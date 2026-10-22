@@ -202,10 +202,11 @@ bb.a:
   %9 = alloca %"class.icu_78::UnicodeString", align 8 ; 11 uses
   %10 = alloca %"struct.icu_78::RuleCharacterIterator::Pos", align 8 ; 14 uses
   %i.k = alloca i8, align 1                       ; 31 uses
-  %i.l = alloca { i64, i64 }, align 8             ; 5 uses
-  %.unpack.a = load i64, ptr %5, align 8, !tbaa !14 ; 4 uses
+  %i.l = alloca { i64, i64 }, align 16            ; 4 uses
   %.elt256 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %.unpack257 = load i64, ptr %.elt256, align 8, !tbaa !14 ; 2 uses
+  %.unpack.a = load i64, ptr %.elt256, align 8, !tbaa !14
+  %11 = load <2 x i64>, ptr %5, align 8, !tbaa !14
+  %.unpack257 = load i64, ptr %5, align 8, !tbaa !14 ; 3 uses
   %i.m = load i32, ptr %7, align 4, !tbaa !11
   %i.n = icmp slt i32 %i.m, 1
   br i1 %i.n, label %bb.b, label %bb.em
@@ -237,7 +238,6 @@ bb.d:                                             ; preds = %bb.b
 .preheader402:                                    ; preds = %bb.d
   %.not265 = icmp ne ptr %2, null                 ; 4 uses
   %i.t = add nsw i32 %6, 1
-  %.fca.1.gep = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   br label %bb.e
 
 bb.e:                                             ; preds = %.critedge297, %.preheader402
@@ -631,8 +631,7 @@ _ZN6icu_7812_GLOBAL__N_117UnicodeSetPointer8allocateEv.exit.thread: ; preds = %b
 
 bb.bl:                                            ; preds = %_ZN6icu_7812_GLOBAL__N_117UnicodeSetPointer8allocateEv.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #14
-  store i64 %.unpack.a, ptr %i.l, align 8, !tbaa !14
-  store i64 %.unpack257, ptr %.fca.1.gep, align 8, !tbaa !14
+  store <2 x i64> %11, ptr %i.l, align 16, !tbaa !14
   invoke void @_ZN6icu_7810UnicodeSet12applyPatternERNS_21RuleCharacterIteratorEPKNS_11SymbolTableERNS_13UnicodeStringEjMS0_FRS0_iEiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(200) %.4211, ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(64) %8, i32 noundef %4, ptr noundef nonnull byval({ i64, i64 }) align 8 %i.l, i32 noundef %i.t, ptr noundef nonnull align 4 dereferenceable(4) %7)
           to label %bb.bm unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit
 
@@ -1035,20 +1034,20 @@ bb.dx:                                            ; preds = %.critedge.thread
   br i1 %.not285, label %bb.ec, label %bb.dy
 
 bb.dy:                                            ; preds = %bb.dx
-  %i.el = getelementptr inbounds i8, ptr %0, i64 %.unpack257 ; 2 uses
-  %i.em = and i64 %.unpack.a, 1
+  %i.el = getelementptr inbounds i8, ptr %0, i64 %.unpack.a ; 2 uses
+  %i.em = and i64 %.unpack257, 1
   %.not286 = icmp eq i64 %i.em, 0
   br i1 %.not286, label %bb.ea, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
   %i.en = load ptr, ptr %i.el, align 8, !tbaa !13
-  %i.eo = getelementptr i8, ptr %i.en, i64 %.unpack.a
+  %i.eo = getelementptr i8, ptr %i.en, i64 %.unpack257
   %i.ep = getelementptr i8, ptr %i.eo, i64 -1
   %i.eq = load ptr, ptr %i.ep, align 8, !nosanitize !64
   br label %bb.eb
 
 bb.ea:                                            ; preds = %bb.dy
-  %i.er = inttoptr i64 %.unpack.a to ptr
+  %i.er = inttoptr i64 %.unpack257 to ptr
   br label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea, %bb.dz

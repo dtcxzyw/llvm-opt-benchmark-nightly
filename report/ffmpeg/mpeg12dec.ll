@@ -205,24 +205,23 @@ bb.g:                                             ; preds = %bb.f
   store ptr %i.ao, ptr %i.am, align 16, !tbaa !101
   %i.ap = shl nsw i64 %i.ah, 1
   store i64 %i.ap, ptr %i.ag, align 8, !tbaa !108
-  %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 2 uses
-  %3 = load i64, ptr %i.aq, align 16, !tbaa !108  ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1016
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !101
-  %4 = getelementptr inbounds i8, ptr %i.as, i64 %3
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 1016
-  store ptr %4, ptr %i.at, align 8, !tbaa !101
-  %5 = shl nsw i64 %3, 1
-  store i64 %5, ptr %i.aq, align 16, !tbaa !108
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 1048 ; 2 uses
-  %i.av = load i64, ptr %i.au, align 8, !tbaa !108 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1024
-  %7 = load ptr, ptr %6, align 16, !tbaa !101
-  %i.aw = getelementptr inbounds i8, ptr %7, i64 %i.av
-  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1024
-  store ptr %i.aw, ptr %i.ax, align 16, !tbaa !101
-  %8 = shl nsw i64 %i.av, 1
-  store i64 %8, ptr %i.au, align 8, !tbaa !108
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1048
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1024
+  %5 = load ptr, ptr %4, align 16, !tbaa !101
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 1024
+  %i.av = load i64, ptr %3, align 8, !tbaa !108
+  %6 = load <2 x i64>, ptr %i.aq, align 16, !tbaa !108
+  %7 = load i64, ptr %i.aq, align 16, !tbaa !108
+  %i.aw = getelementptr inbounds i8, ptr %i.as, i64 %7
+  store ptr %i.aw, ptr %i.at, align 8, !tbaa !101
+  %i.ax = getelementptr inbounds i8, ptr %5, i64 %i.av
+  store ptr %i.ax, ptr %i.au, align 16, !tbaa !101
+  %8 = shl nsw <2 x i64> %6, splat (i64 1)
+  store <2 x i64> %8, ptr %i.aq, align 16, !tbaa !108
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.split.preheader, %.split.us.preheader, %bb.f

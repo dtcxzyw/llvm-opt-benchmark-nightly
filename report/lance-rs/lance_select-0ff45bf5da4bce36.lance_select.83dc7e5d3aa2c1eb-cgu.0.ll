@@ -205,7 +205,7 @@ _RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecRNtNtCs1akgR21QTtx_7roaring6bitmap13
 
 _RINvNtNtCs1akgR21QTtx_7roaring6bitmap8multiops25collect_starting_elementsQINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map3MapINtNtB1f_10filter_map9FilterMapINtNtNtB1j_5slice4iter4IterRNtNtCsbjTsVCnQnhv_12lance_select4mask16RowAddrSelectionENCNvMs4_B2X_B2V_9union_all0ENcNtINtNtB1j_6result6ResultRNtB4_13RoaringBitmapNtNtB1j_7convert10InfallibleE2Ok0EB4I_B53_EB2Z_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecRNtNtCs1akgR21QTtx_7roaring6bitmap13RoaringBitmapE8push_mutCsbjTsVCnQnhv_12lance_select.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m, %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNvMs4_NtCsbjTsVCnQnhv_12lance_select4maskNtBW_16RowAddrSelection9union_all0INtB7_5FnMutTRRB1v_EE8call_mutBY_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.0.2.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ true, %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNvMs4_NtCsbjTsVCnQnhv_12lance_select4maskNtBW_16RowAddrSelection9union_all0INtB7_5FnMutTRRB1v_EE8call_mutBY_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecRNtNtCs1akgR21QTtx_7roaring6bitmap13RoaringBitmapE8push_mutCsbjTsVCnQnhv_12lance_select.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m ] ; 3 uses
-  %.sroa.5123.0.copyload277.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ca, %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNvMs4_NtCsbjTsVCnQnhv_12lance_select4maskNtBW_16RowAddrSelection9union_all0INtB7_5FnMutTRRB1v_EE8call_mutBY_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecRNtNtCs1akgR21QTtx_7roaring6bitmap13RoaringBitmapE8push_mutCsbjTsVCnQnhv_12lance_select.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ca, %bb.m ] ; 9 uses
+  %.sroa.5123.0.copyload277.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ca, %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNvMs4_NtCsbjTsVCnQnhv_12lance_select4maskNtBW_16RowAddrSelection9union_all0INtB7_5FnMutTRRB1v_EE8call_mutBY_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecRNtNtCs1akgR21QTtx_7roaring6bitmap13RoaringBitmapE8push_mutCsbjTsVCnQnhv_12lance_select.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ca, %bb.m ] ; 7 uses
   %.sroa.0.1.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bt, %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNvMs4_NtCsbjTsVCnQnhv_12lance_select4maskNtBW_16RowAddrSelection9union_all0INtB7_5FnMutTRRB1v_EE8call_mutBY_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.lcssa69.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecRNtNtCs1akgR21QTtx_7roaring6bitmap13RoaringBitmapE8push_mutCsbjTsVCnQnhv_12lance_select.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bt, %bb.m ]
   %.sroa.0121.0.copyload.pr.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.q, align 8, !noalias !5636 ; 8 uses
   %.sroa.4122.0.copyload.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.ax, align 8, !noalias !5636 ; 9 uses
@@ -246,16 +246,16 @@ bb.u:                                             ; preds = %bb.x
   br i1 %i.cx, label %.body.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.dg
 
 bb.v:                                             ; preds = %bb.t, %.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %.idx315.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.5123.0.copyload277.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 3 ; 3 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.4122.0.copyload.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 %.idx315.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.4122.0.copyload.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
+  %.idx315.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.5123.0.copyload277.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 3
+  %i.cy = getelementptr i8, ptr %.sroa.4122.0.copyload.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 %.idx315.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.4122.0.copyload.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
   %i.da = load ptr, ptr %.sroa.4122.0.copyload.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !5640, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 8
   %i.dc = load ptr, ptr %i.db, align 8, !noalias !5639, !nonnull !4, !noundef !4 ; 5 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.da, i64 16
   %i.de = load i64, ptr %i.dd, align 8, !noalias !5639, !noundef !4 ; 8 uses
   %i.df = icmp eq i64 %i.de, 0
-  br i1 %i.df, label %3, label %bb.w
+  br i1 %i.df, label %bb.z, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %.idx167.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = mul nuw nsw i64 %i.de, 40 ; 2 uses
@@ -352,25 +352,9 @@ bb.y:                                             ; preds = %bb.t
   call void @llvm.assume(i1 %i.ec)
   br label %bb.z
 
-3:                                                ; preds = %bb.v
-  %gepdiff.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = add nsw i64 %.idx315.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -8
-  %4 = lshr exact i64 %gepdiff.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 3 ; 2 uses
-  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 range(i64 0, 1152921504606846976) %.sroa.5123.0.copyload277.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 %4)
-  %.idx169.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 3 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.idx169.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
-  %.not23.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp samesign ugt i64 %.sroa.5123.0.copyload277.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %4
-  br i1 %.not23.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.z, label %6
-
-6:                                                ; preds = %3
-  %7 = add nuw nsw i64 %.idx169.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 8
-  %8 = icmp samesign eq i64 %7, %.idx315.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %spec.select.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %8, i64 0, i64 8
-  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  br label %bb.z
-
-bb.z:                                             ; preds = %6, %3, %.epilog-lcssa
-  %.sroa.5.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %3 ], [ inttoptr (i64 8 to ptr), %6 ], [ %i.dg, %.epilog-lcssa ]
-  %.sroa.7.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %5, %3 ], [ %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %6 ], [ %i.cz, %.epilog-lcssa ]
+bb.z:                                             ; preds = %.epilog-lcssa, %bb.v
+  %.sroa.5.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.dg, %.epilog-lcssa ], [ inttoptr (i64 8 to ptr), %bb.v ]
+  %.sroa.7.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.cz, %.epilog-lcssa ], [ %i.cy, %bb.v ]
   store i64 %i.de, ptr %i.s, align 8, !noalias !5639
   store ptr %.sroa.5.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.5.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !5639
   store i64 %i.de, ptr %.sroa.7.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !5639

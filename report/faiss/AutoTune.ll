@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !145
   %i.ha = add nsw i32 %i.gz, 1
   store i32 %i.ha, ptr %i.gy, align 4, !tbaa !145
-  %i.hb = add nuw i64 %.096342, 1                 ; 2 uses
+  %i.hb = add nuw nsw i64 %.096342, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.hb, %.05.lcssa.i459467473
   br i1 %exitcond.not, label %.loopexit309, label %.lr.ph, !llvm.loop !379
 

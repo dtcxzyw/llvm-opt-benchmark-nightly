@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.thread337, %bb.c
   %i.bc = sext i32 %i.bb to i64                   ; 4 uses
   %i.bd = tail call i64 @dt_round_size(i64 noundef %i.ba, i64 noundef 4) #33 ; 2 uses
   %i.be = tail call i64 @dt_round_size(i64 noundef %i.bc, i64 noundef 4) #33 ; 2 uses
-  %i.bf = mul i64 %i.be, %i.bd                    ; 10 uses
+  %i.bf = mul i64 %i.be, %i.bd                    ; 12 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bh = load ptr, ptr %i.bg, align 16, !tbaa !53 ; 4 uses
   %i.bi = tail call i64 @dt_dev_pixelpipe_piece_hash(ptr noundef nonnull %1, ptr noundef null, i32 noundef 0) #33
@@ -608,13 +608,10 @@ begin_hunk_1_@_process_opposed:bb.a
   %.not414 = icmp ult i32 %.off415, 5
   %i.ql = add nsw i64 %i.ba, -4
   %i.qm = add nsw i64 %i.bc, -4
-  %9 = insertelement <2 x i64> poison, i64 %i.bf, i64 0 ; 2 uses
-  %10 = shufflevector <2 x i64> %9, <2 x i64> poison, <2 x i32> zeroinitializer
-  %11 = mul <2 x i64> %10, <i64 3, i64 4>         ; 3 uses
-  %12 = extractelement <2 x i64> %11, i64 0
-  %i.qn = getelementptr i8, ptr %i.df, i64 %12    ; 11 uses
-  %13 = extractelement <2 x i64> %11, i64 1
-  %i.qo = getelementptr i8, ptr %i.df, i64 %13    ; 11 uses
+  %9 = mul i64 %i.bf, 3
+  %i.qn = getelementptr i8, ptr %i.df, i64 %9     ; 11 uses
+  %10 = shl i64 %i.bf, 2
+  %i.qo = getelementptr i8, ptr %i.df, i64 %10    ; 11 uses
   %i.qp = shl i64 %i.bf, 1
   %invariant.gep386 = getelementptr i8, ptr %i.df, i64 %i.qp ; 11 uses
   %i.qq = mul i64 %i.bf, 5                        ; 2 uses
@@ -622,6 +619,7 @@ begin_hunk_1_@_process_opposed:bb.a
   br i1 %.not414, label %._crit_edge390.split, label %.preheader353.preheader
 
 .preheader353.preheader:                          ; preds = %.preheader353.lr.ph
+  %11 = insertelement <2 x i64> poison, i64 %i.bf, i64 0 ; 2 uses
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 1) ; 5 uses
   %umax477 = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 1)
   %exitcond463.peel.not = icmp ult i32 %i.az, 2
@@ -630,10 +628,11 @@ begin_hunk_1_@_process_opposed:bb.a
   %.off522 = add i32 %i.qk, -9
   %exitcond463.peel475.not = icmp ult i32 %.off522, 3
   %i.qs = mul i64 %i.bd, %i.be                    ; 2 uses
-  %i.qt = shufflevector <2 x i64> %9, <2 x i64> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
+  %i.qt = shufflevector <2 x i64> %11, <2 x i64> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
   %i.qu = shl <4 x i64> %i.qt, <i64 0, i64 1, i64 poison, i64 poison>
-  %14 = shufflevector <2 x i64> %11, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.qv = shufflevector <4 x i64> %i.qu, <4 x i64> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %12 = shufflevector <2 x i64> %11, <2 x i64> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
+  %13 = mul <4 x i64> %12, <i64 3, i64 4, i64 poison, i64 poison>
+  %i.qv = shufflevector <4 x i64> %i.qu, <4 x i64> %13, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %min.iters.check = icmp ult i32 %i.az, 8
   %i.qw = add <4 x i64> %i.qv, splat (i64 -1)
   %i.qx = shl i64 %i.qs, 1
@@ -1036,7 +1035,7 @@ bb.c:                                             ; preds = %.thread549, %bb.b
   %i.cj = tail call i64 @dt_round_size(i64 noundef %i.ci, i64 noundef 2) #33 ; 3 uses
   %i.ck = add i64 %i.cj, 16                       ; 7 uses
   %i.cl = mul i64 %i.ck, %i.ce
-  %i.cm = tail call i64 @dt_round_size(i64 noundef %i.cl, i64 noundef 64) #33 ; 9 uses
+  %i.cm = tail call i64 @dt_round_size(i64 noundef %i.cl, i64 noundef 64) #33 ; 11 uses
   %i.cn = shl i64 %i.cm, 5
   %i.co = tail call ptr @dt_alloc_aligned(i64 noundef %i.cn) #33 ; 20 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.co, i64 64) ]
@@ -1076,14 +1075,13 @@ bb.f:                                             ; preds = %bb.c
   %i.da = getelementptr inbounds nuw i8, ptr %i.co, i64 %.idx842
   %i.db = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 2 uses
   store ptr %i.da, ptr %i.db, align 16, !tbaa !139
+  %.idx839 = mul i64 %i.cm, 12
   %i.dc = insertelement <4 x i64> poison, i64 %i.cm, i64 0
-  %i.dd = shufflevector <4 x i64> %i.dc, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
-  %9 = mul <4 x i64> %i.dd, <i64 28, i64 poison, i64 poison, i64 12> ; 2 uses
-  %10 = extractelement <4 x i64> %9, i64 3
-  %i.de = getelementptr inbounds nuw i8, ptr %i.co, i64 %10 ; 38 uses
+  %i.dd = shufflevector <4 x i64> %i.dc, <4 x i64> poison, <4 x i32> zeroinitializer
+  %.idx843 = mul i64 %i.cm, 28                    ; 3 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %i.co, i64 %.idx839 ; 38 uses
   store ptr %i.de, ptr %i.cv, align 8, !tbaa !139
-  %11 = extractelement <4 x i64> %9, i64 0        ; 3 uses
-  %i.df = getelementptr i8, ptr %i.co, i64 %11    ; 17 uses
+  %i.df = getelementptr i8, ptr %i.co, i64 %.idx843 ; 17 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.d, i64 56
   store ptr %i.df, ptr %i.dg, align 8, !tbaa !139
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #33
@@ -1486,8 +1484,8 @@ _masks_extend_border.exit506:                     ; preds = %.epilog-lcssa1157, 
   %i.bco = shl nsw i64 %i.bce, 2
   %scevgep964 = getelementptr i8, ptr %i.bch, i64 4
   %i.bcp = shl nsw i64 %i.bce, 2
-  %scevgep1005 = getelementptr i8, ptr %i.co, i64 %11
-  %scevgep1057 = getelementptr i8, ptr %i.co, i64 %11
+  %scevgep1005 = getelementptr i8, ptr %i.co, i64 %.idx843
+  %scevgep1057 = getelementptr i8, ptr %i.co, i64 %.idx843
   %i.bcq = shl nsw i64 %i.bce, 2
   %stride.check1067 = icmp slt i32 %i.bbv, 0
   %stride.check1010 = icmp slt i32 %i.bbv, 0

@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %has_inactive_helper
 bb.an:                                            ; preds = %bb.am
   %i.db = add nsw i64 %.idx, -16
   %i.dc = ashr exact i64 %i.db, 4
-  %i.dd = add nsw i64 %i.dc, 1                    ; 3 uses
+  %i.dd = add nuw nsw i64 %i.dc, 1                ; 3 uses
   tail call fastcc void @GC_generic_lock(ptr noundef nonnull @mark_mutex)
   %i.de = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 16 ; 2 uses
@@ -235,7 +235,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
 
 bb.ar:                                            ; preds = %bb.an
   %i.dp = shl nuw nsw i64 %i.dd, 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.df, ptr nonnull align 8 %0, i64 %i.dp, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.df, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.dp, i1 false)
   %i.dq = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.dd
   %i.dr = ptrtoint ptr %i.dq to i64
   store atomic volatile i64 %i.dr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160) release, align 8

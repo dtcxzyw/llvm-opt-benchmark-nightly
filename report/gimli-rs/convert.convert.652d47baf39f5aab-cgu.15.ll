@@ -205,7 +205,7 @@ switch.hole_check:
   %switch.maskindex = zext nneg i8 %2 to i32
   %switch.shifted = lshr i32 32568841, %switch.maskindex
   %switch.lobit = trunc i32 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %bb.a, !prof !582
+  br i1 %switch.lobit, label %switch.lookup, label %bb.a
 
 bb.a:                                             ; preds = %switch.hole_check
   tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @22) #32, !noalias !581
@@ -608,5 +608,4 @@ begin_hunk_1_@llvm.memmove.p0.p0.i64
 !579 = distinct !{!579, i1 true, !"_RNCNCNvCs8GyQQEoxZtT_7convert4mains2_00B5_"}
 !580 = distinct !{!580, !579, !"_RNCNCNvCs8GyQQEoxZtT_7convert4mains2_00B5_: argument 0"}
 !581 = !{!580}
-!582 = !{!"branch_weights", i32 26000, i32 1}
 end_hunk_1

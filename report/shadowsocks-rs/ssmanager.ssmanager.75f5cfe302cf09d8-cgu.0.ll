@@ -205,7 +205,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
   br i1 %.not8, label %bb.x, label %bb.w, !prof !92
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1e_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.thread: ; preds = %bb.h, %.split, %bb.y
-  %i.ag = load i64, ptr %i.j, align 8, !noundef !80 ; 13 uses
+  %i.ag = load i64, ptr %i.j, align 8, !noundef !80 ; 14 uses
   %i.ah = icmp ult i64 %i.ag, 576460752303423488
   call void @llvm.assume(i1 %i.ah)
   %i.ai = load i64, ptr %i.k, align 8, !noundef !80 ; 5 uses
@@ -221,7 +221,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsa
   %i.ak = sub nuw i64 %i.ai, %i.ag                ; 5 uses
   %.sroa.026.0.copyload = load i64, ptr %i.c, align 8 ; 4 uses
   %.sroa.427.0.copyload = load ptr, ptr %i.i, align 8, !nonnull !80, !noundef !80 ; 6 uses
-  %.idx = shl nuw nsw i64 %i.ag, 4                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ag, 4
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.427.0.copyload, i64 %.idx ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !32693)
   call void @llvm.experimental.noalias.scope.decl(metadata !32694)
@@ -250,13 +250,10 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx8.i.i.i.i, i64 30, i1 false), !noalias !32695
   %i.aw = ptrtoint ptr %i.al to i64               ; 2 uses
-  %gepdiff = add nsw i64 %.idx, -16
-  %4 = lshr exact i64 %gepdiff, 4
-  %5 = call i64 @llvm.umin.i64(i64 %i.ar, i64 %4) ; 2 uses
-  %i.ax = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ax = call i64 @llvm.umax.i64(i64 %i.ar, i64 3) ; 2 uses
   %i.ay = add nuw nsw i64 %i.ax, 1                ; 2 uses
   %i.az = mul i64 %i.ay, 48                       ; 3 uses
-  %or.cond.i.i.i.i = icmp samesign ugt i64 %5, 192153584101141161
+  %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ag, 192153584101141162
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !177
 
 bb.k:                                             ; preds = %bb.j

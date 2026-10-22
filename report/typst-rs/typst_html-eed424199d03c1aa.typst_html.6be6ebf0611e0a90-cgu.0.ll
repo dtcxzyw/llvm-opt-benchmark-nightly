@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   store i64 %i.y, ptr %i.q, align 8, !noalias !14468
   %i.z = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %.val10.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.z, ptr noundef nonnull readonly align 8 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !14468
-  %i.aa = add i64 %.val10.i.i.i.i.i.i, 1          ; 2 uses
+  %i.aa = add nuw nsw i64 %.val10.i.i.i.i.i.i, 1  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !14466
   %i.ab = icmp eq i64 %i.aa, %i.f
   br i1 %i.ab, label %_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4cast8CastInfoEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtNtB2H_5slice4iter4IterTReB3O_EENCNvMs_NtCs9gmjTwvRRSu_10typst_html5typedNtB43_11StringsType5input0EE9from_iterB45_.exit, label %bb.e
@@ -608,7 +608,7 @@ _RINvMs_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRSNtNtNtNtCsdaEETE4DqmE_13typst_libr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !23382
   %gepdiff.i.i.i = sub nuw nsw i64 %.idx.i.i.i, %.idx5.i.i.i ; 2 uses
   %i.cv = lshr exact i64 %gepdiff.i.i.i, 4        ; 3 uses
-  %i.cw = mul nuw i64 %i.cv, 24                   ; 2 uses
+  %i.cw = mul nuw nsw i64 %i.cv, 24               ; 2 uses
   %or.cond.i.i.i.i.i.i.i.i.i.i = icmp samesign ugt i64 %gepdiff.i.i.i, 6148914691236517200
   br i1 %or.cond.i.i.i.i.i.i.i.i.i.i, label %.noexc.i.i.i.i.i.i.i.i, label %bb.o, !prof !70
 

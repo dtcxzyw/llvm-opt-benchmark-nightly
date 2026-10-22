@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph.i43.i
   %.07.i45.i.i.i.i.i.prol = phi i64 [ %i.dr, %.lr.ph.i43.i.i.i.i.i ], [ %i.fc, %bb.y ]
   %.046.i46.i.i.i.i.i.prol = phi ptr [ %.ptr252, %.lr.ph.i43.i.i.i.i.i ], [ %i.fd, %bb.y ] ; 2 uses
   %prol.iter279 = phi i64 [ 0, %.lr.ph.i43.i.i.i.i.i ], [ %prol.iter279.next, %bb.y ]
-  %i.fc = add i64 %.07.i45.i.i.i.i.i.prol, -1     ; 2 uses
+  %i.fc = add nsw i64 %.07.i45.i.i.i.i.i.prol, -1 ; 2 uses
   store i32 %.pre.i44.i.i.i.i.i, ptr %.046.i46.i.i.i.i.i.prol, align 4, !tbaa !42, !noalias !741
   %i.fd = getelementptr inbounds nuw i8, ptr %.046.i46.i.i.i.i.i.prol, i64 4 ; 2 uses
   %prol.iter279.next = add i64 %prol.iter279, 1   ; 2 uses
@@ -233,7 +233,7 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph.i43.i
   %i.fk = getelementptr inbounds nuw i8, ptr %.046.i46.i.i.i.i.i, i64 24
   store i32 %.pre.i44.i.i.i.i.i, ptr %i.fk, align 4, !tbaa !42, !noalias !741
   %i.fl = getelementptr inbounds nuw i8, ptr %.046.i46.i.i.i.i.i, i64 28
-  %i.fm = add i64 %.07.i45.i.i.i.i.i, -8          ; 2 uses
+  %i.fm = add nsw i64 %.07.i45.i.i.i.i.i, -8      ; 2 uses
   store i32 %.pre.i44.i.i.i.i.i, ptr %i.fl, align 4, !tbaa !42, !noalias !741
   %i.fn = getelementptr inbounds nuw i8, ptr %.046.i46.i.i.i.i.i, i64 32
   %.not.i47.i.i.i.i.i.7 = icmp eq i64 %i.fm, 0

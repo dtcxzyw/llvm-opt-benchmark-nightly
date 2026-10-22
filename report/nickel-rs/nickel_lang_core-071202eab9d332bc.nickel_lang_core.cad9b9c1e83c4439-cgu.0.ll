@@ -206,14 +206,14 @@ bb.tj:                                            ; preds = %bb.ti
 
 bb.tk:                                            ; preds = %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !41967
-  %gepdiff = add nsw i64 %.idx, -8                ; 2 uses
+  %gepdiff = add nsw i64 %.idx, -8                ; 3 uses
   %i.bmm = lshr exact i64 %gepdiff, 3             ; 3 uses
-  %i.bmn = mul i64 %i.bmm, 24                     ; 3 uses
+  %i.bmn = mul nuw nsw i64 %i.bmm, 24             ; 2 uses
   %or.cond.i.i.i.i.i.i.i = icmp ugt i64 %gepdiff, 3074457345618258600
   br i1 %or.cond.i.i.i.i.i.i.i, label %bb.tm, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i747, !prof !151
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i747: ; preds = %bb.tk
-  %i.bmo = icmp eq i64 %i.bmn, 0
+  %i.bmo = icmp eq i64 %gepdiff, 0
   br i1 %i.bmo, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h743fc863ed342438E.exit.i.i.i.i.i.i", label %bb.tl
 
 bb.tl:                                            ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i747

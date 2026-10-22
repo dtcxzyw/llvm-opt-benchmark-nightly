@@ -202,7 +202,7 @@ switch.hole_check:
   %switch.maskindex = zext nneg i8 %2 to i32
   %switch.shifted = lshr i32 32568841, %switch.maskindex
   %switch.lobit = trunc i32 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %bb.a, !prof !588
+  br i1 %switch.lobit, label %switch.lookup, label %bb.a
 
 bb.a:                                             ; preds = %switch.hole_check
   tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #24, !noalias !587
@@ -224,7 +224,7 @@ switch.lookup:                                    ; preds = %switch.hole_check
 define hidden void @_RNvXs2_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvCsaN7cMqnSAH7_6simple9dump_file0INtB7_6FnOnceTNtNtCsi68uqYEhoRA_5gimli6common9SectionIdEE9call_onceBS_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %1, i8 noundef range(i8 0, 25) %2) unnamed_addr #0 {
 switch.lookup:
   %.val = load ptr, ptr %1, align 8, !nonnull !6, !align !9, !noundef !6
-  %i.a = load ptr, ptr %.val, align 8, !noalias !591, !nonnull !6, !align !9, !noundef !6
+  %i.a = load ptr, ptr %.val, align 8, !noalias !590, !nonnull !6, !align !9, !noundef !6
   %i.b = zext nneg i8 %2 to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs2_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvCsaN7cMqnSAH7_6simple9dump_file0INtB7_6FnOnceTNtNtCsi68uqYEhoRA_5gimli6common9SectionIdEE9call_onceBS_, i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
@@ -627,7 +627,7 @@ bb.a:
   %i.ah = alloca [8 x i8], align 8                ; 4 uses
   %i.ai = alloca [8 x i8], align 8                ; 4 uses
   %i.aj = alloca [8 x i8], align 8                ; 4 uses
-  %i.ak = load i8, ptr %0, align 8, !range !592, !noundef !6
+  %i.ak = load i8, ptr %0, align 8, !range !591, !noundef !6
   switch i8 %i.ak, label %default.unreachable1 [
     i8 0, label %bb.b
     i8 1, label %bb.c
@@ -1030,7 +1030,7 @@ define internal noundef ptr @_RNvYNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtBb
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtBa_11RandomState3new4KEYS0s_023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !15, !noalias !597, !noundef !6
+  %i.c = load i8, ptr %i.b, align 8, !range !15, !noalias !596, !noundef !6
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CsaN7cMqnSAH7_6simple.exit, label %bb.b, !prof !14
 
@@ -1433,14 +1433,13 @@ begin_hunk_3_@llvm.experimental.noalias.scope.decl
 !585 = distinct !{!585, i1 true, !"_RNCNCNvCsaN7cMqnSAH7_6simple9dump_files_00B5_"}
 !586 = distinct !{!586, !585, !"_RNCNCNvCsaN7cMqnSAH7_6simple9dump_files_00B5_: argument 0"}
 !587 = !{!586}
-!588 = !{!"branch_weights", i32 26000, i32 1}
-!589 = distinct !{!589, i1 true, !"_RNCNvCsaN7cMqnSAH7_6simple9dump_file0B3_"}
-!590 = distinct !{!590, !589, !"_RNCNvCsaN7cMqnSAH7_6simple9dump_file0B3_: argument 0"}
-!591 = !{!590}
-!592 = !{i8 0, i8 77}
-!593 = distinct !{!593, i1 true, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CsaN7cMqnSAH7_6simple"}
-!594 = distinct !{!594, !593, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CsaN7cMqnSAH7_6simple: argument 0"}
-!595 = distinct !{!595, i1 true, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECsaN7cMqnSAH7_6simple"}
-!596 = distinct !{!596, !595, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECsaN7cMqnSAH7_6simple: argument 0"}
-!597 = !{!596, !594}
+!588 = distinct !{!588, i1 true, !"_RNCNvCsaN7cMqnSAH7_6simple9dump_file0B3_"}
+!589 = distinct !{!589, !588, !"_RNCNvCsaN7cMqnSAH7_6simple9dump_file0B3_: argument 0"}
+!590 = !{!589}
+!591 = !{i8 0, i8 77}
+!592 = distinct !{!592, i1 true, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CsaN7cMqnSAH7_6simple"}
+!593 = distinct !{!593, !592, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CsaN7cMqnSAH7_6simple: argument 0"}
+!594 = distinct !{!594, i1 true, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECsaN7cMqnSAH7_6simple"}
+!595 = distinct !{!595, !594, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECsaN7cMqnSAH7_6simple: argument 0"}
+!596 = !{!595, !593}
 end_hunk_3
