@@ -204,16 +204,15 @@ bb.a:
   %i.n = load ptr, ptr %i.m, align 8
   tail call void %i.n(ptr noundef %i.l, i32 %i.k, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.k) #3
-  %2 = add i32 %i.b, 389416                       ; 4 uses
-  %i.o = add i32 %i.b, 389464
+  %i.o = add i32 %i.b, 389416                     ; 4 uses
   %i.p = add i32 %i.b, 389424                     ; 3 uses
-  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %2) #3
+  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %i.o) #3
   %.val.i41 = load ptr, ptr %0, align 8
   %i.q = tail call ptr @to_intel_uncore(ptr noundef %.val.i41) #3 ; 2 uses
   %i.r = getelementptr i8, ptr %i.q, i64 176
   %i.s = load ptr, ptr %i.r, align 8
-  tail call void %i.s(ptr noundef %i.q, i32 %2, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
-  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %2) #3
+  tail call void %i.s(ptr noundef %i.q, i32 %i.o, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
+  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.o) #3
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %i.p) #3
   %.val.i42 = load ptr, ptr %0, align 8
   %i.t = tail call ptr @to_intel_uncore(ptr noundef %.val.i42) #3 ; 2 uses
@@ -223,7 +222,7 @@ bb.a:
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.p) #3
   %i.w = getelementptr i8, ptr %i.a, i64 1764
   store i8 0, ptr %i.w, align 4
-  %i.x = or disjoint i32 %2, 16                   ; 3 uses
+  %i.x = or disjoint i32 %i.o, 16                 ; 3 uses
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %i.x) #3
   %.val.i41.1 = load ptr, ptr %0, align 8
   %i.y = tail call ptr @to_intel_uncore(ptr noundef %.val.i41.1) #3 ; 2 uses
@@ -267,14 +266,14 @@ bb.a:
   %i.as = load ptr, ptr %i.ar, align 8
   tail call void %i.as(ptr noundef %i.aq, i32 %i.ap, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.ap) #3
-  %3 = or disjoint i32 %i.o, 36                   ; 3 uses
-  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %3) #3
+  %2 = add i32 %i.b, 389500                       ; 3 uses
+  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %2) #3
   %.val.i42.3 = load ptr, ptr %0, align 8
   %i.at = tail call ptr @to_intel_uncore(ptr noundef %.val.i42.3) #3 ; 2 uses
   %i.au = getelementptr i8, ptr %i.at, i64 176
   %i.av = load ptr, ptr %i.au, align 8
-  tail call void %i.av(ptr noundef %i.at, i32 %3, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
-  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %3) #3
+  tail call void %i.av(ptr noundef %i.at, i32 %2, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
+  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %2) #3
   %i.aw = getelementptr i8, ptr %i.a, i64 1800
   store i8 0, ptr %i.aw, align 4
   %i.ax = add i32 %i.b, 389504                    ; 3 uses

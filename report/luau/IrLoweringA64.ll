@@ -205,14 +205,12 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4807:   ; preds = %_ZN4Luau7CodeGen5ge
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643strENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.qy, i8 %i.ql, i64 %.sroa.07179.0.insert.insert)
   %i.qz = load ptr, ptr %i.qx, align 8, !tbaa !69, !nonnull !70, !align !71
   %i.ra = and i64 %i.qw, -4294967296              ; 2 uses
-  %.sroa.37176.0.insert.insert = add i64 %i.ra, 17196253184
-  %.sroa.27175.0.insert.insert = or disjoint i64 %.sroa.37176.0.insert.insert, %.sroa.27180.0.insert.ext
-  %.sroa.07174.0.insert.insert = or disjoint i64 %.sroa.27175.0.insert.insert, 1
+  %.sroa.37176.0.insert.insert = add i64 %i.ra, 17196253185
+  %.sroa.07174.0.insert.insert = or disjoint i64 %.sroa.37176.0.insert.insert, %.sroa.27180.0.insert.ext
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643strENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.qz, i8 %i.qp, i64 %.sroa.07174.0.insert.insert)
   %i.rb = load ptr, ptr %i.qx, align 8, !tbaa !69, !nonnull !70, !align !71
-  %.sroa.37171.0.insert.insert = add i64 %i.ra, 34376122368
-  %.sroa.27170.0.insert.insert = or disjoint i64 %.sroa.37171.0.insert.insert, %.sroa.27180.0.insert.ext
-  %.sroa.07169.0.insert.insert = or disjoint i64 %.sroa.27170.0.insert.insert, 1
+  %.sroa.37171.0.insert.insert = add i64 %i.ra, 34376122369
+  %.sroa.07169.0.insert.insert = or disjoint i64 %.sroa.37171.0.insert.insert, %.sroa.27180.0.insert.ext
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643strENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.rb, i8 %i.qt, i64 %.sroa.07169.0.insert.insert)
   %i.rc = load i32, ptr %i.qh, align 8, !tbaa !67
   %i.rd = icmp ugt i32 %i.rc, 4

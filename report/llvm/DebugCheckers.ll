@@ -205,14 +205,14 @@ bb.a:
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = shl i64 %i.ac, 7
   %i.ae = and i64 %i.ad, 140737488355328
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr null, ptr %5, align 8, !tbaa !1164
-  %i.af = or disjoint i64 %i.g, %i.e
-  %i.ag = or disjoint i64 %i.af, %i.m
-  %i.ah = or disjoint i64 %i.ag, %i.o
-  %6 = or disjoint i64 %i.ah, %i.q
-  %.masked.masked.masked.masked.i = or disjoint i64 %6, %i.s
-  %.masked3.masked.masked.i.masked = or i64 %.masked.masked.masked.masked.i, %i.u
+  %5 = or disjoint i64 %i.g, %i.e
+  %6 = or disjoint i64 %5, %i.m
+  %i.af = or disjoint i64 %6, %i.o
+  %i.ag = or disjoint i64 %i.af, %i.q
+  %i.ah = or disjoint i64 %i.ag, %i.s
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store ptr null, ptr %7, align 8, !tbaa !1164
+  %.masked3.masked.masked.i.masked = or i64 %i.ah, %i.u
   %.masked4 = or i64 %.masked3.masked.masked.i.masked, %i.w
   %.masked = or i64 %.masked4, %i.k
   %.masked.masked.i.masked = or i64 %.masked, %i.ae

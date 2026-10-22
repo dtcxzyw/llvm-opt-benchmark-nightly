@@ -205,12 +205,11 @@ bb.cd:                                            ; preds = %bb.cb
   %i.nd = ashr i64 %i.nc, 47                      ; 2 uses
   %i.ne = icmp ult i64 %i.nd, -14
   %i.nf = trunc nsw i64 %i.nd to i32
-  %2 = xor i32 %i.nf, -1
   %i.ng = shl nuw nsw i32 %i.jc, 8
-  %3 = or disjoint i32 %2, 128
-  %i.nh = select i1 %i.ne, i32 142, i32 %3
-  %4 = add nuw nsw i32 %i.nh, %i.ng
-  %i.ni = trunc nuw nsw i32 %4 to i16
+  %2 = xor i32 %i.nf, 48511
+  %i.nh = select i1 %i.ne, i32 142, i32 %2
+  %3 = or i32 %i.nh, %i.ng
+  %i.ni = trunc i32 %3 to i16
   store i16 %i.ni, ptr %i.h, align 4, !tbaa !9
   store i16 %i.iw, ptr %i.g, align 8, !tbaa !9
   store i16 0, ptr %i.i, align 2, !tbaa !9

@@ -205,11 +205,10 @@ bb.em:                                            ; preds = %bb.el
   %i.ach = getelementptr inbounds nuw i8, ptr %.val71.i, i64 328 ; 2 uses
   %i.aci = load i8, ptr %i.ach, align 8, !tbaa !24 ; 2 uses
   %i.acj = zext i8 %i.aci to i32
-  %i.ack = add nuw nsw i32 %i.acj, 2              ; 2 uses
+  %i.ack = add nuw nsw i32 %i.acj, 61442          ; 2 uses
   %i.acl = lshr i32 %i.ack, 8
-  %i.acm = trunc nuw nsw i32 %i.acl to i8
-  %8 = or disjoint i8 %i.acm, -16
-  store i8 %8, ptr %i.f, align 16, !tbaa !24
+  %i.acm = trunc nuw i32 %i.acl to i8
+  store i8 %i.acm, ptr %i.f, align 16, !tbaa !24
   %i.acn = trunc i32 %i.ack to i8
   store i8 %i.acn, ptr %i.cc, align 1, !tbaa !24
   store i8 64, ptr %i.cd, align 2, !tbaa !24

@@ -205,10 +205,9 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %index ; 2 uses
   %i.x = or disjoint <2 x i64> %vec.ind, splat (i64 4294967296)
-  %5 = or disjoint <2 x i64> %step.add, splat (i64 4294967296)
+  %5 = add nuw <2 x i64> %vec.ind, splat (i64 4294967298)
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   store <2 x i64> %i.x, ptr %i.w, align 4, !tbaa !37
   store <2 x i64> %5, ptr %i.y, align 4, !tbaa !37
@@ -611,10 +610,9 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %index ; 2 uses
   %i.j = or disjoint <2 x i64> %vec.ind, splat (i64 4294967296)
-  %2 = or disjoint <2 x i64> %step.add, splat (i64 4294967296)
+  %2 = add nuw <2 x i64> %vec.ind, splat (i64 4294967298)
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store <2 x i64> %i.j, ptr %i.i, align 4, !tbaa !37
   store <2 x i64> %2, ptr %i.k, align 4, !tbaa !37
