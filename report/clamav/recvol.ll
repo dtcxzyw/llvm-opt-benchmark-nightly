@@ -205,24 +205,23 @@ bb.du:                                            ; preds = %bb.dr
 
 bb.dv:                                            ; preds = %bb.du
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
-  %i.ki = add nuw nsw i32 %.0267.ph, %.0269.ph    ; 8 uses
+  %i.ki = add nuw nsw i32 %.0267.ph, %.0269.ph    ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #14
   %i.kj = icmp sgt i32 %i.ki, 0                   ; 2 uses
   br i1 %i.kj, label %.lr.ph657.preheader, label %._crit_edge
 
 .lr.ph657.preheader:                              ; preds = %bb.dv
-  %wide.trip.count809 = zext nneg i32 %i.ki to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count809, 1
   %i.kk = icmp eq i32 %i.ki, 1
   br i1 %i.kk, label %.lr.ph657.epil.preheader, label %.lr.ph657.preheader.new
 
 .lr.ph657.preheader.new:                          ; preds = %.lr.ph657.preheader
-  %unroll_iter = and i64 %wide.trip.count809, 2147483646
+  %31 = and i32 %i.ki, 2147483646
+  %unroll_iter = zext nneg i32 %31 to i64
   br label %.lr.ph657
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.ec
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph657.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.ki to i1
+  br i1 %lcmp.mod.not, label %.lr.ph657.epil.preheader, label %._crit_edge
 
 .lr.ph657.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph657.preheader
   %indvars.iv806.epil.init = phi i64 [ 0, %.lr.ph657.preheader ], [ %indvars.iv.next807.1, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
@@ -625,11 +624,13 @@ bb.cu:                                            ; preds = %._crit_edge410
 
 ._crit_edge415:                                   ; preds = %bb.cz, %bb.cu
   %i.jn = load i32, ptr %i.dt, align 8, !tbaa !200
-  %i.jo = udiv i32 67108864, %i.jn
+  %i.jo = udiv i32 67108864, %i.jn                ; 2 uses
+  %22 = zext nneg i32 %i.jo to i64
   %i.jp = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
-  %i.jq = and i32 %i.jo, 134217726
+  %i.jq = and i32 %i.jo, 1
   %spec.select279.a = zext nneg i32 %i.jq to i64
-  store i64 %spec.select279.a, ptr %i.jp, align 8, !tbaa !133
+  %spec.select278 = sub nsw i64 %22, %spec.select279.a
+  store i64 %spec.select278, ptr %i.jp, align 8, !tbaa !133
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #14
   invoke void @_ZN9RSCoder16C1Ev(ptr noundef nonnull align 8 dereferenceable(64) %21)
           to label %bb.da unwind label %bb.de

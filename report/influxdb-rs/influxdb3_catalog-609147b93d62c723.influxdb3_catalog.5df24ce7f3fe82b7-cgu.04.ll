@@ -205,14 +205,19 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !6395, !noalias !6396, !nonnull !5, !noundef !5
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.i = load i64, ptr %i.h, align 8, !range !13, !noalias !6397, !noundef !5
-  %.not.i.i.i.not.i = icmp eq i64 %i.i, 0         ; 2 uses
+  %1 = trunc nuw i64 %i.i to i1                   ; 2 uses
+  %.not = xor i1 %1, true
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
   %.not.not.not.not = icmp eq ptr %i.j, %i.e
-  %or.cond = select i1 %.not.i.i.i.not.i, i1 true, i1 %.not.not.not.not
-  br i1 %or.cond, label %_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit, label %.lr.ph
+  %or.cond = select i1 %.not, i1 true, i1 %.not.not.not.not
+  br i1 %or.cond, label %_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit.loopexit, label %.lr.ph
 
-_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit: ; preds = %.lr.ph, %bb.a
-  %.not.not.not.lcssa = phi i1 [ false, %bb.a ], [ %.not.i.i.i.not.i, %.lr.ph ]
+_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit.loopexit: ; preds = %.lr.ph
+  %.not.not.not.lcssa.ph = xor i1 %1, true
+  br label %_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit
+
+_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit: ; preds = %_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit.loopexit, %bb.a
+  %.not.not.not.lcssa = phi i1 [ false, %bb.a ], [ %.not.not.not.lcssa.ph, %_RINvYINtNtNtCs96Uix8yqi9Q_8indexmap3map4iter6ValuesNtCsbFlE7Gjht9i_12influxdb3_id6UserIdINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3l_4find5checkRB1o_QNCNvMs1_B1X_NtB1X_14UserRepository12active_users0E0INtNtNtB3t_3ops12control_flow11ControlFlowB4M_EEB27_.exit.loopexit ]
   ret i1 %.not.not.not.lcssa
 }
 
@@ -615,8 +620,8 @@ bb.a:
   %i.i = load ptr, ptr %i.g, align 8, !alias.scope !6523, !noalias !6524, !nonnull !5, !noundef !5 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load i64, ptr %i.j, align 8, !range !13, !noalias !6525, !noundef !5
-  %.not.i.i.i = icmp eq i64 %i.k, 0
-  br i1 %.not.i.i.i, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkRINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoENCNvMs1_B1M_NtB1M_14UserRepository28get_deleted_user_by_oauth_id0E0B1W_.exit.i, label %bb.b
+  %3 = trunc nuw i64 %i.k to i1
+  br i1 %3, label %bb.b, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkRINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4user8UserInfoENCNvMs1_B1M_NtB1M_14UserRepository28get_deleted_user_by_oauth_id0E0B1W_.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 80
@@ -1019,8 +1024,9 @@ bb.a:
   %i.a = load ptr, ptr %.val, align 8, !nonnull !5, !noundef !5
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !13, !noundef !5
-  %.not.i = icmp eq i64 %i.c, 0
-  ret i1 %.not.i
+  %2 = trunc nuw i64 %i.c to i1
+  %3 = xor i1 %2, true
+  ret i1 %3
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable

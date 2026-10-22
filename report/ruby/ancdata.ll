@@ -204,10 +204,10 @@ rb_num2int_inline.exit:                           ; preds = %bb.u, %bb.v
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.s, %rb_num2int_inline.exit
-  %i.cx = phi i32 [ %i.cw, %rb_num2int_inline.exit ], [ 0, %bb.s ] ; 2 uses
-  %.not74 = icmp ne i32 %6, 0                     ; 3 uses
-  %10 = or i32 %i.cx, 64
-  %spec.select = select i1 %.not74, i32 %10, i32 %i.cx
+  %i.cx = phi i32 [ %i.cw, %rb_num2int_inline.exit ], [ 0, %bb.s ]
+  %.not74 = trunc nuw i32 %6 to i1                ; 2 uses
+  %10 = shl nuw nsw i32 %6, 6
+  %spec.select = or i32 %i.cx, %10
   %i.cy = load i64, ptr %i.b, align 8, !tbaa !13
   %i.cz = icmp eq i64 %i.cy, 4
   br i1 %i.cz, label %bb.y, label %bb.x
@@ -595,10 +595,10 @@ bb.i:                                             ; preds = %rb_num2ull_inline.e
 
 rb_num2int_inline.exit:                           ; preds = %bb.h, %bb.i
   %.0.i149 = phi i64 [ %i.o, %bb.h ], [ %i.p, %bb.i ]
-  %i.q = trunc i64 %.0.i149 to i32                ; 2 uses
-  %.not = icmp ne i32 %6, 0                       ; 3 uses
-  %12 = or i32 %i.q, 64
-  %spec.select = select i1 %.not, i32 %12, i32 %i.q ; 3 uses
+  %i.q = trunc i64 %.0.i149 to i32
+  %.not = trunc nuw i32 %6 to i1                  ; 2 uses
+  %12 = shl nuw nsw i32 %6, 6
+  %spec.select = or i32 %12, %i.q                 ; 3 uses
   %i.r = and i64 %4, -5
   %.not193 = icmp eq i64 %i.r, 0
   %i.s = tail call i64 @rb_io_taint_check(i64 noundef %0) #9
@@ -754,8 +754,8 @@ bb.aa:                                            ; preds = %bb.y
   unreachable
 
 bb.ab:                                            ; preds = %bb.x
-  %.not143 = icmp eq i32 %.0110.ph, 0
-  br i1 %.not143, label %bb.ac, label %bb.ad
+  %.not143 = trunc nuw i32 %.0110.ph to i1
+  br i1 %.not143, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   switch i32 %i.bo, label %bb.ad [
@@ -815,8 +815,8 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.cb, label %bb.am, label %bb.as
 
 bb.am:                                            ; preds = %bb.al
-  %.not133 = icmp eq i32 %.0110.ph, 0
-  br i1 %.not133, label %bb.an, label %bb.au
+  %.not133 = trunc nuw i32 %.0110.ph to i1
+  br i1 %.not133, label %bb.au, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.cc = icmp eq i64 %i.bz, 0
@@ -910,9 +910,11 @@ bb.at:                                            ; preds = %bb.as
   br label %.loopexit559
 
 bb.au:                                            ; preds = %bb.am, %bb.aj, %bb.ai
+  %.0110.ph.lcssa354 = phi i32 [ 1, %bb.am ], [ %.0110.ph, %bb.aj ], [ %.0110.ph, %bb.ai ] ; 2 uses
   br i1 %or.cond146, label %.loopexit559, label %bb.az
 
 .loopexit559:                                     ; preds = %bb.au, %.thread178
+  %.0110.ph358 = phi i32 [ %.0110.ph, %.thread178 ], [ %.0110.ph.lcssa354, %bb.au ]
   %.2113182 = phi i64 [ %i.du, %.thread178 ], [ %.0111.ph.ph.ph, %bb.au ]
   %i.dv = load i64, ptr %i.ad, align 8, !tbaa !36 ; 3 uses
   %i.dw = icmp eq i64 %i.dv, 0
@@ -1087,7 +1089,7 @@ __cmsg_nxthdr.exit.i169:                          ; preds = %bb.be
   %.1119.ph.ph.ph = phi i32 [ %spec.select, %.preheader ], [ %.1119.ph.ph.ph.be, %.outer.outer.outer.backedge ]
   %.0115.ph.ph.ph = phi i64 [ 4, %.preheader ], [ %.1116, %.outer.outer.outer.backedge ]
   %.0111.ph.ph.ph = phi i64 [ %i.m, %.preheader ], [ %.2113182, %.outer.outer.outer.backedge ] ; 8 uses
-  %.0110.ph.ph.ph = phi i32 [ 0, %.preheader ], [ %.0110.ph, %.outer.outer.outer.backedge ]
+  %.0110.ph.ph.ph = phi i32 [ 0, %.preheader ], [ %.0110.ph358, %.outer.outer.outer.backedge ]
   %.0107.ph.ph.ph = phi i32 [ %i.x, %.preheader ], [ 1, %.outer.outer.outer.backedge ]
   %i.hd = and i64 %.0111.ph.ph.ph, 4294967295
   %i.he = icmp ugt i64 %.0111.ph.ph.ph, 65536
@@ -1099,7 +1101,7 @@ __cmsg_nxthdr.exit.i169:                          ; preds = %bb.be
   %.0122.ph.ph = phi i64 [ %.0122.ph.ph.ph, %.outer.outer.outer ], [ %.2124, %.outer.outer.backedge ]
   %.1119.ph.ph = phi i32 [ %.1119.ph.ph.ph, %.outer.outer.outer ], [ %spec.select, %.outer.outer.backedge ]
   %.0115.ph.ph = phi i64 [ %.0115.ph.ph.ph, %.outer.outer.outer ], [ %.1116, %.outer.outer.backedge ]
-  %.0110.ph.ph = phi i32 [ %.0110.ph.ph.ph, %.outer.outer.outer ], [ %.0110.ph, %.outer.outer.backedge ]
+  %.0110.ph.ph = phi i32 [ %.0110.ph.ph.ph, %.outer.outer.outer ], [ %.0110.ph.lcssa354, %.outer.outer.backedge ]
   %.0107.ph.ph = phi i32 [ %.0107.ph.ph.ph, %.outer.outer.outer ], [ 0, %.outer.outer.backedge ]
   br label %.outer
 
@@ -1107,7 +1109,7 @@ __cmsg_nxthdr.exit.i169:                          ; preds = %bb.be
   %.0122.ph = phi i64 [ %.1123, %rsock_discard_cmsg_resource.exit.thread ], [ %.0122.ph.ph, %.outer.outer ] ; 8 uses
   %.1119.ph = phi i32 [ %spec.select144, %rsock_discard_cmsg_resource.exit.thread ], [ %.1119.ph.ph, %.outer.outer ]
   %.0115.ph = phi i64 [ %.1116, %rsock_discard_cmsg_resource.exit.thread ], [ %.0115.ph.ph, %.outer.outer ]
-  %.0110.ph = phi i32 [ 1, %rsock_discard_cmsg_resource.exit.thread ], [ %.0110.ph.ph, %.outer.outer ] ; 4 uses
+  %.0110.ph = phi i32 [ 1, %rsock_discard_cmsg_resource.exit.thread ], [ %.0110.ph.ph, %.outer.outer ] ; 5 uses
   %.0107.ph = phi i32 [ %.1108, %rsock_discard_cmsg_resource.exit.thread ], [ %.0107.ph.ph, %.outer.outer ] ; 3 uses
   %.not130 = icmp eq i32 %.0107.ph, 0             ; 2 uses
   br label %bb.k

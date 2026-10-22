@@ -204,7 +204,7 @@ bb.bn:                                            ; preds = %.lr.ph
   unreachable, !nosanitize !9
 
 bb.bo:                                            ; preds = %bb.bn
-  %.sroa.0121.0.copyload.i = load <2 x float>, ptr %i.uw, align 4, !tbaa !146
+  %.sroa.0121.0.copyload.i = load <2 x float>, ptr %i.uw, align 4, !tbaa !146 ; 2 uses
   %.sroa.12128.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.uw, i64 8 ; 2 uses
   %.sroa.12128.0.copyload.i = load float, ptr %.sroa.12128.0..sroa_idx.i, align 4, !tbaa !146
   %i.vh = getelementptr inbounds nuw i8, ptr %i.uw, i64 12 ; 2 uses
@@ -212,36 +212,42 @@ bb.bo:                                            ; preds = %bb.bn
   %i.vi = getelementptr inbounds nuw i8, ptr %i.uw, i64 52 ; 3 uses
   %.sroa.12.0.copyload.i = load float, ptr %.sroa.12.0..sroa_idx.i, align 4, !tbaa !146
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.vh, align 4, !tbaa !146
-  %i.vj = load i32, ptr %i.vi, align 4, !tbaa !168 ; 5 uses
-  %4 = insertelement <2 x i32> poison, i32 %i.vj, i64 0
-  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %6 = and <2 x i32> %5, <i32 1, i32 2>
-  %7 = icmp eq <2 x i32> %6, zeroinitializer
-  %8 = select <2 x i1> %7, <2 x float> %.sroa.0121.0.copyload.i, <2 x float> zeroinitializer ; 4 uses
+  %i.vj = load i32, ptr %i.vi, align 4, !tbaa !168 ; 7 uses
+  %.not.i61 = trunc i32 %i.vj to i1
+  %.sroa.0121.0.vec.extract.i = extractelement <2 x float> %.sroa.0121.0.copyload.i, i64 0
+  %4 = select i1 %.not.i61, float 0.000000e+00, float %.sroa.0121.0.vec.extract.i ; 4 uses
+  %.sroa.0121.0.vec.insert.i = insertelement <2 x float> poison, float %4, i64 0
+  %5 = and i32 %i.vj, 2
+  %.not84.i = icmp eq i32 %5, 0
+  %.sroa.0121.4.vec.extract.i = extractelement <2 x float> %.sroa.0121.0.copyload.i, i64 1
+  %6 = select i1 %.not84.i, float %.sroa.0121.4.vec.extract.i, float 0.000000e+00 ; 4 uses
+  %.sroa.0121.4.vec.insert.i = insertelement <2 x float> %.sroa.0121.0.vec.insert.i, float %6, i64 1
   %i.vk = and i32 %i.vj, 4
   %.not85.i = icmp eq i32 %i.vk, 0
   %i.vl = select i1 %.not85.i, float %.sroa.12128.0.copyload.i, float 0.000000e+00 ; 4 uses
-  %i.vm = and <2 x i32> %5, <i32 8, i32 16>
+  %7 = insertelement <2 x i32> poison, i32 %i.vj, i64 0
+  %8 = shufflevector <2 x i32> %7, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.vm = and <2 x i32> %8, <i32 8, i32 16>
   %i.vn = icmp eq <2 x i32> %i.vm, zeroinitializer
   %i.vo = select <2 x i1> %i.vn, <2 x float> %.sroa.0.0.copyload.i, <2 x float> zeroinitializer ; 4 uses
   %i.vp = and i32 %i.vj, 32
   %.not88.i = icmp eq i32 %i.vp, 0
   %i.vq = select i1 %.not88.i, float %.sroa.12.0.copyload.i, float 0.000000e+00 ; 4 uses
-  %9 = fmul <2 x float> %8, %8                    ; 2 uses
-  %shift667 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop668 = fadd <2 x float> %9, %shift667
-  %10 = extractelement <2 x float> %foldExtExtBinop668, i64 0
+  %9 = fmul float %4, %4
+  %10 = fmul float %6, %6
+  %11 = fadd float %9, %10
   %i.vr = fmul float %i.vl, %i.vl
-  %i.vs = fadd float %i.vr, %10                   ; 2 uses
+  %i.vs = fadd float %i.vr, %11                   ; 2 uses
   %i.vt = fcmp ogt float %i.vs, %i.ub
   br i1 %i.vt, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %bb.bo
   %i.vu = tail call float @sqrtf(float noundef %i.vs) #13
-  %i.vv = fdiv float %i.tx, %i.vu                 ; 2 uses
-  %i.vw = insertelement <2 x float> poison, float %i.vv, i64 0
-  %11 = shufflevector <2 x float> %i.vw, <2 x float> poison, <2 x i32> zeroinitializer
-  %12 = fmul <2 x float> %8, %11
+  %i.vv = fdiv float %i.tx, %i.vu                 ; 3 uses
+  %12 = fmul float %4, %i.vv
+  %i.vw = insertelement <2 x float> poison, float %12, i64 0
+  %13 = fmul float %6, %i.vv
+  %.sroa.05.4.vec.insert.i.i = insertelement <2 x float> %i.vw, float %13, i64 1
   %i.vx = fmul float %i.vl, %i.vv
   %i.vy = or i32 %i.vj, 256                       ; 2 uses
   store i32 %i.vy, ptr %i.vi, align 4, !tbaa !168
@@ -250,7 +256,7 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bp, %bb.bo
   %i.vz = phi i32 [ %i.vy, %bb.bp ], [ %i.vj, %bb.bo ] ; 2 uses
   %.sroa.12128.0.i = phi float [ %i.vx, %bb.bp ], [ %i.vl, %bb.bo ] ; 2 uses
-  %.sroa.0121.0.i = phi <2 x float> [ %12, %bb.bp ], [ %8, %bb.bo ] ; 2 uses
+  %.sroa.0121.0.i = phi <2 x float> [ %.sroa.05.4.vec.insert.i.i, %bb.bp ], [ %.sroa.0121.4.vec.insert.i, %bb.bo ] ; 2 uses
   %i.wa = fmul <2 x float> %i.vo, %i.vo           ; 2 uses
   %shift670 = shufflevector <2 x float> %i.wa, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop671 = fadd <2 x float> %i.wa, %shift670
@@ -653,16 +659,14 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ag, i64 198
   %i.bd = load i8, ptr %i.bc, align 2, !tbaa !156
-  %5 = and i8 %i.bd, 1
-  %6 = icmp eq i8 %5, 0
-  br i1 %6, label %bb.br, label %bb.q
+  %5 = trunc i8 %i.bd to i1
+  br i1 %5, label %bb.q, label %bb.br
 
 bb.q:                                             ; preds = %bb.p
   %i.be = getelementptr inbounds nuw i8, ptr %i.n, i64 198
   %i.bf = load i8, ptr %i.be, align 2, !tbaa !156
-  %7 = and i8 %i.bf, 1
-  %8 = icmp eq i8 %7, 0
-  br i1 %8, label %bb.br, label %bb.r
+  %6 = trunc i8 %i.bf to i1
+  br i1 %6, label %bb.r, label %bb.br
 
 bb.r:                                             ; preds = %bb.q, %bb.o
   %.sroa.5156.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 168

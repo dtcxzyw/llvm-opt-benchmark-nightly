@@ -202,9 +202,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i32, ptr %0, align 8, !tbaa !42
-  %1 = and i32 %i.b, 1
-  %.not = icmp eq i32 %1, 0
-  br i1 %.not, label %bb.d, label %bb.c
+  %.not = trunc i32 %i.b to i1
+  br i1 %.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str.3, i32 noundef 511) #8
@@ -607,7 +606,7 @@ bb.bf:                                            ; preds = %bb.a
   %i.gw = getelementptr inbounds nuw i8, ptr %3, i64 240
   %i.gx = load ptr, ptr %i.gw, align 8, !tbaa !31 ; 2 uses
   %.not.i112 = icmp eq ptr %i.c, null
-  br i1 %.not.i112, label %ossl_x509_crl_set0_libctx.exit, label %bb.bg
+  br i1 %.not.i112, label %ossl_x509_crl_set0_libctx.exit.thread, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
   %i.gy = getelementptr inbounds nuw i8, ptr %3, i64 232
@@ -619,17 +618,19 @@ bb.bg:                                            ; preds = %bb.bf
   tail call void @CRYPTO_free(ptr noundef %i.hc, ptr noundef nonnull @.str.3, i32 noundef 529) #8
   store ptr null, ptr %i.hb, align 8, !tbaa !31
   %.not11.i = icmp eq ptr %i.gx, null
-  br i1 %.not11.i, label %ossl_x509_crl_set0_libctx.exit, label %bb.bh
+  br i1 %.not11.i, label %ossl_x509_crl_set0_libctx.exit.thread, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.hd = tail call ptr @CRYPTO_strdup(ptr noundef nonnull %i.gx, ptr noundef nonnull @.str.3, i32 noundef 532) #8 ; 2 uses
   store ptr %i.hd, ptr %i.hb, align 8, !tbaa !31
-  %4 = icmp ne ptr %i.hd, null
-  %spec.select = zext i1 %4 to i32
+  %4 = icmp eq ptr %i.hd, null
+  br i1 %4, label %ossl_x509_crl_set0_libctx.exit, label %ossl_x509_crl_set0_libctx.exit.thread
+
+ossl_x509_crl_set0_libctx.exit.thread:            ; preds = %bb.bf, %bb.bg, %bb.bh
   br label %ossl_x509_crl_set0_libctx.exit
 
-ossl_x509_crl_set0_libctx.exit:                   ; preds = %bb.bh, %bb.a, %bb.e, %bb.ba, %bb.be, %bb.bf, %bb.bg, %crl_set_issuers.exit, %bb.bd, %bb.az, %bb.c
-  %.191 = phi i32 [ 0, %bb.bd ], [ 1, %bb.a ], [ 0, %crl_set_issuers.exit ], [ 0, %bb.c ], [ 0, %bb.az ], [ %spec.select, %bb.bh ], [ 1, %bb.bg ], [ 1, %bb.bf ], [ 1, %bb.be ], [ 1, %bb.ba ], [ 1, %bb.e ]
+ossl_x509_crl_set0_libctx.exit:                   ; preds = %bb.a, %bb.e, %bb.ba, %bb.be, %ossl_x509_crl_set0_libctx.exit.thread, %bb.bh, %crl_set_issuers.exit, %bb.bd, %bb.az, %bb.c
+  %.191 = phi i32 [ 0, %bb.bh ], [ 0, %bb.bd ], [ 0, %crl_set_issuers.exit ], [ 0, %bb.c ], [ 0, %bb.az ], [ 1, %ossl_x509_crl_set0_libctx.exit.thread ], [ 1, %bb.be ], [ 1, %bb.ba ], [ 1, %bb.e ], [ 1, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   ret i32 %.191
 }

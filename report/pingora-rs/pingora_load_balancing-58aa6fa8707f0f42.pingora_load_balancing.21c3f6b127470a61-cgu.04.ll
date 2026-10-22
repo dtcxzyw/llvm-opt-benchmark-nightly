@@ -202,8 +202,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsfsXztIhCltD_13pingora_error9immut_
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63)
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.c
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrECs2TJrahNLnPN_22pingora_load_balancing.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -606,8 +606,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6
 
 bb.h:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1S_4SyncEL_EEECs2TJrahNLnPN_22pingora_load_balancing.exit.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !236)
-  %0 = icmp eq i64 %i.p, 0
-  br i1 %0, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsfsXztIhCltD_13pingora_error5ErrorECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.i
+  %0 = trunc nuw i64 %i.p to i1
+  br i1 %0, label %bb.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsfsXztIhCltD_13pingora_error5ErrorECs2TJrahNLnPN_22pingora_load_balancing.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.r = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
@@ -1010,8 +1010,8 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2aw
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !18, !noundef !5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.d
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !445)
@@ -1414,8 +1414,8 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !539)
   %i.b = load i64, ptr %0, align 8, !range !18, !alias.scope !539, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %bb.d, label %bb.f
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !540)
@@ -1818,8 +1818,8 @@ _RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !608
   %i.j = load i64, ptr %1, align 8, !range !18, !alias.scope !609, !noundef !5
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNCNCINvMs_NtCskeugdADtBsi_12pingora_core10connectorsNtB2f_18TransportConnector10new_streamNtNtNtB2h_9upstreams4peer9BasicPeerE0s_0EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cs2TJrahNLnPN_22pingora_load_balancing.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1832,6 +1832,7 @@ bb.h:                                             ; preds = %bb.a, %_RINvNtCskKL
 bb.i:                                             ; preds = %bb.g
   %i.l = landingpad { ptr, i32 }
           cleanup
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -2234,8 +2235,8 @@ _RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !637
   %i.j = load i64, ptr %1, align 8, !range !18, !alias.scope !638, !noundef !5
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNCNCINvMs_NtCskeugdADtBsi_12pingora_core10connectorsNtB2f_18TransportConnector10new_streamNtNtNtB2h_9upstreams4peer9BasicPeerE0s_0EEINtNtB1B_4sync3ArcNtNtNtNtBb_9scheduler12multi_thread6handle6HandleEE11take_output0Cs2TJrahNLnPN_22pingora_load_balancing.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -2248,6 +2249,7 @@ bb.h:                                             ; preds = %bb.a, %_RINvNtCskKL
 bb.i:                                             ; preds = %bb.g
   %i.l = landingpad { ptr, i32 }
           cleanup
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -2650,8 +2652,8 @@ _RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreNCNCINvMs_NtCsk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !666
   %i.l = load i64, ptr %1, align 8, !range !18, !alias.scope !667, !noundef !5
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreNCNCINvMs_NtCskeugdADtBsi_12pingora_core10connectorsNtB1a_18TransportConnector10new_streamNtNtNtB1c_9upstreams4peer9BasicPeerE0s_0INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cs2TJrahNLnPN_22pingora_load_balancing.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -2664,6 +2666,7 @@ bb.i:                                             ; preds = %bb.a, %_RINvNtCskKL
 bb.j:                                             ; preds = %bb.h
   %i.n = landingpad { ptr, i32 }
           cleanup
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -3066,8 +3069,8 @@ _RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreNCNCINvMs_NtCsk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !695
   %i.l = load i64, ptr %1, align 8, !range !18, !alias.scope !696, !noundef !5
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCs2awuzAz5vY4_5tokio7runtime4task4coreINtB7_4CoreNCNCINvMs_NtCskeugdADtBsi_12pingora_core10connectorsNtB1a_18TransportConnector10new_streamNtNtNtB1c_9upstreams4peer9BasicPeerE0s_0INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtNtBb_9scheduler12multi_thread6handle6HandleEE11take_output0Cs2TJrahNLnPN_22pingora_load_balancing.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -3080,6 +3083,7 @@ bb.i:                                             ; preds = %bb.a, %_RINvNtCskKL
 bb.j:                                             ; preds = %bb.h
   %i.n = landingpad { ptr, i32 }
           cleanup
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 

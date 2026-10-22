@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruby/original/date_strptime?download=true
-inline.NumInlined: 153
+inline.NumInlined: 154
 inline.NumDeleted: 18
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 1
@@ -72,7 +72,7 @@ target triple = "x86_64-pc-linux-gnu"
 @date__strptime_internal.rbimpl_id.59 = internal unnamed_addr global i64 0, align 8
 @.str.60 = private unnamed_addr constant [5 x i8] c"yday\00", align 1
 @date__strptime_internal.rbimpl_id.61 = internal unnamed_addr global i64 0, align 8
-@date__strptime_internal.rbimpl_id.62 = internal global i64 0, align 8
+@date__strptime_internal.rbimpl_id.62 = internal unnamed_addr global i64 0, align 8
 @date__strptime_internal.rbimpl_id.63 = internal unnamed_addr global i64 0, align 8
 @.str.64 = private unnamed_addr constant [3 x i8] c"-@\00", align 1
 @date__strptime_internal.rbimpl_id.65 = internal unnamed_addr global i64 0, align 8
@@ -475,7 +475,7 @@ valid_range_p.exit:                               ; preds = %bb.am
   %i.ha = icmp eq i64 %i.gz, 0
   br i1 %i.ha, label %bb.an, label %valid_range_p.exit.thread
 
-valid_range_p.exit.thread:                        ; preds = %.split, %bb.am, %valid_range_p.exit
+valid_range_p.exit.thread:                        ; preds = %bb.am, %.split, %valid_range_p.exit
   %.pr.i1123 = load i64, ptr @date__strptime_internal.rbimpl_id.34, align 8, !tbaa !12 ; 2 uses
   %.not4.i1124 = icmp eq i64 %.pr.i1123, 0
   br i1 %.not4.i1124, label %.lr.ph.i1126, label %.thread1653
@@ -665,7 +665,7 @@ valid_range_p.exit1165:                           ; preds = %bb.bb
   %i.je = icmp eq i64 %i.jd, 0
   br i1 %i.je, label %bb.bc, label %valid_range_p.exit1165.thread
 
-valid_range_p.exit1165.thread:                    ; preds = %.split2379, %bb.bb, %valid_range_p.exit1165
+valid_range_p.exit1165.thread:                    ; preds = %bb.bb, %.split2379, %valid_range_p.exit1165
   %i.jf = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.43, ptr noundef @.str.2) #13
   br label %.critedge1028
 
@@ -810,7 +810,7 @@ valid_range_p.exit1206:                           ; preds = %bb.bn
   %i.km = icmp eq i64 %i.kl, 0
   br i1 %i.km, label %bb.bo, label %valid_range_p.exit1206.thread
 
-valid_range_p.exit1206.thread:                    ; preds = %.split2380, %bb.bn, %valid_range_p.exit1206
+valid_range_p.exit1206.thread:                    ; preds = %bb.bn, %.split2380, %valid_range_p.exit1206
   %.pr.i1207 = load i64, ptr @date__strptime_internal.rbimpl_id.51, align 8, !tbaa !12 ; 2 uses
   %.not4.i1208 = icmp eq i64 %.pr.i1207, 0
   br i1 %.not4.i1208, label %.lr.ph.i1210, label %.thread1679
@@ -920,7 +920,7 @@ valid_range_p.exit1235:                           ; preds = %bb.bx
   %i.ln = icmp eq i64 %i.lm, 0
   br i1 %i.ln, label %bb.by, label %valid_range_p.exit1235.thread
 
-valid_range_p.exit1235.thread:                    ; preds = %.split2381, %bb.bx, %valid_range_p.exit1235
+valid_range_p.exit1235.thread:                    ; preds = %bb.bx, %.split2381, %valid_range_p.exit1235
   %.pr.i1236 = load i64, ptr @date__strptime_internal.rbimpl_id.55, align 8, !tbaa !12 ; 2 uses
   %.not4.i1237 = icmp eq i64 %.pr.i1236, 0
   br i1 %.not4.i1237, label %.lr.ph.i1239, label %.thread1690
@@ -998,7 +998,7 @@ valid_range_p.exit1258:                           ; preds = %bb.cc
   %i.mg = icmp eq i64 %i.mf, 0
   br i1 %i.mg, label %.critedge1030, label %valid_range_p.exit1258.thread
 
-valid_range_p.exit1258.thread:                    ; preds = %.split2382, %bb.cc, %valid_range_p.exit1258
+valid_range_p.exit1258.thread:                    ; preds = %bb.cc, %.split2382, %valid_range_p.exit1258
   %i.mh = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.58, ptr noundef @.str.2) #13
   br label %.thread1693
 
@@ -1115,11 +1115,18 @@ num_pattern_p.exit1272:                           ; preds = %bb.cl, %bb.cj, %bb.
   %i.np = sub i64 %1, %.35801
   %i.nq = call fastcc i64 @read_digits(ptr noundef %i.no, i64 noundef %i.np, ptr noundef %i.h, i64 noundef 9223372036854775807) ; 2 uses
   %.not990 = icmp eq i64 %i.nq, 0
-  br i1 %.not990, label %.thread1702, label %bb.co
+  br i1 %.not990, label %5, label %bb.co
 
-.thread1702:                                      ; preds = %num_pattern_p.exit1272
-  %5 = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.62, ptr noundef @.str.2) #13
-  br label %.thread1705
+5:                                                ; preds = %num_pattern_p.exit1272
+  %.pr.i1279 = load i64, ptr @date__strptime_internal.rbimpl_id.62, align 8, !tbaa !12 ; 2 uses
+  %.not4.i1280 = icmp eq i64 %.pr.i1279, 0
+  br i1 %.not4.i1280, label %.thread1702, label %.thread1705
+
+.thread1702:                                      ; preds = %5, %.thread1702
+  %6 = tail call i64 @rb_intern2(ptr noundef nonnull @.str.2, i64 noundef 5) #10 ; 3 uses
+  store i64 %6, ptr @date__strptime_internal.rbimpl_id.62, align 8, !tbaa !12
+  %.not.i1283 = icmp eq i64 %6, 0
+  br i1 %.not.i1283, label %.thread1702, label %.thread1705, !llvm.loop !0
 
 bb.co:                                            ; preds = %num_pattern_p.exit1272, %bb.cm
   %.pn1768 = phi i64 [ %i.nm, %bb.cm ], [ %i.nq, %num_pattern_p.exit1272 ] ; 4 uses
@@ -1183,8 +1190,8 @@ bb.cs:                                            ; preds = %rbimpl_intern_const
   %i.ob = tail call i64 @rb_uint2big(i64 noundef %.pn1768) #10
   br label %bb.ct
 
-.thread1705:                                      ; preds = %.lr.ph.i1276, %bb.cn, %.thread1702
-  %.lcssa.i1275.sink = phi i64 [ %5, %.thread1702 ], [ %.pr.i1273, %bb.cn ], [ %i.nn, %.lr.ph.i1276 ]
+.thread1705:                                      ; preds = %.lr.ph.i1276, %.thread1702, %5, %bb.cn
+  %.lcssa.i1275.sink = phi i64 [ %6, %.thread1702 ], [ %.pr.i1273, %bb.cn ], [ %.pr.i1279, %5 ], [ %i.nn, %.lr.ph.i1276 ]
   %i.oc = tail call i64 @rb_id2sym(i64 noundef %.lcssa.i1275.sink) #10
   %i.od = tail call i64 @rb_hash_aset(i64 noundef %4, i64 noundef %i.oc, i64 noundef 20) #10 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #10
@@ -1239,7 +1246,7 @@ valid_range_p.exit1308:                           ; preds = %bb.cx
   %i.os = icmp eq i64 %i.or, 0
   br i1 %i.os, label %.critedge1032, label %valid_range_p.exit1308.thread
 
-valid_range_p.exit1308.thread:                    ; preds = %.split2383, %bb.cx, %valid_range_p.exit1308
+valid_range_p.exit1308.thread:                    ; preds = %bb.cx, %.split2383, %valid_range_p.exit1308
   %i.ot = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.70, ptr noundef @.str.2) #13
   br label %.thread1708
 
@@ -1310,7 +1317,7 @@ valid_range_p.exit1325:                           ; preds = %bb.db
   %i.pl = icmp eq i64 %i.pk, 0
   br i1 %i.pl, label %.critedge1034, label %valid_range_p.exit1325.thread
 
-valid_range_p.exit1325.thread:                    ; preds = %.split2384, %bb.db, %valid_range_p.exit1325
+valid_range_p.exit1325.thread:                    ; preds = %bb.db, %.split2384, %valid_range_p.exit1325
   %i.pm = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.74, ptr noundef @.str.2) #13
   br label %.thread1713
 
@@ -1634,7 +1641,7 @@ valid_range_p.exit1402:                           ; preds = %bb.dz
   %i.sz = icmp eq i64 %i.sy, 0
   br i1 %i.sz, label %.critedge1038, label %valid_range_p.exit1402.thread
 
-valid_range_p.exit1402.thread:                    ; preds = %.split2385, %bb.dz, %valid_range_p.exit1402
+valid_range_p.exit1402.thread:                    ; preds = %bb.dz, %.split2385, %valid_range_p.exit1402
   %i.ta = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.92, ptr noundef @.str.2) #13
   br label %.thread1724
 
@@ -1791,7 +1798,7 @@ valid_range_p.exit1443:                           ; preds = %bb.ej
   %i.up = icmp eq i64 %i.uo, 0
   br i1 %i.up, label %.critedge1043, label %valid_range_p.exit1443.thread
 
-valid_range_p.exit1443.thread:                    ; preds = %.split2386, %bb.ej, %valid_range_p.exit1443
+valid_range_p.exit1443.thread:                    ; preds = %bb.ej, %.split2386, %valid_range_p.exit1443
   %i.uq = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.101, ptr noundef @.str.2) #13
   br label %.thread1731.a
 
@@ -1853,7 +1860,7 @@ valid_range_p.exit1454:                           ; preds = %bb.en
   %i.vk = icmp eq i64 %i.vj, 0
   br i1 %i.vk, label %.critedge1045, label %valid_range_p.exit1454.thread
 
-valid_range_p.exit1454.thread:                    ; preds = %.split2387, %bb.en, %valid_range_p.exit1454
+valid_range_p.exit1454.thread:                    ; preds = %bb.en, %.split2387, %valid_range_p.exit1454
   %i.vl = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.106, ptr noundef @.str.2) #13
   br label %.thread1736
 
@@ -1924,7 +1931,7 @@ valid_range_p.exit1471:                           ; preds = %bb.er
   %i.wd = icmp eq i64 %i.wc, 0
   br i1 %i.wd, label %.critedge1047, label %valid_range_p.exit1471.thread
 
-valid_range_p.exit1471.thread:                    ; preds = %.split2388, %bb.er, %valid_range_p.exit1471
+valid_range_p.exit1471.thread:                    ; preds = %bb.er, %.split2388, %valid_range_p.exit1471
   %i.we = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.110, ptr noundef @.str.2) #13
   br label %.thread1741
 
@@ -2016,7 +2023,7 @@ valid_range_p.exit1494:                           ; preds = %bb.ew
   %i.xd = icmp eq i64 %i.xc, 0
   br i1 %i.xd, label %.critedge1049, label %valid_range_p.exit1494.thread
 
-valid_range_p.exit1494.thread:                    ; preds = %.split2389, %bb.ew, %valid_range_p.exit1494
+valid_range_p.exit1494.thread:                    ; preds = %bb.ew, %.split2389, %valid_range_p.exit1494
   %i.xe = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.116, ptr noundef @.str.2) #13
   br label %.thread1746
 
@@ -2257,7 +2264,7 @@ valid_range_p.exit1543:                           ; preds = %bb.fp
   %i.zw = icmp eq i64 %i.zv, 0
   br i1 %i.zw, label %bb.fq, label %valid_range_p.exit1543.thread
 
-valid_range_p.exit1543.thread:                    ; preds = %.split2390, %bb.fp, %valid_range_p.exit1543
+valid_range_p.exit1543.thread:                    ; preds = %bb.fp, %.split2390, %valid_range_p.exit1543
   %i.zx = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @date__strptime_internal.rbimpl_id.125, ptr noundef @.str.2) #13
   br label %.critedge1051
 
@@ -2647,9 +2654,9 @@ bb.c:                                             ; preds = %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.033
   %i.c = load i8, ptr %i.b, align 1, !tbaa !14
   %i.d = sext i8 %i.c to i32
-  %i.e = add nsw i32 %i.d, -58
-  %i.f = icmp ult i32 %i.e, -10
-  br i1 %i.f, label %.critedge, label %bb.d
+  %i.e = add nsw i32 %i.d, -48
+  %i.f = icmp ult i32 %i.e, 10
+  br i1 %i.f, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.g = add nuw nsw i64 %.033, 1                 ; 2 uses

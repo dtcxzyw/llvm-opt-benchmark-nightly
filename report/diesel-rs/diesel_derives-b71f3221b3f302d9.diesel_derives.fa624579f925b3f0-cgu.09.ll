@@ -202,10 +202,10 @@ bb.g:                                             ; preds = %bb.f
   %.val7.i = load i64, ptr %0, align 8, !range !33, !alias.scope !659, !noundef !16
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val8.i = load ptr, ptr %i.p, align 8, !alias.scope !659 ; 2 uses
-  %1 = icmp eq i64 %.val7.i, 0
-  %2 = icmp eq ptr %.val8.i, null
-  %or.cond.i2 = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i2, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiEECsluMP4ekZjHw_14diesel_derives.exit4, label %bb.h
+  %1 = trunc nuw i64 %.val7.i to i1
+  %2 = icmp ne ptr %.val8.i, null
+  %or.cond.i2 = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond.i2, label %bb.h, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiEECsluMP4ekZjHw_14diesel_derives.exit4
 
 bb.h:                                             ; preds = %bb.g
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtCshMFl0SviwmK_3syn3lit7LitReprEECsluMP4ekZjHw_14diesel_derives(ptr nonnull %.val8.i)
@@ -215,10 +215,10 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_
   %.val.i = phi i64 [ %.val.i.pre, %._RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesEECsluMP4ekZjHw_14diesel_derives.exit_crit_edge ], [ %i.a, %bb.e ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val6.i = load ptr, ptr %i.q, align 8, !alias.scope !659 ; 2 uses
-  %3 = icmp eq i64 %.val.i, 0
-  %4 = icmp eq ptr %.val6.i, null
-  %or.cond.i = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiEECsluMP4ekZjHw_14diesel_derives.exit, label %bb.i
+  %3 = trunc nuw i64 %.val.i to i1
+  %4 = icmp ne ptr %.val6.i, null
+  %or.cond.i = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond.i, label %bb.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiEECsluMP4ekZjHw_14diesel_derives.exit
 
 bb.i:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesEECsluMP4ekZjHw_14diesel_derives.exit
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtCshMFl0SviwmK_3syn3lit7LitReprEECsluMP4ekZjHw_14diesel_derives(ptr nonnull %.val6.i)
@@ -621,10 +621,10 @@ bb.a:
   %.val = load i64, ptr %0, align 8, !range !33, !noundef !16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val8 = load ptr, ptr %i.a, align 8            ; 2 uses
-  %1 = icmp eq i64 %.val, 0
-  %2 = icmp eq ptr %.val8, null
-  %or.cond.i = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiEECsluMP4ekZjHw_14diesel_derives.exit, label %bb.b
+  %1 = trunc nuw i64 %.val to i1
+  %2 = icmp ne ptr %.val8, null
+  %or.cond.i = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond.i, label %bb.b, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiEECsluMP4ekZjHw_14diesel_derives.exit
 
 bb.b:                                             ; preds = %bb.a
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtCshMFl0SviwmK_3syn3lit7LitReprEECsluMP4ekZjHw_14diesel_derives(ptr nonnull %.val8)
@@ -1027,7 +1027,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 224
   %i.o = load <2 x i32>, ptr %i.n, align 8
   %.sroa.014.0.copyload = load i64, ptr %2, align 8
-  %i.p = trunc nuw i64 %.sroa.014.0.copyload to i1 ; 2 uses
+  %i.p = trunc nuw i64 %.sroa.014.0.copyload to i1
   br i1 %i.p, label %bb.b, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiE3mapBI_NCINvNtNtBM_3gen4fold14fold_signatureINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB1X_17derive_belongs_to0EE0EB1Z_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -1046,7 +1046,7 @@ bb.b:                                             ; preds = %bb.a
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiE3mapBI_NCINvNtNtBM_3gen4fold14fold_signatureINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB1X_17derive_belongs_to0EE0EB1Z_.exit: ; preds = %.noexc, %bb.a
   %.sroa.3.0 = phi ptr [ %i.r, %.noexc ], [ undef, %bb.a ] ; 3 uses
   %.sroa.5.0 = phi i32 [ %i.s, %.noexc ], [ undef, %bb.a ]
-  %storemerge.i = phi i64 [ 1, %.noexc ], [ 0, %bb.a ]
+  %storemerge.i = phi i64 [ 1, %.noexc ], [ 0, %bb.a ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 272
   %i.u = load i32, ptr %i.t, align 8, !noundef !16
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 232
@@ -1060,8 +1060,9 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsf5uYjtxkodL_11proc_macro25IdentECslu
   %.sroa.02.1 = phi i1 [ true, %bb.d ], [ %.sroa.02.2, %bb.f ], [ %.sroa.02.2, %bb.g ], [ %.sroa.02.2, %bb.h ] ; 2 uses
   %.sroa.01.1 = phi i1 [ true, %bb.d ], [ %.sroa.01.2, %bb.f ], [ %.sroa.01.2, %bb.g ], [ %.sroa.01.2, %bb.h ] ; 2 uses
   %.sroa.0.1 = phi i1 [ true, %bb.d ], [ %.sroa.0.2, %bb.f ], [ %.sroa.0.2, %bb.g ], [ %.sroa.0.2, %bb.h ] ; 2 uses
+  %3 = trunc nuw i64 %storemerge.i to i1
   %i.w = icmp ne ptr %.sroa.3.0, null
-  %or.cond.i.not = select i1 %i.p, i1 %i.w, i1 false
+  %or.cond.i.not = select i1 %3, i1 %i.w, i1 false
   br i1 %or.cond.i.not, label %bb.c, label %.noexc12
 
 bb.c:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsf5uYjtxkodL_11proc_macro25IdentECsluMP4ekZjHw_14diesel_derives.exit
@@ -1464,7 +1465,7 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn8generics14
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 184
   %i.l = load <2 x i32>, ptr %i.k, align 8
   %.sroa.024.0.copyload = load i64, ptr %2, align 8
-  %i.m = trunc nuw i64 %.sroa.024.0.copyload to i1 ; 2 uses
+  %i.m = trunc nuw i64 %.sroa.024.0.copyload to i1
   br i1 %i.m, label %bb.d, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB20_17derive_belongs_to0EEs_0EB22_.exit
 
 bb.d:                                             ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB2i_17derive_belongs_to0EE0EB2k_.exit
@@ -1501,7 +1502,7 @@ bb.f:                                             ; preds = %bb.d
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB20_17derive_belongs_to0EEs_0EB22_.exit: ; preds = %.noexc12, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB2i_17derive_belongs_to0EE0EB2k_.exit
   %.sroa.323.0 = phi ptr [ %i.o, %.noexc12 ], [ undef, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB2i_17derive_belongs_to0EE0EB2k_.exit ] ; 3 uses
   %.sroa.5.0 = phi i32 [ %i.p, %.noexc12 ], [ undef, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB2i_17derive_belongs_to0EE0EB2k_.exit ]
-  %storemerge.i = phi i64 [ 1, %.noexc12 ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB2i_17derive_belongs_to0EE0EB2k_.exit ]
+  %storemerge.i = phi i64 [ 1, %.noexc12 ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtCshMFl0SviwmK_3syn8generics14BoundLifetimesE3mapBI_NCINvNtNtBM_3gen4fold17fold_type_bare_fnINtNtCsluMP4ekZjHw_14diesel_derives12associations20ReplacePathLifetimesNCNvB2i_17derive_belongs_to0EE0EB2k_.exit ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 208
   %i.u = load i32, ptr %i.t, align 8, !noundef !16
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 212
@@ -1515,8 +1516,9 @@ bb.g:                                             ; preds = %bb.m, %bb.i
   %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.m ], [ %i.y, %bb.i ] ; 2 uses
   %.sroa.01.2 = phi i1 [ false, %bb.m ], [ true, %bb.i ] ; 2 uses
   %.sroa.0.2 = phi i1 [ %.sroa.0.3, %bb.m ], [ true, %bb.i ] ; 2 uses
+  %3 = trunc nuw i64 %storemerge.i to i1
   %i.x = icmp ne ptr %.sroa.323.0, null
-  %or.cond.i.not = select i1 %i.m, i1 %i.x, i1 false
+  %or.cond.i.not = select i1 %3, i1 %i.x, i1 false
   br i1 %or.cond.i.not, label %bb.h, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshMFl0SviwmK_3syn2ty3AbiEECsluMP4ekZjHw_14diesel_derives.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -1612,10 +1614,10 @@ bb.r:                                             ; preds = %bb.b
   %.val = load i64, ptr %2, align 8, !range !33, !noundef !16
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.val9 = load ptr, ptr %i.am, align 8           ; 2 uses
-  %3 = icmp eq i64 %.val, 0
-  %4 = icmp eq ptr %.val9, null
-  %or.cond.i17 = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond.i17, label %.noexc13.thread, label %bb.s
+  %4 = trunc nuw i64 %.val to i1
+  %5 = icmp ne ptr %.val9, null
+  %or.cond.i17 = select i1 %4, i1 %5, i1 false
+  br i1 %or.cond.i17, label %bb.s, label %.noexc13.thread
 
 bb.s:                                             ; preds = %bb.r
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtCshMFl0SviwmK_3syn3lit7LitReprEECsluMP4ekZjHw_14diesel_derives(ptr nonnull %.val9)

@@ -202,15 +202,15 @@ bb.a:
   %.not = icmp eq i8 %i.c, 2
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.e = load i32, ptr %i.d, align 8, !range !21, !noundef !6
-  %.not54 = icmp eq i32 %i.e, 0
+  %2 = trunc nuw i32 %i.e to i1
   %i.f = load i64, ptr %0, align 8, !range !5, !noundef !6
-  %.not55 = icmp eq i64 %i.f, 0
+  %3 = trunc nuw i64 %i.f to i1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 190 ; 2 uses
   %i.h = load i8, ptr %i.g, align 2, !range !22, !noundef !6
   %.not56.a = icmp eq i8 %i.h, -2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.j = load i64, ptr %i.i, align 8, !range !5, !noundef !6
-  %.not57 = icmp eq i64 %i.j, 0
+  %4 = trunc nuw i64 %i.j to i1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !292)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !293)
   %.val.i.i = load ptr, ptr %1, align 8, !alias.scope !294, !nonnull !6, !align !12, !noundef !6
@@ -250,7 +250,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not63.a, label %bb.g, label %_RNvXs7_NtCs8O45qwFIwQX_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct3endCsPYQCUnoTxQ_10collection.exit
 
 bb.g:                                             ; preds = %bb.f
-  br i1 %.not54, label %bb.i, label %bb.h
+  br i1 %2, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.u = call noundef align 8 ptr @_RINvYINtNtCs8O45qwFIwQX_10serde_json3ser8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser12SerializeMap15serialize_entryeINtNtCskKLDkoKarTP_4core6option6OptionmEECsPYQCUnoTxQ_10collection(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 19, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.d) ; 2 uses
@@ -258,7 +258,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not65.a, label %bb.i, label %_RNvXs7_NtCs8O45qwFIwQX_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct3endCsPYQCUnoTxQ_10collection.exit
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  br i1 %.not55, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.v = call noundef align 8 ptr @_RINvYINtNtCs8O45qwFIwQX_10serde_json3ser8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser12SerializeMap15serialize_entryeINtNtCskKLDkoKarTP_4core6option6OptionyEECsPYQCUnoTxQ_10collection(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 21, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) ; 2 uses
@@ -280,7 +280,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not70, label %bb.n, label %_RNvXs7_NtCs8O45qwFIwQX_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct3endCsPYQCUnoTxQ_10collection.exit
 
 bb.n:                                             ; preds = %bb.l, %bb.m
-  br i1 %.not57, label %bb.p, label %bb.o
+  br i1 %4, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.z = call noundef align 8 ptr @_RINvYINtNtCs8O45qwFIwQX_10serde_json3ser8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser12SerializeMap15serialize_entryeINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtNtBR_11collections5btree3map8BTreeMapNtNtBR_6string6StringNtNtNtCsPYQCUnoTxQ_10collection10operations5types18SparseVectorParamsEEEB4y_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @19, i64 noundef 14, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i) ; 2 uses
@@ -683,7 +683,7 @@ bb.e:                                             ; preds = %.thread, %bb.c, %bb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ac = load i64, ptr %i.ab, align 8, !range !5, !noundef !6
-  %i.ad = trunc nuw i64 %i.ac to i1               ; 2 uses
+  %i.ad = trunc nuw i64 %i.ac to i1
   br i1 %i.ad, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -693,7 +693,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %i.ag = phi i64 [ 1, %bb.f ], [ 0, %bb.e ]
+  %i.ag = phi i64 [ 1, %bb.f ], [ 0, %bb.e ]      ; 2 uses
   store i64 %i.ag, ptr %i.b, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ai = load i64, ptr %i.ah, align 8, !range !28, !noundef !6 ; 3 uses
@@ -764,7 +764,8 @@ bb.p:                                             ; preds = %bb.l
 bb.q:                                             ; preds = %bb.h
   %i.ax = landingpad { ptr, i32 }
           cleanup
-  br i1 %i.ad, label %bb.r, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map8BTreeMapNtNtB16_6string6StringNtNtNtCsPYQCUnoTxQ_10collection10operations5types18SparseVectorParamsEEEB2o_.exit
+  %3 = trunc nuw i64 %i.ag to i1
+  br i1 %3, label %bb.r, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map8BTreeMapNtNtB16_6string6StringNtNtNtCsPYQCUnoTxQ_10collection10operations5types18SparseVectorParamsEEEB2o_.exit
 
 bb.r:                                             ; preds = %bb.q
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 8

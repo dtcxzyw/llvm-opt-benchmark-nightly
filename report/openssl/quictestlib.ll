@@ -204,8 +204,8 @@ bb.v:                                             ; preds = %bb.t, %bb.s
 
 bb.w:                                             ; preds = %bb.v
   %i.av = call i32 @qtest_wait_for_timeout(ptr noundef %1, ptr noundef %.0)
-  %.not97 = icmp eq i32 %i.av, 0
-  br i1 %.not97, label %.loopexit, label %bb.x
+  %.not97 = trunc nuw i32 %i.av to i1
+  br i1 %.not97, label %bb.x, label %.loopexit
 
 bb.x:                                             ; preds = %bb.v, %bb.w
   br i1 %or.cond11, label %bb.y, label %.critedge.backedge
@@ -603,7 +603,6 @@ bb.c:                                             ; preds = %._crit_edge
   br i1 %.not60, label %._crit_edge59, label %.lr.ph58.preheader
 
 .lr.ph58.preheader:                               ; preds = %bb.c
-  %xtraiter = and i64 %2, 1
   %i.ag = icmp eq i64 %2, 1
   br i1 %i.ag, label %.lr.ph58.epil.preheader, label %.lr.ph58.preheader.new
 
@@ -634,8 +633,8 @@ bb.c:                                             ; preds = %._crit_edge
   br i1 %niter.ncmp.1, label %._crit_edge59.loopexit.unr-lcssa, label %.lr.ph58, !llvm.loop !93
 
 ._crit_edge59.loopexit.unr-lcssa:                 ; preds = %.lr.ph58
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge59, label %.lr.ph58.epil.preheader
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph58.epil.preheader, label %._crit_edge59
 
 .lr.ph58.epil.preheader:                          ; preds = %._crit_edge59.loopexit.unr-lcssa, %.lr.ph58.preheader
   %.056.epil.init = phi ptr [ %i.ad, %.lr.ph58.preheader ], [ %i.ar, %._crit_edge59.loopexit.unr-lcssa ]
@@ -740,7 +739,7 @@ bb.e:                                             ; preds = %bb.b
   tail call void (ptr, i32, ptr, ...) @test_info(ptr noundef nonnull @.str, i32 noundef 934, ptr noundef nonnull @.str.40, i64 noundef %i.g, i64 noundef %2) #10
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.d, %bb.c
+bb.f:                                             ; preds = %bb.c, %bb.d
   store i64 %i.h, ptr %i.f, align 8, !tbaa !46
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i64 %i.h, ptr %i.l, align 8, !tbaa !49
@@ -873,7 +872,7 @@ bb.k:                                             ; preds = %._crit_edge, %bb.i
   store i64 %i.aj, ptr %3, align 8, !tbaa !35
   br label %PACKET_buf_init.exit.thread
 
-PACKET_buf_init.exit.thread:                      ; preds = %bb.c, %bb.b, %bb.h, %bb.j, %bb.d, %bb.a, %bb.k
+PACKET_buf_init.exit.thread:                      ; preds = %bb.h, %bb.c, %bb.b, %bb.j, %bb.d, %bb.a, %bb.k
   %.1 = phi i32 [ 0, %bb.j ], [ 0, %bb.a ], [ 0, %bb.h ], [ 1, %bb.k ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
   ret i32 %.1
 }
@@ -948,7 +947,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.k, i8 0, i64 %i.l, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.b, %bb.c
   store i64 %i.a, ptr %i.b, align 8, !tbaa !52
   %i.m = lshr i64 %1, 16
   %i.n = trunc i64 %i.m to i8
@@ -1102,8 +1101,8 @@ bb.p:                                             ; preds = %bb.o
   %i.be = load i64, ptr %i.b, align 8, !tbaa !52  ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !53
-  %6 = icmp ugt i64 %i.bd, %i.bg
-  br i1 %6, label %PACKET_buf_init.exit.thread, label %bb.q
+  %6 = icmp ule i64 %i.bd, %i.bg                  ; 2 uses
+  br i1 %6, label %bb.q, label %qtest_fault_resize_message.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.bh = icmp ugt i64 %i.bd, %i.be
@@ -1117,7 +1116,7 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.memset.p0.i64(ptr align 1 %i.bk, i8 0, i64 %i.bl, i1 false)
   br label %qtest_fault_resize_message.exit.a
 
-qtest_fault_resize_message.exit.a:                ; preds = %bb.q, %bb.r
+qtest_fault_resize_message.exit.a:                ; preds = %bb.r, %bb.q
   store i64 %i.bd, ptr %i.b, align 8, !tbaa !52
   %i.bm = lshr i64 %i.bc, 16
   %i.bn = trunc i64 %i.bm to i8
@@ -1134,10 +1133,14 @@ qtest_fault_resize_message.exit.a:                ; preds = %bb.q, %bb.r
   %i.bw = load ptr, ptr %i.bo, align 8, !tbaa !43
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 3
   store i8 %i.bv, ptr %i.bx, align 1, !tbaa !40
+  br label %qtest_fault_resize_message.exit
+
+qtest_fault_resize_message.exit:                  ; preds = %bb.p, %qtest_fault_resize_message.exit.a
+  %. = zext i1 %6 to i32
   br label %PACKET_buf_init.exit.thread
 
-PACKET_buf_init.exit.thread:                      ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %qtest_fault_resize_message.exit.a, %bb.p, %bb.o, %bb.h, %bb.k
-  %.0 = phi i32 [ 0, %bb.h ], [ 0, %bb.o ], [ 1, %qtest_fault_resize_message.exit.a ], [ 0, %bb.k ], [ 0, %bb.b ], [ 0, %bb.a ], [ 0, %bb.p ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ]
+PACKET_buf_init.exit.thread:                      ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %qtest_fault_resize_message.exit, %bb.o, %bb.h, %bb.k
+  %.0 = phi i32 [ 0, %bb.h ], [ 0, %bb.o ], [ %., %qtest_fault_resize_message.exit ], [ 0, %bb.k ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   ret i32 %.0

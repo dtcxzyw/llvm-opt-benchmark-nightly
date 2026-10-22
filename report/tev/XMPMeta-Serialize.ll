@@ -204,7 +204,7 @@ bb.cd:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, i8 0, i64 24, i1 false)
   %i.vb = and i32 %2, 1
-  %i.vc = icmp eq i32 %i.vb, 0                    ; 7 uses
+  %i.vc = icmp eq i32 %i.vb, 0                    ; 6 uses
   %i.vd = and i32 %2, 2
   %.not198 = icmp eq i32 %i.vd, 0
   br i1 %.not198, label %bb.cv, label %bb.ce
@@ -493,7 +493,8 @@ bb.cv:                                            ; preds = %bb.cd
   %i.aav = getelementptr inbounds nuw i8, ptr %15, i64 5
   store i8 0, ptr %i.aav, align 1, !tbaa !18
   %i.aaw = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 5 uses
-  br i1 %i.vc, label %bb.cx, label %bb.cw
+  %.not199 = trunc i32 %2 to i1
+  br i1 %.not199, label %bb.cw, label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cv
   store <4 x i8> <i8 32, i8 0, i8 0, i8 0>, ptr %i.aau, align 1, !tbaa !18
@@ -896,9 +897,9 @@ bb.ag:                                            ; preds = %_ZL16CanBeRDFAttrPr
   %.3174.ph = phi i8 [ %.1172, %bb.ag ], [ 1, %_ZL16CanBeRDFAttrPropPK8XMP_Node.exit216.thread ], [ 1, %bb.af ]
   %.3.ph = phi i8 [ %.1, %bb.ag ], [ 1, %_ZL16CanBeRDFAttrPropPK8XMP_Node.exit216.thread ], [ 1, %bb.af ] ; 2 uses
   %i.kb = trunc nuw i8 %.3174.ph to i1
-  %i.kc = and i8 %.0182.lcssa291, %.3.ph
-  %or.cond.not = icmp eq i8 %i.kc, 0
-  br i1 %or.cond.not, label %bb.ai, label %bb.ah
+  %i.kc = and i8 %.3.ph, %.0182.lcssa291
+  %or.cond = trunc nuw i8 %i.kc to i1
+  br i1 %or.cond, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %.thread
   %i.kd = call ptr @__cxa_allocate_exception(i64 24) #17 ; 4 uses

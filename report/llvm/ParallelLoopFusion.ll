@@ -204,7 +204,7 @@ _ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit: ; preds = %_ZN4llvm
 
 .lr.ph:                                           ; preds = %_ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit.thread
   %.sroa.0144.0220 = phi ptr [ %.sroa.0144.0, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit.thread ], [ %.sroa.0144.0217, %_ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit ] ; 2 uses
-  %.031219 = phi i1 [ %.3, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit.thread ], [ true, %_ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit ] ; 2 uses
+  %.031219 = phi i8 [ %.3, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit.thread ], [ 1, %_ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit ] ; 2 uses
   %i.fl = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.0144.0220) #19 ; 6 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.fm, align 8, !tbaa !32
@@ -214,7 +214,8 @@ _ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit: ; preds = %_ZN4llvm
   br i1 %i.fp, label %bb.i, label %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit
 
 bb.i:                                             ; preds = %.lr.ph
-  br i1 %.031219, label %bb.j, label %bb.m
+  %46 = trunc nuw i8 %.031219 to i1
+  br i1 %46, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
   %i.fq = load ptr, ptr %43, align 8, !tbaa !26
@@ -366,11 +367,12 @@ bb.s:                                             ; preds = %_ZN4llvm23SmallVect
   %i.hr = load i32, ptr %i.hq, align 4
   %i.hs = and i32 %i.hr, 8388607
   %i.ht = icmp eq i32 %i.hs, 0
-  %46 = and i1 %.031219, %i.ht
+  %47 = and i8 %.031219, 1
+  %48 = select i1 %i.ht, i8 %47, i8 0
   br label %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit.thread
 
 _ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit.thread: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit, %bb.s, %_ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit51, %bb.k, %bb.l
-  %.3 = phi i1 [ true, %_ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit51 ], [ true, %bb.l ], [ true, %bb.k ], [ false, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit ], [ %46, %bb.s ]
+  %.3 = phi i8 [ 1, %_ZN4llvm11SmallVectorIN4mlir3scf10ParallelOpELj6EED2Ev.exit51 ], [ 1, %bb.l ], [ 1, %bb.k ], [ 0, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE9push_backES3_.exit ], [ %48, %bb.s ]
   %i.hu = getelementptr inbounds nuw i8, ptr %.sroa.0144.0220, i64 8
   %.sroa.0144.0 = load ptr, ptr %i.hu, align 8, !tbaa !24 ; 2 uses
   %.not183 = icmp eq ptr %.sroa.0144.0, %i.fg

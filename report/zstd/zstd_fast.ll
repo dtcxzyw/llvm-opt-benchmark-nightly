@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.bd, %bb.d
   %i.ce = lshr i32 %i.cd, %i.bg                   ; 2 uses
   store i32 %.0270.i.i, ptr %.0272.i.in.i, align 4, !tbaa !22
   %i.cf = sub i32 %.reass.i.reass.reass.reass, %i.n
-  %5 = icmp ugt i32 %i.cf, -4
-  br i1 %5, label %bb.r, label %bb.f
+  %5 = icmp ult i32 %i.cf, -3
+  br i1 %5, label %bb.f, label %bb.r
 
 bb.f:                                             ; preds = %bb.e
   %i.cg = icmp ult i32 %.reass.i.reass.reass.reass, %i.n ; 2 uses
@@ -452,7 +452,7 @@ ZSTD_storeSeq.exit358.i.i:                        ; preds = %bb.k, %.lr.ph.i.i.p
   store ptr %i.fl, ptr %i.bi, align 8, !tbaa !35
   %i.fm = icmp ugt i64 %i.cx, 65535
   %.pre240.i.a = load ptr, ptr %i.bl, align 8, !tbaa !40 ; 3 uses
-  br i1 %i.fm, label %bb.p, label %bb.q, !prof !41
+  br i1 %i.fm, label %bb.p, label %bb.q, !prof !143
 
 bb.p:                                             ; preds = %ZSTD_storeSeq.exit358.i.i
   store i32 1, ptr %i.bk, align 8, !tbaa !42
@@ -855,8 +855,8 @@ bb.bf:                                            ; preds = %bb.bk, %bb.be
   %.v.i = select i1 %i.qh, ptr %i.bs, ptr %i.k
   %i.qj = getelementptr inbounds nuw i8, ptr %.v.i, i64 %i.qi ; 2 uses
   %i.qk = sub i32 %i.qg, %i.n
-  %6 = icmp ugt i32 %i.qk, -4
-  br i1 %6, label %.thread122.i, label %bb.bg
+  %6 = icmp ult i32 %i.qk, -3
+  br i1 %6, label %bb.bg, label %.thread122.i
 
 bb.bg:                                            ; preds = %bb.bf
   %.val4.i = load i32, ptr %i.qj, align 1, !tbaa !22
@@ -1012,8 +1012,8 @@ bb.bo:                                            ; preds = %bb.dn, %bb.bn
   %i.sv = lshr i64 %i.su, %i.rx                   ; 2 uses
   store i32 %.0270.i.i50, ptr %.0272.i.in.i46, align 4, !tbaa !22
   %i.sw = sub i32 %.reass.i53.reass.reass.reass, %i.n
-  %7 = icmp ugt i32 %i.sw, -4
-  br i1 %7, label %bb.cb, label %bb.bp
+  %7 = icmp ult i32 %i.sw, -3
+  br i1 %7, label %bb.bp, label %bb.cb
 
 bb.bp:                                            ; preds = %bb.bo
   %i.sx = icmp ult i32 %.reass.i53.reass.reass.reass, %i.n ; 2 uses
@@ -1259,7 +1259,7 @@ ZSTD_storeSeq.exit358.i.i224:                     ; preds = %bb.bu, %.lr.ph.i.i2
   store ptr %i.wc, ptr %i.rz, align 8, !tbaa !35
   %i.wd = icmp ugt i64 %i.to, 65535
   %.pre240.i225 = load ptr, ptr %i.sc, align 8, !tbaa !40 ; 3 uses
-  br i1 %i.wd, label %bb.bz, label %bb.ca, !prof !41
+  br i1 %i.wd, label %bb.bz, label %bb.ca, !prof !143
 
 bb.bz:                                            ; preds = %ZSTD_storeSeq.exit358.i.i224
   store i32 1, ptr %i.sb, align 8, !tbaa !42
@@ -1662,8 +1662,8 @@ bb.dp:                                            ; preds = %bb.du, %bb.do
   %.v.i102 = select i1 %i.agw, ptr %i.sj, ptr %i.k
   %i.agy = getelementptr inbounds nuw i8, ptr %.v.i102, i64 %i.agx ; 2 uses
   %i.agz = sub i32 %i.agv, %i.n
-  %8 = icmp ugt i32 %i.agz, -4
-  br i1 %8, label %.thread122.i105, label %bb.dq
+  %8 = icmp ult i32 %i.agz, -3
+  br i1 %8, label %bb.dq, label %.thread122.i105
 
 bb.dq:                                            ; preds = %bb.dp
   %.val4.i103 = load i32, ptr %i.agy, align 1, !tbaa !22
@@ -1818,8 +1818,8 @@ bb.dy:                                            ; preds = %bb.fx, %bb.dx
   %i.ajj = lshr i64 %i.aji, %i.ail                ; 2 uses
   store i32 %.0270.i.i268, ptr %.0272.i.in.i264, align 4, !tbaa !22
   %i.ajk = sub i32 %.reass.i272.reass.reass.reass, %i.n
-  %9 = icmp ugt i32 %i.ajk, -4
-  br i1 %9, label %bb.el, label %bb.dz
+  %9 = icmp ult i32 %i.ajk, -3
+  br i1 %9, label %bb.dz, label %bb.el
 
 bb.dz:                                            ; preds = %bb.dy
   %i.ajl = icmp ult i32 %.reass.i272.reass.reass.reass, %i.n ; 2 uses
@@ -2065,7 +2065,7 @@ ZSTD_storeSeq.exit358.i.i443:                     ; preds = %bb.ee, %.lr.ph.i.i4
   store ptr %i.amq, ptr %i.ain, align 8, !tbaa !35
   %i.amr = icmp ugt i64 %i.akc, 65535
   %.pre240.i444 = load ptr, ptr %i.aiq, align 8, !tbaa !40 ; 3 uses
-  br i1 %i.amr, label %bb.ej, label %bb.ek, !prof !41
+  br i1 %i.amr, label %bb.ej, label %bb.ek, !prof !143
 
 bb.ej:                                            ; preds = %ZSTD_storeSeq.exit358.i.i443
   store i32 1, ptr %i.aip, align 8, !tbaa !42
@@ -2468,8 +2468,8 @@ bb.fz:                                            ; preds = %bb.ge, %bb.fy
   %.v.i321 = select i1 %i.axk, ptr %i.aix, ptr %i.k
   %i.axm = getelementptr inbounds nuw i8, ptr %.v.i321, i64 %i.axl ; 2 uses
   %i.axn = sub i32 %i.axj, %i.n
-  %10 = icmp ugt i32 %i.axn, -4
-  br i1 %10, label %.thread122.i324, label %bb.ga
+  %10 = icmp ult i32 %i.axn, -3
+  br i1 %10, label %bb.ga, label %.thread122.i324
 
 bb.ga:                                            ; preds = %bb.fz
   %.val4.i322 = load i32, ptr %i.axm, align 1, !tbaa !22
@@ -2624,8 +2624,8 @@ bb.gi:                                            ; preds = %bb.ih, %bb.gh
   %i.azx = lshr i64 %i.azw, %i.ayz                ; 2 uses
   store i32 %.0270.i.i487, ptr %.0272.i.in.i483, align 4, !tbaa !22
   %i.azy = sub i32 %.reass.i491.reass.reass.reass, %i.n
-  %11 = icmp ugt i32 %i.azy, -4
-  br i1 %11, label %bb.gv, label %bb.gj
+  %11 = icmp ult i32 %i.azy, -3
+  br i1 %11, label %bb.gj, label %bb.gv
 
 bb.gj:                                            ; preds = %bb.gi
   %i.azz = icmp ult i32 %.reass.i491.reass.reass.reass, %i.n ; 2 uses
@@ -2871,7 +2871,7 @@ ZSTD_storeSeq.exit358.i.i662:                     ; preds = %bb.go, %.lr.ph.i.i6
   store ptr %i.bde, ptr %i.azb, align 8, !tbaa !35
   %i.bdf = icmp ugt i64 %i.baq, 65535
   %.pre240.i663 = load ptr, ptr %i.aze, align 8, !tbaa !40 ; 3 uses
-  br i1 %i.bdf, label %bb.gt, label %bb.gu, !prof !41
+  br i1 %i.bdf, label %bb.gt, label %bb.gu, !prof !143
 
 bb.gt:                                            ; preds = %ZSTD_storeSeq.exit358.i.i662
   store i32 1, ptr %i.azd, align 8, !tbaa !42
@@ -3274,8 +3274,8 @@ bb.ij:                                            ; preds = %bb.io, %bb.ii
   %.v.i540 = select i1 %i.bny, ptr %i.azl, ptr %i.k
   %i.boa = getelementptr inbounds nuw i8, ptr %.v.i540, i64 %i.bnz ; 2 uses
   %i.bob = sub i32 %i.bnx, %i.n
-  %12 = icmp ugt i32 %i.bob, -4
-  br i1 %12, label %.thread122.i543, label %bb.ik
+  %12 = icmp ult i32 %i.bob, -3
+  br i1 %12, label %bb.ik, label %.thread122.i543
 
 bb.ik:                                            ; preds = %bb.ij
   %.val4.i541 = load i32, ptr %i.boa, align 1, !tbaa !22
@@ -3609,15 +3609,15 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !19   ; 8 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !149  ; 7 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !150  ; 7 uses
   %i.o = ptrtoint ptr %3 to i64
   %i.p = ptrtoint ptr %i.l to i64                 ; 7 uses
   %i.q = sub i64 %i.o, %i.p                       ; 2 uses
   %i.r = add i64 %i.q, %4
   %i.s = trunc i64 %i.r to i32                    ; 2 uses
-  %i.t = load i32, ptr %i.a, align 8, !tbaa !150
+  %i.t = load i32, ptr %i.a, align 8, !tbaa !151
   %i.u = getelementptr i8, ptr %0, i64 28
-  %.val426.a = load i32, ptr %i.u, align 4, !tbaa !151 ; 2 uses
+  %.val426.a = load i32, ptr %i.u, align 4, !tbaa !152 ; 2 uses
   %i.v = getelementptr i8, ptr %0, i64 40
   %.val427 = load i32, ptr %i.v, align 8, !tbaa !27
   %i.w = shl nuw i32 1, %i.t                      ; 2 uses
@@ -3925,7 +3925,7 @@ bb.v:                                             ; preds = %ZSTD_hashPtr.exit37
   %.1288 = phi i64 [ %i.et, %bb.u ], [ %.0287, %ZSTD_hashPtr.exit375 ]
   %.1286 = phi ptr [ %i.ew, %bb.u ], [ %.0285, %ZSTD_hashPtr.exit375 ]
   %i.ex = icmp ult ptr %i.es, %i.al
-  br i1 %i.ex, label %bb.e, label %.loopexit, !llvm.loop !143
+  br i1 %i.ex, label %bb.e, label %.loopexit, !llvm.loop !144
 
 .loopexit:                                        ; preds = %.thread, %bb.v, %bb.c
   %.0340541 = phi ptr [ %.0340568, %bb.v ], [ %3, %bb.c ], [ %.3343, %.thread ]
@@ -3980,7 +3980,7 @@ bb.x:                                             ; preds = %.lr.ph
   %i.fw = icmp ugt ptr %i.fq, %.0340568
   %i.fx = icmp ugt ptr %i.fs, %i.fi
   %i.fy = and i1 %i.fw, %i.fx
-  br i1 %i.fy, label %.lr.ph, label %.critedge, !llvm.loop !144
+  br i1 %i.fy, label %.lr.ph, label %.critedge, !llvm.loop !145
 
 .critedge:                                        ; preds = %bb.x, %.lr.ph, %bb.w, %bb.i
   %.2336 = phi i32 [ %.1335569, %bb.i ], [ %i.fg, %bb.w ], [ %i.fg, %.lr.ph ], [ %i.fg, %bb.x ] ; 2 uses
@@ -4107,7 +4107,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <16 x i8> %wide.load48, ptr %i.hh, align 1, !tbaa !30
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.hi = icmp eq i64 %index.next, %n.vec
-  br i1 %i.hi, label %middle.block, label %vector.body, !llvm.loop !145
+  br i1 %i.hi, label %middle.block, label %vector.body, !llvm.loop !146
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.hb, %n.vec
@@ -4132,7 +4132,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %wide.load54, ptr %next.gep52, align 1, !tbaa !30
   %index.next55 = add nuw i64 %index51, 8         ; 2 uses
   %i.hl = icmp eq i64 %index.next55, %n.vec50
-  br i1 %i.hl, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !146
+  br i1 %i.hl, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !147
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n56 = icmp eq i64 %i.hb, %n.vec50
@@ -4157,7 +4157,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.ho, ptr %.121.i.prol, align 1, !tbaa !30
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !147
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !148
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.121.i.unr = phi ptr [ %.121.i.ph, %.lr.ph.i.preheader ], [ %i.hp, %.lr.ph.i.prol ]
@@ -4202,7 +4202,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ip = getelementptr inbounds nuw i8, ptr %.121.i, i64 8
   store i8 %i.io, ptr %i.im, align 1, !tbaa !30
   %exitcond.not.i.7 = icmp eq ptr %i.in, %.5
-  br i1 %exitcond.not.i.7, label %ZSTD_storeSeq.exit383, label %.lr.ph.i, !llvm.loop !148
+  br i1 %exitcond.not.i.7, label %ZSTD_storeSeq.exit383, label %.lr.ph.i, !llvm.loop !149
 
 ZSTD_storeSeq.exit383.thread:                     ; preds = %bb.z, %bb.y
   %i.iq = load ptr, ptr %i.ba, align 8, !tbaa !35
@@ -4359,10 +4359,10 @@ ZSTD_hashPtr.exit373:                             ; preds = %bb.al
   %.v = select i1 %i.lg, ptr %i.n, ptr %i.l
   %i.li = getelementptr inbounds nuw i8, ptr %.v, i64 %i.lh ; 2 uses
   %i.lj = sub i32 %i.lf, %i.ag
-  %6 = icmp ugt i32 %i.lj, -4
-  %.not363 = icmp eq i32 %.3331554, 0
-  %.not364 = select i1 %.not363, i1 true, i1 %6
-  br i1 %.not364, label %.thread, label %bb.am
+  %6 = icmp ult i32 %i.lj, -3
+  %.not363 = icmp ne i32 %.3331554, 0
+  %.not364 = select i1 %.not363, i1 %6, i1 false
+  br i1 %.not364, label %bb.am, label %.thread
 
 bb.am:                                            ; preds = %.lr.ph555
   %.val = load i32, ptr %i.li, align 1, !tbaa !22
@@ -4626,13 +4626,14 @@ attributes #8 = { nounwind }
 !140 = !{!17, !15, i64 248}
 !141 = !{!17, !10, i64 0}
 !142 = !{!17, !6, i64 296}
-!143 = distinct !{!143, !23}
+!143 = !{!"branch_weights", !"expected", i32 1717127, i32 2145766521}
 !144 = distinct !{!144, !23}
-!145 = distinct !{!145, !23, !36, !37}
+!145 = distinct !{!145, !23}
 !146 = distinct !{!146, !23, !36, !37}
-!147 = distinct !{!147, !39}
-!148 = distinct !{!148, !23, !36}
-!149 = !{!17, !10, i64 16}
-!150 = !{!16, !6, i64 0}
-!151 = !{!17, !6, i64 28}
+!147 = distinct !{!147, !23, !36, !37}
+!148 = distinct !{!148, !39}
+!149 = distinct !{!149, !23, !36}
+!150 = !{!17, !10, i64 16}
+!151 = !{!16, !6, i64 0}
+!152 = !{!17, !6, i64 28}
 end_hunk_4

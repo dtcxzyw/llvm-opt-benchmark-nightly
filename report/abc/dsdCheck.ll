@@ -19,10 +19,9 @@ bb.a:
 
 .critedge.i:                                      ; preds = %.critedge.i.backedge, %bb.a
   %.012.i = phi i32 [ %i.a, %bb.a ], [ %i.b, %.critedge.i.backedge ] ; 2 uses
-  %i.b = add i32 %.012.i, 1                       ; 6 uses
-  %1 = and i32 %.012.i, 1
-  %.not.not.i = icmp eq i32 %1, 0
-  br i1 %.not.not.i, label %.preheader.i, label %.critedge.i.backedge
+  %i.b = add i32 %.012.i, 1                       ; 7 uses
+  %.not.i = trunc i32 %i.b to i1
+  br i1 %.not.i, label %.preheader.i, label %.critedge.i.backedge
 
 .critedge.i.backedge:                             ; preds = %.lr.ph.i, %.critedge.i
   br label %.critedge.i
@@ -50,7 +49,14 @@ Dsd_CheckCacheClear.exit.a:                       ; preds = %.preheader.i, %bb.b
   %i.i = mul nuw nsw i64 %i.h, 40
   %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #9 ; 2 uses
   store ptr %i.j, ptr %calloc, align 8, !tbaa !14
+  %1 = icmp ult i32 %.012.i, 2147483647
+  br i1 %1, label %.lr.ph.i7, label %Dsd_CheckCacheClear.exit
+
+.lr.ph.i7:                                        ; preds = %Dsd_CheckCacheClear.exit.a
   store ptr null, ptr %i.j, align 8, !tbaa !16
+  br label %Dsd_CheckCacheClear.exit
+
+Dsd_CheckCacheClear.exit:                         ; preds = %Dsd_CheckCacheClear.exit.a, %.lr.ph.i7
   ret void
 }
 

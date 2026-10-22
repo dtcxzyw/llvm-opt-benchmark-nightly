@@ -202,10 +202,11 @@ bb.e:                                             ; preds = %bb.d
   %i.n = zext i1 %i.m to i32
   %bcmp.fr.i.i = freeze i32 %i.n
   %.not.i131.i = icmp eq i32 %bcmp.fr.i.i, 0
-  br i1 %.not.i131.i, label %starts_with_help_option.exit.i, label %starts_with_help_option.exit.thread.i
+  %spec.select.i.i = select i1 %.not.i131.i, i64 4, i64 0
+  br label %starts_with_help_option.exit.i
 
 starts_with_help_option.exit.i:                   ; preds = %bb.e, %bb.c
-  %.0.i.i = phi i64 [ 1, %bb.c ], [ 4, %bb.e ]
+  %.0.i.i = phi i64 [ 1, %bb.c ], [ %spec.select.i.i, %bb.e ]
   %i.o = icmp eq i64 %i.e, %.0.i.i
   br i1 %i.o, label %bb.f, label %starts_with_help_option.exit.thread.i
 
@@ -215,7 +216,7 @@ bb.f:                                             ; preds = %starts_with_help_op
   %spec.select.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %spec.select.idx.i
   br label %keyval_parse_one.exit
 
-starts_with_help_option.exit.thread.i:            ; preds = %starts_with_help_option.exit.i, %bb.e, %bb.d
+starts_with_help_option.exit.thread.i:            ; preds = %starts_with_help_option.exit.i, %bb.d
   %.not116.i = icmp eq ptr %.022147, null
   br i1 %.not116.i, label %bb.h, label %bb.g
 

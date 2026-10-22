@@ -204,18 +204,24 @@ bb.db:                                            ; preds = %bb.da
 
 select.unfold:                                    ; preds = %bb.db, %bb.da
   %i.je = call i32 @archive_entry_xattr_count(ptr noundef %1) #15
-  %i.jf = icmp slt i32 %i.je, 1
+  %i.jf = icmp slt i32 %i.je, 1                   ; 2 uses
+  %not. = xor i1 %i.jf, true
+  %spec.select592 = zext i1 %not. to i32
   br label %bb.dc
 
 bb.dc:                                            ; preds = %.thread670, %bb.db, %select.unfold
-  %i.jg = phi i1 [ %i.jf, %select.unfold ], [ false, %bb.db ], [ false, %.thread670 ] ; 2 uses
+  %i.jg = phi i1 [ %i.jf, %select.unfold ], [ false, %bb.db ], [ false, %.thread670 ]
+  %.12482 = phi i32 [ %spec.select592, %select.unfold ], [ 1, %bb.db ], [ 1, %.thread670 ]
   %i.jh = icmp sgt i32 %.1460, 0                  ; 2 uses
   %or.cond8 = select i1 %i.jg, i1 %i.jh, i1 false
+  %spec.store.select18 = select i1 %or.cond8, i32 1, i32 %.12482 ; 2 uses
   %i.ji = call i32 @archive_entry_acl_types(ptr noundef %1) #15 ; 4 uses
-  %i.jj = icmp eq i32 %i.ji, 0
-  %.not560561 = xor i1 %i.jg, %or.cond8
-  %.not560 = select i1 %.not560561, i1 %i.jj, i1 false
-  br i1 %.not560, label %bb.dd, label %bb.de
+  %i.jj = icmp eq i32 %spec.store.select18, 0
+  %4 = icmp ne i32 %i.ji, 0
+  %or.cond10 = select i1 %i.jj, i1 %4, i1 false
+  %5 = trunc nuw i32 %spec.store.select18 to i1
+  %.not560 = select i1 %or.cond10, i1 true, i1 %5
+  br i1 %.not560, label %bb.de, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
   %i.jk = call i32 @archive_entry_symlink_type(ptr noundef nonnull %i.df) #15
@@ -618,9 +624,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %xtraiter = and i32 %i.e, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %lcmp.mod.not = trunc i32 %i.e to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %i.j = getelementptr inbounds nuw i8, ptr @.str.58, i64 %i.c
@@ -1023,9 +1028,8 @@ base64_encode.exit.thread.i:                      ; preds = %bb.n, %bb.k
 
 bb.o:                                             ; preds = %base64_encode.exit.thread.i, %bb.j
   %i.ek = phi i32 [ %.pre.i, %base64_encode.exit.thread.i ], [ %i.au, %bb.j ]
-  %4 = and i32 %i.ek, 1
-  %.not15.i = icmp eq i32 %4, 0
-  br i1 %.not15.i, label %bb.q, label %bb.p
+  %.not15.i = trunc i32 %i.ek to i1
+  br i1 %.not15.i, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)

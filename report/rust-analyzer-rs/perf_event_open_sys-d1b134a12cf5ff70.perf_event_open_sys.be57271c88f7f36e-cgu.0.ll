@@ -204,12 +204,12 @@ _RNvMs_NtCsglb14zjdOMs_19perf_event_open_sys8bindingsINtB4_21___BindgenBitfieldU
   store i64 %i.bt, ptr %i.y, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   %.lobit610 = lshr i8 %i.bf, 7
+  %2 = zext nneg i8 %.lobit610 to i64
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 42
   %i.bv = load i8, ptr %i.bu, align 2, !alias.scope !32, !noundef !4 ; 8 uses
-  %2 = shl i8 %i.bv, 1
-  %3 = and i8 %2, 2
-  %.sroa.0.1.i349.1611 = or disjoint i8 %3, %.lobit610
-  %.sroa.0.1.i349.1 = zext nneg i8 %.sroa.0.1.i349.1611 to i64
+  %.not.i348.1 = trunc i8 %i.bv to i1
+  %3 = select i1 %.not.i348.1, i64 2, i64 0
+  %.sroa.0.1.i349.1 = or disjoint i64 %3, %2
   store i64 %.sroa.0.1.i349.1, ptr %i.x, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   %i.bw = lshr i8 %i.bv, 1
@@ -325,10 +325,9 @@ _RNvMs_NtCsglb14zjdOMs_19perf_event_open_sys8bindingsINtB4_21___BindgenBitfieldU
   %.sroa.0.1.i503.1 = or disjoint i64 %i.dq, %i.dp
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 45
   %i.ds = load i8, ptr %i.dr, align 1, !alias.scope !35, !noundef !4 ; 8 uses
-  %4 = shl i8 %i.ds, 2
-  %5 = and i8 %4, 4
-  %6 = zext nneg i8 %5 to i64
-  %.sroa.0.1.i503.2 = or disjoint i64 %.sroa.0.1.i503.1, %6
+  %.not.i502.2 = trunc i8 %i.ds to i1
+  %4 = select i1 %.not.i502.2, i64 4, i64 0
+  %.sroa.0.1.i503.2 = or disjoint i64 %4, %.sroa.0.1.i503.1
   %i.dt = shl i8 %i.ds, 2
   %i.du = and i8 %i.dt, 8
   %i.dv = zext nneg i8 %i.du to i64
@@ -357,20 +356,26 @@ _RNvMs_NtCsglb14zjdOMs_19perf_event_open_sys8bindingsINtB4_21___BindgenBitfieldU
   %i.el = select i1 %.not.i502.9, i64 0, i64 512
   %.sroa.0.1.i503.9 = or i64 %i.el, %.sroa.0.1.i503.8
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 46
-  %i.en = load i8, ptr %i.em, align 2, !alias.scope !35, !noundef !4 ; 2 uses
-  %i.eo = and i8 %i.en, 127
+  %i.en = load i8, ptr %i.em, align 2, !alias.scope !35, !noundef !4 ; 3 uses
+  %.not.i502.10 = trunc i8 %i.en to i1
+  %5 = select i1 %.not.i502.10, i64 1024, i64 0
+  %.sroa.0.1.i503.10 = or i64 %5, %.sroa.0.1.i503.9
+  %i.eo = and i8 %i.en, 126
   %i.ep = zext nneg i8 %i.eo to i64
   %i.eq = shl nuw nsw i64 %i.ep, 10
-  %.sroa.0.1.i503.16 = or i64 %i.eq, %.sroa.0.1.i503.9
+  %.sroa.0.1.i503.16 = or i64 %i.eq, %.sroa.0.1.i503.10
   %.not.i502.17 = icmp sgt i8 %i.en, -1
   %i.er = select i1 %.not.i502.17, i64 0, i64 131072
   %.sroa.0.1.i503.17 = or i64 %i.er, %.sroa.0.1.i503.16
   %i.es = getelementptr inbounds nuw i8, ptr %0, i64 47
-  %i.et = load i8, ptr %i.es, align 1, !alias.scope !35, !noundef !4 ; 2 uses
-  %i.eu = and i8 %i.et, 127
+  %i.et = load i8, ptr %i.es, align 1, !alias.scope !35, !noundef !4 ; 3 uses
+  %.not.i502.18 = trunc i8 %i.et to i1
+  %6 = select i1 %.not.i502.18, i64 262144, i64 0
+  %.sroa.0.1.i503.18 = or i64 %6, %.sroa.0.1.i503.17
+  %i.eu = and i8 %i.et, 126
   %i.ev = zext nneg i8 %i.eu to i64
   %i.ew = shl nuw nsw i64 %i.ev, 18
-  %.sroa.0.1.i503.24 = or i64 %i.ew, %.sroa.0.1.i503.17
+  %.sroa.0.1.i503.24 = or i64 %i.ew, %.sroa.0.1.i503.18
   %.not.i502.25 = icmp sgt i8 %i.et, -1
   %i.ex = select i1 %.not.i502.25, i64 0, i64 33554432
   %.sroa.0.1.i503.25 = or i64 %i.ex, %.sroa.0.1.i503.24

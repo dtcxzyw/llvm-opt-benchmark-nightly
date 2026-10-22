@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.d
 _ZN4Luau7Compile15isConstantFalseERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit: ; preds = %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !83, !range !52, !noundef !53
-  %2 = icmp eq i8 %i.ab, 0
-  br i1 %2, label %_ZN4Luau7Compile15isConstantFalseERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread17, label %_ZN4Luau7Compile15isConstantFalseERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread.thread19
+  %2 = trunc nuw i8 %i.ab to i1
+  br i1 %2, label %_ZN4Luau7Compile15isConstantFalseERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread.thread19, label %_ZN4Luau7Compile15isConstantFalseERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread17
 
 _ZN4Luau7Compile15isConstantFalseERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread17: ; preds = %bb.g, %_ZN4Luau7Compile15isConstantFalseERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -262,8 +262,8 @@ bb.l:                                             ; preds = %bb.i
 _ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit: ; preds = %bb.l
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !83, !range !52, !noundef !53
-  %.not20 = icmp eq i8 %i.ax, 0
-  br i1 %.not20, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread18
+  %3 = trunc nuw i8 %i.ax to i1
+  br i1 %3, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread18, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread
 
 _ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread18: ; preds = %bb.l, %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -666,8 +666,8 @@ bb.k:                                             ; preds = %bb.h
 _ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit: ; preds = %bb.k
   %i.at = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %i.au = load i8, ptr %i.at, align 8, !tbaa !83, !range !52, !noundef !53
-  %.not = icmp eq i8 %i.au, 0
-  br i1 %.not, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread45
+  %2 = trunc nuw i8 %i.au to i1
+  br i1 %2, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread45, label %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread
 
 _ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit.thread45: ; preds = %bb.k, %_ZN4Luau7Compile14isConstantTrueERKNS_12DenseHashMapIPNS_7AstExprENS0_8ConstantENS_16DenseHashPointerESt8equal_toIS3_EEES3_.exit
   %i.av = getelementptr inbounds nuw i8, ptr %.tr73, i64 40
@@ -762,14 +762,15 @@ bb.g:                                             ; preds = %bb.d
 bb.h:                                             ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.x = load i8, ptr %i.w, align 8, !tbaa !83, !range !52, !noundef !53
-  %2 = icmp eq i8 %i.x, 0
+  %2 = trunc nuw i8 %i.x to i1
+  %3 = xor i1 %2, true
   br label %_ZNK4Luau12DenseHashMapIPNS_7AstExprENS_7Compile8ConstantENS_16DenseHashPointerESt8equal_toIS2_EE4findERKS2_.exit.thread
 
 _ZNK4Luau7Compile8Constant10isTruthfulEv.exit:    ; preds = %bb.g
   br label %_ZNK4Luau12DenseHashMapIPNS_7AstExprENS_7Compile8ConstantENS_16DenseHashPointerESt8equal_toIS2_EE4findERKS2_.exit.thread
 
 _ZNK4Luau12DenseHashMapIPNS_7AstExprENS_7Compile8ConstantENS_16DenseHashPointerESt8equal_toIS2_EE4findERKS2_.exit.thread: ; preds = %bb.e, %bb.f, %bb.g, %bb.h, %bb.a, %bb.b, %_ZNK4Luau7Compile8Constant10isTruthfulEv.exit
-  %i.y = phi i1 [ false, %bb.g ], [ %2, %bb.h ], [ false, %bb.b ], [ false, %bb.a ], [ true, %_ZNK4Luau7Compile8Constant10isTruthfulEv.exit ], [ false, %bb.f ], [ false, %bb.e ]
+  %i.y = phi i1 [ false, %bb.g ], [ %3, %bb.h ], [ false, %bb.b ], [ false, %bb.a ], [ true, %_ZNK4Luau7Compile8Constant10isTruthfulEv.exit ], [ false, %bb.f ], [ false, %bb.e ]
   ret i1 %i.y
 }
 

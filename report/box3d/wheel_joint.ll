@@ -202,8 +202,8 @@ b3MakeSoft.exit376:                               ; preds = %b3MakeSoft.exit, %b
   store float %i.rf, ptr %i.re, align 4, !tbaa !127
   %i.rg = getelementptr inbounds nuw i8, ptr %1, i64 212
   %i.rh = load i8, ptr %i.rg, align 4, !tbaa !149, !range !72, !noundef !73
-  %2 = icmp eq i8 %i.rh, 0
-  br i1 %2, label %bb.d, label %bb.e
+  %2 = trunc nuw i8 %i.rh to i1
+  br i1 %2, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %b3MakeSoft.exit376
   %i.ri = getelementptr inbounds nuw i8, ptr %0, i64 184
@@ -606,9 +606,10 @@ begin_hunk_1_@b3SolveWheelJoint:bb.a
   %i.nb = getelementptr inbounds nuw i8, ptr %0, i64 388
   %i.nc = load i8, ptr %i.nb, align 4, !tbaa !152, !range !72, !noundef !73
   %i.nd = trunc nuw i8 %i.nc to i1
-  %4 = icmp eq i8 %i.ah, 0                        ; 3 uses
-  %or.cond = and i1 %4, %i.nd
-  br i1 %or.cond, label %bb.f, label %bb.g
+  %.not1777 = xor i1 %i.nd, true
+  %4 = trunc nuw i8 %i.ah to i1                   ; 3 uses
+  %or.cond = or i1 %4, %.not1777
+  br i1 %or.cond, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ne = fsub float %.sroa.34.0.copyload, %.sroa.341597.0.copyload
@@ -805,10 +806,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.th = getelementptr inbounds nuw i8, ptr %0, i64 391 ; 2 uses
   %i.ti = load i8, ptr %i.th, align 1, !tbaa !133, !range !72, !noundef !73
   %i.tj = trunc nuw i8 %i.ti to i1
-  %or.cond1777 = and i1 %4, %i.tj
+  %.not1778 = xor i1 %i.tj, true
+  %or.cond1779 = or i1 %4, %.not1778
   %i.tk = extractelement <4 x float> %i.tg, i64 2 ; 2 uses
   %i.tl = extractelement <4 x float> %i.tg, i64 3 ; 2 uses
-  br i1 %or.cond1777, label %bb.j, label %bb.t
+  br i1 %or.cond1779, label %bb.t, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.tm = tail call float @b3Atan2(float noundef %i.lx, float noundef %i.ly) #8 ; 3 uses
@@ -1211,7 +1213,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.t
   %i.ajt = phi <4 x float> [ %i.ajs, %bb.ac ], [ %i.ace, %bb.t ] ; 6 uses
   %i.aju = extractelement <4 x float> %i.ajt, i64 2 ; 5 uses
   %i.ajv = extractelement <4 x float> %i.ajt, i64 3 ; 5 uses
-  br i1 %4, label %bb.ae, label %bb.am
+  br i1 %4, label %bb.am, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ajw = load i8, ptr %i.th, align 1, !tbaa !133, !range !72, !noundef !73

@@ -93,8 +93,8 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %rev = call i16 @llvm.bswap.i16(i16 %.20..20..20.)
-  %.in = select i1 %i.p, i16 %.20..20..20., i16 %rev ; 3 uses
-  %i.r = zext i16 %.in to i32                     ; 2 uses
+  %.in = select i1 %i.p, i16 %.20..20..20., i16 %rev ; 4 uses
+  %i.r = zext i16 %.in to i32
   %i.s = call i16 @llvm.umin.i16(i16 %.in, i16 513) ; 2 uses
   %i.t = zext nneg i16 %i.s to i32                ; 2 uses
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !25   ; 3 uses
@@ -163,18 +163,19 @@ sanitname.exit:                                   ; preds = %bb.k, %bb.h
   %.not70 = icmp eq i32 %i.at, 0
   %spec.select = select i1 %.not70, i32 1, i32 %.048109 ; 2 uses
   %i.au = icmp ugt i16 %.in, 513
-  %2 = and i32 %i.r, 1                            ; 2 uses
+  %2 = and i16 %.in, 1                            ; 2 uses
   br i1 %i.au, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %sanitname.exit
-  %spec.select85 = add nuw nsw i32 %2, %i.r
+  %3 = zext nneg i16 %2 to i32
+  %spec.select85 = add nuw nsw i32 %3, %i.r
   %i.av = sub nsw i32 %spec.select85, %i.t
   %i.aw = zext i32 %i.av to i64
   %i.ax = add i64 %i.ac, %i.aw
   br label %bb.n
 
 bb.m:                                             ; preds = %sanitname.exit
-  %i.ay = zext nneg i32 %2 to i64
+  %i.ay = zext nneg i16 %2 to i64
   %spec.select86 = add i64 %i.ac, %i.ay
   br label %bb.n
 
@@ -189,8 +190,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.e
   %i.ba = shl nuw i32 %i.az, 16
   %.24..24..24.99 = load i16, ptr %.24..24..24..sroa_idx, align 2 ; 2 uses
   %rev76 = call i16 @llvm.bswap.i16(i16 %.24..24..24.99)
-  %.in77 = select i1 %i.p, i16 %.24..24..24.99, i16 %rev76
-  %i.bb = zext i16 %.in77 to i32                  ; 2 uses
+  %.in77 = select i1 %i.p, i16 %.24..24..24.99, i16 %rev76 ; 2 uses
+  %i.bb = zext i16 %.in77 to i32
   %i.bc = or disjoint i32 %i.ba, %i.bb            ; 4 uses
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.5, i32 noundef %i.bc) #8
   %.not78 = icmp eq i32 %i.bc, 0
@@ -220,8 +221,9 @@ bb.r:                                             ; preds = %bb.p
   br i1 %.not83, label %bb.s, label %fmap_readn.exit.thread
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %3 = and i32 %i.bb, 1
-  %spec.select87 = add i32 %i.bc, %3
+  %4 = and i16 %.in77, 1
+  %5 = zext nneg i16 %4 to i32
+  %spec.select87 = add i32 %i.bc, %5
   %i.bh = zext i32 %spec.select87 to i64
   %i.bi = add i64 %.2, %i.bh
   br label %.backedge

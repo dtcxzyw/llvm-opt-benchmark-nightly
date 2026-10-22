@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !255)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !256)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !257)
-  %4 = icmp eq i64 %i.b, 0
-  br i1 %4, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtNtCsdjW2DEjcQy2_12clap_builder4util2id2IdNtNtNtNtBI_6parser7matches11matched_arg10MatchedArgEEBI_.exit.i, label %bb.c
+  %4 = trunc nuw i64 %i.b to i1
+  br i1 %4, label %bb.c, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtNtCsdjW2DEjcQy2_12clap_builder4util2id2IdNtNtNtNtBI_6parser7matches11matched_arg10MatchedArgEEBI_.exit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -606,7 +606,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.h, ptr %1, align 8, !alias.scope !499
   tail call void @llvm.experimental.noalias.scope.decl(metadata !500)
   %i.i = load i64, ptr %i.d, align 8, !range !8, !alias.scope !500, !noundef !5
-  %i.j = trunc nuw i64 %i.i to i1                 ; 2 uses
+  %i.j = trunc nuw i64 %i.i to i1
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   br i1 %i.j, label %bb.c, label %bb.d
 
@@ -625,7 +625,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.sroa.6.0.i = phi i64 [ %i.n, %bb.c ], [ %.sroa.6.0.copyload.i, %bb.d ] ; 3 uses
   %.sroa.5.0.i = phi ptr [ %i.m, %bb.c ], [ %.sroa.5.0.copyload.i, %bb.d ] ; 3 uses
-  %.sroa.0.0.i2 = phi i64 [ 1, %bb.c ], [ 0, %bb.d ]
+  %.sroa.0.0.i2 = phi i64 [ 1, %bb.c ], [ 0, %bb.d ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !502
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !range !4, !alias.scope !500, !noundef !5
@@ -649,8 +649,9 @@ bb.h:                                             ; preds = %bb.k, %bb.g
 
 bb.i:                                             ; preds = %bb.l, %bb.j
   %.pn.i = phi { ptr, i32 } [ %i.t, %bb.l ], [ %i.s, %bb.j ]
+  %2 = trunc nuw i64 %.sroa.0.0.i2 to i1
   %i.r = icmp ne i64 %.sroa.6.0.i, 0
-  %or.cond.not.i = select i1 %i.j, i1 %i.r, i1 false
+  %or.cond.not.i = select i1 %2, i1 %i.r, i1 false
   br i1 %or.cond.not.i, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsdjW2DEjcQy2_12clap_builder7builder3str3StrEBH_.exit.i
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i: ; preds = %bb.i
@@ -764,7 +765,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !536
   call void @llvm.experimental.noalias.scope.decl(metadata !537)
   %i.k = load i64, ptr %i.h, align 8, !range !8, !alias.scope !538, !noalias !539, !noundef !5
-  %i.l = trunc nuw i64 %i.k to i1                 ; 3 uses
+  %i.l = trunc nuw i64 %i.k to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   br i1 %i.l, label %bb.e, label %bb.f
 
@@ -783,7 +784,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.6.0.i.i.i.i = phi i64 [ %i.p, %bb.e ], [ %.sroa.6.0.copyload.i.i.i.i, %bb.f ] ; 5 uses
   %.sroa.5.0.i.i.i.i = phi ptr [ %i.o, %bb.e ], [ %.sroa.5.0.copyload.i.i.i.i, %bb.f ] ; 4 uses
-  %.sroa.0.0.i.i.i.i = phi i64 [ 1, %bb.e ], [ 0, %bb.f ]
+  %.sroa.0.0.i.i.i.i = phi i64 [ 1, %bb.e ], [ 0, %bb.f ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !541
   %i.q = getelementptr inbounds nuw i8, ptr %i.h, i64 48 ; 2 uses
   %i.r = load i64, ptr %i.q, align 8, !range !4, !alias.scope !538, !noalias !539, !noundef !5
@@ -807,8 +808,9 @@ bb.j:                                             ; preds = %bb.m, %bb.i
 
 bb.k:                                             ; preds = %bb.n, %bb.l
   %.pn.i.i.i.i = phi { ptr, i32 } [ %i.v, %bb.n ], [ %i.u, %bb.l ] ; 2 uses
+  %2 = trunc nuw i64 %.sroa.0.0.i.i.i.i to i1
   %i.t = icmp ne i64 %.sroa.6.0.i.i.i.i, 0
-  %or.cond.not.i.i.i.i = select i1 %i.l, i1 %i.t, i1 false
+  %or.cond.not.i.i.i.i = select i1 %2, i1 %i.t, i1 false
   br i1 %or.cond.not.i.i.i.i, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i, label %common.resume.i.i.i
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i: ; preds = %bb.k
@@ -856,8 +858,9 @@ _RNvXs3_NtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB5_13PossibleV
   store i8 %i.y, ptr %.sroa.8.0..sroa_idx.i.i.i, align 8, !noalias !536
   call void @llvm.experimental.noalias.scope.decl(metadata !543)
   call void @llvm.experimental.noalias.scope.decl(metadata !544)
+  %3 = trunc nuw i64 %.sroa.0.0.i.i.i.i to i1
   %i.z = icmp ne i64 %.sroa.6.0.i.i.i.i, 0
-  %or.cond.not.i.i.i = select i1 %i.l, i1 %i.z, i1 false
+  %or.cond.not.i.i.i = select i1 %3, i1 %i.z, i1 false
   br i1 %or.cond.not.i.i.i, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsdjW2DEjcQy2_12clap_builder7builder3str3StrEBH_.exit.i.i.i.i.i
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i.i: ; preds = %_RNvXs3_NtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i.i

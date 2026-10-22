@@ -202,8 +202,8 @@ b3MakeSoft.exit:                                  ; preds = %bb.k, %bb.l
   store float %.sroa.5.0.i367, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !83
   %i.rk = getelementptr inbounds nuw i8, ptr %1, i64 212
   %i.rl = load i8, ptr %i.rk, align 4, !tbaa !140, !range !72, !noundef !73
-  %2 = icmp eq i8 %i.rl, 0
-  br i1 %2, label %bb.m, label %bb.n
+  %2 = trunc nuw i8 %i.rl to i1
+  br i1 %2, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %b3MakeSoft.exit
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.bu, i8 0, i64 48, i1 false)
@@ -606,9 +606,10 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 440
   %i.eg = load i8, ptr %i.ef, align 4, !tbaa !141, !range !72, !noundef !73
   %i.eh = trunc nuw i8 %i.eg to i1
-  %4 = icmp eq i8 %i.ah, 0                        ; 4 uses
-  %or.cond = and i1 %4, %i.eh
-  br i1 %or.cond, label %b3DeltaQuatToRotation.exit, label %bb.f
+  %.not868 = xor i1 %i.eh, true
+  %4 = trunc nuw i8 %i.ah to i1                   ; 4 uses
+  %or.cond = or i1 %4, %.not868
+  br i1 %or.cond, label %bb.f, label %b3DeltaQuatToRotation.exit
 
 b3DeltaQuatToRotation.exit:                       ; preds = %bb.e
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 268
@@ -828,8 +829,9 @@ bb.f:                                             ; preds = %b3DeltaQuatToRotati
   %i.lf = getelementptr inbounds nuw i8, ptr %0, i64 441
   %i.lg = load i8, ptr %i.lf, align 1, !tbaa !145, !range !72, !noundef !73
   %i.lh = trunc nuw i8 %i.lg to i1
-  %or.cond868 = and i1 %4, %i.lh
-  br i1 %or.cond868, label %bb.g, label %bb.h
+  %.not869 = xor i1 %i.lh, true
+  %or.cond870 = or i1 %4, %.not869
+  br i1 %or.cond870, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.li = getelementptr inbounds nuw i8, ptr %0, i64 384
@@ -949,8 +951,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.op = getelementptr inbounds nuw i8, ptr %0, i64 443
   %i.oq = load i8, ptr %i.op, align 1, !tbaa !109, !range !72, !noundef !73
   %i.or = trunc nuw i8 %i.oq to i1
-  %or.cond869 = and i1 %4, %i.or
-  br i1 %or.cond869, label %bb.i, label %bb.t
+  %.not871 = xor i1 %i.or, true
+  %or.cond872 = or i1 %4, %.not871
+  br i1 %or.cond872, label %bb.t, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.os = fcmp olt float %i.ee, 0.000000e+00
@@ -1170,8 +1173,9 @@ bb.t:                                             ; preds = %bb.s, %bb.h
   %i.ul = getelementptr inbounds nuw i8, ptr %0, i64 442
   %i.um = load i8, ptr %i.ul, align 2, !tbaa !107, !range !72, !noundef !73
   %i.un = trunc nuw i8 %i.um to i1
-  %or.cond870 = and i1 %4, %i.un
-  br i1 %or.cond870, label %bb.u, label %bb.z
+  %.not873 = xor i1 %i.un, true
+  %or.cond874 = or i1 %4, %.not873
+  br i1 %or.cond874, label %bb.z, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.uo = fmul float %i.dx, %i.dx

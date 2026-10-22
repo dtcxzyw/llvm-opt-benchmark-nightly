@@ -92,10 +92,11 @@ bb.g:                                             ; preds = %.lr.ph
   br i1 %i.an, label %get_score.exit.thread29, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.g, %bb.b
-  %.not.i.lcssa = phi i32 [ 0, %bb.b ], [ 51, %bb.g ]
+  %.040.lcssa = phi i1 [ false, %bb.b ], [ true, %bb.g ]
   %.lcssa = phi i32 [ %i.o, %bb.b ], [ %i.ah, %bb.g ]
   %i.ao = icmp ult i32 %.lcssa, 24
-  %spec.select = select i1 %i.ao, i32 %.not.i.lcssa, i32 0
+  %1 = and i1 %i.ao, %.040.lcssa
+  %spec.select = select i1 %1, i32 51, i32 0
   br label %get_score.exit.thread
 
 get_score.exit.thread29:                          ; preds = %bb.g, %bb.f
