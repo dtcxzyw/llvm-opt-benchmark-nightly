@@ -204,13 +204,16 @@ bb.bm:                                            ; preds = %._crit_edge
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bz, %.lr.ph74.i
-  %.05272.i = phi ptr [ %spec.select253, %.lr.ph74.i ], [ %i.ra, %bb.bz ] ; 10 uses
+  %.05272.i = phi ptr [ %spec.select253, %.lr.ph74.i ], [ %i.ra, %bb.bz ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  %i.oh = getelementptr inbounds nuw i8, ptr %.05272.i, i64 16 ; 2 uses
-  %i.oi = load <2 x i64>, ptr %i.oh, align 8, !tbaa !76 ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.05272.i, i64 16 ; 3 uses
+  %i.oh = getelementptr inbounds nuw i8, ptr %.05272.i, i64 24
+  %10 = load i64, ptr %i.oh, align 8, !tbaa !32
+  %i.oi = load <2 x i64>, ptr %9, align 8, !tbaa !76
+  %11 = load i64, ptr %9, align 8, !tbaa !30
   %i.oj = getelementptr inbounds nuw i8, ptr %.05272.i, i64 8 ; 2 uses
   %i.ok = load i32, ptr %i.oj, align 8, !tbaa !34
   %.not58.i = icmp eq i32 %i.ok, 0
@@ -230,8 +233,7 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp
   %i.or = load ptr, ptr %i.q, align 8, !tbaa !74
-  %9 = extractelement <2 x i64> %i.oi, i64 0
-  %i.os = getelementptr inbounds [24 x i8], ptr %i.or, i64 %9 ; 2 uses
+  %i.os = getelementptr inbounds [24 x i8], ptr %i.or, i64 %11 ; 2 uses
   %i.ot = load ptr, ptr %i.os, align 8, !tbaa !45 ; 2 uses
   store ptr %i.ot, ptr %6, align 8, !tbaa !26
   %i.ou = getelementptr [24 x i8], ptr %i.os, i64 %i.om ; 2 uses
@@ -245,7 +247,6 @@ bb.bq:                                            ; preds = %bb.bp
   %i.pc = sub i64 %i.pa, %i.pb
   store i64 %i.pc, ptr %i.oe, align 8, !tbaa !23
   %i.pd = load ptr, ptr %i.r, align 8, !tbaa !74
-  %10 = extractelement <2 x i64> %i.oi, i64 1
   %i.pe = getelementptr inbounds [24 x i8], ptr %i.pd, i64 %10 ; 2 uses
   %i.pf = load ptr, ptr %i.pe, align 8, !tbaa !45 ; 2 uses
   store ptr %i.pf, ptr %7, align 8, !tbaa !26
@@ -303,7 +304,7 @@ bb.bx:                                            ; preds = %bb.bv
   %i.qe = ashr exact <2 x i64> %i.qb, splat (i64 32) ; 2 uses
   %i.qf = load <2 x i64>, ptr %i.qa, align 8, !tbaa !76
   %i.qg = add nsw <2 x i64> %i.qf, %i.qe
-  store <2 x i64> %i.qg, ptr %i.oh, align 8, !tbaa !76
+  store <2 x i64> %i.qg, ptr %9, align 8, !tbaa !76
   %i.qh = getelementptr inbounds nuw i8, ptr %i.pz, i64 32
   %i.qi = load i64, ptr %i.qh, align 8, !tbaa !72
   store i64 %i.qi, ptr %i.oo, align 8, !tbaa !33

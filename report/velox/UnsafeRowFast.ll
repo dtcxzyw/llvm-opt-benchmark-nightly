@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %.noexc115, %_ZSt6fi
   %i.id = getelementptr inbounds nuw i8, ptr %i.ib, i64 %i.ia
   store ptr %i.id, ptr %i.gl, align 8, !tbaa !142
   %i.ie = load ptr, ptr %10, align 8              ; 4 uses
-  %i.if = load ptr, ptr %4, align 8, !tbaa !105   ; 5 uses
+  %i.if = load ptr, ptr %4, align 8, !tbaa !105   ; 8 uses
   br i1 %.not, label %.lr.ph188.split.us, label %.lr.ph188.split
 
 .lr.ph188.split.us:                               ; preds = %.lr.ph188
@@ -223,26 +223,32 @@ vector.ph332:                                     ; preds = %.lr.ph188.split.us
   br label %vector.body334
 
 vector.body334:                                   ; preds = %vector.body334, %vector.ph332
-  %index335 = phi i64 [ 0, %vector.ph332 ], [ %index.next336, %vector.body334 ] ; 4 uses
+  %index335 = phi i64 [ 0, %vector.ph332 ], [ %index.next336, %vector.body334 ] ; 7 uses
   %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %index335
   %i.il = load <4 x ptr>, ptr %i.ik, align 8, !tbaa !165 ; 5 uses
-  %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %index335 ; 2 uses
-  %14 = load <4 x i64>, ptr %i.im, align 8, !tbaa !109 ; 5 uses
-  %15 = extractelement <4 x i64> %14, i64 0
-  %16 = extractelement <4 x ptr> %i.il, i64 0
-  %i.in = getelementptr inbounds nuw i8, ptr %16, i64 %15
-  %17 = extractelement <4 x i64> %14, i64 1
-  %i.io = extractelement <4 x ptr> %i.il, i64 1
-  %i.ip = getelementptr inbounds nuw i8, ptr %i.io, i64 %17
-  %18 = extractelement <4 x i64> %14, i64 2
-  %19 = extractelement <4 x ptr> %i.il, i64 2
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 %18
-  %21 = extractelement <4 x i64> %14, i64 3
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %index335 ; 3 uses
+  %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %index335
+  %15 = getelementptr inbounds nuw i8, ptr %i.im, i64 8
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %index335
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %index335
+  %i.in = getelementptr inbounds nuw i8, ptr %18, i64 24
+  %19 = load i64, ptr %i.in, align 8, !tbaa !109
+  %20 = load <4 x i64>, ptr %14, align 8, !tbaa !109
+  %21 = load i64, ptr %17, align 8, !tbaa !109
+  %22 = load i64, ptr %15, align 8, !tbaa !109
+  %23 = load i64, ptr %14, align 8, !tbaa !109
+  %i.io = extractelement <4 x ptr> %i.il, i64 0
+  %i.ip = getelementptr inbounds nuw i8, ptr %i.io, i64 %23
+  %24 = extractelement <4 x ptr> %i.il, i64 1
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 %22
+  %26 = extractelement <4 x ptr> %i.il, i64 2
+  %27 = getelementptr inbounds nuw i8, ptr %26, i64 %21
   %i.iq = extractelement <4 x ptr> %i.il, i64 3
-  %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 %21
-  %i.is = getelementptr inbounds nuw i8, ptr %i.in, i64 4
-  %i.it = getelementptr inbounds nuw i8, ptr %i.ip, i64 4
-  %i.iu = getelementptr inbounds nuw i8, ptr %20, i64 4
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 %19
+  %i.is = getelementptr inbounds nuw i8, ptr %i.ip, i64 4
+  %i.it = getelementptr inbounds nuw i8, ptr %25, i64 4
+  %i.iu = getelementptr inbounds nuw i8, ptr %27, i64 4
   %i.iv = getelementptr inbounds nuw i8, ptr %i.ir, i64 4
   %i.iw = load i32, ptr %i.is, align 4, !tbaa !122
   %i.ix = load i32, ptr %i.it, align 4, !tbaa !122
@@ -256,8 +262,8 @@ vector.body334:                                   ; preds = %vector.body334, %ve
   %wide.gep = getelementptr inbounds i8, <4 x ptr> %i.il, <4 x i64> %i.je
   %i.jf = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %index335
   store <4 x ptr> %wide.gep, ptr %i.jf, align 8, !tbaa !165
-  %i.jg = add <4 x i64> %14, splat (i64 8)
-  store <4 x i64> %i.jg, ptr %i.im, align 8, !tbaa !109
+  %i.jg = add <4 x i64> %20, splat (i64 8)
+  store <4 x i64> %i.jg, ptr %14, align 8, !tbaa !109
   %index.next336 = add nuw i64 %index335, 4       ; 2 uses
   %i.jh = icmp eq i64 %index.next336, %n.vec333
   br i1 %i.jh, label %middle.block337, label %vector.body334, !llvm.loop !359
