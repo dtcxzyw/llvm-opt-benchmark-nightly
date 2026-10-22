@@ -205,7 +205,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1e_4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 9 uses
+  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 10 uses
   %i.aj = icmp ult i64 %i.ai, 1152921504606846976
   call void @llvm.assume(i1 %i.aj)
   %i.ak = load i64, ptr %i.m, align 8, !noundef !177 ; 3 uses
@@ -222,7 +222,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %.sroa.021.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.422.0.copyload = load ptr, ptr %i.k, align 8, !nonnull !177, !noundef !177 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !78694)
-  %.idx = shl nuw nsw i64 %i.ai, 3                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ai, 3
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.422.0.copyload, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !78695)
   call void @llvm.experimental.noalias.scope.decl(metadata !78696)
@@ -280,13 +280,10 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   %i.az = load ptr, ptr %.sroa.422.0.copyload, align 8, !noalias !78713, !nonnull !177, !noundef !177
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx6.i.i.i.i, i64 30, i1 false), !noalias !78704
-  %gepdiff = add nsw i64 %.idx, -8
-  %4 = lshr exact i64 %gepdiff, 3
-  %5 = call i64 @llvm.umin.i64(i64 %i.av, i64 %4) ; 2 uses
-  %i.ba = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ba = call i64 @llvm.umax.i64(i64 %i.av, i64 3) ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %i.bc = mul i64 %i.bb, 40                       ; 3 uses
-  %or.cond.i.i.i.i = icmp samesign ugt i64 %5, 230584300921369394
+  %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ai, 230584300921369395
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !188
 
 bb.k:                                             ; preds = %bb.j
@@ -628,7 +625,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1e_4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 9 uses
+  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 10 uses
   %i.aj = icmp ult i64 %i.ai, 576460752303423488
   call void @llvm.assume(i1 %i.aj)
   %i.ak = load i64, ptr %i.m, align 8, !noundef !177 ; 3 uses
@@ -645,7 +642,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %.sroa.021.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.422.0.copyload = load ptr, ptr %i.k, align 8, !nonnull !177, !noundef !177 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !78801)
-  %.idx = shl nuw nsw i64 %i.ai, 4                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ai, 4
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.422.0.copyload, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !78802)
   call void @llvm.experimental.noalias.scope.decl(metadata !78803)
@@ -703,13 +700,10 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   %i.az = load <2 x ptr>, ptr %.sroa.422.0.copyload, align 8, !noalias !78820
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx8.i.i.i.i, i64 30, i1 false), !noalias !78811
-  %gepdiff = add nsw i64 %.idx, -16
-  %4 = lshr exact i64 %gepdiff, 4
-  %5 = call i64 @llvm.umin.i64(i64 %i.av, i64 %4) ; 2 uses
-  %i.ba = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ba = call i64 @llvm.umax.i64(i64 %i.av, i64 3) ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %i.bc = mul i64 %i.bb, 48                       ; 3 uses
-  %or.cond.i.i.i.i = icmp samesign ugt i64 %5, 192153584101141161
+  %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ai, 192153584101141162
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !188
 
 bb.k:                                             ; preds = %bb.j
@@ -1051,7 +1045,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1e_4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 9 uses
+  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 10 uses
   %i.aj = icmp ult i64 %i.ai, 576460752303423488
   call void @llvm.assume(i1 %i.aj)
   %i.ak = load i64, ptr %i.m, align 8, !noundef !177 ; 3 uses
@@ -1068,7 +1062,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %.sroa.021.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.422.0.copyload = load ptr, ptr %i.k, align 8, !nonnull !177, !noundef !177 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !78908)
-  %.idx = shl nuw nsw i64 %i.ai, 4                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ai, 4
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.422.0.copyload, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !78909)
   call void @llvm.experimental.noalias.scope.decl(metadata !78910)
@@ -1126,13 +1120,10 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   %i.az = load <2 x ptr>, ptr %.sroa.422.0.copyload, align 8, !noalias !78927
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx8.i.i.i.i, i64 30, i1 false), !noalias !78918
-  %gepdiff = add nsw i64 %.idx, -16
-  %4 = lshr exact i64 %gepdiff, 4
-  %5 = call i64 @llvm.umin.i64(i64 %i.av, i64 %4) ; 2 uses
-  %i.ba = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ba = call i64 @llvm.umax.i64(i64 %i.av, i64 3) ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %i.bc = mul i64 %i.bb, 48                       ; 3 uses
-  %or.cond.i.i.i.i = icmp samesign ugt i64 %5, 192153584101141161
+  %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ai, 192153584101141162
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !188
 
 bb.k:                                             ; preds = %bb.j
@@ -1474,7 +1465,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1e_4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 9 uses
+  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 10 uses
   %i.aj = icmp ult i64 %i.ai, 576460752303423488
   call void @llvm.assume(i1 %i.aj)
   %i.ak = load i64, ptr %i.m, align 8, !noundef !177 ; 3 uses
@@ -1491,7 +1482,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %.sroa.021.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.422.0.copyload = load ptr, ptr %i.k, align 8, !nonnull !177, !noundef !177 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !79015)
-  %.idx = shl nuw nsw i64 %i.ai, 4                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ai, 4
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.422.0.copyload, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !79016)
   call void @llvm.experimental.noalias.scope.decl(metadata !79017)
@@ -1549,13 +1540,10 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   %i.az = load <2 x ptr>, ptr %.sroa.422.0.copyload, align 8, !noalias !79034
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx8.i.i.i.i, i64 30, i1 false), !noalias !79025
-  %gepdiff = add nsw i64 %.idx, -16
-  %4 = lshr exact i64 %gepdiff, 4
-  %5 = call i64 @llvm.umin.i64(i64 %i.av, i64 %4) ; 2 uses
-  %i.ba = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ba = call i64 @llvm.umax.i64(i64 %i.av, i64 3) ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %i.bc = mul i64 %i.bb, 48                       ; 3 uses
-  %or.cond.i.i.i.i = icmp samesign ugt i64 %5, 192153584101141161
+  %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ai, 192153584101141162
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !188
 
 bb.k:                                             ; preds = %bb.j
@@ -1897,7 +1885,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1e_4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 9 uses
+  %i.ai = load i64, ptr %i.l, align 8, !noundef !177 ; 10 uses
   %i.aj = icmp ult i64 %i.ai, 576460752303423488
   call void @llvm.assume(i1 %i.aj)
   %i.ak = load i64, ptr %i.m, align 8, !noundef !177 ; 3 uses
@@ -1914,7 +1902,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %.sroa.021.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.422.0.copyload = load ptr, ptr %i.k, align 8, !nonnull !177, !noundef !177 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !79122)
-  %.idx = shl nuw nsw i64 %i.ai, 4                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ai, 4
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.422.0.copyload, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !79123)
   call void @llvm.experimental.noalias.scope.decl(metadata !79124)
@@ -1972,13 +1960,10 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   %i.az = load <2 x ptr>, ptr %.sroa.422.0.copyload, align 8, !noalias !79141
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx8.i.i.i.i, i64 30, i1 false), !noalias !79132
-  %gepdiff = add nsw i64 %.idx, -16
-  %4 = lshr exact i64 %gepdiff, 4
-  %5 = call i64 @llvm.umin.i64(i64 %i.av, i64 %4) ; 2 uses
-  %i.ba = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ba = call i64 @llvm.umax.i64(i64 %i.av, i64 3) ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %i.bc = mul i64 %i.bb, 48                       ; 3 uses
-  %or.cond.i.i.i.i = icmp samesign ugt i64 %5, 192153584101141161
+  %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ai, 192153584101141162
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !188
 
 bb.k:                                             ; preds = %bb.j
@@ -2317,7 +2302,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
   br i1 %.not8, label %bb.x, label %bb.w, !prof !186
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1e_4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.y
-  %i.ag = load i64, ptr %i.j, align 8, !noundef !177 ; 13 uses
+  %i.ag = load i64, ptr %i.j, align 8, !noundef !177 ; 14 uses
   %i.ah = icmp ult i64 %i.ag, 576460752303423488
   call void @llvm.assume(i1 %i.ah)
   %i.ai = load i64, ptr %i.k, align 8, !noundef !177 ; 5 uses
@@ -2333,7 +2318,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %i.ak = sub nuw i64 %i.ai, %i.ag                ; 5 uses
   %.sroa.026.0.copyload = load i64, ptr %i.c, align 8 ; 4 uses
   %.sroa.427.0.copyload = load ptr, ptr %i.i, align 8, !nonnull !177, !noundef !177 ; 6 uses
-  %.idx = shl nuw nsw i64 %i.ag, 4                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ag, 4
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.427.0.copyload, i64 %.idx ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !79230)
   call void @llvm.experimental.noalias.scope.decl(metadata !79231)
@@ -2362,13 +2347,10 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx8.i.i.i.i, i64 30, i1 false), !noalias !79232
   %i.aw = ptrtoint ptr %i.al to i64               ; 2 uses
-  %gepdiff = add nsw i64 %.idx, -16
-  %4 = lshr exact i64 %gepdiff, 4
-  %5 = call i64 @llvm.umin.i64(i64 %i.ar, i64 %4) ; 2 uses
-  %i.ax = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ax = call i64 @llvm.umax.i64(i64 %i.ar, i64 3) ; 2 uses
   %i.ay = add nuw nsw i64 %i.ax, 1                ; 2 uses
   %i.az = mul i64 %i.ay, 48                       ; 3 uses
-  %or.cond.i.i.i.i = icmp samesign ugt i64 %5, 192153584101141161
+  %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ag, 192153584101141162
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !188
 
 bb.k:                                             ; preds = %bb.j
@@ -2771,7 +2753,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCslxdWNweD0x2_11shadowsocks5relay6socks57AddressENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.ah = load i64, ptr %i.l, align 8, !noundef !177 ; 9 uses
+  %i.ah = load i64, ptr %i.l, align 8, !noundef !177 ; 10 uses
   %i.ai = icmp ult i64 %i.ah, 288230376151711744
   call void @llvm.assume(i1 %i.ai)
   %i.aj = load i64, ptr %i.m, align 8, !noundef !177 ; 3 uses
@@ -2788,7 +2770,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %.sroa.021.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.422.0.copyload = load ptr, ptr %i.k, align 8, !nonnull !177, !noundef !177 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !79402)
-  %.idx = shl nuw nsw i64 %i.ah, 5                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ah, 5
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.422.0.copyload, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !79403)
   call void @llvm.experimental.noalias.scope.decl(metadata !79404)
@@ -2871,13 +2853,10 @@ bb.k:                                             ; preds = %_RNvXs4_NtNtCsgCecv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.712.0..sroa_idx13.i.i.i.i, i64 6, i1 false), !noalias !79412
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.79.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.79.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.712.sroa.7.0..sroa.712.0..sroa_idx13.sroa_idx.i.i.i.i, i64 16, i1 false), !noalias !79412
-  %gepdiff = add nsw i64 %.idx, -32
-  %4 = lshr exact i64 %gepdiff, 5
-  %5 = call i64 @llvm.umin.i64(i64 %i.au, i64 %4) ; 2 uses
-  %i.ba = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ba = call i64 @llvm.umax.i64(i64 %i.au, i64 3) ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %i.bc = mul i64 %i.bb, 72                       ; 3 uses
-  %or.cond.i.i3.i.i = icmp samesign ugt i64 %5, 128102389400760774
+  %or.cond.i.i3.i.i = icmp samesign ugt i64 %i.ah, 128102389400760775
   br i1 %or.cond.i.i3.i.i, label %bb.n, label %bb.l, !prof !188
 
 bb.l:                                             ; preds = %bb.k
@@ -3245,7 +3224,7 @@ _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtC
 
 _RNvXs2_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCslxdWNweD0x2_11shadowsocks5relay6socks57AddressENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.thread: ; preds = %bb.h, %.split, %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.ah = load i64, ptr %i.l, align 8, !noundef !177 ; 9 uses
+  %i.ah = load i64, ptr %i.l, align 8, !noundef !177 ; 10 uses
   %i.ai = icmp ult i64 %i.ah, 288230376151711744
   call void @llvm.assume(i1 %i.ai)
   %i.aj = load i64, ptr %i.m, align 8, !noundef !177 ; 3 uses
@@ -3262,7 +3241,7 @@ _RINvNtNtCsf3Ta7LF998c_4core5slice5index5rangeINtNtNtB6_3ops5range7RangeTojEECsg
   %.sroa.021.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.422.0.copyload = load ptr, ptr %i.k, align 8, !nonnull !177, !noundef !177 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !79509)
-  %.idx = shl nuw nsw i64 %i.ah, 5                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ah, 5
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.422.0.copyload, i64 %.idx
   call void @llvm.experimental.noalias.scope.decl(metadata !79510)
   call void @llvm.experimental.noalias.scope.decl(metadata !79511)
@@ -3345,13 +3324,10 @@ bb.k:                                             ; preds = %_RNvXs4_NtNtCsgCecv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.4.i.i, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.712.0..sroa_idx13.i.i.i.i, i64 6, i1 false), !noalias !79519
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.79.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.79.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.712.sroa.7.0..sroa.712.0..sroa_idx13.sroa_idx.i.i.i.i, i64 16, i1 false), !noalias !79519
-  %gepdiff = add nsw i64 %.idx, -32
-  %4 = lshr exact i64 %gepdiff, 5
-  %5 = call i64 @llvm.umin.i64(i64 %i.au, i64 %4) ; 2 uses
-  %i.ba = call i64 @llvm.umax.i64(i64 %5, i64 3)  ; 2 uses
+  %i.ba = call i64 @llvm.umax.i64(i64 %i.au, i64 3) ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %i.bc = mul i64 %i.bb, 72                       ; 3 uses
-  %or.cond.i.i3.i.i = icmp samesign ugt i64 %5, 128102389400760774
+  %or.cond.i.i3.i.i = icmp samesign ugt i64 %i.ah, 128102389400760775
   br i1 %or.cond.i.i3.i.i, label %bb.n, label %bb.l, !prof !188
 
 bb.l:                                             ; preds = %bb.k
