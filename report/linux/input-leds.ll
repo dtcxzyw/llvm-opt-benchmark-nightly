@@ -93,10 +93,8 @@ find_next_bit.exit.i:                             ; preds = %bb.b
   br i1 %i.g, label %bb.c, label %input_leds_get_count.exit
 
 bb.c:                                             ; preds = %find_next_bit.exit.i
-  %3 = and i64 %i.e, 15
-  %4 = getelementptr [16 x i8], ptr @input_led_info, i64 %3
-  %5 = load ptr, ptr %4, align 16
-  %.not.i83 = icmp ne ptr %5, null
+  %3 = or i64 %i.e, -16
+  %.not.i83 = icmp samesign ult i64 %3, -5
   %i.h = zext i1 %.not.i83 to i32
   %spec.select.i = add i32 %.09.i, %i.h           ; 2 uses
   %i.i = add nuw nsw i64 %i.e, 1
@@ -159,11 +157,10 @@ find_next_bit.exit:                               ; preds = %bb.f
   br i1 %i.af, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %find_next_bit.exit
-  %i.ag = and i64 %i.ad, 15
+  %i.ag = and i64 %i.ad, 15                       ; 2 uses
   %i.ah = getelementptr [16 x i8], ptr @input_led_info, i64 %i.ag ; 2 uses
-  %6 = load ptr, ptr %i.ah, align 16              ; 2 uses
-  %.not80 = icmp eq ptr %6, null
-  br i1 %.not80, label %bb.m, label %bb.h
+  %4 = icmp samesign ugt i64 %i.ag, 10
+  br i1 %4, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ai = sext i32 %.06797 to i64
@@ -182,7 +179,8 @@ bb.i:                                             ; preds = %bb.h
 
 dev_name.exit:                                    ; preds = %bb.h, %bb.i
   %.0.i86 = phi ptr [ %.val.i, %bb.i ], [ %i.am, %bb.h ]
-  %i.an = tail call noalias ptr (i32, ptr, ...) @kasprintf(i32 noundef 3264, ptr noundef @.str.2, ptr noundef %.0.i86, ptr noundef nonnull %6) #7 ; 2 uses
+  %5 = load ptr, ptr %i.ah, align 16
+  %i.an = tail call noalias ptr (i32, ptr, ...) @kasprintf(i32 noundef 3264, ptr noundef @.str.2, ptr noundef %.0.i86, ptr noundef %5) #7 ; 2 uses
   store ptr %i.an, ptr %i.aj, align 8
   %.not81 = icmp eq ptr %i.an, null
   br i1 %.not81, label %.loopexit, label %bb.j

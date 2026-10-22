@@ -205,7 +205,7 @@ magic_comment_marker.exit.thread.i:               ; preds = %bb.iq, %bb.in, %bb.
   br i1 %i.anx, label %.preheader271.i, label %parser_magic_comment.exit
 
 .preheader271.i:                                  ; preds = %magic_comment_marker.exit.thread.i, %.loopexit.i936
-  %.0137365.i = phi i64 [ %.4.i, %.loopexit.i936 ], [ 0, %magic_comment_marker.exit.thread.i ] ; 8 uses
+  %.0137365.i = phi i64 [ %.4.i, %.loopexit.i936 ], [ 0, %magic_comment_marker.exit.thread.i ] ; 7 uses
   %.0139364.i = phi i64 [ %.3142.i, %.loopexit.i936 ], [ 0, %magic_comment_marker.exit.thread.i ] ; 6 uses
   %.1145363.i = phi i64 [ %.14.i, %.loopexit.i936 ], [ %.0144.i, %magic_comment_marker.exit.thread.i ]
   %.1150362.i = phi ptr [ %.14163.i, %.loopexit.i936 ], [ %.0149.i, %magic_comment_marker.exit.thread.i ]
@@ -476,8 +476,8 @@ bb.jm:                                            ; preds = %.lr.ph357.i
   br i1 %.not200.i, label %.critedge10.i, label %.loopexit
 
 .critedge10.i:                                    ; preds = %.critedge12.i, %bb.jl, %bb.jm, %.critedge14.i, %.preheader268.i
-  %.12161.i = phi ptr [ %.9158.i, %.critedge14.i ], [ %.9158.i, %.preheader268.i ], [ %scevgep404.i, %bb.jm ], [ %.10159347.i, %bb.jl ], [ %scevgep403.i, %.critedge12.i ] ; 3 uses
-  %.12.i = phi i64 [ 0, %.critedge14.i ], [ %.9.i, %.preheader268.i ], [ 0, %bb.jm ], [ %.10348.i, %bb.jl ], [ 0, %.critedge12.i ] ; 3 uses
+  %.12161.i = phi ptr [ %.9158.i, %.critedge14.i ], [ %.9158.i, %.preheader268.i ], [ %scevgep404.i, %bb.jm ], [ %.10159347.i, %bb.jl ], [ %scevgep403.i, %.critedge12.i ] ; 2 uses
+  %.12.i = phi i64 [ 0, %.critedge14.i ], [ %.9.i, %.preheader268.i ], [ 0, %bb.jm ], [ %.10348.i, %bb.jl ], [ 0, %.critedge12.i ] ; 2 uses
   %i.arc = ptrtoint ptr %.3152302.i to i64
   %i.ard = ptrtoint ptr %.2151300.i to i64
   %i.are = sub i64 %i.arc, %i.ard                 ; 23 uses
@@ -514,7 +514,7 @@ bb.jq:                                            ; preds = %.critedge10.i
 
 ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.jq, %bb.jp, %RSTRING_PTR.exit.i
   %.pre-phi.i937 = phi ptr [ %i.arg, %bb.jp ], [ %i.arg, %RSTRING_PTR.exit.i ], [ %.pre405.i, %bb.jq ] ; 2 uses
-  %.1140.i = phi i64 [ %.0139364.i, %bb.jp ], [ %.0139364.i, %RSTRING_PTR.exit.i ], [ %i.arn, %bb.jq ] ; 3 uses
+  %.1140.i = phi i64 [ %.0139364.i, %bb.jp ], [ %.0139364.i, %RSTRING_PTR.exit.i ], [ %i.arn, %bb.jq ] ; 2 uses
   %i.aro = load i64, ptr %.pre-phi.i937, align 8, !tbaa !30
   %i.arp = and i64 %i.aro, 8192
   %.not.i223.i = icmp eq i64 %i.arp, 0
@@ -917,8 +917,10 @@ vec.epilog.middle.block:                          ; preds = %pred.store.continue
 
 .preheader.i938:                                  ; preds = %bb.jt, %middle.block, %vec.epilog.middle.block, %RSTRING_PTR.exit224.i
   %i.aww = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.814, ptr noundef %i.ars, i64 noundef %i.are) #35
-  %i.awx = icmp eq i32 %i.aww, 0
-  br i1 %i.awx, label %3, label %6
+  %3 = icmp eq i32 %i.aww, 0
+  %i.awx = icmp eq i64 %i.are, 6
+  %or.cond.i939 = and i1 %i.awx, %3
+  br i1 %or.cond.i939, label %bb.ju, label %bb.kc
 
 .lr.ph361.i:                                      ; preds = %.lr.ph361.i.preheader, %bb.jt
   %i.awy = phi i64 [ %i.axd, %bb.jt ], [ %.ph, %.lr.ph361.i.preheader ]
@@ -938,15 +940,9 @@ bb.jt:                                            ; preds = %bb.js, %.lr.ph361.i
   %i.axe = icmp sgt i64 %i.are, %i.axd
   br i1 %i.axe, label %.lr.ph361.i, label %.preheader.i938, !llvm.loop !609
 
-3:                                                ; preds = %.preheader.i938
-  %4 = getelementptr i8, ptr @.str.814, i64 %i.are
-  %5 = load i8, ptr %4, align 1, !tbaa !31
-  %.not203.i = icmp eq i8 %5, 0
-  br i1 %.not203.i, label %bb.ju, label %6
-
-bb.ju:                                            ; preds = %bb.kf, %bb.ke, %bb.kd, %bb.kc, %3
-  %.0133.lcssa.i = phi ptr [ @magic_comments, %3 ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 24), %bb.kc ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 48), %bb.kd ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 72), %bb.ke ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 96), %bb.kf ] ; 2 uses
-  %.lcssa391.i = phi ptr [ @.str.814, %3 ], [ @.str.815, %bb.kc ], [ @.str.816, %bb.kd ], [ @.str.817, %bb.ke ], [ @.str.818, %bb.kf ]
+bb.ju:                                            ; preds = %bb.kf, %bb.ke, %bb.kd, %bb.kc, %.preheader.i938
+  %.0133.lcssa.i = phi ptr [ @magic_comments, %.preheader.i938 ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 24), %bb.kc ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 48), %bb.kd ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 72), %bb.ke ], [ getelementptr inbounds nuw (i8, ptr @magic_comments, i64 96), %bb.kf ] ; 2 uses
+  %.lcssa391.i = phi ptr [ @.str.814, %.preheader.i938 ], [ @.str.815, %bb.kc ], [ @.str.816, %bb.kd ], [ @.str.817, %bb.ke ], [ @.str.818, %bb.kf ]
   %i.axf = ptrtoint ptr %.0135.i to i64
   %i.axg = ptrtoint ptr %.0136.i to i64
   %i.axh = sub i64 %i.axf, %i.axg                 ; 2 uses
@@ -1014,55 +1010,39 @@ RSTRING_PTR.exit231.i:                            ; preds = %bb.kb, %ruby_nonemp
   call void %i.axv(ptr noundef nonnull %0, ptr noundef nonnull %.lcssa391.i, ptr noundef %i.aya) #31, !inline_history !610
   br label %.loopexit.i936
 
-6:                                                ; preds = %3, %.preheader.i938
-  %7 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.815, ptr noundef %i.ars, i64 noundef %i.are) #35
-  %8 = icmp eq i32 %7, 0
-  br i1 %8, label %bb.kc, label %11
+bb.kc:                                            ; preds = %.preheader.i938
+  %4 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.815, ptr noundef %i.ars, i64 noundef %i.are) #35
+  %5 = icmp eq i32 %4, 0
+  %.not203.1.i = icmp eq i64 %i.are, 8
+  %or.cond473.i = and i1 %.not203.1.i, %5
+  br i1 %or.cond473.i, label %bb.ju, label %bb.kd
 
-bb.kc:                                            ; preds = %6
-  %9 = getelementptr i8, ptr @.str.815, i64 %i.are
-  %10 = load i8, ptr %9, align 1, !tbaa !31
-  %.not203.1.i = icmp eq i8 %10, 0
-  br i1 %.not203.1.i, label %bb.ju, label %11
+bb.kd:                                            ; preds = %bb.kc
+  %6 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.816, ptr noundef %i.ars, i64 noundef %i.are) #35
+  %7 = icmp eq i32 %6, 0
+  %.not203.2.i = icmp eq i64 %i.are, 21
+  %or.cond474.i = and i1 %.not203.2.i, %7
+  br i1 %or.cond474.i, label %bb.ju, label %bb.ke
 
-11:                                               ; preds = %bb.kc, %6
-  %12 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.816, ptr noundef %i.ars, i64 noundef %i.are) #35
-  %13 = icmp eq i32 %12, 0
-  br i1 %13, label %bb.kd, label %16
+bb.ke:                                            ; preds = %bb.kd
+  %8 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.817, ptr noundef %i.ars, i64 noundef %i.are) #35
+  %9 = icmp eq i32 %8, 0
+  %.not203.3.i = icmp eq i64 %i.are, 24
+  %or.cond475.i = and i1 %.not203.3.i, %9
+  br i1 %or.cond475.i, label %bb.ju, label %bb.kf
 
-bb.kd:                                            ; preds = %11
-  %14 = getelementptr i8, ptr @.str.816, i64 %i.are
-  %15 = load i8, ptr %14, align 1, !tbaa !31
-  %.not203.2.i = icmp eq i8 %15, 0
-  br i1 %.not203.2.i, label %bb.ju, label %16
+bb.kf:                                            ; preds = %bb.ke
+  %10 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.818, ptr noundef %i.ars, i64 noundef %i.are) #35
+  %11 = icmp eq i32 %10, 0
+  %.not203.4.i = icmp eq i64 %i.are, 11
+  %or.cond476.i = and i1 %.not203.4.i, %11
+  br i1 %or.cond476.i, label %bb.ju, label %.loopexit.i936
 
-16:                                               ; preds = %bb.kd, %11
-  %17 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.817, ptr noundef %i.ars, i64 noundef %i.are) #35
-  %18 = icmp eq i32 %17, 0
-  br i1 %18, label %bb.ke, label %21
-
-bb.ke:                                            ; preds = %16
-  %19 = getelementptr i8, ptr @.str.817, i64 %i.are
-  %20 = load i8, ptr %19, align 1, !tbaa !31
-  %.not203.3.i = icmp eq i8 %20, 0
-  br i1 %.not203.3.i, label %bb.ju, label %21
-
-21:                                               ; preds = %bb.ke, %16
-  %22 = call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.818, ptr noundef %i.ars, i64 noundef %i.are) #35
-  %23 = icmp eq i32 %22, 0
-  br i1 %23, label %bb.kf, label %.loopexit.i936
-
-bb.kf:                                            ; preds = %21
-  %24 = getelementptr i8, ptr @.str.818, i64 %i.are
-  %25 = load i8, ptr %24, align 1, !tbaa !31
-  %.not203.4.i = icmp eq i8 %25, 0
-  br i1 %.not203.4.i, label %bb.ju, label %.loopexit.i936
-
-.loopexit.i936:                                   ; preds = %bb.kf, %21, %RSTRING_PTR.exit231.i, %bb.jf
-  %.14163.i = phi ptr [ %.12161.i, %RSTRING_PTR.exit231.i ], [ %.4153320.i, %bb.jf ], [ %.12161.i, %bb.kf ], [ %.12161.i, %21 ]
-  %.14.i = phi i64 [ %.12.i, %RSTRING_PTR.exit231.i ], [ %.4148321.i, %bb.jf ], [ %.12.i, %bb.kf ], [ %.12.i, %21 ] ; 2 uses
-  %.3142.i = phi i64 [ %.1140.i, %RSTRING_PTR.exit231.i ], [ %.0139364.i, %bb.jf ], [ %.1140.i, %bb.kf ], [ %.1140.i, %21 ]
-  %.4.i = phi i64 [ %.1138.i, %RSTRING_PTR.exit231.i ], [ %.0137365.i, %bb.jf ], [ %.0137365.i, %bb.kf ], [ %.0137365.i, %21 ]
+.loopexit.i936:                                   ; preds = %bb.kf, %RSTRING_PTR.exit231.i, %bb.jf
+  %.14163.i = phi ptr [ %.12161.i, %RSTRING_PTR.exit231.i ], [ %.4153320.i, %bb.jf ], [ %.12161.i, %bb.kf ]
+  %.14.i = phi i64 [ %.12.i, %RSTRING_PTR.exit231.i ], [ %.4148321.i, %bb.jf ], [ %.12.i, %bb.kf ] ; 2 uses
+  %.3142.i = phi i64 [ %.1140.i, %RSTRING_PTR.exit231.i ], [ %.0139364.i, %bb.jf ], [ %.1140.i, %bb.kf ]
+  %.4.i = phi i64 [ %.1138.i, %RSTRING_PTR.exit231.i ], [ %.0137365.i, %bb.jf ], [ %.0137365.i, %bb.kf ]
   %i.ayb = icmp sgt i64 %.14.i, 0
   br i1 %i.ayb, label %.preheader271.i, label %parser_magic_comment.exit
 

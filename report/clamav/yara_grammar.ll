@@ -202,9 +202,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.nw, %bb.nf, %bb.s
   %.01449 = phi ptr [ %.41453, %bb.nw ], [ %.11450, %bb.nf ], [ %.11450, %bb.s ]
-  %.01239 = phi i32 [ %16, %bb.nw ], [ %i.abv, %bb.nf ], [ %i.bl, %bb.s ]
+  %.01239 = phi i32 [ 3, %bb.nw ], [ %i.abv, %bb.nf ], [ %i.bl, %bb.s ]
   %.01236 = phi i32 [ 3, %bb.nw ], [ %.11237, %bb.nf ], [ %spec.select, %bb.s ]
-  %.01219 = phi ptr [ %.51224, %bb.nw ], [ %i.abc, %bb.nf ], [ %.31222, %bb.s ]
+  %.01219 = phi ptr [ %.51224.lcssa, %bb.nw ], [ %i.abc, %bb.nf ], [ %.31222, %bb.s ]
   %.01205 = phi ptr [ %i.ada, %bb.nw ], [ %i.abd, %bb.nf ], [ %i.bo, %bb.s ]
   %.01180 = phi i32 [ %.61186, %bb.nw ], [ %.51185, %bb.nf ], [ -2, %bb.s ]
   %i.v = getelementptr inbounds nuw i8, ptr %.01219, i64 1
@@ -607,7 +607,7 @@ bb.ni:                                            ; preds = %bb.nh
 
 bb.nj:                                            ; preds = %bb.ni, %bb.nh, %bb.ng
   %i.acb = phi i32 [ -2, %bb.ng ], [ %i.aca, %bb.ni ], [ 2, %bb.nh ] ; 3 uses
-  switch i32 %.11237, label %yydestruct.exit [
+  switch i32 %.11237, label %bb.nt [
     i32 0, label %bb.nk
     i32 3, label %bb.nq
   ]
@@ -621,7 +621,7 @@ bb.nk:                                            ; preds = %bb.nj
 
 .thread1517:                                      ; preds = %bb.nk
   call void @yara_yyerror(ptr noundef %0, ptr noundef %1, ptr noundef %.11450) #11
-  br label %yydestruct.exit
+  br label %bb.nt
 
 bb.nl:                                            ; preds = %bb.nk
   %.not1419 = icmp eq ptr %.11450, %i.b
@@ -650,7 +650,7 @@ bb.np:                                            ; preds = %bb.nn
   %i.acf = call fastcc i32 @yysyntax_error(ptr noundef %i.c, ptr nonnull %i.ace, ptr noundef %.31222, i32 noundef %i.acb)
   call void @yara_yyerror(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.ace) #11
   %i.acg = icmp eq i32 %i.acf, 2
-  br i1 %i.acg, label %.thread1462, label %yydestruct.exit
+  br i1 %i.acg, label %.thread1462, label %bb.nt
 
 bb.nq:                                            ; preds = %bb.nj
   %i.ach = icmp slt i32 %.41184, 1
@@ -658,10 +658,10 @@ bb.nq:                                            ; preds = %bb.nj
 
 bb.nr:                                            ; preds = %bb.nq
   %i.aci = icmp eq i32 %.41184, 0
-  br i1 %i.aci, label %.thread1544, label %yydestruct.exit
+  br i1 %i.aci, label %.thread1544, label %bb.nt
 
 bb.ns:                                            ; preds = %bb.nq
-  switch i32 %i.acb, label %yydestruct.exit [
+  switch i32 %i.acb, label %bb.nt [
     i32 9, label %.sink.split.i
     i32 10, label %.sink.split.i
     i32 11, label %.sink.split.i
@@ -675,7 +675,7 @@ bb.ns:                                            ; preds = %bb.nq
 .sink.split.i:                                    ; preds = %bb.ns, %bb.ns, %bb.ns, %bb.ns, %bb.ns, %bb.ns, %bb.ns, %bb.ns
   %i.acj = load ptr, ptr %2, align 8, !tbaa !8
   call void @free(ptr noundef %i.acj) #11
-  br label %yydestruct.exit
+  br label %bb.nt
 
 .thread1503:                                      ; preds = %bb.eq, %bb.eo, %bb.el, %.thread1507, %bb.fc, %bb.dz, %bb.cl, %bb.bz, %bb.bu, %bb.aq, %bb.ae, %bb.y, %bb.w, %bb.mz, %bb.mw, %bb.ms, %bb.mp, %bb.ml, %bb.mh, %bb.me, %bb.ma, %bb.lx, %bb.lt, %bb.lq, %bb.lm, %bb.lj, %bb.lf, %bb.lc, %bb.ky, %bb.kv, %bb.kr, %bb.ko, %bb.kk, %bb.kh, %bb.ke, %bb.jw, %bb.jr, %bb.jo, %bb.jj, %bb.jg, %bb.je, %bb.ja, %bb.iy, %bb.iu, %bb.is, %bb.io, %bb.im, %bb.ii, %bb.ig, %bb.ic, %bb.ia, %bb.hw, %bb.hu, %bb.hl, %bb.hi, %bb.hf, %bb.gx, %bb.gt, %bb.gp, %bb.gl, %bb.gi, %bb.ge, %bb.gb, %bb.fx, %bb.fu, %bb.fq, %bb.fn, %bb.fj, %bb.eh, %bb.ee, %bb.ec, %bb.dw, %bb.du, %bb.dr, %.thread1495, %bb.dl, %bb.di, %bb.de, %bb.db, %bb.cy, %bb.ct, %bb.cp, %bb.cd, %bb.bf, %bb.bd, %bb.ba, %bb.aw, %bb.au, %bb.as, %bb.al, %bb.ab
   %i.ack = sub nsw i64 0, %i.bx                   ; 2 uses
@@ -683,46 +683,31 @@ bb.ns:                                            ; preds = %bb.nq
   %i.acm = getelementptr inbounds i8, ptr %.31222, i64 %i.ack ; 2 uses
   %i.acn = load i8, ptr %i.acm, align 1, !tbaa !8
   %i.aco = zext i8 %i.acn to i32
-  br label %yydestruct.exit
-
-yydestruct.exit:                                  ; preds = %bb.nj, %bb.np, %.thread1517, %.sink.split.i, %bb.ns, %bb.nr, %.thread1503
-  %.41453 = phi ptr [ %.11450, %bb.nr ], [ %.11450, %.sink.split.i ], [ %.11450, %bb.nj ], [ %.11450, %.thread1503 ], [ %.11450, %bb.ns ], [ %.11450, %.thread1517 ], [ %i.ace, %bb.np ] ; 2 uses
-  %.21241 = phi i32 [ %.11240, %bb.nr ], [ %.11240, %.sink.split.i ], [ %.11240, %bb.nj ], [ %i.aco, %.thread1503 ], [ %.11240, %bb.ns ], [ %.11240, %.thread1517 ], [ %.11240, %bb.np ]
-  %.41223 = phi ptr [ %.31222, %bb.nr ], [ %.31222, %.sink.split.i ], [ %.31222, %bb.nj ], [ %i.acm, %.thread1503 ], [ %.31222, %bb.ns ], [ %.31222, %.thread1517 ], [ %.31222, %bb.np ] ; 3 uses
-  %.41209 = phi ptr [ %.31208, %bb.nr ], [ %.31208, %.sink.split.i ], [ %.31208, %bb.nj ], [ %i.acl, %.thread1503 ], [ %.31208, %bb.ns ], [ %.31208, %.thread1517 ], [ %.31208, %bb.np ]
-  %.61186 = phi i32 [ %.41184, %bb.nr ], [ -2, %.sink.split.i ], [ %.41184, %bb.nj ], [ %.51185, %.thread1503 ], [ -2, %bb.ns ], [ %.41184, %.thread1517 ], [ %.41184, %bb.np ] ; 2 uses
   br label %bb.nt
 
-bb.nt:                                            ; preds = %yydestruct.exit1441, %yydestruct.exit
-  %.31242 = phi i32 [ %.21241, %yydestruct.exit ], [ %15, %yydestruct.exit1441 ]
-  %.51224 = phi ptr [ %.41223, %yydestruct.exit ], [ %i.acy, %yydestruct.exit1441 ] ; 3 uses
-  %.51210 = phi ptr [ %.41209, %yydestruct.exit ], [ %i.acx, %yydestruct.exit1441 ] ; 4 uses
-  %i.acp = sext i32 %.31242 to i64                ; 2 uses
+bb.nt:                                            ; preds = %bb.nj, %bb.np, %.thread1517, %.sink.split.i, %bb.ns, %bb.nr, %.thread1503
+  %.41453 = phi ptr [ %.11450, %bb.nr ], [ %.11450, %.sink.split.i ], [ %.11450, %bb.nj ], [ %.11450, %.thread1503 ], [ %.11450, %bb.ns ], [ %.11450, %.thread1517 ], [ %i.ace, %bb.np ] ; 2 uses
+  %.21241 = phi i32 [ %.11240, %bb.nr ], [ %.11240, %.sink.split.i ], [ %.11240, %bb.nj ], [ %i.aco, %.thread1503 ], [ %.11240, %bb.ns ], [ %.11240, %.thread1517 ], [ %.11240, %bb.np ] ; 2 uses
+  %.41223 = phi ptr [ %.31222, %bb.nr ], [ %.31222, %.sink.split.i ], [ %.31222, %bb.nj ], [ %i.acm, %.thread1503 ], [ %.31222, %bb.ns ], [ %.31222, %.thread1517 ], [ %.31222, %bb.np ] ; 4 uses
+  %.41209 = phi ptr [ %.31208, %bb.nr ], [ %.31208, %.sink.split.i ], [ %.31208, %bb.nj ], [ %i.acl, %.thread1503 ], [ %.31208, %bb.ns ], [ %.31208, %.thread1517 ], [ %.31208, %bb.np ] ; 2 uses
+  %.61186 = phi i32 [ %.41184, %bb.nr ], [ -2, %.sink.split.i ], [ %.41184, %bb.nj ], [ %.51185, %.thread1503 ], [ -2, %bb.ns ], [ %.41184, %.thread1517 ], [ %.41184, %bb.np ] ; 2 uses
+  %i.acp = sext i32 %.21241 to i64                ; 2 uses
   %i.acq = getelementptr inbounds [2 x i8], ptr @yypact, i64 %i.acp
-  %i.acr = load i16, ptr %i.acq, align 2, !tbaa !12 ; 2 uses
+  %i.acr = load i16, ptr %i.acq, align 2, !tbaa !12
   %i.acs = icmp sgt i16 %i.acr, -2
-  br i1 %i.acs, label %bb.nu, label %13
+  %5 = icmp eq i32 %.21241, 1
+  %or.cond1787 = and i1 %i.acs, %5
+  br i1 %or.cond1787, label %bb.nw, label %bb.nu
 
-bb.nu:                                            ; preds = %bb.nt
-  %5 = sext i16 %i.acr to i64
-  %6 = add nsw i64 %5, 1                          ; 2 uses
-  %7 = getelementptr inbounds nuw [2 x i8], ptr @yycheck, i64 %6
-  %8 = load i16, ptr %7, align 2, !tbaa !12
-  %i.act = icmp eq i16 %8, 1
-  br i1 %i.act, label %9, label %13
+bb.nu:                                            ; preds = %bb.nt, %yydestruct.exit1441
+  %6 = phi i64 [ %7, %yydestruct.exit1441 ], [ %i.acp, %bb.nt ]
+  %.512101789 = phi ptr [ %i.acx, %yydestruct.exit1441 ], [ %.41209, %bb.nt ] ; 3 uses
+  %.512241788 = phi ptr [ %i.acy, %yydestruct.exit1441 ], [ %.41223, %bb.nt ] ; 2 uses
+  %i.act = icmp eq ptr %.512241788, %.31232
+  br i1 %i.act, label %.loopexit.loopexit, label %bb.nv
 
-9:                                                ; preds = %bb.nu
-  %10 = getelementptr inbounds nuw [2 x i8], ptr @yytable, i64 %6
-  %11 = load i16, ptr %10, align 2, !tbaa !12     ; 2 uses
-  %12 = icmp sgt i16 %11, 0
-  br i1 %12, label %bb.nw, label %13
-
-13:                                               ; preds = %bb.nu, %9, %bb.nt
-  %14 = icmp eq ptr %.51224, %.31232
-  br i1 %14, label %.loopexit.loopexit, label %bb.nv
-
-bb.nv:                                            ; preds = %13
-  %i.acu = getelementptr inbounds i8, ptr @yystos, i64 %i.acp
+bb.nv:                                            ; preds = %bb.nu
+  %i.acu = getelementptr inbounds i8, ptr @yystos, i64 %6
   %i.acv = load i8, ptr %i.acu, align 1, !tbaa !8
   switch i8 %i.acv, label %yydestruct.exit1441 [
     i8 9, label %.sink.split.i1440
@@ -736,20 +721,26 @@ bb.nv:                                            ; preds = %13
   ]
 
 .sink.split.i1440:                                ; preds = %bb.nv, %bb.nv, %bb.nv, %bb.nv, %bb.nv, %bb.nv, %bb.nv, %bb.nv
-  %i.acw = load ptr, ptr %.51210, align 8, !tbaa !8
+  %i.acw = load ptr, ptr %.512101789, align 8, !tbaa !8
   call void @free(ptr noundef %i.acw) #11
   br label %yydestruct.exit1441
 
 yydestruct.exit1441:                              ; preds = %bb.nv, %.sink.split.i1440
-  %i.acx = getelementptr inbounds i8, ptr %.51210, i64 -8
-  %i.acy = getelementptr inbounds i8, ptr %.51224, i64 -1 ; 2 uses
-  %i.acz = load i8, ptr %i.acy, align 1, !tbaa !8
-  %15 = zext i8 %i.acz to i32
-  br label %bb.nt
+  %i.acx = getelementptr inbounds i8, ptr %.512101789, i64 -8 ; 2 uses
+  %i.acy = getelementptr inbounds i8, ptr %.512241788, i64 -1 ; 3 uses
+  %i.acz = load i8, ptr %i.acy, align 1, !tbaa !8 ; 2 uses
+  %7 = zext i8 %i.acz to i64                      ; 2 uses
+  %8 = getelementptr inbounds nuw [2 x i8], ptr @yypact, i64 %7
+  %9 = load i16, ptr %8, align 2, !tbaa !12
+  %10 = icmp sgt i16 %9, -2
+  %11 = icmp eq i8 %i.acz, 1
+  %or.cond = and i1 %10, %11
+  br i1 %or.cond, label %bb.nw, label %bb.nu
 
-bb.nw:                                            ; preds = %9
-  %16 = zext nneg i16 %11 to i32
-  %i.ada = getelementptr inbounds nuw i8, ptr %.51210, i64 8 ; 2 uses
+bb.nw:                                            ; preds = %yydestruct.exit1441, %bb.nt
+  %.51224.lcssa = phi ptr [ %.41223, %bb.nt ], [ %i.acy, %yydestruct.exit1441 ]
+  %.51210.lcssa = phi ptr [ %.41209, %bb.nt ], [ %i.acx, %yydestruct.exit1441 ]
+  %i.ada = getelementptr inbounds nuw i8, ptr %.51210.lcssa, i64 8 ; 2 uses
   %i.adb = load i64, ptr %2, align 8, !tbaa !8
   store i64 %i.adb, ptr %i.ada, align 8, !tbaa !8
   br label %bb.b
@@ -763,7 +754,7 @@ bb.nw:                                            ; preds = %9
   call void @yara_yyerror(ptr noundef %0, ptr noundef %1, ptr noundef nonnull @.str.64) #11
   br label %.loopexit
 
-.loopexit.loopexit:                               ; preds = %13
+.loopexit.loopexit:                               ; preds = %bb.nu
   %.312321643.le = ptrtoaddr ptr %.31232 to i64
   %.412231644.le = ptrtoaddr ptr %.41223 to i64
   %i.adc = sub i64 %.312321643.le, %.412231644.le
@@ -774,7 +765,7 @@ bb.nw:                                            ; preds = %9
   %.61455 = phi ptr [ %.41453, %.loopexit.loopexit ], [ %.51454, %.thread1462 ], [ %.11450, %.thread1469 ], [ %.11450, %bb.h ] ; 2 uses
   %.61235 = phi ptr [ %.31232, %.loopexit.loopexit ], [ %.51234, %.thread1462 ], [ %i.ah, %bb.h ], [ %.31232, %.thread1469 ] ; 2 uses
   %.81227 = phi ptr [ %scevgep.le, %.loopexit.loopexit ], [ %.71226, %.thread1462 ], [ %i.am, %bb.h ], [ %.31222, %.thread1469 ] ; 2 uses
-  %.81213 = phi ptr [ %.51210, %.loopexit.loopexit ], [ %.71212, %.thread1462 ], [ %i.ao, %bb.h ], [ %.31208, %.thread1469 ] ; 2 uses
+  %.81213 = phi ptr [ %.512101789, %.loopexit.loopexit ], [ %.71212, %.thread1462 ], [ %i.ao, %bb.h ], [ %.31208, %.thread1469 ] ; 2 uses
   %.01200 = phi i32 [ 1, %.loopexit.loopexit ], [ 2, %.thread1462 ], [ 1, %bb.h ], [ 0, %.thread1469 ] ; 2 uses
   %.91189 = phi i32 [ %.61186, %.loopexit.loopexit ], [ %.81188, %.thread1462 ], [ %.11181, %.thread1469 ], [ %.11181, %bb.h ] ; 2 uses
   %or.cond15 = icmp ult i32 %.91189, 310

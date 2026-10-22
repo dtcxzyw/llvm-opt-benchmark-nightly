@@ -82,10 +82,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 0, 3) i32 @phpdbg_parse() local_unnamed_addr #0 {
 bb.a:
-  %0 = alloca %struct._phpdbg_param, align 8      ; 6 uses
+  %0 = alloca %struct._phpdbg_param, align 8      ; 5 uses
   %i.a = alloca [200 x i8], align 16              ; 6 uses
   %1 = alloca [200 x %struct._phpdbg_param], align 16 ; 4 uses
-  %i.b = alloca [128 x i8], align 16              ; 6 uses
+  %i.b = alloca [128 x i8], align 16              ; 13 uses
   %i.c = alloca i64, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %0, i8 0, i64 88, i1 false)
@@ -96,27 +96,23 @@ bb.a:
   store i64 128, ptr %i.c, align 8, !tbaa !13
   br label %bb.c
 
-bb.b:                                             ; preds = %34, %bb.bf, %bb.t
-  %.0572 = phi ptr [ %.1573, %bb.bf ], [ %.4575, %34 ], [ %.1573, %bb.t ]
-  %.0511 = phi i32 [ %i.hw, %bb.bf ], [ %35, %34 ], [ %i.av, %bb.t ]
-  %.0508 = phi i32 [ %.1509, %bb.bf ], [ 3, %34 ], [ %spec.select, %bb.t ]
-  %.0489 = phi ptr [ %i.he, %bb.bf ], [ %.4493, %34 ], [ %.3492, %bb.t ]
-  %.0476 = phi ptr [ %i.hf, %bb.bf ], [ %36, %34 ], [ %i.az, %bb.t ]
-  %.0468 = phi i32 [ %.5, %bb.bf ], [ %.6, %34 ], [ -2, %bb.t ]
+bb.b:                                             ; preds = %bb.bf, %bb.t
+  %.0511 = phi i32 [ %i.av, %bb.t ], [ %i.hw, %bb.bf ]
+  %.0489 = phi ptr [ %.3492, %bb.t ], [ %i.he, %bb.bf ]
+  %.0476 = phi ptr [ %i.az, %bb.t ], [ %i.hf, %bb.bf ]
+  %.0468 = phi i32 [ -2, %bb.t ], [ %.5, %bb.bf ]
   %i.d = getelementptr inbounds nuw i8, ptr %.0489, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1573 = phi ptr [ %i.b, %bb.a ], [ %.0572, %bb.b ] ; 17 uses
-  %.1512 = phi i32 [ 0, %bb.a ], [ %.0511, %bb.b ] ; 4 uses
-  %.1509 = phi i32 [ 0, %bb.a ], [ %.0508, %bb.b ] ; 3 uses
+  %.1509 = phi i32 [ 0, %bb.a ], [ %.0511, %bb.b ] ; 3 uses
   %.0505 = phi i64 [ 200, %bb.a ], [ %.2507, %bb.b ] ; 4 uses
   %.0498 = phi ptr [ %i.a, %bb.a ], [ %.3501, %bb.b ] ; 8 uses
   %.1490 = phi ptr [ %i.a, %bb.a ], [ %i.d, %bb.b ] ; 4 uses
   %.0485 = phi ptr [ %1, %bb.a ], [ %.3488, %bb.b ] ; 2 uses
   %.1477 = phi ptr [ %1, %bb.a ], [ %.0476, %bb.b ]
   %.1469 = phi i32 [ -2, %bb.a ], [ %.0468, %bb.b ] ; 3 uses
-  %i.e = trunc nsw i32 %.1512 to i8
+  %i.e = trunc nsw i32 %.1509 to i8
   store i8 %i.e, ptr %.1490, align 1, !tbaa !14
   %i.f = getelementptr inbounds i8, ptr %.0498, i64 %.0505
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -1
@@ -164,15 +160,15 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 .thread591:                                       ; preds = %bb.h, %bb.c
   %.2507 = phi i64 [ %.0505, %bb.c ], [ %spec.store.select, %bb.h ]
-  %.3501 = phi ptr [ %.0498, %bb.c ], [ %i.p, %bb.h ] ; 6 uses
-  %.3492 = phi ptr [ %.1490, %bb.c ], [ %i.u, %bb.h ] ; 5 uses
+  %.3501 = phi ptr [ %.0498, %bb.c ], [ %i.p, %bb.h ] ; 5 uses
+  %.3492 = phi ptr [ %.1490, %bb.c ], [ %i.u, %bb.h ] ; 4 uses
   %.3488 = phi ptr [ %.0485, %bb.c ], [ %i.s, %bb.h ]
-  %.3479 = phi ptr [ %.1477, %bb.c ], [ %i.w, %bb.h ] ; 130 uses
-  %i.y = icmp eq i32 %.1512, 27
+  %.3479 = phi ptr [ %.1477, %bb.c ], [ %i.w, %bb.h ] ; 129 uses
+  %i.y = icmp eq i32 %.1509, 27
   br i1 %i.y, label %.thread619, label %bb.i
 
 bb.i:                                             ; preds = %.thread591
-  %i.z = sext i32 %.1512 to i64                   ; 3 uses
+  %i.z = sext i32 %.1509 to i64                   ; 3 uses
   %i.aa = getelementptr inbounds i8, ptr @yypact, i64 %i.z
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !14
   %i.ac = sext i8 %i.ab to i32
@@ -196,7 +192,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ai = icmp eq i32 %.2470, 256
-  br i1 %i.ai, label %.thread598, label %bb.n
+  br i1 %i.ai, label %.thread619, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.aj = icmp samesign ult i32 %.2470, 278
@@ -238,13 +234,12 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.r
-  %spec.select = call i32 @llvm.usub.sat.i32(i32 %.1509, i32 1)
   %i.az = getelementptr inbounds nuw i8, ptr %.3479, i64 88 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.az, ptr noundef nonnull align 8 dereferenceable(88) %0, i64 88, i1 false), !tbaa.struct !49
   br label %bb.b
 
 bb.u:                                             ; preds = %bb.p, %bb.q, %bb.i
-  %.4 = phi i32 [ %.1469, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ] ; 9 uses
+  %.4 = phi i32 [ %.1469, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ] ; 4 uses
   %i.ba = getelementptr inbounds i8, ptr @yydefact, i64 %i.z
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !14
   %i.bc = sext i8 %i.bb to i32
@@ -647,52 +642,38 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd
 
 bb.bg:                                            ; preds = %bb.u
   %i.hx = icmp eq i32 %.4, -2
-  br i1 %i.hx, label %2, label %bb.bh
+  br i1 %i.hx, label %bb.bj, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %or.cond7 = icmp ult i32 %.4, 278
-  br i1 %or.cond7, label %bb.bi, label %2
+  br i1 %or.cond7, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
   %i.hy = zext nneg i32 %.4 to i64
   %i.hz = getelementptr inbounds nuw i8, ptr @yytranslate, i64 %i.hy
   %i.ia = load i8, ptr %i.hz, align 1, !tbaa !14
   %i.ib = sext i8 %i.ia to i32
-  br label %2
+  br label %bb.bj
 
-2:                                                ; preds = %bb.bi, %bb.bh, %bb.bg
-  %3 = phi i32 [ -2, %bb.bg ], [ %i.ib, %bb.bi ], [ 2, %bb.bh ] ; 2 uses
-  switch i32 %.1509, label %.thread598 [
-    i32 0, label %bb.bj
-    i32 3, label %6
-  ]
-
-bb.bj:                                            ; preds = %2
-  %i.ic = call fastcc i32 @yysyntax_error(ptr noundef %i.c, ptr %.1573, ptr %.3492, i32 %3)
+bb.bj:                                            ; preds = %bb.bg, %bb.bh, %bb.bi
+  %2 = phi i32 [ -2, %bb.bg ], [ %i.ib, %bb.bi ], [ 2, %bb.bh ] ; 2 uses
+  %i.ic = call fastcc i32 @yysyntax_error(ptr noundef %i.c, ptr nonnull %i.b, ptr %.3492, i32 %2)
   switch i32 %i.ic, label %bb.bo [
-    i32 0, label %4
-    i32 -1, label %5
+    i32 0, label %bb.bk
+    i32 -1, label %bb.bl
   ]
 
-4:                                                ; preds = %bb.bj
+bb.bk:                                            ; preds = %bb.bj
   br label %bb.bo
 
-5:                                                ; preds = %bb.bj
-  %.not547 = icmp eq ptr %.1573, %i.b
-  br i1 %.not547, label %bb.bl, label %bb.bk
-
-bb.bk:                                            ; preds = %5
-  call void @free(ptr noundef %.1573) #11
-  br label %bb.bl
-
-bb.bl:                                            ; preds = %bb.bk, %5
+bb.bl:                                            ; preds = %bb.bj
   %i.id = load i64, ptr %i.c, align 8, !tbaa !13
   %i.ie = call noalias ptr @malloc(i64 noundef %i.id) #12 ; 4 uses
   %.not548 = icmp eq ptr %i.ie, null
   br i1 %.not548, label %bb.bn, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.if = call fastcc i32 @yysyntax_error(ptr noundef %i.c, ptr nonnull %i.ie, ptr %.3492, i32 %3)
+  %i.if = call fastcc i32 @yysyntax_error(ptr noundef %i.c, ptr nonnull %i.ie, ptr %.3492, i32 %2)
   %i.ig = icmp eq i32 %i.if, -2
   br label %bb.bo
 
@@ -700,15 +681,15 @@ bb.bn:                                            ; preds = %bb.bl
   store i64 128, ptr %i.c, align 8, !tbaa !13
   br label %bb.bo
 
-bb.bo:                                            ; preds = %bb.bj, %bb.bn, %bb.bm, %4
-  %.2 = phi ptr [ %.1573, %bb.bj ], [ %.1573, %4 ], [ %i.b, %bb.bn ], [ %i.ie, %bb.bm ] ; 2 uses
-  %.0465 = phi ptr [ @.str, %bb.bj ], [ %.1573, %4 ], [ @.str, %bb.bn ], [ %i.ie, %bb.bm ]
-  %.0 = phi i1 [ true, %bb.bj ], [ false, %4 ], [ true, %bb.bn ], [ %i.ig, %bb.bm ]
+bb.bo:                                            ; preds = %bb.bj, %bb.bn, %bb.bm, %bb.bk
+  %.2 = phi ptr [ %i.b, %bb.bj ], [ %i.b, %bb.bk ], [ %i.b, %bb.bn ], [ %i.ie, %bb.bm ] ; 2 uses
+  %.0465 = phi ptr [ @.str, %bb.bj ], [ %i.b, %bb.bk ], [ @.str, %bb.bn ], [ %i.ie, %bb.bm ]
+  %.0 = phi i1 [ true, %bb.bj ], [ false, %bb.bk ], [ true, %bb.bn ], [ %i.ig, %bb.bm ]
   %i.ih = load i32, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 1508), align 4, !tbaa !60
-  %i.ii = call i32 (i32, i32, ptr, ...) @phpdbg_print(i32 noundef 1, i32 noundef %i.ih, ptr noundef nonnull @.str.42, ptr noundef %.0465) #11 ; 0 uses
+  %i.ii = call i32 (i32, i32, ptr, ...) @phpdbg_print(i32 noundef 1, i32 noundef %i.ih, ptr noundef nonnull @.str.42, ptr noundef nonnull %.0465) #11 ; 0 uses
   %.04.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 832), align 8, !tbaa !48 ; 2 uses
   %.not5.i = icmp eq ptr %.04.i, null
-  br i1 %.not5.i, label %yyerror.exit, label %.lr.ph.i
+  br i1 %.not5.i, label %bb.bp, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.bo, %.lr.ph.i
   %.06.i = phi ptr [ %.0.i, %.lr.ph.i ], [ %.04.i, %bb.bo ] ; 2 uses
@@ -716,73 +697,14 @@ bb.bo:                                            ; preds = %bb.bj, %bb.bn, %bb.
   %i.ij = getelementptr inbounds nuw i8, ptr %.06.i, i64 72
   %.0.i = load ptr, ptr %i.ij, align 8, !tbaa !48 ; 2 uses
   %.not.i = icmp eq ptr %.0.i, null
-  br i1 %.not.i, label %yyerror.exit, label %.lr.ph.i, !llvm.loop !47
+  br i1 %.not.i, label %bb.bp, label %.lr.ph.i, !llvm.loop !47
 
-yyerror.exit:                                     ; preds = %.lr.ph.i, %bb.bo
-  br i1 %.0, label %.thread584, label %.thread598
+bb.bp:                                            ; preds = %.lr.ph.i, %bb.bo
+  br i1 %.0, label %.thread584, label %.thread619
 
-6:                                                ; preds = %2
-  %7 = icmp slt i32 %.4, 1
-  br i1 %7, label %8, label %.thread598
-
-8:                                                ; preds = %6
-  %9 = icmp eq i32 %.4, 0
-  br i1 %9, label %.thread619, label %.thread598
-
-.thread598:                                       ; preds = %2, %yyerror.exit, %6, %bb.m, %8
-  %.4575 = phi ptr [ %.1573, %8 ], [ %.1573, %6 ], [ %.1573, %2 ], [ %.1573, %bb.m ], [ %.2, %yyerror.exit ] ; 2 uses
-  %.6 = phi i32 [ %.4, %8 ], [ -2, %6 ], [ %.4, %2 ], [ 257, %bb.m ], [ %.4, %yyerror.exit ]
-  br label %10
-
-10:                                               ; preds = %29, %.thread598
-  %.2513 = phi i32 [ %.1512, %.thread598 ], [ %33, %29 ]
-  %.4493 = phi ptr [ %.3492, %.thread598 ], [ %31, %29 ] ; 3 uses
-  %.4480 = phi ptr [ %.3479, %.thread598 ], [ %30, %29 ] ; 2 uses
-  %11 = sext i32 %.2513 to i64                    ; 3 uses
-  %12 = shl nuw i64 1, %11
-  %13 = and i64 %12, 60283762986848
-  %.not549 = icmp eq i64 %13, 0
-  %14 = lshr i64 10084695978112, %11
-  %15 = trunc i64 %14 to i1
-  %or.cond = select i1 %.not549, i1 %15, i1 false
-  br i1 %or.cond, label %16, label %bb.bp
-
-16:                                               ; preds = %10
-  %17 = getelementptr inbounds i8, ptr @yypact, i64 %11
-  %18 = load i8, ptr %17, align 1, !tbaa !14
-  %19 = sext i8 %18 to i64
-  %20 = add nsw i64 %19, 1                        ; 2 uses
-  %21 = getelementptr inbounds i8, ptr @yycheck, i64 %20
-  %22 = load i8, ptr %21, align 1, !tbaa !14
-  %23 = icmp eq i8 %22, 1
-  br i1 %23, label %24, label %bb.bp
-
-24:                                               ; preds = %16
-  %25 = getelementptr inbounds i8, ptr @yytable, i64 %20
-  %26 = load i8, ptr %25, align 1, !tbaa !14      ; 2 uses
-  %27 = icmp sgt i8 %26, 0
-  br i1 %27, label %34, label %bb.bp
-
-bb.bp:                                            ; preds = %16, %24, %10
-  %28 = icmp eq ptr %.4493, %.3501
-  br i1 %28, label %.thread619, label %29
-
-29:                                               ; preds = %bb.bp
-  %30 = getelementptr inbounds i8, ptr %.4480, i64 -88
-  %31 = getelementptr inbounds i8, ptr %.4493, i64 -1 ; 2 uses
-  %32 = load i8, ptr %31, align 1, !tbaa !14
-  %33 = sext i8 %32 to i32
-  br label %10
-
-34:                                               ; preds = %24
-  %35 = zext nneg i8 %26 to i32
-  %36 = getelementptr inbounds nuw i8, ptr %.4480, i64 88 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %36, ptr noundef nonnull align 8 dereferenceable(88) %0, i64 88, i1 false), !tbaa.struct !49
-  br label %bb.b
-
-.thread584:                                       ; preds = %bb.e, %bb.d, %yyerror.exit
-  %.5576 = phi ptr [ %.2, %yyerror.exit ], [ %.1573, %bb.d ], [ %.1573, %bb.e ] ; 2 uses
-  %.5503 = phi ptr [ %.3501, %yyerror.exit ], [ %.0498, %bb.d ], [ %.0498, %bb.e ] ; 2 uses
+.thread584:                                       ; preds = %bb.e, %bb.d, %bb.bp
+  %.5576 = phi ptr [ %.2, %bb.bp ], [ %i.b, %bb.d ], [ %i.b, %bb.e ] ; 2 uses
+  %.5503 = phi ptr [ %.3501, %bb.bp ], [ %.0498, %bb.d ], [ %.0498, %bb.e ] ; 2 uses
   %i.ik = load i32, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 1508), align 4, !tbaa !60
   %i.il = call i32 (i32, i32, ptr, ...) @phpdbg_print(i32 noundef 1, i32 noundef %i.ik, ptr noundef nonnull @.str.42, ptr noundef nonnull @.str.3) #11 ; 0 uses
   %.04.i561 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 832), align 8, !tbaa !48 ; 2 uses
@@ -797,15 +719,15 @@ bb.bp:                                            ; preds = %16, %24, %10
   %.not.i566 = icmp eq ptr %.0.i565, null
   br i1 %.not.i566, label %.thread619, label %.lr.ph.i563, !llvm.loop !47
 
-.thread619:                                       ; preds = %.thread591, %8, %bb.bp, %.lr.ph.i563, %.thread584
-  %.0474617 = phi i32 [ 2, %.thread584 ], [ 1, %bb.bp ], [ 2, %.lr.ph.i563 ], [ 0, %.thread591 ], [ 1, %8 ] ; 2 uses
-  %.6504611 = phi ptr [ %.5503, %.thread584 ], [ %.3501, %bb.bp ], [ %.5503, %.lr.ph.i563 ], [ %.3501, %8 ], [ %.3501, %.thread591 ] ; 2 uses
-  %.6577609 = phi ptr [ %.5576, %.thread584 ], [ %.4575, %bb.bp ], [ %.5576, %.lr.ph.i563 ], [ %.1573, %8 ], [ %.1573, %.thread591 ] ; 2 uses
+.thread619:                                       ; preds = %.thread591, %bb.m, %.lr.ph.i563, %bb.bp, %.thread584
+  %.0474617 = phi i32 [ 2, %.lr.ph.i563 ], [ 1, %bb.bp ], [ 2, %.thread584 ], [ 1, %bb.m ], [ 0, %.thread591 ] ; 2 uses
+  %.6504611 = phi ptr [ %.5503, %.lr.ph.i563 ], [ %.3501, %bb.bp ], [ %.5503, %.thread584 ], [ %.3501, %bb.m ], [ %.3501, %.thread591 ] ; 2 uses
+  %.6577609 = phi ptr [ %.5576, %.lr.ph.i563 ], [ %.2, %bb.bp ], [ %.5576, %.thread584 ], [ %i.b, %bb.m ], [ %i.b, %.thread591 ] ; 2 uses
   %.not552 = icmp eq ptr %.6504611, %i.a
   br i1 %.not552, label %bb.bq, label %.thread619.thread
 
 .thread619.thread:                                ; preds = %bb.h, %.thread619
-  %.6577609667 = phi ptr [ %.6577609, %.thread619 ], [ %.1573, %bb.h ]
+  %.6577609667 = phi ptr [ %.6577609, %.thread619 ], [ %i.b, %bb.h ]
   %.6504611666 = phi ptr [ %.6504611, %.thread619 ], [ %i.p, %bb.h ]
   %.0474617664 = phi i32 [ %.0474617, %.thread619 ], [ 1, %bb.h ]
   call void @free(ptr noundef %.6504611666) #11
@@ -1162,9 +1084,6 @@ declare i64 @llvm.smin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

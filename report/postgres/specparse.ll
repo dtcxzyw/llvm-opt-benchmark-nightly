@@ -35,22 +35,20 @@ bb.a:
   store i32 -2, ptr @spec_yychar, align 4
   br label %bb.c
 
-bb.b:                                             ; preds = %33, %bb.bc, %bb.v
-  %.0270 = phi i32 [ 3, %33 ], [ %.1271, %bb.bc ], [ %spec.select, %bb.v ]
-  %.0253 = phi ptr [ %.4257, %33 ], [ %i.hu, %bb.bc ], [ %.3256, %bb.v ]
-  %.0246 = phi ptr [ %35, %33 ], [ %i.hv, %bb.bc ], [ %i.az, %bb.v ]
-  %.0239 = phi i32 [ %34, %33 ], [ %i.im, %bb.bc ], [ %i.av, %bb.v ]
+bb.b:                                             ; preds = %bb.bc, %bb.v
+  %.0253 = phi ptr [ %.3256, %bb.v ], [ %i.hu, %bb.bc ]
+  %.0246 = phi ptr [ %i.az, %bb.v ], [ %i.hv, %bb.bc ]
+  %.0239 = phi i32 [ %i.av, %bb.v ], [ %i.im, %bb.bc ]
   %i.b = getelementptr inbounds nuw i8, ptr %.0253, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1271 = phi i32 [ 0, %bb.a ], [ %.0270, %bb.b ] ; 3 uses
   %.0267 = phi i64 [ 200, %bb.a ], [ %.2269, %bb.b ] ; 4 uses
   %.0261 = phi ptr [ %i.a, %bb.a ], [ %.3264, %bb.b ] ; 7 uses
   %.1254 = phi ptr [ %i.a, %bb.a ], [ %i.b, %bb.b ] ; 4 uses
   %.0249 = phi ptr [ %0, %bb.a ], [ %.3252, %bb.b ] ; 2 uses
   %.1247 = phi ptr [ %0, %bb.a ], [ %.0246, %bb.b ]
-  %.1240 = phi i32 [ 0, %bb.a ], [ %.0239, %bb.b ] ; 4 uses
+  %.1240 = phi i32 [ 0, %bb.a ], [ %.0239, %bb.b ] ; 3 uses
   %i.c = trunc nsw i32 %.1240 to i8
   store i8 %i.c, ptr %.1254, align 1
   %i.d = getelementptr inbounds i8, ptr %.0261, i64 %.0267
@@ -99,10 +97,10 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 .thread319:                                       ; preds = %bb.h, %bb.c
   %.2269 = phi i64 [ %.0267, %bb.c ], [ %spec.store.select, %bb.h ]
-  %.3264 = phi ptr [ %.0261, %bb.c ], [ %i.n, %bb.h ] ; 5 uses
-  %.3256 = phi ptr [ %.1254, %bb.c ], [ %i.s, %bb.h ] ; 3 uses
+  %.3264 = phi ptr [ %.0261, %bb.c ], [ %i.n, %bb.h ] ; 4 uses
+  %.3256 = phi ptr [ %.1254, %bb.c ], [ %i.s, %bb.h ] ; 2 uses
   %.3252 = phi ptr [ %.0249, %bb.c ], [ %i.q, %bb.h ]
-  %.3 = phi ptr [ %.1247, %bb.c ], [ %i.u, %bb.h ] ; 56 uses
+  %.3 = phi ptr [ %.1247, %bb.c ], [ %i.u, %bb.h ] ; 55 uses
   %i.w = icmp eq i32 %.1240, 3
   br i1 %i.w, label %.loopexit, label %bb.i
 
@@ -141,7 +139,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   store i32 257, ptr @spec_yychar, align 4
-  br label %.preheader
+  br label %.loopexit
 
 bb.p:                                             ; preds = %bb.n
   %i.aj = icmp samesign ult i32 %i.ag, 268
@@ -182,7 +180,6 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.x
 
 bb.v:                                             ; preds = %bb.t
-  %spec.select = call i32 @llvm.usub.sat.i32(i32 %.1271, i32 1)
   %i.az = getelementptr inbounds nuw i8, ptr %.3, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.az, ptr noundef nonnull align 8 dereferenceable(16) @spec_yylval, i64 16, i1 false)
   store i32 -2, ptr @spec_yychar, align 4
@@ -194,7 +191,7 @@ bb.w:                                             ; preds = %bb.r, %bb.s, %bb.i
   %i.bc = sext i8 %i.bb to i32
   %i.bd = and i64 %i.ab, 1410125546674
   %.not296 = icmp eq i64 %i.bd, 0
-  br i1 %.not296, label %bb.x, label %1
+  br i1 %.not296, label %bb.x, label %bb.bd
 
 bb.x:                                             ; preds = %bb.w, %bb.u
   %.0245 = phi i32 [ %i.bc, %bb.w ], [ %i.ay, %bb.u ] ; 2 uses
@@ -586,88 +583,20 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.im = sext i8 %.in to i32
   br label %bb.b
 
-1:                                                ; preds = %bb.w
-  %2 = load i32, ptr @spec_yychar, align 4        ; 2 uses
-  switch i32 %.1271, label %.preheader [
-    i32 0, label %bb.bd
-    i32 3, label %3
-  ]
-
-bb.bd:                                            ; preds = %1
+bb.bd:                                            ; preds = %bb.w
   %i.in = load i32, ptr @spec_yynerrs, align 4
   %i.io = add i32 %i.in, 1
   store i32 %i.io, ptr @spec_yynerrs, align 4
   call void @spec_yyerror(ptr noundef nonnull @.str) #6
-  br label %.preheader
-
-3:                                                ; preds = %1
-  %4 = icmp slt i32 %2, 1
-  br i1 %4, label %5, label %7
-
-5:                                                ; preds = %3
-  %6 = icmp eq i32 %2, 0
-  br i1 %6, label %.loopexit, label %.preheader
-
-7:                                                ; preds = %3
-  store i32 -2, ptr @spec_yychar, align 4
-  br label %.preheader
-
-.preheader:                                       ; preds = %bb.bd, %1, %5, %7, %bb.o
-  br label %8
-
-8:                                                ; preds = %.preheader, %28
-  %.4257 = phi ptr [ %30, %28 ], [ %.3256, %.preheader ] ; 3 uses
-  %.4 = phi ptr [ %29, %28 ], [ %.3, %.preheader ] ; 2 uses
-  %.2 = phi i32 [ %32, %28 ], [ %.1240, %.preheader ]
-  %9 = sext i32 %.2 to i64                        ; 3 uses
-  %10 = shl nuw i64 1, %9
-  %11 = and i64 %10, 7377303999305
-  %.not298 = icmp eq i64 %11, 0
-  %12 = lshr i64 318941848754, %9
-  %13 = trunc i64 %12 to i1
-  %or.cond = select i1 %.not298, i1 %13, i1 false
-  br i1 %or.cond, label %14, label %26
-
-14:                                               ; preds = %8
-  %15 = getelementptr inbounds i8, ptr @yypact, i64 %9
-  %16 = load i8, ptr %15, align 1
-  %17 = sext i8 %16 to i64
-  %18 = add nsw i64 %17, 1                        ; 2 uses
-  %19 = getelementptr inbounds i8, ptr @yycheck, i64 %18
-  %20 = load i8, ptr %19, align 1
-  %21 = icmp eq i8 %20, 1
-  br i1 %21, label %22, label %26
-
-22:                                               ; preds = %14
-  %23 = getelementptr inbounds i8, ptr @yytable, i64 %18
-  %24 = load i8, ptr %23, align 1                 ; 2 uses
-  %25 = icmp sgt i8 %24, 0
-  br i1 %25, label %33, label %26
-
-26:                                               ; preds = %14, %22, %8
-  %27 = icmp eq ptr %.4257, %.3264
-  br i1 %27, label %.loopexit, label %28
-
-28:                                               ; preds = %26
-  %29 = getelementptr inbounds i8, ptr %.4, i64 -16
-  %30 = getelementptr inbounds i8, ptr %.4257, i64 -1 ; 2 uses
-  %31 = load i8, ptr %30, align 1
-  %32 = sext i8 %31 to i32
-  br label %8
-
-33:                                               ; preds = %22
-  %34 = zext nneg i8 %24 to i32
-  %35 = getelementptr inbounds nuw i8, ptr %.4, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %35, ptr noundef nonnull align 8 dereferenceable(16) @spec_yylval, i64 16, i1 false)
-  br label %bb.b
+  br label %.loopexit
 
 bb.be:                                            ; preds = %bb.d, %bb.e
   call void @spec_yyerror(ptr noundef nonnull @.str.3) #6
   br label %.loopexit
 
-.loopexit:                                        ; preds = %5, %.thread319, %26, %bb.be
-  %.5266 = phi ptr [ %.0261, %bb.be ], [ %.3264, %26 ], [ %.3264, %.thread319 ], [ %.3264, %5 ] ; 2 uses
-  %.0244 = phi i32 [ 2, %bb.be ], [ 1, %26 ], [ 0, %.thread319 ], [ 1, %5 ] ; 2 uses
+.loopexit:                                        ; preds = %.thread319, %bb.o, %bb.bd, %bb.be
+  %.5266 = phi ptr [ %.0261, %bb.be ], [ %.3264, %bb.o ], [ %.3264, %bb.bd ], [ %.3264, %.thread319 ] ; 2 uses
+  %.0244 = phi i32 [ 2, %bb.be ], [ 1, %bb.o ], [ 1, %bb.bd ], [ 0, %.thread319 ] ; 2 uses
   %.not301 = icmp eq ptr %.5266, %i.a
   br i1 %.not301, label %bb.bf, label %.loopexit.thread
 
@@ -709,9 +638,6 @@ declare void @spec_yyerror(ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

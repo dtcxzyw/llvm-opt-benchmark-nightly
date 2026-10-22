@@ -205,11 +205,7 @@ bb.x:                                             ; preds = %bb.w
   %i.cs = lshr i64 %i.a, 32                       ; 2 uses
   %i.ct = trunc nuw i64 %i.cs to i32
   %i.cu = icmp slt i32 %i.ct, 16
-  br i1 %i.cu, label %bb.y, label %.thread105
-
-.thread105:                                       ; preds = %bb.x
-  %2 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.18, i64 noundef 1) #31 ; 0 uses
-  br label %11
+  br i1 %i.cu, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %i.cv = and i64 %i.a, 1030792151040
@@ -217,30 +213,15 @@ bb.y:                                             ; preds = %bb.x
   tail call void @llvm.assume(i1 %i.cw)
   %i.cx = and i64 %i.cs, 15
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr @_ZZN2v88internal12RegisterNameENS0_8RegisterEE5Names, i64 %i.cx
-  %i.cz = load ptr, ptr %i.cy, align 8            ; 2 uses
+  %i.cz = load ptr, ptr %i.cy, align 8
+  br label %bb.z
+
+bb.z:                                             ; preds = %bb.x, %bb.y
+  %2 = phi ptr [ %i.cz, %bb.y ], [ @.str.684, %bb.x ] ; 2 uses
   %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.18, i64 noundef 1) #31 ; 0 uses
-  %.not.i80 = icmp eq ptr %i.cz, null
-  br i1 %.not.i80, label %bb.z, label %11
-
-bb.z:                                             ; preds = %bb.y
-  %4 = load ptr, ptr %0, align 8
-  %5 = getelementptr i8, ptr %4, i64 -24
-  %6 = load i64, ptr %5, align 8
-  %7 = getelementptr inbounds i8, ptr %0, i64 %6  ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %9 = load i32, ptr %8, align 8
-  %10 = or i32 %9, 1
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %7, i32 noundef %10) #31
-  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-
-11:                                               ; preds = %.thread105, %bb.y
-  %12 = phi ptr [ @.str.684, %.thread105 ], [ %i.cz, %bb.y ] ; 2 uses
-  %13 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %12) #31
-  %14 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %12, i64 noundef %13) #31 ; 0 uses
-  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.z, %11
-  %15 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.19, i64 noundef 2) #31 ; 0 uses
+  %4 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #31
+  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %2, i64 noundef %4) #31 ; 0 uses
+  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.19, i64 noundef 2) #31 ; 0 uses
   br label %bb.ah
 
 bb.aa:                                            ; preds = %bb.w
@@ -297,7 +278,7 @@ bb.ag:                                            ; preds = %bb.ae
   %i.ec = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.eb, ptr noundef nonnull @.str.19, i64 noundef 2) #31 ; 0 uses
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.v, %bb.ab, %bb.af, %bb.ag, %bb.ad, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.t
+bb.ah:                                            ; preds = %bb.v, %bb.ab, %bb.af, %bb.ag, %bb.ad, %bb.z, %bb.t
   %i.ed = lshr i64 %i.a, 4
   %i.ee = trunc i64 %i.ed to i8
   switch i8 %i.ee, label %bb.bc [

@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s, %bb.p
 bb.u:                                             ; preds = %bb.t
   %i.ap = ptrtoint ptr %.01627.i to i64
   %i.aq = sub i64 %i.ap, ptrtoint (ptr @ssl_conf_cmds to i64)
-  %i.ar = ashr exact i64 %i.aq, 5                 ; 2 uses
+  %i.ar = ashr exact i64 %i.aq, 5                 ; 4 uses
   %i.as = icmp ugt i64 %i.ar, 30
   br i1 %i.as, label %bb.v, label %bb.w
 
@@ -224,8 +224,7 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %bb.w
   %i.ay = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  %i.az = load i32, ptr %i.ay, align 8, !tbaa !132 ; 2 uses
-  %3 = and i32 %i.az, 1                           ; 2 uses
+  %i.az = load i32, ptr %i.ay, align 8, !tbaa !132
   %i.ba = and i32 %i.az, 3840
   switch i32 %i.ba, label %ctrl_switch_option.exit [
     i32 256, label %bb.ac
@@ -237,8 +236,10 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.ac
 
 bb.z:                                             ; preds = %bb.x
-  %.not16.i.not.i = icmp eq i32 %3, 0
-  br i1 %.not16.i.not.i, label %bb.aa, label %bb.ab
+  %3 = shl nuw nsw i64 1, %i.ar
+  %4 = and i64 %3, 2045769087
+  %.not16.i.not.i = icmp eq i64 %4, 0
+  br i1 %.not16.i.not.i, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.bb = load i64, ptr %i.aw, align 8, !tbaa !33
@@ -257,13 +258,15 @@ bb.ac:                                            ; preds = %bb.y, %bb.x
   %.sink.i.i = phi i64 [ 72, %bb.y ], [ 64, %bb.x ]
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.sink.i.i
   %.0.i.i = load ptr, ptr %i.bg, align 8, !tbaa !34 ; 2 uses
-  %.not17.i.not.i = icmp eq i32 %3, 0
+  %5 = shl nuw nsw i64 1, %i.ar
+  %6 = and i64 %5, 2045769087
+  %.not17.i.not.i = icmp eq i64 %6, 0
   %i.bh = load i32, ptr %.0.i.i, align 4, !tbaa !35 ; 2 uses
   %i.bi = trunc i64 %i.au to i32                  ; 2 uses
   %i.bj = xor i32 %i.bi, -1
   %i.bk = and i32 %i.bh, %i.bj
   %i.bl = or i32 %i.bh, %i.bi
-  %storemerge.i.i = select i1 %.not17.i.not.i, i32 %i.bl, i32 %i.bk
+  %storemerge.i.i = select i1 %.not17.i.not.i, i32 %i.bk, i32 %i.bl
   store i32 %storemerge.i.i, ptr %.0.i.i, align 4, !tbaa !35
   br label %ctrl_switch_option.exit
 

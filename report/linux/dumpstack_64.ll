@@ -87,21 +87,23 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.h = sub nuw i64 %i.d, %i.e
   %i.i = lshr i64 %i.h, 12
-  %i.j = and i64 %i.i, 4294967295
-  %3 = getelementptr [8 x i8], ptr @estack_pages, i64 %i.j ; 3 uses
-  %4 = getelementptr i8, ptr %3, i64 4
-  %5 = load i16, ptr %4, align 4                  ; 2 uses
-  %.not33.i = icmp eq i16 %5, 0
-  br i1 %.not33.i, label %bb.f, label %in_exception_stack.exit
+  %i.j = and i64 %i.i, 4294967295                 ; 2 uses
+  %3 = shl nuw i64 1, %i.j
+  %4 = and i64 %3, 299593
+  %.not33.i = icmp eq i64 %4, 0
+  br i1 %.not33.i, label %in_exception_stack.exit, label %bb.f
 
 in_exception_stack.exit:                          ; preds = %bb.e
-  %i.k = load i32, ptr %3, align 8
+  %5 = getelementptr [8 x i8], ptr @estack_pages, i64 %i.j ; 3 uses
+  %6 = getelementptr i8, ptr %5, i64 4
+  %7 = load i16, ptr %6, align 4
+  %i.k = load i32, ptr %5, align 8
   %i.l = zext i32 %i.k to i64
   %i.m = add i64 %i.e, %i.l                       ; 2 uses
-  %i.n = zext i16 %5 to i64
+  %i.n = zext i16 %7 to i64
   %i.o = add i64 %i.m, %i.n
   %i.p = inttoptr i64 %i.o to ptr                 ; 2 uses
-  %i.q = getelementptr i8, ptr %3, i64 6
+  %i.q = getelementptr i8, ptr %5, i64 6
   %i.r = load i16, ptr %i.q, align 2
   %i.s = zext i16 %i.r to i32
   store i32 %i.s, ptr %2, align 8

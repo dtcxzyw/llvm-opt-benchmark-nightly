@@ -205,8 +205,8 @@ g_strchr.exit.i:                                  ; preds = %bb.ab
   br i1 %.not.i103, label %.preheader.i104, label %.critedge.thread163
 
 .preheader.i104:                                  ; preds = %g_strchr.exit.i
-  %gepdiff = add nsw i64 %.04.i.i.idx, -2         ; 12 uses
-  %i.bw = ashr exact i64 %gepdiff, 1              ; 24 uses
+  %gepdiff = add nsw i64 %.04.i.i.idx, -2         ; 24 uses
+  %i.bw = ashr exact i64 %gepdiff, 1              ; 12 uses
   %.not.i26.i281 = icmp eq i64 %.04.i.i.idx, 2
   br i1 %.not.i26.i281, label %g_strncmp.exit.thread.i, label %.lr.ph284
 
@@ -235,21 +235,19 @@ bb.ae:                                            ; preds = %.lr.ph284
   br label %g_strncmp.exit.thread.i, !llvm.loop !55
 
 g_strncmp.exit.thread.i:                          ; preds = %bb.ad, %.g_strncmp.exit.thread.i_crit_edge, %.preheader.i104
-  %4 = getelementptr inbounds nuw i8, ptr @.str.1, i64 %i.bw
-  %5 = load i8, ptr %4, align 1, !tbaa !25
-  %i.ce = icmp eq i8 %5, 0
+  %i.ce = icmp eq i64 %gepdiff, 10
   br i1 %i.ce, label %bb.bb, label %g_strncmp.exit.i
 
 g_strncmp.exit.i:                                 ; preds = %.lr.ph284, %g_strncmp.exit.thread.i
   %.not.i26.1.i286 = icmp samesign eq i64 %.04.i.i.idx, 2
-  br i1 %.not.i26.1.i286, label %g_strncmp.exit.thread.1.i.a, label %.lr.ph289
+  br i1 %.not.i26.1.i286, label %g_strncmp.exit.thread.1.i, label %.lr.ph289
 
 bb.af:                                            ; preds = %bb.ag
   %i.cf = add i64 %.in358, -1                     ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.06.i.1.i288, i64 1
   %i.ch = getelementptr inbounds nuw i8, ptr %.07.i.1.i287, i64 2
   %.not.i26.1.i = icmp eq i64 %i.cf, 0
-  br i1 %.not.i26.1.i, label %g_strncmp.exit.thread.1.i.a, label %.lr.ph289, !llvm.loop !55
+  br i1 %.not.i26.1.i, label %g_strncmp.exit.thread.1.i, label %.lr.ph289, !llvm.loop !55
 
 .lr.ph289:                                        ; preds = %g_strncmp.exit.i, %bb.af
   %.in358 = phi i64 [ %i.cf, %bb.af ], [ %i.bw, %g_strncmp.exit.i ]
@@ -259,31 +257,34 @@ bb.af:                                            ; preds = %bb.ag
   %i.cj = load i8, ptr %.06.i.1.i288, align 1, !tbaa !25
   %i.ck = zext i8 %i.cj to i16
   %.not10.i.1.i = icmp eq i16 %i.ci, %i.ck
-  br i1 %.not10.i.1.i, label %bb.ag, label %g_strncmp.exit.1.i
+  br i1 %.not10.i.1.i, label %bb.ag, label %g_strncmp.exit.thread.1.i.a
 
 bb.ag:                                            ; preds = %.lr.ph289
   %i.cl = icmp eq i16 %i.ci, 0
   br i1 %i.cl, label %.g_strncmp.exit.thread.1.i_crit_edge, label %bb.af, !llvm.loop !55
 
 .g_strncmp.exit.thread.1.i_crit_edge:             ; preds = %bb.ag
-  br label %g_strncmp.exit.thread.1.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.1.i, !llvm.loop !55
 
-g_strncmp.exit.thread.1.i.a:                      ; preds = %bb.af, %.g_strncmp.exit.thread.1.i_crit_edge, %g_strncmp.exit.i
-  %6 = getelementptr inbounds nuw i8, ptr @.str.2, i64 %i.bw
-  %7 = load i8, ptr %6, align 1, !tbaa !25
-  %i.cm = icmp eq i8 %7, 0
-  br i1 %i.cm, label %bb.bb, label %g_strncmp.exit.1.i
+g_strncmp.exit.thread.1.i:                        ; preds = %bb.af, %.g_strncmp.exit.thread.1.i_crit_edge, %g_strncmp.exit.i
+  switch i64 %gepdiff, label %g_strncmp.exit.1.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.1.i:                               ; preds = %.lr.ph289, %g_strncmp.exit.thread.1.i.a
-  %.not.i26.2.i291 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.2.i291, label %g_strncmp.exit.thread.2.i.a, label %.lr.ph294
+g_strncmp.exit.thread.1.i.a:                      ; preds = %.lr.ph289
+  %i.cm = icmp eq i64 %gepdiff, 0
+  br i1 %i.cm, label %.loopexit, label %g_strncmp.exit.1.i
+
+g_strncmp.exit.1.i:                               ; preds = %g_strncmp.exit.thread.1.i, %g_strncmp.exit.thread.1.i.a
+  br label %.lr.ph294
 
 bb.ah:                                            ; preds = %bb.ai
   %i.cn = add i64 %.in359, -1                     ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.06.i.2.i293, i64 1
   %i.cp = getelementptr inbounds nuw i8, ptr %.07.i.2.i292, i64 2
   %.not.i26.2.i = icmp eq i64 %i.cn, 0
-  br i1 %.not.i26.2.i, label %g_strncmp.exit.thread.2.i.a, label %.lr.ph294, !llvm.loop !55
+  br i1 %.not.i26.2.i, label %g_strncmp.exit.thread.2.i, label %.lr.ph294, !llvm.loop !55
 
 .lr.ph294:                                        ; preds = %g_strncmp.exit.1.i, %bb.ah
   %.in359 = phi i64 [ %i.cn, %bb.ah ], [ %i.bw, %g_strncmp.exit.1.i ]
@@ -293,31 +294,34 @@ bb.ah:                                            ; preds = %bb.ai
   %i.cr = load i8, ptr %.06.i.2.i293, align 1, !tbaa !25
   %i.cs = zext i8 %i.cr to i16
   %.not10.i.2.i = icmp eq i16 %i.cq, %i.cs
-  br i1 %.not10.i.2.i, label %bb.ai, label %g_strncmp.exit.2.i
+  br i1 %.not10.i.2.i, label %bb.ai, label %g_strncmp.exit.thread.2.i.a
 
 bb.ai:                                            ; preds = %.lr.ph294
   %i.ct = icmp eq i16 %i.cq, 0
   br i1 %i.ct, label %.g_strncmp.exit.thread.2.i_crit_edge, label %bb.ah, !llvm.loop !55
 
 .g_strncmp.exit.thread.2.i_crit_edge:             ; preds = %bb.ai
-  br label %g_strncmp.exit.thread.2.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.2.i, !llvm.loop !55
 
-g_strncmp.exit.thread.2.i.a:                      ; preds = %bb.ah, %.g_strncmp.exit.thread.2.i_crit_edge, %g_strncmp.exit.1.i
-  %8 = getelementptr inbounds nuw i8, ptr @.str.3, i64 %i.bw
-  %9 = load i8, ptr %8, align 1, !tbaa !25
-  %i.cu = icmp eq i8 %9, 0
-  br i1 %i.cu, label %bb.bb, label %g_strncmp.exit.2.i
+g_strncmp.exit.thread.2.i:                        ; preds = %bb.ah, %.g_strncmp.exit.thread.2.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.2.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.2.i:                               ; preds = %.lr.ph294, %g_strncmp.exit.thread.2.i.a
-  %.not.i26.3.i296 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.3.i296, label %g_strncmp.exit.thread.3.i.a, label %.lr.ph299
+g_strncmp.exit.thread.2.i.a:                      ; preds = %.lr.ph294
+  %i.cu = icmp eq i64 %gepdiff, 0
+  br i1 %i.cu, label %.loopexit, label %g_strncmp.exit.2.i
+
+g_strncmp.exit.2.i:                               ; preds = %g_strncmp.exit.thread.2.i, %g_strncmp.exit.thread.2.i.a
+  br label %.lr.ph299
 
 bb.aj:                                            ; preds = %bb.ak
   %i.cv = add i64 %.in360, -1                     ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.06.i.3.i298, i64 1
   %i.cx = getelementptr inbounds nuw i8, ptr %.07.i.3.i297, i64 2
   %.not.i26.3.i = icmp eq i64 %i.cv, 0
-  br i1 %.not.i26.3.i, label %g_strncmp.exit.thread.3.i.a, label %.lr.ph299, !llvm.loop !55
+  br i1 %.not.i26.3.i, label %g_strncmp.exit.thread.3.i, label %.lr.ph299, !llvm.loop !55
 
 .lr.ph299:                                        ; preds = %g_strncmp.exit.2.i, %bb.aj
   %.in360 = phi i64 [ %i.cv, %bb.aj ], [ %i.bw, %g_strncmp.exit.2.i ]
@@ -327,31 +331,34 @@ bb.aj:                                            ; preds = %bb.ak
   %i.cz = load i8, ptr %.06.i.3.i298, align 1, !tbaa !25
   %i.da = zext i8 %i.cz to i16
   %.not10.i.3.i = icmp eq i16 %i.cy, %i.da
-  br i1 %.not10.i.3.i, label %bb.ak, label %g_strncmp.exit.3.i
+  br i1 %.not10.i.3.i, label %bb.ak, label %g_strncmp.exit.thread.3.i.a
 
 bb.ak:                                            ; preds = %.lr.ph299
   %i.db = icmp eq i16 %i.cy, 0
   br i1 %i.db, label %.g_strncmp.exit.thread.3.i_crit_edge, label %bb.aj, !llvm.loop !55
 
 .g_strncmp.exit.thread.3.i_crit_edge:             ; preds = %bb.ak
-  br label %g_strncmp.exit.thread.3.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.3.i, !llvm.loop !55
 
-g_strncmp.exit.thread.3.i.a:                      ; preds = %bb.aj, %.g_strncmp.exit.thread.3.i_crit_edge, %g_strncmp.exit.2.i
-  %10 = getelementptr inbounds nuw i8, ptr @.str.4, i64 %i.bw
-  %11 = load i8, ptr %10, align 1, !tbaa !25
-  %i.dc = icmp eq i8 %11, 0
-  br i1 %i.dc, label %bb.bb, label %g_strncmp.exit.3.i
+g_strncmp.exit.thread.3.i:                        ; preds = %bb.aj, %.g_strncmp.exit.thread.3.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.3.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.3.i:                               ; preds = %.lr.ph299, %g_strncmp.exit.thread.3.i.a
-  %.not.i26.4.i301 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.4.i301, label %g_strncmp.exit.thread.4.i.a, label %.lr.ph304
+g_strncmp.exit.thread.3.i.a:                      ; preds = %.lr.ph299
+  %i.dc = icmp eq i64 %gepdiff, 0
+  br i1 %i.dc, label %.loopexit, label %g_strncmp.exit.3.i
+
+g_strncmp.exit.3.i:                               ; preds = %g_strncmp.exit.thread.3.i, %g_strncmp.exit.thread.3.i.a
+  br label %.lr.ph304
 
 bb.al:                                            ; preds = %bb.am
   %i.dd = add i64 %.in361, -1                     ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.06.i.4.i303, i64 1
   %i.df = getelementptr inbounds nuw i8, ptr %.07.i.4.i302, i64 2
   %.not.i26.4.i = icmp eq i64 %i.dd, 0
-  br i1 %.not.i26.4.i, label %g_strncmp.exit.thread.4.i.a, label %.lr.ph304, !llvm.loop !55
+  br i1 %.not.i26.4.i, label %g_strncmp.exit.thread.4.i, label %.lr.ph304, !llvm.loop !55
 
 .lr.ph304:                                        ; preds = %g_strncmp.exit.3.i, %bb.al
   %.in361 = phi i64 [ %i.dd, %bb.al ], [ %i.bw, %g_strncmp.exit.3.i ]
@@ -361,31 +368,34 @@ bb.al:                                            ; preds = %bb.am
   %i.dh = load i8, ptr %.06.i.4.i303, align 1, !tbaa !25
   %i.di = zext i8 %i.dh to i16
   %.not10.i.4.i = icmp eq i16 %i.dg, %i.di
-  br i1 %.not10.i.4.i, label %bb.am, label %g_strncmp.exit.4.i
+  br i1 %.not10.i.4.i, label %bb.am, label %g_strncmp.exit.thread.4.i.a
 
 bb.am:                                            ; preds = %.lr.ph304
   %i.dj = icmp eq i16 %i.dg, 0
   br i1 %i.dj, label %.g_strncmp.exit.thread.4.i_crit_edge, label %bb.al, !llvm.loop !55
 
 .g_strncmp.exit.thread.4.i_crit_edge:             ; preds = %bb.am
-  br label %g_strncmp.exit.thread.4.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.4.i, !llvm.loop !55
 
-g_strncmp.exit.thread.4.i.a:                      ; preds = %bb.al, %.g_strncmp.exit.thread.4.i_crit_edge, %g_strncmp.exit.3.i
-  %12 = getelementptr inbounds nuw i8, ptr @.str.5, i64 %i.bw
-  %13 = load i8, ptr %12, align 1, !tbaa !25
-  %i.dk = icmp eq i8 %13, 0
-  br i1 %i.dk, label %bb.bb, label %g_strncmp.exit.4.i
+g_strncmp.exit.thread.4.i:                        ; preds = %bb.al, %.g_strncmp.exit.thread.4.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.4.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.4.i:                               ; preds = %.lr.ph304, %g_strncmp.exit.thread.4.i.a
-  %.not.i26.5.i306 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.5.i306, label %g_strncmp.exit.thread.5.i.a, label %.lr.ph309
+g_strncmp.exit.thread.4.i.a:                      ; preds = %.lr.ph304
+  %i.dk = icmp eq i64 %gepdiff, 0
+  br i1 %i.dk, label %.loopexit, label %g_strncmp.exit.4.i
+
+g_strncmp.exit.4.i:                               ; preds = %g_strncmp.exit.thread.4.i, %g_strncmp.exit.thread.4.i.a
+  br label %.lr.ph309
 
 bb.an:                                            ; preds = %bb.ao
   %i.dl = add i64 %.in362, -1                     ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.06.i.5.i308, i64 1
   %i.dn = getelementptr inbounds nuw i8, ptr %.07.i.5.i307, i64 2
   %.not.i26.5.i = icmp eq i64 %i.dl, 0
-  br i1 %.not.i26.5.i, label %g_strncmp.exit.thread.5.i.a, label %.lr.ph309, !llvm.loop !55
+  br i1 %.not.i26.5.i, label %g_strncmp.exit.thread.5.i, label %.lr.ph309, !llvm.loop !55
 
 .lr.ph309:                                        ; preds = %g_strncmp.exit.4.i, %bb.an
   %.in362 = phi i64 [ %i.dl, %bb.an ], [ %i.bw, %g_strncmp.exit.4.i ]
@@ -395,31 +405,34 @@ bb.an:                                            ; preds = %bb.ao
   %i.dp = load i8, ptr %.06.i.5.i308, align 1, !tbaa !25
   %i.dq = zext i8 %i.dp to i16
   %.not10.i.5.i = icmp eq i16 %i.do, %i.dq
-  br i1 %.not10.i.5.i, label %bb.ao, label %g_strncmp.exit.5.i
+  br i1 %.not10.i.5.i, label %bb.ao, label %g_strncmp.exit.thread.5.i.a
 
 bb.ao:                                            ; preds = %.lr.ph309
   %i.dr = icmp eq i16 %i.do, 0
   br i1 %i.dr, label %.g_strncmp.exit.thread.5.i_crit_edge, label %bb.an, !llvm.loop !55
 
 .g_strncmp.exit.thread.5.i_crit_edge:             ; preds = %bb.ao
-  br label %g_strncmp.exit.thread.5.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.5.i, !llvm.loop !55
 
-g_strncmp.exit.thread.5.i.a:                      ; preds = %bb.an, %.g_strncmp.exit.thread.5.i_crit_edge, %g_strncmp.exit.4.i
-  %14 = getelementptr inbounds nuw i8, ptr @.str.6, i64 %i.bw
-  %15 = load i8, ptr %14, align 1, !tbaa !25
-  %i.ds = icmp eq i8 %15, 0
-  br i1 %i.ds, label %bb.bb, label %g_strncmp.exit.5.i
+g_strncmp.exit.thread.5.i:                        ; preds = %bb.an, %.g_strncmp.exit.thread.5.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.5.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.5.i:                               ; preds = %.lr.ph309, %g_strncmp.exit.thread.5.i.a
-  %.not.i26.6.i311 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.6.i311, label %g_strncmp.exit.thread.6.i.a, label %.lr.ph314
+g_strncmp.exit.thread.5.i.a:                      ; preds = %.lr.ph309
+  %i.ds = icmp eq i64 %gepdiff, 0
+  br i1 %i.ds, label %.loopexit, label %g_strncmp.exit.5.i
+
+g_strncmp.exit.5.i:                               ; preds = %g_strncmp.exit.thread.5.i, %g_strncmp.exit.thread.5.i.a
+  br label %.lr.ph314
 
 bb.ap:                                            ; preds = %bb.aq
   %i.dt = add i64 %.in363, -1                     ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.06.i.6.i313, i64 1
   %i.dv = getelementptr inbounds nuw i8, ptr %.07.i.6.i312, i64 2
   %.not.i26.6.i = icmp eq i64 %i.dt, 0
-  br i1 %.not.i26.6.i, label %g_strncmp.exit.thread.6.i.a, label %.lr.ph314, !llvm.loop !55
+  br i1 %.not.i26.6.i, label %g_strncmp.exit.thread.6.i, label %.lr.ph314, !llvm.loop !55
 
 .lr.ph314:                                        ; preds = %g_strncmp.exit.5.i, %bb.ap
   %.in363 = phi i64 [ %i.dt, %bb.ap ], [ %i.bw, %g_strncmp.exit.5.i ]
@@ -429,31 +442,34 @@ bb.ap:                                            ; preds = %bb.aq
   %i.dx = load i8, ptr %.06.i.6.i313, align 1, !tbaa !25
   %i.dy = zext i8 %i.dx to i16
   %.not10.i.6.i = icmp eq i16 %i.dw, %i.dy
-  br i1 %.not10.i.6.i, label %bb.aq, label %g_strncmp.exit.6.i
+  br i1 %.not10.i.6.i, label %bb.aq, label %g_strncmp.exit.thread.6.i.a
 
 bb.aq:                                            ; preds = %.lr.ph314
   %i.dz = icmp eq i16 %i.dw, 0
   br i1 %i.dz, label %.g_strncmp.exit.thread.6.i_crit_edge, label %bb.ap, !llvm.loop !55
 
 .g_strncmp.exit.thread.6.i_crit_edge:             ; preds = %bb.aq
-  br label %g_strncmp.exit.thread.6.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.6.i, !llvm.loop !55
 
-g_strncmp.exit.thread.6.i.a:                      ; preds = %bb.ap, %.g_strncmp.exit.thread.6.i_crit_edge, %g_strncmp.exit.5.i
-  %16 = getelementptr inbounds nuw i8, ptr @.str.7, i64 %i.bw
-  %17 = load i8, ptr %16, align 1, !tbaa !25
-  %i.ea = icmp eq i8 %17, 0
-  br i1 %i.ea, label %bb.bb, label %g_strncmp.exit.6.i
+g_strncmp.exit.thread.6.i:                        ; preds = %bb.ap, %.g_strncmp.exit.thread.6.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.6.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.6.i:                               ; preds = %.lr.ph314, %g_strncmp.exit.thread.6.i.a
-  %.not.i26.7.i316 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.7.i316, label %g_strncmp.exit.thread.7.i.a, label %.lr.ph319
+g_strncmp.exit.thread.6.i.a:                      ; preds = %.lr.ph314
+  %i.ea = icmp eq i64 %gepdiff, 0
+  br i1 %i.ea, label %.loopexit, label %g_strncmp.exit.6.i
+
+g_strncmp.exit.6.i:                               ; preds = %g_strncmp.exit.thread.6.i, %g_strncmp.exit.thread.6.i.a
+  br label %.lr.ph319
 
 bb.ar:                                            ; preds = %bb.as
   %i.eb = add i64 %.in364, -1                     ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.06.i.7.i318, i64 1
   %i.ed = getelementptr inbounds nuw i8, ptr %.07.i.7.i317, i64 2
   %.not.i26.7.i = icmp eq i64 %i.eb, 0
-  br i1 %.not.i26.7.i, label %g_strncmp.exit.thread.7.i.a, label %.lr.ph319, !llvm.loop !55
+  br i1 %.not.i26.7.i, label %g_strncmp.exit.thread.7.i, label %.lr.ph319, !llvm.loop !55
 
 .lr.ph319:                                        ; preds = %g_strncmp.exit.6.i, %bb.ar
   %.in364 = phi i64 [ %i.eb, %bb.ar ], [ %i.bw, %g_strncmp.exit.6.i ]
@@ -463,31 +479,34 @@ bb.ar:                                            ; preds = %bb.as
   %i.ef = load i8, ptr %.06.i.7.i318, align 1, !tbaa !25
   %i.eg = zext i8 %i.ef to i16
   %.not10.i.7.i = icmp eq i16 %i.ee, %i.eg
-  br i1 %.not10.i.7.i, label %bb.as, label %g_strncmp.exit.7.i
+  br i1 %.not10.i.7.i, label %bb.as, label %g_strncmp.exit.thread.7.i.a
 
 bb.as:                                            ; preds = %.lr.ph319
   %i.eh = icmp eq i16 %i.ee, 0
   br i1 %i.eh, label %.g_strncmp.exit.thread.7.i_crit_edge, label %bb.ar, !llvm.loop !55
 
 .g_strncmp.exit.thread.7.i_crit_edge:             ; preds = %bb.as
-  br label %g_strncmp.exit.thread.7.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.7.i, !llvm.loop !55
 
-g_strncmp.exit.thread.7.i.a:                      ; preds = %bb.ar, %.g_strncmp.exit.thread.7.i_crit_edge, %g_strncmp.exit.6.i
-  %18 = getelementptr inbounds nuw i8, ptr @.str.8, i64 %i.bw
-  %19 = load i8, ptr %18, align 1, !tbaa !25
-  %i.ei = icmp eq i8 %19, 0
-  br i1 %i.ei, label %bb.bb, label %g_strncmp.exit.7.i
+g_strncmp.exit.thread.7.i:                        ; preds = %bb.ar, %.g_strncmp.exit.thread.7.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.7.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.7.i:                               ; preds = %.lr.ph319, %g_strncmp.exit.thread.7.i.a
-  %.not.i26.8.i321 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.8.i321, label %g_strncmp.exit.thread.8.i.a, label %.lr.ph324
+g_strncmp.exit.thread.7.i.a:                      ; preds = %.lr.ph319
+  %i.ei = icmp eq i64 %gepdiff, 0
+  br i1 %i.ei, label %.loopexit, label %g_strncmp.exit.7.i
+
+g_strncmp.exit.7.i:                               ; preds = %g_strncmp.exit.thread.7.i, %g_strncmp.exit.thread.7.i.a
+  br label %.lr.ph324
 
 bb.at:                                            ; preds = %bb.au
   %i.ej = add i64 %.in365, -1                     ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.06.i.8.i323, i64 1
   %i.el = getelementptr inbounds nuw i8, ptr %.07.i.8.i322, i64 2
   %.not.i26.8.i = icmp eq i64 %i.ej, 0
-  br i1 %.not.i26.8.i, label %g_strncmp.exit.thread.8.i.a, label %.lr.ph324, !llvm.loop !55
+  br i1 %.not.i26.8.i, label %g_strncmp.exit.thread.8.i, label %.lr.ph324, !llvm.loop !55
 
 .lr.ph324:                                        ; preds = %g_strncmp.exit.7.i, %bb.at
   %.in365 = phi i64 [ %i.ej, %bb.at ], [ %i.bw, %g_strncmp.exit.7.i ]
@@ -497,31 +516,34 @@ bb.at:                                            ; preds = %bb.au
   %i.en = load i8, ptr %.06.i.8.i323, align 1, !tbaa !25
   %i.eo = zext i8 %i.en to i16
   %.not10.i.8.i = icmp eq i16 %i.em, %i.eo
-  br i1 %.not10.i.8.i, label %bb.au, label %g_strncmp.exit.8.i
+  br i1 %.not10.i.8.i, label %bb.au, label %g_strncmp.exit.thread.8.i.a
 
 bb.au:                                            ; preds = %.lr.ph324
   %i.ep = icmp eq i16 %i.em, 0
   br i1 %i.ep, label %.g_strncmp.exit.thread.8.i_crit_edge, label %bb.at, !llvm.loop !55
 
 .g_strncmp.exit.thread.8.i_crit_edge:             ; preds = %bb.au
-  br label %g_strncmp.exit.thread.8.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.8.i, !llvm.loop !55
 
-g_strncmp.exit.thread.8.i.a:                      ; preds = %bb.at, %.g_strncmp.exit.thread.8.i_crit_edge, %g_strncmp.exit.7.i
-  %20 = getelementptr inbounds nuw i8, ptr @.str.9, i64 %i.bw
-  %21 = load i8, ptr %20, align 1, !tbaa !25
-  %i.eq = icmp eq i8 %21, 0
-  br i1 %i.eq, label %bb.bb, label %g_strncmp.exit.8.i
+g_strncmp.exit.thread.8.i:                        ; preds = %bb.at, %.g_strncmp.exit.thread.8.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.8.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.8.i:                               ; preds = %.lr.ph324, %g_strncmp.exit.thread.8.i.a
-  %.not.i26.9.i326 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.9.i326, label %g_strncmp.exit.thread.9.i.a, label %.lr.ph329
+g_strncmp.exit.thread.8.i.a:                      ; preds = %.lr.ph324
+  %i.eq = icmp eq i64 %gepdiff, 0
+  br i1 %i.eq, label %.loopexit, label %g_strncmp.exit.8.i
+
+g_strncmp.exit.8.i:                               ; preds = %g_strncmp.exit.thread.8.i, %g_strncmp.exit.thread.8.i.a
+  br label %.lr.ph329
 
 bb.av:                                            ; preds = %bb.aw
   %i.er = add i64 %.in366, -1                     ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.06.i.9.i328, i64 1
   %i.et = getelementptr inbounds nuw i8, ptr %.07.i.9.i327, i64 2
   %.not.i26.9.i = icmp eq i64 %i.er, 0
-  br i1 %.not.i26.9.i, label %g_strncmp.exit.thread.9.i.a, label %.lr.ph329, !llvm.loop !55
+  br i1 %.not.i26.9.i, label %g_strncmp.exit.thread.9.i, label %.lr.ph329, !llvm.loop !55
 
 .lr.ph329:                                        ; preds = %g_strncmp.exit.8.i, %bb.av
   %.in366 = phi i64 [ %i.er, %bb.av ], [ %i.bw, %g_strncmp.exit.8.i ]
@@ -531,31 +553,34 @@ bb.av:                                            ; preds = %bb.aw
   %i.ev = load i8, ptr %.06.i.9.i328, align 1, !tbaa !25
   %i.ew = zext i8 %i.ev to i16
   %.not10.i.9.i = icmp eq i16 %i.eu, %i.ew
-  br i1 %.not10.i.9.i, label %bb.aw, label %g_strncmp.exit.9.i
+  br i1 %.not10.i.9.i, label %bb.aw, label %g_strncmp.exit.thread.9.i.a
 
 bb.aw:                                            ; preds = %.lr.ph329
   %i.ex = icmp eq i16 %i.eu, 0
   br i1 %i.ex, label %.g_strncmp.exit.thread.9.i_crit_edge, label %bb.av, !llvm.loop !55
 
 .g_strncmp.exit.thread.9.i_crit_edge:             ; preds = %bb.aw
-  br label %g_strncmp.exit.thread.9.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.9.i, !llvm.loop !55
 
-g_strncmp.exit.thread.9.i.a:                      ; preds = %bb.av, %.g_strncmp.exit.thread.9.i_crit_edge, %g_strncmp.exit.8.i
-  %22 = getelementptr inbounds nuw i8, ptr @.str.10, i64 %i.bw
-  %23 = load i8, ptr %22, align 1, !tbaa !25
-  %i.ey = icmp eq i8 %23, 0
-  br i1 %i.ey, label %bb.bb, label %g_strncmp.exit.9.i
+g_strncmp.exit.thread.9.i:                        ; preds = %bb.av, %.g_strncmp.exit.thread.9.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.9.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.9.i:                               ; preds = %.lr.ph329, %g_strncmp.exit.thread.9.i.a
-  %.not.i26.10.i331 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.10.i331, label %g_strncmp.exit.thread.10.i.a, label %.lr.ph334
+g_strncmp.exit.thread.9.i.a:                      ; preds = %.lr.ph329
+  %i.ey = icmp eq i64 %gepdiff, 0
+  br i1 %i.ey, label %.loopexit, label %g_strncmp.exit.9.i
+
+g_strncmp.exit.9.i:                               ; preds = %g_strncmp.exit.thread.9.i, %g_strncmp.exit.thread.9.i.a
+  br label %.lr.ph334
 
 bb.ax:                                            ; preds = %bb.ay
   %i.ez = add i64 %.in367, -1                     ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.06.i.10.i333, i64 1
   %i.fb = getelementptr inbounds nuw i8, ptr %.07.i.10.i332, i64 2
   %.not.i26.10.i = icmp eq i64 %i.ez, 0
-  br i1 %.not.i26.10.i, label %g_strncmp.exit.thread.10.i.a, label %.lr.ph334, !llvm.loop !55
+  br i1 %.not.i26.10.i, label %g_strncmp.exit.thread.10.i, label %.lr.ph334, !llvm.loop !55
 
 .lr.ph334:                                        ; preds = %g_strncmp.exit.9.i, %bb.ax
   %.in367 = phi i64 [ %i.ez, %bb.ax ], [ %i.bw, %g_strncmp.exit.9.i ]
@@ -565,24 +590,27 @@ bb.ax:                                            ; preds = %bb.ay
   %i.fd = load i8, ptr %.06.i.10.i333, align 1, !tbaa !25
   %i.fe = zext i8 %i.fd to i16
   %.not10.i.10.i = icmp eq i16 %i.fc, %i.fe
-  br i1 %.not10.i.10.i, label %bb.ay, label %g_strncmp.exit.10.i
+  br i1 %.not10.i.10.i, label %bb.ay, label %g_strncmp.exit.thread.10.i.a
 
 bb.ay:                                            ; preds = %.lr.ph334
   %i.ff = icmp eq i16 %i.fc, 0
   br i1 %i.ff, label %.g_strncmp.exit.thread.10.i_crit_edge, label %bb.ax, !llvm.loop !55
 
 .g_strncmp.exit.thread.10.i_crit_edge:            ; preds = %bb.ay
-  br label %g_strncmp.exit.thread.10.i.a, !llvm.loop !55
+  br label %g_strncmp.exit.thread.10.i, !llvm.loop !55
 
-g_strncmp.exit.thread.10.i.a:                     ; preds = %bb.ax, %.g_strncmp.exit.thread.10.i_crit_edge, %g_strncmp.exit.9.i
-  %24 = getelementptr inbounds nuw i8, ptr @.str.11, i64 %i.bw
-  %25 = load i8, ptr %24, align 1, !tbaa !25
-  %i.fg = icmp eq i8 %25, 0
-  br i1 %i.fg, label %bb.bb, label %g_strncmp.exit.10.i
+g_strncmp.exit.thread.10.i:                       ; preds = %bb.ax, %.g_strncmp.exit.thread.10.i_crit_edge
+  switch i64 %gepdiff, label %g_strncmp.exit.10.i [
+    i64 10, label %bb.bb
+    i64 0, label %.loopexit
+  ]
 
-g_strncmp.exit.10.i:                              ; preds = %.lr.ph334, %g_strncmp.exit.thread.10.i.a
-  %.not.i26.11.i336 = icmp eq i64 %gepdiff, 0
-  br i1 %.not.i26.11.i336, label %g_strncmp.exit.thread.11.i, label %.lr.ph339
+g_strncmp.exit.thread.10.i.a:                     ; preds = %.lr.ph334
+  %i.fg = icmp eq i64 %gepdiff, 0
+  br i1 %i.fg, label %.loopexit, label %g_strncmp.exit.10.i
+
+g_strncmp.exit.10.i:                              ; preds = %g_strncmp.exit.thread.10.i, %g_strncmp.exit.thread.10.i.a
+  br label %.lr.ph339
 
 bb.az:                                            ; preds = %bb.ba
   %i.fh = add i64 %.in368, -1                     ; 2 uses
@@ -608,14 +636,12 @@ bb.ba:                                            ; preds = %.lr.ph339
 .g_strncmp.exit.thread.11.i_crit_edge:            ; preds = %bb.ba
   br label %g_strncmp.exit.thread.11.i, !llvm.loop !55
 
-g_strncmp.exit.thread.11.i:                       ; preds = %bb.az, %.g_strncmp.exit.thread.11.i_crit_edge, %g_strncmp.exit.10.i
-  %26 = getelementptr inbounds nuw i8, ptr @.str.12, i64 %i.bw
-  %27 = load i8, ptr %26, align 1, !tbaa !25
-  %i.fo = icmp eq i8 %27, 0
+g_strncmp.exit.thread.11.i:                       ; preds = %bb.az, %.g_strncmp.exit.thread.11.i_crit_edge
+  %i.fo = icmp eq i64 %gepdiff, 12
   br i1 %i.fo, label %bb.bb, label %.loopexit
 
-bb.bb:                                            ; preds = %g_strncmp.exit.thread.11.i, %g_strncmp.exit.thread.10.i.a, %g_strncmp.exit.thread.9.i.a, %g_strncmp.exit.thread.8.i.a, %g_strncmp.exit.thread.7.i.a, %g_strncmp.exit.thread.6.i.a, %g_strncmp.exit.thread.5.i.a, %g_strncmp.exit.thread.4.i.a, %g_strncmp.exit.thread.3.i.a, %g_strncmp.exit.thread.2.i.a, %g_strncmp.exit.thread.1.i.a, %g_strncmp.exit.thread.i
-  %.033.lcssa.i = phi ptr [ @cclasses, %g_strncmp.exit.thread.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 16), %g_strncmp.exit.thread.1.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 32), %g_strncmp.exit.thread.2.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 48), %g_strncmp.exit.thread.3.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 64), %g_strncmp.exit.thread.4.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 80), %g_strncmp.exit.thread.5.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 96), %g_strncmp.exit.thread.6.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 112), %g_strncmp.exit.thread.7.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 128), %g_strncmp.exit.thread.8.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 144), %g_strncmp.exit.thread.9.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 160), %g_strncmp.exit.thread.10.i.a ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 176), %g_strncmp.exit.thread.11.i ]
+bb.bb:                                            ; preds = %g_strncmp.exit.thread.11.i, %g_strncmp.exit.thread.10.i, %g_strncmp.exit.thread.9.i, %g_strncmp.exit.thread.8.i, %g_strncmp.exit.thread.7.i, %g_strncmp.exit.thread.6.i, %g_strncmp.exit.thread.5.i, %g_strncmp.exit.thread.4.i, %g_strncmp.exit.thread.3.i, %g_strncmp.exit.thread.2.i, %g_strncmp.exit.thread.1.i, %g_strncmp.exit.thread.i
+  %.033.lcssa.i = phi ptr [ @cclasses, %g_strncmp.exit.thread.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 16), %g_strncmp.exit.thread.1.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 144), %g_strncmp.exit.thread.9.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 160), %g_strncmp.exit.thread.10.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 32), %g_strncmp.exit.thread.2.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 48), %g_strncmp.exit.thread.3.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 64), %g_strncmp.exit.thread.4.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 80), %g_strncmp.exit.thread.5.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 96), %g_strncmp.exit.thread.6.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 112), %g_strncmp.exit.thread.7.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 128), %g_strncmp.exit.thread.8.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 176), %g_strncmp.exit.thread.11.i ]
   %i.fp = getelementptr inbounds nuw i8, ptr %.3131, i64 2
   store i16 -32710, ptr %.3131, align 2, !tbaa !27
   %i.fq = ptrtoint ptr %.033.lcssa.i to i64
@@ -638,7 +664,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.ga = icmp eq i16 %i.fz, 58
   br i1 %i.ga, label %.preheader169, label %.critedge.thread163, !llvm.loop !56
 
-.loopexit:                                        ; preds = %g_strncmp.exit.thread.11.i, %.lr.ph339
+.loopexit:                                        ; preds = %g_strncmp.exit.thread.10.i.a, %g_strncmp.exit.thread.9.i.a, %g_strncmp.exit.thread.8.i.a, %g_strncmp.exit.thread.7.i.a, %g_strncmp.exit.thread.6.i.a, %g_strncmp.exit.thread.5.i.a, %g_strncmp.exit.thread.4.i.a, %g_strncmp.exit.thread.3.i.a, %g_strncmp.exit.thread.2.i.a, %g_strncmp.exit.thread.1.i.a, %g_strncmp.exit.thread.11.i, %g_strncmp.exit.thread.10.i, %g_strncmp.exit.thread.9.i, %g_strncmp.exit.thread.8.i, %g_strncmp.exit.thread.7.i, %g_strncmp.exit.thread.6.i, %g_strncmp.exit.thread.5.i, %g_strncmp.exit.thread.4.i, %g_strncmp.exit.thread.3.i, %g_strncmp.exit.thread.2.i, %g_strncmp.exit.thread.1.i, %.lr.ph339
   %i.gb = load i32, ptr %i.ay, align 8, !tbaa !22
   %i.gc = and i32 %i.gb, 16
   %.not97 = icmp eq i32 %i.gc, 0

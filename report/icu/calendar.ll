@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/calendar?download=true
 inline.NumInlined: 469
 inline.NumDeleted: 84
-loop-unroll.NumCompletelyUnrolled: 11
-loop-unroll.NumUnrolled: 11
+loop-unroll.NumCompletelyUnrolled: 14
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZN6icu_788Calendar22handleComputeJulianDayE19UCalendarDateFieldsR10UErrorCode:bb.a
 
 bb.aq:                                            ; preds = %bb.am
@@ -204,71 +204,71 @@ bb.a:
 .lr.ph74.preheader.i:                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   store i32 0, ptr %i.a, align 4, !tbaa !48
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  br label %.lr.ph.i
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 108
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 109
+  %4 = load i8, ptr %2, align 4
+  %5 = load i8, ptr %3, align 1
+  %6 = icmp slt i8 %4, %5
+  %.fr = freeze i1 %6
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 111
+  %7 = load i8, ptr %i.d, align 1, !tbaa !44      ; 3 uses
+  %.not60.i.us = icmp eq i8 %7, 0                 ; 2 uses
+  br i1 %.fr, label %.lr.ph.i.us.preheader, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %.lr.ph74.preheader.i, %bb.b
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ 0, %.lr.ph74.preheader.i ]
-  %2 = phi i32 [ %8, %bb.b ], [ 7, %.lr.ph74.preheader.i ]
-  %.04168.i = phi i32 [ %spec.select.i, %bb.b ], [ 0, %.lr.ph74.preheader.i ]
-  %3 = sext i32 %2 to i64
-  %4 = getelementptr inbounds i8, ptr %i.d, i64 %3
-  %5 = load i8, ptr %4, align 1, !tbaa !44        ; 2 uses
-  %.not60.i = icmp eq i8 %5, 0
-  br i1 %.not60.i, label %.lr.ph.i.preheader.1.a, label %bb.b
+.lr.ph.i.us.preheader:                            ; preds = %.lr.ph74.preheader.i
+  br i1 %.not60.i.us, label %bb.b, label %.lr.ph.i
 
-bb.b:                                             ; preds = %.lr.ph.i
-  %6 = sext i8 %5 to i32
-  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %.04168.i, i32 %6) ; 3 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr @_ZN6icu_788Calendar14kDOWPrecedenceE, i64 %indvars.iv.next.i
-  %8 = load i32, ptr %7, align 4, !tbaa !48       ; 2 uses
-  %.not59.i = icmp eq i32 %8, -1
-  br i1 %.not59.i, label %._crit_edge.i.a, label %.lr.ph.i, !llvm.loop !3
+.lr.ph.i:                                         ; preds = %.lr.ph.i.us.preheader
+  %8 = tail call i8 @llvm.smax.i8(i8 %7, i8 0)    ; 2 uses
+  %spec.select.i.us = zext nneg i8 %8 to i32
+  %.not14 = icmp eq i8 %8, 0
+  %spec.select18 = select i1 %.not14, i32 24, i32 7
+  br label %bb.b
+
+bb.b:                                             ; preds = %.lr.ph.i, %.lr.ph.i.us.preheader
+  %.352.i.us = phi i32 [ %spec.select18, %.lr.ph.i ], [ 24, %.lr.ph.i.us.preheader ] ; 2 uses
+  %.144.i.us = phi i32 [ %spec.select.i.us, %.lr.ph.i ], [ 0, %.lr.ph.i.us.preheader ]
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 122
+  %10 = load i8, ptr %9, align 2, !tbaa !44       ; 2 uses
+  %.not59.i = icmp eq i8 %10, 0
+  br i1 %.not59.i, label %.lr.ph.i.preheader.1.a, label %._crit_edge.i.a
 
 ._crit_edge.i.a:                                  ; preds = %bb.b
-  %9 = icmp sgt i32 %spec.select.i, 0
-  %.15071.i.mux = select i1 %9, i32 7, i32 24
-  %.04372.i.mux = tail call i32 @llvm.smax.i32(i32 %spec.select.i, i32 0)
-  br label %.lr.ph.i.preheader.1.a
+  %11 = tail call i8 @llvm.smax.i8(i8 %10, i8 0)
+  %spec.select.i.us.1 = zext nneg i8 %11 to i32
+  %12 = icmp samesign ult i32 %.144.i.us, %spec.select.i.us.1
+  br i1 %12, label %bb.f, label %.lr.ph.i.preheader.1.a
 
-.lr.ph.i.preheader.1.a:                           ; preds = %._crit_edge.i.a, %.lr.ph.i
-  %.352.i = phi i32 [ %.15071.i.mux, %._crit_edge.i.a ], [ 24, %.lr.ph.i ] ; 2 uses
-  %.144.i = phi i32 [ %.04372.i.mux, %._crit_edge.i.a ], [ 0, %.lr.ph.i ]
-  br label %.lr.ph.i.1
+.lr.ph.i.preheader.1.a:                           ; preds = %._crit_edge.i.loopexit.1, %bb.c, %._crit_edge.i.a, %bb.b
+  %.us-phi = phi i32 [ %.352.i.us, %bb.b ], [ %.352.i.us, %._crit_edge.i.a ], [ %.352.i, %._crit_edge.i.loopexit.1 ], [ %.352.i, %bb.c ]
+  %cond = icmp eq i32 %.us-phi, 7
+  br i1 %cond, label %bb.d, label %bb.h
 
-.lr.ph.i.1:                                       ; preds = %bb.c, %.lr.ph.i.preheader.1.a
-  %indvars.iv.i.1 = phi i64 [ %indvars.iv.next.i.1, %bb.c ], [ 0, %.lr.ph.i.preheader.1.a ]
-  %10 = phi i32 [ %16, %bb.c ], [ 18, %.lr.ph.i.preheader.1.a ]
-  %.04168.i.1 = phi i32 [ %spec.select.i.1, %bb.c ], [ 0, %.lr.ph.i.preheader.1.a ]
-  %11 = sext i32 %10 to i64
-  %12 = getelementptr inbounds i8, ptr %i.d, i64 %11
-  %13 = load i8, ptr %12, align 1, !tbaa !44      ; 2 uses
-  %.not60.i.1 = icmp eq i8 %13, 0
-  br i1 %.not60.i.1, label %.thread.i.1, label %bb.c
+.lr.ph.i.preheader:                               ; preds = %.lr.ph74.preheader.i
+  br i1 %.not60.i.us, label %bb.c, label %.lr.ph.i.1
 
-bb.c:                                             ; preds = %.lr.ph.i.1
-  %14 = sext i8 %13 to i32
-  %spec.select.i.1 = tail call i32 @llvm.smax.i32(i32 %.04168.i.1, i32 %14) ; 2 uses
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i.1, 1 ; 2 uses
-  %15 = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_788Calendar14kDOWPrecedenceE, i64 32), i64 %indvars.iv.next.i.1
-  %16 = load i32, ptr %15, align 4, !tbaa !48     ; 2 uses
-  %.not59.i.1 = icmp eq i32 %16, -1
-  br i1 %.not59.i.1, label %._crit_edge.i.loopexit.1, label %.lr.ph.i.1, !llvm.loop !3
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i.preheader
+  %13 = tail call i8 @llvm.smax.i8(i8 %7, i8 0)   ; 2 uses
+  %spec.select.i = zext nneg i8 %13 to i32
+  %.not = icmp eq i8 %13, 0
+  %spec.select20 = select i1 %.not, i32 24, i32 7
+  br label %bb.c
+
+bb.c:                                             ; preds = %.lr.ph.i.1, %.lr.ph.i.preheader
+  %.352.i = phi i32 [ %spec.select20, %.lr.ph.i.1 ], [ 24, %.lr.ph.i.preheader ] ; 2 uses
+  %.144.i = phi i32 [ %spec.select.i, %.lr.ph.i.1 ], [ 0, %.lr.ph.i.preheader ]
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 122
+  %15 = load i8, ptr %14, align 2, !tbaa !44      ; 2 uses
+  %.not59.i.1 = icmp eq i8 %15, 0
+  br i1 %.not59.i.1, label %.lr.ph.i.preheader.1.a, label %._crit_edge.i.loopexit.1
 
 ._crit_edge.i.loopexit.1:                         ; preds = %bb.c
-  %17 = icmp sgt i32 %spec.select.i.1, %.144.i
-  %18 = select i1 %17, i32 18, i32 %.352.i
-  br label %.thread.i.1
+  %16 = tail call i8 @llvm.smax.i8(i8 %15, i8 0)
+  %spec.select.i.1 = zext nneg i8 %16 to i32
+  %17 = icmp samesign ult i32 %.144.i, %spec.select.i.1
+  br i1 %17, label %bb.f, label %.lr.ph.i.preheader.1.a
 
-.thread.i.1:                                      ; preds = %.lr.ph.i.1, %._crit_edge.i.loopexit.1
-  %.352.i.1 = phi i32 [ %18, %._crit_edge.i.loopexit.1 ], [ %.352.i, %.lr.ph.i.1 ]
-  switch i32 %.352.i.1, label %bb.h [
-    i32 7, label %bb.d
-    i32 18, label %bb.f
-  ]
-
-bb.d:                                             ; preds = %.thread.i.1
+bb.d:                                             ; preds = %.lr.ph.i.preheader.1.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.f = load i32, ptr %i.e, align 4, !tbaa !48   ; 2 uses
   store i32 %i.f, ptr %i.a, align 4, !tbaa !48
@@ -286,7 +286,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 1, ptr %1, align 4, !tbaa !25
   br label %bb.i
 
-bb.f:                                             ; preds = %.thread.i.1
+bb.f:                                             ; preds = %._crit_edge.i.loopexit.1, %._crit_edge.i.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.o = load i32, ptr %i.n, align 8, !tbaa !48   ; 2 uses
   store i32 %i.o, ptr %i.a, align 4, !tbaa !48
@@ -298,7 +298,7 @@ bb.g:                                             ; preds = %bb.f
   store i32 1, ptr %1, align 4, !tbaa !25
   br label %bb.i
 
-bb.h:                                             ; preds = %.thread.i.1, %bb.f, %bb.d
+bb.h:                                             ; preds = %.lr.ph.i.preheader.1.a, %bb.f, %bb.d
   %i.q = load i32, ptr %i.a, align 4, !tbaa !48
   %i.r = srem i32 %i.q, 7                         ; 3 uses
   %i.s = icmp slt i32 %i.r, 0
@@ -420,7 +420,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
   br i1 %.not.i.1, label %_ZNK6icu_788Calendar13resolveFieldsEPA12_A8_Ki.exit, label %.lr.ph74.i.1, !llvm.loop !4
 
 .lr.ph74.i:                                       ; preds = %.thread.i, %.lr.ph74.preheader.i
-  %indvars.iv82.i = phi i64 [ 0, %.lr.ph74.preheader.i ], [ %indvars.iv.next83.i, %.thread.i ] ; 2 uses
+  %indvars.iv82.i = phi i64 [ 0, %.lr.ph74.preheader.i ], [ %indvars.iv.next83.i, %.thread.i ] ; 3 uses
   %i.af = phi i32 [ 5, %.lr.ph74.preheader.i ], [ %i.aw, %.thread.i ] ; 4 uses
   %.04372.i = phi i32 [ 0, %.lr.ph74.preheader.i ], [ %.144.i, %.thread.i ] ; 4 uses
   %.15071.i = phi i32 [ 24, %.lr.ph74.preheader.i ], [ %.352.i, %.thread.i ] ; 3 uses
@@ -480,9 +480,11 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.144.i = phi i32 [ %.04372.i, %._crit_edge.i ], [ %spec.select62.i, %bb.k ], [ %.04372.i, %.lr.ph.i ]
   %indvars.iv.next83.i = add nuw nsw i64 %indvars.iv82.i, 1 ; 2 uses
   %i.av = getelementptr inbounds nuw [32 x i8], ptr @_ZN6icu_788Calendar15kDatePrecedenceE, i64 %indvars.iv.next83.i
-  %i.aw = load i32, ptr %i.av, align 16, !tbaa !48 ; 2 uses
-  %.not.i = icmp eq i32 %i.aw, -1
-  br i1 %.not.i, label %._crit_edge75.i, label %.lr.ph74.i, !llvm.loop !4
+  %i.aw = load i32, ptr %i.av, align 16, !tbaa !48
+  %4 = shl nuw i64 1, %indvars.iv82.i
+  %5 = and i64 %4, 8454656
+  %.not.i = icmp eq i64 %5, 0
+  br i1 %.not.i, label %.lr.ph74.i, label %._crit_edge75.i, !llvm.loop !4
 
 _ZNK6icu_788Calendar13resolveFieldsEPA12_A8_Ki.exit: ; preds = %.thread.i.1, %._crit_edge75.i
   %.352.i.lcssa.lcssa = phi i32 [ %.352.i, %._crit_edge75.i ], [ %.352.i.1, %.thread.i.1 ]
@@ -885,71 +887,68 @@ define noundef i32 @_ZNK6icu_788Calendar16internalGetMonthER10UErrorCode(ptr nof
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !25
   %i.b = icmp slt i32 %i.a, 1
-  br i1 %i.b, label %.lr.ph74.preheader.i, label %bb.d
+  br i1 %i.b, label %.lr.ph.i, label %bb.d
 
-.lr.ph74.preheader.i:                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  br label %.lr.ph.i
+.lr.ph.i:                                         ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 108
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 109
+  %4 = load i8, ptr %2, align 4
+  %5 = load i8, ptr %3, align 1
+  %6 = icmp slt i8 %4, %5
+  %.fr = freeze i1 %6
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 106
+  %i.d = load i8, ptr %i.c, align 2, !tbaa !44    ; 3 uses
+  %.not60.i = icmp eq i8 %i.d, 0                  ; 2 uses
+  br i1 %.fr, label %.lr.ph.i.us.preheader, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %.lr.ph74.preheader.i, %bb.b
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ 0, %.lr.ph74.preheader.i ]
-  %3 = phi i32 [ %7, %bb.b ], [ 2, %.lr.ph74.preheader.i ]
-  %.04168.i = phi i32 [ %spec.select.i, %bb.b ], [ 0, %.lr.ph74.preheader.i ]
-  %4 = sext i32 %3 to i64
-  %i.c = getelementptr inbounds i8, ptr %2, i64 %4
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !44    ; 2 uses
-  %.not60.i = icmp eq i8 %i.d, 0
-  br i1 %.not60.i, label %.lr.ph.i.preheader.1.a, label %bb.b
+.lr.ph.i.us.preheader:                            ; preds = %.lr.ph.i
+  br i1 %.not60.i, label %bb.b, label %._crit_edge.i.us
 
-bb.b:                                             ; preds = %.lr.ph.i
-  %5 = sext i8 %i.d to i32
-  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %.04168.i, i32 %5) ; 3 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @_ZN6icu_788Calendar16kMonthPrecedenceE, i64 %indvars.iv.next.i
-  %7 = load i32, ptr %6, align 4, !tbaa !48       ; 2 uses
-  %.not59.i = icmp eq i32 %7, -1
-  br i1 %.not59.i, label %._crit_edge.i.a, label %.lr.ph.i, !llvm.loop !3
+._crit_edge.i.us:                                 ; preds = %.lr.ph.i.us.preheader
+  %7 = tail call i8 @llvm.smax.i8(i8 %i.d, i8 0)
+  %spec.select.i.us = zext nneg i8 %7 to i32
+  br label %bb.b
+
+bb.b:                                             ; preds = %._crit_edge.i.us, %.lr.ph.i.us.preheader
+  %.144.i.us = phi i32 [ %spec.select.i.us, %._crit_edge.i.us ], [ 0, %.lr.ph.i.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 127
+  %9 = load i8, ptr %8, align 1, !tbaa !44        ; 2 uses
+  %.not59.i = icmp eq i8 %9, 0
+  br i1 %.not59.i, label %._crit_edge.i.loopexit.1, label %._crit_edge.i.a
 
 ._crit_edge.i.a:                                  ; preds = %bb.b
-  %8 = icmp sgt i32 %spec.select.i, 0
-  %.15071.i.mux = select i1 %8, i32 2, i32 24
-  %.04372.i.mux = tail call i32 @llvm.smax.i32(i32 %spec.select.i, i32 0)
-  br label %.lr.ph.i.preheader.1.a
+  %10 = tail call i8 @llvm.smax.i8(i8 %9, i8 0)
+  %spec.select.i.us.1 = zext nneg i8 %10 to i32
+  %11 = icmp samesign ult i32 %.144.i.us, %spec.select.i.us.1
+  br i1 %11, label %.thread.i.1, label %._crit_edge.i.loopexit.1
 
-.lr.ph.i.preheader.1.a:                           ; preds = %._crit_edge.i.a, %.lr.ph.i
-  %.352.i = phi i32 [ %.15071.i.mux, %._crit_edge.i.a ], [ 24, %.lr.ph.i ] ; 2 uses
-  %.144.i = phi i32 [ %.04372.i.mux, %._crit_edge.i.a ], [ 0, %.lr.ph.i ]
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.i
+  br i1 %.not60.i, label %.lr.ph.i.1, label %.lr.ph.i.preheader.1.a
+
+.lr.ph.i.preheader.1.a:                           ; preds = %.lr.ph.i.preheader
+  %12 = tail call i8 @llvm.smax.i8(i8 %i.d, i8 0)
+  %spec.select.i = zext nneg i8 %12 to i32
   br label %.lr.ph.i.1
 
-.lr.ph.i.1:                                       ; preds = %bb.c, %.lr.ph.i.preheader.1.a
-  %indvars.iv.i.1 = phi i64 [ %indvars.iv.next.i.1, %bb.c ], [ 0, %.lr.ph.i.preheader.1.a ]
-  %9 = phi i32 [ %13, %bb.c ], [ 23, %.lr.ph.i.preheader.1.a ]
-  %.04168.i.1 = phi i32 [ %spec.select.i.1, %bb.c ], [ 0, %.lr.ph.i.preheader.1.a ]
-  %10 = sext i32 %9 to i64
-  %i.e = getelementptr inbounds i8, ptr %2, i64 %10
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i.preheader.1.a, %.lr.ph.i.preheader
+  %.04168.i.1 = phi i32 [ %spec.select.i, %.lr.ph.i.preheader.1.a ], [ 0, %.lr.ph.i.preheader ]
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 127
   %i.f = load i8, ptr %i.e, align 1, !tbaa !44    ; 2 uses
   %.not60.i.1 = icmp eq i8 %i.f, 0
-  br i1 %.not60.i.1, label %.thread.i.1, label %bb.c
+  br i1 %.not60.i.1, label %._crit_edge.i.loopexit.1, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.1
-  %11 = sext i8 %i.f to i32
-  %spec.select.i.1 = tail call i32 @llvm.smax.i32(i32 %.04168.i.1, i32 %11) ; 2 uses
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i.1, 1 ; 2 uses
-  %12 = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_788Calendar16kMonthPrecedenceE, i64 32), i64 %indvars.iv.next.i.1
-  %13 = load i32, ptr %12, align 4, !tbaa !48     ; 2 uses
-  %.not59.i.1 = icmp eq i32 %13, -1
-  br i1 %.not59.i.1, label %._crit_edge.i.loopexit.1, label %.lr.ph.i.1, !llvm.loop !3
+  %13 = tail call i8 @llvm.smax.i8(i8 %i.f, i8 0)
+  %spec.select.i.1 = zext nneg i8 %13 to i32
+  %14 = icmp samesign ult i32 %.04168.i.1, %spec.select.i.1
+  br i1 %14, label %.thread.i.1, label %._crit_edge.i.loopexit.1
 
-._crit_edge.i.loopexit.1:                         ; preds = %bb.c
-  %14 = icmp sgt i32 %spec.select.i.1, %.144.i
-  %15 = select i1 %14, i32 23, i32 %.352.i
+._crit_edge.i.loopexit.1:                         ; preds = %.lr.ph.i.1, %bb.c, %bb.b, %._crit_edge.i.a
   br label %.thread.i.1
 
-.thread.i.1:                                      ; preds = %.lr.ph.i.1, %._crit_edge.i.loopexit.1
-  %.352.i.1 = phi i32 [ %15, %._crit_edge.i.loopexit.1 ], [ %.352.i, %.lr.ph.i.1 ]
-  %16 = icmp eq i32 %.352.i.1, 23
-  %. = select i1 %16, i64 100, i64 16
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %.
+.thread.i.1:                                      ; preds = %bb.c, %._crit_edge.i.a, %._crit_edge.i.loopexit.1
+  %.sink16 = phi i64 [ 16, %._crit_edge.i.loopexit.1 ], [ 100, %._crit_edge.i.a ], [ 100, %bb.c ]
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %.sink16
   %i.h = load i32, ptr %i.g, align 4, !tbaa !48
   br label %bb.d
 
@@ -963,80 +962,71 @@ define noundef i32 @_ZNK6icu_788Calendar16internalGetMonthEiR10UErrorCode(ptr no
 bb.a:
   %i.a = load i32, ptr %2, align 4, !tbaa !25
   %i.b = icmp slt i32 %i.a, 1
-  br i1 %i.b, label %.lr.ph74.preheader.i, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
+  br i1 %i.b, label %.lr.ph.i, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
 
-.lr.ph74.preheader.i:                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  br label %.lr.ph.i
+.lr.ph.i:                                         ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 108
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 109
+  %5 = load i8, ptr %3, align 4
+  %6 = load i8, ptr %4, align 1
+  %7 = icmp slt i8 %5, %6
+  %.fr = freeze i1 %7
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 106
+  %i.d = load i8, ptr %i.c, align 2, !tbaa !44    ; 3 uses
+  %.not60.i = icmp eq i8 %i.d, 0                  ; 2 uses
+  br i1 %.fr, label %.lr.ph.i.us.preheader, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %.lr.ph74.preheader.i, %bb.b
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ 0, %.lr.ph74.preheader.i ]
-  %4 = phi i32 [ %8, %bb.b ], [ 2, %.lr.ph74.preheader.i ]
-  %.04168.i = phi i32 [ %spec.select.i, %bb.b ], [ 0, %.lr.ph74.preheader.i ]
-  %5 = sext i32 %4 to i64
-  %i.c = getelementptr inbounds i8, ptr %3, i64 %5
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !44    ; 2 uses
-  %.not60.i = icmp eq i8 %i.d, 0
-  br i1 %.not60.i, label %.lr.ph.i.preheader.1.a, label %bb.b
+.lr.ph.i.us.preheader:                            ; preds = %.lr.ph.i
+  br i1 %.not60.i, label %bb.b, label %._crit_edge.i.us
 
-bb.b:                                             ; preds = %.lr.ph.i
-  %6 = sext i8 %i.d to i32
-  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %.04168.i, i32 %6) ; 3 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr @_ZN6icu_788Calendar16kMonthPrecedenceE, i64 %indvars.iv.next.i
-  %8 = load i32, ptr %7, align 4, !tbaa !48       ; 2 uses
-  %.not59.i = icmp eq i32 %8, -1
-  br i1 %.not59.i, label %._crit_edge.i.a, label %.lr.ph.i, !llvm.loop !3
+._crit_edge.i.us:                                 ; preds = %.lr.ph.i.us.preheader
+  %8 = tail call i8 @llvm.smax.i8(i8 %i.d, i8 0)
+  %spec.select.i.us = zext nneg i8 %8 to i32
+  br label %bb.b
+
+bb.b:                                             ; preds = %._crit_edge.i.us, %.lr.ph.i.us.preheader
+  %.144.i.us = phi i32 [ %spec.select.i.us, %._crit_edge.i.us ], [ 0, %.lr.ph.i.us.preheader ]
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 127
+  %10 = load i8, ptr %9, align 1, !tbaa !44       ; 2 uses
+  %.not59.i = icmp eq i8 %10, 0
+  br i1 %.not59.i, label %bb.d, label %._crit_edge.i.a
 
 ._crit_edge.i.a:                                  ; preds = %bb.b
-  %9 = icmp sgt i32 %spec.select.i, 0
-  %.15071.i.mux = select i1 %9, i32 2, i32 24
-  %.04372.i.mux = tail call i32 @llvm.smax.i32(i32 %spec.select.i, i32 0)
-  br label %.lr.ph.i.preheader.1.a
+  %11 = tail call i8 @llvm.smax.i8(i8 %10, i8 0)
+  %spec.select.i.us.1 = zext nneg i8 %11 to i32
+  %12 = icmp samesign ult i32 %.144.i.us, %spec.select.i.us.1
+  br i1 %12, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit.sink.split, label %bb.d
 
-.lr.ph.i.preheader.1.a:                           ; preds = %._crit_edge.i.a, %.lr.ph.i
-  %.352.i = phi i32 [ %.15071.i.mux, %._crit_edge.i.a ], [ 24, %.lr.ph.i ] ; 2 uses
-  %.144.i = phi i32 [ %.04372.i.mux, %._crit_edge.i.a ], [ 0, %.lr.ph.i ]
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.i
+  br i1 %.not60.i, label %.lr.ph.i.1, label %.lr.ph.i.preheader.1.a
+
+.lr.ph.i.preheader.1.a:                           ; preds = %.lr.ph.i.preheader
+  %13 = tail call i8 @llvm.smax.i8(i8 %i.d, i8 0)
+  %spec.select.i = zext nneg i8 %13 to i32
   br label %.lr.ph.i.1
 
-.lr.ph.i.1:                                       ; preds = %bb.c, %.lr.ph.i.preheader.1.a
-  %indvars.iv.i.1 = phi i64 [ %indvars.iv.next.i.1, %bb.c ], [ 0, %.lr.ph.i.preheader.1.a ]
-  %10 = phi i32 [ %14, %bb.c ], [ 23, %.lr.ph.i.preheader.1.a ]
-  %.04168.i.1 = phi i32 [ %spec.select.i.1, %bb.c ], [ 0, %.lr.ph.i.preheader.1.a ]
-  %11 = sext i32 %10 to i64
-  %i.e = getelementptr inbounds i8, ptr %3, i64 %11
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i.preheader.1.a, %.lr.ph.i.preheader
+  %.04168.i.1 = phi i32 [ %spec.select.i, %.lr.ph.i.preheader.1.a ], [ 0, %.lr.ph.i.preheader ]
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 127
   %i.f = load i8, ptr %i.e, align 1, !tbaa !44    ; 2 uses
   %.not60.i.1 = icmp eq i8 %i.f, 0
-  br i1 %.not60.i.1, label %.thread.i.1, label %bb.c
+  br i1 %.not60.i.1, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.1
-  %12 = sext i8 %i.f to i32
-  %spec.select.i.1 = tail call i32 @llvm.smax.i32(i32 %.04168.i.1, i32 %12) ; 2 uses
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i.1, 1 ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_788Calendar16kMonthPrecedenceE, i64 32), i64 %indvars.iv.next.i.1
-  %14 = load i32, ptr %13, align 4, !tbaa !48     ; 2 uses
-  %.not59.i.1 = icmp eq i32 %14, -1
-  br i1 %.not59.i.1, label %._crit_edge.i.loopexit.1, label %.lr.ph.i.1, !llvm.loop !3
+  %14 = tail call i8 @llvm.smax.i8(i8 %i.f, i8 0)
+  %spec.select.i.1 = zext nneg i8 %14 to i32
+  %15 = icmp samesign ult i32 %.04168.i.1, %spec.select.i.1
+  br i1 %15, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit.sink.split, label %bb.d
 
-._crit_edge.i.loopexit.1:                         ; preds = %bb.c
-  %15 = icmp sgt i32 %spec.select.i.1, %.144.i
-  %16 = select i1 %15, i32 23, i32 %.352.i
-  br label %.thread.i.1
-
-.thread.i.1:                                      ; preds = %.lr.ph.i.1, %._crit_edge.i.loopexit.1
-  %.352.i.1 = phi i32 [ %16, %._crit_edge.i.loopexit.1 ], [ %.352.i, %.lr.ph.i.1 ]
-  %17 = icmp eq i32 %.352.i.1, 23
-  br i1 %17, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit.sink.split, label %bb.d
-
-bb.d:                                             ; preds = %.thread.i.1
+bb.d:                                             ; preds = %.lr.ph.i.1, %bb.c, %bb.b, %._crit_edge.i.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 106
   %i.h = load i8, ptr %i.g, align 2, !tbaa !44
   %i.i = icmp sgt i8 %i.h, 0
   br i1 %i.i, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit.sink.split, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
 
-_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit.sink.split: ; preds = %bb.d, %.thread.i.1
-  %.sink8 = phi i64 [ 100, %.thread.i.1 ], [ 16, %bb.d ]
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.sink8
+_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit.sink.split: ; preds = %bb.d, %bb.c, %._crit_edge.i.a
+  %.sink17 = phi i64 [ 100, %bb.c ], [ 100, %._crit_edge.i.a ], [ 16, %bb.d ]
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.sink17
   %i.k = load i32, ptr %i.j, align 4, !tbaa !48
   br label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
 

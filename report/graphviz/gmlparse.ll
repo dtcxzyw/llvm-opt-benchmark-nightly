@@ -109,9 +109,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.cw, %bb.cn, %bb.v
   %.0196 = phi ptr [ %i.lv, %bb.cw ], [ %i.ku, %bb.cn ], [ %i.ax, %bb.v ]
-  %.0186 = phi ptr [ %.4190, %bb.cw ], [ %i.kt, %bb.cn ], [ %.3189, %bb.v ]
+  %.0186 = phi ptr [ %.4190.lcssa, %bb.cw ], [ %i.kt, %bb.cn ], [ %.3189, %bb.v ]
   %.0177 = phi i32 [ 3, %bb.cw ], [ %.1178, %bb.cn ], [ %spec.select, %bb.v ]
-  %.0176 = phi i32 [ %13, %bb.cw ], [ %i.ll, %bb.cn ], [ %i.au, %bb.v ]
+  %.0176 = phi i32 [ 1, %bb.cw ], [ %i.ll, %bb.cn ], [ %i.au, %bb.v ]
   %i.b = getelementptr inbounds nuw i8, ptr %.0186, i64 1
   br label %bb.c
 
@@ -122,7 +122,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.0183 = phi ptr [ %i.a, %bb.a ], [ %.3, %bb.b ] ; 7 uses
   %.0180 = phi i64 [ 200, %bb.a ], [ %.2182, %bb.b ] ; 4 uses
   %.1178 = phi i32 [ 0, %bb.a ], [ %.0177, %bb.b ] ; 3 uses
-  %.1 = phi i32 [ 0, %bb.a ], [ %.0176, %bb.b ]   ; 3 uses
+  %.1 = phi i32 [ 0, %bb.a ], [ %.0176, %bb.b ]   ; 4 uses
   %i.c = trunc nsw i32 %.1 to i8
   store i8 %i.c, ptr %.1187, align 1, !tbaa !12
   %i.d = getelementptr inbounds i8, ptr %.0183, i64 %.0180
@@ -170,9 +170,9 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %.not231, label %.thread270, label %.loopexit281.thread
 
 .thread270:                                       ; preds = %bb.h, %bb.c
-  %.3199 = phi ptr [ %.1197, %bb.c ], [ %i.u, %bb.h ] ; 48 uses
+  %.3199 = phi ptr [ %.1197, %bb.c ], [ %i.u, %bb.h ] ; 49 uses
   %.3195 = phi ptr [ %.0192, %bb.c ], [ %i.q, %bb.h ]
-  %.3189 = phi ptr [ %.1187, %bb.c ], [ %i.s, %bb.h ] ; 3 uses
+  %.3189 = phi ptr [ %.1187, %bb.c ], [ %i.s, %bb.h ] ; 4 uses
   %.3 = phi ptr [ %.0183, %bb.c ], [ %i.n, %bb.h ] ; 7 uses
   %.2182 = phi i64 [ %.0180, %bb.c ], [ %spec.store.select, %bb.h ]
   %i.w = icmp eq i32 %.1, 55
@@ -181,7 +181,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 bb.i:                                             ; preds = %.thread270
   %i.x = sext i32 %.1 to i64                      ; 2 uses
   %i.y = getelementptr inbounds [2 x i8], ptr @yypact, i64 %i.x
-  %i.z = load i16, ptr %i.y, align 2, !tbaa !48   ; 3 uses
+  %i.z = load i16, ptr %i.y, align 2, !tbaa !48   ; 2 uses
   %i.aa = sext i16 %i.z to i32
   %i.ab = icmp eq i16 %i.z, -29
   br i1 %i.ab, label %bb.w, label %bb.j
@@ -211,7 +211,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   store i32 257, ptr @gmlchar, align 4, !tbaa !11
-  br label %.preheader
+  br label %bb.ct
 
 bb.p:                                             ; preds = %bb.n
   %i.ai = icmp samesign ult i32 %i.af, 290
@@ -614,7 +614,7 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl
 
 bb.co:                                            ; preds = %bb.w
   %i.lm = load i32, ptr @gmlchar, align 4, !tbaa !11 ; 2 uses
-  switch i32 %.1178, label %.preheader [
+  switch i32 %.1178, label %bb.ct [
     i32 0, label %bb.cp
     i32 3, label %bb.cq
   ]
@@ -624,7 +624,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.lo = add nsw i32 %i.ln, 1
   store i32 %i.lo, ptr @gmlnerrs, align 4, !tbaa !11
   call void @gmlerror(ptr noundef nonnull @.str.2) #18
-  br label %.preheader
+  br label %bb.ct
 
 bb.cq:                                            ; preds = %bb.co
   %i.lp = icmp slt i32 %i.lm, 1
@@ -632,52 +632,33 @@ bb.cq:                                            ; preds = %bb.co
 
 bb.cr:                                            ; preds = %bb.cq
   %i.lq = icmp eq i32 %i.lm, 0
-  br i1 %i.lq, label %.loopexit281, label %.preheader
+  br i1 %i.lq, label %.loopexit281, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cq
   store i32 -2, ptr @gmlchar, align 4, !tbaa !11
-  br label %.preheader
+  br label %bb.ct
 
-.preheader:                                       ; preds = %bb.cp, %bb.co, %bb.cr, %bb.cs, %bb.o
-  br label %1
+bb.ct:                                            ; preds = %bb.cp, %bb.co, %bb.cr, %bb.cs, %bb.o
+  %i.lr = icmp eq i32 %.1, 0
+  br i1 %i.lr, label %bb.cw, label %bb.cu
 
-1:                                                ; preds = %.preheader, %bb.cv
-  %2 = phi i16 [ %.pre, %bb.cv ], [ %i.z, %.preheader ] ; 2 uses
-  %.4200 = phi ptr [ %i.ls, %bb.cv ], [ %.3199, %.preheader ] ; 2 uses
-  %.4190 = phi ptr [ %i.lt, %bb.cv ], [ %.3189, %.preheader ] ; 3 uses
-  %3 = icmp sgt i16 %2, -2
-  br i1 %3, label %bb.ct, label %11
+bb.cu:                                            ; preds = %bb.ct, %bb.cv
+  %.4190485 = phi ptr [ %i.lt, %bb.cv ], [ %.3189, %bb.ct ] ; 2 uses
+  %.4200484 = phi ptr [ %i.ls, %bb.cv ], [ %.3199, %bb.ct ]
+  %1 = icmp eq ptr %.4190485, %.3
+  br i1 %1, label %.loopexit281, label %bb.cv
 
-bb.ct:                                            ; preds = %1
-  %4 = sext i16 %2 to i64
-  %5 = add nsw i64 %4, 1                          ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr @yycheck, i64 %5
-  %7 = load i8, ptr %6, align 1, !tbaa !12
-  %i.lr = icmp eq i8 %7, 1
-  br i1 %i.lr, label %bb.cu, label %11
-
-bb.cu:                                            ; preds = %bb.ct
-  %8 = getelementptr inbounds nuw i8, ptr @yytable, i64 %5
-  %9 = load i8, ptr %8, align 1, !tbaa !12        ; 2 uses
-  %10 = icmp sgt i8 %9, 0
-  br i1 %10, label %bb.cw, label %11
-
-11:                                               ; preds = %bb.ct, %bb.cu, %1
-  %12 = icmp eq ptr %.4190, %.3
-  br i1 %12, label %.loopexit281, label %bb.cv
-
-bb.cv:                                            ; preds = %11
-  %i.ls = getelementptr inbounds i8, ptr %.4200, i64 -8
-  %i.lt = getelementptr inbounds i8, ptr %.4190, i64 -1 ; 2 uses
+bb.cv:                                            ; preds = %bb.cu
+  %i.ls = getelementptr inbounds i8, ptr %.4200484, i64 -8 ; 2 uses
+  %i.lt = getelementptr inbounds i8, ptr %.4190485, i64 -1 ; 3 uses
   %i.lu = load i8, ptr %i.lt, align 1, !tbaa !12
-  %.phi.trans.insert = sext i8 %i.lu to i64
-  %.phi.trans.insert405 = getelementptr inbounds [2 x i8], ptr @yypact, i64 %.phi.trans.insert
-  %.pre = load i16, ptr %.phi.trans.insert405, align 2, !tbaa !48
-  br label %1
+  %2 = icmp eq i8 %i.lu, 0
+  br i1 %2, label %bb.cw, label %bb.cu
 
-bb.cw:                                            ; preds = %bb.cu
-  %13 = zext nneg i8 %9 to i32
-  %i.lv = getelementptr inbounds nuw i8, ptr %.4200, i64 8 ; 2 uses
+bb.cw:                                            ; preds = %bb.cv, %bb.ct
+  %.4200.lcssa = phi ptr [ %.3199, %bb.ct ], [ %i.ls, %bb.cv ]
+  %.4190.lcssa = phi ptr [ %.3189, %bb.ct ], [ %i.lt, %bb.cv ]
+  %i.lv = getelementptr inbounds nuw i8, ptr %.4200.lcssa, i64 8 ; 2 uses
   %i.lw = load i64, ptr @gmllval, align 8, !tbaa !12
   store i64 %i.lw, ptr %i.lv, align 8, !tbaa !12
   br label %bb.b
@@ -686,9 +667,9 @@ bb.cx:                                            ; preds = %bb.d, %bb.e
   call void @gmlerror(ptr noundef nonnull @.str.5) #18
   br label %.loopexit281
 
-.loopexit281:                                     ; preds = %.thread270, %bb.cr, %11, %bb.aa, %setDir.exit, %bb.cx
-  %.0207 = phi i32 [ 2, %bb.cx ], [ 1, %bb.aa ], [ 1, %setDir.exit ], [ 1, %11 ], [ 1, %bb.cr ], [ 0, %.thread270 ] ; 2 uses
-  %.5 = phi ptr [ %.0183, %bb.cx ], [ %.3, %bb.aa ], [ %.3, %setDir.exit ], [ %.3, %11 ], [ %.3, %bb.cr ], [ %.3, %.thread270 ] ; 2 uses
+.loopexit281:                                     ; preds = %.thread270, %bb.cr, %bb.cu, %bb.aa, %setDir.exit, %bb.cx
+  %.0207 = phi i32 [ 2, %bb.cx ], [ 1, %bb.aa ], [ 1, %setDir.exit ], [ 1, %bb.cu ], [ 1, %bb.cr ], [ 0, %.thread270 ] ; 2 uses
+  %.5 = phi ptr [ %.0183, %bb.cx ], [ %.3, %bb.aa ], [ %.3, %setDir.exit ], [ %.3, %bb.cu ], [ %.3, %bb.cr ], [ %.3, %.thread270 ] ; 2 uses
   %.not239 = icmp eq ptr %.5, %i.a
   br i1 %.not239, label %bb.cy, label %.loopexit281.thread
 

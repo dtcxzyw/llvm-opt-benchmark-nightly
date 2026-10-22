@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %cdf_file_summary_info.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = load i16, ptr %11, align 4, !tbaa !52
+  %i.q = load i16, ptr %11, align 4, !tbaa !53
   %i.r = icmp eq i16 %i.q, -2
   %i.s = select i1 %i.r, ptr @.str.19, ptr @.str.20
   %i.t = call i32 (ptr, ptr, ...) @file_printf(ptr noundef nonnull %0, ptr noundef nonnull @.str.18, ptr noundef nonnull %i.s) #6
@@ -213,7 +213,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %11, i64 6
-  %i.w = load i16, ptr %i.v, align 2, !tbaa !53   ; 2 uses
+  %i.w = load i16, ptr %i.v, align 2, !tbaa !54   ; 2 uses
   switch i16 %i.w, label %bb.h [
     i16 2, label %bb.f
     i16 1, label %bb.g
@@ -221,7 +221,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.y = load i16, ptr %i.x, align 4, !tbaa !54
+  %i.y = load i16, ptr %i.x, align 4, !tbaa !55
   %i.z = zext i16 %i.y to i32                     ; 2 uses
   %i.aa = and i32 %i.z, 255
   %i.ab = lshr i32 %i.z, 8
@@ -231,7 +231,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.af = load i16, ptr %i.ae, align 4, !tbaa !54
+  %i.af = load i16, ptr %i.ae, align 4, !tbaa !55
   %i.ag = zext i16 %i.af to i32                   ; 2 uses
   %i.ah = lshr i32 %i.ag, 8
   %i.ai = and i32 %i.ag, 255
@@ -242,7 +242,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.e
   %i.al = zext i16 %i.w to i32
   %i.am = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.an = load i16, ptr %i.am, align 4, !tbaa !54
+  %i.an = load i16, ptr %i.am, align 4, !tbaa !55
   %i.ao = zext i16 %i.an to i32                   ; 2 uses
   %i.ap = and i32 %i.ao, 255
   %i.aq = lshr i32 %i.ao, 8
@@ -256,13 +256,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
 
 bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %8, i64 80
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !55
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !56
   %i.av = icmp eq i64 %i.au, 790660
   br i1 %i.av, label %bb.k, label %cdf_clsid_to_mime.exit.thread.i
 
 bb.k:                                             ; preds = %bb.j
   %i.aw = getelementptr inbounds nuw i8, ptr %8, i64 88
-  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !55
+  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !56
   %i.ay = icmp eq i64 %i.ax, 5044031582654955712
   br i1 %i.ay, label %cdf_clsid_to_mime.exit.i, label %cdf_clsid_to_mime.exit.thread.i
 
@@ -273,7 +273,7 @@ cdf_clsid_to_mime.exit.i:                         ; preds = %bb.k
 
 cdf_clsid_to_mime.exit.thread.i:                  ; preds = %cdf_clsid_to_mime.exit.i, %bb.k, %bb.j, %bb.i, %bb.b
   %i.bb = load ptr, ptr %i.f, align 8, !tbaa !23
-  %i.bc = load i64, ptr %i.g, align 8, !tbaa !55  ; 2 uses
+  %i.bc = load i64, ptr %i.g, align 8, !tbaa !56  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
@@ -286,21 +286,21 @@ cdf_clsid_to_mime.exit.thread.i:                  ; preds = %cdf_clsid_to_mime.e
 
 bb.l:                                             ; preds = %cdf_clsid_to_mime.exit.thread.i
   %i.bh = getelementptr inbounds nuw i8, ptr %8, i64 80
-  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !55
+  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !56
   %i.bj = icmp eq i64 %i.bi, 790660
   br i1 %i.bj, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 88
-  %i.bl = load i64, ptr %i.bk, align 8, !tbaa !55
+  %i.bl = load i64, ptr %i.bk, align 8, !tbaa !56
   %i.bm = icmp eq i64 %i.bl, 5044031582654955712
   br i1 %i.bm, label %cdf_clsid_to_mime.exit.i.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  br label %cdf_clsid_to_mime.exit.i.i
+  br label %cdf_clsid_to_mime.exit.i.i, !llvm.loop !46
 
 cdf_clsid_to_mime.exit.i.i:                       ; preds = %bb.n, %bb.m, %cdf_clsid_to_mime.exit.thread.i
-  %.091.i.i = phi ptr [ null, %cdf_clsid_to_mime.exit.thread.i ], [ @.str.30, %bb.m ], [ null, %bb.n ] ; 2 uses
+  %.091.i.i = phi ptr [ null, %cdf_clsid_to_mime.exit.thread.i ], [ null, %bb.n ], [ @.str.30, %bb.m ] ; 2 uses
   %.not133.i.i = icmp eq i64 %i.bc, 0
   br i1 %.not133.i.i, label %._crit_edge.i.i, label %.lr.ph131.i.i
 
@@ -308,10 +308,10 @@ cdf_clsid_to_mime.exit.i.i:                       ; preds = %bb.n, %bb.m, %cdf_c
   %.192130.i.i = phi ptr [ %.4.i.i, %bb.ar ], [ %.091.i.i, %cdf_clsid_to_mime.exit.i.i ] ; 19 uses
   %.094129.i.i = phi i64 [ %i.fb, %bb.ar ], [ 0, %cdf_clsid_to_mime.exit.i.i ] ; 2 uses
   %i.bn = getelementptr inbounds nuw [24 x i8], ptr %i.bb, i64 %.094129.i.i ; 11 uses
-  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !57
+  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !58
   %i.bp = call i32 @cdf_print_property_name(ptr noundef nonnull %i.c, i64 noundef 64, i32 noundef %i.bo) #6 ; 0 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
-  %i.br = load i32, ptr %i.bq, align 4, !tbaa !58 ; 2 uses
+  %i.br = load i32, ptr %i.bq, align 4, !tbaa !59 ; 2 uses
   switch i32 %i.br, label %cdf_file_summary_info.exit.thread50 [
     i32 1, label %bb.ar
     i32 2, label %bb.o
@@ -419,10 +419,10 @@ bb.z:                                             ; preds = %bb.ac, %.lr.ph.preh
 
 bb.aa:                                            ; preds = %bb.z
   %i.do = tail call ptr @__ctype_b_loc() #7
-  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !60
+  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !61
   %i.dq = zext i8 %i.dm to i64
   %i.dr = getelementptr inbounds nuw [2 x i8], ptr %i.dp, i64 %i.dq
-  %i.ds = load i16, ptr %i.dr, align 2, !tbaa !61
+  %i.ds = load i16, ptr %i.dr, align 2, !tbaa !62
   %i.dt = and i16 %i.ds, 16384
   %.not109.i.i = icmp eq i16 %i.dt, 0
   br i1 %.not109.i.i, label %bb.ac, label %bb.ab
@@ -441,7 +441,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %or.cond5.i.i.not81 = select i1 %i.dx, i1 true, i1 %i.dy
   %.not108.i.i = icmp eq i32 %i.dl, 0
   %or.cond = select i1 %or.cond5.i.i.not81, i1 true, i1 %.not108.i.i
-  br i1 %or.cond, label %.critedge.i.i, label %bb.z, !llvm.loop !46
+  br i1 %or.cond, label %.critedge.i.i, label %bb.z, !llvm.loop !47
 
 .critedge.i.i:                                    ; preds = %bb.ac, %bb.z
   %.085.lcssa.ph.i.i = phi i64 [ %.1.i.i, %bb.ac ], [ %.085124.i.i77, %bb.z ] ; 2 uses
@@ -464,7 +464,7 @@ bb.ae:                                            ; preds = %.critedge.i.i
   br i1 %i.ef, label %bb.af, label %.thread.i.i
 
 bb.af:                                            ; preds = %bb.ae
-  %i.eg = load i32, ptr %i.bn, align 8, !tbaa !57
+  %i.eg = load i32, ptr %i.bn, align 8, !tbaa !58
   %i.eh = icmp eq i32 %i.eg, 18
   br i1 %i.eh, label %bb.ag, label %.thread.i.i
 
@@ -540,7 +540,7 @@ bb.ar:                                            ; preds = %.critedge113.i.i, %
   %.4.i.i = phi ptr [ %.192130.i.i, %bb.p ], [ %.192130.i.i, %bb.o ], [ %.192130.i.i, %bb.r ], [ %.192130.i.i, %bb.q ], [ %.192130.i.i, %bb.t ], [ %.192130.i.i, %bb.s ], [ %.192130.i.i, %bb.v ], [ %.192130.i.i, %bb.u ], [ %.192130.i.i, %bb.x ], [ %.192130.i.i, %bb.w ], [ %.192130.i.i, %bb.ah ], [ %.192130.i.i, %bb.y ], [ %.192130.i.i, %.critedge113.i.i ], [ %.192130.i.i, %bb.ai ], [ %.192130.i.i, %.lr.ph131.i.i ], [ %.192130.i.i, %.lr.ph131.i.i ], [ %.3.ph.i.i, %.thread.i.i ] ; 2 uses
   %i.fb = add nuw i64 %.094129.i.i, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.fb, %i.bc
-  br i1 %exitcond.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph131.i.i, !llvm.loop !47
+  br i1 %exitcond.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph131.i.i, !llvm.loop !48
 
 ._crit_edge.loopexit.i.i:                         ; preds = %bb.ar
   %.pre.i.i = load i32, ptr %i.k, align 4, !tbaa !22
@@ -635,169 +635,169 @@ bb.au:                                            ; preds = %bb.as
 
 bb.av:                                            ; preds = %bb.au, %bb.aw
   %.03862 = phi i64 [ 0, %bb.au ], [ %i.lv, %bb.aw ] ; 3 uses
-  %i.gq = load i64, ptr %i.fk, align 8, !tbaa !62
+  %i.gq = load i64, ptr %i.fk, align 8, !tbaa !63
   %.not63 = icmp ult i64 %.03862, %i.gq
   br i1 %.not63, label %bb.aw, label %.critedge
 
 bb.aw:                                            ; preds = %bb.av
   %i.gr = load ptr, ptr %6, align 8, !tbaa !25
   %i.gs = getelementptr inbounds nuw [136 x i8], ptr %i.gr, i64 %.03862 ; 32 uses
-  %i.gt = load i16, ptr %i.gs, align 2, !tbaa !61
+  %i.gt = load i16, ptr %i.gs, align 2, !tbaa !62
   %i.gu = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.gt) #6
   %i.gv = trunc i16 %i.gu to i8
   store i8 %i.gv, ptr %i.h, align 16, !tbaa !26
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gs, i64 2
-  %i.gx = load i16, ptr %i.gw, align 2, !tbaa !61
+  %i.gx = load i16, ptr %i.gw, align 2, !tbaa !62
   %i.gy = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.gx) #6
   %i.gz = trunc i16 %i.gy to i8
   store i8 %i.gz, ptr %i.fl, align 1, !tbaa !26
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gs, i64 4
-  %i.hb = load i16, ptr %i.ha, align 2, !tbaa !61
+  %i.hb = load i16, ptr %i.ha, align 2, !tbaa !62
   %i.hc = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.hb) #6
   %i.hd = trunc i16 %i.hc to i8
   store i8 %i.hd, ptr %i.fm, align 2, !tbaa !26
   %i.he = getelementptr inbounds nuw i8, ptr %i.gs, i64 6
-  %i.hf = load i16, ptr %i.he, align 2, !tbaa !61
+  %i.hf = load i16, ptr %i.he, align 2, !tbaa !62
   %i.hg = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.hf) #6
   %i.hh = trunc i16 %i.hg to i8
   store i8 %i.hh, ptr %i.fn, align 1, !tbaa !26
   %i.hi = getelementptr inbounds nuw i8, ptr %i.gs, i64 8
-  %i.hj = load i16, ptr %i.hi, align 2, !tbaa !61
+  %i.hj = load i16, ptr %i.hi, align 2, !tbaa !62
   %i.hk = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.hj) #6
   %i.hl = trunc i16 %i.hk to i8
   store i8 %i.hl, ptr %i.fo, align 4, !tbaa !26
   %i.hm = getelementptr inbounds nuw i8, ptr %i.gs, i64 10
-  %i.hn = load i16, ptr %i.hm, align 2, !tbaa !61
+  %i.hn = load i16, ptr %i.hm, align 2, !tbaa !62
   %i.ho = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.hn) #6
   %i.hp = trunc i16 %i.ho to i8
   store i8 %i.hp, ptr %i.fp, align 1, !tbaa !26
   %i.hq = getelementptr inbounds nuw i8, ptr %i.gs, i64 12
-  %i.hr = load i16, ptr %i.hq, align 2, !tbaa !61
+  %i.hr = load i16, ptr %i.hq, align 2, !tbaa !62
   %i.hs = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.hr) #6
   %i.ht = trunc i16 %i.hs to i8
   store i8 %i.ht, ptr %i.fq, align 2, !tbaa !26
   %i.hu = getelementptr inbounds nuw i8, ptr %i.gs, i64 14
-  %i.hv = load i16, ptr %i.hu, align 2, !tbaa !61
+  %i.hv = load i16, ptr %i.hu, align 2, !tbaa !62
   %i.hw = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.hv) #6
   %i.hx = trunc i16 %i.hw to i8
   store i8 %i.hx, ptr %i.fr, align 1, !tbaa !26
   %i.hy = getelementptr inbounds nuw i8, ptr %i.gs, i64 16
-  %i.hz = load i16, ptr %i.hy, align 2, !tbaa !61
+  %i.hz = load i16, ptr %i.hy, align 2, !tbaa !62
   %i.ia = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.hz) #6
   %i.ib = trunc i16 %i.ia to i8
   store i8 %i.ib, ptr %i.fs, align 8, !tbaa !26
   %i.ic = getelementptr inbounds nuw i8, ptr %i.gs, i64 18
-  %i.id = load i16, ptr %i.ic, align 2, !tbaa !61
+  %i.id = load i16, ptr %i.ic, align 2, !tbaa !62
   %i.ie = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.id) #6
   %i.if = trunc i16 %i.ie to i8
   store i8 %i.if, ptr %i.ft, align 1, !tbaa !26
   %i.ig = getelementptr inbounds nuw i8, ptr %i.gs, i64 20
-  %i.ih = load i16, ptr %i.ig, align 2, !tbaa !61
+  %i.ih = load i16, ptr %i.ig, align 2, !tbaa !62
   %i.ii = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.ih) #6
   %i.ij = trunc i16 %i.ii to i8
   store i8 %i.ij, ptr %i.fu, align 2, !tbaa !26
   %i.ik = getelementptr inbounds nuw i8, ptr %i.gs, i64 22
-  %i.il = load i16, ptr %i.ik, align 2, !tbaa !61
+  %i.il = load i16, ptr %i.ik, align 2, !tbaa !62
   %i.im = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.il) #6
   %i.in = trunc i16 %i.im to i8
   store i8 %i.in, ptr %i.fv, align 1, !tbaa !26
   %i.io = getelementptr inbounds nuw i8, ptr %i.gs, i64 24
-  %i.ip = load i16, ptr %i.io, align 2, !tbaa !61
+  %i.ip = load i16, ptr %i.io, align 2, !tbaa !62
   %i.iq = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.ip) #6
   %i.ir = trunc i16 %i.iq to i8
   store i8 %i.ir, ptr %i.fw, align 4, !tbaa !26
   %i.is = getelementptr inbounds nuw i8, ptr %i.gs, i64 26
-  %i.it = load i16, ptr %i.is, align 2, !tbaa !61
+  %i.it = load i16, ptr %i.is, align 2, !tbaa !62
   %i.iu = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.it) #6
   %i.iv = trunc i16 %i.iu to i8
   store i8 %i.iv, ptr %i.fx, align 1, !tbaa !26
   %i.iw = getelementptr inbounds nuw i8, ptr %i.gs, i64 28
-  %i.ix = load i16, ptr %i.iw, align 2, !tbaa !61
+  %i.ix = load i16, ptr %i.iw, align 2, !tbaa !62
   %i.iy = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.ix) #6
   %i.iz = trunc i16 %i.iy to i8
   store i8 %i.iz, ptr %i.fy, align 2, !tbaa !26
   %i.ja = getelementptr inbounds nuw i8, ptr %i.gs, i64 30
-  %i.jb = load i16, ptr %i.ja, align 2, !tbaa !61
+  %i.jb = load i16, ptr %i.ja, align 2, !tbaa !62
   %i.jc = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.jb) #6
   %i.jd = trunc i16 %i.jc to i8
   store i8 %i.jd, ptr %i.fz, align 1, !tbaa !26
   %i.je = getelementptr inbounds nuw i8, ptr %i.gs, i64 32
-  %i.jf = load i16, ptr %i.je, align 2, !tbaa !61
+  %i.jf = load i16, ptr %i.je, align 2, !tbaa !62
   %i.jg = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.jf) #6
   %i.jh = trunc i16 %i.jg to i8
   store i8 %i.jh, ptr %i.ga, align 16, !tbaa !26
   %i.ji = getelementptr inbounds nuw i8, ptr %i.gs, i64 34
-  %i.jj = load i16, ptr %i.ji, align 2, !tbaa !61
+  %i.jj = load i16, ptr %i.ji, align 2, !tbaa !62
   %i.jk = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.jj) #6
   %i.jl = trunc i16 %i.jk to i8
   store i8 %i.jl, ptr %i.gb, align 1, !tbaa !26
   %i.jm = getelementptr inbounds nuw i8, ptr %i.gs, i64 36
-  %i.jn = load i16, ptr %i.jm, align 2, !tbaa !61
+  %i.jn = load i16, ptr %i.jm, align 2, !tbaa !62
   %i.jo = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.jn) #6
   %i.jp = trunc i16 %i.jo to i8
   store i8 %i.jp, ptr %i.gc, align 2, !tbaa !26
   %i.jq = getelementptr inbounds nuw i8, ptr %i.gs, i64 38
-  %i.jr = load i16, ptr %i.jq, align 2, !tbaa !61
+  %i.jr = load i16, ptr %i.jq, align 2, !tbaa !62
   %i.js = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.jr) #6
   %i.jt = trunc i16 %i.js to i8
   store i8 %i.jt, ptr %i.gd, align 1, !tbaa !26
   %i.ju = getelementptr inbounds nuw i8, ptr %i.gs, i64 40
-  %i.jv = load i16, ptr %i.ju, align 2, !tbaa !61
+  %i.jv = load i16, ptr %i.ju, align 2, !tbaa !62
   %i.jw = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.jv) #6
   %i.jx = trunc i16 %i.jw to i8
   store i8 %i.jx, ptr %i.ge, align 4, !tbaa !26
   %i.jy = getelementptr inbounds nuw i8, ptr %i.gs, i64 42
-  %i.jz = load i16, ptr %i.jy, align 2, !tbaa !61
+  %i.jz = load i16, ptr %i.jy, align 2, !tbaa !62
   %i.ka = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.jz) #6
   %i.kb = trunc i16 %i.ka to i8
   store i8 %i.kb, ptr %i.gf, align 1, !tbaa !26
   %i.kc = getelementptr inbounds nuw i8, ptr %i.gs, i64 44
-  %i.kd = load i16, ptr %i.kc, align 2, !tbaa !61
+  %i.kd = load i16, ptr %i.kc, align 2, !tbaa !62
   %i.ke = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.kd) #6
   %i.kf = trunc i16 %i.ke to i8
   store i8 %i.kf, ptr %i.gg, align 2, !tbaa !26
   %i.kg = getelementptr inbounds nuw i8, ptr %i.gs, i64 46
-  %i.kh = load i16, ptr %i.kg, align 2, !tbaa !61
+  %i.kh = load i16, ptr %i.kg, align 2, !tbaa !62
   %i.ki = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.kh) #6
   %i.kj = trunc i16 %i.ki to i8
   store i8 %i.kj, ptr %i.gh, align 1, !tbaa !26
   %i.kk = getelementptr inbounds nuw i8, ptr %i.gs, i64 48
-  %i.kl = load i16, ptr %i.kk, align 2, !tbaa !61
+  %i.kl = load i16, ptr %i.kk, align 2, !tbaa !62
   %i.km = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.kl) #6
   %i.kn = trunc i16 %i.km to i8
   store i8 %i.kn, ptr %i.gi, align 8, !tbaa !26
   %i.ko = getelementptr inbounds nuw i8, ptr %i.gs, i64 50
-  %i.kp = load i16, ptr %i.ko, align 2, !tbaa !61
+  %i.kp = load i16, ptr %i.ko, align 2, !tbaa !62
   %i.kq = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.kp) #6
   %i.kr = trunc i16 %i.kq to i8
   store i8 %i.kr, ptr %i.gj, align 1, !tbaa !26
   %i.ks = getelementptr inbounds nuw i8, ptr %i.gs, i64 52
-  %i.kt = load i16, ptr %i.ks, align 2, !tbaa !61
+  %i.kt = load i16, ptr %i.ks, align 2, !tbaa !62
   %i.ku = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.kt) #6
   %i.kv = trunc i16 %i.ku to i8
   store i8 %i.kv, ptr %i.gk, align 2, !tbaa !26
   %i.kw = getelementptr inbounds nuw i8, ptr %i.gs, i64 54
-  %i.kx = load i16, ptr %i.kw, align 2, !tbaa !61
+  %i.kx = load i16, ptr %i.kw, align 2, !tbaa !62
   %i.ky = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.kx) #6
   %i.kz = trunc i16 %i.ky to i8
   store i8 %i.kz, ptr %i.gl, align 1, !tbaa !26
   %i.la = getelementptr inbounds nuw i8, ptr %i.gs, i64 56
-  %i.lb = load i16, ptr %i.la, align 2, !tbaa !61
+  %i.lb = load i16, ptr %i.la, align 2, !tbaa !62
   %i.lc = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.lb) #6
   %i.ld = trunc i16 %i.lc to i8
   store i8 %i.ld, ptr %i.gm, align 4, !tbaa !26
   %i.le = getelementptr inbounds nuw i8, ptr %i.gs, i64 58
-  %i.lf = load i16, ptr %i.le, align 2, !tbaa !61
+  %i.lf = load i16, ptr %i.le, align 2, !tbaa !62
   %i.lg = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.lf) #6
   %i.lh = trunc i16 %i.lg to i8
   store i8 %i.lh, ptr %i.gn, align 1, !tbaa !26
   %i.li = getelementptr inbounds nuw i8, ptr %i.gs, i64 60
-  %i.lj = load i16, ptr %i.li, align 2, !tbaa !61
+  %i.lj = load i16, ptr %i.li, align 2, !tbaa !62
   %i.lk = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.lj) #6
   %i.ll = trunc i16 %i.lk to i8
   store i8 %i.ll, ptr %i.go, align 2, !tbaa !26
   %i.lm = getelementptr inbounds nuw i8, ptr %i.gs, i64 62
-  %i.ln = load i16, ptr %i.lm, align 2, !tbaa !61
+  %i.ln = load i16, ptr %i.lm, align 2, !tbaa !62
   %i.lo = call zeroext i16 @cdf_tole2(i16 noundef zeroext %i.ln) #6
   %i.lp = trunc i16 %i.lo to i8
   store i8 %i.lp, ptr %i.gp, align 1, !tbaa !26
@@ -808,7 +808,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.lu = call fastcc ptr @cdf_app_to_mime(ptr noundef %i.h, ptr noundef nonnull %i.lt) ; 3 uses
   %i.lv = add nuw i64 %.03862, 1
   %i.lw = icmp eq ptr %i.lu, null
-  br i1 %i.lw, label %bb.av, label %.critedge.thread, !llvm.loop !48
+  br i1 %i.lw, label %bb.av, label %.critedge.thread, !llvm.loop !49
 
 .critedge:                                        ; preds = %bb.av
   %i.lx = load i32, ptr %i.k, align 4, !tbaa !22  ; 2 uses
@@ -868,26 +868,26 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %bb.be
   %i.ms = load ptr, ptr %i.a, align 8, !tbaa !23  ; 3 uses
   %i.mt = getelementptr inbounds nuw i8, ptr %i.ms, i64 8
-  %i.mu = load i64, ptr %i.ms, align 8, !tbaa !64
+  %i.mu = load i64, ptr %i.ms, align 8, !tbaa !65
   %i.mv = icmp ugt i64 %i.mu, 1
   br i1 %i.mv, label %.lr.ph.i.i46, label %._crit_edge.i.i45
 
 bb.bg:                                            ; preds = %.lr.ph.i.i46
   %i.mw = add nuw i64 %.016.i.i, 1                ; 2 uses
   %i.mx = load ptr, ptr %i.a, align 8, !tbaa !23  ; 2 uses
-  %i.my = load i64, ptr %i.mx, align 8, !tbaa !64
+  %i.my = load i64, ptr %i.mx, align 8, !tbaa !65
   %i.mz = icmp ult i64 %i.mw, %i.my
-  br i1 %i.mz, label %.lr.ph.i.i46, label %._crit_edge.i.i45, !llvm.loop !49
+  br i1 %i.mz, label %.lr.ph.i.i46, label %._crit_edge.i.i45, !llvm.loop !50
 
 .lr.ph.i.i46:                                     ; preds = %bb.bf, %bb.bg
   %.016.i.i = phi i64 [ %i.mw, %bb.bg ], [ 1, %bb.bf ] ; 3 uses
   %i.na = getelementptr inbounds nuw [528 x i8], ptr %i.mt, i64 %.016.i.i ; 2 uses
-  %i.nb = load i16, ptr %i.na, align 8, !tbaa !66
+  %i.nb = load i16, ptr %i.na, align 8, !tbaa !67
   %i.nc = zext i16 %i.nb to i64
   %i.nd = getelementptr inbounds nuw i8, ptr %i.na, i64 16
   %i.ne = call ptr @cdf_u16tos8(ptr noundef nonnull %i.b, i64 noundef %i.nc, ptr noundef nonnull %i.nd) #6
   %i.nf = load ptr, ptr %i.a, align 8, !tbaa !23
-  %i.ng = load i64, ptr %i.nf, align 8, !tbaa !64
+  %i.ng = load i64, ptr %i.nf, align 8, !tbaa !65
   %i.nh = add i64 %i.ng, -1
   %i.ni = icmp eq i64 %.016.i.i, %i.nh
   %i.nj = select i1 %i.ni, ptr @.str.57, ptr @.str.58
@@ -953,7 +953,7 @@ bb.a:                                             ; preds = %.lr.ph
   br i1 %i.h, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.loopexit
-  %i.i = load ptr, ptr %.lcssa, align 8, !tbaa !68
+  %i.i = load ptr, ptr %.lcssa, align 8, !tbaa !69
   %i.j = tail call i32 (ptr, ptr, ...) @file_printf(ptr noundef nonnull %0, ptr noundef nonnull @.str.60, ptr noundef %i.i) #6
   %i.k = icmp eq i32 %i.j, -1
   br i1 %i.k, label %.thread25, label %bb.e
@@ -965,7 +965,7 @@ bb.c:                                             ; preds = %.loopexit
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !69
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !70
   %i.o = tail call i32 (ptr, ptr, ...) @file_printf(ptr noundef nonnull %0, ptr noundef nonnull @.str.17, ptr noundef %i.n) #6
   %i.p = icmp eq i32 %i.o, -1
   br i1 %i.p, label %.thread25, label %bb.e
@@ -1025,16 +1025,16 @@ define internal fastcc ptr @cdf_app_to_mime(ptr noundef nonnull %0, ptr nofree n
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #8
   %i.b = tail call ptr @zend_str_tolower_dup(ptr noundef nonnull %0, i64 noundef %i.a) #6 ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !72     ; 2 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !73     ; 2 uses
   %.not25 = icmp eq ptr %i.c, null
   br i1 %.not25, label %.loopexit, label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
   %i.d = add i64 %.01826, 1                       ; 2 uses
   %i.e = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.d
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !72   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !73   ; 2 uses
   %.not = icmp eq ptr %i.f, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !70
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !71
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %i.g = phi ptr [ %i.f, %bb.b ], [ %i.c, %bb.a ] ; 2 uses
@@ -1049,7 +1049,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %.lr.ph
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.01826
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !73
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !74
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %bb.a, %bb.c
@@ -1155,28 +1155,29 @@ attributes #8 = { nounwind willreturn memory(read) }
 !47 = distinct !{!47, !27}
 !48 = distinct !{!48, !27}
 !49 = distinct !{!49, !27}
-!50 = !{!"", !9, i64 0, !8, i64 4, !8, i64 8, !8, i64 10}
-!51 = !{!"", !19, i64 0, !19, i64 2, !19, i64 4, !19, i64 6, !50, i64 8, !9, i64 24}
-!52 = !{!51, !19, i64 0}
-!53 = !{!51, !19, i64 6}
-!54 = !{!51, !19, i64 4}
-!55 = !{!12, !12, i64 0}
-!56 = !{!"", !9, i64 0, !9, i64 4, !8, i64 8}
-!57 = !{!56, !9, i64 0}
-!58 = !{!56, !9, i64 4}
-!59 = !{!"p1 short", !13, i64 0}
-!60 = !{!59, !59, i64 0}
-!61 = !{!19, !19, i64 0}
-!62 = !{!24, !12, i64 8}
-!63 = !{!"", !12, i64 0, !8, i64 8}
-!64 = !{!63, !12, i64 0}
-!65 = !{!"", !19, i64 0, !9, i64 4, !12, i64 8, !8, i64 16}
-!66 = !{!65, !19, i64 0}
-!67 = !{!"sinfo", !14, i64 0, !14, i64 8, !8, i64 16, !8, i64 56}
-!68 = !{!67, !14, i64 0}
-!69 = !{!67, !14, i64 8}
-!70 = distinct !{!70, !27}
-!71 = !{!"nv", !14, i64 0, !14, i64 8}
-!72 = !{!71, !14, i64 0}
-!73 = !{!71, !14, i64 8}
+!50 = distinct !{!50, !27}
+!51 = !{!"", !9, i64 0, !8, i64 4, !8, i64 8, !8, i64 10}
+!52 = !{!"", !19, i64 0, !19, i64 2, !19, i64 4, !19, i64 6, !51, i64 8, !9, i64 24}
+!53 = !{!52, !19, i64 0}
+!54 = !{!52, !19, i64 6}
+!55 = !{!52, !19, i64 4}
+!56 = !{!12, !12, i64 0}
+!57 = !{!"", !9, i64 0, !9, i64 4, !8, i64 8}
+!58 = !{!57, !9, i64 0}
+!59 = !{!57, !9, i64 4}
+!60 = !{!"p1 short", !13, i64 0}
+!61 = !{!60, !60, i64 0}
+!62 = !{!19, !19, i64 0}
+!63 = !{!24, !12, i64 8}
+!64 = !{!"", !12, i64 0, !8, i64 8}
+!65 = !{!64, !12, i64 0}
+!66 = !{!"", !19, i64 0, !9, i64 4, !12, i64 8, !8, i64 16}
+!67 = !{!66, !19, i64 0}
+!68 = !{!"sinfo", !14, i64 0, !14, i64 8, !8, i64 16, !8, i64 56}
+!69 = !{!68, !14, i64 0}
+!70 = !{!68, !14, i64 8}
+!71 = distinct !{!71, !27}
+!72 = !{!"nv", !14, i64 0, !14, i64 8}
+!73 = !{!72, !14, i64 0}
+!74 = !{!72, !14, i64 8}
 end_hunk_0

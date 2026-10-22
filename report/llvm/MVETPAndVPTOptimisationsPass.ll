@@ -205,7 +205,7 @@ switch.lookup:                                    ; preds = %bb.dr
   %.val23.val.i.i = load i64, ptr %i.apu, align 8, !tbaa !70
   %i.apv = and i64 %.val23.val.i.i, 4294967295
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_124MVETPAndVPTOptimisations20runOnMachineFunctionERN4llvm15MachineFunctionE, i64 %i.apv
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
   %switch.ext = zext i8 %switch.load to i32
   %i.apw = getelementptr i8, ptr %i.apr, i64 112
   %.val22.val.i.i = load i64, ptr %i.apw, align 8, !tbaa !70
@@ -223,7 +223,7 @@ bb.dt:                                            ; preds = %bb.ds
 
 bb.du:                                            ; preds = %bb.dt, %bb.ds, %switch.lookup
   %i.aqb = load i32, ptr %i.aoi, align 4, !tbaa !68
-  switch i32 %i.aqb, label %66 [
+  switch i32 %i.aqb, label %_ZN4llvm5ARMCCL19getSwappedConditionENS0_9CondCodesE.exit.i.i [
     i32 1114, label %_ZL15IsWritingToVCCRRN4llvm12MachineInstrE.exit.thread.i
     i32 1112, label %_ZL15IsWritingToVCCRRN4llvm12MachineInstrE.exit.thread.i
     i32 1115, label %_ZL15IsWritingToVCCRRN4llvm12MachineInstrE.exit.thread.i
@@ -239,24 +239,16 @@ bb.du:                                            ; preds = %bb.dt, %bb.ds, %swi
     i32 1125, label %_ZL15IsWritingToVCCRRN4llvm12MachineInstrE.exit.thread.i
   ]
 
-66:                                               ; preds = %bb.du
-  %67 = icmp ult i8 %switch.load, 14
-  br i1 %67, label %switch.lookup424, label %_ZN4llvm5ARMCCL19getSwappedConditionENS0_9CondCodesE.exit.i.i
-
-switch.lookup424:                                 ; preds = %66
-  %68 = zext nneg i8 %switch.load to i64
-  %switch.gep425 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_124MVETPAndVPTOptimisations20runOnMachineFunctionERN4llvm15MachineFunctionE.17, i64 %68
+_ZN4llvm5ARMCCL19getSwappedConditionENS0_9CondCodesE.exit.i.i: ; preds = %bb.du
+  %66 = zext i8 %switch.load to i64
+  %switch.gep425 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_124MVETPAndVPTOptimisations20runOnMachineFunctionERN4llvm15MachineFunctionE.17, i64 %66
   %switch.load426 = load i8, ptr %switch.gep425, align 1
   %switch.ext427 = zext i8 %switch.load426 to i32
-  br label %_ZN4llvm5ARMCCL19getSwappedConditionENS0_9CondCodesE.exit.i.i
-
-_ZN4llvm5ARMCCL19getSwappedConditionENS0_9CondCodesE.exit.i.i: ; preds = %switch.lookup424, %66
-  %.0.i25.i.i = phi i32 [ 14, %66 ], [ %switch.ext427, %switch.lookup424 ]
   %.val.i.i112 = load ptr, ptr %i.apq, align 8, !tbaa !69
   %i.aqc = getelementptr i8, ptr %.val.i.i112, i64 112
   %.val.val.i.i = load i64, ptr %i.aqc, align 8, !tbaa !70
   %i.aqd = trunc i64 %.val.val.i.i to i32
-  %i.aqe = icmp eq i32 %.0.i25.i.i, %i.aqd
+  %i.aqe = icmp eq i32 %switch.ext427, %i.aqd
   br i1 %i.aqe, label %bb.dv, label %_ZL15IsWritingToVCCRRN4llvm12MachineInstrE.exit.thread.i
 
 bb.dv:                                            ; preds = %_ZN4llvm5ARMCCL19getSwappedConditionENS0_9CondCodesE.exit.i.i

@@ -202,11 +202,11 @@ bb.f:                                             ; preds = %bb.e, %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %i.aq = tail call i64 asm sideeffect "cmp $1,$2; sbb $0,$0", "=r,ir,r,~{cc},~{dirflag},~{fpsr},~{flags}"(i64 20, i64 %1) #15, !srcloc !132
-  %i.ar = and i64 %i.aq, %1
+  %i.ar = and i64 %i.aq, %1                       ; 2 uses
   %i.as = getelementptr [8 x i8], ptr @xstate_prctl_req, i64 %i.ar
-  %i.at = load i64, ptr %i.as, align 8            ; 8 uses
-  %.not.i.a = icmp eq i64 %i.at, 0
-  br i1 %.not.i.a, label %xstate_request_perm.exit, label %bb.h
+  %i.at = load i64, ptr %i.as, align 8            ; 7 uses
+  %.not.i.a = icmp eq i64 %i.ar, 18
+  br i1 %.not.i.a, label %bb.h, label %xstate_request_perm.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.au = load i64, ptr getelementptr inbounds nuw (i8, ptr @fpu_user_cfg, i64 8), align 8

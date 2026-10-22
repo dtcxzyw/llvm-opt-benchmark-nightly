@@ -205,10 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = sdiv i64 %1, 8
   %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 4 uses
-  %i.d = srem i64 %1, 8                           ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL8kBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !216       ; 3 uses
-  %.not = icmp eq i8 %5, 1
+  %i.d = srem i64 %1, 8                           ; 3 uses
+  %.not = icmp eq i64 %i.d, 0
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -217,12 +215,12 @@ bb.c:                                             ; preds = %bb.b
   %notmask = shl nsw i8 -1, %i.f
   %i.g = xor i8 %notmask, -1
   %i.h = and i8 %i.e, %i.g                        ; 2 uses
-  %6 = icmp ne i8 %5, 0
   %i.i = icmp sgt i64 %2, 0
-  %7 = and i1 %6, %i.i
-  br i1 %7, label %.lr.ph, label %._crit_edge
+  br i1 %i.i, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL8kBitmaskE, i64 %i.d
+  %5 = load i8, ptr %4, align 1, !tbaa !216
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !2306
   %i.l = load ptr, ptr %3, align 8, !tbaa !38611, !nonnull !212, !align !213

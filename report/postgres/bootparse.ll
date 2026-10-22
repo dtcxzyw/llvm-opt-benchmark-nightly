@@ -49,7 +49,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @boot_yyparse(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca %union.YYSTYPE, align 8             ; 6 uses
+  %1 = alloca %union.YYSTYPE, align 8             ; 5 uses
   %i.a = alloca [200 x i8], align 16              ; 6 uses
   %2 = alloca [200 x %union.YYSTYPE], align 16    ; 4 uses
   %i.b = alloca i32, align 4                      ; 3 uses
@@ -60,12 +60,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.ej, %bb.ed, %bb.t
-  %.0345 = phi ptr [ %i.oo, %bb.ej ], [ %i.nu, %bb.ed ], [ %i.ax, %bb.t ]
-  %.0333 = phi ptr [ %.4337, %bb.ej ], [ %i.nt, %bb.ed ], [ %.3336, %bb.t ]
-  %.0321 = phi i32 [ 3, %bb.ej ], [ %.1322, %bb.ed ], [ %spec.select, %bb.t ]
-  %.0318 = phi i32 [ %22, %bb.ej ], [ %i.ol, %bb.ed ], [ %i.au, %bb.t ]
-  %.0317 = phi i32 [ %.6, %bb.ej ], [ %.5, %bb.ed ], [ -2, %bb.t ]
+bb.b:                                             ; preds = %bb.ed, %bb.t
+  %.0345 = phi ptr [ %i.ax, %bb.t ], [ %i.nu, %bb.ed ]
+  %.0333 = phi ptr [ %.3336, %bb.t ], [ %i.nt, %bb.ed ]
+  %.0321 = phi i32 [ %spec.select, %bb.t ], [ %.1322, %bb.ed ]
+  %.0318 = phi i32 [ %i.au, %bb.t ], [ %i.ol, %bb.ed ]
+  %.0317 = phi i32 [ -2, %bb.t ], [ %.5, %bb.ed ]
   %i.d = getelementptr inbounds nuw i8, ptr %.0333, i64 1
   br label %bb.c
 
@@ -125,7 +125,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %.not374, label %.thread430, label %.thread453
 
 .thread430:                                       ; preds = %bb.h, %bb.c
-  %.3348 = phi ptr [ %.1346, %bb.c ], [ %i.w, %bb.h ] ; 64 uses
+  %.3348 = phi ptr [ %.1346, %bb.c ], [ %i.w, %bb.h ] ; 63 uses
   %.3344 = phi ptr [ %.0341, %bb.c ], [ %i.s, %bb.h ]
   %.3336 = phi ptr [ %.1334, %bb.c ], [ %i.u, %bb.h ] ; 3 uses
   %.3330 = phi ptr [ %.0327, %bb.c ], [ %i.p, %bb.h ] ; 5 uses
@@ -136,7 +136,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 bb.i:                                             ; preds = %.thread430
   %i.z = sext i32 %.1319 to i64                   ; 2 uses
   %i.aa = getelementptr inbounds [2 x i8], ptr @yypact, i64 %i.z
-  %i.ab = load i16, ptr %i.aa, align 2            ; 3 uses
+  %i.ab = load i16, ptr %i.aa, align 2            ; 2 uses
   %i.ac = sext i16 %i.ab to i32
   %i.ad = icmp eq i16 %i.ab, -53
   br i1 %i.ad, label %bb.u, label %bb.j
@@ -203,7 +203,7 @@ bb.t:                                             ; preds = %bb.r
   br label %bb.b
 
 bb.u:                                             ; preds = %bb.p, %bb.q, %bb.i
-  %.4 = phi i32 [ %.1, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ] ; 5 uses
+  %.4 = phi i32 [ %.1, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ] ; 2 uses
   %i.az = getelementptr inbounds i8, ptr @yydefact, i64 %i.z
   %i.ba = load i8, ptr %i.az, align 1             ; 2 uses
   %i.bb = sext i8 %i.ba to i32
@@ -606,73 +606,36 @@ bb.ed:                                            ; preds = %bb.ec, %bb.eb
 bb.ee:                                            ; preds = %bb.u
   switch i32 %.1322, label %bb.eh [
     i32 0, label %bb.ef
-    i32 3, label %3
+    i32 3, label %bb.eg
   ]
 
 bb.ef:                                            ; preds = %bb.ee
   call void @boot_yyerror(ptr noundef %0, ptr noundef nonnull @.str.15) #11
   unreachable
 
-3:                                                ; preds = %bb.ee
-  %4 = icmp slt i32 %.4, 1
-  br i1 %4, label %bb.eg, label %bb.eh
-
-bb.eg:                                            ; preds = %3
+bb.eg:                                            ; preds = %bb.ee
   %i.om = icmp eq i32 %.4, 0
   br i1 %i.om, label %.thread453, label %bb.eh
 
-bb.eh:                                            ; preds = %3, %bb.ee, %bb.m, %bb.eg
-  %.6 = phi i32 [ %.4, %bb.eg ], [ 257, %bb.m ], [ %.4, %bb.ee ], [ -2, %3 ]
-  br label %5
+bb.eh:                                            ; preds = %bb.m, %bb.ee, %bb.eg
+  br label %bb.ei
 
-5:                                                ; preds = %18, %bb.eh
-  %6 = phi i16 [ %i.ab, %bb.eh ], [ %.pre, %18 ]  ; 2 uses
-  %.4349 = phi ptr [ %.3348, %bb.eh ], [ %19, %18 ] ; 2 uses
-  %.4337 = phi ptr [ %.3336, %bb.eh ], [ %20, %18 ] ; 3 uses
-  %7 = icmp sgt i16 %6, -2
-  br i1 %7, label %bb.ei, label %16
+bb.ei:                                            ; preds = %bb.eh, %bb.ej
+  %.4337515 = phi ptr [ %i.oo, %bb.ej ], [ %.3336, %bb.eh ] ; 2 uses
+  %i.on = icmp eq ptr %.4337515, %.3330
+  br i1 %i.on, label %.thread453, label %bb.ej
 
-bb.ei:                                            ; preds = %5
-  %8 = sext i16 %6 to i64
-  %9 = add nsw i64 %8, 1                          ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr @yycheck, i64 %9
-  %11 = load i8, ptr %10, align 1
-  %i.on = icmp eq i8 %11, 1
-  br i1 %i.on, label %12, label %16
-
-12:                                               ; preds = %bb.ei
-  %13 = getelementptr inbounds nuw i8, ptr @yytable, i64 %9
-  %14 = load i8, ptr %13, align 1                 ; 2 uses
-  %15 = icmp sgt i8 %14, 0
-  br i1 %15, label %bb.ej, label %16
-
-16:                                               ; preds = %bb.ei, %12, %5
-  %17 = icmp eq ptr %.4337, %.3330
-  br i1 %17, label %.thread453, label %18
-
-18:                                               ; preds = %16
-  %19 = getelementptr inbounds i8, ptr %.4349, i64 -8
-  %20 = getelementptr inbounds i8, ptr %.4337, i64 -1 ; 2 uses
-  %21 = load i8, ptr %20, align 1
-  %.phi.trans.insert = sext i8 %21 to i64
-  %.phi.trans.insert487 = getelementptr inbounds [2 x i8], ptr @yypact, i64 %.phi.trans.insert
-  %.pre = load i16, ptr %.phi.trans.insert487, align 2
-  br label %5
-
-bb.ej:                                            ; preds = %12
-  %22 = zext nneg i8 %14 to i32
-  %i.oo = getelementptr inbounds nuw i8, ptr %.4349, i64 8 ; 2 uses
-  %23 = load i64, ptr %1, align 8
-  store i64 %23, ptr %i.oo, align 8
-  br label %bb.b
+bb.ej:                                            ; preds = %bb.ei
+  %i.oo = getelementptr inbounds i8, ptr %.4337515, i64 -1
+  br label %bb.ei
 
 bb.ek:                                            ; preds = %bb.d, %bb.e
   call void @boot_yyerror(ptr noundef %0, ptr noundef nonnull @.str.18) #11
   unreachable
 
-.thread453:                                       ; preds = %.thread430, %bb.h, %bb.eg, %16
-  %.5332451 = phi ptr [ %.3330, %16 ], [ %i.p, %bb.h ], [ %.3330, %.thread430 ], [ %.3330, %bb.eg ] ; 2 uses
-  %.0356445 = phi i32 [ 1, %16 ], [ 1, %bb.h ], [ 0, %.thread430 ], [ 1, %bb.eg ]
+.thread453:                                       ; preds = %.thread430, %bb.h, %bb.ei, %bb.eg
+  %.5332451 = phi ptr [ %.3330, %bb.eg ], [ %.3330, %bb.ei ], [ %i.p, %bb.h ], [ %.3330, %.thread430 ] ; 2 uses
+  %.0356445 = phi i32 [ 1, %bb.eg ], [ 1, %bb.ei ], [ 1, %bb.h ], [ 0, %.thread430 ]
   %.not384 = icmp eq ptr %.5332451, %i.a
   br i1 %.not384, label %bb.em, label %bb.el
 
