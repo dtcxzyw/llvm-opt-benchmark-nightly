@@ -204,33 +204,27 @@ define dso_local range(i32 -1, 2) i32 @ct_sip_get_header(ptr noundef %0, ptr nou
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = zext i32 %4 to i64
-  %i.c = getelementptr [48 x i8], ptr @ct_sip_hdrs, i64 %i.b ; 8 uses
+  %i.c = getelementptr [48 x i8], ptr @ct_sip_hdrs, i64 %i.b ; 7 uses
   %i.d = zext i32 %3 to i64
-  %i.e = getelementptr i8, ptr %1, i64 %i.d       ; 18 uses
+  %i.e = getelementptr i8, ptr %1, i64 %i.d       ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   store i32 0, ptr %i.a, align 4
   %i.f = zext i32 %2 to i64
-  %i.g = getelementptr i8, ptr %1, i64 %i.f       ; 3 uses
+  %i.g = getelementptr i8, ptr %1, i64 %i.f       ; 2 uses
   %i.h = icmp ult ptr %i.g, %i.e
   br i1 %i.h, label %.lr.ph, label %sip_skip_whitespace.exit.thread
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.i = ptrtoint ptr %i.e to i64                 ; 4 uses
-  %i.j = getelementptr i8, ptr %i.c, i64 24       ; 2 uses
+  %i.i = ptrtoint ptr %i.e to i64                 ; 3 uses
+  %i.j = getelementptr i8, ptr %i.c, i64 24
   %i.k = getelementptr i8, ptr %i.c, i64 8
   %i.l = getelementptr i8, ptr %i.c, i64 28
-  switch i32 %4, label %.lr.ph.split [
-    i32 6, label %.lr.ph.split.us.preheader
-    i32 0, label %.lr.ph.split.us.preheader
-  ]
-
-.lr.ph.split.us.preheader:                        ; preds = %.lr.ph, %.lr.ph
   br label %.lr.ph.split.us
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %7
-  %.067102.us = phi ptr [ %8, %7 ], [ %i.g, %.lr.ph.split.us.preheader ] ; 4 uses
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.ac
+  %.067102.us = phi ptr [ %i.g, %.lr.ph ], [ %i.bz, %bb.ac ] ; 4 uses
   %i.m = load i8, ptr %.067102.us, align 1        ; 2 uses
-  switch i8 %i.m, label %7 [
+  switch i8 %i.m, label %bb.ac [
     i8 13, label %bb.b
     i8 10, label %bb.b
   ]
@@ -254,129 +248,64 @@ bb.e:                                             ; preds = %bb.d
   %.not82.us = icmp ult ptr %i.r, %i.e
   br i1 %.not82.us, label %thread-pre-split.us, label %sip_skip_whitespace.exit.thread
 
-thread-pre-split.us:                              ; preds = %bb.e, %bb.c
+thread-pre-split.us:                              ; preds = %bb.c, %bb.e
   %.1.ph.us = phi ptr [ %i.n, %bb.c ], [ %i.r, %bb.e ] ; 2 uses
   %.pr.us = load i8, ptr %.1.ph.us, align 1
   br label %bb.f
 
 bb.f:                                             ; preds = %thread-pre-split.us, %bb.d
   %i.s = phi i8 [ %.pr.us, %thread-pre-split.us ], [ %i.p, %bb.d ]
-  %.1.us = phi ptr [ %.1.ph.us, %thread-pre-split.us ], [ %i.n, %bb.d ] ; 7 uses
+  %.1.us = phi ptr [ %.1.ph.us, %thread-pre-split.us ], [ %i.n, %bb.d ] ; 11 uses
   switch i8 %i.s, label %bb.g [
-    i8 32, label %7
-    i8 9, label %7
+    i8 32, label %bb.ac
+    i8 9, label %bb.ac
   ]
 
 bb.g:                                             ; preds = %bb.f
   %i.t = ptrtoint ptr %.1.us to i64
-  %i.u = sub i64 %i.i, %i.t
+  %i.u = sub i64 %i.i, %i.t                       ; 2 uses
   %i.v = load i32, ptr %i.j, align 8
   %i.w = zext i32 %i.v to i64                     ; 3 uses
   %.not83.us = icmp slt i64 %i.u, %i.w
-  br i1 %.not83.us, label %7, label %bb.h
+  br i1 %.not83.us, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.x = load ptr, ptr %i.c, align 16
   %i.y = tail call i32 @strncasecmp(ptr noundef %.1.us, ptr noundef %i.x, i64 noundef %i.w) #12
   %i.z = icmp eq i32 %i.y, 0
-  br i1 %i.z, label %.split.us, label %7
+  br i1 %i.z, label %.loopexit, label %bb.i
 
-7:                                                ; preds = %bb.g, %bb.h, %bb.f, %bb.f, %.lr.ph.split.us
-  %.4.us = phi ptr [ %.067102.us, %.lr.ph.split.us ], [ %.1.us, %bb.f ], [ %.1.us, %bb.f ], [ %.1.us, %bb.h ], [ %.1.us, %bb.g ]
-  %8 = getelementptr i8, ptr %.4.us, i64 1        ; 2 uses
-  %9 = icmp ult ptr %8, %i.e
-  br i1 %9, label %.lr.ph.split.us, label %sip_skip_whitespace.exit.thread, !llvm.loop !25
+bb.i:                                             ; preds = %bb.h, %bb.g
+  %i.aa = load ptr, ptr %i.k, align 8             ; 2 uses
+  %i.ab = icmp eq ptr %i.aa, null
+  br i1 %i.ab, label %bb.ac, label %bb.j
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %bb.ac
-  %.067102 = phi ptr [ %i.bz, %bb.ac ], [ %i.g, %.lr.ph ] ; 4 uses
-  %10 = load i8, ptr %.067102, align 1            ; 2 uses
-  switch i8 %10, label %bb.ac [
-    i8 13, label %11
-    i8 10, label %11
-  ]
-
-11:                                               ; preds = %.lr.ph.split, %.lr.ph.split
-  %12 = getelementptr i8, ptr %.067102, i64 1     ; 4 uses
-  %.not81 = icmp ult ptr %12, %i.e
-  br i1 %.not81, label %13, label %sip_skip_whitespace.exit.thread
-
-13:                                               ; preds = %11
-  %14 = icmp eq i8 %10, 13
-  br i1 %14, label %15, label %thread-pre-split
-
-15:                                               ; preds = %13
-  %16 = load i8, ptr %12, align 1                 ; 2 uses
-  %17 = icmp eq i8 %16, 10
-  br i1 %17, label %18, label %20
-
-18:                                               ; preds = %15
-  %19 = getelementptr i8, ptr %.067102, i64 2     ; 2 uses
-  %.not82 = icmp ult ptr %19, %i.e
-  br i1 %.not82, label %thread-pre-split, label %sip_skip_whitespace.exit.thread
-
-thread-pre-split:                                 ; preds = %13, %18
-  %.1.ph = phi ptr [ %12, %13 ], [ %19, %18 ]     ; 2 uses
-  %.pr = load i8, ptr %.1.ph, align 1
-  br label %20
-
-20:                                               ; preds = %thread-pre-split, %15
-  %21 = phi i8 [ %.pr, %thread-pre-split ], [ %16, %15 ]
-  %.1 = phi ptr [ %.1.ph, %thread-pre-split ], [ %12, %15 ] ; 11 uses
-  switch i8 %21, label %22 [
-    i8 32, label %bb.ac
-    i8 9, label %bb.ac
-  ]
-
-22:                                               ; preds = %20
-  %23 = ptrtoint ptr %.1 to i64
-  %24 = sub i64 %i.i, %23                         ; 2 uses
-  %25 = load i32, ptr %i.j, align 8
-  %26 = zext i32 %25 to i64                       ; 3 uses
-  %.not83 = icmp slt i64 %24, %26
-  br i1 %.not83, label %bb.j, label %bb.i
-
-bb.i:                                             ; preds = %22
-  %i.aa = load ptr, ptr %i.c, align 16
-  %27 = tail call i32 @strncasecmp(ptr noundef %.1, ptr noundef %i.aa, i64 noundef %26) #12
-  %i.ab = icmp eq i32 %27, 0
-  br i1 %i.ab, label %.split.us, label %bb.j
-
-.split.us:                                        ; preds = %bb.h, %bb.i
-  %.us-phi = phi i64 [ %26, %bb.i ], [ %i.w, %bb.h ]
-  %.us-phi105 = phi ptr [ %.1, %bb.i ], [ %.1.us, %bb.h ]
-  %28 = getelementptr i8, ptr %.us-phi105, i64 %.us-phi
-  br label %.loopexit
-
-bb.j:                                             ; preds = %bb.i, %22
+bb.j:                                             ; preds = %bb.i
   %i.ac = load i32, ptr %i.l, align 4             ; 2 uses
   %i.ad = add i32 %i.ac, 1
   %i.ae = zext i32 %i.ad to i64
-  %.not85 = icmp slt i64 %24, %i.ae
+  %.not85 = icmp slt i64 %i.u, %i.ae
   br i1 %.not85, label %bb.ac, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %29 = load ptr, ptr %i.k, align 8
   %i.af = zext i32 %i.ac to i64                   ; 3 uses
-  %i.ag = tail call i32 @strncasecmp(ptr noundef %.1, ptr noundef %29, i64 noundef %i.af) #12
+  %i.ag = tail call i32 @strncasecmp(ptr noundef %.1.us, ptr noundef nonnull %i.aa, i64 noundef %i.af) #12
   %i.ah = icmp eq i32 %i.ag, 0
   br i1 %i.ah, label %bb.l, label %bb.ac
 
 bb.l:                                             ; preds = %bb.k
-  %i.ai = getelementptr i8, ptr %.1, i64 %i.af
+  %i.ai = getelementptr i8, ptr %.1.us, i64 %i.af
   %i.aj = load i8, ptr %i.ai, align 1
   %i.ak = zext i8 %i.aj to i64
   %i.al = getelementptr i8, ptr @_ctype, i64 %i.ak
   %i.am = load i8, ptr %i.al, align 1
   %i.an = and i8 %i.am, 3
   %.not86 = icmp eq i8 %i.an, 0
-  br i1 %.not86, label %.loopexit.loopexit, label %bb.ac
+  br i1 %.not86, label %.loopexit, label %bb.ac
 
-.loopexit.loopexit:                               ; preds = %bb.l
-  %30 = getelementptr i8, ptr %.1, i64 %i.af
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.split.us
-  %.2 = phi ptr [ %28, %.split.us ], [ %30, %.loopexit.loopexit ] ; 5 uses
+.loopexit:                                        ; preds = %bb.l, %bb.h
+  %.pn = phi i64 [ %i.w, %bb.h ], [ %i.af, %bb.l ]
+  %.2 = getelementptr i8, ptr %.1.us, i64 %.pn    ; 5 uses
   %i.ao = icmp ult ptr %.2, %i.e
   br i1 %i.ao, label %.lr.ph.preheader.i, label %sip_skip_whitespace.exit
 
@@ -482,16 +411,15 @@ bb.x:                                             ; preds = %bb.w
   %i.bk = sub i64 %i.bi, %i.bj
   %i.bl = trunc i64 %i.bk to i32
   store i32 %i.bl, ptr %5, align 4
-  %31 = add i32 %4, -6
-  %.not89 = icmp ult i32 %31, -5
+  %7 = getelementptr i8, ptr %i.c, i64 16
+  %8 = load ptr, ptr %7, align 16                 ; 2 uses
+  %.not89 = icmp eq ptr %8, null
   br i1 %.not89, label %bb.aa, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %32 = getelementptr i8, ptr %i.c, i64 16
-  %33 = load ptr, ptr %32, align 16
   %i.bm = getelementptr i8, ptr %i.c, i64 32
   %i.bn = load i32, ptr %i.bm, align 16           ; 2 uses
-  %i.bo = tail call fastcc ptr @ct_sip_header_search(ptr noundef nonnull %i.bg, ptr noundef nonnull %i.e, ptr noundef %33, i32 noundef %i.bn) #12, !srcloc !27 ; 2 uses
+  %i.bo = tail call fastcc ptr @ct_sip_header_search(ptr noundef nonnull %i.bg, ptr noundef nonnull %i.e, ptr noundef nonnull %8, i32 noundef %i.bn) #12, !srcloc !27 ; 2 uses
   %.not90 = icmp eq ptr %i.bo, null
   br i1 %.not90, label %sip_skip_whitespace.exit.thread, label %bb.z
 
@@ -518,14 +446,14 @@ bb.ab:                                            ; preds = %bb.aa
   store i32 %i.by, ptr %5, align 4
   br label %sip_skip_whitespace.exit.thread
 
-bb.ac:                                            ; preds = %20, %20, %.lr.ph.split, %bb.j, %bb.k, %bb.l
-  %.4 = phi ptr [ %.067102, %.lr.ph.split ], [ %.1, %20 ], [ %.1, %20 ], [ %.1, %bb.l ], [ %.1, %bb.k ], [ %.1, %bb.j ]
+bb.ac:                                            ; preds = %bb.f, %bb.f, %.lr.ph.split.us, %bb.i, %bb.j, %bb.k, %bb.l
+  %.4 = phi ptr [ %.067102.us, %.lr.ph.split.us ], [ %.1.us, %bb.f ], [ %.1.us, %bb.f ], [ %.1.us, %bb.l ], [ %.1.us, %bb.k ], [ %.1.us, %bb.j ], [ %.1.us, %bb.i ]
   %i.bz = getelementptr i8, ptr %.4, i64 1        ; 2 uses
   %i.ca = icmp ult ptr %i.bz, %i.e
-  br i1 %i.ca, label %.lr.ph.split, label %sip_skip_whitespace.exit.thread, !llvm.loop !25
+  br i1 %i.ca, label %.lr.ph.split.us, label %sip_skip_whitespace.exit.thread, !llvm.loop !25
 
-sip_skip_whitespace.exit.thread:                  ; preds = %bb.e, %bb.b, %7, %18, %11, %bb.ac, %bb.a, %bb.p, %bb.m, %bb.q, %sip_skip_whitespace.exit, %bb.v, %bb.u, %bb.w, %bb.aa, %bb.y, %bb.ab
-  %.0 = phi i32 [ -1, %bb.aa ], [ 1, %bb.ab ], [ -1, %bb.y ], [ 0, %bb.w ], [ 0, %bb.u ], [ 0, %bb.v ], [ 0, %sip_skip_whitespace.exit ], [ 0, %bb.q ], [ 0, %bb.m ], [ 0, %bb.p ], [ 0, %18 ], [ 0, %bb.a ], [ 0, %bb.ac ], [ 0, %11 ], [ 0, %7 ], [ 0, %bb.b ], [ 0, %bb.e ]
+sip_skip_whitespace.exit.thread:                  ; preds = %bb.e, %bb.b, %bb.ac, %bb.a, %bb.p, %bb.m, %bb.q, %sip_skip_whitespace.exit, %bb.v, %bb.u, %bb.w, %bb.aa, %bb.y, %bb.ab
+  %.0 = phi i32 [ -1, %bb.aa ], [ 1, %bb.ab ], [ -1, %bb.y ], [ 0, %bb.w ], [ 0, %bb.u ], [ 0, %bb.v ], [ 0, %sip_skip_whitespace.exit ], [ 0, %bb.q ], [ 0, %bb.m ], [ 0, %bb.p ], [ 0, %bb.a ], [ 0, %bb.ac ], [ 0, %bb.b ], [ 0, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret i32 %.0
 }

@@ -205,10 +205,10 @@ PyUnicode_READ.exit.thread.i:                     ; preds = %PyUnicode_READ.exit
   br label %_getrecord_ex.exit.i
 
 _getrecord_ex.exit.i:                             ; preds = %PyUnicode_READ.exit.thread.i, %PyUnicode_READ.exit.i
-  %.0.i44.i = phi i64 [ %i.as, %PyUnicode_READ.exit.thread.i ], [ 0, %PyUnicode_READ.exit.i ] ; 5 uses
+  %.0.i44.i = phi i64 [ %i.as, %PyUnicode_READ.exit.thread.i ], [ 0, %PyUnicode_READ.exit.i ]
   %i.at = getelementptr [9 x i8], ptr @_PyUnicode_Database_Records, i64 %.0.i44.i ; 3 uses
   %i.au = getelementptr i8, ptr %i.at, i64 6
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !40  ; 6 uses
+  %i.av = load i8, ptr %i.au, align 1, !tbaa !40  ; 10 uses
   %i.aw = zext i8 %i.av to i32                    ; 4 uses
   %i.ax = getelementptr i8, ptr %i.at, i64 8
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !42
@@ -226,7 +226,7 @@ bb.i:                                             ; preds = %_getrecord_ex.exit.
   br i1 %or.cond.i.i, label %bb.j, label %update_ext_pict_state.exit.i
 
 bb.j:                                             ; preds = %bb.i
-  %switch.selectcmp.i.i = icmp eq i64 %.0.i44.i, 212
+  %switch.selectcmp.i.i = icmp eq i8 %i.av, 13
   %switch.select.i.i = select i1 %switch.selectcmp.i.i, i32 2, i32 0
   %switch.selectcmp9.i.i = icmp eq i8 %i.av, 5
   %switch.select10.i.i = select i1 %switch.selectcmp9.i.i, i32 1, i32 %switch.select.i.i
@@ -235,7 +235,7 @@ bb.j:                                             ; preds = %bb.i
 update_ext_pict_state.exit.i:                     ; preds = %bb.j, %bb.i, %bb.h
   %.0.i45.i = phi i32 [ %i.ba, %bb.h ], [ %switch.select10.i.i, %bb.j ], [ 0, %bb.i ] ; 3 uses
   store i32 %.0.i45.i, ptr %i.p, align 4, !tbaa !124
-  %i.bc = icmp eq i64 %.0.i44.i, 392              ; 2 uses
+  %i.bc = icmp eq i8 %i.av, 6                     ; 2 uses
   %i.bd = xor i1 %i.w, true
   %.0.i46.i = and i1 %i.bc, %i.bd                 ; 2 uses
   %i.be = zext i1 %.0.i46.i to i8
@@ -277,7 +277,7 @@ update_incb_state.exit.i:                         ; preds = %bb.o, %bb.n, %bb.m,
 
 bb.p:                                             ; preds = %update_incb_state.exit.i
   %i.bm = icmp eq i32 %i.u, 2
-  %i.bn = icmp eq i64 %.0.i44.i, 3
+  %i.bn = icmp eq i8 %i.av, 3
   %or.cond.i49.i = and i1 %i.bm, %i.bn
   br i1 %or.cond.i49.i, label %grapheme_break.exit.thread.i, label %bb.q
 
@@ -316,8 +316,7 @@ bb.u:                                             ; preds = %bb.s
   %i.bw = icmp eq i32 %i.u, 12
   %i.bx = icmp eq i32 %i.u, 10
   %or.cond21.i.i = or i1 %i.bw, %i.bx
-  %1 = and i64 %.0.i44.i, 65534
-  %i.by = icmp eq i64 %1, 190
+  %i.by = icmp eq i8 %i.av, 10
   %or.cond23.i.i = and i1 %or.cond21.i.i, %i.by
   %i.bz = and i32 %i.aw, 247
   %or.cond25.i.i = icmp eq i32 %i.bz, 5

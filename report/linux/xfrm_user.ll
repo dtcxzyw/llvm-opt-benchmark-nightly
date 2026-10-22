@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = zext nneg i16 %i.f to i32
-  %i.i = add nsw i32 %i.h, -16                    ; 4 uses
-  %i.j = sext i32 %i.i to i64                     ; 3 uses
+  %i.i = add nsw i32 %i.h, -16                    ; 2 uses
+  %i.j = sext i32 %i.i to i64                     ; 2 uses
   %i.k = getelementptr [48 x i8], ptr @xfrm_dispatch, i64 %i.j ; 6 uses
   %i.l = tail call zeroext i1 @netlink_net_capable(ptr noundef %0, i32 noundef 12) #14
   br i1 %i.l, label %bb.c, label %bb.z
@@ -240,20 +240,18 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.v, ptr %3, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.x = getelementptr i8, ptr %i.k, i64 16
-  %i.y = load ptr, ptr %i.x, align 16
+  %i.y = load ptr, ptr %i.x, align 16             ; 2 uses
   store ptr %i.y, ptr %i.w, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.aa = getelementptr i8, ptr %i.k, i64 24
   %i.ab = load ptr, ptr %i.aa, align 8
   store ptr %i.ab, ptr %i.z, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %4 = icmp eq ptr %i.y, null
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ac, i8 0, i64 32, i1 false)
-  switch i32 %i.i, label %bb.h [
-    i32 5, label %bb.g
-    i32 2, label %bb.g
-  ]
+  br i1 %4, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.f
+bb.g:                                             ; preds = %bb.f
   %i.ad = getelementptr i8, ptr %.val, i64 3368
   %.val73.a = load ptr, ptr %i.ad, align 8
   %i.ae = call i32 @__netlink_dump_start(ptr noundef %.val73.a, ptr noundef %0, ptr noundef %1, ptr noundef nonnull %3) #14
@@ -267,7 +265,9 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 bb.i:                                             ; preds = %bb.d, %bb.e
   %i.af = getelementptr [4 x i8], ptr @xfrm_msg_min, i64 %i.j
   %i.ag = load i32, ptr %i.af, align 4            ; 2 uses
-  %.not69.not = icmp eq i32 %i.i, 20              ; 3 uses
+  %5 = getelementptr i8, ptr %i.k, i64 32
+  %6 = load ptr, ptr %5, align 16                 ; 3 uses
+  %.not69.not = icmp eq ptr %6, null              ; 2 uses
   %i.ah = load i32, ptr %1, align 4               ; 2 uses
   %i.ai = add i32 %i.ag, 16
   %i.aj = icmp ult i32 %i.ah, %i.ai
@@ -283,25 +283,26 @@ bb.k:                                             ; preds = %bb.j
   br label %nlmsg_parse_deprecated.exit.thread
 
 nlmsg_parse_deprecated.exit:                      ; preds = %bb.i
-  %4 = getelementptr i8, ptr %i.k, i64 32
-  %5 = load ptr, ptr %4, align 16
-  %i.ak = select i1 %.not69.not, ptr %5, ptr @xfrma_policy
+  %i.ak = select i1 %.not69.not, ptr @xfrma_policy, ptr %6
   %i.al = getelementptr i8, ptr %i.k, i64 40
-  %i.am = load i32, ptr %i.al, align 8
-  %. = select i1 %.not69.not, i32 %i.am, i32 41
+  %i.am = load i32, ptr %i.al, align 8            ; 2 uses
+  %.not69 = icmp eq i32 %i.am, 0
+  %. = select i1 %.not69, i32 41, i32 %i.am
   %i.an = getelementptr i8, ptr %1, i64 16
   %i.ao = add i32 %i.ag, 3
   %i.ap = and i32 %i.ao, -4                       ; 2 uses
   %i.aq = zext i32 %i.ap to i64
   %i.ar = getelementptr i8, ptr %i.an, i64 %i.aq
-  %reass.sub.i = add i32 %i.ah, -16
-  %6 = sub i32 %reass.sub.i, %i.ap
-  %i.as = call i32 @__nla_parse(ptr noundef nonnull %i.a, i32 noundef %., ptr noundef %i.ar, i32 noundef %6, ptr noundef %i.ak, i32 noundef 0, ptr noundef %2) #14 ; 2 uses
+  %reass.sub = sub i32 %i.ah, %i.ap
+  %7 = add i32 %reass.sub, -16
+  %i.as = call i32 @__nla_parse(ptr noundef nonnull %i.a, i32 noundef %., ptr noundef %i.ar, i32 noundef %7, ptr noundef nonnull %i.ak, i32 noundef 0, ptr noundef %2) #14 ; 2 uses
   %i.at = icmp slt i32 %i.as, 0
   br i1 %i.at, label %nlmsg_parse_deprecated.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %nlmsg_parse_deprecated.exit
-  br i1 %.not69.not, label %xfrm_reject_unused_attr.exit, label %bb.m
+  %8 = icmp eq ptr %6, @xfrma_policy
+  %or.cond = or i1 %.not69.not, %8
+  br i1 %or.cond, label %bb.m, label %xfrm_reject_unused_attr.exit
 
 bb.m:                                             ; preds = %bb.l
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 264
@@ -568,15 +569,12 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not29.41.i, label %xfrm_reject_unused_attr.exit, label %bb.v
 
 xfrm_reject_unused_attr.exit:                     ; preds = %.preheader.41.i, %bb.u, %bb.r, %bb.r, %bb.r, %bb.r, %bb.l
-  %7 = and i64 %i.j, 1152921504606846975
-  %8 = shl nuw i64 1, %7
-  %9 = and i64 %8, 4521984
-  %.not72 = icmp eq i64 %9, 0
-  br i1 %.not72, label %bb.x, label %nlmsg_parse_deprecated.exit.thread
+  %9 = load ptr, ptr %i.k, align 16               ; 2 uses
+  %.not72 = icmp eq ptr %9, null
+  br i1 %.not72, label %nlmsg_parse_deprecated.exit.thread, label %bb.x
 
 bb.x:                                             ; preds = %xfrm_reject_unused_attr.exit
-  %10 = load ptr, ptr %i.k, align 16
-  %i.dq = call i32 %10(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.a, ptr noundef %2) #14 ; 2 uses
+  %i.dq = call i32 %9(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.a, ptr noundef %2) #14 ; 2 uses
   %i.dr = getelementptr i8, ptr %0, i64 192       ; 2 uses
   %.val78.a = load i32, ptr %i.dr, align 8
   %i.ds = getelementptr i8, ptr %0, i64 200       ; 2 uses

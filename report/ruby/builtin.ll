@@ -71,7 +71,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @load_with_builtin_functions(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr @builtin_lookup.index, align 4, !tbaa !10 ; 3 uses
+  %i.a = load i32, ptr @builtin_lookup.index, align 4, !tbaa !10 ; 2 uses
   %i.b = add i32 %i.a, 1
   store i32 %i.b, ptr @builtin_lookup.index, align 4, !tbaa !10
   %i.c = sext i32 %i.a to i64
@@ -83,9 +83,9 @@ bb.a:
 
 bin4feature.exit.i:                               ; preds = %bb.a
   %i.g = getelementptr i8, ptr %i.d, i64 8
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !17
-  %.not1013.i = icmp eq i32 %i.a, 24
-  br i1 %.not1013.i, label %.lr.ph.i.preheader, label %builtin_lookup.exit
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !17   ; 2 uses
+  %.not1013.i = icmp eq ptr %i.h, null
+  br i1 %.not1013.i, label %.lr.ph.i.preheader, label %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %bin4feature.exit.i, %bb.a
   br label %.lr.ph.i
@@ -107,26 +107,23 @@ bin4feature.exit12.i:                             ; preds = %bb.b, %.lr.ph.i
   %i.n = getelementptr i8, ptr %.014.i, i64 48    ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !16   ; 2 uses
   %.not.i = icmp ne ptr %i.o, null
-  %.not10.i = icmp eq ptr %i.m, null
+  %.not10.i = icmp eq ptr %i.m, null              ; 2 uses
   %or.cond.i = select i1 %.not.i, i1 %.not10.i, i1 false
   br i1 %or.cond.i, label %.lr.ph.i, label %builtin_lookup.exit, !llvm.loop !11
 
-builtin_lookup.exit:                              ; preds = %bin4feature.exit12.i, %bin4feature.exit.i
-  %.pn = phi ptr [ %i.d, %bin4feature.exit.i ], [ %.014.i, %bin4feature.exit12.i ]
-  %.09.lcssa.i = phi ptr [ %i.h, %bin4feature.exit.i ], [ %i.m, %bin4feature.exit12.i ] ; 2 uses
-  %.0.in = getelementptr i8, ptr %.pn, i64 16
-  %.0 = load i64, ptr %.0.in, align 8, !tbaa !19
-  %.not = icmp eq ptr %.09.lcssa.i, null
-  br i1 %.not, label %bb.c, label %bb.d
+builtin_lookup.exit:                              ; preds = %bin4feature.exit12.i
+  br i1 %.not10.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %builtin_lookup.exit
   tail call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.1, ptr noundef nonnull %0) #7
   unreachable
 
-bb.d:                                             ; preds = %builtin_lookup.exit
-  %i.p = load ptr, ptr @ruby_current_vm_ptr, align 8, !tbaa !21
+bb.d:                                             ; preds = %bin4feature.exit.i, %builtin_lookup.exit
+  %.09.lcssa.i15 = phi ptr [ %i.m, %builtin_lookup.exit ], [ %i.h, %bin4feature.exit.i ]
+  %.014.i.pn = phi ptr [ %.014.i, %builtin_lookup.exit ], [ %i.d, %bin4feature.exit.i ]
+  %i.p = load ptr, ptr @ruby_current_vm_ptr, align 8, !tbaa !20
   %i.q = getelementptr i8, ptr %i.p, i64 1272     ; 3 uses
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !48
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !47
   %.not10 = icmp eq ptr %i.r, null
   br i1 %.not10, label %bb.f, label %bb.e
 
@@ -135,10 +132,12 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  store ptr %1, ptr %i.q, align 8, !tbaa !48
-  %i.s = tail call ptr @rb_iseq_ibf_load_bytes(ptr noundef nonnull %.09.lcssa.i, i64 noundef %.0) #8 ; 2 uses
+  %.014.in = getelementptr i8, ptr %.014.i.pn, i64 16
+  %.014 = load i64, ptr %.014.in, align 8, !tbaa !48
+  store ptr %1, ptr %i.q, align 8, !tbaa !47
+  %i.s = tail call ptr @rb_iseq_ibf_load_bytes(ptr noundef nonnull %.09.lcssa.i15, i64 noundef %.014) #8 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
-  store ptr null, ptr %i.q, align 8, !tbaa !48
+  store ptr null, ptr %i.q, align 8, !tbaa !47
   %i.t = tail call ptr @rb_root_box() #8
   %i.u = tail call i64 @rb_iseq_eval(ptr noundef nonnull %i.s, ptr noundef %i.t) #8 ; 0 uses
   ret void
@@ -211,34 +210,34 @@ attributes #8 = { nounwind }
 !16 = !{!15, !13, i64 0}
 !17 = !{!15, !13, i64 8}
 !18 = !{!"llvm.loop.mustprogress"}
-!19 = !{!15, !14, i64 16}
-!20 = !{!"p1 _ZTS12rb_vm_struct", !12, i64 0}
-!21 = !{!20, !20, i64 0}
-!22 = !{!"p1 _ZTS14ccan_list_node", !12, i64 0}
-!23 = !{!"ccan_list_node", !22, i64 0, !22, i64 8}
-!24 = !{!"ccan_list_head", !23, i64 0}
-!25 = !{!"p1 _ZTS16rb_ractor_struct", !12, i64 0}
-!26 = !{!"p1 _ZTS16rb_thread_struct", !12, i64 0}
-!27 = !{!"_Bool", !8, i64 0}
-!28 = !{!"", !8, i64 0, !25, i64 40, !9, i64 48, !8, i64 56, !27, i64 104}
-!29 = !{!"", !8, i64 0, !25, i64 40, !27, i64 48, !8, i64 56, !9, i64 104, !9, i64 108, !9, i64 112, !9, i64 116, !24, i64 120, !9, i64 136, !24, i64 144, !24, i64 160, !24, i64 176, !27, i64 192, !8, i64 200, !8, i64 248, !27, i64 296, !9, i64 300, !9, i64 304, !25, i64 312, !9, i64 320}
-!30 = !{!"", !24, i64 0, !9, i64 16, !9, i64 20, !25, i64 24, !26, i64 32, !28, i64 40, !29, i64 152}
-!31 = !{!"long long", !8, i64 0}
-!32 = !{!"p1 _ZTS18global_object_list", !12, i64 0}
-!33 = !{!"p1 _ZTS13rb_box_struct", !12, i64 0}
-!34 = !{!"p1 _ZTS8st_table", !12, i64 0}
-!35 = !{!"", !8, i64 0}
-!36 = !{!"p1 _ZTS20rb_event_hook_struct", !12, i64 0}
-!37 = !{!"rb_hook_list_struct", !36, i64 0, !9, i64 8, !9, i64 12, !9, i64 16, !27, i64 20}
-!38 = !{!"p1 _ZTS22rb_postponed_job_queue", !12, i64 0}
-!39 = !{!"p1 _ZTS11rb_objspace", !12, i64 0}
-!40 = !{!"p1 _ZTS24gc_mark_func_data_struct", !12, i64 0}
-!41 = !{!"", !39, i64 0, !40, i64 8}
-!42 = !{!"p1 _ZTS15rb_at_exit_list", !12, i64 0}
-!43 = !{!"p1 _ZTS19rb_builtin_function", !12, i64 0}
-!44 = !{!"p1 _ZTS11rb_id_table", !12, i64 0}
-!45 = !{!"p1 _ZTS9set_table", !12, i64 0}
-!46 = !{!"", !14, i64 0, !14, i64 8, !14, i64 16, !14, i64 24}
-!47 = !{!"rb_vm_struct", !14, i64 0, !30, i64 8, !12, i64 488, !31, i64 496, !9, i64 504, !9, i64 508, !9, i64 508, !9, i64 508, !9, i64 508, !14, i64 512, !32, i64 520, !8, i64 528, !33, i64 568, !33, i64 576, !34, i64 584, !35, i64 592, !37, i64 1112, !38, i64 1136, !9, i64 1144, !24, i64 1152, !8, i64 1168, !14, i64 1208, !14, i64 1216, !14, i64 1224, !14, i64 1232, !9, i64 1240, !41, i64 1248, !42, i64 1264, !43, i64 1272, !34, i64 1280, !44, i64 1288, !34, i64 1296, !45, i64 1304, !45, i64 1312, !44, i64 1320, !14, i64 1328, !8, i64 1336, !46, i64 9520}
-!48 = !{!47, !43, i64 1272}
+!19 = !{!"p1 _ZTS12rb_vm_struct", !12, i64 0}
+!20 = !{!19, !19, i64 0}
+!21 = !{!"p1 _ZTS14ccan_list_node", !12, i64 0}
+!22 = !{!"ccan_list_node", !21, i64 0, !21, i64 8}
+!23 = !{!"ccan_list_head", !22, i64 0}
+!24 = !{!"p1 _ZTS16rb_ractor_struct", !12, i64 0}
+!25 = !{!"p1 _ZTS16rb_thread_struct", !12, i64 0}
+!26 = !{!"_Bool", !8, i64 0}
+!27 = !{!"", !8, i64 0, !24, i64 40, !9, i64 48, !8, i64 56, !26, i64 104}
+!28 = !{!"", !8, i64 0, !24, i64 40, !26, i64 48, !8, i64 56, !9, i64 104, !9, i64 108, !9, i64 112, !9, i64 116, !23, i64 120, !9, i64 136, !23, i64 144, !23, i64 160, !23, i64 176, !26, i64 192, !8, i64 200, !8, i64 248, !26, i64 296, !9, i64 300, !9, i64 304, !24, i64 312, !9, i64 320}
+!29 = !{!"", !23, i64 0, !9, i64 16, !9, i64 20, !24, i64 24, !25, i64 32, !27, i64 40, !28, i64 152}
+!30 = !{!"long long", !8, i64 0}
+!31 = !{!"p1 _ZTS18global_object_list", !12, i64 0}
+!32 = !{!"p1 _ZTS13rb_box_struct", !12, i64 0}
+!33 = !{!"p1 _ZTS8st_table", !12, i64 0}
+!34 = !{!"", !8, i64 0}
+!35 = !{!"p1 _ZTS20rb_event_hook_struct", !12, i64 0}
+!36 = !{!"rb_hook_list_struct", !35, i64 0, !9, i64 8, !9, i64 12, !9, i64 16, !26, i64 20}
+!37 = !{!"p1 _ZTS22rb_postponed_job_queue", !12, i64 0}
+!38 = !{!"p1 _ZTS11rb_objspace", !12, i64 0}
+!39 = !{!"p1 _ZTS24gc_mark_func_data_struct", !12, i64 0}
+!40 = !{!"", !38, i64 0, !39, i64 8}
+!41 = !{!"p1 _ZTS15rb_at_exit_list", !12, i64 0}
+!42 = !{!"p1 _ZTS19rb_builtin_function", !12, i64 0}
+!43 = !{!"p1 _ZTS11rb_id_table", !12, i64 0}
+!44 = !{!"p1 _ZTS9set_table", !12, i64 0}
+!45 = !{!"", !14, i64 0, !14, i64 8, !14, i64 16, !14, i64 24}
+!46 = !{!"rb_vm_struct", !14, i64 0, !29, i64 8, !12, i64 488, !30, i64 496, !9, i64 504, !9, i64 508, !9, i64 508, !9, i64 508, !9, i64 508, !14, i64 512, !31, i64 520, !8, i64 528, !32, i64 568, !32, i64 576, !33, i64 584, !34, i64 592, !36, i64 1112, !37, i64 1136, !9, i64 1144, !23, i64 1152, !8, i64 1168, !14, i64 1208, !14, i64 1216, !14, i64 1224, !14, i64 1232, !9, i64 1240, !40, i64 1248, !41, i64 1264, !42, i64 1272, !33, i64 1280, !43, i64 1288, !33, i64 1296, !44, i64 1304, !44, i64 1312, !43, i64 1320, !14, i64 1328, !8, i64 1336, !45, i64 9520}
+!47 = !{!46, !42, i64 1272}
+!48 = !{!15, !14, i64 16}
 end_hunk_0

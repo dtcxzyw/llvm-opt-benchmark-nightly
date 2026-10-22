@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-aprs?download=true
-inline.NumInlined: 43
-inline.NumDeleted: 13
+inline.NumInlined: 37
+inline.NumDeleted: 12
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 @hf_aprs_msg_nrq = internal global i32 0, align 4
 @.str.92 = private unnamed_addr constant [21 x i8] c"Number/Range/Quality\00", align 1
@@ -202,7 +204,7 @@ begin_hunk_0
 @mic_e_msg_table = internal unnamed_addr constant [8 x %struct.mic_e_msg_table_s] [%struct.mic_e_msg_table_s { ptr @.str.233, ptr @.str.233 }, %struct.mic_e_msg_table_s { ptr @.str.234, ptr @.str.235 }, %struct.mic_e_msg_table_s { ptr @.str.236, ptr @.str.237 }, %struct.mic_e_msg_table_s { ptr @.str.238, ptr @.str.239 }, %struct.mic_e_msg_table_s { ptr @.str.240, ptr @.str.241 }, %struct.mic_e_msg_table_s { ptr @.str.242, ptr @.str.243 }, %struct.mic_e_msg_table_s { ptr @.str.244, ptr @.str.245 }, %struct.mic_e_msg_table_s { ptr @.str.246, ptr @.str.247 }], align 16
 @.str.230 = private unnamed_addr constant [7 x i8] c"MIC-E \00", align 1
 @.str.231 = private unnamed_addr constant [79 x i8] c"Lat %7.7s, Msg A %d, Msg B %d, Msg C %d, N/S %c, Long off %3d, W/E %c, SSID %d\00", align 1
-@dst_code = internal unnamed_addr constant [34 x { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] }] [{ i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 96, i8 48, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 98, i8 49, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 100, i8 50, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 102, i8 51, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 104, i8 52, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 106, i8 53, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 108, i8 54, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 110, i8 55, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 112, i8 56, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 114, i8 57, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -126, i8 48, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -124, i8 49, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -122, i8 50, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -120, i8 51, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -118, i8 52, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -116, i8 53, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -114, i8 54, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -112, i8 55, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -110, i8 56, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -108, i8 57, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -106, i8 32, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -104, i8 32, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -96, i8 48, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -94, i8 49, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -92, i8 50, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -90, i8 51, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -88, i8 52, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -86, i8 53, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -84, i8 54, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -82, i8 55, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -80, i8 56, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -78, i8 57, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -76, i8 32, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 0, i8 95, [2 x i8] zeroinitializer, i32 3, i8 63, [3 x i8] zeroinitializer, i32 3, i8 63, [3 x i8] zeroinitializer }], align 16
+@dst_code = internal constant [34 x { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] }] [{ i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 96, i8 48, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 98, i8 49, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 100, i8 50, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 102, i8 51, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 104, i8 52, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 106, i8 53, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 108, i8 54, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 110, i8 55, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 112, i8 56, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 114, i8 57, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -126, i8 48, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -124, i8 49, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -122, i8 50, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -120, i8 51, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -118, i8 52, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -116, i8 53, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -114, i8 54, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -112, i8 55, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -110, i8 56, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -108, i8 57, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -106, i8 32, [2 x i8] zeroinitializer, i32 1, i8 63, [3 x i8] zeroinitializer, i32 0, i8 63, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -104, i8 32, [2 x i8] zeroinitializer, i32 0, i8 83, [3 x i8] zeroinitializer, i32 0, i8 69, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -96, i8 48, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -94, i8 49, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -92, i8 50, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -90, i8 51, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -88, i8 52, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -86, i8 53, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -84, i8 54, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -82, i8 55, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -80, i8 56, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -78, i8 57, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 -76, i8 32, [2 x i8] zeroinitializer, i32 1, i8 78, [3 x i8] zeroinitializer, i32 100, i8 87, [3 x i8] zeroinitializer }, { i8, i8, [2 x i8], i32, i8, [3 x i8], i32, i8, [3 x i8] } { i8 0, i8 95, [2 x i8] zeroinitializer, i32 3, i8 63, [3 x i8] zeroinitializer, i32 3, i8 63, [3 x i8] zeroinitializer }], align 16
 @.str.233 = private unnamed_addr constant [10 x i8] c"Emergency\00", align 1
 @.str.234 = private unnamed_addr constant [9 x i8] c"Priority\00", align 1
 @.str.235 = private unnamed_addr constant [9 x i8] c"Custom 6\00", align 1
@@ -221,6 +223,7 @@ begin_hunk_0
 @.str.248 = private unnamed_addr constant [6 x i8] c"%6.2f\00", align 1
 @.str.249 = private unnamed_addr constant [6 x i8] c"%7.2f\00", align 1
 @.str.250 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
+@switch.table.dst_code_lookup = private unnamed_addr constant [241 x i8] c"\0A!\0B!\0C!\0D!\0E!\0F!\10!\11!\12!\13!\14!\15!!!!!!!\16!\17!\18!\19!\1A!\1B!\1C!\1D!\1E!\1F! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\00!\01!\02!\03!\04!\05!\06!\07!\08!\09", align 8
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden void @proto_register_aprs() local_unnamed_addr #0 {
@@ -518,7 +521,7 @@ bb.ac:                                            ; preds = %bb.d
 bb.ad:                                            ; preds = %bb.d
   %i.dk = load ptr, ptr %i.e, align 8
   %i.dl = tail call ptr @tvb_get_string_enc(ptr noundef %i.dk, ptr noundef %0, i32 noundef 1, i32 noundef 10, i32 noundef 0) ; 3 uses
-  %i.dm = tail call ptr @strchr(ptr noundef %i.dl, i32 noundef 33) #7 ; 3 uses
+  %i.dm = tail call ptr @strchr(ptr noundef %i.dl, i32 noundef 33) #8 ; 3 uses
   %.not.i = icmp eq ptr %i.dm, null
   br i1 %.not.i, label %aprs_item.exit, label %bb.ae
 
@@ -826,7 +829,7 @@ bb.o:                                             ; preds = %.lr.ph, %bb.n, %bb.
   %i.ac = tail call ptr @proto_tree_add_item(ptr noundef %i.f, i32 noundef %i.ab, ptr noundef %0, i32 noundef %.11, i32 noundef %.sink6, i32 noundef 0) ; 0 uses
   %i.ad = add i32 %.11, %.sink6                   ; 2 uses
   %i.ae = icmp slt i32 %i.ad, %i.b
-  br i1 %i.ae, label %.lr.ph, label %.loopexit, !llvm.loop !7
+  br i1 %i.ae, label %.lr.ph, label %.loopexit, !llvm.loop !6
 
 .loopexit:                                        ; preds = %bb.o, %.thread, %bb.c
   ret i32 %i.b
@@ -836,13 +839,13 @@ bb.o:                                             ; preds = %.lr.ph, %bb.n, %bb.
 define internal fastcc i32 @dissect_mic_e(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 11 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i64 17802391394926399, ptr %i.a, align 8
   %i.b = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 1) ; 2 uses
   %i.c = add i32 %i.b, 1                          ; 2 uses
   %i.d = getelementptr i8, ptr %1, i64 416
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = tail call noalias dereferenceable_or_null(100) ptr @wmem_alloc(ptr noundef %i.e, i64 noundef 100) #9 ; 5 uses
+  %i.f = tail call noalias dereferenceable_or_null(100) ptr @wmem_alloc(ptr noundef %i.e, i64 noundef 100) #10 ; 5 uses
   %i.g = getelementptr i8, ptr %1, i64 232
   %i.h = load i32, ptr %i.g, align 8
   %i.i = icmp eq i32 %i.h, 10
@@ -852,143 +855,71 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %1, i64 236
   %i.k = load i32, ptr %i.j, align 4
   %i.l = icmp eq i32 %i.k, 7
-  br i1 %i.l, label %4, label %bb.c
+  br i1 %i.l, label %dst_code_lookup.exit167, label %bb.c
 
-4:                                                ; preds = %bb.b
-  %5 = getelementptr i8, ptr %1, i64 240
-  %6 = load ptr, ptr %5, align 8                  ; 7 uses
-  %7 = load i8, ptr %6, align 1
-  br label %8
-
-8:                                                ; preds = %8, %4
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %8 ], [ 0, %4 ] ; 3 uses
-  %9 = getelementptr [20 x i8], ptr @dst_code, i64 %indvars.iv.i ; 3 uses
-  %10 = load i8, ptr %9, align 4
-  %.not.i = icmp eq i8 %10, %7
-  %.not8.i = icmp eq i64 %indvars.iv.i, 33
-  %or.cond.i = or i1 %.not8.i, %.not.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
-  br i1 %or.cond.i, label %dst_code_lookup.exit, label %8, !llvm.loop !8
-
-dst_code_lookup.exit:                             ; preds = %8
-  %11 = getelementptr i8, ptr %9, i64 1
-  %12 = load i8, ptr %11, align 1
-  store i8 %12, ptr %i.a, align 8
-  %13 = getelementptr i8, ptr %9, i64 4
-  %14 = load i32, ptr %13, align 4
-  %15 = getelementptr i8, ptr %6, i64 1
+dst_code_lookup.exit167:                          ; preds = %bb.b
+  %4 = getelementptr i8, ptr %1, i64 240
+  %5 = load ptr, ptr %4, align 8                  ; 7 uses
+  %6 = load i8, ptr %5, align 1
+  %7 = tail call fastcc ptr @dst_code_lookup(i8 noundef zeroext %6) ; 2 uses
+  %8 = getelementptr i8, ptr %7, i64 1
+  %9 = load i8, ptr %8, align 1
+  store i8 %9, ptr %i.a, align 8
+  %10 = getelementptr i8, ptr %7, i64 4
+  %11 = load i32, ptr %10, align 4
+  %i.m = and i32 %11, 1
+  %12 = getelementptr i8, ptr %5, i64 1
+  %13 = load i8, ptr %12, align 1
+  %14 = tail call fastcc ptr @dst_code_lookup(i8 noundef zeroext %13) ; 2 uses
+  %15 = getelementptr i8, ptr %14, i64 1
   %16 = load i8, ptr %15, align 1
-  br label %17
-
-17:                                               ; preds = %17, %dst_code_lookup.exit
-  %indvars.iv.i138 = phi i64 [ %indvars.iv.next.i142, %17 ], [ 0, %dst_code_lookup.exit ] ; 3 uses
-  %18 = getelementptr [20 x i8], ptr @dst_code, i64 %indvars.iv.i138 ; 3 uses
-  %19 = load i8, ptr %18, align 4
-  %.not.i139 = icmp eq i8 %19, %16
-  %.not8.i140 = icmp eq i64 %indvars.iv.i138, 33
-  %or.cond.i141 = or i1 %.not8.i140, %.not.i139
-  %indvars.iv.next.i142 = add nuw nsw i64 %indvars.iv.i138, 1
-  br i1 %or.cond.i141, label %dst_code_lookup.exit143, label %17, !llvm.loop !8
-
-dst_code_lookup.exit143:                          ; preds = %17
-  %20 = getelementptr i8, ptr %18, i64 1
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  store i8 %16, ptr %17, align 1
+  %18 = getelementptr i8, ptr %14, i64 4
+  %19 = load i32, ptr %18, align 4
+  %i.n = and i32 %19, 1
+  %20 = getelementptr i8, ptr %5, i64 2
   %21 = load i8, ptr %20, align 1
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %21, ptr %22, align 1
-  %23 = getelementptr i8, ptr %18, i64 4
-  %24 = load i32, ptr %23, align 4
-  %25 = getelementptr i8, ptr %6, i64 2
-  %26 = load i8, ptr %25, align 1
-  br label %27
-
-27:                                               ; preds = %27, %dst_code_lookup.exit143
-  %indvars.iv.i144 = phi i64 [ %indvars.iv.next.i148, %27 ], [ 0, %dst_code_lookup.exit143 ] ; 3 uses
-  %28 = getelementptr [20 x i8], ptr @dst_code, i64 %indvars.iv.i144 ; 3 uses
-  %29 = load i8, ptr %28, align 4
-  %.not.i145 = icmp eq i8 %29, %26
-  %.not8.i146 = icmp eq i64 %indvars.iv.i144, 33
-  %or.cond.i147 = or i1 %.not8.i146, %.not.i145
-  %indvars.iv.next.i148 = add nuw nsw i64 %indvars.iv.i144, 1
-  br i1 %or.cond.i147, label %dst_code_lookup.exit149, label %27, !llvm.loop !8
-
-dst_code_lookup.exit149:                          ; preds = %27
-  %30 = getelementptr i8, ptr %28, i64 1
-  %31 = load i8, ptr %30, align 1
-  %32 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %31, ptr %32, align 2
-  %33 = getelementptr i8, ptr %28, i64 4
-  %34 = load i32, ptr %33, align 4
-  %35 = getelementptr i8, ptr %6, i64 3
-  %36 = load i8, ptr %35, align 1
-  br label %37
-
-37:                                               ; preds = %37, %dst_code_lookup.exit149
-  %indvars.iv.i150 = phi i64 [ %indvars.iv.next.i154, %37 ], [ 0, %dst_code_lookup.exit149 ] ; 3 uses
-  %38 = getelementptr [20 x i8], ptr @dst_code, i64 %indvars.iv.i150 ; 3 uses
-  %39 = load i8, ptr %38, align 4
-  %.not.i151 = icmp eq i8 %39, %36
-  %.not8.i152 = icmp eq i64 %indvars.iv.i150, 33
-  %or.cond.i153 = or i1 %.not8.i152, %.not.i151
-  %indvars.iv.next.i154 = add nuw nsw i64 %indvars.iv.i150, 1
-  br i1 %or.cond.i153, label %dst_code_lookup.exit155, label %37, !llvm.loop !8
-
-dst_code_lookup.exit155:                          ; preds = %37
-  %40 = getelementptr i8, ptr %38, i64 1
-  %41 = load i8, ptr %40, align 1
-  %42 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %41, ptr %42, align 1
-  %43 = getelementptr i8, ptr %38, i64 8
-  %44 = load i8, ptr %43, align 4
-  %45 = getelementptr i8, ptr %6, i64 4
-  %46 = load i8, ptr %45, align 1
-  br label %47
-
-47:                                               ; preds = %47, %dst_code_lookup.exit155
-  %indvars.iv.i156 = phi i64 [ %indvars.iv.next.i160, %47 ], [ 0, %dst_code_lookup.exit155 ] ; 3 uses
-  %48 = getelementptr [20 x i8], ptr @dst_code, i64 %indvars.iv.i156 ; 3 uses
-  %49 = load i8, ptr %48, align 4
-  %.not.i157 = icmp eq i8 %49, %46
-  %.not8.i158 = icmp eq i64 %indvars.iv.i156, 33
-  %or.cond.i159 = or i1 %.not8.i158, %.not.i157
-  %indvars.iv.next.i160 = add nuw nsw i64 %indvars.iv.i156, 1
-  br i1 %or.cond.i159, label %dst_code_lookup.exit161, label %47, !llvm.loop !8
-
-dst_code_lookup.exit161:                          ; preds = %47
-  %50 = getelementptr i8, ptr %48, i64 1
-  %51 = load i8, ptr %50, align 1
-  %52 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %51, ptr %52, align 1
-  %53 = getelementptr i8, ptr %48, i64 12
-  %54 = load i32, ptr %53, align 4
-  %55 = getelementptr i8, ptr %6, i64 5
-  %56 = load i8, ptr %55, align 1
-  br label %57
-
-57:                                               ; preds = %57, %dst_code_lookup.exit161
-  %indvars.iv.i162 = phi i64 [ %indvars.iv.next.i166, %57 ], [ 0, %dst_code_lookup.exit161 ] ; 3 uses
-  %58 = getelementptr [20 x i8], ptr @dst_code, i64 %indvars.iv.i162 ; 3 uses
-  %59 = load i8, ptr %58, align 4
-  %.not.i163 = icmp eq i8 %59, %56
-  %.not8.i164 = icmp eq i64 %indvars.iv.i162, 33
-  %or.cond.i165 = or i1 %.not8.i164, %.not.i163
-  %indvars.iv.next.i166 = add nuw nsw i64 %indvars.iv.i162, 1
-  br i1 %or.cond.i165, label %dst_code_lookup.exit167, label %57, !llvm.loop !8
-
-dst_code_lookup.exit167:                          ; preds = %57
-  %i.m = and i32 %14, 1
-  %i.n = and i32 %24, 1
-  %i.o = and i32 %34, 1
-  %i.p = getelementptr i8, ptr %58, i64 1
+  %22 = tail call fastcc ptr @dst_code_lookup(i8 noundef zeroext %21) ; 2 uses
+  %23 = getelementptr i8, ptr %22, i64 1
+  %24 = load i8, ptr %23, align 1
+  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  store i8 %24, ptr %25, align 2
+  %26 = getelementptr i8, ptr %22, i64 4
+  %27 = load i32, ptr %26, align 4
+  %i.o = and i32 %27, 1
+  %28 = getelementptr i8, ptr %5, i64 3
+  %29 = load i8, ptr %28, align 1
+  %30 = tail call fastcc ptr @dst_code_lookup(i8 noundef zeroext %29) ; 2 uses
+  %31 = getelementptr i8, ptr %30, i64 1
+  %32 = load i8, ptr %31, align 1
+  %33 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  store i8 %32, ptr %33, align 1
+  %34 = getelementptr i8, ptr %30, i64 8
+  %35 = load i8, ptr %34, align 4
+  %36 = getelementptr i8, ptr %5, i64 4
+  %37 = load i8, ptr %36, align 1
+  %38 = tail call fastcc ptr @dst_code_lookup(i8 noundef zeroext %37) ; 2 uses
+  %39 = getelementptr i8, ptr %38, i64 1
+  %40 = load i8, ptr %39, align 1
+  %41 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  store i8 %40, ptr %41, align 1
+  %42 = getelementptr i8, ptr %38, i64 12
+  %43 = load i32, ptr %42, align 4
+  %44 = getelementptr i8, ptr %5, i64 5
+  %45 = load i8, ptr %44, align 1
+  %46 = tail call fastcc ptr @dst_code_lookup(i8 noundef zeroext %45) ; 2 uses
+  %i.p = getelementptr i8, ptr %46, i64 1
   %i.q = load i8, ptr %i.p, align 1
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   store i8 %i.q, ptr %i.r, align 2
-  %i.s = getelementptr i8, ptr %58, i64 16
+  %i.s = getelementptr i8, ptr %46, i64 16
   %i.t = load i8, ptr %i.s, align 4
-  %i.u = getelementptr i8, ptr %6, i64 6
+  %i.u = getelementptr i8, ptr %5, i64 6
   %i.v = load i8, ptr %i.u, align 1
   %i.w = lshr i8 %i.v, 1
   %i.x = and i8 %i.w, 15
-  %i.y = sext i8 %44 to i32
+  %i.y = sext i8 %35 to i32
   %i.z = sext i8 %i.t to i32
   %i.aa = zext nneg i8 %i.x to i32
   br label %bb.c
@@ -998,7 +929,7 @@ bb.c:                                             ; preds = %dst_code_lookup.exi
   %.0131 = phi i32 [ %i.n, %dst_code_lookup.exit167 ], [ 0, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.0130 = phi i32 [ %i.o, %dst_code_lookup.exit167 ], [ 0, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.0129 = phi i32 [ %i.y, %dst_code_lookup.exit167 ], [ 63, %bb.b ], [ 63, %bb.a ] ; 2 uses
-  %.0128 = phi i32 [ %54, %dst_code_lookup.exit167 ], [ 0, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %.0128 = phi i32 [ %43, %dst_code_lookup.exit167 ], [ 0, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.0127 = phi i32 [ %i.z, %dst_code_lookup.exit167 ], [ 63, %bb.b ], [ 63, %bb.a ] ; 2 uses
   %.0 = phi i32 [ %i.aa, %dst_code_lookup.exit167 ], [ 0, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.ab = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 4)
@@ -1101,7 +1032,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.sink.split, %bb.d, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %i.c
 }
 
@@ -1132,7 +1063,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = load i32, ptr @hf_aprs_sym_code, align 4
   %i.s = tail call ptr @proto_tree_add_item(ptr noundef %1, i32 noundef %i.r, ptr noundef %2, i32 noundef %i.p, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.t = add i32 %3, 19                           ; 8 uses
-  %i.u = load i8, ptr @gPREF_APRS_LAX, align 1, !range !9, !noundef !10
+  %i.u = load i8, ptr @gPREF_APRS_LAX, align 1, !range !8, !noundef !9
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %bb.c, label %.critedge
 
@@ -1264,7 +1195,7 @@ aprs_latitude_compressed.exit.thread:             ; preds = %bb.n
 bb.o:                                             ; preds = %bb.n
   %i.cf = add i32 %3, 1                           ; 2 uses
   %i.cg = load ptr, ptr %i.cd, align 8
-  %i.ch = tail call noalias dereferenceable_or_null(100) ptr @wmem_alloc(ptr noundef %i.cg, i64 noundef 100) #9 ; 2 uses
+  %i.ch = tail call noalias dereferenceable_or_null(100) ptr @wmem_alloc(ptr noundef %i.cg, i64 noundef 100) #10 ; 2 uses
   %i.ci = tail call zeroext i8 @tvb_get_uint8(ptr noundef %2, i32 noundef %i.cf)
   %i.cj = zext i8 %i.ci to i32
   %i.ck = add i32 %3, 2
@@ -1291,7 +1222,7 @@ bb.o:                                             ; preds = %bb.n
   %i.df = tail call ptr @proto_tree_add_string(ptr noundef nonnull %1, i32 noundef %i.de, ptr noundef %2, i32 noundef %i.cf, i32 noundef 4, ptr noundef %i.ch) ; 0 uses
   %i.dg = add i32 %3, 5                           ; 3 uses
   %i.dh = load ptr, ptr %i.cd, align 8
-  %i.di = tail call noalias dereferenceable_or_null(100) ptr @wmem_alloc(ptr noundef %i.dh, i64 noundef 100) #9 ; 2 uses
+  %i.di = tail call noalias dereferenceable_or_null(100) ptr @wmem_alloc(ptr noundef %i.dh, i64 noundef 100) #10 ; 2 uses
   %i.dj = tail call zeroext i8 @tvb_get_uint8(ptr noundef %2, i32 noundef %i.dg)
   %i.dk = zext i8 %i.dj to i32
   %i.dl = add i32 %3, 6
@@ -1361,7 +1292,7 @@ bb.r:                                             ; preds = %bb.q
   %i.fd = add nsw i32 %i.fc, -33
   %i.fe = sitofp i32 %i.fd to double
   %i.ff = fmul nnan double %i.fe, f0x3FB3B3B802BEEB94
-  %i.fg = tail call double @exp(double noundef %i.ff) #8
+  %i.fg = tail call double @exp(double noundef %i.ff) #9
   %i.fh = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.en, ptr noundef @.str.249, double noundef %i.fg)
   %i.fi = load i32, ptr %hf_aprs_msg_spd.sink.i, align 4
   %i.fj = tail call ptr @proto_tree_add_string(ptr noundef %i.er, i32 noundef %i.fi, ptr noundef %2, i32 noundef %i.fa, i32 noundef 1, ptr noundef %i.fh) ; 0 uses
@@ -1472,8 +1403,27 @@ declare ptr @proto_tree_add_string(ptr noundef, i32 noundef, ptr noundef, i32 no
 ; Function Attrs: null_pointer_is_valid allocsize(1)
 declare noalias ptr @wmem_alloc(ptr noundef, i64 noundef) local_unnamed_addr #3
 
+; Function Attrs: mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none) uwtable
+define internal fastcc noundef ptr @dst_code_lookup(i8 noundef zeroext %0) unnamed_addr #4 {
+  %switch.tableidx = add i8 %0, 126               ; 2 uses
+  %2 = icmp ult i8 %switch.tableidx, -15
+  br i1 %2, label %switch.lookup, label %.critedge
+
+switch.lookup:                                    ; preds = %1
+  %3 = zext i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.dst_code_lookup, i64 %3
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  br label %.critedge
+
+.critedge:                                        ; preds = %1, %switch.lookup
+  %.lcssa = phi i64 [ %switch.ext, %switch.lookup ], [ 33, %1 ]
+  %4 = getelementptr [20 x i8], ptr @dst_code, i64 %.lcssa
+  ret ptr %4
+}
+
 ; Function Attrs: nofree null_pointer_is_valid
-declare i32 @__snprintf_chk(ptr noundef, i64 noundef, i32 noundef, i64 noundef, ptr noundef, ...) local_unnamed_addr #4
+declare i32 @__snprintf_chk(ptr noundef, i64 noundef, i32 noundef, i64 noundef, ptr noundef, ...) local_unnamed_addr #5
 
 ; Function Attrs: null_pointer_is_valid
 declare void @col_append_str(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
@@ -1482,10 +1432,10 @@ declare void @col_append_str(ptr noundef, i32 noundef, ptr noundef) local_unname
 declare ptr @tvb_get_string_enc(ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(argmem: read)
-declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #5
+declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(errnomem: write)
-declare double @exp(double noundef) local_unnamed_addr #6
+declare double @exp(double noundef) local_unnamed_addr #7
 
 ; Function Attrs: null_pointer_is_valid
 declare noalias ptr @wmem_strdup_printf(ptr noundef, ptr noundef, ...) local_unnamed_addr #2
@@ -1497,12 +1447,13 @@ attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-widt
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nofree null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nounwind willreturn memory(read) }
-attributes #8 = { nounwind }
-attributes #9 = { allocsize(1) }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nofree null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nounwind willreturn memory(read) }
+attributes #9 = { nounwind }
+attributes #10 = { allocsize(1) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}
@@ -1513,9 +1464,8 @@ attributes #9 = { allocsize(1) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = !{!"llvm.loop.mustprogress"}
-!7 = distinct !{!7, !6}
-!8 = distinct !{!8, !6}
-!9 = !{i8 0, i8 2}
-!10 = !{}
+!6 = distinct !{!6, !7}
+!7 = !{!"llvm.loop.mustprogress"}
+!8 = !{i8 0, i8 2}
+!9 = !{}
 end_hunk_0

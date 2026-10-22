@@ -204,8 +204,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .lr.ph.i.a:                                       ; preds = %bb.f
   %i.r = zext nneg i32 %i.p to i64                ; 2 uses
   %i.s = getelementptr [20 x i8], ptr @get_empty_pcm_device.audio_idx, i64 %i.r ; 2 uses
-  %i.t = load i32, ptr %i.s, align 4
-  br label %bb.i
+  %i.t = load i32, ptr %i.s, align 4              ; 2 uses
+  %or.cond22.i = icmp ugt i32 %i.t, 7
+  br i1 %or.cond22.i, label %._crit_edge.i, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %i.u = load ptr, ptr %i.h, align 8
@@ -222,17 +223,17 @@ bb.h:                                             ; preds = %bb.i
   %or.cond.i = icmp ugt i32 %i.aa, 7
   br i1 %or.cond.i, label %._crit_edge.i, label %bb.i, !llvm.loop !66
 
-bb.i:                                             ; preds = %bb.h, %.lr.ph.i.a
-  %i.ab = phi i32 [ %i.t, %.lr.ph.i.a ], [ %i.aa, %bb.h ] ; 4 uses
-  %.023.i = phi i32 [ 0, %.lr.ph.i.a ], [ %i.x, %bb.h ]
+bb.i:                                             ; preds = %.lr.ph.i.a, %bb.h
+  %i.ab = phi i32 [ %i.aa, %bb.h ], [ %i.t, %.lr.ph.i.a ] ; 3 uses
+  %.023.i = phi i32 [ %i.x, %bb.h ], [ 0, %.lr.ph.i.a ]
   %i.ac = zext nneg i32 %i.ab to i64
   %i.ad = tail call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $2, $0", "=*m,={@ccc},Ir,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.f, i64 range(i64 0, 8) %i.ac, ptr elementtype(i64) %i.f) #22, !srcloc !68 ; 2 uses
   %i.ae = icmp ult i8 %i.ad, 2
   tail call void @llvm.assume(i1 %i.ae)
   %i.af = trunc nuw i8 %i.ad to i1
-  br i1 %i.af, label %bb.h, label %get_empty_pcm_device.exit
+  br i1 %i.af, label %bb.h, label %bb.j
 
-._crit_edge.i:                                    ; preds = %bb.h
+._crit_edge.i:                                    ; preds = %bb.h, %.lr.ph.i.a
   %i.ag = load ptr, ptr %i.h, align 8
   %i.ah = getelementptr i8, ptr %i.ag, i64 632
   %i.ai = load ptr, ptr %i.ah, align 8
@@ -245,16 +246,12 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i.a
   tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.an, ptr noundef @.str.41) #25
   br label %get_empty_pcm_device.exit.thread
 
-get_empty_pcm_device.exit:                        ; preds = %bb.i
-  %1 = icmp slt i32 %i.ab, 0
-  br i1 %1, label %get_empty_pcm_device.exit.thread, label %bb.j
-
-get_empty_pcm_device.exit.thread:                 ; preds = %._crit_edge.i, %bb.g, %get_empty_pcm_device.exit
+get_empty_pcm_device.exit.thread:                 ; preds = %bb.g, %._crit_edge.i
   %i.ao = getelementptr i8, ptr %.pn39, i64 -28
   store i32 -1, ptr %i.ao, align 4
   br label %bb.l
 
-bb.j:                                             ; preds = %get_empty_pcm_device.exit
+bb.j:                                             ; preds = %bb.i
   %i.ap = getelementptr i8, ptr %.pn39, i64 -28
   store i32 %i.ab, ptr %i.ap, align 4
   %i.aq = tail call i32 @snd_hda_attach_pcm_stream(ptr noundef %i.b, ptr noundef %0, ptr noundef %.02840) #21

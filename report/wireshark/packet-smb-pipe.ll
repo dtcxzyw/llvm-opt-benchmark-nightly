@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-smb-pipe?download=true
 inline.NumInlined: 28
 inline.NumDeleted: 7
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@dissect_pipe_smb:bb.a
   br i1 %i.ck, label %bb.ao, label %.critedge
 
@@ -204,11 +202,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.y, label %bb.g, label %bb.bj
 
 bb.g:                                             ; preds = %bb.f
-  %i.z = tail call zeroext i16 @tvb_get_letohs(ptr noundef nonnull %1, i32 noundef 0) ; 3 uses
+  %i.z = tail call zeroext i16 @tvb_get_letohs(ptr noundef nonnull %1, i32 noundef 0) ; 2 uses
   %i.aa = load ptr, ptr %i.q, align 8
   %i.ab = getelementptr i8, ptr %3, i64 416       ; 6 uses
   %i.ac = load ptr, ptr %i.ab, align 8
-  %i.ad = zext i16 %i.z to i32                    ; 2 uses
+  %i.ad = zext i16 %i.z to i32                    ; 3 uses
   %i.ae = tail call ptr @val_to_str_ext(ptr noundef %i.ac, i32 noundef %i.ad, ptr noundef @commands_ext, ptr noundef @.str.653)
   tail call void (ptr, i32, ptr, ...) @col_add_fstr(ptr noundef %i.aa, i32 noundef 25, ptr noundef @.str.652, ptr noundef %i.ae)
   %i.af = load i32, ptr @hf_function_code, align 4
@@ -294,62 +292,22 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.q, %bb.n
   %i.br = load i32, ptr %i.a, align 4
-  %6 = add i32 %i.br, %i.bd
-  switch i16 %i.z, label %7 [
-    i16 0, label %find_lanman.exit
-    i16 1, label %.fold.split.i
-    i16 13, label %.fold.split8.i
-    i16 56, label %.fold.split9.i
-    i16 59, label %.fold.split10.i
-    i16 91, label %.fold.split11.i
-    i16 104, label %.fold.split12.i
-    i16 63, label %.fold.split13.i
-    i16 132, label %.fold.split14.i
-    i16 133, label %.fold.split15.i
-    i16 214, label %.fold.split16.i
-    i16 215, label %.fold.split17.i
-  ]
+  br label %.fold.split17.i
 
-7:                                                ; preds = %bb.r
-  br label %find_lanman.exit
+.fold.split17.i:                                  ; preds = %.fold.split17.i, %bb.r
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.fold.split17.i ], [ 0, %bb.r ] ; 2 uses
+  %6 = getelementptr [104 x i8], ptr @lmd, i64 %indvars.iv.i ; 6 uses
+  %7 = load i32, ptr %6, align 8                  ; 2 uses
+  %.not.i = icmp eq i32 %7, -1
+  %8 = icmp eq i32 %7, %i.ad
+  %or.cond.i = or i1 %.not.i, %8
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  br i1 %or.cond.i, label %find_lanman.exit, label %.fold.split17.i, !llvm.loop !11
 
-.fold.split.i:                                    ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split8.i:                                   ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split9.i:                                   ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split10.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split11.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split12.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split13.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split14.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split15.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split16.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-.fold.split17.i:                                  ; preds = %bb.r
-  br label %find_lanman.exit
-
-find_lanman.exit:                                 ; preds = %bb.r, %7, %.fold.split.i, %.fold.split8.i, %.fold.split9.i, %.fold.split10.i, %.fold.split11.i, %.fold.split12.i, %.fold.split13.i, %.fold.split14.i, %.fold.split15.i, %.fold.split16.i, %.fold.split17.i
-  %.lcssa.i = phi ptr [ @lmd, %bb.r ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 1248), %7 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 520), %.fold.split11.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 1040), %.fold.split16.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 104), %.fold.split.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 728), %.fold.split13.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 208), %.fold.split8.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 936), %.fold.split15.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 312), %.fold.split9.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 624), %.fold.split12.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 416), %.fold.split10.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 832), %.fold.split14.i ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 1144), %.fold.split17.i ] ; 5 uses
+find_lanman.exit:                                 ; preds = %.fold.split17.i
+  %9 = add i32 %i.br, %i.bd
   %i.bs = load ptr, ptr %i.b, align 8
-  %i.bt = getelementptr i8, ptr %.lcssa.i, i64 8
+  %i.bt = getelementptr i8, ptr %6, i64 8
   %i.bu = load ptr, ptr %i.bt, align 8
   %i.bv = load ptr, ptr @g_ascii_table, align 8   ; 4 uses
   br label %bb.s
@@ -358,7 +316,7 @@ bb.s:                                             ; preds = %.backedge, %find_la
   %.0208 = phi i1 [ false, %find_lanman.exit ], [ %.0208.be, %.backedge ] ; 19 uses
   %.0145.i = phi ptr [ %i.bu, %find_lanman.exit ], [ %.0145.i.be, %.backedge ] ; 38 uses
   %.0143.i = phi ptr [ %i.bs, %find_lanman.exit ], [ %.0143.i.be, %.backedge ] ; 2 uses
-  %.0.i = phi i32 [ %6, %find_lanman.exit ], [ %.0.i.be, %.backedge ] ; 41 uses
+  %.0.i = phi i32 [ %9, %find_lanman.exit ], [ %.0.i.be, %.backedge ] ; 41 uses
   %i.bw = getelementptr i8, ptr %.0143.i, i64 1   ; 25 uses
   %i.bx = load i8, ptr %.0143.i, align 1
   switch i8 %i.bx, label %.backedge [
@@ -409,7 +367,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.v
   %i.cr = load ptr, ptr %.0145.i, align 8
   %i.cs = load i32, ptr %i.cr, align 4
-  %i.ct = call i32 %i.bz(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.cs, ptr noundef %5), !inline_history !11
+  %i.ct = call i32 %i.bz(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.cs, ptr noundef %5), !inline_history !12
   %i.cu = getelementptr i8, ptr %.0145.i, i64 24
   br label %.backedge
 
@@ -447,7 +405,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.aa
   %i.dn = load ptr, ptr %.0145.i, align 8
   %i.do = load i32, ptr %i.dn, align 4
-  %i.dp = call i32 %i.cw(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.do, ptr noundef %5), !inline_history !11
+  %i.dp = call i32 %i.cw(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.do, ptr noundef %5), !inline_history !12
   %i.dq = getelementptr i8, ptr %.0145.i, i64 24
   br label %.backedge
 
@@ -552,7 +510,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %.backedge
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.fk = call i32 %i.ew(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef %storemerge.i182.i, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.fa, ptr noundef %5), !inline_history !11
+  %i.fk = call i32 %i.ew(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef %storemerge.i182.i, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.fa, ptr noundef %5), !inline_history !12
   %i.fl = getelementptr i8, ptr %.0145.i, i64 24
   br label %.backedge
 
@@ -618,7 +576,7 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.aq
   %i.gr = load ptr, ptr %.0145.i, align 8
   %i.gs = load i32, ptr %i.gr, align 4
-  %i.gt = call i32 %i.fx(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.gs, ptr noundef %5), !inline_history !11
+  %i.gt = call i32 %i.fx(ptr noundef nonnull %1, i32 noundef %.0.i, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.gs, ptr noundef %5), !inline_history !12
   %i.gu = getelementptr i8, ptr %.0145.i, i64 24
   br label %.backedge
 
@@ -684,7 +642,7 @@ bb.ax:                                            ; preds = %bb.s
   %.0145.i.be = phi ptr [ %.0145.i, %bb.s ], [ %.0145.i, %bb.u ], [ %i.cu, %bb.x ], [ %i.cq, %bb.w ], [ %.0145.i, %bb.z ], [ %i.dq, %bb.ac ], [ %i.dm, %bb.ab ], [ %.0145.i, %add_bytes_param.exit.i ], [ %i.fl, %bb.ai ], [ %i.fj, %bb.ah ], [ %.0145.i, %bb.ak ], [ %i.fv, %bb.an ], [ %.0145.i, %bb.ap ], [ %i.gu, %bb.as ], [ %i.gq, %bb.ar ], [ %.0145.i, %get_count.exit172.i ], [ %.0145.i, %bb.av ], [ %.0145.i, %bb.aw ], [ %.0145.i, %bb.ax ]
   %.0143.i.be = phi ptr [ %i.bw, %bb.s ], [ %i.bw, %bb.u ], [ %i.bw, %bb.x ], [ %i.bw, %bb.w ], [ %i.bw, %bb.z ], [ %i.bw, %bb.ac ], [ %i.bw, %bb.ab ], [ %.011.i184187.i, %add_bytes_param.exit.i ], [ %.011.i183.i, %bb.ai ], [ %.011.i183.i, %bb.ah ], [ %i.bw, %bb.ak ], [ %i.bw, %bb.an ], [ %i.bw, %bb.ap ], [ %i.bw, %bb.as ], [ %i.bw, %bb.ar ], [ %.011.i171.i, %get_count.exit172.i ], [ %i.bw, %bb.av ], [ %i.bw, %bb.aw ], [ %i.bw, %bb.ax ]
   %.0.i.be = phi i32 [ %.0.i, %bb.s ], [ %i.cd, %bb.u ], [ %i.ct, %bb.x ], [ %i.cp, %bb.w ], [ %i.da, %bb.z ], [ %i.dp, %bb.ac ], [ %i.dl, %bb.ab ], [ %i.ev, %add_bytes_param.exit.i ], [ %i.fk, %bb.ai ], [ %i.fi, %bb.ah ], [ %.0.i, %bb.ak ], [ %.0.i, %bb.an ], [ %i.gc, %bb.ap ], [ %i.gt, %bb.as ], [ %i.gp, %bb.ar ], [ %i.hn, %get_count.exit172.i ], [ %i.hq, %bb.av ], [ %.0.i, %bb.aw ], [ %i.ht, %bb.ax ]
-  br label %bb.s, !llvm.loop !12
+  br label %bb.s, !llvm.loop !13
 
 dissect_request_parameters.exit:                  ; preds = %bb.s
   %i.hu = call i32 @tvb_reported_length_remaining(ptr noundef nonnull %1, i32 noundef %.0.i)
@@ -730,14 +688,14 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %.not166, label %bb.cp, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.ik = getelementptr i8, ptr %.lcssa.i, i64 16
+  %i.ik = getelementptr i8, ptr %6, i64 16
   %i.il = load ptr, ptr %i.ik, align 8            ; 2 uses
   %.not167 = icmp eq ptr %i.il, null
   br i1 %.not167, label %bb.bg, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   %i.im = call ptr %i.il(ptr noundef nonnull %2, ptr noundef %3, ptr noundef %.0146, i32 noundef 0) ; 2 uses
-  %i.in = getelementptr i8, ptr %.lcssa.i, i64 24
+  %i.in = getelementptr i8, ptr %6, i64 24
   %i.io = load ptr, ptr %i.in, align 8
   %i.ip = load i32, ptr %i.io, align 4
   %i.iq = call ptr @proto_item_add_subtree(ptr noundef %i.im, i32 noundef %i.ip)
@@ -747,7 +705,7 @@ bb.bg:                                            ; preds = %bb.be, %bb.bf
   %.0144 = phi ptr [ %i.im, %bb.bf ], [ null, %bb.be ] ; 2 uses
   %.0 = phi ptr [ %i.iq, %bb.bf ], [ %.0146, %bb.be ] ; 2 uses
   %i.ir = load ptr, ptr %i.c, align 8
-  %i.is = getelementptr i8, ptr %.lcssa.i, i64 32
+  %i.is = getelementptr i8, ptr %6, i64 32
   %i.it = load ptr, ptr %i.is, align 8
   %i.iu = call fastcc i32 @dissect_transact_data(ptr noundef %2, i32 noundef 0, i32 noundef -1, ptr noundef %3, ptr noundef %.0, ptr noundef %i.ir, ptr noundef %i.it, ptr noundef nonnull %i.e, ptr noundef %5) ; 2 uses
   %i.iv = load ptr, ptr %i.d, align 8
@@ -758,20 +716,20 @@ bb.bg:                                            ; preds = %bb.be, %bb.bf
   br i1 %or.cond215, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.bg
-  %i.iy = getelementptr i8, ptr %.lcssa.i, i64 40
+  %i.iy = getelementptr i8, ptr %6, i64 40
+  %10 = load ptr, ptr %i.iy, align 8
   br label %bb.bh
 
 bb.bh:                                            ; preds = %.lr.ph, %bb.bh
   %.0145212 = phi i32 [ 0, %.lr.ph ], [ %i.jb, %bb.bh ]
   %.0147211 = phi i32 [ %i.iu, %.lr.ph ], [ %i.ja, %bb.bh ]
   %i.iz = load ptr, ptr %i.d, align 8
-  %8 = load ptr, ptr %i.iy, align 8
-  %i.ja = call fastcc i32 @dissect_transact_data(ptr noundef %2, i32 noundef %.0147211, i32 noundef -1, ptr noundef %3, ptr noundef %.0, ptr noundef %i.iz, ptr noundef %8, ptr noundef null, ptr noundef %5) ; 2 uses
+  %i.ja = call fastcc i32 @dissect_transact_data(ptr noundef %2, i32 noundef %.0147211, i32 noundef -1, ptr noundef %3, ptr noundef %.0, ptr noundef %i.iz, ptr noundef %10, ptr noundef null, ptr noundef %5) ; 2 uses
   %i.jb = add nuw nsw i32 %.0145212, 1            ; 2 uses
   %i.jc = load i16, ptr %i.e, align 2
   %i.jd = zext i16 %i.jc to i32
   %i.je = icmp samesign ult i32 %i.jb, %i.jd
-  br i1 %i.je, label %bb.bh, label %.loopexit, !llvm.loop !13
+  br i1 %i.je, label %bb.bh, label %.loopexit, !llvm.loop !14
 
 .loopexit:                                        ; preds = %bb.bh, %bb.bg
   %.1 = phi i32 [ %i.iu, %bb.bg ], [ %i.ja, %bb.bh ]
@@ -825,59 +783,20 @@ bb.bn:                                            ; preds = %bb.bl, %bb.bk
   %i.ke = zext i16 %i.kd to i32
   %i.kf = tail call ptr @proto_tree_add_uint(ptr noundef %.0146, i32 noundef %i.kc, ptr noundef nonnull %1, i32 noundef 0, i32 noundef 0, i32 noundef %i.ke) ; 0 uses
   %i.kg = load i16, ptr %i.jy, align 2
-  switch i16 %i.kg, label %9 [
-    i16 0, label %find_lanman.exit184
-    i16 1, label %.fold.split.i183
-    i16 13, label %.fold.split8.i182
-    i16 56, label %.fold.split9.i181
-    i16 59, label %.fold.split10.i180
-    i16 91, label %.fold.split11.i179
-    i16 104, label %.fold.split12.i178
-    i16 63, label %.fold.split13.i177
-    i16 132, label %.fold.split14.i176
-    i16 133, label %.fold.split15.i175
-    i16 214, label %.fold.split16.i174
-    i16 215, label %.fold.split17.i172
-  ]
+  %11 = zext i16 %i.kg to i32
+  br label %.fold.split17.i172
 
-9:                                                ; preds = %bb.bn
-  br label %find_lanman.exit184
+.fold.split17.i172:                               ; preds = %.fold.split17.i172, %bb.bn
+  %indvars.iv.i172 = phi i64 [ %indvars.iv.next.i175, %.fold.split17.i172 ], [ 0, %bb.bn ] ; 2 uses
+  %12 = getelementptr [104 x i8], ptr @lmd, i64 %indvars.iv.i172 ; 3 uses
+  %13 = load i32, ptr %12, align 8                ; 2 uses
+  %.not.i173 = icmp eq i32 %13, -1
+  %14 = icmp eq i32 %13, %11
+  %or.cond.i174 = or i1 %.not.i173, %14
+  %indvars.iv.next.i175 = add nuw nsw i64 %indvars.iv.i172, 1
+  br i1 %or.cond.i174, label %find_lanman.exit184, label %.fold.split17.i172, !llvm.loop !11
 
-.fold.split.i183:                                 ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split8.i182:                                ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split9.i181:                                ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split10.i180:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split11.i179:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split12.i178:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split13.i177:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split14.i176:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split15.i175:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split16.i174:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-.fold.split17.i172:                               ; preds = %bb.bn
-  br label %find_lanman.exit184
-
-find_lanman.exit184:                              ; preds = %bb.bn, %9, %.fold.split.i183, %.fold.split8.i182, %.fold.split9.i181, %.fold.split10.i180, %.fold.split11.i179, %.fold.split12.i178, %.fold.split13.i177, %.fold.split14.i176, %.fold.split15.i175, %.fold.split16.i174, %.fold.split17.i172
-  %.lcssa.i173 = phi ptr [ @lmd, %bb.bn ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 1248), %9 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 520), %.fold.split11.i179 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 1040), %.fold.split16.i174 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 104), %.fold.split.i183 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 728), %.fold.split13.i177 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 208), %.fold.split8.i182 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 936), %.fold.split15.i175 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 312), %.fold.split9.i181 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 624), %.fold.split12.i178 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 416), %.fold.split10.i180 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 832), %.fold.split14.i176 ], [ getelementptr inbounds nuw (i8, ptr @lmd, i64 1144), %.fold.split17.i172 ] ; 2 uses
+find_lanman.exit184:                              ; preds = %.fold.split17.i172
   %i.kh = tail call zeroext i16 @tvb_get_letohs(ptr noundef nonnull %1, i32 noundef 0)
   %i.ki = load i32, ptr @hf_status, align 4
   %i.kj = zext i16 %i.kh to i32
@@ -908,7 +827,7 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.cp
 
 bb.br:                                            ; preds = %find_lanman.exit184
-  %i.kx = getelementptr i8, ptr %.lcssa.i173, i64 48
+  %i.kx = getelementptr i8, ptr %12, i64 48
   %i.ky = load ptr, ptr %i.kx, align 8
   %i.kz = load ptr, ptr @g_ascii_table, align 8   ; 2 uses
   br label %bb.bs
@@ -1035,7 +954,7 @@ bb.by:                                            ; preds = %bb.bx
   br label %.backedge241
 
 bb.bz:                                            ; preds = %bb.bx
-  %i.mv = tail call i32 %i.mh(ptr noundef nonnull %1, i32 noundef %.0.i185, i32 noundef %storemerge.i117.i, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.ml, ptr noundef %5), !inline_history !14
+  %i.mv = tail call i32 %i.mh(ptr noundef nonnull %1, i32 noundef %.0.i185, i32 noundef %storemerge.i117.i, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.ml, ptr noundef %5), !inline_history !15
   %i.mw = getelementptr i8, ptr %.098.i, i64 24
   br label %.backedge241
 
@@ -1074,7 +993,7 @@ bb.cd:                                            ; preds = %bb.cc
 bb.ce:                                            ; preds = %bb.cc
   %i.nq = load ptr, ptr %.098.i, align 8
   %i.nr = load i32, ptr %i.nq, align 4
-  %i.ns = tail call i32 %i.my(ptr noundef nonnull %1, i32 noundef %.0.i185, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.nr, ptr noundef %5), !inline_history !14
+  %i.ns = tail call i32 %i.my(ptr noundef nonnull %1, i32 noundef %.0.i185, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.nr, ptr noundef %5), !inline_history !15
   %i.nt = getelementptr i8, ptr %.098.i, i64 24
   br label %.backedge241
 
@@ -1112,7 +1031,7 @@ bb.ci:                                            ; preds = %bb.ch
 bb.cj:                                            ; preds = %bb.ch
   %i.om = load ptr, ptr %.098.i, align 8
   %i.on = load i32, ptr %i.om, align 4
-  %i.oo = tail call i32 %i.nv(ptr noundef nonnull %1, i32 noundef %.0.i185, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.on, ptr noundef %5), !inline_history !14
+  %i.oo = tail call i32 %i.nv(ptr noundef nonnull %1, i32 noundef %.0.i185, i32 noundef 0, ptr noundef %3, ptr noundef %.0146, i32 noundef 0, i32 noundef %i.on, ptr noundef %5), !inline_history !15
   %i.op = getelementptr i8, ptr %.098.i, i64 24
   br label %.backedge241
 
@@ -1131,7 +1050,7 @@ bb.ck:                                            ; preds = %bb.bs
   %.098.i.be = phi ptr [ %.098.i, %bb.bs ], [ %.098.i, %bb.bt ], [ %.098.i, %add_bytes_param.exit.i199 ], [ %i.mw, %bb.bz ], [ %i.mu, %bb.by ], [ %.098.i, %bb.cb ], [ %i.nt, %bb.ce ], [ %i.np, %bb.cd ], [ %.098.i, %bb.cg ], [ %i.op, %bb.cj ], [ %i.ol, %bb.ci ], [ %.098.i, %bb.ck ]
   %.096.i.be = phi ptr [ %i.la, %bb.bs ], [ %i.la, %bb.bt ], [ %.011.i119122.i, %add_bytes_param.exit.i199 ], [ %.011.i118.i, %bb.bz ], [ %.011.i118.i, %bb.by ], [ %i.la, %bb.cb ], [ %i.la, %bb.ce ], [ %i.la, %bb.cd ], [ %i.la, %bb.cg ], [ %i.la, %bb.cj ], [ %i.la, %bb.ci ], [ %i.la, %bb.ck ]
   %.0.i185.be = phi i32 [ %.0.i185, %bb.bs ], [ %.0.i185, %bb.bt ], [ %i.mg, %add_bytes_param.exit.i199 ], [ %i.mv, %bb.bz ], [ %i.mt, %bb.by ], [ %i.nc, %bb.cb ], [ %i.ns, %bb.ce ], [ %i.no, %bb.cd ], [ %i.nz, %bb.cg ], [ %i.oo, %bb.cj ], [ %i.ok, %bb.ci ], [ %i.ou, %bb.ck ]
-  br label %bb.bs, !llvm.loop !15
+  br label %bb.bs, !llvm.loop !16
 
 dissect_response_parameters.exit:                 ; preds = %bb.bs
   %.not156 = icmp eq ptr %2, null
@@ -1146,7 +1065,7 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %.2, label %bb.cn, label %bb.co
 
 bb.cn:                                            ; preds = %bb.cm
-  tail call fastcc void @dissect_response_data(ptr noundef %2, ptr noundef %3, i32 noundef %i.km, ptr noundef %.0146, ptr noundef %5, ptr noundef %.lcssa.i173, i1 noundef zeroext %.0206, i16 noundef zeroext %.0204)
+  tail call fastcc void @dissect_response_data(ptr noundef %2, ptr noundef %3, i32 noundef %i.km, ptr noundef %.0146, ptr noundef %5, ptr noundef %12, i1 noundef zeroext %.0206, i16 noundef zeroext %.0204)
   br label %bb.cp
 
 bb.co:                                            ; preds = %bb.cm
@@ -1261,7 +1180,7 @@ bb.d:                                             ; preds = %.backedge, %bb.c
   %.0182.be = phi ptr [ %.0182, %bb.d ], [ %.0182, %bb.g ], [ %i.am, %bb.j ], [ %i.ai, %bb.i ], [ %.0182, %bb.m ], [ %i.bu, %bb.p ], [ %i.bq, %bb.o ], [ %.0182, %add_bytes_param.exit ], [ %i.dp, %bb.v ], [ %i.dn, %bb.u ], [ %.0182, %bb.x ], [ %i.dz, %bb.aa ], [ %.0182, %bb.ac ], [ %i.fb, %bb.ah ], [ %i.ex, %get_stringz_pointer_value.exit ], [ %.0182, %add_bytes_pointer_param.exit ], [ %i.gw, %bb.ap ], [ %i.gs, %bb.ao ], [ %.0182, %bb.aq ], [ %.0182, %bb.ar ]
   %.0180.be = phi ptr [ %i.c, %bb.d ], [ %.011.i, %bb.g ], [ %.011.i, %bb.j ], [ %.011.i, %bb.i ], [ %.011.i214, %bb.m ], [ %.011.i214, %bb.p ], [ %.011.i214, %bb.o ], [ %.011.i225257260, %add_bytes_param.exit ], [ %.011.i225256, %bb.v ], [ %.011.i225256, %bb.u ], [ %i.c, %bb.x ], [ %i.c, %bb.aa ], [ %i.c, %bb.ac ], [ %i.c, %bb.ah ], [ %i.c, %get_stringz_pointer_value.exit ], [ %.011.i237, %add_bytes_pointer_param.exit ], [ %.011.i237, %bb.ap ], [ %.011.i237, %bb.ao ], [ %i.c, %bb.aq ], [ %i.c, %bb.ar ]
   %.0.be = phi i32 [ %.0, %bb.d ], [ %i.v, %bb.g ], [ %i.al, %bb.j ], [ %i.ah, %bb.i ], [ %i.be, %bb.m ], [ %i.bt, %bb.p ], [ %i.bp, %bb.o ], [ %i.cz, %add_bytes_param.exit ], [ %i.do, %bb.v ], [ %i.dm, %bb.u ], [ %.0, %bb.x ], [ %.0, %bb.aa ], [ %i.ed, %bb.ac ], [ %i.fa, %bb.ah ], [ %i.eo, %get_stringz_pointer_value.exit ], [ %i.gc, %add_bytes_pointer_param.exit ], [ %i.gv, %bb.ap ], [ %i.gi, %bb.ao ], [ %i.hb, %bb.aq ], [ %i.hb, %bb.ar ]
-  br label %bb.d, !llvm.loop !16
+  br label %bb.d, !llvm.loop !17
 
 bb.e:                                             ; preds = %bb.d
   %i.e = load i8, ptr %i.c, align 1               ; 3 uses
@@ -1664,7 +1583,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr i8, ptr %.07087, i64 16    ; 3 uses
   %i.o = load i32, ptr %i.n, align 8              ; 2 uses
   %.not = icmp eq i32 %i.o, -1
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !17
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b, %bb.a
   %.070.lcssa = phi ptr [ %i.h, %bb.a ], [ %.07087, %bb.b ], [ %i.n, %bb.c ]
@@ -1743,7 +1662,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph96.spl
   %i.av = load i16, ptr %i.b, align 2
   %i.aw = zext i16 %i.av to i32
   %i.ax = icmp samesign ult i32 %i.au, %i.aw
-  br i1 %i.ax, label %.lr.ph92.us, label %.loopexit.us, !llvm.loop !18
+  br i1 %i.ax, label %.lr.ph92.us, label %.loopexit.us, !llvm.loop !19
 
 .loopexit.us:                                     ; preds = %.lr.ph92.us, %bb.g
   %.2.us = phi i32 [ %i.an, %bb.g ], [ %i.at, %.lr.ph92.us ] ; 3 uses
@@ -1758,7 +1677,7 @@ bb.h:                                             ; preds = %.loopexit.us
 bb.i:                                             ; preds = %bb.h, %.loopexit.us
   %i.az = add nuw nsw i32 %.06495.us, 1           ; 2 uses
   %exitcond107.not = icmp eq i32 %i.az, %i.ac
-  br i1 %exitcond107.not, label %.loopexit85, label %.lr.ph96.split.us, !llvm.loop !19
+  br i1 %exitcond107.not, label %.loopexit85, label %.lr.ph96.split.us, !llvm.loop !20
 
 bb.j:                                             ; preds = %bb.e
   br i1 %6, label %bb.k, label %bb.m
@@ -1803,13 +1722,13 @@ bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
   %i.bn = load i16, ptr %i.b, align 2
   %i.bo = zext i16 %i.bn to i32
   %i.bp = icmp samesign ult i32 %i.bm, %i.bo
-  br i1 %i.bp, label %.lr.ph92, label %.loopexit, !llvm.loop !18
+  br i1 %i.bp, label %.lr.ph92, label %.loopexit, !llvm.loop !19
 
 .loopexit:                                        ; preds = %.lr.ph92, %.lr.ph96.split
   %.2 = phi i32 [ %i.bf, %.lr.ph96.split ], [ %i.bl, %.lr.ph92 ] ; 2 uses
   %i.bq = add nuw nsw i32 %.06495, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.bq, %i.ac
-  br i1 %exitcond.not, label %.loopexit85, label %.lr.ph96.split, !llvm.loop !19
+  br i1 %exitcond.not, label %.loopexit85, label %.lr.ph96.split, !llvm.loop !20
 
 .loopexit85:                                      ; preds = %.loopexit, %bb.i, %.preheader84, %bb.n
   %.3 = phi i32 [ %i.bd, %bb.n ], [ 0, %.preheader84 ], [ %.2.us, %bb.i ], [ %.2, %.loopexit ]
@@ -2212,13 +2131,14 @@ attributes #11 = { noreturn }
 !8 = !{}
 !9 = !{!"llvm.loop.mustprogress"}
 !10 = distinct !{!10, !9}
-!11 = distinct !{null}
-!12 = distinct !{!12, !9}
+!11 = distinct !{!11, !9}
+!12 = distinct !{null}
 !13 = distinct !{!13, !9}
-!14 = distinct !{null}
-!15 = distinct !{!15, !9}
+!14 = distinct !{!14, !9}
+!15 = distinct !{null}
 !16 = distinct !{!16, !9}
 !17 = distinct !{!17, !9}
 !18 = distinct !{!18, !9}
 !19 = distinct !{!19, !9}
+!20 = distinct !{!20, !9}
 end_hunk_2

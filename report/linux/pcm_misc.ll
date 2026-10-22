@@ -48,57 +48,44 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 define dso_local range(i32 -22, 128) i32 @snd_pcm_format_signed(i32 noundef %0) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp ult i32 %0, 53
-  br i1 %i.a, label %1, label %bb.c
+  br i1 %i.a, label %bb.b, label %bb.c
 
-1:                                                ; preds = %bb.a
-  %2 = zext nneg i32 %0 to i64                    ; 2 uses
-  %3 = shl nuw nsw i64 1, %2
-  %4 = and i64 %3, 263884971687936
-  %.not = icmp eq i64 %4, 0
-  br i1 %.not, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %1
-  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %2
+bb.b:                                             ; preds = %bb.a
+  %1 = zext nneg i32 %0 to i64
+  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %1
   %i.c = getelementptr i8, ptr %i.b, i64 3
-  %i.d = load i8, ptr %i.c, align 1
-  %i.e = sext i8 %i.d to i32
+  %i.d = load i8, ptr %i.c, align 1               ; 2 uses
+  %2 = icmp slt i8 %i.d, 0
+  %narrow = select i1 %2, i8 -22, i8 %i.d
+  %i.e = sext i8 %narrow to i32
   br label %bb.c
 
-bb.c:                                             ; preds = %1, %bb.a, %bb.b
-  %.0 = phi i32 [ -22, %bb.a ], [ %i.e, %bb.b ], [ -22, %1 ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi i32 [ -22, %bb.a ], [ %i.e, %bb.b ]
   ret i32 %.0
 }
 
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none)
-define dso_local range(i32 -128, 2) i32 @snd_pcm_format_unsigned(i32 noundef %0) #0 align 16 prefalign(16) {
+define dso_local range(i32 -22, 2) i32 @snd_pcm_format_unsigned(i32 noundef %0) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp ult i32 %0, 53
-  br i1 %i.a, label %1, label %snd_pcm_format_signed.exit.thread
+  br i1 %i.a, label %snd_pcm_format_signed.exit, label %snd_pcm_format_signed.exit.thread
 
-1:                                                ; preds = %bb.a
-  %2 = zext nneg i32 %0 to i64                    ; 4 uses
-  %3 = shl nuw nsw i64 1, %2
-  %4 = and i64 %3, 263884971687936
-  %.not.i = icmp eq i64 %4, 0
-  br i1 %.not.i, label %snd_pcm_format_signed.exit, label %snd_pcm_format_signed.exit.thread
-
-snd_pcm_format_signed.exit:                       ; preds = %1
-  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %2
+snd_pcm_format_signed.exit:                       ; preds = %bb.a
+  %1 = zext nneg i32 %0 to i64
+  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %1
   %i.c = getelementptr i8, ptr %i.b, i64 3
   %i.d = load i8, ptr %i.c, align 1
-  %5 = sext i8 %i.d to i32
-  %6 = lshr i64 263884971687936, %2
-  %.fr = freeze i64 %6
-  %7 = trunc i64 %.fr to i1
-  %8 = lshr i64 8739796604171058, %2
-  %.not = trunc i64 %8 to i32
-  %9 = and i32 %.not, 1
-  %spec.select = select i1 %7, i32 %5, i32 %9
+  %.fr = freeze i8 %i.d                           ; 2 uses
+  %2 = icmp sgt i8 %.fr, -1
+  %.not10 = icmp eq i8 %.fr, 0
+  %3 = zext i1 %.not10 to i32
+  %spec.select = select i1 %2, i32 %3, i32 -22
   br label %snd_pcm_format_signed.exit.thread
 
-snd_pcm_format_signed.exit.thread:                ; preds = %snd_pcm_format_signed.exit, %1, %bb.a
-  %10 = phi i32 [ %spec.select, %snd_pcm_format_signed.exit ], [ -22, %1 ], [ -22, %bb.a ]
-  ret i32 %10
+snd_pcm_format_signed.exit.thread:                ; preds = %snd_pcm_format_signed.exit, %bb.a
+  %4 = phi i32 [ %spec.select, %snd_pcm_format_signed.exit ], [ -22, %bb.a ]
+  ret i32 %4
 }
 
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none)
@@ -108,20 +95,16 @@ bb.a:
   br i1 %i.a, label %bb.b, label %snd_pcm_format_signed.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %0 to i64                  ; 2 uses
-  %1 = shl nuw nsw i64 1, %i.b
-  %2 = and i64 %1, 263884971687936
-  %.not.i = icmp eq i64 %2, 0
-  br i1 %.not.i, label %3, label %snd_pcm_format_signed.exit
-
-3:                                                ; preds = %bb.b
-  %4 = lshr i64 8743314283053055, %i.b
-  %5 = trunc i64 %4 to i32
-  %6 = and i32 %5, 1
+  %i.b = zext nneg i32 %0 to i64
+  %1 = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.b
+  %2 = getelementptr i8, ptr %1, i64 3
+  %3 = load i8, ptr %2, align 1
+  %4 = icmp sgt i8 %3, -1
+  %5 = zext i1 %4 to i32
   br label %snd_pcm_format_signed.exit
 
-snd_pcm_format_signed.exit:                       ; preds = %bb.a, %bb.b, %3
-  %.0.i = phi i32 [ 0, %bb.a ], [ %6, %3 ], [ 0, %bb.b ]
+snd_pcm_format_signed.exit:                       ; preds = %bb.a, %bb.b
+  %.0.i = phi i32 [ 0, %bb.a ], [ %5, %bb.b ]
   ret i32 %.0.i
 }
 
@@ -129,57 +112,44 @@ snd_pcm_format_signed.exit:                       ; preds = %bb.a, %bb.b, %3
 define dso_local range(i32 -22, 128) i32 @snd_pcm_format_little_endian(i32 noundef %0) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp ult i32 %0, 53
-  br i1 %i.a, label %1, label %bb.c
+  br i1 %i.a, label %bb.b, label %bb.c
 
-1:                                                ; preds = %bb.a
-  %2 = zext nneg i32 %0 to i64                    ; 2 uses
-  %3 = shl nuw nsw i64 1, %2
-  %4 = and i64 %3, 263884970655747
-  %.not = icmp eq i64 %4, 0
-  br i1 %.not, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %1
-  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %2
+bb.b:                                             ; preds = %bb.a
+  %1 = zext nneg i32 %0 to i64
+  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %1
   %i.c = getelementptr i8, ptr %i.b, i64 2
-  %i.d = load i8, ptr %i.c, align 2
-  %i.e = sext i8 %i.d to i32
+  %i.d = load i8, ptr %i.c, align 2               ; 2 uses
+  %2 = icmp slt i8 %i.d, 0
+  %narrow = select i1 %2, i8 -22, i8 %i.d
+  %i.e = sext i8 %narrow to i32
   br label %bb.c
 
-bb.c:                                             ; preds = %1, %bb.a, %bb.b
-  %.0 = phi i32 [ -22, %bb.a ], [ %i.e, %bb.b ], [ -22, %1 ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi i32 [ -22, %bb.a ], [ %i.e, %bb.b ]
   ret i32 %.0
 }
 
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none)
-define dso_local range(i32 -128, 2) i32 @snd_pcm_format_big_endian(i32 noundef %0) #0 align 16 prefalign(16) {
+define dso_local range(i32 -22, 2) i32 @snd_pcm_format_big_endian(i32 noundef %0) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp ult i32 %0, 53
-  br i1 %i.a, label %1, label %snd_pcm_format_little_endian.exit.thread
+  br i1 %i.a, label %snd_pcm_format_little_endian.exit, label %snd_pcm_format_little_endian.exit.thread
 
-1:                                                ; preds = %bb.a
-  %2 = zext nneg i32 %0 to i64                    ; 4 uses
-  %3 = shl nuw nsw i64 1, %2
-  %4 = and i64 %3, 263884970655747
-  %.not.i = icmp eq i64 %4, 0
-  br i1 %.not.i, label %snd_pcm_format_little_endian.exit, label %snd_pcm_format_little_endian.exit.thread
-
-snd_pcm_format_little_endian.exit:                ; preds = %1
-  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %2
+snd_pcm_format_little_endian.exit:                ; preds = %bb.a
+  %1 = zext nneg i32 %0 to i64
+  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %1
   %i.c = getelementptr i8, ptr %i.b, i64 2
   %i.d = load i8, ptr %i.c, align 2
-  %5 = sext i8 %i.d to i32
-  %6 = lshr i64 263884970655747, %2
-  %.fr = freeze i64 %6
-  %7 = trunc i64 %.fr to i1
-  %8 = lshr i64 6767126648629928, %2
-  %.not = trunc i64 %8 to i32
-  %9 = and i32 %.not, 1
-  %spec.select = select i1 %7, i32 %5, i32 %9
+  %.fr = freeze i8 %i.d                           ; 2 uses
+  %2 = icmp sgt i8 %.fr, -1
+  %.not10 = icmp eq i8 %.fr, 0
+  %3 = zext i1 %.not10 to i32
+  %spec.select = select i1 %2, i32 %3, i32 -22
   br label %snd_pcm_format_little_endian.exit.thread
 
-snd_pcm_format_little_endian.exit.thread:         ; preds = %snd_pcm_format_little_endian.exit, %1, %bb.a
-  %10 = phi i32 [ %spec.select, %snd_pcm_format_little_endian.exit ], [ -22, %1 ], [ -22, %bb.a ]
-  ret i32 %10
+snd_pcm_format_little_endian.exit.thread:         ; preds = %snd_pcm_format_little_endian.exit, %bb.a
+  %4 = phi i32 [ %spec.select, %snd_pcm_format_little_endian.exit ], [ -22, %bb.a ]
+  ret i32 %4
 }
 
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none)
@@ -189,20 +159,16 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %0 to i64                  ; 2 uses
-  %1 = shl nuw nsw i64 1, %i.b
-  %2 = and i64 %1, 3783262208
-  %.not.not = icmp eq i64 %2, 0
-  br i1 %.not.not, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  %4 = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.b
-  %5 = load i8, ptr %4, align 4
-  %6 = zext i8 %5 to i32
+  %i.b = zext nneg i32 %0 to i64
+  %1 = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.b
+  %2 = load i8, ptr %1, align 4                   ; 2 uses
+  %.not.not = icmp eq i8 %2, 0
+  %3 = zext i8 %2 to i32
+  %spec.select = select i1 %.not.not, i32 -22, i32 %3
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a, %3
-  %.0 = phi i32 [ %6, %3 ], [ -22, %bb.a ], [ -22, %bb.b ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi i32 [ %spec.select, %bb.b ], [ -22, %bb.a ]
   ret i32 %.0
 }
 
@@ -210,24 +176,20 @@ bb.c:                                             ; preds = %bb.b, %bb.a, %3
 define dso_local range(i32 -22, 256) i32 @snd_pcm_format_physical_width(i32 noundef %0) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp ult i32 %0, 53
-  br i1 %i.a, label %1, label %bb.c
+  br i1 %i.a, label %bb.b, label %bb.c
 
-1:                                                ; preds = %bb.a
-  %2 = zext nneg i32 %0 to i64                    ; 2 uses
-  %3 = shl nuw nsw i64 1, %2
-  %4 = and i64 %3, 3783262208
-  %.not.not = icmp eq i64 %4, 0
-  br i1 %.not.not, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %1
-  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %2
+bb.b:                                             ; preds = %bb.a
+  %1 = zext nneg i32 %0 to i64
+  %i.b = getelementptr [12 x i8], ptr @pcm_formats, i64 %1
   %i.c = getelementptr i8, ptr %i.b, i64 1
-  %i.d = load i8, ptr %i.c, align 1
+  %i.d = load i8, ptr %i.c, align 1               ; 2 uses
+  %.not = icmp eq i8 %i.d, 0
   %i.e = zext i8 %i.d to i32
+  %spec.select = select i1 %.not, i32 -22, i32 %i.e
   br label %bb.c
 
-bb.c:                                             ; preds = %1, %bb.a, %bb.b
-  %.0 = phi i32 [ %i.e, %bb.b ], [ -22, %bb.a ], [ -22, %1 ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi i32 [ %spec.select, %bb.b ], [ -22, %bb.a ]
   ret i32 %.0
 }
 
@@ -238,23 +200,21 @@ bb.a:
   br i1 %i.a, label %bb.b, label %snd_pcm_format_physical_width.exit.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %0 to i64                  ; 2 uses
-  %2 = shl nuw nsw i64 1, %i.b
-  %3 = and i64 %2, 3783262208
-  %.not.not.i = icmp eq i64 %3, 0
-  br i1 %.not.not.i, label %snd_pcm_format_physical_width.exit, label %snd_pcm_format_physical_width.exit.thread
+  %i.b = zext nneg i32 %0 to i64
+  %2 = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.b
+  %3 = getelementptr i8, ptr %2, i64 1
+  %4 = load i8, ptr %3, align 1                   ; 2 uses
+  %.not.not.i = icmp eq i8 %4, 0
+  br i1 %.not.not.i, label %snd_pcm_format_physical_width.exit.thread, label %snd_pcm_format_physical_width.exit
 
 snd_pcm_format_physical_width.exit:               ; preds = %bb.b
-  %4 = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.b
-  %5 = getelementptr i8, ptr %4, i64 1
-  %6 = load i8, ptr %5, align 1
-  %i.c = zext i8 %6 to i64
+  %i.c = zext i8 %4 to i64
   %i.d = mul i64 %1, %i.c
   %i.e = lshr i64 %i.d, 3
   br label %snd_pcm_format_physical_width.exit.thread
 
-snd_pcm_format_physical_width.exit.thread:        ; preds = %bb.a, %bb.b, %snd_pcm_format_physical_width.exit
-  %i.f = phi i64 [ %i.e, %snd_pcm_format_physical_width.exit ], [ -22, %bb.b ], [ -22, %bb.a ]
+snd_pcm_format_physical_width.exit.thread:        ; preds = %bb.b, %bb.a, %snd_pcm_format_physical_width.exit
+  %i.f = phi i64 [ %i.e, %snd_pcm_format_physical_width.exit ], [ -22, %bb.a ], [ -22, %bb.b ]
   ret i64 %i.f
 }
 
@@ -265,19 +225,17 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %0 to i64                  ; 2 uses
-  %1 = shl nuw nsw i64 1, %i.b
-  %2 = and i64 %1, 3783262208
-  %.not.not = icmp eq i64 %2, 0
-  br i1 %.not.not, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  %4 = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.b
-  %5 = getelementptr i8, ptr %4, i64 4
+  %i.b = zext nneg i32 %0 to i64
+  %1 = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.b ; 2 uses
+  %2 = getelementptr i8, ptr %1, i64 1
+  %3 = load i8, ptr %2, align 1
+  %.not.not = icmp eq i8 %3, 0
+  %4 = getelementptr i8, ptr %1, i64 4
+  %spec.select = select i1 %.not.not, ptr null, ptr %4
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a, %3
-  %.0 = phi ptr [ %5, %3 ], [ null, %bb.a ], [ null, %bb.b ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi ptr [ %spec.select, %bb.b ], [ null, %bb.a ]
   ret ptr %.0
 }
 
@@ -292,23 +250,21 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = zext nneg i32 %0 to i64                  ; 4 uses
-  %i.d = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.c ; 2 uses
+  %i.c = zext nneg i32 %0 to i64
+  %i.d = getelementptr [12 x i8], ptr @pcm_formats, i64 %i.c ; 3 uses
   %i.e = getelementptr i8, ptr %i.d, i64 1
-  %i.f = load i8, ptr %i.e, align 1
+  %i.f = load i8, ptr %i.e, align 1               ; 3 uses
   %i.g = zext i8 %i.f to i32                      ; 2 uses
-  %3 = shl nuw nsw i64 1, %i.c
-  %4 = and i64 %3, 3783262208
-  %.not.not = icmp eq i64 %4, 0
-  br i1 %.not.not, label %bb.d, label %.loopexit
+  %.not.not = icmp eq i8 %i.f, 0
+  br i1 %.not.not, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr i8, ptr %i.d, i64 4        ; 9 uses
-  %5 = lshr i64 3517678881997, %i.c
-  %6 = trunc i64 %5 to i1
-  %7 = lshr i64 545361557979139, %i.c
-  %8 = trunc i64 %7 to i1
-  %or.cond = select i1 %6, i1 true, i1 %8
+  %3 = getelementptr i8, ptr %i.d, i64 3
+  %4 = load i8, ptr %3, align 1
+  %5 = icmp eq i8 %4, 1
+  %6 = icmp ult i8 %i.f, 9
+  %or.cond = or i1 %6, %5
   br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
