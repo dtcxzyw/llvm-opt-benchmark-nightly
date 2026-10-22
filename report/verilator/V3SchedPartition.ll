@@ -1,0 +1,1174 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/verilator/original/V3SchedPartition?download=true
+inline.NumInlined: 1533
+inline.NumDeleted: 690
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumUnrolled: 10
+begin_hunk_0
+$_ZN7V3Sched12LogicByScope3addEP8AstScopeP10AstSenTreeP7AstNode = comdat any
+
+$_ZNK9AstActive6stmtspEv = comdat any
+
+$_ZNK7AstNode5nextpEv = comdat any
+
+$_ZN7AstNode4castI12AstAlwaysPreS_EEPT_PT0_ = comdat any
+
+$_ZN7V3Error10v3errorStrB5cxx11Ev = comdat any
+
+$_ZNK7AstNode8typeNameEv = comdat any
+
+$_ZN12VNUser2InUseD2Ev = comdat any
+
+$_ZN12VNUser1InUseD2Ev = comdat any
+
+$_ZN7V3Sched12LogicByScope13deleteActivesEv = comdat any
+
+$_ZNK9V3Options9availableEv = comdat any
+
+$_ZNK8V3Global5rootpEv = comdat any
+
+$_ZN9VNVisitorD2Ev = comdat any
+
+$_ZN9VNVisitorD0Ev = comdat any
+
+$__clang_call_terminate = comdat any
+
+$_ZNK7AstNode6user2uEv = comdat any
+
+$_ZN15VNUserInUseBase8clearcntEiRjRKb = comdat any
+
+$_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_ = comdat any
+
+$_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_ = comdat any
+
+$_Z8cvtToStrIiENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_ = comdat any
+
+$_ZNK7AstNode4op4pEv = comdat any
+
+$_ZNK7AstNode4op3pEv = comdat any
+
+$_ZNK7AstNode4op2pEv = comdat any
+
+$_ZNK7AstNode4op1pEv = comdat any
+
+$_ZeqRK6VNTypeNS_2enE = comdat any
+
+$_ZNK7AstNode4typeEv = comdat any
+
+$_ZN7V3Sched4util27collectForceReadEdgeIgnoresEP7AstNodeRSt13unordered_setIPK11AstVarScopeSt4hashIS6_ESt8equal_toIS6_ESaIS6_EE = comdat any
+
+$_ZNSt13unordered_setIPK11AstVarScopeSt4hashIS2_ESt8equal_toIS2_ESaIS2_EED2Ev = comdat any
+
+$_ZNK13V3GraphVertex5cloneEP7V3Graph = comdat any
+
+$_ZNK13V3GraphVertex8dotColorB5cxx11Ev = comdat any
+
+$_ZNK13V3GraphVertex8dotStyleB5cxx11Ev = comdat any
+
+$_ZNK13V3GraphVertex7dotNameB5cxx11Ev = comdat any
+
+$_ZNK13V3GraphVertex7dotRankB5cxx11Ev = comdat any
+
+$_ZNK13V3GraphVertex9rankAdderEv = comdat any
+
+$_ZNK13V3GraphVertex8filelineEv = comdat any
+
+$_ZNK13V3GraphVertex7sortCmpEPKS_ = comdat any
+
+$_ZN6V3Rtti8internal12matchClassIdI13V3GraphVertexEEbm = comdat any
+
+$_ZN13V3GraphVertex13v3RttiClassIdEv = comdat any
+
+$_ZN6V3Rtti8internal12matchClassIdIvEEbm = comdat any
+
+$_ZNK7AstNode8filelineEv = comdat any
+
+$_ZN11V3GraphEdgeC2EP7V3GraphP13V3GraphVertexS3_ib = comdat any
+
+$_ZNK7AstNode6user1pEv = comdat any
+
+$_ZNK10AstSenItem5senspEv = comdat any
+
+$_ZNK7AstNode6user1uEv = comdat any
+
+$_ZNK6VNUser7toNodepEv = comdat any
+
+$_ZNK6VNUser2toIP7AstNodeEENSt9enable_ifIXsr3std10is_pointerIT_EE5valueES4_E4typeEv = comdat any
+
+$_ZN7AstNode15unsafePrivateAsI11AstNodeExprS_EEPT_PT0_ = comdat any
+
+$_ZNK11AstVarScope4varpEv = comdat any
+
+$_ZN13V3GraphVertexD2Ev = comdat any
+
+$_ZNK11AstVarScope4nameB5cxx11Ev = comdat any
+
+$_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S9_ = comdat any
+
+$_ZNK11AstVarScope6scopepEv = comdat any
+
+$_ZNK8AstScope4nameB5cxx11Ev = comdat any
+
+$_ZNK6AstVar4nameB5cxx11Ev = comdat any
+
+$_ZNK8AstScope5isTopEv = comdat any
+
+$_ZNK8AstScope11aboveScopepEv = comdat any
+
+$_ZN7AstNode11foreachImplI9AstVarRefZN7V3Sched4util27collectForceReadEdgeIgnoresEPS_RSt13unordered_setIPK11AstVarScopeSt4hashIS8_ESt8equal_toIS8_ESaIS8_EEEUlPKS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_b = comdat any
+
+$_ZZN7AstNode11foreachImplI9AstVarRefZN7V3Sched4util27collectForceReadEdgeIgnoresEPS_RSt13unordered_setIPK11AstVarScopeSt4hashIS8_ESt8equal_toIS8_ESaIS8_EEEUlPKS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_bENKUlS4_E_clES4_ = comdat any
+
+$_ZNK13AstNodeVarRef4varpEv = comdat any
+
+$_ZN7V3Sched4util12isVlForceVecEPK11AstVarScope = comdat any
+
+$_ZNSt10_HashtableIPK11AstVarScopeS2_SaIS2_ENSt8__detail9_IdentityESt8equal_toIS2_ESt4hashIS2_ENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb1ELb1EEEE10_M_emplaceIJRKPS0_EEESt4pairINS4_14_Node_iteratorIS2_Lb1ELb0EEEbESt17integral_constantIbLb1EEDpOT_ = comdat any
+
+$_ZNSt10_HashtableIPK11AstVarScopeS2_SaIS2_ENSt8__detail9_IdentityESt8equal_toIS2_ESt4hashIS2_ENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb1ELb1EEEE21_M_insert_unique_nodeEmmPNS4_10_Hash_nodeIS2_Lb0EEEm = comdat any
+
+$_ZNSt10_HashtableIPK11AstVarScopeS2_SaIS2_ENSt8__detail9_IdentityESt8equal_toIS2_ESt4hashIS2_ENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb1ELb1EEEE13_M_rehash_auxEmSt17integral_constantIbLb1EE = comdat any
+
+$_ZN7AstNode4castI9AstCDType12AstNodeDTypeEEPT_PT0_ = comdat any
+
+$_ZNK7AstNode6dtypepEv = comdat any
+
+$_ZN12AstNodeDType8skipRefpEv = comdat any
+
+$_ZNK9AstCDType4nameB5cxx11Ev = comdat any
+
+$_ZN7AstNode11foreachImplI14AstCMethodHardZN7V3Sched4util27collectForceReadEdgeIgnoresEPS_RSt13unordered_setIPK11AstVarScopeSt4hashIS8_ESt8equal_toIS8_ESaIS8_EEEUlPKS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_b = comdat any
+
+$_ZZN7AstNode11foreachImplI14AstCMethodHardZN7V3Sched4util27collectForceReadEdgeIgnoresEPS_RSt13unordered_setIPK11AstVarScopeSt4hashIS8_ESt8equal_toIS8_ESaIS8_EEEUlPKS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_bENKUlS4_E_clES4_ = comdat any
+
+$_ZNK14AstCMethodHard6methodEv = comdat any
+
+$_ZN7AstNode4castI9AstVarRef11AstNodeExprEEPT_PT0_ = comdat any
+
+$_ZNK14AstCMethodHard5frompEv = comdat any
+
+$_ZNK14AstCMethodHard5pinspEv = comdat any
+
+$_ZN7AstNode11foreachImplI9AstVarRefZZN7V3Sched4util27collectForceReadEdgeIgnoresEPS_RSt13unordered_setIPK11AstVarScopeSt4hashIS8_ESt8equal_toIS8_ESaIS8_EEENKUlPK14AstCMethodHardE_clESI_EUlPKS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_b = comdat any
+
+$_ZNK6AstVar11isPrimaryIOEv = comdat any
+
+$_ZNK7AstNode5backpEv = comdat any
+
+$_ZN9AstActiveC2EP8FileLineRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP10AstSenTree = comdat any
+
+$_ZN6VNTypeC2ENS_2enE = comdat any
+
+$_ZN15VNUserInUseBase8allocateEiRjRb = comdat any
+
+$_ZNK6VNTypecvNS_2enEEv = comdat any
+
+$_ZN7V3Error1sEv = comdat any
+
+$_ZN14V3ErrorGuarded10v3errorStrB5cxx11Ev = comdat any
+
+$_ZN14V3ErrorGuardedC2Ev = comdat any
+
+$_ZN14V3ErrorGuardedD2Ev = comdat any
+
+$_ZN13VErrorMessageC2Ev = comdat any
+
+$_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev = comdat any
+
+$_ZN13VErrorMessageD2Ev = comdat any
+
+$_ZNSt5dequeIPK8FileLineSaIS2_EED2Ev = comdat any
+
+$_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE17_M_initialize_mapEm = comdat any
+
+$_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E = comdat any
+
+$_ZNK6VNType5asciiEv = comdat any
+
+$_ZN15VNUserInUseBase4freeEiRjRb = comdat any
+
+$_ZNK9V3Options10debugCheckEv = comdat any
+
+$_ZN7AstNode4castI16AstNodeProcedureS_EEPT_PT0_ = comdat any
+
+$_ZNK16AstNodeProcedure6stmtspEv = comdat any
+
+$_ZTI9VNVisitor = comdat any
+
+$_ZTS9VNVisitor = comdat any
+
+$_ZTV9VNVisitor = comdat any
+
+$_ZTI13V3GraphVertex = comdat any
+
+$_ZTS13V3GraphVertex = comdat any
+
+$_ZZN13V3GraphVertex13v3RttiClassIdEvE15s_vlrttiClassId = comdat any
+
+$_ZZNK9VEdgeType11clockedStmtEvE7clocked = comdat any
+
+$_ZZN7V3Error1sEvE3s_s = comdat any
+
+$_ZGVZN7V3Error1sEvE3s_s = comdat any
+
+$_ZZNK6VNType5asciiEvE5names = comdat any
+
+@.str = private unnamed_addr constant [3 x i8] c"- \00", align 1
+@.str.1 = private unnamed_addr constant [61 x i8] c"/opt-bench/work/verilator/verilator/src/V3SchedPartition.cpp\00", align 1
+@__FUNCTION__._ZN7V3Sched9partitionERNS_12LogicByScopeES1_S1_ = private unnamed_addr constant [10 x i8] c"partition\00", align 1
+@.str.2 = private unnamed_addr constant [2 x i8] c":\00", align 1
+@_ZSt4cout = external global %"class.std::basic_ostream", align 8
+@.str.3 = private unnamed_addr constant [6 x i8] c"sched\00", align 1
+@.str.4 = private unnamed_addr constant [18 x i8] c"sched-partitioned\00", align 1
+@v3Global = external global %class.V3Global, align 8
+@.str.5 = private unnamed_addr constant [22 x i8] c"Unexpected node type \00", align 1
+@_ZZL5debugvE7s_level = internal unnamed_addr global i32 -1, align 4
+@.str.6 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@_ZTVN7V3Sched12_GLOBAL__N_117SchedGraphBuilderE = internal constant { [525 x ptr] } { [525 x ptr] [ptr null, ptr @_ZTIN7V3Sched12_GLOBAL__N_117SchedGraphBuilderE, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP7AstNode, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderD2Ev, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderD0Ev, ptr @_ZN14VNVisitorConst5visitEP10AstAbortOn, ptr @_ZN14VNVisitorConst5visitEP8AstAcosD, ptr @_ZN14VNVisitorConst5visitEP9AstAcoshD, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP9AstActive, ptr @_ZN14VNVisitorConst5visitEP6AstAdd, ptr @_ZN14VNVisitorConst5visitEP7AstAddD, ptr @_ZN14VNVisitorConst5visitEP14AstAddrOfCFunc, ptr @_ZN14VNVisitorConst5visitEP8AstAlias, ptr @_ZN14VNVisitorConst5visitEP13AstAliasScope, ptr @_ZN14VNVisitorConst5visitEP9AstAlways, ptr @_ZN14VNVisitorConst5visitEP17AstAlwaysObserved, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP13AstAlwaysPost, ptr @_ZN14VNVisitorConst5visitEP18AstAlwaysPostponed, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP12AstAlwaysPre, ptr @_ZN14VNVisitorConst5visitEP17AstAlwaysReactive, ptr @_ZN14VNVisitorConst5visitEP6AstAnd, ptr @_ZN14VNVisitorConst5visitEP6AstArg, ptr @_ZN14VNVisitorConst5visitEP11AstArraySel, ptr @_ZN14VNVisitorConst5visitEP8AstAsinD, ptr @_ZN14VNVisitorConst5visitEP9AstAsinhD, ptr @_ZN14VNVisitorConst5visitEP9AstAssert, ptr @_ZN14VNVisitorConst5visitEP12AstAssertCtl, ptr @_ZN14VNVisitorConst5visitEP18AstAssertIntrinsic, ptr @_ZN14VNVisitorConst5visitEP9AstAssign, ptr @_ZN14VNVisitorConst5visitEP17AstAssignCompound, ptr @_ZN14VNVisitorConst5visitEP13AstAssignCont, ptr @_ZN14VNVisitorConst5visitEP12AstAssignDly, ptr @_ZN14VNVisitorConst5visitEP14AstAssignForce, ptr @_ZN14VNVisitorConst5visitEP10AstAssignW, ptr @_ZN14VNVisitorConst5visitEP18AstAssocArrayDType, ptr @_ZN14VNVisitorConst5visitEP11AstAssocSel, ptr @_ZN14VNVisitorConst5visitEP9AstAtan2D, ptr @_ZN14VNVisitorConst5visitEP8AstAtanD, ptr @_ZN14VNVisitorConst5visitEP9AstAtanhD, ptr @_ZN14VNVisitorConst5visitEP7AstAtoN, ptr @_ZN14VNVisitorConst5visitEP9AstAttrOf, ptr @_ZN14VNVisitorConst5visitEP13AstBasicDType, ptr @_ZN14VNVisitorConst5visitEP8AstBegin, ptr @_ZN14VNVisitorConst5visitEP7AstBind, ptr @_ZN14VNVisitorConst5visitEP14AstBitsToRealD, ptr @_ZN14VNVisitorConst5visitEP20AstBracketArrayDType, ptr @_ZN14VNVisitorConst5visitEP15AstBracketRange, ptr @_ZN14VNVisitorConst5visitEP8AstBreak, ptr @_ZN14VNVisitorConst5visitEP9AstBufIf1, ptr @_ZN14VNVisitorConst5visitEP9AstCAwait, ptr @_ZN14VNVisitorConst5visitEP8AstCCall, ptr @_ZN14VNVisitorConst5visitEP8AstCCast, ptr @_ZN14VNVisitorConst5visitEP9AstCDType, ptr @_ZN14VNVisitorConst5visitEP8AstCExpr, ptr @_ZN14VNVisitorConst5visitEP12AstCExprUser, ptr @_ZN14VNVisitorConst5visitEP8AstCFile, ptr @_ZN14VNVisitorConst5visitEP8AstCFunc, ptr @_ZN14VNVisitorConst5visitEP14AstCLocalScope, ptr @_ZN14VNVisitorConst5visitEP8AstCLog2, ptr @_ZN14VNVisitorConst5visitEP14AstCMethodCall, ptr @_ZN14VNVisitorConst5visitEP14AstCMethodHard, ptr @_ZN14VNVisitorConst5visitEP7AstCNew, ptr @_ZN14VNVisitorConst5visitEP9AstCReset, ptr @_ZN14VNVisitorConst5visitEP10AstCReturn, ptr @_ZN14VNVisitorConst5visitEP8AstCStmt, ptr @_ZN14VNVisitorConst5visitEP12AstCStmtUser, ptr @_ZN14VNVisitorConst5visitEP7AstCUse, ptr @_ZN14VNVisitorConst5visitEP7AstCase, ptr @_ZN14VNVisitorConst5visitEP11AstCaseItem, ptr @_ZN14VNVisitorConst5visitEP7AstCast, ptr @_ZN14VNVisitorConst5visitEP14AstCastDynamic, ptr @_ZN14VNVisitorConst5visitEP12AstCastParse, ptr @_ZN14VNVisitorConst5visitEP11AstCastSize, ptr @_ZN14VNVisitorConst5visitEP11AstCastWrap, ptr @_ZN14VNVisitorConst5visitEP8AstCeilD, ptr @_ZN14VNVisitorConst5visitEP7AstCell, ptr @_ZN14VNVisitorConst5visitEP15AstCellArrayRef, ptr @_ZN14VNVisitorConst5visitEP13AstCellInline, ptr @_ZN14VNVisitorConst5visitEP18AstCellInlineScope, ptr @_ZN14VNVisitorConst5visitEP10AstCellRef, ptr @_ZN14VNVisitorConst5visitEP17AstCgOptionAssign, ptr @_ZN14VNVisitorConst5visitEP8AstClass, ptr @_ZN14VNVisitorConst5visitEP15AstClassExtends, ptr @_ZN14VNVisitorConst5visitEP20AstClassOrPackageRef, ptr @_ZN14VNVisitorConst5visitEP15AstClassPackage, ptr @_ZN14VNVisitorConst5visitEP16AstClassRefDType, ptr @_ZN14VNVisitorConst5visitEP11AstClocking, ptr @_ZN14VNVisitorConst5visitEP15AstClockingItem, ptr @_ZN14VNVisitorConst5visitEP10AstComment, ptr @_ZN14VNVisitorConst5visitEP12AstCompareNN, ptr @_ZN14VNVisitorConst5visitEP9AstConcat, ptr @_ZN14VNVisitorConst5visitEP10AstConcatN, ptr @_ZN14VNVisitorConst5visitEP7AstCond, ptr @_ZN14VNVisitorConst5visitEP9AstConfig, ptr @_ZN14VNVisitorConst5visitEP13AstConfigCell, ptr @_ZN14VNVisitorConst5visitEP13AstConfigRule, ptr @_ZN14VNVisitorConst5visitEP12AstConfigUse, ptr @_ZN14VNVisitorConst5visitEP12AstConsAssoc, ptr @_ZN14VNVisitorConst5visitEP15AstConsDynArray, ptr @_ZN14VNVisitorConst5visitEP17AstConsPackMember, ptr @_ZN14VNVisitorConst5visitEP20AstConsPackUOrStruct, ptr @_ZN14VNVisitorConst5visitEP12AstConsQueue, ptr @_ZN14VNVisitorConst5visitEP15AstConsWildcard, ptr @_ZN14VNVisitorConst5visitEP8AstConst, ptr @_ZN14VNVisitorConst5visitEP13AstConstDType, ptr @_ZN14VNVisitorConst5visitEP12AstConstPool, ptr @_ZN14VNVisitorConst5visitEP13AstConstraint, ptr @_ZN14VNVisitorConst5visitEP19AstConstraintBefore, ptr @_ZN14VNVisitorConst5visitEP17AstConstraintExpr, ptr @_ZN14VNVisitorConst5visitEP20AstConstraintForeach, ptr @_ZN14VNVisitorConst5visitEP15AstConstraintIf, ptr @_ZN14VNVisitorConst5visitEP16AstConstraintRef, ptr @_ZN14VNVisitorConst5visitEP21AstConstraintRefDType, ptr @_ZN14VNVisitorConst5visitEP19AstConstraintUnique, ptr @_ZN14VNVisitorConst5visitEP11AstContinue, ptr @_ZN14VNVisitorConst5visitEP7AstCosD, ptr @_ZN14VNVisitorConst5visitEP8AstCoshD, ptr @_ZN14VNVisitorConst5visitEP12AstCountBits, ptr @_ZN14VNVisitorConst5visitEP12AstCountOnes, ptr @_ZN14VNVisitorConst5visitEP8AstCover, ptr @_ZN14VNVisitorConst5visitEP11AstCoverBin, ptr @_ZN14VNVisitorConst5visitEP13AstCoverCross, ptr @_ZN14VNVisitorConst5visitEP11AstCoverInc, ptr @_ZN14VNVisitorConst5visitEP14AstCoverOption, ptr @_ZN14VNVisitorConst5visitEP17AstCoverOtherDecl, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP14AstCoverToggle, ptr @_ZN14VNVisitorConst5visitEP18AstCoverToggleDecl, ptr @_ZN14VNVisitorConst5visitEP17AstCoverTransItem, ptr @_ZN14VNVisitorConst5visitEP16AstCoverTransSet, ptr @_ZN14VNVisitorConst5visitEP13AstCovergroup, ptr @_ZN14VNVisitorConst5visitEP13AstCoverpoint, ptr @_ZN14VNVisitorConst5visitEP16AstCoverpointRef, ptr @_ZN14VNVisitorConst5visitEP18AstCvtArrayToArray, ptr @_ZN14VNVisitorConst5visitEP19AstCvtArrayToPacked, ptr @_ZN14VNVisitorConst5visitEP16AstCvtPackString, ptr @_ZN14VNVisitorConst5visitEP19AstCvtPackedToArray, ptr @_ZN14VNVisitorConst5visitEP21AstCvtUnpackedToQueue, ptr @_ZN14VNVisitorConst5visitEP11AstDeassign, ptr @_ZN14VNVisitorConst5visitEP19AstDefImplicitDType, ptr @_ZN14VNVisitorConst5visitEP11AstDefParam, ptr @_ZN14VNVisitorConst5visitEP17AstDefaultDisable, ptr @_ZN14VNVisitorConst5visitEP8AstDelay, ptr @_ZN14VNVisitorConst5visitEP10AstDisable, ptr @_ZN14VNVisitorConst5visitEP14AstDisableFork, ptr @_ZN14VNVisitorConst5visitEP10AstDisplay, ptr @_ZN14VNVisitorConst5visitEP7AstDist, ptr @_ZN14VNVisitorConst5visitEP16AstDistChiSquare, ptr @_ZN14VNVisitorConst5visitEP13AstDistErlang, ptr @_ZN14VNVisitorConst5visitEP18AstDistExponential, ptr @_ZN14VNVisitorConst5visitEP11AstDistItem, ptr @_ZN14VNVisitorConst5visitEP13AstDistNormal, ptr @_ZN14VNVisitorConst5visitEP14AstDistPoisson, ptr @_ZN14VNVisitorConst5visitEP8AstDistT, ptr @_ZN14VNVisitorConst5visitEP14AstDistUniform, ptr @_ZN14VNVisitorConst5visitEP6AstDiv, ptr @_ZN14VNVisitorConst5visitEP7AstDivD, ptr @_ZN14VNVisitorConst5visitEP7AstDivS, ptr @_ZN14VNVisitorConst5visitEP6AstDot, ptr @_ZN14VNVisitorConst5visitEP12AstDpiExport, ptr @_ZN14VNVisitorConst5visitEP10AstDumpCtl, ptr @_ZN14VNVisitorConst5visitEP16AstDynArrayDType, ptr @_ZN14VNVisitorConst5visitEP14AstElabDisplay, ptr @_ZN14VNVisitorConst5visitEP8AstEmpty, ptr @_ZN14VNVisitorConst5visitEP13AstEmptyQueue, ptr @_ZN14VNVisitorConst5visitEP18AstEmptyQueueDType, ptr @_ZN14VNVisitorConst5visitEP12AstEnumDType, ptr @_ZN14VNVisitorConst5visitEP11AstEnumItem, ptr @_ZN14VNVisitorConst5visitEP14AstEnumItemRef, ptr @_ZN14VNVisitorConst5visitEP5AstEq, ptr @_ZN14VNVisitorConst5visitEP9AstEqCase, ptr @_ZN14VNVisitorConst5visitEP6AstEqD, ptr @_ZN14VNVisitorConst5visitEP6AstEqN, ptr @_ZN14VNVisitorConst5visitEP6AstEqT, ptr @_ZN14VNVisitorConst5visitEP9AstEqWild, ptr @_ZN14VNVisitorConst5visitEP15AstEventControl, ptr @_ZN14VNVisitorConst5visitEP12AstExecGraph, ptr @_ZN14VNVisitorConst5visitEP7AstExpD, ptr @_ZN14VNVisitorConst5visitEP11AstExprStmt, ptr @_ZN14VNVisitorConst5visitEP9AstExtend, ptr @_ZN14VNVisitorConst5visitEP10AstExtendS, ptr @_ZN14VNVisitorConst5visitEP9AstFClose, ptr @_ZN14VNVisitorConst5visitEP7AstFEof, ptr @_ZN14VNVisitorConst5visitEP9AstFError, ptr @_ZN14VNVisitorConst5visitEP9AstFFlush, ptr @_ZN14VNVisitorConst5visitEP8AstFGetC, ptr @_ZN14VNVisitorConst5visitEP8AstFGetS, ptr @_ZN14VNVisitorConst5visitEP8AstFOpen, ptr @_ZN14VNVisitorConst5visitEP11AstFOpenMcd, ptr @_ZN14VNVisitorConst5visitEP8AstFRead, ptr @_ZN14VNVisitorConst5visitEP10AstFRewind, ptr @_ZN14VNVisitorConst5visitEP9AstFScanF, ptr @_ZN14VNVisitorConst5visitEP8AstFSeek, ptr @_ZN14VNVisitorConst5visitEP8AstFTell, ptr @_ZN14VNVisitorConst5visitEP10AstFUngetC, ptr @_ZN14VNVisitorConst5visitEP10AstFalling, ptr @_ZN14VNVisitorConst5visitEP7AstFell, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP8AstFinal, ptr @_ZN14VNVisitorConst5visitEP9AstFinish, ptr @_ZN14VNVisitorConst5visitEP13AstFinishFork, ptr @_ZN14VNVisitorConst5visitEP12AstFireEvent, ptr @_ZN14VNVisitorConst5visitEP9AstFloorD, ptr @_ZN14VNVisitorConst5visitEP10AstForeach, ptr @_ZN14VNVisitorConst5visitEP16AstForeachHeader, ptr @_ZN14VNVisitorConst5visitEP7AstFork, ptr @_ZN14VNVisitorConst5visitEP7AstFunc, ptr @_ZN14VNVisitorConst5visitEP10AstFuncRef, ptr @_ZN14VNVisitorConst5visitEP9AstFuture, ptr @_ZN14VNVisitorConst5visitEP10AstGatePin, ptr @_ZN14VNVisitorConst5visitEP11AstGenBlock, ptr @_ZN14VNVisitorConst5visitEP10AstGenCase, ptr @_ZN14VNVisitorConst5visitEP14AstGenCaseItem, ptr @_ZN14VNVisitorConst5visitEP9AstGenFor, ptr @_ZN14VNVisitorConst5visitEP8AstGenIf, ptr @_ZN14VNVisitorConst5visitEP23AstGetInitialRandomSeed, ptr @_ZN14VNVisitorConst5visitEP8AstGetcN, ptr @_ZN14VNVisitorConst5visitEP11AstGetcRefN, ptr @_ZN14VNVisitorConst5visitEP5AstGt, ptr @_ZN14VNVisitorConst5visitEP6AstGtD, ptr @_ZN14VNVisitorConst5visitEP6AstGtN, ptr @_ZN14VNVisitorConst5visitEP6AstGtS, ptr @_ZN14VNVisitorConst5visitEP6AstGte, ptr @_ZN14VNVisitorConst5visitEP7AstGteD, ptr @_ZN14VNVisitorConst5visitEP7AstGteN, ptr @_ZN14VNVisitorConst5visitEP7AstGteS, ptr @_ZN14VNVisitorConst5visitEP9AstHypotD, ptr @_ZN14VNVisitorConst5visitEP9AstISToRD, ptr @_ZN14VNVisitorConst5visitEP8AstIToRD, ptr @_ZN14VNVisitorConst5visitEP5AstIf, ptr @_ZN14VNVisitorConst5visitEP8AstIface, ptr @_ZN14VNVisitorConst5visitEP20AstIfaceGenericDType, ptr @_ZN14VNVisitorConst5visitEP16AstIfaceRefDType, ptr @_ZN14VNVisitorConst5visitEP14AstImplication, ptr @_ZN14VNVisitorConst5visitEP11AstImplicit, ptr @_ZN14VNVisitorConst5visitEP18AstInferredDisable, ptr @_ZN14VNVisitorConst5visitEP12AstInitArray, ptr @_ZN14VNVisitorConst5visitEP11AstInitItem, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP10AstInitial, ptr @_ZN14VNVisitorConst5visitEP19AstInitialAutomatic, ptr @_ZN14VNVisitorConst5visitEP23AstInitialAutomaticStmt, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP16AstInitialStatic, ptr @_ZN14VNVisitorConst5visitEP20AstInitialStaticStmt, ptr @_ZN14VNVisitorConst5visitEP9AstInside, ptr @_ZN14VNVisitorConst5visitEP14AstInsideRange, ptr @_ZN14VNVisitorConst5visitEP10AstIntfRef, ptr @_ZN14VNVisitorConst5visitEP14AstIsUnbounded, ptr @_ZN14VNVisitorConst5visitEP12AstIsUnknown, ptr @_ZN14VNVisitorConst5visitEP12AstJumpBlock, ptr @_ZN14VNVisitorConst5visitEP9AstJumpGo, ptr @_ZN14VNVisitorConst5visitEP15AstLambdaArgRef, ptr @_ZN14VNVisitorConst5visitEP7AstLenN, ptr @_ZN14VNVisitorConst5visitEP6AstLet, ptr @_ZN14VNVisitorConst5visitEP10AstLibrary, ptr @_ZN14VNVisitorConst5visitEP9AstLog10D, ptr @_ZN14VNVisitorConst5visitEP9AstLogAnd, ptr @_ZN14VNVisitorConst5visitEP7AstLogD, ptr @_ZN14VNVisitorConst5visitEP8AstLogEq, ptr @_ZN14VNVisitorConst5visitEP8AstLogIf, ptr @_ZN14VNVisitorConst5visitEP9AstLogNot, ptr @_ZN14VNVisitorConst5visitEP8AstLogOr, ptr @_ZN14VNVisitorConst5visitEP7AstLoop, ptr @_ZN14VNVisitorConst5visitEP11AstLoopTest, ptr @_ZN14VNVisitorConst5visitEP5AstLt, ptr @_ZN14VNVisitorConst5visitEP6AstLtD, ptr @_ZN14VNVisitorConst5visitEP6AstLtN, ptr @_ZN14VNVisitorConst5visitEP6AstLtS, ptr @_ZN14VNVisitorConst5visitEP6AstLte, ptr @_ZN14VNVisitorConst5visitEP7AstLteD, ptr @_ZN14VNVisitorConst5visitEP7AstLteN, ptr @_ZN14VNVisitorConst5visitEP7AstLteS, ptr @_ZN14VNVisitorConst5visitEP14AstMatchMasked, ptr @_ZN14VNVisitorConst5visitEP10AstMatches, ptr @_ZN14VNVisitorConst5visitEP14AstMemberDType, ptr @_ZN14VNVisitorConst5visitEP12AstMemberSel, ptr @_ZN14VNVisitorConst5visitEP13AstMethodCall, ptr @_ZN14VNVisitorConst5visitEP9AstModDiv, ptr @_ZN14VNVisitorConst5visitEP10AstModDivS, ptr @_ZN14VNVisitorConst5visitEP10AstModport, ptr @_ZN14VNVisitorConst5visitEP21AstModportClockingRef, ptr @_ZN14VNVisitorConst5visitEP18AstModportFTaskRef, ptr @_ZN14VNVisitorConst5visitEP16AstModportVarRef, ptr @_ZN14VNVisitorConst5visitEP9AstModule, ptr @_ZN14VNVisitorConst5visitEP13AstMonitorOff, ptr @_ZN14VNVisitorConst5visitEP15AstMostSetBitP1, ptr @_ZN14VNVisitorConst5visitEP6AstMul, ptr @_ZN14VNVisitorConst5visitEP7AstMulD, ptr @_ZN14VNVisitorConst5visitEP7AstMulS, ptr @_ZN14VNVisitorConst5visitEP22AstNBACommitQueueDType, ptr @_ZN14VNVisitorConst5visitEP7AstNToI, ptr @_ZN14VNVisitorConst5visitEP9AstNegate, ptr @_ZN14VNVisitorConst5visitEP10AstNegateD, ptr @_ZN14VNVisitorConst5visitEP6AstNeq, ptr @_ZN14VNVisitorConst5visitEP10AstNeqCase, ptr @_ZN14VNVisitorConst5visitEP7AstNeqD, ptr @_ZN14VNVisitorConst5visitEP7AstNeqN, ptr @_ZN14VNVisitorConst5visitEP7AstNeqT, ptr @_ZN14VNVisitorConst5visitEP10AstNeqWild, ptr @_ZN14VNVisitorConst5visitEP10AstNetlist, ptr @_ZN14VNVisitorConst5visitEP6AstNew, ptr @_ZN14VNVisitorConst5visitEP10AstNewCopy, ptr @_ZN14VNVisitorConst5visitEP13AstNewDynamic, ptr @_ZN14VNVisitorConst5visitEP17AstNodeArrayDType, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP13AstNodeAssign, ptr @_ZN14VNVisitorConst5visitEP12AstNodeBiCom, ptr @_ZN14VNVisitorConst5visitEP15AstNodeBiComAsv, ptr @_ZN14VNVisitorConst5visitEP11AstNodeBiop, ptr @_ZN14VNVisitorConst5visitEP12AstNodeBlock, ptr @_ZN14VNVisitorConst5visitEP12AstNodeCCall, ptr @_ZN14VNVisitorConst5visitEP16AstNodeCoverDecl, ptr @_ZN14VNVisitorConst5visitEP20AstNodeCoverOrAssert, ptr @_ZN14VNVisitorConst5visitEP12AstNodeDType, ptr @_ZN14VNVisitorConst5visitEP15AstNodeDistBiop, ptr @_ZN14VNVisitorConst5visitEP16AstNodeDistTriop, ptr @_ZN14VNVisitorConst5visitEP11AstNodeExpr, ptr @_ZN14VNVisitorConst5visitEP12AstNodeFTask, ptr @_ZN14VNVisitorConst5visitEP15AstNodeFTaskRef, ptr @_ZN14VNVisitorConst5visitEP11AstNodeFile, ptr @_ZN14VNVisitorConst5visitEP14AstNodeForeach, ptr @_ZN14VNVisitorConst5visitEP18AstNodeFuncCovItem, ptr @_ZN14VNVisitorConst5visitEP10AstNodeGen, ptr @_ZN14VNVisitorConst5visitEP9AstNodeIf, ptr @_ZN14VNVisitorConst5visitEP13AstNodeModule, ptr @_ZN14VNVisitorConst5visitEP13AstNodePreSel, ptr @_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5visitEP16AstNodeProcedure, ptr @_ZN14VNVisitorConst5visitEP13AstNodeQuadop, ptr @_ZN14VNVisitorConst5visitEP12AstNodeRange, ptr @_ZN14VNVisitorConst5visitEP19AstNodeReadWriteMem, ptr @_ZN14VNVisitorConst5visitEP10AstNodeSel, ptr @_ZN14VNVisitorConst5visitEP11AstNodeStmt, ptr @_ZN14VNVisitorConst5visitEP13AstNodeStream, ptr @_ZN14VNVisitorConst5visitEP18AstNodeSystemBiopD, ptr @_ZN14VNVisitorConst5visitEP19AstNodeSystemUniopD, ptr @_ZN14VNVisitorConst5visitEP13AstNodeTermop, ptr @_ZN14VNVisitorConst5visitEP12AstNodeTriop, ptr @_ZN14VNVisitorConst5visitEP21AstNodeUOrStructDType, ptr @_ZN14VNVisitorConst5visitEP12AstNodeUniop, ptr @_ZN14VNVisitorConst5visitEP13AstNodeVarRef, ptr @_ZN14VNVisitorConst5visitEP6AstNot, ptr @_ZN14VNVisitorConst5visitEP17AstNotFoundModule, ptr @_ZN14VNVisitorConst5visitEP12AstNullCheck, ptr @_ZN14VNVisitorConst5visitEP9AstOneHot, ptr @_ZN14VNVisitorConst5visitEP10AstOneHot0, ptr @_ZN14VNVisitorConst5visitEP5AstOr, ptr @_ZN14VNVisitorConst5visitEP8AstPExpr, ptr @_ZN14VNVisitorConst5visitEP14AstPExprClause, ptr @_ZN14VNVisitorConst5visitEP17AstPackArrayDType, ptr @_ZN14VNVisitorConst5visitEP10AstPackage, ptr @_ZN14VNVisitorConst5visitEP16AstPackageExport, ptr @_ZN14VNVisitorConst5visitEP24AstPackageExportStarStar, ptr @_ZN14VNVisitorConst5visitEP16AstPackageImport, ptr @_ZN14VNVisitorConst5visitEP17AstParamTypeDType, ptr @_ZN14VNVisitorConst5visitEP14AstParseHolder, ptr @_ZN14VNVisitorConst5visitEP11AstParseRef, ptr @_ZN14VNVisitorConst5visitEP17AstParseTypeDType, ptr @_ZN14VNVisitorConst5visitEP7AstPast, ptr @_ZN14VNVisitorConst5visitEP12AstPatMember, ptr @_ZN14VNVisitorConst5visitEP10AstPattern, ptr @_ZN14VNVisitorConst5visitEP14AstPatternStar, ptr @_ZN14VNVisitorConst5visitEP13AstPatternVar, ptr @_ZN14VNVisitorConst5visitEP6AstPin, ptr @_ZN14VNVisitorConst5visitEP7AstPort, ptr @_ZN14VNVisitorConst5visitEP10AstPostDec, ptr @_ZN14VNVisitorConst5visitEP10AstPostInc, ptr @_ZN14VNVisitorConst5visitEP6AstPow, ptr @_ZN14VNVisitorConst5visitEP7AstPowD, ptr @_ZN14VNVisitorConst5visitEP8AstPowSS, ptr @_ZN14VNVisitorConst5visitEP8AstPowSU, ptr @_ZN14VNVisitorConst5visitEP8AstPowUS, ptr @_ZN14VNVisitorConst5visitEP9AstPragma, ptr @_ZN14VNVisitorConst5visitEP9AstPreDec, ptr @_ZN14VNVisitorConst5visitEP9AstPreInc, ptr @_ZN14VNVisitorConst5visitEP12AstPrimitive, ptr @_ZN14VNVisitorConst5visitEP17AstPrintTimeScale, ptr @_ZN14VNVisitorConst5visitEP13AstPropAlways, ptr @_ZN14VNVisitorConst5visitEP11AstPropSpec, ptr @_ZN14VNVisitorConst5visitEP11AstProperty, ptr @_ZN14VNVisitorConst5visitEP7AstPull, ptr @_ZN14VNVisitorConst5visitEP8AstPutcN, ptr @_ZN14VNVisitorConst5visitEP13AstQueueDType, ptr @_ZN14VNVisitorConst5visitEP10AstRSBreak, ptr @_ZN14VNVisitorConst5visitEP9AstRSProd, ptr @_ZN14VNVisitorConst5visitEP13AstRSProdItem, ptr @_ZN14VNVisitorConst5visitEP13AstRSProdList, ptr @_ZN14VNVisitorConst5visitEP11AstRSReturn, ptr @_ZN14VNVisitorConst5visitEP9AstRSRule, ptr @_ZN14VNVisitorConst5visitEP13AstRToIRoundS, ptr @_ZN14VNVisitorConst5visitEP8AstRToIS, ptr @_ZN14VNVisitorConst5visitEP7AstRand, ptr @_ZN14VNVisitorConst5visitEP11AstRandCase, ptr @_ZN14VNVisitorConst5visitEP10AstRandRNG, ptr @_ZN14VNVisitorConst5visitEP15AstRandSequence, ptr @_ZN14VNVisitorConst5visitEP8AstRange, ptr @_ZN14VNVisitorConst5visitEP10AstReadMem, ptr @_ZN14VNVisitorConst5visitEP13AstRealToBits, ptr @_ZN14VNVisitorConst5visitEP9AstRedAnd, ptr @_ZN14VNVisitorConst5visitEP8AstRedOr, ptr @_ZN14VNVisitorConst5visitEP9AstRedXor, ptr @_ZN14VNVisitorConst5visitEP11AstRefDType, ptr @_ZN14VNVisitorConst5visitEP10AstRelease, ptr @_ZN14VNVisitorConst5visitEP9AstRepeat, ptr @_ZN14VNVisitorConst5visitEP12AstReplicate, ptr @_ZN14VNVisitorConst5visitEP13AstReplicateN, ptr @_ZN14VNVisitorConst5visitEP15AstRequireDType, ptr @_ZN14VNVisitorConst5visitEP15AstResizeLValue, ptr @_ZN14VNVisitorConst5visitEP11AstRestrict, ptr @_ZN14VNVisitorConst5visitEP9AstReturn, ptr @_ZN14VNVisitorConst5visitEP9AstRising, ptr @_ZN14VNVisitorConst5visitEP7AstRose, ptr @_ZN14VNVisitorConst5visitEP7AstSAnd, ptr @_ZN14VNVisitorConst5visitEP11AstSClocked, ptr @_ZN14VNVisitorConst5visitEP11AstSConsRep, ptr @_ZN14VNVisitorConst5visitEP14AstSEventually, ptr @_ZN14VNVisitorConst5visitEP8AstSExpr, ptr @_ZN14VNVisitorConst5visitEP10AstSFormat, ptr @_ZN14VNVisitorConst5visitEP13AstSFormatArg, ptr @_ZN14VNVisitorConst5visitEP11AstSFormatF, ptr @_ZN14VNVisitorConst5visitEP11AstSGotoRep, ptr @_ZN14VNVisitorConst5visitEP13AstSIntersect, ptr @_ZN14VNVisitorConst5visitEP14AstSNonConsRep, ptr @_ZN14VNVisitorConst5visitEP6AstSOr, ptr @_ZN14VNVisitorConst5visitEP9AstSScanF, ptr @_ZN14VNVisitorConst5visitEP14AstSThroughout, ptr @_ZN14VNVisitorConst5visitEP10AstSWithin, ptr @_ZN14VNVisitorConst5visitEP19AstSampleQueueDType, ptr @_ZN14VNVisitorConst5visitEP10AstSampled, ptr @_ZN14VNVisitorConst5visitEP8AstScope, ptr @_ZN14VNVisitorConst5visitEP12AstScopeName, ptr @_ZN14VNVisitorConst5visitEP6AstSel, ptr @_ZN14VNVisitorConst5visitEP9AstSelBit, ptr @_ZN14VNVisitorConst5visitEP13AstSelExtract, ptr @_ZN14VNVisitorConst5visitEP11AstSelMinus, ptr @_ZN14VNVisitorConst5visitEP10AstSelPlus, ptr @_ZN14VNVisitorConst5visitEP10AstSenItem, ptr @_ZN14VNVisitorConst5visitEP10AstSenTree, ptr @_ZN14VNVisitorConst5visitEP11AstSequence, ptr @_ZN14VNVisitorConst5visitEP11AstSetAssoc, ptr @_ZN14VNVisitorConst5visitEP14AstSetWildcard, ptr @_ZN14VNVisitorConst5visitEP12AstSetuphold, ptr @_ZN14VNVisitorConst5visitEP9AstShiftL, ptr @_ZN14VNVisitorConst5visitEP12AstShiftLOvr, ptr @_ZN14VNVisitorConst5visitEP9AstShiftR, ptr @_ZN14VNVisitorConst5visitEP12AstShiftROvr, ptr @_ZN14VNVisitorConst5visitEP10AstShiftRS, ptr @_ZN14VNVisitorConst5visitEP13AstShiftRSOvr, ptr @_ZN14VNVisitorConst5visitEP9AstSigned, ptr @_ZN14VNVisitorConst5visitEP7AstSinD, ptr @_ZN14VNVisitorConst5visitEP8AstSinhD, ptr @_ZN14VNVisitorConst5visitEP11AstSliceSel, ptr @_ZN14VNVisitorConst5visitEP19AstSplitPlaceholder, ptr @_ZN14VNVisitorConst5visitEP8AstSqrtD, ptr @_ZN14VNVisitorConst5visitEP9AstStable, ptr @_ZN14VNVisitorConst5visitEP14AstStackTraceF, ptr @_ZN14VNVisitorConst5visitEP14AstStackTraceT, ptr @_ZN14VNVisitorConst5visitEP9AstSteady, ptr @_ZN14VNVisitorConst5visitEP11AstStmtExpr, ptr @_ZN14VNVisitorConst5visitEP13AstStmtPragma, ptr @_ZN14VNVisitorConst5visitEP7AstStop, ptr @_ZN14VNVisitorConst5visitEP14AstStreamDType, ptr @_ZN14VNVisitorConst5visitEP10AstStreamL, ptr @_ZN14VNVisitorConst5visitEP10AstStreamR, ptr @_ZN14VNVisitorConst5visitEP15AstStrengthSpec, ptr @_ZN14VNVisitorConst5visitEP14AstStructDType, ptr @_ZN14VNVisitorConst5visitEP12AstStructSel, ptr @_ZN14VNVisitorConst5visitEP6AstSub, ptr @_ZN14VNVisitorConst5visitEP7AstSubD, ptr @_ZN14VNVisitorConst5visitEP10AstSubstrN, ptr @_ZN14VNVisitorConst5visitEP12AstSysIgnore, ptr @_ZN14VNVisitorConst5visitEP17AstSystemCSection, ptr @_ZN14VNVisitorConst5visitEP10AstSystemF, ptr @_ZN14VNVisitorConst5visitEP10AstSystemT, ptr @_ZN14VNVisitorConst5visitEP13AstTaggedExpr, ptr @_ZN14VNVisitorConst5visitEP16AstTaggedPattern, ptr @_ZN14VNVisitorConst5visitEP7AstTanD, ptr @_ZN14VNVisitorConst5visitEP8AstTanhD, ptr @_ZN14VNVisitorConst5visitEP7AstTask, ptr @_ZN14VNVisitorConst5visitEP10AstTaskRef, ptr @_ZN14VNVisitorConst5visitEP15AstTestPlusArgs, ptr @_ZN14VNVisitorConst5visitEP7AstText, ptr @_ZN14VNVisitorConst5visitEP12AstTextBlock, ptr @_ZN14VNVisitorConst5visitEP10AstThisRef, ptr @_ZN14VNVisitorConst5visitEP7AstTime, ptr @_ZN14VNVisitorConst5visitEP8AstTimeD, ptr @_ZN14VNVisitorConst5visitEP13AstTimeFormat, ptr @_ZN14VNVisitorConst5visitEP13AstTimeImport, ptr @_ZN14VNVisitorConst5visitEP16AstTimePrecision, ptr @_ZN14VNVisitorConst5visitEP11AstTimeUnit, ptr @_ZN14VNVisitorConst5visitEP11AstToLowerN, ptr @_ZN14VNVisitorConst5visitEP12AstToStringN, ptr @_ZN14VNVisitorConst5visitEP11AstToUpperN, ptr @_ZN14VNVisitorConst5visitEP11AstTopScope, ptr @_ZN14VNVisitorConst5visitEP12AstTraceDecl, ptr @_ZN14VNVisitorConst5visitEP11AstTraceInc, ptr @_ZN14VNVisitorConst5visitEP17AstTracePopPrefix, ptr @_ZN14VNVisitorConst5visitEP18AstTracePushPrefix, ptr @_ZN14VNVisitorConst5visitEP12AstTypeTable, ptr @_ZN14VNVisitorConst5visitEP10AstTypedef, ptr @_ZN14VNVisitorConst5visitEP13AstTypedefFwd, ptr @_ZN14VNVisitorConst5visitEP15AstURandomRange, ptr @_ZN14VNVisitorConst5visitEP11AstUdpTable, ptr @_ZN14VNVisitorConst5visitEP15AstUdpTableLine, ptr @_ZN14VNVisitorConst5visitEP18AstUdpTableLineVal, ptr @_ZN14VNVisitorConst5visitEP12AstUnbounded, ptr @_ZN14VNVisitorConst5visitEP13AstUnionDType, ptr @_ZN14VNVisitorConst5visitEP14AstUnlinkedRef, ptr @_ZN14VNVisitorConst5visitEP19AstUnpackArrayDType, ptr @_ZN14VNVisitorConst5visitEP11AstUnsigned, ptr @_ZN14VNVisitorConst5visitEP20AstUnsizedArrayDType, ptr @_ZN14VNVisitorConst5visitEP15AstUnsizedRange, ptr @_ZN14VNVisitorConst5visitEP8AstUntil, ptr @_ZN14VNVisitorConst5visitEP8AstVFile, ptr @_ZN14VNVisitorConst5visitEP16AstValuePlusArgs, ptr @_ZN14VNVisitorConst5visitEP6AstVar, ptr @_ZN14VNVisitorConst5visitEP9AstVarRef, ptr @_ZN14VNVisitorConst5visitEP11AstVarScope, ptr @_ZN14VNVisitorConst5visitEP10AstVarXRef, ptr @_ZN14VNVisitorConst5visitEP12AstVoidDType, ptr @_ZN14VNVisitorConst5visitEP7AstWait, ptr @_ZN14VNVisitorConst5visitEP11AstWaitFork, ptr @_ZN14VNVisitorConst5visitEP21AstWildcardArrayDType, ptr @_ZN14VNVisitorConst5visitEP16AstWildcardRange, ptr @_ZN14VNVisitorConst5visitEP14AstWildcardSel, ptr @_ZN14VNVisitorConst5visitEP7AstWith, ptr @_ZN14VNVisitorConst5visitEP12AstWithParse, ptr @_ZN14VNVisitorConst5visitEP10AstWordSel, ptr @_ZN14VNVisitorConst5visitEP11AstWriteMem, ptr @_ZN14VNVisitorConst5visitEP6AstXor] }, align 8
+@_ZTIN7V3Sched12_GLOBAL__N_117SchedGraphBuilderE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN7V3Sched12_GLOBAL__N_117SchedGraphBuilderE, ptr @_ZTI9VNVisitor }, align 8
+@_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
+@_ZTSN7V3Sched12_GLOBAL__N_117SchedGraphBuilderE = internal constant [44 x i8] c"N7V3Sched12_GLOBAL__N_117SchedGraphBuilderE\00", align 1
+@_ZTI9VNVisitor = linkonce_odr dso_local constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTS9VNVisitor, ptr @_ZTI14VNVisitorConst }, comdat, align 8
+@_ZTS9VNVisitor = linkonce_odr dso_local constant [11 x i8] c"9VNVisitor\00", comdat, align 1
+@_ZTI14VNVisitorConst = external constant ptr
+@_ZTV9VNVisitor = linkonce_odr dso_local constant { [525 x ptr] } { [525 x ptr] [ptr null, ptr @_ZTI9VNVisitor, ptr @__cxa_pure_virtual, ptr @_ZN9VNVisitorD2Ev, ptr @_ZN9VNVisitorD0Ev, ptr @_ZN14VNVisitorConst5visitEP10AstAbortOn, ptr @_ZN14VNVisitorConst5visitEP8AstAcosD, ptr @_ZN14VNVisitorConst5visitEP9AstAcoshD, ptr @_ZN14VNVisitorConst5visitEP9AstActive, ptr @_ZN14VNVisitorConst5visitEP6AstAdd, ptr @_ZN14VNVisitorConst5visitEP7AstAddD, ptr @_ZN14VNVisitorConst5visitEP14AstAddrOfCFunc, ptr @_ZN14VNVisitorConst5visitEP8AstAlias, ptr @_ZN14VNVisitorConst5visitEP13AstAliasScope, ptr @_ZN14VNVisitorConst5visitEP9AstAlways, ptr @_ZN14VNVisitorConst5visitEP17AstAlwaysObserved, ptr @_ZN14VNVisitorConst5visitEP13AstAlwaysPost, ptr @_ZN14VNVisitorConst5visitEP18AstAlwaysPostponed, ptr @_ZN14VNVisitorConst5visitEP12AstAlwaysPre, ptr @_ZN14VNVisitorConst5visitEP17AstAlwaysReactive, ptr @_ZN14VNVisitorConst5visitEP6AstAnd, ptr @_ZN14VNVisitorConst5visitEP6AstArg, ptr @_ZN14VNVisitorConst5visitEP11AstArraySel, ptr @_ZN14VNVisitorConst5visitEP8AstAsinD, ptr @_ZN14VNVisitorConst5visitEP9AstAsinhD, ptr @_ZN14VNVisitorConst5visitEP9AstAssert, ptr @_ZN14VNVisitorConst5visitEP12AstAssertCtl, ptr @_ZN14VNVisitorConst5visitEP18AstAssertIntrinsic, ptr @_ZN14VNVisitorConst5visitEP9AstAssign, ptr @_ZN14VNVisitorConst5visitEP17AstAssignCompound, ptr @_ZN14VNVisitorConst5visitEP13AstAssignCont, ptr @_ZN14VNVisitorConst5visitEP12AstAssignDly, ptr @_ZN14VNVisitorConst5visitEP14AstAssignForce, ptr @_ZN14VNVisitorConst5visitEP10AstAssignW, ptr @_ZN14VNVisitorConst5visitEP18AstAssocArrayDType, ptr @_ZN14VNVisitorConst5visitEP11AstAssocSel, ptr @_ZN14VNVisitorConst5visitEP9AstAtan2D, ptr @_ZN14VNVisitorConst5visitEP8AstAtanD, ptr @_ZN14VNVisitorConst5visitEP9AstAtanhD, ptr @_ZN14VNVisitorConst5visitEP7AstAtoN, ptr @_ZN14VNVisitorConst5visitEP9AstAttrOf, ptr @_ZN14VNVisitorConst5visitEP13AstBasicDType, ptr @_ZN14VNVisitorConst5visitEP8AstBegin, ptr @_ZN14VNVisitorConst5visitEP7AstBind, ptr @_ZN14VNVisitorConst5visitEP14AstBitsToRealD, ptr @_ZN14VNVisitorConst5visitEP20AstBracketArrayDType, ptr @_ZN14VNVisitorConst5visitEP15AstBracketRange, ptr @_ZN14VNVisitorConst5visitEP8AstBreak, ptr @_ZN14VNVisitorConst5visitEP9AstBufIf1, ptr @_ZN14VNVisitorConst5visitEP9AstCAwait, ptr @_ZN14VNVisitorConst5visitEP8AstCCall, ptr @_ZN14VNVisitorConst5visitEP8AstCCast, ptr @_ZN14VNVisitorConst5visitEP9AstCDType, ptr @_ZN14VNVisitorConst5visitEP8AstCExpr, ptr @_ZN14VNVisitorConst5visitEP12AstCExprUser, ptr @_ZN14VNVisitorConst5visitEP8AstCFile, ptr @_ZN14VNVisitorConst5visitEP8AstCFunc, ptr @_ZN14VNVisitorConst5visitEP14AstCLocalScope, ptr @_ZN14VNVisitorConst5visitEP8AstCLog2, ptr @_ZN14VNVisitorConst5visitEP14AstCMethodCall, ptr @_ZN14VNVisitorConst5visitEP14AstCMethodHard, ptr @_ZN14VNVisitorConst5visitEP7AstCNew, ptr @_ZN14VNVisitorConst5visitEP9AstCReset, ptr @_ZN14VNVisitorConst5visitEP10AstCReturn, ptr @_ZN14VNVisitorConst5visitEP8AstCStmt, ptr @_ZN14VNVisitorConst5visitEP12AstCStmtUser, ptr @_ZN14VNVisitorConst5visitEP7AstCUse, ptr @_ZN14VNVisitorConst5visitEP7AstCase, ptr @_ZN14VNVisitorConst5visitEP11AstCaseItem, ptr @_ZN14VNVisitorConst5visitEP7AstCast, ptr @_ZN14VNVisitorConst5visitEP14AstCastDynamic, ptr @_ZN14VNVisitorConst5visitEP12AstCastParse, ptr @_ZN14VNVisitorConst5visitEP11AstCastSize, ptr @_ZN14VNVisitorConst5visitEP11AstCastWrap, ptr @_ZN14VNVisitorConst5visitEP8AstCeilD, ptr @_ZN14VNVisitorConst5visitEP7AstCell, ptr @_ZN14VNVisitorConst5visitEP15AstCellArrayRef, ptr @_ZN14VNVisitorConst5visitEP13AstCellInline, ptr @_ZN14VNVisitorConst5visitEP18AstCellInlineScope, ptr @_ZN14VNVisitorConst5visitEP10AstCellRef, ptr @_ZN14VNVisitorConst5visitEP17AstCgOptionAssign, ptr @_ZN14VNVisitorConst5visitEP8AstClass, ptr @_ZN14VNVisitorConst5visitEP15AstClassExtends, ptr @_ZN14VNVisitorConst5visitEP20AstClassOrPackageRef, ptr @_ZN14VNVisitorConst5visitEP15AstClassPackage, ptr @_ZN14VNVisitorConst5visitEP16AstClassRefDType, ptr @_ZN14VNVisitorConst5visitEP11AstClocking, ptr @_ZN14VNVisitorConst5visitEP15AstClockingItem, ptr @_ZN14VNVisitorConst5visitEP10AstComment, ptr @_ZN14VNVisitorConst5visitEP12AstCompareNN, ptr @_ZN14VNVisitorConst5visitEP9AstConcat, ptr @_ZN14VNVisitorConst5visitEP10AstConcatN, ptr @_ZN14VNVisitorConst5visitEP7AstCond, ptr @_ZN14VNVisitorConst5visitEP9AstConfig, ptr @_ZN14VNVisitorConst5visitEP13AstConfigCell, ptr @_ZN14VNVisitorConst5visitEP13AstConfigRule, ptr @_ZN14VNVisitorConst5visitEP12AstConfigUse, ptr @_ZN14VNVisitorConst5visitEP12AstConsAssoc, ptr @_ZN14VNVisitorConst5visitEP15AstConsDynArray, ptr @_ZN14VNVisitorConst5visitEP17AstConsPackMember, ptr @_ZN14VNVisitorConst5visitEP20AstConsPackUOrStruct, ptr @_ZN14VNVisitorConst5visitEP12AstConsQueue, ptr @_ZN14VNVisitorConst5visitEP15AstConsWildcard, ptr @_ZN14VNVisitorConst5visitEP8AstConst, ptr @_ZN14VNVisitorConst5visitEP13AstConstDType, ptr @_ZN14VNVisitorConst5visitEP12AstConstPool, ptr @_ZN14VNVisitorConst5visitEP13AstConstraint, ptr @_ZN14VNVisitorConst5visitEP19AstConstraintBefore, ptr @_ZN14VNVisitorConst5visitEP17AstConstraintExpr, ptr @_ZN14VNVisitorConst5visitEP20AstConstraintForeach, ptr @_ZN14VNVisitorConst5visitEP15AstConstraintIf, ptr @_ZN14VNVisitorConst5visitEP16AstConstraintRef, ptr @_ZN14VNVisitorConst5visitEP21AstConstraintRefDType, ptr @_ZN14VNVisitorConst5visitEP19AstConstraintUnique, ptr @_ZN14VNVisitorConst5visitEP11AstContinue, ptr @_ZN14VNVisitorConst5visitEP7AstCosD, ptr @_ZN14VNVisitorConst5visitEP8AstCoshD, ptr @_ZN14VNVisitorConst5visitEP12AstCountBits, ptr @_ZN14VNVisitorConst5visitEP12AstCountOnes, ptr @_ZN14VNVisitorConst5visitEP8AstCover, ptr @_ZN14VNVisitorConst5visitEP11AstCoverBin, ptr @_ZN14VNVisitorConst5visitEP13AstCoverCross, ptr @_ZN14VNVisitorConst5visitEP11AstCoverInc, ptr @_ZN14VNVisitorConst5visitEP14AstCoverOption, ptr @_ZN14VNVisitorConst5visitEP17AstCoverOtherDecl, ptr @_ZN14VNVisitorConst5visitEP14AstCoverToggle, ptr @_ZN14VNVisitorConst5visitEP18AstCoverToggleDecl, ptr @_ZN14VNVisitorConst5visitEP17AstCoverTransItem, ptr @_ZN14VNVisitorConst5visitEP16AstCoverTransSet, ptr @_ZN14VNVisitorConst5visitEP13AstCovergroup, ptr @_ZN14VNVisitorConst5visitEP13AstCoverpoint, ptr @_ZN14VNVisitorConst5visitEP16AstCoverpointRef, ptr @_ZN14VNVisitorConst5visitEP18AstCvtArrayToArray, ptr @_ZN14VNVisitorConst5visitEP19AstCvtArrayToPacked, ptr @_ZN14VNVisitorConst5visitEP16AstCvtPackString, ptr @_ZN14VNVisitorConst5visitEP19AstCvtPackedToArray, ptr @_ZN14VNVisitorConst5visitEP21AstCvtUnpackedToQueue, ptr @_ZN14VNVisitorConst5visitEP11AstDeassign, ptr @_ZN14VNVisitorConst5visitEP19AstDefImplicitDType, ptr @_ZN14VNVisitorConst5visitEP11AstDefParam, ptr @_ZN14VNVisitorConst5visitEP17AstDefaultDisable, ptr @_ZN14VNVisitorConst5visitEP8AstDelay, ptr @_ZN14VNVisitorConst5visitEP10AstDisable, ptr @_ZN14VNVisitorConst5visitEP14AstDisableFork, ptr @_ZN14VNVisitorConst5visitEP10AstDisplay, ptr @_ZN14VNVisitorConst5visitEP7AstDist, ptr @_ZN14VNVisitorConst5visitEP16AstDistChiSquare, ptr @_ZN14VNVisitorConst5visitEP13AstDistErlang, ptr @_ZN14VNVisitorConst5visitEP18AstDistExponential, ptr @_ZN14VNVisitorConst5visitEP11AstDistItem, ptr @_ZN14VNVisitorConst5visitEP13AstDistNormal, ptr @_ZN14VNVisitorConst5visitEP14AstDistPoisson, ptr @_ZN14VNVisitorConst5visitEP8AstDistT, ptr @_ZN14VNVisitorConst5visitEP14AstDistUniform, ptr @_ZN14VNVisitorConst5visitEP6AstDiv, ptr @_ZN14VNVisitorConst5visitEP7AstDivD, ptr @_ZN14VNVisitorConst5visitEP7AstDivS, ptr @_ZN14VNVisitorConst5visitEP6AstDot, ptr @_ZN14VNVisitorConst5visitEP12AstDpiExport, ptr @_ZN14VNVisitorConst5visitEP10AstDumpCtl, ptr @_ZN14VNVisitorConst5visitEP16AstDynArrayDType, ptr @_ZN14VNVisitorConst5visitEP14AstElabDisplay, ptr @_ZN14VNVisitorConst5visitEP8AstEmpty, ptr @_ZN14VNVisitorConst5visitEP13AstEmptyQueue, ptr @_ZN14VNVisitorConst5visitEP18AstEmptyQueueDType, ptr @_ZN14VNVisitorConst5visitEP12AstEnumDType, ptr @_ZN14VNVisitorConst5visitEP11AstEnumItem, ptr @_ZN14VNVisitorConst5visitEP14AstEnumItemRef, ptr @_ZN14VNVisitorConst5visitEP5AstEq, ptr @_ZN14VNVisitorConst5visitEP9AstEqCase, ptr @_ZN14VNVisitorConst5visitEP6AstEqD, ptr @_ZN14VNVisitorConst5visitEP6AstEqN, ptr @_ZN14VNVisitorConst5visitEP6AstEqT, ptr @_ZN14VNVisitorConst5visitEP9AstEqWild, ptr @_ZN14VNVisitorConst5visitEP15AstEventControl, ptr @_ZN14VNVisitorConst5visitEP12AstExecGraph, ptr @_ZN14VNVisitorConst5visitEP7AstExpD, ptr @_ZN14VNVisitorConst5visitEP11AstExprStmt, ptr @_ZN14VNVisitorConst5visitEP9AstExtend, ptr @_ZN14VNVisitorConst5visitEP10AstExtendS, ptr @_ZN14VNVisitorConst5visitEP9AstFClose, ptr @_ZN14VNVisitorConst5visitEP7AstFEof, ptr @_ZN14VNVisitorConst5visitEP9AstFError, ptr @_ZN14VNVisitorConst5visitEP9AstFFlush, ptr @_ZN14VNVisitorConst5visitEP8AstFGetC, ptr @_ZN14VNVisitorConst5visitEP8AstFGetS, ptr @_ZN14VNVisitorConst5visitEP8AstFOpen, ptr @_ZN14VNVisitorConst5visitEP11AstFOpenMcd, ptr @_ZN14VNVisitorConst5visitEP8AstFRead, ptr @_ZN14VNVisitorConst5visitEP10AstFRewind, ptr @_ZN14VNVisitorConst5visitEP9AstFScanF, ptr @_ZN14VNVisitorConst5visitEP8AstFSeek, ptr @_ZN14VNVisitorConst5visitEP8AstFTell, ptr @_ZN14VNVisitorConst5visitEP10AstFUngetC, ptr @_ZN14VNVisitorConst5visitEP10AstFalling, ptr @_ZN14VNVisitorConst5visitEP7AstFell, ptr @_ZN14VNVisitorConst5visitEP8AstFinal, ptr @_ZN14VNVisitorConst5visitEP9AstFinish, ptr @_ZN14VNVisitorConst5visitEP13AstFinishFork, ptr @_ZN14VNVisitorConst5visitEP12AstFireEvent, ptr @_ZN14VNVisitorConst5visitEP9AstFloorD, ptr @_ZN14VNVisitorConst5visitEP10AstForeach, ptr @_ZN14VNVisitorConst5visitEP16AstForeachHeader, ptr @_ZN14VNVisitorConst5visitEP7AstFork, ptr @_ZN14VNVisitorConst5visitEP7AstFunc, ptr @_ZN14VNVisitorConst5visitEP10AstFuncRef, ptr @_ZN14VNVisitorConst5visitEP9AstFuture, ptr @_ZN14VNVisitorConst5visitEP10AstGatePin, ptr @_ZN14VNVisitorConst5visitEP11AstGenBlock, ptr @_ZN14VNVisitorConst5visitEP10AstGenCase, ptr @_ZN14VNVisitorConst5visitEP14AstGenCaseItem, ptr @_ZN14VNVisitorConst5visitEP9AstGenFor, ptr @_ZN14VNVisitorConst5visitEP8AstGenIf, ptr @_ZN14VNVisitorConst5visitEP23AstGetInitialRandomSeed, ptr @_ZN14VNVisitorConst5visitEP8AstGetcN, ptr @_ZN14VNVisitorConst5visitEP11AstGetcRefN, ptr @_ZN14VNVisitorConst5visitEP5AstGt, ptr @_ZN14VNVisitorConst5visitEP6AstGtD, ptr @_ZN14VNVisitorConst5visitEP6AstGtN, ptr @_ZN14VNVisitorConst5visitEP6AstGtS, ptr @_ZN14VNVisitorConst5visitEP6AstGte, ptr @_ZN14VNVisitorConst5visitEP7AstGteD, ptr @_ZN14VNVisitorConst5visitEP7AstGteN, ptr @_ZN14VNVisitorConst5visitEP7AstGteS, ptr @_ZN14VNVisitorConst5visitEP9AstHypotD, ptr @_ZN14VNVisitorConst5visitEP9AstISToRD, ptr @_ZN14VNVisitorConst5visitEP8AstIToRD, ptr @_ZN14VNVisitorConst5visitEP5AstIf, ptr @_ZN14VNVisitorConst5visitEP8AstIface, ptr @_ZN14VNVisitorConst5visitEP20AstIfaceGenericDType, ptr @_ZN14VNVisitorConst5visitEP16AstIfaceRefDType, ptr @_ZN14VNVisitorConst5visitEP14AstImplication, ptr @_ZN14VNVisitorConst5visitEP11AstImplicit, ptr @_ZN14VNVisitorConst5visitEP18AstInferredDisable, ptr @_ZN14VNVisitorConst5visitEP12AstInitArray, ptr @_ZN14VNVisitorConst5visitEP11AstInitItem, ptr @_ZN14VNVisitorConst5visitEP10AstInitial, ptr @_ZN14VNVisitorConst5visitEP19AstInitialAutomatic, ptr @_ZN14VNVisitorConst5visitEP23AstInitialAutomaticStmt, ptr @_ZN14VNVisitorConst5visitEP16AstInitialStatic, ptr @_ZN14VNVisitorConst5visitEP20AstInitialStaticStmt, ptr @_ZN14VNVisitorConst5visitEP9AstInside, ptr @_ZN14VNVisitorConst5visitEP14AstInsideRange, ptr @_ZN14VNVisitorConst5visitEP10AstIntfRef, ptr @_ZN14VNVisitorConst5visitEP14AstIsUnbounded, ptr @_ZN14VNVisitorConst5visitEP12AstIsUnknown, ptr @_ZN14VNVisitorConst5visitEP12AstJumpBlock, ptr @_ZN14VNVisitorConst5visitEP9AstJumpGo, ptr @_ZN14VNVisitorConst5visitEP15AstLambdaArgRef, ptr @_ZN14VNVisitorConst5visitEP7AstLenN, ptr @_ZN14VNVisitorConst5visitEP6AstLet, ptr @_ZN14VNVisitorConst5visitEP10AstLibrary, ptr @_ZN14VNVisitorConst5visitEP9AstLog10D, ptr @_ZN14VNVisitorConst5visitEP9AstLogAnd, ptr @_ZN14VNVisitorConst5visitEP7AstLogD, ptr @_ZN14VNVisitorConst5visitEP8AstLogEq, ptr @_ZN14VNVisitorConst5visitEP8AstLogIf, ptr @_ZN14VNVisitorConst5visitEP9AstLogNot, ptr @_ZN14VNVisitorConst5visitEP8AstLogOr, ptr @_ZN14VNVisitorConst5visitEP7AstLoop, ptr @_ZN14VNVisitorConst5visitEP11AstLoopTest, ptr @_ZN14VNVisitorConst5visitEP5AstLt, ptr @_ZN14VNVisitorConst5visitEP6AstLtD, ptr @_ZN14VNVisitorConst5visitEP6AstLtN, ptr @_ZN14VNVisitorConst5visitEP6AstLtS, ptr @_ZN14VNVisitorConst5visitEP6AstLte, ptr @_ZN14VNVisitorConst5visitEP7AstLteD, ptr @_ZN14VNVisitorConst5visitEP7AstLteN, ptr @_ZN14VNVisitorConst5visitEP7AstLteS, ptr @_ZN14VNVisitorConst5visitEP14AstMatchMasked, ptr @_ZN14VNVisitorConst5visitEP10AstMatches, ptr @_ZN14VNVisitorConst5visitEP14AstMemberDType, ptr @_ZN14VNVisitorConst5visitEP12AstMemberSel, ptr @_ZN14VNVisitorConst5visitEP13AstMethodCall, ptr @_ZN14VNVisitorConst5visitEP9AstModDiv, ptr @_ZN14VNVisitorConst5visitEP10AstModDivS, ptr @_ZN14VNVisitorConst5visitEP10AstModport, ptr @_ZN14VNVisitorConst5visitEP21AstModportClockingRef, ptr @_ZN14VNVisitorConst5visitEP18AstModportFTaskRef, ptr @_ZN14VNVisitorConst5visitEP16AstModportVarRef, ptr @_ZN14VNVisitorConst5visitEP9AstModule, ptr @_ZN14VNVisitorConst5visitEP13AstMonitorOff, ptr @_ZN14VNVisitorConst5visitEP15AstMostSetBitP1, ptr @_ZN14VNVisitorConst5visitEP6AstMul, ptr @_ZN14VNVisitorConst5visitEP7AstMulD, ptr @_ZN14VNVisitorConst5visitEP7AstMulS, ptr @_ZN14VNVisitorConst5visitEP22AstNBACommitQueueDType, ptr @_ZN14VNVisitorConst5visitEP7AstNToI, ptr @_ZN14VNVisitorConst5visitEP9AstNegate, ptr @_ZN14VNVisitorConst5visitEP10AstNegateD, ptr @_ZN14VNVisitorConst5visitEP6AstNeq, ptr @_ZN14VNVisitorConst5visitEP10AstNeqCase, ptr @_ZN14VNVisitorConst5visitEP7AstNeqD, ptr @_ZN14VNVisitorConst5visitEP7AstNeqN, ptr @_ZN14VNVisitorConst5visitEP7AstNeqT, ptr @_ZN14VNVisitorConst5visitEP10AstNeqWild, ptr @_ZN14VNVisitorConst5visitEP10AstNetlist, ptr @_ZN14VNVisitorConst5visitEP6AstNew, ptr @_ZN14VNVisitorConst5visitEP10AstNewCopy, ptr @_ZN14VNVisitorConst5visitEP13AstNewDynamic, ptr @_ZN14VNVisitorConst5visitEP17AstNodeArrayDType, ptr @_ZN14VNVisitorConst5visitEP13AstNodeAssign, ptr @_ZN14VNVisitorConst5visitEP12AstNodeBiCom, ptr @_ZN14VNVisitorConst5visitEP15AstNodeBiComAsv, ptr @_ZN14VNVisitorConst5visitEP11AstNodeBiop, ptr @_ZN14VNVisitorConst5visitEP12AstNodeBlock, ptr @_ZN14VNVisitorConst5visitEP12AstNodeCCall, ptr @_ZN14VNVisitorConst5visitEP16AstNodeCoverDecl, ptr @_ZN14VNVisitorConst5visitEP20AstNodeCoverOrAssert, ptr @_ZN14VNVisitorConst5visitEP12AstNodeDType, ptr @_ZN14VNVisitorConst5visitEP15AstNodeDistBiop, ptr @_ZN14VNVisitorConst5visitEP16AstNodeDistTriop, ptr @_ZN14VNVisitorConst5visitEP11AstNodeExpr, ptr @_ZN14VNVisitorConst5visitEP12AstNodeFTask, ptr @_ZN14VNVisitorConst5visitEP15AstNodeFTaskRef, ptr @_ZN14VNVisitorConst5visitEP11AstNodeFile, ptr @_ZN14VNVisitorConst5visitEP14AstNodeForeach, ptr @_ZN14VNVisitorConst5visitEP18AstNodeFuncCovItem, ptr @_ZN14VNVisitorConst5visitEP10AstNodeGen, ptr @_ZN14VNVisitorConst5visitEP9AstNodeIf, ptr @_ZN14VNVisitorConst5visitEP13AstNodeModule, ptr @_ZN14VNVisitorConst5visitEP13AstNodePreSel, ptr @_ZN14VNVisitorConst5visitEP16AstNodeProcedure, ptr @_ZN14VNVisitorConst5visitEP13AstNodeQuadop, ptr @_ZN14VNVisitorConst5visitEP12AstNodeRange, ptr @_ZN14VNVisitorConst5visitEP19AstNodeReadWriteMem, ptr @_ZN14VNVisitorConst5visitEP10AstNodeSel, ptr @_ZN14VNVisitorConst5visitEP11AstNodeStmt, ptr @_ZN14VNVisitorConst5visitEP13AstNodeStream, ptr @_ZN14VNVisitorConst5visitEP18AstNodeSystemBiopD, ptr @_ZN14VNVisitorConst5visitEP19AstNodeSystemUniopD, ptr @_ZN14VNVisitorConst5visitEP13AstNodeTermop, ptr @_ZN14VNVisitorConst5visitEP12AstNodeTriop, ptr @_ZN14VNVisitorConst5visitEP21AstNodeUOrStructDType, ptr @_ZN14VNVisitorConst5visitEP12AstNodeUniop, ptr @_ZN14VNVisitorConst5visitEP13AstNodeVarRef, ptr @_ZN14VNVisitorConst5visitEP6AstNot, ptr @_ZN14VNVisitorConst5visitEP17AstNotFoundModule, ptr @_ZN14VNVisitorConst5visitEP12AstNullCheck, ptr @_ZN14VNVisitorConst5visitEP9AstOneHot, ptr @_ZN14VNVisitorConst5visitEP10AstOneHot0, ptr @_ZN14VNVisitorConst5visitEP5AstOr, ptr @_ZN14VNVisitorConst5visitEP8AstPExpr, ptr @_ZN14VNVisitorConst5visitEP14AstPExprClause, ptr @_ZN14VNVisitorConst5visitEP17AstPackArrayDType, ptr @_ZN14VNVisitorConst5visitEP10AstPackage, ptr @_ZN14VNVisitorConst5visitEP16AstPackageExport, ptr @_ZN14VNVisitorConst5visitEP24AstPackageExportStarStar, ptr @_ZN14VNVisitorConst5visitEP16AstPackageImport, ptr @_ZN14VNVisitorConst5visitEP17AstParamTypeDType, ptr @_ZN14VNVisitorConst5visitEP14AstParseHolder, ptr @_ZN14VNVisitorConst5visitEP11AstParseRef, ptr @_ZN14VNVisitorConst5visitEP17AstParseTypeDType, ptr @_ZN14VNVisitorConst5visitEP7AstPast, ptr @_ZN14VNVisitorConst5visitEP12AstPatMember, ptr @_ZN14VNVisitorConst5visitEP10AstPattern, ptr @_ZN14VNVisitorConst5visitEP14AstPatternStar, ptr @_ZN14VNVisitorConst5visitEP13AstPatternVar, ptr @_ZN14VNVisitorConst5visitEP6AstPin, ptr @_ZN14VNVisitorConst5visitEP7AstPort, ptr @_ZN14VNVisitorConst5visitEP10AstPostDec, ptr @_ZN14VNVisitorConst5visitEP10AstPostInc, ptr @_ZN14VNVisitorConst5visitEP6AstPow, ptr @_ZN14VNVisitorConst5visitEP7AstPowD, ptr @_ZN14VNVisitorConst5visitEP8AstPowSS, ptr @_ZN14VNVisitorConst5visitEP8AstPowSU, ptr @_ZN14VNVisitorConst5visitEP8AstPowUS, ptr @_ZN14VNVisitorConst5visitEP9AstPragma, ptr @_ZN14VNVisitorConst5visitEP9AstPreDec, ptr @_ZN14VNVisitorConst5visitEP9AstPreInc, ptr @_ZN14VNVisitorConst5visitEP12AstPrimitive, ptr @_ZN14VNVisitorConst5visitEP17AstPrintTimeScale, ptr @_ZN14VNVisitorConst5visitEP13AstPropAlways, ptr @_ZN14VNVisitorConst5visitEP11AstPropSpec, ptr @_ZN14VNVisitorConst5visitEP11AstProperty, ptr @_ZN14VNVisitorConst5visitEP7AstPull, ptr @_ZN14VNVisitorConst5visitEP8AstPutcN, ptr @_ZN14VNVisitorConst5visitEP13AstQueueDType, ptr @_ZN14VNVisitorConst5visitEP10AstRSBreak, ptr @_ZN14VNVisitorConst5visitEP9AstRSProd, ptr @_ZN14VNVisitorConst5visitEP13AstRSProdItem, ptr @_ZN14VNVisitorConst5visitEP13AstRSProdList, ptr @_ZN14VNVisitorConst5visitEP11AstRSReturn, ptr @_ZN14VNVisitorConst5visitEP9AstRSRule, ptr @_ZN14VNVisitorConst5visitEP13AstRToIRoundS, ptr @_ZN14VNVisitorConst5visitEP8AstRToIS, ptr @_ZN14VNVisitorConst5visitEP7AstRand, ptr @_ZN14VNVisitorConst5visitEP11AstRandCase, ptr @_ZN14VNVisitorConst5visitEP10AstRandRNG, ptr @_ZN14VNVisitorConst5visitEP15AstRandSequence, ptr @_ZN14VNVisitorConst5visitEP8AstRange, ptr @_ZN14VNVisitorConst5visitEP10AstReadMem, ptr @_ZN14VNVisitorConst5visitEP13AstRealToBits, ptr @_ZN14VNVisitorConst5visitEP9AstRedAnd, ptr @_ZN14VNVisitorConst5visitEP8AstRedOr, ptr @_ZN14VNVisitorConst5visitEP9AstRedXor, ptr @_ZN14VNVisitorConst5visitEP11AstRefDType, ptr @_ZN14VNVisitorConst5visitEP10AstRelease, ptr @_ZN14VNVisitorConst5visitEP9AstRepeat, ptr @_ZN14VNVisitorConst5visitEP12AstReplicate, ptr @_ZN14VNVisitorConst5visitEP13AstReplicateN, ptr @_ZN14VNVisitorConst5visitEP15AstRequireDType, ptr @_ZN14VNVisitorConst5visitEP15AstResizeLValue, ptr @_ZN14VNVisitorConst5visitEP11AstRestrict, ptr @_ZN14VNVisitorConst5visitEP9AstReturn, ptr @_ZN14VNVisitorConst5visitEP9AstRising, ptr @_ZN14VNVisitorConst5visitEP7AstRose, ptr @_ZN14VNVisitorConst5visitEP7AstSAnd, ptr @_ZN14VNVisitorConst5visitEP11AstSClocked, ptr @_ZN14VNVisitorConst5visitEP11AstSConsRep, ptr @_ZN14VNVisitorConst5visitEP14AstSEventually, ptr @_ZN14VNVisitorConst5visitEP8AstSExpr, ptr @_ZN14VNVisitorConst5visitEP10AstSFormat, ptr @_ZN14VNVisitorConst5visitEP13AstSFormatArg, ptr @_ZN14VNVisitorConst5visitEP11AstSFormatF, ptr @_ZN14VNVisitorConst5visitEP11AstSGotoRep, ptr @_ZN14VNVisitorConst5visitEP13AstSIntersect, ptr @_ZN14VNVisitorConst5visitEP14AstSNonConsRep, ptr @_ZN14VNVisitorConst5visitEP6AstSOr, ptr @_ZN14VNVisitorConst5visitEP9AstSScanF, ptr @_ZN14VNVisitorConst5visitEP14AstSThroughout, ptr @_ZN14VNVisitorConst5visitEP10AstSWithin, ptr @_ZN14VNVisitorConst5visitEP19AstSampleQueueDType, ptr @_ZN14VNVisitorConst5visitEP10AstSampled, ptr @_ZN14VNVisitorConst5visitEP8AstScope, ptr @_ZN14VNVisitorConst5visitEP12AstScopeName, ptr @_ZN14VNVisitorConst5visitEP6AstSel, ptr @_ZN14VNVisitorConst5visitEP9AstSelBit, ptr @_ZN14VNVisitorConst5visitEP13AstSelExtract, ptr @_ZN14VNVisitorConst5visitEP11AstSelMinus, ptr @_ZN14VNVisitorConst5visitEP10AstSelPlus, ptr @_ZN14VNVisitorConst5visitEP10AstSenItem, ptr @_ZN14VNVisitorConst5visitEP10AstSenTree, ptr @_ZN14VNVisitorConst5visitEP11AstSequence, ptr @_ZN14VNVisitorConst5visitEP11AstSetAssoc, ptr @_ZN14VNVisitorConst5visitEP14AstSetWildcard, ptr @_ZN14VNVisitorConst5visitEP12AstSetuphold, ptr @_ZN14VNVisitorConst5visitEP9AstShiftL, ptr @_ZN14VNVisitorConst5visitEP12AstShiftLOvr, ptr @_ZN14VNVisitorConst5visitEP9AstShiftR, ptr @_ZN14VNVisitorConst5visitEP12AstShiftROvr, ptr @_ZN14VNVisitorConst5visitEP10AstShiftRS, ptr @_ZN14VNVisitorConst5visitEP13AstShiftRSOvr, ptr @_ZN14VNVisitorConst5visitEP9AstSigned, ptr @_ZN14VNVisitorConst5visitEP7AstSinD, ptr @_ZN14VNVisitorConst5visitEP8AstSinhD, ptr @_ZN14VNVisitorConst5visitEP11AstSliceSel, ptr @_ZN14VNVisitorConst5visitEP19AstSplitPlaceholder, ptr @_ZN14VNVisitorConst5visitEP8AstSqrtD, ptr @_ZN14VNVisitorConst5visitEP9AstStable, ptr @_ZN14VNVisitorConst5visitEP14AstStackTraceF, ptr @_ZN14VNVisitorConst5visitEP14AstStackTraceT, ptr @_ZN14VNVisitorConst5visitEP9AstSteady, ptr @_ZN14VNVisitorConst5visitEP11AstStmtExpr, ptr @_ZN14VNVisitorConst5visitEP13AstStmtPragma, ptr @_ZN14VNVisitorConst5visitEP7AstStop, ptr @_ZN14VNVisitorConst5visitEP14AstStreamDType, ptr @_ZN14VNVisitorConst5visitEP10AstStreamL, ptr @_ZN14VNVisitorConst5visitEP10AstStreamR, ptr @_ZN14VNVisitorConst5visitEP15AstStrengthSpec, ptr @_ZN14VNVisitorConst5visitEP14AstStructDType, ptr @_ZN14VNVisitorConst5visitEP12AstStructSel, ptr @_ZN14VNVisitorConst5visitEP6AstSub, ptr @_ZN14VNVisitorConst5visitEP7AstSubD, ptr @_ZN14VNVisitorConst5visitEP10AstSubstrN, ptr @_ZN14VNVisitorConst5visitEP12AstSysIgnore, ptr @_ZN14VNVisitorConst5visitEP17AstSystemCSection, ptr @_ZN14VNVisitorConst5visitEP10AstSystemF, ptr @_ZN14VNVisitorConst5visitEP10AstSystemT, ptr @_ZN14VNVisitorConst5visitEP13AstTaggedExpr, ptr @_ZN14VNVisitorConst5visitEP16AstTaggedPattern, ptr @_ZN14VNVisitorConst5visitEP7AstTanD, ptr @_ZN14VNVisitorConst5visitEP8AstTanhD, ptr @_ZN14VNVisitorConst5visitEP7AstTask, ptr @_ZN14VNVisitorConst5visitEP10AstTaskRef, ptr @_ZN14VNVisitorConst5visitEP15AstTestPlusArgs, ptr @_ZN14VNVisitorConst5visitEP7AstText, ptr @_ZN14VNVisitorConst5visitEP12AstTextBlock, ptr @_ZN14VNVisitorConst5visitEP10AstThisRef, ptr @_ZN14VNVisitorConst5visitEP7AstTime, ptr @_ZN14VNVisitorConst5visitEP8AstTimeD, ptr @_ZN14VNVisitorConst5visitEP13AstTimeFormat, ptr @_ZN14VNVisitorConst5visitEP13AstTimeImport, ptr @_ZN14VNVisitorConst5visitEP16AstTimePrecision, ptr @_ZN14VNVisitorConst5visitEP11AstTimeUnit, ptr @_ZN14VNVisitorConst5visitEP11AstToLowerN, ptr @_ZN14VNVisitorConst5visitEP12AstToStringN, ptr @_ZN14VNVisitorConst5visitEP11AstToUpperN, ptr @_ZN14VNVisitorConst5visitEP11AstTopScope, ptr @_ZN14VNVisitorConst5visitEP12AstTraceDecl, ptr @_ZN14VNVisitorConst5visitEP11AstTraceInc, ptr @_ZN14VNVisitorConst5visitEP17AstTracePopPrefix, ptr @_ZN14VNVisitorConst5visitEP18AstTracePushPrefix, ptr @_ZN14VNVisitorConst5visitEP12AstTypeTable, ptr @_ZN14VNVisitorConst5visitEP10AstTypedef, ptr @_ZN14VNVisitorConst5visitEP13AstTypedefFwd, ptr @_ZN14VNVisitorConst5visitEP15AstURandomRange, ptr @_ZN14VNVisitorConst5visitEP11AstUdpTable, ptr @_ZN14VNVisitorConst5visitEP15AstUdpTableLine, ptr @_ZN14VNVisitorConst5visitEP18AstUdpTableLineVal, ptr @_ZN14VNVisitorConst5visitEP12AstUnbounded, ptr @_ZN14VNVisitorConst5visitEP13AstUnionDType, ptr @_ZN14VNVisitorConst5visitEP14AstUnlinkedRef, ptr @_ZN14VNVisitorConst5visitEP19AstUnpackArrayDType, ptr @_ZN14VNVisitorConst5visitEP11AstUnsigned, ptr @_ZN14VNVisitorConst5visitEP20AstUnsizedArrayDType, ptr @_ZN14VNVisitorConst5visitEP15AstUnsizedRange, ptr @_ZN14VNVisitorConst5visitEP8AstUntil, ptr @_ZN14VNVisitorConst5visitEP8AstVFile, ptr @_ZN14VNVisitorConst5visitEP16AstValuePlusArgs, ptr @_ZN14VNVisitorConst5visitEP6AstVar, ptr @_ZN14VNVisitorConst5visitEP9AstVarRef, ptr @_ZN14VNVisitorConst5visitEP11AstVarScope, ptr @_ZN14VNVisitorConst5visitEP10AstVarXRef, ptr @_ZN14VNVisitorConst5visitEP12AstVoidDType, ptr @_ZN14VNVisitorConst5visitEP7AstWait, ptr @_ZN14VNVisitorConst5visitEP11AstWaitFork, ptr @_ZN14VNVisitorConst5visitEP21AstWildcardArrayDType, ptr @_ZN14VNVisitorConst5visitEP16AstWildcardRange, ptr @_ZN14VNVisitorConst5visitEP14AstWildcardSel, ptr @_ZN14VNVisitorConst5visitEP7AstWith, ptr @_ZN14VNVisitorConst5visitEP12AstWithParse, ptr @_ZN14VNVisitorConst5visitEP10AstWordSel, ptr @_ZN14VNVisitorConst5visitEP11AstWriteMem, ptr @_ZN14VNVisitorConst5visitEP6AstXor] }, comdat, align 8
+@_ZTIZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE_ = internal constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE_ }, align 8
+@_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
+@_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE_ = internal constant [92 x i8] c"ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE_\00", align 1
+@_ZTIZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE0_ = internal constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE0_ }, align 8
+@_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE0_ = internal constant [93 x i8] c"ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE0_\00", align 1
+@_ZN12VNUser2InUse12s_userCntGblE = external global i32, align 4
+@_ZTIZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE1_ = internal constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE1_ }, align 8
+@_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE1_ = internal constant [93 x i8] c"ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilderC1ERKNS_12LogicByScopeES4_S4_EUlP11AstVarScopeE1_\00", align 1
+@.str.7 = private unnamed_addr constant [24 x i8] c"Should be handled above\00", align 1
+@.str.8 = private unnamed_addr constant [10 x i8] c"Unhandled\00", align 1
+@.str.9 = private unnamed_addr constant [16 x i8] c"Should not nest\00", align 1
+@_ZN12VNUser2InUse10s_userBusyE = external global i8, align 1
+@_ZSt4cerr = external global %"class.std::basic_ostream", align 8
+@.str.10 = private unnamed_addr constant [17 x i8] c"Internal Error: \00", align 1
+@.str.11 = private unnamed_addr constant [48 x i8] c"/opt-bench/work/verilator/verilator/src/V3Ast.h\00", align 1
+@.str.12 = private unnamed_addr constant [14 x i8] c"Clear of User\00", align 1
+@.str.13 = private unnamed_addr constant [26 x i8] c"() not under AstUserInUse\00", align 1
+@.str.14 = private unnamed_addr constant [20 x i8] c"User*() overflowed!\00", align 1
+@.str.15 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
+@.str.18 = private unnamed_addr constant [26 x i8] c"Should be under AstActive\00", align 1
+@_ZTVN7V3Sched12_GLOBAL__N_116SchedLogicVertexE = internal constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr @_ZTIN7V3Sched12_GLOBAL__N_116SchedLogicVertexE, ptr @_ZNK7V3Sched12_GLOBAL__N_116SchedLogicVertex22v3RttiIsInstanceOfImplEm, ptr @_ZNK13V3GraphVertex5cloneEP7V3Graph, ptr @_ZN13V3GraphVertexD2Ev, ptr @_ZN7V3Sched12_GLOBAL__N_116SchedLogicVertexD0Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_116SchedLogicVertex4nameB5cxx11Ev, ptr @_ZNK13V3GraphVertex8dotColorB5cxx11Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_116SchedLogicVertex8dotShapeB5cxx11Ev, ptr @_ZNK13V3GraphVertex8dotStyleB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotNameB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotRankB5cxx11Ev, ptr @_ZNK13V3GraphVertex9rankAdderEv, ptr @_ZNK13V3GraphVertex8filelineEv, ptr @_ZNK13V3GraphVertex7sortCmpEPKS_] }, align 8
+@_ZTIN7V3Sched12_GLOBAL__N_116SchedLogicVertexE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN7V3Sched12_GLOBAL__N_116SchedLogicVertexE, ptr @_ZTI13V3GraphVertex }, align 8
+@_ZTSN7V3Sched12_GLOBAL__N_116SchedLogicVertexE = internal constant [43 x i8] c"N7V3Sched12_GLOBAL__N_116SchedLogicVertexE\00", align 1
+@_ZTI13V3GraphVertex = linkonce_odr dso_local constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTS13V3GraphVertex }, comdat, align 8
+@_ZTS13V3GraphVertex = linkonce_odr dso_local constant [16 x i8] c"13V3GraphVertex\00", comdat, align 1
+@_ZZN7V3Sched12_GLOBAL__N_116SchedLogicVertex13v3RttiClassIdEvE15s_vlrttiClassId = internal global i8 0, align 1
+@_ZZN13V3GraphVertex13v3RttiClassIdEvE15s_vlrttiClassId = linkonce_odr dso_local global i8 0, comdat, align 1
+@.str.19 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.str.20 = private unnamed_addr constant [6 x i8] c"black\00", align 1
+@.str.21 = private unnamed_addr constant [10 x i8] c"rectangle\00", align 1
+@.str.22 = private unnamed_addr constant [42 x i8] c"Non-clocked SenItem under clocked SenTree\00", align 1
+@_ZZNK9VEdgeType11clockedStmtEvE7clocked = linkonce_odr dso_local local_unnamed_addr constant [14 x i8] c"\01\01\01\01\01\01\01\00\00\00\00\00\00\00", comdat, align 1
+@_ZTVN7V3Sched12_GLOBAL__N_114SchedSenVertexE = internal constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr @_ZTIN7V3Sched12_GLOBAL__N_114SchedSenVertexE, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex22v3RttiIsInstanceOfImplEm, ptr @_ZNK13V3GraphVertex5cloneEP7V3Graph, ptr @_ZN13V3GraphVertexD2Ev, ptr @_ZN7V3Sched12_GLOBAL__N_114SchedSenVertexD0Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex4nameB5cxx11Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex8dotColorB5cxx11Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex8dotShapeB5cxx11Ev, ptr @_ZNK13V3GraphVertex8dotStyleB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotNameB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotRankB5cxx11Ev, ptr @_ZNK13V3GraphVertex9rankAdderEv, ptr @_ZNK13V3GraphVertex8filelineEv, ptr @_ZNK13V3GraphVertex7sortCmpEPKS_] }, align 8
+@_ZTIN7V3Sched12_GLOBAL__N_114SchedSenVertexE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN7V3Sched12_GLOBAL__N_114SchedSenVertexE, ptr @_ZTI13V3GraphVertex }, align 8
+@_ZTSN7V3Sched12_GLOBAL__N_114SchedSenVertexE = internal constant [41 x i8] c"N7V3Sched12_GLOBAL__N_114SchedSenVertexE\00", align 1
+@_ZZN7V3Sched12_GLOBAL__N_114SchedSenVertex13v3RttiClassIdEvE15s_vlrttiClassId = internal global i8 0, align 1
+@.str.23 = private unnamed_addr constant [4 x i8] c"red\00", align 1
+@.str.24 = private unnamed_addr constant [14 x i8] c"doubleoctagon\00", align 1
+@_ZTVN7V3Sched12_GLOBAL__N_114SchedVarVertexE = internal constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr @_ZTIN7V3Sched12_GLOBAL__N_114SchedVarVertexE, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedVarVertex22v3RttiIsInstanceOfImplEm, ptr @_ZNK13V3GraphVertex5cloneEP7V3Graph, ptr @_ZN13V3GraphVertexD2Ev, ptr @_ZN7V3Sched12_GLOBAL__N_114SchedVarVertexD0Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedVarVertex4nameB5cxx11Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedVarVertex8dotColorB5cxx11Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedVarVertex8dotShapeB5cxx11Ev, ptr @_ZNK13V3GraphVertex8dotStyleB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotNameB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotRankB5cxx11Ev, ptr @_ZNK13V3GraphVertex9rankAdderEv, ptr @_ZNK13V3GraphVertex8filelineEv, ptr @_ZNK13V3GraphVertex7sortCmpEPKS_] }, align 8
+@_ZTIN7V3Sched12_GLOBAL__N_114SchedVarVertexE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN7V3Sched12_GLOBAL__N_114SchedVarVertexE, ptr @_ZTI13V3GraphVertex }, align 8
+@_ZTSN7V3Sched12_GLOBAL__N_114SchedVarVertexE = internal constant [41 x i8] c"N7V3Sched12_GLOBAL__N_114SchedVarVertexE\00", align 1
+@_ZZN7V3Sched12_GLOBAL__N_114SchedVarVertex13v3RttiClassIdEvE15s_vlrttiClassId = internal global i8 0, align 1
+@.str.25 = private unnamed_addr constant [3 x i8] c"->\00", align 1
+@.str.26 = private unnamed_addr constant [6 x i8] c"green\00", align 1
+@.str.27 = private unnamed_addr constant [9 x i8] c"invhouse\00", align 1
+@.str.28 = private unnamed_addr constant [8 x i8] c"ellipse\00", align 1
+@_ZN12VNUser1InUse12s_userCntGblE = external global i32, align 4
+@_ZTV11V3GraphEdge = external constant { [11 x ptr] }, align 8
+@.str.30 = private unnamed_addr constant [25 x i8] c"Should not need ordering\00", align 1
+@_ZZL14dumpGraphLevelvE7s_level = internal unnamed_addr global i32 -1, align 4
+@.str.31 = private unnamed_addr constant [6 x i8] c"graph\00", align 1
+@.str.32 = private unnamed_addr constant [21 x i8] c"Should be var vertex\00", align 1
+@.str.33 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
+@.str.34 = private unnamed_addr constant [50 x i8] c"/opt-bench/work/verilator/verilator/src/V3Sched.h\00", align 1
+@.str.35 = private unnamed_addr constant [15 x i8] c"Already linked\00", align 1
+@_ZTV9AstActive = external constant { [42 x ptr] }, align 8
+@.str.36 = private unnamed_addr constant [57 x i8] c"/opt-bench/work/verilator/verilator/src/V3AstNodeOther.h\00", align 1
+@.str.37 = private unnamed_addr constant [22 x i8] c"Sentreep required arg\00", align 1
+@_ZN12VNUser1InUse10s_userBusyE = external global i8, align 1
+@.str.38 = private unnamed_addr constant [30 x i8] c"Conflicting user use; AstUser\00", align 1
+@.str.39 = private unnamed_addr constant [46 x i8] c"InUse request when under another AstUserInUse\00", align 1
+@_ZZN7V3Error1sEvE3s_s = linkonce_odr dso_local global %class.V3ErrorGuarded zeroinitializer, comdat, align 8
+@_ZGVZN7V3Error1sEvE3s_s = linkonce_odr dso_local global i64 0, comdat, align 8
+@__dso_handle = external hidden global i8
+@.str.40 = private unnamed_addr constant [11 x i8] c"GUARDED_BY\00", section "llvm.metadata"
+@.str.41 = private unnamed_addr constant [50 x i8] c"/opt-bench/work/verilator/verilator/src/V3Error.h\00", section "llvm.metadata"
+@_ZZNK6VNType5asciiEvE5names = linkonce_odr dso_local local_unnamed_addr constant [484 x ptr] [ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50, ptr @.str.51, ptr @.str.52, ptr @.str.53, ptr @.str.54, ptr @.str.55, ptr @.str.56, ptr @.str.57, ptr @.str.58, ptr @.str.59, ptr @.str.60, ptr @.str.61, ptr @.str.62, ptr @.str.63, ptr @.str.64, ptr @.str.65, ptr @.str.66, ptr @.str.67, ptr @.str.68, ptr @.str.69, ptr @.str.70, ptr @.str.71, ptr @.str.72, ptr @.str.73, ptr @.str.74, ptr @.str.75, ptr @.str.76, ptr @.str.77, ptr @.str.78, ptr @.str.79, ptr @.str.80, ptr @.str.81, ptr @.str.82, ptr @.str.83, ptr @.str.84, ptr @.str.85, ptr @.str.86, ptr @.str.87, ptr @.str.88, ptr @.str.89, ptr @.str.90, ptr @.str.91, ptr @.str.92, ptr @.str.93, ptr @.str.94, ptr @.str.95, ptr @.str.96, ptr @.str.97, ptr @.str.98, ptr @.str.99, ptr @.str.100, ptr @.str.101, ptr @.str.102, ptr @.str.103, ptr @.str.104, ptr @.str.105, ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.109, ptr @.str.110, ptr @.str.111, ptr @.str.112, ptr @.str.113, ptr @.str.114, ptr @.str.115, ptr @.str.116, ptr @.str.117, ptr @.str.118, ptr @.str.119, ptr @.str.120, ptr @.str.121, ptr @.str.122, ptr @.str.123, ptr @.str.124, ptr @.str.125, ptr @.str.126, ptr @.str.127, ptr @.str.128, ptr @.str.129, ptr @.str.130, ptr @.str.131, ptr @.str.132, ptr @.str.133, ptr @.str.134, ptr @.str.135, ptr @.str.136, ptr @.str.137, ptr @.str.138, ptr @.str.139, ptr @.str.140, ptr @.str.141, ptr @.str.142, ptr @.str.143, ptr @.str.144, ptr @.str.145, ptr @.str.146, ptr @.str.147, ptr @.str.148, ptr @.str.149, ptr @.str.150, ptr @.str.151, ptr @.str.152, ptr @.str.153, ptr @.str.154, ptr @.str.155, ptr @.str.156, ptr @.str.157, ptr @.str.158, ptr @.str.159, ptr @.str.160, ptr @.str.161, ptr @.str.162, ptr @.str.163, ptr @.str.164, ptr @.str.165, ptr @.str.166, ptr @.str.167, ptr @.str.168, ptr @.str.169, ptr @.str.170, ptr @.str.171, ptr @.str.172, ptr @.str.173, ptr @.str.174, ptr @.str.175, ptr @.str.176, ptr @.str.177, ptr @.str.178, ptr @.str.179, ptr @.str.180, ptr @.str.181, ptr @.str.182, ptr @.str.183, ptr @.str.184, ptr @.str.185, ptr @.str.186, ptr @.str.187, ptr @.str.188, ptr @.str.189, ptr @.str.190, ptr @.str.191, ptr @.str.192, ptr @.str.193, ptr @.str.194, ptr @.str.195, ptr @.str.196, ptr @.str.197, ptr @.str.198, ptr @.str.199, ptr @.str.200, ptr @.str.201, ptr @.str.202, ptr @.str.203, ptr @.str.204, ptr @.str.205, ptr @.str.206, ptr @.str.207, ptr @.str.208, ptr @.str.209, ptr @.str.210, ptr @.str.211, ptr @.str.212, ptr @.str.213, ptr @.str.214, ptr @.str.215, ptr @.str.216, ptr @.str.217, ptr @.str.218, ptr @.str.219, ptr @.str.220, ptr @.str.221, ptr @.str.222, ptr @.str.223, ptr @.str.224, ptr @.str.225, ptr @.str.226, ptr @.str.227, ptr @.str.228, ptr @.str.229, ptr @.str.230, ptr @.str.231, ptr @.str.232, ptr @.str.233, ptr @.str.234, ptr @.str.235, ptr @.str.236, ptr @.str.237, ptr @.str.238, ptr @.str.239, ptr @.str.240, ptr @.str.241, ptr @.str.242, ptr @.str.243, ptr @.str.244, ptr @.str.245, ptr @.str.246, ptr @.str.247, ptr @.str.248, ptr @.str.249, ptr @.str.250, ptr @.str.251, ptr @.str.252, ptr @.str.253, ptr @.str.254, ptr @.str.255, ptr @.str.256, ptr @.str.257, ptr @.str.258, ptr @.str.259, ptr @.str.260, ptr @.str.261, ptr @.str.262, ptr @.str.263, ptr @.str.264, ptr @.str.265, ptr @.str.266, ptr @.str.267, ptr @.str.268, ptr @.str.269, ptr @.str.270, ptr @.str.271, ptr @.str.272, ptr @.str.273, ptr @.str.274, ptr @.str.275, ptr @.str.276, ptr @.str.277, ptr @.str.278, ptr @.str.279, ptr @.str.280, ptr @.str.281, ptr @.str.282, ptr @.str.283, ptr @.str.284, ptr @.str.285, ptr @.str.286, ptr @.str.287, ptr @.str.288, ptr @.str.289, ptr @.str.290, ptr @.str.291, ptr @.str.292, ptr @.str.293, ptr @.str.294, ptr @.str.295, ptr @.str.296, ptr @.str.297, ptr @.str.298, ptr @.str.299, ptr @.str.300, ptr @.str.301, ptr @.str.302, ptr @.str.303, ptr @.str.304, ptr @.str.305, ptr @.str.306, ptr @.str.307, ptr @.str.308, ptr @.str.309, ptr @.str.310, ptr @.str.311, ptr @.str.312, ptr @.str.313, ptr @.str.314, ptr @.str.315, ptr @.str.316, ptr @.str.317, ptr @.str.318, ptr @.str.319, ptr @.str.320, ptr @.str.321, ptr @.str.322, ptr @.str.323, ptr @.str.324, ptr @.str.325, ptr @.str.326, ptr @.str.327, ptr @.str.328, ptr @.str.329, ptr @.str.330, ptr @.str.331, ptr @.str.332, ptr @.str.333, ptr @.str.334, ptr @.str.335, ptr @.str.336, ptr @.str.337, ptr @.str.338, ptr @.str.339, ptr @.str.340, ptr @.str.341, ptr @.str.342, ptr @.str.343, ptr @.str.344, ptr @.str.345, ptr @.str.346, ptr @.str.347, ptr @.str.348, ptr @.str.349, ptr @.str.350, ptr @.str.351, ptr @.str.352, ptr @.str.353, ptr @.str.354, ptr @.str.355, ptr @.str.356, ptr @.str.357, ptr @.str.358, ptr @.str.359, ptr @.str.360, ptr @.str.361, ptr @.str.362, ptr @.str.363, ptr @.str.364, ptr @.str.365, ptr @.str.366, ptr @.str.367, ptr @.str.368, ptr @.str.369, ptr @.str.370, ptr @.str.371, ptr @.str.372, ptr @.str.373, ptr @.str.374, ptr @.str.375, ptr @.str.376, ptr @.str.377, ptr @.str.378, ptr @.str.379, ptr @.str.380, ptr @.str.381, ptr @.str.382, ptr @.str.383, ptr @.str.384, ptr @.str.385, ptr @.str.386, ptr @.str.387, ptr @.str.388, ptr @.str.389, ptr @.str.390, ptr @.str.391, ptr @.str.392, ptr @.str.393, ptr @.str.394, ptr @.str.395, ptr @.str.396, ptr @.str.397, ptr @.str.398, ptr @.str.399, ptr @.str.400, ptr @.str.401, ptr @.str.402, ptr @.str.403, ptr @.str.404, ptr @.str.405, ptr @.str.406, ptr @.str.407, ptr @.str.408, ptr @.str.409, ptr @.str.410, ptr @.str.411, ptr @.str.412, ptr @.str.413, ptr @.str.414, ptr @.str.415, ptr @.str.416, ptr @.str.417, ptr @.str.418, ptr @.str.419, ptr @.str.420, ptr @.str.421, ptr @.str.422, ptr @.str.423, ptr @.str.424, ptr @.str.425, ptr @.str.426, ptr @.str.427, ptr @.str.428, ptr @.str.429, ptr @.str.430, ptr @.str.431, ptr @.str.432, ptr @.str.433, ptr @.str.434, ptr @.str.435, ptr @.str.436, ptr @.str.437, ptr @.str.438, ptr @.str.439, ptr @.str.440, ptr @.str.441, ptr @.str.442, ptr @.str.443, ptr @.str.444, ptr @.str.445, ptr @.str.446, ptr @.str.447, ptr @.str.448, ptr @.str.449, ptr @.str.450, ptr @.str.451, ptr @.str.452, ptr @.str.453, ptr @.str.454, ptr @.str.455, ptr @.str.456, ptr @.str.457, ptr @.str.458, ptr @.str.459, ptr @.str.460, ptr @.str.461, ptr @.str.462, ptr @.str.463, ptr @.str.464, ptr @.str.465, ptr @.str.466, ptr @.str.467, ptr @.str.468, ptr @.str.469, ptr @.str.470, ptr @.str.471, ptr @.str.472, ptr @.str.473, ptr @.str.474, ptr @.str.475, ptr @.str.476, ptr @.str.477, ptr @.str.478, ptr @.str.479, ptr @.str.480, ptr @.str.481, ptr @.str.482, ptr @.str.483, ptr @.str.484, ptr @.str.485, ptr @.str.486, ptr @.str.487, ptr @.str.488, ptr @.str.489, ptr @.str.490, ptr @.str.491, ptr @.str.492, ptr @.str.493, ptr @.str.494, ptr @.str.495, ptr @.str.496, ptr @.str.497, ptr @.str.498, ptr @.str.499, ptr @.str.500, ptr @.str.501, ptr @.str.502, ptr @.str.503, ptr @.str.504, ptr @.str.505, ptr @.str.506, ptr @.str.507, ptr @.str.508, ptr @.str.509, ptr @.str.510, ptr @.str.511, ptr @.str.512, ptr @.str.513, ptr @.str.514, ptr @.str.515, ptr @.str.516, ptr @.str.517, ptr @.str.518, ptr @.str.519, ptr @.str.520, ptr @.str.521, ptr @.str.522, ptr @.str.523, ptr @.str.524, ptr @.str.525], comdat, align 16
+@.str.42 = private unnamed_addr constant [7 x i8] c"ACTIVE\00", align 1
+@.str.43 = private unnamed_addr constant [6 x i8] c"ALIAS\00", align 1
+@.str.44 = private unnamed_addr constant [11 x i8] c"ALIASSCOPE\00", align 1
+@.str.45 = private unnamed_addr constant [4 x i8] c"ARG\00", align 1
+@.str.46 = private unnamed_addr constant [5 x i8] c"BIND\00", align 1
+@.str.47 = private unnamed_addr constant [6 x i8] c"CFUNC\00", align 1
+@.str.48 = private unnamed_addr constant [12 x i8] c"CLOCALSCOPE\00", align 1
+@.str.49 = private unnamed_addr constant [5 x i8] c"CUSE\00", align 1
+@.str.50 = private unnamed_addr constant [9 x i8] c"CASEITEM\00", align 1
+@.str.51 = private unnamed_addr constant [5 x i8] c"CELL\00", align 1
+@.str.52 = private unnamed_addr constant [11 x i8] c"CELLINLINE\00", align 1
+@.str.53 = private unnamed_addr constant [16 x i8] c"CELLINLINESCOPE\00", align 1
+@.str.54 = private unnamed_addr constant [15 x i8] c"CGOPTIONASSIGN\00", align 1
+@.str.55 = private unnamed_addr constant [13 x i8] c"CLASSEXTENDS\00", align 1
+@.str.56 = private unnamed_addr constant [9 x i8] c"CLOCKING\00", align 1
+@.str.57 = private unnamed_addr constant [13 x i8] c"CLOCKINGITEM\00", align 1
+@.str.58 = private unnamed_addr constant [7 x i8] c"CONFIG\00", align 1
+@.str.59 = private unnamed_addr constant [11 x i8] c"CONFIGCELL\00", align 1
+@.str.60 = private unnamed_addr constant [11 x i8] c"CONFIGRULE\00", align 1
+@.str.61 = private unnamed_addr constant [10 x i8] c"CONFIGUSE\00", align 1
+@.str.62 = private unnamed_addr constant [10 x i8] c"CONSTPOOL\00", align 1
+@.str.63 = private unnamed_addr constant [11 x i8] c"CONSTRAINT\00", align 1
+@.str.64 = private unnamed_addr constant [17 x i8] c"CONSTRAINTBEFORE\00", align 1
+@.str.65 = private unnamed_addr constant [9 x i8] c"COVERBIN\00", align 1
+@.str.66 = private unnamed_addr constant [12 x i8] c"COVEROPTION\00", align 1
+@.str.67 = private unnamed_addr constant [15 x i8] c"COVERTRANSITEM\00", align 1
+@.str.68 = private unnamed_addr constant [14 x i8] c"COVERTRANSSET\00", align 1
+@.str.69 = private unnamed_addr constant [11 x i8] c"COVERGROUP\00", align 1
+@.str.70 = private unnamed_addr constant [14 x i8] c"COVERPOINTREF\00", align 1
+@.str.71 = private unnamed_addr constant [9 x i8] c"DEFPARAM\00", align 1
+@.str.72 = private unnamed_addr constant [15 x i8] c"DEFAULTDISABLE\00", align 1
+@.str.73 = private unnamed_addr constant [10 x i8] c"DPIEXPORT\00", align 1
+@.str.74 = private unnamed_addr constant [12 x i8] c"ELABDISPLAY\00", align 1
+@.str.75 = private unnamed_addr constant [6 x i8] c"EMPTY\00", align 1
+@.str.76 = private unnamed_addr constant [9 x i8] c"ENUMITEM\00", align 1
+@.str.77 = private unnamed_addr constant [14 x i8] c"FOREACHHEADER\00", align 1
+@.str.78 = private unnamed_addr constant [12 x i8] c"GENCASEITEM\00", align 1
+@.str.79 = private unnamed_addr constant [9 x i8] c"IMPLICIT\00", align 1
+@.str.80 = private unnamed_addr constant [9 x i8] c"INITITEM\00", align 1
+@.str.81 = private unnamed_addr constant [8 x i8] c"INTFREF\00", align 1
+@.str.82 = private unnamed_addr constant [8 x i8] c"LIBRARY\00", align 1
+@.str.83 = private unnamed_addr constant [8 x i8] c"MODPORT\00", align 1
+@.str.84 = private unnamed_addr constant [19 x i8] c"MODPORTCLOCKINGREF\00", align 1
+@.str.85 = private unnamed_addr constant [16 x i8] c"MODPORTFTASKREF\00", align 1
+@.str.86 = private unnamed_addr constant [14 x i8] c"MODPORTVARREF\00", align 1
+@.str.87 = private unnamed_addr constant [8 x i8] c"NETLIST\00", align 1
+@.str.88 = private unnamed_addr constant [14 x i8] c"PACKAGEEXPORT\00", align 1
+@.str.89 = private unnamed_addr constant [22 x i8] c"PACKAGEEXPORTSTARSTAR\00", align 1
+@.str.90 = private unnamed_addr constant [14 x i8] c"PACKAGEIMPORT\00", align 1
+@.str.91 = private unnamed_addr constant [4 x i8] c"PIN\00", align 1
+@.str.92 = private unnamed_addr constant [5 x i8] c"PORT\00", align 1
+@.str.93 = private unnamed_addr constant [7 x i8] c"PRAGMA\00", align 1
+@.str.94 = private unnamed_addr constant [9 x i8] c"PROPSPEC\00", align 1
+@.str.95 = private unnamed_addr constant [5 x i8] c"PULL\00", align 1
+@.str.96 = private unnamed_addr constant [6 x i8] c"SCOPE\00", align 1
+@.str.97 = private unnamed_addr constant [8 x i8] c"SENITEM\00", align 1
+@.str.98 = private unnamed_addr constant [8 x i8] c"SENTREE\00", align 1
+@.str.99 = private unnamed_addr constant [13 x i8] c"STRENGTHSPEC\00", align 1
+@.str.100 = private unnamed_addr constant [15 x i8] c"SYSTEMCSECTION\00", align 1
+@.str.101 = private unnamed_addr constant [5 x i8] c"TEXT\00", align 1
+@.str.102 = private unnamed_addr constant [10 x i8] c"TEXTBLOCK\00", align 1
+@.str.103 = private unnamed_addr constant [9 x i8] c"TOPSCOPE\00", align 1
+@.str.104 = private unnamed_addr constant [10 x i8] c"TYPETABLE\00", align 1
+@.str.105 = private unnamed_addr constant [8 x i8] c"TYPEDEF\00", align 1
+@.str.106 = private unnamed_addr constant [11 x i8] c"TYPEDEFFWD\00", align 1
+@.str.107 = private unnamed_addr constant [9 x i8] c"UDPTABLE\00", align 1
+@.str.108 = private unnamed_addr constant [13 x i8] c"UDPTABLELINE\00", align 1
+@.str.109 = private unnamed_addr constant [16 x i8] c"UDPTABLELINEVAL\00", align 1
+@.str.110 = private unnamed_addr constant [4 x i8] c"VAR\00", align 1
+@.str.111 = private unnamed_addr constant [9 x i8] c"VARSCOPE\00", align 1
+@.str.112 = private unnamed_addr constant [5 x i8] c"WITH\00", align 1
+@.str.113 = private unnamed_addr constant [15 x i8] c"COVEROTHERDECL\00", align 1
+@.str.114 = private unnamed_addr constant [16 x i8] c"COVERTOGGLEDECL\00", align 1
+@.str.115 = private unnamed_addr constant [16 x i8] c"ASSOCARRAYDTYPE\00", align 1
+@.str.116 = private unnamed_addr constant [11 x i8] c"BASICDTYPE\00", align 1
+@.str.117 = private unnamed_addr constant [18 x i8] c"BRACKETARRAYDTYPE\00", align 1
+@.str.118 = private unnamed_addr constant [7 x i8] c"CDTYPE\00", align 1
+@.str.119 = private unnamed_addr constant [14 x i8] c"CLASSREFDTYPE\00", align 1
+@.str.120 = private unnamed_addr constant [11 x i8] c"CONSTDTYPE\00", align 1
+@.str.121 = private unnamed_addr constant [19 x i8] c"CONSTRAINTREFDTYPE\00", align 1
+@.str.122 = private unnamed_addr constant [17 x i8] c"DEFIMPLICITDTYPE\00", align 1
+@.str.123 = private unnamed_addr constant [14 x i8] c"DYNARRAYDTYPE\00", align 1
+@.str.124 = private unnamed_addr constant [16 x i8] c"EMPTYQUEUEDTYPE\00", align 1
+@.str.125 = private unnamed_addr constant [10 x i8] c"ENUMDTYPE\00", align 1
+@.str.126 = private unnamed_addr constant [18 x i8] c"IFACEGENERICDTYPE\00", align 1
+@.str.127 = private unnamed_addr constant [14 x i8] c"IFACEREFDTYPE\00", align 1
+@.str.128 = private unnamed_addr constant [12 x i8] c"MEMBERDTYPE\00", align 1
+@.str.129 = private unnamed_addr constant [20 x i8] c"NBACOMMITQUEUEDTYPE\00", align 1
+@.str.130 = private unnamed_addr constant [15 x i8] c"PARAMTYPEDTYPE\00", align 1
+@.str.131 = private unnamed_addr constant [15 x i8] c"PARSETYPEDTYPE\00", align 1
+@.str.132 = private unnamed_addr constant [11 x i8] c"QUEUEDTYPE\00", align 1
+@.str.133 = private unnamed_addr constant [9 x i8] c"REFDTYPE\00", align 1
+@.str.134 = private unnamed_addr constant [13 x i8] c"REQUIREDTYPE\00", align 1
+@.str.135 = private unnamed_addr constant [17 x i8] c"SAMPLEQUEUEDTYPE\00", align 1
+@.str.136 = private unnamed_addr constant [12 x i8] c"STREAMDTYPE\00", align 1
+@.str.137 = private unnamed_addr constant [18 x i8] c"UNSIZEDARRAYDTYPE\00", align 1
+@.str.138 = private unnamed_addr constant [10 x i8] c"VOIDDTYPE\00", align 1
+@.str.139 = private unnamed_addr constant [19 x i8] c"WILDCARDARRAYDTYPE\00", align 1
+@.str.140 = private unnamed_addr constant [15 x i8] c"PACKARRAYDTYPE\00", align 1
+@.str.141 = private unnamed_addr constant [17 x i8] c"UNPACKARRAYDTYPE\00", align 1
+@.str.142 = private unnamed_addr constant [12 x i8] c"STRUCTDTYPE\00", align 1
+@.str.143 = private unnamed_addr constant [11 x i8] c"UNIONDTYPE\00", align 1
+@.str.144 = private unnamed_addr constant [8 x i8] c"ABORTON\00", align 1
+@.str.145 = private unnamed_addr constant [12 x i8] c"ADDROFCFUNC\00", align 1
+@.str.146 = private unnamed_addr constant [7 x i8] c"ATTROF\00", align 1
+@.str.147 = private unnamed_addr constant [6 x i8] c"CEXPR\00", align 1
+@.str.148 = private unnamed_addr constant [10 x i8] c"CEXPRUSER\00", align 1
+@.str.149 = private unnamed_addr constant [12 x i8] c"CMETHODHARD\00", align 1
+@.str.150 = private unnamed_addr constant [7 x i8] c"CRESET\00", align 1
+@.str.151 = private unnamed_addr constant [5 x i8] c"CAST\00", align 1
+@.str.152 = private unnamed_addr constant [10 x i8] c"CASTPARSE\00", align 1
+@.str.153 = private unnamed_addr constant [9 x i8] c"CASTSIZE\00", align 1
+@.str.154 = private unnamed_addr constant [13 x i8] c"CELLARRAYREF\00", align 1
+@.str.155 = private unnamed_addr constant [8 x i8] c"CELLREF\00", align 1
+@.str.156 = private unnamed_addr constant [18 x i8] c"CLASSORPACKAGEREF\00", align 1
+@.str.157 = private unnamed_addr constant [10 x i8] c"CONSASSOC\00", align 1
+@.str.158 = private unnamed_addr constant [13 x i8] c"CONSDYNARRAY\00", align 1
+@.str.159 = private unnamed_addr constant [15 x i8] c"CONSPACKMEMBER\00", align 1
+@.str.160 = private unnamed_addr constant [18 x i8] c"CONSPACKUORSTRUCT\00", align 1
+@.str.161 = private unnamed_addr constant [10 x i8] c"CONSQUEUE\00", align 1
+@.str.162 = private unnamed_addr constant [13 x i8] c"CONSWILDCARD\00", align 1
+@.str.163 = private unnamed_addr constant [6 x i8] c"CONST\00", align 1
+@.str.164 = private unnamed_addr constant [14 x i8] c"CONSTRAINTREF\00", align 1
+@.str.165 = private unnamed_addr constant [16 x i8] c"CVTARRAYTOARRAY\00", align 1
+@.str.166 = private unnamed_addr constant [17 x i8] c"CVTARRAYTOPACKED\00", align 1
+@.str.167 = private unnamed_addr constant [17 x i8] c"CVTPACKEDTOARRAY\00", align 1
+@.str.168 = private unnamed_addr constant [19 x i8] c"CVTUNPACKEDTOQUEUE\00", align 1
+@.str.169 = private unnamed_addr constant [5 x i8] c"DIST\00", align 1
+@.str.170 = private unnamed_addr constant [9 x i8] c"DISTITEM\00", align 1
+@.str.171 = private unnamed_addr constant [4 x i8] c"DOT\00", align 1
+@.str.172 = private unnamed_addr constant [11 x i8] c"EMPTYQUEUE\00", align 1
+@.str.173 = private unnamed_addr constant [12 x i8] c"ENUMITEMREF\00", align 1
+@.str.174 = private unnamed_addr constant [9 x i8] c"EXPRSTMT\00", align 1
+@.str.175 = private unnamed_addr constant [7 x i8] c"FERROR\00", align 1
+@.str.176 = private unnamed_addr constant [6 x i8] c"FOPEN\00", align 1
+@.str.177 = private unnamed_addr constant [9 x i8] c"FOPENMCD\00", align 1
+@.str.178 = private unnamed_addr constant [6 x i8] c"FREAD\00", align 1
+@.str.179 = private unnamed_addr constant [8 x i8] c"FREWIND\00", align 1
+@.str.180 = private unnamed_addr constant [7 x i8] c"FSCANF\00", align 1
+@.str.181 = private unnamed_addr constant [6 x i8] c"FSEEK\00", align 1
+@.str.182 = private unnamed_addr constant [6 x i8] c"FTELL\00", align 1
+@.str.183 = private unnamed_addr constant [8 x i8] c"FALLING\00", align 1
+@.str.184 = private unnamed_addr constant [5 x i8] c"FELL\00", align 1
+@.str.185 = private unnamed_addr constant [7 x i8] c"FUTURE\00", align 1
+@.str.186 = private unnamed_addr constant [8 x i8] c"GATEPIN\00", align 1
+@.str.187 = private unnamed_addr constant [21 x i8] c"GETINITIALRANDOMSEED\00", align 1
+@.str.188 = private unnamed_addr constant [12 x i8] c"IMPLICATION\00", align 1
+@.str.189 = private unnamed_addr constant [10 x i8] c"INITARRAY\00", align 1
+@.str.190 = private unnamed_addr constant [7 x i8] c"INSIDE\00", align 1
+@.str.191 = private unnamed_addr constant [12 x i8] c"INSIDERANGE\00", align 1
+@.str.192 = private unnamed_addr constant [13 x i8] c"LAMBDAARGREF\00", align 1
+@.str.193 = private unnamed_addr constant [12 x i8] c"MATCHMASKED\00", align 1
+@.str.194 = private unnamed_addr constant [8 x i8] c"MATCHES\00", align 1
+@.str.195 = private unnamed_addr constant [10 x i8] c"MEMBERSEL\00", align 1
+@.str.196 = private unnamed_addr constant [8 x i8] c"NEWCOPY\00", align 1
+@.str.197 = private unnamed_addr constant [11 x i8] c"NEWDYNAMIC\00", align 1
+@.str.198 = private unnamed_addr constant [6 x i8] c"PEXPR\00", align 1
+@.str.199 = private unnamed_addr constant [12 x i8] c"PARSEHOLDER\00", align 1
+@.str.200 = private unnamed_addr constant [9 x i8] c"PARSEREF\00", align 1
+@.str.201 = private unnamed_addr constant [5 x i8] c"PAST\00", align 1
+@.str.202 = private unnamed_addr constant [10 x i8] c"PATMEMBER\00", align 1
+@.str.203 = private unnamed_addr constant [8 x i8] c"PATTERN\00", align 1
+@.str.204 = private unnamed_addr constant [12 x i8] c"PATTERNSTAR\00", align 1
+@.str.205 = private unnamed_addr constant [11 x i8] c"PATTERNVAR\00", align 1
+@.str.206 = private unnamed_addr constant [11 x i8] c"PROPALWAYS\00", align 1
+end_hunk_0
+begin_hunk_1_@_ZNK7V3Sched12_GLOBAL__N_116SchedLogicVertex4nameB5cxx11Ev:bb.a
+  ret void
+
+bb.f:                                             ; preds = %bb.a
+  %i.as = landingpad { ptr, i32 }
+          cleanup
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit15
+
+bb.g:                                             ; preds = %bb.c
+  %i.at = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  %i.au = load ptr, ptr %2, align 8, !tbaa !23    ; 2 uses
+  %i.av = icmp eq ptr %i.au, %i.j
+  br i1 %i.av, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit15, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13: ; preds = %bb.g
+  %i.aw = load i64, ptr %i.j, align 8, !tbaa !25
+  %i.ax = add i64 %i.aw, 1
+  call void @_ZdlPvm(ptr noundef %i.au, i64 noundef %i.ax) #30
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit15
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit15: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13, %bb.f
+  %.pn = phi { ptr, i32 } [ %i.as, %bb.f ], [ %i.at, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13 ], [ %i.at, %bb.g ]
+  %i.ay = load ptr, ptr %3, align 8, !tbaa !23    ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.ba = icmp eq ptr %i.ay, %i.az
+  br i1 %i.ba, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit18, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i16
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i16: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit15
+  %i.bb = load i64, ptr %i.az, align 8, !tbaa !25
+  %i.bc = add i64 %i.bb, 1
+  call void @_ZdlPvm(ptr noundef %i.ay, i64 noundef %i.bc) #30
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit18
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit18: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit15, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i16
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
+  resume { ptr, i32 } %.pn
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local void @_ZNK13V3GraphVertex8dotColorB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(80) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
+._crit_edge.i.i:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store ptr %i.a, ptr %0, align 8, !tbaa !141
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.a, ptr noundef nonnull align 1 dereferenceable(5) @.str.20, i64 5, i1 false)
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 5, ptr %i.b, align 8, !tbaa !24
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 21
+  store i8 0, ptr %i.c, align 1, !tbaa !25
+  ret void
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define internal void @_ZNK7V3Sched12_GLOBAL__N_116SchedLogicVertex8dotShapeB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree nonnull readnone align 8 captures(none) %1) unnamed_addr #20 align 2 personality ptr @__gxx_personality_v0 {
+._crit_edge.i.i:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store ptr %i.a, ptr %0, align 8, !tbaa !141
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.a, ptr noundef nonnull align 1 dereferenceable(9) @.str.21, i64 9, i1 false)
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 9, ptr %i.b, align 8, !tbaa !24
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 25
+  store i8 0, ptr %i.c, align 1, !tbaa !25
+  ret void
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local void @_ZNK13V3GraphVertex8dotStyleB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(80) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
+._crit_edge.i.i:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store ptr %i.a, ptr %0, align 8, !tbaa !141
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %i.b, align 8, !tbaa !24
+  store i8 0, ptr %i.a, align 8, !tbaa !25
+  ret void
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local void @_ZNK13V3GraphVertex7dotNameB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(80) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
+._crit_edge.i.i:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store ptr %i.a, ptr %0, align 8, !tbaa !141
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %i.b, align 8, !tbaa !24
+  store i8 0, ptr %i.a, align 8, !tbaa !25
+  ret void
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local void @_ZNK13V3GraphVertex7dotRankB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(80) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
+._crit_edge.i.i:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store ptr %i.a, ptr %0, align 8, !tbaa !141
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %i.b, align 8, !tbaa !24
+  store i8 0, ptr %i.a, align 8, !tbaa !25
+  ret void
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr dso_local noundef i32 @_ZNK13V3GraphVertex9rankAdderEv(ptr noundef nonnull align 8 dereferenceable(80) %0) unnamed_addr #4 comdat align 2 {
+bb.a:
+  ret i32 1
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr dso_local noundef ptr @_ZNK13V3GraphVertex8filelineEv(ptr noundef nonnull align 8 dereferenceable(80) %0) unnamed_addr #4 comdat align 2 {
+bb.a:
+  ret ptr null
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr dso_local noundef i32 @_ZNK13V3GraphVertex7sortCmpEPKS_(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef %1) unnamed_addr #4 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 68
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !352  ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 68
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !352  ; 2 uses
+  %i.e = icmp ult i32 %i.b, %i.d
+  br i1 %i.e, label %bb.e, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.f = icmp ugt i32 %i.b, %i.d
+  br i1 %i.f, label %bb.e, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %i.h = load double, ptr %i.g, align 8, !tbaa !353 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %i.j = load double, ptr %i.i, align 8, !tbaa !353 ; 2 uses
+  %i.k = fcmp olt double %i.h, %i.j
+  br i1 %i.k, label %bb.e, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.l = fcmp ogt double %i.h, %i.j
+  %. = zext i1 %i.l to i32
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
+  %.0 = phi i32 [ -1, %bb.c ], [ -1, %bb.a ], [ 1, %bb.b ], [ %., %bb.d ]
+  ret i32 %.0
+}
+
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
+define internal noundef zeroext i1 @_ZN6V3Rtti8internal12matchClassIdIN7V3Sched12_GLOBAL__N_116SchedLogicVertexEEEbm(i64 noundef %0) #21 {
+bb.a:
+  %i.a = icmp eq i64 %0, ptrtoint (ptr @_ZZN7V3Sched12_GLOBAL__N_116SchedLogicVertex13v3RttiClassIdEvE15s_vlrttiClassId to i64)
+  %i.b = icmp eq i64 %0, ptrtoint (ptr @_ZZN13V3GraphVertex13v3RttiClassIdEvE15s_vlrttiClassId to i64)
+  %spec.select = or i1 %i.a, %i.b
+  ret i1 %spec.select
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
+define internal noundef i64 @_ZN7V3Sched12_GLOBAL__N_116SchedLogicVertex13v3RttiClassIdEv() #11 align 2 {
+bb.a:
+  ret i64 ptrtoint (ptr @_ZZN7V3Sched12_GLOBAL__N_116SchedLogicVertex13v3RttiClassIdEvE15s_vlrttiClassId to i64)
+}
+
+; Function Attrs: inlinehint mustprogress uwtable
+define linkonce_odr dso_local noundef zeroext i1 @_ZN6V3Rtti8internal12matchClassIdI13V3GraphVertexEEbm(i64 noundef %0) #2 comdat {
+bb.a:
+  %i.a = icmp eq i64 %0, ptrtoint (ptr @_ZZN13V3GraphVertex13v3RttiClassIdEvE15s_vlrttiClassId to i64)
+  ret i1 %i.a
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr dso_local noundef i64 @_ZN13V3GraphVertex13v3RttiClassIdEv() #4 comdat align 2 {
+bb.a:
+  ret i64 ptrtoint (ptr @_ZZN13V3GraphVertex13v3RttiClassIdEvE15s_vlrttiClassId to i64)
+}
+
+; Function Attrs: inlinehint mustprogress nounwind uwtable
+define linkonce_odr dso_local noundef zeroext i1 @_ZN6V3Rtti8internal12matchClassIdIvEEbm(i64 noundef %0) #7 comdat {
+bb.a:
+  ret i1 false
+}
+
+declare void @_ZN13V3GraphVertexC1EP7V3GraphRKS_(ptr noundef nonnull align 8 dereferenceable(80), ptr noundef, ptr noundef nonnull align 8 dereferenceable(80)) unnamed_addr #3
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr dso_local noundef ptr @_ZNK7AstNode8filelineEv(ptr noundef nonnull align 8 dereferenceable(152) %0) #4 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !193
+  ret ptr %i.b
+}
+
+declare void @_ZNK8FileLine5asciiB5cxx11Ev(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 8 dereferenceable(48)) #3
+
+; Function Attrs: inlinehint mustprogress uwtable
+define internal fastcc void @_ZZN7AstNode11foreachImplI10AstSenItemZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder10visitLogicEPS_EUlPS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_bENKUlS5_E_clES5_(ptr nofree readonly captures(none) %.0.val, ptr nofree captures(none) %.8.val, ptr noundef %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+bb.a:
+  %i.a = alloca [32 x ptr], align 16              ; 11 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %.sroa.0.0.copyload.i.i = load i16, ptr %i.b, align 8, !tbaa !161
+  %i.c = icmp eq i16 %.sroa.0.0.copyload.i.i, 55
+  br i1 %i.c, label %bb.b, label %_ZZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder10visitLogicEP7AstNodeENKUlP10AstSenItemE_clES5_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = load ptr, ptr %.0.val, align 8, !tbaa !221 ; 16 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
+  %.sroa.0.0.copyload.i.i.i = load i8, ptr %i.e, align 8, !tbaa !358 ; 2 uses
+  %1 = zext i8 %.sroa.0.0.copyload.i.i.i to i64
+  %2 = getelementptr inbounds nuw i8, ptr @_ZZNK9VEdgeType11clockedStmtEvE7clocked, i64 %1
+  %i.f = load i8, ptr %2, align 1, !tbaa !203, !range !157, !noundef !158
+  %3 = trunc nuw i8 %i.f to i1
+  %4 = icmp eq i8 %.sroa.0.0.copyload.i.i.i, 9
+  %or.cond.not.i = or i1 %4, %3
+  br i1 %or.cond.not.i, label %.critedge.i, label %bb.c, !prof !359
+
+bb.c:                                             ; preds = %bb.b
+  %i.g = getelementptr inbounds nuw i8, ptr %.0.val, i64 8
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !222
+  %i.i = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.1, i32 noundef 193) ; 0 uses
+  %i.j = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error10v3errorStrB5cxx11Ev()
+  %i.k = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull @.str.22)
+  tail call void @_ZNK7AstNode15v3errorEndFatalERKNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(152) %i.h, ptr noundef nonnull align 8 dereferenceable(112) %i.k) #33
+  unreachable
+
+.critedge.i:                                      ; preds = %bb.b
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.m = load i32, ptr %i.l, align 8, !tbaa !181
+  %i.n = load i32, ptr @_ZN12VNUser1InUse12s_userCntGblE, align 4, !tbaa !180
+  %i.o = icmp ne i32 %i.m, %i.n
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 2 uses
+  %.not25.i.i = icmp eq i64 %i.q, 0
+  %.not.i.i = select i1 %i.o, i1 true, i1 %.not25.i.i
+  br i1 %.not.i.i, label %bb.d, label %_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder12getSenVertexEP10AstSenItem.exit.i
+
+bb.d:                                             ; preds = %.critedge.i
+  %i.r = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #31 ; 11 uses
+  store ptr null, ptr %i.r, align 8, !tbaa !198
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 4 uses
+  store ptr %0, ptr %i.s, align 8, !tbaa !361
+  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
+  store ptr null, ptr %i.t, align 8, !tbaa !365
+  %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 80 ; 5 uses
+  %.val29.i.i.i.i.i = load i64, ptr %i.u, align 8, !tbaa !366
+  %.not.not.i.i.i.i.i = icmp eq i64 %.val29.i.i.i.i.i, 0
+  br i1 %.not.not.i.i.i.i.i, label %bb.e, label %.critedge.i.i.i.i.i
+
+bb.e:                                             ; preds = %bb.d
+  %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 72
+  br label %bb.f
+
+bb.f:                                             ; preds = %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE13_M_key_equalsERS5_RKNS_16_Hash_node_valueISA_Lb1EEE.exit.i.i.i.i.i, %bb.e
+  %.sroa.03.0.in.i.i.i.i.i = phi ptr [ %i.v, %bb.e ], [ %.sroa.03.0.i.i.i.i.i, %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE13_M_key_equalsERS5_RKNS_16_Hash_node_valueISA_Lb1EEE.exit.i.i.i.i.i ]
+  %.sroa.03.0.i.i.i.i.i = load ptr, ptr %.sroa.03.0.in.i.i.i.i.i, align 8, !tbaa !198 ; 4 uses
+  %.not.i.i.i.i.i = icmp eq ptr %.sroa.03.0.i.i.i.i.i, null
+  br i1 %.not.i.i.i.i.i, label %.critedge.loopexit.i.i.i.i.i, label %bb.g
+
+bb.g:                                             ; preds = %bb.f
+  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.03.0.i.i.i.i.i, i64 8
+  %.val33.i.i.i.i.i = load ptr, ptr %i.s, align 8
+  %.val34.i.i.i.i.i = load ptr, ptr %i.w, align 8
+  %i.x = invoke noundef zeroext i1 @_ZN7AstNode12sameTreeIterEPKS_S1_bb(ptr noundef nonnull align 8 dereferenceable(152) %.val33.i.i.i.i.i, ptr noundef nonnull %.val34.i.i.i.i.i, i1 noundef zeroext true, i1 noundef zeroext false)
+          to label %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE13_M_key_equalsERS5_RKNS_16_Hash_node_valueISA_Lb1EEE.exit.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE13_M_key_equalsERS5_RKNS_16_Hash_node_valueISA_Lb1EEE.exit.i.i.i.i.i: ; preds = %bb.g
+  br i1 %i.x, label %_ZNSt13unordered_mapI5VNRefI10AstSenItemEPN7V3Sched12_GLOBAL__N_114SchedSenVertexESt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S6_EEE7emplaceIJRS1_DnEEESB_INSt8__detail14_Node_iteratorISD_Lb0ELb1EEEbEDpOT_.exit.i.i, label %bb.f, !llvm.loop !354
+
+.critedge.loopexit.i.i.i.i.i:                     ; preds = %bb.f
+  %.val39.pre.i.i.i.i.i = load ptr, ptr %i.s, align 8
+  br label %.critedge.i.i.i.i.i
+
+.critedge.i.i.i.i.i:                              ; preds = %.critedge.loopexit.i.i.i.i.i, %bb.d
+  %.val39.i.i.i.i.i = phi ptr [ %.val39.pre.i.i.i.i.i, %.critedge.loopexit.i.i.i.i.i ], [ %0, %bb.d ]
+  %i.y = invoke noundef i64 @_Z20V3HasherUncachedHashRK7AstNode(ptr noundef nonnull align 8 dereferenceable(152) %.val39.i.i.i.i.i)
+          to label %bb.h unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
+
+bb.h:                                             ; preds = %.critedge.i.i.i.i.i
+  %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 64 ; 6 uses
+  %.val40.i.i.i.i.i = load i64, ptr %i.z, align 8, !tbaa !61
+  %i.aa = urem i64 %i.y, %.val40.i.i.i.i.i        ; 3 uses
+  %.val.i.i.i.i.i = load i64, ptr %i.u, align 8, !tbaa !366
+  %.not21.i.i.i.i.i = icmp eq i64 %.val.i.i.i.i.i, 0
+  br i1 %.not21.i.i.i.i.i, label %.critedge28.i.i.i.i.i, label %bb.i
+
+bb.i:                                             ; preds = %bb.h
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 56
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !60
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.aa
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !236 ; 3 uses
+  %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ae, null
+  br i1 %.not.i.i.i.i.i.i.i, label %.critedge28.i.i.i.i.i, label %bb.j
+
+bb.j:                                             ; preds = %bb.i
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !198 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i.i.i = getelementptr i8, ptr %i.af, i64 24
+  %.val22.pre.i.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i.i.i.i, align 8, !tbaa !368
+  br label %bb.k
+
+bb.k:                                             ; preds = %bb.l, %bb.j
+  %.val22.i.i.i.i.i.i.i = phi i64 [ %.val22.pre.i.i.i.i.i.i.i, %bb.j ], [ %.val24.i.i.i.i.i.i.i, %bb.l ]
+  %.015.i.i.i.i.i.i.i = phi ptr [ %i.ae, %bb.j ], [ %.0.i.i.i.i.i.i.i, %bb.l ]
+  %.0.i.i.i.i.i.i.i = phi ptr [ %i.af, %bb.j ], [ %i.aj, %bb.l ] ; 3 uses
+  %i.ag = icmp eq i64 %i.y, %.val22.i.i.i.i.i.i.i
+  br i1 %i.ag, label %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.i.i.i.i.i.i.i, label %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i.i.i.i
+
+_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.i.i.i.i.i.i.i: ; preds = %bb.k
+  %i.ah = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i.i.i, i64 8
+  %.val21.i.i.i.i.i.i.i = load ptr, ptr %i.ah, align 8
+  %.val.i.i45.i.i.i.i.i = load ptr, ptr %i.s, align 8
+  %i.ai = invoke noundef zeroext i1 @_ZN7AstNode12sameTreeIterEPKS_S1_bb(ptr noundef nonnull align 8 dereferenceable(152) %.val.i.i45.i.i.i.i.i, ptr noundef nonnull %.val21.i.i.i.i.i.i.i, i1 noundef zeroext true, i1 noundef zeroext false)
+          to label %.noexc.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.noexc.i.i.i.i.i:                                 ; preds = %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.i.i.i.i.i.i.i
+  br i1 %i.ai, label %_ZNKSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS4_m.exit.i.i.i.i.i, label %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i.i.i.i
+
+_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i.i.i.i: ; preds = %.noexc.i.i.i.i.i, %bb.k
+  %i.aj = load ptr, ptr %.0.i.i.i.i.i.i.i, align 8, !tbaa !198 ; 3 uses
+  %.not18.i.i.i.i.i.i.i = icmp eq ptr %i.aj, null
+  br i1 %.not18.i.i.i.i.i.i.i, label %.critedge28.i.i.i.i.i, label %bb.l
+
+bb.l:                                             ; preds = %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i.i.i.i
+  %.val23.i.i.i.i.i.i.i = load i64, ptr %i.z, align 8, !tbaa !61
+  %i.ak = getelementptr i8, ptr %i.aj, i64 24
+  %.val24.i.i.i.i.i.i.i = load i64, ptr %i.ak, align 8, !tbaa !368 ; 2 uses
+  %i.al = urem i64 %.val24.i.i.i.i.i.i.i, %.val23.i.i.i.i.i.i.i
+  %.not19.i.i.i.i.i.i.i = icmp eq i64 %i.al, %i.aa
+  br i1 %.not19.i.i.i.i.i.i.i, label %bb.k, label %.critedge28.i.i.i.i.i, !llvm.loop !355
+
+_ZNKSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS4_m.exit.i.i.i.i.i: ; preds = %.noexc.i.i.i.i.i
+  %i.am = load ptr, ptr %.015.i.i.i.i.i.i.i, align 8, !tbaa !198 ; 2 uses
+  %.not23.i.i.i.i.i = icmp eq ptr %i.am, null
+  br i1 %.not23.i.i.i.i.i, label %.critedge28.i.i.i.i.i, label %_ZNSt13unordered_mapI5VNRefI10AstSenItemEPN7V3Sched12_GLOBAL__N_114SchedSenVertexESt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S6_EEE7emplaceIJRS1_DnEEESB_INSt8__detail14_Node_iteratorISD_Lb0ELb1EEEbEDpOT_.exit.i.i
+
+.critedge28.i.i.i.i.i:                            ; preds = %bb.l, %_ZNKSt8__detail15_Hashtable_baseI5VNRefI10AstSenItemESt4pairIKS3_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEENS_10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS5_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i.i.i.i, %_ZNKSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS4_m.exit.i.i.i.i.i, %bb.i, %bb.h
+  %i.an = getelementptr inbounds nuw i8, ptr %i.d, i64 88
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.d, i64 96 ; 2 uses
+  %i.ap = load i64, ptr %i.ao, align 8, !tbaa !237
+  %i.aq = load i64, ptr %i.z, align 8, !tbaa !61
+  %i.ar = load i64, ptr %i.u, align 8, !tbaa !366
+  %i.as = invoke { i8, i64 } @_ZNKSt8__detail20_Prime_rehash_policy14_M_need_rehashEmmm(ptr noundef nonnull align 8 dereferenceable(16) %i.an, i64 noundef %i.aq, i64 noundef %i.ar, i64 noundef 1)
+          to label %.noexc48.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+
+.noexc48.i.i.i.i.i:                               ; preds = %.critedge28.i.i.i.i.i
+  %i.at = extractvalue { i8, i64 } %i.as, 0
+  %i.au = trunc i8 %i.at to i1
+  br i1 %i.au, label %bb.m, label %._crit_edge.i.i.i.i.i.i
+
+._crit_edge.i.i.i.i.i.i:                          ; preds = %.noexc48.i.i.i.i.i
+  %.phi.trans.insert.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 56
+  %.pre.i.i.i.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i.i.i, align 8, !tbaa !60
+  br label %bb.z
+
+bb.m:                                             ; preds = %.noexc48.i.i.i.i.i
+  %i.av = extractvalue { i8, i64 } %i.as, 1       ; 7 uses
+  %i.aw = icmp eq i64 %i.av, 1
+  br i1 %i.aw, label %bb.n, label %bb.o, !prof !17
+
+bb.n:                                             ; preds = %bb.m
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 104 ; 2 uses
+  store ptr null, ptr %i.ax, align 8, !tbaa !369
+  br label %_ZNSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i
+
+bb.o:                                             ; preds = %bb.m
+  %i.ay = icmp ugt i64 %i.av, 1152921504606846975
+  br i1 %i.ay, label %bb.p, label %_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIK5VNRefI10AstSenItemEPN7V3Sched12_GLOBAL__N_114SchedSenVertexEELb1EEEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i.i, !prof !17
+
+bb.p:                                             ; preds = %bb.o
+  %i.az = icmp ugt i64 %i.av, 2305843009213693951
+  br i1 %i.az, label %.noexc.i.i.i.i.i.i.i.i.i.i, label %.noexc7.i.i.i.i.i.i.i.i.i.i
+
+.noexc.i.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.p
+  invoke void @_ZSt28__throw_bad_array_new_lengthv() #33
+          to label %.noexc.i.i.i.i.i.i.i unwind label %bb.v
+
+.noexc.i.i.i.i.i.i.i:                             ; preds = %.noexc.i.i.i.i.i.i.i.i.i.i
+  unreachable
+
+.noexc7.i.i.i.i.i.i.i.i.i.i:                      ; preds = %bb.p
+  invoke void @_ZSt17__throw_bad_allocv() #33
+          to label %.noexc5.i.i.i.i.i.i.i unwind label %bb.v
+
+.noexc5.i.i.i.i.i.i.i:                            ; preds = %.noexc7.i.i.i.i.i.i.i.i.i.i
+  unreachable
+
+_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIK5VNRefI10AstSenItemEPN7V3Sched12_GLOBAL__N_114SchedSenVertexEELb1EEEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.o
+  %i.ba = shl nuw nsw i64 %i.av, 3                ; 2 uses
+  %i.bb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ba) #31
+          to label %.noexc6.i.i.i.i.i.i.i unwind label %bb.v ; 2 uses
+
+.noexc6.i.i.i.i.i.i.i:                            ; preds = %_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIK5VNRefI10AstSenItemEPN7V3Sched12_GLOBAL__N_114SchedSenVertexEELb1EEEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i.i
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bb, i8 0, i64 %i.ba, i1 false)
+  br label %_ZNSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i
+
+_ZNSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i: ; preds = %.noexc6.i.i.i.i.i.i.i, %bb.n
+  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ax, %bb.n ], [ %i.bb, %.noexc6.i.i.i.i.i.i.i ] ; 4 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.d, i64 72 ; 5 uses
+  %.val.i.i.i.i.i.i.i.i = load ptr, ptr %i.bc, align 8, !tbaa !197 ; 2 uses
+  store ptr null, ptr %i.bc, align 8, !tbaa !197
+  %.not30.i.i.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.i.i.i.i.i, null
+  br i1 %.not30.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %_ZNSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i, %bb.t
+  %.032.i.i.i.i.i.i.i.i = phi i64 [ %.1.i.i.i.i.i.i.i.i, %bb.t ], [ 0, %_ZNSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.02531.i.i.i.i.i.i.i.i = phi ptr [ %.025.val.i.i.i.i.i.i.i.i, %bb.t ], [ %.val.i.i.i.i.i.i.i.i, %_ZNSt10_HashtableI5VNRefI10AstSenItemESt4pairIKS2_PN7V3Sched12_GLOBAL__N_114SchedSenVertexEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i.i.i.i.i.i.i.i ] ; 8 uses
+  %.025.val.i.i.i.i.i.i.i.i = load ptr, ptr %.02531.i.i.i.i.i.i.i.i, align 8, !tbaa !198 ; 2 uses
+  %i.bd = getelementptr i8, ptr %.02531.i.i.i.i.i.i.i.i, i64 24
+  %.val29.i.i.i.i.i.i.i.i = load i64, ptr %i.bd, align 8, !tbaa !368
+  %i.be = urem i64 %.val29.i.i.i.i.i.i.i.i, %i.av ; 3 uses
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i.i.i.i.i.i.i, i64 %i.be ; 3 uses
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !236 ; 2 uses
+  %.not27.i.i.i.i.i.i.i.i = icmp eq ptr %i.bg, null
+  br i1 %.not27.i.i.i.i.i.i.i.i, label %bb.q, label %bb.s
+
+bb.q:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i
+  %i.bh = load ptr, ptr %i.bc, align 8, !tbaa !197
+  store ptr %i.bh, ptr %.02531.i.i.i.i.i.i.i.i, align 8, !tbaa !198
+  store ptr %.02531.i.i.i.i.i.i.i.i, ptr %i.bc, align 8, !tbaa !197
+  store ptr %i.bc, ptr %i.bf, align 8, !tbaa !236
+  %i.bi = load ptr, ptr %.02531.i.i.i.i.i.i.i.i, align 8, !tbaa !198
+  %.not28.i.i.i.i.i.i.i.i = icmp eq ptr %i.bi, null
+  br i1 %.not28.i.i.i.i.i.i.i.i, label %bb.t, label %bb.r
+
+bb.r:                                             ; preds = %bb.q
+  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i.i.i.i.i.i.i, i64 %.032.i.i.i.i.i.i.i.i
+  store ptr %.02531.i.i.i.i.i.i.i.i, ptr %i.bj, align 8, !tbaa !236
+end_hunk_1
+begin_hunk_2_@llvm.umax.i64
+!159 = !{!"_ZTSN7V3Sched12_GLOBAL__N_116SchedLogicVertexE", !148, i64 0, !53, i64 80, !54, i64 88, !122, i64 96}
+!160 = !{!159, !122, i64 96}
+!161 = !{!123, !123, i64 0}
+!162 = !{!"_ZTS9AstActive", !129, i64 0, !22, i64 152, !54, i64 184}
+!163 = !{!162, !54, i64 184}
+!164 = !{!129, !122, i64 32}
+!165 = !{!129, !122, i64 8}
+!166 = !{!122, !122, i64 0}
+!167 = !{!"_ZTS11AstNodeExpr", !129, i64 0}
+!168 = !{!"p1 _ZTS13AstNodeModule", !18, i64 0}
+!169 = !{!"_ZTSN7VAccess2enE", !13, i64 0}
+!170 = !{!"_ZTS7VAccess", !169, i64 0}
+!171 = !{!"p1 _ZTSSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE", !18, i64 0}
+!172 = !{!"_ZTSSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE", !171, i64 0}
+!173 = !{!"_ZTSSt12__shared_ptrIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELN9__gnu_cxx12_Lock_policyE2EE", !87, i64 0, !172, i64 8}
+!174 = !{!"_ZTSSt10shared_ptrIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE", !173, i64 0}
+!175 = !{!"_ZTS16VSelfPointerText", !174, i64 0}
+!176 = !{!"_ZTS13AstNodeVarRef", !167, i64 0, !131, i64 152, !57, i64 160, !168, i64 168, !170, i64 176, !175, i64 184}
+!177 = !{!176, !57, i64 160}
+!178 = !{!169, !169, i64 0}
+!179 = !{!129, !14, i64 116}
+!180 = !{!14, !14, i64 0}
+!181 = !{!129, !14, i64 112}
+!182 = !{!129, !122, i64 48}
+!183 = !{!129, !122, i64 40}
+!184 = !{!129, !122, i64 24}
+!185 = !{!"branch_weights", i32 -2147483648, i32 0}
+!186 = !{!"branch_weights", i32 255873, i32 127}
+!187 = !{!19, !19, i64 0}
+!188 = !{!"_ZTSNSt12_Vector_baseISt4pairIP8AstScopeP9AstActiveESaIS5_EE17_Vector_impl_dataE", !134, i64 0, !134, i64 8, !134, i64 16}
+!189 = !{!188, !134, i64 0}
+!190 = !{!188, !134, i64 16}
+!191 = !{!119, !71, i64 1722}
+!192 = !{!129, !122, i64 16}
+!193 = !{!129, !127, i64 88}
+!194 = !{!188, !134, i64 8}
+!195 = !{!176, !131, i64 152}
+!196 = !{!119, !71, i64 771}
+!197 = !{!51, !47, i64 24}
+!198 = !{!48, !47, i64 0}
+!199 = !{!31, !30, i64 0}
+!200 = !{!31, !30, i64 16}
+!201 = !{!58, !54, i64 120}
+!202 = !{!57, !57, i64 0}
+!203 = !{!71, !71, i64 0}
+!204 = !{!"_ZTSSt13_Ios_Fmtflags", !13, i64 0}
+!205 = !{!"_ZTSSt12_Ios_Iostate", !13, i64 0}
+!206 = !{!"p1 _ZTSNSt8ios_base14_Callback_listE", !18, i64 0}
+!207 = !{!"_ZTSNSt8ios_base6_WordsE", !18, i64 0, !21, i64 8}
+!208 = !{!"p1 _ZTSNSt8ios_base6_WordsE", !18, i64 0}
+!209 = !{!"p1 _ZTSNSt6locale5_ImplE", !18, i64 0}
+!210 = !{!"_ZTSSt6locale", !209, i64 0}
+!211 = !{!"_ZTSSt8ios_base", !21, i64 8, !21, i64 16, !204, i64 24, !205, i64 28, !205, i64 32, !206, i64 40, !207, i64 48, !13, i64 64, !14, i64 192, !208, i64 200, !210, i64 208}
+!212 = !{!211, !204, i64 24}
+!213 = !{!204, !204, i64 0}
+!214 = !{!"_ZTSSt15basic_streambufIcSt11char_traitsIcEE", !19, i64 8, !19, i64 16, !19, i64 24, !19, i64 32, !19, i64 40, !19, i64 48, !210, i64 56}
+!215 = !{!214, !19, i64 40}
+!216 = !{!214, !19, i64 32}
+!217 = !{!124, !123, i64 0}
+!218 = !{!"p1 _ZTSN7V3Sched12_GLOBAL__N_117SchedGraphBuilderE", !18, i64 0}
+!219 = !{!"p1 _ZTSN7V3Sched12_GLOBAL__N_116SchedLogicVertexE", !18, i64 0}
+!220 = !{!"_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder10visitLogicEP7AstNodeEUlP10AstSenItemE_", !218, i64 0, !122, i64 8, !219, i64 16}
+!221 = !{!220, !218, i64 0}
+!222 = !{!220, !122, i64 8}
+!223 = !{!220, !219, i64 16}
+!224 = !{!30, !30, i64 0}
+!225 = !{!"_ZTSSt10_HashtableIPK11AstVarScopeS2_SaIS2_ENSt8__detail9_IdentityESt8equal_toIS2_ESt4hashIS2_ENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb1ELb1EEEE", !46, i64 0, !21, i64 8, !48, i64 16, !21, i64 24, !50, i64 32, !47, i64 48}
+!226 = !{!225, !46, i64 0}
+!227 = !{!225, !21, i64 8}
+!228 = !{!"p1 _ZTSSt13unordered_setIPK11AstVarScopeSt4hashIS2_ESt8equal_toIS2_ESaIS2_EE", !18, i64 0}
+!229 = !{!"_ZTSZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder10visitLogicEP7AstNodeEUlPK9AstVarRefE_", !218, i64 0, !219, i64 8, !228, i64 16}
+!230 = !{!229, !218, i64 0}
+!231 = !{!229, !219, i64 8}
+!232 = !{!228, !228, i64 0}
+!233 = !{!225, !47, i64 16}
+!234 = !{!225, !21, i64 24}
+!235 = !{!"p1 _ZTS10AstSenItem", !18, i64 0}
+!236 = !{!47, !47, i64 0}
+!237 = !{!50, !21, i64 8}
+!238 = !{!"_ZTSN7V3Sched12_GLOBAL__N_114SchedSenVertexE", !148, i64 0, !235, i64 80}
+!239 = !{!238, !235, i64 80}
+!240 = !{!152, !53, i64 160}
+!241 = !{!"p1 _ZTS7AstCell", !18, i64 0}
+!242 = !{!"_ZTS8AstScope", !129, i64 0, !22, i64 152, !53, i64 184, !241, i64 192, !168, i64 200}
+!243 = !{!242, !53, i64 184}
+!244 = !{!"_ZTSN10VDirection2enE", !13, i64 0}
+!245 = !{!"_ZTS10VDirection", !244, i64 0}
+!246 = !{!245, !244, i64 0}
+!247 = !{!"any p3 pointer", !29, i64 0}
+!248 = !{!"p3 _ZTS7AstNode", !247, i64 0}
+!249 = !{!248, !248, i64 0}
+!250 = !{!"branch_weights", i32 127, i32 1}
+!251 = !{!"_ZTSZN7AstNode11foreachImplI9AstVarRefZN7V3Sched4util27collectForceReadEdgeIgnoresEPS_RSt13unordered_setIPK11AstVarScopeSt4hashIS8_ESt8equal_toIS8_ESaIS8_EEEUlPKS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_bEUlS4_E_", !18, i64 0, !248, i64 8}
+!252 = !{!251, !18, i64 0}
+!253 = !{i64 8}
+!254 = !{!"_ZTSZN7V3Sched4util27collectForceReadEdgeIgnoresEP7AstNodeRSt13unordered_setIPK11AstVarScopeSt4hashIS6_ESt8equal_toIS6_ESaIS6_EEEUlPK9AstVarRefE_", !228, i64 0, !228, i64 8, !228, i64 16}
+!255 = !{!254, !228, i64 0}
+!256 = !{!225, !47, i64 48}
+!257 = !{!129, !126, i64 72}
+!258 = !{!254, !228, i64 8}
+!259 = !{!254, !228, i64 16}
+!260 = !{!251, !248, i64 8}
+!261 = !{!"_ZTSZN7AstNode11foreachImplI14AstCMethodHardZN7V3Sched4util27collectForceReadEdgeIgnoresEPS_RSt13unordered_setIPK11AstVarScopeSt4hashIS8_ESt8equal_toIS8_ESaIS8_EEEUlPKS1_E_EEvPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT0_bEUlS4_E_", !18, i64 0, !248, i64 8}
+!262 = !{!261, !18, i64 0}
+!263 = !{!"_ZTSN8VCMethod2enE", !13, i64 0}
+!264 = !{!263, !263, i64 0}
+!265 = !{!"_ZTSZN7V3Sched4util27collectForceReadEdgeIgnoresEP7AstNodeRSt13unordered_setIPK11AstVarScopeSt4hashIS6_ESt8equal_toIS6_ESaIS6_EEEUlPK14AstCMethodHardE_", !228, i64 0, !228, i64 8, !228, i64 16}
+!266 = !{!265, !228, i64 0}
+!267 = !{!261, !248, i64 8}
+!268 = !{!"_ZTSN11V3ErrorCode2enE", !13, i64 0}
+!269 = !{!"_ZTS11V3ErrorCode", !268, i64 0}
+!270 = !{!"p3 _ZTS8FileLine", !247, i64 0}
+!271 = !{!"p2 _ZTS8FileLine", !29, i64 0}
+!272 = !{!"_ZTSSt15_Deque_iteratorIPK8FileLineRS2_PS2_E", !271, i64 0, !271, i64 8, !271, i64 16, !270, i64 24}
+!273 = !{!"_ZTSNSt11_Deque_baseIPK8FileLineSaIS2_EE16_Deque_impl_dataE", !270, i64 0, !21, i64 8, !272, i64 16, !272, i64 48}
+!274 = !{!"_ZTSNSt11_Deque_baseIPK8FileLineSaIS2_EE11_Deque_implE", !273, i64 0}
+!275 = !{!"_ZTSSt11_Deque_baseIPK8FileLineSaIS2_EE", !274, i64 0}
+!276 = !{!"_ZTSSt5dequeIPK8FileLineSaIS2_EE", !275, i64 0}
+!277 = !{!"_ZTS13VErrorMessage", !269, i64 0, !22, i64 8, !127, i64 40, !276, i64 48}
+!278 = !{!83, !81, i64 8}
+!279 = !{!273, !270, i64 0}
+!280 = !{!273, !270, i64 40}
+!281 = !{!273, !270, i64 72}
+!282 = !{!271, !271, i64 0}
+!283 = !{!273, !21, i64 8}
+!284 = !{!272, !270, i64 24}
+!285 = distinct !{!285, i1 true, !"_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5buildERKNS_12LogicByScopeES4_S4_"}
+!286 = distinct !{!286, !285, !"_ZN7V3Sched12_GLOBAL__N_117SchedGraphBuilder5buildERKNS_12LogicByScopeES4_S4_: argument 0"}
+!287 = distinct !{null}
+!288 = distinct !{null}
+!289 = distinct !{!289, !149}
+!290 = distinct !{null}
+!291 = distinct !{null}
+!292 = distinct !{null}
+!293 = distinct !{null}
+!294 = distinct !{!294, !149}
+!295 = distinct !{null, null}
+!296 = !{!286}
+!297 = !{!"_ZTSSt4lessIP6AstVarE"}
+!298 = !{!"_ZTSSt20_Rb_tree_key_compareISt4lessIP6AstVarEE", !297, i64 0}
+!299 = !{!"_ZTSNSt8_Rb_treeIP6AstVarS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE13_Rb_tree_implIS5_Lb1EEE", !298, i64 0, !83, i64 8}
+!300 = !{!"_ZTSSt8_Rb_treeIP6AstVarS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE", !299, i64 0}
+!301 = !{!"_ZTSSt3setIP6AstVarSt4lessIS1_ESaIS1_EE", !300, i64 0}
+!302 = !{!"_ZTSSt10_HashtableIPK8AstConstSt4pairIKS2_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaISB_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb0ELb0ELb1EEEE", !46, i64 0, !21, i64 8, !48, i64 16, !21, i64 24, !50, i64 32, !47, i64 48}
+!303 = !{!"_ZTSSt13unordered_mapIPK8AstConstNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S8_EEE", !302, i64 0}
+!304 = !{!"p1 _ZTS12AstTypeTable", !18, i64 0}
+!305 = !{!"p1 _ZTS12AstConstPool", !18, i64 0}
+!306 = !{!"p1 _ZTS10AstPackage", !18, i64 0}
+!307 = !{!"p1 _ZTS8AstClass", !18, i64 0}
+!308 = !{!"p1 _ZTS11AstTopScope", !18, i64 0}
+!309 = !{!"_ZTS10AstNetlist", !129, i64 0, !116, i64 152, !116, i64 153, !22, i64 160, !71, i64 192, !14, i64 196, !301, i64 200, !303, i64 248, !304, i64 304, !305, i64 312, !306, i64 320, !306, i64 328, !307, i64 336, !130, i64 344, !130, i64 352, !57, i64 360, !131, i64 368, !57, i64 376, !57, i64 384, !308, i64 392, !57, i64 400}
+!310 = !{!309, !57, i64 360}
+!311 = !{!58, !53, i64 112}
+!312 = !{i64 0, i64 16, !25}
+!313 = !{!"_ZTS6V3ListI13V3GraphVertexXadL_ZNS0_5linksEvEES0_E", !142, i64 0, !142, i64 8}
+!314 = !{!313, !142, i64 0}
+!315 = !{!143, !142, i64 0}
+!316 = !{!142, !142, i64 0}
+!317 = !{!148, !14, i64 64}
+!318 = !{!144, !144, i64 0}
+!319 = !{!"_ZTS11V3ListLinksI11V3GraphEdgeE", !144, i64 0, !144, i64 8}
+!320 = !{!319, !144, i64 0}
+!321 = !{!"_ZTS11V3GraphEdge", !319, i64 8, !319, i64 24, !142, i64 40, !142, i64 48, !14, i64 56, !71, i64 60, !13, i64 64}
+!322 = !{!321, !142, i64 40}
+!323 = !{!321, !142, i64 48}
+!324 = !{!120, !71, i64 55}
+!325 = !{!159, !53, i64 80}
+!326 = !{!159, !54, i64 88}
+!327 = !{!"branch_weights", i32 1, i32 2001, i32 2000}
+!328 = distinct !{!328, i1 true, !"_ZSt19__relocate_object_aISt4pairIP8AstScopeP9AstActiveES5_SaIS5_EEvPT_PT0_RT1_"}
+!329 = distinct !{!329, !328, !"_ZSt19__relocate_object_aISt4pairIP8AstScopeP9AstActiveES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
+!330 = distinct !{!330, !328, !"_ZSt19__relocate_object_aISt4pairIP8AstScopeP9AstActiveES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
+!331 = distinct !{!331, !149}
+!332 = !{!330, !329}
+!333 = distinct !{!333, !149}
+!334 = !{ptr @_ZN9VNVisitorD2Ev}
+!335 = !{!54, !54, i64 0}
+!336 = distinct !{!336, i1 true, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!337 = distinct !{!337, !336, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!338 = distinct !{!338, i1 true, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!339 = distinct !{!339, !338, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!340 = !{!337}
+!341 = !{!339}
+!342 = !{!339, !337}
+!343 = !{!"_ZTS12AstNodeCCall", !167, i64 0, !22, i64 152, !71, i64 184, !130, i64 192}
+!344 = !{!343, !130, i64 192}
+!345 = !{!"branch_weights", i32 2102744406, i32 44739242}
+!346 = distinct !{!346, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_"}
+!347 = distinct !{!347, !346, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_: argument 0"}
+!348 = distinct !{!348, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_"}
+!349 = distinct !{!349, !348, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_: argument 0"}
+!350 = !{!347}
+!351 = !{!349}
+!352 = !{!148, !14, i64 68}
+!353 = !{!148, !147, i64 56}
+!354 = distinct !{!354, !149}
+!355 = distinct !{!355, !149}
+!356 = distinct !{!356, !149}
+!357 = !{!"_ZTSN9VEdgeType2enE", !13, i64 0}
+!358 = !{!357, !357, i64 0}
+!359 = !{!"branch_weights", i32 4001, i32 1}
+!360 = !{!"_ZTSSt17reference_wrapperI10AstSenItemE", !235, i64 0}
+!361 = !{!360, !235, i64 0}
+!362 = !{!"_ZTS5VNRefI10AstSenItemE", !360, i64 0}
+!363 = !{!"p1 _ZTSN7V3Sched12_GLOBAL__N_114SchedSenVertexE", !18, i64 0}
+!364 = !{!"_ZTSSt4pairIK5VNRefI10AstSenItemEPN7V3Sched12_GLOBAL__N_114SchedSenVertexEE", !362, i64 0, !363, i64 8}
+!365 = !{!364, !363, i64 8}
+!366 = !{!51, !21, i64 32}
+!367 = !{!"_ZTSNSt8__detail21_Hash_node_code_cacheILb1EEE", !21, i64 0}
+!368 = !{!367, !21, i64 0}
+!369 = !{!51, !47, i64 56}
+!370 = distinct !{!370, i1 true, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!371 = distinct !{!371, !370, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!372 = distinct !{!372, i1 true, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!373 = distinct !{!373, !372, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!374 = !{!371}
+!375 = !{!373}
+!376 = !{!373, !371}
+!377 = distinct !{!377, i1 true, !"_ZNK8AstScope4nameB5cxx11Ev"}
+!378 = distinct !{!378, !377, !"_ZNK8AstScope4nameB5cxx11Ev: argument 0"}
+!379 = distinct !{!379, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_"}
+!380 = distinct !{!380, !379, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_: argument 0"}
+!381 = distinct !{!381, i1 true, !"_ZNK6AstVar4nameB5cxx11Ev"}
+!382 = distinct !{!382, !381, !"_ZNK6AstVar4nameB5cxx11Ev: argument 0"}
+!383 = !{!378}
+!384 = !{!380}
+!385 = !{!382}
+!386 = distinct !{!386, i1 true, !"_ZNK9AstCDType4nameB5cxx11Ev"}
+!387 = distinct !{!387, !386, !"_ZNK9AstCDType4nameB5cxx11Ev: argument 0"}
+!388 = !{!387}
+!389 = distinct !{!389, i1 true, !"_ZNK9AstCDType4nameB5cxx11Ev"}
+!390 = distinct !{!390, !389, !"_ZNK9AstCDType4nameB5cxx11Ev: argument 0"}
+!391 = !{!390}
+!392 = !{!"_ZTSZZN7V3Sched4util27collectForceReadEdgeIgnoresEP7AstNodeRSt13unordered_setIPK11AstVarScopeSt4hashIS6_ESt8equal_toIS6_ESaIS6_EEENKUlPK14AstCMethodHardE_clESG_EUlPK9AstVarRefE_", !228, i64 0, !228, i64 8}
+!393 = !{!392, !228, i64 0}
+!394 = !{!392, !228, i64 8}
+!395 = !{!"branch_weights", i32 2123080424, i32 24403224}
+!396 = distinct !{null, null}
+!397 = !{!56, !18, i64 24}
+!398 = !{!229, !228, i64 16}
+!399 = !{!"_ZTSSt12_Base_bitsetILm3EE", !13, i64 0}
+!400 = !{!"_ZTSSt6bitsetILm146EE", !399, i64 0}
+!401 = !{!"_ZTS12VErrorBitSet", !400, i64 0}
+!402 = !{!"_ZTSSo"}
+!403 = !{!"_ZTSSt13_Ios_Openmode", !13, i64 0}
+!404 = !{!"_ZTSNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE", !214, i64 0, !403, i64 64, !22, i64 72}
+!405 = !{!"_ZTSNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE", !402, i64 0, !404, i64 8}
+!406 = !{!"_ZTSSt22__recursive_mutex_base", !13, i64 0}
+!407 = !{!"_ZTSSt15recursive_mutex", !406, i64 0}
+!408 = !{!"_ZTS10V3MutexImpISt15recursive_mutexE", !407, i64 0}
+!409 = !{!"_ZTS14V3ErrorGuarded", !71, i64 0, !71, i64 1, !277, i64 8, !71, i64 136, !86, i64 144, !18, i64 192, !71, i64 200, !14, i64 204, !14, i64 208, !401, i64 216, !401, i64 240, !401, i64 264, !14, i64 288, !14, i64 292, !71, i64 296, !405, i64 304, !408, i64 680}
+!410 = !{!409, !71, i64 0}
+!411 = !{!409, !71, i64 1}
+!412 = !{!409, !71, i64 136}
+!413 = !{!83, !80, i64 0}
+!414 = !{!83, !81, i64 16}
+!415 = !{!83, !81, i64 24}
+!416 = !{!83, !21, i64 32}
+!417 = !{!409, !18, i64 192}
+!418 = !{!409, !71, i64 200}
+!419 = !{!409, !14, i64 204}
+!420 = !{!409, !14, i64 208}
+!421 = !{!409, !14, i64 288}
+!422 = !{!409, !14, i64 292}
+!423 = !{!409, !71, i64 296}
+!424 = !{!"short", !13, i64 0}
+!425 = !{!"p1 _ZTS23__pthread_internal_list", !18, i64 0}
+!426 = !{!"_ZTS23__pthread_internal_list", !425, i64 0, !425, i64 8}
+!427 = !{!"_ZTS17__pthread_mutex_s", !14, i64 0, !14, i64 4, !14, i64 8, !14, i64 12, !14, i64 16, !424, i64 20, !424, i64 22, !426, i64 24}
+!428 = !{!427, !14, i64 16}
+!429 = distinct !{!429, i1 true, !"_ZNSt5dequeIPK8FileLineSaIS2_EE5beginEv"}
+!430 = distinct !{!430, !429, !"_ZNSt5dequeIPK8FileLineSaIS2_EE5beginEv: argument 0"}
+!431 = !{!269, !268, i64 0}
+!432 = !{!268, !268, i64 0}
+!433 = !{!277, !127, i64 40}
+!434 = !{!430}
+!435 = !{!29, !29, i64 0}
+!436 = distinct !{!436, !149}
+!437 = !{!272, !271, i64 8}
+!438 = !{!272, !271, i64 16}
+!439 = !{!273, !271, i64 16}
+!440 = !{!273, !271, i64 48}
+!441 = distinct !{!441, !149}
+!442 = !{!82, !81, i64 24}
+!443 = !{!82, !81, i64 16}
+end_hunk_2
