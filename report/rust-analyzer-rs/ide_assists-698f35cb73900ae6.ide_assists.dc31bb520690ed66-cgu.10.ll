@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.w, label %bb.l, label %bb.m
 
 bb.j:                                             ; preds = %bb.g
-  %i.x = and i16 %i.i, 258
-  %.sroa.016.0.insert.insert.i = xor i16 %i.x, 256
+  %i.x = and i16 %i.i, 256
+  %.sroa.016.0.insert.insert.i = xor i16 %i.x, 258
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.m, %bb.l, %bb.j

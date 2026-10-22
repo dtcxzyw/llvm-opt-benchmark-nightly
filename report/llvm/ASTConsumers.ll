@@ -204,14 +204,14 @@ bb.m:                                             ; preds = %bb.l
   %i.cg = load i64, ptr %i.cf, align 8
   %i.ch = shl i64 %i.cg, 7
   %i.ci = and i64 %i.ch, 140737488355328
+  %.masked.masked.masked = or i64 %i.bw, %i.by
+  %.masked59.masked = or i64 %.masked.masked.masked, %i.ca
+  %.masked.masked.masked.masked = or i64 %.masked59.masked, %i.bg
+  %.masked59.masked.masked = or i64 %.masked.masked.masked.masked, %i.ce
+  %.masked.masked = or i64 %.masked59.masked.masked, %i.ci
   %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr null, ptr %4, align 8, !tbaa !744
-  %.masked.masked.masked.masked = or i64 %i.bw, %i.by
-  %.masked59.masked.masked = or i64 %.masked.masked.masked.masked, %i.ca
-  %.masked.masked = or i64 %.masked59.masked.masked, %i.bg
-  %.masked62 = or i64 %.masked.masked, %i.ce
-  %5 = or i64 %.masked62, %i.ci
-  %i.cj = xor i64 %5, 1610614784
+  %i.cj = xor i64 %.masked.masked, 1610614784
   store i64 %i.cj, ptr %2, align 8
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !486, !nonnull !484, !align !487

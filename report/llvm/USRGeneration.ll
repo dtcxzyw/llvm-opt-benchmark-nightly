@@ -204,15 +204,15 @@ _ZN4llvm11raw_ostreamlsEPKc.exit76:               ; preds = %bb.z, %bb.y, %_ZN4l
   %i.fe = load i64, ptr %i.fd, align 8
   %i.ff = shl i64 %i.fe, 7
   %i.fg = and i64 %i.ff, 140737488355328
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr null, ptr %4, align 8, !tbaa !516
-  %5 = and i64 %i.ew, 1610612736
-  %i.fh = or disjoint i64 %i.ej, %i.eh
-  %i.fi = or disjoint i64 %i.fh, %i.ep
-  %i.fj = or disjoint i64 %i.fi, %i.er
-  %6 = or disjoint i64 %i.fj, %i.et
-  %7 = or disjoint i64 %6, %i.ev
-  %.masked.masked.masked.masked.masked.masked.masked = or i64 %7, %5
+  %4 = and i64 %i.ew, 1610612736
+  %5 = or disjoint i64 %i.ej, %i.eh
+  %6 = or disjoint i64 %5, %i.ep
+  %i.fh = or disjoint i64 %6, %i.er
+  %i.fi = or disjoint i64 %i.fh, %i.et
+  %i.fj = or disjoint i64 %i.fi, %i.ev
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store ptr null, ptr %7, align 8, !tbaa !516
+  %.masked.masked.masked.masked.masked.masked.masked = or i64 %i.fj, %4
   %.masked187.masked.masked.masked.masked.masked = or i64 %.masked.masked.masked.masked.masked.masked.masked, %i.ey
   %.masked190.masked.masked.masked = or i64 %.masked187.masked.masked.masked.masked.masked, %i.en
   %.masked.masked.masked = or i64 %.masked190.masked.masked.masked, %i.fg

@@ -205,11 +205,11 @@ _ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry3endEv.exit: ; preds = %bb.ay, 
   br label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph, %.critedge76
-  %.sroa.0123.0171 = phi i64 [ %.sroa.0.1.i154217, %.lr.ph ], [ %spec.select161, %.critedge76 ] ; 3 uses
+  %.sroa.0123.0171 = phi i64 [ %.sroa.0.1.i154217, %.lr.ph ], [ %spec.select161, %.critedge76 ] ; 2 uses
   %.sroa.8.0170 = phi i32 [ %.sroa.4.1.i153218, %.lr.ph ], [ %spec.select160, %.critedge76 ] ; 2 uses
   %i.jd = and i64 %.sroa.0123.0171, 4
   %i.je = icmp ne i64 %i.jd, 0                    ; 3 uses
-  %i.jf = and i64 %.sroa.0123.0171, -5            ; 2 uses
+  %i.jf = and i64 %.sroa.0123.0171, -5            ; 3 uses
   %.not.not1.i = icmp eq i64 %i.jf, 0
   %.not.not.i = or i1 %i.je, %.not.not1.i
   br i1 %.not.not.i, label %bb.bc, label %_ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratordeEv.exit
@@ -240,7 +240,7 @@ bb.bd:                                            ; preds = %_ZNK12_GLOBAL__N_11
   br label %.critedge80
 
 .critedge76:                                      ; preds = %_ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratordeEv.exit
-  %i.jq = add nuw i64 %.sroa.0123.0171, 16
+  %i.jq = add nuw i64 %i.jf, 20
   %spec.select160 = select i1 %i.je, i32 %.sroa.8.0170, i32 0 ; 2 uses
   %spec.select161 = select i1 %i.je, i64 %i.jq, i64 0 ; 2 uses
   %i.jr = icmp ne i64 %spec.select161, %.sroa.0.0.i219
@@ -643,10 +643,10 @@ _ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry3endEv.exit: ; preds = %bb.u, %
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge65
   %.sroa.9262.1308 = phi i32 [ %spec.select291, %.critedge65 ], [ %.sroa.9262.0369, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.0258.1307 = phi i64 [ %spec.select292, %.critedge65 ], [ %.sroa.0258.0368, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.0258.1307 = phi i64 [ %spec.select292, %.critedge65 ], [ %.sroa.0258.0368, %.lr.ph.preheader ] ; 2 uses
   %i.fu = and i64 %.sroa.0258.1307, 4
   %i.fv = icmp ne i64 %i.fu, 0                    ; 3 uses
-  %i.fw = and i64 %.sroa.0258.1307, -5            ; 2 uses
+  %i.fw = and i64 %.sroa.0258.1307, -5            ; 3 uses
   %i.fx = inttoptr i64 %i.fw to ptr               ; 3 uses
   %.not.not1.i.i = icmp eq i64 %i.fw, 0
   %.not.not.i.i = or i1 %i.fv, %.not.not1.i.i
@@ -677,7 +677,7 @@ bb.w:                                             ; preds = %_ZNK12_GLOBAL__N_11
   br label %.loopexit
 
 .critedge65:                                      ; preds = %_ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorptEv.exit135
-  %i.gg = add nuw i64 %.sroa.0258.1307, 16
+  %i.gg = add nuw i64 %i.fw, 20
   %spec.select291 = select i1 %i.fv, i32 %.sroa.9262.1308, i32 0 ; 2 uses
   %spec.select292 = select i1 %i.fv, i64 %i.gg, i64 0 ; 2 uses
   %i.gh = icmp ne i64 %spec.select292, %.sroa.0255.0367
@@ -807,11 +807,11 @@ _ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry3endEv.exit157: ; preds = %bb.a
   br label %.lr.ph312
 
 .lr.ph312:                                        ; preds = %.lr.ph312.preheader, %_ZN12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorppEv.exit201
-  %.sroa.0229.1311 = phi i64 [ %spec.select294, %_ZN12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorppEv.exit201 ], [ %.sroa.0229.0377, %.lr.ph312.preheader ] ; 3 uses
+  %.sroa.0229.1311 = phi i64 [ %spec.select294, %_ZN12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorppEv.exit201 ], [ %.sroa.0229.0377, %.lr.ph312.preheader ] ; 2 uses
   %.sroa.12.1310 = phi i32 [ %spec.select293, %_ZN12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorppEv.exit201 ], [ %.sroa.12.0376, %.lr.ph312.preheader ]
   %i.in = and i64 %.sroa.0229.1311, 4
   %i.io = icmp ne i64 %i.in, 0                    ; 3 uses
-  %i.ip = and i64 %.sroa.0229.1311, -5            ; 2 uses
+  %i.ip = and i64 %.sroa.0229.1311, -5            ; 3 uses
   %i.iq = inttoptr i64 %i.ip to ptr               ; 9 uses
   %.not.not1.i.i159 = icmp eq i64 %i.ip, 0
   %.not.not.i.i160 = or i1 %i.io, %.not.not1.i.i159 ; 2 uses
@@ -877,7 +877,7 @@ _ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorptEv.exit198: ; preds 
   br i1 %i.jn, label %.loopexit, label %.critedge67
 
 _ZN12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorppEv.exit201: ; preds = %_ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorptEv.exit168.thread, %_ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorptEv.exit188, %_ZNK12_GLOBAL__N_113ResultBuilder14ShadowMapEntry8iteratorptEv.exit168
-  %i.jo = add nuw i64 %.sroa.0229.1311, 16
+  %i.jo = add nuw i64 %i.ip, 20
   %spec.select293 = select i1 %i.io, i32 %.sroa.12.1310, i32 0 ; 2 uses
   %spec.select294 = select i1 %i.io, i64 %i.jo, i64 0 ; 2 uses
   %i.jp = icmp ne i64 %spec.select294, %.sroa.0226.0378
