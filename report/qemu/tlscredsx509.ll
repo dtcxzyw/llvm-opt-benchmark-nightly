@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 bb.ad:                                            ; preds = %bb.ar, %bb.ac
   %.062.i = phi i64 [ 0, %bb.ac ], [ %i.bo, %bb.ar ] ; 3 uses
-  %.060.i = phi i32 [ 0, %bb.ac ], [ %spec.select71.i, %bb.ar ] ; 2 uses
+  %.060.i = phi i1 [ false, %bb.ac ], [ %spec.select69.i, %bb.ar ] ; 3 uses
   %.056.i = phi i1 [ false, %bb.ac ], [ %.157.i, %bb.ar ] ; 3 uses
   %.055.i = phi i1 [ false, %bb.ac ], [ %.1.i, %bb.ar ] ; 3 uses
   store i64 0, ptr %i.b, align 8
@@ -217,7 +217,6 @@ bb.ad:                                            ; preds = %bb.ar, %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   %i.as = icmp eq i64 %.062.i, 0                  ; 2 uses
-  %6 = icmp eq i32 %.060.i, 0                     ; 2 uses
   br i1 %3, label %bb.as, label %bb.au
 
 bb.af:                                            ; preds = %bb.ad
@@ -280,8 +279,8 @@ bb.ao:                                            ; preds = %bb.an
 
 trace_qcrypto_tls_creds_x509_check_key_purpose.exit77.i: ; preds = %bb.ao, %bb.an, %bb.am, %bb.al
   %i.bh = phi i32 [ %i.ay, %bb.al ], [ %i.ay, %bb.am ], [ %i.ay, %bb.an ], [ %.pre.i, %bb.ao ]
-  %.not67.i = icmp eq i32 %i.bh, 0
-  %spec.select71.i = select i1 %.not67.i, i32 %.060.i, i32 1
+  %.not67.i = icmp ne i32 %i.bh, 0
+  %spec.select69.i = select i1 %.not67.i, i1 true, i1 %.060.i
   %i.bi = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.av, ptr noundef nonnull dereferenceable(18) @.str.55) #11
   %i.bj = icmp eq i32 %i.bi, 0
   br i1 %i.bj, label %bb.ar, label %bb.ap
@@ -307,8 +306,9 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %tra
 
 bb.as:                                            ; preds = %bb.ae
   %i.bp = select i1 %i.as, i1 true, i1 %.055.i
-  %or.cond.not.i = select i1 %i.bp, i1 true, i1 %6
-  br i1 %or.cond.not.i, label %qcrypto_tls_creds_check_cert_key_purpose.exit, label %bb.at
+  %.not.i = xor i1 %i.bp, true
+  %or.cond.not.i = select i1 %.not.i, i1 %.060.i, i1 false
+  br i1 %or.cond.not.i, label %bb.at, label %qcrypto_tls_creds_check_cert_key_purpose.exit
 
 bb.at:                                            ; preds = %bb.as
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %5, ptr noundef nonnull @.str.9, i32 noundef 323, ptr noundef nonnull @__func__.qcrypto_tls_creds_check_cert_key_purpose, ptr noundef nonnull @.str.58, ptr noundef %2) #8
@@ -316,8 +316,9 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %bb.ae
   %i.bq = select i1 %i.as, i1 true, i1 %.056.i
-  %or.cond4.not.i = select i1 %i.bq, i1 true, i1 %6
-  br i1 %or.cond4.not.i, label %qcrypto_tls_creds_check_cert_key_purpose.exit, label %bb.av
+  %.not2.i = xor i1 %i.bq, true
+  %or.cond4.not.i = select i1 %.not2.i, i1 %.060.i, i1 false
+  br i1 %or.cond4.not.i, label %bb.av, label %qcrypto_tls_creds_check_cert_key_purpose.exit
 
 bb.av:                                            ; preds = %bb.au
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %5, ptr noundef nonnull @.str.9, i32 noundef 332, ptr noundef nonnull @__func__.qcrypto_tls_creds_check_cert_key_purpose, ptr noundef nonnull @.str.59, ptr noundef %2) #8

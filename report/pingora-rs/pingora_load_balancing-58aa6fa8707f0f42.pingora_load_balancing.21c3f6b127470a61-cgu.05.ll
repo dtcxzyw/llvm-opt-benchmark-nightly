@@ -117,11 +117,12 @@ _RNvXsp_CsfsXztIhCltD_13pingora_errorNtB5_9ErrorTypeNtNtCskKLDkoKarTP_4core5clon
           to label %_RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtCsexYYUdYSQU6_5alloc6string6StringINtB5_4IntoNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrE4intoCs2TJrahNLnPN_22pingora_load_balancing.exit.i unwind label %bb.r
 
 _RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtCsexYYUdYSQU6_5alloc6string6StringINtB5_4IntoNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrE4intoCs2TJrahNLnPN_22pingora_load_balancing.exit.i: ; preds = %_RNvXsp_CsfsXztIhCltD_13pingora_errorNtB5_9ErrorTypeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit
-  %.sroa.08.0.copyload.i = load i64, ptr %i.c, align 8, !noalias !43 ; 5 uses
+  %.sroa.08.0.copyload.i = load i64, ptr %i.c, align 8, !noalias !43 ; 3 uses
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.6.0.copyload.i = load ptr, ptr %.sroa.6.0..sroa_idx.i, align 8, !noalias !43 ; 5 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !43 ; 5 uses
+  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !43
+  %.sroa.8.0.copyload.fr.i = freeze i64 %.sroa.8.0.copyload.i ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !43
   %i.v = invoke { ptr, ptr } @_RNvXse_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtB7_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtBW_6marker4SendNtB1t_4SyncEL_EINtNtBW_7convert4FromIBI_NtCsfsXztIhCltD_13pingora_error5ErrorEE4fromCs2TJrahNLnPN_22pingora_load_balancing(ptr noalias noundef nonnull align 8 %0)
           to label %_RNvXs1_NtCskKLDkoKarTP_4core7convertINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEINtB5_4IntoIBz_DNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB2k_4SyncEL_EE4intoCs2TJrahNLnPN_22pingora_load_balancing.exit.i unwind label %bb.o, !noalias !44 ; 2 uses
@@ -172,7 +173,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.6.0..sroa_idx11.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %.sroa.6.0.copyload.i, ptr %.sroa.6.0..sroa_idx11.i, align 8, !noalias !48
   %.sroa.8.0..sroa_idx13.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 %.sroa.8.0.copyload.i, ptr %.sroa.8.0..sroa_idx13.i, align 8, !noalias !48
+  store i64 %.sroa.8.0.copyload.fr.i, ptr %.sroa.8.0..sroa_idx13.i, align 8, !noalias !48
   call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !49
   %i.ak = call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef 8) #22, !noalias !49 ; 5 uses
   %i.al = icmp eq ptr %i.ak, null
@@ -199,7 +200,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %_RNvXs1_NtCskKLDkoKarTP_4core7convertINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEINtB5_4IntoIBz_DNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB2k_4SyncEL_EE4intoCs2TJrahNLnPN_22pingora_load_balancing.exit.i
   %i.ao = landingpad { ptr, i32 }
-          cleanup                                 ; 3 uses
+          cleanup                                 ; 4 uses
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1S_4SyncEL_EEECs2TJrahNLnPN_22pingora_load_balancing(ptr nonnull %i.w, ptr nonnull %i.x) #24
           to label %bb.m unwind label %bb.l, !noalias !46
 
@@ -210,35 +211,35 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.k
-  %i.aq = icmp eq i64 %.sroa.08.0.copyload.i, 2
+  %i.aq = icmp eq i64 %.sroa.8.0.copyload.fr.i, 0
   br i1 %i.aq, label %.critedge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %2 = icmp eq i64 %.sroa.08.0.copyload.i, 0
-  %3 = icmp eq i64 %.sroa.8.0.copyload.i, 0
-  %or.cond.i = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond.i, label %.critedge, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i5.i
+  switch i64 %.sroa.08.0.copyload.i, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i5.i [
+    i64 2, label %.critedge
+    i64 0, label %.critedge
+  ]
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i5.i: ; preds = %bb.n
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
-  call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.0.copyload.i, i64 noundef %.sroa.8.0.copyload.i, i64 noundef 1) #22, !noalias !50
+  call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.0.copyload.i, i64 noundef %.sroa.8.0.copyload.fr.i, i64 noundef 1) #22, !noalias !50
   br label %.critedge
 
 bb.o:                                             ; preds = %_RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtCsexYYUdYSQU6_5alloc6string6StringINtB5_4IntoNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrE4intoCs2TJrahNLnPN_22pingora_load_balancing.exit.i
   %i.ar = landingpad { ptr, i32 }
-          cleanup                                 ; 3 uses
-  %i.as = icmp eq i64 %.sroa.08.0.copyload.i, 2
+          cleanup                                 ; 4 uses
+  %i.as = icmp eq i64 %.sroa.8.0.copyload.fr.i, 0
   br i1 %i.as, label %.critedge, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %4 = icmp eq i64 %.sroa.08.0.copyload.i, 0
-  %5 = icmp eq i64 %.sroa.8.0.copyload.i, 0
-  %or.cond23.i = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond23.i, label %.critedge, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i
+  switch i64 %.sroa.08.0.copyload.i, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i [
+    i64 2, label %.critedge
+    i64 0, label %.critedge
+  ]
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i: ; preds = %bb.p
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.0.copyload.i, i64 noundef %.sroa.8.0.copyload.i, i64 noundef 1) #22, !noalias !51
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.0.copyload.i, i64 noundef %.sroa.8.0.copyload.fr.i, i64 noundef 1) #22, !noalias !51
   br label %.critedge
 
 bb.q:                                             ; preds = %bb.r
@@ -262,8 +263,8 @@ bb.s:                                             ; preds = %bb.g
   store i8 %i.g, ptr %i.aw, align 8
   ret ptr %i.ak
 
-.critedge:                                        ; preds = %bb.r, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i, %bb.p, %bb.o, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i5.i, %bb.n, %bb.m, %bb.i
-  %eh.lpad-body = phi { ptr, i32 } [ %i.ar, %bb.p ], [ %i.au, %bb.r ], [ %i.ao, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i5.i ], [ %i.am, %bb.i ], [ %i.ao, %bb.m ], [ %i.ao, %bb.n ], [ %i.ar, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i ], [ %i.ar, %bb.o ]
+.critedge:                                        ; preds = %bb.r, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i, %bb.p, %bb.p, %bb.o, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i5.i, %bb.n, %bb.n, %bb.m, %bb.i
+  %eh.lpad-body = phi { ptr, i32 } [ %i.ar, %bb.p ], [ %i.au, %bb.r ], [ %i.ao, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i5.i ], [ %i.am, %bb.i ], [ %i.ao, %bb.n ], [ %i.ar, %bb.p ], [ %i.ar, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i ], [ %i.ao, %bb.m ], [ %i.ao, %bb.n ], [ %i.ar, %bb.o ]
   resume { ptr, i32 } %eh.lpad-body
 }
 
@@ -497,8 +498,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsfsXztIhCltD_13pingora_error9immut_
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.c
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrECs2TJrahNLnPN_22pingora_load_balancing.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -534,8 +535,8 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB11_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB1s_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEEECs2TJrahNLnPN_22pingora_load_balancing(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !12, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB12_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEECs2TJrahNLnPN_22pingora_load_balancing.exit
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EIB12_NtCsfsXztIhCltD_13pingora_error5ErrorEENtNtNtNtCs2awuzAz5vY4_5tokio7runtime4task5error9JoinErrorEECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -706,8 +707,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6
 
 bb.f:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1S_4SyncEL_EEECs2TJrahNLnPN_22pingora_load_balancing.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !75)
-  %1 = icmp eq i64 %i.p, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrEECs2TJrahNLnPN_22pingora_load_balancing.exit, label %bb.g
+  %1 = trunc nuw i64 %i.p to i1
+  br i1 %1, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrEECs2TJrahNLnPN_22pingora_load_balancing.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1110,8 +1111,8 @@ bb.i:                                             ; preds = %.thread28
 
 bb.j:                                             ; preds = %.thread28
   %i.y = load i64, ptr %i.c, align 8, !range !12, !noundef !4
-  %3 = icmp eq i64 %i.y, 0
-  br i1 %3, label %bb.k, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2awuzAz5vY4_5tokio4task4coop16RestoreOnPendingECs2TJrahNLnPN_22pingora_load_balancing.exit20
+  %3 = trunc nuw i64 %i.y to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2awuzAz5vY4_5tokio4task4coop16RestoreOnPendingECs2TJrahNLnPN_22pingora_load_balancing.exit20, label %bb.k
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2awuzAz5vY4_5tokio4task4coop16RestoreOnPendingECs2TJrahNLnPN_22pingora_load_balancing.exit20: ; preds = %bb.k, %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)

@@ -206,7 +206,6 @@ bb.h:                                             ; preds = %bb.g
   %.not10.i.i.i = icmp ne i64 %i.s, 0
   %i.t = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.r, %i.t  ; 4 uses
-  %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.u = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.u, label %.epil.preheader, label %.new
 
@@ -236,8 +235,8 @@ bb.i:                                             ; preds = %bb.i, %.new
   br i1 %niter.ncmp.1, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa, label %bb.i
 
 _RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa: ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit
 
 .epil.preheader:                                  ; preds = %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa, %bb.h
   %.sroa.01.07.i.epil.init = phi i64 [ 0, %bb.h ], [ %i.y, %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa ]
@@ -640,7 +639,6 @@ bb.h:                                             ; preds = %bb.g
   %.not10.i.i.i = icmp ne i64 %i.s, 0
   %i.t = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.r, %i.t  ; 4 uses
-  %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.u = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.u, label %.epil.preheader, label %.new
 
@@ -670,8 +668,8 @@ bb.i:                                             ; preds = %bb.i, %.new
   br i1 %niter.ncmp.1, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa, label %bb.i
 
 _RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa: ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit
 
 .epil.preheader:                                  ; preds = %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa, %bb.h
   %.sroa.01.07.i.epil.init = phi i64 [ 0, %bb.h ], [ %i.y, %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa ]
@@ -1074,7 +1072,6 @@ bb.h:                                             ; preds = %bb.g
   %.not10.i.i.i = icmp ne i64 %i.s, 0
   %i.t = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.r, %i.t  ; 4 uses
-  %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.u = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.u, label %.epil.preheader, label %.new
 
@@ -1104,8 +1101,8 @@ bb.i:                                             ; preds = %bb.i, %.new
   br i1 %niter.ncmp.1, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa, label %bb.i
 
 _RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa: ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit
 
 .epil.preheader:                                  ; preds = %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa, %bb.h
   %.sroa.01.07.i.epil.init = phi i64 [ 0, %bb.h ], [ %i.y, %_RNvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.unr-lcssa ]
@@ -1508,9 +1505,9 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish8autoload12AutoloadPathEBF_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.a, 0
+  %1 = trunc nuw i64 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  br i1 %1, label %bb.c, label %bb.f
+  br i1 %1, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecmENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
@@ -1913,7 +1910,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %0, align 8, !range !22, !noundef !5
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.g = trunc nuw i64 %i.e to i1
   br i1 %i.g, label %bb.c, label %bb.d
 
@@ -1926,7 +1923,7 @@ bb.c:                                             ; preds = %bb.b
     i8 3, label %bb.h
     i8 4, label %bb.h
     i8 5, label %bb.h
-    i8 8, label %bb.e
+    i8 8, label %6
     i8 6, label %bb.bz
     i8 7, label %bb.cc
   ]
@@ -1935,11 +1932,11 @@ bb.d:                                             ; preds = %bb.b
   switch i8 %1, label %default.unreachable115 [
     i8 0, label %bb.f
     i8 1, label %bb.g
-    i8 2, label %bb.e
+    i8 2, label %3
     i8 3, label %bb.g
     i8 4, label %bb.g
-    i8 5, label %bb.e
-    i8 6, label %bb.e
+    i8 5, label %3
+    i8 6, label %3
     i8 7, label %bb.f
     i8 8, label %bb.g
   ]
@@ -1950,12 +1947,14 @@ default.unreachable115:                           ; preds = %bb.d, %bb.c
 default.unreachable:                              ; preds = %bb.m
   unreachable
 
-bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d, %bb.by, %bb.c, %.thread89, %bb.f
-  %.sroa.036.1.sink = phi i64 [ 1, %.thread89 ], [ 1, %bb.f ], [ 1, %bb.by ], [ 0, %bb.c ], [ 1, %bb.d ], [ 1, %bb.d ], [ 1, %bb.d ]
-  %.sroa.6.1.sink = phi i64 [ %i.cu, %.thread89 ], [ %i.o, %bb.f ], [ %.sroa.6.0, %bb.by ], [ undef, %bb.c ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ] ; 2 uses
-  %.not82 = phi i1 [ false, %.thread89 ], [ false, %bb.f ], [ false, %bb.by ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.d ], [ false, %bb.d ]
-  store i64 %.sroa.036.1.sink, ptr %0, align 8
-  store i64 %.sroa.6.1.sink, ptr %i.f, align 8
+3:                                                ; preds = %bb.d, %bb.d, %bb.d
+  store i64 1, ptr %0, align 8
+  store i64 0, ptr %i.f, align 8
+  br label %bb.e
+
+bb.e:                                             ; preds = %6, %bb.f, %3
+  %4 = phi i64 [ %.sroa.6.1, %6 ], [ %i.o, %bb.f ], [ 0, %3 ]
+  %5 = phi i1 [ %7, %6 ], [ true, %bb.f ], [ true, %3 ]
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 272
   %i.j = load i64, ptr %i.i, align 8, !noundef !5 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 264
@@ -1965,7 +1964,9 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d,
   br i1 %i.n, label %bb.cf, label %bb.ce
 
 bb.f:                                             ; preds = %bb.d, %bb.d
-  %i.o = add nsw i64 %i.b, -1
+  %i.o = add nsw i64 %i.b, -1                     ; 2 uses
+  store i64 1, ptr %0, align 8
+  store i64 %i.o, ptr %i.f, align 8
   br label %bb.e
 
 bb.g:                                             ; preds = %bb.ck, %bb.cq, %bb.cp, %bb.ce, %bb.by, %bb.d, %bb.d, %bb.d, %bb.d, %bb.a
@@ -2302,7 +2303,7 @@ bb.bx:                                            ; preds = %bb.bv
 bb.by:                                            ; preds = %bb.bv, %bb.cd, %bb.ca
   %.sroa.6.0 = phi i64 [ %i.cn, %bb.bv ], [ %spec.select, %bb.ca ], [ %i.ct, %bb.cd ] ; 2 uses
   %i.cp = icmp eq i64 %i.h, %.sroa.6.0
-  br i1 %i.cp, label %bb.g, label %bb.e
+  br i1 %i.cp, label %bb.g, label %6
 
 bb.bz:                                            ; preds = %bb.c
   %i.cq = icmp eq i64 %i.h, -1
@@ -2328,12 +2329,20 @@ bb.cd:                                            ; preds = %bb.cc
 
 .thread89:                                        ; preds = %bb.cc
   %i.cu = add i64 %i.h, -1
+  br label %6
+
+6:                                                ; preds = %.thread89, %bb.c, %bb.by
+  %.sroa.6.1 = phi i64 [ %.sroa.6.0, %bb.by ], [ undef, %bb.c ], [ %i.cu, %.thread89 ] ; 2 uses
+  %.sroa.036.1 = phi i64 [ 1, %bb.by ], [ 0, %bb.c ], [ 1, %.thread89 ] ; 2 uses
+  store i64 %.sroa.036.1, ptr %0, align 8
+  store i64 %.sroa.6.1, ptr %i.f, align 8
+  %7 = trunc nuw i64 %.sroa.036.1 to i1
   br label %bb.e
 
 bb.ce:                                            ; preds = %bb.e
-  %3 = icmp eq i64 %i.j, %i.l
-  %or.cond = or i1 %3, %.not82
-  br i1 %or.cond, label %bb.g, label %bb.cg
+  %8 = icmp ne i64 %i.j, %i.l
+  %or.cond = select i1 %8, i1 %5, i1 false
+  br i1 %or.cond, label %bb.cg, label %bb.g
 
 bb.cf:                                            ; preds = %bb.e
   tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2916) #37
@@ -2351,7 +2360,7 @@ bb.cg:                                            ; preds = %bb.ce
   br label %bb.cj
 
 bb.ch:                                            ; preds = %bb.cg
-  %i.cz = urem i64 %.sroa.6.1.sink, %i.cw         ; 5 uses
+  %i.cz = urem i64 %4, %i.cw                      ; 5 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 4 uses
   %i.db = load i64, ptr %i.da, align 8, !noundef !5 ; 2 uses
   %i.dc = icmp ugt i64 %i.db, %i.cz
@@ -2754,7 +2763,6 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   %i.g = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -2763,8 +2771,8 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br label %bb.b
 
 ._crit_edge.i.unr-lcssa:                          ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i
   %.sroa.0.08.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %._crit_edge.i.unr-lcssa ]
@@ -3167,9 +3175,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i, %bb.d ], [ %i.k, %bb.e ] ; 2 uses
-  %3 = and i64 %2, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %_RNvNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_short.exit, label %bb.g
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %bb.g, label %_RNvNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_short.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.0.1.i ; 2 uses
@@ -3572,9 +3579,8 @@ bb.kz:                                            ; preds = %_RNvNtNtCs8frGy5Wne
   %.sroa.10.0 = phi i16 [ 0, %bb.nf ], [ %.sroa.5175.0.extract.trunc, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4read14read_in_chunks.exit ], [ 0, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4read16read_interactive.exit ] ; 2 uses
   %.sroa.9.0 = phi i8 [ 0, %bb.nf ], [ %.sroa.4174.0.extract.trunc, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4read14read_in_chunks.exit ], [ 0, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4read16read_interactive.exit ] ; 2 uses
   %.sroa.0.0.in = phi i64 [ %.sroa.55.0.i, %bb.nf ], [ %.sroa.0.0.insert.insert.i, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4read14read_in_chunks.exit ], [ %.sroa.05.0.i, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4read16read_interactive.exit ] ; 3 uses
-  %4 = and i64 %.sroa.0.0.in, 1
-  %.not230 = icmp eq i64 %4, 0
-  br i1 %.not230, label %bb.ng, label %bb.nh
+  %4 = trunc i64 %.sroa.0.0.in to i1
+  br i1 %4, label %bb.nh, label %bb.ng
 
 bb.la:                                            ; preds = %bb.le, %bb.jc
   %i.adk = invoke noundef i32 @_RNvMsg_NtCs8frGy5WneL6_4fish2ioNtB5_9IoStreams8stdin_fd(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %1)

@@ -204,13 +204,13 @@ UTIL_getFileSize.exit.i60:                        ; preds = %bb.x, %bb.w
   %i.bi = load ptr, ptr %i.bb, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   %i.bj = call i32 @stat(ptr noundef readonly %i.bi, ptr noundef nonnull %6) #19
-  %.not.i67.i = icmp ne i32 %i.bj, 0
+  %.not.i67.i = icmp eq i32 %i.bj, 0
   %i.bk = load i32, ptr %i.ba, align 8
   %i.bl = and i32 %i.bk, 61440
-  %9 = icmp ne i32 %i.bl, 16384
-  %narrow.i.not.i = select i1 %.not.i67.i, i1 true, i1 %9
+  %9 = icmp eq i32 %i.bl, 16384
+  %narrow.i.not.i = select i1 %.not.i67.i, i1 %9, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
-  br i1 %narrow.i.not.i, label %bb.ab, label %bb.y
+  br i1 %narrow.i.not.i, label %bb.y, label %bb.ab
 
 bb.y:                                             ; preds = %UTIL_getFileSize.exit.i60
   %i.bm = load i32, ptr @g_displayLevel, align 4, !tbaa !9
@@ -613,7 +613,7 @@ bb.w:                                             ; preds = %.preheader, %._crit
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.w
-  %.1335.lcssa.i = phi i32 [ %.0334431.i, %bb.w ], [ %i.dd, %._crit_edge.loopexit.i ] ; 10 uses
+  %.1335.lcssa.i = phi i32 [ %.0334431.i, %bb.w ], [ %i.dd, %._crit_edge.loopexit.i ] ; 11 uses
   %.1333.lcssa.i = phi ptr [ %.0332432.i, %bb.w ], [ %i.cy, %._crit_edge.loopexit.i ]
   %.1331.lcssa.i = phi ptr [ %.0330433.i, %bb.w ], [ %i.cz, %._crit_edge.loopexit.i ]
   %.1329.lcssa.i = phi ptr [ %.0328434.i, %bb.w ], [ %i.da, %._crit_edge.loopexit.i ]
@@ -630,13 +630,12 @@ bb.x:                                             ; preds = %._crit_edge.i
   br i1 %or.cond500.i, label %.lr.ph437.preheader.i, label %.loopexit413.i
 
 .lr.ph437.preheader.i:                            ; preds = %bb.x
-  %wide.trip.count542.i = zext i32 %.1335.lcssa.i to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count542.i, 1
   %i.dg = icmp eq i32 %.1335.lcssa.i, 1
   br i1 %i.dg, label %.lr.ph437.i.epil.preheader, label %.lr.ph437.preheader.i.new
 
 .lr.ph437.preheader.i.new:                        ; preds = %.lr.ph437.preheader.i
-  %unroll_iter = and i64 %wide.trip.count542.i, 4294967294
+  %12 = and i32 %.1335.lcssa.i, -2
+  %unroll_iter = zext i32 %12 to i64
   br label %.lr.ph437.i
 
 .lr.ph437.i:                                      ; preds = %.lr.ph437.i, %.lr.ph437.preheader.i.new
@@ -667,8 +666,8 @@ bb.x:                                             ; preds = %._crit_edge.i
   br i1 %niter.ncmp.1, label %.loopexit413.i.loopexit.unr-lcssa, label %.lr.ph437.i, !llvm.loop !40
 
 .loopexit413.i.loopexit.unr-lcssa:                ; preds = %.lr.ph437.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit413.i, label %.lr.ph437.i.epil.preheader
+  %lcmp.mod.not = trunc i32 %.1335.lcssa.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph437.i.epil.preheader, label %.loopexit413.i
 
 .lr.ph437.i.epil.preheader:                       ; preds = %.loopexit413.i.loopexit.unr-lcssa, %.lr.ph437.preheader.i
   %indvars.iv538.i.epil.init = phi i64 [ 0, %.lr.ph437.preheader.i ], [ %indvars.iv.next539.i.1, %.loopexit413.i.loopexit.unr-lcssa ]

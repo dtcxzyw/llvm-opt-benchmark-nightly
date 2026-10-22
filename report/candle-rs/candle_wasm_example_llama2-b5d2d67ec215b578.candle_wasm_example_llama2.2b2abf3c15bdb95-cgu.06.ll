@@ -204,8 +204,8 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCskNPKTEkpOem_12aho_corasick6packe
 define internal fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTINtNtCsej0D7ZFyXq_12wasm_bindgen7closure13ScopedClosureDINtNtNtB4_3ops8function5FnMutTNtB13_7JsValueEEp6OutputINtNtB4_6result6ResultuNtB13_7JsErrorEEL_EBY_EEECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef nonnull align 4 dereferenceable(12) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i32, ptr %0, align 4, !range !18, !noundef !7
-  %1 = icmp eq i32 %i.a, 0
-  br i1 %1, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTINtNtCsej0D7ZFyXq_12wasm_bindgen7closure13ScopedClosureDINtNtNtB4_3ops8function5FnMutTNtBH_7JsValueEEp6OutputINtNtB4_6result6ResultuNtBH_7JsErrorEEL_EBC_EECsemnSGAKhbl_26candle_wasm_example_llama2.exit, label %bb.b
+  %1 = trunc nuw i32 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTINtNtCsej0D7ZFyXq_12wasm_bindgen7closure13ScopedClosureDINtNtNtB4_3ops8function5FnMutTNtBH_7JsValueEEp6OutputINtNtB4_6result6ResultuNtBH_7JsErrorEEL_EBC_EECsemnSGAKhbl_26candle_wasm_example_llama2.exit
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTINtNtCsej0D7ZFyXq_12wasm_bindgen7closure13ScopedClosureDINtNtNtB4_3ops8function5FnMutTNtBH_7JsValueEEp6OutputINtNtB4_6result6ResultuNtBH_7JsErrorEEL_EBC_EECsemnSGAKhbl_26candle_wasm_example_llama2.exit: ; preds = %bb.j, %bb.i, %bb.a
   ret void
@@ -608,8 +608,8 @@ _RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreINtNtCsf3Ta7LF9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !612
   tail call void @llvm.experimental.noalias.scope.decl(metadata !615)
   %i.j = load i64, ptr %1, align 8, !range !6, !alias.scope !616, !noundef !7
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreINtNtCsf3Ta7LF998c_4core3pin3PinINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNCINvMs3_NtNtNtCs9OLX912zl7o_3yew4html9component5scopeINtB2e_5ScopeNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppE11send_futureNCNvXB3c_B3a_NtB2g_9Component8rendered0NtB3c_3MsgE0EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0B3e_.exit.i
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -663,6 +663,7 @@ bb.n:                                             ; preds = %bb.m
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.n, %bb.m
+  store i64 0, ptr %1, align 8, !alias.scope !611
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i, i64 24, i1 false), !noalias !619
   br label %common.resume.i
 
@@ -726,8 +727,8 @@ _RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreINtNtCsf3Ta7LF9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !630
   tail call void @llvm.experimental.noalias.scope.decl(metadata !633)
   %i.j = load i64, ptr %1, align 8, !range !6, !alias.scope !634, !noundef !7
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreINtNtCsf3Ta7LF998c_4core3pin3PinINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNCINvMs3_NtNtNtCs9OLX912zl7o_3yew4html9component5scopeINtB2e_5ScopeNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppE11send_futureNCNvXB3c_B3a_NtB2g_9Component8rendered0NtB3c_3MsgE0EEINtNtB1B_4sync3ArcNtNtNtBd_4task5local6SharedEE11take_output0B3e_.exit.i
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -781,6 +782,7 @@ bb.n:                                             ; preds = %bb.m
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.n, %bb.m
+  store i64 0, ptr %1, align 8, !alias.scope !629
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i, i64 24, i1 false), !noalias !637
   br label %common.resume.i
 
@@ -844,8 +846,8 @@ _RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreINtNtCsf3Ta7LF9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !648
   tail call void @llvm.experimental.noalias.scope.decl(metadata !651)
   %i.j = load i64, ptr %1, align 8, !range !6, !alias.scope !652, !noundef !7
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreINtNtCsf3Ta7LF998c_4core3pin3PinINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNCNCINvMs1_NtNtCshKUX2qKI1Vd_6tokise3imp12local_workerNtB2g_11LocalHandle11spawn_localNCINvMs3_NtNtNtCs9OLX912zl7o_3yew4html9component5scopeINtB3C_5ScopeNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppE11send_futureNCNvXB4A_B4y_NtB3E_9Component8rendered0NtB4A_3MsgE0E00EEINtNtB1B_4sync3ArcNtNtNtBd_4task5local6SharedEE11take_output0B4C_.exit.i
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -899,6 +901,7 @@ bb.n:                                             ; preds = %bb.m
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.n, %bb.m
+  store i64 0, ptr %1, align 8, !alias.scope !647
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i, i64 24, i1 false), !noalias !655
   br label %common.resume.i
 
@@ -967,8 +970,8 @@ _RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreNCINvMs3_NtNtNt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !666
   tail call void @llvm.experimental.noalias.scope.decl(metadata !669)
   %i.l = load i64, ptr %1, align 8, !range !6, !alias.scope !670, !noundef !7
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreNCINvMs3_NtNtNtCs9OLX912zl7o_3yew4html9component5scopeINtB19_5ScopeNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppE11send_futureNCNvXB27_B25_NtB1b_9Component8rendered0NtB27_3MsgE0INtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0B29_.exit.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1022,6 +1025,7 @@ bb.o:                                             ; preds = %bb.n
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.o, %bb.n
+  store i64 0, ptr %1, align 8, !alias.scope !665
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i, i64 24, i1 false), !noalias !673
   br label %common.resume.i
 
@@ -1090,8 +1094,8 @@ _RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreNCINvMs3_NtNtNt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !684
   tail call void @llvm.experimental.noalias.scope.decl(metadata !687)
   %i.l = load i64, ptr %1, align 8, !range !6, !alias.scope !688, !noundef !7
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreNCINvMs3_NtNtNtCs9OLX912zl7o_3yew4html9component5scopeINtB19_5ScopeNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppE11send_futureNCNvXB27_B25_NtB1b_9Component8rendered0NtB27_3MsgE0INtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtNtBd_4task5local6SharedEE11take_output0B29_.exit.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1145,6 +1149,7 @@ bb.o:                                             ; preds = %bb.n
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.o, %bb.n
+  store i64 0, ptr %1, align 8, !alias.scope !683
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i, i64 24, i1 false), !noalias !691
   br label %common.resume.i
 
@@ -1213,8 +1218,8 @@ _RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreNCNCINvMs1_NtNt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !702
   tail call void @llvm.experimental.noalias.scope.decl(metadata !705)
   %i.l = load i64, ptr %1, align 8, !range !6, !alias.scope !706, !noundef !7
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsdIJosCPXwkf_5tokio7runtime4task5error9JoinErrorEEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsdIJosCPXwkf_5tokio7runtime4task4coreINtB7_4CoreNCNCINvMs1_NtNtCshKUX2qKI1Vd_6tokise3imp12local_workerNtB1b_11LocalHandle11spawn_localNCINvMs3_NtNtNtCs9OLX912zl7o_3yew4html9component5scopeINtB2x_5ScopeNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppE11send_futureNCNvXB3v_B3t_NtB2z_9Component8rendered0NtB3v_3MsgE0E00INtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtNtBd_4task5local6SharedEE11take_output0B3x_.exit.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1268,6 +1273,7 @@ bb.o:                                             ; preds = %bb.n
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.o, %bb.n
+  store i64 0, ptr %1, align 8, !alias.scope !701
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i, i64 24, i1 false), !noalias !709
   br label %common.resume.i
 
@@ -1670,8 +1676,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !range !18, !noundef !7
-  %.not = icmp eq i32 %i.e, 0
-  br i1 %.not, label %.invoke, label %bb.d, !prof !8
+  %3 = trunc nuw i32 %i.e to i1
+  br i1 %3, label %bb.d, label %.invoke, !prof !12
 
 bb.c:                                             ; preds = %bb.a
   invoke void @_RNvNtCsf3Ta7LF998c_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #20

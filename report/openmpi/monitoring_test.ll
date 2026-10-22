@@ -201,9 +201,8 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab, %bb.
   %i.cs = srem i32 %i.cr, 2
   %i.ct = call i32 @MPI_Comm_split(ptr noundef nonnull @ompi_mpi_comm_world, i32 noundef %i.cs, i32 noundef %i.cr, ptr noundef nonnull %i.h) #6 ; 0 uses
   %i.cu = load i32, ptr %i.a, align 4, !tbaa !18
-  %2 = and i32 %i.cu, 1
-  %.not121 = icmp eq i32 %2, 0
-  br i1 %.not121, label %bb.ak, label %bb.ad
+  %.not121 = trunc i32 %i.cu to i1
+  br i1 %.not121, label %bb.ad, label %bb.ak
 
 bb.ad:                                            ; preds = %bb.ac
   %i.cv = load ptr, ptr %i.h, align 8, !tbaa !17
@@ -396,15 +395,14 @@ middle.block:                                     ; preds = %vector.body
   %i.gb = srem i32 %i.ga, %i.fq                   ; 5 uses
   %i.gc = add i32 %i.fp, -1
   %i.gd = add i32 %i.gc, %i.fq
-  %i.ge = srem i32 %i.gd, %i.fq                   ; 6 uses
+  %i.ge = srem i32 %i.gd, %i.fq                   ; 7 uses
   %i.gf = call i32 @MPI_Win_create(ptr noundef nonnull %i.p, i64 noundef 40960, i32 noundef 4, ptr noundef nonnull @ompi_mpi_info_null, ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.n) #6 ; 0 uses
   %i.gg = load ptr, ptr %i.n, align 8, !tbaa !31
   %i.gh = call i32 @MPI_Win_fence(i32 noundef 2, ptr noundef %i.gg) #6 ; 0 uses
   %i.gi = load i32, ptr %i.a, align 4, !tbaa !18
-  %3 = and i32 %i.gi, 1
-  %.not127 = icmp eq i32 %3, 0
+  %.not127 = trunc i32 %i.gi to i1
   %i.gj = load ptr, ptr %i.n, align 8, !tbaa !31  ; 2 uses
-  br i1 %.not127, label %bb.av, label %bb.au
+  br i1 %.not127, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %middle.block
   %i.gk = call i32 @MPI_Win_fence(i32 noundef 12, ptr noundef %i.gj) #6 ; 0 uses
@@ -434,33 +432,36 @@ bb.ax:                                            ; preds = %bb.bb
   %i.gw = load ptr, ptr %i.r, align 8, !tbaa !33
   %i.gx = call i32 @MPI_Group_difference(ptr noundef %i.gv, ptr noundef %i.gw, ptr noundef nonnull %i.s) #6 ; 0 uses
   %i.gy = load i32, ptr %i.a, align 4, !tbaa !18
-  %4 = and i32 %i.gy, 1
-  %.not128 = icmp eq i32 %4, 0
+  %.not128 = trunc i32 %i.gy to i1
   %i.gz = load ptr, ptr %i.s, align 8, !tbaa !33  ; 2 uses
   %i.ha = load ptr, ptr %i.n, align 8, !tbaa !31  ; 2 uses
-  br i1 %.not128, label %bb.bg, label %bb.bc
+  br i1 %.not128, label %bb.bc, label %bb.bg
 
 bb.ay:                                            ; preds = %bb.aw, %bb.bb
   %indvars.iv158 = phi i64 [ 0, %bb.aw ], [ %indvars.iv.next159, %bb.bb ] ; 4 uses
   %i.hb = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv158
-  %i.hc = load i32, ptr %i.hb, align 4, !tbaa !18 ; 3 uses
+  %i.hc = load i32, ptr %i.hb, align 4, !tbaa !18 ; 4 uses
   %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv158
   %i.he = load i32, ptr %i.hd, align 4, !tbaa !18
   %.not135 = icmp eq i32 %i.hc, %i.he
   br i1 %.not135, label %bb.bb, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.hf = load i32, ptr %i.a, align 4, !tbaa !18  ; 2 uses
-  %5 = and i32 %i.hf, 1
-  %.not136.a = icmp eq i32 %5, 0                  ; 2 uses
-  %or.cond145.v = select i1 %.not136.a, i32 %i.hf, i32 %i.ge ; 2 uses
-  %or.cond145.not = icmp eq i32 %i.hc, %or.cond145.v
-  br i1 %or.cond145.not, label %bb.bb, label %bb.ba
+  %i.hf = load i32, ptr %i.a, align 4, !tbaa !18  ; 3 uses
+  %.not136 = trunc i32 %i.hf to i1                ; 4 uses
+  %.not136.not = xor i1 %.not136, true
+  %.not136.a = icmp eq i32 %i.hc, %i.ge
+  %or.cond = select i1 %.not136.not, i1 true, i1 %.not136.a
+  %or.cond145.not = icmp eq i32 %i.hc, %i.hf
+  %or.cond144 = or i1 %or.cond145.not, %.not136
+  %or.cond145 = and i1 %or.cond, %or.cond144
+  br i1 %or.cond145, label %bb.bb, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.hg = select i1 %.not136.a, ptr @.str.15, ptr @.str.14
+  %i.hg = select i1 %.not136, ptr @.str.14, ptr @.str.15
+  %2 = select i1 %.not136, i32 %i.ge, i32 %i.hf
   %i.hh = trunc nuw nsw i64 %indvars.iv158 to i32
-  %i.hi = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.13, ptr noundef nonnull %i.hg, i32 noundef %i.hh, i32 noundef %i.hc, i32 noundef %or.cond145.v) ; 0 uses
+  %i.hi = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.13, ptr noundef nonnull %i.hg, i32 noundef %i.hh, i32 noundef %i.hc, i32 noundef %2) ; 0 uses
   %i.hj = call i32 @MPI_Abort(ptr noundef nonnull @ompi_mpi_comm_world, i32 noundef -1) #6 ; 0 uses
   br label %bb.bb
 

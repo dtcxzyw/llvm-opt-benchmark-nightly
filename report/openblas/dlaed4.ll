@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dlaed4_(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef initializes((0, 4)) %7) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca double, align 8                   ; 11 uses
+  %i.a = alloca double, align 8                   ; 12 uses
   %i.b = alloca double, align 8                   ; 9 uses
   %i.c = alloca i32, align 4                      ; 10 uses
   %i.d = alloca [3 x double], align 16            ; 11 uses
@@ -413,13 +413,13 @@ bb.at:                                            ; preds = %bb.ar
   br label %.loopexit
 
 bb.au:                                            ; preds = %._crit_edge1384
-  %8 = icmp eq i32 %.01197, %i.apt
-  %9 = icmp eq i32 %.01197, 1
-  %10 = fcmp ule double %i.atl, 0.000000e+00
-  %11 = fcmp uge double %i.atl, 0.000000e+00
+  %8 = icmp ne i32 %.01197, %i.apt
+  %9 = icmp ne i32 %.01197, 1
+  %10 = fcmp ogt double %i.atl, 0.000000e+00
+  %11 = fcmp olt double %i.atl, 0.000000e+00
   %.01198.v = select i1 %i.ahz, i1 %10, i1 %11
-  %or.cond1331.not.not1336 = or i1 %9, %8
-  %narrow.not = select i1 %or.cond1331.not.not1336, i1 true, i1 %.01198.v ; 2 uses
+  %or.cond1331.not = and i1 %9, %8
+  %narrow.not = select i1 %or.cond1331.not, i1 %.01198.v, i1 false ; 2 uses
   %i.aup = fcmp ugt double %i.atu, 0.000000e+00   ; 2 uses
   %i.auq = fcmp oge double %.4121517201733, %.6118017251729
   %i.aur = fcmp ugt double %.4120717221731, %.6118017251729
@@ -428,7 +428,7 @@ bb.au:                                            ; preds = %._crit_edge1384
   %i.aut = select i1 %i.aup, i1 %i.aur, i1 false
   %.51208 = select i1 %i.aut, double %.6118017251729, double %.4120717221731 ; 3 uses
   store i32 2, ptr %i.c, align 4, !tbaa !84
-  br i1 %narrow.not, label %bb.av, label %bb.bh
+  br i1 %narrow.not, label %bb.bh, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
   br i1 %i.ahz, label %bb.ax, label %bb.aw
@@ -474,7 +474,8 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %i.avz = phi double [ %i.avl, %bb.ax ], [ %i.ava, %bb.aw ] ; 4 uses
   %i.awa = phi double [ %i.avp, %bb.ax ], [ %i.auy, %bb.aw ] ; 4 uses
   %.pre-phi = phi i64 [ %i.avn, %bb.ax ], [ %i.auu, %bb.aw ]
-  %storemerge = phi double [ %i.avy, %bb.ax ], [ %i.avj, %bb.aw ] ; 4 uses
+  %storemerge = phi double [ %i.avy, %bb.ax ], [ %i.avj, %bb.aw ] ; 5 uses
+  store double %storemerge, ptr %i.a, align 8, !tbaa !86
   %i.awb = fadd double %i.awa, %i.avz
   %i.awc = fmul double %i.awa, %i.avz             ; 2 uses
   %i.awd = fneg double %i.ats
@@ -877,7 +878,7 @@ bb.bw:                                            ; preds = %bb.bs
   %.71218 = select i1 %i.bfq, double %.612171444, double %.711811450 ; 3 uses
   %i.bfr = select i1 %i.bfn, i1 %i.bfp, i1 false
   %.71210 = select i1 %i.bfr, double %.711811450, double %.612091445 ; 3 uses
-  br i1 %narrow.not, label %bb.bx, label %bb.cn
+  br i1 %narrow.not, label %bb.cn, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
   %.not1301 = icmp eq i32 %.112011446, 0          ; 2 uses

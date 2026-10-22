@@ -52,10 +52,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.pr = load ptr, ptr %i.e, align 8, !tbaa !16
   %.not116154 = icmp eq ptr %.pr, null
-  br i1 %.not116154, label %.lr.ph, label %.critedge
+  br i1 %.not116154, label %.lr.ph, label %..critedge_crit_edge
+
+..critedge_crit_edge:                             ; preds = %bb.d
+  %.pre = trunc i32 %2 to i1
+  br label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.d
-  %.not117 = trunc i32 %2 to i1
+  %.not117 = trunc i32 %2 to i1                   ; 5 uses
   %.fr = freeze i1 %i.d
   %or.cond133.not = and i1 %.fr, %.not117         ; 2 uses
   %i.i = and i32 %2, -129                         ; 2 uses
@@ -189,12 +193,11 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   tail call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.1, i64 noundef %4, i64 noundef %4, i32 noundef %2, i32 noundef %i.ao) #5
   br label %.thread
 
-.critedge:                                        ; preds = %bb.h, %bb.o, %bb.e, %bb.f, %.lr.ph.split.us, %.lr.ph.split, %bb.d
-  %.092.lcssa = phi ptr [ %3, %bb.d ], [ %3, %.lr.ph.split.us ], [ %3, %.lr.ph.split ], [ %i.o, %bb.e ], [ %i.o, %bb.f ], [ %i.ak, %bb.o ], [ %i.ak, %bb.h ]
-  %.088.lcssa = phi i64 [ %4, %bb.d ], [ %4, %.lr.ph.split.us ], [ %4, %.lr.ph.split ], [ %i.v, %bb.e ], [ %i.v, %bb.f ], [ %i.al, %bb.o ], [ %i.al, %bb.h ]
-  %.084.lcssa.a = phi i64 [ 0, %bb.d ], [ 0, %.lr.ph.split.us ], [ 0, %.lr.ph.split ], [ %i.r, %bb.e ], [ %i.r, %bb.f ], [ %i.x, %bb.o ], [ %i.x, %bb.h ]
-  %5 = and i32 %2, 1
-  %.not124 = icmp eq i32 %5, 0                    ; 2 uses
+.critedge:                                        ; preds = %bb.h, %bb.o, %bb.e, %bb.f, %..critedge_crit_edge, %.lr.ph.split.us, %.lr.ph.split
+  %.not124.pre-phi = phi i1 [ %.pre, %..critedge_crit_edge ], [ %.not117, %bb.e ], [ %.not117, %.lr.ph.split ], [ %.not117, %.lr.ph.split.us ], [ %.not117, %bb.f ], [ true, %bb.o ], [ true, %bb.h ] ; 2 uses
+  %.092.lcssa = phi ptr [ %3, %..critedge_crit_edge ], [ %i.o, %bb.e ], [ %3, %.lr.ph.split ], [ %3, %.lr.ph.split.us ], [ %i.o, %bb.f ], [ %i.ak, %bb.o ], [ %i.ak, %bb.h ]
+  %.084.lcssa.a = phi i64 [ %4, %..critedge_crit_edge ], [ %i.v, %bb.e ], [ %4, %.lr.ph.split ], [ %4, %.lr.ph.split.us ], [ %i.v, %bb.f ], [ %i.al, %bb.o ], [ %i.al, %bb.h ]
+  %.084.lcssa = phi i64 [ 0, %..critedge_crit_edge ], [ %i.r, %bb.e ], [ 0, %.lr.ph.split ], [ 0, %.lr.ph.split.us ], [ %i.r, %bb.f ], [ %i.x, %bb.o ], [ %i.x, %bb.h ]
   %.not126 = icmp eq ptr %0, null
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 4504
@@ -203,7 +206,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r
 
 bb.t:                                             ; preds = %bb.ah, %.critedge
   %.294 = phi ptr [ %.092.lcssa, %.critedge ], [ %i.bw, %bb.ah ] ; 2 uses
-  %.290 = phi i64 [ %.088.lcssa, %.critedge ], [ %i.bx, %bb.ah ] ; 3 uses
+  %.290 = phi i64 [ %.084.lcssa.a, %.critedge ], [ %i.bx, %bb.ah ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store i64 0, ptr %i.a, align 8, !tbaa !82
   %i.ba = load ptr, ptr %i.e, align 8, !tbaa !16  ; 3 uses
@@ -213,9 +216,9 @@ bb.t:                                             ; preds = %bb.ah, %.critedge
 bb.u:                                             ; preds = %bb.t
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 72
   %i.bc = load i32, ptr %i.bb, align 8, !tbaa !84
-  %6 = icmp ne i32 %i.bc, %2
-  %or.cond136 = or i1 %.not124, %6
-  br i1 %or.cond136, label %bb.w, label %bb.v
+  %5 = icmp eq i32 %i.bc, %2
+  %or.cond133 = and i1 %5, %.not124.pre-phi
+  br i1 %or.cond133, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
@@ -231,7 +234,7 @@ bb.x:                                             ; preds = %bb.w
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 72
   store i32 %2, ptr %i.bg, align 8, !tbaa !84
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 3 uses
-  br i1 %.not124, label %bb.z, label %bb.y
+  br i1 %.not124.pre-phi, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   call void @Curl_bufq_init2(ptr noundef nonnull %i.bh, i64 noundef 16384, i64 noundef 1, i32 noundef 3) #5
@@ -280,7 +283,7 @@ bb.ae:                                            ; preds = %bb.ac
 bb.af:                                            ; preds = %bb.ad, %bb.ae
   %i.bs = load i64, ptr %i.a, align 8, !tbaa !82
   %i.bt = load i64, ptr %i.az, align 8, !tbaa !87
-  %i.bu = add i64 %i.bt, %.084.lcssa.a
+  %i.bu = add i64 %i.bt, %.084.lcssa
   call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.2, i64 noundef %i.bs, i32 noundef %2, i64 noundef %i.bu, i32 noundef %i.bj) #5
   br label %bb.ag
 

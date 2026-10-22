@@ -204,8 +204,7 @@ bb.cn:                                            ; preds = %bb.cm, %.loopexit13
 .lr.ph89.i.i:                                     ; preds = %.outer52.i.i, %.lr.ph89.i.preheader.i
   %i.up = phi ptr [ %i.vg, %.outer52.i.i ], [ %i.uo, %.lr.ph89.i.preheader.i ]
   %.sroa.012.38697.i.i = phi i64 [ %.sroa.012.386.i.i, %.outer52.i.i ], [ %.sroa.012.38694102.i.i, %.lr.ph89.i.preheader.i ]
-  %cond.i.i = phi i1 [ false, %.outer52.i.i ], [ true, %.lr.ph89.i.preheader.i ]
-  %.sroa.031.0.ph96.i.i = phi i1 [ true, %.outer52.i.i ], [ false, %.lr.ph89.i.preheader.i ] ; 2 uses
+  %.sroa.031.0.ph96.i.i = phi i8 [ 1, %.outer52.i.i ], [ 0, %.lr.ph89.i.preheader.i ] ; 3 uses
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cr, %.lr.ph89.i.i
@@ -219,9 +218,10 @@ bb.co:                                            ; preds = %bb.cr, %.lr.ph89.i.
   ]
 
 .loopexit54.i.i:                                  ; preds = %bb.cp, %bb.cr, %bb.cv, %bb.ct
-  %.sroa.031.0.ph66.i.i = phi i1 [ %.sroa.031.0.ph96.1.i.i, %bb.ct ], [ %.sroa.031.0.ph96.1.i.i, %bb.cv ], [ %.sroa.031.0.ph96.i.i, %bb.cr ], [ %.sroa.031.0.ph96.i.i, %bb.cp ]
+  %.sroa.031.0.ph66.i.i = phi i8 [ %.sroa.031.0.ph96.1.i.i, %bb.ct ], [ %.sroa.031.0.ph96.1.i.i, %bb.cv ], [ %.sroa.031.0.ph96.i.i, %bb.cr ], [ %.sroa.031.0.ph96.i.i, %bb.cp ]
   %.sroa.012.361.i.i = phi i64 [ %.sroa.012.3.1.i.i, %bb.ct ], [ %.sroa.012.388.1.i.i, %bb.cv ], [ %.sroa.012.3.i.i, %bb.cr ], [ %.sroa.012.388.i.i, %bb.cp ]
-  br i1 %.sroa.031.0.ph66.i.i, label %.thread45.i.i, label %_RNvNtCs1K5DUQUZc67_11proc_macro25parse12float_digits.exit.i
+  %3 = trunc nuw i8 %.sroa.031.0.ph66.i.i to i1
+  br i1 %3, label %.thread45.i.i, label %_RNvNtCs1K5DUQUZc67_11proc_macro25parse12float_digits.exit.i
 
 bb.cp:                                            ; preds = %bb.co
   %i.us = add i32 %i.ur, -48
@@ -229,7 +229,8 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %or.cond7.i.i, label %.outer52.i.i, label %.loopexit54.i.i
 
 bb.cq:                                            ; preds = %bb.co, %bb.co
-  br i1 %cond.i.i, label %.outer.i.i25, label %.thread45.i.i
+  %cond.i.i = trunc nuw i8 %.sroa.031.0.ph96.i.i to i1
+  br i1 %cond.i.i, label %.thread45.i.i, label %.outer.i.i25
 
 bb.cr:                                            ; preds = %bb.co
   %i.ut = call i32 @_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters8peekableINtB4_8PeekableNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCs1K5DUQUZc67_11proc_macro2(ptr nonnull align 8 %i.l) #15 ; 0 uses
@@ -251,8 +252,7 @@ bb.cr:                                            ; preds = %bb.co
 .lr.ph89.1.i.i:                                   ; preds = %.outer52.1.i.i, %.lr.ph89.1.i.preheader.i
   %i.ux = phi ptr [ %i.ve, %.outer52.1.i.i ], [ %i.uw, %.lr.ph89.1.i.preheader.i ]
   %.sroa.012.38697.1.i.i = phi i64 [ %.sroa.012.386.1.i.i, %.outer52.1.i.i ], [ %.sroa.012.38694.i.i, %.lr.ph89.1.i.preheader.i ]
-  %cond.1.i.i = phi i1 [ false, %.outer52.1.i.i ], [ true, %.lr.ph89.1.i.preheader.i ]
-  %.sroa.031.0.ph96.1.i.i = phi i1 [ true, %.outer52.1.i.i ], [ false, %.lr.ph89.1.i.preheader.i ] ; 2 uses
+  %.sroa.031.0.ph96.1.i.i = phi i8 [ 1, %.outer52.1.i.i ], [ 0, %.lr.ph89.1.i.preheader.i ] ; 3 uses
   br label %bb.cs
 
 bb.cs:                                            ; preds = %bb.ct, %.lr.ph89.1.i.i
@@ -273,7 +273,8 @@ bb.ct:                                            ; preds = %bb.cs
   br i1 %.not35.1.i.i, label %.loopexit54.i.i, label %bb.cs
 
 bb.cu:                                            ; preds = %bb.cs, %bb.cs
-  br i1 %cond.1.i.i, label %_RNvNtCs1K5DUQUZc67_11proc_macro25parse12float_digits.exit.i, label %.thread45.i.i
+  %cond.1.i.i = trunc nuw i8 %.sroa.031.0.ph96.1.i.i to i1
+  br i1 %cond.1.i.i, label %.thread45.i.i, label %_RNvNtCs1K5DUQUZc67_11proc_macro25parse12float_digits.exit.i
 
 bb.cv:                                            ; preds = %bb.cs
   %i.vc = add i32 %i.uz, -48

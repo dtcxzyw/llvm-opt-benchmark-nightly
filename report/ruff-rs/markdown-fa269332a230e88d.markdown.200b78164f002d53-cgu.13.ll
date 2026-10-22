@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph.split.us.i
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.f = load i8, ptr %i.e, align 8, !range !7, !alias.scope !32, !noundef !4
-  %.not.us.i = icmp eq i8 %i.f, 0
-  br i1 %.not.us.i, label %.split.us.us.i, label %_RNvNtNtCs2KzzoC5ewhj_8markdown4util4skip13skip_opt_impl.exit
+  %.not.us.i = trunc nuw i8 %i.f to i1
+  br i1 %.not.us.i, label %_RNvNtNtCs2KzzoC5ewhj_8markdown4util4skip13skip_opt_impl.exit, label %.split.us.us.i
 
 .split.us.us.i:                                   ; preds = %bb.b
   %.sroa.021.0.us.i = add nuw nsw i64 %.sroa.0.031.us.i, 1 ; 4 uses
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %.split.us.us.i
   %i.g = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.021.0.us.i ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   %i.i = load i8, ptr %i.h, align 8, !range !7, !alias.scope !32, !noundef !4
-  %5 = icmp ne i8 %i.i, 0                         ; 2 uses
+  %5 = trunc nuw i8 %i.i to i1                    ; 2 uses
   %i.j = add nuw nsw i64 %.sroa.0.031.us.i, 2     ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 73
   %i.l = load i8, ptr %i.k, align 1, !range !8, !alias.scope !32, !noundef !4
@@ -244,8 +244,8 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
   %i.o = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.0.1.us.us.i18 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 72
   %i.q = load i8, ptr %i.p, align 8, !range !7, !alias.scope !32, !noundef !4
-  %6 = icmp eq i8 %i.q, 0
-  %.sroa.022.0.v.us.us.i = select i1 %6, i32 1, i32 -1
+  %6 = trunc nuw i8 %i.q to i1
+  %.sroa.022.0.v.us.us.i = select i1 %6, i32 -1, i32 1
   %.sroa.022.0.us.us.i = add i32 %.sroa.022.0.v.us.us.i, %.sroa.015.1.us.us.i17 ; 2 uses
   %i.r = add i64 %.sroa.0.1.us.us.i18, 1          ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 73
@@ -318,8 +318,8 @@ bb.a:
   %i.i = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.0.031.i2
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 72
   %i.k = load i8, ptr %i.j, align 8, !range !7, !alias.scope !36, !noundef !4
-  %.not.i.not = icmp eq i8 %i.k, 0
-  br i1 %.not.i.not, label %_RNvNtNtCs2KzzoC5ewhj_8markdown4util4skip13skip_opt_impl.exit, label %.split.i
+  %.not.i = trunc nuw i8 %i.k to i1
+  br i1 %.not.i, label %.split.i, label %_RNvNtNtCs2KzzoC5ewhj_8markdown4util4skip13skip_opt_impl.exit
 
 .split.i:                                         ; preds = %.lr.ph
   %.sroa.021.0.i = add nsw i64 %.sroa.0.031.i2, -1 ; 4 uses
@@ -329,18 +329,19 @@ bb.a:
 bb.b:                                             ; preds = %.split.i
   %i.m = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.021.0.i ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 72
-  %i.o = load i8, ptr %i.n, align 8, !range !7, !alias.scope !36, !noundef !4
-  %.not.peel = icmp eq i8 %i.o, 0                 ; 2 uses
+  %i.o = load i8, ptr %i.n, align 8, !range !7, !alias.scope !36, !noundef !4 ; 2 uses
   %spec.select.i.peel = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.021.0.i, i64 1) ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 73
   %i.q = load i8, ptr %i.p, align 1, !range !8, !alias.scope !36, !noundef !4
   %i.r = load i8, ptr %i.h, align 1, !range !8, !alias.scope !36, !noundef !4 ; 2 uses
-  %i.s = icmp eq i8 %i.q, %i.r
-  %or.cond.i.peel = and i1 %i.s, %.not.peel
+  %5 = icmp eq i8 %i.q, %i.r
+  %i.s = icmp eq i8 %i.o, 0
+  %or.cond.i.peel = and i1 %5, %i.s
   br i1 %or.cond.i.peel, label %.loopexit.split.i, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.b
-  %.sroa.022.0.i.peel = select i1 %.not.peel, i32 0, i32 2
+  %6 = shl nuw nsw i8 %i.o, 1
+  %.sroa.022.0.i.peel = zext nneg i8 %6 to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.peel.next
@@ -353,8 +354,8 @@ bb.d:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.0.1.i ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 72
   %i.w = load i8, ptr %i.v, align 8, !range !7, !alias.scope !36, !noundef !4
-  %.not = icmp eq i8 %i.w, 0
-  %.sroa.022.0.v.i = select i1 %.not, i32 -1, i32 1
+  %7 = trunc nuw i8 %i.w to i1
+  %.sroa.022.0.v.i = select i1 %7, i32 1, i32 -1
   %.sroa.022.0.i = add i32 %.sroa.022.0.v.i, %.sroa.015.1.i ; 2 uses
   %spec.select.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.0.1.i, i64 1) ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 73
@@ -689,8 +690,8 @@ bb.g:                                             ; preds = %bb.i, %.lr.ph.i
   %i.af = getelementptr inbounds nuw [80 x i8], ptr %i.m, i64 %.sroa.0.09.i ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 72
   %i.ah = load i8, ptr %i.ag, align 8, !range !7, !alias.scope !42, !noundef !4
-  %2 = icmp eq i8 %i.ah, 0
-  br i1 %2, label %bb.h, label %bb.i
+  %2 = trunc nuw i8 %i.ah to i1
+  br i1 %2, label %bb.i, label %bb.h
 
 ._crit_edge.i:                                    ; preds = %bb.i, %bb.e
   %.sroa.0.0.lcssa.i = phi i64 [ %.sroa.0.08.i, %bb.e ], [ %.sroa.0.0.i, %bb.i ]
@@ -1093,8 +1094,8 @@ bb.s:                                             ; preds = %.loopexit
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 400
   %i.ct = load i8, ptr %i.cs, align 8, !range !7, !noundef !4
   %i.cu = and i8 %i.ct, %.sroa.013.0.lcssa124
-  %or.cond7.not = icmp eq i8 %i.cu, 0
-  br i1 %or.cond7.not, label %bb.p, label %bb.r
+  %or.cond7 = trunc nuw i8 %i.cu to i1
+  br i1 %or.cond7, label %bb.r, label %bb.p
 
 bb.t:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)

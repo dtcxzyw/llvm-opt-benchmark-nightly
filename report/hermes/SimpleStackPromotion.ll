@@ -120,7 +120,7 @@ bb.b:                                             ; preds = %_ZN6hermes12_GLOBAL
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a
   %.0245.i.i = phi ptr [ %i.gi, %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a ], [ %i.o, %bb.b ] ; 2 uses
-  %.0254.i.i = phi i1 [ %.1.i.i, %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a ], [ false, %bb.b ] ; 2 uses
+  %.0254.i.i = phi i8 [ %.1.i.i, %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a ], [ 0, %bb.b ]
   %i.v = load ptr, ptr %.0245.i.i, align 8, !tbaa !75 ; 9 uses
   %i.w = call noundef ptr @_ZN6hermes19isStoreOnceVariableEPNS_8VariableE(ptr noundef %i.v) #10 ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.w, null
@@ -236,9 +236,9 @@ bb.i:                                             ; preds = %bb.c, %.lr.ph.i.i
 
 .lr.ph.i28.i.i.preheader:                         ; preds = %bb.i
   %i.bk = zext i32 %i.bj to i64
-  %i.bl = add nuw nsw i64 %i.bk, 2305843009213693951 ; 2 uses
+  %i.bl = add nuw nsw i64 %i.bk, 2305843009213693951
   %i.bm = and i64 %i.bl, 2305843009213693951      ; 2 uses
-  %i.bn = add nuw nsw i64 %i.bm, 1                ; 2 uses
+  %i.bn = add nuw nsw i64 %i.bm, 1                ; 3 uses
   %i.bo = icmp eq i64 %i.bm, 0
   br i1 %i.bo, label %.lr.ph.i28.i.i.epil.preheader, label %.lr.ph.i28.i.i.preheader.new
 
@@ -247,9 +247,8 @@ bb.i:                                             ; preds = %bb.c, %.lr.ph.i.i
   br label %.lr.ph.i28.i.i
 
 ._crit_edge.i29.i.i.unr-lcssa:                    ; preds = %.lr.ph.i28.i.i
-  %6 = and i64 %i.bl, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i28.i.i.epil.preheader, label %._crit_edge.i29.i.i
+  %lcmp.mod.not = trunc i64 %i.bn to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i28.i.i.epil.preheader, label %._crit_edge.i29.i.i
 
 .lr.ph.i28.i.i.epil.preheader:                    ; preds = %._crit_edge.i29.i.i.unr-lcssa, %.lr.ph.i28.i.i.preheader
   %.03349.i.i.i.epil.init = phi i1 [ false, %.lr.ph.i28.i.i.preheader ], [ %.1.i.i.i.1, %._crit_edge.i29.i.i.unr-lcssa ]
@@ -442,9 +441,11 @@ bb.p:                                             ; preds = %bb.o, %_ZN6hermes9I
   br i1 %.not38.i.i.i, label %._crit_edge55.i.i.i, label %.lr.ph54.i.i.i
 
 _ZN6hermes12_GLOBAL__N_114tryCopyToStackEPNS_8VariableE.exit.i.i: ; preds = %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i38.i.i, %._crit_edge.i29.i.i, %bb.i
-  %.035.lcssa60.i.i.i = phi i1 [ true, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i38.i.i ], [ %.0254.i.i, %._crit_edge.i29.i.i ], [ %.0254.i.i, %bb.i ] ; 2 uses
+  %.035.lcssa60.i.i.i = phi i1 [ true, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i38.i.i ], [ false, %._crit_edge.i29.i.i ], [ false, %bb.i ]
+  %6 = trunc nuw i8 %.0254.i.i to i1
+  %7 = or i1 %.035.lcssa60.i.i.i, %6              ; 2 uses
   %i.ex = call noundef zeroext i1 @_ZNK6hermes5Value8hasUsersEv(ptr noundef nonnull align 8 dereferenceable(40) %i.v) #10
-  br i1 %i.ex, label %bb.q, label %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a
+  br i1 %i.ex, label %bb.q, label %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i
 
 bb.q:                                             ; preds = %_ZN6hermes12_GLOBAL__N_114tryCopyToStackEPNS_8VariableE.exit.i.i
   %i.ey = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6hermes5Value8getUsersEv(ptr noundef nonnull align 8 dereferenceable(40) %i.v) #10 ; 2 uses
@@ -468,7 +469,7 @@ bb.r:                                             ; preds = %.lr.ph.i43.i.i
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 16
   %i.fh = load i8, ptr %i.fg, align 8, !tbaa !76
   %i.fi = icmp eq i8 %i.fh, 51
-  br i1 %i.fi, label %bb.r, label %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a
+  br i1 %i.fi, label %bb.r, label %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i
 
 ._crit_edge.i45.i.i:                              ; preds = %bb.r, %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
@@ -518,7 +519,7 @@ bb.s:                                             ; preds = %._crit_edge.i.i56.i
 
 _ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i57.i.i: ; preds = %bb.s, %._crit_edge.i.i56.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
-  br label %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a
+  br label %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i
 
 .lr.ph29.i.i.i:                                   ; preds = %._crit_edge.i45.i.i, %_ZN6hermes9IRBuilder20InstructionDestroyer3addEPNS_11InstructionE.exit.i48.i.i
   %i.fx = phi i32 [ %i.gg, %_ZN6hermes9IRBuilder20InstructionDestroyer3addEPNS_11InstructionE.exit.i48.i.i ], [ %.pre32.i.i.i, %._crit_edge.i45.i.i ] ; 2 uses
@@ -547,8 +548,13 @@ _ZN6hermes9IRBuilder20InstructionDestroyer3addEPNS_11InstructionE.exit.i48.i.i: 
   %.not22.i.i.i = icmp eq ptr %i.gh, %i.fo
   br i1 %.not22.i.i.i, label %._crit_edge30.i.i.i, label %.lr.ph29.i.i.i
 
-_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a: ; preds = %.lr.ph.i43.i.i, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i57.i.i, %_ZN6hermes12_GLOBAL__N_114tryCopyToStackEPNS_8VariableE.exit.i.i, %_ZN6hermes12_GLOBAL__N_123tryPromoteConstVariableEPNS_8VariableE.exit.i.i
-  %.1.i.i = phi i1 [ true, %_ZN6hermes12_GLOBAL__N_123tryPromoteConstVariableEPNS_8VariableE.exit.i.i ], [ true, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i57.i.i ], [ %.035.lcssa60.i.i.i, %_ZN6hermes12_GLOBAL__N_114tryCopyToStackEPNS_8VariableE.exit.i.i ], [ %.035.lcssa60.i.i.i, %.lr.ph.i43.i.i ] ; 3 uses
+_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i: ; preds = %.lr.ph.i43.i.i, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i57.i.i, %_ZN6hermes12_GLOBAL__N_114tryCopyToStackEPNS_8VariableE.exit.i.i
+  %.3.i.i.i = phi i1 [ true, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i57.i.i ], [ %7, %_ZN6hermes12_GLOBAL__N_114tryCopyToStackEPNS_8VariableE.exit.i.i ], [ %7, %.lr.ph.i43.i.i ]
+  %8 = zext i1 %.3.i.i.i to i8
+  br label %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a
+
+_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i.a: ; preds = %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i, %_ZN6hermes12_GLOBAL__N_123tryPromoteConstVariableEPNS_8VariableE.exit.i.i
+  %.1.i.i = phi i8 [ %8, %_ZN6hermes12_GLOBAL__N_126tryDeleteStoreOnlyVariableEPNS_8VariableE.exit.i.i ], [ 1, %_ZN6hermes12_GLOBAL__N_123tryPromoteConstVariableEPNS_8VariableE.exit.i.i ] ; 3 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %.0245.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.gi, %i.s
   br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
@@ -677,7 +683,7 @@ bb.ae:                                            ; preds = %bb.ad, %.lr.ph.i.i.
 
 .lr.ph10.i.i:                                     ; preds = %._crit_edge.i.i, %bb.ag
   %.08.i.i = phi ptr [ %i.he, %bb.ag ], [ %.pre.i.i, %._crit_edge.i.i ] ; 4 uses
-  %.27.i.i = phi i1 [ %.3.i.i, %bb.ag ], [ %.1.i.i, %._crit_edge.i.i ]
+  %.27.i.i = phi i8 [ %.3.i.i, %bb.ag ], [ %.1.i.i, %._crit_edge.i.i ]
   %i.hb = load ptr, ptr %.08.i.i, align 8, !tbaa !75
   %i.hc = call noundef zeroext i1 @_ZNK6hermes5Value8hasUsersEv(ptr noundef nonnull align 8 dereferenceable(40) %i.hb) #10
   br i1 %i.hc, label %bb.ag, label %bb.af
@@ -689,13 +695,13 @@ bb.af:                                            ; preds = %.lr.ph10.i.i
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %.lr.ph10.i.i
-  %.3.i.i = phi i1 [ %.27.i.i, %.lr.ph10.i.i ], [ true, %bb.af ] ; 5 uses
+  %.3.i.i = phi i8 [ %.27.i.i, %.lr.ph10.i.i ], [ 1, %bb.af ] ; 5 uses
   %i.he = getelementptr inbounds nuw i8, ptr %.08.i.i, i64 8 ; 2 uses
   %.not26.i.i = icmp eq ptr %i.he, %i.u
   br i1 %.not26.i.i, label %._crit_edge11.i.i, label %.lr.ph10.i.i
 
 _ZN6hermes12_GLOBAL__N_113runOnFunctionEPNS_8FunctionE.exit.i: ; preds = %bb.ae, %"_ZSt9__find_ifIPPN6hermes8VariableEN9__gnu_cxx5__ops10_Iter_predIZNS0_12_GLOBAL__N_113runOnFunctionEPNS0_8FunctionEE3$_0EEET_SC_SC_T0_.exit.i.i.i.i.i.i", %bb.ac, %._crit_edge.i.i.i.i.i.i.i.i, %._crit_edge.i.i, %bb.b
-  %.2.lcssa55.i.i = phi i1 [ %.3.i.i, %"_ZSt9__find_ifIPPN6hermes8VariableEN9__gnu_cxx5__ops10_Iter_predIZNS0_12_GLOBAL__N_113runOnFunctionEPNS0_8FunctionEE3$_0EEET_SC_SC_T0_.exit.i.i.i.i.i.i" ], [ %.3.i.i, %bb.ac ], [ %.3.i.i, %._crit_edge.i.i.i.i.i.i.i.i ], [ false, %bb.b ], [ %.1.i.i, %._crit_edge.i.i ], [ %.3.i.i, %bb.ae ]
+  %.2.lcssa55.i.i = phi i8 [ %.3.i.i, %"_ZSt9__find_ifIPPN6hermes8VariableEN9__gnu_cxx5__ops10_Iter_predIZNS0_12_GLOBAL__N_113runOnFunctionEPNS0_8FunctionEE3$_0EEET_SC_SC_T0_.exit.i.i.i.i.i.i" ], [ %.3.i.i, %bb.ac ], [ %.3.i.i, %._crit_edge.i.i.i.i.i.i.i.i ], [ 0, %bb.b ], [ %.1.i.i, %._crit_edge.i.i ], [ %.3.i.i, %bb.ae ]
   %.val.i53.i.i = phi ptr [ %.val.i.pre.i.i, %"_ZSt9__find_ifIPPN6hermes8VariableEN9__gnu_cxx5__ops10_Iter_predIZNS0_12_GLOBAL__N_113runOnFunctionEPNS0_8FunctionEE3$_0EEET_SC_SC_T0_.exit.i.i.i.i.i.i" ], [ %.val.i.pre.i.i, %bb.ac ], [ %.val.i.pre.i.i, %._crit_edge.i.i.i.i.i.i.i.i ], [ %i.o, %bb.b ], [ %.pre.i.i, %._crit_edge.i.i ], [ %.val.i.pre.i.i, %bb.ae ]
   %.016.i.i.i.i.i.i = phi ptr [ %.028.i.i.i.i.i.i.i.i, %"_ZSt9__find_ifIPPN6hermes8VariableEN9__gnu_cxx5__ops10_Iter_predIZNS0_12_GLOBAL__N_113runOnFunctionEPNS0_8FunctionEE3$_0EEET_SC_SC_T0_.exit.i.i.i.i.i.i" ], [ %i.gk, %bb.ac ], [ %i.gk, %._crit_edge.i.i.i.i.i.i.i.i ], [ %i.o, %bb.b ], [ %.pre.i.i, %._crit_edge.i.i ], [ %.1.i.i.i.i.i.i, %bb.ae ]
   %i.hf = ptrtoint ptr %.016.i.i.i.i.i.i to i64
@@ -704,7 +710,8 @@ _ZN6hermes12_GLOBAL__N_113runOnFunctionEPNS_8FunctionE.exit.i: ; preds = %bb.ae,
   %i.hi = lshr exact i64 %i.hh, 3
   %i.hj = trunc i64 %i.hi to i32
   store i32 %i.hj, ptr %i.p, align 8, !tbaa !74
-  %i.hk = or i1 %.019.i, %.2.lcssa55.i.i          ; 2 uses
+  %9 = trunc nuw i8 %.2.lcssa55.i.i to i1
+  %i.hk = or i1 %.019.i, %9                       ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %.sroa.05.020.i, i64 8
   %.sroa.05.0.i = load ptr, ptr %i.hl, align 8, !tbaa !28 ; 2 uses
   %.not.i = icmp eq ptr %.sroa.05.0.i, %i.b

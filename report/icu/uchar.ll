@@ -204,14 +204,15 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %1 = icmp ugt i32 %0, 159
-  %i.b = add i32 %0, -32                          ; 2 uses
-  %i.c = icmp ult i32 %i.b, 95
-  %narrow.i.not = or i1 %1, %i.c
-  br i1 %narrow.i.not, label %bb.k, label %bb.c
+  %1 = icmp ult i32 %0, 160
+  %i.b = add nsw i32 %0, -127
+  %i.c = icmp ult i32 %i.b, -95
+  %narrow.i = select i1 %1, i1 %i.c, i1 false
+  br i1 %narrow.i, label %bb.c, label %bb.k
 
 bb.c:                                             ; preds = %bb.b
-  %or.cond = icmp ult i32 %i.b, -23
+  %2 = add nsw i32 %0, -32
+  %or.cond = icmp ult i32 %2, -23
   %i.d = add nsw i32 %0, -14
   %i.e = icmp ult i32 %i.d, 14
   %narrow = select i1 %or.cond, i1 true, i1 %i.e
@@ -404,14 +405,15 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ag, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  %1 = icmp ugt i32 %0, 159
-  %i.ah = add i32 %0, -32                         ; 2 uses
-  %i.ai = icmp ult i32 %i.ah, 95
-  %narrow.i.not.i = or i1 %1, %i.ai
-  br i1 %narrow.i.not.i, label %u_isIDIgnorable_78.exit, label %bb.j
+  %1 = icmp ult i32 %0, 160
+  %i.ah = add nsw i32 %0, -127
+  %i.ai = icmp ult i32 %i.ah, -95
+  %narrow.i.i = select i1 %1, i1 %i.ai, i1 false
+  br i1 %narrow.i.i, label %bb.j, label %u_isIDIgnorable_78.exit
 
 bb.j:                                             ; preds = %bb.i
-  %or.cond.i = icmp ult i32 %i.ah, -23
+  %2 = add nsw i32 %0, -32
+  %or.cond.i = icmp ult i32 %2, -23
   %i.aj = add nsw i32 %0, -14
   %i.ak = icmp ult i32 %i.aj, 14
   %narrow.i = select i1 %or.cond.i, i1 true, i1 %i.ak
@@ -814,8 +816,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i32, ptr %1, align 4, !tbaa !16
-  %2 = icmp slt i32 %i.b, 1
-  br i1 %2, label %bb.c, label %bb.m
+  %2 = icmp sgt i32 %i.b, 0
+  br i1 %2, label %bb.m, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = icmp ugt i32 %0, 1114111
@@ -1006,8 +1008,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i32, ptr %3, align 4, !tbaa !16
-  %4 = icmp slt i32 %i.b, 1
-  br i1 %4, label %bb.c, label %.loopexit
+  %4 = icmp sgt i32 %i.b, 0
+  br i1 %4, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = icmp slt i32 %2, 0
@@ -1150,8 +1152,8 @@ bb.q:                                             ; preds = %.backedge
 define void @uprv_addScriptExtensionsCodePoints_78(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !16
-  %2 = icmp slt i32 %i.a, 1
-  br i1 %2, label %bb.b, label %bb.c
+  %2 = icmp sgt i32 %i.a, 0
+  br i1 %2, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @utrie2_enum_78(ptr noundef nonnull @_ZL16propsVectorsTrie, ptr noundef null, ptr noundef nonnull @_ZN12_GLOBAL__N_19_scxRangeEPKviij, ptr noundef %0)
@@ -1198,8 +1200,8 @@ declare i32 @ucptrie_get_78(ptr noundef, i32 noundef) local_unnamed_addr #3
 define void @uchar_addPropertyStarts_78(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !16
-  %2 = icmp slt i32 %i.a, 1
-  br i1 %2, label %bb.b, label %bb.c
+  %2 = icmp sgt i32 %i.a, 0
+  br i1 %2, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @utrie2_enum_78(ptr noundef nonnull @_ZL9propsTrie, ptr noundef null, ptr noundef nonnull @_ZL24_enumPropertyStartsRangePKviij, ptr noundef %0)
@@ -1341,8 +1343,8 @@ bb.a:
 define void @upropsvec_addPropertyStarts_78(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !16
-  %2 = icmp slt i32 %i.a, 1
-  br i1 %2, label %bb.b, label %bb.c
+  %2 = icmp sgt i32 %i.a, 0
+  br i1 %2, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @utrie2_enum_78(ptr noundef nonnull @_ZL16propsVectorsTrie, ptr noundef null, ptr noundef nonnull @_ZL24_enumPropertyStartsRangePKviij, ptr noundef %0)

@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %bb.au
 bb.aw:                                            ; preds = %bb.ae, %bb.aa
   %.385 = phi i64 [ %.lcssa.i, %bb.aa ], [ %.lcssa133.i, %bb.ae ] ; 5 uses
   %.377.in = phi ptr [ %i.el, %bb.aa ], [ %i.ev, %bb.ae ]
-  %.sroa.0.12 = phi i8 [ %.sroa.0.8, %bb.aa ], [ %i.eu, %bb.ae ] ; 2 uses
+  %.sroa.0.12 = phi i8 [ %.sroa.0.8, %bb.aa ], [ %i.eu, %bb.ae ] ; 3 uses
   %.377 = load i32, ptr %.377.in, align 4, !tbaa !18 ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
@@ -234,8 +234,8 @@ bb.ay:                                            ; preds = %bb.av, %bb.v, %bb.r
   %i.gu = select i1 %.not186.i, i32 1, i32 5      ; 2 uses
   %i.gv = and i32 %.sroa.0.0.insert.ext, 2
   %.not191.i = icmp ne i32 %i.gv, 0
+  %.not192.i = trunc i8 %.sroa.0.12 to i1
   %5 = and i32 %.sroa.0.0.insert.ext, 1
-  %.not192.i = icmp eq i32 %5, 0
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.cp, %.lr.ph
@@ -423,11 +423,12 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %brmerge.i, label %.thread208.i, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
-  %i.kj = add i32 %.0141.i, 1
-  br i1 %.not192.i, label %.thread208.i, label %.thread.i
+  %i.kj = add i32 %.0141.i, %5                    ; 2 uses
+  br i1 %.not192.i, label %.thread.i, label %.thread208.i
 
 .thread208.i:                                     ; preds = %bb.bu, %bb.bt
   %.0122215.i = phi i32 [ %i.gu, %bb.bu ], [ %.mux.i, %bb.bt ] ; 3 uses
+  %.1142213.i = phi i32 [ %i.kj, %bb.bu ], [ %.0141.i, %bb.bt ]
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   store i32 %i.ig, ptr %i.bn, align 8, !tbaa !101
   store i32 1, ptr %i.bo, align 4, !tbaa !102
@@ -587,7 +588,7 @@ bb.ci:                                            ; preds = %.critedge.i, %bb.ch
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.ci, %bb.bu, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bn, %bb.bm
-  %.1142206.i = phi i32 [ %.0141.i, %bb.ci ], [ %i.kj, %bb.bu ], [ %.0141.i, %bb.bn ], [ %.0141.i, %bb.bm ], [ %.0141.i, %bb.bs ], [ %.0141.i, %bb.br ], [ %.0141.i, %bb.bq ], [ %.0141.i, %bb.bp ]
+  %.1142206.i = phi i32 [ %.1142213.i, %bb.ci ], [ %i.kj, %bb.bu ], [ %.0141.i, %bb.bn ], [ %.0141.i, %bb.bm ], [ %.0141.i, %bb.bs ], [ %.0141.i, %bb.br ], [ %.0141.i, %bb.bq ], [ %.0141.i, %bb.bp ]
   %.3172.i = phi i32 [ %.2171.i, %bb.ci ], [ %.0169.i, %bb.bu ], [ %.0169.i, %bb.bn ], [ %.0169.i, %bb.bm ], [ %.0169.i, %bb.bs ], [ %.0169.i, %bb.br ], [ %.0169.i, %bb.bq ], [ %.0169.i, %bb.bp ]
   %.4165.i = phi i32 [ %.3164.i, %bb.ci ], [ %.0161.i, %bb.bu ], [ %.0161.i, %bb.bn ], [ %.0161.i, %bb.bm ], [ %.0161.i, %bb.bs ], [ %.0161.i, %bb.br ], [ %.0161.i, %bb.bq ], [ %.0161.i, %bb.bp ]
   %.4157.i = phi i32 [ %.3156.i, %bb.ci ], [ %.0153.i, %bb.bu ], [ %.0153.i, %bb.bn ], [ %.0153.i, %bb.bm ], [ %.0153.i, %bb.bs ], [ %.0153.i, %bb.br ], [ %.0153.i, %bb.bq ], [ %.0153.i, %bb.bp ]

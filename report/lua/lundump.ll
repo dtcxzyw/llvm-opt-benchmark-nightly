@@ -204,8 +204,8 @@ bb.ah:                                            ; preds = %checknumsize.exit54
 loadBlock.exit56.i:                               ; preds = %checknumsize.exit54.i
   store i64 40, ptr %i.m, align 8, !tbaa !22
   %i.dc = load double, ptr %i.f, align 8, !tbaa !27
-  %6 = fcmp une double %i.dc, -3.705000e+02
-  br i1 %6, label %bb.ai, label %checkHeader.exit
+  %6 = fcmp oeq double %i.dc, -3.705000e+02
+  br i1 %6, label %checkHeader.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %loadBlock.exit56.i
   call fastcc void @numerror(ptr noundef nonnull readonly %5, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.10) #8
@@ -608,6 +608,7 @@ loadNumber.exit.i:                                ; preds = %bb.ao
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hk, i64 1
   store ptr %i.hl, ptr %i.hj, align 8, !tbaa !25
   %i.hm = load i8, ptr %i.hk, align 1, !tbaa !9
+  %2 = zext i8 %i.hm to i32
   br label %loadByte.exit.i.i47.i
 
 bb.aq:                                            ; preds = %.preheader.i
@@ -617,7 +618,6 @@ bb.aq:                                            ; preds = %.preheader.i
 
 .loadByte.exit.i.i47_crit_edge.i:                 ; preds = %bb.aq
   %.pre.i = load i64, ptr %i.e, align 8, !tbaa !22
-  %2 = trunc i32 %i.hn to i8
   br label %loadByte.exit.i.i47.i
 
 bb.ar:                                            ; preds = %bb.aq
@@ -626,7 +626,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 loadByte.exit.i.i47.i:                            ; preds = %.loadByte.exit.i.i47_crit_edge.i, %.thread.i.i.i46.i
   %i.hp = phi i64 [ %i.hf, %.thread.i.i.i46.i ], [ %.pre.i, %.loadByte.exit.i.i47_crit_edge.i ]
-  %3 = phi i8 [ %i.hm, %.thread.i.i.i46.i ], [ %2, %.loadByte.exit.i.i47_crit_edge.i ] ; 2 uses
+  %3 = phi i32 [ %2, %.thread.i.i.i46.i ], [ %i.hn, %.loadByte.exit.i.i47_crit_edge.i ] ; 2 uses
   %i.hq = add i64 %i.hp, 1                        ; 2 uses
   store i64 %i.hq, ptr %i.e, align 8, !tbaa !22
   %i.hr = icmp ugt i64 %.0.i.i44.i, 144115188075855871
@@ -637,17 +637,19 @@ bb.as:                                            ; preds = %loadByte.exit.i.i47
   unreachable
 
 bb.at:                                            ; preds = %loadByte.exit.i.i47.i
+  %4 = trunc i32 %3 to i8                         ; 2 uses
   %i.hs = shl nuw i64 %.0.i.i44.i, 7
-  %i.ht = and i8 %3, 127
-  %i.hu = zext nneg i8 %i.ht to i64               ; 2 uses
+  %i.ht = and i8 %4, 127
+  %i.hu = zext nneg i8 %i.ht to i64
   %i.hv = or disjoint i64 %i.hs, %i.hu            ; 2 uses
-  %.not.i.i48.i = icmp sgt i8 %3, -1
+  %.not.i.i48.i = icmp sgt i8 %4, -1
   br i1 %.not.i.i48.i, label %loadInteger.exit.i, label %.preheader.i
 
 loadInteger.exit.i:                               ; preds = %bb.at
   %i.hw = lshr i64 %i.hv, 1
-  %4 = and i64 %i.hu, 1
-  %sext.i.i = sub nsw i64 0, %4
+  %5 = and i32 %3, 1
+  %6 = zext nneg i32 %5 to i64
+  %sext.i.i = sub nsw i64 0, %6
   %.0.i.i48 = xor i64 %i.hw, %sext.i.i
   store i64 %.0.i.i48, ptr %i.gh, align 8, !tbaa !9
   %i.hx = getelementptr inbounds nuw i8, ptr %i.gh, i64 8
