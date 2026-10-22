@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN8rawspeed15CrwDecompressor10decompressEv:bb.a
   %i.ix = or disjoint <4 x i16> %i.iw, %i.iu
   store <4 x i16> %i.ix, ptr %i.io, align 2, !tbaa !156
   %indvars.iv.next221.3 = add nuw nsw i64 %indvars.iv220, 16 ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
   %niter.ncmp.3.not = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %.split207.unr-lcssa, label %.split.us, !llvm.loop !207
 

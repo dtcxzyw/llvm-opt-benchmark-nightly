@@ -202,10 +202,10 @@ arch_pkeys_enabled.exit:                          ; preds = %vma_kernel_pagesize
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %arch_pkeys_enabled.exit
-  %.09.i = phi i64 [ 0, %arch_pkeys_enabled.exit ], [ %i.z, %bb.h ] ; 4 uses
-  %i.v = getelementptr [3 x i8], ptr @show_smap_vma_flags.mnemonics, i64 %.09.i
-  %3 = and i64 %.09.i, 60
-  %.not.i30 = icmp eq i64 %3, 32
+  %.09.i = phi i64 [ 0, %arch_pkeys_enabled.exit ], [ %i.z, %bb.h ] ; 3 uses
+  %i.v = getelementptr [3 x i8], ptr @show_smap_vma_flags.mnemonics, i64 %.09.i ; 2 uses
+  %3 = load i8, ptr %i.v, align 1
+  %.not.i30 = icmp eq i8 %3, 0
   br i1 %.not.i30, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
   br i1 %i.f, label %bb.f, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.e
-  %i.g = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(7) @.str.113) #14
+  %i.g = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(7) @.str.113) #14
   %i.h = icmp eq i32 %i.g, 0
   br i1 %i.h, label %.loopexit, label %.preheader.1
 
@@ -252,82 +252,82 @@ bb.l:                                             ; preds = %.split, %bb.k, %bb.
   br label %.loopexit.sink.split
 
 .preheader.1:                                     ; preds = %.preheader.preheader
-  %i.q = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(8) @.str.122) #14
+  %i.q = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(8) @.str.122) #14
   %i.r = icmp eq i32 %i.q, 0
   br i1 %i.r, label %.loopexit, label %.preheader.2
 
 .preheader.2:                                     ; preds = %.preheader.1
-  %i.s = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(7) @.str.115) #14
+  %i.s = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(7) @.str.115) #14
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %.loopexit, label %.preheader.3
 
 .preheader.3:                                     ; preds = %.preheader.2
-  %i.u = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(3) @.str.117) #14
+  %i.u = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(3) @.str.117) #14
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %.loopexit, label %.preheader.4
 
 .preheader.4:                                     ; preds = %.preheader.3
-  %i.w = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.118) #14
+  %i.w = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.118) #14
   %i.x = icmp eq i32 %i.w, 0
   br i1 %i.x, label %.loopexit, label %.preheader.5
 
 .preheader.5:                                     ; preds = %.preheader.4
-  %i.y = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.119) #14
+  %i.y = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.119) #14
   %i.z = icmp eq i32 %i.y, 0
   br i1 %i.z, label %.loopexit, label %.preheader.6
 
 .preheader.6:                                     ; preds = %.preheader.5
-  %i.aa = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.120) #14
+  %i.aa = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.120) #14
   %i.ab = icmp eq i32 %i.aa, 0
   br i1 %i.ab, label %.loopexit, label %.preheader.7
 
 .preheader.7:                                     ; preds = %.preheader.6
-  %i.ac = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(3) @.str.123) #14
+  %i.ac = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(3) @.str.123) #14
   %i.ad = icmp eq i32 %i.ac, 0
   br i1 %i.ad, label %.loopexit, label %.preheader.8
 
 .preheader.8:                                     ; preds = %.preheader.7
-  %i.ae = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.124) #14
+  %i.ae = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.124) #14
   %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %.loopexit, label %.preheader.9
 
 .preheader.9:                                     ; preds = %.preheader.8
-  %i.ag = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.125) #14
+  %i.ag = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.125) #14
   %i.ah = icmp eq i32 %i.ag, 0
   br i1 %i.ah, label %.loopexit, label %.preheader.10
 
 .preheader.10:                                    ; preds = %.preheader.9
-  %i.ai = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.126) #14
+  %i.ai = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.126) #14
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %.loopexit, label %.preheader.11
 
 .preheader.11:                                    ; preds = %.preheader.10
-  %i.ak = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(3) @.str.127) #14
+  %i.ak = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(3) @.str.127) #14
   %i.al = icmp eq i32 %i.ak, 0
   br i1 %i.al, label %.loopexit, label %.preheader.12
 
 .preheader.12:                                    ; preds = %.preheader.11
-  %i.am = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.128) #14
+  %i.am = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.128) #14
   %i.an = icmp eq i32 %i.am, 0
   br i1 %i.an, label %.loopexit, label %.preheader.13
 
 .preheader.13:                                    ; preds = %.preheader.12
-  %i.ao = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.129) #14
+  %i.ao = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.129) #14
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %.loopexit, label %.preheader.14
 
 .preheader.14:                                    ; preds = %.preheader.13
-  %i.aq = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(4) @.str.116) #14
+  %i.aq = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(4) @.str.116) #14
   %i.ar = icmp eq i32 %i.aq, 0
   br i1 %i.ar, label %.loopexit, label %.preheader.15
 
 .preheader.15:                                    ; preds = %.preheader.14
-  %i.as = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(5) @.str.130) #14
+  %i.as = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(5) @.str.130) #14
   %i.at = icmp eq i32 %i.as, 0
   br i1 %i.at, label %.loopexit, label %.preheader.16
 
 .preheader.16:                                    ; preds = %.preheader.15
-  %i.au = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef dereferenceable(7) @.str.114) #14
+  %i.au = tail call i32 @strcmp(ptr noundef %spec.store.select, ptr noundef nonnull dereferenceable(7) @.str.114) #14
   %i.av = icmp eq i32 %i.au, 0
   %spec.select = select i1 %i.av, ptr getelementptr inbounds nuw (i8, ptr @probe_fetch_types, i64 768), ptr null
   br label %.loopexit

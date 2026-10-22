@@ -204,16 +204,16 @@ bb.b:                                             ; preds = %bb.a, %bb.b
 
 .preheader17.preheader:                           ; preds = %bb.b
   %i.e = load i32, ptr @proto_isdn_sup, align 4
-  %i.f = tail call ptr @create_dissector_handle(ptr noundef @dissect_CalledFreephoneNrArg_PDU, i32 noundef %i.e)
+  %i.f = tail call ptr @create_dissector_handle(ptr noundef nonnull @dissect_CalledFreephoneNrArg_PDU, i32 noundef %i.e)
   tail call void @dissector_add_string(ptr noundef @.str.2, ptr noundef @.str.436, ptr noundef %i.f)
   %i.g = load i32, ptr @proto_isdn_sup, align 4
-  %i.h = tail call ptr @create_dissector_handle(ptr noundef @dissect_Monitor_T_FPHArg_PDU, i32 noundef %i.g)
+  %i.h = tail call ptr @create_dissector_handle(ptr noundef nonnull @dissect_Monitor_T_FPHArg_PDU, i32 noundef %i.g)
   tail call void @dissector_add_string(ptr noundef @.str.2, ptr noundef @.str.437, ptr noundef %i.h)
   %i.i = load i32, ptr @proto_isdn_sup, align 4
-  %i.j = tail call ptr @create_dissector_handle(ptr noundef @dissect_Free_T_FPHArg_PDU, i32 noundef %i.i)
+  %i.j = tail call ptr @create_dissector_handle(ptr noundef nonnull @dissect_Free_T_FPHArg_PDU, i32 noundef %i.i)
   tail call void @dissector_add_string(ptr noundef @.str.2, ptr noundef @.str.438, ptr noundef %i.j)
   %i.k = load i32, ptr @proto_isdn_sup, align 4
-  %i.l = tail call ptr @create_dissector_handle(ptr noundef @dissect_Call_T_FPHArg_PDU, i32 noundef %i.k)
+  %i.l = tail call ptr @create_dissector_handle(ptr noundef nonnull @dissect_Call_T_FPHArg_PDU, i32 noundef %i.k)
   tail call void @dissector_add_string(ptr noundef @.str.2, ptr noundef @.str.439, ptr noundef %i.l)
   %i.m = load ptr, ptr @isdn_sup_err_handle, align 8
   tail call void @dissector_add_uint(ptr noundef @.str.4, i32 noundef 0, ptr noundef %i.m)

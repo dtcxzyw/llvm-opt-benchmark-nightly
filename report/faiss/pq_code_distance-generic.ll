@@ -204,7 +204,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIflEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit97.i: ; 
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIflEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit97.i, %bb.u
-  %i.iy = add i64 %.0139.i, 4                     ; 3 uses
+  %i.iy = add nuw i64 %.0139.i, 4                 ; 3 uses
   %i.iz = or disjoint i64 %i.iy, 3
   %i.ja = icmp ult i64 %i.iz, %3
   br i1 %i.ja, label %bb.f, label %.preheader.i, !llvm.loop !31
@@ -607,7 +607,7 @@ _ZN5faiss16heap_replace_topINS_4CMinIflEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit97.i: ; 
   br label %bb.bc
 
 bb.bc:                                            ; preds = %_ZN5faiss16heap_replace_topINS_4CMinIflEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit97.i, %bb.ax
-  %i.vt = add i64 %.0139.i56, 4                   ; 3 uses
+  %i.vt = add nuw i64 %.0139.i56, 4               ; 3 uses
   %i.vu = or disjoint i64 %i.vt, 3
   %i.vv = icmp ult i64 %i.vu, %3
   br i1 %i.vv, label %bb.ai, label %.preheader.i14, !llvm.loop !48
