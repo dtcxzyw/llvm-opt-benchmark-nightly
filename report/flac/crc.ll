@@ -99,9 +99,8 @@ bb.a:
   br i1 %.not27, label %._crit_edge, label %.lr.ph31.preheader
 
 .lr.ph31.preheader:                               ; preds = %.preheader
-  %xtraiter = and i32 %.018.lcssa, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph31.prol.loopexit, label %.lr.ph31.prol
+  %lcmp.mod.not = trunc i32 %.018.lcssa to i1
+  br i1 %lcmp.mod.not, label %.lr.ph31.prol, label %.lr.ph31.prol.loopexit
 
 .lr.ph31.prol:                                    ; preds = %.lr.ph31.preheader
   %i.b = add nsw i32 %.018.lcssa, -1
@@ -288,8 +287,8 @@ bb.a:
   %.021.lcssa = phi ptr [ %0, %bb.a ], [ %i.ax, %.lr.ph ]
   %.020.lcssa = phi i32 [ %1, %bb.a ], [ %i.ay, %.lr.ph ]
   %.0.lcssa = phi i16 [ %2, %bb.a ], [ %i.aw, %.lr.ph ] ; 2 uses
-  %.not = icmp eq i32 %.020.lcssa, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  %.not = trunc nuw i32 %.020.lcssa to i1
+  br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge
   %i.ba = load i32, ptr %.021.lcssa, align 4, !tbaa !18 ; 3 uses

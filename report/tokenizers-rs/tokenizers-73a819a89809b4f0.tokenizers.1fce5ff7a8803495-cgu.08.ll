@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.af, label %_RNCNvMsf_NtNtCs2JiOgHzbbc7_10tokenizers10processors8templateNtB7_25TemplateProcessingBuilder8validate0Bb_.exit.thread.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.b
-  %i.ag = add i64 %.val5.i23.pre.i, 576460752303423487 ; 2 uses
+  %i.ag = add i64 %.val5.i23.pre.i, 576460752303423487
   %i.ah = and i64 %i.ag, 576460752303423487       ; 2 uses
-  %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
+  %i.ai = add nuw nsw i64 %i.ah, 1                ; 3 uses
   %i.aj = icmp eq i64 %i.ah, 0
   br i1 %i.aj, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
@@ -259,9 +259,8 @@ bb.e:                                             ; preds = %.lr.ph.i.i
   br label %.lr.ph.i.i.1
 
 _RNCNvMsf_NtNtCs2JiOgHzbbc7_10tokenizers10processors8templateNtB7_25TemplateProcessingBuilder8validate0Bb_.exit.i.unr-lcssa: ; preds = %bb.d
-  %2 = and i64 %i.ag, 1
-  %lcmp.mod.not.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.epil.preheader, label %_RNCNvMsf_NtNtCs2JiOgHzbbc7_10tokenizers10processors8templateNtB7_25TemplateProcessingBuilder8validate0Bb_.exit.i
+  %lcmp.mod.not = trunc i64 %i.ai to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.epil.preheader, label %_RNCNvMsf_NtNtCs2JiOgHzbbc7_10tokenizers10processors8templateNtB7_25TemplateProcessingBuilder8validate0Bb_.exit.i
 
 .lr.ph.i.i.epil.preheader:                        ; preds = %_RNCNvMsf_NtNtCs2JiOgHzbbc7_10tokenizers10processors8templateNtB7_25TemplateProcessingBuilder8validate0Bb_.exit.i.unr-lcssa, %.lr.ph.i.i.preheader
   %.sroa.0.03.i.i.epil.init = phi i1 [ false, %.lr.ph.i.i.preheader ], [ %.sroa.0.1.i.i.1, %_RNCNvMsf_NtNtCs2JiOgHzbbc7_10tokenizers10processors8templateNtB7_25TemplateProcessingBuilder8validate0Bb_.exit.i.unr-lcssa ] ; 2 uses
