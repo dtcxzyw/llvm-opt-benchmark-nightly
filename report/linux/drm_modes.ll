@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 __drm_to_dev.exit.i:                              ; preds = %bb.e, %bb.d
   %i.g = phi ptr [ %i.f, %bb.e ], [ null, %bb.d ]
   %i.h = select i1 %5, i32 105, i32 112
-  %i.i = load i32, ptr %i.c, align 16             ; 5 uses
+  %i.i = load i32, ptr %i.c, align 16             ; 6 uses
   %i.j = udiv i64 %2, 1000                        ; 2 uses
   tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.g, i32 noundef 2, ptr noundef @.str.9, i32 noundef %3, i32 noundef %4, i32 noundef %i.h, i32 noundef %i.i, i64 noundef %i.j) #15
   %i.k = getelementptr i8, ptr %i.c, i64 8
@@ -607,26 +607,30 @@ bb.bc:                                            ; preds = %__drm_to_dev.exit25
   %i.gv = trunc i32 %i.i to i16
   %i.gw = getelementptr i8, ptr %i.b, i64 20      ; 3 uses
   store i16 %i.gv, ptr %i.gw, align 4
-  %6 = getelementptr i8, ptr %i.b, i64 62         ; 2 uses
-  store i8 64, ptr %6, align 2
-  %7 = getelementptr i8, ptr %i.b, i64 24         ; 3 uses
+  %.not223.i = icmp ult i32 %i.i, 65536
+  br i1 %.not223.i, label %6, label %drm_mode_destroy.exit
+
+6:                                                ; preds = %bb.bc
+  %7 = getelementptr i8, ptr %i.b, i64 62         ; 2 uses
+  store i8 64, ptr %7, align 2
+  %8 = getelementptr i8, ptr %i.b, i64 24         ; 3 uses
   %spec.select.i = select i1 %5, i32 26, i32 10
-  store i32 %spec.select.i, ptr %7, align 8
-  %8 = getelementptr i8, ptr %i.b, i64 80         ; 2 uses
-  %9 = load i16, ptr %i.es, align 4
-  %10 = zext i16 %9 to i32
-  %11 = and i32 %4, 65535
-  %12 = select i1 %5, ptr @.str.4, ptr @.str.1
-  %13 = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %8, i64 noundef 32, ptr noundef @.str.3, i32 noundef %10, i32 noundef %11, ptr noundef nonnull %12) #15 ; 0 uses
+  store i32 %spec.select.i, ptr %8, align 8
+  %9 = getelementptr i8, ptr %i.b, i64 80         ; 2 uses
+  %10 = load i16, ptr %i.es, align 4
+  %11 = zext i16 %10 to i32
+  %12 = and i32 %4, 65535
+  %13 = select i1 %5, ptr @.str.4, ptr @.str.1
+  %14 = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %9, i64 noundef 32, ptr noundef @.str.3, i32 noundef %11, i32 noundef %12, ptr noundef nonnull %13) #15 ; 0 uses
   br i1 %.not.i.i, label %__drm_to_dev.exit262.i, label %bb.bd
 
-bb.bd:                                            ; preds = %bb.bc
+bb.bd:                                            ; preds = %6
   %i.gx = getelementptr i8, ptr %0, i64 8
   %i.gy = load ptr, ptr %i.gx, align 8
   br label %__drm_to_dev.exit262.i
 
-__drm_to_dev.exit262.i:                           ; preds = %bb.bd, %bb.bc
-  %i.gz = phi ptr [ %i.gy, %bb.bd ], [ null, %bb.bc ]
+__drm_to_dev.exit262.i:                           ; preds = %bb.bd, %6
+  %i.gz = phi ptr [ %i.gy, %bb.bd ], [ null, %6 ]
   %i.ha = load i16, ptr %i.ey, align 2            ; 3 uses
   %i.hb = icmp eq i16 %i.ha, 0
   br i1 %i.hb, label %__drm_to_dev.exit262.drm_mode_vrefresh.exit_crit_edge.i, label %bb.be
@@ -634,14 +638,14 @@ __drm_to_dev.exit262.i:                           ; preds = %bb.bd, %bb.bc
 __drm_to_dev.exit262.drm_mode_vrefresh.exit_crit_edge.i: ; preds = %__drm_to_dev.exit262.i
   %.pre.i = load i32, ptr %i.b, align 8
   %.pre270.i = load i16, ptr %i.gw, align 4
-  %.pre271.i = load i32, ptr %7, align 8
+  %.pre271.i = load i32, ptr %8, align 8
   br label %fill_analog_mode.exit
 
 bb.be:                                            ; preds = %__drm_to_dev.exit262.i
   %i.hc = load i16, ptr %i.gw, align 4            ; 5 uses
   %i.hd = icmp eq i16 %i.hc, 0
   %.pre269.i = load i32, ptr %i.b, align 8        ; 6 uses
-  %.pre272.i = load i32, ptr %7, align 8          ; 6 uses
+  %.pre272.i = load i32, ptr %8, align 8          ; 6 uses
   br i1 %i.hd, label %fill_analog_mode.exit, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
@@ -716,12 +720,12 @@ fill_analog_mode.exit:                            ; preds = %__drm_to_dev.exit26
   %i.je = load i16, ptr %i.gu, align 2
   %i.jf = zext i16 %i.je to i32
   %i.jg = zext i16 %i.ir to i32
-  %i.jh = load i8, ptr %6, align 2
+  %i.jh = load i8, ptr %7, align 2
   %i.ji = zext i8 %i.jh to i32
-  tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.gz, i32 noundef 2, ptr noundef @.str.28, ptr noundef %8, i32 noundef %.0.i.i, i32 noundef %i.is, i32 noundef %i.iu, i32 noundef %i.iw, i32 noundef %i.iy, i32 noundef %i.iz, i32 noundef %i.jb, i32 noundef %i.jd, i32 noundef %i.jf, i32 noundef %i.jg, i32 noundef %i.ji, i32 noundef %i.iq) #15
+  tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.gz, i32 noundef 2, ptr noundef @.str.28, ptr noundef %9, i32 noundef %.0.i.i, i32 noundef %i.is, i32 noundef %i.iu, i32 noundef %i.iw, i32 noundef %i.iy, i32 noundef %i.iz, i32 noundef %i.jb, i32 noundef %i.jd, i32 noundef %i.jf, i32 noundef %i.jg, i32 noundef %i.ji, i32 noundef %i.iq) #15
   br label %bb.bi
 
-drm_mode_destroy.exit:                            ; preds = %__drm_to_dev.exit229.i, %__drm_to_dev.exit259.i, %bb.at, %__drm_to_dev.exit249.i, %__drm_to_dev.exit245.i, %__drm_to_dev.exit241.i, %__drm_to_dev.exit237.i, %__drm_to_dev.exit233.i
+drm_mode_destroy.exit:                            ; preds = %__drm_to_dev.exit229.i, %__drm_to_dev.exit259.i, %bb.at, %__drm_to_dev.exit249.i, %__drm_to_dev.exit245.i, %__drm_to_dev.exit241.i, %__drm_to_dev.exit237.i, %__drm_to_dev.exit233.i, %bb.bc
   tail call void @kfree(ptr noundef nonnull %i.b) #15
   br label %bb.bi
 

@@ -204,12 +204,18 @@ bb.u:                                             ; preds = %dissect_dpaux_regis
   %i.ds = load i32, ptr %i.di, align 4
   %i.dt = add i32 %i.ds, %.079.i                  ; 2 uses
   %i.du = icmp ult i32 %i.dt, 5
-  br i1 %i.du, label %switch.lookup26.a, label %dissect_dpaux_register.exit.i
+  br i1 %i.du, label %switch.lookup26, label %dissect_dpaux_register.exit.i
 
-switch.lookup26.a:                                ; preds = %bb.u
+switch.lookup26:                                  ; preds = %bb.u
   %4 = zext nneg i32 %i.dt to i64
   %switch.gep27 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_dpaux.2, i64 %4
-  %switch.load28 = load ptr, ptr %switch.gep27, align 8 ; 2 uses
+  %switch.load28 = load ptr, ptr %switch.gep27, align 8 ; 3 uses
+  %5 = getelementptr i8, ptr %switch.load28, i64 4
+  %6 = load i8, ptr %5, align 4
+  %cond.i.i = icmp eq i8 %6, 0
+  br i1 %cond.i.i, label %switch.lookup26.a, label %dissect_dpaux_register.exit.i
+
+switch.lookup26.a:                                ; preds = %switch.lookup26
   %i.dv = getelementptr i8, ptr %switch.load28, i64 8
   %i.dw = load ptr, ptr %i.dv, align 8
   %i.dx = load i32, ptr %i.dw, align 4
@@ -218,7 +224,7 @@ switch.lookup26.a:                                ; preds = %bb.u
   %i.ea = tail call ptr @proto_tree_add_bitmask_with_flags(ptr noundef %i.dr, ptr noundef %0, i32 noundef range(i32 1, 256) %i.dk, i32 noundef %i.dx, i32 noundef 0, ptr noundef %i.dz, i32 noundef 0, i32 noundef 0) ; 0 uses
   br label %dissect_dpaux_register.exit.i
 
-dissect_dpaux_register.exit.i:                    ; preds = %bb.u, %switch.lookup26.a
+dissect_dpaux_register.exit.i:                    ; preds = %bb.u, %switch.lookup26.a, %switch.lookup26
   %exitcond.not.i = icmp eq i32 %i.dk, %i.cv
   br i1 %exitcond.not.i, label %dissect_dpaux_from_source.exit, label %bb.u, !llvm.loop !6
 

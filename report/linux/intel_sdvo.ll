@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.i
   %i.aj = getelementptr [9 x i8], ptr @sdvo_cmd_names, i64 %indvars.iv.next.i.i
   %i.ak = load i8, ptr %i.aj, align 1
   %i.al = icmp eq i8 %1, %i.ak
-  br i1 %i.al, label %sdvo_cmd_name.exit.i.a, label %bb.h
+  br i1 %i.al, label %sdvo_cmd_name.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
@@ -216,13 +216,17 @@ bb.i:                                             ; preds = %bb.h, %.preheader.i
   %i.am = getelementptr [9 x i8], ptr @sdvo_cmd_names, i64 %indvars.iv.i.i
   %i.an = load i8, ptr %i.am, align 2
   %i.ao = icmp eq i8 %1, %i.an
-  br i1 %i.ao, label %sdvo_cmd_name.exit.i.a, label %bb.g
+  br i1 %i.ao, label %sdvo_cmd_name.exit.i, label %bb.g
 
-sdvo_cmd_name.exit.i.a:                           ; preds = %bb.g, %bb.i
+sdvo_cmd_name.exit.i:                             ; preds = %bb.g, %bb.i
   %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.i.i, %bb.i ], [ %indvars.iv.next.i.i, %bb.g ]
   %5 = getelementptr [9 x i8], ptr @sdvo_cmd_names, i64 %indvars.iv.i.i.lcssa
   %6 = getelementptr i8, ptr %5, i64 1
-  %7 = load ptr, ptr %6, align 1
+  %7 = load ptr, ptr %6, align 1                  ; 2 uses
+  %.not62.i = icmp eq ptr %7, null
+  br i1 %.not62.i, label %sdvo_cmd_name.exit.thread.i, label %sdvo_cmd_name.exit.i.a
+
+sdvo_cmd_name.exit.i.a:                           ; preds = %sdvo_cmd_name.exit.i
   %i.ap = sext i32 %.159.lcssa.i to i64
   %i.aq = getelementptr i8, ptr %i.a, i64 %i.ap
   %i.ar = sub i32 64, %.159.lcssa.i
@@ -231,7 +235,7 @@ sdvo_cmd_name.exit.i.a:                           ; preds = %bb.g, %bb.i
   %i.au = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.aq, i64 noundef %i.at, ptr noundef @.str.18, ptr noundef nonnull %7) #15
   br label %bb.j
 
-sdvo_cmd_name.exit.thread.i:                      ; preds = %bb.h
+sdvo_cmd_name.exit.thread.i:                      ; preds = %bb.h, %sdvo_cmd_name.exit.i
   %i.av = sext i32 %.159.lcssa.i to i64
   %i.aw = getelementptr i8, ptr %i.a, i64 %i.av
   %i.ax = sub i32 64, %.159.lcssa.i

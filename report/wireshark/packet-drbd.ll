@@ -204,11 +204,11 @@ bb.l:                                             ; preds = %bb.k, %find_drbd_co
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.o
-  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
-  %3 = getelementptr [24 x i8], ptr @payload_decoders, i64 %indvars.iv.next.i ; 2 uses
-  %i.bl = load i32, ptr %3, align 8
+  %3 = getelementptr [24 x i8], ptr @payload_decoders, i64 %indvars.iv.i ; 2 uses
+  %4 = getelementptr i8, ptr %3, i64 24
+  %i.bl = load i32, ptr %4, align 8
   %i.bm = icmp eq i32 %i.bl, %i.l
-  br i1 %i.bm, label %find_payload_decoder.exit, label %bb.n
+  br i1 %i.bm, label %find_payload_decoder.exit.split.loop.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
@@ -216,15 +216,18 @@ bb.n:                                             ; preds = %bb.m
   br i1 %exitcond.not.i.1, label %.thread, label %bb.o, !llvm.loop !0
 
 bb.o:                                             ; preds = %bb.n, %bb.l
-  %indvars.iv.i = phi i64 [ 0, %bb.l ], [ %indvars.iv.next.i.1, %bb.n ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.l ], [ %indvars.iv.next.i.1, %bb.n ] ; 3 uses
   %i.bn = getelementptr [24 x i8], ptr @payload_decoders, i64 %indvars.iv.i ; 2 uses
   %i.bo = load i32, ptr %i.bn, align 16
   %i.bp = icmp eq i32 %i.bo, %i.l
   br i1 %i.bp, label %find_payload_decoder.exit, label %bb.m
 
-find_payload_decoder.exit:                        ; preds = %bb.m, %bb.o
-  %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i, %bb.o ], [ %indvars.iv.next.i, %bb.m ]
-  %.lcssa = phi ptr [ %i.bn, %bb.o ], [ %3, %bb.m ] ; 3 uses
+find_payload_decoder.exit.split.loop.exit:        ; preds = %bb.m
+  %5 = getelementptr i8, ptr %3, i64 24
+  br label %find_payload_decoder.exit
+
+find_payload_decoder.exit:                        ; preds = %bb.o, %find_payload_decoder.exit.split.loop.exit
+  %.lcssa = phi ptr [ %5, %find_payload_decoder.exit.split.loop.exit ], [ %i.bn, %bb.o ] ; 3 uses
   %i.bq = getelementptr i8, ptr %1, i64 80
   %i.br = load ptr, ptr %i.bq, align 8
   %i.bs = getelementptr i8, ptr %i.br, i64 53
@@ -232,19 +235,20 @@ find_payload_decoder.exit:                        ; preds = %bb.m, %bb.o
   %i.bu = and i16 %i.bt, 8
   %i.bv = icmp eq i16 %i.bu, 0
   %i.bw = icmp ne ptr %.lcssa, null               ; 2 uses
-  %4 = and i64 %indvars.iv.i.lcssa, 2305843009213693950
-  %.not49.not = icmp eq i64 %4, 28
-  %5 = and i1 %i.bv, %.not49.not
-  %or.cond54 = and i1 %5, %i.bw
+  %or.cond54 = and i1 %i.bw, %i.bv
   br i1 %or.cond54, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %find_payload_decoder.exit
   %i.bx = getelementptr i8, ptr %.lcssa, i64 8
-  %i.by = load ptr, ptr %i.bx, align 8
+  %i.by = load ptr, ptr %i.bx, align 8            ; 2 uses
+  %.not49 = icmp eq ptr %i.by, null
+  br i1 %.not49, label %bb.q, label %6
+
+6:                                                ; preds = %bb.p
   tail call void %i.by(ptr noundef nonnull %i.h, ptr noundef %1, ptr noundef %.0)
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %find_payload_decoder.exit
+bb.q:                                             ; preds = %6, %bb.p, %find_payload_decoder.exit
   %i.bz = icmp eq ptr %2, null
   br i1 %i.bz, label %bb.u, label %bb.r
 

@@ -81,21 +81,27 @@ bb.d:                                             ; preds = %bb.b
   %i.l = getelementptr i8, ptr %i.b, i64 504      ; 3 uses
   %i.m = getelementptr i8, ptr %0, i64 1188       ; 8 uses
   %i.n = getelementptr i8, ptr %0, i64 1160       ; 8 uses
+  br label %1
+
+1:                                                ; preds = %intel_dvo_init_dev.exit.i, %bb.d
+  %indvars.iv.i = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.i, %intel_dvo_init_dev.exit.i ] ; 2 uses
+  %2 = getelementptr [48 x i8], ptr @intel_dvo_devices, i64 %indvars.iv.i ; 4 uses
+  %3 = getelementptr i8, ptr %2, i64 16
+  %4 = load i32, ptr %3, align 16                 ; 2 uses
+  %5 = tail call zeroext i1 @intel_gmbus_is_valid_pin(ptr noundef %0, i32 noundef %4) #5
+  br i1 %5, label %bb.e, label %6
+
+6:                                                ; preds = %1
+  %7 = getelementptr i8, ptr %2, i64 8
+  %8 = load i32, ptr %7, align 8
+  %9 = icmp eq i32 %8, 1
+  %..i.i = select i1 %9, i32 1, i32 5
   br label %bb.e
 
-bb.e:                                             ; preds = %intel_dvo_init_dev.exit.i, %bb.d
-  %indvars.iv.i = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.i, %intel_dvo_init_dev.exit.i ] ; 4 uses
-  %1 = getelementptr [48 x i8], ptr @intel_dvo_devices, i64 %indvars.iv.i ; 3 uses
-  %2 = getelementptr i8, ptr %1, i64 16
-  %3 = load i32, ptr %2, align 16                 ; 2 uses
-  %4 = tail call zeroext i1 @intel_gmbus_is_valid_pin(ptr noundef %0, i32 noundef %3) #5
-  %5 = icmp eq i64 %indvars.iv.i, 3
-  %6 = icmp eq i64 %indvars.iv.i, 5
-  %7 = or i1 %5, %6
-  %..i.i = select i1 %7, i32 1, i32 5
-  %.034.i.i = select i1 %4, i32 %3, i32 %..i.i
+bb.e:                                             ; preds = %6, %1
+  %.034.i.i = phi i32 [ %..i.i, %6 ], [ %4, %1 ]
   %i.o = tail call ptr @intel_gmbus_get_adapter(ptr noundef %0, i32 noundef %.034.i.i) #5 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) %i.l, ptr noundef readonly align 16 dereferenceable(48) %1, i64 48, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) %i.l, ptr noundef readonly align 16 dereferenceable(48) %2, i64 48, i1 false)
   tail call void @intel_gmbus_force_bit(ptr noundef %i.o, i1 noundef zeroext true) #5
   %i.p = load i8, ptr %i.m, align 4
   %i.q = zext i8 %i.p to i64                      ; 2 uses
@@ -204,7 +210,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.sroa.9.0.i.i = phi i32 [ 0, %bb.k ], [ %i.bj, %bb.l ]
-  %i.bn = getelementptr i8, ptr %1, i64 24
+  %i.bn = getelementptr i8, ptr %2, i64 24
   %i.bo = load ptr, ptr %i.bn, align 8
   %i.bp = load ptr, ptr %i.bo, align 8
   %i.bq = tail call zeroext i1 %i.bp(ptr noundef %i.l, ptr noundef %i.o) #5, !inline_history !16 ; 2 uses
@@ -299,7 +305,7 @@ intel_dvo_init_dev.exit.i:                        ; preds = %bb.t, %bb.s
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 7
   %or.cond.i = select i1 %i.bq, i1 true, i1 %exitcond.not.i
-  br i1 %or.cond.i, label %intel_dvo_probe.exit, label %bb.e, !llvm.loop !18
+  br i1 %or.cond.i, label %intel_dvo_probe.exit, label %1, !llvm.loop !18
 
 intel_dvo_probe.exit:                             ; preds = %intel_dvo_init_dev.exit.i
   br i1 %i.bq, label %bb.v, label %bb.u

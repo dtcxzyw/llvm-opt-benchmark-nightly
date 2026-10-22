@@ -49,25 +49,31 @@ bb.b:                                             ; preds = %bb.a, %bb.f
   %i.g = getelementptr [24 x i8], ptr @intel_quirks, i64 %indvars.iv ; 4 uses
   %i.h = load i16, ptr %i.d, align 2
   %i.i = zext i16 %i.h to i32
-  %i.j = load i32, ptr %i.g, align 8
-  %i.k = icmp eq i32 %i.j, %i.i
-  br i1 %i.k, label %bb.c, label %bb.f
+  %i.j = load i32, ptr %i.g, align 8              ; 2 uses
+  %1 = icmp eq i32 %i.j, %i.i
+  %i.k = icmp eq i32 %i.j, 0
+  %or.cond = or i1 %1, %i.k
+  br i1 %or.cond, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.l = load i16, ptr %i.e, align 8
   %i.m = zext i16 %i.l to i32
   %i.n = getelementptr i8, ptr %i.g, i64 4
-  %i.o = load i32, ptr %i.n, align 4
-  %i.p = icmp eq i32 %i.o, %i.m
-  br i1 %i.p, label %bb.d, label %bb.f
+  %i.o = load i32, ptr %i.n, align 4              ; 2 uses
+  %2 = icmp eq i32 %i.o, %i.m
+  %i.p = icmp eq i32 %i.o, -1
+  %or.cond26 = or i1 %2, %i.p
+  br i1 %or.cond26, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.q = load i16, ptr %i.f, align 2
   %i.r = zext i16 %i.q to i32
   %i.s = getelementptr i8, ptr %i.g, i64 8
-  %i.t = load i32, ptr %i.s, align 8
-  %i.u = icmp eq i32 %i.t, %i.r
-  br i1 %i.u, label %bb.e, label %bb.f
+  %i.t = load i32, ptr %i.s, align 8              ; 2 uses
+  %3 = icmp eq i32 %i.t, %i.r
+  %i.u = icmp eq i32 %i.t, -1
+  %or.cond27 = or i1 %3, %i.u
+  br i1 %or.cond27, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr i8, ptr %i.g, i64 16

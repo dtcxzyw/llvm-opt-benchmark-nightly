@@ -204,10 +204,10 @@ bb.a:
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal range(i32 10, 13) i32 @dissect_aim_tlv_value_icq(ptr noundef %0, i16 zeroext %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3) #0 {
+define internal i32 @dissect_aim_tlv_value_icq(ptr noundef %0, i16 zeroext %1, ptr noundef %2, ptr noundef %3) #0 {
 bb.a:
   %i.a = load i32, ptr @ett_aim_icq_tlv, align 4
-  %i.b = tail call ptr @proto_item_add_subtree(ptr noundef %0, i32 noundef %i.a) ; 6 uses
+  %i.b = tail call ptr @proto_item_add_subtree(ptr noundef %0, i32 noundef %i.a) ; 7 uses
   %i.c = load i32, ptr @hf_icq_tlv_data_chunk_size, align 4
   %i.d = tail call ptr @proto_tree_add_item(ptr noundef %i.b, i32 noundef %i.c, ptr noundef %2, i32 noundef 0, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
   %i.e = load i32, ptr @hf_icq_tlv_request_owner_uid, align 4
@@ -234,231 +234,234 @@ bb.c:                                             ; preds = %bb.a, %bb.a
   %i.p = tail call ptr @proto_tree_add_item(ptr noundef %i.b, i32 noundef %i.o, ptr noundef %2, i32 noundef 10, i32 noundef 2, i32 noundef -2147483648)
   switch i16 %i.n, label %bb.d [
     i16 1, label %bb.e
-    i16 100, label %.fold.split
-    i16 110, label %.fold.split62
-    i16 120, label %.fold.split63
-    i16 130, label %.fold.split64
-    i16 135, label %.fold.split65
-    i16 140, label %.fold.split66
-    i16 150, label %.fold.split67
-    i16 160, label %.fold.split68
-    i16 170, label %.fold.split69
-    i16 180, label %.fold.split70
-    i16 190, label %.fold.split71
-    i16 200, label %.fold.split72
-    i16 210, label %.fold.split73
-    i16 220, label %.fold.split74
-    i16 230, label %.fold.split75
-    i16 235, label %.fold.split76
-    i16 240, label %.fold.split77
-    i16 250, label %.fold.split78
-    i16 260, label %.fold.split79
-    i16 270, label %.fold.split80
-    i16 420, label %.fold.split81
-    i16 770, label %.fold.split82
-    i16 870, label %.fold.split83
-    i16 1002, label %.fold.split84
-    i16 1011, label %.fold.split85
-    i16 1021, label %.fold.split86
-    i16 1030, label %.fold.split87
-    i16 1035, label %.fold.split88
-    i16 1040, label %.fold.split89
-    i16 1050, label %.fold.split90
-    i16 1060, label %.fold.split91
-    i16 1070, label %.fold.split92
-    i16 1090, label %.fold.split93
-    i16 1202, label %.fold.split94
-    i16 1210, label %.fold.split95
-    i16 1220, label %.fold.split96
-    i16 1301, label %.fold.split97
-    i16 1385, label %.fold.split98
-    i16 1375, label %.fold.split99
-    i16 1395, label %.fold.split100
-    i16 1870, label %.fold.split101
+    i16 100, label %.fold.split109
+    i16 110, label %.fold.split
+    i16 120, label %.fold.split62
+    i16 130, label %.fold.split63
+    i16 135, label %.fold.split64
+    i16 140, label %.fold.split65
+    i16 150, label %.fold.split66
+    i16 160, label %.fold.split67
+    i16 170, label %.fold.split68
+    i16 180, label %.fold.split69
+    i16 190, label %.fold.split70
+    i16 200, label %.fold.split71
+    i16 210, label %.fold.split72
+    i16 220, label %.fold.split73
+    i16 230, label %.fold.split74
+    i16 235, label %.fold.split75
+    i16 240, label %.fold.split76
+    i16 250, label %.fold.split77
+    i16 260, label %.fold.split78
+    i16 270, label %.fold.split79
+    i16 420, label %.fold.split80
+    i16 770, label %.fold.split81
+    i16 870, label %.fold.split82
+    i16 1002, label %.fold.split83
+    i16 1011, label %.fold.split84
+    i16 1021, label %.fold.split85
+    i16 1030, label %.fold.split86
+    i16 1035, label %.fold.split87
+    i16 1040, label %.fold.split88
+    i16 1050, label %.fold.split89
+    i16 1060, label %.fold.split90
+    i16 1070, label %.fold.split91
+    i16 1090, label %.fold.split92
+    i16 1202, label %.fold.split93
+    i16 1210, label %.fold.split94
+    i16 1220, label %.fold.split95
+    i16 1301, label %.fold.split96
+    i16 1385, label %.fold.split97
+    i16 1375, label %.fold.split98
+    i16 1395, label %.fold.split99
+    i16 1870, label %.fold.split100
   ]
 
 bb.d:                                             ; preds = %bb.c
-  switch i16 %i.n, label %.thread57 [
-    i16 2200, label %bb.e
-    i16 2725, label %.fold.split102
-    i16 2735, label %.fold.split103
-    i16 3130, label %.fold.split104
-    i16 5250, label %.fold.split105
-    i16 8200, label %.fold.split106
-    i16 2210, label %.fold.split107
-    i16 3135, label %.fold.split108
-    i16 8210, label %.fold.split109
-  ]
-
-.thread57:                                        ; preds = %bb.d
-  %4 = getelementptr i8, ptr %3, i64 8
-  %5 = load ptr, ptr %4, align 8
-  tail call void @col_set_str(ptr noundef %5, i32 noundef 25, ptr noundef @.str.767)
-  br label %bb.f
+  switch i16 %i.n, label %bb.e [
+    i16 2200, label %.fold.split109
+    i16 2725, label %.fold.split101
+    i16 2735, label %.fold.split102
+    i16 3130, label %.fold.split103
+    i16 5250, label %.fold.split104
+    i16 8200, label %.fold.split105
+    i16 2210, label %.fold.split106
+    i16 3135, label %.fold.split107
+    i16 8210, label %.fold.split108
+  ], !llvm.loop !35
 
 .fold.split:                                      ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split62:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split63:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split64:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split65:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split66:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split67:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split68:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split69:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split70:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split71:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split72:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split73:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split74:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split75:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split76:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split77:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split78:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split79:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split80:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split81:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split82:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split83:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split84:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split85:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split86:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split87:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split88:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split89:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split90:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split91:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split92:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split93:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split94:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split95:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split96:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split97:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split98:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split99:                                    ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split100:                                   ; preds = %bb.c
-  br label %bb.e
+  br label %.fold.split109
 
-.fold.split101:                                   ; preds = %bb.c
-  br label %bb.e
+.fold.split101:                                   ; preds = %bb.d
+  br label %.fold.split109
 
 .fold.split102:                                   ; preds = %bb.d
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split103:                                   ; preds = %bb.d
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split104:                                   ; preds = %bb.d
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split105:                                   ; preds = %bb.d
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split106:                                   ; preds = %bb.d
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split107:                                   ; preds = %bb.d
-  br label %bb.e
+  br label %.fold.split109
 
 .fold.split108:                                   ; preds = %bb.d
+  br label %.fold.split109
+
+.fold.split109:                                   ; preds = %bb.d, %.fold.split108, %.fold.split107, %.fold.split106, %.fold.split105, %.fold.split104, %.fold.split103, %.fold.split102, %.fold.split101, %bb.c, %.fold.split100, %.fold.split99, %.fold.split98, %.fold.split97, %.fold.split96, %.fold.split95, %.fold.split94, %.fold.split93, %.fold.split92, %.fold.split91, %.fold.split90, %.fold.split89, %.fold.split88, %.fold.split87, %.fold.split86, %.fold.split85, %.fold.split84, %.fold.split83, %.fold.split82, %.fold.split81, %.fold.split80, %.fold.split79, %.fold.split78, %.fold.split77, %.fold.split76, %.fold.split75, %.fold.split74, %.fold.split73, %.fold.split72, %.fold.split71, %.fold.split70, %.fold.split69, %.fold.split68, %.fold.split67, %.fold.split66, %.fold.split65, %.fold.split64, %.fold.split63, %.fold.split62, %.fold.split
+  %.lcssa67 = phi ptr [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 24), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1176), %.fold.split107 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 48), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 72), %.fold.split62 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 96), %.fold.split63 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 120), %.fold.split64 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 144), %.fold.split65 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 168), %.fold.split66 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 192), %.fold.split67 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 216), %.fold.split68 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 240), %.fold.split69 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 264), %.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 288), %.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 312), %.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 336), %.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 360), %.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 384), %.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 408), %.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 432), %.fold.split77 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 456), %.fold.split78 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 480), %.fold.split79 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 504), %.fold.split80 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 528), %.fold.split81 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 552), %.fold.split82 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 576), %.fold.split83 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 600), %.fold.split84 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 624), %.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 648), %.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 672), %.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 696), %.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 720), %.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 744), %.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 768), %.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 792), %.fold.split92 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 816), %.fold.split93 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 840), %.fold.split94 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 864), %.fold.split95 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 888), %.fold.split96 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 912), %.fold.split97 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 936), %.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 960), %.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1008), %bb.d ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 984), %.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1032), %.fold.split101 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1056), %.fold.split102 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1080), %.fold.split103 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1104), %.fold.split104 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1128), %.fold.split105 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1152), %.fold.split106 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1200), %.fold.split108 ]
+  %indvars.iv.next.lcssa66 = phi i64 [ 1, %bb.c ], [ 49, %.fold.split107 ], [ 2, %.fold.split ], [ 3, %.fold.split62 ], [ 4, %.fold.split63 ], [ 5, %.fold.split64 ], [ 6, %.fold.split65 ], [ 7, %.fold.split66 ], [ 8, %.fold.split67 ], [ 9, %.fold.split68 ], [ 10, %.fold.split69 ], [ 11, %.fold.split70 ], [ 12, %.fold.split71 ], [ 13, %.fold.split72 ], [ 14, %.fold.split73 ], [ 15, %.fold.split74 ], [ 16, %.fold.split75 ], [ 17, %.fold.split76 ], [ 18, %.fold.split77 ], [ 19, %.fold.split78 ], [ 20, %.fold.split79 ], [ 21, %.fold.split80 ], [ 22, %.fold.split81 ], [ 23, %.fold.split82 ], [ 24, %.fold.split83 ], [ 25, %.fold.split84 ], [ 26, %.fold.split85 ], [ 27, %.fold.split86 ], [ 28, %.fold.split87 ], [ 29, %.fold.split88 ], [ 30, %.fold.split89 ], [ 31, %.fold.split90 ], [ 32, %.fold.split91 ], [ 33, %.fold.split92 ], [ 34, %.fold.split93 ], [ 35, %.fold.split94 ], [ 36, %.fold.split95 ], [ 37, %.fold.split96 ], [ 38, %.fold.split97 ], [ 39, %.fold.split98 ], [ 40, %.fold.split99 ], [ 42, %bb.d ], [ 41, %.fold.split100 ], [ 43, %.fold.split101 ], [ 44, %.fold.split102 ], [ 45, %.fold.split103 ], [ 46, %.fold.split104 ], [ 47, %.fold.split105 ], [ 48, %.fold.split106 ], [ 50, %.fold.split108 ]
+  %4 = getelementptr [24 x i8], ptr @icq_calls, i64 %indvars.iv.next.lcssa66
+  %5 = getelementptr i8, ptr %4, i64 8
+  %6 = load ptr, ptr %5, align 8                  ; 2 uses
   br label %bb.e
 
-.fold.split109:                                   ; preds = %bb.d
-  br label %bb.e
-
-bb.e:                                             ; preds = %bb.d, %.fold.split109, %.fold.split108, %.fold.split107, %.fold.split106, %.fold.split105, %.fold.split104, %.fold.split103, %.fold.split102, %bb.c, %.fold.split101, %.fold.split100, %.fold.split99, %.fold.split98, %.fold.split97, %.fold.split96, %.fold.split95, %.fold.split94, %.fold.split93, %.fold.split92, %.fold.split91, %.fold.split90, %.fold.split89, %.fold.split88, %.fold.split87, %.fold.split86, %.fold.split85, %.fold.split84, %.fold.split83, %.fold.split82, %.fold.split81, %.fold.split80, %.fold.split79, %.fold.split78, %.fold.split77, %.fold.split76, %.fold.split75, %.fold.split74, %.fold.split73, %.fold.split72, %.fold.split71, %.fold.split70, %.fold.split69, %.fold.split68, %.fold.split67, %.fold.split66, %.fold.split65, %.fold.split64, %.fold.split63, %.fold.split62, %.fold.split
-  %.lcssa = phi ptr [ @icq_calls, %bb.c ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1176), %.fold.split108 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 24), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 48), %.fold.split62 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 72), %.fold.split63 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 96), %.fold.split64 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 120), %.fold.split65 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 144), %.fold.split66 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 168), %.fold.split67 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 192), %.fold.split68 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 216), %.fold.split69 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 240), %.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 264), %.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 288), %.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 312), %.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 336), %.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 360), %.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 384), %.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 408), %.fold.split77 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 432), %.fold.split78 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 456), %.fold.split79 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 480), %.fold.split80 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 504), %.fold.split81 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 528), %.fold.split82 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 552), %.fold.split83 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 576), %.fold.split84 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 600), %.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 624), %.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 648), %.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 672), %.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 696), %.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 720), %.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 744), %.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 768), %.fold.split92 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 792), %.fold.split93 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 816), %.fold.split94 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 840), %.fold.split95 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 864), %.fold.split96 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 888), %.fold.split97 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 912), %.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 936), %.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 960), %.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1008), %bb.d ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 984), %.fold.split101 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1032), %.fold.split102 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1056), %.fold.split103 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1080), %.fold.split104 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1104), %.fold.split105 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1128), %.fold.split106 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1152), %.fold.split107 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1200), %.fold.split109 ]
-  %6 = getelementptr i8, ptr %.lcssa, i64 8
+bb.e:                                             ; preds = %bb.d, %bb.c, %.fold.split109
+  %.lcssa = phi ptr [ %.lcssa67, %.fold.split109 ], [ @icq_calls, %bb.c ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1224), %bb.d ]
+  %7 = phi ptr [ %6, %.fold.split109 ], [ @.str.769, %bb.c ], [ @.str.110, %bb.d ]
+  %spec.select = phi ptr [ %6, %.fold.split109 ], [ @.str.769, %bb.c ], [ @.str.767, %bb.d ]
   %i.q = getelementptr i8, ptr %3, i64 8
   %i.r = load ptr, ptr %i.q, align 8
-  %i.s = load ptr, ptr %6, align 8                ; 2 uses
-  tail call void @col_set_str(ptr noundef %i.r, i32 noundef 25, ptr noundef %i.s)
-  br label %bb.f
+  tail call void @col_set_str(ptr noundef %i.r, i32 noundef 25, ptr noundef nonnull %spec.select)
+  tail call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.p, ptr noundef @.str.768, ptr noundef nonnull %7)
+  %8 = getelementptr i8, ptr %.lcssa, i64 16
+  %i.s = load ptr, ptr %8, align 8                ; 2 uses
+  %.not56 = icmp eq ptr %i.s, null
+  br i1 %.not56, label %bb.g, label %bb.f
 
-bb.f:                                             ; preds = %.thread57, %bb.e
-  %7 = phi ptr [ %i.s, %bb.e ], [ @.str.110, %.thread57 ]
-  tail call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.p, ptr noundef @.str.768, ptr noundef %7)
+bb.f:                                             ; preds = %bb.e
+  %9 = tail call ptr @tvb_new_subset_remaining(ptr noundef %2, i32 noundef 12)
+  %10 = tail call i32 %i.s(ptr noundef %9, ptr noundef %3, ptr noundef %i.b)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.a, %bb.f, %bb.b
-  %.050 = phi i32 [ 12, %bb.f ], [ 11, %bb.b ], [ 10, %bb.a ]
+bb.g:                                             ; preds = %bb.e, %bb.a, %bb.f, %bb.b
+  %.050 = phi i32 [ 12, %bb.e ], [ %10, %bb.f ], [ 10, %bb.a ], [ 11, %bb.b ]
   ret i32 %.050
 }
 
@@ -595,7 +598,7 @@ bb.a:
   %i.b = tail call fastcc i32 @dissect_aim_buddyname(ptr noundef %0, ptr noundef %1, i32 noundef %.07, ptr noundef %2) ; 3 uses
   %i.c = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.b)
   %.not = icmp eq i32 %i.c, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !35
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.b, %.lr.ph ]
@@ -993,7 +996,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ar = add i32 %i.w, %i.aq                     ; 3 uses
   %i.as = call i32 @tvb_reported_length_remaining(ptr noundef %2, i32 noundef %i.ar)
   %.not = icmp eq i32 %i.as, 0
-  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !36
+  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !37
 
 .loopexit:                                        ; preds = %bb.d, %bb.a, %bb.c
   %.1 = phi i32 [ %i.q, %bb.c ], [ %i.l, %bb.a ], [ %i.ar, %bb.d ]
@@ -1049,7 +1052,7 @@ bb.a:
   %i.j = add i32 %i.i, %i.h                       ; 3 uses
   %i.k = tail call i32 @tvb_reported_length_remaining(ptr noundef %2, i32 noundef %i.j)
   %i.l = icmp ugt i32 %i.k, 1
-  br i1 %i.l, label %.lr.ph, label %._crit_edge, !llvm.loop !37
+  br i1 %i.l, label %.lr.ph, label %._crit_edge, !llvm.loop !38
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.j, %.lr.ph ]
@@ -1078,7 +1081,7 @@ bb.a:
   %i.b = tail call fastcc i32 @dissect_aim_tlv(ptr noundef %0, ptr noundef %1, i32 noundef %.07, ptr noundef %2, ptr noundef @aim_client_tlvs) ; 3 uses
   %i.c = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.b)
   %.not = icmp eq i32 %i.c, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !38
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !39
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.b, %.lr.ph ]
@@ -1097,7 +1100,7 @@ bb.a:
   %i.b = tail call fastcc i32 @dissect_aim_tlv(ptr noundef %0, ptr noundef %1, i32 noundef %.07, ptr noundef %2, ptr noundef @aim_client_tlvs) ; 3 uses
   %i.c = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.b)
   %.not = icmp eq i32 %i.c, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !39
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !40
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.b, %.lr.ph ]
@@ -1229,7 +1232,7 @@ bb.a:
   %i.p = tail call fastcc i32 @dissect_ssi_item(ptr noundef %0, ptr noundef %1, i32 noundef %.02729, ptr noundef %i.o) ; 2 uses
   %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i32 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !40
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !41
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.027.lcssa = phi i32 [ 3, %bb.a ], [ %i.p, %.lr.ph ] ; 2 uses
@@ -1266,7 +1269,7 @@ bb.a:
   %i.k = tail call ptr @proto_tree_add_subtree(ptr noundef %2, ptr noundef %0, i32 noundef %.013, i32 noundef %i.i, i32 noundef %i.j, ptr noundef null, ptr noundef @.str.938)
   %i.l = tail call fastcc i32 @dissect_ssi_item(ptr noundef %0, ptr noundef %1, i32 noundef %.013, ptr noundef %i.k) ; 3 uses
   %i.m = icmp ugt i32 %i.a, %i.l
-  br i1 %i.m, label %.lr.ph, label %._crit_edge, !llvm.loop !41
+  br i1 %i.m, label %.lr.ph, label %._crit_edge, !llvm.loop !42
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.l, %.lr.ph ]
@@ -1419,7 +1422,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.041 = phi i32 [ %i.y, %.lr.ph ], [ %i.u, %bb.c ]
   %i.y = tail call fastcc i32 @dissect_aim_tlv(ptr noundef %0, ptr noundef %1, i32 noundef %.041, ptr noundef %3, ptr noundef @aim_client_tlvs) ; 3 uses
   %i.z = icmp slt i32 %i.y, %i.w
-  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !42
+  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !43
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.c
   %.0.lcssa = phi i32 [ %i.u, %bb.c ], [ %i.y, %.lr.ph ]
@@ -1630,4 +1633,5 @@ attributes #11 = { allocsize(1) }
 !40 = distinct !{!40, !12}
 !41 = distinct !{!41, !12}
 !42 = distinct !{!42, !12}
+!43 = distinct !{!43, !12}
 end_hunk_0

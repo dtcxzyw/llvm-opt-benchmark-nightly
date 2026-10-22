@@ -205,14 +205,16 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a, %.preheader
   %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %bb.a ] ; 2 uses
-  %0 = getelementptr [24 x i8], ptr @spi_static_device_list, i64 %indvars.iv ; 3 uses
-  %1 = load ptr, ptr %0, align 8
-  %i.b = getelementptr i8, ptr %0, i64 8
+  %0 = phi ptr [ %3, %.preheader ], [ @.str.145, %bb.a ]
+  %1 = getelementptr [24 x i8], ptr @spi_static_device_list, i64 %indvars.iv ; 2 uses
+  %i.b = getelementptr i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = getelementptr i8, ptr %0, i64 16
+  %i.d = getelementptr i8, ptr %1, i64 16
   %i.e = load i64, ptr %i.d, align 8
-  %i.f = tail call i32 @scsi_dev_info_list_add_keyed(i32 noundef 1, ptr noundef %1, ptr noundef %i.c, ptr noundef null, i64 noundef %i.e, i32 noundef 1) #15 ; 0 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.f = tail call i32 @scsi_dev_info_list_add_keyed(i32 noundef 1, ptr noundef nonnull %0, ptr noundef %i.c, ptr noundef null, i64 noundef %i.e, i32 noundef 1) #15 ; 0 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %2 = getelementptr [24 x i8], ptr @spi_static_device_list, i64 %indvars.iv.next
+  %3 = load ptr, ptr %2, align 8
   %.not12 = icmp eq i64 %indvars.iv.next, 2
   br i1 %.not12, label %.loopexit, label %.preheader, !llvm.loop !29
 

@@ -205,7 +205,7 @@ bb.hc:                                            ; preds = %bb.ht, %bb.hb
   %i.aoc = fadd <2 x float> %i.aoa, %i.aob
   %i.aod = fsub <2 x float> %i.aoc, %i.aoa
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #39
-  %i.aoe = load <2 x float>, ptr %i.any, align 8, !tbaa !75 ; 4 uses
+  %i.aoe = load <2 x float>, ptr %i.any, align 8, !tbaa !75 ; 5 uses
   %i.aof = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aod, <2 x float> %i.aoe, <2 x float> %i.aoa) ; 2 uses
   %i.aog = load <2 x float>, ptr %i.anz, align 8, !tbaa !75 ; 3 uses
   %i.aoh = fmul <2 x float> %i.ano, %i.aog        ; 3 uses
@@ -388,7 +388,7 @@ _ZL7ImClampRK6ImVec2S1_S_.exit.i:                 ; preds = %bb.hq, %bb.hp
   %i.arv = fmul <2 x float> %i.aog, %i.anm
   %i.arw = icmp ult i32 %i.art, 2                 ; 2 uses
   %i.arx = select i1 %i.arw, float %i.ank, float f0x7F7FFFFF
-  %i.ary = icmp eq i32 %i.aru, 2                  ; 2 uses
+  %i.ary = icmp eq i32 %i.aru, 2
   %i.arz = select i1 %i.ary, float %i.ani, float f0x7F7FFFFF
   %i.asa = load <2 x float>, ptr %i.ane, align 8, !tbaa !75
   %i.asb = load <2 x float>, ptr %i.anf, align 8, !tbaa !75
@@ -417,7 +417,9 @@ _ZL7ImClampRK6ImVec2S1_S_.exit.i:                 ; preds = %bb.hq, %bb.hp
   %foldExtExtBinop1325 = fsub <2 x float> %i.asp, %foldExtExtBinop
   %sel = select i1 %i.arw, <2 x float> %foldExtExtBinop1325, <2 x float> %i.asp
   %.sroa.054.1.i = shufflevector <2 x float> %sel, <2 x float> %i.asp, <2 x i32> <i32 0, i32 3> ; 2 uses
-  br i1 %i.ary, label %bb.hr, label %_ZL30CalcResizePosSizeFromAnyCornerP11ImGuiWindowRK6ImVec2S3_PS1_S4_.exit.i
+  %28 = extractelement <2 x float> %i.aoe, i64 1
+  %29 = fcmp oeq float %28, 0.000000e+00
+  br i1 %29, label %bb.hr, label %_ZL30CalcResizePosSizeFromAnyCornerP11ImGuiWindowRK6ImVec2S3_PS1_S4_.exit.i
 
 bb.hr:                                            ; preds = %_ZL7ImClampRK6ImVec2S1_S_.exit.i
   %foldExtExtBinop1327 = fsub <2 x float> %i.asw, %i.asu

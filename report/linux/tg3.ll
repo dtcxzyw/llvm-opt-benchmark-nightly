@@ -205,40 +205,40 @@ bb.ba:                                            ; preds = %_tg3_flag.exit78.i,
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.bh, %bb.ba
-  %indvars.iv.i102 = phi i64 [ 0, %bb.ba ], [ %indvars.iv.next.i104, %bb.bh ] ; 4 uses
+  %indvars.iv.i102 = phi i64 [ 0, %bb.ba ], [ %indvars.iv.next.i104, %bb.bh ] ; 2 uses
+  %3 = phi i16 [ 1024, %bb.ba ], [ %11, %bb.bh ]
   %i.oo = getelementptr [12 x i8], ptr @tg3_test_registers.reg_tbl, i64 %indvars.iv.i102 ; 3 uses
-  %3 = shl nuw i64 1, %indvars.iv.i102            ; 3 uses
+  %4 = getelementptr i8, ptr %i.oo, i64 2
+  %5 = load i16, ptr %4, align 2                  ; 4 uses
   br i1 %.not.i101, label %.critedge.i106, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %4 = and i64 %3, 2107652235809291770
-  %.not63.not.i = icmp eq i64 %4, 0
-  br i1 %.not63.not.i, label %bb.bh, label %_tg3_flag.exit81.i
+  %6 = and i16 %5, 2
+  %.not63.not.i = icmp eq i16 %6, 0
+  br i1 %.not63.not.i, label %_tg3_flag.exit81.i, label %bb.bh
 
 .critedge.i106:                                   ; preds = %bb.bb
-  %5 = and i64 %3, 2305840214649601013
-  %.not64.not.i = icmp eq i64 %5, 0
-  br i1 %.not64.not.i, label %bb.bh, label %_tg3_flag.exit81.i
+  %7 = and i16 %5, 1
+  %.not64.not.i = icmp eq i16 %7, 0
+  br i1 %.not64.not.i, label %_tg3_flag.exit81.i, label %bb.bh
 
 _tg3_flag.exit81.i:                               ; preds = %bb.bc, %.critedge.i106
   %i.op = load volatile i64, ptr %i.ol, align 8
   %i.oq = and i64 %i.op, 256
-  %.not65.i = icmp ne i64 %i.oq, 0
-  %6 = and i64 %3, 2305840217484951551
-  %.not66.not.i = icmp eq i64 %6, 0
-  %or.cond = select i1 %.not65.i, i1 %.not66.not.i, i1 false
-  br i1 %or.cond, label %bb.bh, label %bb.bd
+  %.not65.i = icmp eq i64 %i.oq, 0
+  %8 = and i16 %5, 4
+  %.not66.not.i = icmp eq i16 %8, 0
+  %or.cond = select i1 %.not65.i, i1 true, i1 %.not66.not.i
+  br i1 %or.cond, label %bb.bd, label %bb.bh
 
 bb.bd:                                            ; preds = %_tg3_flag.exit81.i
-  %7 = trunc i64 %indvars.iv.i102 to i32
-  %8 = add i32 %7, -51
-  %.not68.i = icmp ult i32 %8, -2
-  %or.cond.i103 = or i1 %.not67.i, %.not68.i
-  br i1 %or.cond.i103, label %bb.be, label %bb.bh
+  %9 = and i16 %5, 8
+  %.not68.i = icmp eq i16 %9, 0
+  %or.cond88.i = select i1 %.not67.i, i1 true, i1 %.not68.i
+  br i1 %or.cond88.i, label %bb.be, label %bb.bh
 
 bb.be:                                            ; preds = %bb.bd
-  %9 = load i16, ptr %i.oo, align 4
-  %i.or = zext i16 %9 to i32                      ; 8 uses
+  %i.or = zext i16 %3 to i32                      ; 8 uses
   %i.os = getelementptr i8, ptr %i.oo, i64 4
   %i.ot = load i32, ptr %i.os, align 4            ; 4 uses
   %i.ou = getelementptr i8, ptr %i.oo, i64 8
@@ -275,8 +275,10 @@ bb.bg:                                            ; preds = %bb.bf
   call void %i.pk(ptr noundef %i.g, i32 noundef %i.or, i32 noundef %i.ox) #27, !inline_history !371
   br label %bb.bh
 
-bb.bh:                                            ; preds = %_tg3_flag.exit81.i, %bb.bg, %bb.bd, %.critedge.i106, %bb.bc
-  %indvars.iv.next.i104 = add nuw nsw i64 %indvars.iv.i102, 1 ; 2 uses
+bb.bh:                                            ; preds = %bb.bg, %bb.bd, %_tg3_flag.exit81.i, %.critedge.i106, %bb.bc
+  %indvars.iv.next.i104 = add nuw nsw i64 %indvars.iv.i102, 1 ; 3 uses
+  %10 = getelementptr [12 x i8], ptr @tg3_test_registers.reg_tbl, i64 %indvars.iv.next.i104
+  %11 = load i16, ptr %10, align 4
   %.not61.i = icmp eq i64 %indvars.iv.next.i104, 60
   br i1 %.not61.i, label %tg3_test_registers.exit.thread, label %bb.bb, !llvm.loop !372
 

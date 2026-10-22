@@ -205,15 +205,22 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load i32, ptr %1, align 4                ; 3 uses
+  %i.d = load i32, ptr %1, align 4                ; 4 uses
   %i.e = icmp ugt i32 %i.d, 1
-  br i1 %i.e, label %bb.c, label %bb.d
+  br i1 %i.e, label %bb.c, label %2
 
-bb.c:                                             ; preds = %bb.b
+2:                                                ; preds = %bb.b
+  %3 = zext nneg i32 %i.d to i64
+  %4 = getelementptr [56 x i8], ptr @super_types, i64 %3
+  %5 = load ptr, ptr %4, align 8
+  %6 = icmp eq ptr %5, null
+  br i1 %6, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %2, %bb.b
   %i.f = tail call i32 (ptr, ...) @_printk(ptr noundef @.str.55, i32 noundef %i.d) #31 ; 0 uses
   br label %bb.h
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %2
   %i.g = getelementptr i8, ptr %0, i64 196
   store i32 %i.d, ptr %i.g, align 4
   %i.h = getelementptr i8, ptr %1, i64 4

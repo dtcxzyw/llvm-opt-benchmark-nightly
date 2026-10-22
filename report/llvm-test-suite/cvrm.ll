@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %.lr.ph110.i
   %.fr115.i = freeze i32 %i.dx                    ; 10 uses
   %i.dy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 16), align 8, !tbaa !24
   %i.dz = getelementptr inbounds [4 x i8], ptr %i.dy, i64 %indvars.iv122.i
-  %i.ea = load i32, ptr %i.dz, align 4, !tbaa !7  ; 4 uses
+  %i.ea = load i32, ptr %i.dz, align 4, !tbaa !7  ; 3 uses
   %i.eb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 24), align 8, !tbaa !42
   %i.ec = getelementptr inbounds [4 x i8], ptr %i.eb, i64 %indvars.iv122.i ; 2 uses
-  %i.ed = load i32, ptr %i.ec, align 4, !tbaa !7  ; 3 uses
+  %i.ed = load i32, ptr %i.ec, align 4, !tbaa !7  ; 4 uses
   %.not85101.i = icmp sgt i32 %i.ea, %i.ed
   br i1 %.not85101.i, label %.loopexit.i, label %.lr.ph106.i
 
@@ -316,26 +316,38 @@ bb.k:                                             ; preds = %._crit_edge100.spli
   %.not85.us.not.i = icmp slt i32 %.073102.us.i, %i.fp
   br i1 %.not85.us.not.i, label %.lr.ph106.split.us.i, label %.loopexit.i
 
-.lr.ph106.split.i:                                ; preds = %.lr.ph106.i
-  %i.fr = ashr i32 %i.ea, 5
+.lr.ph106.split.i:                                ; preds = %.lr.ph106.i, %4
+  %.070103.i = phi i32 [ %.1.i, %4 ], [ 0, %.lr.ph106.i ] ; 3 uses
+  %.073102.i = phi i32 [ %5, %4 ], [ %i.ea, %.lr.ph106.i ] ; 4 uses
+  %i.fr = ashr i32 %.073102.i, 5
   %i.fs = sext i32 %i.fr to i64
   %i.ft = getelementptr [4 x i8], ptr %.170, i64 %i.fs
   %i.fu = getelementptr i8, ptr %i.ft, i64 4
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !7
-  %i.fw = and i32 %i.ea, 31
+  %i.fw = and i32 %.073102.i, 31
   %i.fx = shl nuw i32 1, %i.fw
-  %i.fy = and i32 %i.fv, %i.fx
+  %i.fy = and i32 %i.fx, %i.fv
   %.not86.i = icmp eq i32 %i.fy, 0
-  br i1 %.not86.i, label %.loopexit.i, label %.preheader.i
+  br i1 %.not86.i, label %4, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.lr.ph106.split.i, %.preheader.i
-  %.07299.i = phi i32 [ %i.fz, %.preheader.i ], [ 0, %.lr.ph106.split.i ]
+  %.07299.i = phi i32 [ %i.fz, %.preheader.i ], [ %.070103.i, %.lr.ph106.split.i ]
   %i.fz = add nsw i32 %.07299.i, %.076108.i       ; 2 uses
   %i.ga = icmp slt i32 %i.fz, %.078.lcssa.i
-  br i1 %i.ga, label %.preheader.i, label %.loopexit.i
+  br i1 %i.ga, label %.preheader.i, label %._crit_edge100.split.i
 
-.loopexit.i:                                      ; preds = %.preheader.i, %bb.k, %.lr.ph106.split.i, %bb.j, %.lr.ph110.i
-  %.177.i = phi i32 [ %.076108.i, %.lr.ph110.i ], [ %.fr115.i, %bb.j ], [ %.fr115.i, %.lr.ph106.split.i ], [ %.fr115.i, %bb.k ], [ %.fr115.i, %.preheader.i ]
+._crit_edge100.split.i:                           ; preds = %.preheader.i
+  %3 = add nsw i32 %.070103.i, %.fr115.i
+  br label %4
+
+4:                                                ; preds = %._crit_edge100.split.i, %.lr.ph106.split.i
+  %.1.i = phi i32 [ %3, %._crit_edge100.split.i ], [ %.070103.i, %.lr.ph106.split.i ]
+  %5 = add i32 %.073102.i, 1
+  %exitcond121.not.i = icmp eq i32 %.073102.i, %i.ed
+  br i1 %exitcond121.not.i, label %.loopexit.i, label %.lr.ph106.split.i
+
+.loopexit.i:                                      ; preds = %4, %bb.k, %bb.j, %.lr.ph110.i
+  %.177.i = phi i32 [ %.076108.i, %.lr.ph110.i ], [ %.fr115.i, %bb.j ], [ %.fr115.i, %bb.k ], [ %.fr115.i, %4 ]
   %indvars.iv.next123.i = add nsw i64 %indvars.iv122.i, 1 ; 2 uses
   %lftr.wideiv125.i = trunc i64 %indvars.iv.next123.i to i32
   %exitcond126.not.i = icmp eq i32 %.15058, %lftr.wideiv125.i
