@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c,
   %i.k = load i16, ptr %i.j, align 4              ; 3 uses
   %.not96 = icmp eq i16 %i.k, 0
   %i.l = getelementptr i8, ptr %0, i64 252
-  %i.m = load i8, ptr %i.l, align 4               ; 10 uses
+  %i.m = load i8, ptr %i.l, align 4               ; 6 uses
   %i.n = icmp ugt i8 %i.m, 5                      ; 2 uses
   br i1 %.not96, label %bb.o, label %bb.f
 
@@ -218,22 +218,27 @@ bb.g:                                             ; preds = %bb.f
   ]
 
 bb.h:                                             ; preds = %bb.g
-  %2 = add nsw i8 %i.m, -4
-  %3 = icmp ult i8 %2, -2
-  br i1 %3, label %xfrm_get_mode.exit, label %xfrm_get_mode.exit.thread
+  %2 = zext nneg i8 %i.m to i64
+  %3 = getelementptr [3 x i8], ptr @xfrm4_mode_map, i64 %2 ; 2 uses
+  %4 = getelementptr i8, ptr %3, i64 1
+  %5 = load i8, ptr %4, align 1
+  %6 = icmp eq i8 %5, 2
+  br i1 %6, label %xfrm_get_mode.exit, label %xfrm_get_mode.exit.thread
 
 bb.i:                                             ; preds = %bb.g
-  %.not.i.a = icmp eq i8 %i.m, 3
-  br i1 %.not.i.a, label %xfrm_get_mode.exit.thread, label %xfrm_get_mode.exit
+  %7 = zext nneg i8 %i.m to i64
+  %8 = getelementptr [3 x i8], ptr @xfrm6_mode_map, i64 %7 ; 2 uses
+  %9 = getelementptr i8, ptr %8, i64 1
+  %10 = load i8, ptr %9, align 1
+  %.not.i.a = icmp eq i8 %10, 10
+  br i1 %.not.i.a, label %xfrm_get_mode.exit, label %xfrm_get_mode.exit.thread
 
-xfrm_get_mode.exit:                               ; preds = %bb.i, %bb.h
-  %xfrm4_mode_map.sink = phi ptr [ @xfrm4_mode_map, %bb.h ], [ @xfrm6_mode_map, %bb.i ]
-  %4 = zext nneg i8 %i.m to i64
-  %5 = getelementptr [3 x i8], ptr %xfrm4_mode_map.sink, i64 %4 ; 4 uses
-  %i.o = icmp eq ptr %5, null
+xfrm_get_mode.exit:                               ; preds = %bb.h, %bb.i
+  %xfrm4_mode_map.sink = phi ptr [ %3, %bb.h ], [ %8, %bb.i ] ; 4 uses
+  %i.o = icmp eq ptr %xfrm4_mode_map.sink, null
   br i1 %i.o, label %xfrm_get_mode.exit.thread, label %bb.k
 
-xfrm_get_mode.exit.thread:                        ; preds = %bb.h, %bb.i, %bb.g, %bb.f, %xfrm_get_mode.exit
+xfrm_get_mode.exit.thread:                        ; preds = %bb.g, %bb.h, %bb.i, %bb.f, %xfrm_get_mode.exit
   tail call void @do_trace_netlink_extack(ptr noundef @__xfrm_init_state.__msg) #14
   %.not117 = icmp eq ptr %1, null
   br i1 %.not117, label %bb.bh, label %bb.j
@@ -243,7 +248,7 @@ bb.j:                                             ; preds = %xfrm_get_mode.exit.
   br label %bb.bh
 
 bb.k:                                             ; preds = %xfrm_get_mode.exit
-  %i.p = getelementptr i8, ptr %5, i64 2
+  %i.p = getelementptr i8, ptr %xfrm4_mode_map.sink, i64 2
   %i.q = load i8, ptr %i.p, align 1
   %i.r = and i8 %i.q, 1
   %.not100 = icmp eq i8 %i.r, 0
@@ -272,22 +277,27 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p
-  %6 = add nsw i8 %i.m, -4
-  %7 = icmp ult i8 %6, -2
-  br i1 %7, label %xfrm_get_mode.exit120, label %xfrm_get_mode.exit120.thread
+  %11 = zext nneg i8 %i.m to i64
+  %12 = getelementptr [3 x i8], ptr @xfrm4_mode_map, i64 %11 ; 2 uses
+  %13 = getelementptr i8, ptr %12, i64 1
+  %14 = load i8, ptr %13, align 1
+  %15 = icmp eq i8 %14, 2
+  br i1 %15, label %xfrm_get_mode.exit120, label %xfrm_get_mode.exit120.thread
 
 bb.r:                                             ; preds = %bb.p
-  %.not.i118 = icmp eq i8 %i.m, 3
-  br i1 %.not.i118, label %xfrm_get_mode.exit120.thread, label %xfrm_get_mode.exit120
+  %16 = zext nneg i8 %i.m to i64
+  %17 = getelementptr [3 x i8], ptr @xfrm6_mode_map, i64 %16 ; 2 uses
+  %18 = getelementptr i8, ptr %17, i64 1
+  %19 = load i8, ptr %18, align 1
+  %.not.i118 = icmp eq i8 %19, 10
+  br i1 %.not.i118, label %xfrm_get_mode.exit120, label %xfrm_get_mode.exit120.thread
 
-xfrm_get_mode.exit120:                            ; preds = %bb.r, %bb.q
-  %xfrm4_mode_map.sink164 = phi ptr [ @xfrm4_mode_map, %bb.q ], [ @xfrm6_mode_map, %bb.r ]
-  %8 = zext nneg i8 %i.m to i64
-  %9 = getelementptr [3 x i8], ptr %xfrm4_mode_map.sink164, i64 %8 ; 2 uses
-  %i.s = icmp eq ptr %9, null
+xfrm_get_mode.exit120:                            ; preds = %bb.q, %bb.r
+  %xfrm4_mode_map.sink164 = phi ptr [ %12, %bb.q ], [ %17, %bb.r ] ; 2 uses
+  %i.s = icmp eq ptr %xfrm4_mode_map.sink164, null
   br i1 %i.s, label %xfrm_get_mode.exit120.thread, label %bb.t
 
-xfrm_get_mode.exit120.thread:                     ; preds = %bb.q, %bb.r, %bb.p, %bb.o, %xfrm_get_mode.exit120
+xfrm_get_mode.exit120.thread:                     ; preds = %bb.p, %bb.q, %bb.r, %bb.o, %xfrm_get_mode.exit120
   tail call void @do_trace_netlink_extack(ptr noundef @__xfrm_init_state.__msg.7) #14
   %.not99 = icmp eq ptr %1, null
   br i1 %.not99, label %bb.bh, label %bb.s
@@ -298,27 +308,31 @@ bb.s:                                             ; preds = %xfrm_get_mode.exit1
 
 bb.t:                                             ; preds = %xfrm_get_mode.exit120
   %i.t = getelementptr i8, ptr %0, i64 768
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(3) %i.t, ptr noundef nonnull align 1 dereferenceable(3) %9, i64 3, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(3) %i.t, ptr noundef nonnull align 1 dereferenceable(3) %xfrm4_mode_map.sink164, i64 3, i1 false)
+  %20 = zext nneg i8 %i.m to i64                  ; 2 uses
   br i1 %.not, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %10 = add nsw i8 %i.m, -4
-  %11 = icmp ult i8 %10, -2
-  br i1 %11, label %xfrm_get_mode.exit123, label %.lr.ph.i
+  %21 = getelementptr [3 x i8], ptr @xfrm4_mode_map, i64 %20 ; 2 uses
+  %22 = getelementptr i8, ptr %21, i64 1
+  %23 = load i8, ptr %22, align 1
+  %24 = icmp eq i8 %23, 2
+  br i1 %24, label %xfrm_get_mode.exit123, label %.lr.ph.i
 
 bb.v:                                             ; preds = %bb.t
-  %.not.i121 = icmp eq i8 %i.m, 3
-  br i1 %.not.i121, label %.lr.ph.i, label %xfrm_get_mode.exit123
+  %25 = getelementptr [3 x i8], ptr @xfrm6_mode_map, i64 %20 ; 2 uses
+  %26 = getelementptr i8, ptr %25, i64 1
+  %27 = load i8, ptr %26, align 1
+  %.not.i121 = icmp eq i8 %27, 10
+  br i1 %.not.i121, label %xfrm_get_mode.exit123, label %.lr.ph.i
 
-xfrm_get_mode.exit123:                            ; preds = %bb.v, %bb.u
-  %xfrm4_mode_map.sink165 = phi ptr [ @xfrm4_mode_map, %bb.u ], [ @xfrm6_mode_map, %bb.v ]
-  %12 = zext nneg i8 %i.m to i64
-  %13 = getelementptr [3 x i8], ptr %xfrm4_mode_map.sink165, i64 %12 ; 3 uses
-  %.not97 = icmp eq ptr %13, null
+xfrm_get_mode.exit123:                            ; preds = %bb.u, %bb.v
+  %xfrm4_mode_map.sink165 = phi ptr [ %21, %bb.u ], [ %25, %bb.v ] ; 3 uses
+  %.not97 = icmp eq ptr %xfrm4_mode_map.sink165, null
   br i1 %.not97, label %.lr.ph.i, label %bb.w
 
 bb.w:                                             ; preds = %xfrm_get_mode.exit123
-  %i.u = getelementptr i8, ptr %13, i64 2
+  %i.u = getelementptr i8, ptr %xfrm4_mode_map.sink165, i64 2
   %i.v = load i8, ptr %i.u, align 1
   %i.w = and i8 %i.v, 1
   %.not98 = icmp eq i8 %i.w, 0
@@ -326,13 +340,13 @@ bb.w:                                             ; preds = %xfrm_get_mode.exit1
 
 bb.x:                                             ; preds = %bb.k
   %i.x = getelementptr i8, ptr %0, i64 768
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(3) %i.x, ptr noundef nonnull align 1 dereferenceable(3) %5, i64 3, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(3) %i.x, ptr noundef nonnull align 1 dereferenceable(3) %xfrm4_mode_map.sink, i64 3, i1 false)
   %i.y = icmp ugt i16 %i.b, 45
   br i1 %i.y, label %xfrm_get_type.exit.thread, label %.lr.ph.i, !prof !158
 
 .lr.ph.i.sink.split:                              ; preds = %bb.w, %bb.l
   %.sink167 = phi i64 [ 768, %bb.l ], [ 771, %bb.w ]
-  %.sink166 = phi ptr [ %5, %bb.l ], [ %13, %bb.w ]
+  %.sink166 = phi ptr [ %xfrm4_mode_map.sink, %bb.l ], [ %xfrm4_mode_map.sink165, %bb.w ]
   %i.z = getelementptr i8, ptr %0, i64 %.sink167
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(3) %i.z, ptr noundef nonnull align 1 dereferenceable(3) %.sink166, i64 3, i1 false)
   br label %.lr.ph.i
@@ -467,7 +481,7 @@ bb.ap:                                            ; preds = %bb.an, %bb.af
 
 bb.aq:                                            ; preds = %bb.ap
   %i.at = getelementptr i8, ptr %0, i64 252
-  %i.au = load i8, ptr %i.at, align 4             ; 6 uses
+  %i.au = load i8, ptr %i.at, align 4             ; 5 uses
   %i.av = icmp ugt i8 %i.au, 5
   br i1 %i.av, label %xfrm_get_mode.exit128.thread, label %bb.ar, !prof !19
 
@@ -478,22 +492,27 @@ bb.ar:                                            ; preds = %bb.aq
   ]
 
 bb.as:                                            ; preds = %bb.ar
-  %14 = add nsw i8 %i.au, -4
-  %15 = icmp ult i8 %14, -2
-  br i1 %15, label %xfrm_get_mode.exit128, label %xfrm_get_mode.exit128.thread
+  %28 = zext nneg i8 %i.au to i64
+  %29 = getelementptr [3 x i8], ptr @xfrm4_mode_map, i64 %28 ; 2 uses
+  %30 = getelementptr i8, ptr %29, i64 1
+  %31 = load i8, ptr %30, align 1
+  %32 = icmp eq i8 %31, 2
+  br i1 %32, label %xfrm_get_mode.exit128, label %xfrm_get_mode.exit128.thread
 
 bb.at:                                            ; preds = %bb.ar
-  %.not.i126 = icmp eq i8 %i.au, 3
-  br i1 %.not.i126, label %xfrm_get_mode.exit128.thread, label %xfrm_get_mode.exit128
+  %33 = zext nneg i8 %i.au to i64
+  %34 = getelementptr [3 x i8], ptr @xfrm6_mode_map, i64 %33 ; 2 uses
+  %35 = getelementptr i8, ptr %34, i64 1
+  %36 = load i8, ptr %35, align 1
+  %.not.i126 = icmp eq i8 %36, 10
+  br i1 %.not.i126, label %xfrm_get_mode.exit128, label %xfrm_get_mode.exit128.thread
 
-xfrm_get_mode.exit128:                            ; preds = %bb.at, %bb.as
-  %xfrm4_mode_map.sink168 = phi ptr [ @xfrm4_mode_map, %bb.as ], [ @xfrm6_mode_map, %bb.at ]
-  %16 = zext nneg i8 %i.au to i64
-  %17 = getelementptr [3 x i8], ptr %xfrm4_mode_map.sink168, i64 %16 ; 2 uses
-  %.not104 = icmp eq ptr %17, null
+xfrm_get_mode.exit128:                            ; preds = %bb.as, %bb.at
+  %xfrm4_mode_map.sink168 = phi ptr [ %29, %bb.as ], [ %34, %bb.at ] ; 2 uses
+  %.not104 = icmp eq ptr %xfrm4_mode_map.sink168, null
   br i1 %.not104, label %xfrm_get_mode.exit128.thread, label %bb.av
 
-xfrm_get_mode.exit128.thread:                     ; preds = %bb.as, %bb.at, %bb.ar, %bb.aq, %xfrm_get_mode.exit128
+xfrm_get_mode.exit128.thread:                     ; preds = %bb.ar, %bb.as, %bb.at, %bb.aq, %xfrm_get_mode.exit128
   tail call void @do_trace_netlink_extack(ptr noundef @__xfrm_init_state.__msg.9) #14
   %.not105 = icmp eq ptr %1, null
   br i1 %.not105, label %bb.bh, label %bb.au
@@ -504,7 +523,7 @@ bb.au:                                            ; preds = %xfrm_get_mode.exit1
 
 bb.av:                                            ; preds = %xfrm_get_mode.exit128
   %i.aw = getelementptr i8, ptr %0, i64 774
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 2 dereferenceable(3) %i.aw, ptr noundef nonnull align 1 dereferenceable(3) %17, i64 3, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 2 dereferenceable(3) %i.aw, ptr noundef nonnull align 1 dereferenceable(3) %xfrm4_mode_map.sink168, i64 3, i1 false)
   %i.ax = getelementptr i8, ptr %0, i64 432
   %i.ay = load i32, ptr %i.ax, align 8
   %.not106 = icmp eq i32 %i.ay, 0

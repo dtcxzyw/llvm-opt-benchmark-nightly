@@ -146,9 +146,11 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr i8, ptr %i.j, i64 8
   store i64 %i.n, ptr %i.o, align 8
   %i.p = getelementptr i8, ptr %i.k, i64 12
-  %i.q = load i32, ptr %i.p, align 4
+  %i.q = load i32, ptr %i.p, align 4              ; 2 uses
+  %0 = icmp eq i32 %i.q, 2
+  %1 = select i1 %0, i32 9, i32 %i.q
   %i.r = getelementptr i8, ptr %i.j, i64 168
-  store i32 %i.q, ptr %i.r, align 8
+  store i32 %1, ptr %i.r, align 8
   %i.s = getelementptr i8, ptr %i.j, i64 176      ; 2 uses
   store i64 0, ptr %i.s, align 8
   %i.t = getelementptr i8, ptr %i.k, i64 4

@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %x86_register_cpudef_types.exit
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %x86_register_cpudef_types.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %x86_register_cpudef_types.exit ] ; 2 uses
   %i.r = getelementptr inbounds nuw [464 x i8], ptr @builtin_x86_defs, i64 %indvars.iv ; 6 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 432
   %i.t = load ptr, ptr %i.s, align 16
@@ -237,11 +237,9 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   call void @g_free(ptr noundef %i.aa) #20
   %i.ac = getelementptr i8, ptr %i.r, i64 448
-  %.val71.i = load ptr, ptr %i.ac, align 16
-  %3 = shl nuw i64 1, %indvars.iv
-  %4 = and i64 %3, 541165912063
-  %.not.i.i.not = icmp eq i64 %4, 0
-  %.x86_cpu_def_get_versions.default_version_list.i.i = select i1 %.not.i.i.not, ptr %.val71.i, ptr @x86_cpu_def_get_versions.default_version_list ; 2 uses
+  %.val71.i = load ptr, ptr %i.ac, align 16       ; 2 uses
+  %.not.i.i.not = icmp eq ptr %.val71.i, null
+  %.x86_cpu_def_get_versions.default_version_list.i.i = select i1 %.not.i.i.not, ptr @x86_cpu_def_get_versions.default_version_list, ptr %.val71.i ; 2 uses
   %i.ad = load i32, ptr %.x86_cpu_def_get_versions.default_version_list.i.i, align 8 ; 2 uses
   %.not6972.i = icmp eq i32 %i.ad, 0
   br i1 %.not6972.i, label %x86_register_cpudef_types.exit, label %.lr.ph.i

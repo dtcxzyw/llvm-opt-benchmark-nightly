@@ -204,7 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader, %.fold.split77, %.fold.split76, %.fold.split75, %.fold.split74, %.fold.split73, %.fold.split72, %.fold.split71, %.fold.split70, %.fold.split69, %.fold.split68, %.fold.split67, %.fold.split66, %.fold.split65, %.fold.split64, %.fold.split63, %.fold.split62, %.fold.split61, %.fold.split
-  %.lcssa = phi ptr [ @intel_agp_chipsets, %.preheader ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 408), %.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 24), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 48), %.fold.split61 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 72), %.fold.split62 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 96), %.fold.split63 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 120), %.fold.split64 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 144), %.fold.split65 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 168), %.fold.split66 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 192), %.fold.split67 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 216), %.fold.split68 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 240), %.fold.split69 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 264), %.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 288), %.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 312), %.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 336), %.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 360), %.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 384), %.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 432), %.fold.split77 ] ; 2 uses
+  %.lcssa56 = phi ptr [ @.str.7, %.preheader ], [ @.str.23, %.fold.split76 ], [ @.str.8, %.fold.split ], [ @.str.9, %.fold.split61 ], [ @.str.10, %.fold.split62 ], [ @.str.11, %.fold.split63 ], [ @.str.11, %.fold.split64 ], [ @.str.12, %.fold.split65 ], [ @.str.13, %.fold.split66 ], [ @.str.14, %.fold.split67 ], [ @.str.15, %.fold.split68 ], [ @.str.16, %.fold.split69 ], [ @.str.17, %.fold.split70 ], [ @.str.18, %.fold.split71 ], [ @.str.19, %.fold.split72 ], [ @.str.20, %.fold.split73 ], [ @.str.21, %.fold.split74 ], [ @.str.22, %.fold.split75 ], [ @.str.24, %.fold.split77 ]
+  %.lcssa = phi ptr [ @intel_agp_chipsets, %.preheader ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 408), %.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 24), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 48), %.fold.split61 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 72), %.fold.split62 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 96), %.fold.split63 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 120), %.fold.split64 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 144), %.fold.split65 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 168), %.fold.split66 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 192), %.fold.split67 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 216), %.fold.split68 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 240), %.fold.split69 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 264), %.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 288), %.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 312), %.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 336), %.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 360), %.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 384), %.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 432), %.fold.split77 ]
   %i.h = getelementptr i8, ptr %.lcssa, i64 16
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
   %i.j = getelementptr i8, ptr %i.b, i64 8
@@ -212,8 +213,8 @@ bb.c:                                             ; preds = %.preheader, %.fold.
   br label %bb.d
 
 bb.d:                                             ; preds = %.loopexit.a, %bb.c
-  %i.k = phi ptr [ %.pre, %.loopexit.a ], [ %i.i, %bb.c ]
-  %.pn = phi ptr [ getelementptr inbounds nuw (i8, ptr @intel_agp_chipsets, i64 456), %.loopexit.a ], [ %.lcssa, %bb.c ]
+  %i.k = phi ptr [ %i.i, %bb.c ], [ %.pre, %.loopexit.a ]
+  %.pn = phi ptr [ %.lcssa56, %bb.c ], [ null, %.loopexit.a ]
   %.not44 = icmp eq ptr %i.k, null
   br i1 %.not44, label %bb.e, label %bb.h
 
@@ -236,14 +237,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %bb.q
 
 bb.h:                                             ; preds = %bb.d
-  %2 = getelementptr i8, ptr %.pn, i64 8
   %i.r = getelementptr i8, ptr %i.b, i64 48
   store ptr %0, ptr %i.r, align 8
   %i.s = getelementptr i8, ptr %i.b, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr i8, ptr %0, i64 200        ; 3 uses
-  %3 = load ptr, ptr %2, align 8
-  tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.t, ptr noundef @.str.4, ptr noundef %3) #8
+  tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.t, ptr noundef @.str.4, ptr noundef %.pn) #8
   %i.u = getelementptr i8, ptr %0, i64 968
   %i.v = load i64, ptr %i.u, align 8
   %.not46 = icmp eq i64 %i.v, 0

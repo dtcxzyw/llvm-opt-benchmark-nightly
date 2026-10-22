@@ -204,7 +204,8 @@ bb.a:
 
 .split.us:                                        ; preds = %bb.a, %find_gmch.exit.thread.us
   %indvars.iv = phi i64 [ %indvars.iv.next, %find_gmch.exit.thread.us ], [ 0, %bb.a ] ; 2 uses
-  %i.e = getelementptr [24 x i8], ptr @intel_gtt_chipsets, i64 %indvars.iv ; 3 uses
+  %4 = phi ptr [ %7, %find_gmch.exit.thread.us ], [ @.str.4, %bb.a ]
+  %i.e = getelementptr [24 x i8], ptr @intel_gtt_chipsets, i64 %indvars.iv ; 2 uses
   %i.f = load i32, ptr %i.e, align 8
   %i.g = and i32 %i.f, 65535                      ; 2 uses
   %i.h = tail call ptr @pci_get_device(i32 noundef 32902, i32 noundef %i.g, ptr noundef null) #11 ; 4 uses
@@ -224,7 +225,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not10.i.us, label %find_gmch.exit.thread.us, label %.split48.us
 
 find_gmch.exit.thread.us:                         ; preds = %bb.c, %.split.us
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %5 = getelementptr [24 x i8], ptr @intel_gtt_chipsets, i64 %indvars.iv.next
+  %6 = getelementptr i8, ptr %5, i64 8
+  %7 = load ptr, ptr %6, align 8                  ; 2 uses
   %.not.us = icmp eq i64 %indvars.iv.next, 35
   br i1 %.not.us, label %thread-pre-split, label %.split.us, !llvm.loop !21
 
@@ -372,8 +376,8 @@ find_gmch.exit.thread.us:                         ; preds = %bb.c, %.split.us
   br label %bb.d
 
 bb.d:                                             ; preds = %.split, %.fold.split102, %.fold.split101, %.fold.split100, %.fold.split99, %.fold.split98, %.fold.split97, %.fold.split96, %.fold.split95, %.fold.split94, %.fold.split93, %.fold.split92, %.fold.split91, %.fold.split90, %.fold.split89, %.fold.split88, %.fold.split87, %.fold.split86, %.fold.split85, %.fold.split84, %.fold.split83, %.fold.split82, %.fold.split81, %.fold.split80, %.fold.split79, %.fold.split78, %.fold.split77, %.fold.split76, %.fold.split75, %.fold.split74, %.fold.split73, %.fold.split72, %.fold.split71, %.fold.split70, %.fold.split
-  %.lcssa55 = phi ptr [ @intel_gtt_chipsets, %.split ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 792), %.fold.split101 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 24), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 48), %.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 72), %.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 96), %.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 120), %.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 144), %.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 168), %.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 192), %.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 216), %.fold.split77 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 240), %.fold.split78 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 264), %.fold.split79 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 288), %.fold.split80 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 312), %.fold.split81 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 336), %.fold.split82 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 360), %.fold.split83 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 384), %.fold.split84 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 408), %.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 432), %.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 456), %.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 480), %.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 504), %.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 528), %.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 552), %.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 576), %.fold.split92 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 600), %.fold.split93 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 624), %.fold.split94 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 648), %.fold.split95 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 672), %.fold.split96 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 696), %.fold.split97 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 720), %.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 744), %.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 768), %.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 816), %.fold.split102 ] ; 2 uses
-  %4 = getelementptr i8, ptr %.lcssa55, i64 8
+  %.lcssa55 = phi ptr [ @intel_gtt_chipsets, %.split ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 792), %.fold.split101 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 24), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 48), %.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 72), %.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 96), %.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 120), %.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 144), %.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 168), %.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 192), %.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 216), %.fold.split77 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 240), %.fold.split78 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 264), %.fold.split79 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 288), %.fold.split80 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 312), %.fold.split81 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 336), %.fold.split82 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 360), %.fold.split83 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 384), %.fold.split84 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 408), %.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 432), %.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 456), %.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 480), %.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 504), %.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 528), %.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 552), %.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 576), %.fold.split92 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 600), %.fold.split93 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 624), %.fold.split94 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 648), %.fold.split95 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 672), %.fold.split96 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 696), %.fold.split97 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 720), %.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 744), %.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 768), %.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 816), %.fold.split102 ]
+  %.lcssa38 = phi ptr [ @.str.4, %.split ], [ @.str.33, %.fold.split101 ], [ @.str.4, %.fold.split ], [ @.str.4, %.fold.split70 ], [ @.str.5, %.fold.split71 ], [ @.str.6, %.fold.split72 ], [ @.str.7, %.fold.split73 ], [ @.str.8, %.fold.split74 ], [ @.str.9, %.fold.split75 ], [ @.str.10, %.fold.split76 ], [ @.str.11, %.fold.split77 ], [ @.str.12, %.fold.split78 ], [ @.str.13, %.fold.split79 ], [ @.str.14, %.fold.split80 ], [ @.str.15, %.fold.split81 ], [ @.str.16, %.fold.split82 ], [ @.str.17, %.fold.split83 ], [ @.str.18, %.fold.split84 ], [ @.str.19, %.fold.split85 ], [ @.str.20, %.fold.split86 ], [ @.str.21, %.fold.split87 ], [ @.str.22, %.fold.split88 ], [ @.str.23, %.fold.split89 ], [ @.str.24, %.fold.split90 ], [ @.str.25, %.fold.split91 ], [ @.str.26, %.fold.split92 ], [ @.str.26, %.fold.split93 ], [ @.str.27, %.fold.split94 ], [ @.str.28, %.fold.split95 ], [ @.str.29, %.fold.split96 ], [ @.str.30, %.fold.split97 ], [ @.str.31, %.fold.split98 ], [ @.str.31, %.fold.split99 ], [ @.str.32, %.fold.split100 ], [ @.str.33, %.fold.split102 ]
   %i.o = tail call ptr @pci_dev_get(ptr noundef nonnull %1) #11
   store ptr %i.o, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 8), align 8
   %i.p = getelementptr i8, ptr %.lcssa55, i64 16
@@ -383,7 +387,6 @@ bb.d:                                             ; preds = %.split, %.fold.spli
 
 .split48.us:                                      ; preds = %bb.b, %bb.c
   %.016.i.us = phi ptr [ %i.l, %bb.c ], [ %i.h, %bb.b ]
-  %5 = getelementptr i8, ptr %i.e, i64 8
   store ptr %.016.i.us, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 8), align 8
   %i.r = getelementptr i8, ptr %i.e, i64 16
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
@@ -391,11 +394,12 @@ bb.d:                                             ; preds = %.split, %.fold.spli
   br label %bb.e
 
 thread-pre-split:                                 ; preds = %find_gmch.exit.thread.us, %.split
+  %.us-phi48 = phi ptr [ null, %.split ], [ %7, %find_gmch.exit.thread.us ]
   %.pr = load ptr, ptr @intel_private, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %thread-pre-split, %.split48.us, %bb.d
-  %i.t = phi ptr [ getelementptr inbounds nuw (i8, ptr @intel_gtt_chipsets, i64 848), %thread-pre-split ], [ %5, %.split48.us ], [ %4, %bb.d ]
+  %i.t = phi ptr [ %.us-phi48, %thread-pre-split ], [ %4, %.split48.us ], [ %.lcssa38, %bb.d ]
   %i.u = phi ptr [ %.pr, %thread-pre-split ], [ %i.s, %.split48.us ], [ %i.q, %bb.d ] ; 2 uses
   %.not27 = icmp eq ptr %i.u, null
   br i1 %.not27, label %bb.bh, label %bb.f
@@ -430,8 +434,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ac = tail call ptr @pci_dev_get(ptr noundef %0) #11
   store ptr %i.ac, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 16), align 8
   %i.ad = getelementptr i8, ptr %0, i64 200
-  %6 = load ptr, ptr %i.t, align 8
-  tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.ad, ptr noundef @.str.2, ptr noundef %6) #12
+  tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.ad, ptr noundef @.str.2, ptr noundef %i.t) #12
   br i1 %.not28, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j

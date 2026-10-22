@@ -204,25 +204,23 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load i32, ptr %i.f, align 4
   %i.h = load i32, ptr %3, align 4
   %i.i = tail call ptr @proto_tree_add_uint(ptr noundef %2, i32 noundef %i.g, ptr noundef %0, i32 noundef %i.h, i32 noundef 4, i32 noundef %i.b) ; 0 uses
-  %.not.not = icmp eq i8 %4, 0
-  br i1 %.not.not, label %bb.c, label %bb.d
+  %6 = getelementptr i8, ptr %i.e, i64 16
+  %7 = load ptr, ptr %6, align 8                  ; 2 uses
+  %.not.not = icmp eq ptr %7, null
+  %8 = getelementptr i8, ptr %1, i64 8
+  %9 = load ptr, ptr %8, align 8                  ; 2 uses
+  br i1 %.not.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %6 = getelementptr i8, ptr %i.e, i64 16
-  %7 = load ptr, ptr %6, align 16
-  %8 = getelementptr i8, ptr %1, i64 8
-  %9 = load ptr, ptr %8, align 8
-  %i.j = tail call ptr @val_to_str_ext_const(i32 noundef %i.b, ptr noundef %7, ptr noundef @.str.2007)
+  %i.j = tail call ptr @val_to_str_ext_const(i32 noundef %i.b, ptr noundef nonnull %7, ptr noundef @.str.2007)
   tail call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %9, i32 noundef 25, ptr noundef @.str.2657, ptr noundef %i.j)
   br label %bb.h
 
 bb.d:                                             ; preds = %bb.b
-  %10 = getelementptr i8, ptr %1, i64 8
-  %11 = load ptr, ptr %10, align 8
   %i.k = getelementptr i8, ptr %i.e, i64 8
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = tail call ptr @val_to_str_const(i32 noundef %i.b, ptr noundef %i.l, ptr noundef @.str.2007)
-  tail call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %11, i32 noundef 25, ptr noundef @.str.2657, ptr noundef %i.m)
+  tail call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %9, i32 noundef 25, ptr noundef @.str.2657, ptr noundef %i.m)
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.a
@@ -625,7 +623,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n, %bb.l
 define internal fastcc void @mbim_dissect_device_service_subscribe_list(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %i.b = alloca i32, align 4                      ; 8 uses
+  %i.b = alloca i32, align 4                      ; 7 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca i32, align 4                      ; 8 uses
   %4 = alloca %struct.mbim_pair_list, align 4     ; 5 uses
@@ -690,7 +688,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ag = add i32 %i.ad, %3
   %i.ah = load i32, ptr @ett_mbim_pair_list, align 4
   %i.ai = add nuw i32 %.146, 1
-  %i.aj = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %2, ptr noundef %0, i32 noundef %i.ag, i32 noundef %i.af, i32 noundef %i.ah, ptr noundef null, ptr noundef @.str.2693, i32 noundef %i.ai) ; 6 uses
+  %i.aj = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %2, ptr noundef %0, i32 noundef %i.ag, i32 noundef %i.af, i32 noundef %i.ah, ptr noundef null, ptr noundef @.str.2693, i32 noundef %i.ai) ; 5 uses
   %i.ak = load i32, ptr %i.ac, align 4
   %i.al = add i32 %i.ak, %3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -700,11 +698,11 @@ bb.e:                                             ; preds = %bb.d
   store ptr null, ptr %i.c, align 8
   %i.am = load i32, ptr @hf_mbim_event_entry_device_service_id, align 4
   %i.an = call fastcc zeroext i8 @mbim_dissect_service_id_uuid(ptr noundef %0, ptr noundef readonly %1, ptr noundef %i.aj, i32 noundef %i.am, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, i1 noundef zeroext true)
-  %.fr38.i = freeze i8 %i.an                      ; 4 uses
+  %.fr38.i = freeze i8 %i.an                      ; 3 uses
   %i.ao = load i32, ptr @hf_mbim_event_entry_cid_count, align 4
   %i.ap = load i32, ptr %i.a, align 4             ; 2 uses
   %i.aq = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.aj, i32 noundef %i.ao, ptr noundef %0, i32 noundef %i.ap, i32 noundef 4, i32 noundef -2147483648, ptr noundef nonnull %i.b) ; 0 uses
-  %i.ar = add i32 %i.ap, 4                        ; 4 uses
+  %i.ar = add i32 %i.ap, 4                        ; 3 uses
   %i.as = load i32, ptr %i.b, align 4
   %.not.i = icmp eq i32 %i.as, 0
   br i1 %.not.i, label %mbim_dissect_event_entry.exit, label %.lr.ph.i
@@ -715,41 +713,36 @@ bb.e:                                             ; preds = %bb.d
   %i.av = getelementptr i8, ptr %i.au, i64 24
   %i.aw = zext nneg i8 %.fr38.i to i64
   %i.ax = getelementptr [24 x i8], ptr @mbim_uuid_info, i64 %i.aw ; 2 uses
-  %i.ay = getelementptr i8, ptr %i.ax, i64 8
-  %i.az = getelementptr i8, ptr %i.ax, i64 16
-  br i1 %i.at, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  %i.ay = getelementptr i8, ptr %i.ax, i64 16
+  %i.az = getelementptr i8, ptr %i.ax, i64 8
+  br i1 %i.at, label %.lr.ph.split.us.split.us.i, label %.lr.ph.split.i
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  %.not.not.i = icmp eq i8 %.fr38.i, 0
-  br i1 %.not.not.i, label %.lr.ph.split.us.split.us.i, label %.lr.ph.split.us.split.i
+.lr.ph.split.us.split.us.i:                       ; preds = %.lr.ph.i, %.lr.ph.split.us.split.i
+  %.032.us.us.i = phi i32 [ %i.bg, %.lr.ph.split.us.split.i ], [ 0, %.lr.ph.i ]
+  %i.ba = phi i32 [ %i.bf, %.lr.ph.split.us.split.i ], [ %i.ar, %.lr.ph.i ] ; 3 uses
+  %i.bb = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.ba) ; 4 uses
+  %i.bc = load ptr, ptr %i.ay, align 8            ; 2 uses
+  %.not.us.i = icmp eq ptr %i.bc, null
+  %i.bd = load i32, ptr @hf_mbim_event_entry_cid, align 4
+  br i1 %.not.us.i, label %7, label %5
 
-.lr.ph.split.us.split.us.i:                       ; preds = %.lr.ph.split.us.i, %.lr.ph.split.us.split.us.i
-  %.032.us.us.i = phi i32 [ %9, %.lr.ph.split.us.split.us.i ], [ 0, %.lr.ph.split.us.i ]
-  %i.ba = phi i32 [ %8, %.lr.ph.split.us.split.us.i ], [ %i.ar, %.lr.ph.split.us.i ] ; 3 uses
-  %i.bb = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.ba) ; 3 uses
-  %i.bc = load ptr, ptr %i.az, align 16
-  %5 = load i32, ptr @hf_mbim_event_entry_cid, align 4
-  %6 = call ptr @val_to_str_ext_const(i32 noundef %i.bb, ptr noundef %i.bc, ptr noundef @.str.2007)
-  %7 = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.aj, i32 noundef %5, ptr noundef %0, i32 noundef %i.ba, i32 noundef 4, i32 noundef %i.bb, ptr noundef @.str.2658, ptr noundef %6, i32 noundef %i.bb) ; 0 uses
-  %8 = add i32 %i.ba, 4
-  %9 = add nuw i32 %.032.us.us.i, 1               ; 2 uses
-  %i.bd = load i32, ptr %i.b, align 4
-  %10 = icmp ult i32 %9, %i.bd
-  br i1 %10, label %.lr.ph.split.us.split.us.i, label %mbim_dissect_event_entry.exit, !llvm.loop !15
+5:                                                ; preds = %.lr.ph.split.us.split.us.i
+  %6 = call ptr @val_to_str_ext_const(i32 noundef %i.bb, ptr noundef nonnull %i.bc, ptr noundef @.str.2007)
+  br label %.lr.ph.split.us.split.i
 
-.lr.ph.split.us.split.i:                          ; preds = %.lr.ph.split.us.i, %.lr.ph.split.us.split.i
-  %.032.us.i = phi i32 [ %i.bg, %.lr.ph.split.us.split.i ], [ 0, %.lr.ph.split.us.i ]
-  %11 = phi i32 [ %i.bf, %.lr.ph.split.us.split.i ], [ %i.ar, %.lr.ph.split.us.i ] ; 3 uses
-  %12 = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %11) ; 3 uses
-  %13 = load i32, ptr @hf_mbim_event_entry_cid, align 4
-  %14 = load ptr, ptr %i.ay, align 8
-  %15 = call ptr @val_to_str_const(i32 noundef %12, ptr noundef %14, ptr noundef @.str.2007)
-  %i.be = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.aj, i32 noundef %13, ptr noundef %0, i32 noundef %11, i32 noundef 4, i32 noundef %12, ptr noundef @.str.2658, ptr noundef %15, i32 noundef %12) ; 0 uses
-  %i.bf = add i32 %11, 4
-  %i.bg = add nuw i32 %.032.us.i, 1               ; 2 uses
+7:                                                ; preds = %.lr.ph.split.us.split.us.i
+  %8 = load ptr, ptr %i.az, align 8
+  %9 = call ptr @val_to_str_const(i32 noundef %i.bb, ptr noundef %8, ptr noundef @.str.2007)
+  br label %.lr.ph.split.us.split.i
+
+.lr.ph.split.us.split.i:                          ; preds = %7, %5
+  %.sink.i = phi ptr [ %9, %7 ], [ %6, %5 ]
+  %i.be = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.aj, i32 noundef %i.bd, ptr noundef %0, i32 noundef %i.ba, i32 noundef 4, i32 noundef %i.bb, ptr noundef @.str.2658, ptr noundef %.sink.i, i32 noundef %i.bb) ; 0 uses
+  %i.bf = add i32 %i.ba, 4
+  %i.bg = add nuw i32 %.032.us.us.i, 1            ; 2 uses
   %i.bh = load i32, ptr %i.b, align 4
   %i.bi = icmp ult i32 %i.bg, %i.bh
-  br i1 %i.bi, label %.lr.ph.split.us.split.i, label %mbim_dissect_event_entry.exit, !llvm.loop !15
+  br i1 %i.bi, label %.lr.ph.split.us.split.us.i, label %mbim_dissect_event_entry.exit, !llvm.loop !15
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
   %i.bj = icmp eq i8 %.fr38.i, -1
@@ -781,7 +774,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cb = icmp ult i32 %i.bz, %i.ca
   br i1 %i.cb, label %.lr.ph.split.split.i, label %mbim_dissect_event_entry.exit, !llvm.loop !15
 
-mbim_dissect_event_entry.exit:                    ; preds = %.lr.ph.split.split.i, %.lr.ph.split.split.us.i, %.lr.ph.split.us.split.i, %.lr.ph.split.us.split.us.i, %bb.e
+mbim_dissect_event_entry.exit:                    ; preds = %.lr.ph.split.split.i, %.lr.ph.split.split.us.i, %.lr.ph.split.us.split.i, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -1184,7 +1177,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 define internal fastcc void @mbim_dissect_device_services_info(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %i.b = alloca i32, align 4                      ; 8 uses
+  %i.b = alloca i32, align 4                      ; 7 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca i32, align 4                      ; 8 uses
   %4 = alloca %struct.mbim_pair_list, align 4     ; 5 uses
@@ -1252,7 +1245,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = add i32 %i.ag, %3
   %i.ak = load i32, ptr @ett_mbim_pair_list, align 4
   %i.al = add nuw i32 %.150, 1
-  %i.am = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %2, ptr noundef %0, i32 noundef %i.aj, i32 noundef %i.ai, i32 noundef %i.ak, ptr noundef null, ptr noundef @.str.2693, i32 noundef %i.al) ; 8 uses
+  %i.am = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %2, ptr noundef %0, i32 noundef %i.aj, i32 noundef %i.ai, i32 noundef %i.ak, ptr noundef null, ptr noundef @.str.2693, i32 noundef %i.al) ; 7 uses
   %i.an = load i32, ptr %i.af, align 4
   %i.ao = add i32 %i.an, %3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1262,7 +1255,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr null, ptr %i.c, align 8
   %i.ap = load i32, ptr @hf_mbim_device_service_element_device_service_id, align 4
   %i.aq = call fastcc zeroext i8 @mbim_dissect_service_id_uuid(ptr noundef %0, ptr noundef readonly %1, ptr noundef %i.am, i32 noundef %i.ap, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, i1 noundef zeroext true)
-  %.fr42.i = freeze i8 %i.aq                      ; 4 uses
+  %.fr42.i = freeze i8 %i.aq                      ; 3 uses
   %i.ar = load i32, ptr %i.a, align 4             ; 4 uses
   %i.as = load i32, ptr @hf_mbim_device_service_element_dss_payload, align 4
   %i.at = load i32, ptr @ett_mbim_bitmap, align 4
@@ -1273,7 +1266,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ay = add i32 %i.ar, 8
   %i.az = load i32, ptr @hf_mbim_device_service_element_cid_count, align 4
   %i.ba = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.am, i32 noundef %i.az, ptr noundef %0, i32 noundef %i.ay, i32 noundef 4, i32 noundef -2147483648, ptr noundef nonnull %i.b) ; 0 uses
-  %i.bb = add i32 %i.ar, 12                       ; 4 uses
+  %i.bb = add i32 %i.ar, 12                       ; 3 uses
   %i.bc = load i32, ptr %i.b, align 4
   %.not.i = icmp eq i32 %i.bc, 0
   br i1 %.not.i, label %mbim_dissect_device_service_element.exit, label %.lr.ph.i
@@ -1284,41 +1277,36 @@ bb.e:                                             ; preds = %bb.d
   %i.bf = getelementptr i8, ptr %i.be, i64 24
   %i.bg = zext nneg i8 %.fr42.i to i64
   %i.bh = getelementptr [24 x i8], ptr @mbim_uuid_info, i64 %i.bg ; 2 uses
-  %i.bi = getelementptr i8, ptr %i.bh, i64 8
-  %i.bj = getelementptr i8, ptr %i.bh, i64 16
-  br i1 %i.bd, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  %i.bi = getelementptr i8, ptr %i.bh, i64 16
+  %i.bj = getelementptr i8, ptr %i.bh, i64 8
+  br i1 %i.bd, label %.lr.ph.split.us.split.us.i, label %.lr.ph.split.i
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  %.not.not.i = icmp eq i8 %.fr42.i, 0
-  br i1 %.not.not.i, label %.lr.ph.split.us.split.us.i, label %.lr.ph.split.us.split.i
+.lr.ph.split.us.split.us.i:                       ; preds = %.lr.ph.i, %.lr.ph.split.us.split.i
+  %.036.us.us.i = phi i32 [ %i.bq, %.lr.ph.split.us.split.i ], [ 0, %.lr.ph.i ]
+  %i.bk = phi i32 [ %i.bp, %.lr.ph.split.us.split.i ], [ %i.bb, %.lr.ph.i ] ; 3 uses
+  %i.bl = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.bk) ; 4 uses
+  %i.bm = load ptr, ptr %i.bi, align 8            ; 2 uses
+  %.not.us.i = icmp eq ptr %i.bm, null
+  %i.bn = load i32, ptr @hf_mbim_device_service_element_cid, align 4
+  br i1 %.not.us.i, label %7, label %5
 
-.lr.ph.split.us.split.us.i:                       ; preds = %.lr.ph.split.us.i, %.lr.ph.split.us.split.us.i
-  %.036.us.us.i = phi i32 [ %9, %.lr.ph.split.us.split.us.i ], [ 0, %.lr.ph.split.us.i ]
-  %i.bk = phi i32 [ %8, %.lr.ph.split.us.split.us.i ], [ %i.bb, %.lr.ph.split.us.i ] ; 3 uses
-  %i.bl = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.bk) ; 3 uses
-  %i.bm = load ptr, ptr %i.bj, align 16
-  %5 = load i32, ptr @hf_mbim_device_service_element_cid, align 4
-  %6 = call ptr @val_to_str_ext_const(i32 noundef %i.bl, ptr noundef %i.bm, ptr noundef @.str.2007)
-  %7 = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.am, i32 noundef %5, ptr noundef %0, i32 noundef %i.bk, i32 noundef 4, i32 noundef %i.bl, ptr noundef @.str.2658, ptr noundef %6, i32 noundef %i.bl) ; 0 uses
-  %8 = add i32 %i.bk, 4
-  %9 = add nuw i32 %.036.us.us.i, 1               ; 2 uses
-  %i.bn = load i32, ptr %i.b, align 4
-  %10 = icmp ult i32 %9, %i.bn
-  br i1 %10, label %.lr.ph.split.us.split.us.i, label %mbim_dissect_device_service_element.exit, !llvm.loop !42
+5:                                                ; preds = %.lr.ph.split.us.split.us.i
+  %6 = call ptr @val_to_str_ext_const(i32 noundef %i.bl, ptr noundef nonnull %i.bm, ptr noundef @.str.2007)
+  br label %.lr.ph.split.us.split.i
 
-.lr.ph.split.us.split.i:                          ; preds = %.lr.ph.split.us.i, %.lr.ph.split.us.split.i
-  %.036.us.i = phi i32 [ %i.bq, %.lr.ph.split.us.split.i ], [ 0, %.lr.ph.split.us.i ]
-  %11 = phi i32 [ %i.bp, %.lr.ph.split.us.split.i ], [ %i.bb, %.lr.ph.split.us.i ] ; 3 uses
-  %12 = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %11) ; 3 uses
-  %13 = load i32, ptr @hf_mbim_device_service_element_cid, align 4
-  %14 = load ptr, ptr %i.bi, align 8
-  %15 = call ptr @val_to_str_const(i32 noundef %12, ptr noundef %14, ptr noundef @.str.2007)
-  %i.bo = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.am, i32 noundef %13, ptr noundef %0, i32 noundef %11, i32 noundef 4, i32 noundef %12, ptr noundef @.str.2658, ptr noundef %15, i32 noundef %12) ; 0 uses
-  %i.bp = add i32 %11, 4
-  %i.bq = add nuw i32 %.036.us.i, 1               ; 2 uses
+7:                                                ; preds = %.lr.ph.split.us.split.us.i
+  %8 = load ptr, ptr %i.bj, align 8
+  %9 = call ptr @val_to_str_const(i32 noundef %i.bl, ptr noundef %8, ptr noundef @.str.2007)
+  br label %.lr.ph.split.us.split.i
+
+.lr.ph.split.us.split.i:                          ; preds = %7, %5
+  %.sink.i = phi ptr [ %9, %7 ], [ %6, %5 ]
+  %i.bo = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.am, i32 noundef %i.bn, ptr noundef %0, i32 noundef %i.bk, i32 noundef 4, i32 noundef %i.bl, ptr noundef @.str.2658, ptr noundef %.sink.i, i32 noundef %i.bl) ; 0 uses
+  %i.bp = add i32 %i.bk, 4
+  %i.bq = add nuw i32 %.036.us.us.i, 1            ; 2 uses
   %i.br = load i32, ptr %i.b, align 4
   %i.bs = icmp ult i32 %i.bq, %i.br
-  br i1 %i.bs, label %.lr.ph.split.us.split.i, label %mbim_dissect_device_service_element.exit, !llvm.loop !42
+  br i1 %i.bs, label %.lr.ph.split.us.split.us.i, label %mbim_dissect_device_service_element.exit, !llvm.loop !42
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
   %i.bt = icmp eq i8 %.fr42.i, -1
@@ -1350,7 +1338,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cl = icmp ult i32 %i.cj, %i.ck
   br i1 %i.cl, label %.lr.ph.split.split.i, label %mbim_dissect_device_service_element.exit, !llvm.loop !42
 
-mbim_dissect_device_service_element.exit:         ; preds = %.lr.ph.split.split.i, %.lr.ph.split.split.us.i, %.lr.ph.split.us.split.i, %.lr.ph.split.us.split.us.i, %bb.e
+mbim_dissect_device_service_element.exit:         ; preds = %.lr.ph.split.split.i, %.lr.ph.split.split.us.i, %.lr.ph.split.us.split.i, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

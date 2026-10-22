@@ -204,52 +204,52 @@ bb.h:                                             ; preds = %bb.g
   %i.u = load ptr, ptr %i.m, align 8
   %i.v = sub i32 %i.t, %i.o
   %i.w = call ptr @tvb_get_string_enc(ptr noundef %i.u, ptr noundef %0, i32 noundef %i.o, i32 noundef %i.v, i32 noundef 2) ; 10 uses
-  %i.x = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.715)
+  %i.x = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.715)
   %i.y = icmp eq i32 %i.x, 0
   br i1 %i.y, label %bb.s, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.717)
+  %i.z = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.717)
   %i.aa = icmp eq i32 %i.z, 0
   br i1 %i.aa, label %bb.s, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ab = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.719)
+  %i.ab = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.719)
   %i.ac = icmp eq i32 %i.ab, 0
   br i1 %i.ac, label %bb.s, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ad = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.721)
+  %i.ad = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.721)
   %i.ae = icmp eq i32 %i.ad, 0
   br i1 %i.ae, label %bb.s, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.af = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.723)
+  %i.af = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.723)
   %i.ag = icmp eq i32 %i.af, 0
   br i1 %i.ag, label %bb.s, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.725)
+  %i.ah = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.725)
   %i.ai = icmp eq i32 %i.ah, 0
   br i1 %i.ai, label %bb.s, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.aj = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.727)
+  %i.aj = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.727)
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.al = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.729)
+  %i.al = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.729)
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %bb.s, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.an = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.731)
+  %i.an = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.731)
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ap = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef @.str.733)
+  %i.ap = call i32 @g_ascii_strcasecmp(ptr noundef %i.w, ptr noundef nonnull @.str.733)
   %i.aq = icmp eq i32 %i.ap, 0
   br i1 %i.aq, label %bb.s, label %bb.r
 

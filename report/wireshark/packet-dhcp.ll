@@ -204,7 +204,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %dissect_netware_ip_suboption.exit
   %.09 = phi i32 [ %.0.i, %dissect_netware_ip_suboption.exit ], [ 0, %bb.a ] ; 5 uses
   %i.b = tail call i32 @tvb_reported_length(ptr noundef %0) ; 2 uses
-  %i.c = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.09) ; 6 uses
+  %i.c = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.09) ; 4 uses
   %i.d = add i32 %.09, 1                          ; 3 uses
   %.not.i = icmp ult i32 %i.d, %i.b
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -253,16 +253,15 @@ bb.f:                                             ; preds = %proto_item_set_hidd
   %i.aa = zext nneg i8 %i.c to i64
   %i.ab = getelementptr [24 x i8], ptr @dissect_netware_ip_suboption.o63_opt, i64 %i.aa ; 2 uses
   %i.ac = getelementptr i8, ptr %i.ab, i64 8
-  %i.ad = load i32, ptr %i.ac, align 8
+  %i.ad = load i32, ptr %i.ac, align 8            ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ab, i64 16
-  %i.af = load ptr, ptr %i.ae, align 8
+  %i.af = load ptr, ptr %i.ae, align 8            ; 2 uses
   %i.ag = tail call fastcc i32 @dhcp_handle_basic_types(ptr noundef %1, ptr noundef %i.o, ptr noundef %i.m, ptr noundef %0, i32 noundef %i.ad, i32 noundef %i.r, i32 noundef %i.i, ptr noundef %i.af, ptr noundef @dissect_netware_ip_suboption.default_hfs)
   %i.ah = icmp eq i32 %i.ag, 0
   br i1 %i.ah, label %bb.g, label %bb.l
 
 bb.g:                                             ; preds = %bb.f
-  %4 = add nsw i8 %i.c, -1
-  %cond.i = icmp ult i8 %4, 4
+  %cond.i = icmp eq i32 %i.ad, 2
   br i1 %cond.i, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -274,8 +273,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.g
-  %5 = icmp samesign ult i8 %i.c, 5
-  br i1 %5, label %bb.k, label %bb.l
+  %4 = icmp eq ptr %i.af, null
+  br i1 %4, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.aj = load i32, ptr @hf_dhcp_option63_value, align 4
@@ -678,12 +677,12 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.ac
 
 bb.o:                                             ; preds = %bb.m
-  %i.br = zext nneg i8 %i.as to i64               ; 2 uses
+  %i.br = zext nneg i8 %i.as to i64
   %i.bs = getelementptr [24 x i8], ptr @dissect_vendor_cablelabs_suboption.o43cablelabs_opt, i64 %i.br ; 3 uses
-  %4 = shl nuw nsw i64 1, %i.br                   ; 2 uses
-  %5 = and i64 %4, 51791391419465984
-  %.not107.i.a = icmp eq i64 %5, 0
-  br i1 %.not107.i.a, label %bb.aa, label %bb.p
+  %4 = getelementptr i8, ptr %i.bs, i64 8
+  %5 = load i32, ptr %4, align 8                  ; 2 uses
+  %.not107.i.a = icmp eq i32 %5, 0
+  br i1 %.not107.i.a, label %bb.p, label %bb.aa
 
 bb.p:                                             ; preds = %bb.o
   switch i8 %i.as, label %bb.x [
@@ -733,14 +732,13 @@ bb.w:                                             ; preds = %bb.u
   br label %bb.ac
 
 bb.x:                                             ; preds = %bb.p
-  %6 = and i64 %4, 38280590389870592
-  %.not109.not.i = icmp eq i64 %6, 0
-  br i1 %.not109.not.i, label %bb.y, label %bb.z
+  %6 = getelementptr i8, ptr %i.bs, i64 16
+  %7 = load ptr, ptr %6, align 8                  ; 2 uses
+  %.not109.not.i = icmp eq ptr %7, null
+  br i1 %.not109.not.i, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %7 = getelementptr i8, ptr %i.bs, i64 16
-  %8 = load ptr, ptr %7, align 8
-  %i.cj = load i32, ptr %8, align 4
+  %i.cj = load i32, ptr %7, align 4
   %i.ck = tail call ptr @proto_tree_add_item(ptr noundef %i.bh, i32 noundef %i.cj, ptr noundef %0, i32 noundef %i.bk, i32 noundef %i.bc, i32 noundef 0) ; 0 uses
   br label %bb.ac
 
@@ -750,11 +748,9 @@ bb.z:                                             ; preds = %bb.x
   br label %bb.ac
 
 bb.aa:                                            ; preds = %bb.o
-  %9 = getelementptr i8, ptr %i.bs, i64 8
-  %10 = load i32, ptr %9, align 8
   %i.cn = getelementptr i8, ptr %i.bs, i64 16
   %i.co = load ptr, ptr %i.cn, align 8
-  %i.cp = tail call fastcc i32 @dhcp_handle_basic_types(ptr noundef %1, ptr noundef %i.bh, ptr noundef %i.bf, ptr noundef %0, i32 noundef %10, i32 noundef %i.bk, i32 noundef %i.bc, ptr noundef %i.co, ptr noundef @dissect_vendor_cablelabs_suboption.default_hfs)
+  %i.cp = tail call fastcc i32 @dhcp_handle_basic_types(ptr noundef %1, ptr noundef %i.bh, ptr noundef %i.bf, ptr noundef %0, i32 noundef %5, i32 noundef %i.bk, i32 noundef %i.bc, ptr noundef %i.co, ptr noundef @dissect_vendor_cablelabs_suboption.default_hfs)
   %i.cq = icmp eq i32 %i.cp, 0
   br i1 %i.cq, label %bb.ab, label %bb.ac
 
@@ -1157,7 +1153,7 @@ bb.c:                                             ; preds = %bb.a
   %i.f = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1)
   %i.g = load i32, ptr @hf_dhcp_option125_cl_suboption, align 4
   %i.h = zext i8 %i.f to i32                      ; 5 uses
-  %i.i = add nuw nsw i32 %i.h, 2                  ; 7 uses
+  %i.i = add nuw nsw i32 %i.h, 2                  ; 8 uses
   %i.j = zext i8 %i.a to i32                      ; 4 uses
   %i.k = tail call ptr @val_to_str_const(i32 noundef %i.j, ptr noundef @option125_cl_suboption_vals, ptr noundef @.str.482)
   %i.l = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %2, i32 noundef %i.g, ptr noundef %0, i32 noundef 1, i32 noundef %i.i, i32 noundef %i.j, ptr noundef @.str.2067, i32 noundef %i.j, ptr noundef %i.k) ; 3 uses
@@ -1181,32 +1177,39 @@ bb.f:                                             ; preds = %bb.e
   %i.u = zext nneg i8 %i.a to i64
   %i.v = getelementptr [24 x i8], ptr @dissect_vendor_cl_suboption.o125_cl_opt, i64 %i.u ; 2 uses
   %i.w = getelementptr i8, ptr %i.v, i64 8
-  %i.x = load i32, ptr %i.w, align 8
+  %i.x = load i32, ptr %i.w, align 8              ; 2 uses
   %i.y = getelementptr i8, ptr %i.v, i64 16
-  %i.z = load ptr, ptr %i.y, align 8              ; 2 uses
+  %i.z = load ptr, ptr %i.y, align 8              ; 3 uses
   %i.aa = tail call fastcc i32 @dhcp_handle_basic_types(ptr noundef %1, ptr noundef %i.n, ptr noundef %i.l, ptr noundef %0, i32 noundef %i.x, i32 noundef 2, i32 noundef %i.h, ptr noundef %i.z, ptr noundef @dissect_vendor_cl_suboption.default_hfs)
   %i.ab = icmp eq i32 %i.aa, 0
   br i1 %i.ab, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
-  switch i8 %i.a, label %bb.j [
-    i8 0, label %bb.h
-    i8 5, label %bb.i
-  ]
+  %cond = icmp eq i32 %i.x, 0
+  %.not = icmp eq ptr %i.z, null                  ; 2 uses
+  br i1 %cond, label %bb.h, label %5
 
 bb.h:                                             ; preds = %bb.g
-  %i.ac = load i32, ptr @hf_dhcp_option125_value, align 4
+  %hf_dhcp_option125_value. = select i1 %.not, ptr @hf_dhcp_option125_value, ptr %i.z
+  %i.ac = load i32, ptr %hf_dhcp_option125_value., align 4
   %i.ad = tail call ptr @proto_tree_add_item(ptr noundef %i.n, i32 noundef %i.ac, ptr noundef %0, i32 noundef 2, i32 noundef %i.h, i32 noundef 0) ; 0 uses
-  br label %bb.j
+  %cond1 = icmp eq i8 %i.a, 5
+  br i1 %cond1, label %4, label %bb.j
 
-bb.i:                                             ; preds = %bb.g
-  %i.ae = load i32, ptr %i.z, align 4
-  %i.af = tail call ptr @proto_tree_add_item(ptr noundef %i.n, i32 noundef %i.ae, ptr noundef %0, i32 noundef 2, i32 noundef %i.h, i32 noundef 0) ; 0 uses
+4:                                                ; preds = %bb.h
   tail call fastcc void @dissect_docsis_cm_cap(ptr noundef %1, ptr noundef %i.n, ptr noundef %0, i32 noundef %i.i, i1 noundef zeroext true)
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.h, %bb.e, %bb.i, %bb.f, %bb.g, %bb.d, %bb.b
-  %.0 = phi i32 [ 1, %bb.b ], [ 2, %bb.d ], [ %i.i, %bb.g ], [ %i.i, %bb.f ], [ %i.i, %bb.i ], [ %i.i, %bb.h ], [ %i.i, %bb.e ]
+5:                                                ; preds = %bb.g
+  br i1 %.not, label %bb.i, label %bb.j
+
+bb.i:                                             ; preds = %5
+  %i.ae = load i32, ptr @hf_dhcp_option125_value, align 4
+  %i.af = tail call ptr @proto_tree_add_item(ptr noundef %i.n, i32 noundef %i.ae, ptr noundef %0, i32 noundef 2, i32 noundef %i.h, i32 noundef 0) ; 0 uses
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.e, %bb.h, %4, %bb.i, %5, %bb.f, %bb.d, %bb.b
+  %.0 = phi i32 [ 1, %bb.b ], [ 2, %bb.d ], [ %i.i, %bb.f ], [ %i.i, %5 ], [ %i.i, %bb.i ], [ %i.i, %4 ], [ %i.i, %bb.h ], [ %i.i, %bb.e ]
   ret i32 %.0
 }
 
@@ -1214,7 +1217,7 @@ bb.j:                                             ; preds = %bb.h, %bb.e, %bb.i,
 define internal range(i32 1, 258) i32 @dissect_vendor_tr111_suboption(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 5 uses
+  %i.b = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 4 uses
   %i.c = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 1)
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %bb.b, label %bb.c
@@ -1227,13 +1230,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.g = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1)
   %i.h = load i32, ptr @hf_dhcp_option125_tr111_suboption, align 4
-  %i.i = zext i8 %i.g to i32                      ; 7 uses
-  %i.j = add nuw nsw i32 %i.i, 2                  ; 6 uses
+  %i.i = zext i8 %i.g to i32                      ; 9 uses
+  %i.j = add nuw nsw i32 %i.i, 2                  ; 8 uses
   %i.k = zext i8 %i.b to i32                      ; 4 uses
   %i.l = tail call ptr @val_to_str_const(i32 noundef %i.k, ptr noundef @option125_tr111_suboption_vals, ptr noundef @.str.482)
   %i.m = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %2, i32 noundef %i.h, ptr noundef %0, i32 noundef 1, i32 noundef %i.j, i32 noundef %i.k, ptr noundef @.str.2067, i32 noundef %i.k, ptr noundef %i.l) ; 3 uses
   %i.n = load i32, ptr @ett_dhcp_option125_tr111_suboption, align 4
-  %i.o = tail call ptr @proto_item_add_subtree(ptr noundef %i.m, i32 noundef %i.n) ; 4 uses
+  %i.o = tail call ptr @proto_item_add_subtree(ptr noundef %i.m, i32 noundef %i.n) ; 6 uses
   %i.p = load i32, ptr @hf_dhcp_suboption_length, align 4
   %i.q = tail call ptr @proto_tree_add_item(ptr noundef %i.o, i32 noundef %i.p, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.r = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 2)
@@ -1271,25 +1274,34 @@ bb.h:                                             ; preds = %proto_item_set_hidd
   %i.ac = zext nneg i8 %i.b to i64
   %i.ad = getelementptr [24 x i8], ptr @dissect_vendor_tr111_suboption.o125_tr111_opt, i64 %i.ac ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
-  %i.af = load i32, ptr %i.ae, align 8
+  %i.af = load i32, ptr %i.ae, align 8            ; 2 uses
   %i.ag = getelementptr i8, ptr %i.ad, i64 16
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 5 uses
   %i.ai = tail call fastcc i32 @dhcp_handle_basic_types(ptr noundef %1, ptr noundef %i.o, ptr noundef %i.m, ptr noundef %0, i32 noundef %i.af, i32 noundef 2, i32 noundef %i.i, ptr noundef %i.ah, ptr noundef @dissect_vendor_tr111_suboption.default_hfs)
   %i.aj = icmp eq i32 %i.ai, 0
-  br i1 %i.aj, label %bb.i, label %bb.l
+  br i1 %i.aj, label %4, label %bb.l
 
-bb.i:                                             ; preds = %bb.h
-  switch i8 %i.b, label %bb.l [
-    i8 0, label %bb.j
-    i8 1, label %bb.k
+4:                                                ; preds = %bb.h
+  switch i32 %i.af, label %8 [
+    i32 0, label %5
+    i32 18, label %bb.k
   ]
 
-bb.j:                                             ; preds = %bb.i
+5:                                                ; preds = %4
+  %.not = icmp eq ptr %i.ah, null
+  br i1 %.not, label %bb.j, label %bb.i
+
+bb.i:                                             ; preds = %5
+  %6 = load i32, ptr %i.ah, align 4
+  %7 = tail call ptr @proto_tree_add_item(ptr noundef %i.o, i32 noundef %6, ptr noundef %0, i32 noundef 2, i32 noundef %i.i, i32 noundef 0) ; 0 uses
+  br label %bb.l
+
+bb.j:                                             ; preds = %5
   %i.ak = load i32, ptr @hf_dhcp_option125_value, align 4
   %i.al = tail call ptr @proto_tree_add_item(ptr noundef %i.o, i32 noundef %i.ak, ptr noundef %0, i32 noundef 2, i32 noundef %i.i, i32 noundef 0) ; 0 uses
   br label %bb.l
 
-bb.k:                                             ; preds = %bb.i
+bb.k:                                             ; preds = %4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.am = call zeroext i1 @tvb_get_string_uint(ptr noundef %0, i32 noundef 2, i32 noundef %i.i, i32 noundef 33554432, ptr noundef nonnull %i.a, ptr noundef null) ; 0 uses
   %i.an = load i32, ptr %i.ah, align 4
@@ -1298,8 +1310,17 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %bb.l
 
-bb.l:                                             ; preds = %proto_item_set_hidden.exit, %bb.j, %bb.k, %bb.h, %bb.i, %bb.d, %bb.b
-  %.0 = phi i32 [ 1, %bb.b ], [ 2, %bb.d ], [ %i.j, %bb.i ], [ %i.j, %bb.h ], [ %i.j, %bb.k ], [ %i.j, %bb.j ], [ %i.j, %proto_item_set_hidden.exit ]
+8:                                                ; preds = %4
+  %9 = icmp eq ptr %i.ah, null
+  br i1 %9, label %10, label %bb.l
+
+10:                                               ; preds = %8
+  %11 = load i32, ptr @hf_dhcp_option125_value, align 4
+  %12 = tail call ptr @proto_tree_add_item(ptr noundef %i.o, i32 noundef %11, ptr noundef %0, i32 noundef 2, i32 noundef %i.i, i32 noundef 0) ; 0 uses
+  br label %bb.l
+
+bb.l:                                             ; preds = %proto_item_set_hidden.exit, %bb.j, %bb.i, %8, %10, %bb.k, %bb.h, %bb.d, %bb.b
+  %.0 = phi i32 [ 1, %bb.b ], [ 2, %bb.d ], [ %i.j, %bb.h ], [ %i.j, %bb.k ], [ %i.j, %10 ], [ %i.j, %8 ], [ %i.j, %bb.i ], [ %i.j, %bb.j ], [ %i.j, %proto_item_set_hidden.exit ]
   ret i32 %.0
 }
 

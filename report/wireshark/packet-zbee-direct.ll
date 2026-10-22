@@ -204,58 +204,58 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden void @proto_reg_handoff_zb_direct() local_unnamed_addr #0 {
 bb.a:
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.75, ptr noundef @.str.76, i1 noundef zeroext false)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.75, ptr noundef @.str.76, i1 noundef zeroext false)
   %i.a = load i32, ptr @proto_zb_direct, align 4
   %i.b = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_dump_info, i32 noundef %i.a, ptr noundef null, ptr noundef @.str.76)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.75, ptr noundef %i.b)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.77, ptr noundef @.str.78, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.75, ptr noundef %i.b)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.77, ptr noundef @.str.78, i1 noundef zeroext false)
   %i.c = load i32, ptr @proto_zb_direct, align 4
   %i.d = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_secur_c25519_aesmmo, i32 noundef %i.c, ptr noundef null, ptr noundef @.str.78)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.77, ptr noundef %i.d)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.79, ptr noundef @.str.80, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.77, ptr noundef %i.d)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.79, ptr noundef @.str.80, i1 noundef zeroext false)
   %i.e = load i32, ptr @proto_zb_direct, align 4
   %i.f = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_secur_c25519_sha256, i32 noundef %i.e, ptr noundef null, ptr noundef @.str.80)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.79, ptr noundef %i.f)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.81, ptr noundef @.str.82, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.79, ptr noundef %i.f)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.81, ptr noundef @.str.82, i1 noundef zeroext false)
   %i.g = load i32, ptr @proto_zb_direct, align 4
   %i.h = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_secur_p256, i32 noundef %i.g, ptr noundef null, ptr noundef @.str.82)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.81, ptr noundef %i.h)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.83, ptr noundef @.str.84, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.81, ptr noundef %i.h)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.83, ptr noundef @.str.84, i1 noundef zeroext false)
   %i.i = load i32, ptr @proto_zb_direct, align 4
   %i.j = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_formation, i32 noundef %i.i, ptr noundef null, ptr noundef @.str.84)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.83, ptr noundef %i.j)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.85, ptr noundef @.str.86, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.83, ptr noundef %i.j)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.85, ptr noundef @.str.86, i1 noundef zeroext false)
   %i.k = load i32, ptr @proto_zb_direct, align 4
   %i.l = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_join, i32 noundef %i.k, ptr noundef null, ptr noundef @.str.86)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.85, ptr noundef %i.l)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.87, ptr noundef @.str.88, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.85, ptr noundef %i.l)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.87, ptr noundef @.str.88, i1 noundef zeroext false)
   %i.m = load i32, ptr @proto_zb_direct, align 4
   %i.n = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_permit_join, i32 noundef %i.m, ptr noundef null, ptr noundef @.str.88)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.87, ptr noundef %i.n)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.89, ptr noundef @.str.90, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.87, ptr noundef %i.n)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.89, ptr noundef @.str.90, i1 noundef zeroext false)
   %i.o = load i32, ptr @proto_zb_direct, align 4
   %i.p = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_leave, i32 noundef %i.o, ptr noundef null, ptr noundef @.str.90)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.89, ptr noundef %i.p)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.91, ptr noundef @.str.92, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.89, ptr noundef %i.p)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.91, ptr noundef @.str.92, i1 noundef zeroext false)
   %i.q = load i32, ptr @proto_zb_direct, align 4
   %i.r = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_status, i32 noundef %i.q, ptr noundef null, ptr noundef @.str.92)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.91, ptr noundef %i.r)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.93, ptr noundef @.str.94, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.91, ptr noundef %i.r)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.93, ptr noundef @.str.94, i1 noundef zeroext false)
   %i.s = load i32, ptr @proto_zb_direct, align 4
   %i.t = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_manage_joiners, i32 noundef %i.s, ptr noundef null, ptr noundef @.str.94)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.93, ptr noundef %i.t)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.95, ptr noundef @.str.96, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.93, ptr noundef %i.t)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.95, ptr noundef @.str.96, i1 noundef zeroext false)
   %i.u = load i32, ptr @proto_zb_direct, align 4
   %i.v = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_identify, i32 noundef %i.u, ptr noundef null, ptr noundef @.str.96)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.95, ptr noundef %i.v)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.97, ptr noundef @.str.98, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.95, ptr noundef %i.v)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.97, ptr noundef @.str.98, i1 noundef zeroext false)
   %i.w = load i32, ptr @proto_zb_direct, align 4
   %i.x = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_finding_binding, i32 noundef %i.w, ptr noundef null, ptr noundef @.str.98)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.97, ptr noundef %i.x)
-  tail call void @bluetooth_add_custom_uuid(ptr noundef @.str.99, ptr noundef @.str.100, i1 noundef zeroext false)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.97, ptr noundef %i.x)
+  tail call void @bluetooth_add_custom_uuid(ptr noundef nonnull @.str.99, ptr noundef @.str.100, i1 noundef zeroext false)
   %i.y = load i32, ptr @proto_zb_direct, align 4
   %i.z = tail call ptr @create_dissector_handle_with_name_and_description(ptr noundef @dissect_zb_direct_tunneling, i32 noundef %i.y, ptr noundef null, ptr noundef @.str.100)
-  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef @.str.99, ptr noundef %i.z)
+  tail call void @dissector_add_string(ptr noundef @.str.101, ptr noundef nonnull @.str.99, ptr noundef %i.z)
   %i.aa = tail call ptr @find_dissector(ptr noundef @.str.102)
   store ptr %i.aa, ptr @zbee_nwk_handle, align 8
   ret void

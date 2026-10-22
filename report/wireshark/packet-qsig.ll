@@ -203,15 +203,29 @@ bb.t:                                             ; preds = %bb.s
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.bf, ptr noundef @.str.2044, ptr noundef nonnull %i.bg)
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.s, %bb.t
+bb.u:                                             ; preds = %bb.t, %bb.s
   %i.bh = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %i.aj
   %i.bi = getelementptr i8, ptr %i.bh, i64 8
-  %i.bj = load ptr, ptr %i.bi, align 8
-  %4 = call i32 %i.bj(ptr noundef %0, ptr noundef %1, ptr noundef %i.as, ptr noundef null)
+  %i.bj = load ptr, ptr %i.bi, align 8            ; 2 uses
+  %.not74 = icmp eq ptr %i.bj, null
+  br i1 %.not74, label %6, label %4
+
+4:                                                ; preds = %bb.u
+  %5 = call i32 %i.bj(ptr noundef %0, ptr noundef %1, ptr noundef %i.as, ptr noundef null)
   br label %get_op.exit.thread
 
-get_op.exit.thread:                               ; preds = %bb.n, %bb.h, %bb.k, %bb.j, %get_op.exit79, %bb.u, %get_op.exit, %bb.e, %bb.d, %bb.a
-  %.060 = phi i32 [ 0, %bb.d ], [ 0, %bb.a ], [ 0, %get_op.exit ], [ 0, %bb.e ], [ %4, %bb.u ], [ 0, %bb.k ], [ 0, %bb.h ], [ 0, %get_op.exit79 ], [ 0, %bb.j ], [ 0, %bb.n ]
+6:                                                ; preds = %bb.u
+  %7 = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 0)
+  %.not75 = icmp eq i32 %7, 0
+  br i1 %.not75, label %get_op.exit.thread, label %8
+
+8:                                                ; preds = %6
+  %9 = call ptr @proto_tree_add_expert_remaining(ptr noundef %2, ptr noundef %1, ptr noundef @ei_qsig_unsupported_error_type, ptr noundef %0, i32 noundef 0) ; 0 uses
+  %10 = call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef 0)
+  br label %get_op.exit.thread
+
+get_op.exit.thread:                               ; preds = %bb.n, %bb.h, %bb.k, %bb.j, %get_op.exit79, %4, %8, %6, %get_op.exit, %bb.e, %bb.d, %bb.a
+  %.060 = phi i32 [ 0, %bb.d ], [ 0, %bb.a ], [ 0, %get_op.exit ], [ 0, %bb.e ], [ %5, %4 ], [ %10, %8 ], [ 0, %6 ], [ 0, %get_op.exit79 ], [ 0, %bb.h ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %.060
 }

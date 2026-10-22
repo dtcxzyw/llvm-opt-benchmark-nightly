@@ -205,17 +205,25 @@ _ZN4llvm9StringRefC2EPKc.exit.i.i.a:              ; preds = %bb.e, %bb.c
   %.02127.i.i = phi i8 [ %i.u, %bb.c ], [ %.223.i.i, %bb.e ] ; 2 uses
   %.02426.i.i = phi i64 [ 0, %bb.c ], [ %i.ah, %bb.e ] ; 3 uses
   %gep.i.i = getelementptr [24 x i8], ptr @_ZN4llvm3sys7unicodeL15HangulSyllablesE, i64 %.02426.i.i
-  %i.ab = load ptr, ptr %gep.i.i, align 8, !tbaa !17 ; 2 uses
-  %7 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ab) #17 ; 2 uses
-  %8 = trunc i64 %7 to i32
-  %.not.i.i = icmp slt i32 %.02028.i.i, %8
+  %i.ab = load ptr, ptr %gep.i.i, align 8, !tbaa !17 ; 3 uses
+  %.not.i.i.i = icmp eq ptr %i.ab, null
+  br i1 %.not.i.i.i, label %_ZN4llvm9StringRefC2EPKc.exit.i.i, label %7
+
+7:                                                ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i.i.a
+  %8 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ab) #17
+  br label %_ZN4llvm9StringRefC2EPKc.exit.i.i
+
+_ZN4llvm9StringRefC2EPKc.exit.i.i:                ; preds = %7, %_ZN4llvm9StringRefC2EPKc.exit.i.i.a
+  %.sroa.0.0.i.i.i = phi i64 [ %8, %7 ], [ 0, %_ZN4llvm9StringRefC2EPKc.exit.i.i.a ] ; 2 uses
+  %9 = trunc i64 %.sroa.0.0.i.i.i to i32
+  %.not.i.i = icmp slt i32 %.02028.i.i, %9
   br i1 %.not.i.i, label %bb.d, label %bb.e
 
-bb.d:                                             ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i.i.a
+bb.d:                                             ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #17
   store i8 %i.u, ptr %i.k, align 1, !tbaa !14
-  %i.ac = call fastcc noundef zeroext i1 @_ZN4llvm3sys7unicodeL10startsWithENS_9StringRefES2_bRmRcb(ptr %i.s, i64 %i.t, ptr nonnull %i.ab, i64 %7, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull align 1 dereferenceable(1) %i.k, i1 noundef zeroext false) ; 3 uses
+  %i.ac = call fastcc noundef zeroext i1 @_ZN4llvm3sys7unicodeL10startsWithENS_9StringRefES2_bRmRcb(ptr %i.s, i64 %i.t, ptr %i.ab, i64 %.sroa.0.0.i.i.i, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull align 1 dereferenceable(1) %i.k, i1 noundef zeroext false) ; 3 uses
   %i.ad = load i64, ptr %i.j, align 8
   %i.ae = trunc i64 %i.ad to i32
   %i.af = trunc i64 %.02426.i.i to i32
@@ -227,10 +235,10 @@ bb.d:                                             ; preds = %_ZN4llvm9StringRefC
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #17
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %_ZN4llvm9StringRefC2EPKc.exit.i.i.a
-  %.1.i = phi i32 [ %.2.i, %bb.d ], [ %.0.i, %_ZN4llvm9StringRefC2EPKc.exit.i.i.a ] ; 4 uses
-  %.223.i.i = phi i8 [ %.122.i.i, %bb.d ], [ %.02127.i.i, %_ZN4llvm9StringRefC2EPKc.exit.i.i.a ] ; 2 uses
-  %.2.i.i = phi i32 [ %.1.i.i, %bb.d ], [ %.02028.i.i, %_ZN4llvm9StringRefC2EPKc.exit.i.i.a ] ; 3 uses
+bb.e:                                             ; preds = %bb.d, %_ZN4llvm9StringRefC2EPKc.exit.i.i
+  %.1.i = phi i32 [ %.2.i, %bb.d ], [ %.0.i, %_ZN4llvm9StringRefC2EPKc.exit.i.i ] ; 4 uses
+  %.223.i.i = phi i8 [ %.122.i.i, %bb.d ], [ %.02127.i.i, %_ZN4llvm9StringRefC2EPKc.exit.i.i ] ; 2 uses
+  %.2.i.i = phi i32 [ %.1.i.i, %bb.d ], [ %.02028.i.i, %_ZN4llvm9StringRefC2EPKc.exit.i.i ] ; 3 uses
   %i.ah = add nuw nsw i64 %.02426.i.i, 1          ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ah, 19
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %_ZN4llvm9StringRefC2EPKc.exit.i.i.a, !llvm.loop !57
@@ -251,17 +259,25 @@ _ZN4llvm9StringRefC2EPKc.exit.i39.i.a:            ; preds = %bb.g, %._crit_edge.
   %.02127.i35.i = phi i8 [ %i.y, %._crit_edge.i.i ], [ %.223.i42.i, %bb.g ] ; 2 uses
   %.02426.i36.i = phi i64 [ 0, %._crit_edge.i.i ], [ %i.au, %bb.g ] ; 3 uses
   %gep.i37.i = getelementptr [24 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm3sys7unicodeL15HangulSyllablesE, i64 8), i64 %.02426.i36.i
-  %i.ao = load ptr, ptr %gep.i37.i, align 8, !tbaa !17 ; 2 uses
-  %9 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ao) #17 ; 2 uses
-  %10 = trunc i64 %9 to i32
-  %.not.i41.i = icmp slt i32 %.02028.i34.i, %10
+  %i.ao = load ptr, ptr %gep.i37.i, align 8, !tbaa !17 ; 3 uses
+  %.not.i.i38.i = icmp eq ptr %i.ao, null
+  br i1 %.not.i.i38.i, label %_ZN4llvm9StringRefC2EPKc.exit.i39.i, label %10
+
+10:                                               ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a
+  %11 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ao) #17
+  br label %_ZN4llvm9StringRefC2EPKc.exit.i39.i
+
+_ZN4llvm9StringRefC2EPKc.exit.i39.i:              ; preds = %10, %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a
+  %.sroa.0.0.i.i40.i = phi i64 [ %11, %10 ], [ 0, %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a ] ; 2 uses
+  %12 = trunc i64 %.sroa.0.0.i.i40.i to i32
+  %.not.i41.i = icmp slt i32 %.02028.i34.i, %12
   br i1 %.not.i41.i, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a
+bb.f:                                             ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i39.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #17
   store i8 %i.y, ptr %i.i, align 1, !tbaa !14
-  %i.ap = call fastcc noundef zeroext i1 @_ZN4llvm3sys7unicodeL10startsWithENS_9StringRefES2_bRmRcb(ptr %i.z, i64 %i.aa, ptr nonnull %i.ao, i64 %9, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 1 dereferenceable(1) %i.i, i1 noundef zeroext false) ; 3 uses
+  %i.ap = call fastcc noundef zeroext i1 @_ZN4llvm3sys7unicodeL10startsWithENS_9StringRefES2_bRmRcb(ptr %i.z, i64 %i.aa, ptr %i.ao, i64 %.sroa.0.0.i.i40.i, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 1 dereferenceable(1) %i.i, i1 noundef zeroext false) ; 3 uses
   %i.aq = load i64, ptr %i.h, align 8
   %i.ar = trunc i64 %i.aq to i32
   %i.as = trunc i64 %.02426.i36.i to i32
@@ -273,10 +289,10 @@ bb.f:                                             ; preds = %_ZN4llvm9StringRefC
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #17
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a
-  %.1127.i = phi i32 [ %.2128.i, %bb.f ], [ %.0126.i, %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a ] ; 4 uses
-  %.223.i42.i = phi i8 [ %.122.i47.i, %bb.f ], [ %.02127.i35.i, %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a ] ; 2 uses
-  %.2.i43.i = phi i32 [ %.1.i48.i, %bb.f ], [ %.02028.i34.i, %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a ] ; 3 uses
+bb.g:                                             ; preds = %bb.f, %_ZN4llvm9StringRefC2EPKc.exit.i39.i
+  %.1127.i = phi i32 [ %.2128.i, %bb.f ], [ %.0126.i, %_ZN4llvm9StringRefC2EPKc.exit.i39.i ] ; 4 uses
+  %.223.i42.i = phi i8 [ %.122.i47.i, %bb.f ], [ %.02127.i35.i, %_ZN4llvm9StringRefC2EPKc.exit.i39.i ] ; 2 uses
+  %.2.i43.i = phi i32 [ %.1.i48.i, %bb.f ], [ %.02028.i34.i, %_ZN4llvm9StringRefC2EPKc.exit.i39.i ] ; 3 uses
   %i.au = add nuw nsw i64 %.02426.i36.i, 1        ; 2 uses
   %exitcond.not.i44.i = icmp eq i64 %i.au, 21
   br i1 %exitcond.not.i44.i, label %._crit_edge.i45.i, label %_ZN4llvm9StringRefC2EPKc.exit.i39.i.a, !llvm.loop !57
@@ -300,17 +316,25 @@ bb.g:                                             ; preds = %bb.f, %_ZN4llvm9Str
   %.02028.i54.i = phi i32 [ -1, %._crit_edge.i45.i ], [ %.2.i63.i, %bb.i ] ; 3 uses
   %.02426.i56.i = phi i64 [ 0, %._crit_edge.i45.i ], [ %i.bh, %bb.i ] ; 3 uses
   %gep.i57.i = getelementptr [24 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm3sys7unicodeL15HangulSyllablesE, i64 16), i64 %.02426.i56.i
-  %i.bc = load ptr, ptr %gep.i57.i, align 8, !tbaa !17 ; 2 uses
-  %11 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bc) #17 ; 2 uses
-  %12 = trunc i64 %11 to i32
-  %.not.i61.i = icmp slt i32 %.02028.i54.i, %12
+  %i.bc = load ptr, ptr %gep.i57.i, align 8, !tbaa !17 ; 3 uses
+  %.not.i.i58.i = icmp eq ptr %i.bc, null
+  br i1 %.not.i.i58.i, label %_ZN4llvm9StringRefC2EPKc.exit.i59.i, label %13
+
+13:                                               ; preds = %.lr.ph.i53.i
+  %14 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bc) #17
+  br label %_ZN4llvm9StringRefC2EPKc.exit.i59.i
+
+_ZN4llvm9StringRefC2EPKc.exit.i59.i:              ; preds = %13, %.lr.ph.i53.i
+  %.sroa.0.0.i.i60.i = phi i64 [ %14, %13 ], [ 0, %.lr.ph.i53.i ] ; 2 uses
+  %15 = trunc i64 %.sroa.0.0.i.i60.i to i32
+  %.not.i61.i = icmp slt i32 %.02028.i54.i, %15
   br i1 %.not.i61.i, label %bb.h, label %bb.i
 
-bb.h:                                             ; preds = %.lr.ph.i53.i
+bb.h:                                             ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i59.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #17
   store i8 %i.al, ptr %i.g, align 1, !tbaa !14
-  %i.bd = call fastcc noundef zeroext i1 @_ZN4llvm3sys7unicodeL10startsWithENS_9StringRefES2_bRmRcb(ptr %i.am, i64 %i.an, ptr nonnull %i.bc, i64 %11, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 1 dereferenceable(1) %i.g, i1 noundef zeroext false) ; 2 uses
+  %i.bd = call fastcc noundef zeroext i1 @_ZN4llvm3sys7unicodeL10startsWithENS_9StringRefES2_bRmRcb(ptr %i.am, i64 %i.an, ptr %i.bc, i64 %.sroa.0.0.i.i60.i, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 1 dereferenceable(1) %i.g, i1 noundef zeroext false) ; 2 uses
   %i.be = load i64, ptr %i.f, align 8
   %i.bf = trunc i64 %i.be to i32
   %i.bg = trunc i64 %.02426.i56.i to i32
@@ -320,9 +344,9 @@ bb.h:                                             ; preds = %.lr.ph.i53.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #17
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %.lr.ph.i53.i
-  %.1130.i = phi i32 [ %.2131.i, %bb.h ], [ %.0129.i, %.lr.ph.i53.i ] ; 4 uses
-  %.2.i63.i = phi i32 [ %.1.i68.i, %bb.h ], [ %.02028.i54.i, %.lr.ph.i53.i ] ; 3 uses
+bb.i:                                             ; preds = %bb.h, %_ZN4llvm9StringRefC2EPKc.exit.i59.i
+  %.1130.i = phi i32 [ %.2131.i, %bb.h ], [ %.0129.i, %_ZN4llvm9StringRefC2EPKc.exit.i59.i ] ; 4 uses
+  %.2.i63.i = phi i32 [ %.1.i68.i, %bb.h ], [ %.02028.i54.i, %_ZN4llvm9StringRefC2EPKc.exit.i59.i ] ; 3 uses
   %i.bh = add nuw nsw i64 %.02426.i56.i, 1        ; 2 uses
   %exitcond.not.i64.i = icmp eq i64 %i.bh, 28
   br i1 %exitcond.not.i64.i, label %._crit_edge.i65.i, label %.lr.ph.i53.i, !llvm.loop !57

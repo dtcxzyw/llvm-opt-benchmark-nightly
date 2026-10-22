@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.en = fmul <4 x float> %i.em, splat (float 5.000000e-01)
   store <4 x float> %i.en, ptr %i.z, align 16, !tbaa !17, !alias.scope !199
   store <4 x float> %i.ej, ptr %i.ab, align 16, !tbaa !17, !alias.scope !200
-  %i.eo = add i64 %.020, 4                        ; 2 uses
+  %i.eo = add nuw i64 %.020, 4                    ; 2 uses
   %i.ep = icmp ult i64 %i.eo, %4
   br i1 %i.ep, label %bb.b, label %._crit_edge, !llvm.loop !189
 }
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.dp = fmul <8 x float> %i.do, splat (float 5.000000e-01)
   store <8 x float> %i.dp, ptr %i.z, align 32, !tbaa !17, !alias.scope !278
   store <8 x float> %i.dl, ptr %i.ab, align 32, !tbaa !17, !alias.scope !279
-  %i.dq = add i64 %.020, 8                        ; 2 uses
+  %i.dq = add nuw i64 %.020, 8                    ; 2 uses
   %i.dr = icmp ult i64 %i.dq, %4
   br i1 %i.dr, label %bb.b, label %._crit_edge, !llvm.loop !268
 }
@@ -1010,7 +1010,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.fu = fmul <4 x float> %i.ft, splat (float 5.000000e-01)
   store <4 x float> %i.fu, ptr %i.z, align 16, !tbaa !17, !alias.scope !357
   store <4 x float> %i.fq, ptr %i.ab, align 16, !tbaa !17, !alias.scope !358
-  %i.fv = add i64 %.020, 4                        ; 2 uses
+  %i.fv = add nuw i64 %.020, 4                    ; 2 uses
   %i.fw = icmp ult i64 %i.fv, %4
   br i1 %i.fw, label %bb.b, label %._crit_edge, !llvm.loop !347
 }

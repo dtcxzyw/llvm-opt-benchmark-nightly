@@ -205,7 +205,7 @@ _ZN5ImGui12SetWindowPosEP11ImGuiWindowRK6ImVec2i.exit: ; preds = %_ZN5ImGui20Mar
   %i.akf = fcmp oge <2 x float> %i.akd, %i.ake
   %i.akg = select <2 x i1> %i.akf, <2 x float> %i.akd, <2 x float> %i.ake ; 2 uses
   %i.akh = fadd <2 x float> %i.aka, %i.akg        ; 4 uses
-  %i.aki = fsub <2 x float> %i.akc, %i.akg        ; 4 uses
+  %i.aki = fsub <2 x float> %i.akc, %i.akg        ; 5 uses
   %not..0375.shrunk = xor i1 %.0375.shrunk, true
   %brmerge472.not = select i1 %not..0375.shrunk, i1 %.not416, i1 false
   %i.akj = extractelement <2 x float> %i.aju, i64 0
@@ -400,6 +400,8 @@ bb.gz:                                            ; preds = %bb.gy
   %i.aoj = fneg float %i.ann
   %i.aok = bitcast <2 x float> %i.aej to i64
   %wide.trip.count = zext nneg i32 %i.alz to i64
+  %38 = extractelement <2 x float> %i.aki, i64 0  ; 2 uses
+  %39 = extractelement <2 x float> %i.aki, i64 1  ; 2 uses
   %i.aol = insertelement <2 x float> poison, float %i.aoj, i64 0
   %i.aom = shufflevector <2 x float> %i.aol, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aon = insertelement <2 x float> poison, float %i.anq, i64 0
@@ -419,7 +421,7 @@ bb.gz:                                            ; preds = %bb.gy
   br i1 %.not249.i, label %bb.hr, label %bb.hq
 
 bb.ha:                                            ; preds = %.lr.ph, %bb.hp
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.hp ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.hp ] ; 8 uses
   %.0232.i1010 = phi i32 [ 0, %.lr.ph ], [ %.1.i, %bb.hp ] ; 4 uses
   %i.aou = phi <2 x float> [ splat (float f0x7F7FFFFF), %.lr.ph ], [ %i.are, %bb.hp ] ; 2 uses
   %i.aov = getelementptr inbounds nuw [24 x i8], ptr @_ZL15resize_grip_def, i64 %indvars.iv ; 2 uses
@@ -431,7 +433,7 @@ bb.ha:                                            ; preds = %.lr.ph, %bb.hp
   %i.aoz = fadd <2 x float> %i.aox, %i.aoy
   %i.apa = fsub <2 x float> %i.aoz, %i.aox
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #35
-  %i.apb = load <2 x float>, ptr %i.aov, align 8, !tbaa !86 ; 4 uses
+  %i.apb = load <2 x float>, ptr %i.aov, align 8, !tbaa !86 ; 5 uses
   %i.apc = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.apa, <2 x float> %i.apb, <2 x float> %i.aox) ; 2 uses
   %i.apd = load <2 x float>, ptr %i.aow, align 8, !tbaa !86 ; 3 uses
   %i.ape = fmul <2 x float> %i.aoo, %i.apd        ; 3 uses
@@ -494,38 +496,47 @@ bb.hh:                                            ; preds = %bb.hg
 bb.hi:                                            ; preds = %bb.hg
   %i.aqc = select i1 %.not260.i, float %i.aor, float f0xFF7FFFFF
   %i.aqd = icmp samesign ult i64 %indvars.iv, 2
-  br i1 %i.aqd, label %bb.hk, label %bb.hj
+  br i1 %i.aqd, label %.thread1188, label %bb.hj
 
-bb.hj:                                            ; preds = %bb.hi
-  %i.aqe = and i32 %i.apo, 2147483646             ; 2 uses
-  %i.aqf = icmp eq i32 %i.aqe, 2
-  %or.cond3.i573 = and i1 %or.cond988, %i.aqf
-  br i1 %or.cond3.i573, label %._crit_edge1081, label %bb.hk
-
-._crit_edge1081:                                  ; preds = %bb.hj
+.thread1188:                                      ; preds = %bb.hi
+  %40 = add nsw i32 %i.apo, -1
+  %41 = icmp ult i32 %40, 2                       ; 2 uses
+  %42 = select i1 %41, float %38, float f0x7F7FFFFF
   br label %bb.hk
 
-bb.hk:                                            ; preds = %bb.hi, %._crit_edge1081, %bb.hj
-  %.pre-phi1080 = phi i32 [ %i.aqe, %bb.hj ], [ 0, %bb.hi ], [ 2, %._crit_edge1081 ]
-  %38 = phi float [ f0xFF7FFFFF, %bb.hj ], [ %.sroa.6936.0, %bb.hi ], [ %.sroa.6936.0, %._crit_edge1081 ]
-  %39 = add nsw i32 %i.apo, -1
-  %40 = fmul <2 x float> %i.apd, %i.aom
-  %41 = icmp ult i32 %39, 2                       ; 2 uses
-  %42 = icmp eq i32 %.pre-phi1080, 2              ; 2 uses
-  %43 = insertelement <2 x i1> poison, i1 %41, i64 0
-  %44 = insertelement <2 x i1> %43, i1 %42, i64 1
-  %45 = select <2 x i1> %44, <2 x float> %i.aki, <2 x float> splat (float f0x7F7FFFFF) ; 2 uses
+bb.hj:                                            ; preds = %bb.hi
+  %i.aqe = and i32 %i.apo, 2147483646
+  %i.aqf = icmp eq i32 %i.aqe, 2                  ; 2 uses
+  %or.cond3.i573 = and i1 %or.cond988, %i.aqf
+  %43 = icmp eq i64 %indvars.iv, 2                ; 4 uses
+  %44 = select i1 %43, float %38, float f0x7F7FFFFF ; 3 uses
+  br i1 %or.cond3.i573, label %bb.hk, label %45
+
+45:                                               ; preds = %bb.hj
+  br i1 %i.aqf, label %._crit_edge1081, label %bb.hk
+
+._crit_edge1081:                                  ; preds = %45
+  br label %bb.hk
+
+bb.hk:                                            ; preds = %bb.hj, %.thread1188, %45, %._crit_edge1081
+  %46 = phi float [ %42, %.thread1188 ], [ %44, %45 ], [ %44, %._crit_edge1081 ], [ %44, %bb.hj ]
+  %47 = phi i1 [ %41, %.thread1188 ], [ %43, %45 ], [ %43, %._crit_edge1081 ], [ %43, %bb.hj ]
+  %48 = phi float [ %.sroa.6936.0, %.thread1188 ], [ f0xFF7FFFFF, %45 ], [ f0xFF7FFFFF, %._crit_edge1081 ], [ %.sroa.6936.0, %bb.hj ]
+  %49 = phi float [ f0x7F7FFFFF, %.thread1188 ], [ f0x7F7FFFFF, %45 ], [ %39, %._crit_edge1081 ], [ %39, %bb.hj ]
+  %50 = fmul <2 x float> %i.apd, %i.aom
   %i.aqg = load <2 x float>, ptr %i.aoh, align 8, !tbaa !86
   %i.aqh = load <2 x float>, ptr %i.aoi, align 8, !tbaa !86
   %i.aqi = fsub <2 x float> %i.aqg, %i.aqh
-  %i.aqj = fsub <2 x float> %40, %i.ape
+  %i.aqj = fsub <2 x float> %50, %i.ape
   %i.aqk = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aqj, <2 x float> %i.apb, <2 x float> %i.ape)
   %i.aql = fadd <2 x float> %i.aqk, %i.aqi        ; 3 uses
   %i.aqm = insertelement <2 x float> poison, float %i.aqc, i64 0
-  %i.aqn = insertelement <2 x float> %i.aqm, float %38, i64 1 ; 2 uses
+  %i.aqn = insertelement <2 x float> %i.aqm, float %48, i64 1 ; 2 uses
   %i.aqo = fcmp olt <2 x float> %i.aql, %i.aqn
-  %i.aqp = fcmp ogt <2 x float> %i.aql, %45
-  %i.aqq = select <2 x i1> %i.aqp, <2 x float> %45, <2 x float> %i.aql
+  %51 = insertelement <2 x float> poison, float %46, i64 0
+  %52 = insertelement <2 x float> %51, float %49, i64 1 ; 2 uses
+  %i.aqp = fcmp ogt <2 x float> %i.aql, %52
+  %i.aqq = select <2 x i1> %i.aqp, <2 x float> %52, <2 x float> %i.aql
   %i.aqr = select <2 x i1> %i.aqo, <2 x float> %i.aqn, <2 x float> %i.aqq ; 3 uses
   %i.aqs = load <2 x float>, ptr %i.all, align 8, !tbaa !86 ; 2 uses
   %i.aqt = fsub <2 x float> %i.aqs, %i.aqr
@@ -538,7 +549,7 @@ bb.hk:                                            ; preds = %bb.hi, %._crit_edge
   %i.ara = bitcast <2 x float> %i.aqz to i64
   %i.arb = call fastcc <2 x float> @_ZL29CalcWindowSizeAfterConstraintP11ImGuiWindowRK6ImVec2(ptr noundef nonnull readonly %i.ajp, i64 %i.ara) ; 4 uses
   store <2 x float> %i.aqu, ptr %27, align 8, !tbaa !86
-  br i1 %41, label %bb.hl, label %bb.hm
+  br i1 %47, label %bb.hl, label %bb.hm
 
 bb.hl:                                            ; preds = %bb.hk
   %foldExtExtBinop = fsub <2 x float> %i.arb, %i.aqz
@@ -548,7 +559,9 @@ bb.hl:                                            ; preds = %bb.hk
   br label %bb.hm
 
 bb.hm:                                            ; preds = %bb.hl, %bb.hk
-  br i1 %42, label %bb.hn, label %.thread964
+  %53 = extractelement <2 x float> %i.apb, i64 1
+  %54 = fcmp oeq float %53, 0.000000e+00
+  br i1 %54, label %bb.hn, label %.thread964
 
 bb.hn:                                            ; preds = %bb.hm
   %foldExtExtBinop1358 = fsub <2 x float> %i.arb, %i.aqz

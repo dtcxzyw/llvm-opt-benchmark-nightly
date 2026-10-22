@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
   br i1 %i.f, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %.thread, %bb.c
-  %i.g = phi i16 [ %i.c, %.thread ], [ %i.e, %bb.c ] ; 2 uses
-  %i.h = phi ptr [ %i.b, %.thread ], [ %i.d, %bb.c ] ; 3 uses
+  %i.g = phi i16 [ %i.c, %.thread ], [ %i.e, %bb.c ]
+  %i.h = phi ptr [ %i.b, %.thread ], [ %i.d, %bb.c ] ; 2 uses
   br label %.split
 
 .split.us:                                        ; preds = %bb.c
@@ -218,29 +218,31 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge.split.us.us, %.split.us
-  %indvars.iv86 = phi i64 [ %indvars.iv.next87, %._crit_edge.split.us.us ], [ 0, %.split.us ] ; 3 uses
-  %.04773.us = phi i32 [ %.2.us.us.lcssa, %._crit_edge.split.us.us ], [ -1, %.split.us ] ; 3 uses
+  %indvars.iv86 = phi i64 [ %indvars.iv.next87, %._crit_edge.split.us.us ], [ 0, %.split.us ] ; 2 uses
+  %.04773.us = phi i32 [ %.1.lcssa.us, %._crit_edge.split.us.us ], [ -1, %.split.us ] ; 4 uses
   %i.n = getelementptr [40 x i8], ptr @ecat_esc_registers, i64 %indvars.iv86 ; 3 uses
   %i.o = load i16, ptr %i.n, align 8
   %i.p = zext i16 %i.o to i32                     ; 3 uses
   %i.q = icmp samesign ult i32 %i.k, %i.p
-  br i1 %i.q, label %.loopexit, label %.lr.ph.us
+  br i1 %i.q, label %.loopexit, label %.preheader.us
 
-.lr.ph.us:                                        ; preds = %bb.d
+.preheader.us:                                    ; preds = %bb.d
   %7 = getelementptr i8, ptr %i.n, i64 4
-  %8 = load i16, ptr %7, align 4
+  %8 = load i16, ptr %7, align 4                  ; 3 uses
+  %9 = zext i16 %8 to i32                         ; 2 uses
+  %.not67 = icmp eq i16 %8, 0
+  br i1 %.not67, label %._crit_edge.split.us.us, label %.lr.ph.us
+
+.lr.ph.us:                                        ; preds = %.preheader.us
   %i.r = getelementptr i8, ptr %i.n, i64 2
   %i.s = load i16, ptr %i.r, align 2
-  %9 = zext i16 %i.s to i32                       ; 5 uses
-  %10 = tail call i16 @llvm.umax.i16(i16 %8, i16 1)
-  %umax84 = zext i16 %10 to i32                   ; 2 uses
-  %xtraiter = and i32 %umax84, 3                  ; 3 uses
-  %11 = and i64 %indvars.iv86, 2305843009213693950
-  %.not122 = icmp eq i64 %11, 68
-  br i1 %.not122, label %.lr.ph.us.new, label %._crit_edge.epil.preheader
+  %umax84 = zext i16 %i.s to i32                  ; 5 uses
+  %xtraiter = and i32 %9, 3                       ; 3 uses
+  %10 = icmp ult i16 %8, 4
+  br i1 %10, label %._crit_edge.epil.preheader, label %.lr.ph.us.new
 
 .lr.ph.us.new:                                    ; preds = %.lr.ph.us
-  %unroll_iter = and i32 %umax84, 65532
+  %unroll_iter = and i32 %9, 65532
   br label %._crit_edge.a
 
 ._crit_edge.a:                                    ; preds = %._crit_edge.a, %.lr.ph.us.new
@@ -248,19 +250,19 @@ bb.d:                                             ; preds = %._crit_edge.split.u
   %.161.us.us = phi i32 [ %.04773.us, %.lr.ph.us.new ], [ %.2.us.us.3, %._crit_edge.a ]
   %niter = phi i32 [ 0, %.lr.ph.us.new ], [ %niter.next.3, %._crit_edge.a ]
   %.not56.us.us = icmp slt i32 %.04662.us.us, %i.j
-  %.pre = add nuw i32 %.04662.us.us, %9           ; 3 uses
+  %.pre = add nuw i32 %.04662.us.us, %umax84      ; 3 uses
   %.not57.us.us = icmp sgt i32 %.pre, %i.m
   %i.t = select i1 %.not56.us.us, i1 true, i1 %.not57.us.us
   %.not56.us.us.1 = icmp slt i32 %.pre, %i.j
-  %.pre.1 = add nuw i32 %.pre, %9                 ; 3 uses
+  %.pre.1 = add nuw i32 %.pre, %umax84            ; 3 uses
   %.not57.us.us.1 = icmp sgt i32 %.pre.1, %i.m
   %i.u = select i1 %.not56.us.us.1, i1 true, i1 %.not57.us.us.1
   %.not56.us.us.2 = icmp slt i32 %.pre.1, %i.j
-  %.pre.2 = add nuw i32 %.pre.1, %9               ; 3 uses
+  %.pre.2 = add nuw i32 %.pre.1, %umax84          ; 3 uses
   %.not57.us.us.2 = icmp sgt i32 %.pre.2, %i.m
   %i.v = select i1 %.not56.us.us.2, i1 true, i1 %.not57.us.us.2
   %.not56.us.us.3 = icmp slt i32 %.pre.2, %i.j
-  %.pre.3 = add nuw i32 %.pre.2, %9               ; 3 uses
+  %.pre.3 = add nuw i32 %.pre.2, %umax84          ; 3 uses
   %.not57.us.us.3 = icmp sgt i32 %.pre.3, %i.m
   %i.w = select i1 %.not56.us.us.3, i1 true, i1 %.not57.us.us.3
   %i.x = select i1 %i.w, i1 %i.v, i1 false
@@ -287,7 +289,7 @@ bb.d:                                             ; preds = %._crit_edge.split.u
   %.161.us.us.epil = phi i32 [ %.161.us.us.epil.init, %._crit_edge.epil.preheader ], [ %.2.us.us.epil, %._crit_edge.epil ]
   %epil.iter = phi i32 [ 0, %._crit_edge.epil.preheader ], [ %epil.iter.next, %._crit_edge.epil ]
   %.not56.us.us.epil = icmp slt i32 %.04662.us.us.epil, %i.j
-  %.pre.epil = add nuw i32 %.04662.us.us.epil, %9 ; 2 uses
+  %.pre.epil = add nuw i32 %.04662.us.us.epil, %umax84 ; 2 uses
   %.not57.us.us.epil = icmp sgt i32 %.pre.epil, %i.m
   %i.aa = select i1 %.not56.us.us.epil, i1 true, i1 %.not57.us.us.epil
   %.2.us.us.epil = select i1 %i.aa, i32 %.161.us.us.epil, i32 0 ; 2 uses
@@ -295,134 +297,111 @@ bb.d:                                             ; preds = %._crit_edge.split.u
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge.split.us.us, label %._crit_edge.epil, !llvm.loop !10
 
-._crit_edge.split.us.us:                          ; preds = %._crit_edge.epil, %._crit_edge.split.us.us.unr-lcssa
-  %.2.us.us.lcssa = phi i32 [ %.2.us.us.3, %._crit_edge.split.us.us.unr-lcssa ], [ %.2.us.us.epil, %._crit_edge.epil ] ; 2 uses
+._crit_edge.split.us.us:                          ; preds = %._crit_edge.split.us.us.unr-lcssa, %._crit_edge.epil, %.preheader.us
+  %.1.lcssa.us = phi i32 [ %.04773.us, %.preheader.us ], [ %.2.us.us.3, %._crit_edge.split.us.us.unr-lcssa ], [ %.2.us.us.epil, %._crit_edge.epil ] ; 2 uses
   %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
   %exitcond89.not = icmp eq i64 %indvars.iv.next87, 108
   br i1 %exitcond89.not, label %.loopexit, label %bb.d, !llvm.loop !11
 
 .split:                                           ; preds = %.split.preheader, %._crit_edge.split
-  %indvars.iv = phi i64 [ 0, %.split.preheader ], [ %indvars.iv.next, %._crit_edge.split ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.split.preheader ], [ %indvars.iv.next, %._crit_edge.split ] ; 2 uses
   %.04773 = phi i32 [ -1, %.split.preheader ], [ %.1.lcssa, %._crit_edge.split ] ; 3 uses
   %i.ab = load i16, ptr %i.h, align 2
   %i.ac = zext i16 %i.ab to i32
   %i.ad = add nuw nsw i32 %4, %i.ac
   %i.ae = getelementptr [40 x i8], ptr @ecat_esc_registers, i64 %indvars.iv ; 7 uses
   %i.af = load i16, ptr %i.ae, align 8
-  %i.ag = zext i16 %i.af to i32                   ; 3 uses
+  %i.ag = zext i16 %i.af to i32                   ; 2 uses
   %i.ah = icmp samesign ult i32 %i.ad, %i.ag
-  br i1 %i.ah, label %.loopexit, label %.lr.ph
+  br i1 %i.ah, label %.loopexit, label %.preheader
 
-.lr.ph:                                           ; preds = %.split
-  %12 = getelementptr i8, ptr %i.ae, i64 4
-  %13 = load i16, ptr %12, align 4
+.preheader:                                       ; preds = %.split
+  %11 = getelementptr i8, ptr %i.ae, i64 4
+  %12 = load i16, ptr %11, align 4                ; 2 uses
+  %13 = zext i16 %12 to i32
+  %.not66 = icmp eq i16 %12, 0
+  br i1 %.not66, label %._crit_edge.split, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.preheader
   %i.ai = getelementptr i8, ptr %i.ae, i64 2
-  %14 = trunc i64 %indvars.iv to i32
-  %15 = add i32 %14, -70
-  %.not58 = icmp ult i32 %15, -2
   %i.aj = getelementptr i8, ptr %i.ae, i64 32
   %i.ak = getelementptr i8, ptr %i.ae, i64 16
   %i.al = getelementptr i8, ptr %i.ae, i64 8      ; 2 uses
   %i.am = getelementptr i8, ptr %i.ae, i64 24
-  %16 = tail call i16 @llvm.umax.i16(i16 %13, i16 1)
-  %umax80 = zext i16 %16 to i32                   ; 2 uses
   %.pre90.pre = load i16, ptr %i.ai, align 2      ; 2 uses
-  %i.an = zext i16 %.pre90.pre to i32             ; 3 uses
-  %.pre91 = zext i16 %.pre90.pre to i32           ; 2 uses
-  br i1 %.not58, label %.lr.ph.split.split.us, label %.lr.ph.split.split
+  %i.an = zext i16 %.pre90.pre to i32             ; 2 uses
+  %.pre91 = zext i16 %.pre90.pre to i32
+  br label %.lr.ph.split.split.us
 
-.lr.ph.split.split.us:                            ; preds = %.lr.ph, %bb.h
-  %.04662.us63 = phi i32 [ %.pre-phi94, %bb.h ], [ %i.ag, %.lr.ph ] ; 5 uses
-  %.161.us64 = phi i32 [ %.2.us69, %bb.h ], [ %.04773, %.lr.ph ] ; 2 uses
-  %.04860.us65 = phi i32 [ %28, %bb.h ], [ 0, %.lr.ph ]
+.lr.ph.split.split.us:                            ; preds = %.lr.ph, %bb.j
+  %.04662.us63 = phi i32 [ %i.ag, %.lr.ph ], [ %.pre-phi81, %bb.j ] ; 6 uses
+  %.161.us64 = phi i32 [ %.04773, %.lr.ph ], [ %.2, %bb.j ] ; 2 uses
+  %.04860.us65 = phi i32 [ 0, %.lr.ph ], [ %i.az, %bb.j ]
   %i.ao = load i16, ptr %i.h, align 2             ; 2 uses
-  %i.ap = zext i16 %i.ao to i32                   ; 3 uses
+  %i.ap = zext i16 %i.ao to i32                   ; 4 uses
   %.not56.us67 = icmp slt i32 %.04662.us63, %i.ap
   br i1 %.not56.us67, label %.lr.ph.split.split.us._crit_edge, label %bb.e
 
 .lr.ph.split.split.us._crit_edge:                 ; preds = %.lr.ph.split.split.us
   %.pre93 = add nsw i32 %.04662.us63, %.pre91
-  br label %bb.h
+  br label %bb.j
 
 bb.e:                                             ; preds = %.lr.ph.split.split.us
-  %i.aq = add nuw i32 %.04662.us63, %i.an         ; 4 uses
+  %i.aq = add nuw i32 %.04662.us63, %i.an         ; 5 uses
   %i.ar = add i16 %i.ao, %i.g
   %i.as = zext i16 %i.ar to i32
   %.not57.us68 = icmp sgt i32 %i.aq, %i.as
-  br i1 %.not57.us68, label %bb.h, label %bb.f
+  br i1 %.not57.us68, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.at = load ptr, ptr %i.ak, align 8            ; 2 uses
+  %i.at = load ptr, ptr %i.aj, align 8            ; 2 uses
   %.not59.us = icmp eq ptr %i.at, null
-  br i1 %.not59.us, label %bb.g, label %17
-
-17:                                               ; preds = %bb.f
-  %18 = add i32 %.04662.us63, %3
-  %19 = sub i32 %18, %i.ap
-  %20 = load ptr, ptr %i.al, align 8
-  %21 = load i32, ptr %20, align 4
-  %22 = load ptr, ptr %i.am, align 8
-  %23 = load i32, ptr %22, align 4
-  %24 = tail call ptr @proto_tree_add_bitmask(ptr noundef %1, ptr noundef %2, i32 noundef %19, i32 noundef %21, i32 noundef %23, ptr noundef nonnull %i.at, i32 noundef -2147483648) ; 0 uses
-  br label %bb.h
+  br i1 %.not59.us, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %25 = load ptr, ptr %i.al, align 8
-  %26 = load i32, ptr %25, align 4
   %i.au = add i32 %.04662.us63, %3
   %i.av = sub i32 %i.au, %i.ap
-  %27 = tail call ptr @proto_tree_add_item(ptr noundef %1, i32 noundef %26, ptr noundef %2, i32 noundef %i.av, i32 noundef %i.an, i32 noundef -2147483648) ; 0 uses
-  br label %bb.h
-
-bb.h:                                             ; preds = %.lr.ph.split.split.us._crit_edge, %bb.g, %17, %bb.e
-  %.pre-phi94 = phi i32 [ %.pre93, %.lr.ph.split.split.us._crit_edge ], [ %i.aq, %bb.g ], [ %i.aq, %17 ], [ %i.aq, %bb.e ]
-  %.2.us69 = phi i32 [ %.161.us64, %.lr.ph.split.split.us._crit_edge ], [ 0, %bb.g ], [ 0, %17 ], [ %.161.us64, %bb.e ] ; 2 uses
-  %28 = add nuw nsw i32 %.04860.us65, 1           ; 2 uses
-  %exitcond81.not = icmp eq i32 %28, %umax80
-  br i1 %exitcond81.not, label %._crit_edge.split, label %.lr.ph.split.split.us, !llvm.loop !9
-
-.lr.ph.split.split:                               ; preds = %.lr.ph, %bb.j
-  %.04662 = phi i32 [ %.pre-phi98, %bb.j ], [ %i.ag, %.lr.ph ] ; 4 uses
-  %.161 = phi i32 [ %.2, %bb.j ], [ %.04773, %.lr.ph ] ; 2 uses
-  %.04860 = phi i32 [ %i.az, %bb.j ], [ 0, %.lr.ph ]
-  %29 = load i16, ptr %i.h, align 2               ; 2 uses
-  %30 = zext i16 %29 to i32                       ; 2 uses
-  %.not56 = icmp slt i32 %.04662, %30
-  br i1 %.not56, label %.lr.ph.split.split._crit_edge, label %31
-
-.lr.ph.split.split._crit_edge:                    ; preds = %.lr.ph.split.split
-  %.pre97 = add nsw i32 %.04662, %.pre91
+  %14 = tail call i32 %i.at(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %i.av) ; 0 uses
   br label %bb.j
 
-31:                                               ; preds = %.lr.ph.split.split
-  %32 = add nuw i32 %.04662, %i.an                ; 3 uses
-  %33 = add i16 %29, %i.g
-  %34 = zext i16 %33 to i32
-  %.not57 = icmp sgt i32 %32, %34
-  br i1 %.not57, label %bb.j, label %bb.i
+bb.h:                                             ; preds = %bb.f
+  %15 = load ptr, ptr %i.ak, align 8              ; 2 uses
+  %exitcond81.not = icmp eq ptr %15, null
+  br i1 %exitcond81.not, label %bb.i, label %.lr.ph.split.split
 
-bb.i:                                             ; preds = %31
-  %i.aw = load ptr, ptr %i.aj, align 8
-  %i.ax = add i32 %.04662, %3
-  %i.ay = sub i32 %i.ax, %30
-  %35 = tail call i32 %i.aw(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %i.ay) ; 0 uses
+.lr.ph.split.split:                               ; preds = %bb.h
+  %16 = add i32 %.04662.us63, %3
+  %17 = sub i32 %16, %i.ap
+  %18 = load ptr, ptr %i.al, align 8
+  %19 = load i32, ptr %18, align 4
+  %20 = load ptr, ptr %i.am, align 8
+  %21 = load i32, ptr %20, align 4
+  %22 = tail call ptr @proto_tree_add_bitmask(ptr noundef %1, ptr noundef %2, i32 noundef %17, i32 noundef %19, i32 noundef %21, ptr noundef nonnull %15, i32 noundef -2147483648) ; 0 uses
   br label %bb.j
 
-bb.j:                                             ; preds = %.lr.ph.split.split._crit_edge, %bb.i, %31
-  %.pre-phi98 = phi i32 [ %.pre97, %.lr.ph.split.split._crit_edge ], [ %32, %bb.i ], [ %32, %31 ]
-  %.2 = phi i32 [ %.161, %.lr.ph.split.split._crit_edge ], [ 0, %bb.i ], [ %.161, %31 ] ; 2 uses
-  %i.az = add nuw nsw i32 %.04860, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.az, %umax80
-  br i1 %exitcond.not, label %._crit_edge.split, label %.lr.ph.split.split, !llvm.loop !9
+bb.i:                                             ; preds = %bb.h
+  %i.aw = load ptr, ptr %i.al, align 8
+  %23 = load i32, ptr %i.aw, align 4
+  %i.ax = add i32 %.04662.us63, %3
+  %i.ay = sub i32 %i.ax, %i.ap
+  %24 = tail call ptr @proto_tree_add_item(ptr noundef %1, i32 noundef %23, ptr noundef %2, i32 noundef %i.ay, i32 noundef %i.an, i32 noundef -2147483648) ; 0 uses
+  br label %bb.j
 
-._crit_edge.split:                                ; preds = %bb.j, %bb.h
-  %.1.lcssa = phi i32 [ %.2.us69, %bb.h ], [ %.2, %bb.j ] ; 2 uses
+bb.j:                                             ; preds = %.lr.ph.split.split.us._crit_edge, %.lr.ph.split.split, %bb.i, %bb.g, %bb.e
+  %.pre-phi81 = phi i32 [ %.pre93, %.lr.ph.split.split.us._crit_edge ], [ %i.aq, %.lr.ph.split.split ], [ %i.aq, %bb.i ], [ %i.aq, %bb.g ], [ %i.aq, %bb.e ]
+  %.2 = phi i32 [ %.161.us64, %.lr.ph.split.split.us._crit_edge ], [ 0, %.lr.ph.split.split ], [ 0, %bb.i ], [ 0, %bb.g ], [ %.161.us64, %bb.e ] ; 2 uses
+  %i.az = add nuw nsw i32 %.04860.us65, 1         ; 2 uses
+  %exitcond.not = icmp eq i32 %i.az, %13
+  br i1 %exitcond.not, label %._crit_edge.split, label %.lr.ph.split.split.us, !llvm.loop !9
+
+._crit_edge.split:                                ; preds = %bb.j, %.preheader
+  %.1.lcssa = phi i32 [ %.04773, %.preheader ], [ %.2, %bb.j ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond83.not = icmp eq i64 %indvars.iv.next, 108
   br i1 %exitcond83.not, label %.loopexit, label %.split, !llvm.loop !11
 
 .loopexit:                                        ; preds = %._crit_edge.split, %.split, %._crit_edge.split.us.us, %bb.d, %bb.b, %bb.a
-  %.3 = phi i32 [ -1, %bb.b ], [ -1, %bb.a ], [ %.04773.us, %bb.d ], [ %.2.us.us.lcssa, %._crit_edge.split.us.us ], [ %.1.lcssa, %._crit_edge.split ], [ %.04773, %.split ]
+  %.3 = phi i32 [ -1, %bb.b ], [ -1, %bb.a ], [ %.04773.us, %bb.d ], [ %.1.lcssa.us, %._crit_edge.split.us.us ], [ %.1.lcssa, %._crit_edge.split ], [ %.04773, %.split ]
   ret i32 %.3
 }
 
@@ -523,9 +502,6 @@ bb.a:
   %i.q = tail call ptr @proto_tree_add_bitmask(ptr noundef %i.d, ptr noundef %2, i32 noundef %i.n, i32 noundef %i.o, i32 noundef %i.p, ptr noundef @ecat_reg_800.reg6, i32 noundef -2147483648) ; 0 uses
   ret i32 8
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #3

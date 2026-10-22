@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 define internal ptr @ZEND_RECV_VARIADIC_SPEC_UNUSED_HANDLER(ptr noundef initializes((0, 8)) %0, ptr noundef %1) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !75   ; 6 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !75   ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !75   ; 4 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !75   ; 5 uses
   store ptr %1, ptr %0, align 8, !tbaa !78
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load i32, ptr %i.e, align 8, !tbaa !75
@@ -582,9 +582,9 @@ bb.af:                                            ; preds = %bb.ae, %.preheader
   %i.fq = getelementptr inbounds nuw i8, ptr %.1182, i64 16
   %i.fr = add i32 %.1184, 1                       ; 2 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %.1188, i64 16
-  %i.ft = add i32 %.1176, 1                       ; 3 uses
+  %i.ft = add i32 %.1176, 1                       ; 2 uses
   %.not204 = icmp ugt i32 %i.ft, %i.d
-  br i1 %.not204, label %.loopexit, label %.preheader, !llvm.loop !444
+  br i1 %.not204, label %.loopexit.loopexit, label %.preheader, !llvm.loop !444
 
 zend_check_type.exit.i220.thread280:              ; preds = %bb.y, %zend_check_type.exit.i220, %.split
   tail call void @zend_verify_arg_error(ptr noundef %i.at, ptr noundef nonnull %i.r, i32 noundef %.0175, ptr noundef %.0187)
@@ -603,9 +603,15 @@ zend_check_type.exit.i220.thread280:              ; preds = %bb.y, %zend_check_t
   %i.gc = load ptr, ptr %0, align 8, !tbaa !78
   br label %.critedge
 
-.loopexit:                                        ; preds = %bb.ad, %bb.af
-  %.3186.ph = phi i32 [ %i.fr, %bb.af ], [ %i.fc, %bb.ad ] ; 3 uses
-  %.3178.ph = phi i32 [ %i.ft, %bb.af ], [ %i.fe, %bb.ad ]
+.loopexit.loopexit:                               ; preds = %bb.af
+  %2 = add i32 %i.b, 1
+  %3 = add nuw i32 %i.d, 1
+  %umax = tail call i32 @llvm.umax.i32(i32 %2, i32 %3)
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.ad, %.loopexit.loopexit
+  %.3186.ph = phi i32 [ %i.fr, %.loopexit.loopexit ], [ %i.fc, %bb.ad ] ; 3 uses
+  %.3178.ph = phi i32 [ %umax, %.loopexit.loopexit ], [ %i.fe, %bb.ad ]
   %i.gd = load i32, ptr %i.z, align 8, !tbaa !156
   %i.ge = sub i32 %.3186.ph, %i.gd
   %i.gf = getelementptr inbounds nuw i8, ptr %i.w, i64 28 ; 2 uses
@@ -1008,9 +1014,9 @@ bb.e:                                             ; preds = %bb.a
 define internal preserve_nonecc ptr @ZEND_RECV_VARIADIC_SPEC_UNUSED_TAILCALL_HANDLER(ptr noundef initializes((0, 8)) %0, ptr noundef %1) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !75   ; 6 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !75   ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !75   ; 4 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !75   ; 5 uses
   store ptr %1, ptr %0, align 8, !tbaa !78
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load i32, ptr %i.e, align 8, !tbaa !75
@@ -1405,13 +1411,19 @@ bb.af:                                            ; preds = %bb.ae, %.preheader
   %i.gb = getelementptr inbounds nuw i8, ptr %.1183, i64 16
   %i.gc = add i32 %.1185, 1                       ; 2 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %.1188, i64 16
-  %i.ge = add i32 %.1, 1                          ; 3 uses
+  %i.ge = add i32 %.1, 1                          ; 2 uses
   %.not203 = icmp ugt i32 %i.ge, %i.d
-  br i1 %.not203, label %.loopexit, label %.preheader, !llvm.loop !505
+  br i1 %.not203, label %.loopexit.loopexit, label %.preheader, !llvm.loop !505
 
-.loopexit:                                        ; preds = %bb.ad, %bb.af
-  %.2186 = phi i32 [ %i.gc, %bb.af ], [ %i.fn, %bb.ad ] ; 3 uses
-  %.2 = phi i32 [ %i.ge, %bb.af ], [ %i.fp, %bb.ad ]
+.loopexit.loopexit:                               ; preds = %bb.af
+  %2 = add i32 %i.b, 1
+  %3 = add nuw i32 %i.d, 1
+  %umax = tail call i32 @llvm.umax.i32(i32 %2, i32 %3)
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.ad, %.loopexit.loopexit
+  %.2186 = phi i32 [ %i.gc, %.loopexit.loopexit ], [ %i.fn, %bb.ad ] ; 3 uses
+  %.2 = phi i32 [ %umax, %.loopexit.loopexit ], [ %i.fp, %bb.ad ]
   %i.gf = load i32, ptr %i.z, align 8, !tbaa !156
   %i.gg = sub i32 %.2186, %i.gf
   %i.gh = getelementptr inbounds nuw i8, ptr %i.w, i64 28 ; 2 uses

@@ -205,13 +205,13 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
   %.lcssa17.i.i = phi i64 [ 0, %bb.f ], [ 1, %bb.g ], [ 2, %bb.h ], [ 3, %bb.i ], [ 4, %bb.j ]
-  %.lcssa.i.i = phi i16 [ %i.ak, %bb.f ], [ %i.am, %bb.g ], [ %i.ao, %bb.h ], [ %i.aq, %bb.i ], [ %i.as, %bb.j ] ; 5 uses
+  %.lcssa.i.i = phi i16 [ %i.ak, %bb.f ], [ %i.am, %bb.g ], [ %i.ao, %bb.h ], [ %i.aq, %bb.i ], [ %i.as, %bb.j ] ; 4 uses
   %i.at = getelementptr [2 x i8], ptr %i.aj, i64 %.lcssa17.i.i
   store i16 0, ptr %i.at, align 2
   %i.au = lshr i16 %.lcssa.i.i, 4                 ; 3 uses
   %i.av = zext nneg i16 %i.au to i64
   %.idx = mul nuw nsw i64 %i.av, 26
-  %i.aw = getelementptr i8, ptr @minstrel_mcs_groups, i64 %.idx ; 2 uses
+  %i.aw = getelementptr i8, ptr @minstrel_mcs_groups, i64 %.idx ; 3 uses
   %i.ax = and i16 %.lcssa.i.i, 15                 ; 2 uses
   %i.ay = icmp eq i16 %i.au, 16                   ; 2 uses
   br i1 %i.ay, label %bb.l, label %bb.m
@@ -260,7 +260,9 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.u
 
 bb.q:                                             ; preds = %bb.o
-  %.not48 = icmp ult i16 %.lcssa.i.i, 288
+  %4 = load i16, ptr %i.aw, align 2
+  %5 = and i16 %4, 256
+  %.not48 = icmp eq i16 %5, 0
   %i.by = trunc nuw nsw i16 %i.ax to i8           ; 2 uses
   %i.bz = getelementptr i8, ptr %i.aw, i64 2
   %i.ca = load i8, ptr %i.bz, align 2             ; 2 uses
@@ -553,7 +555,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.ae
-  %indvars.iv = phi i64 [ 0, %bb.g ], [ %indvars.iv.next, %bb.ae ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %bb.g ], [ %indvars.iv.next, %bb.ae ] ; 4 uses
   %i.bw = getelementptr [26 x i8], ptr @minstrel_mcs_groups, i64 %indvars.iv ; 2 uses
   %i.bx = load i16, ptr %i.bw, align 2
   %i.by = zext i16 %i.bx to i32                   ; 6 uses
@@ -590,13 +592,12 @@ bb.m:                                             ; preds = %bb.i
 .thread:                                          ; preds = %bb.l, %.thread27, %bb.m
   %.pre-phi26 = phi i1 [ true, %bb.m ], [ false, %.thread27 ], [ true, %bb.l ]
   %i.cg = getelementptr i8, ptr %i.bw, i64 2
-  %i.ch = load i8, ptr %i.cg, align 2             ; 2 uses
+  %i.ch = load i8, ptr %i.cg, align 2             ; 6 uses
   %i.ci = zext i8 %i.ch to i32                    ; 2 uses
   %i.cj = load i32, ptr %i.bt, align 8
   %i.ck = icmp eq i32 %i.cj, 2
-  %4 = lshr i64 4104843226862, %indvars.iv
-  %5 = trunc i64 %4 to i1
-  %or.cond = select i1 %i.ck, i1 %5, i1 false
+  %4 = icmp ugt i8 %i.ch, 1
+  %or.cond = select i1 %i.ck, i1 %4, i1 false
   br i1 %or.cond, label %bb.ae, label %bb.n
 
 bb.n:                                             ; preds = %.thread
@@ -671,23 +672,28 @@ bb.x:                                             ; preds = %bb.v, %bb.w, %.crit
   %i.dc = load i16, ptr %i.bv, align 8
   switch i32 %.0, label %bb.aa [
     i32 0, label %bb.y
-    i32 2, label %bb.z
+    i32 2, label %5
   ]
 
 bb.y:                                             ; preds = %bb.x
-  %6 = lshr i64 1172812350532, %indvars.iv
-  %switch.selectcmp.case2.i = trunc i64 %6 to i1
-  %i.dd = select i1 %switch.selectcmp.case2.i, i16 0, i16 512
+  %switch.selectcmp.case1.i = icmp eq i8 %i.ch, 6
+  %switch.selectcmp.case2.i = icmp eq i8 %i.ch, 3
+  %switch.selectcmp.i = or i1 %switch.selectcmp.case1.i, %switch.selectcmp.case2.i
+  %i.dd = select i1 %switch.selectcmp.i, i16 0, i16 512
   br label %bb.aa
 
-bb.z:                                             ; preds = %bb.x
-  %7 = and i32 %i.ci, 251
-  %or.cond3.i.a = icmp eq i32 %7, 3
-  %spec.select1 = select i1 %or.cond3.i.a, i16 64, i16 0
+5:                                                ; preds = %bb.x
+  %6 = and i32 %i.ci, 251
+  %or.cond3.i = icmp eq i32 %6, 3
+  br i1 %or.cond3.i, label %bb.aa, label %bb.z
+
+bb.z:                                             ; preds = %5
+  %or.cond3.i.a = icmp eq i8 %i.ch, 6
+  %spec.select1 = select i1 %or.cond3.i.a, i16 512, i16 0
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x
-  %.0.i124 = phi i16 [ %i.dd, %bb.y ], [ %spec.select1, %bb.z ], [ 0, %bb.x ] ; 3 uses
+bb.aa:                                            ; preds = %bb.z, %5, %bb.y, %bb.x
+  %.0.i124 = phi i16 [ %i.dd, %bb.y ], [ %spec.select1, %bb.z ], [ 0, %bb.x ], [ 64, %5 ] ; 3 uses
   %i.de = zext i16 %i.dc to i32
   %i.df = shl nuw nsw i32 %i.ci, 1
   %i.dg = add nsw i32 %i.df, -2
@@ -1090,9 +1096,9 @@ bb.p:                                             ; preds = %.sink.split37, %bb.
 define internal fastcc void @minstrel_ht_set_rate(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef nonnull writeonly captures(none) %2, i32 noundef range(i32 -2147483648, 255) %3, i32 noundef range(i32 0, 65536) %4) unnamed_addr #9 align 16 prefalign(16) {
 bb.a:
   %i.a = lshr i32 %4, 4                           ; 2 uses
-  %i.b = zext nneg i32 %i.a to i64                ; 2 uses
-  %i.c = getelementptr [26 x i8], ptr @minstrel_mcs_groups, i64 %i.b ; 2 uses
-  %i.d = load i16, ptr %i.c, align 2              ; 3 uses
+  %i.b = zext nneg i32 %i.a to i64
+  %i.c = getelementptr [26 x i8], ptr @minstrel_mcs_groups, i64 %i.b ; 3 uses
+  %i.d = load i16, ptr %i.c, align 2              ; 4 uses
   %i.e = zext nneg i32 %4 to i64                  ; 2 uses
   %i.f = lshr i64 %i.e, 4                         ; 2 uses
   %i.g = getelementptr [252 x i8], ptr %1, i64 %i.f
@@ -1320,7 +1326,8 @@ bb.r:                                             ; preds = %bb.p
   br label %bb.v
 
 bb.s:                                             ; preds = %bb.p
-  %.not59 = icmp samesign ult i32 %4, 288
+  %5 = and i16 %i.d, 256
+  %.not59 = icmp eq i16 %5, 0
   %i.ed = getelementptr i8, ptr %i.c, i64 2
   %i.ee = load i8, ptr %i.ed, align 2
   %i.ef = zext i8 %i.ee to i32                    ; 2 uses
@@ -1353,10 +1360,10 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.es, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
-  %5 = shl nuw i64 1, %i.b
-  %6 = and i64 %5, 4104843226862
-  %.not60 = icmp eq i64 %6, 0
-  br i1 %.not60, label %bb.z, label %bb.y
+  %6 = getelementptr i8, ptr %i.c, i64 2
+  %7 = load i8, ptr %6, align 2
+  %8 = icmp ugt i8 %7, 1
+  br i1 %8, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x, %bb.v
   %i.et = sext i32 %3 to i64

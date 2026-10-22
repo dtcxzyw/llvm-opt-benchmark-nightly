@@ -204,8 +204,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.g
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.g ] ; 4 uses
-  %i.c = getelementptr [44 x i8], ptr @e1000_gstrings_stats, i64 %indvars.iv ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.g ] ; 3 uses
+  %i.c = getelementptr [44 x i8], ptr @e1000_gstrings_stats, i64 %indvars.iv ; 3 uses
   %i.d = getelementptr i8, ptr %i.c, i64 32
   %i.e = load i32, ptr %i.d, align 4
   switch i32 %i.e, label %bb.g [
@@ -222,10 +222,10 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.g = load i32, ptr %i.f, align 4
   %i.h = sext i32 %i.g to i64
   %i.i = getelementptr i8, ptr %.sink, i64 %i.h   ; 2 uses
-  %4 = shl nuw nsw i64 1, %indvars.iv
-  %5 = and i64 %4, 65969892360191
-  %.not = icmp eq i64 %5, 0
-  br i1 %.not, label %bb.f, label %bb.e
+  %4 = getelementptr i8, ptr %i.c, i64 36
+  %5 = load i32, ptr %4, align 4
+  %.not = icmp eq i32 %5, 8
+  br i1 %.not, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.j = load i64, ptr %i.i, align 8

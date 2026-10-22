@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruby/original/symbol?download=true
 inline.NumInlined: 215
 inline.NumDeleted: 75
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -159,11 +157,11 @@ bb.a:
   store i64 %i.b, ptr getelementptr inbounds nuw (i8, ptr @ruby_global_symbols, i64 8), align 8, !tbaa !16
   %i.c = tail call i64 @rb_ary_hidden_new(i64 noundef 0) #20
   store i64 %i.c, ptr getelementptr inbounds nuw (i8, ptr @ruby_global_symbols, i64 16), align 8, !tbaa !17
-  %i.d = tail call nonnull ptr @rb_usascii_encoding() #20 ; 22 uses
+  %i.d = tail call nonnull ptr @rb_usascii_encoding() #20 ; 2 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.d, %bb.a
-  %indvars.iv.i = phi i64 [ 33, %bb.a ], [ %indvars.iv.next.i.a, %bb.d ] ; 5 uses
+bb.b:                                             ; preds = %0, %bb.a
+  %indvars.iv.i = phi i64 [ 33, %bb.a ], [ %indvars.iv.next.i, %0 ] ; 5 uses
   %i.e = trunc nuw nsw i64 %indvars.iv.i to i32   ; 2 uses
   %i.f = and i32 %i.e, 95
   %i.g = add nsw i32 %i.f, -91
@@ -173,7 +171,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   %narrow.i.not.i = and i1 %i.i, %narrow.i.i.i
   %i.j = icmp ne i64 %indvars.iv.i, 95
   %or.cond.i = and i1 %i.j, %narrow.i.not.i
-  br i1 %or.cond.i, label %bb.c, label %bb.d
+  br i1 %or.cond.i, label %bb.c, label %0
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
@@ -181,35 +179,39 @@ bb.c:                                             ; preds = %bb.b
   store i8 %i.k, ptr %i.a, align 1, !tbaa !18
   %i.l = call fastcc i64 @register_static_symid(i64 noundef %indvars.iv.i, ptr noundef nonnull %i.a, i64 noundef 1, ptr noundef %i.d) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
+  br label %0
+
+0:                                                ; preds = %bb.c, %bb.b
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 127
+  br i1 %exitcond.not.i, label %.preheader.i, label %bb.b, !llvm.loop !60
+
+.preheader.i:                                     ; preds = %0, %bb.d
+  %indvars.iv19.i = phi i64 [ %indvars.iv.next.i.a, %bb.d ], [ 0, %0 ] ; 2 uses
+  %1 = getelementptr [6 x i8], ptr @op_tbl, i64 %indvars.iv19.i ; 4 uses
+  %2 = load i16, ptr %1, align 2, !tbaa !64
+  %3 = zext i16 %2 to i64
+  %4 = getelementptr i8, ptr %1, i64 2
+  %5 = getelementptr i8, ptr %1, i64 3
+  %6 = load i8, ptr %5, align 1, !tbaa !18
+  %.not.i = icmp eq i8 %6, 0
+  br i1 %.not.i, label %bb.d, label %7
+
+7:                                                ; preds = %.preheader.i
+  %8 = getelementptr i8, ptr %1, i64 4
+  %9 = load i8, ptr %8, align 2, !tbaa !18
+  %.not14.i = icmp eq i8 %9, 0
+  %10 = select i1 %.not14.i, i64 2, i64 3
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i.a = icmp eq i64 %indvars.iv.next.i.a, 127
-  br i1 %exitcond.not.i.a, label %Init_op_tbl.exit, label %bb.b, !llvm.loop !60
+bb.d:                                             ; preds = %7, %.preheader.i
+  %11 = phi i64 [ %10, %7 ], [ 1, %.preheader.i ]
+  %12 = call fastcc i64 @register_static_symid(i64 noundef %3, ptr noundef %4, i64 noundef %11, ptr noundef %i.d) ; 0 uses
+  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv19.i, 1 ; 2 uses
+  %exitcond.not.i.a = icmp eq i64 %indvars.iv.next.i.a, 21
+  br i1 %exitcond.not.i.a, label %Init_op_tbl.exit, label %.preheader.i, !llvm.loop !61
 
 Init_op_tbl.exit:                                 ; preds = %bb.d
-  %0 = call fastcc i64 @register_static_symid(i64 noundef 128, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 2), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %1 = call fastcc i64 @register_static_symid(i64 noundef 129, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 8), i64 noundef 3, ptr noundef %i.d) ; 0 uses
-  %2 = call fastcc i64 @register_static_symid(i64 noundef 132, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 14), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %3 = call fastcc i64 @register_static_symid(i64 noundef 133, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 20), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %4 = call fastcc i64 @register_static_symid(i64 noundef 134, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 26), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %5 = call fastcc i64 @register_static_symid(i64 noundef 135, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 32), i64 noundef 3, ptr noundef %i.d) ; 0 uses
-  %6 = call fastcc i64 @register_static_symid(i64 noundef 136, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 38), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %7 = call fastcc i64 @register_static_symid(i64 noundef 137, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 44), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %8 = call fastcc i64 @register_static_symid(i64 noundef 138, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 50), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %9 = call fastcc i64 @register_static_symid(i64 noundef 139, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 56), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %10 = call fastcc i64 @register_static_symid(i64 noundef 140, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 62), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %11 = call fastcc i64 @register_static_symid(i64 noundef 141, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 68), i64 noundef 3, ptr noundef %i.d) ; 0 uses
-  %12 = call fastcc i64 @register_static_symid(i64 noundef 142, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 74), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %13 = call fastcc i64 @register_static_symid(i64 noundef 143, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 80), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %14 = call fastcc i64 @register_static_symid(i64 noundef 144, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 86), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %15 = call fastcc i64 @register_static_symid(i64 noundef 145, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 92), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %16 = call fastcc i64 @register_static_symid(i64 noundef 146, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 98), i64 noundef 3, ptr noundef %i.d) ; 0 uses
-  %17 = call fastcc i64 @register_static_symid(i64 noundef 147, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 104), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %18 = call fastcc i64 @register_static_symid(i64 noundef 148, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 110), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %19 = call fastcc i64 @register_static_symid(i64 noundef 149, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 116), i64 noundef 2, ptr noundef %i.d) ; 0 uses
-  %20 = call fastcc i64 @register_static_symid(i64 noundef 150, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @op_tbl, i64 122), i64 noundef 2, ptr noundef %i.d) ; 0 uses
   %i.m = call nonnull ptr @rb_usascii_encoding() #20 ; 99 uses
   %i.n = call fastcc i64 @register_static_symid(i64 noundef 2753, ptr noundef nonnull @.str.15, i64 noundef 3, ptr noundef %i.m) ; 0 uses
   %i.o = call fastcc i64 @register_static_symid(i64 noundef 2769, ptr noundef nonnull @.str.16, i64 noundef 3, ptr noundef %i.m) ; 0 uses
@@ -612,7 +614,7 @@ bb.i:                                             ; preds = %is_global_name_punc
 .preheader.i.i:                                   ; preds = %.lr.ph129
   %i.ak = getelementptr i8, ptr %i.am, i64 1      ; 3 uses
   %i.al = icmp ult ptr %i.ak, %i.c
-  br i1 %i.al, label %.lr.ph129, label %is_special_global_name.exit.i, !llvm.loop !61
+  br i1 %i.al, label %.lr.ph129, label %is_special_global_name.exit.i, !llvm.loop !65
 
 .lr.ph129:                                        ; preds = %.preheader.i.i.preheader, %.preheader.i.i
   %i.am = phi ptr [ %i.ak, %.preheader.i.i ], [ %i.ai, %.preheader.i.i.preheader ] ; 3 uses
@@ -620,10 +622,10 @@ bb.i:                                             ; preds = %is_global_name_punc
   %i.ao = sext i8 %i.an to i32
   %i.ap = add nsw i32 %i.ao, -58
   %i.aq = icmp ult i32 %i.ap, -10
-  br i1 %i.aq, label %.is_special_global_name.exit.i.loopexit_crit_edge, label %.preheader.i.i, !llvm.loop !61
+  br i1 %i.aq, label %.is_special_global_name.exit.i.loopexit_crit_edge, label %.preheader.i.i, !llvm.loop !65
 
 .is_special_global_name.exit.i.loopexit_crit_edge: ; preds = %.lr.ph129
-  br label %is_special_global_name.exit.i, !llvm.loop !61
+  br label %is_special_global_name.exit.i, !llvm.loop !65
 
 is_special_global_name.exit.i:                    ; preds = %.preheader.i.i, %.preheader.i.i.preheader, %.is_special_global_name.exit.i.loopexit_crit_edge, %bb.h, %bb.g, %bb.e
   %.126.i.i = phi ptr [ %i.t, %bb.e ], [ %i.af, %bb.h ], [ %i.v, %bb.g ], [ %i.ai, %.preheader.i.i.preheader ], [ %i.am, %.is_special_global_name.exit.i.loopexit_crit_edge ], [ %i.ak, %.preheader.i.i ]
@@ -731,23 +733,23 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.br = getelementptr i8, ptr %2, i64 32
-  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !68
-  %i.bt = tail call i32 %i.bs(ptr noundef nonnull %0, ptr noundef %i.c, ptr noundef nonnull %2) #20, !inline_history !62 ; 3 uses
+  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !72
+  %i.bt = tail call i32 %i.bs(ptr noundef nonnull %0, ptr noundef %i.c, ptr noundef nonnull %2) #20, !inline_history !66 ; 3 uses
   %i.bu = getelementptr i8, ptr %2, i64 88        ; 3 uses
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !69
-  %i.bw = tail call i32 %i.bv(i32 noundef %i.bt, i32 noundef 10, ptr noundef nonnull %2) #20, !inline_history !63
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !73
+  %i.bw = tail call i32 %i.bv(i32 noundef %i.bt, i32 noundef 10, ptr noundef nonnull %2) #20, !inline_history !67
   %.not.i50.i = icmp eq i32 %i.bw, 0
   br i1 %.not.i50.i, label %bb.z, label %enc_synmane_type_leading_chars.exit.thread78
 
 bb.z:                                             ; preds = %bb.y
-  %i.bx = load ptr, ptr %i.bu, align 8, !tbaa !69
-  %i.by = tail call i32 %i.bx(i32 noundef %i.bt, i32 noundef 6, ptr noundef nonnull %2) #20, !inline_history !64
+  %i.bx = load ptr, ptr %i.bu, align 8, !tbaa !73
+  %i.by = tail call i32 %i.bx(i32 noundef %i.bt, i32 noundef 6, ptr noundef nonnull %2) #20, !inline_history !68
   %.not39.i.i = icmp eq i32 %i.by, 0
   br i1 %.not39.i.i, label %bb.aa, label %rb_sym_constant_char_p.exit.thread.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.bz = getelementptr i8, ptr %2, i64 132
-  %i.ca = load i32, ptr %i.bz, align 4, !tbaa !70
+  %i.ca = load i32, ptr %i.bz, align 4, !tbaa !74
   %i.cb = and i32 %i.ca, 1
   %.not35.i.i = icmp eq i32 %i.cb, 0
   br i1 %.not35.i.i, label %bb.ae, label %bb.ab
@@ -759,25 +761,25 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cd = getelementptr i8, ptr %2, i64 80
-  %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !71
-  %i.cf = tail call i32 %i.ce(ptr noundef nonnull %2, ptr noundef nonnull @rb_sym_constant_char_p.cname, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @rb_sym_constant_char_p.cname, i64 15)) #20, !inline_history !65 ; 2 uses
+  %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !75
+  %i.cf = tail call i32 %i.ce(ptr noundef nonnull %2, ptr noundef nonnull @rb_sym_constant_char_p.cname, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @rb_sym_constant_char_p.cname, i64 15)) #20, !inline_history !69 ; 2 uses
   store i32 %i.cf, ptr @rb_sym_constant_char_p.ctype_titlecase, align 4, !tbaa !13
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.cg = phi i32 [ %i.cf, %bb.ac ], [ %i.cc, %bb.ab ]
-  %i.ch = load ptr, ptr %i.bu, align 8, !tbaa !69
-  %i.ci = tail call i32 %i.ch(i32 noundef %i.bt, i32 noundef %i.cg, ptr noundef nonnull %2) #20, !inline_history !66
+  %i.ch = load ptr, ptr %i.bu, align 8, !tbaa !73
+  %i.ci = tail call i32 %i.ch(i32 noundef %i.bt, i32 noundef %i.cg, ptr noundef nonnull %2) #20, !inline_history !70
   %.not40.i.i = icmp eq i32 %i.ci, 0
   br i1 %.not40.i.i, label %rb_sym_constant_char_p.exit.thread.i, label %enc_synmane_type_leading_chars.exit.thread78
 
 bb.ae:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
-  store ptr %0, ptr %i.b, align 8, !tbaa !72
+  store ptr %0, ptr %i.b, align 8, !tbaa !76
   %i.cj = getelementptr i8, ptr %2, i64 56
-  %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !73
-  %i.cl = call i32 %i.ck(i32 noundef 524288, ptr noundef nonnull %i.b, ptr noundef %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %2) #20, !inline_history !65 ; 2 uses
+  %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !77
+  %i.cl = call i32 %i.ck(i32 noundef 524288, ptr noundef nonnull %i.b, ptr noundef %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %2) #20, !inline_history !69 ; 2 uses
   %i.cm = icmp sgt i32 %i.cl, 0
   br i1 %i.cm, label %bb.af, label %.critedge.i52.i
 
@@ -901,7 +903,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.
   %i.dp = sext i32 %i.do to i64
   %i.dq = getelementptr i8, ptr %.050102, i64 %i.dp ; 3 uses
   %i.dr = icmp ult ptr %i.dq, %i.c
-  br i1 %i.dr, label %.lr.ph, label %.critedge, !llvm.loop !67
+  br i1 %i.dr, label %.lr.ph, label %.critedge, !llvm.loop !71
 
 bb.ap:                                            ; preds = %.lr.ph
   switch i8 %i.dh, label %.critedge [
@@ -1304,7 +1306,7 @@ bb.h:                                             ; preds = %.critedge.i.i.i, %b
   %.sroa.8.1.i.i = phi i32 [ %.sroa.8.031.i.i, %bb.g ], [ %spec.select.i.i, %.critedge.i.i.i ] ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.g, !llvm.loop !74
+  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.g, !llvm.loop !78
 
 ._crit_edge.i.i:                                  ; preds = %bb.h, %bb.f
   %.sroa.6.0.lcssa.i.i = phi i32 [ 0, %bb.f ], [ %.sroa.6.1.i.i, %bb.h ]
@@ -1314,7 +1316,7 @@ bb.h:                                             ; preds = %.critedge.i.i.i, %b
   store i32 %.sroa.8.0.lcssa.i.i, ptr %i.u, align 8, !tbaa !13
   %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 0, ptr %.sroa.10.0..sroa_idx.i.i, align 4
-  store ptr %i.be, ptr %i.bh, align 8, !tbaa !75
+  store ptr %i.be, ptr %i.bh, align 8, !tbaa !79
   tail call void @ruby_xfree(ptr noundef %i.bi) #20
   %.pre.i = load i32, ptr %0, align 8, !tbaa !47
   br label %hash_table_extend.exit.i
@@ -1684,12 +1686,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 ..lr.ph.split.backedge_crit_edge:                 ; preds = %bb.e
   %.pre.pre = load ptr, ptr %i.d, align 8, !tbaa !48
-  br label %.lr.ph.split.outer, !llvm.loop !76
+  br label %.lr.ph.split.outer, !llvm.loop !80
 
 bb.f:                                             ; preds = %.lr.ph.split, %bb.b
   %.old = add nuw nsw i32 %.02025, 1              ; 2 uses
   %.old27 = icmp slt i32 %.old, %i.b
-  br i1 %.old27, label %.lr.ph.split, label %._crit_edge, !llvm.loop !76
+  br i1 %.old27, label %.lr.ph.split, label %._crit_edge, !llvm.loop !80
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e, %.lr.ph, %bb.a
   ret void
@@ -2092,7 +2094,7 @@ bb.c:                                             ; preds = %.lr.ph.split.i
 bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr i8, ptr %i.o, i64 8
   %i.r = load i64, ptr %i.q, align 8, !tbaa !54
-  %i.s = tail call i32 %1(i64 noundef %i.r, ptr noundef %2) #20, !inline_history !77
+  %i.s = tail call i32 %1(i64 noundef %i.r, ptr noundef %2) #20, !inline_history !81
   switch i32 %i.s, label %.critedge.i [
     i32 2, label %bb.e
     i32 1, label %rb_id_table_foreach_values.exit
@@ -2388,9 +2390,9 @@ dup_string_for_create.exit:                       ; preds = %RSTRING_PTR.exit.i,
 bb.f:                                             ; preds = %dup_string_for_create.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.ae = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @ruby_current_ec)
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !79
-  store volatile ptr %i.af, ptr %i.e, align 8, !tbaa !79
-  %.0..0..0..0..0..0..i = load volatile ptr, ptr %i.e, align 8, !tbaa !79
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !83
+  store volatile ptr %i.af, ptr %i.e, align 8, !tbaa !83
+  %.0..0..0..0..0..0..i = load volatile ptr, ptr %i.e, align 8, !tbaa !83
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.ag = load i64, ptr @rb_cSymbol, align 8, !tbaa !20
   %i.ah = tail call i64 @rb_wb_protected_newobj_of(ptr noundef %.0..0..0..0..0..0..i, i64 noundef %i.ag, i64 noundef 20, i32 noundef 0, i64 noundef 40) #20 ; 6 uses
@@ -2793,22 +2795,26 @@ attributes #25 = { nounwind allocsize(0) }
 !59 = !{!35, !14, i64 16}
 !60 = distinct !{!60, !19}
 !61 = distinct !{!61, !19}
-!62 = distinct !{null, null, null}
-!63 = distinct !{null, null, null}
-!64 = distinct !{null, null, null}
-!65 = distinct !{null, null}
+!62 = !{!"short", !11, i64 0}
+!63 = !{!"", !62, i64 0, !11, i64 2, !11, i64 5}
+!64 = !{!63, !62, i64 0}
+!65 = distinct !{!65, !19}
 !66 = distinct !{null, null, null}
-!67 = distinct !{!67, !19}
-!68 = !{!23, !21, i64 32}
-!69 = !{!23, !21, i64 88}
-!70 = !{!23, !12, i64 132}
-!71 = !{!23, !21, i64 80}
-!72 = !{!22, !22, i64 0}
-!73 = !{!23, !21, i64 56}
-!74 = distinct !{!74, !19}
-!75 = !{!45, !45, i64 0}
-!76 = distinct !{!76, !19, !55}
-!77 = !{ptr @rb_id_table_foreach_values}
-!78 = !{!"p1 _ZTS27rb_execution_context_struct", !21, i64 0}
-!79 = !{!78, !78, i64 0}
+!67 = distinct !{null, null, null}
+!68 = distinct !{null, null, null}
+!69 = distinct !{null, null}
+!70 = distinct !{null, null, null}
+!71 = distinct !{!71, !19}
+!72 = !{!23, !21, i64 32}
+!73 = !{!23, !21, i64 88}
+!74 = !{!23, !12, i64 132}
+!75 = !{!23, !21, i64 80}
+!76 = !{!22, !22, i64 0}
+!77 = !{!23, !21, i64 56}
+!78 = distinct !{!78, !19}
+!79 = !{!45, !45, i64 0}
+!80 = distinct !{!80, !19, !55}
+!81 = !{ptr @rb_id_table_foreach_values}
+!82 = !{!"p1 _ZTS27rb_execution_context_struct", !21, i64 0}
+!83 = !{!82, !82, i64 0}
 end_hunk_4

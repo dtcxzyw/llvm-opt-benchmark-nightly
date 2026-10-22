@@ -204,31 +204,49 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 136
   %.val = load ptr, ptr %i.a, align 8
   %i.b = getelementptr i8, ptr %3, i64 12         ; 4 uses
-  %.val43 = load i16, ptr %i.b, align 4           ; 4 uses
+  %.val43 = load i16, ptr %i.b, align 4           ; 5 uses
   %i.c = and i16 %.val43, 1024
   %.not.i = icmp eq i16 %i.c, 0
-  br i1 %.not.i, label %bb.b, label %get_conntrack_index.exit.thread
+  br i1 %.not.i, label %bb.b, label %get_conntrack_index.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = and i16 %.val43, 512
   %.not5.i = icmp eq i16 %i.d, 0
-  br i1 %.not5.i, label %bb.c, label %get_conntrack_index.exit.a
+  br i1 %.not5.i, label %bb.c, label %5
+
+5:                                                ; preds = %bb.b
+  %6 = lshr i16 %.val43, 12
+  %.lobit.i = and i16 %6, 1
+  %7 = zext nneg i16 %.lobit.i to i64
+  br label %get_conntrack_index.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = and i16 %.val43, 4352
-  %or.cond.not = icmp eq i16 %i.e, 4096
-  br i1 %or.cond.not, label %get_conntrack_index.exit.thread52, label %get_conntrack_index.exit.thread
+  %i.e = and i16 %.val43, 256
+  %or.cond.not = icmp eq i16 %i.e, 0
+  br i1 %or.cond.not, label %get_conntrack_index.exit.a, label %get_conntrack_index.exit
 
-get_conntrack_index.exit.a:                       ; preds = %bb.b
+get_conntrack_index.exit.a:                       ; preds = %bb.c
   %i.f = and i16 %.val43, 4096
   %cond = icmp eq i16 %i.f, 0
-  br i1 %cond, label %bb.d, label %get_conntrack_index.exit.thread
+  %..i = select i1 %cond, i64 5, i64 3
+  br label %get_conntrack_index.exit
 
-get_conntrack_index.exit.thread:                  ; preds = %get_conntrack_index.exit.a, %bb.a, %bb.c
+get_conntrack_index.exit:                         ; preds = %bb.a, %5, %bb.c, %get_conntrack_index.exit.a
+  %.0.i = phi i64 [ 2, %bb.c ], [ %7, %5 ], [ 4, %bb.a ], [ %..i, %get_conntrack_index.exit.a ]
+  %8 = getelementptr [10 x i8], ptr @tcp_conntracks, i64 %.0.i
+  %9 = load i8, ptr %8, align 2                   ; 2 uses
+  %10 = icmp ugt i8 %9, 9
+  br i1 %10, label %get_conntrack_index.exit.thread, label %11
+
+get_conntrack_index.exit.thread:                  ; preds = %get_conntrack_index.exit
   tail call void (ptr, ptr, i8, ptr, ...) @nf_l4proto_log_invalid(ptr noundef %1, ptr noundef %4, i8 noundef zeroext 6, ptr noundef @.str.7, ptr noundef @.str.8) #14
   br label %bb.g
 
-bb.d:                                             ; preds = %get_conntrack_index.exit.a
+11:                                               ; preds = %get_conntrack_index.exit
+  %12 = icmp eq i8 %9, 1
+  br i1 %12, label %bb.d, label %get_conntrack_index.exit.thread52
+
+bb.d:                                             ; preds = %11
   %i.g = getelementptr i8, ptr %0, i64 184        ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(60) %i.g, i8 0, i64 60, i1 false)
   %i.h = getelementptr i8, ptr %3, i64 4
@@ -266,7 +284,7 @@ bb.d:                                             ; preds = %get_conntrack_index
   tail call fastcc void @tcp_options(ptr noundef %1, i32 noundef %2, i16 %.val46, ptr noundef %i.g) #15
   br label %bb.f
 
-get_conntrack_index.exit.thread52:                ; preds = %bb.c
+get_conntrack_index.exit.thread52:                ; preds = %11
   %i.ae = getelementptr i8, ptr %.val, i64 2964
   %i.af = load i8, ptr %i.ae, align 4
   %i.ag = icmp eq i8 %i.af, 0

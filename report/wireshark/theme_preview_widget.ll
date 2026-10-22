@@ -205,12 +205,16 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %bb.z
   %i.cl = getelementptr i8, ptr %i.ca, i64 64
-  %i.cm = load ptr, ptr %i.cl, align 16           ; 3 uses
-  %19 = load i8, ptr %i.cm, align 1
-  %.not122.a = icmp eq i8 %19, 0
-  br i1 %.not122.a, label %bb.ae, label %.split.i
+  %i.cm = load ptr, ptr %i.cl, align 16           ; 4 uses
+  %.not122.a = icmp eq ptr %i.cm, null
+  br i1 %.not122.a, label %bb.ae, label %19
 
-.split.i:                                         ; preds = %bb.aa
+19:                                               ; preds = %bb.aa
+  %20 = load i8, ptr %i.cm, align 1
+  %.not122 = icmp eq i8 %20, 0
+  br i1 %.not122, label %bb.ae, label %.split.i
+
+.split.i:                                         ; preds = %19
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
   %i.cn = call noundef i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.cm) #23
   invoke void @_ZN7QString8fromUtf8E14QByteArrayView(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %12, i64 %i.cn, ptr nonnull %i.cm)
@@ -273,7 +277,7 @@ bb.ad:                                            ; preds = %.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #23
   br label %bb.bg
 
-bb.ae:                                            ; preds = %_ZN7QStringD2Ev.exit, %_ZNK5QHashI7QStringSt4pairI6QColorS2_EE14const_iteratorneERKS5_.exit.thread, %bb.aa, %bb.z
+bb.ae:                                            ; preds = %_ZN7QStringD2Ev.exit, %_ZNK5QHashI7QStringSt4pairI6QColorS2_EE14const_iteratorneERKS5_.exit.thread, %19, %bb.aa, %bb.z
   %i.ds = getelementptr i8, ptr %i.ca, i64 72
   %i.dt = load i32, ptr %i.ds, align 8
   switch i32 %i.dt, label %bb.ai [
@@ -351,12 +355,20 @@ bb.ao:                                            ; preds = %bb.an
   store double %i.bg, ptr %i.ba, align 8, !alias.scope !50
   store double %i.ea, ptr %i.bb, align 8, !alias.scope !50
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #23
-  %i.eb = load ptr, ptr %i.ca, align 16           ; 2 uses
-  %20 = call noundef i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.eb) #23
-  invoke void @_ZN7QString8fromUtf8E14QByteArrayView(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %15, i64 %20, ptr %i.eb)
+  %i.eb = load ptr, ptr %i.ca, align 16           ; 3 uses
+  %.not.i154.peel = icmp eq ptr %i.eb, null
+  br i1 %.not.i154.peel, label %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel, label %.split.i155.peel
+
+.split.i155.peel:                                 ; preds = %.preheader.peel
+  %21 = call noundef i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.eb) #23
+  br label %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel
+
+_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel: ; preds = %.split.i155.peel, %.preheader.peel
+  %.sink5.i156.peel = phi i64 [ %21, %.split.i155.peel ], [ 0, %.preheader.peel ]
+  invoke void @_ZN7QString8fromUtf8E14QByteArrayView(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %15, i64 %.sink5.i156.peel, ptr %i.eb)
           to label %bb.ap unwind label %.loopexit.split-lp
 
-bb.ap:                                            ; preds = %.preheader.peel
+bb.ap:                                            ; preds = %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel
   invoke void @_ZN8QPainter8drawTextERK6QRectFiRK7QStringPS0_(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %14, i32 noundef 130, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef null)
           to label %bb.aq unwind label %.loopexit.split-lp260
 
@@ -391,12 +403,20 @@ _ZN7QStringD2Ev.exit161.peel:                     ; preds = %bb.ar, %_ZN17QArray
   store double %i.ej, ptr %i.bb, align 8, !alias.scope !51
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #23
   %i.ek = getelementptr i8, ptr %i.ca, i64 8
-  %i.el = load ptr, ptr %i.ek, align 8            ; 2 uses
-  %21 = call noundef i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.el) #23
-  invoke void @_ZN7QString8fromUtf8E14QByteArrayView(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %15, i64 %21, ptr %i.el)
+  %i.el = load ptr, ptr %i.ek, align 8            ; 3 uses
+  %.not.i154.peel217 = icmp eq ptr %i.el, null
+  br i1 %.not.i154.peel217, label %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel219, label %.split.i155.peel218
+
+.split.i155.peel218:                              ; preds = %_ZN7QStringD2Ev.exit161.peel
+  %22 = call noundef i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.el) #23
+  br label %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel219
+
+_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel219: ; preds = %.split.i155.peel218, %_ZN7QStringD2Ev.exit161.peel
+  %.sink5.i156.peel220 = phi i64 [ %22, %.split.i155.peel218 ], [ 0, %_ZN7QStringD2Ev.exit161.peel ]
+  invoke void @_ZN7QString8fromUtf8E14QByteArrayView(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %15, i64 %.sink5.i156.peel220, ptr %i.el)
           to label %bb.as unwind label %.loopexit.split-lp
 
-bb.as:                                            ; preds = %_ZN7QStringD2Ev.exit161.peel
+bb.as:                                            ; preds = %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel219
   invoke void @_ZN8QPainter8drawTextERK6QRectFiRK7QStringPS0_(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %14, i32 noundef 129, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef null)
           to label %bb.at unwind label %.loopexit.split-lp260
 
@@ -431,12 +451,20 @@ _ZN7QStringD2Ev.exit161.peel223:                  ; preds = %bb.au, %_ZN17QArray
   store double %i.et, ptr %i.bb, align 8, !alias.scope !52
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #23
   %i.eu = getelementptr i8, ptr %i.ca, i64 16
-  %i.ev = load ptr, ptr %i.eu, align 16           ; 2 uses
-  %22 = call noundef i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.ev) #23
-  invoke void @_ZN7QString8fromUtf8E14QByteArrayView(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %15, i64 %22, ptr %i.ev)
+  %i.ev = load ptr, ptr %i.eu, align 16           ; 3 uses
+  %.not.i154.peel249 = icmp eq ptr %i.ev, null
+  br i1 %.not.i154.peel249, label %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel251, label %.split.i155.peel250
+
+.split.i155.peel250:                              ; preds = %_ZN7QStringD2Ev.exit161.peel223
+  %23 = call noundef i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.ev) #23
+  br label %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel251
+
+_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel251: ; preds = %.split.i155.peel250, %_ZN7QStringD2Ev.exit161.peel223
+  %.sink5.i156.peel252 = phi i64 [ %23, %.split.i155.peel250 ], [ 0, %_ZN7QStringD2Ev.exit161.peel223 ]
+  invoke void @_ZN7QString8fromUtf8E14QByteArrayView(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %15, i64 %.sink5.i156.peel252, ptr %i.ev)
           to label %bb.av unwind label %.loopexit.split-lp
 
-bb.av:                                            ; preds = %_ZN7QStringD2Ev.exit161.peel223
+bb.av:                                            ; preds = %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel251
   invoke void @_ZN8QPainter8drawTextERK6QRectFiRK7QStringPS0_(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %14, i32 noundef 130, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef null)
           to label %bb.aw unwind label %.loopexit.split-lp260
 
@@ -567,7 +595,7 @@ _ZN7QStringD2Ev.exit161:                          ; preds = %bb.bb, %_ZN17QArray
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
   br i1 %exitcond.not, label %.loopexit264, label %.preheader, !llvm.loop !49
 
-.loopexit.split-lp:                               ; preds = %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157, %.preheader.peel, %_ZN7QStringD2Ev.exit161.peel, %_ZN7QStringD2Ev.exit161.peel223
+.loopexit.split-lp:                               ; preds = %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157, %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel, %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel219, %_ZN14QByteArrayViewC2IPKcTnNSt9enable_ifIXsr9QtPrivate28IsCompatibleByteArrayPointerIT_EE5valueEbE4typeELb1EEERKS4_.exit157.peel251
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %_ZN7QStringD2Ev.exit165

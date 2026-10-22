@@ -202,11 +202,10 @@ bb.h:                                             ; preds = %.preheader.preheade
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.preheader.preheader, %.fold.split48, %.fold.split47, %.fold.split
-  %.lcssa.a = phi ptr [ getelementptr inbounds nuw (i8, ptr @additional2, i64 120), %.fold.split48 ], [ getelementptr inbounds nuw (i8, ptr @additional2, i64 96), %.fold.split47 ], [ getelementptr inbounds nuw (i8, ptr @additional2, i64 72), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @additional2, i64 48), %.preheader.preheader ], [ %spec.select, %bb.h ] ; 2 uses
-  %3 = getelementptr i8, ptr %.lcssa.a, i64 16
-  %4 = load ptr, ptr %3, align 8
-  store ptr %4, ptr %2, align 8
-  %i.ap = getelementptr i8, ptr %.lcssa.a, i64 8
+  %.lcssa.a = phi ptr [ @.str.261, %.fold.split48 ], [ @.str.259, %.fold.split47 ], [ @.str.254, %.fold.split ], [ @.str.254, %.preheader.preheader ], [ @.str.254, %bb.h ]
+  %.lcssa = phi ptr [ getelementptr inbounds nuw (i8, ptr @additional2, i64 120), %.fold.split48 ], [ getelementptr inbounds nuw (i8, ptr @additional2, i64 96), %.fold.split47 ], [ getelementptr inbounds nuw (i8, ptr @additional2, i64 72), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @additional2, i64 48), %.preheader.preheader ], [ %spec.select, %bb.h ]
+  store ptr %.lcssa.a, ptr %2, align 8
+  %i.ap = getelementptr i8, ptr %.lcssa, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8
   br label %.loopexit
 

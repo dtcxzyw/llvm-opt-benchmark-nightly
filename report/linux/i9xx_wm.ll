@@ -205,29 +205,30 @@ define internal fastcc noundef ptr @pnv_get_cxsr_latency(ptr noundef %0) unnamed
 bb.a:
   %i.a = tail call ptr @intel_dram_info(ptr noundef %0) #12 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
+  %1 = icmp eq i32 %i.b, 2
   %i.c = getelementptr i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8
   %i.e = and i64 %i.d, 2
-  %1 = icmp ne i64 %i.e, 0
-  %i.f = icmp ne i32 %i.b, 2
+  %i.f = icmp ne i64 %i.e, 0
   %i.g = getelementptr i8, ptr %i.a, i64 4        ; 2 uses
   %i.h = getelementptr i8, ptr %i.a, i64 8        ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.e
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.e ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.e ] ; 2 uses
   %i.i = getelementptr [14 x i8], ptr @cxsr_latency_table, i64 %indvars.iv ; 4 uses
-  %i.j = load i8, ptr %i.i, align 2
-  %2 = trunc i8 %i.j to i1
-  %3 = xor i1 %1, %2
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  %5 = lshr i32 831283992, %4
-  %i.k = trunc i32 %5 to i1
+  %i.j = load i8, ptr %i.i, align 2               ; 2 uses
+  %i.k = trunc i8 %i.j to i1
   %i.l = xor i1 %i.f, %i.k
-  %or.cond = select i1 %3, i1 %i.l, i1 false
-  br i1 %or.cond, label %bb.c, label %bb.e
+  br i1 %i.l, label %2, label %bb.e
 
-bb.c:                                             ; preds = %bb.b
+2:                                                ; preds = %bb.b
+  %3 = and i8 %i.j, 2
+  %4 = icmp eq i8 %3, 0
+  %5 = xor i1 %1, %4
+  br i1 %5, label %bb.c, label %bb.e
+
+bb.c:                                             ; preds = %2
   %i.m = load i32, ptr %i.g, align 4
   %i.n = add i32 %i.m, 500
   %i.o = udiv i32 %i.n, 1000
@@ -247,7 +248,7 @@ bb.d:                                             ; preds = %bb.c
   %i.z = icmp eq i32 %i.v, %i.y
   br i1 %i.z, label %.loopexit, label %bb.e
 
-bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
+bb.e:                                             ; preds = %bb.b, %2, %bb.c, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 30
   br i1 %exitcond.not, label %bb.f, label %bb.b, !llvm.loop !56

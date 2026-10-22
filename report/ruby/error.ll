@@ -204,12 +204,11 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %0 to i64                  ; 2 uses
-  %1 = shl nuw nsw i64 1, %i.b
-  %2 = and i64 %1, 58785793
-  %.not.not = icmp eq i64 %2, 0
-  %3 = getelementptr [10 x i8], ptr @builtin_types, i64 %i.b
-  %spec.select = select i1 %.not.not, ptr %3, ptr null
+  %i.b = zext nneg i32 %0 to i64
+  %1 = getelementptr [10 x i8], ptr @builtin_types, i64 %i.b ; 2 uses
+  %2 = load i8, ptr %1, align 2, !tbaa !19
+  %.not.not = icmp eq i8 %2, 0
+  %spec.select = select i1 %.not.not, ptr null, ptr %1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -388,32 +387,29 @@ bb.f:                                             ; preds = %switch.lookup, %bb.
 define internal fastcc void @unexpected_type(i64 noundef %0, i32 noundef range(i32 0, 32) %1, i32 noundef %2) unnamed_addr #10 {
 bb.a:
   %i.a = icmp ugt i32 %2, 28
-  br i1 %i.a, label %rb_builtin_type_name.exit.thread, label %bb.b
+  br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %2 to i64                  ; 2 uses
-  %3 = shl nuw nsw i64 1, %i.b
-  %4 = and i64 %3, 58785793
-  %.not.not.i = icmp ne i64 %4, 0
+  %i.b = zext nneg i32 %2 to i64
   %i.c = getelementptr [10 x i8], ptr @builtin_types, i64 %i.b ; 2 uses
-  %.not = icmp eq ptr %i.c, null
-  %or.cond = or i1 %.not, %.not.not.i
-  br i1 %or.cond, label %rb_builtin_type_name.exit.thread, label %bb.c
+  %3 = load i8, ptr %i.c, align 2, !tbaa !19
+  %.not.i = icmp eq i8 %3, 0
+  br i1 %.not.i, label %bb.c, label %rb_builtin_type_name.exit.thread
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %4 = load i64, ptr @rb_eFatal, align 8, !tbaa !20
+  %i.d = tail call i64 (ptr, ...) @rb_sprintf(ptr noundef nonnull @.str.282, i32 noundef %2, i32 noundef %1) #32
+  br label %bb.d
+
+rb_builtin_type_name.exit.thread:                 ; preds = %bb.b
   %5 = tail call fastcc i64 @displaying_class_of(i64 noundef %0)
-  %i.d = tail call i64 (ptr, ...) @rb_sprintf(ptr noundef nonnull @.str.15, i64 noundef %5, ptr noundef nonnull %i.c) #32
+  %i.e = tail call i64 (ptr, ...) @rb_sprintf(ptr noundef nonnull @.str.15, i64 noundef %5, ptr noundef nonnull %i.c) #32
   %6 = load i64, ptr @rb_eTypeError, align 8, !tbaa !20
   br label %bb.d
 
-rb_builtin_type_name.exit.thread:                 ; preds = %bb.b, %bb.a
-  %7 = load i64, ptr @rb_eFatal, align 8, !tbaa !20
-  %i.e = tail call i64 (ptr, ...) @rb_sprintf(ptr noundef nonnull @.str.282, i32 noundef %2, i32 noundef %1) #32
-  br label %bb.d
-
-bb.d:                                             ; preds = %rb_builtin_type_name.exit.thread, %bb.c
-  %.012 = phi i64 [ %i.d, %bb.c ], [ %i.e, %rb_builtin_type_name.exit.thread ]
-  %.0 = phi i64 [ %6, %bb.c ], [ %7, %rb_builtin_type_name.exit.thread ]
+bb.d:                                             ; preds = %bb.c, %rb_builtin_type_name.exit.thread
+  %.012 = phi i64 [ %i.e, %rb_builtin_type_name.exit.thread ], [ %i.d, %bb.c ]
+  %.0 = phi i64 [ %6, %rb_builtin_type_name.exit.thread ], [ %4, %bb.c ]
   %i.f = tail call i64 @rb_exc_new_str(i64 noundef %.0, i64 noundef %.012)
   tail call void @rb_exc_raise(i64 noundef %i.f) #36
   unreachable
