@@ -202,7 +202,7 @@ _ZN7testing8internal8EqHelper7CompareImjTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #16
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %.pre290 = load i8, ptr %19, align 8, !tbaa !40, !range !41
+  %.pre290 = load i8, ptr %19, align 8, !tbaa !40, !range !41, !noundef !49
   %i.fu = trunc nuw i8 %.pre290 to i1
   br i1 %i.fu, label %.critedge87, label %bb.bo
 
@@ -605,7 +605,7 @@ _ZN7testing8internal8EqHelper7CompareImjTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #16
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %.pre289 = load i8, ptr %19, align 8, !tbaa !40, !range !41
+  %.pre289 = load i8, ptr %19, align 8, !tbaa !40, !range !41, !noundef !49
   %i.fu = trunc nuw i8 %.pre289 to i1
   br i1 %i.fu, label %.critedge87, label %bb.bo
 

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %_RNvXs2J_NtNtCs4NRV
   %.not.i4.i = icmp eq i32 %.val14.i.i.i.i, %spec.select.i.ph.i3
   %i.df = icmp samesign ult i32 %.val14.i.i.i.i, %spec.select.i.ph.i3
   %i.dg = zext i1 %i.df to i64
-  %i.dh = add nuw nsw i64 %i.dd, %i.dg            ; 2 uses
+  %i.dh = add nuw nsw i64 %i.dd, %i.dg            ; 3 uses
   br i1 %.not.i4.i, label %bb.t, label %bb.m
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.u, %bb.o, %bb.n, %bb.w
@@ -301,7 +301,7 @@ bb.u:                                             ; preds = %bb.t
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 8
   %i.er = load ptr, ptr %i.eq, align 8, !noalias !133, !nonnull !4, !noundef !4
   %i.es = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
-  %i.et = load i64, ptr %i.es, align 8, !noalias !133, !noundef !4 ; 4 uses
+  %i.et = load i64, ptr %i.es, align 8, !noalias !133, !noundef !4 ; 3 uses
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs2sepWsjoOnX_17annotate_snippets(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %i.et)
           to label %.noexc6.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !131
 
@@ -309,7 +309,7 @@ bb.u:                                             ; preds = %bb.t
   %i.eu = load i64, ptr %i.ay, align 8, !alias.scope !134, !noalias !127, !noundef !4 ; 3 uses
   %i.ev = icmp sgt i64 %i.eu, -1
   call void @llvm.assume(i1 %i.ev)
-  %.not.i.i.i = icmp eq i64 %i.et, 0
+  %.not.i.i.i = icmp eq i64 %i.dh, 32
   br i1 %.not.i.i.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2sepWsjoOnX_17annotate_snippets.exit.i.i, label %bb.v
 
 bb.v:                                             ; preds = %.noexc6.i.i

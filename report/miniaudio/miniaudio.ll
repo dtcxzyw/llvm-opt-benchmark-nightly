@@ -205,10 +205,10 @@ bb.v:                                             ; preds = %bb.u
   br label %ma_dr_flac__clz.exit
 
 bb.w:                                             ; preds = %bb.u
-  %i.bh = lshr i64 %i.ax, 60
+  %i.bh = lshr i64 %i.ax, 60                      ; 2 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.bh
-  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !118 ; 2 uses
-  %i.bk = icmp eq i32 %i.bj, 0
+  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !118
+  %i.bk = icmp eq i64 %i.bh, 0
   br i1 %i.bk, label %bb.x, label %ma_dr_flac__clz_software.exit
 
 bb.x:                                             ; preds = %bb.w
@@ -611,10 +611,10 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.w, label %ma_dr_flac__clz.exit96.i.thread.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.x = lshr i64 %i.r, 60
+  %i.x = lshr i64 %i.r, 60                        ; 2 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.x
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !118  ; 2 uses
-  %i.aa = icmp eq i32 %i.z, 0
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !118
+  %i.aa = icmp eq i64 %i.x, 0
   br i1 %i.aa, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -1017,10 +1017,10 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %i.ng, label %ma_dr_flac__clz.exit.i.i, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.nh = lshr i64 %.479.i.i, 60
+  %i.nh = lshr i64 %.479.i.i, 60                  ; 2 uses
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.nh
-  %i.nj = load i32, ptr %i.ni, align 4, !tbaa !118 ; 2 uses
-  %i.nk = icmp eq i32 %i.nj, 0
+  %i.nj = load i32, ptr %i.ni, align 4, !tbaa !118
+  %i.nk = icmp eq i64 %i.nh, 0
   br i1 %i.nk, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
@@ -1219,10 +1219,10 @@ bb.as:                                            ; preds = %bb.aq
   br i1 %i.sl, label %ma_dr_flac__clz.exit96.i592.thread, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.sm = lshr i64 %i.sg, 60
+  %i.sm = lshr i64 %i.sg, 60                      ; 2 uses
   %i.sn = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.sm
-  %i.so = load i32, ptr %i.sn, align 4, !tbaa !118 ; 2 uses
-  %i.sp = icmp eq i32 %i.so, 0
+  %i.so = load i32, ptr %i.sn, align 4, !tbaa !118
+  %i.sp = icmp eq i64 %i.sm, 0
   br i1 %i.sp, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
@@ -1625,10 +1625,10 @@ bb.bz:                                            ; preds = %bb.bx
   br i1 %i.afv, label %ma_dr_flac__clz.exit.i602, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.afw = lshr i64 %.479.i599, 60
+  %i.afw = lshr i64 %.479.i599, 60                ; 2 uses
   %i.afx = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.afw
-  %i.afy = load i32, ptr %i.afx, align 4, !tbaa !118 ; 2 uses
-  %i.afz = icmp eq i32 %i.afy, 0
+  %i.afy = load i32, ptr %i.afx, align 4, !tbaa !118
+  %i.afz = icmp eq i64 %i.afw, 0
   br i1 %i.afz, label %bb.cb, label %bb.cc
 
 bb.cb:                                            ; preds = %bb.ca
@@ -1689,10 +1689,10 @@ bb.cf:                                            ; preds = %bb.cd
   br i1 %i.agv, label %ma_dr_flac__clz.exit96.i526.thread, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
-  %i.agw = lshr i64 %.681.i608, 60
+  %i.agw = lshr i64 %.681.i608, 60                ; 2 uses
   %i.agx = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.agw
-  %i.agy = load i32, ptr %i.agx, align 4, !tbaa !118 ; 2 uses
-  %i.agz = icmp eq i32 %i.agy, 0
+  %i.agy = load i32, ptr %i.agx, align 4, !tbaa !118
+  %i.agz = icmp eq i64 %i.agw, 0
   br i1 %i.agz, label %bb.ch, label %bb.ci
 
 bb.ch:                                            ; preds = %bb.cg
@@ -2095,10 +2095,10 @@ bb.dm:                                            ; preds = %bb.dk
   br i1 %i.auf, label %ma_dr_flac__clz.exit.i536, label %bb.dn
 
 bb.dn:                                            ; preds = %bb.dm
-  %i.aug = lshr i64 %.479.i533, 60
+  %i.aug = lshr i64 %.479.i533, 60                ; 2 uses
   %i.auh = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.aug
-  %i.aui = load i32, ptr %i.auh, align 4, !tbaa !118 ; 2 uses
-  %i.auj = icmp eq i32 %i.aui, 0
+  %i.aui = load i32, ptr %i.auh, align 4, !tbaa !118
+  %i.auj = icmp eq i64 %i.aug, 0
   br i1 %i.auj, label %bb.do, label %bb.dp
 
 bb.do:                                            ; preds = %bb.dn
@@ -2159,10 +2159,10 @@ bb.ds:                                            ; preds = %bb.dq
   br i1 %i.avf, label %ma_dr_flac__clz.exit96.i460.thread, label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds
-  %i.avg = lshr i64 %.681.i542, 60
+  %i.avg = lshr i64 %.681.i542, 60                ; 2 uses
   %i.avh = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.avg
-  %i.avi = load i32, ptr %i.avh, align 4, !tbaa !118 ; 2 uses
-  %i.avj = icmp eq i32 %i.avi, 0
+  %i.avi = load i32, ptr %i.avh, align 4, !tbaa !118
+  %i.avj = icmp eq i64 %i.avg, 0
   br i1 %i.avj, label %bb.du, label %bb.dv
 
 bb.du:                                            ; preds = %bb.dt
@@ -2565,10 +2565,10 @@ bb.ez:                                            ; preds = %bb.ex
   br i1 %i.bip, label %ma_dr_flac__clz.exit.i470, label %bb.fa
 
 bb.fa:                                            ; preds = %bb.ez
-  %i.biq = lshr i64 %.479.i467, 60
+  %i.biq = lshr i64 %.479.i467, 60                ; 2 uses
   %i.bir = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.biq
-  %i.bis = load i32, ptr %i.bir, align 4, !tbaa !118 ; 2 uses
-  %i.bit = icmp eq i32 %i.bis, 0
+  %i.bis = load i32, ptr %i.bir, align 4, !tbaa !118
+  %i.bit = icmp eq i64 %i.biq, 0
   br i1 %i.bit, label %bb.fb, label %bb.fc
 
 bb.fb:                                            ; preds = %bb.fa
@@ -2629,10 +2629,10 @@ bb.ff:                                            ; preds = %bb.fd
   br i1 %i.bjp, label %ma_dr_flac__clz.exit96.i394.thread, label %bb.fg
 
 bb.fg:                                            ; preds = %bb.ff
-  %i.bjq = lshr i64 %.681.i476, 60
+  %i.bjq = lshr i64 %.681.i476, 60                ; 2 uses
   %i.bjr = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.bjq
-  %i.bjs = load i32, ptr %i.bjr, align 4, !tbaa !118 ; 2 uses
-  %i.bjt = icmp eq i32 %i.bjs, 0
+  %i.bjs = load i32, ptr %i.bjr, align 4, !tbaa !118
+  %i.bjt = icmp eq i64 %i.bjq, 0
   br i1 %i.bjt, label %bb.fh, label %bb.fi
 
 bb.fh:                                            ; preds = %bb.fg
@@ -3035,10 +3035,10 @@ bb.gm:                                            ; preds = %bb.gk
   br i1 %i.bwz, label %ma_dr_flac__clz.exit.i404, label %bb.gn
 
 bb.gn:                                            ; preds = %bb.gm
-  %i.bxa = lshr i64 %.479.i401, 60
+  %i.bxa = lshr i64 %.479.i401, 60                ; 2 uses
   %i.bxb = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.bxa
-  %i.bxc = load i32, ptr %i.bxb, align 4, !tbaa !118 ; 2 uses
-  %i.bxd = icmp eq i32 %i.bxc, 0
+  %i.bxc = load i32, ptr %i.bxb, align 4, !tbaa !118
+  %i.bxd = icmp eq i64 %i.bxa, 0
   br i1 %i.bxd, label %bb.go, label %bb.gp
 
 bb.go:                                            ; preds = %bb.gn
@@ -3441,10 +3441,10 @@ bb.lr:                                            ; preds = %bb.lp
   br i1 %i.dhy, label %ma_dr_flac__clz.exit96.i328.thread, label %bb.ls
 
 bb.ls:                                            ; preds = %bb.lr
-  %i.dhz = lshr i64 %i.dht, 60
+  %i.dhz = lshr i64 %i.dht, 60                    ; 2 uses
   %i.dia = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.dhz
-  %i.dib = load i32, ptr %i.dia, align 4, !tbaa !118 ; 2 uses
-  %i.dic = icmp eq i32 %i.dib, 0
+  %i.dib = load i32, ptr %i.dia, align 4, !tbaa !118
+  %i.dic = icmp eq i64 %i.dhz, 0
   br i1 %i.dic, label %bb.lt, label %bb.lu
 
 bb.lt:                                            ; preds = %bb.ls
@@ -3847,10 +3847,10 @@ bb.my:                                            ; preds = %bb.mw
   br i1 %i.dvi, label %ma_dr_flac__clz.exit.i338, label %bb.mz
 
 bb.mz:                                            ; preds = %bb.my
-  %i.dvj = lshr i64 %.479.i335, 60
+  %i.dvj = lshr i64 %.479.i335, 60                ; 2 uses
   %i.dvk = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.dvj
-  %i.dvl = load i32, ptr %i.dvk, align 4, !tbaa !118 ; 2 uses
-  %i.dvm = icmp eq i32 %i.dvl, 0
+  %i.dvl = load i32, ptr %i.dvk, align 4, !tbaa !118
+  %i.dvm = icmp eq i64 %i.dvj, 0
   br i1 %i.dvm, label %bb.na, label %bb.nb
 
 bb.na:                                            ; preds = %bb.mz
@@ -3911,10 +3911,10 @@ bb.ne:                                            ; preds = %bb.nc
   br i1 %i.dwi, label %ma_dr_flac__clz.exit96.i262.thread, label %bb.nf
 
 bb.nf:                                            ; preds = %bb.ne
-  %i.dwj = lshr i64 %.681.i344, 60
+  %i.dwj = lshr i64 %.681.i344, 60                ; 2 uses
   %i.dwk = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.dwj
-  %i.dwl = load i32, ptr %i.dwk, align 4, !tbaa !118 ; 2 uses
-  %i.dwm = icmp eq i32 %i.dwl, 0
+  %i.dwl = load i32, ptr %i.dwk, align 4, !tbaa !118
+  %i.dwm = icmp eq i64 %i.dwj, 0
   br i1 %i.dwm, label %bb.ng, label %bb.nh
 
 bb.ng:                                            ; preds = %bb.nf
@@ -4317,10 +4317,10 @@ bb.ol:                                            ; preds = %bb.oj
   br i1 %i.ejs, label %ma_dr_flac__clz.exit.i272, label %bb.om
 
 bb.om:                                            ; preds = %bb.ol
-  %i.ejt = lshr i64 %.479.i269, 60
+  %i.ejt = lshr i64 %.479.i269, 60                ; 2 uses
   %i.eju = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.ejt
-  %i.ejv = load i32, ptr %i.eju, align 4, !tbaa !118 ; 2 uses
-  %i.ejw = icmp eq i32 %i.ejv, 0
+  %i.ejv = load i32, ptr %i.eju, align 4, !tbaa !118
+  %i.ejw = icmp eq i64 %i.ejt, 0
   br i1 %i.ejw, label %bb.on, label %bb.oo
 
 bb.on:                                            ; preds = %bb.om
@@ -4381,10 +4381,10 @@ bb.or:                                            ; preds = %bb.op
   br i1 %i.eks, label %ma_dr_flac__clz.exit96.i196.thread, label %bb.os
 
 bb.os:                                            ; preds = %bb.or
-  %i.ekt = lshr i64 %.681.i278, 60
+  %i.ekt = lshr i64 %.681.i278, 60                ; 2 uses
   %i.eku = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.ekt
-  %i.ekv = load i32, ptr %i.eku, align 4, !tbaa !118 ; 2 uses
-  %i.ekw = icmp eq i32 %i.ekv, 0
+  %i.ekv = load i32, ptr %i.eku, align 4, !tbaa !118
+  %i.ekw = icmp eq i64 %i.ekt, 0
   br i1 %i.ekw, label %bb.ot, label %bb.ou
 
 bb.ot:                                            ; preds = %bb.os
@@ -4787,10 +4787,10 @@ bb.py:                                            ; preds = %bb.pw
   br i1 %i.eyc, label %ma_dr_flac__clz.exit.i206, label %bb.pz
 
 bb.pz:                                            ; preds = %bb.py
-  %i.eyd = lshr i64 %.479.i203, 60
+  %i.eyd = lshr i64 %.479.i203, 60                ; 2 uses
   %i.eye = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.eyd
-  %i.eyf = load i32, ptr %i.eye, align 4, !tbaa !118 ; 2 uses
-  %i.eyg = icmp eq i32 %i.eyf, 0
+  %i.eyf = load i32, ptr %i.eye, align 4, !tbaa !118
+  %i.eyg = icmp eq i64 %i.eyd, 0
   br i1 %i.eyg, label %bb.qa, label %bb.qb
 
 bb.qa:                                            ; preds = %bb.pz
@@ -4851,10 +4851,10 @@ bb.qe:                                            ; preds = %bb.qc
   br i1 %i.ezc, label %ma_dr_flac__clz.exit96.i130.thread, label %bb.qf
 
 bb.qf:                                            ; preds = %bb.qe
-  %i.ezd = lshr i64 %.681.i212, 60
+  %i.ezd = lshr i64 %.681.i212, 60                ; 2 uses
   %i.eze = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.ezd
-  %i.ezf = load i32, ptr %i.eze, align 4, !tbaa !118 ; 2 uses
-  %i.ezg = icmp eq i32 %i.ezf, 0
+  %i.ezf = load i32, ptr %i.eze, align 4, !tbaa !118
+  %i.ezg = icmp eq i64 %i.ezd, 0
   br i1 %i.ezg, label %bb.qg, label %bb.qh
 
 bb.qg:                                            ; preds = %bb.qf
@@ -5257,10 +5257,10 @@ bb.rl:                                            ; preds = %bb.rj
   br i1 %i.fmm, label %ma_dr_flac__clz.exit.i140, label %bb.rm
 
 bb.rm:                                            ; preds = %bb.rl
-  %i.fmn = lshr i64 %.479.i137, 60
+  %i.fmn = lshr i64 %.479.i137, 60                ; 2 uses
   %i.fmo = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.fmn
-  %i.fmp = load i32, ptr %i.fmo, align 4, !tbaa !118 ; 2 uses
-  %i.fmq = icmp eq i32 %i.fmp, 0
+  %i.fmp = load i32, ptr %i.fmo, align 4, !tbaa !118
+  %i.fmq = icmp eq i64 %i.fmn, 0
   br i1 %i.fmq, label %bb.rn, label %bb.ro
 
 bb.rn:                                            ; preds = %bb.rm
@@ -5663,10 +5663,10 @@ bb.wq:                                            ; preds = %bb.wo
   br i1 %i.gpc, label %ma_dr_flac__clz.exit96.i.thread, label %bb.wr
 
 bb.wr:                                            ; preds = %bb.wq
-  %i.gpd = lshr i64 %i.gox, 60
+  %i.gpd = lshr i64 %i.gox, 60                    ; 2 uses
   %i.gpe = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.gpd
-  %i.gpf = load i32, ptr %i.gpe, align 4, !tbaa !118 ; 2 uses
-  %i.gpg = icmp eq i32 %i.gpf, 0
+  %i.gpf = load i32, ptr %i.gpe, align 4, !tbaa !118
+  %i.gpg = icmp eq i64 %i.gpd, 0
   br i1 %i.gpg, label %bb.ws, label %bb.wt
 
 bb.ws:                                            ; preds = %bb.wr
@@ -6069,10 +6069,10 @@ bb.xx:                                            ; preds = %bb.xv
   br i1 %i.hcm, label %ma_dr_flac__clz.exit.i, label %bb.xy
 
 bb.xy:                                            ; preds = %bb.xx
-  %i.hcn = lshr i64 %.479.i, 60
+  %i.hcn = lshr i64 %.479.i, 60                   ; 2 uses
   %i.hco = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.hcn
-  %i.hcp = load i32, ptr %i.hco, align 4, !tbaa !118 ; 2 uses
-  %i.hcq = icmp eq i32 %i.hcp, 0
+  %i.hcp = load i32, ptr %i.hco, align 4, !tbaa !118
+  %i.hcq = icmp eq i64 %i.hcn, 0
   br i1 %i.hcq, label %bb.xz, label %bb.ya
 
 bb.xz:                                            ; preds = %bb.xy
@@ -6475,10 +6475,10 @@ bb.al:                                            ; preds = %bb.aj
   br label %.preheader.i
 
 bb.am:                                            ; preds = %bb.al
-  %i.fs = lshr i64 %i.fn, 60
+  %i.fs = lshr i64 %i.fn, 60                      ; 2 uses
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.fs
-  %i.fu = load i32, ptr %i.ft, align 4, !tbaa !118 ; 2 uses
-  %i.fv = icmp eq i32 %i.fu, 0
+  %i.fu = load i32, ptr %i.ft, align 4, !tbaa !118
+  %i.fv = icmp eq i64 %i.fs, 0
   br i1 %i.fv, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
@@ -6881,10 +6881,10 @@ bb.br:                                            ; preds = %bb.bp
   br i1 %i.sw, label %ma_dr_flac__clz.exit.i.i, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
-  %i.sx = lshr i64 %.354.i.i, 60
+  %i.sx = lshr i64 %.354.i.i, 60                  ; 2 uses
   %i.sy = getelementptr inbounds nuw [4 x i8], ptr @ma_dr_flac__clz_software.clz_table_4, i64 %i.sx
-  %i.sz = load i32, ptr %i.sy, align 4, !tbaa !118 ; 2 uses
-  %i.ta = icmp eq i32 %i.sz, 0
+  %i.sz = load i32, ptr %i.sy, align 4, !tbaa !118
+  %i.ta = icmp eq i64 %i.sx, 0
   br i1 %i.ta, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs

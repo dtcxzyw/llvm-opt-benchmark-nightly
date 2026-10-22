@@ -26,11 +26,11 @@ define dso_local i64 @vm_get_page_prot(i64 noundef %0) #1 align 16 prefalign(16)
 bb.a:
   %i.a = and i64 %0, 15
   %i.b = getelementptr [8 x i8], ptr @protection_map, i64 %i.a
-  %i.c = load i64, ptr %i.b, align 8              ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8
   %i.d = shl i64 %0, 27
   %i.e = and i64 %i.d, 8646911284551352320
   %.3 = or i64 %i.e, %i.c
-  %i.f = and i64 %i.c, 1
+  %i.f = and i64 %0, 7
   %.not16 = icmp eq i64 %i.f, 0
   %i.g = load i64, ptr @__supported_pte_mask, align 8
   %i.h = select i1 %.not16, i64 -1, i64 %i.g

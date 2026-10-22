@@ -204,7 +204,7 @@ _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3any5checkRShN
   %i.iw = icmp ult i64 %i.ij, 7
   br i1 %i.iw, label %.loopexit.i.i.thread, label %_RNvXsY_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB5_7WindowshENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsl5EpZqQPkyP_18build_script_build.exit.i.i.i.i
 
-.loopexit.i.i.thread:                             ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0Csl5EpZqQPkyP_18build_script_build.exit.backedge.i.i.i.i, %_RNvXsY_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB5_7WindowshENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsl5EpZqQPkyP_18build_script_build.exit.i.i.i.i
+.loopexit.i.i.thread:                             ; preds = %_RNvXsY_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB5_7WindowshENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsl5EpZqQPkyP_18build_script_build.exit.i.i.i.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0Csl5EpZqQPkyP_18build_script_build.exit.backedge.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvMNtCs4NRVxsYgnAr_4core3stre8containsReECsl5EpZqQPkyP_18build_script_build.exit.thread
 
