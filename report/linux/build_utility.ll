@@ -205,13 +205,12 @@ find_next_bit.exit:                               ; preds = %bb.e
 
 bb.f:                                             ; preds = %find_next_bit.exit
   %i.ad = and i64 %i.aa, 15                       ; 2 uses
-  %i.ae = shl nuw nsw i64 1, %i.ad
+  %i.ae = shl nuw nsw i64 1, %i.ad                ; 3 uses
   %i.af = trunc nuw nsw i64 %i.ae to i32          ; 2 uses
-  %i.ag = getelementptr [16 x i8], ptr @sd_flag_debug, i64 %i.ad ; 3 uses
-  %3 = load i32, ptr %i.ag, align 16              ; 2 uses
-  %4 = and i32 %3, 1
-  %.not77 = icmp eq i32 %4, 0
-  br i1 %.not77, label %bb.j, label %bb.g
+  %i.ag = getelementptr [16 x i8], ptr @sd_flag_debug, i64 %i.ad ; 2 uses
+  %3 = and i64 %i.ae, 15712
+  %.not77 = icmp eq i64 %3, 0
+  br i1 %.not77, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
   %i.ah = load ptr, ptr %i.w, align 8             ; 2 uses
@@ -232,9 +231,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f
-  %5 = and i32 %3, 2
-  %.not80 = icmp eq i32 %5, 0
-  br i1 %.not80, label %bb.n, label %bb.k
+  %4 = and i64 %i.ae, 7071
+  %.not80 = icmp eq i64 %4, 0
+  br i1 %.not80, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
   %i.ao = load ptr, ptr %0, align 8               ; 2 uses

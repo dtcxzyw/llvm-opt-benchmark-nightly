@@ -69,9 +69,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.dn, %bb.dg, %bb.t
   %.0287 = phi i32 [ 3, %bb.dn ], [ %.1288, %bb.dg ], [ %spec.select, %bb.t ]
-  %.0270 = phi ptr [ %.4274, %bb.dn ], [ %i.na, %bb.dg ], [ %.3273, %bb.t ]
+  %.0270 = phi ptr [ %.4274.lcssa, %bb.dn ], [ %i.na, %bb.dg ], [ %.3273, %bb.t ]
   %.0258 = phi ptr [ %i.nz, %bb.dn ], [ %i.nb, %bb.dg ], [ %i.be, %bb.t ]
-  %.0248 = phi i32 [ %16, %bb.dn ], [ %i.ns, %bb.dg ], [ %i.bb, %bb.t ]
+  %.0248 = phi i32 [ 1, %bb.dn ], [ %i.ns, %bb.dg ], [ %i.bb, %bb.t ]
   %.0241 = phi i32 [ %.6, %bb.dn ], [ %.5, %bb.dg ], [ -2, %bb.t ]
   %i.k = getelementptr inbounds nuw i8, ptr %.0270, i64 1
   br label %bb.c
@@ -83,7 +83,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.1271 = phi ptr [ %i.a, %bb.a ], [ %i.k, %bb.b ] ; 4 uses
   %.0266 = phi ptr [ %2, %bb.a ], [ %.3269, %bb.b ] ; 2 uses
   %.1259 = phi ptr [ %2, %bb.a ], [ %.0258, %bb.b ]
-  %.1249 = phi i32 [ 0, %bb.a ], [ %.0248, %bb.b ] ; 3 uses
+  %.1249 = phi i32 [ 0, %bb.a ], [ %.0248, %bb.b ] ; 4 uses
   %.1 = phi i32 [ -2, %bb.a ], [ %.0241, %bb.b ]  ; 3 uses
   %i.l = trunc nsw i32 %.1249 to i8
   store i8 %i.l, ptr %.1271, align 1, !tbaa !8
@@ -134,16 +134,16 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 .thread387:                                       ; preds = %bb.h, %bb.c
   %.2286 = phi i64 [ %.0284, %bb.c ], [ %spec.store.select, %bb.h ]
   %.3281 = phi ptr [ %.0278, %bb.c ], [ %i.w, %bb.h ] ; 8 uses
-  %.3273 = phi ptr [ %.1271, %bb.c ], [ %i.ab, %bb.h ] ; 3 uses
+  %.3273 = phi ptr [ %.1271, %bb.c ], [ %i.ab, %bb.h ] ; 4 uses
   %.3269 = phi ptr [ %.0266, %bb.c ], [ %i.z, %bb.h ]
-  %.3261 = phi ptr [ %.1259, %bb.c ], [ %i.ad, %bb.h ] ; 49 uses
+  %.3261 = phi ptr [ %.1259, %bb.c ], [ %i.ad, %bb.h ] ; 50 uses
   %i.af = icmp eq i32 %.1249, 31
   br i1 %i.af, label %.loopexit398, label %bb.i
 
 bb.i:                                             ; preds = %.thread387
   %i.ag = sext i32 %.1249 to i64                  ; 2 uses
   %i.ah = getelementptr inbounds [2 x i8], ptr @yypact, i64 %i.ag
-  %i.ai = load i16, ptr %i.ah, align 2, !tbaa !64 ; 3 uses
+  %i.ai = load i16, ptr %i.ah, align 2, !tbaa !64 ; 2 uses
   %i.aj = sext i16 %i.ai to i32
   %i.ak = icmp eq i16 %i.ai, -82
   br i1 %i.ak, label %bb.u, label %bb.j
@@ -163,7 +163,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ao = icmp eq i32 %.2, 256
-  br i1 %i.ao, label %3, label %bb.n
+  br i1 %i.ao, label %bb.dk, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ap = icmp samesign ult i32 %.2, 296
@@ -566,64 +566,45 @@ bb.dg:                                            ; preds = %bb.df, %bb.de
   br label %bb.b
 
 bb.dh:                                            ; preds = %bb.u
-  switch i32 %.1288, label %3 [
+  switch i32 %.1288, label %bb.dk [
     i32 0, label %.thread394
     i32 3, label %bb.di
   ]
 
 .thread394:                                       ; preds = %bb.dh
   call void @htmlerror(ptr noundef %0, ptr noundef nonnull @.str.2) #18
-  br label %3
+  br label %bb.dk
 
 bb.di:                                            ; preds = %bb.dh
   %i.nt = icmp slt i32 %.4, 1
-  br i1 %i.nt, label %bb.dj, label %3
+  br i1 %i.nt, label %bb.dj, label %bb.dk
 
 bb.dj:                                            ; preds = %bb.di
   %i.nu = icmp eq i32 %.4, 0
-  br i1 %i.nu, label %.loopexit398, label %3
+  br i1 %i.nu, label %.loopexit398, label %bb.dk
 
-3:                                                ; preds = %bb.dh, %bb.di, %.thread394, %bb.m, %bb.dj
+bb.dk:                                            ; preds = %bb.dh, %bb.di, %.thread394, %bb.m, %bb.dj
   %.6 = phi i32 [ %.4, %bb.dj ], [ %.4, %.thread394 ], [ %.4, %bb.dh ], [ 257, %bb.m ], [ -2, %bb.di ]
-  br label %4
+  %i.nv = icmp eq i32 %.1249, 0
+  br i1 %i.nv, label %bb.dn, label %bb.dl
 
-4:                                                ; preds = %bb.dm, %3
-  %5 = phi i16 [ %i.ai, %3 ], [ %.pre, %bb.dm ]   ; 2 uses
-  %.4274 = phi ptr [ %.3273, %3 ], [ %i.nx, %bb.dm ] ; 3 uses
-  %.4262 = phi ptr [ %.3261, %3 ], [ %i.nw, %bb.dm ] ; 2 uses
-  %6 = icmp sgt i16 %5, -2
-  br i1 %6, label %bb.dk, label %14
+bb.dl:                                            ; preds = %bb.dk, %bb.dm
+  %.4262553 = phi ptr [ %i.nw, %bb.dm ], [ %.3261, %bb.dk ]
+  %.4274552 = phi ptr [ %i.nx, %bb.dm ], [ %.3273, %bb.dk ] ; 2 uses
+  %3 = icmp eq ptr %.4274552, %.3281
+  br i1 %3, label %.loopexit398, label %bb.dm
 
-bb.dk:                                            ; preds = %4
-  %7 = sext i16 %5 to i64
-  %8 = add nsw i64 %7, 1                          ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr @yycheck, i64 %8
-  %10 = load i8, ptr %9, align 1, !tbaa !8
-  %i.nv = icmp eq i8 %10, 1
-  br i1 %i.nv, label %bb.dl, label %14
-
-bb.dl:                                            ; preds = %bb.dk
-  %11 = getelementptr inbounds nuw i8, ptr @yytable, i64 %8
-  %12 = load i8, ptr %11, align 1, !tbaa !8       ; 2 uses
-  %13 = icmp sgt i8 %12, 0
-  br i1 %13, label %bb.dn, label %14
-
-14:                                               ; preds = %bb.dk, %bb.dl, %4
-  %15 = icmp eq ptr %.4274, %.3281
-  br i1 %15, label %.loopexit398, label %bb.dm
-
-bb.dm:                                            ; preds = %14
-  %i.nw = getelementptr inbounds i8, ptr %.4262, i64 -8
-  %i.nx = getelementptr inbounds i8, ptr %.4274, i64 -1 ; 2 uses
+bb.dm:                                            ; preds = %bb.dl
+  %i.nw = getelementptr inbounds i8, ptr %.4262553, i64 -8 ; 2 uses
+  %i.nx = getelementptr inbounds i8, ptr %.4274552, i64 -1 ; 3 uses
   %i.ny = load i8, ptr %i.nx, align 1, !tbaa !8
-  %.phi.trans.insert = sext i8 %i.ny to i64
-  %.phi.trans.insert494 = getelementptr inbounds [2 x i8], ptr @yypact, i64 %.phi.trans.insert
-  %.pre = load i16, ptr %.phi.trans.insert494, align 2, !tbaa !64
-  br label %4
+  %4 = icmp eq i8 %i.ny, 0
+  br i1 %4, label %bb.dn, label %bb.dl
 
-bb.dn:                                            ; preds = %bb.dl
-  %16 = zext nneg i8 %12 to i32
-  %i.nz = getelementptr inbounds nuw i8, ptr %.4262, i64 8 ; 2 uses
+bb.dn:                                            ; preds = %bb.dm, %bb.dk
+  %.4274.lcssa = phi ptr [ %.3273, %bb.dk ], [ %i.nx, %bb.dm ]
+  %.4262.lcssa = phi ptr [ %.3261, %bb.dk ], [ %i.nw, %bb.dm ]
+  %i.nz = getelementptr inbounds nuw i8, ptr %.4262.lcssa, i64 8 ; 2 uses
   %i.oa = load i64, ptr %1, align 8, !tbaa !8
   store i64 %i.oa, ptr %i.nz, align 8, !tbaa !8
   br label %bb.b
@@ -632,9 +613,9 @@ bb.do:                                            ; preds = %bb.d, %bb.e
   call void @htmlerror(ptr noundef %0, ptr noundef nonnull @.str.5) #18
   br label %.loopexit398
 
-.loopexit398:                                     ; preds = %.thread387, %bb.dj, %14, %bb.aa, %bb.br, %bb.bw, %bb.do
-  %.5283 = phi ptr [ %.0278, %bb.do ], [ %.3281, %bb.br ], [ %.3281, %bb.bw ], [ %.3281, %14 ], [ %.3281, %bb.aa ], [ %.3281, %bb.dj ], [ %.3281, %.thread387 ] ; 2 uses
-  %.0256 = phi i32 [ 2, %bb.do ], [ 1, %bb.br ], [ 1, %bb.bw ], [ 1, %14 ], [ 1, %bb.aa ], [ 1, %bb.dj ], [ 0, %.thread387 ] ; 2 uses
+.loopexit398:                                     ; preds = %.thread387, %bb.dj, %bb.dl, %bb.aa, %bb.br, %bb.bw, %bb.do
+  %.5283 = phi ptr [ %.0278, %bb.do ], [ %.3281, %bb.br ], [ %.3281, %bb.bw ], [ %.3281, %bb.dl ], [ %.3281, %bb.aa ], [ %.3281, %bb.dj ], [ %.3281, %.thread387 ] ; 2 uses
+  %.0256 = phi i32 [ 2, %bb.do ], [ 1, %bb.br ], [ 1, %bb.bw ], [ 1, %bb.dl ], [ 1, %bb.aa ], [ 1, %bb.dj ], [ 0, %.thread387 ] ; 2 uses
   %.not310 = icmp eq ptr %.5283, %i.a
   br i1 %.not310, label %bb.dp, label %.loopexit398.thread
 

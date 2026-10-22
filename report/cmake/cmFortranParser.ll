@@ -104,9 +104,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.bq, %bb.ax, %bb.o
   %.0 = phi ptr [ %.4288, %bb.bq ], [ %.1285353, %bb.ax ], [ %.1285353, %bb.o ] ; 2 uses
   %.0229 = phi ptr [ %i.fv, %bb.bq ], [ %i.ee, %bb.ax ], [ %i.ad, %bb.o ] ; 2 uses
-  %.0223.idx = phi i64 [ %.2225.idx, %bb.bq ], [ %.1224.add, %bb.ax ], [ %.1224.idx355, %bb.o ] ; 2 uses
+  %.0223.idx = phi i64 [ %.2225.idx.lcssa, %bb.bq ], [ %.1224.add, %bb.ax ], [ %.1224.idx355, %bb.o ] ; 2 uses
   %.0220 = phi i32 [ 3, %bb.bq ], [ %.1221356, %bb.ax ], [ %spec.select, %bb.o ]
-  %.0217 = phi i32 [ %16, %bb.bq ], [ %i.ex, %bb.ax ], [ %i.aa, %bb.o ] ; 2 uses
+  %.0217 = phi i32 [ 3, %bb.bq ], [ %i.ex, %bb.ax ], [ %i.aa, %bb.o ] ; 2 uses
   %.0212 = phi i32 [ %.6, %bb.bq ], [ %.5, %bb.ax ], [ -2, %bb.o ] ; 2 uses
   %.0223.add = add nsw i64 %.0223.idx, 1          ; 2 uses
   %.1224.ptr = getelementptr inbounds i8, ptr %i.a, i64 %.0223.add ; 3 uses
@@ -118,10 +118,10 @@ bb.b:                                             ; preds = %bb.bq, %bb.ax, %bb.
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.1224.ptr360 = phi ptr [ %i.a, %bb.a ], [ %.1224.ptr, %bb.b ] ; 5 uses
   %.1359 = phi i32 [ -2, %bb.a ], [ %.0212, %bb.b ] ; 4 uses
-  %.1218357 = phi i32 [ 0, %bb.a ], [ %.0217, %bb.b ] ; 3 uses
+  %.1218357 = phi i32 [ 0, %bb.a ], [ %.0217, %bb.b ] ; 4 uses
   %.1221356 = phi i32 [ 0, %bb.a ], [ %.0220, %bb.b ] ; 3 uses
-  %.1224.idx355 = phi i64 [ 0, %bb.a ], [ %.0223.add, %bb.b ] ; 3 uses
-  %.1230354 = phi ptr [ %2, %bb.a ], [ %.0229, %bb.b ] ; 31 uses
+  %.1224.idx355 = phi i64 [ 0, %bb.a ], [ %.0223.add, %bb.b ] ; 4 uses
+  %.1230354 = phi ptr [ %2, %bb.a ], [ %.0229, %bb.b ] ; 32 uses
   %.1285353 = phi ptr [ %i.b, %bb.a ], [ %.0, %bb.b ] ; 15 uses
   %i.e = icmp eq i32 %.1218357, 2
   br i1 %i.e, label %.loopexit336, label %bb.d
@@ -129,7 +129,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.f = sext i32 %.1218357 to i64                ; 2 uses
   %i.g = getelementptr inbounds [2 x i8], ptr @_ZL6yypact, i64 %i.f
-  %i.h = load i16, ptr %i.g, align 2, !tbaa !16   ; 3 uses
+  %i.h = load i16, ptr %i.g, align 2, !tbaa !16   ; 2 uses
   %i.i = sext i16 %i.h to i32
   %i.j = icmp eq i16 %i.h, -39
   br i1 %i.j, label %bb.p, label %bb.e
@@ -149,7 +149,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.n = icmp eq i32 %.2, 256
-  br i1 %i.n, label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit, label %bb.i
+  br i1 %i.n, label %bb.bn, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.o = icmp samesign ult i32 %.2, 296
@@ -518,7 +518,7 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.ay
   %i.fd = phi i32 [ -2, %bb.ay ], [ %i.fc, %bb.ba ], [ 2, %bb.az ] ; 3 uses
-  switch i32 %.1221356, label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit [
+  switch i32 %.1221356, label %bb.bn [
     i32 0, label %bb.bc
     i32 3, label %bb.bk
   ]
@@ -562,7 +562,7 @@ bb.bj:                                            ; preds = %bb.bc, %bb.bi, %bb.
   %.0209 = phi i1 [ true, %bb.bc ], [ false, %bb.bd ], [ true, %bb.bi ], [ %i.fi, %bb.bh ]
   %i.fj = call noundef ptr @_Z21cmFortran_yyget_extraPv(ptr noundef %0)
   call void @_Z21cmFortranParser_ErrorP17cmFortranParser_sPKc(ptr noundef %i.fj, ptr noundef %.0210)
-  br i1 %.0209, label %bb.br, label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit
+  br i1 %.0209, label %bb.br, label %bb.bn
 
 bb.bk:                                            ; preds = %bb.bb
   %i.fk = icmp slt i32 %.4, 1
@@ -570,51 +570,33 @@ bb.bk:                                            ; preds = %bb.bb
 
 bb.bl:                                            ; preds = %bb.bk
   %i.fl = icmp eq i32 %.4, 0
-  br i1 %i.fl, label %.thread309, label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit
+  br i1 %i.fl, label %.thread309, label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bk
   %.off.i = add nsw i32 %i.fd, -32
   %switch.i = icmp ult i32 %.off.i, 3
-  br i1 %switch.i, label %.sink.split.i, label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit
+  br i1 %switch.i, label %.sink.split.i, label %bb.bn
 
 .sink.split.i:                                    ; preds = %bb.bm
   %i.fm = load ptr, ptr %1, align 8, !tbaa !21
   call void @free(ptr noundef %i.fm) #9
-  br label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit
-
-_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit: ; preds = %bb.bb, %bb.bj, %.sink.split.i, %bb.bm, %bb.h, %bb.bl
-  %.4288 = phi ptr [ %.1285353, %bb.bl ], [ %.1285353, %.sink.split.i ], [ %.1285353, %bb.bb ], [ %.1285353, %bb.h ], [ %.1285353, %bb.bm ], [ %.2286, %bb.bj ] ; 2 uses
-  %.6 = phi i32 [ %.4, %bb.bl ], [ -2, %.sink.split.i ], [ %.4, %bb.bb ], [ 257, %bb.h ], [ -2, %bb.bm ], [ %.4, %bb.bj ] ; 2 uses
   br label %bb.bn
 
-bb.bn:                                            ; preds = %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit
-  %3 = phi i16 [ %i.h, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit ], [ %.pre, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ] ; 2 uses
-  %.2231 = phi ptr [ %.1230354, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit ], [ %i.fs, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ] ; 4 uses
-  %.2225.idx = phi i64 [ %.1224.idx355, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit ], [ %.2225.add, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ] ; 3 uses
-  %.2219 = phi i32 [ %.1218357, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit ], [ %i.fu, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ]
-  %4 = sext i32 %.2219 to i64
-  %5 = icmp sgt i16 %3, -2
-  br i1 %5, label %bb.bo, label %14
+bb.bn:                                            ; preds = %bb.bb, %bb.bj, %.sink.split.i, %bb.bm, %bb.h, %bb.bl
+  %.4288 = phi ptr [ %.1285353, %bb.bl ], [ %.1285353, %.sink.split.i ], [ %.1285353, %bb.bb ], [ %.1285353, %bb.h ], [ %.1285353, %bb.bm ], [ %.2286, %bb.bj ] ; 2 uses
+  %.6 = phi i32 [ %.4, %bb.bl ], [ -2, %.sink.split.i ], [ %.4, %bb.bb ], [ 257, %bb.h ], [ -2, %bb.bm ], [ %.4, %bb.bj ] ; 2 uses
+  %3 = icmp eq i32 %.1218357, 1
+  br i1 %3, label %bb.bq, label %bb.bo
 
-bb.bo:                                            ; preds = %bb.bn
-  %6 = sext i16 %3 to i64
-  %7 = add nsw i64 %6, 1                          ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr @_ZL7yycheck, i64 %7
-  %9 = load i8, ptr %8, align 1, !tbaa !14
-  %i.fn = icmp eq i8 %9, 1
-  br i1 %i.fn, label %10, label %14
+bb.bo:                                            ; preds = %bb.bn, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272
+  %.in421 = phi i32 [ %i.fu, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ], [ %.1218357, %bb.bn ]
+  %.2225.idx417 = phi i64 [ %.2225.add, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ], [ %.1224.idx355, %bb.bn ] ; 2 uses
+  %.2231416 = phi ptr [ %i.fs, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ], [ %.1230354, %bb.bn ] ; 3 uses
+  %i.fn = icmp eq i64 %.2225.idx417, 0
+  br i1 %i.fn, label %.loopexit336, label %bb.bp
 
-10:                                               ; preds = %bb.bo
-  %11 = getelementptr inbounds nuw i8, ptr @_ZL7yytable, i64 %7
-  %12 = load i8, ptr %11, align 1, !tbaa !14      ; 2 uses
-  %13 = icmp sgt i8 %12, 0
-  br i1 %13, label %bb.bq, label %14
-
-14:                                               ; preds = %bb.bo, %10, %bb.bn
-  %15 = icmp eq i64 %.2225.idx, 0
-  br i1 %15, label %.loopexit336, label %bb.bp
-
-bb.bp:                                            ; preds = %14
+bb.bp:                                            ; preds = %bb.bo
+  %4 = sext i32 %.in421 to i64
   %i.fo = getelementptr inbounds i8, ptr @_ZL6yystos, i64 %4
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !14
   %i.fq = sext i8 %i.fp to i32
@@ -623,24 +605,23 @@ bb.bp:                                            ; preds = %14
   br i1 %switch.i270, label %.sink.split.i271, label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272
 
 .sink.split.i271:                                 ; preds = %bb.bp
-  %i.fr = load ptr, ptr %.2231, align 8, !tbaa !21
+  %i.fr = load ptr, ptr %.2231416, align 8, !tbaa !21
   call void @free(ptr noundef %i.fr) #9
   br label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272
 
 _ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272: ; preds = %bb.bp, %.sink.split.i271
-  %i.fs = getelementptr inbounds i8, ptr %.2231, i64 -8
-  %.2225.add = add nsw i64 %.2225.idx, -1         ; 2 uses
+  %i.fs = getelementptr inbounds i8, ptr %.2231416, i64 -8 ; 2 uses
+  %.2225.add = add nsw i64 %.2225.idx417, -1      ; 3 uses
   %.ptr255 = getelementptr inbounds i8, ptr %i.a, i64 %.2225.add
   %i.ft = load i8, ptr %.ptr255, align 1, !tbaa !14 ; 2 uses
   %i.fu = sext i8 %i.ft to i32
-  %.phi.trans.insert = sext i8 %i.ft to i64
-  %.phi.trans.insert378 = getelementptr inbounds [2 x i8], ptr @_ZL6yypact, i64 %.phi.trans.insert
-  %.pre = load i16, ptr %.phi.trans.insert378, align 2, !tbaa !16
-  br label %bb.bn, !llvm.loop !18
+  %5 = icmp eq i8 %i.ft, 1
+  br i1 %5, label %bb.bq, label %bb.bo, !llvm.loop !18
 
-bb.bq:                                            ; preds = %10
-  %16 = zext nneg i8 %12 to i32
-  %i.fv = getelementptr inbounds nuw i8, ptr %.2231, i64 8 ; 2 uses
+bb.bq:                                            ; preds = %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272, %bb.bn
+  %.2231.lcssa = phi ptr [ %.1230354, %bb.bn ], [ %i.fs, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ]
+  %.2225.idx.lcssa = phi i64 [ %.1224.idx355, %bb.bn ], [ %.2225.add, %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit272 ]
+  %i.fv = getelementptr inbounds nuw i8, ptr %.2231.lcssa, i64 8 ; 2 uses
   %i.fw = load i64, ptr %1, align 8, !tbaa !11
   store i64 %i.fw, ptr %i.fv, align 8, !tbaa !11
   br label %bb.b
@@ -654,12 +635,12 @@ bb.br:                                            ; preds = %bb.bj, %bb.b
   call void @_Z21cmFortranParser_ErrorP17cmFortranParser_sPKc(ptr noundef %i.fx, ptr noundef nonnull @.str.5)
   br label %.loopexit336
 
-.loopexit336:                                     ; preds = %bb.c, %14, %bb.br
-  %.6290 = phi ptr [ %.4288, %14 ], [ %.5289, %bb.br ], [ %.1285353, %bb.c ] ; 2 uses
-  %.0236 = phi i32 [ 1, %14 ], [ 2, %bb.br ], [ 0, %bb.c ] ; 2 uses
-  %.4233 = phi ptr [ %.2231, %14 ], [ %.1230.lcssa, %bb.br ], [ %.1230354, %bb.c ] ; 2 uses
-  %.4227 = phi ptr [ %i.a, %14 ], [ %.1224.ptr.lcssa, %bb.br ], [ %.1224.ptr360, %bb.c ] ; 2 uses
-  %.9 = phi i32 [ %.6, %14 ], [ %.8, %bb.br ], [ %.1359, %bb.c ] ; 2 uses
+.loopexit336:                                     ; preds = %bb.c, %bb.bo, %bb.br
+  %.6290 = phi ptr [ %.4288, %bb.bo ], [ %.5289, %bb.br ], [ %.1285353, %bb.c ] ; 2 uses
+  %.0236 = phi i32 [ 1, %bb.bo ], [ 2, %bb.br ], [ 0, %bb.c ] ; 2 uses
+  %.4233 = phi ptr [ %.2231416, %bb.bo ], [ %.1230.lcssa, %bb.br ], [ %.1230354, %bb.c ] ; 2 uses
+  %.4227 = phi ptr [ %i.a, %bb.bo ], [ %.1224.ptr.lcssa, %bb.br ], [ %.1224.ptr360, %bb.c ] ; 2 uses
+  %.9 = phi i32 [ %.6, %bb.bo ], [ %.8, %bb.br ], [ %.1359, %bb.c ] ; 2 uses
   %or.cond11 = icmp ult i32 %.9, 296
   br i1 %or.cond11, label %.thread309, label %_ZL10yydestructPKc15yysymbol_kind_tP17cmFortran_yystypePv.exit276
 

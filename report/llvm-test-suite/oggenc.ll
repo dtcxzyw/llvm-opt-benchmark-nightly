@@ -205,27 +205,21 @@ begin_hunk_0_@setup_tone_curves:bb.a
 
 bb.c:                                             ; preds = %.preheader297
   %i.boz = getelementptr inbounds nuw [4 x i8], ptr @ATH, i64 %i.box
-  %i.bpa = load float, ptr %i.boz, align 4        ; 2 uses
-  %5 = fcmp olt float %i.bpa, 9.990000e+02
-  %.1252 = select i1 %5, float %i.bpa, float 9.990000e+02 ; 4 uses
+  %i.bpa = load float, ptr %i.boz, align 4        ; 3 uses
   %.not = icmp eq i64 %i.box, 87
-  br i1 %.not, label %6, label %bb.d
-
-6:                                                ; preds = %bb.c
-  %7 = fcmp ogt float %.1252, -3.000000e+01
-  br i1 %7, label %.thread469.thread, label %.thread465
+  br i1 %.not, label %.thread465, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.bpb = getelementptr inbounds nuw [4 x i8], ptr @ATH, i64 %i.box
   %i.bpc = getelementptr inbounds nuw i8, ptr %i.bpb, i64 4
   %i.bpd = load float, ptr %i.bpc, align 4        ; 2 uses
-  %i.bpe = fcmp ogt float %.1252, %i.bpd
-  %.1252.1 = select i1 %i.bpe, float %i.bpd, float %.1252 ; 3 uses
+  %i.bpe = fcmp ogt float %i.bpa, %i.bpd
+  %.1252.1 = select i1 %i.bpe, float %i.bpd, float %i.bpa ; 3 uses
   %i.bpf = icmp samesign ult i64 %i.box, 86
   br i1 %i.bpf, label %bb.e, label %.thread465
 
-.thread465:                                       ; preds = %6, %bb.d
-  %.1252.1467 = phi float [ %.1252.1, %bb.d ], [ %.1252, %6 ] ; 2 uses
+.thread465:                                       ; preds = %bb.c, %bb.d
+  %.1252.1467 = phi float [ %.1252.1, %bb.d ], [ %i.bpa, %bb.c ] ; 2 uses
   %i.bpg = fcmp ogt float %.1252.1467, -3.000000e+01
   br i1 %i.bpg, label %.thread469.thread, label %.thread469
 
@@ -256,8 +250,8 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g
   br label %.thread469.thread
 
-.thread469.thread:                                ; preds = %.thread465, %6, %.preheader297, %bb.h, %bb.g, %bb.f, %.thread469
-  %.1252.3 = phi float [ %i.bpo, %bb.h ], [ %.1252.2, %bb.g ], [ -3.000000e+01, %bb.f ], [ %.1252.2471, %.thread469 ], [ -3.000000e+01, %.preheader297 ], [ -3.000000e+01, %6 ], [ -3.000000e+01, %.thread465 ]
+.thread469.thread:                                ; preds = %.thread465, %.preheader297, %bb.h, %bb.g, %bb.f, %.thread469
+  %.1252.3 = phi float [ %i.bpo, %bb.h ], [ %.1252.2, %bb.g ], [ -3.000000e+01, %bb.f ], [ %.1252.2471, %.thread469 ], [ -3.000000e+01, %.preheader297 ], [ -3.000000e+01, %.thread465 ]
   %i.bpq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   store float %.1252.3, ptr %i.bpq, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

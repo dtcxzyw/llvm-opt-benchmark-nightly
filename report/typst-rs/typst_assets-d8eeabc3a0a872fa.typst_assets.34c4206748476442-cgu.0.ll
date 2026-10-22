@@ -205,12 +205,14 @@ bb.ad:                                            ; preds = %_RINvMNtCs3oUPovFnL
 bb.ae:                                            ; preds = %bb.ad
   %i.ho = getelementptr inbounds nuw [4 x i8], ptr @447, i64 %i.hm
   %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 2
-  %i.hq = load i8, ptr %i.hp, align 2, !noundef !4 ; 2 uses
+  %i.hq = load i8, ptr %i.hp, align 2, !noundef !4
   %i.hr = lshr i8 %i.hq, 4                        ; 2 uses
-  %3 = icmp ult i8 %i.hq, -32
-  br i1 %3, label %switch.hole_check93, label %bb.af
+  %switch.maskindex = zext nneg i8 %i.hr to i16
+  %switch.shifted95 = lshr i16 14199, %switch.maskindex
+  %switch.lobit96 = trunc i16 %switch.shifted95 to i1
+  br i1 %switch.lobit96, label %switch.lookup94, label %bb.af
 
-bb.af:                                            ; preds = %switch.hole_check93, %bb.ae
+bb.af:                                            ; preds = %bb.ae
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @462, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @464) #19
   unreachable
 
@@ -221,13 +223,7 @@ bb.ag:                                            ; preds = %bb.ad
 _RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit.fold.split: ; preds = %bb.x, %bb.x, %bb.x
   br label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit
 
-switch.hole_check93:                              ; preds = %bb.ae
-  %switch.maskindex = zext nneg i8 %i.hr to i16
-  %switch.shifted95 = lshr i16 14199, %switch.maskindex
-  %switch.lobit96 = trunc i16 %switch.shifted95 to i1
-  br i1 %switch.lobit96, label %switch.lookup94, label %bb.af
-
-switch.lookup94:                                  ; preds = %switch.hole_check93
+switch.lookup94:                                  ; preds = %bb.ae
   %i.hs = zext nneg i8 %i.hr to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvMNtCs4wS76oGtFbW_12typst_assets6mathmlNtB2_12OperatorInfo21get_operator_category, i64 %i.hs
   %switch.load = load i8, ptr %switch.gep, align 1

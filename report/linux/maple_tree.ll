@@ -205,16 +205,13 @@ mte_destroy_descend.exit:                         ; preds = %bb.h, %.loopexit
   %i.ai = lshr i64 %i.ah, 3
   %i.aj = and i64 %i.ai, 15
   %i.ak = getelementptr i8, ptr @mt_slots, i64 %i.aj
-  %i.al = load i8, ptr %i.ak, align 1             ; 3 uses
-  %.not.i = icmp eq i8 %i.al, 0
-  br i1 %.not.i, label %mte_dead_leaves.exit, label %.lr.ph.preheader.i
-
-.lr.ph.preheader.i:                               ; preds = %mte_destroy_descend.exit
-  %wide.trip.count.i = zext i8 %i.al to i64
+  %i.al = load i8, ptr %i.ak, align 1
+  %2 = tail call i8 @llvm.umax.i8(i8 %i.al, i8 1) ; 2 uses
+  %wide.trip.count.i = zext i8 %2 to i64
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.i, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.i ] ; 4 uses
+.lr.ph.i:                                         ; preds = %bb.i, %mte_destroy_descend.exit
+  %indvars.iv.i = phi i64 [ 0, %mte_destroy_descend.exit ], [ %indvars.iv.next.i, %bb.i ] ; 4 uses
   %i.am = and i64 %indvars.iv.i, 255
   %i.an = getelementptr [8 x i8], ptr %.037, i64 %i.am
   %i.ao = load volatile ptr, ptr %i.an, align 8
@@ -245,14 +242,14 @@ bb.i:                                             ; preds = %.lr.ph.i
   %i.az = trunc i64 %indvars.iv.i to i8
   br label %mte_dead_leaves.exit
 
-mte_dead_leaves.exit:                             ; preds = %bb.i, %mte_destroy_descend.exit, %._crit_edge.loopexit.split.loop.exit.i
-  %.0.lcssa.i = phi i8 [ 0, %mte_destroy_descend.exit ], [ %i.az, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.al, %bb.i ] ; 2 uses
+mte_dead_leaves.exit:                             ; preds = %bb.i, %._crit_edge.loopexit.split.loop.exit.i
+  %.0.lcssa.ph.i = phi i8 [ %i.az, %._crit_edge.loopexit.split.loop.exit.i ], [ %2, %bb.i ] ; 2 uses
   %i.ba = getelementptr i8, ptr %.036, i64 40
-  store i8 %.0.lcssa.i, ptr %i.ba, align 8
+  store i8 %.0.lcssa.ph.i, ptr %i.ba, align 8
   br i1 %1, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %mte_dead_leaves.exit
-  %i.bb = zext i8 %.0.lcssa.i to i64
+  %i.bb = zext i8 %.0.lcssa.ph.i to i64
   %i.bc = load ptr, ptr @maple_node_cache, align 8
   tail call void @kmem_cache_free_bulk(ptr noundef %i.bc, i64 noundef range(i64 0, 256) %i.bb, ptr noundef %.037) #16
   br label %bb.k
@@ -398,16 +395,13 @@ bb.x:                                             ; preds = %.loopexit
   %i.dc = lshr i64 %i.a, 3
   %i.dd = and i64 %i.dc, 15
   %i.de = getelementptr i8, ptr @mt_slots, i64 %i.dd
-  %i.df = load i8, ptr %i.de, align 1             ; 3 uses
-  %.not.i54 = icmp eq i8 %i.df, 0
-  br i1 %.not.i54, label %mte_dead_leaves.exit64, label %.lr.ph.preheader.i55
-
-.lr.ph.preheader.i55:                             ; preds = %bb.x
-  %wide.trip.count.i56 = zext i8 %i.df to i64
+  %i.df = load i8, ptr %i.de, align 1
+  %3 = tail call i8 @llvm.umax.i8(i8 %i.df, i8 1) ; 2 uses
+  %wide.trip.count.i54 = zext i8 %3 to i64
   br label %.lr.ph.i57
 
-.lr.ph.i57:                                       ; preds = %bb.y, %.lr.ph.preheader.i55
-  %indvars.iv.i58 = phi i64 [ 0, %.lr.ph.preheader.i55 ], [ %indvars.iv.next.i62, %bb.y ] ; 4 uses
+.lr.ph.i57:                                       ; preds = %bb.y, %bb.x
+  %indvars.iv.i58 = phi i64 [ 0, %bb.x ], [ %indvars.iv.next.i62, %bb.y ] ; 4 uses
   %i.dg = and i64 %indvars.iv.i58, 255
   %i.dh = getelementptr [8 x i8], ptr %.138, i64 %i.dg
   %i.di = load volatile ptr, ptr %i.dh, align 8
@@ -431,21 +425,21 @@ bb.y:                                             ; preds = %.lr.ph.i57
   %i.ds = getelementptr [8 x i8], ptr %.138, i64 %indvars.iv.i58
   store volatile ptr %i.dq, ptr %i.ds, align 8
   %indvars.iv.next.i62 = add nuw nsw i64 %indvars.iv.i58, 1 ; 2 uses
-  %exitcond.not.i63 = icmp eq i64 %indvars.iv.next.i62, %wide.trip.count.i56
+  %exitcond.not.i63 = icmp eq i64 %indvars.iv.next.i62, %wide.trip.count.i54
   br i1 %exitcond.not.i63, label %mte_dead_leaves.exit64, label %.lr.ph.i57, !llvm.loop !290
 
 ._crit_edge.loopexit.split.loop.exit.i60:         ; preds = %.lr.ph.i57
   %i.dt = trunc i64 %indvars.iv.i58 to i8
   br label %mte_dead_leaves.exit64
 
-mte_dead_leaves.exit64:                           ; preds = %bb.y, %bb.x, %._crit_edge.loopexit.split.loop.exit.i60
-  %.0.lcssa.i61 = phi i8 [ 0, %bb.x ], [ %i.dt, %._crit_edge.loopexit.split.loop.exit.i60 ], [ %i.df, %bb.y ] ; 2 uses
+mte_dead_leaves.exit64:                           ; preds = %bb.y, %._crit_edge.loopexit.split.loop.exit.i60
+  %.0.lcssa.ph.i59 = phi i8 [ %i.dt, %._crit_edge.loopexit.split.loop.exit.i60 ], [ %3, %bb.y ] ; 2 uses
   %i.du = getelementptr i8, ptr %i.db, i64 40
-  store i8 %.0.lcssa.i61, ptr %i.du, align 8
+  store i8 %.0.lcssa.ph.i59, ptr %i.du, align 8
   br i1 %1, label %.thread28, label %.thread31
 
 .thread28:                                        ; preds = %mte_dead_leaves.exit64
-  %i.dv = zext i8 %.0.lcssa.i61 to i64
+  %i.dv = zext i8 %.0.lcssa.ph.i59 to i64
   %i.dw = load ptr, ptr @maple_node_cache, align 8
   tail call void @kmem_cache_free_bulk(ptr noundef %i.dw, i64 noundef range(i64 0, 256) %i.dv, ptr noundef %.138) #16
   br label %bb.z

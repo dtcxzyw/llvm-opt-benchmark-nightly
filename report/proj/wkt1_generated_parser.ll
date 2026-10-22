@@ -135,10 +135,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 0, 3) i32 @pj_wkt1_parse(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 6 uses
+  %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca [200 x i16], align 16             ; 6 uses
   %i.c = alloca [200 x i32], align 16             ; 4 uses
-  %i.d = alloca [128 x i8], align 16              ; 6 uses
+  %i.d = alloca [128 x i8], align 16              ; 11 uses
   %i.e = alloca i64, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   store i32 0, ptr %i.a, align 4, !tbaa !13
@@ -149,27 +149,23 @@ bb.a:
   store i64 128, ptr %i.e, align 8, !tbaa !9
   br label %bb.c
 
-bb.b:                                             ; preds = %28, %bb.y, %bb.s
-  %.0233 = phi ptr [ %.4236, %28 ], [ %.1234, %bb.y ], [ %.1234, %bb.s ]
-  %.0197 = phi i32 [ %29, %28 ], [ %i.ci, %bb.y ], [ %i.ay, %bb.s ]
-  %.0194 = phi i32 [ 3, %28 ], [ %.1195, %bb.y ], [ %spec.select, %bb.s ]
-  %.0178 = phi ptr [ %.4182, %28 ], [ %i.bq, %bb.y ], [ %.3181, %bb.s ]
-  %.0165 = phi ptr [ %31, %28 ], [ %i.br, %bb.y ], [ %i.bc, %bb.s ]
-  %.0154 = phi i32 [ %.6, %28 ], [ %.5, %bb.y ], [ -2, %bb.s ]
+bb.b:                                             ; preds = %bb.y, %bb.s
+  %.0197 = phi i32 [ %i.ay, %bb.s ], [ %i.ci, %bb.y ]
+  %.0178 = phi ptr [ %.3181, %bb.s ], [ %i.bq, %bb.y ]
+  %.0165 = phi ptr [ %i.bc, %bb.s ], [ %i.br, %bb.y ]
+  %.0154 = phi i32 [ -2, %bb.s ], [ %.5, %bb.y ]
   %i.f = getelementptr inbounds nuw i8, ptr %.0178, i64 2
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1234 = phi ptr [ %i.d, %bb.a ], [ %.0233, %bb.b ] ; 16 uses
-  %.1198 = phi i32 [ 0, %bb.a ], [ %.0197, %bb.b ] ; 3 uses
-  %.1195 = phi i32 [ 0, %bb.a ], [ %.0194, %bb.b ] ; 3 uses
+  %.1195 = phi i32 [ 0, %bb.a ], [ %.0197, %bb.b ] ; 3 uses
   %.0187 = phi ptr [ %i.b, %bb.a ], [ %.3190, %bb.b ] ; 8 uses
   %.1179 = phi ptr [ %i.b, %bb.a ], [ %i.f, %bb.b ] ; 4 uses
   %.0174 = phi ptr [ %i.c, %bb.a ], [ %.3177, %bb.b ] ; 2 uses
   %.1166 = phi ptr [ %i.c, %bb.a ], [ %.0165, %bb.b ]
   %.0162 = phi i64 [ 200, %bb.a ], [ %.2164, %bb.b ] ; 4 uses
   %.1155 = phi i32 [ -2, %bb.a ], [ %.0154, %bb.b ] ; 3 uses
-  %i.g = trunc nsw i32 %.1198 to i16
+  %i.g = trunc nsw i32 %.1195 to i16
   store i16 %i.g, ptr %.1179, align 2, !tbaa !11
   %i.h = getelementptr inbounds [2 x i8], ptr %.0187, i64 %.0162
   %i.i = getelementptr inbounds i8, ptr %i.h, i64 -2
@@ -183,7 +179,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = ashr exact i64 %i.l, 1
   %i.n = add nsw i64 %i.m, 1                      ; 5 uses
   %i.o = icmp sgt i64 %.0162, 9999
-  br i1 %i.o, label %.thread245, label %bb.e
+  br i1 %i.o, label %bb.ag, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.p = shl nsw i64 %.0162, 1
@@ -192,7 +188,7 @@ bb.e:                                             ; preds = %bb.d
   %i.r = or disjoint i64 %i.q, 3
   %i.s = call ptr @malloc(i64 noundef %i.r) #9    ; 6 uses
   %.not216.not = icmp eq ptr %i.s, null
-  br i1 %.not216.not, label %.thread245, label %bb.f
+  br i1 %.not216.not, label %bb.ag, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.t = shl i64 %i.n, 1
@@ -219,18 +215,18 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %.not218, label %.thread252, label %.thread288.thread
 
 .thread252:                                       ; preds = %bb.h, %bb.c
-  %.3190 = phi ptr [ %.0187, %bb.c ], [ %i.s, %bb.h ] ; 7 uses
-  %.3181 = phi ptr [ %.1179, %bb.c ], [ %i.aa, %bb.h ] ; 5 uses
+  %.3190 = phi ptr [ %.0187, %bb.c ], [ %i.s, %bb.h ] ; 6 uses
+  %.3181 = phi ptr [ %.1179, %bb.c ], [ %i.aa, %bb.h ] ; 4 uses
   %.3177 = phi ptr [ %.0174, %bb.c ], [ %i.x, %bb.h ]
-  %.3168 = phi ptr [ %.1166, %bb.c ], [ %i.ac, %bb.h ] ; 4 uses
+  %.3168 = phi ptr [ %.1166, %bb.c ], [ %i.ac, %bb.h ] ; 3 uses
   %.2164 = phi i64 [ %.0162, %bb.c ], [ %spec.store.select, %bb.h ]
-  %i.ad = icmp eq i32 %.1198, 32
+  %i.ad = icmp eq i32 %.1195, 32
   br i1 %i.ad, label %.thread288, label %bb.i
 
 bb.i:                                             ; preds = %.thread252
-  %i.ae = sext i32 %.1198 to i64                  ; 2 uses
+  %i.ae = sext i32 %.1195 to i64                  ; 2 uses
   %i.af = getelementptr inbounds [2 x i8], ptr @yypact, i64 %i.ae
-  %i.ag = load i16, ptr %i.af, align 2, !tbaa !11 ; 3 uses
+  %i.ag = load i16, ptr %i.af, align 2, !tbaa !11 ; 2 uses
   %i.ah = sext i16 %i.ag to i32
   %i.ai = icmp eq i16 %i.ag, -131
   br i1 %i.ai, label %bb.t, label %bb.j
@@ -286,14 +282,13 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.u
 
 bb.s:                                             ; preds = %bb.q
-  %spec.select = call i32 @llvm.usub.sat.i32(i32 %.1195, i32 1)
   %i.bb = load i32, ptr %i.a, align 4, !tbaa !13
   %i.bc = getelementptr inbounds nuw i8, ptr %.3168, i64 4 ; 2 uses
   store i32 %i.bb, ptr %i.bc, align 4, !tbaa !13
   br label %bb.b
 
 bb.t:                                             ; preds = %bb.o, %bb.p, %bb.i
-  %.4 = phi i32 [ %.1155, %bb.i ], [ %.3, %bb.o ], [ %.3, %bb.p ] ; 10 uses
+  %.4 = phi i32 [ %.1155, %bb.i ], [ %.3, %bb.o ], [ %.3, %bb.p ] ; 4 uses
   %i.bd = getelementptr inbounds i8, ptr @yydefact, i64 %i.ae
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !12  ; 2 uses
   %i.bf = sext i8 %i.be to i32
@@ -351,46 +346,28 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 
 bb.z:                                             ; preds = %bb.t
   %i.cj = icmp eq i32 %.4, -2
-  br i1 %i.cj, label %1, label %bb.aa
+  br i1 %i.cj, label %bb.ac, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %or.cond7 = icmp ult i32 %.4, 287
-  br i1 %or.cond7, label %bb.ab, label %1
+  br i1 %or.cond7, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ck = zext nneg i32 %.4 to i64
   %i.cl = getelementptr inbounds nuw i8, ptr @yytranslate, i64 %i.ck
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !12
   %i.cn = sext i8 %i.cm to i32
-  br label %1
+  br label %bb.ac
 
-1:                                                ; preds = %bb.ab, %bb.aa, %bb.z
-  %2 = phi i32 [ -2, %bb.z ], [ %i.cn, %bb.ab ], [ 2, %bb.aa ] ; 2 uses
-  switch i32 %.1195, label %9 [
-    i32 0, label %bb.ac
-    i32 3, label %5
-  ]
-
-bb.ac:                                            ; preds = %1
-  %i.co = call fastcc i32 @yysyntax_error(ptr noundef %i.e, ptr %.1234, ptr noundef %.3181, i32 noundef %2)
+bb.ac:                                            ; preds = %bb.z, %bb.aa, %bb.ab
+  %1 = phi i32 [ -2, %bb.z ], [ %i.cn, %bb.ab ], [ 2, %bb.aa ] ; 2 uses
+  %i.co = call fastcc i32 @yysyntax_error(ptr noundef %i.e, ptr nonnull %i.d, ptr noundef %.3181, i32 noundef %1)
   switch i32 %i.co, label %.thread260 [
-    i32 0, label %.thread264
-    i32 1, label %3
+    i32 0, label %bb.ag
+    i32 1, label %bb.ad
   ]
 
-.thread264:                                       ; preds = %bb.ac
-  call void @pj_wkt1_error(ptr noundef %0, ptr noundef %.1234) #8
-  br label %9
-
-3:                                                ; preds = %bb.ac
-  %.not222 = icmp eq ptr %.1234, %i.d
-  br i1 %.not222, label %bb.ad, label %4
-
-4:                                                ; preds = %3
-  call void @free(ptr noundef %.1234)
-  br label %bb.ad
-
-bb.ad:                                            ; preds = %4, %3
+bb.ad:                                            ; preds = %bb.ac
   %i.cp = load i64, ptr %i.e, align 8, !tbaa !9
   %i.cq = call ptr @malloc(i64 noundef %i.cp) #9  ; 5 uses
   %.not223 = icmp eq ptr %i.cq, null
@@ -400,94 +377,41 @@ bb.ae:                                            ; preds = %bb.ad
   store i64 128, ptr %i.e, align 8, !tbaa !9
   br label %.thread260
 
-.thread260:                                       ; preds = %bb.ac, %bb.ae
-  %.2.ph = phi ptr [ %i.d, %bb.ae ], [ %.1234, %bb.ac ]
+.thread260:                                       ; preds = %bb.ae, %bb.ac
   call void @pj_wkt1_error(ptr noundef %0, ptr noundef nonnull @.str) #8
-  br label %.thread245
+  br label %bb.ag
 
 bb.af:                                            ; preds = %bb.ad
-  %i.cr = call fastcc i32 @yysyntax_error(ptr noundef %i.e, ptr nonnull %i.cq, ptr noundef %.3181, i32 noundef %2)
+  %i.cr = call fastcc i32 @yysyntax_error(ptr noundef %i.e, ptr nonnull %i.cq, ptr noundef %.3181, i32 noundef %1)
   call void @pj_wkt1_error(ptr noundef %0, ptr noundef nonnull %i.cq) #8
   %i.cs = icmp eq i32 %i.cr, 2
-  br i1 %i.cs, label %.thread245, label %9
+  br i1 %i.cs, label %bb.ag, label %.thread288
 
-5:                                                ; preds = %1
-  %6 = icmp slt i32 %.4, 1
-  br i1 %6, label %7, label %9
-
-7:                                                ; preds = %5
-  %8 = icmp eq i32 %.4, 0
-  br i1 %8, label %.thread288, label %9
-
-9:                                                ; preds = %5, %bb.af, %.thread264, %1, %7
-  %.4236 = phi ptr [ %.1234, %1 ], [ %.1234, %7 ], [ %i.cq, %bb.af ], [ %.1234, %.thread264 ], [ %.1234, %5 ] ; 2 uses
-  %.6 = phi i32 [ %.4, %1 ], [ %.4, %7 ], [ %.4, %bb.af ], [ %.4, %.thread264 ], [ -2, %5 ]
-  br label %10
-
-10:                                               ; preds = %bb.ag, %9
-  %11 = phi i16 [ %i.ag, %9 ], [ %.pre, %bb.ag ]  ; 2 uses
-  %.4182 = phi ptr [ %.3181, %9 ], [ %26, %bb.ag ] ; 3 uses
-  %.4169 = phi ptr [ %.3168, %9 ], [ %25, %bb.ag ] ; 2 uses
-  %12 = icmp sgt i16 %11, -2
-  br i1 %12, label %13, label %23
-
-13:                                               ; preds = %10
-  %14 = sext i16 %11 to i64
-  %15 = add nsw i64 %14, 1                        ; 2 uses
-  %16 = getelementptr inbounds nuw [2 x i8], ptr @yycheck, i64 %15
-  %17 = load i16, ptr %16, align 2, !tbaa !11
-  %18 = icmp eq i16 %17, 1
-  br i1 %18, label %19, label %23
-
-19:                                               ; preds = %13
-  %20 = getelementptr inbounds nuw [2 x i8], ptr @yytable, i64 %15
-  %21 = load i16, ptr %20, align 2, !tbaa !11     ; 2 uses
-  %22 = icmp sgt i16 %21, 0
-  br i1 %22, label %28, label %23
-
-23:                                               ; preds = %13, %19, %10
-  %24 = icmp eq ptr %.4182, %.3190
-  br i1 %24, label %.thread288, label %bb.ag
-
-bb.ag:                                            ; preds = %23
-  %25 = getelementptr inbounds i8, ptr %.4169, i64 -4
-  %26 = getelementptr inbounds i8, ptr %.4182, i64 -2 ; 2 uses
-  %27 = load i16, ptr %26, align 2, !tbaa !11
-  %.phi.trans.insert = sext i16 %27 to i64
-  %.phi.trans.insert333 = getelementptr inbounds [2 x i8], ptr @yypact, i64 %.phi.trans.insert
-  %.pre = load i16, ptr %.phi.trans.insert333, align 2, !tbaa !11
-  br label %10
-
-28:                                               ; preds = %19
-  %29 = zext nneg i16 %21 to i32
-  %30 = load i32, ptr %i.a, align 4, !tbaa !13
-  %31 = getelementptr inbounds nuw i8, ptr %.4169, i64 4 ; 2 uses
-  store i32 %30, ptr %31, align 4, !tbaa !13
-  br label %bb.b
-
-.thread245:                                       ; preds = %bb.e, %bb.d, %bb.af, %.thread260
-  %.5237 = phi ptr [ %.2.ph, %.thread260 ], [ %.1234, %bb.e ], [ %.1234, %bb.d ], [ %i.cq, %bb.af ]
-  %.5192 = phi ptr [ %.3190, %.thread260 ], [ %.0187, %bb.e ], [ %.0187, %bb.d ], [ %.3190, %bb.af ]
-  call void @pj_wkt1_error(ptr noundef %0, ptr noundef nonnull @.str.3) #8
+bb.ag:                                            ; preds = %bb.d, %bb.e, %bb.af, %.thread260, %bb.ac
+  %.sink = phi ptr [ %i.d, %bb.ac ], [ @.str.3, %.thread260 ], [ @.str.3, %bb.af ], [ @.str.3, %bb.e ], [ @.str.3, %bb.d ]
+  %.0160284.ph = phi i32 [ 1, %bb.ac ], [ 2, %.thread260 ], [ 2, %bb.af ], [ 2, %bb.e ], [ 2, %bb.d ]
+  %.6193278.ph = phi ptr [ %.3190, %bb.ac ], [ %.3190, %.thread260 ], [ %.3190, %bb.af ], [ %.0187, %bb.e ], [ %.0187, %bb.d ]
+  %.4236276.ph = phi ptr [ %i.d, %bb.ac ], [ %i.d, %.thread260 ], [ %i.cq, %bb.af ], [ %i.d, %bb.e ], [ %i.d, %bb.d ]
+  call void @pj_wkt1_error(ptr noundef %0, ptr noundef nonnull %.sink) #8
   br label %.thread288
 
-.thread288:                                       ; preds = %.thread252, %7, %23, %.thread245
-  %.0160286 = phi i32 [ 1, %23 ], [ 2, %.thread245 ], [ 0, %.thread252 ], [ 1, %7 ] ; 2 uses
-  %.6193280 = phi ptr [ %.3190, %23 ], [ %.5192, %.thread245 ], [ %.3190, %7 ], [ %.3190, %.thread252 ] ; 2 uses
-  %.6238278 = phi ptr [ %.4236, %23 ], [ %.5237, %.thread245 ], [ %.1234, %7 ], [ %.1234, %.thread252 ] ; 2 uses
-  %.not226 = icmp eq ptr %.6193280, %i.b
+.thread288:                                       ; preds = %.thread252, %bb.ag, %bb.af
+  %.0160284 = phi i32 [ 1, %bb.af ], [ %.0160284.ph, %bb.ag ], [ 0, %.thread252 ] ; 2 uses
+  %.6193278 = phi ptr [ %.3190, %bb.af ], [ %.6193278.ph, %bb.ag ], [ %.3190, %.thread252 ] ; 2 uses
+  %.4236276 = phi ptr [ %i.cq, %bb.af ], [ %.4236276.ph, %bb.ag ], [ %i.d, %.thread252 ] ; 2 uses
+  %.not226 = icmp eq ptr %.6193278, %i.b
   br i1 %.not226, label %bb.ah, label %.thread288.thread
 
 .thread288.thread:                                ; preds = %bb.h, %.thread288
-  %.6238278346 = phi ptr [ %.6238278, %.thread288 ], [ %.1234, %bb.h ]
-  %.6193280345 = phi ptr [ %.6193280, %.thread288 ], [ %i.s, %bb.h ]
-  %.0160286343 = phi i32 [ %.0160286, %.thread288 ], [ 1, %bb.h ]
+  %.6238278346 = phi ptr [ %.4236276, %.thread288 ], [ %i.d, %bb.h ]
+  %.6193280345 = phi ptr [ %.6193278, %.thread288 ], [ %i.s, %bb.h ]
+  %.0160286343 = phi i32 [ %.0160284, %.thread288 ], [ 1, %bb.h ]
   call void @free(ptr noundef %.6193280345)
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.thread288.thread, %.thread288
-  %.6238278347 = phi ptr [ %.6238278346, %.thread288.thread ], [ %.6238278, %.thread288 ] ; 2 uses
-  %.0160286344 = phi i32 [ %.0160286343, %.thread288.thread ], [ %.0160286, %.thread288 ]
+  %.6238278347 = phi ptr [ %.6238278346, %.thread288.thread ], [ %.4236276, %.thread288 ] ; 2 uses
+  %.0160286344 = phi i32 [ %.0160286343, %.thread288.thread ], [ %.0160284, %.thread288 ]
   %.not227 = icmp eq ptr %.6238278347, %i.d
   br i1 %.not227, label %bb.aj, label %bb.ai
 
@@ -808,9 +732,6 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr captures(none)) local_unnamed_addr #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

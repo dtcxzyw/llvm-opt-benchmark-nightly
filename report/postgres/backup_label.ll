@@ -12,7 +12,6 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.stat = type { i64, i64, i64, i32, i32, i32, i32, i64, i64, i64, i64, %struct.timespec, %struct.timespec, %struct.timespec, [3 x i64] }
 %struct.timespec = type { i64, i64 }
 
-@.str = private unnamed_addr constant [21 x i8] c"START WAL LOCATION: \00", align 1
 @.str.1 = private unnamed_addr constant [23 x i8] c"%s: could not parse %s\00", align 1
 @.str.2 = private unnamed_addr constant [19 x i8] c"START WAL LOCATION\00", align 1
 @.str.3 = private unnamed_addr constant [31 x i8] c"%s: improper terminator for %s\00", align 1
@@ -20,7 +19,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.5 = private unnamed_addr constant [31 x i8] c"%s: could not parse TLI for %s\00", align 1
 @.str.6 = private unnamed_addr constant [15 x i8] c"START TIMELINE\00", align 1
 @.str.7 = private unnamed_addr constant [16 x i8] c"%s: invalid TLI\00", align 1
-@.str.8 = private unnamed_addr constant [23 x i8] c"INCREMENTAL FROM LSN: \00", align 1
 @.str.9 = private unnamed_addr constant [21 x i8] c"INCREMENTAL FROM LSN\00", align 1
 @.str.10 = private unnamed_addr constant [23 x i8] c"INCREMENTAL FROM TLI: \00", align 1
 @.str.11 = private unnamed_addr constant [21 x i8] c"INCREMENTAL FROM TLI\00", align 1
@@ -96,7 +94,6 @@ get_eol_offset.exit:                              ; preds = %bb.d, %bb.c
 
 .lr.ph.preheader.i:                               ; preds = %get_eol_offset.exit
   %gepdiff = sub nsw i64 %i.x, %i.q
-  %scevgep.i = getelementptr i8, ptr @.str, i64 %gepdiff
   %scevgep = getelementptr i8, ptr %i.p, i64 20
   %scevgep203 = getelementptr i8, ptr %scevgep, i64 %i.q
   %i.aa = load i8, ptr %i.r, align 1              ; 2 uses
@@ -318,8 +315,7 @@ bb.x:                                             ; preds = %.lr.ph.i59.19
   br i1 %exitcond.not.i60.19, label %.critedge.i, label %.critedge.i.thread
 
 .critedge.i:                                      ; preds = %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x
-  %.pr = load i8, ptr %scevgep.i, align 1
-  %i.db = icmp eq i8 %.pr, 0
+  %i.db = icmp eq i64 %gepdiff, 20
   br i1 %i.db, label %.critedge.i.thread, label %.lr.ph.preheader.i65
 
 .critedge.i.thread:                               ; preds = %bb.x, %.critedge.i
@@ -611,7 +607,6 @@ line_starts_with.exit73:                          ; preds = %.critedge.i61
 .lr.ph.preheader.i79:                             ; preds = %.lr.ph.preheader.i, %.lr.ph.preheader.i79thread-pre-split
   %i.gl = phi i8 [ %.pr313, %.lr.ph.preheader.i79thread-pre-split ], [ %i.aa, %.lr.ph.preheader.i ]
   %gepdiff171 = sub nsw i64 %i.x, %i.q
-  %scevgep.i80 = getelementptr i8, ptr @.str.8, i64 %gepdiff171
   %scevgep206 = getelementptr i8, ptr %i.p, i64 22
   %scevgep207 = getelementptr i8, ptr %scevgep206, i64 %i.q
   %i.gm = icmp eq i8 %i.gl, 73
@@ -854,8 +849,7 @@ bb.br:                                            ; preds = %.lr.ph.i82.21
   br i1 %exitcond.not.i86.21, label %.critedge.i75, label %.critedge.i75.thread
 
 .critedge.i75:                                    ; preds = %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br
-  %.pr144 = load i8, ptr %scevgep.i80, align 1
-  %i.ju = icmp eq i8 %.pr144, 0
+  %i.ju = icmp eq i64 %gepdiff171, 22
   br i1 %i.ju, label %.critedge.i75.thread, label %line_starts_with.exit87
 
 .critedge.i75.thread:                             ; preds = %bb.br, %.critedge.i75
@@ -1258,7 +1252,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = phi i32 [ %i.gw, %line_starts_with.exit.thread ], [ %i.k, %.preheader ] ; 6 uses
   %i.n = phi i32 [ %.08.i, %line_starts_with.exit.thread ], [ %i.j, %.preheader ] ; 2 uses
   %i.o = load ptr, ptr %1, align 8                ; 2 uses
-  %i.p = sext i32 %i.n to i64                     ; 50 uses
+  %i.p = sext i32 %i.n to i64                     ; 49 uses
   %i.q = getelementptr inbounds i8, ptr %i.o, i64 %i.p ; 46 uses
   br label %bb.c
 
@@ -1282,13 +1276,12 @@ bb.e:                                             ; preds = %bb.c
 
 get_eol_offset.exit:                              ; preds = %bb.e, %bb.d
   %.08.i = phi i32 [ %i.v, %bb.d ], [ %i.m, %bb.e ] ; 5 uses
-  %i.w = sext i32 %.08.i to i64                   ; 48 uses
+  %i.w = sext i32 %.08.i to i64                   ; 47 uses
   %i.x = icmp slt i32 %i.n, %.08.i
   br i1 %i.x, label %.lr.ph.preheader.i, label %line_starts_with.exit50
 
 .lr.ph.preheader.i:                               ; preds = %get_eol_offset.exit
   %gepdiff = sub nsw i64 %i.w, %i.p
-  %scevgep.i = getelementptr i8, ptr @.str.8, i64 %gepdiff
   %i.y = load i8, ptr %i.q, align 1
   %i.z = icmp eq i8 %i.y, 73
   br i1 %i.z, label %bb.f, label %.lr.ph.preheader.i42.thread
@@ -1526,16 +1519,10 @@ bb.z:                                             ; preds = %.lr.ph.i38.20
   %i.dd = getelementptr inbounds nuw i8, ptr %i.q, i64 21
   %i.de = load i8, ptr %i.dd, align 1
   %i.df = icmp eq i8 %i.de, 32
-  br i1 %i.df, label %6, label %.lr.ph.preheader.i42
+  br i1 %i.df, label %line_starts_with.exit.thread, label %.lr.ph.preheader.i42
 
-6:                                                ; preds = %.lr.ph.i38.21
-  %7 = add nsw i64 %i.p, 22
-  %exitcond.not.i39.21 = icmp eq i64 %7, %i.w
-  br i1 %exitcond.not.i39.21, label %line_starts_with.exit, label %line_starts_with.exit.thread
-
-line_starts_with.exit:                            ; preds = %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %6
-  %.pr = load i8, ptr %scevgep.i, align 1
-  %i.dg = icmp eq i8 %.pr, 0
+line_starts_with.exit:                            ; preds = %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z
+  %i.dg = icmp eq i64 %gepdiff, 22
   br i1 %i.dg, label %line_starts_with.exit.thread, label %.lr.ph.preheader.i42
 
 .lr.ph.preheader.i42:                             ; preds = %line_starts_with.exit, %.lr.ph.i38.21, %.lr.ph.i38.20, %.lr.ph.i38.19, %.lr.ph.i38.18, %.lr.ph.i38.17, %.lr.ph.i38.16, %.lr.ph.i38.15, %.lr.ph.i38.14, %.lr.ph.i38.13, %.lr.ph.i38.12, %.lr.ph.i38.11, %.lr.ph.i38.10, %.lr.ph.i38.9, %.lr.ph.i38.8, %.lr.ph.i38.7, %.lr.ph.i38.6, %.lr.ph.i38.5, %.lr.ph.i38.4, %.lr.ph.i38.3, %.lr.ph.i38.2, %.lr.ph.i38.1
@@ -1827,8 +1814,8 @@ bb.ba:                                            ; preds = %bb.az
   call void @exit(i32 noundef 1) #8
   unreachable
 
-line_starts_with.exit.thread:                     ; preds = %6, %bb.av, %.line_starts_with.exit.thread_crit_edge, %line_starts_with.exit50, %line_starts_with.exit
-  %i.gw = phi i32 [ %.pre, %.line_starts_with.exit.thread_crit_edge ], [ %i.m, %bb.av ], [ %i.m, %6 ], [ %i.m, %line_starts_with.exit50 ], [ %i.m, %line_starts_with.exit ] ; 2 uses
+line_starts_with.exit.thread:                     ; preds = %.lr.ph.i38.21, %bb.av, %.line_starts_with.exit.thread_crit_edge, %line_starts_with.exit50, %line_starts_with.exit
+  %i.gw = phi i32 [ %.pre, %.line_starts_with.exit.thread_crit_edge ], [ %i.m, %bb.av ], [ %i.m, %line_starts_with.exit ], [ %i.m, %line_starts_with.exit50 ], [ %i.m, %.lr.ph.i38.21 ] ; 2 uses
   store i32 %.08.i, ptr %i.h, align 8
   %i.gx = icmp slt i32 %.08.i, %i.gw
   br i1 %i.gx, label %.lr.ph.i, label %._crit_edge, !llvm.loop !7

@@ -205,7 +205,7 @@ magic_comment_marker.exit.thread.i:               ; preds = %bb.ho, %bb.hl, %mag
   br i1 %i.alc, label %.preheader284.i, label %parser_magic_comment.exit
 
 .preheader284.i:                                  ; preds = %magic_comment_marker.exit.thread.i, %bb.jh
-  %.0152378.i = phi i64 [ %.5.i, %bb.jh ], [ 0, %magic_comment_marker.exit.thread.i ] ; 8 uses
+  %.0152378.i = phi i64 [ %.5.i, %bb.jh ], [ 0, %magic_comment_marker.exit.thread.i ] ; 7 uses
   %.0154377.i = phi i64 [ %.3157.i, %bb.jh ], [ 0, %magic_comment_marker.exit.thread.i ] ; 6 uses
   %.1160376.i = phi i64 [ %.14.i, %bb.jh ], [ %.0159.i, %magic_comment_marker.exit.thread.i ] ; 2 uses
   %.1166375.i = phi ptr [ %.14179.i, %bb.jh ], [ %.0165.i, %magic_comment_marker.exit.thread.i ] ; 2 uses
@@ -608,8 +608,10 @@ vec.epilog.middle.block:                          ; preds = %pred.store.continue
 
 .preheader.i898:                                  ; preds = %bb.ip, %middle.block, %vec.epilog.middle.block, %RSTRING_PTR.exit241.i
   %i.atj = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.628, ptr noundef %i.aom, i64 noundef %i.any) #32
-  %i.atk = icmp eq i32 %i.atj, 0
-  br i1 %i.atk, label %4, label %7
+  %4 = icmp eq i32 %i.atj, 0
+  %i.atk = icmp eq i64 %i.any, 6
+  %or.cond.i899 = and i1 %i.atk, %4
+  br i1 %or.cond.i899, label %bb.iq, label %bb.iy
 
 .lr.ph374.i:                                      ; preds = %.lr.ph374.i.preheader, %bb.ip
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.ip ], [ %indvars.iv.i.ph, %.lr.ph374.i.preheader ] ; 2 uses
@@ -627,19 +629,13 @@ bb.ip:                                            ; preds = %bb.io, %.lr.ph374.i
   %exitcond.not.i904 = icmp eq i64 %indvars.iv.next.i, %i.any
   br i1 %exitcond.not.i904, label %.preheader.i898, label %.lr.ph374.i, !llvm.loop !556
 
-4:                                                ; preds = %.preheader.i898
-  %5 = getelementptr inbounds i8, ptr @.str.628, i64 %i.any
-  %6 = load i8, ptr %5, align 1, !tbaa !20
-  %.not219.i = icmp eq i8 %6, 0
-  br i1 %.not219.i, label %bb.iq, label %7
-
-bb.iq:                                            ; preds = %bb.jc, %bb.ja, %bb.iz, %bb.iy, %4
-  %.0148.idx.lcssa.i = phi i64 [ 0, %4 ], [ 24, %bb.iy ], [ 48, %bb.iz ], [ 72, %bb.ja ], [ 96, %bb.jc ]
-  %.lcssa404.i = phi ptr [ @.str.628, %4 ], [ @.str.629, %bb.iy ], [ @.str.630, %bb.iz ], [ @.str.631, %bb.ja ], [ @.str.632, %bb.jc ]
+bb.iq:                                            ; preds = %bb.jb, %bb.ja, %bb.iz, %bb.iy, %.preheader.i898
+  %.0148.idx.lcssa.i = phi i64 [ 0, %.preheader.i898 ], [ 24, %bb.iy ], [ 48, %bb.iz ], [ 72, %bb.ja ], [ 96, %bb.jb ]
+  %.lcssa404.i = phi ptr [ @.str.628, %.preheader.i898 ], [ @.str.629, %bb.iy ], [ @.str.630, %bb.iz ], [ @.str.631, %bb.ja ], [ @.str.632, %bb.jb ]
   %.0148.ptr.le.i = getelementptr inbounds nuw i8, ptr @magic_comments, i64 %.0148.idx.lcssa.i ; 2 uses
   %i.ato = ptrtoint ptr %.0150460.i to i64
   %i.atp = ptrtoint ptr %.0151457.i to i64
-  %i.atq = sub i64 %i.ato, %i.atp                 ; 2 uses
+  %i.atq = sub i64 %i.ato, %i.atp                 ; 3 uses
   %i.atr = getelementptr inbounds nuw i8, ptr %.0148.ptr.le.i, i64 16
   %i.ats = load ptr, ptr %i.atr, align 8, !tbaa !572 ; 2 uses
   %.not220.i = icmp eq ptr %i.ats, null
@@ -704,61 +700,49 @@ RSTRING_PTR.exit247.i:                            ; preds = %bb.ix, %ruby_nonemp
   tail call void %i.aue(ptr noundef nonnull %0, ptr noundef nonnull %.lcssa404.i, ptr noundef %i.auj) #29, !inline_history !557
   br label %.loopexit.i899
 
-7:                                                ; preds = %4, %.preheader.i898
-  %8 = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.629, ptr noundef %i.aom, i64 noundef %i.any) #32
-  %9 = icmp eq i32 %8, 0
-  br i1 %9, label %bb.iy, label %12
+bb.iy:                                            ; preds = %.preheader.i898
+  %5 = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.629, ptr noundef %i.aom, i64 noundef %i.any) #32
+  %6 = icmp eq i32 %5, 0
+  %.not219.1.i = icmp eq i64 %i.any, 8
+  %or.cond510.i = and i1 %.not219.1.i, %6
+  br i1 %or.cond510.i, label %bb.iq, label %bb.iz
 
-bb.iy:                                            ; preds = %7
-  %10 = getelementptr inbounds i8, ptr @.str.629, i64 %i.any
-  %11 = load i8, ptr %10, align 1, !tbaa !20
-  %.not219.1.i = icmp eq i8 %11, 0
-  br i1 %.not219.1.i, label %bb.iq, label %12
+bb.iz:                                            ; preds = %bb.iy
+  %7 = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.630, ptr noundef %i.aom, i64 noundef %i.any) #32
+  %8 = icmp eq i32 %7, 0
+  %.not219.2.i = icmp eq i64 %i.any, 21
+  %or.cond511.i = and i1 %.not219.2.i, %8
+  br i1 %or.cond511.i, label %bb.iq, label %bb.ja
 
-12:                                               ; preds = %bb.iy, %7
-  %13 = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.630, ptr noundef %i.aom, i64 noundef %i.any) #32
-  %14 = icmp eq i32 %13, 0
-  br i1 %14, label %bb.iz, label %17
+bb.ja:                                            ; preds = %bb.iz
+  %9 = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.631, ptr noundef %i.aom, i64 noundef %i.any) #32
+  %10 = icmp eq i32 %9, 0
+  %.not219.3.i = icmp eq i64 %i.any, 24
+  %or.cond512.i = and i1 %.not219.3.i, %10
+  br i1 %or.cond512.i, label %bb.iq, label %bb.jb
 
-bb.iz:                                            ; preds = %12
-  %15 = getelementptr inbounds i8, ptr @.str.630, i64 %i.any
-  %16 = load i8, ptr %15, align 1, !tbaa !20
-  %.not219.2.i = icmp eq i8 %16, 0
-  br i1 %.not219.2.i, label %bb.iq, label %17
-
-17:                                               ; preds = %bb.iz, %12
-  %18 = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.631, ptr noundef %i.aom, i64 noundef %i.any) #32
-  %19 = icmp eq i32 %18, 0
-  br i1 %19, label %bb.ja, label %bb.jb
-
-bb.ja:                                            ; preds = %17
-  %20 = getelementptr inbounds i8, ptr @.str.631, i64 %i.any
-  %21 = load i8, ptr %20, align 1, !tbaa !20
-  %.not219.3.i = icmp eq i8 %21, 0
-  br i1 %.not219.3.i, label %bb.iq, label %bb.jb
-
-bb.jb:                                            ; preds = %bb.ja, %17
+bb.jb:                                            ; preds = %bb.ja
   %i.auk = tail call i32 @rb_parser_st_locale_insensitive_strncasecmp(ptr noundef nonnull @.str.632, ptr noundef %i.aom, i64 noundef %i.any) #32
-  %i.aul = icmp eq i32 %i.auk, 0
-  br i1 %i.aul, label %bb.jc, label %.loopexit.i899
+  %11 = icmp eq i32 %i.auk, 0
+  %i.aul = icmp eq i64 %i.any, 11
+  %or.cond513.i = and i1 %i.aul, %11
+  br i1 %or.cond513.i, label %bb.iq, label %bb.jc
 
 bb.jc:                                            ; preds = %bb.jb
-  %22 = getelementptr inbounds i8, ptr @.str.632, i64 %i.any
-  %23 = load i8, ptr %22, align 1, !tbaa !20
-  %.not219.4.i = icmp eq i8 %23, 0
-  br i1 %.not219.4.i, label %bb.iq, label %.loopexit.i899
+  %.pre2170 = ptrtoint ptr %.0150460.i to i64
+  %.pre2172 = ptrtoint ptr %.0151457.i to i64
+  %.pre2174 = sub i64 %.pre2170, %.pre2172
+  br label %.loopexit.i899
 
-.loopexit.i899:                                   ; preds = %bb.jc, %bb.jb, %RSTRING_PTR.exit247.i
-  %.2.i900 = phi i64 [ %.1153.i, %RSTRING_PTR.exit247.i ], [ %.0152378.i, %bb.jc ], [ %.0152378.i, %bb.jb ] ; 5 uses
-  %.not222.i = icmp eq i64 %.2.i900, 0
-  %24 = ptrtoint ptr %.0150460.i to i64
-  %25 = ptrtoint ptr %.0151457.i to i64
-  %26 = sub i64 %24, %25                          ; 3 uses
+.loopexit.i899:                                   ; preds = %bb.jc, %RSTRING_PTR.exit247.i
+  %.pre-phi2175 = phi i64 [ %.pre2174, %bb.jc ], [ %i.atq, %RSTRING_PTR.exit247.i ] ; 3 uses
+  %.2.i901 = phi i64 [ %.0152378.i, %bb.jc ], [ %.1153.i, %RSTRING_PTR.exit247.i ] ; 5 uses
+  %.not222.i = icmp eq i64 %.2.i901, 0
   br i1 %.not222.i, label %bb.jg, label %bb.jd
 
 bb.jd:                                            ; preds = %.loopexit.i899
-  %i.aum = tail call i64 @rb_str_resize(i64 noundef %.2.i900, i64 noundef %26) #29 ; 0 uses
-  %i.aun = inttoptr i64 %.2.i900 to ptr           ; 2 uses
+  %i.aum = tail call i64 @rb_str_resize(i64 noundef %.2.i901, i64 noundef %.pre-phi2175) #29 ; 0 uses
+  %i.aun = inttoptr i64 %.2.i901 to ptr           ; 2 uses
   %i.auo = load i64, ptr %i.aun, align 8, !tbaa !310
   %i.aup = and i64 %i.auo, 8192
   %.not.i248.i = icmp eq i64 %i.aup, 0
@@ -775,16 +759,16 @@ RSTRING_PTR.exit249.i:                            ; preds = %bb.je, %bb.jd
   br i1 %.not.i250.i, label %ruby_nonempty_memcpy.exit251.i, label %bb.jf
 
 bb.jf:                                            ; preds = %RSTRING_PTR.exit249.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aus, ptr nonnull readonly align 1 %.0151457.i, i64 %26, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aus, ptr nonnull readonly align 1 %.0151457.i, i64 %.pre-phi2175, i1 false)
   br label %ruby_nonempty_memcpy.exit251.i
 
 bb.jg:                                            ; preds = %.loopexit.i899
   %i.aut = load ptr, ptr %i.afz, align 8, !tbaa !58
-  %i.auu = tail call i64 @rb_enc_str_new(ptr noundef nonnull %.0151457.i, i64 noundef %26, ptr noundef %i.aut) #29
+  %i.auu = tail call i64 @rb_enc_str_new(ptr noundef nonnull %.0151457.i, i64 noundef %.pre-phi2175, ptr noundef %i.aut) #29
   br label %ruby_nonempty_memcpy.exit251.i
 
 ruby_nonempty_memcpy.exit251.i:                   ; preds = %bb.jg, %bb.jf, %RSTRING_PTR.exit249.i
-  %.3.i901 = phi i64 [ %i.auu, %bb.jg ], [ %.2.i900, %RSTRING_PTR.exit249.i ], [ %.2.i900, %bb.jf ] ; 2 uses
+  %.3.i901 = phi i64 [ %i.auu, %bb.jg ], [ %.2.i901, %RSTRING_PTR.exit249.i ], [ %.2.i901, %bb.jf ] ; 2 uses
   %.val.i902 = load i64, ptr %i.aga, align 8, !tbaa !55
   %i.auv = tail call i64 (i64, i64, i32, ...) @rb_funcall(i64 noundef %.val.i902, i64 noundef %i.agf, i32 noundef 2, i64 noundef %.1155.i, i64 noundef %.3.i901) #29 ; 0 uses
   br label %bb.jh

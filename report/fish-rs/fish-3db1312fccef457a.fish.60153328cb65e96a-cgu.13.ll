@@ -205,20 +205,13 @@ _RINvMNtCs3oUPovFnLWP_4core5sliceSTRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32S
 
 bb.ak:                                            ; preds = %_RINvMNtCs3oUPovFnLWP_4core5sliceSTRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtNtCs8frGy5WneL6_4fish8tinyexpr8FunctionE20binary_search_by_keyBw_NCNvB1j_12find_builtin0EB1l_.exit.i.i
   %i.dp = icmp ult i64 %i.do, 32
-  br i1 %i.dp, label %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.i, label %bb.al
+  br i1 %i.dp, label %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef 32, i64 noundef 32, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @295) #54, !noalias !1698
   unreachable
 
-_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.i: ; preds = %bb.ak
-  %1 = getelementptr inbounds nuw [32 x i8], ptr @294, i64 %i.do ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.0136.0.copyload137.i = load i64, ptr %2, align 8, !noalias !1699 ; 3 uses
-  %.not128.i = icmp eq i64 %.sroa.0136.0.copyload137.i, -1
-  br i1 %.not128.i, label %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i, label %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit
-
-_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i: ; preds = %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.i, %_RINvMNtCs3oUPovFnLWP_4core5sliceSTRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtNtCs8frGy5WneL6_4fish8tinyexpr8FunctionE20binary_search_by_keyBw_NCNvB1j_12find_builtin0EB1l_.exit.i.i
+_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core5sliceSTRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtNtCs8frGy5WneL6_4fish8tinyexpr8FunctionE20binary_search_by_keyBw_NCNvB1j_12find_builtin0EB1l_.exit.i.i
   %i.dq = icmp ne i64 %i.m, 10
   call void @llvm.assume(i1 %i.dq)
   %i.dr = icmp ne i64 %i.m, 4
@@ -239,7 +232,7 @@ bb.an:                                            ; preds = %bb.e
     i8 0, label %bb.aq
     i8 1, label %bb.ar
     i8 2, label %bb.as
-  ], !prof !1700
+  ], !prof !1699
 
 bb.ao:                                            ; preds = %bb.e
   %i.du = load i64, ptr %i.j, align 8, !noalias !1662, !noundef !11
@@ -288,18 +281,20 @@ bb.au:                                            ; preds = %bb.as
   call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @151) #54, !noalias !1662
   unreachable
 
-_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit: ; preds = %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.i
-  %.sroa.7.0..sroa_idx138.i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.sroa.7.0.copyload139.i.a = load i64, ptr %.sroa.7.0..sroa_idx138.i.a, align 8, !noalias !1699
-  %.not = icmp eq i64 %.sroa.0136.0.copyload137.i, -2
-  br i1 %.not, label %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread15, label %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread
+_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit: ; preds = %bb.ak
+  %1 = getelementptr inbounds nuw [32 x i8], ptr @294, i64 %i.do ; 2 uses
+  %.sroa.7.0..sroa_idx138.i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.7.0.copyload139.i.a = load i64, ptr %.sroa.7.0..sroa_idx138.i.a, align 8, !noalias !1700
+  %.sroa.7.0..sroa_idx138.i = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.sroa.7.0.copyload139.i = load i64, ptr %.sroa.7.0..sroa_idx138.i, align 8, !noalias !1700
+  br label %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread
 
-_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread: ; preds = %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i, %bb.am, %bb.ac, %bb.s, %bb.s, %bb.s, %bb.s, %bb.ap, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit
+_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread: ; preds = %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i, %bb.am, %bb.ac, %bb.s, %bb.s, %bb.s, %bb.s, %bb.ap
   %i.ec = phi i8 [ %i.l, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ %i.l, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i ], [ 0, %bb.am ], [ %i.l, %bb.s ], [ %i.l, %bb.s ], [ %i.l, %bb.s ], [ %i.bg, %bb.ac ], [ %i.l, %bb.s ], [ %i.dw, %bb.ap ]
   %i.ed = phi i64 [ %i.m, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ 4, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i ], [ 4, %bb.am ], [ %i.m, %bb.s ], [ %i.m, %bb.s ], [ %i.m, %bb.s ], [ %i.bh, %bb.ac ], [ %i.m, %bb.s ], [ %i.dx, %bb.ap ]
   %.sroa.0.113 = phi i64 [ %.sroa.0.0.i.i, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ %.sroa.0.0.i.i, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i ], [ %.sroa.0.0.i.i, %bb.am ], [ 1, %bb.s ], [ 1, %bb.s ], [ 1, %bb.s ], [ 1, %bb.ac ], [ 1, %bb.s ], [ %.sroa.0.0, %bb.ap ]
-  %.sroa.11.112 = phi i64 [ %.sroa.0136.0.copyload137.i, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ 4, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i ], [ 4, %bb.am ], [ -1, %bb.s ], [ -1, %bb.s ], [ -1, %bb.s ], [ %.sroa.0100.0.i, %bb.ac ], [ -1, %bb.s ], [ %.sroa.11.0, %bb.ap ] ; 2 uses
-  %.sroa.21.111 = phi i64 [ %.sroa.7.0.copyload139.i.a, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ undef, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i ], [ undef, %bb.am ], [ undef, %bb.s ], [ undef, %bb.s ], [ undef, %bb.s ], [ %.sroa.14.0.i, %bb.ac ], [ undef, %bb.s ], [ %.sroa.21.0, %bb.ap ]
+  %.sroa.11.112 = phi i64 [ %.sroa.7.0.copyload139.i.a, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ 4, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i ], [ 4, %bb.am ], [ -1, %bb.s ], [ -1, %bb.s ], [ -1, %bb.s ], [ %.sroa.0100.0.i, %bb.ac ], [ -1, %bb.s ], [ %.sroa.11.0, %bb.ap ] ; 2 uses
+  %.sroa.21.111 = phi i64 [ %.sroa.7.0.copyload139.i, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ undef, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr12find_builtin.exit.thread.i ], [ undef, %bb.am ], [ undef, %bb.s ], [ undef, %bb.s ], [ undef, %bb.s ], [ %.sroa.14.0.i, %bb.ac ], [ undef, %bb.s ], [ %.sroa.21.0, %bb.ap ]
   %i.ee = add i64 %.sroa.0.113, %i.n              ; 3 uses
   %i.ef = icmp ult i64 %i.ee, %i.n
   br i1 %i.ef, label %bb.aw, label %bb.av
@@ -313,9 +308,9 @@ bb.aw:                                            ; preds = %_RNvMs2_NtCs8frGy5W
   call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @141) #54
   unreachable
 
-_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread15: ; preds = %bb.b, %bb.c, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit, %bb.av
-  %.sroa.3.0 = phi i64 [ %.sroa.21.111, %bb.av ], [ undef, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ undef, %bb.c ], [ undef, %bb.b ]
-  %.sroa.04.0 = phi i64 [ %.sroa.11.112, %bb.av ], [ 5, %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit ], [ 5, %bb.c ], [ 5, %bb.b ]
+_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread15: ; preds = %bb.b, %bb.c, %bb.av
+  %.sroa.3.0 = phi i64 [ %.sroa.21.111, %bb.av ], [ undef, %bb.b ], [ undef, %bb.c ]
+  %.sroa.04.0 = phi i64 [ %.sroa.11.112, %bb.av ], [ 5, %bb.b ], [ 5, %bb.c ]
   store i64 %.sroa.04.0, ptr %0, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.3.0, ptr %.sroa.3.0..sroa_idx, align 8
@@ -718,8 +713,8 @@ begin_hunk_1_@llvm.smax.i32
 !1696 = !{!1627}
 !1697 = !{!1632}
 !1698 = !{!1628, !1623, !1619, !1618}
-!1699 = !{!1623, !1619, !1618}
-!1700 = !{!"branch_weights", i32 1, i32 2000, i32 1, i32 2000}
+!1699 = !{!"branch_weights", i32 1, i32 2000, i32 1, i32 2000}
+!1700 = !{!1623, !1619, !1618}
 !1701 = distinct !{!1701, i1 true, !"_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State5power"}
 !1702 = distinct !{!1702, !1701, !"_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State5power: argument 0"}
 !1703 = distinct !{!1703, i1 true, !"_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State4base"}
