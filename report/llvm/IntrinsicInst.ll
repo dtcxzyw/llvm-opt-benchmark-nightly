@@ -202,7 +202,7 @@ _ZNK4llvm20DbgVariableIntrinsic12location_opsEv.exit: ; preds = %.critedge.i.i
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.m, %.lr.ph.i.preheader.i.i.i
-  %.sroa.01.0.copyload.i.i5.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i.a, %bb.m ], [ %.sroa.032.051, %.lr.ph.i.preheader.i.i.i ] ; 7 uses
+  %.sroa.01.0.copyload.i.i5.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i, %bb.m ], [ %.sroa.032.051, %.lr.ph.i.preheader.i.i.i ] ; 8 uses
   %i.bm = and i64 %.sroa.01.0.copyload.i.i5.i.i.i.i, 4
   %i.bn = icmp eq i64 %i.bm, 0                    ; 3 uses
   br i1 %i.bn, label %bb.k, label %bb.l
@@ -225,9 +225,11 @@ _ZN9__gnu_cxx5__ops16_Iter_equals_valIKPN4llvm5ValueEEclINS2_20location_op_itera
   br i1 %i.bv, label %_ZN4llvm4findIRNS_14iterator_rangeINS_20location_op_iteratorEEEPNS_5ValueEEEDaOT_RKT0_.exit, label %bb.m
 
 bb.m:                                             ; preds = %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKPN4llvm5ValueEEclINS2_20location_op_iteratorEEEbT_.exit.i.i.i.i
-  %storemerge.v.i.i.i.i.i = select i1 %i.bn, i64 144, i64 8
-  %storemerge.i.i.i.i.i.a = add nuw i64 %storemerge.v.i.i.i.i.i, %.sroa.01.0.copyload.i.i5.i.i.i.i ; 2 uses
-  %.not.i.i.i.i = icmp eq i64 %storemerge.i.i.i.i.i.a, %.sroa.7.052
+  %5 = and i64 %.sroa.01.0.copyload.i.i5.i.i.i.i, -5
+  %6 = add nuw i64 %5, 12
+  %storemerge.i.i.i.i.i.a = add nuw i64 %.sroa.01.0.copyload.i.i5.i.i.i.i, 144
+  %storemerge.i.i.i.i.i = select i1 %i.bn, i64 %storemerge.i.i.i.i.i.a, i64 %6 ; 2 uses
+  %.not.i.i.i.i = icmp eq i64 %storemerge.i.i.i.i.i, %.sroa.7.052
   br i1 %.not.i.i.i.i, label %_ZN4llvm20DbgVariableIntrinsic13setArgOperandEjPNS_5ValueE.exit, label %.lr.ph.i.i.i.i, !llvm.loop !99
 
 _ZN4llvm4findIRNS_14iterator_rangeINS_20location_op_iteratorEEEPNS_5ValueEEEDaOT_RKT0_.exit: ; preds = %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKPN4llvm5ValueEEclINS2_20location_op_iteratorEEEbT_.exit.i.i.i.i
@@ -350,7 +352,7 @@ _ZL13getAsMetadataPN4llvm5ValueE.exit:            ; preds = %bb.y, %bb.z
   br label %bb.aa
 
 bb.aa:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us, %.lr.ph.split.us
-  %.sroa.026.072.us = phi i64 [ %.sroa.032.051, %.lr.ph.split.us ], [ %storemerge.i.us.a, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us ] ; 4 uses
+  %.sroa.026.072.us = phi i64 [ %.sroa.032.051, %.lr.ph.split.us ], [ %storemerge.i.us, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us ] ; 5 uses
   %i.dh = and i64 %.sroa.026.072.us, 4
   %i.di = icmp eq i64 %i.dh, 0                    ; 2 uses
   br i1 %i.di, label %bb.ac, label %bb.ab
@@ -413,9 +415,11 @@ bb.ah:                                            ; preds = %_ZL13getAsMetadataP
   br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us: ; preds = %bb.ah, %bb.ag
-  %storemerge.v.i.us = select i1 %i.di, i64 144, i64 8
-  %storemerge.i.us.a = add nuw i64 %storemerge.v.i.us, %.sroa.026.072.us ; 2 uses
-  %.not69.us = icmp eq i64 %storemerge.i.us.a, %.sroa.7.052
+  %7 = and i64 %.sroa.026.072.us, -5
+  %8 = add nuw i64 %7, 12
+  %storemerge.i.us.a = add nuw i64 %.sroa.026.072.us, 144
+  %storemerge.i.us = select i1 %i.di, i64 %storemerge.i.us.a, i64 %8 ; 2 uses
+  %.not69.us = icmp eq i64 %storemerge.i.us, %.sroa.7.052
   br i1 %.not69.us, label %._crit_edge, label %bb.aa
 
 ._crit_edge:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us, %_ZL13getAsMetadataPN4llvm5ValueE.exit
@@ -496,7 +500,7 @@ _ZN4llvm11SmallVectorIPNS_15ValueAsMetadataELj4EED2Ev.exit: ; preds = %_ZN4llvm2
   br label %_ZN4llvm20DbgVariableIntrinsic13setArgOperandEjPNS_5ValueE.exit
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit
-  %.sroa.026.072 = phi i64 [ %storemerge.i.a, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit ], [ %.sroa.032.051, %.lr.ph ] ; 4 uses
+  %.sroa.026.072 = phi i64 [ %storemerge.i, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit ], [ %.sroa.032.051, %.lr.ph ] ; 5 uses
   %i.fh = and i64 %.sroa.026.072, 4
   %i.fi = icmp eq i64 %i.fh, 0                    ; 2 uses
   br i1 %i.fi, label %bb.ap, label %bb.aq
@@ -561,9 +565,11 @@ bb.av:                                            ; preds = %_ZL13getAsMetadataP
   br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit: ; preds = %bb.au, %bb.av
-  %storemerge.v.i = select i1 %i.fi, i64 144, i64 8
-  %storemerge.i.a = add nuw i64 %storemerge.v.i, %.sroa.026.072 ; 2 uses
-  %.not69 = icmp eq i64 %storemerge.i.a, %.sroa.7.052
+  %9 = and i64 %.sroa.026.072, -5
+  %10 = add nuw i64 %9, 12
+  %storemerge.i.a = add nuw i64 %.sroa.026.072, 144
+  %storemerge.i = select i1 %i.fi, i64 %storemerge.i.a, i64 %10 ; 2 uses
+  %.not69 = icmp eq i64 %storemerge.i, %.sroa.7.052
   br i1 %.not69, label %._crit_edge, label %.lr.ph.split
 
 _ZN4llvm20DbgVariableIntrinsic13setArgOperandEjPNS_5ValueE.exit: ; preds = %bb.m, %_ZNK4llvm20DbgVariableIntrinsic12location_opsEv.exit, %.critedge.i.i, %_ZN4llvm3Use9addToListEPPS0_.exit.i.i.i.i.i.i, %bb.u, %_ZN4llvm3Use14removeFromListEv.exit.i.i.i.i.i, %_ZN4llvm4findIRNS_14iterator_rangeINS_20location_op_iteratorEEEPNS_5ValueEEEDaOT_RKT0_.exit, %_ZN4llvm11SmallVectorIPNS_15ValueAsMetadataELj4EED2Ev.exit
@@ -966,7 +972,7 @@ _ZNK4llvm20DbgVariableIntrinsic12location_opsEv.exit: ; preds = %.critedge.i.i
   br i1 %.not35, label %._crit_edge39, label %.lr.ph38
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit
-  %.sroa.026.034 = phi i64 [ %storemerge.i.a, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit ], [ %.sroa.029.059, %.lr.ph.preheader ] ; 4 uses
+  %.sroa.026.034 = phi i64 [ %storemerge.i, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit ], [ %.sroa.029.059, %.lr.ph.preheader ] ; 5 uses
   %i.ax = and i64 %.sroa.026.034, 4
   %i.ay = icmp eq i64 %i.ax, 0                    ; 2 uses
   br i1 %i.ay, label %bb.h, label %bb.i
@@ -1024,9 +1030,11 @@ bb.m:                                             ; preds = %_ZL13getAsMetadataP
   br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit: ; preds = %bb.l, %bb.m
-  %storemerge.v.i = select i1 %i.ay, i64 144, i64 8
-  %storemerge.i.a = add nuw i64 %storemerge.v.i, %.sroa.026.034 ; 2 uses
-  %.not32 = icmp eq i64 %storemerge.i.a, %.sroa.6.058
+  %5 = and i64 %.sroa.026.034, -5
+  %6 = add nuw i64 %5, 12
+  %storemerge.i.a = add nuw i64 %.sroa.026.034, 144
+  %storemerge.i = select i1 %i.ay, i64 %storemerge.i.a, i64 %6 ; 2 uses
+  %.not32 = icmp eq i64 %storemerge.i, %.sroa.6.058
   br i1 %.not32, label %._crit_edge, label %.lr.ph
 
 ._crit_edge39:                                    ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit24, %._crit_edge

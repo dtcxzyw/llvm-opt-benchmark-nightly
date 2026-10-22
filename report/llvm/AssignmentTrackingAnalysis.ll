@@ -205,7 +205,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit18:               ; preds = %bb.j, %bb.k
   ret void
 
 .lr.ph:                                           ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit15, %_ZN4llvm11raw_ostreamlsEPKc.exit21
-  %.sroa.01.05 = phi i64 [ %storemerge.i.a, %_ZN4llvm11raw_ostreamlsEPKc.exit21 ], [ %i.av, %_ZN4llvm11raw_ostreamlsEPKc.exit15 ] ; 4 uses
+  %.sroa.01.05 = phi i64 [ %storemerge.i, %_ZN4llvm11raw_ostreamlsEPKc.exit21 ], [ %i.av, %_ZN4llvm11raw_ostreamlsEPKc.exit15 ] ; 5 uses
   %i.bk = and i64 %.sroa.01.05, 4
   %i.bl = icmp eq i64 %i.bk, 0                    ; 2 uses
   br i1 %i.bl, label %bb.l, label %bb.m
@@ -276,9 +276,11 @@ bb.r:                                             ; preds = %_ZN4llvm11raw_ostre
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit21
 
 _ZN4llvm11raw_ostreamlsEPKc.exit21:               ; preds = %bb.q, %bb.r
-  %storemerge.v.i = select i1 %i.bl, i64 144, i64 8
-  %storemerge.i.a = add nuw i64 %storemerge.v.i, %.sroa.01.05 ; 2 uses
-  %.not = icmp eq i64 %storemerge.i.a, %i.ax
+  %2 = and i64 %.sroa.01.05, -5
+  %3 = add nuw i64 %2, 12
+  %storemerge.i.a = add nuw i64 %.sroa.01.05, 144
+  %storemerge.i = select i1 %i.bl, i64 %storemerge.i.a, i64 %3 ; 2 uses
+  %.not = icmp eq i64 %storemerge.i, %i.ax
   br i1 %.not, label %._crit_edge, label %.lr.ph
 }
 
@@ -681,7 +683,7 @@ _ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i.i: 
   br i1 %.not3.i.i.i.i.i.i.i.i.i.i, label %.sink.split.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i.i, %bb.ej
-  %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i.i.i.a, %bb.ej ], [ %i.anb, %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i.i ] ; 5 uses
+  %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i.i.i, %bb.ej ], [ %i.anb, %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i.i ] ; 6 uses
   %i.and = and i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i.i, 4
   %i.ane = icmp eq i64 %i.and, 0                  ; 2 uses
   br i1 %i.ane, label %bb.eh, label %bb.ei
@@ -705,9 +707,11 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKN
   br i1 %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK4llvm18RawLocationWrapper14isKillLocationEPKNS_12DIExpressionE.exit.i.i.i, label %bb.ej
 
 bb.ej:                                            ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKNS2_12DIExpressionEEUlPNS2_5ValueEE_EclINS2_20location_op_iteratorEEEbT_.exit.i.i.i.i.i.i.i.i.i.i
-  %storemerge.v.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ane, i64 144, i64 8
-  %storemerge.i.i.i.i.i.i.i.i.i.i.i.a = add nuw i64 %storemerge.v.i.i.i.i.i.i.i.i.i.i.i, %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i.i ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %storemerge.i.i.i.i.i.i.i.i.i.i.i.a, %i.anc
+  %34 = and i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i.i, -5
+  %35 = add nuw i64 %34, 12
+  %storemerge.i.i.i.i.i.i.i.i.i.i.i.a = add nuw i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i.i, 144
+  %storemerge.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ane, i64 %storemerge.i.i.i.i.i.i.i.i.i.i.i.a, i64 %35 ; 2 uses
+  %.not.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %storemerge.i.i.i.i.i.i.i.i.i.i.i, %i.anc
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %.sink.split.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, !llvm.loop !629
 
 _ZNK4llvm18RawLocationWrapper14isKillLocationEPKNS_12DIExpressionE.exit.i.i.i: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKNS2_12DIExpressionEEUlPNS2_5ValueEE_EclINS2_20location_op_iteratorEEEbT_.exit.i.i.i.i.i.i.i.i.i.i
@@ -1110,7 +1114,7 @@ _ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i52.i.i
   br i1 %.not3.i.i.i.i.i.i.i.i53.i.i, label %.sink.split.i61.i.i, label %.lr.ph.i.i.i.i.i.i.i.i54.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i54.i.i:                     ; preds = %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i52.i.i, %bb.fn
-  %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i55.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i59.i.i, %bb.fn ], [ %i.bcv, %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i52.i.i ] ; 5 uses
+  %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i55.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i58.i.i, %bb.fn ], [ %i.bcv, %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i52.i.i ] ; 6 uses
   %i.bcx = and i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i55.i.i, 4
   %i.bcy = icmp eq i64 %i.bcx, 0                  ; 2 uses
   br i1 %i.bcy, label %bb.fl, label %bb.fm
@@ -1134,9 +1138,11 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKN
   br i1 %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i57.i.i, label %_ZNK4llvm18RawLocationWrapper14isKillLocationEPKNS_12DIExpressionE.exit.i75.i.i, label %bb.fn
 
 bb.fn:                                            ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKNS2_12DIExpressionEEUlPNS2_5ValueEE_EclINS2_20location_op_iteratorEEEbT_.exit.i.i.i.i.i.i.i.i56.i.i
-  %storemerge.v.i.i.i.i.i.i.i.i.i58.i.i = select i1 %i.bcy, i64 144, i64 8
-  %storemerge.i.i.i.i.i.i.i.i.i59.i.i = add nuw i64 %storemerge.v.i.i.i.i.i.i.i.i.i58.i.i, %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i55.i.i ; 2 uses
-  %.not.i.i.i.i.i.i.i.i60.i.i = icmp eq i64 %storemerge.i.i.i.i.i.i.i.i.i59.i.i, %i.bcw
+  %36 = and i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i55.i.i, -5
+  %37 = add nuw i64 %36, 12
+  %storemerge.i.i.i.i.i.i.i.i.i59.i.i = add nuw i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i55.i.i, 144
+  %storemerge.i.i.i.i.i.i.i.i.i58.i.i = select i1 %i.bcy, i64 %storemerge.i.i.i.i.i.i.i.i.i59.i.i, i64 %37 ; 2 uses
+  %.not.i.i.i.i.i.i.i.i60.i.i = icmp eq i64 %storemerge.i.i.i.i.i.i.i.i.i58.i.i, %i.bcw
   br i1 %.not.i.i.i.i.i.i.i.i60.i.i, label %.sink.split.i61.i.i, label %.lr.ph.i.i.i.i.i.i.i.i54.i.i, !llvm.loop !629
 
 _ZNK4llvm18RawLocationWrapper14isKillLocationEPKNS_12DIExpressionE.exit.i75.i.i: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKNS2_12DIExpressionEEUlPNS2_5ValueEE_EclINS2_20location_op_iteratorEEEbT_.exit.i.i.i.i.i.i.i.i56.i.i
