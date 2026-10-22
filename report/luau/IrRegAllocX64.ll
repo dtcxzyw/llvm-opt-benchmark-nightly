@@ -205,8 +205,7 @@ bb.n:                                             ; preds = %bb.m
 ._crit_edge:                                      ; preds = %bb.n
   %.pre369 = zext i8 %i.bp to i64
   %.pre370 = shl nuw nsw i64 %.pre369, 16         ; 2 uses
-  %.pre371 = or disjoint i64 %.pre370, 268468224
-  %i.bz = or disjoint i64 %.pre370, 32768
+  %i.bz = or disjoint i64 %.pre370, 268468224
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -216,15 +215,14 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge, %bb.o
-  %.sroa.2215.0.insert.insert.pre-phi = phi i64 [ %.pre371, %._crit_edge ], [ 274497536, %bb.o ] ; 2 uses
-  %.sroa.3216.0.insert.shift.pre-phi = phi i64 [ %i.bz, %._crit_edge ], [ 6062080, %bb.o ]
+  %.sroa.2215.0.insert.insert.pre-phi = phi i64 [ %i.bz, %._crit_edge ], [ 274497536, %bb.o ] ; 2 uses
+  %.sroa.3216.0.insert.shift.pre-phi = phi i64 [ %.pre370, %._crit_edge ], [ 6029312, %bb.o ]
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !71, !nonnull !42, !align !50
   tail call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643movENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %i.cd, i64 %.sroa.2215.0.insert.insert.pre-phi, i64 103422918657)
   %i.ce = load ptr, ptr %i.cc, align 8, !tbaa !71, !nonnull !42, !align !50
-  %.sroa.5203.0.insert.insert = add nuw nsw i64 %i.by, 5738344742912
-  %.sroa.5202.0.insert.insert = or disjoint i64 %.sroa.5203.0.insert.insert, %.sroa.3216.0.insert.shift.pre-phi
-  %.sroa.0201.0.insert.insert = or disjoint i64 %.sroa.5202.0.insert.insert, 1
+  %.sroa.5203.0.insert.insert = add nuw nsw i64 %i.by, 5738344775681
+  %.sroa.0201.0.insert.insert = or disjoint i64 %.sroa.5203.0.insert.insert, %.sroa.3216.0.insert.shift.pre-phi
   tail call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643leaENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %i.ce, i64 %.sroa.2215.0.insert.insert.pre-phi, i64 %.sroa.0201.0.insert.insert)
   br label %bb.r
 
