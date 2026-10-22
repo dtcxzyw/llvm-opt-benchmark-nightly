@@ -205,7 +205,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i46.i.i.i.i4
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.07.i48.i.i.i.i415 = phi i64 [ %i.ou, %scalar.ph ], [ %.07.i48.i.i.i.i415.ph, %scalar.ph.preheader ]
   %.046.i49.i.i.i.i416 = phi ptr [ %i.ov, %scalar.ph ], [ %.046.i49.i.i.i.i416.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.ou = add i64 %.07.i48.i.i.i.i415, -1         ; 2 uses
+  %i.ou = add nsw i64 %.07.i48.i.i.i.i415, -1     ; 2 uses
   store i32 %.pre.i47.i.i.i.i414, ptr %.046.i49.i.i.i.i416, align 4, !tbaa !318, !noalias !3421
   %i.ov = getelementptr inbounds nuw i8, ptr %.046.i49.i.i.i.i416, i64 4
   %.not.i50.i.i.i.i417 = icmp eq i64 %i.ou, 0
@@ -608,7 +608,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i46.i.i.i.i4
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.07.i48.i.i.i.i411 = phi i64 [ %i.ov, %scalar.ph ], [ %.07.i48.i.i.i.i411.ph, %scalar.ph.preheader ]
   %.046.i49.i.i.i.i412 = phi ptr [ %i.ow, %scalar.ph ], [ %.046.i49.i.i.i.i412.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.ov = add i64 %.07.i48.i.i.i.i411, -1         ; 2 uses
+  %i.ov = add nsw i64 %.07.i48.i.i.i.i411, -1     ; 2 uses
   store i32 %.pre.i47.i.i.i.i410, ptr %.046.i49.i.i.i.i412, align 4, !tbaa !318, !noalias !8109
   %i.ow = getelementptr inbounds nuw i8, ptr %.046.i49.i.i.i.i412, i64 4
   %.not.i50.i.i.i.i413 = icmp eq i64 %i.ov, 0
@@ -1011,7 +1011,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i46.i.i.i.i4
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.07.i48.i.i.i.i412 = phi i64 [ %i.ou, %scalar.ph ], [ %.07.i48.i.i.i.i412.ph, %scalar.ph.preheader ]
   %.046.i49.i.i.i.i413 = phi ptr [ %i.ov, %scalar.ph ], [ %.046.i49.i.i.i.i413.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.ou = add i64 %.07.i48.i.i.i.i412, -1         ; 2 uses
+  %i.ou = add nsw i64 %.07.i48.i.i.i.i412, -1     ; 2 uses
   store i32 %.pre.i47.i.i.i.i411, ptr %.046.i49.i.i.i.i413, align 4, !tbaa !318, !noalias !11673
   %i.ov = getelementptr inbounds nuw i8, ptr %.046.i49.i.i.i.i413, i64 4
   %.not.i50.i.i.i.i414 = icmp eq i64 %i.ou, 0

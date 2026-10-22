@@ -205,24 +205,25 @@ _RINvXs1_NtNtCsgCecv3eZDcN_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   br i1 %i.p, label %.invoke, label %bb.c
 
 bb.c:                                             ; preds = %_RINvXs1_NtNtCsgCecv3eZDcN_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECsltEA4u8Pgfu_11candle_core.exit
-  %i.q = add nsw i64 %3, -1
+  %i.q = add nsw i64 %3, -1                       ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1422)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1423)
-  %gepdiff = add nsw i64 %.idx, -4                ; 3 uses
-  %4 = lshr exact i64 %gepdiff, 2                 ; 3 uses
-  %5 = tail call i64 @llvm.umin.i64(i64 %i.q, i64 %4) ; 5 uses
-  %.not.i.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i.i, label %.loopexit72, label %.lr.ph.preheader.i.i.i
+  %.not.i.i.i = icmp eq i64 %i.q, 0
+  br i1 %.not.i.i.i, label %.loopexit72.thread, label %.lr.ph.preheader.i.i.i
+
+.loopexit72.thread:                               ; preds = %bb.c
+  %4 = load float, ptr %2, align 4, !noundef !4
+  br label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.c
   %.pre.i.i.i = load i32, ptr %2, align 4, !alias.scope !1424, !noalias !1425 ; 2 uses
-  %xtraiter = and i64 %5, 1
-  %i.s = icmp eq i64 %5, 1
+  %xtraiter = and i64 %i.q, 1
+  %i.s = icmp eq i64 %3, 2
   br i1 %i.s, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.preheader.i.i.i.new
 
 .lr.ph.preheader.i.i.i.new:                       ; preds = %.lr.ph.preheader.i.i.i
-  %unroll_iter = and i64 %5, 4611686018427387902
+  %unroll_iter = and i64 %i.q, -2
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i.new
@@ -276,7 +277,7 @@ bb.d:                                             ; preds = %.invoke, %.split96.
   %.epil.init = phi i32 [ %.pre.i.i.i, %.lr.ph.preheader.i.i.i ], [ %i.an, %.loopexit72.loopexit.unr-lcssa ] ; 2 uses
   %.sroa.0.010.i.i.i.epil.init = phi ptr [ %2, %.lr.ph.preheader.i.i.i ], [ %..i.i.i.i.i.1, %.loopexit72.loopexit.unr-lcssa ]
   %.sroa.02.09.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.i.i ], [ %i.ad, %.loopexit72.loopexit.unr-lcssa ]
-  %lcmp.mod145 = trunc i64 %5 to i1
+  %lcmp.mod145 = trunc i64 %i.q to i1
   tail call void @llvm.assume(i1 %lcmp.mod145)
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.sroa.02.09.i.i.i.epil.init ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1426)
@@ -294,20 +295,18 @@ bb.d:                                             ; preds = %.invoke, %.split96.
   %..i.i.i.i.i.epil = select i1 %.not.i.i.i.i.i.epil, ptr %i.ap, ptr %.sroa.0.010.i.i.i.epil.init
   br label %.loopexit72
 
-.loopexit72:                                      ; preds = %.lr.ph.i.i.i.epil.preheader, %.loopexit72.loopexit.unr-lcssa, %bb.c
-  %.sroa.0.0.i.ph = phi ptr [ %2, %bb.c ], [ %..i.i.i.i.i.1, %.loopexit72.loopexit.unr-lcssa ], [ %..i.i.i.i.i.epil, %.lr.ph.i.i.i.epil.preheader ]
-  %i.ax = load float, ptr %.sroa.0.0.i.ph, align 4, !noundef !4 ; 2 uses
+.loopexit72:                                      ; preds = %.loopexit72.loopexit.unr-lcssa, %.lr.ph.i.i.i.epil.preheader
+  %..i.i.i.i.i.lcssa = phi ptr [ %..i.i.i.i.i.1, %.loopexit72.loopexit.unr-lcssa ], [ %..i.i.i.i.i.epil, %.lr.ph.i.i.i.epil.preheader ]
+  %i.ax = load float, ptr %..i.i.i.i.i.lcssa, align 4, !noundef !4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1433)
-  %i.ay = icmp eq i64 %3, 1
-  br i1 %i.ay, label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit, label %6
-
-6:                                                ; preds = %.loopexit72
+  %gepdiff71 = add nsw i64 %.idx, -4              ; 3 uses
+  %5 = lshr exact i64 %gepdiff71, 2               ; 2 uses
   %.pre.i.i = load i32, ptr %2, align 4, !alias.scope !1434 ; 2 uses
-  %7 = icmp eq i64 %gepdiff, 4
-  br i1 %7, label %.epil.preheader, label %.new
+  %i.ay = icmp eq i64 %gepdiff71, 4
+  br i1 %i.ay, label %.epil.preheader, label %.new
 
-.new:                                             ; preds = %6
-  %unroll_iter153 = and i64 %4, 4611686018427387902
+.new:                                             ; preds = %.loopexit72
+  %unroll_iter153 = and i64 %5, 4611686018427387902
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.new
@@ -348,15 +347,15 @@ bb.e:                                             ; preds = %bb.e, %.new
   br i1 %niter154.ncmp.1, label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa, label %bb.e
 
 _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa: ; preds = %bb.e
-  %i.bw = and i64 %gepdiff, 4
+  %i.bw = and i64 %gepdiff71, 4
   %lcmp.mod150.not = icmp eq i64 %i.bw, 0
   br i1 %lcmp.mod150.not, label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa, %6
-  %.epil.init149 = phi i32 [ %.pre.i.i, %6 ], [ %i.bv, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ] ; 2 uses
-  %.sroa.04.0.i.i.epil.init = phi i64 [ 0, %6 ], [ %i.bu, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ]
-  %.sroa.02.0.i.i.epil.init = phi ptr [ %2, %6 ], [ %..i.i.i.i.1, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ]
-  %lcmp.mod152 = trunc i64 %4 to i1
+.epil.preheader:                                  ; preds = %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa, %.loopexit72
+  %.epil.init149 = phi i32 [ %.pre.i.i, %.loopexit72 ], [ %i.bv, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ] ; 2 uses
+  %.sroa.04.0.i.i.epil.init = phi i64 [ 0, %.loopexit72 ], [ %i.bu, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ]
+  %.sroa.02.0.i.i.epil.init = phi ptr [ %2, %.loopexit72 ], [ %..i.i.i.i.1, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ]
+  %lcmp.mod152 = trunc i64 %5 to i1
   tail call void @llvm.assume(i1 %lcmp.mod152)
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.sroa.04.0.i.i.epil.init ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1435)
@@ -374,14 +373,15 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   %..i.i.i.i.epil = select i1 %i.cf, ptr %.sroa.02.0.i.i.epil.init, ptr %i.bx
   br label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit
 
-_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit: ; preds = %.epil.preheader, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa, %.loopexit72
-  %.sroa.0.0.i45 = phi ptr [ %2, %.loopexit72 ], [ %..i.i.i.i.1, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ], [ %..i.i.i.i.epil, %.epil.preheader ]
+_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit: ; preds = %.epil.preheader, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa, %.loopexit72.thread
+  %6 = phi float [ %4, %.loopexit72.thread ], [ %i.ax, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ], [ %i.ax, %.epil.preheader ] ; 2 uses
+  %.sroa.0.0.i45 = phi ptr [ %2, %.loopexit72.thread ], [ %..i.i.i.i.1, %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit.loopexit.unr-lcssa ], [ %..i.i.i.i.epil, %.epil.preheader ]
   %i.cg = load float, ptr %.sroa.0.0.i45, align 4, !noundef !4 ; 2 uses
-  %i.ch = fcmp oeq float %i.cg, %i.ax
+  %i.ch = fcmp oeq float %i.cg, %6
   br i1 %i.ch, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator6reduceNCINvNvBL_6max_by4foldRfNCNvNtNtCsltEA4u8Pgfu_11candle_core9quantized5utils16make_qkx1_quantss_0E0EB23_.exit
-  %i.ci = tail call nsz float @llvm.minimumnum.f32(float %i.ax, float 0.000000e+00) ; 3 uses
+  %i.ci = tail call nsz float @llvm.minimumnum.f32(float %6, float 0.000000e+00) ; 3 uses
   %i.cj = sitofp i32 %0 to float
   %i.ck = fsub float %i.cg, %i.ci
   %i.cl = fdiv float %i.cj, %i.ck                 ; 2 uses
