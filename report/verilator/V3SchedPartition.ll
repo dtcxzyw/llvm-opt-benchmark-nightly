@@ -204,8 +204,6 @@ $_ZTS13V3GraphVertex = comdat any
 
 $_ZZN13V3GraphVertex13v3RttiClassIdEvE15s_vlrttiClassId = comdat any
 
-$_ZZNK9VEdgeType11clockedStmtEvE7clocked = comdat any
-
 $_ZZN7V3Error1sEvE3s_s = comdat any
 
 $_ZGVZN7V3Error1sEvE3s_s = comdat any
@@ -262,7 +260,6 @@ $_ZZNK6VNType5asciiEvE5names = comdat any
 @.str.20 = private unnamed_addr constant [6 x i8] c"black\00", align 1
 @.str.21 = private unnamed_addr constant [10 x i8] c"rectangle\00", align 1
 @.str.22 = private unnamed_addr constant [42 x i8] c"Non-clocked SenItem under clocked SenTree\00", align 1
-@_ZZNK9VEdgeType11clockedStmtEvE7clocked = linkonce_odr dso_local local_unnamed_addr constant [14 x i8] c"\01\01\01\01\01\01\01\00\00\00\00\00\00\00", comdat, align 1
 @_ZTVN7V3Sched12_GLOBAL__N_114SchedSenVertexE = internal constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr @_ZTIN7V3Sched12_GLOBAL__N_114SchedSenVertexE, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex22v3RttiIsInstanceOfImplEm, ptr @_ZNK13V3GraphVertex5cloneEP7V3Graph, ptr @_ZN13V3GraphVertexD2Ev, ptr @_ZN7V3Sched12_GLOBAL__N_114SchedSenVertexD0Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex4nameB5cxx11Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex8dotColorB5cxx11Ev, ptr @_ZNK7V3Sched12_GLOBAL__N_114SchedSenVertex8dotShapeB5cxx11Ev, ptr @_ZNK13V3GraphVertex8dotStyleB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotNameB5cxx11Ev, ptr @_ZNK13V3GraphVertex7dotRankB5cxx11Ev, ptr @_ZNK13V3GraphVertex9rankAdderEv, ptr @_ZNK13V3GraphVertex8filelineEv, ptr @_ZNK13V3GraphVertex7sortCmpEPKS_] }, align 8
 @_ZTIN7V3Sched12_GLOBAL__N_114SchedSenVertexE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN7V3Sched12_GLOBAL__N_114SchedSenVertexE, ptr @_ZTI13V3GraphVertex }, align 8
 @_ZTSN7V3Sched12_GLOBAL__N_114SchedSenVertexE = internal constant [41 x i8] c"N7V3Sched12_GLOBAL__N_114SchedSenVertexE\00", align 1
@@ -665,14 +662,17 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %.0.val, align 8, !tbaa !221 ; 16 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %.sroa.0.0.copyload.i.i.i = load i8, ptr %i.e, align 8, !tbaa !358 ; 2 uses
-  %1 = zext i8 %.sroa.0.0.copyload.i.i.i to i64
-  %2 = getelementptr inbounds nuw i8, ptr @_ZZNK9VEdgeType11clockedStmtEvE7clocked, i64 %1
-  %i.f = load i8, ptr %2, align 1, !tbaa !203, !range !157, !noundef !158
-  %3 = trunc nuw i8 %i.f to i1
-  %4 = icmp eq i8 %.sroa.0.0.copyload.i.i.i, 9
-  %or.cond.not.i = or i1 %4, %3
-  br i1 %or.cond.not.i, label %.critedge.i, label %bb.c, !prof !359
+  %i.f = load i8, ptr %i.e, align 8, !tbaa !358
+  switch i8 %i.f, label %bb.c [
+    i8 9, label %.critedge.i
+    i8 6, label %.critedge.i
+    i8 5, label %.critedge.i
+    i8 4, label %.critedge.i
+    i8 3, label %.critedge.i
+    i8 2, label %.critedge.i
+    i8 1, label %.critedge.i
+    i8 0, label %.critedge.i
+  ], !prof !359
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %.0.val, i64 8
@@ -683,7 +683,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_ZNK7AstNode15v3errorEndFatalERKNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(152) %i.h, ptr noundef nonnull align 8 dereferenceable(112) %i.k) #33
   unreachable
 
-.critedge.i:                                      ; preds = %bb.b
+.critedge.i:                                      ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !181
   %i.n = load i32, ptr @_ZN12VNUser1InUse12s_userCntGblE, align 4, !tbaa !180
@@ -1086,7 +1086,7 @@ begin_hunk_2_@llvm.umax.i64
 !356 = distinct !{!356, !149}
 !357 = !{!"_ZTSN9VEdgeType2enE", !13, i64 0}
 !358 = !{!357, !357, i64 0}
-!359 = !{!"branch_weights", i32 4001, i32 1}
+!359 = !{!"branch_weights", i32 1, i32 500, i32 500, i32 500, i32 500, i32 500, i32 500, i32 500, i32 500}
 !360 = !{!"_ZTSSt17reference_wrapperI10AstSenItemE", !235, i64 0}
 !361 = !{!360, !235, i64 0}
 !362 = !{!"_ZTS5VNRefI10AstSenItemE", !360, i64 0}
