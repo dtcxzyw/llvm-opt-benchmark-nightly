@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %_RNCINvNtNtNtCshzWf
   %i.dg = sub i64 %.sroa.3.0.i.i17.5.i.i.i.i.i.i.i.i, %.val8.i.i.i.i
   %spec.select.i.i.i21.5.i.i.i.i.i.i.i.i = select i1 %i.df, i64 %i.dg, i64 %i.de
   %i.dh = icmp sgt i64 %spec.select.i.i.i21.5.i.i.i.i.i.i.i.i, 0
-  %i.di = select i1 %i.dh, i64 %i.cv, i64 %i.cw, !unpredictable !5 ; 2 uses
-  %i.dj = getelementptr inbounds nuw [72 x i8], ptr @121, i64 %i.di ; 10 uses
+  %i.di = select i1 %i.dh, i64 %i.cv, i64 %i.cw, !unpredictable !5 ; 3 uses
+  %i.dj = getelementptr inbounds nuw [72 x i8], ptr @121, i64 %i.di ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1836)
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 32
   %i.dl = load ptr, ptr %i.dk, align 8, !alias.scope !1837, !noalias !1822, !noundef !5 ; 2 uses
@@ -609,9 +609,8 @@ bb.aw:                                            ; preds = %bb.av, %bb.at
   %i.hc = load i8, ptr %.sroa.5.0.copyload, align 1, !range !13, !noalias !1844, !noundef !5
   %i.hd = trunc nuw i8 %i.hc to i1
   %.not.i.i.i.i.i.i.i.i.i.i = xor i1 %i.hd, true
-  %2 = getelementptr inbounds nuw i8, ptr %i.dj, i64 64
-  %3 = load i8, ptr %2, align 8, !range !13, !alias.scope !1845, !noalias !1846
-  %i.he = trunc nuw i8 %3 to i1
+  %2 = lshr i64 598690255470624, %i.di
+  %i.he = trunc i64 %2 to i1
   %or.cond.i.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i.i.i, i1 %i.he, i1 false
   br i1 %or.cond.i.i.i.i.i.i.i.i.i.i, label %bb.ay, label %bb.ax
 

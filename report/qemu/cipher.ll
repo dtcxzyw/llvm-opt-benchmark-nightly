@@ -15,7 +15,6 @@ target triple = "x86_64-pc-linux-gnu"
 @alg_block_len = internal unnamed_addr constant [13 x i64] [i64 16, i64 16, i64 16, i64 8, i64 8, i64 8, i64 16, i64 16, i64 16, i64 16, i64 16, i64 16, i64 0], align 16
 @__PRETTY_FUNCTION__.qcrypto_cipher_get_key_len = private unnamed_addr constant [53 x i8] c"size_t qcrypto_cipher_get_key_len(QCryptoCipherAlgo)\00", align 1
 @alg_key_len = internal unnamed_addr constant [13 x i64] [i64 16, i64 24, i64 32, i64 8, i64 24, i64 16, i64 16, i64 24, i64 32, i64 16, i64 24, i64 32, i64 0], align 16
-@mode_need_iv = internal unnamed_addr constant [4 x i8] c"\00\01\01\01", align 1
 @.str.2 = private unnamed_addr constant [30 x i8] c"../crypto/cipher-gnutls.c.inc\00", align 1
 @__func__.qcrypto_cipher_ctx_new = private unnamed_addr constant [23 x i8] c"qcrypto_cipher_ctx_new\00", align 1
 @.str.3 = private unnamed_addr constant [45 x i8] c"Unsupported cipher algorithm %s with %s mode\00", align 1
@@ -75,26 +74,20 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
 define dso_local i64 @qcrypto_cipher_get_iv_len(i32 noundef %0, i32 noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = zext nneg i32 %0 to i64
-  %3 = icmp ugt i32 %0, 12
-  %4 = icmp ugt i32 %1, 3
-  %or.cond = or i1 %3, %4
-  br i1 %or.cond, label %bb.c, label %5
+  %2 = icmp ugt i32 %0, 12
+  %3 = add i32 %1, -4
+  %4 = icmp ult i32 %3, -3
+  %or.cond = or i1 %2, %4
+  br i1 %or.cond, label %bb.c, label %bb.b
 
-5:                                                ; preds = %bb.a
-  %6 = zext nneg i32 %1 to i64
-  %7 = getelementptr inbounds nuw i8, ptr @mode_need_iv, i64 %6
-  %8 = load i8, ptr %7, align 1, !range !9, !noundef !10
-  %9 = trunc nuw i8 %8 to i1
-  br i1 %9, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %5
-  %i.a = getelementptr inbounds nuw [8 x i8], ptr @alg_block_len, i64 %2
+bb.b:                                             ; preds = %bb.a
+  %5 = zext nneg i32 %0 to i64
+  %i.a = getelementptr inbounds nuw [8 x i8], ptr @alg_block_len, i64 %5
   %i.b = load i64, ptr %i.a, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %5, %bb.a, %bb.b
-  %.0 = phi i64 [ 0, %5 ], [ 0, %bb.a ], [ %i.b, %bb.b ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]
   ret i64 %.0
 }
 
@@ -462,7 +455,7 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   %.not68 = icmp eq i64 %i.ac, 0
-  br i1 %.not68, label %.critedge73, label %bb.g, !llvm.loop !11
+  br i1 %.not68, label %.critedge73, label %bb.g, !llvm.loop !9
 
 .critedge:                                        ; preds = %bb.j, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
@@ -571,7 +564,7 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   %.not68 = icmp eq i64 %i.ac, 0
-  br i1 %.not68, label %.critedge73, label %bb.g, !llvm.loop !12
+  br i1 %.not68, label %.critedge73, label %bb.g, !llvm.loop !10
 
 .critedge:                                        ; preds = %bb.j, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
@@ -646,8 +639,6 @@ attributes #10 = { nounwind willreturn memory(none) }
 !6 = !{!"Ubuntu clang version 24.0.0 (++20260815081758+83e1178daa12-1~exp1~20260815201912.1788)"}
 !7 = !{!"auto-init"}
 !8 = !{!"llvm.loop.mustprogress"}
-!9 = !{i8 0, i8 2}
-!10 = !{}
-!11 = distinct !{!11, !8}
-!12 = distinct !{!12, !8}
+!9 = distinct !{!9, !8}
+!10 = distinct !{!10, !8}
 end_hunk_0

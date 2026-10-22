@@ -129,8 +129,6 @@ $_ZN4llvm12DenseMapBaseINS_8DenseMapINS_11AssertingVHIKNS_5ValueEEEPNS_8AliasSet
 
 $_ZSt9__find_ifIPN4llvm14MemoryLocationEN9__gnu_cxx5__ops16_Iter_equals_valIKS1_EEET_S8_S8_T0_St26random_access_iterator_tag = comdat any
 
-$_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
 
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
@@ -166,7 +164,6 @@ $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
 @.str.27 = private unnamed_addr constant [4 x i8] c"':\0A\00", align 1
 @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE = external unnamed_addr constant { [13 x ptr] }, align 8
 @_ZTVN4llvm2cl6OptionE = external unnamed_addr constant { [13 x ptr] }, align 8
-@_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] zeroinitializer, [8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\01\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00"], comdat, align 16
 @_ZTVN4llvm21SimpleCaptureAnalysisE = external unnamed_addr constant { [5 x ptr] }, align 8
 @_ZN4llvm17PreservedAnalyses14AllAnalysesKeyE = external global %"struct.llvm::AnalysisSetKey", align 8
 @_ZTVN4llvm2cl11OptionValueIjEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIjE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
@@ -569,14 +566,9 @@ bb.a:
   %3 = alloca %"class.llvm::MemoryLocation", align 8 ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.b = load i16, ptr %i.a, align 2, !tbaa !128
-  %4 = lshr i16 %i.b, 7
-  %i.c = and i16 %4, 7
-  %5 = zext nneg i16 %i.c to i64
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %5
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 2
-  %8 = load i8, ptr %7, align 2, !tbaa !114, !range !20, !noundef !21
-  %9 = trunc nuw i8 %8 to i1
-  br i1 %9, label %bb.b, label %bb.c
+  %i.c = and i16 %i.b, 896
+  %4 = icmp samesign ugt i16 %i.c, 256
+  br i1 %4, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN4llvm15AliasSetTracker10addUnknownEPNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull %1)
@@ -737,14 +729,9 @@ bb.a:
   %3 = alloca %"class.llvm::MemoryLocation", align 8 ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.b = load i16, ptr %i.a, align 2, !tbaa !128
-  %4 = lshr i16 %i.b, 7
-  %i.c = and i16 %4, 7
-  %5 = zext nneg i16 %i.c to i64
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %5
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 2
-  %8 = load i8, ptr %7, align 2, !tbaa !114, !range !20, !noundef !21
-  %9 = trunc nuw i8 %8 to i1
-  br i1 %9, label %bb.b, label %bb.c
+  %i.c = and i16 %i.b, 896
+  %4 = icmp samesign ugt i16 %i.c, 256
+  br i1 %4, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN4llvm15AliasSetTracker10addUnknownEPNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull %1)
@@ -945,14 +932,9 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.c = load i16, ptr %i.b, align 2, !tbaa !128
-  %12 = lshr i16 %i.c, 7
-  %i.d = and i16 %12, 7
-  %13 = zext nneg i16 %i.d to i64
-  %14 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %13
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 2
-  %16 = load i8, ptr %15, align 2, !tbaa !114, !range !20, !noundef !21
-  %17 = trunc nuw i8 %16 to i1
-  br i1 %17, label %bb.c, label %bb.d
+  %i.d = and i16 %i.c, 896
+  %12 = icmp samesign ugt i16 %i.d, 256
+  br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN4llvm15AliasSetTracker10addUnknownEPNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull %1)
@@ -995,14 +977,9 @@ bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.q = load i16, ptr %i.p, align 2, !tbaa !128
-  %18 = lshr i16 %i.q, 7
-  %i.r = and i16 %18, 7
-  %19 = zext nneg i16 %i.r to i64
-  %20 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %19
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 2
-  %22 = load i8, ptr %21, align 2, !tbaa !114, !range !20, !noundef !21
-  %23 = trunc nuw i8 %22 to i1
-  br i1 %23, label %bb.i, label %bb.j
+  %i.r = and i16 %i.q, 896
+  %13 = icmp samesign ugt i16 %i.r, 256
+  br i1 %13, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   tail call void @_ZN4llvm15AliasSetTracker10addUnknownEPNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull %1)

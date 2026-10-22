@@ -36,7 +36,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.19 = private unnamed_addr constant [5 x i8] c"USER\00", align 1
 @.str.20 = private unnamed_addr constant [5 x i8] c"UTF8\00", align 1
 @.str.21 = private unnamed_addr constant [5 x i8] c"XTND\00", align 1
-@pop3cmds = internal unnamed_addr constant [18 x { ptr, i16, i8, [5 x i8] }] [{ ptr, i16, i8, [5 x i8] } { ptr @.str.6, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.7, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.8, i16 4, i8 3, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.9, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.2, i16 4, i8 1, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.10, i16 3, i8 3, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.11, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.12, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.13, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.3, i16 4, i8 3, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.14, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.15, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.16, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.17, i16 3, i8 3, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.18, i16 4, i8 1, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.19, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.20, i16 4, i8 0, [5 x i8] zeroinitializer }, { ptr, i16, i8, [5 x i8] } { ptr @.str.21, i16 4, i8 3, [5 x i8] zeroinitializer }], align 16
 @Curl_scheme_pop3s = external constant %struct.Curl_scheme, align 8
 @.str.23 = private unnamed_addr constant [36 x i8] c"Got unexpected pop3-server response\00", align 1
 @.str.24 = private unnamed_addr constant [6 x i8] c"SASL \00", align 1
@@ -439,11 +438,10 @@ pop3_is_multiline.exit.thread.i.i.i:              ; preds = %bb.aw, %bb.av
   br label %bb.ax
 
 pop3_is_multiline.exit.i.i.i:                     ; preds = %bb.aw, %bb.au, %bb.as, %bb.aq, %bb.ao, %bb.am, %bb.ak, %bb.ai, %bb.ag, %bb.ae, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.u, %bb.s, %bb.q, %bb.o
-  %.lcssa.i.i.i.i = phi ptr [ @pop3cmds, %bb.o ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 16), %bb.q ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 32), %bb.s ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 48), %bb.u ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 64), %bb.w ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 80), %bb.y ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 96), %bb.aa ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 112), %bb.ac ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 128), %bb.ae ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 144), %bb.ag ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 160), %bb.ai ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 176), %bb.ak ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 192), %bb.am ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 208), %bb.ao ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 224), %bb.aq ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 240), %bb.as ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 256), %bb.au ], [ getelementptr inbounds nuw (i8, ptr @pop3cmds, i64 272), %bb.aw ]
-  %2 = getelementptr inbounds nuw i8, ptr %.lcssa.i.i.i.i, i64 10
-  %3 = load i8, ptr %2, align 2
-  %.fr40.i.i.i = freeze i8 %3
-  %i.cq = trunc i8 %.fr40.i.i.i to i1
+  %.016.lcssa.i.i.i.i = phi i64 [ 0, %bb.o ], [ 1, %bb.q ], [ 2, %bb.s ], [ 3, %bb.u ], [ 4, %bb.w ], [ 5, %bb.y ], [ 6, %bb.aa ], [ 7, %bb.ac ], [ 8, %bb.ae ], [ 9, %bb.ag ], [ 10, %bb.ai ], [ 11, %bb.ak ], [ 12, %bb.am ], [ 13, %bb.ao ], [ 14, %bb.aq ], [ 15, %bb.as ], [ 16, %bb.au ], [ 17, %bb.aw ]
+  %2 = lshr i64 156212, %.016.lcssa.i.i.i.i
+  %.fr40.i.i.i = freeze i64 %2
+  %i.cq = trunc i64 %.fr40.i.i.i to i1
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 417 ; 3 uses
   %i.cs = load i32, ptr %i.cr, align 1            ; 2 uses
   br i1 %i.cq, label %bb.ax, label %bb.ay

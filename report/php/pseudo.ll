@@ -179,15 +179,9 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local zeroext i1 @lxb_css_selector_pseudo_function_can_empty(i32 noundef %0, i1 noundef zeroext %1) local_unnamed_addr #2 {
+define dso_local noundef zeroext i1 @lxb_css_selector_pseudo_function_can_empty(i32 noundef %0, i1 noundef zeroext %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = zext i32 %0 to i64
-  %.pn.v = select i1 %1, ptr @lxb_css_selectors_pseudo_data_pseudo_class_function, ptr @lxb_css_selectors_pseudo_data_pseudo_element_function
-  %.pn = getelementptr inbounds nuw [64 x i8], ptr %.pn.v, i64 %2
-  %.0.in.in = getelementptr inbounds nuw i8, ptr %.pn, i64 20
-  %.0.in = load i8, ptr %.0.in.in, align 4, !tbaa !21, !range !22, !noundef !23
-  %.0 = trunc nuw i8 %.0.in to i1
-  ret i1 %.0
+  ret i1 false
 }
 
 declare zeroext i1 @lxb_css_state_failed(ptr noundef, ptr noundef, ptr noundef) #1
@@ -256,11 +250,4 @@ attributes #3 = { nounwind }
 !14 = !{!"long", !8, i64 0}
 !15 = !{!"", !13, i64 0, !12, i64 8, !14, i64 16, !14, i64 24}
 !16 = !{!15, !12, i64 8}
-!17 = !{!"_Bool", !8, i64 0}
-!18 = !{!"lxb_css_syntax_cb_base", !12, i64 0, !12, i64 8}
-!19 = !{!"lxb_css_syntax_cb_function", !18, i64 0, !12, i64 16}
-!20 = !{!"", !13, i64 0, !14, i64 8, !9, i64 16, !17, i64 20, !9, i64 24, !19, i64 32, !17, i64 56, !17, i64 57}
-!21 = !{!20, !17, i64 20}
-!22 = !{i8 0, i8 2}
-!23 = !{}
 end_hunk_0

@@ -85,12 +85,11 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.j = icmp eq i32 %0, 19
   tail call void @ClosePostmasterPorts(i1 noundef zeroext %i.j) #5
   tail call void @InitPostmasterChild() #5
-  %i.k = zext i32 %0 to i64
-  %5 = getelementptr inbounds nuw [24 x i8], ptr @child_process_kinds, i64 %i.k ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %7 = load i8, ptr %6, align 8, !range !4, !noundef !5
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %bb.h, label %bb.g
+  %i.k = zext i32 %0 to i64                       ; 2 uses
+  %5 = shl nuw i64 1, %i.k
+  %6 = and i64 %5, 130814
+  %.not = icmp eq i64 %6, 0
+  br i1 %.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   tail call void @dsm_detach_all() #5
@@ -111,7 +110,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %7 = getelementptr inbounds nuw [24 x i8], ptr @child_process_kinds, i64 %i.k
+  %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.o = load ptr, ptr %i.n, align 8
   tail call void %i.o(ptr noundef %2, i64 noundef %3) #5
   unreachable
@@ -193,6 +193,4 @@ attributes #5 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
-!4 = !{i8 0, i8 2}
-!5 = !{}
 end_hunk_0
