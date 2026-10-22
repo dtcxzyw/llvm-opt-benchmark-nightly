@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw [16 x i8], ptr @_ZN5folly6detail12_GLOBAL__N_113kErrorStringsE, i64 %i.a ; 3 uses
+  %i.c = getelementptr inbounds nuw [16 x i8], ptr @_ZN5folly6detail12_GLOBAL__N_113kErrorStringsE, i64 %i.a ; 2 uses
   %i.d = icmp eq i8 %1, 1
   %i.e = icmp eq ptr %2, %3                       ; 2 uses
   %or.cond = select i1 %i.d, i1 %i.e, i1 false
@@ -311,10 +311,9 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.ad = load ptr, ptr %4, align 8, !tbaa !82
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.w
   store i8 0, ptr %i.ae, align 1, !tbaa !37
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %6 = load i8, ptr %5, align 8, !tbaa !198, !range !44, !noundef !45
-  %7 = trunc nuw i8 %6 to i1                      ; 2 uses
-  br i1 %7, label %bb.n, label %bb.u
+  %5 = add nsw i8 %1, -14
+  %6 = icmp ult i8 %5, -3                         ; 2 uses
+  br i1 %6, label %bb.n, label %bb.u
 
 bb.n:                                             ; preds = %bb.m
   %i.af = load i64, ptr %i.r, align 8, !tbaa !83  ; 8 uses
@@ -478,7 +477,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit: ; preds 
   br label %bb.aa
 
 bb.aa:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit, %bb.u
-  br i1 %7, label %bb.ab, label %bb.ah
+  br i1 %6, label %bb.ab, label %bb.ah
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bx = load i64, ptr %i.r, align 8, !tbaa !83  ; 8 uses
@@ -881,5 +880,4 @@ begin_hunk_1_@llvm.umin.i64
 !195 = !{!"_ZTSN5folly15ConversionErrorE", !194, i64 0, !76, i64 16}
 !196 = !{!195, !76, i64 16}
 !197 = !{!80, !33, i64 0}
-!198 = !{!188, !42, i64 8}
 end_hunk_1

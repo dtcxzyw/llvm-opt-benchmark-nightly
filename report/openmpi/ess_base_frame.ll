@@ -204,15 +204,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %.preheader, label %bb.k
 
 .preheader:                                       ; preds = %bb.b, %bb.j
-  %indvars.iv155 = phi i64 [ %indvars.iv.next156, %bb.j ], [ 0, %bb.b ] ; 2 uses
-  %i.h = getelementptr inbounds nuw [24 x i8], ptr @known_signals, i64 %indvars.iv155 ; 4 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %2 = load i8, ptr %1, align 8, !tbaa !47, !range !48, !noundef !49
-  %3 = trunc nuw i8 %2 to i1
+  %indvars.iv155 = phi i64 [ %indvars.iv.next156, %bb.j ], [ 0, %bb.b ] ; 3 uses
+  %i.h = getelementptr inbounds nuw [24 x i8], ptr @known_signals, i64 %indvars.iv155 ; 3 uses
+  %1 = trunc i64 %indvars.iv155 to i32
+  %2 = add i32 %1, -6
+  %3 = icmp ult i32 %2, 14
   br i1 %3, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %.preheader
-  %i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_framework, i64 76), align 4, !tbaa !52 ; 3 uses
+  %i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_framework, i64 76), align 4, !tbaa !48 ; 3 uses
   %or.cond3 = icmp ult i32 %i.i, 64
   br i1 %or.cond3, label %bb.d, label %bb.f
 
@@ -220,18 +220,18 @@ bb.d:                                             ; preds = %bb.c
   %i.j = zext nneg i32 %i.i to i64
   %i.k = getelementptr inbounds nuw [72 x i8], ptr @pmix_output_info, i64 %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !54
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !50
   %i.n = icmp sgt i32 %i.m, 1
   br i1 %i.n, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !55
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !52
   tail call void (i32, ptr, ...) @pmix_output(i32 noundef %i.i, ptr noundef nonnull @.str.5, ptr noundef %i.p) #14
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
-  %i.q = load i64, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_signal_t_class, i64 56), align 8, !tbaa !56
+  %i.q = load i64, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_signal_t_class, i64 56), align 8, !tbaa !53
   %i.r = tail call noalias noundef ptr @malloc(i64 noundef %i.q) #19 ; 13 uses
   %i.s = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !12
   %i.t = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_signal_t_class, i64 32), align 8, !tbaa !17
@@ -271,11 +271,11 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i.i, label %pmix_obj_new_tma.exit, label %.lr.ph.i.i, !llvm.loop !0
 
 pmix_obj_new_tma.exit:                            ; preds = %.lr.ph.i.i, %bb.h, %bb.i
-  %i.ae = load i32, ptr %i.h, align 8, !tbaa !57
+  %i.ae = load i32, ptr %i.h, align 8, !tbaa !54
   %i.af = getelementptr inbounds nuw i8, ptr %i.r, i64 152
-  store i32 %i.ae, ptr %i.af, align 8, !tbaa !58
+  store i32 %i.ae, ptr %i.af, align 8, !tbaa !55
   %i.ag = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !55
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !52
   %i.ai = tail call noalias ptr @strdup(ptr noundef %i.ah) #14
   %i.aj = getelementptr inbounds nuw i8, ptr %i.r, i64 144
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !33
@@ -314,7 +314,7 @@ bb.k:                                             ; preds = %bb.b
 .preheader112.preheader:                          ; preds = %.lr.ph133
   %i.av = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.22) #18
   %i.aw = icmp eq i32 %i.av, 0
-  br i1 %i.aw, label %bb.o, label %.preheader112.1.a
+  br i1 %i.aw, label %.preheader112.1.a, label %.preheader112.3.a
 
 bb.l:                                             ; preds = %.lr.ph133
   %i.ax = tail call ptr @__errno_location() #15   ; 2 uses
@@ -327,7 +327,7 @@ bb.l:                                             ; preds = %.lr.ph133
 
 bb.m:                                             ; preds = %bb.l
   %i.bb = load ptr, ptr %i.a, align 8, !tbaa !11
-  %i.bc = load i8, ptr %i.bb, align 1, !tbaa !59
+  %i.bc = load i8, ptr %i.bb, align 1, !tbaa !56
   %.not96 = icmp eq i8 %i.bc, 0
   br i1 %.not96, label %.preheader113.preheader, label %bb.n
 
@@ -348,132 +348,127 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.bg = load ptr, ptr %i.at, align 8, !tbaa !11
   br label %bb.p
 
-.preheader112.1.a:                                ; preds = %.preheader112.preheader
-  %4 = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.23) #18
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %bb.o, label %.preheader112.2.a
+.preheader112.1.a:                                ; preds = %.preheader112.preheader, %.preheader112.3.a, %.preheader112.4.a, %.preheader112.5.a, %.preheader112.6.a, %.preheader112.7.a
+  %.lcssa137 = phi ptr [ @.str.22, %.preheader112.preheader ], [ @.str.23, %.preheader112.3.a ], [ @.str.24, %.preheader112.4.a ], [ @.str.25, %.preheader112.5.a ], [ @.str.26, %.preheader112.6.a ], [ @.str.27, %.preheader112.7.a ]
+  %4 = call i32 (ptr, ptr, i32, ...) @pmix_show_help(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.9, i32 noundef 1, ptr noundef nonnull %.lcssa137, ptr noundef %.084) #14 ; 0 uses
+  br label %.loopexit.sink.split
 
-.preheader112.2.a:                                ; preds = %.preheader112.1.a
-  %6 = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.24) #18
-  %7 = icmp eq i32 %6, 0
-  br i1 %7, label %bb.o, label %.preheader112.3.a
+.preheader112.2.a:                                ; preds = %.preheader112.8.a, %.preheader112.9.a, %.preheader112.10.a, %.preheader112.11.a, %.preheader112.12.a, %.preheader112.13.a, %.preheader112.14.a, %.preheader112.15.a, %.preheader112.16.a, %.preheader112.17.a, %.preheader112.18.a, %.preheader112.19.a, %.critedge102.a, %bb.o
+  %.lcssa140.ph = phi ptr [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 456), %bb.o ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 432), %.critedge102.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 408), %.preheader112.19.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 384), %.preheader112.18.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 360), %.preheader112.17.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 336), %.preheader112.16.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 312), %.preheader112.15.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 288), %.preheader112.14.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 264), %.preheader112.13.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 240), %.preheader112.12.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 216), %.preheader112.11.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 192), %.preheader112.10.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 168), %.preheader112.9.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 144), %.preheader112.8.a ]
+  %.lcssa137.ph = phi ptr [ @.str.41, %bb.o ], [ @.str.40, %.critedge102.a ], [ @.str.39, %.preheader112.19.a ], [ @.str.38, %.preheader112.18.a ], [ @.str.37, %.preheader112.17.a ], [ @.str.36, %.preheader112.16.a ], [ @.str.35, %.preheader112.15.a ], [ @.str.34, %.preheader112.14.a ], [ @.str.33, %.preheader112.13.a ], [ @.str.32, %.preheader112.12.a ], [ @.str.31, %.preheader112.11.a ], [ @.str.30, %.preheader112.10.a ], [ @.str.29, %.preheader112.9.a ], [ @.str.28, %.preheader112.8.a ]
+  %5 = load i32, ptr %.lcssa140.ph, align 8, !tbaa !54
+  br label %bb.p
 
-.preheader112.3.a:                                ; preds = %.preheader112.2.a
-  %i.bh = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.25) #18
+.preheader112.3.a:                                ; preds = %.preheader112.preheader
+  %i.bh = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.23) #18
   %i.bi = icmp eq i32 %i.bh, 0
-  br i1 %i.bi, label %bb.o, label %.preheader112.4.a
+  br i1 %i.bi, label %.preheader112.1.a, label %.preheader112.4.a
 
 .preheader112.4.a:                                ; preds = %.preheader112.3.a
-  %i.bj = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.26) #18
+  %i.bj = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.24) #18
   %i.bk = icmp eq i32 %i.bj, 0
-  br i1 %i.bk, label %bb.o, label %.preheader112.5.a
+  br i1 %i.bk, label %.preheader112.1.a, label %.preheader112.5.a
 
 .preheader112.5.a:                                ; preds = %.preheader112.4.a
-  %i.bl = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.27) #18
+  %i.bl = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.25) #18
   %i.bm = icmp eq i32 %i.bl, 0
-  br i1 %i.bm, label %bb.o, label %.preheader112.6.a
+  br i1 %i.bm, label %.preheader112.1.a, label %.preheader112.6.a
 
 .preheader112.6.a:                                ; preds = %.preheader112.5.a
-  %i.bn = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.28) #18
+  %i.bn = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.26) #18
   %i.bo = icmp eq i32 %i.bn, 0
-  br i1 %i.bo, label %bb.o, label %.preheader112.7.a
+  br i1 %i.bo, label %.preheader112.1.a, label %.preheader112.7.a
 
 .preheader112.7.a:                                ; preds = %.preheader112.6.a
-  %i.bp = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.29) #18
+  %i.bp = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.27) #18
   %i.bq = icmp eq i32 %i.bp, 0
-  br i1 %i.bq, label %bb.o, label %.preheader112.8.a
+  br i1 %i.bq, label %.preheader112.1.a, label %.preheader112.8.a
 
 .preheader112.8.a:                                ; preds = %.preheader112.7.a
-  %i.br = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.30) #18
+  %i.br = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.28) #18
   %i.bs = icmp eq i32 %i.br, 0
-  br i1 %i.bs, label %bb.o, label %.preheader112.9.a
+  br i1 %i.bs, label %.preheader112.2.a, label %.preheader112.9.a
 
 .preheader112.9.a:                                ; preds = %.preheader112.8.a
-  %i.bt = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.31) #18
+  %i.bt = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.29) #18
   %i.bu = icmp eq i32 %i.bt, 0
-  br i1 %i.bu, label %bb.o, label %.preheader112.10.a
+  br i1 %i.bu, label %.preheader112.2.a, label %.preheader112.10.a
 
 .preheader112.10.a:                               ; preds = %.preheader112.9.a
-  %i.bv = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.32) #18
+  %i.bv = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.30) #18
   %i.bw = icmp eq i32 %i.bv, 0
-  br i1 %i.bw, label %bb.o, label %.preheader112.11.a
+  br i1 %i.bw, label %.preheader112.2.a, label %.preheader112.11.a
 
 .preheader112.11.a:                               ; preds = %.preheader112.10.a
-  %i.bx = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.33) #18
+  %i.bx = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.31) #18
   %i.by = icmp eq i32 %i.bx, 0
-  br i1 %i.by, label %bb.o, label %.preheader112.12.a
+  br i1 %i.by, label %.preheader112.2.a, label %.preheader112.12.a
 
 .preheader112.12.a:                               ; preds = %.preheader112.11.a
-  %i.bz = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.34) #18
+  %i.bz = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.32) #18
   %i.ca = icmp eq i32 %i.bz, 0
-  br i1 %i.ca, label %bb.o, label %.preheader112.13.a
+  br i1 %i.ca, label %.preheader112.2.a, label %.preheader112.13.a
 
 .preheader112.13.a:                               ; preds = %.preheader112.12.a
-  %i.cb = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.35) #18
+  %i.cb = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.33) #18
   %i.cc = icmp eq i32 %i.cb, 0
-  br i1 %i.cc, label %bb.o, label %.preheader112.14.a
+  br i1 %i.cc, label %.preheader112.2.a, label %.preheader112.14.a
 
 .preheader112.14.a:                               ; preds = %.preheader112.13.a
-  %i.cd = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.36) #18
+  %i.cd = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.34) #18
   %i.ce = icmp eq i32 %i.cd, 0
-  br i1 %i.ce, label %bb.o, label %.preheader112.15.a
+  br i1 %i.ce, label %.preheader112.2.a, label %.preheader112.15.a
 
 .preheader112.15.a:                               ; preds = %.preheader112.14.a
-  %i.cf = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.37) #18
+  %i.cf = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.35) #18
   %i.cg = icmp eq i32 %i.cf, 0
-  br i1 %i.cg, label %bb.o, label %.preheader112.16.a
+  br i1 %i.cg, label %.preheader112.2.a, label %.preheader112.16.a
 
 .preheader112.16.a:                               ; preds = %.preheader112.15.a
-  %i.ch = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.38) #18
+  %i.ch = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.36) #18
   %i.ci = icmp eq i32 %i.ch, 0
-  br i1 %i.ci, label %bb.o, label %.preheader112.17.a
+  br i1 %i.ci, label %.preheader112.2.a, label %.preheader112.17.a
 
 .preheader112.17.a:                               ; preds = %.preheader112.16.a
-  %i.cj = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.39) #18
+  %i.cj = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.37) #18
   %i.ck = icmp eq i32 %i.cj, 0
-  br i1 %i.ck, label %bb.o, label %.preheader112.18.a
+  br i1 %i.ck, label %.preheader112.2.a, label %.preheader112.18.a
 
 .preheader112.18.a:                               ; preds = %.preheader112.17.a
-  %i.cl = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.40) #18
+  %i.cl = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.38) #18
   %i.cm = icmp eq i32 %i.cl, 0
-  br i1 %i.cm, label %bb.o, label %.preheader112.19.a
+  br i1 %i.cm, label %.preheader112.2.a, label %.preheader112.19.a
 
 .preheader112.19.a:                               ; preds = %.preheader112.18.a
-  %i.cn = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.41) #18
+  %i.cn = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.39) #18
   %i.co = icmp eq i32 %i.cn, 0
-  br i1 %i.co, label %bb.o, label %.critedge102.a
+  br i1 %i.co, label %.preheader112.2.a, label %.critedge102.a
 
 .critedge102.a:                                   ; preds = %.preheader112.19.a
-  %8 = call i32 (ptr, ptr, i32, ...) @pmix_show_help(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.8, i32 noundef 1, ptr noundef nonnull %i.as, ptr noundef %.084) #14 ; 0 uses
-  br label %.loopexit.sink.split
+  %6 = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.40) #18
+  %7 = icmp eq i32 %6, 0
+  br i1 %7, label %.preheader112.2.a, label %bb.o
 
-bb.o:                                             ; preds = %.preheader112.19.a, %.preheader112.18.a, %.preheader112.17.a, %.preheader112.16.a, %.preheader112.15.a, %.preheader112.14.a, %.preheader112.13.a, %.preheader112.12.a, %.preheader112.11.a, %.preheader112.10.a, %.preheader112.9.a, %.preheader112.8.a, %.preheader112.7.a, %.preheader112.6.a, %.preheader112.5.a, %.preheader112.4.a, %.preheader112.3.a, %.preheader112.2.a, %.preheader112.1.a, %.preheader112.preheader
-  %.lcssa138 = phi ptr [ @known_signals, %.preheader112.preheader ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 24), %.preheader112.1.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 48), %.preheader112.2.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 72), %.preheader112.3.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 96), %.preheader112.4.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 120), %.preheader112.5.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 144), %.preheader112.6.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 168), %.preheader112.7.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 192), %.preheader112.8.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 216), %.preheader112.9.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 240), %.preheader112.10.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 264), %.preheader112.11.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 288), %.preheader112.12.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 312), %.preheader112.13.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 336), %.preheader112.14.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 360), %.preheader112.15.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 384), %.preheader112.16.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 408), %.preheader112.17.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 432), %.preheader112.18.a ], [ getelementptr inbounds nuw (i8, ptr @known_signals, i64 456), %.preheader112.19.a ] ; 2 uses
-  %.lcssa136 = phi ptr [ @.str.22, %.preheader112.preheader ], [ @.str.23, %.preheader112.1.a ], [ @.str.24, %.preheader112.2.a ], [ @.str.25, %.preheader112.3.a ], [ @.str.26, %.preheader112.4.a ], [ @.str.27, %.preheader112.5.a ], [ @.str.28, %.preheader112.6.a ], [ @.str.29, %.preheader112.7.a ], [ @.str.30, %.preheader112.8.a ], [ @.str.31, %.preheader112.9.a ], [ @.str.32, %.preheader112.10.a ], [ @.str.33, %.preheader112.11.a ], [ @.str.34, %.preheader112.12.a ], [ @.str.35, %.preheader112.13.a ], [ @.str.36, %.preheader112.14.a ], [ @.str.37, %.preheader112.15.a ], [ @.str.38, %.preheader112.16.a ], [ @.str.39, %.preheader112.17.a ], [ @.str.40, %.preheader112.18.a ], [ @.str.41, %.preheader112.19.a ] ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.lcssa138, i64 16
-  %10 = load i8, ptr %9, align 8, !tbaa !47, !range !48, !noundef !49
-  %11 = trunc nuw i8 %10 to i1
-  br i1 %11, label %12, label %.critedge100
+bb.o:                                             ; preds = %.critedge102.a
+  %8 = call i32 @strcasecmp(ptr noundef nonnull %i.as, ptr noundef nonnull @.str.41) #18
+  %9 = icmp eq i32 %8, 0
+  br i1 %9, label %.preheader112.2.a, label %.critedge100
 
 .critedge100:                                     ; preds = %bb.o
-  %i.cp = call i32 (ptr, ptr, i32, ...) @pmix_show_help(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.9, i32 noundef 1, ptr noundef nonnull %.lcssa136, ptr noundef %.084) #14 ; 0 uses
+  %i.cp = call i32 (ptr, ptr, i32, ...) @pmix_show_help(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.8, i32 noundef 1, ptr noundef nonnull %i.as, ptr noundef %.084) #14 ; 0 uses
   br label %.loopexit.sink.split
-
-12:                                               ; preds = %bb.o
-  %13 = load i32, ptr %.lcssa138, align 8, !tbaa !57
-  br label %bb.p
 
 switch.lookup:                                    ; preds = %.preheader113.preheader
   %i.cq = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.prte_ess_base_setup_signals, i64 %i.cq
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.cr = getelementptr inbounds nuw i8, ptr %switch.load, i64 8
-  %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !55
+  %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !52
   br label %bb.p
 
-bb.p:                                             ; preds = %switch.lookup, %12, %.thread
-  %.186 = phi i32 [ %i.az, %.thread ], [ %13, %12 ], [ %i.az, %switch.lookup ] ; 2 uses
-  %.383 = phi ptr [ %i.bg, %.thread ], [ %.lcssa136, %12 ], [ %i.cs, %switch.lookup ] ; 3 uses
+bb.p:                                             ; preds = %switch.lookup, %.preheader112.2.a, %.thread
+  %.186 = phi i32 [ %i.az, %.thread ], [ %5, %.preheader112.2.a ], [ %i.az, %switch.lookup ] ; 2 uses
+  %.383 = phi ptr [ %i.bg, %.thread ], [ %.lcssa137.ph, %.preheader112.2.a ], [ %i.cs, %switch.lookup ] ; 3 uses
   %.079128 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_signals, i64 240), align 8, !tbaa !30 ; 2 uses
   %.not98.not129 = icmp eq ptr %.079128, getelementptr inbounds nuw (i8, ptr @prte_ess_base_signals, i64 120)
   br i1 %.not98.not129, label %.critedge, label %.lr.ph
@@ -494,12 +489,12 @@ bb.q:                                             ; preds = %bb.r
 
 bb.r:                                             ; preds = %.lr.ph
   %i.cy = getelementptr inbounds nuw i8, ptr %.079130, i64 152
-  %i.cz = load i32, ptr %i.cy, align 8, !tbaa !58
+  %i.cz = load i32, ptr %i.cy, align 8, !tbaa !55
   %i.da = icmp eq i32 %.186, %i.cz
   br i1 %i.da, label %.loopexit111, label %bb.q
 
 .critedge:                                        ; preds = %bb.q, %bb.p
-  %i.db = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_framework, i64 76), align 4, !tbaa !52 ; 3 uses
+  %i.db = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_framework, i64 76), align 4, !tbaa !48 ; 3 uses
   %or.cond5 = icmp ult i32 %i.db, 64
   br i1 %or.cond5, label %bb.s, label %bb.u
 
@@ -507,7 +502,7 @@ bb.s:                                             ; preds = %.critedge
   %i.dc = zext nneg i32 %i.db to i64
   %i.dd = getelementptr inbounds nuw [72 x i8], ptr @pmix_output_info, i64 %i.dc
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 4
-  %i.df = load i32, ptr %i.de, align 4, !tbaa !54
+  %i.df = load i32, ptr %i.de, align 4, !tbaa !50
   %i.dg = icmp sgt i32 %i.df, 1
   br i1 %i.dg, label %bb.t, label %bb.u
 
@@ -516,7 +511,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %.critedge, %bb.s, %bb.t
-  %i.dh = load i64, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_signal_t_class, i64 56), align 8, !tbaa !56
+  %i.dh = load i64, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_signal_t_class, i64 56), align 8, !tbaa !53
   %i.di = call noalias noundef ptr @malloc(i64 noundef %i.dh) #19 ; 13 uses
   %i.dj = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !12
   %i.dk = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_ess_base_signal_t_class, i64 32), align 8, !tbaa !17
@@ -557,7 +552,7 @@ bb.x:                                             ; preds = %bb.w
 
 pmix_obj_new_tma.exit109:                         ; preds = %.lr.ph.i.i106, %bb.w, %bb.x
   %i.dv = getelementptr inbounds nuw i8, ptr %i.di, i64 152
-  store i32 %.186, ptr %i.dv, align 8, !tbaa !58
+  store i32 %.186, ptr %i.dv, align 8, !tbaa !55
   %i.dw = call noalias ptr @strdup(ptr noundef %.383) #14
   %i.dx = getelementptr inbounds nuw i8, ptr %i.di, i64 144
   store ptr %i.dw, ptr %i.dx, align 8, !tbaa !33
@@ -581,8 +576,8 @@ pmix_obj_new_tma.exit109:                         ; preds = %.lr.ph.i.i106, %bb.
   %.not = icmp eq ptr %i.ef, null
   br i1 %.not, label %.loopexit.sink.split, label %.lr.ph133, !llvm.loop !45
 
-.loopexit.sink.split:                             ; preds = %.loopexit111, %bb.k, %bb.n, %.critedge102.a, %.critedge100
-  %.3.ph = phi i32 [ -2, %.critedge100 ], [ -2, %.critedge102.a ], [ -2, %bb.n ], [ 0, %bb.k ], [ 0, %.loopexit111 ]
+.loopexit.sink.split:                             ; preds = %.loopexit111, %bb.k, %bb.n, %.critedge100, %.preheader112.1.a
+  %.3.ph = phi i32 [ -2, %.preheader112.1.a ], [ -2, %.critedge100 ], [ -2, %bb.n ], [ 0, %bb.k ], [ 0, %.loopexit111 ]
   call void @PMIx_Argv_free(ptr noundef nonnull %i.aq) #14
   br label %.loopexit
 
@@ -750,18 +745,15 @@ attributes #19 = { nounwind allocsize(0) }
 !43 = distinct !{!43, !24}
 !44 = distinct !{!44, !24}
 !45 = distinct !{!45, !24}
-!46 = !{!"known_signal", !6, i64 0, !10, i64 8, !31, i64 16}
-!47 = !{!46, !31, i64 16}
-!48 = !{i8 0, i8 2}
-!49 = !{}
-!50 = !{!"p2 _ZTS31pmix_mca_base_component_2_1_0_t", !14, i64 0}
-!51 = !{!"pmix_mca_base_framework_t", !10, i64 0, !10, i64 8, !10, i64 16, !9, i64 24, !9, i64 32, !9, i64 40, !6, i64 48, !6, i64 52, !50, i64 56, !10, i64 64, !6, i64 72, !6, i64 76, !27, i64 80, !27, i64 352}
-!52 = !{!51, !6, i64 76}
-!53 = !{!"", !31, i64 0, !31, i64 1, !6, i64 4, !31, i64 8, !6, i64 12, !10, i64 16, !10, i64 24, !6, i64 32, !10, i64 40, !6, i64 48, !31, i64 52, !31, i64 53, !31, i64 54, !31, i64 55, !10, i64 56, !6, i64 64, !6, i64 68}
-!54 = !{!53, !6, i64 4}
-!55 = !{!46, !10, i64 8}
-!56 = !{!16, !15, i64 56}
-!57 = !{!46, !6, i64 0}
-!58 = !{!32, !6, i64 152}
-!59 = !{!5, !5, i64 0}
+!46 = !{!"p2 _ZTS31pmix_mca_base_component_2_1_0_t", !14, i64 0}
+!47 = !{!"pmix_mca_base_framework_t", !10, i64 0, !10, i64 8, !10, i64 16, !9, i64 24, !9, i64 32, !9, i64 40, !6, i64 48, !6, i64 52, !46, i64 56, !10, i64 64, !6, i64 72, !6, i64 76, !27, i64 80, !27, i64 352}
+!48 = !{!47, !6, i64 76}
+!49 = !{!"", !31, i64 0, !31, i64 1, !6, i64 4, !31, i64 8, !6, i64 12, !10, i64 16, !10, i64 24, !6, i64 32, !10, i64 40, !6, i64 48, !31, i64 52, !31, i64 53, !31, i64 54, !31, i64 55, !10, i64 56, !6, i64 64, !6, i64 68}
+!50 = !{!49, !6, i64 4}
+!51 = !{!"known_signal", !6, i64 0, !10, i64 8, !31, i64 16}
+!52 = !{!51, !10, i64 8}
+!53 = !{!16, !15, i64 56}
+!54 = !{!51, !6, i64 0}
+!55 = !{!32, !6, i64 152}
+!56 = !{!5, !5, i64 0}
 end_hunk_0

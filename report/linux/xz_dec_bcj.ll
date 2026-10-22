@@ -5,7 +5,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@bcj_x86.mask_to_allowed_status = internal unnamed_addr constant [8 x i8] c"\01\01\01\00\01\00\00\00", align 1
 @bcj_x86.mask_to_bit_num = internal unnamed_addr constant [8 x i8] c"\00\01\02\02\03\03\03\03", align 1
 @kmalloc_caches = external dso_local local_unnamed_addr global [3 x [14 x ptr]], align 16
 
@@ -270,10 +269,10 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.s = zext nneg i32 %i.r to i64                ; 2 uses
-  %4 = getelementptr i8, ptr @bcj_x86.mask_to_allowed_status, i64 %i.s
-  %5 = load i8, ptr %4, align 1, !range !10, !noundef !11
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %bb.g, label %bb.h
+  %4 = shl nuw nsw i64 1, %i.s
+  %5 = and i64 %4, 22
+  %.not62.i = icmp eq i64 %5, 0
+  br i1 %.not62.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.t = add nuw i64 %.05479.i, 4

@@ -204,8 +204,6 @@ $_ZGVZN7V3Error1sEvE3s_s = comdat any
 
 $_ZZNK6VNType5asciiEvE5names = comdat any
 
-$_ZZNK9VEdgeType11clockedStmtEvE7clocked = comdat any
-
 $_ZSt19piecewise_construct = comdat any
 
 $_ZTVN7V3Sched22AwaitBeforeTrigVisitorE = comdat any
@@ -608,7 +606,6 @@ begin_hunk_1
 @_ZTV8AstRange = external constant { [43 x ptr] }, align 8
 @_ZTV19AstUnpackArrayDType = external constant { [59 x ptr] }, align 8
 @_ZTV9AstConcat = external constant { [58 x ptr] }, align 8
-@_ZZNK9VEdgeType11clockedStmtEvE7clocked = linkonce_odr dso_local local_unnamed_addr constant [14 x i8] c"\01\01\01\01\01\01\01\00\00\00\00\00\00\00", comdat, align 1
 @_ZTV11V3Statistic = external constant { [5 x ptr] }, align 8
 @_ZTV9AstLogNot = external constant { [56 x ptr] }, align 8
 @_ZTV12AstNodeUniop = external constant { [56 x ptr] }, align 8
@@ -1011,14 +1008,17 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.lr.ph, %bb.e
   %i.bb = getelementptr inbounds nuw i8, ptr %storemerge3671845, i64 152
-  %.sroa.0.0.copyload.i.i = load i8, ptr %i.bb, align 8, !tbaa !197 ; 2 uses
-  %45 = zext i8 %.sroa.0.0.copyload.i.i to i64
-  %46 = getelementptr inbounds nuw i8, ptr @_ZZNK9VEdgeType11clockedStmtEvE7clocked, i64 %45
-  %i.bc = load i8, ptr %46, align 1, !tbaa !187, !range !179, !noundef !180
-  %47 = trunc nuw i8 %i.bc to i1
-  %48 = icmp eq i8 %.sroa.0.0.copyload.i.i, 9
-  %or.cond = or i1 %48, %47
-  br i1 %or.cond, label %.critedge, label %bb.h, !prof !640
+  %i.bc = load i8, ptr %i.bb, align 8, !tbaa !197
+  switch i8 %i.bc, label %bb.h [
+    i8 9, label %.critedge
+    i8 6, label %.critedge
+    i8 5, label %.critedge
+    i8 4, label %.critedge
+    i8 3, label %.critedge
+    i8 2, label %.critedge
+    i8 1, label %.critedge
+    i8 0, label %.critedge
+  ], !prof !640
 
 bb.h:                                             ; preds = %bb.g
   %i.bd = invoke noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str, i32 noundef 607)
@@ -1063,7 +1063,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.invoke: ; preds = %
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.cont: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.invoke
   unreachable
 
-.critedge:                                        ; preds = %bb.g
+.critedge:                                        ; preds = %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g
   %i.bn = ptrtoint ptr %.sroa.24.11842 to i64
   %i.bo = ptrtoint ptr %.sroa.01332.11844 to i64
   %i.bp = sub i64 %i.bn, %i.bo                    ; 6 uses
@@ -1466,14 +1466,17 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %.lr.ph1867, %bb.bg
   %i.iy = getelementptr inbounds nuw i8, ptr %storemerge1865, i64 152
-  %.sroa.0.0.copyload.i.i427 = load i8, ptr %i.iy, align 8, !tbaa !197 ; 2 uses
-  %49 = zext i8 %.sroa.0.0.copyload.i.i427 to i64
-  %50 = getelementptr inbounds nuw i8, ptr @_ZZNK9VEdgeType11clockedStmtEvE7clocked, i64 %49
-  %i.iz = load i8, ptr %50, align 1, !tbaa !187, !range !179, !noundef !180
-  %51 = trunc nuw i8 %i.iz to i1
-  %52 = icmp eq i8 %.sroa.0.0.copyload.i.i427, 9
-  %or.cond1390 = or i1 %52, %51
-  br i1 %or.cond1390, label %.critedge376, label %bb.bj, !prof !640
+  %i.iz = load i8, ptr %i.iy, align 8, !tbaa !197
+  switch i8 %i.iz, label %bb.bj [
+    i8 9, label %.critedge376
+    i8 6, label %.critedge376
+    i8 5, label %.critedge376
+    i8 4, label %.critedge376
+    i8 3, label %.critedge376
+    i8 2, label %.critedge376
+    i8 1, label %.critedge376
+    i8 0, label %.critedge376
+  ], !prof !640
 
 bb.bj:                                            ; preds = %bb.bi
   %i.ja = invoke noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str, i32 noundef 626)
@@ -1518,7 +1521,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit434.invoke: ; preds 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit434.cont: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit434.invoke
   unreachable
 
-.critedge376:                                     ; preds = %bb.bi
+.critedge376:                                     ; preds = %bb.bi, %bb.bi, %bb.bi, %bb.bi, %bb.bi, %bb.bi, %bb.bi, %bb.bi
   %i.jk = ptrtoint ptr %.sroa.24.41862 to i64
   %i.jl = ptrtoint ptr %.sroa.01332.41864 to i64
   %i.jm = sub i64 %i.jk, %i.jl                    ; 6 uses
@@ -1921,7 +1924,7 @@ begin_hunk_4_@llvm.smin.i64
 !637 = !{!636, !636, i64 0}
 !638 = !{!577}
 !639 = !{!579, !577}
-!640 = !{!"branch_weights", i32 4001, i32 1}
+!640 = !{!"branch_weights", i32 1, i32 500, i32 500, i32 500, i32 500, i32 500, i32 500, i32 500, i32 500}
 !641 = !{!"_ZTSSt17reference_wrapperIK10AstSenItemE", !256, i64 0}
 !642 = !{!641, !256, i64 0}
 !643 = !{!"_ZTS5VNRefIK10AstSenItemE", !641, i64 0}

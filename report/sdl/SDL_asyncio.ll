@@ -48,7 +48,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.c = tail call i32 @SDL_strcmp_REAL(ptr noundef nonnull %1, ptr noundef nonnull @.str.7) #5
-  %i.d = icmp eq i32 %i.c, 0
+  %i.d = icmp eq i32 %i.c, 0                      ; 2 uses
   br i1 %i.d, label %AsyncFileModeValid.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -67,9 +67,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.j, label %AsyncFileModeValid.exit, label %AsyncFileModeValid.exit.thread
 
 AsyncFileModeValid.exit:                          ; preds = %bb.e, %bb.f, %bb.g, %bb.h
-  %.lcssa.i = phi ptr [ @AsyncFileModeValid.mode_map, %bb.e ], [ getelementptr inbounds nuw (i8, ptr @AsyncFileModeValid.mode_map, i64 24), %bb.f ], [ getelementptr inbounds nuw (i8, ptr @AsyncFileModeValid.mode_map, i64 48), %bb.g ], [ getelementptr inbounds nuw (i8, ptr @AsyncFileModeValid.mode_map, i64 72), %bb.h ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 16
-  %3 = load i8, ptr %2, align 8, !range !3, !noundef !4
+  %.lcssa.i = phi ptr [ @AsyncFileModeValid.mode_map, %bb.e ], [ getelementptr inbounds nuw (i8, ptr @AsyncFileModeValid.mode_map, i64 24), %bb.f ], [ getelementptr inbounds nuw (i8, ptr @AsyncFileModeValid.mode_map, i64 48), %bb.g ], [ getelementptr inbounds nuw (i8, ptr @AsyncFileModeValid.mode_map, i64 72), %bb.h ]
+  %2 = zext i1 %i.d to i8
   %i.k = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 8
   %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %.not21 = icmp eq ptr %i.l, null
@@ -86,7 +85,7 @@ bb.i:                                             ; preds = %AsyncFileModeValid.
 
 bb.j:                                             ; preds = %bb.i
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 201
-  store i8 %3, ptr %i.o, align 1
+  store i8 %2, ptr %i.o, align 1
   %i.p = tail call ptr @SDL_CreateMutex_REAL() #5 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 48 ; 2 uses
   store ptr %i.p, ptr %i.q, align 8

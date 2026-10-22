@@ -205,10 +205,6 @@ $_ZZNK4llvm3MVT23getVectorMinNumElementsEvE10NElemTable = comdat any
 
 $_ZZNK4llvm3MVT13getSizeInBitsEvE9SizeTable = comdat any
 
-$_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
-$_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 
 $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
@@ -289,7 +285,6 @@ $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
 @.str.83 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE = external global %"struct.llvm::fltSemantics", align 4
 @.str.84 = private unnamed_addr constant [146 x i8] c"Possible incorrect use of EVT::getVectorNumElements() for scalable vector. Scalable flag may be dropped, use EVT::getVectorElementCount() instead\00", align 1
-@_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] zeroinitializer, [8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\01\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00"], comdat, align 16
 @_ZN4llvm5RTLIB19RuntimeLibcallsInfo27RuntimeLibcallImplNameTableE = external local_unnamed_addr global %"class.llvm::StringTable", align 8
 @_ZN4llvm5RTLIB19RuntimeLibcallsInfo29RuntimeLibcallNameOffsetTableE = external local_unnamed_addr constant [0 x i16], align 2
 @_ZN4llvm5RTLIB19RuntimeLibcallsInfo27RuntimeLibcallNameSizeTableE = external local_unnamed_addr constant [0 x i8], align 1
@@ -297,7 +292,6 @@ $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
 @_ZN4llvm11APFloatBase13semIEEEsingleE = external global %"struct.llvm::fltSemantics", align 4
 @constinit.89 = private unnamed_addr constant [2 x %"struct.llvm::EVT"] [%"struct.llvm::EVT" { %"class.llvm::MVT" { i16 7 }, ptr null }, %"struct.llvm::EVT" { %"class.llvm::MVT" { i16 7 }, ptr null }], align 8
 @.str.90 = private unnamed_addr constant [146 x i8] c"Possible incorrect use of MVT::getVectorNumElements() for scalable vector. Scalable flag may be dropped, use MVT::getVectorElementCount() instead\00", align 1
-@_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\01\01\00\00\00", [8 x i8] c"\01\01\01\00\00\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00", [8 x i8] c"\01\01\01\01\01\01\01\01"], comdat, align 16
 @"_ZZZNK4llvm17ARMTargetLowering20lowerInterleavedLoadEPNS_11InstructionEPNS_5ValueENS_8ArrayRefIPNS_17ShuffleVectorInstEEENS5_IjEEjRKNS_5APIntEENK3$_0clES4_E8LoadInts" = internal unnamed_addr constant [3 x i32] [i32 4068, i32 4071, i32 4074], align 4
 @.str.91 = private unnamed_addr constant [5 x i8] c"vldN\00", align 1
 @"_ZZZNK4llvm17ARMTargetLowering21lowerInterleavedStoreEPNS_11InstructionEPNS_5ValueEPNS_17ShuffleVectorInstEjRKNS_5APIntEENK3$_0clES4_RNS_15SmallVectorImplIS4_EEE9StoreInts" = internal unnamed_addr constant [3 x i32] [i32 4135, i32 4137, i32 4139], align 4
@@ -700,13 +694,10 @@ bb.cv:                                            ; preds = %bb.a, %bb.a
   %i.mf = load i16, ptr %i.me, align 4
   %i.mg = lshr i16 %i.mf, 8
   %i.mh = and i16 %i.mg, 15
-  %44 = zext nneg i16 %i.mh to i64
-  %45 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %44
-  %46 = getelementptr inbounds nuw i8, ptr %45, i64 2
-  %47 = load i8, ptr %46, align 2, !tbaa !213, !range !50, !noundef !51
-  %48 = trunc nuw i8 %47 to i1                    ; 2 uses
-  %spec.select.i = select i1 %48, i32 0, i32 %2
-  %spec.select3.i = select i1 %48, ptr null, ptr %1
+  %44 = add nsw i16 %i.mh, -3
+  %45 = icmp ult i16 %44, 5                       ; 2 uses
+  %spec.select.i = select i1 %45, i32 0, i32 %2
+  %spec.select3.i = select i1 %45, ptr null, ptr %1
   br label %_ZL15LowerVecReduceFN4llvm7SDValueERNS_12SelectionDAGEPKNS_12ARMSubtargetE.exit
 
 bb.cw:                                            ; preds = %bb.a, %bb.a
@@ -1109,11 +1100,9 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !1080
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !767
-  %i.l = zext i32 %4 to i64
-  %24 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %i.l
-  %25 = getelementptr inbounds nuw i8, ptr %24, i64 4
-  %26 = load i8, ptr %25, align 4, !tbaa !213, !range !50, !noundef !51
-  %i.m = trunc nuw i8 %26 to i1                   ; 2 uses
+  %i.l = zext nneg i32 %4 to i64
+  %24 = lshr i64 208, %i.l
+  %i.m = trunc i64 %24 to i1                      ; 2 uses
   %i.n = tail call { i64, i8 } @_ZNK4llvm4Type22getPrimitiveSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %2) #39 ; 2 uses
   %.fca.1.extract = extractvalue { i64, i8 } %i.n, 1
   %i.o = trunc nuw i8 %.fca.1.extract to i1
@@ -1502,11 +1491,8 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !1080
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !767  ; 3 uses
-  %17 = zext i32 %4 to i64
-  %18 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %17
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 5
-  %20 = load i8, ptr %19, align 1, !tbaa !213, !range !50, !noundef !51
-  %21 = trunc nuw i8 %20 to i1                    ; 2 uses
+  %17 = add i32 %4, -5
+  %18 = icmp ult i32 %17, 3                       ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !788
   %i.m = tail call { i64, i8 } @_ZNK4llvm4Type22getPrimitiveSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.l) #39 ; 2 uses
@@ -1524,7 +1510,7 @@ _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.a
   br i1 %i.o, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
-  %i.p = select i1 %21, i32 4203, i32 4205
+  %i.p = select i1 %18, i32 4203, i32 4205
   %i.q = load ptr, ptr %i.j, align 8, !tbaa !1066, !nonnull !51, !align !92
   %i.r = tail call noundef ptr @_ZN4llvm4Type10getInt32TyERNS_11LLVMContextE(ptr noundef nonnull align 8 dereferenceable(8) %i.q) #38 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #38
@@ -1680,7 +1666,7 @@ _ZN4llvm13IRBuilderBase11CreateTruncEPNS_5ValueEPNS_4TypeERKNS_5TwineEbb.exit40:
   br label %bb.k
 
 bb.i:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
-  %i.cd = select i1 %21, i32 4202, i32 4204
+  %i.cd = select i1 %18, i32 4202, i32 4204
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #38
   %i.ce = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !788

@@ -205,8 +205,8 @@ _ZN4bsslL11rule_equalsEPKcS1_m.exit140.thread:    ; preds = %_ZN4bsslL11rule_equ
   br i1 %i.ax, label %.preheader, label %.thread159
 
 .preheader:                                       ; preds = %.loopexit, %_ZN4bsslL11rule_equalsEPKcS1_m.exit141.thread
-  %.1111198 = phi i64 [ %i.bk, %_ZN4bsslL11rule_equalsEPKcS1_m.exit141.thread ], [ 0, %.loopexit ] ; 2 uses
-  %i.ay = getelementptr inbounds nuw [32 x i8], ptr @_ZN4bsslL14kCipherAliasesE, i64 %.1111198 ; 4 uses
+  %.1111198 = phi i64 [ %i.bk, %_ZN4bsslL11rule_equalsEPKcS1_m.exit141.thread ], [ 0, %.loopexit ] ; 3 uses
+  %i.ay = getelementptr inbounds nuw [32 x i8], ptr @_ZN4bsslL14kCipherAliasesE, i64 %.1111198 ; 3 uses
   %i.az = load ptr, ptr %i.ay, align 16, !tbaa !80 ; 2 uses
   %i.ba = tail call i32 @strncmp(ptr noundef nonnull readonly dereferenceable(1) %i.az, ptr noundef nonnull readonly dereferenceable(1) %.2118, i64 noundef range(i64 1, 0) %.0109) #23
   %i.bb = icmp eq i32 %i.ba, 0
@@ -223,9 +223,9 @@ bb.w:                                             ; preds = %_ZN4bsslL11rule_equ
   %i.bg = load <4 x i32>, ptr %i.bf, align 8, !tbaa !55
   %i.bh = and <4 x i32> %i.z, %i.bg               ; 3 uses
   store <4 x i32> %i.bh, ptr %i.c, align 8, !tbaa !55
-  %5 = getelementptr inbounds nuw i8, ptr %i.ay, i64 26
-  %6 = load i8, ptr %5, align 2, !tbaa !52, !range !33, !noundef !34
-  %i.bi = or i8 %6, %i.x                          ; 3 uses
+  %5 = icmp eq i64 %.1111198, 14
+  %6 = zext i1 %5 to i8
+  %i.bi = or i8 %i.x, %6                          ; 3 uses
   store i8 %i.bi, ptr %i.e, align 2, !tbaa !52
   %.not130 = icmp eq i16 %i.y, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ay, i64 24

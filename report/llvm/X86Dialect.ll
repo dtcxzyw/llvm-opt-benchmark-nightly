@@ -205,7 +205,6 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_13MemoryEffects5WriteEvE13resolveTypeIDEv
 @_ZN4mlir6detail14TypeIDResolverINS_3x866avx5129DotBF16OpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3x863avx9DotInt8OpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3x863avx5DotOpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
-@__const._ZN4mlir3x866avx51214MaskCompressOp27getODSOperandIndexAndLengthEj.isVariadic = private unnamed_addr constant [3 x i8] c"\00\00\01", align 1
 @.str.19 = private unnamed_addr constant [13 x i8] c"constant_src\00", align 1
 @.str.20 = private unnamed_addr constant [58 x i8] c"Invalid attribute `constant_src` in property conversion: \00", align 1
 @.str.21 = private unnamed_addr constant [28 x i8] c"Property conversion failed.\00", align 1
@@ -608,67 +607,57 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader19, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %6, %vector.body ]
-  %3 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3x866avx51214MaskCompressOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %wide.load = load <4 x i8>, ptr %3, align 1, !tbaa !167
-  %wide.load18 = load <4 x i8>, ptr %4, align 1, !tbaa !167
-  %5 = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.a = zext nneg <4 x i8> %wide.load18 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %5               ; 2 uses
-  %6 = add <4 x i32> %vec.phi17, %i.a             ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.c = icmp eq i64 %index.next, %n.vec
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %3 = icmp eq <4 x i32> %vec.phi17, splat (i32 2)
+  %i.a = zext <4 x i1> %3 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
+  %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !321
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %6, %i.b
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader19
 
 .lr.ph.preheader19:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.015.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.d, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.e = add i32 %2, -2
   %i.f = add i32 %2, -3
   %i.g = mul nsw i32 %.0.lcssa, %i.f
   %i.h = add i32 %i.g, %1
-  %7 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3x866avx51214MaskCompressOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %8 = load i8, ptr %7, align 1, !tbaa !167, !range !73, !noundef !74
-  %9 = trunc nuw i8 %8 to i1
-  %i.i = zext i32 %i.e to i64
+  %4 = icmp eq i32 %1, 2
+  %5 = select i1 %4, i32 %i.e, i32 1
+  %i.i = zext i32 %5 to i64
   %i.j = shl nuw i64 %i.i, 32
-  %.sroa.2.0.insert.shift = select i1 %9, i64 %i.j, i64 4294967296
   %.sroa.0.0.insert.ext = zext i32 %i.h to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.j, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader19, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader19 ] ; 2 uses
-  %.015 = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ]
-  %10 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3x866avx51214MaskCompressOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %11 = load i8, ptr %10, align 1, !tbaa !167, !range !73, !noundef !74
-  %i.k = zext nneg i8 %11 to i32
+  %.015 = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph, %.lr.ph.preheader19 ]
+  %.01114 = phi i32 [ %7, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ] ; 2 uses
+  %6 = icmp eq i32 %.01114, 2
+  %i.k = zext i1 %6 to i32
   %spec.select = add nuw nsw i32 %.015, %i.k      ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %7 = add nuw i32 %.01114, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %7, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !322
 }
 
@@ -759,39 +748,33 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 3 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3x866avx51214MaskCompressOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !167
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !167
-  %4 = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.a = zext nneg <4 x i8> %wide.load17 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %4               ; 2 uses
-  %5 = add <4 x i32> %vec.phi16, %i.a             ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.c = icmp eq i64 %index.next, %n.vec
+  %vec.phi16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi16, splat (i32 2)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw <4 x i32> %vec.phi16, splat (i32 8)
+  %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !323
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %5, %i.b
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -814,26 +797,22 @@ _ZN4mlir9Operation14getNumOperandsEv.exit:        ; preds = %._crit_edge, %bb.b
   %i.m = add i32 %i.k, -3
   %i.n = mul nsw i32 %i.m, %.0.lcssa
   %i.o = add i32 %i.n, %1
-  %6 = zext i32 %1 to i64
-  %7 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3x866avx51214MaskCompressOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %6
-  %8 = load i8, ptr %7, align 1, !tbaa !167, !range !73, !noundef !74
-  %9 = trunc nuw i8 %8 to i1
-  %i.p = zext i32 %i.l to i64
+  %3 = icmp eq i32 %1, 2
+  %4 = select i1 %3, i32 %i.l, i32 1
+  %i.p = zext i32 %4 to i64
   %i.q = shl nuw i64 %i.p, 32
-  %.sroa.2.0.insert.shift = select i1 %9, i64 %i.q, i64 4294967296
   %.sroa.0.0.insert.ext = zext i32 %i.o to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.q, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %10 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3x866avx51214MaskCompressOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %11 = load i8, ptr %10, align 1, !tbaa !167, !range !73, !noundef !74
-  %i.r = zext nneg i8 %11 to i32
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.01013 = phi i32 [ %6, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %5 = icmp eq i32 %.01013, 2
+  %i.r = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.r      ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %6 = add nuw i32 %.01013, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %6, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !324
 }
 
@@ -1236,16 +1215,16 @@ _ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit: ; preds = %bb.a
 
 _ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75: ; preds = %.lr.ph.i.i62.preheader
   %i.ad = getelementptr inbounds nuw i8, ptr %.pre.a, i64 68
-  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !54 ; 2 uses
+  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !54
   %i.af = getelementptr inbounds nuw i8, ptr %.pre.a, i64 72
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !55
   %i.ah = zext i32 %i.ae to i64
-  %i.ai = add nsw i64 %i.ah, -2                   ; 2 uses
+  %i.ai = add nsw i64 %i.ah, -2                   ; 3 uses
   %i.aj = icmp ugt i64 %i.ai, 1
   br i1 %i.aj, label %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75
-  %.not294306 = icmp eq i32 %i.ae, 2
+  %.not294306 = icmp eq i64 %i.ai, 0
   br i1 %.not294306, label %._crit_edge, label %.lr.ph309.preheader
 
 .lr.ph309.preheader:                              ; preds = %.preheader

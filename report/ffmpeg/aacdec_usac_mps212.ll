@@ -204,9 +204,9 @@ bb.a:
   br i1 %or.cond3, label %switch.lookup, label %bb.h
 
 switch.lookup:                                    ; preds = %bb.a
-  %i.c = zext nneg i32 %switch.tableidx to i64    ; 2 uses
+  %i.c = zext nneg i32 %switch.tableidx to i64    ; 3 uses
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.pcm_decode, i64 %i.c
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
   %switch.ext = zext i8 %switch.load to i32       ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(28) %i.a, i8 0, i64 28, i1 false)
@@ -228,7 +228,8 @@ switch.lookup.new:                                ; preds = %switch.lookup
 .epil.preheader:                                  ; preds = %.preheader.unr-lcssa, %switch.lookup
   %indvars.iv.epil.init = phi i64 [ 1, %switch.lookup ], [ %indvars.iv.next.1, %.preheader.unr-lcssa ]
   %.05562.epil.init = phi i32 [ 1, %switch.lookup ], [ %i.cz, %.preheader.unr-lcssa ]
-  %lcmp.mod6 = trunc i8 %switch.load to i1
+  %6 = lshr i64 281030691, %i.c
+  %lcmp.mod6 = trunc i64 %6 to i1
   tail call void @llvm.assume(i1 %lcmp.mod6)
   %i.g = mul nuw nsw i32 %.05562.epil.init, %5    ; 2 uses
   %.not910.i.epil = icmp samesign ult i32 %i.g, 2
