@@ -204,8 +204,8 @@ bb.an:                                            ; preds = %bb.al, %.loopexit
   br label %bb.ar
 
 bb.ao:                                            ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %.preheader61.i
-  %.8.i.ph = phi i64 [ 2, %bb.o ], [ 3, %bb.p ], [ 4, %bb.q ], [ 5, %bb.r ], [ 6, %bb.s ], [ 7, %bb.t ], [ 8, %bb.u ], [ 9, %bb.v ], [ 10, %bb.w ], [ 11, %bb.x ], [ 12, %bb.y ], [ 13, %bb.z ], [ 14, %bb.aa ], [ 15, %bb.ab ], [ 16, %bb.ac ], [ 17, %bb.ad ], [ 18, %bb.ae ], [ 19, %bb.af ], [ 20, %bb.ag ], [ 21, %bb.ah ], [ 22, %bb.ai ], [ 0, %.preheader61.i ], [ 1, %bb.n ] ; 2 uses
-  %i.dr = getelementptr inbounds nuw [92 x i8], ptr @TypInfo, i64 %.8.i.ph ; 6 uses
+  %.8.i.ph = phi i64 [ 2, %bb.o ], [ 3, %bb.p ], [ 4, %bb.q ], [ 5, %bb.r ], [ 6, %bb.s ], [ 7, %bb.t ], [ 8, %bb.u ], [ 9, %bb.v ], [ 10, %bb.w ], [ 11, %bb.x ], [ 12, %bb.y ], [ 13, %bb.z ], [ 14, %bb.aa ], [ 15, %bb.ab ], [ 16, %bb.ac ], [ 17, %bb.ad ], [ 18, %bb.ae ], [ 19, %bb.af ], [ 20, %bb.ag ], [ 21, %bb.ah ], [ 22, %bb.ai ], [ 0, %.preheader61.i ], [ 1, %bb.n ] ; 3 uses
+  %i.dr = getelementptr inbounds nuw [92 x i8], ptr @TypInfo, i64 %.8.i.ph ; 5 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 64
   %i.dt = load i32, ptr %i.ds, align 4
   %i.du = load ptr, ptr %i.e, align 8
@@ -216,11 +216,12 @@ bb.ao:                                            ; preds = %bb.ai, %bb.ah, %bb.
   %i.dy = load ptr, ptr %i.e, align 8
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 72
   store i16 %i.dx, ptr %i.dz, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %i.dr, i64 74
-  %5 = load i8, ptr %4, align 2, !range !5, !noundef !6
+  %4 = lshr i64 9717, %.8.i.ph
+  %5 = trunc i64 %4 to i8
   %i.ea = load ptr, ptr %i.e, align 8
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 82
-  store i8 %5, ptr %i.eb, align 2
+  %6 = and i8 %5, 1
+  store i8 %6, ptr %i.eb, align 2
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dr, i64 75
   %i.ed = load i8, ptr %i.ec, align 1
   %i.ee = load ptr, ptr %i.e, align 8
@@ -623,14 +624,15 @@ bb.d:                                             ; preds = %.preheader.preheade
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader.preheader, %.fold.split112, %.fold.split111, %.fold.split110, %.fold.split109, %.fold.split108, %.fold.split107, %.fold.split106, %.fold.split105, %.fold.split104, %.fold.split103, %.fold.split102, %.fold.split101, %.fold.split100, %.fold.split99, %.fold.split98, %.fold.split97, %.fold.split96, %.fold.split95, %.fold.split94, %.fold.split93, %.fold.split92, %.fold.split
-  %.075.lcssa.wide = phi i64 [ 0, %.preheader.preheader ], [ 21, %.fold.split111 ], [ 1, %.fold.split ], [ 2, %.fold.split92 ], [ 3, %.fold.split93 ], [ 4, %.fold.split94 ], [ 5, %.fold.split95 ], [ 6, %.fold.split96 ], [ 7, %.fold.split97 ], [ 8, %.fold.split98 ], [ 9, %.fold.split99 ], [ 10, %.fold.split100 ], [ 11, %.fold.split101 ], [ 12, %.fold.split102 ], [ 13, %.fold.split103 ], [ 14, %.fold.split104 ], [ 15, %.fold.split105 ], [ 16, %.fold.split106 ], [ 17, %.fold.split107 ], [ 18, %.fold.split108 ], [ 19, %.fold.split109 ], [ 20, %.fold.split110 ], [ 22, %.fold.split112 ] ; 2 uses
-  %i.ad = getelementptr inbounds nuw [92 x i8], ptr @TypInfo, i64 %.075.lcssa.wide ; 7 uses
+  %.075.lcssa.wide = phi i64 [ 0, %.preheader.preheader ], [ 21, %.fold.split111 ], [ 1, %.fold.split ], [ 2, %.fold.split92 ], [ 3, %.fold.split93 ], [ 4, %.fold.split94 ], [ 5, %.fold.split95 ], [ 6, %.fold.split96 ], [ 7, %.fold.split97 ], [ 8, %.fold.split98 ], [ 9, %.fold.split99 ], [ 10, %.fold.split100 ], [ 11, %.fold.split101 ], [ 12, %.fold.split102 ], [ 13, %.fold.split103 ], [ 14, %.fold.split104 ], [ 15, %.fold.split105 ], [ 16, %.fold.split106 ], [ 17, %.fold.split107 ], [ 18, %.fold.split108 ], [ 19, %.fold.split109 ], [ 20, %.fold.split110 ], [ 22, %.fold.split112 ] ; 3 uses
+  %i.ad = getelementptr inbounds nuw [92 x i8], ptr @TypInfo, i64 %.075.lcssa.wide ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
   %i.af = load i16, ptr %i.ae, align 4
   store i16 %i.af, ptr %1, align 2
-  %9 = getelementptr inbounds nuw i8, ptr %i.ad, i64 74
-  %10 = load i8, ptr %9, align 2, !range !5, !noundef !6
-  store i8 %10, ptr %2, align 1
+  %9 = lshr i64 9717, %.075.lcssa.wide
+  %10 = trunc i64 %9 to i8
+  %11 = and i8 %10, 1
+  store i8 %11, ptr %2, align 1
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 75
   %i.ah = load i8, ptr %i.ag, align 1
   store i8 %i.ah, ptr %3, align 1

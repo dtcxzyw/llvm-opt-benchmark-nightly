@@ -205,9 +205,9 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc zeroext i1 @tcg_out_cmp_vec_noinv(ptr nofree noundef captures(none) %0, i32 noundef range(i32 0, 256) %1, i32 noundef range(i32 0, 256) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) unnamed_addr #0 {
 bb.a:
-  %i.a = zext i32 %6 to i64
+  %i.a = zext i32 %6 to i64                       ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr @tcg_out_cmp_vec_noinv.cond_fixup, i64 %i.a
-  %i.c = load i8, ptr %i.b, align 1               ; 3 uses
+  %i.c = load i8, ptr %i.b, align 1
   %i.d = zext i8 %i.c to i32                      ; 4 uses
   %i.e = and i32 %i.d, 16
   %.not = icmp eq i32 %i.e, 0
@@ -218,6 +218,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
+  %7 = lshr i64 18056, %i.a                       ; 2 uses
   %i.f = and i32 %i.d, 2
   %.not35 = icmp eq i32 %i.f, 0                   ; 3 uses
   %.033 = select i1 %.not35, i32 %5, i32 %4       ; 3 uses
@@ -248,12 +249,12 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.c
-  %.mask = and i8 %i.c, 1
-  %7 = zext nneg i8 %.mask to i32
+  %8 = trunc nuw nsw i64 %7 to i32
+  %9 = and i32 %8, 1
   %i.n = shl nuw i32 %6, 1
   %i.o = and i32 %i.n, 4
   %i.p = select i1 %.not35, i32 0, i32 %i.o
-  %i.q = or disjoint i32 %i.p, %7
+  %i.q = or disjoint i32 %i.p, %9
   %.1 = xor i32 %i.q, %6
   switch i32 %.1, label %bb.i [
     i32 8, label %._crit_edge
@@ -287,7 +288,7 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   %i.v = or i32 %.sink46, 524288
   %spec.select.i39 = select i1 %i.u, i32 %i.v, i32 %.sink46
   tail call fastcc void @tcg_out_vex_modrm(ptr noundef %0, i32 noundef %spec.select.i39, i32 noundef %3, i32 noundef %.0, i32 noundef %.033.sink)
-  %i.w = trunc i8 %i.c to i1
+  %i.w = trunc i64 %7 to i1
   ret i1 %i.w
 }
 
