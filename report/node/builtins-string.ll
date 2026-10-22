@@ -68,7 +68,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8              ; 2 uses
   %i.h = add nsw i32 %i.g, 1
   store i32 %i.h, ptr %i.f, align 8
-  %i.i = add nsw i32 %0, -5                       ; 6 uses
+  %i.i = add nsw i32 %0, -5                       ; 5 uses
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %_ZNSt6vectorIhSaIhEED2Ev.exit.i.thread, label %bb.b
 
@@ -93,10 +93,10 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i, %.lr.ph.preheader.i
-  %.052210.i = phi i32 [ %i.ai, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ 0, %.lr.ph.preheader.i ] ; 5 uses
-  %.sroa.0131.0209.i = phi ptr [ %.sroa.0131.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ %i.o, %.lr.ph.preheader.i ] ; 9 uses
-  %.sroa.15.0208.i = phi ptr [ %.sroa.15.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ %i.o, %.lr.ph.preheader.i ] ; 6 uses
-  %.sroa.26.0207.i = phi ptr [ %.sroa.26.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ %i.p, %.lr.ph.preheader.i ] ; 5 uses
+  %.052210.i = phi i32 [ %i.ai, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ 0, %.lr.ph.preheader.i ] ; 4 uses
+  %.sroa.0131.0209.i = phi ptr [ %.sroa.0131.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ %i.o, %.lr.ph.preheader.i ] ; 8 uses
+  %.sroa.15.0208.i = phi ptr [ %.sroa.15.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ %i.o, %.lr.ph.preheader.i ] ; 5 uses
+  %.sroa.26.0207.i = phi ptr [ %.sroa.26.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ %i.p, %.lr.ph.preheader.i ] ; 4 uses
   %i.q = tail call fastcc noundef i32 @_ZN2v88internal12_GLOBAL__N_113NextCodePointEPNS0_7IsolateENS0_16BuiltinArgumentsEi(ptr noundef %2, i64 %i.a, ptr %1, i32 noundef %.052210.i) ; 4 uses
   %i.r = icmp eq i32 %i.q, -1
   br i1 %i.r, label %bb.d, label %bb.e
@@ -108,7 +108,7 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.u = icmp ugt i32 %i.q, 255
-  br i1 %i.u, label %._crit_edge.i, label %bb.f
+  br i1 %i.u, label %_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.v = trunc nuw i32 %i.q to i8                 ; 2 uses
@@ -154,26 +154,19 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i
 
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit.i:         ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i, %bb.g
-  %.sroa.26.2.i = phi ptr [ %i.ah, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.26.0207.i, %bb.g ] ; 2 uses
+  %.sroa.26.2.i = phi ptr [ %i.ah, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.26.0207.i, %bb.g ] ; 3 uses
   %.pn.i = phi ptr [ %i.af, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.15.0208.i, %bb.g ]
-  %.sroa.0131.2.i = phi ptr [ %i.ae, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.0131.0209.i, %bb.g ] ; 2 uses
+  %.sroa.0131.2.i = phi ptr [ %i.ae, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.0131.0209.i, %bb.g ] ; 5 uses
   %.sroa.15.2.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 1 ; 2 uses
   %i.ai = add nuw nsw i32 %.052210.i, 1           ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ai, %i.i
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.i, !llvm.loop !10
 
-._crit_edge.i:                                    ; preds = %bb.e
-  %3 = icmp eq i32 %.052210.i, %i.i
-  br i1 %3, label %._crit_edge.thread.i, label %_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i
-
-._crit_edge.thread.i:                             ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i, %._crit_edge.i
-  %.sroa.0131.0.lcssa.ph251.i = phi ptr [ %.sroa.0131.0209.i, %._crit_edge.i ], [ %.sroa.0131.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ] ; 4 uses
-  %.sroa.15.0.lcssa.ph250.i = phi ptr [ %.sroa.15.0208.i, %._crit_edge.i ], [ %.sroa.15.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ]
-  %.sroa.26.0.lcssa.ph249.i = phi ptr [ %.sroa.26.0207.i, %._crit_edge.i ], [ %.sroa.26.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ] ; 2 uses
-  %i.aj = ptrtoint ptr %.sroa.15.0.lcssa.ph250.i to i64
-  %i.ak = ptrtoint ptr %.sroa.0131.0.lcssa.ph251.i to i64
+._crit_edge.thread.i:                             ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i
+  %i.aj = ptrtoint ptr %.sroa.15.2.i to i64
+  %i.ak = ptrtoint ptr %.sroa.0131.2.i to i64
   %i.al = sub i64 %i.aj, %i.ak
-  %i.am = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteENS_4base6VectorIKhEENS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr %.sroa.0131.0.lcssa.ph251.i, i64 %i.al, i8 noundef zeroext 0) #15 ; 2 uses
+  %i.am = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteENS_4base6VectorIKhEENS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr %.sroa.0131.2.i, i64 %i.al, i8 noundef zeroext 0) #15 ; 2 uses
   %i.an = icmp eq ptr %i.am, null
   br i1 %i.an, label %_ZNK2v88internal11MaybeHandleINS0_6StringEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i, label %bb.k
 
@@ -186,7 +179,7 @@ bb.k:                                             ; preds = %._crit_edge.thread.
   %i.aq = load i64, ptr %i.am, align 8
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit.i
 
-_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i: ; preds = %._crit_edge.i
+_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i: ; preds = %bb.e
   %i.ar = sub nuw nsw i32 %i.i, %.052210.i
   %i.as = sext i32 %i.ar to i64                   ; 2 uses
   %i.at = shl nuw nsw i64 %i.as, 1
@@ -500,8 +493,8 @@ _ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit.i:  ; preds = %_ZSt8__copy_nIPKtmP
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit.i
 
 _ZNSt6vectorIhSaIhEED2Ev.exit.i:                  ; preds = %bb.d, %_ZNK2v88internal11MaybeHandleINS0_6StringEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i, %bb.k, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit.i
-  %.sroa.26.0206.i = phi ptr [ %.sroa.26.0207.i, %bb.d ], [ %.sroa.26.0.lcssa.ph249.i, %_ZNK2v88internal11MaybeHandleINS0_6StringEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i ], [ %.sroa.26.0.lcssa.ph249.i, %bb.k ], [ %.sroa.26.0207.i, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit.i ]
-  %.sroa.0131.0201.i = phi ptr [ %.sroa.0131.0209.i, %bb.d ], [ %.sroa.0131.0.lcssa.ph251.i, %_ZNK2v88internal11MaybeHandleINS0_6StringEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i ], [ %.sroa.0131.0.lcssa.ph251.i, %bb.k ], [ %.sroa.0131.0209.i, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit.i ] ; 2 uses
+  %.sroa.26.0206.i = phi ptr [ %.sroa.26.0207.i, %bb.d ], [ %.sroa.26.2.i, %_ZNK2v88internal11MaybeHandleINS0_6StringEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i ], [ %.sroa.26.2.i, %bb.k ], [ %.sroa.26.0207.i, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit.i ]
+  %.sroa.0131.0201.i = phi ptr [ %.sroa.0131.0209.i, %bb.d ], [ %.sroa.0131.2.i, %_ZNK2v88internal11MaybeHandleINS0_6StringEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i ], [ %.sroa.0131.2.i, %bb.k ], [ %.sroa.0131.0209.i, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit.i ] ; 2 uses
   %.sroa.0159.3.i = phi i64 [ %i.t, %bb.d ], [ %i.ap, %_ZNK2v88internal11MaybeHandleINS0_6StringEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i ], [ %i.aq, %bb.k ], [ %.sroa.0159.2.i, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit.i ] ; 2 uses
   %i.ee = ptrtoint ptr %.sroa.26.0206.i to i64
   %i.ef = ptrtoint ptr %.sroa.0131.0201.i to i64
@@ -904,7 +897,7 @@ attributes #16 = { noreturn }
 !9 = !{}
 !10 = distinct !{!10, !5}
 !11 = distinct !{!11, !5}
-!12 = !{!"branch_weights", !"expected", i32 2145766517, i32 1717131}
+!12 = !{!"branch_weights", !"expected", i32 2145766515, i32 1717133}
 !13 = distinct !{!13, !5}
 !14 = !{!"branch_weights", i32 2146410443, i32 1073205}
 !15 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
