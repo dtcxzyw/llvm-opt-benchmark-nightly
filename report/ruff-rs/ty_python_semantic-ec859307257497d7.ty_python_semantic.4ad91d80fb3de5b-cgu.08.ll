@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !9969
-  %i.ev = load ptr, ptr %i.eo, align 8, !noalias !9971, !noundef !12 ; 3 uses
+  %i.ev = load ptr, ptr %i.eo, align 8, !noundef !12 ; 3 uses
   %.not128.i = icmp eq ptr %i.ev, null
   br i1 %.not128.i, label %bb.bj, label %bb.bi
 
@@ -535,10 +535,10 @@ bb.au:                                            ; preds = %.body.thread167, %b
 
 bb.av:                                            ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !9969
-  call void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass11to_instance(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(address) dereferenceable(16) %i.s, i8 noundef 9, ptr noundef nonnull %.val.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val131.i, ptr noundef nonnull align 4 %.val132.i, ptr noalias readonly align 8 captures(address, read_provenance) poison), !noalias !9971, !inline_history !9879
+  call void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass11to_instance(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(address) dereferenceable(16) %i.s, i8 noundef 9, ptr noundef nonnull %.val.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val131.i, ptr noundef nonnull align 4 %.val132.i, ptr noalias readonly align 8 captures(address, read_provenance) poison), !inline_history !9879
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !9969
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.g, ptr noundef nonnull align 4 dereferenceable(16) %i.t, i64 16, i1 false)
-  %i.gm = call noundef zeroext i1 @_RNvMsl_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB7_4Type16is_assignable_to(ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.g, ptr noundef nonnull %.val.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val131.i, ptr noundef nonnull align 4 %.val132.i, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.s), !noalias !9971, !inline_history !9879
+  %i.gm = call noundef zeroext i1 @_RNvMsl_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB7_4Type16is_assignable_to(ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.g, ptr noundef nonnull %.val.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val131.i, ptr noundef nonnull align 4 %.val132.i, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.s), !inline_history !9879
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !9969
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !9969
   br i1 %i.gm, label %bb.ax, label %bb.aw
@@ -661,7 +661,7 @@ bb.bh:                                            ; preds = %_RNvMs0_NtNtCsoTR8n
 
 bb.bi:                                            ; preds = %bb.h
   %i.gw = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
-  %i.gx = load <2 x i64>, ptr %i.gw, align 8, !noalias !9971
+  %i.gx = load <2 x i64>, ptr %i.gw, align 8
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.h
@@ -678,13 +678,13 @@ bb.bj:                                            ; preds = %bb.bi, %bb.h
   store <2 x i64> %i.gy, ptr %.sroa.08.sroa.6.sroa.5.0..sroa.08.sroa.6.0..sroa_idx.sroa_idx.i, align 8, !noalias !9969
   call void @_RINvXs8_NtCs5e9M2GLoJMY_8indexmap3setINtB6_8IndexSetNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameEINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendBO_E6extendINtNtNtB1F_8adapters6cloned6ClonedINtNtNtNtCscdodAO9FK5_5alloc11collections5btree3map4KeysBO_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldEEEB4d_(ptr noalias noundef nonnull align 8 dereferenceable(72) %5, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %i.ak), !noalias !9971, !inline_history !9879
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !9969
-  %i.ha = load ptr, ptr %i.eo, align 8, !noalias !9971, !noundef !12 ; 3 uses
+  %i.ha = load ptr, ptr %i.eo, align 8, !noundef !12 ; 3 uses
   %.not129.i = icmp eq ptr %i.ha, null
   br i1 %.not129.i, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
   %i.hb = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
-  %i.hc = load <2 x i64>, ptr %i.hb, align 8, !noalias !9971
+  %i.hc = load <2 x i64>, ptr %i.hb, align 8
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj

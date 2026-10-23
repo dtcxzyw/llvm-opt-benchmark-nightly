@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.w = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %1, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.i, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.t), !noalias !5, !inline_history !31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !671
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !675
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.l, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s), !noalias !676, !inline_history !31
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.l, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s), !noalias !671, !inline_history !31
   %i.x = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4EnumNtB6_6EnumIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.w, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.l), !noalias !676, !inline_history !644 ; 2 uses
   %.not6.i.i = icmp eq ptr %i.x, null
   br i1 %.not6.i.i, label %_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx11enum_to_def.exit.thread34, label %bb.h
@@ -241,7 +241,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %1, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.e, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.y), !noalias !5, !inline_history !32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !677
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !681
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.h, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s), !noalias !682, !inline_history !32
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.h, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s), !noalias !677, !inline_history !32
   %i.ac = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes6StructNtB6_8StructIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ab, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.h), !noalias !682, !inline_history !657 ; 2 uses
   %.not6.i.i14 = icmp eq ptr %i.ac, null
   br i1 %.not6.i.i14, label %_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx13struct_to_def.exit.thread41, label %bb.k
@@ -278,7 +278,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ag = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %1, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.ad), !noalias !5, !inline_history !687
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !683
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !688
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s), !noalias !689, !inline_history !687
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s), !noalias !683, !inline_history !687
   %i.ah = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5UnionNtB6_7UnionIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ag, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !689, !inline_history !670 ; 2 uses
   %.not6.i.i20 = icmp eq ptr %i.ah, null
   br i1 %.not6.i.i20, label %_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx12union_to_def.exit.thread48, label %bb.m
@@ -368,7 +368,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !708
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !709
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4EnumNtB6_6EnumIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !709, !inline_history !700 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -706,7 +706,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !750
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !751
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ImplNtB6_6ImplIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !751, !inline_history !742 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -766,7 +766,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !770
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !771
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5ConstNtB6_7ConstIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !771, !inline_history !762 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -1017,7 +1017,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !811
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !812
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5TraitNtB6_7TraitIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !812, !inline_history !803 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -1077,7 +1077,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !831
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !832
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5UnionNtB6_7UnionIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !832, !inline_history !823 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -1480,7 +1480,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !902
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !903
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes6StaticNtB6_8StaticIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !903, !inline_history !894 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -1540,7 +1540,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !922
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !923
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes6StructNtB6_8StructIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !923, !inline_history !914 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -1943,7 +1943,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.gp = add nuw i32 %i.ge, 2
   store i32 %i.gp, ptr %i.gd, align 4, !noalias !1138
   %i.gq = invoke fastcc { i64, ptr } @_RNvXsny_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_4ItemNtBa_7AstNode4cast(ptr noundef nonnull %.sroa.0338.1)
-          to label %bb.ah unwind label %.loopexit.split-lp604.loopexit.split-lp.loopexit.split-lp, !noalias !1138, !inline_history !956 ; 2 uses
+          to label %bb.ah unwind label %.loopexit.split-lp604.loopexit.split-lp.loopexit.split-lp, !noalias !1123, !inline_history !956 ; 2 uses
 
 bb.ah:                                            ; preds = %bb.ag
   %i.gr = extractvalue { i64, ptr } %i.gq, 0      ; 3 uses
@@ -2346,31 +2346,31 @@ bb.ju:                                            ; preds = %bb.aj
   %i.adc = add nuw i32 %i.gt, 1
   store i32 %i.adc, ptr %i.gd, align 4, !noalias !1138
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bq)
-  store ptr %.sroa.0338.1, ptr %i.bq, align 8, !noalias !1138
+  store ptr %.sroa.0338.1, ptr %i.bq, align 8, !noalias !1123
   %i.add = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.bq)
-          to label %bb.jx unwind label %bb.jv, !noalias !1138
+          to label %bb.jx unwind label %bb.jv, !noalias !1123
 
 bb.jv:                                            ; preds = %bb.ju
   %i.ade = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.adf = load i32, ptr %i.gd, align 4, !noalias !1138, !noundef !5
+  %i.adf = load i32, ptr %i.gd, align 4, !noalias !1123, !noundef !5
   %i.adg = add i32 %i.adf, -1                     ; 2 uses
-  store i32 %i.adg, ptr %i.gd, align 4, !noalias !1138
+  store i32 %i.adg, ptr %i.gd, align 4, !noalias !1123
   %i.adh = icmp eq i32 %i.adg, 0
   br i1 %i.adh, label %bb.jw, label %.thread550
 
 bb.jw:                                            ; preds = %bb.jv
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.0338.1) #26
-          to label %.thread550 unwind label %bb.ka, !noalias !1138
+          to label %.thread550 unwind label %bb.ka, !noalias !1123
 
 bb.jx:                                            ; preds = %bb.ju
   %i.adi = icmp eq i16 %i.add, 318
   br i1 %i.adi, label %bb.kb, label %bb.jy
 
 bb.jy:                                            ; preds = %bb.jx
-  %i.adj = load i32, ptr %i.gd, align 4, !noalias !1138, !noundef !5
+  %i.adj = load i32, ptr %i.gd, align 4, !noalias !1123, !noundef !5
   %i.adk = add i32 %i.adj, -1                     ; 2 uses
-  store i32 %i.adk, ptr %i.gd, align 4, !noalias !1138
+  store i32 %i.adk, ptr %i.gd, align 4, !noalias !1123
   %i.adl = icmp eq i32 %i.adk, 0
   br i1 %i.adl, label %bb.jz, label %bb.kd
 
@@ -2381,7 +2381,7 @@ bb.jz:                                            ; preds = %bb.jy
 bb.ka:                                            ; preds = %bb.jw
   %i.adm = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1138
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1123
   unreachable
 
 bb.kb:                                            ; preds = %bb.jx
@@ -2784,31 +2784,31 @@ bb.mc:                                            ; preds = %bb.ma
   %i.ahv = add nuw i32 %i.aht, 1
   store i32 %i.ahv, ptr %i.ahs, align 4, !noalias !1138
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bv)
-  store ptr %.sroa.4250.0.copyload.val.i.i, ptr %i.bv, align 8, !noalias !1138
+  store ptr %.sroa.4250.0.copyload.val.i.i, ptr %i.bv, align 8, !noalias !1123
   %i.ahw = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.bv)
-          to label %bb.mf unwind label %bb.md, !noalias !1138
+          to label %bb.mf unwind label %bb.md, !noalias !1123
 
 bb.md:                                            ; preds = %bb.mc
   %i.ahx = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.ahy = load i32, ptr %i.ahs, align 4, !noalias !1138, !noundef !5
+  %i.ahy = load i32, ptr %i.ahs, align 4, !noalias !1123, !noundef !5
   %i.ahz = add i32 %i.ahy, -1                     ; 2 uses
-  store i32 %i.ahz, ptr %i.ahs, align 4, !noalias !1138
+  store i32 %i.ahz, ptr %i.ahs, align 4, !noalias !1123
   %i.aia = icmp eq i32 %i.ahz, 0
   br i1 %i.aia, label %bb.me, label %.body124
 
 bb.me:                                            ; preds = %bb.md
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.4250.0.copyload.val.i.i) #26
-          to label %.body124 unwind label %bb.mi, !noalias !1138
+          to label %.body124 unwind label %bb.mi, !noalias !1123
 
 bb.mf:                                            ; preds = %bb.mc
   %i.aib = icmp eq i16 %i.ahw, 254
   br i1 %i.aib, label %bb.mj, label %bb.mg
 
 bb.mg:                                            ; preds = %bb.mf
-  %i.aic = load i32, ptr %i.ahs, align 4, !noalias !1138, !noundef !5
+  %i.aic = load i32, ptr %i.ahs, align 4, !noalias !1123, !noundef !5
   %i.aid = add i32 %i.aic, -1                     ; 2 uses
-  store i32 %i.aid, ptr %i.ahs, align 4, !noalias !1138
+  store i32 %i.aid, ptr %i.ahs, align 4, !noalias !1123
   %i.aie = icmp eq i32 %i.aid, 0
   br i1 %i.aie, label %bb.mh, label %.thread562
 
@@ -2819,7 +2819,7 @@ bb.mh:                                            ; preds = %bb.mg
 bb.mi:                                            ; preds = %bb.me
   %i.aif = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1138
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1123
   unreachable
 
 _RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData11parent_node.exit128.thread: ; preds = %bb.lz, %.thread562
@@ -2928,31 +2928,31 @@ bb.mr:                                            ; preds = %bb.lx
   %i.ajf = add nuw i32 %i.ahm, 1
   store i32 %i.ajf, ptr %i.ahl, align 4, !noalias !1138
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bw)
-  store ptr %.sroa.4250.0.copyload.val.i.i, ptr %i.bw, align 8, !noalias !1138
+  store ptr %.sroa.4250.0.copyload.val.i.i, ptr %i.bw, align 8, !noalias !1123
   %i.ajg = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.bw)
-          to label %bb.mu unwind label %bb.ms, !noalias !1138
+          to label %bb.mu unwind label %bb.ms, !noalias !1123
 
 bb.ms:                                            ; preds = %bb.mr
   %i.ajh = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.aji = load i32, ptr %i.ahl, align 4, !noalias !1138, !noundef !5
+  %i.aji = load i32, ptr %i.ahl, align 4, !noalias !1123, !noundef !5
   %i.ajj = add i32 %i.aji, -1                     ; 2 uses
-  store i32 %i.ajj, ptr %i.ahl, align 4, !noalias !1138
+  store i32 %i.ajj, ptr %i.ahl, align 4, !noalias !1123
   %i.ajk = icmp eq i32 %i.ajj, 0
   br i1 %i.ajk, label %bb.mt, label %.body104
 
 bb.mt:                                            ; preds = %bb.ms
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.4250.0.copyload.val.i.i) #26
-          to label %.body104 unwind label %bb.mx, !noalias !1138
+          to label %.body104 unwind label %bb.mx, !noalias !1123
 
 bb.mu:                                            ; preds = %bb.mr
   %i.ajl = icmp eq i16 %i.ajg, 287
   br i1 %i.ajl, label %bb.my, label %bb.mv
 
 bb.mv:                                            ; preds = %bb.mu
-  %i.ajm = load i32, ptr %i.ahl, align 4, !noalias !1138, !noundef !5
+  %i.ajm = load i32, ptr %i.ahl, align 4, !noalias !1123, !noundef !5
   %i.ajn = add i32 %i.ajm, -1                     ; 2 uses
-  store i32 %i.ajn, ptr %i.ahl, align 4, !noalias !1138
+  store i32 %i.ajn, ptr %i.ahl, align 4, !noalias !1123
   %i.ajo = icmp eq i32 %i.ajn, 0
   br i1 %i.ajo, label %bb.mw, label %.thread566
 
@@ -2963,7 +2963,7 @@ bb.mw:                                            ; preds = %bb.mv
 bb.mx:                                            ; preds = %bb.mt
   %i.ajp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1138
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1123
   unreachable
 
 _RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData11parent_node.exit134.thread: ; preds = %bb.lw, %.thread566
@@ -3042,23 +3042,23 @@ bb.nf:                                            ; preds = %_RINvNtCshzWfHUSfYa
 
 bb.ng:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes3PatECs8Xq8PKFYOms_3hir.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bx)
-  store ptr %.sroa.0214.1.i.i, ptr %i.bx, align 8, !noalias !1138
+  store ptr %.sroa.0214.1.i.i, ptr %i.bx, align 8, !noalias !1123
   %i.akk = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.bx)
-          to label %bb.nj unwind label %bb.nh, !noalias !1138
+          to label %bb.nj unwind label %bb.nh, !noalias !1123
 
 bb.nh:                                            ; preds = %bb.ng
   %i.akl = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.akm = getelementptr inbounds nuw i8, ptr %.sroa.0214.1.i.i, i64 48 ; 2 uses
-  %i.akn = load i32, ptr %i.akm, align 4, !noalias !1138, !noundef !5
+  %i.akn = load i32, ptr %i.akm, align 4, !noalias !1123, !noundef !5
   %i.ako = add i32 %i.akn, -1                     ; 2 uses
-  store i32 %i.ako, ptr %i.akm, align 4, !noalias !1138
+  store i32 %i.ako, ptr %i.akm, align 4, !noalias !1123
   %i.akp = icmp eq i32 %i.ako, 0
   br i1 %i.akp, label %bb.ni, label %.thread537
 
 bb.ni:                                            ; preds = %bb.nh
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.0214.1.i.i) #26
-          to label %.thread537 unwind label %bb.nm, !noalias !1138
+          to label %.thread537 unwind label %bb.nm, !noalias !1123
 
 bb.nj:                                            ; preds = %bb.ng
   %i.akq = icmp eq i16 %i.akk, 255
@@ -3066,9 +3066,9 @@ bb.nj:                                            ; preds = %bb.ng
 
 bb.nk:                                            ; preds = %bb.nj
   %i.akr = getelementptr inbounds nuw i8, ptr %.sroa.0214.1.i.i, i64 48 ; 2 uses
-  %i.aks = load i32, ptr %i.akr, align 4, !noalias !1138, !noundef !5
+  %i.aks = load i32, ptr %i.akr, align 4, !noalias !1123, !noundef !5
   %i.akt = add i32 %i.aks, -1                     ; 2 uses
-  store i32 %i.akt, ptr %i.akr, align 4, !noalias !1138
+  store i32 %i.akt, ptr %i.akr, align 4, !noalias !1123
   %i.aku = icmp eq i32 %i.akt, 0
   br i1 %i.aku, label %bb.nl, label %.thread570
 
@@ -3079,7 +3079,7 @@ bb.nl:                                            ; preds = %bb.nk
 bb.nm:                                            ; preds = %bb.ni
   %i.akv = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1138
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1123
   unreachable
 
 .thread570:                                       ; preds = %bb.nk, %bb.nl
@@ -3128,31 +3128,31 @@ bb.nr:                                            ; preds = %bb.no
   %i.ale = add nuw i32 %i.aky, 1
   store i32 %i.ale, ptr %i.akx, align 4, !noalias !1138
   call void @llvm.lifetime.start.p0(ptr nonnull %i.by)
-  store ptr %.val315.i.i, ptr %i.by, align 8, !noalias !1138
+  store ptr %.val315.i.i, ptr %i.by, align 8, !noalias !1123
   %i.alf = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.by)
-          to label %bb.nu unwind label %bb.ns, !noalias !1138
+          to label %bb.nu unwind label %bb.ns, !noalias !1123
 
 bb.ns:                                            ; preds = %bb.nr
   %i.alg = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.alh = load i32, ptr %i.akx, align 4, !noalias !1138, !noundef !5
+  %i.alh = load i32, ptr %i.akx, align 4, !noalias !1123, !noundef !5
   %i.ali = add i32 %i.alh, -1                     ; 2 uses
-  store i32 %i.ali, ptr %i.akx, align 4, !noalias !1138
+  store i32 %i.ali, ptr %i.akx, align 4, !noalias !1123
   %i.alj = icmp eq i32 %i.ali, 0
   br i1 %i.alj, label %bb.nt, label %.body76
 
 bb.nt:                                            ; preds = %bb.ns
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val315.i.i) #26
-          to label %.body76 unwind label %bb.nx, !noalias !1138
+          to label %.body76 unwind label %bb.nx, !noalias !1123
 
 bb.nu:                                            ; preds = %bb.nr
   %i.alk = icmp eq i16 %i.alf, 203
   br i1 %i.alk, label %bb.ny, label %bb.nv
 
 bb.nv:                                            ; preds = %bb.nu
-  %i.all = load i32, ptr %i.akx, align 4, !noalias !1138, !noundef !5
+  %i.all = load i32, ptr %i.akx, align 4, !noalias !1123, !noundef !5
   %i.alm = add i32 %i.all, -1                     ; 2 uses
-  store i32 %i.alm, ptr %i.akx, align 4, !noalias !1138
+  store i32 %i.alm, ptr %i.akx, align 4, !noalias !1123
   %i.aln = icmp eq i32 %i.alm, 0
   br i1 %i.aln, label %bb.nw, label %.thread575
 
@@ -3163,7 +3163,7 @@ bb.nw:                                            ; preds = %bb.nv
 bb.nx:                                            ; preds = %bb.nt
   %i.alo = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1138
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30, !noalias !1123
   unreachable
 
 _RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData11parent_node.exit.thread: ; preds = %bb.nn, %.thread575
@@ -3566,7 +3566,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1286
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !1287
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeAliasNtB6_11TypeAliasIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !1287, !inline_history !1278 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -3969,7 +3969,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1371
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !1372
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7VariantNtB6_13EnumVariantIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !1372, !inline_history !1363 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c
@@ -4372,7 +4372,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCs8Xq8PKFYOms_3hir9semantics13source_to_defNtB4_14SourceToDefCtx9cache_for(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(12) %i.e), !noalias !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1738
-  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g), !noalias !1739
+  call void @_RNvMNtCs9GitHPCrz2Q_5rowan3astINtB2_13SyntaxNodePtrNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE3newCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.g)
   %i.j = call noundef align 4 ptr @_RNvXNtNtCsileJQcQObtj_7hir_def7dyn_map4keysINtB2_12AstPtrPolicyNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes2FnNtB6_10FunctionIdENtB4_6Policy3getCs8Xq8PKFYOms_3hir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.d), !noalias !1739, !inline_history !1730 ; 3 uses
   %.not6.i = icmp eq ptr %i.j, null
   br i1 %.not6.i, label %bb.d, label %bb.c

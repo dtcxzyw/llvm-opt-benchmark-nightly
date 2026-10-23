@@ -205,7 +205,7 @@ bb.dz:                                            ; preds = %bb.dw, %bb.du
   store ptr %i.qf, ptr %i.qg, align 8, !dbg !22470, !noalias !21843
   %.val4.i = load ptr, ptr %i.pq, align 8, !dbg !22471 ; 2 uses
   %.val5.i = load i64, ptr %i.ps, align 8, !dbg !22471, !noundef !1205 ; 2 uses
-  %.val3.i = load i32, ptr %.val4.i, align 4, !dbg !22472, !noalias !21852, !noundef !1205 ; 2 uses
+  %.val3.i = load i32, ptr %.val4.i, align 4, !dbg !22472, !noundef !1205 ; 2 uses
   %i.qh = sext i32 %.val3.i to i64, !dbg !22473
   %.not.i178 = icmp ne i64 %.val5.i, 0, !dbg !22474
   call void @llvm.assume(i1 %.not.i178), !dbg !22474, !noalias !21852
@@ -428,7 +428,7 @@ bb.fb:                                            ; preds = %bb.ey, %bb.ew
   store ptr %i.rw, ptr %i.rx, align 8, !dbg !22543, !noalias !21859
   %.val4.i128 = load ptr, ptr %i.rh, align 8, !dbg !22544 ; 2 uses
   %.val5.i129 = load i64, ptr %i.rj, align 8, !dbg !22544, !noundef !1205 ; 2 uses
-  %.val3.i130 = load i64, ptr %.val4.i128, align 8, !dbg !22545, !noalias !21868, !noundef !1205 ; 2 uses
+  %.val3.i130 = load i64, ptr %.val4.i128, align 8, !dbg !22545, !noundef !1205 ; 2 uses
   %.not.i187 = icmp ne i64 %.val5.i129, 0, !dbg !22546
   call void @llvm.assume(i1 %.not.i187), !dbg !22546, !noalias !21868
   %i.ry = getelementptr [8 x i8], ptr %.val4.i128, i64 %.val5.i129, !dbg !22547

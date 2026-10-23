@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.bb = invoke noundef zeroext i1 @_RNvMNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4nameNtB2_4Name7zone_of(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ba, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ao)
-          to label %bb.e unwind label %bb.at, !noalias !2198, !inline_history !2170
+          to label %bb.e unwind label %bb.at, !inline_history !2170
 
 bb.e:                                             ; preds = %bb.d
   br i1 %i.bb, label %.invoke, label %bb.f
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.bd = invoke noundef zeroext i1 @_RNvMNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4nameNtB2_4Name7zone_of(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bc, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ao)
-          to label %bb.h unwind label %bb.at, !noalias !2198, !inline_history !2170
+          to label %bb.h unwind label %bb.at, !inline_history !2170
 
 bb.h:                                             ; preds = %bb.g
   br i1 %i.bd, label %.invoke, label %bb.i
@@ -227,7 +227,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.bf = invoke noundef zeroext i1 @_RNvMNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4nameNtB2_4Name7zone_of(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.be, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ao)
-          to label %bb.k unwind label %bb.at, !noalias !2198, !inline_history !2170
+          to label %bb.k unwind label %bb.at, !inline_history !2170
 
 bb.k:                                             ; preds = %bb.j
   br i1 %i.bf, label %.invoke, label %bb.l
@@ -238,7 +238,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bh = invoke noundef zeroext i1 @_RNvMNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4nameNtB2_4Name7zone_of(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bg, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ao)
-          to label %bb.n unwind label %bb.at, !noalias !2198, !inline_history !2170
+          to label %bb.n unwind label %bb.at, !inline_history !2170
 
 bb.n:                                             ; preds = %bb.m
   br i1 %i.bh, label %.invoke, label %bb.o
@@ -249,7 +249,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bj = invoke noundef zeroext i1 @_RNvMNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4nameNtB2_4Name7zone_of(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bi, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ao)
-          to label %bb.q unwind label %bb.at, !noalias !2198, !inline_history !2170
+          to label %bb.q unwind label %bb.at, !inline_history !2170
 
 bb.q:                                             ; preds = %bb.p
   br i1 %i.bj, label %.invoke, label %bb.r
@@ -260,7 +260,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.bl = invoke noundef zeroext i1 @_RNvMNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4nameNtB2_4Name7zone_of(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bk, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ao)
-          to label %bb.t unwind label %bb.at, !noalias !2198, !inline_history !2170
+          to label %bb.t unwind label %bb.at, !inline_history !2170
 
 bb.t:                                             ; preds = %bb.s
   %_RNvNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain5usage5ONION._RNvNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain5usage7DEFAULT = select i1 %i.bl, ptr @_RNvNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain5usage5ONION, ptr @_RNvNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain5usage7DEFAULT

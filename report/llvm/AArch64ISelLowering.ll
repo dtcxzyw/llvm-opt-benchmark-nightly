@@ -205,42 +205,42 @@ $_ZTVN4llvm2cl11OptionValueIiEE = comdat any
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_AArch64ISelLowering.cpp, ptr null }]
 @switch.table._ZN4llvm21AArch64TargetLoweringC2ERKNS_13TargetMachineERKNS_16AArch64SubtargetE = private unnamed_addr constant [26 x i8] c"\00\02\02\02\02\02\02\02\02\02\02\02\02\02\00\02\02\02\02\02\02\02\02\02\02\00", align 1
 @"switch.table._ZZN4llvm21AArch64TargetLoweringC1ERKNS_13TargetMachineERKNS_16AArch64SubtargetEENK3$_0clENS_3MVTE" = private unnamed_addr constant [11 x i8] c"+:I`\00\00\00{l\88\9C", align 8
-@"switch.table._ZZN4llvm21AArch64TargetLoweringC1ERKNS_13TargetMachineERKNS_16AArch64SubtargetEENK3$_0clENS_3MVTE.259" = private unnamed_addr constant [11 x i8] c"/>Ma\00\00\00|p\8C\9D", align 8
+@"switch.table._ZZN4llvm21AArch64TargetLoweringC1ERKNS_13TargetMachineERKNS_16AArch64SubtargetEENK3$_0clENS_3MVTE.258" = private unnamed_addr constant [11 x i8] c"/>Ma\00\00\00|p\8C\9D", align 8
 @switch.table._ZN4llvm21AArch64TargetLowering24addTypeForFixedLengthSVEENS_3MVTE = private unnamed_addr constant [11 x i8] c":>?@ABCD\00\00E", align 2
-@switch.table._ZN4llvm21AArch64TargetLowering24addTypeForFixedLengthSVEENS_3MVTE.261 = private unnamed_addr constant [9 x i8] c"+/0123456", align 2
-@switch.table._ZNK4llvm21AArch64TargetLowering12LowerBITCASTENS_7SDValueERNS_12SelectionDAGE.265 = private unnamed_addr constant [14 x i8] [i8 26, i8 poison, i8 poison, i8 47, i8 62, i8 77, i8 97, i8 poison, i8 poison, i8 poison, i8 124, i8 112, i8 -116, i8 -99], align 2
+@switch.table._ZN4llvm21AArch64TargetLowering24addTypeForFixedLengthSVEENS_3MVTE.260 = private unnamed_addr constant [9 x i8] c"+/0123456", align 2
+@switch.table._ZNK4llvm21AArch64TargetLowering12LowerBITCASTENS_7SDValueERNS_12SelectionDAGE.264 = private unnamed_addr constant [14 x i8] [i8 26, i8 poison, i8 poison, i8 47, i8 62, i8 77, i8 97, i8 poison, i8 poison, i8 poison, i8 124, i8 112, i8 -116, i8 -99], align 2
 @switch.table._ZNK4llvm21AArch64TargetLowering10LowerSETCCENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [22 x i8] [i8 0, i8 12, i8 10, i8 4, i8 9, i8 4, i8 7, i8 6, i8 0, i8 8, i8 5, i8 11, i8 13, i8 1, i8 poison, i8 poison, i8 0, i8 12, i8 10, i8 11, i8 13, i8 1], align 8
 @switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [12 x i8] [i8 22, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 22, i8 poison, i8 22, i8 17, i8 poison, i8 17], align 4
-@switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.267 = private unnamed_addr constant [13 x i8] [i8 8, i8 2, i8 3, i8 9, i8 poison, i8 poison, i8 poison, i8 0, i8 12, i8 10, i8 11, i8 13, i8 1], align 8
+@switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.266 = private unnamed_addr constant [13 x i8] [i8 8, i8 2, i8 3, i8 9, i8 poison, i8 poison, i8 poison, i8 0, i8 12, i8 10, i8 11, i8 13, i8 1], align 8
 @switch.table._ZNK4llvm21AArch64TargetLowering17LowerBUILD_VECTORENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [27 x i8] c"\01\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01", align 1
 @switch.table._ZNK4llvm21AArch64TargetLowering11LowerMinMaxENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [4 x i8] c"\14\12\0C\0A", align 4
 @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE = private unnamed_addr constant [65 x i8] c"\B0\B1\B2\B3\B4\B5\B6\B7\B8\B9\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\08", align 4
-@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.271 = private unnamed_addr constant [50 x i16] [i16 268, i16 269, i16 270, i16 271, i16 272, i16 273, i16 274, i16 275, i16 276, i16 277, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 15], align 4
-@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.272 = private unnamed_addr constant [10 x i16] [i16 259, i16 260, i16 261, i16 262, i16 263, i16 264, i16 265, i16 266, i16 267, i16 2], align 4
-@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.273 = private unnamed_addr constant [18 x i16] [i16 300, i16 0, i16 301, i16 0, i16 0, i16 0, i16 309, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 311, i16 0, i16 327], align 4
-@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.274 = private unnamed_addr constant [16 x i16] [i16 302, i16 0, i16 0, i16 0, i16 310, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 312, i16 0, i16 328], align 4
-@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.275 = private unnamed_addr constant [16 x i16] [i16 303, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 313, i16 0, i16 329], align 4
-@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.276 = private unnamed_addr constant [16 x i16] [i16 304, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 314, i16 0, i16 330], align 4
+@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.270 = private unnamed_addr constant [50 x i16] [i16 268, i16 269, i16 270, i16 271, i16 272, i16 273, i16 274, i16 275, i16 276, i16 277, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 15], align 4
+@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.271 = private unnamed_addr constant [10 x i16] [i16 259, i16 260, i16 261, i16 262, i16 263, i16 264, i16 265, i16 266, i16 267, i16 2], align 4
+@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.272 = private unnamed_addr constant [18 x i16] [i16 300, i16 0, i16 301, i16 0, i16 0, i16 0, i16 309, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 311, i16 0, i16 327], align 4
+@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.273 = private unnamed_addr constant [16 x i16] [i16 302, i16 0, i16 0, i16 0, i16 310, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 312, i16 0, i16 328], align 4
+@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.274 = private unnamed_addr constant [16 x i16] [i16 303, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 313, i16 0, i16 329], align 4
+@switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.275 = private unnamed_addr constant [16 x i16] [i16 304, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 314, i16 0, i16 330], align 4
 @switch.table._ZNK4llvm21AArch64TargetLowering17getConstraintTypeENS_9StringRefE = private unnamed_addr constant [50 x i8] [i8 4, i8 4, i8 4, i8 4, i8 4, i8 4, i8 poison, i8 poison, i8 2, i8 poison, i8 5, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 4, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 1, i8 1, i8 1, i8 5], align 4
-@switch.table._ZNK4llvm21AArch64TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.277 = private unnamed_addr constant [4 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 448), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 2496), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3520), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 5824)], align 8
+@switch.table._ZNK4llvm21AArch64TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.276 = private unnamed_addr constant [4 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 448), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 2496), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3520), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 5824)], align 8
 @switch.table._ZL22tryWidenMaskForShuffleN4llvm7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [5 x i8] [i8 13, i8 14, i8 poison, i8 15, i8 16], align 2
 @switch.table._ZNK4llvm21AArch64TargetLowering17PerformDAGCombineEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE = private unnamed_addr constant [4 x i16] [i16 411, i16 410, i16 413, i16 412], align 4
 @switch.table._ZL17performANDCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoE = private unnamed_addr constant [53 x i8] [i8 -96, i8 -96, i8 -96, i8 -96, i8 -96, i8 -96, i8 -96, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -96, i8 -96, i8 -96, i8 -96, i8 -96, i8 -96, i8 -96, i8 poison, i8 poison, i8 -96, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 120, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 120, i8 poison, i8 poison, i8 120], align 8
 @switch.table._ZL23performIntrinsicCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoEPKNS_16AArch64SubtargetE = private unnamed_addr constant [46 x i8] [i8 16, i8 32, i8 64, i8 8, i8 poison, i8 poison, i8 16, i8 32, i8 64, i8 8, i8 poison, i8 poison, i8 16, i8 32, i8 64, i8 8, i8 poison, i8 poison, i8 16, i8 32, i8 64, i8 8, i8 poison, i8 poison, i8 16, i8 32, i8 64, i8 8, i8 poison, i8 poison, i8 16, i8 32, i8 64, i8 8, i8 poison, i8 poison, i8 16, i8 32, i8 64, i8 8, i8 poison, i8 poison, i8 16, i8 32, i8 64, i8 8], align 8
-@switch.table._ZL23performIntrinsicCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoEPKNS_16AArch64SubtargetE.281 = private unnamed_addr constant [46 x i16] [i16 882, i16 882, i16 882, i16 882, i16 poison, i16 poison, i16 883, i16 883, i16 883, i16 883, i16 poison, i16 poison, i16 884, i16 884, i16 884, i16 884, i16 poison, i16 poison, i16 885, i16 885, i16 885, i16 885, i16 poison, i16 poison, i16 886, i16 886, i16 886, i16 886, i16 poison, i16 poison, i16 887, i16 887, i16 887, i16 887, i16 poison, i16 poison, i16 888, i16 888, i16 888, i16 888, i16 poison, i16 poison, i16 889, i16 889, i16 889, i16 889], align 4
+@switch.table._ZL23performIntrinsicCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoEPKNS_16AArch64SubtargetE.280 = private unnamed_addr constant [46 x i16] [i16 882, i16 882, i16 882, i16 882, i16 poison, i16 poison, i16 883, i16 883, i16 883, i16 883, i16 poison, i16 poison, i16 884, i16 884, i16 884, i16 884, i16 poison, i16 poison, i16 885, i16 885, i16 885, i16 885, i16 poison, i16 poison, i16 886, i16 886, i16 886, i16 886, i16 poison, i16 poison, i16 887, i16 887, i16 887, i16 887, i16 poison, i16 poison, i16 888, i16 888, i16 888, i16 888, i16 poison, i16 poison, i16 889, i16 889, i16 889, i16 889], align 4
 @switch.table._ZL29performSignExtendInRegCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGE = private unnamed_addr constant [53 x i8] [i8 4, i8 4, i8 4, i8 4, i8 4, i8 4, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 4, i8 4, i8 4, i8 4, i8 4, i8 4, i8 4, i8 poison, i8 poison, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 3], align 8
-@switch.table._ZL29performSignExtendInRegCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGE.282 = private unnamed_addr constant [53 x i16] [i16 651, i16 652, i16 653, i16 654, i16 655, i16 656, i16 657, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 665, i16 666, i16 667, i16 668, i16 669, i16 670, i16 671, i16 poison, i16 poison, i16 679, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 692, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 706, i16 poison, i16 poison, i16 709], align 4
+@switch.table._ZL29performSignExtendInRegCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGE.281 = private unnamed_addr constant [53 x i16] [i16 651, i16 652, i16 653, i16 654, i16 655, i16 656, i16 657, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 665, i16 666, i16 667, i16 668, i16 669, i16 670, i16 671, i16 poison, i16 poison, i16 679, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 692, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 706, i16 poison, i16 poison, i16 709], align 4
 @switch.table._ZL19performSTORECombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGEPKNS_16AArch64SubtargetE = private unnamed_addr constant [14 x i8] [i8 22, i8 poison, i8 poison, i8 43, i8 58, i8 73, i8 96, i8 poison, i8 poison, i8 poison, i8 123, i8 108, i8 -120, i8 -100], align 2
-@switch.table._ZL19performSTORECombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGEPKNS_16AArch64SubtargetE.283 = private unnamed_addr constant [3 x i8] c"\09\12\03", align 4
+@switch.table._ZL19performSTORECombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGEPKNS_16AArch64SubtargetE.282 = private unnamed_addr constant [3 x i8] c"\09\12\03", align 4
 @switch.table._ZL17performUzpCombinePN4llvm6SDNodeERNS_12SelectionDAGEPKNS_16AArch64SubtargetE = private unnamed_addr constant [25 x i8] [i8 62, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 73, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 94], align 2
 @switch.table._ZL17performLD1CombinePN4llvm6SDNodeERNS_12SelectionDAGEj = private unnamed_addr constant [20 x i8] [i8 -66, i8 -71, i8 -76, i8 -82, i8 poison, i8 poison, i8 poison, i8 -66, i8 -71, i8 -76, i8 poison, i8 poison, i8 poison, i8 -66, i8 -71, i8 poison, i8 poison, i8 poison, i8 poison, i8 -66], align 2
 @switch.table._ZNK4llvm21AArch64TargetLowering21ReplaceBITCASTResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE = private unnamed_addr constant [43 x i8] [i8 -66, i8 -71, i8 -76, i8 -82, i8 poison, i8 poison, i8 poison, i8 -66, i8 -71, i8 -76, i8 poison, i8 poison, i8 poison, i8 -66, i8 -71, i8 poison, i8 poison, i8 poison, i8 poison, i8 -66, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -76, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -76, i8 poison, i8 poison, i8 poison, i8 -66, i8 -71, i8 poison, i8 poison, i8 poison, i8 -66], align 2
 @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE = private unnamed_addr constant [6 x i16] [i16 2201, i16 poison, i16 2195, i16 2198, i16 2192, i16 2192], align 4
-@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.284 = private unnamed_addr constant [6 x i16] [i16 520, i16 poison, i16 519, i16 521, i16 518, i16 518], align 4
-@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.285 = private unnamed_addr constant [6 x i16] [i16 4891, i16 poison, i16 4892, i16 4894, i16 4893, i16 4893], align 4
-@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.286 = private unnamed_addr constant [6 x i16] [i16 5188, i16 poison, i16 5189, i16 5191, i16 5190, i16 5190], align 4
-@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.287 = private unnamed_addr constant [6 x i16] [i16 7890, i16 poison, i16 7891, i16 7893, i16 7892, i16 7892], align 4
-@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.288 = private unnamed_addr constant [4 x i16] [i16 1737, i16 1734, i16 1735, i16 1736], align 8
+@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.283 = private unnamed_addr constant [6 x i16] [i16 520, i16 poison, i16 519, i16 521, i16 518, i16 518], align 4
+@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.284 = private unnamed_addr constant [6 x i16] [i16 4891, i16 poison, i16 4892, i16 4894, i16 4893, i16 4893], align 4
+@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.285 = private unnamed_addr constant [6 x i16] [i16 5188, i16 poison, i16 5189, i16 5191, i16 5190, i16 5190], align 4
+@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.286 = private unnamed_addr constant [6 x i16] [i16 7890, i16 poison, i16 7891, i16 7893, i16 7892, i16 7892], align 4
+@switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.287 = private unnamed_addr constant [4 x i16] [i16 1737, i16 1734, i16 1735, i16 1736], align 8
 @switch.table._ZL32getPredicateForFixedLengthVectorRN4llvm12SelectionDAGERNS_5SDLocENS_3EVTE = private unnamed_addr constant [11 x i8] [i8 -89, i8 -90, i8 -91, i8 -92, i8 poison, i8 poison, i8 poison, i8 -90, i8 -90, i8 -91, i8 -92], align 2
 @switch.table._ZNK4llvm21AArch64TargetLowering25getInlineAsmMemConstraintENS_9StringRefE = private unnamed_addr constant [25 x i8] c"\13\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\04\00\05\18", align 4
 @switch.table._ZL25emitConditionalComparisonN4llvm7SDValueES0_NS_3ISD8CondCodeES0_NS_9AArch64CC8CondCodeES4_RKNS_5SDLocERNS_12SelectionDAGE = private unnamed_addr constant [14 x i8] c"\00\04\00\02\00\08\00\01\00\02\08\00\04\00", align 8
@@ -643,7 +643,7 @@ bb.c:                                             ; preds = %_ZN4llvm3MVT11getVe
 
 switch.lookup41:                                  ; preds = %bb.c
   %i.ca = zext nneg i16 %switch.tableidx40 to i64
-  %switch.gep42 = getelementptr inbounds nuw i8, ptr @"switch.table._ZZN4llvm21AArch64TargetLoweringC1ERKNS_13TargetMachineERKNS_16AArch64SubtargetEENK3$_0clENS_3MVTE.259", i64 %i.ca
+  %switch.gep42 = getelementptr inbounds nuw i8, ptr @"switch.table._ZZN4llvm21AArch64TargetLoweringC1ERKNS_13TargetMachineERKNS_16AArch64SubtargetEENK3$_0clENS_3MVTE.258", i64 %i.ca
   %switch.load43 = load i8, ptr %switch.gep42, align 1
   %switch.ext44 = zext i8 %switch.load43 to i64
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit149
@@ -1046,7 +1046,7 @@ bb.aa:                                            ; preds = %bb.z
 
 switch.lookup818:                                 ; preds = %.split770
   %i.gi = zext nneg i32 %i.gg to i64
-  %i.gj = getelementptr i8, ptr @switch.table._ZN4llvm21AArch64TargetLowering24addTypeForFixedLengthSVEENS_3MVTE.261, i64 %i.gi
+  %i.gj = getelementptr i8, ptr @switch.table._ZN4llvm21AArch64TargetLowering24addTypeForFixedLengthSVEENS_3MVTE.260, i64 %i.gi
   %switch.gep819 = getelementptr i8, ptr %i.gj, i64 -2
   %switch.load820 = load i8, ptr %switch.gep819, align 1
   %switch.ext821 = zext i8 %switch.load820 to i16
@@ -1254,7 +1254,7 @@ bb.ae:                                            ; preds = %_ZN4llvm18TargetLow
 
 switch.lookup823:                                 ; preds = %.thread655.split
   %i.hs = zext nneg i32 %i.hq to i64
-  %i.ht = getelementptr i8, ptr @switch.table._ZN4llvm21AArch64TargetLowering24addTypeForFixedLengthSVEENS_3MVTE.261, i64 %i.hs
+  %i.ht = getelementptr i8, ptr @switch.table._ZN4llvm21AArch64TargetLowering24addTypeForFixedLengthSVEENS_3MVTE.260, i64 %i.hs
   %switch.gep824 = getelementptr i8, ptr %i.ht, i64 -2
   %switch.load825 = load i8, ptr %switch.gep824, align 1
   %switch.ext826 = zext i8 %switch.load825 to i16
@@ -1657,7 +1657,7 @@ switch.lookup:                                    ; preds = %bb.bs
   %i.ki = call fastcc { ptr, i32 } @_ZL14emitComparisonN4llvm7SDValueES0_NS_3ISD8CondCodeERKNS_5SDLocERNS_12SelectionDAGE(ptr %.fca.0.extract45, i32 %.fca.1.extract46, ptr %.fca.0.extract31, i32 %.fca.1.extract32, i32 noundef %.6, ptr noundef nonnull align 8 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(920) %6) ; 2 uses
   %.fca.0.extract27 = extractvalue { ptr, i32 } %i.ki, 0 ; 2 uses
   %i.kj = sext i32 %.6 to i64
-  %i.kk = getelementptr i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.267, i64 %i.kj
+  %i.kk = getelementptr i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.266, i64 %i.kj
   %switch.gep = getelementptr i8, ptr %i.kk, i64 -10
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32       ; 2 uses
@@ -2060,7 +2060,7 @@ _ZN4llvm3MVT11getVectorVTES0_j.exit:              ; preds = %bb.ae
 
 switch.lookup280:                                 ; preds = %bb.ae
   %i.fr = zext nneg i16 %switch.tableidx278 to i64
-  %switch.gep281 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering12LowerBITCASTENS_7SDValueERNS_12SelectionDAGE.265, i64 %i.fr
+  %switch.gep281 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering12LowerBITCASTENS_7SDValueERNS_12SelectionDAGE.264, i64 %i.fr
   %switch.load282 = load i8, ptr %switch.gep281, align 1
   %switch.ext283 = zext i8 %switch.load282 to i16
   br label %_ZN4llvm3EVT11getVectorVTERNS_11LLVMContextES0_jb.exit
@@ -2463,7 +2463,7 @@ switch.lookup:                                    ; preds = %bb.a
   %i.at = load i32, ptr %i.as, align 8, !tbaa !671
   %i.au = call noundef i32 @_ZN4llvm3ISD15getSetCCInverseENS0_8CondCodeENS_3EVTE(i32 noundef %i.at, i16 %.sroa.0.0.copyload.i.i, ptr null) #35
   %i.av = sext i32 %i.au to i64
-  %i.aw = getelementptr i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.267, i64 %i.av
+  %i.aw = getelementptr i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.266, i64 %i.av
   %switch.gep = getelementptr i8, ptr %i.aw, i64 -10
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
@@ -2866,7 +2866,7 @@ bb.ag:                                            ; preds = %bb.af
 
 switch.lookup478:                                 ; preds = %.critedge327
   %i.gl = sext i32 %.pre463 to i64
-  %i.gm = getelementptr i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.267, i64 %i.gl
+  %i.gm = getelementptr i8, ptr @switch.table._ZNK4llvm21AArch64TargetLowering10LowerBR_CCENS_7SDValueERNS_12SelectionDAGE.266, i64 %i.gl
   %switch.gep479 = getelementptr i8, ptr %i.gm, i64 -10
   %switch.load480 = load i8, ptr %switch.gep479, align 1
   %switch.ext481 = zext i8 %switch.load480 to i64
@@ -3269,42 +3269,42 @@ switch.lookup891:                                 ; preds = %bb.h
 
 switch.lookup893:                                 ; preds = %bb.l
   %i.cgg = zext nneg i8 %switch.tableidx892 to i64
-  %switch.gep894 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.271, i64 %i.cgg
+  %switch.gep894 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.270, i64 %i.cgg
   %switch.load895 = load i16, ptr %switch.gep894, align 2
   %switch.ext896 = zext i16 %switch.load895 to i32
   br label %bb.ld
 
 switch.lookup898:                                 ; preds = %bb.at
   %i.cgh = zext nneg i8 %switch.tableidx897 to i64
-  %switch.gep899 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.272, i64 %i.cgh
+  %switch.gep899 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.271, i64 %i.cgh
   %switch.load900 = load i16, ptr %switch.gep899, align 2
   %switch.ext901 = zext i16 %switch.load900 to i32
   br label %bb.ld
 
 switch.lookup903:                                 ; preds = %bb.ec
   %i.cgi = zext nneg i8 %switch.tableidx902 to i64
-  %switch.gep904 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.273, i64 %i.cgi
+  %switch.gep904 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.272, i64 %i.cgi
   %switch.load905 = load i16, ptr %switch.gep904, align 2
   %switch.ext906 = zext i16 %switch.load905 to i32
   br label %bb.ld
 
 switch.lookup908:                                 ; preds = %bb.ee
   %i.cgj = zext nneg i8 %switch.tableidx907 to i64
-  %switch.gep909 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.274, i64 %i.cgj
+  %switch.gep909 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.273, i64 %i.cgj
   %switch.load910 = load i16, ptr %switch.gep909, align 2
   %switch.ext911 = zext i16 %switch.load910 to i32
   br label %bb.ld
 
 switch.lookup913:                                 ; preds = %bb.eg
   %i.cgk = zext nneg i8 %switch.tableidx912 to i64
-  %switch.gep914 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.275, i64 %i.cgk
+  %switch.gep914 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.274, i64 %i.cgk
   %switch.load915 = load i16, ptr %switch.gep914, align 2
   %switch.ext916 = zext i16 %switch.load915 to i32
   br label %bb.ld
 
 switch.lookup918:                                 ; preds = %bb.ei
   %i.cgl = zext nneg i8 %switch.tableidx917 to i64
-  %switch.gep919 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.276, i64 %i.cgl
+  %switch.gep919 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL17MatchRegisterNameN4llvm9StringRefE.275, i64 %i.cgl
   %switch.load920 = load i16, ptr %switch.gep919, align 2
   %switch.ext921 = zext i16 %switch.load920 to i32
   br label %bb.ld
@@ -3707,7 +3707,7 @@ _ZNK4llvm8TypeSizecvmEv.exit173:                  ; preds = %bb.au
   br i1 %i.ix, label %switch.lookup430, label %.thread
 
 switch.lookup430:                                 ; preds = %.split
-  %switch.gep431 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.277, i64 %switch.tableidx429
+  %switch.gep431 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.276, i64 %switch.tableidx429
   %switch.load432 = load ptr, ptr %switch.gep431, align 8
   br label %.sink.split
 
@@ -3760,7 +3760,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %.thread
 
 switch.lookup:                                    ; preds = %.split75
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.277, i64 %switch.tableidx
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.276, i64 %switch.tableidx
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %.thread
 
@@ -4163,7 +4163,7 @@ switch.lookup:                                    ; preds = %_ZL14getIntrinsicID
   %switch.ext = zext i8 %switch.load to i64
   %switch.tableidx14 = add i64 %.0.i.i.i.i.i, 4294965110
   %i.afx = and i64 %switch.tableidx14, 4294967295
-  %switch.gep16 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL23performIntrinsicCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoEPKNS_16AArch64SubtargetE.281, i64 %i.afx
+  %switch.gep16 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL23performIntrinsicCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoEPKNS_16AArch64SubtargetE.280, i64 %i.afx
   %switch.load17 = load i16, ptr %switch.gep16, align 2
   %switch.ext18 = zext i16 %switch.load17 to i32
   %i.afy = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG9getVTListENS_3EVTES1_(ptr noundef nonnull align 8 dereferenceable(920) %.16.val, i16 257, ptr null, i16 7, ptr null) #35 ; 2 uses
@@ -4542,7 +4542,7 @@ switch.lookup:                                    ; preds = %bb.w
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.cy = zext nneg i32 %switch.tableidx to i64
-  %switch.gep271 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL29performSignExtendInRegCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGE.282, i64 %i.cy
+  %switch.gep271 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL29performSignExtendInRegCombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGE.281, i64 %i.cy
   %switch.load272 = load i16, ptr %switch.gep271, align 2
   %switch.ext273 = zext i16 %switch.load272 to i32
   %i.cz = load ptr, ptr %i.f, align 8, !tbaa !384
@@ -4945,7 +4945,7 @@ _ZNK4llvm8TypeSizecvmEv.exit447:                  ; preds = %_ZNK4llvm3EVT13getS
   %switch.idx.cast = trunc nuw nsw i32 %i.ze to i16
   %switch.offset = add nuw nsw i16 %switch.idx.cast, 13
   %i.zf = zext nneg i32 %i.ze to i64
-  %switch.gep670 = getelementptr inbounds nuw i8, ptr @switch.table._ZL19performSTORECombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGEPKNS_16AArch64SubtargetE.283, i64 %i.zf
+  %switch.gep670 = getelementptr inbounds nuw i8, ptr @switch.table._ZL19performSTORECombinePN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoERNS_12SelectionDAGEPKNS_16AArch64SubtargetE.282, i64 %i.zf
   %switch.load671 = load i8, ptr %switch.gep670, align 1
   %switch.ext672 = zext i8 %switch.load671 to i32
   br label %_ZL16getFPSubregForVTN4llvm3EVTE.exit
@@ -5348,7 +5348,7 @@ _ZNK4llvm17MachineMemOperand17getMergedOrderingEv.exit98.i: ; preds = %bb.bs
   %i.og = trunc nuw i8 %i.of to i1
   %.v.i96.i = select i1 %i.og, i16 %i.nv, i16 %i.nw
   %i.oh = zext nneg i16 %.v.i96.i to i64
-  %i.oi = getelementptr [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.284, i64 %i.oh
+  %i.oi = getelementptr [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.283, i64 %i.oh
   %switch.gep911 = getelementptr i8, ptr %i.oi, i64 -4
   %switch.load912 = load i16, ptr %switch.gep911, align 2
   %switch.ext913 = zext i16 %switch.load912 to i32
@@ -5591,7 +5591,7 @@ _ZNK4llvm17MachineMemOperand17getMergedOrderingEv.exit.i619: ; preds = %bb.ca, %
   ]
 
 switch.lookup:                                    ; preds = %_ZNK4llvm17MachineMemOperand17getMergedOrderingEv.exit.i619
-  %switch.gep915 = getelementptr inbounds [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.285, i64 %.0.i.i.i
+  %switch.gep915 = getelementptr inbounds [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.284, i64 %.0.i.i.i
   %switch.load916 = load i16, ptr %switch.gep915, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #35
   %.sroa.030.0.copyload.i = load ptr, ptr %i.qt, align 8, !tbaa !394 ; 2 uses
@@ -5631,7 +5631,7 @@ switch.lookup:                                    ; preds = %_ZNK4llvm17MachineM
   br label %_ZL22getAtomicLoad128OpcodejN4llvm14AtomicOrderingE.exit.thread.i
 
 switch.lookup919:                                 ; preds = %_ZNK4llvm17MachineMemOperand17getMergedOrderingEv.exit.i619
-  %switch.gep920 = getelementptr inbounds [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.286, i64 %.0.i.i.i
+  %switch.gep920 = getelementptr inbounds [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.285, i64 %.0.i.i.i
   %switch.load921 = load i16, ptr %switch.gep920, align 2
   br label %_ZL22getAtomicLoad128OpcodejN4llvm14AtomicOrderingE.exit.thread.i
 
@@ -5639,7 +5639,7 @@ switch.lookup919:                                 ; preds = %_ZNK4llvm17MachineM
   unreachable
 
 switch.lookup924:                                 ; preds = %_ZNK4llvm17MachineMemOperand17getMergedOrderingEv.exit.i619
-  %switch.gep925 = getelementptr inbounds [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.287, i64 %.0.i.i.i
+  %switch.gep925 = getelementptr inbounds [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.286, i64 %.0.i.i.i
   %switch.load926 = load i16, ptr %switch.gep925, align 2
   br label %_ZL22getAtomicLoad128OpcodejN4llvm14AtomicOrderingE.exit.thread.i
 
@@ -6034,7 +6034,7 @@ switch.lookup930:                                 ; preds = %switch.hole_check
   %i.xg = getelementptr i8, ptr %i.xf, i64 -16
   %.sroa.0.0.copyload.i.i676 = load i64, ptr %i.xg, align 16
   %i.xh = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.sroa.0.0.copyload.i.i676, i1 true)
-  %i.xi = getelementptr [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.288, i64 %i.xh
+  %i.xi = getelementptr [2 x i8], ptr @switch.table._ZNK4llvm21AArch64TargetLowering18ReplaceNodeResultsEPNS_6SDNodeERNS_15SmallVectorImplINS_7SDValueEEERNS_12SelectionDAGE.287, i64 %i.xh
   %switch.gep933 = getelementptr i8, ptr %i.xi, i64 -6
   %switch.load934 = load i16, ptr %switch.gep933, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %74)

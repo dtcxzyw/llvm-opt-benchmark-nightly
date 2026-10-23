@@ -202,9 +202,9 @@ bb.ab:                                            ; preds = %_ZL17consumeWhitesp
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #15, !noalias !259
-  store ptr %i.kg, ptr %44, align 8, !tbaa !31, !noalias !259
+  store ptr %i.kg, ptr %44, align 8, !tbaa !31
   %.sroa.14.0..sroa_idx260 = getelementptr inbounds nuw i8, ptr %44, i64 8
-  store i64 %i.kh, ptr %.sroa.14.0..sroa_idx260, align 8, !tbaa !20, !noalias !259
+  store i64 %i.kh, ptr %.sroa.14.0..sroa_idx260, align 8, !tbaa !20
   %.sroa.16262.0..sroa_idx263 = getelementptr inbounds nuw i8, ptr %44, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.16262.0..sroa_idx263, ptr noundef nonnull align 8 dereferenceable(16) %i.kf, i64 16, i1 false)
   call fastcc void @_ZL22parseRangeSelectorImplN12_GLOBAL__N_110ParseStateE(ptr dead_on_unwind noalias nonnull writable align 8 %43, ptr noundef nonnull byval(%"struct.(anonymous namespace)::ParseState") align 8 %44), !noalias !259, !inline_history !128
@@ -226,7 +226,7 @@ bb.ab:                                            ; preds = %_ZL17consumeWhitesp
 
 bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %13, ptr noundef nonnull align 8 dereferenceable(32) %43, i64 32, i1 false), !noalias !259
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %13, ptr noundef nonnull align 8 dereferenceable(32) %43, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   %.sroa.0.0.copyload.i110 = load ptr, ptr %13, align 8, !tbaa !31, !noalias !262 ; 3 uses
   %.sroa.2.0..sroa_idx.i111 = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 3 uses
@@ -314,20 +314,20 @@ bb.ae:                                            ; preds = %_ZL17consumeWhitesp
   call void @llvm.lifetime.end.p0(ptr nonnull %11)
   %i.ls = getelementptr inbounds nuw i8, ptr %46, i64 24
   %i.lt = getelementptr inbounds nuw i8, ptr %43, i64 56
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %46, i8 0, i64 24, i1 false), !noalias !259
-  %i.lu = load ptr, ptr %i.lt, align 8, !tbaa !48, !noalias !259
-  store ptr %i.lu, ptr %i.ls, align 8, !tbaa !48, !noalias !259
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %46, i8 0, i64 24, i1 false)
+  %i.lu = load ptr, ptr %i.lt, align 8, !tbaa !48
+  store ptr %i.lu, ptr %i.ls, align 8, !tbaa !48
   %i.lv = getelementptr inbounds nuw i8, ptr %43, i64 48 ; 2 uses
-  %i.lw = load ptr, ptr %i.lv, align 8, !tbaa !27, !noalias !259 ; 2 uses
+  %i.lw = load ptr, ptr %i.lv, align 8, !tbaa !27 ; 2 uses
   %.not.i.i.not.i = icmp eq ptr %i.lw, null
   br i1 %.not.i.i.not.i, label %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.lx = getelementptr inbounds nuw i8, ptr %43, i64 32
   %i.ly = getelementptr inbounds nuw i8, ptr %46, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %46, ptr noundef nonnull align 8 dereferenceable(32) %i.lx, i64 16, i1 false), !tbaa.struct !49, !noalias !259
-  store ptr %i.lw, ptr %i.ly, align 8, !tbaa !27, !noalias !259
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lv, i8 0, i64 16, i1 false), !noalias !259
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %46, ptr noundef nonnull align 8 dereferenceable(32) %i.lx, i64 16, i1 false), !tbaa.struct !49
+  store ptr %i.lw, ptr %i.ly, align 8, !tbaa !27
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lv, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit
 
 _ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit: ; preds = %bb.ae, %bb.af
@@ -730,7 +730,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i202: 
 
 bb.bi:                                            ; preds = %bb.bh
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #15, !noalias !293
-  call fastcc void @_ZL9parseCharcN12_GLOBAL__N_110ParseStateE(ptr dead_on_unwind noalias writable align 8 %16, i8 noundef signext 44, ptr noundef nonnull byval(%"struct.(anonymous namespace)::ParseState") align 8 %15), !noalias !293
+  call fastcc void @_ZL9parseCharcN12_GLOBAL__N_110ParseStateE(ptr dead_on_unwind noalias writable align 8 %16, i8 noundef signext 44, ptr noundef nonnull byval(%"struct.(anonymous namespace)::ParseState") align 8 %15)
   %i.wo = call fastcc noundef nonnull align 8 dereferenceable(41) ptr @_ZN4llvm8ExpectedIN12_GLOBAL__N_113ParseProgressISt9nullopt_tEEEaSEOS5_(ptr noundef nonnull align 8 dereferenceable(41) %14, ptr noundef nonnull align 8 dereferenceable(41) %16), !inline_history !209 ; 0 uses
   %.val9.i = load ptr, ptr %16, align 8, !noalias !293 ; 3 uses
   %i.wp = getelementptr inbounds nuw i8, ptr %16, i64 40
@@ -786,7 +786,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i187: 
 
 bb.bk:                                            ; preds = %bb.bj
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #15, !noalias !293
-  call fastcc void @_ZL9parseCharcN12_GLOBAL__N_110ParseStateE(ptr dead_on_unwind noalias writable align 8 %18, i8 noundef signext 41, ptr noundef nonnull byval(%"struct.(anonymous namespace)::ParseState") align 8 %17), !noalias !293
+  call fastcc void @_ZL9parseCharcN12_GLOBAL__N_110ParseStateE(ptr dead_on_unwind noalias writable align 8 %18, i8 noundef signext 41, ptr noundef nonnull byval(%"struct.(anonymous namespace)::ParseState") align 8 %17)
   %i.xh = call fastcc noundef nonnull align 8 dereferenceable(41) ptr @_ZN4llvm8ExpectedIN12_GLOBAL__N_113ParseProgressISt9nullopt_tEEEaSEOS5_(ptr noundef nonnull align 8 dereferenceable(41) %14, ptr noundef nonnull align 8 dereferenceable(41) %18), !inline_history !209 ; 0 uses
   %.val7.i80 = load ptr, ptr %18, align 8, !noalias !293 ; 3 uses
   %i.xi = getelementptr inbounds nuw i8, ptr %18, i64 40
@@ -824,39 +824,39 @@ bb.bl:                                            ; preds = %_ZN4llvm8ExpectedIN
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0350)
   %i.xt = getelementptr inbounds nuw i8, ptr %20, i64 24
   %i.xu = getelementptr inbounds nuw i8, ptr %15, i64 56
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %20, i8 0, i64 24, i1 false), !noalias !293
-  %i.xv = load ptr, ptr %i.xu, align 8, !tbaa !48, !noalias !293
-  store ptr %i.xv, ptr %i.xt, align 8, !tbaa !48, !noalias !293
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %20, i8 0, i64 24, i1 false)
+  %i.xv = load ptr, ptr %i.xu, align 8, !tbaa !48
+  store ptr %i.xv, ptr %i.xt, align 8, !tbaa !48
   %i.xw = getelementptr inbounds nuw i8, ptr %15, i64 48 ; 2 uses
-  %i.xx = load ptr, ptr %i.xw, align 8, !tbaa !27, !noalias !293 ; 2 uses
+  %i.xx = load ptr, ptr %i.xw, align 8, !tbaa !27 ; 2 uses
   %.not.i.i.not.i172 = icmp eq ptr %i.xx, null
   br i1 %.not.i.i.not.i172, label %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit173, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
   %i.xy = getelementptr inbounds nuw i8, ptr %15, i64 32
   %i.xz = getelementptr inbounds nuw i8, ptr %20, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %20, ptr noundef nonnull align 8 dereferenceable(32) %i.xy, i64 16, i1 false), !tbaa.struct !49, !noalias !293
-  store ptr %i.xx, ptr %i.xz, align 8, !tbaa !27, !noalias !293
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.xw, i8 0, i64 16, i1 false), !noalias !293
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %20, ptr noundef nonnull align 8 dereferenceable(32) %i.xy, i64 16, i1 false), !tbaa.struct !49
+  store ptr %i.xx, ptr %i.xz, align 8, !tbaa !27
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.xw, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit173
 
 _ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit173: ; preds = %bb.bl, %bb.bm
   %i.ya = getelementptr inbounds nuw i8, ptr %21, i64 24
   %i.yb = getelementptr inbounds nuw i8, ptr %17, i64 56
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %21, i8 0, i64 24, i1 false), !noalias !293
-  %i.yc = load ptr, ptr %i.yb, align 8, !tbaa !48, !noalias !293
-  store ptr %i.yc, ptr %i.ya, align 8, !tbaa !48, !noalias !293
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %21, i8 0, i64 24, i1 false)
+  %i.yc = load ptr, ptr %i.yb, align 8, !tbaa !48
+  store ptr %i.yc, ptr %i.ya, align 8, !tbaa !48
   %i.yd = getelementptr inbounds nuw i8, ptr %17, i64 48 ; 2 uses
-  %i.ye = load ptr, ptr %i.yd, align 8, !tbaa !27, !noalias !293 ; 2 uses
+  %i.ye = load ptr, ptr %i.yd, align 8, !tbaa !27 ; 2 uses
   %.not.i.i.not.i170 = icmp eq ptr %i.ye, null
   br i1 %.not.i.i.not.i170, label %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit171, label %bb.bn
 
 bb.bn:                                            ; preds = %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit173
   %i.yf = getelementptr inbounds nuw i8, ptr %17, i64 32
   %i.yg = getelementptr inbounds nuw i8, ptr %21, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %21, ptr noundef nonnull align 8 dereferenceable(32) %i.yf, i64 16, i1 false), !tbaa.struct !49, !noalias !293
-  store ptr %i.ye, ptr %i.yg, align 8, !tbaa !27, !noalias !293
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.yd, i8 0, i64 16, i1 false), !noalias !293
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %21, ptr noundef nonnull align 8 dereferenceable(32) %i.yf, i64 16, i1 false), !tbaa.struct !49
+  store ptr %i.ye, ptr %i.yg, align 8, !tbaa !27
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.yd, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit171
 
 _ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit171: ; preds = %_ZNSt8functionIFN4llvm8ExpectedIN5clang15CharSourceRangeEEERKNS2_12ast_matchers11MatchFinder11MatchResultEEEC2EOSB_.exit173, %bb.bn

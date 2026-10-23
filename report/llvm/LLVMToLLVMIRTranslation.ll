@@ -205,9 +205,9 @@ begin_hunk_0
 @_ZSt19piecewise_construct = linkonce_odr constant %"struct.std::piecewise_construct_t" zeroinitializer, comdat, align 1
 @_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_4LLVM11LLVMDialectEEEEbPFvPNS_11MLIRContextEDpPT_EE9Extension = linkonce_odr hidden unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN4mlir20DialectExtensionBaseD2Ev, ptr @_ZZN4mlir15DialectRegistry12addExtensionIJNS_4LLVM11LLVMDialectEEEEbPFvPNS_11MLIRContextEDpPT_EEN9ExtensionD0Ev, ptr @_ZNK4mlir16DialectExtensionIZNS_15DialectRegistry12addExtensionIJNS_4LLVM11LLVMDialectEEEEbPFvPNS_11MLIRContextEDpPT_EE9ExtensionJS4_EE5applyES6_N4llvm15MutableArrayRefIPNS_7DialectEEE, ptr @_ZNK4mlir16DialectExtensionIZNS_15DialectRegistry12addExtensionIJNS_4LLVM11LLVMDialectEEEEbPFvPNS_11MLIRContextEDpPT_EE9ExtensionJS4_EE5cloneEv, ptr @_ZZN4mlir15DialectRegistry12addExtensionIJNS_4LLVM11LLVMDialectEEEEbPFvPNS_11MLIRContextEDpPT_EENK9Extension5applyES5_PS3_] }, comdat, align 8
 @_ZTVN4mlir20DialectExtensionBaseE = external unnamed_addr constant { [6 x ptr] }, align 8
-@switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.84 = private unnamed_addr constant [10 x i8] c" !()&'$%\22#", align 4
-@switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86 = private unnamed_addr constant [8 x i16] [i16 0, i16 128, i16 256, i16 poison, i16 512, i16 640, i16 768, i16 896], align 2
-@switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.87 = private unnamed_addr constant [8 x i8] [i8 0, i8 1, i8 2, i8 poison, i8 4, i8 5, i8 6, i8 7], align 4
+@switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.83 = private unnamed_addr constant [10 x i8] c" !()&'$%\22#", align 4
+@switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.85 = private unnamed_addr constant [8 x i16] [i16 0, i16 128, i16 256, i16 poison, i16 512, i16 640, i16 768, i16 896], align 2
+@switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86 = private unnamed_addr constant [8 x i8] [i8 0, i8 1, i8 2, i8 poison, i8 4, i8 5, i8 6, i8 7], align 4
 @switch.table._ZL24convertAtomicBinOpToLLVMN4mlir4LLVM11AtomicBinOpE = private unnamed_addr constant [23 x i8] c"\00\01\02\03\04\05\06\07\08\09\0A\0B\0C\0D\0E\13\14\15\16\0F\10\11\12", align 4
 @switch.table._ZL26convertFCmpPredicateToLLVMN4mlir4LLVM13FCmpPredicateE = private unnamed_addr constant [16 x i8] c"\00\01\02\03\04\05\06\07\09\0A\0B\0C\0D\0E\08\0F", align 4
 
@@ -610,11 +610,11 @@ switch.lookup:                                    ; preds = %.thread6250
   %.sroa.0.0.copyload.i.i.i.i3921 = load ptr, ptr %i.aak, align 8, !tbaa !227
   %i.aal = call noundef ptr @_ZNK4mlir4LLVM17ModuleTranslation11lookupValueENS_5ValueE(ptr noundef nonnull align 8 dereferenceable(592) %2, ptr %.sroa.0.0.copyload.i.i.i.i3921)
   %i.aam = call noundef i64 @_ZN4mlir4LLVM15AtomicCmpXchgOp18getSuccessOrderingEv(ptr noundef nonnull align 8 dereferenceable(8) %266) #18
-  %switch.gep = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.87, i64 %i.aam
+  %switch.gep = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86, i64 %i.aam
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32
   %i.aan = call noundef i64 @_ZN4mlir4LLVM15AtomicCmpXchgOp18getFailureOrderingEv(ptr noundef nonnull align 8 dereferenceable(8) %266) #18
-  %switch.gep7205 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.87, i64 %i.aan
+  %switch.gep7205 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86, i64 %i.aan
   %switch.load7206 = load i8, ptr %switch.gep7205, align 1
   %switch.ext7207 = zext i8 %switch.load7206 to i32
   %i.aao = call noundef ptr @_ZN4llvm13IRBuilderBase19CreateAtomicCmpXchgEPNS_5ValueES2_S2_NS_10MaybeAlignENS_14AtomicOrderingES4_h(ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef %i.aae, ptr noundef %i.aai, ptr noundef %i.aal, i16 0, i32 noundef %switch.ext, i32 noundef %switch.ext7207, i8 noundef zeroext 1) ; 6 uses
@@ -748,7 +748,7 @@ switch.lookup7186:                                ; preds = %bb.as
   %.sroa.0.0.copyload.i.i.i.i3933 = load ptr, ptr %i.acp, align 8, !tbaa !227
   %i.acq = call noundef ptr @_ZNK4mlir4LLVM17ModuleTranslation11lookupValueENS_5ValueE(ptr noundef nonnull align 8 dereferenceable(592) %2, ptr %.sroa.0.0.copyload.i.i.i.i3933)
   %i.acr = call noundef i64 @_ZN4mlir4LLVM11AtomicRMWOp11getOrderingEv(ptr noundef nonnull align 8 dereferenceable(8) %269) #18
-  %switch.gep7187 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.87, i64 %i.acr
+  %switch.gep7187 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86, i64 %i.acr
   %switch.load7188 = load i8, ptr %switch.gep7187, align 1
   %switch.ext7189 = zext i8 %switch.load7188 to i32
   %i.acs = call noundef ptr @_ZN4llvm13IRBuilderBase15CreateAtomicRMWENS_13AtomicRMWInst5BinOpEPNS_5ValueES4_NS_10MaybeAlignENS_14AtomicOrderingEhb(ptr noundef nonnull align 8 dereferenceable(88) %1, i32 noundef %i.acg, ptr noundef %i.acl, ptr noundef %i.acq, i16 0, i32 noundef %switch.ext7189, i8 noundef zeroext 1, i1 noundef zeroext false) ; 6 uses
@@ -1151,7 +1151,7 @@ bb.bt:                                            ; preds = %bb.bs
 
 switch.lookup7190:                                ; preds = %bb.bt
   %i.anp = call noundef i64 @_ZN4mlir4LLVM7FenceOp11getOrderingEv(ptr noundef nonnull align 8 dereferenceable(8) %290) #18
-  %switch.gep7191 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.87, i64 %i.anp
+  %switch.gep7191 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86, i64 %i.anp
   %switch.load7192 = load i8, ptr %switch.gep7191, align 1
   %switch.ext7193 = zext i8 %switch.load7192 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %291) #18
@@ -1435,7 +1435,7 @@ bb.ch:                                            ; preds = %bb.cc, %_ZN4mlir4LL
 
 switch.lookup7194:                                ; preds = %.thread6288
   %i.asf = call noundef i64 @_ZN4mlir4LLVM6ICmpOp12getPredicateEv(ptr noundef nonnull align 8 dereferenceable(8) %303) #18
-  %switch.gep7195 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.84, i64 %i.asf
+  %switch.gep7195 = getelementptr inbounds i8, ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.83, i64 %i.asf
   %switch.load7196 = load i8, ptr %switch.gep7195, align 1
   %switch.ext7197 = zext i8 %switch.load7196 to i32
   %i.asg = load ptr, ptr %303, align 8, !tbaa !239
@@ -1751,7 +1751,7 @@ _ZN4mlir4LLVM26DereferenceableOpInterfaceCI2NS_6detail9InterfaceIS1_PNS_9Operati
 
 switch.lookup7198:                                ; preds = %_ZN4mlir4LLVM26DereferenceableOpInterfaceCI2NS_6detail9InterfaceIS1_PNS_9OperationENS0_6detail41DereferenceableOpInterfaceInterfaceTraitsENS_2OpIS1_JEEENS_7OpTrait9TraitBaseEEEINS0_6LoadOpETnPNSt9enable_ifIXsr3std10is_base_ofINS3_IS1_S5_S7_S9_SB_E5TraitIT_EESG_EE5valueEvE4typeELPv0EEESG_.exit, %bb.cv
   %i.axo = call noundef i64 @_ZN4mlir4LLVM6LoadOp11getOrderingEv(ptr noundef nonnull align 8 dereferenceable(8) %314) #18
-  %switch.gep7199 = getelementptr inbounds [2 x i8], ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86, i64 %i.axo
+  %switch.gep7199 = getelementptr inbounds [2 x i8], ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.85, i64 %i.axo
   %switch.load7200 = load i16, ptr %switch.gep7199, align 2
   %i.axp = getelementptr inbounds nuw i8, ptr %i.awx, i64 2 ; 4 uses
   %i.axq = load i16, ptr %i.axp, align 2, !tbaa !251
@@ -2154,7 +2154,7 @@ switch.lookup7201:                                ; preds = %bb.eh
   %i.bjl = call noundef zeroext i1 @_ZN4mlir4LLVM7StoreOp12getVolatile_Ev(ptr noundef nonnull align 8 dereferenceable(8) %336) #18
   %i.bjm = call noundef ptr @_ZN4llvm13IRBuilderBase18CreateAlignedStoreEPNS_5ValueES2_NS_10MaybeAlignEb(ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef %i.bjg, ptr noundef %i.bjk, i16 0, i1 noundef zeroext %i.bjl) ; 9 uses
   %i.bjn = call noundef i64 @_ZN4mlir4LLVM7StoreOp11getOrderingEv(ptr noundef nonnull align 8 dereferenceable(8) %336) #18
-  %switch.gep7202 = getelementptr inbounds [2 x i8], ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.86, i64 %i.bjn
+  %switch.gep7202 = getelementptr inbounds [2 x i8], ptr @switch.table._ZL20convertOperationImplRN4mlir9OperationERN4llvm13IRBuilderBaseERNS_4LLVM17ModuleTranslationE.85, i64 %i.bjn
   %switch.load7203 = load i16, ptr %switch.gep7202, align 2
   %i.bjo = getelementptr inbounds nuw i8, ptr %i.bjm, i64 2 ; 4 uses
   %i.bjp = load i16, ptr %i.bjo, align 2, !tbaa !251

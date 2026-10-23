@@ -202,7 +202,7 @@ _RNvXsc_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5q
   %i.bm = getelementptr i8, ptr %i.bi, i64 1736, !dbg !19841
   %.val41.i = load ptr, ptr %i.bm, align 8, !dbg !19841, !noalias !19716, !nonnull !1416, !noundef !1416
   invoke fastcc void @_RNvMNtCshquuC4dCYVj_10polars_sql8subqueryNtNtB4_7context10SQLContext21resolve_subquery_from(ptr noalias noundef align 16 captures(address) dereferenceable(432) %i.ap, ptr noalias noundef align 8 dereferenceable(248) %i.at, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(1360) %.val41.i)
-          to label %bb.j unwind label %.split.thread, !dbg !19846, !noalias !19716, !inline_history !19344
+          to label %bb.j unwind label %.split.thread, !dbg !19846, !inline_history !19344
 
 bb.j:                                             ; preds = %_RNvXsc_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query14TableWithJoinsEINtNtNtCscgRAwXFJnXP_4core3ops5index5IndexjE5indexCshquuC4dCYVj_10polars_sql.exit
   call void @llvm.experimental.noalias.scope.decl(metadata !19719), !dbg !19840
@@ -605,7 +605,7 @@ _RNvXsc_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5q
   %i.dy = getelementptr i8, ptr %i.da, i64 1736, !dbg !19965
   %.val95.i = load ptr, ptr %i.dy, align 8, !dbg !19965, !noalias !19745, !nonnull !1416, !noundef !1416
   invoke fastcc void @_RNvMNtCshquuC4dCYVj_10polars_sql8subqueryNtNtB4_7context10SQLContext21resolve_subquery_from(ptr noalias noundef align 16 captures(address) dereferenceable(432) %i.x, ptr noalias noundef align 8 dereferenceable(248) %i.ab, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(1360) %.val95.i)
-          to label %bb.bo unwind label %bb.bn, !dbg !19976, !noalias !19745, !inline_history !19437
+          to label %bb.bo unwind label %bb.bn, !dbg !19976, !inline_history !19437
 
 bb.bo:                                            ; preds = %_RNvXsc_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query14TableWithJoinsEINtNtNtCscgRAwXFJnXP_4core3ops5index5IndexjE5indexCshquuC4dCYVj_10polars_sql.exit86
   call void @llvm.experimental.noalias.scope.decl(metadata !19763), !dbg !19964
@@ -1008,7 +1008,7 @@ bb.cp:                                            ; preds = %_RNvXsu_NtCsgZ49sUH
 
 _RNvXsu_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeuEENtNtCscgRAwXFJnXP_4core5clone5Clone5cloneCshquuC4dCYVj_10polars_sql.exit: ; preds = %bb.cn
   invoke fastcc void @_RNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB5_10SQLContext13process_where(ptr noalias noundef align 16 captures(address) dereferenceable(384) %i.gm, ptr noalias noundef nonnull align 8 dereferenceable(248) %1, ptr noalias noundef align 16 captures(address) dereferenceable(384) %i.gl, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %.sroa.06.0.i, i1 noundef zeroext false, ptr noundef nonnull %i.pa)
-          to label %bb.cq unwind label %bb.cp, !dbg !25115, !noalias !24311, !inline_history !22739
+          to label %bb.cq unwind label %bb.cp, !dbg !25115, !inline_history !22739
 
 bb.cq:                                            ; preds = %_RNvXsu_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeuEENtNtCscgRAwXFJnXP_4core5clone5Clone5cloneCshquuC4dCYVj_10polars_sql.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.gl), !dbg !25114, !noalias !24366

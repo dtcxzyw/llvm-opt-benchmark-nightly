@@ -205,7 +205,7 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit: ; preds = %bb.az, 
   tail call void @llvm.assume(i1 %lcmp.mod778)
   %i.ge = getelementptr inbounds nuw [24 x i8], ptr %.1.i427, i64 %.042.i528.epil.init
   %.val.i.epil = load ptr, ptr %i.ge, align 8, !tbaa !268, !noalias !561 ; 2 uses
-  %i.gf = load i8, ptr %.val.i.epil, align 1, !tbaa !86, !noalias !561 ; 2 uses
+  %i.gf = load i8, ptr %.val.i.epil, align 1, !tbaa !86 ; 2 uses
   %.not63.i520.epil = icmp eq i8 %i.gf, 0
   br i1 %.not63.i520.epil, label %._crit_edge530, label %.lr.ph524.epil
 
@@ -216,7 +216,7 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit: ; preds = %bb.az, 
   %i.gh = getelementptr inbounds nuw i8, ptr %.1.i521.epil, i64 1 ; 2 uses
   store i8 %i.gg, ptr %.1.i521.epil, align 1, !tbaa !86, !noalias !561
   %i.gi = getelementptr inbounds nuw i8, ptr %.0.i522.epil, i64 1 ; 2 uses
-  %i.gj = load i8, ptr %i.gi, align 1, !tbaa !86, !noalias !561 ; 2 uses
+  %i.gj = load i8, ptr %i.gi, align 1, !tbaa !86  ; 2 uses
   %.not63.i.epil = icmp eq i8 %i.gj, 0
   br i1 %.not63.i.epil, label %._crit_edge530, label %.lr.ph524.epil, !llvm.loop !538
 
@@ -234,7 +234,7 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit: ; preds = %bb.az, 
   %niter = phi i64 [ 0, %.lr.ph529.preheader.new ], [ %niter.next.1, %._crit_edge525.1 ]
   %i.gn = getelementptr inbounds nuw [24 x i8], ptr %.1.i427, i64 %.042.i528
   %.val.i = load ptr, ptr %i.gn, align 8, !tbaa !268, !noalias !561 ; 2 uses
-  %i.go = load i8, ptr %.val.i, align 1, !tbaa !86, !noalias !561 ; 2 uses
+  %i.go = load i8, ptr %.val.i, align 1, !tbaa !86 ; 2 uses
   %.not63.i520 = icmp eq i8 %i.go, 0
   br i1 %.not63.i520, label %._crit_edge525, label %.lr.ph524
 
@@ -243,7 +243,7 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit: ; preds = %bb.az, 
   %i.gp = getelementptr inbounds nuw [24 x i8], ptr %.1.i427, i64 %.042.i528
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 24
   %.val.i.1 = load ptr, ptr %i.gq, align 8, !tbaa !268, !noalias !561 ; 2 uses
-  %i.gr = load i8, ptr %.val.i.1, align 1, !tbaa !86, !noalias !561 ; 2 uses
+  %i.gr = load i8, ptr %.val.i.1, align 1, !tbaa !86 ; 2 uses
   %.not63.i520.1 = icmp eq i8 %i.gr, 0
   br i1 %.not63.i520.1, label %._crit_edge525.1, label %.lr.ph524.1
 
@@ -254,7 +254,7 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit: ; preds = %bb.az, 
   %i.gt = getelementptr inbounds nuw i8, ptr %.1.i521.1, i64 1 ; 2 uses
   store i8 %i.gs, ptr %.1.i521.1, align 1, !tbaa !86, !noalias !561
   %i.gu = getelementptr inbounds nuw i8, ptr %.0.i522.1, i64 1 ; 2 uses
-  %i.gv = load i8, ptr %i.gu, align 1, !tbaa !86, !noalias !561 ; 2 uses
+  %i.gv = load i8, ptr %i.gu, align 1, !tbaa !86  ; 2 uses
   %.not63.i.1 = icmp eq i8 %i.gv, 0
   br i1 %.not63.i.1, label %._crit_edge525.1, label %.lr.ph524.1, !llvm.loop !538
 
@@ -272,7 +272,7 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit: ; preds = %bb.az, 
   %i.gy = getelementptr inbounds nuw i8, ptr %.1.i521, i64 1 ; 2 uses
   store i8 %i.gx, ptr %.1.i521, align 1, !tbaa !86, !noalias !561
   %i.gz = getelementptr inbounds nuw i8, ptr %.0.i522, i64 1 ; 2 uses
-  %i.ha = load i8, ptr %i.gz, align 1, !tbaa !86, !noalias !561 ; 2 uses
+  %i.ha = load i8, ptr %i.gz, align 1, !tbaa !86  ; 2 uses
   %.not63.i = icmp eq i8 %i.ha, 0
   br i1 %.not63.i, label %._crit_edge525, label %.lr.ph524, !llvm.loop !538
 

@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit111: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #46
   br label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_18WKTValueESt14default_deleteIS2_EED2Ev.exit120
 
-_ZNKSt14default_deleteIN6duckdb12_GLOBAL__N_18WKTValueEEclEPS2_.exit.i: ; preds = %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit116, %bb.an, %bb.y, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107, %bb.ad, %bb.aa, %bb.v, %bb.s, %bb.c
+_ZNKSt14default_deleteIN6duckdb12_GLOBAL__N_18WKTValueEEclEPS2_.exit.i: ; preds = %bb.c, %bb.s, %bb.v, %bb.aa, %bb.ad, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107, %bb.y, %bb.an, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit116, %bb.q
   %.661.ph = phi i1 [ false, %bb.c ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit116 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107 ], [ false, %bb.s ], [ false, %bb.v ], [ false, %bb.y ], [ false, %bb.aa ], [ false, %bb.ad ], [ false, %bb.an ], [ false, %bb.q ]
   %i.cj = load ptr, ptr %.val, align 8, !tbaa !384
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 8

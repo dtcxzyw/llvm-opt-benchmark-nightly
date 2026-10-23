@@ -205,7 +205,7 @@ _ZNKSt14default_deleteIN4llvm15DecoderTreeNodeEEclEPS1_.exit.i48: ; preds = %_ZN
 
 _ZNSt10unique_ptrIN4llvm14CheckFieldNodeESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN4llvm15DecoderTreeNodeEEclEPS1_.exit.i48, %_ZN4llvm13CheckManyNode8addChildESt10unique_ptrINS_15DecoderTreeNodeESt14default_deleteIS2_EE.exit56
   %.val14.i = load ptr, ptr %i.aaz, align 8, !tbaa !264
-  call fastcc void @_ZN12_GLOBAL__N_118DecoderTreeBuilder20convertFilterChooserEPKNS_13FilterChooserE(ptr dead_on_unwind noalias writable align 8 %4, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %.val14.i), !noalias !669, !inline_history !601
+  call fastcc void @_ZN12_GLOBAL__N_118DecoderTreeBuilder20convertFilterChooserEPKNS_13FilterChooserE(ptr dead_on_unwind noalias writable align 8 %4, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %.val14.i), !inline_history !601
   %i.ach = load i32, ptr %i.abe, align 8, !tbaa !65, !noalias !669 ; 2 uses
   %i.aci = zext i32 %i.ach to i64                 ; 2 uses
   %i.acj = add nuw nsw i64 %i.aci, 1              ; 2 uses
@@ -291,7 +291,7 @@ bb.dp:                                            ; preds = %.lr.ph, %_ZNSt10uni
   %i.adp = getelementptr inbounds nuw i8, ptr %.sroa.064.082, i64 40
   %i.adq = load i64, ptr %i.ado, align 8, !tbaa !66 ; 3 uses
   %.val.i15 = load ptr, ptr %i.adp, align 8, !tbaa !264
-  call fastcc void @_ZN12_GLOBAL__N_118DecoderTreeBuilder20convertFilterChooserEPKNS_13FilterChooserE(ptr dead_on_unwind noalias writable align 8 %5, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %.val.i15), !noalias !669, !inline_history !601
+  call fastcc void @_ZN12_GLOBAL__N_118DecoderTreeBuilder20convertFilterChooserEPKNS_13FilterChooserE(ptr dead_on_unwind noalias writable align 8 %5, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %.val.i15), !inline_history !601
   %i.adr = load ptr, ptr %i.adh, align 8, !tbaa !51, !noalias !669 ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.adr, null
   br i1 %.not10.i.i.i.i, label %.critedge.i, label %.lr.ph.i.i.i.i

@@ -202,7 +202,7 @@ bb.fx:                                            ; preds = %_RINvMs1_NtCsfjX3T6
 _RNvXsj_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs3smBju6uAx0_7ide_ssr.exit283: ; preds = %_RINvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB6_7HashMapINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCs3smBju6uAx0_7ide_ssr9resolving12ResolvedPathNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherE3getBO_EB2o_.exit
   %i.sb = add nuw i32 %i.rz, 1
   store i32 %i.sb, ptr %i.bt, align 4, !noalias !283
-  %i.sc = call fastcc noundef ptr @_RNvXsft_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_4PathNtBa_7AstNode4cast(ptr noundef nonnull %.val79) #26, !noalias !283, !inline_history !217 ; 8 uses
+  %i.sc = call fastcc noundef ptr @_RNvXsft_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_4PathNtBa_7AstNode4cast(ptr noundef nonnull %.val79) #26, !inline_history !217 ; 8 uses
   %.not38.i = icmp eq ptr %i.sc, null
   br i1 %.not38.i, label %bb.ga, label %bb.fy, !prof !5
 
@@ -251,7 +251,7 @@ bb.gd:                                            ; preds = %bb.fy
   %i.sl = add nuw i32 %i.se, 1
   store i32 %i.sl, ptr %i.sd, align 4, !noalias !283
   %i.sm = invoke fastcc noundef ptr @_RNvXsft_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_4PathNtBa_7AstNode4cast(ptr noundef nonnull %.val63.i)
-          to label %bb.ge unwind label %bb.gc, !noalias !283, !inline_history !217 ; 9 uses
+          to label %bb.ge unwind label %bb.gc, !inline_history !217 ; 9 uses
 
 bb.ge:                                            ; preds = %bb.gd
   %.not39.i = icmp eq ptr %i.sm, null
@@ -654,31 +654,31 @@ bb.kz:                                            ; preds = %bb.ja
   %i.abp = add nuw i32 %i.xk, 1
   store i32 %i.abp, ptr %i.xj, align 4, !noalias !290
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.xc, ptr %i.a, align 8, !noalias !290
+  store ptr %i.xc, ptr %i.a, align 8
   %i.abq = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCs3smBju6uAx0_7ide_ssr(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a)
-          to label %bb.lc unwind label %bb.la, !noalias !290
+          to label %bb.lc unwind label %bb.la
 
 bb.la:                                            ; preds = %bb.kz
   %i.abr = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.abs = load i32, ptr %i.xj, align 4, !noalias !290, !noundef !4
+  %i.abs = load i32, ptr %i.xj, align 4, !noundef !4
   %i.abt = add i32 %i.abs, -1                     ; 2 uses
-  store i32 %i.abt, ptr %i.xj, align 4, !noalias !290
+  store i32 %i.abt, ptr %i.xj, align 4
   %i.abu = icmp eq i32 %i.abt, 0
   br i1 %i.abu, label %bb.lb, label %.body318
 
 bb.lb:                                            ; preds = %bb.la
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %i.xc) #22
-          to label %.body318 unwind label %bb.lf, !noalias !290
+          to label %.body318 unwind label %bb.lf
 
 bb.lc:                                            ; preds = %bb.kz
   %i.abv = icmp eq i16 %i.abq, 272
   br i1 %i.abv, label %bb.lg, label %bb.ld
 
 bb.ld:                                            ; preds = %bb.lc
-  %i.abw = load i32, ptr %i.xj, align 4, !noalias !290, !noundef !4
+  %i.abw = load i32, ptr %i.xj, align 4, !noundef !4
   %i.abx = add i32 %i.abw, -1                     ; 2 uses
-  store i32 %i.abx, ptr %i.xj, align 4, !noalias !290
+  store i32 %i.abx, ptr %i.xj, align 4
   %i.aby = icmp eq i32 %i.abx, 0
   br i1 %i.aby, label %bb.le, label %.thread592
 
@@ -689,7 +689,7 @@ bb.le:                                            ; preds = %bb.ld
 bb.lf:                                            ; preds = %bb.lb
   %i.abz = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #24, !noalias !290
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #24
   unreachable
 
 .thread592:                                       ; preds = %bb.ld, %bb.le
@@ -782,7 +782,7 @@ bb.ls:                                            ; preds = %bb.lp
   %i.acp = add nuw i32 %i.acm, 1
   store i32 %i.acp, ptr %i.xj, align 4, !noalias !290
   %i.acq = invoke noundef ptr @_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtCs42xZ1oUXfIG_8smol_str7SmolStrINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherE6insertCs3smBju6uAx0_7ide_ssr(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.v, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.r, ptr noundef nonnull %i.xc)
-          to label %bb.lt unwind label %bb.lr, !noalias !290, !inline_history !225 ; 3 uses
+          to label %bb.lt unwind label %bb.lr, !inline_history !225 ; 3 uses
 
 bb.lt:                                            ; preds = %bb.ls
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !289

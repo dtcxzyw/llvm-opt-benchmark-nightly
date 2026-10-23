@@ -174,7 +174,7 @@ $_ZTVN2v88internal8OFStreamE = comdat any
 @_ZTVSt9basic_iosIcSt11char_traitsIcEE = external unnamed_addr constant { [4 x ptr] }, align 8
 @_ZTVN2v88internal8OFStreamE = linkonce_odr hidden unnamed_addr constant { [5 x ptr], [5 x ptr] } { [5 x ptr] [ptr inttoptr (i64 80 to ptr), ptr null, ptr null, ptr @_ZN2v88internal8OFStreamD1Ev, ptr @_ZN2v88internal8OFStreamD0Ev], [5 x ptr] [ptr inttoptr (i64 -80 to ptr), ptr inttoptr (i64 -80 to ptr), ptr null, ptr @_ZTv0_n24_N2v88internal8OFStreamD1Ev, ptr @_ZTv0_n24_N2v88internal8OFStreamD0Ev] }, comdat, align 8
 @_ZTVSt15basic_streambufIcSt11char_traitsIcEE = external unnamed_addr constant { [16 x ptr] }, align 8
-@switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.128 = private unnamed_addr constant [11 x i8] [i8 2, i8 poison, i8 poison, i8 64, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 32], align 4
+@switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.127 = private unnamed_addr constant [11 x i8] [i8 2, i8 poison, i8 poison, i8 64, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 32], align 4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr hidden noundef zeroext i1 @_ZN2v88internal12RegExpParser18VerifyRegExpSyntaxIhEEbPNS0_4ZoneEmPKT_iNS_4base5FlagsINS0_10RegExpFlagEiiEEPNS0_17RegExpCompileDataERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSF_2EEEE(ptr noundef %0, i64 noundef %1, ptr noundef %2, i32 noundef %3, i32 %4, ptr noundef %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #0 comdat align 2 {
@@ -577,7 +577,7 @@ switch.hole_check:                                ; preds = %_ZN2v88internal12_G
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.abd = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.128, i64 %i.abd
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.127, i64 %i.abd
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32       ; 2 uses
   %i.abe = or i32 %.val33.i, %switch.ext
@@ -859,7 +859,7 @@ switch.hole_check1661:                            ; preds = %_ZN2v88internal12_G
 
 switch.lookup1662:                                ; preds = %switch.hole_check1661
   %i.aec = zext nneg i8 %switch.tableidx1659 to i64
-  %switch.gep1666 = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.128, i64 %i.aec
+  %switch.gep1666 = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.127, i64 %i.aec
   %switch.load1667 = load i8, ptr %switch.gep1666, align 1
   %switch.ext1668 = zext i8 %switch.load1667 to i32 ; 4 uses
   %i.aed = and i32 %.sroa.0179.0305.i, %switch.ext1668
@@ -1262,7 +1262,7 @@ switch.hole_check:                                ; preds = %bb.cz
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.xc = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.128, i64 %i.xc
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.127, i64 %i.xc
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32       ; 2 uses
   %i.xd = or i32 %.val.i216.i, %switch.ext
@@ -1441,7 +1441,7 @@ switch.hole_check828:                             ; preds = %bb.dk
 
 switch.lookup829:                                 ; preds = %switch.hole_check828
   %i.yy = zext nneg i8 %switch.tableidx826 to i64
-  %switch.gep833 = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.128, i64 %i.yy
+  %switch.gep833 = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE12ParsePatternEv.127, i64 %i.yy
   %switch.load834 = load i8, ptr %switch.gep833, align 1
   %switch.ext835 = zext i8 %switch.load834 to i32 ; 4 uses
   %i.yz = and i32 %.sroa.0119.0256.i.i, %switch.ext835

@@ -205,12 +205,12 @@ _RNvXs0_NtNtCs1xwejQucwHj_5alloc3vec16in_place_collectINtNtNtNtCs3oUPovFnLWP_4co
   %i.bm = ptrtoint ptr %.lcssa110 to i64
   %i.bn = sub nuw i64 %i.bl, %i.bm
   %i.bo = udiv exact i64 %i.bn, 56
-  store i64 0, ptr %.sroa.546.0..sroa_idx, align 8, !alias.scope !15024, !noalias !15025
-  store ptr inttoptr (i64 8 to ptr), ptr %i.k, align 8, !alias.scope !15024, !noalias !15025
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.445.0..sroa_idx, align 8, !alias.scope !15024, !noalias !15025
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.647.0..sroa_idx, align 8, !alias.scope !15024, !noalias !15025
+  store i64 0, ptr %.sroa.546.0..sroa_idx, align 8, !alias.scope !15024
+  store ptr inttoptr (i64 8 to ptr), ptr %i.k, align 8, !alias.scope !15024
+  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.445.0..sroa_idx, align 8, !alias.scope !15024
+  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.647.0..sroa_idx, align 8, !alias.scope !15024
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeECs9gmjTwvRRSu_10typst_html(ptr noalias nofree noundef nonnull align 8 %.lcssa110, i64 noundef %i.bo)
-          to label %_RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i unwind label %bb.t, !noalias !15026, !inline_history !14979
+          to label %_RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i unwind label %bb.t, !noalias !15025, !inline_history !14979
 
 _RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i: ; preds = %_RNvXs0_NtNtCs1xwejQucwHj_5alloc3vec16in_place_collectINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB7_9into_iter8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeENvNCNvNtCs9gmjTwvRRSu_10typst_html5rules12OUTLINE_RULE012convert_nodeEINtB5_18SpecInPlaceCollectNtNtNtB2a_11foundations7content7ContentBP_E16collect_in_placeB3d_.exit.i
   %.not.i.i = icmp ne i64 %.sroa.01.0.copyload, 0
@@ -239,7 +239,7 @@ bb.w:                                             ; preds = %bb.v
 
 _RNvMs0_NtCs1xwejQucwHj_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.i: ; preds = %bb.u
   %i.bu = icmp ule i64 %i.bp, %i.ak
-  call void @llvm.assume(i1 %i.bu), !noalias !15025
+  call void @llvm.assume(i1 %i.bu), !noalias !15026
   %i.bv = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %.sroa.42.0.copyload, i64 noundef %i.ak, i64 noundef 8, i64 noundef range(i64 0, -15) %i.bp) #53, !noalias !15022, !inline_history !14979 ; 2 uses
   %i.bw = icmp eq ptr %i.bv, null
   br i1 %i.bw, label %bb.x, label %.noexc, !prof !138
@@ -642,8 +642,8 @@ begin_hunk_1_@llvm.minimumnum.v4f32
 !15022 = !{!14974, !14948}
 !15023 = !{!14974, !14976, !14948, !14947}
 !15024 = !{!14978, !14947}
-!15025 = !{!14974}
-!15026 = !{!14948}
+!15025 = !{!14948}
+!15026 = !{!14974}
 !15027 = !{!14981}
 !15028 = !{!14983, !14981}
 !15029 = !{!14985}
