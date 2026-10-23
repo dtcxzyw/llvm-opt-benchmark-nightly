@@ -149,22 +149,26 @@ _ZN2v88internal12_GLOBAL__N_111MyersDifferC2EPNS0_10Comparator5InputEPNS3_6Outpu
   br i1 %i.az, label %bb.f, label %_ZNSt14_Optional_baseIN2v88internal12_GLOBAL__N_111MyersDiffer4PathELb0ELb0EED2Ev.exit.i
 
 bb.f:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_111MyersDifferC2EPNS0_10Comparator5InputEPNS3_6OutputE.exit.i
-  %.val2.i = load ptr, ptr %3, align 8            ; 4 uses
+  %.val2.i = load ptr, ptr %i.a, align 8          ; 6 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.val3.i = load ptr, ptr %i.ba, align 8         ; 3 uses
-  %i.bb = load ptr, ptr %i.a, align 8             ; 6 uses
-  %i.bc = ptrtoint ptr %.val3.i to i64
-  %i.bd = ptrtoint ptr %.val2.i to i64            ; 2 uses
-  %i.be = sub i64 %i.bc, %i.bd
-  %4 = ashr exact i64 %i.be, 3                    ; 2 uses
-  %i.bf = icmp ugt i64 %4, 1
-  br i1 %i.bf, label %.lr.ph.i.i, label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer11WriteResultERKNS2_4PathE.exit.thread.i
+  %.val3.i = load ptr, ptr %3, align 8            ; 4 uses
+  %i.bb = load ptr, ptr %i.ba, align 8            ; 3 uses
+  %i.bc = ptrtoint ptr %i.bb to i64
+  %i.bd = ptrtoint ptr %.val3.i to i64            ; 2 uses
+  %i.be = sub i64 %i.bc, %i.bd                    ; 2 uses
+  %i.bf = icmp ugt i64 %i.be, 8
+  br i1 %i.bf, label %.lr.ph.i.preheader.i, label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer11WriteResultERKNS2_4PathE.exit.thread.i
+
+.lr.ph.i.preheader.i:                             ; preds = %bb.f
+  %4 = ashr exact i64 %i.be, 3
+  %umax.i = call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i
   %i.bg = trunc nuw i8 %.sroa.6.11.i.i to i1
-  %i.bh = getelementptr inbounds i8, ptr %.val3.i, i64 -8
+  %i.bh = getelementptr inbounds i8, ptr %i.bb, i64 -8
   %.val26.i.i = load i32, ptr %i.bh, align 4
-  %i.bi = getelementptr i8, ptr %.val3.i, i64 -4
+  %i.bi = getelementptr i8, ptr %i.bb, i64 -4
   %.val27.i.i = load i32, ptr %i.bi, align 4
   br i1 %i.bg, label %bb.g, label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer11WriteResultERKNS2_4PathE.exit.thread.i
 
@@ -182,17 +186,17 @@ bb.i:                                             ; preds = %bb.g
   %.sroa.1737.16.extract.trunc.i.i = trunc nuw i64 %.sroa.1737.16.extract.shift.i.i to i32 ; 2 uses
   %i.bk = sub nsw i32 %.val26.i.i, %.sroa.1737.12.extract.trunc.i.i
   %i.bl = sub nsw i32 %.val27.i.i, %.sroa.1737.16.extract.trunc.i.i
-  %i.bm = load ptr, ptr %i.bb, align 8
+  %i.bm = load ptr, ptr %.val2.i, align 8
   %i.bn = load ptr, ptr %i.bm, align 8
-  call void %i.bn(ptr noundef nonnull align 8 dereferenceable(8) %i.bb, i32 noundef %.sroa.1737.12.extract.trunc.i.i, i32 noundef %.sroa.1737.16.extract.trunc.i.i, i32 noundef %i.bk, i32 noundef %i.bl) #8, !inline_history !13
+  call void %i.bn(ptr noundef nonnull align 8 dereferenceable(8) %.val2.i, i32 noundef %.sroa.1737.12.extract.trunc.i.i, i32 noundef %.sroa.1737.16.extract.trunc.i.i, i32 noundef %i.bk, i32 noundef %i.bl) #8, !inline_history !13
   br label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer11WriteResultERKNS2_4PathE.exit.thread.i
 
-.lr.ph.i.i:                                       ; preds = %bb.f, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i
-  %.065.i.i = phi i64 [ %i.fb, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ 1, %bb.f ] ; 2 uses
-  %.sroa.6.064.i.i = phi i8 [ %.sroa.6.11.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ 0, %bb.f ] ; 5 uses
-  %.sroa.25.063.i.i = phi i8 [ %.sroa.25.5.fr.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ 0, %bb.f ] ; 4 uses
-  %.sroa.1737.062.i.i = phi i64 [ %.sroa.1737.3.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ undef, %bb.f ] ; 5 uses
-  %i.bo = getelementptr [8 x i8], ptr %.val2.i, i64 %.065.i.i ; 3 uses
+.lr.ph.i.i:                                       ; preds = %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i, %.lr.ph.i.preheader.i
+  %.065.i.i = phi i64 [ %i.fb, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ 1, %.lr.ph.i.preheader.i ] ; 2 uses
+  %.sroa.6.064.i.i = phi i8 [ %.sroa.6.11.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ 0, %.lr.ph.i.preheader.i ] ; 5 uses
+  %.sroa.25.063.i.i = phi i8 [ %.sroa.25.5.fr.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ 0, %.lr.ph.i.preheader.i ] ; 4 uses
+  %.sroa.1737.062.i.i = phi i64 [ %.sroa.1737.3.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i ], [ undef, %.lr.ph.i.preheader.i ] ; 5 uses
+  %i.bo = getelementptr [8 x i8], ptr %.val3.i, i64 %.065.i.i ; 3 uses
   %i.bp = getelementptr i8, ptr %i.bo, i64 -8
   %i.bq = load i64, ptr %i.bp, align 4            ; 2 uses
   %.sroa.07.0.copyload.i.i = load i32, ptr %i.bo, align 4 ; 11 uses
@@ -243,9 +247,9 @@ bb.k:                                             ; preds = %.lr.ph.i.us.prehead
 bb.l:                                             ; preds = %bb.k
   %i.cf = sub nsw i32 %.sroa.0.0.extract.trunc6.i.i.i, %.sroa.1737.12.extract.trunc39.i.i
   %i.cg = sub nsw i32 %.sroa.6.0.extract.trunc.i.i.i, %.sroa.1737.16.extract.trunc44.i.i
-  %i.ch = load ptr, ptr %i.bb, align 8
+  %i.ch = load ptr, ptr %.val2.i, align 8
   %i.ci = load ptr, ptr %i.ch, align 8
-  call void %i.ci(ptr noundef nonnull align 8 dereferenceable(8) %i.bb, i32 noundef %.sroa.1737.12.extract.trunc39.i.i, i32 noundef %.sroa.1737.16.extract.trunc44.i.i, i32 noundef %i.cf, i32 noundef %i.cg) #8, !inline_history !15
+  call void %i.ci(ptr noundef nonnull align 8 dereferenceable(8) %.val2.i, i32 noundef %.sroa.1737.12.extract.trunc39.i.i, i32 noundef %.sroa.1737.16.extract.trunc44.i.i, i32 noundef %i.cf, i32 noundef %i.cg) #8, !inline_history !15
   br label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i.us.peel.i.i
 
 _ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i.us.peel.i.i: ; preds = %bb.l, %bb.k
@@ -386,9 +390,9 @@ bb.o:                                             ; preds = %.lr.ph.i46.us.prehe
 bb.p:                                             ; preds = %bb.o
   %i.eb = sub nsw i32 %.sroa.0.0.i.i, %.sroa.1737.12.extract.trunc41.i.i
   %i.ec = sub nsw i32 %.sroa.6.0.extract.trunc.i38.pre-phi.i.i, %.sroa.1737.16.extract.trunc47.i.i
-  %i.ed = load ptr, ptr %i.bb, align 8
+  %i.ed = load ptr, ptr %.val2.i, align 8
   %i.ee = load ptr, ptr %i.ed, align 8
-  call void %i.ee(ptr noundef nonnull align 8 dereferenceable(8) %i.bb, i32 noundef %.sroa.1737.12.extract.trunc41.i.i, i32 noundef %.sroa.1737.16.extract.trunc47.i.i, i32 noundef %i.eb, i32 noundef %i.ec) #8, !inline_history !15
+  call void %i.ee(ptr noundef nonnull align 8 dereferenceable(8) %.val2.i, i32 noundef %.sroa.1737.12.extract.trunc41.i.i, i32 noundef %.sroa.1737.16.extract.trunc47.i.i, i32 noundef %i.eb, i32 noundef %i.ec) #8, !inline_history !15
   br label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.us.peel.i.i
 
 _ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.us.peel.i.i: ; preds = %bb.p, %bb.o
@@ -442,11 +446,11 @@ _ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationER
 _ZN2v88internal12_GLOBAL__N_111MyersDiffer12WalkDiagonalERNS2_12ResultWriterENS2_5PointES5_.exit55.i.i: ; preds = %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.i.i, %.lr.ph.i46.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.us.i.i, %.lr.ph.i46.us.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.us.peel.i.i, %.lr.ph.i46.us.preheader.i.i, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.peel.i.i, %.lr.ph.i46.preheader68.i.i, %bb.m
   %.sroa.6.11.i.i = phi i8 [ %.sroa.6.7.i.i, %bb.m ], [ 0, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.peel.i.i ], [ %.sroa.6.7.i.i, %.lr.ph.i46.us.preheader.i.i ], [ 0, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.us.peel.i.i ], [ 0, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.us.i.i ], [ %.sroa.6.7.i.i, %.lr.ph.i46.preheader68.i.i ], [ 0, %.lr.ph.i46.us.i.i ], [ 0, %.lr.ph.i46.i.i ], [ 0, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer12ResultWriter20RecordNoModificationERKNS2_5PointE.exit.i52.i.i ] ; 2 uses
   %i.fb = add nuw i64 %.065.i.i, 1                ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.fb, %4
+  %exitcond.not.i.i = icmp eq i64 %i.fb, %umax.i
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !21
 
 _ZN2v88internal12_GLOBAL__N_111MyersDiffer11WriteResultERKNS2_4PathE.exit.thread.i: ; preds = %bb.i, %._crit_edge.i.i, %bb.f
-  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %.val2.i, null
+  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %.val3.i, null
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseIN2v88internal12_GLOBAL__N_111MyersDiffer4PathELb0ELb0EED2Ev.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_111MyersDiffer11WriteResultERKNS2_4PathE.exit.thread.i
@@ -454,7 +458,7 @@ bb.q:                                             ; preds = %_ZN2v88internal12_G
   %.val1.i.i.i.i.i = load ptr, ptr %i.fc, align 8
   %i.fd = ptrtoint ptr %.val1.i.i.i.i.i to i64
   %i.fe = sub i64 %i.fd, %i.bd
-  call void @_ZdlPvm(ptr noundef nonnull %.val2.i, i64 noundef %i.fe) #11
+  call void @_ZdlPvm(ptr noundef nonnull %.val3.i, i64 noundef %i.fe) #11
   br label %_ZNSt14_Optional_baseIN2v88internal12_GLOBAL__N_111MyersDiffer4PathELb0ELb0EED2Ev.exit.i
 
 _ZNSt14_Optional_baseIN2v88internal12_GLOBAL__N_111MyersDiffer4PathELb0ELb0EED2Ev.exit.i: ; preds = %bb.q, %_ZN2v88internal12_GLOBAL__N_111MyersDiffer11WriteResultERKNS2_4PathE.exit.thread.i, %_ZN2v88internal12_GLOBAL__N_111MyersDifferC2EPNS0_10Comparator5InputEPNS3_6OutputE.exit.i
