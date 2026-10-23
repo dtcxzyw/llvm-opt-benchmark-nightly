@@ -205,9 +205,9 @@ XXH3_accumulate_sse2.exit47.i.i.i:                ; preds = %.lr.ph.i, %bb.q
   %i.hl = mul nuw <2 x i64> %i.hk, splat (i64 2654435761)
   %i.hm = mul <2 x i64> %i.hj, splat (i64 -7046029290881679360)
   %i.hn = add <2 x i64> %i.hm, %i.hl              ; 2 uses
-  %i.ho = shl i64 %.0.i.i.i, 6
+  %i.ho = shl nuw nsw i64 %.0.i.i.i, 6
   %i.hp = getelementptr inbounds nuw i8, ptr %.036.i.i.i, i64 %i.ho ; 2 uses
-  %i.hq = sub i64 %.038.i.i.i, %.0.i.i.i          ; 3 uses
+  %i.hq = sub nuw nsw i64 %.038.i.i.i, %.0.i.i.i  ; 3 uses
   %.not44.i.i.i = icmp ult i64 %i.hq, %i.di
   br i1 %.not44.i.i.i, label %.loopexit.i, label %bb.q, !llvm.loop !1
 
@@ -610,9 +610,9 @@ XXH3_accumulate_sse2.exit47.i9:                   ; preds = %XXH3_accumulate_512
   %i.es = mul <2 x i64> %i.ep, splat (i64 -7046029290881679360)
   %i.et = add <2 x i64> %i.es, %i.er              ; 2 uses
   store <2 x i64> %i.et, ptr %i.ao, align 16, !tbaa !50, !alias.scope !140, !noalias !133
-  %i.eu = shl i64 %.0.i7, 6
+  %i.eu = shl nuw nsw i64 %.0.i7, 6
   %i.ev = getelementptr inbounds nuw i8, ptr %.036.i5, i64 %i.eu ; 2 uses
-  %i.ew = sub i64 %.038.i4, %.0.i7                ; 4 uses
+  %i.ew = sub nuw nsw i64 %.038.i4, %.0.i7        ; 4 uses
   %.not44.i12 = icmp ult i64 %i.ew, %i.ac
   br i1 %.not44.i12, label %bb.h, label %bb.g, !llvm.loop !1
 
@@ -918,9 +918,9 @@ XXH3_accumulate_sse2.exit47.i:                    ; preds = %XXH3_accumulate_512
   %i.mi = mul <2 x i64> %i.mf, splat (i64 -7046029290881679360)
   %i.mj = add <2 x i64> %i.mi, %i.mh
   store <2 x i64> %i.mj, ptr %i.ie, align 16, !tbaa !50, !alias.scope !148
-  %i.mk = shl i64 %.0.i, 6
+  %i.mk = shl nuw i64 %.0.i, 6
   %i.ml = getelementptr inbounds nuw i8, ptr %.036.i, i64 %i.mk ; 2 uses
-  %i.mm = sub i64 %.038.i, %.0.i                  ; 3 uses
+  %i.mm = sub nuw nsw i64 %.038.i, %.0.i          ; 3 uses
   %.not44.i = icmp ult i64 %i.mm, %i.hs
   br i1 %.not44.i, label %bb.l, label %bb.k, !llvm.loop !1
 
@@ -1023,7 +1023,7 @@ XXH3_accumulate_512_sse2.exit27:                  ; preds = %.preheader, %XXH3_a
   br i1 %exitcond62.not, label %XXH3_accumulate_sse2.exit.i, label %XXH3_accumulate_512_sse2.exit27, !llvm.loop !0
 
 XXH3_accumulate_sse2.exit.i:                      ; preds = %XXH3_accumulate_512_sse2.exit27
-  %i.ow = shl i64 %.139.i, 6
+  %i.ow = shl nuw i64 %.139.i, 6
   %i.ox = getelementptr inbounds nuw i8, ptr %.137.i, i64 %i.ow
   %i.oy = add i64 %i.mn, %.139.i
   store i64 %i.oy, ptr %i.hq, align 8, !tbaa !47, !alias.scope !147
