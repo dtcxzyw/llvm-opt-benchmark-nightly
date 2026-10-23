@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = icmp ugt i64 %i.g, 8070450532247928832
-  br i1 %i.ag, label %sz_s2u.exit31.i, label %bb.j, !prof !7
+  br i1 %i.ag, label %sz_sa2u.exit.i, label %bb.j, !prof !7
 
 bb.j:                                             ; preds = %bb.i
   %i.ah = shl nuw i64 %i.g, 1
@@ -214,16 +214,12 @@ bb.j:                                             ; preds = %bb.i
   %notmask.i.i = ashr exact i64 -1152921504606846976, %i.aj
   %i.ak = lshr i64 1152921504606846975, %i.aj
   %i.al = add nuw nsw i64 %i.ak, %i.g
-  %i.am = and i64 %i.al, %notmask.i.i
-  br label %sz_s2u.exit31.i
-
-sz_s2u.exit31.i:                                  ; preds = %bb.j, %bb.i
-  %.0.i35.i = phi i64 [ %i.am, %bb.j ], [ 0, %bb.i ] ; 2 uses
-  %4 = icmp ult i64 %.0.i35.i, %i.g
+  %i.am = and i64 %i.al, %notmask.i.i             ; 2 uses
+  %4 = icmp samesign ult i64 %i.am, %i.g
   br i1 %4, label %sz_sa2u.exit.i, label %.thread44.i
 
-.thread44.i:                                      ; preds = %sz_s2u.exit31.i, %bb.h, %sz_s2u.exit.i
-  %.0.i.i = phi i64 [ %.0.i35.i, %sz_s2u.exit31.i ], [ 16384, %bb.h ], [ 16384, %sz_s2u.exit.i ] ; 3 uses
+.thread44.i:                                      ; preds = %bb.j, %bb.h, %sz_s2u.exit.i
+  %.0.i.i = phi i64 [ %i.am, %bb.j ], [ 16384, %bb.h ], [ 16384, %sz_s2u.exit.i ] ; 3 uses
   %i.an = load i64, ptr @duckdb_je_sz_large_pad, align 8, !tbaa !9
   %i.ao = add nuw nsw i64 %i.h, 4095
   %i.ap = and i64 %i.ao, 9223372036854771712
@@ -234,8 +230,8 @@ sz_s2u.exit31.i:                                  ; preds = %bb.j, %bb.i
   %..0.i.i = select i1 %i.at, i64 0, i64 %.0.i.i
   br label %sz_sa2u.exit.i
 
-sz_sa2u.exit.i:                                   ; preds = %.thread44.i, %sz_s2u.exit31.i, %bb.g, %sz_s2u.exit.i, %bb.e
-  %.018.i.i = phi i64 [ 0, %bb.g ], [ %.0.i29.i, %sz_s2u.exit.i ], [ %..0.i.i, %.thread44.i ], [ 0, %sz_s2u.exit31.i ], [ 0, %bb.e ] ; 3 uses
+sz_sa2u.exit.i:                                   ; preds = %.thread44.i, %bb.j, %bb.i, %bb.g, %sz_s2u.exit.i, %bb.e
+  %.018.i.i = phi i64 [ 0, %bb.g ], [ %.0.i29.i, %sz_s2u.exit.i ], [ %..0.i.i, %.thread44.i ], [ 0, %bb.j ], [ 0, %bb.e ], [ 0, %bb.i ] ; 3 uses
   store i64 %.018.i.i, ptr %i.a, align 8, !tbaa !9
   %i.au = load atomic ptr, ptr @duckdb_je_arenas acquire, align 8 ; 2 uses
   %i.av = icmp eq ptr %i.au, null
