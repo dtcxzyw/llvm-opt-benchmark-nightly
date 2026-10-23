@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %._crit_edge.i, %bb.
   %i.n = load i64, ptr %i.m, align 2              ; 3 uses
   %.sroa.6.0.extract.shift.i = lshr i64 %i.n, 32
   %.sroa.6.0.extract.trunc.i = trunc i64 %.sroa.6.0.extract.shift.i to i16
-  %i.o = trunc nsw i64 %indvars.iv.i to i32
-  %5 = trunc i64 %i.n to i32                      ; 2 uses
-  %6 = tail call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 16) ; 2 uses
+  %i.o = trunc i64 %i.n to i32                    ; 2 uses
+  %5 = tail call i32 @llvm.fshl.i32(i32 %i.o, i32 %i.o, i32 16) ; 2 uses
+  %6 = trunc nsw i64 %indvars.iv.i to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %.lr.ph.i.a
-  %.02.i = phi i32 [ %i.o, %.lr.ph.i.a ], [ %i.p, %bb.e ] ; 2 uses
+  %.02.i = phi i32 [ %6, %.lr.ph.i.a ], [ %i.p, %bb.e ] ; 2 uses
   %i.p = sub i32 %.02.i, %i.j                     ; 3 uses
   %i.q = sext i32 %i.p to i64                     ; 2 uses
   %i.r = getelementptr inbounds [8 x i8], ptr %.val147, i64 %i.q ; 4 uses
@@ -221,8 +221,8 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i.a
   %i.u = shl nuw i32 %i.t, 16
   %i.v = zext i16 %.val26.i.i to i32
   %i.w = or disjoint i32 %i.u, %i.v               ; 2 uses
-  %.not.i.i = icmp eq i32 %i.w, %6
-  %i.x = icmp ult i32 %i.w, %6
+  %.not.i.i = icmp eq i32 %i.w, %5
+  %i.x = icmp ult i32 %i.w, %5
   %i.y = select i1 %i.x, i32 -1, i32 1
   br i1 %.not.i.i, label %bb.d, label %index_delete_sort_cmp.exit.i
 

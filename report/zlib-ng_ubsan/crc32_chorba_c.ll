@@ -200,50 +200,91 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.gl
   %i.g = add i64 %i.d, 118784                     ; 2 uses
+  %3 = icmp ult ptr %1, inttoptr (i64 -118784 to ptr)
   %i.h = add i64 %i.d, 118792                     ; 2 uses
+  %4 = icmp ult ptr %1, inttoptr (i64 -118792 to ptr)
   %i.i = add i64 %i.d, 118800                     ; 2 uses
+  %5 = icmp ult ptr %1, inttoptr (i64 -118800 to ptr)
   %i.j = add i64 %i.d, 118808                     ; 2 uses
+  %6 = icmp ult ptr %1, inttoptr (i64 -118808 to ptr)
   %i.k = add i64 %i.d, 118816                     ; 2 uses
+  %7 = icmp ult ptr %1, inttoptr (i64 -118816 to ptr)
   %i.l = add i64 %i.d, 118824                     ; 2 uses
+  %8 = icmp ult ptr %1, inttoptr (i64 -118824 to ptr)
   %i.m = add i64 %i.d, 118832                     ; 2 uses
+  %9 = icmp ult ptr %1, inttoptr (i64 -118832 to ptr)
   %i.n = add i64 %i.d, 118840                     ; 2 uses
+  %10 = icmp ult ptr %1, inttoptr (i64 -118840 to ptr)
   %i.o = add i64 %i.d, 118848                     ; 2 uses
+  %11 = icmp ult ptr %1, inttoptr (i64 -118848 to ptr)
   %i.p = add i64 %i.d, 118856                     ; 2 uses
+  %12 = icmp ult ptr %1, inttoptr (i64 -118856 to ptr)
   %i.q = add i64 %i.d, 118864                     ; 2 uses
+  %13 = icmp ult ptr %1, inttoptr (i64 -118864 to ptr)
   %i.r = add i64 %i.d, 118872                     ; 2 uses
+  %14 = icmp ult ptr %1, inttoptr (i64 -118872 to ptr)
   %i.s = add i64 %i.d, 118880                     ; 2 uses
+  %15 = icmp ult ptr %1, inttoptr (i64 -118880 to ptr)
   %i.t = add i64 %i.d, 118888                     ; 2 uses
+  %16 = icmp ult ptr %1, inttoptr (i64 -118888 to ptr)
   %i.u = add i64 %i.d, 118896                     ; 2 uses
+  %17 = icmp ult ptr %1, inttoptr (i64 -118896 to ptr)
   %i.v = add i64 %i.d, 118904                     ; 2 uses
+  %18 = icmp ult ptr %1, inttoptr (i64 -118904 to ptr)
   %i.w = add i64 %i.d, 118912                     ; 2 uses
+  %19 = icmp ult ptr %1, inttoptr (i64 -118912 to ptr)
   %i.x = add i64 %i.d, 118920                     ; 2 uses
+  %20 = icmp ult ptr %1, inttoptr (i64 -118920 to ptr)
   %i.y = add i64 %i.d, 118928                     ; 2 uses
+  %21 = icmp ult ptr %1, inttoptr (i64 -118928 to ptr)
   %i.z = add i64 %i.d, 118936                     ; 2 uses
+  %22 = icmp ult ptr %1, inttoptr (i64 -118936 to ptr)
   %i.aa = add i64 %i.d, 118944                    ; 2 uses
+  %23 = icmp ult ptr %1, inttoptr (i64 -118944 to ptr)
   %i.ab = add i64 %i.d, 118952                    ; 2 uses
+  %24 = icmp ult ptr %1, inttoptr (i64 -118952 to ptr)
   %i.ac = add i64 %i.d, 118960                    ; 2 uses
+  %25 = icmp ult ptr %1, inttoptr (i64 -118960 to ptr)
   %i.ad = add i64 %i.f, 118960
+  %.not1268 = icmp ugt ptr %i.a, inttoptr (i64 -118961 to ptr)
   %i.ae = add i64 %i.d, 118968                    ; 2 uses
+  %26 = icmp ult ptr %1, inttoptr (i64 -118968 to ptr)
   %i.af = add i64 %i.f, 118968
+  %.not1269 = icmp ugt ptr %i.a, inttoptr (i64 -118969 to ptr)
   %i.ag = add i64 %i.d, 118976                    ; 2 uses
+  %27 = icmp ult ptr %1, inttoptr (i64 -118976 to ptr)
   %i.ah = add i64 %i.f, 118976
+  %.not1270 = icmp ugt ptr %i.a, inttoptr (i64 -118977 to ptr)
   %i.ai = add i64 %i.d, 118984                    ; 2 uses
+  %28 = icmp ult ptr %1, inttoptr (i64 -118984 to ptr)
   %i.aj = add i64 %i.f, 118984
+  %.not1271 = icmp ugt ptr %i.a, inttoptr (i64 -118985 to ptr)
   %i.ak = add i64 %i.d, 118992                    ; 2 uses
+  %29 = icmp ult ptr %1, inttoptr (i64 -118992 to ptr)
   %i.al = add i64 %i.f, 118992
+  %.not1272 = icmp ugt ptr %i.a, inttoptr (i64 -118993 to ptr)
   %i.am = add i64 %i.d, 119000                    ; 2 uses
+  %30 = icmp ult ptr %1, inttoptr (i64 -119000 to ptr)
   %i.an = add i64 %i.f, 119000
+  %.not1273 = icmp ugt ptr %i.a, inttoptr (i64 -119001 to ptr)
   %i.ao = add i64 %i.d, 119008                    ; 2 uses
+  %31 = icmp ult ptr %1, inttoptr (i64 -119008 to ptr)
   %i.ap = add i64 %i.f, 119008
+  %.not1274 = icmp ugt ptr %i.a, inttoptr (i64 -119009 to ptr)
   %i.aq = add i64 %i.d, 119016                    ; 2 uses
+  %32 = icmp ult ptr %1, inttoptr (i64 -119016 to ptr)
   %i.ar = add i64 %i.f, 119016
+  %.not1275 = icmp ugt ptr %i.a, inttoptr (i64 -119017 to ptr)
   %i.as = add i64 %i.d, 119024                    ; 2 uses
+  %33 = icmp ult ptr %1, inttoptr (i64 -119024 to ptr)
   %i.at = add i64 %i.f, 119024
+  %.not1276 = icmp ugt ptr %i.a, inttoptr (i64 -119025 to ptr)
   %i.au = add i64 %i.d, 119032                    ; 2 uses
+  %34 = icmp ult ptr %1, inttoptr (i64 -119032 to ptr)
   %i.av = add i64 %i.f, 119032
+  %.not1277 = icmp ugt ptr %i.a, inttoptr (i64 -119033 to ptr)
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 118784 ; 2 uses
   %i.ax = icmp ne i64 %i.g, 0
-  %3 = icmp ult ptr %1, inttoptr (i64 -118784 to ptr)
   %i.ay = and i1 %i.ax, %3
   %i.az = and i1 %i.e, %i.ay
   br i1 %i.az, label %bb.gn, label %bb.gm, !prof !13, !nosanitize !14
@@ -646,7 +687,6 @@ bb.gp:                                            ; preds = %bb.go, %bb.gn
   %i.aac = xor i64 %i.aab, %i.ta                  ; 4 uses
   %i.aad = getelementptr inbounds nuw i8, ptr %1, i64 118792
   %i.aae = icmp ne i64 %i.h, 0
-  %4 = icmp ult ptr %1, inttoptr (i64 -118792 to ptr)
   %i.aaf = and i1 %i.aae, %4
   %i.aag = and i1 %i.e, %i.aaf
   br i1 %i.aag, label %bb.gr, label %bb.gq, !prof !13, !nosanitize !14
@@ -660,7 +700,6 @@ bb.gr:                                            ; preds = %bb.gp, %bb.gq
   %i.aai = xor i64 %i.aah, %i.tc                  ; 4 uses
   %i.aaj = getelementptr inbounds nuw i8, ptr %1, i64 118800
   %i.aak = icmp ne i64 %i.i, 0
-  %5 = icmp ult ptr %1, inttoptr (i64 -118800 to ptr)
   %i.aal = and i1 %i.aak, %5
   %i.aam = and i1 %i.e, %i.aal
   br i1 %i.aam, label %bb.gt, label %bb.gs, !prof !13, !nosanitize !14
@@ -674,7 +713,6 @@ bb.gt:                                            ; preds = %bb.gr, %bb.gs
   %i.aao = xor i64 %i.aan, %i.te                  ; 4 uses
   %i.aap = getelementptr inbounds nuw i8, ptr %1, i64 118808
   %i.aaq = icmp ne i64 %i.j, 0
-  %6 = icmp ult ptr %1, inttoptr (i64 -118808 to ptr)
   %i.aar = and i1 %i.aaq, %6
   %i.aas = and i1 %i.e, %i.aar
   br i1 %i.aas, label %bb.gv, label %bb.gu, !prof !13, !nosanitize !14
@@ -688,7 +726,6 @@ bb.gv:                                            ; preds = %bb.gt, %bb.gu
   %i.aau = xor i64 %i.aat, %i.tg                  ; 4 uses
   %i.aav = getelementptr inbounds nuw i8, ptr %1, i64 118816
   %i.aaw = icmp ne i64 %i.k, 0
-  %7 = icmp ult ptr %1, inttoptr (i64 -118816 to ptr)
   %i.aax = and i1 %i.aaw, %7
   %i.aay = and i1 %i.e, %i.aax
   br i1 %i.aay, label %bb.gx, label %bb.gw, !prof !13, !nosanitize !14
@@ -702,7 +739,6 @@ bb.gx:                                            ; preds = %bb.gv, %bb.gw
   %i.aba = xor i64 %i.aaz, %i.ti                  ; 4 uses
   %i.abb = getelementptr inbounds nuw i8, ptr %1, i64 118824
   %i.abc = icmp ne i64 %i.l, 0
-  %8 = icmp ult ptr %1, inttoptr (i64 -118824 to ptr)
   %i.abd = and i1 %i.abc, %8
   %i.abe = and i1 %i.e, %i.abd
   br i1 %i.abe, label %bb.gz, label %bb.gy, !prof !13, !nosanitize !14
@@ -716,7 +752,6 @@ bb.gz:                                            ; preds = %bb.gx, %bb.gy
   %i.abg = xor i64 %i.abf, %i.tk                  ; 4 uses
   %i.abh = getelementptr inbounds nuw i8, ptr %1, i64 118832
   %i.abi = icmp ne i64 %i.m, 0
-  %9 = icmp ult ptr %1, inttoptr (i64 -118832 to ptr)
   %i.abj = and i1 %i.abi, %9
   %i.abk = and i1 %i.e, %i.abj
   br i1 %i.abk, label %bb.hb, label %bb.ha, !prof !13, !nosanitize !14
@@ -730,7 +765,6 @@ bb.hb:                                            ; preds = %bb.gz, %bb.ha
   %i.abm = xor i64 %i.abl, %i.tm                  ; 4 uses
   %i.abn = getelementptr inbounds nuw i8, ptr %1, i64 118840
   %i.abo = icmp ne i64 %i.n, 0
-  %10 = icmp ult ptr %1, inttoptr (i64 -118840 to ptr)
   %i.abp = and i1 %i.abo, %10
   %i.abq = and i1 %i.e, %i.abp
   br i1 %i.abq, label %bb.hd, label %bb.hc, !prof !13, !nosanitize !14
@@ -745,7 +779,6 @@ bb.hd:                                            ; preds = %bb.hb, %bb.hc
   %i.abt = xor i64 %i.abs, %i.aac                 ; 4 uses
   %i.abu = getelementptr inbounds nuw i8, ptr %1, i64 118848
   %i.abv = icmp ne i64 %i.o, 0
-  %11 = icmp ult ptr %1, inttoptr (i64 -118848 to ptr)
   %i.abw = and i1 %i.abv, %11
   %i.abx = and i1 %i.e, %i.abw
   br i1 %i.abx, label %bb.hf, label %bb.he, !prof !13, !nosanitize !14
@@ -760,7 +793,6 @@ bb.hf:                                            ; preds = %bb.hd, %bb.he
   %i.aca = xor i64 %i.abz, %i.aai                 ; 4 uses
   %i.acb = getelementptr inbounds nuw i8, ptr %1, i64 118856
   %i.acc = icmp ne i64 %i.p, 0
-  %12 = icmp ult ptr %1, inttoptr (i64 -118856 to ptr)
   %i.acd = and i1 %i.acc, %12
   %i.ace = and i1 %i.e, %i.acd
   br i1 %i.ace, label %bb.hh, label %bb.hg, !prof !13, !nosanitize !14
@@ -775,7 +807,6 @@ bb.hh:                                            ; preds = %bb.hf, %bb.hg
   %i.ach = xor i64 %i.acg, %i.aao                 ; 4 uses
   %i.aci = getelementptr inbounds nuw i8, ptr %1, i64 118864
   %i.acj = icmp ne i64 %i.q, 0
-  %13 = icmp ult ptr %1, inttoptr (i64 -118864 to ptr)
   %i.ack = and i1 %i.acj, %13
   %i.acl = and i1 %i.e, %i.ack
   br i1 %i.acl, label %bb.hj, label %bb.hi, !prof !13, !nosanitize !14
@@ -790,7 +821,6 @@ bb.hj:                                            ; preds = %bb.hh, %bb.hi
   %i.aco = xor i64 %i.acn, %i.aau                 ; 3 uses
   %i.acp = getelementptr inbounds nuw i8, ptr %1, i64 118872
   %i.acq = icmp ne i64 %i.r, 0
-  %14 = icmp ult ptr %1, inttoptr (i64 -118872 to ptr)
   %i.acr = and i1 %i.acq, %14
   %i.acs = and i1 %i.e, %i.acr
   br i1 %i.acs, label %bb.hl, label %bb.hk, !prof !13, !nosanitize !14
@@ -806,7 +836,6 @@ bb.hl:                                            ; preds = %bb.hj, %bb.hk
   %i.acw = xor i64 %i.acv, %i.aba                 ; 3 uses
   %i.acx = getelementptr inbounds nuw i8, ptr %1, i64 118880
   %i.acy = icmp ne i64 %i.s, 0
-  %15 = icmp ult ptr %1, inttoptr (i64 -118880 to ptr)
   %i.acz = and i1 %i.acy, %15
   %i.ada = and i1 %i.e, %i.acz
   br i1 %i.ada, label %bb.hn, label %bb.hm, !prof !13, !nosanitize !14
@@ -822,7 +851,6 @@ bb.hn:                                            ; preds = %bb.hl, %bb.hm
   %i.ade = xor i64 %i.add, %i.abg                 ; 3 uses
   %i.adf = getelementptr inbounds nuw i8, ptr %1, i64 118888
   %i.adg = icmp ne i64 %i.t, 0
-  %16 = icmp ult ptr %1, inttoptr (i64 -118888 to ptr)
   %i.adh = and i1 %i.adg, %16
   %i.adi = and i1 %i.e, %i.adh
   br i1 %i.adi, label %bb.hp, label %bb.ho, !prof !13, !nosanitize !14
@@ -838,7 +866,6 @@ bb.hp:                                            ; preds = %bb.hn, %bb.ho
   %i.adm = xor i64 %i.adl, %i.abm                 ; 3 uses
   %i.adn = getelementptr inbounds nuw i8, ptr %1, i64 118896
   %i.ado = icmp ne i64 %i.u, 0
-  %17 = icmp ult ptr %1, inttoptr (i64 -118896 to ptr)
   %i.adp = and i1 %i.ado, %17
   %i.adq = and i1 %i.e, %i.adp
   br i1 %i.adq, label %bb.hr, label %bb.hq, !prof !13, !nosanitize !14
@@ -854,7 +881,6 @@ bb.hr:                                            ; preds = %bb.hp, %bb.hq
   %i.adu = xor i64 %i.adt, %i.abt                 ; 4 uses
   %i.adv = getelementptr inbounds nuw i8, ptr %1, i64 118904
   %i.adw = icmp ne i64 %i.v, 0
-  %18 = icmp ult ptr %1, inttoptr (i64 -118904 to ptr)
   %i.adx = and i1 %i.adw, %18
   %i.ady = and i1 %i.e, %i.adx
   br i1 %i.ady, label %bb.ht, label %bb.hs, !prof !13, !nosanitize !14
@@ -870,7 +896,6 @@ bb.ht:                                            ; preds = %bb.hr, %bb.hs
   %i.aec = xor i64 %i.aeb, %i.aca                 ; 4 uses
   %i.aed = getelementptr inbounds nuw i8, ptr %1, i64 118912
   %i.aee = icmp ne i64 %i.w, 0
-  %19 = icmp ult ptr %1, inttoptr (i64 -118912 to ptr)
   %i.aef = and i1 %i.aee, %19
   %i.aeg = and i1 %i.e, %i.aef
   br i1 %i.aeg, label %bb.hv, label %bb.hu, !prof !13, !nosanitize !14
@@ -886,7 +911,6 @@ bb.hv:                                            ; preds = %bb.ht, %bb.hu
   %i.aek = xor i64 %i.aej, %i.ach                 ; 4 uses
   %i.ael = getelementptr inbounds nuw i8, ptr %1, i64 118920
   %i.aem = icmp ne i64 %i.x, 0
-  %20 = icmp ult ptr %1, inttoptr (i64 -118920 to ptr)
   %i.aen = and i1 %i.aem, %20
   %i.aeo = and i1 %i.e, %i.aen
   br i1 %i.aeo, label %bb.hx, label %bb.hw, !prof !13, !nosanitize !14
@@ -902,7 +926,6 @@ bb.hx:                                            ; preds = %bb.hv, %bb.hw
   %i.aes = xor i64 %i.aer, %i.aco                 ; 4 uses
   %i.aet = getelementptr inbounds nuw i8, ptr %1, i64 118928
   %i.aeu = icmp ne i64 %i.y, 0
-  %21 = icmp ult ptr %1, inttoptr (i64 -118928 to ptr)
   %i.aev = and i1 %i.aeu, %21
   %i.aew = and i1 %i.e, %i.aev
   br i1 %i.aew, label %bb.hz, label %bb.hy, !prof !13, !nosanitize !14
@@ -918,7 +941,6 @@ bb.hz:                                            ; preds = %bb.hx, %bb.hy
   %i.afa = xor i64 %i.aez, %i.acw                 ; 4 uses
   %i.afb = getelementptr inbounds nuw i8, ptr %1, i64 118936
   %i.afc = icmp ne i64 %i.z, 0
-  %22 = icmp ult ptr %1, inttoptr (i64 -118936 to ptr)
   %i.afd = and i1 %i.afc, %22
   %i.afe = and i1 %i.e, %i.afd
   br i1 %i.afe, label %bb.ib, label %bb.ia, !prof !13, !nosanitize !14
@@ -934,7 +956,6 @@ bb.ib:                                            ; preds = %bb.hz, %bb.ia
   %i.afi = xor i64 %i.afh, %i.ade                 ; 4 uses
   %i.afj = getelementptr inbounds nuw i8, ptr %1, i64 118944
   %i.afk = icmp ne i64 %i.aa, 0
-  %23 = icmp ult ptr %1, inttoptr (i64 -118944 to ptr)
   %i.afl = and i1 %i.afk, %23
   %i.afm = and i1 %i.e, %i.afl
   br i1 %i.afm, label %bb.id, label %bb.ic, !prof !13, !nosanitize !14
@@ -950,7 +971,6 @@ bb.id:                                            ; preds = %bb.ib, %bb.ic
   %i.afq = xor i64 %i.afp, %i.adm                 ; 4 uses
   %i.afr = getelementptr inbounds nuw i8, ptr %1, i64 118952
   %i.afs = icmp ne i64 %i.ab, 0
-  %24 = icmp ult ptr %1, inttoptr (i64 -118952 to ptr)
   %i.aft = and i1 %i.afs, %24
   %i.afu = and i1 %i.e, %i.aft
   br i1 %i.afu, label %bb.if, label %bb.ie, !prof !13, !nosanitize !14
@@ -966,7 +986,6 @@ bb.if:                                            ; preds = %bb.id, %bb.ie
   %i.afy = xor i64 %i.afx, %i.afw                 ; 4 uses
   %i.afz = getelementptr inbounds nuw i8, ptr %1, i64 118960
   %i.aga = icmp ne i64 %i.ac, 0
-  %25 = icmp ult ptr %1, inttoptr (i64 -118960 to ptr)
   %i.agb = and i1 %i.aga, %25
   %i.agc = and i1 %i.e, %i.agb
   br i1 %i.agc, label %bb.ih, label %bb.ig, !prof !13, !nosanitize !14
@@ -978,7 +997,6 @@ bb.ig:                                            ; preds = %bb.if
 bb.ih:                                            ; preds = %bb.if, %bb.ig
   %i.agd = load i64, ptr %i.afz, align 8, !tbaa !16
   %i.age = getelementptr inbounds nuw i8, ptr %i.a, i64 118960
-  %.not1268 = icmp ugt ptr %i.a, inttoptr (i64 -118961 to ptr)
   br i1 %.not1268, label %bb.ii, label %bb.ij, !prof !17, !nosanitize !14
 
 bb.ii:                                            ; preds = %bb.ih
@@ -993,7 +1011,6 @@ bb.ij:                                            ; preds = %bb.ih, %bb.ii
   %i.agj = xor i64 %i.agi, %i.agh                 ; 4 uses
   %i.agk = getelementptr inbounds nuw i8, ptr %1, i64 118968
   %i.agl = icmp ne i64 %i.ae, 0
-  %26 = icmp ult ptr %1, inttoptr (i64 -118968 to ptr)
   %i.agm = and i1 %i.agl, %26
   %i.agn = and i1 %i.e, %i.agm
   br i1 %i.agn, label %bb.il, label %bb.ik, !prof !13, !nosanitize !14
@@ -1005,7 +1022,6 @@ bb.ik:                                            ; preds = %bb.ij
 bb.il:                                            ; preds = %bb.ij, %bb.ik
   %i.ago = load i64, ptr %i.agk, align 8, !tbaa !16
   %i.agp = getelementptr inbounds nuw i8, ptr %i.a, i64 118968
-  %.not1269 = icmp ugt ptr %i.a, inttoptr (i64 -118969 to ptr)
   br i1 %.not1269, label %bb.im, label %bb.in, !prof !17, !nosanitize !14
 
 bb.im:                                            ; preds = %bb.il
@@ -1020,7 +1036,6 @@ bb.in:                                            ; preds = %bb.il, %bb.im
   %i.agu = xor i64 %i.agt, %i.ags                 ; 4 uses
   %i.agv = getelementptr inbounds nuw i8, ptr %1, i64 118976
   %i.agw = icmp ne i64 %i.ag, 0
-  %27 = icmp ult ptr %1, inttoptr (i64 -118976 to ptr)
   %i.agx = and i1 %i.agw, %27
   %i.agy = and i1 %i.e, %i.agx
   br i1 %i.agy, label %bb.ip, label %bb.io, !prof !13, !nosanitize !14
@@ -1032,7 +1047,6 @@ bb.io:                                            ; preds = %bb.in
 bb.ip:                                            ; preds = %bb.in, %bb.io
   %i.agz = load i64, ptr %i.agv, align 8, !tbaa !16
   %i.aha = getelementptr inbounds nuw i8, ptr %i.a, i64 118976
-  %.not1270 = icmp ugt ptr %i.a, inttoptr (i64 -118977 to ptr)
   br i1 %.not1270, label %bb.iq, label %bb.ir, !prof !17, !nosanitize !14
 
 bb.iq:                                            ; preds = %bb.ip
@@ -1047,7 +1061,6 @@ bb.ir:                                            ; preds = %bb.ip, %bb.iq
   %i.ahf = xor i64 %i.ahe, %i.ahd                 ; 4 uses
   %i.ahg = getelementptr inbounds nuw i8, ptr %1, i64 118984
   %i.ahh = icmp ne i64 %i.ai, 0
-  %28 = icmp ult ptr %1, inttoptr (i64 -118984 to ptr)
   %i.ahi = and i1 %i.ahh, %28
   %i.ahj = and i1 %i.e, %i.ahi
   br i1 %i.ahj, label %bb.it, label %bb.is, !prof !13, !nosanitize !14
@@ -1059,7 +1072,6 @@ bb.is:                                            ; preds = %bb.ir
 bb.it:                                            ; preds = %bb.ir, %bb.is
   %i.ahk = load i64, ptr %i.ahg, align 8, !tbaa !16
   %i.ahl = getelementptr inbounds nuw i8, ptr %i.a, i64 118984
-  %.not1271 = icmp ugt ptr %i.a, inttoptr (i64 -118985 to ptr)
   br i1 %.not1271, label %bb.iu, label %bb.iv, !prof !17, !nosanitize !14
 
 bb.iu:                                            ; preds = %bb.it
@@ -1074,7 +1086,6 @@ bb.iv:                                            ; preds = %bb.it, %bb.iu
   %i.ahq = xor i64 %i.ahp, %i.aho                 ; 3 uses
   %i.ahr = getelementptr inbounds nuw i8, ptr %1, i64 118992
   %i.ahs = icmp ne i64 %i.ak, 0
-  %29 = icmp ult ptr %1, inttoptr (i64 -118992 to ptr)
   %i.aht = and i1 %i.ahs, %29
   %i.ahu = and i1 %i.e, %i.aht
   br i1 %i.ahu, label %bb.ix, label %bb.iw, !prof !13, !nosanitize !14
@@ -1086,7 +1097,6 @@ bb.iw:                                            ; preds = %bb.iv
 bb.ix:                                            ; preds = %bb.iv, %bb.iw
   %i.ahv = load i64, ptr %i.ahr, align 8, !tbaa !16
   %i.ahw = getelementptr inbounds nuw i8, ptr %i.a, i64 118992
-  %.not1272 = icmp ugt ptr %i.a, inttoptr (i64 -118993 to ptr)
   br i1 %.not1272, label %bb.iy, label %bb.iz, !prof !17, !nosanitize !14
 
 bb.iy:                                            ; preds = %bb.ix
@@ -1101,7 +1111,6 @@ bb.iz:                                            ; preds = %bb.ix, %bb.iy
   %i.aib = xor i64 %i.aia, %i.ahz                 ; 3 uses
   %i.aic = getelementptr inbounds nuw i8, ptr %1, i64 119000
   %i.aid = icmp ne i64 %i.am, 0
-  %30 = icmp ult ptr %1, inttoptr (i64 -119000 to ptr)
   %i.aie = and i1 %i.aid, %30
   %i.aif = and i1 %i.e, %i.aie
   br i1 %i.aif, label %bb.jb, label %bb.ja, !prof !13, !nosanitize !14
@@ -1113,7 +1122,6 @@ bb.ja:                                            ; preds = %bb.iz
 bb.jb:                                            ; preds = %bb.iz, %bb.ja
   %i.aig = load i64, ptr %i.aic, align 8, !tbaa !16
   %i.aih = getelementptr inbounds nuw i8, ptr %i.a, i64 119000
-  %.not1273 = icmp ugt ptr %i.a, inttoptr (i64 -119001 to ptr)
   br i1 %.not1273, label %bb.jc, label %bb.jd, !prof !17, !nosanitize !14
 
 bb.jc:                                            ; preds = %bb.jb
@@ -1128,7 +1136,6 @@ bb.jd:                                            ; preds = %bb.jb, %bb.jc
   %i.aim = xor i64 %i.ail, %i.aik                 ; 3 uses
   %i.ain = getelementptr inbounds nuw i8, ptr %1, i64 119008
   %i.aio = icmp ne i64 %i.ao, 0
-  %31 = icmp ult ptr %1, inttoptr (i64 -119008 to ptr)
   %i.aip = and i1 %i.aio, %31
   %i.aiq = and i1 %i.e, %i.aip
   br i1 %i.aiq, label %bb.jf, label %bb.je, !prof !13, !nosanitize !14
@@ -1140,7 +1147,6 @@ bb.je:                                            ; preds = %bb.jd
 bb.jf:                                            ; preds = %bb.jd, %bb.je
   %i.air = load i64, ptr %i.ain, align 8, !tbaa !16
   %i.ais = getelementptr inbounds nuw i8, ptr %i.a, i64 119008
-  %.not1274 = icmp ugt ptr %i.a, inttoptr (i64 -119009 to ptr)
   br i1 %.not1274, label %bb.jg, label %bb.jh, !prof !17, !nosanitize !14
 
 bb.jg:                                            ; preds = %bb.jf
@@ -1155,7 +1161,6 @@ bb.jh:                                            ; preds = %bb.jf, %bb.jg
   %i.aix = xor i64 %i.aiw, %i.aiv                 ; 3 uses
   %i.aiy = getelementptr inbounds nuw i8, ptr %1, i64 119016
   %i.aiz = icmp ne i64 %i.aq, 0
-  %32 = icmp ult ptr %1, inttoptr (i64 -119016 to ptr)
   %i.aja = and i1 %i.aiz, %32
   %i.ajb = and i1 %i.e, %i.aja
   br i1 %i.ajb, label %bb.jj, label %bb.ji, !prof !13, !nosanitize !14
@@ -1167,7 +1172,6 @@ bb.ji:                                            ; preds = %bb.jh
 bb.jj:                                            ; preds = %bb.jh, %bb.ji
   %i.ajc = load i64, ptr %i.aiy, align 8, !tbaa !16
   %i.ajd = getelementptr inbounds nuw i8, ptr %i.a, i64 119016
-  %.not1275 = icmp ugt ptr %i.a, inttoptr (i64 -119017 to ptr)
   br i1 %.not1275, label %bb.jk, label %bb.jl, !prof !17, !nosanitize !14
 
 bb.jk:                                            ; preds = %bb.jj
@@ -1182,7 +1186,6 @@ bb.jl:                                            ; preds = %bb.jj, %bb.jk
   %i.aji = xor i64 %i.ajh, %i.ajg                 ; 3 uses
   %i.ajj = getelementptr inbounds nuw i8, ptr %1, i64 119024
   %i.ajk = icmp ne i64 %i.as, 0
-  %33 = icmp ult ptr %1, inttoptr (i64 -119024 to ptr)
   %i.ajl = and i1 %i.ajk, %33
   %i.ajm = and i1 %i.e, %i.ajl
   br i1 %i.ajm, label %bb.jn, label %bb.jm, !prof !13, !nosanitize !14
@@ -1194,7 +1197,6 @@ bb.jm:                                            ; preds = %bb.jl
 bb.jn:                                            ; preds = %bb.jl, %bb.jm
   %i.ajn = load i64, ptr %i.ajj, align 8, !tbaa !16
   %i.ajo = getelementptr inbounds nuw i8, ptr %i.a, i64 119024
-  %.not1276 = icmp ugt ptr %i.a, inttoptr (i64 -119025 to ptr)
   br i1 %.not1276, label %bb.jo, label %bb.jp, !prof !17, !nosanitize !14
 
 bb.jo:                                            ; preds = %bb.jn
@@ -1209,7 +1211,6 @@ bb.jp:                                            ; preds = %bb.jn, %bb.jo
   %i.ajt = xor i64 %i.ajs, %i.ajr                 ; 3 uses
   %i.aju = getelementptr inbounds nuw i8, ptr %1, i64 119032
   %i.ajv = icmp ne i64 %i.au, 0
-  %34 = icmp ult ptr %1, inttoptr (i64 -119032 to ptr)
   %i.ajw = and i1 %i.ajv, %34
   %i.ajx = and i1 %i.e, %i.ajw
   br i1 %i.ajx, label %bb.jr, label %bb.jq, !prof !13, !nosanitize !14
@@ -1221,7 +1222,6 @@ bb.jq:                                            ; preds = %bb.jp
 bb.jr:                                            ; preds = %bb.jp, %bb.jq
   %i.ajy = load i64, ptr %i.aju, align 8, !tbaa !16
   %i.ajz = getelementptr inbounds nuw i8, ptr %i.a, i64 119032
-  %.not1277 = icmp ugt ptr %i.a, inttoptr (i64 -119033 to ptr)
   br i1 %.not1277, label %bb.js, label %bb.jt, !prof !17, !nosanitize !14
 
 bb.js:                                            ; preds = %bb.jr

@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %.lr.ph
   %i.fx = icmp sgt i32 %.0129, 1
   br i1 %i.fx, label %.lr.ph, label %.critedge, !llvm.loop !1385
 
-.critedge:                                        ; preds = %.lr.ph, %bb.ae, %_ZNK8QPointerI20QCPAbstractPlottableEptEv.exit78
+.critedge:                                        ; preds = %bb.ae, %.lr.ph, %_ZNK8QPointerI20QCPAbstractPlottableEptEv.exit78
   %.051.lcssa = phi i32 [ %i.fb, %_ZNK8QPointerI20QCPAbstractPlottableEptEv.exit78 ], [ %spec.select, %bb.ae ], [ %.051128, %.lr.ph ]
   %i.fy = icmp sgt i32 %i.fq, -1
   %i.fz = icmp slt i32 %i.fq, %i.el
