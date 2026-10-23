@@ -202,15 +202,14 @@ bb.cg:                                            ; preds = %bb.cf
   %i.ln = load i32, ptr @hf_stun_att_change_port, align 4
   %i.lo = call ptr @proto_tree_add_item_ret_boolean(ptr noundef %.0825, i32 noundef %i.ln, ptr noundef %0, i32 noundef %.pre-phi, i32 noundef 4, i32 noundef 0, ptr noundef nonnull %i.f) ; 0 uses
   %i.lp = load i8, ptr %i.e, align 1, !range !8, !noundef !9
-  %i.lq = trunc nuw i8 %i.lp to i1                ; 3 uses
+  %i.lq = trunc nuw i8 %i.lp to i1                ; 2 uses
   %i.lr = load i8, ptr %i.f, align 1, !range !8
   %i.ls = trunc nuw i8 %i.lr to i1                ; 2 uses
   %brmerge1030 = select i1 %i.lq, i1 true, i1 %i.ls
   br i1 %brmerge1030, label %.sink.split, label %bb.ch
 
 .sink.split:                                      ; preds = %bb.cg
-  %or.cond12 = select i1 %i.lq, i1 %i.ls, i1 false
-  %.str.284.mux = select i1 %or.cond12, ptr @.str.284, ptr @.str.285
+  %.str.284.mux = select i1 %i.ls, ptr @.str.284, ptr @.str.285
   %.str.284.mux.mux = select i1 %i.lq, ptr %.str.284.mux, ptr @.str.286
   %i.lt = load ptr, ptr %i.bt, align 8
   call void @col_append_str(ptr noundef %i.lt, i32 noundef 25, ptr noundef %.str.284.mux.mux)

@@ -204,7 +204,7 @@ bb.ih:                                            ; preds = %bb.ig
   br i1 %i.axv, label %bb.ii, label %bb.im
 
 bb.ii:                                            ; preds = %bb.ih
-  %i.aym = call noundef ptr @_ZN5clang4Expr12IgnoreParensEv(ptr noundef nonnull align 8 dereferenceable(16) %i.axi) #24 ; 6 uses
+  %i.aym = call noundef ptr @_ZN5clang4Expr12IgnoreParensEv(ptr noundef nonnull align 8 dereferenceable(16) %i.axi) #24 ; 5 uses
   %i.ayn = load i16, ptr %i.aym, align 8
   %i.ayo = and i16 %i.ayn, 511
   %i.ayp = add nsw i16 %i.ayo, -119
@@ -228,12 +228,10 @@ bb.ik:                                            ; preds = %bb.ij
 bb.il:                                            ; preds = %bb.ik
   %i.ayv = load i16, ptr %i.aym, align 8
   %i.ayw = and i16 %i.ayv, 511
-  %.not.i.i.i.i.i947 = icmp eq i16 %i.ayw, 118    ; 2 uses
-  %spec.select.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i947, ptr %i.aym, ptr null
-  %68 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i, i64 48
-  %i.ayx = getelementptr inbounds nuw i8, ptr %i.aym, i64 40
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i.i.i947, ptr %68, ptr %i.ayx
-  %i.ayy = load ptr, ptr %spec.select.i.i.i.i.i, align 8, !tbaa !1274
+  %.not.i.i.i.i.i947 = icmp eq i16 %i.ayw, 118
+  %spec.select.v.i.i.i.i.i = select i1 %.not.i.i.i.i.i947, i64 48, i64 40
+  %i.ayx = getelementptr inbounds nuw i8, ptr %i.aym, i64 %spec.select.v.i.i.i.i.i
+  %i.ayy = load ptr, ptr %i.ayx, align 8, !tbaa !1274
   %i.ayz = call noundef ptr @_ZN5clang4Expr14IgnoreImpCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ayy) #24
   br label %bb.im
 

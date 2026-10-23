@@ -205,12 +205,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !388, !nonnull !135, !align !200
   %i.c = load i16, ptr %0, align 8
   %i.d = and i16 %i.c, 511
-  %.not.i.i.i.i = icmp eq i16 %i.d, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %0, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %3, ptr %i.e
-  %i.f = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !391
+  %.not.i.i.i.i = icmp eq i16 %i.d, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !391
   %i.g = tail call noundef ptr @_ZNK5clang8dataflow11Environment18getStorageLocationERKNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(228) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.f) #21 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.d, label %bb.b
@@ -613,13 +611,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = load i16, ptr %1, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i.i = icmp eq i16 %i.f, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %5, ptr %i.g
+  %.not.i.i.i.i = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
   %i.h = zext i32 %i.b to i64
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.h
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !391  ; 2 uses
   %i.k = tail call noundef zeroext i1 @_ZNK5clang12ast_matchers8internal14ASTMatchFinder32isTraversalIgnoringImplicitNodesEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #21
   br i1 %i.k, label %bb.c, label %bb.d

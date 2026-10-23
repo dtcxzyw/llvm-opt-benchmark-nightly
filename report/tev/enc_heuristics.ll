@@ -205,10 +205,9 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   %predphi55 = select <4 x i1> %i.cv, <4 x float> %i.cl, <4 x float> %predphi ; 2 uses
   %predphi56 = select <4 x i1> %i.cv, <4 x float> %predphi, <4 x float> %i.cl
   %predphi57 = select <4 x i1> %i.ct, <4 x float> %predphi56, <4 x float> %predphi54 ; 2 uses
-  %i.cw = fcmp olt <4 x float> %i.cn, %predphi57  ; 2 uses
+  %i.cw = fcmp olt <4 x float> %i.cn, %predphi57
   %i.cx = fcmp olt <4 x float> %i.cn, %predphi55
-  %1 = select <4 x i1> %i.cw, <4 x i1> %i.cx, <4 x i1> zeroinitializer
-  %predphi58 = select <4 x i1> %1, <4 x float> %predphi55, <4 x float> %i.cn
+  %predphi58 = select <4 x i1> %i.cx, <4 x float> %predphi55, <4 x float> %i.cn
   %predphi59 = select <4 x i1> %i.cw, <4 x float> %predphi58, <4 x float> %predphi57
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.ax
   store <4 x float> %predphi59, ptr %i.cy, align 4, !tbaa !112, !alias.scope !722, !noalias !723

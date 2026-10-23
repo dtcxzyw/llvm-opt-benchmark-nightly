@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.pre-phi = phi i16 [ %.pre35, %bb.b ], [ %i.b, %bb.a ]
-  %.019 = phi ptr [ %i.d, %bb.b ], [ %1, %bb.a ]  ; 3 uses
+  %.019 = phi ptr [ %i.d, %bb.b ], [ %1, %bb.a ]  ; 2 uses
   %i.e = add nsw i16 %.pre-phi, -119
   %spec.select.i.i.i.i.i.i.i.i = icmp ult i16 %i.e, -2
   br i1 %spec.select.i.i.i.i.i.i.i.i, label %bb.j, label %bb.d
@@ -218,12 +218,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.h = and i32 %i.f, 511
-  %.not.i.i.i.i = icmp eq i32 %i.h, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.019, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.i = getelementptr inbounds nuw i8, ptr %.019, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %6, ptr %i.i
-  %i.j = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !1193 ; 2 uses
+  %.not.i.i.i.i = icmp eq i32 %i.h, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.i = getelementptr inbounds nuw i8, ptr %.019, i64 %spec.select.v.i.i.i.i
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !1193 ; 2 uses
   %i.k = load i16, ptr %i.j, align 8
   %i.l = and i16 %i.k, 511
   %.not34 = icmp eq i16 %i.l, 50
@@ -626,7 +624,6 @@ bb.a:
   br i1 %i.c, label %.preheader.a, label %.split.loop.exit11
 
 .preheader.a:                                     ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %.not15 = icmp eq i32 %i.b, 0
   br i1 %.not15, label %.split.loop.exit11, label %.lr.ph
 
@@ -634,10 +631,9 @@ bb.a:
   %i.d = zext i32 %i.b to i64
   %i.e = load i16, ptr %1, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i.i = icmp eq i16 %i.f, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %i.g = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.g, ptr %4
+  %.not.i.i.i.i = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
@@ -647,7 +643,7 @@ bb.b:                                             ; preds = %bb.c
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv16 = phi i64 [ %i.d, %.lr.ph ], [ %i.h, %bb.b ] ; 2 uses
   %i.h = add nsw i64 %indvars.iv16, -1            ; 3 uses
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.h
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !1193
   %i.k = load i16, ptr %i.j, align 8
   %i.l = and i16 %i.k, 511
@@ -1050,7 +1046,6 @@ bb.a:
   br i1 %i.c, label %.preheader.a, label %.split.loop.exit11
 
 .preheader.a:                                     ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %.not15 = icmp eq i32 %i.b, 0
   br i1 %.not15, label %.split.loop.exit11, label %.lr.ph
 
@@ -1058,10 +1053,9 @@ bb.a:
   %i.d = zext i32 %i.b to i64
   %i.e = load i16, ptr %1, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i.i = icmp eq i16 %i.f, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %i.g = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.g, ptr %4
+  %.not.i.i.i.i = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
@@ -1071,7 +1065,7 @@ bb.b:                                             ; preds = %bb.c
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv16 = phi i64 [ %i.d, %.lr.ph ], [ %i.h, %bb.b ] ; 2 uses
   %i.h = add nsw i64 %indvars.iv16, -1            ; 3 uses
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.h
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !1193
   %i.k = load i16, ptr %i.j, align 8
   %i.l = and i16 %i.k, 511
@@ -1474,7 +1468,6 @@ _ZN5clang12ast_matchers8internal7MatcherINS_13CXXMethodDeclEED2Ev.exit29: ; pred
   %i.df = getelementptr inbounds nuw i8, ptr %26, i64 12
   %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %31 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.di = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.dj = getelementptr inbounds nuw i8, ptr %27, i64 16 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %27, i64 8 ; 2 uses
@@ -1528,11 +1521,10 @@ bb.y:                                             ; preds = %bb.x
 _ZN5clang12ast_matchers8internal21BoundNodesTreeBuilderC2ERKS2_.exit: ; preds = %bb.x, %bb.y
   %i.ei = load i16, ptr %1, align 8
   %i.ej = and i16 %i.ei, 511
-  %.not.i.i.i.i30 = icmp eq i16 %i.ej, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i30, ptr %1, ptr null
-  %i.ek = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i30, ptr %i.ek, ptr %31
-  %i.el = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %indvars.iv
+  %.not.i.i.i.i30 = icmp eq i16 %i.ej, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i30, i64 48, i64 40
+  %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %indvars.iv
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !1193
   %i.en = call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.em) #20 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19
@@ -1935,16 +1927,14 @@ bb.a:
   %5 = alloca %"class.clang::ast_matchers::internal::BoundNodesTreeBuilder", align 8 ; 11 uses
   %i.a = load i16, ptr %1, align 8
   %i.b = and i16 %i.a, 511
-  %.not.i.i.i.i = icmp eq i16 %i.b, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %6, ptr %i.c ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.b, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !1907 ; 2 uses
   %i.f = zext i32 %i.e to i64
   %.idx = shl nuw nsw i64 %i.f, 3
-  %i.g = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 %.idx
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx
   %.not26 = icmp eq i32 %i.e, 0
   br i1 %.not26, label %.thread, label %.lr.ph
 
@@ -1963,7 +1953,7 @@ bb.b:                                             ; preds = %bb.j
   br i1 %.not, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.018.027 = phi ptr [ %spec.select.i.i.i.i, %.lr.ph ], [ %i.n, %bb.b ] ; 2 uses
+  %.sroa.018.027 = phi ptr [ %i.c, %.lr.ph ], [ %i.n, %bb.b ] ; 2 uses
   %i.o = load ptr, ptr %.sroa.018.027, align 8, !tbaa !937 ; 3 uses
   %i.p = call noundef zeroext i1 @_ZNK5clang12ast_matchers8internal14ASTMatchFinder32isTraversalIgnoringImplicitNodesEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #19
   br i1 %i.p, label %bb.d, label %bb.e
@@ -2366,13 +2356,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = load i16, ptr %1, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i.i = icmp eq i16 %i.f, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %5, ptr %i.g
+  %.not.i.i.i.i = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
   %i.h = zext i32 %i.b to i64
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.h
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !1193 ; 2 uses
   %i.k = tail call noundef zeroext i1 @_ZNK5clang12ast_matchers8internal14ASTMatchFinder32isTraversalIgnoringImplicitNodesEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #19
   br i1 %i.k, label %bb.c, label %bb.d

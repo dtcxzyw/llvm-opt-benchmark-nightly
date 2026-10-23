@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK5clang12DynTypedNode3getINS_16CXXConstructExprEEEPKT_v.exit.i.i.i: ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !12, !noalias !973 ; 6 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !12, !noalias !973 ; 5 uses
   %.not.i.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i.i, label %.thread20.i.i.i, label %bb.c
 
@@ -237,12 +237,10 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.ab = load i16, ptr %i.n, align 8, !noalias !973
   %i.ac = and i16 %i.ab, 511
-  %.not.i.i.i.i.i.i.i.i = icmp eq i16 %i.ac, 118  ; 2 uses
-  %spec.select.i.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i, ptr %i.n, ptr null
-  %10 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i.i.i.i, i64 48
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.n, i64 40
-  %spec.select.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i, ptr %10, ptr %i.ad ; 2 uses
-  %i.ae = load ptr, ptr %spec.select.i.i.i.i.i.i.i.i, align 8, !tbaa !480, !noalias !973
+  %.not.i.i.i.i.i.i.i.i = icmp eq i16 %i.ac, 118
+  %spec.select.v.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i, i64 48, i64 40
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.n, i64 %spec.select.v.i.i.i.i.i.i.i.i ; 2 uses
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !480, !noalias !973
   %i.af = call i32 @_ZNK5clang4Stmt11getBeginLocEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ae) #19, !noalias !973
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !62, !noalias !973
@@ -262,7 +260,7 @@ bb.g:                                             ; preds = %bb.h, %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ap = and i64 %indvars.iv.next.i.i.i.i.i, 2147483647
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i.i.i.i.i, i64 %i.ap
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.ap
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !480, !noalias !973 ; 2 uses
   %i.as = load i16, ptr %i.ar, align 8, !noalias !973
   %i.at = and i16 %i.as, 511

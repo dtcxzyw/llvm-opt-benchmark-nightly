@@ -202,11 +202,9 @@ bb.fr:                                            ; preds = %bb.fh, %bb.ak, %bb.
 
 bb.fs:                                            ; preds = %bb.fn
   %i.qw = load i64, ptr %.sroa.09.1.i.i, align 8, !range !16, !alias.scope !3903, !noundef !6
-  %i.qx = icmp eq i64 %i.qw, -9223372036854775807 ; 2 uses
-  %.sroa.3.0.idx.i.i = select i1 %i.qx, i64 8, i64 0
-  %.sroa.3.0.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.1.i.i, i64 %.sroa.3.0.idx.i.i
+  %i.qx = icmp eq i64 %i.qw, -9223372036854775807
   store i8 1, ptr %i.qm, align 8, !noalias !3862
-  %spec.select.i = select i1 %i.qx, ptr null, ptr %.sroa.3.0.i.i
+  %spec.select.i = select i1 %i.qx, ptr null, ptr %.sroa.09.1.i.i
   store i8 1, ptr %i.ai, align 8
   %i.qy = insertvalue { i64, ptr } { i64 0, ptr poison }, ptr %spec.select.i, 1
   br label %common.ret

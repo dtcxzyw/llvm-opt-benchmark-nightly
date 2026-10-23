@@ -205,17 +205,18 @@ vector.body225:                                   ; preds = %.lr.ph52.i, %vector
   %i.br = getelementptr [8 x i8], ptr %i.c, i64 %i.bq ; 2 uses
   %i.bs = getelementptr i8, ptr %i.br, i64 -16    ; 2 uses
   %i.bt = getelementptr i8, ptr %i.br, i64 -32    ; 2 uses
-  %wide.load228 = load <2 x i64>, ptr %i.bs, align 8, !tbaa !21 ; 3 uses
-  %wide.load229 = load <2 x i64>, ptr %i.bt, align 8, !tbaa !21 ; 3 uses
+  %wide.load228 = load <2 x i64>, ptr %i.bs, align 8, !tbaa !21 ; 2 uses
+  %wide.load229 = load <2 x i64>, ptr %i.bt, align 8, !tbaa !21 ; 2 uses
   %i.bu = shl <2 x i64> %wide.load228, splat (i64 63)
-  %7 = shufflevector <2 x i64> %i.bu, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %7 = shufflevector <2 x i64> %i.bu, <2 x i64> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.bv = shl <2 x i64> %wide.load229, splat (i64 63) ; 2 uses
-  %i.bw = shufflevector <2 x i64> %i.bv, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %i.bw = shufflevector <2 x i64> %i.bv, <2 x i64> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.bx = lshr <2 x i64> %wide.load228, splat (i64 1)
   %i.by = shufflevector <2 x i64> %7, <2 x i64> %vector.recur227, <2 x i32> <i32 0, i32 3>
   %reverse232 = or disjoint <2 x i64> %i.bx, %i.by
-  %8 = shufflevector <2 x i64> %wide.load228, <2 x i64> %wide.load229, <2 x i32> <i32 3, i32 0>
-  %reverse233 = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %8, <2 x i64> %wide.load229, <2 x i64> splat (i64 63))
+  %8 = lshr <2 x i64> %wide.load229, splat (i64 1)
+  %9 = shufflevector <2 x i64> %i.bw, <2 x i64> %7, <2 x i32> <i32 0, i32 3>
+  %reverse233 = or disjoint <2 x i64> %8, %9
   store <2 x i64> %reverse232, ptr %i.bs, align 8, !tbaa !21
   store <2 x i64> %reverse233, ptr %i.bt, align 8, !tbaa !21
   %index.next234 = add nuw i64 %index226, 4       ; 2 uses
@@ -538,17 +539,18 @@ vector.body:                                      ; preds = %.lr.ph52.i.i.prehea
   %i.if = getelementptr [8 x i8], ptr %i.c, i64 %i.ie ; 2 uses
   %i.ig = getelementptr i8, ptr %i.if, i64 -16    ; 2 uses
   %i.ih = getelementptr i8, ptr %i.if, i64 -32    ; 2 uses
-  %wide.load = load <2 x i64>, ptr %i.ig, align 8, !tbaa !21 ; 3 uses
-  %wide.load217 = load <2 x i64>, ptr %i.ih, align 8, !tbaa !21 ; 3 uses
+  %wide.load = load <2 x i64>, ptr %i.ig, align 8, !tbaa !21 ; 2 uses
+  %wide.load217 = load <2 x i64>, ptr %i.ih, align 8, !tbaa !21 ; 2 uses
   %i.ii = shl <2 x i64> %wide.load, splat (i64 63)
-  %9 = shufflevector <2 x i64> %i.ii, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %10 = shufflevector <2 x i64> %i.ii, <2 x i64> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.ij = shl <2 x i64> %wide.load217, splat (i64 63) ; 2 uses
-  %i.ik = shufflevector <2 x i64> %i.ij, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %i.ik = shufflevector <2 x i64> %i.ij, <2 x i64> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.il = lshr <2 x i64> %wide.load, splat (i64 1)
-  %i.im = shufflevector <2 x i64> %9, <2 x i64> %vector.recur, <2 x i32> <i32 0, i32 3>
+  %i.im = shufflevector <2 x i64> %10, <2 x i64> %vector.recur, <2 x i32> <i32 0, i32 3>
   %reverse219 = or disjoint <2 x i64> %i.il, %i.im
-  %10 = shufflevector <2 x i64> %wide.load, <2 x i64> %wide.load217, <2 x i32> <i32 3, i32 0>
-  %reverse220 = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %10, <2 x i64> %wide.load217, <2 x i64> splat (i64 63))
+  %11 = lshr <2 x i64> %wide.load217, splat (i64 1)
+  %12 = shufflevector <2 x i64> %i.ik, <2 x i64> %10, <2 x i32> <i32 0, i32 3>
+  %reverse220 = or disjoint <2 x i64> %11, %12
   store <2 x i64> %reverse219, ptr %i.ig, align 8, !tbaa !21
   store <2 x i64> %reverse220, ptr %i.ih, align 8, !tbaa !21
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -623,9 +625,6 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i64> @llvm.fshl.v2i64(<2 x i64>, <2 x i64>, <2 x i64>) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
