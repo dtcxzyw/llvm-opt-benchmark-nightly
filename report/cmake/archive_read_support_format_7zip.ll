@@ -205,7 +205,7 @@ define internal fastcc i32 @setup_decode_folder(ptr noundef %0, ptr nofree nound
 bb.a:
   %i.a = alloca ptr, align 8                      ; 9 uses
   %i.b = alloca [3 x ptr], align 16               ; 10 uses
-  %i.c = alloca [3 x i64], align 16               ; 13 uses
+  %i.c = alloca [3 x i64], align 16               ; 12 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2072 ; 7 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !58
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !60   ; 27 uses
@@ -593,11 +593,7 @@ bb.ak:                                            ; preds = %bb.ai
 .preheader197:                                    ; preds = %bb.ak
   %i.ew = load i64, ptr %i.dg, align 8, !tbaa !134
   %.not176208 = icmp eq i64 %i.ew, 0
-  br i1 %.not176208, label %._crit_edge210, label %.lr.ph209
-
-.lr.ph209:                                        ; preds = %.preheader197
-  %.promoted = load i64, ptr %i.c, align 16
-  br label %bb.am
+  br i1 %.not176208, label %._crit_edge210, label %bb.am
 
 bb.al:                                            ; preds = %bb.bj, %bb.ax, %bb.ak
   %i.ex = phi ptr [ %i.he, %bb.bj ], [ null, %bb.ax ], [ null, %bb.ak ]
@@ -606,23 +602,22 @@ bb.al:                                            ; preds = %bb.bj, %bb.ax, %bb.
   tail call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 12, ptr noundef nonnull @.str.23) #18
   br label %.thread188
 
-bb.am:                                            ; preds = %.lr.ph209, %read_consume.exit
-  %3 = phi i64 [ %.promoted, %.lr.ph209 ], [ %i.fm, %read_consume.exit ] ; 2 uses
-  %i.ey = phi i64 [ 0, %.lr.ph209 ], [ %i.fm, %read_consume.exit ] ; 2 uses
+bb.am:                                            ; preds = %.preheader197, %read_consume.exit
+  %i.ey = phi i64 [ %i.fm, %read_consume.exit ], [ 0, %.preheader197 ] ; 4 uses
   %i.ez = tail call fastcc i64 @extract_pack_stream(ptr noundef nonnull %0, i64 noundef 0) ; 2 uses
   %i.fa = icmp slt i64 %i.ez, 0
   br i1 %i.fa, label %.loopexit221.loopexit264, label %bb.an
 
 .loopexit221.loopexit:                            ; preds = %bb.bk
-  store i64 %5, ptr %i.jn, align 16
+  store i64 %i.jo, ptr %i.jn, align 16
   br label %.loopexit221
 
 .loopexit221.loopexit262:                         ; preds = %bb.ay
-  store i64 %4, ptr %i.hi, align 8
+  store i64 %i.hj, ptr %i.hi, align 8
   br label %.loopexit221
 
 .loopexit221.loopexit264:                         ; preds = %bb.am
-  store i64 %3, ptr %i.c, align 16
+  store i64 %i.ey, ptr %i.c, align 16
   br label %.loopexit221
 
 .loopexit221:                                     ; preds = %.loopexit221.loopexit264, %.loopexit221.loopexit262, %.loopexit221.loopexit
@@ -642,15 +637,15 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.fg, label %.loopexit222.loopexit265, label %bb.ao
 
 .loopexit222.loopexit:                            ; preds = %bb.bl
-  store i64 %5, ptr %i.jn, align 16
+  store i64 %i.jo, ptr %i.jn, align 16
   br label %.loopexit222
 
 .loopexit222.loopexit263:                         ; preds = %bb.az
-  store i64 %4, ptr %i.hi, align 8
+  store i64 %i.hj, ptr %i.hi, align 8
   br label %.loopexit222
 
 .loopexit222.loopexit265:                         ; preds = %bb.an
-  store i64 %3, ptr %i.c, align 16
+  store i64 %i.ey, ptr %i.c, align 16
   br label %.loopexit222
 
 .loopexit222:                                     ; preds = %.loopexit222.loopexit265, %.loopexit222.loopexit263, %.loopexit222.loopexit
@@ -667,7 +662,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.fk = getelementptr inbounds nuw i8, ptr %i.eu, i64 %i.ey
   %i.fl = load ptr, ptr %i.a, align 8, !tbaa !102
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fk, ptr align 1 %i.fl, i64 %i.ff, i1 false)
-  %i.fm = add i64 %i.ey, %i.ff                    ; 3 uses
+  %i.fm = add i64 %i.ey, %i.ff                    ; 2 uses
   %i.fn = load i64, ptr %i.di, align 8, !tbaa !74
   %.not177 = icmp eq i64 %i.fn, 0
   br i1 %.not177, label %read_consume.exit, label %bb.ap
@@ -775,13 +770,11 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not176208.1, label %._crit_edge210.1, label %.lr.ph209.1
 
 .lr.ph209.1:                                      ; preds = %.preheader197.1
-  %i.hi = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
-  %.promoted285 = load i64, ptr %i.hi, align 8
+  %i.hi = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   br label %bb.ay
 
 bb.ay:                                            ; preds = %read_consume.exit.1, %.lr.ph209.1
-  %4 = phi i64 [ %i.hr, %read_consume.exit.1 ], [ %.promoted285, %.lr.ph209.1 ] ; 2 uses
-  %i.hj = phi i64 [ %i.hr, %read_consume.exit.1 ], [ 0, %.lr.ph209.1 ] ; 2 uses
+  %i.hj = phi i64 [ %i.hr, %read_consume.exit.1 ], [ 0, %.lr.ph209.1 ] ; 4 uses
   %i.hk = tail call fastcc i64 @extract_pack_stream(ptr noundef nonnull %0, i64 noundef 0) ; 2 uses
   %i.hl = icmp slt i64 %i.hk, 0
   br i1 %i.hl, label %.loopexit221.loopexit262, label %bb.az
@@ -796,7 +789,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.hp = getelementptr inbounds nuw i8, ptr %i.he, i64 %i.hj
   %i.hq = load ptr, ptr %i.a, align 8, !tbaa !102
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.hp, ptr align 1 %i.hq, i64 %i.hn, i1 false)
-  %i.hr = add i64 %i.hj, %i.hn                    ; 3 uses
+  %i.hr = add i64 %i.hj, %i.hn                    ; 2 uses
   %i.hs = load i64, ptr %i.di, align 8, !tbaa !74
   %.not177.1 = icmp eq i64 %i.hs, 0
   br i1 %.not177.1, label %read_consume.exit.1, label %bb.bb
@@ -904,13 +897,11 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %.not176208.2, label %._crit_edge210.2, label %.lr.ph209.2
 
 .lr.ph209.2:                                      ; preds = %.preheader197.2
-  %i.jn = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 4 uses
-  %.promoted289 = load i64, ptr %i.jn, align 16
+  %i.jn = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   br label %bb.bk
 
 bb.bk:                                            ; preds = %read_consume.exit.2, %.lr.ph209.2
-  %5 = phi i64 [ %i.jw, %read_consume.exit.2 ], [ %.promoted289, %.lr.ph209.2 ] ; 2 uses
-  %i.jo = phi i64 [ %i.jw, %read_consume.exit.2 ], [ 0, %.lr.ph209.2 ] ; 2 uses
+  %i.jo = phi i64 [ %i.jw, %read_consume.exit.2 ], [ 0, %.lr.ph209.2 ] ; 4 uses
   %i.jp = tail call fastcc i64 @extract_pack_stream(ptr noundef nonnull %0, i64 noundef 0) ; 2 uses
   %i.jq = icmp slt i64 %i.jp, 0
   br i1 %i.jq, label %.loopexit221.loopexit, label %bb.bl
@@ -925,7 +916,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jj, i64 %i.jo
   %i.jv = load ptr, ptr %i.a, align 8, !tbaa !102
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ju, ptr align 1 %i.jv, i64 %i.js, i1 false)
-  %i.jw = add i64 %i.jo, %i.js                    ; 3 uses
+  %i.jw = add i64 %i.jo, %i.js                    ; 2 uses
   %i.jx = load i64, ptr %i.di, align 8, !tbaa !74
   %.not177.2 = icmp eq i64 %i.jx, 0
   br i1 %.not177.2, label %read_consume.exit.2, label %bb.bn

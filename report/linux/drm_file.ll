@@ -204,13 +204,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.k
-  %i.j = phi i64 [ 0, %.lr.ph ], [ %11, %bb.k ]
-  %i.k = phi i64 [ 0, %.lr.ph ], [ %10, %bb.k ]
-  %i.l = phi i64 [ 0, %.lr.ph ], [ %4, %bb.k ]
-  %i.m = phi i64 [ 0, %.lr.ph ], [ %i.an, %bb.k ] ; 2 uses
+  %i.j = phi i64 [ 0, %.lr.ph ], [ %i.ar, %bb.k ]
+  %i.k = phi i64 [ 0, %.lr.ph ], [ %i.an, %bb.k ]
+  %i.l = phi i64 [ 0, %.lr.ph ], [ %15, %bb.k ]
+  %i.m = phi i64 [ 0, %.lr.ph ], [ %9, %bb.k ]
   %i.n = phi ptr [ %i.e, %.lr.ph ], [ %i.au, %bb.k ] ; 9 uses
   %.02743 = phi i32 [ 0, %.lr.ph ], [ %.229, %bb.k ] ; 3 uses
-  %i.o = phi i64 [ 0, %.lr.ph ], [ %i.ao, %bb.k ] ; 2 uses
+  %3 = phi i64 [ 0, %.lr.ph ], [ %12, %bb.k ]     ; 2 uses
+  %4 = phi i64 [ 0, %.lr.ph ], [ %11, %bb.k ]     ; 2 uses
+  %5 = phi i64 [ 0, %.lr.ph ], [ %16, %bb.k ]     ; 2 uses
+  %6 = phi i64 [ 0, %.lr.ph ], [ %spec.select53, %bb.k ] ; 2 uses
+  %7 = phi i64 [ 0, %.lr.ph ], [ %i.ao, %bb.k ]   ; 2 uses
+  %i.o = phi i64 [ 0, %.lr.ph ], [ %10, %bb.k ]
   %i.p = getelementptr i8, ptr %i.n, i64 336      ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8              ; 3 uses
   %.not35 = icmp eq ptr %i.q, null
@@ -266,33 +271,46 @@ drm_gem_object_is_shared_for_memory_stats.exit:   ; preds = %bb.i
 drm_gem_object_is_shared_for_memory_stats.exit.thread: ; preds = %bb.i, %drm_gem_object_is_shared_for_memory_stats.exit
   %i.ah = getelementptr i8, ptr %i.n, i64 216
   %i.ai = load i64, ptr %i.ah, align 8
-  %i.aj = add i64 %i.o, %i.ai
-  br label %bb.k
+  %i.aj = add i64 %i.ai, %3                       ; 2 uses
+  br label %8
 
 bb.j:                                             ; preds = %drm_gem_object_is_shared_for_memory_stats.exit
   %i.ak = getelementptr i8, ptr %i.n, i64 216
   %i.al = load i64, ptr %i.ak, align 8
-  %i.am = add i64 %i.m, %i.al
+  %i.am = add i64 %i.al, %4                       ; 2 uses
+  br label %8
+
+8:                                                ; preds = %bb.j, %drm_gem_object_is_shared_for_memory_stats.exit.thread
+  %9 = phi i64 [ %i.am, %bb.j ], [ %i.m, %drm_gem_object_is_shared_for_memory_stats.exit.thread ] ; 2 uses
+  %10 = phi i64 [ %i.o, %bb.j ], [ %i.aj, %drm_gem_object_is_shared_for_memory_stats.exit.thread ] ; 2 uses
+  %11 = phi i64 [ %i.am, %bb.j ], [ %4, %drm_gem_object_is_shared_for_memory_stats.exit.thread ]
+  %12 = phi i64 [ %3, %bb.j ], [ %i.aj, %drm_gem_object_is_shared_for_memory_stats.exit.thread ]
+  %13 = and i32 %.0, 1
+  %.not39 = icmp eq i32 %13, 0                    ; 3 uses
+  %14 = add i64 %i.x, %5                          ; 2 uses
+  %15 = select i1 %.not39, i64 %i.l, i64 %14      ; 2 uses
+  %16 = select i1 %.not39, i64 %5, i64 %14
+  %.1 = select i1 %.not39, i32 0, i32 %.0
+  %17 = getelementptr i8, ptr %i.n, i64 248
+  %18 = load ptr, ptr %17, align 8
+  %19 = call zeroext i1 @dma_resv_test_signaled(ptr noundef %18, i32 noundef 2) #13
+  br i1 %19, label %bb.k, label %20
+
+20:                                               ; preds = %8
+  %21 = add i64 %i.x, %7                          ; 2 uses
+  %22 = or i32 %.128, 4
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %drm_gem_object_is_shared_for_memory_stats.exit.thread
-  %i.an = phi i64 [ %i.am, %bb.j ], [ %i.m, %drm_gem_object_is_shared_for_memory_stats.exit.thread ] ; 2 uses
-  %i.ao = phi i64 [ %i.o, %bb.j ], [ %i.aj, %drm_gem_object_is_shared_for_memory_stats.exit.thread ] ; 2 uses
-  %.not39 = trunc i32 %.0 to i1
-  %3 = select i1 %.not39, i64 %i.x, i64 0
-  %4 = add i64 %i.l, %3                           ; 2 uses
-  %5 = getelementptr i8, ptr %i.n, i64 248
-  %6 = load ptr, ptr %5, align 8
-  %7 = call zeroext i1 @dma_resv_test_signaled(ptr noundef %6, i32 noundef 2) #13 ; 3 uses
-  %8 = or i32 %.128, 4
-  %9 = select i1 %7, i64 0, i64 %i.x
-  %10 = add i64 %i.k, %9                          ; 2 uses
-  %.229 = select i1 %7, i32 %.128, i32 %8         ; 2 uses
-  %i.ap = and i32 %.0, 3
-  %i.aq = icmp eq i32 %i.ap, 3
-  %.not40.not = select i1 %7, i1 %i.aq, i1 false
-  %i.ar = select i1 %.not40.not, i64 %i.x, i64 0
-  %11 = add i64 %i.j, %i.ar                       ; 2 uses
+bb.k:                                             ; preds = %20, %8
+  %i.an = phi i64 [ %i.k, %8 ], [ %21, %20 ]      ; 2 uses
+  %i.ao = phi i64 [ %7, %8 ], [ %21, %20 ]
+  %.229 = phi i32 [ %.128, %8 ], [ %22, %20 ]     ; 2 uses
+  %.2 = phi i32 [ %.1, %8 ], [ 0, %20 ]
+  %i.ap = and i32 %.2, 2
+  %i.aq = icmp eq i32 %i.ap, 0                    ; 2 uses
+  %23 = add i64 %i.x, %6                          ; 2 uses
+  %i.ar = select i1 %i.aq, i64 %i.j, i64 %23      ; 2 uses
+  %spec.select53 = select i1 %i.aq, i64 %6, i64 %23
   %i.as = load i32, ptr %i.a, align 4
   %i.at = add i32 %i.as, 1
   store i32 %i.at, ptr %i.a, align 4
@@ -301,14 +319,14 @@ bb.k:                                             ; preds = %bb.j, %drm_gem_obje
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !42
 
 ._crit_edge:                                      ; preds = %bb.k
-  store i64 %i.an, ptr %i.f, align 8
-  store i64 %4, ptr %i.g, align 8
-  store i64 %10, ptr %i.h, align 8
-  store i64 %11, ptr %i.i, align 8
+  store i64 %9, ptr %i.f, align 8
+  store i64 %15, ptr %i.g, align 8
+  store i64 %i.an, ptr %i.h, align 8
+  store i64 %i.ar, ptr %i.i, align 8
   br label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge, %bb.a
-  %.lcssa = phi i64 [ %i.ao, %._crit_edge ], [ 0, %bb.a ]
+  %.lcssa = phi i64 [ %10, %._crit_edge ], [ 0, %bb.a ]
   %.027.lcssa = phi i32 [ %.229, %._crit_edge ], [ 0, %bb.a ]
   store i64 %.lcssa, ptr %2, align 8
   call void @_raw_spin_unlock(ptr noundef %i.c) #13

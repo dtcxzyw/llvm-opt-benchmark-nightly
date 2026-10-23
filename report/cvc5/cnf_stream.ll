@@ -205,8 +205,8 @@ _ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_S_check_init_lenEmRKS4_
   store ptr %i.p, ptr %3, align 8, !tbaa !123
   %i.q = call i64 @_ZN4cvc58internal4prop9CnfStream10newLiteralENS0_12NodeTemplateILb0EEEbbb(ptr noundef nonnull align 8 dereferenceable(352) %0, ptr noundef nonnull align 8 %3, i1 noundef zeroext false, i1 noundef zeroext false, i1 noundef zeroext true) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
-  %i.r = add nuw nsw i64 %i.o, 1                  ; 7 uses
-  %i.s = shl nuw nsw i64 %i.r, 3                  ; 2 uses
+  %i.r = add nuw nsw i64 %i.o, 1                  ; 6 uses
+  %i.s = shl nuw nsw i64 %i.r, 3                  ; 3 uses
   %i.t = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #23 ; 9 uses
   store ptr %i.t, ptr %4, align 8, !tbaa !118
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.r
@@ -396,8 +396,7 @@ _ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EED2Ev.exit: ; preds = %._cr
 
 _ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EED2Ev.exit32: ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.k
   %.pn21.pn.pn = phi { ptr, i32 } [ %.pn21, %bb.k ], [ %lpad.loopexit.split-lp53, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %.idx = shl nuw nsw i64 %i.r, 3
-  call void @_ZdlPvm(ptr noundef nonnull %i.t, i64 noundef %.idx) #24
+  call void @_ZdlPvm(ptr noundef nonnull %i.t, i64 noundef %i.s) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   resume { ptr, i32 } %.pn21.pn.pn
 }

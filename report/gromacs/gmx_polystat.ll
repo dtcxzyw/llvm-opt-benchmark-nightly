@@ -205,44 +205,46 @@ bb.cm:                                            ; preds = %.noexc533
 
 .thread.i521:                                     ; preds = %.preheader.thread42.i531, %.preheader.thread.i529, %.thread41.i530
   %.sroa.13.2 = phi i32 [ %spec.select1235, %.preheader.thread42.i531 ], [ 0, %.thread41.i530 ], [ 0, %.preheader.thread.i529 ] ; 2 uses
-  %.sroa.0869.12 = phi i64 [ %.sroa.0869.10, %.preheader.thread42.i531 ], [ %spec.select1102, %.preheader.thread.i529 ], [ 2, %.thread41.i530 ] ; 2 uses
-  %.sroa.28.10 = phi i32 [ %spec.select1236, %.preheader.thread42.i531 ], [ 2, %.preheader.thread.i529 ], [ 2, %.thread41.i530 ] ; 3 uses
+  %.sroa.27.10 = phi i32 [ %spec.select1236, %.preheader.thread42.i531 ], [ 2, %.preheader.thread.i529 ], [ 2, %.thread41.i530 ] ; 3 uses
+  %21 = phi i64 [ %.sroa.0869.10, %.preheader.thread42.i531 ], [ %spec.select1102, %.preheader.thread.i529 ], [ 2, %.thread41.i530 ] ; 2 uses
   %i.afu = phi i32 [ %i.aft, %.preheader.thread42.i531 ], [ 1, %.preheader.thread.i529 ], [ 2, %.thread41.i530 ]
   %.not.1.i522 = icmp eq i32 %i.afu, 1
   br i1 %.not.1.i522, label %.thread39.i527, label %.thread37.i523
 
 .thread37.i523:                                   ; preds = %.thread.i521, %.preheader.i519
   %.sroa.13.3 = phi i32 [ %.sroa.13.2, %.thread.i521 ], [ %.sroa.13.1, %.preheader.i519 ]
-  %.sroa.0869.13 = phi i64 [ %.sroa.0869.12, %.thread.i521 ], [ %spec.select1102, %.preheader.i519 ]
-  %.sroa.28.11 = phi i32 [ %.sroa.28.10, %.thread.i521 ], [ %.sroa.28.8, %.preheader.i519 ] ; 3 uses
+  %.sroa.27.11 = phi i32 [ %.sroa.27.10, %.thread.i521 ], [ %.sroa.28.8, %.preheader.i519 ] ; 3 uses
+  %22 = phi i64 [ %21, %.thread.i521 ], [ %spec.select1102, %.preheader.i519 ]
   %i.afv = phi i32 [ 2, %.thread.i521 ], [ 0, %.preheader.i519 ]
-  %.not26.1.i524 = icmp eq i32 %.sroa.28.11, 1    ; 2 uses
+  %.not26.1.i524 = icmp eq i32 %.sroa.27.11, 1    ; 2 uses
   %spec.select1237 = select i1 %.not26.1.i524, i32 %.sroa.13.3, i32 1
-  %spec.select1238 = select i1 %.not26.1.i524, i32 1, i32 %.sroa.28.11
+  %spec.select1238 = select i1 %.not26.1.i524, i32 1, i32 %.sroa.27.11
   br label %.thread37.thread.i525
 
 .thread37.thread.i525:                            ; preds = %.thread37.i523, %.preheader.thread.i529
   %.sroa.13.4 = phi i32 [ %spec.select1237, %.thread37.i523 ], [ 1, %.preheader.thread.i529 ] ; 2 uses
-  %.sroa.0869.15 = phi i64 [ %.sroa.0869.13, %.thread37.i523 ], [ %spec.select1102, %.preheader.thread.i529 ] ; 2 uses
-  %.sroa.28.13 = phi i32 [ %.sroa.28.11, %.thread37.i523 ], [ 2, %.preheader.thread.i529 ] ; 2 uses
-  %21 = phi i32 [ %i.afv, %.thread37.i523 ], [ 0, %.preheader.thread.i529 ]
-  %i.afw = phi i32 [ %spec.select1238, %.thread37.i523 ], [ 2, %.preheader.thread.i529 ]
-  %.not.2.i526 = icmp eq i32 %21, 2
+  %.sroa.27.13 = phi i32 [ %.sroa.27.11, %.thread37.i523 ], [ 2, %.preheader.thread.i529 ] ; 2 uses
+  %.sroa.28.13 = phi i32 [ %spec.select1238, %.thread37.i523 ], [ 2, %.preheader.thread.i529 ] ; 2 uses
+  %23 = phi i64 [ %22, %.thread37.i523 ], [ %spec.select1102, %.preheader.thread.i529 ] ; 2 uses
+  %i.afw = phi i32 [ %i.afv, %.thread37.i523 ], [ 0, %.preheader.thread.i529 ]
+  %.not.2.i526 = icmp eq i32 %i.afw, 2
   br i1 %.not.2.i526, label %bb.cn, label %.thread39.i527
 
 .thread39.i527:                                   ; preds = %.thread37.thread.i525, %.thread.i521
   %.sroa.13.5 = phi i32 [ %.sroa.13.2, %.thread.i521 ], [ %.sroa.13.4, %.thread37.thread.i525 ]
-  %.sroa.0869.16 = phi i64 [ %.sroa.0869.12, %.thread.i521 ], [ %.sroa.0869.15, %.thread37.thread.i525 ]
-  %.sroa.28.14 = phi i32 [ %.sroa.28.10, %.thread.i521 ], [ %.sroa.28.13, %.thread37.thread.i525 ]
-  %22 = phi i32 [ %.sroa.28.10, %.thread.i521 ], [ %i.afw, %.thread37.thread.i525 ]
-  %.not26.2.i528 = icmp eq i32 %22, 2
-  %spec.select.a = select i1 %.not26.2.i528, i32 %.sroa.13.5, i32 2
+  %.sroa.27.14 = phi i32 [ %.sroa.27.10, %.thread.i521 ], [ %.sroa.27.13, %.thread37.thread.i525 ]
+  %.sroa.28.14 = phi i32 [ %.sroa.27.10, %.thread.i521 ], [ %.sroa.28.13, %.thread37.thread.i525 ] ; 2 uses
+  %24 = phi i64 [ %21, %.thread.i521 ], [ %23, %.thread37.thread.i525 ]
+  %.not26.2.i528 = icmp eq i32 %.sroa.28.14, 2    ; 2 uses
+  %spec.select = select i1 %.not26.2.i528, i32 %.sroa.13.5, i32 2
+  %spec.select.a = select i1 %.not26.2.i528, i32 2, i32 %.sroa.28.14
   br label %bb.cn
 
 bb.cn:                                            ; preds = %.thread39.i527, %.thread37.thread.i525
-  %.sroa.13.6 = phi i32 [ %spec.select.a, %.thread39.i527 ], [ %.sroa.13.4, %.thread37.thread.i525 ] ; 2 uses
-  %.sroa.0869.17 = phi i64 [ %.sroa.0869.16, %.thread39.i527 ], [ %.sroa.0869.15, %.thread37.thread.i525 ] ; 2 uses
-  %.sroa.28.15 = phi i32 [ %.sroa.28.14, %.thread39.i527 ], [ %.sroa.28.13, %.thread37.thread.i525 ]
+  %.sroa.13.6 = phi i32 [ %spec.select, %.thread39.i527 ], [ %.sroa.13.4, %.thread37.thread.i525 ] ; 2 uses
+  %.sroa.27.15 = phi i32 [ %.sroa.27.14, %.thread39.i527 ], [ %.sroa.27.13, %.thread37.thread.i525 ]
+  %.sroa.28.15 = phi i32 [ %spec.select.a, %.thread39.i527 ], [ %.sroa.28.13, %.thread37.thread.i525 ]
+  %25 = phi i64 [ %24, %.thread39.i527 ], [ %23, %.thread37.thread.i525 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   %i.afx = load float, ptr %i.k, align 4, !tbaa !93
   %i.afy = load ptr, ptr %i.f, align 8, !tbaa !82
@@ -254,14 +256,14 @@ bb.co:                                            ; preds = %bb.cn
   %i.agb = fpext float %i.aga to double
   %i.agc = call double @sqrt(double noundef %i.afd) #18
   %i.agd = call double @sqrt(double noundef %i.afc) #18
-  %i.age = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.0869.17
+  %i.age = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %25
   %i.agf = load double, ptr %i.age, align 8, !tbaa !91
   %i.agg = call double @sqrt(double noundef %i.agf) #18
   %i.agh = sext i32 %.sroa.13.6 to i64            ; 2 uses
   %i.agi = getelementptr inbounds [8 x i8], ptr %i.o, i64 %i.agh
   %i.agj = load double, ptr %i.agi, align 8, !tbaa !91
   %i.agk = call double @sqrt(double noundef %i.agj) #18
-  %i.agl = zext nneg i32 %.sroa.28.15 to i64      ; 2 uses
+  %i.agl = zext nneg i32 %.sroa.28.15 to i64
   %i.agm = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.agl
   %i.agn = load double, ptr %i.agm, align 8, !tbaa !91
   %i.ago = call double @sqrt(double noundef %i.agn) #18
@@ -296,7 +298,7 @@ bb.cp:                                            ; preds = %.loopexit649
   %i.ahe = fmul float %i.ahb, %i.ahd
   %i.ahf = fpext float %i.ahe to double
   %i.ahg = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %.0267, ptr noundef nonnull @.str.72, double noundef %i.ahf) #18 ; 0 uses
-  %i.ahh = getelementptr inbounds nuw [8 x i8], ptr %i.ou, i64 %.sroa.0869.17 ; 3 uses
+  %i.ahh = getelementptr inbounds nuw [8 x i8], ptr %i.ou, i64 %25 ; 3 uses
   %i.ahi = load ptr, ptr %i.ahh, align 8, !tbaa !87
   %i.ahj = load double, ptr %i.ahi, align 8, !tbaa !91
   %i.ahk = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %.0267, ptr noundef nonnull @.str.73, double noundef %i.ahj) #18 ; 0 uses
@@ -320,7 +322,8 @@ bb.cp:                                            ; preds = %.loopexit649
   %i.aic = getelementptr inbounds nuw i8, ptr %i.aib, i64 16
   %i.aid = load double, ptr %i.aic, align 8, !tbaa !91
   %i.aie = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %.0267, ptr noundef nonnull @.str.73, double noundef %i.aid) #18 ; 0 uses
-  %i.aif = getelementptr inbounds nuw [8 x i8], ptr %i.ou, i64 %i.agl ; 3 uses
+  %26 = zext nneg i32 %.sroa.27.15 to i64
+  %i.aif = getelementptr inbounds nuw [8 x i8], ptr %i.ou, i64 %26 ; 3 uses
   %i.aig = load ptr, ptr %i.aif, align 8, !tbaa !87
   %i.aih = load double, ptr %i.aig, align 8, !tbaa !91
   %i.aii = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %.0267, ptr noundef nonnull @.str.73, double noundef %i.aih) #18 ; 0 uses

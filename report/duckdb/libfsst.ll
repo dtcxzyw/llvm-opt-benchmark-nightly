@@ -205,7 +205,7 @@ define hidden noalias noundef nonnull ptr @duckdb_fsst_create(i64 noundef %0, pt
 bb.a:
   %4 = alloca %"class.duckdb::unique_ptr", align 8 ; 9 uses
   %5 = alloca %"class.std::vector", align 8       ; 8 uses
-  %6 = alloca %"class.std::vector", align 8       ; 9 uses
+  %6 = alloca %"class.std::vector", align 8       ; 8 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(32768) ptr @_Znam(i64 noundef 32768) #21 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr null, ptr %4, align 8, !tbaa !125
@@ -293,7 +293,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %.thread
   %i.y = phi ptr [ %i.t, %bb.h ], [ %i.t, %bb.i ], [ %i.t, %bb.j ], [ %i.o, %.thread ]
   %i.z = phi ptr [ %i.s, %bb.h ], [ %i.s, %bb.i ], [ %i.s, %bb.j ], [ %i.n, %.thread ]
-  %i.aa = phi ptr [ %i.r, %bb.h ], [ %i.r, %bb.i ], [ %i.r, %bb.j ], [ null, %.thread ] ; 2 uses
+  %i.aa = phi ptr [ %i.r, %bb.h ], [ %i.r, %bb.i ], [ %i.r, %bb.j ], [ null, %.thread ] ; 4 uses
   store ptr %i.y, ptr %i.z, align 8, !tbaa !30
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.ac = icmp ne i32 %3, 0
@@ -389,12 +389,11 @@ bb.w:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt12__shared_ptrIN7libfsst11SymbolTableELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 _ZNSt12__shared_ptrIN7libfsst11SymbolTableELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.w, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.s, %bb.q
-  %7 = load ptr, ptr %6, align 8, !tbaa !31       ; 2 uses
-  %.not.i.i.i23 = icmp eq ptr %7, null
+  %.not.i.i.i23 = icmp eq ptr %i.aa, null
   br i1 %.not.i.i.i23, label %_ZNSt6vectorIPKhSaIS1_EED2Ev.exit, label %bb.x
 
 bb.x:                                             ; preds = %_ZNSt12__shared_ptrIN7libfsst11SymbolTableELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  call void @_ZdlPv(ptr noundef nonnull %7) #23
+  call void @_ZdlPv(ptr noundef nonnull %i.aa) #23
   br label %_ZNSt6vectorIPKhSaIS1_EED2Ev.exit
 
 _ZNSt6vectorIPKhSaIS1_EED2Ev.exit:                ; preds = %_ZNSt12__shared_ptrIN7libfsst11SymbolTableELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.x

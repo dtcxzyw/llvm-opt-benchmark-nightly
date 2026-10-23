@@ -204,7 +204,7 @@ bb.a:
   %20 = alloca %"class.llvm::DiagnosticInfoPGOProfile", align 8 ; 8 uses
   %21 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %22 = alloca %"class.llvm::DenseMap.136", align 8 ; 7 uses
-  %23 = alloca %"class.llvm::DenseMap.136", align 8 ; 7 uses
+  %23 = alloca %"class.llvm::DenseMap.136", align 8 ; 8 uses
   %24 = alloca %"class.std::map", align 8         ; 9 uses
   %25 = alloca %"class.std::set", align 8         ; 9 uses
   %26 = alloca %"class.llvm::DenseSet", align 8   ; 6 uses
@@ -607,25 +607,28 @@ _ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fg, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #19
   call void @_ZN4llvm7memprof17computeUndriftMapERNS_6ModuleEPNS_22IndexedInstrProfReaderERKNS_17TargetLibraryInfoE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::DenseMap.136") align 8 %23, ptr noundef nonnull align 8 dereferenceable(1288) %2, ptr noundef nonnull %i.ab, ptr noundef nonnull align 8 dereferenceable(80) %i.fj)
-  %.phi.trans.insert210 = getelementptr inbounds nuw i8, ptr %23, i64 20
-  %.phi.trans.insert208 = getelementptr inbounds nuw i8, ptr %23, i64 16
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %29 = load ptr, ptr %23, align 8, !tbaa !275    ; 2 uses
+  store ptr %29, ptr %22, align 8, !tbaa !275
+  store ptr null, ptr %23, align 8, !tbaa !275
+  %.phi.trans.insert208 = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   %.pre207 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !142 ; 2 uses
-  %.pre206 = load ptr, ptr %23, align 8, !tbaa !275 ; 2 uses
-  store ptr %.pre206, ptr %22, align 8, !tbaa !275
-  %i.fk = getelementptr inbounds nuw i8, ptr %22, i64 8
-  store ptr %.pre207, ptr %i.fk, align 8, !tbaa !142
-  %i.fl = getelementptr inbounds nuw i8, ptr %22, i64 16
-  %.pre211 = load i32, ptr %.phi.trans.insert210, align 4, !tbaa !52
-  %i.fm = load <2 x i32>, ptr %.phi.trans.insert208, align 8, !tbaa !52
-  store <2 x i32> %i.fm, ptr %i.fl, align 8, !tbaa !52
+  store ptr %.pre207, ptr %.phi.trans.insert208, align 8, !tbaa !142
+  store ptr null, ptr %.phi.trans.insert, align 8, !tbaa !142
+  %i.fk = getelementptr inbounds nuw i8, ptr %22, i64 16
+  %30 = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
+  %i.fl = getelementptr inbounds nuw i8, ptr %23, i64 20
+  %.pre211 = load i32, ptr %i.fl, align 4, !tbaa !52
+  %i.fm = load <2 x i32>, ptr %30, align 8, !tbaa !52
+  store i32 0, ptr %30, align 8, !tbaa !52
+  store <2 x i32> %i.fm, ptr %i.fk, align 8, !tbaa !52
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #19
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEENS3_ImvEENS6_ImS8_EEEaSEOSB_.exit, %bb.p
-  %29 = phi ptr [ %.pre207, %_ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEENS3_ImvEENS6_ImS8_EEEaSEOSB_.exit ], [ null, %bb.p ]
-  %i.fn = phi ptr [ %.pre206, %_ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEENS3_ImvEENS6_ImS8_EEEaSEOSB_.exit ], [ null, %bb.p ] ; 2 uses
-  %30 = phi i32 [ %.pre211, %_ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEENS3_ImvEENS6_ImS8_EEEaSEOSB_.exit ], [ 0, %bb.p ] ; 2 uses
+  %31 = phi i32 [ %.pre211, %_ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEENS3_ImvEENS6_ImS8_EEEaSEOSB_.exit ], [ 0, %bb.p ] ; 2 uses
+  %i.fn = phi ptr [ %.pre207, %_ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEENS3_ImvEENS6_ImS8_EEEaSEOSB_.exit ], [ null, %bb.p ]
+  %32 = phi ptr [ %29, %_ZN4llvm8DenseMapImNS0_INS_7memprof12LineLocationES2_NS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S2_EEEENS3_ImvEENS6_ImS8_EEEaSEOSB_.exit ], [ null, %bb.p ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #19
   %i.fo = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 5 uses
   store i32 0, ptr %i.fo, align 8, !tbaa !280
@@ -1028,18 +1031,18 @@ _ZN4llvm6detail12DenseSetImplImNS_8DenseMapImNS0_13DenseSetEmptyENS_12DenseMapIn
   %i.od = load ptr, ptr %i.fp, align 8, !tbaa !281
   call void @_ZNSt8_Rb_treeImSt4pairIKm14AllocMatchInfoESt10_Select1stIS3_ESt4lessImESaIS3_EE8_M_eraseEPSt13_Rb_tree_nodeIS3_E(ptr noundef nonnull align 8 dereferenceable(48) %24, ptr noundef %i.od)
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #19
-  %i.oe = icmp eq i32 %30, 0
+  %i.oe = icmp eq i32 %31, 0
   br i1 %i.oe, label %bb.az, label %.lr.ph7.preheader.i.i110
 
 .lr.ph7.preheader.i.i110:                         ; preds = %_ZN4llvm6detail12DenseSetImplImNS_8DenseMapImNS0_13DenseSetEmptyENS_12DenseMapInfoImvEENS0_12DenseSetPairImEEEEED2Ev.exit109
-  %i.of = zext i32 %30 to i64                     ; 2 uses
+  %i.of = zext i32 %31 to i64                     ; 2 uses
   %i.og = add nuw nsw i64 %i.of, 31               ; 2 uses
   %i.oh = lshr i64 %i.og, 5
   br label %.lr.ph7.i.i111
 
 .lr.ph7.i.i111:                                   ; preds = %._crit_edge.i.i119, %.lr.ph7.preheader.i.i110
   %indvars.iv.i.i112 = phi i64 [ 0, %.lr.ph7.preheader.i.i110 ], [ %indvars.iv.next.i.i120, %._crit_edge.i.i119 ] ; 3 uses
-  %i.oi = getelementptr inbounds nuw [4 x i8], ptr %29, i64 %indvars.iv.i.i112
+  %i.oi = getelementptr inbounds nuw [4 x i8], ptr %i.fn, i64 %indvars.iv.i.i112
   %i.oj = load i32, ptr %i.oi, align 4, !tbaa !52 ; 2 uses
   %.not11.i2.i.i113 = icmp eq i32 %i.oj, 0
   br i1 %.not11.i2.i.i113, label %._crit_edge.i.i119, label %.lr.ph.i.i114
@@ -1054,7 +1057,7 @@ bb.ax:                                            ; preds = %_ZZN4llvm12DenseMap
   %i.ol = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0.i3.i.i116, i1 true)
   %i.om = or disjoint i32 %i.ol, %i.ok
   %i.on = zext i32 %i.om to i64
-  %i.oo = getelementptr inbounds nuw [32 x i8], ptr %i.fn, i64 %i.on ; 2 uses
+  %i.oo = getelementptr inbounds nuw [32 x i8], ptr %32, i64 %i.on ; 2 uses
   %i.op = getelementptr inbounds nuw i8, ptr %i.oo, i64 28
   %i.oq = load i32, ptr %i.op, align 4, !tbaa !131 ; 2 uses
   %i.or = icmp eq i32 %i.oq, 0
@@ -1088,7 +1091,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapImNS1_INS_7memprof12LineLocationES3_NS_12Dens
   %i.pd = lshr i64 %i.og, 3
   %i.pe = and i64 %i.pd, 1073741820
   %i.pf = add nuw nsw i64 %i.pe, %i.pc
-  call void @_ZN4llvm17deallocate_bufferEPvmm(ptr noundef %i.fn, i64 noundef %i.pf, i64 noundef 8) #19
+  call void @_ZN4llvm17deallocate_bufferEPvmm(ptr noundef %32, i64 noundef %i.pf, i64 noundef 8) #19
   br label %bb.az
 
 bb.az:                                            ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapImNS1_INS_7memprof12LineLocationES3_NS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S3_EEEENS4_ImvEENS7_ImS9_EEEEmS9_SA_SB_E10destroyAllEv.exit.i122, %_ZN4llvm6detail12DenseSetImplImNS_8DenseMapImNS0_13DenseSetEmptyENS_12DenseMapInfoImvEENS0_12DenseSetPairImEEEEED2Ev.exit109

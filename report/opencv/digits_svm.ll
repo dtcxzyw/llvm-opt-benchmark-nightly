@@ -182,7 +182,7 @@ bb.a:
   %59 = alloca %"class.cv::Mat", align 8          ; 8 uses
   %60 = alloca %"class.cv::Rect_", align 4        ; 8 uses
   %61 = alloca %"class.std::vector.0", align 8    ; 17 uses
-  %62 = alloca %"class.std::vector.0", align 8    ; 14 uses
+  %62 = alloca %"class.std::vector.0", align 8    ; 10 uses
   %63 = alloca %"struct.cv::Ptr", align 8         ; 9 uses
   %64 = alloca %"struct.cv::Ptr.9", align 8       ; 9 uses
   %65 = alloca %"class.std::vector.13", align 8   ; 12 uses
@@ -585,7 +585,7 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i131: ; preds = %bb.dr
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i133: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i131
   %i.aff = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.afb) #20
-          to label %.noexc5.i136 unwind label %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135 ; 4 uses
+          to label %.noexc5.i136 unwind label %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135 ; 7 uses
 
 .noexc5.i136:                                     ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i133
   store ptr %i.aff, ptr %62, align 8, !tbaa !68
@@ -614,7 +614,8 @@ _ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135:        ; preds = %bb.ds, %_ZNSt12_Vec
   br label %.body139
 
 bb.dw:                                            ; preds = %bb.dv, %bb.du, %bb.dt, %.thread.i.i137
-  %i.afm = phi ptr [ %i.afg, %bb.dt ], [ %i.afg, %bb.du ], [ %i.afg, %bb.dv ], [ %i.afd, %.thread.i.i137 ]
+  %82 = phi ptr [ %i.aff, %bb.dt ], [ %i.aff, %bb.du ], [ %i.aff, %bb.dv ], [ null, %.thread.i.i137 ] ; 6 uses
+  %i.afm = phi ptr [ %i.afg, %bb.dt ], [ %i.afg, %bb.du ], [ %i.afg, %bb.dv ], [ %i.afd, %.thread.i.i137 ] ; 3 uses
   %i.afn = getelementptr inbounds nuw i8, ptr %62, i64 8
   store ptr %i.afm, ptr %i.afn, align 8, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #17
@@ -1017,14 +1018,11 @@ bb.gy:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN2cv2ml8KNearestELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit218: ; preds = %_ZNSt12__shared_ptrIN2cv2ml3SVMELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit213, %bb.gu, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i216, %bb.gy
   call void @llvm.lifetime.end.p0(ptr nonnull %63) #17
-  %82 = load ptr, ptr %62, align 8, !tbaa !68     ; 3 uses
   %.not.i.i.i219 = icmp eq ptr %82, null
   br i1 %.not.i.i.i219, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.gz
 
 bb.gz:                                            ; preds = %_ZNSt12__shared_ptrIN2cv2ml8KNearestELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit218
-  %83 = getelementptr inbounds nuw i8, ptr %62, i64 16
-  %84 = load ptr, ptr %83, align 8, !tbaa !66
-  %i.arb = ptrtoint ptr %84 to i64
+  %i.arb = ptrtoint ptr %i.afm to i64
   %i.arc = ptrtoint ptr %82 to i64
   %i.ard = sub i64 %i.arb, %i.arc
   call void @_ZdlPvm(ptr noundef nonnull %82, i64 noundef %i.ard) #19
@@ -1329,17 +1327,14 @@ _ZNSt6vectorIfSaIfEED2Ev.exit262:                 ; preds = %bb.hu, %bb.hv
   call void @llvm.lifetime.end.p0(ptr nonnull %64) #17
   call void @_ZNSt12__shared_ptrIN2cv2ml8KNearestELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %63) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %63) #17
-  %85 = load ptr, ptr %62, align 8, !tbaa !68     ; 3 uses
-  %.not.i.i.i263 = icmp eq ptr %85, null
+  %.not.i.i.i263 = icmp eq ptr %82, null
   br i1 %.not.i.i.i263, label %.body139, label %bb.hw
 
 bb.hw:                                            ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit262
-  %86 = getelementptr inbounds nuw i8, ptr %62, i64 16
-  %87 = load ptr, ptr %86, align 8, !tbaa !66
-  %i.auc = ptrtoint ptr %87 to i64
-  %i.aud = ptrtoint ptr %85 to i64
+  %i.auc = ptrtoint ptr %i.afm to i64
+  %i.aud = ptrtoint ptr %82 to i64
   %i.aue = sub i64 %i.auc, %i.aud
-  call void @_ZdlPvm(ptr noundef nonnull %85, i64 noundef %i.aue) #19
+  call void @_ZdlPvm(ptr noundef nonnull %82, i64 noundef %i.aue) #19
   br label %.body139
 
 .body139:                                         ; preds = %bb.hw, %_ZNSt6vectorIfSaIfEED2Ev.exit262, %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135

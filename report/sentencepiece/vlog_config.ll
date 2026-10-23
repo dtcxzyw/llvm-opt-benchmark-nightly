@@ -202,7 +202,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 define dso_local void @_ZN4absl12lts_2026052612log_internal15UpdateVLogSitesEv() local_unnamed_addr #1 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %0 = alloca %"class.std::vector", align 8       ; 13 uses
+  %0 = alloca %"class.std::vector", align 8       ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #19
   %i.b = load ptr, ptr @_ZN4absl12lts_2026052612log_internal12_GLOBAL__N_112vmodule_infoE, align 8, !tbaa !24 ; 3 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -232,8 +232,8 @@ _ZN4absl12lts_2026052612log_internal12_GLOBAL__N_116get_vmodule_infoEv.exit: ; p
 
 .thread:                                          ; preds = %_ZN4absl12lts_2026052612log_internal12_GLOBAL__N_116get_vmodule_infoEv.exit
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.j = getelementptr inbounds nuw i8, ptr null, i64 %i.h
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr null, i64 %i.h ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   store ptr %i.j, ptr %i.k, align 8, !tbaa !45
   br label %_ZNSt6vectorIN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EEC2ERKS6_.exit
@@ -248,12 +248,12 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20260
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #22 ; 6 uses
+  %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #22 ; 7 uses
   store ptr %i.n, ptr %0, align 8, !tbaa !43
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %i.n, ptr %i.o, align 8, !tbaa !44
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.h
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.h ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.p, ptr %i.q, align 8, !tbaa !45
   br label %.lr.ph.i.i.i.i.i
 
@@ -347,9 +347,10 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInf
   br label %common.resume
 
 _ZNSt6vectorIN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EEC2ERKS6_.exit: ; preds = %bb.g, %.thread
-  %i.ap = phi ptr [ %i.k, %.thread ], [ %i.q, %bb.g ]
-  %i.aq = phi ptr [ %i.i, %.thread ], [ %i.o, %bb.g ] ; 2 uses
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %.thread ], [ %i.ai, %bb.g ]
+  %i.ap = phi ptr [ %i.j, %.thread ], [ %i.p, %bb.g ]
+  %i.aq = phi ptr [ %i.i, %.thread ], [ %i.o, %bb.g ]
+  %1 = phi ptr [ null, %.thread ], [ %i.n, %bb.g ] ; 5 uses
+  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %.thread ], [ %i.ai, %bb.g ] ; 3 uses
   store ptr %.0.lcssa.i.i.i.i.i, ptr %i.aq, align 8, !tbaa !44
   %i.ar = load i32, ptr @_ZN4absl12lts_2026052612log_internal12_GLOBAL__N_18global_vE, align 4, !tbaa !25
   %i.as = load atomic i8, ptr @_ZGVZN4absl12lts_2026052612log_internal12_GLOBAL__N_119GetUpdateSitesMutexEvE18update_sites_mutex acquire, align 8
@@ -485,9 +486,7 @@ bb.w:                                             ; preds = %.loopexit
   unreachable
 
 _ZN4absl12lts_202605269MutexLockD2Ev.exit:        ; preds = %.loopexit
-  %1 = load ptr, ptr %0, align 8, !tbaa !43       ; 5 uses
-  %2 = load ptr, ptr %i.aq, align 8, !tbaa !44    ; 2 uses
-  %.not4.i.i.i = icmp eq ptr %1, %2
+  %.not4.i.i.i = icmp eq ptr %1, %.0.lcssa.i.i.i.i.i
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoES4_EvT_S6_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN4absl12lts_202605269MutexLockD2Ev.exit, %_ZSt8_DestroyIN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoEEvPT_.exit.i.i.i
@@ -505,7 +504,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyIN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoEEvPT_.exit.i.i.i: ; preds = %.lr.ph.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
   %i.cb = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 40 ; 2 uses
-  %.not.i.i.i33 = icmp eq ptr %i.cb, %2
+  %.not.i.i.i33 = icmp eq ptr %i.cb, %.0.lcssa.i.i.i.i.i
   br i1 %.not.i.i.i33, label %_ZSt8_DestroyIPN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoES4_EvT_S6_RSaIT0_E.exit.i, label %.lr.ph.i.i.i, !llvm.loop !0
 
 _ZSt8_DestroyIPN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoES4_EvT_S6_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoEEvPT_.exit.i.i.i, %_ZN4absl12lts_202605269MutexLockD2Ev.exit
@@ -513,8 +512,7 @@ _ZSt8_DestroyIPN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoES4_
   br i1 %.not.i.i2.i, label %_ZNSt6vectorIN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EED2Ev.exit, label %bb.x
 
 bb.x:                                             ; preds = %_ZSt8_DestroyIPN4absl12lts_2026052612log_internal12_GLOBAL__N_111VModuleInfoES4_EvT_S6_RSaIT0_E.exit.i
-  %.val1.i = load ptr, ptr %i.ap, align 8, !tbaa !45
-  %i.cc = ptrtoint ptr %.val1.i to i64
+  %i.cc = ptrtoint ptr %i.ap to i64
   %i.cd = ptrtoint ptr %1 to i64
   %i.ce = sub i64 %i.cc, %i.cd
   call void @_ZdlPvm(ptr noundef nonnull %1, i64 noundef %i.ce) #24

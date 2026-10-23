@@ -205,7 +205,7 @@ bb.bq:                                            ; preds = %_ZN12_GLOBAL__N_119
   %i.cq = getelementptr inbounds nuw i8, ptr %20, i64 8
   store i64 0, ptr %i.cq, align 8
   %i.cr = invoke noalias noundef nonnull dereferenceable(864) ptr @_Znwm(i64 noundef 864) #39
-          to label %.noexc7.i unwind label %.body.i.thread ; 9 uses
+          to label %.noexc7.i unwind label %.body.i.thread ; 8 uses
 
 .noexc7.i:                                        ; preds = %bb.bq
   store ptr %i.cr, ptr %20, align 8, !tbaa !332
@@ -215,7 +215,7 @@ bb.bq:                                            ; preds = %_ZN12_GLOBAL__N_119
   br label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZSt10_ConstructIN12_GLOBAL__N_119CordCompareTestCaseEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i, %.noexc7.i
-  %.018.i.i.i.i.i.i = phi ptr [ %i.dn, %_ZSt10_ConstructIN12_GLOBAL__N_119CordCompareTestCaseEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i ], [ %i.cr, %.noexc7.i ] ; 10 uses
+  %.018.i.i.i.i.i.i = phi ptr [ %i.dn, %_ZSt10_ConstructIN12_GLOBAL__N_119CordCompareTestCaseEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i ], [ %i.cr, %.noexc7.i ] ; 11 uses
   %.01217.i.i.i.i.i.idx.i = phi i64 [ %.01217.i.i.i.i.i.add.i, %_ZSt10_ConstructIN12_GLOBAL__N_119CordCompareTestCaseEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i ], [ 0, %.noexc7.i ] ; 2 uses
   %.01217.i.i.i.i.i.ptr.i = getelementptr inbounds nuw i8, ptr %21, i64 %.01217.i.i.i.i.i.idx.i ; 7 uses
   %i.cu = load i8, ptr %.01217.i.i.i.i.i.ptr.i, align 8, !tbaa !78
@@ -324,7 +324,7 @@ bb.cc:                                            ; preds = %bb.bz
   br label %.body119
 
 bb.cd:                                            ; preds = %_ZSt10_ConstructIN12_GLOBAL__N_119CordCompareTestCaseEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i
-  %i.dv = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %20, i64 8
   store ptr %i.dn, ptr %i.dv, align 8, !tbaa !334
   %i.dw = getelementptr inbounds nuw i8, ptr %21, i64 832 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %21, i64 848 ; 2 uses
@@ -727,13 +727,8 @@ _ZN12_GLOBAL__N_119CordCompareTestCaseD2Ev.exit.26: ; preds = %bb.eh, %_ZN4absl1
   %i.km = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   br label %bb.fb
 
-22:                                               ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i147.i
-  %23 = load ptr, ptr %i.dv, align 8, !tbaa !334  ; 2 uses
-  %.not4.i.i.i = icmp eq ptr %i.cr, %23
-  br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN12_GLOBAL__N_119CordCompareTestCaseES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %22, %_ZSt8_DestroyIN12_GLOBAL__N_119CordCompareTestCaseEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.kw, %_ZSt8_DestroyIN12_GLOBAL__N_119CordCompareTestCaseEEvPT_.exit.i.i.i ], [ %i.cr, %22 ] ; 4 uses
+.lr.ph.i.i.i:                                     ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i147.i, %_ZSt8_DestroyIN12_GLOBAL__N_119CordCompareTestCaseEEvPT_.exit.i.i.i
+  %.05.i.i.i = phi ptr [ %i.kw, %_ZSt8_DestroyIN12_GLOBAL__N_119CordCompareTestCaseEEvPT_.exit.i.i.i ], [ %i.cr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i147.i ] ; 5 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 16 ; 2 uses
   %i.ko = load i8, ptr %i.kn, align 1, !tbaa !78
   %i.kp = trunc i8 %i.ko to i1
@@ -767,11 +762,11 @@ bb.el:                                            ; preds = %bb.ek
   unreachable
 
 _ZSt8_DestroyIN12_GLOBAL__N_119CordCompareTestCaseEEvPT_.exit.i.i.i: ; preds = %bb.ek, %_ZN4absl12lts_202605264CordD2Ev.exit.i.i.i.i.i
-  %i.kw = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 32 ; 2 uses
-  %.not.i.i.i = icmp eq ptr %i.kw, %23
+  %i.kw = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 32
+  %.not.i.i.i = icmp eq ptr %.05.i.i.i, %.018.i.i.i.i.i.i
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPN12_GLOBAL__N_119CordCompareTestCaseES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i.i.i, !llvm.loop !23
 
-_ZSt8_DestroyIPN12_GLOBAL__N_119CordCompareTestCaseES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %22, %_ZSt8_DestroyIN12_GLOBAL__N_119CordCompareTestCaseEEvPT_.exit.i.i.i
+_ZSt8_DestroyIPN12_GLOBAL__N_119CordCompareTestCaseES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIN12_GLOBAL__N_119CordCompareTestCaseEEvPT_.exit.i.i.i
   call void @_ZdlPvm(ptr noundef nonnull %i.cr, i64 noundef 864) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #38
   %i.kx = load i8, ptr %19, align 8, !tbaa !78
@@ -903,8 +898,8 @@ bb.fa:                                            ; preds = %_ZN4absl12lts_20260
   %i.lw = icmp eq ptr %i.lv, %21
   br i1 %i.lw, label %.loopexit, label %.preheader
 
-.body119:                                         ; preds = %.body.i.thread, %bb.cc
-  %eh.lpad-body.i231 = phi { ptr, i32 } [ %i.du, %.body.i.thread ], [ %i.dr, %bb.cc ]
+.body119:                                         ; preds = %bb.cc, %.body.i.thread
+  %eh.lpad-body.i231 = phi { ptr, i32 } [ %i.dr, %bb.cc ], [ %i.du, %.body.i.thread ]
   %i.lx = getelementptr inbounds nuw i8, ptr %21, i64 832
   call fastcc void @_ZN12_GLOBAL__N_119CordCompareTestCaseD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.lx) #38
   %i.ly = getelementptr inbounds nuw i8, ptr %21, i64 800
@@ -1307,7 +1302,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #38
   %i.wl = getelementptr inbounds nuw i8, ptr %.sroa.0131.0174, i64 32
   %.not = icmp eq ptr %.sroa.0131.0174, %.018.i.i.i.i.i.i
-  br i1 %.not, label %22, label %bb.fb
+  br i1 %.not, label %.lr.ph.i.i.i, label %bb.fb
 
 bb.il:                                            ; preds = %bb.fb
   %i.wm = landingpad { ptr, i32 }

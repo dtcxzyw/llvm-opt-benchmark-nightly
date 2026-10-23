@@ -205,7 +205,7 @@ bb.dk:                                            ; preds = %.noexc312
 .thread706:                                       ; preds = %bb.dk
   %i.qc = getelementptr inbounds nuw i8, ptr %30, i64 8
   %i.qd = getelementptr inbounds i8, ptr null, i64 %i.qb ; 2 uses
-  %i.qe = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 2 uses
+  %i.qe = getelementptr inbounds nuw i8, ptr %30, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %30, i8 0, i64 16, i1 false)
   store ptr %i.qd, ptr %i.qe, align 8, !tbaa !84
   br label %bb.dp
@@ -230,7 +230,7 @@ _ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i317: ; preds = %bb.dl
   %i.qh = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 4 uses
   store ptr %i.qg, ptr %i.qh, align 8, !tbaa !85
   %i.qi = getelementptr inbounds nuw i8, ptr %i.qg, i64 %i.qb ; 4 uses
-  %i.qj = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 4 uses
+  %i.qj = getelementptr inbounds nuw i8, ptr %30, i64 16
   store ptr %i.qi, ptr %i.qj, align 8, !tbaa !84
   %i.qk = icmp samesign ugt i64 %i.qb, 8
   br i1 %i.qk, label %bb.dm, label %bb.dn, !prof !768
@@ -249,8 +249,7 @@ bb.do:                                            ; preds = %bb.dn
   br label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do, %bb.dn, %bb.dm, %.thread706
-  %46 = phi ptr [ %i.qj, %bb.dm ], [ %i.qj, %bb.dn ], [ %i.qj, %bb.do ], [ %i.qe, %.thread706 ]
-  %i.qn = phi ptr [ %i.qi, %bb.dm ], [ %i.qi, %bb.dn ], [ %i.qi, %bb.do ], [ %i.qd, %.thread706 ] ; 2 uses
+  %i.qn = phi ptr [ %i.qi, %bb.dm ], [ %i.qi, %bb.dn ], [ %i.qi, %bb.do ], [ %i.qd, %.thread706 ] ; 3 uses
   %i.qo = phi ptr [ %i.qh, %bb.dm ], [ %i.qh, %bb.dn ], [ %i.qh, %bb.do ], [ %i.qc, %.thread706 ]
   %i.qp = phi ptr [ %i.qg, %bb.dm ], [ %i.qg, %bb.dn ], [ %i.qg, %bb.do ], [ null, %.thread706 ] ; 6 uses
   store ptr %i.qn, ptr %i.qo, align 8, !tbaa !85
@@ -653,8 +652,7 @@ _ZNSt6vectorImSaImEED2Ev.exit424:                 ; preds = %bb.ey, %.body345, %
   br i1 %.not.i.i.i425, label %_ZNSt6vectorImSaImEED2Ev.exit426, label %bb.ez
 
 bb.ez:                                            ; preds = %.body329
-  %47 = load ptr, ptr %46, align 8, !tbaa !84
-  %i.wj = ptrtoint ptr %47 to i64
+  %i.wj = ptrtoint ptr %i.qn to i64
   %i.wk = ptrtoint ptr %i.qp to i64
   %i.wl = sub i64 %i.wj, %i.wk
   call void @_ZdlPvm(ptr noundef nonnull %i.qp, i64 noundef %i.wl) #32
@@ -946,7 +944,7 @@ bb.fn:                                            ; preds = %.noexc462
 .thread708:                                       ; preds = %bb.fn
   %i.zz = getelementptr inbounds nuw i8, ptr %40, i64 8
   %i.aaa = getelementptr inbounds i8, ptr null, i64 %i.qb ; 2 uses
-  %i.aab = getelementptr inbounds nuw i8, ptr %40, i64 16 ; 2 uses
+  %i.aab = getelementptr inbounds nuw i8, ptr %40, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %40, i8 0, i64 16, i1 false)
   store ptr %i.aaa, ptr %i.aab, align 8, !tbaa !84
   br label %bb.fs
@@ -971,7 +969,7 @@ _ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i467: ; preds = %bb.fo
   %i.aae = getelementptr inbounds nuw i8, ptr %40, i64 8 ; 4 uses
   store ptr %i.aad, ptr %i.aae, align 8, !tbaa !85
   %i.aaf = getelementptr inbounds nuw i8, ptr %i.aad, i64 %i.qb ; 4 uses
-  %i.aag = getelementptr inbounds nuw i8, ptr %40, i64 16 ; 4 uses
+  %i.aag = getelementptr inbounds nuw i8, ptr %40, i64 16
   store ptr %i.aaf, ptr %i.aag, align 8, !tbaa !84
   %i.aah = icmp samesign ugt i64 %i.qb, 8
   br i1 %i.aah, label %bb.fp, label %bb.fq, !prof !768
@@ -990,8 +988,7 @@ bb.fr:                                            ; preds = %bb.fq
   br label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr, %bb.fq, %bb.fp, %.thread708
-  %48 = phi ptr [ %i.aag, %bb.fp ], [ %i.aag, %bb.fq ], [ %i.aag, %bb.fr ], [ %i.aab, %.thread708 ]
-  %i.aak = phi ptr [ %i.aaf, %bb.fp ], [ %i.aaf, %bb.fq ], [ %i.aaf, %bb.fr ], [ %i.aaa, %.thread708 ] ; 2 uses
+  %i.aak = phi ptr [ %i.aaf, %bb.fp ], [ %i.aaf, %bb.fq ], [ %i.aaf, %bb.fr ], [ %i.aaa, %.thread708 ] ; 3 uses
   %i.aal = phi ptr [ %i.aae, %bb.fp ], [ %i.aae, %bb.fq ], [ %i.aae, %bb.fr ], [ %i.zz, %.thread708 ]
   %i.aam = phi ptr [ %i.aad, %bb.fp ], [ %i.aad, %bb.fq ], [ %i.aad, %bb.fr ], [ null, %.thread708 ] ; 6 uses
   store ptr %i.aak, ptr %i.aal, align 8, !tbaa !85
@@ -1394,8 +1391,7 @@ _ZNSt6vectorImSaImEED2Ev.exit681:                 ; preds = %bb.hp, %.body495, %
   br i1 %.not.i.i.i682, label %_ZNSt6vectorImSaImEED2Ev.exit683, label %bb.hq
 
 bb.hq:                                            ; preds = %.body479
-  %49 = load ptr, ptr %48, align 8, !tbaa !84
-  %i.akv = ptrtoint ptr %49 to i64
+  %i.akv = ptrtoint ptr %i.aak to i64
   %i.akw = ptrtoint ptr %i.aam to i64
   %i.akx = sub i64 %i.akv, %i.akw
   call void @_ZdlPvm(ptr noundef nonnull %i.aam, i64 noundef %i.akx) #32

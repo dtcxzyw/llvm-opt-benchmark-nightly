@@ -205,12 +205,12 @@ define noundef zeroext i1 @_RNvMNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_
   %i.dg = fdiv double %i.df, %i.cr
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.dg, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %.sroa.0.0.vec.insert.a = insertelement <2 x i32> poison, i32 %i.cn, i64 0
-  %.sroa.0.4.vec.insert.a = insertelement <2 x i32> %.sroa.0.0.vec.insert.a, i32 %i.bu, i64 1
-  %.sroa.6.8.vec.insert = insertelement <2 x i32> poison, i32 %i.ba, i64 0
-  %.sroa.6.12.vec.insert = insertelement <2 x i32> %.sroa.6.8.vec.insert, i32 %i.ag, i64 1
+  %.sroa.0.0.vec.insert.a = insertelement <2 x i32> poison, i32 %i.ba, i64 0
+  %.sroa.0.4.vec.insert.a = insertelement <2 x i32> %.sroa.0.0.vec.insert.a, i32 %i.ag, i64 1
+  %.sroa.6.8.vec.insert = insertelement <2 x i32> poison, i32 %i.cn, i64 0
+  %.sroa.6.12.vec.insert = insertelement <2 x i32> %.sroa.6.8.vec.insert, i32 %i.bu, i64 1
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.di = uitofp <2 x i32> %.sroa.0.4.vec.insert.a to <2 x double> ; 9 uses
+  %i.di = uitofp <2 x i32> %.sroa.6.12.vec.insert to <2 x double> ; 9 uses
   %i.dj = load i32, ptr %0, align 4, !noundef !4
   %i.dk = load i32, ptr %i.dh, align 4, !noundef !4
   %i.dl = insertelement <2 x i32> poison, i32 %i.dj, i64 0
@@ -320,7 +320,7 @@ define noundef zeroext i1 @_RNvMNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_
   %i.hl = tail call nsz <2 x double> @llvm.maximumnum.v2f64(<2 x double> %i.hk, <2 x double> zeroinitializer)
   %i.hm = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.hn = getelementptr inbounds nuw i8, ptr %0, i64 108
-  %i.ho = uitofp <2 x i32> %.sroa.6.12.vec.insert to <2 x double> ; 9 uses
+  %i.ho = uitofp <2 x i32> %.sroa.0.4.vec.insert.a to <2 x double> ; 9 uses
   %i.hp = load i32, ptr %i.hm, align 4, !noundef !4
   %i.hq = load i32, ptr %i.hn, align 4, !noundef !4
   %i.hr = insertelement <2 x i32> poison, i32 %i.hp, i64 0

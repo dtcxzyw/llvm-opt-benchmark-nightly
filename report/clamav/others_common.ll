@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %., ptr %i.aa, align 8, !tbaa !31
   %i.ab = icmp eq i32 %i.w, 2                     ; 2 uses
   %i.ac = zext i1 %i.ab to i32
-  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 32
   store i32 %i.ac, ptr %i.ad, align 8, !tbaa !32
   %i.ae = icmp eq ptr %.15171, null               ; 2 uses
   br i1 %i.ab, label %bb.i, label %bb.n
@@ -231,14 +231,9 @@ bb.l:                                             ; preds = %bb.k
 cli_safer_strdup.exit:                            ; preds = %bb.k
   %i.ai = call i32 %3(ptr noundef %., ptr noundef nonnull %i.af, ptr noundef nonnull %.15171, i32 noundef 1, ptr noundef %4) #22 ; 2 uses
   %.not65 = icmp eq i32 %i.ai, 0
-  br i1 %.not65, label %8, label %cli_safer_strdup.exit.thread
+  br i1 %.not65, label %bb.m, label %cli_safer_strdup.exit.thread
 
-8:                                                ; preds = %cli_safer_strdup.exit
-  %.pr74 = load i32, ptr %i.ad, align 8, !tbaa !32
-  %.not66 = icmp eq i32 %.pr74, 0
-  br i1 %.not66, label %.thread77, label %bb.m
-
-bb.m:                                             ; preds = %8
+bb.m:                                             ; preds = %cli_safer_strdup.exit
   %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr %.15171, ptr %i.aj, align 8, !tbaa !33
   br label %bb.q
@@ -250,7 +245,7 @@ bb.o:                                             ; preds = %bb.n
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.19)
   br label %cli_safer_strdup.exit.thread
 
-.thread77:                                        ; preds = %8, %bb.n
+.thread77:                                        ; preds = %bb.n
   %i.ak = call noalias ptr @strdup(ptr noundef nonnull readonly %.15171) #22 ; 2 uses
   %.not.i67 = icmp eq ptr %i.ak, null
   br i1 %.not.i67, label %bb.p, label %cli_safer_strdup.exit69

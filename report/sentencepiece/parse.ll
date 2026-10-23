@@ -202,8 +202,8 @@ bb.k:                                             ; preds = %bb.a
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %52) #27
-  %i.z = zext nneg i32 %0 to i64                  ; 6 uses
-  %.idx.i = shl nuw nsw i64 %i.z, 5
+  %i.z = zext nneg i32 %0 to i64                  ; 5 uses
+  %.idx.i = shl nuw nsw i64 %i.z, 5               ; 2 uses
   %i.aa = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx.i) #24
           to label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i.i unwind label %.thread ; 5 uses
 
@@ -225,8 +225,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
 bb.l:                                             ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i.i
   %i.ag = landingpad { ptr, i32 }
           cleanup
-  %.idx = shl nuw nsw i64 %i.z, 5
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aa, i64 noundef %.idx) #25
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.aa, i64 noundef %.idx.i) #25
   br label %.body
 
 _ZNKSt6vectorIN4absl12lts_2026052614flags_internal12_GLOBAL__N_18ArgsListESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i.i
@@ -309,7 +308,7 @@ bb.p:                                             ; preds = %_ZNKSt6vectorIN4abs
   br label %.body
 
 .body:                                            ; preds = %.thread, %bb.l, %bb.p
-  %.pn = phi { ptr, i32 } [ %i.bk, %bb.p ], [ %i.ab, %.thread ], [ %i.ag, %bb.l ]
+  %.pn = phi { ptr, i32 } [ %i.bk, %bb.p ], [ %i.ag, %bb.l ], [ %i.ab, %.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %52) #27
   br label %_ZN4absl12lts_202605269MutexLockD2Ev.exit330
 

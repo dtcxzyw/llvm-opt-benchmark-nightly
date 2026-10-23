@@ -205,7 +205,7 @@ bb.fm:                                            ; preds = %bb.fl
 
 bb.fn:                                            ; preds = %bb.fm
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.51) #32
-          to label %.noexc53.i.i251.i.i unwind label %.body.i.i87.thread.i.i.a
+          to label %.noexc53.i.i251.i.i unwind label %.body.i.i87.thread.i.i
 
 .noexc53.i.i251.i.i:                              ; preds = %bb.fn
   unreachable
@@ -213,7 +213,7 @@ bb.fn:                                            ; preds = %bb.fm
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i: ; preds = %bb.fm
   %i.uu = shl nuw nsw i64 %i.us, 2
   %i.uv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.uu) #33
-          to label %.noexc54.i.i151.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ; 5 uses
+          to label %.noexc54.i.i151.i.i unwind label %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.split-lp.loopexit.i.i ; 5 uses
 
 .noexc54.i.i151.i.i:                              ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i
   store i32 0, ptr %i.uv, align 4, !tbaa !83
@@ -418,11 +418,11 @@ _ZNK7xgboost6common4SpanIKSt7variantIJNS_4tree14ScalarTreeViewENS3_19MultiTarget
 
 bb.gb:                                            ; preds = %_ZNK7xgboost6common4SpanIKSt7variantIJNS_4tree14ScalarTreeViewENS3_19MultiTargetTreeViewEEELm18446744073709551615EEixEm.exit.i.i.i.i.i245.i.i
   %i.wy = invoke noundef i32 @_ZNK7xgboost4tree13WalkTreeMixInINS0_14ScalarTreeViewEE8MaxDepthEi(ptr noundef nonnull align 8 dereferenceable(193) %i.wu, i32 noundef 0)
-          to label %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
+          to label %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i unwind label %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.i.i
 
 bb.gc:                                            ; preds = %_ZNK7xgboost6common4SpanIKSt7variantIJNS_4tree14ScalarTreeViewENS3_19MultiTargetTreeViewEEELm18446744073709551615EEixEm.exit.i.i.i.i.i245.i.i
   %i.wz = invoke noundef i32 @_ZNK7xgboost4tree13WalkTreeMixInINS0_19MultiTargetTreeViewEE8MaxDepthEi(ptr noundef nonnull align 8 dereferenceable(193) %i.wu, i32 noundef 0)
-          to label %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
+          to label %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i unwind label %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.i.i
 
 _ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i: ; preds = %bb.gc, %bb.gb
   %.sink.i.i.i.i.i.i.i246.i.i = phi i32 [ %i.wy, %bb.gb ], [ %i.wz, %bb.gc ]
@@ -448,7 +448,7 @@ _ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_tra
 
 _ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i: ; preds = %bb.gd
   invoke void @_ZN4dmlc14LogCheckFormatIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr") align 8 %154, ptr noundef nonnull align 4 dereferenceable(4) %i.ag, ptr noundef nonnull align 4 dereferenceable(4) %i.ah)
-          to label %.noexc40.i.i222.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
+          to label %.noexc40.i.i222.i.i unwind label %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.split-lp.loopexit.i.i
 
 .noexc40.i.i222.i.i:                              ; preds = %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i
   %.pr.i.i.i.i223.i.i = load ptr, ptr %154, align 8, !tbaa !53
@@ -800,9 +800,26 @@ bb.hh:                                            ; preds = %bb.fv, %bb.fs
   call void @llvm.lifetime.end.p0(ptr nonnull %158) #18
   br label %.body.i.i87.i.i
 
+.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.i.i: ; preds = %bb.gc, %bb.gb
+  %lpad.loopexit307.i.i = landingpad { ptr, i32 }
+          cleanup
+  br label %.body.i.i87.i.i
+
+.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.split-lp.loopexit.i.i: ; preds = %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i
+  %.ph.ph.i.i = phi ptr [ %i.va, %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i ], [ null, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i ]
+  %.ph306.ph.i.i = phi ptr [ %i.vb, %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i ], [ null, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i ]
+  %lpad.loopexit310.i.i = landingpad { ptr, i32 }
+          cleanup
+  br label %.body.i.i87.i.i
+
+.body.i.i87.thread.i.i:                           ; preds = %bb.fn
+  %lpad.loopexit.split-lp311.i.i = landingpad { ptr, i32 }
+          cleanup
+  br label %_ZNSt6vectorIiSaIiEED2Ev.exit51.i.i90.i.i
+
 _ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i: ; preds = %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i179.i.i, %bb.fk
-  %i.zk = phi ptr [ null, %bb.fk ], [ %i.va, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i179.i.i ], [ %i.va, %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i ] ; 5 uses
-  %i.zl = phi ptr [ null, %bb.fk ], [ %i.vb, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i179.i.i ], [ %i.vb, %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i ] ; 5 uses
+  %i.zk = phi ptr [ %i.va, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i179.i.i ], [ null, %bb.fk ], [ %i.va, %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i ] ; 5 uses
+  %i.zl = phi ptr [ %i.vb, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i179.i.i ], [ null, %bb.fk ], [ %i.vb, %_ZZN7xgboost9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS0_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENSC_19MultiTargetTreeViewEEENS1_9CopyViewsEEEPNS1_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS_6common15OptionalWeightsEENKUlT_E_clIiEEDaSS_.exit.i.i.i.i.i.i ] ; 5 uses
   %i.zm = uitofp i64 %spec.select.i.i.i.i73.i.i to double
   %i.zn = fmul nnan double %i.zm, 1.562500e-02
   %i.zo = call double @llvm.ceil.f64(double %i.zn)
@@ -811,10 +828,10 @@ _ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlo
   br i1 %i.zq, label %.preheader.i.i.i.i.i141.i.i, label %bb.hl
 
 .preheader.i.i.i.i.i141.i.i:                      ; preds = %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.thread.i.i
-  %200 = phi ptr [ %i.va, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.thread.i.i ], [ %i.zk, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i ] ; 3 uses
+  %200 = phi i64 [ %i.wl, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.thread.i.i ], [ %i.zp, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i ] ; 2 uses
   %i.zr = phi ptr [ %i.vb, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.thread.i.i ], [ %i.zl, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i ] ; 3 uses
-  %201 = phi i64 [ %i.wl, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.thread.i.i ], [ %i.zp, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i ] ; 2 uses
-  %.not126.i.i.i.i.i142.i.i = icmp eq i64 %201, 0
+  %201 = phi ptr [ %i.va, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.thread.i.i ], [ %i.zk, %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i ] ; 3 uses
+  %.not126.i.i.i.i.i142.i.i = icmp eq i64 %200, 0
   br i1 %.not126.i.i.i.i.i142.i.i, label %_ZN7xgboost6common13ParallelFor1dILm64EmZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlOT_E_EEvS8_iOT1_.exit.i.i.i.i, label %.lr.ph119.i.i.i.i.i143.preheader.i.i
 
 .lr.ph119.i.i.i.i.i143.preheader.i.i:             ; preds = %.preheader.i.i.i.i.i141.i.i
@@ -829,7 +846,7 @@ _ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlo
   call void @llvm.lifetime.start.p0(ptr nonnull %139) #18
   %i.zv = add i64 %.sroa.speculated.i259.i.i, %i.zt
   invoke void @_ZN7xgboost6common7Range1dC2Emm(ptr noundef nonnull align 8 dereferenceable(16) %139, i64 noundef %i.zt, i64 noundef %i.zv)
-          to label %.noexc273.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
+          to label %.noexc273.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
 
 .noexc273.i.i:                                    ; preds = %.lr.ph119.i.i.i.i.i143.i.i
   %i.zw = load i64, ptr %i.rl, align 8, !tbaa !314
@@ -865,7 +882,7 @@ bb.hk:                                            ; preds = %.split.i.i.i.i263.i
 
 _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i.i264.i.i: ; preds = %.split.i.i.i.i263.i.i
   invoke void @_ZNK7xgboost9predictor13DataToFeatVecINS0_14SparsePageViewINS_11CatAccessorEEEE8FVecFillERKNS_6common7Range1dEjNS6_4SpanINS_7RegTree4FVecELm18446744073709551615EEE(ptr noundef nonnull align 1 dereferenceable(1) %196, ptr noundef nonnull align 8 dereferenceable(16) %139, i32 noundef %i.un, i64 %i.aae, ptr %.val.i.i260.i.i)
-          to label %.noexc274.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
+          to label %.noexc274.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
 
 .noexc274.i.i:                                    ; preds = %_ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i.i264.i.i
   %i.aai = load i64, ptr %139, align 8, !tbaa !315 ; 2 uses
@@ -874,7 +891,7 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i.i264
   %i.aal = load i64, ptr %i.rl, align 8, !tbaa !314
   %i.aam = sub i64 %i.aal, %i.aai
   invoke fastcc void @_ZN7xgboost9predictor12_GLOBAL__N_119DispatchArrayLayoutERKNS0_15GBTreeModelViewINS1_3VecESt7variantIJNS_4tree14ScalarTreeViewENS5_19MultiTargetTreeViewEEENS1_9CopyViewsEEEmNS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmNS_6linalg10TensorViewIfLi2EEERKSt6vectorIiSaIiEEbNSD_15OptionalWeightsE(ptr noundef nonnull align 8 dereferenceable(60) %i.dk, i64 noundef %i.aak, i64 %i.aae, ptr %.val.i.i260.i.i, i64 noundef %i.aam, ptr noundef nonnull byval(%"class.xgboost::linalg::TensorView") align 8 %161, ptr noundef nonnull align 8 dereferenceable(24) %157, i1 noundef zeroext %i.zs, ptr noundef nonnull byval(%"struct.xgboost::common::OptionalWeights") align 8 %160)
-          to label %.noexc275.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
+          to label %.noexc275.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
 
 .noexc275.i.i:                                    ; preds = %.noexc274.i.i
   br i1 %i.aag, label %.noexc45.i.i145.i.i, label %.lr.ph.i.i.i265.i.i
@@ -940,7 +957,7 @@ _ZN7xgboost7RegTree4FVec4DropEv.exit.i.i.i271.i.i: ; preds = %.lr.ph.i.i.i.i.i.i
 .noexc45.i.i145.i.i:                              ; preds = %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i.i271.i.i, %.noexc275.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %139) #18
   %i.abf = add nuw i64 %.0118.i.i.i.i.i144.i.i, 1 ; 2 uses
-  %exitcond148.not.i.i.i.i.i146.i.i = icmp eq i64 %i.abf, %201
+  %exitcond148.not.i.i.i.i.i146.i.i = icmp eq i64 %i.abf, %200
   br i1 %exitcond148.not.i.i.i.i.i146.i.i, label %_ZN7xgboost6common13ParallelFor1dILm64EmZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlOT_E_EEvS8_iOT1_.exit.i.i.i.i, label %.lr.ph119.i.i.i.i.i143.i.i, !llvm.loop !662
 
 bb.hl:                                            ; preds = %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i
@@ -959,7 +976,7 @@ _ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_tra
 
 _ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i.i122.i.i: ; preds = %bb.hl
   invoke void @_ZN4dmlc14LogCheckFormatIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr") align 8 %150, ptr noundef nonnull align 4 dereferenceable(4) %i.ae, ptr noundef nonnull align 4 dereferenceable(4) %i.af)
-          to label %.noexc46.i.i125.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i
+          to label %.noexc46.i.i125.i.i unwind label %.body.i.i87.thread.i.i.a
 
 .noexc46.i.i125.i.i:                              ; preds = %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i.i122.i.i
   %.pr.i.i.i.i.i126.i.i = load ptr, ptr %150, align 8, !tbaa !53
@@ -1362,56 +1379,44 @@ bb.in:                                            ; preds = %bb.ho
   unreachable
 
 _ZN7xgboost6common13ParallelFor1dILm64EmZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlOT_E_EEvS8_iOT1_.exit.i.i.i.i: ; preds = %.noexc45.i.i145.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i.i103.i.i, %.preheader.i.i.i.i.i141.i.i
-  %i.aem = phi ptr [ %200, %.preheader.i.i.i.i.i141.i.i ], [ %i.zk, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i.i103.i.i ], [ %200, %.noexc45.i.i145.i.i ]
-  %i.aen = phi ptr [ %i.zr, %.preheader.i.i.i.i.i141.i.i ], [ %i.zl, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i.i103.i.i ], [ %i.zr, %.noexc45.i.i145.i.i ] ; 3 uses
-  %.not.i.i.i49.i.i104.i.i = icmp eq ptr %i.aen, null
+  %i.aem = phi ptr [ %i.zl, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i.i103.i.i ], [ %i.zr, %.preheader.i.i.i.i.i141.i.i ], [ %i.zr, %.noexc45.i.i145.i.i ] ; 3 uses
+  %i.aen = phi ptr [ %i.zk, %_ZN4dmlc12OMPExceptionD2Ev.exit.i.i.i.i.i103.i.i ], [ %201, %.preheader.i.i.i.i.i141.i.i ], [ %201, %.noexc45.i.i145.i.i ]
+  %.not.i.i.i49.i.i104.i.i = icmp eq ptr %i.aem, null
   br i1 %.not.i.i.i49.i.i104.i.i, label %bb.ir, label %bb.io
 
 bb.io:                                            ; preds = %_ZN7xgboost6common13ParallelFor1dILm64EmZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlOT_E_EEvS8_iOT1_.exit.i.i.i.i
-  %i.aeo = ptrtoint ptr %i.aem to i64
-  %i.aep = ptrtoint ptr %i.aen to i64
+  %i.aeo = ptrtoint ptr %i.aen to i64
+  %i.aep = ptrtoint ptr %i.aem to i64
   %i.aeq = sub i64 %i.aeo, %i.aep
-  call void @_ZdlPvm(ptr noundef nonnull %i.aen, i64 noundef %i.aeq) #34
+  call void @_ZdlPvm(ptr noundef nonnull %i.aem, i64 noundef %i.aeq) #34
   br label %bb.ir
 
-.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i: ; preds = %.noexc274.i.i, %_ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i.i264.i.i, %.lr.ph119.i.i.i.i.i143.i.i
-  %lpad.loopexit.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i.i87.i.i
-
-.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i: ; preds = %bb.gc, %bb.gb
-  %lpad.loopexit344.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i.i87.i.i
-
-.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i: ; preds = %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i.i122.i.i, %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i
-  %202 = phi ptr [ %i.zk, %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i.i122.i.i ], [ %i.va, %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i ], [ null, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i ]
-  %203 = phi ptr [ %i.zl, %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i.i122.i.i ], [ %i.vb, %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i221.i.i ], [ null, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i148.i.i ]
+.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i: ; preds = %.noexc274.i.i, %_ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i.i264.i.i, %.lr.ph119.i.i.i.i.i143.i.i
   %lpad.loopexit346.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i87.i.i
 
-.body.i.i87.thread.i.i.a:                         ; preds = %bb.fn
+.body.i.i87.thread.i.i.a:                         ; preds = %_ZN4dmlc11LogCheck_GEIiiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i.i.i.i.i122.i.i
   %lpad.loopexit.split-lp347.i.i = landingpad { ptr, i32 }
           cleanup
-  br label %_ZNSt6vectorIiSaIiEED2Ev.exit51.i.i90.i.i
+  br label %.body.i.i87.i.i
 
-.body.i.i87.i.i:                                  ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i, %bb.hp, %bb.hh, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i, %bb.gh
-  %204 = phi ptr [ %i.zk, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i ], [ %i.va, %bb.gh ], [ %i.va, %bb.hh ], [ %i.va, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i ], [ %i.zk, %bb.hp ], [ %200, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ], [ %i.va, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ], [ %202, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ]
-  %205 = phi ptr [ %i.zl, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i ], [ %i.vb, %bb.gh ], [ %i.vb, %bb.hh ], [ %i.vb, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i ], [ %i.zl, %bb.hp ], [ %i.zr, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ], [ %i.vb, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ], [ %203, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ] ; 3 uses
-  %.pn22.i.i88.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i.i.i.i82.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i ], [ %.pn.i.i.i.i225.i.i, %bb.gh ], [ %.pn.pn.i.i158.i.i, %bb.hh ], [ %eh.lpad-body.i.i.i.i188.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i ], [ %.pn.i.i.i.i.i128.i.i, %bb.hp ], [ %lpad.loopexit.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ], [ %lpad.loopexit344.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ], [ %lpad.loopexit346.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ] ; 2 uses
-  %.not.i.i.i50.i.i89.i.i = icmp eq ptr %205, null
+.body.i.i87.i.i:                                  ; preds = %.body.i.i87.thread.i.i.a, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i, %bb.hp, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.split-lp.loopexit.i.i, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.i.i, %bb.hh, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i, %bb.gh
+  %202 = phi ptr [ %i.zk, %.body.i.i87.thread.i.i.a ], [ %i.va, %bb.gh ], [ %i.va, %bb.hh ], [ %i.va, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i ], [ %i.zk, %bb.hp ], [ %i.zk, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i ], [ %i.va, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.i.i ], [ %.ph.ph.i.i, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.split-lp.loopexit.i.i ], [ %201, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ]
+  %203 = phi ptr [ %i.zl, %.body.i.i87.thread.i.i.a ], [ %i.vb, %bb.gh ], [ %i.vb, %bb.hh ], [ %i.vb, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i ], [ %i.zl, %bb.hp ], [ %i.zl, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i ], [ %i.vb, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.i.i ], [ %.ph306.ph.i.i, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.split-lp.loopexit.i.i ], [ %i.zr, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ] ; 3 uses
+  %.pn22.i.i88.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp347.i.i, %.body.i.i87.thread.i.i.a ], [ %.pn.i.i.i.i225.i.i, %bb.gh ], [ %.pn.pn.i.i158.i.i, %bb.hh ], [ %eh.lpad-body.i.i.i.i188.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit82.i.i.i.i190.i.i ], [ %.pn.i.i.i.i.i128.i.i, %bb.hp ], [ %eh.lpad-body.i.i.i.i.i82.i.i, %_ZN4dmlc12OMPExceptionD2Ev.exit81.i.i.i.i.i84.i.i ], [ %lpad.loopexit307.i.i, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.i.i ], [ %lpad.loopexit310.i.i, %.loopexit.split-lp66.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i149.loopexit.split-lp.loopexit.i.i ], [ %lpad.loopexit346.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i123.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i ] ; 2 uses
+  %.not.i.i.i50.i.i89.i.i = icmp eq ptr %203, null
   br i1 %.not.i.i.i50.i.i89.i.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit51.i.i90.i.i, label %bb.ip
 
 bb.ip:                                            ; preds = %.body.i.i87.i.i
-  %i.aer = ptrtoint ptr %204 to i64
-  %i.aes = ptrtoint ptr %205 to i64
+  %i.aer = ptrtoint ptr %202 to i64
+  %i.aes = ptrtoint ptr %203 to i64
   %i.aet = sub i64 %i.aer, %i.aes
-  call void @_ZdlPvm(ptr noundef nonnull %205, i64 noundef %i.aet) #34
+  call void @_ZdlPvm(ptr noundef nonnull %203, i64 noundef %i.aet) #34
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit51.i.i90.i.i
 
-_ZNSt6vectorIiSaIiEED2Ev.exit51.i.i90.i.i:        ; preds = %bb.ip, %.body.i.i87.i.i, %.body.i.i87.thread.i.i.a
-  %.pn22.i.i88457.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp347.i.i, %.body.i.i87.thread.i.i.a ], [ %.pn22.i.i88.i.i, %bb.ip ], [ %.pn22.i.i88.i.i, %.body.i.i87.i.i ]
+_ZNSt6vectorIiSaIiEED2Ev.exit51.i.i90.i.i:        ; preds = %bb.ip, %.body.i.i87.i.i, %.body.i.i87.thread.i.i
+  %.pn22.i.i88457.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp311.i.i, %.body.i.i87.thread.i.i ], [ %.pn22.i.i88.i.i, %bb.ip ], [ %.pn22.i.i88.i.i, %.body.i.i87.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %157) #18
   br label %.body252.i.i
 

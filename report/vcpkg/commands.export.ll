@@ -206,37 +206,30 @@ define internal fastcc void @_ZN12_GLOBAL__N_138print_export_plan_and_return_not
 bb.a:
   %1 = alloca %"class.std::vector.105", align 8   ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %.not711 = icmp eq ptr %.0.val, %.8.val
   br i1 %.not711, label %bb.b, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.c
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit
-  store ptr %i.au, ptr %i.a, align 8
-  store ptr %i.at, ptr %i.b, align 8
-  br label %bb.b
-
-bb.b:                                             ; preds = %._crit_edge, %bb.a
-  %i.e = phi ptr [ %i.at, %._crit_edge ], [ null, %bb.a ] ; 3 uses
-  %i.f = phi ptr [ %i.av, %._crit_edge ], [ null, %bb.a ] ; 6 uses
-  store ptr %i.f, ptr %1, align 8
+bb.b:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit, %bb.a
+  %i.e = phi ptr [ null, %bb.a ], [ %i.at, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 3 uses
+  %i.f = phi ptr [ null, %bb.a ], [ %i.av, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 5 uses
   invoke fastcc void @_ZN12_GLOBAL__N_132print_and_sort_export_plan_blockERKN5vcpkg3msg8MessageTIJEEERSt6vectorIPKNS0_16ExportPlanActionESaIS9_EE(ptr noundef nonnull align 8 dereferenceable(8) @_ZN5vcpkg32msgExportingAlreadyBuiltPackagesE, ptr noundef nonnull align 8 dereferenceable(24) %1)
           to label %bb.o unwind label %.loopexit.split-lp
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit
-  %i.g = phi ptr [ null, %.lr.ph ], [ %i.at, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 7 uses
-  %i.h = phi ptr [ null, %.lr.ph ], [ %i.au, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 5 uses
-  %.sroa.04.012 = phi ptr [ %.0.val, %.lr.ph ], [ %i.aw, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 6 uses
-  %i.i = phi ptr [ null, %.lr.ph ], [ %i.av, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 9 uses
-  %i.j = invoke noundef ptr @_ZNK5vcpkg16ExportPlanAction14core_paragraphEv(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.04.012)
+  %i.g = phi ptr [ null, %.lr.ph ], [ %i.av, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 10 uses
+  %i.h = phi ptr [ null, %.lr.ph ], [ %i.au, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 8 uses
+  %.sroa.04.012 = phi ptr [ null, %.lr.ph ], [ %i.at, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 7 uses
+  %i.i = phi ptr [ %.0.val, %.lr.ph ], [ %i.aw, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit ] ; 6 uses
+  %i.j = invoke noundef ptr @_ZNK5vcpkg16ExportPlanAction14core_paragraphEv(ptr noundef nonnull align 8 dereferenceable(88) %i.i)
           to label %bb.d unwind label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
@@ -244,22 +237,23 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not.i.i = icmp eq ptr %i.h, %i.g
+  %.not.i.i = icmp eq ptr %i.h, %.sroa.04.012
   br i1 %.not.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store ptr %.sroa.04.012, ptr %i.h, align 8, !tbaa !106
-  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  store ptr %i.i, ptr %i.h, align 8, !tbaa !106
+  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
+  store ptr %i.k, ptr %i.a, align 8, !tbaa !115
   br label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = ptrtoint ptr %i.g to i64
-  %i.m = ptrtoint ptr %i.i to i64
+  %i.l = ptrtoint ptr %i.h to i64
+  %i.m = ptrtoint ptr %i.g to i64
   %i.n = sub i64 %i.l, %i.m                       ; 6 uses
   %i.o = icmp eq i64 %i.n, 9223372036854775800
   br i1 %i.o, label %.invoke, label %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
-.invoke:                                          ; preds = %bb.l, %bb.g
+.invoke:                                          ; preds = %bb.g
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.59) #28
           to label %.cont unwind label %.loopexit.split-lp
 
@@ -277,29 +271,32 @@ _ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.u = shl nuw nsw i64 %i.t, 3
   %i.v = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #25
-          to label %.noexc12 unwind label %.loopexit ; 4 uses
+          to label %.noexc12 unwind label %.loopexit ; 5 uses
 
 .noexc12:                                         ; preds = %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.w = getelementptr inbounds i8, ptr %i.v, i64 %i.n ; 2 uses
-  store ptr %.sroa.04.012, ptr %i.w, align 8, !tbaa !106
+  store ptr %i.i, ptr %i.w, align 8, !tbaa !106
   %i.x = icmp sgt i64 %i.n, 0
   br i1 %i.x, label %bb.h, label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 bb.h:                                             ; preds = %.noexc12
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.v, ptr align 8 %i.i, i64 %i.n, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.v, ptr align 8 %i.g, i64 %i.n, i1 false)
   br label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 _ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.h, %.noexc12
-  %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %.not.i17.i.i.i = icmp eq ptr %i.i, null
+  %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 8 ; 2 uses
+  %.not.i17.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.n) #26
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %i.n) #26
   br label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.t
+  store ptr %i.v, ptr %1, align 8, !tbaa !109
+  store ptr %i.y, ptr %i.a, align 8, !tbaa !115
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.t ; 2 uses
+  store ptr %i.z, ptr %i.b, align 8, !tbaa !114
   br label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit
 
 bb.j:                                             ; preds = %bb.d
@@ -309,7 +306,7 @@ bb.j:                                             ; preds = %bb.d
   br i1 %.not.i.i13, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  store ptr %.sroa.04.012, ptr %i.aa, align 8, !tbaa !106
+  store ptr %i.i, ptr %i.aa, align 8, !tbaa !106
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store ptr %i.ac, ptr %i.c, align 8, !tbaa !115
   br label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit
@@ -320,7 +317,14 @@ bb.l:                                             ; preds = %bb.j
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = sub i64 %i.ae, %i.af                    ; 6 uses
   %i.ah = icmp eq i64 %i.ag, 9223372036854775800
-  br i1 %i.ah, label %.invoke, label %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i14
+  br i1 %i.ah, label %2, label %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i14
+
+2:                                                ; preds = %bb.l
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.59) #28
+          to label %.noexc20 unwind label %.loopexit.split-lp
+
+.noexc20:                                         ; preds = %2
+  unreachable
 
 _ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i14: ; preds = %bb.l
   %i.ai = ashr exact i64 %i.ag, 3                 ; 3 uses
@@ -337,7 +341,7 @@ _ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
 .noexc21:                                         ; preds = %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i14
   %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 %i.ag ; 2 uses
-  store ptr %.sroa.04.012, ptr %i.ap, align 8, !tbaa !106
+  store ptr %i.i, ptr %i.ap, align 8, !tbaa !106
   %i.aq = icmp sgt i64 %i.ag, 0
   br i1 %i.aq, label %bb.m, label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i17
 
@@ -362,32 +366,33 @@ _ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9_
   br label %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit
 
 _ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE9push_backEOS3_.exit: ; preds = %bb.k, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i19, %bb.f, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
-  %i.at = phi ptr [ %i.g, %bb.k ], [ %i.g, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i19 ], [ %i.g, %bb.f ], [ %i.z, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 3 uses
-  %i.au = phi ptr [ %i.h, %bb.k ], [ %i.h, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i19 ], [ %i.k, %bb.f ], [ %i.y, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.av = phi ptr [ %i.i, %bb.k ], [ %i.i, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i19 ], [ %i.i, %bb.f ], [ %i.v, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.04.012, i64 88 ; 2 uses
+  %i.at = phi ptr [ %i.z, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.04.012, %bb.f ], [ %.sroa.04.012, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i19 ], [ %.sroa.04.012, %bb.k ] ; 2 uses
+  %i.au = phi ptr [ %i.y, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.k, %bb.f ], [ %i.h, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i19 ], [ %i.h, %bb.k ]
+  %i.av = phi ptr [ %i.v, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.g, %bb.f ], [ %i.g, %_ZNSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i19 ], [ %i.g, %bb.k ] ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.i, i64 88 ; 2 uses
   %.not7 = icmp eq ptr %i.aw, %.8.val
-  br i1 %.not7, label %._crit_edge, label %bb.c
+  br i1 %.not7, label %bb.b, label %bb.c
 
 bb.o:                                             ; preds = %bb.b
   invoke fastcc void @_ZN12_GLOBAL__N_132print_and_sort_export_plan_blockERKN5vcpkg3msg8MessageTIJEEERSt6vectorIPKNS0_16ExportPlanActionESaIS9_EE(ptr noundef nonnull align 8 dereferenceable(8) @_ZN5vcpkg20msgPackagesToInstallE, ptr noundef nonnull align 8 dereferenceable(24) %0)
           to label %bb.q unwind label %.loopexit.split-lp
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.c, %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i14
+  %.lcssa18 = phi ptr [ %i.h, %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %.sroa.04.012, %bb.c ], [ %.sroa.04.012, %_ZNKSt6vectorIPKN5vcpkg16ExportPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i14 ]
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %bb.p
 
-.loopexit.split-lp:                               ; preds = %.invoke, %bb.b, %bb.o
-  %3 = phi ptr [ %i.e, %bb.b ], [ %i.e, %bb.o ], [ %i.g, %.invoke ]
-  %4 = phi ptr [ %i.f, %bb.b ], [ %i.f, %bb.o ], [ %i.i, %.invoke ]
+.loopexit.split-lp:                               ; preds = %bb.b, %bb.o, %.invoke, %2
+  %3 = phi ptr [ %i.e, %bb.b ], [ %i.e, %bb.o ], [ %i.h, %.invoke ], [ %.sroa.04.012, %2 ]
+  %4 = phi ptr [ %i.f, %bb.b ], [ %i.f, %bb.o ], [ %i.g, %.invoke ], [ %i.g, %2 ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.p
 
 bb.p:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %i.ax = phi ptr [ %i.g, %.loopexit ], [ %3, %.loopexit.split-lp ]
-  %i.ay = phi ptr [ %i.i, %.loopexit ], [ %4, %.loopexit.split-lp ] ; 3 uses
+  %i.ax = phi ptr [ %.lcssa18, %.loopexit ], [ %3, %.loopexit.split-lp ]
+  %i.ay = phi ptr [ %i.g, %.loopexit ], [ %4, %.loopexit.split-lp ] ; 3 uses
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.az = load ptr, ptr %0, align 8, !tbaa !109   ; 3 uses
   %.not.i.i.i23 = icmp eq ptr %i.az, null

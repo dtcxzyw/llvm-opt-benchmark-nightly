@@ -205,7 +205,7 @@ ma_sound_config_init_2.exit:                      ; preds = %bb.c, %bb.d
   store i64 0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !164
   %.sroa.610.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 88
   store i64 -1, ptr %.sroa.610.0..sroa_idx, align 8, !tbaa !164
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 96 ; 2 uses
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx, i8 0, i64 16, i1 false)
   %.sroa.711.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 112
   store i32 %.sroa.711.0, ptr %.sroa.711.0..sroa_idx, align 8, !tbaa !118
@@ -236,8 +236,7 @@ ma_zero_memory_default.exit.i.i:                  ; preds = %ma_sound_config_ini
 
 bb.e:                                             ; preds = %ma_zero_memory_default.exit.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 976
-  %7 = load <2 x ptr>, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !134
-  store <2 x ptr> %7, ptr %i.l, align 8, !tbaa !134
+  store <2 x ptr> splat (ptr null), ptr %i.l, align 8, !tbaa !134
   %i.m = call i32 @ma_sound_init_from_file_internal(ptr noundef nonnull %0, ptr noundef nonnull readonly %6, ptr noundef nonnull %5)
   br label %ma_sound_init_ex.exit
 
@@ -640,7 +639,7 @@ ma_sound_config_init_2.exit:                      ; preds = %bb.c, %bb.d
   store i64 0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !164
   %.sroa.610.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 88
   store i64 -1, ptr %.sroa.610.0..sroa_idx, align 8, !tbaa !164
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 96 ; 2 uses
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx, i8 0, i64 16, i1 false)
   %.sroa.711.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 112
   store i32 %.sroa.711.0, ptr %.sroa.711.0..sroa_idx, align 8, !tbaa !118
@@ -672,8 +671,7 @@ ma_zero_memory_default.exit.i.i:                  ; preds = %ma_sound_config_ini
 
 bb.e:                                             ; preds = %ma_zero_memory_default.exit.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 976
-  %7 = load <2 x ptr>, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !134
-  store <2 x ptr> %7, ptr %i.l, align 8, !tbaa !134
+  store <2 x ptr> splat (ptr null), ptr %i.l, align 8, !tbaa !134
   %i.m = call i32 @ma_sound_init_from_file_internal(ptr noundef nonnull %0, ptr noundef nonnull readonly %6, ptr noundef nonnull %5)
   br label %ma_sound_init_ex.exit
 
@@ -1076,7 +1074,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 ; Function Attrs: nounwind uwtable
 define i32 @ma_sound_group_init(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #8 {
 bb.a:
-  %4 = alloca %struct.ma_sound_config, align 8    ; 15 uses
+  %4 = alloca %struct.ma_sound_config, align 8    ; 14 uses
   %.sroa.9 = alloca [16 x i8], align 4            ; 5 uses
   %.sroa.10 = alloca [20 x i8], align 4           ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
@@ -1140,10 +1138,8 @@ ma_zero_memory_default.exit.i:                    ; preds = %ma_sound_group_conf
   br i1 %.not.i, label %ma_sound_group_init_ex.exit, label %bb.d
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 96
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 976
-  %6 = load <2 x ptr>, ptr %5, align 8, !tbaa !134
-  store <2 x ptr> %6, ptr %i.i, align 8, !tbaa !134
+  store <2 x ptr> splat (ptr null), ptr %i.i, align 8, !tbaa !134
   %i.j = call fastcc i32 @ma_sound_init_from_data_source_internal(ptr noundef nonnull %0, ptr noundef nonnull readonly %4, ptr noundef nonnull %3)
   br label %ma_sound_group_init_ex.exit
 

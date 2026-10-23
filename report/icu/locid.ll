@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [5 x ptr], align 16               ; 11 uses
   %i.b = alloca [5 x i32], align 16               ; 12 uses
   %i.c = alloca i32, align 4                      ; 27 uses
-  %7 = alloca %"class.std::basic_string_view", align 8 ; 9 uses
+  %7 = alloca %"class.std::basic_string_view", align 8 ; 10 uses
   %8 = alloca %"class.icu_78::CharString", align 8 ; 14 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   tail call void @_ZN6icu_786Locale7PayloadD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.d) #25
@@ -541,7 +541,7 @@ bb.ak:                                            ; preds = %bb.ai
 
 bb.al:                                            ; preds = %bb.ai, %bb.ak, %bb.aj
   %i.de = phi ptr [ %i.da, %bb.aj ], [ null, %bb.ak ], [ null, %bb.ai ] ; 2 uses
-  %i.df = phi i64 [ %i.db, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.ai ] ; 4 uses
+  %i.df = phi i64 [ %i.db, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.ai ] ; 5 uses
   %.1103 = phi i32 [ %i.dc, %bb.aj ], [ %i.dd, %bb.ak ], [ %.0102, %bb.ai ]
   %i.dg = zext nneg i32 %.1103 to i64             ; 2 uses
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.dg
@@ -648,11 +648,12 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.eq, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.er = ptrtoint ptr %i.de to i64
   %i.es = sub i64 %i.er, %i.en
-  %i.et = getelementptr inbounds i8, ptr %i.ej, i64 %i.es
-  store ptr %i.et, ptr %9, align 8, !tbaa !36
+  %9 = getelementptr inbounds i8, ptr %i.ej, i64 %i.es
+  store i64 %i.df, ptr %7, align 8, !tbaa !35
+  %i.et = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store ptr %9, ptr %i.et, align 8, !tbaa !36
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.aw, %bb.ax, %bb.as

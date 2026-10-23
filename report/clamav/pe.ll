@@ -205,7 +205,7 @@ declare void @cli_bytecode_context_destroy(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @scan_pe_imp(ptr noundef nonnull %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [3 x ptr], align 16               ; 17 uses
+  %i.a = alloca [3 x ptr], align 16               ; 12 uses
   %i.b = alloca [3 x i8], align 1                 ; 8 uses
   %i.c = alloca ptr, align 8                      ; 15 uses
   %i.d = alloca i32, align 4                      ; 6 uses
@@ -278,7 +278,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not69.1, label %.lr.ph.preheader, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.y = phi ptr [ %i.w, %bb.g ], [ null, %bb.f ] ; 2 uses
+  %i.y = phi ptr [ %i.w, %bb.g ], [ null, %bb.f ] ; 5 uses
   %i.z = tail call zeroext i1 @cli_hm_have_any(ptr noundef %i.h, i32 noundef 2) #22 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %i.ab = zext i1 %i.z to i8
@@ -299,7 +299,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not69.2, label %.lr.ph.preheader, label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.ag = phi ptr [ %i.ae, %bb.j ], [ null, %bb.i ] ; 2 uses
+  %i.ag = phi ptr [ %i.ae, %bb.j ], [ null, %bb.i ] ; 5 uses
   %i.ah = load i8, ptr @cli_debug_flag, align 1, !tbaa !39
   %.not = icmp eq i8 %i.ah, 0
   br i1 %.not, label %bb.l, label %bb.m
@@ -329,7 +329,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   br label %.loopexit
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
-  %i.an = phi ptr [ %i.am, %bb.n ], [ %i.q, %bb.m ], [ %i.q, %bb.l ] ; 4 uses
+  %i.an = phi ptr [ %i.am, %bb.n ], [ %i.q, %bb.m ], [ %i.q, %bb.l ] ; 5 uses
   %i.ao = call fastcc i32 @hash_imptbl(ptr noundef nonnull %0, ptr noundef %i.a, ptr noundef %i.d, ptr noundef %i.b, ptr noundef %1) ; 3 uses
   %.not63 = icmp eq i32 %i.ao, 0
   br i1 %.not63, label %bb.p, label %.preheader.preheader
@@ -391,12 +391,7 @@ bb.w:                                             ; preds = %bb.v
   %i.be = load ptr, ptr %i.c, align 8, !tbaa !82
   %i.bf = call i32 @cli_append_virus(ptr noundef nonnull %0, ptr noundef %i.be) #22 ; 2 uses
   %.not68 = icmp eq i32 %i.bf, 0
-  br i1 %.not68, label %bb.x, label %..loopexit.loopexit81_crit_edge
-
-..loopexit.loopexit81_crit_edge:                  ; preds = %bb.w
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.pre90 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !82
-  br label %.loopexit.loopexit81
+  br i1 %.not68, label %bb.x, label %.loopexit.loopexit81
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %i.bg = call i32 @cli_hm_scan_wild(ptr noundef %i.an, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 0) #22
@@ -409,9 +404,7 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = load ptr, ptr %2, align 8, !tbaa !82       ; 6 uses
-  %i.bk = call i32 @cli_hm_scan(ptr noundef %3, i32 noundef %i.bb, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 1) #22
+  %i.bk = call i32 @cli_hm_scan(ptr noundef %i.y, i32 noundef %i.bb, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 1) #22
   %i.bl = icmp eq i32 %i.bk, 1
   br i1 %i.bl, label %bb.aa, label %bb.ab
 
@@ -422,7 +415,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not68.1, label %bb.ab, label %.loopexit.loopexit81
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
-  %i.bo = call i32 @cli_hm_scan_wild(ptr noundef %3, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 1) #22
+  %i.bo = call i32 @cli_hm_scan_wild(ptr noundef %i.y, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 1) #22
   %i.bp = icmp eq i32 %i.bo, 1
   br i1 %i.bp, label %bb.ac, label %bb.ad
 
@@ -432,9 +425,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %5 = load ptr, ptr %4, align 16, !tbaa !82      ; 2 uses
-  %i.bs = call i32 @cli_hm_scan(ptr noundef %5, i32 noundef %i.bb, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 2) #22
+  %i.bs = call i32 @cli_hm_scan(ptr noundef %i.ag, i32 noundef %i.bb, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 2) #22
   %i.bt = icmp eq i32 %i.bs, 1
   br i1 %i.bt, label %bb.ae, label %bb.af
 
@@ -445,7 +436,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not68.2, label %bb.af, label %.loopexit.loopexit81
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %i.bw = call i32 @cli_hm_scan_wild(ptr noundef %5, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 2) #22
+  %i.bw = call i32 @cli_hm_scan_wild(ptr noundef %i.ag, ptr noundef nonnull %i.c, ptr noundef %i.h, i32 noundef 2) #22
   %i.bx = icmp eq i32 %i.bw, 1
   br i1 %i.bx, label %bb.ag, label %.loopexit.loopexit81
 
@@ -454,15 +445,11 @@ bb.ag:                                            ; preds = %bb.af
   %i.bz = call i32 @cli_append_virus(ptr noundef nonnull %0, ptr noundef %i.by) #22 ; 0 uses
   br label %.loopexit.loopexit81
 
-.loopexit.loopexit81:                             ; preds = %bb.af, %bb.ag, %..loopexit.loopexit81_crit_edge, %bb.ae, %bb.aa
-  %6 = phi ptr [ %.pre90, %..loopexit.loopexit81_crit_edge ], [ %3, %bb.ae ], [ %3, %bb.aa ], [ %3, %bb.ag ], [ %3, %bb.af ]
-  %.2 = phi i32 [ %i.bf, %..loopexit.loopexit81_crit_edge ], [ %i.bv, %bb.ae ], [ %i.bn, %bb.aa ], [ 0, %bb.ag ], [ 0, %bb.af ]
-  %7 = load ptr, ptr %i.a, align 16, !tbaa !82
-  call void @free(ptr noundef %7) #22
-  call void @free(ptr noundef %6) #22
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %9 = load ptr, ptr %8, align 16, !tbaa !82
-  call void @free(ptr noundef %9) #22
+.loopexit.loopexit81:                             ; preds = %bb.af, %bb.ag, %bb.ae, %bb.aa, %bb.w
+  %.2 = phi i32 [ %i.bf, %bb.w ], [ %i.bv, %bb.ae ], [ %i.bn, %bb.aa ], [ 0, %bb.ag ], [ 0, %bb.af ]
+  call void @free(ptr noundef %i.an) #22
+  call void @free(ptr noundef %i.y) #22
+  call void @free(ptr noundef %i.ag) #22
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.c, %.loopexit.loopexit82, %.loopexit.loopexit81, %.preheader.preheader

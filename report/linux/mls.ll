@@ -204,11 +204,13 @@ bb.i:                                             ; preds = %bb.c
 
 bb.j:                                             ; preds = %bb.i
   store i8 0, ptr %i.s, align 1
-  %i.t = getelementptr i8, ptr %i.s, i64 1
+  %i.t = getelementptr i8, ptr %i.s, i64 1        ; 2 uses
+  %6 = icmp eq ptr %i.t, null
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.sroa.5.0 = phi ptr [ null, %bb.i ], [ %i.t, %bb.j ] ; 4 uses
+  %.sroa.5.0 = phi ptr [ null, %bb.i ], [ %i.t, %bb.j ] ; 3 uses
+  %7 = phi i1 [ true, %bb.i ], [ %6, %bb.j ]
   %i.u = getelementptr i8, ptr %0, i64 152        ; 2 uses
   %i.v = getelementptr i8, ptr %3, i64 16         ; 2 uses
   %i.w = getelementptr i8, ptr %0, i64 176        ; 4 uses
@@ -312,7 +314,7 @@ bb.y:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.o
   %i.at = icmp eq ptr %.sroa.5.0, null
-  br i1 %i.at, label %._crit_edge.1.thread, label %bb.z
+  br i1 %i.at, label %._crit_edge.1, label %bb.z
 
 bb.z:                                             ; preds = %._crit_edge
   %i.au = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.sroa.5.0, i32 noundef 58) #9 ; 3 uses
@@ -335,7 +337,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ay = getelementptr i8, ptr %3, i64 40
   store i32 %i.ax, ptr %i.ay, align 8
   %.not90104.1 = icmp eq ptr %.065.1, null
-  br i1 %.not90104.1, label %._crit_edge.1.thread143, label %.lr.ph106.1
+  br i1 %.not90104.1, label %._crit_edge.1, label %.lr.ph106.1
 
 .lr.ph106.1:                                      ; preds = %bb.ac
   %i.az = getelementptr i8, ptr %3, i64 48        ; 2 uses
@@ -410,11 +412,10 @@ bb.am:                                            ; preds = %.lr.ph.1
   %.not90.1 = icmp eq ptr %.2.1, null
   br i1 %.not90.1, label %._crit_edge.1, label %bb.ad, !llvm.loop !16
 
-._crit_edge.1:                                    ; preds = %.backedge.1, %bb.k
-  %6 = icmp eq ptr %.sroa.5.0, null
-  br i1 %6, label %._crit_edge.1.thread, label %._crit_edge.1.thread143
+._crit_edge.1:                                    ; preds = %.backedge.1, %bb.ac, %._crit_edge, %bb.k
+  br i1 %7, label %._crit_edge.1.thread, label %._crit_edge.1.thread143
 
-._crit_edge.1.thread:                             ; preds = %._crit_edge, %._crit_edge.1
+._crit_edge.1.thread:                             ; preds = %._crit_edge.1
   %i.bq = load i32, ptr %i.v, align 8
   %i.br = getelementptr i8, ptr %3, i64 40
   store i32 %i.bq, ptr %i.br, align 8
@@ -424,7 +425,7 @@ bb.am:                                            ; preds = %.lr.ph.1
   %.not98 = icmp eq i32 %i.bu, 0
   br i1 %.not98, label %._crit_edge.1.thread143, label %mls_context_cpy.exit
 
-._crit_edge.1.thread143:                          ; preds = %bb.ac, %._crit_edge.1.thread, %._crit_edge.1
+._crit_edge.1.thread143:                          ; preds = %._crit_edge.1.thread, %._crit_edge.1
   br label %mls_context_cpy.exit
 
 mls_context_cpy.exit:                             ; preds = %bb.x, %bb.w, %bb.u, %bb.t, %.lr.ph, %bb.ah, %bb.ai, %bb.ak, %bb.al, %.lr.ph.1, %bb.n, %bb.ab, %bb.h, %bb.g, %bb.f, %._crit_edge.1.thread, %bb.d, %bb.e, %bb.b, %._crit_edge.1.thread143

@@ -204,13 +204,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit: ; preds = %bb
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4Json4PathC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_12PathArgumentESB_SB_SB_SB_(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %5, ptr noundef nonnull align 8 dereferenceable(40) %6) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt12_Vector_baseIPKN4Json12PathArgumentESaIS3_EE11_M_allocateEm.exit.i:
-  %7 = alloca %"class.std::vector.16", align 8    ; 8 uses
+  %7 = alloca %"class.std::vector.16", align 8    ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #36
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i64 0, ptr %8, align 8
   %i.a = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #42
-          to label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit31 unwind label %9 ; 10 uses
+          to label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit31 unwind label %.thread69 ; 10 uses
+
+.thread69:                                        ; preds = %_ZNSt12_Vector_baseIPKN4Json12PathArgumentESaIS3_EE11_M_allocateEm.exit.i
+  %8 = landingpad { ptr, i32 }
+          cleanup
+  br label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit53
 
 _ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit31: ; preds = %_ZNSt12_Vector_baseIPKN4Json12PathArgumentESaIS3_EE11_M_allocateEm.exit.i
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -237,19 +240,14 @@ _ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit: ; preds = %_ZNSt6vectorIP
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #36
   ret void
 
-9:                                                ; preds = %_ZNSt12_Vector_baseIPKN4Json12PathArgumentESaIS3_EE11_M_allocateEm.exit.i
-  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit53
-
 bb.a:                                             ; preds = %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit31
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 40) #39
   br label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit53
 
-_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit53: ; preds = %9, %bb.a
-  %lpad.phi79 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %9 ], [ %lpad.thr_comm, %bb.a ]
+_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit53: ; preds = %.thread69, %bb.a
+  %lpad.phi79 = phi { ptr, i32 } [ %8, %.thread69 ], [ %lpad.thr_comm, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #36
   tail call void @_ZNSt6vectorIN4Json12PathArgumentESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #36
   resume { ptr, i32 } %lpad.phi79

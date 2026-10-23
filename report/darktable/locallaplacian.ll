@@ -89,7 +89,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = alloca [30 x ptr], align 16              ; 15 uses
   %i.f = alloca [30 x ptr], align 16              ; 13 uses
-  %i.g = alloca [6 x float], align 16             ; 10 uses
+  %i.g = alloca [6 x float], align 16             ; 7 uses
   %i.h = alloca [6 x [30 x ptr]], align 16        ; 19 uses
   %i.i = icmp slt i32 %2, 2
   %i.j = icmp slt i32 %3, 2
@@ -492,11 +492,8 @@ dl.exit678:                                       ; preds = %._crit_edge877.thre
   %i.qm = sext i32 %.05.lcssa.i671 to i64
   tail call fastcc void @gauss_reduce(ptr noundef %i.qj, ptr noundef %i.qi, i64 noundef %i.ql, i64 noundef %i.qm)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #14
-  %9 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %10 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %11 = getelementptr inbounds nuw i8, ptr %i.g, i64 12
   store <4 x float> <float f0x3DAAAAAB, float 2.500000e-01, float f0x3ED55556, float f0x3F155555>, ptr %i.g, align 16, !tbaa !21
-  %i.qn = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
+  %i.qn = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store <2 x float> <float 7.500000e-01, float f0x3F6AAAAB>, ptr %i.qn, align 16, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1440) %i.h, i8 0, i64 1440, i1 false)
@@ -899,10 +896,6 @@ bb.ag:                                            ; preds = %._crit_edge891.spli
 
 .lr.ph902:                                        ; preds = %bb.ag
   %i.ahn = zext i32 %i.qk to i64                  ; 2 uses
-  %.pre1075 = load float, ptr %9, align 4
-  %12 = load float, ptr %10, align 8
-  %13 = load float, ptr %11, align 4
-  %14 = load float, ptr %i.qn, align 16
   br label %bb.ah
 
 .preheader844.preheader:                          ; preds = %._crit_edge899.split, %bb.ag
@@ -1305,20 +1298,20 @@ bb.ao:                                            ; preds = %.preheader846, %.cr
   %i.awx = add nuw nsw i64 %indvars.iv1031, %i.awu ; 2 uses
   %i.awy = getelementptr inbounds nuw [4 x i8], ptr %i.aws, i64 %i.awx
   %i.awz = load float, ptr %i.awy, align 4, !tbaa !21 ; 5 uses
-  %15 = fcmp reassoc nsz arcp contract afn ugt float %.pre1075, %i.awz
-  br i1 %15, label %.critedge, label %bb.ap
+  %9 = fcmp reassoc nsz arcp contract afn ult float %i.awz, 2.500000e-01
+  br i1 %9, label %.critedge, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %16 = fcmp reassoc nsz arcp contract afn ugt float %12, %i.awz
-  br i1 %16, label %.critedge, label %bb.aq
+  %10 = fcmp reassoc nsz arcp contract afn ult float %i.awz, f0x3ED55556
+  br i1 %10, label %.critedge, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %17 = fcmp reassoc nsz arcp contract afn ugt float %13, %i.awz
-  br i1 %17, label %.critedge, label %bb.ar
+  %11 = fcmp reassoc nsz arcp contract afn ult float %i.awz, f0x3F155555
+  br i1 %11, label %.critedge, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %18 = fcmp reassoc nsz arcp contract afn ugt float %14, %i.awz
-  %spec.select1144 = select i1 %18, i32 4, i32 5
+  %12 = fcmp reassoc nsz arcp contract afn ult float %i.awz, 7.500000e-01
+  %spec.select1144 = select i1 %12, i32 4, i32 5
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ar, %bb.aq, %bb.ap, %bb.ao

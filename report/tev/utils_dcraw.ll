@@ -204,7 +204,7 @@ bb.a:
   %i.z = extractelement <2 x double> %i.y, i64 1
   store double %i.z, ptr %i.l, align 8, !tbaa !79
   %i.aa = extractelement <2 x double> %i.y, i64 0
-  %i.ab = tail call double @llvm.fmuladd.f64(double %i.k, double %.pre112, double %i.aa)
+  %i.ab = tail call double @llvm.fmuladd.f64(double %i.k, double %.pre112, double %i.aa) ; 3 uses
   store double %i.ab, ptr %i.m, align 16, !tbaa !79
   %exitcond.not = icmp eq i32 %i.d, 1
   br i1 %exitcond.not, label %.preheader54.lr.ph, label %.preheader56.1
@@ -232,7 +232,7 @@ bb.a:
   %i.au = extractelement <2 x double> %i.at, i64 1
   store double %i.au, ptr %i.ag, align 16, !tbaa !79
   %i.av = extractelement <2 x double> %i.at, i64 0
-  %i.aw = tail call double @llvm.fmuladd.f64(double %i.af, double %.pre112, double %i.av)
+  %i.aw = tail call double @llvm.fmuladd.f64(double %i.af, double %.pre112, double %i.av) ; 4 uses
   store double %i.aw, ptr %i.ah, align 8, !tbaa !79
   %exitcond.not.1 = icmp eq i32 %i.d, 2
   br i1 %exitcond.not.1, label %.preheader54.lr.ph, label %.preheader56.2
@@ -260,7 +260,7 @@ bb.a:
   %i.bp = extractelement <2 x double> %i.bo, i64 1
   store double %i.bp, ptr %i.bb, align 8, !tbaa !79
   %i.bq = extractelement <2 x double> %i.bo, i64 0
-  %i.br = tail call double @llvm.fmuladd.f64(double %i.ba, double %.pre112, double %i.bq)
+  %i.br = tail call double @llvm.fmuladd.f64(double %i.ba, double %.pre112, double %i.bq) ; 3 uses
   store double %i.br, ptr %i.bc, align 16, !tbaa !79
   %exitcond.not.2 = icmp eq i32 %i.d, 3
   br i1 %exitcond.not.2, label %.preheader54.lr.ph, label %.preheader56.3
@@ -288,20 +288,21 @@ bb.a:
   %i.ck = extractelement <2 x double> %i.cj, i64 1
   store double %i.ck, ptr %i.bw, align 16, !tbaa !79
   %i.cl = extractelement <2 x double> %i.cj, i64 0
-  %i.cm = tail call double @llvm.fmuladd.f64(double %i.bv, double %.pre112, double %i.cl)
+  %i.cm = tail call double @llvm.fmuladd.f64(double %i.bv, double %.pre112, double %i.cl) ; 2 uses
   store double %i.cm, ptr %i.bx, align 8, !tbaa !79
   br label %.preheader54.lr.ph
 
 .preheader54.lr.ph:                               ; preds = %.preheader56.3, %.preheader56.2, %.preheader56.1, %.preheader56.preheader
+  %3 = phi double [ %i.cm, %.preheader56.3 ], [ undef, %.preheader56.2 ], [ undef, %.preheader56.1 ], [ undef, %.preheader56.preheader ] ; 2 uses
+  %4 = phi double [ %i.br, %.preheader56.3 ], [ %i.br, %.preheader56.2 ], [ undef, %.preheader56.1 ], [ undef, %.preheader56.preheader ] ; 2 uses
+  %5 = phi double [ %i.aw, %.preheader56.3 ], [ %i.aw, %.preheader56.2 ], [ %i.aw, %.preheader56.1 ], [ undef, %.preheader56.preheader ] ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 153268
   %i.co = load <2 x double>, ptr %i.a, align 16, !tbaa !79 ; 3 uses
   %i.cp = extractelement <2 x double> %i.co, i64 0
   %i.cq = fadd double %i.cp, 0.000000e+00
   %i.cr = extractelement <2 x double> %i.co, i64 1
   %i.cs = fadd double %i.cq, %i.cr
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %4 = load double, ptr %3, align 16, !tbaa !79   ; 2 uses
-  %i.ct = fadd double %i.cs, %4                   ; 4 uses
+  %i.ct = fadd double %i.cs, %i.ab                ; 4 uses
   %i.cu = fcmp ogt double %i.ct, 1.000000e-05
   br i1 %i.cu, label %.preheader52, label %.preheader53
 
@@ -310,12 +311,13 @@ bb.a:
   br label %bb.b
 
 .preheader52:                                     ; preds = %.preheader54.lr.ph
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.cv = insertelement <2 x double> poison, double %i.ct, i64 0
   %i.cw = shufflevector <2 x double> %i.cv, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cx = fdiv <2 x double> %i.co, %i.cw
   store <2 x double> %i.cx, ptr %i.a, align 16, !tbaa !79
-  %i.cy = fdiv double %4, %i.ct
-  store double %i.cy, ptr %3, align 16, !tbaa !79
+  %i.cy = fdiv double %i.ab, %i.ct
+  store double %i.cy, ptr %6, align 16, !tbaa !79
   %i.cz = fdiv double 1.000000e+00, %i.ct
   %i.da = fptrunc double %i.cz to float
   br label %bb.b
@@ -333,9 +335,7 @@ bb.b:                                             ; preds = %.preheader52, %.pre
   %i.de = fadd double %i.dd, 0.000000e+00
   %i.df = extractelement <2 x double> %i.dc, i64 1
   %i.dg = fadd double %i.de, %i.df
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
-  %6 = load double, ptr %5, align 8, !tbaa !79    ; 2 uses
-  %i.dh = fadd double %i.dg, %6                   ; 4 uses
+  %i.dh = fadd double %i.dg, %5                   ; 4 uses
   %i.di = fcmp ogt double %i.dh, 1.000000e-05
   br i1 %i.di, label %.preheader52.1, label %.preheader53.1
 
@@ -344,12 +344,13 @@ bb.b:                                             ; preds = %.preheader52, %.pre
   br label %bb.c
 
 .preheader52.1:                                   ; preds = %.preheader54.1
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.dj = insertelement <2 x double> poison, double %i.dh, i64 0
   %i.dk = shufflevector <2 x double> %i.dj, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dl = fdiv <2 x double> %i.dc, %i.dk
   store <2 x double> %i.dl, ptr %i.db, align 8, !tbaa !79
-  %i.dm = fdiv double %6, %i.dh
-  store double %i.dm, ptr %5, align 8, !tbaa !79
+  %i.dm = fdiv double %5, %i.dh
+  store double %i.dm, ptr %7, align 8, !tbaa !79
   %i.dn = fdiv double 1.000000e+00, %i.dh
   %i.do = fptrunc double %i.dn to float
   br label %bb.c
@@ -368,9 +369,7 @@ bb.c:                                             ; preds = %.preheader52.1, %.p
   %i.dt = fadd double %i.ds, 0.000000e+00
   %i.du = extractelement <2 x double> %i.dr, i64 1
   %i.dv = fadd double %i.dt, %i.du
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
-  %8 = load double, ptr %7, align 16, !tbaa !79   ; 2 uses
-  %i.dw = fadd double %i.dv, %8                   ; 4 uses
+  %i.dw = fadd double %i.dv, %4                   ; 4 uses
   %i.dx = fcmp ogt double %i.dw, 1.000000e-05
   br i1 %i.dx, label %.preheader52.2, label %.preheader53.2
 
@@ -379,12 +378,13 @@ bb.c:                                             ; preds = %.preheader52.1, %.p
   br label %bb.d
 
 .preheader52.2:                                   ; preds = %.preheader54.2
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.dy = insertelement <2 x double> poison, double %i.dw, i64 0
   %i.dz = shufflevector <2 x double> %i.dy, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ea = fdiv <2 x double> %i.dr, %i.dz
   store <2 x double> %i.ea, ptr %i.dq, align 16, !tbaa !79
-  %i.eb = fdiv double %8, %i.dw
-  store double %i.eb, ptr %7, align 16, !tbaa !79
+  %i.eb = fdiv double %4, %i.dw
+  store double %i.eb, ptr %8, align 16, !tbaa !79
   %i.ec = fdiv double 1.000000e+00, %i.dw
   %i.ed = fptrunc double %i.ec to float
   br label %bb.d
@@ -403,9 +403,7 @@ bb.d:                                             ; preds = %.preheader52.2, %.p
   %i.ei = fadd double %i.eh, 0.000000e+00
   %i.ej = extractelement <2 x double> %i.eg, i64 1
   %i.ek = fadd double %i.ei, %i.ej
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 88 ; 2 uses
-  %10 = load double, ptr %9, align 8, !tbaa !79   ; 2 uses
-  %i.el = fadd double %i.ek, %10                  ; 4 uses
+  %i.el = fadd double %i.ek, %3                   ; 4 uses
   %i.em = fcmp ogt double %i.el, 1.000000e-05
   br i1 %i.em, label %.preheader52.3, label %.preheader53.3
 
@@ -414,11 +412,12 @@ bb.d:                                             ; preds = %.preheader52.2, %.p
   br label %bb.e
 
 .preheader52.3:                                   ; preds = %.preheader54.3
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.en = insertelement <2 x double> poison, double %i.el, i64 0
   %i.eo = shufflevector <2 x double> %i.en, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ep = fdiv <2 x double> %i.eg, %i.eo
   store <2 x double> %i.ep, ptr %i.ef, align 8, !tbaa !79
-  %i.eq = fdiv double %10, %i.el
+  %i.eq = fdiv double %3, %i.el
   store double %i.eq, ptr %9, align 8, !tbaa !79
   %i.er = fdiv double 1.000000e+00, %i.el
   %i.es = fptrunc double %i.er to float

@@ -202,11 +202,13 @@ get_clock.exit.i:                                 ; preds = %bb.q, %bb.p
   br i1 %.not36.i, label %write_jr_code_debug_info.exit.critedge, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %get_clock.exit.i, %bb.s
-  %i.co = phi i64 [ %i.dc, %bb.s ], [ 0, %get_clock.exit.i ]
+  %10 = phi i64 [ %i.dc, %bb.s ], [ 0, %get_clock.exit.i ]
+  %11 = phi i32 [ %13, %bb.s ], [ 49, %get_clock.exit.i ] ; 2 uses
+  %i.co = phi i64 [ %12, %bb.s ], [ 1, %get_clock.exit.i ] ; 2 uses
   %.030.i = phi i32 [ %i.db, %bb.s ], [ 0, %get_clock.exit.i ]
-  %i.cp = phi i32 [ %i.da, %bb.s ], [ 49, %get_clock.exit.i ] ; 2 uses
-  %i.cq = phi i64 [ %i.cz, %bb.s ], [ 1, %get_clock.exit.i ] ; 2 uses
-  %i.cr = getelementptr inbounds nuw [48 x i8], ptr %i.h, i64 %i.co
+  %i.cp = phi i32 [ %i.da, %bb.s ], [ 49, %get_clock.exit.i ]
+  %i.cq = phi i64 [ %i.cz, %bb.s ], [ 1, %get_clock.exit.i ]
+  %i.cr = getelementptr inbounds nuw [48 x i8], ptr %i.h, i64 %10
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
   %i.ct = load ptr, ptr %i.cs, align 8            ; 2 uses
   %.not26.i = icmp eq ptr %i.ct, null
@@ -215,14 +217,16 @@ get_clock.exit.i:                                 ; preds = %bb.q, %bb.p
 bb.r:                                             ; preds = %.lr.ph.i
   %i.cu = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ct) #17
   %i.cv = trunc i64 %i.cu to i32
-  %i.cw = add i32 %i.cp, 17
-  %i.cx = add i32 %i.cw, %i.cv
-  %i.cy = add i64 %i.cq, 1
+  %i.cw = add i32 %11, 17
+  %i.cx = add i32 %i.cw, %i.cv                    ; 2 uses
+  %i.cy = add i64 %i.co, 1                        ; 2 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %.lr.ph.i
   %i.cz = phi i64 [ %i.cq, %.lr.ph.i ], [ %i.cy, %bb.r ] ; 2 uses
   %i.da = phi i32 [ %i.cp, %.lr.ph.i ], [ %i.cx, %bb.r ] ; 2 uses
+  %12 = phi i64 [ %i.co, %.lr.ph.i ], [ %i.cy, %bb.r ]
+  %13 = phi i32 [ %11, %.lr.ph.i ], [ %i.cx, %bb.r ]
   %i.db = add i32 %.030.i, 1                      ; 2 uses
   %i.dc = sext i32 %i.db to i64                   ; 2 uses
   %i.dd = icmp ugt i64 %i.bu, %i.dc

@@ -205,8 +205,8 @@ scalar.ph587:                                     ; preds = %scalar.ph587.prehea
   %i.afs = getelementptr inbounds nuw [4 x i8], ptr %i.adc, i64 %indvars.iv
   store i32 %i.afr, ptr %i.afs, align 4, !tbaa !88
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %35 = icmp samesign ult i64 %indvars.iv.next, %i.adi
-  br i1 %35, label %scalar.ph587, label %._crit_edge, !llvm.loop !739
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.adi
+  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph587, !llvm.loop !739
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit359: ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #12
@@ -609,8 +609,8 @@ _ZNSt6vectorIiSaIiEED2Ev.exit427:                 ; preds = %bb.fr, %bb.fs
   %.not.i.i.i428 = icmp eq ptr %i.adc, null
   br i1 %.not.i.i.i428, label %_ZNSt6vectorIiSaIiEED2Ev.exit429, label %.loopexit.split-lp.loopexit.split-lp.thread
 
-.loopexit.split-lp.loopexit.split-lp.thread:      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit395, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit420, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp
-  %.pn81.pn577 = phi { ptr, i32 } [ %.pn81.pn, %.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp ], [ %.pn79, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit395 ], [ %.pn75, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit420 ]
+.loopexit.split-lp.loopexit.split-lp.thread:      ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit395, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit420, %.loopexit.split-lp.loopexit.split-lp
+  %.pn81.pn577 = phi { ptr, i32 } [ %.pn81.pn, %.loopexit.split-lp.loopexit.split-lp ], [ %.pn75, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit420 ], [ %.pn79, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit395 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp ]
   %i.ali = ptrtoint ptr %i.adb to i64
   %i.alj = ptrtoint ptr %i.adc to i64
   %i.alk = sub i64 %i.ali, %i.alj

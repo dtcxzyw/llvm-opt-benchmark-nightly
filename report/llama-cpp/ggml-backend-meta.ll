@@ -205,9 +205,9 @@ bb.gk:                                            ; preds = %bb.bl, %bb.bl
   br i1 %.not.i429, label %.invoke, label %bb.gl
 
 .invoke:                                          ; preds = %bb.gz, %._crit_edge.us910, %.preheader598, %bb.gw, %bb.gs, %bb.bj, %bb.bf, %bb.bb, %bb.ax, %bb.at, %bb.ap, %bb.al, %bb.ah, %bb.ad, %bb.z, %bb.gp, %ggml_backend_buffer_is_meta.exit.i425, %bb.gr, %bb.gk, %bb.ey, %bb.ek, %bb.ei, %bb.cq, %bb.cf
-  %i.hw = phi i32 [ 543, %bb.ey ], [ 761, %bb.ei ], [ 543, %bb.cf ], [ 543, %bb.gk ], [ 543, %bb.cq ], [ 761, %bb.ek ], [ 1062, %bb.gp ], [ 1104, %bb.gs ], [ 1099, %._crit_edge.us910 ], [ 1086, %bb.gw ], [ 463, %bb.gr ], [ 862, %bb.z ], [ 862, %bb.bj ], [ 862, %bb.bf ], [ 862, %bb.bb ], [ 862, %bb.ax ], [ 862, %bb.at ], [ 862, %bb.ap ], [ 862, %bb.al ], [ 862, %bb.ah ], [ 862, %bb.ad ], [ 463, %ggml_backend_buffer_is_meta.exit.i425 ], [ 1099, %.preheader598 ], [ 1091, %bb.gz ]
-  %i.hx = phi ptr [ @.str.10, %bb.ey ], [ @.str.10, %bb.ei ], [ @.str.10, %bb.cf ], [ @.str.10, %bb.gk ], [ @.str.10, %bb.cq ], [ @.str.10, %bb.ek ], [ @.str.49, %bb.gp ], [ @.str.10, %bb.gs ], [ @.str.10, %._crit_edge.us910 ], [ @.str.10, %bb.gw ], [ @.str.10, %bb.gr ], [ @.str.10, %bb.z ], [ @.str.10, %bb.bj ], [ @.str.10, %bb.bf ], [ @.str.10, %bb.bb ], [ @.str.10, %bb.ax ], [ @.str.10, %bb.at ], [ @.str.10, %bb.ap ], [ @.str.10, %bb.al ], [ @.str.10, %bb.ah ], [ @.str.10, %bb.ad ], [ @.str.10, %ggml_backend_buffer_is_meta.exit.i425 ], [ @.str.10, %.preheader598 ], [ @.str.10, %bb.gz ]
-  %i.hy = phi ptr [ @.str.56, %bb.ey ], [ @.str.67, %bb.ei ], [ @.str.56, %bb.cf ], [ @.str.56, %bb.gk ], [ @.str.56, %bb.cq ], [ @.str.67, %bb.ek ], [ %i.ia, %bb.gp ], [ @.str.52, %bb.gs ], [ @.str.51, %._crit_edge.us910 ], [ @.str.50, %bb.gw ], [ @.str.43, %bb.gr ], [ @.str.48, %bb.z ], [ @.str.48, %bb.bj ], [ @.str.48, %bb.bf ], [ @.str.48, %bb.bb ], [ @.str.48, %bb.ax ], [ @.str.48, %bb.at ], [ @.str.48, %bb.ap ], [ @.str.48, %bb.al ], [ @.str.48, %bb.ah ], [ @.str.48, %bb.ad ], [ @.str.43, %ggml_backend_buffer_is_meta.exit.i425 ], [ @.str.51, %.preheader598 ], [ @.str.31, %bb.gz ]
+  %i.hw = phi i32 [ 543, %bb.ey ], [ 761, %bb.ek ], [ 761, %bb.ei ], [ 543, %bb.cq ], [ 543, %bb.cf ], [ 543, %bb.gk ], [ 1062, %bb.gp ], [ 1104, %bb.gs ], [ 1099, %._crit_edge.us910 ], [ 1086, %bb.gw ], [ 463, %bb.gr ], [ 862, %bb.z ], [ 862, %bb.bj ], [ 862, %bb.bf ], [ 862, %bb.bb ], [ 862, %bb.ax ], [ 862, %bb.at ], [ 862, %bb.ap ], [ 862, %bb.al ], [ 862, %bb.ah ], [ 862, %bb.ad ], [ 463, %ggml_backend_buffer_is_meta.exit.i425 ], [ 1099, %.preheader598 ], [ 1091, %bb.gz ]
+  %i.hx = phi ptr [ @.str.10, %bb.ey ], [ @.str.10, %bb.ek ], [ @.str.10, %bb.ei ], [ @.str.10, %bb.cq ], [ @.str.10, %bb.cf ], [ @.str.10, %bb.gk ], [ @.str.49, %bb.gp ], [ @.str.10, %bb.gs ], [ @.str.10, %._crit_edge.us910 ], [ @.str.10, %bb.gw ], [ @.str.10, %bb.gr ], [ @.str.10, %bb.z ], [ @.str.10, %bb.bj ], [ @.str.10, %bb.bf ], [ @.str.10, %bb.bb ], [ @.str.10, %bb.ax ], [ @.str.10, %bb.at ], [ @.str.10, %bb.ap ], [ @.str.10, %bb.al ], [ @.str.10, %bb.ah ], [ @.str.10, %bb.ad ], [ @.str.10, %ggml_backend_buffer_is_meta.exit.i425 ], [ @.str.10, %.preheader598 ], [ @.str.10, %bb.gz ]
+  %i.hy = phi ptr [ @.str.56, %bb.ey ], [ @.str.67, %bb.ek ], [ @.str.67, %bb.ei ], [ @.str.56, %bb.cq ], [ @.str.56, %bb.cf ], [ @.str.56, %bb.gk ], [ %i.ia, %bb.gp ], [ @.str.52, %bb.gs ], [ @.str.51, %._crit_edge.us910 ], [ @.str.50, %bb.gw ], [ @.str.43, %bb.gr ], [ @.str.48, %bb.z ], [ @.str.48, %bb.bj ], [ @.str.48, %bb.bf ], [ @.str.48, %bb.bb ], [ @.str.48, %bb.ax ], [ @.str.48, %bb.at ], [ @.str.48, %bb.ap ], [ @.str.48, %bb.al ], [ @.str.48, %bb.ah ], [ @.str.48, %bb.ad ], [ @.str.43, %ggml_backend_buffer_is_meta.exit.i425 ], [ @.str.51, %.preheader598 ], [ @.str.31, %bb.gz ]
   invoke void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str.8, i32 noundef %i.hw, ptr noundef nonnull %i.hx, ptr noundef %i.hy) #26
           to label %.cont unwind label %bb.hc
 
@@ -610,12 +610,12 @@ bb.hc:                                            ; preds = %.invoke, %bb.gp
   %exitcond981.not = icmp eq i64 %i.pr, 10
   br i1 %exitcond981.not, label %bb.gs, label %bb.gt, !llvm.loop !406
 
-_ZNSt6vectorI29ggml_backend_meta_split_stateSaIS0_EED2Ev.exit423: ; preds = %bb.gq, %bb.gs
+_ZNSt6vectorI29ggml_backend_meta_split_stateSaIS0_EED2Ev.exit423: ; preds = %bb.gs, %bb.gq
   call void @_ZdlPvm(ptr noundef nonnull %i.dj, i64 noundef 21280) #29, !noalias !445
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #27, !noalias !445
   br label %"_ZZL33ggml_backend_meta_get_split_stateR41ggml_backend_meta_simple_tensor_containerPK11ggml_tensorbENK4$_19clEv.exit"
 
-bb.hd:                                            ; preds = %bb.aa, %bb.bp, %bb.bs, %bb.bv, %bb.by, %bb.cb, %bb.ce, %bb.cj, %bb.cm, %bb.cp, %bb.cu, %bb.cx, %bb.da, %bb.dd, %bb.dg, %bb.dj, %bb.dm, %bb.dp, %bb.ds, %bb.dv, %bb.dy, %bb.eb, %bb.ee, %bb.eh, %bb.eo, %bb.er, %bb.eu, %bb.ex, %bb.fc, %bb.ff, %bb.fi, %bb.fl, %bb.fo, %bb.fr, %bb.fu, %bb.fx, %bb.ga, %bb.gd, %bb.gg, %bb.gj, %bb.go, %bb.hc
+bb.hd:                                            ; preds = %bb.hc, %bb.go, %bb.gj, %bb.gg, %bb.gd, %bb.ga, %bb.fx, %bb.fu, %bb.fr, %bb.fo, %bb.fl, %bb.fi, %bb.ff, %bb.fc, %bb.ex, %bb.eu, %bb.er, %bb.eo, %bb.eh, %bb.ee, %bb.eb, %bb.dy, %bb.dv, %bb.ds, %bb.dp, %bb.dm, %bb.dj, %bb.dg, %bb.dd, %bb.da, %bb.cx, %bb.cu, %bb.cp, %bb.cm, %bb.cj, %bb.ce, %bb.cb, %bb.by, %bb.bv, %bb.bs, %bb.bp, %bb.aa
   %.pn120.pn.i = phi { ptr, i32 } [ %i.hz, %bb.go ], [ %i.du, %bb.aa ], [ %i.pq, %bb.hc ], [ %i.ga, %bb.bp ], [ %i.gb, %bb.bs ], [ %i.gc, %bb.bv ], [ %i.gd, %bb.by ], [ %i.ge, %bb.cb ], [ %i.gf, %bb.ce ], [ %i.hq, %bb.fx ], [ %i.gh, %bb.cj ], [ %i.gj, %bb.cm ], [ %i.gk, %bb.cp ], [ %i.hu, %bb.gj ], [ %i.gm, %bb.cu ], [ %i.gn, %bb.cx ], [ %i.go, %bb.da ], [ %i.gp, %bb.dd ], [ %i.gq, %bb.dg ], [ %i.gr, %bb.dj ], [ %i.gs, %bb.dm ], [ %i.gt, %bb.dp ], [ %i.gu, %bb.ds ], [ %i.gv, %bb.dv ], [ %i.gw, %bb.dy ], [ %i.gx, %bb.eb ], [ %i.gy, %bb.ee ], [ %i.gz, %bb.eh ], [ %i.ht, %bb.gg ], [ %i.hs, %bb.gd ], [ %i.he, %bb.eo ], [ %i.hf, %bb.er ], [ %i.hg, %bb.eu ], [ %i.hh, %bb.ex ], [ %i.hr, %bb.ga ], [ %i.hj, %bb.fc ], [ %i.hk, %bb.ff ], [ %i.hl, %bb.fi ], [ %i.hm, %bb.fl ], [ %i.hn, %bb.fo ], [ %i.ho, %bb.fr ], [ %i.hp, %bb.fu ]
   call void @_ZdlPvm(ptr noundef nonnull %i.dj, i64 noundef 21280) #29, !noalias !445
   br label %_ZNSt6vectorI29ggml_backend_meta_split_stateSaIS0_EED2Ev.exit
@@ -625,7 +625,7 @@ common.resume:                                    ; preds = %_ZNSt7__cxx1112basi
   resume { ptr, i32 } %common.resume.op
 
 _ZNSt6vectorI29ggml_backend_meta_split_stateSaIS0_EED2Ev.exit: ; preds = %bb.hd, %bb.w
-  %.pn120.pn.pn.i = phi { ptr, i32 } [ %i.ds, %bb.w ], [ %.pn120.pn.i, %bb.hd ]
+  %.pn120.pn.pn.i = phi { ptr, i32 } [ %.pn120.pn.i, %bb.hd ], [ %i.ds, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #27, !noalias !445
   br label %common.resume
 

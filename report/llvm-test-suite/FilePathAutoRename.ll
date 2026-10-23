@@ -19,7 +19,7 @@ $_ZNK11CStringBaseIwE3MidEii = comdat any
 define dso_local noundef zeroext i1 @_Z14AutoRenamePathR11CStringBaseIwE(ptr noundef nonnull align 8 dereferenceable(16) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 _ZN11CStringBaseIwEC2Ev.exit:
   %1 = alloca %class.CStringBase, align 8         ; 9 uses
-  %2 = alloca %class.CStringBase, align 8         ; 12 uses
+  %2 = alloca %class.CStringBase, align 8         ; 14 uses
   %3 = alloca %class.CStringBase, align 8         ; 12 uses
   %4 = alloca %class.CStringBase, align 8         ; 7 uses
   %5 = alloca %class.CStringBase, align 8         ; 7 uses
@@ -88,7 +88,6 @@ _ZNK11CStringBaseIwE11ReverseFindEw.exit47:       ; preds = %bb.g, %_ZN11CString
   %.1.i134 = phi i32 [ -1, %_ZN11CStringBaseIwEC2Ev.exit ], [ %.1.i, %bb.f ], [ %.1.i, %bb.g ] ; 5 uses
   %.1.i46 = phi i32 [ -1, %_ZN11CStringBaseIwEC2Ev.exit ], [ %i.x, %bb.f ], [ -1, %bb.g ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 0, ptr %i.aa, align 8
@@ -105,7 +104,7 @@ _ZNK11CStringBaseIwE11ReverseFindEw.exit47:       ; preds = %bb.g, %_ZN11CString
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 0, ptr %i.ae, align 8
   %i.af = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #8
-          to label %.noexc71 unwind label %bb.t   ; 7 uses
+          to label %.noexc71 unwind label %bb.t   ; 5 uses
 
 .noexc71:                                         ; preds = %.noexc
   store ptr %i.af, ptr %3, align 8, !tbaa !12
@@ -122,6 +121,7 @@ bb.h:                                             ; preds = %.noexc71
           to label %_ZNK11CStringBaseIwE4LeftEi.exit unwind label %bb.u
 
 _ZNK11CStringBaseIwE4LeftEi.exit:                 ; preds = %bb.h
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store i32 0, ptr %6, align 8, !tbaa !16
   store i32 0, ptr %i.ab, align 4, !tbaa !14
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
@@ -260,7 +260,7 @@ bb.w:                                             ; preds = %bb.v
 _ZN11CStringBaseIwED2Ev.exit104:                  ; preds = %bb.w, %bb.v, %bb.u
   %.pn = phi { ptr, i32 } [ %i.bs, %bb.u ], [ %i.bt, %bb.v ], [ %i.bt, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
-  br label %.thread
+  br label %bb.ao
 
 bb.x:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit
   %i.bw = landingpad { ptr, i32 }
@@ -281,10 +281,11 @@ bb.z:                                             ; preds = %bb.y
 _ZN11CStringBaseIwED2Ev.exit105:                  ; preds = %bb.z, %bb.y, %bb.x
   %.pn35 = phi { ptr, i32 } [ %i.bw, %bb.x ], [ %i.bx, %bb.y ], [ %i.bx, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
-  br label %.thread
+  br label %bb.ao
 
 bb.aa:                                            ; preds = %.noexc71
-  store i32 0, ptr %6, align 8, !tbaa !16
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  store i32 0, ptr %7, align 8, !tbaa !16
   store i32 0, ptr %i.ab, align 4, !tbaa !14
   %i.ca = load i32, ptr %i.d, align 8, !tbaa !16  ; 2 uses
   %i.cb = add nsw i32 %i.ca, 1                    ; 4 uses
@@ -323,18 +324,19 @@ bb.ad:                                            ; preds = %bb.ad, %_ZN11CStrin
 
 _ZN11CStringBaseIwEaSERKS0_.exit122:              ; preds = %bb.ad
   %i.cn = load i32, ptr %i.d, align 8, !tbaa !16  ; 2 uses
-  store i32 %i.cn, ptr %6, align 8, !tbaa !16
+  store i32 %i.cn, ptr %7, align 8, !tbaa !16
   br label %bb.ae
 
 bb.ae:                                            ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit122, %_ZN11CStringBaseIwED2Ev.exit103
-  %.pr135 = phi ptr [ %i.ci, %_ZN11CStringBaseIwEaSERKS0_.exit122 ], [ %i.ar, %_ZN11CStringBaseIwED2Ev.exit103 ] ; 10 uses
   %i.co = phi i32 [ %i.cb, %_ZN11CStringBaseIwEaSERKS0_.exit122 ], [ %i.ak, %_ZN11CStringBaseIwED2Ev.exit103 ] ; 7 uses
   %i.cp = phi i32 [ %i.cn, %_ZN11CStringBaseIwEaSERKS0_.exit122 ], [ %i.aw, %_ZN11CStringBaseIwED2Ev.exit103 ] ; 7 uses
-  %.pr135172 = ptrtoaddr ptr %.pr135 to i64
+  %8 = phi ptr [ %i.ci, %_ZN11CStringBaseIwEaSERKS0_.exit122 ], [ %i.ar, %_ZN11CStringBaseIwED2Ev.exit103 ] ; 11 uses
+  %.pr135172 = ptrtoaddr ptr %8 to i64
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.cq = xor i32 %i.cp, -1
   %i.cr = add i32 %i.co, %i.cq                    ; 3 uses
   %.not.i.i123 = icmp slt i32 %i.cr, 1
-  br i1 %.not.i.i123, label %bb.af, label %_ZN11CStringBaseIwEpLEw.exitthread-pre-split
+  br i1 %.not.i.i123, label %bb.af, label %_ZN11CStringBaseIwEpLEw.exit
 
 bb.af:                                            ; preds = %bb.ae
   %i.cs = icmp sgt i32 %i.co, 64
@@ -349,7 +351,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.cy = add nsw i32 %.1.i.i, %i.co              ; 2 uses
   %i.cz = add nsw i32 %i.cy, 1                    ; 3 uses
   %i.da = icmp eq i32 %i.cz, %i.co
-  br i1 %i.da, label %_ZN11CStringBaseIwEpLEw.exitthread-pre-split, label %bb.ag
+  br i1 %i.da, label %_ZN11CStringBaseIwEpLEw.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.db = zext nneg i32 %i.cz to i64
@@ -382,7 +384,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %.pr135, i64 %index ; 2 uses
+  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %index ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 16
   %wide.load = load <4 x i32>, ptr %i.dk, align 4, !tbaa !14
   %wide.load173 = load <4 x i32>, ptr %i.dl, align 4, !tbaa !14
@@ -407,7 +409,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i.i.i, %midd
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv.i.i.i.prol = phi i64 [ %indvars.iv.next.i.i.i.prol, %scalar.ph.prol ], [ %indvars.iv.i.i.i.ph, %scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %.pr135, i64 %indvars.iv.i.i.i.prol
+  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.i.i.i.prol
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !14
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %indvars.iv.i.i.i.prol
   store i32 %i.dq, ptr %i.dr, align 4, !tbaa !14
@@ -424,22 +426,22 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.3, %scalar.ph ], [ %indvars.iv.i.i.i.unr, %scalar.ph.prol.loopexit ] ; 6 uses
-  %i.du = getelementptr inbounds nuw [4 x i8], ptr %.pr135, i64 %indvars.iv.i.i.i
+  %i.du = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.i.i.i
   %i.dv = load i32, ptr %i.du, align 4, !tbaa !14
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %indvars.iv.i.i.i
   store i32 %i.dv, ptr %i.dw, align 4, !tbaa !14
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %i.dx = getelementptr inbounds nuw [4 x i8], ptr %.pr135, i64 %indvars.iv.next.i.i.i
+  %i.dx = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.next.i.i.i
   %i.dy = load i32, ptr %i.dx, align 4, !tbaa !14
   %i.dz = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %indvars.iv.next.i.i.i
   store i32 %i.dy, ptr %i.dz, align 4, !tbaa !14
   %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
-  %i.ea = getelementptr inbounds nuw [4 x i8], ptr %.pr135, i64 %indvars.iv.next.i.i.i.1
+  %i.ea = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.next.i.i.i.1
   %i.eb = load i32, ptr %i.ea, align 4, !tbaa !14
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %indvars.iv.next.i.i.i.1
   store i32 %i.eb, ptr %i.ec, align 4, !tbaa !14
   %indvars.iv.next.i.i.i.2 = add nuw nsw i64 %indvars.iv.i.i.i, 3 ; 2 uses
-  %i.ed = getelementptr inbounds nuw [4 x i8], ptr %.pr135, i64 %indvars.iv.next.i.i.i.2
+  %i.ed = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.next.i.i.i.2
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !14
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %indvars.iv.next.i.i.i.2
   store i32 %i.ee, ptr %i.ef, align 4, !tbaa !14
@@ -448,30 +450,26 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %exitcond.not.i.i.i.3, label %._crit_edge.thread.i.i.i, label %scalar.ph, !llvm.loop !25
 
 ._crit_edge.thread.i.i.i:                         ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.preheader.i.i.i
-  call void @_ZdaPv(ptr noundef nonnull %.pr135) #9
+  call void @_ZdaPv(ptr noundef nonnull %8) #9
   br label %bb.ah
 
 bb.ah:                                            ; preds = %._crit_edge.thread.i.i.i, %.noexc126
   store ptr %i.df, ptr %2, align 8, !tbaa !12
-  %i.eg = sext i32 %i.cp to i64                   ; 2 uses
+  %i.eg = sext i32 %i.cp to i64
   %i.eh = getelementptr inbounds [4 x i8], ptr %i.df, i64 %i.eg
   store i32 0, ptr %i.eh, align 4, !tbaa !14
   store i32 %i.cz, ptr %i.z, align 4, !tbaa !15
   br label %_ZN11CStringBaseIwEpLEw.exit
 
-_ZN11CStringBaseIwEpLEw.exitthread-pre-split:     ; preds = %bb.af, %bb.ae
-  %.pre148 = sext i32 %i.cp to i64
-  br label %_ZN11CStringBaseIwEpLEw.exit
-
-_ZN11CStringBaseIwEpLEw.exit:                     ; preds = %_ZN11CStringBaseIwEpLEw.exitthread-pre-split, %bb.ah
-  %.pre-phi = phi i64 [ %.pre148, %_ZN11CStringBaseIwEpLEw.exitthread-pre-split ], [ %i.eg, %bb.ah ]
-  %7 = phi ptr [ %.pr135, %_ZN11CStringBaseIwEpLEw.exitthread-pre-split ], [ %i.df, %bb.ah ] ; 5 uses
-  %i.ei = getelementptr inbounds [4 x i8], ptr %7, i64 %.pre-phi
+_ZN11CStringBaseIwEpLEw.exit:                     ; preds = %bb.ae, %bb.af, %bb.ah
+  %10 = phi ptr [ %8, %bb.ae ], [ %8, %bb.af ], [ %i.df, %bb.ah ] ; 5 uses
+  %11 = sext i32 %i.cp to i64
+  %i.ei = getelementptr inbounds [4 x i8], ptr %10, i64 %11
   store i32 95, ptr %i.ei, align 4, !tbaa !14
   %i.ej = add nsw i32 %i.cp, 1                    ; 2 uses
-  store i32 %i.ej, ptr %6, align 8, !tbaa !16
+  store i32 %i.ej, ptr %9, align 8, !tbaa !16
   %i.ek = sext i32 %i.ej to i64
-  %i.el = getelementptr inbounds [4 x i8], ptr %7, i64 %i.ek
+  %i.el = getelementptr inbounds [4 x i8], ptr %10, i64 %i.ek
   store i32 0, ptr %i.el, align 4, !tbaa !14
   br label %bb.ai
 
@@ -505,7 +503,7 @@ bb.am:                                            ; preds = %bb.al
 
 _ZN11CStringBaseIwED2Ev.exit128:                  ; preds = %bb.al, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
-  call void @_ZdaPv(ptr noundef nonnull %7) #9
+  call void @_ZdaPv(ptr noundef nonnull %10) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
   %i.et = load ptr, ptr %1, align 8, !tbaa !12    ; 2 uses
   %i.eu = icmp eq ptr %i.et, null
@@ -525,35 +523,32 @@ _ZN11CStringBaseIwED2Ev.exit129:                  ; preds = %_ZN11CStringBaseIwE
           cleanup
   br label %bb.ao
 
-.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.ag, %bb.ab, %bb.ak
-  %i.ew = phi ptr [ %.pr135, %bb.ag ], [ %i.ab, %bb.ab ], [ %7, %bb.ak ]
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.ak, %bb.ab, %bb.ag
+  %i.ew = phi ptr [ %10, %bb.ak ], [ %i.ab, %bb.ab ], [ %8, %bb.ag ]
   %lpad.loopexit.split-lp144 = landingpad { ptr, i32 }
           cleanup
   br label %bb.ao
 
-bb.ao:                                            ; preds = %.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp
-  %8 = phi ptr [ %7, %.loopexit.split-lp.loopexit ], [ %i.ew, %.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp144, %.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
+bb.ao:                                            ; preds = %.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp, %_ZN11CStringBaseIwED2Ev.exit105, %_ZN11CStringBaseIwED2Ev.exit104
+  %12 = phi ptr [ %i.ar, %_ZN11CStringBaseIwED2Ev.exit105 ], [ %i.ab, %_ZN11CStringBaseIwED2Ev.exit104 ], [ %10, %.loopexit.split-lp.loopexit ], [ %i.ew, %.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
+  %.pn37.pn = phi { ptr, i32 } [ %.pn35, %_ZN11CStringBaseIwED2Ev.exit105 ], [ %.pn, %_ZN11CStringBaseIwED2Ev.exit104 ], [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp144, %.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   %.pre = load ptr, ptr %3, align 8, !tbaa !12    ; 2 uses
   %i.ex = icmp eq ptr %.pre, null
   br i1 %i.ex, label %bb.ap, label %.thread
 
-.thread:                                          ; preds = %_ZN11CStringBaseIwED2Ev.exit105, %_ZN11CStringBaseIwED2Ev.exit104, %bb.ao
-  %.pn37.pn166 = phi { ptr, i32 } [ %lpad.phi, %bb.ao ], [ %.pn35, %_ZN11CStringBaseIwED2Ev.exit105 ], [ %.pn, %_ZN11CStringBaseIwED2Ev.exit104 ]
-  %9 = phi ptr [ %.pre, %bb.ao ], [ %i.af, %_ZN11CStringBaseIwED2Ev.exit105 ], [ %i.af, %_ZN11CStringBaseIwED2Ev.exit104 ]
-  %10 = phi ptr [ %8, %bb.ao ], [ %i.ar, %_ZN11CStringBaseIwED2Ev.exit105 ], [ %i.ab, %_ZN11CStringBaseIwED2Ev.exit104 ]
-  call void @_ZdaPv(ptr noundef nonnull %9) #9
+.thread:                                          ; preds = %bb.ao
+  call void @_ZdaPv(ptr noundef nonnull %.pre) #9
   br label %bb.ap
 
-bb.ap:                                            ; preds = %bb.t, %bb.ao, %.thread
-  %11 = phi ptr [ %i.ab, %bb.t ], [ %8, %bb.ao ], [ %10, %.thread ]
-  %.pn37.pn.pn = phi { ptr, i32 } [ %i.br, %bb.t ], [ %lpad.phi, %bb.ao ], [ %.pn37.pn166, %.thread ]
+bb.ap:                                            ; preds = %bb.ao, %.thread, %bb.t
+  %.pn37.pn.pn137 = phi { ptr, i32 } [ %i.br, %bb.t ], [ %.pn37.pn, %.thread ], [ %.pn37.pn, %bb.ao ]
+  %13 = phi ptr [ %i.ab, %bb.t ], [ %12, %.thread ], [ %12, %bb.ao ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
-  call void @_ZdaPv(ptr noundef nonnull %11) #9
+  call void @_ZdaPv(ptr noundef nonnull %13) #9
   br label %_ZN11CStringBaseIwED2Ev.exit131
 
 _ZN11CStringBaseIwED2Ev.exit131:                  ; preds = %bb.ap, %bb.s
-  %.pn37.pn.pn.pn = phi { ptr, i32 } [ %i.bq, %bb.s ], [ %.pn37.pn.pn, %bb.ap ]
+  %.pn37.pn.pn.pn = phi { ptr, i32 } [ %i.bq, %bb.s ], [ %.pn37.pn.pn137, %bb.ap ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
   %i.ey = load ptr, ptr %1, align 8, !tbaa !12    ; 2 uses
   %i.ez = icmp eq ptr %i.ey, null

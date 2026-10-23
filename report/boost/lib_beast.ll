@@ -205,6 +205,7 @@ begin_hunk_0_@_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvEN4initC2Ev:
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 668), align 4, !tbaa !289
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 672), align 8, !tbaa !289
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  store i16 144, ptr %i.v, align 16, !tbaa !197
   store i16 9, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 676), align 4, !tbaa !289
   store i16 9, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 680), align 8, !tbaa !289
   store i16 9, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 684), align 4, !tbaa !289
@@ -317,10 +318,8 @@ begin_hunk_0_@_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvEN4initC2Ev:
   store i16 9, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1112), align 8, !tbaa !289
   store i16 9, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1116), align 4, !tbaa !289
   store i16 9, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1120), align 8, !tbaa !289
-  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 18 ; 2 uses
-  %1 = load i16, ptr %0, align 2, !tbaa !197
-  %2 = add i16 %1, 112
-  store i16 %2, ptr %0, align 2, !tbaa !197
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
+  store i16 112, ptr %0, align 2, !tbaa !197
   store i16 7, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1124), align 4, !tbaa !289
   store i16 7, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1128), align 8, !tbaa !289
   store i16 7, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1132), align 4, !tbaa !289
@@ -345,7 +344,8 @@ begin_hunk_0_@_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvEN4initC2Ev:
   store i16 7, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1208), align 8, !tbaa !289
   store i16 7, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1212), align 4, !tbaa !289
   store i16 7, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1216), align 8, !tbaa !289
-  %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 14 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 14
+  store i16 24, ptr %i.w, align 2, !tbaa !197
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1220), align 4, !tbaa !289
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1224), align 8, !tbaa !289
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1228), align 4, !tbaa !289
@@ -354,12 +354,7 @@ begin_hunk_0_@_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvEN4initC2Ev:
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1240), align 8, !tbaa !289
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1244), align 4, !tbaa !289
   store i16 8, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1248), align 8, !tbaa !289
-  %3 = load i16, ptr %i.v, align 16, !tbaa !197
-  %4 = load <2 x i16>, ptr %i.w, align 2, !tbaa !197
-  %5 = add i16 %3, 144
-  store i16 %5, ptr %i.v, align 16, !tbaa !197
-  %6 = add <2 x i16> %4, <i16 24, i16 152>
-  store <2 x i16> %6, ptr %i.w, align 2, !tbaa !197
+  store i16 152, ptr %i.v, align 16, !tbaa !197
   call void @_ZN5boost5beast4zlib6detail14deflate_stream9gen_codesEPNS3_7ct_dataEiPt(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 98), i32 noundef 287, ptr noundef nonnull %i.a)
   store <8 x i16> <i16 0, i16 5, i16 16, i16 5, i16 8, i16 5, i16 24, i16 5>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1250), align 2, !tbaa !197
   store <8 x i16> <i16 4, i16 5, i16 20, i16 5, i16 12, i16 5, i16 28, i16 5>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib6detail14deflate_stream7get_lutEvE4data, i64 1266), align 2, !tbaa !197

@@ -205,7 +205,7 @@ bb.a:
   %7 = alloca %"struct.std::__detail::_AllocNode", align 8 ; 4 uses
   %8 = alloca %"class.std::mersenne_twister_engine", align 8 ; 81 uses
   %9 = alloca %"class.std::unordered_set", align 8 ; 19 uses
-  %10 = alloca %"class.std::vector.3", align 8    ; 10 uses
+  %10 = alloca %"class.std::vector.3", align 8    ; 8 uses
   %11 = alloca %"struct.faiss::(anonymous namespace)::InitDistancesResult", align 8 ; 8 uses
   %i.a = alloca i64, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #17
@@ -302,8 +302,8 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc83
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc83, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i
-  %i.ag = phi ptr [ null, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i ], [ %i.aa, %.noexc83 ], [ %i.aa, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
-  %i.ah = phi ptr [ null, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i ], [ %i.z, %.noexc83 ], [ %i.z, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 9 uses
+  %i.ag = phi ptr [ null, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i ], [ %i.aa, %.noexc83 ], [ %i.aa, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 2 uses
+  %i.ah = phi ptr [ null, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i ], [ %i.z, %.noexc83 ], [ %i.z, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 10 uses
   %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i ], [ %i.ac, %.noexc83 ], [ %i.af, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
   %i.ai = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr %.0.i.i.i.i.i, ptr %i.ai, align 8, !tbaa !41
@@ -706,23 +706,19 @@ bb.bc:                                            ; preds = %_ZNSt6vectorIdSaIdE
   %i.aep = ptrtoint ptr %.sroa.0296.0310327 to i64
   %i.aeq = sub i64 %i.aeo, %i.aep
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0296.0310327, i64 noundef %i.aeq) #19
-  %.pre416 = load ptr, ptr %10, align 8, !tbaa !37
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit190
 
 _ZNSt6vectorIdSaIdEED2Ev.exit190:                 ; preds = %bb.p, %_ZNSt6vectorIdSaIdEED2Ev.exit184, %bb.bc
-  %12 = phi ptr [ %.pre416, %bb.bc ], [ %i.ah, %bb.p ], [ %i.ah, %_ZNSt6vectorIdSaIdEED2Ev.exit184 ] ; 3 uses
   %.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn.pn329, %bb.bc ], [ %i.ek, %bb.p ], [ %lpad.loopexit.split-lp668, %_ZNSt6vectorIdSaIdEED2Ev.exit184 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
-  %.not.i.i.i191 = icmp eq ptr %12, null
+  %.not.i.i.i191 = icmp eq ptr %i.ah, null
   br i1 %.not.i.i.i191, label %_ZNSt6vectorIdSaIdEED2Ev.exit192, label %bb.bd
 
 bb.bd:                                            ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit190
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %14 = load ptr, ptr %13, align 8, !tbaa !38
-  %i.aer = ptrtoint ptr %14 to i64
-  %i.aes = ptrtoint ptr %12 to i64
+  %i.aer = ptrtoint ptr %i.ag to i64
+  %i.aes = ptrtoint ptr %i.ah to i64
   %i.aet = sub i64 %i.aer, %i.aes
-  call void @_ZdlPvm(ptr noundef nonnull %12, i64 noundef %i.aet) #19
+  call void @_ZdlPvm(ptr noundef nonnull %i.ah, i64 noundef %i.aet) #19
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit192
 
 _ZNSt6vectorIdSaIdEED2Ev.exit192:                 ; preds = %bb.bd, %_ZNSt6vectorIdSaIdEED2Ev.exit190, %bb.k

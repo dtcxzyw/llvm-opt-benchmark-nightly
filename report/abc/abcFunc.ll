@@ -119,6 +119,9 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.n, %.lr.ph.i.new
+  %6 = phi i32 [ 0, %.lr.ph.i.new ], [ %12, %bb.n ] ; 3 uses
+  %7 = phi i32 [ 0, %.lr.ph.i.new ], [ %13, %bb.n ] ; 3 uses
+  %8 = phi i32 [ 0, %.lr.ph.i.new ], [ %14, %bb.n ] ; 3 uses
   %i.j = phi i32 [ 0, %.lr.ph.i.new ], [ %i.z, %bb.n ] ; 4 uses
   %i.k = phi i32 [ 0, %.lr.ph.i.new ], [ %i.aa, %bb.n ] ; 4 uses
   %i.l = phi i32 [ 0, %.lr.ph.i.new ], [ %i.ab, %bb.n ] ; 4 uses
@@ -134,21 +137,24 @@ bb.f:                                             ; preds = %bb.n, %.lr.ph.i.new
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.o = add nsw i32 %i.j, 1
+  %i.o = add nsw i32 %i.l, 1                      ; 2 uses
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = add nsw i32 %i.k, 1
+  %i.p = add nsw i32 %i.k, 1                      ; 2 uses
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.f
-  %i.q = add nsw i32 %i.l, 1
+  %i.q = add nsw i32 %i.j, 1                      ; 2 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f
-  %i.r = phi i32 [ %i.j, %bb.i ], [ %i.j, %bb.h ], [ %i.o, %bb.g ], [ %i.j, %bb.f ] ; 4 uses
+  %9 = phi i32 [ %6, %bb.i ], [ %6, %bb.h ], [ %i.o, %bb.g ], [ %6, %bb.f ] ; 3 uses
+  %10 = phi i32 [ %7, %bb.i ], [ %i.p, %bb.h ], [ %7, %bb.g ], [ %7, %bb.f ] ; 3 uses
+  %11 = phi i32 [ %i.q, %bb.i ], [ %8, %bb.h ], [ %8, %bb.g ], [ %8, %bb.f ] ; 3 uses
+  %i.r = phi i32 [ %i.q, %bb.i ], [ %i.j, %bb.h ], [ %i.j, %bb.g ], [ %i.j, %bb.f ] ; 4 uses
   %i.s = phi i32 [ %i.k, %bb.i ], [ %i.p, %bb.h ], [ %i.k, %bb.g ], [ %i.k, %bb.f ] ; 4 uses
-  %i.t = phi i32 [ %i.q, %bb.i ], [ %i.l, %bb.h ], [ %i.l, %bb.g ], [ %i.l, %bb.f ] ; 4 uses
+  %i.t = phi i32 [ %i.l, %bb.i ], [ %i.l, %bb.h ], [ %i.o, %bb.g ], [ %i.l, %bb.f ] ; 4 uses
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1
   %i.u = mul nsw i64 %indvars.iv.next.i, %i.g
   %gep.i.1 = getelementptr i8, ptr %invariant.gep.i, i64 %i.u
@@ -160,21 +166,24 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %i.w = add nsw i32 %i.t, 1
+  %i.w = add nsw i32 %i.r, 1                      ; 2 uses
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.j
-  %i.x = add nsw i32 %i.s, 1
+  %i.x = add nsw i32 %i.s, 1                      ; 2 uses
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.j
-  %i.y = add nsw i32 %i.r, 1
+  %i.y = add nsw i32 %i.t, 1                      ; 2 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j
-  %i.z = phi i32 [ %i.r, %bb.k ], [ %i.r, %bb.l ], [ %i.y, %bb.m ], [ %i.r, %bb.j ] ; 3 uses
-  %i.aa = phi i32 [ %i.s, %bb.k ], [ %i.x, %bb.l ], [ %i.s, %bb.m ], [ %i.s, %bb.j ] ; 3 uses
-  %i.ab = phi i32 [ %i.w, %bb.k ], [ %i.t, %bb.l ], [ %i.t, %bb.m ], [ %i.t, %bb.j ] ; 3 uses
+  %12 = phi i32 [ %9, %bb.k ], [ %9, %bb.l ], [ %i.y, %bb.m ], [ %9, %bb.j ] ; 3 uses
+  %13 = phi i32 [ %10, %bb.k ], [ %i.x, %bb.l ], [ %10, %bb.m ], [ %10, %bb.j ] ; 3 uses
+  %14 = phi i32 [ %i.w, %bb.k ], [ %11, %bb.l ], [ %11, %bb.m ], [ %11, %bb.j ] ; 3 uses
+  %i.z = phi i32 [ %i.w, %bb.k ], [ %i.r, %bb.l ], [ %i.r, %bb.m ], [ %i.r, %bb.j ] ; 2 uses
+  %i.aa = phi i32 [ %i.s, %bb.k ], [ %i.x, %bb.l ], [ %i.s, %bb.m ], [ %i.s, %bb.j ] ; 2 uses
+  %i.ab = phi i32 [ %i.t, %bb.k ], [ %i.t, %bb.l ], [ %i.y, %bb.m ], [ %i.t, %bb.j ] ; 2 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -185,9 +194,12 @@ Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa: ; preds = %bb.n
   br i1 %lcmp.mod.not, label %Abc_ConvertSopToBdd2Count.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa, %.lr.ph.i
-  %.epil.init.a = phi i32 [ 0, %.lr.ph.i ], [ %i.z, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ] ; 4 uses
-  %.epil.init56.a = phi i32 [ 0, %.lr.ph.i ], [ %i.aa, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ] ; 4 uses
-  %.epil.init58.a = phi i32 [ 0, %.lr.ph.i ], [ %i.ab, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ] ; 4 uses
+  %.epil.init = phi i32 [ 0, %.lr.ph.i ], [ %12, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ] ; 3 uses
+  %.epil.init56 = phi i32 [ 0, %.lr.ph.i ], [ %13, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ] ; 3 uses
+  %.epil.init58 = phi i32 [ 0, %.lr.ph.i ], [ %14, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ] ; 3 uses
+  %.epil.init.a = phi i32 [ 0, %.lr.ph.i ], [ %i.z, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ]
+  %.epil.init56.a = phi i32 [ 0, %.lr.ph.i ], [ %i.aa, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ]
+  %.epil.init58.a = phi i32 [ 0, %.lr.ph.i ], [ %i.ab, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ]
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.1, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ]
   %lcmp.mod62 = trunc i32 %3 to i1
   tail call void @llvm.assume(i1 %lcmp.mod62)
@@ -201,7 +213,7 @@ Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa: ; preds = %bb.n
   ]
 
 bb.o:                                             ; preds = %.epil.preheader
-  %i.ae = add nsw i32 %.epil.init58.a, 1
+  %i.ae = add nsw i32 %.epil.init.a, 1
   br label %Abc_ConvertSopToBdd2Count.exit
 
 bb.p:                                             ; preds = %.epil.preheader
@@ -209,7 +221,7 @@ bb.p:                                             ; preds = %.epil.preheader
   br label %Abc_ConvertSopToBdd2Count.exit
 
 bb.q:                                             ; preds = %.epil.preheader
-  %i.ag = add nsw i32 %.epil.init.a, 1
+  %i.ag = add nsw i32 %.epil.init58.a, 1
   br label %Abc_ConvertSopToBdd2Count.exit
 
 common.ret:                                       ; preds = %bb.b, %bb.d, %Abc_ConvertSopToBdd2Count.exit
@@ -218,9 +230,9 @@ common.ret:                                       ; preds = %bb.b, %bb.d, %Abc_C
 
 Abc_ConvertSopToBdd2Count.exit:                   ; preds = %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa, %bb.q, %bb.p, %bb.o, %.epil.preheader, %.Abc_ConvertSopToBdd2Count.exit_crit_edge
   %.pre-phi = phi i64 [ %.pre, %.Abc_ConvertSopToBdd2Count.exit_crit_edge ], [ %i.h, %.epil.preheader ], [ %i.h, %bb.o ], [ %i.h, %bb.p ], [ %i.h, %bb.q ], [ %i.h, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ]
-  %.sroa.0.0 = phi i32 [ 0, %.Abc_ConvertSopToBdd2Count.exit_crit_edge ], [ %i.z, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ], [ %.epil.init.a, %bb.o ], [ %.epil.init.a, %bb.p ], [ %i.ag, %bb.q ], [ %.epil.init.a, %.epil.preheader ] ; 3 uses
-  %.sroa.6.0 = phi i32 [ 0, %.Abc_ConvertSopToBdd2Count.exit_crit_edge ], [ %i.aa, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ], [ %.epil.init56.a, %bb.o ], [ %i.af, %bb.p ], [ %.epil.init56.a, %bb.q ], [ %.epil.init56.a, %.epil.preheader ] ; 2 uses
-  %.sroa.9.0 = phi i32 [ 0, %.Abc_ConvertSopToBdd2Count.exit_crit_edge ], [ %i.ab, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ], [ %i.ae, %bb.o ], [ %.epil.init58.a, %bb.p ], [ %.epil.init58.a, %bb.q ], [ %.epil.init58.a, %.epil.preheader ]
+  %.sroa.0.0 = phi i32 [ 0, %.Abc_ConvertSopToBdd2Count.exit_crit_edge ], [ %12, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ], [ %.epil.init, %bb.o ], [ %.epil.init, %bb.p ], [ %i.ag, %bb.q ], [ %.epil.init, %.epil.preheader ] ; 3 uses
+  %.sroa.6.0 = phi i32 [ 0, %.Abc_ConvertSopToBdd2Count.exit_crit_edge ], [ %13, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ], [ %.epil.init56, %bb.o ], [ %i.af, %bb.p ], [ %.epil.init56, %bb.q ], [ %.epil.init56, %.epil.preheader ] ; 2 uses
+  %.sroa.9.0 = phi i32 [ 0, %.Abc_ConvertSopToBdd2Count.exit_crit_edge ], [ %14, %Abc_ConvertSopToBdd2Count.exit.loopexit.unr-lcssa ], [ %i.ae, %bb.o ], [ %.epil.init58, %bb.p ], [ %.epil.init58, %bb.q ], [ %.epil.init58, %.epil.preheader ]
   %i.ah = add nsw i32 %5, 1                       ; 3 uses
   %i.ai = tail call ptr @Abc_ConvertSopToBdd2_rec(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %.sroa.0.0, i32 noundef %4, i32 noundef %i.ah) ; 3 uses
   tail call void @Cudd_Ref(ptr noundef %i.ai) #18

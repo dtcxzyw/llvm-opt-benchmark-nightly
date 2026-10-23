@@ -205,7 +205,7 @@ _ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorISt4pairISt6vectorIjSa
 ; Function Attrs: mustprogress nounwind
 define linkonce_odr dso_local void @_ZSt25__unguarded_linear_insertIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorISt4pairISt6vectorIjSaIjEEPN4mold9InputFileINS9_6X86_64EEEENS2_23cache_aligned_allocatorISE_EEEESE_EEN9__gnu_cxx5__ops14_Val_comp_iterIZNSt6ranges8__detail16__make_comp_projINSM_4lessEMSE_S8_EEDaRT_RT0_EUlOSR_OST_E_EEEvSR_ST_(ptr nofree noundef align 8 dead_on_return dereferenceable(24) %0, ptr %1, ptr %2) local_unnamed_addr #2 comdat {
 bb.a:
-  %3 = alloca %"struct.std::pair.595", align 16   ; 6 uses
+  %3 = alloca %"struct.std::pair.595", align 8    ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !392  ; 2 uses
@@ -227,13 +227,17 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorISt4pairISt6vectorIjSaIjEEPN4mold9InputFileINS8_6X86_64EEEENS1_23cache_aligned_allocatorISD_EEEESD_EdeEv.exit
 
 _ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorISt4pairISt6vectorIjSaIjEEPN4mold9InputFileINS8_6X86_64EEEENS1_23cache_aligned_allocatorISD_EEEESD_EdeEv.exit: ; preds = %bb.a, %bb.b
-  %.0.i = phi ptr [ %i.n, %bb.b ], [ %i.b, %bb.a ] ; 4 uses
-  %4 = load <2 x ptr>, ptr %.0.i, align 8, !tbaa !557 ; 2 uses
-  store <2 x ptr> %4, ptr %3, align 16, !tbaa !557
+  %.0.i = phi ptr [ %i.n, %bb.b ], [ %i.b, %bb.a ] ; 5 uses
+  %4 = load ptr, ptr %.0.i, align 8, !tbaa !394   ; 2 uses
+  store ptr %4, ptr %3, align 8, !tbaa !394
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
+  %7 = load ptr, ptr %6, align 8, !tbaa !556      ; 2 uses
+  store ptr %7, ptr %5, align 8, !tbaa !556
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !395  ; 2 uses
-  store ptr %i.q, ptr %i.o, align 16, !tbaa !395
+  store ptr %i.q, ptr %i.o, align 8, !tbaa !395
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.0.i, i8 0, i64 24, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.s = getelementptr inbounds nuw i8, ptr %.0.i, i64 24
@@ -400,11 +404,13 @@ bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops
   br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorISt4pairISt6vectorIjSaIjEEPN4mold9InputFileINS8_6X86_64EEEENS1_23cache_aligned_allocatorISD_EEEESD_EdeEv.exit10
 
 _ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorISt4pairISt6vectorIjSaIjEEPN4mold9InputFileINS8_6X86_64EEEENS1_23cache_aligned_allocatorISD_EEEESD_EdeEv.exit10: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZNSt6ranges8__detail16__make_comp_projINS2_4lessEMSt4pairISt6vectorIjSaIjEEPN4mold9InputFileINSA_6X86_64EEEES9_EEDaRT_RT0_EUlOSH_OSJ_E_EclISF_N3tbb6detail2d115vector_iteratorINSS_17concurrent_vectorISF_NSS_23cache_aligned_allocatorISF_EEEESF_EEEEbSI_SJ_.exit.thread, %bb.k
-  %.0.i9 = phi ptr [ %i.db, %bb.k ], [ %i.cq, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZNSt6ranges8__detail16__make_comp_projINS2_4lessEMSt4pairISt6vectorIjSaIjEEPN4mold9InputFileINSA_6X86_64EEEES9_EEDaRT_RT0_EUlOSH_OSJ_E_EclISF_N3tbb6detail2d115vector_iteratorINSS_17concurrent_vectorISF_NSS_23cache_aligned_allocatorISF_EEEESF_EEEEbSI_SJ_.exit.thread ] ; 4 uses
+  %.0.i9 = phi ptr [ %i.db, %bb.k ], [ %i.cq, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZNSt6ranges8__detail16__make_comp_projINS2_4lessEMSt4pairISt6vectorIjSaIjEEPN4mold9InputFileINSA_6X86_64EEEES9_EEDaRT_RT0_EUlOSH_OSJ_E_EclISF_N3tbb6detail2d115vector_iteratorINSS_17concurrent_vectorISF_NSS_23cache_aligned_allocatorISF_EEEESF_EEEEbSI_SJ_.exit.thread ] ; 5 uses
   %i.dc = load ptr, ptr %.0.i9, align 8, !tbaa !394 ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.0.i9, i64 8
   %i.dd = getelementptr inbounds nuw i8, ptr %.0.i9, i64 16 ; 2 uses
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !395
-  store <2 x ptr> %4, ptr %.0.i9, align 8, !tbaa !557
+  store ptr %4, ptr %.0.i9, align 8, !tbaa !394
+  store ptr %7, ptr %8, align 8, !tbaa !556
   store ptr %i.q, ptr %i.dd, align 8, !tbaa !395
   %.not.i.i.i.i.i.i11 = icmp eq ptr %i.dc, null
   br i1 %.not.i.i.i.i.i.i11, label %_ZNSt4pairISt6vectorIjSaIjEEPN4mold9InputFileINS3_6X86_64EEEED2Ev.exit, label %bb.l

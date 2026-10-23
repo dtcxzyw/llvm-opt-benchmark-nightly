@@ -204,7 +204,7 @@ pdu_free.exit:                                    ; preds = %._crit_edge.i, %bb.
 define internal void @v9fs_walk(ptr noundef %0) #0 {
 bb.a:
   %1 = alloca %struct.V9fsPath, align 8           ; 14 uses
-  %2 = alloca %struct.V9fsPath, align 8           ; 12 uses
+  %2 = alloca %struct.V9fsPath, align 8           ; 10 uses
   %i.a = alloca i16, align 2                      ; 14 uses
   %3 = alloca %struct.stat, align 8               ; 13 uses
   %4 = alloca %struct.stat, align 8               ; 7 uses
@@ -387,13 +387,13 @@ bb.m:                                             ; preds = %trace_v9fs_walk.exi
   %i.bx = trunc i64 %i.bu to i32
   %i.by = call ptr @g_memdup(ptr noundef %i.bw, i32 noundef %i.bx) #25
   store ptr %i.by, ptr %i.bt, align 8
-  %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   call void @g_free(ptr noundef null) #23
   %i.ca = load i64, ptr %i.bs, align 8            ; 2 uses
   store i64 %i.ca, ptr %2, align 8
   %i.cb = load ptr, ptr %i.bv, align 8
   %i.cc = trunc i64 %i.ca to i32
-  %i.cd = call ptr @g_memdup(ptr noundef %i.cb, i32 noundef %i.cc) #25 ; 2 uses
+  %i.cd = call ptr @g_memdup(ptr noundef %i.cb, i32 noundef %i.cc) #25 ; 4 uses
   store ptr %i.cd, ptr %i.bz, align 8
   %i.ce = call ptr @qemu_coroutine_self() #23
   %i.cf = call ptr @qemu_bh_new_full(ptr noundef nonnull @co_run_in_worker_bh, ptr noundef %i.ce, ptr noundef nonnull @.str.1, ptr noundef null) #23 ; 2 uses
@@ -597,7 +597,7 @@ bb.z:                                             ; preds = %bb.y
   store i64 %i.fk, ptr %2, align 8
   %i.fl = load ptr, ptr %i.bv, align 8
   %i.fm = trunc i64 %i.fk to i32
-  %i.fn = call ptr @g_memdup(ptr noundef %i.fl, i32 noundef %i.fm) #25
+  %i.fn = call ptr @g_memdup(ptr noundef %i.fl, i32 noundef %i.fm) #25 ; 4 uses
   store ptr %i.fn, ptr %i.bz, align 8
   %i.fo = icmp sgt i32 %.1, 0
   br i1 %i.fo, label %.lr.ph247, label %same_stat_id.exit178.thread._crit_edge.thread
@@ -606,16 +606,13 @@ bb.z:                                             ; preds = %bb.y
   %i.fp = getelementptr inbounds nuw i8, ptr %3, i64 8
   %wide.trip.count = zext nneg i32 %.1 to i64
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.promoted = load ptr, ptr %i.bz, align 8
-  %.promoted335 = load i64, ptr %2, align 1
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph247, %bb.ac
-  %i.fr = phi i64 [ %.promoted335, %.lr.ph247 ], [ %7, %bb.ac ] ; 2 uses
-  %6 = phi ptr [ %.promoted, %.lr.ph247 ], [ %i.hb, %bb.ac ] ; 3 uses
-  %indvars.iv268 = phi i64 [ 0, %.lr.ph247 ], [ %indvars.iv.next269, %bb.ac ] ; 6 uses
-  %.1135244 = phi i32 [ %i.fd, %.lr.ph247 ], [ %.2, %bb.ac ] ; 2 uses
-  %.3139243 = phi i32 [ %i.fb, %.lr.ph247 ], [ %.4, %bb.ac ]
+  %i.fr = phi i64 [ 0, %.lr.ph247 ], [ %indvars.iv.next269, %bb.ac ] ; 6 uses
+  %.1135245 = phi i32 [ %i.fd, %.lr.ph247 ], [ %.2, %bb.ac ] ; 2 uses
+  %.1135244 = phi i32 [ %i.fb, %.lr.ph247 ], [ %.4, %bb.ac ]
+  %6 = phi ptr [ %i.fn, %.lr.ph247 ], [ %i.hb, %bb.ac ] ; 3 uses
   %i.fs = load ptr, ptr %i.e, align 8             ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 7400
   %.val173 = load i64, ptr %3, align 8
@@ -632,7 +629,7 @@ same_stat_id.exit178:                             ; preds = %bb.aa
 
 sub_0219:                                         ; preds = %same_stat_id.exit178
   %i.fz = load ptr, ptr %i.d, align 8
-  %i.ga = getelementptr inbounds nuw [16 x i8], ptr %i.fz, i64 %indvars.iv268
+  %i.ga = getelementptr inbounds nuw [16 x i8], ptr %i.fz, i64 %i.fr
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
   %i.gc = load ptr, ptr %i.gb, align 8            ; 3 uses
   %i.gd = load i8, ptr %i.gc, align 1             ; 2 uses
@@ -662,21 +659,23 @@ sub_2221:                                         ; preds = %sub_1220
   br i1 %.not163, label %bb.ac, label %same_stat_id.exit178.thread
 
 same_stat_id.exit178.thread:                      ; preds = %bb.aa, %.tail218, %same_stat_id.exit178
-  %i.gp = getelementptr inbounds nuw [144 x i8], ptr %.0205, i64 %indvars.iv268
+  %i.gp = getelementptr inbounds nuw [144 x i8], ptr %.0205, i64 %i.fr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %3, ptr noundef nonnull align 8 dereferenceable(144) %i.gp, i64 144, i1 false)
   %i.gq = call fastcc i32 @stat_to_qid(ptr noundef nonnull %0, ptr noundef nonnull %3, ptr noundef nonnull %5) ; 3 uses
   %i.gr = icmp slt i32 %i.gq, 0
   br i1 %i.gr, label %same_stat_id.exit178.thread._crit_edge.split.loop.exit313, label %bb.ab
 
 bb.ab:                                            ; preds = %same_stat_id.exit178.thread
-  %i.gs = or i32 %i.gq, %.1135244
-  %i.gt = getelementptr inbounds nuw [16 x i8], ptr %.0209, i64 %indvars.iv268 ; 2 uses
+  %i.gs = or i32 %i.gq, %.1135245
+  %i.gt = getelementptr inbounds nuw [16 x i8], ptr %.0209, i64 %i.fr ; 2 uses
   call void @g_free(ptr noundef %6) #23
   %i.gu = load i64, ptr %i.gt, align 8            ; 3 uses
+  store i64 %i.gu, ptr %2, align 8
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gt, i64 8
   %i.gw = load ptr, ptr %i.gv, align 8
   %i.gx = trunc i64 %i.gu to i32                  ; 2 uses
-  %i.gy = call ptr @g_memdup(ptr noundef %i.gw, i32 noundef %i.gx) #25 ; 2 uses
+  %i.gy = call ptr @g_memdup(ptr noundef %i.gw, i32 noundef %i.gx) #25 ; 3 uses
+  store ptr %i.gy, ptr %i.bz, align 8
   %i.gz = load ptr, ptr %i.bt, align 8
   call void @g_free(ptr noundef %i.gz) #23
   store i64 0, ptr %i.fq, align 8
@@ -686,29 +685,25 @@ bb.ab:                                            ; preds = %same_stat_id.exit17
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %.tail218
-  %7 = phi i64 [ %i.gu, %bb.ab ], [ %i.fr, %.tail218 ] ; 2 uses
   %i.hb = phi ptr [ %i.gy, %bb.ab ], [ %6, %.tail218 ] ; 2 uses
-  %.4 = phi i32 [ 0, %bb.ab ], [ %.3139243, %.tail218 ] ; 2 uses
-  %.2 = phi i32 [ %i.gs, %bb.ab ], [ %.1135244, %.tail218 ] ; 2 uses
-  %i.hc = getelementptr inbounds nuw [16 x i8], ptr %.0213, i64 %indvars.iv268
+  %.4 = phi i32 [ 0, %bb.ab ], [ %.1135244, %.tail218 ] ; 2 uses
+  %.2 = phi i32 [ %i.gs, %bb.ab ], [ %.1135245, %.tail218 ] ; 2 uses
+  %i.hc = getelementptr inbounds nuw [16 x i8], ptr %.0213, i64 %i.fr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.hc, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 noundef 16, i1 noundef false) #23
-  %indvars.iv.next269 = add nuw nsw i64 %indvars.iv268, 1 ; 2 uses
+  %indvars.iv.next269 = add nuw nsw i64 %i.fr, 1  ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next269, %wide.trip.count
   br i1 %exitcond.not, label %same_stat_id.exit178.thread._crit_edge.loopexit, label %bb.aa, !llvm.loop !28
 
 same_stat_id.exit178.thread._crit_edge.split.loop.exit313: ; preds = %same_stat_id.exit178.thread
-  store ptr %6, ptr %i.bz, align 8
-  store i64 %i.fr, ptr %2, align 1
-  %i.hd = trunc nuw nsw i64 %indvars.iv268 to i32
+  %i.hd = trunc nuw nsw i64 %i.fr to i32
   br label %same_stat_id.exit178.thread._crit_edge
 
 same_stat_id.exit178.thread._crit_edge.loopexit:  ; preds = %bb.ac
-  store ptr %i.hb, ptr %i.bz, align 8
-  store i64 %7, ptr %2, align 1
   %i.he = icmp slt i32 %.2, 0
   br label %same_stat_id.exit178.thread._crit_edge
 
 same_stat_id.exit178.thread._crit_edge:           ; preds = %same_stat_id.exit178.thread._crit_edge.loopexit, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313
+  %.lcssa = phi ptr [ %6, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %i.hb, %same_stat_id.exit178.thread._crit_edge.loopexit ] ; 3 uses
   %.0.lcssa = phi i32 [ %i.hd, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %.1, %same_stat_id.exit178.thread._crit_edge.loopexit ] ; 3 uses
   %.5 = phi i32 [ %i.gq, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %.4, %same_stat_id.exit178.thread._crit_edge.loopexit ]
   %.3 = phi i1 [ true, %same_stat_id.exit178.thread._crit_edge.split.loop.exit313 ], [ %i.he, %same_stat_id.exit178.thread._crit_edge.loopexit ]
@@ -724,6 +719,7 @@ bb.ad:                                            ; preds = %same_stat_id.exit17
 
 bb.ae:                                            ; preds = %same_stat_id.exit178.thread._crit_edge.thread, %same_stat_id.exit178.thread._crit_edge
   %.0.lcssa292 = phi i32 [ 0, %same_stat_id.exit178.thread._crit_edge.thread ], [ %.0.lcssa, %same_stat_id.exit178.thread._crit_edge ] ; 3 uses
+  %.lcssa295 = phi ptr [ %i.fn, %same_stat_id.exit178.thread._crit_edge.thread ], [ %.lcssa, %same_stat_id.exit178.thread._crit_edge ] ; 5 uses
   %i.hg = load i32, ptr %i.b, align 4
   %i.hh = load i32, ptr %i.c, align 4             ; 2 uses
   %i.hi = icmp eq i32 %i.hg, %i.hh
@@ -774,6 +770,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 v9fs_path_unlock.exit:                            ; preds = %bb.ai, %v9fs_path_write_lock.exit, %bb.ak, %bb.ad
   %.0.lcssa291 = phi i32 [ %.0.lcssa, %bb.ad ], [ %.0.lcssa292, %bb.ak ], [ %.0.lcssa292, %v9fs_path_write_lock.exit ], [ %.0.lcssa292, %bb.ai ]
+  %.lcssa297 = phi ptr [ %.lcssa, %bb.ad ], [ %.lcssa295, %bb.ak ], [ %.lcssa295, %v9fs_path_write_lock.exit ], [ %.lcssa295, %bb.ai ]
   %.0131 = phi ptr [ null, %bb.ad ], [ %i.hr, %bb.ak ], [ null, %v9fs_path_write_lock.exit ], [ null, %bb.ai ]
   %i.hx = trunc i32 %.0.lcssa291 to i16           ; 2 uses
   %i.hy = call i32 @v9fs_walk_marshal(ptr noundef nonnull %0, i16 noundef zeroext %i.hx, ptr noundef %.0213)
@@ -785,6 +782,7 @@ v9fs_path_unlock.exit:                            ; preds = %bb.ai, %v9fs_path_w
   br label %.thread
 
 .thread:                                          ; preds = %same_stat_id.exit178.thread._crit_edge.thread, %bb.aj, %bb.af, %bb.ad, %bb.y, %.loopexit, %v9fs_path_unlock.exit
+  %7 = phi ptr [ %i.cd, %.loopexit ], [ %.lcssa297, %v9fs_path_unlock.exit ], [ %.lcssa, %bb.ad ], [ %i.cd, %bb.y ], [ %.lcssa295, %bb.af ], [ %.lcssa295, %bb.aj ], [ %i.fn, %same_stat_id.exit178.thread._crit_edge.thread ]
   %.6 = phi i32 [ %.2138, %.loopexit ], [ %i.hy, %v9fs_path_unlock.exit ], [ %.5, %bb.ad ], [ %i.fb, %bb.y ], [ -22, %bb.af ], [ -22, %bb.aj ], [ %i.fb, %same_stat_id.exit178.thread._crit_edge.thread ]
   %.1132 = phi ptr [ null, %.loopexit ], [ %.0131, %v9fs_path_unlock.exit ], [ null, %bb.ad ], [ null, %bb.y ], [ null, %bb.af ], [ null, %bb.aj ], [ null, %same_stat_id.exit178.thread._crit_edge.thread ] ; 5 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.bq, i64 260 ; 2 uses
@@ -874,8 +872,7 @@ put_fid.exit185:                                  ; preds = %bb.ax, %bb.au, %bb.
   %i.jf = load ptr, ptr %i.bt, align 8
   call void @g_free(ptr noundef %i.jf) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
-  %8 = load ptr, ptr %i.bz, align 8
-  call void @g_free(ptr noundef %8) #23
+  call void @g_free(ptr noundef %7) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   br label %trace_v9fs_walk.exit189
 

@@ -205,7 +205,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %i.ew, label %bb.u, label %_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2INS_9ReplicateINS_14CwiseNullaryOpINS_8internal12linspaced_opIiEENS0_IiLin1ELi1ELi0ELin1ELi1EEEEELin1ELin1EEEEERKNS_9EigenBaseIT_EE.exit.sink.split
 
 bb.u:                                             ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i
-  %i.ex = icmp ugt i64 %i.eb, 1537228672809129301
+  %i.ex = icmp samesign ugt i64 %i.eb, 1537228672809129301
   br i1 %i.ex, label %.invoke108, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %bb.u
@@ -608,7 +608,7 @@ bb.a:
   %11 = alloca %"class.Eigen::internal::generic_dense_assignment_kernel.496", align 8 ; 7 uses
   %12 = alloca %"struct.Eigen::internal::assign_op", align 1 ; 3 uses
   %13 = alloca %"class.Eigen::Block", align 8     ; 9 uses
-  %14 = alloca %"class.Eigen::Matrix.12", align 8 ; 8 uses
+  %14 = alloca %"class.Eigen::Matrix.12", align 8 ; 10 uses
   %15 = alloca %"class.Eigen::Matrix.3", align 8  ; 7 uses
   %16 = alloca %"class.Eigen::Matrix.3", align 8  ; 13 uses
   %17 = alloca %"class.Eigen::Matrix.3", align 8  ; 6 uses
@@ -618,27 +618,32 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !80   ; 18 uses
-  store i64 0, ptr %14, align 8
-  %21 = icmp sgt i64 %i.b, 4611686018427387903
-  br i1 %21, label %.noexc.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
+  %21 = icmp eq i64 %i.b, 0
+  br i1 %21, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.thread, label %24
 
-.noexc.i:                                         ; preds = %bb.a
+_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.thread: ; preds = %bb.a
+  %22 = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %23 = getelementptr inbounds nuw i8, ptr %14, i64 16
+  br label %_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IliEERKT_RKT0_.exit
+
+24:                                               ; preds = %bb.a
+  %25 = icmp sgt i64 %i.b, 4611686018427387903
+  br i1 %25, label %.noexc.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i
+
+.noexc.i:                                         ; preds = %24
   %i.c = tail call ptr @__cxa_allocate_exception(i64 8) #25 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.c, align 8, !tbaa !107
   tail call void @__cxa_throw(ptr nonnull %i.c, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #28
   unreachable
 
-_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
+_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %24
   %i.d = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %.not.i42 = icmp eq i64 %i.b, 0
-  br i1 %.not.i42, label %_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IliEERKT_RKT0_.exit, label %22
+  %26 = icmp sgt i64 %i.b, 0
+  br i1 %26, label %bb.b, label %.sink.split.i
 
-22:                                               ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i
-  %23 = icmp sgt i64 %i.b, 0
-  br i1 %23, label %bb.b, label %.sink.split.i
-
-bb.b:                                             ; preds = %22
+bb.b:                                             ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i
   %.not = icmp samesign ult i64 %i.b, 2305843009213693952
   br i1 %.not, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i, label %.noexc
 
@@ -660,15 +665,17 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %bb.b
   tail call void @__cxa_throw(ptr nonnull %i.j, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #28
   unreachable
 
-.sink.split.i:                                    ; preds = %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i, %22
-  %.sink.i = phi ptr [ %i.h, %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i ], [ null, %22 ] ; 2 uses
+.sink.split.i:                                    ; preds = %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i
+  %.sink.i = phi ptr [ %i.h, %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i ], [ null, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i ] ; 2 uses
   store ptr %.sink.i, ptr %14, align 8, !tbaa !66
   br label %_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IliEERKT_RKT0_.exit
 
-_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IliEERKT_RKT0_.exit: ; preds = %.sink.split.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i
-  %i.k = phi ptr [ %.sink.i, %.sink.split.i ], [ null, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i ] ; 8 uses
-  store i64 %i.b, ptr %i.d, align 8, !tbaa !111
-  store i64 2, ptr %i.e, align 8, !tbaa !112
+_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IliEERKT_RKT0_.exit: ; preds = %.sink.split.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.thread
+  %27 = phi ptr [ %23, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.thread ], [ %i.e, %.sink.split.i ]
+  %28 = phi ptr [ %22, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.thread ], [ %i.d, %.sink.split.i ]
+  %i.k = phi ptr [ null, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.thread ], [ %.sink.i, %.sink.split.i ] ; 8 uses
+  store i64 %i.b, ptr %28, align 8, !tbaa !111
+  store i64 2, ptr %27, align 8, !tbaa !112
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses

@@ -204,15 +204,17 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #25
-  %.pre = load ptr, ptr %i.c, align 8             ; 2 uses
-  %.pre470 = load ptr, ptr %i.d, align 8
+  %.pre = load ptr, ptr %i.c, align 8             ; 3 uses
+  %.pre470 = load ptr, ptr %i.d, align 8          ; 2 uses
   %.pre484 = ptrtoint ptr %.pre470 to i64
   %.pre485 = ptrtoint ptr %.pre to i64
+  %36 = icmp eq ptr %.pre470, %.pre
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i, %bb.a
-  %.pre-phi486 = phi i64 [ %.pre485, %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ %i.h, %bb.a ] ; 2 uses
-  %.pre-phi = phi i64 [ %.pre484, %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ %i.g, %bb.a ] ; 2 uses
+  %.pre-phi486 = phi i64 [ %.pre485, %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ %i.h, %bb.a ]
+  %.pre-phi = phi i64 [ %.pre484, %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ %i.g, %bb.a ]
+  %37 = phi i1 [ %36, %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ]
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ %i.f, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.k, %_ZNSt15__new_allocatorIPKN2v88internal6torque4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 11 uses
   store ptr %i.m, ptr %15, align 8
@@ -615,8 +617,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.lw, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit227.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit296.thread443
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit227.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit227
-  %36 = icmp eq i64 %.pre-phi, %.pre-phi486
-  br i1 %36, label %bb.by, label %bb.bw
+  br i1 %37, label %bb.by, label %bb.bw
 
 bb.bw:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit227.thread
   invoke void @_ZN2v88internal6torque11ReportErrorIJRA46_KcEEEvDpOT_(ptr noundef nonnull align 1 dereferenceable(46) @.str.35) #23

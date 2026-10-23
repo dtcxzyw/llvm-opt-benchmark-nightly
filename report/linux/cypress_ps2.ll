@@ -204,7 +204,7 @@ declare dso_local void @input_alloc_absinfo(ptr noundef) local_unnamed_addr #4
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @cypress_process_packet(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 align 16 {
 bb.a:
-  %1 = alloca %struct.cytp_report_data, align 4   ; 24 uses
+  %1 = alloca %struct.cytp_report_data, align 4   ; 19 uses
   %2 = alloca [2 x %struct.input_mt_pos], align 8 ; 9 uses
   %i.a = alloca [2 x i32], align 8                ; 6 uses
   %i.b = getelementptr i8, ptr %0, i64 8
@@ -253,7 +253,7 @@ cypress_get_finger_count.exit.thread.i:           ; preds = %bb.c
   br label %bb.f
 
 cypress_get_finger_count.exit.i:                  ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i32 [ %switch.select.i.i, %bb.c ], [ %i.l, %bb.b ] ; 2 uses
+  %.0.i.i = phi i32 [ %switch.select.i.i, %bb.c ], [ %i.l, %bb.b ] ; 4 uses
   store i32 %.0.i.i, ptr %1, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 4 uses
   %i.r = shl i8 %i.f, 1
@@ -275,7 +275,7 @@ bb.d:                                             ; preds = %cypress_get_finger_
   %i.aa = getelementptr i8, ptr %0, i64 170
   %i.ab = load i8, ptr %i.aa, align 2
   %i.ac = zext i8 %i.ab to i32
-  %i.ad = or disjoint i32 %i.z, %i.ac
+  %i.ad = or disjoint i32 %i.z, %i.ac             ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.ad, ptr %i.ae, align 4
   %i.af = and i8 %i.w, 7
@@ -284,7 +284,7 @@ bb.d:                                             ; preds = %cypress_get_finger_
   %i.ai = getelementptr i8, ptr %0, i64 171
   %i.aj = load i8, ptr %i.ai, align 1
   %i.ak = zext i8 %i.aj to i32
-  %i.al = or disjoint i32 %i.ah, %i.ak
+  %i.al = or disjoint i32 %i.ah, %i.ak            ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.al, ptr %i.am, align 4
   %i.an = getelementptr i8, ptr %i.d, i64 8
@@ -300,6 +300,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.sink.split.i
 
 bb.f:                                             ; preds = %cypress_get_finger_count.exit.i, %cypress_get_finger_count.exit.thread.i
+  %3 = phi i32 [ 4, %cypress_get_finger_count.exit.thread.i ], [ %.0.i.i, %cypress_get_finger_count.exit.i ] ; 2 uses
   %i.at = phi i8 [ %i.p, %cypress_get_finger_count.exit.thread.i ], [ %i.s, %cypress_get_finger_count.exit.i ] ; 2 uses
   %i.au = phi ptr [ %i.n, %cypress_get_finger_count.exit.thread.i ], [ %i.q, %cypress_get_finger_count.exit.i ] ; 2 uses
   %i.av = getelementptr i8, ptr %0, i64 169
@@ -310,7 +311,7 @@ bb.f:                                             ; preds = %cypress_get_finger_
   %i.ba = getelementptr i8, ptr %0, i64 170
   %i.bb = load i8, ptr %i.ba, align 2
   %i.bc = zext i8 %i.bb to i32
-  %i.bd = or disjoint i32 %i.az, %i.bc
+  %i.bd = or disjoint i32 %i.az, %i.bc            ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.bd, ptr %i.be, align 4
   %i.bf = and i8 %i.aw, 7
@@ -319,7 +320,7 @@ bb.f:                                             ; preds = %cypress_get_finger_
   %i.bi = getelementptr i8, ptr %0, i64 171
   %i.bj = load i8, ptr %i.bi, align 1
   %i.bk = zext i8 %i.bj to i32
-  %i.bl = or disjoint i32 %i.bh, %i.bk
+  %i.bl = or disjoint i32 %i.bh, %i.bk            ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.bl, ptr %i.bm, align 4
   %i.bn = getelementptr i8, ptr %i.d, i64 8
@@ -345,7 +346,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.bz = getelementptr i8, ptr %0, i64 174
   %i.ca = load i8, ptr %i.bz, align 2
   %i.cb = zext i8 %i.ca to i32
-  %i.cc = or disjoint i32 %i.by, %i.cb
+  %i.cc = or disjoint i32 %i.by, %i.cb            ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i32 %i.cc, ptr %i.cd, align 4
   %i.ce = and i8 %i.bv, 15
@@ -354,12 +355,17 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ch = getelementptr i8, ptr %0, i64 175
   %i.ci = load i8, ptr %i.ch, align 1
   %i.cj = zext i8 %i.ci to i32
-  %i.ck = or disjoint i32 %i.cg, %i.cj
+  %i.ck = or disjoint i32 %i.cg, %i.cj            ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 20
   store i32 %i.ck, ptr %i.cl, align 4
   br i1 %.not.i, label %cypress_parse_packet.exit, label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.h, %bb.e
+  %4 = phi i32 [ 0, %bb.e ], [ %i.ck, %bb.h ]
+  %5 = phi i32 [ 0, %bb.e ], [ %i.cc, %bb.h ]
+  %6 = phi i32 [ %i.al, %bb.e ], [ %i.bl, %bb.h ]
+  %7 = phi i32 [ %i.ad, %bb.e ], [ %i.bd, %bb.h ]
+  %8 = phi i32 [ 1, %bb.e ], [ %3, %bb.h ]
   %.sink53.i.sroa.phi = phi ptr [ %.sink53.i.sroa.gep, %bb.e ], [ %.sink53.i.sroa.gep33, %bb.h ]
   %.sink.i = phi i32 [ %i.as, %bb.e ], [ %i.bt, %bb.h ]
   %.ph.i = phi i8 [ %i.t, %bb.e ], [ %i.at, %bb.h ]
@@ -368,6 +374,11 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %cypress_parse_packet.exit
 
 cypress_parse_packet.exit:                        ; preds = %cypress_get_finger_count.exit.i, %bb.d, %bb.h, %.sink.split.i
+  %9 = phi i32 [ 0, %cypress_get_finger_count.exit.i ], [ 0, %bb.d ], [ %i.ck, %bb.h ], [ %4, %.sink.split.i ]
+  %10 = phi i32 [ 0, %cypress_get_finger_count.exit.i ], [ 0, %bb.d ], [ %i.cc, %bb.h ], [ %5, %.sink.split.i ]
+  %11 = phi i32 [ 0, %cypress_get_finger_count.exit.i ], [ %i.al, %bb.d ], [ %i.bl, %bb.h ], [ %6, %.sink.split.i ]
+  %12 = phi i32 [ 0, %cypress_get_finger_count.exit.i ], [ %i.ad, %bb.d ], [ %i.bd, %bb.h ], [ %7, %.sink.split.i ]
+  %13 = phi i32 [ %.0.i.i, %cypress_get_finger_count.exit.i ], [ 1, %bb.d ], [ %3, %bb.h ], [ %8, %.sink.split.i ] ; 4 uses
   %i.cm = phi i8 [ %i.s, %cypress_get_finger_count.exit.i ], [ %i.t, %bb.d ], [ %i.at, %bb.h ], [ %.ph.i, %.sink.split.i ] ; 2 uses
   %i.cn = phi ptr [ %i.q, %cypress_get_finger_count.exit.i ], [ %i.u, %bb.d ], [ %i.au, %bb.h ], [ %.ph51.i, %.sink.split.i ]
   %i.co = and i8 %i.f, 3
@@ -376,40 +387,31 @@ cypress_parse_packet.exit:                        ; preds = %cypress_get_finger_
   %i.cp = or disjoint i8 %i.cm, %.masked.i
   %spec.select.i = select i1 %.not45.i, i8 %i.co, i8 %i.cp
   store i8 %spec.select.i, ptr %i.cn, align 4
-  %3 = load i32, ptr %1, align 4                  ; 4 uses
-  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %3, i32 2) ; 3 uses
-  %4 = icmp sgt i32 %3, 0
-  br i1 %4, label %.lr.ph, label %._crit_edge
+  %spec.store.select = tail call i32 @llvm.umin.i32(i32 %13, i32 2) ; 3 uses
+  %.not = icmp eq i32 %13, 0
+  br i1 %.not, label %._crit_edge.thread, label %.lr.ph
+
+._crit_edge.thread:                               ; preds = %cypress_parse_packet.exit
+  %14 = call i32 @input_mt_assign_slots(ptr noundef %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %2, i32 noundef %spec.store.select, i32 noundef 0) #9 ; 0 uses
+  br label %._crit_edge38
 
 .lr.ph:                                           ; preds = %cypress_parse_packet.exit
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %6 = load i32, ptr %5, align 4
-  %i.cq = trunc i32 %6 to i16
+  %i.cq = trunc nsw i32 %12 to i16
   store i16 %i.cq, ptr %2, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i32, ptr %7, align 4
-  %i.cr = trunc i32 %8 to i16
+  %i.cr = trunc nsw i32 %11 to i16
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 2
   store i16 %i.cr, ptr %i.cs, align 2
-  %exitcond.not = icmp eq i32 %3, 1
+  %exitcond.not = icmp eq i32 %13, 1
   br i1 %exitcond.not, label %.lr.ph37, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %10 = load i32, ptr %9, align 4
-  %i.ct = trunc i32 %10 to i16
+  %i.ct = trunc nsw i32 %10 to i16
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i16 %i.ct, ptr %i.cu, align 4
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %12 = load i32, ptr %11, align 4
-  %i.cv = trunc i32 %12 to i16
+  %i.cv = trunc nsw i32 %9 to i16
   %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 6
   store i16 %i.cv, ptr %i.cw, align 2
   br label %.lr.ph37
-
-._crit_edge:                                      ; preds = %cypress_parse_packet.exit
-  %13 = call i32 @input_mt_assign_slots(ptr noundef %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %2, i32 noundef %spec.store.select, i32 noundef 0) #9 ; 0 uses
-  br label %._crit_edge38
 
 .lr.ph37:                                         ; preds = %bb.i, %.lr.ph
   %i.cx = call i32 @input_mt_assign_slots(ptr noundef %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %2, i32 noundef %spec.store.select, i32 noundef 0) #9 ; 0 uses
@@ -436,9 +438,9 @@ bb.j:                                             ; preds = %.lr.ph37, %bb.j
   %exitcond44.not = icmp eq i64 %indvars.iv.next41, %wide.trip.count43
   br i1 %exitcond44.not, label %._crit_edge38, label %bb.j, !llvm.loop !19
 
-._crit_edge38:                                    ; preds = %bb.j, %._crit_edge
+._crit_edge38:                                    ; preds = %bb.j, %._crit_edge.thread
   call void @input_mt_sync_frame(ptr noundef %i.c) #9
-  call void @input_mt_report_finger_count(ptr noundef %i.c, i32 noundef %3) #9
+  call void @input_mt_report_finger_count(ptr noundef %i.c, i32 noundef %13) #9
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.dj = load i8, ptr %i.di, align 4             ; 3 uses
   %i.dk = and i8 %i.dj, 1
@@ -475,7 +477,7 @@ declare dso_local void @input_mt_report_finger_count(ptr noundef, i32 noundef) l
 declare dso_local void @input_event(ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #6
+declare i32 @llvm.umin.i32(i32, i32) #6
 
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

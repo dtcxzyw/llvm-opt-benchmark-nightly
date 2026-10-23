@@ -205,17 +205,18 @@ _ZNKSt6vectorIN10ClipperLib8IntPointESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds
 
 _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i: ; preds = %_ZNKSt6vectorIN10ClipperLib8IntPointESaIS1_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bg, i8 0, i64 %i.be, i1 false)
-  %.pre40.pre = load ptr, ptr %i.aw, align 8      ; 2 uses
-  %.pre.pre = load ptr, ptr %i.az, align 8
   store ptr %i.bg, ptr %6, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.be ; 4 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.be ; 3 uses
   store ptr %7, ptr %i.t, align 8
   store ptr %7, ptr %i.u, align 8
-  %i.bh = icmp eq ptr %.pre.pre, %.pre40.pre
+  %8 = ptrtoint ptr %7 to i64                     ; 2 uses
+  %.pre = load ptr, ptr %i.az, align 8
+  %.pre44 = load ptr, ptr %i.aw, align 8          ; 2 uses
+  %i.bh = icmp eq ptr %.pre, %.pre44
   br i1 %i.bh, label %_ZN10ClipperLib13TranslatePathERKSt6vectorINS_8IntPointESaIS1_EERS3_S1_.exit, label %.lr.ph.i19
 
 .lr.ph.i19:                                       ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i, %.lr.ph.i19
-  %i.bi = phi ptr [ %i.bp, %.lr.ph.i19 ], [ %.pre40.pre, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i ]
+  %i.bi = phi ptr [ %i.bp, %.lr.ph.i19 ], [ %.pre44, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i ]
   %.010.i20 = phi i64 [ %i.bn, %.lr.ph.i19 ], [ 0, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i ] ; 3 uses
   %i.bj = getelementptr inbounds nuw [16 x i8], ptr %i.bi, i64 %.010.i20
   %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.bg, i64 %.010.i20
@@ -234,7 +235,7 @@ _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i: ; preds = %_ZNKSt6
 
 _ZN10ClipperLib13TranslatePathERKSt6vectorINS_8IntPointESaIS1_EERS3_S1_.exit: ; preds = %.lr.ph.i19, %bb.d, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i
   %i.bv = phi ptr [ null, %bb.d ], [ %i.bg, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i ], [ %i.bg, %.lr.ph.i19 ] ; 6 uses
-  %8 = phi ptr [ null, %bb.d ], [ %7, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i ], [ %7, %.lr.ph.i19 ] ; 2 uses
+  %9 = phi i64 [ 0, %bb.d ], [ %8, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE6resizeEm.exit.i ], [ %8, %.lr.ph.i19 ] ; 2 uses
   %i.bw = load ptr, ptr %4, align 8
   %i.bx = getelementptr i8, ptr %i.bw, i64 -24
   %i.by = load i64, ptr %i.bx, align 8
@@ -247,7 +248,6 @@ bb.g:                                             ; preds = %_ZN10ClipperLib13Tr
   br i1 %.not.i.i.i22, label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %9 = ptrtoint ptr %8 to i64
   %i.cb = ptrtoint ptr %i.bv to i64
   %i.cc = sub i64 %9, %i.cb
   call void @_ZdlPvm(ptr noundef nonnull %i.bv, i64 noundef %i.cc) #34
@@ -276,14 +276,13 @@ _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EED2Ev.exit: ; preds = %bb.g, %bb.h
   br i1 %.not.i.i.i23, label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EED2Ev.exit24, label %bb.i
 
 bb.i:                                             ; preds = %.loopexit.split-lp32
-  %10 = ptrtoint ptr %8 to i64
   %i.cd = ptrtoint ptr %i.bv to i64
-  %i.ce = sub i64 %10, %i.cd
+  %i.ce = sub i64 %9, %i.cd
   call void @_ZdlPvm(ptr noundef nonnull %i.bv, i64 noundef %i.ce) #34
   br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EED2Ev.exit24
 
 _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EED2Ev.exit24: ; preds = %.loopexit.split-lp32.thread.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp32, %bb.i
-  %lpad.phi3975 = phi { ptr, i32 } [ %lpad.loopexit.split-lp90, %.loopexit.split-lp32.thread.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit38, %.loopexit.split-lp32 ], [ %lpad.loopexit38, %bb.i ]
+  %lpad.phi3975 = phi { ptr, i32 } [ %lpad.loopexit38, %bb.i ], [ %lpad.loopexit38, %.loopexit.split-lp32 ], [ %lpad.loopexit.split-lp90, %.loopexit.split-lp32.thread.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
   br label %.loopexit.split-lp
 

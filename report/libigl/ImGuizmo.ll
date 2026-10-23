@@ -204,7 +204,7 @@ begin_hunk_0_@_ZN8ImGuizmo29RecomposeMatrixFromComponentsEPKfS1_S1_Pf:.preheader
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN8ImGuizmo10ManipulateEPKfS1_NS_9OPERATIONENS_4MODEEPfS4_S4_S4_S4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef %4, ptr nofree noundef writeonly captures(address_is_null) %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr nofree noundef readonly captures(address_is_null) %7, ptr nofree noundef readonly captures(address_is_null) %8) local_unnamed_addr #14 {
 bb.a:
-  %i.a = alloca [7 x i32], align 16               ; 10 uses
+  %i.a = alloca [7 x i32], align 16               ; 8 uses
   %9 = alloca %"struct.ImGuizmo::vec_t", align 4  ; 6 uses
   %10 = alloca %"struct.ImGuizmo::vec_t", align 4 ; 3 uses
   %11 = alloca %"struct.ImGuizmo::vec_t", align 4 ; 3 uses
@@ -218,7 +218,7 @@ bb.a:
   %i.d = alloca [512 x i8], align 16              ; 5 uses
   %17 = alloca %struct.ImVec2, align 8            ; 4 uses
   %18 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %i.e = alloca [7 x i32], align 16               ; 20 uses
+  %i.e = alloca [7 x i32], align 16               ; 19 uses
   %i.f = alloca i8, align 1                       ; 4 uses
   %i.g = alloca i8, align 1                       ; 4 uses
   %19 = alloca %"struct.ImGuizmo::vec_t", align 16 ; 5 uses
@@ -621,6 +621,7 @@ bb.eo:                                            ; preds = %bb.en, %.thread67.i
   br label %_ZN8ImGuizmoL13ComputeColorsEPjiNS_9OPERATIONE.exit.i114
 
 _ZN8ImGuizmoL13ComputeColorsEPjiNS_9OPERATIONE.exit.i114: ; preds = %.loopexit.loopexit51.i.i, %.loopexit.loopexit.i.i, %.preheader.preheader.i.i113
+  %65 = phi i32 [ -1717986919, %.preheader.preheader.i.i113 ], [ -1978629889, %.loopexit.loopexit.i.i ], [ -1, %.loopexit.loopexit51.i.i ]
   %.sroa.02.0.copyload.i.i115 = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 188), align 4, !tbaa !10 ; 3 uses
   %.sroa.12.0.copyload.i.i116 = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 192), align 8, !tbaa !10 ; 3 uses
   %.sroa.22.0.copyload.i.i117 = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 196), align 4, !tbaa !10 ; 3 uses
@@ -668,7 +669,6 @@ _ZN8ImGuizmoL13ComputeColorsEPjiNS_9OPERATIONE.exit.i114: ; preds = %.loopexit.l
   br label %bb.eq
 
 bb.ep:                                            ; preds = %bb.ev
-  %65 = load i32, ptr %i.e, align 16, !tbaa !52
   call void @_ZN10ImDrawList15AddCircleFilledERK6ImVec2fji(ptr noundef nonnull align 8 dereferenceable(196) %i.des, ptr noundef nonnull align 4 dereferenceable(8) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 640), float noundef 6.000000e+00, i32 noundef %65, i32 noundef 32)
   %i.dhe = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32, !range !33, !noundef !34
   %i.dhf = trunc nuw i8 %i.dhe to i1
@@ -1071,7 +1071,6 @@ bb.ey:                                            ; preds = %bb.dp
 bb.ez:                                            ; preds = %bb.ey
   %i.dtd = icmp eq i32 %.0, 15
   %i.dte = select i1 %i.dtd, i32 -1978629889, i32 -1
-  store i32 %i.dte, ptr %i.a, align 16, !tbaa !52
   %i.dtf = icmp eq i32 %.0, 12
   %i.dtg = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   br i1 %i.dtf, label %.thread73.i.i, label %bb.fa
@@ -1107,6 +1106,7 @@ bb.fc:                                            ; preds = %bb.fb, %.thread72.i
   br label %_ZN8ImGuizmoL13ComputeColorsEPjiNS_9OPERATIONE.exit.i127
 
 _ZN8ImGuizmoL13ComputeColorsEPjiNS_9OPERATIONE.exit.i127: ; preds = %.loopexit.loopexit53.i.i, %.preheader.preheader.i.i126
+  %66 = phi i32 [ -1717986919, %.preheader.preheader.i.i126 ], [ %i.dte, %.loopexit.loopexit53.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %9, ptr noundef nonnull align 4 dereferenceable(16) @__const._ZN8ImGuizmoL14DrawScaleGizmoEi.scaleDisplay, i64 16, i1 false)
   %i.dtn = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32, !range !33, !noundef !34
@@ -1123,7 +1123,6 @@ bb.fe:                                            ; preds = %bb.fd, %_ZN8ImGuizm
   br label %bb.fg
 
 bb.ff:                                            ; preds = %bb.fm
-  %66 = load i32, ptr %i.a, align 16, !tbaa !52
   call void @_ZN10ImDrawList15AddCircleFilledERK6ImVec2fji(ptr noundef nonnull align 8 dereferenceable(196) %i.dta, ptr noundef nonnull align 4 dereferenceable(8) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 640), float noundef 6.000000e+00, i32 noundef %66, i32 noundef 32)
   %i.dtr = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32, !range !33, !noundef !34
   %i.dts = trunc nuw i8 %i.dtr to i1

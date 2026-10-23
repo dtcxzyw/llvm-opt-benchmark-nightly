@@ -204,10 +204,13 @@ bb.a:
   br label %bb.m
 
 bb.b:                                             ; preds = %.lr.ph, %bb.l
-  %i.v = phi i32 [ 0, %.lr.ph ], [ %i.df, %bb.l ] ; 7 uses
-  %i.w = phi i32 [ 0, %.lr.ph ], [ %i.dg, %bb.l ] ; 7 uses
+  %2 = phi i32 [ 0, %.lr.ph ], [ %8, %bb.l ]      ; 6 uses
+  %3 = phi i32 [ 0, %.lr.ph ], [ %9, %bb.l ]      ; 6 uses
+  %4 = phi i32 [ 0, %.lr.ph ], [ %i.dh, %bb.l ]   ; 7 uses
+  %i.v = phi i32 [ 0, %.lr.ph ], [ %i.dg, %bb.l ] ; 7 uses
+  %i.w = phi i32 [ 0, %.lr.ph ], [ %i.df, %bb.l ] ; 7 uses
   %.0100148 = phi i32 [ 0, %.lr.ph ], [ %i.di, %bb.l ] ; 9 uses
-  %i.x = phi i32 [ 0, %.lr.ph ], [ %i.dh, %bb.l ] ; 7 uses
+  %i.x = phi i32 [ 0, %.lr.ph ], [ %10, %bb.l ]   ; 6 uses
   %i.y = lshr i32 %.0100148, 6
   %i.z = zext nneg i32 %i.y to i64                ; 2 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.z
@@ -280,7 +283,7 @@ Pla_ManExpendDirNum.exit:                         ; preds = %bb.f
 bb.g:                                             ; preds = %Pla_ManExpendDirNum.exit.thread, %Pla_ManExpendDirNum.exit
   %i.bd = or i64 %i.ah, %i.ae
   store i64 %i.bd, ptr %i.ag, align 8, !tbaa !30
-  %i.be = add nsw i32 %i.x, 1
+  %i.be = add nsw i32 %4, 1                       ; 2 uses
   tail call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.o, i32 noundef %.0100148, i32 noundef -1)
   br label %bb.k
 
@@ -299,7 +302,7 @@ bb.h:                                             ; preds = %Pla_ManExpendDirNum
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !30
   %i.bq = or i64 %i.bl, %i.bp
   store i64 %i.bq, ptr %i.bo, align 8, !tbaa !30
-  %i.br = add nsw i32 %i.v, 1
+  %i.br = add nsw i32 %i.v, 1                     ; 2 uses
   tail call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.o, i32 noundef %.0100148, i32 noundef %i.bg)
   br label %bb.k
 
@@ -347,25 +350,32 @@ bb.j:                                             ; preds = %bb.i
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !30
   %i.da = or i64 %i.cz, %i.ce
   store i64 %i.da, ptr %i.cy, align 8, !tbaa !30
-  %i.db = add nsw i32 %i.w, 1
+  %i.db = add nsw i32 %i.w, 1                     ; 2 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %Pla_ManExpendDirNum.exit, %bb.j, %bb.h, %bb.g
-  %i.dc = phi i32 [ %i.v, %bb.i ], [ %i.v, %Pla_ManExpendDirNum.exit ], [ %i.v, %bb.j ], [ %i.br, %bb.h ], [ %i.v, %bb.g ]
-  %i.dd = phi i32 [ %i.w, %bb.i ], [ %i.w, %Pla_ManExpendDirNum.exit ], [ %i.db, %bb.j ], [ %i.w, %bb.h ], [ %i.w, %bb.g ]
-  %i.de = phi i32 [ %i.x, %bb.i ], [ %i.x, %Pla_ManExpendDirNum.exit ], [ %i.x, %bb.j ], [ %i.x, %bb.h ], [ %i.be, %bb.g ]
+  %5 = phi i32 [ %2, %bb.g ], [ %2, %bb.j ], [ %i.br, %bb.h ], [ %2, %Pla_ManExpendDirNum.exit ], [ %2, %bb.i ]
+  %6 = phi i32 [ %3, %bb.g ], [ %i.db, %bb.j ], [ %3, %bb.h ], [ %3, %Pla_ManExpendDirNum.exit ], [ %3, %bb.i ]
+  %7 = phi i32 [ %i.be, %bb.g ], [ %i.x, %bb.j ], [ %i.x, %bb.h ], [ %i.x, %Pla_ManExpendDirNum.exit ], [ %i.x, %bb.i ]
+  %i.dc = phi i32 [ %i.w, %bb.g ], [ %i.db, %bb.j ], [ %i.w, %bb.h ], [ %i.w, %Pla_ManExpendDirNum.exit ], [ %i.w, %bb.i ]
+  %i.dd = phi i32 [ %i.v, %bb.g ], [ %i.v, %bb.j ], [ %i.br, %bb.h ], [ %i.v, %Pla_ManExpendDirNum.exit ], [ %i.v, %bb.i ]
+  %i.de = phi i32 [ %i.be, %bb.g ], [ %4, %bb.j ], [ %4, %bb.h ], [ %4, %Pla_ManExpendDirNum.exit ], [ %4, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.b, %bb.c
-  %i.df = phi i32 [ %i.dc, %bb.k ], [ %i.v, %bb.b ], [ %i.v, %bb.c ] ; 2 uses
-  %i.dg = phi i32 [ %i.dd, %bb.k ], [ %i.w, %bb.b ], [ %i.w, %bb.c ] ; 2 uses
-  %i.dh = phi i32 [ %i.de, %bb.k ], [ %i.x, %bb.b ], [ %i.x, %bb.c ] ; 2 uses
+  %8 = phi i32 [ %5, %bb.k ], [ %2, %bb.b ], [ %2, %bb.c ] ; 2 uses
+  %9 = phi i32 [ %6, %bb.k ], [ %3, %bb.b ], [ %3, %bb.c ] ; 2 uses
+  %10 = phi i32 [ %7, %bb.k ], [ %i.x, %bb.b ], [ %i.x, %bb.c ] ; 2 uses
+  %i.df = phi i32 [ %i.dc, %bb.k ], [ %i.w, %bb.b ], [ %i.w, %bb.c ]
+  %i.dg = phi i32 [ %i.dd, %bb.k ], [ %i.v, %bb.b ], [ %i.v, %bb.c ]
+  %i.dh = phi i32 [ %i.de, %bb.k ], [ %4, %bb.b ], [ %4, %bb.c ]
   %i.di = add nuw nsw i32 %.0100148, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.di, %smax
   br i1 %exitcond.not, label %.lr.ph160, label %bb.b, !llvm.loop !47
 
 bb.m:                                             ; preds = %.lr.ph160, %bb.t
+  %11 = phi i32 [ 0, %.lr.ph160 ], [ %12, %bb.t ] ; 2 uses
   %i.dj = phi i32 [ 0, %.lr.ph160 ], [ %i.fq, %bb.t ] ; 3 uses
   %.1101159 = phi i32 [ 0, %.lr.ph160 ], [ %i.fr, %bb.t ] ; 7 uses
   %i.dk = lshr i32 %.1101159, 6
@@ -481,22 +491,23 @@ bb.s:                                             ; preds = %.lr.ph155, %bb.r
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !30
   %i.fo = or i64 %i.fj, %i.fn
   store i64 %i.fo, ptr %i.fm, align 8, !tbaa !30
-  %i.fp = add nsw i32 %i.dj, 1
+  %i.fp = add nsw i32 %i.dj, 1                    ; 2 uses
   tail call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.o, i32 noundef %.1101159, i32 noundef %i.fe)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.m, %bb.n, %._crit_edge
-  %i.fq = phi i32 [ %i.dj, %bb.m ], [ %i.dj, %bb.n ], [ %i.fp, %._crit_edge ] ; 2 uses
+  %12 = phi i32 [ %11, %bb.m ], [ %11, %bb.n ], [ %i.fp, %._crit_edge ] ; 2 uses
+  %i.fq = phi i32 [ %i.dj, %bb.m ], [ %i.dj, %bb.n ], [ %i.fp, %._crit_edge ]
   %i.fr = add nuw nsw i32 %.1101159, 1            ; 2 uses
   %exitcond194.not = icmp eq i32 %i.fr, %smax193
   br i1 %exitcond194.not, label %._crit_edge161, label %bb.m, !llvm.loop !49
 
 ._crit_edge161:                                   ; preds = %bb.t, %bb.a
-  %.lcssa147245 = phi i32 [ 0, %bb.a ], [ %i.dh, %bb.t ] ; 2 uses
-  %.sroa.9.0244 = phi i32 [ 0, %bb.a ], [ %i.dg, %bb.t ] ; 2 uses
-  %.sroa.6.0243 = phi i32 [ 0, %bb.a ], [ %i.df, %bb.t ] ; 2 uses
-  %.sroa.19.0 = phi i32 [ 0, %bb.a ], [ %i.fq, %bb.t ] ; 2 uses
+  %.lcssa147245 = phi i32 [ 0, %bb.a ], [ %10, %bb.t ] ; 2 uses
+  %.sroa.9.0244 = phi i32 [ 0, %bb.a ], [ %9, %bb.t ] ; 2 uses
+  %.sroa.6.0243 = phi i32 [ 0, %bb.a ], [ %8, %bb.t ] ; 2 uses
+  %.sroa.19.0 = phi i32 [ 0, %bb.a ], [ %12, %bb.t ] ; 2 uses
   %putchar = tail call i32 @putchar(i32 10)       ; 0 uses
   %i.fs = icmp sgt i32 %i.h, 0
   br i1 %i.fs, label %.lr.ph.preheader.i, label %Pla_TtCountOnes.exit

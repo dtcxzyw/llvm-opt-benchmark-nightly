@@ -189,48 +189,54 @@ bb.g:                                             ; preds = %is_specified_ip_add
   br i1 %.not6579, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g, %bb.k
-  %i.t = phi i32 [ %18, %bb.k ], [ 0, %bb.g ]     ; 2 uses
+  %i.t = phi i32 [ %23, %bb.k ], [ 0, %bb.g ]     ; 2 uses
   %.06081 = phi ptr [ %.060, %bb.k ], [ %.06078, %bb.g ] ; 3 uses
-  %.06180 = phi i32 [ %.2, %bb.k ], [ 0, %bb.g ]  ; 2 uses
-  %i.u = phi i32 [ %16, %bb.k ], [ 0, %bb.g ]     ; 2 uses
-  %i.v = icmp eq i32 %i.u, 0
+  %15 = phi i32 [ %20, %bb.k ], [ 0, %bb.g ]      ; 2 uses
+  %16 = phi i32 [ %24, %bb.k ], [ 0, %bb.g ]      ; 2 uses
+  %.06180 = phi i32 [ %.2, %bb.k ], [ 0, %bb.g ]  ; 3 uses
+  %i.u = phi i32 [ %19, %bb.k ], [ 0, %bb.g ]     ; 2 uses
+  %i.v = icmp eq i32 %15, 0
   br i1 %i.v, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph
   %i.w = getelementptr inbounds nuw i8, ptr %.06081, i64 4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !21
-  %i.y = icmp eq i32 %i.x, 10                     ; 2 uses
-  %spec.select = select i1 %i.y, i32 10, i32 0
-  %15 = zext i1 %i.y to i32
-  %spec.select87 = add nsw i32 %.06180, %15
+  %i.y = icmp eq i32 %i.x, 10
+  br i1 %i.y, label %17, label %bb.i
+
+17:                                               ; preds = %bb.h
+  %18 = add nsw i32 %.06180, 1
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %.lr.ph
-  %16 = phi i32 [ %i.u, %.lr.ph ], [ %spec.select, %bb.h ] ; 2 uses
-  %.162 = phi i32 [ %.06180, %.lr.ph ], [ %spec.select87, %bb.h ] ; 2 uses
-  %i.z = icmp eq i32 %i.t, 0
+bb.i:                                             ; preds = %17, %bb.h, %.lr.ph
+  %19 = phi i32 [ 10, %17 ], [ %i.u, %bb.h ], [ %i.u, %.lr.ph ] ; 2 uses
+  %.162 = phi i32 [ %18, %17 ], [ %.06180, %bb.h ], [ %.06180, %.lr.ph ] ; 3 uses
+  %20 = phi i32 [ 10, %17 ], [ 0, %bb.h ], [ %15, %.lr.ph ]
+  %i.z = icmp eq i32 %16, 0
   br i1 %i.z, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = getelementptr inbounds nuw i8, ptr %.06081, i64 4
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !21
-  %i.ac = icmp eq i32 %i.ab, 2                    ; 2 uses
-  %spec.select88 = select i1 %i.ac, i32 2, i32 0
-  %17 = zext i1 %i.ac to i32
-  %spec.select89 = add nsw i32 %.162, %17
+  %i.ac = icmp eq i32 %i.ab, 2
+  br i1 %i.ac, label %21, label %bb.k
+
+21:                                               ; preds = %bb.j
+  %22 = add nsw i32 %.162, 1
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i
-  %18 = phi i32 [ %i.t, %bb.i ], [ %spec.select88, %bb.j ] ; 2 uses
-  %.2 = phi i32 [ %.162, %bb.i ], [ %spec.select89, %bb.j ] ; 2 uses
+bb.k:                                             ; preds = %bb.i, %bb.j, %21
+  %23 = phi i32 [ 2, %21 ], [ %i.t, %bb.j ], [ %i.t, %bb.i ] ; 2 uses
+  %.2 = phi i32 [ %22, %21 ], [ %.162, %bb.j ], [ %.162, %bb.i ] ; 2 uses
+  %24 = phi i32 [ 2, %21 ], [ 0, %bb.j ], [ %16, %bb.i ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.06081, i64 40
   %.060 = load ptr, ptr %i.ad, align 8, !tbaa !20 ; 2 uses
   %.not65 = icmp eq ptr %.060, null
   br i1 %.not65, label %.loopexit, label %.lr.ph, !llvm.loop !78
 
 .loopexit:                                        ; preds = %bb.k, %bb.g, %is_specified_ip_address.exit.thread
-  %.sroa.7.1 = phi i32 [ 2, %is_specified_ip_address.exit.thread ], [ 0, %bb.g ], [ %18, %bb.k ] ; 2 uses
-  %.sroa.0.0 = phi i32 [ 10, %is_specified_ip_address.exit.thread ], [ 0, %bb.g ], [ %16, %bb.k ] ; 2 uses
+  %.sroa.7.1 = phi i32 [ 2, %is_specified_ip_address.exit.thread ], [ 0, %bb.g ], [ %23, %bb.k ] ; 2 uses
+  %.sroa.0.0 = phi i32 [ 10, %is_specified_ip_address.exit.thread ], [ 0, %bb.g ], [ %19, %bb.k ] ; 2 uses
   %.3 = phi i32 [ 2, %is_specified_ip_address.exit.thread ], [ 0, %bb.g ], [ %.2, %bb.k ] ; 2 uses
   %.059 = phi ptr [ null, %is_specified_ip_address.exit.thread ], [ %i.s, %bb.g ], [ %i.s, %bb.k ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #16

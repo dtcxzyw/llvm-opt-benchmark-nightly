@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5: ; preds = %_ZNS
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4llvh10TimerGroup17PrintQueuedTimersERNS_11raw_ostreamE(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) local_unnamed_addr #1 align 2 {
 bb.a:
-  %2 = alloca %"class.llvh::TimeRecord", align 8  ; 13 uses
+  %2 = alloca %"class.llvh::TimeRecord", align 8  ; 9 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %5 = alloca %"class.llvh::format_object.28", align 8 ; 7 uses
@@ -249,20 +249,20 @@ _ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit: ; pre
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !60   ; 2 uses
   %i.q = load ptr, ptr %i.c, align 8, !tbaa !60   ; 2 uses
   %.not7981 = icmp eq ptr %i.p, %i.q
-  br i1 %.not7981, label %bb.e, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  br label %bb.q
+  br i1 %.not7981, label %bb.e, label %bb.q
 
 ._crit_edge:                                      ; preds = %bb.q
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 24
   store <2 x double> %i.cx, ptr %6, align 8, !tbaa !71
   store i64 %i.da, ptr %7, align 8, !tbaa !67
+  %8 = icmp eq i64 %i.da, 0
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit
+  %.lcssa83 = phi i1 [ %8, %._crit_edge ], [ true, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ]
   %.lcssa = phi double [ %i.cu, %._crit_edge ], [ 0.000000e+00, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ] ; 2 uses
+  %9 = phi <2 x double> [ %i.cx, %._crit_edge ], [ zeroinitializer, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ] ; 4 uses
   store double %.lcssa, ptr %2, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !30
@@ -435,28 +435,28 @@ _ZL20getDefaultTimerGroupv.exit:                  ; preds = %_ZNSt7__cxx1112basi
   %.not = icmp eq ptr %0, %i.cr
   br i1 %.not, label %bb.s, label %bb.r
 
-bb.q:                                             ; preds = %.lr.ph, %bb.q
-  %8 = phi i64 [ 0, %.lr.ph ], [ %i.da, %bb.q ]
-  %.sroa.076.082 = phi ptr [ %i.p, %.lr.ph ], [ %i.db, %bb.q ] ; 4 uses
-  %9 = phi double [ 0.000000e+00, %.lr.ph ], [ %i.cu, %bb.q ]
-  %i.cs = phi <2 x double> [ zeroinitializer, %.lr.ph ], [ %i.cx, %bb.q ]
-  %i.ct = load double, ptr %.sroa.076.082, align 8, !tbaa !80
-  %i.cu = fadd double %i.ct, %9                   ; 2 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.076.082, i64 8
+bb.q:                                             ; preds = %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit, %bb.q
+  %10 = phi double [ %i.cu, %bb.q ], [ 0.000000e+00, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ]
+  %11 = phi i64 [ %i.da, %bb.q ], [ 0, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ]
+  %.sroa.076.086 = phi ptr [ %i.db, %bb.q ], [ %i.p, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ] ; 4 uses
+  %i.cs = phi <2 x double> [ %i.cx, %bb.q ], [ zeroinitializer, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ]
+  %i.ct = load double, ptr %.sroa.076.086, align 8, !tbaa !80
+  %i.cu = fadd double %10, %i.ct                  ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.076.086, i64 8
   %i.cw = load <2 x double>, ptr %i.cv, align 8, !tbaa !71
-  %i.cx = fadd <2 x double> %i.cw, %i.cs          ; 2 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.076.082, i64 24
+  %i.cx = fadd <2 x double> %i.cs, %i.cw          ; 3 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.076.086, i64 24
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !67
-  %i.da = add nsw i64 %8, %i.cz                   ; 2 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %.sroa.076.082, i64 96 ; 2 uses
+  %i.da = add nsw i64 %i.cz, %11                  ; 3 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %.sroa.076.086, i64 96 ; 2 uses
   %.not79 = icmp eq ptr %i.db, %i.q
   br i1 %.not79, label %._crit_edge, label %bb.q
 
 bb.r:                                             ; preds = %_ZL20getDefaultTimerGroupv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %11 = load <2 x double>, ptr %10, align 8, !tbaa !71
-  %12 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %11)
+  %shift = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %shift, %9
+  %12 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.dc = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr @.str.13, ptr %i.dc, align 8, !tbaa !75, !alias.scope !187
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh13format_objectIJddEEE, i64 16), ptr %5, align 8, !tbaa !13, !alias.scope !187
@@ -485,9 +485,8 @@ bb.u:                                             ; preds = %bb.s
   br label %_ZN4llvh11raw_ostreamlsEc.exit40
 
 _ZN4llvh11raw_ostreamlsEc.exit40:                 ; preds = %bb.t, %bb.u
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %14 = load double, ptr %13, align 8, !tbaa !73  ; 2 uses
-  %i.dk = fcmp une double %14, 0.000000e+00
+  %13 = extractelement <2 x double> %9, i64 0     ; 2 uses
+  %i.dk = fcmp une double %13, 0.000000e+00
   %.pre97.pre101.pre104 = load ptr, ptr %i.t, align 8, !tbaa !31 ; 3 uses
   br i1 %i.dk, label %bb.v, label %_ZN4llvh11raw_ostreamlsEPKc.exit43
 
@@ -513,9 +512,8 @@ bb.x:                                             ; preds = %bb.v
 
 _ZN4llvh11raw_ostreamlsEPKc.exit43:               ; preds = %bb.x, %bb.w, %_ZN4llvh11raw_ostreamlsEc.exit40
   %.pre97.pre101 = phi ptr [ %i.ds, %bb.x ], [ %.pre97.pre101.pre, %bb.w ], [ %.pre97.pre101.pre104, %_ZN4llvh11raw_ostreamlsEc.exit40 ] ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %16 = load double, ptr %15, align 8, !tbaa !72  ; 2 uses
-  %i.dt = fcmp une double %16, 0.000000e+00
+  %14 = extractelement <2 x double> %9, i64 1     ; 2 uses
+  %i.dt = fcmp une double %14, 0.000000e+00
   br i1 %i.dt, label %bb.y, label %_ZN4llvh11raw_ostreamlsEPKc.exit46
 
 bb.y:                                             ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit43
@@ -540,7 +538,7 @@ bb.aa:                                            ; preds = %bb.y
 
 _ZN4llvh11raw_ostreamlsEPKc.exit46:               ; preds = %bb.aa, %bb.z, %_ZN4llvh11raw_ostreamlsEPKc.exit43
   %.pre97 = phi ptr [ %i.eb, %bb.aa ], [ %.pre97.pre, %bb.z ], [ %.pre97.pre101, %_ZN4llvh11raw_ostreamlsEPKc.exit43 ] ; 3 uses
-  %i.ec = fadd double %14, %16
+  %i.ec = fadd double %14, %13
   %i.ed = fcmp une double %i.ec, 0.000000e+00
   br i1 %i.ed, label %bb.ab, label %_ZN4llvh11raw_ostreamlsEPKc.exit49
 
@@ -587,10 +585,7 @@ bb.af:                                            ; preds = %_ZN4llvh11raw_ostre
 
 _ZN4llvh11raw_ostreamlsEPKc.exit52:               ; preds = %bb.ae, %bb.af
   %.pre99 = phi ptr [ %.pre99.pre, %bb.ae ], [ %i.eu, %bb.af ] ; 3 uses
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %18 = load i64, ptr %17, align 8, !tbaa !67
-  %.not25 = icmp eq i64 %18, 0
-  br i1 %.not25, label %_ZN4llvh11raw_ostreamlsEPKc.exit55, label %bb.ag
+  br i1 %.lcssa83, label %_ZN4llvh11raw_ostreamlsEPKc.exit55, label %bb.ag
 
 bb.ag:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit52
   %i.ev = load ptr, ptr %i.r, align 8, !tbaa !30

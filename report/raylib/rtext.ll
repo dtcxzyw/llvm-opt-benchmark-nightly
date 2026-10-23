@@ -205,14 +205,14 @@ bb.a:
   %i.o = alloca i32, align 4                      ; 6 uses
   %i.p = alloca i32, align 4                      ; 6 uses
   %i.q = alloca i32, align 4                      ; 6 uses
-  %9 = alloca %struct.stbtt_fontinfo, align 8     ; 34 uses
+  %9 = alloca %struct.stbtt_fontinfo, align 8     ; 32 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.ob, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %9, i8 0, i64 160, i1 false)
-  %i.r = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %9, i64 8
   store ptr %0, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 3 uses
   %.sroa.431.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %9, i64 72
@@ -229,10 +229,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %stbtt__find_table.exit140.i.i.thread, label %.lr.ph.i.i.i
 
 stbtt__find_table.exit140.i.i.thread:             ; preds = %bb.b
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 24
-  %11 = getelementptr inbounds nuw i8, ptr %9, i64 36
-  %i.z = getelementptr inbounds nuw i8, ptr %9, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 0, i64 24, i1 false)
+  %i.z = getelementptr inbounds nuw i8, ptr %9, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.z, i8 0, i64 24, i1 false)
   br label %stbtt__find_table.exit200.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.b
@@ -453,7 +451,7 @@ bb.af:                                            ; preds = %bb.ad, %bb.ac, %bb.
 
 stbtt__find_table.exit170.i.i:                    ; preds = %bb.af, %bb.ae
   %.2.i169.i.i = phi i32 [ %i.dk, %bb.ae ], [ 0, %bb.af ] ; 3 uses
-  %i.dl = getelementptr inbounds nuw i8, ptr %9, i64 36 ; 3 uses
+  %i.dl = getelementptr inbounds nuw i8, ptr %9, i64 36
   store i32 %.2.i169.i.i, ptr %i.dl, align 4
   br label %bb.ag
 
@@ -497,7 +495,7 @@ bb.al:                                            ; preds = %bb.aj, %bb.ai, %bb.
 
 stbtt__find_table.exit180.i.i:                    ; preds = %bb.al, %bb.ak
   %.2.i179.i.i = phi i32 [ %i.ec, %bb.ak ], [ 0, %bb.al ] ; 3 uses
-  %i.ed = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 3 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr %9, i64 40
   store i32 %.2.i179.i.i, ptr %i.ed, align 8
   br label %bb.am
 
@@ -584,14 +582,12 @@ bb.ax:                                            ; preds = %bb.av, %bb.au, %bb.
   br i1 %exitcond.not.i198.i.i, label %stbtt__find_table.exit200.i.i, label %bb.as
 
 stbtt__find_table.exit200.i.i:                    ; preds = %bb.ax, %stbtt__find_table.exit140.i.i.thread, %bb.aw
-  %12 = phi ptr [ %i.dl, %bb.aw ], [ %11, %stbtt__find_table.exit140.i.i.thread ], [ %i.dl, %bb.ax ] ; 2 uses
   %.val144 = phi i32 [ %.2.i169.i.i, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ %.2.i169.i.i, %bb.ax ] ; 2 uses
   %i.fn = phi i32 [ %i.ca, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ %i.ca, %bb.ax ] ; 2 uses
   %.2.i333.i.i189194198208218234 = phi i32 [ %.2.i.i.i, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ %.2.i.i.i, %bb.ax ] ; 4 uses
   %.2.i139.i.i190193199207219233 = phi i32 [ %.2.i139.i.i, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ %.2.i139.i.i, %bb.ax ]
   %.2.i159.i.i200206220232 = phi i32 [ %.2.i159.i.i, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ %.2.i159.i.i, %bb.ax ]
-  %.2.i179.i.i221231 = phi i32 [ %.2.i179.i.i, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ %.2.i179.i.i, %bb.ax ]
-  %13 = phi ptr [ %i.ed, %bb.aw ], [ %i.z, %stbtt__find_table.exit140.i.i.thread ], [ %i.ed, %bb.ax ] ; 2 uses
+  %.2.i179.i.i221231 = phi i32 [ %.2.i179.i.i, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ %.2.i179.i.i, %bb.ax ] ; 2 uses
   %.2.i199.i.i = phi i32 [ %i.fm, %bb.aw ], [ 0, %stbtt__find_table.exit140.i.i.thread ], [ 0, %bb.ax ]
   %i.fo = getelementptr inbounds nuw i8, ptr %9, i64 48
   store i32 %.2.i199.i.i, ptr %i.fo, align 8
@@ -994,7 +990,7 @@ stbtt__find_table.exit331.thread.i.i:             ; preds = %bb.db, %bb.dc, %stb
   %i.vu = shl nuw nsw i32 %i.vt, 8
   %i.vv = zext i8 %.val128.i.i to i32
   %i.vw = or disjoint i32 %i.vu, %i.vv            ; 2 uses
-  %i.vx = getelementptr inbounds nuw i8, ptr %9, i64 56 ; 4 uses
+  %i.vx = getelementptr inbounds nuw i8, ptr %9, i64 56
   %.not397.i.i = icmp eq i32 %i.vw, 0
   br i1 %.not397.i.i, label %.thread, label %.lr.ph.i.i
 
@@ -1046,8 +1042,8 @@ bb.de:                                            ; preds = %bb.dd
   br label %bb.df
 
 bb.df:                                            ; preds = %.sink.split.i.i, %bb.de, %bb.dd
-  %.val148 = phi i32 [ %i.vz, %bb.de ], [ %i.vz, %bb.dd ], [ %i.wt, %.sink.split.i.i ] ; 3 uses
-  %i.wu = phi i32 [ %i.wa, %bb.de ], [ %i.wa, %bb.dd ], [ %i.wt, %.sink.split.i.i ] ; 2 uses
+  %.val148 = phi i32 [ %i.vz, %bb.de ], [ %i.vz, %bb.dd ], [ %i.wt, %.sink.split.i.i ] ; 2 uses
+  %i.wu = phi i32 [ %i.wa, %bb.de ], [ %i.wa, %bb.dd ], [ %i.wt, %.sink.split.i.i ] ; 6 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.dd
@@ -1081,7 +1077,7 @@ bb.dg:                                            ; preds = %._crit_edge.i.i
   store i32 %i.xd, ptr %i.xe, align 4
   %i.xf = sitofp i32 %2 to float
   %i.xg = sext i32 %.val144 to i64
-  %i.xh = getelementptr inbounds i8, ptr %0, i64 %i.xg ; 4 uses
+  %i.xh = getelementptr inbounds i8, ptr %0, i64 %i.xg ; 6 uses
   %i.xi = getelementptr inbounds nuw i8, ptr %i.xh, i64 4
   %.val6.i = load i8, ptr %i.xi, align 1
   %i.xj = getelementptr i8, ptr %i.xh, i64 5
@@ -1162,6 +1158,10 @@ bb.di:                                            ; preds = %bb.dj
   %i.yq = fneg float %i.xy                        ; 6 uses
   %i.yr = fdiv float 3.500000e-01, %i.xy          ; 2 uses
   %i.ys = fmul float %i.yr, %i.yr                 ; 4 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.xh, i64 34 ; 2 uses
+  %11 = getelementptr i8, ptr %i.xh, i64 35       ; 2 uses
+  %12 = sext i32 %.2.i179.i.i221231 to i64
+  %13 = getelementptr inbounds i8, ptr %0, i64 %12 ; 4 uses
   %.not143 = icmp ne i32 %5, 2
   %i.yt = sitofp i16 %i.xn to float
   %i.yu = fmul float %i.xy, %i.yt
@@ -1179,7 +1179,7 @@ bb.dj:                                            ; preds = %.loopexit250, %bb.d
   %.0129281 = phi i32 [ 0, %.loopexit250 ], [ %spec.select, %bb.dj ]
   %i.zc = getelementptr inbounds nuw [4 x i8], ptr %.0125, i64 %indvars.iv320
   %i.zd = load i32, ptr %i.zc, align 4
-  %i.ze = tail call fastcc i32 @stbtt_FindGlyphIndex(ptr nonnull %0, i32 %.val148, i32 noundef %i.zd)
+  %i.ze = tail call fastcc i32 @stbtt_FindGlyphIndex(ptr nonnull %0, i32 %i.wu, i32 noundef %i.zd)
   %i.zf = icmp sgt i32 %i.ze, 0
   %i.zg = zext i1 %i.zf to i32
   %spec.select = add nuw nsw i32 %.0129281, %i.zg ; 2 uses
@@ -1196,17 +1196,15 @@ bb.dl:                                            ; preds = %bb.di, %bb.nx
   %.0122285 = phi i32 [ 0, %bb.di ], [ %.1, %bb.nx ] ; 3 uses
   %.2284 = phi i32 [ 0, %bb.di ], [ %.3, %bb.nx ] ; 2 uses
   %i.zi = getelementptr inbounds nuw [4 x i8], ptr %.0125, i64 %indvars.iv330
-  %14 = load i32, ptr %i.zi, align 4              ; 7 uses
-  %.val145 = load ptr, ptr %i.r, align 8
-  %.val146 = load i32, ptr %i.vx, align 8
-  %i.zj = call fastcc i32 @stbtt_FindGlyphIndex(ptr %.val145, i32 %.val146, i32 noundef %14) ; 5 uses
+  %.val146 = load i32, ptr %i.zi, align 4         ; 7 uses
+  %i.zj = call fastcc i32 @stbtt_FindGlyphIndex(ptr %0, i32 %i.wu, i32 noundef %.val146) ; 5 uses
   %i.zk = icmp sgt i32 %i.zj, 0
   br i1 %i.zk, label %bb.dm, label %bb.nx
 
 bb.dm:                                            ; preds = %bb.dl
   %i.zl = sext i32 %.0122285 to i64
   %i.zm = getelementptr inbounds [40 x i8], ptr %i.yo, i64 %i.zl ; 18 uses
-  store i32 %14, ptr %i.zm, align 8
+  store i32 %.val146, ptr %i.zm, align 8
   switch i32 %5, label %bb.np [
     i32 0, label %bb.dn
     i32 1, label %bb.dn
@@ -1609,7 +1607,7 @@ stbtt_GetCodepointBitmap.exit:                    ; preds = %bb.do, %bb.dp, %stb
   br label %.sink.split
 
 bb.le:                                            ; preds = %bb.dm
-  %.not141 = icmp eq i32 %14, 32
+  %.not141 = icmp eq i32 %.val146, 32
   br i1 %.not141, label %bb.np, label %bb.lf
 
 bb.lf:                                            ; preds = %bb.le
@@ -2012,32 +2010,22 @@ bb.np:                                            ; preds = %.sink.split, %bb.dm
 
 stbtt_GetCodepointHMetrics.exit:                  ; preds = %bb.np
   %i.cpp = getelementptr inbounds nuw i8, ptr %i.zm, i64 12
-  %.val.i163 = load ptr, ptr %i.r, align 8        ; 3 uses
-  %.val4.i = load i32, ptr %i.vx, align 8
-  %i.cpq = call fastcc i32 @stbtt_FindGlyphIndex(ptr %.val.i163, i32 %.val4.i, i32 noundef %14) ; 2 uses
-  %15 = load i32, ptr %12, align 4
-  %16 = sext i32 %15 to i64
-  %17 = getelementptr inbounds i8, ptr %.val.i163, i64 %16 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 34
-  %.val.i.i164 = load i8, ptr %18, align 1
-  %19 = getelementptr i8, ptr %17, i64 35
-  %.val31.i.i = load i8, ptr %19, align 1
+  %i.cpq = call fastcc i32 @stbtt_FindGlyphIndex(ptr %0, i32 %i.wu, i32 noundef %.val146) ; 2 uses
+  %.val.i.i164 = load i8, ptr %10, align 1
+  %.val31.i.i = load i8, ptr %11, align 1
   %i.cpr = zext i8 %.val.i.i164 to i32
   %i.cps = shl nuw nsw i32 %i.cpr, 8
   %i.cpt = zext i8 %.val31.i.i to i32
   %i.cpu = or disjoint i32 %i.cps, %i.cpt         ; 2 uses
   %i.cpv = icmp slt i32 %i.cpq, %i.cpu            ; 2 uses
-  %20 = load i32, ptr %13, align 8
-  %21 = sext i32 %20 to i64
-  %22 = getelementptr inbounds i8, ptr %.val.i163, i64 %21 ; 2 uses
   %i.cpw = shl nuw nsw i32 %i.cpu, 2
   %i.cpx = zext nneg i32 %i.cpw to i64
-  %i.cpy = getelementptr i8, ptr %22, i64 %i.cpx  ; 2 uses
+  %i.cpy = getelementptr i8, ptr %13, i64 %i.cpx  ; 2 uses
   %i.cpz = getelementptr i8, ptr %i.cpy, i64 -4
   %i.cqa = getelementptr i8, ptr %i.cpy, i64 -3
   %i.cqb = shl nsw i32 %i.cpq, 2
   %i.cqc = sext i32 %i.cqb to i64
-  %i.cqd = getelementptr inbounds i8, ptr %22, i64 %i.cqc ; 2 uses
+  %i.cqd = getelementptr inbounds i8, ptr %13, i64 %i.cqc ; 2 uses
   %i.cqe = getelementptr i8, ptr %i.cqd, i64 1
   %.val32.sink.in.i.i = select i1 %i.cpv, ptr %i.cqd, ptr %i.cpz
   %.val33.sink.in.i.i = select i1 %i.cpv, ptr %i.cqe, ptr %i.cqa
@@ -2056,7 +2044,7 @@ stbtt_GetCodepointHMetrics.exit:                  ; preds = %bb.np
   br i1 %or.cond, label %bb.nq, label %bb.nr
 
 bb.nq:                                            ; preds = %stbtt_GetCodepointHMetrics.exit
-  call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.6, i32 noundef %14, i32 noundef %.0181, i32 noundef %2) #39
+  call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.6, i32 noundef %.val146, i32 noundef %.0181, i32 noundef %2) #39
   br label %bb.nr
 
 bb.nr:                                            ; preds = %bb.nq, %stbtt_GetCodepointHMetrics.exit
@@ -2075,39 +2063,29 @@ bb.nr:                                            ; preds = %bb.nq, %stbtt_GetCo
   br label %bb.ns
 
 bb.ns:                                            ; preds = %bb.nr, %bb.np
-  switch i32 %14, label %bb.nw [
+  switch i32 %.val146, label %bb.nw [
     i32 12288, label %stbtt_GetCodepointHMetrics.exit175
     i32 32, label %stbtt_GetCodepointHMetrics.exit175
   ]
 
 stbtt_GetCodepointHMetrics.exit175:               ; preds = %bb.ns, %bb.ns
   %i.cqu = getelementptr inbounds nuw i8, ptr %i.zm, i64 12 ; 2 uses
-  %.val.i166 = load ptr, ptr %i.r, align 8        ; 3 uses
-  %.val4.i167 = load i32, ptr %i.vx, align 8
-  %i.cqv = call fastcc i32 @stbtt_FindGlyphIndex(ptr %.val.i166, i32 %.val4.i167, i32 noundef %14) ; 2 uses
-  %23 = load i32, ptr %12, align 4
-  %24 = sext i32 %23 to i64
-  %25 = getelementptr inbounds i8, ptr %.val.i166, i64 %24 ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %25, i64 34
-  %.val.i.i168 = load i8, ptr %26, align 1
-  %27 = getelementptr i8, ptr %25, i64 35
-  %.val31.i.i169 = load i8, ptr %27, align 1
+  %i.cqv = call fastcc i32 @stbtt_FindGlyphIndex(ptr %0, i32 %i.wu, i32 noundef %.val146) ; 2 uses
+  %.val.i.i168 = load i8, ptr %10, align 1
+  %.val31.i.i169 = load i8, ptr %11, align 1
   %i.cqw = zext i8 %.val.i.i168 to i32
   %i.cqx = shl nuw nsw i32 %i.cqw, 8
   %i.cqy = zext i8 %.val31.i.i169 to i32
   %i.cqz = or disjoint i32 %i.cqx, %i.cqy         ; 2 uses
   %i.cra = icmp slt i32 %i.cqv, %i.cqz            ; 2 uses
-  %28 = load i32, ptr %13, align 8
-  %29 = sext i32 %28 to i64
-  %30 = getelementptr inbounds i8, ptr %.val.i166, i64 %29 ; 2 uses
   %i.crb = shl nuw nsw i32 %i.cqz, 2
   %i.crc = zext nneg i32 %i.crb to i64
-  %i.crd = getelementptr i8, ptr %30, i64 %i.crc  ; 2 uses
+  %i.crd = getelementptr i8, ptr %13, i64 %i.crc  ; 2 uses
   %i.cre = getelementptr i8, ptr %i.crd, i64 -4
   %i.crf = getelementptr i8, ptr %i.crd, i64 -3
   %i.crg = shl nsw i32 %i.cqv, 2
   %i.crh = sext i32 %i.crg to i64
-  %i.cri = getelementptr inbounds i8, ptr %30, i64 %i.crh ; 2 uses
+  %i.cri = getelementptr inbounds i8, ptr %13, i64 %i.crh ; 2 uses
   %i.crj = getelementptr i8, ptr %i.cri, i64 1
   %.val32.sink.in.i.i171 = select i1 %i.cra, ptr %i.cri, ptr %i.cre
   %.val33.sink.in.i.i172 = select i1 %i.cra, ptr %i.crj, ptr %i.crf

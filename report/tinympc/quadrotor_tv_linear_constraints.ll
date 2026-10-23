@@ -126,7 +126,7 @@ bb.a:
   %19 = alloca %"class.Eigen::Matrix", align 8    ; 6 uses
   %20 = alloca %"class.Eigen::Matrix.61", align 16 ; 28 uses
   %i.b = ptrtoaddr ptr %20 to i64                 ; 2 uses
-  %21 = alloca %"class.Eigen::Matrix.61", align 16 ; 19 uses
+  %21 = alloca %"class.Eigen::Matrix.61", align 16 ; 15 uses
   %22 = alloca %"class.Eigen::Matrix.23", align 8 ; 7 uses
   %23 = alloca %"class.Eigen::Matrix", align 8    ; 6 uses
   %24 = alloca %"class.Eigen::Matrix", align 8    ; 6 uses
@@ -529,11 +529,7 @@ bb.am:                                            ; preds = %bb.al
   store <2 x double> splat (double 2.000000e+00), ptr %21, align 16, !tbaa !29
   %i.gu = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
   store double 4.000000e+00, ptr %i.gu, align 16, !tbaa !29
-  %28 = getelementptr inbounds nuw i8, ptr %21, i64 24
-  %29 = getelementptr inbounds nuw i8, ptr %21, i64 32
-  %30 = getelementptr inbounds nuw i8, ptr %21, i64 48
-  %31 = getelementptr inbounds nuw i8, ptr %21, i64 64
-  %i.gv = getelementptr inbounds nuw i8, ptr %21, i64 80
+  %i.gv = getelementptr inbounds nuw i8, ptr %21, i64 24
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gm, i64 1224
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gm, i64 1232
   %i.gy = getelementptr inbounds nuw i8, ptr %22, i64 8
@@ -564,7 +560,7 @@ bb.am:                                            ; preds = %bb.al
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %28, i8 0, i64 72, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.gv, i8 0, i64 72, i1 false)
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.am, %bb.cc
@@ -967,28 +963,20 @@ bb.cb:                                            ; preds = %_ZNSolsEPFRSoS_E.ex
   %i.ww = fadd <2 x double> %i.wt, %i.wv
   store <2 x double> %i.ww, ptr %i.go, align 16, !tbaa !27
   %i.wx = load <2 x double>, ptr %i.gq, align 16, !tbaa !27
-  %32 = fmul <2 x double> %i.wx, splat (double f0x3FEF5C28F5C28F5C)
-  %33 = load <2 x double>, ptr %29, align 16, !tbaa !27
-  %i.wy = fmul <2 x double> %33, splat (double 2.000000e-02)
-  %i.wz = fadd <2 x double> %32, %i.wy
+  %i.wy = fmul <2 x double> %i.wx, splat (double f0x3FEF5C28F5C28F5C)
+  %i.wz = fadd <2 x double> %i.wy, zeroinitializer
   store <2 x double> %i.wz, ptr %i.gq, align 16, !tbaa !27
   %i.xa = load <2 x double>, ptr %i.gr, align 16, !tbaa !27
-  %34 = fmul <2 x double> %i.xa, splat (double f0x3FEF5C28F5C28F5C)
-  %35 = load <2 x double>, ptr %30, align 16, !tbaa !27
-  %i.xb = fmul <2 x double> %35, splat (double 2.000000e-02)
-  %i.xc = fadd <2 x double> %34, %i.xb
+  %i.xb = fmul <2 x double> %i.xa, splat (double f0x3FEF5C28F5C28F5C)
+  %i.xc = fadd <2 x double> %i.xb, zeroinitializer
   store <2 x double> %i.xc, ptr %i.gr, align 16, !tbaa !27
   %i.xd = load <2 x double>, ptr %i.gs, align 16, !tbaa !27
-  %36 = fmul <2 x double> %i.xd, splat (double f0x3FEF5C28F5C28F5C)
-  %37 = load <2 x double>, ptr %31, align 16, !tbaa !27
-  %i.xe = fmul <2 x double> %37, splat (double 2.000000e-02)
-  %i.xf = fadd <2 x double> %36, %i.xe
+  %i.xe = fmul <2 x double> %i.xd, splat (double f0x3FEF5C28F5C28F5C)
+  %i.xf = fadd <2 x double> %i.xe, zeroinitializer
   store <2 x double> %i.xf, ptr %i.gs, align 16, !tbaa !27
   %i.xg = load <2 x double>, ptr %i.gt, align 16, !tbaa !27
-  %38 = fmul <2 x double> %i.xg, splat (double f0x3FEF5C28F5C28F5C)
-  %39 = load <2 x double>, ptr %i.gv, align 16, !tbaa !27
-  %i.xh = fmul <2 x double> %39, splat (double 2.000000e-02)
-  %i.xi = fadd <2 x double> %38, %i.xh
+  %i.xh = fmul <2 x double> %i.xg, splat (double f0x3FEF5C28F5C28F5C)
+  %i.xi = fadd <2 x double> %i.xh, zeroinitializer
   store <2 x double> %i.xi, ptr %i.gt, align 16, !tbaa !27
   %i.xj = extractelement <2 x double> %i.wu, i64 0
   br label %bb.cc

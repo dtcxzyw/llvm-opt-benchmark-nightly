@@ -204,44 +204,37 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4Json4PathC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_12PathArgumentESB_SB_SB_SB_(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %5, ptr noundef nonnull align 8 dereferenceable(40) %6) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 _ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i:
-  %7 = alloca %"class.std::vector.43", align 8    ; 9 uses
+  %7 = alloca %"class.std::vector.43", align 8    ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #40
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store i64 0, ptr %8, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.c = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #43
-          to label %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12 unwind label %bb.a ; 6 uses
+          to label %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12 unwind label %bb.a ; 4 uses
 
 _ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12: ; preds = %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   store ptr %2, ptr %i.c, align 8, !tbaa !238
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store ptr %i.c, ptr %7, align 8, !tbaa !579
-  store ptr %9, ptr %i.a, align 8, !tbaa !580
   %i.d = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #43
-          to label %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22 unwind label %bb.b ; 6 uses
+          to label %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22 unwind label %9 ; 6 uses
 
 _ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22: ; preds = %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12
+  %8 = ptrtoint ptr %2 to i64
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %3, ptr %i.e, align 8, !tbaa !238
-  %10 = load i64, ptr %i.c, align 8
-  store i64 %10, ptr %i.d, align 8
+  store i64 %8, ptr %i.d, align 8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 8) #41
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #43
-          to label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30 unwind label %bb.b ; 7 uses
+          to label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30 unwind label %12 ; 7 uses
 
 _ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30: ; preds = %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store ptr %4, ptr %i.g, align 8, !tbaa !238
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false)
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 16) #41
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 32
-  %12 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  store ptr %5, ptr %12, align 8, !tbaa !238
+  store ptr %5, ptr %i.h, align 8, !tbaa !238
   %i.i = invoke noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #43
-          to label %.noexc49 unwind label %bb.b   ; 7 uses
+          to label %.noexc49 unwind label %15     ; 7 uses
 
 .noexc49:                                         ; preds = %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -254,23 +247,45 @@ _ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30: ; preds = %_
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 64 ; 2 uses
   store ptr %i.l, ptr %i.b, align 8, !tbaa !581
   invoke void @_ZN4Json4Path8makePathERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIPKNS_12PathArgumentESaISC_EE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(24) %7)
-          to label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit unwind label %bb.b
+          to label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit unwind label %18
 
 _ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit: ; preds = %.noexc49
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 64) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #40
   ret void
 
+9:                                                ; preds = %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12
+  %10 = landingpad { ptr, i32 }
+          cleanup
+  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  br label %bb.b
+
+12:                                               ; preds = %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22
+  %13 = landingpad { ptr, i32 }
+          cleanup
+  %14 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  br label %bb.b
+
+15:                                               ; preds = %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30
+  %16 = landingpad { ptr, i32 }
+          cleanup
+  %17 = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  br label %bb.b
+
+18:                                               ; preds = %.noexc49
+  %19 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.b
+
 bb.a:                                             ; preds = %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit52
 
-bb.b:                                             ; preds = %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30, %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22, %.noexc49, %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12
-  %.ph = phi ptr [ %9, %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12 ], [ %i.l, %.noexc49 ], [ %11, %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22 ], [ %i.h, %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30 ]
-  %.ph74 = phi ptr [ %i.c, %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i12 ], [ %i.i, %.noexc49 ], [ %i.d, %_ZNKSt6vectorIPKN4Json12PathArgumentESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i22 ], [ %i.f, %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EE9push_backEOS3_.exit30 ] ; 2 uses
-  %lpad.thr_comm = landingpad { ptr, i32 }
-          cleanup
+bb.b:                                             ; preds = %18, %15, %12, %9
+  %.ph = phi ptr [ %11, %9 ], [ %14, %12 ], [ %i.l, %18 ], [ %17, %15 ]
+  %.ph74 = phi ptr [ %i.c, %9 ], [ %i.d, %12 ], [ %i.i, %18 ], [ %i.f, %15 ] ; 2 uses
+  %.pn.ph = phi { ptr, i32 } [ %10, %9 ], [ %13, %12 ], [ %19, %18 ], [ %16, %15 ]
   %i.m = ptrtoint ptr %.ph to i64
   %i.n = ptrtoint ptr %.ph74 to i64
   %i.o = sub i64 %i.m, %i.n
@@ -278,7 +293,7 @@ bb.b:                                             ; preds = %_ZNSt6vectorIPKN4Js
   br label %_ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit52
 
 _ZNSt6vectorIPKN4Json12PathArgumentESaIS3_EED2Ev.exit52: ; preds = %bb.a, %bb.b
-  %lpad.phi78 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.a ], [ %lpad.thr_comm, %bb.b ]
+  %lpad.phi78 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.a ], [ %.pn.ph, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #40
   tail call void @_ZNSt6vectorIN4Json12PathArgumentESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #40
   resume { ptr, i32 } %lpad.phi78

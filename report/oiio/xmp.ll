@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZN3tsl2rh26power_o
 
 _ZN3tsl2rh26power_of_two_growth_policyILm2EEC2ERm.exit.i: ; preds = %bb.d, %_ZN3tsl2rh26power_of_two_growth_policyILm2EE15is_power_of_twoEm.exit.i.i.i
   %.012.i.i.i = phi i64 [ %i.t, %bb.d ], [ %0, %_ZN3tsl2rh26power_of_two_growth_policyILm2EE15is_power_of_twoEm.exit.i.i.i ] ; 10 uses
-  %i.u = add i64 %.012.i.i.i, -1
+  %i.u = add nsw i64 %.012.i.i.i, -1
   %i.v = icmp ugt i64 %.012.i.i.i, 192153584101141162
   br i1 %i.v, label %.noexc.i, label %_ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEELb1EEESaISH_EEC2EmRKSI_.exit.i.i
 
@@ -216,7 +216,6 @@ _ZN3tsl2rh26power_of_two_growth_policyILm2EEC2ERm.exit.i: ; preds = %bb.d, %_ZN3
 _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEELb1EEESaISH_EEC2EmRKSI_.exit.i.i: ; preds = %_ZN3tsl2rh26power_of_two_growth_policyILm2EEC2ERm.exit.i
   %i.w = mul nuw nsw i64 %.012.i.i.i, 48
   %i.x = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #32 ; 5 uses
-  %1 = getelementptr inbounds nuw [48 x i8], ptr %i.x, i64 %.012.i.i.i
   %xtraiter = and i64 %.012.i.i.i, 3              ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
@@ -301,17 +300,18 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %.08.i.i.i.i.i.i.lcssa = phi ptr [ %.08.i.i.i.i.i.i.lcssa.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.au, %.unr-lcssa ]
   %.lcssa28 = phi ptr [ %.lcssa28.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.ap, %.unr-lcssa ]
   %i.av = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i.lcssa, i64 6
+  %1 = getelementptr inbounds nuw [48 x i8], ptr %i.x, i64 %.012.i.i.i
   store i8 1, ptr %i.av, align 2, !tbaa !201
   %i.aw = uitofp nneg i64 %.012.i.i.i to float
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.e, %bb.f, %bb.g, %bb.h
-  %.sroa.8.0 = phi ptr [ %i.x, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ]
-  %.sroa.12.0 = phi ptr [ %.lcssa28, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ]
-  %.sroa.21.0 = phi i64 [ %.012.i.i.i, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.e ] ; 2 uses
-  %.sroa.0.0 = phi i64 [ %i.u, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.e ] ; 3 uses
-  %.sroa.15.0 = phi ptr [ %1, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ]
-  %2 = phi ptr [ %i.x, %bb.h ], [ @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E23static_empty_bucket_ptrEvE12empty_bucketB5cxx11, %bb.g ], [ @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E23static_empty_bucket_ptrEvE12empty_bucketB5cxx11, %bb.f ], [ @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E23static_empty_bucket_ptrEvE12empty_bucketB5cxx11, %bb.e ] ; 2 uses
+  %.val165 = phi i64 [ %.012.i.i.i, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.e ] ; 2 uses
+  %.sroa.12.0 = phi ptr [ %i.x, %bb.h ], [ @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E23static_empty_bucket_ptrEvE12empty_bucketB5cxx11, %bb.g ], [ @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E23static_empty_bucket_ptrEvE12empty_bucketB5cxx11, %bb.f ], [ @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E23static_empty_bucket_ptrEvE12empty_bucketB5cxx11, %bb.e ] ; 2 uses
+  %2 = phi ptr [ %1, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ]
+  %3 = phi ptr [ %.lcssa28, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ]
+  %.sroa.15.0 = phi ptr [ %i.x, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ]
+  %.val194 = phi i64 [ %i.u, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.e ] ; 2 uses
   %.0691720.i = phi float [ %i.aw, %bb.h ], [ 0.000000e+00, %bb.g ], [ 0.000000e+00, %bb.f ], [ 0.000000e+00, %bb.e ]
   %i.ax = fcmp olt <2 x float> %i.a, <float 0.000000e+00, float 2.000000e-01>
   %i.ay = select <2 x i1> %i.ax, <2 x float> <float 0.000000e+00, float 2.000000e-01>, <2 x float> %i.a ; 2 uses
@@ -320,7 +320,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.bb = extractelement <2 x float> %i.ba, i64 1
   %i.bc = fmul float %i.bb, %.0691720.i
   %i.bd = fptoui float %i.bc to i64
-  %i.be = icmp samesign ult i64 %.sroa.21.0, 4294967297
+  %i.be = icmp samesign ult i64 %.val165, 4294967297
   %.val.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 8), align 8, !tbaa !603 ; 4 uses
   %.val14 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 16), align 8, !tbaa !603 ; 2 uses
   %.not6 = icmp eq ptr %.val.i, %.val14
@@ -334,13 +334,13 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.thread.i
   %i.bf = phi ptr [ %.pre11, %._crit_edge.loopexit ], [ %.val.i, %.thread.i ] ; 2 uses
   %i.bg = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.val.i, %.thread.i ] ; 5 uses
-  store i64 %.sroa.0.0, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, align 8, !tbaa !92
+  store i64 %.val194, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, align 8, !tbaa !92
   %i.bh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 24), align 8, !tbaa !205
-  store ptr %.sroa.8.0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 8), align 8, !tbaa !203
-  store ptr %.sroa.12.0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 16), align 8, !tbaa !204
-  store ptr %.sroa.15.0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 24), align 8, !tbaa !205
-  store ptr %2, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 32), align 8, !tbaa !603
-  store i64 %.sroa.21.0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 40), align 8, !tbaa !92
+  store ptr %.sroa.15.0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 8), align 8, !tbaa !203
+  store ptr %3, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 16), align 8, !tbaa !204
+  store ptr %2, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 24), align 8, !tbaa !205
+  store ptr %.sroa.12.0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 32), align 8, !tbaa !603
+  store i64 %.val165, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 40), align 8, !tbaa !92
   store i64 %i.bd, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 56), align 8, !tbaa !92
   store <2 x float> %i.ba, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 64), align 8, !tbaa !119
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 72), align 8, !tbaa !207
@@ -423,7 +423,6 @@ bb.n:                                             ; preds = %bb.m
 
 _ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E8hash_keyIS8_EEmRKT_.exit: ; preds = %bb.m, %bb.l
   %i.cd = phi i64 [ %i.bx, %bb.l ], [ %i.ca, %bb.m ] ; 2 uses
-  %3 = and i64 %.sroa.0.0, %i.cd
   %i.ce = trunc i64 %i.cd to i32
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.02.07, i64 8 ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.02.07, i64 40 ; 3 uses
@@ -432,8 +431,9 @@ _ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11c
 bb.o:                                             ; preds = %bb.t, %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E8hash_keyIS8_EEmRKT_.exit
   %.015.i = phi i16 [ 0, %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E8hash_keyIS8_EEmRKT_.exit ], [ %i.da, %bb.t ] ; 4 uses
   %.014.i = phi i32 [ %i.ce, %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E8hash_keyIS8_EEmRKT_.exit ], [ %.1.i, %bb.t ] ; 3 uses
-  %.0.i.a = phi i64 [ %3, %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E8hash_keyIS8_EEmRKT_.exit ], [ %4, %bb.t ] ; 2 uses
-  %i.ch = getelementptr inbounds nuw [48 x i8], ptr %2, i64 %.0.i.a ; 9 uses
+  %.0.i.a = phi i64 [ %i.cd, %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E8hash_keyIS8_EEmRKT_.exit ], [ %i.db, %bb.t ]
+  %.0.i = and i64 %.0.i.a, %.val194               ; 2 uses
+  %i.ch = getelementptr inbounds nuw [48 x i8], ptr %.sroa.12.0, i64 %.0.i ; 9 uses
   %i.ci = getelementptr i8, ptr %i.ch, i64 4      ; 4 uses
   %.val7.i = load i16, ptr %i.ci, align 4, !tbaa !193 ; 2 uses
   %i.cj = icmp sgt i16 %.015.i, %.val7.i
@@ -484,8 +484,7 @@ bb.t:                                             ; preds = %bb.s, %bb.o
   %.116.i = phi i16 [ %i.cy, %bb.s ], [ %.015.i, %bb.o ]
   %.1.i = phi i32 [ %i.cz, %bb.s ], [ %.014.i, %bb.o ]
   %i.da = add i16 %.116.i, 1
-  %i.db = add nuw i64 %.0.i.a, 1
-  %4 = and i64 %i.db, %.sroa.0.0
+  %i.db = add nuw nsw i64 %.0.i, 1
   br label %bb.o, !llvm.loop !602
 
 _ZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E22insert_value_on_rehashEmsjOSF_.exit: ; preds = %bb.r, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i

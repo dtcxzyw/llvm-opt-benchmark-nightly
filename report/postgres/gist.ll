@@ -204,7 +204,7 @@ bb.a:
   store ptr %0, ptr %7, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr %4, ptr %i.j, align 8
-  %i.k = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %7, i64 24
   store i8 %i.g, ptr %i.k, align 8
   store i32 0, ptr %6, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -217,8 +217,8 @@ bb.a:
   store i16 0, ptr %i.o, align 2
   %i.p = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 8 uses
   store ptr %6, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
@@ -266,8 +266,9 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.prehe
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d, %bb.b
-  %.1113.lcssa = phi ptr [ %.0112, %bb.b ], [ %i.z, %bb.d ], [ %i.ae, %._crit_edge.loopexit ] ; 31 uses
+  %.1113.lcssa = phi ptr [ %.0112, %bb.b ], [ %i.z, %bb.d ], [ %i.ae, %._crit_edge.loopexit ] ; 29 uses
   %.1.lcssa = phi i1 [ %.0, %bb.b ], [ false, %bb.d ], [ false, %._crit_edge.loopexit ] ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 24
   %i.ai = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 16 ; 5 uses
   %i.aj = load i64, ptr %i.ai, align 8
   %.not = icmp eq i64 %i.aj, 0
@@ -292,7 +293,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.aq = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 4 ; 18 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 4 ; 19 uses
   %i.ar = load i32, ptr %i.aq, align 4            ; 4 uses
   %i.as = icmp slt i32 %i.ar, 0
   br i1 %i.as, label %bb.i, label %bb.j
@@ -368,7 +369,7 @@ bb.l:                                             ; preds = %bb.k, %.thread142
   br i1 %i.ch, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.ci = load ptr, ptr %i.r, align 8
+  %i.ci = load ptr, ptr %i.q, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 4
   %i.ck = load i32, ptr %.1113.lcssa, align 8
   %i.cl = call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.11, ptr noundef nonnull %i.cj, i32 noundef %i.ck) #8 ; 0 uses
@@ -376,9 +377,8 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %8 = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 4
-  %i.cm = load i32, ptr %8, align 4
-  %i.cn = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 32 ; 6 uses
+  %i.cm = load i32, ptr %i.aq, align 4
+  %i.cn = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 32 ; 7 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 26 ; 4 uses
   br label %bb.o
 
@@ -529,11 +529,9 @@ list_length.exit.i:                               ; preds = %gistfixsplit.exit
   br i1 %i.ff, label %.lr.ph.i, label %gistfinishsplit.exit
 
 .lr.ph.i:                                         ; preds = %list_length.exit.i
-  %.pre162 = load i8, ptr %i.k, align 8, !range !6
   %i.fg = getelementptr i8, ptr %i.ep, i64 16
   %i.fh = zext nneg i32 %.036.i to i64
   %i.fi = zext i32 %i.fe to i64
-  %9 = trunc nuw i8 %.pre162 to i1
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.ab, %.lr.ph.i
@@ -557,7 +555,7 @@ bb.w:                                             ; preds = %bb.ab, %.lr.ph.i
   %i.fv = call i32 @BufferGetBlockNumber(i32 noundef %i.fu) #8, !inline_history !15
   call void @CheckForSerializableConflictIn(ptr noundef %0, ptr noundef null, i32 noundef %i.fv) #8, !inline_history !15
   %i.fw = load i32, ptr %i.ft, align 4
-  %i.fx = call zeroext i1 @gistplacetopage(ptr noundef %0, i64 noundef %2, ptr noundef %3, i32 noundef %i.fw, ptr noundef nonnull %i.fq, i32 noundef 1, i16 noundef zeroext 0, ptr noundef null, i32 noundef %i.fr, ptr noundef nonnull %i.a, i1 noundef zeroext true, ptr noundef %4, i1 noundef zeroext %9), !inline_history !15
+  %i.fx = call zeroext i1 @gistplacetopage(ptr noundef %0, i64 noundef %2, ptr noundef %3, i32 noundef %i.fw, ptr noundef nonnull %i.fq, i32 noundef 1, i16 noundef zeroext 0, ptr noundef null, i32 noundef %i.fr, ptr noundef nonnull %i.a, i1 noundef zeroext true, ptr noundef %4, i1 noundef zeroext %5), !inline_history !15
   %.not24.i = icmp eq i32 %i.fs, 0
   br i1 %.not24.i, label %bb.y, label %bb.x
 
@@ -599,7 +597,7 @@ gistfinishsplit.exit:                             ; preds = %bb.ab, %gistfixspli
   store ptr %i.gf, ptr %i.b, align 16
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gc, i64 8
   %i.gh = load ptr, ptr %i.gg, align 8
-  store ptr %i.gh, ptr %i.q, align 8
+  store ptr %i.gh, ptr %i.r, align 8
   call fastcc void @gistFindCorrectParent(ptr noundef %0, ptr noundef nonnull %.1113.lcssa)
   %i.gi = load ptr, ptr %i.cn, align 8
   %i.gj = load i16, ptr %i.co, align 2
@@ -607,13 +605,11 @@ gistfinishsplit.exit:                             ; preds = %bb.ab, %gistfixspli
   %i.gl = load i32, ptr %i.gc, align 8
   %i.gm = call fastcc zeroext i1 @gistinserttuples(ptr noundef nonnull readonly %7, ptr noundef %i.gi, ptr noundef %3, ptr noundef nonnull %i.b, i32 noundef 2, i16 noundef zeroext %i.gj, i32 noundef %i.gk, i32 noundef %i.gl, i1 noundef zeroext true, i1 noundef zeroext false) #11, !inline_history !14 ; 0 uses
   store i16 0, ptr %i.co, align 2
-  %10 = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 24
-  store i8 1, ptr %10, align 8
+  store i8 1, ptr %8, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   %i.gn = load i32, ptr %i.aq, align 4
   call void @UnlockReleaseBuffer(i32 noundef %i.gn) #8
-  %11 = getelementptr inbounds nuw i8, ptr %.1113.lcssa, i64 32
-  %i.go = load ptr, ptr %11, align 8              ; 2 uses
+  %i.go = load ptr, ptr %i.cn, align 8            ; 2 uses
   store ptr %i.go, ptr %i.p, align 8
   br label %.backedge
 
@@ -687,8 +683,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %i.hu = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #9 ; 0 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.hv = load ptr, ptr %12, align 8
+  %i.hv = load ptr, ptr %i.q, align 8
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 4
   %i.hx = call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.5, ptr noundef nonnull %i.hw) #8 ; 0 uses
   %i.hy = call i32 (ptr, ...) @errdetail(ptr noundef nonnull @.str.6) #8 ; 0 uses
@@ -746,9 +741,7 @@ bb.ao:                                            ; preds = %BufferGetPage.exit1
   %i.it = call i32 @BufferGetBlockNumber(i32 noundef %i.is) #8, !inline_history !16
   call void @CheckForSerializableConflictIn(ptr noundef %0, ptr noundef null, i32 noundef %i.it) #8, !inline_history !16
   %i.iu = load i32, ptr %i.aq, align 4
-  %13 = load i8, ptr %i.k, align 8, !range !6, !noundef !7
-  %14 = trunc nuw i8 %13 to i1
-  %i.iv = call zeroext i1 @gistplacetopage(ptr noundef %0, i64 noundef %2, ptr noundef %3, i32 noundef %i.iu, ptr noundef nonnull %i.f, i32 noundef 1, i16 noundef zeroext %i.hf, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.e, i1 noundef zeroext true, ptr noundef %4, i1 noundef zeroext %14), !inline_history !16
+  %i.iv = call zeroext i1 @gistplacetopage(ptr noundef %0, i64 noundef %2, ptr noundef %3, i32 noundef %i.iu, ptr noundef nonnull %i.f, i32 noundef 1, i16 noundef zeroext %i.hf, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.e, i1 noundef zeroext true, ptr noundef %4, i1 noundef zeroext %5), !inline_history !16
   %i.iw = load ptr, ptr %i.e, align 8             ; 2 uses
   %.not.i.i = icmp eq ptr %i.iw, null
   br i1 %.not.i.i, label %gistinserttuple.exit, label %bb.ap
@@ -873,9 +866,7 @@ bb.bc:                                            ; preds = %bb.ba, %bb.ax, %bb.
   %i.kq = call i32 @BufferGetBlockNumber(i32 noundef %i.kp) #8, !inline_history !16
   call void @CheckForSerializableConflictIn(ptr noundef %0, ptr noundef null, i32 noundef %i.kq) #8, !inline_history !16
   %i.kr = load i32, ptr %i.aq, align 4
-  %15 = load i8, ptr %i.k, align 8, !range !6, !noundef !7
-  %16 = trunc nuw i8 %15 to i1
-  %i.ks = call zeroext i1 @gistplacetopage(ptr noundef %0, i64 noundef %2, ptr noundef %3, i32 noundef %i.kr, ptr noundef nonnull %i.d, i32 noundef 1, i16 noundef zeroext 0, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c, i1 noundef zeroext true, ptr noundef %4, i1 noundef zeroext %16), !inline_history !16 ; 0 uses
+  %i.ks = call zeroext i1 @gistplacetopage(ptr noundef %0, i64 noundef %2, ptr noundef %3, i32 noundef %i.kr, ptr noundef nonnull %i.d, i32 noundef 1, i16 noundef zeroext 0, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c, i1 noundef zeroext true, ptr noundef %4, i1 noundef zeroext %5), !inline_history !16 ; 0 uses
   %i.kt = load ptr, ptr %i.c, align 8             ; 2 uses
   %.not.i.i137 = icmp eq ptr %i.kt, null
   br i1 %.not.i.i137, label %gistinserttuple.exit138, label %bb.bd

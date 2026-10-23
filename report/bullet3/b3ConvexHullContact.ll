@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %.lr.ph856
   %i.lb = fdiv float 5.000000e-01, %i.kz          ; 2 uses
   %i.lc = insertelement <2 x float> poison, float %i.lb, i64 0
   %i.ld = shufflevector <2 x float> %i.lc, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.le = fmul <2 x float> %i.ld, %i.fo
-  %i.lf = fmul float %i.lb, %i.fp
+  %i.le = fmul <2 x float> %i.fo, %i.ld
+  %i.lf = fmul float %i.fp, %i.lb
   br label %_ZNK11b3Matrix3x311getRotationER12b3Quaternion.exit
 
 bb.h:                                             ; preds = %.lr.ph856
@@ -609,7 +609,7 @@ bb.p:                                             ; preds = %bb.o
   %i.zj = insertelement <4 x float> %i.gj, float %i.zh, i64 1
   %i.zk = insertelement <4 x float> <float poison, float 5.000000e-01, float poison, float poison>, float %i.zi, i64 0
   %i.zl = shufflevector <4 x float> %i.zk, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 0>
-  %i.zm = fmul <4 x float> %i.zl, %i.zj
+  %i.zm = fmul <4 x float> %i.zj, %i.zl
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o

@@ -205,7 +205,7 @@ bb.a:
   %i.h = alloca [80 x i8], align 8                ; 17 uses
   %.sroa.914.i.i.i.i.i.i = alloca [7 x i8], align 1 ; 4 uses
   %.sroa.30.i.i.i.i.i.i = alloca [24 x i8], align 8 ; 4 uses
-  %i.i = alloca [80 x i8], align 8                ; 12 uses
+  %i.i = alloca [80 x i8], align 8                ; 13 uses
   %i.j = alloca [80 x i8], align 8                ; 6 uses
   %i.k = alloca [80 x i8], align 8                ; 6 uses
   %i.l = alloca [16 x i8], align 8                ; 5 uses
@@ -327,7 +327,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.419.sroa.4.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 3 uses
   %.sroa.419.sroa.5.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
   %.sroa.419.sroa.6.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
-  %.sroa.419.sroa.7.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
+  %.sroa.419.sroa.7.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   %.sroa.419.sroa.8.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %.sroa.419.sroa.9.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   %.sroa.25.32..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 3 uses
@@ -349,6 +349,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.6.0..sroa_idx2.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
+  %.sroa.6.sroa.9.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %.sroa.6.sroa.10.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %.sroa.6.sroa.11.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %.sroa.6.sroa.12.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 48
@@ -751,16 +752,20 @@ bb.eh:                                            ; preds = %"_ZN81_$LT$core..st
 
 .lr.ph497.i.i.i.i.i.i.i.sink.split:               ; preds = %bb.fw, %bb.fx
   %.sink768 = phi ptr [ inttoptr (i64 1 to ptr), %bb.fx ], [ %.sroa.5208.0.copyload.i.i.i.i.i.i.i.i, %bb.fw ] ; 2 uses
-  %.sink.a = phi i64 [ 0, %bb.fx ], [ %.sroa.6209.0.copyload.i.i.i.i.i.i.i.i, %bb.fw ] ; 2 uses
+  %.sink = phi i64 [ 0, %bb.fx ], [ %.sroa.6209.0.copyload.i.i.i.i.i.i.i.i, %bb.fw ] ; 2 uses
+  %.sroa.0207.0.copyload.i.i77.i.i.i.i.i.i.ph = phi i64 [ 0, %bb.fx ], [ %.sroa.0207.0.copyload.i.i.i.i.i.i.i.i, %bb.fw ]
+  %.sink.a = phi i64 [ 0, %bb.fx ], [ %.sroa.6206.0.copyload.i.i.i.i.i.i.i.i, %bb.fw ]
   %.ph766 = phi i64 [ 0, %bb.fx ], [ %.sroa.0204.0.copyload.i.i.i.i.i.i.i.i, %bb.fw ]
   %.ph767 = phi i64 [ %i.ama, %bb.fx ], [ %i.ahk, %bb.fw ]
   store ptr %.sink768, ptr %.sroa.419.sroa.8.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !11508
-  store i64 %.sink.a, ptr %.sroa.419.sroa.9.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !11508
+  store i64 %.sink, ptr %.sroa.419.sroa.9.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !11508
   br label %.lr.ph497.i.i.i.i.i.i.i
 
 .lr.ph497.i.i.i.i.i.i.i:                          ; preds = %.lr.ph497.i.i.i.i.i.i.i.sink.split, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i", %bb.ee
-  %i.ach = phi i64 [ undef, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ undef, %bb.ee ], [ %.sink.a, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
+  %i.ach = phi i64 [ undef, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ undef, %bb.ee ], [ %.sink, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
   %i.aci = phi ptr [ undef, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ undef, %bb.ee ], [ %.sink768, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
+  %.sroa.0207.0.copyload.i.i77.i.i.i.i.i.i = phi i64 [ undef, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ undef, %bb.ee ], [ %.sroa.0207.0.copyload.i.i77.i.i.i.i.i.i.ph, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
+  %.sroa.6206.0.copyload.i.i67.i.i.i.i.i.i = phi i64 [ undef, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ undef, %bb.ee ], [ %.sink.a, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
   %i.acj = phi i64 [ %.sroa.10.sroa.0.0.insert.ext.i.i.i.i.i.i.i, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ %.sroa.10.sroa.0.0.insert.ext.i.i.i.i.i.i.i, %bb.ee ], [ %.ph766, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
   %i.ack = phi i8 [ 2, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ 2, %bb.ee ], [ 3, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
   %i.acl = phi i64 [ %.pre526.i.i.i.i.i.i.i, %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit.i.i.i.i.i.i.i" ], [ %.pre.i.i140.i.i.i.i.i, %bb.ee ], [ %.ph767, %.lr.ph497.i.i.i.i.i.i.i.sink.split ]
@@ -830,7 +835,7 @@ bb.em:                                            ; preds = %bb.el
   %.not52.i.i.i.i.i.i.i.i = icmp eq i64 %i.ade, -9223372036854775808
   %.sroa.0204.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.bh, align 8, !noalias !11547 ; 9 uses
   %.sroa.5205.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.5205.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11547 ; 9 uses
-  %.sroa.6206.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.6206.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11547 ; 3 uses
+  %.sroa.6206.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.6206.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11547 ; 4 uses
   br i1 %.not52.i.i.i.i.i.i.i.i, label %bb.eo, label %bb.en
 
 bb.en:                                            ; preds = %.noexc169.i.i.i.i.i.i.i
@@ -994,7 +999,7 @@ bb.eu:                                            ; preds = %bb.et
 bb.ev:                                            ; preds = %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.i.i.i.i.i.i.i.i"
   %i.afj = load i64, ptr %i.b, align 8, !range !30, !noalias !11547, !noundef !17 ; 3 uses
   %.not55.i.i.i.i.i.i.i.i = icmp eq i64 %i.afj, -9223372036854775808
-  %.sroa.0207.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.bi, align 8, !noalias !11547 ; 7 uses
+  %.sroa.0207.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.bi, align 8, !noalias !11547 ; 8 uses
   %.sroa.5208.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.5208.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11547 ; 6 uses
   %.sroa.6209.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.6209.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11547 ; 3 uses
   br i1 %.not55.i.i.i.i.i.i.i.i, label %bb.ey, label %bb.ew
@@ -1397,8 +1402,7 @@ bb.gr:                                            ; preds = %"_ZN81_$LT$core..st
 
 bb.gs:                                            ; preds = %"_ZN5insta7content4yaml8vendored7scanner16Scanner$LT$T$GT$9lookahead17hddef1e727776ec67E.exit262.i.i.i.i.i.i.i", %.loopexit469.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.914.i.i.i.i.i.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.914.0..sroa_idx.i.i.i.i.i.i, i64 7, i1 false), !noalias !11465
-  %2 = load <2 x i64>, ptr %.sroa.419.sroa.5.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !11625
-  %.sroa.23.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.419.sroa.7.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !11625
+  %.sroa.23.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.419.sroa.5.0..sroa.419.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !11625
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.30.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.520.0..sroa_idx.i.i.i.i.i.i.i, i64 24, i1 false), !noalias !11465
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !11508
   %i.asr = icmp eq ptr %.sroa.7287.8.copyload289.i.i.i.i.i.i.i, null
@@ -1569,8 +1573,9 @@ bb.hb:                                            ; preds = %bb.gt, %bb.gs
   store i8 %i.ack, ptr %i.i, align 8, !noalias !11465
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.0..sroa_idx2.i.i.i.i.i.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.914.i.i.i.i.i.i, i64 7, i1 false), !noalias !11465
   store i64 %i.acj, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
-  store <2 x i64> %2, ptr %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
-  store i64 %.sroa.23.0.copyload.i.i.i.i.i.i, ptr %.sroa.6.sroa.10.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
+  store i64 %.sroa.23.0.copyload.i.i.i.i.i.i, ptr %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
+  store i64 %.sroa.6206.0.copyload.i.i67.i.i.i.i.i.i, ptr %.sroa.6.sroa.9.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
+  store i64 %.sroa.0207.0.copyload.i.i77.i.i.i.i.i.i, ptr %.sroa.6.sroa.10.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
   store ptr %i.aci, ptr %.sroa.6.sroa.11.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
   store i64 %i.ach, ptr %.sroa.6.sroa.12.0..sroa.6.0..sroa_idx2.sroa_idx.i.i.i.i.i.i, align 8, !noalias !11465
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.0..sroa_idx4.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.30.i.i.i.i.i.i, i64 24, i1 false), !noalias !11465

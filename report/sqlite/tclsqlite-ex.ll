@@ -206,8 +206,8 @@ bb.ba:                                            ; preds = %.thread, %bb.az, %b
 define internal fastcc i32 @dbQrf(ptr nofree noundef captures(none) %0, i32 noundef range(i32 2, -2147483648) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #4 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
-  %i.b = alloca ptr, align 8                      ; 6 uses
-  %3 = alloca %struct.sqlite3_qrf_spec, align 8   ; 35 uses
+  %i.b = alloca ptr, align 8                      ; 8 uses
+  %3 = alloca %struct.sqlite3_qrf_spec, align 8   ; 33 uses
   %i.c = alloca [6 x ptr], align 16               ; 6 uses
   %i.d = alloca i32, align 4                      ; 5 uses
   %i.e = alloca i32, align 4                      ; 5 uses
@@ -248,7 +248,7 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 21 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.af = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 36
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 28
@@ -271,20 +271,21 @@ bb.a:
   br label %bb.b
 
 .preheader:                                       ; preds = %bb.cl
-  %.not368 = icmp eq ptr %i.oj, null
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !66  ; 2 uses
+  %.not368 = icmp eq ptr %.pre, null
   br i1 %.not368, label %.critedge, label %.lr.ph369
 
 bb.b:                                             ; preds = %.lr.ph367, %bb.cl
-  %4 = phi ptr [ null, %.lr.ph367 ], [ %i.oi, %bb.cl ] ; 18 uses
-  %i.az = phi ptr [ null, %.lr.ph367 ], [ %i.oj, %bb.cl ] ; 18 uses
-  %.0196365 = phi i32 [ 2, %.lr.ph367 ], [ %i.ok, %bb.cl ] ; 20 uses
+  %.0196412 = phi i32 [ 2, %.lr.ph367 ], [ %i.ok, %bb.cl ] ; 20 uses
+  %i.az = phi ptr [ null, %.lr.ph367 ], [ %i.oj, %bb.cl ] ; 33 uses
+  %4 = phi ptr [ null, %.lr.ph367 ], [ %i.oi, %bb.cl ] ; 33 uses
   %i.ba = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 2736
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !107
-  %i.bd = sext i32 %.0196365 to i64
+  %i.bd = sext i32 %.0196412 to i64
   %i.be = getelementptr inbounds [8 x i8], ptr %2, i64 %i.bd
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !105
-  %i.bg = call ptr %i.bc(ptr noundef %i.bf) #20   ; 36 uses
+  %i.bg = call ptr %i.bc(ptr noundef %i.bf) #20   ; 35 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.c, ptr noundef nonnull align 16 dereferenceable(48) @__const.dbQrf.azBool, i64 48, i1 false)
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !29
@@ -292,7 +293,8 @@ bb.b:                                             ; preds = %.lr.ph367, %bb.cl
   br i1 %.not236, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not253 = icmp eq ptr %i.az, null
+  %5 = load ptr, ptr %i.b, align 8, !tbaa !66
+  %.not253 = icmp eq ptr %5, null
   br i1 %.not253, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -308,7 +310,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.cl
 
 bb.f:                                             ; preds = %bb.b
-  %i.bm = icmp eq i32 %.0196365, %i.x
+  %i.bm = icmp eq i32 %.0196412, %i.x
   br i1 %i.bm, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -330,7 +332,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 2448
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !129
   %i.bw = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.bx = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.bx = add nsw i32 %.0196412, 1                ; 2 uses
   %i.by = sext i32 %i.bx to i64
   %i.bz = getelementptr inbounds [8 x i8], ptr %2, i64 %i.by
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !105
@@ -362,7 +364,7 @@ bb.l:                                             ; preds = %bb.k
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 2448
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !129
   %i.cl = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.cm = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.cm = add nsw i32 %.0196412, 1                ; 2 uses
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds [8 x i8], ptr %2, i64 %i.cn
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !105
@@ -402,7 +404,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 2448
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !129
   %i.df = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.dg = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.dg = add nsw i32 %.0196412, 1                ; 2 uses
   %i.dh = sext i32 %i.dg to i64
   %i.di = getelementptr inbounds [8 x i8], ptr %2, i64 %i.dh
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !105
@@ -462,7 +464,7 @@ bb.x:                                             ; preds = %bb.w
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 2448
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !129
   %i.ec = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.ed = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.ed = add nsw i32 %.0196412, 1                ; 2 uses
   %i.ee = sext i32 %i.ed to i64
   %i.ef = getelementptr inbounds [8 x i8], ptr %2, i64 %i.ee
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !105
@@ -495,7 +497,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 2448
   %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !129
   %i.er = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.es = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.es = add nsw i32 %.0196412, 1                ; 2 uses
   %i.et = sext i32 %i.es to i64
   %i.eu = getelementptr inbounds [8 x i8], ptr %2, i64 %i.et
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !105
@@ -538,7 +540,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 2448
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !129
   %i.fk = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.fl = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.fl = add nsw i32 %.0196412, 1                ; 2 uses
   %i.fm = sext i32 %i.fl to i64
   %i.fn = getelementptr inbounds [8 x i8], ptr %2, i64 %i.fm
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !105
@@ -595,7 +597,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 2448
   %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !129
   %i.gd = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.ge = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.ge = add nsw i32 %.0196412, 1                ; 2 uses
   %i.gf = sext i32 %i.ge to i64
   %i.gg = getelementptr inbounds [8 x i8], ptr %2, i64 %i.gf
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !105
@@ -659,7 +661,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au, %bb.
   %i.hc = getelementptr inbounds nuw i8, ptr %i.hb, i64 320
   %i.hd = load ptr, ptr %i.hc, align 8, !tbaa !133
   %i.he = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.hf = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.hf = add nsw i32 %.0196412, 1                ; 2 uses
   %i.hg = sext i32 %i.hf to i64
   %i.hh = getelementptr inbounds [8 x i8], ptr %2, i64 %i.hg
   %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !105
@@ -728,7 +730,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.hu = getelementptr inbounds nuw i8, ptr %i.ht, i64 320
   %i.hv = load ptr, ptr %i.hu, align 8, !tbaa !133
   %i.hw = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.hx = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.hx = add nsw i32 %.0196412, 1                ; 2 uses
   %i.hy = sext i32 %i.hx to i64
   %i.hz = getelementptr inbounds [8 x i8], ptr %2, i64 %i.hy
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !105
@@ -759,7 +761,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 320
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !133
   %i.ii = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.ij = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.ij = add nsw i32 %.0196412, 1                ; 2 uses
   %i.ik = sext i32 %i.ij to i64
   %i.il = getelementptr inbounds [8 x i8], ptr %2, i64 %i.ik
   %i.im = load ptr, ptr %i.il, align 8, !tbaa !105
@@ -790,7 +792,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 392
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !174
   %i.iu = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.iv = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.iv = add nsw i32 %.0196412, 1                ; 2 uses
   %i.iw = sext i32 %i.iv to i64
   %i.ix = getelementptr inbounds [8 x i8], ptr %2, i64 %i.iw ; 2 uses
   %i.iy = load ptr, ptr %i.ix, align 8, !tbaa !105
@@ -799,12 +801,11 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %.not239, label %bb.bn, label %.thread293
 
 bb.bn:                                            ; preds = %bb.bm
-  %5 = load ptr, ptr %i.af, align 8, !tbaa !407
-  call void @sqlite3_free(ptr noundef %5) #20
+  call void @sqlite3_free(ptr noundef %4) #20
   %i.ja = load i32, ptr %i.n, align 4, !tbaa !30
   %i.jb = add nsw i32 %i.ja, 1
   %i.jc = sext i32 %i.jb to i64
-  %i.jd = call ptr @sqlite3_malloc64(i64 noundef %i.jc) #20 ; 4 uses
+  %i.jd = call ptr @sqlite3_malloc64(i64 noundef %i.jc) #20 ; 6 uses
   store ptr %i.jd, ptr %i.af, align 8, !tbaa !407
   %i.je = icmp eq ptr %i.jd, null
   br i1 %i.je, label %bb.bo, label %bb.bp
@@ -873,6 +874,7 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.ki, label %.lr.ph363, label %._crit_edge364, !llvm.loop !384
 
 .thread293:                                       ; preds = %bb.bm, %bb.bo, %.thread288
+  %.ph = phi ptr [ %i.jd, %.thread288 ], [ null, %bb.bo ], [ %4, %bb.bm ]
   %.3188.ph = phi i32 [ %.2187.ph, %.thread288 ], [ 1, %bb.bo ], [ %i.iz, %bb.bm ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #20
   br label %bb.ck
@@ -893,7 +895,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.km = getelementptr inbounds nuw i8, ptr %i.kl, i64 392
   %i.kn = load ptr, ptr %i.km, align 8, !tbaa !174
   %i.ko = load ptr, ptr %i.ac, align 8, !tbaa !122
-  %i.kp = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.kp = add nsw i32 %.0196412, 1                ; 2 uses
   %i.kq = sext i32 %i.kp to i64
   %i.kr = getelementptr inbounds [8 x i8], ptr %2, i64 %i.kq ; 2 uses
   %i.ks = load ptr, ptr %i.kr, align 8, !tbaa !105
@@ -902,12 +904,12 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %.not237, label %bb.bu, label %.thread303
 
 bb.bu:                                            ; preds = %bb.bt
-  call void @sqlite3_free(ptr noundef %4) #20
+  call void @sqlite3_free(ptr noundef %i.az) #20
   %i.ku = load i32, ptr %i.q, align 4, !tbaa !30
   %i.kv = add nsw i32 %i.ku, 1
   %i.kw = sext i32 %i.kv to i64
   %i.kx = shl nsw i64 %i.kw, 1
-  %i.ky = call ptr @sqlite3_malloc64(i64 noundef %i.kx) #20 ; 5 uses
+  %i.ky = call ptr @sqlite3_malloc64(i64 noundef %i.kx) #20 ; 6 uses
   store ptr %i.ky, ptr %i.ad, align 8, !tbaa !409
   %i.kz = icmp eq ptr %i.ky, null
   br i1 %i.kz, label %bb.bv, label %bb.bw
@@ -972,6 +974,7 @@ bb.by:                                            ; preds = %.lr.ph
   br label %.thread303
 
 .thread303:                                       ; preds = %bb.bt, %bb.bv, %bb.by
+  %.ph303 = phi ptr [ %i.ky, %bb.by ], [ null, %bb.bv ], [ %i.az, %bb.bt ]
   %.6191.ph = phi i32 [ %i.lq, %bb.by ], [ 1, %bb.bv ], [ %i.kt, %bb.bt ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #20
   br label %bb.ck
@@ -989,7 +992,7 @@ bb.ca:                                            ; preds = %bb.bz
   %i.mh = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.mi = getelementptr inbounds nuw i8, ptr %i.mh, i64 2736
   %i.mj = load ptr, ptr %i.mi, align 8, !tbaa !107
-  %i.mk = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.mk = add nsw i32 %.0196412, 1                ; 2 uses
   %i.ml = sext i32 %i.mk to i64
   %i.mm = getelementptr inbounds [8 x i8], ptr %2, i64 %i.ml
   %i.mn = load ptr, ptr %i.mm, align 8, !tbaa !105
@@ -1006,7 +1009,7 @@ bb.cc:                                            ; preds = %bb.cb
   %i.mr = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mr, i64 2736
   %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !107
-  %i.mu = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.mu = add nsw i32 %.0196412, 1                ; 2 uses
   %i.mv = sext i32 %i.mu to i64
   %i.mw = getelementptr inbounds [8 x i8], ptr %2, i64 %i.mv
   %i.mx = load ptr, ptr %i.mw, align 8, !tbaa !105
@@ -1023,7 +1026,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.nb = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.nc = getelementptr inbounds nuw i8, ptr %i.nb, i64 2736
   %i.nd = load ptr, ptr %i.nc, align 8, !tbaa !107
-  %i.ne = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.ne = add nsw i32 %.0196412, 1                ; 2 uses
   %i.nf = sext i32 %i.ne to i64
   %i.ng = getelementptr inbounds [8 x i8], ptr %2, i64 %i.nf
   %i.nh = load ptr, ptr %i.ng, align 8, !tbaa !105
@@ -1040,7 +1043,7 @@ bb.cg:                                            ; preds = %bb.cf
   %i.nl = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.nm = getelementptr inbounds nuw i8, ptr %i.nl, i64 2736
   %i.nn = load ptr, ptr %i.nm, align 8, !tbaa !107
-  %i.no = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.no = add nsw i32 %.0196412, 1                ; 2 uses
   %i.np = sext i32 %i.no to i64
   %i.nq = getelementptr inbounds [8 x i8], ptr %2, i64 %i.np
   %i.nr = load ptr, ptr %i.nq, align 8, !tbaa !105
@@ -1057,7 +1060,7 @@ bb.ch:                                            ; preds = %bb.cf
 bb.ci:                                            ; preds = %bb.ch
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nv, i64 2736
   %i.nx = load ptr, ptr %i.nw, align 8, !tbaa !107
-  %i.ny = add nsw i32 %.0196365, 1                ; 2 uses
+  %i.ny = add nsw i32 %.0196412, 1                ; 2 uses
   %i.nz = sext i32 %i.ny to i64
   %i.oa = getelementptr inbounds [8 x i8], ptr %2, i64 %i.nz
   %i.ob = load ptr, ptr %i.oa, align 8, !tbaa !105
@@ -1075,21 +1078,23 @@ bb.cj:                                            ; preds = %bb.ch
   br label %bb.ck
 
 bb.ck:                                            ; preds = %.thread303, %.thread293, %bb.bk, %bb.bh, %bb.be, %bb.ar, %bb.ak, %bb.ab, %bb.y, %bb.v, %bb.m, %bb.j, %bb.cj, %bb.g, %bb.d
+  %6 = phi ptr [ %4, %bb.d ], [ %4, %bb.cj ], [ %4, %bb.g ], [ %4, %bb.j ], [ %4, %bb.m ], [ %4, %bb.v ], [ %4, %bb.y ], [ %4, %bb.ab ], [ %4, %bb.ak ], [ %4, %bb.ar ], [ %4, %bb.be ], [ %4, %bb.bh ], [ %4, %bb.bk ], [ %.ph, %.thread293 ], [ %4, %.thread303 ]
+  %7 = phi ptr [ %i.az, %bb.d ], [ %i.az, %bb.cj ], [ %i.az, %bb.g ], [ %i.az, %bb.j ], [ %i.az, %bb.m ], [ %i.az, %bb.v ], [ %i.az, %bb.y ], [ %i.az, %bb.ab ], [ %i.az, %bb.ak ], [ %i.az, %bb.ar ], [ %i.az, %bb.be ], [ %i.az, %bb.bh ], [ %i.az, %bb.bk ], [ %i.az, %.thread293 ], [ %.ph303, %.thread303 ]
   %.8193 = phi i32 [ 1, %bb.d ], [ 1, %bb.cj ], [ 1, %bb.g ], [ %i.cb, %bb.j ], [ %i.cq, %bb.m ], [ %i.dm, %bb.v ], [ %i.eh, %bb.y ], [ %i.ew, %bb.ab ], [ %i.fp, %bb.ak ], [ %i.gm, %bb.ar ], [ %i.hj, %bb.be ], [ %i.ib, %bb.bh ], [ %i.in, %bb.bk ], [ %.3188.ph, %.thread293 ], [ %.6191.ph, %.thread303 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   br label %bb.cr
 
 bb.cl:                                            ; preds = %._crit_edge, %._crit_edge364, %.thread284, %.thread281, %.thread278, %.thread274, %.thread270, %.thread266, %.thread263, %.thread260, %.thread257, %.thread, %bb.cc, %bb.cg, %bb.ci, %bb.ce, %bb.ca, %bb.e
-  %i.oi = phi ptr [ %4, %bb.ci ], [ %4, %bb.cg ], [ %4, %bb.ce ], [ %4, %bb.cc ], [ %4, %bb.ca ], [ %i.ky, %._crit_edge ], [ %4, %._crit_edge364 ], [ %4, %.thread284 ], [ %4, %.thread281 ], [ %4, %.thread278 ], [ %4, %.thread274 ], [ %4, %.thread270 ], [ %4, %.thread266 ], [ %4, %.thread263 ], [ %4, %.thread260 ], [ %4, %.thread257 ], [ %4, %.thread ], [ %4, %bb.e ]
-  %i.oj = phi ptr [ %i.az, %bb.ci ], [ %i.az, %bb.cg ], [ %i.az, %bb.ce ], [ %i.az, %bb.cc ], [ %i.az, %bb.ca ], [ %i.az, %._crit_edge ], [ %i.az, %._crit_edge364 ], [ %i.az, %.thread284 ], [ %i.az, %.thread281 ], [ %i.az, %.thread278 ], [ %i.az, %.thread274 ], [ %i.az, %.thread270 ], [ %i.az, %.thread266 ], [ %i.az, %.thread263 ], [ %i.az, %.thread260 ], [ %i.az, %.thread257 ], [ %i.az, %.thread ], [ %i.bg, %bb.e ] ; 3 uses
-  %.14210.ph = phi i32 [ %i.ny, %bb.ci ], [ %i.no, %bb.cg ], [ %i.ne, %bb.ce ], [ %i.mu, %bb.cc ], [ %i.mk, %bb.ca ], [ %i.kp, %._crit_edge ], [ %i.iv, %._crit_edge364 ], [ %i.ij, %.thread284 ], [ %i.hx, %.thread281 ], [ %i.hf, %.thread278 ], [ %i.ge, %.thread274 ], [ %i.fl, %.thread270 ], [ %i.es, %.thread266 ], [ %i.ed, %.thread263 ], [ %i.dg, %.thread260 ], [ %i.cm, %.thread257 ], [ %i.bx, %.thread ], [ %.0196365, %bb.e ]
+  %i.oi = phi ptr [ %4, %bb.ci ], [ %4, %bb.cg ], [ %4, %bb.ce ], [ %4, %bb.cc ], [ %4, %bb.ca ], [ %4, %._crit_edge ], [ %i.jd, %._crit_edge364 ], [ %4, %.thread284 ], [ %4, %.thread281 ], [ %4, %.thread278 ], [ %4, %.thread274 ], [ %4, %.thread270 ], [ %4, %.thread266 ], [ %4, %.thread263 ], [ %4, %.thread260 ], [ %4, %.thread257 ], [ %4, %.thread ], [ %4, %bb.e ] ; 5 uses
+  %i.oj = phi ptr [ %i.az, %bb.ci ], [ %i.az, %bb.cg ], [ %i.az, %bb.ce ], [ %i.az, %bb.cc ], [ %i.az, %bb.ca ], [ %i.ky, %._crit_edge ], [ %i.az, %._crit_edge364 ], [ %i.az, %.thread284 ], [ %i.az, %.thread281 ], [ %i.az, %.thread278 ], [ %i.az, %.thread274 ], [ %i.az, %.thread270 ], [ %i.az, %.thread266 ], [ %i.az, %.thread263 ], [ %i.az, %.thread260 ], [ %i.az, %.thread257 ], [ %i.az, %.thread ], [ %i.az, %bb.e ] ; 5 uses
+  %.14210.ph = phi i32 [ %i.ny, %bb.ci ], [ %i.no, %bb.cg ], [ %i.ne, %bb.ce ], [ %i.mu, %bb.cc ], [ %i.mk, %bb.ca ], [ %i.kp, %._crit_edge ], [ %i.iv, %._crit_edge364 ], [ %i.ij, %.thread284 ], [ %i.hx, %.thread281 ], [ %i.hf, %.thread278 ], [ %i.ge, %.thread274 ], [ %i.fl, %.thread270 ], [ %i.es, %.thread266 ], [ %i.ed, %.thread263 ], [ %i.dg, %.thread260 ], [ %i.cm, %.thread257 ], [ %i.bx, %.thread ], [ %.0196412, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   %i.ok = add nsw i32 %.14210.ph, 1               ; 2 uses
   %i.ol = icmp slt i32 %i.ok, %1
   br i1 %i.ol, label %bb.b, label %.preheader, !llvm.loop !386
 
 .lr.ph369:                                        ; preds = %.preheader, %bb.cq
-  %i.om = phi ptr [ %i.pb, %bb.cq ], [ %i.oj, %.preheader ] ; 2 uses
+  %i.om = phi ptr [ %i.pb, %bb.cq ], [ %.pre, %.preheader ] ; 2 uses
   %i.on = load i8, ptr %i.om, align 1, !tbaa !29
   %.not233 = icmp eq i8 %i.on, 0
   br i1 %.not233, label %.critedge, label %bb.cm
@@ -1140,6 +1145,8 @@ bb.cq:                                            ; preds = %bb.co, %bb.cn
   br i1 %.not, label %.critedge, label %.lr.ph369
 
 .critedge:                                        ; preds = %.lr.ph369, %bb.cq, %bb.a, %.preheader
+  %.lcssa347534 = phi ptr [ null, %bb.a ], [ %i.oj, %.preheader ], [ %i.oj, %bb.cq ], [ %i.oj, %.lr.ph369 ]
+  %.lcssa367533 = phi ptr [ null, %bb.a ], [ %i.oi, %.preheader ], [ %i.oi, %bb.cq ], [ %i.oi, %.lr.ph369 ]
   %i.pc = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.pd = getelementptr inbounds nuw i8, ptr %i.pc, i64 1872
   %i.pe = load ptr, ptr %i.pd, align 8, !tbaa !118
@@ -1150,13 +1157,11 @@ bb.cq:                                            ; preds = %bb.co, %bb.cn
   br label %bb.cr
 
 bb.cr:                                            ; preds = %.thread316, %bb.ck, %.critedge
+  %8 = phi ptr [ %6, %bb.ck ], [ %i.oi, %.thread316 ], [ %.lcssa367533, %.critedge ]
+  %9 = phi ptr [ %7, %bb.ck ], [ %i.oj, %.thread316 ], [ %.lcssa347534, %.critedge ]
   %.10195 = phi i32 [ %.8193, %bb.ck ], [ 1, %.thread316 ], [ 0, %.critedge ]
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  %7 = load ptr, ptr %6, align 8, !tbaa !409
-  call void @sqlite3_free(ptr noundef %7) #20
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %9 = load ptr, ptr %8, align 8, !tbaa !407
   call void @sqlite3_free(ptr noundef %9) #20
+  call void @sqlite3_free(ptr noundef %8) #20
   %i.pi = load ptr, ptr %i.a, align 8, !tbaa !66
   call void @sqlite3_free(ptr noundef %i.pi) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20

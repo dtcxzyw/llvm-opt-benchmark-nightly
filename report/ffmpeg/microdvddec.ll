@@ -204,7 +204,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.h, %bb.e
   %i.p = phi ptr [ %i.n, %bb.e ], [ %i.ab, %bb.h ] ; 4 uses
-  %.sroa.18.0 = phi i32 [ 0, %bb.e ], [ %.sroa.18.1, %bb.h ] ; 2 uses
+  %.sroa.17.0 = phi i32 [ 0, %bb.e ], [ %i.aa, %bb.h ] ; 2 uses
+  %.sroa.18.0 = phi i32 [ 0, %bb.e ], [ %4, %bb.h ] ; 2 uses
   %i.q = load i8, ptr %i.p, align 1, !tbaa !31    ; 2 uses
   %i.r = sext i8 %i.q to i32
   switch i8 %i.q, label %bb.g [
@@ -225,10 +226,11 @@ bb.h:                                             ; preds = %bb.g
   %i.w = trunc i64 %i.v to i32
   %i.x = sub i32 %i.w, ptrtoint (ptr @.str.4 to i32)
   %i.y = select i1 %.not.i, i32 -1, i32 %i.x      ; 2 uses
+  %2 = icmp sgt i32 %i.y, -1                      ; 2 uses
   %i.z = shl nuw i32 1, %i.y
-  %2 = icmp slt i32 %i.y, 0
-  %i.aa = select i1 %2, i32 0, i32 %i.z
-  %.sroa.18.1 = or i32 %i.aa, %.sroa.18.0
+  %3 = or i32 %i.z, %.sroa.18.0                   ; 2 uses
+  %i.aa = select i1 %2, i32 %3, i32 %.sroa.17.0
+  %4 = select i1 %2, i32 %3, i32 %.sroa.18.0
   %i.ab = getelementptr inbounds nuw i8, ptr %i.p, i64 1
   br label %bb.f, !llvm.loop !58
 
@@ -338,14 +340,14 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not28, label %.thread55, label %check_for_italic_slash_marker.exit42
 
 .thread55:                                        ; preds = %bb.f, %bb.v, %bb.t, %bb.p, %bb.k, %bb.n, %bb.r
-  %i.bu = phi ptr [ %i.bs, %bb.v ], [ %i.as, %bb.n ], [ %i.bf, %bb.r ], [ %i.av, %bb.p ], [ %i.ai, %bb.k ], [ %i.bh, %bb.t ], [ %i.p, %bb.f ]
-  %.sroa.27.067 = phi i32 [ 0, %bb.v ], [ %i.ao, %bb.n ], [ %i.bb, %bb.r ], [ 0, %bb.p ], [ 0, %bb.k ], [ 0, %bb.t ], [ 0, %bb.f ]
-  %.sroa.25.066 = phi ptr [ null, %bb.v ], [ %i.n, %bb.n ], [ %i.n, %bb.r ], [ null, %bb.p ], [ null, %bb.k ], [ null, %bb.t ], [ null, %bb.f ]
-  %.sroa.24.065 = phi i32 [ %i.br, %bb.v ], [ 0, %bb.n ], [ 0, %bb.r ], [ 0, %bb.p ], [ 0, %bb.k ], [ 0, %bb.t ], [ 0, %bb.f ]
-  %.sroa.18.264 = phi i32 [ %i.bo, %bb.v ], [ 0, %bb.n ], [ 0, %bb.r ], [ %i.au, %bb.p ], [ %i.ah, %bb.k ], [ %i.bj, %bb.t ], [ %.sroa.18.0, %bb.f ]
-  %.sroa.1243.463 = phi i32 [ 1, %bb.v ], [ %.sroa.1243.2, %bb.n ], [ 0, %bb.r ], [ %.sroa.1243.3, %bb.p ], [ %.sroa.1243.1, %bb.k ], [ 1, %bb.t ], [ %.sroa.1243.0, %bb.f ]
-  %.sroa.0.062 = phi i8 [ 111, %bb.v ], [ 102, %bb.n ], [ 104, %bb.r ], [ 115, %bb.p ], [ 99, %bb.k ], [ 112, %bb.t ], [ %i.k, %bb.f ] ; 2 uses
-  %i.bv = sext i8 %.sroa.0.062 to i32
+  %i.bu = phi ptr [ %i.ai, %bb.k ], [ %i.as, %bb.n ], [ %i.bh, %bb.t ], [ %i.bs, %bb.v ], [ %i.av, %bb.p ], [ %i.bf, %bb.r ], [ %i.p, %bb.f ]
+  %.sroa.0.0 = phi i8 [ 99, %bb.k ], [ 102, %bb.n ], [ 112, %bb.t ], [ 111, %bb.v ], [ 115, %bb.p ], [ 104, %bb.r ], [ %i.k, %bb.f ] ; 2 uses
+  %.sroa.1143.4 = phi i32 [ %.sroa.1243.1, %bb.k ], [ %.sroa.1243.2, %bb.n ], [ 1, %bb.t ], [ 1, %bb.v ], [ %.sroa.1243.3, %bb.p ], [ 0, %bb.r ], [ %.sroa.1243.0, %bb.f ]
+  %.sroa.24.065 = phi i32 [ %i.ah, %bb.k ], [ 0, %bb.n ], [ %i.bj, %bb.t ], [ %i.bo, %bb.v ], [ %i.au, %bb.p ], [ 0, %bb.r ], [ %.sroa.17.0, %bb.f ]
+  %.sroa.18.264 = phi i32 [ 0, %bb.k ], [ 0, %bb.n ], [ 0, %bb.t ], [ %i.br, %bb.v ], [ 0, %bb.p ], [ 0, %bb.r ], [ 0, %bb.f ]
+  %.sroa.23.0 = phi ptr [ null, %bb.k ], [ %i.n, %bb.n ], [ null, %bb.t ], [ null, %bb.v ], [ null, %bb.p ], [ %i.n, %bb.r ], [ null, %bb.f ]
+  %.sroa.25.0 = phi i32 [ 0, %bb.k ], [ %i.ao, %bb.n ], [ 0, %bb.t ], [ 0, %bb.v ], [ 0, %bb.p ], [ %i.bb, %bb.r ], [ 0, %bb.f ]
+  %i.bv = sext i8 %.sroa.0.0 to i32
   %memchr.i = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) @.str.6, i32 %i.bv, i64 9) ; 2 uses
   %.not.i.i = icmp eq ptr %memchr.i, null
   %i.bw = ptrtoint ptr %memchr.i to i64
@@ -358,19 +360,19 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %.thread55
   %i.cb = zext nneg i32 %i.bz to i64
   %i.cc = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.cb ; 8 uses
-  store i8 %.sroa.0.062, ptr %i.cc, align 8
+  store i8 %.sroa.0.0, ptr %i.cc, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.5.0..sroa_idx, i8 0, i64 3, i1 false)
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 4
-  store i32 %.sroa.1243.463, ptr %.sroa.6.0..sroa_idx, align 4
+  store i32 %.sroa.1143.4, ptr %.sroa.6.0..sroa_idx, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
-  store i32 %.sroa.18.264, ptr %.sroa.7.0..sroa_idx, align 8
+  store i32 %.sroa.24.065, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 12
-  store i32 %.sroa.24.065, ptr %.sroa.8.0..sroa_idx, align 4
+  store i32 %.sroa.18.264, ptr %.sroa.8.0..sroa_idx, align 4
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
-  store ptr %.sroa.25.066, ptr %.sroa.9.0..sroa_idx, align 8
+  store ptr %.sroa.23.0, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
-  store i32 %.sroa.27.067, ptr %.sroa.10.0..sroa_idx, align 8
+  store i32 %.sroa.25.0, ptr %.sroa.10.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 28
   store i32 0, ptr %.sroa.11.0..sroa_idx, align 4
   br label %bb.x
@@ -402,8 +404,8 @@ microdvd_set_tag.exit.i39:                        ; preds = %.loopexit
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 1
   br label %check_for_italic_slash_marker.exit42
 
-check_for_italic_slash_marker.exit42:             ; preds = %bb.u, %bb.v, %bb.t, %bb.s, %bb.q, %bb.p, %bb.m, %bb.k, %bb.c, %bb.g, %bb.f, %microdvd_set_tag.exit.i39, %.loopexit
-  %.2 = phi ptr [ %i.ch, %.loopexit ], [ %i.cl, %microdvd_set_tag.exit.i39 ], [ %i.i, %bb.g ], [ %i.i, %bb.f ], [ %i.i, %bb.c ], [ %i.i, %bb.k ], [ %i.i, %bb.m ], [ %i.i, %bb.p ], [ %i.i, %bb.q ], [ %i.i, %bb.s ], [ %i.i, %bb.t ], [ %i.i, %bb.v ], [ %i.i, %bb.u ]
+check_for_italic_slash_marker.exit42:             ; preds = %bb.c, %bb.v, %bb.u, %bb.t, %bb.s, %bb.p, %bb.k, %bb.m, %bb.q, %bb.g, %bb.f, %microdvd_set_tag.exit.i39, %.loopexit
+  %.2 = phi ptr [ %i.ch, %.loopexit ], [ %i.cl, %microdvd_set_tag.exit.i39 ], [ %i.i, %bb.g ], [ %i.i, %bb.f ], [ %i.i, %bb.q ], [ %i.i, %bb.m ], [ %i.i, %bb.k ], [ %i.i, %bb.p ], [ %i.i, %bb.s ], [ %i.i, %bb.t ], [ %i.i, %bb.u ], [ %i.i, %bb.v ], [ %i.i, %bb.c ]
   ret ptr %.2
 }
 

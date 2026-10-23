@@ -205,9 +205,10 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %bb.f
   %i.f = phi i8 [ %i.o, %bb.f ], [ 0, %.preheader ] ; 2 uses
   %i.g = phi i8 [ %i.p, %bb.f ], [ 0, %.preheader ] ; 2 uses
-  %i.h = phi i8 [ %i.q, %bb.f ], [ 0, %.preheader ] ; 4 uses
+  %i.h = phi i8 [ %i.q, %bb.f ], [ 0, %.preheader ] ; 2 uses
   %.052 = phi ptr [ %i.r, %bb.f ], [ %2, %.preheader ] ; 4 uses
-  %i.i = load i8, ptr %.052, align 1, !tbaa !27   ; 3 uses
+  %3 = phi i8 [ %4, %bb.f ], [ 0, %.preheader ]   ; 3 uses
+  %i.i = load i8, ptr %.052, align 1, !tbaa !27   ; 4 uses
   switch i8 %i.i, label %bb.e [
     i8 0, label %bb.g
     i8 114, label %bb.c
@@ -216,7 +217,7 @@ bb.b:                                             ; preds = %.preheader, %bb.f
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b
-  %i.j = icmp eq i8 %i.h, 0
+  %i.j = icmp eq i8 %3, 0
   br i1 %i.j, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -237,6 +238,7 @@ bb.f:                                             ; preds = %bb.b, %bb.c
   %i.o = phi i8 [ 98, %bb.c ], [ %i.f, %bb.b ]
   %i.p = phi i8 [ %i.g, %bb.c ], [ %i.i, %bb.b ]
   %i.q = phi i8 [ %i.i, %bb.c ], [ %i.h, %bb.b ]
+  %4 = phi i8 [ %i.i, %bb.c ], [ %3, %bb.b ]
   %i.r = getelementptr inbounds nuw i8, ptr %.052, i64 1
   br label %bb.b, !llvm.loop !93
 
@@ -244,7 +246,7 @@ bb.g:                                             ; preds = %bb.b
   store i8 %i.g, ptr %i.d, align 2
   store i8 %i.f, ptr %i.e, align 1
   store i8 %i.h, ptr %i.a, align 4
-  switch i8 %i.h, label %bb.n [
+  switch i8 %3, label %bb.n [
     i8 114, label %bb.h
     i8 119, label %bb.l
   ]

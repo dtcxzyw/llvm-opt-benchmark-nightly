@@ -202,7 +202,7 @@ aeron_format_transport_uri.exit:                  ; preds = %bb.e, %bb.g, %aeron
   %i.bl = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.bm = getelementptr inbounds nuw i8, ptr %7, i64 20
   %i.bn = getelementptr inbounds nuw i8, ptr %7, i64 48
-  %i.bo = getelementptr inbounds nuw i8, ptr %7, i64 50 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %7, i64 50
   %i.bp = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.bq = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.br = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -595,7 +595,7 @@ bb.an:                                            ; preds = %bb.am, %bb.ak
   store i32 %i.ie, ptr %i.bl, align 8
   store i32 %i.ik, ptr %i.bm, align 4
   store i16 1, ptr %i.bn, align 8
-  %i.iv = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.dh) ; 4 uses
+  %i.iv = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.dh) ; 5 uses
   store i8 %i.iv, ptr %i.bo, align 2
   %i.iw = call fastcc i32 @aeron_frame_info_setup(ptr noundef %1, ptr noundef %i.iq, ptr noundef nonnull %7, ptr noundef %.0)
   %i.ix = icmp slt i32 %i.iw, 0
@@ -808,8 +808,7 @@ bb.bk:                                            ; preds = %.critedge.i.i
   br label %aeron_msg_process.exit.i
 
 aeron_msg_process.exit.i:                         ; preds = %bb.bk, %.critedge.i.i, %bb.bg, %bb.az, %bb.ay, %bb.ax, %bb.aw
-  %10 = load i8, ptr %i.bo, align 2
-  %i.mh = icmp ugt i8 %10, -65                    ; 2 uses
+  %i.mh = icmp ugt i8 %i.iv, -65                  ; 2 uses
   br i1 %i.jd, label %bb.bl, label %bb.bv
 
 bb.bl:                                            ; preds = %aeron_msg_process.exit.i

@@ -202,7 +202,7 @@ move_diff_queue.exit:                             ; preds = %diff_might_be_renam
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @process_all_files(ptr nofree noundef captures(none) initializes((0, 8)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2, ptr nofree noundef nonnull captures(none) %3) unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.range_set, align 8          ; 8 uses
+  %4 = alloca %struct.range_set, align 8          ; 7 uses
   %5 = alloca %struct.collect_diff_cbdata, align 8 ; 4 uses
   %6 = alloca %struct.s_xpparam, align 8          ; 4 uses
   %7 = alloca %struct.s_xdemitconf, align 8       ; 5 uses
@@ -228,7 +228,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %10, i64 16
   br label %bb.b
@@ -631,13 +631,11 @@ range_set_difference.exit.i.i:                    ; preds = %.loopexit.i.i.i
 
 .preheader.lr.ph.i16.i.i:                         ; preds = %range_set_difference.exit.i.i
   %wide.trip.count.i17.i.i = zext i32 %.sroa.8.1.i.i to i64
-  %.promoted106.i.i = load i32, ptr %4, align 8
-  %.promoted109.i.i = load ptr, ptr %i.n, align 8
   br label %.preheader.i18.i.i
 
 .preheader.i18.i.i:                               ; preds = %range_set_append.exit48.i.i, %.preheader.lr.ph.i16.i.i
-  %i.ez = phi ptr [ %.promoted109.i.i, %.preheader.lr.ph.i16.i.i ], [ %i.gh, %range_set_append.exit48.i.i ] ; 3 uses
-  %storemerge.i.i.i43108.i.i = phi i32 [ %.promoted106.i.i, %.preheader.lr.ph.i16.i.i ], [ %storemerge.i.i.i43107.i.i, %range_set_append.exit48.i.i ] ; 3 uses
+  %i.ez = phi ptr [ null, %.preheader.lr.ph.i16.i.i ], [ %i.gh, %range_set_append.exit48.i.i ] ; 3 uses
+  %storemerge.i.i.i43108.i.i = phi i32 [ 0, %.preheader.lr.ph.i16.i.i ], [ %storemerge.i.i.i43107.i.i, %range_set_append.exit48.i.i ] ; 3 uses
   %indvars.iv14.i.i.i = phi i64 [ 0, %.preheader.lr.ph.i16.i.i ], [ %.pre.i, %range_set_append.exit48.i.i ] ; 6 uses
   %.011.i.i.i = phi i64 [ 0, %.preheader.lr.ph.i16.i.i ], [ %.1.lcssa.i.i.i, %range_set_append.exit48.i.i ] ; 2 uses
   %.02810.i.i.i = phi i32 [ 0, %.preheader.lr.ph.i16.i.i ], [ %.129.lcssa.i.i.i, %range_set_append.exit48.i.i ] ; 3 uses
@@ -748,11 +746,11 @@ process_diff_filepair.exit.thread:                ; preds = %bb.f, %bb.g, %.preh
   br label %.thread
 
 process_diff_filepair.exit:                       ; preds = %range_set_append.exit48.i.i, %diff_ranges_filter_touched.exit.i.i, %range_set_difference.exit.i.i
-  %i.gl = phi ptr [ null, %diff_ranges_filter_touched.exit.i.i ], [ null, %range_set_difference.exit.i.i ], [ %i.gh, %range_set_append.exit48.i.i ]
-  %.sroa.15.463.i.i = phi ptr [ null, %diff_ranges_filter_touched.exit.i.i ], [ %.sroa.15.1.i.i, %range_set_difference.exit.i.i ], [ %.sroa.15.1.i.i, %range_set_append.exit48.i.i ]
+  %i.gl = phi ptr [ %.sroa.15.1.i.i, %range_set_difference.exit.i.i ], [ null, %diff_ranges_filter_touched.exit.i.i ], [ %.sroa.15.1.i.i, %range_set_append.exit48.i.i ]
+  %.sroa.15.463.i.i = phi ptr [ null, %range_set_difference.exit.i.i ], [ null, %diff_ranges_filter_touched.exit.i.i ], [ %i.gh, %range_set_append.exit48.i.i ]
   call fastcc void @range_set_union(ptr noundef nonnull %9, ptr noundef nonnull %4, ptr noundef nonnull %i.bm)
-  call void @free(ptr noundef %.sroa.15.463.i.i) #13
   call void @free(ptr noundef %i.gl) #13
+  call void @free(ptr noundef %.sroa.15.463.i.i) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   %i.gm = getelementptr inbounds nuw i8, ptr %.02980.i, i64 24 ; 2 uses
   %i.gn = load ptr, ptr %i.gm, align 8, !tbaa !19

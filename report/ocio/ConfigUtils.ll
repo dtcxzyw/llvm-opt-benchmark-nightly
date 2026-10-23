@@ -204,7 +204,7 @@ _ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2E
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %i.cn, label %.thread, label %.preheader
 
-.thread:                                          ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.an
+.thread:                                          ; preds = %bb.an, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4
   %spec.select = phi i32 [ 4, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4 ], [ 0, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 1, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1 ], [ 2, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2 ], [ 3, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3 ], [ -1, %bb.an ]
   call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 80) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
@@ -607,9 +607,9 @@ bb.db:                                            ; preds = %bb.bq, %bb.bp
   br label %bb.di
 
 .loopexit:                                        ; preds = %bb.bd, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3
-  %i.ii = phi ptr [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3 ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2 ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1 ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4 ], [ %i.dj, %bb.bd ]
-  %i.ij = phi ptr [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3 ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2 ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1 ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4 ], [ %i.dh, %bb.bd ]
-  %.4 = phi i32 [ 3, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3 ], [ 2, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2 ], [ 0, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 1, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1 ], [ %spec.select, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4 ], [ -1, %bb.bd ]
+  %i.ii = phi ptr [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1 ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4 ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3 ], [ %i.em, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2 ], [ %i.dj, %bb.bd ]
+  %i.ij = phi ptr [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1 ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4 ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3 ], [ %i.el, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2 ], [ %i.dh, %bb.bd ]
+  %.4 = phi i32 [ 0, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 1, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.1 ], [ %spec.select, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.4 ], [ 3, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3 ], [ 2, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59ProcessorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.2 ], [ -1, %bb.bd ]
   %i.ik = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.il = load ptr, ptr %i.ik, align 8, !tbaa !37 ; 8 uses
   %.not.i.i84 = icmp eq ptr %i.il, null
@@ -761,27 +761,26 @@ bb.ds:                                            ; preds = %bb.dr, %bb.av
 
 bb.dt:                                            ; preds = %bb.au, %bb.ds
   %i.kb = phi ptr [ %i.ka, %bb.ds ], [ %i.dj, %bb.au ]
-  %.pre.pre = phi ptr [ %.pre.pre.pre, %bb.ds ], [ %i.dh, %bb.au ] ; 2 uses
-  %.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn, %bb.ds ], [ %i.dr, %bb.au ] ; 2 uses
+  %.pre.pre = phi ptr [ %.pre.pre.pre, %bb.ds ], [ %i.dh, %bb.au ]
+  %.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn, %bb.ds ], [ %i.dr, %bb.au ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   call void @_ZN16OpenColorIO_v2_515PackedImageDescD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %9) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
   call void @_ZdlPvm(ptr noundef nonnull %i.dm, i64 noundef 72) #23
-  %.not.i.i.i101 = icmp eq ptr %.pre.pre, null
-  br i1 %.not.i.i.i101, label %_ZNSt6vectorIfSaIfEED2Ev.exit103, label %bb.du
+  br label %bb.du
 
-bb.du:                                            ; preds = %.thread168, %.thread, %bb.dt
-  %14 = phi ptr [ %i.dj, %.thread ], [ %i.kb, %bb.dt ], [ %i.dj, %.thread168 ]
+bb.du:                                            ; preds = %.thread, %.thread168, %bb.dt
   %.pn.pn.pn.pn.pn.pn.pn.pn167 = phi { ptr, i32 } [ %i.dp, %.thread ], [ %.pn.pn.pn.pn.pn.pn, %bb.dt ], [ %i.dq, %.thread168 ]
   %i.kc = phi ptr [ %i.dh, %.thread ], [ %.pre.pre, %bb.dt ], [ %i.dh, %.thread168 ] ; 2 uses
+  %14 = phi ptr [ %i.dj, %.thread ], [ %i.kb, %bb.dt ], [ %i.dj, %.thread168 ]
   %i.kd = ptrtoint ptr %14 to i64
   %i.ke = ptrtoint ptr %i.kc to i64
   %i.kf = sub i64 %i.kd, %i.ke
   call void @_ZdlPvm(ptr noundef nonnull %i.kc, i64 noundef %i.kf) #23
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit103
 
-_ZNSt6vectorIfSaIfEED2Ev.exit103:                 ; preds = %bb.du, %bb.dt, %_ZNSt12_Vector_baseIfSaIfEED2Ev.exit.i
-  %.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.di, %_ZNSt12_Vector_baseIfSaIfEED2Ev.exit.i ], [ %.pn.pn.pn.pn.pn.pn, %bb.dt ], [ %.pn.pn.pn.pn.pn.pn.pn.pn167, %bb.du ]
+_ZNSt6vectorIfSaIfEED2Ev.exit103:                 ; preds = %bb.du, %_ZNSt12_Vector_baseIfSaIfEED2Ev.exit.i
+  %.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn.pn.pn.pn167, %bb.du ], [ %i.di, %_ZNSt12_Vector_baseIfSaIfEED2Ev.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   br label %bb.ei
 
@@ -1184,17 +1183,17 @@ bb.aj:                                            ; preds = %bb.ai
 
 .preheader:                                       ; preds = %bb.aj
   %i.bt = icmp sgt i32 %i.bs, 0
-  br i1 %i.bt, label %.lr.ph, label %.split.thread
+  br i1 %i.bt, label %.split.thread, label %.lr.ph
 
 .split.thread:                                    ; preds = %.preheader
-  call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef 80) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
-  br label %bb.bq
-
-.lr.ph:                                           ; preds = %.preheader
   %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
   %16 = getelementptr inbounds nuw i8, ptr %11, i64 8
   br label %bb.al
+
+.lr.ph:                                           ; preds = %bb.bl, %.preheader
+  call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef 80) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
+  br label %bb.bq
 
 bb.ak:                                            ; preds = %bb.aa
   %i.bu = landingpad { ptr, i32 }
@@ -1206,9 +1205,9 @@ bb.ak:                                            ; preds = %bb.aa
           cleanup
   br label %bb.bp
 
-bb.al:                                            ; preds = %.lr.ph, %bb.bl
-  %.032134 = phi i32 [ 0, %.lr.ph ], [ %i.dq, %bb.bl ] ; 2 uses
-  %.033133 = phi ptr [ undef, %.lr.ph ], [ %.2, %bb.bl ] ; 2 uses
+bb.al:                                            ; preds = %.split.thread, %bb.bl
+  %.032134 = phi i32 [ 0, %.split.thread ], [ %i.dq, %bb.bl ] ; 2 uses
+  %.033133 = phi ptr [ undef, %.split.thread ], [ %.2, %bb.bl ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
   %i.bw = load ptr, ptr %0, align 8, !tbaa !27    ; 2 uses
   %i.bx = invoke noundef ptr @_ZNK16OpenColorIO_v2_56Config24getColorSpaceNameByIndexEi(ptr noundef nonnull align 8 dereferenceable(8) %i.bw, i32 noundef %.032134)
@@ -1228,7 +1227,7 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.am, %bb.al
   %i.bz = landingpad { ptr, i32 }
           cleanup
-  br label %bb.bo
+  br label %.split
 
 bb.aq:                                            ; preds = %bb.an
   %i.ca = landingpad { ptr, i32 }
@@ -1375,7 +1374,7 @@ bb.bk:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.be, %bb.bg, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i99, %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
-  switch i32 %.141, label %.split [
+  switch i32 %.141, label %bb.bo [
     i32 0, label %bb.bl
     i32 4, label %bb.bl
   ]
@@ -1383,7 +1382,7 @@ _ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE
 bb.bl:                                            ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.dq = add nuw nsw i32 %.032134, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.dq, %i.bs
-  br i1 %exitcond.not, label %.split, label %bb.al, !llvm.loop !150
+  br i1 %exitcond.not, label %.lr.ph, label %bb.al, !llvm.loop !150
 
 bb.bm:                                            ; preds = %bb.aw, %bb.av
   %.pn68 = phi { ptr, i32 } [ %i.cj, %bb.aw ], [ %i.ci, %bb.av ]
@@ -1393,32 +1392,31 @@ bb.bm:                                            ; preds = %bb.aw, %bb.av
 bb.bn:                                            ; preds = %bb.bm, %bb.aq
   %.pn68.pn = phi { ptr, i32 } [ %.pn68, %bb.bm ], [ %i.ca, %bb.aq ]
   call void @_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %11) #21
-  br label %bb.bo
+  br label %.split
 
-.split:                                           ; preds = %bb.bl, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %.242.ph = phi i32 [ %.141, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 2, %bb.bl ]
-  %17 = and i32 %.242.ph, -3
-  %18 = icmp eq i32 %17, 0
-  call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef 80) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
-  br i1 %18, label %bb.bq, label %bb.cb
-
-bb.bo:                                            ; preds = %bb.ap, %bb.bn
+.split:                                           ; preds = %bb.bn, %bb.ap
   %.pn68.pn.pn = phi { ptr, i32 } [ %.pn68.pn, %bb.bn ], [ %i.bz, %bb.ap ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
   br label %bb.bp
 
-bb.bp:                                            ; preds = %bb.bo, %.thread
-  %.pn68.pn.pn.pn169 = phi { ptr, i32 } [ %i.bv, %.thread ], [ %.pn68.pn.pn, %bb.bo ]
+bb.bo:                                            ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+  call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef 80) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
+  %17 = and i32 %.141, -3
+  %cond1 = icmp eq i32 %17, 0
+  br i1 %cond1, label %bb.bq, label %bb.cb
+
+bb.bp:                                            ; preds = %.split, %.thread
+  %.pn68.pn.pn.pn169 = phi { ptr, i32 } [ %.pn68.pn.pn, %.split ], [ %i.bv, %.thread ]
   call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef 80) #23
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit105
 
 _ZNSt6vectorIfSaIfEED2Ev.exit105:                 ; preds = %bb.bp, %_ZNSt12_Vector_baseIfSaIfEED2Ev.exit.i
-  %.pn68.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bn, %_ZNSt12_Vector_baseIfSaIfEED2Ev.exit.i ], [ %.pn68.pn.pn.pn169, %bb.bp ]
+  %.pn68.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn68.pn.pn.pn169, %bb.bp ], [ %i.bn, %_ZNSt12_Vector_baseIfSaIfEED2Ev.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   br label %bb.co
 
-bb.bq:                                            ; preds = %.split.thread, %.split, %_ZN16OpenColorIO_v2_511ConfigUtils17SuspendCacheGuardC2ERKSt10shared_ptrIKNS_6ConfigEE.exit96
+bb.bq:                                            ; preds = %.lr.ph, %bb.bo, %_ZN16OpenColorIO_v2_511ConfigUtils17SuspendCacheGuardC2ERKSt10shared_ptrIKNS_6ConfigEE.exit96
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #21
   invoke void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(112) %13)
           to label %bb.br unwind label %bb.bv
@@ -1501,7 +1499,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.bv
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
   br label %bb.co
 
-bb.cb:                                            ; preds = %.split
+bb.cb:                                            ; preds = %bb.bo
   %i.ef = load ptr, ptr %9, align 8, !tbaa !27
   %i.eg = load i32, ptr %i.bi, align 8, !tbaa !79
   call void @_ZNK16OpenColorIO_v2_56Config22setProcessorCacheFlagsENS_19ProcessorCacheFlagsE(ptr noundef nonnull align 8 dereferenceable(8) %i.ef, i32 noundef %i.eg) #21

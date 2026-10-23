@@ -205,8 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i20: ; preds = %b
   br label %common.resume
 
 _ZNK2cv3dnn14dnn5_v202606059DictValue4sizeEv.exit22: ; preds = %bb.e, %bb.e, %bb.e
-  %i.s = and i64 %.0.in.i, 2147483647             ; 4 uses
-  %i.t = shl nuw nsw i64 %i.s, 2                  ; 3 uses
+  %i.s = and i64 %.0.in.i, 2147483647             ; 2 uses
+  %i.t = shl nuw nsw i64 %i.s, 2                  ; 5 uses
   %i.u = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #39
           to label %bb.i unwind label %bb.p       ; 8 uses
 
@@ -296,8 +296,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.j, !llvm.loop !3690
 
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.o
-  %.idx = shl nuw nsw i64 %i.s, 2
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %.idx) #40
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %i.t) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   br label %bb.t
 
@@ -306,14 +305,13 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.o
           cleanup
   br label %.body
 
-.body:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i27, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+.body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i27
   %eh.lpad-body = phi { ptr, i32 } [ %i.ab, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i27 ], [ %lpad.loopexit.split-lp50, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %.idx45 = shl nuw nsw i64 %i.s, 2
-  call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %.idx45) #40
+  call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %i.t) #40
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit33
 
 _ZNSt6vectorIiSaIiEED2Ev.exit33:                  ; preds = %.body, %bb.p
-  %.pn.pn = phi { ptr, i32 } [ %i.an, %bb.p ], [ %eh.lpad-body, %.body ]
+  %.pn.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.an, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   br label %common.resume
 
@@ -424,8 +422,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i20: ; preds = %b
   br label %common.resume
 
 _ZNK2cv3dnn14dnn5_v202606059DictValue4sizeEv.exit22: ; preds = %bb.e, %bb.e, %bb.e
-  %i.s = and i64 %.0.in.i, 2147483647             ; 4 uses
-  %i.t = shl nuw nsw i64 %i.s, 2                  ; 3 uses
+  %i.s = and i64 %.0.in.i, 2147483647             ; 2 uses
+  %i.t = shl nuw nsw i64 %i.s, 2                  ; 5 uses
   %i.u = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #39
           to label %bb.i unwind label %bb.p       ; 8 uses
 
@@ -513,8 +511,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.j, !llvm.loop !3691
 
 _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %bb.o
-  %.idx = shl nuw nsw i64 %i.s, 2
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %.idx) #40
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %i.t) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   br label %bb.t
 
@@ -523,14 +520,13 @@ _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %bb.o
           cleanup
   br label %.body
 
-.body:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i27, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+.body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i27
   %eh.lpad-body = phi { ptr, i32 } [ %i.ab, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i27 ], [ %lpad.loopexit.split-lp50, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %.idx45 = shl nuw nsw i64 %i.s, 2
-  call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %.idx45) #40
+  call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %i.t) #40
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit33
 
 _ZNSt6vectorIfSaIfEED2Ev.exit33:                  ; preds = %.body, %bb.p
-  %.pn.pn = phi { ptr, i32 } [ %i.an, %bb.p ], [ %eh.lpad-body, %.body ]
+  %.pn.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.an, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   br label %common.resume
 
@@ -933,7 +929,11 @@ _ZN14PyAllowThreadsD2Ev.exit22:                   ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %_ZN14PyAllowThreadsD2Ev.exit22
   %i.y = call ptr @__cxa_begin_catch(ptr %.010) #37
   invoke void @_Z18pyRaiseCVExceptionRKN2cv9ExceptionE(ptr noundef nonnull align 8 dereferenceable(148) %i.y)
-          to label %.invoke unwind label %bb.p
+          to label %6 unwind label %bb.p
+
+6:                                                ; preds = %bb.j
+  call void @__cxa_end_catch()
+  br label %.thread
 
 bb.k:                                             ; preds = %_ZN14PyAllowThreadsD2Ev.exit22
   %i.z = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #37
@@ -950,13 +950,17 @@ bb.l:                                             ; preds = %bb.k
   invoke void @PyErr_SetString(ptr noundef %i.ac, ptr noundef %i.ag)
           to label %.invoke unwind label %bb.o
 
-.invoke:                                          ; preds = %bb.m, %bb.l, %bb.j
+.invoke:                                          ; preds = %bb.l
   call void @__cxa_end_catch()
   br label %.thread
 
 bb.m:                                             ; preds = %bb.k
   invoke void @PyErr_SetString(ptr noundef %i.ac, ptr noundef nonnull @.str.2227)
-          to label %.invoke unwind label %bb.n
+          to label %7 unwind label %bb.n
+
+7:                                                ; preds = %bb.m
+  call void @__cxa_end_catch()
+  br label %.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ah = landingpad { ptr, i32 }
@@ -980,7 +984,7 @@ bb.p:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   br label %.thread
 
-.thread:                                          ; preds = %.invoke, %.critedge, %bb.c
+.thread:                                          ; preds = %6, %7, %.invoke, %.critedge, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #37
   br label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606056TargetESaIS3_EED2Ev.exit24
 

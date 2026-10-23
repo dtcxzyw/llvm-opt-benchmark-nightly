@@ -205,8 +205,10 @@ bb.ar:                                            ; preds = %_ZN4llvm8SmallSetIj
   br label %_ZN12_GLOBAL__N_17Context15collectFunctionERN4llvm12GCOVFunctionERNS_7SummaryE.exit
 
 .lr.ph78.i:                                       ; preds = %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i, %.loopexit.i
-  %.promoted312 = phi i64 [ %.promoted311, %.loopexit.i ], [ 0, %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i ] ; 3 uses
-  %.promoted298307 = phi i64 [ %.promoted298306, %.loopexit.i ], [ 0, %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i ] ; 3 uses
+  %.promoted319 = phi i64 [ %.promoted318, %.loopexit.i ], [ 0, %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i ] ; 3 uses
+  %.promoted305314 = phi i64 [ %.promoted305313, %.loopexit.i ], [ 0, %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i ] ; 3 uses
+  %.promoted312 = phi i64 [ %.promoted311, %.loopexit.i ], [ 0, %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i ] ; 2 uses
+  %.promoted298307 = phi i64 [ %.promoted298306, %.loopexit.i ], [ 0, %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i ] ; 2 uses
   %.sroa.064.077.i = phi ptr [ %i.sv, %.loopexit.i ], [ %i.ll, %_ZNSt6vectorIPKN4llvm12GCOVFunctionESaIS3_EE9push_backEOS3_.exit.i ] ; 2 uses
   %i.lw = load ptr, ptr %.sroa.064.077.i, align 8, !tbaa !109 ; 5 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 88
@@ -224,8 +226,10 @@ bb.ar:                                            ; preds = %_ZN4llvm8SmallSetIj
   br label %bb.as
 
 bb.as:                                            ; preds = %._crit_edge.i, %.lr.ph75.i
-  %.promoted310 = phi i64 [ %.promoted312, %.lr.ph75.i ], [ %.promoted309, %._crit_edge.i ]
-  %.promoted298305 = phi i64 [ %.promoted298307, %.lr.ph75.i ], [ %.promoted298304, %._crit_edge.i ]
+  %.promoted317 = phi i64 [ %.promoted319, %.lr.ph75.i ], [ %.promoted316, %._crit_edge.i ]
+  %.promoted305312 = phi i64 [ %.promoted305314, %.lr.ph75.i ], [ %.promoted305311, %._crit_edge.i ]
+  %.promoted310 = phi i64 [ %.promoted319, %.lr.ph75.i ], [ %.promoted309, %._crit_edge.i ] ; 2 uses
+  %.promoted298305 = phi i64 [ %.promoted305314, %.lr.ph75.i ], [ %.promoted298304, %._crit_edge.i ] ; 2 uses
   %.lcssa297302 = phi i64 [ %.promoted312, %.lr.ph75.i ], [ %.lcssa297301, %._crit_edge.i ] ; 2 uses
   %.lcssa295300 = phi i64 [ %.promoted298307, %.lr.ph75.i ], [ %.lcssa295299, %._crit_edge.i ] ; 2 uses
   %.04773.i = phi ptr [ %i.ma, %.lr.ph75.i ], [ %i.rs, %._crit_edge.i ] ; 5 uses
@@ -614,22 +618,26 @@ _ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i: ; preds = %_ZSt8
   br i1 %.not5070.i, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i.loopexit:                           ; preds = %.critedge.thread.i
-  store i64 %i.st, ptr %i.v, align 8
-  store i64 %i.ss, ptr %i.ap, align 8
+  store i64 %54, ptr %i.v, align 8
+  store i64 %53, ptr %i.ap, align 8
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i
-  %.promoted309 = phi i64 [ %i.ss, %._crit_edge.i.loopexit ], [ %.promoted310, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 2 uses
-  %.promoted298304 = phi i64 [ %i.st, %._crit_edge.i.loopexit ], [ %.promoted298305, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 2 uses
-  %.lcssa297301 = phi i64 [ %i.ss, %._crit_edge.i.loopexit ], [ %.lcssa297302, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ]
-  %.lcssa295299 = phi i64 [ %i.st, %._crit_edge.i.loopexit ], [ %.lcssa295300, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ]
+  %.promoted316 = phi i64 [ %.promoted317, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ], [ %53, %._crit_edge.i.loopexit ] ; 2 uses
+  %.promoted305311 = phi i64 [ %.promoted305312, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ], [ %54, %._crit_edge.i.loopexit ] ; 2 uses
+  %.promoted309 = phi i64 [ %.promoted310, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ], [ %53, %._crit_edge.i.loopexit ]
+  %.promoted298304 = phi i64 [ %.promoted298305, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ], [ %54, %._crit_edge.i.loopexit ]
+  %.lcssa297301 = phi i64 [ %.lcssa297302, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ], [ %i.ss, %._crit_edge.i.loopexit ] ; 2 uses
+  %.lcssa295299 = phi i64 [ %.lcssa295300, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ], [ %i.st, %._crit_edge.i.loopexit ] ; 2 uses
   %i.rs = getelementptr inbounds nuw i8, ptr %.04773.i, i64 40 ; 2 uses
   %.not48.i = icmp eq ptr %i.rs, %i.mc
   br i1 %.not48.i, label %.loopexit.i, label %bb.as
 
 .lr.ph.i:                                         ; preds = %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i, %.critedge.thread.i
-  %i.rt = phi i64 [ %i.ss, %.critedge.thread.i ], [ %.lcssa297302, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 3 uses
-  %i.ru = phi i64 [ %i.st, %.critedge.thread.i ], [ %.lcssa295300, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 2 uses
+  %47 = phi i64 [ %53, %.critedge.thread.i ], [ %.promoted310, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 3 uses
+  %48 = phi i64 [ %54, %.critedge.thread.i ], [ %.promoted298305, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 2 uses
+  %i.rt = phi i64 [ %i.ss, %.critedge.thread.i ], [ %.lcssa297302, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 4 uses
+  %i.ru = phi i64 [ %i.st, %.critedge.thread.i ], [ %.lcssa295300, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 3 uses
   %.04671.i = phi ptr [ %i.su, %.critedge.thread.i ], [ %i.ro, %_ZNSt6vectorIN12_GLOBAL__N_18LineInfoESaIS1_EE6resizeEm.exit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
   %i.rv = load i32, ptr %.04671.i, align 4, !tbaa !90 ; 2 uses
@@ -675,9 +683,11 @@ bb.bd:                                            ; preds = %_ZN4llvm23SmallVect
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #22
   call void @_ZN4llvm8SmallSetIjLj16ESt4lessIjEE10insertImplIRKjEESt4pairINS_16SmallSetIteratorIjLj16ES2_EEbEOT_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.147") align 8 %33, ptr noundef nonnull align 8 dereferenceable(128) %31, ptr noundef nonnull align 4 dereferenceable(4) %i.e)
   %i.sp = load i8, ptr %i.an, align 8, !tbaa !218, !range !175, !noundef !172
+  %49 = trunc nuw i8 %i.sp to i1                  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #22
-  %47 = zext nneg i8 %i.sp to i64
-  %spec.select = add i64 %i.ru, %47               ; 2 uses
+  %50 = add i64 %i.ru, 1                          ; 2 uses
+  %spec.select = select i1 %49, i64 %50, i64 %48  ; 2 uses
+  %spec.select355 = select i1 %49, i64 %50, i64 %i.ru ; 2 uses
   %i.sq = load i64, ptr %i.md, align 8, !tbaa !104
   %.not51.not.i = icmp eq i64 %i.sq, 0
   br i1 %.not51.not.i, label %.critedge.thread.i, label %.critedge.i
@@ -686,22 +696,28 @@ bb.bd:                                            ; preds = %_ZN4llvm23SmallVect
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #22
   call void @_ZN4llvm8SmallSetIjLj16ESt4lessIjEE10insertImplIRKjEESt4pairINS_16SmallSetIteratorIjLj16ES2_EEbEOT_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.147") align 8 %34, ptr noundef nonnull align 8 dereferenceable(128) %32, ptr noundef nonnull align 4 dereferenceable(4) %i.e)
   %i.sr = load i8, ptr %i.ao, align 8, !tbaa !218, !range !175, !noundef !172
+  %51 = trunc nuw i8 %i.sr to i1                  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %34) #22
-  %48 = zext nneg i8 %i.sr to i64
-  %spec.select350 = add i64 %i.rt, %48
+  %52 = add i64 %i.rt, 1                          ; 2 uses
+  %spec.select356 = select i1 %51, i64 %52, i64 %47
+  %spec.select357 = select i1 %51, i64 %52, i64 %i.rt
   br label %.critedge.thread.i
 
 .critedge.thread.i:                               ; preds = %.critedge.i, %bb.bd, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_9GCOVBlockELb1EE9push_backES3_.exit.i
-  %i.ss = phi i64 [ %i.rt, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_9GCOVBlockELb1EE9push_backES3_.exit.i ], [ %spec.select350, %.critedge.i ], [ %i.rt, %bb.bd ] ; 4 uses
-  %i.st = phi i64 [ %i.ru, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_9GCOVBlockELb1EE9push_backES3_.exit.i ], [ %spec.select, %.critedge.i ], [ %spec.select, %bb.bd ] ; 4 uses
+  %53 = phi i64 [ %47, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_9GCOVBlockELb1EE9push_backES3_.exit.i ], [ %spec.select356, %.critedge.i ], [ %47, %bb.bd ] ; 4 uses
+  %54 = phi i64 [ %48, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_9GCOVBlockELb1EE9push_backES3_.exit.i ], [ %spec.select, %.critedge.i ], [ %spec.select, %bb.bd ] ; 4 uses
+  %i.ss = phi i64 [ %i.rt, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_9GCOVBlockELb1EE9push_backES3_.exit.i ], [ %spec.select357, %.critedge.i ], [ %i.rt, %bb.bd ] ; 2 uses
+  %i.st = phi i64 [ %i.ru, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_9GCOVBlockELb1EE9push_backES3_.exit.i ], [ %spec.select355, %.critedge.i ], [ %spec.select355, %bb.bd ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #22
   %i.su = getelementptr inbounds nuw i8, ptr %.04671.i, i64 4 ; 2 uses
   %.not50.i = icmp eq ptr %i.su, %i.rr
   br i1 %.not50.i, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
 .loopexit.i:                                      ; preds = %._crit_edge.i, %.lr.ph78.i
-  %.promoted311 = phi i64 [ %.promoted312, %.lr.ph78.i ], [ %.promoted309, %._crit_edge.i ]
-  %.promoted298306 = phi i64 [ %.promoted298307, %.lr.ph78.i ], [ %.promoted298304, %._crit_edge.i ]
+  %.promoted318 = phi i64 [ %.promoted319, %.lr.ph78.i ], [ %.promoted316, %._crit_edge.i ]
+  %.promoted305313 = phi i64 [ %.promoted305314, %.lr.ph78.i ], [ %.promoted305311, %._crit_edge.i ]
+  %.promoted311 = phi i64 [ %.promoted312, %.lr.ph78.i ], [ %.lcssa297301, %._crit_edge.i ]
+  %.promoted298306 = phi i64 [ %.promoted298307, %.lr.ph78.i ], [ %.lcssa295299, %._crit_edge.i ]
   %i.sv = getelementptr inbounds nuw i8, ptr %.sroa.064.077.i, i64 8 ; 2 uses
   %.not69.i = icmp eq ptr %i.sv, %i.lp
   br i1 %.not69.i, label %._crit_edge79.loopexit.i, label %.lr.ph78.i
@@ -852,6 +868,9 @@ bb.bq:                                            ; preds = %bb.bp
   br label %_ZNK12_GLOBAL__N_17Context13collectSourceERNS_10SourceInfoERNS_7SummaryE.exit
 
 .lr.ph.i102:                                      ; preds = %bb.bq, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i
+  %.lcssa337345 = phi i64 [ %.lcssa337344, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i ], [ 0, %bb.bq ] ; 3 uses
+  %.lcssa335342 = phi i64 [ %.lcssa335341, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i ], [ 0, %bb.bq ] ; 3 uses
+  %.lcssa333340 = phi i64 [ %.lcssa333339, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i ], [ 0, %bb.bq ] ; 3 uses
   %.lcssa330340 = phi i64 [ %.lcssa330339, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i ], [ 0, %bb.bq ] ; 3 uses
   %.lcssa328337 = phi i64 [ %.lcssa328336, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i ], [ 0, %bb.bq ] ; 3 uses
   %.lcssa326335 = phi i64 [ %.lcssa326334, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i ], [ 0, %bb.bq ] ; 3 uses
@@ -1254,6 +1273,9 @@ bb.ch:                                            ; preds = %bb.cg
   br label %bb.ci
 
 bb.ci:                                            ; preds = %._crit_edge46.thread.i.i, %.lr.ph53.i.i
+  %55 = phi i64 [ %.lcssa337345, %.lr.ph53.i.i ], [ %58, %._crit_edge46.thread.i.i ] ; 3 uses
+  %56 = phi i64 [ %.lcssa335342, %.lr.ph53.i.i ], [ %59, %._crit_edge46.thread.i.i ] ; 3 uses
+  %57 = phi i64 [ %.lcssa333340, %.lr.ph53.i.i ], [ %60, %._crit_edge46.thread.i.i ] ; 3 uses
   %i.acr = phi i64 [ %.lcssa330340, %.lr.ph53.i.i ], [ %i.ael, %._crit_edge46.thread.i.i ] ; 4 uses
   %i.acs = phi i64 [ %.lcssa328337, %.lr.ph53.i.i ], [ %i.aem, %._crit_edge46.thread.i.i ] ; 4 uses
   %i.act = phi i64 [ %.lcssa326335, %.lr.ph53.i.i ], [ %i.aen, %._crit_edge46.thread.i.i ] ; 4 uses
@@ -1356,29 +1378,35 @@ bb.cj:                                            ; preds = %bb.ci
 bb.ck:                                            ; preds = %._crit_edge46.i.i
   %i.aeg = zext nneg i32 %.1.i.i.lcssa to i64
   %i.aeh = select i1 %.not88.not.i.i, i64 0, i64 %i.adc
-  %i.aei = add i64 %i.act, %i.adc
-  %i.aej = add i64 %i.acs, %i.aeh
-  %i.aek = add i64 %i.acr, %i.aeg
+  %i.aei = add i64 %i.act, %i.adc                 ; 2 uses
+  %i.aej = add i64 %i.aeh, %i.acs                 ; 2 uses
+  %i.aek = add i64 %i.acr, %i.aeg                 ; 2 uses
   br label %._crit_edge46.thread.i.i
 
 ._crit_edge46.thread.i.i:                         ; preds = %bb.ck, %._crit_edge46.i.i, %bb.cj, %bb.ci
-  %i.ael = phi i64 [ %i.aek, %bb.ck ], [ %i.acr, %._crit_edge46.i.i ], [ %i.acr, %bb.cj ], [ %i.acr, %bb.ci ] ; 3 uses
-  %i.aem = phi i64 [ %i.aej, %bb.ck ], [ %i.acs, %._crit_edge46.i.i ], [ %i.acs, %bb.cj ], [ %i.acs, %bb.ci ] ; 3 uses
-  %i.aen = phi i64 [ %i.aei, %bb.ck ], [ %i.act, %._crit_edge46.i.i ], [ %i.act, %bb.cj ], [ %i.act, %bb.ci ] ; 3 uses
+  %58 = phi i64 [ %i.aek, %bb.ck ], [ %55, %._crit_edge46.i.i ], [ %55, %bb.cj ], [ %55, %bb.ci ] ; 3 uses
+  %59 = phi i64 [ %i.aej, %bb.ck ], [ %56, %._crit_edge46.i.i ], [ %56, %bb.cj ], [ %56, %bb.ci ] ; 3 uses
+  %60 = phi i64 [ %i.aei, %bb.ck ], [ %57, %._crit_edge46.i.i ], [ %57, %bb.cj ], [ %57, %bb.ci ] ; 3 uses
+  %i.ael = phi i64 [ %i.aek, %bb.ck ], [ %i.acr, %._crit_edge46.i.i ], [ %i.acr, %bb.cj ], [ %i.acr, %bb.ci ] ; 2 uses
+  %i.aem = phi i64 [ %i.aej, %bb.ck ], [ %i.acs, %._crit_edge46.i.i ], [ %i.acs, %bb.cj ], [ %i.acs, %bb.ci ] ; 2 uses
+  %i.aen = phi i64 [ %i.aei, %bb.ck ], [ %i.act, %._crit_edge46.i.i ], [ %i.act, %bb.cj ], [ %i.act, %bb.ci ] ; 2 uses
   %i.aeo = getelementptr inbounds nuw i8, ptr %.07751.i.i, i64 8 ; 2 uses
   %.not85.i.i = icmp eq ptr %i.aeo, %i.acq
   br i1 %.not85.i.i, label %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit, label %bb.ci
 
 _ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit: ; preds = %._crit_edge46.thread.i.i
-  store i64 %i.aen, ptr %i.hd, align 8
-  store i64 %i.aem, ptr %i.he, align 8
-  store i64 %i.ael, ptr %i.hf, align 8
+  store i64 %60, ptr %i.hd, align 8
+  store i64 %59, ptr %i.he, align 8
+  store i64 %58, ptr %i.hf, align 8
   br label %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i
 
 _ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i: ; preds = %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit, %bb.ch, %bb.cg
-  %.lcssa330339 = phi i64 [ %i.ael, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ], [ %.lcssa330340, %bb.ch ], [ %.lcssa330340, %bb.cg ]
-  %.lcssa328336 = phi i64 [ %i.aem, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ], [ %.lcssa328337, %bb.ch ], [ %.lcssa328337, %bb.cg ]
-  %.lcssa326334 = phi i64 [ %i.aen, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ], [ %.lcssa326335, %bb.ch ], [ %.lcssa326335, %bb.cg ]
+  %.lcssa337344 = phi i64 [ %.lcssa337345, %bb.cg ], [ %.lcssa337345, %bb.ch ], [ %58, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ]
+  %.lcssa335341 = phi i64 [ %.lcssa335342, %bb.cg ], [ %.lcssa335342, %bb.ch ], [ %59, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ]
+  %.lcssa333339 = phi i64 [ %.lcssa333340, %bb.cg ], [ %.lcssa333340, %bb.ch ], [ %60, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ]
+  %.lcssa330339 = phi i64 [ %.lcssa330340, %bb.cg ], [ %.lcssa330340, %bb.ch ], [ %i.ael, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ]
+  %.lcssa328336 = phi i64 [ %.lcssa328337, %bb.cg ], [ %.lcssa328337, %bb.ch ], [ %i.aem, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ]
+  %.lcssa326334 = phi i64 [ %.lcssa326335, %bb.cg ], [ %.lcssa326335, %bb.ch ], [ %i.aen, %_ZNK12_GLOBAL__N_17Context17collectSourceLineERNS_10SourceInfoEPNS_7SummaryERNS_8LineInfoEm.exit.i.loopexit ]
   %i.aep = add i64 %.022.i, 1
   %i.aeq = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i, i64 40 ; 2 uses
   %.not.i108 = icmp eq ptr %i.aeq, %.val77

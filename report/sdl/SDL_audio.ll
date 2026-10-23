@@ -205,15 +205,17 @@ bb.f:                                             ; preds = %ObtainPhysicalAudio
   br label %bb.g
 
 ._crit_edge:                                      ; preds = %.loopexit
-  store <2 x i32> %i.ak, ptr %i.u, align 4
-  store i32 %spec.store.select119.lcssa127, ptr %2, align 4
+  store <2 x i32> %9, ptr %i.u, align 4
+  store i32 %.lcssa119131, ptr %2, align 4
   br i1 %.1, label %bb.i, label %.thread
 
 bb.g:                                             ; preds = %.lr.ph134, %.loopexit
   %.083133 = phi ptr [ %.083129, %.lr.ph134 ], [ %.083, %.loopexit ] ; 3 uses
   %.084132 = phi i1 [ false, %.lr.ph134 ], [ %.1, %.loopexit ]
-  %spec.store.select119.lcssa128131 = phi i32 [ 0, %.lr.ph134 ], [ %spec.store.select119.lcssa127, %.loopexit ] ; 3 uses
-  %i.v = phi <2 x i32> [ zeroinitializer, %.lr.ph134 ], [ %i.ak, %.loopexit ] ; 3 uses
+  %3 = phi i32 [ 0, %.lr.ph134 ], [ %spec.store.select119.lcssa127, %.loopexit ] ; 3 uses
+  %spec.store.select119.lcssa128131 = phi i32 [ 0, %.lr.ph134 ], [ %.lcssa119131, %.loopexit ] ; 3 uses
+  %4 = phi <2 x i32> [ zeroinitializer, %.lr.ph134 ], [ %i.ak, %.loopexit ] ; 3 uses
+  %i.v = phi <2 x i32> [ zeroinitializer, %.lr.ph134 ], [ %9, %.loopexit ] ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.083133, i64 32
   %i.x = load i8, ptr %i.w, align 8, !range !4, !noundef !5
   %i.y = trunc nuw i8 %i.x to i1
@@ -227,26 +229,33 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %bb.h, %.lr.ph
   %.082123 = phi ptr [ %.082, %.lr.ph ], [ %.082120, %bb.h ] ; 2 uses
-  %spec.store.select119122 = phi i32 [ %spec.store.select, %.lr.ph ], [ %spec.store.select119.lcssa128131, %bb.h ] ; 2 uses
-  %i.aa = phi <2 x i32> [ %i.ai, %.lr.ph ], [ %i.v, %bb.h ]
+  %5 = phi i32 [ %spec.store.select, %.lr.ph ], [ %3, %bb.h ] ; 2 uses
+  %spec.store.select119122 = phi i32 [ %spec.select, %.lr.ph ], [ %spec.store.select119.lcssa128131, %bb.h ]
+  %6 = phi <2 x i32> [ %i.ai, %.lr.ph ], [ %4, %bb.h ] ; 2 uses
+  %i.aa = phi <2 x i32> [ %8, %.lr.ph ], [ %i.v, %bb.h ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.082123, i64 %.v ; 2 uses
-  %i.ac = load i32, ptr %i.ab, align 4            ; 2 uses
+  %i.ac = load i32, ptr %i.ab, align 4            ; 3 uses
   %i.ad = and i32 %i.ac, 255
-  %i.ae = and i32 %spec.store.select119122, 255
-  %i.af = icmp samesign ugt i32 %i.ad, %i.ae
-  %spec.store.select = select i1 %i.af, i32 %i.ac, i32 %spec.store.select119122 ; 2 uses
+  %i.ae = and i32 %5, 255
+  %i.af = icmp samesign ugt i32 %i.ad, %i.ae      ; 2 uses
+  %spec.select = select i1 %i.af, i32 %i.ac, i32 %spec.store.select119122 ; 2 uses
+  %spec.store.select = select i1 %i.af, i32 %i.ac, i32 %5 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
-  %i.ah = load <2 x i32>, ptr %i.ag, align 4
-  %i.ai = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.ah, <2 x i32> %i.aa) ; 2 uses
+  %i.ah = load <2 x i32>, ptr %i.ag, align 4      ; 3 uses
+  %7 = icmp sgt <2 x i32> %i.ah, %6
+  %8 = select <2 x i1> %7, <2 x i32> %i.ah, <2 x i32> %i.aa ; 2 uses
+  %i.ai = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.ah, <2 x i32> %6) ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.082123, i64 200
   %.082 = load ptr, ptr %i.aj, align 8            ; 2 uses
   %.not108 = icmp eq ptr %.082, null
   br i1 %.not108, label %.loopexit, label %.lr.ph, !llvm.loop !24
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.h, %bb.g
-  %spec.store.select119.lcssa127 = phi i32 [ %spec.store.select119.lcssa128131, %bb.g ], [ %spec.store.select119.lcssa128131, %bb.h ], [ %spec.store.select, %.lr.ph ] ; 2 uses
+  %.lcssa119131 = phi i32 [ %spec.store.select119.lcssa128131, %bb.g ], [ %spec.store.select119.lcssa128131, %bb.h ], [ %spec.select, %.lr.ph ] ; 2 uses
+  %spec.store.select119.lcssa127 = phi i32 [ %3, %bb.g ], [ %3, %bb.h ], [ %spec.store.select, %.lr.ph ]
   %.1 = phi i1 [ %.084132, %bb.g ], [ true, %bb.h ], [ true, %.lr.ph ] ; 2 uses
-  %i.ak = phi <2 x i32> [ %i.v, %bb.g ], [ %i.v, %bb.h ], [ %i.ai, %.lr.ph ] ; 2 uses
+  %9 = phi <2 x i32> [ %i.v, %bb.g ], [ %i.v, %bb.h ], [ %8, %.lr.ph ] ; 2 uses
+  %i.ak = phi <2 x i32> [ %4, %bb.g ], [ %4, %bb.h ], [ %i.ai, %.lr.ph ]
   %i.al = getelementptr inbounds nuw i8, ptr %.083133, i64 56
   %.083 = load ptr, ptr %i.al, align 8            ; 2 uses
   %.not100 = icmp eq ptr %.083, null
