@@ -202,14 +202,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.val.val, i64 802
-  %i.f = load i16, ptr %i.e, align 2
+  %i.f = load i16, ptr %i.e, align 2              ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 802
-  %i.h = load i16, ptr %i.g, align 2
+  %i.h = load i16, ptr %i.g, align 2              ; 2 uses
   %.0.i = tail call i32 @llvm.ucmp.i32.i16(i16 %i.f, i16 %i.h) ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.val.val, i64 196
-  %i.j = load i16, ptr %i.i, align 4
+  %i.j = load i16, ptr %i.i, align 4              ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 196
-  %i.l = load i16, ptr %i.k, align 4
+  %i.l = load i16, ptr %i.k, align 4              ; 2 uses
   %.0.i14 = tail call i32 @llvm.ucmp.i32.i16(i16 %i.j, i16 %i.l) ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.val.val, i64 912
   %i.n = load i16, ptr %i.m, align 8
@@ -220,11 +220,11 @@ bb.a:
   %i.q = sub nsw i32 0, %.0.i
   %i.r = sub nsw i32 0, %.0.i14
   %i.s = sub nsw i32 0, %.0.i15
-  %.011 = select i1 %.b, i32 %i.q, i32 %.0.i      ; 2 uses
-  %.010 = select i1 %.b, i32 %i.r, i32 %.0.i14    ; 2 uses
+  %.011 = select i1 %.b, i32 %i.q, i32 %.0.i
+  %.010 = select i1 %.b, i32 %i.r, i32 %.0.i14
   %.0 = select i1 %.b, i32 %i.s, i32 %.0.i15
-  %.not = icmp eq i32 %.011, 0
-  %.not13 = icmp eq i32 %.010, 0
+  %.not = icmp eq i16 %i.f, %i.h
+  %.not13 = icmp eq i16 %i.j, %i.l
   %.0..010 = select i1 %.not13, i32 %.0, i32 %.010
   %.012 = select i1 %.not, i32 %.0..010, i32 %.011
   ret i32 %.012

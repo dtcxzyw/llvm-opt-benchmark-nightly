@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ds = sext i8 %i.dq to i32
   %i.dt = mul nsw i32 %.01427.i68.i, 10
   %i.du = add nsw i32 %i.ds, -48
-  %i.dv = add i32 %i.du, %i.dt                    ; 3 uses
+  %i.dv = add i32 %i.du, %i.dt                    ; 4 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 1 ; 4 uses
   %i.dx = load i8, ptr %i.dw, align 1, !tbaa !8   ; 2 uses
   %i.dy = sext i8 %i.dx to i64
@@ -210,19 +210,22 @@ bb.q:                                             ; preds = %bb.p
   %i.ea = load i16, ptr %i.dz, align 2, !tbaa !19
   %i.eb = and i16 %i.ea, 2048
   %.not17.i69.i = icmp eq i16 %i.eb, 0
-  br i1 %.not17.i69.i, label %xSAT_ReadInt.exit71.i.a, label %.lr.ph28.i67.i, !llvm.loop !13
+  br i1 %.not17.i69.i, label %xSAT_ReadInt.exit71.i, label %.lr.ph28.i67.i, !llvm.loop !13
 
-xSAT_ReadInt.exit71.i.a:                          ; preds = %.lr.ph28.i67.i
+xSAT_ReadInt.exit71.i:                            ; preds = %.lr.ph28.i67.i
+  %2 = icmp eq i32 %i.dv, 0
+  br i1 %2, label %xSAT_ReadClause.exit.i, label %xSAT_ReadInt.exit71.i.a
+
+xSAT_ReadInt.exit71.i.a:                          ; preds = %xSAT_ReadInt.exit71.i
   %.not19.i70.i = icmp eq i8 %.lcssa.i63.i, 45
   %i.ec = sub nsw i32 0, %i.dv
-  %i.ed = select i1 %.not19.i70.i, i32 %i.ec, i32 %i.dv ; 2 uses
-  %2 = icmp eq i32 %i.ed, 0
-  br i1 %2, label %xSAT_ReadClause.exit.i, label %.lr.ph.i38.i
+  %i.ed = select i1 %.not19.i70.i, i32 %i.ec, i32 %i.dv
+  br label %.lr.ph.i38.i
 
-.lr.ph.i38.i:                                     ; preds = %xSAT_ReadInt.exit71.i.a, %xSAT_ReadInt.exit56.i
-  %i.ee = phi ptr [ %i.fa, %xSAT_ReadInt.exit56.i ], [ %i.o, %xSAT_ReadInt.exit71.i.a ] ; 2 uses
-  %.8.i = phi ptr [ %i.gh, %xSAT_ReadInt.exit56.i ], [ %i.dw, %xSAT_ReadInt.exit71.i.a ] ; 3 uses
-  %i.ef = phi i32 [ %i.go, %xSAT_ReadInt.exit56.i ], [ %i.ed, %xSAT_ReadInt.exit71.i.a ] ; 2 uses
+.lr.ph.i38.i:                                     ; preds = %xSAT_ReadInt.exit56.i, %xSAT_ReadInt.exit71.i.a
+  %i.ee = phi ptr [ %i.o, %xSAT_ReadInt.exit71.i.a ], [ %i.fa, %xSAT_ReadInt.exit56.i ] ; 2 uses
+  %.8.i = phi ptr [ %i.dw, %xSAT_ReadInt.exit71.i.a ], [ %i.gh, %xSAT_ReadInt.exit56.i ] ; 3 uses
+  %i.ef = phi i32 [ %i.ed, %xSAT_ReadInt.exit71.i.a ], [ %i.go, %xSAT_ReadInt.exit56.i ] ; 2 uses
   %i.eg = tail call i32 @llvm.abs.i32(i32 %i.ef, i1 true)
   %i.eh = icmp slt i32 %i.ef, 1
   %i.ei = zext i1 %i.eh to i32
@@ -351,7 +354,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.gd = sext i8 %i.gb to i32
   %i.ge = mul nsw i32 %.01427.i53.i, 10
   %i.gf = add nsw i32 %i.gd, -48
-  %i.gg = add i32 %i.gf, %i.ge                    ; 3 uses
+  %i.gg = add i32 %i.gf, %i.ge                    ; 4 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gc, i64 1 ; 4 uses
   %i.gi = load i8, ptr %i.gh, align 1, !tbaa !8   ; 2 uses
   %i.gj = sext i8 %i.gi to i64
@@ -364,12 +367,12 @@ bb.aa:                                            ; preds = %bb.z
 xSAT_ReadInt.exit56.i:                            ; preds = %.lr.ph28.i52.i
   %.not19.i55.i = icmp eq i8 %.lcssa.i48.i, 45
   %i.gn = sub nsw i32 0, %i.gg
-  %i.go = select i1 %.not19.i55.i, i32 %i.gn, i32 %i.gg ; 2 uses
-  %i.gp = icmp eq i32 %i.go, 0
+  %i.go = select i1 %.not19.i55.i, i32 %i.gn, i32 %i.gg
+  %i.gp = icmp eq i32 %i.gg, 0
   br i1 %i.gp, label %xSAT_ReadClause.exit.i, label %.lr.ph.i38.i
 
-xSAT_ReadClause.exit.i:                           ; preds = %xSAT_ReadInt.exit56.i, %xSAT_ReadInt.exit71.i.a
-  %.9.i = phi ptr [ %i.dw, %xSAT_ReadInt.exit71.i.a ], [ %i.gh, %xSAT_ReadInt.exit56.i ]
+xSAT_ReadClause.exit.i:                           ; preds = %xSAT_ReadInt.exit56.i, %xSAT_ReadInt.exit71.i
+  %.9.i = phi ptr [ %i.dw, %xSAT_ReadInt.exit71.i ], [ %i.gh, %xSAT_ReadInt.exit56.i ]
   %i.gq = tail call i32 @xSAT_SolverAddClause(ptr noundef nonnull %.012.i.ph, ptr noundef nonnull %.0.i.ph) #15
   %.not16.i = icmp eq i32 %i.gq, 0
   br i1 %.not16.i, label %bb.ab, label %skipLine.exit.i.backedge

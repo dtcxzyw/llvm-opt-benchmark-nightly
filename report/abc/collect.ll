@@ -202,14 +202,12 @@ bb.o:                                             ; preds = %.thread233.i
   %i.cf = zext nneg i32 %i.ce to i64
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %.val.i217.i, i64 %i.cf
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !64 ; 4 uses
-  %.not.i.i218.i = icmp eq i32 %i.ch, 0
   %i.ci = and i32 %i.bp, 1
   %.not9.i.i.i = icmp eq i32 %i.ci, 0
   %i.cj = sub nsw i32 0, %i.ch
-  %spec.select.i.i.i = select i1 %.not9.i.i.i, i32 %i.ch, i32 %i.cj ; 2 uses
-  %.not17.i.i = icmp eq i32 %spec.select.i.i.i, 0
-  %.not.i219.i = select i1 %.not.i.i218.i, i1 true, i1 %.not17.i.i
-  br i1 %.not.i219.i, label %kissat_map_literal.exit.i, label %bb.p
+  %spec.select.i.i.i = select i1 %.not9.i.i.i, i32 %i.ch, i32 %i.cj
+  %.not17.i.i = icmp eq i32 %i.ch, 0
+  br i1 %.not17.i.i, label %kissat_map_literal.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ck = call i32 @llvm.abs.i32(i32 %i.ch, i1 true)
@@ -612,14 +610,12 @@ bb.b:                                             ; preds = %bb.a
   %.val.i = load ptr, ptr %i.k, align 8, !tbaa !72
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %.val.i, i64 %.pre152.a
   %i.m = load i32, ptr %i.l, align 4, !tbaa !64   ; 4 uses
-  %.not.i.i = icmp eq i32 %i.m, 0
   %i.n = and i32 %1, 1
   %.not9.i.i = icmp eq i32 %i.n, 0
   %i.o = sub nsw i32 0, %i.m
-  %spec.select.i.i = select i1 %.not9.i.i, i32 %i.m, i32 %i.o ; 2 uses
-  %.not17.i = icmp eq i32 %spec.select.i.i, 0
-  %.not.i = select i1 %.not.i.i, i1 true, i1 %.not17.i
-  br i1 %.not.i, label %kissat_map_literal.exit, label %bb.c
+  %spec.select.i.i = select i1 %.not9.i.i, i32 %i.m, i32 %i.o
+  %.not17.i = icmp eq i32 %i.m, 0
+  br i1 %.not17.i, label %kissat_map_literal.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge151
   %i.p = tail call i32 @llvm.abs.i32(i32 %i.m, i1 true)
@@ -709,14 +705,12 @@ bb.h:                                             ; preds = %bb.g
   %.val.i100.us = load ptr, ptr %i.k, align 8, !tbaa !72
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %.val.i100.us, i64 %.pre156
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !64 ; 4 uses
-  %.not.i.i101.us = icmp eq i32 %i.ba, 0
   %i.bb = and i32 %.sroa.018.0.copyload.us, 1
   %.not9.i.i102.us = icmp eq i32 %i.bb, 0
   %i.bc = sub nsw i32 0, %i.ba
-  %spec.select.i.i103.us = select i1 %.not9.i.i102.us, i32 %i.ba, i32 %i.bc ; 2 uses
-  %.not17.i104.us = icmp eq i32 %spec.select.i.i103.us, 0
-  %.not.i105.us = select i1 %.not.i.i101.us, i1 true, i1 %.not17.i104.us
-  br i1 %.not.i105.us, label %kissat_map_literal.exit107.thread.us, label %bb.i
+  %spec.select.i.i103.us = select i1 %.not9.i.i102.us, i32 %i.ba, i32 %i.bc
+  %.not17.i104.us = icmp eq i32 %i.ba, 0
+  br i1 %.not17.i104.us, label %kissat_map_literal.exit107.thread.us, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge150
   %i.bd = tail call i32 @llvm.abs.i32(i32 %i.ba, i1 true)

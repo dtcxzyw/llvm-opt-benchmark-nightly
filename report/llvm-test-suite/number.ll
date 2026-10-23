@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !22   ; 3 uses
   %i.g = icmp sgt i32 %i.f, 0
-  br i1 %i.g, label %.lr.ph.preheader.i, label %num2long.exit
+  br i1 %i.g, label %.lr.ph.preheader.i, label %bb.e
 
 .lr.ph.preheader.i:                               ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -219,7 +219,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.01216.i, i64 1
   %i.k = load i8, ptr %.01216.i, align 1, !tbaa !24
   %i.l = sext i8 %i.k to i64
-  %i.m = add nsw i64 %i.i, %i.l                   ; 3 uses
+  %i.m = add nsw i64 %i.i, %i.l                   ; 4 uses
   %i.n = add nsw i32 %.017.i, -1
   %i.o = icmp samesign ugt i32 %.017.i, 1         ; 2 uses
   %i.p = icmp slt i64 %i.m, 922337203685477581
@@ -227,24 +227,22 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.q, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !1
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
-  %4 = tail call i64 @llvm.smax.i64(i64 %i.m, i64 0)
-  %5 = select i1 %i.o, i64 0, i64 %4
-  br label %num2long.exit
+  br i1 %i.o, label %bb.d, label %num2long.exit
 
-num2long.exit:                                    ; preds = %bb.c, %._crit_edge.loopexit.i
-  %.lcssa.i = phi i64 [ 0, %bb.c ], [ %5, %._crit_edge.loopexit.i ] ; 2 uses
+num2long.exit:                                    ; preds = %._crit_edge.loopexit.i
+  %4 = tail call i64 @llvm.smax.i64(i64 %i.m, i64 0) ; 2 uses
   %i.r = load i32, ptr %1, align 4, !tbaa !21
   %i.s = icmp eq i32 %i.r, 0
-  %i.t = sub nsw i64 0, %.lcssa.i
-  %.014.i = select i1 %i.s, i64 %.lcssa.i, i64 %i.t ; 7 uses
-  %6 = icmp eq i64 %.014.i, 0
-  br i1 %6, label %bb.d, label %.critedge
+  %i.t = sub nsw i64 0, %4
+  %.014.i = select i1 %i.s, i64 %4, i64 %i.t      ; 6 uses
+  %5 = icmp slt i64 %i.m, 1
+  br i1 %5, label %bb.d, label %.critedge
 
-bb.d:                                             ; preds = %num2long.exit
-  %7 = icmp sgt i32 %i.f, 1
-  br i1 %7, label %bb.f, label %bb.e
+bb.d:                                             ; preds = %._crit_edge.loopexit.i, %num2long.exit
+  %.not59 = icmp eq i32 %i.f, 1
+  br i1 %.not59, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.c, %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.v = load i8, ptr %i.u, align 4, !tbaa !24
   %.not40 = icmp eq i8 %i.v, 0

@@ -204,13 +204,8 @@ bb.e:                                             ; preds = %bb.k, %RARRAY_PTR.e
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !21
   %i.ai = shl i64 %.0124161, %i.u
   %i.aj = getelementptr [8 x i8], ptr %.0.i.i, i64 %i.ai ; 5 uses
-  %i.ak = call i32 %i.ah(ptr noundef %i.aj, ptr noundef nonnull %i.ad, ptr noundef nonnull %0) #13 ; 2 uses
-  %1 = load i8, ptr %i.p, align 8
-  %2 = and i8 %1, 1
-  %.not149 = icmp eq i8 %2, 0
-  %3 = sub i32 0, %i.ak
-  %spec.select = select i1 %.not149, i32 %i.ak, i32 %3 ; 2 uses
-  %i.al = icmp eq i32 %spec.select, 0
+  %i.ak = call i32 %i.ah(ptr noundef %i.aj, ptr noundef nonnull %i.ad, ptr noundef nonnull %0) #13 ; 3 uses
+  %i.al = icmp eq i32 %i.ak, 0
   br i1 %i.al, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph
@@ -225,6 +220,11 @@ bb.f:                                             ; preds = %.lr.ph
   br label %bb.j, !llvm.loop !100
 
 bb.g:                                             ; preds = %.lr.ph
+  %1 = load i8, ptr %i.p, align 8
+  %2 = and i8 %1, 1
+  %.not149 = icmp eq i8 %2, 0
+  %3 = sub i32 0, %i.ak
+  %spec.select = select i1 %.not149, i32 %i.ak, i32 %3
   %i.aq = icmp slt i32 %spec.select, 0
   br i1 %i.aq, label %bb.h, label %bb.i
 

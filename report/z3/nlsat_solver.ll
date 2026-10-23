@@ -205,13 +205,9 @@ bb.e:                                             ; preds = %.lr.ph145, %.thread
   %i.z = zext nneg i32 %i.x to i64                ; 2 uses
   %i.aa = load ptr, ptr %i.m, align 8, !tbaa !231
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.z
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !233 ; 2 uses
-  %5 = sub nsw i32 0, %i.ac
-  %.0.i.i.i.i = select i1 %i.y, i32 %5, i32 %i.ac
-  switch i32 %.0.i.i.i.i, label %_Z6all_ofIN5nlsat6clauseEZNS0_6solver3imp5checkERKNS0_10assignmentER7svectorIN3sat7literalEjEEUlS9_E_EbRKT_RKT0_.exit [
-    i32 0, label %bb.f
-    i32 -1, label %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i
-  ]
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !233 ; 3 uses
+  %.not.i.i.i = icmp eq i32 %i.ac, 0
+  br i1 %.not.i.i.i, label %bb.f, label %.noexc.a
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.ad = load ptr, ptr %i.n, align 8, !tbaa !244
@@ -242,18 +238,24 @@ _ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i: ; preds = %_ZNK6vectorIbLb0EjE
 
 bb.h:                                             ; preds = %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i
   %i.aq = invoke noundef zeroext i1 @_ZN5nlsat9evaluator4evalEPNS_4atomEb(ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull %i.af, i1 noundef zeroext %i.y)
-          to label %.noexc.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.noexc.a:                                         ; preds = %bb.h
+.noexc:                                           ; preds = %bb.h
   br i1 %i.aq, label %_Z6all_ofIN5nlsat6clauseEZNS0_6solver3imp5checkERKNS0_10assignmentER7svectorIN3sat7literalEjEEUlS9_E_EbRKT_RKT0_.exit, label %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i
 
-_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i: ; preds = %.noexc.a, %.lr.ph.i
+.noexc.a:                                         ; preds = %.lr.ph.i
+  %5 = sub nsw i32 0, %i.ac
+  %.0.i.i.i.i = select i1 %i.y, i32 %5, i32 %i.ac
+  %6 = icmp eq i32 %.0.i.i.i.i, -1
+  br i1 %6, label %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i, label %_Z6all_ofIN5nlsat6clauseEZNS0_6solver3imp5checkERKNS0_10assignmentER7svectorIN3sat7literalEjEEUlS9_E_EbRKT_RKT0_.exit
+
+_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i: ; preds = %.noexc.a, %.noexc
   %i.ar = getelementptr inbounds nuw i8, ptr %.01318.i, i64 4 ; 2 uses
   %.not.i = icmp eq ptr %i.ar, %i.w
   br i1 %.not.i, label %_Z6all_ofIN5nlsat6clauseEZNS0_6solver3imp5checkERKNS0_10assignmentER7svectorIN3sat7literalEjEEUlS9_E_EbRKT_RKT0_.exit, label %.lr.ph.i
 
-_Z6all_ofIN5nlsat6clauseEZNS0_6solver3imp5checkERKNS0_10assignmentER7svectorIN3sat7literalEjEEUlS9_E_EbRKT_RKT0_.exit: ; preds = %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i, %.noexc.a, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i, %bb.g, %bb.f, %.lr.ph.i
-  %.not57110 = phi i1 [ false, %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i ], [ true, %bb.f ], [ true, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i ], [ true, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i ], [ true, %bb.g ], [ true, %.noexc.a ], [ true, %.lr.ph.i ]
+_Z6all_ofIN5nlsat6clauseEZNS0_6solver3imp5checkERKNS0_10assignmentER7svectorIN3sat7literalEjEEUlS9_E_EbRKT_RKT0_.exit: ; preds = %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i, %.noexc.a, %.noexc, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i, %bb.g, %bb.f
+  %.not57110 = phi i1 [ true, %.noexc.a ], [ false, %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E_clES7_.exit.thread15.i ], [ true, %bb.f ], [ true, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i ], [ true, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i ], [ true, %bb.g ], [ true, %.noexc ]
   %.pr = load i32, ptr %i.t, align 4, !tbaa !238  ; 2 uses
   %i.as = zext i32 %.pr to i64
   %.idx.i58 = shl nuw nsw i64 %i.as, 2
@@ -269,13 +271,9 @@ _Z6all_ofIN5nlsat6clauseEZNS0_6solver3imp5checkERKNS0_10assignmentER7svectorIN3s
   %i.aw = zext nneg i32 %i.au to i64              ; 2 uses
   %i.ax = load ptr, ptr %i.m, align 8, !tbaa !231
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %i.aw
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !233 ; 2 uses
-  %6 = sub nsw i32 0, %i.az
-  %.0.i.i.i.i61 = select i1 %i.av, i32 %6, i32 %i.az
-  switch i32 %.0.i.i.i.i61, label %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E0_clES7_.exit.thread.i [
-    i32 0, label %bb.i
-    i32 1, label %.thread
-  ]
+  %i.az = load i32, ptr %i.ay, align 4, !tbaa !233 ; 3 uses
+  %.not.i.i.i61 = icmp eq i32 %i.az, 0
+  br i1 %.not.i.i.i61, label %bb.i, label %.noexc67
 
 bb.i:                                             ; preds = %.lr.ph.i59
   %i.ba = load ptr, ptr %i.n, align 8, !tbaa !244
@@ -306,12 +304,18 @@ _ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i65: ; preds = %_ZNK6vectorIbLb0E
 
 bb.k:                                             ; preds = %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i65
   %i.bn = invoke noundef zeroext i1 @_ZN5nlsat9evaluator4evalEPNS_4atomEb(ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull %i.bc, i1 noundef zeroext %i.av)
-          to label %.noexc67 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc68 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.noexc67:                                         ; preds = %bb.k
+.noexc68:                                         ; preds = %bb.k
   br i1 %i.bn, label %.thread, label %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E0_clES7_.exit.thread.i
 
-_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E0_clES7_.exit.thread.i: ; preds = %.noexc67, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i65, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i63, %bb.j, %bb.i, %.lr.ph.i59
+.noexc67:                                         ; preds = %.lr.ph.i59
+  %7 = sub nsw i32 0, %i.az
+  %.0.i.i.i.i62 = select i1 %i.av, i32 %7, i32 %i.az
+  %8 = icmp eq i32 %.0.i.i.i.i62, 1
+  br i1 %8, label %.thread, label %_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E0_clES7_.exit.thread.i
+
+_ZZN5nlsat6solver3imp5checkERKNS_10assignmentER7svectorIN3sat7literalEjEENKUlS7_E0_clES7_.exit.thread.i: ; preds = %.noexc67, %.noexc68, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i65, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i63, %bb.j, %bb.i
   %i.bo = getelementptr inbounds nuw i8, ptr %.01319.i, i64 4 ; 2 uses
   %.not.not.i = icmp eq ptr %i.bo, %i.at
   br i1 %.not.not.i, label %.loopexit131, label %.lr.ph.i59
@@ -441,8 +445,8 @@ bb.s:                                             ; preds = %.sink.split, %_ZNK5
   %.not51 = icmp eq ptr %i.dl, %i.bq
   br i1 %.not51, label %.thread, label %.lr.ph
 
-.thread:                                          ; preds = %.lr.ph.i59, %.noexc67, %bb.s, %bb.e, %.thread114, %.loopexit131
-  %.1 = phi i32 [ 0, %.loopexit131 ], [ %.039142, %.thread114 ], [ %.039142, %bb.s ], [ %.039142, %bb.e ], [ %.039142, %.noexc67 ], [ %.039142, %.lr.ph.i59 ] ; 2 uses
+.thread:                                          ; preds = %.noexc68, %.noexc67, %bb.s, %bb.e, %.thread114, %.loopexit131
+  %.1 = phi i32 [ 0, %.loopexit131 ], [ %.039142, %.thread114 ], [ %.039142, %bb.s ], [ %.039142, %bb.e ], [ %.039142, %.noexc67 ], [ %.039142, %.noexc68 ] ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.038144, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.dm, %i.l
   br i1 %.not, label %._crit_edge, label %bb.e
@@ -845,10 +849,10 @@ bb.a:
   %i.e = zext nneg i32 %i.b to i64                ; 2 uses
   %i.f = load ptr, ptr %i.d, align 8, !tbaa !231
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.e
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !233  ; 2 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !233  ; 3 uses
   %i.i = sub nsw i32 0, %i.h
-  %.0.i.i = select i1 %i.c, i32 %i.i, i32 %i.h    ; 2 uses
-  %.not.i = icmp eq i32 %.0.i.i, 0
+  %.0.i.i = select i1 %i.c, i32 %i.i, i32 %i.h
+  %.not.i = icmp eq i32 %i.h, 0
   br i1 %.not.i, label %bb.b, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -1251,7 +1255,7 @@ _ZNK6vectorIPN5nlsat6clauseELb0EjE3endEv.exit.i:  ; preds = %bb.s
   %.not17.i = icmp eq i32 %i.es, 0
   br i1 %.not17.i, label %.loopexit, label %.lr.ph.i13
 
-_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit.thread: ; preds = %bb.v, %.lr.ph.i.i23, %.split, %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit
+_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit.thread: ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i, %bb.v, %.split, %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit
   %i.ew = getelementptr inbounds nuw i8, ptr %.01218.i, i64 8 ; 2 uses
   %.not.i15 = icmp eq ptr %i.ew, %i.ev
   br i1 %.not.i15, label %.loopexit, label %.lr.ph.i13
@@ -1276,13 +1280,9 @@ _ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit.thread: ; preds = %bb.v
   %i.ff = zext nneg i32 %i.fd to i64              ; 2 uses
   %i.fg = load ptr, ptr %i.j, align 8, !tbaa !231
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %i.ff
-  %i.fi = load i32, ptr %i.fh, align 4, !tbaa !233 ; 2 uses
-  %2 = sub nsw i32 0, %i.fi
-  %.0.i.i.i.i = select i1 %i.fe, i32 %2, i32 %i.fi
-  switch i32 %.0.i.i.i.i, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i [
-    i32 0, label %bb.t
-    i32 1, label %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit.thread
-  ]
+  %i.fi = load i32, ptr %i.fh, align 4, !tbaa !233 ; 3 uses
+  %.not.i.i.i24 = icmp eq i32 %i.fi, 0
+  br i1 %.not.i.i.i24, label %bb.t, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i
 
 bb.t:                                             ; preds = %.lr.ph.i.i23
   %i.fj = load ptr, ptr %i.p, align 8, !tbaa !244
@@ -1315,7 +1315,13 @@ bb.v:                                             ; preds = %_ZNK5nlsat10assignm
   %i.fw = call noundef zeroext i1 @_ZN5nlsat9evaluator4evalEPNS_4atomEb(ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull %i.fl, i1 noundef zeroext %i.fe)
   br i1 %i.fw, label %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit.thread, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i
 
-_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i: ; preds = %bb.v, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i, %bb.u, %bb.t, %.lr.ph.i.i23
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i: ; preds = %.lr.ph.i.i23
+  %2 = sub nsw i32 0, %i.fi
+  %.0.i.i.i.i = select i1 %i.fe, i32 %2, i32 %i.fi
+  %.not14.i.i = icmp eq i32 %.0.i.i.i.i, 1
+  br i1 %.not14.i.i, label %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit.thread, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i
+
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i: ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i, %bb.v, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i, %bb.u, %bb.t
   %i.fx = getelementptr inbounds nuw i8, ptr %.01322.i.i, i64 4 ; 2 uses
   %.not.not.i.i = icmp eq ptr %i.fx, %i.fc
   br i1 %.not.not.i.i, label %_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.i, label %.lr.ph.i.i23
@@ -1350,7 +1356,7 @@ _ZNK6vectorIPN5nlsat6clauseELb0EjE3endEv.exit.i16: ; preds = %bb.w
   %.not17.i17 = icmp eq i32 %i.gi, 0
   br i1 %.not17.i17, label %.loopexit, label %.lr.ph.i18
 
-_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40.thread: ; preds = %bb.z, %.lr.ph.i.i28, %.split45, %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40
+_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40.thread: ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i33, %bb.z, %.split45, %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40
   %i.gm = getelementptr inbounds nuw i8, ptr %.01218.i19, i64 8 ; 2 uses
   %.not.i21 = icmp eq ptr %i.gm, %i.gl
   br i1 %.not.i21, label %.loopexit, label %.lr.ph.i18
@@ -1375,13 +1381,9 @@ _ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40.thread: ; preds = %bb
   %i.gv = zext nneg i32 %i.gt to i64              ; 2 uses
   %i.gw = load ptr, ptr %i.j, align 8, !tbaa !231
   %i.gx = getelementptr inbounds nuw [4 x i8], ptr %i.gw, i64 %i.gv
-  %i.gy = load i32, ptr %i.gx, align 4, !tbaa !233 ; 2 uses
-  %3 = sub nsw i32 0, %i.gy
-  %.0.i.i.i.i31 = select i1 %i.gu, i32 %3, i32 %i.gy
-  switch i32 %.0.i.i.i.i31, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i35 [
-    i32 0, label %bb.x
-    i32 1, label %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40.thread
-  ]
+  %i.gy = load i32, ptr %i.gx, align 4, !tbaa !233 ; 3 uses
+  %.not.i.i.i32 = icmp eq i32 %i.gy, 0
+  br i1 %.not.i.i.i32, label %bb.x, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i33
 
 bb.x:                                             ; preds = %.lr.ph.i.i28
   %i.gz = load ptr, ptr %i.p, align 8, !tbaa !244
@@ -1414,7 +1416,13 @@ bb.z:                                             ; preds = %_ZNK5nlsat10assignm
   %i.hm = call noundef zeroext i1 @_ZN5nlsat9evaluator4evalEPNS_4atomEb(ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull %i.hb, i1 noundef zeroext %i.gu)
   br i1 %i.hm, label %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40.thread, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i35
 
-_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i35: ; preds = %bb.z, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i38, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i33, %bb.y, %bb.x, %.lr.ph.i.i28
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i33: ; preds = %.lr.ph.i.i28
+  %3 = sub nsw i32 0, %i.gy
+  %.0.i.i.i.i34 = select i1 %i.gu, i32 %3, i32 %i.gy
+  %.not14.i.i35 = icmp eq i32 %.0.i.i.i.i34, 1
+  br i1 %.not14.i.i35, label %_ZN5nlsat6solver3imp14process_clauseERKNS_6clauseEb.exit40.thread, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i35
+
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i.i35: ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i.i33, %bb.z, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i.i38, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i.i33, %bb.y, %bb.x
   %i.hn = getelementptr inbounds nuw i8, ptr %.01322.i.i29, i64 4 ; 2 uses
   %.not.not.i.i36 = icmp eq ptr %i.hn, %i.gs
   br i1 %.not.not.i.i36, label %_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.i37, label %.lr.ph.i.i28
@@ -1817,13 +1825,9 @@ bb.b:                                             ; preds = %_ZN5nlsat6solver3im
   %i.l = zext nneg i32 %i.j to i64                ; 2 uses
   %i.m = load ptr, ptr %i.f, align 8, !tbaa !231
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.l
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !233  ; 2 uses
-  %3 = sub nsw i32 0, %i.o
-  %.0.i.i.i = select i1 %i.k, i32 %3, i32 %i.o
-  switch i32 %.0.i.i.i, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i [
-    i32 0, label %bb.c
-    i32 1, label %_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.thread
-  ]
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !233  ; 3 uses
+  %.not.i.i = icmp eq i32 %i.o, 0
+  br i1 %.not.i.i, label %bb.c, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.p = load ptr, ptr %i.g, align 8, !tbaa !244
@@ -1856,7 +1860,13 @@ bb.e:                                             ; preds = %_ZNK5nlsat10assignm
   %i.ac = tail call noundef zeroext i1 @_ZN5nlsat9evaluator4evalEPNS_4atomEb(ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull %i.r, i1 noundef zeroext %i.k)
   br i1 %i.ac, label %_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.thread, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i
 
-_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i: ; preds = %bb.e, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i, %bb.d, %bb.c, %bb.b
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i: ; preds = %bb.b
+  %3 = sub nsw i32 0, %i.o
+  %.0.i.i.i = select i1 %i.k, i32 %3, i32 %i.o
+  %.not14.i = icmp eq i32 %.0.i.i.i, 1
+  br i1 %.not14.i, label %_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.thread, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i
+
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread.i: ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i, %bb.e, %_ZNK5nlsat10assignment11is_assignedEj.exit.i.i, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i.i, %bb.d, %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %.01322.i, i64 4 ; 2 uses
   %.not.not.i = icmp eq ptr %i.ad, %i.e
   br i1 %.not.not.i, label %_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit, label %bb.b
@@ -1875,8 +1885,8 @@ bb.g:                                             ; preds = %_ZN5nlsat6solver3im
   %i.ai = tail call noundef zeroext i1 @_ZN5nlsat6solver3imp20process_arith_clauseERKNS_6clauseEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i1 noundef zeroext %2)
   br label %_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.thread
 
-_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.thread: ; preds = %bb.e, %bb.b, %bb.g, %bb.f
-  %.0 = phi i1 [ %i.ai, %bb.g ], [ %i.ah, %bb.f ], [ true, %bb.b ], [ true, %bb.e ]
+_ZN5nlsat6solver3imp12is_satisfiedERKNS_6clauseE.exit.thread: ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i, %bb.e, %bb.g, %bb.f
+  %.0 = phi i1 [ %i.ai, %bb.g ], [ %i.ah, %bb.f ], [ true, %bb.e ], [ true, %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.i ]
   ret i1 %.0
 }
 
@@ -1915,10 +1925,10 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5nlsat6
   %i.l = zext nneg i32 %i.j to i64                ; 2 uses
   %i.m = load ptr, ptr %i.d, align 8, !tbaa !231
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.l
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !233  ; 2 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !233  ; 3 uses
   %i.p = sub nsw i32 0, %i.o
-  %.0.i.i = select i1 %i.k, i32 %i.p, i32 %i.o    ; 2 uses
-  %.not.i = icmp eq i32 %.0.i.i, 0
+  %.0.i.i = select i1 %i.k, i32 %i.p, i32 %i.o
+  %.not.i = icmp eq i32 %i.o, 0
   br i1 %.not.i, label %bb.c, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -2108,65 +2118,58 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = zext nneg i32 %i.ab to i64              ; 5 uses
   %i.ae = load ptr, ptr %i.t, align 8, !tbaa !231
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.ad
-  %i.ag = load i32, ptr %i.af, align 4, !tbaa !233 ; 7 uses
-  %7 = sub nsw i32 0, %i.ag                       ; 6 uses
-  %.0.i.i = select i1 %i.ac, i32 %7, i32 %i.ag
-  switch i32 %.0.i.i, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread [
-    i32 0, label %bb.f
-    i32 -1, label %.thread117
-  ]
+  %i.ag = load i32, ptr %i.af, align 4, !tbaa !233 ; 4 uses
+  %.not.i = icmp eq i32 %i.ag, 0
+  br i1 %.not.i, label %bb.f, label %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = load ptr, ptr %i.u, align 8, !tbaa !244
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.ad
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !240 ; 3 uses
   %i.ak = icmp eq ptr %i.aj, null
-  br i1 %i.ak, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread, label %bb.g
+  br i1 %i.ak, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 12
   %i.am = load i32, ptr %i.al, align 4, !tbaa !260 ; 2 uses
   %i.an = load ptr, ptr %i.v, align 8, !tbaa !183 ; 3 uses
   %i.ao = icmp eq ptr %i.an, null
-  br i1 %i.ao, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread, label %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i
+  br i1 %i.ao, label %bb.i, label %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i
 
 _ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i:            ; preds = %bb.g
   %i.ap = getelementptr inbounds i8, ptr %i.an, i64 -4
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !192
   %.not.i.i.i = icmp ult i32 %i.am, %i.aq
-  br i1 %.not.i.i.i, label %_ZNK5nlsat10assignment11is_assignedEj.exit.i, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread
+  br i1 %.not.i.i.i, label %_ZNK5nlsat10assignment11is_assignedEj.exit.i, label %bb.i
 
 _ZNK5nlsat10assignment11is_assignedEj.exit.i:     ; preds = %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i
   %i.ar = zext i32 %i.am to i64
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ar
   %.0.i.sroa.speculate.load..i.i = load i8, ptr %i.as, align 1, !tbaa !261
   %i.at = trunc nuw i8 %.0.i.sroa.speculate.load..i.i to i1
-  br i1 %i.at, label %bb.h, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread
+  br i1 %i.at, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZNK5nlsat10assignment11is_assignedEj.exit.i
   %i.au = invoke noundef zeroext i1 @_ZN5nlsat9evaluator4evalEPNS_4atomEb(ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull %i.aj, i1 noundef zeroext %i.ac)
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.h
-  br i1 %i.au, label %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge, label %.thread117
+  br i1 %i.au, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread, label %.thread117
 
-.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge: ; preds = %.noexc
+.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge: ; preds = %bb.e
+  %7 = sub nsw i32 0, %i.ag
+  %.0.i.i = select i1 %i.ac, i32 %7, i32 %i.ag
+  %8 = icmp eq i32 %.0.i.i, -1
+  br i1 %8, label %.thread117, label %.noexc76.a
+
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread: ; preds = %.noexc
   %.pre = load ptr, ptr %i.t, align 8, !tbaa !231
   %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.ad
   %.pre155 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !233 ; 2 uses
-  %.pre160 = sub nsw i32 0, %.pre155
-  br label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread
+  %.not.i70 = icmp eq i32 %.pre155, 0
+  br i1 %.not.i70, label %bb.i, label %.noexc76.a
 
-_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread: ; preds = %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge, %bb.e, %bb.g, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i, %_ZNK5nlsat10assignment11is_assignedEj.exit.i, %bb.f
-  %.pre-phi = phi i32 [ %.pre160, %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge ], [ %7, %bb.e ], [ %7, %bb.g ], [ %7, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i ], [ %7, %_ZNK5nlsat10assignment11is_assignedEj.exit.i ], [ %7, %bb.f ]
-  %8 = phi i32 [ %.pre155, %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge ], [ %i.ag, %bb.e ], [ %i.ag, %bb.g ], [ %i.ag, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i ], [ %i.ag, %_ZNK5nlsat10assignment11is_assignedEj.exit.i ], [ %i.ag, %bb.f ]
-  %.0.i.i69 = select i1 %i.ac, i32 %.pre-phi, i32 %8
-  switch i32 %.0.i.i69, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit77.thread [
-    i32 0, label %bb.i
-    i32 1, label %.thread124
-  ]
-
-bb.i:                                             ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread
+bb.i:                                             ; preds = %bb.f, %_ZNK5nlsat10assignment11is_assignedEj.exit.i, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i, %bb.g, %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread
   %i.av = load ptr, ptr %i.u, align 8, !tbaa !244
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %i.ad
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !240 ; 3 uses
@@ -2195,12 +2198,19 @@ _ZNK5nlsat10assignment11is_assignedEj.exit.i74:   ; preds = %_ZNK6vectorIbLb0EjE
 
 bb.k:                                             ; preds = %_ZNK5nlsat10assignment11is_assignedEj.exit.i74
   %i.bi = invoke noundef zeroext i1 @_ZN5nlsat9evaluator4evalEPNS_4atomEb(ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull %i.ax, i1 noundef zeroext %i.ac)
-          to label %.noexc76.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc76 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.noexc76.a:                                       ; preds = %bb.k
+.noexc76:                                         ; preds = %bb.k
   br i1 %i.bi, label %.thread124, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit77.thread
 
-_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit77.thread: ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread, %bb.j, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i72, %_ZNK5nlsat10assignment11is_assignedEj.exit.i74, %.noexc76.a, %bb.i
+.noexc76.a:                                       ; preds = %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge, %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread
+  %9 = phi i32 [ %.pre155, %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread ], [ %i.ag, %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge ] ; 2 uses
+  %10 = sub nsw i32 0, %9
+  %.0.i.i69 = select i1 %i.ac, i32 %10, i32 %9
+  %11 = icmp eq i32 %.0.i.i69, 1
+  br i1 %11, label %.thread124, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit77.thread
+
+_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit77.thread: ; preds = %bb.j, %_ZNK6vectorIbLb0EjE4sizeEv.exit.i.i.i72, %_ZNK5nlsat10assignment11is_assignedEj.exit.i74, %.noexc76, %bb.i, %.noexc76.a
   %i.bj = load ptr, ptr %i.u, align 8, !tbaa !244
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %i.ad
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !240
@@ -2386,9 +2396,9 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #28
   br label %.thread117
 
-.thread117:                                       ; preds = %bb.ai, %bb.e, %.noexc
-  %.343122 = phi i32 [ %.242.jt4, %bb.ai ], [ %.040151, %.noexc ], [ %.040151, %bb.e ] ; 2 uses
-  %.449121 = phi i32 [ %.348.jt4, %bb.ai ], [ %.045150, %.noexc ], [ %.045150, %bb.e ] ; 2 uses
+.thread117:                                       ; preds = %bb.ai, %.noexc, %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge
+  %.343122 = phi i32 [ %.242.jt4, %bb.ai ], [ %.040151, %.noexc ], [ %.040151, %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge ] ; 2 uses
+  %.449121 = phi i32 [ %.348.jt4, %bb.ai ], [ %.045150, %.noexc ], [ %.045150, %.noexc._ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread_crit_edge ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cr = load i32, ptr %i.q, align 4, !tbaa !238
   %i.cs = zext i32 %i.cr to i64
@@ -2508,8 +2518,8 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.
   invoke void @_ZN5nlsat6solver3imp15updt_infeasibleEPKNS_12interval_setE(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef %i.eo)
           to label %.thread124 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.thread124:                                       ; preds = %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread, %.noexc76.a, %.invoke198, %bb.c, %bb.ah, %bb.ap, %._crit_edge
-  %.4 = phi i1 [ true, %bb.ah ], [ false, %._crit_edge ], [ true, %.invoke198 ], [ true, %bb.ap ], [ false, %bb.c ], [ true, %.noexc76.a ], [ true, %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit.thread ]
+.thread124:                                       ; preds = %.noexc76, %.noexc76.a, %.invoke198, %bb.c, %bb.ah, %bb.ap, %._crit_edge
+  %.4 = phi i1 [ true, %bb.ah ], [ false, %._crit_edge ], [ true, %.invoke198 ], [ true, %bb.ap ], [ false, %bb.c ], [ true, %.noexc76.a ], [ true, %.noexc76 ]
   %i.ep = load ptr, ptr %3, align 8, !tbaa !404   ; 2 uses
   %.not.i.i96 = icmp eq ptr %i.ep, null
   br i1 %.not.i.i96, label %_ZN7obj_refIN5nlsat12interval_setENS0_20interval_set_managerEED2Ev.exit98, label %bb.ar
@@ -2912,15 +2922,12 @@ define linkonce_odr hidden void @_ZN5nlsat6solver3imp18process_antecedentEN3sat7
 bb.a:
   tail call void @_ZN5nlsat6solver3imp10checkpointEv(ptr noundef nonnull align 8 dereferenceable(1017) %0)
   %i.a = lshr i32 %1, 1                           ; 9 uses
-  %2 = trunc i32 %1 to i1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 416
   %i.c = zext nneg i32 %i.a to i64                ; 9 uses
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !231
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.c
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !233  ; 2 uses
-  %3 = sub nsw i32 0, %i.f
-  %.0.i = select i1 %2, i32 %3, i32 %i.f
-  %i.g = icmp eq i32 %.0.i, 0
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !233
+  %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
@@ -3323,10 +3330,10 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit56: ; preds = %bb.t
   %i.ef = zext nneg i32 %i.ed to i64              ; 2 uses
   %i.eg = load ptr, ptr %i.dl, align 8, !tbaa !231
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %i.ef
-  %i.ei = load i32, ptr %i.eh, align 4, !tbaa !233 ; 2 uses
+  %i.ei = load i32, ptr %i.eh, align 4, !tbaa !233 ; 3 uses
   %i.ej = sub nsw i32 0, %i.ei
-  %.0.i.i = select i1 %i.ee, i32 %i.ej, i32 %i.ei ; 2 uses
-  %.not.i = icmp eq i32 %.0.i.i, 0
+  %.0.i.i = select i1 %i.ee, i32 %i.ej, i32 %i.ei
+  %.not.i = icmp eq i32 %i.ei, 0
   br i1 %.not.i, label %bb.u, label %_ZN5nlsat6solver3imp5valueEN3sat7literalE.exit
 
 bb.u:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit56

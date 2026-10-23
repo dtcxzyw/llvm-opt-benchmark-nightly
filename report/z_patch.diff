@@ -1,0 +1,105 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 0d47b655f3a91..a706ef4056595 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -11081,6 +11081,14 @@ const Value *llvm::stripNullTest(const Value *V) {
+         return X;
+     }
+   }
++
++  // select(cond, X, -X)
++  {
++    const Value *X;
++    if (match(V, m_c_Select(m_Value(X), m_Neg(m_Deferred(X)))))
++      return X;
++  }
++
+   return nullptr;
+ }
+ 
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 003f8e2ba1430..fd7a00b016b04 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -8014,22 +8014,6 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   if (Value *V = simplifyICmpInst(I.getCmpPredicate(), Op0, Op1, Q))
+     return replaceInstUsesWith(I, V);
+ 
+-  // Comparing -val or val with non-zero is the same as just comparing val
+-  // ie, abs(val) != 0 -> val != 0
+-  if (I.getPredicate() == ICmpInst::ICMP_NE && match(Op1, m_Zero())) {
+-    Value *Cond, *SelectTrue, *SelectFalse;
+-    if (match(Op0, m_Select(m_Value(Cond), m_Value(SelectTrue),
+-                            m_Value(SelectFalse)))) {
+-      if (Value *V = dyn_castNegVal(SelectTrue)) {
+-        if (V == SelectFalse)
+-          return CmpInst::Create(Instruction::ICmp, I.getPredicate(), V, Op1);
+-      } else if (Value *V = dyn_castNegVal(SelectFalse)) {
+-        if (V == SelectTrue)
+-          return CmpInst::Create(Instruction::ICmp, I.getPredicate(), V, Op1);
+-      }
+-    }
+-  }
+-
+   if (Instruction *Res = foldICmpTruncWithTruncOrExt(I, Q))
+     return Res;
+ 
+diff --git a/llvm/test/Transforms/InstCombine/icmp.ll b/llvm/test/Transforms/InstCombine/icmp.ll
+index 5382287098149..ddbfda6d1bd30 100644
+--- a/llvm/test/Transforms/InstCombine/icmp.ll
++++ b/llvm/test/Transforms/InstCombine/icmp.ll
+@@ -1279,8 +1279,8 @@ define i1 @test57(i32 %a) {
+ }
+ 
+ ; rdar://problem/10482509
+-define zeroext i1 @cmpabs1(i64 %val) {
+-; CHECK-LABEL: define zeroext i1 @cmpabs1(
++define zeroext i1 @cmpabs_ne1(i64 %val) {
++; CHECK-LABEL: define zeroext i1 @cmpabs_ne1(
+ ; CHECK-SAME: i64 [[VAL:%.*]]) {
+ ; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp ne i64 [[VAL]], 0
+ ; CHECK-NEXT:    ret i1 [[TOBOOL]]
+@@ -1292,8 +1292,8 @@ define zeroext i1 @cmpabs1(i64 %val) {
+   ret i1 %tobool
+ }
+ 
+-define zeroext i1 @cmpabs2(i64 %val) {
+-; CHECK-LABEL: define zeroext i1 @cmpabs2(
++define zeroext i1 @cmpabs_ne2(i64 %val) {
++; CHECK-LABEL: define zeroext i1 @cmpabs_ne2(
+ ; CHECK-SAME: i64 [[VAL:%.*]]) {
+ ; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp ne i64 [[VAL]], 0
+ ; CHECK-NEXT:    ret i1 [[TOBOOL]]
+@@ -1305,6 +1305,32 @@ define zeroext i1 @cmpabs2(i64 %val) {
+   ret i1 %tobool
+ }
+ 
++define zeroext i1 @cmpabs_eq1(i64 %val) {
++; CHECK-LABEL: define zeroext i1 @cmpabs_eq1(
++; CHECK-SAME: i64 [[VAL:%.*]]) {
++; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp eq i64 [[VAL]], 0
++; CHECK-NEXT:    ret i1 [[TOBOOL]]
++;
++  %sub = sub nsw i64 0, %val
++  %cmp = icmp slt i64 %val, 0
++  %sub.val = select i1 %cmp, i64 %sub, i64 %val
++  %tobool = icmp eq i64 %sub.val, 0
++  ret i1 %tobool
++}
++
++define zeroext i1 @cmpabs_eq2(i64 %val) {
++; CHECK-LABEL: define zeroext i1 @cmpabs_eq2(
++; CHECK-SAME: i64 [[VAL:%.*]]) {
++; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp eq i64 [[VAL]], 0
++; CHECK-NEXT:    ret i1 [[TOBOOL]]
++;
++  %sub = sub nsw i64 0, %val
++  %cmp = icmp slt i64 %val, 0
++  %sub.val = select i1 %cmp, i64 %val, i64 %sub
++  %tobool = icmp eq i64 %sub.val, 0
++  ret i1 %tobool
++}
++
+ define i1 @abs_intrin_eq_zero(i8 %x) {
+ ; CHECK-LABEL: define i1 @abs_intrin_eq_zero(
+ ; CHECK-SAME: i8 [[X:%.*]]) {

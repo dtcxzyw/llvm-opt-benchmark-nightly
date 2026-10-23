@@ -205,9 +205,9 @@ declare i32 @git_qsort_s(ptr noundef, i64 noundef, i64 noundef, ptr noundef, ptr
 ; Function Attrs: nounwind uwtable
 define internal i32 @compare_refs(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(address_is_null) %2) #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = alloca ptr, align 8                      ; 6 uses
-  %3 = alloca %struct.strbuf, align 8             ; 8 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.b = alloca ptr, align 8                      ; 7 uses
+  %3 = alloca %struct.strbuf, align 8             ; 9 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !58     ; 4 uses
   %i.d = load ptr, ptr %1, align 8, !tbaa !58     ; 4 uses
   %cond = icmp eq ptr %2, null
@@ -255,7 +255,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   call void @strbuf_release(ptr noundef nonnull %3) #24
-  %i.u = getelementptr inbounds nuw i8, ptr %.01826, i64 12 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %.01826, i64 12 ; 3 uses
   %i.v = load i32, ptr %i.u, align 4, !tbaa !99   ; 4 uses
   %i.w = and i32 %i.v, 8
   %.not37.i = icmp eq i32 %i.w, 0
@@ -280,12 +280,12 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.ab = and i32 %i.x, 32
   %.not4.i.i = icmp eq i32 %i.ab, 0
-  br i1 %.not4.i.i, label %bb.k, label %cmp_ref_sorting.exit
+  br i1 %.not4.i.i, label %bb.k, label %cmp_ref_sorting.exit.thread
 
 bb.k:                                             ; preds = %bb.j
   %i.ac = and i32 %i.y, 32
   %.not5.i.i = icmp eq i32 %i.ac, 0
-  br i1 %.not5.i.i, label %bb.l, label %cmp_ref_sorting.exit
+  br i1 %.not5.i.i, label %bb.l, label %cmp_ref_sorting.exit.thread
 
 bb.l:                                             ; preds = %bb.k
   call void (ptr, i32, ptr, ...) @BUG_fl(ptr noundef nonnull @.str.20, i32 noundef 3455, ptr noundef nonnull @.str.155) #26
@@ -356,7 +356,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %.thre
   %i.be = call i64 @llvm.umin.i64(i64 %i.ba, i64 %i.az)
   %i.bf = call i32 %i.bc(ptr noundef %i.bd, ptr noundef %.pre4655.i, i64 noundef %i.be) #24, !callees !212, !inline_history !209 ; 2 uses
   %.not41.i = icmp eq i32 %i.bf, 0
-  br i1 %.not41.i, label %bb.v, label %cmp_ref_sorting.exit
+  br i1 %.not41.i, label %bb.v, label %cmp_ref_sorting.exit.thread
 
 bb.v:                                             ; preds = %bb.u
   %spec.select43.i = call i32 @llvm.ucmp.i32.i64(i64 %i.az, i64 %i.ba)
@@ -369,27 +369,30 @@ bb.w:                                             ; preds = %bb.o
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 24
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !115 ; 2 uses
   %i.bl = icmp ult i64 %i.bh, %i.bk
-  br i1 %i.bl, label %cmp_ref_sorting.exit, label %bb.x
+  br i1 %i.bl, label %cmp_ref_sorting.exit.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.bm = icmp ne i64 %i.bh, %i.bk
   %..i = zext i1 %i.bm to i32
   br label %cmp_ref_sorting.exit
 
-cmp_ref_sorting.exit:                             ; preds = %bb.j, %bb.k, %bb.n, %bb.r, %bb.u, %bb.v, %bb.w, %bb.x
-  %4 = phi i1 [ false, %bb.v ], [ false, %bb.n ], [ false, %bb.r ], [ false, %bb.w ], [ false, %bb.u ], [ false, %bb.x ], [ true, %bb.j ], [ true, %bb.k ]
-  %.1.i = phi i32 [ %spec.select43.i, %bb.v ], [ %i.ai, %bb.n ], [ %i.av, %bb.r ], [ -1, %bb.w ], [ %i.bf, %bb.u ], [ %..i, %bb.x ], [ -1, %bb.j ], [ 1, %bb.k ] ; 2 uses
-  %i.bn = load i32, ptr %i.u, align 4, !tbaa !99
-  %5 = and i32 %i.bn, 1
-  %6 = icmp eq i32 %5, 0
-  %or.cond.i = or i1 %4, %6
-  %7 = sub nsw i32 0, %.1.i
-  %8 = select i1 %or.cond.i, i32 %.1.i, i32 %7    ; 2 uses
+cmp_ref_sorting.exit.thread:                      ; preds = %bb.w, %bb.u, %bb.j, %bb.k
+  %.ph = phi i1 [ true, %bb.k ], [ true, %bb.j ], [ false, %bb.u ], [ false, %bb.w ]
+  %.1.i.ph = phi i32 [ 1, %bb.k ], [ -1, %bb.j ], [ -1, %bb.w ], [ %i.bf, %bb.u ]
+  %4 = load i32, ptr %i.u, align 4, !tbaa !99
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
-  %.not24 = icmp eq i32 %8, 0
-  br i1 %.not24, label %bb.y, label %.loopexit.a
+  br label %.loopexit
+
+cmp_ref_sorting.exit:                             ; preds = %bb.n, %bb.r, %bb.v, %bb.x
+  %.1.i = phi i32 [ %spec.select43.i, %bb.v ], [ %i.ai, %bb.n ], [ %i.av, %bb.r ], [ %..i, %bb.x ] ; 2 uses
+  %i.bn = load i32, ptr %i.u, align 4, !tbaa !99
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
+  %.not24 = icmp eq i32 %.1.i, 0
+  br i1 %.not24, label %bb.y, label %.loopexit
 
 bb.y:                                             ; preds = %cmp_ref_sorting.exit
   %i.bo = load ptr, ptr %.01826, align 8, !tbaa !98 ; 2 uses
@@ -415,8 +418,19 @@ bb.aa:                                            ; preds = %bb.a, %._crit_edge
   %i.bx = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bv, ptr noundef nonnull dereferenceable(1) %i.bw) #25
   br label %.loopexit.a
 
-.loopexit.a:                                      ; preds = %cmp_ref_sorting.exit, %bb.z, %bb.aa
-  %.2 = phi i32 [ %i.bx, %bb.aa ], [ %i.bu, %bb.z ], [ %8, %cmp_ref_sorting.exit ]
+.loopexit:                                        ; preds = %cmp_ref_sorting.exit, %cmp_ref_sorting.exit.thread
+  %5 = phi i32 [ %4, %cmp_ref_sorting.exit.thread ], [ %i.bn, %cmp_ref_sorting.exit ]
+  %.1.i46 = phi i32 [ %.1.i.ph, %cmp_ref_sorting.exit.thread ], [ %.1.i, %cmp_ref_sorting.exit ] ; 2 uses
+  %6 = phi i1 [ %.ph, %cmp_ref_sorting.exit.thread ], [ false, %cmp_ref_sorting.exit ]
+  %7 = and i32 %5, 1
+  %8 = icmp eq i32 %7, 0
+  %or.cond.i.le = or i1 %6, %8
+  %9 = sub nsw i32 0, %.1.i46
+  %10 = select i1 %or.cond.i.le, i32 %.1.i46, i32 %9
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.z, %bb.aa
+  %.2 = phi i32 [ %i.bx, %bb.aa ], [ %i.bu, %bb.z ], [ %10, %.loopexit ]
   ret i32 %.2
 }
 

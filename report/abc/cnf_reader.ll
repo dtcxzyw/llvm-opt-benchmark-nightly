@@ -48,10 +48,11 @@ bb.b:                                             ; preds = %bb.a
 skip_line.exit.outer:                             ; preds = %vec_uint_alloc.exit, %bb.b
   %.078.ph = phi ptr [ %.8, %vec_uint_alloc.exit ], [ %i.h, %bb.b ]
   %.015.ph = phi ptr [ %i.dl, %vec_uint_alloc.exit ], [ null, %bb.b ] ; 2 uses
-  %.0.ph = phi ptr [ %i.dd, %vec_uint_alloc.exit ], [ null, %bb.b ] ; 9 uses
+  %.0.ph = phi ptr [ %i.dd, %vec_uint_alloc.exit ], [ null, %bb.b ] ; 10 uses
   %i.o = icmp eq ptr %.0.ph, null
-  %i.p = getelementptr inbounds nuw i8, ptr %.0.ph, i64 4 ; 7 uses
-  %.phi.trans.insert178 = getelementptr i8, ptr %.0.ph, i64 8 ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.0.ph, i64 4 ; 7 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.0.ph, i64 8 ; 4 uses
+  %.phi.trans.insert178 = getelementptr i8, ptr %.0.ph, i64 8
   br label %skip_line.exit
 
 skip_line.exit:                                   ; preds = %skip_line.exit.backedge, %skip_line.exit.outer
@@ -310,7 +311,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.z
 
 bb.o:                                             ; preds = %bb.m
-  store i32 0, ptr %i.p, align 4, !tbaa !22
+  store i32 0, ptr %2, align 4, !tbaa !22
   %i.dm = load i8, ptr %.3, align 1, !tbaa !13    ; 2 uses
   %i.dn = sext i8 %i.dm to i64
   %i.do = getelementptr inbounds [2 x i8], ptr %i.q, i64 %i.dn
@@ -366,7 +367,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ek = sext i8 %i.ei to i32
   %i.el = mul nsw i32 %.01319.i73, 10
   %i.em = add nsw i32 %i.ek, -48
-  %i.en = add i32 %i.em, %i.el                    ; 3 uses
+  %i.en = add i32 %i.em, %i.el                    ; 4 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ej, i64 1 ; 4 uses
   %i.ep = load i8, ptr %i.eo, align 1, !tbaa !13  ; 2 uses
   %i.eq = sext i8 %i.ep to i64
@@ -377,21 +378,24 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not15.i74, label %read_int.exit76, label %.lr.ph.i72, !llvm.loop !11
 
 read_int.exit76:                                  ; preds = %.lr.ph.i72
-  %.not17.i75 = icmp eq i8 %i.dy, 45
-  %2 = sub nsw i32 0, %i.en
-  %3 = select i1 %.not17.i75, i32 %2, i32 %i.en   ; 2 uses
-  %i.eu = icmp eq i32 %3, 0
-  br i1 %i.eu, label %read_int.exit76.read_clause.exit_crit_edge, label %.lr.ph.i47.a
+  %i.eu = icmp eq i32 %i.en, 0
+  br i1 %i.eu, label %read_int.exit76.read_clause.exit_crit_edge, label %.lr.ph.i47
 
 read_int.exit76.read_clause.exit_crit_edge:       ; preds = %read_int.exit76
   %.0.val.pre = load ptr, ptr %.phi.trans.insert178, align 8, !tbaa !24
   br label %read_clause.exit
 
-.lr.ph.i47.a:                                     ; preds = %read_int.exit76, %read_int.exit63
-  %i.ev = phi ptr [ %i.fo, %read_int.exit63 ], [ %i.q, %read_int.exit76 ] ; 2 uses
-  %i.ew = phi i32 [ %i.fu, %read_int.exit63 ], [ 0, %read_int.exit76 ] ; 6 uses
-  %.9 = phi ptr [ %i.gx, %read_int.exit63 ], [ %i.eo, %read_int.exit76 ] ; 3 uses
-  %i.ex = phi i32 [ %i.he, %read_int.exit63 ], [ %3, %read_int.exit76 ] ; 2 uses
+.lr.ph.i47:                                       ; preds = %read_int.exit76
+  %.not17.i75 = icmp eq i8 %i.dy, 45
+  %3 = sub nsw i32 0, %i.en
+  %4 = select i1 %.not17.i75, i32 %3, i32 %i.en
+  br label %.lr.ph.i47.a
+
+.lr.ph.i47.a:                                     ; preds = %read_int.exit63, %.lr.ph.i47
+  %i.ev = phi ptr [ %i.q, %.lr.ph.i47 ], [ %i.fo, %read_int.exit63 ] ; 2 uses
+  %i.ew = phi i32 [ 0, %.lr.ph.i47 ], [ %i.fu, %read_int.exit63 ] ; 6 uses
+  %.9 = phi ptr [ %i.eo, %.lr.ph.i47 ], [ %i.gx, %read_int.exit63 ] ; 3 uses
+  %i.ex = phi i32 [ %4, %.lr.ph.i47 ], [ %i.he, %read_int.exit63 ] ; 2 uses
   %i.ey = icmp slt i32 %i.ex, 1
   %i.ez = tail call i32 @llvm.abs.i32(i32 %i.ex, i1 true)
   %i.fa = shl nuw i32 %i.ez, 1
@@ -403,7 +407,7 @@ read_int.exit76.read_clause.exit_crit_edge:       ; preds = %read_int.exit76
   br i1 %i.ff, label %bb.r, label %.vec_uint_push_back.exit_crit_edge.i
 
 .vec_uint_push_back.exit_crit_edge.i:             ; preds = %.lr.ph.i47.a
-  %.pre.i = load ptr, ptr %.phi.trans.insert178, align 8, !tbaa !24
+  %.pre.i = load ptr, ptr %i.p, align 8, !tbaa !24
   br label %vec_uint_push_back.exit.i
 
 bb.r:                                             ; preds = %.lr.ph.i47.a
@@ -411,13 +415,13 @@ bb.r:                                             ; preds = %.lr.ph.i47.a
   br i1 %i.fg, label %vec_uint_reserve.exit.i.i, label %bb.s
 
 vec_uint_reserve.exit.i.i:                        ; preds = %bb.r
-  %i.fh = load ptr, ptr %.phi.trans.insert178, align 8, !tbaa !24
+  %i.fh = load ptr, ptr %i.p, align 8, !tbaa !24
   %i.fi = tail call dereferenceable_or_null(64) ptr @realloc(ptr noundef %i.fh, i64 noundef 64) #14
   br label %vec_uint_reserve.exit10.sink.split.i.i
 
 bb.s:                                             ; preds = %bb.r
   %.not.i9.i.i = icmp sgt i32 %i.ew, 0
-  %.pre7.i = load ptr, ptr %.phi.trans.insert178, align 8, !tbaa !24 ; 2 uses
+  %.pre7.i = load ptr, ptr %i.p, align 8, !tbaa !24 ; 2 uses
   br i1 %.not.i9.i.i, label %bb.t, label %vec_uint_push_back.exit.i
 
 bb.t:                                             ; preds = %bb.s
@@ -430,9 +434,9 @@ bb.t:                                             ; preds = %bb.s
 vec_uint_reserve.exit10.sink.split.i.i:           ; preds = %bb.t, %vec_uint_reserve.exit.i.i
   %i.fn = phi ptr [ %i.fm, %bb.t ], [ %i.fi, %vec_uint_reserve.exit.i.i ] ; 2 uses
   %.sink.i.i = phi i32 [ %i.fj, %bb.t ], [ 16, %vec_uint_reserve.exit.i.i ]
-  store ptr %i.fn, ptr %.phi.trans.insert178, align 8, !tbaa !24
+  store ptr %i.fn, ptr %i.p, align 8, !tbaa !24
   store i32 %.sink.i.i, ptr %.0.ph, align 8, !tbaa !23
-  %.pre8.i = load i32, ptr %i.p, align 4, !tbaa !22
+  %.pre8.i = load i32, ptr %2, align 4, !tbaa !22
   %.pre176 = load ptr, ptr %i.n, align 8, !tbaa !16
   br label %vec_uint_push_back.exit.i
 
@@ -443,9 +447,9 @@ vec_uint_push_back.exit.i:                        ; preds = %vec_uint_reserve.ex
   %i.fr = zext i32 %i.fp to i64
   %i.fs = getelementptr inbounds nuw [4 x i8], ptr %i.fq, i64 %i.fr
   store i32 %i.fd, ptr %i.fs, align 4, !tbaa !25
-  %i.ft = load i32, ptr %i.p, align 4, !tbaa !22
+  %i.ft = load i32, ptr %2, align 4, !tbaa !22
   %i.fu = add i32 %i.ft, 1                        ; 3 uses
-  store i32 %i.fu, ptr %i.p, align 4, !tbaa !22
+  store i32 %i.fu, ptr %2, align 4, !tbaa !22
   %i.fv = load i8, ptr %.9, align 1, !tbaa !13    ; 2 uses
   %i.fw = sext i8 %i.fv to i64
   %i.fx = getelementptr inbounds [2 x i8], ptr %i.fo, i64 %i.fw
@@ -501,7 +505,7 @@ bb.v:                                             ; preds = %bb.u
   %i.gt = sext i8 %i.gr to i32
   %i.gu = mul nsw i32 %.01319.i60, 10
   %i.gv = add nsw i32 %i.gt, -48
-  %i.gw = add i32 %i.gv, %i.gu                    ; 3 uses
+  %i.gw = add i32 %i.gv, %i.gu                    ; 4 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gs, i64 1 ; 4 uses
   %i.gy = load i8, ptr %i.gx, align 1, !tbaa !13  ; 2 uses
   %i.gz = sext i8 %i.gy to i64
@@ -514,8 +518,8 @@ bb.v:                                             ; preds = %bb.u
 read_int.exit63:                                  ; preds = %.lr.ph.i59
   %.not17.i62 = icmp eq i8 %i.gh, 45
   %i.hd = sub nsw i32 0, %i.gw
-  %i.he = select i1 %.not17.i62, i32 %i.hd, i32 %i.gw ; 2 uses
-  %i.hf = icmp eq i32 %i.he, 0
+  %i.he = select i1 %.not17.i62, i32 %i.hd, i32 %i.gw
+  %i.hf = icmp eq i32 %i.gw, 0
   br i1 %i.hf, label %read_clause.exit, label %.lr.ph.i47.a
 
 read_clause.exit:                                 ; preds = %read_int.exit63, %read_int.exit76.read_clause.exit_crit_edge
@@ -530,10 +534,10 @@ bb.w:                                             ; preds = %read_clause.exit
   %i.hh = getelementptr i8, ptr %.0.ph, i64 8
   %i.hi = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.1) ; 0 uses
   %i.hj = load ptr, ptr @stdout, align 8, !tbaa !27
-  %i.hk = load i32, ptr %i.p, align 4, !tbaa !22
+  %i.hk = load i32, ptr %2, align 4, !tbaa !22
   %i.hl = load i32, ptr %.0.ph, align 8, !tbaa !23
   %i.hm = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.hj, ptr noundef nonnull @.str.5, i32 noundef %i.hk, i32 noundef %i.hl) #13 ; 0 uses
-  %i.hn = load i32, ptr %i.p, align 4, !tbaa !22
+  %i.hn = load i32, ptr %2, align 4, !tbaa !22
   %.not.i48 = icmp eq i32 %i.hn, 0
   br i1 %.not.i48, label %vec_uint_print.exit, label %.lr.ph.i49
 
@@ -545,7 +549,7 @@ bb.w:                                             ; preds = %read_clause.exit
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !25
   %i.hs = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ho, ptr noundef nonnull @.str.6, i32 noundef %i.hr) #13 ; 0 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.ht = load i32, ptr %i.p, align 4, !tbaa !22
+  %i.ht = load i32, ptr %2, align 4, !tbaa !22
   %i.hu = zext i32 %i.ht to i64
   %i.hv = icmp samesign ult i64 %indvars.iv.next.i, %i.hu
   br i1 %i.hv, label %.lr.ph.i49, label %vec_uint_print.exit, !llvm.loop !12

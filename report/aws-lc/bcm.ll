@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %.lr.ph
   br i1 %.not127, label %.thread215, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.fd = load i32, ptr %i.do, align 8, !tbaa !91 ; 3 uses
+  %i.fd = load i32, ptr %i.do, align 8, !tbaa !91 ; 2 uses
   %i.fe = load i32, ptr %i.dr, align 8, !tbaa !91
   %.not.i147 = icmp eq i32 %i.fd, %i.fe
   br i1 %.not.i147, label %BN_cmp.exit, label %BN_cmp.exit.thread
@@ -217,11 +217,8 @@ BN_cmp.exit:                                      ; preds = %bb.af
   %i.fi = load ptr, ptr %i.cf, align 8, !tbaa !92
   %i.fj = load i32, ptr %i.cj, align 8, !tbaa !93
   %i.fk = sext i32 %i.fj to i64
-  %i.fl = tail call fastcc i32 @bn_cmp_words_consttime(ptr noundef %i.ff, i64 noundef %i.fh, ptr noundef %i.fi, i64 noundef %i.fk) ; 2 uses
-  %.not16.i = icmp eq i32 %i.fd, 0
-  %5 = sub nsw i32 0, %i.fl
-  %6 = select i1 %.not16.i, i32 %i.fl, i32 %5
-  %i.fm = icmp eq i32 %6, 0
+  %i.fl = tail call fastcc i32 @bn_cmp_words_consttime(ptr noundef %i.ff, i64 noundef %i.fh, ptr noundef %i.fi, i64 noundef %i.fk)
+  %i.fm = icmp eq i32 %i.fl, 0
   br i1 %i.fm, label %.loopexit, label %BN_cmp.exit.thread
 
 BN_cmp.exit.thread:                               ; preds = %BN_cmp.exit, %bb.af
@@ -624,7 +621,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 336
-  %i.m = load i32, ptr %i.l, align 8, !tbaa !91   ; 2 uses
+  %i.m = load i32, ptr %i.l, align 8, !tbaa !91
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 336
   %i.o = load i32, ptr %i.n, align 8, !tbaa !91
   %.not.i = icmp eq i32 %i.m, %i.o
@@ -641,11 +638,8 @@ BN_cmp.exit:                                      ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 328
   %i.x = load i32, ptr %i.w, align 8, !tbaa !93
   %i.y = sext i32 %i.x to i64
-  %i.z = tail call fastcc i32 @bn_cmp_words_consttime(ptr noundef %i.r, i64 noundef %i.u, ptr noundef %i.v, i64 noundef %i.y) ; 2 uses
-  %.not16.i = icmp eq i32 %i.m, 0
-  %3 = sub nsw i32 0, %i.z
-  %4 = select i1 %.not16.i, i32 %i.z, i32 %3
-  %.not30 = icmp eq i32 %4, 0
+  %i.z = tail call fastcc i32 @bn_cmp_words_consttime(ptr noundef %i.r, i64 noundef %i.u, ptr noundef %i.v, i64 noundef %i.y)
+  %.not30 = icmp eq i32 %i.z, 0
   br i1 %.not30, label %bb.g, label %BN_cmp.exit.thread
 
 bb.g:                                             ; preds = %BN_cmp.exit
