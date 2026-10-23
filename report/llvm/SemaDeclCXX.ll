@@ -205,12 +205,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = load i16, ptr %1, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i = icmp eq i16 %i.f, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %2, ptr %i.g
-  %i.h = load ptr, ptr %spec.select.i.i.i, align 8, !tbaa !115 ; 5 uses
+  %.not.i.i.i = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !115  ; 5 uses
   %i.i = load i16, ptr %i.h, align 8              ; 3 uses
   %i.j = and i16 %i.i, 511
   %.not = icmp eq i16 %i.j, 55

@@ -205,31 +205,28 @@ bb.q:                                             ; preds = %bb.o
   %i.wc = load ptr, ptr %6, align 8, !tbaa !24
   %i.wd = getelementptr [4 x i8], ptr %i.wc, i64 %i.un ; 2 uses
   %i.we = load float, ptr %i.wd, align 4, !tbaa !68
-  %i.wf = insertelement <4 x float> poison, float %i.we, i64 0 ; 2 uses
+  %i.wf = insertelement <4 x float> poison, float %i.we, i64 0
+  %7 = shufflevector <4 x float> %i.wf, <4 x float> poison, <4 x i32> zeroinitializer
   %i.wg = getelementptr i8, ptr %i.wd, i64 4
   %i.wh = load float, ptr %i.wg, align 4, !tbaa !68
-  %i.wi = insertelement <4 x float> poison, float %i.wh, i64 0 ; 2 uses
-  br i1 %i.lw, label %.lr.ph748.i.preheader, label %.loopexit660.i
+  %i.wi = insertelement <4 x float> poison, float %i.wh, i64 0
+  %8 = shufflevector <4 x float> %i.wi, <4 x float> poison, <4 x i32> zeroinitializer
+  br i1 %i.lw, label %.lr.ph748.i, label %.loopexit660.i
 
-.lr.ph748.i.preheader:                            ; preds = %bb.q
-  %7 = shufflevector <4 x float> %i.wf, <4 x float> %i.wi, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  %8 = shufflevector <4 x float> %i.wf, <4 x float> %i.wi, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  br label %.lr.ph748.i
-
-.lr.ph748.i:                                      ; preds = %.lr.ph748.i.preheader, %.lr.ph748.i
-  %.18747.i = phi ptr [ %i.wz, %.lr.ph748.i ], [ %.15771.i, %.lr.ph748.i.preheader ] ; 2 uses
-  %.0496746.i = phi i32 [ %i.xb, %.lr.ph748.i ], [ 0, %.lr.ph748.i.preheader ]
-  %.2500745.i = phi ptr [ %i.xa, %.lr.ph748.i ], [ %i.up, %.lr.ph748.i.preheader ] ; 3 uses
-  %i.wj = load <4 x float>, ptr %.2500745.i, align 16, !tbaa !89 ; 2 uses
+.lr.ph748.i:                                      ; preds = %bb.q, %.lr.ph748.i
+  %.18747.i = phi ptr [ %i.wz, %.lr.ph748.i ], [ %.15771.i, %bb.q ] ; 2 uses
+  %.0496746.i = phi i32 [ %i.xb, %.lr.ph748.i ], [ 0, %bb.q ]
+  %.2500745.i = phi ptr [ %i.xa, %.lr.ph748.i ], [ %i.up, %bb.q ] ; 3 uses
+  %i.wj = load <4 x float>, ptr %.2500745.i, align 16, !tbaa !89
   %i.wk = getelementptr inbounds nuw i8, ptr %.2500745.i, i64 16
-  %i.wl = load <4 x float>, ptr %i.wk, align 16, !tbaa !89 ; 2 uses
-  %9 = shufflevector <4 x float> %i.wj, <4 x float> %i.wl, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.wm = fmul fast <4 x float> %9, %7            ; 2 uses
-  %10 = shufflevector <4 x float> %i.wj, <4 x float> %i.wl, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %11 = fmul fast <4 x float> %10, %8             ; 2 uses
-  %i.wn = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %i.wm)
+  %i.wl = load <4 x float>, ptr %i.wk, align 16, !tbaa !89
+  %9 = fmul fast <4 x float> %i.wj, %7            ; 2 uses
+  %i.wm = fmul fast <4 x float> %i.wl, %8         ; 2 uses
+  %10 = shufflevector <4 x float> %9, <4 x float> %i.wm, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %11 = shufflevector <4 x float> %9, <4 x float> %i.wm, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
+  %i.wn = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %10)
   %i.wo = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %11)
-  %i.wp = fadd fast <4 x float> %i.wn, %i.wm
+  %i.wp = fadd fast <4 x float> %i.wn, %10
   %i.wq = fadd fast <4 x float> %i.wo, %11
   %i.wr = tail call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> nofpclass(nan inf) %i.wp)
   %i.ws = tail call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> nofpclass(nan inf) %i.wq)
@@ -253,15 +250,12 @@ bb.r:                                             ; preds = %bb.o
   %i.xg = load float, ptr %i.xf, align 4, !tbaa !68 ; 2 uses
   %i.xh = getelementptr i8, ptr %i.xf, i64 4
   %i.xi = load float, ptr %i.xh, align 4, !tbaa !68 ; 2 uses
-  %i.xj = insertelement <4 x float> poison, float %i.xg, i64 0 ; 3 uses
-  %i.xk = insertelement <4 x float> poison, float %i.xi, i64 0 ; 3 uses
+  %i.xj = insertelement <4 x float> poison, float %i.xg, i64 0 ; 2 uses
+  %12 = shufflevector <4 x float> %i.xj, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.xk = insertelement <4 x float> poison, float %i.xi, i64 0 ; 2 uses
+  %13 = shufflevector <4 x float> %i.xk, <4 x float> poison, <4 x i32> zeroinitializer
   %i.xl = shufflevector <4 x float> %i.xj, <4 x float> %i.xk, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  br i1 %i.lw, label %.lr.ph754.i.preheader, label %.preheader661.i
-
-.lr.ph754.i.preheader:                            ; preds = %bb.r
-  %12 = shufflevector <4 x float> %i.xj, <4 x float> %i.xk, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  %13 = shufflevector <4 x float> %i.xj, <4 x float> %i.xk, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  br label %.lr.ph754.i
+  br i1 %i.lw, label %.lr.ph754.i, label %.preheader661.i
 
 .preheader661.i:                                  ; preds = %.lr.ph754.i, %bb.r
   %.4502.lcssa.i = phi ptr [ %i.up, %bb.r ], [ %i.yu, %.lr.ph754.i ] ; 2 uses
@@ -271,10 +265,10 @@ bb.r:                                             ; preds = %bb.o
   %i.xn = icmp slt i32 %i.xm, %5
   br i1 %i.xn, label %.lr.ph761.i, label %.preheader659.i
 
-.lr.ph754.i:                                      ; preds = %.lr.ph754.i.preheader, %.lr.ph754.i
-  %.20753.i = phi ptr [ %i.yt, %.lr.ph754.i ], [ %.15771.i, %.lr.ph754.i.preheader ] ; 2 uses
-  %.0492752.i = phi i32 [ %i.yv, %.lr.ph754.i ], [ 0, %.lr.ph754.i.preheader ]
-  %.4502751.i = phi ptr [ %i.yu, %.lr.ph754.i ], [ %i.up, %.lr.ph754.i.preheader ] ; 5 uses
+.lr.ph754.i:                                      ; preds = %bb.r, %.lr.ph754.i
+  %.20753.i = phi ptr [ %i.yt, %.lr.ph754.i ], [ %.15771.i, %bb.r ] ; 2 uses
+  %.0492752.i = phi i32 [ %i.yv, %.lr.ph754.i ], [ 0, %bb.r ]
+  %.4502751.i = phi ptr [ %i.yu, %.lr.ph754.i ], [ %i.up, %bb.r ] ; 5 uses
   %i.xo = load i64, ptr %.4502751.i, align 1, !tbaa !89
   %i.xp = insertelement <2 x i64> poison, i64 %i.xo, i64 0
   %i.xq = bitcast <2 x i64> %i.xp to <4 x float>
@@ -290,14 +284,18 @@ bb.r:                                             ; preds = %bb.o
   %i.ya = load i64, ptr %i.xz, align 1, !tbaa !89
   %i.yb = insertelement <2 x i64> poison, i64 %i.ya, i64 0
   %i.yc = bitcast <2 x i64> %i.yb to <4 x float>
-  %i.yd = shufflevector <4 x float> %i.xq, <4 x float> %i.xu, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %i.ye = shufflevector <4 x float> %i.xy, <4 x float> %i.yc, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %i.yf = fmul fast <4 x float> %12, %i.yd        ; 2 uses
-  %i.yg = fmul fast <4 x float> %13, %i.ye        ; 2 uses
-  %i.yh = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %i.yf)
-  %i.yi = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %i.yg)
-  %i.yj = fadd fast <4 x float> %i.yh, %i.yf
-  %i.yk = fadd fast <4 x float> %i.yi, %i.yg
+  %i.yd = shufflevector <4 x float> %i.xq, <4 x float> %i.xu, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.ye = shufflevector <4 x float> %i.xy, <4 x float> %i.yc, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %14 = shufflevector <4 x float> %i.yd, <4 x float> %i.ye, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %15 = shufflevector <4 x float> %i.yd, <4 x float> %i.ye, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
+  %i.yf = fmul fast <4 x float> %12, %14          ; 2 uses
+  %i.yg = fmul fast <4 x float> %13, %15          ; 2 uses
+  %16 = shufflevector <4 x float> %i.yf, <4 x float> %i.yg, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %17 = shufflevector <4 x float> %i.yf, <4 x float> %i.yg, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
+  %i.yh = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %16)
+  %i.yi = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %17)
+  %i.yj = fadd fast <4 x float> %i.yh, %16
+  %i.yk = fadd fast <4 x float> %i.yi, %17
   %i.yl = tail call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> nofpclass(nan inf) %i.yj)
   %i.ym = tail call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> nofpclass(nan inf) %i.yk)
   %i.yn = tail call <8 x i16> @llvm.x86.sse2.packssdw.128(<4 x i32> %i.yl, <4 x i32> %i.ym)
@@ -700,15 +698,12 @@ bb.l:                                             ; preds = %._crit_edge.i, %.lr
   %i.qg = load float, ptr %i.qf, align 4, !tbaa !68 ; 3 uses
   %i.qh = getelementptr i8, ptr %i.qf, i64 4
   %i.qi = load float, ptr %i.qh, align 4, !tbaa !68 ; 3 uses
-  %i.qj = insertelement <4 x float> poison, float %i.qg, i64 0 ; 3 uses
-  %i.qk = insertelement <4 x float> poison, float %i.qi, i64 0 ; 3 uses
+  %i.qj = insertelement <4 x float> poison, float %i.qg, i64 0 ; 2 uses
+  %7 = shufflevector <4 x float> %i.qj, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.qk = insertelement <4 x float> poison, float %i.qi, i64 0 ; 2 uses
+  %8 = shufflevector <4 x float> %i.qk, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ql = shufflevector <4 x float> %i.qj, <4 x float> %i.qk, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  br i1 %i.pm, label %.lr.ph577.i.preheader, label %.preheader474.i
-
-.lr.ph577.i.preheader:                            ; preds = %bb.l
-  %7 = shufflevector <4 x float> %i.qj, <4 x float> %i.qk, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  %8 = shufflevector <4 x float> %i.qj, <4 x float> %i.qk, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
-  br label %.lr.ph577.i
+  br i1 %i.pm, label %.lr.ph577.i, label %.preheader474.i
 
 .preheader474.i:                                  ; preds = %.lr.ph577.i, %bb.l
   %.0381.lcssa.i = phi ptr [ %i.qd, %bb.l ], [ %i.rf, %.lr.ph577.i ] ; 2 uses
@@ -718,20 +713,20 @@ bb.l:                                             ; preds = %._crit_edge.i, %.lr
   %i.qn = icmp slt i32 %i.qm, %5
   br i1 %i.qn, label %.lr.ph584.i, label %.preheader473.i
 
-.lr.ph577.i:                                      ; preds = %.lr.ph577.i.preheader, %.lr.ph577.i
-  %.17576.i = phi ptr [ %i.re, %.lr.ph577.i ], [ %.16594.i, %.lr.ph577.i.preheader ] ; 2 uses
-  %.0378575.i = phi i32 [ %i.rg, %.lr.ph577.i ], [ 0, %.lr.ph577.i.preheader ]
-  %.0381574.i = phi ptr [ %i.rf, %.lr.ph577.i ], [ %i.qd, %.lr.ph577.i.preheader ] ; 3 uses
-  %i.qo = load <4 x float>, ptr %.0381574.i, align 1, !tbaa !89 ; 2 uses
+.lr.ph577.i:                                      ; preds = %bb.l, %.lr.ph577.i
+  %.17576.i = phi ptr [ %i.re, %.lr.ph577.i ], [ %.16594.i, %bb.l ] ; 2 uses
+  %.0378575.i = phi i32 [ %i.rg, %.lr.ph577.i ], [ 0, %bb.l ]
+  %.0381574.i = phi ptr [ %i.rf, %.lr.ph577.i ], [ %i.qd, %bb.l ] ; 3 uses
+  %i.qo = load <4 x float>, ptr %.0381574.i, align 1, !tbaa !89
   %i.qp = getelementptr inbounds nuw [4 x i8], ptr %.0381574.i, i64 %i.n
-  %i.qq = load <4 x float>, ptr %i.qp, align 1, !tbaa !89 ; 2 uses
-  %9 = shufflevector <4 x float> %i.qo, <4 x float> %i.qq, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.qr = fmul fast <4 x float> %9, %7            ; 2 uses
-  %10 = shufflevector <4 x float> %i.qo, <4 x float> %i.qq, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %11 = fmul fast <4 x float> %10, %8             ; 2 uses
-  %i.qs = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %i.qr)
+  %i.qq = load <4 x float>, ptr %i.qp, align 1, !tbaa !89
+  %9 = fmul fast <4 x float> %i.qo, %7            ; 2 uses
+  %i.qr = fmul fast <4 x float> %i.qq, %8         ; 2 uses
+  %10 = shufflevector <4 x float> %9, <4 x float> %i.qr, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %11 = shufflevector <4 x float> %9, <4 x float> %i.qr, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
+  %i.qs = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %10)
   %i.qt = tail call <4 x float> @llvm.copysign.v4f32(<4 x float> splat (float 5.000000e-01), <4 x float> %11)
-  %i.qu = fadd fast <4 x float> %i.qs, %i.qr
+  %i.qu = fadd fast <4 x float> %i.qs, %10
   %i.qv = fadd fast <4 x float> %i.qt, %11
   %i.qw = tail call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> nofpclass(nan inf) %i.qu)
   %i.qx = tail call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> nofpclass(nan inf) %i.qv)

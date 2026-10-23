@@ -202,12 +202,10 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.q = load i16, ptr %1, align 8
   %i.r = and i16 %i.q, 511
-  %.not.i.i.i.i = icmp eq i16 %i.r, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %2, ptr %i.s
-  %i.t = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !171 ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.r, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !171  ; 2 uses
   %i.u = load ptr, ptr %0, align 8, !tbaa !27, !nonnull !28, !align !29
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 160
   %i.w = call noundef ptr @_ZN5clang9lifetimes8internal13OriginManager15getOrCreateListEPKNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(248) %i.v, ptr noundef nonnull align 8 dereferenceable(16) %i.t) #15 ; 3 uses
@@ -285,12 +283,10 @@ bb.k:                                             ; preds = %_ZNK5clang4Type18ge
 bb.l:                                             ; preds = %bb.k
   %i.bc = load i16, ptr %1, align 8
   %i.bd = and i16 %i.bc, 511
-  %.not.i.i.i.i42 = icmp eq i16 %i.bd, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i43 = select i1 %.not.i.i.i.i42, ptr %1, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i43, i64 48
-  %i.be = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i.i44 = select i1 %.not.i.i.i.i42, ptr %3, ptr %i.be
-  %i.bf = load ptr, ptr %spec.select.i.i.i.i44, align 8, !tbaa !171 ; 2 uses
+  %.not.i.i.i.i42 = icmp eq i16 %i.bd, 118
+  %spec.select.v.i.i.i.i43 = select i1 %.not.i.i.i.i42, i64 48, i64 40
+  %i.be = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i43
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !171 ; 2 uses
   %i.bg = load ptr, ptr %0, align 8, !tbaa !27, !nonnull !28, !align !29
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 160
   %i.bi = call noundef ptr @_ZN5clang9lifetimes8internal13OriginManager15getOrCreateListEPKNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(248) %i.bh, ptr noundef nonnull align 8 dereferenceable(16) %i.bf) #15 ; 3 uses
@@ -397,15 +393,13 @@ _ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread: ; preds = %bb.l, %.thread, %b
   %i.cx = load ptr, ptr %i.d, align 8, !tbaa !189
   %i.cy = load i16, ptr %1, align 8
   %i.cz = and i16 %i.cy, 511
-  %.not.i.i.i = icmp eq i16 %i.cz, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.da = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i51 = select i1 %.not.i.i.i, ptr %4, ptr %i.da
+  %.not.i.i.i = icmp eq i16 %i.cz, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.da = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dc = load i32, ptr %i.db, align 8, !tbaa !190
   %i.dd = zext i32 %i.dc to i64
-  call void @_ZN5clang9lifetimes8internal14FactsGenerator18handleFunctionCallEPKNS_4ExprEPKNS_12FunctionDeclEN4llvm8ArrayRefIS5_EEb(ptr noundef nonnull align 8 dereferenceable(177) %0, ptr noundef nonnull %1, ptr noundef %i.cx, ptr nonnull %spec.select.i.i.i51, i64 %i.dd, i1 noundef zeroext false)
+  call void @_ZN5clang9lifetimes8internal14FactsGenerator18handleFunctionCallEPKNS_4ExprEPKNS_12FunctionDeclEN4llvm8ArrayRefIS5_EEb(ptr noundef nonnull align 8 dereferenceable(177) %0, ptr noundef nonnull %1, ptr noundef %i.cx, ptr nonnull %i.da, i64 %i.dd, i1 noundef zeroext false)
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN5clang9lifetimes8internal11FactManager15appendBlockFactEPKNS_8CFGBlockEPKNS1_4FactE.exit.us.i, %_ZN5clang9lifetimes8internalL16getRValueOriginsEPKNS_4ExprEPNS1_10OriginListE.exit.thread, %_ZN5clang9lifetimes8internalL16getRValueOriginsEPKNS_4ExprEPNS1_10OriginListE.exit48.thread66, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread, %bb.b
@@ -425,12 +419,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load i16, ptr %1, align 8
   %i.d = and i16 %i.c, 511
-  %.not.i.i.i.i = icmp eq i16 %i.d, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %2, ptr %i.e
-  %i.f = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !171 ; 4 uses
+  %.not.i.i.i.i = icmp eq i16 %i.d, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.i
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !171  ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.g, align 8, !tbaa !80
   %i.h = tail call noundef zeroext i1 @_ZN5clang9lifetimes16isGslPointerTypeENS_8QualTypeE(i64 %.sroa.0.0.copyload.i) #15
@@ -626,13 +618,12 @@ bb.p:                                             ; preds = %bb.j
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !189
   %i.cr = load i16, ptr %1, align 8
   %i.cs = and i16 %i.cr, 511
-  %.not.i.i.i = icmp eq i16 %i.cs, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %i.ct = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %i.ct, ptr %i.e
+  %.not.i.i.i = icmp eq i16 %i.cs, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i
   %i.cu = load i32, ptr %i.a, align 8, !tbaa !190
   %i.cv = zext i32 %i.cu to i64
-  tail call void @_ZN5clang9lifetimes8internal14FactsGenerator18handleFunctionCallEPKNS_4ExprEPKNS_12FunctionDeclEN4llvm8ArrayRefIS5_EEb(ptr noundef nonnull align 8 dereferenceable(177) %0, ptr noundef nonnull %1, ptr noundef %i.cq, ptr nonnull %spec.select.i.i.i, i64 %i.cv, i1 noundef zeroext true)
+  tail call void @_ZN5clang9lifetimes8internal14FactsGenerator18handleFunctionCallEPKNS_4ExprEPKNS_12FunctionDeclEN4llvm8ArrayRefIS5_EEb(ptr noundef nonnull align 8 dereferenceable(177) %0, ptr noundef nonnull %1, ptr noundef %i.cq, ptr nonnull %i.ct, i64 %i.cv, i1 noundef zeroext true)
   br label %_ZN5clang9lifetimes8internal14FactsGenerator4flowEPNS1_10OriginListES4_bPKNS_8CFGBlockE.exit
 
 _ZN5clang9lifetimes8internal14FactsGenerator4flowEPNS1_10OriginListES4_bPKNS_8CFGBlockE.exit: ; preds = %_ZN5clang9lifetimes8internal11FactManager15appendBlockFactEPKNS_8CFGBlockEPKNS1_4FactE.exit.us.i, %bb.o, %bb.n, %_ZN5clang9lifetimes8internalL16getRValueOriginsEPKNS_4ExprEPNS1_10OriginListE.exit, %bb.p, %bb.a

@@ -205,13 +205,12 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64, !dbg !114041
   %i.f = sub nuw i64 %i.d, %i.e, !dbg !114041
   %i.g = udiv exact i64 %i.f, 80, !dbg !114041
-  %.not.i.not = icmp ult i64 %1, %i.g, !dbg !114042 ; 3 uses
+  %.not.i.not = icmp ult i64 %1, %i.g, !dbg !114042 ; 2 uses
   %i.h = getelementptr inbounds nuw [80 x i8], ptr %i.c, i64 %1, !dbg !114042 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 80, !dbg !114042
-  %storemerge.i = select i1 %.not.i.not, ptr %i.i, ptr %i.b, !dbg !114042
-  %.sroa.0.0.i = select i1 %.not.i.not, ptr %i.h, ptr null, !dbg !114042
-  store ptr %storemerge.i, ptr %0, align 8, !dbg !114043, !alias.scope !114037
-  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 48, !dbg !114044
+  %.sroa.0.0.i = select i1 %.not.i.not, ptr %i.i, ptr %i.b, !dbg !114042
+  store ptr %.sroa.0.0.i, ptr %0, align 8, !dbg !114043, !alias.scope !114037
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 48, !dbg !114044
   %.sroa.0.0 = select i1 %.not.i.not, ptr %i.j, ptr null, !dbg !114044
   ret ptr %.sroa.0.0, !dbg !114045
 }
