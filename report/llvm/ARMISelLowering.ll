@@ -205,7 +205,6 @@ bb.g:                                             ; preds = %bb.f
   %i.cq = getelementptr inbounds nuw i8, ptr %16, i64 32
   %i.cr = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.cs = ptrtoint ptr %19 to i64
-  %29 = zext i32 %4 to i64                        ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.cu = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 5 uses
@@ -217,6 +216,7 @@ bb.g:                                             ; preds = %bb.f
   %i.db = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.dc = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.dd = ptrtoint ptr %14 to i64
+  %wide.trip.count143 = zext i32 %4 to i64        ; 2 uses
   %wide.trip.count = zext i32 %.071166 to i64
   br label %bb.h
 
@@ -439,7 +439,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit20.i: ; pre
   %i.gd = add i32 %i.gc, -1
   store i32 %i.gd, ptr %i.cn, align 8, !tbaa !375
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond146.not.a = icmp eq i64 %indvars.iv.next.i, %29
+  %exitcond146.not.a = icmp eq i64 %indvars.iv.next.i, %wide.trip.count143
   br i1 %exitcond146.not.a, label %._crit_edge.i, label %bb.t, !llvm.loop !3015
 
 "_ZZNK4llvm17ARMTargetLowering21lowerInterleavedStoreEPNS_11InstructionEPNS_5ValueEPNS_17ShuffleVectorInstEjRKNS_5APIntEENK3$_0clES4_RNS_15SmallVectorImplIS4_EE.exit": ; preds = %_ZN4llvm11SmallVectorIPNS_5ValueELj6EED2Ev.exit.i, %_ZN4llvm11SmallVectorIPNS_5ValueELj6EED2Ev.exit18.i
@@ -639,7 +639,7 @@ _ZN4llvm11SmallVectorIiLj16EED2Ev.exit84:         ; preds = %_ZN4llvm23SmallVect
 
 bb.aj:                                            ; preds = %_ZN4llvm11SmallVectorIiLj16EED2Ev.exit84, %_ZN4llvm11SmallVectorIiLj16EED2Ev.exit
   %indvars.iv.next141 = add nuw nsw i64 %indvars.iv140, 1 ; 2 uses
-  %exitcond144.not = icmp eq i64 %indvars.iv.next141, %29
+  %exitcond144.not = icmp eq i64 %indvars.iv.next141, %wide.trip.count143
   br i1 %exitcond144.not, label %bb.k, label %bb.x, !llvm.loop !3018
 
 bb.ak:                                            ; preds = %._crit_edge, %bb.b, %bb.a

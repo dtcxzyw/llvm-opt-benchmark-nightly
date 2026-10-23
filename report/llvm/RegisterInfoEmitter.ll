@@ -206,6 +206,7 @@ bb.gm:                                            ; preds = %_ZN4llvm11raw_ostre
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit893
 
 _ZN4llvm11raw_ostreamlsEPKc.exit893:              ; preds = %bb.gl, %bb.gm
+  %68 = zext i32 %i.atu to i64
   %i.aur = load ptr, ptr %i.o, align 8, !tbaa !182
   %i.aus = load ptr, ptr %i.q, align 8, !tbaa !183 ; 2 uses
   %i.aut = icmp eq ptr %i.aur, %i.aus
@@ -308,8 +309,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit900, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #22
   %indvars.iv.next2669 = add nuw nsw i64 %indvars.iv2668, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next2669 to i32
-  %exitcond2671 = icmp eq i32 %i.atu, %lftr.wideiv
+  %exitcond2671 = icmp eq i64 %indvars.iv.next2669, %68
   br i1 %exitcond2671, label %.loopexit2673, label %.peel.next, !llvm.loop !1205
 
 _ZN4llvm11raw_ostreamlsEPKc.exit896:              ; preds = %bb.gq, %bb.gp, %.lr.ph2453

@@ -205,7 +205,7 @@ middle.block266:                                  ; preds = %vector.body261
   %i.gd = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %.031.i295.i.prol
   %i.ge = load i64, ptr %i.gc, align 4, !tbaa !26
   store i64 %i.ge, ptr %i.gd, align 4, !tbaa !26
-  %i.gf = add nuw i64 %.031.i295.i.prol, 1        ; 2 uses
+  %i.gf = add nuw nsw i64 %.031.i295.i.prol, 1    ; 2 uses
   %prol.iter287.next = add i64 %prol.iter287, 1   ; 2 uses
   %prol.iter287.cmp.not = icmp eq i64 %prol.iter287.next, %xtraiter285
   br i1 %prol.iter287.cmp.not, label %.lr.ph.i294.i.prol.loopexit, label %.lr.ph.i294.i.prol, !llvm.loop !51
@@ -222,22 +222,22 @@ middle.block266:                                  ; preds = %vector.body261
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %.031.i295.i
   %i.gk = load i64, ptr %i.gi, align 4, !tbaa !26
   store i64 %i.gk, ptr %i.gj, align 4, !tbaa !26
-  %i.gl = add nuw i64 %.031.i295.i, 1             ; 2 uses
+  %i.gl = add nuw nsw i64 %.031.i295.i, 1         ; 2 uses
   %i.gm = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %i.gl
   %i.gn = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %i.gl
   %i.go = load i64, ptr %i.gm, align 4, !tbaa !26
   store i64 %i.go, ptr %i.gn, align 4, !tbaa !26
-  %i.gp = add nuw i64 %.031.i295.i, 2             ; 2 uses
+  %i.gp = add nuw nsw i64 %.031.i295.i, 2         ; 2 uses
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %i.gp
   %i.gr = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %i.gp
   %i.gs = load i64, ptr %i.gq, align 4, !tbaa !26
   store i64 %i.gs, ptr %i.gr, align 4, !tbaa !26
-  %i.gt = add nuw i64 %.031.i295.i, 3             ; 2 uses
+  %i.gt = add nuw nsw i64 %.031.i295.i, 3         ; 2 uses
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %i.gt
   %i.gv = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %i.gt
   %i.gw = load i64, ptr %i.gu, align 4, !tbaa !26
   store i64 %i.gw, ptr %i.gv, align 4, !tbaa !26
-  %i.gx = add nuw i64 %.031.i295.i, 4             ; 2 uses
+  %i.gx = add nuw nsw i64 %.031.i295.i, 4         ; 2 uses
   %exitcond.not.i296.i.3 = icmp eq i64 %i.gx, %i.db
   br i1 %exitcond.not.i296.i.3, label %._crit_edge.i290.i, label %.lr.ph.i294.i, !llvm.loop !52
 
@@ -350,7 +350,7 @@ middle.block252:                                  ; preds = %vector.body247
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %.031.i308.i.prol
   %i.hz = load i64, ptr %i.hx, align 4, !tbaa !26
   store i64 %i.hz, ptr %i.hy, align 4, !tbaa !26
-  %i.ia = add nuw i64 %.031.i308.i.prol, 1        ; 2 uses
+  %i.ia = add nuw nsw i64 %.031.i308.i.prol, 1    ; 2 uses
   %prol.iter290.next = add i64 %prol.iter290, 1   ; 2 uses
   %prol.iter290.cmp.not = icmp eq i64 %prol.iter290.next, %xtraiter288
   br i1 %prol.iter290.cmp.not, label %.lr.ph.i307.i.prol.loopexit, label %.lr.ph.i307.i.prol, !llvm.loop !54
@@ -367,22 +367,22 @@ middle.block252:                                  ; preds = %vector.body247
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %.031.i308.i
   %i.if = load i64, ptr %i.id, align 4, !tbaa !26
   store i64 %i.if, ptr %i.ie, align 4, !tbaa !26
-  %i.ig = add nuw i64 %.031.i308.i, 1             ; 2 uses
+  %i.ig = add nuw nsw i64 %.031.i308.i, 1         ; 2 uses
   %i.ih = getelementptr inbounds nuw [8 x i8], ptr %i.hd, i64 %i.ig
   %i.ii = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %i.ig
   %i.ij = load i64, ptr %i.ih, align 4, !tbaa !26
   store i64 %i.ij, ptr %i.ii, align 4, !tbaa !26
-  %i.ik = add nuw i64 %.031.i308.i, 2             ; 2 uses
+  %i.ik = add nuw nsw i64 %.031.i308.i, 2         ; 2 uses
   %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.hd, i64 %i.ik
   %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %i.ik
   %i.in = load i64, ptr %i.il, align 4, !tbaa !26
   store i64 %i.in, ptr %i.im, align 4, !tbaa !26
-  %i.io = add nuw i64 %.031.i308.i, 3             ; 2 uses
+  %i.io = add nuw nsw i64 %.031.i308.i, 3         ; 2 uses
   %i.ip = getelementptr inbounds nuw [8 x i8], ptr %i.hd, i64 %i.io
   %i.iq = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %i.io
   %i.ir = load i64, ptr %i.ip, align 4, !tbaa !26
   store i64 %i.ir, ptr %i.iq, align 4, !tbaa !26
-  %i.is = add nuw i64 %.031.i308.i, 4             ; 2 uses
+  %i.is = add nuw nsw i64 %.031.i308.i, 4         ; 2 uses
   %exitcond.not.i309.i.3 = icmp eq i64 %i.is, %i.he
   br i1 %exitcond.not.i309.i.3, label %._crit_edge.i303.i, label %.lr.ph.i307.i, !llvm.loop !55
 
@@ -785,7 +785,7 @@ middle.block238:                                  ; preds = %vector.body233
   %i.sb = getelementptr inbounds nuw [8 x i8], ptr %i.rr, i64 %.031.i293.i.prol
   %i.sc = load i64, ptr %i.sa, align 4, !tbaa !26
   store i64 %i.sc, ptr %i.sb, align 4, !tbaa !26
-  %i.sd = add nuw i64 %.031.i293.i.prol, 1        ; 2 uses
+  %i.sd = add nuw nsw i64 %.031.i293.i.prol, 1    ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i292.i.prol.loopexit, label %.lr.ph.i292.i.prol, !llvm.loop !61
@@ -802,22 +802,22 @@ middle.block238:                                  ; preds = %vector.body233
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.rr, i64 %.031.i293.i
   %i.si = load i64, ptr %i.sg, align 4, !tbaa !26
   store i64 %i.si, ptr %i.sh, align 4, !tbaa !26
-  %i.sj = add nuw i64 %.031.i293.i, 1             ; 2 uses
+  %i.sj = add nuw nsw i64 %.031.i293.i, 1         ; 2 uses
   %i.sk = getelementptr inbounds nuw [8 x i8], ptr %i.ox, i64 %i.sj
   %i.sl = getelementptr inbounds nuw [8 x i8], ptr %i.rr, i64 %i.sj
   %i.sm = load i64, ptr %i.sk, align 4, !tbaa !26
   store i64 %i.sm, ptr %i.sl, align 4, !tbaa !26
-  %i.sn = add nuw i64 %.031.i293.i, 2             ; 2 uses
+  %i.sn = add nuw nsw i64 %.031.i293.i, 2         ; 2 uses
   %i.so = getelementptr inbounds nuw [8 x i8], ptr %i.ox, i64 %i.sn
   %i.sp = getelementptr inbounds nuw [8 x i8], ptr %i.rr, i64 %i.sn
   %i.sq = load i64, ptr %i.so, align 4, !tbaa !26
   store i64 %i.sq, ptr %i.sp, align 4, !tbaa !26
-  %i.sr = add nuw i64 %.031.i293.i, 3             ; 2 uses
+  %i.sr = add nuw nsw i64 %.031.i293.i, 3         ; 2 uses
   %i.ss = getelementptr inbounds nuw [8 x i8], ptr %i.ox, i64 %i.sr
   %i.st = getelementptr inbounds nuw [8 x i8], ptr %i.rr, i64 %i.sr
   %i.su = load i64, ptr %i.ss, align 4, !tbaa !26
   store i64 %i.su, ptr %i.st, align 4, !tbaa !26
-  %i.sv = add nuw i64 %.031.i293.i, 4             ; 2 uses
+  %i.sv = add nuw nsw i64 %.031.i293.i, 4         ; 2 uses
   %exitcond.not.i294.i.3 = icmp eq i64 %i.sv, %i.ow
   br i1 %exitcond.not.i294.i.3, label %._crit_edge.i288.i, label %.lr.ph.i292.i, !llvm.loop !62
 
@@ -930,7 +930,7 @@ middle.block:                                     ; preds = %vector.body
   %i.tw = getelementptr inbounds nuw [8 x i8], ptr %i.tm, i64 %.031.i306.i.prol
   %i.tx = load i64, ptr %i.tv, align 4, !tbaa !26
   store i64 %i.tx, ptr %i.tw, align 4, !tbaa !26
-  %i.ty = add nuw i64 %.031.i306.i.prol, 1        ; 2 uses
+  %i.ty = add nuw nsw i64 %.031.i306.i.prol, 1    ; 2 uses
   %prol.iter284.next = add i64 %prol.iter284, 1   ; 2 uses
   %prol.iter284.cmp.not = icmp eq i64 %prol.iter284.next, %xtraiter282
   br i1 %prol.iter284.cmp.not, label %.lr.ph.i305.i.prol.loopexit, label %.lr.ph.i305.i.prol, !llvm.loop !64
@@ -947,22 +947,22 @@ middle.block:                                     ; preds = %vector.body
   %i.uc = getelementptr inbounds nuw [8 x i8], ptr %i.tm, i64 %.031.i306.i
   %i.ud = load i64, ptr %i.ub, align 4, !tbaa !26
   store i64 %i.ud, ptr %i.uc, align 4, !tbaa !26
-  %i.ue = add nuw i64 %.031.i306.i, 1             ; 2 uses
+  %i.ue = add nuw nsw i64 %.031.i306.i, 1         ; 2 uses
   %i.uf = getelementptr inbounds nuw [8 x i8], ptr %i.tb, i64 %i.ue
   %i.ug = getelementptr inbounds nuw [8 x i8], ptr %i.tm, i64 %i.ue
   %i.uh = load i64, ptr %i.uf, align 4, !tbaa !26
   store i64 %i.uh, ptr %i.ug, align 4, !tbaa !26
-  %i.ui = add nuw i64 %.031.i306.i, 2             ; 2 uses
+  %i.ui = add nuw nsw i64 %.031.i306.i, 2         ; 2 uses
   %i.uj = getelementptr inbounds nuw [8 x i8], ptr %i.tb, i64 %i.ui
   %i.uk = getelementptr inbounds nuw [8 x i8], ptr %i.tm, i64 %i.ui
   %i.ul = load i64, ptr %i.uj, align 4, !tbaa !26
   store i64 %i.ul, ptr %i.uk, align 4, !tbaa !26
-  %i.um = add nuw i64 %.031.i306.i, 3             ; 2 uses
+  %i.um = add nuw nsw i64 %.031.i306.i, 3         ; 2 uses
   %i.un = getelementptr inbounds nuw [8 x i8], ptr %i.tb, i64 %i.um
   %i.uo = getelementptr inbounds nuw [8 x i8], ptr %i.tm, i64 %i.um
   %i.up = load i64, ptr %i.un, align 4, !tbaa !26
   store i64 %i.up, ptr %i.uo, align 4, !tbaa !26
-  %i.uq = add nuw i64 %.031.i306.i, 4             ; 2 uses
+  %i.uq = add nuw nsw i64 %.031.i306.i, 4         ; 2 uses
   %exitcond.not.i307.i.3 = icmp eq i64 %i.uq, %i.tc
   br i1 %exitcond.not.i307.i.3, label %._crit_edge.i301.i, label %.lr.ph.i305.i, !llvm.loop !65
 

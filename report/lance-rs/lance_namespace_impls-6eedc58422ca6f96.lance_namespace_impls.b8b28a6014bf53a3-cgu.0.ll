@@ -205,7 +205,7 @@ bb.bk:                                            ; preds = %bb.bk, %_RINvNtNtCs
   %i.aps = zext nneg i32 %i.apr to i64
   %i.apt = add i64 %i.apj, %i.aps                 ; 3 uses
   %i.apu = add nuw nsw i64 %.sroa.04.0.i.i.i4.i.i.i.i47.i.i, 2 ; 2 uses
-  %niter757.next.1 = add i64 %niter757, 2         ; 2 uses
+  %niter757.next.1 = add nuw i64 %niter757, 2     ; 2 uses
   %niter757.ncmp.1 = icmp eq i64 %niter757.next.1, %unroll_iter756
   br i1 %niter757.ncmp.1, label %.lr.ph.preheader.i.i.i.i.i.i50.i.i.unr-lcssa, label %bb.bk
 

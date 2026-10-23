@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %._crit_edge184.i.i, %.lr.ph186.i.i
   %indvars.iv232.i.i = phi i64 [ 0, %.lr.ph186.i.i ], [ %indvars.iv.next233.i.i, %._crit_edge184.i.i ] ; 2 uses
-  %i.gq = mul i64 %indvars.iv232.i.i, %i.ax
+  %i.gq = mul nsw i64 %indvars.iv232.i.i, %i.ax
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %i.gq ; 2 uses
   br i1 %i.ba, label %.lr.ph.i43.i, label %.preheader156.i.i
 
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %._crit_edge191.i.i, %.lr.ph193.i.i
   %indvars.iv239.i.i = phi i64 [ 0, %.lr.ph193.i.i ], [ %indvars.iv.next240.i.i, %._crit_edge191.i.i ] ; 2 uses
-  %i.fs = mul i64 %indvars.iv239.i.i, %i.ax
+  %i.fs = mul nsw i64 %indvars.iv239.i.i, %i.ax
   %i.ft = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %i.fs ; 2 uses
   br i1 %i.ba, label %.lr.ph.i43.i, label %.preheader163.i.i
 

@@ -205,8 +205,8 @@ _ZNK4llvm14LandingPadInst9getClauseEj.exit201:    ; preds = %_ZNK4llvm14LandingP
   %i.bx = phi ptr [ %i.au, %_ZNK4llvm14LandingPadInst7isCatchEj.exit.thread ], [ %i.am, %_ZNK4llvm14LandingPadInst7isCatchEj.exit ] ; 3 uses
   %i.by = phi ptr [ %i.as, %_ZNK4llvm14LandingPadInst7isCatchEj.exit.thread ], [ %i.ak, %_ZNK4llvm14LandingPadInst7isCatchEj.exit ] ; 7 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 32
-  %i.ca = load i64, ptr %i.bz, align 8, !tbaa !180 ; 2 uses
-  %i.cb = trunc i64 %i.ca to i32                  ; 3 uses
+  %i.ca = load i64, ptr %i.bz, align 8, !tbaa !180 ; 3 uses
+  %i.cb = trunc i64 %i.ca to i32                  ; 2 uses
   %.not181 = icmp eq i32 %i.cb, 0
   br i1 %.not181, label %bb.h, label %bb.k
 
@@ -315,6 +315,7 @@ bb.q:                                             ; preds = %bb.p
 
 _ZN4llvm15SmallVectorImplIPNS_8ConstantEE7reserveEm.exit: ; preds = %bb.p, %bb.q
   %i.db = getelementptr inbounds nuw i8, ptr %i.by, i64 4
+  %7 = and i64 %i.ca, 4294967295
   br label %bb.r
 
 bb.r:                                             ; preds = %_ZN4llvm15SmallVectorImplIPNS_8ConstantEE7reserveEm.exit, %_ZN4llvm23SmallVectorTemplateBaseIPNS_8ConstantELb1EE9push_backES2_.exit239
@@ -417,8 +418,7 @@ bb.u:                                             ; preds = %.critedge550, %_ZN4
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_8ConstantELb1EE9push_backES2_.exit239: ; preds = %.lr.ph.i.i227, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i210, %.split, %.split295
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %lftr.wideiv, %i.cb
+  %exitcond = icmp eq i64 %indvars.iv.next, %7
   br i1 %exitcond, label %bb.v, label %bb.r, !llvm.loop !1088
 
 bb.v:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_8ConstantELb1EE9push_backES2_.exit239

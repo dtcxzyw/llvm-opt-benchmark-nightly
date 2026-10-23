@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.e, %._crit_edge.
   %i.cv = extractelement <2 x double> %foldExtExtBinop.1, i64 0
   store double %i.cv, ptr %gep.i.i.i.i.i.i.i.i.i.i.1.1, align 8, !tbaa !47
   %i.cw = add nuw nsw i64 %.09.i.i.i.i.i.i.i.i.i.i.1, 2 ; 2 uses
-  %niter163.next.1 = add i64 %niter163, 2         ; 2 uses
+  %niter163.next.1 = add nuw nsw i64 %niter163, 2 ; 2 uses
   %niter163.ncmp.1 = icmp eq i64 %niter163.next.1, %unroll_iter162
   br i1 %niter163.ncmp.1, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.1.unr-lcssa, label %bb.e, !llvm.loop !334
 
@@ -276,7 +276,7 @@ bb.f:                                             ; preds = %bb.f, %._crit_edge.
   %i.eb = extractelement <2 x double> %foldExtExtBinop142.1, i64 0
   store double %i.eb, ptr %gep.i.i.i.i.i.i.i.i.i.i.2.1, align 8, !tbaa !47
   %i.ec = add nuw nsw i64 %.09.i.i.i.i.i.i.i.i.i.i.2, 2 ; 2 uses
-  %niter169.next.1 = add i64 %niter169, 2         ; 2 uses
+  %niter169.next.1 = add nuw nsw i64 %niter169, 2 ; 2 uses
   %niter169.ncmp.1 = icmp eq i64 %niter169.next.1, %unroll_iter168
   br i1 %niter169.ncmp.1, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.2.unr-lcssa, label %bb.f, !llvm.loop !334
 
@@ -347,7 +347,7 @@ bb.g:                                             ; preds = %bb.g, %._crit_edge.
   %i.fh = extractelement <2 x double> %foldExtExtBinop145.1, i64 0
   store double %i.fh, ptr %gep.i.i.i.i.i.i.i.i.i.i.3.1, align 8, !tbaa !47
   %i.fi = add nuw nsw i64 %.09.i.i.i.i.i.i.i.i.i.i.3, 2 ; 2 uses
-  %niter175.next.1 = add i64 %niter175, 2         ; 2 uses
+  %niter175.next.1 = add nuw nsw i64 %niter175, 2 ; 2 uses
   %niter175.ncmp.1 = icmp eq i64 %niter175.next.1, %unroll_iter174
   br i1 %niter175.ncmp.1, label %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2INS_7ProductINS_9TransposeIKNS_3MapIS1_Li0ENS_6StrideILi0ELi0EEEEEEENS0_IdLi4ELi4ELi0ELi4ELi4EEELi0EEEEERKNS_9EigenBaseIT_EE.exit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !334
 

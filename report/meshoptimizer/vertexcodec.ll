@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.thread123
   store i8 %i.qm, ptr %i.qn, align 1, !tbaa !9
   %i.qo = add i64 %i.qe, %4                       ; 2 uses
   %i.qp = add nuw nsw i64 %.03950.1.i, 2          ; 2 uses
-  %niter197.next.1 = add i64 %niter197, 2         ; 2 uses
+  %niter197.next.1 = add nuw i64 %niter197, 2     ; 2 uses
   %niter197.ncmp.1 = icmp eq i64 %niter197.next.1, %unroll_iter196
   br i1 %niter197.ncmp.1, label %._crit_edge.1.i.unr-lcssa, label %._crit_edge.i103.new, !llvm.loop !50
 
@@ -260,7 +260,7 @@ bb.r:                                             ; preds = %.thread123
   store i8 %i.rq, ptr %i.rr, align 1, !tbaa !9
   %i.rs = add i64 %i.ri, %4                       ; 2 uses
   %i.rt = add nuw nsw i64 %.03950.2.i, 2          ; 2 uses
-  %niter203.next.1 = add i64 %niter203, 2         ; 2 uses
+  %niter203.next.1 = add nuw i64 %niter203, 2     ; 2 uses
   %niter203.ncmp.1 = icmp eq i64 %niter203.next.1, %unroll_iter202
   br i1 %niter203.ncmp.1, label %._crit_edge.2.i.unr-lcssa, label %._crit_edge.1.i.new, !llvm.loop !50
 
@@ -315,7 +315,7 @@ bb.r:                                             ; preds = %.thread123
   store i8 %i.su, ptr %i.sv, align 1, !tbaa !9
   %i.sw = add i64 %i.sm, %4                       ; 2 uses
   %i.sx = add nuw nsw i64 %.03950.3.i, 2          ; 2 uses
-  %niter209.next.1 = add i64 %niter209, 2         ; 2 uses
+  %niter209.next.1 = add nuw i64 %niter209, 2     ; 2 uses
   %niter209.ncmp.1 = icmp eq i64 %niter209.next.1, %unroll_iter208
   br i1 %niter209.ncmp.1, label %_ZN7meshoptL13decodeDeltas1IhLb0EEEvPKhPhmmS2_i.exit.loopexit.unr-lcssa, label %._crit_edge.2.i.new, !llvm.loop !50
 
@@ -471,7 +471,7 @@ bb.s:                                             ; preds = %bb.r
   store i16 %i.wt, ptr %i.wu, align 1
   %i.wv = add i64 %i.wf, %4                       ; 2 uses
   %i.ww = add nuw nsw i64 %.03953.us.1.i, 2       ; 2 uses
-  %niter185.next.1 = add i64 %niter185, 2         ; 2 uses
+  %niter185.next.1 = add nuw i64 %niter185, 2     ; 2 uses
   %niter185.ncmp.1 = icmp eq i64 %niter185.next.1, %unroll_iter184
   br i1 %niter185.ncmp.1, label %_ZN7meshoptL13decodeDeltas1IhLb0EEEvPKhPhmmS2_i.exit.loopexit174.unr-lcssa, label %._crit_edge.us.i.new, !llvm.loop !51
 

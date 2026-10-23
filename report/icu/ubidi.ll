@@ -204,18 +204,19 @@ bb.x:                                             ; preds = %bb.w, %bb.v
 
 .lr.ph:                                           ; preds = %bb.x
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 324
-  %i.dg = sext i32 %2 to i64                      ; 5 uses
-  %i.dh = add nsw i32 %2, -1
+  %i.dg = sext i32 %2 to i64                      ; 3 uses
+  %i.dh = add nsw i32 %2, -1                      ; 2 uses
   %smin = tail call i32 @llvm.smin.i32(i32 %1, i32 %i.dh)
   %i.di = add i32 %2, 1
   %.phi.trans.insert = sext i32 %smin to i64
   %.phi.trans.insert257 = getelementptr inbounds i8, ptr %i.b, i64 %.phi.trans.insert
+  %wide.trip.count = sext i32 %i.dh to i64        ; 2 uses
   %indvars.iv.next287.a = add nsw i64 %i.dg, -1   ; 2 uses
   %i.dj = icmp sgt i64 %indvars.iv.next287.a, %i.al
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph, %bb.ak
-  %indvars.iv248 = phi i64 [ %i.al, %.lr.ph ], [ %indvars.iv.next249, %bb.ak ] ; 7 uses
+  %indvars.iv248 = phi i64 [ %i.al, %.lr.ph ], [ %indvars.iv.next249, %bb.ak ] ; 8 uses
   %.0165239 = phi i32 [ -1, %.lr.ph ], [ %.4, %bb.ak ] ; 6 uses
   %.0166238 = phi i8 [ 1, %.lr.ph ], [ %.4170, %bb.ak ] ; 5 uses
   %.2176237 = phi i16 [ %.1175, %.lr.ph ], [ %i.ej, %bb.ak ] ; 2 uses
@@ -277,18 +278,17 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not197, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.ad
-  %indvars.iv.next251290 = add nsw i64 %indvars.iv248, 1 ; 2 uses
-  %6 = icmp slt i64 %indvars.iv.next251290, %i.dg
-  br i1 %6, label %.lr.ph292, label %.thread
+  %exitcond.not289 = icmp eq i64 %indvars.iv248, %wide.trip.count
+  br i1 %exitcond.not289, label %.thread, label %.lr.ph292
 
 .preheader:                                       ; preds = %.lr.ph292
-  %indvars.iv.next251 = add nsw i64 %indvars.iv.next251291, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next251, %i.dg
-  br i1 %7, label %.lr.ph292, label %.thread, !llvm.loop !154
+  %exitcond.not = icmp eq i64 %indvars.iv.next251, %wide.trip.count
+  br i1 %exitcond.not, label %.thread, label %.lr.ph292, !llvm.loop !154
 
 .lr.ph292:                                        ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv.next251291 = phi i64 [ %indvars.iv.next251, %.preheader ], [ %indvars.iv.next251290, %.preheader.preheader ] ; 3 uses
-  %i.dw = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv.next251291
+  %indvars.iv.next251291 = phi i64 [ %indvars.iv.next251, %.preheader ], [ %indvars.iv248, %.preheader.preheader ]
+  %indvars.iv.next251 = add nsw i64 %indvars.iv.next251291, 1 ; 4 uses
+  %i.dw = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv.next251
   %i.dx = load i8, ptr %i.dw, align 1, !tbaa !53  ; 2 uses
   switch i8 %i.dx, label %.preheader [
     i8 13, label %.loopexit.loopexit
@@ -297,7 +297,7 @@ bb.ad:                                            ; preds = %bb.ac
   ], !llvm.loop !154
 
 .loopexit.loopexit:                               ; preds = %.lr.ph292, %.lr.ph292, %.lr.ph292
-  %i.dy = trunc nsw i64 %indvars.iv.next251291 to i32
+  %i.dy = trunc nsw i64 %indvars.iv.next251 to i32
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.ad

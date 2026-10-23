@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !3924
 
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !3999
 
@@ -1011,7 +1011,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !4073
 
@@ -1414,7 +1414,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !4148
 
@@ -1817,7 +1817,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store float %i.ld, ptr %i.kw, align 4, !tbaa !14
   %i.le = getelementptr inbounds nuw [4 x i8], ptr %i.kw, i64 %i.al ; 3 uses
   %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.kx, i64 %i.kn ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !5314
 
@@ -2220,7 +2220,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store float %i.kk, ptr %i.ke, align 4, !tbaa !14
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %i.al ; 3 uses
   %i.km = getelementptr inbounds nuw [4 x i8], ptr %i.kf, i64 %i.jw ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !5390
 
@@ -2623,7 +2623,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store float %i.ld, ptr %i.kw, align 4, !tbaa !14
   %i.le = getelementptr inbounds nuw [4 x i8], ptr %i.kw, i64 %i.al ; 3 uses
   %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.kx, i64 %i.kn ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !5464
 
@@ -3026,7 +3026,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store float %i.kk, ptr %i.ke, align 4, !tbaa !14
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %i.al ; 3 uses
   %i.km = getelementptr inbounds nuw [4 x i8], ptr %i.kf, i64 %i.jw ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !5540
 
@@ -3429,7 +3429,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store double %i.ld, ptr %i.kw, align 8, !tbaa !208
   %i.le = getelementptr inbounds nuw [8 x i8], ptr %i.kw, i64 %i.al ; 3 uses
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %i.kx, i64 %i.kn ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !6241
 
@@ -3832,7 +3832,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store double %i.kk, ptr %i.ke, align 8, !tbaa !208
   %i.kl = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %i.al ; 3 uses
   %i.km = getelementptr inbounds nuw [8 x i8], ptr %i.kf, i64 %i.jw ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !6317
 
@@ -4235,7 +4235,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store double %i.ld, ptr %i.kw, align 8, !tbaa !208
   %i.le = getelementptr inbounds nuw [8 x i8], ptr %i.kw, i64 %i.al ; 3 uses
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %i.kx, i64 %i.kn ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !6391
 
@@ -4638,7 +4638,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store double %i.kk, ptr %i.ke, align 8, !tbaa !208
   %i.kl = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %i.al ; 3 uses
   %i.km = getelementptr inbounds nuw [8 x i8], ptr %i.kf, i64 %i.jw ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !6467
 
@@ -5041,7 +5041,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.mg, ptr %i.lv, align 2, !tbaa !218
   %i.mh = getelementptr inbounds nuw [2 x i8], ptr %i.lv, i64 %i.al ; 3 uses
   %i.mi = getelementptr inbounds nuw [2 x i8], ptr %i.lw, i64 %i.li ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !7419
 
@@ -5444,7 +5444,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.np, ptr %i.ne, align 2, !tbaa !218
   %i.nq = getelementptr inbounds nuw [2 x i8], ptr %i.ne, i64 %i.al ; 3 uses
   %i.nr = getelementptr inbounds nuw [2 x i8], ptr %i.nf, i64 %i.mr ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !7496
 
@@ -5847,7 +5847,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.mg, ptr %i.lv, align 2, !tbaa !218
   %i.mh = getelementptr inbounds nuw [2 x i8], ptr %i.lv, i64 %i.al ; 3 uses
   %i.mi = getelementptr inbounds nuw [2 x i8], ptr %i.lw, i64 %i.li ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !7572
 
@@ -6250,7 +6250,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.np, ptr %i.ne, align 2, !tbaa !218
   %i.nq = getelementptr inbounds nuw [2 x i8], ptr %i.ne, i64 %i.al ; 3 uses
   %i.nr = getelementptr inbounds nuw [2 x i8], ptr %i.nf, i64 %i.mr ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !7649
 
@@ -6653,7 +6653,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.mr, ptr %i.mh, align 2, !tbaa !218
   %i.ms = getelementptr inbounds nuw [2 x i8], ptr %i.mh, i64 %i.al ; 3 uses
   %i.mt = getelementptr inbounds nuw [2 x i8], ptr %i.mi, i64 %i.lv ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !8612
 
@@ -7056,7 +7056,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.my, ptr %i.mo, align 2, !tbaa !218
   %i.mz = getelementptr inbounds nuw [2 x i8], ptr %i.mo, i64 %i.al ; 3 uses
   %i.na = getelementptr inbounds nuw [2 x i8], ptr %i.mp, i64 %i.mc ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !8689
 
@@ -7459,7 +7459,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.mr, ptr %i.mh, align 2, !tbaa !218
   %i.ms = getelementptr inbounds nuw [2 x i8], ptr %i.mh, i64 %i.al ; 3 uses
   %i.mt = getelementptr inbounds nuw [2 x i8], ptr %i.mi, i64 %i.lv ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !8765
 
@@ -7862,7 +7862,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   store i16 %i.my, ptr %i.mo, align 2, !tbaa !218
   %i.mz = getelementptr inbounds nuw [2 x i8], ptr %i.mo, i64 %i.al ; 3 uses
   %i.na = getelementptr inbounds nuw [2 x i8], ptr %i.mp, i64 %i.mc ; 2 uses
-  %niter276.next.1 = add i32 %niter276, 2         ; 2 uses
+  %niter276.next.1 = add nuw nsw i32 %niter276, 2 ; 2 uses
   %niter276.ncmp.1 = icmp eq i32 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !8842
 
@@ -8265,7 +8265,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !10409
 
@@ -8668,7 +8668,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !10484
 
@@ -9071,7 +9071,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !10558
 
@@ -9474,7 +9474,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph129.ne
   %i.kr = load i64, ptr %i.ak, align 8, !tbaa !32
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kr ; 3 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.kl, i64 %i.kb ; 2 uses
-  %niter280.next.1 = add i32 %niter280, 2         ; 2 uses
+  %niter280.next.1 = add nuw nsw i32 %niter280, 2 ; 2 uses
   %niter280.ncmp.1 = icmp eq i32 %niter280.next.1, %unroll_iter279
   br i1 %niter280.ncmp.1, label %..loopexit105_crit_edge.unr-lcssa, label %.lr.ph135.new, !llvm.loop !10633
 
