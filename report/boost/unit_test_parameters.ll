@@ -204,9 +204,9 @@ _ZN5boost7runtime3cla14argv_traverser13current_tokenEv.exit.lr.ph: ; preds = %bb
   %i.y = getelementptr inbounds nuw i8, ptr %11, i64 112 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %11, i64 96
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.ab = getelementptr inbounds nuw i8, ptr %11, i64 64 ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %11, i64 72 ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %35, i64 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %11, i64 72 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %35, i64 8
+  %i.ad = getelementptr inbounds nuw i8, ptr %11, i64 64 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %42, i64 8
@@ -523,11 +523,11 @@ bb.af:                                            ; preds = %bb.ae, %_ZN5boost10
 bb.ag:                                            ; preds = %bb.af
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cn, i64 170
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !189, !range !83, !noundef !84
-  %43 = trunc nuw i8 %i.dw to i1
-  br i1 %43, label %bb.bq, label %bb.ah
+  %43 = icmp eq i8 %i.dw, 0
+  br i1 %43, label %bb.ah, label %bb.bq
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %i.dx = load i64, ptr %i.ac, align 8, !tbaa !68 ; 4 uses
+  %i.dx = load i64, ptr %i.ab, align 8, !tbaa !68 ; 4 uses
   %i.dy = ptrtoint ptr %i.ds to i64
   %i.dz = ptrtoint ptr %i.dt to i64
   %i.ea = sub i64 %i.dy, %i.dz
@@ -539,7 +539,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %.not12.i.i.i.i, label %.loopexit232, label %.lr.ph.i.i.preheader.i.i
 
 .lr.ph.i.i.preheader.i.i:                         ; preds = %bb.ai
-  %i.ec = load ptr, ptr %i.ab, align 8, !tbaa !71
+  %i.ec = load ptr, ptr %i.ad, align 8, !tbaa !71
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.aj, %.lr.ph.i.i.preheader.i.i
@@ -818,7 +818,7 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bh
   br label %bb.dg
 
 bb.bq:                                            ; preds = %bb.ag
-  %i.gg = load i64, ptr %i.ac, align 8, !tbaa !68
+  %i.gg = load i64, ptr %i.ab, align 8, !tbaa !68
   %i.gh = icmp eq i64 %i.gg, 0
   br i1 %i.gh, label %bb.br, label %bb.by
 
@@ -854,7 +854,7 @@ _ZN5boost7runtime3cla14argv_traverser13current_tokenEv.exit119: ; preds = %.lr.p
   store <2 x ptr> <ptr @_ZN5boost9unit_test13basic_cstringIKcE4nullE, ptr @_ZN5boost9unit_test13basic_cstringIKcE4nullE>, ptr %34, align 16, !tbaa !89
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   store ptr %spec.select, ptr %35, align 8, !tbaa !63
-  store ptr %spec.select446, ptr %i.ad, align 8, !tbaa !64
+  store ptr %spec.select446, ptr %i.ac, align 8, !tbaa !64
   %i.gr = invoke noundef zeroext i1 @_ZN5boost7runtime3cla6parser21validate_token_formatENS_9unit_test13basic_cstringIKcEERS6_S7_S7_Rb(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef nonnull align 8 dead_on_return %35, ptr noundef nonnull align 8 dereferenceable(16) %32, ptr noundef nonnull align 8 dereferenceable(16) %33, ptr noundef nonnull align 8 dereferenceable(16) %34, ptr noundef nonnull align 1 dereferenceable(1) %i.b)
           to label %bb.bs unwind label %bb.bv
 
@@ -1217,7 +1217,7 @@ bb.db:                                            ; preds = %bb.da
   br label %_ZN5boost10shared_ptrINS_7runtime11basic_paramEED2Ev.exit.i
 
 _ZN5boost10shared_ptrINS_7runtime11basic_paramEED2Ev.exit.i: ; preds = %bb.db, %bb.da, %bb.cz, %_ZN5boost10shared_ptrINS_7runtime11basic_paramEED2Ev.exit
-  %i.kn = load ptr, ptr %i.ab, align 8, !tbaa !71 ; 2 uses
+  %i.kn = load ptr, ptr %i.ad, align 8, !tbaa !71 ; 2 uses
   %i.ko = icmp eq ptr %i.kn, %i.ah
   br i1 %i.ko, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
@@ -1620,9 +1620,9 @@ bb.q:                                             ; preds = %_ZNKSt7__cxx1112bas
   store i8 0, ptr %i.cs, align 2, !tbaa !189
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %.val.i.i = load i8, ptr %i.ct, align 8, !tbaa !143, !range !83, !noundef !84
-  %10 = xor i8 %.val.i.i, 1
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 171
-  store i8 %10, ptr %11, align 1, !tbaa !189
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 171
+  %11 = xor i8 %.val.i.i, 1
+  store i8 %11, ptr %10, align 1, !tbaa !189
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   store ptr null, ptr %i.cu, align 8, !tbaa !99, !alias.scope !769
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
@@ -2025,12 +2025,13 @@ bb.o:                                             ; preds = %_ZStlsISt11char_tra
   %i.bx = getelementptr inbounds nuw i8, ptr %14, i64 12
   %i.by = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %15 = icmp eq ptr %1, @_ZSt4cout
-  %16 = icmp eq ptr %1, @_ZSt4cerr
-  %or.cond.i.i57.not97.not99 = or i1 %15, %16     ; 2 uses
+  %15 = icmp ne ptr %1, @_ZSt4cout                ; 2 uses
+  %16 = icmp ne ptr %1, @_ZSt4cerr                ; 2 uses
+  %or.cond.i.i57.not97 = and i1 %15, %16
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 170
   %i.cb = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %or.cond.i.i83.demorgan = and i1 %15, %16
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %_ZN5boost9unit_testeqIKcEEbRKNS0_13basic_cstringIT_E10std_stringERKS5_.exit.thread
@@ -2118,9 +2119,9 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.dp = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.by, i64 noundef 13, ptr noundef nonnull @.str.220, i32 noundef 27, i32 noundef 49, i32 noundef 51, i32 noundef 57) #30 ; 2 uses
   store i32 %i.dp, ptr %i.bz, align 4, !tbaa !206
   %i.dq = load i8, ptr %5, align 4, !tbaa !205, !range !83, !noundef !84
-  %17 = trunc nuw i8 %i.dq to i1
-  %brmerge.not = and i1 %or.cond.i.i57.not97.not99, %17
-  br i1 %brmerge.not, label %bb.u, label %_ZN5boost9unit_test5utils14scope_setcolorC2EbRSoNS1_9term_attr1_ENS1_10term_color1_ES7_.exit58
+  %.not = icmp eq i8 %i.dq, 0
+  %brmerge = or i1 %.not, %or.cond.i.i57.not97
+  br i1 %brmerge, label %_ZN5boost9unit_test5utils14scope_setcolorC2EbRSoNS1_9term_attr1_ENS1_10term_color1_ES7_.exit58, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.dr = sext i32 %i.dp to i64
@@ -2259,9 +2260,9 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.fj = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.cb, i64 noundef 13, ptr noundef nonnull @.str.220, i32 noundef 27, i32 noundef 48, i32 noundef 57, i32 noundef 57) #30 ; 2 uses
   store i32 %i.fj, ptr %i.cc, align 4, !tbaa !206
   %i.fk = load i8, ptr %4, align 4, !tbaa !205, !range !83, !noundef !84
-  %18 = trunc nuw i8 %i.fk to i1
-  %brmerge.demorgan = and i1 %or.cond.i.i57.not97.not99, %18
-  br i1 %brmerge.demorgan, label %bb.am, label %_ZN5boost9unit_test5utils14scope_setcolorD2Ev.exit84
+  %.not108 = icmp eq i8 %i.fk, 0
+  %brmerge109 = or i1 %.not108, %or.cond.i.i83.demorgan
+  br i1 %brmerge109, label %_ZN5boost9unit_test5utils14scope_setcolorD2Ev.exit84, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.fl = sext i32 %i.fj to i64
@@ -2664,8 +2665,8 @@ _ZN5boost9unit_test13basic_cstringIKcE4trimES3_.exit: ; preds = %_ZN5boost9unit_
 bb.ai:                                            ; preds = %_ZN5boost9unit_test13basic_cstringIKcE4trimES3_.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 170
   %i.ay = load i8, ptr %i.ax, align 2, !tbaa !189, !range !83, !noundef !84
-  %24 = trunc nuw i8 %i.ay to i1
-  br i1 %24, label %bb.aj, label %bb.av
+  %24 = icmp eq i8 %i.ay, 0
+  br i1 %24, label %bb.av, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #30
@@ -3068,8 +3069,8 @@ bb.a:
   %2 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 171
   %i.b = load i8, ptr %i.a, align 1, !tbaa !189, !range !83, !noundef !84
-  %3 = trunc nuw i8 %i.b to i1
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = icmp eq i8 %i.b, 0
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -3472,8 +3473,8 @@ bb.a:
   %2 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 171
   %i.b = load i8, ptr %i.a, align 1, !tbaa !189, !range !83, !noundef !84
-  %3 = trunc nuw i8 %i.b to i1
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = icmp eq i8 %i.b, 0
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -3876,8 +3877,8 @@ bb.a:
   %2 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 171
   %i.b = load i8, ptr %i.a, align 1, !tbaa !189, !range !83, !noundef !84
-  %3 = trunc nuw i8 %i.b to i1
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = icmp eq i8 %i.b, 0
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -4280,8 +4281,8 @@ bb.a:
   %2 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 171
   %i.b = load i8, ptr %i.a, align 1, !tbaa !189, !range !83, !noundef !84
-  %3 = trunc nuw i8 %i.b to i1
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = icmp eq i8 %i.b, 0
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -4684,8 +4685,8 @@ bb.a:
   %3 = alloca %"class.std::vector.306", align 8   ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 171
   %i.b = load i8, ptr %i.a, align 1, !tbaa !189, !range !83, !noundef !84
-  %4 = trunc nuw i8 %i.b to i1
-  br i1 %4, label %bb.b, label %bb.f
+  %4 = icmp eq i8 %i.b, 0
+  br i1 %4, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -5088,8 +5089,8 @@ bb.a:
   %2 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 171
   %i.b = load i8, ptr %i.a, align 1, !tbaa !189, !range !83, !noundef !84
-  %3 = trunc nuw i8 %i.b to i1
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = icmp eq i8 %i.b, 0
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -5492,8 +5493,8 @@ bb.a:
   %2 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 171
   %i.b = load i8, ptr %i.a, align 1, !tbaa !189, !range !83, !noundef !84
-  %3 = trunc nuw i8 %i.b to i1
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = icmp eq i8 %i.b, 0
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i, %.lr.ph23.i.i.i.i
-  %.sroa.02.020.i.i.i.i = phi i1 [ false, %.lr.ph23.i.i.i.i ], [ %.sroa.02.1.i.i.i.i, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ]
+  %.sroa.02.020.i.i.i.i = phi i8 [ 0, %.lr.ph23.i.i.i.i ], [ %.sroa.02.1.i.i.i.i, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ]
   %.sroa.06.019.i.i.i.i = phi i64 [ %i.ah, %.lr.ph23.i.i.i.i ], [ %.sroa.06.1.i.i.i.i, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ] ; 4 uses
   %.sroa.0.018.i.i.i.i = phi i64 [ 0, %.lr.ph23.i.i.i.i ], [ %.sroa.0.1.i.i.i.i, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ] ; 4 uses
   %i.am = and i64 %.sroa.06.019.i.i.i.i, 2251799813685247
@@ -288,10 +288,11 @@ bb.m:                                             ; preds = %._crit_edge.i.i.i.i
 _RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i: ; preds = %bb.m, %bb.l, %bb.h
   %.sroa.0.1.i.i.i.i = phi i64 [ 0, %bb.h ], [ %.sroa.0.018.i.i.i.i, %bb.m ], [ %i.ay, %bb.l ]
   %.sroa.06.1.i.i.i.i = phi i64 [ %.sroa.01.0.i.i.i.i.i, %bb.h ], [ %.sroa.06.019.i.i.i.i, %bb.m ], [ %.sroa.06.019.i.i.i.i, %bb.l ] ; 2 uses
-  %.sroa.02.1.i.i.i.i = phi i1 [ %.sroa.02.020.i.i.i.i, %bb.h ], [ true, %bb.m ], [ true, %bb.l ] ; 2 uses
+  %.sroa.02.1.i.i.i.i = phi i8 [ %.sroa.02.020.i.i.i.i, %bb.h ], [ 1, %bb.m ], [ 1, %bb.l ] ; 2 uses
   %i.az = lshr i64 %.sroa.06.1.i.i.i.i, 51
+  %.not.i.i.i.i = icmp ne i8 %.sroa.02.1.i.i.i.i, 0
   %i.ba = icmp eq i64 %i.w, %i.az
-  %or.cond.not.i.i.i.i = or i1 %.sroa.02.1.i.i.i.i, %i.ba
+  %or.cond.not.i.i.i.i = or i1 %.not.i.i.i.i, %i.ba
   br i1 %or.cond.not.i.i.i.i, label %bb.h, label %_RNvMs0_NtCsdNqyU9N9qTX_12sharded_slab5shardINtB5_5ShardNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE12clear_remoteCs7p2uQeJxui2_9deltalake.exit
 
 bb.n:                                             ; preds = %_RNvMs_NtCsdNqyU9N9qTX_12sharded_slab3tidINtB4_3TidNtNtB6_3cfg13DefaultConfigE7currentCs7p2uQeJxui2_9deltalake.exit
@@ -353,7 +354,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i14, %.lr.ph23.i.i.i.i6
-  %.sroa.02.020.i.i.i.i9 = phi i1 [ false, %.lr.ph23.i.i.i.i6 ], [ %.sroa.02.1.i.i.i.i17, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i14 ]
+  %.sroa.02.020.i.i.i.i9 = phi i8 [ 0, %.lr.ph23.i.i.i.i6 ], [ %.sroa.02.1.i.i.i.i17, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i14 ]
   %.sroa.06.019.i.i.i.i10 = phi i64 [ %i.ca, %.lr.ph23.i.i.i.i6 ], [ %.sroa.06.1.i.i.i.i16, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i14 ] ; 4 uses
   %.sroa.0.018.i.i.i.i11 = phi i64 [ 0, %.lr.ph23.i.i.i.i6 ], [ %.sroa.0.1.i.i.i.i15, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i14 ] ; 4 uses
   %i.cf = and i64 %.sroa.06.019.i.i.i.i10, 2251799813685247
@@ -439,10 +440,11 @@ bb.x:                                             ; preds = %._crit_edge.i.i.i.i
 _RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i14: ; preds = %bb.x, %bb.w, %bb.s
   %.sroa.0.1.i.i.i.i15 = phi i64 [ 0, %bb.s ], [ %.sroa.0.018.i.i.i.i11, %bb.x ], [ %i.ct, %bb.w ]
   %.sroa.06.1.i.i.i.i16 = phi i64 [ %.sroa.01.0.i.i.i.i.i13, %bb.s ], [ %.sroa.06.019.i.i.i.i10, %bb.x ], [ %.sroa.06.019.i.i.i.i10, %bb.w ] ; 2 uses
-  %.sroa.02.1.i.i.i.i17 = phi i1 [ %.sroa.02.020.i.i.i.i9, %bb.s ], [ true, %bb.x ], [ true, %bb.w ] ; 2 uses
+  %.sroa.02.1.i.i.i.i17 = phi i8 [ %.sroa.02.020.i.i.i.i9, %bb.s ], [ 1, %bb.x ], [ 1, %bb.w ] ; 2 uses
   %i.cu = lshr i64 %.sroa.06.1.i.i.i.i16, 51
+  %.not.i.i.i.i18 = icmp ne i8 %.sroa.02.1.i.i.i.i17, 0
   %i.cv = icmp eq i64 %i.bl, %i.cu
-  %or.cond.not.i.i.i.i18 = or i1 %.sroa.02.1.i.i.i.i17, %i.cv
+  %or.cond.not.i.i.i.i18 = or i1 %.not.i.i.i.i18, %i.cv
   br i1 %or.cond.not.i.i.i.i18, label %bb.s, label %_RNvMs0_NtCsdNqyU9N9qTX_12sharded_slab5shardINtB5_5ShardNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE12clear_remoteCs7p2uQeJxui2_9deltalake.exit
 
 _RNvMs0_NtCsdNqyU9N9qTX_12sharded_slab5shardINtB5_5ShardNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE12clear_remoteCs7p2uQeJxui2_9deltalake.exit: ; preds = %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i, %_RNvNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i14, %bb.u, %bb.r, %bb.q, %_RNvMs0_NtCsdNqyU9N9qTX_12sharded_slab5shardINtB5_5ShardNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE5localCs7p2uQeJxui2_9deltalake.exit.i, %bb.n, %bb.j, %bb.g, %bb.f, %bb.e, %bb.d

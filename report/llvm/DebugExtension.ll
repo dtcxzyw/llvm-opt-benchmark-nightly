@@ -205,7 +205,9 @@ _ZN4llvm6detail18UniqueFunctionBaseIvJPN4mlir9OperationERNS2_12OpAsmPrinterENS_9
 define linkonce_odr hidden i8 @_ZN4mlir23RegisteredOperationName5ModelINS_9transform19EmitParamAsRemarkOpEE16verifyInvariantsEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef %1) unnamed_addr #0 comdat align 2 {
 _ZN4llvm6detail18UniqueFunctionBaseINS_13LogicalResultEJPN4mlir9OperationEEED2Ev.exit:
   %i.a = tail call i8 @_ZN4mlir18op_definition_impl12verifyTraitsIJNS_7OpTrait11ZeroRegionsINS_9transform19EmitParamAsRemarkOpEEENS2_11ZeroResultsIS5_EENS2_14ZeroSuccessorsIS5_EENS2_16AtLeastNOperandsILj1EE4ImplIS5_EENS2_12OpInvariantsIS5_EENS_19BytecodeOpInterface5TraitIS5_EENS4_20TransformOpInterface5TraitIS5_EENS4_16MatchOpInterface5TraitIS5_EENS_23MemoryEffectOpInterface5TraitIS5_EENS4_26NavigationTransformOpTraitIS5_EEEEEN4llvm13LogicalResultEPNS_9OperationE(ptr noundef %1)
-  ret i8 %i.a
+  %2 = icmp ne i8 %i.a, 0
+  %3 = zext i1 %2 to i8
+  ret i8 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -608,7 +610,9 @@ _ZN4llvm6detail18UniqueFunctionBaseIvJPN4mlir9OperationERNS2_12OpAsmPrinterENS_9
 define linkonce_odr hidden i8 @_ZN4mlir23RegisteredOperationName5ModelINS_9transform14EmitRemarkAtOpEE16verifyInvariantsEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef %1) unnamed_addr #0 comdat align 2 {
 _ZN4llvm6detail18UniqueFunctionBaseINS_13LogicalResultEJPN4mlir9OperationEEED2Ev.exit:
   %i.a = tail call i8 @_ZN4mlir18op_definition_impl12verifyTraitsIJNS_7OpTrait11ZeroRegionsINS_9transform14EmitRemarkAtOpEEENS2_11ZeroResultsIS5_EENS2_14ZeroSuccessorsIS5_EENS2_10OneOperandIS5_EENS2_12OpInvariantsIS5_EENS_19BytecodeOpInterface5TraitIS5_EENS4_20TransformOpInterface5TraitIS5_EENS4_16MatchOpInterface5TraitIS5_EENS_23MemoryEffectOpInterface5TraitIS5_EENS4_26NavigationTransformOpTraitIS5_EEEEEN4llvm13LogicalResultEPNS_9OperationE(ptr noundef %1)
-  ret i8 %i.a
+  %2 = icmp ne i8 %i.a, 0
+  %3 = zext i1 %2 to i8
+  ret i8 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

@@ -204,10 +204,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !67   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.val25, i64 40
   %i.q = load i8, ptr %i.p, align 8, !tbaa !67, !range !251, !noundef !252
-  %6 = trunc nuw i8 %i.q to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #39
-  %7 = xor i1 %6, true
-  call fastcc void @_ZN7jsonnet8internal12_GLOBAL__N_111Interpreter12objectFieldsEPKNS1_10HeapObjectEb(ptr dead_on_unwind noalias writable align 8 %5, ptr noundef %i.m, i1 noundef zeroext %7)
+  %6 = icmp eq i8 %i.q, 0
+  call fastcc void @_ZN7jsonnet8internal12_GLOBAL__N_111Interpreter12objectFieldsEPKNS1_10HeapObjectEb(ptr dead_on_unwind noalias writable align 8 %5, ptr noundef %i.m, i1 noundef zeroext %6)
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !166  ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
@@ -593,7 +592,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !67
   %i.n = getelementptr inbounds nuw i8, ptr %.val43, i64 24
   %i.o = load i8, ptr %i.n, align 8, !tbaa !67, !range !251, !noundef !252
-  %7 = trunc nuw i8 %i.o to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #39
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   store i32 0, ptr %i.p, align 8, !tbaa !165
@@ -606,8 +604,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 40
   store i64 0, ptr %i.t, align 8, !tbaa !168
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #39
-  %8 = xor i1 %7, true
-  invoke fastcc void @_ZN7jsonnet8internal12_GLOBAL__N_111Interpreter12objectFieldsEPKNS1_10HeapObjectEb(ptr dead_on_unwind noalias writable align 8 %6, ptr noundef %i.m, i1 noundef zeroext %8)
+  %7 = icmp eq i8 %i.o, 0
+  invoke fastcc void @_ZN7jsonnet8internal12_GLOBAL__N_111Interpreter12objectFieldsEPKNS1_10HeapObjectEb(ptr dead_on_unwind noalias writable align 8 %6, ptr noundef %i.m, i1 noundef zeroext %7)
           to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.b:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit

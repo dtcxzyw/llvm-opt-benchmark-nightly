@@ -202,8 +202,9 @@ bb.h:                                             ; preds = %bb.f
   %i.cu = getelementptr inbounds nuw i8, ptr %i.m, i64 112
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !246
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 16
-  %i.cx = load i8, ptr %i.cw, align 8
-  %i.cy = trunc i8 %i.cx to i1                    ; 6 uses
+  %i.cx = load i8, ptr %i.cw, align 8             ; 2 uses
+  %i.cy = trunc i8 %i.cx to i1                    ; 5 uses
+  %69 = and i8 %i.cx, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #19
   call void @_ZNK4llvm6object15MachOObjectFile20getSymtabLoadCommandEv(ptr dead_on_unwind nonnull writable sret(%"struct.llvm::MachO::symtab_command") align 4 %53, ptr noundef nonnull align 8 dereferenceable(360) %i.ct) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #19
@@ -606,7 +607,7 @@ bb.cb:                                            ; preds = %bb.bz, %bb.ca
   %i.ve = and i64 %i.vd, -4096                    ; 3 uses
   %i.vf = add i64 %i.ve, %.0261.lcssa1106         ; 2 uses
   %i.vg = icmp ugt i64 %i.vf, 4294967295
-  %not. = xor i1 %i.cy, true
+  %not. = icmp eq i8 %69, 0
   %.not282 = select i1 %not., i1 %i.vg, i1 false
   %i.vh = icmp ult i64 %i.vf, %i.ve
   %or.cond = select i1 %.not282, i1 true, i1 %i.vh

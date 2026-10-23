@@ -203,11 +203,12 @@ bb.c:                                             ; preds = %._crit_edge
   br i1 %.not34, label %bb.d, label %.preheader, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.c
-  %2 = icmp ult i64 %i.i, 5
-  %or.cond = and i1 %2, %i.f
-  %3 = icmp ult i64 %i.h, 4
-  %or.cond3.not = select i1 %or.cond, i1 %3, i1 false
-  br i1 %or.cond3.not, label %bb.e, label %.critedge
+  %2 = icmp ugt i64 %i.i, 4
+  %.not36 = xor i1 %i.f, true
+  %or.cond.not37 = or i1 %2, %.not36
+  %3 = icmp ugt i64 %i.h, 3
+  %or.cond3.not = select i1 %or.cond.not37, i1 true, i1 %3
+  br i1 %or.cond3.not, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   store i64 %i.i, ptr %1, align 8, !tbaa !23
@@ -268,11 +269,12 @@ bb.c:                                             ; preds = %._crit_edge.i
   br i1 %.not34.i, label %bb.d, label %.preheader.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.c
-  %6 = icmp ult i64 %i.i, 5
-  %or.cond.i = and i1 %6, %i.f
-  %7 = icmp ult i64 %i.h, 4
-  %or.cond3.not.i = select i1 %or.cond.i, i1 %7, i1 false
-  br i1 %or.cond3.not.i, label %lzma_validate_chain.exit, label %lzma_validate_chain.exit.thread
+  %6 = icmp ugt i64 %i.i, 4
+  %.not36.i = xor i1 %i.f, true
+  %or.cond.not37.i = or i1 %6, %.not36.i
+  %7 = icmp ugt i64 %i.h, 3
+  %or.cond3.not.i = select i1 %or.cond.not37.i, i1 true, i1 %7
+  br i1 %or.cond3.not.i, label %lzma_validate_chain.exit.thread, label %lzma_validate_chain.exit
 
 lzma_validate_chain.exit:                         ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #4
@@ -420,11 +422,12 @@ bb.c:                                             ; preds = %._crit_edge.i
   br i1 %.not34.i, label %bb.d, label %.preheader.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.c
-  %2 = icmp ult i64 %i.i, 5
-  %or.cond.i = and i1 %2, %i.f
-  %3 = icmp ult i64 %i.h, 4
-  %or.cond3.not.i = select i1 %or.cond.i, i1 %3, i1 false
-  br i1 %or.cond3.not.i, label %lzma_validate_chain.exit, label %.critedge
+  %2 = icmp ugt i64 %i.i, 4
+  %.not36.i = xor i1 %i.f, true
+  %or.cond.not37.i = or i1 %2, %.not36.i
+  %3 = icmp ugt i64 %i.h, 3
+  %or.cond3.not.i = select i1 %or.cond.not37.i, i1 true, i1 %3
+  br i1 %or.cond3.not.i, label %.critedge, label %lzma_validate_chain.exit
 
 lzma_validate_chain.exit:                         ; preds = %bb.d, %bb.h
   %i.l = phi i64 [ %i.z, %bb.h ], [ %i.b, %bb.d ]

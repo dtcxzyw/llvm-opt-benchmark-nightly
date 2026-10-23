@@ -204,12 +204,13 @@ bb.jt:                                            ; preds = %bb.js
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799: ; preds = %_ZN4cvc58internal6ResultD2Ev.exit796, %bb.jr, %bb.js
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #18
+  %45 = xor i1 %.1142.in, true
   br label %bb.ju
 
 bb.ju:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit638, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799
   %.4171 = phi i1 [ %or.cond9, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799 ], [ false, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit638 ]
   %.3148 = phi i1 [ %.2147, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799 ], [ %.1146, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit638 ] ; 3 uses
-  %.2143 = phi i1 [ %.1142.in, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799 ], [ false, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit638 ]
+  %.2143 = phi i1 [ %45, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799 ], [ true, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit638 ]
   %.3140 = phi i1 [ %.2139, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799 ], [ %.1138, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit638 ]
   %i.afv = load ptr, ptr %24, align 8, !tbaa !262 ; 3 uses
   %i.afw = load i64, ptr %i.afv, align 8          ; 3 uses
@@ -270,7 +271,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit805: ; preds = %_ZN4cvc58internal1
   br i1 %.4171, label %bb.kb, label %.critedge313
 
 bb.kb:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit805
-  br i1 %.2143, label %.loopexit, label %bb.cy, !llvm.loop !529
+  br i1 %.2143, label %bb.cy, label %.loopexit, !llvm.loop !529
 
 bb.kc:                                            ; preds = %bb.jn, %bb.ji, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit790
   %.pn270 = phi { ptr, i32 } [ %.pn260, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit790 ], [ %i.afa, %bb.ji ], [ %.pn267.pn, %bb.jn ] ; 2 uses

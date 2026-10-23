@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %bb
   br label %.thread
 
 .thread:                                          ; preds = %.thread.sink.split, %.split, %bb.ao
-  %i.dx = phi i8 [ %i.cz, %.split ], [ %i.cz, %bb.ao ], [ %.ph173, %.thread.sink.split ]
+  %i.dx = phi i8 [ %i.cz, %.split ], [ %i.cz, %bb.ao ], [ %.ph173, %.thread.sink.split ] ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.bi, i64 24
   %i.dz = load i8, ptr %i.dy, align 8, !tbaa !129, !range !28, !noundef !29
   %i.ea = trunc nuw i8 %i.dz to i1
@@ -366,8 +366,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit121: ; preds = %bb
   br label %bb.cl
 
 bb.bo:                                            ; preds = %switch.early.test, %switch.early.test, %bb.bf
-  %22 = trunc nuw i8 %i.dx to i1                  ; 2 uses
-  br i1 %22, label %switch.early.test103, label %bb.bx
+  %.not = icmp eq i8 %i.dx, 0
+  br i1 %.not, label %bb.bx, label %switch.early.test103
 
 switch.early.test103:                             ; preds = %bb.bo
   switch i32 %i.ex, label %bb.bp [
@@ -438,6 +438,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124: ; preds = %bb
 bb.bx:                                            ; preds = %switch.early.test103, %switch.early.test103, %bb.bo
   %spec.select = select i1 %i.eb, i64 %.fr, i64 9223372036854775807 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #29
+  %22 = trunc nuw i8 %i.dx to i1
   %i.gg = tail call i64 @llvm.smax.i64(i64 %spec.select, i64 %3)
   %i.gh = select i1 %22, i64 %i.gg, i64 %spec.select
   store i64 %i.gh, ptr %i.s, align 8, !tbaa !27

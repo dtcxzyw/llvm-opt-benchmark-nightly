@@ -205,11 +205,12 @@ bb.a:
   %.val4.i.i.i.i.i = load i64, ptr %i.i, align 8
   %i.k = getelementptr i8, ptr %i.i, i64 8
   %.val5.i.i.i.i.i = load i8, ptr %i.k, align 8, !tbaa !704, !range !67, !noundef !68
-  %3 = trunc nuw i8 %.val3.i9.i.i.i.i to i1
-  %i.l = icmp eq i8 %.val3.i9.i.i.i.i, %.val5.i.i.i.i.i ; 2 uses
-  %brmerge.not.i.i.i.i.i.i.i = and i1 %i.l, %3
+  %3 = icmp ne i8 %.val3.i9.i.i.i.i, %.val5.i.i.i.i.i ; 2 uses
+  %i.l = icmp eq i8 %.val3.i9.i.i.i.i, 0
+  %brmerge.i.i.i.i.i.i.i = or i1 %i.l, %3
+  %not..i.i.i.i.i.i.i = xor i1 %3, true
   %i.m = icmp eq i64 %.val.i8.i.i.i.i, %.val4.i.i.i.i.i
-  %i.n = select i1 %brmerge.not.i.i.i.i.i.i.i, i1 %i.m, i1 %i.l
+  %i.n = select i1 %brmerge.i.i.i.i.i.i.i, i1 %not..i.i.i.i.i.i.i, i1 %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.p = load i64, ptr %i.o, align 8, !tbaa !701  ; 2 uses
   %i.q = getelementptr inbounds i8, ptr %1, i64 %i.p
@@ -229,11 +230,12 @@ bb.a:
   %.val4.i14.i.i.i.i = load i8, ptr %i.y, align 1
   %i.aa = getelementptr i8, ptr %i.y, i64 1
   %.val5.i15.i.i.i.i = load i8, ptr %i.aa, align 1, !tbaa !66, !range !67, !noundef !68
-  %4 = trunc nuw i8 %.val3.i13.i.i.i.i to i1
-  %i.ab = icmp eq i8 %.val3.i13.i.i.i.i, %.val5.i15.i.i.i.i ; 2 uses
-  %brmerge.not.i.i.i16.i.i.i.i = and i1 %i.ab, %4
+  %4 = icmp ne i8 %.val3.i13.i.i.i.i, %.val5.i15.i.i.i.i ; 2 uses
+  %i.ab = icmp eq i8 %.val3.i13.i.i.i.i, 0
+  %brmerge.i.i.i17.i.i.i.i = or i1 %i.ab, %4
+  %not..i.i.i18.i.i.i.i = xor i1 %4, true
   %i.ac = icmp eq i8 %.val.i12.i.i.i.i, %.val4.i14.i.i.i.i
-  %i.ad = select i1 %brmerge.not.i.i.i16.i.i.i.i, i1 %i.ac, i1 %i.ab
+  %i.ad = select i1 %brmerge.i.i.i17.i.i.i.i, i1 %not..i.i.i18.i.i.i.i, i1 %i.ac
   %i.ae = and i1 %i.u, %i.ad
   ret i1 %i.ae
 }

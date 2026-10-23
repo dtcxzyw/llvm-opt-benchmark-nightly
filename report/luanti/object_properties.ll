@@ -202,15 +202,16 @@ bb.e:                                             ; preds = %bb.d
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !232, !nonnull !75, !align !144 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 4
   %i.aq = load i8, ptr %i.ap, align 4, !tbaa !53, !range !74, !noundef !75 ; 2 uses
-  %2 = trunc nuw i8 %i.aq to i1
-  %3 = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
-  %4 = load i8, ptr %3, align 4, !tbaa !53, !range !74, !noundef !75
-  %i.ar = icmp eq i8 %i.aq, %4                    ; 2 uses
-  %brmerge.not.i.i.i.i = and i1 %i.ar, %2
+  %2 = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
+  %3 = load i8, ptr %2, align 4, !tbaa !53, !range !74, !noundef !75
+  %4 = icmp ne i8 %i.aq, %3                       ; 2 uses
+  %i.ar = icmp eq i8 %i.aq, 0
+  %brmerge.i.i.i.i = or i1 %i.ar, %4
+  %not..i.i.i.i = xor i1 %4, true
   %i.as = load i32, ptr %i.ao, align 4
   %i.at = load i32, ptr %i.am, align 4
   %i.au = icmp eq i32 %i.as, %i.at
-  %i.av = select i1 %brmerge.not.i.i.i.i, i1 %i.au, i1 %i.ar
+  %i.av = select i1 %brmerge.i.i.i.i, i1 %not..i.i.i.i, i1 %i.au
   br i1 %i.av, label %bb.f, label %_ZNSt15__tuple_compareISt5tupleIJRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EERKS1_IN5video6SColorESaISD_EERKN4core8aabbox3dIfEESM_RK12ObjectVisualRKS7_SR_SR_SR_SR_RKNSI_8vector3dIfEERKSD_RKSt8optionalISD_ERKSY_IjERKNSI_8vector2dIsEES18_RKfS1A_S1A_S1A_S1A_S1A_RK7MapNodeRKtS1F_RKaRK16PointabilityTypeRKbS1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_RK10StepUpModeEES1Q_Lm10ELm40EE4__eqERKS1Q_S1T_.exit
 
 bb.f:                                             ; preds = %bb.e
@@ -220,15 +221,16 @@ bb.f:                                             ; preds = %bb.e
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !234, !nonnull !75, !align !144 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 4
   %i.bb = load i8, ptr %i.ba, align 4, !tbaa !55, !range !74, !noundef !75 ; 2 uses
-  %5 = trunc nuw i8 %i.bb to i1
-  %6 = getelementptr inbounds nuw i8, ptr %i.az, i64 4
-  %7 = load i8, ptr %6, align 4, !tbaa !55, !range !74, !noundef !75
-  %i.bc = icmp eq i8 %i.bb, %7                    ; 2 uses
-  %brmerge.not.i.i.i.i.i = and i1 %i.bc, %5
+  %5 = getelementptr inbounds nuw i8, ptr %i.az, i64 4
+  %6 = load i8, ptr %5, align 4, !tbaa !55, !range !74, !noundef !75
+  %7 = icmp ne i8 %i.bb, %6                       ; 2 uses
+  %i.bc = icmp eq i8 %i.bb, 0
+  %brmerge.i.i.i.i.i = or i1 %i.bc, %7
+  %not..i.i.i.i.i = xor i1 %7, true
   %i.bd = load i32, ptr %i.ax, align 4
   %i.be = load i32, ptr %i.az, align 4
   %i.bf = icmp eq i32 %i.bd, %i.be
-  %i.bg = select i1 %brmerge.not.i.i.i.i.i, i1 %i.bf, i1 %i.bc
+  %i.bg = select i1 %brmerge.i.i.i.i.i, i1 %not..i.i.i.i.i, i1 %i.bf
   br i1 %i.bg, label %bb.g, label %_ZNSt15__tuple_compareISt5tupleIJRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EERKS1_IN5video6SColorESaISD_EERKN4core8aabbox3dIfEESM_RK12ObjectVisualRKS7_SR_SR_SR_SR_RKNSI_8vector3dIfEERKSD_RKSt8optionalISD_ERKSY_IjERKNSI_8vector2dIsEES18_RKfS1A_S1A_S1A_S1A_S1A_RK7MapNodeRKtS1F_RKaRK16PointabilityTypeRKbS1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_S1M_RK10StepUpModeEES1Q_Lm10ELm40EE4__eqERKS1Q_S1T_.exit
 
 bb.g:                                             ; preds = %bb.f

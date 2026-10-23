@@ -142,16 +142,16 @@ bb.a:
   %10 = alloca %class.btVector3, align 8          ; 13 uses
   %11 = alloca %class.btTransform, align 8        ; 22 uses
   %12 = alloca %class.btTransform, align 8        ; 22 uses
-  %13 = alloca %struct.btSimplex, align 8         ; 27 uses
-  %14 = alloca %class.btVector3, align 16         ; 13 uses
+  %13 = alloca %struct.btSimplex, align 8         ; 28 uses
+  %14 = alloca %class.btVector3, align 16         ; 14 uses
   %15 = alloca %class.btVector3, align 8          ; 7 uses
   %16 = alloca %class.btVector3, align 8          ; 7 uses
   %17 = alloca %class.btVector3, align 8          ; 7 uses
   %18 = alloca %class.btVector3, align 8          ; 7 uses
   %19 = alloca %class.btVector3, align 8          ; 8 uses
   %20 = alloca %class.btVector3, align 4          ; 10 uses
-  %21 = alloca %class.btVector3, align 4          ; 12 uses
-  %22 = alloca %class.btVector3, align 4          ; 12 uses
+  %21 = alloca %class.btVector3, align 4          ; 13 uses
+  %22 = alloca %class.btVector3, align 4          ; 13 uses
   %23 = alloca %class.btVector3, align 8          ; 5 uses
   %24 = alloca %class.btVector3, align 8          ; 5 uses
   %25 = alloca %class.btVector3, align 8          ; 5 uses
@@ -554,8 +554,9 @@ bb.an:                                            ; preds = %.loopexit, %bb.al, 
   %.sroa.9.0 = phi float [ %i.xb, %bb.al ], [ 0.000000e+00, %bb.am ], [ 0.000000e+00, %.loopexit ] ; 6 uses
   %.sroa.14.0 = phi float [ %i.xa, %bb.al ], [ 0.000000e+00, %bb.am ], [ 0.000000e+00, %.loopexit ] ; 6 uses
   %.sroa.19.0 = phi float [ %.sroa.19.0.copyload, %bb.al ], [ 0.000000e+00, %bb.am ], [ 0.000000e+00, %.loopexit ]
-  %.1114 = phi i1 [ true, %bb.al ], [ false, %bb.am ], [ false, %.loopexit ] ; 5 uses
-  %.1 = phi float [ %i.yc, %bb.al ], [ 0.000000e+00, %bb.am ], [ 0.000000e+00, %.loopexit ] ; 8 uses
+  %.not = phi i1 [ false, %bb.al ], [ true, %bb.am ], [ true, %.loopexit ] ; 3 uses
+  %.1114 = phi i1 [ true, %bb.al ], [ false, %bb.am ], [ false, %.loopexit ] ; 3 uses
+  %.1 = phi float [ %i.yc, %bb.al ], [ 0.000000e+00, %bb.am ], [ 0.000000e+00, %.loopexit ] ; 9 uses
   %i.yd = phi <3 x float> [ %i.wz, %bb.al ], [ zeroinitializer, %bb.am ], [ zeroinitializer, %.loopexit ]
   %i.ye = getelementptr inbounds nuw i8, ptr %0, i64 92
   %i.yf = load i32, ptr %i.ye, align 4, !tbaa !33
@@ -581,7 +582,6 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.an, %bb.ao, %bb.ap, %bb.aq
   %i.ym = phi i1 [ false, %bb.ap ], [ false, %bb.ao ], [ false, %bb.an ], [ %i.yl, %bb.aq ]
-  %.not = xor i1 %.1114, true
   %or.cond = select i1 %.not, i1 true, i1 %i.ym
   %or.cond3 = or i1 %.4107, %or.cond
   br i1 %or.cond3, label %bb.as, label %.sink.split
@@ -666,9 +666,9 @@ bb.ay:                                            ; preds = %bb.ax
   %i.aag = call noundef float @sqrtf(float noundef %i.aaf) #13
   %i.aah = fneg float %i.aag                      ; 2 uses
   store i32 3, ptr %i.bg, align 8, !tbaa !32
-  %30 = fcmp ule float %.1, %i.aah
-  %or.cond133.not = select i1 %.1114, i1 %30, i1 false
-  br i1 %or.cond133.not, label %bb.ba, label %bb.az
+  %30 = fcmp ogt float %.1, %i.aah
+  %or.cond133.not = select i1 %.not, i1 true, i1 %30
+  br i1 %or.cond133.not, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ay
   %i.aai = fdiv float 1.000000e+00, %i.zz         ; 2 uses
@@ -690,7 +690,11 @@ bb.ba:                                            ; preds = %bb.ay
 
 bb.bb:                                            ; preds = %bb.ax
   store i32 9, ptr %i.bg, align 8, !tbaa !32
-  br label %.split
+  call void @llvm.lifetime.end.p0(ptr nonnull %22) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %21) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #13
+  br i1 %.1114, label %bb.bh, label %bb.bo
 
 bb.bc:                                            ; preds = %bb.au
   %i.aan = fcmp ogt float %i.zb, 0.000000e+00
@@ -715,9 +719,9 @@ bb.bd:                                            ; preds = %bb.bc
   %i.abd = call noundef float @llvm.fmuladd.f32(float %i.aba, float %i.aba, float %i.abc)
   %i.abe = call noundef float @sqrtf(float noundef %i.abd) #13
   %i.abf = fsub float %i.abe, %i.bj               ; 2 uses
-  %31 = fcmp uge float %i.abf, %.1
-  %or.cond135.not = select i1 %.1114, i1 %31, i1 false
-  br i1 %or.cond135.not, label %bb.bf, label %bb.be
+  %31 = fcmp olt float %i.abf, %.1
+  %or.cond135.not = select i1 %.not, i1 true, i1 %31
+  br i1 %or.cond135.not, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %bb.bd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 4 dereferenceable(16) %21, i64 16, i1 false), !tbaa.struct !36
@@ -771,7 +775,7 @@ bb.bf:                                            ; preds = %bb.bd, %bb.be
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #13
   br label %.sink.split
 
-.split:                                           ; preds = %bb.bb, %bb.at, %bb.bc
+.split:                                           ; preds = %bb.at, %bb.bc
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #13
@@ -789,8 +793,8 @@ bb.bg:                                            ; preds = %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #13
   br label %bb.bh
 
-bb.bh:                                            ; preds = %.sink.split, %.split, %bb.bg
-  %.6547 = phi float [ %.1, %.split ], [ %.1, %bb.bg ], [ %.6547.ph, %.sink.split ] ; 6 uses
+bb.bh:                                            ; preds = %.sink.split, %bb.bb, %.split, %bb.bg
+  %.6547 = phi float [ %.1, %bb.bb ], [ %.1, %bb.bg ], [ %.1, %.split ], [ %.6547.ph, %.sink.split ] ; 6 uses
   %i.ach = fcmp olt float %.6547, 0.000000e+00
   br i1 %i.ach, label %bb.bj, label %bb.bi
 
@@ -1193,7 +1197,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #13
   br label %bb.bo
 
-bb.bo:                                            ; preds = %.split, %bb.bg, %bb.bi, %bb.bn
+bb.bo:                                            ; preds = %bb.bb, %.split, %bb.bg, %bb.bi, %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #13

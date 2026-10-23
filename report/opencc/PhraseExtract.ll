@@ -204,13 +204,12 @@ _ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN5TCLAP3ArgESt6vectorIS4_SaIS4_EEEEPK
 bb.j:                                             ; preds = %.lr.ph96
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 145
   %i.at = load i8, ptr %i.as, align 1, !tbaa !45, !range !31, !noundef !32
-  %5 = trunc nuw i8 %i.at to i1
+  %.not.i = icmp ne i8 %i.at, 0
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 161
   %i.av = load i8, ptr %i.au, align 1, !range !31
-  %6 = trunc nuw i8 %i.av to i1
-  %not. = xor i1 %5, true
-  %i.aw = select i1 %not., i1 true, i1 %6
-  br i1 %i.aw, label %bb.r, label %bb.k
+  %.not4.i = icmp eq i8 %i.av, 0
+  %i.aw = select i1 %.not.i, i1 %.not4.i, i1 false
+  br i1 %i.aw, label %bb.k, label %bb.r
 
 bb.k:                                             ; preds = %bb.j
   %i.ax = tail call ptr @__cxa_allocate_exception(i64 104) #26 ; 3 uses
@@ -455,13 +454,12 @@ bb.e:                                             ; preds = %bb.d
   %i.u = load ptr, ptr %i.o, align 8, !tbaa !78   ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 145
   %i.w = load i8, ptr %i.v, align 1, !tbaa !45, !range !31, !noundef !32
-  %5 = trunc nuw i8 %i.w to i1
+  %.not.i = icmp ne i8 %i.w, 0
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 161
   %i.y = load i8, ptr %i.x, align 1, !range !31
-  %6 = trunc nuw i8 %i.y to i1
-  %not. = xor i1 %5, true
-  %i.z = select i1 %not., i1 true, i1 %6
-  br i1 %i.z, label %bb.f, label %bb.g
+  %.not4.i = icmp eq i8 %i.y, 0
+  %i.z = select i1 %.not.i, i1 %.not4.i, i1 false
+  br i1 %i.z, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %i.u, i64 48

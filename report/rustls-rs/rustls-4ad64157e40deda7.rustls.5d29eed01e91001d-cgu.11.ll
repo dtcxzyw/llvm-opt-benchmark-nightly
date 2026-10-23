@@ -204,11 +204,10 @@ bb.a:
   %i.n = load i32, ptr %i.m, align 4, !noundef !5 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 339
   %i.p = load i8, ptr %i.o, align 1, !range !6, !noundef !5
-  %5 = trunc nuw i8 %i.p to i1
-  %6 = icmp ne i32 %i.n, 0
-  %or.cond = and i1 %6, %5
-  %or.cond.not = xor i1 %or.cond, true
-  %brmerge = or i1 %4, %or.cond.not
+  %.not9 = icmp eq i8 %i.p, 0
+  %5 = icmp eq i32 %i.n, 0
+  %or.cond.not10 = or i1 %5, %.not9
+  %brmerge = or i1 %4, %or.cond.not10
   br i1 %brmerge, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a, %bb.c
@@ -611,15 +610,15 @@ _RNvMNtNtCs7ZUl82OSlxp_6rustls6client5tls13NtB2_17KeyExchangeChoice3new.exit: ; 
   %i.cn = load i16, ptr %i.cm, align 8, !range !777, !noundef !5
   %i.co = getelementptr inbounds nuw i8, ptr %.val216, i64 178
   %i.cp = load i16, ptr %i.co, align 2
-  %.sroa.0310.0.copyload = load ptr, ptr %6, align 8 ; 10 uses
+  %.sroa.0310.0.copyload = load ptr, ptr %6, align 8 ; 12 uses
   %.sroa.4311.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.sroa.4311.0.copyload = load ptr, ptr %.sroa.4311.0..sroa_idx, align 8 ; 17 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 16
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %12 = trunc nuw i16 %i.cn to i1
-  %.not155 = icmp ne ptr %.sroa.0310.0.copyload, null ; 3 uses
-  %or.cond.not = select i1 %12, i1 %.not155, i1 false
-  br i1 %or.cond.not, label %bb.ag, label %bb.bw
+  %.not196 = icmp eq i16 %i.cn, 0
+  %.not155 = icmp eq ptr %.sroa.0310.0.copyload, null ; 3 uses
+  %or.cond.not = select i1 %.not196, i1 true, i1 %.not155
+  br i1 %or.cond.not, label %bb.bw, label %bb.ag
 
 bb.ag:                                            ; preds = %_RNvMNtNtCs7ZUl82OSlxp_6rustls6client5tls13NtB2_17KeyExchangeChoice3new.exit
   %i.cq = load i64, ptr %i.af, align 8, !range !7, !noundef !5
@@ -704,6 +703,7 @@ bb.at:                                            ; preds = %bb.bf, %bb.be, %bb.
   br i1 %.not.i.i.i, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0310.0.copyload) ]
   invoke void %i.dk(ptr noundef nonnull %.sroa.0310.0.copyload)
           to label %bb.av unwind label %bb.ax
 
@@ -716,6 +716,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
 bb.aw:                                            ; preds = %bb.av
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.4311.0.copyload, i64 16
   %i.dp = load i64, ptr %i.do, align 8, !range !15, !invariant.load !5
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0310.0.copyload) ]
   call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.0310.0.copyload, i64 noundef range(i64 1, -9223372036854775808) %i.dm, i64 noundef range(i64 1, 536870913) %i.dp) #29
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls5tls1312key_schedule16KeyScheduleEarlyEBH_.exit
 
@@ -796,7 +797,7 @@ bb.bg:                                            ; preds = %bb.gs, %bb.gr, %bb.
 
 common.resume.i.i252:                             ; preds = %bb.cc, %bb.ce, %bb.bh
   %eh.lpad-body256 = phi { ptr, i32 } [ %i.ei, %bb.bh ], [ %i.fz, %bb.ce ], [ %i.fw, %bb.cc ] ; 2 uses
-  br i1 %.not155, label %bb.et, label %.thread459
+  br i1 %.not155, label %.thread459, label %bb.et
 
 bb.bh:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist23Tls13ClientSessionValueEBH_.exit.i254, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist23Tls13ClientSessionValueEEB13_.exit258, %bb.by, %bb.bx
   %i.ei = landingpad { ptr, i32 }
@@ -997,7 +998,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlx
           to label %bb.ch unwind label %bb.bh
 
 bb.ch:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist23Tls13ClientSessionValueEEB13_.exit258
-  br i1 %.not155, label %bb.ci, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls5tls1312key_schedule16KeyScheduleEarlyEBH_.exit263
+  br i1 %.not155, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls5tls1312key_schedule16KeyScheduleEarlyEBH_.exit263, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4311.0.copyload) ]

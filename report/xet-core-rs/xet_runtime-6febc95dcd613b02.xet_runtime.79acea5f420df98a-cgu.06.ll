@@ -204,6 +204,7 @@ bb.l:                                             ; preds = %bb.m, %bb.k
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 6
   %i.cu = load i8, ptr %i.ct, align 1, !range !12, !noundef !4
   %i.cv = load i8, ptr %0, align 1, !range !12, !noundef !4
+  %.not3781 = icmp eq i8 %i.cv, 0
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.k
@@ -270,16 +271,15 @@ bb.n:                                             ; preds = %bb.l
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 6
   %i.di = load i8, ptr %i.dh, align 1, !range !12, !noundef !4 ; 2 uses
   %i.dj = trunc nuw i8 %i.di to i1
-  %i.dk = load i8, ptr %0, align 1, !range !12, !noundef !4 ; 2 uses
-  %4 = trunc nuw i8 %i.dk to i1
+  %i.dk = load i8, ptr %0, align 1, !range !12, !noundef !4
   %.not = xor i1 %i.dg, true
   %brmerge = or i1 %.not, %i.dj
-  %.not3 = xor i1 %4, true
-  %brmerge4 = select i1 %brmerge, i1 true, i1 %.not3
+  %.not3 = icmp eq i8 %i.dk, 0                    ; 2 uses
+  %brmerge4 = or i1 %brmerge, %.not3
   br i1 %brmerge4, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.p, %.thread, %bb.n
-  %5 = phi i8 [ %i.cv, %.thread ], [ %i.dk, %bb.n ], [ 1, %bb.p ]
+  %.not3785 = phi i1 [ %.not3781, %.thread ], [ %.not3, %bb.n ], [ false, %bb.p ]
   %i.dl = phi i8 [ %i.cu, %.thread ], [ %i.di, %bb.n ], [ 0, %bb.p ]
   %.sroa.075.0785 = phi i1 [ false, %.thread ], [ %i.dg, %bb.n ], [ true, %bb.p ]
   %.sroa.777.0784 = phi i32 [ undef, %.thread ], [ %i.df, %bb.n ], [ %i.df, %bb.p ]
@@ -382,11 +382,11 @@ bb.s:                                             ; preds = %bb.r
   %.sroa.010.0.sroa.sel525.v.sroa.sel.v.sroa.sel.v = select i1 %.not474, ptr %i.ax, ptr %i.au
   %.sroa.010.0.sroa.sel525.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.010.0.sroa.sel525.v.sroa.sel.v.sroa.sel.v, i64 96
   %i.er = load ptr, ptr %.sroa.010.0.sroa.sel525.v.sroa.sel.v.sroa.sel, align 8, !noundef !4 ; 2 uses
-  %.not476 = icmp ne ptr %i.er, null
-  %6 = and i8 %i.dl, %5
-  %7 = icmp ne i8 %6, 0
-  %brmerge9.not = and i1 %7, %.not476
-  br i1 %brmerge9.not, label %bb.u, label %bb.t
+  %.not476 = icmp eq ptr %i.er, null
+  %brmerge7 = or i1 %.not3785, %.not476
+  %.not8 = icmp eq i8 %i.dl, 0
+  %brmerge9 = or i1 %.not8, %brmerge7
+  br i1 %brmerge9, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
   br i1 %.sroa.0175.0, label %bb.ad, label %.critedge
@@ -789,11 +789,11 @@ bb.g:                                             ; preds = %_RNvXs1_NtCsiWcPrHi
 bb.h:                                             ; preds = %.noexc10, %._crit_edge.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !914
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.ax = load i8, ptr %i.aw, align 1, !range !12, !noalias !914, !noundef !4
-  %i.ay = trunc nuw i8 %i.ax to i1                ; 2 uses
+  %i.ax = load i8, ptr %i.aw, align 1, !range !12, !noalias !914, !noundef !4 ; 2 uses
+  %i.ay = trunc nuw i8 %i.ax to i1
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %i.ba = load i8, ptr %i.az, align 1, !range !12
-  %i.bb = trunc nuw i8 %i.ba to i1                ; 2 uses
+  %i.ba = load i8, ptr %i.az, align 1, !range !12 ; 2 uses
+  %i.bb = trunc nuw i8 %i.ba to i1
   %or.cond = select i1 %i.ay, i1 true, i1 %i.bb
   br i1 %or.cond, label %bb.j, label %bb.k
 
@@ -1097,10 +1097,11 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs8C3ZpOVqhBL
   br label %.thread
 
 bb.aq:                                            ; preds = %bb.at, %bb.ar, %._crit_edge129.i
+  %.not83.i = icmp eq i8 %i.ax, 0
   %i.dd = load ptr, ptr %i.v, align 8, !noalias !914 ; 2 uses
-  %.not72.i = icmp ne ptr %i.dd, null
-  %or.cond.not.i = select i1 %i.ay, i1 %.not72.i, i1 false
-  br i1 %or.cond.not.i, label %bb.av, label %bb.au
+  %.not72.i = icmp eq ptr %i.dd, null
+  %or.cond.not.i = select i1 %.not83.i, i1 true, i1 %.not72.i
+  br i1 %or.cond.not.i, label %bb.au, label %bb.av
 
 bb.ar:                                            ; preds = %._crit_edge129.i
   %storemerge.sroa.sel52.v.sroa.sel.v = select i1 %.not, ptr %i.ak, ptr %i.z
@@ -1125,9 +1126,10 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsiWcPrHiWZDL_10serde_json5error5ErrorEECsarFSTFZzLuM_11xet_runtime.exit.i, %bb.aq
   %i.di = phi ptr [ %.pre133.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsiWcPrHiWZDL_10serde_json5error5ErrorEECsarFSTFZzLuM_11xet_runtime.exit.i ], [ %i.dd, %bb.aq ]
-  %.not74.i = icmp ne ptr %i.di, null
-  %or.cond85.not.i = select i1 %i.bb, i1 %.not74.i, i1 false
-  br i1 %or.cond85.not.i, label %bb.az, label %bb.ay
+  %.not84.i = icmp eq i8 %i.ba, 0
+  %.not74.i = icmp eq ptr %i.di, null
+  %or.cond85.not.i = select i1 %.not84.i, i1 true, i1 %.not74.i
+  br i1 %or.cond85.not.i, label %bb.ay, label %bb.az
 
 bb.av:                                            ; preds = %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !914

@@ -204,8 +204,9 @@ _ZN2v89LocalBaseINS_7Promise8ResolverEE3NewEPNS_7IsolateEm.exit: ; preds = %_ZN2
   store ptr %i.jm, ptr %i.je, align 8
   store i64 %i.jb, ptr %.0.i.i, align 8
   %i.jn = tail call i16 @_ZN2v87Promise8Resolver7ResolveENS_5LocalINS_7ContextEEENS2_INS_5ValueEEE(ptr noundef nonnull align 1 dereferenceable(1) %.0.i.i, ptr nonnull %.0.i, ptr %i.ce) #17
-  %3 = trunc i16 %i.jn to i1
-  br i1 %3, label %bb.ae, label %bb.ac
+  %3 = and i16 %i.jn, 255
+  %4 = icmp eq i16 %3, 0
+  br i1 %4, label %bb.ac, label %bb.ae
 
 bb.ac:                                            ; preds = %_ZN2v89LocalBaseINS_7Promise8ResolverEE3NewEPNS_7IsolateEm.exit
   %i.jo = load ptr, ptr %i.h, align 8             ; 2 uses

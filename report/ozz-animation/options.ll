@@ -205,9 +205,8 @@ bb.u:                                             ; preds = %.lr.ph141
   %i.ee = trunc nuw i8 %i.ed to i1
   %i.ef = getelementptr inbounds nuw i8, ptr %i.eb, i64 24
   %i.eg = load i8, ptr %i.ef, align 8, !range !81
-  %3 = trunc nuw i8 %i.eg to i1
-  %4 = xor i1 %3, true
-  %i.eh = select i1 %i.ee, i1 true, i1 %4
+  %3 = icmp eq i8 %i.eg, 0
+  %i.eh = select i1 %i.ee, i1 true, i1 %3
   br i1 %i.eh, label %bb.u, label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph141
@@ -610,10 +609,10 @@ define internal noundef zeroext i1 @_ZN3ozz7options12_GLOBAL__N_123ValidateExclu
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 41
   %i.b = load i8, ptr %i.a, align 1, !tbaa !83, !range !81, !noundef !82
-  %2 = trunc nuw i8 %i.b to i1
-  %3 = icmp ne i32 %1, 1
-  %or.cond = and i1 %3, %2                        ; 2 uses
-  br i1 %or.cond, label %bb.b, label %bb.h
+  %.not4 = icmp eq i8 %i.b, 0
+  %2 = icmp eq i32 %1, 1
+  %or.cond.not = or i1 %2, %.not4                 ; 2 uses
+  br i1 %or.cond.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.44, i64 noundef 8) ; 0 uses
@@ -679,8 +678,7 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.a, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit
-  %.0 = xor i1 %or.cond, true
-  ret i1 %.0
+  ret i1 %or.cond.not
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

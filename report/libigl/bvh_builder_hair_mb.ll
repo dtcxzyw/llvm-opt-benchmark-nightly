@@ -205,6 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ap = fcmp ogt float %.sroa.0288.0.lcssa, %.sroa.038.0.copyload
   %i.aq = fcmp olt float %.sroa.6.0.lcssa, %.sroa.439.0.copyload
   %i.ar = select i1 %i.ap, i1 true, i1 %i.aq
+  %22 = zext i1 %i.ar to i8
   br label %bb.g
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
@@ -236,7 +237,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %._crit_edge604, %._crit_edge, %bb.e
   %i.bl = phi i64 [ %i.y, %._crit_edge ], [ %i.x, %bb.e ], [ %.pre606, %._crit_edge604 ] ; 3 uses
   %i.bm = phi i64 [ %i.x, %._crit_edge ], [ %i.x, %bb.e ], [ %.pre, %._crit_edge604 ] ; 3 uses
-  %.075 = phi i1 [ %i.ar, %._crit_edge ], [ false, %bb.e ], [ false, %._crit_edge604 ] ; 2 uses
+  %.075 = phi i8 [ %22, %._crit_edge ], [ 0, %bb.e ], [ 0, %._crit_edge604 ] ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 112 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %2, i64 120
@@ -272,7 +273,8 @@ bb.i:                                             ; preds = %.lr.ph783
   br i1 %.not.i151, label %bb.i, label %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152.thread, !llvm.loop !304
 
 _ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152: ; preds = %bb.i, %bb.h
-  br i1 %.075, label %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152.thread, label %bb.j
+  %.not93 = icmp eq i8 %.075, 0
+  br i1 %.not93, label %bb.j, label %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152.thread
 
 bb.j:                                             ; preds = %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -356,11 +358,12 @@ _ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25Virt
   %.sroa.43.112..sroa_idx.i = getelementptr inbounds nuw i8, ptr %19, i64 152
   %.sroa.46.112..sroa_idx.i = getelementptr inbounds nuw i8, ptr %19, i64 156
   %i.ea = getelementptr inbounds nuw i8, ptr %19, i64 160 ; 3 uses
+  %23 = trunc nuw i8 %.075 to i1
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152.thread, %bb.af
   %i.eb = phi i64 [ %i.mn, %bb.af ], [ 1, %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152.thread ] ; 3 uses
-  %.176 = phi i1 [ false, %bb.af ], [ %.075, %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152.thread ]
+  %.176 = phi i1 [ false, %bb.af ], [ %23, %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit152.thread ]
   %.not560 = icmp eq i64 %i.eb, 0
   br i1 %.not560, label %._crit_edge537.thread, label %.lr.ph529
 

@@ -202,8 +202,11 @@ bb.b:                                             ; preds = %bb.a
   invoke void @_RNvXNtCsgSMwPvzVUxY_11proc_macro212token_streamNtB2_8IntoIterNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next(ptr nonnull sret([32 x i8]) align 8 %i.q, ptr nonnull align 8 %i.t)
           to label %bb.d unwind label %.thread87
 
-bb.c:                                             ; preds = %bb.ao
-  br i1 %.sroa.030.3.ph, label %.thread114, label %.thread
+bb.c:                                             ; preds = %bb.ao, %.split
+  %.sroa.030.2.ph = phi i8 [ %.sroa.030.3.ph, %bb.ao ], [ %.sroa.028.2106, %.split ]
+  %.pn49.ph = phi { ptr, i32 } [ %.pn46.ph, %bb.ao ], [ %i.as, %.split ] ; 2 uses
+  %3 = trunc nuw i8 %.sroa.030.2.ph to i1
+  br i1 %3, label %.thread114, label %.thread
 
 bb.d:                                             ; preds = %bb.b
   invoke void @_RNvNtCs2SM5xCHwwDm_13logos_codegen4util12expect_punct(ptr nonnull sret([32 x i8]) align 8 %i.r, ptr nonnull align 8 %i.q, i32 124)
@@ -382,7 +385,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.thread102, %bb.ad, %bb.ah
-  %3 = phi i1 [ false, %.thread102 ], [ true, %bb.ad ], [ true, %bb.ah ] ; 2 uses
+  %.sroa.028.2106 = phi i8 [ 0, %.thread102 ], [ 1, %bb.ad ], [ 1, %bb.ah ] ; 2 uses
   %.sroa.020.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.020, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.020.32..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.020, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
@@ -398,12 +401,13 @@ bb.ah:                                            ; preds = %bb.ad
 
 .split:                                           ; preds = %bb.ag
   %i.as = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  br i1 %3, label %.thread114, label %.thread
+          cleanup
+  br label %bb.c
 
 bb.ai:                                            ; preds = %bb.ag
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %i.d, i64 64, i1 false)
-  br i1 %3, label %bb.aj, label %bb.ak
+  %4 = trunc nuw i8 %.sroa.028.2106 to i1
+  br i1 %4, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgSMwPvzVUxY_11proc_macro212token_stream8IntoIterEBF_(ptr nonnull align 8 %i.t)
@@ -427,8 +431,8 @@ bb.an:                                            ; preds = %bb.q
           to label %bb.ao unwind label %bb.k
 
 bb.ao:                                            ; preds = %bb.al, %bb.x, %bb.am, %bb.u, %bb.q, %bb.q, %bb.an, %bb.af
-  %.sroa.030.3.ph = phi i1 [ true, %bb.q ], [ true, %bb.an ], [ true, %bb.q ], [ true, %bb.u ], [ true, %bb.am ], [ true, %bb.x ], [ true, %bb.al ], [ false, %bb.af ]
-  %.pn46.ph = phi { ptr, i32 } [ %i.ae, %bb.q ], [ %i.ae, %bb.an ], [ %i.ae, %bb.q ], [ %i.ah, %bb.u ], [ %.pn, %bb.am ], [ %.pn, %bb.x ], [ %i.at, %bb.al ], [ %i.ar, %bb.af ] ; 2 uses
+  %.sroa.030.3.ph = phi i8 [ 1, %bb.q ], [ 1, %bb.an ], [ 1, %bb.q ], [ 1, %bb.u ], [ 1, %bb.am ], [ 1, %bb.x ], [ 1, %bb.al ], [ 0, %bb.af ]
+  %.pn46.ph = phi { ptr, i32 } [ %i.ae, %bb.q ], [ %i.ae, %bb.an ], [ %i.ae, %bb.q ], [ %i.ah, %bb.u ], [ %.pn, %bb.am ], [ %.pn, %bb.x ], [ %i.at, %bb.al ], [ %i.ar, %bb.af ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgSMwPvzVUxY_11proc_macro25IdentEBD_(ptr nonnull align 8 %i.k) #16
           to label %bb.c unwind label %bb.k
 
@@ -507,14 +511,14 @@ bb.ba:                                            ; preds = %bb.m, %bb.l
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsgSMwPvzVUxY_11proc_macro29TokenTreeEECs36YJ3mR2EUy_5quote(ptr nonnull align 8 %i.n) #16
           to label %.thread114 unwind label %bb.k
 
-.thread114:                                       ; preds = %.split, %bb.aw, %bb.av, %bb.aq, %bb.az, %bb.ay, %bb.ax, %.thread87, %bb.ba, %bb.c
-  %.pn5272 = phi { ptr, i32 } [ %i.au, %bb.ax ], [ %.pn46.ph, %bb.c ], [ %lpad.thr_comm.split-lp86, %bb.ba ], [ %lpad.thr_comm85, %.thread87 ], [ %i.av, %bb.aw ], [ %i.av, %bb.av ], [ %i.av, %bb.aq ], [ %i.au, %bb.az ], [ %i.au, %bb.ay ], [ %i.as, %.split ]
+.thread114:                                       ; preds = %bb.aw, %bb.av, %bb.aq, %bb.az, %bb.ay, %bb.ax, %.thread87, %bb.ba, %bb.c
+  %.pn5170 = phi { ptr, i32 } [ %i.au, %bb.ax ], [ %.pn49.ph, %bb.c ], [ %lpad.thr_comm.split-lp86, %bb.ba ], [ %lpad.thr_comm85, %.thread87 ], [ %i.av, %bb.aw ], [ %i.av, %bb.av ], [ %i.av, %bb.aq ], [ %i.au, %bb.az ], [ %i.au, %bb.ay ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgSMwPvzVUxY_11proc_macro212token_stream8IntoIterEBF_(ptr nonnull align 8 %i.t) #16
           to label %.thread unwind label %bb.k
 
-.thread:                                          ; preds = %.split, %bb.i, %bb.c, %.thread114, %bb.bb
-  %.pn5463 = phi { ptr, i32 } [ %i.w, %bb.i ], [ %lpad.thr_comm.split-lp, %bb.bb ], [ %.pn46.ph, %bb.c ], [ %.pn5272, %.thread114 ], [ %i.as, %.split ]
-  resume { ptr, i32 } %.pn5463
+.thread:                                          ; preds = %bb.i, %bb.c, %.thread114, %bb.bb
+  %.pn5361 = phi { ptr, i32 } [ %i.w, %bb.i ], [ %lpad.thr_comm.split-lp, %bb.bb ], [ %.pn49.ph, %bb.c ], [ %.pn5170, %.thread114 ]
+  resume { ptr, i32 } %.pn5361
 
 bb.bb:                                            ; preds = %bb.a
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }

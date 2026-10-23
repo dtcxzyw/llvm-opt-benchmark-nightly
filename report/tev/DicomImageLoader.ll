@@ -205,11 +205,12 @@ bb.b:                                             ; preds = %_ZNSt3__113move_ite
   br i1 %i.e, label %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.i.i, label %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.thread.i.i
 
 _ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.i.i: ; preds = %bb.b
-  %4 = trunc nuw i8 %i.d to i1
-  %i.f = icmp eq i8 %i.d, %.sroa.02.sroa.3.0.copyload ; 2 uses
-  %brmerge.not.i.i.i.i.i = and i1 %i.f, %4
+  %4 = icmp ne i8 %i.d, %.sroa.02.sroa.3.0.copyload ; 2 uses
+  %i.f = icmp eq i8 %i.d, 0
+  %brmerge.i.i.i.i.i = or i1 %i.f, %4
+  %not..i.i.i.i.i = xor i1 %4, true
   %i.g = icmp eq ptr %.pre.i.i, %.sroa.02.sroa.2.0.copyload
-  %.0.i.i.i.i.i = select i1 %brmerge.not.i.i.i.i.i, i1 %i.g, i1 %i.f
+  %.0.i.i.i.i.i = select i1 %brmerge.i.i.i.i.i, i1 %not..i.i.i.i.i, i1 %i.g
   br i1 %.0.i.i.i.i.i, label %_ZNSt3__18distanceB8ne180100INS_13move_iteratorINS_6ranges9join_viewINS2_11owning_viewINS_6vectorINS5_IN3tev14DicomImageDataENS_9allocatorIS7_EEEENS8_ISA_EEEEEEE10__iteratorILb0EEEEEEENS_15iterator_traitsIT_E15difference_typeESJ_SJ_.exit, label %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.thread.i.i
 
 _ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.thread.i.i: ; preds = %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.i.i, %bb.b
@@ -368,11 +369,12 @@ bb.b:                                             ; preds = %_ZNSt3__113move_ite
   br i1 %i.l, label %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit, label %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.thread
 
 _ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit: ; preds = %bb.b
-  %4 = trunc nuw i8 %i.k to i1
-  %i.m = icmp eq i8 %i.k, %i.f                    ; 2 uses
-  %brmerge.not.i.i.i = and i1 %i.m, %4
+  %4 = icmp ne i8 %i.k, %i.f                      ; 2 uses
+  %i.m = icmp eq i8 %i.k, 0
+  %brmerge.i.i.i = or i1 %i.m, %4
+  %not..i.i.i = xor i1 %4, true
   %i.n = icmp eq ptr %.pre, %i.g
-  %.0.i.i.i = select i1 %brmerge.not.i.i.i, i1 %i.n, i1 %i.m
+  %.0.i.i.i = select i1 %brmerge.i.i.i, i1 %not..i.i.i, i1 %i.n
   br i1 %.0.i.i.i, label %_ZNSt3__128__exception_guard_exceptionsINS_29_AllocatorDestroyRangeReverseINS_9allocatorIN3tev14DicomImageDataEEEPS4_EEED2B8ne180100Ev.exit, label %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.thread
 
 _ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit.thread: ; preds = %bb.b, %_ZNSt3__1eqB8ne180100INS_6ranges9join_viewINS1_11owning_viewINS_6vectorINS4_IN3tev14DicomImageDataENS_9allocatorIS6_EEEENS7_IS9_EEEEEEE10__iteratorILb0EEESF_EEbRKNS_13move_iteratorIT_EERKNSG_IT0_EE.exit
@@ -775,8 +777,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !279  ; 17 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 3 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !4828, !range !202, !noundef !203
-  %2 = trunc nuw i8 %i.g to i1
-  br i1 %2, label %.critedge, label %bb.b
+  %.not49.not = icmp eq i8 %i.g, 0
+  br i1 %.not49.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 16

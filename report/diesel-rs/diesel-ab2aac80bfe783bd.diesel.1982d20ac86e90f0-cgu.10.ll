@@ -205,9 +205,8 @@ define hidden noundef zeroext i1 @_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 72
   %.val = load i8, ptr %i.a, align 8, !range !31, !noundef !4
-  %2 = trunc nuw i8 %.val to i1
-  %3 = xor i1 %2, true
-  ret i1 %3
+  %2 = icmp eq i8 %.val, 0
+  ret i1 %2
 }
 
 ; Function Attrs: nonlazybind uwtable

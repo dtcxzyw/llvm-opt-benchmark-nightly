@@ -202,7 +202,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.d
   %.val.i = load ptr, ptr %i.e, align 8           ; 3 uses
   %i.ae = load i32, ptr %2, align 8               ; 2 uses
-  %.not.i.i89 = trunc i32 %i.ae to i1             ; 2 uses
+  %.not.i.i89 = trunc i32 %i.ae to i8
+  %spec.select = and i8 %.not.i.i89, 1            ; 2 uses
   %.not13.i.i = icmp ugt i32 %i.ae, 16777215
   %i.af = getelementptr i8, ptr %.val.i, i64 72
   %i.ag = load i64, ptr %i.af, align 8
@@ -219,9 +220,10 @@ bb.g:                                             ; preds = %bb.d
   store i64 %i.ap, ptr %i.aq, align 8
   %i.ar = xor i64 %i.ap, -1
   %i.as = and i64 %i.ai, %i.ar
-  %.not14.i.i = icmp ne i64 %i.as, 0
-  %narrow.i.not.i = select i1 %.not.i.i89, i1 %.not14.i.i, i1 false
-  br i1 %narrow.i.not.i, label %get_file_caps.exit, label %bb.h
+  %.not14.i.i = icmp eq i64 %i.as, 0
+  %.not24.i = icmp eq i8 %spec.select, 0
+  %narrow.i.not.i = select i1 %.not24.i, i1 true, i1 %.not14.i.i
+  br i1 %narrow.i.not.i, label %bb.h, label %get_file_caps.exit
 
 get_file_caps.exit:                               ; preds = %bb.e, %bb.f, %bb.g
   %.01520.i = phi i32 [ -1, %bb.g ], [ %i.z, %bb.e ], [ -22, %bb.f ]
@@ -232,7 +234,7 @@ get_file_caps.exit:                               ; preds = %bb.e, %bb.f, %bb.g
   br label %bb.ar
 
 bb.h:                                             ; preds = %bb.c, %.critedge, %bb.g, %bb.e
-  %.2115.ph = phi i1 [ false, %bb.c ], [ %.not.i.i89, %bb.g ], [ false, %bb.e ], [ false, %.critedge ] ; 5 uses
+  %.2115.ph = phi i8 [ 0, %bb.c ], [ %spec.select, %bb.g ], [ 0, %bb.e ], [ 0, %.critedge ] ; 5 uses
   %.2.ph = phi i1 [ false, %bb.c ], [ %.not13.i.i, %bb.g ], [ false, %bb.e ], [ false, %.critedge ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   %i.av = getelementptr i8, ptr %i.f, i64 144     ; 2 uses
@@ -303,7 +305,7 @@ bb.o:                                             ; preds = %__is_suid.exit.thre
   br label %handle_privileged_root.exit
 
 handle_privileged_root.exit:                      ; preds = %bb.h, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o
-  %.3 = phi i1 [ true, %bb.o ], [ %.2115.ph, %bb.n ], [ %.2115.ph, %bb.m ], [ %.2115.ph, %bb.k ], [ %.2115.ph, %bb.l ], [ %.2115.ph, %bb.h ] ; 2 uses
+  %.3 = phi i8 [ 1, %bb.o ], [ %.2115.ph, %bb.n ], [ %.2115.ph, %bb.m ], [ %.2115.ph, %bb.k ], [ %.2115.ph, %bb.l ], [ %.2115.ph, %bb.h ]
   %i.by = load i64, ptr %i.p, align 8
   %i.bz = load i64, ptr %i.h, align 8
   %i.ca = xor i64 %i.bz, -1
@@ -413,7 +415,8 @@ bb.aa:                                            ; preds = %._crit_edge, %bb.z
   %i.du = load i64, ptr %i.p, align 8
   %i.dv = or i64 %i.ds, %i.du                     ; 8 uses
   store i64 %i.dv, ptr %i.p, align 8
-  %spec.select.a = select i1 %.3, i64 %i.dv, i64 %i.ds ; 4 uses
+  %3 = trunc nuw i8 %.3 to i1                     ; 2 uses
+  %spec.select.a = select i1 %3, i64 %i.dv, i64 %i.ds ; 4 uses
   %i.dw = getelementptr i8, ptr %i.f, i64 64
   store i64 %spec.select.a, ptr %i.dw, align 8
   %i.dx = getelementptr i8, ptr %i.f, i64 48      ; 2 uses
@@ -570,7 +573,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.fs, label %bb.ar, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  br i1 %.3, label %bb.aq, label %bb.ap
+  br i1 %3, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   %i.ft = xor i64 %i.fd, -1

@@ -184,16 +184,15 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) @__const.cmd__bundle_uri_parse.sb, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
-  %.not = icmp eq i32 %2, 0
+  %.not = icmp eq i32 %2, 0                       ; 2 uses
   %spec.select = select i1 %.not, ptr %i.a, ptr %i.b ; 2 uses
   %i.c = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef null, ptr noundef nonnull %3, ptr noundef nonnull %spec.select, i32 noundef 2) #9
   call void @init_bundle_list(ptr noundef nonnull %5) #9
   %i.d = call ptr @xstrdup(ptr noundef nonnull @.str.7) #9
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 56
   store ptr %i.d, ptr %i.e, align 8, !tbaa !35
-  %trunc = trunc nuw i32 %2 to i1
   %.not15 = icmp eq i32 %i.c, 1                   ; 2 uses
-  br i1 %trunc, label %bb.h, label %bb.b
+  br i1 %.not, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
   br i1 %.not15, label %bb.c, label %bb.k

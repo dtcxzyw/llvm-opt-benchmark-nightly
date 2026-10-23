@@ -205,14 +205,13 @@ bb.ec:                                            ; preds = %bb.eb
   call void @llvm.experimental.noalias.scope.decl(metadata !4961)
   call void @llvm.experimental.noalias.scope.decl(metadata !4962)
   %i.ui = load i8, ptr %i.by, align 8, !range !37, !alias.scope !4963, !noundef !20
-  %3 = trunc nuw i8 %i.ui to i1
+  %.not.i201.i.i.i.i = icmp eq i8 %i.ui, 0
   %i.uj = load i8, ptr %i.bx, align 4, !range !37, !alias.scope !4963
-  %4 = trunc nuw i8 %i.uj to i1
-  %or.cond.i.i.i.i.i = select i1 %3, i1 true, i1 %4
-  %or.cond.not.i.i.i.i.i = xor i1 %or.cond.i.i.i.i.i, true
+  %.not1.i.i.i.i.i = icmp eq i8 %i.uj, 0
+  %or.cond.i.i.i.i.i = select i1 %.not.i201.i.i.i.i, i1 %.not1.i.i.i.i.i, i1 false
   %i.uk = load i8, ptr %i.be, align 2, !range !37, !alias.scope !4963
   %i.ul = trunc nuw i8 %i.uk to i1
-  %or.cond25.i.i.i.i.i = select i1 %or.cond.not.i.i.i.i.i, i1 %i.ul, i1 false, !prof !43
+  %or.cond25.i.i.i.i.i = select i1 %or.cond.i.i.i.i.i, i1 %i.ul, i1 false, !prof !43
   br i1 %or.cond25.i.i.i.i.i, label %bb.ed, label %bb.ee, !prof !43
 
 bb.ed:                                            ; preds = %bb.ec
@@ -615,8 +614,7 @@ bb.e:                                             ; preds = %bb.c
   call void @_ZN6brotli3enc17brotli_bit_stream29BrotliWriteBitsPrepareStorage17h3e3bbade587d8cacE(i64 noundef %i.w, ptr noalias noundef nonnull align 1 %9, i64 noundef %10)
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 97
   %i.y = load i8, ptr %i.x, align 1, !range !37, !noundef !20
-  %12 = trunc nuw i8 %i.y to i1
-  %.not = xor i1 %12, true
+  %.not = icmp eq i8 %i.y, 0
   %brmerge = or i1 %11, %.not
   br i1 %brmerge, label %bb.g, label %bb.f
 
@@ -729,8 +727,7 @@ bb.e:                                             ; preds = %bb.c
   call void @_ZN6brotli3enc17brotli_bit_stream29BrotliWriteBitsPrepareStorage17h3e3bbade587d8cacE(i64 noundef %i.w, ptr noalias noundef nonnull align 1 %10, i64 noundef %11)
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 97
   %i.y = load i8, ptr %i.x, align 1, !range !37, !noundef !20
-  %13 = trunc nuw i8 %i.y to i1
-  %.not = xor i1 %13, true
+  %.not = icmp eq i8 %i.y, 0
   %brmerge = or i1 %12, %.not
   br i1 %brmerge, label %bb.f, label %bb.g
 
@@ -1133,12 +1130,11 @@ bb.c:                                             ; preds = %"_ZN5alloc11collect
   %i.z = icmp ult i64 %i.x, 32768                 ; 2 uses
   %i.aa = zext i1 %i.z to i8
   store i8 %i.aa, ptr %i.y, align 1, !alias.scope !12556
-  %.not5.i = xor i1 %i.z, true
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.ac = load i8, ptr %i.ab, align 8, !range !37, !alias.scope !12556
-  %3 = trunc nuw i8 %i.ac to i1
-  %or.cond.i = select i1 %.not5.i, i1 true, i1 %3
-  br i1 %or.cond.i, label %_ZN10actix_http2h17payload5Inner8register17hc8e689070eaf2c53E.exit.i, label %bb.e
+  %.not8.i = icmp eq i8 %i.ac, 0
+  %or.cond.i = select i1 %i.z, i1 %.not8.i, i1 false
+  br i1 %or.cond.i, label %bb.e, label %_ZN10actix_http2h17payload5Inner8register17hc8e689070eaf2c53E.exit.i
 
 "_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$9pop_front17hd3a7fc5399015439E.exit.thread.i": ; preds = %"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$9pop_front17hd3a7fc5399015439E.exit.i", %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses

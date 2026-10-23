@@ -206,8 +206,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i32, ptr %i.d, align 8, !tbaa !69
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.g = load i8, ptr %i.f, align 4, !tbaa !69, !range !113, !noundef !114
-  %2 = trunc nuw i8 %i.g to i1
-  %.not.i = xor i1 %2, true
+  %.not.i = icmp eq i8 %i.g, 0
   %i.h = icmp eq i32 %1, 0
   %or.cond.i = and i1 %i.h, %.not.i
   %i.i = icmp eq i32 %i.e, %1
@@ -610,8 +609,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.m = load i32, ptr %i.h, align 8, !tbaa !157
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 92
   %i.o = load i8, ptr %i.n, align 4, !tbaa !158, !range !113, !noundef !114
-  %8 = trunc nuw i8 %i.o to i1
-  %.not.i = xor i1 %8, true
+  %.not.i = icmp eq i8 %i.o, 0
   %i.p = icmp eq i32 %6, 0                        ; 2 uses
   %or.cond.i = and i1 %i.p, %.not.i
   %i.q = icmp eq i32 %i.m, %6
@@ -1014,8 +1012,8 @@ bb.e:                                             ; preds = %_Z18_mi_is_main_thr
 bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !188, !range !113, !noundef !114
-  %3 = trunc nuw i8 %i.ab to i1
-  br i1 %3, label %.critedge.thread, label %bb.g
+  %3 = icmp eq i8 %i.ab, 0
+  br i1 %3, label %bb.g, label %.critedge.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 32
@@ -1418,8 +1416,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.2.0.copyload = load i8, ptr %.sroa.2.0..sroa_idx, align 4
   %.sroa.1.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.1.0.copyload = load i32, ptr %.sroa.1.0..sroa_idx, align 8
-  %2 = trunc nuw i8 %.sroa.2.0.copyload to i1
-  %.not.i.i = xor i1 %2, true
+  %.not.i.i = icmp eq i8 %.sroa.2.0.copyload, 0
   %i.d = icmp eq i32 %i.b, 0
   %or.cond.i.i = and i1 %i.d, %.not.i.i
   %i.e = icmp eq i32 %.sroa.1.0.copyload, %i.b
@@ -1822,8 +1819,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d
 define hidden void @_Z16_mi_process_donev() local_unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr @_mi_process_is_initialized, align 1, !tbaa !115, !range !113, !noundef !114
-  %0 = trunc nuw i8 %i.a to i1
-  %.not = xor i1 %0, true
+  %.not = icmp eq i8 %i.a, 0
   %.b = load i1, ptr @_ZZ16_mi_process_donevE12process_done, align 1
   %or.cond = select i1 %.not, i1 true, i1 %.b
   br i1 %or.cond, label %bb.bp, label %bb.b
@@ -2226,8 +2222,7 @@ bb.c:                                             ; preds = %bb.b
 .split:                                           ; preds = %bb.c
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.2.0.copyload = load i8, ptr %.sroa.2.0..sroa_idx, align 4
-  %2 = trunc nuw i8 %.sroa.2.0.copyload to i1
-  %.not.i.i.i = xor i1 %2, true
+  %.not.i.i.i = icmp eq i8 %.sroa.2.0.copyload, 0
   %i.k = icmp eq i32 %i.i, 0
   %or.cond.i.i.i = and i1 %i.k, %.not.i.i.i
   %i.l = icmp eq i32 %.sroa.1.0.copyload, %i.i
@@ -2630,10 +2625,10 @@ bb.b:                                             ; preds = %.lr.ph.us.i
   %.sroa.2.0.copyload.us.us.i = load i8, ptr %.sroa.2.0..sroa_idx.us.us.i, align 4
   %.sroa.1.0..sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %.sroa.1.0.copyload.us.us.i = load i32, ptr %.sroa.1.0..sroa_idx.us.us.i, align 8
-  %5 = trunc nuw i8 %.sroa.2.0.copyload.us.us.i to i1
-  %6 = icmp ne i32 %.sroa.1.0.copyload.us.us.i, 0
-  %spec.select.i.i.us.us.not.i = and i1 %6, %5
-  br i1 %spec.select.i.i.us.us.not.i, label %bb.c, label %.split63.us.i
+  %.not.i.i.us.us.i = icmp eq i8 %.sroa.2.0.copyload.us.us.i, 0
+  %5 = icmp eq i32 %.sroa.1.0.copyload.us.us.i, 0
+  %spec.select.i.i.us.us.i = or i1 %.not.i.i.us.us.i, %5
+  br i1 %spec.select.i.i.us.us.i, label %.split63.us.i, label %bb.c
 
 bb.c:                                             ; preds = %.split.us.us.i, %.lr.ph.us.i
   %i.aa = getelementptr inbounds nuw i8, ptr %.03261.us.us.i, i64 72
@@ -2993,8 +2988,7 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.em, i64 12
   %.sroa.2.0.copyload.i.i = load i8, ptr %.sroa.2.0..sroa_idx.i.i, align 4
   %.sroa.1.0.copyload.i.i = load i32, ptr %.sroa.1.0..sroa_idx.i.i, align 8
-  %7 = trunc nuw i8 %.sroa.2.0.copyload.i.i to i1
-  %.not.i.i.i.i.i = xor i1 %7, true
+  %.not.i.i.i.i.i = icmp eq i8 %.sroa.2.0.copyload.i.i, 0
   %i.es = icmp eq i32 %i.eq, 0
   %or.cond.i.i.i.i.i = and i1 %i.es, %.not.i.i.i.i.i
   %i.et = icmp eq i32 %.sroa.1.0.copyload.i.i, %i.eq
@@ -3397,11 +3391,11 @@ _ZL21mi_commit_mask_createmmP16mi_commit_mask_s.exit.i: ; preds = %.peel.next.i.
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false)
   %i.bp = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.bq = load i8, ptr %i.bp, align 8, !range !113, !noundef !114 ; 2 uses
-  %8 = trunc nuw i8 %i.bq to i1
-  %9 = xor i8 %i.bq, 1
-  %10 = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
-  store i8 %9, ptr %10, align 8, !tbaa !223
-  br i1 %8, label %bb.s, label %bb.q
+  %8 = icmp eq i8 %i.bq, 0
+  %9 = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
+  %10 = xor i8 %i.bq, 1
+  store i8 %10, ptr %9, align 8, !tbaa !223
+  br i1 %8, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %.critedge.i
   %i.br = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 488), align 8, !tbaa !135

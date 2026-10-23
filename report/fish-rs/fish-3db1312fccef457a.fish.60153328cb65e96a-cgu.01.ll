@@ -204,16 +204,17 @@ bb.k:                                             ; preds = %.critedge2, %bb.j
   %i.ak = load i64, ptr %i.aj, align 8, !range !28, !noundef !14
   %i.al = trunc nuw i64 %i.ak to i1
   %i.am = getelementptr inbounds nuw i8, ptr %.0.val, i64 152
-  %i.an = load i64, ptr %i.am, align 8, !range !28, !noundef !14
-  %2 = trunc nuw i64 %i.an to i1                  ; 3 uses
+  %i.an = load i64, ptr %i.am, align 8, !range !28, !noundef !14 ; 2 uses
   br i1 %i.al, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
+  %2 = trunc nuw i64 %i.an to i1
   br i1 %2, label %bb.n, label %.critedge6
 
 bb.m:                                             ; preds = %bb.k
-  %i.ao = tail call fastcc noundef zeroext i1 @_RNCNvMs4_NtNtCs8frGy5WneL6_4fish6reader6readerNtB7_6Reader17is_repaint_needed0Bb_(i1 noundef zeroext %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @69, i64 noundef 9) #43 ; 0 uses
-  br i1 %2, label %bb.ah, label %bb.p
+  %3 = icmp ne i64 %i.an, 0                       ; 2 uses
+  %i.ao = tail call fastcc noundef zeroext i1 @_RNCNvMs4_NtNtCs8frGy5WneL6_4fish6reader6readerNtB7_6Reader17is_repaint_needed0Bb_(i1 noundef zeroext %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @69, i64 noundef 9) #43 ; 0 uses
+  br i1 %3, label %bb.ah, label %bb.p
 
 bb.n:                                             ; preds = %bb.l
   %i.ap = getelementptr inbounds nuw i8, ptr %.0.val, i64 1280
@@ -250,16 +251,17 @@ bb.p:                                             ; preds = %.split, %bb.m
   br i1 %i.bj, label %bb.ah, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.bl = load i64, ptr %i.j, align 8, !range !28, !noundef !14
-  %3 = trunc nuw i64 %i.bl to i1                  ; 3 uses
+  %i.bl = load i64, ptr %i.j, align 8, !range !28, !noundef !14 ; 2 uses
   br i1 %.sroa.07.0, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  br i1 %3, label %.split25, label %.critedge8
+  %4 = trunc nuw i64 %i.bl to i1
+  br i1 %4, label %.split25, label %.critedge8
 
 bb.s:                                             ; preds = %bb.q
-  %i.bm = tail call fastcc noundef zeroext i1 @_RNCNvMs4_NtNtCs8frGy5WneL6_4fish6reader6readerNtB7_6Reader17is_repaint_needed0Bb_(i1 noundef zeroext %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 27) #43 ; 0 uses
-  br i1 %3, label %bb.ah, label %bb.t
+  %5 = icmp ne i64 %i.bl, 0                       ; 2 uses
+  %i.bm = tail call fastcc noundef zeroext i1 @_RNCNvMs4_NtNtCs8frGy5WneL6_4fish6reader6readerNtB7_6Reader17is_repaint_needed0Bb_(i1 noundef zeroext %5, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 27) #43 ; 0 uses
+  br i1 %5, label %bb.ah, label %bb.t
 
 .split25:                                         ; preds = %bb.r
   %i.bn = getelementptr inbounds nuw i8, ptr %.0.val, i64 144
@@ -275,16 +277,17 @@ bb.t:                                             ; preds = %.split25, %bb.s
   %i.bs = load i32, ptr %i.a, align 4, !range !25, !noundef !14
   %i.bt = trunc nuw i32 %i.bs to i1
   %i.bu = getelementptr inbounds nuw i8, ptr %.0.val, i64 336
-  %i.bv = load i32, ptr %i.bu, align 8, !range !25, !noundef !14
-  %4 = trunc nuw i32 %i.bv to i1                  ; 3 uses
+  %i.bv = load i32, ptr %i.bu, align 8, !range !25, !noundef !14 ; 2 uses
   br i1 %i.bt, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  br i1 %4, label %bb.w, label %.critedge10
+  %6 = trunc nuw i32 %i.bv to i1
+  br i1 %6, label %bb.w, label %.critedge10
 
 bb.v:                                             ; preds = %bb.t
-  %i.bw = tail call fastcc noundef zeroext i1 @_RNCNvMs4_NtNtCs8frGy5WneL6_4fish6reader6readerNtB7_6Reader17is_repaint_needed0Bb_(i1 noundef zeroext %4, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @72, i64 noundef 14) #43 ; 0 uses
-  br i1 %4, label %bb.y, label %bb.x
+  %7 = icmp ne i32 %i.bv, 0                       ; 2 uses
+  %i.bw = tail call fastcc noundef zeroext i1 @_RNCNvMs4_NtNtCs8frGy5WneL6_4fish6reader6readerNtB7_6Reader17is_repaint_needed0Bb_(i1 noundef zeroext %7, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @72, i64 noundef 14) #43 ; 0 uses
+  br i1 %7, label %bb.y, label %bb.x
 
 bb.w:                                             ; preds = %bb.u
   %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -687,9 +690,9 @@ bb.hj:                                            ; preds = %_RNvMs0_NtNtCs8frGy
 .noexc96:                                         ; preds = %bb.hj
   unreachable
 
-select.unfold:                                    ; preds = %bb.hb, %bb.hc, %bb.hd, %bb.hh, %bb.hk
-  %.sink505 = phi i64 [ 1, %bb.hk ], [ 0, %bb.hh ], [ 0, %bb.hd ], [ 0, %bb.hc ], [ 0, %bb.hb ] ; 3 uses
-  %.sink504 = phi ptr [ %i.vr, %bb.hk ], [ inttoptr (i64 4 to ptr), %bb.hh ], [ inttoptr (i64 4 to ptr), %bb.hd ], [ inttoptr (i64 4 to ptr), %bb.hc ], [ inttoptr (i64 4 to ptr), %bb.hb ] ; 2 uses
+select.unfold:                                    ; preds = %bb.hc, %bb.hb, %bb.hd, %bb.hh, %bb.hk
+  %.sink505 = phi i64 [ 1, %bb.hk ], [ 0, %bb.hh ], [ 0, %bb.hd ], [ 0, %bb.hb ], [ 0, %bb.hc ] ; 3 uses
+  %.sink504 = phi ptr [ %i.vr, %bb.hk ], [ inttoptr (i64 4 to ptr), %bb.hh ], [ inttoptr (i64 4 to ptr), %bb.hd ], [ inttoptr (i64 4 to ptr), %bb.hb ], [ inttoptr (i64 4 to ptr), %bb.hc ] ; 2 uses
   store i64 %.sink505, ptr %i.bt, align 8
   %.sroa.4126.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   store ptr %.sink504, ptr %.sroa.4126.0..sroa_idx, align 8
@@ -1092,8 +1095,8 @@ bb.da:                                            ; preds = %bb.cz
   %.val93.pre = load ptr, ptr %0, align 8
   br label %_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread
 
-_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread: ; preds = %._RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread_crit_edge, %bb.cw, %bb.cq, %bb.cr, %bb.cs, %bb.cl, %bb.cy
-  %.val93 = phi ptr [ %.val93.pre, %._RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread_crit_edge ], [ %.val106, %bb.cw ], [ %.val106, %bb.cq ], [ %.val106, %bb.cr ], [ %.val106, %bb.cs ], [ %.val106, %bb.cl ], [ %.val93.pre320, %bb.cy ] ; 2 uses
+_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread: ; preds = %._RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread_crit_edge, %bb.cw, %bb.cr, %bb.cq, %bb.cs, %bb.cl, %bb.cy
+  %.val93 = phi ptr [ %.val93.pre, %._RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread_crit_edge ], [ %.val106, %bb.cw ], [ %.val106, %bb.cr ], [ %.val106, %bb.cq ], [ %.val106, %bb.cs ], [ %.val106, %bb.cl ], [ %.val93.pre320, %bb.cy ] ; 2 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %.val93, i64 2258
   %i.iw = load i8, ptr %i.iv, align 2, !range !13, !alias.scope !1586, !noundef !14
   %.not.i166 = icmp eq i8 %i.iw, 2
@@ -1496,8 +1499,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %.val35 = load ptr, ptr %1, align 8, !nonnull !14, !align !19, !noundef !14 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.val35, i64 2286
-  %i.ac = load i8, ptr %i.ab, align 2, !range !20, !noundef !14
-  %i.ad = trunc nuw i8 %i.ac to i1                ; 2 uses
+  %i.ac = load i8, ptr %i.ab, align 2, !range !20, !noundef !14 ; 2 uses
+  %i.ad = trunc nuw i8 %i.ac to i1
   br i1 %i.ad, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -1513,8 +1516,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.ai = extractvalue { i16, i16 } %i.ah, 0
   %i.aj = zext i16 %i.ai to i64
-  %not. = xor i1 %i.ad, true
-  %. = zext i1 %not. to i64
+  %4 = xor i8 %i.ac, 1
+  %. = zext nneg i8 %4 to i64
   %.val15 = load ptr, ptr %1, align 8, !nonnull !14, !align !19, !noundef !14
   %i.ak = getelementptr inbounds nuw i8, ptr %.val15, i64 992
   invoke void @_RNvMs1_NtCs8frGy5WneL6_4fish6screenNtB5_6Screen21reset_abandoning_line(ptr noalias nofree noundef nonnull align 8 dereferenceable(256) %i.ak, i64 noundef %., i64 %i.aj)
@@ -1917,12 +1920,12 @@ bb.ry:                                            ; preds = %bb.rv
 bb.rz:                                            ; preds = %bb.rw
   %i.awd = getelementptr i8, ptr %.val661, i64 689 ; 2 uses
   %.val1004 = load i8, ptr %i.awd, align 1, !range !20, !noundef !14 ; 2 uses
-  %2 = trunc nuw i8 %.val1004 to i1
+  %2 = icmp eq i8 %.val1004, 0
   %i.awe = xor i8 %.val1004, 1
   store i8 %i.awe, ptr %i.awd, align 1, !alias.scope !2042
   %i.awf = getelementptr inbounds nuw i8, ptr %.val661, i64 688
   store i8 1, ptr %i.awf, align 8, !alias.scope !2043
-  br i1 %2, label %_RNvMsd_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData30select_completion_in_direction.exit, label %bb.sa
+  br i1 %2, label %bb.sa, label %_RNvMsd_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData30select_completion_in_direction.exit
 
 bb.sa:                                            ; preds = %bb.rz
   %.val901 = load i64, ptr %i.avx, align 8, !range !28, !noundef !14
@@ -2325,8 +2328,8 @@ bb.c:                                             ; preds = %bb.a
 _RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData16active_edit_line.exit: ; preds = %bb.b, %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %.0.val, i64 1617
   %i.m = load i8, ptr %i.l, align 1, !range !20, !noundef !14
-  %1 = trunc nuw i8 %i.m to i1
-  br i1 %1, label %bb.d, label %_RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData16active_edit_line.exit.thread
+  %.not4 = icmp eq i8 %i.m, 0
+  br i1 %.not4, label %_RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData16active_edit_line.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %_RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData16active_edit_line.exit
   %i.n = getelementptr i8, ptr %.0.val, i64 120

@@ -204,12 +204,12 @@ __drm_to_dev.exit136:                             ; preds = %.critedge91, %bb.s
   %i.cc = load ptr, ptr %i.cb, align 8
   tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.br, i32 noundef 2, ptr noundef @.str.11, ptr noundef %i.bu, i32 noundef %i.bv, i32 noundef %i.by, i32 noundef %i.ca, ptr noundef %i.cc) #14
   %.not87 = icmp eq i8 %i.ab, 0
-  %i.cd = load i8, ptr %i.bw, align 2, !range !26, !noundef !27
-  %1 = trunc nuw i8 %i.cd to i1                   ; 2 uses
+  %i.cd = load i8, ptr %i.bw, align 2, !range !26, !noundef !27 ; 2 uses
   br i1 %.not87, label %bb.aa, label %bb.t
 
 bb.t:                                             ; preds = %__drm_to_dev.exit136
-  br i1 %1, label %bb.z, label %bb.u, !prof !30
+  %.not88.not = icmp eq i8 %i.cd, 0
+  br i1 %.not88.not, label %bb.u, label %bb.z, !prof !24
 
 bb.u:                                             ; preds = %bb.t
   %i.ce = load ptr, ptr %i.e, align 8             ; 2 uses
@@ -268,6 +268,7 @@ bb.z:                                             ; preds = %dev_name.exit152, %
   br label %bb.aj
 
 bb.aa:                                            ; preds = %__drm_to_dev.exit136
+  %1 = trunc nuw i8 %i.cd to i1
   br i1 %1, label %bb.ab, label %bb.ag, !prof !24
 
 bb.ab:                                            ; preds = %bb.aa
@@ -501,8 +502,8 @@ __drm_to_dev.exit70:                              ; preds = %.critedge, %bb.j
   tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.aq, i32 noundef 2, ptr noundef @.str.16, ptr noundef %i.at, i32 noundef %i.au, i32 noundef %i.ax, i32 noundef %i.az, ptr noundef %i.bb) #14
   tail call void @assert_dpll(ptr noundef %i.e, ptr noundef nonnull %i.g, i1 noundef zeroext true) #16
   %i.bc = load i8, ptr %i.av, align 2, !range !26, !noundef !27
-  %1 = trunc nuw i8 %i.bc to i1
-  br i1 %1, label %bb.p, label %bb.k, !prof !30
+  %.not57.not = icmp eq i8 %i.bc, 0
+  br i1 %.not57.not, label %bb.k, label %bb.p, !prof !24
 
 bb.k:                                             ; preds = %__drm_to_dev.exit70
   %i.bd = load ptr, ptr %i.e, align 8             ; 2 uses

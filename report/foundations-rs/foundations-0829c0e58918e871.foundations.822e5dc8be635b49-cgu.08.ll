@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %_RINvCs3ZeXDd4Wx7Y_
   br i1 %.not, label %bb.h, label %bb.i, !dbg !16347
 
 bb.h:                                             ; preds = %bb.i, %bb.g, %_RINvCs3ZeXDd4Wx7Y_4rand12random_rangedINtNtNtCs3oUPovFnLWP_4core3ops5range5RangedEECsbaWXNhtWAp9_11foundations.exit
-  %.sroa.0.0 = phi i1 [ false, %_RINvCs3ZeXDd4Wx7Y_4rand12random_rangedINtNtNtCs3oUPovFnLWP_4core3ops5range5RangedEECsbaWXNhtWAp9_11foundations.exit ], [ %3, %bb.i ], [ true, %bb.g ], !dbg !16348
+  %.sroa.0.0 = phi i1 [ false, %_RINvCs3ZeXDd4Wx7Y_4rand12random_rangedINtNtNtCs3oUPovFnLWP_4core3ops5range5RangedEECsbaWXNhtWAp9_11foundations.exit ], [ %2, %bb.i ], [ true, %bb.g ], !dbg !16348
   ret i1 %.sroa.0.0, !dbg !16349
 
 bb.i:                                             ; preds = %bb.g
@@ -210,8 +210,7 @@ bb.i:                                             ; preds = %bb.g
   call void @_RNvMs1_NtNtCsgtgatFLTNh8_8governor5state6directINtB7_11RateLimiterNtB5_8NotKeyedNtNtB7_9in_memory13InMemoryStateNtNtCsbaWXNhtWAp9_11foundations9ratelimit17StaticQuantaClockINtNtB9_10middleware14NoOpMiddlewareNtNtNtB9_5clock6quanta13QuantaInstantEE5checkB1Q_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.b, ptr noundef nonnull align 8 %i.q), !dbg !16351
   %i.s = load i64, ptr %i.b, align 8, !dbg !16352, !range !765, !noundef !734
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !16353
-  %2 = trunc nuw i64 %i.s to i1, !dbg !16354
-  %3 = xor i1 %2, true, !dbg !16354
+  %2 = icmp eq i64 %i.s, 0, !dbg !16354
   br label %bb.h, !dbg !16355
 }
 

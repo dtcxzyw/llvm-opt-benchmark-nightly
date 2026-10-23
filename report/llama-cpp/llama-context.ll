@@ -205,13 +205,14 @@ bb.ek:                                            ; preds = %bb.ej
   br label %_ZNKSt14default_deleteI22llama_memory_context_iEclEPS0_.exit.i468
 
 ._crit_edge:                                      ; preds = %bb.el
-  %12 = icmp ult i32 %i.vv, 2
-  %or.cond390.not = or i1 %spec.select, %12
-  br i1 %or.cond390.not, label %_ZNKSt14default_deleteI22llama_memory_context_iEclEPS0_.exit.i465, label %bb.em
+  %12 = icmp eq i8 %spec.select, 0
+  %13 = icmp ugt i32 %i.vv, 1
+  %or.cond390 = and i1 %12, %13
+  br i1 %or.cond390, label %bb.em, label %_ZNKSt14default_deleteI22llama_memory_context_iEclEPS0_.exit.i465
 
 bb.el:                                            ; preds = %.lr.ph634, %bb.el
   %.0253633 = phi i64 [ 0, %.lr.ph634 ], [ %i.vu, %bb.el ] ; 4 uses
-  %.0254632 = phi i1 [ true, %.lr.ph634 ], [ %spec.select, %bb.el ]
+  %.0254631 = phi i8 [ 1, %.lr.ph634 ], [ %spec.select, %bb.el ]
   %i.vp = getelementptr inbounds nuw [4 x i8], ptr %i.vd, i64 %.0253633
   %i.vq = load i32, ptr %i.vp, align 4, !tbaa !199
   %i.vr = sext i32 %i.vq to i64                   ; 2 uses
@@ -219,7 +220,7 @@ bb.el:                                            ; preds = %.lr.ph634, %bb.el
   %i.vt = getelementptr inbounds nuw [4 x i8], ptr %i.vm, i64 %i.vr
   store i32 %i.vs, ptr %i.vt, align 4, !tbaa !199
   %.not378 = icmp eq i64 %.0253633, %i.vr
-  %spec.select = select i1 %.not378, i1 %.0254632, i1 false ; 2 uses
+  %spec.select = select i1 %.not378, i8 %.0254631, i8 0 ; 2 uses
   %i.vu = add nuw nsw i64 %.0253633, 1            ; 2 uses
   %i.vv = load i32, ptr %i.fz, align 8, !tbaa !194 ; 3 uses
   %i.vw = zext i32 %i.vv to i64                   ; 2 uses

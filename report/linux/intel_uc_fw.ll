@@ -202,16 +202,17 @@ bb.r:                                             ; preds = %bb.q
   %i.dt = load i8, ptr %i.ds, align 1, !range !12, !noundef !13
   %i.du = trunc nuw i8 %i.dt to i1
   %i.dv = getelementptr i8, ptr %i.de, i64 13
-  %i.dw = load i8, ptr %i.dv, align 1, !range !12, !noundef !13
-  %3 = trunc nuw i8 %i.dw to i1                   ; 2 uses
+  %i.dw = load i8, ptr %i.dv, align 1, !range !12, !noundef !13 ; 2 uses
   br i1 %i.du, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %.not138.i = icmp ne i8 %i.do, %i.dq
-  %or.cond151.not.i = or i1 %.not138.i, %3
-  br i1 %or.cond151.not.i, label %bb.z, label %bb.w
+  %.not.i = icmp eq i8 %i.dw, 0
+  %.not138.i = icmp eq i8 %i.do, %i.dq
+  %or.cond151.i = and i1 %.not138.i, %.not.i
+  br i1 %or.cond151.i, label %bb.w, label %bb.z
 
 bb.t:                                             ; preds = %bb.r
+  %3 = trunc nuw i8 %i.dw to i1
   br i1 %3, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t

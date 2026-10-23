@@ -205,8 +205,8 @@ define hidden noundef nonnull ptr @_RINvMs0_NtNtNtNtCsh8eZTKRCwoO_3std3sys12thre
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !6408 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !dbg !6409, !range !2229, !noundef !2226
-  %trunc = trunc nuw i8 %i.b to i1, !dbg !6410
-  br i1 %trunc, label %bb.g, label %bb.b, !dbg !6410
+  %.not8.not = icmp eq i8 %i.b, 0, !dbg !6410
+  br i1 %.not8.not, label %bb.b, label %bb.g, !dbg !6410
 
 bb.b:                                             ; preds = %bb.a
   %.not = icmp eq ptr %1, null, !dbg !6411
@@ -609,10 +609,11 @@ bb.be:                                            ; preds = %bb.ba
 bb.bf:                                            ; preds = %bb.be
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hc, i64 16, !dbg !115535
   %i.hk = load i64, ptr %i.hj, align 8, !dbg !115535, !noundef !2226
-  %5 = and i8 %i.gp, %i.go, !dbg !115536
-  %.not.a = icmp ne i8 %5, 0, !dbg !115536
+  %.not = icmp ne i8 %i.go, 0, !dbg !115536
+  %.not.a = icmp ne i8 %i.gp, 0, !dbg !115536
+  %brmerge.not129 = and i1 %.not, %.not.a, !dbg !115536
   %i.hl = icmp eq i64 %i.hk, 1
-  %or.cond = and i1 %.not.a, %i.hl, !dbg !115536
+  %or.cond = and i1 %brmerge.not129, %i.hl, !dbg !115536
   br i1 %or.cond, label %bb.bg, label %bb.bb, !dbg !115536
 
 bb.bg:                                            ; preds = %bb.bf
@@ -1015,10 +1016,10 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !115958, !noalias !115947
   call fastcc void @_RNvXsv_NtNtCscgRAwXFJnXP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(104) %i.b) #50, !dbg !115959
   %i.h = load i64, ptr %i.a, align 8, !dbg !115960, !range !2367, !noalias !115947, !noundef !2226
-  %3 = trunc nuw i64 %i.h to i1, !dbg !115961
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !115962, !noalias !115947
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !115961, !noalias !115947
+  %not..i.i.i = icmp eq i64 %i.h, 0, !dbg !115962
   %i.i = add i32 %.sroa.0.0.i.i.i, 1, !dbg !115963
-  br i1 %3, label %bb.d, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes10StringTypeB1u_NtB1w_10UInt32TypeNCNvYINtB8_12ChunkedArrayB1u_ENtNtNtNtCsePnBjWcsLF5_10polars_ops13chunked_array7strings9namespace19StringNameSpaceImpl18count_matches_many0E0CskY9G75ZWc4U_11polars_expr.exit, !dbg !115964
+  br i1 %not..i.i.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes10StringTypeB1u_NtB1w_10UInt32TypeNCNvYINtB8_12ChunkedArrayB1u_ENtNtNtNtCsePnBjWcsLF5_10polars_ops13chunked_array7strings9namespace19StringNameSpaceImpl18count_matches_many0E0CskY9G75ZWc4U_11polars_expr.exit, label %bb.d, !dbg !115964
 
 _RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes10StringTypeB1u_NtB1w_10UInt32TypeNCNvYINtB8_12ChunkedArrayB1u_ENtNtNtNtCsePnBjWcsLF5_10polars_ops13chunked_array7strings9namespace19StringNameSpaceImpl18count_matches_many0E0CskY9G75ZWc4U_11polars_expr.exit: ; preds = %bb.d, %.thread.i, %bb.b
   %.sroa.4.1.i.i = phi i32 [ undef, %bb.b ], [ undef, %.thread.i ], [ %.sroa.0.0.i.i.i, %bb.d ], !dbg !115965
@@ -1061,10 +1062,10 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !116018, !noalias !116006
   call fastcc void @_RNvXsv_NtNtCscgRAwXFJnXP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(104) %i.b) #50, !dbg !116019
   %i.h = load i64, ptr %i.a, align 8, !dbg !116020, !range !2367, !noalias !116006, !noundef !2226
-  %3 = trunc nuw i64 %i.h to i1, !dbg !116021
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !116022, !noalias !116006
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !116021, !noalias !116006
+  %not..i.i.i = icmp eq i64 %i.h, 0, !dbg !116022
   %i.i = add i32 %.sroa.0.0.i.i.i, 1, !dbg !116023
-  br i1 %3, label %bb.d, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes10StringTypeB1u_NtB1w_10UInt32TypeNCNvYINtB8_12ChunkedArrayB1u_ENtNtNtNtCsePnBjWcsLF5_10polars_ops13chunked_array7strings9namespace19StringNameSpaceImpl18count_matches_many0Es_0CskY9G75ZWc4U_11polars_expr.exit, !dbg !116024
+  br i1 %not..i.i.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes10StringTypeB1u_NtB1w_10UInt32TypeNCNvYINtB8_12ChunkedArrayB1u_ENtNtNtNtCsePnBjWcsLF5_10polars_ops13chunked_array7strings9namespace19StringNameSpaceImpl18count_matches_many0Es_0CskY9G75ZWc4U_11polars_expr.exit, label %bb.d, !dbg !116024
 
 _RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes10StringTypeB1u_NtB1w_10UInt32TypeNCNvYINtB8_12ChunkedArrayB1u_ENtNtNtNtCsePnBjWcsLF5_10polars_ops13chunked_array7strings9namespace19StringNameSpaceImpl18count_matches_many0Es_0CskY9G75ZWc4U_11polars_expr.exit: ; preds = %bb.d, %.thread.i, %bb.b
   %.sroa.4.1.i.i = phi i32 [ undef, %bb.b ], [ undef, %.thread.i ], [ %.sroa.0.0.i.i.i, %bb.d ], !dbg !116025
@@ -1407,10 +1408,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !116247
   %.val = load ptr, ptr %i.b, align 8, !dbg !116247, !nonnull !2226, !align !2858, !noundef !2226 ; 2 uses
   %i.c = load i16, ptr %.val, align 2, !dbg !116248, !range !2805, !noundef !2226
-  %3 = trunc nuw i16 %i.c to i1, !dbg !116249
-  %4 = icmp ne i16 %1, 0
-  %or.cond.not.i = and i1 %4, %3, !dbg !116249
-  br i1 %or.cond.not.i, label %bb.b, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float16TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch3pow21pow_on_chunked_arraysB1u_B1u_Es_0E0B2f_.exit, !dbg !116249
+  %.not.i = icmp eq i16 %i.c, 0, !dbg !116249
+  %3 = icmp eq i16 %1, 0
+  %or.cond.i = or i1 %3, %.not.i, !dbg !116249
+  br i1 %or.cond.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float16TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch3pow21pow_on_chunked_arraysB1u_B1u_Es_0E0B2f_.exit, label %bb.b, !dbg !116249
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 2, !dbg !116248
@@ -1433,10 +1434,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !116263
   %.val = load ptr, ptr %i.b, align 8, !dbg !116263, !nonnull !2226, !align !2858, !noundef !2226 ; 2 uses
   %i.c = load i16, ptr %.val, align 2, !dbg !116264, !range !2805, !noundef !2226
-  %3 = trunc nuw i16 %i.c to i1, !dbg !116265
-  %4 = icmp ne i16 %1, 0
-  %or.cond.not.i = and i1 %4, %3, !dbg !116265
-  br i1 %or.cond.not.i, label %bb.b, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float16TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch3pow21pow_on_chunked_arraysB1u_B1u_Es_0Es_0B2f_.exit, !dbg !116265
+  %.not.i = icmp eq i16 %i.c, 0, !dbg !116265
+  %3 = icmp eq i16 %1, 0
+  %or.cond.i = or i1 %3, %.not.i, !dbg !116265
+  br i1 %or.cond.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float16TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch3pow21pow_on_chunked_arraysB1u_B1u_Es_0Es_0B2f_.exit, label %bb.b, !dbg !116265
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 2, !dbg !116264
@@ -1459,10 +1460,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !116285
   %.val = load ptr, ptr %i.b, align 8, !dbg !116285, !nonnull !2226, !align !2881, !noundef !2226 ; 2 uses
   %i.c = load i32, ptr %.val, align 4, !dbg !116286, !range !2809, !noundef !2226
-  %3 = trunc nuw i32 %i.c to i1, !dbg !116287
-  %4 = icmp ne i32 %1, 0
-  %or.cond.not.i = and i1 %4, %3, !dbg !116287
-  br i1 %or.cond.not.i, label %bb.b, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float32TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0E0B2f_.exit, !dbg !116287
+  %.not.i = icmp eq i32 %i.c, 0, !dbg !116287
+  %3 = icmp eq i32 %1, 0
+  %or.cond.i = or i1 %3, %.not.i, !dbg !116287
+  br i1 %or.cond.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float32TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0E0B2f_.exit, label %bb.b, !dbg !116287
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 4, !dbg !116286
@@ -1485,10 +1486,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !116307
   %.val = load ptr, ptr %i.b, align 8, !dbg !116307, !nonnull !2226, !align !2881, !noundef !2226 ; 2 uses
   %i.c = load i32, ptr %.val, align 4, !dbg !116308, !range !2809, !noundef !2226
-  %3 = trunc nuw i32 %i.c to i1, !dbg !116309
-  %4 = icmp ne i32 %1, 0
-  %or.cond.not.i = and i1 %4, %3, !dbg !116309
-  br i1 %or.cond.not.i, label %bb.b, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float32TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0Es_0B2f_.exit, !dbg !116309
+  %.not.i = icmp eq i32 %i.c, 0, !dbg !116309
+  %3 = icmp eq i32 %1, 0
+  %or.cond.i = or i1 %3, %.not.i, !dbg !116309
+  br i1 %or.cond.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float32TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0Es_0B2f_.exit, label %bb.b, !dbg !116309
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 4, !dbg !116308
@@ -1559,10 +1560,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !116369
   %.val = load ptr, ptr %i.b, align 8, !dbg !116369, !nonnull !2226, !align !2450, !noundef !2226 ; 2 uses
   %i.c = load i64, ptr %.val, align 8, !dbg !116370, !range !2367, !noundef !2226
-  %3 = trunc nuw i64 %i.c to i1, !dbg !116371
-  %4 = icmp ne i64 %1, 0
-  %or.cond.not.i = and i1 %4, %3, !dbg !116371
-  br i1 %or.cond.not.i, label %bb.b, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float64TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0E0B2f_.exit, !dbg !116371
+  %.not.i = icmp eq i64 %i.c, 0, !dbg !116371
+  %3 = icmp eq i64 %1, 0
+  %or.cond.i = or i1 %3, %.not.i, !dbg !116371
+  br i1 %or.cond.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float64TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0E0B2f_.exit, label %bb.b, !dbg !116371
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 8, !dbg !116370
@@ -1585,10 +1586,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !116391
   %.val = load ptr, ptr %i.b, align 8, !dbg !116391, !nonnull !2226, !align !2450, !noundef !2226 ; 2 uses
   %i.c = load i64, ptr %.val, align 8, !dbg !116392, !range !2367, !noundef !2226
-  %3 = trunc nuw i64 %i.c to i1, !dbg !116393
-  %4 = icmp ne i64 %1, 0
-  %or.cond.not.i = and i1 %4, %3, !dbg !116393
-  br i1 %or.cond.not.i, label %bb.b, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float64TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0Es_0B2f_.exit, !dbg !116393
+  %.not.i = icmp eq i64 %i.c, 0, !dbg !116393
+  %3 = icmp eq i64 %1, 0
+  %or.cond.i = or i1 %3, %.not.i, !dbg !116393
+  br i1 %or.cond.i, label %_RNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity28broadcast_binary_elementwiseNtNtBa_9datatypes11Float64TypeB1u_B1u_NCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry17arctan2_on_floatsB1u_E0Es_0B2f_.exit, label %bb.b, !dbg !116393
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 8, !dbg !116392
@@ -1991,8 +1992,8 @@ begin_hunk_3_@llvm.vector.reduce.umin.v2i64
 !115958 = !DILocation(line: 1116, column: 9, scope: !1953, inlinedAt: !115940)
 !115959 = !DILocation(line: 1116, column: 16, scope: !1953, inlinedAt: !115940)
 !115960 = !DILocation(line: 1164, column: 15, scope: !1956, inlinedAt: !115941)
-!115961 = !DILocation(line: 1164, column: 9, scope: !1956, inlinedAt: !115941)
-!115962 = !DILocation(line: 1119, column: 10, scope: !1953, inlinedAt: !115940)
+!115961 = !DILocation(line: 1119, column: 10, scope: !1953, inlinedAt: !115940)
+!115962 = !DILocation(line: 1164, column: 9, scope: !1956, inlinedAt: !115941)
 !115963 = !DILocation(line: 232, column: 24, scope: !1957, inlinedAt: !115942)
 !115964 = !DILocation(line: 2686, column: 19, scope: !1955, inlinedAt: !115932)
 !115965 = !DILocation(line: 618, scope: !1946, inlinedAt: !115920)
@@ -2051,8 +2052,8 @@ begin_hunk_3_@llvm.vector.reduce.umin.v2i64
 !116018 = !DILocation(line: 1116, column: 9, scope: !1953, inlinedAt: !115999)
 !116019 = !DILocation(line: 1116, column: 16, scope: !1953, inlinedAt: !115999)
 !116020 = !DILocation(line: 1164, column: 15, scope: !1956, inlinedAt: !116000)
-!116021 = !DILocation(line: 1164, column: 9, scope: !1956, inlinedAt: !116000)
-!116022 = !DILocation(line: 1119, column: 10, scope: !1953, inlinedAt: !115999)
+!116021 = !DILocation(line: 1119, column: 10, scope: !1953, inlinedAt: !115999)
+!116022 = !DILocation(line: 1164, column: 9, scope: !1956, inlinedAt: !116000)
 !116023 = !DILocation(line: 232, column: 24, scope: !1957, inlinedAt: !116001)
 !116024 = !DILocation(line: 2686, column: 19, scope: !1955, inlinedAt: !115991)
 !116025 = !DILocation(line: 618, scope: !1946, inlinedAt: !115979)

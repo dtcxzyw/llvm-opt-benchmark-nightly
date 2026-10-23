@@ -204,8 +204,8 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   store i32 %0, ptr %i.a, align 4, !tbaa !171
   %i.b = load i8, ptr %2, align 1, !tbaa !172, !range !97, !noundef !98
-  %6 = trunc nuw i8 %i.b to i1
-  br i1 %6, label %bb.h, label %bb.b, !prof !145
+  %.not.not = icmp eq i8 %i.b, 0
+  br i1 %.not.not, label %bb.b, label %bb.h, !prof !24
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str, i64 noundef 16) ; 0 uses
@@ -431,8 +431,8 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   store i32 %0, ptr %i.a, align 4, !tbaa !171
   %i.b = load i8, ptr %2, align 1, !tbaa !172, !range !97, !noundef !98
-  %6 = trunc nuw i8 %i.b to i1
-  br i1 %6, label %bb.h, label %bb.b, !prof !145
+  %.not.not = icmp eq i8 %i.b, 0
+  br i1 %.not.not, label %bb.b, label %bb.h, !prof !24
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str, i64 noundef 16) ; 0 uses
@@ -835,7 +835,7 @@ _ZN7AstNode4castI6AstSel11AstNodeExprEEPT_PT0_.exit313: ; preds = %bb.cv
   br label %_ZN7AstNode4castI6AstSel11AstNodeExprEEPT_PT0_.exit313.thread
 
 _ZN7AstNode4castI6AstSel11AstNodeExprEEPT_PT0_.exit313.thread: ; preds = %bb.cv, %_ZN9AstAssignC2EP8FileLineP11AstNodeExprS3_P7AstNode.exit, %_ZN7AstNode4castI6AstSel11AstNodeExprEEPT_PT0_.exit313
-  %i.lz = phi i1 [ true, %_ZN7AstNode4castI6AstSel11AstNodeExprEEPT_PT0_.exit313 ], [ false, %_ZN9AstAssignC2EP8FileLineP11AstNodeExprS3_P7AstNode.exit ], [ false, %bb.cv ] ; 3 uses
+  %i.lz = phi i1 [ false, %_ZN7AstNode4castI6AstSel11AstNodeExprEEPT_PT0_.exit313 ], [ true, %_ZN9AstAssignC2EP8FileLineP11AstNodeExprS3_P7AstNode.exit ], [ true, %bb.cv ] ; 3 uses
   %i.ma = phi ptr [ %i.ly, %_ZN7AstNode4castI6AstSel11AstNodeExprEEPT_PT0_.exit313 ], [ null, %_ZN9AstAssignC2EP8FileLineP11AstNodeExprS3_P7AstNode.exit ], [ %i.bn, %bb.cv ] ; 3 uses
   %.not178 = icmp eq ptr %.2, null
   br i1 %.not178, label %bb.cx, label %bb.cw
@@ -860,23 +860,30 @@ bb.cx:                                            ; preds = %bb.cw, %_ZN7AstNode
 
 .noexc317:                                        ; preds = %.noexc316
   %.not.i314 = icmp eq ptr %i.mh, null
-  br i1 %.not.i314, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318.thread, label %bb.cy
+  br i1 %.not.i314, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318, label %bb.cy
 
 bb.cy:                                            ; preds = %.noexc317
   %i.mi = getelementptr inbounds nuw i8, ptr %i.mh, i64 164
-  %.sroa.0.0.copyload.i.i.i315 = load i8, ptr %i.mi, align 4, !tbaa !308
-  %switch.tableidx = add i8 %.sroa.0.0.copyload.i.i.i315, -5 ; 2 uses
-  %i.mj = icmp ult i8 %switch.tableidx, 20
-  br i1 %i.mj, label %switch.hole_check, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318
+  %.sroa.0.0.copyload.i.i.i315 = load i8, ptr %i.mi, align 4, !tbaa !308 ; 2 uses
+  %i.mj = icmp ult i8 %.sroa.0.0.copyload.i.i.i315, 25
+  br i1 %i.mj, label %switch.lookup, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318
 
-_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318: ; preds = %switch.hole_check, %bb.cy
+switch.lookup:                                    ; preds = %bb.cy
+  %switch.cast = zext nneg i8 %.sroa.0.0.copyload.i.i.i315 to i25
+  %switch.downshift = lshr i25 7135, %switch.cast
+  %switch.masked = trunc i25 %switch.downshift to i1
+  br label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318
+
+_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318: ; preds = %bb.cy, %switch.lookup, %.noexc317
+  %8 = phi i1 [ %switch.masked, %switch.lookup ], [ false, %.noexc317 ], [ true, %bb.cy ]
   %i.mk = load i8, ptr %i.ey, align 8, !range !97
-  %8 = trunc nuw i8 %i.mk to i1
-  %or.cond13 = or i1 %i.lz, %8
+  %.not181 = icmp eq i8 %i.mk, 0
+  %or.cond11.not = select i1 %8, i1 %.not181, i1 false
+  %or.cond13.not180 = and i1 %i.lz, %or.cond11.not
   %i.ml = load i32, ptr %7, align 8
-  %9 = icmp ne i32 %i.ml, 0
-  %or.cond16.not = select i1 %or.cond13, i1 true, i1 %9
-  br i1 %or.cond16.not, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318.thread, label %bb.cz
+  %9 = icmp eq i32 %i.ml, 0
+  %or.cond16.not = select i1 %or.cond13.not180, i1 %9, i1 false
+  br i1 %or.cond16.not, label %bb.cz, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318.thread
 
 bb.cz:                                            ; preds = %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318
   %i.mm = load i32, ptr %i.gh, align 4, !tbaa !292
@@ -895,14 +902,8 @@ _ZNK7AstNode5widthEv.exit320:                     ; preds = %bb.da, %bb.cz
   %i.ms = icmp eq i32 %i.mm, %i.mr
   br label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318.thread
 
-switch.hole_check:                                ; preds = %bb.cy
-  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
-  %switch.shifted = lshr i32 1048353, %switch.maskindex
-  %switch.lobit = trunc i32 %switch.shifted to i1
-  br i1 %switch.lobit, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318.thread, label %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318
-
-_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318.thread: ; preds = %switch.hole_check, %.noexc317, %_ZNK7AstNode5widthEv.exit320, %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318
-  %10 = phi i1 [ %i.ms, %_ZNK7AstNode5widthEv.exit320 ], [ false, %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318 ], [ false, %.noexc317 ], [ false, %switch.hole_check ]
+_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318.thread: ; preds = %_ZNK7AstNode5widthEv.exit320, %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318
+  %10 = phi i1 [ %i.ms, %_ZNK7AstNode5widthEv.exit320 ], [ false, %_ZN10ForceState14isBitwiseDTypeEP7AstNode.exit318 ]
   %i.mt = load i64, ptr %i.hi, align 4
   %i.mu = and i64 %i.mt, 536870912
   %.not394 = icmp eq i64 %i.mu, 0
@@ -1093,7 +1094,7 @@ bb.do:                                            ; preds = %.critedge
           to label %_ZNK10ForceState30createForceReadIndexExpressionERKNS_12VarForceInfoEP11AstNodeExprS4_.exit343 unwind label %bb.dv ; 2 uses
 
 _ZNK10ForceState30createForceReadIndexExpressionERKNS_12VarForceInfoEP11AstNodeExprS4_.exit343: ; preds = %.noexc341
-  br i1 %i.lz, label %.invoke, label %_ZNK10ForceState30createForceReadIndexExpressionERKNS_12VarForceInfoEP11AstNodeExprS4_.exit
+  br i1 %i.lz, label %_ZNK10ForceState30createForceReadIndexExpressionERKNS_12VarForceInfoEP11AstNodeExprS4_.exit, label %.invoke
 
 .invoke:                                          ; preds = %.noexc344, %_ZNK10ForceState30createForceReadIndexExpressionERKNS_12VarForceInfoEP11AstNodeExprS4_.exit343
   %i.oy = phi ptr [ %i.ox, %_ZNK10ForceState30createForceReadIndexExpressionERKNS_12VarForceInfoEP11AstNodeExprS4_.exit343 ], [ %i.pf, %.noexc344 ]
@@ -1104,7 +1105,7 @@ _ZNK10ForceState30createForceReadIndexExpressionERKNS_12VarForceInfoEP11AstNodeE
   %i.pa = load ptr, ptr %i.bz, align 8, !tbaa !422, !nonnull !98, !align !274 ; 2 uses
   %i.pb = getelementptr inbounds nuw i8, ptr %i.bo, i64 88
   %i.pc = load ptr, ptr %i.pb, align 8, !tbaa !152 ; 2 uses
-  br i1 %i.lz, label %bb.dp, label %bb.dq
+  br i1 %i.lz, label %bb.dq, label %bb.dp
 
 bb.dp:                                            ; preds = %.critedge.thread
   %i.pd = invoke noundef ptr @_ZN7AstNode9cloneTreeEbb(ptr noundef nonnull align 8 dereferenceable(232) %i.bo, i1 noundef zeroext false, i1 noundef zeroext true)

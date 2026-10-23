@@ -202,17 +202,18 @@ bb.af:                                            ; preds = %bb.ad
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.2196 = phi ptr [ %i.du, %bb.ae ], [ %i.dw, %bb.af ]
+  %.0175 = xor i1 %.not207, true
   store i8 %i.dn, ptr %i.dm, align 8
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.ab
   %.4.ph = phi ptr [ %.1195, %bb.ab ], [ %.2196, %bb.ag ] ; 6 uses
-  %.2181.ph.not = phi i1 [ false, %bb.ab ], [ %.not207, %bb.ag ]
+  %.2181.ph.not = phi i1 [ true, %bb.ab ], [ %.0175, %bb.ag ]
   %.2177.ph = phi i1 [ true, %bb.ab ], [ %.not207, %bb.ag ]
   %i.dx = load i8, ptr %4, align 1, !range !15, !noundef !16
-  %5 = trunc nuw i8 %i.dx to i1
-  %or.cond7.not = or i1 %.2181.ph.not, %5
-  br i1 %or.cond7.not, label %.thread232, label %bb.ai
+  %.not = icmp eq i8 %i.dx, 0
+  %or.cond7 = and i1 %.not, %.2181.ph.not
+  br i1 %or.cond7, label %bb.ai, label %.thread232
 
 bb.ai:                                            ; preds = %bb.ah
   br i1 %i.af, label %bb.aj, label %bb.an

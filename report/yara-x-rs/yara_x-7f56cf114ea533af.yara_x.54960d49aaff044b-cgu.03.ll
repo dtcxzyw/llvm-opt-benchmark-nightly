@@ -204,15 +204,16 @@ bb.i:                                             ; preds = %.split12, %bb.g
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.ah = trunc nuw i32 %i.af to i1
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.aj = load i32, ptr %i.ai, align 8, !range !28, !noundef !6
-  %2 = trunc nuw i32 %i.aj to i1                  ; 2 uses
+  %i.aj = load i32, ptr %i.ai, align 8, !range !28, !noundef !6 ; 2 uses
   br i1 %i.ah, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
+  %2 = trunc nuw i32 %i.aj to i1
   br i1 %2, label %.split13, label %bb.o
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %2, label %bb.o, label %bb.l
+  %3 = icmp eq i32 %i.aj, 0
+  br i1 %3, label %bb.l, label %bb.o
 
 .split13:                                         ; preds = %bb.j
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 76
@@ -615,15 +616,16 @@ bb.b:                                             ; preds = %.split, %_RNvYNtNtN
   %i.e = load i32, ptr %i.c, align 8, !range !28, !noundef !6
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.g = trunc nuw i32 %i.e to i1
-  %i.h = load i32, ptr %i.d, align 8, !range !28, !noundef !6
-  %3 = trunc nuw i32 %i.h to i1                   ; 2 uses
+  %i.h = load i32, ptr %i.d, align 8, !range !28, !noundef !6 ; 2 uses
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
+  %3 = trunc nuw i32 %i.h to i1
   br i1 %3, label %.split.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 bb.d:                                             ; preds = %.lr.ph
-  br i1 %3, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread, label %bb.e
+  %4 = icmp eq i32 %i.h, 0
+  br i1 %4, label %bb.e, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 .split.i.i:                                       ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 4
@@ -638,15 +640,16 @@ bb.e:                                             ; preds = %.split.i.i, %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   %i.p = trunc nuw i32 %i.n to i1
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.r = load i32, ptr %i.q, align 8, !range !28, !noundef !6
-  %4 = trunc nuw i32 %i.r to i1                   ; 2 uses
+  %i.r = load i32, ptr %i.q, align 8, !range !28, !noundef !6 ; 2 uses
   br i1 %i.p, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  br i1 %4, label %.split6.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
+  %5 = trunc nuw i32 %i.r to i1
+  br i1 %5, label %.split6.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 bb.g:                                             ; preds = %bb.e
-  br i1 %4, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread, label %bb.h
+  %6 = icmp eq i32 %i.r, 0
+  br i1 %6, label %bb.h, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 .split6.i.i:                                      ; preds = %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 12
@@ -661,15 +664,16 @@ bb.h:                                             ; preds = %.split6.i.i, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   %i.z = trunc nuw i32 %i.x to i1
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.ab = load i32, ptr %i.aa, align 8, !range !28, !noundef !6
-  %5 = trunc nuw i32 %i.ab to i1                  ; 2 uses
+  %i.ab = load i32, ptr %i.aa, align 8, !range !28, !noundef !6 ; 2 uses
   br i1 %i.z, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  br i1 %5, label %.split7.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
+  %7 = trunc nuw i32 %i.ab to i1
+  br i1 %7, label %.split7.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 bb.j:                                             ; preds = %bb.h
-  br i1 %5, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread, label %bb.k
+  %8 = icmp eq i32 %i.ab, 0
+  br i1 %8, label %bb.k, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 .split7.i.i:                                      ; preds = %bb.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 20
@@ -684,15 +688,16 @@ bb.k:                                             ; preds = %.split7.i.i, %bb.j
   %i.ai = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   %i.aj = trunc nuw i32 %i.ah to i1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.al = load i32, ptr %i.ak, align 8, !range !28, !noundef !6
-  %6 = trunc nuw i32 %i.al to i1                  ; 2 uses
+  %i.al = load i32, ptr %i.ak, align 8, !range !28, !noundef !6 ; 2 uses
   br i1 %i.aj, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  br i1 %6, label %.split8.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
+  %9 = trunc nuw i32 %i.al to i1
+  br i1 %9, label %.split8.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 bb.m:                                             ; preds = %bb.k
-  br i1 %6, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread, label %bb.n
+  %10 = icmp eq i32 %i.al, 0
+  br i1 %10, label %bb.n, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex7MapItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 .split8.i.i:                                      ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.d, i64 28
@@ -774,15 +779,16 @@ bb.f:                                             ; preds = %.split.i.i, %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 76
   %i.u = trunc nuw i32 %i.s to i1
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 72
-  %i.w = load i32, ptr %i.v, align 8, !range !28, !noundef !6
-  %3 = trunc nuw i32 %i.w to i1                   ; 2 uses
+  %i.w = load i32, ptr %i.v, align 8, !range !28, !noundef !6 ; 2 uses
   br i1 %i.u, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
+  %3 = trunc nuw i32 %i.w to i1
   br i1 %3, label %.split16.i.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex9ClassItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 bb.h:                                             ; preds = %bb.f
-  br i1 %3, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex9ClassItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread, label %bb.i
+  %4 = icmp eq i32 %i.w, 0
+  br i1 %4, label %bb.i, label %_RNvYNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3dex9ClassItemNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neBa_.exit.thread
 
 .split16.i.i:                                     ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 76

@@ -203,9 +203,9 @@ define linkonce_odr hidden void @_ZNK7testing18PolymorphicMatcherINS_8internal18
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load i8, ptr %i.a, align 8, !tbaa !85, !range !56, !noundef !57
-  %2 = trunc nuw i8 %i.b to i1                    ; 2 uses
-  %i.c = select i1 %2, ptr @.str.70, ptr @.str.69
-  %i.d = select i1 %2, i64 6, i64 3
+  %2 = icmp eq i8 %i.b, 0                         ; 2 uses
+  %i.c = select i1 %2, ptr @.str.69, ptr @.str.70
+  %i.d = select i1 %2, i64 3, i64 6
   %i.e = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.c, i64 noundef %i.d) ; 0 uses
   %i.f = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.71, i64 noundef 9) ; 0 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 41
@@ -245,8 +245,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i8, ptr %i.c, align 8, !tbaa !85, !range !56, !noundef !57
-  %4 = trunc nuw i8 %i.d to i1
-  %5 = xor i1 %4, true
+  %4 = icmp eq i8 %i.d, 0
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
@@ -326,7 +325,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13: ; preds = %bb.
   resume { ptr, i32 } %i.u
 
 bb.i:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.b
-  %.07 = phi i1 [ %5, %bb.b ], [ %i.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %.07 = phi i1 [ %4, %bb.b ], [ %i.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   ret i1 %.07
 }
 

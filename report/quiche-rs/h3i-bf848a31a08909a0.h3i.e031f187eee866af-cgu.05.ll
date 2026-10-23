@@ -204,15 +204,16 @@ bb.s:                                             ; preds = %.split, %bb.r
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !16865
   %i.bz = trunc nuw i64 %i.bx to i1, !dbg !16866
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !16865
-  %i.cb = load i64, ptr %i.ca, align 8, !dbg !16865, !range !2806, !noundef !1246
-  %2 = trunc nuw i64 %i.cb to i1, !dbg !16866     ; 2 uses
+  %i.cb = load i64, ptr %i.ca, align 8, !dbg !16865, !range !2806, !noundef !1246 ; 2 uses
   br i1 %i.bz, label %bb.t, label %bb.u, !dbg !16866
 
 bb.t:                                             ; preds = %bb.s
+  %2 = trunc nuw i64 %i.cb to i1, !dbg !16866
   br i1 %2, label %.split80, label %bb.c, !dbg !16866
 
 bb.u:                                             ; preds = %bb.s
-  br i1 %2, label %bb.c, label %bb.v, !dbg !16364
+  %3 = icmp eq i64 %i.cb, 0, !dbg !16866
+  br i1 %3, label %bb.v, label %bb.c, !dbg !16364
 
 .split80:                                         ; preds = %bb.t
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !16865
@@ -233,15 +234,16 @@ bb.v:                                             ; preds = %.split80, %bb.u
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !16869
   %i.cj = trunc nuw i64 %i.ch to i1, !dbg !16870
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !16869
-  %i.cl = load i64, ptr %i.ck, align 8, !dbg !16869, !range !2806, !noundef !1246
-  %3 = trunc nuw i64 %i.cl to i1, !dbg !16870     ; 2 uses
+  %i.cl = load i64, ptr %i.ck, align 8, !dbg !16869, !range !2806, !noundef !1246 ; 2 uses
   br i1 %i.cj, label %bb.w, label %bb.x, !dbg !16870
 
 bb.w:                                             ; preds = %bb.v
-  br i1 %3, label %.split81, label %bb.c, !dbg !16870
+  %4 = trunc nuw i64 %i.cl to i1, !dbg !16870
+  br i1 %4, label %.split81, label %bb.c, !dbg !16870
 
 bb.x:                                             ; preds = %bb.v
-  br i1 %3, label %bb.c, label %bb.y, !dbg !16368
+  %5 = icmp eq i64 %i.cl, 0, !dbg !16870
+  br i1 %5, label %bb.y, label %bb.c, !dbg !16368
 
 .split81:                                         ; preds = %bb.w
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !16869
@@ -262,15 +264,16 @@ bb.y:                                             ; preds = %.split81, %bb.x
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !16873
   %i.ct = trunc nuw i64 %i.cr to i1, !dbg !16874
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !16873
-  %i.cv = load i64, ptr %i.cu, align 8, !dbg !16873, !range !2806, !noundef !1246
-  %4 = trunc nuw i64 %i.cv to i1, !dbg !16874     ; 2 uses
+  %i.cv = load i64, ptr %i.cu, align 8, !dbg !16873, !range !2806, !noundef !1246 ; 2 uses
   br i1 %i.ct, label %bb.z, label %bb.aa, !dbg !16874
 
 bb.z:                                             ; preds = %bb.y
-  br i1 %4, label %.split82, label %bb.c, !dbg !16874
+  %6 = trunc nuw i64 %i.cv to i1, !dbg !16874
+  br i1 %6, label %.split82, label %bb.c, !dbg !16874
 
 bb.aa:                                            ; preds = %bb.y
-  br i1 %4, label %bb.c, label %bb.ab, !dbg !16372
+  %7 = icmp eq i64 %i.cv, 0, !dbg !16874
+  br i1 %7, label %bb.ab, label %bb.c, !dbg !16372
 
 .split82:                                         ; preds = %bb.z
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 56, !dbg !16873
@@ -291,15 +294,16 @@ bb.ab:                                            ; preds = %.split82, %bb.aa
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 72, !dbg !16877
   %i.dd = trunc nuw i64 %i.db to i1, !dbg !16878
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !16877
-  %i.df = load i64, ptr %i.de, align 8, !dbg !16877, !range !2806, !noundef !1246
-  %5 = trunc nuw i64 %i.df to i1, !dbg !16878     ; 2 uses
+  %i.df = load i64, ptr %i.de, align 8, !dbg !16877, !range !2806, !noundef !1246 ; 2 uses
   br i1 %i.dd, label %bb.ac, label %bb.ad, !dbg !16878
 
 bb.ac:                                            ; preds = %bb.ab
-  br i1 %5, label %.split83, label %bb.c, !dbg !16878
+  %8 = trunc nuw i64 %i.df to i1, !dbg !16878
+  br i1 %8, label %.split83, label %bb.c, !dbg !16878
 
 bb.ad:                                            ; preds = %bb.ab
-  br i1 %5, label %bb.c, label %bb.ae, !dbg !16376
+  %9 = icmp eq i64 %i.df, 0, !dbg !16878
+  br i1 %9, label %bb.ae, label %bb.c, !dbg !16376
 
 .split83:                                         ; preds = %bb.ac
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !16877
@@ -319,15 +323,16 @@ bb.ae:                                            ; preds = %.split83, %bb.ad
   %i.dl = load i64, ptr %i.dk, align 8, !dbg !16881, !range !2806, !noundef !1246
   %i.dm = trunc nuw i64 %i.dl to i1, !dbg !16882
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !16881
-  %i.do = load i64, ptr %i.dn, align 8, !dbg !16881, !range !2806, !noundef !1246
-  %6 = trunc nuw i64 %i.do to i1, !dbg !16882     ; 2 uses
+  %i.do = load i64, ptr %i.dn, align 8, !dbg !16881, !range !2806, !noundef !1246 ; 2 uses
   br i1 %i.dm, label %bb.af, label %bb.ag, !dbg !16882
 
 bb.af:                                            ; preds = %bb.ae
-  br i1 %6, label %bb.ah, label %bb.c, !dbg !16882
+  %10 = trunc nuw i64 %i.do to i1, !dbg !16882
+  br i1 %10, label %bb.ah, label %bb.c, !dbg !16882
 
 bb.ag:                                            ; preds = %bb.ae
-  br i1 %6, label %bb.c, label %bb.ai, !dbg !16381
+  %11 = icmp eq i64 %i.do, 0, !dbg !16882
+  br i1 %11, label %bb.ai, label %bb.c, !dbg !16381
 
 bb.ah:                                            ; preds = %bb.af
     #dbg_value(ptr %0, !16386, !DIExpression(DW_OP_plus_uconst, 88, DW_OP_stack_value), !16604)

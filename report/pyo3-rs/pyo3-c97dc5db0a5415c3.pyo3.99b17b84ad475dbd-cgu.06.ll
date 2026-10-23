@@ -204,8 +204,7 @@ _RINvMNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_objectNtB3_13PyTypeBuilder17p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !292
   %i.nc = getelementptr inbounds nuw i8, ptr %i.an, i64 184 ; 2 uses
   %i.nd = load i8, ptr %i.nc, align 8, !range !8, !alias.scope !293, !noundef !4 ; 2 uses
-  %22 = trunc nuw i8 %i.nd to i1
-  %.not.i.i8 = xor i1 %22, true
+  %.not.i.i8 = icmp eq i8 %i.nd, 0
   %i.ne = getelementptr inbounds nuw i8, ptr %i.an, i64 189
   %i.nf = load i8, ptr %i.ne, align 1, !range !8, !alias.scope !293
   %i.ng = trunc nuw i8 %i.nf to i1
@@ -214,8 +213,7 @@ _RINvMNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_objectNtB3_13PyTypeBuilder17p
 
 bb.cf:                                            ; preds = %_RINvMNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_objectNtB3_13PyTypeBuilder9push_slotNtNtCskKLDkoKarTP_4core3ffi6c_voidEB7_.exit.i.i, %_RINvMNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_objectNtB3_13PyTypeBuilder17push_raw_vec_slotNtNtCs971naDxHMnY_8pyo3_ffi11descrobject11PyGetSetDefEB7_.exit.i.i
   %i.nh = phi i8 [ %.pre.i.i, %_RINvMNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_objectNtB3_13PyTypeBuilder9push_slotNtNtCskKLDkoKarTP_4core3ffi6c_voidEB7_.exit.i.i ], [ %i.nd, %_RINvMNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_objectNtB3_13PyTypeBuilder17push_raw_vec_slotNtNtCs971naDxHMnY_8pyo3_ffi11descrobject11PyGetSetDefEB7_.exit.i.i ]
-  %23 = trunc nuw i8 %i.nh to i1
-  %.not3.i.i = xor i1 %23, true
+  %.not3.i.i = icmp eq i8 %i.nh, 0
   %i.ni = getelementptr inbounds nuw i8, ptr %i.an, i64 190
   %i.nj = load i8, ptr %i.ni, align 2, !range !8, !alias.scope !293
   %i.nk = trunc nuw i8 %i.nj to i1
@@ -442,11 +440,10 @@ bb.db:                                            ; preds = %bb.cu, %bb.ct
   %i.qr = getelementptr inbounds nuw i8, ptr %i.an, i64 192 ; 2 uses
   %i.qs = load i8, ptr %i.qr, align 8, !range !8, !alias.scope !289, !noundef !4
   %i.qt = trunc nuw i8 %i.qs to i1                ; 2 uses
-  %.not.i10 = xor i1 %i.qt, true
   %i.qu = load i8, ptr %i.ph, align 1, !range !8, !alias.scope !289
-  %24 = trunc nuw i8 %i.qu to i1                  ; 2 uses
-  %or.cond.i = select i1 %.not.i10, i1 true, i1 %24
-  br i1 %or.cond.i, label %bb.dc, label %bb.dd
+  %.not86.i = icmp eq i8 %i.qu, 0                 ; 2 uses
+  %or.cond.i = select i1 %i.qt, i1 %.not86.i, i1 false
+  br i1 %or.cond.i, label %bb.dd, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
   %i.qv = getelementptr inbounds nuw i8, ptr %i.an, i64 176 ; 2 uses
@@ -535,7 +532,7 @@ bb.dl:                                            ; preds = %_RINvMNtNtCsdc6yCHi
   br i1 %i.ri, label %bb.dt, label %.loopexit.i11
 
 bb.dm:                                            ; preds = %bb.dc
-  br i1 %24, label %bb.do, label %bb.dn, !prof !10
+  br i1 %.not86.i, label %bb.dn, label %bb.do, !prof !9
 
 bb.dn:                                            ; preds = %bb.dm
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #24

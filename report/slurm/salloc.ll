@@ -202,7 +202,8 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.q, %bb.r, %bb.s
-  %.1245 = phi i1 [ false, %bb.s ], [ true, %bb.r ], [ true, %bb.q ] ; 2 uses
+  %.not338.not = phi i1 [ true, %bb.s ], [ false, %bb.r ], [ false, %bb.q ]
+  %.1245 = phi i1 [ false, %bb.s ], [ true, %bb.r ], [ true, %bb.q ]
   %.1243 = phi i32 [ %i.an, %bb.s ], [ %.0242472, %bb.r ], [ %.0242472, %bb.q ]
   %.1240 = phi ptr [ %i.ap, %bb.s ], [ %.0239474, %bb.r ], [ %.0239474, %bb.q ]
   %i.aq = load i32, ptr getelementptr inbounds nuw (i8, ptr @opt, i64 364), align 4 ; 2 uses
@@ -340,7 +341,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %.not417 = icmp eq ptr %.0267470, null
   %spec.select = select i1 %.not417, ptr %i.bz, ptr %.0267470 ; 2 uses
   %i.ch = add nuw nsw i32 %.0241473, 1            ; 2 uses
-  br i1 %.1245, label %bb.an, label %bb.o, !llvm.loop !13
+  br i1 %.not338.not, label %bb.o, label %bb.an, !llvm.loop !13
 
 bb.an:                                            ; preds = %bb.am
   store i32 %i.ch, ptr @het_job_limit, align 4
@@ -743,24 +744,26 @@ bb.gs:                                            ; preds = %.lr.ph482
   unreachable
 
 bb.gt:                                            ; preds = %.lr.ph482
-  %4 = trunc nuw i8 %i.nc to i1
   %i.nf = load i32, ptr %i.c, align 4
   %i.ng = and i32 %i.nf, 255
-  %5 = icmp ne i32 %i.ng, 127
-  %6 = icmp ne i32 %i.nb, -1                      ; 2 uses
-  %.not389 = or i1 %6, %4
-  %or.cond484 = select i1 %5, i1 %.not389, i1 false
-  br i1 %or.cond484, label %bb.gu, label %.critedge.backedge
+  %4 = icmp eq i32 %i.ng, 127
+  br i1 %4, label %.critedge.backedge, label %5
 
-.critedge.backedge:                               ; preds = %bb.gt
+5:                                                ; preds = %bb.gt
+  %6 = icmp eq i32 %i.nb, -1                      ; 2 uses
+  %7 = icmp eq i8 %i.nc, 0
+  %8 = and i1 %6, %7
+  br i1 %8, label %.critedge.backedge, label %bb.gu
+
+.critedge.backedge:                               ; preds = %5, %bb.gt
   %i.nh = load i32, ptr @command_pid, align 4
   %i.ni = call i32 @waitpid(i32 noundef %i.nh, ptr noundef nonnull %i.c, i32 noundef 2) #12
   %i.nj = call i32 @pthread_mutex_lock(ptr noundef nonnull @exit_flag_lock) #12 ; 2 uses
   %.not386 = icmp eq i32 %i.nj, 0
   br i1 %.not386, label %.lr.ph482, label %.critedge._crit_edge, !llvm.loop !18
 
-bb.gu:                                            ; preds = %bb.gt
-  br i1 %6, label %bb.gx, label %bb.gv
+bb.gu:                                            ; preds = %5
+  br i1 %6, label %bb.gv, label %bb.gx
 
 bb.gv:                                            ; preds = %bb.gu
   %i.nk = tail call ptr @__errno_location() #14

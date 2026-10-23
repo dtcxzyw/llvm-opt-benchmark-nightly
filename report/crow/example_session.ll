@@ -205,12 +205,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load i8, ptr %i.c, align 8, !tbaa !443, !range !238, !noundef !239
-  %2 = trunc nuw i8 %i.d to i1
+  %.not26 = icmp eq i8 %i.d, 0
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4asio6detail15keyword_tss_ptrINS0_10call_stackINS0_14thread_contextENS0_16thread_info_baseEE7contextEE6value_E)
   %.08.i = load ptr, ptr %i.e, align 8            ; 2 uses
-  %.not9.i = icmp ne ptr %.08.i, null
-  %or.cond.not = select i1 %2, i1 %.not9.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i, label %.thread
+  %.not9.i = icmp eq ptr %.08.i, null
+  %or.cond.not = select i1 %.not26, i1 true, i1 %.not9.i
+  br i1 %or.cond.not, label %.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
   %.010.i = phi ptr [ %.0.i, %bb.c ], [ %.08.i, %bb.b ] ; 3 uses
@@ -613,8 +613,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ar = load ptr, ptr %5, align 8, !tbaa !728, !nonnull !239, !align !412 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 48
   %i.at = load i8, ptr %i.as, align 8, !tbaa !420, !range !238, !noundef !239
-  %6 = trunc nuw i8 %i.at to i1
-  %.not19 = xor i1 %6, true
+  %.not19 = icmp eq i8 %i.at, 0
   %i.au = load i8, ptr %i.ap, align 8, !range !238
   %i.av = trunc nuw i8 %i.au to i1
   %or.cond = select i1 %.not19, i1 true, i1 %i.av
@@ -726,8 +725,8 @@ bb.a:
   %7 = alloca %"struct.asio::detail::scheduler::work_cleanup", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !507, !range !238, !noundef !239
-  %8 = trunc nuw i8 %i.b to i1
-  br i1 %8, label %.loopexit, label %.lr.ph
+  %.not.not37 = icmp eq i8 %i.b, 0
+  br i1 %.not.not37, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
@@ -1130,8 +1129,8 @@ _ZN4asio6detail27conditionally_enabled_event5clearERNS0_27conditionally_enabled_
 
 _ZN4asio6detail27conditionally_enabled_event4waitERNS0_27conditionally_enabled_mutex11scoped_lockE.exit: ; preds = %.lr.ph.i.i, %_ZN4asio6detail27conditionally_enabled_event5clearERNS0_27conditionally_enabled_mutex11scoped_lockE.exit, %.thread
   %i.eq = load i8, ptr %i.a, align 8, !tbaa !507, !range !238, !noundef !239
-  %9 = trunc nuw i8 %i.eq to i1
-  br i1 %9, label %.loopexit, label %bb.b, !llvm.loop !1767
+  %.not.not = icmp eq i8 %i.eq, 0
+  br i1 %.not.not, label %bb.b, label %.loopexit, !llvm.loop !1767
 
 .loopexit:                                        ; preds = %_ZN4asio6detail27conditionally_enabled_event4waitERNS0_27conditionally_enabled_mutex11scoped_lockE.exit, %bb.a, %bb.an
   %.3 = phi i64 [ 1, %bb.an ], [ 0, %bb.a ], [ 0, %_ZN4asio6detail27conditionally_enabled_event4waitERNS0_27conditionally_enabled_mutex11scoped_lockE.exit ]
@@ -1534,12 +1533,12 @@ define linkonce_odr dso_local void @_ZN4asio6detail9scheduler24post_deferred_com
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load i8, ptr %i.a, align 8, !tbaa !443, !range !238, !noundef !239
-  %2 = trunc nuw i8 %i.b to i1
+  %.not23 = icmp eq i8 %i.b, 0
   %i.c = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4asio6detail15keyword_tss_ptrINS0_10call_stackINS0_14thread_contextENS0_16thread_info_baseEE7contextEE6value_E)
   %.08.i = load ptr, ptr %i.c, align 8            ; 2 uses
-  %.not9.i = icmp ne ptr %.08.i, null
-  %or.cond.not = select i1 %2, i1 %.not9.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i, label %.thread
+  %.not9.i = icmp eq ptr %.08.i, null
+  %or.cond.not = select i1 %.not23, i1 true, i1 %.not9.i
+  br i1 %or.cond.not, label %.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %bb.b
   %.010.i = phi ptr [ %.0.i, %bb.b ], [ %.08.i, %bb.a ] ; 3 uses

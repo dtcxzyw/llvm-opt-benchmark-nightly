@@ -204,26 +204,27 @@ bb.d:                                             ; preds = %_RNvXs2J_NtNtCsj6eK
   br i1 %.not7, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %4 = load i8, ptr %i.c, align 8, !range !14, !noundef !4
   %i.aq = load ptr, ptr %i.d, align 8, !noundef !4
   %i.ar = load ptr, ptr %i.e, align 8, !noundef !4
   %.not8 = icmp eq i32 %i.ap, %spec.select.i.ph.i
-  br i1 %.not8, label %bb.f, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split
+  br i1 %.not8, label %5, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split
 
-bb.f:                                             ; preds = %bb.e
-  %4 = load i8, ptr %i.c, align 8, !range !14, !noundef !4
-  %5 = trunc nuw i8 %4 to i1
-  %i.as = icmp eq i64 %.sroa.11.016, %i.f         ; 2 uses
-  %.not = xor i1 %5, true
-  %brmerge = select i1 %i.as, i1 true, i1 %.not
-  br i1 %brmerge, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split, label %bb.g
+5:                                                ; preds = %bb.e
+  %6 = icmp eq i64 %.sroa.11.016, %i.f
+  br i1 %6, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split, label %bb.f
+
+bb.f:                                             ; preds = %5
+  %i.as = icmp eq i8 %4, 0
+  br i1 %i.as, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not.i.i = icmp eq ptr %.sroa.0.1, %i.b
   br i1 %.not.i.i, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread, label %bb.b
 
-_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split: ; preds = %bb.f, %bb.d, %bb.e
-  %.sroa.01.0.ph = phi i1 [ false, %bb.d ], [ %i.as, %bb.f ], [ false, %bb.e ]
+_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread.sink.split: ; preds = %5, %bb.d, %bb.e, %bb.f
+  %.sroa.01.0.ph = phi i1 [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.e ], [ true, %5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit.thread
 
@@ -348,7 +349,6 @@ bb.f:                                             ; preds = %_RNvXs2J_NtNtCsj6eK
 
 bb.g:                                             ; preds = %bb.f
   %i.bc = load i8, ptr %i.n, align 8, !range !14, !noalias !659, !noundef !4
-  %6 = trunc nuw i8 %i.bc to i1
   %i.bd = load ptr, ptr %i.o, align 8, !noalias !659, !noundef !4 ; 2 uses
   %i.be = load ptr, ptr %i.p, align 8, !noalias !659, !noundef !4 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %.sroa.11.014.i.i, %3
@@ -374,7 +374,8 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.bh, label %_RNCNvNtNtCsgbWeKYPjk8w_3syn5token7parsing12punct_helper0B7_.exit.thread.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  br i1 %6, label %bb.m, label %bb.h
+  %.not17.not.i.i = icmp eq i8 %i.bc, 0
+  br i1 %.not17.not.i.i, label %bb.h, label %bb.m
 
 _RNCNvNtNtCsgbWeKYPjk8w_3syn5token7parsing12punct_helper0B7_.exit.thread.i: ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !659

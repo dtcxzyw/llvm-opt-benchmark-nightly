@@ -204,7 +204,9 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !128
   %i.c = tail call fastcc { ptr, i8 } @_ZN4mlir6linalg12_GLOBAL__N_120winogradConv2DHelperERNS_12RewriterBaseENS0_16Conv2DNhwcFhwcOpENS0_17WinogradConv2DFmrE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr %1, i32 noundef %i.b)
   %i.d = extractvalue { ptr, i8 } %i.c, 1
-  ret i8 %i.d
+  %3 = icmp ne i8 %i.d, 0
+  %spec.select = zext i1 %3 to i8
+  ret i8 %spec.select
 }
 
 declare void @_ZN4mlir7PatternC2EN4llvm9StringRefENS_14PatternBenefitEPNS_11MLIRContextENS1_8ArrayRefIS2_EE(ptr noundef nonnull align 8 dereferenceable(88), ptr, i64, i16, ptr noundef, ptr noundef byval(%"class.llvm::ArrayRef.902") align 8) unnamed_addr #2

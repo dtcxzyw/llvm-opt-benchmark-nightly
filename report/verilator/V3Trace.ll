@@ -204,8 +204,8 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   store i32 %0, ptr %i.a, align 4, !tbaa !34
   %i.b = load i8, ptr %2, align 1, !tbaa !274, !range !80, !noundef !81
-  %6 = trunc nuw i8 %i.b to i1
-  br i1 %6, label %bb.h, label %bb.b, !prof !200
+  %.not.not = icmp eq i8 %i.b, 0
+  br i1 %.not.not, label %bb.b, label %bb.h, !prof !24
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str.5, i64 noundef 16) ; 0 uses
@@ -608,8 +608,8 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   store i32 %0, ptr %i.a, align 4, !tbaa !34
   %i.b = load i8, ptr %2, align 1, !tbaa !274, !range !80, !noundef !81
-  %6 = trunc nuw i8 %i.b to i1
-  br i1 %6, label %bb.h, label %bb.b, !prof !200
+  %.not.not = icmp eq i8 %i.b, 0
+  br i1 %.not.not, label %bb.b, label %bb.h, !prof !24
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str.5, i64 noundef 16) ; 0 uses
@@ -1012,12 +1012,13 @@ _ZNK7AstNode8widthMinEv.exit24:                   ; preds = %bb.j, %_ZNK7AstNode
 bb.k:                                             ; preds = %_ZNK7AstNode8widthMinEv.exit24
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.bi = load i8, ptr %i.bh, align 8, !tbaa !348, !range !80, !noundef !81 ; 2 uses
-  %4 = trunc nuw i8 %i.bi to i1
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 200
   %i.bk = load i8, ptr %i.bj, align 8, !tbaa !348, !range !80, !noundef !81
-  %i.bl = icmp eq i8 %i.bi, %i.bk                 ; 2 uses
-  %brmerge.not = and i1 %i.bl, %4
-  br i1 %brmerge.not, label %bb.l, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread35
+  %4 = icmp ne i8 %i.bi, %i.bk                    ; 2 uses
+  %i.bl = icmp eq i8 %i.bi, 0
+  %brmerge = or i1 %i.bl, %4
+  %not. = xor i1 %4, true
+  br i1 %brmerge, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread35, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.bm = load i32, ptr %i.c, align 8, !tbaa !349
@@ -1034,7 +1035,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread35
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread35: ; preds = %bb.k, %bb.f, %bb.m, %bb.l, %_ZNK7AstNode8widthMinEv.exit24, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
-  %i.bu = phi i1 [ %i.bl, %bb.k ], [ false, %_ZNK7AstNode8widthMinEv.exit24 ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit ], [ false, %bb.f ], [ false, %bb.l ], [ %i.bt, %bb.m ]
+  %i.bu = phi i1 [ %not., %bb.k ], [ false, %_ZNK7AstNode8widthMinEv.exit24 ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit ], [ false, %bb.f ], [ false, %bb.l ], [ %i.bt, %bb.m ]
   %i.bv = load ptr, ptr %3, align 8, !tbaa !30    ; 2 uses
   %i.bw = icmp eq ptr %i.bv, %i.t
   br i1 %i.bw, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i

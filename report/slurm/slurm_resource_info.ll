@@ -202,13 +202,13 @@ _isvalue.exit.thread:                             ; preds = %_isvalue.exit, %_is
   br label %bb.b, !llvm.loop !11
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %.not.i.not = icmp eq i32 %i.f, 0
+  %.not.i = icmp ne i32 %i.f, 0
   %i.y = load ptr, ptr %i.a, align 8
   store ptr %i.y, ptr %i.b, align 8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bl
-  %.073 = phi i1 [ %.1, %bb.bl ], [ true, %.lr.ph.preheader ] ; 2 uses
+  %.073 = phi i8 [ %.1, %bb.bl ], [ 1, %.lr.ph.preheader ] ; 2 uses
   %i.z = call ptr @strsep(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.24) #13 ; 3 uses
   store ptr %i.z, ptr %i.c, align 8
   %.not59 = icmp eq ptr %i.z, null
@@ -228,8 +228,9 @@ bb.f:                                             ; preds = %bb.e
   br label %.critedge.thread
 
 bb.g:                                             ; preds = %bb.e
-  %or.cond = select i1 %.not.i.not, i1 %.073, i1 false
-  br i1 %or.cond, label %bb.h, label %bb.j
+  %.not61 = icmp eq i8 %.073, 0
+  %or.cond = select i1 %.not.i, i1 true, i1 %.not61
+  br i1 %or.cond, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = call i32 @get_log_level() #13
@@ -241,7 +242,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
-  %.1 = phi i1 [ %.073, %bb.g ], [ false, %bb.i ], [ false, %bb.h ]
+  %.1 = phi i8 [ %.073, %bb.g ], [ 0, %bb.i ], [ 0, %bb.h ]
   %i.ag = load ptr, ptr %i.c, align 8
   %i.ah = call i32 @xstrcasecmp(ptr noundef %i.ag, ptr noundef nonnull @.str.27) #13
   %i.ai = icmp eq i32 %i.ah, 0

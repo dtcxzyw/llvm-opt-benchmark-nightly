@@ -202,10 +202,9 @@ bb.t:                                             ; preds = %.noexc2.i
 
 bb.u:                                             ; preds = %bb.t
   %i.bs = load i8, ptr %i.ad, align 4, !range !15, !noundef !5 ; 2 uses
-  %2 = trunc nuw i8 %i.bs to i1
-  %.not = xor i1 %i.bh, true
-  %brmerge = or i1 %.not, %2
-  br i1 %brmerge, label %bb.o, label %bb.v
+  %.not17 = icmp eq i8 %i.bs, 0
+  %brmerge.not = and i1 %i.bh, %.not17
+  br i1 %brmerge.not, label %bb.v, label %bb.o
 
 bb.v:                                             ; preds = %bb.u
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses

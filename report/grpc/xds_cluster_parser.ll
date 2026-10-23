@@ -204,12 +204,12 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.by = load i8, ptr %i.bx, align 8, !tbaa !186, !range !45, !noundef !46 ; 2 uses
-  %4 = trunc nuw i8 %i.by to i1
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 392
   %i.ca = load i8, ptr %i.bz, align 8, !tbaa !186, !range !45, !noundef !46
-  %i.cb = icmp eq i8 %i.by, %i.ca                 ; 2 uses
-  %brmerge.not.i = and i1 %i.cb, %4
-  br i1 %brmerge.not.i, label %.split14, label %_ZSteqIN9grpc_core22OutlierDetectionConfigES1_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS3_ERKSC_IS6_E.exit
+  %4 = icmp ne i8 %i.by, %i.ca                    ; 2 uses
+  %i.cb = icmp eq i8 %i.by, 0
+  %brmerge.i13 = or i1 %i.cb, %4
+  br i1 %brmerge.i13, label %_ZSteqIN9grpc_core22OutlierDetectionConfigES1_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS3_ERKSC_IS6_E.exit, label %.split14
 
 .split14:                                         ; preds = %bb.l
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 320
@@ -218,7 +218,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ce, label %bb.m, label %_ZSteqIN9grpc_core12experimental4JsonESaIS2_EEbRKSt6vectorIT_T0_ES9_.exit
 
 _ZSteqIN9grpc_core22OutlierDetectionConfigES1_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS3_ERKSC_IS6_E.exit: ; preds = %bb.l
-  br i1 %i.cb, label %bb.m, label %_ZSteqIN9grpc_core12experimental4JsonESaIS2_EEbRKSt6vectorIT_T0_ES9_.exit
+  br i1 %4, label %_ZSteqIN9grpc_core12experimental4JsonESaIS2_EEbRKSt6vectorIT_T0_ES9_.exit, label %bb.m
 
 bb.m:                                             ; preds = %.split14, %_ZSteqIN9grpc_core22OutlierDetectionConfigES1_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS3_ERKSC_IS6_E.exit
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 400
@@ -621,12 +621,12 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.q = load i8, ptr %i.p, align 4, !tbaa !508, !range !45, !noundef !46 ; 2 uses
-  %2 = trunc nuw i8 %i.q to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.s = load i8, ptr %i.r, align 4, !tbaa !508, !range !45, !noundef !46
-  %i.t = icmp eq i8 %i.q, %i.s                    ; 2 uses
-  %brmerge.not.i = and i1 %i.t, %2
-  br i1 %brmerge.not.i, label %bb.f, label %_ZSteqIN9grpc_core22OutlierDetectionConfig19SuccessRateEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
+  %2 = icmp ne i8 %i.q, %i.s                      ; 2 uses
+  %i.t = icmp eq i8 %i.q, 0
+  %brmerge.i = or i1 %i.t, %2
+  br i1 %brmerge.i, label %_ZSteqIN9grpc_core22OutlierDetectionConfig19SuccessRateEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 28
@@ -661,17 +661,18 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.an, label %bb.i, label %_ZSteqIN9grpc_core22OutlierDetectionConfig25FailurePercentageEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
 
 _ZSteqIN9grpc_core22OutlierDetectionConfig19SuccessRateEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit: ; preds = %bb.e
-  br i1 %i.t, label %bb.i, label %_ZSteqIN9grpc_core22OutlierDetectionConfig25FailurePercentageEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
+  br i1 %2, label %_ZSteqIN9grpc_core22OutlierDetectionConfig25FailurePercentageEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit, label %bb.i
 
 bb.i:                                             ; preds = %.split, %_ZSteqIN9grpc_core22OutlierDetectionConfig19SuccessRateEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !514, !range !45, !noundef !46 ; 2 uses
-  %3 = trunc nuw i8 %i.ap to i1
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !514, !range !45, !noundef !46
-  %i.as = icmp eq i8 %i.ap, %i.ar                 ; 2 uses
-  %brmerge.not.i9 = and i1 %i.as, %3
-  br i1 %brmerge.not.i9, label %bb.j, label %_ZSteqIN9grpc_core22OutlierDetectionConfig25FailurePercentageEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
+  %3 = icmp ne i8 %i.ap, %i.ar                    ; 2 uses
+  %i.as = icmp eq i8 %i.ap, 0
+  %brmerge.i10 = or i1 %i.as, %3
+  %not..i11 = xor i1 %3, true
+  br i1 %brmerge.i10, label %_ZSteqIN9grpc_core22OutlierDetectionConfig25FailurePercentageEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -706,7 +707,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZSteqIN9grpc_core22OutlierDetectionConfig25FailurePercentageEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
 
 _ZSteqIN9grpc_core22OutlierDetectionConfig25FailurePercentageEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit: ; preds = %bb.f, %bb.g, %bb.h, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %.split, %_ZSteqIN9grpc_core22OutlierDetectionConfig19SuccessRateEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit, %bb.d, %bb.c, %bb.b, %bb.a
-  %i.bn = phi i1 [ false, %_ZSteqIN9grpc_core22OutlierDetectionConfig19SuccessRateEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ], [ false, %.split ], [ false, %bb.j ], [ %i.as, %bb.i ], [ %i.bm, %bb.m ], [ false, %bb.l ], [ false, %bb.k ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.f ]
+  %i.bn = phi i1 [ false, %_ZSteqIN9grpc_core22OutlierDetectionConfig19SuccessRateEjectionES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ], [ false, %.split ], [ false, %bb.j ], [ %not..i11, %bb.i ], [ %i.bm, %bb.m ], [ false, %bb.l ], [ false, %bb.k ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.f ]
   ret i1 %i.bn
 }
 

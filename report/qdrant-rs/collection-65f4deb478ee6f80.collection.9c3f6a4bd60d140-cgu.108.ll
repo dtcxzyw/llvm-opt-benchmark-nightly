@@ -205,8 +205,9 @@ bb.a:
   %i.aa = load i64, ptr %i.z, align 8, !alias.scope !332 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.p, i64 168
   %i.ac = load ptr, ptr %i.ab, align 8, !alias.scope !332, !nonnull !5
-  %i.ad = load i32, ptr %i.s, align 8, !range !335, !alias.scope !332
-  %i.ae = trunc nuw i32 %i.ad to i1               ; 2 uses
+  %i.ad = load i32, ptr %i.s, align 8, !range !335, !alias.scope !332 ; 2 uses
+  %3 = icmp eq i32 %i.ad, 0
+  %i.ae = trunc nuw i32 %i.ad to i1
   %i.af = getelementptr inbounds nuw i8, ptr %i.p, i64 188
   %i.ag = load i32, ptr %i.af, align 4, !alias.scope !332
   %i.ah = load i64, ptr %i.p, align 8, !range !7, !alias.scope !332 ; 4 uses
@@ -330,7 +331,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ae, label %.split7.i.i, label %_RNvXsoJ_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_6VectorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %i.ae, label %_RNvXsoJ_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_6VectorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i, label %bb.l
+  br i1 %3, label %bb.l, label %_RNvXsoJ_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_6VectorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i
 
 .split7.i.i:                                      ; preds = %bb.j
   %i.cf = load i32, ptr %i.cd, align 4, !alias.scope !337, !noundef !5

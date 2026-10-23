@@ -204,24 +204,27 @@ bb.y:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 6 uses
   br label %bb.z
 
-._crit_edge100.i:                                 ; preds = %._crit_edge95.i, %bb.y
-  %.0.lcssa.i = phi i1 [ false, %bb.y ], [ %spec.select.i, %._crit_edge95.i ]
+._crit_edge99.loopexit.i:                         ; preds = %._crit_edge95.i
+  %7 = icmp eq i8 %spec.select.i, 0
+  br label %._crit_edge100.i
+
+._crit_edge100.i:                                 ; preds = %._crit_edge99.loopexit.i, %bb.y
+  %.0.lcssa.i = phi i1 [ true, %bb.y ], [ %7, %._crit_edge99.loopexit.i ]
   %i.cd = load i8, ptr %i.bd, align 8, !tbaa !266, !range !59, !noundef !60
   %i.ce = trunc nuw i8 %i.cd to i1
-  %.not.i = xor i1 %i.ce, true
-  %or.cond.i.a = select i1 %.not.i, i1 true, i1 %.0.lcssa.i
-  br i1 %or.cond.i.a, label %.noexc26, label %bb.al
+  %or.cond.i.a = select i1 %i.ce, i1 %.0.lcssa.i, i1 false
+  br i1 %or.cond.i.a, label %bb.al, label %.noexc26
 
 bb.z:                                             ; preds = %._crit_edge95.i, %.lr.ph99.i
   %i.cf = phi ptr [ %i.bt, %.lr.ph99.i ], [ %i.cv, %._crit_edge95.i ] ; 2 uses
   %i.cg = phi ptr [ %i.bu, %.lr.ph99.i ], [ %i.cw, %._crit_edge95.i ] ; 2 uses
   %indvars.iv121.i.a = phi i64 [ 0, %.lr.ph99.i ], [ %indvars.iv.next122.pre-phi.i.a, %._crit_edge95.i ] ; 6 uses
-  %.097.i = phi i1 [ false, %.lr.ph99.i ], [ %spec.select.i, %._crit_edge95.i ]
+  %.096.i = phi i8 [ 0, %.lr.ph99.i ], [ %spec.select.i, %._crit_edge95.i ]
   %i.ch = getelementptr inbounds nuw [104 x i8], ptr %i.bt, i64 %indvars.iv121.i.a ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 88
   %i.cj = load i32, ptr %i.ci, align 8, !tbaa !69
   %i.ck = icmp sgt i32 %i.cj, 0
-  %spec.select.i = select i1 %i.ck, i1 true, i1 %.097.i ; 2 uses
+  %spec.select.i = select i1 %i.ck, i8 1, i8 %.096.i ; 2 uses
   %i.cl = ptrtoint ptr %i.cg to i64
   %i.cm = ptrtoint ptr %i.cf to i64
   %i.cn = sub i64 %i.cl, %i.cm
@@ -252,7 +255,7 @@ bb.z:                                             ; preds = %._crit_edge95.i, %.
   %i.cv = phi ptr [ %i.cf, %.._crit_edge95_crit_edge.i ], [ %i.fn, %._crit_edge95.loopexit.i ]
   %i.cw = phi ptr [ %i.cg, %.._crit_edge95_crit_edge.i ], [ %i.fm, %._crit_edge95.loopexit.i ]
   %i.cx = icmp slt i64 %indvars.iv.next122.pre-phi.i.a, %.pre-phi130.i
-  br i1 %i.cx, label %bb.z, label %._crit_edge100.i, !llvm.loop !260
+  br i1 %i.cx, label %bb.z, label %._crit_edge99.loopexit.i, !llvm.loop !260
 
 bb.aa:                                            ; preds = %._crit_edge.i, %.lr.ph.i
   %indvars.iv123.i = phi i64 [ %indvars.iv121.i.a, %.lr.ph.i ], [ %indvars.iv.next124.pre-phi.i, %._crit_edge.i ] ; 4 uses

@@ -205,7 +205,8 @@ _RNvNtCsjtLiwbyrj3U_20unicode_segmentation8grapheme10check_pair.exit.i.i.i.i: ; 
 
 _RNvNtCsjtLiwbyrj3U_20unicode_segmentation8grapheme10check_pair.exit.thread89.i.i.i.i: ; preds = %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be
   %i.kl = load i8, ptr %.sroa.12.0..sroa_idx, align 4, !range !18, !alias.scope !1307, !noundef !7 ; 2 uses
-  %..i.i.i.i = sub nuw nsw i8 4, %i.kl
+  %2 = icmp eq i8 %i.kl, 0
+  %..i.i.i.i = select i1 %2, i8 4, i8 3
   store i8 %..i.i.i.i, ptr %.sroa.14.0..sroa_idx, align 2, !alias.scope !1307
   br label %_RNvMs4_NtCsjtLiwbyrj3U_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread.i.i.i
 
@@ -252,8 +253,8 @@ bb.bp:                                            ; preds = %bb.bm, %.split.i61.
   call void @llvm.experimental.noalias.scope.decl(metadata !1317)
   call void @llvm.experimental.noalias.scope.decl(metadata !1318)
   %i.ky = load i8, ptr %.sroa.12.0..sroa_idx, align 4, !range !18, !alias.scope !1319, !noalias !1320, !noundef !7
-  %2 = trunc nuw i8 %i.ky to i1
-  br i1 %2, label %.lr.ph.preheader.i28.i, label %.loopexit.i.i.sink.split
+  %.not.i = icmp eq i8 %i.ky, 0
+  br i1 %.not.i, label %.loopexit.i.i.sink.split, label %.lr.ph.preheader.i28.i
 
 .lr.ph.preheader.i28.i:                           ; preds = %bb.bp
   %i.kz = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.gk
@@ -454,10 +455,10 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu
   br i1 %i.oi, label %.loopexit.i.i.sink.split, label %.lr.ph.i30.i
 
 bb.bx:                                            ; preds = %bb.bu
-  %3 = trunc nuw i64 %i.le to i1
-  %4 = icmp ne i64 %i.ld, 0
-  %or.cond.not.i.i = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond.not.i.i, label %bb.by, label %.loopexit.i.i.sink.split
+  %.not32.i.i = icmp eq i64 %i.le, 0
+  %3 = icmp eq i64 %i.ld, 0
+  %or.cond.not.i.i = select i1 %.not32.i.i, i1 true, i1 %3
+  br i1 %or.cond.not.i.i, label %.loopexit.i.i.sink.split, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
   %i.oj = invoke noundef i8 @_RNvMs4_NtCsjtLiwbyrj3U_20unicode_segmentation8graphemeNtB5_14GraphemeCursor17grapheme_category(ptr noalias noundef nonnull align 8 dereferenceable(192) %i.d, i32 noundef %.sroa.4.1.i.ph.i35.i)
@@ -759,7 +760,7 @@ bb.cs:                                            ; preds = %bb.m
   br label %bb.ae
 
 _RNvMs4_NtCsjtLiwbyrj3U_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread.i.i.i: ; preds = %bb.bz, %_RNvNtCsjtLiwbyrj3U_20unicode_segmentation8grapheme10check_pair.exit.thread89.i.i.i.i
-  %.in.i = phi i8 [ %i.kl, %_RNvNtCsjtLiwbyrj3U_20unicode_segmentation8grapheme10check_pair.exit.thread89.i.i.i.i ], [ %i.on, %bb.bz ]
+  %.in.i = phi i8 [ %i.on, %bb.bz ], [ %i.kl, %_RNvNtCsjtLiwbyrj3U_20unicode_segmentation8grapheme10check_pair.exit.thread89.i.i.i.i ]
   %i.tc = trunc nuw i8 %.in.i to i1
   br i1 %i.tc, label %_RNvMs4_NtCsjtLiwbyrj3U_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread.thread159.i.i.i, label %.loopexit.i.i
 

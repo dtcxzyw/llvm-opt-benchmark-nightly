@@ -204,10 +204,14 @@ bb.h:                                             ; preds = %.noexc34
 
 bb.i:                                             ; preds = %.noexc39
   %i.z = invoke noundef zeroext i1 @_ZNK4pugi13xml_attribute7as_boolEb(ptr noundef nonnull align 8 dereferenceable(8) %4, i1 noundef zeroext false)
-          to label %.noexc40.a unwind label %bb.o
+          to label %.noexc40 unwind label %bb.o
 
-.noexc40.a:                                       ; preds = %bb.i, %.noexc39
-  %.0 = phi i1 [ true, %.noexc39 ], [ %i.z, %bb.i ] ; 2 uses
+.noexc40:                                         ; preds = %bb.i
+  %13 = zext i1 %i.z to i8
+  br label %.noexc40.a
+
+.noexc40.a:                                       ; preds = %.noexc40, %.noexc39
+  %.0 = phi i8 [ 1, %.noexc39 ], [ %13, %.noexc40 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %i.aa = invoke ptr @_ZNK4pugi8xml_node9attributeEPKc(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.7)
@@ -306,12 +310,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %b
   br i1 %.099, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit
-  %13 = xor i1 %.0, true
-  invoke void @_ZN6Assimp14StandardShapes8MakeConeEfffjRSt6vectorI10aiVector3tIfESaIS3_EEb(float noundef %.097, float noundef 0.000000e+00, float noundef %.096, i32 noundef 30, ptr noundef nonnull align 8 dereferenceable(24) %11, i1 noundef zeroext %13)
+  %14 = icmp eq i8 %.0, 0
+  invoke void @_ZN6Assimp14StandardShapes8MakeConeEfffjRSt6vectorI10aiVector3tIfESaIS3_EEb(float noundef %.097, float noundef 0.000000e+00, float noundef %.096, i32 noundef 30, ptr noundef nonnull align 8 dereferenceable(24) %11, i1 noundef zeroext %14)
           to label %.loopexit101 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.t:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit
-  br i1 %.0, label %bb.u, label %.loopexit101
+  %15 = trunc nuw i8 %.0 to i1
+  br i1 %15, label %bb.u, label %.loopexit101
 
 bb.u:                                             ; preds = %bb.t
   invoke void @_ZN6Assimp14StandardShapes10MakeCircleEfjRSt6vectorI10aiVector3tIfESaIS3_EE(float noundef %.096, i32 noundef 30, ptr noundef nonnull align 8 dereferenceable(24) %11)

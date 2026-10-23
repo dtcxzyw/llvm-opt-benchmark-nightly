@@ -205,12 +205,11 @@ _ZNK3g2o17SparseBlockMatrixIN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4colsEv.exit:
   %i.s = phi i64 [ %i.r, %bb.d ], [ 0, %_ZNK3g2o17SparseBlockMatrixIN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4rowsEv.exit ]
   tail call void @_ZN5Eigen12SparseMatrixIdLi0EiE6resizeEll(ptr noundef nonnull align 8 dereferenceable(72) %i.d, i64 noundef %i.k, i64 noundef %i.s)
   %.pre = load i8, ptr %i.a, align 1, !tbaa !146, !range !198
-  %3 = trunc nuw i8 %.pre to i1
-  %4 = xor i1 %3, true
+  %3 = icmp eq i8 %.pre, 0
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNK3g2o17SparseBlockMatrixIN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4colsEv.exit, %bb.a
-  %i.t = phi i1 [ %4, %_ZNK3g2o17SparseBlockMatrixIN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4colsEv.exit ], [ true, %bb.a ]
+  %i.t = phi i1 [ %3, %_ZNK3g2o17SparseBlockMatrixIN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4colsEv.exit ], [ true, %bb.a ]
   tail call void @_ZN3g2o17LinearSolverEigenIN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE16fillSparseMatrixERKNS_17SparseBlockMatrixIS3_EEb(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef nonnull align 8 dereferenceable(73) %1, i1 noundef zeroext %i.t)
   %i.u = load i8, ptr %i.a, align 1, !tbaa !146, !range !198, !noundef !199
   %i.v = trunc nuw i8 %i.u to i1

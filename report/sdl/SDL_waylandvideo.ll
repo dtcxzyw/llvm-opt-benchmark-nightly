@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 .lr.ph105.i.i.i:                                  ; preds = %.critedge.i.i.i, %.critedge79.i.i.i
   %indvars.iv109.i.i.i = phi i64 [ %indvars.iv.next110.i.i.i, %.critedge79.i.i.i ], [ 0, %.critedge.i.i.i ] ; 3 uses
   %.052103.i.i.i = phi i32 [ %.1.i.i.i, %.critedge79.i.i.i ], [ 0, %.critedge.i.i.i ] ; 5 uses
-  %.053102.i.i.i = phi i1 [ %.154.i.i.i, %.critedge79.i.i.i ], [ false, %.critedge.i.i.i ] ; 5 uses
+  %.053102.i.i.i = phi i8 [ %.154.i.i.i, %.critedge79.i.i.i ], [ 0, %.critedge.i.i.i ] ; 5 uses
   %.055101.i.i.i = phi i32 [ %.156.i.i.i, %.critedge79.i.i.i ], [ 0, %.critedge.i.i.i ] ; 6 uses
   %.057100.i.i.i = phi float [ %.158.i.i.i, %.critedge79.i.i.i ], [ 0.000000e+00, %.critedge.i.i.i ] ; 7 uses
   %.05999.i.i.i = phi double [ %.160.i.i.i, %.critedge79.i.i.i ], [ 0.000000e+00, %.critedge.i.i.i ] ; 6 uses
@@ -217,12 +217,13 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.dw = load i32, ptr %i.dv, align 4
   %i.dx = add i32 %i.dw, -5
   %spec.select.i.i.i = icmp ult i32 %i.dx, -2     ; 3 uses
-  %.not.i.i.i = xor i1 %.053102.i.i.i, true       ; 2 uses
-  %or.cond.i.i.i = and i1 %spec.select.i.i.i, %.not.i.i.i
+  %2 = zext i1 %spec.select.i.i.i to i8
+  %.not.i.i.i = icmp eq i8 %.053102.i.i.i, 0      ; 2 uses
+  %or.cond.i.i.i = and i1 %.not.i.i.i, %spec.select.i.i.i
   br i1 %or.cond.i.i.i, label %.critedge81.i.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph105.i.i.i
-  %or.cond4.i.i.i = or i1 %spec.select.i.i.i, %.not.i.i.i
+  %or.cond4.i.i.i = or i1 %.not.i.i.i, %spec.select.i.i.i
   br i1 %or.cond4.i.i.i, label %bb.ae, label %.critedge79.i.i.i
 
 bb.ae:                                            ; preds = %bb.ad
@@ -291,7 +292,7 @@ bb.al:                                            ; preds = %bb.ak
   %.160.i.i.i = phi double [ %i.ey, %.critedge81.i.i.i ], [ %.05999.i.i.i, %bb.al ], [ %.05999.i.i.i, %bb.ag ], [ %.05999.i.i.i, %bb.ai ], [ %.05999.i.i.i, %bb.ak ], [ %.05999.i.i.i, %bb.ad ]
   %.158.i.i.i = phi float [ %i.fa, %.critedge81.i.i.i ], [ %.057100.i.i.i, %bb.al ], [ %.057100.i.i.i, %bb.ag ], [ %.057100.i.i.i, %bb.ai ], [ %.057100.i.i.i, %bb.ak ], [ %.057100.i.i.i, %bb.ad ]
   %.156.i.i.i = phi i32 [ %i.fc, %.critedge81.i.i.i ], [ %.055101.i.i.i, %bb.al ], [ %.055101.i.i.i, %bb.ag ], [ %.055101.i.i.i, %bb.ai ], [ %.055101.i.i.i, %bb.ak ], [ %.055101.i.i.i, %bb.ad ]
-  %.154.i.i.i = phi i1 [ %spec.select.i.i.i, %.critedge81.i.i.i ], [ %.053102.i.i.i, %bb.al ], [ %.053102.i.i.i, %bb.ag ], [ %.053102.i.i.i, %bb.ai ], [ %.053102.i.i.i, %bb.ak ], [ true, %bb.ad ]
+  %.154.i.i.i = phi i8 [ %2, %.critedge81.i.i.i ], [ %.053102.i.i.i, %bb.al ], [ %.053102.i.i.i, %bb.ag ], [ %.053102.i.i.i, %bb.ai ], [ %.053102.i.i.i, %bb.ak ], [ 1, %bb.ad ]
   %.1.i.i.i = phi i32 [ %i.fd, %.critedge81.i.i.i ], [ %.052103.i.i.i, %bb.al ], [ %.052103.i.i.i, %bb.ag ], [ %.052103.i.i.i, %bb.ai ], [ %.052103.i.i.i, %bb.ak ], [ %.052103.i.i.i, %bb.ad ] ; 2 uses
   %indvars.iv.next110.i.i.i = add nuw nsw i64 %indvars.iv109.i.i.i, 1 ; 2 uses
   %i.fe = load i32, ptr %i.au, align 8

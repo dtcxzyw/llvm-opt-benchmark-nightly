@@ -204,12 +204,12 @@ bb.fv:                                            ; preds = %bb.fo, %.sink.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !noalias !2604
   %i.ry = getelementptr inbounds nuw i8, ptr %i.at, i64 56
   %i.rz = load i64, ptr %i.ry, align 8, !range !20, !noalias !2604, !noundef !5 ; 4 uses
-  %2 = icmp ne i64 %i.rz, -2                      ; 2 uses
+  %2 = icmp eq i64 %i.rz, -2                      ; 2 uses
   %i.sa = getelementptr inbounds nuw i8, ptr %i.at, i64 144
   %.val10.i = load i8, ptr %i.sa, align 8, !noalias !2604
-  %3 = trunc nuw i8 %.val10.i to i1
-  %or.cond.not.i = select i1 %2, i1 %3, i1 false
-  br i1 %or.cond.not.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit.i, label %bb.fw
+  %3 = icmp eq i8 %.val10.i, 0
+  %or.cond.not.i = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond.not.i, label %bb.fw, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit.i
 
 bb.fw:                                            ; preds = %bb.fv
   %i.sb = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !2604, !nonnull !5, !noundef !5
@@ -309,7 +309,7 @@ bb.gf:                                            ; preds = %bb.hg, %_RINvNtCs3o
 
 _RINvNtCs8frGy5WneL6_4fish2fs26rewrite_via_temporary_fileNCNvMNtB4_20env_universal_commonNtBX_12EnvUniversal4sync0INtNtCs3oUPovFnLWP_4core6option6OptionNtBX_19UniversalReadUpdateEEB4_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !2604
-  br i1 %2, label %bb.gg, label %bb.hd
+  br i1 %2, label %bb.hd, label %bb.gg
 
 bb.gg:                                            ; preds = %_RINvNtCs8frGy5WneL6_4fish2fs26rewrite_via_temporary_fileNCNvMNtB4_20env_universal_commonNtBX_12EnvUniversal4sync0INtNtCs3oUPovFnLWP_4core6option6OptionNtBX_19UniversalReadUpdateEEB4_.exit
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 152
@@ -712,10 +712,10 @@ bb.k:                                             ; preds = %bb.g, %bb.i
   br i1 %i.cr, label %._crit_edge, label %.lr.ph
 
 bb.l:                                             ; preds = %bb.g
-  %3 = trunc nuw i64 %i.m to i1
-  %4 = icmp ne i64 %i.l, 0
-  %.sroa.08.0.not = select i1 %3, i1 %4, i1 false
-  br i1 %.sroa.08.0.not, label %bb.m, label %._crit_edge
+  %3 = icmp eq i64 %i.l, 0
+  %not. = icmp eq i64 %i.m, 0
+  %.sroa.08.0.not = select i1 %not., i1 true, i1 %3
+  br i1 %.sroa.08.0.not, label %._crit_edge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.cs = tail call noundef i8 @_RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor17grapheme_category(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %0, i32 noundef %.sroa.4.1.i.ph)
@@ -1118,9 +1118,10 @@ _RNvNtCsg9url7n1wdL_20unicode_segmentation8grapheme10check_pair.exit.thread.i.i:
 
 _RNvNtCsg9url7n1wdL_20unicode_segmentation8grapheme10check_pair.exit.thread86.i.i: ; preds = %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm
   %i.ju = load i8, ptr %i.br, align 4, !range !16, !alias.scope !3606, !noundef !5 ; 2 uses
-  %1 = xor i8 %i.ju, 1
-  %..i.i = sub nuw nsw i8 2, %i.ju
+  %1 = icmp eq i8 %i.ju, 0
+  %..i.i = select i1 %1, i8 2, i8 1
   store i8 %..i.i, ptr %i.bj, align 2, !alias.scope !3606
+  %2 = xor i8 %i.ju, 1
   br label %_RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread.i
 
 _RNvNtCsg9url7n1wdL_20unicode_segmentation8grapheme10check_pair.exit.thread88.i.i: ; preds = %.thread.i.i.i, %bb.bn
@@ -1248,7 +1249,7 @@ _RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is
   br label %bb.cj
 
 _RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread.i: ; preds = %_RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit._RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread_crit_edge.i, %bb.ca, %_RNvNtCsg9url7n1wdL_20unicode_segmentation8grapheme10check_pair.exit.thread86.i.i
-  %i.ku = phi i8 [ %.pre138.i, %_RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit._RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread_crit_edge.i ], [ %i.kl, %bb.ca ], [ %1, %_RNvNtCsg9url7n1wdL_20unicode_segmentation8grapheme10check_pair.exit.thread86.i.i ]
+  %i.ku = phi i8 [ %.pre138.i, %_RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit._RNvMs4_NtCsg9url7n1wdL_20unicode_segmentation8graphemeNtB5_14GraphemeCursor11is_boundary.exit.thread_crit_edge.i ], [ %i.kl, %bb.ca ], [ %2, %_RNvNtCsg9url7n1wdL_20unicode_segmentation8grapheme10check_pair.exit.thread86.i.i ]
   %i.kv = trunc nuw i8 %i.ku to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !3603
   br i1 %i.kv, label %.loopexit, label %bb.cj

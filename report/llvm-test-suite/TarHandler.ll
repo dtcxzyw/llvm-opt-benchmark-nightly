@@ -205,20 +205,21 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
   %.pre.pre = load i8, ptr %i.d, align 4, !tbaa !76, !range !44
-  %2 = trunc nuw i8 %.pre.pre to i1
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %.pre = phi i1 [ %2, %bb.a ], [ %.pre.be, %.backedge ] ; 2 uses
+  %.pre = phi i8 [ %.pre.pre, %bb.a ], [ %.pre.be, %.backedge ] ; 2 uses
   %i.m = load i32, ptr %i.c, align 8, !tbaa !75
   %i.n = icmp ult i32 %i.m, %1
   br i1 %i.n, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %.pre, label %.loopexit, label %.critedge.thread
+  %.not.not = icmp eq i8 %.pre, 0
+  br i1 %.not.not, label %.critedge.thread, label %.loopexit
 
 .critedge:                                        ; preds = %bb.b
-  br i1 %.pre, label %bb.d, label %.critedge.thread
+  %2 = trunc nuw i8 %.pre to i1
+  br i1 %2, label %bb.d, label %.critedge.thread
 
 bb.d:                                             ; preds = %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -421,7 +422,7 @@ bb.l:                                             ; preds = %bb.j
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.l, %bb.i
-  %.pre.be = phi i1 [ true, %bb.l ], [ false, %bb.i ]
+  %.pre.be = phi i8 [ 1, %bb.l ], [ 0, %bb.i ]
   br label %bb.b, !llvm.loop !115
 
 .loopexit:                                        ; preds = %bb.c, %.thread25, %.thread

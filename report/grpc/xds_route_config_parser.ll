@@ -204,15 +204,16 @@ _ZNK9grpc_core22XdsRouteConfigResource5Route8MatcherseqERKS2_.exit: ; preds = %b
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.w = load i8, ptr %i.v, align 4, !tbaa !186, !range !75, !noundef !76 ; 2 uses
-  %2 = trunc nuw i8 %i.w to i1
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 84
   %i.y = load i8, ptr %i.x, align 4, !tbaa !186, !range !75, !noundef !76
-  %i.z = icmp eq i8 %i.w, %i.y                    ; 2 uses
-  %brmerge.not.i.i = and i1 %i.z, %2
+  %2 = icmp ne i8 %i.w, %i.y                      ; 2 uses
+  %i.z = icmp eq i8 %i.w, 0
+  %brmerge.i.i = or i1 %i.z, %2
+  %not..i.i = xor i1 %2, true
   %i.aa = load i32, ptr %i.t, align 8
   %i.ab = load i32, ptr %i.u, align 8
   %i.ac = icmp eq i32 %i.aa, %i.ab
-  %i.ad = select i1 %brmerge.not.i.i, i1 %i.ac, i1 %i.z
+  %i.ad = select i1 %brmerge.i.i, i1 %not..i.i, i1 %i.ac
   br i1 %i.ad, label %bb.e, label %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9grpc_core22XdsRouteConfigResource20FilterConfigOverrideESt4lessIS5_ESaISt4pairIKS5_S8_EEEbRKSt3mapIT_T0_T1_T2_ESM_.exit
 
 bb.e:                                             ; preds = %_ZNK9grpc_core22XdsRouteConfigResource5Route8MatcherseqERKS2_.exit
@@ -368,12 +369,12 @@ bb.e:                                             ; preds = %_ZNK9grpc_core22Xds
 _ZSteqIN9grpc_core22XdsRouteConfigResource5Route11RouteAction10HashPolicyESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit: ; preds = %bb.e, %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !136, !range !75, !noundef !76 ; 2 uses
-  %3 = trunc nuw i8 %i.ae to i1
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ag = load i8, ptr %i.af, align 8, !tbaa !136, !range !75, !noundef !76
-  %i.ah = icmp eq i8 %i.ae, %i.ag                 ; 2 uses
-  %brmerge.not.i = and i1 %i.ah, %3
-  br i1 %brmerge.not.i, label %bb.f, label %_ZSteqIN9grpc_core22XdsRouteConfigResource11RetryPolicyES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
+  %3 = icmp ne i8 %i.ae, %i.ag                    ; 2 uses
+  %i.ah = icmp eq i8 %i.ae, 0
+  %brmerge.i = or i1 %i.ah, %3
+  br i1 %brmerge.i, label %_ZSteqIN9grpc_core22XdsRouteConfigResource11RetryPolicyES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZSteqIN9grpc_core22XdsRouteConfigResource5Route11RouteAction10HashPolicyESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -406,7 +407,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ba, label %bb.h, label %_ZSteqIN9grpc_core22XdsRouteConfigResource5Route11RouteAction10HashPolicyESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.thread
 
 _ZSteqIN9grpc_core22XdsRouteConfigResource11RetryPolicyES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit: ; preds = %_ZSteqIN9grpc_core22XdsRouteConfigResource5Route11RouteAction10HashPolicyESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit
-  br i1 %i.ah, label %bb.h, label %_ZSteqIN9grpc_core22XdsRouteConfigResource5Route11RouteAction10HashPolicyESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.thread
+  br i1 %3, label %_ZSteqIN9grpc_core22XdsRouteConfigResource5Route11RouteAction10HashPolicyESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %.split, %_ZSteqIN9grpc_core22XdsRouteConfigResource11RetryPolicyES2_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS4_ERKSD_IS7_E.exit
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -429,15 +430,16 @@ bb.i:                                             ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.bj = load i8, ptr %i.bi, align 8, !tbaa !225, !range !75, !noundef !76 ; 2 uses
-  %4 = trunc nuw i8 %i.bj to i1
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.bl = load i8, ptr %i.bk, align 8, !tbaa !225, !range !75, !noundef !76
-  %i.bm = icmp eq i8 %i.bj, %i.bl                 ; 2 uses
-  %brmerge.not.i6 = and i1 %i.bm, %4
+  %4 = icmp ne i8 %i.bj, %i.bl                    ; 2 uses
+  %i.bm = icmp eq i8 %i.bj, 0
+  %brmerge.i7 = or i1 %i.bm, %4
+  %not..i8 = xor i1 %4, true
   %.sroa.0.0.copyload.i = load i64, ptr %i.bh, align 8
   %i.bn = load i64, ptr %i.bg, align 8
   %i.bo = icmp eq i64 %i.bn, %.sroa.0.0.copyload.i
-  %i.bp = select i1 %brmerge.not.i6, i1 %i.bo, i1 %i.bm
+  %i.bp = select i1 %brmerge.i7, i1 %not..i8, i1 %i.bo
   br i1 %i.bp, label %bb.j, label %_ZSteqIN9grpc_core22XdsRouteConfigResource5Route11RouteAction10HashPolicyESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.thread
 
 bb.j:                                             ; preds = %bb.i
@@ -712,9 +714,9 @@ _ZStneIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit.i: ; preds = %_
   call void @_ZSt10__do_visitINSt8__detail9__variant20__variant_idx_cookieEZSteqIJSt9monostatebN9grpc_core12experimental4Json11NumberValueENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt3mapISE_S7_St4lessISE_ESaISt4pairIKSE_S7_EEESt6vectorIS7_SaIS7_EEEEbRKSt7variantIJDpT_EESV_EUlOT_T0_E_JRKSQ_IJS4_bS8_SE_SM_SP_EEEEDcOSY_DpOT1_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(56) %i.q), !inline_history !663
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
   %i.s = load i8, ptr %i.a, align 1, !tbaa !83, !range !75, !noundef !76
-  %3 = trunc nuw i8 %i.s to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
-  br i1 %3, label %bb.d, label %_ZNK9grpc_core22XdsRouteConfigResource20FilterConfigOverrideeqERKS1_.exit
+  %3 = icmp eq i8 %i.s, 0
+  br i1 %3, label %_ZNK9grpc_core22XdsRouteConfigResource20FilterConfigOverrideeqERKS1_.exit, label %bb.d
 
 bb.d:                                             ; preds = %_ZStneIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit.i
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 104

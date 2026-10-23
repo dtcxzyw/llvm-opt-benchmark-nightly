@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
-  %.0103208 = phi i1 [ false, %.lr.ph ], [ %spec.select, %bb.f ]
+  %.0103207 = phi i8 [ 0, %.lr.ph ], [ %spec.select, %bb.f ]
   %.0112207 = phi i32 [ 0, %.lr.ph ], [ %spec.select134, %bb.f ]
   %.0117206 = phi ptr [ %i.g, %.lr.ph ], [ %i.ac, %bb.f ] ; 2 uses
   %i.p = load i32, ptr %.0117206, align 4, !tbaa !13 ; 3 uses
   %i.q = icmp eq i32 %i.p, %1
-  %spec.select = select i1 %i.q, i1 true, i1 %.0103208 ; 2 uses
+  %spec.select = select i1 %i.q, i8 1, i8 %.0103207 ; 2 uses
   %i.r = sext i32 %i.p to i64
   %i.s = getelementptr inbounds i8, ptr %i.m, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !tbaa !163   ; 2 uses
@@ -238,9 +238,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not126, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.f
-  %3 = icmp samesign ugt i32 %spec.select134, 2
-  %i.ad = select i1 %spec.select, i1 %3, i1 false
-  br i1 %i.ad, label %bb.g, label %.thread.thread
+  %3 = icmp eq i8 %spec.select, 0
+  %4 = icmp samesign ult i32 %spec.select134, 3
+  %i.ad = select i1 %3, i1 true, i1 %4
+  br i1 %i.ad, label %.thread.thread, label %bb.g
 
 bb.g:                                             ; preds = %.thread
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1064 ; 7 uses

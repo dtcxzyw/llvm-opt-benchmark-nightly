@@ -204,18 +204,19 @@ bb.c:                                             ; preds = %bb.e, %bb.b
   %i.ac = load ptr, ptr %i.d, align 8, !tbaa !161
   %i.ad = load ptr, ptr %i.e, align 8, !tbaa !161
   %i.ae = icmp eq ptr %i.ac, %i.ad
-  %.pre = load i8, ptr %i.f, align 1, !tbaa !86, !range !136
-  %8 = trunc nuw i8 %.pre to i1                   ; 2 uses
+  %.pre = load i8, ptr %i.f, align 1, !tbaa !86, !range !136 ; 2 uses
   br i1 %i.ae, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %8, label %.critedge2, label %bb.e
+  %.not.not = icmp eq i8 %.pre, 0
+  br i1 %.not.not, label %bb.e, label %.critedge2
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZN7rocksdb19InstrumentedCondVar4WaitEv(ptr noundef nonnull align 8 dereferenceable(76) %i.g)
           to label %bb.c unwind label %.loopexit.split-lp101.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.loop !241
 
 .critedge:                                        ; preds = %bb.c
+  %8 = trunc nuw i8 %.pre to i1
   br i1 %8, label %.critedge2, label %bb.f
 
 bb.f:                                             ; preds = %.critedge
@@ -238,8 +239,8 @@ bb.g:                                             ; preds = %bb.f
   %.025170 = phi i64 [ %i.cb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ 0, %bb.g ]
   %.027169 = phi i64 [ %.128, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ %i.aj, %bb.g ]
   %i.ao = load i8, ptr %i.f, align 1, !tbaa !86, !range !136, !noundef !137
-  %9 = trunc nuw i8 %i.ao to i1
-  br i1 %9, label %.critedge2, label %bb.h
+  %.not.not42 = icmp eq i8 %i.ao, 0
+  br i1 %.not.not42, label %bb.h, label %.critedge2
 
 bb.h:                                             ; preds = %.lr.ph
   %i.ap = load atomic i64, ptr %i.h seq_cst, align 8
@@ -642,8 +643,8 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = load i8, ptr %i.c, align 1, !tbaa !86, !range !136, !noundef !137
-  %1 = trunc nuw i8 %i.g to i1
-  br i1 %1, label %.critedge, label %bb.d
+  %.not.not = icmp eq i8 %i.g, 0
+  br i1 %.not.not, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN7rocksdb19InstrumentedCondVar4WaitEv(ptr noundef nonnull align 8 dereferenceable(76) %i.d)
@@ -872,8 +873,8 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt3mapI
 
 bb.d:                                             ; preds = %bb.c
   %i.u = load i8, ptr %i.p, align 1, !tbaa !86, !range !136, !noundef !137
-  %2 = trunc nuw i8 %i.u to i1
-  br i1 %2, label %.critedge, label %bb.e
+  %.not3.not = icmp eq i8 %i.u, 0
+  br i1 %.not3.not, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZN7rocksdb19InstrumentedCondVar4WaitEv(ptr noundef nonnull align 8 dereferenceable(76) %i.q)

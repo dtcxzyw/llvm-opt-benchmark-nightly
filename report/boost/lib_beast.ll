@@ -205,11 +205,11 @@ bb.w:                                             ; preds = %.preheader.i121
 
 .loopexit259:                                     ; preds = %.preheader21.i115, %bb.w
   %i.jl = load i8, ptr %i.c, align 4, !tbaa !258, !range !194, !noundef !146
-  %6 = trunc nuw i8 %i.jl to i1
+  %.not236 = icmp eq i8 %i.jl, 0
   %i.jm = load i64, ptr %i.dq, align 8
-  %7 = icmp ne i64 %i.jm, 0
-  %or.cond240.not = select i1 %6, i1 true, i1 %7
-  br i1 %or.cond240.not, label %.critedge, label %bb.x
+  %6 = icmp eq i64 %i.jm, 0
+  %or.cond240.not = select i1 %.not236, i1 %6, i1 false
+  br i1 %or.cond240.not, label %bb.x, label %.critedge
 
 bb.x:                                             ; preds = %.loopexit259
   store i8 1, ptr %i.c, align 4, !tbaa !258
@@ -408,11 +408,11 @@ bb.y:                                             ; preds = %.preheader.i136
 
 .loopexit257:                                     ; preds = %bb.y, %.preheader21.i130.24
   %i.mb = load i8, ptr %i.d, align 1, !tbaa !259, !range !194, !noundef !146
-  %8 = trunc nuw i8 %i.mb to i1
+  %.not241 = icmp eq i8 %i.mb, 0
   %i.mc = load i64, ptr %i.dq, align 8
-  %9 = icmp ne i64 %i.mc, 0
-  %or.cond245.not = select i1 %8, i1 true, i1 %9
-  br i1 %or.cond245.not, label %.critedge, label %bb.z
+  %7 = icmp eq i64 %i.mc, 0
+  %or.cond245.not = select i1 %.not241, i1 %7, i1 false
+  br i1 %or.cond245.not, label %bb.z, label %.critedge
 
 bb.z:                                             ; preds = %.loopexit257
   store i8 1, ptr %i.d, align 1, !tbaa !259
@@ -815,12 +815,12 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.r = load i8, ptr %2, align 4, !tbaa !330, !range !194, !noundef !146
-  %6 = trunc nuw i8 %i.r to i1
+  %.not.i = icmp eq i8 %i.r, 0
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.t = load i32, ptr %i.s, align 4
-  %7 = icmp eq i32 %i.t, 5
-  %.not224 = select i1 %6, i1 %7, i1 false
-  br i1 %.not224, label %.critedge2, label %.critedge
+  %6 = icmp ne i32 %i.t, 5
+  %.not224 = select i1 %.not.i, i1 true, i1 %6
+  br i1 %.not224, label %.critedge, label %.critedge2
 
 .critedge:                                        ; preds = %bb.g, %bb.i
   %i.u = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib15make_error_codeENS1_5errorEE3cat, i64 8), align 8, !tbaa !66, !noalias !1110
@@ -1043,14 +1043,14 @@ bb.z:                                             ; preds = %_ZN5boost8optionalI
 
 bb.aa:                                            ; preds = %bb.z
   %i.dj = load i8, ptr %2, align 4, !tbaa !330, !range !194, !noundef !146
-  %8 = trunc nuw i8 %i.dj to i1
+  %.not.i58 = icmp eq i8 %i.dj, 0
   %i.dk = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.dl = load i32, ptr %i.dk, align 4            ; 2 uses
-  %9 = icmp slt i32 %.sroa.31.0.insert.shift.i.i.i243, %i.dl
-  %10 = icmp eq i32 %i.dl, 5
-  %.not228 = or i1 %9, %10
-  %or.cond221.not = select i1 %8, i1 %.not228, i1 false
-  br i1 %or.cond221.not, label %.critedge4, label %bb.ab
+  %7 = icmp sge i32 %.sroa.31.0.insert.shift.i.i.i243, %i.dl
+  %8 = icmp ne i32 %i.dl, 5
+  %9 = and i1 %7, %8
+  %or.cond221.not = select i1 %.not.i58, i1 true, i1 %9
+  br i1 %or.cond221.not, label %bb.ab, label %.critedge4
 
 bb.ab:                                            ; preds = %bb.aa
   %i.dm = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost5beast4zlib15make_error_codeENS1_5errorEE3cat, i64 8), align 8, !tbaa !66, !noalias !1112
@@ -1126,11 +1126,11 @@ bb.ag:                                            ; preds = %.critedge4
 
 bb.ah:                                            ; preds = %.thread245
   %i.ei = load i8, ptr %2, align 4, !tbaa !330, !range !194, !noundef !146 ; 2 uses
-  %11 = trunc nuw i8 %i.ei to i1
+  %.not.i80 = icmp ne i8 %i.ei, 0
   %i.ej = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.ek = load i32, ptr %i.ej, align 4
   %i.el = icmp eq i32 %i.ek, 0
-  %.not230 = select i1 %11, i1 %i.el, i1 false
+  %.not230 = select i1 %.not.i80, i1 %i.el, i1 false
   %brmerge = or i1 %i.dv, %.not230
   br i1 %brmerge, label %.critedge8, label %.critedge6
 
@@ -1199,11 +1199,11 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.ao
   %i.ff = icmp eq i32 %.0, 1
-  %.pre237 = load i8, ptr %2, align 4, !tbaa !330, !range !194 ; 2 uses
+  %.pre237 = load i8, ptr %2, align 4, !tbaa !330, !range !194 ; 3 uses
   br i1 %i.ff, label %bb.as, label %.critedge8
 
 bb.as:                                            ; preds = %bb.ar
-  %i.fg = trunc nuw i8 %.pre237 to i1             ; 2 uses
+  %i.fg = trunc nuw i8 %.pre237 to i1
   %i.fh = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %i.fi = load i32, ptr %i.fh, align 4            ; 2 uses
   %i.fj = icmp eq i32 %i.fi, 2
@@ -1215,9 +1215,10 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.ay
 
 bb.au:                                            ; preds = %bb.as
-  %i.fl = icmp eq i32 %i.fi, 1
-  %.not232 = select i1 %i.fg, i1 %i.fl, i1 false
-  br i1 %.not232, label %bb.ay, label %bb.av
+  %i.fl = icmp eq i8 %.pre237, 0
+  %10 = icmp ne i32 %i.fi, 1
+  %.not232 = select i1 %i.fl, i1 true, i1 %10
+  br i1 %.not232, label %bb.av, label %bb.ay
 
 bb.av:                                            ; preds = %bb.au
   tail call void @_ZN5boost5beast4zlib6detail14deflate_stream15tr_stored_blockEPcji(ptr noundef nonnull align 8 dereferenceable(5928) %0, ptr noundef null, i32 noundef 0, i32 noundef 0)

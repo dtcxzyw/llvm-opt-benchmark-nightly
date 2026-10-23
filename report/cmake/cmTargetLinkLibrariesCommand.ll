@@ -204,19 +204,20 @@ bb.cv:                                            ; preds = %.sink.split, %bb.cl
   br i1 %.not218, label %bb.at, label %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405.loopexit", !llvm.loop !109
 
 "_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405.loopexit": ; preds = %bb.cv
-  %42 = trunc nuw i8 %.1184 to i1
-  %43 = zext nneg i32 %.1187 to i64
+  %42 = zext nneg i32 %.1187 to i64
+  %43 = icmp eq i8 %.1184, 0
   br label %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405"
 
 "_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405": ; preds = %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405.loopexit", %bb.ac
-  %.0186.lcssa = phi i64 [ 0, %bb.ac ], [ %43, %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405.loopexit" ]
-  %.0183.lcssa.not = phi i1 [ false, %bb.ac ], [ %42, %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405.loopexit" ]
+  %.0186.lcssa = phi i64 [ 0, %bb.ac ], [ %42, %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405.loopexit" ]
+  %.0183.lcssa.not = phi i1 [ true, %bb.ac ], [ %43, %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405.loopexit" ]
   %i.rk = invoke fastcc noundef zeroext i1 @"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv"(ptr noundef nonnull align 8 dereferenceable(32) %15)
           to label %bb.cw unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.cw:                                            ; preds = %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread405"
-  %brmerge.not = select i1 %i.rk, i1 %.0183.lcssa.not, i1 false
-  br i1 %brmerge.not, label %bb.cx, label %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread402"
+  %.not561 = xor i1 %i.rk, true
+  %brmerge.not = select i1 %.not561, i1 true, i1 %.0183.lcssa.not
+  br i1 %brmerge.not, label %"_ZZ28cmTargetLinkLibrariesCommandRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EER17cmExecutionStatusENK3$_0clEv.exit.thread402", label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #21

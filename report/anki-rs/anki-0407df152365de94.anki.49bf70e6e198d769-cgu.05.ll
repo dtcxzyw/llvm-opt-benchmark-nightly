@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.a
-  %i.n = load i64, ptr %1, align 8, !range !30, !noundef !10 ; 3 uses
+  %i.n = load i64, ptr %1, align 8, !range !30, !noundef !10 ; 4 uses
   %i.o = icmp ne i64 %i.n, 3
   tail call void @llvm.assume(i1 %i.o)
   %i.p = icmp samesign ult i64 %i.n, 2
@@ -244,7 +244,7 @@ bb.f:                                             ; preds = %bb.b
   ]
 
 "_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit": ; preds = %bb.ak, %bb.aj, %bb.ai, %.split13.i, %bb.ag, %bb.af, %.split12.i, %bb.ad, %bb.ac, %.split11.i, %bb.aa, %bb.z, %.split.i, %bb.x, %bb.w, %bb.u, %"_ZN5alloc3vec10partial_eq117_$LT$impl$u20$core..cmp..PartialEq$LT$alloc..vec..Vec$LT$U$C$A2$GT$$GT$$u20$for$u20$alloc..vec..Vec$LT$T$C$A1$GT$$GT$2eq17h71450a353be57606E.exit.i", %bb.t, %bb.s, %bb.r, %bb.p, %bb.o, %bb.n, %bb.e, %bb.d, %bb.m, %bb.a, %bb.b, %bb.c, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17ha4c1f700e7f86f4eE.exit", %.thread40
-  %.sroa.0.0.shrunk = phi i1 [ false, %bb.a ], [ false, %bb.m ], [ false, %.thread40 ], [ %i.ag, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17ha4c1f700e7f86f4eE.exit" ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ %i.q, %bb.e ], [ %i.fb, %bb.ak ], [ false, %bb.o ], [ %9, %bb.aj ], [ false, %bb.af ], [ false, %bb.ac ], [ false, %bb.z ], [ false, %bb.w ], [ false, %bb.r ], [ false, %bb.n ], [ false, %bb.ag ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.x ], [ false, %bb.u ], [ false, %bb.s ], [ false, %bb.p ], [ false, %bb.ai ], [ false, %"_ZN5alloc3vec10partial_eq117_$LT$impl$u20$core..cmp..PartialEq$LT$alloc..vec..Vec$LT$U$C$A2$GT$$GT$$u20$for$u20$alloc..vec..Vec$LT$T$C$A1$GT$$GT$2eq17h71450a353be57606E.exit.i" ], [ false, %.split13.i ], [ false, %.split.i ], [ false, %.split11.i ], [ false, %.split12.i ], [ false, %bb.t ]
+  %.sroa.0.0.shrunk = phi i1 [ false, %bb.a ], [ false, %bb.m ], [ false, %.thread40 ], [ %i.ag, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17ha4c1f700e7f86f4eE.exit" ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ %i.q, %bb.e ], [ %i.fb, %bb.ak ], [ false, %bb.o ], [ %12, %bb.aj ], [ false, %bb.af ], [ false, %bb.ac ], [ false, %bb.z ], [ false, %bb.w ], [ false, %bb.r ], [ false, %bb.n ], [ false, %bb.ag ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.x ], [ false, %bb.u ], [ false, %bb.s ], [ false, %bb.p ], [ false, %bb.ai ], [ false, %"_ZN5alloc3vec10partial_eq117_$LT$impl$u20$core..cmp..PartialEq$LT$alloc..vec..Vec$LT$U$C$A2$GT$$GT$$u20$for$u20$alloc..vec..Vec$LT$T$C$A1$GT$$GT$2eq17h71450a353be57606E.exit.i" ], [ false, %.split13.i ], [ false, %.split.i ], [ false, %.split11.i ], [ false, %.split12.i ], [ false, %bb.t ]
   ret i1 %.sroa.0.0.shrunk
 
 bb.g:                                             ; preds = %bb.f
@@ -258,8 +258,7 @@ bb.h:                                             ; preds = %bb.l, %.critedge34,
   %.sroa.01.0 = phi i8 [ 4, %.critedge34 ], [ 3, %.critedge ], [ 2, %bb.k ], [ 1, %bb.j ], [ 0, %bb.g ], [ 5, %bb.l ]
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.w = load i8, ptr %i.v, align 8, !range !21, !noundef !10
-  %3 = trunc nuw i8 %i.w to i1
-  %.sroa.02.0 = xor i1 %3, true
+  %.sroa.02.0 = icmp eq i8 %i.w, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !10, !align !13, !noundef !10
@@ -428,14 +427,15 @@ bb.u:                                             ; preds = %"_ZN5alloc3vec10par
 bb.v:                                             ; preds = %bb.u
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dj = trunc nuw i64 %i.d to i1
-  %4 = trunc nuw i64 %i.n to i1                   ; 2 uses
   br i1 %i.dj, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  br i1 %4, label %.split.i, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
+  %3 = trunc nuw i64 %i.n to i1
+  br i1 %3, label %.split.i, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 bb.x:                                             ; preds = %bb.v
-  br i1 %4, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit", label %bb.y
+  %4 = icmp eq i64 %i.n, 0
+  br i1 %4, label %bb.y, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 .split.i:                                         ; preds = %bb.w
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -450,15 +450,16 @@ bb.y:                                             ; preds = %.split.i, %bb.x
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.dr = trunc nuw i64 %i.dp to i1
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.dt = load i64, ptr %i.ds, align 8, !range !12, !alias.scope !1315, !noundef !10
-  %5 = trunc nuw i64 %i.dt to i1                  ; 2 uses
+  %i.dt = load i64, ptr %i.ds, align 8, !range !12, !alias.scope !1315, !noundef !10 ; 2 uses
   br i1 %i.dr, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
+  %5 = trunc nuw i64 %i.dt to i1
   br i1 %5, label %.split11.i, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 bb.aa:                                            ; preds = %bb.y
-  br i1 %5, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit", label %bb.ab
+  %6 = icmp eq i64 %i.dt, 0
+  br i1 %6, label %bb.ab, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 .split11.i:                                       ; preds = %bb.z
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -473,15 +474,16 @@ bb.ab:                                            ; preds = %.split11.i, %bb.aa
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.eb = trunc nuw i64 %i.dz to i1
   %i.ec = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.ed = load i64, ptr %i.ec, align 8, !range !12, !alias.scope !1315, !noundef !10
-  %6 = trunc nuw i64 %i.ed to i1                  ; 2 uses
+  %i.ed = load i64, ptr %i.ec, align 8, !range !12, !alias.scope !1315, !noundef !10 ; 2 uses
   br i1 %i.eb, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  br i1 %6, label %.split12.i, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
+  %7 = trunc nuw i64 %i.ed to i1
+  br i1 %7, label %.split12.i, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 bb.ad:                                            ; preds = %bb.ab
-  br i1 %6, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit", label %bb.ae
+  %8 = icmp eq i64 %i.ed, 0
+  br i1 %8, label %bb.ae, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 .split12.i:                                       ; preds = %bb.ac
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -496,15 +498,16 @@ bb.ae:                                            ; preds = %.split12.i, %bb.ad
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.el = trunc nuw i64 %i.ej to i1
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.en = load i64, ptr %i.em, align 8, !range !12, !alias.scope !1315, !noundef !10
-  %7 = trunc nuw i64 %i.en to i1                  ; 2 uses
+  %i.en = load i64, ptr %i.em, align 8, !range !12, !alias.scope !1315, !noundef !10 ; 2 uses
   br i1 %i.el, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  br i1 %7, label %.split13.i, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
+  %9 = trunc nuw i64 %i.en to i1
+  br i1 %9, label %.split13.i, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 bb.ag:                                            ; preds = %bb.ae
-  br i1 %7, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit", label %bb.ah
+  %10 = icmp eq i64 %i.en, 0
+  br i1 %10, label %bb.ah, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 .split13.i:                                       ; preds = %bb.af
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -519,15 +522,15 @@ bb.ah:                                            ; preds = %.split13.i, %bb.ag
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ev = trunc nuw i64 %i.et to i1
   %i.ew = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.ex = load i64, ptr %i.ew, align 8, !range !12, !alias.scope !1315, !noundef !10
-  %8 = trunc nuw i64 %i.ex to i1                  ; 2 uses
+  %i.ex = load i64, ptr %i.ew, align 8, !range !12, !alias.scope !1315, !noundef !10 ; 2 uses
   br i1 %i.ev, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  br i1 %8, label %bb.ak, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
+  %11 = trunc nuw i64 %i.ex to i1
+  br i1 %11, label %bb.ak, label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 bb.aj:                                            ; preds = %bb.ah
-  %9 = xor i1 %8, true
+  %12 = icmp eq i64 %i.ex, 0
   br label %"_ZN103_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..cmp..PartialEq$LT$alloc..borrow..Cow$LT$C$GT$$GT$$GT$2eq17h94df59a763a3b75fE.exit"
 
 bb.ak:                                            ; preds = %bb.ai
@@ -930,8 +933,8 @@ bb.i:                                             ; preds = %bb.h
 "_ZN110_$LT$std..collections..hash..map..ValuesMut$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha7f38f0e49e64e67E.exit.i.i.i.i.i.i.i.i": ; preds = %bb.i
   %i.be = getelementptr inbounds i8, ptr %i.bb, i64 -72
   %i.bf = load i8, ptr %i.be, align 8, !range !21, !alias.scope !3632, !noalias !3628, !noundef !10
-  %3 = trunc nuw i8 %i.bf to i1
-  br i1 %3, label %_ZN4core4iter8adapters5chain17and_then_or_clear17h7d55a6d695e9caecE.exit.i.i.i, label %bb.h
+  %not..i.i.i.i.i.i.i.i = icmp eq i8 %i.bf, 0
+  br i1 %not..i.i.i.i.i.i.i.i, label %bb.h, label %_ZN4core4iter8adapters5chain17and_then_or_clear17h7d55a6d695e9caecE.exit.i.i.i
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   store ptr null, ptr %.sroa.3.0..sroa_idx.i.i.i, align 8, !alias.scope !3630, !noalias !3628
@@ -1334,12 +1337,12 @@ bb.o:                                             ; preds = %bb.a, %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 584
   %i.z = load i8, ptr %i.y, align 8, !range !21, !alias.scope !7947, !noundef !10
-  %2 = trunc nuw i8 %i.z to i1
+  %.not.i = icmp eq i8 %i.z, 0
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.ab = load i64, ptr %i.aa, align 8, !alias.scope !7947
-  %3 = icmp ne i64 %i.ab, 0
-  %or.cond.not.i = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond.not.i, label %"_ZN5hyper5proto2h14conn21Conn$LT$I$C$B$C$T$GT$18require_empty_read17hce41a5a9d3d8b02dE.exit", label %bb.p
+  %2 = icmp eq i64 %i.ab, 0
+  %or.cond.not.i = select i1 %.not.i, i1 %2, i1 false
+  br i1 %or.cond.not.i, label %bb.p, label %"_ZN5hyper5proto2h14conn21Conn$LT$I$C$B$C$T$GT$18require_empty_read17hce41a5a9d3d8b02dE.exit"
 
 bb.p:                                             ; preds = %bb.o
   %i.ac = tail call { i64, ptr } @"_ZN5hyper5proto2h12io21Buffered$LT$T$C$B$GT$17poll_read_from_io17haebb0d014dad9e3dE"(ptr noalias noundef nonnull align 8 dereferenceable(608) %0, ptr noalias noundef nonnull align 8 dereferenceable(32) %1) ; 2 uses

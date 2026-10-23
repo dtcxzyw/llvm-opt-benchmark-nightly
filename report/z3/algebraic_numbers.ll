@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
 _ZNK6vectorIjLb0EjE4sizeEv.exit:                  ; preds = %.preheader, %bb.aa
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.aa ], [ 0, %.preheader ] ; 3 uses
   %i.cm = phi ptr [ %i.di, %bb.aa ], [ %i.ci, %.preheader ] ; 3 uses
-  %.089285 = phi i1 [ %.2.ph, %bb.aa ], [ false, %.preheader ] ; 2 uses
+  %.089285 = phi i8 [ %.2.ph, %bb.aa ], [ 0, %.preheader ] ; 2 uses
   %i.cn = getelementptr inbounds i8, ptr %i.cm, i64 -4
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !115
   %i.cp = zext i32 %i.co to i64
@@ -248,7 +248,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.dh, label %bb.aa, label %.thread177
 
 bb.aa:                                            ; preds = %bb.z, %bb.x
-  %.2.ph = phi i1 [ %.089285, %bb.x ], [ true, %bb.z ] ; 2 uses
+  %.2.ph = phi i8 [ %.089285, %bb.x ], [ 1, %bb.z ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.di = load ptr, ptr %i.o, align 8, !tbaa !114 ; 2 uses
   %i.dj = icmp eq ptr %i.di, null
@@ -256,15 +256,16 @@ bb.aa:                                            ; preds = %bb.z, %bb.x
 
 .critedge:                                        ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit, %bb.aa
   %i.dk = phi ptr [ %i.cm, %_ZNK6vectorIjLb0EjE4sizeEv.exit ], [ null, %bb.aa ]
-  %.089.lcssa = phi i1 [ %.089285, %_ZNK6vectorIjLb0EjE4sizeEv.exit ], [ %.2.ph, %bb.aa ]
-  br i1 %.089.lcssa, label %bb.q, label %.critedge296
+  %.089.lcssa.ph = phi i8 [ %.089285, %_ZNK6vectorIjLb0EjE4sizeEv.exit ], [ %.2.ph, %bb.aa ]
+  %17 = icmp eq i8 %.089.lcssa.ph, 0
+  br i1 %17, label %.critedge296, label %bb.q
 
 .thread177:                                       ; preds = %bb.z
   invoke void @_ZN17algebraic_numbers7manager3imp10checkpointEv(ptr noundef nonnull align 8 dereferenceable(936) %0)
           to label %.backedge unwind label %.loopexit.split-lp193.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.loop !233
 
 .critedge296:                                     ; preds = %.preheader, %.critedge
-  %i.dl = phi ptr [ null, %.preheader ], [ %i.dk, %.critedge ] ; 4 uses
+  %i.dl = phi ptr [ %i.dk, %.critedge ], [ null, %.preheader ] ; 4 uses
   %i.dm = load i32, ptr %i.ab, align 4, !tbaa !146
   %i.dn = icmp sgt i32 %i.dm, 0
   br i1 %i.dn, label %.thread187, label %bb.ab

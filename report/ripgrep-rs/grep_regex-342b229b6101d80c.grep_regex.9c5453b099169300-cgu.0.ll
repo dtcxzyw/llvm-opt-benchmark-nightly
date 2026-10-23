@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.h
 
 bb.p:                                             ; preds = %bb.h
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ac, i64 8, !dbg !3867
-  %.sroa.0134.0.copyload = load i64, ptr %i.bm, align 8, !dbg !3867 ; 4 uses
+  %.sroa.0134.0.copyload = load i64, ptr %i.bm, align 8, !dbg !3867 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 16, !dbg !3867
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !3867, !nonnull !212, !noundef !212 ; 4 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 24, !dbg !3867
@@ -605,7 +605,7 @@ bb.by:                                            ; preds = %bb.bu
   %i.fe = icmp eq i64 %i.fc, 0
   %or.cond.i = select i1 %i.fd, i1 %i.fe, i1 false, !dbg !4018
   %i.ff = trunc i64 %.sroa.10.0.copyload to i32, !dbg !4019 ; 2 uses
-  %i.fg = trunc i64 %.sroa.0134.0.copyload to i32, !dbg !4018
+  %i.fg = trunc i64 %.sroa.0134.0.copyload to i32, !dbg !4018 ; 2 uses
   %i.fh = lshr i64 %.sroa.0134.0.copyload, 32, !dbg !4018 ; 2 uses
   %i.fi = trunc nuw i64 %i.fh to i32, !dbg !4018
   br i1 %or.cond.i, label %bb.ca, label %._crit_edge.i, !dbg !4018
@@ -630,10 +630,9 @@ bb.ca:                                            ; preds = %bb.by
   %..i.i = zext i1 %i.fn to i32, !dbg !4022       ; 2 uses
   store i32 %..i.i, ptr %.sroa.10.0..sroa_idx140, align 8, !dbg !4023, !alias.scope !3799
   %i.fo = getelementptr inbounds nuw i8, ptr %i.p, i64 4, !dbg !4024
-  %3 = trunc i64 %.sroa.0134.0.copyload to i1, !dbg !4025
   %i.fp = icmp ne i64 %i.fh, 0, !dbg !4025
-  %not..i = xor i1 %3, true, !dbg !4025
-  %narrow.i = or i1 %i.fp, %not..i, !dbg !4025
+  %not..i = icmp eq i32 %i.fg, 0, !dbg !4025
+  %narrow.i = or i1 %not..i, %i.fp, !dbg !4025
   %.sroa.3.0.i = zext i1 %narrow.i to i32, !dbg !4025 ; 2 uses
   store i32 1, ptr %i.p, align 8, !dbg !4026, !alias.scope !3799
   store i32 %.sroa.3.0.i, ptr %i.fo, align 4, !dbg !4026, !alias.scope !3799

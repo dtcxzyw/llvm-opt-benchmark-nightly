@@ -205,15 +205,16 @@ bb.y:                                             ; preds = %_ZN4toml2v3eqERKNS0
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ct, i64 52
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 54
   %i.eg = load i8, ptr %i.ef, align 2, !tbaa !104, !range !105, !noundef !106 ; 2 uses
-  %2 = trunc nuw i8 %i.eg to i1
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ct, i64 54
   %i.ei = load i8, ptr %i.eh, align 2, !tbaa !104, !range !105, !noundef !106
-  %i.ej = icmp eq i8 %i.eg, %i.ei                 ; 2 uses
-  %brmerge.not.i.i.i.i.i.i.i = and i1 %i.ej, %2
+  %2 = icmp ne i8 %i.eg, %i.ei                    ; 2 uses
+  %i.ej = icmp eq i8 %i.eg, 0
+  %brmerge.i.i.i.i.i.i.i = or i1 %i.ej, %2
+  %not..i.i.i.i.i.i.i = xor i1 %2, true
   %.sroa.01.0.copyload.i.i.i.i.i.i.i = load i16, ptr %i.ed, align 4
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i16, ptr %i.ee, align 4
   %i.ek = icmp eq i16 %.sroa.01.0.copyload.i.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i.i.i
-  %i.el = select i1 %brmerge.not.i.i.i.i.i.i.i, i1 %i.ek, i1 %i.ej
+  %i.el = select i1 %brmerge.i.i.i.i.i.i.i, i1 %not..i.i.i.i.i.i.i, i1 %i.ek
   br label %"_ZNKR4toml2v34node5visitIZNS0_4impl18node_deep_equalityEPKS1_S5_E3$_0EEDcOT_.exit"
 
 bb.z:                                             ; preds = %bb.d
@@ -616,15 +617,16 @@ _ZN4toml2v3eqERKNS0_4timeES3_.exit.i.i.i.i.i:     ; preds = %bb.p
   %i.dq = getelementptr inbounds nuw i8, ptr %i.y, i64 52
   %i.dr = getelementptr inbounds nuw i8, ptr %i.s, i64 54
   %i.ds = load i8, ptr %i.dr, align 2, !tbaa !104, !range !105, !noundef !106 ; 2 uses
-  %2 = trunc nuw i8 %i.ds to i1
   %i.dt = getelementptr inbounds nuw i8, ptr %i.y, i64 54
   %i.du = load i8, ptr %i.dt, align 2, !tbaa !104, !range !105, !noundef !106
-  %i.dv = icmp eq i8 %i.ds, %i.du                 ; 2 uses
-  %brmerge.not.i.i.i.i.i.i = and i1 %i.dv, %2
+  %2 = icmp ne i8 %i.ds, %i.du                    ; 2 uses
+  %i.dv = icmp eq i8 %i.ds, 0
+  %brmerge.i.i.i.i.i.i = or i1 %i.dv, %2
+  %not..i.i.i.i.i.i = xor i1 %2, true
   %.sroa.01.0.copyload.i.i.i.i.i.i = load i16, ptr %i.dp, align 4
   %.sroa.0.0.copyload.i.i.i.i.i.i = load i16, ptr %i.dq, align 4
   %i.dw = icmp eq i16 %.sroa.01.0.copyload.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i.i
-  %i.dx = select i1 %brmerge.not.i.i.i.i.i.i, i1 %i.dw, i1 %i.dv
+  %i.dx = select i1 %brmerge.i.i.i.i.i.i, i1 %not..i.i.i.i.i.i, i1 %i.dw
   br i1 %i.dx, label %"_ZN4toml2v34node8do_visitIZNS0_5array5equalERKS3_S5_E3$_0RS1_EEDcOT_OT0_.exit.thread31", label %.critedge
 
 bb.q:                                             ; preds = %bb.c
@@ -1027,15 +1029,16 @@ _ZN4toml2v3eqERKNS0_4timeES3_.exit.i.i.i.i.i:     ; preds = %bb.r
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ab, i64 52
   %i.du = getelementptr inbounds nuw i8, ptr %i.v, i64 54
   %i.dv = load i8, ptr %i.du, align 2, !tbaa !104, !range !105, !noundef !106 ; 2 uses
-  %2 = trunc nuw i8 %i.dv to i1
   %i.dw = getelementptr inbounds nuw i8, ptr %i.ab, i64 54
   %i.dx = load i8, ptr %i.dw, align 2, !tbaa !104, !range !105, !noundef !106
-  %i.dy = icmp eq i8 %i.dv, %i.dx                 ; 2 uses
-  %brmerge.not.i.i.i.i.i.i = and i1 %i.dy, %2
+  %2 = icmp ne i8 %i.dv, %i.dx                    ; 2 uses
+  %i.dy = icmp eq i8 %i.dv, 0
+  %brmerge.i.i.i.i.i.i = or i1 %i.dy, %2
+  %not..i.i.i.i.i.i = xor i1 %2, true
   %.sroa.01.0.copyload.i.i.i.i.i.i = load i16, ptr %i.ds, align 4
   %.sroa.0.0.copyload.i.i.i.i.i.i = load i16, ptr %i.dt, align 4
   %i.dz = icmp eq i16 %.sroa.01.0.copyload.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i.i
-  %i.ea = select i1 %brmerge.not.i.i.i.i.i.i, i1 %i.dz, i1 %i.dy
+  %i.ea = select i1 %brmerge.i.i.i.i.i.i, i1 %not..i.i.i.i.i.i, i1 %i.dz
   br i1 %i.ea, label %"_ZN4toml2v34node8do_visitIZNS0_5table5equalERKS3_S5_E3$_0RS1_EEDcOT_OT0_.exit.thread33", label %.critedge
 
 bb.s:                                             ; preds = %bb.e
@@ -1438,10 +1441,10 @@ _ZN12_GLOBAL__N_120utf8_buffered_reader9read_nextEv.exit: ; preds = %bb.c, %bb.d
   store ptr %.0.i, ptr %i.a, align 8, !tbaa !240
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 3464
   %i.as = load i8, ptr %i.ar, align 8, !tbaa !254, !range !105, !noundef !106
-  %1 = trunc nuw i8 %i.as to i1
-  %.not = icmp ne ptr %.0.i, null
-  %or.cond.not = and i1 %.not, %1
-  br i1 %or.cond.not, label %bb.l, label %_ZN4toml2v34impl13is_whitespaceEDi.exit.thread
+  %.not1 = icmp eq i8 %i.as, 0
+  %.not = icmp eq ptr %.0.i, null
+  %or.cond = or i1 %.not, %.not1
+  br i1 %or.cond, label %_ZN4toml2v34impl13is_whitespaceEDi.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %_ZN12_GLOBAL__N_120utf8_buffered_reader9read_nextEv.exit
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 3465
@@ -1844,11 +1847,11 @@ bb.ca:                                            ; preds = %bb.bz
 
 bb.cb:                                            ; preds = %bb.bu, %bb.bu, %bb.bu, %bb.bu
   %i.ht = load i8, ptr %i.e, align 1, !tbaa !261, !range !105, !noundef !106
-  %16 = trunc nuw i8 %i.ht to i1
-  %17 = load i64, ptr %i.d, align 8
-  %18 = icmp ult i64 %17, 127
-  %.not40 = select i1 %16, i1 true, i1 %18
-  br i1 %.not40, label %bb.cf, label %bb.cc, !prof !169
+  %16 = load i64, ptr %i.d, align 8
+  %17 = icmp ugt i64 %16, 126
+  %not. = icmp eq i8 %i.ht, 0
+  %.not40 = select i1 %not., i1 %17, i1 false
+  br i1 %.not40, label %bb.cc, label %bb.cf, !prof !156
 
 bb.cc:                                            ; preds = %bb.cb
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #50
@@ -2251,8 +2254,7 @@ define void @_ZN4toml2v34impl9formatter13print_newlineEb(ptr nofree noundef nonn
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 2 uses
   %i.b = load i8, ptr %i.a, align 4, !tbaa !130, !range !105, !noundef !106
-  %2 = trunc nuw i8 %i.b to i1
-  %.not = xor i1 %2, true
+  %.not = icmp eq i8 %i.b, 0
   %or.cond = or i1 %1, %.not
   br i1 %or.cond, label %bb.b, label %bb.c
 
@@ -2655,14 +2657,14 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   %i.ar = load ptr, ptr %i.ah, align 8, !tbaa !175
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 88
   %i.at = load i8, ptr %i.as, align 8, !tbaa !145, !range !105, !noundef !106
-  %2 = trunc nuw i8 %i.at to i1
-  br i1 %2, label %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit.thread", label %bb.m
+  %2 = icmp eq i8 %i.at, 0
+  br i1 %2, label %bb.m, label %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit.thread"
 
 "_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit.thread": ; preds = %.lr.ph.i.i.i, %bb.d, %bb.c, %bb.b, %_ZNK4toml2v34impl14table_iteratorILb1EE9get_proxyEv.exit, %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit"
   store i8 1, ptr %i.d, align 8, !tbaa !331
   %i.au = load i8, ptr %i.e, align 4, !tbaa !130, !range !105, !noundef !106
-  %3 = trunc nuw i8 %i.au to i1
-  br i1 %3, label %_ZN4toml2v34impl9formatter13print_newlineEb.exit, label %bb.f
+  %.not.i81 = icmp eq i8 %i.au, 0
+  br i1 %.not.i81, label %bb.f, label %_ZN4toml2v34impl9formatter13print_newlineEb.exit
 
 bb.f:                                             ; preds = %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit.thread"
   %i.av = load ptr, ptr %i.f, align 8, !tbaa !131
@@ -2920,8 +2922,8 @@ bb.z:                                             ; preds = %.lr.ph.i.i.i86
   %i.em = load ptr, ptr %i.ec, align 8, !tbaa !175
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 88
   %i.eo = load i8, ptr %i.en, align 8, !tbaa !145, !range !105, !noundef !106
-  %4 = trunc nuw i8 %i.eo to i1
-  br i1 %4, label %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit92.thread", label %bb.aa
+  %3 = icmp eq i8 %i.eo, 0
+  br i1 %3, label %bb.aa, label %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit92.thread"
 
 bb.aa:                                            ; preds = %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit92"
   %i.ep = add i64 %.070185, 1
@@ -3093,8 +3095,8 @@ bb.am:                                            ; preds = %.lr.ph.i.i.i103
   %i.gy = load ptr, ptr %i.go, align 8, !tbaa !175
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 88
   %i.ha = load i8, ptr %i.gz, align 8, !tbaa !145, !range !105, !noundef !106
-  %5 = trunc nuw i8 %i.ha to i1
-  br i1 %5, label %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit109.thread", label %bb.an
+  %4 = icmp eq i8 %i.ha, 0
+  br i1 %4, label %bb.an, label %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit109.thread"
 
 bb.an:                                            ; preds = %"_ZZN4toml2v314toml_formatter5printERKNS0_5tableEENK3$_0clERKNS0_4nodeE.exit109"
   %i.hb = load i64, ptr %i.bp, align 8, !tbaa !126
@@ -3497,8 +3499,8 @@ _ZNK4toml2v34impl14table_iteratorILb1EE9get_proxyEv.exit: ; preds = %_ZNK4toml2v
 
 bb.d:                                             ; preds = %_ZNK4toml2v34impl14table_iteratorILb1EE9get_proxyEv.exit
   %i.w = load i8, ptr %i.n, align 4, !tbaa !130, !range !105, !noundef !106
-  %3 = trunc nuw i8 %i.w to i1
-  br i1 %3, label %_ZN4toml2v34impl9formatter13print_newlineEb.exit, label %bb.e
+  %.not.i = icmp eq i8 %i.w, 0
+  br i1 %.not.i, label %bb.e, label %_ZN4toml2v34impl9formatter13print_newlineEb.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.o, align 8, !tbaa !131
@@ -3624,8 +3626,8 @@ bb.e:                                             ; preds = %bb.c, %bb.l
 
 bb.f:                                             ; preds = %bb.e
   %i.s = load i8, ptr %i.m, align 4, !tbaa !130, !range !105, !noundef !106
-  %3 = trunc nuw i8 %i.s to i1
-  br i1 %3, label %_ZN4toml2v34impl9formatter13print_newlineEb.exit, label %bb.g
+  %.not.i = icmp eq i8 %i.s, 0
+  br i1 %.not.i, label %bb.g, label %_ZN4toml2v34impl9formatter13print_newlineEb.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.t = load ptr, ptr %i.n, align 8, !tbaa !131

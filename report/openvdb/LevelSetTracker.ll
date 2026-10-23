@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %_ZNK7openvdb5v13_04
   %.sroa.02.06.i.i.i = phi ptr [ %i.e, %.lr.ph.i.i.i ], [ %i.r, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.thread.i.i.i ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i.i, i64 48
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !642
-  %2 = icmp ne ptr %i.j, null
+  %2 = icmp eq ptr %i.j, null
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i.i, i64 57
   %i.l = load i8, ptr %i.k, align 1, !range !449
-  %3 = trunc nuw i8 %i.l to i1
-  %.not3.i.i.i.i = select i1 %2, i1 true, i1 %3
-  br i1 %.not3.i.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.thread.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.i.i.i
+  %3 = icmp eq i8 %i.l, 0
+  %.not3.i.i.i.i = select i1 %2, i1 %3, i1 false
+  br i1 %.not3.i.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.thread.i.i.i
 
 _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.i.i.i: ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i.i, i64 56
@@ -395,12 +395,12 @@ bb.b:                                             ; preds = %_ZNK7openvdb5v13_04
   %.sroa.02.06.i.i.i = phi ptr [ %i.e, %.lr.ph.i.i.i ], [ %i.r, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.thread.i.i.i ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i.i, i64 48
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !642
-  %2 = icmp ne ptr %i.j, null
+  %2 = icmp eq ptr %i.j, null
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i.i, i64 57
   %i.l = load i8, ptr %i.k, align 1, !range !449
-  %3 = trunc nuw i8 %i.l to i1
-  %.not3.i.i.i.i = select i1 %2, i1 true, i1 %3
-  br i1 %.not3.i.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.thread.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.i.i.i
+  %3 = icmp eq i8 %i.l, 0
+  %.not3.i.i.i.i = select i1 %2, i1 %3, i1 false
+  br i1 %.not3.i.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.thread.i.i.i
 
 _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit.i.i.i: ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i.i, i64 56
@@ -803,12 +803,12 @@ bb.a:
   %.sroa.2.0.i.i = phi ptr [ %i.i, %bb.b ], [ %i.c, %bb.a ] ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.2.0.i.i, i64 48
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !642
-  %7 = icmp ne ptr %i.f, null
+  %7 = icmp eq ptr %i.f, null
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.2.0.i.i, i64 57
   %i.h = load i8, ptr %i.g, align 1, !range !449
-  %8 = trunc nuw i8 %i.h to i1
-  %.not2.i.i.i.i = select i1 %7, i1 true, i1 %8
-  br i1 %.not2.i.i.i.i, label %bb.b, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE14cbeginValueOffEv.exit.i
+  %8 = icmp eq i8 %i.h, 0
+  %.not2.i.i.i.i = select i1 %7, i1 %8, i1 false
+  br i1 %.not2.i.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE14cbeginValueOffEv.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i
   %i.i = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.2.0.i.i) #32 ; 3 uses
@@ -816,7 +816,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %.not.i.i.i.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE14cbeginValueOffEv.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !2898
 
 _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE14cbeginValueOffEv.exit.i: ; preds = %bb.b, %.lr.ph.i.i.i.i, %bb.a
-  %.sroa.2.1.i.i = phi ptr [ %i.c, %bb.a ], [ %.sroa.2.0.i.i, %.lr.ph.i.i.i.i ], [ %i.i, %bb.b ] ; 2 uses
+  %.sroa.2.1.i.i = phi ptr [ %i.c, %bb.a ], [ %i.i, %bb.b ], [ %.sroa.2.0.i.i, %.lr.ph.i.i.i.i ] ; 2 uses
   %.not10.i = icmp eq ptr %.sroa.2.1.i.i, %i.d
   br i1 %.not10.i, label %_ZN7openvdb5v13_05tools14count_internal20InactiveVoxelCountOpINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEEEEEclERKSD_m.exit, label %.lr.ph.i
 
@@ -849,12 +849,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.sroa.5.2.i = phi ptr [ %i.w, %bb.f ], [ %i.r, %bb.e ] ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.5.2.i, i64 48
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !642
-  %9 = icmp ne ptr %i.t, null
+  %9 = icmp eq ptr %i.t, null
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.5.2.i, i64 57
   %i.v = load i8, ptr %i.u, align 1, !range !449
-  %10 = trunc nuw i8 %i.v to i1
-  %.not2.i.i.i5.i = select i1 %9, i1 true, i1 %10
-  br i1 %.not2.i.i.i5.i, label %bb.f, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i
+  %10 = icmp eq i8 %i.v, 0
+  %.not2.i.i.i5.i = select i1 %9, i1 %10, i1 false
+  br i1 %.not2.i.i.i5.i, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i4.i
   %i.w = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.5.2.i) #32 ; 3 uses
@@ -862,7 +862,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i4.i
   br i1 %.not.i.i.i6.i, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i, label %.lr.ph.i.i.i4.i, !llvm.loop !2898
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i: ; preds = %bb.f, %.lr.ph.i.i.i4.i, %bb.e
-  %.sroa.5.3.i = phi ptr [ %i.r, %bb.e ], [ %i.w, %bb.f ], [ %.sroa.5.2.i, %.lr.ph.i.i.i4.i ] ; 2 uses
+  %.sroa.5.3.i = phi ptr [ %i.r, %bb.e ], [ %.sroa.5.2.i, %.lr.ph.i.i.i4.i ], [ %i.w, %bb.f ] ; 2 uses
   %.not.i = icmp eq ptr %.sroa.5.3.i, %i.d
   br i1 %.not.i, label %_ZN7openvdb5v13_05tools14count_internal20InactiveVoxelCountOpINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEEEEEclERKSD_m.exit, label %bb.c, !llvm.loop !2899
 
@@ -1265,12 +1265,12 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt3setI
   %.sroa.010.016 = phi ptr [ %i.g, %.lr.ph ], [ %i.t, %_ZNSt3setIN7openvdb5v13_04math5CoordESt4lessIS3_ESaIS3_EE6insertERKS3_.exit ] ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.010.016, i64 48
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !642
-  %2 = icmp ne ptr %i.k, null
+  %2 = icmp eq ptr %i.k, null
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.010.016, i64 57
   %i.m = load i8, ptr %i.l, align 1, !range !449
-  %3 = trunc nuw i8 %i.m to i1
-  %.not3.i = select i1 %2, i1 true, i1 %3
-  br i1 %.not3.i, label %_ZNSt3setIN7openvdb5v13_04math5CoordESt4lessIS3_ESaIS3_EE6insertERKS3_.exit, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit
+  %3 = icmp eq i8 %i.m, 0
+  %.not3.i = select i1 %2, i1 %3, i1 false
+  br i1 %.not3.i, label %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit, label %_ZNSt3setIN7openvdb5v13_04math5CoordESt4lessIS3_ESaIS3_EE6insertERKS3_.exit
 
 _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE16isBackgroundTileERKSt23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEE.exit: ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.010.016, i64 56
@@ -1673,15 +1673,15 @@ bb.k:                                             ; preds = %_ZNSt3mapIN7openvdb
 bb.l:                                             ; preds = %bb.k
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 48 ; 3 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !642 ; 2 uses
-  %8 = icmp ne ptr %i.ay, null                    ; 2 uses
+  %8 = icmp eq ptr %i.ay, null                    ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 57
-  %i.ba = load i8, ptr %i.az, align 1, !range !449
-  %9 = trunc nuw i8 %i.ba to i1                   ; 2 uses
-  %.not57 = select i1 %8, i1 true, i1 %9
-  br i1 %.not57, label %bb.m, label %.critedge
+  %i.ba = load i8, ptr %i.az, align 1, !range !449 ; 2 uses
+  %9 = icmp eq i8 %i.ba, 0
+  %.not57 = select i1 %8, i1 %9, i1 false
+  br i1 %.not57, label %.critedge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  br i1 %8, label %vector.memcheck85, label %bb.n
+  br i1 %8, label %bb.n, label %vector.memcheck85
 
 vector.memcheck85:                                ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
@@ -1851,7 +1851,8 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4
   br label %.critedge
 
 bb.n:                                             ; preds = %bb.m
-  br i1 %9, label %bb.o, label %.critedge
+  %10 = trunc nuw i8 %i.ba to i1
+  br i1 %10, label %bb.o, label %.critedge
 
 bb.o:                                             ; preds = %bb.n
   %i.ec = call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #29 ; 13 uses
@@ -2083,23 +2084,23 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
 bb.r:                                             ; preds = %_ZNSt3mapIN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS4_12InternalNodeINS6_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEE10NodeStructESt4lessIS3_ESaISt4pairIKS3_SD_EEE4findERSH_.exit
   %i.ih = getelementptr inbounds nuw i8, ptr %.sroa.045.060, i64 57
   %i.ii = load i8, ptr %i.ih, align 1, !range !449
-  %10 = trunc nuw i8 %i.ii to i1
-  %11 = icmp ne ptr %.sroa.0.0.i.i, %i.e
-  %or.cond.not = select i1 %10, i1 %11, i1 false
-  br i1 %or.cond.not, label %bb.s, label %.critedge
+  %.not = icmp eq i8 %i.ii, 0
+  %11 = icmp eq ptr %.sroa.0.0.i.i, %i.e
+  %or.cond.not = select i1 %.not, i1 true, i1 %11
+  br i1 %or.cond.not, label %.critedge, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.ij = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 48 ; 2 uses
   %i.ik = load ptr, ptr %i.ij, align 8, !tbaa !642 ; 3 uses
-  %12 = icmp ne ptr %i.ik, null                   ; 2 uses
+  %12 = icmp eq ptr %i.ik, null                   ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 57
-  %i.im = load i8, ptr %i.il, align 1, !range !449
-  %13 = trunc nuw i8 %i.im to i1                  ; 2 uses
-  %.not55 = select i1 %12, i1 true, i1 %13
-  br i1 %.not55, label %bb.t, label %.critedge
+  %i.im = load i8, ptr %i.il, align 1, !range !449 ; 2 uses
+  %13 = icmp eq i8 %i.im, 0
+  %.not55 = select i1 %12, i1 %13, i1 false
+  br i1 %.not55, label %.critedge, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  br i1 %12, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit, label %bb.u
+  br i1 %12, label %bb.u, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit: ; preds = %bb.t
   call void @_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EED2Ev(ptr noundef nonnull align 8 dead_on_return(270352) dereferenceable(270352) %i.ik) #23
@@ -2115,7 +2116,8 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Value
   br label %.critedge
 
 bb.u:                                             ; preds = %bb.t
-  br i1 %13, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit24, label %.critedge
+  %14 = trunc nuw i8 %i.im to i1
+  br i1 %14, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit24, label %.critedge
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE7setTileERKSt17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEERKNS9_4TileE.exit24: ; preds = %bb.u
   %i.ir = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 56 ; 2 uses

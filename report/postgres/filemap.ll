@@ -204,17 +204,18 @@ filehash_start_iterate.exit:                      ; preds = %bb.b, %bb.c, %bb.a
 
 bb.d:                                             ; preds = %decide_file_action.exit, %filehash_start_iterate.exit
   %i.l = phi ptr [ %i.b, %filehash_start_iterate.exit ], [ %.pre, %decide_file_action.exit ] ; 3 uses
-  %.sroa.12.0 = phi i1 [ false, %filehash_start_iterate.exit ], [ %spec.select, %decide_file_action.exit ] ; 2 uses
+  %.sroa.12.0 = phi i8 [ 0, %filehash_start_iterate.exit ], [ %spec.select, %decide_file_action.exit ] ; 2 uses
   %.sroa.0.0 = phi i32 [ %.2.i, %filehash_start_iterate.exit ], [ %i.u, %decide_file_action.exit ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 12
+  %1 = icmp eq i8 %.sroa.12.0, 0
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %bb.d
-  %.sroa.12.2 = phi i1 [ %.sroa.12.0, %bb.d ], [ %spec.select, %bb.f ]
+  %.sroa.12.2 = phi i8 [ %.sroa.12.0, %bb.d ], [ %spec.select, %bb.f ]
   %.sroa.0.2 = phi i32 [ %.sroa.0.0, %bb.d ], [ %i.u, %bb.f ] ; 2 uses
-  %i.o = phi i1 [ %.sroa.12.0, %bb.d ], [ %1, %bb.f ]
-  br i1 %i.o, label %bb.ah, label %bb.f
+  %i.o = phi i1 [ %1, %bb.d ], [ %2, %bb.f ]
+  br i1 %i.o, label %bb.f, label %bb.ah
 
 bb.f:                                             ; preds = %bb.e
   %i.p = load ptr, ptr %i.m, align 8
@@ -225,8 +226,8 @@ bb.f:                                             ; preds = %bb.e
   %i.u = and i32 %i.t, %i.s                       ; 2 uses
   %i.v = xor i32 %i.s, %.2.i
   %i.w = and i32 %i.t, %i.v
-  %1 = icmp eq i32 %i.w, 0                        ; 2 uses
-  %spec.select = select i1 %1, i1 true, i1 %.sroa.12.2 ; 2 uses
+  %2 = icmp ne i32 %i.w, 0                        ; 2 uses
+  %spec.select = select i1 %2, i8 %.sroa.12.2, i8 1 ; 2 uses
   %i.x = load i32, ptr %i.r, align 8
   %.not.i12 = icmp eq i32 %i.x, 1
   br i1 %.not.i12, label %filehash_iterate.exit, label %bb.e
@@ -610,16 +611,17 @@ filehash_start_iterate.exit20:                    ; preds = %bb.ai, %bb.aj, %bb.
   br label %bb.ak
 
 bb.ak:                                            ; preds = %filehash_iterate.exit24, %filehash_start_iterate.exit20
-  %.sroa.12.1 = phi i1 [ false, %filehash_start_iterate.exit20 ], [ %spec.select37, %filehash_iterate.exit24 ] ; 2 uses
+  %.sroa.12.1 = phi i8 [ 0, %filehash_start_iterate.exit20 ], [ %spec.select38, %filehash_iterate.exit24 ] ; 2 uses
   %.sroa.0.1 = phi i32 [ %.2.i19, %filehash_start_iterate.exit20 ], [ %i.fg, %filehash_iterate.exit24 ]
   %.0 = phi i32 [ 0, %filehash_start_iterate.exit20 ], [ %i.fk, %filehash_iterate.exit24 ] ; 2 uses
+  %3 = icmp eq i8 %.sroa.12.1, 0
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.am, %bb.ak
-  %.sroa.12.5 = phi i1 [ %.sroa.12.1, %bb.ak ], [ %spec.select37, %bb.am ]
+  %.sroa.12.5 = phi i8 [ %.sroa.12.1, %bb.ak ], [ %spec.select38, %bb.am ]
   %.sroa.0.4 = phi i32 [ %.sroa.0.1, %bb.ak ], [ %i.fg, %bb.am ] ; 2 uses
-  %i.fa = phi i1 [ %.sroa.12.1, %bb.ak ], [ %2, %bb.am ]
-  br i1 %i.fa, label %bb.an, label %bb.am
+  %i.fa = phi i1 [ %3, %bb.ak ], [ %4, %bb.am ]
+  br i1 %i.fa, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
   %i.fb = load ptr, ptr %i.ex, align 8
@@ -630,8 +632,8 @@ bb.am:                                            ; preds = %bb.al
   %i.fg = and i32 %i.ff, %i.fe                    ; 2 uses
   %i.fh = xor i32 %i.fe, %.2.i19
   %i.fi = and i32 %i.ff, %i.fh
-  %2 = icmp eq i32 %i.fi, 0                       ; 2 uses
-  %spec.select37 = select i1 %2, i1 true, i1 %.sroa.12.5 ; 2 uses
+  %4 = icmp ne i32 %i.fi, 0                       ; 2 uses
+  %spec.select38 = select i1 %4, i8 %.sroa.12.5, i8 1 ; 2 uses
   %i.fj = load i32, ptr %i.fd, align 8
   %.not.i22 = icmp eq i32 %i.fj, 1
   br i1 %.not.i22, label %filehash_iterate.exit24, label %bb.al

@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN8WasmEd
   %i.ac = getelementptr inbounds nuw i8, ptr %.0310, i64 1 ; 3 uses
   %i.ad = load i8, ptr %.0310, align 8, !tbaa !102
   %i.ae = getelementptr inbounds nuw i8, ptr %.0310, i64 2
-  %i.af = load i8, ptr %i.ae, align 2, !tbaa !103, !range !17, !noundef !18
-  %16 = trunc nuw i8 %i.af to i1                  ; 3 uses
+  %i.af = load i8, ptr %i.ae, align 2, !tbaa !103, !range !17, !noundef !18 ; 3 uses
   switch i8 %i.ad, label %bb.ce [
     i8 0, label %bb.c
     i8 1, label %bb.w
@@ -214,8 +213,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN8WasmEd
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %17 = xor i1 %16, true
-  tail call void @llvm.assume(i1 %17)
+  %16 = icmp eq i8 %i.af, 0
+  tail call void @llvm.assume(i1 %16)
   %i.ag = getelementptr inbounds nuw i8, ptr %.0310, i64 8 ; 2 uses
   %i.ah = load i8, ptr %i.ac, align 1, !tbaa !19
   switch i8 %i.ah, label %bb.v [
@@ -596,7 +595,8 @@ _ZN8WasmEdge7Runtime8Instance17ComponentInstance11addFunctionEPNS1_9Component16F
   br label %_ZN8WasmEdge7Runtime8Instance17ComponentInstance15addCoreFunctionEPNS1_16FunctionInstanceE.exit251.thread277
 
 bb.w:                                             ; preds = %bb.b
-  tail call void @llvm.assume(i1 %16)
+  %17 = trunc nuw i8 %i.af to i1
+  tail call void @llvm.assume(i1 %17)
   %i.es = getelementptr inbounds nuw i8, ptr %.0310, i64 8
   %i.et = load i32, ptr %i.es, align 8, !tbaa !105
   %i.eu = zext i32 %i.et to i64
@@ -999,7 +999,8 @@ _ZN8WasmEdge7Runtime8Instance17ComponentInstance15addCoreFunctionEPNS1_16Functio
   br label %_ZN8WasmEdge7Runtime8Instance17ComponentInstance15addCoreFunctionEPNS1_16FunctionInstanceE.exit251.thread277
 
 bb.bs:                                            ; preds = %bb.b
-  br i1 %16, label %bb.bt, label %bb.bv
+  %18 = trunc nuw i8 %i.af to i1
+  br i1 %18, label %bb.bt, label %bb.bv
 
 bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #18

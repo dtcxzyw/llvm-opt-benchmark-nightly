@@ -202,17 +202,18 @@ bb.s:                                             ; preds = %bb.r, %.loopexit176
   %.0108213 = phi i32 [ %i.bi, %bb.r ], [ %.3, %.loopexit176 ] ; 3 uses
   %.0109212 = phi ptr [ %i.bh, %bb.r ], [ %.3112, %.loopexit176 ] ; 3 uses
   %.0113211 = phi ptr [ %i.bc, %bb.r ], [ %.4, %.loopexit176 ] ; 2 uses
-  %.0117210 = phi i1 [ false, %bb.r ], [ %..0117, %.loopexit176 ] ; 2 uses
+  %.0117208 = phi i8 [ 0, %bb.r ], [ %.0117., %.loopexit176 ] ; 2 uses
   %.0121209 = phi ptr [ null, %bb.r ], [ %.3124, %.loopexit176 ] ; 4 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.0113211, i64 16
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !24 ; 2 uses
-  %i.bm = icmp eq ptr %i.bl, null                 ; 3 uses
-  %.not150.a = select i1 %i.bm, i1 %.0117210, i1 false
-  br i1 %.not150.a, label %.critedge, label %bb.t
+  %7 = icmp ne ptr %i.bl, null                    ; 3 uses
+  %i.bm = icmp eq i8 %.0117208, 0
+  %.not150.a = select i1 %7, i1 true, i1 %i.bm
+  br i1 %.not150.a, label %bb.t, label %.critedge
 
 bb.t:                                             ; preds = %bb.s
-  %..0117 = select i1 %i.bm, i1 true, i1 %.0117210
-  %.0113. = select i1 %i.bm, ptr %.0113211, ptr %i.bl ; 4 uses
+  %.0117. = select i1 %7, i8 %.0117208, i8 1
+  %.0113. = select i1 %7, ptr %i.bl, ptr %.0113211 ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.0113., i64 72
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !47
   %i.bp = getelementptr inbounds nuw i8, ptr %.0113., i64 112

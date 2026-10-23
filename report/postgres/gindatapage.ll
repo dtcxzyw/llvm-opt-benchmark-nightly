@@ -202,15 +202,16 @@ bb.m:                                             ; preds = %bb.g
   br i1 %.not7285, label %._crit_edge90, label %.lr.ph89
 
 .lr.ph89:                                         ; preds = %._crit_edge.thread, %bb.o
-  %.06287 = phi i1 [ %spec.select, %bb.o ], [ false, %._crit_edge.thread ]
+  %.06287 = phi i8 [ %spec.select, %bb.o ], [ 0, %._crit_edge.thread ]
   %.sroa.0.186 = phi ptr [ %i.bn, %bb.o ], [ %i.az, %._crit_edge.thread ] ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0.186, i64 16
   %i.bb = load i8, ptr %i.ba, align 8             ; 2 uses
-  %.not73 = icmp ne i8 %i.bb, 0
-  %spec.select = or i1 %.not73, %.06287           ; 2 uses
-  %.not74 = icmp ne i8 %i.bb, 1
-  %or.cond.not = and i1 %.not74, %spec.select
-  br i1 %or.cond.not, label %bb.n, label %bb.o
+  %.not73 = icmp eq i8 %i.bb, 0
+  %spec.select = select i1 %.not73, i8 %.06287, i8 1 ; 2 uses
+  %.not80 = icmp eq i8 %spec.select, 0
+  %.not74 = icmp eq i8 %i.bb, 1
+  %or.cond = or i1 %.not74, %.not80
+  br i1 %or.cond, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph89
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.0.186, i64 40 ; 3 uses

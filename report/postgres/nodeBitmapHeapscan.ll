@@ -202,11 +202,11 @@ bb.q:                                             ; preds = %bb.p, %bb.d
 bb.r:                                             ; preds = %bb.q
   %i.aw = tail call zeroext i1 @ScanRelIsReadOnly(ptr noundef nonnull %0) #5
   %i.ax = load i32, ptr @CheckXidAlive, align 4
-  %1 = icmp eq i32 %i.ax, 0
+  %1 = icmp ne i32 %i.ax, 0
   %i.ay = load i8, ptr @bsysscan, align 1, !range !12
-  %2 = trunc nuw i8 %i.ay to i1
-  %.not8.i.i.i = select i1 %1, i1 true, i1 %2
-  br i1 %.not8.i.i.i, label %table_beginscan_bm.exit.i, label %bb.s, !prof !16
+  %2 = icmp eq i8 %i.ay, 0
+  %.not8.i.i.i = select i1 %1, i1 %2, i1 false
+  br i1 %.not8.i.i.i, label %bb.s, label %table_beginscan_bm.exit.i, !prof !16
 
 bb.s:                                             ; preds = %bb.r
   %i.az = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #6 ; 0 uses
@@ -272,7 +272,7 @@ bb.t:                                             ; preds = %BitmapTableScanSetu
 bb.u:                                             ; preds = %.lr.ph, %bb.aa
   %i.ck = load volatile i32, ptr @InterruptPending, align 4
   %.not = icmp eq i32 %i.ck, 0
-  br i1 %.not, label %bb.w, label %bb.v, !prof !16
+  br i1 %.not, label %bb.w, label %bb.v, !prof !17
 
 bb.v:                                             ; preds = %bb.u
   call void @ProcessInterrupts() #5
@@ -432,11 +432,12 @@ attributes #6 = { cold nounwind }
 !8 = distinct !{null, null, null}
 !9 = distinct !{null}
 !10 = distinct !{null}
-!11 = distinct !{!11, !17}
+!11 = distinct !{!11, !18}
 !12 = !{i8 0, i8 2}
 !13 = !{}
 !14 = !{i64 1954120, i64 1954136}
 !15 = !{i64 2149451894}
-!16 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!17 = !{!"llvm.loop.mustprogress"}
+!16 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!17 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!18 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -205,10 +205,10 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3zip3ZipINtNtN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb), !noalias !29352
   %i.rv = getelementptr inbounds nuw i8, ptr %1, i64 181
   %i.rw = load i8, ptr %i.rv, align 1, !range !77, !noalias !29352, !noundef !58
-  %3 = trunc nuw i8 %i.rw to i1
-  %4 = icmp ne i64 %.sroa.0232.4.i, 0
-  %or.cond.not.i = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond.not.i, label %bb.jj, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtNtB4_3ops5range5RangeyEEECsaSXGKSfiU2E_10lance_file.exit.i
+  %.not.i39 = icmp eq i8 %i.rw, 0
+  %3 = icmp eq i64 %.sroa.0232.4.i, 0
+  %or.cond.not.i = select i1 %.not.i39, i1 true, i1 %3
+  br i1 %or.cond.not.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtNtB4_3ops5range5RangeyEEECsaSXGKSfiU2E_10lance_file.exit.i, label %bb.jj
 
 bb.dp:                                            ; preds = %bb.fa, %bb.ez
   %i.rx = landingpad { ptr, i32 }
@@ -611,8 +611,8 @@ bb.a:
   %i.m = alloca [40 x i8], align 8                ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.n = load atomic i64, ptr @_RNvNtCs9ipI1vyGjpZ_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %4 = icmp ult i64 %i.n, 2
-  br i1 %4, label %bb.d, label %bb.c
+  %4 = icmp ugt i64 %i.n, 1                       ; 3 uses
+  br i1 %4, label %bb.c, label %bb.d
 
 .body:                                            ; preds = %.body.i, %bb.ac, %bb.b, %bb.ah
   %.pn = phi { ptr, i32 } [ %i.bx, %bb.ah ], [ %i.q, %bb.b ], [ %.pn.i, %bb.ac ], [ %.pn.i, %.body.i ] ; 2 uses
@@ -632,7 +632,7 @@ bb.b:                                             ; preds = %bb.ai, %bb.ad, %bb.
   br label %.body
 
 bb.c:                                             ; preds = %bb.l, %bb.n, %bb.a
-  %.sroa.022.2 = phi i8 [ 0, %bb.a ], [ 1, %bb.n ], [ 1, %bb.l ] ; 12 uses
+  %.sroa.022.2 = phi i8 [ 0, %bb.a ], [ 1, %bb.n ], [ 1, %bb.l ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
@@ -945,11 +945,10 @@ bb.af:                                            ; preds = %bb.aa
   store i8 %i.bq, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %5 = trunc nuw i8 %.sroa.022.2 to i1
   %i.bs = load i64, ptr %i.m, align 8, !range !79
-  %.not.i.i57 = icmp ne i64 %i.bs, -1
-  %or.cond87.not = select i1 %5, i1 %.not.i.i57, i1 false
-  br i1 %or.cond87.not, label %bb.ar, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCshTahG2RyGLb_7tracing4span4SpanECsaSXGKSfiU2E_10lance_file.exit61
+  %.not.i.i57 = icmp eq i64 %i.bs, -1
+  %or.cond87.not = select i1 %4, i1 true, i1 %.not.i.i57
+  br i1 %or.cond87.not, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCshTahG2RyGLb_7tracing4span4SpanECsaSXGKSfiU2E_10lance_file.exit61, label %bb.ar
 
 bb.ag:                                            ; preds = %bb.z
   %.sroa.7.8..sroa_idx66 = getelementptr inbounds nuw i8, ptr %.sroa.7, i64 7 ; 2 uses
@@ -981,11 +980,10 @@ bb.ai:                                            ; preds = %bb.ag
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %6 = trunc nuw i8 %.sroa.022.2 to i1
   %i.by = load i64, ptr %i.m, align 8, !range !79
-  %.not.i.i = icmp ne i64 %i.by, -1
-  %or.cond85.not = select i1 %6, i1 %.not.i.i, i1 false
-  br i1 %or.cond85.not, label %bb.ak, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCshTahG2RyGLb_7tracing4span4SpanECsaSXGKSfiU2E_10lance_file.exit61
+  %.not.i.i = icmp eq i64 %i.by, -1
+  %or.cond85.not = select i1 %4, i1 true, i1 %.not.i.i
+  br i1 %or.cond85.not, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCshTahG2RyGLb_7tracing4span4SpanECsaSXGKSfiU2E_10lance_file.exit61, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   %i.bz = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 2 uses

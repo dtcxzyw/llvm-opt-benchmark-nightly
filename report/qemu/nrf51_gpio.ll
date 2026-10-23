@@ -204,8 +204,8 @@ extract32.exit66:                                 ; preds = %bb.a, %update_outpu
   %i.o = lshr i32 %i.m, %i.n
   %i.p = trunc i32 %i.o to i1                     ; 2 uses
   %i.q = load i32, ptr %i.c, align 8
-  %i.r = lshr i32 %i.q, %i.n                      ; 8 uses
-  %i.s = trunc i32 %i.r to i1                     ; 3 uses
+  %i.r = lshr i32 %i.q, %i.n                      ; 9 uses
+  %i.s = trunc i32 %i.r to i1                     ; 2 uses
   %i.t = trunc i32 %i.r to i8
   %i.u = and i8 %i.t, 1
   %i.v = load i32, ptr %i.d, align 4              ; 3 uses
@@ -230,14 +230,15 @@ bb.b:                                             ; preds = %extract32.exit66, %
   br label %is_connected.exit
 
 bb.c:                                             ; preds = %extract32.exit66, %extract32.exit66
-  %1 = xor i1 %i.s, true
+  %1 = and i32 %i.r, 1
+  %2 = icmp eq i32 %1, 0
   br label %is_connected.exit
 
 default.unreachable:                              ; preds = %extract32.exit66
   unreachable
 
 is_connected.exit:                                ; preds = %extract32.exit66, %extract32.exit66, %extract32.exit66, %extract32.exit66, %bb.b, %bb.c
-  %.0.i = phi i1 [ %1, %bb.c ], [ %i.s, %bb.b ], [ true, %extract32.exit66 ], [ true, %extract32.exit66 ], [ true, %extract32.exit66 ], [ true, %extract32.exit66 ]
+  %.0.i = phi i1 [ %2, %bb.c ], [ %i.s, %bb.b ], [ true, %extract32.exit66 ], [ true, %extract32.exit66 ], [ true, %extract32.exit66 ], [ true, %extract32.exit66 ]
   %i.ab = and i1 %.0.i, %i.l
   %cond.fr89 = freeze i1 %i.ab                    ; 6 uses
   br i1 %.not, label %bb.e, label %bb.d

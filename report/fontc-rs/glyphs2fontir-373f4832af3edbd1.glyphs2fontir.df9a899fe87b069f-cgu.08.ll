@@ -204,6 +204,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc11collections
 
 _RNvMs0_NtCsjceHdiZFn9b_13glyphs2fontir4toirNtB5_13Colrv1RunType7key_for.exit.i.i: ; preds = %bb.cx, %bb.cw, %bb.cv, %bb.cp, %bb.ce
   %i.xb = phi i1 [ false, %bb.cx ], [ true, %bb.cw ], [ true, %bb.cv ], [ true, %bb.cp ], [ true, %bb.ce ]
+  %2 = phi i1 [ true, %bb.cx ], [ false, %bb.cw ], [ false, %bb.cv ], [ false, %bb.cp ], [ false, %bb.ce ]
   %i.xc = phi i64 [ 0, %bb.cx ], [ 3, %bb.cw ], [ 5, %bb.cv ], [ 4, %bb.cp ], [ 2, %bb.ce ] ; 2 uses
   %i.xd = load i64, ptr %i.fx, align 8, !noalias !798, !noundef !5 ; 2 uses
   %.not85.i.i = icmp eq i64 %i.xd, 0
@@ -446,14 +447,14 @@ _RNvXs2Y_NtCs1qcNTItuk7F_13glyphs_reader4fontNtB6_8GradientNtNtCsf3Ta7LF998c_4co
 
 bb.ju:                                            ; preds = %_RNvXs2Y_NtCs1qcNTItuk7F_13glyphs_reader4fontNtB6_8GradientNtNtCsf3Ta7LF998c_4core3cmp9PartialEq2eq.exit.i.i.i.i, %bb.jm
   %i.abl = trunc nuw i64 %i.xl to i1
-  %2 = trunc nuw i64 %i.xc to i1                  ; 2 uses
   br i1 %i.abl, label %bb.jv, label %.split262.i.i
 
 bb.jv:                                            ; preds = %bb.ju
-  br i1 %2, label %bb.jw, label %_RNvXs4_NtCsjceHdiZFn9b_13glyphs2fontir4toirNtB5_13Colrv1RunTypeNtNtCsf3Ta7LF998c_4core3cmp9PartialEq2eq.exit.thread.i.i
+  %3 = trunc nuw i64 %i.xc to i1
+  br i1 %3, label %bb.jw, label %_RNvXs4_NtCsjceHdiZFn9b_13glyphs2fontir4toirNtB5_13Colrv1RunTypeNtNtCsf3Ta7LF998c_4core3cmp9PartialEq2eq.exit.thread.i.i
 
 .split262.i.i:                                    ; preds = %bb.ju
-  br i1 %2, label %_RNvXs4_NtCsjceHdiZFn9b_13glyphs2fontir4toirNtB5_13Colrv1RunTypeNtNtCsf3Ta7LF998c_4core3cmp9PartialEq2eq.exit.thread.i.i, label %_RNvXs4_NtCsjceHdiZFn9b_13glyphs2fontir4toirNtB5_13Colrv1RunTypeNtNtCsf3Ta7LF998c_4core3cmp9PartialEq2eq.exit.thread260.i.i
+  br i1 %2, label %_RNvXs4_NtCsjceHdiZFn9b_13glyphs2fontir4toirNtB5_13Colrv1RunTypeNtNtCsf3Ta7LF998c_4core3cmp9PartialEq2eq.exit.thread260.i.i, label %_RNvXs4_NtCsjceHdiZFn9b_13glyphs2fontir4toirNtB5_13Colrv1RunTypeNtNtCsf3Ta7LF998c_4core3cmp9PartialEq2eq.exit.thread.i.i
 
 bb.jw:                                            ; preds = %bb.jv
   %i.abm = getelementptr inbounds nuw i8, ptr %i.xk, i64 8
@@ -856,13 +857,13 @@ define hidden { ptr, i64 } @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5impls
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load i8, ptr %i.a, align 8, !range !15, !alias.scope !894, !noundef !5
-  %2 = trunc nuw i8 %i.b to i1                    ; 2 uses
+  %.not.not.i = icmp eq i8 %i.b, 0                ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = load i64, ptr %i.c, align 8, !alias.scope !894
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !894, !nonnull !5
-  %.sroa.3.0.i = select i1 %2, i64 undef, i64 %i.d
-  %.sroa.0.0.i = select i1 %2, ptr null, ptr %i.f
+  %.sroa.3.0.i = select i1 %.not.not.i, i64 %i.d, i64 undef
+  %.sroa.0.0.i = select i1 %.not.not.i, ptr %i.f, ptr null
   %i.g = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0.i, 0
   %i.h = insertvalue { ptr, i64 } %i.g, i64 %.sroa.3.0.i, 1
   ret { ptr, i64 } %i.h

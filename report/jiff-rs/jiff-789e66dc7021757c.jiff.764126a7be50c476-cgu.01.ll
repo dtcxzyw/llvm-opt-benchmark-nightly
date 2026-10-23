@@ -204,6 +204,7 @@ bb.wh:                                            ; preds = %_RINvNtCs3oUPovFnLW
   br label %bb.rp
 
 _RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit673: ; preds = %bb.vx, %bb.wf
+  %.not.not.i = phi i1 [ false, %bb.wf ], [ true, %bb.vx ]
   %.sroa.01713.0 = phi i8 [ 1, %bb.wf ], [ 0, %bb.vx ] ; 2 uses
   %.sroa.101715.0 = phi i8 [ %i.bun, %bb.wf ], [ undef, %bb.vx ] ; 2 uses
   %.sroa.121717.0 = phi ptr [ %i.bty, %bb.wf ], [ %i.bav, %bb.vx ] ; 3 uses
@@ -229,9 +230,11 @@ bb.wj:                                            ; preds = %bb.wi
   %i.buw = getelementptr inbounds nuw i8, ptr %.val90, i64 68
   %i.bux = load i32, ptr %i.buw, align 4, !noalias !2015, !noundef !6 ; 2 uses
   %i.buy = icmp eq i32 %i.bux, 0
+  %or.cond12.i = and i1 %.not.not.i, %i.buy
   %i.buz = trunc nuw i8 %.sroa.01713.0 to i1
   %i.bva = icmp eq i8 %.sroa.101715.0, 0
-  %or.cond1.i675 = select i1 %i.buz, i1 %i.bva, i1 %i.buy
+  %or.cond.i675 = select i1 %i.buz, i1 %i.bva, i1 false
+  %or.cond1.i675 = select i1 %or.cond12.i, i1 true, i1 %or.cond.i675
   br i1 %or.cond1.i675, label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE18fmt_dot_fractionalBb_.exit, label %bb.wk
 
 bb.wk:                                            ; preds = %bb.wj
@@ -634,13 +637,14 @@ bb.a:
   %i.j = load i8, ptr %i.i, align 2, !range !12, !noundef !6
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 95
   %i.l = load i8, ptr %i.k, align 1               ; 4 uses
-  %2 = trunc nuw i16 %i.d to i1
+  %.not55 = icmp eq i16 %i.d, 0
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 92
   %i.n = load i8, ptr %i.m, align 4, !range !12
-  %3 = and i8 %i.n, %i.j
-  %4 = icmp ne i8 %3, 0
-  %.not56 = select i1 %2, i1 %4, i1 false
-  br i1 %.not56, label %bb.c, label %bb.b, !prof !2350
+  %.not56 = icmp eq i8 %i.n, 0
+  %or.cond.not57 = select i1 %.not55, i1 true, i1 %.not56, !prof !21
+  %.not50 = icmp eq i8 %i.j, 0
+  %brmerge = or i1 %.not50, %or.cond.not57
+  br i1 %brmerge, label %bb.b, label %bb.c, !prof !2350
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt7strtimeNtB7_14BrokenDownTime7to_date7to_date(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(112) %1) #20
@@ -1043,7 +1047,7 @@ begin_hunk_2_@llvm.umin.i64
 !2347 = !{!2321}
 !2348 = !{!2323}
 !2349 = !{!2331, !2329, !2327, !2325, !2323}
-!2350 = !{!"branch_weights", i32 -294967296, i32 6003000}
+!2350 = !{!"branch_weights", i32 6003000, i32 -294967296}
 !2351 = !{!"branch_weights", i32 2146410443, i32 1073205}
 !2352 = !{!"branch_weights", i32 1073205, i32 2146410443}
 !2353 = distinct !{!2353, i1 true, !"_RNvMsg_NtCsb09rMIQFAXO_9jiff_core4utilINtB5_8ArrayStrKj9_E8push_strCsa9sSWSfjDbm_4jiff"}

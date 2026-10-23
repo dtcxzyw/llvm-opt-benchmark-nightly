@@ -204,8 +204,8 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.h, ptr noundef nonnull align 8 dereferenceable(12) %i.i, i64 12, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 8 uses
   %i.k = load i8, ptr %i.j, align 8, !tbaa !41, !range !42, !noundef !43
-  %4 = trunc nuw i8 %i.k to i1
-  br i1 %4, label %.critedge2.thread50, label %.lr.ph
+  %.not.not143 = icmp eq i8 %i.k, 0
+  br i1 %.not.not143, label %.lr.ph, label %.critedge2.thread50
 
 .lr.ph:                                           ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -227,7 +227,7 @@ bb.a:
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %.critedge2
+bb.b:                                             ; preds = %.critedge229.backedge, %.lr.ph
   store i32 0, ptr %0, align 8, !tbaa !39
   store i64 0, ptr %i.l, align 8, !tbaa !18
   %i.ac = load ptr, ptr %i.g, align 8, !tbaa !53
@@ -630,11 +630,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN6g
 
 _ZN6google8protobuf2io9Tokenizer13TryConsumeOneINS1_12_GLOBAL__N_111UnprintableEEEbv.exit: ; preds = %.critedge
   %i.fs = load i8, ptr %i.j, align 8, !tbaa !41, !range !42, !noundef !43
-  %5 = or i8 %i.fp, %i.fs
-  %or.cond177.not.not = icmp eq i8 %5, 0
-  br i1 %or.cond177.not.not, label %.critedge.backedge, label %.critedge2
+  %4 = trunc nuw i8 %i.fs to i1
+  br i1 %4, label %.critedge2.thread50, label %5
 
-.critedge.backedge:                               ; preds = %_ZN6google8protobuf2io9Tokenizer13TryConsumeOneINS1_12_GLOBAL__N_111UnprintableEEEbv.exit, %.critedge
+5:                                                ; preds = %_ZN6google8protobuf2io9Tokenizer13TryConsumeOneINS1_12_GLOBAL__N_111UnprintableEEEbv.exit
+  %6 = icmp eq i8 %i.fp, 0
+  br i1 %6, label %.critedge.backedge, label %.critedge229.backedge
+
+.critedge.backedge:                               ; preds = %5, %.critedge
   br label %.critedge, !llvm.loop !87
 
 bb.av:                                            ; preds = %.noexc.i
@@ -882,16 +885,19 @@ _ZN6google8protobuf2io9Tokenizer8EndTokenEv.exit36: ; preds = %_ZN6google8protob
   store i32 %i.iz, ptr %i.y, align 8, !tbaa !38
   br label %.critedge2.thread
 
-.critedge2:                                       ; preds = %_ZN6google8protobuf2io9Tokenizer13TryConsumeOneINS1_12_GLOBAL__N_111UnprintableEEEbv.exit, %.preheader, %bb.ar, %bb.as
-  %i.ja = load i8, ptr %i.j, align 8, !tbaa !41, !range !42, !noundef !43
-  %6 = trunc nuw i8 %i.ja to i1
-  br i1 %6, label %.critedge2.thread50, label %bb.b
+.critedge2:                                       ; preds = %.preheader, %bb.as, %bb.ar
+  %i.ja = load i8, ptr %i.j, align 8, !tbaa !41
+  %7 = icmp eq i8 %i.ja, 0
+  br i1 %7, label %.critedge229.backedge, label %.critedge2.thread50
+
+.critedge229.backedge:                            ; preds = %5, %.critedge2
+  br label %bb.b
 
 bb.bp:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit22
   %.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit22 ], [ %i.ig, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33 ]
   resume { ptr, i32 } %.pn.pn
 
-.critedge2.thread50:                              ; preds = %.critedge2, %bb.at, %bb.a
+.critedge2.thread50:                              ; preds = %.critedge2, %bb.at, %_ZN6google8protobuf2io9Tokenizer13TryConsumeOneINS1_12_GLOBAL__N_111UnprintableEEEbv.exit, %bb.a
   store i32 1, ptr %0, align 8, !tbaa !39
   %i.jb = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.jb, align 8, !tbaa !18
@@ -1253,8 +1259,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.df = load i32, ptr %i.aa, align 4, !tbaa !30
   %i.dg = getelementptr inbounds nuw i8, ptr %5, i64 61 ; 2 uses
   %i.dh = load i8, ptr %i.dg, align 1, !tbaa !69, !range !42, !noundef !43
-  %7 = trunc nuw i8 %i.dh to i1
-  %.not.i30 = xor i1 %7, true
+  %.not.i30 = icmp eq i8 %i.dh, 0
   %i.di = getelementptr inbounds nuw i8, ptr %5, i64 62 ; 2 uses
   %i.dj = load i8, ptr %i.di, align 2, !range !42
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -1529,8 +1534,7 @@ bb.bh:                                            ; preds = %_ZN6google8protobuf
 
 bb.bi:                                            ; preds = %bb.bh
   %i.gh = load i8, ptr %i.es, align 1, !tbaa !69, !range !42, !noundef !43
-  %8 = trunc nuw i8 %i.gh to i1
-  %.not.i44 = xor i1 %8, true
+  %.not.i44 = icmp eq i8 %i.gh, 0
   %i.gi = load i8, ptr %i.et, align 2, !range !42
   %i.gj = trunc nuw i8 %i.gi to i1
   %or.cond.i45 = select i1 %.not.i44, i1 true, i1 %i.gj
@@ -1933,11 +1937,11 @@ bb.dc:                                            ; preds = %.thread
 bb.dd:                                            ; preds = %bb.dc
   %i.kp = getelementptr inbounds nuw i8, ptr %5, i64 60
   %i.kq = load i8, ptr %i.kp, align 4, !tbaa !71, !range !42, !noundef !43
-  %9 = trunc nuw i8 %i.kq to i1
+  %.not6.i = icmp eq i8 %i.kq, 0
   %i.kr = load ptr, ptr %5, align 8               ; 3 uses
-  %.not.i69 = icmp ne ptr %i.kr, null
-  %or.cond.not.i = select i1 %9, i1 %.not.i69, i1 false
-  br i1 %or.cond.not.i, label %bb.de, label %bb.dk
+  %.not.i69 = icmp eq ptr %i.kr, null
+  %or.cond.not.i = select i1 %.not6.i, i1 true, i1 %.not.i69
+  br i1 %or.cond.not.i, label %bb.dk, label %bb.de
 
 bb.de:                                            ; preds = %bb.dd
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24

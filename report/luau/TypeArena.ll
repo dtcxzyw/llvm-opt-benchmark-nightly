@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %_ZNKSt25__optional_
   %i.t = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.02137 ; 10 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.v = load i8, ptr %i.u, align 8, !tbaa !57, !range !24, !noundef !25 ; 3 uses
-  %2 = trunc nuw i8 %i.v to i1                    ; 2 uses
-  %i.w = icmp eq i8 %i.v, %i.q                    ; 2 uses
-  %brmerge.not.i.i = and i1 %i.w, %2
-  br i1 %brmerge.not.i.i, label %bb.e, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit
+  %2 = icmp ne i8 %i.v, %i.q                      ; 2 uses
+  %i.w = icmp eq i8 %i.v, 0                       ; 2 uses
+  %brmerge.i.i = or i1 %i.w, %2
+  br i1 %brmerge.i.i, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 8
@@ -228,7 +228,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread29
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit: ; preds = %bb.d
-  br i1 %i.w, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread29
+  br i1 %2, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread29, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread: ; preds = %bb.f, %.split, %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit
   tail call void @_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE14_M_copy_assignERKS6_(ptr noundef nonnull align 8 dereferenceable(40) %i.t, ptr noundef nonnull align 8 dereferenceable(40) %1)
@@ -240,9 +240,9 @@ _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread29: ; preds = %bb.e, %.split, %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit
   %i.ai = load i8, ptr %i.d, align 8, !tbaa !57, !range !24, !noundef !25
-  %3 = icmp eq i8 %i.v, %i.ai                     ; 2 uses
-  %brmerge.not.i.i26 = and i1 %3, %2
-  br i1 %brmerge.not.i.i26, label %bb.g, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28
+  %3 = icmp ne i8 %i.v, %i.ai                     ; 2 uses
+  %brmerge.i.i27 = or i1 %i.w, %3
+  br i1 %brmerge.i.i27, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28, label %bb.g
 
 bb.g:                                             ; preds = %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread29
   %i.aj = getelementptr inbounds nuw i8, ptr %i.t, i64 8
@@ -263,7 +263,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.aq, label %.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28.thread30
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28: ; preds = %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread29
-  br i1 %3, label %.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28.thread30
+  br i1 %3, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28.thread30, label %.thread
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28.thread30: ; preds = %bb.g, %.split31, %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit28
   %i.ar = add i64 %.02036, 1                      ; 3 uses
@@ -287,13 +287,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.f = load i8, ptr %i.e, align 8, !tbaa !57, !range !24, !noundef !25 ; 2 uses
-  %2 = trunc nuw i8 %i.f to i1                    ; 2 uses
+  %i.f = load i8, ptr %i.e, align 8, !tbaa !57, !range !24, !noundef !25 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.h = load i8, ptr %i.g, align 8, !tbaa !57, !range !24, !noundef !25
-  %i.i = icmp eq i8 %i.f, %i.h                    ; 2 uses
-  %brmerge.not.i.i = and i1 %i.i, %2
-  br i1 %brmerge.not.i.i, label %bb.c, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit
+  %2 = icmp ne i8 %i.f, %i.h                      ; 2 uses
+  %i.i = icmp eq i8 %i.f, 0
+  %brmerge.i.i = or i1 %i.i, %2
+  br i1 %brmerge.i.i, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -315,7 +315,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.r, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %.thread
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit: ; preds = %bb.b
-  br i1 %i.i, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %bb.e
+  br i1 %2, label %bb.e, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread
 
 .thread:                                          ; preds = %.split, %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -327,7 +327,8 @@ bb.e:                                             ; preds = %_ZNKSt8equal_toISt8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.w = load i64, ptr %i.v, align 8, !tbaa !156
   %i.x = add i64 %i.w, -1                         ; 2 uses
-  br i1 %2, label %._crit_edge, label %_ZNKSt25__optional_hash_call_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_Lb1EEclERKSt8optionalIS5_E.exit
+  %3 = trunc nuw i8 %i.f to i1
+  br i1 %3, label %._crit_edge, label %_ZNKSt25__optional_hash_call_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_Lb1EEclERKSt8optionalIS5_E.exit
 
 ._crit_edge:                                      ; preds = %bb.e
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -368,10 +369,10 @@ bb.h:                                             ; preds = %_ZNKSt25__optional_
   %i.ak = getelementptr inbounds nuw [40 x i8], ptr %i.ah, i64 %.01942 ; 8 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.am = load i8, ptr %i.al, align 8, !tbaa !57, !range !24, !noundef !25 ; 3 uses
-  %3 = trunc nuw i8 %i.am to i1                   ; 2 uses
-  %i.an = icmp eq i8 %i.am, %i.ae                 ; 2 uses
-  %brmerge.not.i.i24 = and i1 %i.an, %3
-  br i1 %brmerge.not.i.i24, label %bb.i, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26
+  %4 = icmp ne i8 %i.am, %i.ae                    ; 2 uses
+  %i.an = icmp eq i8 %i.am, 0                     ; 2 uses
+  %brmerge.i.i25 = or i1 %i.an, %4
+  br i1 %brmerge.i.i25, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -392,13 +393,13 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.av, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26.thread31
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26: ; preds = %bb.h
-  br i1 %i.an, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26.thread31
+  br i1 %4, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26.thread31, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26.thread31: ; preds = %bb.i, %.split32, %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26
   %i.aw = load i8, ptr %i.g, align 8, !tbaa !57, !range !24, !noundef !25
-  %4 = icmp eq i8 %i.am, %i.aw                    ; 2 uses
-  %brmerge.not.i.i27 = and i1 %4, %3
-  br i1 %brmerge.not.i.i27, label %bb.k, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29
+  %5 = icmp ne i8 %i.am, %i.aw                    ; 2 uses
+  %brmerge.i.i30 = or i1 %i.an, %5
+  br i1 %brmerge.i.i30, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29, label %bb.k
 
 bb.k:                                             ; preds = %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26.thread31
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -419,7 +420,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.be, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29.thread33
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29: ; preds = %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit26.thread31
-  br i1 %4, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29.thread33
+  br i1 %5, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29.thread33, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29.thread33: ; preds = %bb.k, %.split34, %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit29
   %i.bf = add i64 %.01841, 1                      ; 3 uses
@@ -537,11 +538,11 @@ bb.f:                                             ; preds = %.lr.ph, %_ZNKSt8equ
   %i.ai = getelementptr inbounds nuw [40 x i8], ptr %i.ah, i64 %.01116 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !57, !range !24, !noundef !25 ; 2 uses
-  %2 = trunc nuw i8 %i.ak to i1
-  %3 = load i8, ptr %i.g, align 8, !tbaa !57, !range !24, !noundef !25
-  %i.al = icmp eq i8 %i.ak, %3                    ; 2 uses
-  %brmerge.not.i.i = and i1 %i.al, %2
-  br i1 %brmerge.not.i.i, label %bb.g, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit
+  %2 = load i8, ptr %i.g, align 8, !tbaa !57, !range !24, !noundef !25
+  %3 = icmp ne i8 %i.ak, %2                       ; 2 uses
+  %i.al = icmp eq i8 %i.ak, 0
+  %brmerge.i.i = or i1 %i.al, %3
+  br i1 %brmerge.i.i, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
@@ -562,7 +563,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.at, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread14
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit: ; preds = %bb.f
-  br i1 %i.al, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread14
+  br i1 %3, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread14, label %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread
 
 _ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit.thread14: ; preds = %bb.g, %.split, %_ZNKSt8equal_toISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclERKS7_SA_.exit
   %i.au = invoke noundef ptr @_ZN4Luau6detail14DenseHashTableISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEES9_S9_NS0_16ItemInterfaceSetIS9_EESt4hashIS9_ESt8equal_toIS9_EE13insert_unsafeERKS9_(ptr noundef nonnull align 8 dereferenceable(66) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.ai)

@@ -204,10 +204,10 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.aa = and i32 %i.z, 15
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 193
-  %i.ac = load i8, ptr %i.ab, align 1, !range !10, !noundef !11
-  %9 = trunc nuw i8 %i.ac to i1                   ; 5 uses
-  %10 = xor i1 %9, true
-  %i.ad = zext i1 %10 to i64
+  %i.ac = load i8, ptr %i.ab, align 1, !range !10, !noundef !11 ; 2 uses
+  %9 = icmp eq i8 %i.ac, 0                        ; 2 uses
+  %10 = xor i8 %i.ac, 1                           ; 2 uses
+  %i.ad = zext nneg i8 %10 to i64                 ; 2 uses
   %i.ae = lshr exact i64 64, %i.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   switch i32 %i.aa, label %bb.g [
@@ -234,13 +234,13 @@ bb.f:                                             ; preds = %bb.e
   br label %select.unfold
 
 .split.i:                                         ; preds = %bb.e
-  br i1 %9, label %.thread169.i, label %bb.i
+  br i1 %9, label %bb.i, label %.thread169.i
 
 bb.g:                                             ; preds = %bb.e
   br label %select.unfold70
 
 bb.h:                                             ; preds = %bb.e
-  br i1 %9, label %.thread169.i, label %bb.i
+  br i1 %9, label %bb.i, label %.thread169.i
 
 bb.i:                                             ; preds = %bb.h, %.split.i
   %i.am = phi i32 [ 9, %.split.i ], [ 0, %bb.h ]
@@ -259,7 +259,8 @@ bb.i:                                             ; preds = %bb.h, %.split.i
 .preheader.i:                                     ; preds = %.thread169.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %7, i8 0, i64 64, i1 false), !annotation !13
   store i64 0, ptr %i.a, align 8, !annotation !13
-  %11 = select i1 %9, i32 6, i32 7
+  %11 = or disjoint i8 %10, 6
+  %12 = zext nneg i8 %11 to i32
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %.0126.in.i89 = shl i64 %i.y, 2
   %.0126.i90 = and i64 %.0126.in.i89, 72057594037923840 ; 2 uses
@@ -278,7 +279,7 @@ bb.j:                                             ; preds = %bb.l
   %i.at = add nsw i32 %.in, -1                    ; 2 uses
   call void @riscv_iommu_hpm_incr_ctr(ptr noundef nonnull %0, ptr noundef nonnull %i.t, i32 noundef 5) #17
   %i.au = mul nuw nsw i32 %i.at, 9
-  %i.av = add nuw i32 %i.au, %11
+  %i.av = add nuw i32 %i.au, %12
   %i.aw = load i64, ptr %i.t, align 8
   %i.ax = trunc i64 %i.aw to i32
   %i.ay = and i32 %i.ax, 16777215
@@ -309,8 +310,8 @@ bb.l:                                             ; preds = %bb.k
   %.0126.i.lcssa = phi i64 [ %.0126.i90, %.preheader.i ], [ %.0126.i, %bb.j ]
   call void @riscv_iommu_hpm_incr_ctr(ptr noundef nonnull %0, ptr noundef nonnull %i.t, i32 noundef 5) #17
   %i.bj = load i64, ptr %i.t, align 8
-  %12 = select i1 %9, i64 6, i64 5
-  %i.bk = shl i64 %i.bj, %12
+  %13 = sub nuw nsw i64 6, %i.ad
+  %i.bk = shl i64 %i.bj, %13
   %i.bl = and i64 %i.bk, 4080
   %i.bm = or disjoint i64 %i.bl, %.0126.i.lcssa
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %7, i8 noundef 0, i64 noundef 64, i1 noundef false) #17

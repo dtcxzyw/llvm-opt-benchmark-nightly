@@ -204,10 +204,11 @@ _RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme10check_pair.exit.thread.i.i.
 
 _RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme10check_pair.exit.thread39.i.i.i.i.i.i: ; preds = %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al
   %i.hs = load i8, ptr %i.t, align 4, !range !116, !alias.scope !4064, !noundef !75 ; 2 uses
-  %2 = xor i8 %i.hs, 1
-  %..i.i.i.i.i.i.i.i = sub nuw nsw i8 2, %i.hs
+  %2 = icmp eq i8 %i.hs, 0
+  %..i.i.i.i.i.i.i.i = select i1 %2, i8 2, i8 1
   store i8 %..i.i.i.i.i.i.i.i, ptr %i.m, align 2, !alias.scope !4077
-  %.sroa.19.8.insert.ext.i.i.i.i.i = zext nneg i8 %2 to i64
+  %3 = xor i8 %i.hs, 1
+  %.sroa.19.8.insert.ext.i.i.i.i.i = zext nneg i8 %3 to i64
   %.sroa.19.8.insert.mask47.i.i.i.i.i = and i64 %.sroa.19.0.i.i.i.i.i, -256
   %.sroa.19.8.insert.insert48.i.i.i.i.i = or disjoint i64 %.sroa.19.8.insert.mask47.i.i.i.i.i, %.sroa.19.8.insert.ext.i.i.i.i.i
   br label %bb.bv
@@ -234,16 +235,17 @@ _RNvXs2_NtNtCsbvkFyIu7lgC_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5ra
   br i1 %i.hx, label %bb.ay, label %.thread.i.i.i
 
 bb.ay:                                            ; preds = %_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range7RangeTojEE5indexCshbKHpCRGxgC_16deltalake_derive.exit.i.i
-  %i.hy = load i64, ptr %i.p, align 8, !range !97, !alias.scope !4081, !noalias !4071, !noundef !75
+  %i.hy = load i64, ptr %i.p, align 8, !range !97, !alias.scope !4081, !noalias !4071, !noundef !75 ; 2 uses
   %i.hz = load i64, ptr %i.q, align 8, !alias.scope !4081, !noalias !4071 ; 2 uses
-  %i.ia = trunc nuw i64 %i.hy to i1               ; 2 uses
+  %i.ia = trunc nuw i64 %i.hy to i1
   %..i.i.i.i = select i1 %i.ia, i64 %i.hz, i64 0
   %i.ib = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ft
+  %4 = icmp eq i64 %i.hy, 0
   br label %.outer.i.i.i
 
 .outer.i.i.i:                                     ; preds = %bb.be, %bb.ay
   %i.ic = phi i64 [ %i.le, %bb.be ], [ %i.hz, %bb.ay ]
-  %i.id = phi i1 [ true, %bb.be ], [ %i.ia, %bb.ay ]
+  %i.id = phi i1 [ false, %bb.be ], [ %4, %bb.ay ]
   %.sroa.2.0.ph.i.i.i = phi ptr [ %.sroa.2.317.i.i.i, %bb.be ], [ %i.ib, %bb.ay ]
   %.sroa.0.0.ph.i.i.i = phi i64 [ %i.le, %bb.be ], [ %..i.i.i.i, %bb.ay ]
   br label %bb.az
@@ -412,9 +414,9 @@ bb.be:                                            ; preds = %bb.bc
   br label %.outer.i.i.i
 
 bb.bf:                                            ; preds = %bb.bd
-  %.not520.i.i.i = icmp ne i64 %i.ic, 0
-  %.not5.not.i.i.i = select i1 %i.id, i1 %.not520.i.i.i, i1 false
-  br i1 %.not5.not.i.i.i, label %bb.bg, label %.thread.i.i.i
+  %.not520.i.i.i = icmp eq i64 %i.ic, 0
+  %.not5.not.i.i.i = select i1 %i.id, i1 true, i1 %.not520.i.i.i
+  br i1 %.not5.not.i.i.i, label %.thread.i.i.i, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
   %i.lf = call noundef i8 @_RNvMs4_NtCskxeEtmv7ubq_20unicode_segmentation8graphemeNtB5_14GraphemeCursor17grapheme_category(ptr noalias noundef nonnull align 8 dereferenceable(200) %i.b, i32 noundef %spec.select.i.i18.i.i.i), !noalias !4085

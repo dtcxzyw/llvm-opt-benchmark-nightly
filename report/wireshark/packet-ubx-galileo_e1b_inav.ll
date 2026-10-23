@@ -204,8 +204,8 @@ bb.bi:                                            ; preds = %bb.bg
   br i1 %or.cond21, label %.preheader, label %.thread593
 
 .preheader:                                       ; preds = %.loopexit
-  %i.act = load i8, ptr %i.b, align 1, !range !12, !noundef !13
-  %i.acu = trunc nuw i8 %i.act to i1              ; 2 uses
+  %i.act = load i8, ptr %i.b, align 1, !range !12, !noundef !13 ; 2 uses
+  %i.acu = trunc nuw i8 %i.act to i1
   %i.acv = select i1 %i.acu, i64 8, i64 4         ; 2 uses
   br label %bb.bj
 
@@ -244,9 +244,10 @@ bb.bn:                                            ; preds = %bb.bm
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj
   %.8.lcssa = phi i64 [ %.8613, %bb.bj ], [ %i.acv, %bb.bn ], [ %i.acz, %bb.bk ], [ %i.adh, %bb.bm ], [ %i.add, %bb.bl ]
-  %7 = icmp ne i64 %.8.lcssa, 4
-  %or.cond23.not = or i1 %7, %i.acu
-  br i1 %or.cond23.not, label %.thread593, label %bb.bp
+  %.not = icmp eq i8 %i.act, 0
+  %7 = icmp eq i64 %.8.lcssa, 4
+  %or.cond23 = and i1 %7, %.not
+  br i1 %or.cond23, label %bb.bp, label %.thread593
 
 bb.bp:                                            ; preds = %bb.bo
   %i.adm = getelementptr i8, ptr %1, i64 416

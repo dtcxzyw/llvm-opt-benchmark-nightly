@@ -204,9 +204,8 @@ bb.a:
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.e = load i8, ptr %i.d, align 8, !range !55
-  %1 = trunc nuw i8 %i.e to i1
-  %2 = xor i1 %1, true
-  %i.f = select i1 %i.c, i1 %2, i1 false
+  %1 = icmp eq i8 %i.e, 0
+  %i.f = select i1 %i.c, i1 %1, i1 false
   ret i1 %i.f
 }
 
@@ -215,11 +214,10 @@ define dso_local noundef zeroext i1 @_ZNK4Luau8Property11isWriteOnlyEv(ptr nofre
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.b = load i8, ptr %i.a, align 8, !tbaa !170, !range !55, !noundef !56
-  %1 = trunc nuw i8 %i.b to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.d = load i8, ptr %i.c, align 8, !range !55
   %i.e = trunc nuw i8 %i.d to i1
-  %not. = xor i1 %1, true
+  %not. = icmp eq i8 %i.b, 0
   %i.f = select i1 %not., i1 %i.e, i1 false
   ret i1 %i.f
 }
@@ -622,15 +620,16 @@ _ZNK4Luau21GenericTypeDefinitioneqERKS0_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i, i64 8
   %i.x = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i, i64 16
   %i.y = load i8, ptr %i.x, align 8, !tbaa !170, !range !55, !noundef !56 ; 2 uses
-  %2 = trunc nuw i8 %i.y to i1
   %i.z = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i, i64 16
   %i.aa = load i8, ptr %i.z, align 8, !tbaa !170, !range !55, !noundef !56
-  %i.ab = icmp eq i8 %i.y, %i.aa                  ; 2 uses
-  %brmerge.not.i.i.i.i.i.i.i = and i1 %i.ab, %2
+  %2 = icmp ne i8 %i.y, %i.aa                     ; 2 uses
+  %i.ab = icmp eq i8 %i.y, 0
+  %brmerge.i.i.i.i.i.i.i = or i1 %i.ab, %2
+  %not..i.i.i.i.i.i.i = xor i1 %2, true
   %i.ac = load ptr, ptr %i.v, align 8
   %i.ad = load ptr, ptr %i.w, align 8
   %i.ae = icmp eq ptr %i.ac, %i.ad
-  %i.af = select i1 %brmerge.not.i.i.i.i.i.i.i, i1 %i.ae, i1 %i.ab
+  %i.af = select i1 %brmerge.i.i.i.i.i.i.i, i1 %not..i.i.i.i.i.i.i, i1 %i.ae
   br i1 %i.af, label %bb.d, label %_ZSteqIN4Luau25GenericTypePackDefinitionESaIS1_EEbRKSt6vectorIT_T0_ES8_.exit
 
 bb.d:                                             ; preds = %_ZNK4Luau21GenericTypeDefinitioneqERKS0_.exit.i.i.i.i.i
@@ -674,15 +673,16 @@ _ZNK4Luau25GenericTypePackDefinitioneqERKS0_.exit.i.i.i.i.i: ; preds = %.lr.ph.i
   %i.bb = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i6, i64 8
   %i.bc = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i7, i64 16
   %i.bd = load i8, ptr %i.bc, align 8, !tbaa !309, !range !55, !noundef !56 ; 2 uses
-  %3 = trunc nuw i8 %i.bd to i1
   %i.be = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i6, i64 16
   %i.bf = load i8, ptr %i.be, align 8, !tbaa !309, !range !55, !noundef !56
-  %i.bg = icmp eq i8 %i.bd, %i.bf                 ; 2 uses
-  %brmerge.not.i.i.i.i.i.i.i8 = and i1 %i.bg, %3
+  %3 = icmp ne i8 %i.bd, %i.bf                    ; 2 uses
+  %i.bg = icmp eq i8 %i.bd, 0
+  %brmerge.i.i.i.i.i.i.i9 = or i1 %i.bg, %3
+  %not..i.i.i.i.i.i.i10 = xor i1 %3, true
   %i.bh = load ptr, ptr %i.ba, align 8
   %i.bi = load ptr, ptr %i.bb, align 8
   %i.bj = icmp eq ptr %i.bh, %i.bi
-  %i.bk = select i1 %brmerge.not.i.i.i.i.i.i.i8, i1 %i.bj, i1 %i.bg
+  %i.bk = select i1 %brmerge.i.i.i.i.i.i.i9, i1 %not..i.i.i.i.i.i.i10, i1 %i.bj
   br i1 %i.bk, label %bb.f, label %_ZSteqIN4Luau25GenericTypePackDefinitionESaIS1_EEbRKSt6vectorIT_T0_ES8_.exit
 
 bb.f:                                             ; preds = %_ZNK4Luau25GenericTypePackDefinitioneqERKS0_.exit.i.i.i.i.i
@@ -709,15 +709,16 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i8, ptr %i.f, align 8, !tbaa !170, !range !55, !noundef !56 ; 2 uses
-  %2 = trunc nuw i8 %i.g to i1
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i8, ptr %i.h, align 8, !tbaa !170, !range !55, !noundef !56
-  %i.j = icmp eq i8 %i.g, %i.i                    ; 2 uses
-  %brmerge.not.i = and i1 %i.j, %2
+  %2 = icmp ne i8 %i.g, %i.i                      ; 2 uses
+  %i.j = icmp eq i8 %i.g, 0
+  %brmerge.i = or i1 %i.j, %2
+  %not..i = xor i1 %2, true
   %i.k = load ptr, ptr %i.d, align 8
   %i.l = load ptr, ptr %i.e, align 8
   %i.m = icmp eq ptr %i.k, %i.l
-  %i.n = select i1 %brmerge.not.i, i1 %i.m, i1 %i.j
+  %i.n = select i1 %brmerge.i, i1 %not..i, i1 %i.m
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -738,15 +739,16 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i8, ptr %i.f, align 8, !tbaa !309, !range !55, !noundef !56 ; 2 uses
-  %2 = trunc nuw i8 %i.g to i1
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i8, ptr %i.h, align 8, !tbaa !309, !range !55, !noundef !56
-  %i.j = icmp eq i8 %i.g, %i.i                    ; 2 uses
-  %brmerge.not.i = and i1 %i.j, %2
+  %2 = icmp ne i8 %i.g, %i.i                      ; 2 uses
+  %i.j = icmp eq i8 %i.g, 0
+  %brmerge.i = or i1 %i.j, %2
+  %not..i = xor i1 %2, true
   %i.k = load ptr, ptr %i.d, align 8
   %i.l = load ptr, ptr %i.e, align 8
   %i.m = icmp eq ptr %i.k, %i.l
-  %i.n = select i1 %brmerge.not.i, i1 %i.m, i1 %i.j
+  %i.n = select i1 %brmerge.i, i1 %not..i, i1 %i.m
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

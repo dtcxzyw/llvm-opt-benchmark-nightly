@@ -202,8 +202,8 @@ _ZN2cv3MataSERKNS_7MatExprE.exit:                 ; preds = %bb.wc
   call void @llvm.lifetime.end.p0(ptr nonnull %160) #32
   %i.bsm = load ptr, ptr %125, align 8, !tbaa !187
   %i.bsn = icmp ne ptr %i.bsm, null
-  %i.bso = load i8, ptr @timelapse, align 1, !range !97
-  %i.bsp = trunc nuw i8 %i.bso to i1              ; 2 uses
+  %i.bso = load i8, ptr @timelapse, align 1, !range !97 ; 2 uses
+  %i.bsp = trunc nuw i8 %i.bso to i1
   %or.cond = select i1 %i.bsn, i1 true, i1 %i.bsp
   br i1 %or.cond, label %bb.xq, label %bb.wd
 
@@ -542,9 +542,10 @@ bb.xp:                                            ; preds = %_ZNSolsEf.exit.invo
 
 bb.xq:                                            ; preds = %_ZN2cv3MataSERKNS_7MatExprE.exit
   %i.bwd = load ptr, ptr %126, align 8, !tbaa !190
-  %.not1343.a = icmp eq ptr %i.bwd, null
-  %or.cond3 = select i1 %.not1343.a, i1 %i.bsp, i1 false
-  br i1 %or.cond3, label %bb.xr, label %bb.xu
+  %184 = icmp ne ptr %i.bwd, null
+  %.not1343.a = icmp eq i8 %i.bso, 0
+  %or.cond3 = select i1 %184, i1 true, i1 %.not1343.a
+  br i1 %or.cond3, label %bb.xu, label %bb.xr
 
 bb.xr:                                            ; preds = %bb.xq
   call void @llvm.lifetime.start.p0(ptr nonnull %163) #32

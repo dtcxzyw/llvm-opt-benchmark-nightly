@@ -202,10 +202,10 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
-  %i.d = alloca [21 x i8], align 1                ; 6 uses
+  %i.d = alloca [21 x i8], align 1                ; 12 uses
   %i.e = alloca [21 x i8], align 1                ; 7 uses
-  %i.f = alloca [16 x i8], align 8                ; 10 uses
-  %i.g = alloca [8 x i8], align 8                 ; 8 uses
+  %i.f = alloca [16 x i8], align 8                ; 12 uses
+  %i.g = alloca [8 x i8], align 8                 ; 10 uses
   %i.h = alloca [24 x i8], align 8                ; 6 uses
   %i.i = alloca [24 x i8], align 8                ; 7 uses
   %i.j = alloca [40 x i8], align 8                ; 8 uses
@@ -373,36 +373,37 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.bb, label %bb.k, label %bb.i, !prof !639
 
 bb.i:                                             ; preds = %.thread, %bb.h
-  %i.bc = phi ptr [ %i.au, %.thread ], [ %i.ba, %bb.h ]
+  %i.bc = phi ptr [ %i.au, %.thread ], [ %i.ba, %bb.h ] ; 2 uses
   %i.bd = phi i64 [ %i.ai, %.thread ], [ %.pr.i, %bb.h ]
   %i.be = phi ptr [ %i.al, %.thread ], [ %.pre.i, %bb.h ] ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.be, i64 24 ; 3 uses
   invoke fastcc void @_RNCNvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB7_10Repository19are_snapshots_equal0Bb_(ptr noalias nofree noundef align 1 captures(address) dereferenceable(21) %i.e, ptr nonnull %i.g, ptr nonnull %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.be) #26
           to label %.noexc70 unwind label %.thread95.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc70:                                         ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !640)
+  %5 = load i8, ptr %i.e, align 1, !range !9, !alias.scope !640, !noalias !638
+  %.fr23.i.i.i = freeze i8 %5                     ; 2 uses
+  %6 = trunc i8 %.fr23.i.i.i to i1
   %i.bf = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.e, i64 1 ; 2 uses
-  %.not13.i.i.i = icmp eq i64 %i.bd, 1
-  br i1 %.not13.i.i.i, label %.loopexit50.i, label %.lr.ph.i.i.i.a
+  %.not13.i.i.i = icmp eq i64 %i.bd, 1            ; 3 uses
+  br i1 %6, label %.lr.ph.i.i.i.a, label %.split.i.i.i
 
 .lr.ph.i.i.i.a:                                   ; preds = %.noexc70
-  %4 = getelementptr inbounds nuw i8, ptr %i.be, i64 24
-  %5 = load i8, ptr %i.e, align 1, !range !9, !alias.scope !640, !noalias !638 ; 2 uses
-  br label %bb.j
+  br i1 %.not13.i.i.i, label %.loopexit50.i, label %bb.j
 
-bb.j:                                             ; preds = %.backedge.i.i.i, %.lr.ph.i.i.i.a
-  %i.bh = phi ptr [ %4, %.lr.ph.i.i.i.a ], [ %i.bi, %.backedge.i.i.i ] ; 2 uses
+bb.j:                                             ; preds = %.lr.ph.i.i.i.a, %.split.us.backedge.i.i.i
+  %i.bh = phi ptr [ %i.bi, %.split.us.backedge.i.i.i ], [ %4, %.lr.ph.i.i.i.a ] ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !641
   invoke fastcc void @_RNCNvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB7_10Repository19are_snapshots_equal0Bb_(ptr noalias nofree noundef align 1 captures(address) dereferenceable(21) %i.d, ptr nonnull %i.g, ptr nonnull %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bh) #26
           to label %.noexc71 unwind label %.thread95.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc71:                                         ; preds = %bb.j
-  %i.bj = load i8, ptr %i.d, align 1, !range !9, !alias.scope !642, !noalias !641, !noundef !5 ; 2 uses
-  %6 = and i8 %i.bj, %5
-  %.not2.i.i.i.i.i = icmp eq i8 %6, 0
-  br i1 %.not2.i.i.i.i.i, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i, label %.split.i.i.i.a
+  %i.bj = load i8, ptr %i.d, align 1, !range !9, !alias.scope !642, !noalias !641, !noundef !5
+  %7 = trunc nuw i8 %i.bj to i1
+  br i1 %7, label %.split.i.i.i.a, label %.backedge.i.i.i
 
 .split.i.i.i.a:                                   ; preds = %.noexc71
   %i.bk = load i128, ptr %i.bf, align 1
@@ -420,17 +421,47 @@ bb.j:                                             ; preds = %.backedge.i.i.i, %.
   %i.bw = zext i1 %i.bv to i32
   %.not.i.i.i = icmp eq i32 %i.bw, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !641
-  br i1 %.not.i.i.i, label %.backedge.i.i.i, label %bb.l
+  br i1 %.not.i.i.i, label %.split.us.backedge.i.i.i, label %bb.l
 
-_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i: ; preds = %.noexc71
-  %7 = or i8 %i.bj, %5
-  %.mux.i.i.not.i.i.i = icmp eq i8 %7, 0
+.split.us.backedge.i.i.i:                         ; preds = %.split.i.i.i.a
+  %.not26.not.i.i.i = icmp eq ptr %i.bi, %i.bc
+  br i1 %.not26.not.i.i.i, label %.loopexit50.i, label %bb.j
+
+.split.i.i.i:                                     ; preds = %.noexc70
+  %8 = icmp eq i8 %.fr23.i.i.i, 0
+  br i1 %8, label %.split.split.us.i.i.i, label %.split.split.i.i.i
+
+.split.split.us.i.i.i:                            ; preds = %.split.i.i.i
+  br i1 %.not13.i.i.i, label %.loopexit50.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.split.split.us.i.i.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i
+  %9 = phi ptr [ %12, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i ], [ %4, %.split.split.us.i.i.i ] ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !641
+  invoke fastcc void @_RNCNvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB7_10Repository19are_snapshots_equal0Bb_(ptr noalias nofree noundef align 1 captures(address) dereferenceable(21) %i.d, ptr nonnull %i.g, ptr nonnull %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %9) #26
+          to label %.noexc72 unwind label %.thread95.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.noexc72:                                         ; preds = %.lr.ph.i.i.i
+  %10 = load i8, ptr %i.d, align 1, !range !9, !alias.scope !642, !noalias !641, !noundef !5
+  %11 = trunc nuw i8 %10 to i1
+  br i1 %11, label %.backedge.i.i.i, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i
+
+_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i: ; preds = %.noexc72
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !641
-  br i1 %.mux.i.i.not.i.i.i, label %.backedge.i.i.i, label %bb.l
+  %.not25.i.i.i = icmp eq ptr %12, %i.bc
+  br i1 %.not25.i.i.i, label %.loopexit50.i, label %.lr.ph.i.i.i
 
-.backedge.i.i.i:                                  ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i, %.split.i.i.i.a
-  %.not14.i.i.i = icmp eq ptr %i.bi, %i.bc
-  br i1 %.not14.i.i.i, label %.loopexit50.i, label %bb.j
+.split.split.i.i.i:                               ; preds = %.split.i.i.i
+  br i1 %.not13.i.i.i, label %.loopexit50.i, label %13
+
+13:                                               ; preds = %.split.split.i.i.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !641
+  invoke fastcc void @_RNCNvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB7_10Repository19are_snapshots_equal0Bb_(ptr noalias nofree noundef align 1 captures(address) dereferenceable(21) %i.d, ptr nonnull %i.g, ptr nonnull %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4) #26
+          to label %.backedge.i.i.i unwind label %.thread95.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.backedge.i.i.i:                                  ; preds = %.noexc72, %.noexc71, %13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !641
+  br label %bb.l
 
 bb.k:                                             ; preds = %bb.h
   invoke void @_RNvNtCs3oUPovFnLWP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 24, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @72) #25
@@ -439,7 +470,7 @@ bb.k:                                             ; preds = %bb.h
 .noexc72.a:                                       ; preds = %bb.k
   unreachable
 
-bb.l:                                             ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i, %.split.i.i.i.a
+bb.l:                                             ; preds = %.split.i.i.i.a, %.backedge.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !638
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !637
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !637
@@ -456,7 +487,7 @@ bb.l:                                             ; preds = %_RNCINvNtNtNtCs3oUP
   %i.cb = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   br i1 %i.by, label %bb.n, label %bb.o, !prof !11
 
-.loopexit50.i:                                    ; preds = %.backedge.i.i.i, %.noexc70
+.loopexit50.i:                                    ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdINtNtBa_6option6OptionAhj14_EuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs0_NtB14_10repositoryNtB34_10Repository19are_snapshots_equal0NCINvNvNtNtNtB8_6traits8iterator8Iterator3all5checkB1L_NCB2Y_s_0E0E0B16_.exit.i.i.i, %.split.us.backedge.i.i.i, %.split.split.i.i.i, %.split.split.us.i.i.i, %.lr.ph.i.i.i.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !638
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !637
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !637
@@ -696,7 +727,7 @@ _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip
   %.not67 = icmp eq i64 %.sroa.0.0.copyload81, -1
   br i1 %.not67, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEEB1v_.exit80, !prof !647
 
-.thread95.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph, %bb.j, %.invoke, %bb.z, %bb.ad, %bb.g, %bb.i, %bb.k, %bb.l, %bb.x
+.thread95.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.j, %.lr.ph, %.lr.ph.i.i.i, %.invoke, %bb.z, %bb.ad, %bb.g, %bb.i, %13, %bb.k, %bb.l, %bb.x
   %lpad.loopexit.split-lp123 = landingpad { ptr, i32 }
           cleanup
   br label %.thread90

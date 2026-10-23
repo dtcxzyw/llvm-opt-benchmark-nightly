@@ -205,7 +205,7 @@ _ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUnique
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
   %i.u = icmp ugt i64 %i.t, 8
-  br i1 %i.u, label %.lr.ph, label %._crit_edge
+  br i1 %i.u, label %.lr.ph, label %._crit_edge.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit
   %i.v = getelementptr inbounds nuw i8, ptr %13, i64 8
@@ -226,15 +226,10 @@ _ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUnique
   %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 72
   br label %bb.i
 
-._crit_edge.loopexit:                             ; preds = %_ZN6duckdb10ColumnListD2Ev.exit
-  %38 = trunc nuw i8 %.164 to i1
-  %39 = icmp ult i64 %.162, 9
-  %40 = select i1 %38, i1 %39, i1 false
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit
-  %.063.lcssa = phi i1 [ true, %_ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit ], [ %40, %._crit_edge.loopexit ] ; 2 uses
-  %41 = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef 0)
+._crit_edge.loopexit:                             ; preds = %_ZN6duckdb10ColumnListD2Ev.exit, %_ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit
+  %.063.lcssa = phi i8 [ 1, %_ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit ], [ %.164, %_ZN6duckdb10ColumnListD2Ev.exit ] ; 2 uses
+  %.061.lcssa = phi i64 [ 0, %_ZN6duckdb9make_uniqINS_12_GLOBAL__N_115SortKeyBindDataEJEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit ], [ %.162, %_ZN6duckdb10ColumnListD2Ev.exit ] ; 2 uses
+  %38 = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef 0)
           to label %bb.cg unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.h:                                             ; preds = %bb.g
@@ -637,8 +632,8 @@ bb.cf:                                            ; preds = %bb.ce, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #29
   br label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_115SortKeyBindDataESt14default_deleteIS2_EED2Ev.exit220
 
-bb.cg:                                            ; preds = %._crit_edge
-  %i.hw = invoke noundef nonnull align 8 dereferenceable(88) ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %41)
+bb.cg:                                            ; preds = %._crit_edge.loopexit
+  %i.hw = invoke noundef nonnull align 8 dereferenceable(88) ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %38)
           to label %bb.ch unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ch:                                            ; preds = %bb.cg
@@ -657,7 +652,10 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.hy, label %bb.ck, label %bb.ct
 
 bb.ck:                                            ; preds = %bb.cj
-  br i1 %.063.lcssa, label %bb.dl, label %bb.cl
+  %.not = icmp eq i8 %.063.lcssa, 0
+  %39 = icmp ugt i64 %.061.lcssa, 8
+  %or.cond = select i1 %.not, i1 true, i1 %39
+  br i1 %or.cond, label %bb.cl, label %bb.dl
 
 bb.cl:                                            ; preds = %bb.ck
   %i.hz = call ptr @__cxa_allocate_exception(i64 16) #29 ; 3 uses
@@ -674,7 +672,7 @@ bb.cn:                                            ; preds = %bb.cm
   invoke void @__cxa_throw(ptr nonnull %i.hz, ptr nonnull @_ZTIN6duckdb15BinderExceptionE, ptr nonnull @_ZNSt13runtime_errorD2Ev) #31
           to label %bb.dr unwind label %bb.cr
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.i, %bb.j, %bb.k, %bb.cg, %._crit_edge
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.i, %bb.j, %bb.k, %bb.cg, %._crit_edge.loopexit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_115SortKeyBindDataESt14default_deleteIS2_EED2Ev.exit220
@@ -742,7 +740,10 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %i.ih, label %bb.cw, label %bb.df
 
 bb.cw:                                            ; preds = %bb.cv
-  br i1 %.063.lcssa, label %bb.cx, label %bb.dl
+  %40 = trunc nuw i8 %.063.lcssa to i1
+  %41 = icmp ult i64 %.061.lcssa, 9
+  %or.cond3 = select i1 %40, i1 %41, i1 false
+  br i1 %or.cond3, label %bb.cx, label %bb.dl
 
 bb.cx:                                            ; preds = %bb.cw
   %i.ii = call ptr @__cxa_allocate_exception(i64 16) #29 ; 3 uses

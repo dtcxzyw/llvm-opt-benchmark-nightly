@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %.lr.ph, %bb.y
   %i.s = phi ptr [ %i.h, %.lr.ph ], [ %i.bx, %bb.y ]
   %.086 = phi ptr [ %0, %.lr.ph ], [ %i.bw, %bb.y ] ; 6 uses
-  %.04585 = phi i1 [ false, %.lr.ph ], [ %12, %bb.y ] ; 3 uses
+  %.04586 = phi i8 [ 0, %.lr.ph ], [ %12, %bb.y ] ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.086, i64 440
   %i.u = getelementptr inbounds nuw i8, ptr %.086, i64 448
   %i.v = load i16, ptr %i.u, align 8, !tbaa !14   ; 3 uses
@@ -343,7 +343,7 @@ bb.s:                                             ; preds = %.critedge.thread69,
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.k, %.critedge.thread67, %.critedge, %bb.s
-  %12 = phi i1 [ true, %bb.s ], [ %.04585, %.critedge ], [ %.04585, %.critedge.thread67 ], [ %.04585, %bb.k ] ; 2 uses
+  %12 = phi i8 [ 1, %bb.s ], [ %.04586, %.critedge ], [ %.04586, %.critedge.thread67 ], [ %.04586, %bb.k ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #19
   %i.bo = getelementptr inbounds nuw i8, ptr %.086, i64 416
   invoke void @_ZN6icu_788message215FunctionOptions12mergeOptionsEOS1_R10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::message2::FunctionOptions") align 8 %10, ptr noundef nonnull align 8 dereferenceable(20) %7, ptr noundef nonnull align 8 dereferenceable(20) %i.bo, ptr noundef nonnull align 4 dereferenceable(4) %6)
@@ -390,11 +390,15 @@ bb.y:                                             ; preds = %bb.w
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 408
   %i.bz = load i8, ptr %i.by, align 8, !tbaa !57
   %i.ca = icmp eq i8 %i.bz, 0
-  br i1 %i.ca, label %bb.e, label %._crit_edge, !llvm.loop !109
+  br i1 %i.ca, label %bb.e, label %._crit_edge.loopexit, !llvm.loop !109
 
-._crit_edge:                                      ; preds = %bb.y, %.preheader
-  %.045.lcssa = phi i1 [ false, %.preheader ], [ %12, %bb.y ]
-  %.lcssa = phi ptr [ %i.h, %.preheader ], [ %i.bx, %bb.y ]
+._crit_edge.loopexit:                             ; preds = %bb.y
+  %13 = icmp eq i8 %12, 0
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
+  %.045.lcssa = phi i1 [ true, %.preheader ], [ %13, %._crit_edge.loopexit ]
+  %.lcssa = phi ptr [ %i.h, %.preheader ], [ %i.bx, %._crit_edge.loopexit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6icu_788message220FormattedPlaceholderE, i64 16), ptr %11, align 8, !tbaa !13
   %i.cb = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
@@ -436,7 +440,6 @@ bb.y:                                             ; preds = %bb.w
           to label %bb.z unwind label %bb.ac
 
 bb.z:                                             ; preds = %._crit_edge
-  %13 = xor i1 %i.ct, true
   %i.cu = load ptr, ptr %i.c, align 8, !tbaa !80  ; 2 uses
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !13
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 24
@@ -469,8 +472,8 @@ bb.ad:                                            ; preds = %bb.aa
           to label %bb.ah unwind label %bb.ac
 
 bb.ae:                                            ; preds = %bb.aa
-  %or.cond = or i1 %.045.lcssa, %13
-  br i1 %or.cond, label %bb.af, label %bb.ah
+  %or.cond.not = and i1 %.045.lcssa, %i.ct
+  br i1 %or.cond.not, label %bb.ah, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   invoke void @_ZN6icu_788message213DynamicErrors23setRecoverableBadOptionERKNS_13UnicodeStringER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(29) %1, ptr noundef nonnull align 8 dereferenceable(64) %8, ptr noundef nonnull align 4 dereferenceable(4) %6)

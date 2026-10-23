@@ -205,11 +205,11 @@ bb.mk:                                            ; preds = %_ZL32DemoWindowWidg
   call void @_ZN5ImGui9PlotLinesEPKcPKfiiS1_ff6ImVec2i(ptr noundef nonnull @.str.839, ptr noundef nonnull @_ZZL25DemoWindowWidgetsPlottingvE3arr, i32 noundef 7, i32 noundef 0, ptr noundef null, float noundef f0x7F7FFFFF, float noundef f0x7F7FFFFF, <2 x float> zeroinitializer, i32 noundef 4)
   call void @_ZN5ImGui13PlotHistogramEPKcPKfiiS1_ff6ImVec2i(ptr noundef nonnull @.str.840, ptr noundef nonnull @_ZZL25DemoWindowWidgetsPlottingvE3arr, i32 noundef 7, i32 noundef 0, ptr noundef null, float noundef 0.000000e+00, float noundef 1.000000e+00, <2 x float> <float 0.000000e+00, float 8.000000e+01>, i32 noundef 4)
   %i.anf = load i8, ptr @_ZZL25DemoWindowWidgetsPlottingvE7animate, align 1, !tbaa !35, !range !19, !noundef !20
-  %84 = trunc nuw i8 %i.anf to i1
+  %.not.i39 = icmp eq i8 %i.anf, 0
   %i.ang = load double, ptr @_ZZL25DemoWindowWidgetsPlottingvE12refresh_time, align 8 ; 2 uses
-  %85 = fcmp une double %i.ang, 0.000000e+00
-  %or.cond.not.i = select i1 %84, i1 %85, i1 false
-  br i1 %or.cond.not.i, label %bb.mm, label %bb.ml
+  %84 = fcmp oeq double %i.ang, 0.000000e+00
+  %or.cond.not.i = select i1 %.not.i39, i1 true, i1 %84
+  br i1 %or.cond.not.i, label %bb.ml, label %bb.mm
 
 bb.ml:                                            ; preds = %bb.mk
   %i.anh = call noundef double @_ZN5ImGui7GetTimeEv() ; 2 uses
@@ -612,10 +612,9 @@ bb.jd:                                            ; preds = %bb.jc
 
 bb.je:                                            ; preds = %bb.jd
   %i.aay = load i8, ptr @_ZZL40DemoWindowWidgetsSelectionAndMultiSelectP19ImGuiDemoWindowDataE12use_deletion, align 1, !tbaa !35, !range !19, !noundef !20
-  %29 = trunc nuw i8 %i.aay to i1
   %i.aaz = load i32, ptr @_ZZL40DemoWindowWidgetsSelectionAndMultiSelectP19ImGuiDemoWindowDataE9selection_5, align 8
   %i.aba = icmp eq i32 %i.aaz, 0
-  %not. = xor i1 %29, true
+  %not. = icmp eq i8 %i.aay, 0
   %i.abb = select i1 %not., i1 true, i1 %i.aba
   invoke void @_ZN5ImGui13BeginDisabledEb(i1 noundef zeroext %i.abb)
           to label %bb.jf unwind label %bb.ix

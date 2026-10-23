@@ -204,19 +204,20 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 1434
   %i.ae = load i8, ptr %i.ad, align 2, !tbaa !57, !range !36, !noundef !37
-  %8 = trunc nuw i8 %i.ae to i1
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 1435
-  %.val.i.i = load i8, ptr %9, align 1, !range !36
-  %.not = xor i8 %.val.i.i, 1
-  %10 = select i1 %8, i8 %.not, i8 0              ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 1435
+  %.val.i.i = load i8, ptr %8, align 1, !range !36
+  %.not = icmp eq i8 %.val.i.i, 0
+  %not..i = icmp ne i8 %i.ae, 0
+  %.not26 = select i1 %not..i, i1 %.not, i1 false
+  %9 = zext i1 %.not26 to i8                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #19
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.af, align 8, !tbaa !39, !alias.scope !290
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %10, ptr %i.ag, align 1, !tbaa !40, !alias.scope !290
+  store i8 %9, ptr %i.ag, align 1, !tbaa !40, !alias.scope !290
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5Catch9UnaryExprIbEE, i64 16), ptr %0, align 8, !tbaa !42, !alias.scope !290
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %10, ptr %i.ah, align 2, !tbaa !55, !alias.scope !290
+  store i8 %9, ptr %i.ah, align 2, !tbaa !55, !alias.scope !290
   invoke void @_ZN5Catch16AssertionHandler10handleExprERKNS_20ITransientExpressionE(ptr noundef nonnull align 8 dereferenceable(72) %4, ptr noundef nonnull align 8 dereferenceable(10) %0)
           to label %bb.e unwind label %.body17
 

@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %_ZNSt6bitsetILm7EE3
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.ar
   %.sroa.065.076 = phi ptr [ %i.db, %bb.ar ], [ %i.t, %.preheader.lr.ph ] ; 9 uses
   %i.ax = invoke noundef zeroext i1 @_ZN3gmx20equalCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.065.076, ptr noundef nonnull align 8 dereferenceable(32) @_ZN3gmxL18mtsForceGroupNamesB5cxx11E)
-          to label %bb.w unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.w unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 ._crit_edge:                                      ; preds = %bb.ar, %bb.u, %bb.g
   %i.ay = load ptr, ptr %0, align 8, !tbaa !120   ; 2 uses
@@ -240,6 +240,7 @@ _ZNSt6bitsetILm7EE3setEmb.exit:                   ; preds = %bb.w
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZNSt6bitsetILm7EE3setEmb.exit, %bb.w
+  %.1 = phi i8 [ 0, %bb.w ], [ 1, %_ZNSt6bitsetILm7EE3setEmb.exit ]
   %i.bm = invoke noundef zeroext i1 @_ZN3gmx20equalCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.065.076, ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN3gmxL18mtsForceGroupNamesB5cxx11E, i64 32))
           to label %bb.y unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -253,7 +254,7 @@ _ZNSt6bitsetILm7EE3setEmb.exit.1:                 ; preds = %bb.y
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZNSt6bitsetILm7EE3setEmb.exit.1, %bb.y
-  %.1.1 = phi i1 [ %i.ax, %bb.y ], [ true, %_ZNSt6bitsetILm7EE3setEmb.exit.1 ]
+  %.1.1 = phi i8 [ %.1, %bb.y ], [ 1, %_ZNSt6bitsetILm7EE3setEmb.exit.1 ]
   %i.bp = invoke noundef zeroext i1 @_ZN3gmx20equalCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.065.076, ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN3gmxL18mtsForceGroupNamesB5cxx11E, i64 64))
           to label %bb.aa unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -267,7 +268,7 @@ _ZNSt6bitsetILm7EE3setEmb.exit.2:                 ; preds = %bb.aa
   br label %bb.ab
 
 bb.ab:                                            ; preds = %_ZNSt6bitsetILm7EE3setEmb.exit.2, %bb.aa
-  %.1.2 = phi i1 [ %.1.1, %bb.aa ], [ true, %_ZNSt6bitsetILm7EE3setEmb.exit.2 ]
+  %.1.2 = phi i8 [ %.1.1, %bb.aa ], [ 1, %_ZNSt6bitsetILm7EE3setEmb.exit.2 ]
   %i.bs = invoke noundef zeroext i1 @_ZN3gmx20equalCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.065.076, ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN3gmxL18mtsForceGroupNamesB5cxx11E, i64 96))
           to label %bb.ac unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -281,7 +282,7 @@ _ZNSt6bitsetILm7EE3setEmb.exit.3:                 ; preds = %bb.ac
   br label %bb.ad
 
 bb.ad:                                            ; preds = %_ZNSt6bitsetILm7EE3setEmb.exit.3, %bb.ac
-  %.1.3 = phi i1 [ %.1.2, %bb.ac ], [ true, %_ZNSt6bitsetILm7EE3setEmb.exit.3 ]
+  %.1.3 = phi i8 [ %.1.2, %bb.ac ], [ 1, %_ZNSt6bitsetILm7EE3setEmb.exit.3 ]
   %i.bv = invoke noundef zeroext i1 @_ZN3gmx20equalCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.065.076, ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN3gmxL18mtsForceGroupNamesB5cxx11E, i64 128))
           to label %bb.ae unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -295,7 +296,7 @@ _ZNSt6bitsetILm7EE3setEmb.exit.4:                 ; preds = %bb.ae
   br label %bb.af
 
 bb.af:                                            ; preds = %_ZNSt6bitsetILm7EE3setEmb.exit.4, %bb.ae
-  %.1.4 = phi i1 [ %.1.3, %bb.ae ], [ true, %_ZNSt6bitsetILm7EE3setEmb.exit.4 ]
+  %.1.4 = phi i8 [ %.1.3, %bb.ae ], [ 1, %_ZNSt6bitsetILm7EE3setEmb.exit.4 ]
   %i.by = invoke noundef zeroext i1 @_ZN3gmx20equalCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.065.076, ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN3gmxL18mtsForceGroupNamesB5cxx11E, i64 160))
           to label %bb.ag unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -309,7 +310,7 @@ _ZNSt6bitsetILm7EE3setEmb.exit.5:                 ; preds = %bb.ag
   br label %bb.ah
 
 bb.ah:                                            ; preds = %_ZNSt6bitsetILm7EE3setEmb.exit.5, %bb.ag
-  %.1.5 = phi i1 [ %.1.4, %bb.ag ], [ true, %_ZNSt6bitsetILm7EE3setEmb.exit.5 ]
+  %.1.5 = phi i8 [ %.1.4, %bb.ag ], [ 1, %_ZNSt6bitsetILm7EE3setEmb.exit.5 ]
   %i.cb = invoke noundef zeroext i1 @_ZN3gmx20equalCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.065.076, ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN3gmxL18mtsForceGroupNamesB5cxx11E, i64 192))
           to label %bb.ai unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -323,7 +324,8 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.ar
 
 bb.aj:                                            ; preds = %bb.ai
-  br i1 %.1.5, label %bb.ar, label %bb.ak
+  %.not = icmp eq i8 %.1.5, 0
+  br i1 %.not, label %bb.ak, label %bb.ar
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22

@@ -128,7 +128,7 @@ bb.a:
   %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   store ptr %0, ptr %i.b, align 8, !tbaa !12
   %i.c = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL3acf, i64 24), align 8, !tbaa !17, !range !18, !noundef !19 ; 2 uses
-  %27 = trunc nuw i8 %i.c to i1                   ; 2 uses
+  %.not249 = icmp eq i8 %i.c, 0                   ; 2 uses
   %.b.i = load i1, ptr @_ZL8bACFinit, align 1
   br i1 %.b.i, label %_Z11get_acfnoutv.exit, label %bb.b
 
@@ -201,15 +201,17 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k
   %i.o = and i64 %8, 12
-  %28 = icmp eq i64 %i.o, 12
-  %or.cond = and i1 %28, %27                      ; 2 uses
-  %brmerge.not = and i1 %12, %or.cond
-  %.mux = select i1 %or.cond, i8 0, i8 %i.c
-  br i1 %brmerge.not, label %bb.n, label %bb.o
+  %27 = icmp ne i64 %i.o, 12                      ; 2 uses
+  %.not178 = xor i1 %12, true
+  %28 = or i1 %.not249, %.not178
+  %brmerge = or i1 %27, %28
+  %.mux = select i1 %27, i8 %i.c, i8 0
+  br i1 %brmerge, label %bb.o, label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  %brmerge181.demorgan = and i1 %12, %27
-  br i1 %brmerge181.demorgan, label %bb.n, label %bb.o
+  %.not180 = xor i1 %12, true
+  %brmerge181 = or i1 %.not249, %.not180
+  br i1 %brmerge181, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.p = load ptr, ptr @stderr, align 8, !tbaa !22

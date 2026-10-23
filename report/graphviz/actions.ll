@@ -205,7 +205,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %.str.29.sink = phi ptr [ @.str.29, %bb.d ], [ @.str.28, %bb.c ]
-  %.015 = phi i1 [ false, %bb.d ], [ true, %bb.c ] ; 4 uses
+  %.not142.not.i = phi i1 [ true, %bb.d ], [ false, %bb.c ] ; 3 uses
+  %.015 = phi i1 [ false, %bb.d ], [ true, %bb.c ]
   %i.m = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(5) %.str.29.sink) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
@@ -262,7 +263,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %._crit_edge, %bb.j
   %i.af = phi i32 [ %.pre129, %._crit_edge ], [ %i.y, %bb.j ] ; 2 uses
   %i.ag = load i32, ptr %i.g, align 4, !tbaa !33  ; 2 uses
-  br i1 %.015, label %bb.u, label %bb.l
+  br i1 %.not142.not.i, label %bb.l, label %bb.u
 
 bb.l:                                             ; preds = %bb.k
   %i.ah = load i32, ptr %i.f, align 4, !tbaa !33
@@ -359,7 +360,19 @@ bb.u:                                             ; preds = %bb.k
   %.masked = and i32 %i.cc, 16711680
   %i.cf = or disjoint i32 %.sroa.0.1.insert.insert66121, %.masked
   %.sroa.0.3.insert.insert92123 = or disjoint i32 %i.cf, %i.ce
-  br label %.thread114
+  %.sroa.0.3.insert.insert92 = zext i32 %.sroa.0.3.insert.insert92123 to i64
+  %5 = bitcast i64 %.sroa.0.3.insert.insert92 to double
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
+  br label %bb.bh
 
 .thread.i:                                        ; preds = %bb.i, %bb.h
   %i.cg = load i8, ptr %.0113.i, align 1, !tbaa !8 ; 4 uses
@@ -502,14 +515,14 @@ agxbuse.exit.i:                                   ; preds = %agxbputc.exit.i.i.a
   %i.ds = phi ptr [ %.pre, %agxbputc.exit.i.i.agxbuse.exit.i_crit_edge ], [ %i.dl, %agxbputc.exit.i.thread.i ] ; 2 uses
   %i.dt = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %i.ds, ptr noundef nonnull @.str.50, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #19
   %i.du = icmp slt i32 %i.dt, 3
-  br i1 %i.du, label %bb.ao, label %bb.ad
+  br i1 %i.du, label %6, label %bb.ad
 
 agxbuse.exit.thread.i:                            ; preds = %agxbputc.exit.i.i, %._crit_edge.i
   %i.dv = phi ptr [ %i.di, %agxbputc.exit.i.i ], [ %i.cm, %._crit_edge.i ]
   store i8 0, ptr %i.dv, align 1, !tbaa !8
   %i.dw = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %3, ptr noundef nonnull @.str.50, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #19
   %i.dx = icmp slt i32 %i.dw, 3
-  br i1 %i.dx, label %agxbfree.exit.thread.i, label %bb.ad
+  br i1 %i.dx, label %bb.ao, label %bb.ad
 
 bb.ad:                                            ; preds = %agxbuse.exit.thread.i, %agxbuse.exit.i
   %i.dy = phi i1 [ false, %agxbuse.exit.thread.i ], [ true, %agxbuse.exit.i ]
@@ -523,7 +536,7 @@ bb.ad:                                            ; preds = %agxbuse.exit.thread
   %i.eg = insertelement <4 x double> %i.ef, double %i.ec, i64 3
   %i.eh = call nsz <4 x double> @llvm.minnum.v4f64(<4 x double> %i.eg, <4 x double> splat (double 1.000000e+00))
   %i.ei = call nsz <4 x double> @llvm.maxnum.v4f64(<4 x double> %i.eh, <4 x double> zeroinitializer) ; 6 uses
-  %i.ej = extractelement <4 x double> %i.ei, i64 0 ; 4 uses
+  %i.ej = extractelement <4 x double> %i.ei, i64 0 ; 3 uses
   store double %i.ej, ptr %i.a, align 8, !tbaa !73
   %i.ek = extractelement <4 x double> %i.ei, i64 2 ; 4 uses
   store double %i.ek, ptr %i.b, align 8, !tbaa !73
@@ -531,7 +544,7 @@ bb.ad:                                            ; preds = %agxbuse.exit.thread
   store double %i.el, ptr %i.c, align 8, !tbaa !73
   %i.em = extractelement <4 x double> %i.ei, i64 3
   store double %i.em, ptr %i.d, align 8, !tbaa !73
-  br i1 %.015, label %bb.ae, label %bb.am
+  br i1 %.not142.not.i, label %bb.am, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.en = fcmp ugt double %i.ek, 0.000000e+00
@@ -598,29 +611,32 @@ hsv2rgb.exit.i:                                   ; preds = %bb.ak, %bb.aj, %bb.
   %i.fn = fptoui <4 x double> %i.fm to <4 x i8>
   %i.fo = bitcast <4 x i8> %i.fn to i32
   %i.fp = zext i32 %i.fo to i64
-  %i.fq = bitcast i64 %i.fp to double             ; 2 uses
+  %i.fq = bitcast i64 %i.fp to double
   %i.fr = insertelement <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, double %i.fq, i64 0
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ad, %hsv2rgb.exit.i
-  %.sroa.0.0 = phi double [ %i.fq, %hsv2rgb.exit.i ], [ %i.ej, %bb.ad ]
   %i.fs = phi <4 x double> [ %i.fr, %hsv2rgb.exit.i ], [ %i.ei, %bb.ad ]
-  br i1 %i.dy, label %bb.an, label %bb.be
+  br i1 %i.dy, label %bb.an, label %agxbfree.exit.thread.i
 
 bb.an:                                            ; preds = %bb.am
   %.val124.i = load ptr, ptr %3, align 8
   call void @free(ptr noundef %.val124.i) #19
-  br label %bb.be
-
-bb.ao:                                            ; preds = %agxbuse.exit.i
-  call void @free(ptr noundef %i.ds) #19
   br label %agxbfree.exit.thread.i
 
-agxbfree.exit.thread.i:                           ; preds = %bb.ao, %agxbuse.exit.thread.i
+6:                                                ; preds = %agxbuse.exit.i
+  call void @free(ptr noundef %i.ds) #19
+  br label %bb.ao
+
+bb.ao:                                            ; preds = %6, %agxbuse.exit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   br label %bb.ap
 
-bb.ap:                                            ; preds = %agxbfree.exit.thread.i, %.thread.i
+agxbfree.exit.thread.i:                           ; preds = %bb.an, %bb.am
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
+  br label %bb.be
+
+bb.ap:                                            ; preds = %bb.ao, %.thread.i
   %i.ft = call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %.0113.i, ptr noundef nonnull dereferenceable(6) @.str.51) #20
   %.not.i128.i = icmp eq i32 %i.ft, 0
   br i1 %.not.i128.i, label %resolveColor.exit.i, label %bb.aq
@@ -696,7 +712,7 @@ bb.az:                                            ; preds = %bb.ay, %.lr.ph.i.i
 bb.ba:                                            ; preds = %bb.ax
   %i.go = getelementptr inbounds nuw i8, ptr @color_lib, i64 %i.gh ; 4 uses
   call void @free(ptr noundef nonnull %i.ge) #19
-  br i1 %.015, label %bb.bc, label %bb.bb
+  br i1 %.not142.not.i, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 8
@@ -715,7 +731,10 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.ba
   %i.ha = getelementptr inbounds nuw i8, ptr %i.go, i64 11
   %i.hb = load i32, ptr %i.ha, align 1
-  br label %.thread114
+  %7 = zext i32 %i.hb to i64
+  %8 = bitcast i64 %7 to double
+  %9 = insertelement <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, double %8, i64 0
+  br label %bb.be
 
 bb.bd:                                            ; preds = %bb.az
   call void @free(ptr noundef nonnull %i.ge) #19
@@ -752,10 +771,8 @@ colorxlate.exit:                                  ; preds = %bb.bd, %resolveColo
   %i.hf = insertelement <4 x double> %i.he, double %.sroa.36.1.ph.ph, i64 3
   br label %bb.bf
 
-.thread114:                                       ; preds = %bb.u, %bb.bc
-  %.sroa.0.1.ph.ph113.in.in = phi i32 [ %i.hb, %bb.bc ], [ %.sroa.0.3.insert.insert92123, %bb.u ]
-  %.sroa.0.1.ph.ph113.in = zext i32 %.sroa.0.1.ph.ph113.in.in to i64
-  %.sroa.0.1.ph.ph113 = bitcast i64 %.sroa.0.1.ph.ph113.in to double
+bb.be:                                            ; preds = %agxbfree.exit.thread.i, %bb.bc
+  %10 = phi <4 x double> [ %9, %bb.bc ], [ %i.fs, %agxbfree.exit.thread.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #19
@@ -766,24 +783,11 @@ colorxlate.exit:                                  ; preds = %bb.bd, %resolveColo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
-  br label %bb.bh
-
-bb.be:                                            ; preds = %bb.am, %bb.an
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
+  %11 = extractelement <4 x double> %10, i64 0
   br i1 %.015, label %bb.bh, label %bb.bf
 
 bb.bf:                                            ; preds = %.thread, %bb.be
-  %i.hg = phi <4 x double> [ %i.hf, %.thread ], [ %i.fs, %bb.be ] ; 4 uses
+  %i.hg = phi <4 x double> [ %i.hf, %.thread ], [ %10, %bb.be ] ; 4 uses
   %i.hh = extractelement <4 x double> %i.hg, i64 0
   %i.hi = extractelement <4 x double> %i.hg, i64 1
   %i.hj = extractelement <4 x double> %i.hg, i64 2
@@ -795,8 +799,8 @@ bb.bg:                                            ; preds = %bb.bf
   call void (ptr, ptr, ...) @agxbprint(ptr noundef %4, ptr noundef nonnull @.str.31, double noundef %i.hk)
   br label %bb.bj
 
-bb.bh:                                            ; preds = %.thread114, %bb.be
-  %.sroa.0.1.ph120 = phi double [ %.sroa.0.1.ph.ph113, %.thread114 ], [ %.sroa.0.0, %bb.be ]
+bb.bh:                                            ; preds = %bb.u, %bb.be
+  %.sroa.0.1.ph120 = phi double [ %5, %bb.u ], [ %11, %bb.be ]
   %i.hl = bitcast double %.sroa.0.1.ph120 to i64
   %.sroa.0.0.extract.trunc = trunc i64 %i.hl to i32 ; 4 uses
   %i.hm = and i32 %.sroa.0.0.extract.trunc, 255

@@ -202,14 +202,15 @@ bb.c:                                             ; preds = %bb.a
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.pre430 = load i64, ptr %.phi.trans.insert, align 8 ; 4 uses
   %.phi.trans.insert431 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %.pre432 = load i64, ptr %.phi.trans.insert431, align 8, !range !14 ; 3 uses
+  %.pre432 = load i64, ptr %.phi.trans.insert431, align 8, !range !14 ; 4 uses
   %.phi.trans.insert433 = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.pre434 = load i64, ptr %.phi.trans.insert433, align 8 ; 4 uses
   %.pre435 = trunc nuw i64 %.pre to i1            ; 3 uses
   br i1 %i.ba, label %.loopexit226, label %.lr.ph.i.lr.ph
 
 .lr.ph.i.lr.ph:                                   ; preds = %bb.c
-  %i.bb = trunc nuw i64 %.pre432 to i1            ; 2 uses
+  %not..i.i.i = icmp eq i64 %.pre432, 0
+  %i.bb = trunc nuw i64 %.pre432 to i1
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %i.be = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
@@ -265,7 +266,7 @@ bb.f:                                             ; preds = %.split5.us.i
   br i1 %i.bw, label %.loopexit226, label %.split5.us.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
-  br i1 %i.bb, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batches0INtB7_5FnMutTRRNtBT_13SnapshotChunkEE8call_mutBX_.exit.i, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batches0INtB7_5FnMutTRRNtBT_13SnapshotChunkEE8call_mutBX_.exit.us.i
+  br i1 %not..i.i.i, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batches0INtB7_5FnMutTRRNtBT_13SnapshotChunkEE8call_mutBX_.exit.us.i, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batches0INtB7_5FnMutTRRNtBT_13SnapshotChunkEE8call_mutBX_.exit.i
 
 _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batches0INtB7_5FnMutTRRNtBT_13SnapshotChunkEE8call_mutBX_.exit.us.i: ; preds = %.lr.ph.split.i
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.0.0357, i64 80
@@ -322,7 +323,7 @@ _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs92BnbMq7p8c_15inf
 
 .loopexit226:                                     ; preds = %bb.du, %bb.g, %bb.f, %bb.e, %bb.c
   %.pre-phi = phi i1 [ true, %bb.f ], [ false, %bb.g ], [ %.pre435, %bb.c ], [ true, %bb.e ], [ %.pre435, %bb.du ]
-  %i.co = phi i64 [ 0, %bb.f ], [ 1, %bb.g ], [ %.pre432, %bb.c ], [ 1, %bb.e ], [ %.pre432, %bb.du ]
+  %i.co = phi i64 [ 0, %bb.f ], [ 1, %bb.g ], [ %.pre432, %bb.c ], [ 1, %bb.e ], [ %.pre432, %bb.du ] ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.cq = load ptr, ptr %i.cp, align 8, !noundef !8 ; 3 uses
   %.not75 = icmp ne ptr %i.cq, null               ; 3 uses
@@ -351,7 +352,8 @@ _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs92BnbMq7p8c_15inf
   store i64 %.sroa.013.sroa.3.sroa.4.0, ptr %.sroa.013.sroa.5.sroa.4.0..sroa.013.sroa.5.0..sroa_idx.sroa_idx, align 8
   %.sroa.314.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
   store i64 %.sroa.314.0, ptr %.sroa.314.0..sroa_idx, align 8
-  %i.cv = trunc nuw i64 %i.co to i1               ; 2 uses
+  %not..i.i.i95 = icmp eq i64 %i.co, 0
+  %i.cv = trunc nuw i64 %i.co to i1
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.cx = getelementptr inbounds nuw i8, ptr %i.am, i64 32 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
@@ -492,7 +494,7 @@ bb.n:                                             ; preds = %.split5.us.i100
   br i1 %i.ff, label %.loopexit210.backedge, label %.split5.us.i100
 
 .lr.ph.split.i94:                                 ; preds = %.lr.ph.i92
-  br i1 %i.cv, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batchess1_0INtB7_5FnMutTRRNtBT_17MutableTableChunkEE8call_mutBX_.exit.i, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batchess1_0INtB7_5FnMutTRRNtBT_17MutableTableChunkEE8call_mutBX_.exit.us.i
+  br i1 %not..i.i.i95, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batchess1_0INtB7_5FnMutTRRNtBT_17MutableTableChunkEE8call_mutBX_.exit.us.i, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batchess1_0INtB7_5FnMutTRRNtBT_17MutableTableChunkEE8call_mutBX_.exit.i
 
 _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtBT_11TableBuffer26partitioned_record_batchess1_0INtB7_5FnMutTRRNtBT_17MutableTableChunkEE8call_mutBX_.exit.us.i: ; preds = %.lr.ph.split.i94
   %i.fg = getelementptr inbounds nuw i8, ptr %.sroa.0163.0358, i64 80

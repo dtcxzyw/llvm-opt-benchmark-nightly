@@ -202,9 +202,8 @@ bb.mt:                                            ; preds = %_ZNKSt7__cxx1112bas
 bb.mu:                                            ; preds = %bb.mt
   %i.asw = getelementptr inbounds nuw i8, ptr %7, i64 13
   %i.asx = load i8, ptr %i.asw, align 1, !tbaa !131, !range !113, !noundef !124
-  %118 = trunc nuw i8 %i.asx to i1
-  %.not27 = xor i1 %118, true
-  %or.cond30 = or i1 %i.ass, %.not27
+  %.not27 = icmp eq i8 %i.asx, 0
+  %or.cond30 = or i1 %.not27, %i.ass
   br i1 %or.cond30, label %bb.mv, label %.invoke
 
 bb.mv:                                            ; preds = %bb.mu

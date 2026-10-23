@@ -205,8 +205,7 @@ bb.fj:                                            ; preds = %.split, %bb.fi
 .split235:                                        ; preds = %bb.fj
   %i.qp = getelementptr inbounds nuw i8, ptr %1, i64 57
   %i.qq = load i8, ptr %i.qp, align 1, !tbaa !71, !range !49, !noundef !50
-  %16 = trunc nuw i8 %i.qq to i1
-  %not. = xor i1 %16, true
+  %not. = icmp eq i8 %i.qq, 0
   %.0113.shrunk. = or i1 %spec.select288, %not.
   br i1 %.0113.shrunk., label %bb.fl, label %.thread238
 
@@ -609,15 +608,15 @@ bb.a:
   %11 = alloca %"class.ncnn::Mat", align 8        ; 41 uses
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 30
   %i.z = load i8, ptr %i.y, align 2, !tbaa !48, !range !49, !noundef !50
-  %12 = trunc nuw i8 %i.z to i1
+  %.not271 = icmp eq i8 %i.z, 0
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.ab = load i32, ptr %i.aa, align 8
-  %.not = icmp ne i32 %i.ab, 0
-  %or.cond273.not = select i1 %12, i1 %.not, i1 false
+  %.not = icmp eq i32 %i.ab, 0
+  %or.cond273.not = select i1 %.not271, i1 true, i1 %.not
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !51, !range !49, !noundef !50
   %i.ae = trunc nuw i8 %i.ad to i1                ; 2 uses
-  br i1 %or.cond273.not, label %bb.b, label %bb.t
+  br i1 %or.cond273.not, label %bb.t, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.ae, label %bb.c, label %_ZNK4ncnn3Mat8elembitsEv.exit380.thread
@@ -1020,11 +1019,11 @@ _ZN4ncnnL49convolution_im2col_gemm_get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit.i
   store i32 %i.cm, ptr %i.e, align 4, !tbaa !66
   %i.cn = getelementptr inbounds nuw i8, ptr %1, i64 39
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !56, !range !49, !noundef !50
-  %5 = trunc nuw i8 %i.co to i1
+  %.not663 = icmp eq i8 %i.co, 0
   %i.cp = and i32 %i.p, 7
-  %6 = icmp eq i32 %i.cp, 0
-  %7 = and i1 %6, %5                              ; 2 uses
-  %.062.i = select i1 %7, i32 8, i32 1            ; 4 uses
+  %5 = icmp ne i32 %i.cp, 0
+  %.not664 = or i1 %5, %.not663                   ; 2 uses
+  %.062.i = select i1 %.not664, i32 1, i32 8      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -1253,7 +1252,7 @@ bb.am:                                            ; preds = %bb.al
 .preheader.us.us.i:                               ; preds = %bb.an, %.preheader125.us.us.i
   %indvars.iv140.i = phi i64 [ %indvars.iv.next141.i, %bb.an ], [ 0, %.preheader125.us.us.i ] ; 4 uses
   %.1129.us.us.i = phi ptr [ %.lcssa, %bb.an ], [ %.052131.us.us.i, %.preheader125.us.us.i ] ; 2 uses
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit76.us.us.i, label %_ZN4ncnn3MatD2Ev.exit76.us.us.i.epil.preheader
+  br i1 %.not664, label %_ZN4ncnn3MatD2Ev.exit76.us.us.i.epil.preheader, label %_ZN4ncnn3MatD2Ev.exit76.us.us.i
 
 _ZN4ncnn3MatD2Ev.exit76.us.us.i:                  ; preds = %.preheader.us.us.i, %_ZN4ncnn3MatD2Ev.exit76.us.us.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %_ZN4ncnn3MatD2Ev.exit76.us.us.i ], [ 0, %.preheader.us.us.i ] ; 3 uses

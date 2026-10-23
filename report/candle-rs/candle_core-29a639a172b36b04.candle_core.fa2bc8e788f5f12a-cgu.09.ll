@@ -205,14 +205,15 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   br i1 %exitcond399.not.4, label %.split293.us, label %.lr.ph243.us.4
 
 ._crit_edge224:                                   ; preds = %bb.bl
-  %6 = fcmp une float %i.vt, 0.000000e+00
-  %or.cond.not = select i1 %spec.select, i1 %6, i1 false
-  br i1 %or.cond.not, label %bb.at, label %.lr.ph243.us.preheader.preheader
+  %6 = icmp eq i8 %spec.select, 0
+  %7 = fcmp oeq float %i.vt, 0.000000e+00
+  %or.cond.not = select i1 %6, i1 true, i1 %7
+  br i1 %or.cond.not, label %.lr.ph243.us.preheader.preheader, label %bb.at
 
 _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139: ; preds = %.lr.ph223, %bb.bl
   %.sroa.045.0221 = phi float [ %i.vq, %bb.bl ], [ 0.000000e+00, %.lr.ph223 ]
   %.sroa.049.0220 = phi float [ %i.vt, %bb.bl ], [ 0.000000e+00, %.lr.ph223 ]
-  %.sroa.053.0219 = phi i1 [ %spec.select, %bb.bl ], [ false, %.lr.ph223 ]
+  %.sroa.053.0219 = phi i8 [ %spec.select, %bb.bl ], [ 0, %.lr.ph223 ]
   %.sroa.0107.0218 = phi i64 [ %i.kr, %bb.bl ], [ 0, %.lr.ph223 ] ; 4 uses
   %i.kr = add nuw i64 %.sroa.0107.0218, 1         ; 2 uses
   %i.ks = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.sroa.0107.0218
@@ -227,8 +228,8 @@ _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139: ; preds = %.
   %i.kz = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0107.0218
   %i.la = load i8, ptr %i.kz, align 1, !noundef !4
   %i.lb = sext i8 %i.la to i32
-  %.not127 = icmp ne i32 %i.ky, %i.lb
-  %spec.select = select i1 %.not127, i1 true, i1 %.sroa.053.0219 ; 2 uses
+  %.not127 = icmp eq i32 %i.ky, %i.lb
+  %spec.select = select i1 %.not127, i8 %.sroa.053.0219, i8 1 ; 2 uses
   br i1 %i.cs, label %bb.bk, label %bb.bj
 
 bb.as:                                            ; preds = %.lr.ph223
@@ -344,7 +345,7 @@ _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.1: 
 _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.1: ; preds = %bb.ax, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.1
   %.sroa.045.0221.1 = phi float [ %i.mz, %bb.ax ], [ 0.000000e+00, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.1 ]
   %.sroa.049.0220.1 = phi float [ %i.nc, %bb.ax ], [ 0.000000e+00, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.1 ]
-  %.sroa.053.0219.1 = phi i1 [ %spec.select.1, %bb.ax ], [ false, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.1 ]
+  %.sroa.053.0219.1 = phi i8 [ %spec.select.1, %bb.ax ], [ 0, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.1 ]
   %.sroa.0107.0218.1 = phi i64 [ %i.mi, %bb.ax ], [ 0, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.1 ] ; 4 uses
   %i.mi = add nuw i64 %.sroa.0107.0218.1, 1       ; 2 uses
   %i.mj = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.sroa.0107.0218.1
@@ -359,8 +360,8 @@ _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.1: ; preds = 
   %i.mq = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0107.0218.1
   %i.mr = load i8, ptr %i.mq, align 1, !noundef !4
   %i.ms = sext i8 %i.mr to i32
-  %.not127.1 = icmp ne i32 %i.mp, %i.ms
-  %spec.select.1 = select i1 %.not127.1, i1 true, i1 %.sroa.053.0219.1 ; 2 uses
+  %.not127.1 = icmp eq i32 %i.mp, %i.ms
+  %spec.select.1 = select i1 %.not127.1, i8 %.sroa.053.0219.1, i8 1 ; 2 uses
   br i1 %i.cs, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.1
@@ -388,9 +389,10 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
   br i1 %exitcond396.1.not, label %._crit_edge224.1, label %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.1
 
 ._crit_edge224.1:                                 ; preds = %bb.ax
-  %7 = fcmp une float %i.nc, 0.000000e+00
-  %or.cond.not.1 = select i1 %spec.select.1, i1 %7, i1 false
-  br i1 %or.cond.not.1, label %bb.ay, label %.lr.ph243.us.preheader.preheader
+  %8 = icmp eq i8 %spec.select.1, 0
+  %9 = fcmp oeq float %i.nc, 0.000000e+00
+  %or.cond.not.1 = select i1 %8, i1 true, i1 %9
+  br i1 %or.cond.not.1, label %.lr.ph243.us.preheader.preheader, label %bb.ay
 
 bb.ay:                                            ; preds = %._crit_edge224.1
   %i.nd = fmul float %i.mz, %i.mz
@@ -513,7 +515,7 @@ _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.2: 
 _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.2: ; preds = %bb.bc, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.2
   %.sroa.045.0221.2 = phi float [ %i.pt, %bb.bc ], [ 0.000000e+00, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.2 ]
   %.sroa.049.0220.2 = phi float [ %i.pw, %bb.bc ], [ 0.000000e+00, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.2 ]
-  %.sroa.053.0219.2 = phi i1 [ %spec.select.2, %bb.bc ], [ false, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.2 ]
+  %.sroa.053.0219.2 = phi i8 [ %spec.select.2, %bb.bc ], [ 0, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.2 ]
   %.sroa.0107.0218.2 = phi i64 [ %i.pc, %bb.bc ], [ 0, %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.preheader.2 ] ; 4 uses
   %i.pc = add nuw i64 %.sroa.0107.0218.2, 1       ; 2 uses
   %i.pd = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.sroa.0107.0218.2
@@ -528,8 +530,8 @@ _RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.2: ; preds = 
   %i.pk = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0107.0218.2
   %i.pl = load i8, ptr %i.pk, align 1, !noundef !4
   %i.pm = sext i8 %i.pl to i32
-  %.not127.2 = icmp ne i32 %i.pj, %i.pm
-  %spec.select.2 = select i1 %.not127.2, i1 true, i1 %.sroa.053.0219.2 ; 2 uses
+  %.not127.2 = icmp eq i32 %i.pj, %i.pm
+  %spec.select.2 = select i1 %.not127.2, i8 %.sroa.053.0219.2, i8 1 ; 2 uses
   br i1 %i.cs, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.2
@@ -557,9 +559,10 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.
   br i1 %exitcond396.2.not, label %._crit_edge224.2, label %_RNvXs1d_NtNtCsf3Ta7LF998c_4core3cmp5implslNtB8_3Ord5clamp.exit139.2
 
 ._crit_edge224.2:                                 ; preds = %bb.bc
-  %8 = fcmp une float %i.pw, 0.000000e+00
-  %or.cond.not.2 = select i1 %spec.select.2, i1 %8, i1 false
-  br i1 %or.cond.not.2, label %bb.bd, label %.lr.ph243.us.preheader.preheader
+  %10 = icmp eq i8 %spec.select.2, 0
+  %11 = fcmp oeq float %i.pw, 0.000000e+00
+  %or.cond.not.2 = select i1 %10, i1 true, i1 %11
+  br i1 %or.cond.not.2, label %.lr.ph243.us.preheader.preheader, label %bb.bd
 
 bb.bd:                                            ; preds = %._crit_edge224.2
   %i.px = fmul float %i.pt, %i.pt

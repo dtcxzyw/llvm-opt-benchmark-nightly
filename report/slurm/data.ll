@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = load ptr, ptr %i.m, align 8
   %.fr50 = freeze ptr %i.n                        ; 3 uses
   %i.o = icmp eq ptr %.fr50, null
-  br i1 %i.o, label %.split, label %.outer.split.lr.ph
+  br i1 %i.o, label %.outer.split.us, label %.outer.split.lr.ph
 
 .outer.split.lr.ph:                               ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 16
@@ -212,13 +212,14 @@ bb.d:                                             ; preds = %bb.c
 .outer.split.us.a:                                ; preds = %.outer.split.lr.ph, %.outer.us
   %.0.ph44.us = phi ptr [ %.1.us, %.outer.us ], [ %i.q, %.outer.split.lr.ph ]
   %.023.ph43.us = phi ptr [ %.124.us, %.outer.us ], [ %.fr50, %.outer.split.lr.ph ] ; 3 uses
-  %.025.ph42.us = phi i1 [ %.126.us, %.outer.us ], [ false, %.outer.split.lr.ph ]
+  %.025.ph42.us = phi i8 [ %.126.us, %.outer.us ], [ 0, %.outer.split.lr.ph ]
+  %3 = icmp eq i8 %.025.ph42.us, 0
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.outer.split.us.a
-  %.025.us.a = phi i1 [ false, %bb.f ], [ %.025.ph42.us, %.outer.split.us.a ]
+  %.025.us.a = phi i1 [ true, %bb.f ], [ %3, %.outer.split.us.a ]
   %.0.us = phi ptr [ null, %bb.f ], [ %.0.ph44.us, %.outer.split.us.a ] ; 4 uses
-  br i1 %.025.us.a, label %.split, label %bb.f
+  br i1 %.025.us.a, label %bb.f, label %.split
 
 bb.f:                                             ; preds = %bb.e
   %i.r = icmp eq ptr %.0.us, null
@@ -229,7 +230,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = load ptr, ptr %i.s, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %.0.us, i64 16
   %i.v = load ptr, ptr %i.u, align 8
-  %i.w = tail call zeroext i1 @data_check_match(ptr noundef %i.t, ptr noundef %i.v, i1 noundef zeroext true) ; 3 uses
+  %i.w = tail call zeroext i1 @data_check_match(ptr noundef %i.t, ptr noundef %i.v, i1 noundef zeroext true)
   br i1 %i.w, label %bb.g, label %.outer.us
 
 bb.g:                                             ; preds = %.split39.us46
@@ -241,24 +242,30 @@ bb.g:                                             ; preds = %.split39.us46
   br label %.outer.us
 
 .outer.us:                                        ; preds = %bb.g, %.split39.us46
+  %.126.us = phi i8 [ 0, %bb.g ], [ 1, %.split39.us46 ] ; 2 uses
   %.124.us = phi ptr [ %i.ab, %bb.g ], [ %.023.ph43.us, %.split39.us46 ] ; 2 uses
   %.1.us = phi ptr [ %i.aa, %bb.g ], [ %.0.us, %.split39.us46 ]
-  %.126.us = xor i1 %i.w, true
   %i.ac = icmp eq ptr %.124.us, null
-  br i1 %i.ac, label %.split, label %.outer.split.us.a, !llvm.loop !38
+  br i1 %i.ac, label %.outer.split.us, label %.outer.split.us.a, !llvm.loop !38
+
+.outer.split.us:                                  ; preds = %.outer, %.outer.us, %bb.d
+  %.025.us = phi i8 [ 0, %bb.d ], [ %.126.us, %.outer.us ], [ %.126, %.outer ]
+  %4 = icmp eq i8 %.025.us, 0
+  br label %.split
 
 .outer.split:                                     ; preds = %.outer.split.lr.ph, %.outer
   %.0.ph44 = phi ptr [ %.1, %.outer ], [ %i.q, %.outer.split.lr.ph ] ; 3 uses
   %.023.ph43 = phi ptr [ %.124, %.outer ], [ %.fr50, %.outer.split.lr.ph ] ; 3 uses
-  %.025.ph42 = phi i1 [ %.126, %.outer ], [ false, %.outer.split.lr.ph ]
-  br i1 %.025.ph42, label %.split, label %.split39.us
+  %.025.ph42 = phi i8 [ %.126, %.outer ], [ 0, %.outer.split.lr.ph ]
+  %5 = icmp eq i8 %.025.ph42, 0
+  br i1 %5, label %.split39.us, label %.split
 
 .split39.us:                                      ; preds = %.outer.split
   %i.ad = getelementptr inbounds nuw i8, ptr %.023.ph43, i64 16
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %.0.ph44, i64 16
   %i.ag = load ptr, ptr %i.af, align 8
-  %i.ah = tail call zeroext i1 @data_check_match(ptr noundef %i.ae, ptr noundef %i.ag, i1 noundef zeroext false) ; 3 uses
+  %i.ah = tail call zeroext i1 @data_check_match(ptr noundef %i.ae, ptr noundef %i.ag, i1 noundef zeroext false)
   br i1 %i.ah, label %bb.h, label %.outer
 
 bb.h:                                             ; preds = %.split39.us
@@ -270,14 +277,14 @@ bb.h:                                             ; preds = %.split39.us
   br label %.outer
 
 .outer:                                           ; preds = %.split39.us, %bb.h
+  %.126 = phi i8 [ 0, %bb.h ], [ 1, %.split39.us ] ; 2 uses
   %.124 = phi ptr [ %i.am, %bb.h ], [ %.023.ph43, %.split39.us ] ; 2 uses
   %.1 = phi ptr [ %i.al, %bb.h ], [ %.0.ph44, %.split39.us ]
-  %.126 = xor i1 %i.ah, true
   %i.an = icmp eq ptr %.124, null
-  br i1 %i.an, label %.split, label %.outer.split, !llvm.loop !38
+  br i1 %i.an, label %.outer.split.us, label %.outer.split, !llvm.loop !38
 
-.split:                                           ; preds = %.outer.split, %.outer, %.outer.us, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.027 = phi i1 [ false, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ %i.w, %.outer.us ], [ false, %bb.e ], [ true, %bb.d ], [ false, %.outer.split ], [ %i.ah, %.outer ]
+.split:                                           ; preds = %.outer.split, %bb.e, %.outer.split.us, %bb.c, %bb.b, %bb.a
+  %.027 = phi i1 [ false, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ %4, %.outer.split.us ], [ false, %bb.e ], [ false, %.outer.split ]
   ret i1 %.027
 }
 

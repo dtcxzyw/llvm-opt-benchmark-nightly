@@ -205,13 +205,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
-  %14 = load i8, ptr %7, align 8, !tbaa !55, !range !52, !noundef !53 ; 2 uses
-  %i.h = load i8, ptr %i.g, align 8, !tbaa !55, !range !52, !noundef !53 ; 2 uses
-  %15 = and i8 %i.h, %14
-  %.not3.i = icmp eq i8 %15, 0
-  br i1 %.not3.i, label %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit, label %bb.c
+  %i.h = load i8, ptr %7, align 8, !tbaa !55, !range !52, !noundef !53
+  %14 = trunc nuw i8 %i.h to i1
+  %15 = load i8, ptr %i.g, align 8, !tbaa !55, !range !52, !noundef !53 ; 2 uses
+  br i1 %14, label %16, label %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit
 
-bb.c:                                             ; preds = %bb.b
+16:                                               ; preds = %bb.b
+  %17 = trunc nuw i8 %15 to i1
+  br i1 %17, label %bb.c, label %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread
+
+bb.c:                                             ; preds = %16
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.gep96 = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -233,11 +236,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread101, label %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread
 
 _ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit: ; preds = %bb.b
-  %16 = or i8 %i.h, %14
-  %.mux.i.not = icmp eq i8 %16, 0
+  %.mux.i.not = icmp eq i8 %15, 0
   br i1 %.mux.i.not, label %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread101, label %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread
 
-_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread: ; preds = %bb.c, %.split, %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit
+_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread: ; preds = %.split, %bb.c, %16, %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit
   %.sroa.014.0.copyload = load i64, ptr @_ZN5vcpkg32msgUpdateBaselineUpdatedBaselineE, align 8, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
   invoke void @_ZNKR5vcpkg8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8value_orIRA1_KcEES6_OT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %8, ptr noundef nonnull align 8 dereferenceable(40) %i.g, ptr noundef nonnull align 1 dereferenceable(1) @.str.13)
@@ -340,7 +342,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit60: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   br label %bb.ad
 
-_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread101: ; preds = %bb.d, %.split, %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit
+_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit.thread101: ; preds = %.split, %bb.d, %_ZN5vcpkgneERKNS_8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_.exit
   %.sroa.08.0.copyload = load i64, ptr @_ZN5vcpkg25msgUpdateBaselineNoUpdateE, align 8, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
   invoke void @_ZNKR5vcpkg8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8value_orIRA1_KcEES6_OT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %11, ptr noundef nonnull align 8 dereferenceable(40) %i.g, ptr noundef nonnull align 1 dereferenceable(1) @.str.13)

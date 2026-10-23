@@ -205,8 +205,8 @@ WriteSegmentToSteamControllerPacketAssembler.exit: ; preds = %bb.u, %bb.s
   %.1.i = phi i1 [ %i.cx, %bb.u ], [ true, %bb.s ] ; 4 uses
   %i.cy = load i16, ptr %i.ao, align 8            ; 5 uses
   %.not.i125 = icmp eq i16 %i.cy, 1
-  %i.cz = trunc i16 %i.cy to i8                   ; 2 uses
-  %i.da = lshr i16 %i.cy, 8                       ; 2 uses
+  %i.cz = trunc i16 %i.cy to i8                   ; 3 uses
+  %i.da = lshr i16 %i.cy, 8                       ; 3 uses
   br i1 %.not.i125, label %bb.an, label %bb.v
 
 bb.v:                                             ; preds = %WriteSegmentToSteamControllerPacketAssembler.exit
@@ -412,7 +412,7 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.av
 
 bb.an:                                            ; preds = %WriteSegmentToSteamControllerPacketAssembler.exit
-  %i.hf = load i8, ptr %i.au, align 2
+  %i.hf = load i8, ptr %i.au, align 2             ; 2 uses
   switch i8 %i.hf, label %UpdateSteamControllerState.exit.thread [
     i8 1, label %bb.ao
     i8 7, label %bb.aq
@@ -477,7 +477,7 @@ bb.av:                                            ; preds = %bb.ar, %bb.am, %bb.
   br i1 %i.hx, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  call fastcc void @ControllerConnected(ptr noundef nonnull %0, ptr noundef %i.c)
+  call fastcc void @ControllerConnected(ptr noundef %0, ptr noundef %i.c)
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
@@ -632,28 +632,30 @@ bb.bc:                                            ; preds = %bb.ba, %bb.bb
   br label %.thread
 
 UpdateSteamControllerState.exit:                  ; preds = %bb.v
-  %i.lr = load i8, ptr %i.bu, align 8, !range !4, !noundef !5
-  %1 = trunc nuw i8 %i.lr to i1                   ; 2 uses
-  %.not = xor i1 %1, true
-  %or.cond = and i1 %.1.i, %.not
-  %2 = icmp eq i8 %i.cz, 1
-  %i.ls = icmp eq i16 %i.da, 0
-  %or.cond163.a = and i1 %2, %i.ls                ; 2 uses
-  br i1 %or.cond, label %bb.bd, label %bb.bh
+  %i.lr = load i8, ptr %i.bu, align 8, !range !4, !noundef !5 ; 2 uses
+  %i.ls = icmp eq i8 %i.lr, 0
+  %or.cond163.a = and i1 %.1.i, %i.ls
+  br i1 %or.cond163.a, label %bb.bd, label %bb.bh
 
 UpdateSteamControllerState.exit.thread:           ; preds = %bb.an
-  %i.lt = load i8, ptr %i.bu, align 8, !range !4, !noundef !5
-  %3 = trunc nuw i8 %i.lt to i1                   ; 2 uses
-  %.not155 = xor i1 %3, true
+  %i.lt = load i8, ptr %i.bu, align 8, !range !4, !noundef !5 ; 2 uses
+  %.not155 = icmp eq i8 %i.lt, 0
   %or.cond156 = and i1 %.1.i, %.not155
   br i1 %or.cond156, label %.thread158, label %.thread159
 
 bb.bd:                                            ; preds = %UpdateSteamControllerState.exit
-  br i1 %or.cond163.a, label %.thread158, label %.thread
+  %1 = icmp eq i8 %i.cz, 1
+  %2 = icmp eq i16 %i.da, 0
+  %or.cond163 = and i1 %1, %2
+  br i1 %or.cond163, label %.thread158thread-pre-split, label %.thread
 
-.thread158:                                       ; preds = %bb.bd, %UpdateSteamControllerState.exit.thread
-  %4 = load i8, ptr %i.au, align 2
-  %i.lu = icmp eq i8 %4, 3
+.thread158thread-pre-split:                       ; preds = %bb.bd
+  %.pr = load i8, ptr %i.au, align 2
+  br label %.thread158
+
+.thread158:                                       ; preds = %.thread158thread-pre-split, %UpdateSteamControllerState.exit.thread
+  %3 = phi i8 [ %.pr, %.thread158thread-pre-split ], [ %i.hf, %UpdateSteamControllerState.exit.thread ]
+  %i.lu = icmp eq i8 %3, 3
   br i1 %i.lu, label %bb.be, label %.thread
 
 bb.be:                                            ; preds = %.thread158
@@ -667,16 +669,21 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not115, label %.thread, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  call fastcc void @ControllerConnected(ptr noundef nonnull %0, ptr noundef %i.c)
+  call fastcc void @ControllerConnected(ptr noundef %0, ptr noundef %i.c)
   br label %.thread
 
 bb.bh:                                            ; preds = %UpdateSteamControllerState.exit
-  %i.lx = and i1 %or.cond163.a, %1
+  %4 = trunc nuw i8 %i.lr to i1
+  %5 = icmp eq i8 %i.cz, 1
+  %6 = and i1 %5, %4
+  %7 = icmp eq i16 %i.da, 0
+  %i.lx = and i1 %6, %7
   %or.cond165 = and i1 %i.lx, %.1.i
   br i1 %or.cond165, label %.thread162, label %.thread
 
 .thread159:                                       ; preds = %UpdateSteamControllerState.exit.thread
-  %or.cond3160 = and i1 %.1.i, %3
+  %8 = trunc nuw i8 %i.lt to i1
+  %or.cond3160 = and i1 %.1.i, %8
   br i1 %or.cond3160, label %.thread162, label %.thread
 
 .thread162:                                       ; preds = %bb.bh, %.thread159

@@ -204,9 +204,9 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 2 uses
   %i.aa = load i8, ptr %i.z, align 8, !range !8, !noundef !9
-  %1 = trunc nuw i8 %i.aa to i1
+  %.not.not = icmp eq i8 %i.aa, 0
   store i8 1, ptr %i.z, align 8
-  br i1 %1, label %bb.r, label %bb.p
+  br i1 %.not.not, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 433
@@ -609,7 +609,8 @@ bb.n:                                             ; preds = %bb.j, %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 65
   %i.aq = load i8, ptr %i.ap, align 1
-  %i.ar = lshr i8 %i.aq, 3                        ; 2 uses
+  %i.ar = lshr i8 %i.aq, 3
+  %.lobit.i = and i8 %i.ar, 1                     ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 66
   %i.at = load i8, ptr %i.as, align 2
   %i.au = zext i8 %i.at to i32                    ; 2 uses
@@ -670,11 +671,11 @@ bb.t:                                             ; preds = %bb.s
   %i.bt = trunc i32 %i.br to i1
   %i.bu = icmp eq i32 %i.av, 48
   %or.cond.i = and i1 %i.bu, %i.bt
-  %spec.select64.i = select i1 %or.cond.i, i8 1, i8 %i.ar
+  %spec.select64.i = select i1 %or.cond.i, i8 1, i8 %.lobit.i
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
-  %.058.i = phi i8 [ 1, %bb.s ], [ %spec.select64.i, %bb.t ], [ %i.ar, %bb.r ]
+  %.058.i = phi i8 [ 1, %bb.s ], [ %spec.select64.i, %bb.t ], [ %.lobit.i, %bb.r ]
   %.056.i = phi i8 [ 0, %bb.s ], [ 0, %bb.t ], [ %spec.select.i, %bb.r ] ; 2 uses
   %i.bv = load i8, ptr %i.f, align 8
   %i.bw = icmp eq i8 %i.bv, 26
@@ -702,11 +703,11 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ao, i64 168
   %i.cd = load ptr, ptr %i.cc, align 8
   call void @blk_get_geometry(ptr noundef %i.cd, ptr noundef nonnull %i.a) #16
-  %2 = trunc i8 %.058.i to i1
+  %.not.i = icmp eq i8 %.058.i, 0
   %i.ce = load i64, ptr %i.a, align 8             ; 2 uses
-  %3 = icmp eq i64 %i.ce, 0
-  %or.cond3.not.i = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond3.not.i, label %bb.ab, label %bb.x
+  %2 = icmp ne i64 %i.ce, 0
+  %or.cond3.not.i = select i1 %.not.i, i1 %2, i1 false
+  br i1 %or.cond3.not.i, label %bb.x, label %bb.ab
 
 bb.x:                                             ; preds = %bb.w
   %i.cf = load i8, ptr %i.f, align 8

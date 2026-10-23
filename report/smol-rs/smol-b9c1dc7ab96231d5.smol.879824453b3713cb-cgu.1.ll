@@ -202,13 +202,13 @@ bb.l:                                             ; preds = %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !align !10, !noundef !5 ; 3 uses
   store ptr null, ptr %i.b, align 8
   %i.x = load i8, ptr %i.d, align 8, !range !8, !noundef !5
-  %3 = trunc nuw i8 %i.x to i1
-  %.not.i41 = icmp ne ptr %i.w, null              ; 2 uses
-  %or.cond.not.i = and i1 %.not.i41, %3
-  br i1 %or.cond.not.i, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit
+  %.not1.i = icmp eq i8 %i.x, 0
+  %.not.i41 = icmp eq ptr %i.w, null              ; 2 uses
+  %or.cond.i = or i1 %.not.i41, %.not1.i
+  br i1 %or.cond.i, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split
 
 _RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit: ; preds = %bb.l
-  br i1 %.not.i41, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, label %bb.n, !prof !111
+  br i1 %.not.i41, label %bb.n, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, !prof !111
 
 bb.m:                                             ; preds = %bb.j
   %i.y = call { i64, i32 } @_RNvMNtCsG258MDvU3F_3std4timeNtB2_7Instant7elapsed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) ; 2 uses
@@ -253,20 +253,21 @@ bb.q:                                             ; preds = %bb.p
   %i.ai = load ptr, ptr %i.b, align 8, !align !10, !noundef !5 ; 3 uses
   store ptr null, ptr %i.b, align 8
   %i.aj = load i8, ptr %i.d, align 8, !range !8, !noundef !5
-  %4 = trunc nuw i8 %i.aj to i1
-  %.not.i46 = icmp ne ptr %i.ai, null             ; 2 uses
-  %or.cond.not.i47 = and i1 %.not.i46, %4
-  br i1 %or.cond.not.i47, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit48
+  %.not1.i46 = icmp eq i8 %i.aj, 0
+  %.not.i47 = icmp eq ptr %i.ai, null             ; 2 uses
+  %or.cond.i48 = or i1 %.not.i47, %.not1.i46
+  br i1 %or.cond.i48, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit48, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split
 
 _RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit48: ; preds = %bb.q
-  br i1 %.not.i46, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, label %bb.r, !prof !111
+  br i1 %.not.i47, label %bb.r, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, !prof !111
 
 bb.r:                                             ; preds = %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit48
   call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #26
   unreachable
 
 _RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split: ; preds = %bb.q, %bb.l, %bb.ad, %bb.z
-  %.sink84 = phi ptr [ %i.ar, %bb.z ], [ %i.aw, %bb.ad ], [ %i.w, %bb.l ], [ %i.ai, %bb.q ] ; 2 uses
+  %.sink84 = phi ptr [ %i.ar, %bb.z ], [ %i.aw, %bb.ad ], [ %i.w, %bb.l ], [ %i.ai, %bb.q ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink84) ]
   %i.ak = atomicrmw add ptr %.sink84, i64 -2 release, align 8 ; 0 uses
   br label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread
 
@@ -319,13 +320,13 @@ bb.z:                                             ; preds = %bb.y
   %i.ar = load ptr, ptr %i.b, align 8, !align !10, !noundef !5 ; 3 uses
   store ptr null, ptr %i.b, align 8
   %i.as = load i8, ptr %i.d, align 8, !range !8, !noundef !5
-  %5 = trunc nuw i8 %i.as to i1
-  %.not.i51 = icmp ne ptr %i.ar, null             ; 2 uses
-  %or.cond.not.i52 = and i1 %.not.i51, %5
-  br i1 %or.cond.not.i52, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit53
+  %.not1.i52 = icmp eq i8 %i.as, 0
+  %.not.i53 = icmp eq ptr %i.ar, null             ; 2 uses
+  %or.cond.i54 = or i1 %.not.i53, %.not1.i52
+  br i1 %or.cond.i54, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit53, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split
 
 _RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit53: ; preds = %bb.z
-  br i1 %.not.i51, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, label %bb.aa, !prof !111
+  br i1 %.not.i53, label %bb.aa, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, !prof !111
 
 bb.aa:                                            ; preds = %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit53
   call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #26
@@ -346,13 +347,13 @@ bb.ad:                                            ; preds = %bb.ac
   %i.aw = load ptr, ptr %i.b, align 8, !align !10, !noundef !5 ; 3 uses
   store ptr null, ptr %i.b, align 8
   %i.ax = load i8, ptr %i.d, align 8, !range !8, !noundef !5
-  %6 = trunc nuw i8 %i.ax to i1
-  %.not.i58 = icmp ne ptr %i.aw, null             ; 2 uses
-  %or.cond.not.i59 = and i1 %.not.i58, %6
-  br i1 %or.cond.not.i59, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit60
+  %.not1.i60 = icmp eq i8 %i.ax, 0
+  %.not.i61 = icmp eq ptr %i.aw, null             ; 2 uses
+  %or.cond.i62 = or i1 %.not.i61, %.not1.i60
+  br i1 %or.cond.i62, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit60, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread.sink.split
 
 _RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit60: ; preds = %bb.ad
-  br i1 %.not.i58, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, label %bb.af, !prof !111
+  br i1 %.not.i61, label %bb.af, label %_RINvXs2_CskHQ0D3bTzth_23event_listener_strategyNtB6_11NonBlockingNtB6_8Strategy4polluNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit.thread, !prof !111
 
 bb.ae:                                            ; preds = %bb.ac
   %.sroa.01.0.i57 = extractvalue { i64, i1 } %i.au, 0
@@ -755,15 +756,16 @@ define hidden void @_RNvXs0_NvNtCs1gyvJd0MAV7_10async_lock5mutexs2_1__INtB7_11Ac
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load ptr, ptr %i.a, align 8, !align !10, !noundef !5 ; 2 uses
+  %i.c = load ptr, ptr %i.a, align 8, !align !10, !noundef !5 ; 3 uses
   store ptr null, ptr %i.a, align 8
   %i.d = load i8, ptr %i.b, align 8, !range !8, !noundef !5
-  %1 = trunc nuw i8 %i.d to i1
-  %.not.i = icmp ne ptr %i.c, null
-  %or.cond.not.i = and i1 %.not.i, %1
-  br i1 %or.cond.not.i, label %bb.b, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit
+  %.not1.i = icmp eq i8 %i.d, 0
+  %.not.i = icmp eq ptr %i.c, null
+  %or.cond.i = or i1 %.not.i, %.not1.i
+  br i1 %or.cond.i, label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.e = atomicrmw add ptr %i.c, i64 -2 release, align 8 ; 0 uses
   br label %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit
 
@@ -1156,11 +1158,11 @@ bb.z:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.aa:                                            ; preds = %_RINvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB5_4TakeINtNtB7_4skip4SkipINtNtB7_5chain5ChainINtNtNtBb_5slice4iter4IterINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEB1A_EEENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4k_4find5checkRB20_QNCNCNCNvMsf_Csa9iXSdNszRG_14async_executorNtB5G_6Runner8runnable000E0INtNtNtBb_3ops12control_flow11ControlFlowB5o_EECsbDLrNlwBX3H_4smol.exit.thread.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !172
   %.pre.i.i.i.i.i.i = load i64, ptr %i.g, align 8, !range !7, !noalias !172
-  %2 = trunc nuw i64 %.pre.i.i.i.i.i.i to i1
+  %.not.i.i.i.i.i = icmp eq i64 %.pre.i.i.i.i.i.i, 0
   %i.bz = load ptr, ptr %i.at, align 8, !noalias !166
-  %.not.i.i23.i.i.i.i.i.i = icmp ne ptr %i.bz, null
-  %or.cond.not.i.i.i.i.i = select i1 %2, i1 %.not.i.i23.i.i.i.i.i.i, i1 false
-  br i1 %or.cond.not.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i25.i.i.i.i.i.i, label %.thread.i.thread.i.i.i.i.i
+  %.not.i.i23.i.i.i.i.i.i = icmp eq ptr %i.bz, null
+  %or.cond.not.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i1 true, i1 %.not.i.i23.i.i.i.i.i.i
+  br i1 %or.cond.not.i.i.i.i.i, label %.thread.i.thread.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i25.i.i.i.i.i.i
 
 bb.ab:                                            ; preds = %.noexc10.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !172
@@ -1382,11 +1384,11 @@ bb.ao:                                            ; preds = %bb.am
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1G_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEECsbDLrNlwBX3H_4smol.exit16.i.i.i.i.i.i: ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !172
   %i.fg = load i64, ptr %i.g, align 8, !range !7, !noalias !172, !noundef !5
-  %3 = trunc nuw i64 %i.fg to i1
+  %.not31.i.i.i.i.i.i = icmp eq i64 %i.fg, 0
   %i.fh = load ptr, ptr %i.at, align 8, !noalias !172
-  %.not.i.i17.i.i.i.i.i.i = icmp ne ptr %i.fh, null
-  %or.cond.not36.i.i.i.i.i.i = select i1 %3, i1 %.not.i.i17.i.i.i.i.i.i, i1 false
-  br i1 %or.cond.not36.i.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i.i.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB22_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEINtB12_12TryLockErrorBX_EEECsbDLrNlwBX3H_4smol.exit.i.i.i.i.i.i
+  %.not.i.i17.i.i.i.i.i.i = icmp eq ptr %i.fh, null
+  %or.cond.not36.i.i.i.i.i.i = select i1 %.not31.i.i.i.i.i.i, i1 true, i1 %.not.i.i17.i.i.i.i.i.i
+  br i1 %or.cond.not36.i.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB22_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEINtB12_12TryLockErrorBX_EEECsbDLrNlwBX3H_4smol.exit.i.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i.i.i.i.i.i.i
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i.i.i.i.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1G_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEECsbDLrNlwBX3H_4smol.exit16.i.i.i.i.i.i
   invoke void @_RNvXsh_NtNtNtCsG258MDvU3F_3std4sync6poison6rwlockINtB5_15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1d_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsbDLrNlwBX3H_4smol(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.at)
@@ -1789,7 +1791,7 @@ attributes #27 = { inlinehint }
 !108 = !{!103}
 !109 = !{i32 -1, i32 1000000000}
 !110 = !{!105}
-!111 = !{!"branch_weights", !"expected", i32 2145337238, i32 2146410}
+!111 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
 !112 = !{!107}
 !113 = distinct !{!113, i1 true, !"_RNvMs3_Csl6TgSXZDiW0_4slabINtB5_4SlabNtNtNtCskKLDkoKarTP_4core4task4wake5WakerE9insert_atCsbDLrNlwBX3H_4smol"}
 !114 = distinct !{!114, !113, !"_RNvMs3_Csl6TgSXZDiW0_4slabINtB5_4SlabNtNtNtCskKLDkoKarTP_4core4task4wake5WakerE9insert_atCsbDLrNlwBX3H_4smol: argument 0"}

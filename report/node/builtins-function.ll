@@ -204,9 +204,10 @@ _ZNK2v88internal11MaybeHandleINS0_15JSBoundFunctionEE8ToHandleIS2_EEbPNS0_12Dire
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 5544
   %i.dl = trunc i64 %i.dh to i32
   %i.dm = call i16 @_ZN2v88internal42JSFunctionOrBoundFunctionOrWrappedFunction17CopyNameAndLengthEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_10JSReceiverEEENS4_INS0_6StringEEEi(ptr noundef nonnull %0, ptr nonnull %i.di, ptr %i.ab, ptr nonnull %i.dk, i32 noundef %i.dl) #12
-  %6 = trunc i16 %i.dm to i1
+  %6 = and i16 %i.dm, 255
+  %7 = icmp eq i16 %6, 0
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 912
-  %spec.select = select i1 %6, ptr %i.di, ptr %i.dn
+  %spec.select = select i1 %7, ptr %i.dn, ptr %i.di
   br label %bb.m
 
 bb.m:                                             ; preds = %.critedge55, %_ZNK2v88internal11MaybeHandleINS0_15JSBoundFunctionEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, %bb.h

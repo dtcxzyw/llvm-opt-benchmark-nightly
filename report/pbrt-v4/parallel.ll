@@ -202,8 +202,8 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.f, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
   %i.g = load i8, ptr %i.f, align 8, !tbaa !57, !range !41, !noundef !58
-  %2 = trunc nuw i8 %i.g to i1
-  br i1 %2, label %bb.i, label %bb.f
+  %.not.not = icmp eq i8 %i.g, 0
+  br i1 %.not.not, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZN4pbrt10ThreadPool10WorkOrWaitEPSt11unique_lockISt5mutexEb(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef nonnull %1, i1 noundef zeroext false)
@@ -306,12 +306,11 @@ declare void @_ZN4pbrt3LogENS_8LogLevelEPKciS2_(i32 noundef, ptr noundef, i32 no
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4pbrt10ThreadPool10WorkOrWaitEPSt11unique_lockISt5mutexEb(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %.not13 = xor i1 %2, true
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 65
   %i.b = load i8, ptr %i.a, align 1, !range !41
-  %3 = trunc nuw i8 %i.b to i1
-  %or.cond = select i1 %.not13, i1 %3, i1 false
-  br i1 %or.cond, label %bb.b, label %bb.c
+  %.not17 = icmp eq i8 %i.b, 0
+  %or.cond = select i1 %2, i1 true, i1 %.not17
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80

@@ -202,10 +202,11 @@ bb.i:                                             ; preds = %bb.g
   %i.q = load i32, ptr %i.p, align 16             ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 1096
   %i.s = load i8, ptr %i.r, align 8, !range !7, !noundef !8
-  %4 = trunc nuw i8 %i.s to i1
-  %.not = trunc i32 %i.q to i1
-  %or.cond49.not = select i1 %4, i1 %.not, i1 false
-  br i1 %or.cond49.not, label %bb.ac, label %bb.j
+  %.not48 = icmp eq i8 %i.s, 0
+  %4 = and i32 %i.q, 1
+  %.not = icmp eq i32 %4, 0
+  %or.cond49.not = select i1 %.not48, i1 true, i1 %.not
+  br i1 %or.cond49.not, label %bb.j, label %bb.ac
 
 bb.j:                                             ; preds = %bb.i
   %i.t = trunc i64 %2 to i32                      ; 2 uses
