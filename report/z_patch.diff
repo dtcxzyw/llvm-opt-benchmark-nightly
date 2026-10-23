@@ -1,0 +1,717 @@
+diff --git a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+index 1d282437f85fc7..b246a16dded82d 100644
+--- a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
++++ b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+@@ -21,6 +21,7 @@
+ #include "llvm/Analysis/ConstantFolding.h"
+ #include "llvm/Analysis/DomTreeUpdater.h"
+ #include "llvm/Analysis/GlobalsModRef.h"
++#include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+ #include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Analysis/ValueTracking.h"
+@@ -1404,7 +1405,8 @@ struct LoadOps {
+   LoadInst *RootInsert = nullptr;
+   bool FoundRoot = false;
+   uint64_t LoadSize = 0;
+-  uint64_t Shift = 0;
++  Value *Shift = nullptr;
++  Value *Accumulator = nullptr;
+   Type *ZextType;
+   AAMDNodes AATags;
+ };
+@@ -1414,7 +1416,7 @@ struct LoadOps {
+ // (ZExt(L1) << shift1) | ZExt(L2) -> ZExt(L3)
+ static bool foldLoadsRecursive(Value *V, LoadOps &LOps, const DataLayout &DL,
+                                AliasAnalysis &AA, bool IsRoot = false) {
+-  uint64_t ShAmt2;
++  Value *ShAmt2 = nullptr;
+   Value *X;
+   Instruction *L1, *L2;
+ 
+@@ -1424,10 +1426,13 @@ static bool foldLoadsRecursive(Value *V, LoadOps &LOps, const DataLayout &DL,
+   if (!IsRoot && !V->hasOneUse())
+     return false;
+ 
+-  if (!match(V, m_c_Or(m_Value(X),
+-                       m_OneUse(m_ShlOrSelf(m_OneUse(m_ZExt(m_Instruction(L2))),
+-                                            ShAmt2)))))
++  auto MatchLoad2 =
++      m_CombineOr(m_Shl(m_OneUse(m_ZExt(m_Instruction(L2))), m_Value(ShAmt2)),
++                  m_ZExt(m_Instruction(L2)));
++  if (!match(V, m_c_Or(m_Value(X), m_OneUse(MatchLoad2))))
+     return false;
++  if (!ShAmt2)
++    ShAmt2 = ConstantInt::get(V->getType(), 0);
+ 
+   if (!foldLoadsRecursive(X, LOps, DL, AA, /*IsRoot=*/false) && LOps.FoundRoot)
+     // Avoid Partial chain merge.
+@@ -1435,11 +1440,27 @@ static bool foldLoadsRecursive(Value *V, LoadOps &LOps, const DataLayout &DL,
+ 
+   // Check if the pattern has loads
+   LoadInst *LI1 = LOps.Root;
+-  uint64_t ShAmt1 = LOps.Shift;
+-  if (LOps.FoundRoot == false &&
+-      match(X, m_OneUse(
+-                   m_ShlOrSelf(m_OneUse(m_ZExt(m_Instruction(L1))), ShAmt1)))) {
++  Value *ShAmt1 = LOps.Shift;
++  if (!LOps.FoundRoot) {
++    auto MatchLoad1 =
++        m_CombineOr(m_Shl(m_OneUse(m_ZExt(m_Instruction(L1))), m_Value(ShAmt1)),
++                    m_ZExt(m_Instruction(L1)));
++    if (!match(X, m_OneUse(MatchLoad1))) {
++      // An unrolled byte decoder may start the OR chain with an accumulator:
++      // (Acc | (ZExt(L1) << S)) | (ZExt(L2) << (S + 8)). Keep Acc outside
++      // the combined load and require single use of the intermediate OR.
++      if (!match(X, m_OneUse(m_c_Or(m_OneUse(MatchLoad1),
++                                   m_Value(LOps.Accumulator)))))
++        return false;
++      // Preserve existing constant-shift load assembly. Treating an inner
++      // OR tree as an accumulator can merge only part of a wider load and
++      // prevent subsequent InstCombine passes from recognizing the whole.
++      if (!ShAmt1 || isa<Constant>(ShAmt1) || isa<Constant>(ShAmt2))
++        return false;
++    }
+     LI1 = dyn_cast<LoadInst>(L1);
++    if (!ShAmt1)
++      ShAmt1 = ConstantInt::get(X->getType(), 0);
+   }
+   LoadInst *LI2 = dyn_cast<LoadInst>(L2);
+ 
+@@ -1536,7 +1557,16 @@ static bool foldLoadsRecursive(Value *V, LoadOps &LOps, const DataLayout &DL,
+   uint64_t ShiftDiff = IsBigEndian ? LoadSize2 : LoadSize1;
+   uint64_t PrevSize =
+       DL.getTypeStoreSize(IntegerType::get(LI1->getContext(), LoadSize1));
+-  if ((ShAmt2 - ShAmt1) != ShiftDiff || (Offset2 - Offset1) != PrevSize)
++  if ((Offset2 - Offset1) != PrevSize)
++    return false;
++
++  // The shifts may share a variable base, as in S and S + LoadSize1.
++  // Subtraction is wrapping: whenever both original shifts are in range,
++  // their constant difference gives the relative bit positions of the loads.
++  Value *Diff = simplifyBinOp(Instruction::Sub, ShAmt2, ShAmt1,
++                              SimplifyQuery(DL).getWithoutUndef());
++  auto *ConstDiff = dyn_cast_or_null<ConstantInt>(Diff);
++  if (!ConstDiff || ConstDiff->getValue() != ShiftDiff)
+     return false;
+ 
+   // Reject if the combined size of the loads exceeds the target type size.
+@@ -1616,10 +1646,17 @@ static bool foldConsecutiveLoads(Instruction &I, const DataLayout &DL,
+   // Zero extend if needed.
+   NewOp = Builder.CreateZExt(NewOp, LOps.ZextType);
+ 
+-  // Check if shift needed. We need to shift with the amount of load1
+-  // shift if not zero.
+-  if (LOps.Shift)
++  // A variable shift amount may be computed after the loads. Emit such a
++  // shift at the original OR so that its operands dominate it.
++  if (!isa<Constant>(LOps.Shift))
++    Builder.SetInsertPoint(&I);
++  if (!match(LOps.Shift, m_Zero()))
+     NewOp = Builder.CreateShl(NewOp, LOps.Shift);
++  if (LOps.Accumulator) {
++    // Acc may be defined after the loads even when the shift is constant.
++    Builder.SetInsertPoint(&I);
++    NewOp = Builder.CreateOr(NewOp, LOps.Accumulator);
++  }
+   I.replaceAllUsesWith(NewOp);
+ 
+   return true;
+diff --git a/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift-accumulator.ll b/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift-accumulator.ll
+index 4a85fe7475e5d0..61d24e803527c6 100644
+--- a/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift-accumulator.ll
++++ b/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift-accumulator.ll
+@@ -6,31 +6,39 @@ declare void @use(i64)
+ 
+ ; The unrolled loop body in faiss::PQDecoderGeneric::decode.
+ define i64 @load4_acc_le(ptr %p, i64 %s, i64 %acc) {
+-; ALL-LABEL: define i64 @load4_acc_le(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[ACC:%.*]]) #[[ATTR0:[0-9]+]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[O0:%.*]] = or i64 [[V0]], [[ACC]]
+-; ALL-NEXT:    [[S1:%.*]] = add nsw i64 [[S]], 8
+-; ALL-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[O1:%.*]] = or i64 [[V1]], [[O0]]
+-; ALL-NEXT:    [[S2:%.*]] = add nsw i64 [[S]], 16
+-; ALL-NEXT:    [[P3:%.*]] = getelementptr i8, ptr [[P]], i64 3
+-; ALL-NEXT:    [[L2:%.*]] = load i8, ptr [[P2]], align 1
+-; ALL-NEXT:    [[Z2:%.*]] = zext i8 [[L2]] to i64
+-; ALL-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
+-; ALL-NEXT:    [[O2:%.*]] = or i64 [[O1]], [[V2]]
+-; ALL-NEXT:    [[S3:%.*]] = add nsw i64 [[S]], 24
+-; ALL-NEXT:    [[L3:%.*]] = load i8, ptr [[P3]], align 1
+-; ALL-NEXT:    [[Z3:%.*]] = zext i8 [[L3]] to i64
+-; ALL-NEXT:    [[V3:%.*]] = shl i64 [[Z3]], [[S3]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[V3]], [[O2]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load4_acc_le(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[ACC:%.*]]) #[[ATTR0:[0-9]+]] {
++; LE-NEXT:    [[L0:%.*]] = load i32, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[L0]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S]]
++; LE-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], [[ACC]]
++; LE-NEXT:    ret i64 [[TMP3]]
++;
++; BE-LABEL: define i64 @load4_acc_le(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[ACC:%.*]]) #[[ATTR0:[0-9]+]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; BE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; BE-NEXT:    [[O0:%.*]] = or i64 [[V0]], [[ACC]]
++; BE-NEXT:    [[S1:%.*]] = add nsw i64 [[S]], 8
++; BE-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; BE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; BE-NEXT:    [[O1:%.*]] = or i64 [[V1]], [[O0]]
++; BE-NEXT:    [[S2:%.*]] = add nsw i64 [[S]], 16
++; BE-NEXT:    [[P3:%.*]] = getelementptr i8, ptr [[P]], i64 3
++; BE-NEXT:    [[L2:%.*]] = load i8, ptr [[P2]], align 1
++; BE-NEXT:    [[Z2:%.*]] = zext i8 [[L2]] to i64
++; BE-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
++; BE-NEXT:    [[O2:%.*]] = or i64 [[O1]], [[V2]]
++; BE-NEXT:    [[S3:%.*]] = add nsw i64 [[S]], 24
++; BE-NEXT:    [[L3:%.*]] = load i8, ptr [[P3]], align 1
++; BE-NEXT:    [[Z3:%.*]] = zext i8 [[L3]] to i64
++; BE-NEXT:    [[V3:%.*]] = shl i64 [[Z3]], [[S3]]
++; BE-NEXT:    [[R:%.*]] = or i64 [[V3]], [[O2]]
++; BE-NEXT:    ret i64 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -58,19 +66,28 @@ define i64 @load4_acc_le(ptr %p, i64 %s, i64 %acc) {
+ }
+ 
+ define i64 @load2_acc_be(ptr %p, i64 %s, i64 %acc) {
+-; ALL-LABEL: define i64 @load2_acc_be(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[ACC:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[PREFIX:%.*]] = or i64 [[ACC]], [[V0]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[PREFIX]], [[V1]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load2_acc_be(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[ACC:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; LE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; LE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; LE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; LE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; LE-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
++; LE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; LE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; LE-NEXT:    [[PREFIX:%.*]] = or i64 [[ACC]], [[V0]]
++; LE-NEXT:    [[R:%.*]] = or i64 [[PREFIX]], [[V1]]
++; LE-NEXT:    ret i64 [[R]]
++;
++; BE-LABEL: define i64 @load2_acc_be(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[ACC:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; BE-NEXT:    [[TMP1:%.*]] = zext i16 [[L0]] to i64
++; BE-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S1]]
++; BE-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], [[ACC]]
++; BE-NEXT:    ret i64 [[TMP3]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -89,7 +106,7 @@ define i64 @load2_acc_be(ptr %p, i64 %s, i64 %acc) {
+ ; The inlining regression is covered by or-load-constant-accumulator.ll.
+ define i64 @load2_constant_acc_after_load(ptr %p, i64 %x) {
+ ; ALL-LABEL: define i64 @load2_constant_acc_after_load(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[X:%.*]]) #[[ATTR0]] {
++; ALL-SAME: ptr [[P:%.*]], i64 [[X:%.*]]) #[[ATTR0:[0-9]+]] {
+ ; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+ ; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+ ; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+@@ -176,20 +193,29 @@ define i64 @load2_acc_multiuse_prefix(ptr %p, i64 %s, i64 %acc) {
+ 
+ ; Variable shifts still support an accumulator computed after the loads.
+ define i64 @load2_variable_acc_after_load(ptr %p, i64 %s, i64 %x) {
+-; ALL-LABEL: define i64 @load2_variable_acc_after_load(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[X:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[ACC:%.*]] = xor i64 [[X]], 15
+-; ALL-NEXT:    [[PREFIX:%.*]] = or i64 [[ACC]], [[V0]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[PREFIX]], [[V1]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load2_variable_acc_after_load(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[X:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = zext i16 [[L0]] to i64
++; LE-NEXT:    [[ACC:%.*]] = xor i64 [[X]], 15
++; LE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S]]
++; LE-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], [[ACC]]
++; LE-NEXT:    ret i64 [[TMP3]]
++;
++; BE-LABEL: define i64 @load2_variable_acc_after_load(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[X:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; BE-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
++; BE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; BE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; BE-NEXT:    [[ACC:%.*]] = xor i64 [[X]], 15
++; BE-NEXT:    [[PREFIX:%.*]] = or i64 [[ACC]], [[V0]]
++; BE-NEXT:    [[R:%.*]] = or i64 [[PREFIX]], [[V1]]
++; BE-NEXT:    ret i64 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -204,6 +230,3 @@ define i64 @load2_variable_acc_after_load(ptr %p, i64 %s, i64 %x) {
+   %r = or i64 %prefix, %v1
+   ret i64 %r
+ }
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; BE: {{.*}}
+-; LE: {{.*}}
+diff --git a/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift.ll b/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift.ll
+index edf9e30d1327b1..c18a3b24aa150b 100644
+--- a/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift.ll
++++ b/llvm/test/Transforms/AggressiveInstCombine/X86/or-load-variable-shift.ll
+@@ -5,18 +5,25 @@
+ declare void @use(i64)
+ 
+ define i64 @load2_le(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load2_le(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0:[0-9]+]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load2_le(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0:[0-9]+]] {
++; LE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = zext i16 [[L0]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S]]
++; LE-NEXT:    ret i64 [[TMP2]]
++;
++; BE-LABEL: define i64 @load2_le(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0:[0-9]+]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; BE-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
++; BE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; BE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; BE-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
++; BE-NEXT:    ret i64 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -31,18 +38,26 @@ define i64 @load2_le(ptr %p, i64 %s) {
+ }
+ 
+ define i64 @load2_be(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load2_be(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load2_be(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; LE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; LE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; LE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; LE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; LE-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
++; LE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; LE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; LE-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
++; LE-NEXT:    ret i64 [[R]]
++;
++; BE-LABEL: define i64 @load2_be(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; BE-NEXT:    [[TMP1:%.*]] = zext i16 [[L0]] to i64
++; BE-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S1]]
++; BE-NEXT:    ret i64 [[TMP2]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -57,30 +72,37 @@ define i64 @load2_be(ptr %p, i64 %s) {
+ }
+ 
+ define i64 @load4_le(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load4_le(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
+-; ALL-NEXT:    [[P3:%.*]] = getelementptr i8, ptr [[P]], i64 3
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[L2:%.*]] = load i8, ptr [[P2]], align 1
+-; ALL-NEXT:    [[L3:%.*]] = load i8, ptr [[P3]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[Z2:%.*]] = zext i8 [[L2]] to i64
+-; ALL-NEXT:    [[Z3:%.*]] = zext i8 [[L3]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
+-; ALL-NEXT:    [[S2:%.*]] = add i64 [[S]], 16
+-; ALL-NEXT:    [[S3:%.*]] = add i64 [[S]], 24
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
+-; ALL-NEXT:    [[V3:%.*]] = shl i64 [[Z3]], [[S3]]
+-; ALL-NEXT:    [[O1:%.*]] = or i64 [[V0]], [[V1]]
+-; ALL-NEXT:    [[O2:%.*]] = or i64 [[V2]], [[O1]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[O2]], [[V3]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load4_le(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[L0:%.*]] = load i32, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[L0]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S]]
++; LE-NEXT:    ret i64 [[TMP2]]
++;
++; BE-LABEL: define i64 @load4_le(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
++; BE-NEXT:    [[P3:%.*]] = getelementptr i8, ptr [[P]], i64 3
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[L2:%.*]] = load i8, ptr [[P2]], align 1
++; BE-NEXT:    [[L3:%.*]] = load i8, ptr [[P3]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; BE-NEXT:    [[Z2:%.*]] = zext i8 [[L2]] to i64
++; BE-NEXT:    [[Z3:%.*]] = zext i8 [[L3]] to i64
++; BE-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
++; BE-NEXT:    [[S2:%.*]] = add i64 [[S]], 16
++; BE-NEXT:    [[S3:%.*]] = add i64 [[S]], 24
++; BE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; BE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; BE-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
++; BE-NEXT:    [[V3:%.*]] = shl i64 [[Z3]], [[S3]]
++; BE-NEXT:    [[O1:%.*]] = or i64 [[V0]], [[V1]]
++; BE-NEXT:    [[O2:%.*]] = or i64 [[V2]], [[O1]]
++; BE-NEXT:    [[R:%.*]] = or i64 [[O2]], [[V3]]
++; BE-NEXT:    ret i64 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %p2 = getelementptr i8, ptr %p, i64 2
+@@ -108,30 +130,38 @@ define i64 @load4_le(ptr %p, i64 %s) {
+ 
+ ; The exact shift shape from #215495; folds on a big-endian layout.
+ define i64 @load4_issue_be(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load4_issue_be(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
+-; ALL-NEXT:    [[P3:%.*]] = getelementptr i8, ptr [[P]], i64 3
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[L2:%.*]] = load i8, ptr [[P2]], align 1
+-; ALL-NEXT:    [[L3:%.*]] = load i8, ptr [[P3]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[Z2:%.*]] = zext i8 [[L2]] to i64
+-; ALL-NEXT:    [[Z3:%.*]] = zext i8 [[L3]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
+-; ALL-NEXT:    [[S2:%.*]] = add i64 [[S]], -16
+-; ALL-NEXT:    [[S3:%.*]] = add i64 [[S]], -24
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
+-; ALL-NEXT:    [[V3:%.*]] = shl i64 [[Z3]], [[S3]]
+-; ALL-NEXT:    [[O1:%.*]] = or i64 [[V0]], [[V1]]
+-; ALL-NEXT:    [[O2:%.*]] = or i64 [[O1]], [[V2]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[O2]], [[V3]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load4_issue_be(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; LE-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
++; LE-NEXT:    [[P3:%.*]] = getelementptr i8, ptr [[P]], i64 3
++; LE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; LE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; LE-NEXT:    [[L2:%.*]] = load i8, ptr [[P2]], align 1
++; LE-NEXT:    [[L3:%.*]] = load i8, ptr [[P3]], align 1
++; LE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; LE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; LE-NEXT:    [[Z2:%.*]] = zext i8 [[L2]] to i64
++; LE-NEXT:    [[Z3:%.*]] = zext i8 [[L3]] to i64
++; LE-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
++; LE-NEXT:    [[S2:%.*]] = add i64 [[S]], -16
++; LE-NEXT:    [[S3:%.*]] = add i64 [[S]], -24
++; LE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; LE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; LE-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
++; LE-NEXT:    [[V3:%.*]] = shl i64 [[Z3]], [[S3]]
++; LE-NEXT:    [[O1:%.*]] = or i64 [[V0]], [[V1]]
++; LE-NEXT:    [[O2:%.*]] = or i64 [[O1]], [[V2]]
++; LE-NEXT:    [[R:%.*]] = or i64 [[O2]], [[V3]]
++; LE-NEXT:    ret i64 [[R]]
++;
++; BE-LABEL: define i64 @load4_issue_be(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[L0:%.*]] = load i32, ptr [[P]], align 1
++; BE-NEXT:    [[TMP1:%.*]] = zext i32 [[L0]] to i64
++; BE-NEXT:    [[S3:%.*]] = add i64 [[S]], -24
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S3]]
++; BE-NEXT:    ret i64 [[TMP2]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %p2 = getelementptr i8, ptr %p, i64 2
+@@ -159,19 +189,27 @@ define i64 @load4_issue_be(ptr %p, i64 %s) {
+ 
+ ; Both shifts have an offset, and the lower shift is defined after the loads.
+ define i64 @load2_offset_after_load(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load2_offset_after_load(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[S0:%.*]] = add i64 [[S]], -16
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S0]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load2_offset_after_load(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = zext i16 [[L0]] to i64
++; LE-NEXT:    [[S0:%.*]] = add i64 [[S]], -16
++; LE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S0]]
++; LE-NEXT:    ret i64 [[TMP2]]
++;
++; BE-LABEL: define i64 @load2_offset_after_load(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; BE-NEXT:    [[S0:%.*]] = add i64 [[S]], -16
++; BE-NEXT:    [[S1:%.*]] = add i64 [[S]], -8
++; BE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S0]]
++; BE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; BE-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
++; BE-NEXT:    ret i64 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -187,18 +225,25 @@ define i64 @load2_offset_after_load(ptr %p, i64 %s) {
+ }
+ 
+ define i64 @load2_commuted_add(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load2_commuted_add(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 8, [[S]]
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[V1]], [[V0]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load2_commuted_add(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = zext i16 [[L0]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S]]
++; LE-NEXT:    ret i64 [[TMP2]]
++;
++; BE-LABEL: define i64 @load2_commuted_add(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; BE-NEXT:    [[S1:%.*]] = add i64 8, [[S]]
++; BE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; BE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; BE-NEXT:    [[R:%.*]] = or i64 [[V1]], [[V0]]
++; BE-NEXT:    ret i64 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -213,18 +258,26 @@ define i64 @load2_commuted_add(ptr %p, i64 %s) {
+ }
+ 
+ define i64 @load2_sub_be(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load2_sub_be(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = sub i64 [[S]], 8
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load2_sub_be(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; LE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; LE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; LE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; LE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; LE-NEXT:    [[S1:%.*]] = sub i64 [[S]], 8
++; LE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; LE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; LE-NEXT:    [[R:%.*]] = or i64 [[V0]], [[V1]]
++; LE-NEXT:    ret i64 [[R]]
++;
++; BE-LABEL: define i64 @load2_sub_be(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; BE-NEXT:    [[TMP1:%.*]] = zext i16 [[L0]] to i64
++; BE-NEXT:    [[S1:%.*]] = sub i64 [[S]], 8
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S1]]
++; BE-NEXT:    ret i64 [[TMP2]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -239,24 +292,31 @@ define i64 @load2_sub_be(ptr %p, i64 %s) {
+ }
+ 
+ define i64 @load_mixed_widths_le(ptr %p, i64 %s) {
+-; ALL-LABEL: define i64 @load_mixed_widths_le(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[L2:%.*]] = load i16, ptr [[P2]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
+-; ALL-NEXT:    [[Z2:%.*]] = zext i16 [[L2]] to i64
+-; ALL-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
+-; ALL-NEXT:    [[S2:%.*]] = add i64 [[S]], 16
+-; ALL-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
+-; ALL-NEXT:    [[O1:%.*]] = or i64 [[V0]], [[V1]]
+-; ALL-NEXT:    [[R:%.*]] = or i64 [[O1]], [[V2]]
+-; ALL-NEXT:    ret i64 [[R]]
++; LE-LABEL: define i64 @load_mixed_widths_le(
++; LE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[L0:%.*]] = load i32, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[L0]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], [[S]]
++; LE-NEXT:    ret i64 [[TMP2]]
++;
++; BE-LABEL: define i64 @load_mixed_widths_le(
++; BE-SAME: ptr [[P:%.*]], i64 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P]], i64 2
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[L2:%.*]] = load i16, ptr [[P2]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i64
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i64
++; BE-NEXT:    [[Z2:%.*]] = zext i16 [[L2]] to i64
++; BE-NEXT:    [[S1:%.*]] = add i64 [[S]], 8
++; BE-NEXT:    [[S2:%.*]] = add i64 [[S]], 16
++; BE-NEXT:    [[V0:%.*]] = shl i64 [[Z0]], [[S]]
++; BE-NEXT:    [[V1:%.*]] = shl i64 [[Z1]], [[S1]]
++; BE-NEXT:    [[V2:%.*]] = shl i64 [[Z2]], [[S2]]
++; BE-NEXT:    [[O1:%.*]] = or i64 [[V0]], [[V1]]
++; BE-NEXT:    [[R:%.*]] = or i64 [[O1]], [[V2]]
++; BE-NEXT:    ret i64 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %p2 = getelementptr i8, ptr %p, i64 2
+@@ -277,18 +337,24 @@ define i64 @load_mixed_widths_le(ptr %p, i64 %s) {
+ }
+ 
+ define i16 @load2_i16_result(ptr %p, i16 %s) {
+-; ALL-LABEL: define i16 @load2_i16_result(
+-; ALL-SAME: ptr [[P:%.*]], i16 [[S:%.*]]) #[[ATTR0]] {
+-; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+-; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+-; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+-; ALL-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i16
+-; ALL-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i16
+-; ALL-NEXT:    [[S1:%.*]] = add i16 [[S]], 8
+-; ALL-NEXT:    [[V0:%.*]] = shl i16 [[Z0]], [[S]]
+-; ALL-NEXT:    [[V1:%.*]] = shl i16 [[Z1]], [[S1]]
+-; ALL-NEXT:    [[R:%.*]] = or i16 [[V0]], [[V1]]
+-; ALL-NEXT:    ret i16 [[R]]
++; LE-LABEL: define i16 @load2_i16_result(
++; LE-SAME: ptr [[P:%.*]], i16 [[S:%.*]]) #[[ATTR0]] {
++; LE-NEXT:    [[L0:%.*]] = load i16, ptr [[P]], align 1
++; LE-NEXT:    [[TMP1:%.*]] = shl i16 [[L0]], [[S]]
++; LE-NEXT:    ret i16 [[TMP1]]
++;
++; BE-LABEL: define i16 @load2_i16_result(
++; BE-SAME: ptr [[P:%.*]], i16 [[S:%.*]]) #[[ATTR0]] {
++; BE-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
++; BE-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
++; BE-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
++; BE-NEXT:    [[Z0:%.*]] = zext i8 [[L0]] to i16
++; BE-NEXT:    [[Z1:%.*]] = zext i8 [[L1]] to i16
++; BE-NEXT:    [[S1:%.*]] = add i16 [[S]], 8
++; BE-NEXT:    [[V0:%.*]] = shl i16 [[Z0]], [[S]]
++; BE-NEXT:    [[V1:%.*]] = shl i16 [[Z1]], [[S1]]
++; BE-NEXT:    [[R:%.*]] = or i16 [[V0]], [[V1]]
++; BE-NEXT:    ret i16 [[R]]
+ ;
+   %p1 = getelementptr i8, ptr %p, i64 1
+   %l0 = load i8, ptr %p, align 1
+@@ -304,7 +370,7 @@ define i16 @load2_i16_result(ptr %p, i16 %s) {
+ 
+ define i64 @different_bases(ptr %p, i64 %s, i64 %t) {
+ ; ALL-LABEL: define i64 @different_bases(
+-; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[T:%.*]]) #[[ATTR0]] {
++; ALL-SAME: ptr [[P:%.*]], i64 [[S:%.*]], i64 [[T:%.*]]) #[[ATTR0:[0-9]+]] {
+ ; ALL-NEXT:    [[P1:%.*]] = getelementptr i8, ptr [[P]], i64 1
+ ; ALL-NEXT:    [[L0:%.*]] = load i8, ptr [[P]], align 1
+ ; ALL-NEXT:    [[L1:%.*]] = load i8, ptr [[P1]], align 1
+@@ -517,6 +583,3 @@ define i64 @independent_freezes(ptr %p, i64 %s) {
+   %r = or i64 %v0, %v1
+   ret i64 %r
+ }
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; BE: {{.*}}
+-; LE: {{.*}}
