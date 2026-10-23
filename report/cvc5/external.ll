@@ -202,11 +202,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.f = zext nneg i32 %i.a to i64                ; 3 uses
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !183
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.f
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !192  ; 2 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !192  ; 3 uses
   %i.j = icmp slt i32 %1, 0                       ; 2 uses
   %i.k = sub nsw i32 0, %i.i
-  %spec.select = select i1 %i.j, i32 %i.k, i32 %i.i ; 2 uses
-  %.not23 = icmp eq i32 %spec.select, 0
+  %spec.select = select i1 %i.j, i32 %i.k, i32 %i.i
+  %.not23 = icmp eq i32 %i.i, 0
   %.pre43 = load ptr, ptr %0, align 8, !tbaa !51  ; 3 uses
   br i1 %.not23, label %bb.e, label %bb.k
 
@@ -609,29 +609,23 @@ bb.j:                                             ; preds = %bb.i
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bd
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !208 ; 2 uses
   %.not.i.i = icmp eq i8 %i.bf, 0
-  br i1 %.not.i.i, label %_ZNK7CaDiCaL8External5fixedEi.exit, label %bb.k
+  br i1 %.not.i.i, label %_ZNK7CaDiCaL8External5fixedEi.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %3 = sext i8 %i.bf to i32
   %i.bg = getelementptr inbounds nuw i8, ptr %i.az, i64 712
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !209
   %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.bh, i64 %i.bd
   %i.bj = load i32, ptr %i.bi, align 8, !tbaa !211
   %.not9.i.i = icmp eq i32 %i.bj, 0
-  %spec.select.i.i = select i1 %.not9.i.i, i32 %3, i32 0
-  br label %_ZNK7CaDiCaL8External5fixedEi.exit
+  br i1 %.not9.i.i, label %bb.l, label %_ZNK7CaDiCaL8External5fixedEi.exit.thread
 
-_ZNK7CaDiCaL8External5fixedEi.exit:               ; preds = %bb.j, %bb.k
-  %.0.i.i = phi i32 [ 0, %bb.j ], [ %spec.select.i.i, %bb.k ] ; 2 uses
-  %4 = icmp slt i32 %spec.select.i, 0
-  %5 = sub nsw i32 0, %.0.i.i
-  %spec.select10.i.i = select i1 %4, i32 %5, i32 %.0.i.i ; 2 uses
-  %.not24 = icmp eq i32 %spec.select10.i.i, 0
-  br i1 %.not24, label %_ZNK7CaDiCaL8External5fixedEi.exit.thread, label %bb.l
-
-bb.l:                                             ; preds = %_ZNK7CaDiCaL8External5fixedEi.exit
+bb.l:                                             ; preds = %bb.k
+  %3 = sext i8 %i.bf to i32                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.bk = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #24 ; 3 uses
+  %4 = icmp slt i32 %spec.select.i, 0
+  %5 = sub nsw i32 0, %3
+  %spec.select10.i.i = select i1 %4, i32 %5, i32 %3
   %i.bl = icmp slt i32 %spec.select10.i.i, 0
   %i.bm = sub nsw i32 0, %1
   %i.bn = select i1 %i.bl, i32 %i.bm, i32 %1
@@ -662,7 +656,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   br label %_ZNK7CaDiCaL8External5fixedEi.exit.thread
 
-_ZNK7CaDiCaL8External5fixedEi.exit.thread:        ; preds = %bb.i, %bb.h, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit, %_ZNSt6vectorIiSaIiEED2Ev.exit, %_ZNK7CaDiCaL8External5fixedEi.exit, %bb.g, %bb.a
+_ZNK7CaDiCaL8External5fixedEi.exit.thread:        ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit, %_ZNSt6vectorIiSaIiEED2Ev.exit, %bb.g, %bb.a
   ret void
 
 bb.o:                                             ; preds = %bb.l
@@ -1065,8 +1059,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.m, %.lr.ph.i
-  %.sroa.09.014.i = phi ptr [ %i.k, %.lr.ph.i ], [ %i.ao, %bb.m ] ; 3 uses
-  %i.s = load i32, ptr %.sroa.09.014.i, align 4, !tbaa !192 ; 6 uses
+  %.sroa.09.014.i = phi ptr [ %i.k, %.lr.ph.i ], [ %i.ao, %bb.m ] ; 2 uses
+  %i.s = load i32, ptr %.sroa.09.014.i, align 4, !tbaa !192 ; 4 uses
   %i.t = tail call i32 @llvm.abs.i32(i32 %i.s, i1 true) ; 3 uses
   %i.u = load i32, ptr %i.o, align 8, !tbaa !52
   %.not.i.i = icmp sgt i32 %i.t, %i.u
@@ -1101,25 +1095,22 @@ _ZNK7CaDiCaL8External4ivalEi.exit.i:              ; preds = %bb.i, %bb.h, %bb.g
   %.0.i.i = phi i1 [ %i.am, %bb.i ], [ false, %bb.h ], [ false, %bb.g ]
   %i.an = icmp slt i32 %i.s, 0
   %spec.select.i.i = xor i1 %i.an, %.0.i.i
-  %1 = sub nsw i32 0, %i.s
-  %2 = select i1 %spec.select.i.i, i32 %i.s, i32 %1 ; 2 uses
-  %.not.i = icmp eq i32 %2, %i.s
+  %.not13.i = icmp eq i32 %i.s, 0                 ; 2 uses
+  %.not.i = or i1 %.not13.i, %spec.select.i.i
   br i1 %.not.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %_ZNK7CaDiCaL8External4ivalEi.exit.i
   tail call void (ptr, ...) @_ZN7CaDiCaL5fatalEPKcz(ptr noundef nonnull @.str.6, i32 noundef %i.s)
-  br label %bb.k
-
-bb.k:                                             ; preds = %bb.j, %_ZNK7CaDiCaL8External4ivalEi.exit.i
-  %.not8.i = icmp eq i32 %2, 0
-  br i1 %.not8.i, label %bb.l, label %bb.m
-
-bb.l:                                             ; preds = %bb.k
-  %3 = load i32, ptr %.sroa.09.014.i, align 4, !tbaa !192
-  tail call void (ptr, ...) @_ZN7CaDiCaL5fatalEPKcz(ptr noundef nonnull @.str.7, i32 noundef %3)
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k
+bb.k:                                             ; preds = %_ZNK7CaDiCaL8External4ivalEi.exit.i
+  br i1 %.not13.i, label %bb.l, label %bb.m
+
+bb.l:                                             ; preds = %bb.k
+  tail call void (ptr, ...) @_ZN7CaDiCaL5fatalEPKcz(ptr noundef nonnull @.str.7, i32 noundef 0)
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.09.014.i, i64 4 ; 2 uses
   %.not12.i = icmp eq ptr %i.ao, %i.m
   br i1 %.not12.i, label %_ZN7CaDiCaL8External27check_assumptions_satisfiedEv.exit.loopexit, label %bb.g
@@ -1522,7 +1513,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
   %.sroa.09.014 = phi ptr [ %i.b, %.lr.ph ], [ %i.af, %bb.h ] ; 3 uses
-  %i.i = load i32, ptr %.sroa.09.014, align 4, !tbaa !192 ; 6 uses
+  %i.i = load i32, ptr %.sroa.09.014, align 4, !tbaa !192 ; 4 uses
   %i.j = tail call i32 @llvm.abs.i32(i32 %i.i, i1 true) ; 3 uses
   %i.k = load i32, ptr %i.e, align 8, !tbaa !52
   %.not.i = icmp sgt i32 %i.j, %i.k
@@ -1557,25 +1548,23 @@ _ZNK7CaDiCaL8External4ivalEi.exit:                ; preds = %bb.b, %bb.c, %bb.d
   %.0.i = phi i1 [ %i.ac, %bb.d ], [ false, %bb.c ], [ false, %bb.b ]
   %i.ad = icmp slt i32 %i.i, 0
   %spec.select.i = xor i1 %i.ad, %.0.i
-  %1 = sub nsw i32 0, %i.i
-  %2 = select i1 %spec.select.i, i32 %i.i, i32 %1 ; 2 uses
-  %.not = icmp eq i32 %2, %i.i
+  %.not13 = icmp eq i32 %i.i, 0                   ; 2 uses
+  %.not = or i1 %.not13, %spec.select.i
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZNK7CaDiCaL8External4ivalEi.exit
   tail call void (ptr, ...) @_ZN7CaDiCaL5fatalEPKcz(ptr noundef nonnull @.str.6, i32 noundef %i.i)
-  br label %bb.f
+  br label %bb.h
 
-bb.f:                                             ; preds = %bb.e, %_ZNK7CaDiCaL8External4ivalEi.exit
-  %.not8 = icmp eq i32 %2, 0
-  br i1 %.not8, label %bb.g, label %bb.h
+bb.f:                                             ; preds = %_ZNK7CaDiCaL8External4ivalEi.exit
+  br i1 %.not13, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.ae = load i32, ptr %.sroa.09.014, align 4, !tbaa !192
   tail call void (ptr, ...) @_ZN7CaDiCaL5fatalEPKcz(ptr noundef nonnull @.str.7, i32 noundef %i.ae)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f
+bb.h:                                             ; preds = %bb.e, %bb.g, %bb.f
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.09.014, i64 4 ; 2 uses
   %.not12 = icmp eq ptr %i.af, %i.d
   br i1 %.not12, label %._crit_edge, label %bb.b
@@ -1978,8 +1967,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN7CaDiCaL8External6frozenEi.exit.thread
-  %i.n = phi ptr [ null, %.lr.ph ], [ %6, %_ZN7CaDiCaL8External6frozenEi.exit.thread ] ; 9 uses
-  %i.o = phi ptr [ null, %.lr.ph ], [ %7, %_ZN7CaDiCaL8External6frozenEi.exit.thread ] ; 9 uses
+  %i.n = phi ptr [ null, %.lr.ph ], [ %6, %_ZN7CaDiCaL8External6frozenEi.exit.thread ] ; 10 uses
+  %i.o = phi ptr [ null, %.lr.ph ], [ %7, %_ZN7CaDiCaL8External6frozenEi.exit.thread ] ; 10 uses
   %.sroa.038.050 = phi i32 [ 1, %.lr.ph ], [ %i.bs, %_ZN7CaDiCaL8External6frozenEi.exit.thread ] ; 6 uses
   %i.p = call i32 @llvm.abs.i32(i32 %.sroa.038.050, i1 true) ; 3 uses
   %i.q = load i32, ptr %i.h, align 8, !tbaa !52
@@ -2023,27 +2012,21 @@ bb.f:                                             ; preds = %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !tbaa !208 ; 2 uses
   %.not.i.i = icmp eq i8 %i.an, 0
-  br i1 %.not.i.i, label %_ZNK7CaDiCaL8External5fixedEi.exit, label %bb.g
+  br i1 %.not.i.i, label %_ZN7CaDiCaL8External6frozenEi.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = sext i8 %i.an to i32
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 712
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !209
   %i.aq = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %i.al
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !211
   %.not9.i.i = icmp eq i32 %i.ar, 0
-  %spec.select.i.i = select i1 %.not9.i.i, i32 %3, i32 0
-  br label %_ZNK7CaDiCaL8External5fixedEi.exit
+  br i1 %.not9.i.i, label %bb.h, label %_ZN7CaDiCaL8External6frozenEi.exit.thread
 
-_ZNK7CaDiCaL8External5fixedEi.exit:               ; preds = %bb.f, %bb.g
-  %.0.i.i = phi i32 [ 0, %bb.f ], [ %spec.select.i.i, %bb.g ] ; 2 uses
+bb.h:                                             ; preds = %bb.g
+  %3 = sext i8 %i.an to i32                       ; 2 uses
   %4 = icmp slt i32 %spec.select.i, 0
-  %5 = sub nsw i32 0, %.0.i.i
-  %spec.select10.i.i = select i1 %4, i32 %5, i32 %.0.i.i ; 2 uses
-  %.not = icmp eq i32 %spec.select10.i.i, 0
-  br i1 %.not, label %_ZN7CaDiCaL8External6frozenEi.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %_ZNK7CaDiCaL8External5fixedEi.exit
+  %5 = sub nsw i32 0, %3
+  %spec.select10.i.i = select i1 %4, i32 %5, i32 %3
   %i.as = icmp slt i32 %spec.select10.i.i, 0
   %i.at = sub nsw i32 0, %.sroa.038.050
   %i.au = select i1 %i.as, i32 %i.at, i32 %.sroa.038.050 ; 2 uses
@@ -2137,9 +2120,9 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.o
   store ptr %.pre.pre, ptr %i.l, align 8, !tbaa !190
   br label %_ZN7CaDiCaL8External6frozenEi.exit.thread
 
-_ZN7CaDiCaL8External6frozenEi.exit.thread:        ; preds = %bb.e, %bb.d, %bb.c, %_ZN7CaDiCaL8External6frozenEi.exit, %_ZNK7CaDiCaL8External5fixedEi.exit, %bb.o, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
-  %6 = phi ptr [ %i.n, %bb.e ], [ %i.n, %bb.d ], [ %i.n, %bb.c ], [ %i.n, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.n, %_ZNK7CaDiCaL8External5fixedEi.exit ], [ %.pre.pre, %bb.o ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ] ; 2 uses
-  %7 = phi ptr [ %i.o, %bb.e ], [ %i.o, %bb.d ], [ %i.o, %bb.c ], [ %i.o, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.o, %_ZNK7CaDiCaL8External5fixedEi.exit ], [ %i.br, %bb.o ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ]
+_ZN7CaDiCaL8External6frozenEi.exit.thread:        ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %_ZN7CaDiCaL8External6frozenEi.exit, %bb.o, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
+  %6 = phi ptr [ %i.n, %bb.e ], [ %i.n, %bb.d ], [ %i.n, %bb.c ], [ %i.n, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.n, %bb.g ], [ %.pre.pre, %bb.o ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.n, %bb.f ] ; 2 uses
+  %7 = phi ptr [ %i.o, %bb.e ], [ %i.o, %bb.d ], [ %i.o, %bb.c ], [ %i.o, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.o, %bb.g ], [ %i.br, %bb.o ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.o, %bb.f ]
   %i.bs = add i32 %.sroa.038.050, 1
   %.not45 = icmp eq i32 %.sroa.038.050, %i.g
   br i1 %.not45, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %bb.c
@@ -2201,8 +2184,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNK7CaDiCaL8External5fixedEi.exit.thread
-  %i.n = phi ptr [ null, %.lr.ph ], [ %6, %_ZNK7CaDiCaL8External5fixedEi.exit.thread ] ; 8 uses
-  %i.o = phi ptr [ null, %.lr.ph ], [ %7, %_ZNK7CaDiCaL8External5fixedEi.exit.thread ] ; 8 uses
+  %i.n = phi ptr [ null, %.lr.ph ], [ %6, %_ZNK7CaDiCaL8External5fixedEi.exit.thread ] ; 9 uses
+  %i.o = phi ptr [ null, %.lr.ph ], [ %7, %_ZNK7CaDiCaL8External5fixedEi.exit.thread ] ; 9 uses
   %.sroa.043.056 = phi i32 [ 1, %.lr.ph ], [ %i.ck, %_ZNK7CaDiCaL8External5fixedEi.exit.thread ] ; 7 uses
   %i.p = call i32 @llvm.abs.i32(i32 %.sroa.043.056, i1 true) ; 3 uses
   %i.q = load i32, ptr %i.h, align 8, !tbaa !52
@@ -2246,27 +2229,21 @@ bb.e:                                             ; preds = %.thread
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !tbaa !208 ; 2 uses
   %.not.i.i = icmp eq i8 %i.an, 0
-  br i1 %.not.i.i, label %_ZNK7CaDiCaL8External5fixedEi.exit, label %bb.f
+  br i1 %.not.i.i, label %_ZNK7CaDiCaL8External5fixedEi.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = sext i8 %i.an to i32
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 712
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !209
   %i.aq = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %i.al
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !211
   %.not9.i.i = icmp eq i32 %i.ar, 0
-  %spec.select.i.i = select i1 %.not9.i.i, i32 %3, i32 0
-  br label %_ZNK7CaDiCaL8External5fixedEi.exit
+  br i1 %.not9.i.i, label %bb.g, label %_ZNK7CaDiCaL8External5fixedEi.exit.thread
 
-_ZNK7CaDiCaL8External5fixedEi.exit:               ; preds = %bb.e, %bb.f
-  %.0.i.i = phi i32 [ 0, %bb.e ], [ %spec.select.i.i, %bb.f ] ; 2 uses
+bb.g:                                             ; preds = %bb.f
+  %3 = sext i8 %i.an to i32                       ; 2 uses
   %4 = icmp slt i32 %spec.select.i, 0
-  %5 = sub nsw i32 0, %.0.i.i
-  %spec.select10.i.i = select i1 %4, i32 %5, i32 %.0.i.i ; 2 uses
-  %.not = icmp eq i32 %spec.select10.i.i, 0
-  br i1 %.not, label %_ZNK7CaDiCaL8External5fixedEi.exit.thread, label %bb.g
-
-bb.g:                                             ; preds = %_ZNK7CaDiCaL8External5fixedEi.exit
+  %5 = sub nsw i32 0, %3
+  %spec.select10.i.i = select i1 %4, i32 %5, i32 %3
   %i.as = icmp slt i32 %spec.select10.i.i, 0      ; 2 uses
   %i.at = sub nsw i32 0, %.sroa.043.056
   %i.au = select i1 %i.as, i32 %i.at, i32 %.sroa.043.056 ; 2 uses
@@ -2385,9 +2362,9 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.p
   store ptr %.pre.pre, ptr %i.l, align 8, !tbaa !190
   br label %_ZNK7CaDiCaL8External5fixedEi.exit.thread
 
-_ZNK7CaDiCaL8External5fixedEi.exit.thread:        ; preds = %bb.c, %.thread, %_ZN7CaDiCaL8External6frozenEi.exit, %_ZNK7CaDiCaL8External5fixedEi.exit, %bb.p, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
-  %6 = phi ptr [ %i.n, %bb.c ], [ %i.n, %.thread ], [ %i.n, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.n, %_ZNK7CaDiCaL8External5fixedEi.exit ], [ %.pre.pre, %bb.p ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ] ; 2 uses
-  %7 = phi ptr [ %i.o, %bb.c ], [ %i.o, %.thread ], [ %i.o, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.o, %_ZNK7CaDiCaL8External5fixedEi.exit ], [ %i.cj, %bb.p ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ]
+_ZNK7CaDiCaL8External5fixedEi.exit.thread:        ; preds = %bb.f, %bb.e, %bb.c, %.thread, %_ZN7CaDiCaL8External6frozenEi.exit, %bb.p, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
+  %6 = phi ptr [ %i.n, %bb.c ], [ %i.n, %.thread ], [ %i.n, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.n, %bb.f ], [ %.pre.pre, %bb.p ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.n, %bb.e ] ; 2 uses
+  %7 = phi ptr [ %i.o, %bb.c ], [ %i.o, %.thread ], [ %i.o, %_ZN7CaDiCaL8External6frozenEi.exit ], [ %i.o, %bb.f ], [ %i.cj, %bb.p ], [ %.pre.pre, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.o, %bb.e ]
   %i.ck = add i32 %.sroa.043.056, 1
   %.not51 = icmp eq i32 %.sroa.043.056, %i.g
   br i1 %.not51, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %bb.c

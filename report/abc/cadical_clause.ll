@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bf
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !13  ; 2 uses
   %.not.i = icmp eq i8 %i.bh, 0
-  br i1 %.not.i, label %_ZN7CaDiCaL8Internal5fixedEi.exit, label %bb.i
+  br i1 %.not.i, label %bb.s, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.bi = sext i8 %i.bh to i32
@@ -212,18 +212,14 @@ bb.i:                                             ; preds = %bb.h
   %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.bj, i64 %i.bf
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !197
   %.not9.i = icmp eq i32 %i.bl, 0
-  %spec.select.i62.a = select i1 %.not9.i, i32 %i.bi, i32 0
-  br label %_ZN7CaDiCaL8Internal5fixedEi.exit
-
-_ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.h, %bb.i
-  %.0.i = phi i32 [ 0, %bb.h ], [ %spec.select.i62.a, %bb.i ] ; 2 uses
+  %spec.select.i62 = select i1 %.not9.i, i32 %i.bi, i32 0 ; 3 uses
   %4 = icmp slt i32 %i.bc, 0                      ; 2 uses
-  %5 = sub nsw i32 0, %.0.i
-  %spec.select10.i = select i1 %4, i32 %5, i32 %.0.i ; 2 uses
-  %6 = icmp slt i32 %spec.select10.i, 0
+  %5 = sub nsw i32 0, %spec.select.i62
+  %spec.select.i62.a = select i1 %4, i32 %5, i32 %spec.select.i62
+  %6 = icmp slt i32 %spec.select.i62.a, 0
   br i1 %6, label %bb.j, label %bb.r
 
-bb.j:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
+bb.j:                                             ; preds = %bb.i
   %i.bm = load i8, ptr %i.aj, align 8, !tbaa !201, !range !202, !noundef !203
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.k, label %_ZNSt6vectorIlSaIlEE9push_backERKl.exit
@@ -317,11 +313,11 @@ _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJRKlEEEvN9__gnu_cxx17__normal_iteratorIP
   store ptr %i.de, ptr %i.ap, align 8, !tbaa !255
   br label %_ZNSt6vectorIlSaIlEE9push_backERKl.exit
 
-bb.r:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
-  %.not51 = icmp eq i32 %spec.select10.i, 0
+bb.r:                                             ; preds = %bb.i
+  %.not51 = icmp eq i32 %spec.select.i62, 0
   br i1 %.not51, label %bb.s, label %_ZNSt6vectorIlSaIlEE9push_backERKl.exit
 
-bb.s:                                             ; preds = %bb.r
+bb.s:                                             ; preds = %bb.h, %bb.r
   %i.df = load ptr, ptr %i.ah, align 8, !tbaa !176 ; 4 uses
   %i.dg = load ptr, ptr %i.ai, align 8, !tbaa !200
   %.not.i65 = icmp eq ptr %i.df, %i.dg

@@ -204,15 +204,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %storemerge, i64 4
   %i.k = load i32, ptr %i.j, align 4, !tbaa !194  ; 2 uses
   %i.l = icmp sgt i32 %i.i, %i.k                  ; 2 uses
-  %.121 = select i1 %i.l, i32 %.01824, i32 %.02023 ; 6 uses
+  %.121 = select i1 %i.l, i32 %.01824, i32 %.02023 ; 5 uses
   %i.m = tail call noundef i32 @llvm.abs.i32(i32 %.121, i1 true)
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.n
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !184  ; 2 uses
-  %3 = icmp slt i32 %.121, 0
-  %4 = sub nsw i32 0, %i.p
-  %spec.select.i = select i1 %3, i32 %4, i32 %i.p
-  %.not5 = icmp eq i32 %spec.select.i, 0
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !184
+  %.not5 = icmp eq i32 %i.p, 0
   br i1 %.not5, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -615,15 +612,12 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i
   %i.ac = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 4
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !194 ; 2 uses
   %i.ae = icmp sgt i32 %i.ab, %i.ad               ; 2 uses
-  %.121.i = select i1 %i.ae, i32 %.01824.i, i32 %.02023.i ; 6 uses
+  %.121.i = select i1 %i.ae, i32 %.01824.i, i32 %.02023.i ; 5 uses
   %i.af = tail call noundef i32 @llvm.abs.i32(i32 %.121.i, i1 true)
   %i.ag = zext nneg i32 %i.af to i64
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.ag
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !184 ; 2 uses
-  %2 = icmp slt i32 %.121.i, 0
-  %3 = sub nsw i32 0, %i.ai
-  %spec.select.i.i = select i1 %2, i32 %3, i32 %i.ai
-  %.not5.i = icmp eq i32 %spec.select.i.i, 0
+  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !184
+  %.not5.i = icmp eq i32 %i.ai, 0
   br i1 %.not5.i, label %_ZN7CaDiCaL8Internal15probe_dominatorEii.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1026,15 +1020,12 @@ bb.i:                                             ; preds = %bb.j, %.lr.ph.i
   %i.aq = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 4
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !194 ; 2 uses
   %i.as = icmp sgt i32 %i.ap, %i.ar               ; 2 uses
-  %.121.i = select i1 %i.as, i32 %.01824.i, i32 %.02023.i ; 6 uses
+  %.121.i = select i1 %i.as, i32 %.01824.i, i32 %.02023.i ; 5 uses
   %i.at = tail call noundef i32 @llvm.abs.i32(i32 %.121.i, i1 true)
   %i.au = zext nneg i32 %i.at to i64
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.au
-  %i.aw = load i32, ptr %i.av, align 4, !tbaa !184 ; 2 uses
-  %2 = icmp slt i32 %.121.i, 0
-  %3 = sub nsw i32 0, %i.aw
-  %spec.select.i.i = select i1 %2, i32 %3, i32 %i.aw
-  %.not5.i = icmp eq i32 %spec.select.i.i, 0
+  %i.aw = load i32, ptr %i.av, align 4, !tbaa !184
+  %.not5.i = icmp eq i32 %i.aw, 0
   br i1 %.not5.i, label %_ZN7CaDiCaL8Internal15probe_dominatorEii.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i

@@ -204,17 +204,14 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.q, %bb.r, %_ZSt8
 .lr.ph170:                                        ; preds = %._crit_edge165, %bb.t
   %.sroa.0121.0168 = phi ptr [ %i.dv, %bb.t ], [ %i.cg, %._crit_edge165 ] ; 2 uses
   %.sroa.0124.0167 = phi ptr [ %.sroa.0124.1, %bb.t ], [ %i.cg, %._crit_edge165 ] ; 3 uses
-  %i.dn = load i32, ptr %.sroa.0121.0168, align 4, !tbaa !168 ; 4 uses
+  %i.dn = load i32, ptr %.sroa.0121.0168, align 4, !tbaa !168 ; 3 uses
   store i32 %i.dn, ptr %.sroa.0124.0167, align 4, !tbaa !168
   %i.do = tail call noundef i32 @llvm.abs.i32(i32 %i.dn, i1 true)
   %i.dp = zext nneg i32 %i.do to i64
   %i.dq = load ptr, ptr %i.ab, align 8, !tbaa !241
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 %i.dp ; 2 uses
-  %i.ds = load i8, ptr %i.dr, align 1, !tbaa !172 ; 2 uses
-  %3 = icmp slt i32 %i.dn, 0
-  %4 = sub i8 0, %i.ds
-  %spec.select.i105 = select i1 %3, i8 %4, i8 %i.ds
-  %.not103 = icmp eq i8 %spec.select.i105, 0
+  %i.ds = load i8, ptr %i.dr, align 1, !tbaa !172
+  %.not103 = icmp eq i8 %i.ds, 0
   br i1 %.not103, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph170
