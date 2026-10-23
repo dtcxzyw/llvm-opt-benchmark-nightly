@@ -202,13 +202,16 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ad, %bb.af
-  %.3.ph = phi i32 [ 77, %bb.ad ], [ 75, %bb.af ]
-  %7 = tail call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.3.ph) ; 2 uses
+  %.3.ph = phi i32 [ 77, %bb.ad ], [ 75, %bb.af ] ; 2 uses
+  %7 = icmp eq i32 %.3.ph, 76
+  %.finite = select i1 %7, i32 76, i32 77
+  %8 = icmp eq i32 %.3.ph, 75
+  %.finite137 = select i1 %8, i32 75, i32 %.finite ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %6, i64 312
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !58
   %i.ck = getelementptr inbounds nuw i8, ptr %6, i64 320
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !59
-  %i.cm = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.cj, ptr noundef nonnull %6, i32 noundef %i.cl, i32 noundef %7, ptr noundef nonnull @FUNC_NAME) #7 ; 0 uses
+  %i.cm = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.cj, ptr noundef nonnull %6, i32 noundef %i.cl, i32 noundef %.finite137, ptr noundef nonnull @FUNC_NAME) #7 ; 0 uses
   br label %bb.ap
 
 ompi_comm_iface_coll_check.exit:                  ; preds = %bb.ae
@@ -296,7 +299,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.thread120, %bb.an, %ompi_comm_iface_coll_check.exit, %bb.ao, %bb.ag
-  %.1 = phi i32 [ %7, %bb.ag ], [ %.0.ph, %.thread120 ], [ 0, %bb.an ], [ %i.dr, %bb.ao ], [ 0, %ompi_comm_iface_coll_check.exit ]
+  %.1 = phi i32 [ %.finite137, %bb.ag ], [ %.0.ph, %.thread120 ], [ 0, %bb.an ], [ %i.dr, %bb.ao ], [ 0, %ompi_comm_iface_coll_check.exit ]
   ret i32 %.1
 }
 

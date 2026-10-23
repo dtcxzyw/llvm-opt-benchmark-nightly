@@ -202,16 +202,17 @@ bb.r:                                             ; preds = %.lr.ph.split
 
 .thread111:                                       ; preds = %.lr.ph.split, %bb.r, %.lr.ph
   %.2114 = phi i32 [ 3, %.lr.ph ], [ 3, %bb.r ], [ 2, %.lr.ph.split ]
-  %8 = tail call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.2114) ; 2 uses
+  %8 = icmp eq i32 %.2114, 2
+  %.finite = select i1 %8, i32 2, i32 3           ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %5, i64 312
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !60
   %i.bl = getelementptr inbounds nuw i8, ptr %5, i64 320
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !61
-  %i.bn = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.bk, ptr noundef %5, i32 noundef %i.bm, i32 noundef %8, ptr noundef nonnull @FUNC_NAME) #8 ; 0 uses
+  %i.bn = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.bk, ptr noundef %5, i32 noundef %i.bm, i32 noundef %.finite, ptr noundef nonnull @FUNC_NAME) #8 ; 0 uses
   br label %.thread116
 
 .thread116:                                       ; preds = %ompi_comm_invalid.exit.thread, %.thread, %.thread111, %bb.n
-  %.0.ph = phi i32 [ %i.aq, %bb.n ], [ %8, %.thread111 ], [ %i.at, %.thread ], [ %i.l, %ompi_comm_invalid.exit.thread ]
+  %.0.ph = phi i32 [ %i.aq, %bb.n ], [ %.finite, %.thread111 ], [ %i.at, %.thread ], [ %i.l, %ompi_comm_invalid.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %bb.y
 

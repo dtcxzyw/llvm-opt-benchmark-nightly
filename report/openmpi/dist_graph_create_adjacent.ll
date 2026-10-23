@@ -202,13 +202,16 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ab, %bb.ad
-  %.0111.ph = phi i32 [ 77, %bb.ab ], [ 75, %bb.ad ]
-  %10 = call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.0111.ph) ; 2 uses
+  %.0111.ph = phi i32 [ 77, %bb.ab ], [ 75, %bb.ad ] ; 2 uses
+  %10 = icmp eq i32 %.0111.ph, 76
+  %.finite = select i1 %10, i32 76, i32 77
+  %11 = icmp eq i32 %.0111.ph, 75
+  %.finite186 = select i1 %11, i32 75, i32 %.finite ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !56
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.dr = load i32, ptr %i.dq, align 8, !tbaa !57
-  %i.ds = call i32 @ompi_errhandler_invoke(ptr noundef %i.dp, ptr noundef nonnull %0, i32 noundef %i.dr, i32 noundef %10, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
+  %i.ds = call i32 @ompi_errhandler_invoke(ptr noundef %i.dp, ptr noundef nonnull %0, i32 noundef %i.dr, i32 noundef %.finite186, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
   br label %bb.ag
 
 ompi_comm_iface_create_check.exit:                ; preds = %bb.ac
@@ -229,7 +232,7 @@ bb.af:                                            ; preds = %ompi_comm_iface_cre
   br label %bb.ag
 
 bb.ag:                                            ; preds = %ompi_comm_iface_create_check.exit, %bb.af, %bb.ae, %ompi_errcode_get_mpi_code.exit, %bb.u, %.split127.us, %bb.r, %.split.us, %bb.m, %bb.h, %bb.f, %ompi_comm_invalid.exit.thread
-  %.0 = phi i32 [ %i.l, %ompi_comm_invalid.exit.thread ], [ %i.n, %bb.f ], [ %i.u, %bb.h ], [ %i.af, %bb.m ], [ %i.av, %.split.us ], [ %i.bd, %bb.r ], [ %i.bl, %.split127.us ], [ %i.bt, %bb.u ], [ %i.di, %ompi_errcode_get_mpi_code.exit ], [ %10, %bb.ae ], [ 0, %ompi_comm_iface_create_check.exit ], [ %i.dx, %bb.af ]
+  %.0 = phi i32 [ %i.l, %ompi_comm_invalid.exit.thread ], [ %i.n, %bb.f ], [ %i.u, %bb.h ], [ %i.af, %bb.m ], [ %i.av, %.split.us ], [ %i.bd, %bb.r ], [ %i.bl, %.split127.us ], [ %i.bt, %bb.u ], [ %i.di, %ompi_errcode_get_mpi_code.exit ], [ %.finite186, %bb.ae ], [ 0, %ompi_comm_iface_create_check.exit ], [ %i.dx, %bb.af ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.0
 }

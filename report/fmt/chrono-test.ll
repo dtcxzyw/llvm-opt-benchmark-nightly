@@ -205,11 +205,12 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 define linkonce_odr hidden void @_ZN3fmt3v126detail24write_fractional_secondsIcNS0_14basic_appenderIcEENSt6chrono8durationIySt5ratioILl1ELl3EEEEEEvRT0_T1_i(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 %1, i32 noundef %2) local_unnamed_addr #2 comdat {
 _ZN3fmt3v126detail13duration_castINSt6chrono8durationIySt5ratioILl1ELl1000000EEEEyS5_ILl1ELl3EETnNSt9enable_ifIXaasr3std11is_integralIT0_EE5valuesr3std11is_integralINT_3repEEE5valueEiE4typeELi0EEESB_NS4_ISA_T1_EE.exit:
   %.fr = freeze i64 %1
-  %i.a = urem i64 %.fr, 3                         ; 2 uses
-  %3 = trunc nuw nsw i64 %i.a to i32
-  %.lhs.trunc = mul nuw nsw i32 %3, 1000000
-  %4 = udiv i32 %.lhs.trunc, 3
-  %.zext = zext nneg i32 %4 to i64                ; 6 uses
+  %i.a = urem i64 %.fr, 3                         ; 3 uses
+  %3 = icmp eq i64 %i.a, 1
+  %.finite = select i1 %3, i32 333333, i32 666666
+  %4 = icmp eq i64 %i.a, 0
+  %.finite121 = select i1 %4, i32 0, i32 %.finite
+  %.zext = zext nneg i32 %.finite121 to i64       ; 6 uses
   %i.b = or i64 %.zext, 1
   %i.c = tail call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %i.b, i1 true)
   %i.d = xor i64 %i.c, 63

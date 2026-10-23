@@ -204,7 +204,7 @@ ext4_block_to_path.exit:                          ; preds = %bb.h
 
 ext4_block_to_path.exit.thread:                   ; preds = %bb.i, %bb.g, %bb.e, %bb.c
   %i.bg = phi i32 [ %i.q, %bb.c ], [ 14, %bb.i ], [ 13, %bb.g ], [ 12, %bb.e ] ; 2 uses
-  %.0 = phi i32 [ 1, %bb.c ], [ 4, %bb.i ], [ 3, %bb.g ], [ 2, %bb.e ] ; 4 uses
+  %.0 = phi i32 [ 1, %bb.c ], [ 4, %bb.i ], [ 3, %bb.g ], [ 2, %bb.e ] ; 6 uses
   %i.bh = xor i32 %i.q, -1
   tail call void @ext4_es_remove_extent(ptr noundef %1, i32 noundef %i.q, i32 noundef %i.bh) #10
   %i.bi = load i64, ptr %i.h, align 8
@@ -275,11 +275,13 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %3 = trunc nuw nsw i32 %.0 to i8
-  %.idx = mul nuw i8 %3, 24
-  %.lhs.trunc = add i8 %.idx, -24
-  %4 = udiv exact i8 %.lhs.trunc, 24
-  %i.cc = zext nneg i8 %4 to i32
+  %3 = icmp eq i32 %.0, 3
+  %.finite = select i1 %3, i8 2, i8 3
+  %4 = icmp eq i32 %.0, 2
+  %.finite108 = select i1 %4, i8 1, i8 %.finite
+  %5 = icmp eq i32 %.0, 1
+  %.finite109 = select i1 %5, i8 0, i8 %.finite108
+  %i.cc = zext nneg i8 %.finite109 to i32
   call fastcc void @ext4_free_branches(ptr noundef %0, ptr noundef %1, ptr noundef null, ptr noundef nonnull %i.b, ptr noundef nonnull %i.cb, i32 noundef %i.cc) #12, !srcloc !49
   %i.cd = load ptr, ptr %i.by, align 8
   store i32 0, ptr %i.cd, align 4
@@ -682,7 +684,7 @@ ext4_block_to_path.exit:                          ; preds = %bb.c, %bb.e, %bb.g,
   %i.bf = phi i32 [ %i.x, %bb.c ], [ %i.x, %bb.e ], [ %i.x, %bb.g ], [ %i.x, %bb.i ], [ %.pre293, %bb.j ] ; 2 uses
   %i.bg = phi ptr [ %i.g, %bb.c ], [ %i.g, %bb.e ], [ %i.g, %bb.g ], [ %i.g, %bb.i ], [ %.pre, %bb.j ]
   %i.bh = phi i1 [ false, %bb.c ], [ true, %bb.e ], [ true, %bb.g ], [ true, %bb.i ], [ false, %bb.j ]
-  %.060.i = phi i32 [ 1, %bb.c ], [ 2, %bb.e ], [ 3, %bb.g ], [ 4, %bb.i ], [ 0, %bb.j ] ; 13 uses
+  %.060.i = phi i32 [ 1, %bb.c ], [ 2, %bb.e ], [ 3, %bb.g ], [ 4, %bb.i ], [ 0, %bb.j ] ; 15 uses
   %i.bi = icmp ult i32 %spec.select, 12
   br i1 %i.bi, label %ext4_block_to_path.exit240.thread, label %bb.k
 
@@ -878,11 +880,13 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dp = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %6 = trunc nuw nsw i32 %.060.i to i8
-  %.idx = mul nuw i8 %6, 24
-  %.lhs.trunc = add i8 %.idx, -24
-  %7 = sdiv exact i8 %.lhs.trunc, 24
-  %i.dq = sext i8 %7 to i32
+  %6 = icmp eq i32 %.060.i, 2
+  %.finite = select i1 %6, i8 1, i8 2
+  %7 = icmp eq i32 %.060.i, 1
+  %.finite396 = select i1 %7, i8 0, i8 %.finite
+  %8 = icmp eq i32 %.060.i, 0
+  %.finite397 = select i1 %8, i8 -1, i8 %.finite396
+  %i.dq = sext i8 %.finite397 to i32
   call fastcc void @ext4_free_branches(ptr noundef %0, ptr noundef %1, ptr noundef null, ptr noundef nonnull %i.c, ptr noundef nonnull %i.dp, i32 noundef %i.dq) #12, !srcloc !72
   %i.dr = load ptr, ptr %i.dm, align 8
   store i32 0, ptr %i.dr, align 4

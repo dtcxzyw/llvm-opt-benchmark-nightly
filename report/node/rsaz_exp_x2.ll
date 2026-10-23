@@ -21,7 +21,7 @@ bb.a:
   %i.b = add nsw i32 %12, 53
   %i.c = sdiv i32 %i.b, 52                        ; 3 uses
   %i.d = mul nsw i32 %i.c, 52
-  %i.e = sub nsw i32 %i.d, %12                    ; 2 uses
+  %i.e = sub nsw i32 %i.d, %12
   %i.f = shl nsw i32 %i.e, 2
   %i.g = shl nsw i32 %i.c, 6
   %i.h = add nsw i32 %i.g, 255
@@ -82,13 +82,18 @@ bb.c:                                             ; preds = %bb.b
   %i.at = sext i32 %i.c to i64
   %i.au = shl nsw i64 %i.at, 3
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.as, i8 0, i64 %i.au, i1 false)
-  %13 = sdiv i32 %i.e, 13
-  %14 = shl nsw i32 %13, 6
+  %13 = icmp eq i32 %12, 1536
+  %.finite254 = select i1 %13, i32 64, i32 64
+  %14 = icmp eq i32 %12, 2048
+  %.finite255 = select i1 %14, i32 128, i32 %.finite254
   %i.av = srem i32 %i.f, 52
-  %i.aw = add nsw i32 %14, %i.av                  ; 2 uses
+  %i.aw = add nsw i32 %.finite255, %i.av
   %i.ax = sdiv i32 %i.aw, 64
-  %15 = srem i32 %i.aw, 64
-  %i.ay = zext nneg i32 %15 to i64
+  %15 = icmp eq i32 %12, 1536
+  %.finite252 = select i1 %15, i32 44, i32 12
+  %16 = icmp eq i32 %12, 2048
+  %.finite253 = select i1 %16, i32 24, i32 %.finite252
+  %i.ay = zext nneg i32 %.finite253 to i64
   %i.az = shl nuw i64 1, %i.ay
   %i.ba = sext i32 %i.ax to i64
   %i.bb = getelementptr inbounds [8 x i8], ptr %i.as, i64 %i.ba ; 2 uses
@@ -293,9 +298,11 @@ bb.h:                                             ; preds = %bb.g
   %i.ei = getelementptr [8 x i8], ptr %i.eb, i64 %i.eh
   %i.ej = getelementptr i8, ptr %i.ei, i64 -8
   store i64 0, ptr %i.ej, align 8, !tbaa !11
-  %.lhs.trunc.i = trunc nuw nsw i32 %12 to i16
-  %16 = urem i16 %.lhs.trunc.i, 5                 ; 2 uses
-  %.not.i = icmp eq i16 %16, 0
+  %17 = icmp eq i32 %12, 1536
+  %.finite = select i1 %17, i16 1, i16 4
+  %18 = icmp eq i32 %12, 2048
+  %.finite251 = select i1 %18, i16 3, i16 %.finite ; 2 uses
+  %.not.i = icmp eq i16 %.finite251, 0
   br i1 %.not.i, label %bb.i, label %.lr.ph.preheader.i
 
 bb.i:                                             ; preds = %bb.h
@@ -303,7 +310,7 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 .lr.ph.preheader.i:                               ; preds = %bb.h
-  %.zext.i = zext nneg i16 %16 to i32
+  %.zext.i = zext nneg i16 %.finite251 to i32
   %i.ek = sub nuw nsw i32 %12, %.zext.i           ; 3 uses
   %i.el = and i32 %i.ek, 63
   %i.em = lshr i32 %i.ek, 6                       ; 2 uses

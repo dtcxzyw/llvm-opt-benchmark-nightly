@@ -204,7 +204,7 @@ define hidden void @_ZN6Assimp3FBX4Util12EncodeBase64B5cxx11EPKcm(ptr dead_on_un
 bb.a:
   %.sroa.0 = alloca i32, align 4                  ; 7 uses
   %i.a = urem i64 %2, 3                           ; 3 uses
-  %i.b = xor i64 %i.a, 3                          ; 2 uses
+  %i.b = xor i64 %i.a, 3                          ; 3 uses
   %i.c = add i64 %i.b, %2
   %i.d = shl i64 %i.c, 2
   %i.e = udiv i64 %i.d, 3                         ; 7 uses
@@ -315,12 +315,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; pre
   %i.cf = getelementptr i8, ptr %i.ce, i64 %i.az
   %i.cg = getelementptr i8, ptr %i.cf, i64 3
   store i8 %i.cd, ptr %i.cg, align 1
-  %.tr = trunc nuw nsw i64 %i.b to i8
-  %.lhs.trunc = shl nuw nsw i8 %.tr, 2
-  %3 = udiv i8 %.lhs.trunc, 3                     ; 2 uses
-  %.zext = zext nneg i8 %3 to i64                 ; 2 uses
+  %3 = icmp eq i64 %i.b, 2
+  %.finite = select i1 %3, i8 2, i8 4
+  %4 = icmp eq i64 %i.b, 1
+  %.finite45 = select i1 %4, i8 1, i8 %.finite    ; 2 uses
+  %.zext = zext nneg i8 %.finite45 to i64         ; 2 uses
   %xtraiter = and i64 %.zext, 3                   ; 3 uses
-  %i.ch = add nsw i8 %3, -1
+  %i.ch = add nsw i8 %.finite45, -1
   %i.ci = icmp ult i8 %i.ch, 3
   br i1 %i.ci, label %.lr.ph39.epil.preheader, label %.lr.ph39.preheader.new
 

@@ -202,13 +202,16 @@ bb.as:                                            ; preds = %bb.ar
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.aq
-  %.2141.ph = phi i32 [ 77, %bb.aq ], [ 75, %bb.as ]
+  %.2141.ph = phi i32 [ 77, %bb.aq ], [ 75, %bb.as ] ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %6, i64 312
   %i.et = load ptr, ptr %i.es, align 8, !tbaa !63
   %i.eu = getelementptr inbounds nuw i8, ptr %6, i64 320
   %i.ev = load i32, ptr %i.eu, align 8, !tbaa !64
-  %9 = call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.2141.ph)
-  %i.ew = call i32 @ompi_errhandler_invoke(ptr noundef %i.et, ptr noundef nonnull %6, i32 noundef %i.ev, i32 noundef %9, ptr noundef nonnull @FUNC_NAME) #9
+  %9 = icmp eq i32 %.2141.ph, 76
+  %.finite = select i1 %9, i32 76, i32 77
+  %10 = icmp eq i32 %.2141.ph, 75
+  %.finite262 = select i1 %10, i32 75, i32 %.finite
+  %i.ew = call i32 @ompi_errhandler_invoke(ptr noundef %i.et, ptr noundef nonnull %6, i32 noundef %i.ev, i32 noundef %.finite262, ptr noundef nonnull @FUNC_NAME) #9
   br label %bb.bl
 
 ompi_comm_iface_coll_check.exit:                  ; preds = %bb.ar
