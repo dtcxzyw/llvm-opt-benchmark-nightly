@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %get_device_or_die.e
   br label %bb.m
 
 bb.m:                                             ; preds = %.critedge, %bb.l
-  %i.am = load i64, ptr %i.ak, align 8, !tbaa !21 ; 5 uses
+  %i.am = load i64, ptr %i.ak, align 8, !tbaa !21 ; 4 uses
   %i.an = trunc i64 %i.am to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
   store i32 0, ptr %i.c, align 4, !tbaa !14
@@ -301,7 +301,7 @@ bb.z:                                             ; preds = %bb.p, %bb.x, %bb.r,
   %.074 = phi ptr [ null, %bb.y ], [ null, %bb.x ], [ null, %bb.p ], [ %i.bc, %bb.r ], [ null, %bb.q ] ; 3 uses
   %.073 = phi ptr [ %i.bj, %bb.y ], [ null, %bb.x ], [ null, %bb.p ], [ null, %bb.r ], [ null, %bb.q ] ; 2 uses
   %sext = shl i64 %i.am, 32
-  %i.bk = ashr exact i64 %sext, 32                ; 3 uses
+  %i.bk = ashr exact i64 %sext, 32                ; 4 uses
   %i.bl = load i64, ptr %0, align 8, !tbaa !22
   %spec.select.i = call i64 @llvm.usub.sat.i64(i64 %i.bl, i64 1)
   %i.bm = icmp ugt i64 %i.bk, %spec.select.i
@@ -358,7 +358,7 @@ bb.ai:                                            ; preds = %strbuf_setlen.exit
   %i.bu = load ptr, ptr %i.f, align 8, !tbaa !20
   %i.bv = call i32 @is_git_directory(ptr noundef %i.bu)
   %.not102 = icmp eq i32 %i.bv, 0
-  br i1 %.not102, label %6, label %bb.aj
+  br i1 %.not102, label %.preheader.preheader, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.bw = load ptr, ptr %i.f, align 8, !tbaa !20
@@ -397,14 +397,11 @@ bb.am:                                            ; preds = %is_implicit_bare_re
   call void @strbuf_add(ptr noundef %1, ptr noundef nonnull @.str.23, i64 noundef 1) #20
   br label %.critedge.thread5
 
-6:                                                ; preds = %bb.ai
-  br i1 %i.ao, label %.preheader.preheader, label %.critedge.thread5
-
-.preheader.preheader:                             ; preds = %6
-  %7 = and i64 %i.am, 4294967295
-  %indvars.iv.next124 = add nsw i64 %7, -1        ; 2 uses
-  %8 = icmp sgt i64 %indvars.iv.next124, %i.al
-  br i1 %8, label %.lr.ph.preheader, label %.critedge.thread5
+.preheader.preheader:                             ; preds = %bb.ai
+  %indvars.iv.next123 = add nsw i64 %i.bk, -1     ; 2 uses
+  %6 = icmp sgt i64 %indvars.iv.next123, %i.al
+  %or.cond125 = select i1 %i.ao, i1 %6, i1 false
+  br i1 %or.cond125, label %.lr.ph.preheader, label %.critedge.thread5
 
 .lr.ph.preheader:                                 ; preds = %.preheader.preheader
   %i.cf = load ptr, ptr %i.f, align 8, !tbaa !20  ; 3 uses
@@ -416,7 +413,7 @@ bb.am:                                            ; preds = %is_implicit_bare_re
   br i1 %i.cg, label %.lr.ph, label %.critedge.thread5, !llvm.loop !102
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.preheader
-  %indvars.iv.next125 = phi i64 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.next124, %.lr.ph.preheader ] ; 3 uses
+  %indvars.iv.next125 = phi i64 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.next123, %.lr.ph.preheader ] ; 3 uses
   %i.ch = getelementptr inbounds i8, ptr %i.cf, i64 %indvars.iv.next125
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !13
   %.not10 = icmp eq i8 %i.ci, 47
@@ -475,8 +472,8 @@ get_device_or_die.exit128:                        ; preds = %bb.at
   %.not106 = icmp eq i64 %.077, %i.ct
   br i1 %.not106, label %.critedge, label %.critedge.thread5
 
-.critedge.thread5:                                ; preds = %bb.w, %6, %get_device_or_die.exit128, %.preheader.preheader, %.preheader, %bb.ah, %bb.am, %is_implicit_bare_repo.exit, %is_implicit_bare_repo.exit.thread, %bb.u, %bb.s
-  %.182.ph = phi i32 [ %.0, %bb.ah ], [ -3, %bb.s ], [ -3, %bb.u ], [ -5, %is_implicit_bare_repo.exit ], [ 3, %bb.am ], [ -4, %is_implicit_bare_repo.exit.thread ], [ -1, %.preheader ], [ -3, %bb.w ], [ -1, %6 ], [ -2, %get_device_or_die.exit128 ], [ -1, %.preheader.preheader ]
+.critedge.thread5:                                ; preds = %bb.w, %.preheader.preheader, %get_device_or_die.exit128, %.preheader, %bb.ah, %bb.am, %is_implicit_bare_repo.exit, %is_implicit_bare_repo.exit.thread, %bb.u, %bb.s
+  %.182.ph = phi i32 [ %.0, %bb.ah ], [ -3, %bb.s ], [ -3, %bb.u ], [ -5, %is_implicit_bare_repo.exit ], [ 3, %bb.am ], [ -4, %is_implicit_bare_repo.exit.thread ], [ -1, %.preheader ], [ -1, %.preheader.preheader ], [ -3, %bb.w ], [ -2, %get_device_or_die.exit128 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   br label %bb.av
 

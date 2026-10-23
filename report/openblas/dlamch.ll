@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlamch?download=true
 inline.NumInlined: 41
 inline.NumDeleted: 1
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumRuntimeUnrolled: 7
 loop-unroll.NumUnrolled: 18
 begin_hunk_0_@dlamch_:bb.a
 bb.n:                                             ; preds = %bb.l
@@ -205,22 +205,13 @@ bb.f:                                             ; preds = %bb.e
   %i.al = fadd double %i.ak, 0.000000e+00         ; 2 uses
   %.not61.i = icmp slt i32 %i.s, 1                ; 4 uses
   %exitcond.not.i.1 = icmp eq i32 %i.s, 2
-  %xtraiter = and i32 %i.s, 7                     ; 2 uses
-  %lcmp.mod317 = icmp ne i32 %xtraiter, 0
+  %exitcond78.not.i.1 = icmp eq i32 %i.s, 2
   br label %.lr.ph75.i
 
-.lr.ph68.i.epil:                                  ; preds = %.lr.ph68.i.epil, %.lr.ph.i45.1
-  %.166.i.epil = phi double [ %8, %.lr.ph68.i.epil ], [ 0.000000e+00, %.lr.ph.i45.1 ]
-  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph68.i.epil ], [ 0, %.lr.ph.i45.1 ]
-  %8 = fadd double %i.bb, %.166.i.epil            ; 2 uses
-  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit.i46, label %.lr.ph68.i.epil, !llvm.loop !15
-
-.loopexit.i46:                                    ; preds = %.lr.ph68.i.epil, %._crit_edge.thread.i
-  %.pn.i = phi double [ %i.ax, %._crit_edge.thread.i ], [ %i.bb, %.lr.ph68.i.epil ]
-  %.140.lcssa80.i = phi double [ 0.000000e+00, %._crit_edge.thread.i ], [ %spec.select380, %.lr.ph68.i.epil ]
-  %.1.lcssa.i = phi double [ 0.000000e+00, %._crit_edge.thread.i ], [ %8, %.lr.ph68.i.epil ]
+.loopexit.i46:                                    ; preds = %.lr.ph.i45.1, %._crit_edge.thread.i
+  %.pn.i = phi double [ %i.ax, %._crit_edge.thread.i ], [ %8, %.lr.ph.i45.1 ]
+  %.140.lcssa80.i = phi double [ 0.000000e+00, %._crit_edge.thread.i ], [ %spec.select380, %.lr.ph.i45.1 ]
+  %.1.lcssa.i = phi double [ 0.000000e+00, %._crit_edge.thread.i ], [ %.lcssa313, %.lr.ph.i45.1 ]
   %i.am = fdiv double %.pn.i, %i.ak
   %i.an = fcmp oeq double %i.av, %.04373.i
   %i.ao = fcmp oeq double %i.am, %.04373.i
@@ -250,29 +241,22 @@ bb.f:                                             ; preds = %bb.e
   %i.az = fadd double %i.au, %i.ay
   %spec.select380 = select i1 %exitcond.not.i.1, double %i.ay, double %i.az
   %i.ba = fmul double %i.ak, %.04373.i
-  %i.bb = fadd double %i.ba, 0.000000e+00         ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod317)
-  br label %.lr.ph68.i.epil
+  %8 = fadd double %i.ba, 0.000000e+00            ; 4 uses
+  %9 = fadd double %8, %8                         ; 2 uses
+  %i.bb = fadd double %8, %9
+  %.lcssa313 = select i1 %exitcond78.not.i.1, double %9, double %i.bb
+  br label %.loopexit.i46
 
 .lr.ph75.preheader.i47:                           ; preds = %.loopexit.i46
   %i.bc = fsub double 0.000000e+00, %i.ak
   %exitcond.not.i54.1 = icmp eq i32 %i.s, 2
-  %xtraiter318 = and i32 %i.s, 7                  ; 2 uses
-  %lcmp.mod322 = icmp ne i32 %xtraiter318, 0
+  %exitcond78.not.i59.1 = icmp eq i32 %i.s, 2
   br label %.lr.ph75.i48
 
-.lr.ph68.i56.epil:                                ; preds = %.lr.ph68.i56.epil, %.lr.ph.i51.1
-  %.166.i57.epil = phi double [ %9, %.lr.ph68.i56.epil ], [ 0.000000e+00, %.lr.ph.i51.1 ]
-  %epil.iter319 = phi i32 [ %epil.iter319.next, %.lr.ph68.i56.epil ], [ 0, %.lr.ph.i51.1 ]
-  %9 = fadd double %i.bs, %.166.i57.epil          ; 2 uses
-  %epil.iter319.next = add i32 %epil.iter319, 1   ; 2 uses
-  %epil.iter319.cmp.not = icmp eq i32 %epil.iter319.next, %xtraiter318
-  br i1 %epil.iter319.cmp.not, label %.loopexit.i60, label %.lr.ph68.i56.epil, !llvm.loop !16
-
-.loopexit.i60:                                    ; preds = %.lr.ph68.i56.epil, %._crit_edge.thread.i67
-  %.pn.i61 = phi double [ %i.bo, %._crit_edge.thread.i67 ], [ %i.bs, %.lr.ph68.i56.epil ]
-  %.140.lcssa80.i62 = phi double [ 0.000000e+00, %._crit_edge.thread.i67 ], [ %spec.select381, %.lr.ph68.i56.epil ]
-  %.1.lcssa.i63 = phi double [ 0.000000e+00, %._crit_edge.thread.i67 ], [ %9, %.lr.ph68.i56.epil ]
+.loopexit.i60:                                    ; preds = %.lr.ph.i51.1, %._crit_edge.thread.i67
+  %.pn.i61 = phi double [ %i.bo, %._crit_edge.thread.i67 ], [ %10, %.lr.ph.i51.1 ]
+  %.140.lcssa80.i62 = phi double [ 0.000000e+00, %._crit_edge.thread.i67 ], [ %spec.select381, %.lr.ph.i51.1 ]
+  %.1.lcssa.i63 = phi double [ 0.000000e+00, %._crit_edge.thread.i67 ], [ %.lcssa309, %.lr.ph.i51.1 ]
   %i.bd = fdiv double %.pn.i61, %i.ak
   %i.be = fcmp oeq double %i.bm, %.04373.i49
   %i.bf = fcmp oeq double %i.bd, %.04373.i49
@@ -302,9 +286,11 @@ bb.f:                                             ; preds = %bb.e
   %i.bq = fadd double %i.bl, %i.bp
   %spec.select381 = select i1 %exitcond.not.i54.1, double %i.bp, double %i.bq
   %i.br = fmul double %i.ak, %.04373.i49
-  %i.bs = fadd double %i.br, 0.000000e+00         ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod322)
-  br label %.lr.ph68.i56.epil
+  %10 = fadd double %i.br, 0.000000e+00           ; 4 uses
+  %11 = fadd double %10, %10                      ; 2 uses
+  %i.bs = fadd double %10, %11
+  %.lcssa309 = select i1 %exitcond78.not.i59.1, double %11, double %i.bs
+  br label %.loopexit.i60
 
 dlamc4_.exit68:                                   ; preds = %.loopexit.i60
   %i.bt = fmul double %i.ak, %i.al
@@ -319,22 +305,13 @@ dlamc4_.exit68:                                   ; preds = %.loopexit.i60
   %i.bz = fmul double %i.ak, %i.bx
   %i.ca = fadd double %i.bz, 0.000000e+00
   %exitcond.not.i76.1 = icmp eq i32 %i.s, 2
-  %xtraiter325 = and i32 %i.s, 7                  ; 2 uses
-  %lcmp.mod329 = icmp ne i32 %xtraiter325, 0
+  %exitcond78.not.i81.1 = icmp eq i32 %i.s, 2
   br label %.lr.ph75.i70
 
-.lr.ph68.i78.epil:                                ; preds = %.lr.ph68.i78.epil, %.lr.ph.i73.1
-  %.166.i79.epil = phi double [ %10, %.lr.ph68.i78.epil ], [ 0.000000e+00, %.lr.ph.i73.1 ]
-  %epil.iter326 = phi i32 [ %epil.iter326.next, %.lr.ph68.i78.epil ], [ 0, %.lr.ph.i73.1 ]
-  %10 = fadd double %i.cq, %.166.i79.epil         ; 2 uses
-  %epil.iter326.next = add i32 %epil.iter326, 1   ; 2 uses
-  %epil.iter326.cmp.not = icmp eq i32 %epil.iter326.next, %xtraiter325
-  br i1 %epil.iter326.cmp.not, label %.loopexit.i82, label %.lr.ph68.i78.epil, !llvm.loop !17
-
-.loopexit.i82:                                    ; preds = %.lr.ph68.i78.epil, %._crit_edge.thread.i89
-  %.pn.i83 = phi double [ %i.cm, %._crit_edge.thread.i89 ], [ %i.cq, %.lr.ph68.i78.epil ]
-  %.140.lcssa80.i84 = phi double [ 0.000000e+00, %._crit_edge.thread.i89 ], [ %spec.select382, %.lr.ph68.i78.epil ]
-  %.1.lcssa.i85 = phi double [ 0.000000e+00, %._crit_edge.thread.i89 ], [ %10, %.lr.ph68.i78.epil ]
+.loopexit.i82:                                    ; preds = %.lr.ph.i73.1, %._crit_edge.thread.i89
+  %.pn.i83 = phi double [ %i.cm, %._crit_edge.thread.i89 ], [ %12, %.lr.ph.i73.1 ]
+  %.140.lcssa80.i84 = phi double [ 0.000000e+00, %._crit_edge.thread.i89 ], [ %spec.select382, %.lr.ph.i73.1 ]
+  %.1.lcssa.i85 = phi double [ 0.000000e+00, %._crit_edge.thread.i89 ], [ %.lcssa306, %.lr.ph.i73.1 ]
   %i.cb = fdiv double %.pn.i83, %i.ak
   %i.cc = fcmp oeq double %i.ck, %.04373.i71
   %i.cd = fcmp oeq double %i.cb, %.04373.i71
@@ -364,30 +341,23 @@ dlamc4_.exit68:                                   ; preds = %.loopexit.i60
   %i.co = fadd double %i.cj, %i.cn
   %spec.select382 = select i1 %exitcond.not.i76.1, double %i.cn, double %i.co
   %i.cp = fmul double %i.ak, %.04373.i71
-  %i.cq = fadd double %i.cp, 0.000000e+00         ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod329)
-  br label %.lr.ph68.i78.epil
+  %12 = fadd double %i.cp, 0.000000e+00           ; 4 uses
+  %13 = fadd double %12, %12                      ; 2 uses
+  %i.cq = fadd double %12, %13
+  %.lcssa306 = select i1 %exitcond78.not.i81.1, double %13, double %i.cq
+  br label %.loopexit.i82
 
 .lr.ph75.preheader.i91:                           ; preds = %.loopexit.i82
   %i.cr = fmul double %i.ak, %i.bx
   %i.cs = fsub double 0.000000e+00, %i.cr
   %exitcond.not.i98.1 = icmp eq i32 %i.s, 2
-  %xtraiter332 = and i32 %i.s, 7                  ; 2 uses
-  %lcmp.mod336 = icmp ne i32 %xtraiter332, 0
+  %exitcond78.not.i103.1 = icmp eq i32 %i.s, 2
   br label %.lr.ph75.i92
 
-.lr.ph68.i100.epil:                               ; preds = %.lr.ph68.i100.epil, %.lr.ph.i95.1
-  %.166.i101.epil = phi double [ %11, %.lr.ph68.i100.epil ], [ 0.000000e+00, %.lr.ph.i95.1 ]
-  %epil.iter333 = phi i32 [ %epil.iter333.next, %.lr.ph68.i100.epil ], [ 0, %.lr.ph.i95.1 ]
-  %11 = fadd double %i.di, %.166.i101.epil        ; 2 uses
-  %epil.iter333.next = add i32 %epil.iter333, 1   ; 2 uses
-  %epil.iter333.cmp.not = icmp eq i32 %epil.iter333.next, %xtraiter332
-  br i1 %epil.iter333.cmp.not, label %.loopexit.i104, label %.lr.ph68.i100.epil, !llvm.loop !18
-
-.loopexit.i104:                                   ; preds = %.lr.ph68.i100.epil, %._crit_edge.thread.i111
-  %.pn.i105 = phi double [ %i.de, %._crit_edge.thread.i111 ], [ %i.di, %.lr.ph68.i100.epil ]
-  %.140.lcssa80.i106 = phi double [ 0.000000e+00, %._crit_edge.thread.i111 ], [ %spec.select383, %.lr.ph68.i100.epil ]
-  %.1.lcssa.i107 = phi double [ 0.000000e+00, %._crit_edge.thread.i111 ], [ %11, %.lr.ph68.i100.epil ]
+.loopexit.i104:                                   ; preds = %.lr.ph.i95.1, %._crit_edge.thread.i111
+  %.pn.i105 = phi double [ %i.de, %._crit_edge.thread.i111 ], [ %14, %.lr.ph.i95.1 ]
+  %.140.lcssa80.i106 = phi double [ 0.000000e+00, %._crit_edge.thread.i111 ], [ %spec.select383, %.lr.ph.i95.1 ]
+  %.1.lcssa.i107 = phi double [ 0.000000e+00, %._crit_edge.thread.i111 ], [ %.lcssa303, %.lr.ph.i95.1 ]
   %i.ct = fdiv double %.pn.i105, %i.ak
   %i.cu = fcmp oeq double %i.dc, %.04373.i93
   %i.cv = fcmp oeq double %i.ct, %.04373.i93
@@ -417,9 +387,11 @@ dlamc4_.exit68:                                   ; preds = %.loopexit.i60
   %i.dg = fadd double %i.db, %i.df
   %spec.select383 = select i1 %exitcond.not.i98.1, double %i.df, double %i.dg
   %i.dh = fmul double %i.ak, %.04373.i93
-  %i.di = fadd double %i.dh, 0.000000e+00         ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod336)
-  br label %.lr.ph68.i100.epil
+  %14 = fadd double %i.dh, 0.000000e+00           ; 4 uses
+  %15 = fadd double %14, %14                      ; 2 uses
+  %i.di = fadd double %14, %15
+  %.lcssa303 = select i1 %exitcond78.not.i103.1, double %15, double %i.di
+  br label %.loopexit.i104
 
 dlamc4_.exit112:                                  ; preds = %.loopexit.i104, %dlamc4_.exit68
   %.0176260 = phi i32 [ 1, %dlamc4_.exit68 ], [ %i.ch, %.loopexit.i104 ] ; 6 uses
@@ -528,7 +500,7 @@ bb.s:                                             ; preds = %bb.p, %bb.g, %bb.n,
   %i.ey = fadd double %i.ex, 0.000000e+00         ; 3 uses
   %niter345.next.7 = add i32 %niter345, 8         ; 2 uses
   %niter345.ncmp.7 = icmp eq i32 %niter345.next.7, %unroll_iter344
-  br i1 %niter345.ncmp.7, label %._crit_edge214.unr-lcssa, label %.lr.ph213, !llvm.loop !19
+  br i1 %niter345.ncmp.7, label %._crit_edge214.unr-lcssa, label %.lr.ph213, !llvm.loop !15
 
 ._crit_edge214.unr-lcssa:                         ; preds = %.lr.ph213
   %lcmp.mod341.not = icmp eq i32 %xtraiter339, 0
@@ -547,7 +519,7 @@ bb.s:                                             ; preds = %bb.p, %bb.g, %bb.n,
   %i.fb = fadd double %i.fa, 0.000000e+00         ; 2 uses
   %epil.iter340.next = add i32 %epil.iter340, 1   ; 2 uses
   %epil.iter340.cmp.not = icmp eq i32 %epil.iter340.next, %xtraiter339
-  br i1 %epil.iter340.cmp.not, label %._crit_edge214, label %.lr.ph213.epil, !llvm.loop !20
+  br i1 %epil.iter340.cmp.not, label %._crit_edge214, label %.lr.ph213.epil, !llvm.loop !16
 
 ._crit_edge214:                                   ; preds = %.lr.ph213.epil, %._crit_edge214.unr-lcssa
   %.lcssa301 = phi double [ %i.ey, %._crit_edge214.unr-lcssa ], [ %i.fb, %.lr.ph213.epil ] ; 2 uses
@@ -669,7 +641,7 @@ bb.v:                                             ; preds = %bb.u
   %i.hb = fadd double %.06167.i.epil, %i.gz       ; 2 uses
   %epil.iter347.next = add i32 %epil.iter347, 1   ; 2 uses
   %epil.iter347.cmp.not = icmp eq i32 %epil.iter347.next, %xtraiter346
-  br i1 %epil.iter347.cmp.not, label %._crit_edge.i117, label %.lr.ph.i114.epil, !llvm.loop !21
+  br i1 %epil.iter347.cmp.not, label %._crit_edge.i117, label %.lr.ph.i114.epil, !llvm.loop !17
 
 ._crit_edge.i117:                                 ; preds = %._crit_edge.i117.loopexit.unr-lcssa, %.lr.ph.i114.epil, %bb.v
   %.061.lcssa.i = phi double [ 0.000000e+00, %bb.v ], [ %i.gy, %._crit_edge.i117.loopexit.unr-lcssa ], [ %i.hb, %.lr.ph.i114.epil ] ; 2 uses
@@ -730,7 +702,7 @@ dlamc5_.exit.loopexit.unr-lcssa:                  ; preds = %.lr.ph76.i
   %i.hx = fadd double %i.hw, 0.000000e+00         ; 2 uses
   %epil.iter355.next = add i32 %epil.iter355, 1   ; 2 uses
   %epil.iter355.cmp.not = icmp eq i32 %epil.iter355.next, %xtraiter354
-  br i1 %epil.iter355.cmp.not, label %dlamc5_.exit, label %.lr.ph76.i.epil, !llvm.loop !22
+  br i1 %epil.iter355.cmp.not, label %dlamc5_.exit, label %.lr.ph76.i.epil, !llvm.loop !18
 
 dlamc5_.exit:                                     ; preds = %dlamc5_.exit.loopexit.unr-lcssa, %.lr.ph76.i.epil, %._crit_edge.i117
   %.2.lcssa.i = phi double [ %spec.select63.i, %._crit_edge.i117 ], [ %i.hv, %dlamc5_.exit.loopexit.unr-lcssa ], [ %i.hx, %.lr.ph76.i.epil ]
@@ -839,7 +811,7 @@ bb.a:
   %i.h = fadd double %i.ah, %.166.epil            ; 2 uses
   %epil.iter87.next = add i32 %epil.iter87, 1     ; 2 uses
   %epil.iter87.cmp.not = icmp eq i32 %epil.iter87.next, %xtraiter86
-  br i1 %epil.iter87.cmp.not, label %.loopexit, label %.lr.ph68.epil, !llvm.loop !23
+  br i1 %epil.iter87.cmp.not, label %.loopexit, label %.lr.ph68.epil, !llvm.loop !19
 
 .loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph68.epil, %._crit_edge.thread
   %.pn = phi double [ %i.w, %._crit_edge.thread ], [ %i.ah, %.lr.ph68.epil ], [ %i.ah, %.loopexit.loopexit.unr-lcssa ]
@@ -895,7 +867,7 @@ bb.a:
   %i.ae = fadd double %i.s, %i.ad                 ; 3 uses
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %.lr.ph68.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !24
+  br i1 %niter.ncmp.7, label %.lr.ph68.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !20
 
 .lr.ph68.preheader.unr-lcssa:                     ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -913,7 +885,7 @@ bb.a:
   %i.af = fadd double %i.s, %.14063.epil          ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.lr.ph68.preheader, label %.lr.ph.epil, !llvm.loop !25
+  br i1 %epil.iter.cmp.not, label %.lr.ph68.preheader, label %.lr.ph.epil, !llvm.loop !21
 
 .lr.ph68.preheader:                               ; preds = %.lr.ph.epil, %.lr.ph68.preheader.unr-lcssa
   %.lcssa = phi double [ %i.ae, %.lr.ph68.preheader.unr-lcssa ], [ %i.af, %.lr.ph.epil ] ; 2 uses
@@ -938,9 +910,9 @@ bb.a:
   %i.ao = fadd double %i.ah, %i.an
   %i.ap = fadd double %i.ah, %i.ao
   %i.aq = fadd double %i.ah, %i.ap                ; 3 uses
-  %niter92.next.7 = add i32 %niter92, 8           ; 2 uses
+  %niter92.next.7 = add nuw nsw i32 %niter92, 8   ; 2 uses
   %niter92.ncmp.7 = icmp eq i32 %niter92.next.7, %unroll_iter91
-  br i1 %niter92.ncmp.7, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph68, !llvm.loop !26
+  br i1 %niter92.ncmp.7, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph68, !llvm.loop !22
 
 ._crit_edge76:                                    ; preds = %.loopexit, %bb.a
   ret i32 0
@@ -1085,7 +1057,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.bf = fadd double %.06167.epil, %i.bd         ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !27
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.h
   %.061.lcssa = phi double [ 0.000000e+00, %bb.h ], [ %i.bc, %._crit_edge.loopexit.unr-lcssa ], [ %i.bf, %.lr.ph.epil ] ; 2 uses
@@ -1144,7 +1116,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.bz = fadd double %i.by, 0.000000e+00         ; 2 uses
   %epil.iter99.next = add i32 %epil.iter99, 1     ; 2 uses
   %epil.iter99.cmp.not = icmp eq i32 %epil.iter99.next, %xtraiter98
-  br i1 %epil.iter99.cmp.not, label %._crit_edge77, label %.lr.ph76.epil, !llvm.loop !28
+  br i1 %epil.iter99.cmp.not, label %._crit_edge77, label %.lr.ph76.epil, !llvm.loop !24
 
 ._crit_edge77:                                    ; preds = %._crit_edge77.loopexit.unr-lcssa, %.lr.ph76.epil, %._crit_edge
   %.2.lcssa = phi double [ %spec.select63, %._crit_edge ], [ %i.bx, %._crit_edge77.loopexit.unr-lcssa ], [ %i.bz, %.lr.ph76.epil ]
@@ -1180,8 +1152,8 @@ attributes #10 = { nounwind }
 !llvm.ident = !{!4}
 !llvm.errno.tbaa = !{!9}
 
-!0 = distinct !{!0, !14}
-!1 = distinct !{!1, !14}
+!0 = distinct !{!0, !13}
+!1 = distinct !{!1, !13}
 !2 = !{i32 8, !"PIC Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
@@ -1193,20 +1165,16 @@ attributes #10 = { nounwind }
 !10 = !{!7, !7, i64 0}
 !11 = !{!"double", !6, i64 0}
 !12 = !{!11, !11, i64 0}
-!13 = !{!"llvm.loop.unroll.disable"}
-!14 = !{!"llvm.loop.mustprogress"}
+!13 = !{!"llvm.loop.mustprogress"}
+!14 = !{!"llvm.loop.unroll.disable"}
 !15 = distinct !{!15, !13}
-!16 = distinct !{!16, !13}
-!17 = distinct !{!17, !13}
-!18 = distinct !{!18, !13}
+!16 = distinct !{!16, !14}
+!17 = distinct !{!17, !14}
+!18 = distinct !{!18, !14}
 !19 = distinct !{!19, !14}
 !20 = distinct !{!20, !13}
-!21 = distinct !{!21, !13}
+!21 = distinct !{!21, !14}
 !22 = distinct !{!22, !13}
-!23 = distinct !{!23, !13}
+!23 = distinct !{!23, !14}
 !24 = distinct !{!24, !14}
-!25 = distinct !{!25, !13}
-!26 = distinct !{!26, !14}
-!27 = distinct !{!27, !13}
-!28 = distinct !{!28, !13}
 end_hunk_0

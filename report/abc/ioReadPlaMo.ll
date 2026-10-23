@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not81, label %Mop_ManCheckDist1.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph148
-  %.val = load i32, ptr %i.d, align 8, !tbaa !24  ; 6 uses
+  %.val = load i32, ptr %i.d, align 8, !tbaa !24  ; 5 uses
   %.val85 = load ptr, ptr %i.e, align 8, !tbaa !29
   %i.v = getelementptr i8, ptr %.val85, i64 8
   %.val85.val = load ptr, ptr %i.v, align 8, !tbaa !28 ; 3 uses
@@ -216,7 +216,7 @@ bb.d:                                             ; preds = %.lr.ph148
   br i1 %i.z, label %.lr.ph.preheader.i, label %Mop_ManCheckDist1.exit.thread
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
-  %wide.trip.count.i = zext nneg i32 %.val to i64 ; 16 uses
+  %wide.trip.count.i = zext nneg i32 %.val to i64 ; 17 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.preheader.i, %select.unfold.i
@@ -271,7 +271,7 @@ Mop_ManCheckDist1.exit:                           ; preds = %select.unfold.i.1, 
   br i1 %i.ae, label %Mop_ManCheckDist1.exit.thread, label %Mop_ManCheckDist1.exit.thread226
 
 Mop_ManCheckDist1.exit.thread226:                 ; preds = %select.unfold.i.thread, %Mop_ManCheckDist1.exit
-  %.val90 = load i32, ptr %i.f, align 4, !tbaa !25 ; 8 uses
+  %.val90 = load i32, ptr %i.f, align 4, !tbaa !25 ; 7 uses
   %.val91 = load ptr, ptr %i.g, align 8, !tbaa !30
   %i.ar = getelementptr i8, ptr %.val91, i64 8
   %.val91.val = load ptr, ptr %i.ar, align 8, !tbaa !28 ; 6 uses
@@ -285,7 +285,7 @@ Mop_ManCheckDist1.exit.thread226:                 ; preds = %select.unfold.i.thr
   br i1 %i.ay, label %.lr.ph.preheader.i98, label %.lr.ph139.preheader
 
 .lr.ph.preheader.i98:                             ; preds = %Mop_ManCheckDist1.exit.thread226
-  %wide.trip.count.i99 = zext nneg i32 %.val90 to i64 ; 8 uses
+  %wide.trip.count.i99 = zext nneg i32 %.val90 to i64 ; 9 uses
   br label %.lr.ph.i100
 
 bb.g:                                             ; preds = %.lr.ph.i100
@@ -304,7 +304,6 @@ bb.g:                                             ; preds = %.lr.ph.i100
   br i1 %.not.i102, label %bb.g, label %.lr.ph.i108
 
 .lr.ph139.preheader:                              ; preds = %bb.g, %Mop_ManCheckDist1.exit.thread226
-  %wide.trip.count170 = zext nneg i32 %.val to i64
   %min.iters.check259 = icmp ult i32 %.val, 6
   br i1 %min.iters.check259, label %.lr.ph139.preheader314, label %vector.memcheck251
 
@@ -472,7 +471,7 @@ middle.block:                                     ; preds = %vector.body
   %i.dj = and i64 %i.di, %i.dg
   store i64 %i.dj, ptr %i.dh, align 8, !tbaa !44
   %indvars.iv.next167.3 = add nuw nsw i64 %indvars.iv166, 4 ; 2 uses
-  %exitcond171.not.3 = icmp eq i64 %indvars.iv.next167.3, %wide.trip.count170
+  %exitcond171.not.3 = icmp eq i64 %indvars.iv.next167.3, %wide.trip.count.i
   br i1 %exitcond171.not.3, label %.preheader, label %.lr.ph139, !llvm.loop !109
 
 .lr.ph141:                                        ; preds = %.lr.ph141.prol.loopexit, %.lr.ph141
@@ -612,7 +611,7 @@ vector.body303:                                   ; preds = %vector.body303, %ve
 
 middle.block310:                                  ; preds = %vector.body303
   %cmp.n311 = icmp eq i64 %n.vec302, %wide.trip.count.i
-  br i1 %cmp.n311, label %.lr.ph137.preheader.a, label %Mop_ManCheckContain.exit113.preheader316
+  br i1 %cmp.n311, label %.lr.ph137.preheader, label %Mop_ManCheckContain.exit113.preheader316
 
 Mop_ManCheckContain.exit113.preheader316:         ; preds = %vector.memcheck292, %Mop_ManCheckContain.exit113.preheader, %middle.block310
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck292 ], [ 0, %Mop_ManCheckContain.exit113.preheader ], [ %n.vec302, %middle.block310 ] ; 3 uses
@@ -638,7 +637,7 @@ Mop_ManCheckContain.exit113.prol.loopexit:        ; preds = %Mop_ManCheckContain
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %Mop_ManCheckContain.exit113.preheader316 ], [ %indvars.iv.next.prol, %Mop_ManCheckContain.exit113.prol ]
   %i.fg = sub nsw i64 %indvars.iv.ph, %wide.trip.count.i
   %i.fh = icmp ugt i64 %i.fg, -4
-  br i1 %i.fh, label %.lr.ph137.preheader.a, label %Mop_ManCheckContain.exit113
+  br i1 %i.fh, label %.lr.ph137.preheader, label %.lr.ph137.preheader.a
 
 .lr.ph.i108:                                      ; preds = %.lr.ph.i100, %bb.p
   %indvars.iv.i109 = phi i64 [ %indvars.iv.next.i111, %bb.p ], [ 0, %.lr.ph.i100 ] ; 3 uses
@@ -650,12 +649,44 @@ Mop_ManCheckContain.exit113.prol.loopexit:        ; preds = %Mop_ManCheckContain
   %.not.i110 = icmp eq i64 %i.fj, %i.fm
   br i1 %.not.i110, label %bb.p, label %Mop_ManCheckDist1.exit.thread
 
-.lr.ph137.preheader.a:                            ; preds = %Mop_ManCheckContain.exit113.prol.loopexit, %Mop_ManCheckContain.exit113, %middle.block310
-  %wide.trip.count164 = zext nneg i32 %.val90 to i64
-  %min.iters.check279 = icmp ult i32 %.val90, 6
-  br i1 %min.iters.check279, label %.lr.ph137.preheader315, label %vector.memcheck272
+.lr.ph137.preheader.a:                            ; preds = %Mop_ManCheckContain.exit113.prol.loopexit, %.lr.ph137.preheader.a
+  %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph137.preheader.a ], [ %indvars.iv.unr, %Mop_ManCheckContain.exit113.prol.loopexit ] ; 6 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv
+  %4 = load i64, ptr %3, align 8, !tbaa !44
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv ; 2 uses
+  %6 = load i64, ptr %5, align 8, !tbaa !44
+  %7 = and i64 %6, %4
+  store i64 %7, ptr %5, align 8, !tbaa !44
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.next
+  %9 = load i64, ptr %8, align 8, !tbaa !44
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next ; 2 uses
+  %11 = load i64, ptr %10, align 8, !tbaa !44
+  %12 = and i64 %11, %9
+  store i64 %12, ptr %10, align 8, !tbaa !44
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.next.1
+  %14 = load i64, ptr %13, align 8, !tbaa !44
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next.1 ; 2 uses
+  %16 = load i64, ptr %15, align 8, !tbaa !44
+  %17 = and i64 %16, %14
+  store i64 %17, ptr %15, align 8, !tbaa !44
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.next.2
+  %19 = load i64, ptr %18, align 8, !tbaa !44
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next.2 ; 2 uses
+  %21 = load i64, ptr %20, align 8, !tbaa !44
+  %22 = and i64 %21, %19
+  store i64 %22, ptr %20, align 8, !tbaa !44
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count.i
+  br i1 %exitcond.not.3, label %.lr.ph137.preheader, label %.lr.ph137.preheader.a, !llvm.loop !116
 
-vector.memcheck272:                               ; preds = %.lr.ph137.preheader.a
+.lr.ph137.preheader:                              ; preds = %Mop_ManCheckContain.exit113.prol.loopexit, %.lr.ph137.preheader.a, %middle.block310
+  %min.iters.check278 = icmp ult i32 %.val90, 6
+  br i1 %min.iters.check278, label %.lr.ph137.preheader315, label %vector.memcheck272
+
+vector.memcheck272:                               ; preds = %.lr.ph137.preheader
   %i.fn = add nsw i64 %i.aw, %wide.trip.count.i99
   %i.fo = shl nsw i64 %i.fn, 3
   %scevgep273.a = getelementptr i8, ptr %.val91.val, i64 %i.fo
@@ -689,17 +720,17 @@ vector.body282:                                   ; preds = %vector.body282, %ve
   store <2 x i64> %i.fy, ptr %i.fw, align 8, !tbaa !44, !alias.scope !131, !noalias !130
   %index.next288 = add nuw i64 %index283, 4       ; 2 uses
   %i.fz = icmp eq i64 %index.next288, %n.vec281
-  br i1 %i.fz, label %middle.block289, label %vector.body282, !llvm.loop !119
+  br i1 %i.fz, label %middle.block289, label %vector.body282, !llvm.loop !120
 
 middle.block289:                                  ; preds = %vector.body282
   %cmp.n290 = icmp eq i64 %n.vec281, %wide.trip.count.i99
   br i1 %cmp.n290, label %._crit_edge, label %.lr.ph137.preheader315
 
-.lr.ph137.preheader315:                           ; preds = %vector.memcheck272, %.lr.ph137.preheader.a, %middle.block289
-  %indvars.iv161.ph = phi i64 [ 0, %vector.memcheck272 ], [ 0, %.lr.ph137.preheader.a ], [ %n.vec281, %middle.block289 ] ; 5 uses
+.lr.ph137.preheader315:                           ; preds = %vector.memcheck272, %.lr.ph137.preheader, %middle.block289
+  %indvars.iv161.ph = phi i64 [ 0, %vector.memcheck272 ], [ 0, %.lr.ph137.preheader ], [ %n.vec281, %middle.block289 ] ; 5 uses
   %xtraiter326 = and i64 %wide.trip.count.i99, 1
   %lcmp.mod327.not = icmp eq i64 %xtraiter326, 0
-  br i1 %lcmp.mod327.not, label %.lr.ph137.prol.loopexit, label %.lr.ph137.prol
+  br i1 %lcmp.mod327.not, label %Mop_ManCheckContain.exit113, label %.lr.ph137.prol
 
 .lr.ph137.prol:                                   ; preds = %.lr.ph137.preheader315
   %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv161.ph
@@ -710,49 +741,16 @@ middle.block289:                                  ; preds = %vector.body282
   %i.gf = and i64 %i.ge, %i.gc
   store i64 %i.gf, ptr %i.gd, align 8, !tbaa !44
   %indvars.iv.next162.prol = or disjoint i64 %indvars.iv161.ph, 1
-  br label %.lr.ph137.prol.loopexit
+  br label %Mop_ManCheckContain.exit113
 
-.lr.ph137.prol.loopexit:                          ; preds = %.lr.ph137.prol, %.lr.ph137.preheader315
-  %indvars.iv161.unr = phi i64 [ %indvars.iv161.ph, %.lr.ph137.preheader315 ], [ %indvars.iv.next162.prol, %.lr.ph137.prol ]
-  %3 = add nsw i64 %wide.trip.count.i99, -1
-  %4 = icmp eq i64 %indvars.iv161.ph, %3
-  br i1 %4, label %._crit_edge, label %.lr.ph137
+Mop_ManCheckContain.exit113:                      ; preds = %.lr.ph137.prol, %.lr.ph137.preheader315
+  %indvars.iv.a = phi i64 [ %indvars.iv161.ph, %.lr.ph137.preheader315 ], [ %indvars.iv.next162.prol, %.lr.ph137.prol ]
+  %indvars.iv.next.3.a = add nsw i64 %wide.trip.count.i99, -1
+  %exitcond.not.3.a = icmp eq i64 %indvars.iv161.ph, %indvars.iv.next.3.a
+  br i1 %exitcond.not.3.a, label %._crit_edge, label %.lr.ph137
 
-Mop_ManCheckContain.exit113:                      ; preds = %Mop_ManCheckContain.exit113.prol.loopexit, %Mop_ManCheckContain.exit113
-  %indvars.iv.a = phi i64 [ %indvars.iv.next.3.a, %Mop_ManCheckContain.exit113 ], [ %indvars.iv.unr, %Mop_ManCheckContain.exit113.prol.loopexit ] ; 6 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.a
-  %6 = load i64, ptr %5, align 8, !tbaa !44
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.a ; 2 uses
-  %8 = load i64, ptr %7, align 8, !tbaa !44
-  %9 = and i64 %8, %6
-  store i64 %9, ptr %7, align 8, !tbaa !44
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.next
-  %11 = load i64, ptr %10, align 8, !tbaa !44
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next ; 2 uses
-  %13 = load i64, ptr %12, align 8, !tbaa !44
-  %14 = and i64 %13, %11
-  store i64 %14, ptr %12, align 8, !tbaa !44
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.a, 2 ; 2 uses
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.next.1
-  %16 = load i64, ptr %15, align 8, !tbaa !44
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next.1 ; 2 uses
-  %18 = load i64, ptr %17, align 8, !tbaa !44
-  %19 = and i64 %18, %16
-  store i64 %19, ptr %17, align 8, !tbaa !44
-  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.a, 3 ; 2 uses
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.next.2
-  %21 = load i64, ptr %20, align 8, !tbaa !44
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next.2 ; 2 uses
-  %23 = load i64, ptr %22, align 8, !tbaa !44
-  %24 = and i64 %23, %21
-  store i64 %24, ptr %22, align 8, !tbaa !44
-  %indvars.iv.next.3.a = add nuw nsw i64 %indvars.iv.a, 4 ; 2 uses
-  %exitcond.not.3.a = icmp eq i64 %indvars.iv.next.3.a, %wide.trip.count.i
-  br i1 %exitcond.not.3.a, label %.lr.ph137.preheader.a, label %Mop_ManCheckContain.exit113, !llvm.loop !120
-
-.lr.ph137:                                        ; preds = %.lr.ph137.prol.loopexit, %.lr.ph137
-  %indvars.iv161 = phi i64 [ %indvars.iv.next162.1, %.lr.ph137 ], [ %indvars.iv161.unr, %.lr.ph137.prol.loopexit ] ; 4 uses
+.lr.ph137:                                        ; preds = %Mop_ManCheckContain.exit113, %.lr.ph137
+  %indvars.iv161 = phi i64 [ %indvars.iv.next162.1, %.lr.ph137 ], [ %indvars.iv.a, %Mop_ManCheckContain.exit113 ] ; 4 uses
   %i.gg = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv161
   %i.gh = load i64, ptr %i.gg, align 8, !tbaa !44
   %i.gi = xor i64 %i.gh, -1
@@ -769,10 +767,10 @@ Mop_ManCheckContain.exit113:                      ; preds = %Mop_ManCheckContain
   %i.gr = and i64 %i.gq, %i.go
   store i64 %i.gr, ptr %i.gp, align 8, !tbaa !44
   %indvars.iv.next162.1 = add nuw nsw i64 %indvars.iv161, 2 ; 2 uses
-  %exitcond165.not.1 = icmp eq i64 %indvars.iv.next162.1, %wide.trip.count164
+  %exitcond165.not.1 = icmp eq i64 %indvars.iv.next162.1, %wide.trip.count.i99
   br i1 %exitcond165.not.1, label %._crit_edge, label %.lr.ph137, !llvm.loop !121
 
-._crit_edge:                                      ; preds = %.lr.ph137.prol.loopexit, %.lr.ph137, %middle.block289
+._crit_edge:                                      ; preds = %Mop_ManCheckContain.exit113, %.lr.ph137, %middle.block289
   %i.gs = load i32, ptr %i.h, align 4, !tbaa !33  ; 7 uses
   %i.gt = load i32, ptr %2, align 8, !tbaa !34
   %i.gu = icmp eq i32 %i.gs, %i.gt
@@ -1175,11 +1173,11 @@ attributes #30 = { nounwind allocsize(1) }
 !113 = distinct !{!113, !111}
 !114 = distinct !{!114, !42, !45, !46}
 !115 = distinct !{!115, !47}
-!116 = distinct !{!116, i1 false, !"LVerDomain"}
-!117 = distinct !{!117, !116}
-!118 = distinct !{!118, !116}
-!119 = distinct !{!119, !42, !45, !46}
-!120 = distinct !{!120, !42, !45}
+!116 = distinct !{!116, !42, !45}
+!117 = distinct !{!117, i1 false, !"LVerDomain"}
+!118 = distinct !{!118, !117}
+!119 = distinct !{!119, !117}
+!120 = distinct !{!120, !42, !45, !46}
 !121 = distinct !{!121, !42, !45}
 !122 = distinct !{!122, !42}
 !123 = distinct !{!123, !42}
@@ -1189,8 +1187,8 @@ attributes #30 = { nounwind allocsize(1) }
 !127 = !{!107}
 !128 = !{!112}
 !129 = !{!113}
-!130 = !{!117}
-!131 = !{!118}
+!130 = !{!118}
+!131 = !{!119}
 !132 = distinct !{!132, i1 false, !"LVerDomain"}
 !133 = distinct !{!133, !132}
 !134 = distinct !{!134, !132}

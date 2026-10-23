@@ -205,14 +205,14 @@ bytestream2_get_byte.exit63.i:                    ; preds = %.lr.ph.i
 bytestream2_get_byte.exit63._crit_edge.i:         ; preds = %bytestream2_get_byte.exit63.i, %bytestream2_get_byte.exit63.thread.i
   %.pre-phi.i316 = phi i64 [ %i.la, %bytestream2_get_byte.exit63.thread.i ], [ %.pre.i313, %bytestream2_get_byte.exit63.i ]
   %i.lj = phi ptr [ %i.ky, %bytestream2_get_byte.exit63.thread.i ], [ %i.le, %bytestream2_get_byte.exit63.i ] ; 2 uses
-  %i.lk = phi i32 [ 0, %bytestream2_get_byte.exit63.thread.i ], [ %i.lh, %bytestream2_get_byte.exit63.i ] ; 5 uses
+  %i.lk = phi i32 [ 0, %bytestream2_get_byte.exit63.thread.i ], [ %i.lh, %bytestream2_get_byte.exit63.i ] ; 4 uses
   %i.ll = sub i64 %i.la, %.pre-phi.i316           ; 2 uses
   %i.lm = trunc i64 %i.ll to i32
   %i.ln = icmp slt i32 %i.lm, 1
   br i1 %i.ln, label %.loopexit335, label %bb.cg
 
 bb.cg:                                            ; preds = %bytestream2_get_byte.exit63._crit_edge.i
-  %i.lo = sub nsw i32 0, %i.lk
+  %i.lo = sub nsw i32 0, %i.lk                    ; 2 uses
   %i.lp = zext nneg i32 %i.lo to i64
   %i.lq = add i64 %.14776.i, %i.lp
   %i.lr = load i64, ptr %i.kd, align 8, !tbaa !75
@@ -257,8 +257,7 @@ bytestream2_get_byte.exit61.i:                    ; preds = %bb.cj, %bb.ci
 .prol.loopexit:                                   ; preds = %.prol.preheader, %bytestream2_get_byte.exit61.i
   %.lcssa584.unr = phi i64 [ poison, %bytestream2_get_byte.exit61.i ], [ %i.ma, %.prol.preheader ]
   %.273.i.unr = phi i64 [ %.14776.i, %bytestream2_get_byte.exit61.i ], [ %i.ma, %.prol.preheader ]
-  %4 = add nsw i32 %i.lk, 2
-  %i.mc = icmp ult i32 %4, 3
+  %i.mc = icmp ult i32 %i.lo, 3
   br i1 %i.mc, label %.unr-lcssa, label %bytestream2_get_byte.exit61.i.new
 
 bytestream2_get_byte.exit61.i.new:                ; preds = %.prol.loopexit, %bytestream2_get_byte.exit61.i.new

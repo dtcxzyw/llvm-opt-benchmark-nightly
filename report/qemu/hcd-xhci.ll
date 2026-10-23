@@ -205,7 +205,7 @@ xhci_ring_chain_length.exit.thread:               ; preds = %xhci_ring_chain_len
   br label %.loopexit
 
 xhci_ring_chain_length.exit:                      ; preds = %.thread3.i, %bb.ap, %bb.as
-  %.2.i = phi i32 [ %i.ds, %bb.ap ], [ %i.dy, %bb.as ], [ %i.ed, %.thread3.i ] ; 4 uses
+  %.2.i = phi i32 [ %i.ds, %bb.ap ], [ %i.dy, %bb.as ], [ %i.ed, %.thread3.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   %i.ej = icmp slt i32 %.2.i, 1
   br i1 %i.ej, label %.loopexit, label %bb.ay
@@ -256,7 +256,7 @@ bb.ay:                                            ; preds = %xhci_ring_chain_len
 .critedge132.lr.ph:                               ; preds = %bb.ay
   %i.fg = call noalias dereferenceable_or_null(256) ptr @g_malloc0(i64 noundef 256) #19 ; 51 uses
   store ptr %0, ptr %i.fg, align 8
-  %i.fh = zext nneg i32 %.2.i to i64
+  %i.fh = zext nneg i32 %.2.i to i64              ; 2 uses
   %i.fi = call noalias ptr @g_malloc_n(i64 noundef %i.fh, i64 noundef 32) #20
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fg, i64 208 ; 6 uses
   store ptr %i.fi, ptr %i.fj, align 8
@@ -274,12 +274,11 @@ bb.ay:                                            ; preds = %xhci_ring_chain_len
   %i.fp = load i32, ptr %i.de, align 8
   %i.fq = add i32 %i.fp, 1
   store i32 %i.fq, ptr %i.de, align 8
-  %wide.trip.count = zext nneg i32 %.2.i to i64
   br label %.critedge132
 
 bb.az:                                            ; preds = %.critedge132
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.fh
   br i1 %exitcond.not, label %._crit_edge, label %.critedge132, !llvm.loop !21
 
 .critedge132:                                     ; preds = %.critedge132.lr.ph, %bb.az

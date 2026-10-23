@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ty_python_semantic-ec859307257497d7.ty_python_semantic.4ad91d80fb3de5b-cgu.08?download=true
 inline.NumInlined: 8661
 inline.NumDeleted: 4050
-loop-unroll.NumCompletelyUnrolled: 21
+loop-unroll.NumCompletelyUnrolled: 22
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 22
+loop-unroll.NumUnrolled: 23
 begin_hunk_0_@_RNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class30cycle_normalized_optional_type:bb.a
 
 ; Function Attrs: nonlazybind uwtable
@@ -205,16 +205,16 @@ bb.k:                                             ; preds = %_RINvMs9_NvNtNtCsoT
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.02.057, i64 40 ; 2 uses
   %.val13.i = load ptr, ptr %i.cl, align 8, !alias.scope !15722, !nonnull !12, !noundef !12 ; 8 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.val13.i, i64 16 ; 2 uses
-  %i.cn = load ptr, ptr %i.cm, align 8, !noalias !15723, !nonnull !12, !noundef !12 ; 7 uses
+  %i.cn = load ptr, ptr %i.cm, align 8, !noalias !15723, !nonnull !12, !noundef !12 ; 6 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.val13.i, i64 24 ; 2 uses
-  %i.cp = load i64, ptr %i.co, align 8, !noalias !15723, !noundef !12 ; 4 uses
+  %i.cp = load i64, ptr %i.co, align 8, !noalias !15723, !noundef !12 ; 3 uses
   %i.cq = icmp ult i64 %i.cp, 2
   br i1 %i.cq, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %.lr.ph
   %i.cr = getelementptr inbounds nuw i8, ptr %.val13.i, i64 32
   %i.cs = load i32, ptr %i.cr, align 8, !range !23, !noalias !15724, !noundef !12
-  switch i32 %i.cs, label %6 [
+  switch i32 %i.cs, label %bb.n [
     i32 1, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i
     i32 4, label %bb.m
   ]
@@ -223,27 +223,20 @@ bb.m:                                             ; preds = %bb.l
   %i.ct = getelementptr inbounds nuw i8, ptr %.val13.i, i64 36
   %i.cu = load i32, ptr %i.ct, align 4, !noalias !15724, !noundef !12
   %i.cv = icmp eq i32 %i.cu, 0
-  br i1 %i.cv, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i, label %6
+  br i1 %i.cv, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i, label %bb.n
 
-6:                                                ; preds = %bb.m, %bb.l
-  %.idx95 = mul nuw nsw i64 %i.cp, 72
-  %7 = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.idx95
-  %.not.not.not.i.not.i.i88 = icmp eq i64 %i.cp, 0
-  br i1 %.not.not.not.i.not.i.i88, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i, label %.lr.ph90
-
-bb.n:                                             ; preds = %.lr.ph90
-  %8 = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 2 uses
-  %.not.not.not.i.not.i.i = icmp eq ptr %8, %7
+bb.n:                                             ; preds = %bb.m, %bb.l
+  %.not.not.not.i.not.i.i = icmp eq i64 %i.cp, 0
   br i1 %.not.not.not.i.not.i.i, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i, label %.lr.ph90
 
-.lr.ph90:                                         ; preds = %6, %bb.n
-  %9 = phi ptr [ %8, %bb.n ], [ %i.cn, %6 ]       ; 2 uses
-  %.val.i.i.i = load i64, ptr %9, align 8, !range !74, !noalias !15725, !noundef !12
-  %10 = icmp eq i64 %.val.i.i.i, 2
-  br i1 %10, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i, label %bb.n
+.lr.ph90:                                         ; preds = %bb.n
+  %.val.i.i.i = load i64, ptr %i.cn, align 8, !range !74, !noalias !15725, !noundef !12
+  %6 = icmp eq i64 %.val.i.i.i, 2
+  %spec.select = select i1 %6, i32 39, i32 37
+  br label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i
 
-_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i: ; preds = %bb.n, %.lr.ph90, %6, %bb.m, %bb.l
-  %storemerge.i.i = phi i32 [ 39, %bb.m ], [ 39, %bb.l ], [ 37, %6 ], [ 39, %.lr.ph90 ], [ 37, %bb.n ]
+_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class34descriptor_setter_signature_domain0B7_.exit.i: ; preds = %.lr.ph90, %bb.n, %bb.m, %bb.l
+  %storemerge.i.i = phi i32 [ 39, %bb.m ], [ 39, %bb.l ], [ 37, %bb.n ], [ %spec.select, %.lr.ph90 ]
   store i32 %storemerge.i.i, ptr %i.z, align 4
   br label %bb.at
 

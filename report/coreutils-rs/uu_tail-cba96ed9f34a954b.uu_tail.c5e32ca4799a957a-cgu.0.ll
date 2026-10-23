@@ -205,7 +205,7 @@ _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlH
 
 .lr.ph.i.i.i232.i:                                ; preds = %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlHlzpN0xi_7uu_tail.exit.i.i, %bb.lt
   %i.amv = phi ptr [ %i.anr, %bb.lt ], [ %.sroa.10.0.i.i.i, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlHlzpN0xi_7uu_tail.exit.i.i ]
-  %i.amw = phi i64 [ %i.ant, %bb.lt ], [ 1, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlHlzpN0xi_7uu_tail.exit.i.i ] ; 6 uses
+  %i.amw = phi i64 [ %i.ant, %bb.lt ], [ 1, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlHlzpN0xi_7uu_tail.exit.i.i ] ; 5 uses
   %.lcssa30.i.i.i.i = phi ptr [ %.lcssa29.i.i.i.i, %bb.lt ], [ %.sroa.6315.0.i, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlHlzpN0xi_7uu_tail.exit.i.i ] ; 2 uses
   %i.amx = phi i16 [ %i.ang, %bb.lt ], [ %i.amg, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlHlzpN0xi_7uu_tail.exit.i.i ] ; 2 uses
   %.val2126.i.i.i.i = phi i64 [ %i.anj, %bb.lt ], [ %i.amj, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlHlzpN0xi_7uu_tail.exit.i.i ] ; 2 uses
@@ -259,8 +259,6 @@ _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCs2vK
 
 _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3map4KeysNtNtB1a_4path7PathBufNtNtNtCsgZlHlzpN0xi_7uu_tail6follow5files8PathDataEENtNtNtB8_6traits8iterator8Iterator4nextB2k_.exit.thread12.i.i.i.i: ; preds = %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3map4KeysNtNtB1a_4path7PathBufNtNtNtCsgZlHlzpN0xi_7uu_tail6follow5files8PathDataEENtNtNtB8_6traits8iterator8Iterator4nextB2k_.exit.i.i.i.i, %._crit_edge18.i.i.i.i.i.i.i.i
   %.sroa.7.018.i.i.i.i = phi ptr [ %i.ann, %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3map4KeysNtNtB1a_4path7PathBufNtNtNtCsgZlHlzpN0xi_7uu_tail6follow5files8PathDataEENtNtNtB8_6traits8iterator8Iterator4nextB2k_.exit.i.i.i.i ], [ inttoptr (i64 1 to ptr), %._crit_edge18.i.i.i.i.i.i.i.i ]
-  %1 = icmp samesign ult i64 %i.amw, 384307168202282326
-  call void @llvm.assume(i1 %1)
   %i.anp = load i64, ptr %i.d, align 8, !range !10, !alias.scope !3299, !noalias !3284, !noundef !9
   %i.anq = icmp eq i64 %i.amw, %i.anp
   br i1 %i.anq, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufE7reserveCsgZlHlzpN0xi_7uu_tail.exit.i.i.i.i, label %bb.lt

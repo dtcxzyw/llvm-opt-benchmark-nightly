@@ -205,12 +205,9 @@ _ZNSt6vectorIhSaIhEE9push_backERKh.exit:          ; preds = %bb.j, %_ZNSt6vector
   store i64 0, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !68, !alias.scope !370
   %i.bn = call noundef nonnull align 8 dereferenceable(17) ptr @_ZN4LIEF2PE14unwind_aarch647Decoder5lognfIJN3fmt3v129join_viewIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEESD_cEEEEERS2_PKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(17) %0, ptr noundef nonnull @.str.54, ptr noundef nonnull align 8 dereferenceable(32) %5) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
-  %i.bo = icmp slt i32 %i.aj, 4
-  br i1 %i.bo, label %.lr.ph127.preheader, label %._crit_edge
-
-.lr.ph127.preheader:                              ; preds = %.critedge
   %6 = sub nsw i32 4, %i.aj
-  br label %.lr.ph127
+  %i.bo = icmp slt i32 %i.aj, 4
+  br i1 %i.bo, label %.lr.ph127, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph127, %.critedge
   %i.bp = call noundef nonnull align 8 dereferenceable(17) ptr @_ZN4LIEF2PE14unwind_aarch647Decoder5lognfIJEEERS2_PKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(17) %0, ptr noundef nonnull @.str.57) ; 0 uses
@@ -250,8 +247,8 @@ _ZNKSt12_Mem_fn_baseIMN4LIEF2PE14unwind_aarch647DecoderEFbbELb1EEclIJPS3_RbEEEDT
   %i.cb = call noundef zeroext i1 %i.ca(ptr noundef nonnull align 8 dereferenceable(17) %i.bt, i1 noundef zeroext %1) #23, !inline_history !363
   br i1 %i.cb, label %.thread90, label %bb.r
 
-.lr.ph127:                                        ; preds = %.lr.ph127.preheader, %.lr.ph127
-  %.027126 = phi i32 [ %i.cd, %.lr.ph127 ], [ 0, %.lr.ph127.preheader ]
+.lr.ph127:                                        ; preds = %.critedge, %.lr.ph127
+  %.027126 = phi i32 [ %i.cd, %.lr.ph127 ], [ 0, %.critedge ]
   %i.cc = call noundef nonnull align 8 dereferenceable(17) ptr @_ZN4LIEF2PE14unwind_aarch647Decoder5lognfIJEEERS2_PKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(17) %0, ptr noundef nonnull @.str.56) ; 0 uses
   %i.cd = add nuw nsw i32 %.027126, 1             ; 2 uses
   %exitcond139.not = icmp eq i32 %i.cd, %6

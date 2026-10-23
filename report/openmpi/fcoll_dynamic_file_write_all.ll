@@ -204,7 +204,7 @@ scalar.ph1425:                                    ; preds = %scalar.ph1425.prehe
   br i1 %exitcond1126.not, label %._crit_edge942, label %scalar.ph1425, !llvm.loop !27
 
 ._crit_edge942:                                   ; preds = %scalar.ph1425, %middle.block1436, %.preheader813
-  %.2659.lcssa = phi i32 [ %.1658945, %.preheader813 ], [ %i.no, %middle.block1436 ], [ %spec.select788, %scalar.ph1425 ] ; 11 uses
+  %.2659.lcssa = phi i32 [ %.1658945, %.preheader813 ], [ %i.no, %middle.block1436 ], [ %spec.select788, %scalar.ph1425 ] ; 10 uses
   %indvars.iv.next1128 = add nuw nsw i64 %indvars.iv1127, 1 ; 2 uses
   %exitcond1131.not = icmp eq i64 %indvars.iv.next1128, %wide.trip.count1130
   br i1 %exitcond1131.not, label %._crit_edge946, label %.preheader813, !llvm.loop !28
@@ -214,7 +214,7 @@ scalar.ph1425:                                    ; preds = %scalar.ph1425.prehe
   br i1 %i.nt, label %bb.bf, label %._crit_edge946.thread
 
 bb.bf:                                            ; preds = %._crit_edge946
-  %i.nu = zext nneg i32 %.2659.lcssa to i64       ; 3 uses
+  %i.nu = zext nneg i32 %.2659.lcssa to i64       ; 4 uses
   %i.nv = mul nuw nsw i64 %i.nu, 24
   %i.nw = call noalias ptr @malloc(i64 noundef %i.nv) #11 ; 12 uses
   %i.nx = icmp eq ptr %i.nw, null
@@ -369,14 +369,10 @@ bb.bj:                                            ; preds = %bb.bh, %bb.bi
   %i.qp = shl nsw i64 %i.qo, 2
   %i.qq = call noalias ptr @calloc(i64 noundef 1, i64 noundef %i.qp) #12 ; 3 uses
   %i.qr = icmp eq ptr %i.qq, null
-  br i1 %i.qr, label %.loopexit815.sink.split, label %.lr.ph962.preheader
+  br i1 %i.qr, label %.loopexit815.sink.split, label %.lr.ph962
 
-.lr.ph962.preheader:                              ; preds = %._crit_edge960
-  %wide.trip.count1151 = zext nneg i32 %.2659.lcssa to i64
-  br label %.lr.ph962
-
-.lr.ph962:                                        ; preds = %.lr.ph962.preheader, %bb.bm
-  %indvars.iv1147 = phi i64 [ 0, %.lr.ph962.preheader ], [ %indvars.iv.next1148, %bb.bm ] ; 2 uses
+.lr.ph962:                                        ; preds = %._crit_edge960, %bb.bm
+  %indvars.iv1147 = phi i64 [ %indvars.iv.next1148, %bb.bm ], [ 0, %._crit_edge960 ] ; 2 uses
   %i.qs = getelementptr inbounds nuw [4 x i8], ptr %i.nz, i64 %indvars.iv1147
   %i.qt = load i32, ptr %i.qs, align 4, !tbaa !8
   %i.qu = sext i32 %i.qt to i64                   ; 2 uses
@@ -409,7 +405,7 @@ bb.bl:                                            ; preds = %.lr.ph962
 
 bb.bm:                                            ; preds = %bb.bk, %bb.bl
   %indvars.iv.next1148 = add nuw nsw i64 %indvars.iv1147, 1 ; 2 uses
-  %exitcond1152.not = icmp eq i64 %indvars.iv.next1148, %wide.trip.count1151
+  %exitcond1152.not = icmp eq i64 %indvars.iv.next1148, %i.nu
   br i1 %exitcond1152.not, label %._crit_edge963, label %.lr.ph962, !llvm.loop !32
 
 ._crit_edge963:                                   ; preds = %bb.bm

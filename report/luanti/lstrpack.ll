@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %posrelatI.ex
   %i.t = call fastcc i32 @getdetails(ptr noundef %1, i64 noundef %.05888, ptr noundef %i.a, ptr noundef %i.c, ptr noundef %i.d) ; 2 uses
   %i.u = load i32, ptr %i.d, align 4, !tbaa !19
   %i.v = sext i32 %i.u to i64                     ; 2 uses
-  %i.w = load i32, ptr %i.c, align 4, !tbaa !19   ; 24 uses
+  %i.w = load i32, ptr %i.c, align 4, !tbaa !19   ; 23 uses
   %i.x = sext i32 %i.w to i64                     ; 5 uses
   %i.y = add nsw i64 %i.x, %i.v
   %i.z = load i64, ptr %i.b, align 8, !tbaa !22
@@ -391,7 +391,7 @@ bb.p:                                             ; preds = %bb.g
 .lr.ph.i:                                         ; preds = %bb.p
   %i.ci = load i32, ptr %i.q, align 8, !tbaa !16
   %.not41.i = icmp eq i32 %i.ci, 0
-  %i.cj = zext nneg i32 %i.w to i64               ; 10 uses
+  %i.cj = zext nneg i32 %i.w to i64               ; 11 uses
   %i.ck = call i64 @llvm.umin.i64(i64 %i.cj, i64 8) ; 16 uses
   br i1 %.not41.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
@@ -564,11 +564,7 @@ bb.p:                                             ; preds = %bb.g
 ._crit_edge.i.thread:                             ; preds = %.lr.ph.split.i.7, %.lr.ph.split.i.6, %.lr.ph.split.i.5, %.lr.ph.split.i.4, %.lr.ph.split.i.3, %.lr.ph.split.i.2, %.lr.ph.split.i.1, %.lr.ph.split.i
   %.lcssa = phi i64 [ %i.el, %.lr.ph.split.i ], [ %i.er, %.lr.ph.split.i.1 ], [ %i.ey, %.lr.ph.split.i.2 ], [ %i.fe, %.lr.ph.split.i.3 ], [ %i.fl, %.lr.ph.split.i.4 ], [ %i.fr, %.lr.ph.split.i.5 ], [ %i.fy, %.lr.ph.split.i.6 ], [ %i.ge, %.lr.ph.split.i.7 ] ; 2 uses
   %i.gg = icmp samesign ult i32 %i.w, 9
-  br i1 %i.gg, label %unpackint.exit, label %.lr.ph46.split.i.preheader
-
-.lr.ph46.split.i.preheader:                       ; preds = %._crit_edge.i.thread
-  %wide.trip.count = zext nneg i32 %i.w to i64
-  br label %.lr.ph46.split.i
+  br i1 %i.gg, label %unpackint.exit, label %.lr.ph46.split.i
 
 .lr.ph46.split.us.i:                              ; preds = %._crit_edge.i, %bb.r
   %indvars.iv57.i = phi i64 [ %indvars.iv.next58.i, %bb.r ], [ 8, %._crit_edge.i ] ; 2 uses
@@ -590,8 +586,8 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph46.spl
   %exitcond97.not = icmp eq i64 %indvars.iv.next58.i, %i.cj
   br i1 %exitcond97.not, label %unpackint.exit, label %.lr.ph46.split.us.i, !llvm.loop !0
 
-.lr.ph46.split.i:                                 ; preds = %.lr.ph46.split.i.preheader, %bb.t
-  %indvars.iv53.i = phi i64 [ %indvars.iv.next54.i, %bb.t ], [ 8, %.lr.ph46.split.i.preheader ] ; 2 uses
+.lr.ph46.split.i:                                 ; preds = %._crit_edge.i.thread, %bb.t
+  %indvars.iv53.i = phi i64 [ %indvars.iv.next54.i, %bb.t ], [ 8, %._crit_edge.i.thread ] ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.cg, i64 %indvars.iv53.i
   %i.gp = load i8, ptr %i.go, align 1, !tbaa !18
   %.not39.i = icmp eq i8 %i.gp, 0
@@ -603,7 +599,7 @@ bb.s:                                             ; preds = %.lr.ph46.split.i
 
 bb.t:                                             ; preds = %bb.s, %.lr.ph46.split.i
   %indvars.iv.next54.i = add nuw nsw i64 %indvars.iv53.i, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next54.i, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next54.i, %i.cj
   br i1 %exitcond.not, label %unpackint.exit, label %.lr.ph46.split.i, !llvm.loop !0
 
 unpackint.exit:                                   ; preds = %bb.t, %bb.r, %._crit_edge.i.thread, %._crit_edge.i

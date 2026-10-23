@@ -202,7 +202,7 @@ Vec_PtrStart.exit:                                ; preds = %bb.j, %bb.k
   %.val.i60 = phi ptr [ %.val.i, %Vec_PtrSetEntry.exit ], [ %i.p, %Vec_PtrStart.exit ] ; 7 uses
   %i.v = phi i32 [ %i.bg, %Vec_PtrSetEntry.exit ], [ %spec.store.select.i.i, %Vec_PtrStart.exit ] ; 7 uses
   %i.w = phi i32 [ %i.bh, %Vec_PtrSetEntry.exit ], [ %.val43, %Vec_PtrStart.exit ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %Vec_PtrSetEntry.exit ], [ 0, %Vec_PtrStart.exit ] ; 9 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %Vec_PtrSetEntry.exit ], [ 0, %Vec_PtrStart.exit ] ; 8 uses
   %.val4256 = phi i32 [ %.val42, %Vec_PtrSetEntry.exit ], [ %.val43, %Vec_PtrStart.exit ]
   %i.x = phi ptr [ %i.bj, %Vec_PtrSetEntry.exit ], [ %i.h, %Vec_PtrStart.exit ] ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 640
@@ -220,7 +220,7 @@ Vec_PtrStart.exit:                                ; preds = %bb.j, %bb.k
   %i.ah = getelementptr inbounds [8 x i8], ptr %.val47, i64 %i.ag
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !64
   %i.aj = tail call ptr @Extra_UtilStrsav(ptr noundef %i.ai) #17
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 5 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 6 uses
   %i.ak = sext i32 %i.w to i64                    ; 3 uses
   %.not.i.not.i = icmp slt i64 %indvars.iv, %i.ak
   br i1 %.not.i.not.i, label %Vec_PtrSetEntry.exit, label %bb.l
@@ -287,8 +287,7 @@ Vec_PtrGrow.exit.i.i:                             ; preds = %Vec_PtrGrow.exit.si
   br i1 %.not4.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %Vec_PtrGrow.exit.i.i
-  %3 = add nuw i64 %indvars.iv, 1
-  %i.ay = sub i64 %3, %.pre-phi                   ; 3 uses
+  %i.ay = sub i64 %indvars.iv.next, %.pre-phi     ; 3 uses
   %min.iters.check = icmp ult i64 %i.ay, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader73, label %vector.ph
 

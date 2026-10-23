@@ -200,7 +200,7 @@ bb.p:                                             ; preds = %bb.n
 
 _ZNK2cv11_InputArray6getMatEi.exit:               ; preds = %bb.o, %bb.p
   %i.ap = invoke noundef i32 @_ZNK2cv3Mat11checkVectorEiib(ptr noundef nonnull align 8 dereferenceable(208) %4, i32 noundef 2, i32 noundef 5, i1 noundef zeroext true)
-          to label %bb.q unwind label %bb.aa      ; 5 uses
+          to label %bb.q unwind label %bb.aa      ; 4 uses
 
 bb.q:                                             ; preds = %_ZNK2cv11_InputArray6getMatEi.exit
   %i.aq = icmp sgt i32 %i.ap, -1
@@ -249,7 +249,7 @@ bb.w:                                             ; preds = %bb.q
   %i.az = ptrtoaddr ptr %i.ay to i64
   %i.ba = load ptr, ptr %1, align 8, !tbaa !20
   %i.bb = getelementptr inbounds nuw [24 x i8], ptr %i.ba, i64 %.03251 ; 4 uses
-  %i.bc = zext nneg i32 %i.ap to i64              ; 4 uses
+  %i.bc = zext nneg i32 %i.ap to i64              ; 9 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 2 uses
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !36 ; 2 uses
   %i.bf = load ptr, ptr %i.bb, align 8, !tbaa !23 ; 2 uses
@@ -284,7 +284,6 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit: ; preds = %bb.x, %bb.y, %bb.
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit
   %i.bo = load ptr, ptr %i.bb, align 8, !tbaa !23 ; 7 uses
-  %wide.trip.count = zext nneg i32 %i.ap to i64   ; 5 uses
   %min.iters.check = icmp ult i32 %i.ap, 4
   %i.bp = ptrtoaddr ptr %i.bo to i64
   %i.bq = sub i64 %i.az, %i.bp
@@ -293,7 +292,7 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit: ; preds = %bb.x, %bb.y, %bb.
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %i.bc, 2147483644              ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -311,12 +310,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bv, label %middle.block, label %vector.body, !llvm.loop !53
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %i.bc
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
+  %xtraiter = and i64 %i.bc, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -334,7 +333,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
-  %i.bz = sub nsw i64 %indvars.iv.ph, %wide.trip.count
+  %i.bz = sub nsw i64 %indvars.iv.ph, %i.bc
   %i.ca = icmp ugt i64 %i.bz, -4
   br i1 %i.ca, label %._crit_edge, label %scalar.ph
 
@@ -360,7 +359,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.cm = load i64, ptr %i.ck, align 4, !tbaa !38
   store i64 %i.cm, ptr %i.cl, align 4, !tbaa !38
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %i.bc
   br i1 %exitcond.not.3, label %._crit_edge, label %scalar.ph, !llvm.loop !55
 
 bb.aa:                                            ; preds = %bb.x, %_ZNK2cv11_InputArray6getMatEi.exit

@@ -206,7 +206,7 @@ bb.x:                                             ; preds = %bb.w, %._crit_edge4
   %.0234 = phi i32 [ %i.dp, %bb.v ], [ %i.dt, %._crit_edge412 ], [ %i.dt, %bb.w ] ; 2 uses
   %.0231 = phi ptr [ %i.dq, %bb.v ], [ %i.du, %._crit_edge412 ], [ %i.du, %bb.w ] ; 2 uses
   %.0230.in = phi i32 [ %i.dp, %bb.v ], [ %i.dt, %._crit_edge412 ], [ %i.dy, %bb.w ] ; 2 uses
-  %.0230 = add nsw i32 %.0230.in, -1              ; 7 uses
+  %.0230 = add nsw i32 %.0230.in, -1              ; 5 uses
   %i.dz = load i32, ptr %i.bz, align 8, !tbaa !703 ; 4 uses
   %i.ea = load i32, ptr %i.cb, align 4, !tbaa !1165
   %.not.i.i.i261 = icmp sgt i32 %i.ea, %i.dz
@@ -535,7 +535,7 @@ bb.aw:                                            ; preds = %sqlite3VdbeAddOp2.e
   %i.jf = load i32, ptr %i.dd, align 4, !tbaa !1881 ; 2 uses
   %i.jg = add nsw i32 %i.jf, -1                   ; 5 uses
   store i32 %i.jg, ptr %i.dd, align 4, !tbaa !1881
-  %i.jh = zext nneg i32 %.0230 to i64
+  %i.jh = zext nneg i32 %.0230 to i64             ; 3 uses
   %i.ji = shl nuw nsw i64 %i.jh, 2
   %i.jj = tail call fastcc ptr @sqlite3DbMallocRawNN(ptr noundef nonnull %i.a, i64 noundef %i.ji) ; 4 uses
   %.not251 = icmp eq ptr %i.jj, null
@@ -610,7 +610,6 @@ bb.be:                                            ; preds = %bb.bc
   %i.ki = getelementptr inbounds nuw i8, ptr %.0399, i64 64
   %i.kj = getelementptr inbounds nuw i8, ptr %.0399, i64 8
   %i.kk = getelementptr inbounds nuw i8, ptr %.0399, i64 24
-  %wide.trip.count = zext nneg i32 %.0230 to i64
   br label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph, %sqlite3VdbeChangeP5.exit
@@ -756,7 +755,7 @@ bb.bp:                                            ; preds = %analyzeVdbeCommentI
 
 sqlite3VdbeChangeP5.exit:                         ; preds = %analyzeVdbeCommentIndexWithColumnName.exit, %bb.bp
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.jh
   br i1 %exitcond.not, label %._crit_edge, label %bb.bf, !llvm.loop !5620
 
 ._crit_edge:                                      ; preds = %sqlite3VdbeChangeP5.exit
@@ -837,8 +836,6 @@ bb.bu:                                            ; preds = %sqlite3VdbeGoto.exi
   store i32 %i.nt, ptr %i.ob, align 8, !tbaa !927
   %i.oc = getelementptr inbounds nuw i8, ptr %.0399, i64 8
   %i.od = getelementptr inbounds nuw i8, ptr %.0399, i64 24
-  %smax408 = tail call i32 @llvm.smax.i32(i32 %.0230, i32 1)
-  %wide.trip.count409 = zext nneg i32 %smax408 to i64
   br label %bb.bv
 
 bb.bv:                                            ; preds = %.lr.ph394, %analyzeVdbeCommentIndexWithColumnName.exit314
@@ -925,7 +922,7 @@ bb.cb:                                            ; preds = %sqlite3VdbeAddOp3.e
 
 analyzeVdbeCommentIndexWithColumnName.exit314:    ; preds = %bb.bz, %bb.ca, %bb.cb
   %indvars.iv.next406 = add nuw nsw i64 %indvars.iv405, 1 ; 2 uses
-  %exitcond410.not = icmp eq i64 %indvars.iv.next406, %wide.trip.count409
+  %exitcond410.not = icmp eq i64 %indvars.iv.next406, %i.jh
   br i1 %exitcond410.not, label %._crit_edge395, label %bb.bv, !llvm.loop !5621
 
 ._crit_edge395:                                   ; preds = %analyzeVdbeCommentIndexWithColumnName.exit314

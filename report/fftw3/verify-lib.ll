@@ -204,7 +204,6 @@ bb.a:
   %i.ch = mul i64 %i.cg, %i.ad
   %i.ci = shl nuw nsw i64 %i.ae, 4
   %i.cj = mul i64 %i.ci, %i.ad                    ; 2 uses
-  %14 = add i32 %i.w, -1
   %xtraiter = and i32 %i.w, 3                     ; 3 uses
   %i.ck = icmp ult i32 %i.w, 4
   %unroll_iter = and i32 %i.w, 2147483644
@@ -247,7 +246,7 @@ bb.a:
   %n.vec347 = and i64 %i.ad, 2147483646           ; 3 uses
   %cmp.n353 = icmp eq i64 %n.vec347, %i.ad
   %xtraiter520 = and i32 %i.w, 3                  ; 3 uses
-  %i.cu = icmp ult i32 %14, 3
+  %i.cu = icmp ult i32 %i.w, 4
   %unroll_iter524 = and i32 %i.w, 2147483644
   %lcmp.mod522.not = icmp eq i32 %xtraiter520, 0
   %lcmp.mod523 = icmp ne i32 %xtraiter520, 0

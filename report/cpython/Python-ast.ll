@@ -202,9 +202,8 @@ bb.r:                                             ; preds = %bb.q
 
 .lr.ph169:                                        ; preds = %bb.r
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.ax = add nsw i32 %1, -1                      ; 4 uses
+  %i.ax = add nsw i32 %1, -1                      ; 3 uses
   %i.ay = getelementptr i8, ptr %i.d, i64 80032
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %bb.t
 
 bb.s:                                             ; preds = %Py_DECREF.exit86
@@ -259,7 +258,7 @@ _PyOnceFlag_CallOnce.exit.i132:                   ; preds = %bb.y
 
 get_ast_state.exit135.thread138:                  ; preds = %bb.y, %_PyOnceFlag_CallOnce.exit.i132
   %i.bp = call i64 @PySequence_Size(ptr noundef nonnull %i.bc) #9, !inline_history !430
-  %.fr170 = freeze i64 %i.bp                      ; 7 uses
+  %.fr170 = freeze i64 %i.bp                      ; 6 uses
   %i.bq = icmp slt i64 %.fr170, 0
   br i1 %i.bq, label %ast_repr_list.exit, label %bb.z
 
@@ -274,12 +273,12 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  %i.bt = call ptr @PyUnicodeWriter_Create(i64 noundef 0) #9, !inline_history !430 ; 14 uses
+  %i.bt = call ptr @PyUnicodeWriter_Create(i64 noundef 0) #9, !inline_history !430 ; 12 uses
   %i.bu = icmp eq ptr %i.bt, null
   br i1 %i.bu, label %.thread148, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bv = call ptr @PySequence_GetItem(ptr noundef nonnull %i.bc, i64 noundef 0) #9, !inline_history !430 ; 23 uses
+  %i.bv = call ptr @PySequence_GetItem(ptr noundef nonnull %i.bc, i64 noundef 0) #9, !inline_history !430 ; 17 uses
   store ptr %i.bv, ptr %i.a, align 16, !tbaa !15
   %.not.i131 = icmp eq ptr %i.bv, null
   br i1 %.not.i131, label %.thread148, label %bb.ad
@@ -296,7 +295,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not51.i, label %.thread148, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %i.by = phi ptr [ %i.bx, %bb.ae ], [ null, %bb.ad ] ; 15 uses
+  %i.by = phi ptr [ %i.bx, %bb.ae ], [ null, %bb.ad ] ; 12 uses
   %.val57.i = load ptr, ptr %i.bg, align 8, !tbaa !127
   %i.bz = getelementptr i8, ptr %.val57.i, i64 168
   %.val58.i = load i64, ptr %i.bz, align 8, !tbaa !133
@@ -308,59 +307,23 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br i1 %i.cd, label %.thread148, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.af
-  %i.ce = call i64 @llvm.umin.i64(i64 %.fr170, i64 2)
+  %i.ce = call i64 @llvm.umin.i64(i64 %.fr170, i64 2) ; 2 uses
   %i.cf = icmp samesign ugt i64 %.fr170, 2
-  %i.cg = getelementptr i8, ptr %i.bj, i64 80032  ; 3 uses
-  br i1 %i.cf, label %.lr.ph.split, label %.lr.ph.split.us.preheader._crit_edge
+  %i.cg = getelementptr i8, ptr %i.bj, i64 80032  ; 2 uses
+  br i1 %i.cf, label %.lr.ph.split, label %bb.ag
 
-.lr.ph.split.us.preheader._crit_edge:             ; preds = %.lr.ph
-  %.pre = load ptr, ptr %i.cg, align 8, !tbaa !159
-  %.phi.trans.insert = getelementptr i8, ptr %i.bv, i64 8
-  %.val.i.us.peel.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !127
-  %3 = call i32 @PyType_IsSubtype(ptr noundef %.val.i.us.peel.pre, ptr noundef %.pre) #9, !inline_history !430
-  %.not54.i.us.peel = icmp eq i32 %3, 0
-  br i1 %.not54.i.us.peel, label %13, label %4
+bb.ag:                                            ; preds = %.lr.ph, %.thread144.us
+  %.0.i167.us = phi i64 [ %3, %.thread144.us ], [ 0, %.lr.ph ] ; 3 uses
+  %i.ch = icmp eq i64 %.0.i167.us, 0
+  br i1 %i.ch, label %._crit_edge262, label %.lr.ph.split.us
 
-4:                                                ; preds = %.lr.ph.split.us.preheader._crit_edge
-  %5 = call fastcc ptr @ast_repr_max_depth(ptr noundef nonnull %i.bv, i32 noundef %i.ax), !inline_history !430 ; 5 uses
-  %.not55.i.us.peel = icmp eq ptr %5, null
-  br i1 %.not55.i.us.peel, label %.thread148, label %6
-
-6:                                                ; preds = %4
-  %7 = call i32 @PyUnicodeWriter_WriteStr(ptr noundef nonnull %i.bt, ptr noundef nonnull %5) #9, !inline_history !430
-  %8 = icmp sgt i32 %7, -1
-  %9 = load i32, ptr %5, align 8, !tbaa !16       ; 2 uses
-  %.not.i.i.us.peel = icmp sgt i32 %9, -1
-  br i1 %.not.i.i.us.peel, label %bb.ag, label %12
-
-bb.ag:                                            ; preds = %6
-  %10 = add nsw i32 %9, -1                        ; 2 uses
-  store i32 %10, ptr %5, align 8, !tbaa !16
-  %i.ch = icmp eq i32 %10, 0
-  br i1 %i.ch, label %11, label %12
-
-11:                                               ; preds = %bb.ag
-  call void @_Py_Dealloc(ptr noundef nonnull %5) #9, !inline_history !430
-  br label %12
-
-12:                                               ; preds = %11, %bb.ag, %6
-  br i1 %8, label %.thread144.us.peel, label %.thread148
-
-13:                                               ; preds = %.lr.ph.split.us.preheader._crit_edge
-  %14 = call i32 @PyUnicodeWriter_WriteRepr(ptr noundef nonnull %i.bt, ptr noundef nonnull %i.bv) #9, !inline_history !430
-  %15 = icmp slt i32 %14, 0
-  br i1 %15, label %.thread148, label %.thread144.us.peel
-
-.thread144.us.peel:                               ; preds = %13, %12
-  %exitcond.not.peel = icmp eq i64 %.fr170, 1
-  br i1 %exitcond.not.peel, label %.thread150, label %.lr.ph.split.us
-
-.lr.ph.split.us:                                  ; preds = %.thread144.us.peel
+.lr.ph.split.us:                                  ; preds = %bb.ag
   %i.ci = call i32 @PyUnicodeWriter_WriteASCII(ptr noundef nonnull %i.bt, ptr noundef nonnull @.str.392, i64 noundef 2) #9, !inline_history !430
   %i.cj = icmp slt i32 %i.ci, 0
   br i1 %i.cj, label %.thread148, label %._crit_edge262
 
-._crit_edge262:                                   ; preds = %.lr.ph.split.us
+._crit_edge262:                                   ; preds = %.lr.ph.split.us, %bb.ag
+  %2 = getelementptr [8 x i8], ptr %i.a, i64 %.0.i167.us
   %i.ck = load ptr, ptr %2, align 8, !tbaa !15    ; 3 uses
   %i.cl = getelementptr i8, ptr %i.ck, i64 8
   %.val.i.us = load ptr, ptr %i.cl, align 8, !tbaa !127
@@ -392,12 +355,17 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.ai
-  br i1 %i.cq, label %.thread150, label %.thread148
+  br i1 %i.cq, label %.thread144.us, label %.thread148
 
 bb.am:                                            ; preds = %._crit_edge262
   %i.cu = call i32 @PyUnicodeWriter_WriteRepr(ptr noundef nonnull %i.bt, ptr noundef nonnull %i.ck) #9, !inline_history !430
   %i.cv = icmp slt i32 %i.cu, 0
-  br i1 %i.cv, label %.thread148, label %.thread150
+  br i1 %i.cv, label %.thread148, label %.thread144.us
+
+.thread144.us:                                    ; preds = %bb.am, %bb.al
+  %3 = add nuw nsw i64 %.0.i167.us, 1             ; 2 uses
+  %exitcond.not = icmp eq i64 %3, %i.ce
+  br i1 %exitcond.not, label %.thread150, label %bb.ag, !llvm.loop !431
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.thread144
   %.0.i167 = phi i64 [ %i.dn, %.thread144 ], [ 0, %.lr.ph ] ; 3 uses
@@ -462,7 +430,7 @@ bb.aw:                                            ; preds = %bb.av
   %exitcond183.not = icmp eq i64 %i.dn, %i.ce
   br i1 %exitcond183.not, label %.thread150, label %.lr.ph.split, !llvm.loop !431
 
-.thread150:                                       ; preds = %.thread144, %.thread144.us.peel, %bb.al, %bb.am
+.thread150:                                       ; preds = %.thread144.us, %.thread144
   %i.do = select i1 %.not52.i, i32 41, i32 93
   %i.dp = call i32 @PyUnicodeWriter_WriteChar(ptr noundef nonnull %i.bt, i32 noundef %i.do) #9, !inline_history !430
   %i.dq = icmp slt i32 %i.dp, 0
@@ -488,11 +456,11 @@ Py_XDECREF.exit:                                  ; preds = %bb.ax, %bb.ay, %bb.
   %i.du = call ptr @PyUnicodeWriter_Finish(ptr noundef nonnull %i.bt) #9, !inline_history !430
   br label %bb.ba
 
-.thread148:                                       ; preds = %bb.an, %bb.au, %bb.aw, %bb.ap, %bb.at, %4, %12, %13, %bb.am, %bb.al, %bb.ah, %.lr.ph.split.us, %.thread150, %bb.af, %bb.ae, %bb.ac, %bb.ab
-  %16 = phi ptr [ %i.by, %bb.al ], [ null, %bb.ab ], [ %i.by, %.thread150 ], [ %i.by, %bb.af ], [ null, %bb.ae ], [ null, %bb.ac ], [ %i.by, %bb.am ], [ %i.by, %13 ], [ %i.by, %12 ], [ %i.by, %4 ], [ %i.by, %.lr.ph.split.us ], [ %i.by, %bb.ah ], [ %i.by, %bb.at ], [ %i.by, %bb.ap ], [ %i.by, %bb.aw ], [ %i.by, %bb.au ], [ %i.by, %bb.an ]
-  %17 = phi ptr [ %i.bv, %bb.al ], [ null, %bb.ab ], [ %i.bv, %.thread150 ], [ %i.bv, %bb.af ], [ %i.bv, %bb.ae ], [ null, %bb.ac ], [ %i.bv, %bb.am ], [ %i.bv, %13 ], [ %i.bv, %12 ], [ %i.bv, %4 ], [ %i.bv, %.lr.ph.split.us ], [ %i.bv, %bb.ah ], [ %i.bv, %bb.at ], [ %i.bv, %bb.ap ], [ %i.bv, %bb.aw ], [ %i.bv, %bb.au ], [ %i.bv, %bb.an ]
-  call fastcc void @Py_XDECREF(ptr noundef %17), !inline_history !430
-  call fastcc void @Py_XDECREF(ptr noundef %16), !inline_history !430
+.thread148:                                       ; preds = %bb.am, %bb.al, %bb.ah, %.lr.ph.split.us, %bb.an, %bb.au, %bb.aw, %bb.ap, %bb.at, %.thread150, %bb.af, %bb.ae, %bb.ac, %bb.ab
+  %4 = phi ptr [ %i.by, %bb.an ], [ null, %bb.ab ], [ %i.by, %.thread150 ], [ %i.by, %bb.af ], [ null, %bb.ae ], [ null, %bb.ac ], [ %i.by, %bb.at ], [ %i.by, %bb.ap ], [ %i.by, %bb.aw ], [ %i.by, %bb.au ], [ %i.by, %.lr.ph.split.us ], [ %i.by, %bb.ah ], [ %i.by, %bb.al ], [ %i.by, %bb.am ]
+  %5 = phi ptr [ %i.bv, %bb.an ], [ null, %bb.ab ], [ %i.bv, %.thread150 ], [ %i.bv, %bb.af ], [ %i.bv, %bb.ae ], [ null, %bb.ac ], [ %i.bv, %bb.at ], [ %i.bv, %bb.ap ], [ %i.bv, %bb.aw ], [ %i.bv, %bb.au ], [ %i.bv, %.lr.ph.split.us ], [ %i.bv, %bb.ah ], [ %i.bv, %bb.al ], [ %i.bv, %bb.am ]
+  call fastcc void @Py_XDECREF(ptr noundef %5), !inline_history !430
+  call fastcc void @Py_XDECREF(ptr noundef %4), !inline_history !430
   call void @PyUnicodeWriter_Discard(ptr noundef %i.bt) #9, !inline_history !430
   br label %bb.ba
 

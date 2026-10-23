@@ -204,7 +204,7 @@ scalar.ph1981:                                    ; preds = %scalar.ph1981.prehe
   br i1 %exitcond1503.not, label %._crit_edge1246, label %scalar.ph1981, !llvm.loop !27
 
 ._crit_edge1246:                                  ; preds = %scalar.ph1981, %middle.block1992, %.preheader1064
-  %.1678.lcssa = phi i32 [ %.06771249, %.preheader1064 ], [ %i.nf, %middle.block1992 ], [ %spec.select, %scalar.ph1981 ] ; 9 uses
+  %.1678.lcssa = phi i32 [ %.06771249, %.preheader1064 ], [ %i.nf, %middle.block1992 ], [ %spec.select, %scalar.ph1981 ] ; 8 uses
   %indvars.iv.next1505 = add nuw nsw i64 %indvars.iv1504, 1 ; 2 uses
   %exitcond1508.not = icmp eq i64 %indvars.iv.next1505, %wide.trip.count1507
   br i1 %exitcond1508.not, label %._crit_edge1250, label %.preheader1064, !llvm.loop !28
@@ -214,7 +214,7 @@ scalar.ph1981:                                    ; preds = %scalar.ph1981.prehe
   br i1 %i.nk, label %bb.bt, label %._crit_edge1250.thread
 
 bb.bt:                                            ; preds = %._crit_edge1250
-  %i.nl = zext nneg i32 %.1678.lcssa to i64       ; 3 uses
+  %i.nl = zext nneg i32 %.1678.lcssa to i64       ; 4 uses
   %i.nm = mul nuw nsw i64 %i.nl, 24               ; 2 uses
   %i.nn = call noalias ptr @malloc(i64 noundef %i.nm) #12 ; 17 uses
   %i.no = icmp eq ptr %i.nn, null
@@ -481,18 +481,14 @@ bb.cg:                                            ; preds = %._crit_edge1270.thr
   %i.sf = shl nsw i64 %i.se, 2
   %i.sg = call noalias ptr @calloc(i64 noundef 1, i64 noundef %i.sf) #13 ; 3 uses
   %i.sh = icmp eq ptr %i.sg, null
-  br i1 %i.sh, label %bb.ch, label %.lr.ph1273.preheader
-
-.lr.ph1273.preheader:                             ; preds = %bb.cg
-  %wide.trip.count1534 = zext nneg i32 %.1678.lcssa to i64
-  br label %.lr.ph1273
+  br i1 %i.sh, label %bb.ch, label %.lr.ph1273
 
 bb.ch:                                            ; preds = %bb.cg
   call void (i32, ptr, ...) @opal_output(i32 noundef 1, ptr noundef nonnull @.str.1) #11
   br label %.loopexit1066
 
-.lr.ph1273:                                       ; preds = %.lr.ph1273.preheader, %bb.ck
-  %indvars.iv1530 = phi i64 [ 0, %.lr.ph1273.preheader ], [ %indvars.iv.next1531, %bb.ck ] ; 2 uses
+.lr.ph1273:                                       ; preds = %bb.cg, %bb.ck
+  %indvars.iv1530 = phi i64 [ %indvars.iv.next1531, %bb.ck ], [ 0, %bb.cg ] ; 2 uses
   %i.si = getelementptr inbounds nuw [4 x i8], ptr %i.nq, i64 %indvars.iv1530
   %i.sj = load i32, ptr %i.si, align 4, !tbaa !8
   %i.sk = sext i32 %i.sj to i64                   ; 2 uses
@@ -525,7 +521,7 @@ bb.cj:                                            ; preds = %.lr.ph1273
 
 bb.ck:                                            ; preds = %bb.ci, %bb.cj
   %indvars.iv.next1531 = add nuw nsw i64 %indvars.iv1530, 1 ; 2 uses
-  %exitcond1535.not = icmp eq i64 %indvars.iv.next1531, %wide.trip.count1534
+  %exitcond1535.not = icmp eq i64 %indvars.iv.next1531, %i.nl
   br i1 %exitcond1535.not, label %._crit_edge1274, label %.lr.ph1273, !llvm.loop !33
 
 ._crit_edge1274:                                  ; preds = %bb.ck

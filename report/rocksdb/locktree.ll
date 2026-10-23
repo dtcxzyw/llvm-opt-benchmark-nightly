@@ -202,13 +202,13 @@ _ZNK4toku15concurrent_tree15locked_keyrange7iterateIZNS_L25extract_first_n_row_l
   %i.ak = phi ptr [ %i.u, %_ZNK4toku15concurrent_tree15locked_keyrange7iterateIZNS_L25extract_first_n_row_locksEPS1_PNS_16locktree_managerEPNS_8row_lockEiE14extract_fn_objEEvPT_.exit.i.lr.ph ], [ %i.ah, %.loopexit194 ] ; 2 uses
   %i.al = load ptr, ptr %i.t, align 8, !tbaa !79
   call fastcc void @_ZN4toku8treenode17traverse_overlapsIZNS_L25extract_first_n_row_locksEPNS_15concurrent_tree15locked_keyrangeEPNS_16locktree_managerEPNS_8row_lockEiE14extract_fn_objEEvRKNS_8keyrangeEPT_(ptr noundef nonnull align 8 dereferenceable(202) %i.al, ptr noundef nonnull align 8 dereferenceable(81) %i.x, ptr noundef nonnull %3)
-  %.pre.i = load i32, ptr %3, align 8, !tbaa !121 ; 6 uses
+  %.pre.i = load i32, ptr %3, align 8, !tbaa !121 ; 5 uses
   %i.am = icmp sgt i32 %.pre.i, 0
   br i1 %i.am, label %.lr.ph.i, label %._crit_edge217
 
 .lr.ph.i:                                         ; preds = %_ZNK4toku15concurrent_tree15locked_keyrange7iterateIZNS_L25extract_first_n_row_locksEPS1_PNS_16locktree_managerEPNS_8row_lockEiE14extract_fn_objEEvPT_.exit.i
   %.not.i.i79 = icmp eq ptr %i.ak, null
-  %wide.trip.count17.i = zext nneg i32 %.pre.i to i64 ; 2 uses
+  %wide.trip.count17.i = zext nneg i32 %.pre.i to i64 ; 3 uses
   br i1 %.not.i.i79, label %_ZN4tokuL25remove_row_lock_from_treeEPNS_15concurrent_tree15locked_keyrangeERKNS_8row_lockEmPNS_16locktree_managerE.exit.us.i, label %_ZN4tokuL25remove_row_lock_from_treeEPNS_15concurrent_tree15locked_keyrangeERKNS_8row_lockEmPNS_16locktree_managerE.exit.i
 
 _ZN4tokuL25remove_row_lock_from_treeEPNS_15concurrent_tree15locked_keyrangeERKNS_8row_lockEmPNS_16locktree_managerE.exit.us.i: ; preds = %.lr.ph.i, %_ZN4tokuL25remove_row_lock_from_treeEPNS_15concurrent_tree15locked_keyrangeERKNS_8row_lockEmPNS_16locktree_managerE.exit.us.i
@@ -237,10 +237,6 @@ _ZN4tokuL25remove_row_lock_from_treeEPNS_15concurrent_tree15locked_keyrangeERKNS
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   %i.au = zext nneg i32 %.pre.i to i64            ; 2 uses
   br label %.preheader192
-
-.lr.ph216.preheader:                              ; preds = %_ZNSt3setImSt4lessImESaImEED2Ev.exit
-  %wide.trip.count = zext nneg i32 %.pre.i to i64
-  br label %.lr.ph216
 
 .preheader192:                                    ; preds = %.preheader192.preheader, %_ZNSt3setImSt4lessImESaImEED2Ev.exit
   %.068214 = phi i32 [ %.067.lcssa, %_ZNSt3setImSt4lessImESaImEED2Ev.exit ], [ 0, %.preheader192.preheader ] ; 2 uses
@@ -371,7 +367,7 @@ bb.k:                                             ; preds = %._crit_edge
 _ZNSt3setImSt4lessImESaImEED2Ev.exit:             ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   %i.cp = icmp slt i32 %.067.lcssa, %.pre.i
-  br i1 %i.cp, label %.preheader192, label %.lr.ph216.preheader, !llvm.loop !184
+  br i1 %i.cp, label %.preheader192, label %.lr.ph216, !llvm.loop !184
 
 bb.l:                                             ; preds = %.lr.ph, %_ZN4toku3omtIPNS_18txnid_range_bufferES2_Lb0EE9insert_atERKS2_j.exit
   %.sroa.0157.0213 = phi ptr [ %i.ci, %.lr.ph ], [ %i.lt, %_ZN4toku3omtIPNS_18txnid_range_bufferES2_Lb0EE9insert_atERKS2_j.exit ] ; 2 uses
@@ -774,8 +770,8 @@ _ZNSt3setImSt4lessImESaImEED2Ev.exit91:           ; preds = %bb.bh
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
   resume { ptr, i32 } %.pn.pn
 
-.lr.ph216:                                        ; preds = %.lr.ph216.preheader, %bb.bl
-  %indvars.iv242 = phi i64 [ 0, %.lr.ph216.preheader ], [ %indvars.iv.next243, %bb.bl ] ; 2 uses
+.lr.ph216:                                        ; preds = %_ZNSt3setImSt4lessImESaImEED2Ev.exit, %bb.bl
+  %indvars.iv242 = phi i64 [ %indvars.iv.next243, %bb.bl ], [ 0, %_ZNSt3setImSt4lessImESaImEED2Ev.exit ] ; 2 uses
   %i.ly = getelementptr inbounds nuw [112 x i8], ptr %i.q, i64 %indvars.iv242 ; 2 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 104
   %i.ma = load ptr, ptr %i.lz, align 8, !tbaa !101 ; 4 uses
@@ -802,7 +798,7 @@ _ZNSt3setImSt4lessImESaImEED2Ev.exit92:           ; preds = %bb.bj
 bb.bl:                                            ; preds = %_ZNSt3setImSt4lessImESaImEED2Ev.exit92, %.lr.ph216
   call void @_ZN4toku8keyrange7destroyEv(ptr noundef nonnull align 8 dereferenceable(81) %i.ly)
   %indvars.iv.next243 = add nuw nsw i64 %indvars.iv242, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next243, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next243, %wide.trip.count17.i
   br i1 %exitcond.not, label %.loopexit194, label %.lr.ph216, !llvm.loop !186
 
 ._crit_edge217:                                   ; preds = %_ZNK4toku15concurrent_tree15locked_keyrange7iterateIZNS_L25extract_first_n_row_locksEPS1_PNS_16locktree_managerEPNS_8row_lockEiE14extract_fn_objEEvPT_.exit.i, %.loopexit194, %bb.d

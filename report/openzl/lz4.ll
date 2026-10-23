@@ -204,7 +204,7 @@ LZ4_prepareTable.exit77.thread:                   ; preds = %bb.e, %bb.d
   br label %bb.al
 
 LZ4_prepareTable.exit77:                          ; preds = %.LZ4_prepareTable.exit77_crit_edge, %bb.e
-  %i.o = phi i32 [ %.pre1513, %.LZ4_prepareTable.exit77_crit_edge ], [ %i.j, %bb.e ] ; 6 uses
+  %i.o = phi i32 [ %.pre1513, %.LZ4_prepareTable.exit77_crit_edge ], [ %i.j, %bb.e ] ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16400 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16384
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16408 ; 3 uses
@@ -243,7 +243,7 @@ bb.i:                                             ; preds = %bb.g
   %.val587 = load i32, ptr %1, align 1, !tbaa !27
   %i.ac = mul i32 %.val587, -1640531535
   %i.ad = lshr i32 %i.ac, 19
-  %i.ae = trunc i32 %i.o to i16
+  %i.ae = trunc i32 %i.o to i16                   ; 2 uses
   %i.af = zext nneg i32 %i.ad to i64
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.af
   store i16 %i.ae, ptr %i.ag, align 2, !tbaa !29
@@ -606,12 +606,11 @@ bb.af:                                            ; preds = %bb.ae
   %i.gc = zext nneg i32 %i.fz to i64
   %i.gd = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.gc ; 2 uses
   %i.ge = load i16, ptr %i.gd, align 2, !tbaa !29 ; 2 uses
-  %6 = zext i16 %i.ge to i32
   %i.gf = zext i16 %i.ge to i64
   %i.gg = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.gf ; 2 uses
   %i.gh = trunc i64 %i.gb to i16
   store i16 %i.gh, ptr %i.gd, align 2, !tbaa !29
-  %.not523.i = icmp ugt i32 %i.o, %6
+  %.not523.i = icmp ult i16 %i.ge, %i.ae
   br i1 %.not523.i, label %bb.ai, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -1014,7 +1013,7 @@ LZ4_prepareTable.exit69.thread:                   ; preds = %bb.cv, %bb.cu
   br label %bb.ej
 
 LZ4_prepareTable.exit69:                          ; preds = %.LZ4_prepareTable.exit69_crit_edge, %bb.cv
-  %i.vz = phi i32 [ %.pre1518, %.LZ4_prepareTable.exit69_crit_edge ], [ %i.vu, %bb.cv ] ; 6 uses
+  %i.vz = phi i32 [ %.pre1518, %.LZ4_prepareTable.exit69_crit_edge ], [ %i.vu, %bb.cv ] ; 5 uses
   %i.wa = getelementptr inbounds nuw i8, ptr %0, i64 16400 ; 2 uses
   %i.wb = getelementptr inbounds nuw i8, ptr %0, i64 16384
   %i.wc = getelementptr inbounds nuw i8, ptr %0, i64 16408 ; 3 uses
@@ -1059,7 +1058,7 @@ bb.da:                                            ; preds = %bb.cx
   %.val566 = load i32, ptr %1, align 1, !tbaa !27
   %i.wq = mul i32 %.val566, -1640531535
   %i.wr = lshr i32 %i.wq, 19
-  %i.ws = trunc i32 %i.vz to i16
+  %i.ws = trunc i32 %i.vz to i16                  ; 2 uses
   %i.wt = zext nneg i32 %i.wr to i64
   %i.wu = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.wt
   store i16 %i.ws, ptr %i.wu, align 2, !tbaa !29
@@ -1442,12 +1441,11 @@ bb.eb:                                            ; preds = %bb.ea
   %i.adb = zext nneg i32 %i.acy to i64
   %i.adc = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.adb ; 2 uses
   %i.add = load i16, ptr %i.adc, align 2, !tbaa !29 ; 2 uses
-  %7 = zext i16 %i.add to i32
   %i.ade = zext i16 %i.add to i64
   %i.adf = getelementptr inbounds nuw i8, ptr %i.wh, i64 %i.ade ; 2 uses
   %i.adg = trunc i64 %i.ada to i16
   store i16 %i.adg, ptr %i.adc, align 2, !tbaa !29
-  %.not523.i266 = icmp ugt i32 %i.vz, %7
+  %.not523.i266 = icmp ult i16 %i.add, %i.ws
   br i1 %.not523.i266, label %bb.ee, label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb

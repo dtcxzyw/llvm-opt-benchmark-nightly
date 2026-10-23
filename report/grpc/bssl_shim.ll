@@ -202,7 +202,7 @@ _ZNSt14_Function_baseD2Ev.exit34.i:               ; preds = %_ZNSt10unique_ptrIA
   br label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit347
 
 bb.cx:                                            ; preds = %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit41.i, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit38.i, %bb.co, %bb.cj, %bb.cb
-  %.5.i = phi i32 [ %i.kr, %bb.co ], [ -1, %bb.cj ], [ -1, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit41.i ], [ %i.kr, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit38.i ], [ %i.kj, %bb.cb ] ; 8 uses
+  %.5.i = phi i32 [ %i.kr, %bb.co ], [ -1, %bb.cj ], [ -1, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit41.i ], [ %i.kr, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit38.i ], [ %i.kj, %bb.cb ] ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -329,7 +329,7 @@ bb.du:                                            ; preds = %bb.dt
   br label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit350.thread
 
 iter.check:                                       ; preds = %bb.dr, %bb.dt
-  %wide.trip.count = zext nneg i32 %.5.i to i64   ; 6 uses
+  %wide.trip.count = zext nneg i32 %.5.i to i64   ; 7 uses
   %min.iters.check = icmp ult i32 %.5.i, 4
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
@@ -389,8 +389,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge:                                      ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
   %i.nk = load ptr, ptr %i.f, align 8, !tbaa !137
-  %10 = zext nneg i32 %.5.i to i64
-  %i.nl = invoke fastcc noundef i32 @_ZL8WriteAllP6ssl_stPKvm(ptr noundef %i.nk, ptr noundef nonnull %i.kd, i64 noundef %10)
+  %i.nl = invoke fastcc noundef i32 @_ZL8WriteAllP6ssl_stPKvm(ptr noundef %i.nk, ptr noundef nonnull %i.kd, i64 noundef %wide.trip.count)
           to label %bb.dv unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

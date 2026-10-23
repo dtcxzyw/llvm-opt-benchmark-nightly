@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %.lr.ph64, %._crit_e
   %i.as = sext i32 %i.aq to i64
   %i.at = load ptr, ptr %i.ar, align 8, !tbaa !407
   %i.au = getelementptr [8 x i8], ptr %i.at, i64 %i.as ; 2 uses
-  %i.av = load i64, ptr %i.au, align 8, !tbaa !91 ; 7 uses
+  %i.av = load i64, ptr %i.au, align 8, !tbaa !91 ; 6 uses
   %i.aw = getelementptr i8, ptr %i.au, i64 8
-  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !91 ; 5 uses
-  %i.ay = sub i64 %i.ax, %i.av                    ; 2 uses
+  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !91 ; 4 uses
+  %i.ay = sub i64 %i.ax, %i.av                    ; 3 uses
   %i.az = add i64 %i.ay, %.05361
   %i.ba = load ptr, ptr %i.af, align 8, !tbaa !69 ; 6 uses
   %i.bb = load ptr, ptr %i.ad, align 8, !tbaa !60 ; 10 uses
@@ -431,9 +431,8 @@ _ZNSt6vectorIhN8LightGBM6Common18AlignmentAllocatorIhLm32EEEE6resizeEm.exit: ; p
   br i1 %i.do, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt6vectorIhN8LightGBM6Common18AlignmentAllocatorIhLm32EEEE6resizeEm.exit
-  %11 = sub nuw i64 %i.ax, %i.av
   %.neg = add i64 %i.av, 1
-  %xtraiter119 = and i64 %11, 1
+  %xtraiter119 = and i64 %i.ay, 1
   %lcmp.mod120.not = icmp eq i64 %xtraiter119, 0
   br i1 %lcmp.mod120.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
