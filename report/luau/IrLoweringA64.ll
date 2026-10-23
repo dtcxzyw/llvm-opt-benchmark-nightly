@@ -205,14 +205,12 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4807:   ; preds = %_ZN4Luau7CodeGen5ge
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643strENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.qy, i8 %i.ql, i64 %.sroa.07179.0.insert.insert)
   %i.qz = load ptr, ptr %i.qx, align 8, !tbaa !69, !nonnull !70, !align !71
   %i.ra = and i64 %i.qw, -4294967296              ; 2 uses
-  %.sroa.37176.0.insert.insert = add i64 %i.ra, 17196253184
-  %.sroa.27175.0.insert.insert = or disjoint i64 %.sroa.37176.0.insert.insert, %.sroa.27180.0.insert.ext
-  %.sroa.07174.0.insert.insert = or disjoint i64 %.sroa.27175.0.insert.insert, 1
+  %.sroa.37176.0.insert.insert = add i64 %i.ra, 17196253185
+  %.sroa.07174.0.insert.insert = or disjoint i64 %.sroa.37176.0.insert.insert, %.sroa.27180.0.insert.ext
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643strENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.qz, i8 %i.qp, i64 %.sroa.07174.0.insert.insert)
   %i.rb = load ptr, ptr %i.qx, align 8, !tbaa !69, !nonnull !70, !align !71
-  %.sroa.37171.0.insert.insert = add i64 %i.ra, 34376122368
-  %.sroa.27170.0.insert.insert = or disjoint i64 %.sroa.37171.0.insert.insert, %.sroa.27180.0.insert.ext
-  %.sroa.07169.0.insert.insert = or disjoint i64 %.sroa.27170.0.insert.insert, 1
+  %.sroa.37171.0.insert.insert = add i64 %i.ra, 34376122369
+  %.sroa.07169.0.insert.insert = or disjoint i64 %.sroa.37171.0.insert.insert, %.sroa.27180.0.insert.ext
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643strENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %i.rb, i8 %i.qt, i64 %.sroa.07169.0.insert.insert)
   %i.rc = load i32, ptr %i.qh, align 8, !tbaa !67
   %i.rd = icmp ugt i32 %i.rc, 4
@@ -615,15 +613,15 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.m, label %.sink.split, label %bb.g
 
 .sink.split:                                      ; preds = %bb.f, %bb.e
-  %.sink43 = phi i32 [ %i.b, %bb.e ], [ %i.j, %bb.f ]
+  %.sink43 = phi i32 [ %i.b, %bb.e ], [ %i.j, %bb.f ] ; 2 uses
   %.sink41 = phi i8 [ 12, %bb.e ], [ 4, %bb.f ]
   %.sink38 = phi i8 [ %i.c, %bb.e ], [ %i.k, %bb.f ]
-  %i.n = add i32 %.sink43, 16                     ; 2 uses
+  %i.n = add i32 %.sink43, 16
   %.sroa.46.0.insert.ext = zext i32 %i.n to i64
   %.sroa.46.0.insert.shift = shl nuw i64 %.sroa.46.0.insert.ext, 32
   %.sroa.02.0.insert.insert = or disjoint i64 %.sroa.46.0.insert.shift, 16435713
   tail call void @_ZN4Luau7CodeGen3A6418AssemblyBuilderA643strENS1_11RegisterA64ENS1_10AddressA64E(ptr noundef nonnull align 8 dereferenceable(184) %0, i8 %.sink41, i64 %.sroa.02.0.insert.insert)
-  %6 = or disjoint i32 %i.n, 12
+  %6 = add i32 %.sink43, 28
   %.sroa.41.0.insert.ext = zext i32 %6 to i64
   %.sroa.41.0.insert.shift = shl nuw i64 %.sroa.41.0.insert.ext, 32
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.41.0.insert.shift, 16435713

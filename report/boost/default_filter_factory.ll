@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.critedge
 .lr.ph117:                                        ; preds = %bb.e, %bb.v
   %.1115 = phi i64 [ %i.bd, %bb.v ], [ %.0111, %bb.e ] ; 4 uses
   %.151114 = phi ptr [ %i.bc, %bb.v ], [ %i.n, %bb.e ] ; 5 uses
-  %.189113 = phi i32 [ %.5.ph, %bb.v ], [ %i.m, %bb.e ] ; 5 uses
+  %.189113 = phi i32 [ %5, %bb.v ], [ %i.m, %bb.e ] ; 5 uses
   %i.p = load i8, ptr %.151114, align 1, !tbaa !51 ; 3 uses
   %i.q = add i8 %i.p, -48
   %or.cond.i58 = icmp ult i8 %i.q, 10
@@ -218,8 +218,7 @@ bb.f:                                             ; preds = %.lr.ph117
 bb.g:                                             ; preds = %bb.f
   %i.s = zext nneg i8 %i.p to i32
   %i.t = mul nsw i32 %.189113, 10
-  %reass.sub.i59 = add i32 %i.t, 48
-  %i.u = sub i32 %reass.sub.i59, %i.s
+  %i.u = sub i32 %i.t, %i.s
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
@@ -228,22 +227,22 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.w = mul i32 %.189113, 10                     ; 2 uses
-  %i.x = zext nneg i8 %i.p to i32
-  %i.y = add nsw i32 %i.x, -48                    ; 2 uses
-  %3 = or disjoint i32 %i.y, -2147483648
-  %.not.i.i.i = icmp slt i32 %i.w, %3
+  %i.x = zext nneg i8 %i.p to i32                 ; 2 uses
+  %i.y = add nuw i32 %i.x, 2147483600
+  %.not.i.i.i = icmp slt i32 %i.w, %i.y
   br i1 %.not.i.i.i, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i
 
 _ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i: ; preds = %bb.i
-  %i.z = sub nsw i32 %i.w, %i.y
+  %i.z = sub i32 %i.w, %i.x
   br label %bb.j
 
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit: ; preds = %bb.i, %bb.h
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit: ; preds = %bb.h, %bb.i
   store i32 %.189113, ptr %2, align 4, !tbaa !42
   br label %._crit_edge.thread
 
 bb.j:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i, %bb.g
-  %.3.ph = phi i32 [ %i.z, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i ], [ %i.u, %bb.g ] ; 6 uses
+  %.3.ph = phi i32 [ %i.u, %bb.g ], [ %i.z, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i ]
+  %3 = add i32 %.3.ph, 48                         ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.151114, i64 1 ; 3 uses
   %i.ab = add i64 %.1115, 1
   %i.ac = icmp eq ptr %i.aa, %i.b
@@ -261,33 +260,32 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = zext nneg i8 %i.ad to i32
-  %i.ah = mul nsw i32 %.3.ph, 10
-  %reass.sub.i66 = add i32 %i.ah, 48
-  %i.ai = sub i32 %reass.sub.i66, %i.ag
+  %i.ah = mul nsw i32 %3, 10
+  %i.ai = sub i32 %i.ah, %i.ag
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
-  %i.aj = icmp slt i32 %.3.ph, -214748364
+  %i.aj = icmp slt i32 %3, -214748364
   br i1 %i.aj, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit67, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ak = mul i32 %.3.ph, 10                      ; 2 uses
-  %i.al = zext nneg i8 %i.ad to i32
-  %i.am = add nsw i32 %i.al, -48                  ; 2 uses
-  %4 = or disjoint i32 %i.am, -2147483648
-  %.not.i.i.i61 = icmp slt i32 %i.ak, %4
+  %i.ak = mul i32 %3, 10                          ; 2 uses
+  %i.al = zext nneg i8 %i.ad to i32               ; 2 uses
+  %i.am = add nuw i32 %i.al, 2147483600
+  %.not.i.i.i61 = icmp slt i32 %i.ak, %i.am
   br i1 %.not.i.i.i61, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit67, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62
 
 _ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62: ; preds = %bb.o
-  %i.an = sub nsw i32 %i.ak, %i.am
+  %i.an = sub i32 %i.ak, %i.al
   br label %bb.p
 
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit67: ; preds = %bb.o, %bb.n
-  store i32 %.3.ph, ptr %2, align 4, !tbaa !42
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit67: ; preds = %bb.n, %bb.o
+  store i32 %3, ptr %2, align 4, !tbaa !42
   br label %._crit_edge.thread
 
 bb.p:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62, %bb.m
-  %.4.ph = phi i32 [ %i.an, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62 ], [ %i.ai, %bb.m ] ; 6 uses
+  %.4.ph = phi i32 [ %i.ai, %bb.m ], [ %i.an, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62 ]
+  %4 = add i32 %.4.ph, 48                         ; 6 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.151114, i64 2 ; 3 uses
   %i.ap = add i64 %.1115, 2
   %i.aq = icmp eq ptr %i.ao, %i.b
@@ -305,40 +303,39 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.au = zext nneg i8 %i.ar to i32
-  %i.av = mul nsw i32 %.4.ph, 10
-  %reass.sub.i74 = add i32 %i.av, 48
-  %i.aw = sub i32 %reass.sub.i74, %i.au
+  %i.av = mul nsw i32 %4, 10
+  %i.aw = sub i32 %i.av, %i.au
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.r
-  %i.ax = icmp slt i32 %.4.ph, -214748364
+  %i.ax = icmp slt i32 %4, -214748364
   br i1 %i.ax, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit75, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.ay = mul i32 %.4.ph, 10                      ; 2 uses
-  %i.az = zext nneg i8 %i.ar to i32
-  %i.ba = add nsw i32 %i.az, -48                  ; 2 uses
-  %5 = or disjoint i32 %i.ba, -2147483648
-  %.not.i.i.i69 = icmp slt i32 %i.ay, %5
+  %i.ay = mul i32 %4, 10                          ; 2 uses
+  %i.az = zext nneg i8 %i.ar to i32               ; 2 uses
+  %i.ba = add nuw i32 %i.az, 2147483600
+  %.not.i.i.i69 = icmp slt i32 %i.ay, %i.ba
   br i1 %.not.i.i.i69, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit75, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70
 
 _ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70: ; preds = %bb.u
-  %i.bb = sub nsw i32 %i.ay, %i.ba
+  %i.bb = sub i32 %i.ay, %i.az
   br label %bb.v
 
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit75: ; preds = %bb.u, %bb.t
-  store i32 %.4.ph, ptr %2, align 4, !tbaa !42
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIciEEbT_mRT0_.exit75: ; preds = %bb.t, %bb.u
+  store i32 %4, ptr %2, align 4, !tbaa !42
   br label %._crit_edge.thread
 
 bb.v:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70, %bb.s
-  %.5.ph = phi i32 [ %i.bb, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70 ], [ %i.aw, %bb.s ] ; 2 uses
+  %.5.ph = phi i32 [ %i.aw, %bb.s ], [ %i.bb, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIicEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70 ]
+  %5 = add i32 %.5.ph, 48                         ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.151114, i64 3 ; 2 uses
   %i.bd = add i64 %.1115, 3
   %i.be = icmp eq ptr %i.bc, %i.b
   br i1 %i.be, label %._crit_edge118, label %.lr.ph117, !llvm.loop !276
 
 ._crit_edge118:                                   ; preds = %bb.v, %.lr.ph117, %bb.j, %bb.k, %bb.p, %bb.q, %bb.e
-  %.290 = phi i32 [ %i.m, %bb.e ], [ %.189113, %.lr.ph117 ], [ %.3.ph, %bb.k ], [ %.4.ph, %bb.q ], [ %.4.ph, %bb.p ], [ %.3.ph, %bb.j ], [ %.5.ph, %bb.v ]
+  %.290 = phi i32 [ %i.m, %bb.e ], [ %.189113, %.lr.ph117 ], [ %3, %bb.k ], [ %4, %bb.q ], [ %4, %bb.p ], [ %3, %bb.j ], [ %5, %bb.v ]
   %.2 = phi ptr [ %i.n, %bb.e ], [ %.151114, %.lr.ph117 ], [ %i.aa, %bb.k ], [ %i.ao, %bb.q ], [ %scevgep, %bb.p ], [ %scevgep, %bb.j ], [ %scevgep, %bb.v ]
   store i32 %.290, ptr %2, align 4, !tbaa !42
   store ptr %.2, ptr %0, align 8, !tbaa !25
@@ -741,7 +738,7 @@ bb.e:                                             ; preds = %.critedge
 .lr.ph117:                                        ; preds = %bb.e, %bb.v
   %.1115 = phi i64 [ %i.bd, %bb.v ], [ %.0111, %bb.e ] ; 4 uses
   %.151114 = phi ptr [ %i.bc, %bb.v ], [ %i.n, %bb.e ] ; 5 uses
-  %.189113 = phi i64 [ %.5.ph, %bb.v ], [ %i.m, %bb.e ] ; 5 uses
+  %.189113 = phi i64 [ %5, %bb.v ], [ %i.m, %bb.e ] ; 5 uses
   %i.p = load i8, ptr %.151114, align 1, !tbaa !51 ; 3 uses
   %i.q = add i8 %i.p, -48
   %or.cond.i58 = icmp ult i8 %i.q, 10
@@ -754,8 +751,7 @@ bb.f:                                             ; preds = %.lr.ph117
 bb.g:                                             ; preds = %bb.f
   %i.s = zext nneg i8 %i.p to i64
   %i.t = mul nsw i64 %.189113, 10
-  %reass.sub.i59 = add i64 %i.t, 48
-  %i.u = sub i64 %reass.sub.i59, %i.s
+  %i.u = sub i64 %i.t, %i.s
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
@@ -764,22 +760,22 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.w = mul nsw i64 %.189113, 10                 ; 2 uses
-  %i.x = zext nneg i8 %i.p to i64
-  %i.y = add nsw i64 %i.x, -48                    ; 2 uses
-  %3 = or disjoint i64 %i.y, -9223372036854775808
-  %.not.i.i.i = icmp slt i64 %i.w, %3
+  %i.x = zext nneg i8 %i.p to i64                 ; 2 uses
+  %i.y = add nuw i64 %i.x, 9223372036854775760
+  %.not.i.i.i = icmp slt i64 %i.w, %i.y
   br i1 %.not.i.i.i, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i
 
 _ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i: ; preds = %bb.i
-  %i.z = sub nsw i64 %i.w, %i.y
+  %i.z = sub i64 %i.w, %i.x
   br label %bb.j
 
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit: ; preds = %bb.i, %bb.h
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit: ; preds = %bb.h, %bb.i
   store i64 %.189113, ptr %2, align 8, !tbaa !52
   br label %._crit_edge.thread
 
 bb.j:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i, %bb.g
-  %.3.ph = phi i64 [ %i.z, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i ], [ %i.u, %bb.g ] ; 6 uses
+  %.3.ph = phi i64 [ %i.u, %bb.g ], [ %i.z, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i ]
+  %3 = add i64 %.3.ph, 48                         ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.151114, i64 1 ; 3 uses
   %i.ab = add i64 %.1115, 1
   %i.ac = icmp eq ptr %i.aa, %i.b
@@ -797,33 +793,32 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = zext nneg i8 %i.ad to i64
-  %i.ah = mul nsw i64 %.3.ph, 10
-  %reass.sub.i66 = add i64 %i.ah, 48
-  %i.ai = sub i64 %reass.sub.i66, %i.ag
+  %i.ah = mul nsw i64 %3, 10
+  %i.ai = sub i64 %i.ah, %i.ag
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
-  %i.aj = icmp slt i64 %.3.ph, -922337203685477580
+  %i.aj = icmp slt i64 %3, -922337203685477580
   br i1 %i.aj, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit67, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ak = mul nsw i64 %.3.ph, 10                  ; 2 uses
-  %i.al = zext nneg i8 %i.ad to i64
-  %i.am = add nsw i64 %i.al, -48                  ; 2 uses
-  %4 = or disjoint i64 %i.am, -9223372036854775808
-  %.not.i.i.i61 = icmp slt i64 %i.ak, %4
+  %i.ak = mul nsw i64 %3, 10                      ; 2 uses
+  %i.al = zext nneg i8 %i.ad to i64               ; 2 uses
+  %i.am = add nuw i64 %i.al, 9223372036854775760
+  %.not.i.i.i61 = icmp slt i64 %i.ak, %i.am
   br i1 %.not.i.i.i61, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit67, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62
 
 _ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62: ; preds = %bb.o
-  %i.an = sub nsw i64 %i.ak, %i.am
+  %i.an = sub i64 %i.ak, %i.al
   br label %bb.p
 
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit67: ; preds = %bb.o, %bb.n
-  store i64 %.3.ph, ptr %2, align 8, !tbaa !52
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit67: ; preds = %bb.n, %bb.o
+  store i64 %3, ptr %2, align 8, !tbaa !52
   br label %._crit_edge.thread
 
 bb.p:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62, %bb.m
-  %.4.ph = phi i64 [ %i.an, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62 ], [ %i.ai, %bb.m ] ; 6 uses
+  %.4.ph = phi i64 [ %i.ai, %bb.m ], [ %i.an, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62 ]
+  %4 = add i64 %.4.ph, 48                         ; 6 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.151114, i64 2 ; 3 uses
   %i.ap = add i64 %.1115, 2
   %i.aq = icmp eq ptr %i.ao, %i.b
@@ -841,40 +836,39 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.au = zext nneg i8 %i.ar to i64
-  %i.av = mul nsw i64 %.4.ph, 10
-  %reass.sub.i74 = add i64 %i.av, 48
-  %i.aw = sub i64 %reass.sub.i74, %i.au
+  %i.av = mul nsw i64 %4, 10
+  %i.aw = sub i64 %i.av, %i.au
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.r
-  %i.ax = icmp slt i64 %.4.ph, -922337203685477580
+  %i.ax = icmp slt i64 %4, -922337203685477580
   br i1 %i.ax, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit75, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.ay = mul nsw i64 %.4.ph, 10                  ; 2 uses
-  %i.az = zext nneg i8 %i.ar to i64
-  %i.ba = add nsw i64 %i.az, -48                  ; 2 uses
-  %5 = or disjoint i64 %i.ba, -9223372036854775808
-  %.not.i.i.i69 = icmp slt i64 %i.ay, %5
+  %i.ay = mul nsw i64 %4, 10                      ; 2 uses
+  %i.az = zext nneg i8 %i.ar to i64               ; 2 uses
+  %i.ba = add nuw i64 %i.az, 9223372036854775760
+  %.not.i.i.i69 = icmp slt i64 %i.ay, %i.ba
   br i1 %.not.i.i.i69, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit75, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70
 
 _ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70: ; preds = %bb.u
-  %i.bb = sub nsw i64 %i.ay, %i.ba
+  %i.bb = sub i64 %i.ay, %i.az
   br label %bb.v
 
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit75: ; preds = %bb.u, %bb.t
-  store i64 %.4.ph, ptr %2, align 8, !tbaa !52
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIclEEbT_mRT0_.exit75: ; preds = %bb.t, %bb.u
+  store i64 %4, ptr %2, align 8, !tbaa !52
   br label %._crit_edge.thread
 
 bb.v:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70, %bb.s
-  %.5.ph = phi i64 [ %i.bb, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70 ], [ %i.aw, %bb.s ] ; 2 uses
+  %.5.ph = phi i64 [ %i.aw, %bb.s ], [ %i.bb, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIlcEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70 ]
+  %5 = add i64 %.5.ph, 48                         ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.151114, i64 3 ; 2 uses
   %i.bd = add i64 %.1115, 3
   %i.be = icmp eq ptr %i.bc, %i.b
   br i1 %i.be, label %._crit_edge118, label %.lr.ph117, !llvm.loop !299
 
 ._crit_edge118:                                   ; preds = %bb.v, %.lr.ph117, %bb.j, %bb.k, %bb.p, %bb.q, %bb.e
-  %.290 = phi i64 [ %i.m, %bb.e ], [ %.189113, %.lr.ph117 ], [ %.3.ph, %bb.k ], [ %.4.ph, %bb.q ], [ %.4.ph, %bb.p ], [ %.3.ph, %bb.j ], [ %.5.ph, %bb.v ]
+  %.290 = phi i64 [ %i.m, %bb.e ], [ %.189113, %.lr.ph117 ], [ %3, %bb.k ], [ %4, %bb.q ], [ %4, %bb.p ], [ %3, %bb.j ], [ %5, %bb.v ]
   %.2 = phi ptr [ %i.n, %bb.e ], [ %.151114, %.lr.ph117 ], [ %i.aa, %bb.k ], [ %i.ao, %bb.q ], [ %scevgep, %bb.p ], [ %scevgep, %bb.j ], [ %scevgep, %bb.v ]
   store i64 %.290, ptr %2, align 8, !tbaa !52
   store ptr %.2, ptr %0, align 8, !tbaa !25
@@ -1277,9 +1271,9 @@ bb.f:                                             ; preds = %.critedge
 .lr.ph114:                                        ; preds = %bb.f, %bb.w
   %.1112 = phi i64 [ %i.al, %bb.w ], [ %.0108, %bb.f ] ; 4 uses
   %.151111 = phi ptr [ %i.ak, %bb.w ], [ %i.k, %bb.f ] ; 5 uses
-  %.186110 = phi i32 [ %.5.ph, %bb.w ], [ %i.j, %bb.f ] ; 5 uses
-  %i.m = load i32, ptr %.151111, align 4, !tbaa !100 ; 2 uses
-  %i.n = add i32 %i.m, -48                        ; 3 uses
+  %.186110 = phi i32 [ %8, %bb.w ], [ %i.j, %bb.f ] ; 5 uses
+  %i.m = load i32, ptr %.151111, align 4, !tbaa !100 ; 3 uses
+  %i.n = add i32 %i.m, -48
   %or.cond.i58 = icmp ult i32 %i.n, 10
   br i1 %or.cond.i58, label %bb.g, label %._crit_edge115
 
@@ -1289,8 +1283,6 @@ bb.g:                                             ; preds = %.lr.ph114
 
 bb.h:                                             ; preds = %bb.g
   %i.p = mul nsw i32 %.186110, 10
-  %reass.sub.i59 = add i32 %i.p, 48
-  %3 = sub i32 %reass.sub.i59, %i.m
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.g
@@ -1299,28 +1291,26 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.r = mul i32 %.186110, 10                     ; 2 uses
-  %4 = or disjoint i32 %i.n, -2147483648
-  %.not.i.i.i = icmp slt i32 %i.r, %4
-  br i1 %.not.i.i.i, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i
+  %3 = add nuw i32 %i.m, 2147483600
+  %.not.i.i.i = icmp slt i32 %i.r, %3
+  br i1 %.not.i.i.i, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit, label %bb.k
 
-_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i: ; preds = %bb.j
-  %5 = sub nsw i32 %i.r, %i.n
-  br label %bb.k
-
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit: ; preds = %bb.j, %bb.i
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit: ; preds = %bb.i, %bb.j
   store i32 %.186110, ptr %2, align 4, !tbaa !42
   br label %._crit_edge.thread
 
-bb.k:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i, %bb.h
-  %.3.ph = phi i32 [ %5, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i ], [ %3, %bb.h ] ; 6 uses
+bb.k:                                             ; preds = %bb.j, %bb.h
+  %.3.ph = phi i32 [ %i.p, %bb.h ], [ %i.r, %bb.j ]
+  %reass.sub.i59 = sub i32 %.3.ph, %i.m
+  %4 = add i32 %reass.sub.i59, 48                 ; 6 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.151111, i64 4 ; 4 uses
   %i.t = add i64 %.1112, 1
   %i.u = icmp eq ptr %i.s, %i.b
   br i1 %i.u, label %._crit_edge115, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.v = load i32, ptr %i.s, align 4, !tbaa !100  ; 2 uses
-  %i.w = add i32 %i.v, -48                        ; 3 uses
+  %i.v = load i32, ptr %i.s, align 4, !tbaa !100  ; 3 uses
+  %i.w = add i32 %i.v, -48
   %or.cond.i60 = icmp ult i32 %i.w, 10
   br i1 %or.cond.i60, label %bb.m, label %._crit_edge115
 
@@ -1329,39 +1319,35 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.x, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.y = mul nsw i32 %.3.ph, 10
-  %reass.sub.i66 = add i32 %i.y, 48
-  %6 = sub i32 %reass.sub.i66, %i.v
+  %i.y = mul nsw i32 %4, 10
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.m
-  %i.z = icmp slt i32 %.3.ph, -214748364
+  %i.z = icmp slt i32 %4, -214748364
   br i1 %i.z, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit67, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.aa = mul i32 %.3.ph, 10                      ; 2 uses
-  %7 = or disjoint i32 %i.w, -2147483648
-  %.not.i.i.i61 = icmp slt i32 %i.aa, %7
-  br i1 %.not.i.i.i61, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit67, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62
+  %i.aa = mul i32 %4, 10                          ; 2 uses
+  %5 = add nuw i32 %i.v, 2147483600
+  %.not.i.i.i61 = icmp slt i32 %i.aa, %5
+  br i1 %.not.i.i.i61, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit67, label %bb.q
 
-_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62: ; preds = %bb.p
-  %8 = sub nsw i32 %i.aa, %i.w
-  br label %bb.q
-
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit67: ; preds = %bb.p, %bb.o
-  store i32 %.3.ph, ptr %2, align 4, !tbaa !42
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit67: ; preds = %bb.o, %bb.p
+  store i32 %4, ptr %2, align 4, !tbaa !42
   br label %._crit_edge.thread
 
-bb.q:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62, %bb.n
-  %.4.ph = phi i32 [ %8, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i62 ], [ %6, %bb.n ] ; 6 uses
+bb.q:                                             ; preds = %bb.p, %bb.n
+  %.4.ph = phi i32 [ %i.y, %bb.n ], [ %i.aa, %bb.p ]
+  %reass.sub.i64 = sub i32 %.4.ph, %i.v
+  %6 = add i32 %reass.sub.i64, 48                 ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.151111, i64 8 ; 4 uses
   %i.ac = add i64 %.1112, 2
   %i.ad = icmp eq ptr %i.ab, %i.b
   br i1 %i.ad, label %._crit_edge115, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.ae = load i32, ptr %i.ab, align 4, !tbaa !100 ; 2 uses
-  %i.af = add i32 %i.ae, -48                      ; 3 uses
+  %i.ae = load i32, ptr %i.ab, align 4, !tbaa !100 ; 3 uses
+  %i.af = add i32 %i.ae, -48
   %or.cond.i68 = icmp ult i32 %i.af, 10
   br i1 %or.cond.i68, label %bb.s, label %._crit_edge115
 
@@ -1370,38 +1356,34 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ag, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.ah = mul nsw i32 %.4.ph, 10
-  %reass.sub.i74 = add i32 %i.ah, 48
-  %9 = sub i32 %reass.sub.i74, %i.ae
+  %i.ah = mul nsw i32 %6, 10
   br label %bb.w
 
 bb.u:                                             ; preds = %bb.s
-  %i.ai = icmp slt i32 %.4.ph, -214748364
+  %i.ai = icmp slt i32 %6, -214748364
   br i1 %i.ai, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit75, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.aj = mul i32 %.4.ph, 10                      ; 2 uses
-  %10 = or disjoint i32 %i.af, -2147483648
-  %.not.i.i.i69 = icmp slt i32 %i.aj, %10
-  br i1 %.not.i.i.i69, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit75, label %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70
+  %i.aj = mul i32 %6, 10                          ; 2 uses
+  %7 = add nuw i32 %i.ae, 2147483600
+  %.not.i.i.i69 = icmp slt i32 %i.aj, %7
+  br i1 %.not.i.i.i69, label %_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit75, label %bb.w
 
-_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70: ; preds = %bb.v
-  %11 = sub nsw i32 %i.aj, %i.af
-  br label %bb.w
-
-_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit75: ; preds = %bb.v, %bb.u
-  store i32 %.4.ph, ptr %2, align 4, !tbaa !42
+_ZN5boost6spirit2qi6detail13int_extractorILj10ENS2_20negative_accumulatorILj10EEELin1ELb0EE4callIwiEEbT_mRT0_.exit75: ; preds = %bb.u, %bb.v
+  store i32 %6, ptr %2, align 4, !tbaa !42
   br label %._crit_edge.thread
 
-bb.w:                                             ; preds = %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70, %bb.t
-  %.5.ph = phi i32 [ %11, %_ZN5boost6spirit2qi6detail20negative_accumulatorILj10EE3addIiwEEbRT_T0_N4mpl_5bool_ILb1EEE.exit.i.i70 ], [ %9, %bb.t ] ; 2 uses
+bb.w:                                             ; preds = %bb.v, %bb.t
+  %.5.ph = phi i32 [ %i.ah, %bb.t ], [ %i.aj, %bb.v ]
+  %reass.sub = sub i32 %.5.ph, %i.ae
+  %8 = add i32 %reass.sub, 48                     ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.151111, i64 12 ; 3 uses
   %i.al = add i64 %.1112, 3
   %i.am = icmp eq ptr %i.ak, %i.b
   br i1 %i.am, label %._crit_edge115, label %.lr.ph114, !llvm.loop !440
 
 ._crit_edge115:                                   ; preds = %bb.w, %.lr.ph114, %bb.k, %bb.l, %bb.q, %bb.r, %bb.f
-  %.287 = phi i32 [ %i.j, %bb.f ], [ %.186110, %.lr.ph114 ], [ %.3.ph, %bb.l ], [ %.4.ph, %bb.r ], [ %.4.ph, %bb.q ], [ %.3.ph, %bb.k ], [ %.5.ph, %bb.w ]
+  %.287 = phi i32 [ %i.j, %bb.f ], [ %.186110, %.lr.ph114 ], [ %4, %bb.l ], [ %6, %bb.r ], [ %6, %bb.q ], [ %4, %bb.k ], [ %8, %bb.w ]
   %.2 = phi ptr [ %i.k, %bb.f ], [ %.151111, %.lr.ph114 ], [ %i.s, %bb.l ], [ %i.ab, %bb.r ], [ %i.ab, %bb.q ], [ %i.s, %bb.k ], [ %i.ak, %bb.w ]
   store i32 %.287, ptr %2, align 4, !tbaa !42
   store ptr %.2, ptr %0, align 8, !tbaa !97

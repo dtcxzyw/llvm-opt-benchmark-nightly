@@ -205,12 +205,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 3                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 2 uses
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %7 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %7 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %7
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.r
   br label %bb.c
@@ -632,14 +632,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa227 = phi i64 [ %i.c, %.lr.ph ], [ %i.tt, %bb.b ] ; 2 uses
   %.060.lcssa = phi ptr [ %1, %.lr.ph ], [ %.1.i.i, %bb.b ]
   %i.i = lshr exact i64 %.lcssa227, 2             ; 2 uses
-  %i.j = add nsw i64 %i.i, -2                     ; 2 uses
+  %i.j = add nsw i64 %i.i, -2
   %i.k = lshr i64 %i.j, 1                         ; 3 uses
-  %i.l = add nsw i64 %i.i, -1
+  %i.l = add nsw i64 %i.i, -1                     ; 3 uses
   %i.m = lshr i64 %i.l, 1                         ; 2 uses
   %i.n = and i64 %.lcssa227, 4
   %i.o = icmp eq i64 %i.n, 0
-  %4 = or disjoint i64 %i.j, 1                    ; 2 uses
-  %i.p = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %4
+  %i.p = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.k
   br label %bb.c
 
@@ -935,7 +934,7 @@ bb.q:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %._crit_edge.i.i.i.i
-  %.128.i.i.i.i = phi i64 [ %4, %bb.q ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.128.i.i.i.i = phi i64 [ %i.l, %bb.q ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.de = icmp samesign ugt i64 %.128.i.i.i.i, %.014.i.i.i
   br i1 %i.de, label %.lr.ph.i.i.i.i.i, label %_ZSt13__adjust_heapIPjljN9__gnu_cxx5__ops15_Iter_comp_iterIZN11max_cliquesIZN3opt10preprocess12prop_mutexesER6vectorINS5_4softELb1EjER8rationalE11neg_literalE7cliquesERK7svectorIjjER5u_mapI8uint_setERS7_ISG_Lb1EjEEUljjE_EEEvT_T0_SS_T1_T2_.exit.i.i.i
 

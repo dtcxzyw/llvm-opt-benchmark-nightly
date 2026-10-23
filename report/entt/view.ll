@@ -205,16 +205,15 @@ bb.a:
   br i1 %i.k, label %"_ZSt13__heap_selectISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN43ViewMultiStorage_EachWithSuggestedType_Test8TestBodyEvE3$_1EEEvT_SG_SG_T0_.exit.i", label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph._crit_edge
-  %i.l = add nsw i64 %i.j, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.j, -2
   %i.m = lshr i64 %i.l, 1                         ; 4 uses
-  %i.n = add nsw i64 %i.j, -1
+  %i.n = add nsw i64 %i.j, -1                     ; 2 uses
   %i.o = lshr i64 %i.n, 1                         ; 4 uses
   %i.p = and i64 %.fr.i.i.i, 4
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %.split.preheader.i.i.i, label %.split.us.i.i.i
 
 .split.preheader.i.i.i:                           ; preds = %bb.b
-  %5 = or disjoint i64 %i.l, 1
   %i.r = sub nsw i64 1, %i.j
   %i.s = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.r
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -4
@@ -332,7 +331,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.122.i.i.i.i = phi i64 [ %5, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.122.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.cj = icmp sgt i64 %.122.i.i.i.i, %.08.i.i.i
   br i1 %i.cj, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops15_Iter_comp_iterIZN43ViewMultiStorage_EachWithSuggestedType_Test8TestBodyEvE3$_1EEEvT_T0_SH_T1_T2_.exit.i.i.i"
 
@@ -735,16 +734,15 @@ bb.a:
   br i1 %i.k, label %"_ZSt13__heap_selectISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN43ViewMultiStorage_EachWithSuggestedType_Test8TestBodyEvE3$_3EEEvT_SG_SG_T0_.exit.i", label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph._crit_edge
-  %i.l = add nsw i64 %i.j, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.j, -2
   %i.m = lshr i64 %i.l, 1                         ; 4 uses
-  %i.n = add nsw i64 %i.j, -1
+  %i.n = add nsw i64 %i.j, -1                     ; 2 uses
   %i.o = lshr i64 %i.n, 1                         ; 4 uses
   %i.p = and i64 %.fr.i.i.i, 4
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %.split.preheader.i.i.i, label %.split.us.i.i.i
 
 .split.preheader.i.i.i:                           ; preds = %bb.b
-  %5 = or disjoint i64 %i.l, 1
   %i.r = sub nsw i64 1, %i.j
   %i.s = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.r
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -4
@@ -862,7 +860,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.122.i.i.i.i = phi i64 [ %5, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.122.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.cj = icmp sgt i64 %.122.i.i.i.i, %.08.i.i.i
   br i1 %i.cj, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops15_Iter_comp_iterIZN43ViewMultiStorage_EachWithSuggestedType_Test8TestBodyEvE3$_3EEEvT_T0_SH_T1_T2_.exit.i.i.i"
 
@@ -1165,16 +1163,15 @@ bb.a:
   br i1 %i.k, label %"_ZSt13__heap_selectISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN43ViewMultiStorage_EachWithSuggestedType_Test8TestBodyEvE3$_4EEEvT_SG_SG_T0_.exit.i", label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph._crit_edge
-  %i.l = add nsw i64 %i.j, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.j, -2
   %i.m = lshr i64 %i.l, 1                         ; 4 uses
-  %i.n = add nsw i64 %i.j, -1
+  %i.n = add nsw i64 %i.j, -1                     ; 2 uses
   %i.o = lshr i64 %i.n, 1                         ; 4 uses
   %i.p = and i64 %.fr.i.i.i, 4
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %.split.preheader.i.i.i, label %.split.us.i.i.i
 
 .split.preheader.i.i.i:                           ; preds = %bb.b
-  %5 = or disjoint i64 %i.l, 1
   %i.r = sub nsw i64 1, %i.j
   %i.s = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.r
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -4
@@ -1292,7 +1289,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.122.i.i.i.i = phi i64 [ %5, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.122.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.cj = icmp sgt i64 %.122.i.i.i.i, %.08.i.i.i
   br i1 %i.cj, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops15_Iter_comp_iterIZN43ViewMultiStorage_EachWithSuggestedType_Test8TestBodyEvE3$_4EEEvT_T0_SH_T1_T2_.exit.i.i.i"
 

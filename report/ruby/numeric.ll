@@ -205,8 +205,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = xor i64 %0, -1
-  %1 = or disjoint i64 %i.b, 1
+  %i.b = xor i64 %0, -2
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread
 
 bb.c:                                             ; preds = %bb.a
@@ -228,7 +227,7 @@ bb.d:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %bb.c, %rbimpl_RB_TYPE_P_fastpath.exit, %bb.d, %bb.b
-  %.0 = phi i64 [ %1, %bb.b ], [ %i.k, %bb.d ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit ], [ 4, %bb.c ]
+  %.0 = phi i64 [ %i.b, %bb.b ], [ %i.k, %bb.d ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit ], [ 4, %bb.c ]
   ret i64 %.0
 }
 
@@ -631,8 +630,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = xor i64 %1, -1
-  %2 = or disjoint i64 %i.b, 1
+  %i.b = xor i64 %1, -2
   br label %rb_int_comp.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -654,7 +652,7 @@ bb.d:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br label %rb_int_comp.exit
 
 rb_int_comp.exit:                                 ; preds = %bb.b, %bb.c, %rbimpl_RB_TYPE_P_fastpath.exit.i, %bb.d
-  %.0.i = phi i64 [ %2, %bb.b ], [ %i.k, %bb.d ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit.i ], [ 4, %bb.c ]
+  %.0.i = phi i64 [ %i.b, %bb.b ], [ %i.k, %bb.d ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit.i ], [ 4, %bb.c ]
   ret i64 %.0.i
 }
 

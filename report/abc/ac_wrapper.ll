@@ -205,12 +205,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %.split
@@ -623,14 +623,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa53 = phi i64 [ %i.d, %.lr.ph ], [ %i.dc, %bb.b ] ; 2 uses
   %.lcssa51 = phi i64 [ %i.c, %.lr.ph ], [ %i.db, %bb.b ] ; 2 uses
   %storemerge27.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
-  %i.k = add nsw i64 %.lcssa53, -2                ; 2 uses
+  %i.k = add nsw i64 %.lcssa53, -2
   %i.l = lshr i64 %i.k, 1                         ; 3 uses
-  %i.m = add nsw i64 %.lcssa53, -1
+  %i.m = add nsw i64 %.lcssa53, -1                ; 3 uses
   %i.n = lshr i64 %i.m, 1                         ; 2 uses
   %i.o = and i64 %.lcssa51, 32
   %i.p = icmp eq i64 %i.o, 0
-  %10 = or disjoint i64 %i.k, 1                   ; 2 uses
-  %i.q = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %10
+  %i.q = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.m
   %i.r = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.l
   br label %bb.c
 
@@ -676,7 +675,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.m, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ai = icmp sgt i64 %.1.i.i.i, %.08.i.i
   br i1 %i.ai, label %.lr.ph.i.i.i.i17, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN3acd21ac_decomposition_impl15encoding_columnESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS3_22create_covering_matrixILb0EEEbRKS6_IN5kitty18static_truth_tableILj11ELb0EEESaISF_EERS8_bEUlRKS4_SM_E0_EEEvT_T0_SQ_T1_T2_.exit.i.i
 
@@ -1079,19 +1078,19 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 5                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 5                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 2 uses
   %i.j = and i64 %i.c, 32
   %i.k = icmp eq i64 %i.j, 0
   %i.l = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.l
   br label %bb.c

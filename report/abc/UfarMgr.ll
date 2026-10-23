@@ -205,12 +205,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
-  %.fr = freeze i64 %i.c                          ; 4 uses
+  %.fr = freeze i64 %i.c                          ; 5 uses
   %i.d = icmp slt i64 %.fr, 2
   br i1 %i.d, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = add nsw i64 %.fr, -2                     ; 3 uses
+  %i.e = add nsw i64 %.fr, -2                     ; 2 uses
   %i.f = lshr i64 %i.e, 1                         ; 2 uses
   %i.g = add nsw i64 %.fr, -1
   %i.h = lshr i64 %i.g, 1                         ; 4 uses
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.e, 1                    ; 2 uses
+  %3 = add nsw i64 %.fr, -1                       ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.k
   br label %.split
@@ -623,14 +623,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr.i.i28.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ej, %bb.b ] ; 3 uses
   %storemerge26.lcssa = phi ptr [ %.fr30, %.lr.ph ], [ %.sroa.015.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i.i28.lcssa, 3             ; 2 uses
-  %i.l = add nsw i64 %i.k, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.k, -2
   %i.m = lshr i64 %i.l, 1                         ; 3 uses
-  %i.n = add nsw i64 %i.k, -1
+  %i.n = add nsw i64 %i.k, -1                     ; 3 uses
   %i.o = lshr i64 %i.n, 1                         ; 2 uses
   %i.p = and i64 %.fr.i.i28.lcssa, 8
   %i.q = icmp eq i64 %i.p, 0
-  %3 = or disjoint i64 %i.l, 1                    ; 2 uses
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %.fr29, i64 %3
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %.fr29, i64 %i.n
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %.fr29, i64 %i.m
   br label %bb.c
 
@@ -678,7 +677,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %.sroa.03.0.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.03.0.copyload.i.i.i to i32 ; 2 uses
   %.sroa.3.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.03.0.copyload.i.i.i, 32
   %.sroa.3.0.extract.trunc.i.i.i.i.i = trunc nuw i64 %.sroa.3.0.extract.shift.i.i.i.i.i to i32
@@ -1081,12 +1080,12 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 2                   ; 3 uses
+  %i.d = ashr exact i64 %.fr, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -1096,7 +1095,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %.split

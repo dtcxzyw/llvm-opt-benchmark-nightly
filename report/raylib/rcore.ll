@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %._crit_edge.i, label %.lr.ph74.i
 
 .lr.ph.i:                                         ; preds = %.preheader62.i, %.lr.ph.i
-  %.066.i = phi i32 [ %i.bg, %.lr.ph.i ], [ 0, %.preheader62.i ]
+  %.066.i = phi i32 [ %i.bg, %.lr.ph.i ], [ 0, %.preheader62.i ] ; 2 uses
   %.15465.i = phi i32 [ %i.be, %.lr.ph.i ], [ %.05382.i, %.preheader62.i ]
   %.15664.i = phi i32 [ %i.bd, %.lr.ph.i ], [ %.05581.i, %.preheader62.i ]
   %.16063.i = phi ptr [ %i.bf, %.lr.ph.i ], [ %.05979.i, %.preheader62.i ] ; 9 uses
@@ -249,8 +249,8 @@ bb.b:                                             ; preds = %bb.a
   %i.bd = add i32 %i.ay, %i.bc                    ; 3 uses
   %i.be = add i32 %i.az, %i.bd                    ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.16063.i, i64 8 ; 2 uses
-  %i.bg = add i32 %.066.i, 8                      ; 3 uses
-  %4 = or disjoint i32 %i.bg, 7
+  %i.bg = add i32 %.066.i, 8                      ; 2 uses
+  %4 = add i32 %.066.i, 15
   %i.bh = icmp ult i32 %4, %.05283.i
   br i1 %i.bh, label %.lr.ph.i, label %.preheader.i
 
@@ -653,7 +653,7 @@ sdefl_put.exit21:                                 ; preds = %.lr.ph.i19, %sdefl_
   br i1 %i.ai, label %._crit_edge.i, label %.lr.ph74.i
 
 .lr.ph.i22:                                       ; preds = %.preheader62.i, %.lr.ph.i22
-  %.066.i = phi i32 [ %i.bx, %.lr.ph.i22 ], [ 0, %.preheader62.i ]
+  %.066.i = phi i32 [ %i.bx, %.lr.ph.i22 ], [ 0, %.preheader62.i ] ; 2 uses
   %.15465.i = phi i32 [ %i.bv, %.lr.ph.i22 ], [ %.05382.i, %.preheader62.i ]
   %.15664.i = phi i32 [ %i.bu, %.lr.ph.i22 ], [ %.05581.i, %.preheader62.i ]
   %.16063.i = phi ptr [ %i.bw, %.lr.ph.i22 ], [ %.05979.i, %.preheader62.i ] ; 9 uses
@@ -697,8 +697,8 @@ sdefl_put.exit21:                                 ; preds = %.lr.ph.i19, %sdefl_
   %i.bu = add i32 %i.bp, %i.bt                    ; 3 uses
   %i.bv = add i32 %i.bq, %i.bu                    ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.16063.i, i64 8 ; 2 uses
-  %i.bx = add i32 %.066.i, 8                      ; 3 uses
-  %5 = or disjoint i32 %i.bx, 7
+  %i.bx = add i32 %.066.i, 8                      ; 2 uses
+  %5 = add i32 %.066.i, 15
   %i.by = icmp ult i32 %5, %.05283.i
   br i1 %i.by, label %.lr.ph.i22, label %.preheader.i
 
@@ -1101,14 +1101,11 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %.not105 = icmp sgt i64 %i.d, 2
-  br i1 %.not105, label %.lr.ph108.preheader, label %bb.e
-
-.lr.ph108.preheader:                              ; preds = %.lr.ph.preheader
-  %invariant.op = sub nsw i64 %i.d, 2
-  br label %.lr.ph108
+  br i1 %.not105, label %.lr.ph108, label %bb.e
 
 .lr.ph:                                           ; preds = %bb.k
-  %.not = icmp slt i64 %indvars.iv.next86, %invariant.op
+  %2 = add nuw nsw i64 %indvars.iv85107, 6        ; 2 uses
+  %.not = icmp slt i64 %2, %i.d
   br i1 %.not, label %.lr.ph108, label %.lr.ph._crit_edge
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph
@@ -1120,9 +1117,10 @@ bb.e:                                             ; preds = %.lr.ph._crit_edge, 
   tail call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.252)
   br label %.loopexit
 
-.lr.ph108:                                        ; preds = %.lr.ph108.preheader, %.lr.ph
-  %indvars.iv85107 = phi i64 [ %indvars.iv.next86, %.lr.ph ], [ 0, %.lr.ph108.preheader ] ; 4 uses
-  %indvars.iv87106 = phi i64 [ %indvars.iv.next88, %.lr.ph ], [ 0, %.lr.ph108.preheader ] ; 3 uses
+.lr.ph108:                                        ; preds = %.lr.ph.preheader, %.lr.ph
+  %3 = phi i64 [ %2, %.lr.ph ], [ 2, %.lr.ph.preheader ]
+  %indvars.iv85107 = phi i64 [ %indvars.iv.next86, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %indvars.iv87106 = phi i64 [ %indvars.iv.next88, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv85107 ; 2 uses
   %i.r = load i8, ptr %i.q, align 1
   %i.s = zext i8 %i.r to i64
@@ -1135,8 +1133,7 @@ bb.e:                                             ; preds = %.lr.ph._crit_edge, 
   %i.z = getelementptr inbounds nuw i8, ptr @DecodeDataBase64.base64DecodeTable, i64 %i.y
   %i.aa = load i8, ptr %i.z, align 1
   %i.ab = zext i8 %i.aa to i32
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv85107
-  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %i.ad = load i8, ptr %i.ac, align 1             ; 2 uses
   %.not70 = icmp eq i8 %i.ad, 61
   br i1 %.not70, label %bb.g, label %bb.f
@@ -1196,7 +1193,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bf = trunc i32 %i.at to i8
   %i.bg = getelementptr i8, ptr %i.bb, i64 2
   store i8 %i.bf, ptr %i.bg, align 1
-  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85107, 4 ; 3 uses
+  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85107, 4 ; 2 uses
   %i.bh = trunc nuw i64 %indvars.iv.next86 to i32
   %i.bi = icmp slt i32 %i.bh, %i.c
   br i1 %i.bi, label %.lr.ph, label %.loopexit.loopexit

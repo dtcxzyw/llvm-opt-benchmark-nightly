@@ -204,7 +204,7 @@ declare dso_local i32 @_printk(ptr noundef, ...) local_unnamed_addr #2
 define dso_local void @intel_flipq_reset(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = tail call ptr @intel_crtc_for_pipe(ptr noundef %0, i32 noundef %1) #3 ; 5 uses
-  %i.b = shl i32 %1, 10                           ; 13 uses
+  %i.b = shl i32 %1, 10                           ; 14 uses
   %i.c = add i32 %i.b, 389240                     ; 3 uses
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %i.c) #3
   %.val.i = load ptr, ptr %0, align 8
@@ -229,16 +229,15 @@ bb.a:
   %i.n = load ptr, ptr %i.m, align 8
   tail call void %i.n(ptr noundef %i.l, i32 %i.k, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.k) #3
-  %2 = add i32 %i.b, 389416                       ; 4 uses
-  %i.o = add i32 %i.b, 389464
+  %i.o = add i32 %i.b, 389416                     ; 3 uses
   %i.p = add i32 %i.b, 389424                     ; 3 uses
-  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %2) #3
+  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %i.o) #3
   %.val.i41 = load ptr, ptr %0, align 8
   %i.q = tail call ptr @to_intel_uncore(ptr noundef %.val.i41) #3 ; 2 uses
   %i.r = getelementptr i8, ptr %i.q, i64 176
   %i.s = load ptr, ptr %i.r, align 8
-  tail call void %i.s(ptr noundef %i.q, i32 %2, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
-  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %2) #3
+  tail call void %i.s(ptr noundef %i.q, i32 %i.o, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
+  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.o) #3
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %i.p) #3
   %.val.i42 = load ptr, ptr %0, align 8
   %i.t = tail call ptr @to_intel_uncore(ptr noundef %.val.i42) #3 ; 2 uses
@@ -248,14 +247,14 @@ bb.a:
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.p) #3
   %i.w = getelementptr i8, ptr %i.a, i64 1764
   store i8 0, ptr %i.w, align 4
-  %3 = or disjoint i32 %2, 16                     ; 3 uses
-  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %3) #3
+  %2 = add i32 %i.b, 389432                       ; 3 uses
+  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %2) #3
   %.val.i41.1 = load ptr, ptr %0, align 8
   %i.x = tail call ptr @to_intel_uncore(ptr noundef %.val.i41.1) #3 ; 2 uses
   %i.y = getelementptr i8, ptr %i.x, i64 176
   %i.z = load ptr, ptr %i.y, align 8
-  tail call void %i.z(ptr noundef %i.x, i32 %3, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
-  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %3) #3
+  tail call void %i.z(ptr noundef %i.x, i32 %2, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
+  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %2) #3
   %i.aa = add i32 %i.b, 389440                    ; 3 uses
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %i.aa) #3
   %.val.i42.1 = load ptr, ptr %0, align 8
@@ -292,14 +291,14 @@ bb.a:
   %i.ar = load ptr, ptr %i.aq, align 8
   tail call void %i.ar(ptr noundef %i.ap, i32 %i.ao, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.ao) #3
-  %4 = or disjoint i32 %i.o, 36                   ; 3 uses
-  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %4) #3
+  %3 = add i32 %i.b, 389500                       ; 3 uses
+  tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %3) #3
   %.val.i42.3 = load ptr, ptr %0, align 8
   %i.as = tail call ptr @to_intel_uncore(ptr noundef %.val.i42.3) #3 ; 2 uses
   %i.at = getelementptr i8, ptr %i.as, i64 176
   %i.au = load ptr, ptr %i.at, align 8
-  tail call void %i.au(ptr noundef %i.as, i32 %4, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
-  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %4) #3
+  tail call void %i.au(ptr noundef %i.as, i32 %3, i32 noundef 0, i1 noundef zeroext true) #3, !inline_history !1
+  tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %3) #3
   %i.av = getelementptr i8, ptr %i.a, i64 1800
   store i8 0, ptr %i.av, align 4
   %i.aw = add i32 %i.b, 389504                    ; 3 uses

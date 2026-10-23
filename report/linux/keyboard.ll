@@ -204,8 +204,7 @@ bb.dq:                                            ; preds = %bb.dp
 
 .thread.i:                                        ; preds = %bb.dq
   %i.ti = trunc nuw nsw i32 %2 to i16
-  %i.tj = add nuw nsw i16 %i.ti, 16
-  %5 = or i16 %i.tj, -512
+  %i.tj = add nuw nsw i16 %i.ti, -1008
   br label %bb.dv
 
 bb.dr:                                            ; preds = %bb.dp
@@ -236,7 +235,7 @@ bb.du:                                            ; preds = %bb.dt
   br label %kbd_keycode.exit
 
 bb.dv:                                            ; preds = %bb.dr, %.thread.i
-  %.0100147.i = phi i16 [ %5, %.thread.i ], [ %i.tl, %bb.dr ] ; 4 uses
+  %.0100147.i = phi i16 [ %i.tj, %.thread.i ], [ %i.tl, %bb.dr ] ; 4 uses
   %i.tv = lshr i16 %.0100147.i, 8
   %i.tw = trunc nuw i16 %i.tv to i8
   %i.tx = add nsw i8 %i.tw, 16                    ; 2 uses

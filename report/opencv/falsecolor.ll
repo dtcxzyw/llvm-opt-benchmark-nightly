@@ -204,15 +204,14 @@ bb.q:                                             ; preds = %bb.r, %_ZNK2cv7MatE
   store i64 0, ptr %i.ay, align 8, !noalias !43
   store i32 50397184, ptr %3, align 8, !tbaa !28, !noalias !43
   store ptr %16, ptr %i.ax, align 8, !tbaa !29, !noalias !43
-  %i.bl = shl nuw nsw i64 %indvars.iv.i, 1
-  %23 = add nuw nsw i64 %i.bl, 50                 ; 2 uses
+  %i.bl = shl nuw nsw i64 %indvars.iv.i, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17, !noalias !43
   %i.bm = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.bn = uitofp nneg i32 %i.bm to double
   store double %i.bn, ptr %4, align 8, !tbaa !30, !noalias !43
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.az, i8 0, i64 24, i1 false), !noalias !43
-  %.sroa.0144.0.insert.insert.i = or disjoint i64 %23, 107374182400
-  %.sroa.0142.0.insert.insert.i = or disjoint i64 %23, 322122547200
+  %.sroa.0144.0.insert.insert.i = add nuw nsw i64 %i.bl, 107374182450
+  %.sroa.0142.0.insert.insert.i = add nuw nsw i64 %i.bl, 322122547250
   invoke void @_ZN2cv4lineERKNS_17_InputOutputArrayENS_6Point_IiEES4_RKNS_7Scalar_IdEEiii(ptr noundef nonnull align 8 dereferenceable(24) %3, i64 %.sroa.0144.0.insert.insert.i, i64 %.sroa.0142.0.insert.insert.i, ptr noundef nonnull align 8 dereferenceable(32) %4, i32 noundef 2, i32 noundef 8, i32 noundef 0)
           to label %bb.r unwind label %bb.s
 

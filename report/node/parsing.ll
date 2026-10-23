@@ -204,8 +204,8 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %_ZN2
   store i64 %i.ab, ptr %5, align 8
   %i.ac = call noundef i32 @_ZNK2v88internal18SharedFunctionInfo11EndPositionEv(ptr noundef nonnull align 8 dereferenceable(8) %5) #7 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
-  %i.ad = load i64, ptr %.0.i, align 8
-  %i.ae = add i64 %i.ad, -1                       ; 2 uses
+  %i.ad = load i64, ptr %.0.i, align 8            ; 2 uses
+  %i.ae = add i64 %i.ad, -1
   %i.af = inttoptr i64 %i.ae to ptr
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 12
   %i.ah = load i32, ptr %i.ag, align 4
@@ -215,8 +215,7 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %_ZN2
 bb.d:                                             ; preds = %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
   %i.aj = load i64, ptr %.0.i.i, align 8
   %i.ak = inttoptr i64 %i.aj to ptr
-  %8 = or disjoint i64 %i.ae, 1
-  %i.al = inttoptr i64 %8 to ptr
+  %i.al = inttoptr i64 %i.ad to ptr
   call void @_ZN2v88internal7Isolate20PushStackTraceAndDieEPvS2_S2_S2_S2_S2_(ptr noundef nonnull align 8 dereferenceable(64320) %2, ptr noundef %i.ak, ptr noundef nonnull %i.al, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null) #7
   br label %bb.e
 
