@@ -1,0 +1,571 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 51c118e995096f..78e52ce9e140d8 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -114,7 +114,9 @@ struct FactOrCheck {
+                    /// min/mix intrinsic.
+     InstCheck,     /// An instruction to simplify (e.g. an overflow math
+                    /// intrinsics) or whose flags may be strengthened.
+-    UseCheck       /// An use of a compare instruction to simplify.
++    UseCheck,      /// An use of a compare instruction to simplify.
++    NoOverflowFact /// An overflow intrinsic that does not overflow on entry to
++                   /// a block.
+   };
+ 
+   union {
+@@ -161,6 +163,10 @@ struct FactOrCheck {
+     return FactOrCheck(EntryTy::InstFact, DTN, Inst);
+   }
+ 
++  static FactOrCheck getNoOverflowFact(DomTreeNode *DTN, WithOverflowInst *WO) {
++    return FactOrCheck(EntryTy::NoOverflowFact, DTN, WO);
++  }
++
+   static FactOrCheck getCheck(DomTreeNode *DTN, Use *U) {
+     return FactOrCheck(DTN, U);
+   }
+@@ -364,6 +370,13 @@ class ConstraintInfo {
+   /// cleared when the system changes.
+   DenseMap<PointerIntPair<Value *, 1, bool>, Decomposition> DecomposeCache;
+ 
++  /// Turn \p ADec <= \p BDec into a constraint for the signed or unsigned
++  /// system, depending on \p IsSigned.
++  ConstraintTy getConstraint(const Decomposition &ADec,
++                             const Decomposition &BDec, bool IsSigned,
++                             bool IsEq, bool IsNe,
++                             SmallVectorImpl<Value *> &NewVariables);
++
+ public:
+   DenseMap<PointerIntPair<Value *, 1, bool>, Decomposition> &
+   getDecomposeCache() {
+@@ -423,6 +436,21 @@ class ConstraintInfo {
+                              SmallVectorImpl<Value *> &NewVariables,
+                              bool ForceSignedSystem = false);
+ 
++  /// Turn \p ADec == \p BDec into a constraint for the signed or unsigned
++  /// system, depending on \p IsSigned.
++  ConstraintTy getEqConstraint(const Decomposition &ADec,
++                               const Decomposition &BDec, bool IsSigned,
++                               SmallVectorImpl<Value *> &NewVariables) {
++    return getConstraint(ADec, BDec, IsSigned, /*IsEq=*/true, /*IsNe=*/false,
++                         NewVariables);
++  }
++
++  /// Add \p R with its \p NewVariables to the system and push its entries
++  /// on \p DFSInStack.
++  void addConstraint(ConstraintTy &R, ArrayRef<Value *> NewVariables,
++                     unsigned NumIn, unsigned NumOut,
++                     SmallVectorImpl<StackEntry> &DFSInStack);
++
+   /// Turns a comparison of the form \p Op0 \p Pred \p Op1 into a vector of
+   /// constraints using getConstraint. Returns an empty constraint if the result
+   /// cannot be used to query the existing constraint system, e.g. because it
+@@ -914,19 +942,27 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+     return {};
+ 
+   bool IsSigned = ForceSignedSystem || CmpInst::isSigned(Pred);
+-  auto &Value2Index = getValue2Index(IsSigned);
+   auto ADec = decompose(Op0->stripPointerCastsSameRepresentation(), *this,
+                         IsSigned, DL);
+   auto BDec = decompose(Op1->stripPointerCastsSameRepresentation(), *this,
+                         IsSigned, DL);
++  ConstraintTy R =
++      getConstraint(ADec, BDec, IsSigned, IsEq, IsNe, NewVariables);
++  if (!R.empty() && (Pred == CmpInst::ICMP_SLT || Pred == CmpInst::ICMP_ULT))
++    if (AddOverflow(R.Coefficients[0].Coefficient, int64_t(-1),
++                    R.Coefficients[0].Coefficient))
++      return {};
++  return R;
++}
++
++ConstraintTy ConstraintInfo::getConstraint(
++    const Decomposition &ADec, const Decomposition &BDec, bool IsSigned,
++    bool IsEq, bool IsNe, SmallVectorImpl<Value *> &NewVariables) {
++  auto &Value2Index = getValue2Index(IsSigned);
+   RowTy R = getRowForLessEqual(ADec, BDec, Value2Index, NewVariables);
+   if (R.empty())
+     return {};
+ 
+-  if (Pred == CmpInst::ICMP_SLT || Pred == CmpInst::ICMP_ULT)
+-    if (AddOverflow(R[0].Coefficient, int64_t(-1), R[0].Coefficient))
+-      return {};
+-
+   // Remove any new variable without a coefficient in the row.
+   unsigned NumV2I = Value2Index.size();
+   NewVariables.truncate(R.back().Id > NumV2I ? R.back().Id - NumV2I : 0);
+@@ -1676,6 +1712,14 @@ void State::addInfoFor(BasicBlock &BB) {
+ 
+   Value *Cond = Br->getCondition();
+ 
++  // An overflow intrinsic does not overflow on the false successor of a branch
++  // on its overflow bit.
++  WithOverflowInst *WO;
++  if (match(Cond, m_ExtractValue<1>(m_WithOverflowInst(WO))) &&
++      canAddSuccessor(BB, Br->getSuccessor(1)))
++    WorkList.push_back(
++        FactOrCheck::getNoOverflowFact(DT.getNode(Br->getSuccessor(1)), WO));
++
+   // If the condition is a chain of ORs/AND and the successor only has the
+   // current block as predecessor, queue conditions for the successor.
+   Value *Op0, *Op1;
+@@ -2295,6 +2339,14 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+   }
+   LLVM_DEBUG(dbgs() << "Adding '"; dumpUnpackedICmp(dbgs(), Pred, A, B);
+              dbgs() << "'\n");
++  addConstraint(R, NewVariables, NumIn, NumOut, DFSInStack);
++}
++
++void ConstraintInfo::addConstraint(ConstraintTy &R,
++                                   ArrayRef<Value *> NewVariables,
++                                   unsigned NumIn, unsigned NumOut,
++                                   SmallVectorImpl<StackEntry> &DFSInStack) {
++  auto &CSToUse = getCS(R.IsSigned);
+   bool Added = CSToUse.addRow(R.Coefficients, R.NumVars);
+   if (!Added)
+     return;
+@@ -2341,6 +2393,37 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+   }
+ }
+ 
++/// Add Result == LHS op RHS for the result of an add/sub.with.overflow \p WO
++/// that does not overflow, in each system where the operation does not wrap.
++static void addNoOverflowFacts(WithOverflowInst *WO, ConstraintInfo &Info,
++                               const ScalarOptions &Opts, unsigned NumIn,
++                               unsigned NumOut,
++                               SmallVectorImpl<StackEntry> &DFSInStack) {
++  Instruction::BinaryOps Opc = WO->getBinaryOp();
++  if (Opc != Instruction::Add && Opc != Instruction::Sub)
++    return;
++  const DataLayout &DL = WO->getDataLayout();
++  for (User *U : WO->users()) {
++    if (!match(U, m_ExtractValue<0>(m_Value())))
++      continue;
++    for (bool IsSigned : {false, true}) {
++      if (Info.getCS(IsSigned).size() > Opts.constraint_elimination_max_rows ||
++          !isKnownNoWrap(Opc, WO->getLHS(), WO->getRHS(), WO->getNoWrapKind(),
++                         Info, IsSigned))
++        continue;
++      Decomposition D = decompose(WO->getLHS(), Info, IsSigned, DL);
++      Decomposition RHS = decompose(WO->getRHS(), Info, IsSigned, DL);
++      if (Opc == Instruction::Add ? D.add(RHS) : D.sub(RHS))
++        continue;
++      SmallVector<Value *> NewVariables;
++      ConstraintTy R =
++          Info.getEqConstraint(Decomposition(U), D, IsSigned, NewVariables);
++      if (!R.empty())
++        Info.addConstraint(R, NewVariables, NumIn, NumOut, DFSInStack);
++    }
++  }
++}
++
+ /// Replace the uses of \p II, which is known not to overflow, by the
+ /// corresponding plain binary operation and a false overflow flag.
+ static bool replaceOverflowUses(WithOverflowInst *II,
+@@ -2429,6 +2512,12 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+     // If both entries have the same In numbers, conditional facts come first.
+     // Otherwise use the relative order in the basic block.
+     if (A.NumIn == B.NumIn) {
++      // No-overflow facts come first, so other entries in the block can use
++      // them.
++      bool NoOverflowA = A.Ty == FactOrCheck::EntryTy::NoOverflowFact;
++      bool NoOverflowB = B.Ty == FactOrCheck::EntryTy::NoOverflowFact;
++      if (NoOverflowA || NoOverflowB)
++        return NoOverflowA && !NoOverflowB;
+       if (A.isConditionFact() && B.isConditionFact()) {
+         bool NoConstOpA = HasNoConstOp(A);
+         bool NoConstOpB = HasNoConstOp(B);
+@@ -2471,6 +2560,17 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+                            DFSInStack);
+     }
+ 
++    if (CB.Ty == FactOrCheck::EntryTy::NoOverflowFact) {
++      addNoOverflowFacts(cast<WithOverflowInst>(CB.Inst), Info, Opts, CB.NumIn,
++                         CB.NumOut, DFSInStack);
++      // Keep the reproducer stack in sync with DFSInStack.
++      if (ReproducerModule)
++        while (ReproducerCondStack.size() < DFSInStack.size())
++          ReproducerCondStack.emplace_back(ICmpInst::BAD_ICMP_PREDICATE,
++                                           nullptr, nullptr);
++      continue;
++    }
++
+     CmpPredicate Pred;
+     Value *A, *B;
+     // For a block, check if any CmpInsts become known based on the current set
+diff --git a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+index 4194797fa5ea05..e24a282f50eec2 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+@@ -318,3 +318,252 @@ then:
+ else:
+   ret i8 0
+ }
++
++; The result is only used on the no-overflow edge, so it is %a + %b there.
++define void @sadd_result_guarded_nonneg_ops(i8 %a, i8 %b) {
++; CHECK-LABEL: define void @sadd_result_guarded_nonneg_ops(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A_NONNEG:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[A_NONNEG]])
++; CHECK-NEXT:    [[B_NONNEG:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NONNEG]])
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[NO_OV:.*]]
++; CHECK:       [[NO_OV]]:
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.nonneg = icmp sge i8 %a, 0
++  call void @llvm.assume(i1 %a.nonneg)
++  %b.nonneg = icmp sge i8 %b, 0
++  call void @llvm.assume(i1 %b.nonneg)
++  %wo = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %b)
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %no.ov
++
++no.ov:
++  %s = extractvalue { i8, i1 } %wo, 0
++  %t.1 = icmp sge i8 %s, 0
++  call void @use(i1 %t.1)
++  %t.2 = icmp sge i8 %s, %a
++  call void @use(i1 %t.2)
++  %t.3 = icmp uge i8 %s, %b
++  call void @use(i1 %t.3)
++  ret void
++
++exit:
++  ret void
++}
++
++; srem of the guarded non-negative sum by %n is in [0, %n) and so below %d.
++define i1 @sadd_result_guarded_srem_index(i8 %i, i8 %off, i8 %n, i8 %d) {
++; CHECK-LABEL: define i1 @sadd_result_guarded_srem_index(
++; CHECK-SAME: i8 [[I:%.*]], i8 [[OFF:%.*]], i8 [[N:%.*]], i8 [[D:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[I_NONNEG:%.*]] = icmp sge i8 [[I]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[I_NONNEG]])
++; CHECK-NEXT:    [[OFF_NONNEG:%.*]] = icmp sge i8 [[OFF]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_NONNEG]])
++; CHECK-NEXT:    [[N_POS:%.*]] = icmp sgt i8 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_POS]])
++; CHECK-NEXT:    [[N_ULE_D:%.*]] = icmp ule i8 [[N]], [[D]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_ULE_D]])
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[I]], i8 [[OFF]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[NO_OV:.*]]
++; CHECK:       [[NO_OV]]:
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    [[IDX:%.*]] = srem i8 [[S]], [[N]]
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %i.nonneg = icmp sge i8 %i, 0
++  call void @llvm.assume(i1 %i.nonneg)
++  %off.nonneg = icmp sge i8 %off, 0
++  call void @llvm.assume(i1 %off.nonneg)
++  %n.pos = icmp sgt i8 %n, 0
++  call void @llvm.assume(i1 %n.pos)
++  %n.ule.d = icmp ule i8 %n, %d
++  call void @llvm.assume(i1 %n.ule.d)
++  %wo = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %i, i8 %off)
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %no.ov
++
++no.ov:
++  %s = extractvalue { i8, i1 } %wo, 0
++  %idx = srem i8 %s, %n
++  %t = icmp ult i8 %idx, %d
++  ret i1 %t
++
++exit:
++  ret i1 false
++}
++
++; %s is also used on the overflow edge; only the no-overflow use is simplified.
++define void @sadd_result_used_on_overflow(i8 %a, i8 %b) {
++; CHECK-LABEL: define void @sadd_result_used_on_overflow(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A_NONNEG:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[A_NONNEG]])
++; CHECK-NEXT:    [[B_NONNEG:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NONNEG]])
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[OVF:.*]], label %[[NO_OV:.*]]
++; CHECK:       [[NO_OV]]:
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    ret void
++; CHECK:       [[OVF]]:
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[S]], 0
++; CHECK-NEXT:    call void @use(i1 [[C_2]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.nonneg = icmp sge i8 %a, 0
++  call void @llvm.assume(i1 %a.nonneg)
++  %b.nonneg = icmp sge i8 %b, 0
++  call void @llvm.assume(i1 %b.nonneg)
++  %wo = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %b)
++  %s = extractvalue { i8, i1 } %wo, 0
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %ovf, label %no.ov
++
++no.ov:
++  %c.1 = icmp sge i8 %s, 0
++  call void @use(i1 %c.1)
++  ret void
++
++ovf:
++  %c.2 = icmp sge i8 %s, 0
++  call void @use(i1 %c.2)
++  ret void
++}
++
++; Negative test: %b may be negative, so the sum can be below %a unsigned.
++define void @sadd_result_guarded_unsigned_neg_op(i8 %a, i8 %b) {
++; CHECK-LABEL: define void @sadd_result_guarded_unsigned_neg_op(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A_NONNEG:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[A_NONNEG]])
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[NO_OV:.*]]
++; CHECK:       [[NO_OV]]:
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    [[C:%.*]] = icmp uge i8 [[S]], [[A]]
++; CHECK-NEXT:    call void @use(i1 [[C]])
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.nonneg = icmp sge i8 %a, 0
++  call void @llvm.assume(i1 %a.nonneg)
++  %wo = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %b)
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %no.ov
++
++no.ov:
++  %s = extractvalue { i8, i1 } %wo, 0
++  %c = icmp uge i8 %s, %a
++  call void @use(i1 %c)
++  ret void
++
++exit:
++  ret void
++}
++
++; The no-overflow successor is a loop header that also gets induction facts,
++; so %s >=s %a folds in the loop.
++define void @sadd_result_no_overflow_succ_loop_header(i8 %a, i8 %b, i8 %n) {
++; CHECK-LABEL: define void @sadd_result_no_overflow_succ_loop_header(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]], i8 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[B_NN:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NN]])
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i8 [[IV]], 1
++; CHECK-NEXT:    [[CONT:%.*]] = icmp ult i8 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[CONT]], label %[[LOOP]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %b.nn = icmp sge i8 %b, 0
++  call void @llvm.assume(i1 %b.nn)
++  %wo = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %b)
++  %s = extractvalue { i8, i1 } %wo, 0
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %loop
++
++loop:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %loop ]
++  %c = icmp sge i8 %s, %a
++  call void @use(i1 %c)
++  %iv.next = add nuw nsw i8 %iv, 1
++  %cont = icmp ult i8 %iv.next, %n
++  br i1 %cont, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The result is used in a fact before the overflow check.
++define void @sadd_result_fact_before_guard(i8 %a, i8 %b, i8 %n) {
++; CHECK-LABEL: define void @sadd_result_fact_before_guard(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]], i8 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[B_NN:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NN]])
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    [[C0:%.*]] = icmp sle i8 [[S]], [[N]]
++; CHECK-NEXT:    br i1 [[C0]], label %[[GUARD:.*]], label %[[EXIT:.*]]
++; CHECK:       [[GUARD]]:
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT]], label %[[NOOV:.*]]
++; CHECK:       [[NOOV]]:
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %b.nn = icmp sge i8 %b, 0
++  call void @llvm.assume(i1 %b.nn)
++  %wo = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %b)
++  %s = extractvalue { i8, i1 } %wo, 0
++  %c0 = icmp sle i8 %s, %n
++  br i1 %c0, label %guard, label %exit
++
++guard:
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %noov
++
++noov:
++  %c = icmp sle i8 %a, %n
++  call void @use(i1 %c)
++  ret void
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
+index 9077c3647589de..6e697b4a205983 100644
+--- a/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
+@@ -395,3 +395,38 @@ check.2:
+ exit:
+   ret i1 false
+ }
++
++declare void @use(i1)
++
++; The result is only used on the no-overflow edge, so it is %a - %b there.
++define void @ssub_result_guarded_nonneg_sub(i8 %a, i8 %b) {
++; CHECK-LABEL: @ssub_result_guarded_nonneg_sub(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[B_NONNEG:%.*]] = icmp sge i8 [[B:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NONNEG]])
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 [[A:%.*]], i8 [[B]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label [[EXIT:%.*]], label [[NO_OV:%.*]]
++; CHECK:       no.ov:
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    ret void
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %b.nonneg = icmp sge i8 %b, 0
++  call void @llvm.assume(i1 %b.nonneg)
++  %wo = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %a, i8 %b)
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %no.ov
++
++no.ov:
++  %s = extractvalue { i8, i1 } %wo, 0
++  %t = icmp sle i8 %s, %a
++  call void @use(i1 %t)
++  ret void
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/uadd-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/uadd-with-overflow.ll
+index 843c48c88ea7ab..b3e723820fa8bd 100644
+--- a/llvm/test/Transforms/ConstraintElimination/uadd-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/uadd-with-overflow.ll
+@@ -69,3 +69,33 @@ entry:
+   call void @use(i1 %o)
+   ret i8 %v
+ }
++
++; The result is only used on the no-overflow edge, so it is %a + %b there.
++define void @uadd_result_guarded(i8 %a, i8 %b) {
++; CHECK-LABEL: define void @uadd_result_guarded(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[NO_OV:.*]]
++; CHECK:       [[NO_OV]]:
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %wo = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %a, i8 %b)
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %no.ov
++
++no.ov:
++  %s = extractvalue { i8, i1 } %wo, 0
++  %t = icmp uge i8 %s, %a
++  call void @use(i1 %t)
++  ret void
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll
+index b4b3fcce2d31a3..e46047261b7f2d 100644
+--- a/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll
+@@ -293,3 +293,34 @@ exit.fail:
+   ret i8 0
+ }
+ 
++
++declare void @use(i1)
++
++; The result is only used on the no-overflow edge, so it is %a - %b there.
++define void @usub_result_guarded(i8 %a, i8 %b) {
++; CHECK-LABEL: @usub_result_guarded(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[WO:%.*]] = call { i8, i1 } @llvm.usub.with.overflow.i8(i8 [[A:%.*]], i8 [[B:%.*]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[WO]], 1
++; CHECK-NEXT:    br i1 [[OV]], label [[EXIT:%.*]], label [[NO_OV:%.*]]
++; CHECK:       no.ov:
++; CHECK-NEXT:    [[S:%.*]] = extractvalue { i8, i1 } [[WO]], 0
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    ret void
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %wo = call { i8, i1 } @llvm.usub.with.overflow.i8(i8 %a, i8 %b)
++  %ov = extractvalue { i8, i1 } %wo, 1
++  br i1 %ov, label %exit, label %no.ov
++
++no.ov:
++  %s = extractvalue { i8, i1 } %wo, 0
++  %t = icmp ule i8 %s, %a
++  call void @use(i1 %t)
++  ret void
++
++exit:
++  ret void
++}
