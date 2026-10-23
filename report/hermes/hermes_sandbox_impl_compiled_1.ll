@@ -204,11 +204,15 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ar = icmp eq i32 %.0.copyload.i239, 1
-  br i1 %i.ar, label %.loopexit, label %.lr.ph
+  br i1 %i.ar, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.h, %.backedge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.backedge ], [ 1, %bb.h ] ; 2 uses
-  %i.as = trunc nuw i64 %indvars.iv to i32
+.lr.ph.preheader:                                 ; preds = %bb.h
+  %2 = zext nneg i32 %.0.copyload.i239 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.backedge
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %.backedge ] ; 2 uses
+  %i.as = trunc nuw nsw i64 %indvars.iv to i32
   %i.at = shl i32 %i.as, 3
   %i.au = add i32 %i.at, %.0.copyload.i240        ; 2 uses
   %i.av = zext i32 %i.au to i64                   ; 3 uses
@@ -221,8 +225,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .backedge:                                        ; preds = %.lr.ph, %bb.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %.0.copyload.i239, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next, %2
   br i1 %exitcond, label %.loopexit, label %.lr.ph
 
 bb.i:                                             ; preds = %.lr.ph

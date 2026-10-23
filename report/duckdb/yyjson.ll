@@ -204,13 +204,13 @@ bb.os:                                            ; preds = %bb.or, %bb.oq
 
 _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit696: ; preds = %bb.op, %bb.os
   %.11606 = phi i64 [ %i.ebe, %bb.os ], [ %i.eaq, %bb.op ] ; 8 uses
-  %storemerge.i694 = phi i32 [ %i.dye, %bb.os ], [ %i.ear, %bb.op ]
+  %storemerge.i694 = phi i32 [ %i.dye, %bb.os ], [ %i.ear, %bb.op ] ; 2 uses
   %i.ebf = icmp samesign ult i64 %.11606, 10000000000000000
-  %i.ebg = select i1 %i.ebf, i32 16, i32 17
+  %i.ebg = select i1 %i.ebf, i32 16, i32 17       ; 2 uses
   %i.ebh = icmp samesign ult i64 %.11606, 1000000000000000
-  %.neg129.i634 = sext i1 %i.ebh to i32
+  %.neg129.i634 = sext i1 %i.ebh to i32           ; 2 uses
   %i.ebi = add nsw i32 %i.ebg, %.neg129.i634
-  %i.ebj = add nsw i32 %i.ebi, %storemerge.i694   ; 8 uses
+  %i.ebj = add nsw i32 %i.ebi, %storemerge.i694   ; 7 uses
   %i.ebk = add nsw i32 %i.ebj, 5
   %or.cond3.i635 = icmp ult i32 %i.ebk, 27
   br i1 %or.cond3.i635, label %bb.ot, label %bb.pi
@@ -597,8 +597,12 @@ bb.ph:                                            ; preds = %bb.pf
   %.0.i797 = getelementptr inbounds nuw i8, ptr %i.eho, i64 %.pn.i796 ; 2 uses
   %scevgep = getelementptr i8, ptr %.0.i1222.lcssa, i64 1
   %scevgep3695 = getelementptr i8, ptr %scevgep, i64 %.lobit.i630
-  %i.elg = zext nneg i32 %i.ebj to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.dpf, ptr align 1 %scevgep3695, i64 %i.elg, i1 false), !tbaa !99
+  %6 = add nsw i32 %i.ebg, -1
+  %7 = add nsw i32 %6, %storemerge.i694
+  %8 = add nsw i32 %7, %.neg129.i634
+  %i.elg = zext i32 %8 to i64
+  %9 = add nuw nsw i64 %i.elg, 1
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.dpf, ptr noundef nonnull align 1 dereferenceable(1) %scevgep3695, i64 %9, i1 false), !tbaa !99
   %i.elh = zext nneg i32 %i.ebj to i64
   %i.eli = getelementptr inbounds nuw i8, ptr %i.dpf, i64 %i.elh ; 2 uses
   store i8 46, ptr %i.eli, align 1, !tbaa !99
@@ -1001,13 +1005,13 @@ bb.yu:                                            ; preds = %bb.yt, %bb.ys
 
 _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit686: ; preds = %bb.yr, %bb.yu
   %.11603 = phi i64 [ %i.hvc, %bb.yu ], [ %i.huo, %bb.yr ] ; 8 uses
-  %storemerge.i684 = phi i32 [ %i.hsc, %bb.yu ], [ %i.hup, %bb.yr ]
+  %storemerge.i684 = phi i32 [ %i.hsc, %bb.yu ], [ %i.hup, %bb.yr ] ; 2 uses
   %i.hvd = icmp samesign ult i64 %.11603, 10000000000000000
-  %i.hve = select i1 %i.hvd, i32 16, i32 17
+  %i.hve = select i1 %i.hvd, i32 16, i32 17       ; 2 uses
   %i.hvf = icmp samesign ult i64 %.11603, 1000000000000000
-  %.neg129.i649 = sext i1 %i.hvf to i32
+  %.neg129.i649 = sext i1 %i.hvf to i32           ; 2 uses
   %i.hvg = add nsw i32 %i.hve, %.neg129.i649
-  %i.hvh = add nsw i32 %i.hvg, %storemerge.i684   ; 8 uses
+  %i.hvh = add nsw i32 %i.hvg, %storemerge.i684   ; 7 uses
   %i.hvi = add nsw i32 %i.hvh, 5
   %or.cond3.i650 = icmp ult i32 %i.hvi, 27
   br i1 %or.cond3.i650, label %bb.yv, label %bb.zk
@@ -1394,8 +1398,12 @@ bb.zj:                                            ; preds = %bb.zh
   %.0.i731 = getelementptr inbounds nuw i8, ptr %i.ibm, i64 %.pn.i730 ; 2 uses
   %scevgep3705 = getelementptr i8, ptr %.3354.i, i64 1
   %scevgep3706 = getelementptr i8, ptr %scevgep3705, i64 %.lobit.i645
-  %i.ife = zext nneg i32 %i.hvh to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.hjd, ptr align 1 %scevgep3706, i64 %i.ife, i1 false), !tbaa !99
+  %10 = add nsw i32 %i.hve, -1
+  %11 = add nsw i32 %10, %storemerge.i684
+  %12 = add nsw i32 %11, %.neg129.i649
+  %i.ife = zext i32 %12 to i64
+  %13 = add nuw nsw i64 %i.ife, 1
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.hjd, ptr noundef nonnull align 1 dereferenceable(1) %scevgep3706, i64 %13, i1 false), !tbaa !99
   %i.iff = zext nneg i32 %i.hvh to i64
   %i.ifg = getelementptr inbounds nuw i8, ptr %i.hjd, i64 %i.iff ; 2 uses
   store i8 46, ptr %i.ifg, align 1, !tbaa !99
@@ -1798,13 +1806,13 @@ bb.ow:                                            ; preds = %bb.ov, %bb.ou
 
 _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit695.i: ; preds = %bb.ow, %bb.ot
   %.0782 = phi i64 [ %i.ebj, %bb.ow ], [ %i.eav, %bb.ot ] ; 8 uses
-  %storemerge.i693.i = phi i32 [ %i.dyj, %bb.ow ], [ %i.eaw, %bb.ot ]
+  %storemerge.i693.i = phi i32 [ %i.dyj, %bb.ow ], [ %i.eaw, %bb.ot ] ; 2 uses
   %i.ebk = icmp samesign ult i64 %.0782, 10000000000000000
-  %i.ebl = select i1 %i.ebk, i32 16, i32 17
+  %i.ebl = select i1 %i.ebk, i32 16, i32 17       ; 2 uses
   %i.ebm = icmp samesign ult i64 %.0782, 1000000000000000
-  %.neg129.i.i35 = sext i1 %i.ebm to i32
+  %.neg129.i.i35 = sext i1 %i.ebm to i32          ; 2 uses
   %i.ebn = add nsw i32 %i.ebl, %.neg129.i.i35
-  %i.ebo = add nsw i32 %i.ebn, %storemerge.i693.i ; 8 uses
+  %i.ebo = add nsw i32 %i.ebn, %storemerge.i693.i ; 7 uses
   %i.ebp = add nsw i32 %i.ebo, 5
   %or.cond3.i.i36 = icmp ult i32 %i.ebp, 27
   br i1 %or.cond3.i.i36, label %bb.ox, label %bb.pm
@@ -2191,8 +2199,12 @@ bb.pl:                                            ; preds = %bb.pj
   %i.elo = getelementptr inbounds nuw i8, ptr %i.ehv, i64 %i.eln ; 2 uses
   %scevgep = getelementptr i8, ptr %.0.i850.i.lcssa, i64 1
   %scevgep2878 = getelementptr i8, ptr %scevgep, i64 %.lobit.i679.i
-  %i.elp = zext nneg i32 %i.ebo to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.dpk, ptr align 1 %scevgep2878, i64 %i.elp, i1 false), !tbaa !99
+  %7 = add nsw i32 %i.ebl, -1
+  %8 = add nsw i32 %7, %storemerge.i693.i
+  %9 = add nsw i32 %8, %.neg129.i.i35
+  %i.elp = zext i32 %9 to i64
+  %10 = add nuw nsw i64 %i.elp, 1
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.dpk, ptr noundef nonnull align 1 dereferenceable(1) %scevgep2878, i64 %10, i1 false), !tbaa !99
   %i.elq = zext nneg i32 %i.ebo to i64
   %i.elr = getelementptr inbounds nuw i8, ptr %i.dpk, i64 %i.elq ; 2 uses
   store i8 46, ptr %i.elr, align 1, !tbaa !99
@@ -2595,13 +2607,13 @@ bb.zm:                                            ; preds = %bb.zl, %bb.zk
 
 _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit555.i: ; preds = %bb.zm, %bb.zj
   %.0772 = phi i64 [ %i.hvv, %bb.zm ], [ %i.hvh, %bb.zj ] ; 8 uses
-  %storemerge.i553.i = phi i32 [ %i.hsv, %bb.zm ], [ %i.hvi, %bb.zj ]
+  %storemerge.i553.i = phi i32 [ %i.hsv, %bb.zm ], [ %i.hvi, %bb.zj ] ; 2 uses
   %i.hvw = icmp samesign ult i64 %.0772, 10000000000000000
-  %i.hvx = select i1 %i.hvw, i32 16, i32 17
+  %i.hvx = select i1 %i.hvw, i32 16, i32 17       ; 2 uses
   %i.hvy = icmp samesign ult i64 %.0772, 1000000000000000
-  %.neg129.i.i205 = sext i1 %i.hvy to i32
+  %.neg129.i.i205 = sext i1 %i.hvy to i32         ; 2 uses
   %i.hvz = add nsw i32 %i.hvx, %.neg129.i.i205
-  %i.hwa = add nsw i32 %i.hvz, %storemerge.i553.i ; 8 uses
+  %i.hwa = add nsw i32 %i.hvz, %storemerge.i553.i ; 7 uses
   %i.hwb = add nsw i32 %i.hwa, 5
   %or.cond3.i.i206 = icmp ult i32 %i.hwb, 27
   br i1 %or.cond3.i.i206, label %bb.zn, label %bb.aac
@@ -2988,8 +3000,12 @@ bb.aab:                                           ; preds = %bb.zz
   %i.iga = getelementptr inbounds nuw i8, ptr %i.ich, i64 %i.ifz ; 2 uses
   %scevgep2888 = getelementptr i8, ptr %.3359.i, i64 1
   %scevgep2889 = getelementptr i8, ptr %scevgep2888, i64 %.lobit.i539.i
-  %i.igb = zext nneg i32 %i.hwa to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.hjw, ptr align 1 %scevgep2889, i64 %i.igb, i1 false), !tbaa !99
+  %11 = add nsw i32 %i.hvx, -1
+  %12 = add nsw i32 %11, %storemerge.i553.i
+  %13 = add nsw i32 %12, %.neg129.i.i205
+  %i.igb = zext i32 %13 to i64
+  %14 = add nuw nsw i64 %i.igb, 1
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.hjw, ptr noundef nonnull align 1 dereferenceable(1) %scevgep2889, i64 %14, i1 false), !tbaa !99
   %i.igc = zext nneg i32 %i.hwa to i64
   %i.igd = getelementptr inbounds nuw i8, ptr %i.hjw, i64 %i.igc ; 2 uses
   store i8 46, ptr %i.igd, align 1, !tbaa !99

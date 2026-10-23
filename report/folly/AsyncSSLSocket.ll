@@ -205,10 +205,12 @@ bb.i:                                             ; preds = %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 1672
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 1256 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 864 ; 2 uses
+  %11 = add i32 %3, -1                            ; 2 uses
+  %12 = add i32 %3, -2
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph247, %bb.as
-  %.099246 = phi i32 [ 0, %.lr.ph247 ], [ %.pre-phi, %bb.as ] ; 6 uses
+  %.099246 = phi i32 [ 0, %.lr.ph247 ], [ %.pre-phi, %bb.as ] ; 8 uses
   %.0103245 = phi i64 [ 0, %.lr.ph247 ], [ %.3106, %bb.as ] ; 5 uses
   %.0107244 = phi i64 [ 0, %.lr.ph247 ], [ %.2109, %bb.as ] ; 3 uses
   %.0181243 = phi ptr [ null, %.lr.ph247 ], [ %.4185, %bb.as ] ; 4 uses
@@ -231,7 +233,7 @@ bb.l:                                             ; preds = %bb.j
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %.0103245 ; 2 uses
   %i.aw = load i64, ptr %i.ag, align 8, !tbaa !11320 ; 4 uses
   %i.ax = icmp ult i64 %i.aq, %i.aw
-  %i.ay = add nuw i32 %.099246, 1                 ; 5 uses
+  %i.ay = add nuw i32 %.099246, 1                 ; 4 uses
   %i.az = icmp ult i32 %i.ay, %3
   %or.cond = and i1 %i.az, %i.ax
   br i1 %or.cond, label %bb.m, label %.preheader
@@ -255,12 +257,15 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %bb.o, %bb.p, %bb.m
   %.1182 = phi ptr [ %.0181243, %bb.m ], [ %i.bd, %bb.p ], [ %i.bc, %bb.o ] ; 10 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.1182, ptr align 1 %i.av, i64 %i.aq, i1 false)
+  %13 = sub i32 %11, %.099246
+  %14 = sub i32 %12, %.099246
+  %wide.trip.count = zext i32 %14 to i64
   %.pre = load i64, ptr %i.ag, align 8, !tbaa !11320
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.v, %bb.q
   %i.be = phi i64 [ %i.br, %bb.v ], [ %.pre, %bb.q ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.v ], [ 0, %bb.q ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.v ], [ 0, %bb.q ] ; 3 uses
   %.0177 = phi i64 [ %i.bp, %bb.v ], [ %i.aq, %bb.q ] ; 3 uses
   %i.bf = trunc nuw i64 %indvars.iv to i32        ; 3 uses
   %i.bg = add i32 %i.ay, %i.bf
@@ -285,35 +290,36 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.bp = add i64 %.sroa.speculated, %.0177       ; 6 uses
   %i.bq = icmp ult i64 %.sroa.speculated, %i.bo
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 3 uses
   br i1 %i.bq, label %.critedge, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %11 = add i32 %i.ay, %indvars
-  %12 = icmp ult i32 %11, %3
-  br i1 %12, label %bb.v, label %.preheader
+  %exitcond.not = icmp eq i64 %indvars.iv, %wide.trip.count
+  br i1 %exitcond.not, label %.preheader, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.br = load i64, ptr %i.ag, align 8, !tbaa !11320 ; 2 uses
   %i.bs = icmp ult i64 %i.bp, %i.br
-  br i1 %i.bs, label %bb.r, label %.preheader, !llvm.loop !11748
+  br i1 %i.bs, label %bb.r, label %.preheader.loopexit.split.loop.exit354, !llvm.loop !11748
 
 .critedge:                                        ; preds = %bb.t
   %i.bt = icmp eq i64 %.sroa.speculated, 0
   br i1 %i.bt, label %.preheader, label %.critedge2
 
-.preheader:                                       ; preds = %bb.v, %bb.u, %bb.l, %.critedge
-  %.0318 = phi ptr [ %.1182, %.critedge ], [ %i.av, %bb.l ], [ %.1182, %bb.u ], [ %.1182, %bb.v ] ; 3 uses
-  %.2316 = phi i32 [ %i.bf, %.critedge ], [ 0, %bb.l ], [ %indvars, %bb.u ], [ %indvars, %bb.v ] ; 3 uses
-  %.1178313 = phi i64 [ %i.bp, %.critedge ], [ %i.aq, %bb.l ], [ %i.bp, %bb.u ], [ %i.bp, %bb.v ] ; 3 uses
-  %.2183311 = phi ptr [ %.1182, %.critedge ], [ %.0181243, %bb.l ], [ %.1182, %bb.u ], [ %.1182, %bb.v ] ; 3 uses
+.preheader.loopexit.split.loop.exit354:           ; preds = %bb.v
+  %indvars.le = trunc i64 %indvars.iv.next to i32
+  br label %.preheader
+
+.preheader:                                       ; preds = %bb.u, %.preheader.loopexit.split.loop.exit354, %bb.l, %.critedge
+  %.0318 = phi ptr [ %.1182, %.critedge ], [ %i.av, %bb.l ], [ %.1182, %.preheader.loopexit.split.loop.exit354 ], [ %.1182, %bb.u ] ; 3 uses
+  %.2316 = phi i32 [ %i.bf, %.critedge ], [ 0, %bb.l ], [ %indvars.le, %.preheader.loopexit.split.loop.exit354 ], [ %13, %bb.u ] ; 3 uses
+  %.1178313 = phi i64 [ %i.bp, %.critedge ], [ %i.aq, %bb.l ], [ %i.bp, %.preheader.loopexit.split.loop.exit354 ], [ %i.bp, %bb.u ] ; 3 uses
+  %.2183311 = phi ptr [ %.1182, %.critedge ], [ %.0181243, %bb.l ], [ %.1182, %.preheader.loopexit.split.loop.exit354 ], [ %.1182, %bb.u ] ; 3 uses
   %i.bu = add i32 %i.ay, %.2316                   ; 2 uses
   %i.bv = icmp ult i32 %i.bu, %3
   br i1 %i.bv, label %.lr.ph.preheader, label %.critedge2
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %13 = xor i32 %.099246, -1
-  %14 = add i32 %3, %13
+  %15 = sub i32 %11, %.099246
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.w
@@ -337,7 +343,7 @@ bb.w:                                             ; preds = %.lr.ph
   %.2105314 = phi i64 [ %.sroa.speculated, %.critedge ], [ 0, %.preheader ], [ 0, %.lr.ph ], [ 0, %bb.w ]
   %.1178312 = phi i64 [ %i.bp, %.critedge ], [ %.1178313, %.preheader ], [ %.1178313, %.lr.ph ], [ %.1178313, %bb.w ] ; 3 uses
   %.2183310 = phi ptr [ %.1182, %.critedge ], [ %.2183311, %.preheader ], [ %.2183311, %.lr.ph ], [ %.2183311, %bb.w ] ; 6 uses
-  %.4 = phi i32 [ %i.bf, %.critedge ], [ %.2316, %.preheader ], [ %14, %bb.w ], [ %.3239, %.lr.ph ] ; 2 uses
+  %.4 = phi i32 [ %i.bf, %.critedge ], [ %.2316, %.preheader ], [ %15, %bb.w ], [ %.3239, %.lr.ph ] ; 2 uses
   store i32 %4, ptr %i.ah, align 8, !tbaa !11321
   %i.cf = add i32 %.4, %.099246
   %i.cg = add i32 %i.cf, 1                        ; 4 uses

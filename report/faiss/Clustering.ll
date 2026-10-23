@@ -204,7 +204,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.ht = ashr exact i64 %i.hs, 2                 ; 3 uses
   %i.hu = load i64, ptr %i.dj, align 8, !tbaa !45 ; 3 uses
   %i.hv = urem i64 %i.ht, %i.hu
-  %i.hw = udiv i64 %i.ht, %i.hu                   ; 10 uses
+  %i.hw = udiv i64 %i.ht, %i.hu                   ; 11 uses
   %i.hx = icmp eq i64 %i.hv, 0
   br i1 %i.hx, label %bb.bx, label %bb.bn
 
@@ -390,6 +390,7 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit:               ; preds = %bb.ce, %_ZSt6fill_n
   %i.kn = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 19
   %i.kp = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %.neg = add i64 %i.hw, 1
   %xtraiter761 = and i64 %.0228, 7                ; 3 uses
   %i.kq = icmp ult i64 %.0228, 8
   %unroll_iter765 = and i64 %.0228, 9223372036854775800
@@ -458,8 +459,8 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i314:     ; preds = %bb.co
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit316
 
 _ZNSt6vectorIfSaIfEE6resizeEm.exit316:            ; preds = %._ZNSt6vectorIfSaIfEE6resizeEm.exit316_crit_edge, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i314, %bb.co, %bb.cn
-  %i.lm = phi i64 [ %.pre585, %._ZNSt6vectorIfSaIfEE6resizeEm.exit316_crit_edge ], [ %i.la, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i314 ], [ %i.la, %bb.co ], [ %i.la, %bb.cn ] ; 2 uses
-  %i.ln = sub i64 %i.lm, %i.hw                    ; 6 uses
+  %i.lm = phi i64 [ %.pre585, %._ZNSt6vectorIfSaIfEE6resizeEm.exit316_crit_edge ], [ %i.la, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i314 ], [ %i.la, %bb.co ], [ %i.la, %bb.cn ] ; 3 uses
+  %i.ln = sub i64 %i.lm, %i.hw                    ; 5 uses
   %.not261 = icmp eq i64 %i.lm, %i.hw
   br i1 %.not261, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.cp
 
@@ -501,7 +502,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
 
 .lr.ph529.split.us.preheader:                     ; preds = %.lr.ph529
   %xtraiter = and i64 %i.ln, 1
-  %14 = icmp ult i64 %i.ln, 2
+  %14 = icmp eq i64 %i.lm, %.neg
   br i1 %14, label %.lr.ph529.split.us.epil.preheader, label %.lr.ph529.split.us.preheader.new
 
 .lr.ph529.split.us.preheader.new:                 ; preds = %.lr.ph529.split.us.preheader

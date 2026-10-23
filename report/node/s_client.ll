@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 46
 inline.NumDeleted: 18
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @.str.563 = private unnamed_addr constant [30 x i8] c"Error in PSK client callback\0A\00", align 1
 @.str.564 = private unnamed_addr constant [36 x i8] c"Error finding suitable ciphersuite\0A\00", align 1
@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %.preheader1809.preh
   br label %.thread1714
 
 bb.b:                                             ; preds = %.preheader1809.preheader
-  %i.aj = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.398) #15 ; 74 uses
+  %i.aj = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.398) #15 ; 80 uses
   %i.ak = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.399) #15 ; 84 uses
   %i.al = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.400) #15 ; 117 uses
   %i.am = tail call i32 @SSL_CONF_CTX_set_flags(ptr noundef nonnull %i.ac, i32 noundef 5) #15 ; 0 uses
@@ -608,7 +608,7 @@ bb.vh:                                            ; preds = %bb.vg
   br i1 %.01154.lcssa, label %bb.vl, label %bb.vi
 
 bb.vi:                                            ; preds = %bb.vh
-  %i.auu = call i32 @raw_read_stdin(ptr noundef %i.aj, i32 noundef 8192) #15 ; 6 uses
+  %i.auu = call i32 @raw_read_stdin(ptr noundef %i.aj, i32 noundef 8192) #15 ; 10 uses
   %i.auv = icmp sgt i32 %i.auu, 0
   br i1 %i.auv, label %.lr.ph3426.preheader, label %.loopexit
 
@@ -651,9 +651,39 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph3426
 
 .lr.ph3432.preheader:                             ; preds = %.lr.ph3426, %middle.block
-  %spec.select1562.lcssa = phi i32 [ %i.avf, %middle.block ], [ %spec.select1562, %.lr.ph3426 ]
-  %i.avg = zext nneg i32 %i.auu to i64
-  br label %.lr.ph3432
+  %spec.select1562.lcssa = phi i32 [ %i.avf, %middle.block ], [ %spec.select1562, %.lr.ph3426 ] ; 4 uses
+  %i.avg = zext nneg i32 %i.auu to i64            ; 3 uses
+  %xtraiter = and i64 %i.avg, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph3432.prol.loopexit, label %.lr.ph3432.prol
+
+.lr.ph3432.prol:                                  ; preds = %.lr.ph3432.preheader
+  %indvars.iv.next3849.prol = add nsw i64 %i.avg, -1 ; 5 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.aj, i64 %indvars.iv.next3849.prol
+  %10 = load i8, ptr %9, align 1, !tbaa !19       ; 2 uses
+  %11 = sext i32 %spec.select1562.lcssa to i64
+  %12 = getelementptr i8, ptr %i.aj, i64 %indvars.iv.next3849.prol
+  %13 = getelementptr i8, ptr %12, i64 %11
+  store i8 %10, ptr %13, align 1, !tbaa !19
+  %14 = icmp eq i8 %10, 10
+  br i1 %14, label %15, label %.lr.ph3432.prol.loopexit
+
+15:                                               ; preds = %.lr.ph3432.prol
+  %16 = add nsw i32 %spec.select1562.lcssa, -1    ; 2 uses
+  %17 = add nuw nsw i32 %i.auu, 1                 ; 2 uses
+  %18 = sext i32 %16 to i64
+  %19 = getelementptr i8, ptr %i.aj, i64 %indvars.iv.next3849.prol
+  %20 = getelementptr i8, ptr %19, i64 %18
+  store i8 13, ptr %20, align 1, !tbaa !19
+  br label %.lr.ph3432.prol.loopexit
+
+.lr.ph3432.prol.loopexit:                         ; preds = %.lr.ph3432.prol, %15, %.lr.ph3432.preheader
+  %indvars.iv3848.unr = phi i64 [ %i.avg, %.lr.ph3432.preheader ], [ %indvars.iv.next3849.prol, %15 ], [ %indvars.iv.next3849.prol, %.lr.ph3432.prol ]
+  %.23430.unr = phi i32 [ %spec.select1562.lcssa, %.lr.ph3432.preheader ], [ %16, %15 ], [ %spec.select1562.lcssa, %.lr.ph3432.prol ]
+  %.211123429.unr = phi i32 [ %i.auu, %.lr.ph3432.preheader ], [ %17, %15 ], [ %i.auu, %.lr.ph3432.prol ]
+  %.31113.lcssa.unr = phi i32 [ poison, %.lr.ph3432.preheader ], [ %17, %15 ], [ %i.auu, %.lr.ph3432.prol ]
+  %21 = icmp eq i32 %i.auu, 1
+  br i1 %21, label %.loopexit, label %.lr.ph3432
 
 .lr.ph3426:                                       ; preds = %.lr.ph3426.preheader4715, %.lr.ph3426
   %indvars.iv3843 = phi i64 [ %indvars.iv.next3844, %.lr.ph3426 ], [ %indvars.iv3843.ph, %.lr.ph3426.preheader4715 ] ; 2 uses
@@ -667,11 +697,11 @@ middle.block:                                     ; preds = %vector.body
   %exitcond3847.not = icmp eq i64 %indvars.iv.next3844, %wide.trip.count3846
   br i1 %exitcond3847.not, label %.lr.ph3432.preheader, label %.lr.ph3426, !llvm.loop !56
 
-.lr.ph3432:                                       ; preds = %.lr.ph3432.preheader, %bb.vk
-  %indvars.iv3848 = phi i64 [ %i.avg, %.lr.ph3432.preheader ], [ %indvars.iv.next3849, %bb.vk ] ; 2 uses
-  %.23430 = phi i32 [ %spec.select1562.lcssa, %.lr.ph3432.preheader ], [ %.3.a, %bb.vk ] ; 3 uses
-  %.211123429 = phi i32 [ %i.auu, %.lr.ph3432.preheader ], [ %.31113.a, %bb.vk ] ; 2 uses
-  %indvars.iv.next3849 = add nsw i64 %indvars.iv3848, -1 ; 4 uses
+.lr.ph3432:                                       ; preds = %.lr.ph3432.prol.loopexit, %bb.vk
+  %indvars.iv3848 = phi i64 [ %indvars.iv.next3849.1, %bb.vk ], [ %indvars.iv3848.unr, %.lr.ph3432.prol.loopexit ] ; 3 uses
+  %.23430 = phi i32 [ %.3.a, %bb.vk ], [ %.23430.unr, %.lr.ph3432.prol.loopexit ] ; 3 uses
+  %.211123429 = phi i32 [ %.31113.a, %bb.vk ], [ %.211123429.unr, %.lr.ph3432.prol.loopexit ] ; 2 uses
+  %indvars.iv.next3849 = add nsw i64 %indvars.iv3848, -1 ; 3 uses
   %i.avl = getelementptr inbounds nuw i8, ptr %i.aj, i64 %indvars.iv.next3849
   %i.avm = load i8, ptr %i.avl, align 1, !tbaa !19 ; 2 uses
   %i.avn = sext i32 %.23430 to i64
@@ -679,29 +709,51 @@ middle.block:                                     ; preds = %vector.body
   %i.avp = getelementptr i8, ptr %i.avo, i64 %i.avn
   store i8 %i.avm, ptr %i.avp, align 1, !tbaa !19
   %i.avq = icmp eq i8 %i.avm, 10
-  br i1 %i.avq, label %bb.vj, label %bb.vk
+  br i1 %i.avq, label %22, label %.lr.ph3432.1
 
-bb.vj:                                            ; preds = %.lr.ph3432
-  %i.avr = add nsw i32 %.23430, -1                ; 2 uses
-  %i.avs = add nuw nsw i32 %.211123429, 1
+22:                                               ; preds = %.lr.ph3432
+  %23 = add nsw i32 %.23430, -1                   ; 2 uses
+  %24 = add nuw nsw i32 %.211123429, 1
+  %25 = sext i32 %23 to i64
+  %26 = getelementptr i8, ptr %i.aj, i64 %indvars.iv.next3849
+  %27 = getelementptr i8, ptr %26, i64 %25
+  store i8 13, ptr %27, align 1, !tbaa !19
+  br label %.lr.ph3432.1
+
+.lr.ph3432.1:                                     ; preds = %.lr.ph3432, %22
+  %.31113 = phi i32 [ %24, %22 ], [ %.211123429, %.lr.ph3432 ] ; 2 uses
+  %.3 = phi i32 [ %23, %22 ], [ %.23430, %.lr.ph3432 ] ; 3 uses
+  %indvars.iv.next3849.1 = add nsw i64 %indvars.iv3848, -2 ; 4 uses
+  %28 = getelementptr inbounds nuw i8, ptr %i.aj, i64 %indvars.iv.next3849.1
+  %29 = load i8, ptr %28, align 1, !tbaa !19      ; 2 uses
+  %30 = sext i32 %.3 to i64
+  %31 = getelementptr i8, ptr %i.aj, i64 %indvars.iv.next3849.1
+  %32 = getelementptr i8, ptr %31, i64 %30
+  store i8 %29, ptr %32, align 1, !tbaa !19
+  %33 = icmp eq i8 %29, 10
+  br i1 %33, label %bb.vj, label %bb.vk
+
+bb.vj:                                            ; preds = %.lr.ph3432.1
+  %i.avr = add nsw i32 %.3, -1                    ; 2 uses
+  %i.avs = add nuw nsw i32 %.31113, 1
   %i.avt = sext i32 %i.avr to i64
-  %i.avu = getelementptr i8, ptr %i.aj, i64 %indvars.iv.next3849
+  %i.avu = getelementptr i8, ptr %i.aj, i64 %indvars.iv.next3849.1
   %i.avv = getelementptr i8, ptr %i.avu, i64 %i.avt
   store i8 13, ptr %i.avv, align 1, !tbaa !19
   br label %bb.vk
 
-bb.vk:                                            ; preds = %.lr.ph3432, %bb.vj
-  %.31113.a = phi i32 [ %i.avs, %bb.vj ], [ %.211123429, %.lr.ph3432 ] ; 2 uses
-  %.3.a = phi i32 [ %i.avr, %bb.vj ], [ %.23430, %.lr.ph3432 ]
-  %9 = icmp samesign ugt i64 %indvars.iv3848, 1
-  br i1 %9, label %.lr.ph3432, label %.loopexit, !llvm.loop !57
+bb.vk:                                            ; preds = %bb.vj, %.lr.ph3432.1
+  %.31113.a = phi i32 [ %i.avs, %bb.vj ], [ %.31113, %.lr.ph3432.1 ] ; 2 uses
+  %.3.a = phi i32 [ %i.avr, %bb.vj ], [ %.3, %.lr.ph3432.1 ]
+  %34 = icmp sgt i64 %indvars.iv3848, 2
+  br i1 %34, label %.lr.ph3432, label %.loopexit, !llvm.loop !57
 
 bb.vl:                                            ; preds = %bb.vh
   %i.avw = call i32 @raw_read_stdin(ptr noundef %i.aj, i32 noundef 16384) #15
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.vk, %bb.vi, %bb.vl
-  %.41114 = phi i32 [ %i.avw, %bb.vl ], [ %i.auu, %bb.vi ], [ %.31113.a, %bb.vk ] ; 4 uses
+.loopexit:                                        ; preds = %.lr.ph3432.prol.loopexit, %bb.vk, %bb.vi, %bb.vl
+  %.41114 = phi i32 [ %i.avw, %bb.vl ], [ %i.auu, %bb.vi ], [ %.31113.lcssa.unr, %.lr.ph3432.prol.loopexit ], [ %.31113.a, %bb.vk ] ; 4 uses
   %i.avx = icmp eq i32 %.41114, 0
   %spec.select1563 = select i1 %i.avx, i32 1, i32 %.11073 ; 2 uses
   %i.avy = icmp slt i32 %.41114, 1

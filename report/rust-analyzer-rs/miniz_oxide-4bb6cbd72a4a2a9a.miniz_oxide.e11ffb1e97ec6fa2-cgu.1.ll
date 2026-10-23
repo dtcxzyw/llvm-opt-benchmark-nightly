@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/miniz_oxide-4bb6cbd72a4a2a9a.miniz_oxide.e11ffb1e97ec6fa2-cgu.1?download=true
 inline.NumInlined: 150
 inline.NumDeleted: 97
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core9init_tree:bb.a
   %index.next180 = shl nuw i64 %index179, 1
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 %index.next180 ; 2 uses
@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %.lr.ph
   %i.fr = icmp eq ptr %i.fn, %i.fi
   br i1 %i.fr, label %._crit_edge, label %.lr.ph
 
-.loopexit83:                                      ; preds = %bb.m, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit81, %.lr.ph, %._crit_edge115, %.lr.ph114, %bb.o
-  %.sroa.9.0 = phi i8 [ 10, %.lr.ph114 ], [ undef, %.lr.ph ], [ 10, %._crit_edge115 ], [ 10, %bb.o ], [ 28, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit81 ], [ 28, %bb.m ]
-  %.sroa.0.0 = phi i8 [ -1, %.lr.ph114 ], [ -1, %.lr.ph ], [ -1, %._crit_edge115 ], [ 1, %bb.o ], [ -1, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit81 ], [ 1, %bb.m ]
+.loopexit83:                                      ; preds = %bb.m, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit81, %.lr.ph, %._crit_edge115, %.lr.ph114, %.lr.ph114.1, %.lr.ph114.2, %.lr.ph114.3, %bb.o
+  %.sroa.9.0 = phi i8 [ 10, %.lr.ph114 ], [ undef, %.lr.ph ], [ 10, %._crit_edge115 ], [ 10, %bb.o ], [ 10, %.lr.ph114.3 ], [ 10, %.lr.ph114.2 ], [ 10, %.lr.ph114.1 ], [ 28, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit81 ], [ 28, %bb.m ]
+  %.sroa.0.0 = phi i8 [ -1, %.lr.ph114 ], [ -1, %.lr.ph ], [ -1, %._crit_edge115 ], [ 1, %bb.o ], [ -1, %.lr.ph114.3 ], [ -1, %.lr.ph114.2 ], [ -1, %.lr.ph114.1 ], [ -1, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit81 ], [ 1, %bb.m ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %.loopexit86
@@ -275,7 +275,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %or.cond, label %.loopexit83, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.gk = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 2048 ; 2 uses
+  %i.gk = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 2048 ; 5 uses
   %.not187 = icmp eq i16 %i.ff, 0
   br i1 %.not187, label %.outer.split._crit_edge, label %.lr.ph107.preheader
 
@@ -296,7 +296,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.gm = add i64 %.sroa.062.0106, 1              ; 4 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %.sroa.054.1, i64 %.sroa.062.0106
   %i.go = load i8, ptr %i.gn, align 1, !noundef !4
-  %i.gp = and i8 %i.go, 15                        ; 8 uses
+  %i.gp = and i8 %i.go, 15                        ; 10 uses
   %i.gq = icmp eq i8 %i.gp, 0
   br i1 %i.gq, label %.loopexit, label %bb.r
 
@@ -352,7 +352,7 @@ bb.t:                                             ; preds = %bb.u, %bb.s
   %.sroa.048.0 = phi i16 [ %i.hn, %bb.u ], [ %i.hg, %bb.s ]
   %i.hh = sub nuw nsw i8 16, %i.gp
   %i.hi = zext nneg i8 %i.hh to i16
-  %i.hj = lshr i16 %.sroa.048.0, %i.hi            ; 4 uses
+  %i.hj = lshr i16 %.sroa.048.0, %i.hi            ; 8 uses
   %i.hk = icmp samesign ult i8 %i.gp, 11
   br i1 %i.hk, label %bb.v, label %bb.w
 
@@ -391,15 +391,15 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w, %bb.x
   %.sroa.049.0 = phi i16 [ %.sroa.031.0.ph167, %bb.x ], [ %i.hz, %bb.w ] ; 2 uses
-  %.sroa.031.1 = phi i16 [ %i.ib, %bb.x ], [ %.sroa.031.0.ph167, %bb.w ] ; 2 uses
-  %i.ic = lshr i16 %i.hj, 9                       ; 2 uses
+  %.sroa.031.1 = phi i16 [ %i.ib, %bb.x ], [ %.sroa.031.0.ph167, %bb.w ] ; 5 uses
+  %i.ic = lshr i16 %i.hj, 9
   %.not118 = icmp eq i8 %i.gp, 11
   br i1 %.not118, label %._crit_edge115, label %.lr.ph114
 
-._crit_edge115:                                   ; preds = %bb.ab, %bb.y
-  %.sroa.049.1.lcssa = phi i16 [ %.sroa.049.0, %bb.y ], [ %.sroa.049.2.a, %bb.ab ]
-  %.sroa.038.0.lcssa = phi i16 [ %i.ic, %bb.y ], [ %i.ii, %bb.ab ]
-  %.sroa.031.2.lcssa = phi i16 [ %.sroa.031.1, %bb.y ], [ %.sroa.031.3.a, %bb.ab ]
+._crit_edge115:                                   ; preds = %33, %38, %9, %22, %bb.ab, %bb.y
+  %.sroa.049.1.lcssa = phi i16 [ %.sroa.049.0, %bb.y ], [ %.sroa.049.2, %9 ], [ %.sroa.049.2.1, %22 ], [ %.sroa.049.2.a, %bb.ab ], [ %.sroa.031.3.a, %38 ], [ %36, %33 ]
+  %.sroa.038.0.lcssa = phi i16 [ %i.ic, %bb.y ], [ %i.ii, %9 ], [ %10, %22 ], [ %23, %bb.ab ], [ %28, %38 ], [ %28, %33 ]
+  %.sroa.031.2.lcssa = phi i16 [ %.sroa.031.1, %bb.y ], [ %.sroa.031.3, %9 ], [ %.sroa.031.3.1, %22 ], [ %.sroa.031.3.a, %bb.ab ], [ %39, %38 ], [ %.sroa.031.3.a, %33 ]
   %i.id = lshr i16 %.sroa.038.0.lcssa, 1
   %i.ie = and i16 %i.id, 1
   %i.if = xor i16 %.sroa.049.1.lcssa, -1
@@ -407,18 +407,13 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   %i.ih = icmp ugt i16 %i.ig, 575
   br i1 %i.ih, label %.loopexit83, label %.outer
 
-.lr.ph114:                                        ; preds = %bb.y, %bb.ab
-  %.sroa.064.0112 = phi i8 [ %2, %bb.ab ], [ 11, %bb.y ]
-  %.sroa.031.2111 = phi i16 [ %.sroa.031.3.a, %bb.ab ], [ %.sroa.031.1, %bb.y ] ; 4 uses
-  %.sroa.038.0110 = phi i16 [ %i.ii, %bb.ab ], [ %i.ic, %bb.y ]
-  %.sroa.049.1109 = phi i16 [ %.sroa.049.2.a, %bb.ab ], [ %.sroa.049.0, %bb.y ]
-  %2 = add nuw nsw i8 %.sroa.064.0112, 1          ; 2 uses
-  %i.ii = lshr i16 %.sroa.038.0110, 1             ; 3 uses
+.lr.ph114:                                        ; preds = %bb.y
+  %i.ii = lshr i16 %i.hj, 10                      ; 2 uses
   %i.ij = and i16 %i.ii, 1
-  %i.ik = xor i16 %.sroa.049.1109, -1
+  %i.ik = xor i16 %.sroa.049.0, -1
   %i.il = add i16 %i.ij, %i.ik                    ; 2 uses
   %i.im = icmp ugt i16 %i.il, 575
-  br i1 %i.im, label %.loopexit83, label %bb.z
+  br i1 %i.im, label %.loopexit83, label %2
 
 .outer:                                           ; preds = %._crit_edge115
   %i.in = zext nneg i16 %i.ig to i64
@@ -428,23 +423,95 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   %i.iq = icmp ult i64 %i.gm, %i.fg
   br i1 %i.iq, label %.lr.ph107.preheader, label %.outer.split._crit_edge
 
-bb.z:                                             ; preds = %.lr.ph114
-  %i.ir = zext nneg i16 %i.il to i64
+2:                                                ; preds = %.lr.ph114
+  %3 = zext nneg i16 %i.il to i64
+  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.gk, i64 %3 ; 2 uses
+  %5 = load i16, ptr %4, align 2, !noundef !4     ; 2 uses
+  %6 = icmp eq i16 %5, 0
+  br i1 %6, label %7, label %9
+
+7:                                                ; preds = %2
+  store i16 %.sroa.031.1, ptr %4, align 2
+  %8 = add i16 %.sroa.031.1, -2
+  br label %9
+
+9:                                                ; preds = %2, %7
+  %.sroa.049.2 = phi i16 [ %.sroa.031.1, %7 ], [ %5, %2 ] ; 2 uses
+  %.sroa.031.3 = phi i16 [ %8, %7 ], [ %.sroa.031.1, %2 ] ; 5 uses
+  %exitcond131.not = icmp eq i8 %i.gp, 12
+  br i1 %exitcond131.not, label %._crit_edge115, label %.lr.ph114.1
+
+.lr.ph114.1:                                      ; preds = %9
+  %10 = lshr i16 %i.hj, 11                        ; 2 uses
+  %11 = and i16 %10, 1
+  %12 = xor i16 %.sroa.049.2, -1
+  %13 = add i16 %11, %12                          ; 2 uses
+  %14 = icmp ugt i16 %13, 575
+  br i1 %14, label %.loopexit83, label %15
+
+15:                                               ; preds = %.lr.ph114.1
+  %16 = zext nneg i16 %13 to i64
+  %17 = getelementptr inbounds nuw [2 x i8], ptr %i.gk, i64 %16 ; 2 uses
+  %18 = load i16, ptr %17, align 2, !noundef !4   ; 2 uses
+  %19 = icmp eq i16 %18, 0
+  br i1 %19, label %20, label %22
+
+20:                                               ; preds = %15
+  store i16 %.sroa.031.3, ptr %17, align 2
+  %21 = add i16 %.sroa.031.3, -2
+  br label %22
+
+22:                                               ; preds = %20, %15
+  %.sroa.049.2.1 = phi i16 [ %.sroa.031.3, %20 ], [ %18, %15 ] ; 2 uses
+  %.sroa.031.3.1 = phi i16 [ %21, %20 ], [ %.sroa.031.3, %15 ] ; 5 uses
+  %exitcond131.not.1 = icmp eq i8 %i.gp, 13
+  br i1 %exitcond131.not.1, label %._crit_edge115, label %.lr.ph114.2
+
+.lr.ph114.2:                                      ; preds = %22
+  %23 = lshr i16 %i.hj, 12                        ; 2 uses
+  %24 = and i16 %23, 1
+  %25 = xor i16 %.sroa.049.2.1, -1
+  %26 = add i16 %24, %25                          ; 2 uses
+  %27 = icmp ugt i16 %26, 575
+  br i1 %27, label %.loopexit83, label %bb.z
+
+bb.z:                                             ; preds = %.lr.ph114.2
+  %i.ir = zext nneg i16 %26 to i64
   %i.is = getelementptr inbounds nuw [2 x i8], ptr %i.gk, i64 %i.ir ; 2 uses
   %i.it = load i16, ptr %i.is, align 2, !noundef !4 ; 2 uses
   %i.iu = icmp eq i16 %i.it, 0
   br i1 %i.iu, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  store i16 %.sroa.031.2111, ptr %i.is, align 2
-  %i.iv = add i16 %.sroa.031.2111, -2
+  store i16 %.sroa.031.3.1, ptr %i.is, align 2
+  %i.iv = add i16 %.sroa.031.3.1, -2
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.z, %bb.aa
-  %.sroa.049.2.a = phi i16 [ %.sroa.031.2111, %bb.aa ], [ %i.it, %bb.z ] ; 2 uses
-  %.sroa.031.3.a = phi i16 [ %i.iv, %bb.aa ], [ %.sroa.031.2111, %bb.z ] ; 2 uses
-  %exitcond131.not.a = icmp eq i8 %2, %i.gp
-  br i1 %exitcond131.not.a, label %._crit_edge115, label %.lr.ph114
+bb.ab:                                            ; preds = %bb.aa, %bb.z
+  %.sroa.049.2.a = phi i16 [ %.sroa.031.3.1, %bb.aa ], [ %i.it, %bb.z ] ; 2 uses
+  %.sroa.031.3.a = phi i16 [ %i.iv, %bb.aa ], [ %.sroa.031.3.1, %bb.z ] ; 5 uses
+  %exitcond131.not.a = icmp eq i8 %i.gp, 14
+  br i1 %exitcond131.not.a, label %._crit_edge115, label %.lr.ph114.3
+
+.lr.ph114.3:                                      ; preds = %bb.ab
+  %28 = lshr i16 %i.hj, 13                        ; 3 uses
+  %29 = and i16 %28, 1
+  %30 = xor i16 %.sroa.049.2.a, -1
+  %31 = add i16 %29, %30                          ; 2 uses
+  %32 = icmp ugt i16 %31, 575
+  br i1 %32, label %.loopexit83, label %33
+
+33:                                               ; preds = %.lr.ph114.3
+  %34 = zext nneg i16 %31 to i64
+  %35 = getelementptr inbounds nuw [2 x i8], ptr %i.gk, i64 %34 ; 2 uses
+  %36 = load i16, ptr %35, align 2, !noundef !4   ; 2 uses
+  %37 = icmp eq i16 %36, 0
+  br i1 %37, label %38, label %._crit_edge115
+
+38:                                               ; preds = %33
+  store i16 %.sroa.031.3.a, ptr %35, align 2
+  %39 = add i16 %.sroa.031.3.a, -2
+  br label %._crit_edge115
 
 bb.ac:                                            ; preds = %iter.check, %bb.ac
   %indvars.iv = phi i64 [ %i.hu, %iter.check ], [ %indvars.iv.next, %bb.ac ] ; 2 uses

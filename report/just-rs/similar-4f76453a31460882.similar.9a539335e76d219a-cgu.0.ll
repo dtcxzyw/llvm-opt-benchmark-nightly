@@ -205,10 +205,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge
   %i.ay = phi ptr [ %.pre1068, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 12 uses
-  %i.az = phi i64 [ %.pre1066, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 25 uses
+  %i.az = phi i64 [ %.pre1066, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 27 uses
   %i.ba = phi i64 [ %.pre1064, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1062, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 13 uses
-  %i.bc = phi i64 [ %.pre1060, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 31 uses
+  %i.bc = phi i64 [ %.pre1060, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 33 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 7 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -611,7 +611,7 @@ bb.bo:                                            ; preds = %bb.bm, %_RNvNtCsdft
 .lr.ph481.split.i:                                ; preds = %bb.bn, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.hx, %bb.bn ], [ 1, %bb.bl ]
   %i.hy = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 28 uses
-  %invariant.op482.i = sub i64 %.sroa.0272.0, %i.bd ; 4 uses
+  %invariant.op482.i = sub i64 %.sroa.0272.0, %i.bd ; 5 uses
   %invariant.op.i92 = sub i64 %.sroa.0.0, %i.ba   ; 4 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit223.thread.us488.i, label %.lr.ph481.split.split.i
 
@@ -711,7 +711,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 .lr.ph523.i:                                      ; preds = %.lr.ph523.i.preheader, %bb.dg
   %.sroa.05.0.not522.not.i = phi i1 [ true, %bb.dg ], [ false, %.lr.ph523.i.preheader ] ; 3 uses
-  %.sroa.09.0521.i = phi i64 [ %.sroa.09.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 12 uses
+  %.sroa.09.0521.i = phi i64 [ %.sroa.09.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 13 uses
   %.sroa.038.0520.i = phi i64 [ %.sroa.038.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 17 uses
   %i.jf = and i64 %.sroa.038.0520.i, 1023
   %i.jg = icmp ne i64 %i.jf, 0
@@ -825,10 +825,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread
   %i.kj = icmp ult i64 %i.ki, %i.bc
   br i1 %i.kj, label %bb.cd, label %.invoke.i
 
-.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i, %.split60.i, %.lr.ph.split.i
-  %i.kk = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %i.kv, %bb.cd ], [ %i.mu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.om, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.ki, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
-  %i.kl = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %bb.cd ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
-  %i.km = phi ptr [ @68, %.lr.ph.split.i ], [ @49, %bb.cd ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ @68, %.split60.i ], [ @59, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
+.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i, %.split60.i, %.lr.ph.split.i, %11
+  %i.kk = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %i.kv, %bb.cd ], [ %umax737.le.i, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.ki, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
+  %i.kl = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %i.az, %bb.cd ], [ %i.bc, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
+  %i.km = phi ptr [ @68, %.lr.ph.split.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ @49, %bb.cd ], [ @59, %11 ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ @68, %.split60.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.kk, i64 noundef %i.kl, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.km) #37
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3155
 
@@ -1001,7 +1001,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i: ; p
   br i1 %i.mt, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsdftwklc2oBO_7similar.exit227.sink.split.i.thread, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i, %.split50.i, %bb.cl
-  %i.mu = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 3 uses
+  %i.mu = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 2 uses
   %i.mv = icmp ult i64 %i.mu, %i.az
   br i1 %i.mv, label %bb.co, label %.invoke.i
 
@@ -1116,9 +1116,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i: ; p
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i, %.split52.i, %.lr.ph1924
   %i.ol = mul i64 %.sroa.09.1.i1923, %i.hr        ; 2 uses
-  %i.om = add i64 %.sroa.09.1.i1923, %invariant.op482.i ; 3 uses
+  %i.om = add i64 %.sroa.09.1.i1923, %invariant.op482.i ; 2 uses
   %i.on = icmp ult i64 %i.om, %i.bc
-  br i1 %i.on, label %bb.cz, label %.invoke.i
+  br i1 %i.on, label %bb.cz, label %11
+
+11:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i
+  %12 = add i64 %.sroa.09.0521.i, %invariant.op482.i
+  %umax737.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cz:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i
   %i.oo = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.om
@@ -1489,7 +1494,7 @@ bb.ee:                                            ; preds = %bb.ec, %_RNvNtCsdft
   %.sroa.10.0.i.i105 = phi i64 [ %i.tk, %bb.ed ], [ 1, %bb.eb ]
   %i.tl = inttoptr i64 %.sroa.10.0.i.i105 to ptr  ; 28 uses
   %invariant.op.i120 = sub i64 %.sroa.0272.0, %i.bd ; 5 uses
-  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
+  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 5 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit223.thread.us504.i, label %.lr.ph496.split.split.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit223.thread.us504.i: ; preds = %.lr.ph496.split.i, %..loopexit85_crit_edge.split.us.split.us.us.i233
@@ -1588,7 +1593,7 @@ bb.em:                                            ; preds = %bb.el
 
 .lr.ph540.i:                                      ; preds = %.lr.ph540.i.preheader, %bb.fx
   %.sroa.05.0.not539.not.i = phi i1 [ true, %bb.fx ], [ false, %.lr.ph540.i.preheader ] ; 3 uses
-  %.sroa.09.0538.i = phi i64 [ %.sroa.09.3.i164, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 13 uses
+  %.sroa.09.0538.i = phi i64 [ %.sroa.09.3.i164, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 14 uses
   %.sroa.039.0537.i = phi i64 [ %.sroa.039.3.i, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 16 uses
   %i.us = and i64 %.sroa.039.0537.i, 1023
   %i.ut = icmp ne i64 %i.us, 0
@@ -1692,10 +1697,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread
   %i.vw = icmp ult i64 %i.vv, %i.bc
   br i1 %i.vw, label %bb.eu, label %.invoke.i138
 
-.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225, %bb.eu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i
-  %i.vx = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i207, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.vv, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %i.yh, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %i.zz, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %.reass.us.us.us.i227, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.az, %bb.ga ], [ %i.wi, %bb.eu ], [ %.reass.us.i212, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
-  %i.vy = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.az, %bb.ga ], [ %i.az, %bb.eu ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
-  %i.vz = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ @85, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ @91, %bb.ga ], [ @75, %bb.eu ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
+.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225, %bb.eu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i, %13
+  %i.vx = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i207, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.wi, %bb.eu ], [ %umax754.le.i, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %.reass.us.us.us.i227, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %i.az, %bb.ga ], [ %i.vv, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %.reass.us.i212, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
+  %i.vy = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.az, %bb.eu ], [ %i.az, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %i.az, %bb.ga ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
+  %i.vz = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ @75, %bb.eu ], [ @85, %13 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ @91, %bb.ga ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.vx, i64 noundef %i.vy, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.vz) #37
           to label %.cont.i139 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i114.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3173
 
@@ -1868,7 +1873,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i176: 
   br i1 %i.yg, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQIB1M_QINtNtB4_7compact7CompactIB1e_mEB2H_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEEB6_.exit.thread406, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i176, %.split50.i180, %bb.fc
-  %i.yh = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 3 uses
+  %i.yh = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 2 uses
   %i.yi = icmp ult i64 %i.yh, %i.bc
   br i1 %i.yi, label %bb.ff, label %.invoke.i138
 
@@ -1983,9 +1988,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i154: 
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i154, %.split52.i166, %.lr.ph1916
   %i.zy = mul i64 %.sroa.09.1.i1511915, %i.te     ; 2 uses
-  %i.zz = add i64 %.sroa.09.1.i1511915, %invariant.op497.i ; 3 uses
+  %i.zz = add i64 %.sroa.09.1.i1511915, %invariant.op497.i ; 2 uses
   %i.aaa = icmp ult i64 %i.zz, %i.az
-  br i1 %i.aaa, label %bb.fq, label %.invoke.i138
+  br i1 %i.aaa, label %bb.fq, label %13
+
+13:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155
+  %14 = add i64 %.sroa.09.0538.i, %invariant.op497.i
+  %umax754.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i138
 
 bb.fq:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155
   %i.aab = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.zz
@@ -2388,10 +2398,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge
   %i.ay = phi ptr [ %.pre1068, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 12 uses
-  %i.az = phi i64 [ %.pre1066, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 25 uses
+  %i.az = phi i64 [ %.pre1066, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 27 uses
   %i.ba = phi i64 [ %.pre1064, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1062, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 13 uses
-  %i.bc = phi i64 [ %.pre1060, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 31 uses
+  %i.bc = phi i64 [ %.pre1060, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 33 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 7 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -2794,7 +2804,7 @@ bb.bo:                                            ; preds = %bb.bm, %_RNvNtCsdft
 .lr.ph481.split.i:                                ; preds = %bb.bn, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.hx, %bb.bn ], [ 1, %bb.bl ]
   %i.hy = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 28 uses
-  %invariant.op482.i = sub i64 %.sroa.0272.0, %i.bd ; 4 uses
+  %invariant.op482.i = sub i64 %.sroa.0272.0, %i.bd ; 5 uses
   %invariant.op.i92 = sub i64 %.sroa.0.0, %i.ba   ; 4 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit223.thread.us488.i, label %.lr.ph481.split.split.i
 
@@ -2894,7 +2904,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 .lr.ph523.i:                                      ; preds = %.lr.ph523.i.preheader, %bb.dg
   %.sroa.05.0.not522.not.i = phi i1 [ true, %bb.dg ], [ false, %.lr.ph523.i.preheader ] ; 3 uses
-  %.sroa.09.0521.i = phi i64 [ %.sroa.09.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 12 uses
+  %.sroa.09.0521.i = phi i64 [ %.sroa.09.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 13 uses
   %.sroa.038.0520.i = phi i64 [ %.sroa.038.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 17 uses
   %i.jf = and i64 %.sroa.038.0520.i, 1023
   %i.jg = icmp ne i64 %i.jf, 0
@@ -3008,10 +3018,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread
   %i.kj = icmp ult i64 %i.ki, %i.bc
   br i1 %i.kj, label %bb.cd, label %.invoke.i
 
-.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i, %.split60.i, %.lr.ph.split.i
-  %i.kk = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %i.kv, %bb.cd ], [ %i.mu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.om, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.ki, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
-  %i.kl = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %bb.cd ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
-  %i.km = phi ptr [ @68, %.lr.ph.split.i ], [ @49, %bb.cd ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ @68, %.split60.i ], [ @59, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
+.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i, %.split60.i, %.lr.ph.split.i, %11
+  %i.kk = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %i.kv, %bb.cd ], [ %umax737.le.i, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.ki, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
+  %i.kl = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ %i.az, %bb.cd ], [ %i.bc, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
+  %i.km = phi ptr [ @68, %.lr.ph.split.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i ], [ @49, %bb.cd ], [ @59, %11 ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i ], [ @68, %.split60.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.kk, i64 noundef %i.kl, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.km) #37
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3549
 
@@ -3184,7 +3194,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i: ; p
   br i1 %i.mt, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsdftwklc2oBO_7similar.exit227.sink.split.i.thread, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i, %.split50.i, %bb.cl
-  %i.mu = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 3 uses
+  %i.mu = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 2 uses
   %i.mv = icmp ult i64 %i.mu, %i.az
   br i1 %i.mv, label %bb.co, label %.invoke.i
 
@@ -3299,9 +3309,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i: ; p
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i, %.split52.i, %.lr.ph1924
   %i.ol = mul i64 %.sroa.09.1.i1923, %i.hr        ; 2 uses
-  %i.om = add i64 %.sroa.09.1.i1923, %invariant.op482.i ; 3 uses
+  %i.om = add i64 %.sroa.09.1.i1923, %invariant.op482.i ; 2 uses
   %i.on = icmp ult i64 %i.om, %i.bc
-  br i1 %i.on, label %bb.cz, label %.invoke.i
+  br i1 %i.on, label %bb.cz, label %11
+
+11:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i
+  %12 = add i64 %.sroa.09.0521.i, %invariant.op482.i
+  %umax737.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cz:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i
   %i.oo = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.om
@@ -3672,7 +3687,7 @@ bb.ee:                                            ; preds = %bb.ec, %_RNvNtCsdft
   %.sroa.10.0.i.i105 = phi i64 [ %i.tk, %bb.ed ], [ 1, %bb.eb ]
   %i.tl = inttoptr i64 %.sroa.10.0.i.i105 to ptr  ; 28 uses
   %invariant.op.i120 = sub i64 %.sroa.0272.0, %i.bd ; 5 uses
-  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
+  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 5 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit223.thread.us504.i, label %.lr.ph496.split.split.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit223.thread.us504.i: ; preds = %.lr.ph496.split.i, %..loopexit85_crit_edge.split.us.split.us.us.i233
@@ -3771,7 +3786,7 @@ bb.em:                                            ; preds = %bb.el
 
 .lr.ph540.i:                                      ; preds = %.lr.ph540.i.preheader, %bb.fx
   %.sroa.05.0.not539.not.i = phi i1 [ true, %bb.fx ], [ false, %.lr.ph540.i.preheader ] ; 3 uses
-  %.sroa.09.0538.i = phi i64 [ %.sroa.09.3.i164, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 13 uses
+  %.sroa.09.0538.i = phi i64 [ %.sroa.09.3.i164, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 14 uses
   %.sroa.039.0537.i = phi i64 [ %.sroa.039.3.i, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 16 uses
   %i.us = and i64 %.sroa.039.0537.i, 1023
   %i.ut = icmp ne i64 %i.us, 0
@@ -3875,10 +3890,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread
   %i.vw = icmp ult i64 %i.vv, %i.bc
   br i1 %i.vw, label %bb.eu, label %.invoke.i138
 
-.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225, %bb.eu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i
-  %i.vx = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i207, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.vv, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %i.yh, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %i.zz, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %.reass.us.us.us.i227, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.az, %bb.ga ], [ %i.wi, %bb.eu ], [ %.reass.us.i212, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
-  %i.vy = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.az, %bb.ga ], [ %i.az, %bb.eu ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
-  %i.vz = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ @85, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ @91, %bb.ga ], [ @75, %bb.eu ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
+.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225, %bb.eu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i, %13
+  %i.vx = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i207, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.wi, %bb.eu ], [ %umax754.le.i, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %.reass.us.us.us.i227, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %i.az, %bb.ga ], [ %i.vv, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %.reass.us.i212, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
+  %i.vy = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ %i.az, %bb.eu ], [ %i.az, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ %i.az, %bb.ga ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
+  %i.vz = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.i ], [ @75, %bb.eu ], [ @85, %13 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.us.us.i225 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit249.thread.i191 ], [ @91, %bb.ga ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit231.thread.i137 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit254.thread.us.i211 ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.vx, i64 noundef %i.vy, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.vz) #37
           to label %.cont.i139 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i114.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3567
 
@@ -4051,7 +4066,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i176: 
   br i1 %i.yg, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQIB1M_QINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2H_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEEB6_.exit.thread406, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.thread.i177: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit237.i176, %.split50.i180, %bb.fc
-  %i.yh = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 3 uses
+  %i.yh = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 2 uses
   %i.yi = icmp ult i64 %i.yh, %i.bc
   br i1 %i.yi, label %bb.ff, label %.invoke.i138
 
@@ -4166,9 +4181,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i154: 
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.i154, %.split52.i166, %.lr.ph1916
   %i.zy = mul i64 %.sroa.09.1.i1511915, %i.te     ; 2 uses
-  %i.zz = add i64 %.sroa.09.1.i1511915, %invariant.op497.i ; 3 uses
+  %i.zz = add i64 %.sroa.09.1.i1511915, %invariant.op497.i ; 2 uses
   %i.aaa = icmp ult i64 %i.zz, %i.az
-  br i1 %i.aaa, label %bb.fq, label %.invoke.i138
+  br i1 %i.aaa, label %bb.fq, label %13
+
+13:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155
+  %14 = add i64 %.sroa.09.0538.i, %invariant.op497.i
+  %umax754.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i138
 
 bb.fq:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit243.thread.i155
   %i.aab = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.zz
@@ -4571,10 +4591,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge
   %i.ay = phi ptr [ %.pre1061, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 12 uses
-  %i.az = phi i64 [ %.pre1059, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 25 uses
+  %i.az = phi i64 [ %.pre1059, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 27 uses
   %i.ba = phi i64 [ %.pre1057, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1055, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 13 uses
-  %i.bc = phi i64 [ %.pre1053, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 31 uses
+  %i.bc = phi i64 [ %.pre1053, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 33 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 7 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -4977,7 +4997,7 @@ bb.bo:                                            ; preds = %bb.bm, %_RNvNtCsdft
 .lr.ph481.split.i:                                ; preds = %bb.bn, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.hr, %bb.bn ], [ 1, %bb.bl ]
   %i.hs = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 28 uses
-  %invariant.op482.i = sub i64 %.sroa.0265.0, %i.bd ; 4 uses
+  %invariant.op482.i = sub i64 %.sroa.0265.0, %i.bd ; 5 uses
   %invariant.op.i92 = sub i64 %.sroa.0.0, %i.ba   ; 4 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us488.i, label %.lr.ph481.split.split.i
 
@@ -5080,7 +5100,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i, %.lr.ph523.i
   %.sroa.05.0.not522.not.i = phi i1 [ false, %.lr.ph523.i ], [ true, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 3 uses
-  %.sroa.09.0521.i = phi i64 [ 0, %.lr.ph523.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 13 uses
+  %.sroa.09.0521.i = phi i64 [ 0, %.lr.ph523.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 14 uses
   %.sroa.038.0520.i = phi i64 [ 0, %.lr.ph523.i ], [ %.sroa.038.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 18 uses
   %i.jc = and i64 %.sroa.038.0520.i, 1023
   %i.jd = icmp ne i64 %i.jc, 0
@@ -5185,10 +5205,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread
   %i.jx = icmp ult i64 %i.jw, %i.bc
   br i1 %i.jx, label %bb.ce, label %.invoke.i
 
-.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i, %bb.ce, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i, %.split60.i, %.lr.ph.split.i
-  %i.jy = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %i.kj, %bb.ce ], [ %i.mb, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.nm, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.jw, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
-  %i.jz = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %bb.ce ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
-  %i.ka = phi ptr [ @68, %.lr.ph.split.i ], [ @49, %bb.ce ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ @68, %.split60.i ], [ @59, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i, %bb.ce, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i, %.split60.i, %.lr.ph.split.i, %11
+  %i.jy = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.kj, %bb.ce ], [ %umax737.le.i, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.jw, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+  %i.jz = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.az, %bb.ce ], [ %i.bc, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+  %i.ka = phi ptr [ @68, %.lr.ph.split.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ @49, %bb.ce ], [ @59, %11 ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ @68, %.split60.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.jy, i64 noundef %i.jz, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ka) #37
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3839
 
@@ -5342,7 +5362,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i: ; p
   br i1 %i.ma, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsdftwklc2oBO_7similar.exit225.sink.split.i.thread, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i, %.split50.i, %bb.cm
-  %i.mb = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 3 uses
+  %i.mb = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 2 uses
   %i.mc = icmp ult i64 %i.mb, %i.az
   br i1 %i.mc, label %bb.cp, label %.invoke.i
 
@@ -5438,9 +5458,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i: ; p
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i, %.split52.i, %.lr.ph1936
   %i.nl = mul i64 %.sroa.09.1.i1935, %i.hl        ; 2 uses
-  %i.nm = add i64 %.sroa.09.1.i1935, %invariant.op482.i ; 3 uses
+  %i.nm = add i64 %.sroa.09.1.i1935, %invariant.op482.i ; 2 uses
   %i.nn = icmp ult i64 %i.nm, %i.bc
-  br i1 %i.nn, label %bb.da, label %.invoke.i
+  br i1 %i.nn, label %bb.da, label %11
+
+11:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i
+  %12 = add i64 %.sroa.09.0521.i, %invariant.op482.i
+  %umax737.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.da:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i
   %i.no = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.nm
@@ -5807,7 +5832,7 @@ bb.ee:                                            ; preds = %bb.ec, %_RNvNtCsdft
   %.sroa.10.0.i.i105 = phi i64 [ %i.sg, %bb.ed ], [ 1, %bb.eb ]
   %i.sh = inttoptr i64 %.sroa.10.0.i.i105 to ptr  ; 28 uses
   %invariant.op.i120 = sub i64 %.sroa.0265.0, %i.bd ; 5 uses
-  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
+  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 5 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us504.i, label %.lr.ph496.split.split.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us504.i: ; preds = %.lr.ph496.split.i, %..loopexit85_crit_edge.split.us.split.us.us.i226
@@ -5909,7 +5934,7 @@ bb.em:                                            ; preds = %bb.el
 
 bb.en:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160, %.lr.ph540.i
   %.sroa.05.0.not539.not.i = phi i1 [ false, %.lr.ph540.i ], [ true, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 3 uses
-  %.sroa.09.0538.i = phi i64 [ 0, %.lr.ph540.i ], [ %.sroa.09.3.i162, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 14 uses
+  %.sroa.09.0538.i = phi i64 [ 0, %.lr.ph540.i ], [ %.sroa.09.3.i162, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 15 uses
   %.sroa.039.0537.i = phi i64 [ 0, %.lr.ph540.i ], [ %.sroa.039.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 17 uses
   %i.tr = and i64 %.sroa.039.0537.i, 1023
   %i.ts = icmp ne i64 %i.tr, 0
@@ -6004,10 +6029,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread
   %i.um = icmp ult i64 %i.ul, %i.bc
   br i1 %i.um, label %bb.ev, label %.invoke.i138
 
-.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218, %bb.ev, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i
-  %i.un = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i200, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.ul, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.wq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %i.yb, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %.reass.us.us.us.i220, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.az, %bb.ga ], [ %i.uy, %bb.ev ], [ %.reass.us.i205, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
-  %i.uo = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.az, %bb.ga ], [ %i.az, %bb.ev ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
-  %i.up = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ @85, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ @91, %bb.ga ], [ @75, %bb.ev ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
+.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218, %bb.ev, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i, %13
+  %i.un = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i200, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.uy, %bb.ev ], [ %umax754.le.i, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %.reass.us.us.us.i220, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %i.az, %bb.ga ], [ %i.ul, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %.reass.us.i205, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
+  %i.uo = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.az, %bb.ev ], [ %i.az, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %i.az, %bb.ga ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
+  %i.up = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ @75, %bb.ev ], [ @85, %13 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ @91, %bb.ga ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.un, i64 noundef %i.uo, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.up) #37
           to label %.cont.i139 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i114.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3849
 
@@ -6161,7 +6186,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i173: 
   br i1 %i.wp, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactIB1e_mEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEB6_.exit.thread399, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i173, %.split50.i177, %bb.fd
-  %i.wq = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 3 uses
+  %i.wq = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 2 uses
   %i.wr = icmp ult i64 %i.wq, %i.bc
   br i1 %i.wr, label %bb.fg, label %.invoke.i138
 
@@ -6257,9 +6282,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i154: 
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i154, %.split52.i167, %.lr.ph1928
   %i.ya = mul i64 %.sroa.09.1.i1511927, %i.sa     ; 2 uses
-  %i.yb = add i64 %.sroa.09.1.i1511927, %invariant.op497.i ; 3 uses
+  %i.yb = add i64 %.sroa.09.1.i1511927, %invariant.op497.i ; 2 uses
   %i.yc = icmp ult i64 %i.yb, %i.az
-  br i1 %i.yc, label %bb.fr, label %.invoke.i138
+  br i1 %i.yc, label %bb.fr, label %13
+
+13:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155
+  %14 = add i64 %.sroa.09.0538.i, %invariant.op497.i
+  %umax754.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i138
 
 bb.fr:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155
   %i.yd = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.yb
@@ -6662,10 +6692,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge
   %i.ay = phi ptr [ %.pre1061, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 12 uses
-  %i.az = phi i64 [ %.pre1059, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 25 uses
+  %i.az = phi i64 [ %.pre1059, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 27 uses
   %i.ba = phi i64 [ %.pre1057, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1055, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 13 uses
-  %i.bc = phi i64 [ %.pre1053, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 31 uses
+  %i.bc = phi i64 [ %.pre1053, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 33 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 7 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_EB6_.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -7068,7 +7098,7 @@ bb.bo:                                            ; preds = %bb.bm, %_RNvNtCsdft
 .lr.ph481.split.i:                                ; preds = %bb.bn, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.hr, %bb.bn ], [ 1, %bb.bl ]
   %i.hs = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 28 uses
-  %invariant.op482.i = sub i64 %.sroa.0265.0, %i.bd ; 4 uses
+  %invariant.op482.i = sub i64 %.sroa.0265.0, %i.bd ; 5 uses
   %invariant.op.i92 = sub i64 %.sroa.0.0, %i.ba   ; 4 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us488.i, label %.lr.ph481.split.split.i
 
@@ -7171,7 +7201,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i, %.lr.ph523.i
   %.sroa.05.0.not522.not.i = phi i1 [ false, %.lr.ph523.i ], [ true, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 3 uses
-  %.sroa.09.0521.i = phi i64 [ 0, %.lr.ph523.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 13 uses
+  %.sroa.09.0521.i = phi i64 [ 0, %.lr.ph523.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 14 uses
   %.sroa.038.0520.i = phi i64 [ 0, %.lr.ph523.i ], [ %.sroa.038.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i ] ; 18 uses
   %i.jc = and i64 %.sroa.038.0520.i, 1023
   %i.jd = icmp ne i64 %i.jc, 0
@@ -7276,10 +7306,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread
   %i.jx = icmp ult i64 %i.jw, %i.bc
   br i1 %i.jx, label %bb.ce, label %.invoke.i
 
-.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i, %bb.ce, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i, %.split60.i, %.lr.ph.split.i
-  %i.jy = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %i.kj, %bb.ce ], [ %i.mb, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.nm, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.jw, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
-  %i.jz = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %bb.ce ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
-  %i.ka = phi ptr [ @68, %.lr.ph.split.i ], [ @49, %bb.ce ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ @68, %.split60.i ], [ @59, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i, %bb.ce, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i, %.split60.i, %.lr.ph.split.i, %11
+  %i.jy = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.kj, %bb.ce ], [ %umax737.le.i, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.jw, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+  %i.jz = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.az, %bb.ce ], [ %i.bc, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+  %i.ka = phi ptr [ @68, %.lr.ph.split.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ @49, %bb.ce ], [ @59, %11 ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ @68, %.split60.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.jy, i64 noundef %i.jz, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ka) #37
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !4097
 
@@ -7433,7 +7463,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i: ; p
   br i1 %i.ma, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsdftwklc2oBO_7similar.exit225.sink.split.i.thread, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i, %.split50.i, %bb.cm
-  %i.mb = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 3 uses
+  %i.mb = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 2 uses
   %i.mc = icmp ult i64 %i.mb, %i.az
   br i1 %i.mc, label %bb.cp, label %.invoke.i
 
@@ -7529,9 +7559,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i: ; p
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i, %.split52.i, %.lr.ph1936
   %i.nl = mul i64 %.sroa.09.1.i1935, %i.hl        ; 2 uses
-  %i.nm = add i64 %.sroa.09.1.i1935, %invariant.op482.i ; 3 uses
+  %i.nm = add i64 %.sroa.09.1.i1935, %invariant.op482.i ; 2 uses
   %i.nn = icmp ult i64 %i.nm, %i.bc
-  br i1 %i.nn, label %bb.da, label %.invoke.i
+  br i1 %i.nn, label %bb.da, label %11
+
+11:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i
+  %12 = add i64 %.sroa.09.0521.i, %invariant.op482.i
+  %umax737.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.da:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i
   %i.no = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.nm
@@ -7898,7 +7933,7 @@ bb.ee:                                            ; preds = %bb.ec, %_RNvNtCsdft
   %.sroa.10.0.i.i105 = phi i64 [ %i.sg, %bb.ed ], [ 1, %bb.eb ]
   %i.sh = inttoptr i64 %.sroa.10.0.i.i105 to ptr  ; 28 uses
   %invariant.op.i120 = sub i64 %.sroa.0265.0, %i.bd ; 5 uses
-  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
+  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 5 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us504.i, label %.lr.ph496.split.split.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us504.i: ; preds = %.lr.ph496.split.i, %..loopexit85_crit_edge.split.us.split.us.us.i226
@@ -8000,7 +8035,7 @@ bb.em:                                            ; preds = %bb.el
 
 bb.en:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160, %.lr.ph540.i
   %.sroa.05.0.not539.not.i = phi i1 [ false, %.lr.ph540.i ], [ true, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 3 uses
-  %.sroa.09.0538.i = phi i64 [ 0, %.lr.ph540.i ], [ %.sroa.09.3.i162, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 14 uses
+  %.sroa.09.0538.i = phi i64 [ 0, %.lr.ph540.i ], [ %.sroa.09.3.i162, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 15 uses
   %.sroa.039.0537.i = phi i64 [ 0, %.lr.ph540.i ], [ %.sroa.039.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalB9_.exit.i160 ] ; 17 uses
   %i.tr = and i64 %.sroa.039.0537.i, 1023
   %i.ts = icmp ne i64 %i.tr, 0
@@ -8095,10 +8130,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread
   %i.um = icmp ult i64 %i.ul, %i.bc
   br i1 %i.um, label %bb.ev, label %.invoke.i138
 
-.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218, %bb.ev, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i
-  %i.un = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i200, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.ul, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.wq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %i.yb, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %.reass.us.us.us.i220, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.az, %bb.ga ], [ %i.uy, %bb.ev ], [ %.reass.us.i205, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
-  %i.uo = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.az, %bb.ga ], [ %i.az, %bb.ev ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
-  %i.up = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ @85, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ @91, %bb.ga ], [ @75, %bb.ev ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
+.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218, %bb.ev, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i, %13
+  %i.un = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i200, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.uy, %bb.ev ], [ %umax754.le.i, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %.reass.us.us.us.i220, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %i.az, %bb.ga ], [ %i.ul, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %.reass.us.i205, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
+  %i.uo = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.az, %bb.ev ], [ %i.az, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ %i.az, %bb.ga ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
+  %i.up = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ @75, %bb.ev ], [ @85, %13 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i218 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i184 ], [ @91, %bb.ga ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i204 ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.un, i64 noundef %i.uo, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.up) #37
           to label %.cont.i139 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i114.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !4107
 
@@ -8252,7 +8287,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i173: 
   br i1 %i.wp, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEB6_.exit.thread399, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i174: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i173, %.split50.i177, %bb.fd
-  %i.wq = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 3 uses
+  %i.wq = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 2 uses
   %i.wr = icmp ult i64 %i.wq, %i.bc
   br i1 %i.wr, label %bb.fg, label %.invoke.i138
 
@@ -8348,9 +8383,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i154: 
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i154, %.split52.i167, %.lr.ph1928
   %i.ya = mul i64 %.sroa.09.1.i1511927, %i.sa     ; 2 uses
-  %i.yb = add i64 %.sroa.09.1.i1511927, %invariant.op497.i ; 3 uses
+  %i.yb = add i64 %.sroa.09.1.i1511927, %invariant.op497.i ; 2 uses
   %i.yc = icmp ult i64 %i.yb, %i.az
-  br i1 %i.yc, label %bb.fr, label %.invoke.i138
+  br i1 %i.yc, label %bb.fr, label %13
+
+13:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155
+  %14 = add i64 %.sroa.09.0538.i, %invariant.op497.i
+  %umax754.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i138
 
 bb.fr:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155
   %i.yd = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.yb
@@ -8753,10 +8793,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge
   %i.ay = phi ptr [ %.pre1068, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 12 uses
-  %i.az = phi i64 [ %.pre1066, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 25 uses
+  %i.az = phi i64 [ %.pre1066, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 27 uses
   %i.ba = phi i64 [ %.pre1064, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1062, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 13 uses
-  %i.bc = phi i64 [ %.pre1060, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 31 uses
+  %i.bc = phi i64 [ %.pre1060, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 33 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 7 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -9159,7 +9199,7 @@ bb.bo:                                            ; preds = %bb.bm, %_RNvNtCsdft
 .lr.ph481.split.i:                                ; preds = %bb.bn, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.hx, %bb.bn ], [ 1, %bb.bl ]
   %i.hy = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 28 uses
-  %invariant.op482.i = sub i64 %.sroa.0272.0, %i.bd ; 4 uses
+  %invariant.op482.i = sub i64 %.sroa.0272.0, %i.bd ; 5 uses
   %invariant.op.i92 = sub i64 %.sroa.0.0, %i.ba   ; 4 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us488.i, label %.lr.ph481.split.split.i
 
@@ -9259,7 +9299,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 .lr.ph523.i:                                      ; preds = %.lr.ph523.i.preheader, %bb.dg
   %.sroa.05.0.not522.not.i = phi i1 [ true, %bb.dg ], [ false, %.lr.ph523.i.preheader ] ; 3 uses
-  %.sroa.09.0521.i = phi i64 [ %.sroa.09.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 12 uses
+  %.sroa.09.0521.i = phi i64 [ %.sroa.09.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 13 uses
   %.sroa.038.0520.i = phi i64 [ %.sroa.038.3.i, %bb.dg ], [ 0, %.lr.ph523.i.preheader ] ; 17 uses
   %i.jf = and i64 %.sroa.038.0520.i, 1023
   %i.jg = icmp ne i64 %i.jf, 0
@@ -9373,10 +9413,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread
   %i.kj = icmp ult i64 %i.ki, %i.bc
   br i1 %i.kj, label %bb.cd, label %.invoke.i
 
-.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i, %.split60.i, %.lr.ph.split.i
-  %i.kk = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %i.kv, %bb.cd ], [ %i.mu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.om, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.ki, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
-  %i.kl = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %bb.cd ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
-  %i.km = phi ptr [ @68, %.lr.ph.split.i ], [ @49, %bb.cd ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ @68, %.split60.i ], [ @59, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i, %bb.dj, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i, %.split60.i, %.lr.ph.split.i, %11
+  %i.kk = phi i64 [ %.us-phi493.i, %.lr.ph.split.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.kv, %bb.cd ], [ %umax737.le.i, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %.us-phi493.i, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %.us-phi493.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.ki, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+  %i.kl = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ %i.az, %bb.cd ], [ %i.bc, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ %i.bc, %.split60.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ %i.az, %bb.dj ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
+  %i.km = phi ptr [ @68, %.lr.ph.split.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i ], [ @49, %bb.cd ], [ @59, %11 ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i ], [ @68, %.split60.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.i ], [ @65, %bb.dj ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.kk, i64 noundef %i.kl, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.km) #37
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !4447
 
@@ -9549,7 +9589,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i: ; p
   br i1 %i.mt, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsdftwklc2oBO_7similar.exit225.sink.split.i.thread, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i, %.split50.i, %bb.cl
-  %i.mu = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 3 uses
+  %i.mu = add i64 %.sroa.038.1501.i, %invariant.op.i92 ; 2 uses
   %i.mv = icmp ult i64 %i.mu, %i.az
   br i1 %i.mv, label %bb.co, label %.invoke.i
 
@@ -9664,9 +9704,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i: ; p
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i, %.split52.i, %.lr.ph1924
   %i.ol = mul i64 %.sroa.09.1.i1923, %i.hr        ; 2 uses
-  %i.om = add i64 %.sroa.09.1.i1923, %invariant.op482.i ; 3 uses
+  %i.om = add i64 %.sroa.09.1.i1923, %invariant.op482.i ; 2 uses
   %i.on = icmp ult i64 %i.om, %i.bc
-  br i1 %i.on, label %bb.cz, label %.invoke.i
+  br i1 %i.on, label %bb.cz, label %11
+
+11:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i
+  %12 = add i64 %.sroa.09.0521.i, %invariant.op482.i
+  %umax737.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cz:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i
   %i.oo = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.om
@@ -10037,7 +10082,7 @@ bb.ee:                                            ; preds = %bb.ec, %_RNvNtCsdft
   %.sroa.10.0.i.i105 = phi i64 [ %i.tk, %bb.ed ], [ 1, %bb.eb ]
   %i.tl = inttoptr i64 %.sroa.10.0.i.i105 to ptr  ; 28 uses
   %invariant.op.i120 = sub i64 %.sroa.0272.0, %i.bd ; 5 uses
-  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
+  %invariant.op497.i = sub i64 %.sroa.0.0, %i.ba  ; 5 uses
   br i1 %.not.i73, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us504.i, label %.lr.ph496.split.split.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit221.thread.us504.i: ; preds = %.lr.ph496.split.i, %..loopexit85_crit_edge.split.us.split.us.us.i233
@@ -10136,7 +10181,7 @@ bb.em:                                            ; preds = %bb.el
 
 .lr.ph540.i:                                      ; preds = %.lr.ph540.i.preheader, %bb.fx
   %.sroa.05.0.not539.not.i = phi i1 [ true, %bb.fx ], [ false, %.lr.ph540.i.preheader ] ; 3 uses
-  %.sroa.09.0538.i = phi i64 [ %.sroa.09.3.i164, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 13 uses
+  %.sroa.09.0538.i = phi i64 [ %.sroa.09.3.i164, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 14 uses
   %.sroa.039.0537.i = phi i64 [ %.sroa.039.3.i, %bb.fx ], [ 0, %.lr.ph540.i.preheader ] ; 16 uses
   %i.us = and i64 %.sroa.039.0537.i, 1023
   %i.ut = icmp ne i64 %i.us, 0
@@ -10240,10 +10285,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread
   %i.vw = icmp ult i64 %i.vv, %i.bc
   br i1 %i.vw, label %bb.eu, label %.invoke.i138
 
-.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225, %bb.eu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i
-  %i.vx = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i207, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.vv, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.yh, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177 ], [ %i.zz, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191 ], [ %.reass.us.us.us.i227, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225 ], [ %i.az, %bb.ga ], [ %i.wi, %bb.eu ], [ %.reass.us.i212, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211 ]
-  %i.vy = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225 ], [ %i.az, %bb.ga ], [ %i.az, %bb.eu ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211 ]
-  %i.vz = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177 ], [ @85, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225 ], [ @91, %bb.ga ], [ @75, %bb.eu ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211 ]
+.invoke.i138:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225, %bb.eu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177, %bb.ga, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191, %bb.gq, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i, %13
+  %i.vx = phi i64 [ %.us-phi510.i, %bb.gq ], [ %.reass.i207, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.wi, %bb.eu ], [ %umax754.le.i, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177 ], [ %.reass.us.us.us.i227, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191 ], [ %i.az, %bb.ga ], [ %i.vv, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %.reass.us.i212, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211 ]
+  %i.vy = phi i64 [ %i.az, %bb.gq ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ %i.az, %bb.eu ], [ %i.az, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191 ], [ %i.az, %bb.ga ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211 ]
+  %i.vz = phi ptr [ @95, %bb.gq ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.i ], [ @75, %bb.eu ], [ @85, %13 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.us.us.i225 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit247.thread.i191 ], [ @91, %bb.ga ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit229.thread.i137 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit252.thread.us.i211 ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.vx, i64 noundef %i.vy, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.vz) #37
           to label %.cont.i139 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i114.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !4470
 
@@ -10416,7 +10461,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i176: 
   br i1 %i.yg, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupmEB1d_INtNtB4_4hook12NoFinishHookQQINtNtB4_7compact7CompactB1d_B1d_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEB6_.exit.thread406, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.thread.i177: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit235.i176, %.split50.i180, %bb.fc
-  %i.yh = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 3 uses
+  %i.yh = add i64 %.sroa.039.1518.i, %invariant.op.i120 ; 2 uses
   %i.yi = icmp ult i64 %i.yh, %i.bc
   br i1 %i.yi, label %bb.ff, label %.invoke.i138
 
@@ -10531,9 +10576,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i154: 
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.i154, %.split52.i166, %.lr.ph1916
   %i.zy = mul i64 %.sroa.09.1.i1511915, %i.te     ; 2 uses
-  %i.zz = add i64 %.sroa.09.1.i1511915, %invariant.op497.i ; 3 uses
+  %i.zz = add i64 %.sroa.09.1.i1511915, %invariant.op497.i ; 2 uses
   %i.aaa = icmp ult i64 %i.zz, %i.az
-  br i1 %i.aaa, label %bb.fq, label %.invoke.i138
+  br i1 %i.aaa, label %bb.fq, label %13
+
+13:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155
+  %14 = add i64 %.sroa.09.0538.i, %invariant.op497.i
+  %umax754.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i138
 
 bb.fq:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit241.thread.i155
   %i.aab = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.zz
@@ -10936,10 +10986,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge
   %i.ay = phi ptr [ %.pre1059, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.al, %bb.g ] ; 12 uses
-  %i.az = phi i64 [ %.pre1057, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.ak, %bb.g ] ; 25 uses
+  %i.az = phi i64 [ %.pre1057, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.ak, %bb.g ] ; 27 uses
   %i.ba = phi i64 [ %.pre1055, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1053, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.ai, %bb.g ] ; 13 uses
-  %i.bc = phi i64 [ %.pre1051, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.ah, %bb.g ] ; 31 uses
+  %i.bc = phi i64 [ %.pre1051, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.ah, %bb.g ] ; 33 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.ag, %bb.g ] ; 7 uses
   %.sroa.0.0.i61 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexB9_.exit.i.i.i.i.i58 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i61              ; 9 uses
@@ -11342,7 +11392,7 @@ bb.bo:                                            ; preds = %bb.bm, %_RNvNtCsdft
 .lr.ph731.split.i:                                ; preds = %bb.bn, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.gz, %bb.bn ], [ 1, %bb.bl ]
   %i.ha = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 28 uses
-  %invariant.op732.i = sub i64 %.sroa.0263.0, %i.bd ; 4 uses
+  %invariant.op732.i = sub i64 %.sroa.0263.0, %i.bd ; 5 uses
   %invariant.op.i90 = sub i64 %.sroa.0.0, %i.ba   ; 4 uses
   br i1 %.not.i71, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit219.thread.us738.i, label %.lr.ph731.split.split.i
 
@@ -11442,7 +11492,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 .lr.ph773.i:                                      ; preds = %.lr.ph773.i.preheader, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i
   %.sroa.05.0.not772.not.i = phi i1 [ true, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i ], [ false, %.lr.ph773.i.preheader ] ; 3 uses
-  %.sroa.09.0771.i = phi i64 [ %.sroa.09.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i ], [ 0, %.lr.ph773.i.preheader ] ; 13 uses
+  %.sroa.09.0771.i = phi i64 [ %.sroa.09.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i ], [ 0, %.lr.ph773.i.preheader ] ; 14 uses
   %.sroa.038.0770.i = phi i64 [ %.sroa.038.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i ], [ 0, %.lr.ph773.i.preheader ] ; 18 uses
   %i.ih = and i64 %.sroa.038.0770.i, 1023
   %i.ii = icmp ne i64 %i.ih, 0
@@ -11554,10 +11604,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread
   %i.jd = icmp ult i64 %i.jc, %i.bc
   br i1 %i.jd, label %bb.cd, label %.invoke.i
 
-.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i, %bb.di, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i, %.split310.i, %.lr.ph.split.i
-  %i.je = phi i64 [ %.us-phi743.i, %.lr.ph.split.i ], [ %i.jp, %bb.cd ], [ %i.lh, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i ], [ %.us-phi743.i, %.split310.i ], [ %i.ms, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i ], [ %.us-phi743.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i ], [ %i.az, %bb.di ], [ %i.jc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i ]
-  %i.jf = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %bb.cd ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i ], [ %i.bc, %.split310.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i ], [ %i.az, %bb.di ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i ]
-  %i.jg = phi ptr [ @68, %.lr.ph.split.i ], [ @49, %bb.cd ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i ], [ @68, %.split310.i ], [ @59, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i ], [ @65, %bb.di ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i ]
+.invoke.i:                                        ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i, %bb.cd, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i, %bb.di, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i, %.split310.i, %.lr.ph.split.i, %11
+  %i.je = phi i64 [ %.us-phi743.i, %.lr.ph.split.i ], [ %.reass.us.us.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i ], [ %i.jp, %bb.cd ], [ %umax987.le.i, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i ], [ %.us-phi743.i, %.split310.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i ], [ %.us-phi743.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i ], [ %i.az, %bb.di ], [ %i.jc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i ], [ %.reass.us.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i ]
+  %i.jf = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i ], [ %i.az, %bb.cd ], [ %i.bc, %11 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i ], [ %i.bc, %.split310.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i ], [ %i.az, %bb.di ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i ]
+  %i.jg = phi ptr [ @68, %.lr.ph.split.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i ], [ @49, %bb.cd ], [ @59, %11 ], [ @54, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i ], [ @68, %.split310.i ], [ @64, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i ], [ @68, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.i ], [ @65, %bb.di ], [ @48, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i ], [ @69, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.je, i64 noundef %i.jf, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.jg) #37
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !4684
 
@@ -11710,7 +11760,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.i: ; p
   br i1 %i.lg, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsdftwklc2oBO_7similar.exit223.sink.split.i.thread, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.i, %.split300.i, %bb.cl
-  %i.lh = add i64 %.sroa.038.1751.i, %invariant.op.i90 ; 3 uses
+  %i.lh = add i64 %.sroa.038.1751.i, %invariant.op.i90 ; 2 uses
   %i.li = icmp ult i64 %i.lh, %i.az
   br i1 %i.li, label %bb.co, label %.invoke.i
 
@@ -11805,9 +11855,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.i: ; p
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.i, %.split302.i, %.lr.ph1946
   %i.mr = mul i64 %.sroa.09.1.i1945, %i.gt        ; 2 uses
-  %i.ms = add i64 %.sroa.09.1.i1945, %invariant.op732.i ; 3 uses
+  %i.ms = add i64 %.sroa.09.1.i1945, %invariant.op732.i ; 2 uses
   %i.mt = icmp ult i64 %i.ms, %i.bc
-  br i1 %i.mt, label %bb.cz, label %.invoke.i
+  br i1 %i.mt, label %bb.cz, label %11
+
+11:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i
+  %12 = add i64 %.sroa.09.0771.i, %invariant.op732.i
+  %umax987.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cz:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i
   %i.mu = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.ms
@@ -12174,7 +12229,7 @@ bb.ed:                                            ; preds = %bb.eb, %_RNvNtCsdft
   %.sroa.10.0.i.i103 = phi i64 [ %i.rm, %bb.ec ], [ 1, %bb.ea ]
   %i.rn = inttoptr i64 %.sroa.10.0.i.i103 to ptr  ; 28 uses
   %invariant.op.i118 = sub i64 %.sroa.0263.0, %i.bd ; 5 uses
-  %invariant.op747.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
+  %invariant.op747.i = sub i64 %.sroa.0.0, %i.ba  ; 5 uses
   br i1 %.not.i71, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit219.thread.us754.i, label %.lr.ph746.split.split.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit219.thread.us754.i: ; preds = %.lr.ph746.split.i, %..loopexit335_crit_edge.split.us.split.us.us.i224
@@ -12273,7 +12328,7 @@ bb.el:                                            ; preds = %bb.ek
 
 .lr.ph790.i:                                      ; preds = %.lr.ph790.i.preheader, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i158
   %.sroa.05.0.not789.not.i = phi i1 [ true, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i158 ], [ false, %.lr.ph790.i.preheader ] ; 3 uses
-  %.sroa.09.0788.i = phi i64 [ %.sroa.09.3.i160, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i158 ], [ 0, %.lr.ph790.i.preheader ] ; 14 uses
+  %.sroa.09.0788.i = phi i64 [ %.sroa.09.3.i160, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i158 ], [ 0, %.lr.ph790.i.preheader ] ; 15 uses
   %.sroa.039.0787.i = phi i64 [ %.sroa.039.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalB9_.exit.i158 ], [ 0, %.lr.ph790.i.preheader ] ; 17 uses
   %i.su = and i64 %.sroa.039.0787.i, 1023
   %i.sv = icmp ne i64 %i.su, 0
@@ -12375,10 +12430,10 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread
   %i.tq = icmp ult i64 %i.tp, %i.bc
   br i1 %i.tq, label %bb.et, label %.invoke.i136
 
-.invoke.i136:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216, %bb.et, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i153, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172, %bb.fy, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182, %bb.go, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i
-  %i.tr = phi i64 [ %.us-phi760.i, %bb.go ], [ %.reass.i198, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i ], [ %i.tp, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135 ], [ %i.vu, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172 ], [ %i.xf, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i153 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182 ], [ %.reass.us.us.us.i218, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216 ], [ %i.az, %bb.fy ], [ %i.uc, %bb.et ], [ %.reass.us.i203, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202 ]
-  %i.ts = phi i64 [ %i.az, %bb.go ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172 ], [ %i.az, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i153 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216 ], [ %i.az, %bb.fy ], [ %i.az, %bb.et ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202 ]
-  %i.tt = phi ptr [ @95, %bb.go ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172 ], [ @85, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i153 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216 ], [ @91, %bb.fy ], [ @75, %bb.et ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202 ]
+.invoke.i136:                                     ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216, %bb.et, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172, %bb.fy, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182, %bb.go, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i, %13
+  %i.tr = phi i64 [ %.us-phi760.i, %bb.go ], [ %.reass.i198, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i ], [ %i.uc, %bb.et ], [ %umax1004.le.i, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172 ], [ %.reass.us.us.us.i218, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182 ], [ %i.az, %bb.fy ], [ %i.tp, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135 ], [ %.reass.us.i203, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202 ]
+  %i.ts = phi i64 [ %i.az, %bb.go ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i ], [ %i.az, %bb.et ], [ %i.az, %13 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182 ], [ %i.az, %bb.fy ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135 ], [ %i.bc, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202 ]
+  %i.tt = phi ptr [ @95, %bb.go ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.i ], [ @75, %bb.et ], [ @85, %13 ], [ @80, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.us.us.i216 ], [ @90, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit245.thread.i182 ], [ @91, %bb.fy ], [ @74, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit227.thread.i135 ], [ @94, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit250.thread.us.i202 ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.tr, i64 noundef %i.ts, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.tt) #37
           to label %.cont.i137 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i112.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !4698
 
@@ -12531,7 +12586,7 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.i171: 
   br i1 %i.vt, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupmEB1d_INtNtB4_7compact7CompactB1d_B1d_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEB6_.exit.thread397, label %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.thread.i172: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit233.i171, %.split300.i175, %bb.fb
-  %i.vu = add i64 %.sroa.039.1768.i, %invariant.op.i118 ; 3 uses
+  %i.vu = add i64 %.sroa.039.1768.i, %invariant.op.i118 ; 2 uses
   %i.vv = icmp ult i64 %i.vu, %i.bc
   br i1 %i.vv, label %bb.fe, label %.invoke.i136
 
@@ -12626,9 +12681,14 @@ _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.i152: 
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i153: ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.i152, %.split302.i165, %.lr.ph1938
   %i.xe = mul i64 %.sroa.09.1.i1491937, %i.rg     ; 2 uses
-  %i.xf = add i64 %.sroa.09.1.i1491937, %invariant.op747.i ; 3 uses
+  %i.xf = add i64 %.sroa.09.1.i1491937, %invariant.op747.i ; 2 uses
   %i.xg = icmp ult i64 %i.xf, %i.az
-  br i1 %i.xg, label %bb.fp, label %.invoke.i136
+  br i1 %i.xg, label %bb.fp, label %13
+
+13:                                               ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i153
+  %14 = add i64 %.sroa.09.0788.i, %invariant.op747.i
+  %umax1004.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i136
 
 bb.fp:                                            ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit239.thread.i153
   %i.xh = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.xf
