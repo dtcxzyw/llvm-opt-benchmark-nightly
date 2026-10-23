@@ -205,14 +205,18 @@ bb.b:                                             ; preds = %.lr.ph176, %select.
   %i.aj = tail call noundef i32 @llvm.abs.i32(i32 %i.ai, i1 true)
   %i.ak = zext nneg i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ak
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !196 ; 2 uses
-  %3 = icmp slt i32 %i.ai, 0
-  %4 = sub i8 0, %i.am
-  %spec.select.i = select i1 %3, i8 %4, i8 %i.am
-  %or.cond = icmp slt i8 %spec.select.i, 1
-  br i1 %or.cond, label %bb.c, label %.split.us.loopexit
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !196 ; 3 uses
+  %.not75 = icmp eq i8 %i.am, 0
+  br i1 %.not75, label %bb.c, label %3
 
-.split.us.loopexit:                               ; preds = %.lr.ph.split
+3:                                                ; preds = %.lr.ph.split
+  %4 = icmp slt i32 %i.ai, 0
+  %5 = sub i8 0, %i.am
+  %spec.select.i = select i1 %4, i8 %5, i8 %i.am
+  %6 = icmp slt i8 %spec.select.i, 0
+  br i1 %6, label %bb.c, label %.split.us.loopexit
+
+.split.us.loopexit:                               ; preds = %3
   %.pre = load ptr, ptr %i.l, align 8, !tbaa !271 ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.pre, i64 24
   store i32 %i.y, ptr %i.an, align 8, !tbaa !167
@@ -228,7 +232,7 @@ bb.b:                                             ; preds = %.lr.ph176, %select.
   %.not76 = icmp eq ptr %i.au, null
   br i1 %.not76, label %..thread114_crit_edge, label %.thread134
 
-bb.c:                                             ; preds = %.lr.ph.split
+bb.c:                                             ; preds = %.lr.ph.split, %3
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.099.0153, i64 16 ; 2 uses
   %.not138 = icmp eq ptr %i.av, %i.ag
   br i1 %.not138, label %.thread114, label %.lr.ph.split
@@ -313,11 +317,8 @@ bb.f:                                             ; preds = %bb.g, %.lr.ph.i
   %i.bw = tail call noundef i32 @llvm.abs.i32(i32 %i.bv, i1 true)
   %i.bx = zext nneg i32 %i.bw to i64
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 %i.bx
-  %i.bz = load i8, ptr %i.by, align 1, !tbaa !196 ; 2 uses
-  %5 = icmp slt i32 %i.bv, 0
-  %6 = sub i8 0, %i.bz
-  %spec.select.i.i = select i1 %5, i8 %6, i8 %i.bz ; 2 uses
-  %.not31.i = icmp eq i8 %spec.select.i.i, 0
+  %i.bz = load i8, ptr %i.by, align 1, !tbaa !196 ; 3 uses
+  %.not31.i = icmp eq i8 %i.bz, 0
   br i1 %.not31.i, label %._crit_edge.thread52.i, label %bb.g
 
 ._crit_edge.thread52.i:                           ; preds = %bb.f
@@ -325,6 +326,9 @@ bb.f:                                             ; preds = %bb.g, %.lr.ph.i
   br label %_ZN7CaDiCaL8Internal13subsume_checkEPNS_6ClauseES2_.exit
 
 bb.g:                                             ; preds = %bb.f
+  %7 = icmp slt i32 %i.bv, 0
+  %8 = sub i8 0, %i.bz
+  %spec.select.i.i = select i1 %7, i8 %8, i8 %i.bz
   %i.ca = icmp sgt i8 %spec.select.i.i, 0         ; 2 uses
   %.not32.i = icmp ne i32 %.02434.i, 0            ; 2 uses
   %i.cb = select i1 %i.ca, i1 true, i1 %.not32.i
@@ -380,14 +384,14 @@ _ZN7CaDiCaL8Internal13subsume_checkEPNS_6ClauseES2_.exit.thread122: ; preds = %_
   %i.cr = tail call noundef i32 @llvm.abs.i32(i32 %i.cq, i1 true)
   %i.cs = zext nneg i32 %i.cr to i64
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cp, i64 %i.cs
-  %i.cu = load i8, ptr %i.ct, align 1, !tbaa !196 ; 2 uses
-  %7 = icmp slt i32 %i.cq, 0
-  %8 = sub i8 0, %i.cu
-  %spec.select.i.us.1 = select i1 %7, i8 %8, i8 %i.cu ; 2 uses
-  %.not75.us.1 = icmp eq i8 %spec.select.i.us.1, 0
+  %i.cu = load i8, ptr %i.ct, align 1, !tbaa !196 ; 3 uses
+  %.not75.us.1 = icmp eq i8 %i.cu, 0
   br i1 %.not75.us.1, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.split.us.1
+  %9 = icmp slt i32 %i.cq, 0
+  %10 = sub i8 0, %i.cu
+  %spec.select.i.us.1 = select i1 %9, i8 %10, i8 %i.cu
   %i.cv = icmp slt i8 %spec.select.i.us.1, 0
   %.pre191.1 = load ptr, ptr %i.l, align 8, !tbaa !271 ; 5 uses
   br i1 %i.cv, label %.split156.us.1, label %.split.us.1
@@ -490,14 +494,14 @@ bb.o:                                             ; preds = %bb.p, %.lr.ph.i.1
   %i.eg = tail call noundef i32 @llvm.abs.i32(i32 %i.ef, i1 true)
   %i.eh = zext nneg i32 %i.eg to i64
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ee, i64 %i.eh
-  %i.ej = load i8, ptr %i.ei, align 1, !tbaa !196 ; 2 uses
-  %9 = icmp slt i32 %i.ef, 0
-  %10 = sub i8 0, %i.ej
-  %spec.select.i.i.1 = select i1 %9, i8 %10, i8 %i.ej ; 2 uses
-  %.not31.i.1 = icmp eq i8 %spec.select.i.i.1, 0
+  %i.ej = load i8, ptr %i.ei, align 1, !tbaa !196 ; 3 uses
+  %.not31.i.1 = icmp eq i8 %i.ej, 0
   br i1 %.not31.i.1, label %._crit_edge.thread52.i.1, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
+  %11 = icmp slt i32 %i.ef, 0
+  %12 = sub i8 0, %i.ej
+  %spec.select.i.i.1 = select i1 %11, i8 %12, i8 %i.ej
   %i.ek = icmp sgt i8 %spec.select.i.i.1, 0       ; 2 uses
   %.not32.i.1 = icmp ne i32 %.02434.i.1, 0        ; 2 uses
   %i.el = select i1 %i.ek, i1 true, i1 %.not32.i.1
