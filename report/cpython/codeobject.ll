@@ -205,14 +205,16 @@ bb.g:                                             ; preds = %bb.f
   %i.bc = mul i64 %i.bb, 1000003
   %i.bd = getelementptr i8, ptr %0, i64 16        ; 2 uses
   %.val97 = load i64, ptr %i.bd, align 8, !tbaa !133 ; 2 uses
-  %i.be = xor i64 %i.bc, %.val97
+  %i.be = xor i64 %i.bc, %.val97                  ; 2 uses
   %.68698 = mul i64 %i.be, 1000003                ; 2 uses
   %i.bf = icmp sgt i64 %.val97, 0
   br i1 %i.bf, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.g
+  %.686.in.lcssa = phi i64 [ %i.be, %bb.g ], [ %i.bl, %.lr.ph ]
   %.686.lcssa = phi i64 [ %.68698, %bb.g ], [ %.686, %.lr.ph ]
-  %..686 = tail call i64 @llvm.umin.i64(i64 %.686.lcssa, i64 -2)
+  %1 = icmp eq i64 %.686.in.lcssa, 2336937208910341525
+  %..686 = select i1 %1, i64 -2, i64 %.686.lcssa
   br label %bb.h
 
 .lr.ph:                                           ; preds = %bb.g, %.lr.ph
@@ -225,7 +227,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bi = zext nneg i16 %i.bh to i64              ; 2 uses
   %i.bj = xor i64 %.686101, %i.bi
   %i.bk = mul i64 %i.bj, 1000003
-  %i.bl = xor i64 %i.bk, %.sroa.5.0.extract.trunc
+  %i.bl = xor i64 %i.bk, %.sroa.5.0.extract.trunc ; 2 uses
   %i.bm = getelementptr i8, ptr @_PyOpcode_Caches, i64 %i.bi
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !114
   %i.bo = zext i8 %i.bn to i32
@@ -626,9 +628,6 @@ declare ptr @_PyUnicode_Copy(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12

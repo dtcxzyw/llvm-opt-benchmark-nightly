@@ -202,10 +202,10 @@ bb.d:                                             ; preds = %bb.c
   %i.p = tail call i64 @llvm.fshl.i64(i64 %i.o, i64 %i.o, i64 31)
   %i.q = mul i64 %i.p, -7046029288634856825
   %i.r = mul i64 %i.i, -4417276706812531889
-  %i.s = add i64 %i.r, %i.q                       ; 2 uses
+  %i.s = add i64 %i.r, %i.q                       ; 3 uses
   %i.t = tail call i64 @llvm.fshl.i64(i64 %i.s, i64 %i.s, i64 31)
-  %i.u = mul i64 %i.t, -7046029288634856825       ; 2 uses
-  %i.v = icmp eq i64 %i.u, -1
+  %i.u = mul i64 %i.t, -7046029288634856825
+  %i.v = icmp eq i64 %i.s, -7310950145364759145
   %..231 = select i1 %i.v, i64 1546275796, i64 %i.u
   br label %.critedge
 

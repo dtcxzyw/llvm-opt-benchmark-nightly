@@ -204,9 +204,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i8
-  %4 = mul i8 %3, 6
-  %i.e = icmp eq i8 %4, -128
+  %3 = and i32 %1, 127
+  %i.e = icmp eq i32 %3, 64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIa25custom_multiply_constantsIaEEvT_.exit.us
@@ -609,9 +608,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i8
-  %4 = mul i8 %3, 31
-  %i.e = icmp eq i8 %4, -64
+  %3 = and i32 %1, 255
+  %i.e = icmp eq i32 %3, 64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIa19custom_or_constantsIaEEvT_.exit.us
@@ -702,9 +700,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i8
-  %4 = mul i8 %3, 29
-  %i.e = icmp eq i8 %4, 64
+  %3 = and i32 %1, 255
+  %i.e = icmp eq i32 %3, 64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIa20custom_xor_constantsIaEEvT_.exit.us
@@ -1107,9 +1104,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i8
-  %4 = mul i8 %3, 6
-  %i.e = icmp eq i8 %4, -128
+  %3 = and i32 %1, 127
+  %i.e = icmp eq i32 %3, 64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIh25custom_multiply_constantsIhEEvT_.exit.us
@@ -1512,9 +1508,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i8
-  %4 = mul i8 %3, 31
-  %i.e = icmp eq i8 %4, -64
+  %3 = and i32 %1, 255
+  %i.e = icmp eq i32 %3, 64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIh19custom_or_constantsIhEEvT_.exit.us
@@ -1605,9 +1600,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i8
-  %4 = mul i8 %3, 29
-  %i.e = icmp eq i8 %4, 64
+  %3 = and i32 %1, 255
+  %i.e = icmp eq i32 %3, 64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIh20custom_xor_constantsIhEEvT_.exit.us
@@ -2010,9 +2004,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i16
-  %4 = mul i16 %3, 6
-  %i.e = icmp eq i16 %4, -17536
+  %3 = and i32 %1, 32767
+  %i.e = icmp eq i32 %3, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIs25custom_multiply_constantsIsEEvT_.exit.us
@@ -2415,9 +2408,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i16
-  %4 = mul i16 %3, 31
-  %i.e = icmp eq i16 %4, -14144
+  %3 = and i32 %1, 65535
+  %i.e = icmp eq i32 %3, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIs19custom_or_constantsIsEEvT_.exit.us
@@ -2508,9 +2500,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i16
-  %4 = mul i16 %3, 29
-  %i.e = icmp eq i16 %4, -30144
+  %3 = and i32 %1, 65535
+  %i.e = icmp eq i32 %3, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIs20custom_xor_constantsIsEEvT_.exit.us
@@ -2711,8 +2702,8 @@ _Z17check_shifted_sumIs19custom_constant_addIsEEvT_.exit.us: ; preds = %bb.b, %.
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs19custom_constant_addIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs19custom_constant_addIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, -14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 1014
   br i1 %i.al, label %_Z17check_shifted_sumIs19custom_constant_addIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -2901,8 +2892,8 @@ _Z17check_shifted_sumIs28custom_multiple_constant_addIsEEvT_.exit.us: ; preds = 
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs28custom_multiple_constant_addIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs28custom_multiple_constant_addIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, -14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 1014
   br i1 %i.al, label %_Z17check_shifted_sumIs28custom_multiple_constant_addIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -3091,8 +3082,8 @@ _Z17check_shifted_sumIs19custom_constant_subIsEEvT_.exit.us: ; preds = %bb.b, %.
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs19custom_constant_subIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs19custom_constant_subIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, 14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 10
   br i1 %i.al, label %_Z17check_shifted_sumIs19custom_constant_subIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -3281,8 +3272,8 @@ _Z17check_shifted_sumIs28custom_multiple_constant_subIsEEvT_.exit.us: ; preds = 
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs28custom_multiple_constant_subIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs28custom_multiple_constant_subIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, 14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 10
   br i1 %i.al, label %_Z17check_shifted_sumIs28custom_multiple_constant_subIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -3470,7 +3461,7 @@ _Z17check_shifted_sumIs24custom_constant_multiplyIsEEvT_.exit.us: ; preds = %bb.
   %i.ai = phi double [ %i.ao, %_Z17check_shifted_sumIs24custom_constant_multiplyIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ap, %_Z17check_shifted_sumIs24custom_constant_multiplyIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.aj = fptosi double %i.ai to i16
-  %3 = mul i16 %i.aj, -23040
+  %3 = and i16 %i.aj, 127
   %i.ak = icmp eq i16 %3, 0
   br i1 %i.ak, label %_Z17check_shifted_sumIs24custom_constant_multiplyIsEEvT_.exit, label %bb.c
 
@@ -3659,7 +3650,7 @@ _Z17check_shifted_sumIs33custom_multiple_constant_multiplyIsEEvT_.exit.us: ; pre
   %i.ai = phi double [ %i.ao, %_Z17check_shifted_sumIs33custom_multiple_constant_multiplyIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ap, %_Z17check_shifted_sumIs33custom_multiple_constant_multiplyIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.aj = fptosi double %i.ai to i16
-  %3 = mul i16 %i.aj, -23040
+  %3 = and i16 %i.aj, 127
   %i.ak = icmp eq i16 %3, 0
   br i1 %i.ak, label %_Z17check_shifted_sumIs33custom_multiple_constant_multiplyIsEEvT_.exit, label %bb.c
 
@@ -3849,8 +3840,8 @@ _Z17check_shifted_sumIs34custom_multiple_constant_multiply2IsEEvT_.exit.us: ; pr
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs34custom_multiple_constant_multiply2IsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs34custom_multiple_constant_multiply2IsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, 23040
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 904
   br i1 %i.al, label %_Z17check_shifted_sumIs34custom_multiple_constant_multiply2IsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -4040,7 +4031,7 @@ _Z17check_shifted_sumIs22custom_constant_divideIsEEvT_.exit.us: ; preds = %bb.b,
   %.01013 = phi i32 [ %i.ar, %_Z17check_shifted_sumIs22custom_constant_divideIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = sdiv i16 %i.ak, 5
-  %3 = mul i16 %i.al, 8000
+  %3 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %3, 0
   br i1 %i.am, label %_Z17check_shifted_sumIs22custom_constant_divideIsEEvT_.exit, label %bb.c
 
@@ -4231,7 +4222,7 @@ _Z17check_shifted_sumIs31custom_multiple_constant_divideIsEEvT_.exit.us: ; preds
   %.01013 = phi i32 [ %i.ar, %_Z17check_shifted_sumIs31custom_multiple_constant_divideIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = sdiv i16 %i.ak, 120
-  %3 = mul i16 %i.al, 8000
+  %3 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %3, 0
   br i1 %i.am, label %_Z17check_shifted_sumIs31custom_multiple_constant_divideIsEEvT_.exit, label %bb.c
 
@@ -4421,8 +4412,8 @@ _Z17check_shifted_sumIs32custom_multiple_constant_divide2IsEEvT_.exit.us: ; pred
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs32custom_multiple_constant_divide2IsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs32custom_multiple_constant_divide2IsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, -16000
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 1022
   br i1 %i.al, label %_Z17check_shifted_sumIs32custom_multiple_constant_divide2IsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -4606,7 +4597,7 @@ _Z17check_shifted_sumIs30custom_multiple_constant_mixedIsEEvT_.exit.us: ; preds 
   %i.ae = phi double [ %i.ak, %_Z17check_shifted_sumIs30custom_multiple_constant_mixedIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.al, %_Z17check_shifted_sumIs30custom_multiple_constant_mixedIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.af = fptosi double %i.ae to i16
-  %3 = mul i16 %i.af, 8000
+  %3 = and i16 %i.af, 1023
   %i.ag = icmp eq i16 %3, 0
   br i1 %i.ag, label %_Z17check_shifted_sumIs30custom_multiple_constant_mixedIsEEvT_.exit, label %bb.c
 
@@ -4797,8 +4788,7 @@ _Z17check_shifted_sumIs19custom_constant_andIsEEvT_.exit.us: ; preds = %bb.b, %.
   %.01013 = phi i32 [ %i.ar, %_Z17check_shifted_sumIs19custom_constant_andIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = and i16 %i.ak, 10
-  %3 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %3, 0
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z17check_shifted_sumIs19custom_constant_andIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -4988,8 +4978,7 @@ _Z17check_shifted_sumIs28custom_multiple_constant_andIsEEvT_.exit.us: ; preds = 
   %.01013 = phi i32 [ %i.ar, %_Z17check_shifted_sumIs28custom_multiple_constant_andIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = and i16 %i.ak, 14
-  %3 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %3, 0
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z17check_shifted_sumIs28custom_multiple_constant_andIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -5392,9 +5381,8 @@ _Z17check_shifted_sumIs19custom_constant_xorIsEEvT_.exit.us: ; preds = %bb.b, %.
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs19custom_constant_xorIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs19custom_constant_xorIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = xor i16 %i.ak, 10
-  %4 = mul i16 %3, 8000
-  %i.al = icmp eq i16 %4, 0
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 10
   br i1 %i.al, label %_Z17check_shifted_sumIs19custom_constant_xorIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -5583,9 +5571,8 @@ _Z17check_shifted_sumIs28custom_multiple_constant_xorIsEEvT_.exit.us: ; preds = 
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIs28custom_multiple_constant_xorIsEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIs28custom_multiple_constant_xorIsEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %3 = xor i16 %i.ak, 49
-  %4 = mul i16 %3, 8000
-  %i.al = icmp eq i16 %4, 0
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 49
   br i1 %i.al, label %_Z17check_shifted_sumIs28custom_multiple_constant_xorIsEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -5940,9 +5927,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i16
-  %4 = mul i16 %3, 6
-  %i.e = icmp eq i16 %4, -17536
+  %3 = and i32 %1, 32767
+  %i.e = icmp eq i32 %3, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIt25custom_multiply_constantsItEEvT_.exit.us
@@ -6345,9 +6331,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i16
-  %4 = mul i16 %3, 31
-  %i.e = icmp eq i16 %4, -14144
+  %3 = and i32 %1, 65535
+  %i.e = icmp eq i32 %3, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIt19custom_or_constantsItEEvT_.exit.us
@@ -6438,9 +6423,8 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = trunc i32 %1 to i16
-  %4 = mul i16 %3, 29
-  %i.e = icmp eq i16 %4, -30144
+  %3 = and i32 %1, 65535
+  %i.e = icmp eq i32 %3, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIt20custom_xor_constantsItEEvT_.exit.us
@@ -6641,8 +6625,8 @@ _Z17check_shifted_sumIt19custom_constant_addItEEvT_.exit.us: ; preds = %bb.b, %.
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt19custom_constant_addItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt19custom_constant_addItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, -14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 1014
   br i1 %i.al, label %_Z17check_shifted_sumIt19custom_constant_addItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -6831,8 +6815,8 @@ _Z17check_shifted_sumIt28custom_multiple_constant_addItEEvT_.exit.us: ; preds = 
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt28custom_multiple_constant_addItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt28custom_multiple_constant_addItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, -14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 1014
   br i1 %i.al, label %_Z17check_shifted_sumIt28custom_multiple_constant_addItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -7021,8 +7005,8 @@ _Z17check_shifted_sumIt19custom_constant_subItEEvT_.exit.us: ; preds = %bb.b, %.
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt19custom_constant_subItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt19custom_constant_subItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, 14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 10
   br i1 %i.al, label %_Z17check_shifted_sumIt19custom_constant_subItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -7211,8 +7195,8 @@ _Z17check_shifted_sumIt28custom_multiple_constant_subItEEvT_.exit.us: ; preds = 
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt28custom_multiple_constant_subItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt28custom_multiple_constant_subItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, 14464
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 10
   br i1 %i.al, label %_Z17check_shifted_sumIt28custom_multiple_constant_subItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -7400,7 +7384,7 @@ _Z17check_shifted_sumIt24custom_constant_multiplyItEEvT_.exit.us: ; preds = %bb.
   %i.ai = phi double [ %i.ao, %_Z17check_shifted_sumIt24custom_constant_multiplyItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ap, %_Z17check_shifted_sumIt24custom_constant_multiplyItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.aj = fptoui double %i.ai to i16
-  %3 = mul i16 %i.aj, -23040
+  %3 = and i16 %i.aj, 127
   %i.ak = icmp eq i16 %3, 0
   br i1 %i.ak, label %_Z17check_shifted_sumIt24custom_constant_multiplyItEEvT_.exit, label %bb.c
 
@@ -7589,7 +7573,7 @@ _Z17check_shifted_sumIt33custom_multiple_constant_multiplyItEEvT_.exit.us: ; pre
   %i.ai = phi double [ %i.ao, %_Z17check_shifted_sumIt33custom_multiple_constant_multiplyItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ap, %_Z17check_shifted_sumIt33custom_multiple_constant_multiplyItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.aj = fptoui double %i.ai to i16
-  %3 = mul i16 %i.aj, -23040
+  %3 = and i16 %i.aj, 127
   %i.ak = icmp eq i16 %3, 0
   br i1 %i.ak, label %_Z17check_shifted_sumIt33custom_multiple_constant_multiplyItEEvT_.exit, label %bb.c
 
@@ -7779,8 +7763,8 @@ _Z17check_shifted_sumIt34custom_multiple_constant_multiply2ItEEvT_.exit.us: ; pr
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt34custom_multiple_constant_multiply2ItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt34custom_multiple_constant_multiply2ItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, 23040
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 904
   br i1 %i.al, label %_Z17check_shifted_sumIt34custom_multiple_constant_multiply2ItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -7970,7 +7954,7 @@ _Z17check_shifted_sumIt22custom_constant_divideItEEvT_.exit.us: ; preds = %bb.b,
   %.01013 = phi i32 [ %i.ar, %_Z17check_shifted_sumIt22custom_constant_divideItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = udiv i16 %i.ak, 5
-  %3 = mul i16 %i.al, 8000
+  %3 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %3, 0
   br i1 %i.am, label %_Z17check_shifted_sumIt22custom_constant_divideItEEvT_.exit, label %bb.c
 
@@ -8160,10 +8144,8 @@ _Z17check_shifted_sumIt31custom_multiple_constant_divideItEEvT_.exit.us: ; preds
   %i.aj = phi double [ %i.ao, %_Z17check_shifted_sumIt31custom_multiple_constant_divideItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ap, %_Z17check_shifted_sumIt31custom_multiple_constant_divideItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = udiv i16 %i.ak, 120
-  %4 = mul i16 %3, 8000
-  %5 = icmp eq i16 %4, 0
-  br i1 %5, label %_Z17check_shifted_sumIt31custom_multiple_constant_divideItEEvT_.exit, label %bb.c
+  %3 = icmp ult i16 %i.ak, 120
+  br i1 %3, label %_Z17check_shifted_sumIt31custom_multiple_constant_divideItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
   %i.al = load i32, ptr @current_test, align 4, !tbaa !7
@@ -8351,8 +8333,8 @@ _Z17check_shifted_sumIt32custom_multiple_constant_divide2ItEEvT_.exit.us: ; pred
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt32custom_multiple_constant_divide2ItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt32custom_multiple_constant_divide2ItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = mul i16 %i.ak, 8000
-  %i.al = icmp eq i16 %3, -16000
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 1022
   br i1 %i.al, label %_Z17check_shifted_sumIt32custom_multiple_constant_divide2ItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -8536,7 +8518,7 @@ _Z17check_shifted_sumIt30custom_multiple_constant_mixedItEEvT_.exit.us: ; preds 
   %i.ae = phi double [ %i.ak, %_Z17check_shifted_sumIt30custom_multiple_constant_mixedItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.al, %_Z17check_shifted_sumIt30custom_multiple_constant_mixedItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.af = fptoui double %i.ae to i16
-  %3 = mul i16 %i.af, 8000
+  %3 = and i16 %i.af, 1023
   %i.ag = icmp eq i16 %3, 0
   br i1 %i.ag, label %_Z17check_shifted_sumIt30custom_multiple_constant_mixedItEEvT_.exit, label %bb.c
 
@@ -8727,8 +8709,7 @@ _Z17check_shifted_sumIt19custom_constant_andItEEvT_.exit.us: ; preds = %bb.b, %.
   %.01013 = phi i32 [ %i.ar, %_Z17check_shifted_sumIt19custom_constant_andItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = and i16 %i.ak, 10
-  %3 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %3, 0
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z17check_shifted_sumIt19custom_constant_andItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -8918,8 +8899,7 @@ _Z17check_shifted_sumIt28custom_multiple_constant_andItEEvT_.exit.us: ; preds = 
   %.01013 = phi i32 [ %i.ar, %_Z17check_shifted_sumIt28custom_multiple_constant_andItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = and i16 %i.ak, 14
-  %3 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %3, 0
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z17check_shifted_sumIt28custom_multiple_constant_andItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -9322,9 +9302,8 @@ _Z17check_shifted_sumIt19custom_constant_xorItEEvT_.exit.us: ; preds = %bb.b, %.
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt19custom_constant_xorItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt19custom_constant_xorItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = xor i16 %i.ak, 10
-  %4 = mul i16 %3, 8000
-  %i.al = icmp eq i16 %4, 0
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 10
   br i1 %i.al, label %_Z17check_shifted_sumIt19custom_constant_xorItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -9513,9 +9492,8 @@ _Z17check_shifted_sumIt28custom_multiple_constant_xorItEEvT_.exit.us: ; preds = 
   %i.aj = phi double [ %i.ap, %_Z17check_shifted_sumIt28custom_multiple_constant_xorItEEvT_.exit ], [ %.pre16, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aq, %_Z17check_shifted_sumIt28custom_multiple_constant_xorItEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %3 = xor i16 %i.ak, 49
-  %4 = mul i16 %3, 8000
-  %i.al = icmp eq i16 %4, 0
+  %3 = and i16 %i.ak, 1023
+  %i.al = icmp eq i16 %3, 49
   br i1 %i.al, label %_Z17check_shifted_sumIt28custom_multiple_constant_xorItEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -9867,8 +9845,7 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = mul i32 %1, 6
-  %i.e = icmp eq i32 %3, 48000
+  %i.e = icmp eq i32 %1, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIi25custom_multiply_constantsIiEEvT_.exit.us
@@ -10271,8 +10248,8 @@ _Z17check_shifted_sumIi19custom_constant_addIiEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIi19custom_constant_addIiEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIi19custom_constant_addIiEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108854
   br i1 %i.ae, label %_Z17check_shifted_sumIi19custom_constant_addIiEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -10429,8 +10406,8 @@ _Z17check_shifted_sumIi28custom_multiple_constant_addIiEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIi28custom_multiple_constant_addIiEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIi28custom_multiple_constant_addIiEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108854
   br i1 %i.ae, label %_Z17check_shifted_sumIi28custom_multiple_constant_addIiEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -10587,8 +10564,8 @@ _Z17check_shifted_sumIi19custom_constant_subIiEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIi19custom_constant_subIiEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIi19custom_constant_subIiEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, 80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIi19custom_constant_subIiEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -10745,8 +10722,8 @@ _Z17check_shifted_sumIi28custom_multiple_constant_subIiEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIi28custom_multiple_constant_subIiEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIi28custom_multiple_constant_subIiEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, 80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIi28custom_multiple_constant_subIiEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -11149,8 +11126,8 @@ _Z17check_shifted_sumIi34custom_multiple_constant_multiply2IiEEvT_.exit.us: ; pr
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIi34custom_multiple_constant_multiply2IiEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIi34custom_multiple_constant_multiply2IiEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -960000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108744
   br i1 %i.ae, label %_Z17check_shifted_sumIi34custom_multiple_constant_multiply2IiEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -11553,8 +11530,8 @@ _Z17check_shifted_sumIi32custom_multiple_constant_divide2IiEEvT_.exit.us: ; pred
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIi32custom_multiple_constant_divide2IiEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIi32custom_multiple_constant_divide2IiEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -16000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108862
   br i1 %i.ae, label %_Z17check_shifted_sumIi32custom_multiple_constant_divide2IiEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -11957,8 +11934,7 @@ bb.a:
   br i1 %i.d, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %3 = mul i32 %1, 6
-  %i.e = icmp eq i32 %3, 48000
+  %i.e = icmp eq i32 %1, 8000
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_Z17check_shifted_sumIj25custom_multiply_constantsIjEEvT_.exit.us
@@ -12361,8 +12337,8 @@ _Z17check_shifted_sumIj19custom_constant_addIjEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj19custom_constant_addIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj19custom_constant_addIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108854
   br i1 %i.ae, label %_Z17check_shifted_sumIj19custom_constant_addIjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -12519,8 +12495,8 @@ _Z17check_shifted_sumIj28custom_multiple_constant_addIjEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj28custom_multiple_constant_addIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj28custom_multiple_constant_addIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108854
   br i1 %i.ae, label %_Z17check_shifted_sumIj28custom_multiple_constant_addIjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -12677,8 +12653,8 @@ _Z17check_shifted_sumIj19custom_constant_subIjEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj19custom_constant_subIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj19custom_constant_subIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, 80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIj19custom_constant_subIjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -12835,8 +12811,8 @@ _Z17check_shifted_sumIj28custom_multiple_constant_subIjEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj28custom_multiple_constant_subIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj28custom_multiple_constant_subIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, 80000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIj28custom_multiple_constant_subIjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -12992,7 +12968,7 @@ _Z17check_shifted_sumIj24custom_constant_multiplyIjEEvT_.exit.us: ; preds = %bb.
   %i.ab = phi double [ %i.ah, %_Z17check_shifted_sumIj24custom_constant_multiplyIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ai, %_Z17check_shifted_sumIj24custom_constant_multiplyIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ac = fptoui double %i.ab to i32
-  %3 = mul i32 %i.ac, 960000
+  %3 = and i32 %i.ac, 8388607
   %i.ad = icmp eq i32 %3, 0
   br i1 %i.ad, label %_Z17check_shifted_sumIj24custom_constant_multiplyIjEEvT_.exit, label %bb.c
 
@@ -13149,7 +13125,7 @@ _Z17check_shifted_sumIj33custom_multiple_constant_multiplyIjEEvT_.exit.us: ; pre
   %i.ab = phi double [ %i.ah, %_Z17check_shifted_sumIj33custom_multiple_constant_multiplyIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ai, %_Z17check_shifted_sumIj33custom_multiple_constant_multiplyIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ac = fptoui double %i.ab to i32
-  %3 = mul i32 %i.ac, 960000
+  %3 = and i32 %i.ac, 8388607
   %i.ad = icmp eq i32 %3, 0
   br i1 %i.ad, label %_Z17check_shifted_sumIj33custom_multiple_constant_multiplyIjEEvT_.exit, label %bb.c
 
@@ -13307,8 +13283,8 @@ _Z17check_shifted_sumIj34custom_multiple_constant_multiply2IjEEvT_.exit.us: ; pr
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj34custom_multiple_constant_multiply2IjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj34custom_multiple_constant_multiply2IjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -960000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108744
   br i1 %i.ae, label %_Z17check_shifted_sumIj34custom_multiple_constant_multiply2IjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -13466,7 +13442,7 @@ _Z17check_shifted_sumIj22custom_constant_divideIjEEvT_.exit.us: ; preds = %bb.b,
   %.01013 = phi i32 [ %i.ak, %_Z17check_shifted_sumIj22custom_constant_divideIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
   %i.ae = udiv i32 %i.ad, 5
-  %3 = mul i32 %i.ae, 8000
+  %3 = and i32 %i.ae, 67108863
   %i.af = icmp eq i32 %3, 0
   br i1 %i.af, label %_Z17check_shifted_sumIj22custom_constant_divideIjEEvT_.exit, label %bb.c
 
@@ -13624,10 +13600,8 @@ _Z17check_shifted_sumIj31custom_multiple_constant_divideIjEEvT_.exit.us: ; preds
   %i.ac = phi double [ %i.ah, %_Z17check_shifted_sumIj31custom_multiple_constant_divideIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ai, %_Z17check_shifted_sumIj31custom_multiple_constant_divideIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = udiv i32 %i.ad, 120
-  %4 = mul i32 %3, 8000
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %_Z17check_shifted_sumIj31custom_multiple_constant_divideIjEEvT_.exit, label %bb.c
+  %3 = icmp ult i32 %i.ad, 120
+  br i1 %3, label %_Z17check_shifted_sumIj31custom_multiple_constant_divideIjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
   %i.ae = load i32, ptr @current_test, align 4, !tbaa !7
@@ -13783,8 +13757,8 @@ _Z17check_shifted_sumIj32custom_multiple_constant_divide2IjEEvT_.exit.us: ; pred
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj32custom_multiple_constant_divide2IjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj32custom_multiple_constant_divide2IjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = mul i32 %i.ad, 8000
-  %i.ae = icmp eq i32 %3, -16000
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 67108862
   br i1 %i.ae, label %_Z17check_shifted_sumIj32custom_multiple_constant_divide2IjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -13937,7 +13911,7 @@ _Z17check_shifted_sumIj30custom_multiple_constant_mixedIjEEvT_.exit.us: ; preds 
   %i.y = phi double [ %i.ae, %_Z17check_shifted_sumIj30custom_multiple_constant_mixedIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.af, %_Z17check_shifted_sumIj30custom_multiple_constant_mixedIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.z = fptoui double %i.y to i32
-  %3 = mul i32 %i.z, 8000
+  %3 = and i32 %i.z, 67108863
   %i.aa = icmp eq i32 %3, 0
   br i1 %i.aa, label %_Z17check_shifted_sumIj30custom_multiple_constant_mixedIjEEvT_.exit, label %bb.c
 
@@ -14340,9 +14314,8 @@ _Z17check_shifted_sumIj19custom_constant_xorIjEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj19custom_constant_xorIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj19custom_constant_xorIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = xor i32 %i.ad, 10
-  %4 = mul i32 %3, 8000
-  %i.ae = icmp eq i32 %4, 0
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIj19custom_constant_xorIjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -14499,9 +14472,8 @@ _Z17check_shifted_sumIj28custom_multiple_constant_xorIjEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIj28custom_multiple_constant_xorIjEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIj28custom_multiple_constant_xorIjEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %3 = xor i32 %i.ad, 49
-  %4 = mul i32 %3, 8000
-  %i.ae = icmp eq i32 %4, 0
+  %3 = and i32 %i.ad, 67108863
+  %i.ae = icmp eq i32 %3, 49
   br i1 %i.ae, label %_Z17check_shifted_sumIj28custom_multiple_constant_xorIjEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -14904,8 +14876,8 @@ _Z17check_shifted_sumIl19custom_constant_addIlEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIl19custom_constant_addIlEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIl19custom_constant_addIlEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711734
   br i1 %i.ae, label %_Z17check_shifted_sumIl19custom_constant_addIlEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -15062,8 +15034,8 @@ _Z17check_shifted_sumIl28custom_multiple_constant_addIlEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIl28custom_multiple_constant_addIlEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIl28custom_multiple_constant_addIlEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711734
   br i1 %i.ae, label %_Z17check_shifted_sumIl28custom_multiple_constant_addIlEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -15220,8 +15192,8 @@ _Z17check_shifted_sumIl19custom_constant_subIlEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIl19custom_constant_subIlEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIl19custom_constant_subIlEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, 80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIl19custom_constant_subIlEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -15378,8 +15350,8 @@ _Z17check_shifted_sumIl28custom_multiple_constant_subIlEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIl28custom_multiple_constant_subIlEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIl28custom_multiple_constant_subIlEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, 80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIl28custom_multiple_constant_subIlEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -15782,8 +15754,8 @@ _Z17check_shifted_sumIl34custom_multiple_constant_multiply2IlEEvT_.exit.us: ; pr
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIl34custom_multiple_constant_multiply2IlEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIl34custom_multiple_constant_multiply2IlEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -960000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711624
   br i1 %i.ae, label %_Z17check_shifted_sumIl34custom_multiple_constant_multiply2IlEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -16186,8 +16158,8 @@ _Z17check_shifted_sumIl32custom_multiple_constant_divide2IlEEvT_.exit.us: ; pred
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIl32custom_multiple_constant_divide2IlEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIl32custom_multiple_constant_divide2IlEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptosi double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -16000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711742
   br i1 %i.ae, label %_Z17check_shifted_sumIl32custom_multiple_constant_divide2IlEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -16590,8 +16562,8 @@ _Z17check_shifted_sumIm19custom_constant_addImEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm19custom_constant_addImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm19custom_constant_addImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711734
   br i1 %i.ae, label %_Z17check_shifted_sumIm19custom_constant_addImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -16748,8 +16720,8 @@ _Z17check_shifted_sumIm28custom_multiple_constant_addImEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm28custom_multiple_constant_addImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm28custom_multiple_constant_addImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711734
   br i1 %i.ae, label %_Z17check_shifted_sumIm28custom_multiple_constant_addImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -16906,8 +16878,8 @@ _Z17check_shifted_sumIm19custom_constant_subImEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm19custom_constant_subImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm19custom_constant_subImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, 80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIm19custom_constant_subImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -17064,8 +17036,8 @@ _Z17check_shifted_sumIm28custom_multiple_constant_subImEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm28custom_multiple_constant_subImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm28custom_multiple_constant_subImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, 80000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIm28custom_multiple_constant_subImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -17221,7 +17193,7 @@ _Z17check_shifted_sumIm24custom_constant_multiplyImEEvT_.exit.us: ; preds = %bb.
   %i.ab = phi double [ %i.ah, %_Z17check_shifted_sumIm24custom_constant_multiplyImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ai, %_Z17check_shifted_sumIm24custom_constant_multiplyImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ac = fptoui double %i.ab to i64
-  %3 = mul i64 %i.ac, 960000
+  %3 = and i64 %i.ac, 36028797018963967
   %i.ad = icmp eq i64 %3, 0
   br i1 %i.ad, label %_Z17check_shifted_sumIm24custom_constant_multiplyImEEvT_.exit, label %bb.c
 
@@ -17378,7 +17350,7 @@ _Z17check_shifted_sumIm33custom_multiple_constant_multiplyImEEvT_.exit.us: ; pre
   %i.ab = phi double [ %i.ah, %_Z17check_shifted_sumIm33custom_multiple_constant_multiplyImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ai, %_Z17check_shifted_sumIm33custom_multiple_constant_multiplyImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ac = fptoui double %i.ab to i64
-  %3 = mul i64 %i.ac, 960000
+  %3 = and i64 %i.ac, 36028797018963967
   %i.ad = icmp eq i64 %3, 0
   br i1 %i.ad, label %_Z17check_shifted_sumIm33custom_multiple_constant_multiplyImEEvT_.exit, label %bb.c
 
@@ -17536,8 +17508,8 @@ _Z17check_shifted_sumIm34custom_multiple_constant_multiply2ImEEvT_.exit.us: ; pr
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm34custom_multiple_constant_multiply2ImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm34custom_multiple_constant_multiply2ImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -960000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711624
   br i1 %i.ae, label %_Z17check_shifted_sumIm34custom_multiple_constant_multiply2ImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -17691,7 +17663,7 @@ _Z17check_shifted_sumIm22custom_constant_divideImEEvT_.exit.us: ; preds = %bb.b,
   %.01013 = phi i32 [ %i.am, %_Z17check_shifted_sumIm22custom_constant_divideImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.af = fptoui double %i.ae to i64
   %i.ag = udiv i64 %i.af, 5
-  %3 = mul i64 %i.ag, 8000
+  %3 = and i64 %i.ag, 288230376151711743
   %i.ah = icmp eq i64 %3, 0
   br i1 %i.ah, label %_Z17check_shifted_sumIm22custom_constant_divideImEEvT_.exit, label %bb.c
 
@@ -17845,10 +17817,8 @@ _Z17check_shifted_sumIm31custom_multiple_constant_divideImEEvT_.exit.us: ; preds
   %i.ae = phi double [ %i.aj, %_Z17check_shifted_sumIm31custom_multiple_constant_divideImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.ak, %_Z17check_shifted_sumIm31custom_multiple_constant_divideImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.af = fptoui double %i.ae to i64
-  %3 = udiv i64 %i.af, 120
-  %4 = mul i64 %3, 8000
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %_Z17check_shifted_sumIm31custom_multiple_constant_divideImEEvT_.exit, label %bb.c
+  %3 = icmp ult i64 %i.af, 120
+  br i1 %3, label %_Z17check_shifted_sumIm31custom_multiple_constant_divideImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
   %i.ag = load i32, ptr @current_test, align 4, !tbaa !7
@@ -18004,8 +17974,8 @@ _Z17check_shifted_sumIm32custom_multiple_constant_divide2ImEEvT_.exit.us: ; pred
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm32custom_multiple_constant_divide2ImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm32custom_multiple_constant_divide2ImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = mul i64 %i.ad, 8000
-  %i.ae = icmp eq i64 %3, -16000
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 288230376151711742
   br i1 %i.ae, label %_Z17check_shifted_sumIm32custom_multiple_constant_divide2ImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -18158,7 +18128,7 @@ _Z17check_shifted_sumIm30custom_multiple_constant_mixedImEEvT_.exit.us: ; preds 
   %i.y = phi double [ %i.ae, %_Z17check_shifted_sumIm30custom_multiple_constant_mixedImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.af, %_Z17check_shifted_sumIm30custom_multiple_constant_mixedImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.z = fptoui double %i.y to i64
-  %3 = mul i64 %i.z, 8000
+  %3 = and i64 %i.z, 288230376151711743
   %i.aa = icmp eq i64 %3, 0
   br i1 %i.aa, label %_Z17check_shifted_sumIm30custom_multiple_constant_mixedImEEvT_.exit, label %bb.c
 
@@ -18561,9 +18531,8 @@ _Z17check_shifted_sumIm19custom_constant_xorImEEvT_.exit.us: ; preds = %bb.b, %.
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm19custom_constant_xorImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm19custom_constant_xorImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = xor i64 %i.ad, 10
-  %4 = mul i64 %3, 8000
-  %i.ae = icmp eq i64 %4, 0
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 10
   br i1 %i.ae, label %_Z17check_shifted_sumIm19custom_constant_xorImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -18720,9 +18689,8 @@ _Z17check_shifted_sumIm28custom_multiple_constant_xorImEEvT_.exit.us: ; preds = 
   %i.ac = phi double [ %i.ai, %_Z17check_shifted_sumIm28custom_multiple_constant_xorImEEvT_.exit ], [ %.pre17, %.preheader.preheader ] ; 2 uses
   %.01013 = phi i32 [ %i.aj, %_Z17check_shifted_sumIm28custom_multiple_constant_xorImEEvT_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %3 = xor i64 %i.ad, 49
-  %4 = mul i64 %3, 8000
-  %i.ae = icmp eq i64 %4, 0
+  %3 = and i64 %i.ad, 288230376151711743
+  %i.ae = icmp eq i64 %3, 49
   br i1 %i.ae, label %_Z17check_shifted_sumIm28custom_multiple_constant_xorImEEvT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader

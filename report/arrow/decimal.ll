@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
   %.pre.i51 = load ptr, ptr %1, align 8, !tbaa !21
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i: ; preds = %bb.k, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i, %bb.k
   %i.bk = phi ptr [ %i.be, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i ], [ %.pre.i51, %bb.k ]
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.ay
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bl, i8 48, i64 %i.az, i1 false)
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.e, %.critedge
 
 bb.f:                                             ; preds = %bb.e
   %i.aj = trunc nuw nsw i64 %i.af to i32          ; 3 uses
-  %i.ak = add nuw nsw i64 %.039, 1                ; 3 uses
+  %i.ak = add nuw nsw i64 %.039, 1                ; 4 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.039
   store i32 %i.aj, ptr %i.al, align 4, !tbaa !10
   %i.am = load i64, ptr %.040.ph, align 8, !tbaa !45
@@ -666,7 +666,15 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i: ; preds = %bb.k, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i
   %i.bc = phi ptr [ %i.aw, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i ], [ %.pre.i51, %bb.k ]
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.aq
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.aq ; 2 uses
+  %cond.i.i.i = icmp eq i64 %i.ak, -8198552921648689607
+  br i1 %cond.i.i.i, label %6, label %7
+
+6:                                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i
+  store i8 48, ptr %i.bd, align 1, !tbaa !38
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc.exit
+
+7:                                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bd, i8 48, i64 %i.ar, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc.exit
 
@@ -674,7 +682,7 @@ bb.l:                                             ; preds = %bb.h
   %i.be = icmp ult i64 %i.as, %i.aq
   br i1 %i.be, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc.exit, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc.exit.thread
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i, %bb.l
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc.exit: ; preds = %6, %7, %bb.l
   store i64 %i.as, ptr %i.ap, align 8, !tbaa !22
   %i.bf = load ptr, ptr %1, align 8, !tbaa !21
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.as
