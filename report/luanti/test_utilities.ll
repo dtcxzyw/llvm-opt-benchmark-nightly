@@ -204,18 +204,18 @@ _ZNSt6vectorIN4core8vector3dIsEESaIS2_EED2Ev.exit81.1: ; preds = %bb.x, %bb.w
           to label %bb.aa unwind label %bb.ae
 
 bb.y:                                             ; preds = %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit.1", %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit"
-  %i.dw = phi ptr [ %i.dq, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit.1" ], [ %i.ch, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit" ]
-  %i.dx = phi ptr [ %i.dp, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit.1" ], [ %i.cg, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit" ] ; 3 uses
+  %i.dw = phi ptr [ %i.cg, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit" ], [ %i.dp, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit.1" ] ; 3 uses
+  %i.dx = phi ptr [ %i.ch, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit" ], [ %i.dq, %"_Z9apply_allIZN13TestUtilities18testIsBlockInSightEvE3$_2St6vectorIN4core8vector3dIsEESaIS5_EEET0_RKS8_T_.exit.1" ]
   %i.dy = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.not.i.i.i82 = icmp eq ptr %i.dx, null
+  %.not.i.i.i82 = icmp eq ptr %i.dw, null
   br i1 %.not.i.i.i82, label %.body77, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.dz = ptrtoint ptr %i.dw to i64
-  %i.ea = ptrtoint ptr %i.dx to i64
+  %i.dz = ptrtoint ptr %i.dx to i64
+  %i.ea = ptrtoint ptr %i.dw to i64
   %i.eb = sub i64 %i.dz, %i.ea
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.dx, i64 noundef %i.eb) #30
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.dw, i64 noundef %i.eb) #30
   br label %.body77
 
 .body77:                                          ; preds = %bb.z, %bb.y, %bb.p, %.loopexit.split-lp.i74

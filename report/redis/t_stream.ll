@@ -202,9 +202,9 @@ lpGetIntegerIfValid.exit169:                      ; preds = %bb.ae, %bb.ah
   %i.du = call ptr @lpNext(ptr noundef %.0124229, ptr noundef %i.dt) #18 ; 3 uses
   store ptr %i.du, ptr %i.p, align 8, !tbaa !129
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
-  %i.dv = add i64 %i.bf, %.0.i165                 ; 3 uses
+  %i.dv = add i64 %.0.i165, %i.bf                 ; 3 uses
   store i64 %i.dv, ptr %6, align 8, !tbaa !51
-  %i.dw = add i64 %i.bg, %.0.i168                 ; 2 uses
+  %i.dw = add i64 %.0.i168, %i.bg                 ; 2 uses
   store i64 %i.dw, ptr %i.ap, align 8, !tbaa !50
   br i1 %i.ag, label %.split, label %bb.ai
 

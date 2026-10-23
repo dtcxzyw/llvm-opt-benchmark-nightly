@@ -205,14 +205,14 @@ _ZNSt6vectorIN8WasmEdge7ValTypeESaIS1_EED2Ev.exit1875: ; preds = %bb.av, %.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25
   br label %_ZN8WasmEdge9Validator11FormChecker10StackTransEN5cxx204spanIKNS_7ValTypeELm18446744073709551615EEES6_.exit2144
 
-bb.bj:                                            ; preds = %bb.p, %bb.t, %bb.bg, %bb.bf, %bb.ay, %bb.aa
+bb.bj:                                            ; preds = %bb.aa, %bb.ay, %bb.bf, %bb.bg, %bb.t, %bb.p
   %.pn1372.pn.pn.pn = phi { ptr, i32 } [ %i.dc, %bb.aa ], [ %.pn1367.pn.pn, %bb.ay ], [ %i.bm, %bb.p ], [ %i.hp, %bb.bf ], [ %i.bs, %bb.t ], [ %i.hq, %bb.bg ]
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
   call void @_ZdlPvm(ptr noundef nonnull %i.at, i64 noundef 8) #22
   br label %_ZNSt6vectorIN8WasmEdge7ValTypeESaIS1_EED2Ev.exit1877
 
 _ZNSt6vectorIN8WasmEdge7ValTypeESaIS1_EED2Ev.exit1877: ; preds = %bb.bj, %bb.j
-  %.pn1372.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bd, %bb.j ], [ %.pn1372.pn.pn.pn, %bb.bj ]
+  %.pn1372.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn1372.pn.pn.pn, %bb.bj ], [ %i.bd, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25
   br label %bb.zt
 

@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bl, %.lr.ph.i
   %i.hq = phi i32 [ %i.gw, %.thread.i ], [ %i.hi, %bb.bj ], [ %i.hi, %bb.bm ]
   %i.hr = phi i1 [ true, %.thread.i ], [ %i.hh, %bb.bj ], [ %i.hh, %bb.bm ]
   %i.hs = icmp sgt i32 %i.hq, 0
-  %or.cond4.i = and i1 %i.hs, %i.hr
+  %or.cond4.i = and i1 %i.hr, %i.hs
   br i1 %or.cond4.i, label %bb.bn, label %.critedge.i
 
 bb.bn:                                            ; preds = %._crit_edge.i
