@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.nlohmann::json_abi_v3_12_0::detail::iter_impl", align 8 ; 10 uses
   %4 = alloca %"class.nlohmann::json_abi_v3_12_0::detail::iter_impl", align 8 ; 8 uses
   %i.f = load i8, ptr %0, align 8, !tbaa !42      ; 2 uses
-  %i.g = zext i8 %i.f to i64                      ; 27 uses
+  %i.g = zext i8 %i.f to i64                      ; 11 uses
   switch i8 %i.f, label %.loopexit [
     i8 0, label %bb.b
     i8 9, label %bb.b
@@ -232,10 +232,8 @@ _ZNK8nlohmann16json_abi_v3_12_06detail15iteration_proxyINS1_9iter_implIKNS0_10ba
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !40   ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 40
   %i.p = load i64, ptr %i.o, align 8, !tbaa !53
-  %5 = shl nuw nsw i64 %i.g, 6
-  %6 = lshr i64 %i.g, 2
-  %i.q = add nuw nsw i64 %5, 2654435769
-  %i.r = add nuw nsw i64 %i.q, %6
+  %i.q = add nuw nsw i64 64, 2654435769
+  %i.r = add nuw nsw i64 %i.q, 0
   %i.s = add i64 %i.r, %i.p
   %i.t = xor i64 %i.s, %i.g
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
@@ -455,10 +453,8 @@ _ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_st
   %i.cn = ptrtoint ptr %i.cl to i64
   %i.co = sub i64 %i.cm, %i.cn
   %i.cp = ashr exact i64 %i.co, 4
-  %7 = shl nuw nsw i64 %i.g, 6
-  %8 = lshr i64 %i.g, 2
-  %i.cq = add nuw nsw i64 %7, 2654435769
-  %i.cr = add nuw nsw i64 %i.cq, %8
+  %i.cq = add nuw nsw i64 128, 2654435769
+  %i.cr = add nuw nsw i64 %i.cq, 0
   %i.cs = add nsw i64 %i.cr, %i.cp
   %i.ct = xor i64 %i.cs, %i.g                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
@@ -541,10 +537,8 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _ZNKSt15__str_hash_baseIcSaIcENSt7__cxx1112basic_stringIcSt11char_traitsIcES0_EEEclERKS5_.exit78: ; preds = %bb.q
-  %9 = shl nuw nsw i64 %i.g, 6
-  %10 = lshr i64 %i.g, 2
-  %i.dy = add nuw nsw i64 %9, 2654435769
-  %i.dz = add nuw nsw i64 %i.dy, %10
+  %i.dy = add nuw nsw i64 192, 2654435769
+  %i.dz = add nuw nsw i64 %i.dy, 0
   %i.ea = add i64 %i.dz, %i.dv
   %i.eb = xor i64 %i.ea, %i.g
   br label %.loopexit
@@ -556,10 +550,8 @@ bb.s:                                             ; preds = %bb.a
   %i.ec = load i8, ptr %i.e, align 1, !tbaa !55, !range !134, !noundef !135
   %i.ed = zext nneg i8 %i.ec to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #26
-  %11 = shl nuw nsw i64 %i.g, 6
-  %12 = lshr i64 %i.g, 2
-  %i.ee = add nuw nsw i64 %11, 2654435769
-  %i.ef = add nuw nsw i64 %i.ee, %12
+  %i.ee = add nuw nsw i64 256, 2654435769
+  %i.ef = add nuw nsw i64 %i.ee, 1
   %i.eg = add nuw nsw i64 %i.ef, %i.ed
   %i.eh = xor i64 %i.eg, %i.g
   br label %.loopexit
@@ -570,10 +562,8 @@ bb.t:                                             ; preds = %bb.a
   call void @_ZN8nlohmann16json_abi_v3_12_06detail20get_arithmetic_valueINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEElTnNSt9enable_ifIXaasr3std13is_arithmeticIT0_EE5valuentsr3std7is_sameISH_NT_9boolean_tEEE5valueEiE4typeELi0EEEvRKSI_RSH_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.ei = load i64, ptr %i.d, align 8, !tbaa !142
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #26
-  %13 = shl nuw nsw i64 %i.g, 6
-  %14 = lshr i64 %i.g, 2
-  %i.ej = add nuw nsw i64 %13, 2654435769
-  %i.ek = add nuw nsw i64 %i.ej, %14
+  %i.ej = add nuw nsw i64 320, 2654435769
+  %i.ek = add nuw nsw i64 %i.ej, 1
   %i.el = add i64 %i.ek, %i.ei
   %i.em = xor i64 %i.el, %i.g
   br label %.loopexit
@@ -584,10 +574,8 @@ bb.u:                                             ; preds = %bb.a
   call void @_ZN8nlohmann16json_abi_v3_12_06detail20get_arithmetic_valueINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEmTnNSt9enable_ifIXaasr3std13is_arithmeticIT0_EE5valuentsr3std7is_sameISH_NT_9boolean_tEEE5valueEiE4typeELi0EEEvRKSI_RSH_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.c)
   %i.en = load i64, ptr %i.c, align 8, !tbaa !142
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
-  %15 = shl nuw nsw i64 %i.g, 6
-  %16 = lshr i64 %i.g, 2
-  %i.eo = add nuw nsw i64 %15, 2654435769
-  %i.ep = add nuw nsw i64 %i.eo, %16
+  %i.eo = add nuw nsw i64 384, 2654435769
+  %i.ep = add nuw nsw i64 %i.eo, 1
   %i.eq = add i64 %i.ep, %i.en
   %i.er = xor i64 %i.eq, %i.g
   br label %.loopexit
@@ -617,10 +605,8 @@ bb.x:                                             ; preds = %bb.w
 _ZNKSt4hashIdEclEd.exit:                          ; preds = %bb.v, %bb.w
   %i.ex = phi i64 [ 0, %bb.v ], [ %i.eu, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %17 = shl nuw nsw i64 %i.g, 6
-  %18 = lshr i64 %i.g, 2
-  %i.ey = add nuw nsw i64 %17, 2654435769
-  %i.ez = add nuw nsw i64 %i.ey, %18
+  %i.ey = add nuw nsw i64 448, 2654435769
+  %i.ez = add nuw nsw i64 %i.ey, 1
   %i.fa = add i64 %i.ez, %i.ex
   %i.fb = xor i64 %i.fa, %i.g
   br label %.loopexit
@@ -632,10 +618,8 @@ bb.y:                                             ; preds = %bb.a
   %i.ff = load ptr, ptr %i.fc, align 8, !tbaa !155
   %i.fg = ptrtoint ptr %i.fe to i64
   %i.fh = ptrtoint ptr %i.ff to i64
-  %19 = shl nuw nsw i64 %i.g, 6
-  %20 = lshr i64 %i.g, 2
-  %i.fi = add nuw nsw i64 %19, 2654435769
-  %i.fj = add nuw nsw i64 %i.fi, %20
+  %i.fi = add nuw nsw i64 512, 2654435769
+  %i.fj = add nuw nsw i64 %i.fi, 2
   %i.fk = add i64 %i.fj, %i.fg
   %i.fl = sub i64 %i.fk, %i.fh
   %i.fm = xor i64 %i.fl, %i.g                     ; 3 uses

@@ -205,9 +205,8 @@ bb.u:                                             ; preds = %bb.h
   br i1 %min.iters.check43, label %.lr.ph.i.i.preheader, label %vector.body46
 
 vector.body46:                                    ; preds = %.lr.ph.i.preheader.i
-  %n.vec45 = and i64 %0, 8                        ; 2 uses
-  %2 = shl nuw nsw i64 %n.vec45, 2
-  %i.al = getelementptr i8, ptr %1, i64 %2
+  %n.vec45 = and i64 %0, 8
+  %i.al = getelementptr i8, ptr %1, i64 32
   %i.am = and i64 %0, 7
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16
   store <4 x i32> splat (i32 -2147483648), ptr %1, align 16, !tbaa !83
@@ -254,9 +253,8 @@ bb.v:                                             ; preds = %bb.p, %bb.o, %bb.n
   br i1 %min.iters.check, label %.lr.ph.i.i26.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.i.preheader.i24
-  %n.vec = and i64 %0, 8                          ; 2 uses
-  %3 = shl nuw nsw i64 %n.vec, 2
-  %i.as = getelementptr i8, ptr %1, i64 %3
+  %n.vec = and i64 %0, 8
+  %i.as = getelementptr i8, ptr %1, i64 32
   %i.at = and i64 %0, 7
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 16
   store <4 x i32> splat (i32 -2147483648), ptr %1, align 16, !tbaa !83
@@ -659,9 +657,8 @@ bb.r:                                             ; preds = %bb.g
   br i1 %min.iters.check56, label %.lr.ph.i.i.preheader, label %vector.body59
 
 vector.body59:                                    ; preds = %.lr.ph.i.preheader.i
-  %n.vec58 = and i64 %0, 8                        ; 2 uses
-  %3 = shl nuw nsw i64 %n.vec58, 2
-  %i.bi = getelementptr i8, ptr %2, i64 %3
+  %n.vec58 = and i64 %0, 8
+  %i.bi = getelementptr i8, ptr %2, i64 32
   %i.bj = and i64 %0, 7
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16
   store <4 x i32> splat (i32 -2147483648), ptr %2, align 16, !tbaa !83
@@ -704,9 +701,8 @@ bb.s:                                             ; preds = %bb.q, %bb.p, %bb.o
   br i1 %min.iters.check, label %.lr.ph.i.i37.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.i.preheader.i35
-  %n.vec = and i64 %0, 8                          ; 2 uses
-  %4 = shl nuw nsw i64 %n.vec, 2
-  %i.bp = getelementptr i8, ptr %2, i64 %4
+  %n.vec = and i64 %0, 8
+  %i.bp = getelementptr i8, ptr %2, i64 32
   %i.bq = and i64 %0, 7
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 16
   store <4 x i32> splat (i32 -2147483648), ptr %2, align 16, !tbaa !83
@@ -1109,9 +1105,8 @@ bb.r:                                             ; preds = %bb.i
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.i.preheader.i
-  %n.vec = and i64 %0, 8                          ; 2 uses
-  %2 = shl nuw nsw i64 %n.vec, 2
-  %i.ac = getelementptr i8, ptr %1, i64 %2
+  %n.vec = and i64 %0, 8
+  %i.ac = getelementptr i8, ptr %1, i64 32
   %i.ad = and i64 %0, 7
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 16
   store <4 x i32> splat (i32 -2147483648), ptr %1, align 16, !tbaa !83
@@ -1157,10 +1152,9 @@ bb.s:                                             ; preds = %bb.q, %bb.p, %bb.o
   br i1 %min.iters.check47, label %.lr.ph.i.i27.preheader, label %vector.ph48
 
 vector.ph48:                                      ; preds = %.lr.ph.i.preheader.i25
-  %n.vec49 = and i64 %i.ak, -8                    ; 3 uses
+  %n.vec49 = and i64 %i.ak, -8                    ; 2 uses
   %i.al = and i64 %i.ak, 7
-  %3 = shl i64 %n.vec49, 2
-  %i.am = getelementptr i8, ptr %1, i64 %3
+  %i.am = getelementptr i8, ptr %1, i64 32
   br label %vector.body50
 
 vector.body50:                                    ; preds = %vector.body50, %vector.ph48
@@ -1563,9 +1557,8 @@ bb.s:                                             ; preds = %bb.h
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.i.preheader.i
-  %n.vec = and i64 %0, 8                          ; 2 uses
-  %3 = shl nuw nsw i64 %n.vec, 2
-  %i.bj = getelementptr i8, ptr %2, i64 %3
+  %n.vec = and i64 %0, 8
+  %i.bj = getelementptr i8, ptr %2, i64 32
   %i.bk = and i64 %0, 7
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 16
   store <4 x i32> splat (i32 -2147483648), ptr %2, align 16, !tbaa !83
@@ -1611,10 +1604,9 @@ bb.t:                                             ; preds = %bb.r, %bb.q, %bb.p
   br i1 %min.iters.check60, label %.lr.ph.i.i38.preheader, label %vector.ph61
 
 vector.ph61:                                      ; preds = %.lr.ph.i.preheader.i36
-  %n.vec62 = and i64 %i.br, -8                    ; 3 uses
+  %n.vec62 = and i64 %i.br, -8                    ; 2 uses
   %i.bs = and i64 %i.br, 7
-  %4 = shl i64 %n.vec62, 2
-  %i.bt = getelementptr i8, ptr %2, i64 %4
+  %i.bt = getelementptr i8, ptr %2, i64 32
   br label %vector.body63
 
 vector.body63:                                    ; preds = %vector.body63, %vector.ph61

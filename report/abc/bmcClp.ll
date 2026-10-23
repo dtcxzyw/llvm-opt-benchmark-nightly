@@ -205,11 +205,9 @@ bb.bw:                                            ; preds = %bb.bw, %.epil.prehe
   br i1 %epil.iter.cmp.not, label %sat_solver_clean_polarity.exit, label %bb.bw, !llvm.loop !172
 
 sat_solver_clean_polarity.exit:                   ; preds = %sat_solver_clean_polarity.exit.loopexit.unr-lcssa, %bb.bw, %bb.bu
-  %12 = trunc nuw nsw i64 %indvars.iv377 to i32
-  %notmask = shl nsw i32 -1, %12
-  %13 = xor i32 %notmask, -1
-  %14 = shl nuw nsw i32 %13, 1                    ; 2 uses
-  %i.in = or disjoint i32 %14, 1
+  %12 = icmp eq i64 %indvars.iv377, 0
+  %.finite = select i1 %12, i32 0, i32 2          ; 2 uses
+  %i.in = or disjoint i32 %.finite, 1
   store i32 %i.in, ptr %i.c, align 4, !tbaa !34
   %i.io = call i32 @sat_solver_solve(ptr noundef %i.hh, ptr noundef nonnull %i.c, ptr noundef nonnull %i.bx, i64 noundef 0, i64 noundef 0, i64 noundef 0, i64 noundef 0) #18
   br i1 %.not149, label %bb.bz, label %bb.bx
@@ -559,7 +557,7 @@ Vec_IntGrow.exit11.sink.split.i239:               ; preds = %bb.dc, %bb.dd
 Vec_IntPush.exit243:                              ; preds = %Vec_StrFillExtra.exit, %Vec_IntGrow.exit11.sink.split.i239
   %.promoted328 = phi ptr [ %.pre387, %Vec_StrFillExtra.exit ], [ %i.mt, %Vec_IntGrow.exit11.sink.split.i239 ] ; 3 uses
   store i32 1, ptr %i.al, align 4, !tbaa !32
-  store i32 %14, ptr %.promoted328, align 4, !tbaa !34
+  store i32 %.finite, ptr %.promoted328, align 4, !tbaa !34
   %.val = load i32, ptr %i.ae, align 4, !tbaa !32 ; 2 uses
   %i.mu = icmp sgt i32 %.val, 0
   %.val163.pre = load i32, ptr %i.al, align 4, !tbaa !32 ; 2 uses

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not45, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.c
-  %.rhs.trunc = trunc nuw i32 %1 to i8            ; 2 uses
+  %.rhs.trunc = trunc nuw i32 %1 to i8
   br i1 %2, label %.preheader.us, label %.preheader
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph
@@ -212,7 +212,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = load i8, ptr %0, align 1
   %i.f = and i8 %i.e, -128
   %i.g = or i8 %i.f, %.promoted.us
-  %i.h = icmp ne i32 %1, 1                        ; 3 uses
+  %i.h = icmp ne i32 %1, 1                        ; 2 uses
   %.sroa.7.2.us.us = select i1 %i.h, i32 7, i32 6 ; 2 uses
   %i.i = zext i1 %i.h to i64
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %i.i
@@ -223,12 +223,10 @@ bb.c:                                             ; preds = %bb.a
   %.not.us.us.1 = icmp eq i32 %i.n, 0
   %i.o = select i1 %.not.us.us.1, i8 0, i8 64
   %i.p = or i8 %i.o, %i.g
-  %3 = select i1 %i.h, i32 2, i32 1
-  %4 = urem i32 %3, %1                            ; 3 uses
-  %.not12.us.us.1 = icmp eq i32 %4, 0
+  %.not12.us.us.1 = icmp eq i32 0, 0
   %i.q = sext i1 %.not12.us.us.1 to i32
   %.sroa.7.2.us.us.1 = add nsw i32 %.sroa.7.2.us.us, %i.q ; 2 uses
-  %i.r = zext nneg i32 %4 to i64
+  %i.r = zext nneg i32 0 to i64
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1
   %i.u = zext i8 %i.t to i32
@@ -237,7 +235,7 @@ bb.c:                                             ; preds = %bb.a
   %.not.us.us.2 = icmp eq i32 %i.w, 0
   %i.x = select i1 %.not.us.us.2, i8 0, i8 32
   %i.y = or i8 %i.x, %i.p
-  %i.z = add nuw nsw i32 %4, 1                    ; 2 uses
+  %i.z = add nuw nsw i32 0, 1                     ; 2 uses
   %i.aa = icmp eq i32 %i.z, %1                    ; 2 uses
   %i.ab = select i1 %i.aa, i32 0, i32 %i.z
   %.fr67 = freeze i32 %i.ab                       ; 2 uses
@@ -441,7 +439,7 @@ bb.c:                                             ; preds = %bb.a
   %i.fx = load i8, ptr %i.a, align 2
   %i.fy = or i8 %i.fw, %i.fx
   store i8 %i.fy, ptr %i.a, align 2
-  %i.fz = icmp ne i32 %1, 1                       ; 3 uses
+  %i.fz = icmp ne i32 %1, 1                       ; 2 uses
   %.sroa.7.2 = select i1 %i.fz, i32 7, i32 6      ; 2 uses
   %i.ga = and i32 %i.fv, 64
   %.not.1 = icmp eq i32 %i.ga, 0
@@ -453,9 +451,7 @@ bb.c:                                             ; preds = %bb.a
   %i.gg = load i8, ptr %i.gf, align 1
   %i.gh = or i8 %i.gd, %i.gg
   store i8 %i.gh, ptr %i.gf, align 1
-  %5 = select i1 %i.fz, i32 2, i32 1
-  %6 = urem i32 %5, %1                            ; 3 uses
-  %.not12.1 = icmp eq i32 %6, 0
+  %.not12.1 = icmp eq i32 0, 0
   %i.gi = sext i1 %.not12.1 to i32
   %.sroa.7.2.1 = add nsw i32 %.sroa.7.2, %i.gi    ; 2 uses
   %i.gj = and i32 %i.fv, 32
@@ -463,12 +459,12 @@ bb.c:                                             ; preds = %bb.a
   %i.gk = shl nuw i32 1, %.sroa.7.2.1
   %i.gl = trunc i32 %i.gk to i8
   %i.gm = select i1 %.not.2, i8 0, i8 %i.gl
-  %i.gn = zext nneg i32 %6 to i64
+  %i.gn = zext nneg i32 0 to i64
   %i.go = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.gn ; 2 uses
   %i.gp = load i8, ptr %i.go, align 1
   %i.gq = or i8 %i.gm, %i.gp
   store i8 %i.gq, ptr %i.go, align 1
-  %i.gr = add nuw nsw i32 %6, 1                   ; 2 uses
+  %i.gr = add nuw nsw i32 0, 1                    ; 2 uses
   %i.gs = icmp eq i32 %i.gr, %1                   ; 2 uses
   %i.gt = select i1 %i.gs, i32 0, i32 %i.gr
   %.fr58 = freeze i32 %i.gt                       ; 2 uses
@@ -516,7 +512,7 @@ bb.c:                                             ; preds = %bb.a
   %i.hz = or i8 %i.hv, %i.hy
   store i8 %i.hz, ptr %i.hx, align 1
   %i.ia = add i32 %.fr61, 1
-  %i.ib = urem i32 %i.ia, %1                      ; 3 uses
+  %i.ib = urem i32 %i.ia, %1                      ; 4 uses
   %.not12.5 = icmp eq i32 %i.ib, 0
   %i.ic = sext i1 %.not12.5 to i32
   %.sroa.7.2.5 = add nsw i32 %.sroa.7.2.4, %i.ic  ; 2 uses
@@ -532,7 +528,7 @@ bb.c:                                             ; preds = %bb.a
   store i8 %i.ik, ptr %i.ii, align 1
   %i.il = add nuw nsw i32 %i.ib, 1                ; 2 uses
   %i.im = icmp eq i32 %i.il, %1                   ; 2 uses
-  %i.in = select i1 %i.im, i32 0, i32 %i.il       ; 2 uses
+  %i.in = select i1 %i.im, i32 0, i32 %i.il
   %i.io = sext i1 %i.im to i32
   %.sroa.7.2.6 = add nsw i32 %.sroa.7.2.5, %i.io  ; 2 uses
   %i.ip = and i32 %i.fv, 1
@@ -549,10 +545,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %exitcond.not, label %._crit_edge, label %.preheader.1
 
 .preheader.1:                                     ; preds = %.preheader
-  %7 = trunc nuw i32 %i.in to i8
-  %.lhs.trunc71 = add nuw nsw i8 %7, 1
-  %8 = urem i8 %.lhs.trunc71, %.rhs.trunc         ; 3 uses
-  %.not12.7 = icmp eq i8 %8, 0
+  %3 = icmp eq i32 %i.ib, 0
+  %.finite = select i1 %3, i8 0, i8 1             ; 3 uses
+  %.not12.7 = icmp eq i8 %.finite, 0
   %i.ix = sext i1 %.not12.7 to i32
   %.sroa.7.2.7 = add i32 %.sroa.7.2.6, %i.ix      ; 2 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -562,12 +557,12 @@ bb.c:                                             ; preds = %bb.a
   %i.jc = trunc i32 %i.jb to i8
   %.not.inv.1 = icmp slt i8 %i.iz, 0
   %i.jd = select i1 %.not.inv.1, i8 %i.jc, i8 0
-  %i.je = zext nneg i8 %8 to i64
+  %i.je = zext nneg i8 %.finite to i64
   %i.jf = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.je ; 2 uses
   %i.jg = load i8, ptr %i.jf, align 1
   %i.jh = or i8 %i.jd, %i.jg
   store i8 %i.jh, ptr %i.jf, align 1
-  %narrow = add nuw nsw i8 %8, 1
+  %narrow = add nuw nsw i8 %.finite, 1
   %i.ji = zext nneg i8 %narrow to i32             ; 2 uses
   %i.jj = icmp eq i32 %1, %i.ji                   ; 2 uses
   %i.jk = select i1 %i.jj, i32 0, i32 %i.ji

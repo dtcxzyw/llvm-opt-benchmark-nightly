@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit12.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit16.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit14.i"
   %.sroa.0.1.ph = phi ptr [ %i.bg, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit12.i" ], [ %i.bp, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit14.i" ], [ %i.bz, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit16.i" ], [ %i.ba, %bb.r ] ; 2 uses
-  %.sroa.4.0.i22.ph = phi i32 [ %i.bl, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit12.i" ], [ %i.bw, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit14.i" ], [ %i.ch, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit16.i" ], [ %i.bn, %bb.r ] ; 24 uses
+  %.sroa.4.0.i22.ph = phi i32 [ %i.bl, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit12.i" ], [ %i.bw, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit14.i" ], [ %i.ch, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha927d347885cf44cE.exit16.i" ], [ %i.bn, %bb.r ] ; 20 uses
   %i.ci = icmp samesign ult i32 %.sroa.4.0.i22.ph, 1114112
   tail call void @llvm.assume(i1 %i.ci)
   switch i32 %.sroa.4.0.i22.ph, label %bb.x [
@@ -399,29 +399,24 @@ bb.am:                                            ; preds = %bb.ai, %bb.ai, %bb.
   br label %bb.as
 
 bb.an:                                            ; preds = %bb.aj
-  %4 = or i32 %.sroa.4.0.i22.ph, 1
-  %5 = tail call range(i32 11, 32) i32 @llvm.ctlz.i32(i32 %4, i1 true)
-  %6 = lshr i32 %5, 2
-  %i.ef = zext nneg i32 %6 to i64                 ; 2 uses
+  %4 = icmp eq i32 %.sroa.4.0.i22.ph, 92
+  %.finite = select i1 %4, i32 6, i32 7
+  %i.ef = zext nneg i32 %.finite to i64           ; 2 uses
   %i.eg = add nsw i64 %i.ef, -2                   ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.a, i8 0, i64 3, i1 false), !noalias !1317
-  %7 = lshr i32 %.sroa.4.0.i22.ph, 20
-  %i.eh = zext nneg i32 %7 to i64
+  %i.eh = zext nneg i32 0 to i64
   %i.ei = getelementptr inbounds nuw i8, ptr @186, i64 %i.eh
   %i.ej = load i8, ptr %i.ei, align 1, !range !1318, !noalias !1319, !noundef !6
   store i8 %i.ej, ptr %i.aq, align 1, !noalias !1317
-  %8 = lshr i32 %.sroa.4.0.i22.ph, 16
-  %i.ek = zext nneg i32 %8 to i64
+  %i.ek = zext nneg i32 0 to i64
   %i.el = getelementptr inbounds nuw i8, ptr @186, i64 %i.ek
   %i.em = load i8, ptr %i.el, align 1, !range !1318, !noalias !1319, !noundef !6
   store i8 %i.em, ptr %i.ar, align 1, !noalias !1317
-  %9 = lshr i32 %.sroa.4.0.i22.ph, 12
-  %i.en = zext nneg i32 %9 to i64
+  %i.en = zext nneg i32 0 to i64
   %i.eo = getelementptr inbounds nuw i8, ptr @186, i64 %i.en
   %i.ep = load i8, ptr %i.eo, align 1, !range !1318, !noalias !1319, !noundef !6
   store i8 %i.ep, ptr %i.as, align 1, !noalias !1317
-  %10 = lshr i32 %.sroa.4.0.i22.ph, 8
-  %i.eq = zext nneg i32 %10 to i64
+  %i.eq = zext nneg i32 0 to i64
   %i.er = getelementptr inbounds nuw i8, ptr @186, i64 %i.eq
   %i.es = load i8, ptr %i.er, align 1, !range !1318, !noalias !1319, !noundef !6
   store i8 %i.es, ptr %i.at, align 1, !noalias !1317
@@ -823,9 +818,6 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #35
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef i64 @_ZN4core5slice4sort6stable5drift11sqrt_approx17h43164af9ba479437E(i64 noundef) unnamed_addr #1
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.ctlz.i32(i32, i1 immarg) #35
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
 declare void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef, ptr noundef nonnull align 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #29

@@ -205,7 +205,7 @@ Abc_TtDup.exit:                                   ; preds = %Abc_Clock.exit, %.l
   %i.u = sext i32 %1 to i64
   %i.v = shl nsw i64 %i.u, 2                      ; 4 uses
   %i.w = icmp sgt i32 %i.i, 1
-  %wide.trip.count24.i57 = zext i32 %i.i to i64   ; 2 uses
+  %wide.trip.count24.i57 = zext i32 %i.i to i64
   %.not55 = icmp eq i32 %5, 0                     ; 3 uses
   br i1 %i.w, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
@@ -267,7 +267,6 @@ bb.e:                                             ; preds = %bb.d, %Abc_TtCopy.e
   br i1 %i.m, label %.lr.ph.split.split.us.preheader, label %.lr.ph.split.split
 
 .lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph.split
-  %8 = shl nuw nsw i64 %wide.trip.count24.i57, 3
   br label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split.split.us.preheader, %bb.h
@@ -297,7 +296,7 @@ Abc_TtCopy.exit.thread.us88:                      ; preds = %Abc_TtCopy.exit.us8
   br label %.lr.ph18.preheader.i56.us89
 
 .lr.ph18.preheader.i56.us89:                      ; preds = %Abc_TtCopy.exit.thread.us88, %Abc_TtCopy.exit.us84
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.l, ptr align 8 %0, i64 %8, i1 false), !tbaa !26
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.l, ptr align 8 %0, i64 8, i1 false), !tbaa !26
   br i1 %.not55, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph18.preheader.i56.us89

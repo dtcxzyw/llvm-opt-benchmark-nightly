@@ -205,9 +205,8 @@ _ZSt6fill_nIPN4mlir4TypeEmS1_ET_S3_T0_RKT1_.exit.i.i.i.i.i: ; preds = %bb.i
 
 vector.ph21:                                      ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %n.vec22 = and i64 %i.au, 4                     ; 3 uses
-  %10 = shl nuw nsw i64 %n.vec22, 3
-  %i.az = getelementptr i8, ptr %i.ay, i64 %10
+  %n.vec22 = and i64 %i.au, 4                     ; 2 uses
+  %i.az = getelementptr i8, ptr %i.ay, i64 32
   %i.ba = and i64 %i.au, 3
   %broadcast.splatinsert23 = insertelement <2 x i64> poison, i64 %i.ax, i64 0
   %broadcast.splat24 = shufflevector <2 x i64> %broadcast.splatinsert23, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses

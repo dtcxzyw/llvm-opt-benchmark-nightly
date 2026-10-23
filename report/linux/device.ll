@@ -204,13 +204,12 @@ get_num_conns.exit:                               ; preds = %bb.b
 
 bb.c:                                             ; preds = %get_num_conns.exit
   %i.q = and i32 %i.n, 128
-  %.not75 = icmp eq i32 %i.q, 0                   ; 2 uses
-  %. = select i1 %.not75, i32 8, i32 16           ; 2 uses
+  %.not75 = icmp eq i32 %i.q, 0                   ; 3 uses
+  %. = select i1 %.not75, i32 8, i32 16
   %.87 = select i1 %.not75, i32 3, i32 1
   %i.r = and i32 %i.n, 127                        ; 3 uses
-  %4 = add nsw i32 %., -1
-  %5 = shl nuw nsw i32 1, %4                      ; 2 uses
-  %i.s = add nsw i32 %5, -1                       ; 2 uses
+  %.finite = select i1 %.not75, i32 128, i32 32768 ; 2 uses
+  %i.s = add nsw i32 %.finite, -1                 ; 2 uses
   switch i32 %i.r, label %.lr.ph114 [
     i32 0, label %.thread
     i32 1, label %bb.d
@@ -325,7 +324,7 @@ snd_hdac_read.exit93:                             ; preds = %bb.o, %bb.p
 
 bb.q:                                             ; preds = %snd_hdac_read.exit93, %bb.k
   %i.bb = load i32, ptr %i.c, align 4             ; 3 uses
-  %i.bc = and i32 %i.bb, %5
+  %i.bc = and i32 %i.bb, %.finite
   %.not77 = icmp eq i32 %i.bc, 0
   %i.bd = and i32 %i.bb, %i.s                     ; 7 uses
   %i.be = trunc nuw nsw i32 %i.bd to i16          ; 5 uses

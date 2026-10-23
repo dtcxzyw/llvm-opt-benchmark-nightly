@@ -204,7 +204,7 @@ _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit561.i: ; preds = %_ZL13validateMe
   store i32 3, ptr %i.xv, align 8, !tbaa !73
   %.pre166.i = load i32, ptr %i.f, align 8, !tbaa !73 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %50, ptr noundef nonnull align 8 dereferenceable(128) %14, i64 16, i1 false)
-  %i.yg = zext i32 %.pre166.i to i64              ; 2 uses
+  %i.yg = zext i32 %.pre166.i to i64
   %.not.i.i.i.i36 = icmp ult i32 %.pre166.i, 3
   br i1 %.not.i.i.i.i36, label %bb.dk, label %bb.dj
 
@@ -229,8 +229,7 @@ bb.dm:                                            ; preds = %bb.dk
   ], !prof !243
 
 bb.dn:                                            ; preds = %bb.dm
-  %.idx32.i.i.i.i = shl nuw nsw i64 %i.yg, 4
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.yd, ptr nonnull align 8 %i.xu, i64 %.idx32.i.i.i.i, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.yd, ptr nonnull align 8 %i.xu, i64 32, i1 false)
   br label %_ZSt4copyIPKN4llvm9MCOperandEPS1_ET0_T_S6_S5_.exit30.i.i.i.i
 
 bb.do:                                            ; preds = %bb.dm
@@ -307,7 +306,7 @@ _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit570.i: ; preds = %_ZL13validateMe
   store i32 3, ptr %i.yu, align 8, !tbaa !73
   %.pre164.i = load i32, ptr %i.f, align 8, !tbaa !73 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %50, ptr noundef nonnull align 8 dereferenceable(128) %15, i64 16, i1 false)
-  %i.za = zext i32 %.pre164.i to i64              ; 2 uses
+  %i.za = zext i32 %.pre164.i to i64
   %.not.i.i.i571.i = icmp ult i32 %.pre164.i, 3
   br i1 %.not.i.i.i571.i, label %bb.ds, label %bb.dr
 
@@ -332,8 +331,7 @@ bb.du:                                            ; preds = %bb.ds
   ], !prof !243
 
 bb.dv:                                            ; preds = %bb.du
-  %.idx32.i.i.i577.i = shl nuw nsw i64 %i.za, 4
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.yw, ptr nonnull align 8 %i.yt, i64 %.idx32.i.i.i577.i, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.yw, ptr nonnull align 8 %i.yt, i64 32, i1 false)
   br label %_ZSt4copyIPKN4llvm9MCOperandEPS1_ET0_T_S6_S5_.exit30.i.i.i578.i
 
 bb.dw:                                            ; preds = %bb.du
@@ -410,7 +408,7 @@ _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit593.i: ; preds = %_ZL13validateMe
   store i32 3, ptr %i.zo, align 8, !tbaa !73
   %.pre162.i = load i32, ptr %i.f, align 8, !tbaa !73 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %50, ptr noundef nonnull align 8 dereferenceable(128) %16, i64 16, i1 false)
-  %i.zu = zext i32 %.pre162.i to i64              ; 2 uses
+  %i.zu = zext i32 %.pre162.i to i64
   %.not.i.i.i594.i = icmp ult i32 %.pre162.i, 3
   br i1 %.not.i.i.i594.i, label %bb.ea, label %bb.dz
 
@@ -435,8 +433,7 @@ bb.ec:                                            ; preds = %bb.ea
   ], !prof !243
 
 bb.ed:                                            ; preds = %bb.ec
-  %.idx32.i.i.i600.i = shl nuw nsw i64 %i.zu, 4
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.zq, ptr nonnull align 8 %i.zn, i64 %.idx32.i.i.i600.i, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.zq, ptr nonnull align 8 %i.zn, i64 32, i1 false)
   br label %_ZSt4copyIPKN4llvm9MCOperandEPS1_ET0_T_S6_S5_.exit30.i.i.i601.i
 
 bb.ee:                                            ; preds = %bb.ec
@@ -522,7 +519,7 @@ _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit617.i: ; preds = %.fold.split.i, 
   store i32 3, ptr %i.aai, align 8, !tbaa !73
   %.pre137.i = load i32, ptr %i.f, align 8, !tbaa !73 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %50, ptr noundef nonnull align 8 dereferenceable(128) %17, i64 16, i1 false)
-  %i.aan = zext i32 %.pre137.i to i64             ; 2 uses
+  %i.aan = zext i32 %.pre137.i to i64
   %.not.i.i.i618.i = icmp ult i32 %.pre137.i, 3
   br i1 %.not.i.i.i618.i, label %bb.el, label %bb.ek
 
@@ -547,8 +544,7 @@ bb.en:                                            ; preds = %bb.el
   ], !prof !243
 
 bb.eo:                                            ; preds = %bb.en
-  %.idx32.i.i.i624.i = shl nuw nsw i64 %i.aan, 4
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aak, ptr nonnull align 8 %i.aah, i64 %.idx32.i.i.i624.i, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aak, ptr nonnull align 8 %i.aah, i64 32, i1 false)
   br label %_ZSt4copyIPKN4llvm9MCOperandEPS1_ET0_T_S6_S5_.exit30.i.i.i625.i
 
 bb.ep:                                            ; preds = %bb.en
@@ -668,7 +664,7 @@ _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit641.i: ; preds = %_ZL13validateMe
   store i32 3, ptr %i.abn, align 8, !tbaa !73
   %.pre160.i = load i32, ptr %i.f, align 8, !tbaa !73 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %50, ptr noundef nonnull align 8 dereferenceable(128) %19, i64 16, i1 false)
-  %i.abv = zext i32 %.pre160.i to i64             ; 2 uses
+  %i.abv = zext i32 %.pre160.i to i64
   %.not.i.i.i642.i = icmp ult i32 %.pre160.i, 3
   br i1 %.not.i.i.i642.i, label %bb.ev, label %bb.eu
 
@@ -693,8 +689,7 @@ bb.ex:                                            ; preds = %bb.ev
   ], !prof !243
 
 bb.ey:                                            ; preds = %bb.ex
-  %.idx32.i.i.i648.i = shl nuw nsw i64 %i.abv, 4
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.abr, ptr nonnull align 8 %i.abm, i64 %.idx32.i.i.i648.i, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.abr, ptr nonnull align 8 %i.abm, i64 32, i1 false)
   br label %_ZSt4copyIPKN4llvm9MCOperandEPS1_ET0_T_S6_S5_.exit30.i.i.i649.i
 
 bb.ez:                                            ; preds = %bb.ex
@@ -769,7 +764,7 @@ _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit664.i: ; preds = %_ZL13validateMe
   store i32 3, ptr %i.acj, align 8, !tbaa !73
   %.pre158.i = load i32, ptr %i.f, align 8, !tbaa !73 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %50, ptr noundef nonnull align 8 dereferenceable(128) %20, i64 16, i1 false)
-  %i.acq = zext i32 %.pre158.i to i64             ; 2 uses
+  %i.acq = zext i32 %.pre158.i to i64
   %.not.i.i.i665.i = icmp ult i32 %.pre158.i, 3
   br i1 %.not.i.i.i665.i, label %bb.fd, label %bb.fc
 
@@ -794,8 +789,7 @@ bb.ff:                                            ; preds = %bb.fd
   ], !prof !243
 
 bb.fg:                                            ; preds = %bb.ff
-  %.idx32.i.i.i671.i = shl nuw nsw i64 %i.acq, 4
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.acn, ptr nonnull align 8 %i.aci, i64 %.idx32.i.i.i671.i, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.acn, ptr nonnull align 8 %i.aci, i64 32, i1 false)
   br label %_ZSt4copyIPKN4llvm9MCOperandEPS1_ET0_T_S6_S5_.exit30.i.i.i672.i
 
 bb.fh:                                            ; preds = %bb.ff

@@ -204,15 +204,14 @@ select.unfold.i.i.i.i.i:                          ; preds = %.lr.ph
   %i.ba = phi ptr [ %i.bb, %select.unfold.i.i.i.i.i ], [ %i.av, %select.unfold.i.i.i.i.i.preheader ] ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 24 ; 4 uses
   %i.bc = getelementptr i8, ptr %i.ba, i64 16
-  %.val3.i.i.i.i.i.i.i = load i64, ptr %i.bc, align 8, !noalias !9248, !noundef !4 ; 3 uses
+  %.val3.i.i.i.i.i.i.i = load i64, ptr %i.bc, align 8, !noalias !9248, !noundef !4 ; 2 uses
   %i.bd = icmp eq i64 %.val3.i.i.i.i.i.i.i, 0
   br i1 %i.bd, label %select.unfold.i.i.i.i.i, label %.loopexit.loopexit.i.i.loopexit
 
 select.unfold.i.i.i.i.i._crit_edge.loopexit:      ; preds = %select.unfold.i.i.i.i.i
   %i.be = getelementptr i8, ptr %i.ba, i64 8
   %.val.i.i.i.i.i.i.i.le56 = load ptr, ptr %i.be, align 8, !noalias !9248, !nonnull !4, !noundef !4
-  %.idx.i.le53 = mul nuw nsw i64 %.val3.i.i.i.i.i.i.i, 6
-  %i.bf = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i.le56, i64 %.idx.i.le53
+  %i.bf = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i.le56, i64 0
   br label %select.unfold.i.i.i.i.i._crit_edge
 
 select.unfold.i.i.i.i.i._crit_edge:               ; preds = %select.unfold.i.i.i.i.i._crit_edge.loopexit, %select.unfold.i.i.i.i.i.preheader
@@ -615,15 +614,14 @@ select.unfold.i.i.i.i:                            ; preds = %.lr.ph
   %i.ay = phi ptr [ %i.az, %select.unfold.i.i.i.i ], [ %i.at, %select.unfold.i.i.i.i.preheader ] ; 4 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 48 ; 4 uses
   %i.ba = getelementptr i8, ptr %i.ay, i64 40
-  %.val3.i.i.i.i.i.i = load i64, ptr %i.ba, align 8, !noalias !9451, !noundef !4 ; 3 uses
+  %.val3.i.i.i.i.i.i = load i64, ptr %i.ba, align 8, !noalias !9451, !noundef !4 ; 2 uses
   %i.bb = icmp eq i64 %.val3.i.i.i.i.i.i, 0
   br i1 %i.bb, label %select.unfold.i.i.i.i, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterTNtNtCs3v5ql5U6hxj_6fontir18feature_variations4NBoxINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtNtNtB2o_11collections5btree3map8BTreeMapNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameB3z_EEEEIB15_B2Q_ENCNvNtNtCshxhuDJfZv4T_6fontbe8features18feature_variations25make_substitution_lookups0ENtNtNtB9_6traits8iterator8Iterator4nextB4J_.exit.i.i.loopexit
 
 select.unfold.i.i.i.i._crit_edge.loopexit:        ; preds = %select.unfold.i.i.i.i
   %i.bc = getelementptr i8, ptr %i.ay, i64 32
   %.val.i.i.i.i.i.i.le61 = load ptr, ptr %i.bc, align 8, !noalias !9451, !nonnull !4, !noundef !4
-  %.idx.i.le58 = mul nuw nsw i64 %.val3.i.i.i.i.i.i, 24
-  %i.bd = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.le61, i64 %.idx.i.le58
+  %i.bd = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.le61, i64 0
   br label %select.unfold.i.i.i.i._crit_edge
 
 select.unfold.i.i.i.i._crit_edge:                 ; preds = %select.unfold.i.i.i.i._crit_edge.loopexit, %select.unfold.i.i.i.i.preheader
@@ -1026,15 +1024,14 @@ select.unfold.i.i.i.i:                            ; preds = %.lr.ph
   %i.bd = getelementptr i8, ptr %i.bb, i64 40
   %.val.i.i.i.i.i.i = load ptr, ptr %i.bd, align 8, !noalias !9531, !nonnull !4, !noundef !4 ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 32
-  %i.bf = load i64, ptr %i.be, align 8, !noalias !9531, !noundef !4 ; 3 uses
+  %i.bf = load i64, ptr %i.be, align 8, !noalias !9531, !noundef !4 ; 2 uses
   %i.bg = icmp eq i64 %i.bf, 0
   br i1 %i.bg, label %select.unfold.i.i.i.i, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterTNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtB1x_12KernFragmentEEEIB15_NtB1x_8KernPairENCNvXs3_NtNtB1z_8features4kernNtB3H_17KerningGatherWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtB1x_7ContextB1v_NtNtB1z_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB1z_.exit.i.i.loopexit
 
 select.unfold.i.i.i.i._crit_edge.loopexit:        ; preds = %select.unfold.i.i.i.i
   %i.bh = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 24
   %i.bi = load ptr, ptr %i.bh, align 8, !noalias !9531, !nonnull !4, !noundef !4
-  %.idx.i.le62 = mul nuw nsw i64 %i.bf, 304
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.idx.i.le62
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 0
   br label %select.unfold.i.i.i.i._crit_edge
 
 select.unfold.i.i.i.i._crit_edge:                 ; preds = %select.unfold.i.i.i.i._crit_edge.loopexit, %select.unfold.i.i.i.i.preheader

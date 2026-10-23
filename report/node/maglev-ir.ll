@@ -205,10 +205,10 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit135: ; preds = %_ZN2v88
   %i.eb = or i16 %i.dj, %.sroa.0168.0.copyload
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
   %.sroa.16.0.copyload = load i16, ptr %.sroa.16.0..sroa_idx, align 4
-  %i.ec = and i8 %i.i, 7                          ; 3 uses
-  %i.ed = or disjoint i8 %i.ec, -128              ; 2 uses
+  %i.ec = and i8 %i.i, 7                          ; 2 uses
+  %i.ed = or disjoint i8 %i.ec, -128
   %i.ee = lshr i8 %i.i, 3                         ; 4 uses
-  %i.ef = or disjoint i8 %i.ec, 64                ; 2 uses
+  %i.ef = or disjoint i8 %i.ec, 64
   %.sroa.16.0.insert.ext = zext i16 %.sroa.16.0.copyload to i48
   %.sroa.16.0.insert.shift = shl nuw i48 %.sroa.16.0.insert.ext, 32
   %.sroa.10.0.insert.ext = zext i16 %i.ea to i48
@@ -222,19 +222,12 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit135: ; preds = %_ZN2v88
   ]
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph
-  %10 = or disjoint i8 %i.ec, 32
-  %.sroa.0.3.insert.ext249 = zext nneg i8 %10 to i64
-  %.sroa.0.3.insert.shift250 = shl nuw nsw i64 %.sroa.0.3.insert.ext249, 24
-  %.sroa.0.2.insert.ext239 = zext i8 %i.ed to i64
-  %.sroa.0.2.insert.shift240 = shl nuw nsw i64 %.sroa.0.2.insert.ext239, 16
   %.sroa.0.1.insert.ext224 = zext nneg i8 %i.ee to i64
   %.sroa.0.1.insert.shift225 = shl nuw nsw i64 %.sroa.0.1.insert.ext224, 8
-  %i.eg = or disjoint i64 %.sroa.0.2.insert.shift240, %.sroa.0.1.insert.shift225
-  %.sroa.0.2.insert.ext244 = zext nneg i8 %i.ef to i64
-  %.sroa.0.2.insert.shift245 = shl nuw nsw i64 %.sroa.0.2.insert.ext244, 16
+  %i.eg = or disjoint i64 8650752, %.sroa.0.1.insert.shift225
   %.sroa.0.1.insert.ext229 = zext nneg i8 %i.ee to i64
   %.sroa.0.1.insert.shift230 = shl nuw nsw i64 %.sroa.0.1.insert.ext229, 8
-  %i.eh = or disjoint i64 %.sroa.0.2.insert.shift245, %.sroa.0.1.insert.shift230
+  %i.eh = or disjoint i64 4456448, %.sroa.0.1.insert.shift230
   br label %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us
 
 _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us: ; preds = %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us, %.lr.ph.split.us
@@ -247,7 +240,7 @@ _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0
   %.sroa.0.4.insert.shift260 = shl nuw nsw i64 %.sroa.0.4.insert.ext259, 32
   %. = select i1 %i.el, i64 %i.eh, i64 %i.eg
   %i.em = or disjoint i64 %., %.sroa.0.4.insert.shift260
-  %.sroa.0.0 = or disjoint i64 %i.em, %.sroa.0.3.insert.shift250
+  %.sroa.0.0 = or disjoint i64 %i.em, 603979776
   %.fca.1.load.i.i.us = select i1 %i.el, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr)
   call void @_ZN2v88internal14MacroAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %1, i8 %i.aq, i64 %.sroa.0.0, ptr nonnull %.fca.1.load.i.i.us) #28
   call void @_ZN2v88internal6maglev15MaglevAssembler32StoreTaggedFieldWithWriteBarrierENS0_8RegisterEiS3_NS1_16RegisterSnapshotENS2_17ValueIsCompressedENS2_13ValueCanBeSmiE(ptr noundef nonnull align 8 dereferenceable(456) %1, i8 %storemerge, i32 noundef %i.ej, i8 %i.aq, i48 %.sroa.0168.0.insert.insert, i32 noundef 1, i32 noundef 1) #28
@@ -272,7 +265,7 @@ _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0
 ._crit_edge:                                      ; preds = %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us, %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit, %_ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit135
   call void @_ZN2v88internal14MacroAssembler8LoadRootENS0_8RegisterENS0_9RootIndexE(ptr noundef nonnull align 8 dereferenceable(436) %1, i8 %i.aq, i16 noundef zeroext 0) #28
   %i.eq = and i8 %storemerge, 7                   ; 3 uses
-  %i.er = or disjoint i8 %i.eq, 32                ; 2 uses
+  %i.er = or disjoint i8 %i.eq, 32
   %i.es = or disjoint i8 %i.eq, -128              ; 6 uses
   %i.et = or disjoint i8 %i.eq, 64                ; 7 uses
   %i.eu = load i32, ptr %i.au, align 4
@@ -284,8 +277,6 @@ _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0
   ]
 
 .split.us:                                        ; preds = %._crit_edge, %._crit_edge
-  %.sroa.0264.3.insert.ext391 = zext nneg i8 %i.er to i64
-  %.sroa.0264.3.insert.shift392 = shl nuw nsw i64 %.sroa.0264.3.insert.ext391, 24 ; 3 uses
   %i.ex = sext i32 %i.ev to i64
   %i.ey = add nsw i64 %i.ex, 136
   %i.ez = icmp ult i64 %i.ey, 256                 ; 3 uses
@@ -301,7 +292,7 @@ _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0
   %.sroa.0264.4.insert.ext431 = zext i32 %.sink471 to i64
   %.sroa.0264.4.insert.shift432 = shl nuw i64 %.sroa.0264.4.insert.ext431, 32
   %i.fb = or disjoint i64 %.sink470, %.sroa.0264.4.insert.shift432
-  %.sroa.0264.0 = or disjoint i64 %i.fb, %.sroa.0264.3.insert.shift392
+  %.sroa.0264.0 = or disjoint i64 %i.fb, 603979776
   %.fca.1.load.i.i138.us = inttoptr i64 %.fca.1.load.i.i138.in.us to ptr
   call void @_ZN2v88internal14MacroAssembler16StoreTaggedFieldENS0_7OperandENS0_8RegisterE(ptr noundef nonnull align 8 dereferenceable(456) %1, i64 %.sroa.0264.0, ptr nonnull %.fca.1.load.i.i138.us, i8 %i.aq) #28
   %i.fc = load i32, ptr %i.au, align 4
@@ -323,7 +314,7 @@ _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0
   %.sroa.0264.4.insert.ext436 = zext i32 %.sink473 to i64
   %.sroa.0264.4.insert.shift437 = shl nuw i64 %.sroa.0264.4.insert.ext436, 32
   %i.fk = or disjoint i64 %.sink472, %.sroa.0264.4.insert.shift437
-  %.sroa.0264.2 = or disjoint i64 %i.fk, %.sroa.0264.3.insert.shift392
+  %.sroa.0264.2 = or disjoint i64 %i.fk, 603979776
   %.fca.1.load.i.i138.us.1 = inttoptr i64 %.fca.1.load.i.i138.in.us.1 to ptr
   call void @_ZN2v88internal14MacroAssembler16StoreTaggedFieldENS0_7OperandENS0_8RegisterE(ptr noundef nonnull align 8 dereferenceable(456) %1, i64 %.sroa.0264.2, ptr nonnull %.fca.1.load.i.i138.us.1, i8 %i.aq) #28
   %i.fl = load i32, ptr %i.au, align 4
@@ -345,7 +336,7 @@ _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0
   %.sroa.0264.4.insert.ext441 = zext i32 %.sink475 to i64
   %.sroa.0264.4.insert.shift442 = shl nuw i64 %.sroa.0264.4.insert.ext441, 32
   %i.ft = or disjoint i64 %.sink474, %.sroa.0264.4.insert.shift442
-  %.sroa.0264.3 = or disjoint i64 %i.ft, %.sroa.0264.3.insert.shift392
+  %.sroa.0264.3 = or disjoint i64 %i.ft, 603979776
   br label %.split214.us
 
 .split:                                           ; preds = %._crit_edge

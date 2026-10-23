@@ -204,24 +204,21 @@ bb.e:                                             ; preds = %bb.d
   %i.l = tail call i32 %i.k(ptr noundef %i.i, i32 range(i32 270356, 1598733) 794644, i1 noundef zeroext true) #14, !inline_history !80
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 794644) #14
   %i.m = and i32 %i.l, 256
-  %.not.not.i = icmp eq i32 %i.m, 0               ; 2 uses
-  %.25.i = select i1 %.not.not.i, i32 19000, i32 24000 ; 2 uses
-  %.lhs.trunc.i = trunc nuw nsw i32 %.25.i to i16
-  %1 = udiv i16 %.lhs.trunc.i, 1000
-  %.zext.i = zext nneg i16 %1 to i32
-  %2 = shl nuw nsw i32 %.zext.i, 16               ; 2 uses
+  %.not.not.i = icmp eq i32 %i.m, 0               ; 3 uses
+  %.25.i = select i1 %.not.not.i, i32 19000, i32 24000
+  %.finite = select i1 %.not.not.i, i32 1245184, i32 1572864 ; 2 uses
   br i1 %.not.not.i, label %bb.f, label %cnp_rawclk.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.n = load i32, ptr %i.a, align 8
   %i.o = icmp sgt i32 %i.n, 6
   %spec.select.v.i = select i1 %i.o, i32 268437504, i32 268435456
-  %spec.select.i = or disjoint i32 %spec.select.v.i, %2
+  %spec.select.i = or disjoint i32 %spec.select.v.i, %.finite
   br label %cnp_rawclk.exit
 
 cnp_rawclk.exit:                                  ; preds = %bb.e, %bb.f
   %..i = phi i32 [ 200, %bb.f ], [ 0, %bb.e ]
-  %.1.i = phi i32 [ %spec.select.i, %bb.f ], [ %2, %bb.e ]
+  %.1.i = phi i32 [ %spec.select.i, %bb.f ], [ %.finite, %bb.e ]
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 811524) #14
   %.val.i26.i = load ptr, ptr %0, align 8
   %i.p = tail call ptr @to_intel_uncore(ptr noundef %.val.i26.i) #14 ; 2 uses

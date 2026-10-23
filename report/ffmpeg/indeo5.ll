@@ -205,17 +205,16 @@ bb.v:                                             ; preds = %bb.s, %bb.u, %bb.t
   %i.ez = getelementptr inbounds nuw i8, ptr %.1178233.us, i64 8
   store i8 %.sink, ptr %i.ez, align 4, !tbaa !138
   %i.fa = load i32, ptr %i.az, align 8, !tbaa !43
-  %.not199.us = icmp eq i32 %i.b, %i.fa
-  %i.fb = select i1 %.not199.us, i32 1, i32 4     ; 2 uses
+  %.not199.us = icmp eq i32 %i.b, %i.fa           ; 2 uses
+  %i.fb = select i1 %.not199.us, i32 1, i32 4
   %i.fc = lshr i32 %i.ey, 3
   %i.fd = zext nneg i32 %i.fc to i64
   %i.fe = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.fd
   %i.ff = load i32, ptr %i.fe, align 1, !tbaa !31
   %i.fg = and i32 %i.ey, 7
   %i.fh = lshr i32 %i.ff, %i.fg
-  %narrow.i.i.us = sub nuw nsw i32 32, %i.fb
-  %4 = lshr i32 -1, %narrow.i.i.us
-  %i.fi = and i32 %4, %i.fh                       ; 2 uses
+  %.finite = select i1 %.not199.us, i32 1, i32 15
+  %i.fi = and i32 %.finite, %i.fh                 ; 2 uses
   %i.fj = add i32 %i.fb, %i.ey
   %i.fk = tail call i32 @llvm.umin.i32(i32 %i.bg, i32 %i.fj) ; 10 uses
   store i32 %i.fk, ptr %i.as, align 8, !tbaa !28

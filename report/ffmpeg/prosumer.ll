@@ -111,15 +111,14 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.k, %bb.f
   %indvars.iv.i.i = phi i64 [ 0, %bb.f ], [ %indvars.iv.next.i.i, %bb.k ] ; 3 uses
-  %i.aw = icmp samesign ugt i64 %indvars.iv.i.i, 10
-  %i.ax = select i1 %i.aw, i32 8, i32 4           ; 5 uses
+  %i.aw = icmp samesign ugt i64 %indvars.iv.i.i, 10 ; 2 uses
+  %i.ax = select i1 %i.aw, i32 8, i32 4           ; 4 uses
   %.not.i.i = icmp samesign ult i32 %i.am, %i.ax
   br i1 %.not.i.i, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %1 = sub nuw nsw i32 12, %i.ax
-  %2 = shl nsw i32 -1048576, %1
-  %i.ay = and i32 %2, %i.av
+  %.finite54 = select i1 %i.aw, i32 -16777216, i32 -268435456
+  %i.ay = and i32 %.finite54, %i.av
   %i.az = lshr exact i32 %i.ay, 20
   %.idx.i.i = shl nuw nsw i64 %indvars.iv.i.i, 2
   %i.ba = getelementptr inbounds nuw i8, ptr @table, i64 %.idx.i.i ; 2 uses
@@ -159,15 +158,14 @@ bb.k:                                             ; preds = %bb.h, %bb.g
 
 bb.l:                                             ; preds = %bb.p, %.loopexit.i.i
   %indvars.iv.1.i.i = phi i64 [ 0, %.loopexit.i.i ], [ %indvars.iv.next.1.i.i, %bb.p ] ; 3 uses
-  %i.bo = icmp samesign ugt i64 %indvars.iv.1.i.i, 10
-  %i.bp = select i1 %i.bo, i32 8, i32 4           ; 3 uses
+  %i.bo = icmp samesign ugt i64 %indvars.iv.1.i.i, 10 ; 2 uses
+  %i.bp = select i1 %i.bo, i32 8, i32 4           ; 2 uses
   %.not.1.i.i = icmp samesign ult i32 %.236.i.i, %i.bp
   br i1 %.not.1.i.i, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %3 = sub nuw nsw i32 12, %i.bp
-  %4 = shl nsw i32 -1048576, %3
-  %i.bq = and i32 %4, %.2.i.i
+  %.finite = select i1 %i.bo, i32 -16777216, i32 -268435456
+  %i.bq = and i32 %.finite, %.2.i.i
   %i.br = lshr exact i32 %i.bq, 20
   %.idx50.i.i = shl nuw nsw i64 %indvars.iv.1.i.i, 2
   %i.bs = getelementptr inbounds nuw i8, ptr @table, i64 %.idx50.i.i ; 2 uses

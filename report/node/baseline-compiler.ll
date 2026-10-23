@@ -204,10 +204,7 @@ _ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit._c
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20
 
 bb.c:                                             ; preds = %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit, %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit
-  %i.u = and i8 %.sroa.0.0.copyload.i24, 7        ; 2 uses
-  %2 = or disjoint i8 %i.u, 32
-  %3 = zext nneg i8 %2 to i64
-  %4 = shl nuw nsw i64 %3, 24
+  %i.u = and i8 %.sroa.0.0.copyload.i24, 7
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20
 
 bb.d:                                             ; preds = %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit, %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit
@@ -217,7 +214,7 @@ bb.d:                                             ; preds = %_ZN2v88internal8bas
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20: ; preds = %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit._crit_edge, %bb.c, %bb.d
   %.sroa.476.0 = phi i8 [ %i.w, %bb.d ], [ %.pre, %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit._crit_edge ], [ %i.u, %bb.c ]
-  %.sroa.677.1 = phi i64 [ 0, %bb.d ], [ 0, %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit._crit_edge ], [ %4, %bb.c ]
+  %.sroa.677.1 = phi i64 [ 0, %bb.d ], [ 0, %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit._crit_edge ], [ 603979776, %bb.c ]
   %i.x = phi ptr [ inttoptr (i64 2 to ptr), %bb.d ], [ inttoptr (i64 1 to ptr), %_ZN2v88internal8baseline17BaselineAssembler20ScratchRegisterScopeC2EPS2_.exit._crit_edge ], [ inttoptr (i64 2 to ptr), %bb.c ]
   %.sroa.275.0 = lshr i8 %.sroa.0.0.copyload.i24, 3
   %.sroa.476.0.insert.ext = zext i8 %.sroa.476.0 to i64
@@ -240,10 +237,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20._crit_edge: ; preds = %_ZN2v88i
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit
 
 bb.e:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20
-  %i.z = and i8 %.sroa.0.0.copyload.i24, 7        ; 2 uses
-  %5 = or disjoint i8 %i.z, 32
-  %6 = zext nneg i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 24
+  %i.z = and i8 %.sroa.0.0.copyload.i24, 7
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit
 
 bb.f:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20
@@ -252,7 +246,7 @@ bb.f:                                             ; preds = %_ZN2v88internal7Ope
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit:   ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20._crit_edge, %bb.e, %bb.f
-  %.sroa.6.1 = phi i64 [ 0, %bb.f ], [ 0, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20._crit_edge ], [ %7, %bb.e ]
+  %.sroa.6.1 = phi i64 [ 0, %bb.f ], [ 0, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20._crit_edge ], [ 603979776, %bb.e ]
   %.sroa.4.0 = phi i8 [ %i.ab, %bb.f ], [ %.pre67, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20._crit_edge ], [ %i.z, %bb.e ]
   %i.ac = phi ptr [ inttoptr (i64 2 to ptr), %bb.f ], [ inttoptr (i64 1 to ptr), %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit20._crit_edge ], [ inttoptr (i64 2 to ptr), %bb.e ]
   %.sroa.2.0 = lshr i8 %.sroa.0.0.copyload.i24, 3

@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph58.i:                                       ; preds = %.lr.ph.i.prol.loopexit.1, %.lr.ph.i.1, %.lr.ph.i.prol.loopexit
   %i.ba = add nuw nsw i32 %2, 1
-  %i.bb = zext nneg i32 %i.ba to i64              ; 2 uses
+  %i.bb = zext nneg i32 %i.ba to i64
   %i.bc = mul nuw nsw i64 %wide.trip.count65.i, %i.bb
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bc
   %i.be = load double, ptr %i.bd, align 8, !tbaa !47
@@ -255,13 +255,12 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph58.i
   br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.b, !llvm.loop !186
 
 .epilog-lcssa:                                    ; preds = %bb.b
-  %indvars.iv.next73.i = add nsw i64 %wide.trip.count65.i, -1 ; 5 uses
+  %indvars.iv.next73.i = add nsw i64 %wide.trip.count65.i, -1 ; 4 uses
   %.not19 = icmp eq i32 %2, 2
   br i1 %.not19, label %gauss_solve_triangular.exit, label %bb.c
 
 bb.c:                                             ; preds = %.epilog-lcssa
-  %3 = mul nuw nsw i64 %indvars.iv.next73.i, %i.bb
-  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
+  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %0, i64 4
   %i.bv = load double, ptr %i.bu, align 8, !tbaa !47
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next73.i ; 2 uses
   %i.bx = load double, ptr %i.bw, align 8, !tbaa !47

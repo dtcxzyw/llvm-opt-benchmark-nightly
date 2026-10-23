@@ -202,23 +202,18 @@ _ZN2v88internal14MacroAssembler7LoadMapENS0_8RegisterES2_.exit: ; preds = %._ZN2
   br i1 %.not33, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN2v88internal14MacroAssembler7LoadMapENS0_8RegisterES2_.exit
-  %i.r = and i8 %4, 7                             ; 2 uses
+  %i.r = and i8 %4, 7
   %i.s = lshr i8 %4, 3                            ; 2 uses
   %i.t = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.t)
-  %i.u = or disjoint i8 %i.r, 64                  ; 2 uses
+  %i.u = or disjoint i8 %i.r, 64
   switch i8 %4, label %.lr.ph.split [
     i8 4, label %.lr.ph.split.us
     i8 12, label %.lr.ph.split.us
   ]
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph
-  %8 = or disjoint i8 %i.r, 32
-  %.sroa.0.3.insert.ext = zext nneg i8 %8 to i64
-  %.sroa.0.3.insert.shift = shl nuw nsw i64 %.sroa.0.3.insert.ext, 24
-  %.sroa.0.2.insert.ext43 = zext nneg i8 %i.u to i64
-  %.sroa.0.2.insert.shift44 = shl nuw nsw i64 %.sroa.0.2.insert.ext43, 16
-  %.sroa.0.2.insert.insert46 = or disjoint i64 %.sroa.0.3.insert.shift, %.sroa.0.2.insert.shift44
+  %.sroa.0.2.insert.insert46 = or disjoint i64 603979776, 4456448
   %.sroa.0.1.insert.ext38 = zext nneg i8 %i.s to i64
   %.sroa.0.1.insert.shift39 = shl nuw nsw i64 %.sroa.0.1.insert.ext38, 8
   %.sroa.0.1.insert.insert41 = or disjoint i64 %.sroa.0.2.insert.insert46, %.sroa.0.1.insert.shift39

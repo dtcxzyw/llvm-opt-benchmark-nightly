@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %.preheader255.prehe
 
 .preheader255.preheader.thread.i:                 ; preds = %bb.u, %.thread292.i
   %.2184.peel.i = phi i32 [ %i.dv, %bb.u ], [ %i.dp, %.thread292.i ] ; 2 uses
-  %.1.peel.i = phi i32 [ 4, %bb.u ], [ 2, %.thread292.i ] ; 25 uses
+  %.1.peel.i = phi i32 [ 4, %bb.u ], [ 2, %.thread292.i ] ; 24 uses
   %notmask.peel.i = shl nsw i32 -1, %.1.peel.i    ; 2 uses
   %i.dx = xor i32 %notmask.peel.i, -1
   %i.dy = lshr i32 %.2184.peel.i, 2
@@ -360,10 +360,9 @@ bb.ad:                                            ; preds = %.preheader255.i.pre
   br i1 %.not207.i.5, label %bb.ae, label %.thread.loopexit.loopexit.i
 
 bb.ae:                                            ; preds = %bb.ad
-  %notmask.i.5 = shl nsw i32 -16777216, %.1.peel.i ; 2 uses
-  %i.ha = xor i32 %notmask.i.5, -1
+  %i.ha = xor i32 -67108864, -1
   %i.hb = lshr i32 %i.gy, 2
-  %i.hc = and i32 %i.hb, %notmask.i.5
+  %i.hc = and i32 %i.hb, -67108864
   %i.hd = and i32 %i.gy, %i.ha
   %i.he = or disjoint i32 %i.hc, %i.hd            ; 2 uses
   %i.hf = getelementptr inbounds i8, ptr %i.go, i64 %.v.i

@@ -205,7 +205,7 @@ bb.ex:                                            ; preds = %bb.ew, %bb.ev
   %i.czf = getelementptr inbounds i8, ptr %i.cyy, i64 %indvars.iv282.i.i
   %i.czg = load i8, ptr %i.czf, align 1, !tbaa !32
   %.fr219.i.i = freeze i8 %i.czg                  ; 5 uses
-  %i.czh = zext i8 %.fr219.i.i to i64             ; 20 uses
+  %i.czh = zext i8 %.fr219.i.i to i64             ; 19 uses
   %i.czi = sub nsw i64 0, %i.czh                  ; 6 uses
   %.not221.i.i = icmp eq i8 %.fr219.i.i, 0
   br i1 %.not221.i.i, label %.split.us.us.split.split.preheader.i.i, label %.split.us.us.split.us.preheader.i.i
@@ -564,9 +564,8 @@ scalar.ph491:                                     ; preds = %scalar.ph491.prol.l
   br i1 %exitcond267.2.not.i.i.1, label %.split170.us.us.i.i, label %scalar.ph491, !llvm.loop !172
 
 .split.us.us.split.split.preheader.i.i:           ; preds = %.split.us.us.i.i
-  %4 = mul nuw nsw i64 %i.czh, -12                ; 2 uses
-  %scevgep280.i.i = getelementptr i8, ptr %.0123175.us.i.i, i64 %4
-  %scevgep281.i.i = getelementptr i8, ptr %.0122176.us.i.i, i64 %4
+  %scevgep280.i.i = getelementptr i8, ptr %.0123175.us.i.i, i64 0
+  %scevgep281.i.i = getelementptr i8, ptr %.0122176.us.i.i, i64 0
   br label %.split170.us.us.i.i
 
 .split170.us.us.i.i:                              ; preds = %.lr.ph.us.us.us.2.i.i, %scalar.ph491.prol.loopexit, %scalar.ph491, %middle.block504, %.split.us.us.split.split.preheader.i.i, %._crit_edge.us.us.us.2.i.i, %..loopexit158_crit_edge.us.us.us.1.i.i

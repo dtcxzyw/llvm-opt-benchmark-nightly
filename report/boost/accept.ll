@@ -205,14 +205,12 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !762
   %.not.i.i = icmp eq i64 %i.c, 0                 ; 2 uses
-  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32 ; 2 uses
+  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32
   %.0.i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.0.v.i.i
   br i1 %.not.i.i, label %bb.b, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.a
-  %3 = add nuw nsw i64 %.0.v.i.i, 112
-  %4 = lshr exact i64 %3, 4
-  %i.d = add nuw nsw i64 %4, 1
+  %i.d = add nuw nsw i64 9, 1
   %xtraiter = and i64 %i.d, 7                     ; 2 uses
   %lcmp.mod47 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod47)
@@ -615,14 +613,12 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !762
   %.not.i.i = icmp eq i64 %i.c, 0                 ; 2 uses
-  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32 ; 2 uses
+  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32
   %.0.i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.0.v.i.i
   br i1 %.not.i.i, label %bb.b, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.a
-  %3 = add nuw nsw i64 %.0.v.i.i, 112
-  %4 = lshr exact i64 %3, 4
-  %i.d = add nuw nsw i64 %4, 1
+  %i.d = add nuw nsw i64 9, 1
   %xtraiter = and i64 %i.d, 7                     ; 2 uses
   %lcmp.mod47 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod47)

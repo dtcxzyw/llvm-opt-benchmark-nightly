@@ -205,7 +205,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 210
   %i.l = load i16, ptr %i.k, align 2, !noundef !5
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
-  %i.n = load i64, ptr %i.m, align 8, !noundef !5 ; 5 uses
+  %i.n = load i64, ptr %i.m, align 8, !noundef !5 ; 4 uses
   %i.o = icmp ult i64 %i.n, 18595508138820113
   tail call void @llvm.assume(i1 %i.o)
   %i.p = icmp eq i64 %i.n, 3
@@ -220,8 +220,7 @@ bb.b:                                             ; preds = %bb.a
 .thread127:                                       ; preds = %bb.b, %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 232
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !5, !noundef !5 ; 2 uses
-  %.idx128 = mul nuw nsw i64 %i.n, 496
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx128
+  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1488
   br label %.lr.ph
 
 bb.c:                                             ; preds = %bb.a
@@ -624,7 +623,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 210
   %i.l = load i16, ptr %i.k, align 2, !noundef !5
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
-  %i.n = load i64, ptr %i.m, align 8, !noundef !5 ; 5 uses
+  %i.n = load i64, ptr %i.m, align 8, !noundef !5 ; 4 uses
   %i.o = icmp ult i64 %i.n, 18595508138820113
   tail call void @llvm.assume(i1 %i.o)
   %i.p = icmp eq i64 %i.n, 3
@@ -639,8 +638,7 @@ bb.b:                                             ; preds = %bb.a
 .thread127:                                       ; preds = %bb.b, %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 232
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !5, !noundef !5 ; 2 uses
-  %.idx128 = mul nuw nsw i64 %i.n, 496
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx128
+  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1488
   br label %.lr.ph
 
 bb.c:                                             ; preds = %bb.a

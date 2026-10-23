@@ -205,12 +205,11 @@ define linkonce_odr hidden void @_ZN5boost5beast6detail20test_mutable_buffersINS
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load i64, ptr %i.b, align 8, !tbaa !111
-  %.not.i.i.i.i = icmp eq i64 %i.c, 0
-  %.0.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 16, i64 32 ; 2 uses
+  %.not.i.i.i.i = icmp eq i64 %i.c, 0             ; 2 uses
+  %.0.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 16, i64 32
   %.0.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 %.0.v.i.i.i.i
-  %4 = add nsw i64 %.0.v.i.i.i.i, -16
-  %5 = lshr exact i64 %4, 4
-  %i.d = add nuw nsw i64 %5, 1                    ; 2 uses
+  %.finite = select i1 %.not.i.i.i.i, i64 0, i64 1
+  %i.d = add nuw nsw i64 %.finite, 1              ; 2 uses
   %xtraiter = and i64 %i.d, 7                     ; 2 uses
   %lcmp.mod41 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod41)

@@ -21,7 +21,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !18   ; 23 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !18   ; 22 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !21   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -69,10 +69,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not214227, label %._crit_edge247.thread, label %.preheader
 
 .preheader:                                       ; preds = %.preheader218
-  %3 = add nuw nsw i32 %i.f, 1
-  %4 = zext nneg i32 %3 to i64
-  %5 = shl nuw nsw i64 %4, 2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ad, i8 0, i64 %5, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ad, i8 0, i64 4, i1 false), !tbaa !29
   br label %._crit_edge247.thread
 
 .lr.ph246:                                        ; preds = %bb.e

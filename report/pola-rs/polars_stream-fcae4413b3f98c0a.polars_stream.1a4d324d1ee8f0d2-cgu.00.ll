@@ -205,9 +205,8 @@ _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8for_each4call
   %i.ajk = lshr i64 %i.aji, 1, !dbg !101457
   %i.ajl = add i64 %i.ajh, -1, !dbg !101455
   %i.ajm = and i8 %i.ajj, 1, !dbg !101458
-  %i.ajn = trunc nuw nsw i64 %i.aii to i8, !dbg !101459 ; 2 uses
-  %3 = shl nuw i8 1, %i.ajn, !dbg !101459
-  %i.ajo = xor i8 %3, -1, !dbg !101460
+  %i.ajn = trunc nuw nsw i64 %i.aii to i8, !dbg !101459
+  %i.ajo = xor i8 -128, -1, !dbg !101460
   %i.ajp = shl nuw i8 %i.ajm, %i.ajn, !dbg !101461
   %i.ajq = and i8 %i.aja, %i.ajo, !dbg !101462
   %i.ajr = or i8 %i.ajp, %i.ajq, !dbg !101462

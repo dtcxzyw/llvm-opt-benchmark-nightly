@@ -205,29 +205,22 @@ bb.a:
   tail call void @llvm.assume(i1 %i.f)
   %i.g = add nsw i64 %i.e, -2
   %.inv.i = icmp samesign ult i64 %i.e, 2
-  %i.h = select i1 %.inv.i, i64 2, i64 %i.g       ; 9 uses
-  %.sroa.4.0.extract.shift.i.i.i = lshr i64 %i.h, 8
-  %.sroa.5.0.extract.shift.i.i.i = lshr i64 %i.h, 16
-  %.sroa.6.0.extract.shift.i.i.i = lshr i64 %i.h, 24
-  %.sroa.7.0.extract.shift.i.i.i = lshr i64 %i.h, 32
-  %.sroa.8.0.extract.shift.i.i.i = lshr i64 %i.h, 40
-  %.sroa.9.0.extract.shift.i.i.i = lshr i64 %i.h, 48
-  %.sroa.10.0.extract.shift.i.i.i = lshr i64 %i.h, 56
+  %i.h = select i1 %.inv.i, i64 2, i64 %i.g       ; 2 uses
   %i.i = xor i64 %i.c, %i.h
   %i.j = mul i64 %i.i, 1099511628211
-  %i.k = xor i64 %i.j, %.sroa.4.0.extract.shift.i.i.i
+  %i.k = xor i64 %i.j, 0
   %i.l = mul i64 %i.k, 1099511628211
-  %i.m = xor i64 %i.l, %.sroa.5.0.extract.shift.i.i.i
+  %i.m = xor i64 %i.l, 0
   %i.n = mul i64 %i.m, 1099511628211
-  %i.o = xor i64 %i.n, %.sroa.6.0.extract.shift.i.i.i
+  %i.o = xor i64 %i.n, 0
   %i.p = mul i64 %i.o, 1099511628211
-  %i.q = xor i64 %i.p, %.sroa.7.0.extract.shift.i.i.i
+  %i.q = xor i64 %i.p, 0
   %i.r = mul i64 %i.q, 1099511628211
-  %i.s = xor i64 %i.r, %.sroa.8.0.extract.shift.i.i.i
+  %i.s = xor i64 %i.r, 0
   %i.t = mul i64 %i.s, 1099511628211
-  %i.u = xor i64 %i.t, %.sroa.9.0.extract.shift.i.i.i
+  %i.u = xor i64 %i.t, 0
   %i.v = mul i64 %i.u, 1099511628211
-  %i.w = xor i64 %i.v, %.sroa.10.0.extract.shift.i.i.i
+  %i.w = xor i64 %i.v, 0
   %i.x = mul i64 %i.w, 1099511628211              ; 4 uses
   switch i64 %i.h, label %bb.b [
     i64 0, label %bb.c

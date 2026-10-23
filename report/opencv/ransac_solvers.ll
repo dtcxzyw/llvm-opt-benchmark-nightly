@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.aw, ptr %i.f, align 4, !tbaa !62
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
-  %i.ax = zext nneg i32 %i.aw to i64              ; 2 uses
+  %i.ax = zext nneg i32 %i.aw to i64
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
   br i1 %i.ap, label %_ZNSt12_Vector_baseIN2cv3MatESaIS1_EE11_M_allocateEm.exit.i, label %.thread1279
 
@@ -217,8 +217,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt12_Vector_baseIN2cv3MatESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.ba = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
-  %65 = mul nuw nsw i64 %i.ax, 208
-  %i.bb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %65) #26
+  %i.bb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef 4368) #26
           to label %.noexc214 unwind label %bb.aa ; 4 uses
 
 .noexc214:                                        ; preds = %_ZNSt12_Vector_baseIN2cv3MatESaIS1_EE11_M_allocateEm.exit.i
