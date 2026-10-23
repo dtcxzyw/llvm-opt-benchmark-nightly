@@ -110,7 +110,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.x = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.t, i32 -1) ; 2 uses
-  %i.y = extractvalue { i32, i1 } %i.x, 0, !nosanitize !9 ; 3 uses
+  %i.y = extractvalue { i32, i1 } %i.x, 0, !nosanitize !9 ; 2 uses
   %i.z = extractvalue { i32, i1 } %i.x, 1, !nosanitize !9
   br i1 %i.z, label %bb.l, label %bb.m, !prof !13, !nosanitize !9
 
@@ -120,17 +120,12 @@ bb.l:                                             ; preds = %bb.k
   unreachable, !nosanitize !9
 
 bb.m:                                             ; preds = %bb.k
-  %8 = icmp ne i32 %3, 0, !nosanitize !9
-  %9 = icmp ne i32 %i.y, -2147483648, !nosanitize !9
-  %10 = icmp ne i32 %3, -1, !nosanitize !9
-  %11 = or i1 %10, %9, !nosanitize !9
-  %12 = and i1 %8, %11, !nosanitize !9
-  br i1 %12, label %bb.o, label %bb.n, !prof !10, !nosanitize !9
+  %.not283 = icmp eq i32 %3, 0, !nosanitize !9
+  br i1 %.not283, label %bb.n, label %bb.o, !prof !13, !nosanitize !9
 
 bb.n:                                             ; preds = %bb.m
   %i.ab = zext i32 %i.y to i64, !nosanitize !9
-  %13 = zext i32 %3 to i64, !nosanitize !9
-  tail call void @__ubsan_handle_divrem_overflow_abort(ptr nonnull @7, i64 %i.ab, i64 %13) #4, !nosanitize !9
+  tail call void @__ubsan_handle_divrem_overflow_abort(ptr nonnull @7, i64 %i.ab, i64 0) #4, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.o:                                             ; preds = %bb.m
@@ -170,7 +165,7 @@ bb.u:                                             ; preds = %bb.t
   unreachable, !nosanitize !9
 
 bb.v:                                             ; preds = %bb.t
-  %i.an = sdiv i32 %i.aj, %i.j                    ; 7 uses
+  %i.an = sdiv i32 %i.aj, %i.j                    ; 5 uses
   %i.ao = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %2, i32 %i.an), !nosanitize !9 ; 2 uses
   %i.ap = extractvalue { i32, i1 } %i.ao, 0, !nosanitize !9 ; 2 uses
   %i.aq = extractvalue { i32, i1 } %i.ao, 1, !nosanitize !9
@@ -184,7 +179,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %i.at = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ap, i32 -1) ; 2 uses
-  %i.au = extractvalue { i32, i1 } %i.at, 0, !nosanitize !9 ; 3 uses
+  %i.au = extractvalue { i32, i1 } %i.at, 0, !nosanitize !9 ; 2 uses
   %i.av = extractvalue { i32, i1 } %i.at, 1, !nosanitize !9
   br i1 %i.av, label %bb.y, label %bb.z, !prof !13, !nosanitize !9
 
@@ -194,17 +189,12 @@ bb.y:                                             ; preds = %bb.x
   unreachable, !nosanitize !9
 
 bb.z:                                             ; preds = %bb.x
-  %14 = icmp ne i32 %i.an, 0, !nosanitize !9
-  %15 = icmp ne i32 %i.au, -2147483648, !nosanitize !9
-  %16 = icmp ne i32 %i.an, -1, !nosanitize !9
-  %17 = or i1 %16, %15, !nosanitize !9
-  %18 = and i1 %14, %17, !nosanitize !9
-  br i1 %18, label %bb.ab, label %bb.aa, !prof !10, !nosanitize !9
+  %.not284 = icmp eq i32 %i.an, 0, !nosanitize !9
+  br i1 %.not284, label %bb.aa, label %bb.ab, !prof !13, !nosanitize !9
 
 bb.aa:                                            ; preds = %bb.z
   %i.ax = zext i32 %i.au to i64, !nosanitize !9
-  %19 = zext i32 %i.an to i64, !nosanitize !9
-  tail call void @__ubsan_handle_divrem_overflow_abort(ptr nonnull @13, i64 %i.ax, i64 %19) #4, !nosanitize !9
+  tail call void @__ubsan_handle_divrem_overflow_abort(ptr nonnull @13, i64 %i.ax, i64 0) #4, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ab:                                            ; preds = %bb.z
