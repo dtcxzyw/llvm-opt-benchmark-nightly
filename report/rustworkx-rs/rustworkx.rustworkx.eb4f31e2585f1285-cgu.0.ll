@@ -205,7 +205,7 @@ _RNvMsG_NtCs87CvPiUlf0m_5alloc3vecINtB5_3VecNtNtCs68Jln09rRqb_8petgraph10graph_i
   br i1 %exitcond.not.i.i.i, label %.loopexit.i.i.i, label %.lr.ph723.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RINvXs0_NtNtCsjH8OHv3LeEG_4rand3seq5sliceSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexNtB6_11SliceRandom15partial_shuffleNtNtCs6EUok6QJynq_8rand_pcg6pcg12811Lcg128Xsl64ECskcxRuJ53GpR_9rustworkx.exit.i.i.i, %_RNvMs2_NtCsfztDQZkQYYe_8indexmap3mapINtB5_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBO_EuE11insert_fullCskcxRuJ53GpR_9rustworkx.exit.i.i.i
-  %.sroa.0.0712.i.i.i = phi i64 [ %i.aie, %_RNvMs2_NtCsfztDQZkQYYe_8indexmap3mapINtB5_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBO_EuE11insert_fullCskcxRuJ53GpR_9rustworkx.exit.i.i.i ], [ 0, %_RINvXs0_NtNtCsjH8OHv3LeEG_4rand3seq5sliceSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexNtB6_11SliceRandom15partial_shuffleNtNtCs6EUok6QJynq_8rand_pcg6pcg12811Lcg128Xsl64ECskcxRuJ53GpR_9rustworkx.exit.i.i.i ] ; 2 uses
+  %.sroa.0.0712.i.i.i = phi i64 [ %i.aie, %_RNvMs2_NtCsfztDQZkQYYe_8indexmap3mapINtB5_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBO_EuE11insert_fullCskcxRuJ53GpR_9rustworkx.exit.i.i.i ], [ 0, %_RINvXs0_NtNtCsjH8OHv3LeEG_4rand3seq5sliceSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexNtB6_11SliceRandom15partial_shuffleNtNtCs6EUok6QJynq_8rand_pcg6pcg12811Lcg128Xsl64ECskcxRuJ53GpR_9rustworkx.exit.i.i.i ] ; 3 uses
   %i.vm = load ptr, ptr %i.fr, align 8, !noalias !111341, !nonnull !56, !noundef !56
   %i.vn = getelementptr inbounds nuw [4 x i8], ptr %i.vm, i64 %.sroa.0.0712.i.i.i ; 2 uses
   %i.vo = load i32, ptr %i.vn, align 4, !noalias !111341, !noundef !56 ; 3 uses
@@ -608,8 +608,8 @@ bb.bu:                                            ; preds = %_RNCINvMs6_NtCslcZT
   br i1 %i.aid, label %_RNvMs2_NtCsfztDQZkQYYe_8indexmap3mapINtB5_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBO_EuE11insert_fullCskcxRuJ53GpR_9rustworkx.exit.i.i.i, label %.invoke920.i.i.i
 
 _RNvMs2_NtCsfztDQZkQYYe_8indexmap3mapINtB5_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBO_EuE11insert_fullCskcxRuJ53GpR_9rustworkx.exit.i.i.i: ; preds = %.loopexit854.i.i.i, %bb.bu, %_RNvMs_NtCsfztDQZkQYYe_8indexmap5innerINtB4_4CoreTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBL_EuE10push_entryCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i.i
-  %i.aie = add nuw nsw i64 %.sroa.0.0712.i.i.i, 2 ; 2 uses
-  %5 = or disjoint i64 %i.aie, 1
+  %i.aie = add nuw nsw i64 %.sroa.0.0712.i.i.i, 2
+  %5 = add nuw nsw i64 %.sroa.0.0712.i.i.i, 3
   %i.aif = load i64, ptr %.phi.trans.insert.i.i.i, align 8, !noalias !111341, !noundef !56 ; 2 uses
   %i.aig = icmp ult i64 %i.aif, 2305843009213693952
   call void @llvm.assume(i1 %i.aig)

@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.u, %.loopexit
   br i1 %i.dz, label %.lr.ph341, label %._crit_edge
 
 .lr.ph341:                                        ; preds = %bb.w, %bb.ac
-  %indvars.iv392 = phi i64 [ %indvars.iv.next393, %bb.ac ], [ 0, %bb.w ] ; 4 uses
+  %indvars.iv392 = phi i64 [ %indvars.iv.next393, %bb.ac ], [ 0, %bb.w ] ; 5 uses
   %i.km = getelementptr inbounds nuw [8 x i8], ptr %i.fb, i64 %indvars.iv392 ; 4 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %i.km, i64 4
   %i.ko = load i32, ptr %i.kn, align 4, !tbaa !76 ; 4 uses
@@ -261,9 +261,9 @@ bb.ab:                                            ; preds = %.lr.ph341
   br label %.critedge236
 
 bb.ac:                                            ; preds = %bb.z, %bb.aa
-  %indvars.iv.next393 = add nuw nsw i64 %indvars.iv392, 2 ; 3 uses
-  %i.lr = trunc i64 %indvars.iv.next393 to i32
-  %7 = or disjoint i32 %i.lr, 1
+  %indvars.iv.next393 = add nuw nsw i64 %indvars.iv392, 2 ; 2 uses
+  %i.lr = trunc i64 %indvars.iv392 to i32
+  %7 = add i32 %i.lr, 3
   %i.ls = icmp slt i32 %7, %i.g
   br i1 %i.ls, label %.lr.ph341, label %._crit_edge.loopexit, !llvm.loop !257
 

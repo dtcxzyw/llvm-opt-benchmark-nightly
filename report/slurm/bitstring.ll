@@ -202,14 +202,14 @@ bb.a:
   br i1 %.not.us.i7, label %.lr.ph, label %.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph
-  %2 = or disjoint i64 %i.d, 63
+  %2 = add i64 %.02841.us.i8, 127
   %.not.us.i = icmp ult i64 %2, %i.b
   br i1 %.not.us.i, label %.lr.ph, label %.split.us.i, !llvm.loop !8
 
 .lr.ph:                                           ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.us.i
   %.02940.us.i9 = phi i32 [ %i.n, %.lr.ph.split.us.i ], [ 0, %.lr.ph.split.us.i.preheader ]
-  %.02841.us.i8 = phi i64 [ %i.d, %.lr.ph.split.us.i ], [ 0, %.lr.ph.split.us.i.preheader ] ; 2 uses
-  %i.d = add i64 %.02841.us.i8, 64                ; 3 uses
+  %.02841.us.i8 = phi i64 [ %i.d, %.lr.ph.split.us.i ], [ 0, %.lr.ph.split.us.i.preheader ] ; 3 uses
+  %i.d = add i64 %.02841.us.i8, 64                ; 2 uses
   %i.e = ashr exact i64 %.02841.us.i8, 6
   %i.f = add nsw i64 %i.e, 2                      ; 2 uses
   %i.g = getelementptr inbounds [8 x i8], ptr %0, i64 %i.f

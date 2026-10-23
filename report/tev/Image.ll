@@ -205,12 +205,12 @@ bb.e:                                             ; preds = %bb.d
 _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEmmmmmmPKc.exit: ; preds = %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %2, i64 44)
-  %i.g = or i64 %.sroa.speculated.i, 7
-  %i.h = add nuw i64 %i.g, 1                      ; 2 uses
+  %i.g = or i64 %.sroa.speculated.i, 7            ; 2 uses
+  %i.h = add nuw i64 %i.g, 1
   %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #46 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr align 1 %1, i64 %2, i1 false)
   store ptr %i.i, ptr %i.f, align 8, !tbaa !126
-  %3 = or disjoint i64 %i.h, 1
+  %3 = add nuw i64 %i.g, 2
   store i64 %3, ptr %0, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.j, align 8, !tbaa !126

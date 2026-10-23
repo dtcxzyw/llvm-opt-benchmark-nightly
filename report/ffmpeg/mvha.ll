@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %.lr.ph, %bb.aa
   %i.de = ptrtoint ptr %i.dc to i64
   %i.df = sub i64 %i.dd, %i.de
   %i.dg = load i32, ptr %i.cm, align 4, !tbaa !66
-  %i.dh = load i32, ptr %i.cn, align 8, !tbaa !67 ; 6 uses
+  %i.dh = load i32, ptr %i.cn, align 8, !tbaa !67 ; 7 uses
   %.tr.i = trunc i64 %i.df to i32
   %i.di = shl i32 %.tr.i, 3
   %i.dj = add i32 %i.dh, %i.dg
@@ -224,7 +224,7 @@ bb.v:                                             ; preds = %bb.u
 
 bits_read_bit_be.exit:                            ; preds = %bb.u
   %.val.i.pre.i = load i64, ptr %i.d, align 8, !tbaa !68 ; 2 uses
-  %i.dn = add i32 %i.dh, -1                       ; 5 uses
+  %i.dn = add i32 %i.dh, -1                       ; 4 uses
   %i.do = shl i64 %.val.i.pre.i, 1                ; 4 uses
   store i64 %i.do, ptr %i.d, align 8, !tbaa !68
   store i32 %i.dn, ptr %i.cn, align 8, !tbaa !67
@@ -260,7 +260,7 @@ bits_priv_refill_32_be.exit.i227:                 ; preds = %bb.x
   %i.eb = or i64 %i.ea, %i.do
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dc, i64 4
   store ptr %i.ec, ptr %i.cl, align 8, !tbaa !65
-  %4 = or disjoint i32 %i.dn, 32
+  %4 = add nuw nsw i32 %i.dh, 31
   br label %bits_read_nz_be.exit228
 
 bits_read_nz_be.exit228:                          ; preds = %bits_read_bit_be.exit.thread369, %bb.w, %bb.x, %bits_priv_refill_32_be.exit.i227

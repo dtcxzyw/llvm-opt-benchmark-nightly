@@ -205,12 +205,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
-  %.fr = freeze i64 %i.c                          ; 4 uses
+  %.fr = freeze i64 %i.c                          ; 5 uses
   %i.d = icmp slt i64 %.fr, 2
   br i1 %i.d, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = add nsw i64 %.fr, -2                     ; 3 uses
+  %i.e = add nsw i64 %.fr, -2                     ; 2 uses
   %i.f = lshr i64 %i.e, 1                         ; 2 uses
   %i.g = add nsw i64 %.fr, -1
   %i.h = lshr i64 %i.g, 1                         ; 4 uses
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.e, 1                    ; 2 uses
+  %3 = add nsw i64 %.fr, -1                       ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.k
   br label %.split

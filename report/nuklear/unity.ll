@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %stbtt__buf_get8.exi
 
 .preheader:                                       ; preds = %.preheader.preheader, %stbtt__csctx_rline_to.exit
   %i.by = phi i32 [ %.pre452, %.preheader.preheader ], [ %i.da, %stbtt__csctx_rline_to.exit ] ; 2 uses
-  %indvars.iv429 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next430, %stbtt__csctx_rline_to.exit ] ; 2 uses
+  %indvars.iv429 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next430, %stbtt__csctx_rline_to.exit ] ; 3 uses
   %i.bz = phi <2 x float> [ %i.bx, %.preheader.preheader ], [ %i.dc, %stbtt__csctx_rline_to.exit ]
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv429
   %i.cb = load <2 x float>, ptr %i.ca, align 8, !tbaa !54
@@ -299,8 +299,8 @@ stbtt__csctx_rline_to.exit:                       ; preds = %stbtt__track_vertex
   %i.dc = phi <2 x float> [ %i.cc, %stbtt__track_vertex.exit.i.i ], [ %i.cz, %bb.y ]
   %i.dd = add nsw i32 %i.db, 1
   store i32 %i.dd, ptr %.phi.trans.insert.i309, align 8, !tbaa !280
-  %indvars.iv.next430 = add nuw nsw i64 %indvars.iv429, 2 ; 2 uses
-  %5 = or disjoint i64 %indvars.iv.next430, 1
+  %indvars.iv.next430 = add nuw nsw i64 %indvars.iv429, 2
+  %5 = add nuw nsw i64 %indvars.iv429, 3
   %i.de = icmp samesign ult i64 %5, %i.bw
   br i1 %i.de, label %.preheader, label %.thread, !llvm.loop !1227
 
@@ -703,7 +703,7 @@ bb.cf:                                            ; preds = %stbtt__buf_get8.exi
 
 .lr.ph357:                                        ; preds = %.lr.ph357.preheader, %stbtt__csctx_rline_to.exit311
   %i.jt = phi i32 [ %.pre446, %.lr.ph357.preheader ], [ %i.kv, %stbtt__csctx_rline_to.exit311 ] ; 2 uses
-  %indvars.iv420 = phi i64 [ 0, %.lr.ph357.preheader ], [ %indvars.iv.next421, %stbtt__csctx_rline_to.exit311 ] ; 2 uses
+  %indvars.iv420 = phi i64 [ 0, %.lr.ph357.preheader ], [ %indvars.iv.next421, %stbtt__csctx_rline_to.exit311 ] ; 3 uses
   %i.ju = phi <2 x float> [ %i.js, %.lr.ph357.preheader ], [ %i.kx, %stbtt__csctx_rline_to.exit311 ]
   %i.jv = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv420
   %i.jw = load <2 x float>, ptr %i.jv, align 8, !tbaa !54
@@ -797,8 +797,8 @@ stbtt__csctx_rline_to.exit311:                    ; preds = %stbtt__track_vertex
   %i.kx = phi <2 x float> [ %i.jx, %stbtt__track_vertex.exit.i.i308 ], [ %i.ku, %bb.cs ]
   %i.ky = add nsw i32 %i.kw, 1
   store i32 %i.ky, ptr %.phi.trans.insert.i309, align 8, !tbaa !280
-  %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 2 ; 4 uses
-  %6 = or disjoint i64 %indvars.iv.next421, 1
+  %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 2 ; 3 uses
+  %6 = add nuw nsw i64 %indvars.iv420, 3
   %i.kz = icmp samesign ult i64 %6, %i.jr
   br i1 %i.kz, label %.lr.ph357, label %._crit_edge, !llvm.loop !1230
 

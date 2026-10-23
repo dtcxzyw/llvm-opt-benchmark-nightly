@@ -204,7 +204,7 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i144.i.i.i: ;
   %.sroa.450.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.659.0..sroa_idx.i.i, align 8, !tbaa !94 ; 3 uses
   %.sroa.551.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.760.0..sroa_idx.i.i, align 4, !tbaa !94 ; 4 uses
   %.sroa.652.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.861.0..sroa_idx.i.i, align 8, !tbaa !94
-  %i.cgl = mul nuw nsw i64 %indvars.iv.i20.i.i, 6 ; 5 uses
+  %i.cgl = mul nuw nsw i64 %indvars.iv.i20.i.i, 6 ; 7 uses
   %i.cgm = icmp ne i32 %.sroa.450.0.copyload.i.i.i.i.i, 0
   call void @llvm.assume(i1 %i.cgm)
   %i.cgn = icmp sge i32 %.sroa.450.0.copyload.i.i.i.i.i, %.sroa.551.0.copyload.i.i.i.i.i
@@ -212,7 +212,7 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i144.i.i.i: ;
   %i.cgo = zext nneg i32 %.sroa.450.0.copyload.i.i.i.i.i to i64 ; 6 uses
   %i.cgp = zext nneg i32 %.sroa.652.0.copyload.i.i.i.i.i to i64 ; 8 uses
   %i.cgq = zext i32 %i.cgk to i64
-  %i.cgr = add nuw nsw i64 %i.cgl, 2              ; 4 uses
+  %i.cgr = add nuw nsw i64 %i.cgl, 2              ; 3 uses
   %i.cgs = icmp samesign ule i64 %i.cgr, %i.cgp
   call void @llvm.assume(i1 %i.cgs)
   %i.cgt = icmp samesign ult i64 %i.cgl, %i.cgp
@@ -242,7 +242,7 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i144.i.i.i: ;
   %i.chn = mul nuw nsw i32 %i.cgx, 15
   %i.cho = zext nneg i32 %i.chn to i64
   %i.chp = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cho
-  %i.chq = add nuw nsw i64 %i.cgl, 4              ; 4 uses
+  %i.chq = add nuw nsw i64 %i.cgl, 4              ; 3 uses
   %i.chr = icmp samesign ule i64 %i.chq, %i.cgp
   call void @llvm.assume(i1 %i.chr)
   %i.chs = icmp samesign ult i64 %i.cgr, %i.cgp
@@ -255,7 +255,7 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i144.i.i.i: ;
   %i.chy = mul nuw nsw i32 %i.cgx, 9
   %i.chz = zext nneg i32 %i.chy to i64
   %i.cia = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.chz
-  %12 = or disjoint i64 %i.cgr, 1                 ; 2 uses
+  %12 = add nuw nsw i64 %i.cgl, 3                 ; 2 uses
   %i.cib = icmp samesign ult i64 %12, %i.cgp
   %i.cic = mul nuw nsw i64 %12, %i.cgo
   %i.cid = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.cic ; 2 uses
@@ -276,7 +276,7 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i144.i.i.i: ;
   %i.ciq = mul nuw nsw i32 %i.cgx, 11
   %i.cir = zext nneg i32 %i.ciq to i64
   %i.cis = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cir
-  %13 = or disjoint i64 %i.chq, 1                 ; 2 uses
+  %13 = add nuw nsw i64 %i.cgl, 5                 ; 2 uses
   %i.cit = icmp samesign ult i64 %13, %i.cgp
   %i.ciu = mul nuw nsw i64 %13, %i.cgo
   %i.civ = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.ciu ; 2 uses

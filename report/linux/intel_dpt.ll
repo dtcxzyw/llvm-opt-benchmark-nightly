@@ -36,8 +36,7 @@ bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr i8, ptr %0, i64 1664
   %i.g = load i32, ptr %i.f, align 8
   %i.h = getelementptr i8, ptr %0, i64 1669       ; 7 uses
-  %i.i = shl i32 %i.g, 12                         ; 4 uses
-  %1 = add i32 %i.i, 459372                       ; 7 uses
+  %i.i = shl i32 %i.g, 12                         ; 7 uses
   %i.j = getelementptr i8, ptr %i.c, i64 5160     ; 7 uses
   %i.k = load i8, ptr %i.h, align 1
   %i.l = zext i8 %i.k to i64                      ; 2 uses
@@ -46,6 +45,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.n, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %1 = add i32 %i.i, 459372                       ; 4 uses
   %i.o = load i8, ptr %i.j, align 8, !range !14, !noundef !15
   %i.p = trunc nuw i8 %i.o to i1
   %i.q = select i1 %i.p, i32 0, i32 524288
@@ -72,7 +72,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.aa, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %2 = or disjoint i32 %1, 256                    ; 4 uses
+  %2 = add i32 %i.i, 459628                       ; 4 uses
   %i.ab = load i8, ptr %i.j, align 8, !range !14, !noundef !15
   %i.ac = trunc nuw i8 %i.ab to i1
   %i.ad = select i1 %i.ac, i32 0, i32 524288
@@ -153,7 +153,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.bp, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %3 = or disjoint i32 %1, 1024                   ; 4 uses
+  %3 = add i32 %i.i, 460396                       ; 4 uses
   %i.bq = load i8, ptr %i.j, align 8, !range !14, !noundef !15
   %i.br = trunc nuw i8 %i.bq to i1
   %i.bs = select i1 %i.br, i32 0, i32 524288
@@ -180,7 +180,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.cc, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %4 = or disjoint i32 %1, 1280                   ; 4 uses
+  %4 = add i32 %i.i, 460652                       ; 4 uses
   %i.cd = load i8, ptr %i.j, align 8, !range !14, !noundef !15
   %i.ce = trunc nuw i8 %i.cd to i1
   %i.cf = select i1 %i.ce, i32 0, i32 524288

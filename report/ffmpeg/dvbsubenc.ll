@@ -200,7 +200,7 @@ bb.c:                                             ; preds = %.lr.ph
 
 .critedge.us:                                     ; preds = %bb.c, %bb.b, %.critedge.us.split.loop.exit
   %.0.us.lcssa = phi i32 [ %i.v, %.critedge.us.split.loop.exit ], [ %smax, %bb.b ], [ %smax, %bb.c ]
-  %i.w = sub nsw i32 %.0.us.lcssa, %.0190331.us   ; 16 uses
+  %i.w = sub nsw i32 %.0.us.lcssa, %.0190331.us   ; 17 uses
   %i.x = icmp eq i8 %i.m, 0                       ; 5 uses
   %i.y = icmp eq i32 %i.w, 2
   %or.cond.us = select i1 %i.x, i1 %i.y, i1 false
@@ -218,7 +218,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond7.us, label %bb.q, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ac = add nsw i32 %i.w, -9                    ; 3 uses
+  %i.ac = add nsw i32 %i.w, -9                    ; 2 uses
   %or.cond9.us = icmp ult i32 %i.ac, 16
   br i1 %or.cond9.us, label %bb.n, label %bb.g
 
@@ -289,8 +289,8 @@ bb.n:                                             ; preds = %bb.f
 bb.o:                                             ; preds = %bb.n
   %i.bf = getelementptr inbounds nuw i8, ptr %.1210328.us, i64 1
   store i8 %i.be, ptr %.1210328.us, align 1, !tbaa !11
-  %i.bg = trunc nuw nsw i32 %i.ac to i8
-  %6 = or disjoint i8 %i.bg, -32
+  %i.bg = trunc nuw nsw i32 %i.w to i8
+  %6 = add nuw nsw i8 %i.bg, -41
   %i.bh = getelementptr inbounds nuw i8, ptr %.1210328.us, i64 2
   store i8 %6, ptr %i.bf, align 1, !tbaa !11
   %i.bi = shl nuw nsw i32 %i.n, 4

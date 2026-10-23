@@ -206,7 +206,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i:                                         ; preds = %bb.h, %bb.j
   %i.ab = phi i32 [ %i.an, %bb.j ], [ 0, %bb.h ]
-  %.030.i = phi i32 [ %i.ao, %bb.j ], [ 0, %bb.h ] ; 2 uses
+  %.030.i = phi i32 [ %i.ao, %bb.j ], [ 0, %bb.h ] ; 3 uses
   %i.ac = zext i32 %.030.i to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ac
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !130
@@ -230,8 +230,8 @@ bb.i:                                             ; preds = %.lr.ph.i
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.i
   %i.an = phi i32 [ %i.al, %.lr.ph.i ], [ 0, %bb.i ] ; 2 uses
-  %i.ao = add i32 %.030.i, 8                      ; 3 uses
-  %4 = or disjoint i32 %i.ao, 7
+  %i.ao = add i32 %.030.i, 8                      ; 2 uses
+  %4 = add i32 %.030.i, 15
   %i.ap = icmp ult i32 %4, %i.d
   br i1 %i.ap, label %.lr.ph.i, label %.loopexit29.i, !llvm.loop !8
 
@@ -290,7 +290,7 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph.i33:                                       ; preds = %bb.o, %bb.q
   %i.bm = phi i32 [ %i.by, %bb.q ], [ 0, %bb.o ]
-  %.030.i34 = phi i32 [ %i.bz, %bb.q ], [ 0, %bb.o ] ; 2 uses
+  %.030.i34 = phi i32 [ %i.bz, %bb.q ], [ 0, %bb.o ] ; 3 uses
   %i.bn = zext i32 %.030.i34 to i64
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bn
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !130
@@ -314,8 +314,8 @@ bb.p:                                             ; preds = %.lr.ph.i33
 
 bb.q:                                             ; preds = %bb.p, %.lr.ph.i33
   %i.by = phi i32 [ %i.bw, %.lr.ph.i33 ], [ 0, %bb.p ] ; 2 uses
-  %i.bz = add i32 %.030.i34, 8                    ; 3 uses
-  %5 = or disjoint i32 %i.bz, 7
+  %i.bz = add i32 %.030.i34, 8                    ; 2 uses
+  %5 = add i32 %.030.i34, 15
   %i.ca = icmp ult i32 %5, %i.d
   br i1 %i.ca, label %.lr.ph.i33, label %.loopexit29.i26, !llvm.loop !8
 
@@ -578,7 +578,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i:                                         ; preds = %bb.k, %bb.m
   %i.av = phi i32 [ %i.bh, %bb.m ], [ %i.ao, %bb.k ]
-  %.030.i = phi i32 [ %i.bi, %bb.m ], [ 0, %bb.k ] ; 2 uses
+  %.030.i = phi i32 [ %i.bi, %bb.m ], [ 0, %bb.k ] ; 3 uses
   %i.aw = zext i32 %.030.i to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.aw
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !130
@@ -602,8 +602,8 @@ bb.l:                                             ; preds = %.lr.ph.i
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph.i
   %i.bh = phi i32 [ %i.bf, %.lr.ph.i ], [ 0, %bb.l ] ; 2 uses
-  %i.bi = add i32 %.030.i, 8                      ; 3 uses
-  %4 = or disjoint i32 %i.bi, 7
+  %i.bi = add i32 %.030.i, 8                      ; 2 uses
+  %4 = add i32 %.030.i, 15
   %i.bj = icmp ult i32 %4, %i.an
   br i1 %i.bj, label %.lr.ph.i, label %.loopexit29.i, !llvm.loop !8
 
@@ -1006,7 +1006,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.q, %.lr.ph.i60
   %i.cu = phi i32 [ %i.cm, %.lr.ph.i60 ], [ %i.dg, %bb.q ]
-  %.030.i61 = phi i32 [ 0, %.lr.ph.i60 ], [ %i.dh, %bb.q ] ; 2 uses
+  %.030.i61 = phi i32 [ 0, %.lr.ph.i60 ], [ %i.dh, %bb.q ] ; 3 uses
   %i.cv = zext i32 %.030.i61 to i64
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.cv
   %i.cx = load i64, ptr %i.cw, align 8, !tbaa !130
@@ -1030,8 +1030,8 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %i.dg = phi i32 [ %i.de, %bb.o ], [ 0, %bb.p ]  ; 2 uses
-  %i.dh = add i32 %.030.i61, 8                    ; 3 uses
-  %2 = or disjoint i32 %i.dh, 7
+  %i.dh = add i32 %.030.i61, 8                    ; 2 uses
+  %2 = add i32 %.030.i61, 15
   %i.di = icmp ult i32 %2, %i.ci
   br i1 %i.di, label %bb.o, label %.loopexit29.i53, !llvm.loop !8
 
@@ -1101,7 +1101,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.y, %.lr.ph.i73
   %i.el = phi i32 [ %i.ed, %.lr.ph.i73 ], [ %i.ex, %bb.y ]
-  %.030.i74 = phi i32 [ 0, %.lr.ph.i73 ], [ %i.ey, %bb.y ] ; 2 uses
+  %.030.i74 = phi i32 [ 0, %.lr.ph.i73 ], [ %i.ey, %bb.y ] ; 3 uses
   %i.em = zext i32 %.030.i74 to i64
   %i.en = getelementptr inbounds nuw i8, ptr %i.ea, i64 %i.em
   %i.eo = load i64, ptr %i.en, align 8, !tbaa !130
@@ -1125,8 +1125,8 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x, %bb.w
   %i.ex = phi i32 [ %i.ev, %bb.w ], [ 0, %bb.x ]  ; 2 uses
-  %i.ey = add i32 %.030.i74, 8                    ; 3 uses
-  %3 = or disjoint i32 %i.ey, 7
+  %i.ey = add i32 %.030.i74, 8                    ; 2 uses
+  %3 = add i32 %.030.i74, 15
   %i.ez = icmp ult i32 %3, %i.dz
   br i1 %i.ez, label %bb.w, label %.loopexit29.i66, !llvm.loop !8
 
@@ -1204,7 +1204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %.lr.ph.i ] ; 3 uses
   %i.l = phi i32 [ %i.w, %bb.d ], [ %i.f, %.lr.ph.i ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.n = load i64, ptr %i.m, align 8, !tbaa !130
@@ -1228,8 +1228,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.w = phi i32 [ %i.u, %bb.b ], [ 0, %bb.c ]    ; 2 uses
-  %indvars.iv.next = add nuw i64 %indvars.iv, 8   ; 3 uses
-  %3 = or disjoint i64 %indvars.iv.next, 7
+  %indvars.iv.next = add nuw i64 %indvars.iv, 8   ; 2 uses
+  %3 = add nuw i64 %indvars.iv, 15
   %i.x = icmp ult i64 %3, %i.k
   br i1 %i.x, label %bb.b, label %.loopexit29.i.loopexit, !llvm.loop !8
 

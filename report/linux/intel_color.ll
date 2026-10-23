@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %bb.j, %bb.n, %bb.q,
 bb.s:                                             ; preds = %bb.r
   %i.cl = shl i32 %i.h, 12
   %i.cm = shl i32 %i.j, 8
-  %i.cn = add i32 %i.cm, %i.cl                    ; 11 uses
-  %i.co = add i32 %i.cn, 459280                   ; 13 uses
+  %i.cn = add i32 %i.cm, %i.cl                    ; 20 uses
+  %i.co = add i32 %i.cn, 459280                   ; 7 uses
   %i.cp = load i16, ptr %i.a, align 16
   %i.cq = zext i16 %i.cp to i32
   %i.cr = shl nuw i32 %i.cq, 16
@@ -269,7 +269,7 @@ bb.y:                                             ; preds = %bb.x, %trace_i915_r
   %i.do = zext i32 %.0.i.i to i64
   %i.dp = getelementptr i8, ptr %i.dn, i64 %i.do
   tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.cv, ptr elementtype(i32) %i.dp) #12, !srcloc !25
-  %2 = or disjoint i32 %i.co, 4                   ; 3 uses
+  %2 = add i32 %i.cn, 459284                      ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.dr = load i16, ptr %i.dq, align 4
   %i.ds = zext i16 %i.dr to i32
@@ -324,7 +324,7 @@ bb.ad:                                            ; preds = %bb.ac, %trace_i915_
   %i.el = zext i32 %.0.i.i253 to i64
   %i.em = getelementptr i8, ptr %i.ek, i64 %i.el
   tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.dt, ptr elementtype(i32) %i.em) #12, !srcloc !25
-  %3 = or disjoint i32 %i.co, 8                   ; 3 uses
+  %3 = add i32 %i.cn, 459288                      ; 3 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   %i.eo = load i16, ptr %i.en, align 2
   %i.ep = zext i16 %i.eo to i32
@@ -383,7 +383,7 @@ bb.ai:                                            ; preds = %bb.ah, %trace_i915_
   %i.fm = zext i32 %.0.i.i261 to i64
   %i.fn = getelementptr i8, ptr %i.fl, i64 %i.fm
   tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.eu, ptr elementtype(i32) %i.fn) #12, !srcloc !25
-  %4 = or disjoint i32 %i.co, 12                  ; 3 uses
+  %4 = add i32 %i.cn, 459292                      ; 3 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.a, i64 10
   %i.fp = load i16, ptr %i.fo, align 2
   %i.fq = zext i16 %i.fp to i32
@@ -554,7 +554,7 @@ bb.ax:                                            ; preds = %bb.aw, %trace_i915_
   %i.il = zext i32 %.0.i.i285 to i64
   %i.im = getelementptr i8, ptr %i.ik, i64 %i.il
   tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.hs, ptr elementtype(i32) %i.im) #12, !srcloc !25
-  %i.in = add i32 %i.cn, 459304                   ; 6 uses
+  %i.in = add i32 %i.cn, 459304                   ; 5 uses
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_i915_reg_rw, i64 8), i1 false) #12
           to label %trace_i915_reg_rw.exit.i291 [label %arch_test_bit.exit.i.i.i290], !srcloc !18
 
@@ -605,7 +605,7 @@ bb.bc:                                            ; preds = %bb.bb, %trace_i915_
   %i.jf = zext i32 %.0.i.i293 to i64
   %i.jg = getelementptr i8, ptr %i.je, i64 %i.jf
   tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, ptr elementtype(i32) %i.jg) #12, !srcloc !25
-  %5 = or disjoint i32 %i.in, 4                   ; 3 uses
+  %5 = add i32 %i.cn, 459308                      ; 3 uses
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_i915_reg_rw, i64 8), i1 false) #12
           to label %trace_i915_reg_rw.exit.i299 [label %arch_test_bit.exit.i.i.i298], !srcloc !18
 
@@ -651,13 +651,13 @@ bb.bg:                                            ; preds = %trace_i915_reg_rw.e
 
 bb.bh:                                            ; preds = %bb.s
   tail call void @intel_dsb_reg_write(ptr noundef nonnull %0, i32 %i.co, i32 noundef %i.cv) #11
-  %6 = or disjoint i32 %i.co, 4
+  %6 = add i32 %i.cn, 459284
   %i.jw = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.jx = load i16, ptr %i.jw, align 4
   %i.jy = zext i16 %i.jx to i32
   %i.jz = shl nuw i32 %i.jy, 16
   tail call void @intel_dsb_reg_write(ptr noundef nonnull %0, i32 %6, i32 noundef %i.jz) #11
-  %7 = or disjoint i32 %i.co, 8
+  %7 = add i32 %i.cn, 459288
   %i.ka = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   %i.kb = load i16, ptr %i.ka, align 2
   %i.kc = zext i16 %i.kb to i32
@@ -667,7 +667,7 @@ bb.bh:                                            ; preds = %bb.s
   %i.kg = zext i16 %i.kf to i32
   %i.kh = or disjoint i32 %i.kd, %i.kg
   tail call void @intel_dsb_reg_write(ptr noundef nonnull %0, i32 %7, i32 noundef %i.kh) #11
-  %8 = or disjoint i32 %i.co, 12
+  %8 = add i32 %i.cn, 459292
   %i.ki = getelementptr inbounds nuw i8, ptr %i.a, i64 10
   %i.kj = load i16, ptr %i.ki, align 2
   %i.kk = zext i16 %i.kj to i32
@@ -689,9 +689,9 @@ bb.bh:                                            ; preds = %bb.s
   %i.ky = zext i16 %i.kx to i32
   %i.kz = shl nuw i32 %i.ky, 16
   tail call void @intel_dsb_reg_write(ptr noundef nonnull %0, i32 %i.kv, i32 noundef %i.kz) #11
-  %i.la = add i32 %i.cn, 459304                   ; 2 uses
+  %i.la = add i32 %i.cn, 459304
   tail call void @intel_dsb_reg_write(ptr noundef nonnull %0, i32 %i.la, i32 noundef 0) #11
-  %9 = or disjoint i32 %i.la, 4
+  %9 = add i32 %i.cn, 459308
   tail call void @intel_dsb_reg_write(ptr noundef nonnull %0, i32 %9, i32 noundef 0) #11
   %i.lb = add i32 %i.cn, 459312
   tail call void @intel_dsb_reg_write(ptr noundef nonnull %0, i32 %i.lb, i32 noundef 0) #11
@@ -757,7 +757,7 @@ intel_de_write_fw.exit313:                        ; preds = %trace_i915_reg_rw.e
   br label %intel_de_write_dsb.exit233
 
 intel_de_write_dsb.exit233:                       ; preds = %bb.bh, %intel_de_write_fw.exit313
-  %i.lz = add i32 %i.cn, 459316                   ; 8 uses
+  %i.lz = add i32 %i.cn, 459316                   ; 7 uses
   %i.ma = getelementptr i8, ptr %i.p, i64 24
   %i.mb = load i64, ptr %i.ma, align 8            ; 2 uses
   %i.mc = lshr i64 %i.mb, 19
@@ -907,7 +907,7 @@ intel_de_write_fw.exit332:                        ; preds = %trace_i915_reg_rw.e
   br label %intel_de_write_dsb.exit229
 
 intel_de_write_dsb.exit229:                       ; preds = %bb.bt, %intel_de_write_fw.exit332
-  %10 = or disjoint i32 %i.lz, 8                  ; 4 uses
+  %10 = add i32 %i.cn, 459324                     ; 4 uses
   %i.on = getelementptr i8, ptr %i.p, i64 88
   %i.oo = load i64, ptr %i.on, align 8            ; 2 uses
   %i.op = lshr i64 %i.oo, 19
