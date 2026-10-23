@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f
   store i32 %i.q, ptr %i.bl, align 8, !tbaa !169
   %i.bm = add i64 %i.ac, %i.ba, !nosanitize !12   ; 2 uses
   %i.bn = icmp uge i64 %i.bm, %i.ba, !nosanitize !12
-  %i.bo = and i1 %i.bn, %i.bb
+  %i.bo = and i1 %i.bb, %i.bn, !nosanitize !12
   br i1 %i.bo, label %bb.j, label %bb.i, !prof !13, !nosanitize !12
 
 bb.i:                                             ; preds = %bb.h

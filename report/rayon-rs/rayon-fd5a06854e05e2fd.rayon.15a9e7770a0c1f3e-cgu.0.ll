@@ -202,7 +202,7 @@ _RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteryE6boundsB4_.exit: ; pred
 define { i64, i64 } @_RNvXsj_NtCs1Rjy1FfFCsk_5rayon15range_inclusivexNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
-  %i.b = load i64, ptr %0, align 8, !alias.scope !179, !noundef !4 ; 4 uses
+  %i.b = load i64, ptr %0, align 8, !alias.scope !179, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8, !alias.scope !179, !noundef !4 ; 4 uses
   %.not.i = icmp sle i64 %i.b, %i.d
@@ -218,10 +218,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.d, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = extractvalue { i64, i1 } %i.h, 0         ; 2 uses
-  %1 = icmp sgt i64 %i.j, %i.b
+  %i.j = extractvalue { i64, i1 } %i.h, 0
   %i.k = sub i64 %i.j, %i.b
-  %.sroa.02.0 = select i1 %1, i64 %i.k, i64 0
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterxE6boundsB4_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -234,7 +232,7 @@ bb.d:                                             ; preds = %bb.b
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterxE6boundsB4_.exit
 
 _RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterxE6boundsB4_.exit: ; preds = %bb.a, %bb.d, %bb.c
-  %.sroa.4.1 = phi i64 [ %.sroa.02.0, %bb.c ], [ %i.n, %bb.d ], [ 0, %bb.a ]
+  %.sroa.4.1 = phi i64 [ %i.k, %bb.c ], [ %i.n, %bb.d ], [ 0, %bb.a ]
   %.sroa.0.1 = phi i64 [ 1, %bb.c ], [ %i.m, %bb.d ], [ 1, %bb.a ]
   %i.o = insertvalue { i64, i64 } poison, i64 %.sroa.0.1, 0
   %i.p = insertvalue { i64, i64 } %i.o, i64 %.sroa.4.1, 1

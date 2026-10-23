@@ -202,7 +202,7 @@ bb.a:
   br i1 %.not5.i, label %parse_options_count.exit, label %.lr.ph.i
 
 parse_options_count.exit:                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader, %bb.a
-  %.0.lcssa.i = phi i64 [ 0, %bb.a ], [ 0, %.lr.ph.i.preheader ], [ %i.b, %.lr.ph.i ] ; 7 uses
+  %.0.lcssa.i = phi i64 [ 0, %bb.a ], [ 0, %.lr.ph.i.preheader ], [ %i.b, %.lr.ph.i ] ; 5 uses
   %.not6.i11 = icmp eq ptr %1, null
   br i1 %.not6.i11, label %parse_options_count.exit17, label %.lr.ph.i12.preheader
 
@@ -253,41 +253,18 @@ st_mult.exit:                                     ; preds = %st_add.exit18
   %i.p = mul nuw i64 %i.n, 96
   %i.q = tail call ptr @xmalloc(i64 noundef %i.p) #12 ; 3 uses
   %.not.i = icmp eq i64 %.0.lcssa.i, 0
-  br i1 %.not.i, label %copy_array.exit, label %2
+  br i1 %.not.i, label %copy_array.exit, label %st_mult.exit.i
 
-2:                                                ; preds = %st_mult.exit
-  %3 = icmp ugt i64 %.0.lcssa.i, 192153584101141162
-  br i1 %3, label %4, label %st_mult.exit.i
-
-4:                                                ; preds = %2
-  tail call void (ptr, ...) @die(ptr noundef nonnull @.str.15, i64 noundef 96, i64 noundef %.0.lcssa.i) #13
-  unreachable
-
-st_mult.exit.i:                                   ; preds = %2
+st_mult.exit.i:                                   ; preds = %st_mult.exit
   %i.r = mul nuw i64 %.0.lcssa.i, 96
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.q, ptr readonly align 1 %0, i64 %i.r, i1 false)
   br label %copy_array.exit
 
 copy_array.exit:                                  ; preds = %st_mult.exit, %st_mult.exit.i
   %i.s = getelementptr inbounds nuw [96 x i8], ptr %i.q, i64 %.0.lcssa.i
-  %i.t = add i64 %.0.lcssa.i16, 1                 ; 4 uses
-  %.not.i19 = icmp eq i64 %i.t, 0
-  br i1 %.not.i19, label %copy_array.exit21, label %5
-
-5:                                                ; preds = %copy_array.exit
-  %6 = icmp ugt i64 %i.t, 192153584101141162
-  br i1 %6, label %7, label %st_mult.exit.i20
-
-7:                                                ; preds = %5
-  tail call void (ptr, ...) @die(ptr noundef nonnull @.str.15, i64 noundef 96, i64 noundef %i.t) #13
-  unreachable
-
-st_mult.exit.i20:                                 ; preds = %5
-  %8 = mul nuw i64 %i.t, 96
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.s, ptr readonly align 1 %1, i64 %8, i1 false)
-  br label %copy_array.exit21
-
-copy_array.exit21:                                ; preds = %copy_array.exit, %st_mult.exit.i20
+  %2 = mul nuw i64 %.0.lcssa.i16, 96
+  %i.t = add nuw i64 %2, 96
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(1) %1, i64 %i.t, i1 false)
   ret ptr %i.q
 }
 

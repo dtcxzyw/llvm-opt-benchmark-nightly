@@ -204,18 +204,14 @@ bb.h:                                             ; preds = %_ZNK5folly12small_v
   %i.r = select i1 %i.q, i64 0, i64 8             ; 4 uses
   %i.s = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.p, i64 %i.r) ; 2 uses
   %i.t = extractvalue { i64, i1 } %i.s, 1
-  %i.u = extractvalue { i64, i1 } %i.s, 0         ; 5 uses
-  br i1 %i.t, label %_ZN5folly11checked_addImvEEbPT_S1_S1_.exit, label %4, !prof !14193
+  %i.u = extractvalue { i64, i1 } %i.s, 0         ; 4 uses
+  br i1 %i.t, label %_ZN5folly11checked_addImvEEbPT_S1_S1_.exit, label %bb.i, !prof !14193
 
 _ZN5folly11checked_addImvEEbPT_S1_S1_.exit:       ; preds = %bb.h
   tail call void @_ZN5folly6detail16throw_exception_ISt12length_errorJPKcEEEvDpT0_(ptr noundef nonnull @.str.26) #21
   unreachable
 
-4:                                                ; preds = %bb.h
-  %5 = icmp eq i64 %i.u, 0
-  br i1 %5, label %_ZN5folly14goodMallocSizeEm.exit, label %bb.i
-
-bb.i:                                             ; preds = %4
+bb.i:                                             ; preds = %bb.h
   %i.v = load atomic i8, ptr @_ZN5folly6detail14FastStaticBoolIZNS0_23usingJEMallocOrTCMallocEvE11InitializerE5flag_E monotonic, align 1 ; 2 uses
   %.not.i.i.i.i18 = icmp eq i8 %i.v, 0
   br i1 %.not.i.i.i.i18, label %_ZN5folly10canNallocxEv.exit.i, label %.split.i, !prof !14193
@@ -234,8 +230,8 @@ bb.j:                                             ; preds = %_ZN5folly10canNallo
   %i.z = select i1 %.not.i, i64 %i.u, i64 %i.y
   br label %_ZN5folly14goodMallocSizeEm.exit
 
-_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %4, %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.j
-  %.0.i19 = phi i64 [ 0, %4 ], [ %i.z, %bb.j ], [ %i.u, %_ZN5folly10canNallocxEv.exit.i ], [ %i.u, %.split.i ]
+_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.j
+  %.0.i19 = phi i64 [ %i.u, %.split.i ], [ %i.z, %bb.j ], [ %i.u, %_ZN5folly10canNallocxEv.exit.i ]
   %i.aa = sub i64 %.0.i19, %i.r                   ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = and i64 %i.aa, -8

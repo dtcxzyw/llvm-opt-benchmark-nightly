@@ -204,18 +204,14 @@ bb.l:                                             ; preds = %bb.k
   unreachable, !nosanitize !10
 
 .preheader1085.split.preheader:                   ; preds = %.preheader1085, %.preheader1085.split
-  %i.aw = phi i32 [ %i.au, %.preheader1085.split ], [ 1, %.preheader1085 ] ; 3 uses
+  %i.aw = phi i32 [ %i.au, %.preheader1085.split ], [ 1, %.preheader1085 ] ; 2 uses
   %indvars.iv1007514050 = phi i64 [ %indvars.iv.next10076, %.preheader1085.split ], [ 0, %.preheader1085 ] ; 2 uses
   %i.ax = sext i32 %i.aw to i64                   ; 2 uses
   %i.ay = getelementptr inbounds [16 x i8], ptr %.0.fr, i64 %i.ax ; 2 uses
-  %i.az = shl nsw i64 %i.ax, 4
-  %i.ba = add i64 %i.az, %i.aq, !nosanitize !10   ; 3 uses
-  %2 = icmp ne i64 %i.ba, 0
-  %3 = icmp uge i64 %i.ba, %i.aq, !nosanitize !10
-  %4 = icmp slt i32 %i.aw, 0
-  %5 = xor i1 %4, %3
-  %6 = and i1 %2, %5, !nosanitize !10
-  br i1 %6, label %bb.m, label %.split4841.us, !prof !11, !nosanitize !10
+  %i.az = shl nuw nsw i64 %i.ax, 4
+  %i.ba = add i64 %i.az, %i.aq, !nosanitize !10   ; 2 uses
+  %.not6504 = icmp ult i64 %i.ba, %i.aq, !nosanitize !10
+  br i1 %.not6504, label %.split4841.us, label %bb.m, !prof !89, !nosanitize !10
 
 .split4841.us:                                    ; preds = %.preheader1085.split.preheader, %.preheader1085
   %.us-phi4843 = phi i64 [ 16, %.preheader1085 ], [ %i.ba, %.preheader1085.split.preheader ]
@@ -257,71 +253,41 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.014.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.014.i, i64 4
   br label %bb.o
 
-.loopexit:                                        ; preds = %._crit_edge4864.us, %bb.t
-  %.1.lcssa = phi i32 [ %.05446339, %bb.t ], [ %i.cg, %._crit_edge4864.us ] ; 2 uses
-  %7 = icmp slt i32 %.1.lcssa, %i.ao
-  br i1 %7, label %bb.o, label %._crit_edge, !llvm.loop !182
-
-bb.o:                                             ; preds = %.lr.ph, %.loopexit
-  %indvars.iv10080 = phi i64 [ %indvars.iv1007514050, %.lr.ph ], [ %indvars.iv.next10081, %.loopexit ] ; 4 uses
-  %.05446339 = phi i32 [ %.sroa.01036.0.extract.trunc, %.lr.ph ], [ %.1.lcssa, %.loopexit ] ; 6 uses
+bb.o:                                             ; preds = %.lr.ph, %.loopexit.us
+  %indvars.iv10080 = phi i64 [ %indvars.iv1007514050, %.lr.ph ], [ %indvars.iv.next10081, %.loopexit.us ] ; 4 uses
+  %.05446339 = phi i32 [ %.sroa.01036.0.extract.trunc, %.lr.ph ], [ %.1.lcssa.us, %.loopexit.us ] ; 6 uses
   %i.br = getelementptr inbounds nuw [16 x i8], ptr %.0.fr, i64 %indvars.iv10080 ; 3 uses
   %i.bs = shl nuw nsw i64 %indvars.iv10080, 4
   %i.bt = add i64 %i.bs, %i.aq, !nosanitize !10   ; 2 uses
   %.not6341 = icmp ult i64 %i.bt, %i.aq, !nosanitize !10
-  br i1 %.not6341, label %8, label %bb.p, !prof !89, !nosanitize !10
-
-8:                                                ; preds = %bb.o
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @14, i64 %i.aq, i64 %i.bt) #11, !nosanitize !10
-  unreachable, !nosanitize !10
+  br i1 %.not6341, label %.split6342.us, label %bb.p, !prof !89, !nosanitize !10
 
 bb.p:                                             ; preds = %bb.o
   %i.bu = ptrtoint ptr %i.br to i64, !nosanitize !10 ; 2 uses
   %i.bv = and i64 %i.bu, 7, !nosanitize !10
   %i.bw = icmp eq i64 %i.bv, 0, !nosanitize !10
-  br i1 %i.bw, label %bb.q, label %9, !prof !11, !nosanitize !10
-
-9:                                                ; preds = %bb.p
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @15, i64 %i.bu) #11, !nosanitize !10
-  unreachable, !nosanitize !10
+  br i1 %i.bw, label %bb.q, label %.split6345.us, !prof !11, !nosanitize !10
 
 bb.q:                                             ; preds = %bb.p
   %i.bx = load i32, ptr %i.br, align 8, !tbaa !96 ; 3 uses
-  %indvars.iv.next10081 = add nuw nsw i64 %indvars.iv10080, 1 ; 3 uses
+  %indvars.iv.next10081 = add nuw nsw i64 %indvars.iv10080, 1 ; 2 uses
   %exitcond10083 = icmp eq i64 %indvars.iv10080, 2147483647
-  br i1 %exitcond10083, label %10, label %bb.r, !prof !89, !nosanitize !10
-
-10:                                               ; preds = %bb.q
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @16, i64 2147483647, i64 1) #11, !nosanitize !10
-  unreachable, !nosanitize !10
+  br i1 %exitcond10083, label %.split6348.us, label %bb.r, !prof !89, !nosanitize !10
 
 bb.r:                                             ; preds = %bb.q
   %sext = shl i64 %indvars.iv.next10081, 32       ; 2 uses
   %i.by = ashr exact i64 %sext, 28
   %i.bz = getelementptr inbounds i8, ptr %.0.fr, i64 %i.by ; 2 uses
   %i.ca = ashr exact i64 %sext, 28
-  %i.cb = add i64 %i.ca, %i.aq, !nosanitize !10   ; 3 uses
-  %11 = icmp ne i64 %i.cb, 0
-  %12 = icmp uge i64 %i.cb, %i.aq, !nosanitize !10
-  %13 = and i64 %indvars.iv.next10081, 2147483648
-  %14 = icmp ne i64 %13, 0
-  %15 = xor i1 %14, %12
-  %16 = and i1 %11, %15, !nosanitize !10
-  br i1 %16, label %bb.s, label %17, !prof !11, !nosanitize !10
-
-17:                                               ; preds = %bb.r
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @17, i64 %i.aq, i64 %i.cb) #11, !nosanitize !10
-  unreachable, !nosanitize !10
+  %i.cb = add i64 %i.ca, %i.aq, !nosanitize !10   ; 2 uses
+  %.not6513 = icmp ult i64 %i.cb, %i.aq, !nosanitize !10
+  br i1 %.not6513, label %.split6351.us, label %bb.s, !prof !89, !nosanitize !10
 
 bb.s:                                             ; preds = %bb.r
   %i.cc = ptrtoint ptr %i.bz to i64, !nosanitize !10 ; 2 uses
   %i.cd = and i64 %i.cc, 7, !nosanitize !10
   %i.ce = icmp eq i64 %i.cd, 0, !nosanitize !10
-  br i1 %i.ce, label %bb.t, label %18, !prof !11, !nosanitize !10
-
-18:                                               ; preds = %bb.s
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @18, i64 %i.cc) #11, !nosanitize !10
-  unreachable, !nosanitize !10
+  br i1 %i.ce, label %bb.t, label %.split6354.us, !prof !11, !nosanitize !10
 
 bb.t:                                             ; preds = %bb.s
   %i.cf = load i32, ptr %i.bz, align 8, !tbaa !96
@@ -330,45 +296,20 @@ bb.t:                                             ; preds = %bb.s
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !187
   %.fr6342 = freeze ptr %i.ci                     ; 3 uses
   %i.cj = icmp slt i32 %.05446339, %i.cg
-  br i1 %i.cj, label %.lr.ph4867, label %.loopexit
+  br i1 %i.cj, label %.lr.ph4867, label %.loopexit.us
 
 .lr.ph4867:                                       ; preds = %bb.t
   %i.ck = ptrtoint ptr %.fr6342 to i64            ; 4 uses
   %.not6343 = icmp eq ptr %.fr6342, null
   %i.cl = sext i32 %.05446339 to i64              ; 2 uses
-  br i1 %.not6343, label %.lr.ph4867.split.us, label %.lr.ph4867.split.split.us.preheader, !prof !89
-
-.lr.ph4867.split.us:                              ; preds = %.lr.ph4867
-  %19 = mul nsw i64 %i.cl, 168
-  %20 = add i64 %19, %i.bg, !nosanitize !10       ; 3 uses
-  %21 = icmp eq i64 %20, 0
-  %22 = xor i1 %i.bh, %21
-  %23 = icmp uge i64 %20, %i.bg, !nosanitize !10
-  %24 = icmp slt i32 %.05446339, 0
-  %25 = xor i1 %24, %23
-  %26 = and i1 %22, %25, !nosanitize !10
-  br i1 %26, label %27, label %.split4870.us, !prof !11, !nosanitize !10
-
-27:                                               ; preds = %.lr.ph4867.split.us
-  %28 = tail call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %.05446339, i32 %i.bx), !nosanitize !10 ; 2 uses
-  %29 = extractvalue { i32, i1 } %28, 1, !nosanitize !10
-  br i1 %29, label %.split4874.us, label %30, !prof !89, !nosanitize !10
-
-30:                                               ; preds = %27
-  %31 = extractvalue { i32, i1 } %28, 0, !nosanitize !10 ; 2 uses
-  %32 = sext i32 %31 to i64
-  %33 = mul nsw i64 %32, 12                       ; 2 uses
-  %34 = icmp eq i32 %31, 0
-  %35 = icmp uge i64 %33, %i.ck, !nosanitize !10
-  %36 = and i1 %34, %35
-  br i1 %36, label %.split4882, label %.split4878.us, !prof !11, !nosanitize !10
+  br i1 %.not6343, label %._crit_edge4864.us, label %.lr.ph4867.split.split.us.preheader, !prof !89
 
 .lr.ph4867.split.split.us.preheader:              ; preds = %.lr.ph4867
   %i.cm = sext i32 %i.cg to i64
   br label %.lr.ph4867.split.split.us
 
-.lr.ph4867.split.split.us:                        ; preds = %.lr.ph4867.split.split.us.preheader, %._crit_edge4864.us
-  %indvars.iv10071 = phi i64 [ %i.cl, %.lr.ph4867.split.split.us.preheader ], [ %indvars.iv.next10072, %._crit_edge4864.us ] ; 5 uses
+.lr.ph4867.split.split.us:                        ; preds = %.lr.ph4867.split.split.us.preheader, %._crit_edge4864.us.us
+  %indvars.iv10071 = phi i64 [ %i.cl, %.lr.ph4867.split.split.us.preheader ], [ %indvars.iv.next10276, %._crit_edge4864.us.us ] ; 5 uses
   %i.cn = getelementptr inbounds [168 x i8], ptr %.0543, i64 %indvars.iv10071 ; 25 uses
   %i.co = mul nsw i64 %indvars.iv10071, 168
   %i.cp = add i64 %i.co, %i.bg, !nosanitize !10   ; 3 uses
@@ -759,7 +700,7 @@ b3InvertMatrix.exit.us:                           ; preds = %bb.an, %bb.am
 bb.ao:                                            ; preds = %b3InvertMatrix.exit.us
   store ptr %i.lk, ptr %i.cn, align 8, !tbaa !118
   %i.lt = icmp sgt i32 %i.hp, 0
-  br i1 %i.lt, label %.lr.ph4863.us, label %._crit_edge4864.us
+  br i1 %i.lt, label %.lr.ph4863.us, label %._crit_edge4864.us.us
 
 .lr.ph4863.us:                                    ; preds = %bb.ao
   %i.lu = getelementptr inbounds nuw i8, ptr %i.dp, i64 72
@@ -1126,7 +1067,7 @@ bb.az:                                            ; preds = %bb.ay
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ut = fadd float %.05504848.us, %i.ui         ; 2 uses
   %exitcond10059.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond10059.not, label %._crit_edge.us, label %.lr.ph.us, !llvm.loop !183
+  br i1 %exitcond10059.not, label %._crit_edge.us, label %.lr.ph.us, !llvm.loop !182
 
 ._crit_edge.us:                                   ; preds = %bb.az, %bb.aw
   %.0550.lcssa.us = phi float [ 0.000000e+00, %bb.aw ], [ %i.ut, %bb.az ]
@@ -1489,32 +1430,86 @@ b3Invert2.exit.us:                                ; preds = %bb.be, %._crit_edge
   store float %i.adr, ptr %.sroa.4.0..sroa_idx.us, align 4, !tbaa !107
   %indvars.iv.next10067 = add nuw nsw i64 %indvars.iv10066, 1 ; 2 uses
   %exitcond10070.not = icmp eq i64 %indvars.iv.next10067, %wide.trip.count10069
-  br i1 %exitcond10070.not, label %._crit_edge4864.us, label %.lr.ph4863.split.us, !llvm.loop !184
+  br i1 %exitcond10070.not, label %._crit_edge4864.us.us, label %.lr.ph4863.split.us, !llvm.loop !183
 
-._crit_edge4864.us:                               ; preds = %b3Invert2.exit.us, %bb.ao
-  %indvars.iv.next10072 = add nsw i64 %indvars.iv10071, 1 ; 2 uses
-  %exitcond10074.not = icmp eq i64 %indvars.iv.next10072, %i.cm
-  br i1 %exitcond10074.not, label %.loopexit, label %.lr.ph4867.split.split.us, !llvm.loop !185
+._crit_edge4864.us.us:                            ; preds = %b3Invert2.exit.us, %bb.ao
+  %indvars.iv.next10276 = add nsw i64 %indvars.iv10071, 1 ; 2 uses
+  %exitcond10279.not = icmp eq i64 %indvars.iv.next10276, %i.cm
+  br i1 %exitcond10279.not, label %.loopexit.us, label %.lr.ph4867.split.split.us, !llvm.loop !184
 
-.split4870.us:                                    ; preds = %.lr.ph4867.split.split.us, %.lr.ph4867.split.us
-  %.us-phi4872 = phi i64 [ %20, %.lr.ph4867.split.us ], [ %i.cp, %.lr.ph4867.split.split.us ]
+.loopexit.us:                                     ; preds = %._crit_edge4864.us.us, %bb.t
+  %.1.lcssa.us = phi i32 [ %.05446339, %bb.t ], [ %i.cg, %._crit_edge4864.us.us ] ; 2 uses
+  %2 = icmp slt i32 %.1.lcssa.us, %i.ao
+  br i1 %2, label %bb.o, label %._crit_edge, !llvm.loop !185
+
+.split6342.us:                                    ; preds = %bb.o
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @14, i64 %i.aq, i64 %i.bt) #11, !nosanitize !10
+  unreachable, !nosanitize !10
+
+.split6345.us:                                    ; preds = %bb.p
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @15, i64 %i.bu) #11, !nosanitize !10
+  unreachable, !nosanitize !10
+
+.split6348.us:                                    ; preds = %bb.q
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @16, i64 2147483647, i64 1) #11, !nosanitize !10
+  unreachable, !nosanitize !10
+
+.split6351.us:                                    ; preds = %bb.r
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @17, i64 %i.aq, i64 %i.cb) #11, !nosanitize !10
+  unreachable, !nosanitize !10
+
+.split6354.us:                                    ; preds = %bb.s
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @18, i64 %i.cc) #11, !nosanitize !10
+  unreachable, !nosanitize !10
+
+._crit_edge4864.us:                               ; preds = %.lr.ph4867
+  %3 = mul nsw i64 %i.cl, 168
+  %indvars.iv.next10072 = add i64 %3, %i.bg, !nosanitize !10 ; 3 uses
+  %exitcond10074.not = icmp eq i64 %indvars.iv.next10072, 0
+  %4 = xor i1 %i.bh, %exitcond10074.not
+  %5 = icmp uge i64 %indvars.iv.next10072, %i.bg, !nosanitize !10
+  %6 = icmp slt i32 %.05446339, 0
+  %7 = xor i1 %6, %5
+  %8 = and i1 %4, %7, !nosanitize !10
+  br i1 %8, label %9, label %.split4870.us, !prof !11, !nosanitize !10
+
+9:                                                ; preds = %._crit_edge4864.us
+  %10 = tail call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %.05446339, i32 %i.bx), !nosanitize !10 ; 2 uses
+  %11 = extractvalue { i32, i1 } %10, 1, !nosanitize !10
+  br i1 %11, label %.split4874.us, label %12, !prof !89, !nosanitize !10
+
+12:                                               ; preds = %9
+  %13 = extractvalue { i32, i1 } %10, 0, !nosanitize !10 ; 2 uses
+  %14 = sext i32 %13 to i64                       ; 2 uses
+  %15 = mul nsw i64 %14, 12                       ; 2 uses
+  %16 = icmp eq i32 %13, 0
+  %17 = icmp uge i64 %15, %i.ck, !nosanitize !10
+  %18 = and i1 %16, %17
+  br i1 %18, label %.split4882.us, label %.split4878.us, !prof !11, !nosanitize !10
+
+.split4882.us:                                    ; preds = %12
+  %.idx = mul nuw nsw i64 %14, 12
+  br label %.split4882
+
+.split4870.us:                                    ; preds = %.lr.ph4867.split.split.us, %._crit_edge4864.us
+  %.us-phi4872 = phi i64 [ %indvars.iv.next10072, %._crit_edge4864.us ], [ %i.cp, %.lr.ph4867.split.split.us ]
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @19, i64 %i.bg, i64 %.us-phi4872) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
-.split4874.us:                                    ; preds = %bb.u, %27
-  %.us-phi4876 = phi i32 [ %.05446339, %27 ], [ %i.cw, %bb.u ]
+.split4874.us:                                    ; preds = %bb.u, %9
+  %.us-phi4876 = phi i32 [ %.05446339, %9 ], [ %i.cw, %bb.u ]
   %i.ads = zext i32 %.us-phi4876 to i64, !nosanitize !10
   %i.adt = zext i32 %i.bx to i64, !nosanitize !10
   tail call void @__ubsan_handle_sub_overflow_abort(ptr nonnull @20, i64 %i.ads, i64 %i.adt) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
-.split4878.us:                                    ; preds = %bb.v, %30
-  %.us-phi4880 = phi i64 [ %33, %30 ], [ %i.dd, %bb.v ]
+.split4878.us:                                    ; preds = %bb.v, %12
+  %.us-phi4880 = phi i64 [ %15, %12 ], [ %i.dd, %bb.v ]
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @21, i64 %i.ck, i64 %.us-phi4880) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
-.split4882:                                       ; preds = %bb.w, %30
-  %.us-phi4883 = phi i64 [ 0, %30 ], [ %i.dj, %bb.w ]
+.split4882:                                       ; preds = %bb.w, %.split4882.us
+  %.us-phi4883 = phi i64 [ %.idx, %.split4882.us ], [ %i.dj, %bb.w ]
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @23, i64 %.us-phi4883) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
@@ -1604,7 +1599,7 @@ b3Invert2.exit.us:                                ; preds = %bb.be, %._crit_edge
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @52, i64 %i.ow, i64 %i.adu) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
-._crit_edge:                                      ; preds = %.loopexit, %.preheader
+._crit_edge:                                      ; preds = %.loopexit.us, %.preheader
   ret void
 }
 
@@ -2007,19 +2002,15 @@ bb.r:                                             ; preds = %bb.q
   unreachable, !nosanitize !10
 
 .preheader116.split.preheader:                    ; preds = %.preheader116, %.preheader116.split
-  %i.bj = phi i32 [ %i.bh, %.preheader116.split ], [ 1, %.preheader116 ] ; 4 uses
+  %i.bj = phi i32 [ %i.bh, %.preheader116.split ], [ 1, %.preheader116 ] ; 3 uses
   %.0804472 = phi i32 [ %i.bj, %.preheader116.split ], [ 0, %.preheader116 ]
   %indvars.iv32844471 = phi i64 [ %indvars.iv.next3285, %.preheader116.split ], [ 0, %.preheader116 ] ; 2 uses
   %i.bk = sext i32 %i.bj to i64                   ; 2 uses
   %i.bl = getelementptr inbounds [16 x i8], ptr %.076.fr, i64 %i.bk ; 2 uses
-  %i.bm = shl nsw i64 %i.bk, 4
-  %i.bn = add i64 %i.bm, %i.bd, !nosanitize !10   ; 3 uses
-  %3 = icmp ne i64 %i.bn, 0
-  %4 = icmp uge i64 %i.bn, %i.bd, !nosanitize !10
-  %5 = icmp slt i32 %i.bj, 0
-  %6 = xor i1 %5, %4
-  %7 = and i1 %3, %6, !nosanitize !10
-  br i1 %7, label %bb.s, label %.split1291.us, !prof !11, !nosanitize !10
+  %i.bm = shl nuw nsw i64 %i.bk, 4
+  %i.bn = add i64 %i.bm, %i.bd, !nosanitize !10   ; 2 uses
+  %.not1758 = icmp ult i64 %i.bn, %i.bd, !nosanitize !10
+  br i1 %.not1758, label %.split1291.us, label %bb.s, !prof !89, !nosanitize !10
 
 .split1291.us:                                    ; preds = %.preheader116.split.preheader, %.preheader116
   %.us-phi1293 = phi i64 [ 16, %.preheader116 ], [ %i.bn, %.preheader116.split.preheader ]
@@ -2422,11 +2413,8 @@ bb.bl:                                            ; preds = %b3SetBit.exit.us.4,
   %.not1760 = icmp ult i64 %i.nd, %i.bd, !nosanitize !10
   br i1 %.not1760, label %.split1588.us, label %.lr.ph, !prof !167, !nosanitize !10
 
-8:                                                ; preds = %.loopexit.us1740
-  br i1 %10, label %.lr.ph, label %.split1588.us, !prof !217, !nosanitize !10
-
-.lr.ph:                                           ; preds = %.lr.ph1576.split.split.us, %8
-  %.pn = phi i64 [ %i.nl, %8 ], [ %i.nb, %.lr.ph1576.split.split.us ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph1576.split.split.us, %.loopexit.us1740
+  %.pn = phi i64 [ %i.nl, %.loopexit.us1740 ], [ %i.nb, %.lr.ph1576.split.split.us ] ; 2 uses
   %i.ne = getelementptr inbounds [16 x i8], ptr %.076.fr, i64 %.pn ; 2 uses
   %i.nf = ptrtoint ptr %i.ne to i64, !nosanitize !10 ; 2 uses
   %i.ng = and i64 %i.nf, 7, !nosanitize !10
@@ -2440,17 +2428,13 @@ bb.bm:                                            ; preds = %.lr.ph
   br i1 %i.nj, label %.split1594.us, label %bb.bn, !prof !89, !nosanitize !10
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.nk = extractvalue { i32, i1 } %i.ni, 0, !nosanitize !10 ; 2 uses
+  %i.nk = extractvalue { i32, i1 } %i.ni, 0, !nosanitize !10
   %i.nl = sext i32 %i.nk to i64                   ; 3 uses
   %i.nm = getelementptr inbounds [16 x i8], ptr %.076.fr, i64 %i.nl ; 2 uses
-  %i.nn = shl nsw i64 %i.nl, 4
-  %i.no = add i64 %i.nn, %i.bd, !nosanitize !10   ; 4 uses
-  %9 = icmp ne i64 %i.no, 0
-  %10 = icmp uge i64 %i.no, %i.bd, !nosanitize !10 ; 2 uses
-  %11 = icmp slt i32 %i.nk, 0
-  %12 = xor i1 %11, %10
-  %13 = and i1 %9, %12, !nosanitize !10
-  br i1 %13, label %bb.bo, label %.split1597.us, !prof !11, !nosanitize !10
+  %i.nn = shl nuw nsw i64 %i.nl, 4
+  %i.no = add i64 %i.nn, %i.bd, !nosanitize !10   ; 2 uses
+  %.not1763 = icmp ult i64 %i.no, %i.bd, !nosanitize !10
+  br i1 %.not1763, label %.split1597.us, label %bb.bo, !prof !89, !nosanitize !10
 
 bb.bo:                                            ; preds = %bb.bn
   %i.np = ptrtoint ptr %i.nm to i64, !nosanitize !10 ; 2 uses
@@ -2462,10 +2446,10 @@ bb.bo:                                            ; preds = %bb.bn
   %i.ns = load i32, ptr %i.nm, align 8, !tbaa !96
   %i.nt = tail call noundef i32 @llvm.smin.i32(i32 %i.ns, i32 %i.bb)
   %i.nu = icmp sgt i32 %i.nt, %.sroa.0.0.extract.trunc
-  br i1 %i.nu, label %.lr.ph1348, label %8
+  br i1 %i.nu, label %.lr.ph1348, label %.lr.ph
 
-.split1588.us:                                    ; preds = %.lr.ph1576.split.us, %8, %.lr.ph1576.split.split.us
-  %.us-phi1589 = phi i64 [ %i.nd, %.lr.ph1576.split.split.us ], [ %i.no, %8 ], [ %i.bw, %.lr.ph1576.split.us ]
+.split1588.us:                                    ; preds = %.lr.ph1576.split.us, %.lr.ph1576.split.split.us
+  %.us-phi1589 = phi i64 [ %i.nd, %.lr.ph1576.split.split.us ], [ %i.bw, %.lr.ph1576.split.us ]
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @114, i64 %i.bd, i64 %.us-phi1589) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
@@ -2577,7 +2561,7 @@ bb.bp:                                            ; preds = %.lr.ph1348
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden noundef i32 @b3GetWideContactConstraintByteCount() local_unnamed_addr #7 !func_sanitize !218 {
+define hidden noundef i32 @b3GetWideContactConstraintByteCount() local_unnamed_addr #7 !func_sanitize !217 {
 bb.a:
   ret i32 1696
 }
@@ -2676,25 +2660,21 @@ bb.h:                                             ; preds = %bb.g
   %i.ao = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ar, i32 1), !nosanitize !10 ; 2 uses
   %i.ap = extractvalue { i32, i1 } %i.ao, 0, !nosanitize !10
   %i.aq = extractvalue { i32, i1 } %i.ao, 1, !nosanitize !10
-  br i1 %i.aq, label %.split.us, label %.preheader1196.split.preheader, !prof !92, !llvm.loop !219, !nosanitize !10
+  br i1 %i.aq, label %.split.us, label %.preheader1196.split.preheader, !prof !92, !llvm.loop !218, !nosanitize !10
 
 .split.us:                                        ; preds = %.preheader1196.split
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @134, i64 2147483647, i64 1) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
 .preheader1196.split.preheader:                   ; preds = %.preheader1196, %.preheader1196.split
-  %i.ar = phi i32 [ %i.ap, %.preheader1196.split ], [ 1, %.preheader1196 ] ; 3 uses
+  %i.ar = phi i32 [ %i.ap, %.preheader1196.split ], [ 1, %.preheader1196 ] ; 2 uses
   %indvars.iv2435036767 = phi i64 [ %indvars.iv.next24351, %.preheader1196.split ], [ 0, %.preheader1196 ] ; 2 uses
   %i.as = sext i32 %i.ar to i64                   ; 2 uses
   %i.at = getelementptr inbounds [16 x i8], ptr %.fr12764, i64 %i.as ; 2 uses
-  %i.au = shl nsw i64 %i.as, 4
-  %i.av = add i64 %i.au, %i.al, !nosanitize !10   ; 3 uses
-  %2 = icmp ne i64 %i.av, 0
-  %3 = icmp uge i64 %i.av, %i.al, !nosanitize !10
-  %4 = icmp slt i32 %i.ar, 0
-  %5 = xor i1 %4, %3
-  %6 = and i1 %2, %5, !nosanitize !10
-  br i1 %6, label %bb.i, label %.split11240.us, !prof !11, !nosanitize !10
+  %i.au = shl nuw nsw i64 %i.as, 4
+  %i.av = add i64 %i.au, %i.al, !nosanitize !10   ; 2 uses
+  %.not12766 = icmp ult i64 %i.av, %i.al, !nosanitize !10
+  br i1 %.not12766, label %.split11240.us, label %bb.i, !prof !89, !nosanitize !10
 
 .split11240.us:                                   ; preds = %.preheader1196.split.preheader, %.preheader1196
   %.us-phi11242 = phi i64 [ 16, %.preheader1196 ], [ %i.av, %.preheader1196.split.preheader ]
@@ -2714,7 +2694,7 @@ bb.i:                                             ; preds = %.preheader1196.spli
 bb.j:                                             ; preds = %bb.i
   %i.az = load i32, ptr %i.at, align 8, !tbaa !171
   %.not665 = icmp sgt i32 %i.az, %.sroa.01148.0.extract.trunc
-  br i1 %.not665, label %.preheader1195, label %.preheader1196.split, !llvm.loop !219
+  br i1 %.not665, label %.preheader1195, label %.preheader1196.split, !llvm.loop !218
 
 .preheader1195:                                   ; preds = %bb.j
   %i.ba = icmp sgt i32 %i.aj, %.sroa.01148.0.extract.trunc
@@ -2735,7 +2715,7 @@ bb.j:                                             ; preds = %bb.i
 .loopexit:                                        ; preds = %bb.br, %bb.u
   %.1.lcssa = phi i32 [ %.062312762, %bb.u ], [ %i.by, %bb.br ] ; 2 uses
   %i.bi = icmp slt i32 %.1.lcssa, %i.aj
-  br i1 %i.bi, label %bb.k, label %._crit_edge, !llvm.loop !220
+  br i1 %i.bi, label %bb.k, label %._crit_edge, !llvm.loop !219
 
 bb.k:                                             ; preds = %.lr.ph12763, %.loopexit
   %indvars.iv24355 = phi i64 [ %indvars.iv2435036767, %.lr.ph12763 ], [ %indvars.iv.next24356, %.loopexit ] ; 4 uses
@@ -2762,7 +2742,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.bp = load i32, ptr %i.bj, align 8, !tbaa !171 ; 2 uses
-  %indvars.iv.next24356 = add nuw nsw i64 %indvars.iv24355, 1 ; 3 uses
+  %indvars.iv.next24356 = add nuw nsw i64 %indvars.iv24355, 1 ; 2 uses
   %exitcond24359 = icmp eq i64 %indvars.iv24355, 2147483647
   br i1 %exitcond24359, label %bb.p, label %bb.q, !prof !89, !nosanitize !10
 
@@ -2775,14 +2755,9 @@ bb.q:                                             ; preds = %bb.o
   %i.bq = ashr exact i64 %sext, 28
   %i.br = getelementptr inbounds i8, ptr %.fr12764, i64 %i.bq ; 2 uses
   %i.bs = ashr exact i64 %sext, 28
-  %i.bt = add i64 %i.bs, %i.al, !nosanitize !10   ; 3 uses
-  %7 = icmp ne i64 %i.bt, 0
-  %8 = icmp uge i64 %i.bt, %i.al, !nosanitize !10
-  %9 = and i64 %indvars.iv.next24356, 2147483648
-  %10 = icmp ne i64 %9, 0
-  %11 = xor i1 %10, %8
-  %12 = and i1 %7, %11, !nosanitize !10
-  br i1 %12, label %bb.s, label %bb.r, !prof !11, !nosanitize !10
+  %i.bt = add i64 %i.bs, %i.al, !nosanitize !10   ; 2 uses
+  %.not12768 = icmp ult i64 %i.bt, %i.al, !nosanitize !10
+  br i1 %.not12768, label %bb.r, label %bb.s, !prof !89, !nosanitize !10
 
 bb.r:                                             ; preds = %bb.q
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @141, i64 %i.al, i64 %i.bt) #11, !nosanitize !10
@@ -3185,11 +3160,11 @@ b3Perp.exit.us:                                   ; preds = %bb.ay, %bb.ax
   store float %i.ng, ptr %i.nf, align 4, !tbaa !176
   %i.nh = getelementptr inbounds nuw i8, ptr %i.gi, i64 192
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv24343
-  %i.nj = load float, ptr %i.nh, align 8, !tbaa !225
+  %i.nj = load float, ptr %i.nh, align 8, !tbaa !224
   store float %i.nj, ptr %i.ni, align 4, !tbaa !176
   %i.nk = getelementptr inbounds nuw i8, ptr %i.gi, i64 196
   %i.nl = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv24343
-  %i.nm = load float, ptr %i.nk, align 4, !tbaa !226
+  %i.nm = load float, ptr %i.nk, align 4, !tbaa !225
   store float %i.nm, ptr %i.nl, align 4, !tbaa !176
   %i.nn = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %indvars.iv24343
   %.sroa.2352.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %i.gi, i64 208 ; 2 uses
@@ -3442,7 +3417,7 @@ bb.bc:                                            ; preds = %bb.bb
   store float %i.uj, ptr %i.tc, align 4, !tbaa !176
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond24332.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond24332.not, label %._crit_edge.us, label %bb.az, !llvm.loop !221
+  br i1 %exitcond24332.not, label %._crit_edge.us, label %bb.az, !llvm.loop !220
 
 ._crit_edge.us:                                   ; preds = %bb.bc, %b3Perp.exit.us
   %.sroa.0941.0.lcssa.us = phi <2 x float> [ zeroinitializer, %b3Perp.exit.us ], [ %i.pt, %bb.bc ] ; 2 uses
@@ -3845,18 +3820,18 @@ b3InvertMatrix.exit.us:                           ; preds = %bb.bm, %b3Invert2.e
   %i.afr = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %indvars.iv24343
   store float %.sroa.16.0.us, ptr %i.afr, align 4, !tbaa !176
   %i.afs = getelementptr inbounds nuw i8, ptr %i.gy, i64 252
-  %i.aft = load float, ptr %i.afs, align 4, !tbaa !227
+  %i.aft = load float, ptr %i.afs, align 4, !tbaa !226
   %i.afu = fmul float %i.ab, %i.aft
   %i.afv = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %indvars.iv24343
   store float %i.afu, ptr %i.afv, align 4, !tbaa !176
   %i.afw = getelementptr inbounds nuw i8, ptr %i.gy, i64 256
   %i.afx = getelementptr inbounds nuw [4 x i8], ptr %i.fh, i64 %indvars.iv24343
-  %i.afy = load float, ptr %i.afw, align 4, !tbaa !228
+  %i.afy = load float, ptr %i.afw, align 4, !tbaa !227
   %i.afz = fmul float %i.ab, %i.afy
   store float %i.afz, ptr %i.afx, align 4, !tbaa !176
   %i.aga = getelementptr inbounds nuw i8, ptr %i.gy, i64 260
   %i.agb = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %indvars.iv24343
-  %i.agc = load float, ptr %i.aga, align 4, !tbaa !229
+  %i.agc = load float, ptr %i.aga, align 4, !tbaa !228
   %i.agd = fmul float %i.ab, %i.agc
   store float %i.agd, ptr %i.agb, align 4, !tbaa !176
   %i.age = icmp slt i32 %i.oc, 4
@@ -3916,12 +3891,12 @@ bb.bn:                                            ; preds = %.lr.ph11262.us
   store float 0.000000e+00, ptr %i.ahk, align 4, !tbaa !176
   %indvars.iv.next24340 = add nsw i64 %indvars.iv24339, 1 ; 2 uses
   %exitcond24342.not = icmp eq i64 %indvars.iv.next24340, 4
-  br i1 %exitcond24342.not, label %._crit_edge11263.us, label %.lr.ph11262.us, !llvm.loop !222
+  br i1 %exitcond24342.not, label %._crit_edge11263.us, label %.lr.ph11262.us, !llvm.loop !221
 
 ._crit_edge11263.us:                              ; preds = %bb.bn, %b3InvertMatrix.exit.us
   %indvars.iv.next24344 = add nuw nsw i64 %indvars.iv24343, 1 ; 2 uses
   %exitcond24346.not = icmp eq i64 %indvars.iv.next24344, 4
-  br i1 %exitcond24346.not, label %.critedge, label %.preheader.split.split.split.us, !llvm.loop !223
+  br i1 %exitcond24346.not, label %.critedge, label %.preheader.split.split.split.us, !llvm.loop !222
 
 bb.bo:                                            ; preds = %bb.x
   %i.ahl = and i64 %indvars.iv24347, 4294967295
@@ -4050,7 +4025,7 @@ bb.br:                                            ; preds = %.critedge
   %indvars.iv.next24348 = add nsw i64 %indvars.iv24347, 1 ; 2 uses
   %indvars = trunc i64 %indvars.iv.next24348 to i32
   %i.aht = icmp sgt i32 %i.by, %indvars
-  br i1 %i.aht, label %bb.v, label %.loopexit, !llvm.loop !224
+  br i1 %i.aht, label %bb.v, label %.loopexit, !llvm.loop !223
 
 ._crit_edge:                                      ; preds = %.loopexit, %.preheader1195
   ret void
@@ -4371,7 +4346,7 @@ bb.k:                                             ; preds = %.lr.ph.split.us.spl
   store <4 x float> %i.em, ptr %.sroa.5206.0..sroa_idx, align 16, !tbaa !176
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.split.us.split.us.split.us, label %.lr.ph.split.us.split.us.split.us, !llvm.loop !230
+  br i1 %exitcond.not, label %._crit_edge.split.us.split.us.split.us, label %.lr.ph.split.us.split.us.split.us, !llvm.loop !229
 
 .split.us:                                        ; preds = %.lr.ph.split.us.split.us.split.us
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @179, i64 %i.bd, i64 %i.bm) #11, !nosanitize !10
@@ -4671,7 +4646,7 @@ bb.l:                                             ; preds = %._crit_edge.split.u
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @b3GatherBodies(ptr dead_on_unwind noalias nofree nonnull writable writeonly align 16 captures(none) %0, ptr noundef %1, ptr noundef nonnull %2) unnamed_addr #8 !func_sanitize !231 {
+define internal fastcc void @b3GatherBodies(ptr dead_on_unwind noalias nofree nonnull writable writeonly align 16 captures(none) %0, ptr noundef %1, ptr noundef nonnull %2) unnamed_addr #8 !func_sanitize !230 {
 bb.a:
   %i.a = ptrtoint ptr %2 to i64, !nosanitize !10  ; 11 uses
   %i.b = and i64 %i.a, 3, !nosanitize !10
@@ -5038,7 +5013,7 @@ bb.au:                                            ; preds = %bb.ak, %bb.at
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @b3ScatterBodies(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #9 !func_sanitize !232 {
+define internal fastcc void @b3ScatterBodies(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #9 !func_sanitize !231 {
 bb.a:
   %i.a = ptrtoint ptr %2 to i64, !nosanitize !10  ; 2 uses
   %i.b = and i64 %i.a, 15, !nosanitize !10
@@ -5441,7 +5416,7 @@ begin_hunk_5_@b3SolveContacts_Convex:bb.a
   store <4 x float> %i.kv, ptr %.sroa.5466.0..sroa_idx, align 16, !tbaa !176
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.o, !llvm.loop !233
+  br i1 %exitcond.not, label %._crit_edge, label %bb.o, !llvm.loop !232
 
 ._crit_edge:                                      ; preds = %bb.q, %bb.n
   %.0151.lcssa = phi <4 x float> [ zeroinitializer, %bb.n ], [ %i.hy, %bb.q ] ; 2 uses
@@ -5844,7 +5819,7 @@ bb.p:                                             ; preds = %bb.n
   store <4 x float> %i.gz, ptr %.sroa.5155.0..sroa_idx, align 16, !tbaa !176
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !234
+  br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !233
 
 ._crit_edge:                                      ; preds = %bb.p, %bb.m
   call fastcc void @b3ScatterBodies(ptr noundef %i.g, ptr noundef %i.ax, ptr noundef %2)
@@ -5969,25 +5944,21 @@ bb.l:                                             ; preds = %bb.k
   %i.ay = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.bb, i32 1), !nosanitize !10 ; 2 uses
   %i.az = extractvalue { i32, i1 } %i.ay, 0, !nosanitize !10
   %i.ba = extractvalue { i32, i1 } %i.ay, 1, !nosanitize !10
-  br i1 %i.ba, label %.split.us, label %.preheader180.split.preheader, !prof !92, !llvm.loop !235, !nosanitize !10
+  br i1 %i.ba, label %.split.us, label %.preheader180.split.preheader, !prof !92, !llvm.loop !234, !nosanitize !10
 
 .split.us:                                        ; preds = %.preheader180.split
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @205, i64 2147483647, i64 1) #11, !nosanitize !10
   unreachable, !nosanitize !10
 
 .preheader180.split.preheader:                    ; preds = %.preheader180, %.preheader180.split
-  %i.bb = phi i32 [ %i.az, %.preheader180.split ], [ 1, %.preheader180 ] ; 3 uses
+  %i.bb = phi i32 [ %i.az, %.preheader180.split ], [ 1, %.preheader180 ] ; 2 uses
   %indvars.iv44466814 = phi i64 [ %indvars.iv.next4447.a, %.preheader180.split ], [ 0, %.preheader180 ] ; 2 uses
   %i.bc = sext i32 %i.bb to i64                   ; 2 uses
   %i.bd = getelementptr inbounds [16 x i8], ptr %.fr2439, i64 %i.bc ; 2 uses
-  %i.be = shl nsw i64 %i.bc, 4
-  %i.bf = add i64 %i.be, %i.av, !nosanitize !10   ; 3 uses
-  %3 = icmp ne i64 %i.bf, 0
-  %4 = icmp uge i64 %i.bf, %i.av, !nosanitize !10
-  %5 = icmp slt i32 %i.bb, 0
-  %6 = xor i1 %5, %4
-  %7 = and i1 %3, %6, !nosanitize !10
-  br i1 %7, label %bb.m, label %.split2229.us, !prof !11, !nosanitize !10
+  %i.be = shl nuw nsw i64 %i.bc, 4
+  %i.bf = add i64 %i.be, %i.av, !nosanitize !10   ; 2 uses
+  %.not2441 = icmp ult i64 %i.bf, %i.av, !nosanitize !10
+  br i1 %.not2441, label %.split2229.us, label %bb.m, !prof !89, !nosanitize !10
 
 .split2229.us:                                    ; preds = %.preheader180.split.preheader, %.preheader180
   %.us-phi2231 = phi i64 [ 16, %.preheader180 ], [ %i.bf, %.preheader180.split.preheader ]
@@ -6007,7 +5978,7 @@ bb.m:                                             ; preds = %.preheader180.split
 bb.n:                                             ; preds = %bb.m
   %i.bj = load i32, ptr %i.bd, align 8, !tbaa !171
   %.not156 = icmp sgt i32 %i.bj, %.sroa.0165.0.extract.trunc
-  br i1 %.not156, label %.preheader179, label %.preheader180.split, !llvm.loop !235
+  br i1 %.not156, label %.preheader179, label %.preheader180.split, !llvm.loop !234
 
 .preheader179:                                    ; preds = %bb.n
   %i.bk = icmp sgt i32 %i.at, %.sroa.0165.0.extract.trunc
@@ -6024,7 +5995,7 @@ bb.n:                                             ; preds = %bb.m
   %.1129.lcssa = phi i32 [ %.01282434, %bb.y ], [ %i.ce, %bb.bt ] ; 2 uses
   %i.bn = icmp slt i32 %.1129.lcssa, %i.at
   %indvars.iv.next4452 = add nuw nsw i64 %indvars.iv4451, 1
-  br i1 %i.bn, label %bb.o, label %._crit_edge2437, !llvm.loop !236
+  br i1 %i.bn, label %bb.o, label %._crit_edge2437, !llvm.loop !235
 
 bb.o:                                             ; preds = %.lr.ph2436, %.loopexit178
   %indvars.iv4451 = phi i64 [ %indvars.iv44466814, %.lr.ph2436 ], [ %indvars.iv.next4452, %.loopexit178 ] ; 5 uses
@@ -6427,7 +6398,7 @@ bb.bq:                                            ; preds = %.lr.ph2237.4
   %.8.ph = phi i8 [ %.21322238, %bb.af ], [ 1, %bb.bf ], [ %.21322238, %bb.az ], [ %.21322238, %bb.bq ], [ %.21322238, %bb.bg ], [ %.21322238, %bb.bp ], [ %.21322238, %bb.bm ], [ %.21322238, %bb.bj ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 4
-  br i1 %exitcond.not, label %bb.br, label %.preheader177.split, !llvm.loop !237
+  br i1 %exitcond.not, label %bb.br, label %.preheader177.split, !llvm.loop !236
 
 bb.br:                                            ; preds = %.preheader177.split, %.loopexit
   %.2132.lcssa = phi i8 [ %.21322238, %.preheader177.split ], [ %.8.ph, %.loopexit ] ; 2 uses
@@ -6444,7 +6415,7 @@ bb.bt:                                            ; preds = %bb.br
   %i.ly = extractvalue { i32, i1 } %i.lv, 0, !nosanitize !10
   %i.lz = icmp slt i32 %i.ly, %i.ce
   %indvars.iv.next4445 = add nsw i64 %indvars.iv4444, 1
-  br i1 %i.lz, label %.lr.ph2243.split, label %.loopexit178, !llvm.loop !238
+  br i1 %i.lz, label %.lr.ph2243.split, label %.loopexit178, !llvm.loop !237
 
 ._crit_edge2437:                                  ; preds = %.loopexit178, %.preheader179
   %.0130.lcssa = phi i8 [ %i.ak, %.preheader179 ], [ %.1131.lcssa, %.loopexit178 ]
@@ -6563,7 +6534,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden void @b3SolveContacts_Overflow(ptr noundef %0, i1 noundef zeroext %1) local_unnamed_addr #9 !func_sanitize !239 {
+define hidden void @b3SolveContacts_Overflow(ptr noundef %0, i1 noundef zeroext %1) local_unnamed_addr #9 !func_sanitize !238 {
 bb.a:
   %i.a = icmp ne ptr %0, null, !nosanitize !10
   %i.b = ptrtoint ptr %0 to i64, !nosanitize !10  ; 2 uses
@@ -6966,27 +6937,26 @@ begin_hunk_8_@llvm.vector.reduce.smax.v4i32
 !214 = distinct !{!214, !93}
 !215 = distinct !{!215, !93}
 !216 = distinct !{!216, !93}
-!217 = !{!"branch_weights", i32 134217473, i32 127}
-!218 = !{i32 -1056584962, i32 901845932}
+!217 = !{i32 -1056584962, i32 901845932}
+!218 = distinct !{!218, !93}
 !219 = distinct !{!219, !93}
 !220 = distinct !{!220, !93}
 !221 = distinct !{!221, !93}
 !222 = distinct !{!222, !93}
 !223 = distinct !{!223, !93}
-!224 = distinct !{!224, !93}
-!225 = !{!101, !12, i64 192}
-!226 = !{!101, !12, i64 196}
-!227 = !{!120, !12, i64 252}
-!228 = !{!120, !12, i64 256}
-!229 = !{!120, !12, i64 260}
-!230 = distinct !{!230, !93}
-!231 = !{i32 -1056584962, i32 626594335}
-!232 = !{i32 -1056584962, i32 476710063}
+!224 = !{!101, !12, i64 192}
+!225 = !{!101, !12, i64 196}
+!226 = !{!120, !12, i64 252}
+!227 = !{!120, !12, i64 256}
+!228 = !{!120, !12, i64 260}
+!229 = distinct !{!229, !93}
+!230 = !{i32 -1056584962, i32 626594335}
+!231 = !{i32 -1056584962, i32 476710063}
+!232 = distinct !{!232, !93}
 !233 = distinct !{!233, !93}
 !234 = distinct !{!234, !93}
 !235 = distinct !{!235, !93}
 !236 = distinct !{!236, !93}
 !237 = distinct !{!237, !93}
-!238 = distinct !{!238, !93}
-!239 = !{i32 -1056584962, i32 -300727642}
+!238 = !{i32 -1056584962, i32 -300727642}
 end_hunk_8
