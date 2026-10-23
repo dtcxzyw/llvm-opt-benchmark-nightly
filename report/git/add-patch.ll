@@ -205,7 +205,7 @@ parse_diff.exit:                                  ; preds = %bb.q, %complete_fil
   %i.ow = getelementptr inbounds nuw i8, ptr %0, i64 904 ; 7 uses
   %i.ox = getelementptr inbounds nuw i8, ptr %0, i64 848 ; 40 uses
   %i.oy = getelementptr inbounds nuw i8, ptr %0, i64 856 ; 21 uses
-  %i.oz = getelementptr inbounds nuw i8, ptr %0, i64 864 ; 23 uses
+  %i.oz = getelementptr inbounds nuw i8, ptr %0, i64 864 ; 22 uses
   %i.pa = getelementptr inbounds nuw i8, ptr %0, i64 888 ; 9 uses
   %i.pb = getelementptr inbounds nuw i8, ptr %0, i64 912 ; 4 uses
   %i.pc = getelementptr inbounds nuw i8, ptr %0, i64 816 ; 6 uses
@@ -608,22 +608,11 @@ bb.la:                                            ; preds = %_.exit46.i.i.i
   store i64 %i.amf, ptr %i.sk, align 8, !tbaa !68
   %i.amg = load i64, ptr %i.oy, align 8, !tbaa !91 ; 2 uses
   %.not57.i.i.i = icmp eq i64 %i.amg, 0
-  br i1 %.not57.i.i.i, label %edit_hunk_manually.exit.i.i, label %.lr.ph.i.i483.i
+  br i1 %.not57.i.i.i, label %edit_hunk_manually.exit.i.i, label %find_next_line.exit.i.i484.i
 
-.lr.ph.i.i483.i:                                  ; preds = %bb.la, %bb.lc
-  %10 = phi i64 [ %i.amt, %bb.lc ], [ %i.amg, %bb.la ] ; 4 uses
-  %.056.i.i.i = phi i64 [ %.0.i48.i.i.i, %bb.lc ], [ 0, %bb.la ] ; 6 uses
-  %.not.i47.i.i.i = icmp ult i64 %.056.i.i.i, %10
-  br i1 %.not.i47.i.i.i, label %find_next_line.exit.i.i484.i, label %11
-
-11:                                               ; preds = %.lr.ph.i.i483.i
-  %12 = trunc i64 %.056.i.i.i to i32
-  %13 = trunc i64 %10 to i32
-  %14 = load ptr, ptr %i.oz, align 8, !tbaa !57
-  call void (ptr, i32, ptr, ...) @BUG_fl(ptr noundef nonnull @.str.107, i32 noundef 783, ptr noundef nonnull @.str.174, i32 noundef %12, i32 noundef %13, ptr noundef %14) #19
-  unreachable
-
-find_next_line.exit.i.i484.i:                     ; preds = %.lr.ph.i.i483.i
+find_next_line.exit.i.i484.i:                     ; preds = %bb.la, %bb.lc
+  %10 = phi i64 [ %i.amt, %bb.lc ], [ %i.amg, %bb.la ] ; 2 uses
+  %.056.i.i.i = phi i64 [ %.0.i48.i.i.i, %bb.lc ], [ 0, %bb.la ] ; 4 uses
   %i.amh = load ptr, ptr %i.oz, align 8, !tbaa !57 ; 2 uses
   %i.ami = getelementptr inbounds nuw i8, ptr %i.amh, i64 %.056.i.i.i ; 2 uses
   %i.amj = sub nuw i64 %10, %.056.i.i.i
@@ -648,7 +637,7 @@ bb.lb:                                            ; preds = %find_next_line.exit
 bb.lc:                                            ; preds = %bb.lb, %find_next_line.exit.i.i484.i
   %i.amt = load i64, ptr %i.oy, align 8, !tbaa !91 ; 2 uses
   %i.amu = icmp ult i64 %.0.i48.i.i.i, %i.amt
-  br i1 %i.amu, label %.lr.ph.i.i483.i, label %._crit_edge.i.i.i, !llvm.loop !116
+  br i1 %i.amu, label %find_next_line.exit.i.i484.i, label %._crit_edge.i.i.i, !llvm.loop !116
 
 ._crit_edge.i.i.i:                                ; preds = %bb.lc
   %.pre61.i.i.i = load i64, ptr %i.as, align 8, !tbaa !89 ; 6 uses
@@ -669,10 +658,8 @@ bb.le:                                            ; preds = %bb.ld
   br i1 %i.amy, label %.preheader.i.i.i.i, label %._crit_edge.i.i.i.i
 
 .preheader.i.i.i.i:                               ; preds = %bb.le, %bb.ll
-  %i.amz = phi i64 [ %i.anx, %bb.ll ], [ %.pre61.i.i.i, %bb.le ]
-  %.04551.i.i.i.i = phi i64 [ %i.anf, %bb.ll ], [ %.pre62.i.i.i, %bb.le ] ; 5 uses
-  %15 = add nuw i64 %.04551.i.i.i.i, 1
-  %umax.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.amz, i64 %15) ; 2 uses
+  %i.amz = phi i64 [ %i.anx, %bb.ll ], [ %.pre61.i.i.i, %bb.le ] ; 2 uses
+  %.04551.i.i.i.i = phi i64 [ %i.anf, %bb.ll ], [ %.pre62.i.i.i, %bb.le ] ; 4 uses
   br label %bb.lf
 
 bb.lf:                                            ; preds = %bb.lg, %.preheader.i.i.i.i
@@ -684,11 +671,11 @@ bb.lf:                                            ; preds = %bb.lg, %.preheader.
 
 bb.lg:                                            ; preds = %bb.lf
   %i.and = add i64 %.050.i.i.i.i, 1               ; 2 uses
-  %exitcond.not.i.i.i.i = icmp eq i64 %i.and, %umax.i.i.i.i
+  %exitcond.not.i.i.i.i = icmp eq i64 %i.and, %i.amz
   br i1 %exitcond.not.i.i.i.i, label %bb.lh, label %bb.lf, !llvm.loop !117
 
 bb.lh:                                            ; preds = %bb.lg, %bb.lf
-  %.0.lcssa.i.i.i.i = phi i64 [ %umax.i.i.i.i, %bb.lg ], [ %.050.i.i.i.i, %bb.lf ] ; 5 uses
+  %.0.lcssa.i.i.i.i = phi i64 [ %i.amz, %bb.lg ], [ %.050.i.i.i.i, %bb.lf ] ; 5 uses
   %i.ane = zext i1 %i.anc to i64
   %i.anf = add i64 %.0.lcssa.i.i.i.i, %i.ane      ; 4 uses
   %i.ang = icmp ugt i64 %.0.lcssa.i.i.i.i, %.04551.i.i.i.i

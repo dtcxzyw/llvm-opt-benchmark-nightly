@@ -205,7 +205,7 @@ begin_hunk_0_@_Z12cmp_inputrecP8_IO_FILEPK10t_inputrecS3_ff:bb.a
   br label %bb.ae
 
 ._crit_edge.i480:                                 ; preds = %.loopexit136.i, %_ZL13cmp_awhParamsP8_IO_FILERKN3gmx9AwhParamsES4_ff.exit
-  %i.apm = load i32, ptr %i.aoq, align 4, !tbaa !414 ; 3 uses
+  %i.apm = load i32, ptr %i.aoq, align 4, !tbaa !414 ; 2 uses
   %i.apn = load i32, ptr %i.aos, align 4, !tbaa !414
   %i.apo = icmp eq i32 %i.apm, %i.apn
   %i.app = icmp sgt i32 %i.apm, 0
@@ -316,15 +316,12 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.aso, label %bb.ae, label %._crit_edge.i480, !llvm.loop !593
 
 .preheader134.i:                                  ; preds = %._crit_edge142.i, %.preheader134.lr.ph.i
-  %6 = phi i32 [ %i.apm, %.preheader134.lr.ph.i ], [ %8, %._crit_edge142.i ] ; 2 uses
-  %.0124143.i = phi i32 [ 0, %.preheader134.lr.ph.i ], [ %i.asp, %._crit_edge142.i ] ; 5 uses
-  %7 = icmp slt i32 %.0124143.i, %6
-  br i1 %7, label %.lr.ph141.i, label %._crit_edge142.i
+  %.0124143.i = phi i32 [ 0, %.preheader134.lr.ph.i ], [ %i.asp, %._crit_edge142.i ] ; 4 uses
+  br label %.lr.ph141.i
 
-._crit_edge142.i:                                 ; preds = %.lr.ph141.i, %.preheader134.i
-  %8 = phi i32 [ %6, %.preheader134.i ], [ %i.atd, %.lr.ph141.i ] ; 2 uses
+._crit_edge142.i:                                 ; preds = %.lr.ph141.i
   %i.asp = add nuw nsw i32 %.0124143.i, 1         ; 2 uses
-  %i.asq = icmp slt i32 %i.asp, %8
+  %i.asq = icmp slt i32 %i.asp, %i.atd
   br i1 %i.asq, label %.preheader134.i, label %.loopexit.i, !llvm.loop !594
 
 .lr.ph141.i:                                      ; preds = %.preheader134.i, %.lr.ph141.i

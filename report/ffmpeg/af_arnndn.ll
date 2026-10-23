@@ -205,15 +205,13 @@ bb.aq:                                            ; preds = %.critedge.i, %.crit
 bb.ar:                                            ; preds = %bb.aq
   %i.ex = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   store ptr %i.ew, ptr %i.ex, align 8, !tbaa !87
-  %i.ey = load i32, ptr %i.ca, align 4, !tbaa !84 ; 2 uses
+  %i.ey = load i32, ptr %i.ca, align 4, !tbaa !84
   %.not751.not973.i = icmp sgt i32 %i.ey, 0
   br i1 %.not751.not973.i, label %.preheader952.i, label %.critedge928.i.preheader
 
 .preheader952.i:                                  ; preds = %bb.ar, %.thread839.i
-  %2 = phi i32 [ %4, %.thread839.i ], [ %i.ey, %bb.ar ] ; 2 uses
   %.0632974.i = phi i32 [ %i.gl, %.thread839.i ], [ 0, %bb.ar ] ; 4 uses
-  %3 = icmp sgt i32 %2, 0
-  br i1 %3, label %.lr.ph970.i, label %.thread839.i
+  br label %.lr.ph970.i
 
 .lr.ph970.i:                                      ; preds = %.preheader952.i, %bb.as
   %.0630969.i = phi i32 [ %i.fk, %bb.as ], [ 0, %.preheader952.i ] ; 2 uses
@@ -295,10 +293,10 @@ bb.au:                                            ; preds = %.lr.ph970.2.i
   call fastcc void @rnnoise_model_free(ptr noundef nonnull %i.l)
   br label %rnnoise_model_from_file.exit
 
-.thread839.i:                                     ; preds = %bb.au, %._crit_edge971.1.i, %._crit_edge971.i, %.preheader952.i
-  %4 = phi i32 [ %2, %.preheader952.i ], [ %i.fd, %._crit_edge971.i ], [ %i.fp, %._crit_edge971.1.i ], [ %i.gc, %bb.au ] ; 2 uses
+.thread839.i:                                     ; preds = %bb.au, %._crit_edge971.1.i, %._crit_edge971.i
+  %2 = phi i32 [ %i.fp, %._crit_edge971.1.i ], [ %i.fd, %._crit_edge971.i ], [ %i.gc, %bb.au ]
   %i.gl = add nuw nsw i32 %.0632974.i, 1          ; 2 uses
-  %.not751.not.i = icmp slt i32 %i.gl, %4
+  %.not751.not.i = icmp slt i32 %i.gl, %2
   br i1 %.not751.not.i, label %.preheader952.i, label %.critedge928.i.preheader, !llvm.loop !109
 
 .critedge928.i.preheader:                         ; preds = %.thread839.i, %bb.ar
@@ -573,15 +571,13 @@ bb.bk:                                            ; preds = %.critedge930.i, %.c
 bb.bl:                                            ; preds = %bb.bk
   %i.kg = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   store ptr %i.kf, ptr %i.kg, align 8, !tbaa !87
-  %i.kh = load i32, ptr %i.hj, align 4, !tbaa !84 ; 2 uses
+  %i.kh = load i32, ptr %i.hj, align 4, !tbaa !84
   %.not765.not991.i = icmp sgt i32 %i.kh, 0
   br i1 %.not765.not991.i, label %.preheader947.i, label %.critedge932.i.preheader
 
 .preheader947.i:                                  ; preds = %bb.bl, %.thread863.i
-  %5 = phi i32 [ %7, %.thread863.i ], [ %i.kh, %bb.bl ] ; 2 uses
   %.0625992.i = phi i32 [ %i.lu, %.thread863.i ], [ 0, %bb.bl ] ; 4 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph988.i, label %.thread863.i
+  br label %.lr.ph988.i
 
 .lr.ph988.i:                                      ; preds = %.preheader947.i, %bb.bm
   %.0623987.i = phi i32 [ %i.kt, %bb.bm ], [ 0, %.preheader947.i ] ; 2 uses
@@ -663,10 +659,10 @@ bb.bo:                                            ; preds = %.lr.ph988.2.i
   call fastcc void @rnnoise_model_free(ptr noundef nonnull %i.l)
   br label %rnnoise_model_from_file.exit
 
-.thread863.i:                                     ; preds = %bb.bo, %._crit_edge989.1.i, %._crit_edge989.i, %.preheader947.i
-  %7 = phi i32 [ %5, %.preheader947.i ], [ %i.km, %._crit_edge989.i ], [ %i.ky, %._crit_edge989.1.i ], [ %i.ll, %bb.bo ] ; 2 uses
+.thread863.i:                                     ; preds = %bb.bo, %._crit_edge989.1.i, %._crit_edge989.i
+  %3 = phi i32 [ %i.ky, %._crit_edge989.1.i ], [ %i.km, %._crit_edge989.i ], [ %i.ll, %bb.bo ]
   %i.lu = add nuw nsw i32 %.0625992.i, 1          ; 2 uses
-  %.not765.not.i = icmp slt i32 %i.lu, %7
+  %.not765.not.i = icmp slt i32 %i.lu, %3
   br i1 %.not765.not.i, label %.preheader947.i, label %.critedge932.i.preheader, !llvm.loop !114
 
 .critedge932.i.preheader:                         ; preds = %.thread863.i, %bb.bl
@@ -941,15 +937,13 @@ bb.ce:                                            ; preds = %.critedge934.i, %.c
 bb.cf:                                            ; preds = %bb.ce
   %i.pp = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   store ptr %i.po, ptr %i.pp, align 8, !tbaa !87
-  %i.pq = load i32, ptr %i.ms, align 4, !tbaa !84 ; 2 uses
+  %i.pq = load i32, ptr %i.ms, align 4, !tbaa !84
   %.not779.not1009.i = icmp sgt i32 %i.pq, 0
   br i1 %.not779.not1009.i, label %.preheader942.i, label %.critedge936.i.preheader
 
 .preheader942.i:                                  ; preds = %bb.cf, %.thread887.i
-  %8 = phi i32 [ %10, %.thread887.i ], [ %i.pq, %bb.cf ] ; 2 uses
   %.06181010.i = phi i32 [ %i.rd, %.thread887.i ], [ 0, %bb.cf ] ; 4 uses
-  %9 = icmp sgt i32 %8, 0
-  br i1 %9, label %.lr.ph1006.i, label %.thread887.i
+  br label %.lr.ph1006.i
 
 .lr.ph1006.i:                                     ; preds = %.preheader942.i, %bb.cg
   %.06161005.i = phi i32 [ %i.qc, %bb.cg ], [ 0, %.preheader942.i ] ; 2 uses
@@ -1031,10 +1025,10 @@ bb.ci:                                            ; preds = %.lr.ph1006.2.i
   call fastcc void @rnnoise_model_free(ptr noundef nonnull %i.l)
   br label %rnnoise_model_from_file.exit
 
-.thread887.i:                                     ; preds = %bb.ci, %._crit_edge1007.1.i, %._crit_edge1007.i, %.preheader942.i
-  %10 = phi i32 [ %8, %.preheader942.i ], [ %i.pv, %._crit_edge1007.i ], [ %i.qh, %._crit_edge1007.1.i ], [ %i.qu, %bb.ci ] ; 2 uses
+.thread887.i:                                     ; preds = %bb.ci, %._crit_edge1007.1.i, %._crit_edge1007.i
+  %4 = phi i32 [ %i.qh, %._crit_edge1007.1.i ], [ %i.pv, %._crit_edge1007.i ], [ %i.qu, %bb.ci ]
   %i.rd = add nuw nsw i32 %.06181010.i, 1         ; 2 uses
-  %.not779.not.i = icmp slt i32 %i.rd, %10
+  %.not779.not.i = icmp slt i32 %i.rd, %4
   br i1 %.not779.not.i, label %.preheader942.i, label %.critedge936.i.preheader, !llvm.loop !119
 
 .critedge936.i.preheader:                         ; preds = %.thread887.i, %bb.cf

@@ -205,16 +205,14 @@ bb.c:                                             ; preds = %.preheader
   br i1 %exitcond.not.i, label %bb.c, label %.preheader, !llvm.loop !172
 
 .preheader296.i:                                  ; preds = %bb.c, %.critedge180.i
-  %.0168313.i = phi i32 [ %.2.i, %.critedge180.i ], [ %1, %bb.c ] ; 3 uses
-  %.0169312.i = phi i32 [ %.2171.i, %.critedge180.i ], [ 0, %bb.c ] ; 2 uses
+  %.0168313.i = phi i32 [ %.2.i, %.critedge180.i ], [ %1, %bb.c ] ; 2 uses
+  %.0169312.i = phi i32 [ %.2171.i, %.critedge180.i ], [ 0, %bb.c ]
   %i.ak = sext i32 %.0169312.i to i64
-  %i.al = sext i32 %.0168313.i to i64             ; 3 uses
-  %11 = add nsw i32 %.0169312.i, 1
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %.0168313.i, i32 %11)
+  %i.al = sext i32 %.0168313.i to i64             ; 5 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.preheader296.i
-  %indvars.iv359.i = phi i64 [ %i.ak, %.preheader296.i ], [ %indvars.iv.next360.i, %bb.e ] ; 3 uses
+  %indvars.iv359.i = phi i64 [ %i.ak, %.preheader296.i ], [ %indvars.iv.next360.i, %bb.e ] ; 4 uses
   %i.am = getelementptr inbounds [40 x i8], ptr %2, i64 %indvars.iv359.i
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   %i.ao = load float, ptr %i.an, align 4, !tbaa !198, !noalias !196
@@ -231,14 +229,14 @@ bb.e:                                             ; preds = %bb.d
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.e, %.critedge.split.loop.exit409.i
-  %.1170.lcssa.i = phi i32 [ %i.ar, %.critedge.split.loop.exit409.i ], [ %smax.i, %bb.e ] ; 5 uses
-  %12 = sext i32 %.1170.lcssa.i to i64            ; 3 uses
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.al, i64 %12) ; 2 uses
-  %13 = icmp sgt i32 %.0168313.i, %.1170.lcssa.i
-  br i1 %13, label %.lr.ph542, label %.critedge180.i
+  %.pre-phi421 = phi i64 [ %indvars.iv359.i, %.critedge.split.loop.exit409.i ], [ %i.al, %bb.e ] ; 4 uses
+  %.1170.lcssa.i = phi i32 [ %i.ar, %.critedge.split.loop.exit409.i ], [ %.0168313.i, %bb.e ] ; 3 uses
+  %smin = tail call i64 @llvm.smin.i64(i64 %i.al, i64 %.pre-phi421) ; 2 uses
+  %11 = icmp slt i64 %.pre-phi421, %i.al
+  br i1 %11, label %.lr.ph542, label %.critedge180.i
 
 bb.f:                                             ; preds = %.lr.ph542
-  %i.as = icmp sgt i64 %indvars.iv.next363.i, %12
+  %i.as = icmp sgt i64 %indvars.iv.next363.i, %.pre-phi421
   br i1 %i.as, label %.lr.ph542, label %.critedge180.i, !llvm.loop !174
 
 .lr.ph542:                                        ; preds = %.critedge.i, %bb.f
@@ -252,7 +250,7 @@ bb.f:                                             ; preds = %.lr.ph542
 
 .critedge2.i:                                     ; preds = %.lr.ph542
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  %i.ax = getelementptr inbounds [40 x i8], ptr %2, i64 %12 ; 2 uses
+  %i.ax = getelementptr inbounds [40 x i8], ptr %2, i64 %.pre-phi421 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %8, ptr noundef nonnull align 4 dereferenceable(40) %i.ax, i64 40, i1 false), !tbaa.struct !199, !noalias !196
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.ax, ptr noundef nonnull align 4 dereferenceable(40) %i.at, i64 40, i1 false), !tbaa.struct !199, !noalias !196
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.at, ptr noundef nonnull align 4 dereferenceable(40) %8, i64 40, i1 false), !tbaa.struct !199, !noalias !196
@@ -272,16 +270,14 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.ba, label %.preheader293.i, label %.preheader294.i
 
 .preheader294.i:                                  ; preds = %bb.g, %.critedge181.i
-  %.3316.i = phi i32 [ %.5.i, %.critedge181.i ], [ %1, %bb.g ] ; 3 uses
-  %.3172315.i = phi i32 [ %.5174.i, %.critedge181.i ], [ 0, %bb.g ] ; 2 uses
+  %.3316.i = phi i32 [ %.5.i, %.critedge181.i ], [ %1, %bb.g ] ; 2 uses
+  %.3172315.i = phi i32 [ %.5174.i, %.critedge181.i ], [ 0, %bb.g ]
   %i.bb = sext i32 %.3172315.i to i64
-  %i.bc = sext i32 %.3316.i to i64                ; 3 uses
-  %14 = add nsw i32 %.3172315.i, 1
-  %smax367.i = tail call i32 @llvm.smax.i32(i32 %.3316.i, i32 %14)
+  %i.bc = sext i32 %.3316.i to i64                ; 5 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %.preheader294.i
-  %indvars.iv365.i = phi i64 [ %i.bb, %.preheader294.i ], [ %indvars.iv.next366.i, %bb.i ] ; 3 uses
+  %indvars.iv365.i = phi i64 [ %i.bb, %.preheader294.i ], [ %indvars.iv.next366.i, %bb.i ] ; 4 uses
   %i.bd = getelementptr inbounds [40 x i8], ptr %2, i64 %indvars.iv365.i
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 28
   %i.bf = load float, ptr %i.be, align 4, !tbaa !200, !noalias !196
@@ -298,14 +294,14 @@ bb.i:                                             ; preds = %bb.h
   br label %.critedge4.i
 
 .critedge4.i:                                     ; preds = %bb.i, %.critedge4.split.loop.exit411.i
-  %.4173.lcssa.i = phi i32 [ %i.bi, %.critedge4.split.loop.exit411.i ], [ %smax367.i, %bb.i ] ; 5 uses
-  %15 = sext i32 %.4173.lcssa.i to i64            ; 3 uses
-  %smin414 = tail call i64 @llvm.smin.i64(i64 %i.bc, i64 %15) ; 2 uses
-  %16 = icmp sgt i32 %.3316.i, %.4173.lcssa.i
-  br i1 %16, label %.lr.ph544, label %.critedge181.i
+  %.pre-phi419 = phi i64 [ %indvars.iv365.i, %.critedge4.split.loop.exit411.i ], [ %i.bc, %bb.i ] ; 4 uses
+  %.4173.lcssa.i = phi i32 [ %i.bi, %.critedge4.split.loop.exit411.i ], [ %.3316.i, %bb.i ] ; 3 uses
+  %smin414 = tail call i64 @llvm.smin.i64(i64 %i.bc, i64 %.pre-phi419) ; 2 uses
+  %12 = icmp slt i64 %.pre-phi419, %i.bc
+  br i1 %12, label %.lr.ph544, label %.critedge181.i
 
 bb.j:                                             ; preds = %.lr.ph544
-  %i.bj = icmp sgt i64 %indvars.iv.next370.i, %15
+  %i.bj = icmp sgt i64 %indvars.iv.next370.i, %.pre-phi419
   br i1 %i.bj, label %.lr.ph544, label %.critedge181.i, !llvm.loop !177
 
 .lr.ph544:                                        ; preds = %.critedge4.i, %bb.j
@@ -319,7 +315,7 @@ bb.j:                                             ; preds = %.lr.ph544
 
 .critedge6.i:                                     ; preds = %.lr.ph544
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  %i.bo = getelementptr inbounds [40 x i8], ptr %2, i64 %15 ; 2 uses
+  %i.bo = getelementptr inbounds [40 x i8], ptr %2, i64 %.pre-phi419 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %9, ptr noundef nonnull align 4 dereferenceable(40) %i.bo, i64 40, i1 false), !tbaa.struct !199, !noalias !196
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.bo, ptr noundef nonnull align 4 dereferenceable(40) %i.bk, i64 40, i1 false), !tbaa.struct !199, !noalias !196
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.bk, ptr noundef nonnull align 4 dereferenceable(40) %9, i64 40, i1 false), !tbaa.struct !199, !noalias !196
@@ -335,16 +331,14 @@ bb.j:                                             ; preds = %.lr.ph544
   br i1 %i.bq, label %.preheader294.i, label %.loopexit.i, !llvm.loop !178
 
 .preheader293.i:                                  ; preds = %bb.g, %.critedge182.i
-  %.6319.i = phi i32 [ %.8.i, %.critedge182.i ], [ %1, %bb.g ] ; 3 uses
-  %.6175318.i = phi i32 [ %.8177.i, %.critedge182.i ], [ 0, %bb.g ] ; 2 uses
+  %.6319.i = phi i32 [ %.8.i, %.critedge182.i ], [ %1, %bb.g ] ; 2 uses
+  %.6175318.i = phi i32 [ %.8177.i, %.critedge182.i ], [ 0, %bb.g ]
   %i.br = sext i32 %.6175318.i to i64
-  %i.bs = sext i32 %.6319.i to i64                ; 3 uses
-  %17 = add nsw i32 %.6175318.i, 1
-  %smax374.i = tail call i32 @llvm.smax.i32(i32 %.6319.i, i32 %17)
+  %i.bs = sext i32 %.6319.i to i64                ; 5 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.l, %.preheader293.i
-  %indvars.iv372.i = phi i64 [ %i.br, %.preheader293.i ], [ %indvars.iv.next373.i, %bb.l ] ; 3 uses
+  %indvars.iv372.i = phi i64 [ %i.br, %.preheader293.i ], [ %indvars.iv.next373.i, %bb.l ] ; 4 uses
   %i.bt = getelementptr inbounds [40 x i8], ptr %2, i64 %indvars.iv372.i
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 32
   %i.bv = load float, ptr %i.bu, align 4, !tbaa !201, !noalias !196
@@ -361,14 +355,14 @@ bb.l:                                             ; preds = %bb.k
   br label %.critedge8.i
 
 .critedge8.i:                                     ; preds = %bb.l, %.critedge8.split.loop.exit413.i
-  %.7176.lcssa.i = phi i32 [ %i.by, %.critedge8.split.loop.exit413.i ], [ %smax374.i, %bb.l ] ; 5 uses
-  %18 = sext i32 %.7176.lcssa.i to i64            ; 3 uses
-  %smin415 = tail call i64 @llvm.smin.i64(i64 %i.bs, i64 %18) ; 2 uses
-  %19 = icmp sgt i32 %.6319.i, %.7176.lcssa.i
-  br i1 %19, label %.lr.ph546, label %.critedge182.i
+  %.pre-phi = phi i64 [ %indvars.iv372.i, %.critedge8.split.loop.exit413.i ], [ %i.bs, %bb.l ] ; 4 uses
+  %.7176.lcssa.i = phi i32 [ %i.by, %.critedge8.split.loop.exit413.i ], [ %.6319.i, %bb.l ] ; 3 uses
+  %smin415 = tail call i64 @llvm.smin.i64(i64 %i.bs, i64 %.pre-phi) ; 2 uses
+  %13 = icmp slt i64 %.pre-phi, %i.bs
+  br i1 %13, label %.lr.ph546, label %.critedge182.i
 
 bb.m:                                             ; preds = %.lr.ph546
-  %i.bz = icmp sgt i64 %indvars.iv.next377.i, %18
+  %i.bz = icmp sgt i64 %indvars.iv.next377.i, %.pre-phi
   br i1 %i.bz, label %.lr.ph546, label %.critedge182.i, !llvm.loop !180
 
 .lr.ph546:                                        ; preds = %.critedge8.i, %bb.m
@@ -382,7 +376,7 @@ bb.m:                                             ; preds = %.lr.ph546
 
 .critedge10.i:                                    ; preds = %.lr.ph546
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
-  %i.ce = getelementptr inbounds [40 x i8], ptr %2, i64 %18 ; 2 uses
+  %i.ce = getelementptr inbounds [40 x i8], ptr %2, i64 %.pre-phi ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %10, ptr noundef nonnull align 4 dereferenceable(40) %i.ce, i64 40, i1 false), !tbaa.struct !199, !noalias !196
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.ce, ptr noundef nonnull align 4 dereferenceable(40) %i.ca, i64 40, i1 false), !tbaa.struct !199, !noalias !196
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.ca, ptr noundef nonnull align 4 dereferenceable(40) %10, i64 40, i1 false), !tbaa.struct !199, !noalias !196

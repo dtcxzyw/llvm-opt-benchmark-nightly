@@ -204,7 +204,7 @@ _ZN4bssl5ArrayIhE16InitForOverwriteEm.exit.i:     ; preds = %.noexc38.i, %.noexc
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 928
   %i.hs = load i8, ptr %i.hr, align 8, !tbaa !141 ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hq, i64 640
-  %i.hu = load i8, ptr %i.ht, align 8, !tbaa !139 ; 2 uses
+  %i.hu = load i8, ptr %i.ht, align 8, !tbaa !139
   %i.hv = icmp ugt i8 %i.hu, %i.hs
   br i1 %i.hv, label %.lr.ph.i33, label %._crit_edge.i
 
@@ -228,13 +228,11 @@ bb.aj:                                            ; preds = %._crit_edge.i, %bb.
   br label %.loopexit.split-lp.i
 
 bb.ak:                                            ; preds = %.thread82.i, %.lr.ph.i33
-  %12 = phi i8 [ %i.hu, %.lr.ph.i33 ], [ %16, %.thread82.i ] ; 2 uses
-  %i.ih = phi ptr [ %i.hq, %.lr.ph.i33 ], [ %18, %.thread82.i ] ; 3 uses
-  %i.ii = phi i8 [ %i.hs, %.lr.ph.i33 ], [ %17, %.thread82.i ] ; 2 uses
+  %i.ih = phi ptr [ %i.hq, %.lr.ph.i33 ], [ %.pre172.i, %.thread82.i ] ; 2 uses
+  %i.ii = phi i8 [ %i.hs, %.lr.ph.i33 ], [ %.pre174.i, %.thread82.i ]
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ih, i64 932
   %i.ik = load i32, ptr %i.ij, align 4, !tbaa !142
-  %13 = icmp ugt i8 %12, %i.ii
-  br i1 %13, label %.split.i.i, label %.thread.i
+  br label %.split.i.i
 
 .split.i.i:                                       ; preds = %bb.ak, %.thread30.i.i
   %i.il = phi ptr [ %.pre.i.i, %.thread30.i.i ], [ %i.ih, %bb.ak ] ; 4 uses
@@ -637,21 +635,16 @@ _ZN4bsslL16seal_next_packetEP6ssl_stNS_4SpanIhEEPm.exit.i: ; preds = %_ZN4bsslL1
 bb.bw:                                            ; preds = %bb.bv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.pc = icmp eq i64 %i.oy, 0
-  br i1 %i.pc, label %..thread_crit_edge.i, label %bb.by
+  br i1 %i.pc, label %.thread.i, label %bb.by
 
-..thread_crit_edge.i:                             ; preds = %bb.bw
+.thread.i:                                        ; preds = %bb.bw
   %.pre.i = load ptr, ptr %i.f, align 8, !tbaa !76 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 640
   %.pre171.i = load i8, ptr %.phi.trans.insert.i, align 8, !tbaa !139
-  br label %.thread.i
-
-.thread.i:                                        ; preds = %..thread_crit_edge.i, %bb.ak
-  %14 = phi i8 [ %.pre171.i, %..thread_crit_edge.i ], [ %12, %bb.ak ] ; 2 uses
-  %15 = phi ptr [ %.pre.i, %..thread_crit_edge.i ], [ %i.ih, %bb.ak ] ; 2 uses
-  %i.pd = getelementptr inbounds nuw i8, ptr %15, i64 928
-  %i.pe = load i8, ptr %i.pd, align 8, !tbaa !141 ; 2 uses
-  %i.pf = icmp ugt i8 %14, %i.pe
-  br i1 %i.pf, label %bb.bx, label %.thread82.i
+  %i.pd = getelementptr inbounds nuw i8, ptr %.pre.i, i64 928
+  %i.pe = load i8, ptr %i.pd, align 8, !tbaa !141
+  %i.pf = icmp ugt i8 %.pre171.i, %i.pe
+  br i1 %i.pf, label %bb.bx, label %._crit_edge.i
 
 bb.bx:                                            ; preds = %.thread.i
   invoke void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 169, ptr noundef nonnull @.str, i32 noundef 907)
@@ -667,13 +660,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.pj = icmp sgt i32 %i.pi, 0
   %.pre172.i = load ptr, ptr %i.f, align 8, !tbaa !76 ; 4 uses
   %.phi.trans.insert173.i = getelementptr inbounds nuw i8, ptr %.pre172.i, i64 928 ; 2 uses
-  br i1 %i.pj, label %..thread82_crit_edge.i, label %bb.ca
-
-..thread82_crit_edge.i:                           ; preds = %bb.bz
-  %.pre174.i = load i8, ptr %.phi.trans.insert173.i, align 8, !tbaa !141
-  %.phi.trans.insert175.i = getelementptr inbounds nuw i8, ptr %.pre172.i, i64 640
-  %.pre176.i = load i8, ptr %.phi.trans.insert175.i, align 8, !tbaa !139
-  br label %.thread82.i
+  br i1 %i.pj, label %.thread82.i, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
   store i8 %i.ii, ptr %.phi.trans.insert173.i, align 8, !tbaa !141
@@ -689,14 +676,14 @@ bb.ca:                                            ; preds = %bb.bz
           cleanup
   br label %.loopexit.split-lp.i
 
-.thread82.i:                                      ; preds = %..thread82_crit_edge.i, %.thread.i
-  %16 = phi i8 [ %14, %.thread.i ], [ %.pre176.i, %..thread82_crit_edge.i ] ; 2 uses
-  %17 = phi i8 [ %i.pe, %.thread.i ], [ %.pre174.i, %..thread82_crit_edge.i ] ; 2 uses
-  %18 = phi ptr [ %15, %.thread.i ], [ %.pre172.i, %..thread82_crit_edge.i ]
-  %i.pn = icmp ugt i8 %16, %17
+.thread82.i:                                      ; preds = %bb.bz
+  %.pre174.i = load i8, ptr %.phi.trans.insert173.i, align 8, !tbaa !141 ; 2 uses
+  %.phi.trans.insert175.i = getelementptr inbounds nuw i8, ptr %.pre172.i, i64 640
+  %.pre176.i = load i8, ptr %.phi.trans.insert175.i, align 8, !tbaa !139
+  %i.pn = icmp ugt i8 %.pre176.i, %.pre174.i
   br i1 %i.pn, label %bb.ak, label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %.thread82.i, %_ZN4bssl5ArrayIhE16InitForOverwriteEm.exit.i
+._crit_edge.i:                                    ; preds = %.thread82.i, %.thread.i, %_ZN4bssl5ArrayIhE16InitForOverwriteEm.exit.i
   %i.po = load ptr, ptr %i.gp, align 8, !tbaa !200
   %i.pp = invoke i32 @BIO_flush(ptr noundef %i.po)
           to label %bb.cb unwind label %bb.aj

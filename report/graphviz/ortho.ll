@@ -204,22 +204,19 @@ bb.b:                                             ; preds = %.lr.ph120, %addPEdg
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !73   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.0117, i64 32 ; 64 uses
   %i.l = getelementptr i8, ptr %.0117, i64 48     ; 2 uses
-  %.val177286.i = load i64, ptr %i.l, align 8, !tbaa !71 ; 2 uses
+  %.val177286.i = load i64, ptr %i.l, align 8, !tbaa !71
   %.not175287.i = icmp ugt i64 %.val177286.i, 1
   br i1 %.not175287.i, label %.preheader.i, label %.loopexit
 
-.critedge.loopexit.i:                             ; preds = %is_parallel.exit.thread.i, %.preheader.i
-  %.val177.i = phi i64 [ %.val177300.i, %.preheader.i ], [ %.val.i, %is_parallel.exit.thread.i ] ; 2 uses
+.critedge.loopexit.i:                             ; preds = %is_parallel.exit.thread.i
   %i.m = add nuw i64 %i.n, 1                      ; 2 uses
-  %.not175.i = icmp ult i64 %i.m, %.val177.i
+  %.not175.i = icmp ult i64 %i.m, %.val.i
   br i1 %.not175.i, label %.preheader.i, label %.loopexit, !llvm.loop !183
 
 .preheader.i:                                     ; preds = %.lr.ph, %.critedge.loopexit.i
-  %.val177300.i = phi i64 [ %.val177.i, %.critedge.loopexit.i ], [ %.val177286.i, %.lr.ph ] ; 2 uses
-  %i.n = phi i64 [ %i.m, %.critedge.loopexit.i ], [ 1, %.lr.ph ] ; 4 uses
+  %i.n = phi i64 [ %i.m, %.critedge.loopexit.i ], [ 1, %.lr.ph ] ; 3 uses
   %.0166288.i = phi i64 [ %i.n, %.critedge.loopexit.i ], [ 0, %.lr.ph ] ; 19 uses
-  %.not174284.i = icmp ult i64 %i.n, %.val177300.i
-  br i1 %.not174284.i, label %.lr.ph.i, label %.critedge.loopexit.i
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %is_parallel.exit.thread.i
   %.0285.i = phi i64 [ %i.kb, %is_parallel.exit.thread.i ], [ %i.n, %.preheader.i ] ; 20 uses
