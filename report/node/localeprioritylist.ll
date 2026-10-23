@@ -182,10 +182,10 @@ bb.m:                                             ; preds = %.lr.ph.i54
   br i1 %exitcond.not.i56, label %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57, label %.lr.ph.i54, !llvm.loop !0
 
 _ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57: ; preds = %.lr.ph.i54, %bb.m, %bb.l
-  %.0.lcssa.i51 = phi ptr [ %i.av, %bb.l ], [ %.05.i55, %.lr.ph.i54 ], [ %scevgep.i53, %bb.m ] ; 6 uses
+  %.0.lcssa.i51 = phi ptr [ %i.av, %bb.l ], [ %.05.i55, %.lr.ph.i54 ], [ %scevgep.i53, %bb.m ] ; 5 uses
   store ptr %.0.lcssa.i51, ptr %i.a, align 8
   %.not42 = icmp eq ptr %.0.lcssa.i51, %i.n
-  br i1 %.not42, label %bb.x, label %bb.n
+  br i1 %.not42, label %bb.aa, label %bb.n
 
 bb.n:                                             ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57
   %i.bc = load i8, ptr %.0.lcssa.i51, align 1
@@ -292,9 +292,9 @@ _ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit78: ; preds = %.lr.ph.i75, %bb.w
   store ptr %.0.lcssa.i72, ptr %i.a, align 8
   br label %bb.x
 
-bb.x:                                             ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit78, %bb.n, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57
-  %6 = phi ptr [ %.0.lcssa.i72, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit78 ], [ %.0.lcssa.i51, %bb.n ], [ %.0.lcssa.i51, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57 ] ; 3 uses
-  %.0 = phi i32 [ %i.bx, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit78 ], [ 1000, %bb.n ], [ 1000, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57 ] ; 2 uses
+bb.x:                                             ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit78, %bb.n
+  %6 = phi ptr [ %.0.lcssa.i72, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit78 ], [ %.0.lcssa.i51, %bb.n ] ; 3 uses
+  %.0 = phi i32 [ %i.bx, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit78 ], [ 1000, %bb.n ] ; 2 uses
   %.not45 = icmp eq ptr %6, %i.n
   br i1 %.not45, label %bb.aa, label %bb.y
 
@@ -309,8 +309,9 @@ bb.z:                                             ; preds = %bb.y, %_ZN6icu_7812
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
   br label %.loopexit105
 
-bb.aa:                                            ; preds = %bb.x
-  %i.ch = call noundef zeroext i1 @_ZN6icu_7818LocalePriorityList3addERKNS_6LocaleEiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(40) %5, i32 noundef %.0, ptr noundef nonnull align 4 dereferenceable(4) %3) ; 0 uses
+bb.aa:                                            ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57, %bb.x
+  %.0107 = phi i32 [ %.0, %bb.x ], [ 1000, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit57 ]
+  %i.ch = call noundef zeroext i1 @_ZN6icu_7818LocalePriorityList3addERKNS_6LocaleEiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(40) %5, i32 noundef %.0107, ptr noundef nonnull align 4 dereferenceable(4) %3) ; 0 uses
   call void @_ZN6icu_786LocaleD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %5) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
   %i.ci = load i8, ptr %i.r, align 4

@@ -98,7 +98,7 @@ bb.a:
   %8 = alloca %"class.cv::Mat", align 8           ; 8 uses
   %9 = alloca %"class.std::vector", align 8       ; 12 uses
   %10 = alloca %"class.std::vector", align 8      ; 15 uses
-  %11 = alloca %"class.cv::ppf_match_3d::ICP", align 8 ; 11 uses
+  %11 = alloca %"class.cv::ppf_match_3d::ICP", align 8 ; 12 uses
   %12 = alloca %"struct.cv::Ptr", align 16        ; 11 uses
   %13 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %14 = alloca %"class.cv::Mat", align 8          ; 4 uses
@@ -501,10 +501,14 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i375: ; preds = %.noexc378, %
           to label %_ZNSolsEPFRSoS_E.exit155.preheader unwind label %bb.eb ; 0 uses
 
 _ZNSolsEPFRSoS_E.exit155.preheader:               ; preds = %.noexc380
-  %i.rl = load ptr, ptr %i.no, align 8, !tbaa !47 ; 2 uses
+  %i.rl = load ptr, ptr %i.no, align 8, !tbaa !47
   %i.rm = load ptr, ptr %10, align 8, !tbaa !48   ; 4 uses
   %.not = icmp eq ptr %i.rl, %i.rm
-  br i1 %.not, label %_ZNSolsEPFRSoS_E.exit155._crit_edge, label %.lr.ph
+  br i1 %.not, label %_ZNSolsEPFRSoS_E.exit155._crit_edge.thread, label %.lr.ph
+
+_ZNSolsEPFRSoS_E.exit155._crit_edge.thread:       ; preds = %_ZNSolsEPFRSoS_E.exit155.preheader
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
+  br label %_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exit.i
 
 .lr.ph:                                           ; preds = %_ZNSolsEPFRSoS_E.exit155.preheader
   %i.rn = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
@@ -667,9 +671,9 @@ _ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev
   %i.tl = icmp ugt i64 %i.tk, 16
   br i1 %i.tl, label %.peel.next, label %_ZNSolsEPFRSoS_E.exit155._crit_edge
 
-_ZNSolsEPFRSoS_E.exit155._crit_edge:              ; preds = %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.peel, %_ZNSolsEPFRSoS_E.exit155.preheader
-  %.lcssa404 = phi ptr [ %i.rl, %_ZNSolsEPFRSoS_E.exit155.preheader ], [ %i.tg, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.peel ], [ %i.xl, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 2 uses
-  %.lcssa = phi ptr [ %i.rm, %_ZNSolsEPFRSoS_E.exit155.preheader ], [ %i.th, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.peel ], [ %i.xm, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 3 uses
+_ZNSolsEPFRSoS_E.exit155._crit_edge:              ; preds = %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.peel
+  %.lcssa404 = phi ptr [ %i.tg, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.peel ], [ %i.xl, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 2 uses
+  %.lcssa = phi ptr [ %i.th, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.peel ], [ %i.xm, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
   %.not4.i.i.i = icmp eq ptr %.lcssa, %.lcssa404
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
@@ -734,8 +738,8 @@ _ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exitthrea
   %.pr.i = load ptr, ptr %10, align 8, !tbaa !48
   br label %_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exit.i
 
-_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exitthread-pre-split.i, %_ZNSolsEPFRSoS_E.exit155._crit_edge
-  %16 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exitthread-pre-split.i ], [ %.lcssa, %_ZNSolsEPFRSoS_E.exit155._crit_edge ] ; 3 uses
+_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exit.i: ; preds = %_ZNSolsEPFRSoS_E.exit155._crit_edge.thread, %_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exitthread-pre-split.i, %_ZNSolsEPFRSoS_E.exit155._crit_edge
+  %16 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN2cv3PtrINS0_12ppf_match_3d6Pose3DEEES4_EvT_S6_RSaIT0_E.exitthread-pre-split.i ], [ %.lcssa, %_ZNSolsEPFRSoS_E.exit155._crit_edge ], [ %i.rm, %_ZNSolsEPFRSoS_E.exit155._crit_edge.thread ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %16, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEESaIS4_EED2Ev.exit, label %bb.dt
 

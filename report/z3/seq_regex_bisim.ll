@@ -205,7 +205,7 @@ _ZNK16basic_union_find4findEj.exit14:             ; preds = %.preheader.i11, %_Z
 
 _ZNK16basic_union_find4findEj.exit14.thread:      ; preds = %bb.h
   %.not27 = icmp eq i32 %i.ar, %i.as
-  br i1 %.not27, label %_ZN16basic_union_find5mergeEjj.exit, label %_ZNK16basic_union_find4findEj.exit10.i
+  br i1 %.not27, label %_ZN16basic_union_find5mergeEjj.exit, label %.preheader.i15.preheader
 
 _ZNK16basic_union_find12get_num_varsEv.exit.i.i:  ; preds = %_ZNK16basic_union_find4findEj.exit14
   br i1 %.not.i, label %.preheader.i.i, label %_ZNK16basic_union_find12get_num_varsEv.exit.i4.i
@@ -230,14 +230,18 @@ _ZNK16basic_union_find12get_num_varsEv.exit.i4.i: ; preds = %.preheader.i.i, %_Z
   %.not17.i9.i = icmp eq i32 %i.bj, %.09.i8.i
   br i1 %.not17.i9.i, label %_ZNK16basic_union_find4findEj.exit10.i, label %.preheader.i7.i
 
-_ZNK16basic_union_find4findEj.exit10.i:           ; preds = %.preheader.i7.i, %_ZNK16basic_union_find4findEj.exit14.thread, %_ZNK16basic_union_find12get_num_varsEv.exit.i4.i
-  %.2.i30.i = phi i32 [ %i.ar, %_ZNK16basic_union_find4findEj.exit14.thread ], [ %.2.i.ph.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i4.i ], [ %.2.i.ph.i, %.preheader.i7.i ] ; 4 uses
-  %.2.i6.i = phi i32 [ %i.as, %_ZNK16basic_union_find4findEj.exit14.thread ], [ %i.as, %_ZNK16basic_union_find12get_num_varsEv.exit.i4.i ], [ %.09.i8.i, %.preheader.i7.i ] ; 4 uses
-  %i.bk = icmp eq i32 %.2.i30.i, %.2.i6.i
-  br i1 %i.bk, label %_ZN16basic_union_find5mergeEjj.exit, label %.preheader.i15
+_ZNK16basic_union_find4findEj.exit10.i:           ; preds = %.preheader.i7.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i4.i
+  %.2.i6.i = phi i32 [ %i.as, %_ZNK16basic_union_find12get_num_varsEv.exit.i4.i ], [ %.09.i8.i, %.preheader.i7.i ] ; 2 uses
+  %i.bk = icmp eq i32 %.2.i.ph.i, %.2.i6.i
+  br i1 %i.bk, label %_ZN16basic_union_find5mergeEjj.exit, label %.preheader.i15.preheader
 
-.preheader.i15:                                   ; preds = %_ZNK16basic_union_find4findEj.exit10.i, %_ZNK16basic_union_find12get_num_varsEv.exit.thread.i.i
-  %i.bl = phi ptr [ %.pre.i, %_ZNK16basic_union_find12get_num_varsEv.exit.thread.i.i ], [ %i.au, %_ZNK16basic_union_find4findEj.exit10.i ] ; 3 uses
+.preheader.i15.preheader:                         ; preds = %_ZNK16basic_union_find4findEj.exit14.thread, %_ZNK16basic_union_find4findEj.exit10.i
+  %.2.i6.i46 = phi i32 [ %.2.i6.i, %_ZNK16basic_union_find4findEj.exit10.i ], [ %i.as, %_ZNK16basic_union_find4findEj.exit14.thread ] ; 3 uses
+  %.2.i30.i45 = phi i32 [ %.2.i.ph.i, %_ZNK16basic_union_find4findEj.exit10.i ], [ %i.ar, %_ZNK16basic_union_find4findEj.exit14.thread ] ; 3 uses
+  br label %.preheader.i15
+
+.preheader.i15:                                   ; preds = %.preheader.i15.preheader, %_ZNK16basic_union_find12get_num_varsEv.exit.thread.i.i
+  %i.bl = phi ptr [ %.pre.i, %_ZNK16basic_union_find12get_num_varsEv.exit.thread.i.i ], [ %i.au, %.preheader.i15.preheader ] ; 3 uses
   %i.bm = icmp eq ptr %i.bl, null
   br i1 %i.bm, label %_ZNK16basic_union_find12get_num_varsEv.exit.thread.i.i, label %_ZNK16basic_union_find12get_num_varsEv.exit.i11.i
 
@@ -271,15 +275,15 @@ _ZNK16basic_union_find12get_num_varsEv.exit.thread.i15.i: ; preds = %_ZNK16basic
 _ZN16basic_union_find11ensure_sizeEj.exit16.i:    ; preds = %_ZNK16basic_union_find12get_num_varsEv.exit.i13.i
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !60 ; 4 uses
-  %i.bx = zext i32 %.2.i30.i to i64
+  %i.bx = zext i32 %.2.i30.i45 to i64
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %i.bx
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !54
-  %i.ca = zext i32 %.2.i6.i to i64
+  %i.ca = zext i32 %.2.i6.i46 to i64
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %i.ca
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !54
   %i.cd = icmp ugt i32 %i.bz, %i.cc               ; 2 uses
-  %spec.select.i = select i1 %i.cd, i32 %.2.i6.i, i32 %.2.i30.i
-  %spec.select31.i = select i1 %i.cd, i32 %.2.i30.i, i32 %.2.i6.i ; 2 uses
+  %spec.select.i = select i1 %i.cd, i32 %.2.i6.i46, i32 %.2.i30.i45
+  %spec.select31.i = select i1 %i.cd, i32 %.2.i30.i45, i32 %.2.i6.i46 ; 2 uses
   %i.ce = zext i32 %spec.select.i to i64          ; 3 uses
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %i.ce
   store i32 %spec.select31.i, ptr %i.cf, align 4, !tbaa !54

@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %vsfComparator.exit
 
 bb.z:                                             ; preds = %vsfComparator.exit35.i, %bb.y
   %.021.i = phi ptr [ %1, %bb.y ], [ %i.dp, %vsfComparator.exit35.i ] ; 3 uses
-  %i.dp = getelementptr inbounds i8, ptr %.021.i, i64 -16 ; 7 uses
+  %i.dp = getelementptr inbounds i8, ptr %.021.i, i64 -16 ; 8 uses
   %i.dq = getelementptr inbounds i8, ptr %.021.i, i64 -8
   %i.dr = load i32, ptr %i.dq, align 8, !tbaa !14 ; 3 uses
   %i.ds = icmp eq i32 %i.cz, %i.dr
@@ -234,9 +234,9 @@ bb.ac:                                            ; preds = %vsfComparator.exit3
   br i1 %i.ed, label %.preheader52.i, label %.preheader53.i
 
 .preheader52.i:                                   ; preds = %bb.ac, %vsfComparator.exit32.i
-  %.0.i142 = phi ptr [ %i.ef, %vsfComparator.exit32.i ], [ %.0114200, %bb.ac ] ; 4 uses
+  %.0.i142 = phi ptr [ %i.ef, %vsfComparator.exit32.i ], [ %.0114200, %bb.ac ] ; 3 uses
   %i.ee = icmp ult ptr %.0.i142, %i.dp
-  br i1 %i.ee, label %bb.ad, label %.critedge.i137
+  br i1 %i.ee, label %bb.ad, label %partition_left.exit
 
 bb.ad:                                            ; preds = %.preheader52.i
   %i.ef = getelementptr inbounds nuw i8, ptr %.0.i142, i64 16 ; 4 uses
@@ -295,8 +295,8 @@ vsfComparator.exit29.i:                           ; preds = %bb.ah, %bb.ag
   %i.fg = icmp sgt i32 %.1.i28.i, -1
   br i1 %i.fg, label %.preheader53.i, label %.critedge.i137, !llvm.loop !26
 
-.critedge.i137:                                   ; preds = %vsfComparator.exit29.i, %vsfComparator.exit32.i, %.preheader52.i
-  %.2.i = phi ptr [ %i.ef, %vsfComparator.exit32.i ], [ %.0.i142, %.preheader52.i ], [ %i.et, %vsfComparator.exit29.i ] ; 2 uses
+.critedge.i137:                                   ; preds = %vsfComparator.exit29.i, %vsfComparator.exit32.i
+  %.2.i = phi ptr [ %i.ef, %vsfComparator.exit32.i ], [ %i.et, %vsfComparator.exit29.i ] ; 2 uses
   %i.fh = icmp ult ptr %.2.i, %i.dp
   br i1 %i.fh, label %.lr.ph.i138, label %partition_left.exit
 
@@ -372,8 +372,8 @@ bb.an:                                            ; preds = %vsfComparator.exit.
   %i.gk = icmp ult ptr %i.fw, %i.fi
   br i1 %i.gk, label %.lr.ph.i138, label %partition_left.exit, !llvm.loop !29
 
-partition_left.exit:                              ; preds = %bb.an, %.critedge.i137
-  %.122.lcssa.i = phi ptr [ %i.dp, %.critedge.i137 ], [ %i.fi, %bb.an ] ; 5 uses
+partition_left.exit:                              ; preds = %.preheader52.i, %bb.an, %.critedge.i137
+  %.122.lcssa.i = phi ptr [ %i.dp, %.critedge.i137 ], [ %i.fi, %bb.an ], [ %i.dp, %.preheader52.i ] ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0114200, ptr noundef nonnull align 8 dereferenceable(16) %.122.lcssa.i, i64 16, i1 false), !tbaa.struct !18
   store ptr %.sroa.0.0.copyload.i135, ptr %.122.lcssa.i, align 8, !tbaa !16
   %.sroa.14.0..122.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.122.lcssa.i, i64 8
@@ -396,7 +396,7 @@ bb.ao:                                            ; preds = %._crit_edge244, %vs
 
 bb.ap:                                            ; preds = %vsfComparator.exit291.i, %bb.ao
   %.0.i144 = phi ptr [ %.0114200, %bb.ao ], [ %i.gn, %vsfComparator.exit291.i ] ; 4 uses
-  %i.gn = getelementptr inbounds nuw i8, ptr %.0.i144, i64 16 ; 8 uses
+  %i.gn = getelementptr inbounds nuw i8, ptr %.0.i144, i64 16 ; 9 uses
   %i.go = getelementptr inbounds nuw i8, ptr %.0.i144, i64 24
   %i.gp = load i32, ptr %i.go, align 8, !tbaa !14 ; 3 uses
   %i.gq = icmp eq i32 %i.gp, %.sroa.46.0.copyload.i
@@ -428,9 +428,9 @@ bb.as:                                            ; preds = %vsfComparator.exit2
   br i1 %i.hb, label %.preheader366.i.a, label %.preheader367.i
 
 .preheader366.i.a:                                ; preds = %bb.as, %vsfComparator.exit288.i
-  %.0208.i = phi ptr [ %i.hd, %vsfComparator.exit288.i ], [ %1, %bb.as ] ; 4 uses
+  %.0208.i = phi ptr [ %i.hd, %vsfComparator.exit288.i ], [ %1, %bb.as ] ; 3 uses
   %i.hc = icmp ult ptr %i.gn, %.0208.i
-  br i1 %i.hc, label %bb.at, label %.critedge.i145
+  br i1 %i.hc, label %bb.at, label %partition_right_branchless.exit
 
 bb.at:                                            ; preds = %.preheader366.i.a
   %i.hd = getelementptr inbounds i8, ptr %.0208.i, i64 -16 ; 4 uses
@@ -489,9 +489,9 @@ vsfComparator.exit285.i:                          ; preds = %bb.ax, %bb.aw
   %i.ie = icmp sgt i32 %.1.i284.i, -1
   br i1 %i.ie, label %.preheader367.i, label %.critedge.i145, !llvm.loop !32
 
-.critedge.i145:                                   ; preds = %vsfComparator.exit285.i, %vsfComparator.exit288.i, %.preheader366.i.a
-  %.2210.i = phi ptr [ %i.hd, %vsfComparator.exit288.i ], [ %.0208.i, %.preheader366.i.a ], [ %i.hr, %vsfComparator.exit285.i ] ; 6 uses
-  %.not = icmp ult ptr %i.gn, %.2210.i            ; 2 uses
+.critedge.i145:                                   ; preds = %vsfComparator.exit285.i, %vsfComparator.exit288.i
+  %.2210.i = phi ptr [ %i.hd, %vsfComparator.exit288.i ], [ %i.hr, %vsfComparator.exit285.i ] ; 6 uses
+  %.not = icmp ult ptr %i.gn, %.2210.i
   br i1 %.not, label %bb.ay, label %partition_right_branchless.exit
 
 bb.ay:                                            ; preds = %.critedge.i145
@@ -894,8 +894,9 @@ bb.co:                                            ; preds = %bb.co, %bb.cn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %partition_right_branchless.exit
 
-partition_right_branchless.exit:                  ; preds = %.critedge.i145, %.loopexit.i
-  %.8.i = phi ptr [ %i.gn, %.critedge.i145 ], [ %.7.i, %.loopexit.i ] ; 13 uses
+partition_right_branchless.exit:                  ; preds = %.preheader366.i.a, %.critedge.i145, %.loopexit.i
+  %24 = phi i1 [ true, %.critedge.i145 ], [ false, %.loopexit.i ], [ true, %.preheader366.i.a ]
+  %.8.i = phi ptr [ %i.gn, %.critedge.i145 ], [ %.7.i, %.loopexit.i ], [ %i.gn, %.preheader366.i.a ] ; 13 uses
   %i.xf = getelementptr inbounds i8, ptr %.8.i, i64 -16 ; 9 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0114200, ptr noundef nonnull align 8 dereferenceable(16) %i.xf, i64 16, i1 false), !tbaa.struct !18
   store ptr %.sroa.0.0.copyload.i143, ptr %i.xf, align 8, !tbaa !16
@@ -1062,7 +1063,7 @@ bb.cx:                                            ; preds = %bb.cw
   br label %bb.db
 
 bb.cy:                                            ; preds = %partition_right_branchless.exit
-  br i1 %.not, label %bb.db, label %bb.cz
+  br i1 %24, label %bb.cz, label %bb.db
 
 bb.cz:                                            ; preds = %bb.cy
   %i.zb = call fastcc zeroext i1 @partial_insertion_sort(ptr noundef nonnull %.0114200, ptr noundef nonnull %i.xf)

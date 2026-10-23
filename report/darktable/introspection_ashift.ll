@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %nmsfit.exit.thread,
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @_do_get_structure_auto(ptr noundef %0, i32 noundef %1) unnamed_addr #5 {
 bb.a:
-  %2 = alloca %struct.rect, align 8               ; 46 uses
+  %2 = alloca %struct.rect, align 8               ; 47 uses
   %i.a = alloca double, align 8                   ; 6 uses
   %3 = alloca %struct.rect, align 16              ; 50 uses
   %i.b = alloca i32, align 4                      ; 8 uses
@@ -608,7 +608,7 @@ bb.co:                                            ; preds = %.loopexit.i.i.i, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
   %i.aop = call reassoc nsz arcp contract afn fastcc double @rect_nfa(ptr noundef nonnull %3, ptr noundef nonnull readonly %i.wu, double noundef %i.agz) ; 4 uses
   %i.aoq = fcmp reassoc nsz arcp contract afn ogt double %i.aop, 0.000000e+00
-  br i1 %i.aoq, label %rect_improve.exit.i.i.i, label %bb.cp
+  br i1 %i.aoq, label %rect_improve.exit.thread.i.i.i, label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
   %i.aor = load <4 x double>, ptr %3, align 16, !tbaa !166 ; 6 uses
@@ -696,7 +696,7 @@ bb.cy:                                            ; preds = %bb.cx
 bb.cz:                                            ; preds = %bb.cy, %bb.cx
   %.165.4.i.i.i.i = phi nsz double [ %i.apl, %bb.cy ], [ %.165.3.i.i.i.i, %bb.cx ] ; 5 uses
   %i.apn = fcmp reassoc nsz arcp contract afn ogt double %.165.4.i.i.i.i, 0.000000e+00
-  br i1 %i.apn, label %rect_improve.exit.i.i.i, label %bb.da
+  br i1 %i.apn, label %rect_improve.exit.thread.i.i.i, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
   %i.apo = load <4 x double>, ptr %3, align 16, !tbaa !166 ; 6 uses
@@ -813,7 +813,7 @@ bb.do:                                            ; preds = %bb.dn
 bb.dp:                                            ; preds = %bb.do, %bb.dn, %bb.dm
   %.367.4.i.i.i.i = phi nsz double [ %i.aqp, %bb.do ], [ %.367.3.i.i.i.i, %bb.dn ], [ %.367.3.i.i.i.i, %bb.dm ] ; 5 uses
   %i.aqr = fcmp reassoc nsz arcp contract afn ogt double %.367.4.i.i.i.i, 0.000000e+00
-  br i1 %i.aqr, label %rect_improve.exit.i.i.i, label %bb.dq
+  br i1 %i.aqr, label %rect_improve.exit.thread.i.i.i, label %bb.dq
 
 bb.dq:                                            ; preds = %bb.dp
   %i.aqs = load <2 x double>, ptr %3, align 16, !tbaa !166 ; 2 uses
@@ -962,7 +962,7 @@ bb.ee:                                            ; preds = %bb.ed
 bb.ef:                                            ; preds = %bb.ee, %bb.ed, %bb.ec
   %.5.4.i.i.i.i = phi nsz double [ %i.asu, %bb.ee ], [ %.5.3.i.i.i.i, %bb.ed ], [ %.5.3.i.i.i.i, %bb.ec ] ; 5 uses
   %i.asw = fcmp reassoc nsz arcp contract afn ogt double %.5.4.i.i.i.i, 0.000000e+00
-  br i1 %i.asw, label %rect_improve.exit.i.i.i, label %bb.eg
+  br i1 %i.asw, label %rect_improve.exit.thread.i.i.i, label %bb.eg
 
 bb.eg:                                            ; preds = %bb.ef
   %i.asx = load <2 x double>, ptr %3, align 16, !tbaa !166 ; 2 uses
@@ -1111,7 +1111,7 @@ bb.eu:                                            ; preds = %bb.et
 bb.ev:                                            ; preds = %bb.eu, %bb.et, %bb.es
   %.7.4.i.i.i.i = phi nsz double [ %i.auz, %bb.eu ], [ %.7.3.i.i.i.i, %bb.et ], [ %.7.3.i.i.i.i, %bb.es ] ; 4 uses
   %i.avb = fcmp reassoc nsz arcp contract afn ogt double %.7.4.i.i.i.i, 0.000000e+00
-  br i1 %i.avb, label %rect_improve.exit.i.i.i, label %bb.ew
+  br i1 %i.avb, label %rect_improve.exit.thread.i.i.i, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev
   %i.avc = load <4 x double>, ptr %3, align 16, !tbaa !166 ; 6 uses
@@ -1196,13 +1196,19 @@ bb.ff:                                            ; preds = %bb.fe
   store <2 x double> %i.avv, ptr %i.aia, align 16, !tbaa !166
   br label %rect_improve.exit.i.i.i
 
-rect_improve.exit.i.i.i:                          ; preds = %bb.ff, %bb.fe, %bb.ev, %bb.ef, %bb.dp, %bb.cz, %bb.co
-  %.069.i.i.i.i = phi nsz double [ %.7.4.i.i.i.i, %bb.ev ], [ %i.aop, %bb.co ], [ %.165.4.i.i.i.i, %bb.cz ], [ %.367.4.i.i.i.i, %bb.dp ], [ %.5.4.i.i.i.i, %bb.ef ], [ %i.avw, %bb.ff ], [ %.9.3.i.i.i.i, %bb.fe ] ; 2 uses
+rect_improve.exit.thread.i.i.i:                   ; preds = %bb.ev, %bb.ef, %bb.dp, %bb.cz, %bb.co
+  %.069.i.ph.i.i.i = phi double [ %.5.4.i.i.i.i, %bb.ef ], [ %.367.4.i.i.i.i, %bb.dp ], [ %.165.4.i.i.i.i, %bb.cz ], [ %i.aop, %bb.co ], [ %.7.4.i.i.i.i, %bb.ev ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #34
+  br label %bb.fg
+
+rect_improve.exit.i.i.i:                          ; preds = %bb.ff, %bb.fe
+  %.069.i.i.i.i = phi nsz double [ %.9.3.i.i.i.i, %bb.fe ], [ %i.avw, %bb.ff ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #34
   %i.avy = fcmp reassoc nsz arcp contract afn ugt double %.069.i.i.i.i, 0.000000e+00
   br i1 %i.avy, label %bb.fg, label %bb.fo
 
-bb.fg:                                            ; preds = %rect_improve.exit.i.i.i
+bb.fg:                                            ; preds = %rect_improve.exit.i.i.i, %rect_improve.exit.thread.i.i.i
+  %.069.i12.i.i.i = phi double [ %.069.i.ph.i.i.i, %rect_improve.exit.thread.i.i.i ], [ %.069.i.i.i.i, %rect_improve.exit.i.i.i ]
   %i.avz = load <4 x double>, ptr %3, align 16, !tbaa !166
   %i.awa = fmul reassoc nsz arcp contract afn <4 x double> %i.avz, splat (double f0x3FF0295FAD40A57F)
   %i.awb = fadd reassoc nsz arcp contract afn <4 x double> %i.awa, splat (double f0x3FE0295FAD40A57F) ; 5 uses
@@ -1294,7 +1300,7 @@ add_7tuple.exit.i.i.i:                            ; preds = %enlarge_ntuple_list
   %i.axo = add i32 %i.aws, 6
   %i.axp = zext i32 %i.axo to i64
   %i.axq = getelementptr inbounds nuw [8 x i8], ptr %i.awr, i64 %i.axp
-  store double %.069.i.i.i.i, ptr %i.axq, align 8, !tbaa !166
+  store double %.069.i12.i.i.i, ptr %i.axq, align 8, !tbaa !166
   %i.axr = add i32 %i.awg, 1
   store i32 %i.axr, ptr %i.lh, align 8, !tbaa !538
   br label %bb.fo

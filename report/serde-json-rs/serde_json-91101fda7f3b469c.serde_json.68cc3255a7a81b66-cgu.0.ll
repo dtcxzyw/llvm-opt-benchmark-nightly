@@ -204,27 +204,31 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE15append_elementsCs8ZPNfZ0ciAA_10serde_json.exit46.i, %bb.a
-  %.sroa.06.0.i = load i64, ptr %i.c, align 8, !alias.scope !457, !noundef !6 ; 21 uses
+  %.sroa.06.0.i = load i64, ptr %i.c, align 8, !alias.scope !457, !noundef !6 ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !459)
-  %i.g = load i64, ptr %i.d, align 8, !alias.scope !460, !noundef !6 ; 14 uses
+  %i.g = load i64, ptr %i.d, align 8, !alias.scope !460, !noundef !6 ; 12 uses
   %i.h = icmp eq i64 %.sroa.06.0.i, %i.g
-  br i1 %i.h, label %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i, label %bb.c
+  br i1 %i.h, label %._RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.thread.i_crit_edge, label %bb.c
+
+._RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.thread.i_crit_edge: ; preds = %bb.b
+  %.val.i.i.i.pre = load ptr, ptr %1, align 8, !alias.scope !461
+  br label %bb.i
 
 bb.c:                                             ; preds = %bb.b
   %i.i = icmp ult i64 %.sroa.06.0.i, %i.g
   br i1 %i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = load ptr, ptr %1, align 8, !alias.scope !460, !nonnull !6, !noundef !6 ; 3 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.06.0.i
-  %i.l = load i8, ptr %i.k, align 1, !noalias !461, !noundef !6
+  %i.j = load ptr, ptr %1, align 8, !alias.scope !460, !nonnull !6, !noundef !6 ; 10 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.06.0.i ; 4 uses
+  %i.l = load i8, ptr %i.k, align 1, !noalias !462, !noundef !6
   switch i8 %i.l, label %bb.f [
     i8 34, label %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i
     i8 92, label %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i
   ]
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtCs8Chj7Szqq0n_4core9panicking18panic_bounds_check(i64 noundef %.sroa.06.0.i, i64 noundef %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #28, !noalias !461
+  tail call void @_RNvNtCs8Chj7Szqq0n_4core9panicking18panic_bounds_check(i64 noundef %.sroa.06.0.i, i64 noundef %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #28, !noalias !462
   unreachable
 
 bb.f:                                             ; preds = %bb.d
@@ -233,8 +237,8 @@ bb.f:                                             ; preds = %bb.d
   %i.n = sub nuw i64 %i.g, %i.m                   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.m ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.g
-  %i.q = load atomic ptr, ptr @_RNvNvNtNtNtCs1F4dABBouLx_6memchr4arch6x86_646memchr11memchr2_raw2FN monotonic, align 8, !noalias !462, !nonnull !6, !noundef !6
-  %i.r = tail call { i64, ptr } %i.q(i8 noundef 34, i8 noundef 92, ptr noundef nonnull readonly %i.o, ptr noundef nonnull readonly %i.p), !noalias !463, !inline_history !423 ; 2 uses
+  %i.q = load atomic ptr, ptr @_RNvNvNtNtNtCs1F4dABBouLx_6memchr4arch6x86_646memchr11memchr2_raw2FN monotonic, align 8, !noalias !463, !nonnull !6, !noundef !6
+  %i.r = tail call { i64, ptr } %i.q(i8 noundef 34, i8 noundef 92, ptr noundef nonnull readonly %i.o, ptr noundef nonnull readonly %i.p), !noalias !464, !inline_history !427 ; 2 uses
   %i.s = extractvalue { i64, ptr } %i.r, 0
   %i.t = trunc nuw i64 %i.s to i1
   br i1 %i.t, label %bb.g, label %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECs8ZPNfZ0ciAA_10serde_json.exit.i.i
@@ -256,8 +260,8 @@ _RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   store i64 %i.z, ptr %i.c, align 8, !alias.scope !460
   br label %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i
 
-_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i: ; preds = %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECs8ZPNfZ0ciAA_10serde_json.exit.i.i, %bb.d, %bb.d, %bb.b
-  %3 = phi i64 [ %.sroa.06.0.i, %bb.b ], [ %.sroa.06.0.i, %bb.d ], [ %.sroa.06.0.i, %bb.d ], [ %i.z, %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECs8ZPNfZ0ciAA_10serde_json.exit.i.i ] ; 19 uses
+_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i: ; preds = %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECs8ZPNfZ0ciAA_10serde_json.exit.i.i, %bb.d, %bb.d
+  %3 = phi i64 [ %i.z, %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECs8ZPNfZ0ciAA_10serde_json.exit.i.i ], [ %.sroa.06.0.i, %bb.d ], [ %.sroa.06.0.i, %bb.d ] ; 19 uses
   %i.aa = icmp eq i64 %3, %i.g
   br i1 %i.aa, label %bb.i, label %bb.h
 
@@ -265,14 +269,15 @@ bb.h:                                             ; preds = %_RNvMs3_NtCs8ZPNfZ0
   %i.ab = icmp ult i64 %3, %i.g
   br i1 %i.ab, label %bb.l, label %bb.m
 
-bb.i:                                             ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !464
-  store i64 4, ptr %i.b, align 8, !noalias !464
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !465)
+bb.i:                                             ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i, %._RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.thread.i_crit_edge
+  %.val.i.i.i = phi ptr [ %.val.i.i.i.pre, %._RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.thread.i_crit_edge ], [ %i.j, %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i ] ; 5 uses
+  %.lcssa = phi i64 [ %.sroa.06.0.i, %._RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.thread.i_crit_edge ], [ %i.g, %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape.exit.i ] ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !465
+  store i64 4, ptr %i.b, align 8, !noalias !465
   tail call void @llvm.experimental.noalias.scope.decl(metadata !466)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !467)
-  %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !468, !nonnull !6, !noundef !6 ; 5 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.g
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !468)
+  %i.ac = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %.lcssa
   %i.ad = load atomic ptr, ptr @_RNvNvNtNtNtCs1F4dABBouLx_6memchr4arch6x86_646memchr11memrchr_raw2FN monotonic, align 8, !noalias !469, !nonnull !6, !noundef !6
   %i.ae = invoke { i64, ptr } %i.ad(i8 noundef 10, ptr noundef nonnull readonly %.val.i.i.i, ptr noundef nonnull readonly %i.ac)
           to label %.noexc.i.i unwind label %bb.j, !noalias !470, !inline_history !13 ; 2 uses
@@ -289,7 +294,7 @@ _RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   %i.ak = sub i64 %i.ai, %i.aj                    ; 3 uses
   %i.al = icmp sgt i64 %i.ak, -1
   tail call void @llvm.assume(i1 %i.al)
-  %.not.i.i.i.i.i = icmp ult i64 %i.ak, %i.g
+  %.not.i.i.i.i.i = icmp ult i64 %i.ak, %.lcssa
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i)
   %i.am = add nuw i64 %i.ak, 1
   br label %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i.i
@@ -319,17 +324,16 @@ bb.k:                                             ; preds = %bb.j
 
 _RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_.exit.i: ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i.i
   %i.ar = add i64 %i.ap, 1
-  %i.as = sub i64 %i.g, %.sroa.0.06.i.i.i.i
+  %i.as = sub i64 %.lcssa, %.sroa.0.06.i.i.i.i
   %i.at = call noundef nonnull align 8 ptr @_RNvMs0_NtCs8ZPNfZ0ciAA_10serde_json5errorNtB5_5Error6syntax(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %i.ar, i64 noundef %i.as), !noalias !472
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.at, ptr %i.au, align 8, !alias.scope !473
   store i64 2, ptr %0, align 8, !alias.scope !473
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !464
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !465
   br label %_RINvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB6_9SliceRead15parse_str_bytesShNCNvXs5_B6_BD_NtB6_4Read13parse_str_raw0EB8_.exit
 
 bb.l:                                             ; preds = %bb.h
-  %4 = load ptr, ptr %1, align 8, !alias.scope !457, !nonnull !6, !noundef !6 ; 9 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %4, i64 %3
+  %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 %3
   %i.aw = load i8, ptr %i.av, align 1, !noalias !474, !noundef !6
   switch i8 %i.aw, label %bb.n [
     i8 34, label %bb.q
@@ -343,12 +347,12 @@ bb.m:                                             ; preds = %bb.h
 bb.n:                                             ; preds = %bb.l
   %i.ax = add nuw i64 %3, 1                       ; 3 uses
   store i64 %i.ax, ptr %i.c, align 8, !alias.scope !457
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !464
-  store i64 16, ptr %i.a, align 8, !noalias !464
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !465
+  store i64 16, ptr %i.a, align 8, !noalias !465
   tail call void @llvm.experimental.noalias.scope.decl(metadata !475)
-  %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 %i.ax
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.ax
   %i.az = load atomic ptr, ptr @_RNvNvNtNtNtCs1F4dABBouLx_6memchr4arch6x86_646memchr11memrchr_raw2FN monotonic, align 8, !noalias !476, !nonnull !6, !noundef !6
-  %i.ba = invoke { i64, ptr } %i.az(i8 noundef 10, ptr noundef nonnull readonly %4, ptr noundef nonnull readonly %i.ay)
+  %i.ba = invoke { i64, ptr } %i.az(i8 noundef 10, ptr noundef nonnull readonly %i.j, ptr noundef nonnull readonly %i.ay)
           to label %.noexc.i35.i unwind label %bb.o, !noalias !477, !inline_history !13 ; 2 uses
 
 .noexc.i35.i:                                     ; preds = %bb.n
@@ -359,7 +363,7 @@ bb.n:                                             ; preds = %bb.l
 _RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs8ZPNfZ0ciAA_10serde_json.exit.i.i.i38.i: ; preds = %.noexc.i35.i
   %i.bd = extractvalue { i64, ptr } %i.ba, 1
   %i.be = ptrtoint ptr %i.bd to i64
-  %i.bf = ptrtoint ptr %4 to i64
+  %i.bf = ptrtoint ptr %i.j to i64
   %i.bg = sub i64 %i.be, %i.bf                    ; 3 uses
   %i.bh = icmp sgt i64 %i.bg, -1
   tail call void @llvm.assume(i1 %i.bh)
@@ -370,9 +374,9 @@ _RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
 
 _RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i36.i: ; preds = %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs8ZPNfZ0ciAA_10serde_json.exit.i.i.i38.i, %.noexc.i35.i
   %.sroa.0.06.i.i.i37.i = phi i64 [ %i.bi, %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs8ZPNfZ0ciAA_10serde_json.exit.i.i.i38.i ], [ 0, %.noexc.i35.i ] ; 2 uses
-  %i.bj = getelementptr i8, ptr %4, i64 %.sroa.0.06.i.i.i37.i
+  %i.bj = getelementptr i8, ptr %i.j, i64 %.sroa.0.06.i.i.i37.i
   %i.bk = load atomic ptr, ptr @_RNvNvNtNtNtCs1F4dABBouLx_6memchr4arch6x86_646memchr9count_raw2FN monotonic, align 8, !noalias !478, !nonnull !6, !noundef !6
-  %i.bl = invoke noundef i64 %i.bk(i8 noundef 10, ptr noundef nonnull %4, ptr noundef %i.bj)
+  %i.bl = invoke noundef i64 %i.bk(i8 noundef 10, ptr noundef nonnull %i.j, ptr noundef %i.bj)
           to label %_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_.exit41.i unwind label %bb.o, !noalias !477, !inline_history !13
 
 bb.o:                                             ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i36.i, %bb.n
@@ -394,7 +398,7 @@ _RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.bp, ptr %i.bq, align 8, !alias.scope !480
   store i64 2, ptr %0, align 8, !alias.scope !480
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !464
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !465
   br label %_RINvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB6_9SliceRead15parse_str_bytesShNCNvXs5_B6_BD_NtB6_4Read13parse_str_raw0EB8_.exit
 
 bb.q:                                             ; preds = %bb.l
@@ -416,7 +420,6 @@ bb.t:                                             ; preds = %bb.q
   br i1 %i.bu, label %bb.y, label %bb.z, !prof !12
 
 bb.u:                                             ; preds = %bb.s
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.06.0.i
   %gepdiff27.i = sub nuw nsw i64 %3, %.sroa.06.0.i ; 4 uses
   %i.bw = load i64, ptr %2, align 8, !range !15, !alias.scope !481, !noundef !6
   %i.bx = sub nsw i64 %i.bw, %i.br
@@ -438,7 +441,7 @@ bb.v:                                             ; preds = %_RNvMs_NtCsbqH9stoi
   %i.cb = phi i64 [ %i.bz, %_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE7reserveCs8ZPNfZ0ciAA_10serde_json.exit.thread.i.i ], [ %i.br, %_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE7reserveCs8ZPNfZ0ciAA_10serde_json.exit.i.i ]
   %i.cc = load ptr, ptr %i.f, align 8, !alias.scope !482, !nonnull !6, !noundef !6
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 %i.cb
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cd, ptr nonnull readonly align 1 %5, i64 %gepdiff27.i, i1 false), !noalias !474
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cd, ptr nonnull readonly align 1 %i.k, i64 %gepdiff27.i, i1 false), !noalias !474
   %.pre.i.i = load i64, ptr %i.e, align 8, !alias.scope !482
   br label %bb.x
 
@@ -466,18 +469,16 @@ bb.y:                                             ; preds = %bb.t
 
 bb.z:                                             ; preds = %bb.t
   %i.ci = sub nuw i64 %3, %.sroa.06.0.i
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.06.0.i
   %i.cj = add nuw i64 %3, 1
   store i64 %i.cj, ptr %i.c, align 8, !alias.scope !457
   store i64 0, ptr %0, align 8, !alias.scope !456
   %.sroa.420.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %6, ptr %.sroa.420.0..sroa_idx.i, align 8, !alias.scope !456
+  store ptr %i.k, ptr %.sroa.420.0..sroa_idx.i, align 8, !alias.scope !456
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.ci, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !456
   br label %_RINvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB6_9SliceRead15parse_str_bytesShNCNvXs5_B6_BD_NtB6_4Read13parse_str_raw0EB8_.exit
 
 bb.aa:                                            ; preds = %bb.r
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.06.0.i
   %gepdiff.i = sub nuw nsw i64 %3, %.sroa.06.0.i  ; 4 uses
   %i.ck = load i64, ptr %i.e, align 8, !alias.scope !483, !noundef !6 ; 5 uses
   %i.cl = load i64, ptr %2, align 8, !range !15, !alias.scope !483, !noundef !6
@@ -502,7 +503,7 @@ bb.ab:                                            ; preds = %_RNvMs_NtCsbqH9stoi
   %i.cr = phi i64 [ %i.co, %_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE7reserveCs8ZPNfZ0ciAA_10serde_json.exit.thread.i45.i ], [ %i.ck, %_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE7reserveCs8ZPNfZ0ciAA_10serde_json.exit.i42.i ]
   %i.cs = load ptr, ptr %i.f, align 8, !alias.scope !484, !nonnull !6, !noundef !6
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.cr
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ct, ptr nonnull readonly align 1 %7, i64 %gepdiff.i, i1 false), !noalias !474
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ct, ptr nonnull readonly align 1 %i.k, i64 %gepdiff.i, i1 false), !noalias !474
   %.pre.i44.i = load i64, ptr %i.e, align 8, !alias.scope !484
   br label %_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE15append_elementsCs8ZPNfZ0ciAA_10serde_json.exit46.i
 
@@ -905,15 +906,15 @@ begin_hunk_1_@llvm.memset.p0.i64
 !418 = distinct !{!418, !415, !"_RINvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB6_9SliceRead15parse_str_bytesShNCNvXs5_B6_BD_NtB6_4Read13parse_str_raw0EB8_: argument 2"}
 !419 = distinct !{!419, i1 true, !"_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape"}
 !420 = distinct !{!420, !419, !"_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape: argument 0"}
-!421 = distinct !{!421, i1 true, !"_RNCNvNtCs1F4dABBouLx_6memchr6memchr7memchr20Cs8ZPNfZ0ciAA_10serde_json"}
-!422 = distinct !{!422, !421, !"_RNCNvNtCs1F4dABBouLx_6memchr6memchr7memchr20Cs8ZPNfZ0ciAA_10serde_json: argument 0"}
-!423 = distinct !{null, ptr @_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape, null}
-!424 = distinct !{!424, i1 true, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_"}
-!425 = distinct !{!425, !424, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_: argument 0"}
-!426 = distinct !{!426, !424, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_: argument 1"}
-!427 = distinct !{!427, i1 true, !"_RNvXs5_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceReadNtB5_4Read8position"}
-!428 = distinct !{!428, !427, !"_RNvXs5_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceReadNtB5_4Read8position: argument 0"}
-!429 = distinct !{!429, !424, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_: argument 2"}
+!421 = distinct !{!421, i1 true, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_"}
+!422 = distinct !{!422, !421, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_: argument 1"}
+!423 = distinct !{!423, i1 true, !"_RNvXs5_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceReadNtB5_4Read8position"}
+!424 = distinct !{!424, !423, !"_RNvXs5_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceReadNtB5_4Read8position: argument 0"}
+!425 = distinct !{!425, i1 true, !"_RNCNvNtCs1F4dABBouLx_6memchr6memchr7memchr20Cs8ZPNfZ0ciAA_10serde_json"}
+!426 = distinct !{!426, !425, !"_RNCNvNtCs1F4dABBouLx_6memchr6memchr7memchr20Cs8ZPNfZ0ciAA_10serde_json: argument 0"}
+!427 = distinct !{null, ptr @_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead14skip_to_escape, null}
+!428 = distinct !{!428, !421, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_: argument 0"}
+!429 = distinct !{!429, !421, !"_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadINtB2_9ReferenceShEEB4_: argument 2"}
 !430 = distinct !{!430, i1 true, !"_RNCNvNtCs1F4dABBouLx_6memchr6memchr7memrchr0Cs8ZPNfZ0ciAA_10serde_json"}
 !431 = distinct !{!431, !430, !"_RNCNvNtCs1F4dABBouLx_6memchr6memchr7memrchr0Cs8ZPNfZ0ciAA_10serde_json: argument 0"}
 !432 = distinct !{!432, i1 true, !"_RINvMs3_NtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchrNtB6_4Iter5countNCNvXs_NtBc_6memchrNtB1e_6MemchrNtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator5count0ECs8ZPNfZ0ciAA_10serde_json"}
@@ -945,19 +946,19 @@ begin_hunk_1_@llvm.memset.p0.i64
 !458 = !{!418}
 !459 = !{!420}
 !460 = !{!420, !417}
-!461 = !{!420, !416, !417}
-!462 = !{!422, !420, !416, !417, !418}
-!463 = !{!422, !420, !416, !417}
-!464 = !{!416, !417, !418}
-!465 = !{!425}
-!466 = !{!426}
-!467 = !{!428}
-!468 = !{!428, !426, !417}
-!469 = !{!431, !428, !425, !426, !429, !416, !417, !418}
-!470 = !{!425, !426, !429, !416, !417}
-!471 = !{!435, !433, !428, !425, !426, !429, !416, !417, !418}
-!472 = !{!425, !426, !416, !417}
-!473 = !{!425, !416}
+!461 = !{!424, !422, !417}
+!462 = !{!420, !416, !417}
+!463 = !{!426, !420, !416, !417, !418}
+!464 = !{!426, !420, !416, !417}
+!465 = !{!416, !417, !418}
+!466 = !{!428}
+!467 = !{!422}
+!468 = !{!424}
+!469 = !{!431, !424, !428, !422, !429, !416, !417, !418}
+!470 = !{!428, !422, !429, !416, !417}
+!471 = !{!435, !433, !424, !428, !422, !429, !416, !417, !418}
+!472 = !{!428, !422, !416, !417}
+!473 = !{!428, !416}
 !474 = !{!416, !417}
 !475 = !{!437}
 !476 = !{!443, !441, !437, !439, !438, !416, !417, !418}

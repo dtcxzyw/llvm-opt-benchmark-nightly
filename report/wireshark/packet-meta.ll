@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
-  %.pre-phi = phi i32 [ %.pre, %._crit_edge ], [ %i.i, %bb.b ] ; 17 uses
+  %.pre-phi = phi i32 [ %.pre, %._crit_edge ], [ %i.i, %bb.b ] ; 5 uses
   %.065 = phi ptr [ null, %._crit_edge ], [ %i.m, %bb.b ] ; 26 uses
   %.064 = phi ptr [ null, %._crit_edge ], [ %i.k, %bb.b ]
   %.not.i = icmp eq i16 %i.e, 0
-  br i1 %.not.i, label %evaluate_meta_items.exit, label %.lr.ph.i
+  br i1 %.not.i, label %bb.ao, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
   %i.y = getelementptr i8, ptr %1, i64 356        ; 2 uses
@@ -609,8 +609,8 @@ evaluate_meta_item_dxt.exit.i:                    ; preds = %bb.am, %.lr.ph.spli
   %i.ir = icmp slt i32 %i.iq, %.pre-phi
   br i1 %i.ir, label %.lr.ph.split.i, label %evaluate_meta_items.exit, !llvm.loop !6
 
-evaluate_meta_items.exit:                         ; preds = %evaluate_meta_item_dxt.exit.us34.i, %evaluate_meta_item_dxt.exit.us.i, %evaluate_meta_item_dxt.exit.i, %bb.c
-  %.0.lcssa.i = phi i32 [ 0, %bb.c ], [ %i.fi, %evaluate_meta_item_dxt.exit.us.i ], [ %i.iq, %evaluate_meta_item_dxt.exit.i ], [ %i.hi, %evaluate_meta_item_dxt.exit.us34.i ]
+evaluate_meta_items.exit:                         ; preds = %evaluate_meta_item_dxt.exit.us34.i, %evaluate_meta_item_dxt.exit.us.i, %evaluate_meta_item_dxt.exit.i
+  %.0.lcssa.i = phi i32 [ %i.iq, %evaluate_meta_item_dxt.exit.i ], [ %i.fi, %evaluate_meta_item_dxt.exit.us.i ], [ %i.hi, %evaluate_meta_item_dxt.exit.us34.i ]
   %.not70 = icmp eq i32 %.0.lcssa.i, %.pre-phi
   br i1 %.not70, label %bb.ao, label %bb.an
 
@@ -618,7 +618,8 @@ bb.an:                                            ; preds = %evaluate_meta_items
   %i.is = tail call ptr @expert_add_info(ptr noundef %1, ptr noundef %.064, ptr noundef @ei_meta_invalid_header) ; 0 uses
   br label %bb.az
 
-bb.ao:                                            ; preds = %evaluate_meta_items.exit
+bb.ao:                                            ; preds = %bb.c, %evaluate_meta_items.exit
+  %.0.lcssa.i74 = phi i32 [ %.pre-phi, %evaluate_meta_items.exit ], [ 0, %bb.c ] ; 13 uses
   %cond = icmp eq i16 %i.d, 2
   br i1 %cond, label %bb.ap, label %.thread
 
@@ -653,9 +654,9 @@ bb.at:                                            ; preds = %bb.ap
   br label %.thread
 
 bb.au:                                            ; preds = %bb.ap
-  %i.iy = add nuw nsw i32 %.pre-phi, 8            ; 2 uses
+  %i.iy = add nuw nsw i32 %.0.lcssa.i74, 8        ; 2 uses
   %i.iz = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef %i.iy)
-  %i.ja = add nuw nsw i32 %.pre-phi, 12
+  %i.ja = add nuw nsw i32 %.0.lcssa.i74, 12
   %i.jb = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef %i.ja) ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %4, i8 noundef 0, i64 noundef 28, i1 noundef false) #5
   %i.jc = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -678,9 +679,9 @@ bb.au:                                            ; preds = %bb.ap
   br label %.thread
 
 bb.av:                                            ; preds = %bb.ap
-  %i.jo = add nuw nsw i32 %.pre-phi, 8
+  %i.jo = add nuw nsw i32 %.0.lcssa.i74, 8
   %i.jp = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef %i.jo) ; 2 uses
-  %i.jq = add nuw nsw i32 %.pre-phi, 4
+  %i.jq = add nuw nsw i32 %.0.lcssa.i74, 4
   %i.jr = lshr i32 %i.jp, 20
   %i.js = trunc nuw nsw i32 %i.jr to i16
   %i.jt = and i16 %i.js, 255
@@ -703,8 +704,8 @@ bb.aw:                                            ; preds = %bb.ap
 
 bb.ax:                                            ; preds = %bb.ap
   %i.kd = load ptr, ptr @mtp2_handle, align 8     ; 2 uses
-  %i.ke = add nuw nsw i32 %.pre-phi, 8
-  %i.kf = add nuw nsw i32 %.pre-phi, 10
+  %i.ke = add nuw nsw i32 %.0.lcssa.i74, 8
+  %i.kf = add nuw nsw i32 %.0.lcssa.i74, 10
   %i.kg = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.kf)
   %i.kh = tail call ptr @tvb_new_subset_length(ptr noundef %0, i32 noundef %i.ke, i32 noundef %i.kg) ; 2 uses
   %.not71 = icmp eq ptr %i.kh, null
@@ -713,7 +714,7 @@ bb.ax:                                            ; preds = %bb.ap
 .thread:                                          ; preds = %bb.ao, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.aw, %bb.ax
   %.081 = phi ptr [ null, %bb.ax ], [ null, %bb.ao ], [ %4, %bb.av ], [ %4, %bb.au ], [ %4, %bb.at ], [ null, %bb.as ], [ null, %bb.ar ], [ null, %bb.aq ], [ null, %bb.aw ]
   %.06279 = phi ptr [ %i.kd, %bb.ax ], [ %i.a, %bb.ao ], [ %i.jz, %bb.av ], [ %i.jn, %bb.au ], [ %i.ix, %bb.at ], [ %i.iv, %bb.as ], [ %i.iu, %bb.ar ], [ %i.it, %bb.aq ], [ %i.kc, %bb.aw ]
-  %.06677 = phi i32 [ %.pre-phi, %bb.ax ], [ %.pre-phi, %bb.ao ], [ %i.jq, %bb.av ], [ %i.iy, %bb.au ], [ %.pre-phi, %bb.at ], [ %.pre-phi, %bb.as ], [ %.pre-phi, %bb.ar ], [ %.pre-phi, %bb.aq ], [ %.pre-phi, %bb.aw ]
+  %.06677 = phi i32 [ %.0.lcssa.i74, %bb.ax ], [ %.0.lcssa.i74, %bb.ao ], [ %i.jq, %bb.av ], [ %i.iy, %bb.au ], [ %.0.lcssa.i74, %bb.at ], [ %.0.lcssa.i74, %bb.as ], [ %.0.lcssa.i74, %bb.ar ], [ %.0.lcssa.i74, %bb.aq ], [ %.0.lcssa.i74, %bb.aw ]
   %i.ki = add nuw nsw i32 %.06677, 8
   %i.kj = tail call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef %i.ki)
   br label %bb.ay

@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
   %.idx = shl nuw nsw i64 %2, 4, !dbg !3241       ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 %.idx, !dbg !3241 ; 3 uses
   %i.ai = icmp eq i64 %2, 0, !dbg !3242
-  br i1 %i.ai, label %.loopexit99, label %.lr.ph, !dbg !3086
+  br i1 %i.ai, label %bb.p, label %.lr.ph, !dbg !3086
 
 .lr.ph:                                           ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 8
@@ -321,7 +321,7 @@ bb.h:                                             ; preds = %.lr.ph.split
   br label %.loopexit99, !dbg !3287
 
 .body34:                                          ; preds = %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp101, %.body.i, %bb.bg, %bb.j, %bb.bj
-  %.sroa.023.0 = phi i1 [ true, %bb.j ], [ %.sroa.023.3.lpad-body, %bb.bj ], [ false, %.body.i ], [ false, %bb.bg ], [ %6, %.loopexit.split-lp101 ], [ true, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !3288
+  %.sroa.023.0 = phi i1 [ true, %bb.j ], [ %.sroa.023.3.lpad-body, %bb.bj ], [ false, %.body.i ], [ false, %bb.bg ], [ %5, %.loopexit.split-lp101 ], [ true, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !3288
   %.pn29 = phi { ptr, i32 } [ %i.ci, %bb.j ], [ %eh.lpad-body, %bb.bj ], [ %eh.lpad-body.i, %.body.i ], [ %i.hj, %bb.bg ], [ %lpad.loopexit.split-lp103, %.loopexit.split-lp101 ], [ %lpad.loopexit.split-lp270, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECs4PheDXcg4wa_10polars_row(ptr noalias noundef align 8 dereferenceable(24) %i.r) #19
           to label %bb.bf unwind label %bb.bh, !dbg !3224
@@ -332,6 +332,7 @@ bb.h:                                             ; preds = %.lr.ph.split
   br label %.body34
 
 .loopexit.split-lp101:                            ; preds = %bb.o, %bb.p
+  %5 = phi i1 [ true, %bb.o ], [ false, %bb.p ]
   %lpad.loopexit.split-lp103 = landingpad { ptr, i32 }
           cleanup
   br label %.body34
@@ -418,19 +419,19 @@ _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_ro
   %i.ct = icmp eq ptr %i.bo, %i.ah, !dbg !3242
   br i1 %i.ct, label %.loopexit99, label %.lr.ph.split, !dbg !3086
 
-.loopexit99:                                      ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit.us, %bb.c, %.split.us
-  %5 = phi i64 [ %i.bm, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit.us ], [ %.pre, %.split.us ], [ 0, %bb.c ], [ %i.cs, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit ], !dbg !3286 ; 2 uses
-  %i.cu = icmp sgt i64 %5, -1, !dbg !3294
+.loopexit99:                                      ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit.us, %.split.us
+  %6 = phi i64 [ %i.bm, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit.us ], [ %.pre, %.split.us ], [ %i.cs, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit ], !dbg !3286 ; 2 uses
+  %i.cu = icmp sgt i64 %6, -1, !dbg !3294
   call void @llvm.assume(i1 %i.cu), !dbg !3295
-  %6 = icmp ne i64 %5, %2, !dbg !3296             ; 2 uses
-  br i1 %6, label %bb.o, label %bb.p, !dbg !3296
+  %.not = icmp eq i64 %6, %2, !dbg !3296
+  br i1 %.not, label %bb.p, label %bb.o, !dbg !3296
 
 bb.o:                                             ; preds = %.loopexit99
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !dbg !3297
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder13with_capacity(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.n, i64 noundef %2)
           to label %bb.q unwind label %.loopexit.split-lp101, !dbg !3298
 
-bb.p:                                             ; preds = %.loopexit99
+bb.p:                                             ; preds = %bb.c, %.loopexit99
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !dbg !3299
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false), !dbg !3299
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow5array9primitiveINtB2_14PrimitiveArrayhE8from_vecCs4PheDXcg4wa_10polars_row(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.o)
@@ -833,7 +834,7 @@ bb.c:                                             ; preds = %bb.a
   %.idx = shl nuw nsw i64 %2, 4, !dbg !3852       ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 %.idx, !dbg !3852 ; 3 uses
   %i.ai = icmp eq i64 %2, 0, !dbg !3853
-  br i1 %i.ai, label %.loopexit99, label %.lr.ph, !dbg !3697
+  br i1 %i.ai, label %bb.p, label %.lr.ph, !dbg !3697
 
 .lr.ph:                                           ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 8
@@ -951,7 +952,7 @@ bb.h:                                             ; preds = %.lr.ph.split
   br label %.loopexit99, !dbg !3897
 
 .body34:                                          ; preds = %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp101, %.body.i, %bb.bg, %bb.j, %bb.bj
-  %.sroa.023.0 = phi i1 [ true, %bb.j ], [ %.sroa.023.3.lpad-body, %bb.bj ], [ false, %.body.i ], [ false, %bb.bg ], [ %6, %.loopexit.split-lp101 ], [ true, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !3898
+  %.sroa.023.0 = phi i1 [ true, %bb.j ], [ %.sroa.023.3.lpad-body, %bb.bj ], [ false, %.body.i ], [ false, %bb.bg ], [ %5, %.loopexit.split-lp101 ], [ true, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !3898
   %.pn29 = phi { ptr, i32 } [ %i.ch, %bb.j ], [ %eh.lpad-body, %bb.bj ], [ %eh.lpad-body.i, %.body.i ], [ %i.hh, %bb.bg ], [ %lpad.loopexit.split-lp103, %.loopexit.split-lp101 ], [ %lpad.loopexit.split-lp270, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECs4PheDXcg4wa_10polars_row(ptr noalias noundef align 8 dereferenceable(24) %i.r) #19
           to label %bb.bf unwind label %bb.bh, !dbg !3835
@@ -962,6 +963,7 @@ bb.h:                                             ; preds = %.lr.ph.split
   br label %.body34
 
 .loopexit.split-lp101:                            ; preds = %bb.o, %bb.p
+  %5 = phi i1 [ true, %bb.o ], [ false, %bb.p ]
   %lpad.loopexit.split-lp103 = landingpad { ptr, i32 }
           cleanup
   br label %.body34
@@ -1047,19 +1049,19 @@ _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_ro
   %i.cr = icmp eq ptr %i.bn, %i.ah, !dbg !3853
   br i1 %i.cr, label %.loopexit99, label %.lr.ph.split, !dbg !3697
 
-.loopexit99:                                      ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit.us, %bb.c, %.split.us
-  %5 = phi i64 [ %i.bl, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit.us ], [ %.pre, %.split.us ], [ 0, %bb.c ], [ %i.cq, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit ], !dbg !3896 ; 2 uses
-  %i.cs = icmp ult i64 %5, 2305843009213693952, !dbg !3904
+.loopexit99:                                      ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit.us, %.split.us
+  %6 = phi i64 [ %i.bl, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit.us ], [ %.pre, %.split.us ], [ %i.cq, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCs4PheDXcg4wa_10polars_row.exit ], !dbg !3896 ; 2 uses
+  %i.cs = icmp ult i64 %6, 2305843009213693952, !dbg !3904
   call void @llvm.assume(i1 %i.cs), !dbg !3905
-  %6 = icmp ne i64 %5, %2, !dbg !3906             ; 2 uses
-  br i1 %6, label %bb.o, label %bb.p, !dbg !3906
+  %.not = icmp eq i64 %6, %2, !dbg !3906
+  br i1 %.not, label %bb.p, label %bb.o, !dbg !3906
 
 bb.o:                                             ; preds = %.loopexit99
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !dbg !3907
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder13with_capacity(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.n, i64 noundef %2)
           to label %bb.q unwind label %.loopexit.split-lp101, !dbg !3908
 
-bb.p:                                             ; preds = %.loopexit99
+bb.p:                                             ; preds = %bb.c, %.loopexit99
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !dbg !3909
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false), !dbg !3909
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow5array9primitiveINtB2_14PrimitiveArraymE8from_vecCs4PheDXcg4wa_10polars_row(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.o)
@@ -1462,7 +1464,7 @@ bb.c:                                             ; preds = %bb.a
   %.idx = shl nuw nsw i64 %2, 4, !dbg !4467       ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 %.idx, !dbg !4467 ; 3 uses
   %i.ai = icmp eq i64 %2, 0, !dbg !4468
-  br i1 %i.ai, label %.loopexit99, label %.lr.ph, !dbg !4311
+  br i1 %i.ai, label %bb.p, label %.lr.ph, !dbg !4311
 
 .lr.ph:                                           ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 8
@@ -1581,7 +1583,7 @@ bb.h:                                             ; preds = %.lr.ph.split
   br label %.loopexit99, !dbg !4513
 
 .body34:                                          ; preds = %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp101, %.body.i, %bb.bg, %bb.j, %bb.bj
-  %.sroa.023.0 = phi i1 [ true, %bb.j ], [ %.sroa.023.3.lpad-body, %bb.bj ], [ false, %.body.i ], [ false, %bb.bg ], [ %6, %.loopexit.split-lp101 ], [ true, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !4514
+  %.sroa.023.0 = phi i1 [ true, %bb.j ], [ %.sroa.023.3.lpad-body, %bb.bj ], [ false, %.body.i ], [ false, %bb.bg ], [ %5, %.loopexit.split-lp101 ], [ true, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !4514
   %.pn29 = phi { ptr, i32 } [ %i.ci, %bb.j ], [ %eh.lpad-body, %bb.bj ], [ %eh.lpad-body.i, %.body.i ], [ %i.hk, %bb.bg ], [ %lpad.loopexit.split-lp103, %.loopexit.split-lp101 ], [ %lpad.loopexit.split-lp270, %.loopexit100.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECs4PheDXcg4wa_10polars_row(ptr noalias noundef align 8 dereferenceable(24) %i.r) #19
           to label %bb.bf unwind label %bb.bh, !dbg !4450
@@ -1592,6 +1594,7 @@ bb.h:                                             ; preds = %.lr.ph.split
   br label %.body34
 
 .loopexit.split-lp101:                            ; preds = %bb.o, %bb.p
+  %5 = phi i1 [ true, %bb.o ], [ false, %bb.p ]
   %lpad.loopexit.split-lp103 = landingpad { ptr, i32 }
           cleanup
   br label %.body34
@@ -1678,19 +1681,19 @@ _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_ro
   %i.ct = icmp eq ptr %i.bo, %i.ah, !dbg !4468
   br i1 %i.ct, label %.loopexit99, label %.lr.ph.split, !dbg !4311
 
-.loopexit99:                                      ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit.us, %bb.c, %.split.us
-  %5 = phi i64 [ %i.bm, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit.us ], [ %.pre, %.split.us ], [ 0, %bb.c ], [ %i.cs, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit ], !dbg !4512 ; 2 uses
-  %i.cu = icmp ult i64 %5, 4611686018427387904, !dbg !4520
+.loopexit99:                                      ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit.us, %.split.us
+  %6 = phi i64 [ %i.bm, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit.us ], [ %.pre, %.split.us ], [ %i.cs, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCs4PheDXcg4wa_10polars_row.exit ], !dbg !4512 ; 2 uses
+  %i.cu = icmp ult i64 %6, 4611686018427387904, !dbg !4520
   call void @llvm.assume(i1 %i.cu), !dbg !4521
-  %6 = icmp ne i64 %5, %2, !dbg !4522             ; 2 uses
-  br i1 %6, label %bb.o, label %bb.p, !dbg !4522
+  %.not = icmp eq i64 %6, %2, !dbg !4522
+  br i1 %.not, label %bb.p, label %bb.o, !dbg !4522
 
 bb.o:                                             ; preds = %.loopexit99
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !dbg !4523
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder13with_capacity(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.n, i64 noundef %2)
           to label %bb.q unwind label %.loopexit.split-lp101, !dbg !4524
 
-bb.p:                                             ; preds = %.loopexit99
+bb.p:                                             ; preds = %bb.c, %.loopexit99
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !dbg !4525
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false), !dbg !4525
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow5array9primitiveINtB2_14PrimitiveArraytE8from_vecCs4PheDXcg4wa_10polars_row(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.o)

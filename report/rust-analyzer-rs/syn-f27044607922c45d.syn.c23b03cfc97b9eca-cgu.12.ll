@@ -202,23 +202,27 @@ bb.a:
   br i1 %.not78, label %.thread339, label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit
 
 _RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit: ; preds = %bb.a
-  %i.j = load i8, ptr %1, align 1
+  %i.j = load i8, ptr %1, align 1                 ; 2 uses
   %i.k = icmp eq i8 %i.j, 45                      ; 2 uses
   br i1 %i.k, label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit.thread, label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49
 
 _RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit.thread: ; preds = %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit
   %i.l = tail call { ptr, i64 } @_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs1K5DUQUZc67_11proc_macro2(ptr nonnull %1, i64 %2, i64 1, ptr nonnull align 8 @49) #18 ; 2 uses
-  %3 = extractvalue { ptr, i64 } %i.l, 0
   %i.m = extractvalue { ptr, i64 } %i.l, 1        ; 2 uses
   %.not79 = icmp eq i64 %i.m, 0
-  br i1 %.not79, label %.thread339, label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49
+  br i1 %.not79, label %.thread339, label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49thread-pre-split
 
-_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49: ; preds = %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit.thread
-  %.sroa.0.0325 = phi ptr [ %3, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit.thread ], [ %1, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit ] ; 4 uses
-  %.sroa.20.0324 = phi i64 [ %i.m, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit.thread ], [ %2, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit ] ; 2 uses
-  %4 = load i8, ptr %.sroa.0.0325, align 1        ; 2 uses
-  %5 = icmp ugt i64 %.sroa.20.0324, 1
-  br i1 %5, label %bb.b, label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit51
+_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49thread-pre-split: ; preds = %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit.thread
+  %3 = extractvalue { ptr, i64 } %i.l, 0          ; 2 uses
+  %.pr = load i8, ptr %3, align 1
+  br label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49
+
+_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49: ; preds = %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49thread-pre-split
+  %4 = phi i8 [ %.pr, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49thread-pre-split ], [ %i.j, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit ] ; 2 uses
+  %.sroa.0.0325 = phi ptr [ %3, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49thread-pre-split ], [ %1, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit ] ; 3 uses
+  %.sroa.20.0324 = phi i64 [ %i.m, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49thread-pre-split ], [ %2, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit ] ; 3 uses
+  %.not116 = icmp eq i64 %.sroa.20.0324, 1
+  br i1 %.not116, label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit51, label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.0325, i64 1
@@ -226,7 +230,6 @@ bb.b:                                             ; preds = %_RINvNtNtCsgFSQ9XOT
   br label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit51
 
 _RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit51: ; preds = %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49, %bb.b
-  %.sroa.20.0318330 = phi i64 [ %.sroa.20.0324, %bb.b ], [ 1, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49 ] ; 2 uses
   %.sroa.0.0.i50 = phi i8 [ %i.o, %bb.b ], [ 0, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit49 ]
   %i.p = icmp eq i8 %4, 48
   br i1 %i.p, label %bb.c, label %bb.d
@@ -257,7 +260,7 @@ _RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph.thread: ; pre
   %.sink450 = phi ptr [ @52, %bb.f ], [ @51, %bb.e ], [ @50, %bb.c ]
   %i.r = phi i1 [ false, %bb.f ], [ false, %bb.e ], [ true, %bb.c ]
   %.sroa.029.0 = phi i8 [ 2, %bb.f ], [ 8, %bb.e ], [ 16, %bb.c ] ; 3 uses
-  %i.s = tail call { ptr, i64 } @_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs1K5DUQUZc67_11proc_macro2(ptr nonnull %.sroa.0.0325, i64 %.sroa.20.0318330, i64 2, ptr nonnull align 8 %.sink450) #18 ; 2 uses
+  %i.s = tail call { ptr, i64 } @_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs1K5DUQUZc67_11proc_macro2(ptr nonnull %.sroa.0.0325, i64 %.sroa.20.0324, i64 2, ptr nonnull align 8 %.sink450) #18 ; 2 uses
   %i.t = extractvalue { ptr, i64 } %i.s, 1        ; 3 uses
   call void @_RNvMNtCsgFSQ9XOTBNe_3syn6bigintNtB2_6BigInt3new(ptr nonnull sret([24 x i8]) align 8 %i.i)
   %.not80154162 = icmp eq i64 %i.t, 0
@@ -270,7 +273,7 @@ _RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph: ; preds = %.
 _RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.preheader: ; preds = %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph.thread, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph
   %i.v = phi i1 [ true, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph.thread ], [ false, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph ] ; 3 uses
   %.sroa.029.0348356 = phi i8 [ 10, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph.thread ], [ %.sroa.029.0, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph ] ; 2 uses
-  %.sroa.20.1349355 = phi i64 [ %.sroa.20.0318330, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph.thread ], [ %i.t, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph ]
+  %.sroa.20.1349355 = phi i64 [ %.sroa.20.0324, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph.thread ], [ %i.t, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph ]
   %.sroa.0.1350354 = phi ptr [ %.sroa.0.0325, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph.thread ], [ %i.u, %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph.lr.ph ]
   br label %_RINvNtNtCsgFSQ9XOTBNe_3syn3lit5value4byteeEB6_.exit53.lr.ph
 

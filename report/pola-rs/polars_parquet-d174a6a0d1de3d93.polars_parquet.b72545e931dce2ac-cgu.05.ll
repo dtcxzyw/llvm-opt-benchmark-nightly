@@ -205,9 +205,8 @@ bb.g:                                             ; preds = %bb.e
   %.pr.pre = load i64, ptr %2, align 8, !dbg !35377
   br label %thread-pre-split, !dbg !35378
 
-thread-pre-split:                                 ; preds = %.thread-pre-split_crit_edge, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k
-  %6 = phi i64 [ %i.ph, %bb.k ], [ %i.ps, %bb.q ], [ %i.pr, %bb.p ], [ %i.pp, %bb.o ], [ %i.pn, %bb.n ], [ %i.pl, %bb.m ], [ %i.pj, %bb.l ], [ %.pr.pre, %.thread-pre-split_crit_edge ], !dbg !35377 ; 11 uses
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !35377 ; 10 uses
+thread-pre-split:                                 ; preds = %.thread-pre-split_crit_edge, %bb.q, %bb.p, %bb.k
+  %6 = phi i64 [ %i.ph, %bb.k ], [ %i.ps, %bb.q ], [ %i.pr, %bb.p ], [ %.pr.pre, %.thread-pre-split_crit_edge ], !dbg !35377 ; 11 uses
   %i.ox = icmp eq i64 %6, 1, !dbg !35378
   br i1 %i.ox, label %bb.ei, label %bb.ej, !dbg !35378
 
@@ -242,22 +241,22 @@ bb.k:                                             ; preds = %bb.g
 bb.l:                                             ; preds = %bb.g
   %i.pj = load i64, ptr %2, align 8, !dbg !35377, !range !1574, !noundef !1032 ; 2 uses
   %i.pk = icmp eq i64 %i.pj, 1, !dbg !35378
-  br i1 %i.pk, label %bb.al, label %thread-pre-split, !dbg !35378
+  br i1 %i.pk, label %bb.al, label %.thread1627.thread, !dbg !35378
 
 bb.m:                                             ; preds = %bb.g
   %i.pl = load i64, ptr %2, align 8, !dbg !35377, !range !1574, !noundef !1032 ; 2 uses
   %i.pm = icmp eq i64 %i.pl, 1, !dbg !35378
-  br i1 %i.pm, label %bb.ba, label %thread-pre-split, !dbg !35378
+  br i1 %i.pm, label %bb.ba, label %.thread1627.thread, !dbg !35378
 
 bb.n:                                             ; preds = %bb.g
   %i.pn = load i64, ptr %2, align 8, !dbg !35377, !range !1574, !noundef !1032 ; 2 uses
   %i.po = icmp eq i64 %i.pn, 1, !dbg !35378
-  br i1 %i.po, label %bb.bo, label %thread-pre-split, !dbg !35378
+  br i1 %i.po, label %bb.bo, label %.thread1627.thread, !dbg !35378
 
 bb.o:                                             ; preds = %bb.g
   %i.pp = load i64, ptr %2, align 8, !dbg !35377, !range !1574, !noundef !1032 ; 2 uses
   %i.pq = icmp eq i64 %i.pp, 1, !dbg !35378
-  br i1 %i.pq, label %bb.cc, label %thread-pre-split, !dbg !35378
+  br i1 %i.pq, label %bb.cc, label %.thread1627.thread, !dbg !35378
 
 bb.p:                                             ; preds = %bb.g
   %i.pr = load i64, ptr %2, align 8, !dbg !35377, !range !1574, !noundef !1032 ; 2 uses
@@ -660,7 +659,7 @@ bb.ds:                                            ; preds = %bb.q
   call void @llvm.assume(i1 %i.va), !dbg !35631
   %i.vb = icmp eq i64 %i.uz, 0, !dbg !35632
   %brmerge.not = and i1 %i.oq, %i.vb, !dbg !35632
-  br i1 %brmerge.not, label %bb.dt, label %.thread1650, !dbg !35632
+  br i1 %brmerge.not, label %bb.dt, label %.thread1627.thread, !dbg !35632
 
 bb.dt:                                            ; preds = %bb.ds
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.615.sroa.8), !dbg !34665
@@ -833,7 +832,13 @@ bb.ei:                                            ; preds = %thread-pre-split
     i8 22, label %bb.ox
   ], !dbg !35378, !prof !34682
 
+.thread1627.thread:                               ; preds = %bb.ds, %bb.l, %bb.m, %bb.n, %bb.o
+  %.ph = phi i64 [ 0, %bb.ds ], [ %i.pp, %bb.o ], [ %i.pn, %bb.n ], [ %i.pl, %bb.m ], [ %i.pj, %bb.l ]
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !35377
+  br label %bb.ey, !dbg !35378
+
 bb.ej:                                            ; preds = %thread-pre-split
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !35377 ; 10 uses
   switch i8 %i.ow, label %bb.ey [
     i8 6, label %bb.fj
     i8 11, label %bb.fk
@@ -958,8 +963,10 @@ bb.ex:                                            ; preds = %bb.ew
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet4read11compression17BasicDecompressorEBO_(ptr noalias noundef align 8 dereferenceable(232) %i.lq) #39
           to label %.thread1605.thread1721 unwind label %bb.ay, !dbg !35695
 
-bb.ey:                                            ; preds = %bb.ej
-  switch i64 %6, label %.thread1647 [
+bb.ey:                                            ; preds = %.thread1627.thread, %bb.ej
+  %9 = phi ptr [ %7, %.thread1627.thread ], [ %8, %bb.ej ]
+  %10 = phi i64 [ %.ph, %.thread1627.thread ], [ %6, %bb.ej ]
+  switch i64 %10, label %.thread1647 [
     i64 2, label %bb.oq
     i64 4, label %bb.rg
     i64 5, label %bb.rh
@@ -1043,14 +1050,14 @@ bb.fi:                                            ; preds = %bb.fg
 
 bb.fj:                                            ; preds = %bb.ej
   %cond1748.a = icmp eq i64 %6, 7, !dbg !35378
-  %i.xr = load i64, ptr %7, align 8, !dbg !35378
+  %i.xr = load i64, ptr %8, align 8, !dbg !35378
   %i.xs = icmp eq i64 %i.xr, 16, !dbg !35378
   %or.cond = select i1 %cond1748.a, i1 %i.xs, i1 false, !dbg !35378
   br i1 %or.cond, label %bb.fq, label %.thread1650, !dbg !35378
 
 bb.fk:                                            ; preds = %bb.ej
   %cond1747.a = icmp eq i64 %6, 7, !dbg !35378
-  %i.xt = load i64, ptr %7, align 8, !dbg !35378
+  %i.xt = load i64, ptr %8, align 8, !dbg !35378
   %i.xu = icmp eq i64 %i.xt, 16, !dbg !35378
   %or.cond1753 = select i1 %cond1747.a, i1 %i.xu, i1 false, !dbg !35378
   br i1 %or.cond1753, label %bb.gh, label %.thread1650, !dbg !35378
@@ -1453,17 +1460,17 @@ bb.js:                                            ; preds = %bb.fm
   ], !dbg !35378
 
 bb.jt:                                            ; preds = %bb.js
-  %i.acy = load i64, ptr %7, align 8, !dbg !35378, !noundef !1032
+  %i.acy = load i64, ptr %8, align 8, !dbg !35378, !noundef !1032
   %i.acz = icmp eq i64 %i.acy, 12, !dbg !35378
   br i1 %i.acz, label %bb.jw, label %.thread1650, !dbg !35378
 
 bb.ju:                                            ; preds = %bb.js
-  %i.ada = load i64, ptr %7, align 8, !dbg !35378, !noundef !1032
+  %i.ada = load i64, ptr %8, align 8, !dbg !35378, !noundef !1032
   %i.adb = icmp eq i64 %i.ada, 12, !dbg !35378
   br i1 %i.adb, label %bb.kn, label %.thread1650, !dbg !35378
 
 bb.jv:                                            ; preds = %bb.js
-  %i.adc = load i64, ptr %7, align 8, !dbg !35378, !noundef !1032
+  %i.adc = load i64, ptr %8, align 8, !dbg !35378, !noundef !1032
   %i.add = icmp eq i64 %i.adc, 12, !dbg !35378
   br i1 %i.add, label %bb.le, label %.thread1650, !dbg !35378
 
@@ -1866,8 +1873,8 @@ bb.mi:                                            ; preds = %bb.mg
 
 bb.mj:                                            ; preds = %bb.fo
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ig), !dbg !36259
-  store ptr %7, ptr %i.ig, align 8, !dbg !36259
-  %i.ahl = load i64, ptr %7, align 8, !dbg !36260, !noundef !1032 ; 4 uses
+  store ptr %8, ptr %i.ig, align 8, !dbg !36259
+  %i.ahl = load i64, ptr %8, align 8, !dbg !36260, !noundef !1032 ; 4 uses
   %i.ahm = icmp ugt i64 %i.ahl, 16, !dbg !36260
   br i1 %i.ahm, label %bb.ny, label %bb.nv, !dbg !36260
 
@@ -2270,7 +2277,7 @@ bb.pa:                                            ; preds = %bb.oy
   br label %bb.pk, !dbg !36440
 
 bb.pb:                                            ; preds = %bb.fp
-  %i.ala = load i64, ptr %7, align 8, !dbg !36441, !noundef !1032 ; 8 uses
+  %i.ala = load i64, ptr %8, align 8, !dbg !36441, !noundef !1032 ; 8 uses
   %i.alb = icmp ult i64 %i.ala, 17, !dbg !36441
   br i1 %i.alb, label %bb.pt, label %bb.ps, !dbg !36441
 
@@ -2467,7 +2474,7 @@ bb.pv:                                            ; preds = %bb.pt
 
 bb.pw:                                            ; preds = %bb.ps
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fr), !dbg !36500
-  store ptr %7, ptr %i.fr, align 8, !dbg !36500
+  store ptr %8, ptr %i.fr, align 8, !dbg !36500
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fq), !dbg !36501
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fo), !dbg !36502
   store ptr %i.fr, ptr %i.fo, align 8, !dbg !36502
@@ -2870,7 +2877,7 @@ bb.un:                                            ; preds = %bb.ul, %bb.ui
   br label %bb.yi, !dbg !35400
 
 bb.uo:                                            ; preds = %bb.ri
-  %i.asa = load i64, ptr %7, align 8, !dbg !35378, !noundef !1032
+  %i.asa = load i64, ptr %9, align 8, !dbg !35378, !noundef !1032
   %i.asb = icmp eq i64 %i.asa, 2, !dbg !35378
   br i1 %i.asb, label %bb.up, label %.thread1650, !dbg !35378
 
@@ -2992,7 +2999,7 @@ bb.vc:                                            ; preds = %bb.vb
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet4read11compression17BasicDecompressorEBO_(ptr noalias noundef align 8 dereferenceable(232) %i.ef) #39
           to label %.thread1605.thread1721 unwind label %bb.ay, !dbg !36829
 
-.thread1650:                                      ; preds = %bb.ds, %bb.ei, %bb.ez, %bb.fj, %bb.fk, %bb.fm, %bb.fn, %bb.fl, %bb.js, %bb.jt, %bb.ju, %bb.jv, %bb.fp, %bb.fo, %bb.uo, %bb.rf, %bb.ri, %bb.rh, %bb.rg, %bb.oq, %.thread1647
+.thread1650:                                      ; preds = %bb.fl, %bb.ei, %bb.ez, %bb.fj, %bb.fk, %bb.fm, %bb.fn, %bb.js, %bb.jt, %bb.ju, %bb.jv, %bb.fp, %bb.fo, %bb.uo, %bb.rf, %bb.ri, %bb.rh, %bb.rg, %bb.oq, %.thread1647
   call void @llvm.lifetime.start.p0(ptr nonnull %i.be), !dbg !36845
   store ptr %2, ptr %i.be, align 8, !dbg !36845
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !dbg !36846
@@ -3395,7 +3402,7 @@ begin_hunk_6_@llvm.vector.reduce.or.v2i64
 !34679 = !DILocation(line: 74, column: 18, scope: !33577)
 !34680 = !DILocation(line: 2104, column: 9, scope: !33590, inlinedAt: !34679)
 !34681 = !DILocation(line: 3892, column: 9, scope: !33591, inlinedAt: !34680)
-!34682 = !{!"branch_weights", i32 -1610612736, i32 536870912, i32 536870912, i32 536870912, i32 536870912, i32 536870912, i32 535799313, i32 536870912, i32 535799, i32 535799}
+!34682 = !{!"branch_weights", i32 -1610612736, i32 536870912, i32 536870912, i32 536870912, i32 536870912, i32 536870912, i32 535799314, i32 536870912, i32 535799, i32 535799}
 !34683 = !DILexicalBlockFile(scope: !33442, file: !1207, discriminator: 38)
 !34684 = !DILexicalBlockFile(scope: !33441, file: !1207, discriminator: 38)
 !34685 = !DILocation(line: 135, column: 13, scope: !33439)
@@ -3442,7 +3449,7 @@ begin_hunk_6_@llvm.vector.reduce.or.v2i64
 !34726 = !DILexicalBlockFile(scope: !33440, file: !1351, discriminator: 26)
 !34727 = !DILocation(line: 558, column: 16, scope: !34726, inlinedAt: !34725)
 !34728 = !{!33634}
-!34729 = !{!"branch_weights", i32 0, i32 2143197, i32 2143197, i32 2143197255}
+!34729 = !{!"branch_weights", i32 0, i32 2143196, i32 2143196, i32 2143197257}
 !34730 = !DILocation(line: 278, column: 40, scope: !33630)
 !34731 = !DILexicalBlockFile(scope: !33641, file: !1434, discriminator: 2)
 !34732 = !DILocation(line: 278, column: 40, scope: !34731)
@@ -3845,7 +3852,7 @@ begin_hunk_7_@llvm.vector.reduce.or.v2i64
 !35139 = !DILocation(line: 424, column: 25, scope: !34161)
 !35140 = !DILexicalBlockFile(scope: !34175, file: !1434, discriminator: 2)
 !35141 = !DILocation(line: 424, column: 25, scope: !35140)
-!35142 = !{!"branch_weights", i32 0, i32 757890869, i32 757890869, i32 378566, i32 378566, i32 252377911, i32 252377911, i32 126188956}
+!35142 = !{!"branch_weights", i32 0, i32 757890868, i32 757890868, i32 378566, i32 378566, i32 252377911, i32 252377911, i32 126188956}
 !35143 = !{!"branch_weights", i32 2000, i32 4004, i32 2, i32 2, i32 2000}
 !35144 = !DILexicalBlockFile(scope: !33442, file: !1207, discriminator: 10)
 !35145 = !DILexicalBlockFile(scope: !33441, file: !1207, discriminator: 10)

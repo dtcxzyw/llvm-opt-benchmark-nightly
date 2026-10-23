@@ -205,8 +205,8 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !262
   %i.c = icmp ne ptr %i.b, null                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !324  ; 2 uses
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !323  ; 2 uses
   %i.h = ptrtoint ptr %i.f to i64
@@ -297,10 +297,10 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   store ptr %.0.lcssa.i.i.i.i.i, ptr %i.ai, align 8, !tbaa !225
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !258 ; 3 uses
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !258 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %.not176203 = icmp eq ptr %i.ak, %i.al
-  br i1 %.not176203, label %.critedge.a, label %.lr.ph
+  br i1 %.not176203, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.loopexit181
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -328,16 +328,16 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.v
-  %storemerge205 = phi i64 [ 0, %.lr.ph ], [ %i.ej, %bb.v ] ; 8 uses
-  %.sroa.0150.0204 = phi ptr [ %i.ak, %.lr.ph ], [ %i.ei, %bb.v ] ; 6 uses
+  %storemerge205 = phi i64 [ 0, %.lr.ph ], [ %i.ej, %bb.v ] ; 12 uses
+  %.sroa.0150.0204 = phi ptr [ %i.ak, %.lr.ph ], [ %i.ei, %bb.v ] ; 5 uses
   %i.bi = load ptr, ptr %i.e, align 8, !tbaa !324
   %i.bj = load ptr, ptr %i.d, align 8, !tbaa !323 ; 2 uses
   %i.bk = ptrtoint ptr %i.bi to i64
   %i.bl = ptrtoint ptr %i.bj to i64
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = sdiv exact i64 %i.bm, 24
-  %.not = icmp eq i64 %storemerge205, %i.bn
-  br i1 %.not, label %.critedge.a, label %bb.c
+  %.not = icmp eq i64 %storemerge205, %i.bn       ; 2 uses
+  br i1 %.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   br i1 %i.c, label %bb.d, label %bb.t
@@ -551,7 +551,7 @@ _ZN7testing25StringMatchResultListenerD2Ev.exit:  ; preds = %_ZNSt7__cxx1112basi
   store i64 0, ptr %i.bg, align 8, !tbaa !276
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.bh) #26, !inline_history !274
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
-  br i1 %i.bz, label %bb.v, label %.critedge.a
+  br i1 %i.bz, label %bb.v, label %.critedge
 
 bb.q:                                             ; preds = %bb.d
   %i.dv = landingpad { ptr, i32 }
@@ -622,31 +622,39 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 
 bb.u:                                             ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE15MatchAndExplainES9_PNS_19MatchResultListenerE.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
-  br i1 %i.eh, label %bb.v, label %.critedge.a
+  br i1 %i.eh, label %bb.v, label %.critedge
 
 bb.v:                                             ; preds = %_ZN7testing25StringMatchResultListenerD2Ev.exit, %bb.u
-  %i.ei = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0150.0204) #30 ; 3 uses
+  %i.ei = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0150.0204) #30 ; 2 uses
   %i.ej = add i64 %storemerge205, 1               ; 2 uses
   %.not176 = icmp eq ptr %i.ei, %i.al
-  br i1 %.not176, label %.critedge.a, label %bb.b, !llvm.loop !1991
+  br i1 %.not176, label %._crit_edge, label %bb.b, !llvm.loop !1991
 
-.critedge.a:                                      ; preds = %bb.b, %bb.u, %_ZN7testing25StringMatchResultListenerD2Ev.exit, %bb.v, %.loopexit181
-  %.sroa.0150.0.lcssa = phi ptr [ %i.ak, %.loopexit181 ], [ %i.ei, %bb.v ], [ %.sroa.0150.0204, %_ZN7testing25StringMatchResultListenerD2Ev.exit ], [ %.sroa.0150.0204, %bb.u ], [ %.sroa.0150.0204, %bb.b ] ; 2 uses
-  %storemerge.lcssa = phi i64 [ 0, %.loopexit181 ], [ %i.ej, %bb.v ], [ %storemerge205, %_ZN7testing25StringMatchResultListenerD2Ev.exit ], [ %storemerge205, %bb.u ], [ %storemerge205, %bb.b ] ; 7 uses
-  %.2 = phi i1 [ false, %.loopexit181 ], [ false, %bb.v ], [ true, %_ZN7testing25StringMatchResultListenerD2Ev.exit ], [ true, %bb.u ], [ false, %bb.b ]
-  %.not177223.a = icmp eq ptr %.sroa.0150.0.lcssa, %i.al
-  br i1 %.not177223.a, label %._crit_edge, label %.lr.ph226
+.critedge:                                        ; preds = %bb.b, %bb.u, %_ZN7testing25StringMatchResultListenerD2Ev.exit
+  %.not177223 = icmp eq ptr %.sroa.0150.0204, %i.al
+  br i1 %.not177223, label %.lr.ph226, label %.critedge.a
 
-.lr.ph226:                                        ; preds = %.critedge.a, %.lr.ph226
-  %.033225.a = phi i64 [ %14, %.lr.ph226 ], [ %storemerge.lcssa, %.critedge.a ]
-  %.sroa.0150.1224 = phi ptr [ %15, %.lr.ph226 ], [ %.sroa.0150.0.lcssa, %.critedge.a ]
-  %14 = add i64 %.033225.a, 1                     ; 2 uses
+.critedge.a:                                      ; preds = %.critedge, %.critedge.a
+  %.033225 = phi i64 [ %14, %.critedge.a ], [ %storemerge205, %.critedge ]
+  %.sroa.0150.1224 = phi ptr [ %15, %.critedge.a ], [ %.sroa.0150.0204, %.critedge ]
+  %14 = add i64 %.033225, 1                       ; 2 uses
   %15 = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.0150.1224) #30 ; 2 uses
-  %.not177 = icmp eq ptr %15, %i.al
-  br i1 %.not177, label %._crit_edge, label %.lr.ph226, !llvm.loop !1992
+  %.not177223.a = icmp eq ptr %15, %i.al
+  br i1 %.not177223.a, label %.lr.ph226, label %.critedge.a, !llvm.loop !1992
 
-._crit_edge:                                      ; preds = %.lr.ph226, %.critedge.a
-  %.033.lcssa = phi i64 [ %storemerge.lcssa, %.critedge.a ], [ %14, %.lr.ph226 ] ; 4 uses
+.lr.ph226:                                        ; preds = %.critedge.a, %.critedge
+  %.033225.a = phi i64 [ %storemerge205, %.critedge ], [ %14, %.critedge.a ] ; 2 uses
+  %16 = load ptr, ptr %i.e, align 8, !tbaa !324   ; 2 uses
+  %17 = load ptr, ptr %i.d, align 8, !tbaa !323   ; 2 uses
+  %18 = ptrtoint ptr %16 to i64
+  %19 = ptrtoint ptr %17 to i64
+  %20 = sub i64 %18, %19
+  %21 = sdiv exact i64 %20, 24
+  %.not177 = icmp eq i64 %.033225.a, %21
+  br i1 %.not177, label %bb.ag, label %bb.w
+
+._crit_edge:                                      ; preds = %bb.v, %.loopexit181
+  %.033.lcssa = phi i64 [ 0, %.loopexit181 ], [ %i.ej, %bb.v ] ; 2 uses
   %i.ek = load ptr, ptr %i.e, align 8, !tbaa !324 ; 2 uses
   %i.el = load ptr, ptr %i.d, align 8, !tbaa !323 ; 2 uses
   %i.em = ptrtoint ptr %i.ek to i64
@@ -654,10 +662,11 @@ bb.v:                                             ; preds = %_ZN7testing25String
   %i.eo = sub i64 %i.em, %i.en
   %i.ep = sdiv exact i64 %i.eo, 24
   %.not54 = icmp eq i64 %.033.lcssa, %i.ep
-  br i1 %.not54, label %bb.ag, label %bb.w
+  br i1 %.not54, label %bb.av, label %bb.w
 
-bb.w:                                             ; preds = %._crit_edge
-  %i.eq = icmp ne i64 %.033.lcssa, 0
+bb.w:                                             ; preds = %._crit_edge, %.lr.ph226
+  %.033.lcssa304 = phi i64 [ %.033.lcssa, %._crit_edge ], [ %.033225.a, %.lr.ph226 ] ; 3 uses
+  %i.eq = icmp ne i64 %.033.lcssa304, 0
   %or.cond = and i1 %i.c, %i.eq
   br i1 %or.cond, label %bb.x, label %_ZN7testing8internal15PrintIfNotEmptyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSo.exit
 
@@ -679,11 +688,11 @@ _ZN7testing19MatchResultListenerlsIA11_cEERS0_RKT_.exit: ; preds = %bb.x, %bb.y
 .noexc83:                                         ; preds = %_ZN7testing19MatchResultListenerlsIA11_cEERS0_RKT_.exit
   %i.et = load ptr, ptr %5, align 8, !tbaa !222, !noalias !2001
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 16
-  %i.ev = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.eu, i64 noundef %.033.lcssa)
+  %i.ev = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.eu, i64 noundef %.033.lcssa304)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.i.i81 unwind label %bb.aa, !noalias !2001 ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.i.i81: ; preds = %.noexc83
-  %i.ew = icmp eq i64 %.033.lcssa, 1              ; 2 uses
+  %i.ew = icmp eq i64 %.033.lcssa304, 1           ; 2 uses
   %i.ex = select i1 %i.ew, ptr @.str.146, ptr @.str.147
   %i.ey = load ptr, ptr %5, align 8, !tbaa !222, !noalias !2001
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 16
@@ -821,15 +830,15 @@ _ZNKSt14default_deleteINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #26
   br label %.body76
 
-bb.ag:                                            ; preds = %._crit_edge
-  br i1 %.2, label %bb.ah, label %bb.av
+bb.ag:                                            ; preds = %.lr.ph226
+  br i1 %.not, label %bb.av, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   br i1 %i.c, label %bb.ai, label %_ZN7testing8internal15PrintIfNotEmptyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSo.exit
 
 bb.ai:                                            ; preds = %bb.ah
   %i.gl = load ptr, ptr %i.aj, align 8, !tbaa !258 ; 2 uses
-  %.not57232 = icmp eq i64 %storemerge.lcssa, 0
+  %.not57232 = icmp eq i64 %storemerge205, 0
   br i1 %.not57232, label %._crit_edge237, label %.lr.ph236
 
 ._crit_edge237:                                   ; preds = %.lr.ph236, %bb.ai
@@ -847,7 +856,7 @@ bb.aj:                                            ; preds = %._crit_edge237
   %.sroa.0.0233 = phi ptr [ %i.go, %.lr.ph236 ], [ %i.gl, %bb.ai ]
   %i.go = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.0.0233) #30 ; 2 uses
   %i.gp = add nuw i64 %.032234, 1                 ; 2 uses
-  %.not57 = icmp eq i64 %i.gp, %storemerge.lcssa
+  %.not57 = icmp eq i64 %i.gp, %storemerge205
   br i1 %.not57, label %._crit_edge237, label %.lr.ph236, !llvm.loop !1995
 
 _ZN7testing19MatchResultListenerlsIA16_cEERS0_RKT_.exit: ; preds = %bb.aj
@@ -856,7 +865,7 @@ _ZN7testing19MatchResultListenerlsIA16_cEERS0_RKT_.exit: ; preds = %bb.aj
   br i1 %.not.i95, label %_ZN7testing19MatchResultListenerlsIA3_cEERS0_RKT_.exit, label %bb.ak
 
 bb.ak:                                            ; preds = %_ZN7testing19MatchResultListenerlsIA16_cEERS0_RKT_.exit
-  %i.gq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %.pr, i64 noundef %storemerge.lcssa)
+  %i.gq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %.pr, i64 noundef %storemerge205)
           to label %_ZN7testing19MatchResultListenerlsImEERS0_RKT_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN7testing19MatchResultListenerlsImEERS0_RKT_.exit: ; preds = %bb.ak
@@ -910,7 +919,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106: ; preds = %_ZN7testing19MatchResultListenerlsIA3_cEERS0_RKT_.exit103, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i104
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #26
   %i.he = load ptr, ptr %i.d, align 8, !tbaa !323
-  %i.hf = getelementptr inbounds nuw [24 x i8], ptr %i.he, i64 %storemerge.lcssa ; 2 uses
+  %i.hf = getelementptr inbounds nuw [24 x i8], ptr %i.he, i64 %storemerge205 ; 2 uses
   %i.hg = load ptr, ptr %i.a, align 8, !tbaa !262
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hf, i64 8 ; 2 uses
   %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !333
@@ -951,7 +960,7 @@ bb.ar:                                            ; preds = %_ZStlsISt11char_tra
 
 _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE18DescribeNegationToEPSo.exit: ; preds = %bb.ar
   %i.hq = load ptr, ptr %9, align 8, !tbaa !224
-  %i.hr = getelementptr inbounds nuw [32 x i8], ptr %i.hq, i64 %storemerge.lcssa ; 2 uses
+  %i.hr = getelementptr inbounds nuw [32 x i8], ptr %i.hq, i64 %storemerge205 ; 2 uses
   %i.hs = load ptr, ptr %i.a, align 8, !tbaa !262 ; 3 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hr, i64 8 ; 2 uses
   %i.hu = load i64, ptr %i.ht, align 8, !tbaa !206
@@ -994,8 +1003,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit117: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #26
   br label %.body76
 
-bb.av:                                            ; preds = %bb.ag
-  %.not56228 = icmp ne ptr %i.ek, %i.el
+bb.av:                                            ; preds = %._crit_edge, %bb.ag
+  %22 = phi ptr [ %16, %bb.ag ], [ %i.ek, %._crit_edge ]
+  %23 = phi ptr [ %17, %bb.ag ], [ %i.el, %._crit_edge ]
+  %.not56228 = icmp ne ptr %22, %23
   %or.cond295.not = and i1 %.not56228, %i.c
   br i1 %or.cond295.not, label %.lr.ph231.preheader, label %_ZN7testing8internal15PrintIfNotEmptyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSo.exit
 

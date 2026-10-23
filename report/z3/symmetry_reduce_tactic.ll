@@ -205,7 +205,7 @@ _ZN6vectorIP3appLb0EjE5resetEv.exit:              ; preds = %bb.k, %bb.l
 
 _ZNK6vectorIP3appLb0EjE5emptyEv.exit:             ; preds = %.preheader, %bb.as
   %i.aw = phi ptr [ %i.fj, %bb.as ], [ %i.au, %.preheader ]
-  %.193 = phi i32 [ %i.en, %bb.as ], [ %.018101, %.preheader ] ; 8 uses
+  %.193 = phi i32 [ %i.en, %bb.as ], [ %.018101, %.preheader ] ; 9 uses
   %i.ax = getelementptr inbounds i8, ptr %i.aw, i64 -4
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !38
   %i.az = icmp eq i32 %i.ay, 0
@@ -411,14 +411,16 @@ _ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.i:      ; preds = %bb.ac
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !38 ; 3 uses
   %i.dl = load ptr, ptr %9, align 8
   %.fr36.i = freeze ptr %i.dl                     ; 8 uses
-  %11 = icmp eq ptr %.fr36.i, null
-  %.not.i45.a = icmp eq i32 %i.dk, 0
-  %or.cond.i = select i1 %11, i1 true, i1 %.not.i45.a
-  br i1 %or.cond.i, label %_ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i, label %_ZNK6vectorIP3appLb0EjE3endEv.exit.i.lr.ph.i
+  %.not.i45.a = icmp eq ptr %.fr36.i, null
+  %11 = getelementptr inbounds i8, ptr %.fr36.i, i64 -4
+  br i1 %.not.i45.a, label %_ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i, label %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.split.split.i
 
-_ZNK6vectorIP3appLb0EjE3endEv.exit.i.lr.ph.i:     ; preds = %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.i
-  %12 = getelementptr inbounds i8, ptr %.fr36.i, i64 -4
-  %i.dm = load i32, ptr %12, align 4, !tbaa !38   ; 2 uses
+_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.split.split.i: ; preds = %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.i
+  %.not.i45 = icmp eq i32 %i.dk, 0
+  br i1 %.not.i45, label %.critedge, label %_ZNK6vectorIP3appLb0EjE3endEv.exit.i.lr.ph.i
+
+_ZNK6vectorIP3appLb0EjE3endEv.exit.i.lr.ph.i:     ; preds = %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.split.split.i
+  %i.dm = load i32, ptr %11, align 4, !tbaa !38   ; 2 uses
   %i.dn = zext i32 %i.dm to i64
   %i.do = shl nuw nsw i64 %i.dn, 3
   %i.dp = getelementptr inbounds nuw i8, ptr %.fr36.i, i64 %i.do
@@ -456,7 +458,7 @@ _ZNK6vectorIP3appLb0EjE8containsERKS1_.exit.i:    ; preds = %bb.ae
   br label %_ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i
 
 _ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i:          ; preds = %.critedge.loopexit38.i, %_ZNK6vectorIP3appLb0EjE3endEv.exit.i.lr.ph.i, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.i
-  %.018.i = phi i32 [ %i.dv, %.critedge.loopexit38.i ], [ 0, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.i ], [ 0, %_ZNK6vectorIP3appLb0EjE3endEv.exit.i.lr.ph.i ] ; 2 uses
+  %.018.i = phi i32 [ %i.dv, %.critedge.loopexit38.i ], [ 0, %_ZNK6vectorIP3appLb0EjE3endEv.exit.i.lr.ph.i ], [ 0, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.i ] ; 2 uses
   %i.dw = icmp eq i32 %.018.i, %i.dk
   br i1 %i.dw, label %.critedge, label %_ZN22symmetry_reduce_tactic3imp12select_constERK10ptr_vectorI3appES5_.exit
 
@@ -601,8 +603,8 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
   br label %.body
 
-.critedge:                                        ; preds = %_ZNK6vectorIP3appLb0EjE5emptyEv.exit, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit44, %bb.as, %_ZN22symmetry_reduce_tactic3imp12select_constERK10ptr_vectorI3appES5_.exit, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i, %bb.ac, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit, %_ZNK6vectorIP3appLb0EjE8containsERKS1_.exit.i, %.preheader, %.noexc40, %_ZN22symmetry_reduce_tactic3imp25invariant_by_permutationsEP4exprR10ptr_vectorI3appE.exit
-  %.3 = phi i32 [ %.018101, %_ZN22symmetry_reduce_tactic3imp25invariant_by_permutationsEP4exprR10ptr_vectorI3appE.exit ], [ %.018101, %.noexc40 ], [ %.193, %_ZNK6vectorIP3appLb0EjE8containsERKS1_.exit.i ], [ %.018101, %.preheader ], [ %.193, %_ZNK6vectorIP3appLb0EjE5emptyEv.exit ], [ %.193, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit44 ], [ %i.en, %bb.as ], [ %.193, %_ZN22symmetry_reduce_tactic3imp12select_constERK10ptr_vectorI3appES5_.exit ], [ %.193, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i ], [ %.193, %bb.ac ], [ %.193, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit ] ; 2 uses
+.critedge:                                        ; preds = %_ZNK6vectorIP3appLb0EjE5emptyEv.exit, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit44, %bb.as, %_ZN22symmetry_reduce_tactic3imp12select_constERK10ptr_vectorI3appES5_.exit, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i, %bb.ac, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.split.split.i, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit, %_ZNK6vectorIP3appLb0EjE8containsERKS1_.exit.i, %.preheader, %.noexc40, %_ZN22symmetry_reduce_tactic3imp25invariant_by_permutationsEP4exprR10ptr_vectorI3appE.exit
+  %.3 = phi i32 [ %.018101, %_ZN22symmetry_reduce_tactic3imp25invariant_by_permutationsEP4exprR10ptr_vectorI3appE.exit ], [ %.018101, %.noexc40 ], [ %.193, %_ZNK6vectorIP3appLb0EjE8containsERKS1_.exit.i ], [ %.018101, %.preheader ], [ %.193, %_ZNK6vectorIP3appLb0EjE5emptyEv.exit ], [ %.193, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit44 ], [ %i.en, %bb.as ], [ %.193, %_ZN22symmetry_reduce_tactic3imp12select_constERK10ptr_vectorI3appES5_.exit ], [ %.193, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit10.i ], [ %.193, %bb.ac ], [ %.193, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.lr.ph.split.split.i ], [ %.193, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.fn = load ptr, ptr %5, align 8, !tbaa !164   ; 2 uses
   %i.fo = icmp eq ptr %i.fn, null

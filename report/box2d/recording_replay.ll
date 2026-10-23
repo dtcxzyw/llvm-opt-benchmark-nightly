@@ -205,7 +205,7 @@ define hidden range(i24 0, 65794) i24 @b2RecR_LOCKS(ptr nofree noundef captures(
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 6 uses
-  %i.c = sext i32 %i.b to i64
+  %i.c = sext i32 %i.b to i64                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i32, ptr %i.d, align 8, !tbaa !19   ; 4 uses
   %.not.i.i = icmp slt i32 %i.b, %i.e
@@ -223,62 +223,68 @@ b2RecRdrCheck.exit.i.i:                           ; preds = %bb.a
 
 b2RecR_BOOL.exit:                                 ; preds = %b2RecRdrCheck.exit.thread.i.i, %b2RecRdrCheck.exit.i.i
   %.not.i.i3 = icmp slt i32 %i.b, %i.e
-  br i1 %.not.i.i3, label %b2RecR_BOOL.exit9, label %b2RecRdrCheck.exit.thread.i.i5
+  br i1 %.not.i.i3, label %b2RecR_BOOL.exit16.thread, label %b2RecRdrCheck.exit.thread.i.i5
 
 b2RecR_BOOL.exit.thread:                          ; preds = %b2RecRdrCheck.exit.i.i
   %i.g = load ptr, ptr %0, align 8, !tbaa !22
-  %i.h = add nsw i32 %i.b, 1                      ; 3 uses
+  %i.h = add nsw i32 %i.b, 1                      ; 4 uses
   store i32 %i.h, ptr %i.a, align 4, !tbaa !18
   %i.i = getelementptr inbounds i8, ptr %i.g, i64 %i.c
   %i.j = load i8, ptr %i.i, align 1, !tbaa !23
-  %i.k = icmp ne i8 %i.j, 0                       ; 3 uses
+  %i.k = icmp ne i8 %i.j, 0                       ; 2 uses
+  %.pre = sext i32 %i.h to i64                    ; 2 uses
   %.not.i.i330 = icmp slt i32 %i.h, %i.e
   br i1 %.not.i.i330, label %b2RecR_BOOL.exit9.thread, label %b2RecRdrCheck.exit.thread.i.i5
 
 b2RecRdrCheck.exit.thread.i.i5:                   ; preds = %b2RecR_BOOL.exit.thread, %b2RecR_BOOL.exit
   %.0.i.i35 = phi i1 [ %i.k, %b2RecR_BOOL.exit.thread ], [ false, %b2RecR_BOOL.exit ]
+  %1 = phi i32 [ %i.h, %b2RecR_BOOL.exit.thread ], [ %i.b, %b2RecR_BOOL.exit ]
+  %.pre-phi32 = phi i64 [ %.pre, %b2RecR_BOOL.exit.thread ], [ %i.c, %b2RecR_BOOL.exit ]
   store i8 0, ptr %.phi.trans.insert.i.i, align 8, !tbaa !20
-  br label %b2RecR_BOOL.exit9
-
-b2RecR_BOOL.exit9:                                ; preds = %b2RecR_BOOL.exit, %b2RecRdrCheck.exit.thread.i.i5
-  %.0.i.i34 = phi i1 [ %.0.i.i35, %b2RecRdrCheck.exit.thread.i.i5 ], [ false, %b2RecR_BOOL.exit ] ; 2 uses
-  %.not.i.i10 = phi i1 [ false, %b2RecRdrCheck.exit.thread.i.i5 ], [ true, %b2RecR_BOOL.exit ]
-  br i1 %.not.i.i10, label %b2RecR_BOOL.exit16.thread, label %b2RecRdrCheck.exit.thread.i.i12.a
+  br label %b2RecRdrCheck.exit.thread.i.i12.a
 
 b2RecR_BOOL.exit9.thread:                         ; preds = %b2RecR_BOOL.exit.thread
-  %.pre = sext i32 %i.h to i64
   %i.l = load ptr, ptr %0, align 8, !tbaa !22
   %i.m = add nsw i32 %i.b, 2                      ; 3 uses
   store i32 %i.m, ptr %i.a, align 4, !tbaa !18
   %i.n = getelementptr inbounds i8, ptr %i.l, i64 %.pre
   %i.o = load i8, ptr %i.n, align 1, !tbaa !23
   %.not19 = icmp eq i8 %i.o, 0
-  %i.p = select i1 %.not19, i24 0, i24 256        ; 2 uses
-  %.not.i.i1046 = icmp slt i32 %i.m, %i.e
-  br i1 %.not.i.i1046, label %b2RecR_BOOL.exit16, label %b2RecRdrCheck.exit.thread.i.i12.a
+  %i.p = select i1 %.not19, i24 0, i24 256
+  %.pre22 = sext i32 %i.m to i64
+  br label %b2RecRdrCheck.exit.thread.i.i12.a
 
-b2RecRdrCheck.exit.thread.i.i12.a:                ; preds = %b2RecR_BOOL.exit9.thread, %b2RecR_BOOL.exit9
-  %.0.i.i653 = phi i24 [ %i.p, %b2RecR_BOOL.exit9.thread ], [ 0, %b2RecR_BOOL.exit9 ]
-  %.0.i.i3448 = phi i1 [ %i.k, %b2RecR_BOOL.exit9.thread ], [ %.0.i.i34, %b2RecR_BOOL.exit9 ]
+b2RecRdrCheck.exit.thread.i.i12.a:                ; preds = %b2RecRdrCheck.exit.thread.i.i5, %b2RecR_BOOL.exit9.thread
+  %.0.i.i34 = phi i1 [ %.0.i.i35, %b2RecRdrCheck.exit.thread.i.i5 ], [ %i.k, %b2RecR_BOOL.exit9.thread ] ; 3 uses
+  %.pre-phi23 = phi i64 [ %.pre-phi32, %b2RecRdrCheck.exit.thread.i.i5 ], [ %.pre22, %b2RecR_BOOL.exit9.thread ]
+  %.0.i.i3448 = phi i1 [ false, %b2RecRdrCheck.exit.thread.i.i5 ], [ true, %b2RecR_BOOL.exit9.thread ]
+  %2 = phi i32 [ %1, %b2RecRdrCheck.exit.thread.i.i5 ], [ %i.m, %b2RecR_BOOL.exit9.thread ] ; 2 uses
+  %.0.i.i6 = phi i24 [ 0, %b2RecRdrCheck.exit.thread.i.i5 ], [ %i.p, %b2RecR_BOOL.exit9.thread ] ; 3 uses
+  %.not.i.i10 = icmp slt i32 %2, %i.e
+  br i1 %.not.i.i10, label %b2RecRdrCheck.exit.i.i14, label %b2RecRdrCheck.exit.thread.i.i12
+
+b2RecRdrCheck.exit.thread.i.i12:                  ; preds = %b2RecRdrCheck.exit.thread.i.i12.a
   store i8 0, ptr %.phi.trans.insert.i.i, align 8, !tbaa !20
   br label %b2RecR_BOOL.exit16.thread
 
-b2RecR_BOOL.exit16:                               ; preds = %b2RecR_BOOL.exit9.thread
-  %.pre22 = sext i32 %i.m to i64
+b2RecRdrCheck.exit.i.i14:                         ; preds = %b2RecRdrCheck.exit.thread.i.i12.a
+  br i1 %.0.i.i3448, label %b2RecR_BOOL.exit16, label %b2RecR_BOOL.exit16.thread
+
+b2RecR_BOOL.exit16:                               ; preds = %b2RecRdrCheck.exit.i.i14
   %i.q = load ptr, ptr %0, align 8, !tbaa !22
-  %i.r = add nsw i32 %i.b, 3
+  %i.r = add nsw i32 %2, 1
   store i32 %i.r, ptr %i.a, align 4, !tbaa !18
-  %i.s = getelementptr inbounds i8, ptr %i.q, i64 %.pre22
+  %i.s = getelementptr inbounds i8, ptr %i.q, i64 %.pre-phi23
   %i.t = load i8, ptr %i.s, align 1, !tbaa !23
   %.fr = freeze i8 %i.t
   %.not = icmp eq i8 %.fr, 0
   %spec.select = select i1 %.not, i24 0, i24 65536
-  %i.u = or disjoint i24 %spec.select, %i.p
+  %i.u = or disjoint i24 %spec.select, %.0.i.i6
   br label %b2RecR_BOOL.exit16.thread
 
-b2RecR_BOOL.exit16.thread:                        ; preds = %b2RecR_BOOL.exit9, %b2RecR_BOOL.exit16, %b2RecRdrCheck.exit.thread.i.i12.a
-  %.0.i.i3447 = phi i1 [ %.0.i.i3448, %b2RecRdrCheck.exit.thread.i.i12.a ], [ %i.k, %b2RecR_BOOL.exit16 ], [ %.0.i.i34, %b2RecR_BOOL.exit9 ]
-  %.sroa.2.0.insert.insert = phi i24 [ %.0.i.i653, %b2RecRdrCheck.exit.thread.i.i12.a ], [ %i.u, %b2RecR_BOOL.exit16 ], [ 0, %b2RecR_BOOL.exit9 ]
+b2RecR_BOOL.exit16.thread:                        ; preds = %b2RecR_BOOL.exit, %b2RecR_BOOL.exit16, %b2RecRdrCheck.exit.thread.i.i12, %b2RecRdrCheck.exit.i.i14
+  %.0.i.i3447 = phi i1 [ %.0.i.i34, %b2RecRdrCheck.exit.thread.i.i12 ], [ %.0.i.i34, %b2RecR_BOOL.exit16 ], [ %.0.i.i34, %b2RecRdrCheck.exit.i.i14 ], [ false, %b2RecR_BOOL.exit ]
+  %.sroa.2.0.insert.insert = phi i24 [ %.0.i.i6, %b2RecRdrCheck.exit.thread.i.i12 ], [ %i.u, %b2RecR_BOOL.exit16 ], [ %.0.i.i6, %b2RecRdrCheck.exit.i.i14 ], [ 0, %b2RecR_BOOL.exit ]
   %.sroa.0.0.insert.ext = zext i1 %.0.i.i3447 to i24
   %.sroa.0.0.insert.insert = or disjoint i24 %.sroa.2.0.insert.insert, %.sroa.0.0.insert.ext
   ret i24 %.sroa.0.0.insert.insert

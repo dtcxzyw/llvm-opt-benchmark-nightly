@@ -205,9 +205,13 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.e
-  %i.an = load float, ptr %i.j, align 4, !tbaa !20 ; 4 uses
+  %i.an = load float, ptr %i.j, align 4, !tbaa !20 ; 3 uses
   %i.ao = fcmp ogt float %i.an, 0.000000e+00
-  br i1 %i.ao, label %.preheader.a, label %bb.i
+  br i1 %i.ao, label %.preheader, label %.thread
+
+.thread:                                          ; preds = %bb.b
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 16
+  br label %bb.i
 
 bb.c:                                             ; preds = %bb.a, %bb.e
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.e ] ; 6 uses
@@ -371,14 +375,14 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %exitcond.not = icmp eq i64 %indvars.iv.next, 4
   br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !183
 
-bb.f:                                             ; preds = %.preheader.a
+bb.f:                                             ; preds = %.preheader
   %i.gd = fdiv nnan float 1.000000e+00, %i.an
   %i.ge = insertelement <4 x float> poison, float %i.gd, i64 0
   %i.gf = shufflevector <4 x float> %i.ge, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.gg = fmul <4 x float> %i.gf, %19             ; 5 uses
+  %i.gg = fmul <4 x float> %i.gf, %20             ; 5 uses
   %i.gh = shufflevector <4 x float> %i.gg, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.gi = shufflevector <4 x float> %i.gg, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %i.gj = shufflevector <2 x float> %i.gi, <2 x float> %22, <2 x i32> <i32 0, i32 3>
+  %i.gj = shufflevector <2 x float> %i.gi, <2 x float> %23, <2 x i32> <i32 0, i32 3>
   %i.gk = load float, ptr %i.p, align 8, !tbaa !20 ; 3 uses
   %i.gl = tail call noundef float @llvm.fabs.f32(float %i.gk)
   %i.gm = fcmp ogt float %i.gl, f0x3F3504F3
@@ -429,7 +433,25 @@ bb.h:                                             ; preds = %bb.f
   %i.hz = insertelement <4 x float> %i.hy, float %i.hq, i64 2
   br label %_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit
 
-_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit:         ; preds = %bb.g, %bb.h
+.preheader:                                       ; preds = %bb.b, %.preheader
+  %indvars.iv217 = phi i64 [ %indvars.iv.next218, %.preheader ], [ 0, %bb.b ] ; 2 uses
+  %.sroa.16.0209 = phi <2 x float> [ %23, %.preheader ], [ zeroinitializer, %bb.b ] ; 2 uses
+  %.sroa.0141.0208 = phi <2 x float> [ %21, %.preheader ], [ zeroinitializer, %bb.b ]
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %10, i64 %indvars.iv217
+  %17 = load <3 x float>, ptr %16, align 16, !tbaa !20
+  %18 = shufflevector <3 x float> %17, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  %19 = shufflevector <2 x float> %.sroa.0141.0208, <2 x float> %.sroa.16.0209, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  %20 = fadd <4 x float> %19, %18                 ; 3 uses
+  %21 = shufflevector <4 x float> %20, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %22 = shufflevector <4 x float> %20, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %23 = shufflevector <2 x float> %22, <2 x float> %.sroa.16.0209, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %indvars.iv.next218 = add nuw nsw i64 %indvars.iv217, 1 ; 2 uses
+  %24 = trunc nuw nsw i64 %indvars.iv.next218 to i32
+  %25 = uitofp nneg i32 %24 to float
+  %26 = fcmp ogt float %i.an, %25
+  br i1 %26, label %.preheader, label %bb.f, !llvm.loop !184
+
+_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit:         ; preds = %bb.h, %bb.g
   %.sroa.14.0 = phi float [ %i.hg, %bb.g ], [ %i.hw, %bb.h ] ; 2 uses
   %.sroa.11227.0 = phi float [ %i.hc, %bb.g ], [ %i.hv, %bb.h ] ; 2 uses
   %.sroa.5.0 = phi float [ %i.hb, %bb.g ], [ %i.hs, %bb.h ]
@@ -625,41 +647,22 @@ _Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit:         ; preds = %bb.g, %bb.h
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %14, i64 88
   store <2 x float> %i.gj, ptr %.sroa.16.0..sroa_idx, align 8, !tbaa !20
   %.pre = load float, ptr %i.j, align 4, !tbaa !20
-  br label %bb.i
+  %27 = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 2 uses
+  %28 = fcmp ogt float %.pre, 0.000000e+00
+  br i1 %28, label %.preheader.a, label %bb.i
 
-.preheader.a:                                     ; preds = %bb.b, %.preheader.a
-  %indvars.iv217 = phi i64 [ %indvars.iv.next218, %.preheader.a ], [ 0, %bb.b ] ; 2 uses
-  %.sroa.16.0209 = phi <2 x float> [ %22, %.preheader.a ], [ zeroinitializer, %bb.b ] ; 2 uses
-  %.sroa.0141.0208 = phi <2 x float> [ %20, %.preheader.a ], [ zeroinitializer, %bb.b ]
-  %15 = getelementptr inbounds nuw [16 x i8], ptr %10, i64 %indvars.iv217
-  %16 = load <3 x float>, ptr %15, align 16, !tbaa !20
-  %17 = shufflevector <3 x float> %16, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
-  %18 = shufflevector <2 x float> %.sroa.0141.0208, <2 x float> %.sroa.16.0209, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
-  %19 = fadd <4 x float> %18, %17                 ; 3 uses
-  %20 = shufflevector <4 x float> %19, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %21 = shufflevector <4 x float> %19, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %22 = shufflevector <2 x float> %21, <2 x float> %.sroa.16.0209, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %indvars.iv.next218 = add nuw nsw i64 %indvars.iv217, 1 ; 2 uses
-  %23 = trunc nuw nsw i64 %indvars.iv.next218 to i32
-  %24 = uitofp nneg i32 %23 to float
-  %25 = fcmp ogt float %i.an, %24
-  br i1 %25, label %.preheader.a, label %bb.f, !llvm.loop !184
-
-bb.i:                                             ; preds = %_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit, %bb.b
-  %26 = phi float [ %.pre, %_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit ], [ %i.an, %bb.b ]
-  %i.oy = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 2 uses
-  %27 = fcmp ogt float %26, 0.000000e+00
-  br i1 %27, label %28, label %29
-
-28:                                               ; preds = %bb.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.oy, ptr noundef nonnull align 16 dereferenceable(16) %10, i64 16, i1 false), !tbaa.struct !22
+.preheader.a:                                     ; preds = %_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %27, ptr noundef nonnull align 16 dereferenceable(16) %10, i64 16, i1 false), !tbaa.struct !22
   br label %bb.j
 
-29:                                               ; preds = %bb.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.oy, i8 0, i64 16, i1 false)
+bb.i:                                             ; preds = %.thread, %_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit
+  %29 = phi ptr [ %15, %.thread ], [ %27, %_Z13b3PlaneSpace1RK9b3Vector3PS_S2_.exit ]
+  store <2 x float> zeroinitializer, ptr %29, align 16
+  %i.oy = getelementptr inbounds nuw i8, ptr %14, i64 24
+  store <2 x float> zeroinitializer, ptr %i.oy, align 8, !tbaa !20
   br label %bb.j
 
-bb.j:                                             ; preds = %28, %29
+bb.j:                                             ; preds = %.preheader.a, %bb.i
   %i.oz = load float, ptr %i.j, align 4, !tbaa !20
   %i.pa = fcmp ogt float %i.oz, 1.000000e+00
   br i1 %i.pa, label %bb.l, label %bb.k

@@ -202,34 +202,37 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #9
 ; Function Attrs: mustprogress noinline nounwind uwtable
 define noundef i64 @_ZN5folly10symbolizer22getAsyncStackTraceSafeEPmm(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1) local_unnamed_addr #10 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN5folly27tryGetCurrentAsyncStackRootEv() #15 ; 3 uses
+  %i.a = tail call noundef ptr @_ZN5folly27tryGetCurrentAsyncStackRootEv() #15 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = tail call ptr @llvm.frameaddress.p0(i32 0)
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %4 = load ptr, ptr %3, align 8, !tbaa !34
   %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %bb.d, label %bb.c
+  br i1 %.not, label %.thread, label %bb.c
+
+.thread:                                          ; preds = %bb.b
+  %2 = load atomic ptr, ptr %i.a monotonic, align 8 ; 0 uses
+  br label %.critedge
 
 bb.c:                                             ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %4 = load ptr, ptr %3, align 8, !tbaa !34
   %i.c = tail call ptr @llvm.returnaddress.p0(i32 0)
   %i.d = ptrtoint ptr %i.c to i64
   store i64 %i.d, ptr %0, align 8, !tbaa !20
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.028 = phi i64 [ 1, %bb.c ], [ 0, %bb.b ]      ; 3 uses
   %5 = load atomic ptr, ptr %i.a monotonic, align 8
-  %6 = icmp ult i64 %.028, %1
-  br i1 %6, label %.lr.ph, label %.critedge
+  %.not56 = icmp eq i64 %1, 1
+  br i1 %.not56, label %.critedge, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %6 = tail call ptr @llvm.frameaddress.p0(i32 0)
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit
   %.038 = phi ptr [ %.sroa.10.1, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ %5, %bb.d ] ; 2 uses
   %.02637 = phi ptr [ %.sroa.8.1, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ %4, %bb.d ]
-  %.02736 = phi ptr [ %.sroa.5.1, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ %2, %bb.d ] ; 3 uses
-  %.135 = phi i64 [ %i.av, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ %.028, %bb.d ] ; 4 uses
+  %.02736 = phi ptr [ %.sroa.5.1, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ %6, %bb.d ] ; 3 uses
+  %.135 = phi i64 [ %i.av, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ 1, %bb.d ] ; 4 uses
   %i.e = icmp ne ptr %.02736, null
   %i.f = icmp ne ptr %.038, null                  ; 2 uses
   %i.g = select i1 %i.e, i1 true, i1 %i.f
@@ -325,8 +328,8 @@ _ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.ex
   %i.aw = icmp ult i64 %i.av, %1
   br i1 %i.aw, label %.lr.ph, label %.critedge, !llvm.loop !27
 
-.critedge:                                        ; preds = %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit, %.lr.ph, %bb.d, %bb.a
-  %.029 = phi i64 [ 0, %bb.a ], [ %.028, %bb.d ], [ %i.av, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ %.135, %.lr.ph ]
+.critedge:                                        ; preds = %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit, %.lr.ph, %.thread, %bb.c, %bb.a
+  %.029 = phi i64 [ 0, %bb.a ], [ 1, %bb.c ], [ 0, %.thread ], [ %i.av, %_ZN5folly10symbolizer12_GLOBAL__N_114walkAsyncStackEPmmPNS_15AsyncStackFrameE.exit ], [ %.135, %.lr.ph ]
   ret i64 %.029
 }
 

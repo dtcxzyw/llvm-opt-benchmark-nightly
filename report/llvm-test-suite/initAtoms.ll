@@ -205,25 +205,32 @@ bb.a:
 
 .preheader.lr.ph:                                 ; preds = %.lr.ph, %._crit_edge
   %.06069 = phi i32 [ %i.ai, %.lr.ph ], [ %i.bk, %._crit_edge ] ; 3 uses
-  %i.aw = sitofp i32 %.06069 to double            ; 2 uses
+  %i.aw = sitofp i32 %.06069 to double            ; 3 uses
   %i.ax = add nsw i32 %.06069, %i.aq
   %i.ay = mul nsw i32 %i.ax, %2
-  %i.az = fadd nnan double %i.aw, 2.500000e-01
-  %i.ba = fmul double %3, %i.az                   ; 6 uses
+  %5 = fadd nnan double %i.aw, 2.500000e-01
+  %6 = fmul double %3, %5                         ; 6 uses
+  %i.az = fadd nnan double %i.aw, 7.500000e-01
+  %i.ba = fmul double %3, %i.az                   ; 10 uses
   %i.bb = fadd nnan double %i.aw, 7.500000e-01
-  %i.bc = fmul double %3, %i.bb                   ; 6 uses
+  %i.bc = fmul double %3, %i.bb
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.ac
   %.05968 = phi i32 [ %i.aj, %.preheader.lr.ph ], [ %i.dp, %bb.ac ] ; 3 uses
-  %i.bd = sitofp i32 %.05968 to double            ; 2 uses
+  %i.bd = sitofp i32 %.05968 to double            ; 3 uses
   %i.be = add nsw i32 %.05968, %i.ay
   %i.bf = shl nsw i32 %i.be, 2                    ; 4 uses
   %i.bg = fadd nnan double %i.bd, 2.500000e-01
   %i.bh = fmul double %3, %i.bg                   ; 6 uses
   %i.bi = load double, ptr %i.c, align 8, !tbaa !21 ; 7 uses
   %i.bj = fcmp olt double %i.as, %i.bi
-  br i1 %i.bj, label %bb.h, label %bb.b
+  br i1 %i.bj, label %.thread, label %bb.b
+
+.thread:                                          ; preds = %.preheader
+  %7 = fadd nnan double %i.bd, 7.500000e-01
+  %8 = fmul double %3, %7
+  br label %bb.o
 
 ._crit_edge:                                      ; preds = %bb.ac
   %i.bk = add i32 %.06069, 1                      ; 2 uses
@@ -237,12 +244,12 @@ bb.b:                                             ; preds = %.preheader
 
 bb.c:                                             ; preds = %bb.b
   %i.bn = load double, ptr %i.aa, align 8, !tbaa !21
-  %i.bo = fcmp olt double %i.ba, %i.bn
+  %i.bo = fcmp olt double %6, %i.bn
   br i1 %i.bo, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.bp = load double, ptr %i.ab, align 8, !tbaa !21
-  %i.bq = fcmp ult double %i.ba, %i.bp
+  %i.bq = fcmp ult double %6, %i.bp
   br i1 %i.bq, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
@@ -258,15 +265,15 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.bv = load ptr, ptr %i.ae, align 8, !tbaa !30
   %i.bw = load ptr, ptr %i.af, align 8, !tbaa !29
-  tail call void @putAtomInBox(ptr noundef %i.bv, ptr noundef %i.bw, i32 noundef %i.bf, i32 noundef 0, double noundef %i.as, double noundef %i.ba, double noundef %i.bh, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
+  tail call void @putAtomInBox(ptr noundef %i.bv, ptr noundef %i.bw, i32 noundef %i.bf, i32 noundef 0, double noundef %i.as, double noundef %6, double noundef %i.bh, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
   %.pre = load double, ptr %i.c, align 8, !tbaa !21
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.e, %bb.f, %bb.c, %bb.d, %.preheader, %bb.b, %bb.g
-  %5 = phi double [ %i.bi, %bb.e ], [ %i.bi, %bb.f ], [ %i.bi, %bb.c ], [ %i.bi, %bb.d ], [ %i.bi, %.preheader ], [ %i.bi, %bb.b ], [ %.pre, %bb.g ] ; 7 uses
+bb.h:                                             ; preds = %bb.e, %bb.f, %bb.c, %bb.d, %bb.b, %bb.g
+  %9 = phi double [ %i.bi, %bb.e ], [ %i.bi, %bb.f ], [ %i.bi, %bb.c ], [ %i.bi, %bb.d ], [ %.pre, %bb.g ], [ %i.bi, %bb.b ] ; 7 uses
   %i.bx = fadd nnan double %i.bd, 7.500000e-01
-  %i.by = fmul double %3, %i.bx                   ; 6 uses
-  %i.bz = fcmp olt double %i.as, %5
+  %i.by = fmul double %3, %i.bx                   ; 10 uses
+  %i.bz = fcmp olt double %i.as, %9
   br i1 %i.bz, label %bb.o, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -276,12 +283,12 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.cc = load double, ptr %i.aa, align 8, !tbaa !21
-  %i.cd = fcmp olt double %i.bc, %i.cc
+  %i.cd = fcmp olt double %i.ba, %i.cc
   br i1 %i.cd, label %bb.o, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ce = load double, ptr %i.ab, align 8, !tbaa !21
-  %i.cf = fcmp ult double %i.bc, %i.ce
+  %i.cf = fcmp ult double %i.ba, %i.ce
   br i1 %i.cf, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
@@ -298,14 +305,16 @@ bb.n:                                             ; preds = %bb.m
   %i.ck = or disjoint i32 %i.bf, 1
   %i.cl = load ptr, ptr %i.ae, align 8, !tbaa !30
   %i.cm = load ptr, ptr %i.af, align 8, !tbaa !29
-  tail call void @putAtomInBox(ptr noundef %i.cl, ptr noundef %i.cm, i32 noundef %i.ck, i32 noundef 0, double noundef %i.as, double noundef %i.bc, double noundef %i.by, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
+  tail call void @putAtomInBox(ptr noundef %i.cl, ptr noundef %i.cm, i32 noundef %i.ck, i32 noundef 0, double noundef %i.as, double noundef %i.ba, double noundef %i.by, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
   %.pre85 = load double, ptr %i.c, align 8, !tbaa !21
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
-  %6 = phi double [ %.pre85, %bb.n ], [ %5, %bb.m ], [ %5, %bb.l ], [ %5, %bb.k ], [ %5, %bb.j ], [ %5, %bb.i ], [ %5, %bb.h ] ; 7 uses
-  %i.cn = fcmp olt double %i.au, %6
-  br i1 %i.cn, label %bb.v, label %bb.p
+bb.o:                                             ; preds = %.thread, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
+  %10 = phi double [ %i.by, %bb.n ], [ %i.by, %bb.m ], [ %i.by, %bb.l ], [ %i.by, %bb.k ], [ %i.by, %bb.j ], [ %i.by, %bb.i ], [ %i.by, %bb.h ], [ %8, %.thread ] ; 3 uses
+  %11 = phi double [ %i.ba, %bb.n ], [ %i.ba, %bb.m ], [ %i.ba, %bb.l ], [ %i.ba, %bb.k ], [ %i.ba, %bb.j ], [ %i.ba, %bb.i ], [ %i.ba, %bb.h ], [ %i.bc, %.thread ] ; 3 uses
+  %12 = phi double [ %.pre85, %bb.n ], [ %9, %bb.m ], [ %9, %bb.l ], [ %9, %bb.k ], [ %9, %bb.j ], [ %9, %bb.i ], [ %9, %bb.h ], [ %i.bi, %.thread ] ; 6 uses
+  %i.cn = fcmp olt double %i.au, %12
+  br i1 %i.cn, label %bb.ac, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.co = load double, ptr %i.d, align 8, !tbaa !21
@@ -314,35 +323,35 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.cq = load double, ptr %i.aa, align 8, !tbaa !21
-  %i.cr = fcmp olt double %i.ba, %i.cq
+  %i.cr = fcmp olt double %6, %i.cq
   br i1 %i.cr, label %bb.v, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.cs = load double, ptr %i.ab, align 8, !tbaa !21
-  %i.ct = fcmp ult double %i.ba, %i.cs
+  %i.ct = fcmp ult double %6, %i.cs
   br i1 %i.ct, label %bb.s, label %bb.v
 
 bb.s:                                             ; preds = %bb.r
   %i.cu = load double, ptr %i.ac, align 8, !tbaa !21
-  %i.cv = fcmp olt double %i.by, %i.cu
+  %i.cv = fcmp olt double %10, %i.cu
   br i1 %i.cv, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.cw = load double, ptr %i.ad, align 8, !tbaa !21
-  %i.cx = fcmp ult double %i.by, %i.cw
+  %i.cx = fcmp ult double %10, %i.cw
   br i1 %i.cx, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.cy = or disjoint i32 %i.bf, 2
   %i.cz = load ptr, ptr %i.ae, align 8, !tbaa !30
   %i.da = load ptr, ptr %i.af, align 8, !tbaa !29
-  tail call void @putAtomInBox(ptr noundef %i.cz, ptr noundef %i.da, i32 noundef %i.cy, i32 noundef 0, double noundef %i.au, double noundef %i.ba, double noundef %i.by, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
+  tail call void @putAtomInBox(ptr noundef %i.cz, ptr noundef %i.da, i32 noundef %i.cy, i32 noundef 0, double noundef %i.au, double noundef %6, double noundef %10, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
   %.pre86 = load double, ptr %i.c, align 8, !tbaa !21
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o
-  %7 = phi double [ %.pre86, %bb.u ], [ %6, %bb.t ], [ %6, %bb.s ], [ %6, %bb.r ], [ %6, %bb.q ], [ %6, %bb.p ], [ %6, %bb.o ]
-  %i.db = fcmp olt double %i.au, %7
+bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p
+  %13 = phi double [ %.pre86, %bb.u ], [ %12, %bb.t ], [ %12, %bb.s ], [ %12, %bb.r ], [ %12, %bb.q ], [ %12, %bb.p ]
+  %i.db = fcmp olt double %i.au, %13
   br i1 %i.db, label %bb.ac, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -352,12 +361,12 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.de = load double, ptr %i.aa, align 8, !tbaa !21
-  %i.df = fcmp olt double %i.bc, %i.de
+  %i.df = fcmp olt double %11, %i.de
   br i1 %i.df, label %bb.ac, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.dg = load double, ptr %i.ab, align 8, !tbaa !21
-  %i.dh = fcmp ult double %i.bc, %i.dg
+  %i.dh = fcmp ult double %11, %i.dg
   br i1 %i.dh, label %bb.z, label %bb.ac
 
 bb.z:                                             ; preds = %bb.y
@@ -374,10 +383,10 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dm = or disjoint i32 %i.bf, 3
   %i.dn = load ptr, ptr %i.ae, align 8, !tbaa !30
   %i.do = load ptr, ptr %i.af, align 8, !tbaa !29
-  tail call void @putAtomInBox(ptr noundef %i.dn, ptr noundef %i.do, i32 noundef %i.dm, i32 noundef 0, double noundef %i.au, double noundef %i.bc, double noundef %i.bh, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
+  tail call void @putAtomInBox(ptr noundef %i.dn, ptr noundef %i.do, i32 noundef %i.dm, i32 noundef 0, double noundef %i.au, double noundef %11, double noundef %i.bh, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef 0.000000e+00) #11
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
+bb.ac:                                            ; preds = %bb.o, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
   %i.dp = add i32 %.05968, 1                      ; 2 uses
   %exitcond.not = icmp eq i32 %i.dp, %i.al
   br i1 %exitcond.not, label %._crit_edge, label %.preheader

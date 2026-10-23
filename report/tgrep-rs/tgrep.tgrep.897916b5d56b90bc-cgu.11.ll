@@ -204,10 +204,10 @@ bb.bw:                                            ; preds = %bb.bu
   call void @llvm.experimental.noalias.scope.decl(metadata !367), !noalias !316
   call void @llvm.experimental.noalias.scope.decl(metadata !368), !noalias !316
   call void @llvm.experimental.noalias.scope.decl(metadata !369), !noalias !316
-  %i.fb = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !370, !noalias !371, !nonnull !7, !noundef !7 ; 3 uses
-  %i.fc = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !370, !noalias !371, !nonnull !7, !noundef !7 ; 5 uses
+  %i.fb = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !370, !noalias !371, !nonnull !7, !noundef !7 ; 2 uses
+  %i.fc = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !370, !noalias !371, !nonnull !7, !noundef !7 ; 4 uses
   %i.fd = icmp eq ptr %i.fc, %i.fb
-  br i1 %i.fd, label %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22
+  br i1 %i.fd, label %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit.thread, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22: ; preds = %bb.bw
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 32 ; 2 uses
@@ -241,10 +241,10 @@ _RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2
   %i.fk = select i1 %i.fj, i64 %.sink7.i.i.i28, i64 0
   br label %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread
 
-_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread: ; preds = %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge, %bb.bw, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22
-  %2 = phi ptr [ %.pre44, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge ], [ %i.fe, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22 ], [ %i.fc, %bb.bw ] ; 4 uses
-  %3 = phi ptr [ %.pre, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge ], [ %i.fb, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22 ], [ %i.fb, %bb.bw ]
-  %.sroa.032.039 = phi i64 [ %i.fk, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22 ], [ 0, %bb.bw ]
+_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread: ; preds = %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22
+  %2 = phi ptr [ %.pre44, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge ], [ %i.fe, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22 ] ; 4 uses
+  %3 = phi ptr [ %.pre, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge ], [ %i.fb, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22 ]
+  %.sroa.032.039 = phi i64 [ %i.fk, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31._RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread_crit_edge ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i22 ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !376), !noalias !316
   call void @llvm.experimental.noalias.scope.decl(metadata !377), !noalias !316
   call void @llvm.experimental.noalias.scope.decl(metadata !378), !noalias !316
@@ -276,9 +276,10 @@ _RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2
   %i.fq = icmp eq i64 %spec.select.i.i.i, 2
   br i1 %i.fq, label %bb.cc, label %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit.thread
 
-_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit.thread: ; preds = %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit
-  %.sroa.034.043 = phi i64 [ %spec.select.i.i.i, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i ], [ 0, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread ]
-  %.sroa.635.042 = phi i64 [ %.sink7.i.i.i, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit ], [ undef, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i ], [ undef, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread ]
+_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit.thread: ; preds = %bb.bw, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit
+  %.sroa.032.03966 = phi i64 [ %.sroa.032.039, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit ], [ %.sroa.032.039, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i ], [ %.sroa.032.039, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread ], [ 0, %bb.bw ]
+  %.sroa.034.043 = phi i64 [ %spec.select.i.i.i, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i ], [ 0, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread ], [ 0, %bb.bw ]
+  %.sroa.635.042 = phi i64 [ %.sink7.i.i.i, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit ], [ undef, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i ], [ undef, %_RINvXs4_NtCs4ZeZeX9PAiK_10serde_core2deQNtNtNtCs6MoqnCnVQOT_10serde_json5value2de15SeqDeserializerNtB6_9SeqAccess12next_elementyECsbNLsQi0JuJ4_5tgrep.exit31.thread ], [ undef, %bb.bw ]
   %i.fr = trunc nuw i64 %.sroa.034.043 to i1
   %.185.i = select i1 %i.fr, i64 %.sroa.635.042, i64 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !353
@@ -393,7 +394,7 @@ bb.ck:                                            ; preds = %bb.cb
   %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 184
   store i64 %.sink7.i.i.i229.i, ptr %.sroa.18.0..sroa_idx.i, align 8, !alias.scope !316
   %.sroa.19.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 192
-  store i64 %.sroa.032.039, ptr %.sroa.19.0..sroa_idx.i, align 8, !alias.scope !316
+  store i64 %.sroa.032.03966, ptr %.sroa.19.0..sroa_idx.i, align 8, !alias.scope !316
   %.sroa.20.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 200
   store i64 %.185.i, ptr %.sroa.20.0..sroa_idx.i, align 8, !alias.scope !316
   %.sroa.21.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 208
@@ -796,7 +797,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !2243, !nonnull !7, !noundef !7 ; 12 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.g
   %i.n = load i8, ptr %i.m, align 1, !noalias !2244, !noundef !7 ; 2 uses
-  %i.o = add nuw i64 %i.g, 1                      ; 8 uses
+  %i.o = add nuw i64 %i.g, 1                      ; 6 uses
   store i64 %i.o, ptr %i.f, align 8, !alias.scope !2243
   %i.p = icmp eq i8 %i.n, 48
   br i1 %i.p, label %bb.c, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit
@@ -808,11 +809,11 @@ _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit: ; pr
 
 .preheader:                                       ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit
   %i.r = icmp ult i64 %i.o, %i.i
-  br i1 %i.r, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit43, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread
+  br i1 %i.r, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit43, label %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.s = icmp ult i64 %i.o, %i.i
-  br i1 %i.s, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread
+  br i1 %i.s, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit, label %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit
 
 _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit: ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.o
@@ -828,8 +829,8 @@ bb.d:                                             ; preds = %_RNvXs8_NtCs6MoqnCn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit
 
-_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread: ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit43, %.preheader, %bb.c, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit
-  %1 = phi i64 [ %i.o, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit ], [ %i.o, %.preheader ], [ %i.o, %bb.c ], [ %i.aa, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit43 ] ; 5 uses
+_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread: ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit43, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit
+  %1 = phi i64 [ %i.o, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit ], [ %i.aa, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit43 ] ; 5 uses
   %i.y = icmp ult i64 %1, %i.i
   br i1 %i.y, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit40, label %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit
 
@@ -911,10 +912,10 @@ _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i: ; 
 
 bb.g:                                             ; preds = %.loopexit.i, %.loopexit.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2253)
-  %i.at = add nuw i64 %storemerge.in.i108, 2      ; 5 uses
+  %i.at = add nuw i64 %storemerge.in.i108, 2      ; 4 uses
   store i64 %i.at, ptr %i.f, align 8, !alias.scope !2254
   %i.au = icmp ult i64 %i.at, %i.i
-  br i1 %i.au, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i.i
+  br i1 %i.au, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i.i
 
 _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i: ; preds = %bb.g
   %i.av = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.at
@@ -924,8 +925,8 @@ _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i: 
     i8 45, label %bb.h
   ]
 
-_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i.i: ; preds = %bb.h, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i, %bb.g
-  %2 = phi i64 [ %i.at, %bb.g ], [ %i.ay, %bb.h ], [ %i.at, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i ] ; 3 uses
+_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i.i: ; preds = %bb.h, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i
+  %2 = phi i64 [ %i.at, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i.i ], [ %i.ay, %bb.h ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2256)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2257)
   %i.ax = icmp ult i64 %2, %i.i
@@ -949,7 +950,7 @@ _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i.i: 
   %i.be = icmp ult i64 %i.bb, %i.i
   br i1 %i.be, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i.i, label %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit
 
-_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i.i: ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i.i
+_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i.i: ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i.i, %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2261
   store i64 13, ptr %i.b, align 8, !noalias !2261
   %i.bf = call noundef nonnull align 8 ptr @_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE5errorCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b)
@@ -972,10 +973,10 @@ bb.i:                                             ; preds = %_RNvXs8_NtCs6MoqnCn
 
 bb.j:                                             ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit40, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit40
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2264)
-  %i.bm = add nuw i64 %1, 1                       ; 5 uses
+  %i.bm = add nuw i64 %1, 1                       ; 4 uses
   store i64 %i.bm, ptr %i.f, align 8, !alias.scope !2265
   %i.bn = icmp ult i64 %i.bm, %i.i
-  br i1 %i.bn, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i
+  br i1 %i.bn, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i
 
 _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45: ; preds = %bb.j
   %i.bo = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.bm
@@ -985,8 +986,8 @@ _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45: 
     i8 45, label %bb.k
   ]
 
-_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i: ; preds = %bb.k, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45, %bb.j
-  %3 = phi i64 [ %i.bm, %bb.j ], [ %i.br, %bb.k ], [ %i.bm, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45 ] ; 3 uses
+_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i: ; preds = %bb.k, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45
+  %3 = phi i64 [ %i.bm, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.i45 ], [ %i.br, %bb.k ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2267)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2268)
   %i.bq = icmp ult i64 %3, %i.i
@@ -1010,7 +1011,7 @@ _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i: ; 
   %i.bx = icmp ult i64 %i.bu, %i.i
   br i1 %i.bx, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i, label %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit
 
-_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i: ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i
+_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i: ; preds = %bb.j, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2264
   store i64 13, ptr %i.a, align 8, !noalias !2264
   %i.by = call noundef nonnull align 8 ptr @_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE5errorCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
@@ -1035,8 +1036,8 @@ _RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE
   store i64 %i.i, ptr %i.f, align 8, !alias.scope !2249
   br label %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit
 
-_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit: ; preds = %bb.e, %bb.l, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i, %bb.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i.i, %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit.loopexit73, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i, %.preheader.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i.i, %.preheader.i.i, %.loopexit.i, %.thread.thread.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit40, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread, %bb.d
-  %.sroa.0.3 = phi ptr [ %i.x, %bb.d ], [ null, %.preheader.i ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit40 ], [ %i.z, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread ], [ null, %bb.i ], [ null, %.loopexit.i ], [ null, %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit.loopexit73 ], [ %i.as, %.thread.thread.i ], [ %i.bf, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i.i ], [ null, %.preheader.i.i ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread ], [ %i.by, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i ], [ null, %bb.l ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i.i ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i ], [ null, %bb.e ]
+_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit: ; preds = %bb.e, %bb.l, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i, %bb.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i.i, %bb.c, %.preheader, %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit.loopexit73, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i, %.preheader.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i.i, %.preheader.i.i, %.loopexit.i, %.thread.thread.i, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit40, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread, %bb.d
+  %.sroa.0.3 = phi ptr [ %i.x, %bb.d ], [ null, %.preheader.i ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit40 ], [ %i.z, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread ], [ null, %.preheader ], [ null, %.loopexit.i ], [ null, %_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE14ignore_decimalCsbNLsQi0JuJ4_5tgrep.exit.loopexit73 ], [ %i.as, %.thread.thread.i ], [ %i.bf, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i.i ], [ null, %.preheader.i.i ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread ], [ %i.by, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.thread.i ], [ null, %bb.c ], [ null, %bb.i ], [ null, %bb.l ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i.i ], [ null, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit26.i ], [ null, %bb.e ]
   ret ptr %.sroa.0.3
 }
 
@@ -1050,14 +1051,14 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
   %i.g = load i64, ptr %i.f, align 8, !alias.scope !2299, !noundef !7 ; 2 uses
-  %i.h = add i64 %i.g, 1                          ; 5 uses
+  %i.h = add i64 %i.g, 1                          ; 4 uses
   store i64 %i.h, ptr %i.f, align 8, !alias.scope !2299
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2300)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2301)
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !2302, !noundef !7 ; 4 uses
   %i.k = icmp ult i64 %i.h, %i.j
-  br i1 %i.k, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread
+  br i1 %i.k, label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit, label %bb.d
 
 _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit: ; preds = %bb.a
   %i.l = load ptr, ptr %i.e, align 8, !alias.scope !2302, !nonnull !7, !noundef !7
@@ -1077,9 +1078,9 @@ _RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.threa
   store i64 %i.o, ptr %i.f, align 8
   br label %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread
 
-_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread: ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.sink.split, %bb.a, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit
-  %5 = phi i64 [ %i.h, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit ], [ %i.h, %bb.a ], [ %i.o, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.sink.split ] ; 3 uses
-  %.sroa.0.0 = phi i1 [ true, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit ], [ true, %bb.a ], [ %.sroa.0.0.ph, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.sink.split ] ; 2 uses
+_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread: ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.sink.split, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit
+  %5 = phi i64 [ %i.h, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit ], [ %i.o, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.sink.split ] ; 3 uses
+  %.sroa.0.0 = phi i1 [ true, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit ], [ %.sroa.0.0.ph, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread.sink.split ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2304)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2305)
   %i.p = icmp ult i64 %5, %i.j
@@ -1095,7 +1096,7 @@ bb.c:                                             ; preds = %_RNvXs8_NtCs6MoqnCn
   %or.cond = icmp ult i8 %i.u, 10
   br i1 %or.cond, label %bb.f, label %bb.e, !prof !26
 
-bb.d:                                             ; preds = %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread
+bb.d:                                             ; preds = %bb.a, %_RNvXs8_NtCs6MoqnCnVQOT_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i64 5, ptr %i.d, align 8
   %i.v = call noundef nonnull align 8 ptr @_RNvMs3_NtCs6MoqnCnVQOT_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE5errorCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.d)

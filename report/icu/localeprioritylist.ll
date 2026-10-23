@@ -202,7 +202,7 @@ _ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70: ; preds = %.lr.ph.i67, %bb.p
   %.0.lcssa.i64 = phi ptr [ %i.ax, %bb.o ], [ %.05.i68, %.lr.ph.i67 ], [ %scevgep.i66, %bb.p ] ; 6 uses
   store ptr %.0.lcssa.i64, ptr %i.a, align 8, !tbaa !23
   %.not52 = icmp eq ptr %.0.lcssa.i64, %i.n
-  br i1 %.not52, label %bb.ab, label %bb.q
+  br i1 %.not52, label %bb.ad, label %bb.q
 
 bb.q:                                             ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70
   %i.be = load i8, ptr %.0.lcssa.i64, align 1, !tbaa !24
@@ -315,10 +315,10 @@ _ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit91: ; preds = %.lr.ph.i88, %bb.a
   store ptr %.0.lcssa.i85, ptr %i.a, align 8, !tbaa !23
   br label %bb.ab
 
-bb.ab:                                            ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit91, %bb.q, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70
-  %6 = phi ptr [ %.0.lcssa.i85, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit91 ], [ %.0.lcssa.i64, %bb.q ], [ %.0.lcssa.i64, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70 ] ; 3 uses
-  %.0 = phi i32 [ %i.bz, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit91 ], [ 1000, %bb.q ], [ 1000, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70 ]
-  %.not55 = icmp eq ptr %6, %i.n                  ; 2 uses
+bb.ab:                                            ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit91, %bb.q
+  %6 = phi ptr [ %.0.lcssa.i85, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit91 ], [ %.0.lcssa.i64, %bb.q ] ; 4 uses
+  %.0 = phi i32 [ %i.bz, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit91 ], [ 1000, %bb.q ] ; 2 uses
+  %.not55 = icmp eq ptr %6, %i.n
   br i1 %.not55, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
@@ -326,12 +326,15 @@ bb.ac:                                            ; preds = %bb.ab
   %.not56 = icmp eq i8 %i.cj, 44
   br i1 %.not56, label %bb.ad, label %bb.af
 
-bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %i.ck = invoke noundef zeroext i1 @_ZN6icu_7818LocalePriorityList3addERKNS_6LocaleEiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(40) %5, i32 noundef %.0, ptr noundef nonnull align 4 dereferenceable(4) %3)
+bb.ad:                                            ; preds = %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70, %bb.ac, %bb.ab
+  %.not55121 = phi i1 [ true, %bb.ab ], [ false, %bb.ac ], [ true, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70 ]
+  %.0120 = phi i32 [ %.0, %bb.ab ], [ %.0, %bb.ac ], [ 1000, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70 ]
+  %7 = phi ptr [ %6, %bb.ab ], [ %6, %bb.ac ], [ %.0.lcssa.i64, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit70 ]
+  %i.ck = invoke noundef zeroext i1 @_ZN6icu_7818LocalePriorityList3addERKNS_6LocaleEiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(40) %5, i32 noundef %.0120, ptr noundef nonnull align 4 dereferenceable(4) %3)
           to label %bb.ae unwind label %bb.y      ; 0 uses
 
 bb.ae:                                            ; preds = %bb.ad
-  br i1 %.not55, label %bb.ag, label %bb.ah
+  br i1 %.not55121, label %bb.ag, label %bb.ah
 
 bb.af:                                            ; preds = %bb.ac, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit77, %bb.t, %_ZN6icu_7812_GLOBAL__N_110skipSpacesEPKcS2_.exit84, %bb.w, %bb.x, %bb.m
   store i32 1, ptr %3, align 4, !tbaa !16
@@ -347,7 +350,7 @@ bb.ag:                                            ; preds = %bb.ae
   br i1 %.not.i.i.i.jt3, label %bb.al, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ae
-  %i.cm = getelementptr inbounds nuw i8, ptr %6, i64 1
+  %i.cm = getelementptr inbounds nuw i8, ptr %7, i64 1
   store ptr %i.cm, ptr %i.a, align 8, !tbaa !23
   call void @_ZN6icu_786LocaleD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %5) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
