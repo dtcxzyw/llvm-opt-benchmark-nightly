@@ -204,9 +204,10 @@ bb.aa:                                            ; preds = %._crit_edge399
 
 .preheader361.lr.ph:                              ; preds = %.critedge
   %i.gg = icmp sgt i32 %.2259, 0
-  %5 = sext i32 %.2259 to i64                     ; 2 uses
+  %5 = add i32 %.2259, -1
   %i.gh = call i32 @llvm.usub.sat.i32(i32 %4, i32 %2)
   %wide.trip.count.a = zext nneg i32 %.2259 to i64
+  %wide.trip.count = zext i32 %5 to i64           ; 2 uses
   %i.gi = call i32 @llvm.usub.sat.i32(i32 %4, i32 %2)
   br label %.preheader361
 
@@ -227,7 +228,7 @@ bb.aa:                                            ; preds = %._crit_edge399
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph427, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.lr.ph427 ], [ %indvars.iv.next, %.loopexit ] ; 8 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph427 ], [ %indvars.iv.next, %.loopexit ] ; 9 uses
   %.0205426 = phi i32 [ 0, %.lr.ph427 ], [ %.2207, %.loopexit ] ; 6 uses
   %.1209425 = phi i32 [ %.0208492, %.lr.ph427 ], [ %.3211, %.loopexit ] ; 4 uses
   %.0213424 = phi i32 [ -1, %.lr.ph427 ], [ %.2215, %.loopexit ] ; 5 uses
@@ -313,20 +314,19 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %.cr
 bb.an:                                            ; preds = %bb.am
   %i.hm = getelementptr inbounds nuw i8, ptr %i.gp, i64 392
   %i.hn = load ptr, ptr %i.hm, align 8
-  %.not301 = icmp ne ptr %i.hn, null
-  %indvars.iv.next522592 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.not304593 = icmp slt i64 %indvars.iv.next522592, %5
-  %or.cond596 = select i1 %.not301, i1 %.not304593, i1 false
-  br i1 %or.cond596, label %.lr.ph595, label %.loopexit
+  %.not301 = icmp eq ptr %i.hn, null
+  %exitcond.not594 = icmp eq i64 %indvars.iv, %wide.trip.count
+  %or.cond596 = select i1 %.not301, i1 true, i1 %exitcond.not594
+  br i1 %or.cond596, label %.loopexit, label %.lr.ph595
 
 .preheader:                                       ; preds = %.lr.ph595
-  %indvars.iv.next522 = add nuw nsw i64 %indvars.iv.next522594, 1 ; 2 uses
-  %.not304 = icmp slt i64 %indvars.iv.next522, %5
-  br i1 %.not304, label %.lr.ph595, label %.loopexit, !llvm.loop !58
+  %exitcond.not = icmp eq i64 %indvars.iv.next522, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph595, !llvm.loop !58
 
 .lr.ph595:                                        ; preds = %bb.an, %.preheader
-  %indvars.iv.next522594 = phi i64 [ %indvars.iv.next522, %.preheader ], [ %indvars.iv.next522592, %bb.an ] ; 2 uses
-  %i.ho = getelementptr inbounds nuw [4 x i8], ptr %i.gk, i64 %indvars.iv.next522594
+  %indvars.iv.next522594 = phi i64 [ %indvars.iv.next522, %.preheader ], [ %indvars.iv, %bb.an ]
+  %indvars.iv.next522 = add nuw nsw i64 %indvars.iv.next522594, 1 ; 3 uses
+  %i.ho = getelementptr inbounds nuw [4 x i8], ptr %i.gk, i64 %indvars.iv.next522
   %i.hp = load i32, ptr %i.ho, align 4
   %.not302 = icmp eq i32 %i.hp, -1
   br i1 %.not302, label %.preheader, label %.thread336, !llvm.loop !58
