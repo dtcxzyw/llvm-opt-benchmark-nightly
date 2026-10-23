@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %.lr.ph263, %_ZNSt6v
   %i.av = icmp ne i64 %i.au, 0
   %i.aw = zext i1 %i.av to i64
   %i.ax = add i64 %i.at, %i.aw
-  %.fr = freeze i64 %i.ax                         ; 7 uses
+  %.fr = freeze i64 %i.ax                         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   %i.ay = icmp ugt i64 %.fr, 1152921504606846975
   br i1 %i.ay, label %bb.j, label %_ZNSt6vectorImSaImEE17_S_check_init_lenEmRKS0_.exit.i.i
@@ -232,7 +232,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorImSaImE
   store ptr %i.bb, ptr %i.ai, align 8, !tbaa !378
   store i64 0, ptr %i.ba, align 8, !tbaa !68
   %i.bc = getelementptr i8, ptr %i.ba, i64 8      ; 3 uses
-  %i.bd = add nsw i64 %.fr, -1                    ; 2 uses
+  %i.bd = add nsw i64 %.fr, -1                    ; 3 uses
   %i.be = icmp eq i64 %i.bd, 0
   br i1 %i.be, label %.lr.ph258, label %_ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i
 
@@ -249,9 +249,9 @@ _ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc95
   %i.bh = ptrtoint ptr %i.ba to i64
   %i.bi = sub i64 %i.bg, %i.bh
   %i.bj = ashr exact i64 %i.bi, 3                 ; 4 uses
-  %10 = add nsw i64 %.fr, -1
-  %11 = call i64 @llvm.umin.i64(i64 %10, i64 %i.bj) ; 2 uses
-  %min.iters.check = icmp ult i64 %11, 4
+  %10 = call i64 @llvm.umin.i64(i64 %i.bd, i64 %i.bj)
+  %11 = add i64 %10, 1                            ; 3 uses
+  %min.iters.check = icmp ult i64 %11, 5
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph258
@@ -260,11 +260,10 @@ scalar.ph.preheader:                              ; preds = %vector.body, %.lr.p
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %.lr.ph258
-  %12 = add nuw i64 %11, 1                        ; 2 uses
-  %i.bk = and i64 %12, 3                          ; 2 uses
+  %i.bk = and i64 %11, 3                          ; 2 uses
   %i.bl = icmp eq i64 %i.bk, 0
   %i.bm = select i1 %i.bl, i64 4, i64 %i.bk
-  %n.vec = sub i64 %12, %i.bm                     ; 3 uses
+  %n.vec = sub i64 %11, %i.bm                     ; 3 uses
   %i.bn = add i64 %.034262, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.034262, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer

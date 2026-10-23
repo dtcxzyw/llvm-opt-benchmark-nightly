@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %.lr.ph168, %_ZN7CaD
   %i.dj = load ptr, ptr %.sroa.0120.0167, align 8, !tbaa !179 ; 7 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 24 ; 4 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 16
-  %i.dm = load i32, ptr %i.dl, align 8, !tbaa !180 ; 5 uses
+  %i.dm = load i32, ptr %i.dl, align 8, !tbaa !180 ; 6 uses
   %i.dn = icmp sgt i32 %i.dm, 1
   br i1 %i.dn, label %.lr.ph155, label %._crit_edge165
 
@@ -237,13 +237,12 @@ bb.o:                                             ; preds = %.lr.ph155, %bb.n
 
 .lr.ph164.preheader:                              ; preds = %bb.n, %._crit_edge156
   %i.dv = zext nneg i32 %i.dm to i64              ; 3 uses
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %wide.trip.count, i64 2) ; 2 uses
-  %i.dw = add nuw nsw i64 %3, 1                   ; 2 uses
-  %min.iters.check240 = icmp samesign ult i64 %3, 7
+  %i.dw = add nsw i64 %wide.trip.count, -1        ; 2 uses
+  %min.iters.check240 = icmp ult i32 %i.dm, 9
   br i1 %min.iters.check240, label %.lr.ph164.preheader259, label %vector.ph241
 
 vector.ph241:                                     ; preds = %.lr.ph164.preheader
-  %n.vec242 = and i64 %i.dw, 4294967288           ; 3 uses
+  %n.vec242 = and i64 %i.dw, -8                   ; 3 uses
   %i.dx = sub nsw i64 %i.dv, %n.vec242
   %vector.recur.init245 = insertelement <4 x i32> poison, i32 %i.dq, i64 3
   %invariant.gep269 = getelementptr [4 x i8], ptr %i.dk, i64 %i.dv
@@ -645,9 +644,6 @@ declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/wlcWriteVer?download=true
 inline.NumInlined: 214
 inline.NumDeleted: 48
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
 loop-unroll.NumUnrolled: 7
 begin_hunk_0_@Wlc_WriteVerInt:bb.a
   store i8 0, ptr %i.a, align 16, !tbaa !26
@@ -205,14 +205,14 @@ bb.at:                                            ; preds = %._crit_edge1247
   %i.gj = load i64, ptr %i.gi, align 8, !tbaa !11
   store i64 %i.gj, ptr %i.b, align 8, !tbaa !11
   %fwrite873 = call i64 @fwrite(ptr nonnull @.str.35, i64 11, i64 1, ptr %0) ; 0 uses
-  %.val11.i = load i32, ptr %i.ez, align 4, !tbaa !29 ; 8 uses
+  %.val11.i = load i32, ptr %i.ez, align 4, !tbaa !29 ; 6 uses
   %i.gk = icmp sgt i32 %.val11.i, 0
   br i1 %i.gk, label %.lr.ph.i1020, label %Wlc_ObjFaninBitNum.exit
 
 .lr.ph.i1020:                                     ; preds = %bb.at
   %i.gl = icmp samesign ugt i32 %.val11.i, 2
   %i.gm = getelementptr inbounds nuw i8, ptr %i.cd, i64 16 ; 3 uses
-  %.val.i1021 = load ptr, ptr %i.bi, align 8, !tbaa !25 ; 8 uses
+  %.val.i1021 = load ptr, ptr %i.bi, align 8, !tbaa !25 ; 7 uses
   br i1 %i.gl, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i1020
@@ -254,46 +254,19 @@ Wlc_ObjHasArray.exit.thread.i.i.us.i:             ; preds = %Wlc_ObjHasArray.exi
   %indvars.iv.next33.i.1 = add nuw nsw i64 %indvars.iv32.i, 2 ; 2 uses
   %niter1415.next.1 = add nuw nsw i64 %niter1415, 2 ; 2 uses
   %niter1415.ncmp.1 = icmp eq i64 %niter1415.next.1, %unroll_iter1414
-  br i1 %niter1415.ncmp.1, label %Wlc_ObjFaninBitNum.exit.loopexit.unr-lcssa, label %Wlc_ObjHasArray.exit.thread.i.i.us.i, !llvm.loop !1
+  br i1 %niter1415.ncmp.1, label %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa, label %Wlc_ObjHasArray.exit.thread.i.i.us.i, !llvm.loop !1
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i1020
   %i.hj = load i16, ptr %i.cd, align 8
   %i.hk = and i16 %i.hj, 63
-  switch i16 %i.hk, label %Wlc_ObjFaninId.exit.i.a [
-    i16 6, label %.lr.ph.split.split.us.i
-    i16 22, label %.lr.ph.split.split.us.i
+  switch i16 %i.hk, label %Wlc_ObjFaninId.exit.i.1.a [
+    i16 6, label %Wlc_ObjHasArray.exit.thread.i.i.us16.i
+    i16 22, label %Wlc_ObjHasArray.exit.thread.i.i.us16.i
   ]
 
-.lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.i, %.lr.ph.split.i
-  %3 = load ptr, ptr %i.gm, align 8, !tbaa !26    ; 3 uses
-  %wide.trip.count.i = zext nneg i32 %.val11.i to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
-  %4 = icmp eq i32 %.val11.i, 1
-  br i1 %4, label %Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader, label %.lr.ph.split.split.us.i.new
-
-.lr.ph.split.split.us.i.new:                      ; preds = %.lr.ph.split.split.us.i
-  %unroll_iter = and i64 %wide.trip.count.i, 2
-  br label %Wlc_ObjHasArray.exit.thread.i.i.us16.i
-
-Wlc_ObjHasArray.exit.thread.i.i.us16.i:           ; preds = %Wlc_ObjHasArray.exit.thread.i.i.us16.i, %.lr.ph.split.split.us.i.new
-  %indvars.iv.i1022 = phi i64 [ 0, %.lr.ph.split.split.us.i.new ], [ %indvars.iv.next.i1023.1, %Wlc_ObjHasArray.exit.thread.i.i.us16.i ] ; 3 uses
-  %.013.us14.i = phi i32 [ 0, %.lr.ph.split.split.us.i.new ], [ %i.hs, %Wlc_ObjHasArray.exit.thread.i.i.us16.i ]
-  %niter = phi i64 [ 0, %.lr.ph.split.split.us.i.new ], [ %niter.next.1, %Wlc_ObjHasArray.exit.thread.i.i.us16.i ]
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i1022
-  %6 = load i32, ptr %5, align 4, !tbaa !27
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [24 x i8], ptr %.val.i1021, i64 %7 ; 2 uses
-  %9 = getelementptr i8, ptr %8, i64 8
-  %.val9.us18.i = load i32, ptr %9, align 8, !tbaa !30
-  %10 = getelementptr i8, ptr %8, i64 12
-  %.val10.us19.i = load i32, ptr %10, align 4, !tbaa !31
-  %11 = sub nsw i32 %.val9.us18.i, %.val10.us19.i
-  %12 = call i32 @llvm.abs.i32(i32 %11, i1 true)
-  %13 = add nuw nsw i32 %.013.us14.i, 1
-  %14 = add nuw nsw i32 %13, %12
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i1022
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 4
-  %i.hl = load i32, ptr %16, align 4, !tbaa !27
+Wlc_ObjHasArray.exit.thread.i.i.us16.i:           ; preds = %.lr.ph.split.i, %.lr.ph.split.i
+  %3 = load ptr, ptr %i.gm, align 8, !tbaa !26    ; 2 uses
+  %i.hl = load i32, ptr %3, align 4, !tbaa !27
   %i.hm = sext i32 %i.hl to i64
   %i.hn = getelementptr inbounds [24 x i8], ptr %.val.i1021, i64 %i.hm ; 2 uses
   %i.ho = getelementptr i8, ptr %i.hn, i64 8
@@ -301,16 +274,14 @@ Wlc_ObjHasArray.exit.thread.i.i.us16.i:           ; preds = %Wlc_ObjHasArray.exi
   %i.hp = getelementptr i8, ptr %i.hn, i64 12
   %.val10.us19.i.1.a = load i32, ptr %i.hp, align 4, !tbaa !31
   %i.hq = sub nsw i32 %.val9.us18.i.1.a, %.val10.us19.i.1.a
-  %i.hr = call i32 @llvm.abs.i32(i32 %i.hq, i1 true)
-  %17 = add nuw nsw i32 %14, 1
-  %i.hs = add nuw nsw i32 %17, %i.hr              ; 3 uses
-  %indvars.iv.next.i1023.1 = add nuw nsw i64 %indvars.iv.i1022, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa, label %Wlc_ObjHasArray.exit.thread.i.i.us16.i, !llvm.loop !1
+  %i.hr = call i32 @llvm.abs.i32(i32 %i.hq, i1 true) ; 2 uses
+  %i.hs = add nuw nsw i32 %i.hr, 1
+  %niter.ncmp.1 = icmp eq i32 %.val11.i, 1
+  br i1 %niter.ncmp.1, label %Wlc_ObjFaninBitNum.exit, label %Wlc_ObjFaninId.exit.i.a
 
-Wlc_ObjFaninId.exit.i.a:                          ; preds = %.lr.ph.split.i
-  %i.ht = load i32, ptr %i.gm, align 8, !tbaa !27
+Wlc_ObjFaninId.exit.i.a:                          ; preds = %Wlc_ObjHasArray.exit.thread.i.i.us16.i
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.ht = load i32, ptr %4, align 4, !tbaa !27
   %i.hu = sext i32 %i.ht to i64
   %i.hv = getelementptr inbounds [24 x i8], ptr %.val.i1021, i64 %i.hu ; 2 uses
   %i.hw = getelementptr i8, ptr %i.hv, i64 8
@@ -318,14 +289,13 @@ Wlc_ObjFaninId.exit.i.a:                          ; preds = %.lr.ph.split.i
   %i.hx = getelementptr i8, ptr %i.hv, i64 12
   %.val10.i.a = load i32, ptr %i.hx, align 4, !tbaa !31
   %i.hy = sub nsw i32 %.val9.i.a, %.val10.i.a
-  %i.hz = call i32 @llvm.abs.i32(i32 %i.hy, i1 true) ; 2 uses
-  %i.ia = add nuw nsw i32 %i.hz, 1
-  %exitcond31.not.i = icmp eq i32 %.val11.i, 1
-  br i1 %exitcond31.not.i, label %Wlc_ObjFaninBitNum.exit, label %Wlc_ObjFaninId.exit.i.1.a
+  %i.hz = call i32 @llvm.abs.i32(i32 %i.hy, i1 true)
+  %i.ia = add nuw nsw i32 %i.hr, 2
+  %5 = add nuw nsw i32 %i.ia, %i.hz
+  br label %Wlc_ObjFaninBitNum.exit
 
-Wlc_ObjFaninId.exit.i.1.a:                        ; preds = %Wlc_ObjFaninId.exit.i.a
-  %18 = getelementptr inbounds nuw i8, ptr %i.cd, i64 20
-  %i.ib = load i32, ptr %18, align 4, !tbaa !27
+Wlc_ObjFaninId.exit.i.1.a:                        ; preds = %.lr.ph.split.i
+  %i.ib = load i32, ptr %i.gm, align 8, !tbaa !27
   %i.ic = sext i32 %i.ib to i64
   %i.id = getelementptr inbounds [24 x i8], ptr %.val.i1021, i64 %i.ic ; 2 uses
   %i.ie = getelementptr i8, ptr %i.id, i64 8
@@ -333,20 +303,14 @@ Wlc_ObjFaninId.exit.i.1.a:                        ; preds = %Wlc_ObjFaninId.exit
   %i.if = getelementptr i8, ptr %i.id, i64 12
   %.val10.i.1.a = load i32, ptr %i.if, align 4, !tbaa !31
   %i.ig = sub nsw i32 %.val9.i.1.a, %.val10.i.1.a
-  %i.ih = call i32 @llvm.abs.i32(i32 %i.ig, i1 true)
-  %i.ii = add nuw nsw i32 %i.hz, 2
-  %19 = add nuw nsw i32 %i.ii, %i.ih
-  br label %Wlc_ObjFaninBitNum.exit
+  %i.ih = call i32 @llvm.abs.i32(i32 %i.ig, i1 true) ; 2 uses
+  %i.ii = add nuw nsw i32 %i.ih, 1
+  %exitcond31.not.i = icmp eq i32 %.val11.i, 1
+  br i1 %exitcond31.not.i, label %Wlc_ObjFaninBitNum.exit, label %Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a
 
-Wlc_ObjFaninBitNum.exit.loopexit.unr-lcssa:       ; preds = %Wlc_ObjHasArray.exit.thread.i.i.us.i
-  %lcmp.mod1411.not = icmp eq i64 %xtraiter1410, 0
-  br i1 %lcmp.mod1411.not, label %Wlc_ObjFaninBitNum.exit, label %Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a
-
-Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a: ; preds = %Wlc_ObjFaninBitNum.exit.loopexit.unr-lcssa
-  %lcmp.mod1413 = trunc i32 %.val11.i to i1
-  call void @llvm.assume(i1 %lcmp.mod1413)
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.gn, i64 %indvars.iv.next33.i.1
-  %i.ij = load i32, ptr %20, align 4, !tbaa !27
+Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a: ; preds = %Wlc_ObjFaninId.exit.i.1.a
+  %6 = getelementptr inbounds nuw i8, ptr %i.cd, i64 20
+  %i.ij = load i32, ptr %6, align 4, !tbaa !27
   %i.ik = sext i32 %i.ij to i64
   %i.il = getelementptr inbounds [24 x i8], ptr %.val.i1021, i64 %i.ik ; 2 uses
   %i.im = getelementptr i8, ptr %i.il, i64 8
@@ -355,20 +319,18 @@ Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a: ; preds = %Wlc_ObjFaninBi
   %.val10.us.i.epil.a = load i32, ptr %i.in, align 4, !tbaa !31
   %i.io = sub nsw i32 %.val9.us.i.epil.a, %.val10.us.i.epil.a
   %i.ip = call i32 @llvm.abs.i32(i32 %i.io, i1 true)
-  %i.iq = add nuw nsw i32 %i.hi, 1
+  %i.iq = add nuw nsw i32 %i.ih, 2
   %i.ir = add nuw nsw i32 %i.iq, %i.ip
   br label %Wlc_ObjFaninBitNum.exit
 
-Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa:   ; preds = %Wlc_ObjHasArray.exit.thread.i.i.us16.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa:   ; preds = %Wlc_ObjHasArray.exit.thread.i.i.us.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter1410, 0
   br i1 %lcmp.mod.not, label %Wlc_ObjFaninBitNum.exit, label %Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader
 
-Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader: ; preds = %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa, %.lr.ph.split.split.us.i
-  %indvars.iv.i1022.epil.init = phi i64 [ 0, %.lr.ph.split.split.us.i ], [ %indvars.iv.next.i1023.1, %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa ]
-  %.013.us14.i.epil.init = phi i32 [ 0, %.lr.ph.split.split.us.i ], [ %i.hs, %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa ]
+Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader: ; preds = %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa
   %lcmp.mod1409 = trunc i32 %.val11.i to i1
   call void @llvm.assume(i1 %lcmp.mod1409)
-  %i.is = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i1022.epil.init
+  %i.is = getelementptr inbounds nuw [4 x i8], ptr %i.gn, i64 %indvars.iv.next33.i.1
   %i.it = load i32, ptr %i.is, align 4, !tbaa !27
   %i.iu = sext i32 %i.it to i64
   %i.iv = getelementptr inbounds [24 x i8], ptr %.val.i1021, i64 %i.iu ; 2 uses
@@ -378,12 +340,12 @@ Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader: ; preds = %Wlc_ObjFaninBi
   %.val10.us19.i.epil = load i32, ptr %i.ix, align 4, !tbaa !31
   %i.iy = sub nsw i32 %.val9.us18.i.epil, %.val10.us19.i.epil
   %i.iz = call i32 @llvm.abs.i32(i32 %i.iy, i1 true)
-  %i.ja = add nuw nsw i32 %.013.us14.i.epil.init, 1
+  %i.ja = add nuw nsw i32 %i.hi, 1
   %i.jb = add nuw nsw i32 %i.ja, %i.iz
   br label %Wlc_ObjFaninBitNum.exit
 
-Wlc_ObjFaninBitNum.exit:                          ; preds = %Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader, %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa, %Wlc_ObjFaninId.exit.i.a, %Wlc_ObjFaninId.exit.i.1.a, %Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a, %Wlc_ObjFaninBitNum.exit.loopexit.unr-lcssa, %bb.at
-  %.0.lcssa.i = phi i32 [ 0, %bb.at ], [ %19, %Wlc_ObjFaninId.exit.i.1.a ], [ %i.ir, %Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a ], [ %i.hi, %Wlc_ObjFaninBitNum.exit.loopexit.unr-lcssa ], [ %i.ia, %Wlc_ObjFaninId.exit.i.a ], [ %i.hs, %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa ], [ %i.jb, %Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader ]
+Wlc_ObjFaninBitNum.exit:                          ; preds = %Wlc_ObjHasArray.exit.thread.i.i.us16.i, %Wlc_ObjFaninId.exit.i.a, %Wlc_ObjFaninId.exit.i.1.a, %Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a, %Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader, %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa, %bb.at
+  %.0.lcssa.i = phi i32 [ 0, %bb.at ], [ %i.ir, %Wlc_ObjHasArray.exit.thread.i.i.us.i.epil.preheader.a ], [ %i.jb, %Wlc_ObjHasArray.exit.thread.i.i.us16.i.epil.preheader ], [ %i.hi, %Wlc_ObjFaninBitNum.exit.loopexit1403.unr-lcssa ], [ %i.ii, %Wlc_ObjFaninId.exit.i.1.a ], [ %i.hs, %Wlc_ObjHasArray.exit.thread.i.i.us16.i ], [ %5, %Wlc_ObjFaninId.exit.i.a ]
   call void @Extra_PrintHex(ptr noundef %0, ptr noundef nonnull %i.b, i32 noundef %.0.lcssa.i) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   br label %Abc_TtPrintHexArrayRev.exit

@@ -205,8 +205,8 @@ bb.ca:                                            ; preds = %.lr.ph676, %_ZN4llv
   store i64 0, ptr %23, align 8
   store i8 0, ptr %.sroa.2109.0..sroa_idx, align 8
   call void @_ZN4llvm15ComputeValueVTsERKNS_14TargetLoweringERKNS_10DataLayoutEPNS_4TypeERNS_15SmallVectorImplINS_3EVTEEEPSA_PNS8_INS_8TypeSizeEEESD_(ptr noundef nonnull align 8 dereferenceable(518435) %i.us, ptr noundef nonnull align 8 dereferenceable(912) %i.uu, ptr noundef %i.uw, ptr noundef nonnull align 8 dereferenceable(16) %22, ptr noundef null, ptr noundef null, ptr noundef nonnull byval(%"class.llvm::TypeSize") align 8 %23) #34
-  %i.ux = load i32, ptr %i.uf, align 8, !tbaa !82 ; 3 uses
-  %i.uy = zext i32 %i.ux to i64                   ; 2 uses
+  %i.ux = load i32, ptr %i.uf, align 8, !tbaa !82 ; 2 uses
+  %i.uy = zext i32 %i.ux to i64                   ; 3 uses
   %i.uz = icmp eq i32 %i.ux, 0
   br i1 %i.uz, label %_ZN4llvm19SelectionDAGBuilder24CopyToExportRegsIfNeededEPKNS_5ValueE.exit, label %bb.cb
 
@@ -609,8 +609,7 @@ _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit: ; preds 
   %i.acy = add i32 %i.aby, %.2357670              ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %indvars.iv.next692 = add nuw nsw i64 %indvars.iv691, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next692 to i32
-  %exitcond = icmp eq i32 %i.ux, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next692, %i.uy
   br i1 %exitcond, label %bb.cp, label %_ZN4llvm8dyn_castINS_16FrameIndexSDNodeENS_6SDNodeEEEDcPT0_.exit.thread, !llvm.loop !2525
 
 bb.cx:                                            ; preds = %bb.cp

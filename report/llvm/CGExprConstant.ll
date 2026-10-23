@@ -205,7 +205,7 @@ _ZNK12_GLOBAL__N_129ConstantAggregateBuilderUtils7getSizeEPN4llvm4TypeE.exit.i: 
   %.fca.0.extract.i.i6 = extractvalue { i64, i8 } %i.jp, 0 ; 15 uses
   %i.jr = load i32, ptr %i.bg, align 4
   %i.js = and i32 %i.jr, 268435455                ; 4 uses
-  %i.jt = zext nneg i32 %i.js to i64              ; 9 uses
+  %i.jt = zext nneg i32 %i.js to i64              ; 8 uses
   %i.ju = load ptr, ptr %i.d, align 8, !tbaa !457 ; 6 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 %.idx.i ; 4 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.ju, i64 %i.ai ; 2 uses
@@ -256,7 +256,7 @@ bb.ae:                                            ; preds = %.lr.ph.i.i.i66.1.i
   %i.kn = load i32, ptr %i.e, align 8, !tbaa !458 ; 3 uses
   %i.ko = zext i32 %i.kn to i64                   ; 3 uses
   %i.kp = icmp samesign eq i64 %i.aj, %i.ko
-  %i.kq = add nsw i64 %i.jt, -1                   ; 10 uses
+  %i.kq = add nsw i64 %i.jt, -1                   ; 12 uses
   %i.kr = add nuw nsw i64 %i.kq, %i.ko            ; 3 uses
   %i.ks = load i32, ptr %i.l, align 4, !tbaa !482
   %i.kt = zext i32 %i.ks to i64
@@ -278,14 +278,13 @@ bb.ag:                                            ; preds = %bb.af
   %.pre-phi.i.i.i.i.i81.i = phi i64 [ %i.aj, %bb.af ], [ %.pre25.i.i.i.i.i.i, %bb.ag ]
   %i.kv = phi i32 [ %i.kn, %bb.af ], [ %.pre.i.i.i.i.i83.i, %bb.ag ]
   %i.kw = getelementptr inbounds nuw [8 x i8], ptr %.pre107.i.i.i.i.i, i64 %.pre-phi.i.i.i.i.i81.i ; 2 uses
-  %3 = add nsw i64 %i.jt, -1                      ; 2 uses
-  %xtraiter238 = and i64 %3, 3                    ; 3 uses
+  %xtraiter238 = and i64 %i.kq, 3                 ; 3 uses
   %i.kx = add nsw i32 %i.js, -2
   %i.ky = icmp ult i32 %i.kx, 3
   br i1 %i.ky, label %.lr.ph.i.i.i.i.i.i.i.i.i82.i.epil.preheader, label %.lr.ph.i.i.i.i.preheader.i.i.i.i.i.i.new
 
 .lr.ph.i.i.i.i.preheader.i.i.i.i.i.i.new:         ; preds = %.lr.ph.i.i.i.i.preheader.i.i.i.i.i.i
-  %unroll_iter241 = and i64 %3, -4
+  %unroll_iter241 = and i64 %i.kq, -4
   br label %.lr.ph.i.i.i.i.i.i.i.i.i82.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i82.i:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i82.i, %.lr.ph.i.i.i.i.preheader.i.i.i.i.i.i.new
@@ -688,7 +687,7 @@ bb.ci:                                            ; preds = %.lr.ph.i.i.i150.1.i
   br label %"_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEENS1_14iterator_rangeINS1_15mapped_iteratorINS1_6detail15SafeIntIteratorImLb0EEEZNS_24ConstantAggregateBuilder5splitEmN5clang9CharUnitsEE3$_3S4_EEEEEEvRT_mmT0_.exit.i"
 
 "_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEENS1_14iterator_rangeINS1_15mapped_iteratorINS1_6detail15SafeIntIteratorImLb0EEEZNS_24ConstantAggregateBuilder5splitEmN5clang9CharUnitsEE3$_3S4_EEEEEEvRT_mmT0_.exit.i": ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i166.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i182.i, %"_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEENS1_14iterator_rangeINS1_15mapped_iteratorINS1_6detail15SafeIntIteratorImLb0EEEZNS_24ConstantAggregateBuilder5splitEmN5clang9CharUnitsEE3$_3S4_EEEEEEvRT_mmT0_.exit.i.sink.split", %._crit_edge.i.i.i.i180.i, %_ZSt13move_backwardIPPN4llvm8ConstantES3_ET0_T_S5_S4_.exit.i.i.i.i165.i
-  %i.aal = call noundef i64 @_ZNK4llvm22ConstantDataSequential14getNumElementsEv(ptr noundef nonnull align 8 dereferenceable(40) %i.ba) #22 ; 12 uses
+  %i.aal = call noundef i64 @_ZNK4llvm22ConstantDataSequential14getNumElementsEv(ptr noundef nonnull align 8 dereferenceable(40) %i.ba) #22 ; 11 uses
   %i.aam = load ptr, ptr %i.d, align 8, !tbaa !457 ; 6 uses
   %i.aan = getelementptr inbounds nuw i8, ptr %i.aam, i64 %.idx.i ; 4 uses
   %i.aao = getelementptr inbounds nuw i8, ptr %i.aam, i64 %i.ai ; 2 uses
@@ -739,7 +738,7 @@ bb.cm:                                            ; preds = %.lr.ph.i.i.i213.1.i
   %i.abf = load i32, ptr %i.e, align 8, !tbaa !458 ; 3 uses
   %i.abg = zext i32 %i.abf to i64                 ; 3 uses
   %i.abh = icmp samesign eq i64 %i.aj, %i.abg
-  %i.abi = add i64 %i.aal, -1                     ; 10 uses
+  %i.abi = add i64 %i.aal, -1                     ; 12 uses
   %i.abj = add i64 %i.abi, %i.abg                 ; 3 uses
   %i.abk = load i32, ptr %i.l, align 4, !tbaa !482
   %i.abl = zext i32 %i.abk to i64
@@ -761,14 +760,13 @@ bb.co:                                            ; preds = %bb.cn
   %.pre-phi.i.i.i.i.i267.i = phi i64 [ %i.aj, %bb.cn ], [ %.pre25.i.i.i.i.i275.i, %bb.co ]
   %i.abn = phi i32 [ %i.abf, %bb.cn ], [ %.pre.i.i.i.i.i274.i, %bb.co ]
   %i.abo = getelementptr inbounds nuw [8 x i8], ptr %.pre107.i.i.i.i266.i, i64 %.pre-phi.i.i.i.i.i267.i ; 2 uses
-  %4 = add i64 %i.aal, -1                         ; 2 uses
   %i.abp = add i64 %i.aal, -2
-  %xtraiter257 = and i64 %4, 3                    ; 3 uses
+  %xtraiter257 = and i64 %i.abi, 3                ; 3 uses
   %i.abq = icmp ult i64 %i.abp, 3
   br i1 %i.abq, label %.lr.ph.i.i.i.i.i.i.i.i.i268.i.epil.preheader, label %.lr.ph.i.i.i.i.preheader.i.i.i.i.i265.i.new
 
 .lr.ph.i.i.i.i.preheader.i.i.i.i.i265.i.new:      ; preds = %.lr.ph.i.i.i.i.preheader.i.i.i.i.i265.i
-  %unroll_iter261 = and i64 %4, -4
+  %unroll_iter261 = and i64 %i.abi, -4
   br label %.lr.ph.i.i.i.i.i.i.i.i.i268.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i268.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i268.i, %.lr.ph.i.i.i.i.preheader.i.i.i.i.i265.i.new

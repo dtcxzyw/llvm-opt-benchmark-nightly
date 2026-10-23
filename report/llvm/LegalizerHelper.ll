@@ -205,7 +205,7 @@ _ZNK4llvm3LLT14getNumElementsEv.exit118:          ; preds = %bb.g
 
 bb.i:                                             ; preds = %._crit_edge, %_ZNK4llvm3LLT14getNumElementsEv.exit118
   %.pre-phi = phi i32 [ %.pre, %._crit_edge ], [ %i.u, %_ZNK4llvm3LLT14getNumElementsEv.exit118 ]
-  %i.x = phi i32 [ 1, %._crit_edge ], [ %i.w, %_ZNK4llvm3LLT14getNumElementsEv.exit118 ] ; 12 uses
+  %i.x = phi i32 [ 1, %._crit_edge ], [ %i.w, %_ZNK4llvm3LLT14getNumElementsEv.exit118 ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store ptr %i.y, ptr %5, align 8, !tbaa !228
@@ -279,10 +279,8 @@ bb.i:                                             ; preds = %._crit_edge, %_ZNK4
   %i.bu = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.bv = getelementptr inbounds nuw i8, ptr %18, i64 16
   %i.bw = getelementptr inbounds nuw i8, ptr %16, i64 16
-  %umax = call i32 @llvm.umax.i32(i32 %i.x, i32 1)
-  %i.bx = zext nneg i32 %i.x to i64               ; 2 uses
+  %i.bx = zext nneg i32 %i.x to i64               ; 3 uses
   %invariant.op = or disjoint i64 %i.aw, 3458764513820540928
-  %wide.trip.count200 = zext nneg i32 %umax to i64
   br label %bb.n
 
 bb.j:                                             ; preds = %bb.ar
@@ -604,7 +602,7 @@ _ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit124: ; pr
 
 bb.am:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit124, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit
   %indvars.iv.next198 = add nuw nsw i64 %indvars.iv197, 1 ; 2 uses
-  %exitcond201.not = icmp eq i64 %indvars.iv.next198, %wide.trip.count200
+  %exitcond201.not = icmp eq i64 %indvars.iv.next198, %i.bx
   br i1 %exitcond201.not, label %.cont148, label %bb.af, !llvm.loop !1064
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit: ; preds = %bb.y

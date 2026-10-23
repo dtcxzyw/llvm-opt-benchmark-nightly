@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 59
 inline.NumDeleted: 23
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @.str.605 = private unnamed_addr constant [6 x i8] c"usage\00", align 1
 @.str.606 = private unnamed_addr constant [9 x i8] c"selector\00", align 1
@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %.preheader1955.preh
   br label %.thread1818
 
 bb.b:                                             ; preds = %.preheader1955.preheader
-  %i.ak = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.419) #16 ; 115 uses
+  %i.ak = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.419) #16 ; 121 uses
   %i.al = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.420) #16 ; 125 uses
   %i.am = tail call ptr @app_malloc(i64 noundef 16384, ptr noundef nonnull @.str.421) #16 ; 158 uses
   %i.an = tail call i32 @SSL_CONF_CTX_set_flags(ptr noundef nonnull %i.ad, i32 noundef 5) #16 ; 0 uses
@@ -608,7 +608,7 @@ bb.wv:                                            ; preds = %bb.wu
   br i1 %.01200.lcssa, label %bb.wz, label %bb.ww
 
 bb.ww:                                            ; preds = %bb.wv
-  %i.axo = call i32 @raw_read_stdin(ptr noundef %i.ak, i32 noundef 8191) #16 ; 6 uses
+  %i.axo = call i32 @raw_read_stdin(ptr noundef %i.ak, i32 noundef 8191) #16 ; 10 uses
   %i.axp = icmp sgt i32 %i.axo, 0
   br i1 %i.axp, label %.lr.ph3498.preheader, label %.loopexit
 
@@ -651,9 +651,39 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph3498
 
 .lr.ph3504.preheader:                             ; preds = %.lr.ph3498, %middle.block
-  %spec.select1641.lcssa = phi i32 [ %i.axz, %middle.block ], [ %spec.select1641, %.lr.ph3498 ]
-  %i.aya = zext nneg i32 %i.axo to i64
-  br label %.lr.ph3504
+  %spec.select1641.lcssa = phi i32 [ %i.axz, %middle.block ], [ %spec.select1641, %.lr.ph3498 ] ; 4 uses
+  %i.aya = zext nneg i32 %i.axo to i64            ; 3 uses
+  %xtraiter = and i64 %i.aya, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph3504.prol.loopexit, label %.lr.ph3504.prol
+
+.lr.ph3504.prol:                                  ; preds = %.lr.ph3504.preheader
+  %indvars.iv.next3920.prol = add nsw i64 %i.aya, -1 ; 5 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.ak, i64 %indvars.iv.next3920.prol
+  %10 = load i8, ptr %9, align 1, !tbaa !18       ; 2 uses
+  %11 = sext i32 %spec.select1641.lcssa to i64
+  %12 = getelementptr i8, ptr %i.ak, i64 %indvars.iv.next3920.prol
+  %13 = getelementptr i8, ptr %12, i64 %11
+  store i8 %10, ptr %13, align 1, !tbaa !18
+  %14 = icmp eq i8 %10, 10
+  br i1 %14, label %15, label %.lr.ph3504.prol.loopexit
+
+15:                                               ; preds = %.lr.ph3504.prol
+  %16 = add nsw i32 %spec.select1641.lcssa, -1    ; 2 uses
+  %17 = add nuw nsw i32 %i.axo, 1                 ; 2 uses
+  %18 = sext i32 %16 to i64
+  %19 = getelementptr i8, ptr %i.ak, i64 %indvars.iv.next3920.prol
+  %20 = getelementptr i8, ptr %19, i64 %18
+  store i8 13, ptr %20, align 1, !tbaa !18
+  br label %.lr.ph3504.prol.loopexit
+
+.lr.ph3504.prol.loopexit:                         ; preds = %.lr.ph3504.prol, %15, %.lr.ph3504.preheader
+  %indvars.iv3919.unr = phi i64 [ %i.aya, %.lr.ph3504.preheader ], [ %indvars.iv.next3920.prol, %15 ], [ %indvars.iv.next3920.prol, %.lr.ph3504.prol ]
+  %.23502.unr = phi i32 [ %spec.select1641.lcssa, %.lr.ph3504.preheader ], [ %16, %15 ], [ %spec.select1641.lcssa, %.lr.ph3504.prol ]
+  %.311583501.unr = phi i32 [ %i.axo, %.lr.ph3504.preheader ], [ %17, %15 ], [ %i.axo, %.lr.ph3504.prol ]
+  %.41159.lcssa.unr = phi i32 [ poison, %.lr.ph3504.preheader ], [ %17, %15 ], [ %i.axo, %.lr.ph3504.prol ]
+  %21 = icmp eq i32 %i.axo, 1
+  br i1 %21, label %.loopexit, label %.lr.ph3504
 
 .lr.ph3498:                                       ; preds = %.lr.ph3498.preheader4793, %.lr.ph3498
   %indvars.iv3914 = phi i64 [ %indvars.iv.next3915, %.lr.ph3498 ], [ %indvars.iv3914.ph, %.lr.ph3498.preheader4793 ] ; 2 uses
@@ -667,11 +697,11 @@ middle.block:                                     ; preds = %vector.body
   %exitcond3918.not = icmp eq i64 %indvars.iv.next3915, %wide.trip.count3917
   br i1 %exitcond3918.not, label %.lr.ph3504.preheader, label %.lr.ph3498, !llvm.loop !56
 
-.lr.ph3504:                                       ; preds = %.lr.ph3504.preheader, %bb.wy
-  %indvars.iv3919 = phi i64 [ %i.aya, %.lr.ph3504.preheader ], [ %indvars.iv.next3920, %bb.wy ] ; 2 uses
-  %.23502 = phi i32 [ %spec.select1641.lcssa, %.lr.ph3504.preheader ], [ %.3.a, %bb.wy ] ; 3 uses
-  %.311583501 = phi i32 [ %i.axo, %.lr.ph3504.preheader ], [ %.41159.a, %bb.wy ] ; 2 uses
-  %indvars.iv.next3920 = add nsw i64 %indvars.iv3919, -1 ; 4 uses
+.lr.ph3504:                                       ; preds = %.lr.ph3504.prol.loopexit, %bb.wy
+  %indvars.iv3919 = phi i64 [ %indvars.iv.next3920.1, %bb.wy ], [ %indvars.iv3919.unr, %.lr.ph3504.prol.loopexit ] ; 3 uses
+  %.23502 = phi i32 [ %.3.a, %bb.wy ], [ %.23502.unr, %.lr.ph3504.prol.loopexit ] ; 3 uses
+  %.311583501 = phi i32 [ %.41159.a, %bb.wy ], [ %.311583501.unr, %.lr.ph3504.prol.loopexit ] ; 2 uses
+  %indvars.iv.next3920 = add nsw i64 %indvars.iv3919, -1 ; 3 uses
   %i.ayf = getelementptr inbounds nuw i8, ptr %i.ak, i64 %indvars.iv.next3920
   %i.ayg = load i8, ptr %i.ayf, align 1, !tbaa !18 ; 2 uses
   %i.ayh = sext i32 %.23502 to i64
@@ -679,29 +709,51 @@ middle.block:                                     ; preds = %vector.body
   %i.ayj = getelementptr i8, ptr %i.ayi, i64 %i.ayh
   store i8 %i.ayg, ptr %i.ayj, align 1, !tbaa !18
   %i.ayk = icmp eq i8 %i.ayg, 10
-  br i1 %i.ayk, label %bb.wx, label %bb.wy
+  br i1 %i.ayk, label %22, label %.lr.ph3504.1
 
-bb.wx:                                            ; preds = %.lr.ph3504
-  %i.ayl = add nsw i32 %.23502, -1                ; 2 uses
-  %i.aym = add nuw nsw i32 %.311583501, 1
+22:                                               ; preds = %.lr.ph3504
+  %23 = add nsw i32 %.23502, -1                   ; 2 uses
+  %24 = add nuw nsw i32 %.311583501, 1
+  %25 = sext i32 %23 to i64
+  %26 = getelementptr i8, ptr %i.ak, i64 %indvars.iv.next3920
+  %27 = getelementptr i8, ptr %26, i64 %25
+  store i8 13, ptr %27, align 1, !tbaa !18
+  br label %.lr.ph3504.1
+
+.lr.ph3504.1:                                     ; preds = %.lr.ph3504, %22
+  %.41159 = phi i32 [ %24, %22 ], [ %.311583501, %.lr.ph3504 ] ; 2 uses
+  %.3 = phi i32 [ %23, %22 ], [ %.23502, %.lr.ph3504 ] ; 3 uses
+  %indvars.iv.next3920.1 = add nsw i64 %indvars.iv3919, -2 ; 4 uses
+  %28 = getelementptr inbounds nuw i8, ptr %i.ak, i64 %indvars.iv.next3920.1
+  %29 = load i8, ptr %28, align 1, !tbaa !18      ; 2 uses
+  %30 = sext i32 %.3 to i64
+  %31 = getelementptr i8, ptr %i.ak, i64 %indvars.iv.next3920.1
+  %32 = getelementptr i8, ptr %31, i64 %30
+  store i8 %29, ptr %32, align 1, !tbaa !18
+  %33 = icmp eq i8 %29, 10
+  br i1 %33, label %bb.wx, label %bb.wy
+
+bb.wx:                                            ; preds = %.lr.ph3504.1
+  %i.ayl = add nsw i32 %.3, -1                    ; 2 uses
+  %i.aym = add nuw nsw i32 %.41159, 1
   %i.ayn = sext i32 %i.ayl to i64
-  %i.ayo = getelementptr i8, ptr %i.ak, i64 %indvars.iv.next3920
+  %i.ayo = getelementptr i8, ptr %i.ak, i64 %indvars.iv.next3920.1
   %i.ayp = getelementptr i8, ptr %i.ayo, i64 %i.ayn
   store i8 13, ptr %i.ayp, align 1, !tbaa !18
   br label %bb.wy
 
-bb.wy:                                            ; preds = %.lr.ph3504, %bb.wx
-  %.41159.a = phi i32 [ %i.aym, %bb.wx ], [ %.311583501, %.lr.ph3504 ] ; 2 uses
-  %.3.a = phi i32 [ %i.ayl, %bb.wx ], [ %.23502, %.lr.ph3504 ]
-  %9 = icmp samesign ugt i64 %indvars.iv3919, 1
-  br i1 %9, label %.lr.ph3504, label %.loopexit, !llvm.loop !57
+bb.wy:                                            ; preds = %bb.wx, %.lr.ph3504.1
+  %.41159.a = phi i32 [ %i.aym, %bb.wx ], [ %.41159, %.lr.ph3504.1 ] ; 2 uses
+  %.3.a = phi i32 [ %i.ayl, %bb.wx ], [ %.3, %.lr.ph3504.1 ]
+  %34 = icmp sgt i64 %indvars.iv3919, 2
+  br i1 %34, label %.lr.ph3504, label %.loopexit, !llvm.loop !57
 
 bb.wz:                                            ; preds = %bb.wv
   %i.ayq = call i32 @raw_read_stdin(ptr noundef %i.ak, i32 noundef 16383) #16
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.wy, %bb.ww, %bb.wz
-  %.51160 = phi i32 [ %i.ayq, %bb.wz ], [ %i.axo, %bb.ww ], [ %.41159.a, %bb.wy ] ; 4 uses
+.loopexit:                                        ; preds = %.lr.ph3504.prol.loopexit, %bb.wy, %bb.ww, %bb.wz
+  %.51160 = phi i32 [ %i.ayq, %bb.wz ], [ %i.axo, %bb.ww ], [ %.41159.lcssa.unr, %.lr.ph3504.prol.loopexit ], [ %.41159.a, %bb.wy ] ; 4 uses
   %i.ayr = icmp eq i32 %.51160, 0
   %spec.select1642 = select i1 %i.ayr, i32 1, i32 %.11118 ; 2 uses
   %i.ays = icmp slt i32 %.51160, 1

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 47
 inline.NumDeleted: 9
 loop-unroll.NumCompletelyUnrolled: 18
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 24
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 25
 begin_hunk_0_@cli_scanautoit:bb.a
   %.sroa.109.26.1.ph.i = phi i32 [ %i.afr, %.preheader458.1.thread.i ], [ %.sroa.109.36.insert.insert377.1.i, %bb.cc ]
   %.ph811.i = phi i32 [ 14, %.preheader458.1.thread.i ], [ 15, %bb.cc ]
@@ -205,7 +205,7 @@ getbits.exit231.i:                                ; preds = %bb.cg, %bb.cb
 
 bb.ch:                                            ; preds = %.sink.split.i, %._crit_edge.i
   %.sroa.62.1.i = phi i32 [ %i.dt, %._crit_edge.i ], [ %.sroa.62.1.ph.i, %.sink.split.i ] ; 7 uses
-  %.sroa.0.0.i = phi ptr [ %i.dz, %._crit_edge.i ], [ %.sroa.0.0.ph.i, %.sink.split.i ] ; 9 uses
+  %.sroa.0.0.i = phi ptr [ %i.dz, %._crit_edge.i ], [ %.sroa.0.0.ph.i, %.sink.split.i ] ; 11 uses
   %i.ajx = icmp ult i32 %.sroa.62.1.i, 2
   br i1 %i.ajx, label %u2a.exit.i, label %bb.ci
 
@@ -235,35 +235,89 @@ bb.cm:                                            ; preds = %bb.cl
   br label %.lr.ph49.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.cl, %bb.ck, %bb.cj, %bb.ci
-  %i.akh = call i32 @llvm.umin.i32(i32 %.sroa.62.1.i, i32 20)
-  %i.aki = and i32 %i.akh, 30                     ; 2 uses
-  %i.akj = zext nneg i32 %i.aki to i64
+  %i.akh = call i32 @llvm.umin.i32(i32 %.sroa.62.1.i, i32 20) ; 2 uses
+  %i.aki = and i32 %i.akh, 30
+  %i.akj = zext nneg i32 %i.akh to i64
+  %3 = add nsw i64 %i.akj, -2                     ; 2 uses
+  %4 = lshr i64 %3, 1                             ; 2 uses
+  %5 = add nuw i64 %4, 1                          ; 2 uses
+  %6 = icmp eq i64 %4, 0
+  br i1 %6, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.preheader.i.i.new
+
+.lr.ph.preheader.i.i.new:                         ; preds = %.lr.ph.preheader.i.i
+  %unroll_iter807 = and i64 %5, -2
   br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %bb.co, %.lr.ph.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.co ] ; 2 uses
-  %.045.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i ], [ %i.akr, %bb.co ]
+.lr.ph.i.i:                                       ; preds = %bb.co, %.lr.ph.preheader.i.i.new
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.new ], [ %indvars.iv.next.i.i.1, %bb.co ] ; 3 uses
+  %.045.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i.new ], [ %i.akr, %bb.co ]
+  %niter808 = phi i64 [ 0, %.lr.ph.preheader.i.i.new ], [ %indvars.iv.next.i.i, %bb.co ]
   %i.akk = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %indvars.iv.i.i ; 2 uses
   %i.akl = load i8, ptr %i.akk, align 1, !tbaa !8
   %.not43.i.i = icmp eq i8 %i.akl, 0
-  br i1 %.not43.i.i, label %bb.co, label %bb.cn
+  br i1 %.not43.i.i, label %.lr.ph.i.i.1, label %7
 
-bb.cn:                                            ; preds = %.lr.ph.i.i
-  %i.akm = getelementptr inbounds nuw i8, ptr %i.akk, i64 1
+7:                                                ; preds = %.lr.ph.i.i
+  %8 = getelementptr inbounds nuw i8, ptr %i.akk, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !8
+  %10 = icmp eq i8 %9, 0
+  %11 = zext i1 %10 to i32
+  br label %.lr.ph.i.i.1
+
+.lr.ph.i.i.1:                                     ; preds = %7, %.lr.ph.i.i
+  %12 = phi i32 [ 0, %.lr.ph.i.i ], [ %11, %7 ]
+  %13 = add i32 %12, %.045.i.i
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %indvars.iv.i.i ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 2
+  %16 = load i8, ptr %15, align 1, !tbaa !8
+  %.not43.i.i.1 = icmp eq i8 %16, 0
+  br i1 %.not43.i.i.1, label %bb.co, label %bb.cn
+
+bb.cn:                                            ; preds = %.lr.ph.i.i.1
+  %i.akm = getelementptr inbounds nuw i8, ptr %14, i64 3
   %i.akn = load i8, ptr %i.akm, align 1, !tbaa !8
   %i.ako = icmp eq i8 %i.akn, 0
   %i.akp = zext i1 %i.ako to i32
   br label %bb.co
 
-bb.co:                                            ; preds = %bb.cn, %.lr.ph.i.i
-  %i.akq = phi i32 [ 0, %.lr.ph.i.i ], [ %i.akp, %bb.cn ]
-  %i.akr = add i32 %i.akq, %.045.i.i              ; 2 uses
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
-  %3 = icmp samesign ult i64 %indvars.iv.next.i.i, %i.akj
-  br i1 %3, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !20
+bb.co:                                            ; preds = %bb.cn, %.lr.ph.i.i.1
+  %i.akq = phi i32 [ 0, %.lr.ph.i.i.1 ], [ %i.akp, %bb.cn ]
+  %i.akr = add i32 %i.akq, %13                    ; 3 uses
+  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
+  %indvars.iv.next.i.i = add nuw nsw i64 %niter808, 2 ; 2 uses
+  %niter808.ncmp.1.not = icmp eq i64 %indvars.iv.next.i.i, %unroll_iter807
+  br i1 %niter808.ncmp.1.not, label %._crit_edge.i.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !20
 
-._crit_edge.i.i:                                  ; preds = %bb.co
-  %i.aks = shl i32 %i.akr, 2
+._crit_edge.i.i.unr-lcssa:                        ; preds = %bb.co
+  %17 = and i64 %3, 2
+  %lcmp.mod804.not.not = icmp eq i64 %17, 0
+  br i1 %lcmp.mod804.not.not, label %.lr.ph.i.i.epil.preheader, label %._crit_edge.i.i
+
+.lr.ph.i.i.epil.preheader:                        ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.preheader.i.i
+  %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i.1, %._crit_edge.i.i.unr-lcssa ]
+  %.045.i.i.epil.init = phi i32 [ 0, %.lr.ph.preheader.i.i ], [ %i.akr, %._crit_edge.i.i.unr-lcssa ]
+  %lcmp.mod806 = trunc i64 %5 to i1
+  call void @llvm.assume(i1 %lcmp.mod806)
+  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %indvars.iv.i.i.epil.init ; 2 uses
+  %19 = load i8, ptr %18, align 1, !tbaa !8
+  %.not43.i.i.epil = icmp eq i8 %19, 0
+  br i1 %.not43.i.i.epil, label %._crit_edge.i.i.epilog-lcssa, label %20
+
+20:                                               ; preds = %.lr.ph.i.i.epil.preheader
+  %21 = getelementptr inbounds nuw i8, ptr %18, i64 1
+  %22 = load i8, ptr %21, align 1, !tbaa !8
+  %23 = icmp eq i8 %22, 0
+  %24 = zext i1 %23 to i32
+  br label %._crit_edge.i.i.epilog-lcssa
+
+._crit_edge.i.i.epilog-lcssa:                     ; preds = %20, %.lr.ph.i.i.epil.preheader
+  %25 = phi i32 [ 0, %.lr.ph.i.i.epil.preheader ], [ %24, %20 ]
+  %26 = add i32 %25, %.045.i.i.epil.init
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %._crit_edge.i.i.epilog-lcssa
+  %.lcssa713 = phi i32 [ %i.akr, %._crit_edge.i.i.unr-lcssa ], [ %26, %._crit_edge.i.i.epilog-lcssa ]
+  %i.aks = shl i32 %.lcssa713, 2
   %.not42.i.i = icmp ult i32 %i.aks, %i.aki
   br i1 %.not42.i.i, label %u2a.exit.i, label %.lr.ph49.preheader.i.i
 

@@ -205,7 +205,7 @@ bb.cb:                                            ; preds = %bb.bz
 
 .preheader576:                                    ; preds = %.preheader576thread-pre-split, %bb.bv
   %i.qu = phi i64 [ %.pr805, %.preheader576thread-pre-split ], [ %i.qm, %bb.bv ]
-  %.0210 = phi i32 [ 8, %.preheader576thread-pre-split ], [ %i.qn, %bb.bv ] ; 3 uses
+  %.0210 = phi i32 [ 8, %.preheader576thread-pre-split ], [ %i.qn, %bb.bv ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.j, ptr noundef nonnull align 8 dereferenceable(64) %i.jn, i64 64, i1 false)
   %.not699 = icmp eq i64 %i.qu, 0
@@ -213,6 +213,7 @@ bb.cb:                                            ; preds = %bb.bz
 
 .lr.ph685:                                        ; preds = %.preheader576
   %i.qv = getelementptr inbounds nuw i8, ptr %i.jl, i64 4 ; 4 uses
+  %3 = add nsw i32 %.0210, -1                     ; 2 uses
   %i.qw = trunc nuw i64 %indvars.iv746 to i32
   br label %bb.cc
 
@@ -224,7 +225,7 @@ bb.cb:                                            ; preds = %bb.bz
 bb.cc:                                            ; preds = %.lr.ph685, %bb.cx
   %i.qx = phi i64 [ 0, %.lr.ph685 ], [ %i.zu, %bb.cx ]
   %.sroa.0481.3683.in = phi ptr [ %i.jm, %.lr.ph685 ], [ %.sroa.0481.3683, %bb.cx ]
-  %.0207681 = phi i32 [ 0, %.lr.ph685 ], [ %i.zt, %bb.cx ] ; 7 uses
+  %.0207681 = phi i32 [ 0, %.lr.ph685 ], [ %i.zt, %bb.cx ] ; 8 uses
   %.sroa.0481.3683 = load ptr, ptr %.sroa.0481.3683.in, align 8 ; 13 uses
   %.not239 = icmp ult i32 %.0207681, %.0210
   br i1 %.not239, label %bb.ch, label %bb.cd
@@ -326,20 +327,19 @@ bb.cl:                                            ; preds = %bb.ck, %bb.ci
 
 .preheader.preheader:                             ; preds = %bb.cl
   %.sroa.0469.2853 = load ptr, ptr %.sroa.0481.3683, align 8 ; 2 uses
-  %.0206854 = add nuw nsw i32 %.0207681, 1        ; 2 uses
-  %3 = icmp ult i32 %.0206854, %.0210
-  br i1 %3, label %.lr.ph857, label %.loopexit571
+  %exitcond746.not855 = icmp eq i32 %.0207681, %3
+  br i1 %exitcond746.not855, label %.loopexit571, label %.lr.ph857
 
 .preheader:                                       ; preds = %.lr.ph857
-  %.sroa.0469.2 = load ptr, ptr %.sroa.0469.2855, align 8 ; 2 uses
-  %.0206 = add nuw nsw i32 %.0206856, 1           ; 2 uses
-  %4 = icmp ult i32 %.0206, %.0210
-  br i1 %4, label %.lr.ph857, label %.loopexit571, !llvm.loop !34
+  %.0206 = add nuw nsw i32 %.0206.in856, 1        ; 2 uses
+  %.sroa.0469.2 = load ptr, ptr %.sroa.0469.2857, align 8 ; 2 uses
+  %exitcond746.not = icmp eq i32 %.0206, %3
+  br i1 %exitcond746.not, label %.loopexit571, label %.lr.ph857, !llvm.loop !34
 
 .lr.ph857:                                        ; preds = %.preheader.preheader, %.preheader
-  %.0206856 = phi i32 [ %.0206, %.preheader ], [ %.0206854, %.preheader.preheader ]
-  %.sroa.0469.2855 = phi ptr [ %.sroa.0469.2, %.preheader ], [ %.sroa.0469.2853, %.preheader.preheader ] ; 2 uses
-  %i.sf = getelementptr inbounds nuw i8, ptr %.sroa.0469.2855, i64 36
+  %.sroa.0469.2857 = phi ptr [ %.sroa.0469.2, %.preheader ], [ %.sroa.0469.2853, %.preheader.preheader ] ; 2 uses
+  %.0206.in856 = phi i32 [ %.0206, %.preheader ], [ %.0207681, %.preheader.preheader ]
+  %i.sf = getelementptr inbounds nuw i8, ptr %.sroa.0469.2857, i64 36
   %i.sg = load i32, ptr %i.sf, align 4
   %i.sh = icmp eq i32 %i.sg, %.0207681
   br i1 %i.sh, label %_ZNSt10unique_ptrIA_10aiVector3tIfESt14default_deleteIS2_EED2Ev.exit, label %.preheader, !llvm.loop !34

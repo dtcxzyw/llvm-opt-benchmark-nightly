@@ -206,8 +206,8 @@ bb.hc:                                            ; preds = %bb.hb, %_ZN6Assimp9
   %i.ada = getelementptr inbounds nuw [4 x i8], ptr %.sroa.02606.5, i64 %indvars.iv
   store i32 %.0681, ptr %i.ada, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond4776.not = icmp eq i64 %indvars.iv.next, %i.abi
-  br i1 %exitcond4776.not, label %.loopexit2998, label %bb.gw, !llvm.loop !55
+  %46 = icmp samesign ult i64 %indvars.iv.next, %i.abi
+  br i1 %46, label %bb.gw, label %.loopexit2998, !llvm.loop !55
 
 .loopexit2998:                                    ; preds = %bb.hc, %_ZN6Assimp9strtoul10EPKcPS1_.exit1275, %_ZN6Assimp9strtoul10EPKcPS1_.exit1275.thread
   %.sroa.02606.2 = phi ptr [ %.sroa.02606.03956, %_ZN6Assimp9strtoul10EPKcPS1_.exit1275 ], [ %.sroa.02606.03956, %_ZN6Assimp9strtoul10EPKcPS1_.exit1275.thread ], [ %.sroa.02606.5, %bb.hc ] ; 7 uses

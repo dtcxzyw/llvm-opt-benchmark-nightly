@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openmpi/original/tm_kpartitioning?download=true
 inline.NumInlined: 12
 inline.NumDeleted: 11
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@tm_kpartition_build_tree_from_topology:bb.a
   %.056 = phi ptr [ null, %bb.g ], [ null, %bb.d ], [ %i.at, %bb.p ], [ null, %bb.e ], [ null, %bb.h ], [ null, %bb.m ], [ null, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %display_partition.e
   %i.bp = phi i32 [ %i.u, %display_partition.exit.thread ], [ %i.bc, %bb.m ], [ %i.bc, %display_partition.exit ] ; 9 uses
   %i.bq = sext i32 %i.bp to i64
   %i.br = shl nsw i64 %i.bq, 2                    ; 4 uses
-  %i.bs = tail call noalias ptr @malloc(i64 noundef %i.br) #16 ; 8 uses
+  %i.bs = tail call noalias ptr @malloc(i64 noundef %i.br) #16 ; 6 uses
   %i.bt = icmp sgt i32 %i.d, 0                    ; 6 uses
   br i1 %i.bt, label %.preheader80.lr.ph.i, label %split_com_mat.exit
 
@@ -271,14 +271,14 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %niter.ncmp.1, label %._crit_edge.us.i85.unr-lcssa, label %.preheader80.us.i.new, !llvm.loop !52
 
 bb.s:                                             ; preds = %._crit_edge.us.i85
-  %i.co = sext i32 %.1.us.i.lcssa to i64
+  %i.co = sext i32 %.1.us.i.lcssa to i64          ; 2 uses
   %i.cp = shl nsw i64 %i.co, 3                    ; 2 uses
-  %i.cq = tail call noalias ptr @malloc(i64 noundef %i.cp) #16 ; 6 uses
+  %i.cq = tail call noalias ptr @malloc(i64 noundef %i.cp) #16 ; 4 uses
   %i.cr = icmp sgt i32 %.1.us.i.lcssa, 0
   br i1 %i.cr, label %.lr.ph86.us.preheader.i, label %._crit_edge90.us.i
 
 .lr.ph86.us.preheader.i:                          ; preds = %bb.s
-  %wide.trip.count107.i = zext nneg i32 %.1.us.i.lcssa to i64 ; 5 uses
+  %wide.trip.count107.i = zext nneg i32 %.1.us.i.lcssa to i64 ; 2 uses
   br label %.lr.ph86.us.i
 
 .lr.ph86.us.i:                                    ; preds = %.lr.ph86.us.i, %.lr.ph86.us.preheader.i
@@ -291,69 +291,34 @@ bb.s:                                             ; preds = %._crit_edge.us.i85
   br i1 %exitcond108.not.i, label %.lr.ph89.us.i, label %.lr.ph86.us.i, !llvm.loop !53
 
 bb.t:                                             ; preds = %.lr.ph89.us.i, %.unr-lcssa
-  %indvars.iv109.i = phi i64 [ 0, %.lr.ph89.us.i ], [ %indvars.iv.next110.i, %.unr-lcssa ] ; 13 uses
-  %8 = sub nsw i64 %wide.trip.count107.i, %indvars.iv109.i
+  %indvars.iv109.i = phi i64 [ 0, %.lr.ph89.us.i ], [ %indvars.iv.next110.i, %.unr-lcssa ] ; 5 uses
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %indvars.iv109.i
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !8
   %i.cw = sext i32 %i.cv to i64
   %i.cx = getelementptr inbounds [8 x i8], ptr %i.dw, i64 %i.cw
-  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !21 ; 3 uses
+  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !21
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv109.i
-  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !21 ; 3 uses
-  %xtraiter101 = and i64 %8, 1
-  %lcmp.mod102.not = icmp eq i64 %xtraiter101, 0
-  br i1 %lcmp.mod102.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !21
+  br label %.new
 
-.prol.loopexit.unr-lcssa:                         ; preds = %bb.t
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %indvars.iv109.i
-  %10 = load i32, ptr %9, align 4, !tbaa !8
-  %11 = sext i32 %10 to i64
-  %12 = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %11
-  %13 = load double, ptr %12, align 8, !tbaa !23  ; 2 uses
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %indvars.iv109.i
-  store double %13, ptr %14, align 8, !tbaa !23
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv109.i
-  %16 = load ptr, ptr %15, align 8, !tbaa !21
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %indvars.iv109.i
-  store double %13, ptr %17, align 8, !tbaa !23
-  %indvars.iv.next112.i.prol = add nuw nsw i64 %indvars.iv109.i, 1
-  br label %.prol.loopexit
-
-.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %bb.t
-  %indvars.iv111.i.unr = phi i64 [ %indvars.iv109.i, %bb.t ], [ %indvars.iv.next112.i.prol, %.prol.loopexit.unr-lcssa ]
-  %18 = icmp eq i64 %indvars.iv109.i, %28
-  br i1 %18, label %.unr-lcssa, label %.new
-
-.new:                                             ; preds = %.prol.loopexit, %.new
-  %indvars.iv111.i = phi i64 [ %indvars.iv.next112.i.1, %.new ], [ %indvars.iv111.i.unr, %.prol.loopexit ] ; 5 uses
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %indvars.iv111.i
-  %20 = load i32, ptr %19, align 4, !tbaa !8
-  %21 = sext i32 %20 to i64
-  %22 = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %21
-  %23 = load double, ptr %22, align 8, !tbaa !23  ; 2 uses
-  %24 = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %indvars.iv111.i
-  store double %23, ptr %24, align 8, !tbaa !23
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv111.i
-  %26 = load ptr, ptr %25, align 8, !tbaa !21
-  %27 = getelementptr inbounds nuw [8 x i8], ptr %26, i64 %indvars.iv109.i
-  store double %23, ptr %27, align 8, !tbaa !23
-  %indvars.iv.next112.i = add nuw nsw i64 %indvars.iv111.i, 1 ; 3 uses
-  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %indvars.iv.next112.i
+.new:                                             ; preds = %.new, %bb.t
+  %indvars.iv111.i = phi i64 [ %indvars.iv.next112.i.1, %.new ], [ %indvars.iv109.i, %bb.t ] ; 4 uses
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %indvars.iv111.i
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !8
   %i.dd = sext i32 %i.dc to i64
   %i.de = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %i.dd
   %i.df = load double, ptr %i.de, align 8, !tbaa !23 ; 2 uses
-  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %indvars.iv.next112.i
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %indvars.iv111.i
   store double %i.df, ptr %i.dg, align 8, !tbaa !23
-  %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv.next112.i
+  %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv111.i
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !21
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %indvars.iv109.i
   store double %i.df, ptr %i.dj, align 8, !tbaa !23
-  %indvars.iv.next112.i.1 = add nuw nsw i64 %indvars.iv111.i, 2 ; 2 uses
-  %exitcond116.not.i.1 = icmp eq i64 %indvars.iv.next112.i.1, %wide.trip.count107.i
-  br i1 %exitcond116.not.i.1, label %.unr-lcssa, label %.new, !llvm.loop !54
+  %indvars.iv.next112.i.1 = add nuw nsw i64 %indvars.iv111.i, 1 ; 2 uses
+  %8 = icmp slt i64 %indvars.iv.next112.i.1, %i.co
+  br i1 %8, label %.new, label %.unr-lcssa, !llvm.loop !54
 
-.unr-lcssa:                                       ; preds = %.new, %.prol.loopexit
+.unr-lcssa:                                       ; preds = %.new
   %indvars.iv.next110.i = add nuw nsw i64 %indvars.iv109.i, 1 ; 2 uses
   %exitcond120.not.i = icmp eq i64 %indvars.iv.next110.i, %wide.trip.count107.i
   br i1 %exitcond120.not.i, label %._crit_edge90.us.i, label %bb.t, !llvm.loop !55
@@ -397,7 +362,6 @@ bb.u:                                             ; preds = %.epil.preheader
 
 .lr.ph89.us.i:                                    ; preds = %.lr.ph86.us.i
   %i.dw = load ptr, ptr %1, align 8, !tbaa !19
-  %28 = add nsw i64 %wide.trip.count107.i, -1
   br label %bb.t
 
 .preheader80.lr.ph.split.i:                       ; preds = %.preheader80.lr.ph.i

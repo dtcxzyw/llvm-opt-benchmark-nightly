@@ -205,37 +205,39 @@ _ZNKSt3mapI15BannerSlideType15SlideTypeConfigSt4lessIS0_ESaISt4pairIKS0_S1_EEE4f
 
 bb.r:                                             ; preds = %_ZNKSt3mapI15BannerSlideType15SlideTypeConfigSt4lessIS0_ESaISt4pairIKS0_S1_EEE4findERS5_.exit.i
   %.sroa.8160.0..sroa_idx = getelementptr i8, ptr %.19.i.i.i.i64, i64 44
-  %.sroa.8160.0.copyload = load i32, ptr %.sroa.8160.0..sroa_idx, align 4 ; 3 uses
+  %.sroa.8160.0.copyload = load i32, ptr %.sroa.8160.0..sroa_idx, align 4 ; 2 uses
   %i.ca = getelementptr i8, ptr %.19.i.i.i.i64, i64 88
   %i.cb = load ptr, ptr %i.ca, align 8, !noalias !80 ; 4 uses
   %.not.i.i.i.i4.i = icmp eq ptr %i.cb, null
-  br i1 %.not.i.i.i.i4.i, label %_ZN15SlideTypeConfigD2Ev.exit74.a, label %_ZN17QArrayDataPointerI6QColorE5derefEv.exit.i.i.i
+  br i1 %.not.i.i.i.i4.i, label %_ZN15SlideTypeConfigD2Ev.exit74, label %_ZN17QArrayDataPointerI6QColorE5derefEv.exit.i.i.i
 
 _ZN17QArrayDataPointerI6QColorE5derefEv.exit.i.i.i: ; preds = %bb.r
   %i.cc = atomicrmw add ptr %i.cb, i32 1 acq_rel, align 4, !noalias !80 ; 0 uses
   %i.cd = atomicrmw add ptr %i.cb, i32 -1 acq_rel, align 4
   %.not.i.i.i70 = icmp eq i32 %i.cd, 1
-  br i1 %.not.i.i.i70, label %bb.s, label %_ZN15SlideTypeConfigD2Ev.exit74.a
+  br i1 %.not.i.i.i70, label %bb.s, label %_ZN15SlideTypeConfigD2Ev.exit74
 
 bb.s:                                             ; preds = %_ZN17QArrayDataPointerI6QColorE5derefEv.exit.i.i.i
   call void @_ZN10QArrayData10deallocateEPS_xx(ptr noundef nonnull %i.cb, i64 noundef 16, i64 noundef 8) #28
-  br label %_ZN15SlideTypeConfigD2Ev.exit74.a
+  br label %_ZN15SlideTypeConfigD2Ev.exit74
 
-_ZN15SlideTypeConfigD2Ev.exit74.a:                ; preds = %bb.r, %bb.s, %_ZN17QArrayDataPointerI6QColorE5derefEv.exit.i.i.i
-  %2 = icmp sgt i32 %.sroa.8160.0.copyload, 0
-  %.pre205 = load i64, ptr %i.m, align 8          ; 4 uses
-  %i.ce = zext nneg i32 %.sroa.8160.0.copyload to i64
+_ZN15SlideTypeConfigD2Ev.exit74:                  ; preds = %bb.r, %bb.s, %_ZN17QArrayDataPointerI6QColorE5derefEv.exit.i.i.i
+  %2 = icmp slt i32 %.sroa.8160.0.copyload, 1
+  %.pre205 = load i64, ptr %i.m, align 8          ; 5 uses
+  br i1 %2, label %_ZN15SlideTypeConfigD2Ev.exit74.thread, label %_ZN15SlideTypeConfigD2Ev.exit74.a
+
+_ZN15SlideTypeConfigD2Ev.exit74.a:                ; preds = %_ZN15SlideTypeConfigD2Ev.exit74
+  %i.ce = zext nneg i32 %.sroa.8160.0.copyload to i64 ; 2 uses
   %.not = icmp sgt i64 %.pre205, %i.ce
-  %or.cond224 = select i1 %2, i1 %.not, i1 false
-  br i1 %or.cond224, label %bb.t, label %_ZN15SlideTypeConfigD2Ev.exit74.thread
+  br i1 %.not, label %bb.t, label %_ZN15SlideTypeConfigD2Ev.exit74.thread
 
 bb.t:                                             ; preds = %_ZN15SlideTypeConfigD2Ev.exit74.a
   %i.cf = load i8, ptr %i.l, align 4, !range !16, !noundef !17
   %i.cg = trunc nuw i8 %i.cf to i1
   br i1 %i.cg, label %_ZN15SlideTypeConfigD2Ev.exit74.thread, label %bb.u
 
-_ZN15SlideTypeConfigD2Ev.exit74.thread:           ; preds = %bb.o, %_ZNKSt3mapI15BannerSlideType15SlideTypeConfigSt4lessIS0_ESaISt4pairIKS0_S1_EEE4findERS5_.exit.i, %_ZNKSt8_Rb_treeI15BannerSlideTypeSt4pairIKS0_15SlideTypeConfigESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS2_.exit.i.i.i, %bb.p, %bb.t, %_ZN15SlideTypeConfigD2Ev.exit74.a
-  %3 = phi i64 [ %.pre, %bb.o ], [ %.pre, %_ZNKSt3mapI15BannerSlideType15SlideTypeConfigSt4lessIS0_ESaISt4pairIKS0_S1_EEE4findERS5_.exit.i ], [ %.pre, %_ZNKSt8_Rb_treeI15BannerSlideTypeSt4pairIKS0_15SlideTypeConfigESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS2_.exit.i.i.i ], [ %.pre, %bb.p ], [ %.pre205, %bb.t ], [ %.pre205, %_ZN15SlideTypeConfigD2Ev.exit74.a ]
+_ZN15SlideTypeConfigD2Ev.exit74.thread:           ; preds = %bb.o, %_ZNKSt3mapI15BannerSlideType15SlideTypeConfigSt4lessIS0_ESaISt4pairIKS0_S1_EEE4findERS5_.exit.i, %_ZNKSt8_Rb_treeI15BannerSlideTypeSt4pairIKS0_15SlideTypeConfigESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS2_.exit.i.i.i, %bb.p, %bb.t, %_ZN15SlideTypeConfigD2Ev.exit74.a, %_ZN15SlideTypeConfigD2Ev.exit74
+  %3 = phi i64 [ %.pre, %bb.o ], [ %.pre, %_ZNKSt3mapI15BannerSlideType15SlideTypeConfigSt4lessIS0_ESaISt4pairIKS0_S1_EEE4findERS5_.exit.i ], [ %.pre, %_ZNKSt8_Rb_treeI15BannerSlideTypeSt4pairIKS0_15SlideTypeConfigESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS2_.exit.i.i.i ], [ %.pre, %bb.p ], [ %.pre205, %bb.t ], [ %.pre205, %_ZN15SlideTypeConfigD2Ev.exit74.a ], [ %.pre205, %_ZN15SlideTypeConfigD2Ev.exit74 ]
   %i.ch = load ptr, ptr %i.p, align 8             ; 2 uses
   %i.ci = getelementptr [248 x i8], ptr %i.ch, i64 %3
   invoke void @_ZN9QtPrivate15QCommonArrayOpsI11BannerSlideE10growAppendEPKS1_S4_(ptr noundef align 8 dereferenceable_or_null(24) %i.e, ptr noundef %i.ch, ptr noundef %i.ci)
@@ -290,7 +292,6 @@ _ZNKSt3mapI15BannerSlideTypeiSt4lessIS0_ESaISt4pairIKS0_iEEE4findERS4_.exit.i: ;
   %.1.i92 = phi i64 [ 0, %bb.u ], [ 0, %_ZNKSt8_Rb_treeI15BannerSlideTypeSt4pairIKS0_iESt10_Select1stIS3_ESt4lessIS0_ESaIS3_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS3_EPKSt18_Rb_tree_node_baseRS2_.exit.i.i.i ], [ %i.cw, %_ZNKSt3mapI15BannerSlideTypeiSt4lessIS0_ESaISt4pairIKS0_iEEE4findERS4_.exit.i ], [ 0, %bb.v ]
   %i.cx = srem i64 %.1.i92, %.pre205
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %wide.trip.count = zext nneg i32 %.sroa.8160.0.copyload to i64
   br label %.lr.ph197
 
 .lr.ph197:                                        ; preds = %.lr.ph197.preheader, %_ZN5QListI11BannerSlideE6appendERKS0_.exit102
@@ -351,7 +352,7 @@ _ZNK17QArrayDataPointerI11BannerSlideE11needsDetachEv.exit.thread.i.i.i.i.i99: ;
 
 _ZN5QListI11BannerSlideE6appendERKS0_.exit102:    ; preds = %_ZNK17QArrayDataPointerI11BannerSlideE11needsDetachEv.exit.i.i.i.i.i98, %_ZNK17QArrayDataPointerI11BannerSlideE11needsDetachEv.exit.thread.i.i.i.i.i99
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ce
   br i1 %exitcond.not, label %_ZN5QListI11BannerSlideE6appendERKS1_.exit, label %.lr.ph197, !llvm.loop !79
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZN5QListI11BannerSlideE6detachEv.exit.i, %_ZNK17QArrayDataPointerI11BannerSlideE11needsDetachEv.exit.thread.i.i.i.i, %bb.x, %_ZNK17QArrayDataPointerI11BannerSlideE11needsDetachEv.exit.thread.i.i.i.i.i99, %bb.n, %_ZNK17QArrayDataPointerI11BannerSlideE11needsDetachEv.exit.thread.i.i.i.i.i, %_ZN15SlideTypeConfigD2Ev.exit74.thread

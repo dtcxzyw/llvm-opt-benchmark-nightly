@@ -205,10 +205,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge
   %i.ay = phi ptr [ %.pre1052, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 10 uses
-  %i.az = phi i64 [ %.pre1050, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 22 uses
+  %i.az = phi i64 [ %.pre1050, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 24 uses
   %i.ba = phi i64 [ %.pre1048, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1046, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 11 uses
-  %i.bc = phi i64 [ %.pre1044, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 27 uses
+  %i.bc = phi i64 [ %.pre1044, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 29 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 8 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -611,7 +611,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 .lr.ph466.i:                                      ; preds = %bb.bj, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.gx, %bb.bl ], [ 1, %bb.bj ]
   %i.gy = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 21 uses
-  %invariant.op467.i = sub i64 %.sroa.0218.0, %i.bd ; 3 uses
+  %invariant.op467.i = sub i64 %.sroa.0218.0, %i.bd ; 4 uses
   %invariant.op.i85 = sub i64 %.sroa.0.0, %i.ba   ; 3 uses
   br label %.lr.ph466.split.i
 
@@ -626,7 +626,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 
 .lr.ph492.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i, %bb.dc
   %.sroa.05.0.not491.i = phi i1 [ false, %bb.dc ], [ true, %..loopexit68_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0490.i = phi i64 [ %.sroa.09.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 12 uses
+  %.sroa.09.0490.i = phi i64 [ %.sroa.09.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 13 uses
   %.sroa.038.0489.i = phi i64 [ %.sroa.038.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 17 uses
   %i.hb = and i64 %.sroa.038.0489.i, 1023
   %i.hc = icmp eq i64 %i.hb, 0
@@ -736,10 +736,10 @@ bb.bs:                                            ; preds = %bb.bu, %.lr.ph492.i
   %i.if = icmp ult i64 %i.ie, %i.bc
   br i1 %i.if, label %bb.bv, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.bv, %bb.bs, %bb.cu, %bb.ch, %bb.di, %bb.eb, %.lr.ph.split.i
-  %i.ig = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.ke, %bb.ch ], [ %i.lq, %bb.cu ], [ %i.az, %bb.di ], [ %i.ie, %bb.bs ], [ %i.il, %bb.bv ], [ %.reass.us.i, %bb.dr ]
-  %i.ih = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ch ], [ %i.bc, %bb.cu ], [ %i.az, %bb.di ], [ %i.bc, %bb.bs ], [ %i.az, %bb.bv ], [ %i.az, %bb.dr ]
-  %i.ii = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ch ], [ @252, %bb.cu ], [ @258, %bb.di ], [ @241, %bb.bs ], [ @242, %bb.bv ], [ @262, %bb.dr ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.bv, %bb.bs, %bb.ch, %bb.di, %bb.eb, %.lr.ph.split.i, %11
+  %i.ig = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.az, %bb.ch ], [ %umax687.le.i, %11 ], [ %i.ie, %bb.bs ], [ %i.az, %bb.di ], [ %i.il, %bb.bv ], [ %.reass.us.i, %bb.dr ]
+  %i.ih = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ch ], [ %i.bc, %11 ], [ %i.bc, %bb.bs ], [ %i.az, %bb.di ], [ %i.az, %bb.bv ], [ %i.az, %bb.dr ]
+  %i.ii = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ch ], [ @252, %11 ], [ @241, %bb.bs ], [ @258, %bb.di ], [ @242, %bb.bv ], [ @262, %bb.dr ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ig, i64 noundef %i.ih, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ii) #74
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !15992
 
@@ -879,7 +879,7 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.kd, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskXtk6F4WjxZ_4just.exit219.sink.split.i.thread, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cd
-  %i.ke = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 3 uses
+  %i.ke = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 2 uses
   %i.kf = icmp ult i64 %i.ke, %i.az
   br i1 %i.kf, label %bb.ci, label %.invoke.i
 
@@ -980,9 +980,14 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.ct, %.lr.ph1791
   %i.lp = mul i64 %.sroa.09.1.i1790, %i.gr        ; 2 uses
-  %i.lq = add i64 %.sroa.09.1.i1790, %invariant.op467.i ; 3 uses
+  %i.lq = add i64 %.sroa.09.1.i1790, %invariant.op467.i ; 2 uses
   %i.lr = icmp ult i64 %i.lq, %i.bc
-  br i1 %i.lr, label %bb.cv, label %.invoke.i
+  br i1 %i.lr, label %bb.cv, label %11
+
+11:                                               ; preds = %bb.cu
+  %12 = add i64 %.sroa.09.0490.i, %invariant.op467.i
+  %umax687.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cv:                                            ; preds = %bb.cu
   %i.ls = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.lq
@@ -1299,7 +1304,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
   %.sroa.10.0.i.i94 = phi i64 [ %i.pp, %bb.eg ], [ 1, %bb.ee ]
   %i.pq = inttoptr i64 %.sroa.10.0.i.i94 to ptr   ; 21 uses
   %invariant.op.i109 = sub i64 %.sroa.0218.0, %i.bd ; 4 uses
-  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 3 uses
+  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
   br label %.lr.ph481.split.i
 
 .lr.ph481.split.i:                                ; preds = %.lr.ph481.i, %..loopexit68_crit_edge.split.us.i179
@@ -1313,7 +1318,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
 
 .lr.ph508.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i179, %bb.fx
   %.sroa.05.0.not507.i = phi i1 [ false, %bb.fx ], [ true, %..loopexit68_crit_edge.split.us.i179 ] ; 3 uses
-  %.sroa.09.0506.i = phi i64 [ %.sroa.09.3.i144, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 13 uses
+  %.sroa.09.0506.i = phi i64 [ %.sroa.09.3.i144, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 14 uses
   %.sroa.039.0505.i = phi i64 [ %.sroa.039.3.i, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 16 uses
   %i.pt = and i64 %.sroa.039.0505.i, 1023
   %i.pu = icmp eq i64 %i.pt, 0
@@ -1415,10 +1420,10 @@ bb.en:                                            ; preds = %bb.ep, %.lr.ph508.i
   %i.qx = icmp ult i64 %i.qw, %i.bc
   br i1 %i.qx, label %bb.eq, label %.invoke.i121
 
-.invoke.i121:                                     ; preds = %bb.gm, %bb.eq, %bb.en, %bb.fp, %bb.fc, %bb.gd, %bb.gy, %bb.gx
-  %i.qy = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i170, %bb.gx ], [ %i.sw, %bb.fc ], [ %i.ui, %bb.fp ], [ %i.az, %bb.gd ], [ %i.qw, %bb.en ], [ %i.rd, %bb.eq ], [ %.reass.us.i173, %bb.gm ]
-  %i.qz = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fc ], [ %i.az, %bb.fp ], [ %i.az, %bb.gd ], [ %i.bc, %bb.en ], [ %i.az, %bb.eq ], [ %i.bc, %bb.gm ]
-  %i.ra = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fc ], [ @278, %bb.fp ], [ @284, %bb.gd ], [ @267, %bb.en ], [ @268, %bb.eq ], [ @287, %bb.gm ]
+.invoke.i121:                                     ; preds = %bb.gm, %bb.eq, %bb.en, %bb.fc, %bb.gd, %bb.gy, %bb.gx, %13
+  %i.qy = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i170, %bb.gx ], [ %i.bc, %bb.fc ], [ %umax703.le.i, %13 ], [ %i.qw, %bb.en ], [ %i.az, %bb.gd ], [ %i.rd, %bb.eq ], [ %.reass.us.i173, %bb.gm ]
+  %i.qz = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fc ], [ %i.az, %13 ], [ %i.bc, %bb.en ], [ %i.az, %bb.gd ], [ %i.az, %bb.eq ], [ %i.bc, %bb.gm ]
+  %i.ra = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fc ], [ @278, %13 ], [ @267, %bb.en ], [ @284, %bb.gd ], [ @268, %bb.eq ], [ @287, %bb.gm ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.qy, i64 noundef %i.qz, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ra) #74
           to label %.cont.i122 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i103.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !16006
 
@@ -1558,7 +1563,7 @@ bb.fb:                                            ; preds = %bb.fa
   br i1 %i.sv, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQIB1M_QINtNtB4_7compact7CompactIB1e_mEB2H_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXtk6F4WjxZ_4just.exit.thread344, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb, %bb.ey
-  %i.sw = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 3 uses
+  %i.sw = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 2 uses
   %i.sx = icmp ult i64 %i.sw, %i.bc
   br i1 %i.sx, label %bb.fd, label %.invoke.i121
 
@@ -1659,9 +1664,14 @@ bb.fo:                                            ; preds = %bb.fn
 
 bb.fp:                                            ; preds = %bb.fo, %.lr.ph1783
   %i.uh = mul i64 %.sroa.09.1.i1341782, %i.pj     ; 2 uses
-  %i.ui = add i64 %.sroa.09.1.i1341782, %invariant.op482.i ; 3 uses
+  %i.ui = add i64 %.sroa.09.1.i1341782, %invariant.op482.i ; 2 uses
   %i.uj = icmp ult i64 %i.ui, %i.az
-  br i1 %i.uj, label %bb.fq, label %.invoke.i121
+  br i1 %i.uj, label %bb.fq, label %13
+
+13:                                               ; preds = %bb.fp
+  %14 = add i64 %.sroa.09.0506.i, %invariant.op482.i
+  %umax703.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i121
 
 bb.fq:                                            ; preds = %bb.fp
   %i.uk = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.ui
@@ -2064,10 +2074,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge
   %i.ay = phi ptr [ %.pre1052, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 10 uses
-  %i.az = phi i64 [ %.pre1050, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 22 uses
+  %i.az = phi i64 [ %.pre1050, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 24 uses
   %i.ba = phi i64 [ %.pre1048, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1046, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 11 uses
-  %i.bc = phi i64 [ %.pre1044, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 27 uses
+  %i.bc = phi i64 [ %.pre1044, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 29 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 8 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -2470,7 +2480,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 .lr.ph466.i:                                      ; preds = %bb.bj, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.gx, %bb.bl ], [ 1, %bb.bj ]
   %i.gy = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 21 uses
-  %invariant.op467.i = sub i64 %.sroa.0218.0, %i.bd ; 3 uses
+  %invariant.op467.i = sub i64 %.sroa.0218.0, %i.bd ; 4 uses
   %invariant.op.i85 = sub i64 %.sroa.0.0, %i.ba   ; 3 uses
   br label %.lr.ph466.split.i
 
@@ -2485,7 +2495,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 
 .lr.ph492.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i, %bb.dc
   %.sroa.05.0.not491.i = phi i1 [ false, %bb.dc ], [ true, %..loopexit68_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0490.i = phi i64 [ %.sroa.09.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 12 uses
+  %.sroa.09.0490.i = phi i64 [ %.sroa.09.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 13 uses
   %.sroa.038.0489.i = phi i64 [ %.sroa.038.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 17 uses
   %i.hb = and i64 %.sroa.038.0489.i, 1023
   %i.hc = icmp eq i64 %i.hb, 0
@@ -2595,10 +2605,10 @@ bb.bs:                                            ; preds = %bb.bu, %.lr.ph492.i
   %i.if = icmp ult i64 %i.ie, %i.bc
   br i1 %i.if, label %bb.bv, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.bv, %bb.bs, %bb.cu, %bb.ch, %bb.di, %bb.eb, %.lr.ph.split.i
-  %i.ig = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.ke, %bb.ch ], [ %i.lq, %bb.cu ], [ %i.az, %bb.di ], [ %i.ie, %bb.bs ], [ %i.il, %bb.bv ], [ %.reass.us.i, %bb.dr ]
-  %i.ih = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ch ], [ %i.bc, %bb.cu ], [ %i.az, %bb.di ], [ %i.bc, %bb.bs ], [ %i.az, %bb.bv ], [ %i.az, %bb.dr ]
-  %i.ii = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ch ], [ @252, %bb.cu ], [ @258, %bb.di ], [ @241, %bb.bs ], [ @242, %bb.bv ], [ @262, %bb.dr ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.bv, %bb.bs, %bb.ch, %bb.di, %bb.eb, %.lr.ph.split.i, %11
+  %i.ig = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.az, %bb.ch ], [ %umax687.le.i, %11 ], [ %i.ie, %bb.bs ], [ %i.az, %bb.di ], [ %i.il, %bb.bv ], [ %.reass.us.i, %bb.dr ]
+  %i.ih = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ch ], [ %i.bc, %11 ], [ %i.bc, %bb.bs ], [ %i.az, %bb.di ], [ %i.az, %bb.bv ], [ %i.az, %bb.dr ]
+  %i.ii = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ch ], [ @252, %11 ], [ @241, %bb.bs ], [ @258, %bb.di ], [ @242, %bb.bv ], [ @262, %bb.dr ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ig, i64 noundef %i.ih, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ii) #74
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !16371
 
@@ -2738,7 +2748,7 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.kd, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskXtk6F4WjxZ_4just.exit219.sink.split.i.thread, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cd
-  %i.ke = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 3 uses
+  %i.ke = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 2 uses
   %i.kf = icmp ult i64 %i.ke, %i.az
   br i1 %i.kf, label %bb.ci, label %.invoke.i
 
@@ -2839,9 +2849,14 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.ct, %.lr.ph1791
   %i.lp = mul i64 %.sroa.09.1.i1790, %i.gr        ; 2 uses
-  %i.lq = add i64 %.sroa.09.1.i1790, %invariant.op467.i ; 3 uses
+  %i.lq = add i64 %.sroa.09.1.i1790, %invariant.op467.i ; 2 uses
   %i.lr = icmp ult i64 %i.lq, %i.bc
-  br i1 %i.lr, label %bb.cv, label %.invoke.i
+  br i1 %i.lr, label %bb.cv, label %11
+
+11:                                               ; preds = %bb.cu
+  %12 = add i64 %.sroa.09.0490.i, %invariant.op467.i
+  %umax687.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cv:                                            ; preds = %bb.cu
   %i.ls = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.lq
@@ -3158,7 +3173,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
   %.sroa.10.0.i.i94 = phi i64 [ %i.pp, %bb.eg ], [ 1, %bb.ee ]
   %i.pq = inttoptr i64 %.sroa.10.0.i.i94 to ptr   ; 21 uses
   %invariant.op.i109 = sub i64 %.sroa.0218.0, %i.bd ; 4 uses
-  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 3 uses
+  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
   br label %.lr.ph481.split.i
 
 .lr.ph481.split.i:                                ; preds = %.lr.ph481.i, %..loopexit68_crit_edge.split.us.i179
@@ -3172,7 +3187,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
 
 .lr.ph508.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i179, %bb.fx
   %.sroa.05.0.not507.i = phi i1 [ false, %bb.fx ], [ true, %..loopexit68_crit_edge.split.us.i179 ] ; 3 uses
-  %.sroa.09.0506.i = phi i64 [ %.sroa.09.3.i144, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 13 uses
+  %.sroa.09.0506.i = phi i64 [ %.sroa.09.3.i144, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 14 uses
   %.sroa.039.0505.i = phi i64 [ %.sroa.039.3.i, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 16 uses
   %i.pt = and i64 %.sroa.039.0505.i, 1023
   %i.pu = icmp eq i64 %i.pt, 0
@@ -3274,10 +3289,10 @@ bb.en:                                            ; preds = %bb.ep, %.lr.ph508.i
   %i.qx = icmp ult i64 %i.qw, %i.bc
   br i1 %i.qx, label %bb.eq, label %.invoke.i121
 
-.invoke.i121:                                     ; preds = %bb.gm, %bb.eq, %bb.en, %bb.fp, %bb.fc, %bb.gd, %bb.gy, %bb.gx
-  %i.qy = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i170, %bb.gx ], [ %i.sw, %bb.fc ], [ %i.ui, %bb.fp ], [ %i.az, %bb.gd ], [ %i.qw, %bb.en ], [ %i.rd, %bb.eq ], [ %.reass.us.i173, %bb.gm ]
-  %i.qz = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fc ], [ %i.az, %bb.fp ], [ %i.az, %bb.gd ], [ %i.bc, %bb.en ], [ %i.az, %bb.eq ], [ %i.bc, %bb.gm ]
-  %i.ra = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fc ], [ @278, %bb.fp ], [ @284, %bb.gd ], [ @267, %bb.en ], [ @268, %bb.eq ], [ @287, %bb.gm ]
+.invoke.i121:                                     ; preds = %bb.gm, %bb.eq, %bb.en, %bb.fc, %bb.gd, %bb.gy, %bb.gx, %13
+  %i.qy = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i170, %bb.gx ], [ %i.bc, %bb.fc ], [ %umax703.le.i, %13 ], [ %i.qw, %bb.en ], [ %i.az, %bb.gd ], [ %i.rd, %bb.eq ], [ %.reass.us.i173, %bb.gm ]
+  %i.qz = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fc ], [ %i.az, %13 ], [ %i.bc, %bb.en ], [ %i.az, %bb.gd ], [ %i.az, %bb.eq ], [ %i.bc, %bb.gm ]
+  %i.ra = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fc ], [ @278, %13 ], [ @267, %bb.en ], [ @284, %bb.gd ], [ @268, %bb.eq ], [ @287, %bb.gm ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.qy, i64 noundef %i.qz, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ra) #74
           to label %.cont.i122 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i103.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !16385
 
@@ -3417,7 +3432,7 @@ bb.fb:                                            ; preds = %bb.fa
   br i1 %i.sv, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQIB1M_QINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2H_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXtk6F4WjxZ_4just.exit.thread344, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb, %bb.ey
-  %i.sw = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 3 uses
+  %i.sw = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 2 uses
   %i.sx = icmp ult i64 %i.sw, %i.bc
   br i1 %i.sx, label %bb.fd, label %.invoke.i121
 
@@ -3518,9 +3533,14 @@ bb.fo:                                            ; preds = %bb.fn
 
 bb.fp:                                            ; preds = %bb.fo, %.lr.ph1783
   %i.uh = mul i64 %.sroa.09.1.i1341782, %i.pj     ; 2 uses
-  %i.ui = add i64 %.sroa.09.1.i1341782, %invariant.op482.i ; 3 uses
+  %i.ui = add i64 %.sroa.09.1.i1341782, %invariant.op482.i ; 2 uses
   %i.uj = icmp ult i64 %i.ui, %i.az
-  br i1 %i.uj, label %bb.fq, label %.invoke.i121
+  br i1 %i.uj, label %bb.fq, label %13
+
+13:                                               ; preds = %bb.fp
+  %14 = add i64 %.sroa.09.0506.i, %invariant.op482.i
+  %umax703.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i121
 
 bb.fq:                                            ; preds = %bb.fp
   %i.uk = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.ui
@@ -3923,10 +3943,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge
   %i.ay = phi ptr [ %.pre1045, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 10 uses
-  %i.az = phi i64 [ %.pre1043, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 22 uses
+  %i.az = phi i64 [ %.pre1043, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 24 uses
   %i.ba = phi i64 [ %.pre1041, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1039, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 11 uses
-  %i.bc = phi i64 [ %.pre1037, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 27 uses
+  %i.bc = phi i64 [ %.pre1037, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 29 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 8 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -4329,7 +4349,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 .lr.ph466.i:                                      ; preds = %bb.bj, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.gr, %bb.bl ], [ 1, %bb.bj ]
   %i.gs = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 21 uses
-  %invariant.op467.i = sub i64 %.sroa.0211.0, %i.bd ; 3 uses
+  %invariant.op467.i = sub i64 %.sroa.0211.0, %i.bd ; 4 uses
   %invariant.op.i85 = sub i64 %.sroa.0.0, %i.ba   ; 3 uses
   br label %.lr.ph466.split.i
 
@@ -4350,7 +4370,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 
 bb.bn:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i, %.lr.ph492.i
   %.sroa.05.0.not491.i = phi i1 [ true, %.lr.ph492.i ], [ false, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 3 uses
-  %.sroa.09.0490.i = phi i64 [ 0, %.lr.ph492.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 13 uses
+  %.sroa.09.0490.i = phi i64 [ 0, %.lr.ph492.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 14 uses
   %.sroa.038.0489.i = phi i64 [ 0, %.lr.ph492.i ], [ %.sroa.038.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 18 uses
   %i.gy = and i64 %.sroa.038.0489.i, 1023
   %i.gz = icmp eq i64 %i.gy, 0
@@ -4451,10 +4471,10 @@ bb.bt:                                            ; preds = %bb.bv, %bb.bn
   %i.ht = icmp ult i64 %i.hs, %i.bc
   br i1 %i.ht, label %bb.bw, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.bw, %bb.bt, %bb.cv, %bb.ci, %bb.di, %bb.eb, %.lr.ph.split.i
-  %i.hu = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.jl, %bb.ci ], [ %i.kq, %bb.cv ], [ %i.az, %bb.di ], [ %i.hs, %bb.bt ], [ %i.hz, %bb.bw ], [ %.reass.us.i, %bb.dr ]
-  %i.hv = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ci ], [ %i.bc, %bb.cv ], [ %i.az, %bb.di ], [ %i.bc, %bb.bt ], [ %i.az, %bb.bw ], [ %i.az, %bb.dr ]
-  %i.hw = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ci ], [ @252, %bb.cv ], [ @258, %bb.di ], [ @241, %bb.bt ], [ @242, %bb.bw ], [ @262, %bb.dr ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.bw, %bb.bt, %bb.ci, %bb.di, %bb.eb, %.lr.ph.split.i, %11
+  %i.hu = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.az, %bb.ci ], [ %umax687.le.i, %11 ], [ %i.hs, %bb.bt ], [ %i.az, %bb.di ], [ %i.hz, %bb.bw ], [ %.reass.us.i, %bb.dr ]
+  %i.hv = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ci ], [ %i.bc, %11 ], [ %i.bc, %bb.bt ], [ %i.az, %bb.di ], [ %i.az, %bb.bw ], [ %i.az, %bb.dr ]
+  %i.hw = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ci ], [ @252, %11 ], [ @241, %bb.bt ], [ @258, %bb.di ], [ @242, %bb.bw ], [ @262, %bb.dr ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.hu, i64 noundef %i.hv, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hw) #74
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !16646
 
@@ -4576,7 +4596,7 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %i.jk, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskXtk6F4WjxZ_4just.exit217.sink.split.i.thread, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch, %bb.ce
-  %i.jl = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 3 uses
+  %i.jl = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 2 uses
   %i.jm = icmp ult i64 %i.jl, %i.az
   br i1 %i.jm, label %bb.cj, label %.invoke.i
 
@@ -4659,9 +4679,14 @@ bb.cu:                                            ; preds = %bb.ct
 
 bb.cv:                                            ; preds = %bb.cu, %.lr.ph1803
   %i.kp = mul i64 %.sroa.09.1.i1802, %i.gl        ; 2 uses
-  %i.kq = add i64 %.sroa.09.1.i1802, %invariant.op467.i ; 3 uses
+  %i.kq = add i64 %.sroa.09.1.i1802, %invariant.op467.i ; 2 uses
   %i.kr = icmp ult i64 %i.kq, %i.bc
-  br i1 %i.kr, label %bb.cw, label %.invoke.i
+  br i1 %i.kr, label %bb.cw, label %11
+
+11:                                               ; preds = %bb.cv
+  %12 = add i64 %.sroa.09.0490.i, %invariant.op467.i
+  %umax687.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cw:                                            ; preds = %bb.cv
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.kq
@@ -4975,7 +5000,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
   %.sroa.10.0.i.i94 = phi i64 [ %i.ol, %bb.eg ], [ 1, %bb.ee ]
   %i.om = inttoptr i64 %.sroa.10.0.i.i94 to ptr   ; 21 uses
   %invariant.op.i109 = sub i64 %.sroa.0211.0, %i.bd ; 4 uses
-  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 3 uses
+  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
   br label %.lr.ph481.split.i
 
 .lr.ph508.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i172
@@ -4995,7 +5020,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
 
 bb.ei:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140, %.lr.ph508.i
   %.sroa.05.0.not507.i = phi i1 [ true, %.lr.ph508.i ], [ false, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 3 uses
-  %.sroa.09.0506.i = phi i64 [ 0, %.lr.ph508.i ], [ %.sroa.09.3.i142, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 14 uses
+  %.sroa.09.0506.i = phi i64 [ 0, %.lr.ph508.i ], [ %.sroa.09.3.i142, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 15 uses
   %.sroa.039.0505.i = phi i64 [ 0, %.lr.ph508.i ], [ %.sroa.039.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 17 uses
   %i.os = and i64 %.sroa.039.0505.i, 1023
   %i.ot = icmp eq i64 %i.os, 0
@@ -5088,10 +5113,10 @@ bb.eo:                                            ; preds = %bb.eq, %bb.ei
   %i.pn = icmp ult i64 %i.pm, %i.bc
   br i1 %i.pn, label %bb.er, label %.invoke.i121
 
-.invoke.i121:                                     ; preds = %bb.gm, %bb.er, %bb.eo, %bb.fq, %bb.fd, %bb.gd, %bb.gy, %bb.gx
-  %i.po = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i163, %bb.gx ], [ %i.rf, %bb.fd ], [ %i.sk, %bb.fq ], [ %i.az, %bb.gd ], [ %i.pm, %bb.eo ], [ %i.pt, %bb.er ], [ %.reass.us.i166, %bb.gm ]
-  %i.pp = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fd ], [ %i.az, %bb.fq ], [ %i.az, %bb.gd ], [ %i.bc, %bb.eo ], [ %i.az, %bb.er ], [ %i.bc, %bb.gm ]
-  %i.pq = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fd ], [ @278, %bb.fq ], [ @284, %bb.gd ], [ @267, %bb.eo ], [ @268, %bb.er ], [ @287, %bb.gm ]
+.invoke.i121:                                     ; preds = %bb.gm, %bb.er, %bb.eo, %bb.fd, %bb.gd, %bb.gy, %bb.gx, %13
+  %i.po = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i163, %bb.gx ], [ %i.bc, %bb.fd ], [ %umax703.le.i, %13 ], [ %i.pm, %bb.eo ], [ %i.az, %bb.gd ], [ %i.pt, %bb.er ], [ %.reass.us.i166, %bb.gm ]
+  %i.pp = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fd ], [ %i.az, %13 ], [ %i.bc, %bb.eo ], [ %i.az, %bb.gd ], [ %i.az, %bb.er ], [ %i.bc, %bb.gm ]
+  %i.pq = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fd ], [ @278, %13 ], [ @267, %bb.eo ], [ @284, %bb.gd ], [ @268, %bb.er ], [ @287, %bb.gm ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.po, i64 noundef %i.pp, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.pq) #74
           to label %.cont.i122 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i103.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !16655
 
@@ -5213,7 +5238,7 @@ bb.fc:                                            ; preds = %bb.fb
   br i1 %i.re, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactIB1e_mEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXtk6F4WjxZ_4just.exit.thread337, label %bb.fd
 
 bb.fd:                                            ; preds = %bb.fc, %bb.ez
-  %i.rf = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 3 uses
+  %i.rf = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 2 uses
   %i.rg = icmp ult i64 %i.rf, %i.bc
   br i1 %i.rg, label %bb.fe, label %.invoke.i121
 
@@ -5296,9 +5321,14 @@ bb.fp:                                            ; preds = %bb.fo
 
 bb.fq:                                            ; preds = %bb.fp, %.lr.ph1795
   %i.sj = mul i64 %.sroa.09.1.i1341794, %i.of     ; 2 uses
-  %i.sk = add i64 %.sroa.09.1.i1341794, %invariant.op482.i ; 3 uses
+  %i.sk = add i64 %.sroa.09.1.i1341794, %invariant.op482.i ; 2 uses
   %i.sl = icmp ult i64 %i.sk, %i.az
-  br i1 %i.sl, label %bb.fr, label %.invoke.i121
+  br i1 %i.sl, label %bb.fr, label %13
+
+13:                                               ; preds = %bb.fq
+  %14 = add i64 %.sroa.09.0506.i, %invariant.op482.i
+  %umax703.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i121
 
 bb.fr:                                            ; preds = %bb.fq
   %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.sk
@@ -5701,10 +5731,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge
   %i.ay = phi ptr [ %.pre1045, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 10 uses
-  %i.az = phi i64 [ %.pre1043, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 22 uses
+  %i.az = phi i64 [ %.pre1043, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 24 uses
   %i.ba = phi i64 [ %.pre1041, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1039, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 11 uses
-  %i.bc = phi i64 [ %.pre1037, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 27 uses
+  %i.bc = phi i64 [ %.pre1037, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 29 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 8 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupjEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -6107,7 +6137,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 .lr.ph466.i:                                      ; preds = %bb.bj, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.gr, %bb.bl ], [ 1, %bb.bj ]
   %i.gs = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 21 uses
-  %invariant.op467.i = sub i64 %.sroa.0211.0, %i.bd ; 3 uses
+  %invariant.op467.i = sub i64 %.sroa.0211.0, %i.bd ; 4 uses
   %invariant.op.i85 = sub i64 %.sroa.0.0, %i.ba   ; 3 uses
   br label %.lr.ph466.split.i
 
@@ -6128,7 +6158,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 
 bb.bn:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i, %.lr.ph492.i
   %.sroa.05.0.not491.i = phi i1 [ true, %.lr.ph492.i ], [ false, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 3 uses
-  %.sroa.09.0490.i = phi i64 [ 0, %.lr.ph492.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 13 uses
+  %.sroa.09.0490.i = phi i64 [ 0, %.lr.ph492.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 14 uses
   %.sroa.038.0489.i = phi i64 [ 0, %.lr.ph492.i ], [ %.sroa.038.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ] ; 18 uses
   %i.gy = and i64 %.sroa.038.0489.i, 1023
   %i.gz = icmp eq i64 %i.gy, 0
@@ -6229,10 +6259,10 @@ bb.bt:                                            ; preds = %bb.bv, %bb.bn
   %i.ht = icmp ult i64 %i.hs, %i.bc
   br i1 %i.ht, label %bb.bw, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.bw, %bb.bt, %bb.cv, %bb.ci, %bb.di, %bb.eb, %.lr.ph.split.i
-  %i.hu = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.jl, %bb.ci ], [ %i.kq, %bb.cv ], [ %i.az, %bb.di ], [ %i.hs, %bb.bt ], [ %i.hz, %bb.bw ], [ %.reass.us.i, %bb.dr ]
-  %i.hv = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ci ], [ %i.bc, %bb.cv ], [ %i.az, %bb.di ], [ %i.bc, %bb.bt ], [ %i.az, %bb.bw ], [ %i.az, %bb.dr ]
-  %i.hw = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ci ], [ @252, %bb.cv ], [ @258, %bb.di ], [ @241, %bb.bt ], [ @242, %bb.bw ], [ @262, %bb.dr ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.bw, %bb.bt, %bb.ci, %bb.di, %bb.eb, %.lr.ph.split.i, %11
+  %i.hu = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.az, %bb.ci ], [ %umax687.le.i, %11 ], [ %i.hs, %bb.bt ], [ %i.az, %bb.di ], [ %i.hz, %bb.bw ], [ %.reass.us.i, %bb.dr ]
+  %i.hv = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ci ], [ %i.bc, %11 ], [ %i.bc, %bb.bt ], [ %i.az, %bb.di ], [ %i.az, %bb.bw ], [ %i.az, %bb.dr ]
+  %i.hw = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ci ], [ @252, %11 ], [ @241, %bb.bt ], [ @258, %bb.di ], [ @242, %bb.bw ], [ @262, %bb.dr ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.hu, i64 noundef %i.hv, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hw) #74
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !16895
 
@@ -6354,7 +6384,7 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %i.jk, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskXtk6F4WjxZ_4just.exit217.sink.split.i.thread, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch, %bb.ce
-  %i.jl = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 3 uses
+  %i.jl = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 2 uses
   %i.jm = icmp ult i64 %i.jl, %i.az
   br i1 %i.jm, label %bb.cj, label %.invoke.i
 
@@ -6437,9 +6467,14 @@ bb.cu:                                            ; preds = %bb.ct
 
 bb.cv:                                            ; preds = %bb.cu, %.lr.ph1803
   %i.kp = mul i64 %.sroa.09.1.i1802, %i.gl        ; 2 uses
-  %i.kq = add i64 %.sroa.09.1.i1802, %invariant.op467.i ; 3 uses
+  %i.kq = add i64 %.sroa.09.1.i1802, %invariant.op467.i ; 2 uses
   %i.kr = icmp ult i64 %i.kq, %i.bc
-  br i1 %i.kr, label %bb.cw, label %.invoke.i
+  br i1 %i.kr, label %bb.cw, label %11
+
+11:                                               ; preds = %bb.cv
+  %12 = add i64 %.sroa.09.0490.i, %invariant.op467.i
+  %umax687.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cw:                                            ; preds = %bb.cv
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.kq
@@ -6753,7 +6788,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
   %.sroa.10.0.i.i94 = phi i64 [ %i.ol, %bb.eg ], [ 1, %bb.ee ]
   %i.om = inttoptr i64 %.sroa.10.0.i.i94 to ptr   ; 21 uses
   %invariant.op.i109 = sub i64 %.sroa.0211.0, %i.bd ; 4 uses
-  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 3 uses
+  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
   br label %.lr.ph481.split.i
 
 .lr.ph508.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i172
@@ -6773,7 +6808,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
 
 bb.ei:                                            ; preds = %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140, %.lr.ph508.i
   %.sroa.05.0.not507.i = phi i1 [ true, %.lr.ph508.i ], [ false, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 3 uses
-  %.sroa.09.0506.i = phi i64 [ 0, %.lr.ph508.i ], [ %.sroa.09.3.i142, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 14 uses
+  %.sroa.09.0506.i = phi i64 [ 0, %.lr.ph508.i ], [ %.sroa.09.3.i142, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 15 uses
   %.sroa.039.0505.i = phi i64 [ 0, %.lr.ph508.i ], [ %.sroa.039.3.i, %_RNvXs0_NtNtCsdftwklc2oBO_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i140 ] ; 17 uses
   %i.os = and i64 %.sroa.039.0505.i, 1023
   %i.ot = icmp eq i64 %i.os, 0
@@ -6866,10 +6901,10 @@ bb.eo:                                            ; preds = %bb.eq, %bb.ei
   %i.pn = icmp ult i64 %i.pm, %i.bc
   br i1 %i.pn, label %bb.er, label %.invoke.i121
 
-.invoke.i121:                                     ; preds = %bb.gm, %bb.er, %bb.eo, %bb.fq, %bb.fd, %bb.gd, %bb.gy, %bb.gx
-  %i.po = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i163, %bb.gx ], [ %i.rf, %bb.fd ], [ %i.sk, %bb.fq ], [ %i.az, %bb.gd ], [ %i.pm, %bb.eo ], [ %i.pt, %bb.er ], [ %.reass.us.i166, %bb.gm ]
-  %i.pp = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fd ], [ %i.az, %bb.fq ], [ %i.az, %bb.gd ], [ %i.bc, %bb.eo ], [ %i.az, %bb.er ], [ %i.bc, %bb.gm ]
-  %i.pq = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fd ], [ @278, %bb.fq ], [ @284, %bb.gd ], [ @267, %bb.eo ], [ @268, %bb.er ], [ @287, %bb.gm ]
+.invoke.i121:                                     ; preds = %bb.gm, %bb.er, %bb.eo, %bb.fd, %bb.gd, %bb.gy, %bb.gx, %13
+  %i.po = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i163, %bb.gx ], [ %i.bc, %bb.fd ], [ %umax703.le.i, %13 ], [ %i.pm, %bb.eo ], [ %i.az, %bb.gd ], [ %i.pt, %bb.er ], [ %.reass.us.i166, %bb.gm ]
+  %i.pp = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fd ], [ %i.az, %13 ], [ %i.bc, %bb.eo ], [ %i.az, %bb.gd ], [ %i.az, %bb.er ], [ %i.bc, %bb.gm ]
+  %i.pq = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fd ], [ @278, %13 ], [ @267, %bb.eo ], [ @284, %bb.gd ], [ @268, %bb.er ], [ @287, %bb.gm ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.po, i64 noundef %i.pp, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.pq) #74
           to label %.cont.i122 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i103.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !16904
 
@@ -6991,7 +7026,7 @@ bb.fc:                                            ; preds = %bb.fb
   br i1 %i.re, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupjEB1d_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXtk6F4WjxZ_4just.exit.thread337, label %bb.fd
 
 bb.fd:                                            ; preds = %bb.fc, %bb.ez
-  %i.rf = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 3 uses
+  %i.rf = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 2 uses
   %i.rg = icmp ult i64 %i.rf, %i.bc
   br i1 %i.rg, label %bb.fe, label %.invoke.i121
 
@@ -7074,9 +7109,14 @@ bb.fp:                                            ; preds = %bb.fo
 
 bb.fq:                                            ; preds = %bb.fp, %.lr.ph1795
   %i.sj = mul i64 %.sroa.09.1.i1341794, %i.of     ; 2 uses
-  %i.sk = add i64 %.sroa.09.1.i1341794, %invariant.op482.i ; 3 uses
+  %i.sk = add i64 %.sroa.09.1.i1341794, %invariant.op482.i ; 2 uses
   %i.sl = icmp ult i64 %i.sk, %i.az
-  br i1 %i.sl, label %bb.fr, label %.invoke.i121
+  br i1 %i.sl, label %bb.fr, label %13
+
+13:                                               ; preds = %bb.fq
+  %14 = add i64 %.sroa.09.0506.i, %invariant.op482.i
+  %umax703.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i121
 
 bb.fr:                                            ; preds = %bb.fq
   %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.sk
@@ -7479,10 +7519,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge
   %i.ay = phi ptr [ %.pre1052, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.al, %bb.g ] ; 10 uses
-  %i.az = phi i64 [ %.pre1050, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 22 uses
+  %i.az = phi i64 [ %.pre1050, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ak, %bb.g ] ; 24 uses
   %i.ba = phi i64 [ %.pre1048, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1046, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ai, %bb.g ] ; 11 uses
-  %i.bc = phi i64 [ %.pre1044, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 27 uses
+  %i.bc = phi i64 [ %.pre1044, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ah, %bb.g ] ; 29 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.ag, %bb.g ] ; 8 uses
   %.sroa.0.0.i63 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i60 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i63              ; 9 uses
@@ -7885,7 +7925,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 .lr.ph466.i:                                      ; preds = %bb.bj, %bb.bl
   %.sroa.10.0.i.i = phi i64 [ %i.gx, %bb.bl ], [ 1, %bb.bj ]
   %i.gy = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 21 uses
-  %invariant.op467.i = sub i64 %.sroa.0218.0, %i.bd ; 3 uses
+  %invariant.op467.i = sub i64 %.sroa.0218.0, %i.bd ; 4 uses
   %invariant.op.i85 = sub i64 %.sroa.0.0, %i.ba   ; 3 uses
   br label %.lr.ph466.split.i
 
@@ -7900,7 +7940,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bi
 
 .lr.ph492.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i, %bb.dc
   %.sroa.05.0.not491.i = phi i1 [ false, %bb.dc ], [ true, %..loopexit68_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0490.i = phi i64 [ %.sroa.09.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 12 uses
+  %.sroa.09.0490.i = phi i64 [ %.sroa.09.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 13 uses
   %.sroa.038.0489.i = phi i64 [ %.sroa.038.3.i, %bb.dc ], [ 0, %..loopexit68_crit_edge.split.us.i ] ; 17 uses
   %i.hb = and i64 %.sroa.038.0489.i, 1023
   %i.hc = icmp eq i64 %i.hb, 0
@@ -8010,10 +8050,10 @@ bb.bs:                                            ; preds = %bb.bu, %.lr.ph492.i
   %i.if = icmp ult i64 %i.ie, %i.bc
   br i1 %i.if, label %bb.bv, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.bv, %bb.bs, %bb.cu, %bb.ch, %bb.di, %bb.eb, %.lr.ph.split.i
-  %i.ig = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.ke, %bb.ch ], [ %i.lq, %bb.cu ], [ %i.az, %bb.di ], [ %i.ie, %bb.bs ], [ %i.il, %bb.bv ], [ %.reass.us.i, %bb.dr ]
-  %i.ih = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ch ], [ %i.bc, %bb.cu ], [ %i.az, %bb.di ], [ %i.bc, %bb.bs ], [ %i.az, %bb.bv ], [ %i.az, %bb.dr ]
-  %i.ii = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ch ], [ @252, %bb.cu ], [ @258, %bb.di ], [ @241, %bb.bs ], [ @242, %bb.bv ], [ @262, %bb.dr ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.bv, %bb.bs, %bb.ch, %bb.di, %bb.eb, %.lr.ph.split.i, %11
+  %i.ig = phi i64 [ %.reass.i88, %.lr.ph.split.i ], [ %.reass.i88, %bb.eb ], [ %i.az, %bb.ch ], [ %umax687.le.i, %11 ], [ %i.ie, %bb.bs ], [ %i.az, %bb.di ], [ %i.il, %bb.bv ], [ %.reass.us.i, %bb.dr ]
+  %i.ih = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.eb ], [ %i.az, %bb.ch ], [ %i.bc, %11 ], [ %i.bc, %bb.bs ], [ %i.az, %bb.di ], [ %i.az, %bb.bv ], [ %i.az, %bb.dr ]
+  %i.ii = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.eb ], [ @247, %bb.ch ], [ @252, %11 ], [ @241, %bb.bs ], [ @258, %bb.di ], [ @242, %bb.bv ], [ @262, %bb.dr ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ig, i64 noundef %i.ih, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ii) #74
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !17236
 
@@ -8153,7 +8193,7 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.kd, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskXtk6F4WjxZ_4just.exit217.sink.split.i.thread, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cd
-  %i.ke = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 3 uses
+  %i.ke = add i64 %.sroa.038.1469.i, %invariant.op.i85 ; 2 uses
   %i.kf = icmp ult i64 %i.ke, %i.az
   br i1 %i.kf, label %bb.ci, label %.invoke.i
 
@@ -8254,9 +8294,14 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.ct, %.lr.ph1791
   %i.lp = mul i64 %.sroa.09.1.i1790, %i.gr        ; 2 uses
-  %i.lq = add i64 %.sroa.09.1.i1790, %invariant.op467.i ; 3 uses
+  %i.lq = add i64 %.sroa.09.1.i1790, %invariant.op467.i ; 2 uses
   %i.lr = icmp ult i64 %i.lq, %i.bc
-  br i1 %i.lr, label %bb.cv, label %.invoke.i
+  br i1 %i.lr, label %bb.cv, label %11
+
+11:                                               ; preds = %bb.cu
+  %12 = add i64 %.sroa.09.0490.i, %invariant.op467.i
+  %umax687.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cv:                                            ; preds = %bb.cu
   %i.ls = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.lq
@@ -8573,7 +8618,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
   %.sroa.10.0.i.i94 = phi i64 [ %i.pp, %bb.eg ], [ 1, %bb.ee ]
   %i.pq = inttoptr i64 %.sroa.10.0.i.i94 to ptr   ; 21 uses
   %invariant.op.i109 = sub i64 %.sroa.0218.0, %i.bd ; 4 uses
-  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 3 uses
+  %invariant.op482.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
   br label %.lr.ph481.split.i
 
 .lr.ph481.split.i:                                ; preds = %.lr.ph481.i, %..loopexit68_crit_edge.split.us.i179
@@ -8587,7 +8632,7 @@ bb.eh:                                            ; preds = %bb.ef, %bb.ed
 
 .lr.ph508.i:                                      ; preds = %..loopexit68_crit_edge.split.us.i179, %bb.fx
   %.sroa.05.0.not507.i = phi i1 [ false, %bb.fx ], [ true, %..loopexit68_crit_edge.split.us.i179 ] ; 3 uses
-  %.sroa.09.0506.i = phi i64 [ %.sroa.09.3.i144, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 13 uses
+  %.sroa.09.0506.i = phi i64 [ %.sroa.09.3.i144, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 14 uses
   %.sroa.039.0505.i = phi i64 [ %.sroa.039.3.i, %bb.fx ], [ 0, %..loopexit68_crit_edge.split.us.i179 ] ; 16 uses
   %i.pt = and i64 %.sroa.039.0505.i, 1023
   %i.pu = icmp eq i64 %i.pt, 0
@@ -8689,10 +8734,10 @@ bb.en:                                            ; preds = %bb.ep, %.lr.ph508.i
   %i.qx = icmp ult i64 %i.qw, %i.bc
   br i1 %i.qx, label %bb.eq, label %.invoke.i121
 
-.invoke.i121:                                     ; preds = %bb.gm, %bb.eq, %bb.en, %bb.fp, %bb.fc, %bb.gd, %bb.gy, %bb.gx
-  %i.qy = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i170, %bb.gx ], [ %i.sw, %bb.fc ], [ %i.ui, %bb.fp ], [ %i.az, %bb.gd ], [ %i.qw, %bb.en ], [ %i.rd, %bb.eq ], [ %.reass.us.i173, %bb.gm ]
-  %i.qz = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fc ], [ %i.az, %bb.fp ], [ %i.az, %bb.gd ], [ %i.bc, %bb.en ], [ %i.az, %bb.eq ], [ %i.bc, %bb.gm ]
-  %i.ra = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fc ], [ @278, %bb.fp ], [ @284, %bb.gd ], [ @267, %bb.en ], [ @268, %bb.eq ], [ @287, %bb.gm ]
+.invoke.i121:                                     ; preds = %bb.gm, %bb.eq, %bb.en, %bb.fc, %bb.gd, %bb.gy, %bb.gx, %13
+  %i.qy = phi i64 [ %.reass483.i, %bb.gy ], [ %.reass.i170, %bb.gx ], [ %i.bc, %bb.fc ], [ %umax703.le.i, %13 ], [ %i.qw, %bb.en ], [ %i.az, %bb.gd ], [ %i.rd, %bb.eq ], [ %.reass.us.i173, %bb.gm ]
+  %i.qz = phi i64 [ %i.az, %bb.gy ], [ %i.bc, %bb.gx ], [ %i.bc, %bb.fc ], [ %i.az, %13 ], [ %i.bc, %bb.en ], [ %i.az, %bb.gd ], [ %i.az, %bb.eq ], [ %i.bc, %bb.gm ]
+  %i.ra = phi ptr [ @288, %bb.gy ], [ @287, %bb.gx ], [ @273, %bb.fc ], [ @278, %13 ], [ @267, %bb.en ], [ @284, %bb.gd ], [ @268, %bb.eq ], [ @287, %bb.gm ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.qy, i64 noundef %i.qz, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ra) #74
           to label %.cont.i122 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i103.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !17255
 
@@ -8832,7 +8877,7 @@ bb.fb:                                            ; preds = %bb.fa
   br i1 %i.sv, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupmEB1d_INtNtB4_4hook12NoFinishHookQQINtNtB4_7compact7CompactB1d_B1d_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXtk6F4WjxZ_4just.exit.thread344, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb, %bb.ey
-  %i.sw = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 3 uses
+  %i.sw = add i64 %.sroa.039.1485.i, %invariant.op.i109 ; 2 uses
   %i.sx = icmp ult i64 %i.sw, %i.bc
   br i1 %i.sx, label %bb.fd, label %.invoke.i121
 
@@ -8933,9 +8978,14 @@ bb.fo:                                            ; preds = %bb.fn
 
 bb.fp:                                            ; preds = %bb.fo, %.lr.ph1783
   %i.uh = mul i64 %.sroa.09.1.i1341782, %i.pj     ; 2 uses
-  %i.ui = add i64 %.sroa.09.1.i1341782, %invariant.op482.i ; 3 uses
+  %i.ui = add i64 %.sroa.09.1.i1341782, %invariant.op482.i ; 2 uses
   %i.uj = icmp ult i64 %i.ui, %i.az
-  br i1 %i.uj, label %bb.fq, label %.invoke.i121
+  br i1 %i.uj, label %bb.fq, label %13
+
+13:                                               ; preds = %bb.fp
+  %14 = add i64 %.sroa.09.0506.i, %invariant.op482.i
+  %umax703.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i121
 
 bb.fq:                                            ; preds = %bb.fp
   %i.uk = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.ui
@@ -9338,10 +9388,10 @@ bb.k:                                             ; preds = %_RNvXs3_NtNtCsdftwk
 
 _RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit: ; preds = %bb.g, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58, %bb.k, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge
   %i.ay = phi ptr [ %.pre1043, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.al, %bb.k ], [ %i.al, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.al, %bb.g ] ; 10 uses
-  %i.az = phi i64 [ %.pre1041, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.ak, %bb.g ] ; 22 uses
+  %i.az = phi i64 [ %.pre1041, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ak, %bb.k ], [ %i.ak, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.ak, %bb.g ] ; 24 uses
   %i.ba = phi i64 [ %.pre1039, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.aj, %bb.k ], [ %i.aj, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.aj, %bb.g ] ; 5 uses
   %i.bb = phi ptr [ %.pre1037, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ai, %bb.k ], [ %i.ai, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.ai, %bb.g ] ; 11 uses
-  %i.bc = phi i64 [ %.pre1035, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.ah, %bb.g ] ; 27 uses
+  %i.bc = phi i64 [ %.pre1035, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.ah, %bb.g ] ; 29 uses
   %i.bd = phi i64 [ %.pre, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ag, %bb.k ], [ %i.ag, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.ag, %bb.g ] ; 8 uses
   %.sroa.0.0.i61 = phi i64 [ 0, %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit.thread._RINvNtNtCsdftwklc2oBO_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_ECskXtk6F4WjxZ_4just.exit_crit_edge ], [ %i.ae, %bb.g ], [ %.sroa.01.030.i.i.i.i, %_RNvXs3_NtNtCsdftwklc2oBO_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCskXtk6F4WjxZ_4just.exit.i.i.i.i.i58 ], [ %i.af, %bb.k ] ; 4 uses
   %i.be = sub i64 %3, %.sroa.0.0.i61              ; 9 uses
@@ -9744,7 +9794,7 @@ bb.bj:                                            ; preds = %bb.bh, %bb.bf
 .lr.ph690.i:                                      ; preds = %bb.bg, %bb.bi
   %.sroa.10.0.i.i = phi i64 [ %i.fp, %bb.bi ], [ 1, %bb.bg ]
   %i.fq = inttoptr i64 %.sroa.10.0.i.i to ptr     ; 21 uses
-  %invariant.op691.i = sub i64 %.sroa.0209.0, %i.bd ; 3 uses
+  %invariant.op691.i = sub i64 %.sroa.0209.0, %i.bd ; 4 uses
   %invariant.op.i83 = sub i64 %.sroa.0.0, %i.ba   ; 3 uses
   br label %.lr.ph690.split.i
 
@@ -9759,7 +9809,7 @@ bb.bj:                                            ; preds = %bb.bh, %bb.bf
 
 .lr.ph716.i:                                      ; preds = %..loopexit292_crit_edge.split.us.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i
   %.sroa.05.0.not715.i = phi i1 [ false, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ], [ true, %..loopexit292_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0714.i = phi i64 [ %.sroa.09.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ], [ 0, %..loopexit292_crit_edge.split.us.i ] ; 13 uses
+  %.sroa.09.0714.i = phi i64 [ %.sroa.09.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ], [ 0, %..loopexit292_crit_edge.split.us.i ] ; 14 uses
   %.sroa.038.0713.i = phi i64 [ %.sroa.038.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i ], [ 0, %..loopexit292_crit_edge.split.us.i ] ; 18 uses
   %i.ft = and i64 %.sroa.038.0713.i, 1023
   %i.fu = icmp eq i64 %i.ft, 0
@@ -9858,10 +9908,10 @@ bb.bp:                                            ; preds = %bb.br, %.lr.ph716.i
   %i.go = icmp ult i64 %i.gn, %i.bc
   br i1 %i.go, label %bb.bs, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dn, %bb.bs, %bb.bp, %bb.cr, %bb.ce, %bb.de, %bb.dx, %.lr.ph.split.i
-  %i.gp = phi i64 [ %.reass.i86, %.lr.ph.split.i ], [ %.reass.i86, %bb.dx ], [ %i.ig, %bb.ce ], [ %i.jl, %bb.cr ], [ %i.az, %bb.de ], [ %i.gn, %bb.bp ], [ %i.gu, %bb.bs ], [ %.reass.us.i, %bb.dn ]
-  %i.gq = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.dx ], [ %i.az, %bb.ce ], [ %i.bc, %bb.cr ], [ %i.az, %bb.de ], [ %i.bc, %bb.bp ], [ %i.az, %bb.bs ], [ %i.az, %bb.dn ]
-  %i.gr = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.dx ], [ @247, %bb.ce ], [ @252, %bb.cr ], [ @258, %bb.de ], [ @241, %bb.bp ], [ @242, %bb.bs ], [ @262, %bb.dn ]
+.invoke.i:                                        ; preds = %bb.dn, %bb.bs, %bb.bp, %bb.ce, %bb.de, %bb.dx, %.lr.ph.split.i, %11
+  %i.gp = phi i64 [ %.reass.i86, %.lr.ph.split.i ], [ %.reass.i86, %bb.dx ], [ %i.az, %bb.ce ], [ %umax911.le.i, %11 ], [ %i.gn, %bb.bp ], [ %i.az, %bb.de ], [ %i.gu, %bb.bs ], [ %.reass.us.i, %bb.dn ]
+  %i.gq = phi i64 [ %i.bc, %.lr.ph.split.i ], [ %i.bc, %bb.dx ], [ %i.az, %bb.ce ], [ %i.bc, %11 ], [ %i.bc, %bb.bp ], [ %i.az, %bb.de ], [ %i.az, %bb.bs ], [ %i.az, %bb.dn ]
+  %i.gr = phi ptr [ @261, %.lr.ph.split.i ], [ @261, %bb.dx ], [ @247, %bb.ce ], [ @252, %11 ], [ @241, %bb.bp ], [ @258, %bb.de ], [ @242, %bb.bs ], [ @262, %bb.dn ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.gp, i64 noundef %i.gq, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gr) #74
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !17452
 
@@ -9982,7 +10032,7 @@ bb.cd:                                            ; preds = %bb.cc
   br i1 %i.if, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskXtk6F4WjxZ_4just.exit215.sink.split.i.thread, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd, %bb.ca
-  %i.ig = add i64 %.sroa.038.1693.i, %invariant.op.i83 ; 3 uses
+  %i.ig = add i64 %.sroa.038.1693.i, %invariant.op.i83 ; 2 uses
   %i.ih = icmp ult i64 %i.ig, %i.az
   br i1 %i.ih, label %bb.cf, label %.invoke.i
 
@@ -10064,9 +10114,14 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cq, %.lr.ph1805
   %i.jk = mul i64 %.sroa.09.1.i1804, %i.fj        ; 2 uses
-  %i.jl = add i64 %.sroa.09.1.i1804, %invariant.op691.i ; 3 uses
+  %i.jl = add i64 %.sroa.09.1.i1804, %invariant.op691.i ; 2 uses
   %i.jm = icmp ult i64 %i.jl, %i.bc
-  br i1 %i.jm, label %bb.cs, label %.invoke.i
+  br i1 %i.jm, label %bb.cs, label %11
+
+11:                                               ; preds = %bb.cr
+  %12 = add i64 %.sroa.09.0714.i, %invariant.op691.i
+  %umax911.le.i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %12)
+  br label %.invoke.i
 
 bb.cs:                                            ; preds = %bb.cr
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.jl
@@ -10381,7 +10436,7 @@ bb.ed:                                            ; preds = %bb.eb, %bb.dz
   %.sroa.10.0.i.i92 = phi i64 [ %i.nh, %bb.ec ], [ 1, %bb.ea ]
   %i.ni = inttoptr i64 %.sroa.10.0.i.i92 to ptr   ; 21 uses
   %invariant.op.i107 = sub i64 %.sroa.0209.0, %i.bd ; 4 uses
-  %invariant.op706.i = sub i64 %.sroa.0.0, %i.ba  ; 3 uses
+  %invariant.op706.i = sub i64 %.sroa.0.0, %i.ba  ; 4 uses
   br label %.lr.ph705.split.i
 
 .lr.ph705.split.i:                                ; preds = %.lr.ph705.i, %..loopexit292_crit_edge.split.us.i170
@@ -10395,7 +10450,7 @@ bb.ed:                                            ; preds = %bb.eb, %bb.dz
 
 .lr.ph732.i:                                      ; preds = %..loopexit292_crit_edge.split.us.i170, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i138
   %.sroa.05.0.not731.i = phi i1 [ false, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i138 ], [ true, %..loopexit292_crit_edge.split.us.i170 ] ; 3 uses
-  %.sroa.09.0730.i = phi i64 [ %.sroa.09.3.i140, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i138 ], [ 0, %..loopexit292_crit_edge.split.us.i170 ] ; 14 uses
+  %.sroa.09.0730.i = phi i64 [ %.sroa.09.3.i140, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i138 ], [ 0, %..loopexit292_crit_edge.split.us.i170 ] ; 15 uses
   %.sroa.039.0729.i = phi i64 [ %.sroa.039.3.i, %_RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCskXtk6F4WjxZ_4just.exit.i138 ], [ 0, %..loopexit292_crit_edge.split.us.i170 ] ; 17 uses
   %i.nl = and i64 %.sroa.039.0729.i, 1023
   %i.nm = icmp eq i64 %i.nl, 0
@@ -10486,10 +10541,10 @@ bb.ej:                                            ; preds = %bb.el, %.lr.ph732.i
   %i.og = icmp ult i64 %i.of, %i.bc
   br i1 %i.og, label %bb.em, label %.invoke.i119
 
-.invoke.i119:                                     ; preds = %bb.gh, %bb.em, %bb.ej, %bb.fl, %bb.ey, %bb.fy, %bb.gt, %bb.gs
-  %i.oh = phi i64 [ %.reass707.i, %bb.gt ], [ %.reass.i161, %bb.gs ], [ %i.py, %bb.ey ], [ %i.rd, %bb.fl ], [ %i.az, %bb.fy ], [ %i.of, %bb.ej ], [ %i.om, %bb.em ], [ %.reass.us.i164, %bb.gh ]
-  %i.oi = phi i64 [ %i.az, %bb.gt ], [ %i.bc, %bb.gs ], [ %i.bc, %bb.ey ], [ %i.az, %bb.fl ], [ %i.az, %bb.fy ], [ %i.bc, %bb.ej ], [ %i.az, %bb.em ], [ %i.bc, %bb.gh ]
-  %i.oj = phi ptr [ @288, %bb.gt ], [ @287, %bb.gs ], [ @273, %bb.ey ], [ @278, %bb.fl ], [ @284, %bb.fy ], [ @267, %bb.ej ], [ @268, %bb.em ], [ @287, %bb.gh ]
+.invoke.i119:                                     ; preds = %bb.gh, %bb.em, %bb.ej, %bb.ey, %bb.fy, %bb.gt, %bb.gs, %13
+  %i.oh = phi i64 [ %.reass707.i, %bb.gt ], [ %.reass.i161, %bb.gs ], [ %i.bc, %bb.ey ], [ %umax927.le.i, %13 ], [ %i.of, %bb.ej ], [ %i.az, %bb.fy ], [ %i.om, %bb.em ], [ %.reass.us.i164, %bb.gh ]
+  %i.oi = phi i64 [ %i.az, %bb.gt ], [ %i.bc, %bb.gs ], [ %i.bc, %bb.ey ], [ %i.az, %13 ], [ %i.bc, %bb.ej ], [ %i.az, %bb.fy ], [ %i.az, %bb.em ], [ %i.bc, %bb.gh ]
+  %i.oj = phi ptr [ @288, %bb.gt ], [ @287, %bb.gs ], [ @273, %bb.ey ], [ @278, %13 ], [ @267, %bb.ej ], [ @284, %bb.fy ], [ @268, %bb.em ], [ @287, %bb.gh ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.oh, i64 noundef %i.oi, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.oj) #74
           to label %.cont.i120 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i101.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !17463
 
@@ -10610,7 +10665,7 @@ bb.ex:                                            ; preds = %bb.ew
   br i1 %i.px, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers27maybe_emit_small_side_exactINtNtB4_5utils12OffsetLookupmEB1d_INtNtB4_7compact7CompactB1d_B1d_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEECskXtk6F4WjxZ_4just.exit.thread335, label %bb.ey
 
 bb.ey:                                            ; preds = %bb.ex, %bb.eu
-  %i.py = add i64 %.sroa.039.1709.i, %invariant.op.i107 ; 3 uses
+  %i.py = add i64 %.sroa.039.1709.i, %invariant.op.i107 ; 2 uses
   %i.pz = icmp ult i64 %i.py, %i.bc
   br i1 %i.pz, label %bb.ez, label %.invoke.i119
 
@@ -10692,9 +10747,14 @@ bb.fk:                                            ; preds = %bb.fj
 
 bb.fl:                                            ; preds = %bb.fk, %.lr.ph1797
   %i.rc = mul i64 %.sroa.09.1.i1321796, %i.nb     ; 2 uses
-  %i.rd = add i64 %.sroa.09.1.i1321796, %invariant.op706.i ; 3 uses
+  %i.rd = add i64 %.sroa.09.1.i1321796, %invariant.op706.i ; 2 uses
   %i.re = icmp ult i64 %i.rd, %i.az
-  br i1 %i.re, label %bb.fm, label %.invoke.i119
+  br i1 %i.re, label %bb.fm, label %13
+
+13:                                               ; preds = %bb.fl
+  %14 = add i64 %.sroa.09.0730.i, %invariant.op706.i
+  %umax927.le.i = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %14)
+  br label %.invoke.i119
 
 bb.fm:                                            ; preds = %bb.fl
   %i.rf = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.rd
@@ -11097,7 +11157,7 @@ bb.m:                                             ; preds = %.loopexit35.i
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store i64 %.val16.i.i.i.i.i.i.i.1, ptr %i.by, align 8, !noalias !63706
   %i.bz = add nuw nsw i64 %i.bn, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecReEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1J_5slice4iter4IterNtNtB8_6string6StringENvMB2R_B2P_6as_strEE9from_iterCskXtk6F4WjxZ_4just.exit.i.unr-lcssa, label %.preheader.i.i.i38.i
 

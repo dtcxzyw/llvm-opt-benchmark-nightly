@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 91
 inline.NumDeleted: 25
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@Rpo_Recursion:bb.a
 select.unfold.i29.i.3:                            ; preds = %select.unfold.i29.i.2
   %indvars.iv.next.i31.i.3 = add nsw i64 %indvars.iv.i30.i.ph, -4 ; 3 uses
@@ -205,11 +205,11 @@ bb.ab:                                            ; preds = %bb.aa, %._crit_edge
   %i.jl = icmp slt i32 %4, 6
   %i.jm = add nsw i32 %4, -5
   %i.jn = shl nuw i32 1, %i.jm
-  %i.jo = select i1 %i.jl, i32 1, i32 %i.jn       ; 6 uses
+  %i.jo = select i1 %i.jl, i32 1, i32 %i.jn       ; 8 uses
   %i.jp = sext i32 %i.jo to i64
   %i.jq = shl nsw i64 %i.jp, 2                    ; 2 uses
   %i.jr = icmp sgt i32 %i.jo, 0                   ; 3 uses
-  %i.js = zext i32 %i.jo to i64                   ; 9 uses
+  %i.js = zext i32 %i.jo to i64                   ; 13 uses
   %i.jt = icmp sgt i32 %4, 0
   %i.ju = zext nneg i32 %4 to i64
   %i.jv = add nsw i32 %3, -1
@@ -218,8 +218,14 @@ bb.ab:                                            ; preds = %bb.aa, %._crit_edge
 .lr.ph.i.preheader:                               ; preds = %bb.ab
   %min.iters.check363 = icmp ult i32 %i.jo, 8
   %n.vec365 = and i64 %i.js, 2147483640
+  %xtraiter = and i64 %i.js, 3                    ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %8 = icmp ult i32 %i.jo, 4
   %min.iters.check345 = icmp ult i32 %i.jo, 8
   %n.vec347 = and i64 %i.js, 2147483640
+  %xtraiter433 = and i64 %i.js, 3                 ; 2 uses
+  %lcmp.mod434.not = icmp eq i64 %xtraiter433, 0
+  %9 = icmp ult i32 %i.jo, 4
   %min.iters.check327 = icmp ult i32 %i.jo, 8
   %n.vec329 = and i64 %i.js, 4294967288
   br label %.lr.ph.i
@@ -309,7 +315,7 @@ bb.ag:                                            ; preds = %Rpo_computeMinEdgeC
   %i.lh = trunc i64 %i.kr to i32
   %i.li = lshr i32 %i.lh, 1
   %i.lj = and i32 %i.li, 3
-  %i.lk = tail call noalias ptr @malloc(i64 noundef %i.jq) #15 ; 6 uses
+  %i.lk = tail call noalias ptr @malloc(i64 noundef %i.jq) #15 ; 14 uses
   %i.ll = ptrtoaddr ptr %i.lk to i64              ; 4 uses
   %i.lm = tail call noalias ptr @malloc(i64 noundef %i.jq) #15 ; 4 uses
   %i.ln = ptrtoaddr ptr %i.lm to i64              ; 2 uses
@@ -348,26 +354,45 @@ Vec_StrAlloc.exit.i:                              ; preds = %bb.ah, %bb.ag
 
 bb.ai:                                            ; preds = %Vec_StrAlloc.exit.i
   %i.mf = getelementptr inbounds nuw i8, ptr %i.le, i64 8
-  %i.mg = load ptr, ptr %i.mf, align 8, !tbaa !14 ; 3 uses
+  %i.mg = load ptr, ptr %i.mf, align 8, !tbaa !14 ; 7 uses
   %i.mh = ptrtoaddr ptr %i.mg to i64
   %i.mi = getelementptr inbounds nuw i8, ptr %i.lg, i64 8
-  %i.mj = load ptr, ptr %i.mi, align 8, !tbaa !14 ; 3 uses
+  %i.mj = load ptr, ptr %i.mi, align 8, !tbaa !14 ; 7 uses
   %i.mk = ptrtoaddr ptr %i.mj to i64
-  br i1 %i.jr, label %select.unfold.i.i198.preheader.a, label %Kit_TruthOr.exit42.i
+  br i1 %i.jr, label %select.unfold.i.i198.preheader, label %Kit_TruthOr.exit42.i
 
-select.unfold.i.i198.preheader.a:                 ; preds = %bb.ai
-  br i1 %min.iters.check345, label %select.unfold.i.i198.preheader423.a, label %vector.memcheck340
+select.unfold.i.i198.preheader:                   ; preds = %bb.ai
+  br i1 %min.iters.check345, label %select.unfold.i.i198.preheader423, label %vector.memcheck340
 
-select.unfold.i.i198.preheader423.a:              ; preds = %vector.memcheck340, %select.unfold.i.i198.preheader.a
-  br label %select.unfold.i.i198
+select.unfold.i.i198.preheader423:                ; preds = %vector.memcheck340, %select.unfold.i.i198.preheader
+  br i1 %lcmp.mod434.not, label %select.unfold.i.i198.preheader423.a, label %select.unfold.i.i198.preheader.a
 
-vector.memcheck340:                               ; preds = %select.unfold.i.i198.preheader.a
+select.unfold.i.i198.preheader.a:                 ; preds = %select.unfold.i.i198.preheader423, %select.unfold.i.i198.preheader.a
+  %indvars.iv.i.i199.prol = phi i64 [ %indvars.iv.next.i.i200.prol, %select.unfold.i.i198.preheader.a ], [ %i.js, %select.unfold.i.i198.preheader423 ]
+  %prol.iter435 = phi i64 [ %prol.iter435.next, %select.unfold.i.i198.preheader.a ], [ 0, %select.unfold.i.i198.preheader423 ]
+  %indvars.iv.next.i.i200.prol = add nsw i64 %indvars.iv.i.i199.prol, -1 ; 5 uses
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.mg, i64 %indvars.iv.next.i.i200.prol
+  %11 = load i32, ptr %10, align 4, !tbaa !15
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.mj, i64 %indvars.iv.next.i.i200.prol
+  %13 = load i32, ptr %12, align 4, !tbaa !15
+  %14 = and i32 %13, %11
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i.i200.prol
+  store i32 %14, ptr %15, align 4, !tbaa !15
+  %prol.iter435.next = add i64 %prol.iter435, 1   ; 2 uses
+  %prol.iter435.cmp.not = icmp eq i64 %prol.iter435.next, %xtraiter433
+  br i1 %prol.iter435.cmp.not, label %select.unfold.i.i198.preheader423.a, label %select.unfold.i.i198.preheader.a, !llvm.loop !77
+
+select.unfold.i.i198.preheader423.a:              ; preds = %select.unfold.i.i198.preheader.a, %select.unfold.i.i198.preheader423
+  %indvars.iv.i.i199.unr = phi i64 [ %i.js, %select.unfold.i.i198.preheader423 ], [ %indvars.iv.next.i.i200.prol, %select.unfold.i.i198.preheader.a ]
+  br i1 %9, label %select.unfold.preheader.i38.i, label %select.unfold.i.i198
+
+vector.memcheck340:                               ; preds = %select.unfold.i.i198.preheader
   %i.ml = sub i64 %i.ll, %i.mh
   %diff.check341 = icmp ugt i64 %i.ml, -32
   %i.mm = sub i64 %i.ll, %i.mk
   %diff.check342 = icmp ugt i64 %i.mm, -32
   %conflict.rdx343 = or i1 %diff.check341, %diff.check342
-  br i1 %conflict.rdx343, label %select.unfold.i.i198.preheader423.a, label %vector.body348
+  br i1 %conflict.rdx343, label %select.unfold.i.i198.preheader423, label %vector.body348
 
 vector.body348:                                   ; preds = %vector.memcheck340, %vector.body348
   %index349 = phi i64 [ %index.next354, %vector.body348 ], [ 0, %vector.memcheck340 ] ; 2 uses
@@ -392,11 +417,35 @@ vector.body348:                                   ; preds = %vector.memcheck340,
   store <4 x i32> %i.mw, ptr %i.mz, align 4, !tbaa !15
   %index.next354 = add nuw i64 %index349, 8       ; 2 uses
   %i.na = icmp eq i64 %index.next354, %n.vec347
-  br i1 %i.na, label %select.unfold.preheader.i38.i, label %vector.body348, !llvm.loop !77
+  br i1 %i.na, label %select.unfold.preheader.i38.i, label %vector.body348, !llvm.loop !78
 
 select.unfold.i.i198:                             ; preds = %select.unfold.i.i198.preheader423.a, %select.unfold.i.i198
-  %indvars.iv.i.i199 = phi i64 [ %indvars.iv.next.i.i200.a, %select.unfold.i.i198 ], [ %i.js, %select.unfold.i.i198.preheader423.a ] ; 2 uses
-  %indvars.iv.next.i.i200.a = add nsw i64 %indvars.iv.i.i199, -1 ; 4 uses
+  %indvars.iv.i.i199 = phi i64 [ %indvars.iv.next.i.i200.a, %select.unfold.i.i198 ], [ %indvars.iv.i.i199.unr, %select.unfold.i.i198.preheader423.a ] ; 5 uses
+  %indvars.iv.next.i.i200 = add nsw i64 %indvars.iv.i.i199, -1 ; 3 uses
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.mg, i64 %indvars.iv.next.i.i200
+  %17 = load i32, ptr %16, align 4, !tbaa !15
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.mj, i64 %indvars.iv.next.i.i200
+  %19 = load i32, ptr %18, align 4, !tbaa !15
+  %20 = and i32 %19, %17
+  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i.i200
+  store i32 %20, ptr %21, align 4, !tbaa !15
+  %indvars.iv.next.i.i200.1 = add nsw i64 %indvars.iv.i.i199, -2 ; 3 uses
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.mg, i64 %indvars.iv.next.i.i200.1
+  %23 = load i32, ptr %22, align 4, !tbaa !15
+  %24 = getelementptr inbounds nuw [4 x i8], ptr %i.mj, i64 %indvars.iv.next.i.i200.1
+  %25 = load i32, ptr %24, align 4, !tbaa !15
+  %26 = and i32 %25, %23
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i.i200.1
+  store i32 %26, ptr %27, align 4, !tbaa !15
+  %indvars.iv.next.i.i200.2 = add nsw i64 %indvars.iv.i.i199, -3 ; 3 uses
+  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.mg, i64 %indvars.iv.next.i.i200.2
+  %29 = load i32, ptr %28, align 4, !tbaa !15
+  %30 = getelementptr inbounds nuw [4 x i8], ptr %i.mj, i64 %indvars.iv.next.i.i200.2
+  %31 = load i32, ptr %30, align 4, !tbaa !15
+  %32 = and i32 %31, %29
+  %33 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i.i200.2
+  store i32 %32, ptr %33, align 4, !tbaa !15
+  %indvars.iv.next.i.i200.a = add nsw i64 %indvars.iv.i.i199, -4 ; 4 uses
   %i.nb = getelementptr inbounds nuw [4 x i8], ptr %i.mg, i64 %indvars.iv.next.i.i200.a
   %i.nc = load i32, ptr %i.nb, align 4, !tbaa !15
   %i.nd = getelementptr inbounds nuw [4 x i8], ptr %i.mj, i64 %indvars.iv.next.i.i200.a
@@ -404,31 +453,50 @@ select.unfold.i.i198:                             ; preds = %select.unfold.i.i19
   %i.nf = and i32 %i.ne, %i.nc
   %i.ng = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i.i200.a
   store i32 %i.nf, ptr %i.ng, align 4, !tbaa !15
-  %8 = icmp samesign ugt i64 %indvars.iv.i.i199, 1
-  br i1 %8, label %select.unfold.i.i198, label %select.unfold.preheader.i38.i, !llvm.loop !78
+  %34 = icmp sgt i64 %indvars.iv.i.i199, 4
+  br i1 %34, label %select.unfold.i.i198, label %select.unfold.preheader.i38.i, !llvm.loop !79
 
 bb.aj:                                            ; preds = %Vec_StrAlloc.exit.i
   %i.nh = getelementptr inbounds nuw i8, ptr %i.le, i64 8
-  %i.ni = load ptr, ptr %i.nh, align 8, !tbaa !14 ; 3 uses
+  %i.ni = load ptr, ptr %i.nh, align 8, !tbaa !14 ; 7 uses
   %i.nj = ptrtoaddr ptr %i.ni to i64
   %i.nk = getelementptr inbounds nuw i8, ptr %i.lg, i64 8
-  %i.nl = load ptr, ptr %i.nk, align 8, !tbaa !14 ; 3 uses
+  %i.nl = load ptr, ptr %i.nk, align 8, !tbaa !14 ; 7 uses
   %i.nm = ptrtoaddr ptr %i.nl to i64
-  br i1 %i.jr, label %select.unfold.i34.i194.preheader.a, label %Kit_TruthOr.exit42.i
+  br i1 %i.jr, label %select.unfold.i34.i194.preheader, label %Kit_TruthOr.exit42.i
 
-select.unfold.i34.i194.preheader.a:               ; preds = %bb.aj
-  br i1 %min.iters.check363, label %select.unfold.i34.i194.preheader425.a, label %vector.memcheck358
+select.unfold.i34.i194.preheader:                 ; preds = %bb.aj
+  br i1 %min.iters.check363, label %select.unfold.i34.i194.preheader425, label %vector.memcheck358
 
-select.unfold.i34.i194.preheader425.a:            ; preds = %vector.memcheck358, %select.unfold.i34.i194.preheader.a
-  br label %select.unfold.i34.i194
+select.unfold.i34.i194.preheader425:              ; preds = %vector.memcheck358, %select.unfold.i34.i194.preheader
+  br i1 %lcmp.mod.not, label %select.unfold.i34.i194.preheader425.a, label %select.unfold.i34.i194.preheader.a
 
-vector.memcheck358:                               ; preds = %select.unfold.i34.i194.preheader.a
+select.unfold.i34.i194.preheader.a:               ; preds = %select.unfold.i34.i194.preheader425, %select.unfold.i34.i194.preheader.a
+  %indvars.iv.i35.i195.prol = phi i64 [ %indvars.iv.next.i36.i.prol, %select.unfold.i34.i194.preheader.a ], [ %i.js, %select.unfold.i34.i194.preheader425 ]
+  %prol.iter = phi i64 [ %prol.iter.next, %select.unfold.i34.i194.preheader.a ], [ 0, %select.unfold.i34.i194.preheader425 ]
+  %indvars.iv.next.i36.i.prol = add nsw i64 %indvars.iv.i35.i195.prol, -1 ; 5 uses
+  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %indvars.iv.next.i36.i.prol
+  %36 = load i32, ptr %35, align 4, !tbaa !15
+  %37 = getelementptr inbounds nuw [4 x i8], ptr %i.nl, i64 %indvars.iv.next.i36.i.prol
+  %38 = load i32, ptr %37, align 4, !tbaa !15
+  %39 = or i32 %38, %36
+  %40 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i36.i.prol
+  store i32 %39, ptr %40, align 4, !tbaa !15
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %select.unfold.i34.i194.preheader425.a, label %select.unfold.i34.i194.preheader.a, !llvm.loop !80
+
+select.unfold.i34.i194.preheader425.a:            ; preds = %select.unfold.i34.i194.preheader.a, %select.unfold.i34.i194.preheader425
+  %indvars.iv.i35.i195.unr = phi i64 [ %i.js, %select.unfold.i34.i194.preheader425 ], [ %indvars.iv.next.i36.i.prol, %select.unfold.i34.i194.preheader.a ]
+  br i1 %8, label %select.unfold.preheader.i38.i, label %select.unfold.i34.i194
+
+vector.memcheck358:                               ; preds = %select.unfold.i34.i194.preheader
   %i.nn = sub i64 %i.ll, %i.nj
   %diff.check359 = icmp ugt i64 %i.nn, -32
   %i.no = sub i64 %i.ll, %i.nm
   %diff.check360 = icmp ugt i64 %i.no, -32
   %conflict.rdx361 = or i1 %diff.check359, %diff.check360
-  br i1 %conflict.rdx361, label %select.unfold.i34.i194.preheader425.a, label %vector.body366
+  br i1 %conflict.rdx361, label %select.unfold.i34.i194.preheader425, label %vector.body366
 
 vector.body366:                                   ; preds = %vector.memcheck358, %vector.body366
   %index367 = phi i64 [ %index.next372, %vector.body366 ], [ 0, %vector.memcheck358 ] ; 2 uses
@@ -453,11 +521,35 @@ vector.body366:                                   ; preds = %vector.memcheck358,
   store <4 x i32> %i.ny, ptr %i.ob, align 4, !tbaa !15
   %index.next372 = add nuw i64 %index367, 8       ; 2 uses
   %i.oc = icmp eq i64 %index.next372, %n.vec365
-  br i1 %i.oc, label %select.unfold.preheader.i38.i, label %vector.body366, !llvm.loop !79
+  br i1 %i.oc, label %select.unfold.preheader.i38.i, label %vector.body366, !llvm.loop !81
 
 select.unfold.i34.i194:                           ; preds = %select.unfold.i34.i194.preheader425.a, %select.unfold.i34.i194
-  %indvars.iv.i35.i195 = phi i64 [ %indvars.iv.next.i36.i.a, %select.unfold.i34.i194 ], [ %i.js, %select.unfold.i34.i194.preheader425.a ] ; 2 uses
-  %indvars.iv.next.i36.i.a = add nsw i64 %indvars.iv.i35.i195, -1 ; 4 uses
+  %indvars.iv.i35.i195 = phi i64 [ %indvars.iv.next.i36.i.a, %select.unfold.i34.i194 ], [ %indvars.iv.i35.i195.unr, %select.unfold.i34.i194.preheader425.a ] ; 5 uses
+  %indvars.iv.next.i36.i = add nsw i64 %indvars.iv.i35.i195, -1 ; 3 uses
+  %41 = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %indvars.iv.next.i36.i
+  %42 = load i32, ptr %41, align 4, !tbaa !15
+  %43 = getelementptr inbounds nuw [4 x i8], ptr %i.nl, i64 %indvars.iv.next.i36.i
+  %44 = load i32, ptr %43, align 4, !tbaa !15
+  %45 = or i32 %44, %42
+  %46 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i36.i
+  store i32 %45, ptr %46, align 4, !tbaa !15
+  %indvars.iv.next.i36.i.1 = add nsw i64 %indvars.iv.i35.i195, -2 ; 3 uses
+  %47 = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %indvars.iv.next.i36.i.1
+  %48 = load i32, ptr %47, align 4, !tbaa !15
+  %49 = getelementptr inbounds nuw [4 x i8], ptr %i.nl, i64 %indvars.iv.next.i36.i.1
+  %50 = load i32, ptr %49, align 4, !tbaa !15
+  %51 = or i32 %50, %48
+  %52 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i36.i.1
+  store i32 %51, ptr %52, align 4, !tbaa !15
+  %indvars.iv.next.i36.i.2 = add nsw i64 %indvars.iv.i35.i195, -3 ; 3 uses
+  %53 = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %indvars.iv.next.i36.i.2
+  %54 = load i32, ptr %53, align 4, !tbaa !15
+  %55 = getelementptr inbounds nuw [4 x i8], ptr %i.nl, i64 %indvars.iv.next.i36.i.2
+  %56 = load i32, ptr %55, align 4, !tbaa !15
+  %57 = or i32 %56, %54
+  %58 = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i36.i.2
+  store i32 %57, ptr %58, align 4, !tbaa !15
+  %indvars.iv.next.i36.i.a = add nsw i64 %indvars.iv.i35.i195, -4 ; 4 uses
   %i.od = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %indvars.iv.next.i36.i.a
   %i.oe = load i32, ptr %i.od, align 4, !tbaa !15
   %i.of = getelementptr inbounds nuw [4 x i8], ptr %i.nl, i64 %indvars.iv.next.i36.i.a
@@ -465,15 +557,15 @@ select.unfold.i34.i194:                           ; preds = %select.unfold.i34.i
   %i.oh = or i32 %i.og, %i.oe
   %i.oi = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next.i36.i.a
   store i32 %i.oh, ptr %i.oi, align 4, !tbaa !15
-  %9 = icmp samesign ugt i64 %indvars.iv.i35.i195, 1
-  br i1 %9, label %select.unfold.i34.i194, label %select.unfold.preheader.i38.i, !llvm.loop !80
+  %59 = icmp sgt i64 %indvars.iv.i35.i195, 4
+  br i1 %59, label %select.unfold.i34.i194, label %select.unfold.preheader.i38.i, !llvm.loop !82
 
 Kit_TruthAnd.exit.i201:                           ; preds = %Vec_StrAlloc.exit.i
   tail call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.20)
   br i1 %i.jr, label %select.unfold.preheader.i38.i, label %Kit_TruthOr.exit42.i
 
-select.unfold.preheader.i38.i:                    ; preds = %vector.body366, %select.unfold.i34.i194, %vector.body348, %select.unfold.i.i198, %Kit_TruthAnd.exit.i201
-  %.089.i = phi i8 [ 43, %select.unfold.i34.i194 ], [ 37, %Kit_TruthAnd.exit.i201 ], [ 42, %vector.body348 ], [ 42, %select.unfold.i.i198 ], [ 43, %vector.body366 ] ; 2 uses
+select.unfold.preheader.i38.i:                    ; preds = %vector.body366, %select.unfold.i34.i194.preheader425.a, %select.unfold.i34.i194, %vector.body348, %select.unfold.i.i198.preheader423.a, %select.unfold.i.i198, %Kit_TruthAnd.exit.i201
+  %.089.i = phi i8 [ 43, %select.unfold.i34.i194.preheader425.a ], [ 37, %Kit_TruthAnd.exit.i201 ], [ 42, %vector.body348 ], [ 42, %select.unfold.i.i198.preheader423.a ], [ 42, %select.unfold.i.i198 ], [ 43, %select.unfold.i34.i194 ], [ 43, %vector.body366 ] ; 2 uses
   %i.oj = load ptr, ptr %i.le, align 8, !tbaa !19 ; 3 uses
   %i.ok = load ptr, ptr %i.lg, align 8, !tbaa !19 ; 3 uses
   br i1 %min.iters.check327, label %select.unfold.i39.i.preheader, label %vector.memcheck
@@ -514,7 +606,7 @@ vector.body330:                                   ; preds = %vector.memcheck, %v
   store <4 x i32> %i.oy, ptr %i.pb, align 4, !tbaa !15
   %index.next336 = add nuw i64 %index331, 8       ; 2 uses
   %i.pc = icmp eq i64 %index.next336, %n.vec329
-  br i1 %i.pc, label %Kit_TruthOr.exit42.i, label %vector.body330, !llvm.loop !81
+  br i1 %i.pc, label %Kit_TruthOr.exit42.i, label %vector.body330, !llvm.loop !83
 
 select.unfold.i39.i:                              ; preds = %select.unfold.i39.i.preheader, %select.unfold.i39.i
   %indvars.iv.i40.i = phi i64 [ %indvars.iv.next.i41.i, %select.unfold.i39.i ], [ %i.js, %select.unfold.i39.i.preheader ] ; 2 uses
@@ -527,7 +619,7 @@ select.unfold.i39.i:                              ; preds = %select.unfold.i39.i
   %i.pi = getelementptr inbounds nuw [4 x i8], ptr %i.lm, i64 %indvars.iv.next.i41.i
   store i32 %i.ph, ptr %i.pi, align 4, !tbaa !15
   %i.pj = icmp samesign ugt i64 %indvars.iv.i40.i, 1
-  br i1 %i.pj, label %select.unfold.i39.i, label %Kit_TruthOr.exit42.i, !llvm.loop !82
+  br i1 %i.pj, label %select.unfold.i39.i, label %Kit_TruthOr.exit42.i, !llvm.loop !84
 
 Kit_TruthOr.exit42.i:                             ; preds = %vector.body330, %select.unfold.i39.i, %Kit_TruthAnd.exit.i201, %bb.aj, %bb.ai
   %.088.i = phi i8 [ 37, %Kit_TruthAnd.exit.i201 ], [ 43, %bb.aj ], [ 42, %bb.ai ], [ %.089.i, %select.unfold.i39.i ], [ %.089.i, %vector.body330 ]
@@ -634,7 +726,7 @@ Vec_StrPush.exit.i.i.i:                           ; preds = %Vec_StrGrow.exit11.
   store i8 %i.pu, ptr %i.ql, align 1, !tbaa !26
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
-  br i1 %exitcond.not.i.i.i, label %Vec_StrAppend.exit.i, label %bb.an, !llvm.loop !83
+  br i1 %exitcond.not.i.i.i, label %Vec_StrAppend.exit.i, label %bb.an, !llvm.loop !85
 
 Vec_StrAppend.exit.i:                             ; preds = %Vec_StrPush.exit.i.i.i, %Vec_StrPutC.exit.i
   %i.qm = load i32, ptr %i.ma, align 4, !tbaa !27 ; 7 uses
@@ -777,7 +869,7 @@ Vec_StrPush.exit.i.i57.i:                         ; preds = %Vec_StrGrow.exit11.
   store i8 %i.rj, ptr %i.sa, align 1, !tbaa !26
   %indvars.iv.next.i.i58.i = add nuw nsw i64 %indvars.iv.i.i54.i, 1 ; 2 uses
   %exitcond.not.i.i59.i = icmp eq i64 %indvars.iv.next.i.i58.i, %wide.trip.count.i.i53.i
-  br i1 %exitcond.not.i.i59.i, label %Vec_StrAppend.exit68.i, label %bb.be, !llvm.loop !83
+  br i1 %exitcond.not.i.i59.i, label %Vec_StrAppend.exit68.i, label %bb.be, !llvm.loop !85
 
 Vec_StrAppend.exit68.i:                           ; preds = %Vec_StrPush.exit.i.i57.i, %Vec_StrPutC.exit51.i
   %i.sb = load i32, ptr %i.ma, align 4, !tbaa !27 ; 7 uses
@@ -1006,7 +1098,7 @@ bb.ck:                                            ; preds = %.lr.ph232
 bb.cl:                                            ; preds = %bb.ck, %.lr.ph232
   %indvars.iv.next250 = add nuw nsw i64 %indvars.iv249, 1 ; 2 uses
   %exitcond253.not = icmp eq i64 %indvars.iv.next250, %wide.trip.count.i
-  br i1 %exitcond253.not, label %._crit_edge233.thread, label %.lr.ph232, !llvm.loop !84
+  br i1 %exitcond253.not, label %._crit_edge233.thread, label %.lr.ph232, !llvm.loop !86
 
 ._crit_edge233:                                   ; preds = %bb.cj
   %.not174 = icmp eq ptr %i.dk, null
@@ -1143,10 +1235,10 @@ attributes #18 = { nounwind allocsize(1) }
 !61 = distinct !{!61, !16, !17, !18}
 !62 = distinct !{!62, !16, !18, !17}
 !63 = distinct !{!63, !16}
-!64 = distinct !{!64, !85}
+!64 = distinct !{!64, !87}
 !65 = distinct !{!65, !16, !17, !18}
 !66 = distinct !{!66, !16, !17}
-!67 = distinct !{!67, !85}
+!67 = distinct !{!67, !87}
 !68 = distinct !{!68, !16, !17, !18}
 !69 = distinct !{!69, !16, !17}
 !70 = distinct !{!70, !16}
@@ -1156,13 +1248,15 @@ attributes #18 = { nounwind allocsize(1) }
 !74 = distinct !{!74, !16}
 !75 = distinct !{!75, !16}
 !76 = distinct !{!76, !16}
-!77 = distinct !{!77, !16, !17, !18}
-!78 = distinct !{!78, !16, !17}
-!79 = distinct !{!79, !16, !17, !18}
-!80 = distinct !{!80, !16, !17}
+!77 = distinct !{!77, !87}
+!78 = distinct !{!78, !16, !17, !18}
+!79 = distinct !{!79, !16, !17}
+!80 = distinct !{!80, !87}
 !81 = distinct !{!81, !16, !17, !18}
 !82 = distinct !{!82, !16, !17}
-!83 = distinct !{!83, !16}
-!84 = distinct !{!84, !16}
-!85 = !{!"llvm.loop.unroll.disable"}
+!83 = distinct !{!83, !16, !17, !18}
+!84 = distinct !{!84, !16, !17}
+!85 = distinct !{!85, !16}
+!86 = distinct !{!86, !16}
+!87 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

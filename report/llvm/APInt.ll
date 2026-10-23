@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %.split, %_ZNK4llvm5
   br i1 %i.ao, label %bb.j, label %bb.s
 
 bb.j:                                             ; preds = %bb.i
-  %i.ap = udiv i32 %2, %i.b                       ; 3 uses
+  %i.ap = udiv i32 %2, %i.b                       ; 2 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZN4llvm5APInt7setBitsEjj.exit
@@ -224,8 +224,8 @@ bb.k:                                             ; preds = %bb.j, %_ZN4llvm5API
   br i1 %.not70, label %_ZN4llvm5APInt7setBitsEjj.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ba = trunc nuw i64 %indvars.iv to i32        ; 3 uses
-  %i.bb = mul i32 %i.ap, %i.ba                    ; 5 uses
+  %i.ba = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.bb = mul i32 %i.ap, %i.ba                    ; 6 uses
   %i.bc = add i32 %i.ba, 1
   %i.bd = mul i32 %i.bc, %i.ap                    ; 5 uses
   %i.be = icmp eq i32 %i.bb, %i.bd
@@ -295,8 +295,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n
 .lr.ph.preheader.i.i:                             ; preds = %bb.r
   %i.ck = zext nneg i32 %.022.i.i to i64          ; 3 uses
   %wide.trip.count.i.i = zext nneg i32 %i.bp to i64 ; 2 uses
-  %6 = mul i32 %i.ap, %i.ba
-  %i.cl = lshr i32 %6, 6
+  %i.cl = lshr i32 %i.bb, 6
   %i.cm = xor i32 %i.cl, -1
   %i.cn = sext i32 %i.cm to i64
   %i.co = add nsw i64 %i.cn, %wide.trip.count.i.i ; 3 uses

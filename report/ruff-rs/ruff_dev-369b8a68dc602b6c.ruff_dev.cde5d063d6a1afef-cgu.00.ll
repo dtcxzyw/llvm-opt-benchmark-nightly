@@ -202,13 +202,13 @@ bb.b:                                             ; preds = %_RNvMsF_NtCscdodAO9
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.o = load i64, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.q = load i64, ptr %i.p, align 8              ; 27 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 29 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4 ; 11 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.u = load i64, ptr %i.t, align 8              ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.w = load i64, ptr %i.v, align 8              ; 23 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 25 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !4 ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -611,7 +611,7 @@ bb.be:                                            ; preds = %bb.bd
   store ptr %i.gh, ptr %i.gi, align 8, !alias.scope !307, !noalias !306
   %i.gj = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 7 uses
   store i64 %i.ga, ptr %i.gj, align 8, !alias.scope !307, !noalias !306
-  %invariant.op470.i = sub i64 %.sroa.0195.0, %i.o ; 3 uses
+  %invariant.op470.i = sub i64 %.sroa.0195.0, %i.o ; 4 uses
   %invariant.op.i = sub i64 %.sroa.0.0, %i.u      ; 3 uses
   br label %.lr.ph469.split.i
 
@@ -626,7 +626,7 @@ bb.be:                                            ; preds = %bb.bd
 
 .lr.ph495.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i, %bb.cu
   %.sroa.05.0.not494.i = phi i1 [ false, %bb.cu ], [ true, %..loopexit39_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0493.i = phi i64 [ %.sroa.09.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 12 uses
+  %.sroa.09.0493.i = phi i64 [ %.sroa.09.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 13 uses
   %.sroa.038.0492.i = phi i64 [ %.sroa.038.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 17 uses
   %i.gm = and i64 %.sroa.038.0492.i, 1023
   %i.gn = icmp eq i64 %i.gm, 0
@@ -729,10 +729,10 @@ bb.bk:                                            ; preds = %bb.bm, %.lr.ph495.i
   %i.hq = icmp ult i64 %i.hp, %i.q
   br i1 %i.hq, label %bb.bn, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bt, %bb.br, %bb.bq, %bb.bp, %bb.bn, %bb.bk, %bb.cs, %bb.cq, %bb.cp, %bb.co, %bb.cm, %bb.cf, %bb.cd, %bb.cc, %bb.cb, %bb.bz, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i
-  %i.hr = phi i64 [ %i.kf, %bb.cf ], [ %.reass.i, %bb.du ], [ %.reass.i, %.lr.ph.split.i ], [ %i.lt, %bb.cs ], [ %i.hp, %bb.bk ], [ %i.ne, %bb.dc ], [ %i.q, %bb.cw ], [ %i.mx, %bb.db ], [ %i.w, %bb.cz ], [ %i.jp, %bb.bz ], [ %i.jt, %bb.cb ], [ %i.jx, %bb.cd ], [ %i.jv, %bb.cc ], [ %i.lb, %bb.cm ], [ %i.lf, %bb.co ], [ %i.ll, %bb.cq ], [ %i.lh, %bb.cp ], [ %i.ia, %bb.bp ], [ %i.ic, %bb.bq ], [ %i.is, %bb.bt ], [ %i.hw, %bb.bn ], [ %i.ih, %bb.br ], [ %i.ob, %bb.dm ], [ %.reass.us.i, %bb.dk ], [ %i.ou, %bb.dr ], [ %i.of, %bb.dn ], [ %i.ol, %bb.dp ]
-  %i.hs = phi i64 [ %.pre729.i.a, %bb.cf ], [ %i.q, %bb.du ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.cs ], [ %i.q, %bb.bk ], [ %i.mz, %bb.dc ], [ %i.q, %bb.cw ], [ %i.mz, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %.pre729.i.a, %bb.cb ], [ %.pre729.i.a, %bb.cd ], [ %.pre729.i.a, %bb.cc ], [ %i.q, %bb.cm ], [ %.pre727.i, %bb.co ], [ %.pre727.i, %bb.cq ], [ %.pre727.i, %bb.cp ], [ %.pre725.i, %bb.bp ], [ %.pre725.i, %bb.bq ], [ %.pre725.i, %bb.bt ], [ %i.w, %bb.bn ], [ %.pre725.i, %bb.br ], [ %i.od, %bb.dm ], [ %i.w, %bb.dk ], [ %i.ot, %bb.dr ], [ %i.od, %bb.dn ], [ %i.om, %bb.dp ]
-  %i.ht = phi ptr [ @34, %bb.cf ], [ @45, %bb.du ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cs ], [ @23, %bb.bk ], [ @44, %bb.dc ], [ @41, %bb.cw ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.bz ], [ @31, %bb.cb ], [ @32, %bb.cd ], [ @33, %bb.cc ], [ @35, %bb.cm ], [ @37, %bb.co ], [ @38, %bb.cq ], [ @39, %bb.cp ], [ @25, %bb.bp ], [ @27, %bb.bq ], [ @28, %bb.bt ], [ @24, %bb.bn ], [ @26, %bb.br ], [ @47, %bb.dm ], [ @46, %bb.dk ], [ @50, %bb.dr ], [ @48, %bb.dn ], [ @49, %bb.dp ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bt, %bb.br, %bb.bq, %bb.bp, %bb.bn, %bb.bk, %bb.cs, %bb.cq, %bb.cp, %bb.co, %bb.bz, %bb.cf, %bb.cd, %bb.cc, %bb.cb, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i, %11
+  %i.hr = phi i64 [ %i.kf, %bb.cf ], [ %.reass.i, %.lr.ph.split.i ], [ %i.lt, %bb.cs ], [ %umax723.le.i, %11 ], [ %i.q, %bb.cw ], [ %i.hw, %bb.bn ], [ %.reass.i, %bb.du ], [ %i.ne, %bb.dc ], [ %i.mx, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %i.jt, %bb.cb ], [ %i.jx, %bb.cd ], [ %i.jv, %bb.cc ], [ %i.lf, %bb.co ], [ %i.ll, %bb.cq ], [ %i.lh, %bb.cp ], [ %i.ih, %bb.br ], [ %i.ic, %bb.bq ], [ %i.hp, %bb.bk ], [ %i.ia, %bb.bp ], [ %i.is, %bb.bt ], [ %i.ou, %bb.dr ], [ %i.ol, %bb.dp ], [ %.reass.us.i, %bb.dk ], [ %i.ob, %bb.dm ], [ %i.of, %bb.dn ]
+  %i.hs = phi i64 [ %.pre729.i.a, %bb.cf ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.cs ], [ %i.q, %11 ], [ %i.q, %bb.cw ], [ %i.w, %bb.bn ], [ %i.q, %bb.du ], [ %i.mz, %bb.dc ], [ %i.mz, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %.pre729.i.a, %bb.cb ], [ %.pre729.i.a, %bb.cd ], [ %.pre729.i.a, %bb.cc ], [ %.pre727.i, %bb.co ], [ %.pre727.i, %bb.cp ], [ %.pre727.i, %bb.cq ], [ %.pre725.i, %bb.br ], [ %.pre725.i, %bb.bq ], [ %i.q, %bb.bk ], [ %.pre725.i, %bb.bp ], [ %.pre725.i, %bb.bt ], [ %i.ot, %bb.dr ], [ %i.om, %bb.dp ], [ %i.w, %bb.dk ], [ %i.od, %bb.dm ], [ %i.od, %bb.dn ]
+  %i.ht = phi ptr [ @34, %bb.cf ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cs ], [ @35, %11 ], [ @41, %bb.cw ], [ @24, %bb.bn ], [ @45, %bb.du ], [ @44, %bb.dc ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.bz ], [ @31, %bb.cb ], [ @32, %bb.cd ], [ @33, %bb.cc ], [ @37, %bb.co ], [ @38, %bb.cq ], [ @39, %bb.cp ], [ @26, %bb.br ], [ @27, %bb.bq ], [ @23, %bb.bk ], [ @25, %bb.bp ], [ @28, %bb.bt ], [ @50, %bb.dr ], [ @49, %bb.dp ], [ @46, %bb.dk ], [ @47, %bb.dm ], [ @48, %bb.dn ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.hr, i64 noundef %i.hs, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ht) #14
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !306
 
@@ -874,7 +874,7 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %i.jo, label %.loopexit24.i, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %bb.bv
-  %i.jp = add i64 %.sroa.038.1472.i, %invariant.op.i ; 3 uses
+  %i.jp = add i64 %.sroa.038.1472.i, %invariant.op.i ; 2 uses
   %i.jq = icmp ult i64 %i.jp, %i.w
   br i1 %i.jq, label %bb.ca, label %.invoke.i
 
@@ -977,9 +977,14 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %bb.cl, %.lr.ph1507
   %i.la = mul i64 %.sroa.09.1.i1506, %i.fy        ; 2 uses
-  %i.lb = add i64 %.sroa.09.1.i1506, %invariant.op470.i ; 3 uses
+  %i.lb = add i64 %.sroa.09.1.i1506, %invariant.op470.i ; 2 uses
   %i.lc = icmp ult i64 %i.lb, %i.q
-  br i1 %i.lc, label %bb.cn, label %.invoke.i
+  br i1 %i.lc, label %bb.cn, label %11
+
+11:                                               ; preds = %bb.cm
+  %12 = add i64 %.sroa.09.0493.i, %invariant.op470.i
+  %umax723.le.i = call i64 @llvm.umax.i64(i64 %i.q, i64 %12)
+  br label %.invoke.i
 
 bb.cn:                                            ; preds = %bb.cm
   %i.ld = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.lb
@@ -1299,7 +1304,7 @@ bb.dy:                                            ; preds = %bb.dx
   %i.pm = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 7 uses
   store i64 %i.pd, ptr %i.pm, align 8, !alias.scope !320, !noalias !319
   %invariant.op.i92 = sub i64 %.sroa.0195.0, %i.o ; 4 uses
-  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 3 uses
+  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 4 uses
   br label %.lr.ph484.split.i
 
 .lr.ph484.split.i:                                ; preds = %.lr.ph484.i, %..loopexit39_crit_edge.split.us.i157
@@ -1313,7 +1318,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 .lr.ph511.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i157, %bb.fo
   %.sroa.05.0.not510.i = phi i1 [ false, %bb.fo ], [ true, %..loopexit39_crit_edge.split.us.i157 ] ; 3 uses
-  %.sroa.09.0509.i = phi i64 [ %.sroa.09.3.i122, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 13 uses
+  %.sroa.09.0509.i = phi i64 [ %.sroa.09.3.i122, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 14 uses
   %.sroa.039.0508.i = phi i64 [ %.sroa.039.3.i, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 16 uses
   %i.pp = and i64 %.sroa.039.0508.i, 1023
   %i.pq = icmp eq i64 %i.pp, 0
@@ -1411,10 +1416,10 @@ bb.ee:                                            ; preds = %bb.eg, %.lr.ph511.i
   %i.qt = icmp ult i64 %i.qs, %i.q
   br i1 %i.qt, label %bb.eh, label %.invoke.i104
 
-.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.en, %bb.el, %bb.ek, %bb.ej, %bb.eh, %bb.ee, %bb.fm, %bb.fk, %bb.fj, %bb.fi, %bb.fg, %bb.ez, %bb.ex, %bb.ew, %bb.ev, %bb.et, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp
-  %i.qu = phi i64 [ %i.ti, %bb.ez ], [ %.reass.i148, %bb.gp ], [ %.reass486.i, %bb.gq ], [ %i.uw, %bb.fm ], [ %i.qs, %bb.ee ], [ %i.wh, %bb.fw ], [ %i.q, %bb.fq ], [ %i.wa, %bb.fv ], [ %i.w, %bb.ft ], [ %i.ss, %bb.et ], [ %i.sw, %bb.ev ], [ %i.ta, %bb.ex ], [ %i.sy, %bb.ew ], [ %i.ue, %bb.fg ], [ %i.ui, %bb.fi ], [ %i.uo, %bb.fk ], [ %i.uk, %bb.fj ], [ %i.rd, %bb.ej ], [ %i.rf, %bb.ek ], [ %i.rv, %bb.en ], [ %i.qz, %bb.eh ], [ %i.rk, %bb.el ], [ %i.xe, %bb.gg ], [ %.reass.us.i151, %bb.ge ], [ %i.xx, %bb.gl ], [ %i.xi, %bb.gh ], [ %i.xo, %bb.gj ]
-  %i.qv = phi i64 [ %.pre745.i.a, %bb.ez ], [ %i.q, %bb.gp ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fm ], [ %i.q, %bb.ee ], [ %i.wc, %bb.fw ], [ %i.q, %bb.fq ], [ %i.wc, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %.pre745.i.a, %bb.ev ], [ %.pre745.i.a, %bb.ex ], [ %.pre745.i.a, %bb.ew ], [ %i.w, %bb.fg ], [ %.pre743.i, %bb.fi ], [ %.pre743.i, %bb.fk ], [ %.pre743.i, %bb.fj ], [ %.pre741.i, %bb.ej ], [ %.pre741.i, %bb.ek ], [ %.pre741.i, %bb.en ], [ %i.w, %bb.eh ], [ %.pre741.i, %bb.el ], [ %i.xg, %bb.gg ], [ %i.q, %bb.ge ], [ %i.xw, %bb.gl ], [ %i.xg, %bb.gh ], [ %i.xp, %bb.gj ]
-  %i.qw = phi ptr [ @62, %bb.ez ], [ @73, %bb.gp ], [ @74, %bb.gq ], [ @68, %bb.fm ], [ @51, %bb.ee ], [ @72, %bb.fw ], [ @69, %bb.fq ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.et ], [ @59, %bb.ev ], [ @60, %bb.ex ], [ @61, %bb.ew ], [ @64, %bb.fg ], [ @65, %bb.fi ], [ @66, %bb.fk ], [ @67, %bb.fj ], [ @53, %bb.ej ], [ @55, %bb.ek ], [ @56, %bb.en ], [ @52, %bb.eh ], [ @54, %bb.el ], [ @75, %bb.gg ], [ @73, %bb.ge ], [ @78, %bb.gl ], [ @76, %bb.gh ], [ @77, %bb.gj ]
+.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.en, %bb.el, %bb.ek, %bb.ej, %bb.eh, %bb.ee, %bb.fm, %bb.fk, %bb.fj, %bb.fi, %bb.et, %bb.ez, %bb.ex, %bb.ew, %bb.ev, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp, %13
+  %i.qu = phi i64 [ %i.ti, %bb.ez ], [ %.reass486.i, %bb.gq ], [ %i.uw, %bb.fm ], [ %umax739.le.i, %13 ], [ %i.q, %bb.fq ], [ %i.qz, %bb.eh ], [ %.reass.i148, %bb.gp ], [ %i.wh, %bb.fw ], [ %i.wa, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %i.sw, %bb.ev ], [ %i.ta, %bb.ex ], [ %i.sy, %bb.ew ], [ %i.ui, %bb.fi ], [ %i.uo, %bb.fk ], [ %i.uk, %bb.fj ], [ %i.rk, %bb.el ], [ %i.rf, %bb.ek ], [ %i.qs, %bb.ee ], [ %i.rd, %bb.ej ], [ %i.rv, %bb.en ], [ %i.xx, %bb.gl ], [ %i.xo, %bb.gj ], [ %.reass.us.i151, %bb.ge ], [ %i.xe, %bb.gg ], [ %i.xi, %bb.gh ]
+  %i.qv = phi i64 [ %.pre745.i.a, %bb.ez ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fm ], [ %i.w, %13 ], [ %i.q, %bb.fq ], [ %i.w, %bb.eh ], [ %i.q, %bb.gp ], [ %i.wc, %bb.fw ], [ %i.wc, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %.pre745.i.a, %bb.ev ], [ %.pre745.i.a, %bb.ex ], [ %.pre745.i.a, %bb.ew ], [ %.pre743.i, %bb.fi ], [ %.pre743.i, %bb.fj ], [ %.pre743.i, %bb.fk ], [ %.pre741.i, %bb.el ], [ %.pre741.i, %bb.ek ], [ %i.q, %bb.ee ], [ %.pre741.i, %bb.ej ], [ %.pre741.i, %bb.en ], [ %i.xw, %bb.gl ], [ %i.xp, %bb.gj ], [ %i.q, %bb.ge ], [ %i.xg, %bb.gg ], [ %i.xg, %bb.gh ]
+  %i.qw = phi ptr [ @62, %bb.ez ], [ @74, %bb.gq ], [ @68, %bb.fm ], [ @64, %13 ], [ @69, %bb.fq ], [ @52, %bb.eh ], [ @73, %bb.gp ], [ @72, %bb.fw ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.et ], [ @59, %bb.ev ], [ @60, %bb.ex ], [ @61, %bb.ew ], [ @65, %bb.fi ], [ @66, %bb.fk ], [ @67, %bb.fj ], [ @54, %bb.el ], [ @55, %bb.ek ], [ @51, %bb.ee ], [ @53, %bb.ej ], [ @56, %bb.en ], [ @78, %bb.gl ], [ @77, %bb.gj ], [ @73, %bb.ge ], [ @75, %bb.gg ], [ @76, %bb.gh ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.qu, i64 noundef %i.qv, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.qw) #14
           to label %.cont.i105 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i88.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !319
 
@@ -1556,7 +1561,7 @@ bb.es:                                            ; preds = %bb.er
   br i1 %i.sr, label %.loopexit24.i124, label %bb.et
 
 bb.et:                                            ; preds = %bb.es, %bb.ep
-  %i.ss = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 3 uses
+  %i.ss = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 2 uses
   %i.st = icmp ult i64 %i.ss, %i.q
   br i1 %i.st, label %bb.eu, label %.invoke.i104
 
@@ -1659,9 +1664,14 @@ bb.ff:                                            ; preds = %bb.fe
 
 bb.fg:                                            ; preds = %bb.ff, %.lr.ph1499
   %i.ud = mul i64 %.sroa.09.1.i1121498, %i.pb     ; 2 uses
-  %i.ue = add i64 %.sroa.09.1.i1121498, %invariant.op485.i ; 3 uses
+  %i.ue = add i64 %.sroa.09.1.i1121498, %invariant.op485.i ; 2 uses
   %i.uf = icmp ult i64 %i.ue, %i.w
-  br i1 %i.uf, label %bb.fh, label %.invoke.i104
+  br i1 %i.uf, label %bb.fh, label %13
+
+13:                                               ; preds = %bb.fg
+  %14 = add i64 %.sroa.09.0509.i, %invariant.op485.i
+  %umax739.le.i = call i64 @llvm.umax.i64(i64 %i.w, i64 %14)
+  br label %.invoke.i104
 
 bb.fh:                                            ; preds = %bb.fg
   %i.ug = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.ue
@@ -2064,13 +2074,13 @@ bb.b:                                             ; preds = %_RNvMsF_NtCscdodAO9
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.o = load i64, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.q = load i64, ptr %i.p, align 8              ; 27 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 29 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4 ; 11 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.u = load i64, ptr %i.t, align 8              ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.w = load i64, ptr %i.v, align 8              ; 23 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 25 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !4 ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -2473,7 +2483,7 @@ bb.be:                                            ; preds = %bb.bd
   store ptr %i.gh, ptr %i.gi, align 8, !alias.scope !630, !noalias !629
   %i.gj = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 7 uses
   store i64 %i.ga, ptr %i.gj, align 8, !alias.scope !630, !noalias !629
-  %invariant.op470.i = sub i64 %.sroa.0195.0, %i.o ; 3 uses
+  %invariant.op470.i = sub i64 %.sroa.0195.0, %i.o ; 4 uses
   %invariant.op.i = sub i64 %.sroa.0.0, %i.u      ; 3 uses
   br label %.lr.ph469.split.i
 
@@ -2488,7 +2498,7 @@ bb.be:                                            ; preds = %bb.bd
 
 .lr.ph495.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i, %bb.cu
   %.sroa.05.0.not494.i = phi i1 [ false, %bb.cu ], [ true, %..loopexit39_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0493.i = phi i64 [ %.sroa.09.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 12 uses
+  %.sroa.09.0493.i = phi i64 [ %.sroa.09.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 13 uses
   %.sroa.038.0492.i = phi i64 [ %.sroa.038.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 17 uses
   %i.gm = and i64 %.sroa.038.0492.i, 1023
   %i.gn = icmp eq i64 %i.gm, 0
@@ -2591,10 +2601,10 @@ bb.bk:                                            ; preds = %bb.bm, %.lr.ph495.i
   %i.hq = icmp ult i64 %i.hp, %i.q
   br i1 %i.hq, label %bb.bn, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bt, %bb.br, %bb.bq, %bb.bp, %bb.bn, %bb.bk, %bb.cs, %bb.cq, %bb.cp, %bb.co, %bb.cm, %bb.cf, %bb.cd, %bb.cc, %bb.cb, %bb.bz, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i
-  %i.hr = phi i64 [ %i.kf, %bb.cf ], [ %.reass.i, %bb.du ], [ %.reass.i, %.lr.ph.split.i ], [ %i.lt, %bb.cs ], [ %i.hp, %bb.bk ], [ %i.ne, %bb.dc ], [ %i.q, %bb.cw ], [ %i.mx, %bb.db ], [ %i.w, %bb.cz ], [ %i.jp, %bb.bz ], [ %i.jt, %bb.cb ], [ %i.jx, %bb.cd ], [ %i.jv, %bb.cc ], [ %i.lb, %bb.cm ], [ %i.lf, %bb.co ], [ %i.ll, %bb.cq ], [ %i.lh, %bb.cp ], [ %i.ia, %bb.bp ], [ %i.ic, %bb.bq ], [ %i.is, %bb.bt ], [ %i.hw, %bb.bn ], [ %i.ih, %bb.br ], [ %i.ob, %bb.dm ], [ %.reass.us.i, %bb.dk ], [ %i.ou, %bb.dr ], [ %i.of, %bb.dn ], [ %i.ol, %bb.dp ]
-  %i.hs = phi i64 [ %.pre729.i.a, %bb.cf ], [ %i.q, %bb.du ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.cs ], [ %i.q, %bb.bk ], [ %i.mz, %bb.dc ], [ %i.q, %bb.cw ], [ %i.mz, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %.pre729.i.a, %bb.cb ], [ %.pre729.i.a, %bb.cd ], [ %.pre729.i.a, %bb.cc ], [ %i.q, %bb.cm ], [ %.pre727.i, %bb.co ], [ %.pre727.i, %bb.cq ], [ %.pre727.i, %bb.cp ], [ %.pre725.i, %bb.bp ], [ %.pre725.i, %bb.bq ], [ %.pre725.i, %bb.bt ], [ %i.w, %bb.bn ], [ %.pre725.i, %bb.br ], [ %i.od, %bb.dm ], [ %i.w, %bb.dk ], [ %i.ot, %bb.dr ], [ %i.od, %bb.dn ], [ %i.om, %bb.dp ]
-  %i.ht = phi ptr [ @34, %bb.cf ], [ @45, %bb.du ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cs ], [ @23, %bb.bk ], [ @44, %bb.dc ], [ @41, %bb.cw ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.bz ], [ @31, %bb.cb ], [ @32, %bb.cd ], [ @33, %bb.cc ], [ @35, %bb.cm ], [ @37, %bb.co ], [ @38, %bb.cq ], [ @39, %bb.cp ], [ @25, %bb.bp ], [ @27, %bb.bq ], [ @28, %bb.bt ], [ @24, %bb.bn ], [ @26, %bb.br ], [ @47, %bb.dm ], [ @46, %bb.dk ], [ @50, %bb.dr ], [ @48, %bb.dn ], [ @49, %bb.dp ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bt, %bb.br, %bb.bq, %bb.bp, %bb.bn, %bb.bk, %bb.cs, %bb.cq, %bb.cp, %bb.co, %bb.bz, %bb.cf, %bb.cd, %bb.cc, %bb.cb, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i, %11
+  %i.hr = phi i64 [ %i.kf, %bb.cf ], [ %.reass.i, %.lr.ph.split.i ], [ %i.lt, %bb.cs ], [ %umax723.le.i, %11 ], [ %i.q, %bb.cw ], [ %i.hw, %bb.bn ], [ %.reass.i, %bb.du ], [ %i.ne, %bb.dc ], [ %i.mx, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %i.jt, %bb.cb ], [ %i.jx, %bb.cd ], [ %i.jv, %bb.cc ], [ %i.lf, %bb.co ], [ %i.ll, %bb.cq ], [ %i.lh, %bb.cp ], [ %i.ih, %bb.br ], [ %i.ic, %bb.bq ], [ %i.hp, %bb.bk ], [ %i.ia, %bb.bp ], [ %i.is, %bb.bt ], [ %i.ou, %bb.dr ], [ %i.ol, %bb.dp ], [ %.reass.us.i, %bb.dk ], [ %i.ob, %bb.dm ], [ %i.of, %bb.dn ]
+  %i.hs = phi i64 [ %.pre729.i.a, %bb.cf ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.cs ], [ %i.q, %11 ], [ %i.q, %bb.cw ], [ %i.w, %bb.bn ], [ %i.q, %bb.du ], [ %i.mz, %bb.dc ], [ %i.mz, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %.pre729.i.a, %bb.cb ], [ %.pre729.i.a, %bb.cd ], [ %.pre729.i.a, %bb.cc ], [ %.pre727.i, %bb.co ], [ %.pre727.i, %bb.cp ], [ %.pre727.i, %bb.cq ], [ %.pre725.i, %bb.br ], [ %.pre725.i, %bb.bq ], [ %i.q, %bb.bk ], [ %.pre725.i, %bb.bp ], [ %.pre725.i, %bb.bt ], [ %i.ot, %bb.dr ], [ %i.om, %bb.dp ], [ %i.w, %bb.dk ], [ %i.od, %bb.dm ], [ %i.od, %bb.dn ]
+  %i.ht = phi ptr [ @34, %bb.cf ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cs ], [ @35, %11 ], [ @41, %bb.cw ], [ @24, %bb.bn ], [ @45, %bb.du ], [ @44, %bb.dc ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.bz ], [ @31, %bb.cb ], [ @32, %bb.cd ], [ @33, %bb.cc ], [ @37, %bb.co ], [ @38, %bb.cq ], [ @39, %bb.cp ], [ @26, %bb.br ], [ @27, %bb.bq ], [ @23, %bb.bk ], [ @25, %bb.bp ], [ @28, %bb.bt ], [ @50, %bb.dr ], [ @49, %bb.dp ], [ @46, %bb.dk ], [ @47, %bb.dm ], [ @48, %bb.dn ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.hr, i64 noundef %i.hs, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ht) #14
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !629
 
@@ -2736,7 +2746,7 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %i.jo, label %.loopexit24.i, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %bb.bv
-  %i.jp = add i64 %.sroa.038.1472.i, %invariant.op.i ; 3 uses
+  %i.jp = add i64 %.sroa.038.1472.i, %invariant.op.i ; 2 uses
   %i.jq = icmp ult i64 %i.jp, %i.w
   br i1 %i.jq, label %bb.ca, label %.invoke.i
 
@@ -2839,9 +2849,14 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %bb.cl, %.lr.ph1507
   %i.la = mul i64 %.sroa.09.1.i1506, %i.fy        ; 2 uses
-  %i.lb = add i64 %.sroa.09.1.i1506, %invariant.op470.i ; 3 uses
+  %i.lb = add i64 %.sroa.09.1.i1506, %invariant.op470.i ; 2 uses
   %i.lc = icmp ult i64 %i.lb, %i.q
-  br i1 %i.lc, label %bb.cn, label %.invoke.i
+  br i1 %i.lc, label %bb.cn, label %11
+
+11:                                               ; preds = %bb.cm
+  %12 = add i64 %.sroa.09.0493.i, %invariant.op470.i
+  %umax723.le.i = call i64 @llvm.umax.i64(i64 %i.q, i64 %12)
+  br label %.invoke.i
 
 bb.cn:                                            ; preds = %bb.cm
   %i.ld = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.lb
@@ -3161,7 +3176,7 @@ bb.dy:                                            ; preds = %bb.dx
   %i.pm = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 7 uses
   store i64 %i.pd, ptr %i.pm, align 8, !alias.scope !643, !noalias !642
   %invariant.op.i92 = sub i64 %.sroa.0195.0, %i.o ; 4 uses
-  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 3 uses
+  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 4 uses
   br label %.lr.ph484.split.i
 
 .lr.ph484.split.i:                                ; preds = %.lr.ph484.i, %..loopexit39_crit_edge.split.us.i157
@@ -3175,7 +3190,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 .lr.ph511.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i157, %bb.fo
   %.sroa.05.0.not510.i = phi i1 [ false, %bb.fo ], [ true, %..loopexit39_crit_edge.split.us.i157 ] ; 3 uses
-  %.sroa.09.0509.i = phi i64 [ %.sroa.09.3.i122, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 13 uses
+  %.sroa.09.0509.i = phi i64 [ %.sroa.09.3.i122, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 14 uses
   %.sroa.039.0508.i = phi i64 [ %.sroa.039.3.i, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 16 uses
   %i.pp = and i64 %.sroa.039.0508.i, 1023
   %i.pq = icmp eq i64 %i.pp, 0
@@ -3273,10 +3288,10 @@ bb.ee:                                            ; preds = %bb.eg, %.lr.ph511.i
   %i.qt = icmp ult i64 %i.qs, %i.q
   br i1 %i.qt, label %bb.eh, label %.invoke.i104
 
-.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.en, %bb.el, %bb.ek, %bb.ej, %bb.eh, %bb.ee, %bb.fm, %bb.fk, %bb.fj, %bb.fi, %bb.fg, %bb.ez, %bb.ex, %bb.ew, %bb.ev, %bb.et, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp
-  %i.qu = phi i64 [ %i.ti, %bb.ez ], [ %.reass.i148, %bb.gp ], [ %.reass486.i, %bb.gq ], [ %i.uw, %bb.fm ], [ %i.qs, %bb.ee ], [ %i.wh, %bb.fw ], [ %i.q, %bb.fq ], [ %i.wa, %bb.fv ], [ %i.w, %bb.ft ], [ %i.ss, %bb.et ], [ %i.sw, %bb.ev ], [ %i.ta, %bb.ex ], [ %i.sy, %bb.ew ], [ %i.ue, %bb.fg ], [ %i.ui, %bb.fi ], [ %i.uo, %bb.fk ], [ %i.uk, %bb.fj ], [ %i.rd, %bb.ej ], [ %i.rf, %bb.ek ], [ %i.rv, %bb.en ], [ %i.qz, %bb.eh ], [ %i.rk, %bb.el ], [ %i.xe, %bb.gg ], [ %.reass.us.i151, %bb.ge ], [ %i.xx, %bb.gl ], [ %i.xi, %bb.gh ], [ %i.xo, %bb.gj ]
-  %i.qv = phi i64 [ %.pre745.i.a, %bb.ez ], [ %i.q, %bb.gp ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fm ], [ %i.q, %bb.ee ], [ %i.wc, %bb.fw ], [ %i.q, %bb.fq ], [ %i.wc, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %.pre745.i.a, %bb.ev ], [ %.pre745.i.a, %bb.ex ], [ %.pre745.i.a, %bb.ew ], [ %i.w, %bb.fg ], [ %.pre743.i, %bb.fi ], [ %.pre743.i, %bb.fk ], [ %.pre743.i, %bb.fj ], [ %.pre741.i, %bb.ej ], [ %.pre741.i, %bb.ek ], [ %.pre741.i, %bb.en ], [ %i.w, %bb.eh ], [ %.pre741.i, %bb.el ], [ %i.xg, %bb.gg ], [ %i.q, %bb.ge ], [ %i.xw, %bb.gl ], [ %i.xg, %bb.gh ], [ %i.xp, %bb.gj ]
-  %i.qw = phi ptr [ @62, %bb.ez ], [ @73, %bb.gp ], [ @74, %bb.gq ], [ @68, %bb.fm ], [ @51, %bb.ee ], [ @72, %bb.fw ], [ @69, %bb.fq ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.et ], [ @59, %bb.ev ], [ @60, %bb.ex ], [ @61, %bb.ew ], [ @64, %bb.fg ], [ @65, %bb.fi ], [ @66, %bb.fk ], [ @67, %bb.fj ], [ @53, %bb.ej ], [ @55, %bb.ek ], [ @56, %bb.en ], [ @52, %bb.eh ], [ @54, %bb.el ], [ @75, %bb.gg ], [ @73, %bb.ge ], [ @78, %bb.gl ], [ @76, %bb.gh ], [ @77, %bb.gj ]
+.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.en, %bb.el, %bb.ek, %bb.ej, %bb.eh, %bb.ee, %bb.fm, %bb.fk, %bb.fj, %bb.fi, %bb.et, %bb.ez, %bb.ex, %bb.ew, %bb.ev, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp, %13
+  %i.qu = phi i64 [ %i.ti, %bb.ez ], [ %.reass486.i, %bb.gq ], [ %i.uw, %bb.fm ], [ %umax739.le.i, %13 ], [ %i.q, %bb.fq ], [ %i.qz, %bb.eh ], [ %.reass.i148, %bb.gp ], [ %i.wh, %bb.fw ], [ %i.wa, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %i.sw, %bb.ev ], [ %i.ta, %bb.ex ], [ %i.sy, %bb.ew ], [ %i.ui, %bb.fi ], [ %i.uo, %bb.fk ], [ %i.uk, %bb.fj ], [ %i.rk, %bb.el ], [ %i.rf, %bb.ek ], [ %i.qs, %bb.ee ], [ %i.rd, %bb.ej ], [ %i.rv, %bb.en ], [ %i.xx, %bb.gl ], [ %i.xo, %bb.gj ], [ %.reass.us.i151, %bb.ge ], [ %i.xe, %bb.gg ], [ %i.xi, %bb.gh ]
+  %i.qv = phi i64 [ %.pre745.i.a, %bb.ez ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fm ], [ %i.w, %13 ], [ %i.q, %bb.fq ], [ %i.w, %bb.eh ], [ %i.q, %bb.gp ], [ %i.wc, %bb.fw ], [ %i.wc, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %.pre745.i.a, %bb.ev ], [ %.pre745.i.a, %bb.ex ], [ %.pre745.i.a, %bb.ew ], [ %.pre743.i, %bb.fi ], [ %.pre743.i, %bb.fj ], [ %.pre743.i, %bb.fk ], [ %.pre741.i, %bb.el ], [ %.pre741.i, %bb.ek ], [ %i.q, %bb.ee ], [ %.pre741.i, %bb.ej ], [ %.pre741.i, %bb.en ], [ %i.xw, %bb.gl ], [ %i.xp, %bb.gj ], [ %i.q, %bb.ge ], [ %i.xg, %bb.gg ], [ %i.xg, %bb.gh ]
+  %i.qw = phi ptr [ @62, %bb.ez ], [ @74, %bb.gq ], [ @68, %bb.fm ], [ @64, %13 ], [ @69, %bb.fq ], [ @52, %bb.eh ], [ @73, %bb.gp ], [ @72, %bb.fw ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.et ], [ @59, %bb.ev ], [ @60, %bb.ex ], [ @61, %bb.ew ], [ @65, %bb.fi ], [ @66, %bb.fk ], [ @67, %bb.fj ], [ @54, %bb.el ], [ @55, %bb.ek ], [ @51, %bb.ee ], [ @53, %bb.ej ], [ @56, %bb.en ], [ @78, %bb.gl ], [ @77, %bb.gj ], [ @73, %bb.ge ], [ @75, %bb.gg ], [ @76, %bb.gh ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.qu, i64 noundef %i.qv, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.qw) #14
           to label %.cont.i105 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i88.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !642
 
@@ -3418,7 +3433,7 @@ bb.es:                                            ; preds = %bb.er
   br i1 %i.sr, label %.loopexit24.i124, label %bb.et
 
 bb.et:                                            ; preds = %bb.es, %bb.ep
-  %i.ss = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 3 uses
+  %i.ss = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 2 uses
   %i.st = icmp ult i64 %i.ss, %i.q
   br i1 %i.st, label %bb.eu, label %.invoke.i104
 
@@ -3521,9 +3536,14 @@ bb.ff:                                            ; preds = %bb.fe
 
 bb.fg:                                            ; preds = %bb.ff, %.lr.ph1499
   %i.ud = mul i64 %.sroa.09.1.i1121498, %i.pb     ; 2 uses
-  %i.ue = add i64 %.sroa.09.1.i1121498, %invariant.op485.i ; 3 uses
+  %i.ue = add i64 %.sroa.09.1.i1121498, %invariant.op485.i ; 2 uses
   %i.uf = icmp ult i64 %i.ue, %i.w
-  br i1 %i.uf, label %bb.fh, label %.invoke.i104
+  br i1 %i.uf, label %bb.fh, label %13
+
+13:                                               ; preds = %bb.fg
+  %14 = add i64 %.sroa.09.0509.i, %invariant.op485.i
+  %umax739.le.i = call i64 @llvm.umax.i64(i64 %i.w, i64 %14)
+  br label %.invoke.i104
 
 bb.fh:                                            ; preds = %bb.fg
   %i.ug = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.ue
@@ -3926,13 +3946,13 @@ bb.b:                                             ; preds = %_RNvMsF_NtCscdodAO9
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.o = load i64, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.q = load i64, ptr %i.p, align 8              ; 27 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 29 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4 ; 11 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.u = load i64, ptr %i.t, align 8              ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.w = load i64, ptr %i.v, align 8              ; 23 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 25 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !4 ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -4335,7 +4355,7 @@ bb.be:                                            ; preds = %bb.bd
   store ptr %i.gb, ptr %i.gc, align 8, !alias.scope !849, !noalias !848
   %i.gd = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 7 uses
   store i64 %i.fu, ptr %i.gd, align 8, !alias.scope !849, !noalias !848
-  %invariant.op470.i = sub i64 %.sroa.0188.0, %i.o ; 3 uses
+  %invariant.op470.i = sub i64 %.sroa.0188.0, %i.o ; 4 uses
   %invariant.op.i = sub i64 %.sroa.0.0, %i.u      ; 3 uses
   br label %.lr.ph469.split.i
 
@@ -4356,7 +4376,7 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i, %.lr.ph495.i
   %.sroa.05.0.not494.i = phi i1 [ true, %.lr.ph495.i ], [ false, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 3 uses
-  %.sroa.09.0493.i = phi i64 [ 0, %.lr.ph495.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 13 uses
+  %.sroa.09.0493.i = phi i64 [ 0, %.lr.ph495.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 14 uses
   %.sroa.038.0492.i = phi i64 [ 0, %.lr.ph495.i ], [ %.sroa.038.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 18 uses
   %i.gj = and i64 %.sroa.038.0492.i, 1023
   %i.gk = icmp eq i64 %i.gj, 0
@@ -4450,10 +4470,10 @@ bb.bl:                                            ; preds = %bb.bn, %bb.bf
   %i.he = icmp ult i64 %i.hd, %i.q
   br i1 %i.he, label %bb.bo, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bu, %bb.bs, %bb.br, %bb.bq, %bb.bo, %bb.bl, %bb.ct, %bb.cr, %bb.cq, %bb.cp, %bb.cn, %bb.cg, %bb.ce, %bb.cd, %bb.cc, %bb.ca, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i
-  %i.hf = phi i64 [ %i.jm, %bb.cg ], [ %.reass.i, %bb.du ], [ %.reass.i, %.lr.ph.split.i ], [ %i.kt, %bb.ct ], [ %i.hd, %bb.bl ], [ %i.ma, %bb.dc ], [ %i.q, %bb.cw ], [ %i.lt, %bb.db ], [ %i.w, %bb.cz ], [ %i.iw, %bb.ca ], [ %i.ja, %bb.cc ], [ %i.je, %bb.ce ], [ %i.jc, %bb.cd ], [ %i.kb, %bb.cn ], [ %i.kf, %bb.cp ], [ %i.kl, %bb.cr ], [ %i.kh, %bb.cq ], [ %i.ho, %bb.bq ], [ %i.hq, %bb.br ], [ %i.ig, %bb.bu ], [ %i.hk, %bb.bo ], [ %i.hv, %bb.bs ], [ %i.mx, %bb.dm ], [ %.reass.us.i, %bb.dk ], [ %i.nq, %bb.dr ], [ %i.nb, %bb.dn ], [ %i.nh, %bb.dp ]
-  %i.hg = phi i64 [ %.pre729.i.a, %bb.cg ], [ %i.q, %bb.du ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.ct ], [ %i.q, %bb.bl ], [ %i.lv, %bb.dc ], [ %i.q, %bb.cw ], [ %i.lv, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.ca ], [ %.pre729.i.a, %bb.cc ], [ %.pre729.i.a, %bb.ce ], [ %.pre729.i.a, %bb.cd ], [ %i.q, %bb.cn ], [ %.pre727.i, %bb.cp ], [ %.pre727.i, %bb.cr ], [ %.pre727.i, %bb.cq ], [ %.pre725.i, %bb.bq ], [ %.pre725.i, %bb.br ], [ %.pre725.i, %bb.bu ], [ %i.w, %bb.bo ], [ %.pre725.i, %bb.bs ], [ %i.mz, %bb.dm ], [ %i.w, %bb.dk ], [ %i.np, %bb.dr ], [ %i.mz, %bb.dn ], [ %i.ni, %bb.dp ]
-  %i.hh = phi ptr [ @34, %bb.cg ], [ @45, %bb.du ], [ @45, %.lr.ph.split.i ], [ @40, %bb.ct ], [ @23, %bb.bl ], [ @44, %bb.dc ], [ @41, %bb.cw ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.ca ], [ @31, %bb.cc ], [ @32, %bb.ce ], [ @33, %bb.cd ], [ @35, %bb.cn ], [ @37, %bb.cp ], [ @38, %bb.cr ], [ @39, %bb.cq ], [ @25, %bb.bq ], [ @27, %bb.br ], [ @28, %bb.bu ], [ @24, %bb.bo ], [ @26, %bb.bs ], [ @47, %bb.dm ], [ @46, %bb.dk ], [ @50, %bb.dr ], [ @48, %bb.dn ], [ @49, %bb.dp ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bu, %bb.bs, %bb.br, %bb.bq, %bb.bo, %bb.bl, %bb.ct, %bb.cr, %bb.cq, %bb.cp, %bb.ca, %bb.cg, %bb.ce, %bb.cd, %bb.cc, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i, %11
+  %i.hf = phi i64 [ %i.jm, %bb.cg ], [ %.reass.i, %.lr.ph.split.i ], [ %i.kt, %bb.ct ], [ %umax723.le.i, %11 ], [ %i.q, %bb.cw ], [ %i.hk, %bb.bo ], [ %.reass.i, %bb.du ], [ %i.ma, %bb.dc ], [ %i.lt, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.ca ], [ %i.ja, %bb.cc ], [ %i.je, %bb.ce ], [ %i.jc, %bb.cd ], [ %i.kf, %bb.cp ], [ %i.kl, %bb.cr ], [ %i.kh, %bb.cq ], [ %i.hv, %bb.bs ], [ %i.hq, %bb.br ], [ %i.hd, %bb.bl ], [ %i.ho, %bb.bq ], [ %i.ig, %bb.bu ], [ %i.nq, %bb.dr ], [ %i.nh, %bb.dp ], [ %.reass.us.i, %bb.dk ], [ %i.mx, %bb.dm ], [ %i.nb, %bb.dn ]
+  %i.hg = phi i64 [ %.pre729.i.a, %bb.cg ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.ct ], [ %i.q, %11 ], [ %i.q, %bb.cw ], [ %i.w, %bb.bo ], [ %i.q, %bb.du ], [ %i.lv, %bb.dc ], [ %i.lv, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.ca ], [ %.pre729.i.a, %bb.cc ], [ %.pre729.i.a, %bb.ce ], [ %.pre729.i.a, %bb.cd ], [ %.pre727.i, %bb.cp ], [ %.pre727.i, %bb.cq ], [ %.pre727.i, %bb.cr ], [ %.pre725.i, %bb.bs ], [ %.pre725.i, %bb.br ], [ %i.q, %bb.bl ], [ %.pre725.i, %bb.bq ], [ %.pre725.i, %bb.bu ], [ %i.np, %bb.dr ], [ %i.ni, %bb.dp ], [ %i.w, %bb.dk ], [ %i.mz, %bb.dm ], [ %i.mz, %bb.dn ]
+  %i.hh = phi ptr [ @34, %bb.cg ], [ @45, %.lr.ph.split.i ], [ @40, %bb.ct ], [ @35, %11 ], [ @41, %bb.cw ], [ @24, %bb.bo ], [ @45, %bb.du ], [ @44, %bb.dc ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.ca ], [ @31, %bb.cc ], [ @32, %bb.ce ], [ @33, %bb.cd ], [ @37, %bb.cp ], [ @38, %bb.cr ], [ @39, %bb.cq ], [ @26, %bb.bs ], [ @27, %bb.br ], [ @23, %bb.bl ], [ @25, %bb.bq ], [ @28, %bb.bu ], [ @50, %bb.dr ], [ @49, %bb.dp ], [ @46, %bb.dk ], [ @47, %bb.dm ], [ @48, %bb.dn ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.hf, i64 noundef %i.hg, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hh) #14
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !848
 
@@ -4577,7 +4597,7 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.iv, label %.loopexit24.i, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz, %bb.bw
-  %i.iw = add i64 %.sroa.038.1472.i, %invariant.op.i ; 3 uses
+  %i.iw = add i64 %.sroa.038.1472.i, %invariant.op.i ; 2 uses
   %i.ix = icmp ult i64 %i.iw, %i.w
   br i1 %i.ix, label %bb.cb, label %.invoke.i
 
@@ -4662,9 +4682,14 @@ bb.cm:                                            ; preds = %bb.cl
 
 bb.cn:                                            ; preds = %bb.cm, %.lr.ph1518
   %i.ka = mul i64 %.sroa.09.1.i1517, %i.fs        ; 2 uses
-  %i.kb = add i64 %.sroa.09.1.i1517, %invariant.op470.i ; 3 uses
+  %i.kb = add i64 %.sroa.09.1.i1517, %invariant.op470.i ; 2 uses
   %i.kc = icmp ult i64 %i.kb, %i.q
-  br i1 %i.kc, label %bb.co, label %.invoke.i
+  br i1 %i.kc, label %bb.co, label %11
+
+11:                                               ; preds = %bb.cn
+  %12 = add i64 %.sroa.09.0493.i, %invariant.op470.i
+  %umax723.le.i = call i64 @llvm.umax.i64(i64 %i.q, i64 %12)
+  br label %.invoke.i
 
 bb.co:                                            ; preds = %bb.cn
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.kb
@@ -4981,7 +5006,7 @@ bb.dy:                                            ; preds = %bb.dx
   %i.oi = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 7 uses
   store i64 %i.nz, ptr %i.oi, align 8, !alias.scope !857, !noalias !856
   %invariant.op.i92 = sub i64 %.sroa.0188.0, %i.o ; 4 uses
-  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 3 uses
+  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 4 uses
   br label %.lr.ph484.split.i
 
 .lr.ph511.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i150
@@ -5001,7 +5026,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 bb.dz:                                            ; preds = %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118, %.lr.ph511.i
   %.sroa.05.0.not510.i = phi i1 [ true, %.lr.ph511.i ], [ false, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 3 uses
-  %.sroa.09.0509.i = phi i64 [ 0, %.lr.ph511.i ], [ %.sroa.09.3.i120, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 14 uses
+  %.sroa.09.0509.i = phi i64 [ 0, %.lr.ph511.i ], [ %.sroa.09.3.i120, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 15 uses
   %.sroa.039.0508.i = phi i64 [ 0, %.lr.ph511.i ], [ %.sroa.039.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB7_5utils12OffsetLookupmEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 17 uses
   %i.oo = and i64 %.sroa.039.0508.i, 1023
   %i.op = icmp eq i64 %i.oo, 0
@@ -5090,10 +5115,10 @@ bb.ef:                                            ; preds = %bb.eh, %bb.dz
   %i.pj = icmp ult i64 %i.pi, %i.q
   br i1 %i.pj, label %bb.ei, label %.invoke.i104
 
-.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.eo, %bb.em, %bb.el, %bb.ek, %bb.ei, %bb.ef, %bb.fn, %bb.fl, %bb.fk, %bb.fj, %bb.fh, %bb.fa, %bb.ey, %bb.ex, %bb.ew, %bb.eu, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp
-  %i.pk = phi i64 [ %i.rr, %bb.fa ], [ %.reass.i141, %bb.gp ], [ %.reass486.i, %bb.gq ], [ %i.sy, %bb.fn ], [ %i.pi, %bb.ef ], [ %i.uf, %bb.fw ], [ %i.q, %bb.fq ], [ %i.ty, %bb.fv ], [ %i.w, %bb.ft ], [ %i.rb, %bb.eu ], [ %i.rf, %bb.ew ], [ %i.rj, %bb.ey ], [ %i.rh, %bb.ex ], [ %i.sg, %bb.fh ], [ %i.sk, %bb.fj ], [ %i.sq, %bb.fl ], [ %i.sm, %bb.fk ], [ %i.pt, %bb.ek ], [ %i.pv, %bb.el ], [ %i.ql, %bb.eo ], [ %i.pp, %bb.ei ], [ %i.qa, %bb.em ], [ %i.vc, %bb.gg ], [ %.reass.us.i144, %bb.ge ], [ %i.vv, %bb.gl ], [ %i.vg, %bb.gh ], [ %i.vm, %bb.gj ]
-  %i.pl = phi i64 [ %.pre745.i.a, %bb.fa ], [ %i.q, %bb.gp ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fn ], [ %i.q, %bb.ef ], [ %i.ua, %bb.fw ], [ %i.q, %bb.fq ], [ %i.ua, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.eu ], [ %.pre745.i.a, %bb.ew ], [ %.pre745.i.a, %bb.ey ], [ %.pre745.i.a, %bb.ex ], [ %i.w, %bb.fh ], [ %.pre743.i, %bb.fj ], [ %.pre743.i, %bb.fl ], [ %.pre743.i, %bb.fk ], [ %.pre741.i, %bb.ek ], [ %.pre741.i, %bb.el ], [ %.pre741.i, %bb.eo ], [ %i.w, %bb.ei ], [ %.pre741.i, %bb.em ], [ %i.ve, %bb.gg ], [ %i.q, %bb.ge ], [ %i.vu, %bb.gl ], [ %i.ve, %bb.gh ], [ %i.vn, %bb.gj ]
-  %i.pm = phi ptr [ @62, %bb.fa ], [ @73, %bb.gp ], [ @74, %bb.gq ], [ @68, %bb.fn ], [ @51, %bb.ef ], [ @72, %bb.fw ], [ @69, %bb.fq ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.eu ], [ @59, %bb.ew ], [ @60, %bb.ey ], [ @61, %bb.ex ], [ @64, %bb.fh ], [ @65, %bb.fj ], [ @66, %bb.fl ], [ @67, %bb.fk ], [ @53, %bb.ek ], [ @55, %bb.el ], [ @56, %bb.eo ], [ @52, %bb.ei ], [ @54, %bb.em ], [ @75, %bb.gg ], [ @73, %bb.ge ], [ @78, %bb.gl ], [ @76, %bb.gh ], [ @77, %bb.gj ]
+.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.eo, %bb.em, %bb.el, %bb.ek, %bb.ei, %bb.ef, %bb.fn, %bb.fl, %bb.fk, %bb.fj, %bb.eu, %bb.fa, %bb.ey, %bb.ex, %bb.ew, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp, %13
+  %i.pk = phi i64 [ %i.rr, %bb.fa ], [ %.reass486.i, %bb.gq ], [ %i.sy, %bb.fn ], [ %umax739.le.i, %13 ], [ %i.q, %bb.fq ], [ %i.pp, %bb.ei ], [ %.reass.i141, %bb.gp ], [ %i.uf, %bb.fw ], [ %i.ty, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.eu ], [ %i.rf, %bb.ew ], [ %i.rj, %bb.ey ], [ %i.rh, %bb.ex ], [ %i.sk, %bb.fj ], [ %i.sq, %bb.fl ], [ %i.sm, %bb.fk ], [ %i.qa, %bb.em ], [ %i.pv, %bb.el ], [ %i.pi, %bb.ef ], [ %i.pt, %bb.ek ], [ %i.ql, %bb.eo ], [ %i.vv, %bb.gl ], [ %i.vm, %bb.gj ], [ %.reass.us.i144, %bb.ge ], [ %i.vc, %bb.gg ], [ %i.vg, %bb.gh ]
+  %i.pl = phi i64 [ %.pre745.i.a, %bb.fa ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fn ], [ %i.w, %13 ], [ %i.q, %bb.fq ], [ %i.w, %bb.ei ], [ %i.q, %bb.gp ], [ %i.ua, %bb.fw ], [ %i.ua, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.eu ], [ %.pre745.i.a, %bb.ew ], [ %.pre745.i.a, %bb.ey ], [ %.pre745.i.a, %bb.ex ], [ %.pre743.i, %bb.fj ], [ %.pre743.i, %bb.fk ], [ %.pre743.i, %bb.fl ], [ %.pre741.i, %bb.em ], [ %.pre741.i, %bb.el ], [ %i.q, %bb.ef ], [ %.pre741.i, %bb.ek ], [ %.pre741.i, %bb.eo ], [ %i.vu, %bb.gl ], [ %i.vn, %bb.gj ], [ %i.q, %bb.ge ], [ %i.ve, %bb.gg ], [ %i.ve, %bb.gh ]
+  %i.pm = phi ptr [ @62, %bb.fa ], [ @74, %bb.gq ], [ @68, %bb.fn ], [ @64, %13 ], [ @69, %bb.fq ], [ @52, %bb.ei ], [ @73, %bb.gp ], [ @72, %bb.fw ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.eu ], [ @59, %bb.ew ], [ @60, %bb.ey ], [ @61, %bb.ex ], [ @65, %bb.fj ], [ @66, %bb.fl ], [ @67, %bb.fk ], [ @54, %bb.em ], [ @55, %bb.el ], [ @51, %bb.ef ], [ @53, %bb.ek ], [ @56, %bb.eo ], [ @78, %bb.gl ], [ @77, %bb.gj ], [ @73, %bb.ge ], [ @75, %bb.gg ], [ @76, %bb.gh ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.pk, i64 noundef %i.pl, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.pm) #14
           to label %.cont.i105 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i88.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !856
 
@@ -5217,7 +5242,7 @@ bb.et:                                            ; preds = %bb.es
   br i1 %i.ra, label %.loopexit24.i125, label %bb.eu
 
 bb.eu:                                            ; preds = %bb.et, %bb.eq
-  %i.rb = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 3 uses
+  %i.rb = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 2 uses
   %i.rc = icmp ult i64 %i.rb, %i.q
   br i1 %i.rc, label %bb.ev, label %.invoke.i104
 
@@ -5302,9 +5327,14 @@ bb.fg:                                            ; preds = %bb.ff
 
 bb.fh:                                            ; preds = %bb.fg, %.lr.ph1510
   %i.sf = mul i64 %.sroa.09.1.i1121509, %i.nx     ; 2 uses
-  %i.sg = add i64 %.sroa.09.1.i1121509, %invariant.op485.i ; 3 uses
+  %i.sg = add i64 %.sroa.09.1.i1121509, %invariant.op485.i ; 2 uses
   %i.sh = icmp ult i64 %i.sg, %i.w
-  br i1 %i.sh, label %bb.fi, label %.invoke.i104
+  br i1 %i.sh, label %bb.fi, label %13
+
+13:                                               ; preds = %bb.fh
+  %14 = add i64 %.sroa.09.0509.i, %invariant.op485.i
+  %umax739.le.i = call i64 @llvm.umax.i64(i64 %i.w, i64 %14)
+  br label %.invoke.i104
 
 bb.fi:                                            ; preds = %bb.fh
   %i.si = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.sg
@@ -5707,13 +5737,13 @@ bb.b:                                             ; preds = %_RNvMsF_NtCscdodAO9
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.o = load i64, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.q = load i64, ptr %i.p, align 8              ; 27 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 29 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4 ; 11 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.u = load i64, ptr %i.t, align 8              ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.w = load i64, ptr %i.v, align 8              ; 23 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 25 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !4 ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -6116,7 +6146,7 @@ bb.be:                                            ; preds = %bb.bd
   store ptr %i.gb, ptr %i.gc, align 8, !alias.scope !1042, !noalias !1041
   %i.gd = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 7 uses
   store i64 %i.fu, ptr %i.gd, align 8, !alias.scope !1042, !noalias !1041
-  %invariant.op470.i = sub i64 %.sroa.0188.0, %i.o ; 3 uses
+  %invariant.op470.i = sub i64 %.sroa.0188.0, %i.o ; 4 uses
   %invariant.op.i = sub i64 %.sroa.0.0, %i.u      ; 3 uses
   br label %.lr.ph469.split.i
 
@@ -6137,7 +6167,7 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i, %.lr.ph495.i
   %.sroa.05.0.not494.i = phi i1 [ true, %.lr.ph495.i ], [ false, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 3 uses
-  %.sroa.09.0493.i = phi i64 [ 0, %.lr.ph495.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 13 uses
+  %.sroa.09.0493.i = phi i64 [ 0, %.lr.ph495.i ], [ %.sroa.09.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 14 uses
   %.sroa.038.0492.i = phi i64 [ 0, %.lr.ph495.i ], [ %.sroa.038.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ] ; 18 uses
   %i.gj = and i64 %.sroa.038.0492.i, 1023
   %i.gk = icmp eq i64 %i.gj, 0
@@ -6231,10 +6261,10 @@ bb.bl:                                            ; preds = %bb.bn, %bb.bf
   %i.he = icmp ult i64 %i.hd, %i.q
   br i1 %i.he, label %bb.bo, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bu, %bb.bs, %bb.br, %bb.bq, %bb.bo, %bb.bl, %bb.ct, %bb.cr, %bb.cq, %bb.cp, %bb.cn, %bb.cg, %bb.ce, %bb.cd, %bb.cc, %bb.ca, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i
-  %i.hf = phi i64 [ %i.jm, %bb.cg ], [ %.reass.i, %bb.du ], [ %.reass.i, %.lr.ph.split.i ], [ %i.kt, %bb.ct ], [ %i.hd, %bb.bl ], [ %i.ma, %bb.dc ], [ %i.q, %bb.cw ], [ %i.lt, %bb.db ], [ %i.w, %bb.cz ], [ %i.iw, %bb.ca ], [ %i.ja, %bb.cc ], [ %i.je, %bb.ce ], [ %i.jc, %bb.cd ], [ %i.kb, %bb.cn ], [ %i.kf, %bb.cp ], [ %i.kl, %bb.cr ], [ %i.kh, %bb.cq ], [ %i.ho, %bb.bq ], [ %i.hq, %bb.br ], [ %i.ig, %bb.bu ], [ %i.hk, %bb.bo ], [ %i.hv, %bb.bs ], [ %i.mx, %bb.dm ], [ %.reass.us.i, %bb.dk ], [ %i.nq, %bb.dr ], [ %i.nb, %bb.dn ], [ %i.nh, %bb.dp ]
-  %i.hg = phi i64 [ %.pre729.i.a, %bb.cg ], [ %i.q, %bb.du ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.ct ], [ %i.q, %bb.bl ], [ %i.lv, %bb.dc ], [ %i.q, %bb.cw ], [ %i.lv, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.ca ], [ %.pre729.i.a, %bb.cc ], [ %.pre729.i.a, %bb.ce ], [ %.pre729.i.a, %bb.cd ], [ %i.q, %bb.cn ], [ %.pre727.i, %bb.cp ], [ %.pre727.i, %bb.cr ], [ %.pre727.i, %bb.cq ], [ %.pre725.i, %bb.bq ], [ %.pre725.i, %bb.br ], [ %.pre725.i, %bb.bu ], [ %i.w, %bb.bo ], [ %.pre725.i, %bb.bs ], [ %i.mz, %bb.dm ], [ %i.w, %bb.dk ], [ %i.np, %bb.dr ], [ %i.mz, %bb.dn ], [ %i.ni, %bb.dp ]
-  %i.hh = phi ptr [ @34, %bb.cg ], [ @45, %bb.du ], [ @45, %.lr.ph.split.i ], [ @40, %bb.ct ], [ @23, %bb.bl ], [ @44, %bb.dc ], [ @41, %bb.cw ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.ca ], [ @31, %bb.cc ], [ @32, %bb.ce ], [ @33, %bb.cd ], [ @35, %bb.cn ], [ @37, %bb.cp ], [ @38, %bb.cr ], [ @39, %bb.cq ], [ @25, %bb.bq ], [ @27, %bb.br ], [ @28, %bb.bu ], [ @24, %bb.bo ], [ @26, %bb.bs ], [ @47, %bb.dm ], [ @46, %bb.dk ], [ @50, %bb.dr ], [ @48, %bb.dn ], [ @49, %bb.dp ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bu, %bb.bs, %bb.br, %bb.bq, %bb.bo, %bb.bl, %bb.ct, %bb.cr, %bb.cq, %bb.cp, %bb.ca, %bb.cg, %bb.ce, %bb.cd, %bb.cc, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i, %11
+  %i.hf = phi i64 [ %i.jm, %bb.cg ], [ %.reass.i, %.lr.ph.split.i ], [ %i.kt, %bb.ct ], [ %umax723.le.i, %11 ], [ %i.q, %bb.cw ], [ %i.hk, %bb.bo ], [ %.reass.i, %bb.du ], [ %i.ma, %bb.dc ], [ %i.lt, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.ca ], [ %i.ja, %bb.cc ], [ %i.je, %bb.ce ], [ %i.jc, %bb.cd ], [ %i.kf, %bb.cp ], [ %i.kl, %bb.cr ], [ %i.kh, %bb.cq ], [ %i.hv, %bb.bs ], [ %i.hq, %bb.br ], [ %i.hd, %bb.bl ], [ %i.ho, %bb.bq ], [ %i.ig, %bb.bu ], [ %i.nq, %bb.dr ], [ %i.nh, %bb.dp ], [ %.reass.us.i, %bb.dk ], [ %i.mx, %bb.dm ], [ %i.nb, %bb.dn ]
+  %i.hg = phi i64 [ %.pre729.i.a, %bb.cg ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.ct ], [ %i.q, %11 ], [ %i.q, %bb.cw ], [ %i.w, %bb.bo ], [ %i.q, %bb.du ], [ %i.lv, %bb.dc ], [ %i.lv, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.ca ], [ %.pre729.i.a, %bb.cc ], [ %.pre729.i.a, %bb.ce ], [ %.pre729.i.a, %bb.cd ], [ %.pre727.i, %bb.cp ], [ %.pre727.i, %bb.cq ], [ %.pre727.i, %bb.cr ], [ %.pre725.i, %bb.bs ], [ %.pre725.i, %bb.br ], [ %i.q, %bb.bl ], [ %.pre725.i, %bb.bq ], [ %.pre725.i, %bb.bu ], [ %i.np, %bb.dr ], [ %i.ni, %bb.dp ], [ %i.w, %bb.dk ], [ %i.mz, %bb.dm ], [ %i.mz, %bb.dn ]
+  %i.hh = phi ptr [ @34, %bb.cg ], [ @45, %.lr.ph.split.i ], [ @40, %bb.ct ], [ @35, %11 ], [ @41, %bb.cw ], [ @24, %bb.bo ], [ @45, %bb.du ], [ @44, %bb.dc ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.ca ], [ @31, %bb.cc ], [ @32, %bb.ce ], [ @33, %bb.cd ], [ @37, %bb.cp ], [ @38, %bb.cr ], [ @39, %bb.cq ], [ @26, %bb.bs ], [ @27, %bb.br ], [ @23, %bb.bl ], [ @25, %bb.bq ], [ @28, %bb.bu ], [ @50, %bb.dr ], [ @49, %bb.dp ], [ @46, %bb.dk ], [ @47, %bb.dm ], [ @48, %bb.dn ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.hf, i64 noundef %i.hg, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hh) #14
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1041
 
@@ -6358,7 +6388,7 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.iv, label %.loopexit24.i, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz, %bb.bw
-  %i.iw = add i64 %.sroa.038.1472.i, %invariant.op.i ; 3 uses
+  %i.iw = add i64 %.sroa.038.1472.i, %invariant.op.i ; 2 uses
   %i.ix = icmp ult i64 %i.iw, %i.w
   br i1 %i.ix, label %bb.cb, label %.invoke.i
 
@@ -6443,9 +6473,14 @@ bb.cm:                                            ; preds = %bb.cl
 
 bb.cn:                                            ; preds = %bb.cm, %.lr.ph1518
   %i.ka = mul i64 %.sroa.09.1.i1517, %i.fs        ; 2 uses
-  %i.kb = add i64 %.sroa.09.1.i1517, %invariant.op470.i ; 3 uses
+  %i.kb = add i64 %.sroa.09.1.i1517, %invariant.op470.i ; 2 uses
   %i.kc = icmp ult i64 %i.kb, %i.q
-  br i1 %i.kc, label %bb.co, label %.invoke.i
+  br i1 %i.kc, label %bb.co, label %11
+
+11:                                               ; preds = %bb.cn
+  %12 = add i64 %.sroa.09.0493.i, %invariant.op470.i
+  %umax723.le.i = call i64 @llvm.umax.i64(i64 %i.q, i64 %12)
+  br label %.invoke.i
 
 bb.co:                                            ; preds = %bb.cn
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.kb
@@ -6762,7 +6797,7 @@ bb.dy:                                            ; preds = %bb.dx
   %i.oi = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 7 uses
   store i64 %i.nz, ptr %i.oi, align 8, !alias.scope !1050, !noalias !1049
   %invariant.op.i92 = sub i64 %.sroa.0188.0, %i.o ; 4 uses
-  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 3 uses
+  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 4 uses
   br label %.lr.ph484.split.i
 
 .lr.ph511.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i150
@@ -6782,7 +6817,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 bb.dz:                                            ; preds = %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118, %.lr.ph511.i
   %.sroa.05.0.not510.i = phi i1 [ true, %.lr.ph511.i ], [ false, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 3 uses
-  %.sroa.09.0509.i = phi i64 [ 0, %.lr.ph511.i ], [ %.sroa.09.3.i120, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 14 uses
+  %.sroa.09.0509.i = phi i64 [ 0, %.lr.ph511.i ], [ %.sroa.09.3.i120, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 15 uses
   %.sroa.039.0508.i = phi i64 [ 0, %.lr.ph511.i ], [ %.sroa.039.3.i, %_RNvXs0_NtNtCsiqiOkcJdymw_7similar10algorithms4hookINtB5_12NoFinishHookQINtNtB7_7compact7CompactINtNtB9_4text12TextDiffSideeEB1v_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEEENtB5_8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i118 ] ; 17 uses
   %i.oo = and i64 %.sroa.039.0508.i, 1023
   %i.op = icmp eq i64 %i.oo, 0
@@ -6871,10 +6906,10 @@ bb.ef:                                            ; preds = %bb.eh, %bb.dz
   %i.pj = icmp ult i64 %i.pi, %i.q
   br i1 %i.pj, label %bb.ei, label %.invoke.i104
 
-.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.eo, %bb.em, %bb.el, %bb.ek, %bb.ei, %bb.ef, %bb.fn, %bb.fl, %bb.fk, %bb.fj, %bb.fh, %bb.fa, %bb.ey, %bb.ex, %bb.ew, %bb.eu, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp
-  %i.pk = phi i64 [ %i.rr, %bb.fa ], [ %.reass.i141, %bb.gp ], [ %.reass486.i, %bb.gq ], [ %i.sy, %bb.fn ], [ %i.pi, %bb.ef ], [ %i.uf, %bb.fw ], [ %i.q, %bb.fq ], [ %i.ty, %bb.fv ], [ %i.w, %bb.ft ], [ %i.rb, %bb.eu ], [ %i.rf, %bb.ew ], [ %i.rj, %bb.ey ], [ %i.rh, %bb.ex ], [ %i.sg, %bb.fh ], [ %i.sk, %bb.fj ], [ %i.sq, %bb.fl ], [ %i.sm, %bb.fk ], [ %i.pt, %bb.ek ], [ %i.pv, %bb.el ], [ %i.ql, %bb.eo ], [ %i.pp, %bb.ei ], [ %i.qa, %bb.em ], [ %i.vc, %bb.gg ], [ %.reass.us.i144, %bb.ge ], [ %i.vv, %bb.gl ], [ %i.vg, %bb.gh ], [ %i.vm, %bb.gj ]
-  %i.pl = phi i64 [ %.pre745.i.a, %bb.fa ], [ %i.q, %bb.gp ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fn ], [ %i.q, %bb.ef ], [ %i.ua, %bb.fw ], [ %i.q, %bb.fq ], [ %i.ua, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.eu ], [ %.pre745.i.a, %bb.ew ], [ %.pre745.i.a, %bb.ey ], [ %.pre745.i.a, %bb.ex ], [ %i.w, %bb.fh ], [ %.pre743.i, %bb.fj ], [ %.pre743.i, %bb.fl ], [ %.pre743.i, %bb.fk ], [ %.pre741.i, %bb.ek ], [ %.pre741.i, %bb.el ], [ %.pre741.i, %bb.eo ], [ %i.w, %bb.ei ], [ %.pre741.i, %bb.em ], [ %i.ve, %bb.gg ], [ %i.q, %bb.ge ], [ %i.vu, %bb.gl ], [ %i.ve, %bb.gh ], [ %i.vn, %bb.gj ]
-  %i.pm = phi ptr [ @62, %bb.fa ], [ @73, %bb.gp ], [ @74, %bb.gq ], [ @68, %bb.fn ], [ @51, %bb.ef ], [ @72, %bb.fw ], [ @69, %bb.fq ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.eu ], [ @59, %bb.ew ], [ @60, %bb.ey ], [ @61, %bb.ex ], [ @64, %bb.fh ], [ @65, %bb.fj ], [ @66, %bb.fl ], [ @67, %bb.fk ], [ @53, %bb.ek ], [ @55, %bb.el ], [ @56, %bb.eo ], [ @52, %bb.ei ], [ @54, %bb.em ], [ @75, %bb.gg ], [ @73, %bb.ge ], [ @78, %bb.gl ], [ @76, %bb.gh ], [ @77, %bb.gj ]
+.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.eo, %bb.em, %bb.el, %bb.ek, %bb.ei, %bb.ef, %bb.fn, %bb.fl, %bb.fk, %bb.fj, %bb.eu, %bb.fa, %bb.ey, %bb.ex, %bb.ew, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp, %13
+  %i.pk = phi i64 [ %i.rr, %bb.fa ], [ %.reass486.i, %bb.gq ], [ %i.sy, %bb.fn ], [ %umax739.le.i, %13 ], [ %i.q, %bb.fq ], [ %i.pp, %bb.ei ], [ %.reass.i141, %bb.gp ], [ %i.uf, %bb.fw ], [ %i.ty, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.eu ], [ %i.rf, %bb.ew ], [ %i.rj, %bb.ey ], [ %i.rh, %bb.ex ], [ %i.sk, %bb.fj ], [ %i.sq, %bb.fl ], [ %i.sm, %bb.fk ], [ %i.qa, %bb.em ], [ %i.pv, %bb.el ], [ %i.pi, %bb.ef ], [ %i.pt, %bb.ek ], [ %i.ql, %bb.eo ], [ %i.vv, %bb.gl ], [ %i.vm, %bb.gj ], [ %.reass.us.i144, %bb.ge ], [ %i.vc, %bb.gg ], [ %i.vg, %bb.gh ]
+  %i.pl = phi i64 [ %.pre745.i.a, %bb.fa ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fn ], [ %i.w, %13 ], [ %i.q, %bb.fq ], [ %i.w, %bb.ei ], [ %i.q, %bb.gp ], [ %i.ua, %bb.fw ], [ %i.ua, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.eu ], [ %.pre745.i.a, %bb.ew ], [ %.pre745.i.a, %bb.ey ], [ %.pre745.i.a, %bb.ex ], [ %.pre743.i, %bb.fj ], [ %.pre743.i, %bb.fk ], [ %.pre743.i, %bb.fl ], [ %.pre741.i, %bb.em ], [ %.pre741.i, %bb.el ], [ %i.q, %bb.ef ], [ %.pre741.i, %bb.ek ], [ %.pre741.i, %bb.eo ], [ %i.vu, %bb.gl ], [ %i.vn, %bb.gj ], [ %i.q, %bb.ge ], [ %i.ve, %bb.gg ], [ %i.ve, %bb.gh ]
+  %i.pm = phi ptr [ @62, %bb.fa ], [ @74, %bb.gq ], [ @68, %bb.fn ], [ @64, %13 ], [ @69, %bb.fq ], [ @52, %bb.ei ], [ @73, %bb.gp ], [ @72, %bb.fw ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.eu ], [ @59, %bb.ew ], [ @60, %bb.ey ], [ @61, %bb.ex ], [ @65, %bb.fj ], [ @66, %bb.fl ], [ @67, %bb.fk ], [ @54, %bb.em ], [ @55, %bb.el ], [ @51, %bb.ef ], [ @53, %bb.ek ], [ @56, %bb.eo ], [ @78, %bb.gl ], [ @77, %bb.gj ], [ @73, %bb.ge ], [ @75, %bb.gg ], [ @76, %bb.gh ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.pk, i64 noundef %i.pl, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.pm) #14
           to label %.cont.i105 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i88.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1049
 
@@ -6998,7 +7033,7 @@ bb.et:                                            ; preds = %bb.es
   br i1 %i.ra, label %.loopexit24.i125, label %bb.eu
 
 bb.eu:                                            ; preds = %bb.et, %bb.eq
-  %i.rb = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 3 uses
+  %i.rb = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 2 uses
   %i.rc = icmp ult i64 %i.rb, %i.q
   br i1 %i.rc, label %bb.ev, label %.invoke.i104
 
@@ -7083,9 +7118,14 @@ bb.fg:                                            ; preds = %bb.ff
 
 bb.fh:                                            ; preds = %bb.fg, %.lr.ph1510
   %i.sf = mul i64 %.sroa.09.1.i1121509, %i.nx     ; 2 uses
-  %i.sg = add i64 %.sroa.09.1.i1121509, %invariant.op485.i ; 3 uses
+  %i.sg = add i64 %.sroa.09.1.i1121509, %invariant.op485.i ; 2 uses
   %i.sh = icmp ult i64 %i.sg, %i.w
-  br i1 %i.sh, label %bb.fi, label %.invoke.i104
+  br i1 %i.sh, label %bb.fi, label %13
+
+13:                                               ; preds = %bb.fh
+  %14 = add i64 %.sroa.09.0509.i, %invariant.op485.i
+  %umax739.le.i = call i64 @llvm.umax.i64(i64 %i.w, i64 %14)
+  br label %.invoke.i104
 
 bb.fi:                                            ; preds = %bb.fh
   %i.si = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.sg
@@ -7488,13 +7528,13 @@ bb.b:                                             ; preds = %_RNvMsF_NtCscdodAO9
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.o = load i64, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.q = load i64, ptr %i.p, align 8              ; 27 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 29 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4 ; 11 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.u = load i64, ptr %i.t, align 8              ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.w = load i64, ptr %i.v, align 8              ; 23 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 25 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !4 ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -7897,7 +7937,7 @@ bb.be:                                            ; preds = %bb.bd
   store ptr %i.gh, ptr %i.gi, align 8, !alias.scope !1327, !noalias !1326
   %i.gj = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 7 uses
   store i64 %i.ga, ptr %i.gj, align 8, !alias.scope !1327, !noalias !1326
-  %invariant.op470.i = sub i64 %.sroa.0195.0, %i.o ; 3 uses
+  %invariant.op470.i = sub i64 %.sroa.0195.0, %i.o ; 4 uses
   %invariant.op.i = sub i64 %.sroa.0.0, %i.u      ; 3 uses
   br label %.lr.ph469.split.i
 
@@ -7912,7 +7952,7 @@ bb.be:                                            ; preds = %bb.bd
 
 .lr.ph495.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i, %bb.cu
   %.sroa.05.0.not494.i = phi i1 [ false, %bb.cu ], [ true, %..loopexit39_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0493.i = phi i64 [ %.sroa.09.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 12 uses
+  %.sroa.09.0493.i = phi i64 [ %.sroa.09.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 13 uses
   %.sroa.038.0492.i = phi i64 [ %.sroa.038.3.i, %bb.cu ], [ 0, %..loopexit39_crit_edge.split.us.i ] ; 17 uses
   %i.gm = and i64 %.sroa.038.0492.i, 1023
   %i.gn = icmp eq i64 %i.gm, 0
@@ -8015,10 +8055,10 @@ bb.bk:                                            ; preds = %bb.bm, %.lr.ph495.i
   %i.hq = icmp ult i64 %i.hp, %i.q
   br i1 %i.hq, label %bb.bn, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bt, %bb.br, %bb.bq, %bb.bp, %bb.bn, %bb.bk, %bb.cs, %bb.cq, %bb.cp, %bb.co, %bb.cm, %bb.cf, %bb.cd, %bb.cc, %bb.cb, %bb.bz, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i
-  %i.hr = phi i64 [ %i.kf, %bb.cf ], [ %.reass.i, %bb.du ], [ %.reass.i, %.lr.ph.split.i ], [ %i.lt, %bb.cs ], [ %i.hp, %bb.bk ], [ %i.ne, %bb.dc ], [ %i.q, %bb.cw ], [ %i.mx, %bb.db ], [ %i.w, %bb.cz ], [ %i.jp, %bb.bz ], [ %i.jt, %bb.cb ], [ %i.jx, %bb.cd ], [ %i.jv, %bb.cc ], [ %i.lb, %bb.cm ], [ %i.lf, %bb.co ], [ %i.ll, %bb.cq ], [ %i.lh, %bb.cp ], [ %i.ia, %bb.bp ], [ %i.ic, %bb.bq ], [ %i.is, %bb.bt ], [ %i.hw, %bb.bn ], [ %i.ih, %bb.br ], [ %i.ob, %bb.dm ], [ %.reass.us.i, %bb.dk ], [ %i.ou, %bb.dr ], [ %i.of, %bb.dn ], [ %i.ol, %bb.dp ]
-  %i.hs = phi i64 [ %.pre729.i.a, %bb.cf ], [ %i.q, %bb.du ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.cs ], [ %i.q, %bb.bk ], [ %i.mz, %bb.dc ], [ %i.q, %bb.cw ], [ %i.mz, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %.pre729.i.a, %bb.cb ], [ %.pre729.i.a, %bb.cd ], [ %.pre729.i.a, %bb.cc ], [ %i.q, %bb.cm ], [ %.pre727.i, %bb.co ], [ %.pre727.i, %bb.cq ], [ %.pre727.i, %bb.cp ], [ %.pre725.i, %bb.bp ], [ %.pre725.i, %bb.bq ], [ %.pre725.i, %bb.bt ], [ %i.w, %bb.bn ], [ %.pre725.i, %bb.br ], [ %i.od, %bb.dm ], [ %i.w, %bb.dk ], [ %i.ot, %bb.dr ], [ %i.od, %bb.dn ], [ %i.om, %bb.dp ]
-  %i.ht = phi ptr [ @34, %bb.cf ], [ @45, %bb.du ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cs ], [ @23, %bb.bk ], [ @44, %bb.dc ], [ @41, %bb.cw ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.bz ], [ @31, %bb.cb ], [ @32, %bb.cd ], [ @33, %bb.cc ], [ @35, %bb.cm ], [ @37, %bb.co ], [ @38, %bb.cq ], [ @39, %bb.cp ], [ @25, %bb.bp ], [ @27, %bb.bq ], [ @28, %bb.bt ], [ @24, %bb.bn ], [ @26, %bb.br ], [ @47, %bb.dm ], [ @46, %bb.dk ], [ @50, %bb.dr ], [ @48, %bb.dn ], [ @49, %bb.dp ]
+.invoke.i:                                        ; preds = %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.bt, %bb.br, %bb.bq, %bb.bp, %bb.bn, %bb.bk, %bb.cs, %bb.cq, %bb.cp, %bb.co, %bb.bz, %bb.cf, %bb.cd, %bb.cc, %bb.cb, %bb.cz, %bb.cw, %bb.dc, %bb.db, %bb.du, %.lr.ph.split.i, %11
+  %i.hr = phi i64 [ %i.kf, %bb.cf ], [ %.reass.i, %.lr.ph.split.i ], [ %i.lt, %bb.cs ], [ %umax723.le.i, %11 ], [ %i.q, %bb.cw ], [ %i.hw, %bb.bn ], [ %.reass.i, %bb.du ], [ %i.ne, %bb.dc ], [ %i.mx, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %i.jt, %bb.cb ], [ %i.jx, %bb.cd ], [ %i.jv, %bb.cc ], [ %i.lf, %bb.co ], [ %i.ll, %bb.cq ], [ %i.lh, %bb.cp ], [ %i.ih, %bb.br ], [ %i.ic, %bb.bq ], [ %i.hp, %bb.bk ], [ %i.ia, %bb.bp ], [ %i.is, %bb.bt ], [ %i.ou, %bb.dr ], [ %i.ol, %bb.dp ], [ %.reass.us.i, %bb.dk ], [ %i.ob, %bb.dm ], [ %i.of, %bb.dn ]
+  %i.hs = phi i64 [ %.pre729.i.a, %bb.cf ], [ %i.q, %.lr.ph.split.i ], [ %.pre727.i, %bb.cs ], [ %i.q, %11 ], [ %i.q, %bb.cw ], [ %i.w, %bb.bn ], [ %i.q, %bb.du ], [ %i.mz, %bb.dc ], [ %i.mz, %bb.db ], [ %i.w, %bb.cz ], [ %i.w, %bb.bz ], [ %.pre729.i.a, %bb.cb ], [ %.pre729.i.a, %bb.cd ], [ %.pre729.i.a, %bb.cc ], [ %.pre727.i, %bb.co ], [ %.pre727.i, %bb.cp ], [ %.pre727.i, %bb.cq ], [ %.pre725.i, %bb.br ], [ %.pre725.i, %bb.bq ], [ %i.q, %bb.bk ], [ %.pre725.i, %bb.bp ], [ %.pre725.i, %bb.bt ], [ %i.ot, %bb.dr ], [ %i.om, %bb.dp ], [ %i.w, %bb.dk ], [ %i.od, %bb.dm ], [ %i.od, %bb.dn ]
+  %i.ht = phi ptr [ @34, %bb.cf ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cs ], [ @35, %11 ], [ @41, %bb.cw ], [ @24, %bb.bn ], [ @45, %bb.du ], [ @44, %bb.dc ], [ @43, %bb.db ], [ @42, %bb.cz ], [ @30, %bb.bz ], [ @31, %bb.cb ], [ @32, %bb.cd ], [ @33, %bb.cc ], [ @37, %bb.co ], [ @38, %bb.cq ], [ @39, %bb.cp ], [ @26, %bb.br ], [ @27, %bb.bq ], [ @23, %bb.bk ], [ @25, %bb.bp ], [ @28, %bb.bt ], [ @50, %bb.dr ], [ @49, %bb.dp ], [ @46, %bb.dk ], [ @47, %bb.dm ], [ @48, %bb.dn ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.hr, i64 noundef %i.hs, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ht) #14
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1326
 
@@ -8160,7 +8200,7 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %i.jo, label %.loopexit24.i, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %bb.bv
-  %i.jp = add i64 %.sroa.038.1472.i, %invariant.op.i ; 3 uses
+  %i.jp = add i64 %.sroa.038.1472.i, %invariant.op.i ; 2 uses
   %i.jq = icmp ult i64 %i.jp, %i.w
   br i1 %i.jq, label %bb.ca, label %.invoke.i
 
@@ -8263,9 +8303,14 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %bb.cl, %.lr.ph1507
   %i.la = mul i64 %.sroa.09.1.i1506, %i.fy        ; 2 uses
-  %i.lb = add i64 %.sroa.09.1.i1506, %invariant.op470.i ; 3 uses
+  %i.lb = add i64 %.sroa.09.1.i1506, %invariant.op470.i ; 2 uses
   %i.lc = icmp ult i64 %i.lb, %i.q
-  br i1 %i.lc, label %bb.cn, label %.invoke.i
+  br i1 %i.lc, label %bb.cn, label %11
+
+11:                                               ; preds = %bb.cm
+  %12 = add i64 %.sroa.09.0493.i, %invariant.op470.i
+  %umax723.le.i = call i64 @llvm.umax.i64(i64 %i.q, i64 %12)
+  br label %.invoke.i
 
 bb.cn:                                            ; preds = %bb.cm
   %i.ld = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.lb
@@ -8585,7 +8630,7 @@ bb.dy:                                            ; preds = %bb.dx
   %i.pm = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 7 uses
   store i64 %i.pd, ptr %i.pm, align 8, !alias.scope !1345, !noalias !1344
   %invariant.op.i92 = sub i64 %.sroa.0195.0, %i.o ; 4 uses
-  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 3 uses
+  %invariant.op485.i = sub i64 %.sroa.0.0, %i.u   ; 4 uses
   br label %.lr.ph484.split.i
 
 .lr.ph484.split.i:                                ; preds = %.lr.ph484.i, %..loopexit39_crit_edge.split.us.i157
@@ -8599,7 +8644,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 .lr.ph511.i:                                      ; preds = %..loopexit39_crit_edge.split.us.i157, %bb.fo
   %.sroa.05.0.not510.i = phi i1 [ false, %bb.fo ], [ true, %..loopexit39_crit_edge.split.us.i157 ] ; 3 uses
-  %.sroa.09.0509.i = phi i64 [ %.sroa.09.3.i122, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 13 uses
+  %.sroa.09.0509.i = phi i64 [ %.sroa.09.3.i122, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 14 uses
   %.sroa.039.0508.i = phi i64 [ %.sroa.039.3.i, %bb.fo ], [ 0, %..loopexit39_crit_edge.split.us.i157 ] ; 16 uses
   %i.pp = and i64 %.sroa.039.0508.i, 1023
   %i.pq = icmp eq i64 %i.pp, 0
@@ -8697,10 +8742,10 @@ bb.ee:                                            ; preds = %bb.eg, %.lr.ph511.i
   %i.qt = icmp ult i64 %i.qs, %i.q
   br i1 %i.qt, label %bb.eh, label %.invoke.i104
 
-.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.en, %bb.el, %bb.ek, %bb.ej, %bb.eh, %bb.ee, %bb.fm, %bb.fk, %bb.fj, %bb.fi, %bb.fg, %bb.ez, %bb.ex, %bb.ew, %bb.ev, %bb.et, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp
-  %i.qu = phi i64 [ %i.ti, %bb.ez ], [ %.reass.i148, %bb.gp ], [ %.reass486.i, %bb.gq ], [ %i.uw, %bb.fm ], [ %i.qs, %bb.ee ], [ %i.wh, %bb.fw ], [ %i.q, %bb.fq ], [ %i.wa, %bb.fv ], [ %i.w, %bb.ft ], [ %i.ss, %bb.et ], [ %i.sw, %bb.ev ], [ %i.ta, %bb.ex ], [ %i.sy, %bb.ew ], [ %i.ue, %bb.fg ], [ %i.ui, %bb.fi ], [ %i.uo, %bb.fk ], [ %i.uk, %bb.fj ], [ %i.rd, %bb.ej ], [ %i.rf, %bb.ek ], [ %i.rv, %bb.en ], [ %i.qz, %bb.eh ], [ %i.rk, %bb.el ], [ %i.xe, %bb.gg ], [ %.reass.us.i151, %bb.ge ], [ %i.xx, %bb.gl ], [ %i.xi, %bb.gh ], [ %i.xo, %bb.gj ]
-  %i.qv = phi i64 [ %.pre745.i.a, %bb.ez ], [ %i.q, %bb.gp ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fm ], [ %i.q, %bb.ee ], [ %i.wc, %bb.fw ], [ %i.q, %bb.fq ], [ %i.wc, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %.pre745.i.a, %bb.ev ], [ %.pre745.i.a, %bb.ex ], [ %.pre745.i.a, %bb.ew ], [ %i.w, %bb.fg ], [ %.pre743.i, %bb.fi ], [ %.pre743.i, %bb.fk ], [ %.pre743.i, %bb.fj ], [ %.pre741.i, %bb.ej ], [ %.pre741.i, %bb.ek ], [ %.pre741.i, %bb.en ], [ %i.w, %bb.eh ], [ %.pre741.i, %bb.el ], [ %i.xg, %bb.gg ], [ %i.q, %bb.ge ], [ %i.xw, %bb.gl ], [ %i.xg, %bb.gh ], [ %i.xp, %bb.gj ]
-  %i.qw = phi ptr [ @62, %bb.ez ], [ @73, %bb.gp ], [ @74, %bb.gq ], [ @68, %bb.fm ], [ @51, %bb.ee ], [ @72, %bb.fw ], [ @69, %bb.fq ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.et ], [ @59, %bb.ev ], [ @60, %bb.ex ], [ @61, %bb.ew ], [ @64, %bb.fg ], [ @65, %bb.fi ], [ @66, %bb.fk ], [ @67, %bb.fj ], [ @53, %bb.ej ], [ @55, %bb.ek ], [ @56, %bb.en ], [ @52, %bb.eh ], [ @54, %bb.el ], [ @75, %bb.gg ], [ @73, %bb.ge ], [ @78, %bb.gl ], [ @76, %bb.gh ], [ @77, %bb.gj ]
+.invoke.i104:                                     ; preds = %bb.gl, %bb.gj, %bb.gh, %bb.gg, %bb.ge, %bb.en, %bb.el, %bb.ek, %bb.ej, %bb.eh, %bb.ee, %bb.fm, %bb.fk, %bb.fj, %bb.fi, %bb.et, %bb.ez, %bb.ex, %bb.ew, %bb.ev, %bb.ft, %bb.fq, %bb.fw, %bb.fv, %bb.gq, %bb.gp, %13
+  %i.qu = phi i64 [ %i.ti, %bb.ez ], [ %.reass486.i, %bb.gq ], [ %i.uw, %bb.fm ], [ %umax739.le.i, %13 ], [ %i.q, %bb.fq ], [ %i.qz, %bb.eh ], [ %.reass.i148, %bb.gp ], [ %i.wh, %bb.fw ], [ %i.wa, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %i.sw, %bb.ev ], [ %i.ta, %bb.ex ], [ %i.sy, %bb.ew ], [ %i.ui, %bb.fi ], [ %i.uo, %bb.fk ], [ %i.uk, %bb.fj ], [ %i.rk, %bb.el ], [ %i.rf, %bb.ek ], [ %i.qs, %bb.ee ], [ %i.rd, %bb.ej ], [ %i.rv, %bb.en ], [ %i.xx, %bb.gl ], [ %i.xo, %bb.gj ], [ %.reass.us.i151, %bb.ge ], [ %i.xe, %bb.gg ], [ %i.xi, %bb.gh ]
+  %i.qv = phi i64 [ %.pre745.i.a, %bb.ez ], [ %i.w, %bb.gq ], [ %.pre743.i, %bb.fm ], [ %i.w, %13 ], [ %i.q, %bb.fq ], [ %i.w, %bb.eh ], [ %i.q, %bb.gp ], [ %i.wc, %bb.fw ], [ %i.wc, %bb.fv ], [ %i.w, %bb.ft ], [ %i.q, %bb.et ], [ %.pre745.i.a, %bb.ev ], [ %.pre745.i.a, %bb.ex ], [ %.pre745.i.a, %bb.ew ], [ %.pre743.i, %bb.fi ], [ %.pre743.i, %bb.fj ], [ %.pre743.i, %bb.fk ], [ %.pre741.i, %bb.el ], [ %.pre741.i, %bb.ek ], [ %i.q, %bb.ee ], [ %.pre741.i, %bb.ej ], [ %.pre741.i, %bb.en ], [ %i.xw, %bb.gl ], [ %i.xp, %bb.gj ], [ %i.q, %bb.ge ], [ %i.xg, %bb.gg ], [ %i.xg, %bb.gh ]
+  %i.qw = phi ptr [ @62, %bb.ez ], [ @74, %bb.gq ], [ @68, %bb.fm ], [ @64, %13 ], [ @69, %bb.fq ], [ @52, %bb.eh ], [ @73, %bb.gp ], [ @72, %bb.fw ], [ @71, %bb.fv ], [ @70, %bb.ft ], [ @57, %bb.et ], [ @59, %bb.ev ], [ @60, %bb.ex ], [ @61, %bb.ew ], [ @65, %bb.fi ], [ @66, %bb.fk ], [ @67, %bb.fj ], [ @54, %bb.el ], [ @55, %bb.ek ], [ @51, %bb.ee ], [ @53, %bb.ej ], [ @56, %bb.en ], [ @78, %bb.gl ], [ @77, %bb.gj ], [ @73, %bb.ge ], [ @75, %bb.gg ], [ @76, %bb.gh ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.qu, i64 noundef %i.qv, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.qw) #14
           to label %.cont.i105 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i88.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1344
 
@@ -8842,7 +8887,7 @@ bb.es:                                            ; preds = %bb.er
   br i1 %i.sr, label %.loopexit24.i124, label %bb.et
 
 bb.et:                                            ; preds = %bb.es, %bb.ep
-  %i.ss = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 3 uses
+  %i.ss = add i64 %.sroa.039.1488.i, %invariant.op.i92 ; 2 uses
   %i.st = icmp ult i64 %i.ss, %i.q
   br i1 %i.st, label %bb.eu, label %.invoke.i104
 
@@ -8945,9 +8990,14 @@ bb.ff:                                            ; preds = %bb.fe
 
 bb.fg:                                            ; preds = %bb.ff, %.lr.ph1499
   %i.ud = mul i64 %.sroa.09.1.i1121498, %i.pb     ; 2 uses
-  %i.ue = add i64 %.sroa.09.1.i1121498, %invariant.op485.i ; 3 uses
+  %i.ue = add i64 %.sroa.09.1.i1121498, %invariant.op485.i ; 2 uses
   %i.uf = icmp ult i64 %i.ue, %i.w
-  br i1 %i.uf, label %bb.fh, label %.invoke.i104
+  br i1 %i.uf, label %bb.fh, label %13
+
+13:                                               ; preds = %bb.fg
+  %14 = add i64 %.sroa.09.0509.i, %invariant.op485.i
+  %umax739.le.i = call i64 @llvm.umax.i64(i64 %i.w, i64 %14)
+  br label %.invoke.i104
 
 bb.fh:                                            ; preds = %bb.fg
   %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ue
@@ -9350,13 +9400,13 @@ bb.b:                                             ; preds = %_RNvMsF_NtCscdodAO9
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.o = load i64, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.q = load i64, ptr %i.p, align 8              ; 27 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 29 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4 ; 11 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.u = load i64, ptr %i.t, align 8              ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.w = load i64, ptr %i.v, align 8              ; 23 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 25 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !4 ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -9759,7 +9809,7 @@ bb.bb:                                            ; preds = %bb.ba
   store ptr %i.ez, ptr %i.fa, align 8, !alias.scope !1486, !noalias !1485
   %i.fb = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 7 uses
   store i64 %i.es, ptr %i.fb, align 8, !alias.scope !1486, !noalias !1485
-  %invariant.op688.i = sub i64 %.sroa.0186.0, %i.o ; 3 uses
+  %invariant.op688.i = sub i64 %.sroa.0186.0, %i.o ; 4 uses
   %invariant.op.i = sub i64 %.sroa.0.0, %i.u      ; 3 uses
   br label %.lr.ph687.split.i
 
@@ -9774,7 +9824,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 .lr.ph713.i:                                      ; preds = %..loopexit257_crit_edge.split.us.i, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i
   %.sroa.05.0.not712.i = phi i1 [ false, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ], [ true, %..loopexit257_crit_edge.split.us.i ] ; 3 uses
-  %.sroa.09.0711.i = phi i64 [ %.sroa.09.3.i, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ], [ 0, %..loopexit257_crit_edge.split.us.i ] ; 13 uses
+  %.sroa.09.0711.i = phi i64 [ %.sroa.09.3.i, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ], [ 0, %..loopexit257_crit_edge.split.us.i ] ; 14 uses
   %.sroa.038.0710.i = phi i64 [ %.sroa.038.3.i, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i ], [ 0, %..loopexit257_crit_edge.split.us.i ] ; 18 uses
   %i.fe = and i64 %.sroa.038.0710.i, 1023
   %i.ff = icmp eq i64 %i.fe, 0
@@ -9866,10 +9916,10 @@ bb.bh:                                            ; preds = %bb.bj, %.lr.ph713.i
   %i.fz = icmp ult i64 %i.fy, %i.q
   br i1 %i.fz, label %bb.bk, label %.invoke.i
 
-.invoke.i:                                        ; preds = %bb.dn, %bb.dl, %bb.dj, %bb.di, %bb.dg, %bb.bq, %bb.bo, %bb.bn, %bb.bm, %bb.bk, %bb.bh, %bb.cp, %bb.cn, %bb.cm, %bb.cl, %bb.cj, %bb.cc, %bb.ca, %bb.bz, %bb.by, %bb.bw, %bb.cv, %bb.cs, %bb.cy, %bb.cx, %bb.dq, %.lr.ph.split.i
-  %i.ga = phi i64 [ %i.ih, %bb.cc ], [ %.reass.i, %bb.dq ], [ %.reass.i, %.lr.ph.split.i ], [ %i.jo, %bb.cp ], [ %i.fy, %bb.bh ], [ %i.kv, %bb.cy ], [ %i.q, %bb.cs ], [ %i.ko, %bb.cx ], [ %i.w, %bb.cv ], [ %i.hr, %bb.bw ], [ %i.hv, %bb.by ], [ %i.hz, %bb.ca ], [ %i.hx, %bb.bz ], [ %i.iw, %bb.cj ], [ %i.ja, %bb.cl ], [ %i.jg, %bb.cn ], [ %i.jc, %bb.cm ], [ %i.gj, %bb.bm ], [ %i.gl, %bb.bn ], [ %i.hb, %bb.bq ], [ %i.gf, %bb.bk ], [ %i.gq, %bb.bo ], [ %i.ls, %bb.di ], [ %.reass.us.i, %bb.dg ], [ %i.ml, %bb.dn ], [ %i.lw, %bb.dj ], [ %i.mc, %bb.dl ]
-  %i.gb = phi i64 [ %.pre947.i.a, %bb.cc ], [ %i.q, %bb.dq ], [ %i.q, %.lr.ph.split.i ], [ %.pre945.i, %bb.cp ], [ %i.q, %bb.bh ], [ %i.kq, %bb.cy ], [ %i.q, %bb.cs ], [ %i.kq, %bb.cx ], [ %i.w, %bb.cv ], [ %i.w, %bb.bw ], [ %.pre947.i.a, %bb.by ], [ %.pre947.i.a, %bb.ca ], [ %.pre947.i.a, %bb.bz ], [ %i.q, %bb.cj ], [ %.pre945.i, %bb.cl ], [ %.pre945.i, %bb.cn ], [ %.pre945.i, %bb.cm ], [ %.pre943.i, %bb.bm ], [ %.pre943.i, %bb.bn ], [ %.pre943.i, %bb.bq ], [ %i.w, %bb.bk ], [ %.pre943.i, %bb.bo ], [ %i.lu, %bb.di ], [ %i.w, %bb.dg ], [ %i.mk, %bb.dn ], [ %i.lu, %bb.dj ], [ %i.md, %bb.dl ]
-  %i.gc = phi ptr [ @34, %bb.cc ], [ @45, %bb.dq ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cp ], [ @23, %bb.bh ], [ @44, %bb.cy ], [ @41, %bb.cs ], [ @43, %bb.cx ], [ @42, %bb.cv ], [ @30, %bb.bw ], [ @31, %bb.by ], [ @32, %bb.ca ], [ @33, %bb.bz ], [ @35, %bb.cj ], [ @37, %bb.cl ], [ @38, %bb.cn ], [ @39, %bb.cm ], [ @25, %bb.bm ], [ @27, %bb.bn ], [ @28, %bb.bq ], [ @24, %bb.bk ], [ @26, %bb.bo ], [ @47, %bb.di ], [ @46, %bb.dg ], [ @50, %bb.dn ], [ @48, %bb.dj ], [ @49, %bb.dl ]
+.invoke.i:                                        ; preds = %bb.dn, %bb.dl, %bb.dj, %bb.di, %bb.dg, %bb.bq, %bb.bo, %bb.bn, %bb.bm, %bb.bk, %bb.bh, %bb.cp, %bb.cn, %bb.cm, %bb.cl, %bb.bw, %bb.cc, %bb.ca, %bb.bz, %bb.by, %bb.cv, %bb.cs, %bb.cy, %bb.cx, %bb.dq, %.lr.ph.split.i, %11
+  %i.ga = phi i64 [ %i.ih, %bb.cc ], [ %.reass.i, %.lr.ph.split.i ], [ %i.jo, %bb.cp ], [ %umax941.le.i, %11 ], [ %i.q, %bb.cs ], [ %i.gf, %bb.bk ], [ %.reass.i, %bb.dq ], [ %i.kv, %bb.cy ], [ %i.ko, %bb.cx ], [ %i.w, %bb.cv ], [ %i.w, %bb.bw ], [ %i.hv, %bb.by ], [ %i.hz, %bb.ca ], [ %i.hx, %bb.bz ], [ %i.ja, %bb.cl ], [ %i.jg, %bb.cn ], [ %i.jc, %bb.cm ], [ %i.gq, %bb.bo ], [ %i.gl, %bb.bn ], [ %i.fy, %bb.bh ], [ %i.gj, %bb.bm ], [ %i.hb, %bb.bq ], [ %i.ml, %bb.dn ], [ %i.mc, %bb.dl ], [ %.reass.us.i, %bb.dg ], [ %i.ls, %bb.di ], [ %i.lw, %bb.dj ]
+  %i.gb = phi i64 [ %.pre947.i.a, %bb.cc ], [ %i.q, %.lr.ph.split.i ], [ %.pre945.i, %bb.cp ], [ %i.q, %11 ], [ %i.q, %bb.cs ], [ %i.w, %bb.bk ], [ %i.q, %bb.dq ], [ %i.kq, %bb.cy ], [ %i.kq, %bb.cx ], [ %i.w, %bb.cv ], [ %i.w, %bb.bw ], [ %.pre947.i.a, %bb.by ], [ %.pre947.i.a, %bb.ca ], [ %.pre947.i.a, %bb.bz ], [ %.pre945.i, %bb.cl ], [ %.pre945.i, %bb.cm ], [ %.pre945.i, %bb.cn ], [ %.pre943.i, %bb.bo ], [ %.pre943.i, %bb.bn ], [ %i.q, %bb.bh ], [ %.pre943.i, %bb.bm ], [ %.pre943.i, %bb.bq ], [ %i.mk, %bb.dn ], [ %i.md, %bb.dl ], [ %i.w, %bb.dg ], [ %i.lu, %bb.di ], [ %i.lu, %bb.dj ]
+  %i.gc = phi ptr [ @34, %bb.cc ], [ @45, %.lr.ph.split.i ], [ @40, %bb.cp ], [ @35, %11 ], [ @41, %bb.cs ], [ @24, %bb.bk ], [ @45, %bb.dq ], [ @44, %bb.cy ], [ @43, %bb.cx ], [ @42, %bb.cv ], [ @30, %bb.bw ], [ @31, %bb.by ], [ @32, %bb.ca ], [ @33, %bb.bz ], [ @37, %bb.cl ], [ @38, %bb.cn ], [ @39, %bb.cm ], [ @26, %bb.bo ], [ @27, %bb.bn ], [ @23, %bb.bh ], [ @25, %bb.bm ], [ @28, %bb.bq ], [ @50, %bb.dn ], [ @49, %bb.dl ], [ @46, %bb.dg ], [ @47, %bb.di ], [ @48, %bb.dj ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.ga, i64 noundef %i.gb, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gc) #14
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1489
 
@@ -9992,7 +10042,7 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %i.hq, label %.loopexit242.i, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bs
-  %i.hr = add i64 %.sroa.038.1690.i, %invariant.op.i ; 3 uses
+  %i.hr = add i64 %.sroa.038.1690.i, %invariant.op.i ; 2 uses
   %i.hs = icmp ult i64 %i.hr, %i.w
   br i1 %i.hs, label %bb.bx, label %.invoke.i
 
@@ -10076,9 +10126,14 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.ci, %.lr.ph1521
   %i.iv = mul i64 %.sroa.09.1.i1520, %i.eq        ; 2 uses
-  %i.iw = add i64 %.sroa.09.1.i1520, %invariant.op688.i ; 3 uses
+  %i.iw = add i64 %.sroa.09.1.i1520, %invariant.op688.i ; 2 uses
   %i.ix = icmp ult i64 %i.iw, %i.q
-  br i1 %i.ix, label %bb.ck, label %.invoke.i
+  br i1 %i.ix, label %bb.ck, label %11
+
+11:                                               ; preds = %bb.cj
+  %12 = add i64 %.sroa.09.0711.i, %invariant.op688.i
+  %umax941.le.i = call i64 @llvm.umax.i64(i64 %i.q, i64 %12)
+  br label %.invoke.i
 
 bb.ck:                                            ; preds = %bb.cj
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.iw
@@ -10396,7 +10451,7 @@ bb.du:                                            ; preds = %bb.dt
   %i.ne = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 7 uses
   store i64 %i.mv, ptr %i.ne, align 8, !alias.scope !1497, !noalias !1496
   %invariant.op.i90 = sub i64 %.sroa.0186.0, %i.o ; 4 uses
-  %invariant.op703.i = sub i64 %.sroa.0.0, %i.u   ; 3 uses
+  %invariant.op703.i = sub i64 %.sroa.0.0, %i.u   ; 4 uses
   br label %.lr.ph702.split.i
 
 .lr.ph702.split.i:                                ; preds = %.lr.ph702.i, %..loopexit257_crit_edge.split.us.i148
@@ -10410,7 +10465,7 @@ bb.du:                                            ; preds = %bb.dt
 
 .lr.ph729.i:                                      ; preds = %..loopexit257_crit_edge.split.us.i148, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i116
   %.sroa.05.0.not728.i = phi i1 [ false, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i116 ], [ true, %..loopexit257_crit_edge.split.us.i148 ] ; 3 uses
-  %.sroa.09.0727.i = phi i64 [ %.sroa.09.3.i118, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i116 ], [ 0, %..loopexit257_crit_edge.split.us.i148 ] ; 14 uses
+  %.sroa.09.0727.i = phi i64 [ %.sroa.09.3.i118, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i116 ], [ 0, %..loopexit257_crit_edge.split.us.i148 ] ; 15 uses
   %.sroa.039.0726.i = phi i64 [ %.sroa.039.3.i, %_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook5equalCshFZivb7RUAJ_8ruff_dev.exit.i116 ], [ 0, %..loopexit257_crit_edge.split.us.i148 ] ; 17 uses
   %i.nh = and i64 %.sroa.039.0726.i, 1023
   %i.ni = icmp eq i64 %i.nh, 0
@@ -10497,10 +10552,10 @@ bb.ea:                                            ; preds = %bb.ec, %.lr.ph729.i
   %i.oc = icmp ult i64 %i.ob, %i.q
   br i1 %i.oc, label %bb.ed, label %.invoke.i102
 
-.invoke.i102:                                     ; preds = %bb.gg, %bb.ge, %bb.gc, %bb.gb, %bb.fz, %bb.ej, %bb.eh, %bb.eg, %bb.ef, %bb.ed, %bb.ea, %bb.fi, %bb.fg, %bb.ff, %bb.fe, %bb.fc, %bb.ev, %bb.et, %bb.es, %bb.er, %bb.ep, %bb.fo, %bb.fl, %bb.fr, %bb.fq, %bb.gl, %bb.gk
-  %i.od = phi i64 [ %i.qk, %bb.ev ], [ %.reass.i139, %bb.gk ], [ %.reass704.i, %bb.gl ], [ %i.rr, %bb.fi ], [ %i.ob, %bb.ea ], [ %i.sy, %bb.fr ], [ %i.q, %bb.fl ], [ %i.sr, %bb.fq ], [ %i.w, %bb.fo ], [ %i.pu, %bb.ep ], [ %i.py, %bb.er ], [ %i.qc, %bb.et ], [ %i.qa, %bb.es ], [ %i.qz, %bb.fc ], [ %i.rd, %bb.fe ], [ %i.rj, %bb.fg ], [ %i.rf, %bb.ff ], [ %i.om, %bb.ef ], [ %i.oo, %bb.eg ], [ %i.pe, %bb.ej ], [ %i.oi, %bb.ed ], [ %i.ot, %bb.eh ], [ %i.tv, %bb.gb ], [ %.reass.us.i142, %bb.fz ], [ %i.uo, %bb.gg ], [ %i.tz, %bb.gc ], [ %i.uf, %bb.ge ]
-  %i.oe = phi i64 [ %.pre963.i.a, %bb.ev ], [ %i.q, %bb.gk ], [ %i.w, %bb.gl ], [ %.pre961.i, %bb.fi ], [ %i.q, %bb.ea ], [ %i.st, %bb.fr ], [ %i.q, %bb.fl ], [ %i.st, %bb.fq ], [ %i.w, %bb.fo ], [ %i.q, %bb.ep ], [ %.pre963.i.a, %bb.er ], [ %.pre963.i.a, %bb.et ], [ %.pre963.i.a, %bb.es ], [ %i.w, %bb.fc ], [ %.pre961.i, %bb.fe ], [ %.pre961.i, %bb.fg ], [ %.pre961.i, %bb.ff ], [ %.pre959.i, %bb.ef ], [ %.pre959.i, %bb.eg ], [ %.pre959.i, %bb.ej ], [ %i.w, %bb.ed ], [ %.pre959.i, %bb.eh ], [ %i.tx, %bb.gb ], [ %i.q, %bb.fz ], [ %i.un, %bb.gg ], [ %i.tx, %bb.gc ], [ %i.ug, %bb.ge ]
-  %i.of = phi ptr [ @62, %bb.ev ], [ @73, %bb.gk ], [ @74, %bb.gl ], [ @68, %bb.fi ], [ @51, %bb.ea ], [ @72, %bb.fr ], [ @69, %bb.fl ], [ @71, %bb.fq ], [ @70, %bb.fo ], [ @57, %bb.ep ], [ @59, %bb.er ], [ @60, %bb.et ], [ @61, %bb.es ], [ @64, %bb.fc ], [ @65, %bb.fe ], [ @66, %bb.fg ], [ @67, %bb.ff ], [ @53, %bb.ef ], [ @55, %bb.eg ], [ @56, %bb.ej ], [ @52, %bb.ed ], [ @54, %bb.eh ], [ @75, %bb.gb ], [ @73, %bb.fz ], [ @78, %bb.gg ], [ @76, %bb.gc ], [ @77, %bb.ge ]
+.invoke.i102:                                     ; preds = %bb.gg, %bb.ge, %bb.gc, %bb.gb, %bb.fz, %bb.ej, %bb.eh, %bb.eg, %bb.ef, %bb.ed, %bb.ea, %bb.fi, %bb.fg, %bb.ff, %bb.fe, %bb.ep, %bb.ev, %bb.et, %bb.es, %bb.er, %bb.fo, %bb.fl, %bb.fr, %bb.fq, %bb.gl, %bb.gk, %13
+  %i.od = phi i64 [ %i.qk, %bb.ev ], [ %.reass704.i, %bb.gl ], [ %i.rr, %bb.fi ], [ %umax957.le.i, %13 ], [ %i.q, %bb.fl ], [ %i.oi, %bb.ed ], [ %.reass.i139, %bb.gk ], [ %i.sy, %bb.fr ], [ %i.sr, %bb.fq ], [ %i.w, %bb.fo ], [ %i.q, %bb.ep ], [ %i.py, %bb.er ], [ %i.qc, %bb.et ], [ %i.qa, %bb.es ], [ %i.rd, %bb.fe ], [ %i.rj, %bb.fg ], [ %i.rf, %bb.ff ], [ %i.ot, %bb.eh ], [ %i.oo, %bb.eg ], [ %i.ob, %bb.ea ], [ %i.om, %bb.ef ], [ %i.pe, %bb.ej ], [ %i.uo, %bb.gg ], [ %i.uf, %bb.ge ], [ %.reass.us.i142, %bb.fz ], [ %i.tv, %bb.gb ], [ %i.tz, %bb.gc ]
+  %i.oe = phi i64 [ %.pre963.i.a, %bb.ev ], [ %i.w, %bb.gl ], [ %.pre961.i, %bb.fi ], [ %i.w, %13 ], [ %i.q, %bb.fl ], [ %i.w, %bb.ed ], [ %i.q, %bb.gk ], [ %i.st, %bb.fr ], [ %i.st, %bb.fq ], [ %i.w, %bb.fo ], [ %i.q, %bb.ep ], [ %.pre963.i.a, %bb.er ], [ %.pre963.i.a, %bb.et ], [ %.pre963.i.a, %bb.es ], [ %.pre961.i, %bb.fe ], [ %.pre961.i, %bb.ff ], [ %.pre961.i, %bb.fg ], [ %.pre959.i, %bb.eh ], [ %.pre959.i, %bb.eg ], [ %i.q, %bb.ea ], [ %.pre959.i, %bb.ef ], [ %.pre959.i, %bb.ej ], [ %i.un, %bb.gg ], [ %i.ug, %bb.ge ], [ %i.q, %bb.fz ], [ %i.tx, %bb.gb ], [ %i.tx, %bb.gc ]
+  %i.of = phi ptr [ @62, %bb.ev ], [ @74, %bb.gl ], [ @68, %bb.fi ], [ @64, %13 ], [ @69, %bb.fl ], [ @52, %bb.ed ], [ @73, %bb.gk ], [ @72, %bb.fr ], [ @71, %bb.fq ], [ @70, %bb.fo ], [ @57, %bb.ep ], [ @59, %bb.er ], [ @60, %bb.et ], [ @61, %bb.es ], [ @65, %bb.fe ], [ @66, %bb.fg ], [ @67, %bb.ff ], [ @54, %bb.eh ], [ @55, %bb.eg ], [ @51, %bb.ea ], [ @53, %bb.ef ], [ @56, %bb.ej ], [ @78, %bb.gg ], [ @77, %bb.ge ], [ @73, %bb.fz ], [ @75, %bb.gb ], [ @76, %bb.gc ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.od, i64 noundef %i.oe, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.of) #14
           to label %.cont.i103 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i86.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1500
 
@@ -10623,7 +10678,7 @@ bb.eo:                                            ; preds = %bb.en
   br i1 %i.pt, label %.loopexit242.i123, label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo, %bb.el
-  %i.pu = add i64 %.sroa.039.1706.i, %invariant.op.i90 ; 3 uses
+  %i.pu = add i64 %.sroa.039.1706.i, %invariant.op.i90 ; 2 uses
   %i.pv = icmp ult i64 %i.pu, %i.q
   br i1 %i.pv, label %bb.eq, label %.invoke.i102
 
@@ -10707,9 +10762,14 @@ bb.fb:                                            ; preds = %bb.fa
 
 bb.fc:                                            ; preds = %bb.fb, %.lr.ph1513
   %i.qy = mul i64 %.sroa.09.1.i1101512, %i.mt     ; 2 uses
-  %i.qz = add i64 %.sroa.09.1.i1101512, %invariant.op703.i ; 3 uses
+  %i.qz = add i64 %.sroa.09.1.i1101512, %invariant.op703.i ; 2 uses
   %i.ra = icmp ult i64 %i.qz, %i.w
-  br i1 %i.ra, label %bb.fd, label %.invoke.i102
+  br i1 %i.ra, label %bb.fd, label %13
+
+13:                                               ; preds = %bb.fc
+  %14 = add i64 %.sroa.09.0727.i, %invariant.op703.i
+  %umax957.le.i = call i64 @llvm.umax.i64(i64 %i.w, i64 %14)
+  br label %.invoke.i102
 
 bb.fd:                                            ; preds = %bb.fc
   %i.rb = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.qz

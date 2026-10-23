@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.p
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   %i.u = load i8, ptr %i.t, align 1, !tbaa !89    ; 2 uses
   %i.v = zext i8 %i.u to i32
-  %i.w = add nsw i32 %i.s, %i.v                   ; 9 uses
+  %i.w = add nsw i32 %i.s, %i.v                   ; 8 uses
   %i.x = sub nsw i32 0, %i.w                      ; 2 uses
   %i.y = icmp slt i32 %i.q, 1
   %i.z = icmp sgt i32 %i.w, -1
@@ -467,12 +467,12 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
   br i1 %.not80.us, label %.preheader81, label %bb.h
 
 .preheader81:                                     ; preds = %..preheader_crit_edge.us, %._crit_edge.us.us
-  %.us-phi = phi ptr [ %.073.us.us, %._crit_edge.us.us ], [ %.073.us, %..preheader_crit_edge.us ] ; 25 uses
+  %.us-phi = phi ptr [ %.073.us.us, %._crit_edge.us.us ], [ %.073.us, %..preheader_crit_edge.us ] ; 22 uses
   %i.db = icmp ult i32 %i.x, 8
   br i1 %i.db, label %.lr.ph101, label %._crit_edge
 
 .lr.ph101:                                        ; preds = %.preheader81
-  %i.dc = getelementptr inbounds nuw i8, ptr %.us-phi, i64 8 ; 8 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %.us-phi, i64 8 ; 7 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.us-phi, i64 16
   %i.de = load i64, ptr %.us-phi, align 8, !tbaa !30
   store i64 %i.de, ptr %i.dd, align 8, !tbaa !30
@@ -480,79 +480,69 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
   %i.dg = getelementptr inbounds nuw i8, ptr %.us-phi, i64 24
   store i64 %i.df, ptr %i.dg, align 8, !tbaa !30
   %exitcond115.not = icmp eq i32 %i.w, -7
-  br i1 %exitcond115.not, label %._crit_edge, label %5
+  br i1 %exitcond115.not, label %._crit_edge, label %bb.j
 
-._crit_edge:                                      ; preds = %.lr.ph101, %5, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %.preheader81
+._crit_edge:                                      ; preds = %.lr.ph101, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %.preheader81
   %i.dh = load ptr, ptr %i.h, align 16, !tbaa !38
   tail call void %i.dh(ptr noundef nonnull %i.aj) #9
   br label %bb.p
 
-5:                                                ; preds = %.lr.ph101
-  %6 = getelementptr inbounds nuw i8, ptr %.us-phi, i64 32
-  %7 = load i64, ptr %.us-phi, align 8, !tbaa !30
-  store i64 %7, ptr %6, align 8, !tbaa !30
-  %8 = load i64, ptr %i.dc, align 8, !tbaa !30
-  %9 = getelementptr inbounds nuw i8, ptr %.us-phi, i64 40
-  store i64 %8, ptr %9, align 8, !tbaa !30
-  %exitcond115.not.1 = icmp eq i32 %i.w, -6
-  br i1 %exitcond115.not.1, label %._crit_edge, label %bb.j
-
-bb.j:                                             ; preds = %5
-  %i.di = getelementptr inbounds nuw i8, ptr %.us-phi, i64 48
+bb.j:                                             ; preds = %.lr.ph101
+  %i.di = getelementptr inbounds nuw i8, ptr %.us-phi, i64 32
   %i.dj = load i64, ptr %.us-phi, align 8, !tbaa !30
   store i64 %i.dj, ptr %i.di, align 8, !tbaa !30
   %i.dk = load i64, ptr %i.dc, align 8, !tbaa !30
-  %i.dl = getelementptr inbounds nuw i8, ptr %.us-phi, i64 56
+  %i.dl = getelementptr inbounds nuw i8, ptr %.us-phi, i64 40
   store i64 %i.dk, ptr %i.dl, align 8, !tbaa !30
-  %exitcond115.not.2.a = icmp eq i32 %i.w, -5
+  %exitcond115.not.2.a = icmp eq i32 %i.w, -6
   br i1 %exitcond115.not.2.a, label %._crit_edge, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.dm = getelementptr inbounds nuw i8, ptr %.us-phi, i64 64
+  %i.dm = getelementptr inbounds nuw i8, ptr %.us-phi, i64 48
   %i.dn = load i64, ptr %.us-phi, align 8, !tbaa !30
   store i64 %i.dn, ptr %i.dm, align 8, !tbaa !30
   %i.do = load i64, ptr %i.dc, align 8, !tbaa !30
-  %i.dp = getelementptr inbounds nuw i8, ptr %.us-phi, i64 72
+  %i.dp = getelementptr inbounds nuw i8, ptr %.us-phi, i64 56
   store i64 %i.do, ptr %i.dp, align 8, !tbaa !30
-  %exitcond115.not.3.a = icmp eq i32 %i.w, -4
+  %exitcond115.not.3.a = icmp eq i32 %i.w, -5
   br i1 %exitcond115.not.3.a, label %._crit_edge, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.dq = getelementptr inbounds nuw i8, ptr %.us-phi, i64 80
+  %i.dq = getelementptr inbounds nuw i8, ptr %.us-phi, i64 64
   %i.dr = load i64, ptr %.us-phi, align 8, !tbaa !30
   store i64 %i.dr, ptr %i.dq, align 8, !tbaa !30
   %i.ds = load i64, ptr %i.dc, align 8, !tbaa !30
-  %i.dt = getelementptr inbounds nuw i8, ptr %.us-phi, i64 88
+  %i.dt = getelementptr inbounds nuw i8, ptr %.us-phi, i64 72
   store i64 %i.ds, ptr %i.dt, align 8, !tbaa !30
-  %exitcond115.not.4.a = icmp eq i32 %i.w, -3
+  %exitcond115.not.4.a = icmp eq i32 %i.w, -4
   br i1 %exitcond115.not.4.a, label %._crit_edge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.du = getelementptr inbounds nuw i8, ptr %.us-phi, i64 96
+  %i.du = getelementptr inbounds nuw i8, ptr %.us-phi, i64 80
   %i.dv = load i64, ptr %.us-phi, align 8, !tbaa !30
   store i64 %i.dv, ptr %i.du, align 8, !tbaa !30
   %i.dw = load i64, ptr %i.dc, align 8, !tbaa !30
-  %i.dx = getelementptr inbounds nuw i8, ptr %.us-phi, i64 104
+  %i.dx = getelementptr inbounds nuw i8, ptr %.us-phi, i64 88
   store i64 %i.dw, ptr %i.dx, align 8, !tbaa !30
-  %exitcond115.not.5.a = icmp eq i32 %i.w, -2
+  %exitcond115.not.5.a = icmp eq i32 %i.w, -3
   br i1 %exitcond115.not.5.a, label %._crit_edge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.dy = getelementptr inbounds nuw i8, ptr %.us-phi, i64 112
+  %i.dy = getelementptr inbounds nuw i8, ptr %.us-phi, i64 96
   %i.dz = load i64, ptr %.us-phi, align 8, !tbaa !30
   store i64 %i.dz, ptr %i.dy, align 8, !tbaa !30
   %i.ea = load i64, ptr %i.dc, align 8, !tbaa !30
-  %i.eb = getelementptr inbounds nuw i8, ptr %.us-phi, i64 120
+  %i.eb = getelementptr inbounds nuw i8, ptr %.us-phi, i64 104
   store i64 %i.ea, ptr %i.eb, align 8, !tbaa !30
-  %exitcond115.not.6 = icmp eq i32 %i.w, -1
+  %exitcond115.not.6 = icmp eq i32 %i.w, -2
   br i1 %exitcond115.not.6, label %._crit_edge, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ec = getelementptr inbounds nuw i8, ptr %.us-phi, i64 128
+  %i.ec = getelementptr inbounds nuw i8, ptr %.us-phi, i64 112
   %i.ed = load i64, ptr %.us-phi, align 8, !tbaa !30
   store i64 %i.ed, ptr %i.ec, align 8, !tbaa !30
   %i.ee = load i64, ptr %i.dc, align 8, !tbaa !30
-  %i.ef = getelementptr inbounds nuw i8, ptr %.us-phi, i64 136
+  %i.ef = getelementptr inbounds nuw i8, ptr %.us-phi, i64 120
   store i64 %i.ee, ptr %i.ef, align 8, !tbaa !30
   br label %._crit_edge
 

@@ -203,7 +203,7 @@ bb.fw:                                            ; preds = %bb.fu
   br label %.thread1325
 
 bb.fx:                                            ; preds = %bb.fs
-  %i.uc = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.sp) #15 ; 10 uses
+  %i.uc = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.sp) #15 ; 9 uses
   %i.ud = icmp slt i32 %i.uc, 0
   br i1 %i.ud, label %bb.fy, label %bb.gc
 
@@ -606,8 +606,7 @@ bb.jr:                                            ; preds = %bb.jm
   %i.afx = call i64 @H5Screate_simple(i32 noundef 1, ptr noundef nonnull %i.k, ptr noundef null) #15 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.l, i8 0, i64 256, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.o, i8 0, i64 64, i1 false)
-  %9 = zext nneg i32 %i.uc to i64
-  %wide.trip.count4550 = zext nneg i32 %i.uc to i64 ; 3 uses
+  %wide.trip.count4550 = zext nneg i32 %i.uc to i64 ; 4 uses
   %min.iters.check = icmp ult i32 %i.uc, 4
   %n.vec = and i64 %wide.trip.count4550, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count4550
@@ -861,7 +860,7 @@ bb.kv:                                            ; preds = %bb.ku, %bb.kt
   br i1 %.not2987, label %._crit_edge2951, label %.lr.ph2950
 
 .lr.ph2950:                                       ; preds = %bb.kv, %.lr.ph2950
-  %indvars.iv4552 = phi i64 [ %i.ajv, %.lr.ph2950 ], [ %9, %bb.kv ] ; 2 uses
+  %indvars.iv4552 = phi i64 [ %i.ajv, %.lr.ph2950 ], [ %wide.trip.count4550, %bb.kv ] ; 2 uses
   %i.ajv = add nsw i64 %indvars.iv4552, -1        ; 4 uses
   %i.ajw = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ajv
   %i.ajx = load i64, ptr %i.ajw, align 8, !tbaa !11

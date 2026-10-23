@@ -205,8 +205,7 @@ bb.do:                                            ; preds = %bb.dn
   %wide.trip.count746 = zext i32 %i.abe to i64
   %.1234.i.idx = select i1 %i.aag, i64 %i.aaj, i64 0 ; 6 uses
   %invariant.gep979 = getelementptr i8, ptr %i.zj, i64 %.1234.i.idx
-  %smax = call i64 @llvm.smax.i64(i64 %i.aba, i64 1)
-  %i.abf = add nsw i64 %smax, -1                  ; 3 uses
+  %i.abf = add nsw i64 %i.aba, -1                 ; 3 uses
   %i.abg = mul i64 %i.abf, %i.aau                 ; 5 uses
   %scevgep1063 = getelementptr i8, ptr %i.zp, i64 %i.abg
   %i.abh = add nsw i64 %.1234.i.idx, %i.aaw       ; 2 uses
@@ -227,7 +226,7 @@ bb.do:                                            ; preds = %bb.dn
   %scevgep1078.a = getelementptr i8, ptr %i.abq, i64 %i.abj
   %i.abr = getelementptr i8, ptr %i.zj, i64 %.1234.i.idx
   %scevgep1080.a = getelementptr i8, ptr %i.abr, i64 %i.abj
-  %i.abs = shl i64 %i.abf, 1
+  %i.abs = shl nsw i64 %i.abf, 1
   %i.abt = mul i64 %i.abs, %i.aaz
   %scevgep1090.a = getelementptr i8, ptr %i.yl, i64 %i.abt
   %i.abu = or i32 %i.zn, %i.zq
@@ -376,20 +375,19 @@ bb.dr:                                            ; preds = %.lr.ph650, %add_ybl
   %i.aea = trunc i64 %i.adz to i32
   %i.aeb = sub i32 %i.aea, %i.zx                  ; 2 uses
   %smax1064 = call i32 @llvm.smax.i32(i32 %i.aeb, i32 0) ; 3 uses
-  %i.aec = add i32 %i.aeb, %i.zg
-  %smin1065 = call i32 @llvm.smin.i32(i32 %i.zq, i32 %i.aec)
-  %5 = sub i32 %smin1065, %smax1064
-  %i.aed = call i32 @llvm.umax.i32(i32 %5, i32 1)
-  %umax = zext i32 %i.aed to i64                  ; 7 uses
-  %6 = add i32 %i.aaq, %smax1064
-  %7 = sext i32 %6 to i64
-  %i.aee = getelementptr i8, ptr %scevgep1063, i64 %umax
-  %scevgep1066 = getelementptr i8, ptr %i.aee, i64 %7 ; 2 uses
+  %i.aec = add i32 %i.aaq, %smax1064
+  %5 = sext i32 %i.aec to i64
+  %6 = add i32 %i.aeb, %i.zg
+  %i.aed = call i32 @llvm.smin.i32(i32 %i.zq, i32 %6)
+  %7 = sub i32 %i.aed, %smax1064
+  %8 = zext i32 %7 to i64                         ; 7 uses
+  %i.aee = getelementptr i8, ptr %scevgep1063, i64 %5
+  %scevgep1066 = getelementptr i8, ptr %i.aee, i64 %8 ; 2 uses
   %i.aef = sub i64 %i.adz, %i.abd
   %smin1068 = call i64 @llvm.smin.i64(i64 %i.aef, i64 0) ; 2 uses
   %i.aeg = sub nsw i64 0, %smin1068               ; 3 uses
   %scevgep1069 = getelementptr i8, ptr %scevgep1067, i64 %i.aeg
-  %i.aeh = sub i64 %umax, %smin1068               ; 4 uses
+  %i.aeh = sub i64 %8, %smin1068                  ; 4 uses
   %scevgep1071 = getelementptr i8, ptr %scevgep1070.a, i64 %i.aeh
   %scevgep1073 = getelementptr i8, ptr %scevgep1072.a, i64 %i.aeg
   %scevgep1075 = getelementptr i8, ptr %scevgep1074.a, i64 %i.aeh
@@ -398,7 +396,7 @@ bb.dr:                                            ; preds = %.lr.ph650, %add_ybl
   %scevgep1081.a = getelementptr i8, ptr %scevgep1080.a, i64 %i.aeh
   %i.aei = add i32 %i.aap, %smax1064
   %i.aej = sext i32 %i.aei to i64
-  %i.aek = add nsw i64 %umax, %i.aej
+  %i.aek = add nsw i64 %i.aej, %8
   %i.ael = shl nsw i64 %i.aek, 1
   %scevgep1091 = getelementptr i8, ptr %scevgep1090.a, i64 %i.ael
   %i.aem = mul nuw nsw i64 %indvars.iv743, %i.abc
@@ -801,13 +799,13 @@ bb.ee:                                            ; preds = %.split952, %same_bl
   %i.aqe = zext nneg i32 %spec.select261.i to i64 ; 3 uses
   %i.aqf = getelementptr i8, ptr %i.afd, i64 %i.abg
   %scevgep1082.a = getelementptr i8, ptr %i.aqf, i64 %i.aas
-  %scevgep1083.a = getelementptr i8, ptr %scevgep1082.a, i64 %umax
+  %scevgep1083.a = getelementptr i8, ptr %scevgep1082.a, i64 %8
   %scevgep1084.a = getelementptr i8, ptr %.sroa.7.0, i64 %i.abg
-  %scevgep1085.a = getelementptr i8, ptr %scevgep1084.a, i64 %umax
+  %scevgep1085.a = getelementptr i8, ptr %scevgep1084.a, i64 %8
   %scevgep1086.a = getelementptr i8, ptr %.sroa.12.0, i64 %i.abg
-  %scevgep1087.a = getelementptr i8, ptr %scevgep1086.a, i64 %umax
+  %scevgep1087.a = getelementptr i8, ptr %scevgep1086.a, i64 %8
   %scevgep1088.a = getelementptr i8, ptr %.sroa.17.0, i64 %i.abg
-  %scevgep1089 = getelementptr i8, ptr %scevgep1088.a, i64 %umax
+  %scevgep1089 = getelementptr i8, ptr %scevgep1088.a, i64 %8
   %i.aqg = insertelement <8 x ptr> poison, ptr %i.afr, i64 0
   %i.aqh = shufflevector <8 x ptr> %i.aqg, <8 x ptr> poison, <8 x i32> zeroinitializer
   %i.aqi = insertelement <8 x ptr> poison, ptr %scevgep1071, i64 0
@@ -1209,12 +1207,6 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

@@ -205,7 +205,7 @@ _sp_sub_off.exit241.i.outer444:                   ; preds = %_sp_sub_off.exit241
   br label %_sp_sub_off.exit241.i
 
 _sp_sub_off.exit241.i:                            ; preds = %_sp_sub_off.exit241.i.backedge, %_sp_sub_off.exit241.i.outer444
-  %.0.in.lcssa.i253.i618 = phi i16 [ %.promoted620, %_sp_sub_off.exit241.i.outer444 ], [ %.0.in.lcssa.i253.i, %_sp_sub_off.exit241.i.backedge ] ; 12 uses
+  %.0.in.lcssa.i253.i618 = phi i16 [ %.promoted620, %_sp_sub_off.exit241.i.outer444 ], [ %.0.in.lcssa.i253.i, %_sp_sub_off.exit241.i.backedge ] ; 11 uses
   %i.bv = phi i16 [ %.ph445.a, %_sp_sub_off.exit241.i.outer444 ], [ %.be450, %_sp_sub_off.exit241.i.backedge ] ; 12 uses
   %i.bw = phi i16 [ %.ph447, %_sp_sub_off.exit241.i.outer444 ], [ %.be449, %_sp_sub_off.exit241.i.backedge ] ; 14 uses
   %i.bx = phi i16 [ %.ph448, %_sp_sub_off.exit241.i.outer444 ], [ %.be450, %_sp_sub_off.exit241.i.backedge ] ; 16 uses
@@ -228,7 +228,7 @@ bb.r:                                             ; preds = %_sp_sub_off.exit241
   br label %_sp_invmod_bin.exit
 
 bb.s:                                             ; preds = %bb.r, %._crit_edge.i
-  %i.cd = phi i16 [ %.pre436.i.a, %._crit_edge.i ], [ %.pre437.i, %bb.r ] ; 13 uses
+  %i.cd = phi i16 [ %.pre436.i.a, %._crit_edge.i ], [ %.pre437.i, %bb.r ] ; 11 uses
   %.not58.i = icmp eq i16 %i.cd, 0
   br i1 %.not58.i, label %sp_sub.exit, label %bb.t
 
@@ -631,11 +631,15 @@ _sp_div_2.exit143.i:                              ; preds = %bb.ah, %scalar.ph38
 
 bb.aj:                                            ; preds = %bb.ab
   %i.mk = icmp ugt i16 %i.cd, %.0.in.lcssa.i253.i618
-  br i1 %i.mk, label %.lr.ph64.i.i, label %bb.ak
+  br i1 %i.mk, label %..lr.ph64.i_crit_edge.i, label %bb.ak
+
+..lr.ph64.i_crit_edge.i:                          ; preds = %bb.aj
+  %.pre444.i = zext i16 %i.cd to i64
+  br label %.lr.ph64.i.i
 
 bb.ak:                                            ; preds = %bb.aj
   %i.ml = icmp ult i16 %i.cd, %.0.in.lcssa.i253.i618
-  %.pre446.i = zext i16 %i.cd to i64              ; 7 uses
+  %.pre446.i = zext i16 %i.cd to i64              ; 9 uses
   br i1 %i.ml, label %_sp_cmp_abs.exit.i.preheader, label %.preheader.i144.i.preheader
 
 _sp_cmp_abs.exit.i.preheader:                     ; preds = %bb.al, %bb.ak
@@ -659,7 +663,8 @@ bb.al:                                            ; preds = %.preheader.i144.i.p
   %i.ms = icmp ult i64 %i.mo, %i.mq
   br i1 %i.ms, label %_sp_cmp_abs.exit.i.preheader, label %.preheader.i144.i, !llvm.loop !1
 
-.lr.ph64.i.i:                                     ; preds = %bb.aj, %.preheader.i144.i.preheader, %.preheader.i144.i
+.lr.ph64.i.i:                                     ; preds = %.preheader.i144.i.preheader, %.preheader.i144.i, %..lr.ph64.i_crit_edge.i
+  %zext426.pre-phi.i = phi i64 [ %.pre444.i, %..lr.ph64.i_crit_edge.i ], [ %.pre446.i, %.preheader.i144.i ], [ %.pre446.i, %.preheader.i144.i.preheader ] ; 7 uses
   %wide.trip.count87.i.i = zext i16 %.0.in.lcssa.i253.i618 to i64 ; 2 uses
   br label %bb.am
 
@@ -681,22 +686,21 @@ bb.an:                                            ; preds = %bb.am
   %i.nb = trunc i128 %i.na to i64
   store i64 %i.nb, ptr %i.mt, align 8, !tbaa !36
   %i.nc = ashr i128 %i.na, 64                     ; 2 uses
-  %indvars.iv.next83.i156.i = add nuw nsw i64 %indvars.iv82.i155.i, 1 ; 3 uses
-  %lftr.wideiv426.i = trunc i64 %indvars.iv.next83.i156.i to i16
-  %exitcond210 = icmp eq i16 %i.cd, %lftr.wideiv426.i
+  %indvars.iv.next83.i156.i = add nuw nsw i64 %indvars.iv82.i155.i, 1 ; 2 uses
+  %exitcond210 = icmp eq i64 %indvars.iv.next83.i156.i, %zext426.pre-phi.i
   br i1 %exitcond210, label %.critedge2.i.i, label %bb.am, !llvm.loop !17
 
 .critedge2.i.i:                                   ; preds = %bb.an, %bb.am
-  %.2.lcssa.ph.i.pre-phi.i = phi i16 [ %.0.in.lcssa.i253.i618, %bb.am ], [ %i.cd, %bb.an ] ; 2 uses
-  %.2.lcssa.ph.in.i.i = phi i64 [ %wide.trip.count87.i.i, %bb.am ], [ %indvars.iv.next83.i156.i, %bb.an ] ; 2 uses
+  %.2.lcssa.ph.in.i.i = phi i64 [ %wide.trip.count87.i.i, %bb.am ], [ %zext426.pre-phi.i, %bb.an ] ; 4 uses
   %.049.lcssa.ph.i.i = phi i128 [ %.04963.i.i, %bb.am ], [ %i.nc, %bb.an ] ; 2 uses
-  %i.nd = icmp ugt i16 %i.cd, %.2.lcssa.ph.i.pre-phi.i
-  br i1 %i.nd, label %.lr.ph74.i.i.a, label %._crit_edge.i150.i
+  %.2.lcssa.ph.i.i = trunc i64 %.2.lcssa.ph.in.i.i to i16
+  %i.nd = icmp ugt i16 %i.cd, %.2.lcssa.ph.i.i
+  %3 = and i64 %.2.lcssa.ph.in.i.i, 65535         ; 4 uses
+  br i1 %i.nd, label %.lr.ph74.i.i.a, label %.preheader.i151.i
 
 .lr.ph74.i.i.a:                                   ; preds = %.critedge2.i.i
-  %3 = and i64 %.2.lcssa.ph.in.i.i, 65535         ; 4 uses
-  %wide.trip.count93.i.i = zext i16 %i.cd to i64  ; 5 uses
-  %4 = sub i64 %wide.trip.count93.i.i, %.2.lcssa.ph.in.i.i
+  %4 = sub nsw i64 %zext426.pre-phi.i, %.2.lcssa.ph.in.i.i
+  %.neg = add nsw i64 %.2.lcssa.ph.in.i.i, 1
   %xtraiter536 = and i64 %4, 1
   %lcmp.mod537.not = icmp eq i64 %xtraiter536, 0
   br i1 %lcmp.mod537.not, label %.prol.loopexit535, label %.prol.loopexit535.unr-lcssa
@@ -715,8 +719,7 @@ bb.an:                                            ; preds = %bb.am
 .prol.loopexit535:                                ; preds = %.prol.loopexit535.unr-lcssa, %.lr.ph74.i.i.a
   %indvars.iv90.i.i.unr = phi i64 [ %3, %.lr.ph74.i.i.a ], [ %indvars.iv.next91.i.i.prol, %.prol.loopexit535.unr-lcssa ]
   %.173.i.i.unr = phi i128 [ %.049.lcssa.ph.i.i, %.lr.ph74.i.i.a ], [ %i.nj, %.prol.loopexit535.unr-lcssa ]
-  %5 = add nsw i64 %wide.trip.count93.i.i, -1
-  %i.nk = icmp eq i64 %3, %5
+  %i.nk = icmp eq i64 %zext426.pre-phi.i, %.neg
   br i1 %i.nk, label %.preheader.i151.i, label %.lr.ph74.i.i.new
 
 .lr.ph74.i.i.new:                                 ; preds = %.prol.loopexit535, %.lr.ph74.i.i.new
@@ -738,17 +741,13 @@ bb.an:                                            ; preds = %bb.am
   store i64 %i.nw, ptr %i.ns, align 8, !tbaa !36
   %i.nx = ashr i128 %i.nv, 64
   %indvars.iv.next91.i.i.1 = add nuw nsw i64 %indvars.iv90.i.i, 2 ; 2 uses
-  %exitcond94.not.i.i.1 = icmp eq i64 %indvars.iv.next91.i.i.1, %wide.trip.count93.i.i
+  %exitcond94.not.i.i.1 = icmp eq i64 %indvars.iv.next91.i.i.1, %zext426.pre-phi.i
   br i1 %exitcond94.not.i.i.1, label %.preheader.i151.i, label %.lr.ph74.i.i.new, !llvm.loop !18
 
-._crit_edge.i150.i:                               ; preds = %.critedge2.i.i
-  %.pre438.i = zext i16 %.2.lcssa.ph.i.pre-phi.i to i64
-  br label %.preheader.i151.i
-
-.preheader.i151.i:                                ; preds = %.prol.loopexit535, %.lr.ph74.i.i.new, %._crit_edge.i150.i
-  %.pre-phi.i = phi i64 [ %.pre438.i, %._crit_edge.i150.i ], [ %wide.trip.count93.i.i, %.lr.ph74.i.i.new ], [ %wide.trip.count93.i.i, %.prol.loopexit535 ] ; 2 uses
-  %.not420 = icmp eq i64 %.pre-phi.i, 0
-  br i1 %.not420, label %.split.loop.exit106.i.i, label %.lr.ph356
+.preheader.i151.i:                                ; preds = %.prol.loopexit535, %.lr.ph74.i.i.new, %.critedge2.i.i
+  %.pre-phi.i = phi i64 [ %3, %.critedge2.i.i ], [ %zext426.pre-phi.i, %.lr.ph74.i.i.new ], [ %zext426.pre-phi.i, %.prol.loopexit535 ] ; 2 uses
+  %5 = icmp sgt i64 %.pre-phi.i, 0
+  br i1 %5, label %.lr.ph356, label %.split.loop.exit106.i.i
 
 bb.ao:                                            ; preds = %.lr.ph356
   %indvars.iv.next96.i.i = add nsw i64 %indvars.iv95.i.i355, -1
@@ -763,7 +762,7 @@ bb.ao:                                            ; preds = %.lr.ph356
   br i1 %.not56.i153.i, label %bb.ao, label %.split.loop.exit.i154.i, !llvm.loop !19
 
 .split.loop.exit.i154.i:                          ; preds = %.lr.ph356
-  %i.ob = trunc nuw i64 %indvars.iv95.i.i355 to i16
+  %i.ob = trunc i64 %indvars.iv95.i.i355 to i16
   br label %.split.loop.exit106.i.i
 
 .split.loop.exit106.i.i:                          ; preds = %bb.ao, %.preheader.i151.i, %.split.loop.exit.i154.i

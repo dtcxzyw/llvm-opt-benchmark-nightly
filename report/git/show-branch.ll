@@ -205,7 +205,6 @@ name_commits.exit:                                ; preds = %name_commits.exit.l
   %.neg = shl i32 -4, %.0164.lcssa433
   %i.aeq = or disjoint i32 %.neg, 3
   %i.aer = load i32, ptr @column_colors_ansi_max, align 4
-  %umax = call i32 @llvm.umax.i32(i32 %.0164.lcssa433, i32 1)
   %min.iters.check510 = icmp ult i32 %.0164.lcssa433, 8
   %n.vec512 = and i32 %.0164.lcssa433, -8         ; 4 uses
   %i.aes = icmp eq i32 %n.vec512, 8
@@ -373,7 +372,7 @@ get_color_code.exit241:                           ; preds = %bb.dv, %bb.dw
 
 bb.dx:                                            ; preds = %get_color_code.exit241, %.critedge
   %i.ahh = add nuw nsw i32 %.5326, 1              ; 2 uses
-  %exitcond369.not = icmp eq i32 %i.ahh, %umax
+  %exitcond369.not = icmp eq i32 %i.ahh, %.0164.lcssa433
   br i1 %exitcond369.not, label %bb.dy, label %omit_in_dense.exit.thread, !llvm.loop !93
 
 bb.dy:                                            ; preds = %bb.dx
@@ -776,13 +775,13 @@ declare void @strbuf_grow(ptr noundef, i64 noundef) local_unnamed_addr #3
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #14
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

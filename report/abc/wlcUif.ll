@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/wlcUif?download=true
 inline.NumInlined: 119
 inline.NumDeleted: 27
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@Wlc_NtkPairIsUifable:bb.a
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !15
   %i.da = sext i32 %i.cz to i64
@@ -204,14 +204,14 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %Wlc_NtkPairIsUifable.exit.thread
-  %i.x = phi ptr [ %i.j, %.lr.ph ], [ %4, %Wlc_NtkPairIsUifable.exit.thread ] ; 14 uses
-  %i.y = phi ptr [ %i.k, %.lr.ph ], [ %5, %Wlc_NtkPairIsUifable.exit.thread ] ; 18 uses
-  %i.z = phi i32 [ %i.l, %.lr.ph ], [ %6, %Wlc_NtkPairIsUifable.exit.thread ] ; 17 uses
-  %i.aa = phi i32 [ %i.m, %.lr.ph ], [ %7, %Wlc_NtkPairIsUifable.exit.thread ] ; 18 uses
+  %i.x = phi ptr [ %i.j, %.lr.ph ], [ %23, %Wlc_NtkPairIsUifable.exit.thread ] ; 16 uses
+  %i.y = phi ptr [ %i.k, %.lr.ph ], [ %24, %Wlc_NtkPairIsUifable.exit.thread ] ; 20 uses
+  %i.z = phi i32 [ %i.l, %.lr.ph ], [ %25, %Wlc_NtkPairIsUifable.exit.thread ] ; 19 uses
+  %i.aa = phi i32 [ %i.m, %.lr.ph ], [ %26, %Wlc_NtkPairIsUifable.exit.thread ] ; 20 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %Wlc_NtkPairIsUifable.exit.thread ] ; 3 uses
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %.val35, i64 %indvars.iv
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !15
-  %.val36 = load ptr, ptr %i.i, align 8, !tbaa !26 ; 10 uses
+  %.val36 = load ptr, ptr %i.i, align 8, !tbaa !26 ; 12 uses
   %i.ad = sext i32 %i.ac to i64
   %i.ae = getelementptr inbounds [24 x i8], ptr %.val36, i64 %i.ad ; 6 uses
   %i.af = icmp eq i64 %indvars.iv, %indvars.iv67
@@ -252,8 +252,8 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.aq = icmp samesign ugt i32 %.val37.i, 2
-  %i.ar = and i16 %.val33.i, 63                   ; 3 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 7 uses
+  %i.ar = and i16 %.val33.i, 63                   ; 4 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 9 uses
   br i1 %i.aq, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
@@ -308,14 +308,54 @@ bb.g:                                             ; preds = %Wlc_ObjFanin.exit40
   ]
 
 .lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.i, %.lr.ph.split.i
-  %i.bo = load ptr, ptr %i.u, align 8, !tbaa !31
-  %wide.trip.count.i = zext nneg i32 %.val37.i to i64
-  br label %bb.h
+  %i.bo = load ptr, ptr %i.u, align 8, !tbaa !31  ; 2 uses
+  %1 = load i32, ptr %i.bo, align 4, !tbaa !15
+  %2 = sext i32 %1 to i64
+  %3 = getelementptr inbounds [24 x i8], ptr %.val36, i64 %2 ; 3 uses
+  switch i16 %i.ar, label %Wlc_ObjFanin.exit40.us51.i [
+    i16 6, label %Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i
+    i16 22, label %Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i
+  ]
 
-bb.h:                                             ; preds = %3, %.lr.ph.split.split.us.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %3 ], [ 0, %.lr.ph.split.split.us.i ] ; 3 uses
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv.i
-  %i.bp = load i32, ptr %1, align 4, !tbaa !15
+Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i:       ; preds = %.lr.ph.split.split.us.i, %.lr.ph.split.split.us.i
+  %4 = load ptr, ptr %i.as, align 8, !tbaa !31
+  br label %Wlc_ObjFanin.exit40.us51.i
+
+Wlc_ObjFanin.exit40.us51.i:                       ; preds = %Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i, %.lr.ph.split.split.us.i
+  %5 = phi ptr [ %4, %Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i ], [ %i.as, %.lr.ph.split.split.us.i ]
+  %6 = load i32, ptr %5, align 4, !tbaa !15
+  %7 = sext i32 %6 to i64
+  %8 = getelementptr inbounds [24 x i8], ptr %.val36, i64 %7 ; 3 uses
+  %9 = getelementptr i8, ptr %3, i64 8
+  %.val25.us52.i = load i32, ptr %9, align 8, !tbaa !28
+  %10 = getelementptr i8, ptr %3, i64 12
+  %.val26.us53.i = load i32, ptr %10, align 4, !tbaa !29
+  %11 = sub nsw i32 %.val25.us52.i, %.val26.us53.i
+  %12 = tail call i32 @llvm.abs.i32(i32 %11, i1 true)
+  %13 = getelementptr i8, ptr %8, i64 8
+  %.val.us54.i = load i32, ptr %13, align 8, !tbaa !28
+  %14 = getelementptr i8, ptr %8, i64 12
+  %.val24.us55.i = load i32, ptr %14, align 4, !tbaa !29
+  %15 = sub nsw i32 %.val.us54.i, %.val24.us55.i
+  %16 = tail call i32 @llvm.abs.i32(i32 %15, i1 true)
+  %.not22.us56.i = icmp eq i32 %12, %16
+  br i1 %.not22.us56.i, label %17, label %Wlc_NtkPairIsUifable.exit.thread
+
+17:                                               ; preds = %Wlc_ObjFanin.exit40.us51.i
+  %.val32.us57.i = load i16, ptr %3, align 8
+  %.val31.us58.i = load i16, ptr %8, align 8
+  %18 = xor i16 %.val31.us58.i, %.val32.us57.i
+  %19 = and i16 %18, 64
+  %.not23.us59.i = icmp eq i16 %19, 0
+  br i1 %.not23.us59.i, label %20, label %Wlc_NtkPairIsUifable.exit.thread
+
+20:                                               ; preds = %17
+  %exitcond.not.i = icmp eq i32 %.val37.i, 1
+  br i1 %exitcond.not.i, label %Wlc_NtkPairIsUifable.exit, label %bb.h
+
+bb.h:                                             ; preds = %20
+  %21 = getelementptr inbounds nuw i8, ptr %i.bo, i64 4
+  %i.bp = load i32, ptr %21, align 4, !tbaa !15
   %i.bq = sext i32 %i.bp to i64
   %i.br = getelementptr inbounds [24 x i8], ptr %.val36, i64 %i.bq ; 3 uses
   switch i16 %i.ar, label %Wlc_ObjFanin.exit40.us51.i.a [
@@ -329,8 +369,8 @@ Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i.a:     ; preds = %bb.h, %bb.h
 
 Wlc_ObjFanin.exit40.us51.i.a:                     ; preds = %Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i.a, %bb.h
   %i.bt = phi ptr [ %i.bs, %Wlc_ObjHasArray.exit.thread.i.i.i38.us50.i.a ], [ %i.as, %bb.h ]
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %indvars.iv.i
-  %i.bu = load i32, ptr %2, align 4, !tbaa !15
+  %22 = getelementptr inbounds nuw i8, ptr %i.bt, i64 4
+  %i.bu = load i32, ptr %22, align 4, !tbaa !15
   %i.bv = sext i32 %i.bu to i64
   %i.bw = getelementptr inbounds [24 x i8], ptr %.val36, i64 %i.bv ; 3 uses
   %i.bx = getelementptr i8, ptr %i.br, i64 8
@@ -354,12 +394,7 @@ bb.i:                                             ; preds = %Wlc_ObjFanin.exit40
   %i.cf = xor i16 %.val31.us58.i.a, %.val32.us57.i.a
   %i.cg = and i16 %i.cf, 64
   %.not23.us59.i.a = icmp eq i16 %i.cg, 0
-  br i1 %.not23.us59.i.a, label %3, label %Wlc_NtkPairIsUifable.exit.thread
-
-3:                                                ; preds = %bb.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %Wlc_NtkPairIsUifable.exit, label %bb.h, !llvm.loop !0
+  br i1 %.not23.us59.i.a, label %Wlc_NtkPairIsUifable.exit, label %Wlc_NtkPairIsUifable.exit.thread
 
 bb.j:                                             ; preds = %bb.l
   %exitcond95.not.i = icmp eq i32 %.val37.i, 1
@@ -448,7 +483,7 @@ bb.l:                                             ; preds = %Wlc_ObjFanin.exit40
   %.not23.i = icmp eq i16 %i.dr, 0
   br i1 %.not23.i, label %bb.j, label %Wlc_NtkPairIsUifable.exit.thread
 
-Wlc_NtkPairIsUifable.exit:                        ; preds = %3, %bb.j, %bb.k, %bb.f, %.preheader.i
+Wlc_NtkPairIsUifable.exit:                        ; preds = %20, %bb.i, %bb.j, %bb.k, %bb.f, %.preheader.i
   %i.ds = ptrtoint ptr %.val36 to i64             ; 3 uses
   %i.dt = sub i64 %i.v, %i.ds
   %i.du = sdiv exact i64 %i.dt, 24
@@ -553,20 +588,20 @@ Vec_IntPush.exit47:                               ; preds = %Vec_IntPush.exit, %
   store i32 %i.eo, ptr %i.fb, align 4, !tbaa !15
   br label %Wlc_NtkPairIsUifable.exit.thread
 
-Wlc_NtkPairIsUifable.exit.thread:                 ; preds = %Wlc_ObjFanin.exit40.us51.i.a, %bb.i, %Wlc_ObjFanin.exit40.i, %bb.l, %Wlc_ObjFanin.exit40.i.1, %bb.k, %bb.g, %Wlc_ObjFanin.exit40.us.i, %bb.d, %bb.c, %bb.e, %Vec_IntPush.exit47
-  %4 = phi ptr [ %i.x, %Wlc_ObjFanin.exit40.i ], [ %i.x, %bb.g ], [ %i.ex, %Vec_IntPush.exit47 ], [ %i.x, %bb.d ], [ %i.x, %bb.c ], [ %i.x, %bb.e ], [ %i.x, %Wlc_ObjFanin.exit40.us.i ], [ %i.x, %bb.k ], [ %i.x, %Wlc_ObjFanin.exit40.i.1 ], [ %i.x, %bb.l ], [ %i.x, %bb.i ], [ %i.x, %Wlc_ObjFanin.exit40.us51.i.a ] ; 2 uses
-  %5 = phi ptr [ %i.y, %Wlc_ObjFanin.exit40.i ], [ %i.y, %bb.g ], [ %i.ex, %Vec_IntPush.exit47 ], [ %i.y, %bb.d ], [ %i.y, %bb.c ], [ %i.y, %bb.e ], [ %i.y, %Wlc_ObjFanin.exit40.us.i ], [ %i.y, %bb.k ], [ %i.y, %Wlc_ObjFanin.exit40.i.1 ], [ %i.y, %bb.l ], [ %i.y, %bb.i ], [ %i.y, %Wlc_ObjFanin.exit40.us51.i.a ] ; 2 uses
-  %6 = phi i32 [ %i.z, %Wlc_ObjFanin.exit40.i ], [ %i.z, %bb.g ], [ %i.ey, %Vec_IntPush.exit47 ], [ %i.z, %bb.d ], [ %i.z, %bb.c ], [ %i.z, %bb.e ], [ %i.z, %Wlc_ObjFanin.exit40.us.i ], [ %i.z, %bb.k ], [ %i.z, %Wlc_ObjFanin.exit40.i.1 ], [ %i.z, %bb.l ], [ %i.z, %bb.i ], [ %i.z, %Wlc_ObjFanin.exit40.us51.i.a ] ; 2 uses
-  %7 = phi i32 [ %i.aa, %Wlc_ObjFanin.exit40.i ], [ %i.aa, %bb.g ], [ %i.ez, %Vec_IntPush.exit47 ], [ %i.aa, %bb.d ], [ %i.aa, %bb.c ], [ %i.aa, %bb.e ], [ %i.aa, %Wlc_ObjFanin.exit40.us.i ], [ %i.aa, %bb.k ], [ %i.aa, %Wlc_ObjFanin.exit40.i.1 ], [ %i.aa, %bb.l ], [ %i.aa, %bb.i ], [ %i.aa, %Wlc_ObjFanin.exit40.us51.i.a ] ; 2 uses
+Wlc_NtkPairIsUifable.exit.thread:                 ; preds = %Wlc_ObjFanin.exit40.us51.i, %17, %Wlc_ObjFanin.exit40.us51.i.a, %bb.i, %Wlc_ObjFanin.exit40.i, %bb.l, %Wlc_ObjFanin.exit40.i.1, %bb.k, %bb.g, %Wlc_ObjFanin.exit40.us.i, %bb.d, %bb.c, %bb.e, %Vec_IntPush.exit47
+  %23 = phi ptr [ %i.x, %Wlc_ObjFanin.exit40.i ], [ %i.x, %bb.g ], [ %i.ex, %Vec_IntPush.exit47 ], [ %i.x, %bb.d ], [ %i.x, %bb.c ], [ %i.x, %bb.e ], [ %i.x, %Wlc_ObjFanin.exit40.us.i ], [ %i.x, %bb.k ], [ %i.x, %Wlc_ObjFanin.exit40.i.1 ], [ %i.x, %bb.l ], [ %i.x, %bb.i ], [ %i.x, %Wlc_ObjFanin.exit40.us51.i.a ], [ %i.x, %17 ], [ %i.x, %Wlc_ObjFanin.exit40.us51.i ] ; 2 uses
+  %24 = phi ptr [ %i.y, %Wlc_ObjFanin.exit40.i ], [ %i.y, %bb.g ], [ %i.ex, %Vec_IntPush.exit47 ], [ %i.y, %bb.d ], [ %i.y, %bb.c ], [ %i.y, %bb.e ], [ %i.y, %Wlc_ObjFanin.exit40.us.i ], [ %i.y, %bb.k ], [ %i.y, %Wlc_ObjFanin.exit40.i.1 ], [ %i.y, %bb.l ], [ %i.y, %bb.i ], [ %i.y, %Wlc_ObjFanin.exit40.us51.i.a ], [ %i.y, %17 ], [ %i.y, %Wlc_ObjFanin.exit40.us51.i ] ; 2 uses
+  %25 = phi i32 [ %i.z, %Wlc_ObjFanin.exit40.i ], [ %i.z, %bb.g ], [ %i.ey, %Vec_IntPush.exit47 ], [ %i.z, %bb.d ], [ %i.z, %bb.c ], [ %i.z, %bb.e ], [ %i.z, %Wlc_ObjFanin.exit40.us.i ], [ %i.z, %bb.k ], [ %i.z, %Wlc_ObjFanin.exit40.i.1 ], [ %i.z, %bb.l ], [ %i.z, %bb.i ], [ %i.z, %Wlc_ObjFanin.exit40.us51.i.a ], [ %i.z, %17 ], [ %i.z, %Wlc_ObjFanin.exit40.us51.i ] ; 2 uses
+  %26 = phi i32 [ %i.aa, %Wlc_ObjFanin.exit40.i ], [ %i.aa, %bb.g ], [ %i.ez, %Vec_IntPush.exit47 ], [ %i.aa, %bb.d ], [ %i.aa, %bb.c ], [ %i.aa, %bb.e ], [ %i.aa, %Wlc_ObjFanin.exit40.us.i ], [ %i.aa, %bb.k ], [ %i.aa, %Wlc_ObjFanin.exit40.i.1 ], [ %i.aa, %bb.l ], [ %i.aa, %bb.i ], [ %i.aa, %Wlc_ObjFanin.exit40.us51.i.a ], [ %i.aa, %17 ], [ %i.aa, %Wlc_ObjFanin.exit40.us51.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count70
   br i1 %exitcond.not, label %.critedge2, label %bb.b, !llvm.loop !38
 
 .critedge2:                                       ; preds = %Wlc_NtkPairIsUifable.exit.thread, %bb.b
-  %i.fc = phi ptr [ %4, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.x, %bb.b ] ; 2 uses
-  %i.fd = phi ptr [ %5, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.y, %bb.b ]
-  %i.fe = phi i32 [ %6, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.z, %bb.b ]
-  %i.ff = phi i32 [ %7, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.aa, %bb.b ] ; 2 uses
+  %i.fc = phi ptr [ %23, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.x, %bb.b ] ; 2 uses
+  %i.fd = phi ptr [ %24, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.y, %bb.b ]
+  %i.fe = phi i32 [ %25, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.z, %bb.b ]
+  %i.ff = phi i32 [ %26, %Wlc_NtkPairIsUifable.exit.thread ], [ %i.aa, %bb.b ] ; 2 uses
   %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
   %exitcond71.not = icmp eq i64 %indvars.iv.next68, %wide.trip.count70
   br i1 %exitcond71.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !39

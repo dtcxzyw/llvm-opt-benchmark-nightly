@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/ir_check?download=true
 inline.NumInlined: 3
 inline.NumDeleted: 3
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@ir_check:bb.a
   %i.ds = getelementptr inbounds nuw [52 x i8], ptr %.val, i64 %i.dr
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 32
@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %.split, %bb.ba, %bb
 bb.bk:                                            ; preds = %bb.bj
   %i.gs = getelementptr inbounds nuw [8 x i8], ptr %i.gr, i64 %i.bk ; 3 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 4
-  %i.gu = load i32, ptr %i.gt, align 4, !tbaa !55 ; 4 uses
+  %i.gu = load i32, ptr %i.gt, align 4, !tbaa !55 ; 6 uses
   %i.gv = icmp sgt i32 %i.gu, 16
   br i1 %i.gv, label %bb.bl, label %bb.by
 
@@ -348,7 +348,7 @@ bb.bx:                                            ; preds = %bb.bw
 
 .lr.ph63.preheader.i:                             ; preds = %bb.bx, %bb.bw, %bb.bv
   %.sroa.0.8 = phi ptr [ %.sroa.0.7, %bb.bw ], [ %i.jc, %bb.bx ], [ %.sroa.0.7, %bb.bv ]
-  %.165.i.i = phi ptr [ null, %bb.bw ], [ %i.jd, %bb.bx ], [ %i.ix, %bb.bv ] ; 4 uses
+  %.165.i.i = phi ptr [ null, %bb.bw ], [ %i.jd, %bb.bx ], [ %i.ix, %bb.bv ] ; 6 uses
   %i.ji = getelementptr inbounds nuw [8 x i8], ptr %.sroa.14.4, i64 %i.bk
   store ptr %.165.i.i, ptr %i.ji, align 8, !tbaa !57
   %i.jj = load i32, ptr %i.a, align 8, !tbaa !41
@@ -360,13 +360,46 @@ bb.bx:                                            ; preds = %bb.bw
   %i.jo = load ptr, ptr %i.t, align 8, !tbaa !63
   %i.jp = load i32, ptr %i.gs, align 4, !tbaa !64
   %i.jq = sext i32 %i.jp to i64
-  %i.jr = getelementptr inbounds [4 x i8], ptr %i.jo, i64 %i.jq
+  %i.jr = getelementptr inbounds [4 x i8], ptr %i.jo, i64 %i.jq ; 3 uses
+  %xtraiter = and i32 %i.gu, 1
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph63.preheader.i.new, label %.lr.ph63.i.prol
+
+.lr.ph63.i.prol:                                  ; preds = %.lr.ph63.preheader.i
+  %1 = load i32, ptr %i.jr, align 4, !tbaa !46    ; 2 uses
+  %2 = and i32 %1, 63
+  %3 = zext nneg i32 %2 to i64
+  %4 = shl nuw i64 1, %3
+  %5 = lshr i32 %1, 6
+  %6 = zext nneg i32 %5 to i64
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %.165.i.i, i64 %6 ; 2 uses
+  %8 = load i64, ptr %7, align 8, !tbaa !65
+  %9 = or i64 %4, %8
+  store i64 %9, ptr %7, align 8, !tbaa !65
+  %10 = getelementptr inbounds nuw i8, ptr %i.jr, i64 4
+  %11 = add nsw i32 %i.gu, -1
+  br label %.lr.ph63.preheader.i.new
+
+.lr.ph63.preheader.i.new:                         ; preds = %.lr.ph63.preheader.i, %.lr.ph63.i.prol
+  %.03962.i.unr = phi ptr [ %i.jr, %.lr.ph63.preheader.i ], [ %10, %.lr.ph63.i.prol ]
+  %.04061.i.unr = phi i32 [ %i.gu, %.lr.ph63.preheader.i ], [ %11, %.lr.ph63.i.prol ]
   br label %.lr.ph63.i
 
-.lr.ph63.i:                                       ; preds = %.lr.ph63.i, %.lr.ph63.preheader.i
-  %.03962.i = phi ptr [ %i.kb, %.lr.ph63.i ], [ %i.jr, %.lr.ph63.preheader.i ] ; 2 uses
-  %.04061.i = phi i32 [ %i.kc, %.lr.ph63.i ], [ %i.gu, %.lr.ph63.preheader.i ] ; 2 uses
-  %i.js = load i32, ptr %.03962.i, align 4, !tbaa !46 ; 2 uses
+.lr.ph63.i:                                       ; preds = %.lr.ph63.i, %.lr.ph63.preheader.i.new
+  %.03962.i = phi ptr [ %.03962.i.unr, %.lr.ph63.preheader.i.new ], [ %i.kb, %.lr.ph63.i ] ; 3 uses
+  %.04061.i = phi i32 [ %.04061.i.unr, %.lr.ph63.preheader.i.new ], [ %i.kc, %.lr.ph63.i ] ; 2 uses
+  %12 = load i32, ptr %.03962.i, align 4, !tbaa !46 ; 2 uses
+  %13 = and i32 %12, 63
+  %14 = zext nneg i32 %13 to i64
+  %15 = shl nuw i64 1, %14
+  %16 = lshr i32 %12, 6
+  %17 = zext nneg i32 %16 to i64
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %.165.i.i, i64 %17 ; 2 uses
+  %19 = load i64, ptr %18, align 8, !tbaa !65
+  %20 = or i64 %15, %19
+  store i64 %20, ptr %18, align 8, !tbaa !65
+  %21 = getelementptr inbounds nuw i8, ptr %.03962.i, i64 4
+  %i.js = load i32, ptr %21, align 4, !tbaa !46   ; 2 uses
   %i.jt = and i32 %i.js, 63
   %i.ju = zext nneg i32 %i.jt to i64
   %i.jv = shl nuw i64 1, %i.ju
@@ -376,10 +409,10 @@ bb.bx:                                            ; preds = %bb.bw
   %i.jz = load i64, ptr %i.jy, align 8, !tbaa !65
   %i.ka = or i64 %i.jv, %i.jz
   store i64 %i.ka, ptr %i.jy, align 8, !tbaa !65
-  %i.kb = getelementptr inbounds nuw i8, ptr %.03962.i, i64 4
-  %i.kc = add nsw i32 %.04061.i, -1
-  %1 = icmp samesign ugt i32 %.04061.i, 1
-  br i1 %1, label %.lr.ph63.i, label %ir_check_use_list.exit, !llvm.loop !13
+  %i.kb = getelementptr inbounds nuw i8, ptr %.03962.i, i64 8
+  %i.kc = add nsw i32 %.04061.i, -2
+  %22 = icmp sgt i32 %.04061.i, 2
+  br i1 %22, label %.lr.ph63.i, label %ir_check_use_list.exit, !llvm.loop !13
 
 bb.by:                                            ; preds = %bb.bk
   %i.kd = icmp sgt i32 %i.gu, 0
@@ -782,7 +815,7 @@ bb.dj:                                            ; preds = %bb.di
   br label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj, %bb.di
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %ir_check_input_list.exit.loopexit.unr-lcssa, label %bb.dg, !llvm.loop !16
 

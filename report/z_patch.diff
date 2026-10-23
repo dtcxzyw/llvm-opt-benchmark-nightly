@@ -1,0 +1,318 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 166bf76853e41..eb7de42a0f838 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16158,7 +16158,16 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+   unsigned NumDomTreeSteps = 0;
+   VisitedBlocks.insert(Block);
+   std::pair<const BasicBlock *, const BasicBlock *> Pair(Pred, Block);
+-  for (;; Pair = SE.getPredecessorWithUniqueSuccessorForBB(Pair.first)) {
++  // getPredecessorWithUniqueSuccessorForBB skips from a merge block inside a
++  // loop to the loop header. Continue at the merge block's immediate dominator
++  // instead, to also collect the conditions dominating the merge block.
++  auto GetNextPair = [&](const BasicBlock *BB) {
++    while (Depth == 0 && SE.LI.getLoopFor(BB) && !SE.LI.isLoopHeader(BB) &&
++           !BB->getSinglePredecessor())
++      BB = SE.DT.getNode(BB)->getIDom()->getBlock();
++    return SE.getPredecessorWithUniqueSuccessorForBB(BB);
++  };
++  for (;; Pair = GetNextPair(Pair.first)) {
+     if (!Pair.first) {
+       // At the first block without a unique predecessor, try to build
+       // conditions for its phis by merging those of their incoming blocks.
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll b/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll
+index 0d1313d3932ee..b2488ac958fee 100644
+--- a/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll
++++ b/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll
+@@ -281,3 +281,291 @@ loop:
+ exit:
+   ret void
+ }
++
++define void @guard_before_merge_in_outer_loop(ptr %p, i32 %k, i1 %c) {
++; CHECK-LABEL: 'guard_before_merge_in_outer_loop'
++; CHECK-NEXT:  Determining loop execution counts for: @guard_before_merge_in_outer_loop
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer.header: backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %outer.header: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %outer.header: symbolic max backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %outer.header: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  br label %outer.header
++
++outer.header:
++  %j = phi i32 [ 0, %entry ], [ %j.next, %outer.latch ]
++  %guard = icmp ugt i32 %n, 1
++  br i1 %guard, label %split, label %outer.latch
++
++split:
++  br i1 %c, label %then, label %else
++
++then:
++  br label %ph
++
++else:
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %iv.next, %loop ]
++  store i32 %i, ptr %p, align 4
++  %iv.next = add nuw i32 %i, 1
++  %ec = icmp ult i32 %iv.next, %m
++  br i1 %ec, label %loop, label %outer.latch
++
++outer.latch:
++  %j.next = add i32 %j, 1
++  %ec.outer = icmp eq i32 %j.next, %k
++  br i1 %ec.outer, label %exit, label %outer.header
++
++exit:
++  ret void
++}
++
++define void @phi_guard_after_merge_in_outer_loop(ptr %p, i32 %a, i32 %b, i32 %k, i1 %c, i1 %c2) {
++; CHECK-LABEL: 'phi_guard_after_merge_in_outer_loop'
++; CHECK-NEXT:  Determining loop execution counts for: @phi_guard_after_merge_in_outer_loop
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer.header: backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %outer.header: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %outer.header: symbolic max backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %outer.header: Trip multiple is 1
++;
++entry:
++  br i1 %c, label %then.a, label %then.b
++
++then.a:
++  %ga = icmp ugt i32 %a, 1
++  br i1 %ga, label %outer.ph, label %exit
++
++then.b:
++  %gb = icmp ugt i32 %b, 1
++  br i1 %gb, label %outer.ph, label %exit
++
++outer.ph:
++  %n = phi i32 [ %a, %then.a ], [ %b, %then.b ]
++  br label %outer.header
++
++outer.header:
++  %j = phi i32 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  br i1 %c2, label %then, label %else
++
++then:
++  br label %ph
++
++else:
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %iv.next, %loop ]
++  store i32 %i, ptr %p, align 4
++  %iv.next = add nuw i32 %i, 1
++  %ec = icmp ult i32 %iv.next, %m
++  br i1 %ec, label %loop, label %outer.latch
++
++outer.latch:
++  %j.next = add i32 %j, 1
++  %ec.outer = icmp eq i32 %j.next, %k
++  br i1 %ec.outer, label %exit, label %outer.header
++
++exit:
++  ret void
++}
++
++define void @guard_above_outer_loop_many_merges_in_outer_loop(ptr %p, i32 %k, i1 %c) {
++; CHECK-LABEL: 'guard_above_outer_loop_many_merges_in_outer_loop'
++; CHECK-NEXT:  Determining loop execution counts for: @guard_above_outer_loop_many_merges_in_outer_loop
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer.header: backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %outer.header: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %outer.header: symbolic max backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %outer.header: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  %guard = icmp ugt i32 %n, 1
++  br i1 %guard, label %split, label %exit
++
++split:
++  br i1 %c, label %split.then, label %split.else
++
++split.then:
++  br label %outer.ph
++
++split.else:
++  br label %outer.ph
++
++outer.ph:
++  br label %outer.header
++
++outer.header:
++  %j = phi i32 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  br i1 %c, label %t1, label %f1
++
++t1:
++  br label %m1
++
++f1:
++  br label %m1
++
++m1:
++  br i1 %c, label %t2, label %f2
++
++t2:
++  br label %m2
++
++f2:
++  br label %m2
++
++m2:
++  br i1 %c, label %t3, label %f3
++
++t3:
++  br label %m3
++
++f3:
++  br label %m3
++
++m3:
++  br i1 %c, label %t4, label %f4
++
++t4:
++  br label %m4
++
++f4:
++  br label %m4
++
++m4:
++  br i1 %c, label %t5, label %f5
++
++t5:
++  br label %m5
++
++f5:
++  br label %m5
++
++m5:
++  br i1 %c, label %t6, label %f6
++
++t6:
++  br label %m6
++
++f6:
++  br label %m6
++
++m6:
++  br i1 %c, label %t7, label %f7
++
++t7:
++  br label %m7
++
++f7:
++  br label %m7
++
++m7:
++  br i1 %c, label %t8, label %f8
++
++t8:
++  br label %m8
++
++f8:
++  br label %m8
++
++m8:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %m8 ], [ %iv.next, %loop ]
++  store i32 %i, ptr %p, align 4
++  %iv.next = add nuw i32 %i, 1
++  %ec = icmp ult i32 %iv.next, %m
++  br i1 %ec, label %loop, label %outer.latch
++
++outer.latch:
++  %j.next = add i32 %j, 1
++  %ec.outer = icmp eq i32 %j.next, %k
++  br i1 %ec.outer, label %exit, label %outer.header
++
++exit:
++  ret void
++}
++
++define void @phi_incoming_from_merge_in_other_loop(ptr %p, i32 %a, i32 %b, i1 %c, i1 %d, i1 %e, i1 %x) {
++; CHECK-LABEL: 'phi_incoming_from_merge_in_other_loop'
++; CHECK-NEXT:  Determining loop execution counts for: @phi_incoming_from_merge_in_other_loop
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %l0.header: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %l0.header: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %l0.header: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  br i1 %c, label %l0.ph, label %then.b
++
++then.b:
++  %gb = icmp ugt i32 %b, 1
++  br i1 %gb, label %merge, label %exit
++
++l0.ph:
++  %ga = icmp ugt i32 %a, 1
++  br i1 %ga, label %l0.header, label %exit
++
++l0.header:
++  br i1 %d, label %l0.split, label %l0.latch
++
++l0.split:
++  br i1 %e, label %l0.then, label %l0.else
++
++l0.then:
++  br label %l0.exiting
++
++l0.else:
++  br label %l0.exiting
++
++l0.exiting:
++  br i1 %x, label %merge, label %l0.latch
++
++l0.latch:
++  br label %l0.header
++
++merge:
++  %n = phi i32 [ %a, %l0.exiting ], [ %b, %then.b ]
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %iv.next, %loop ]
++  store i32 %i, ptr %p, align 4
++  %iv.next = add nuw i32 %i, 1
++  %ec = icmp ult i32 %iv.next, %m
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}

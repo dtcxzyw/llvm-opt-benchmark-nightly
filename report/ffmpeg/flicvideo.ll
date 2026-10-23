@@ -204,7 +204,7 @@ bytestream2_get_byte.exit238.i:                   ; preds = %bb.x
 
 .preheader382.i:                                  ; preds = %bytestream2_get_byte.exit238.i, %.thread360.i
   %.0165412.i = phi i32 [ %i.hf, %.thread360.i ], [ 0, %bytestream2_get_byte.exit238.i ]
-  %.5177411.i = phi i64 [ %.9181.i, %.thread360.i ], [ %.1158416.i, %bytestream2_get_byte.exit238.i ]
+  %.5177411.i = phi i64 [ %.9181.i, %.thread360.i ], [ %.1158416.i, %bytestream2_get_byte.exit238.i ] ; 2 uses
   %.sroa.0.7410.i = phi ptr [ %.sroa.0.9.i, %.thread360.i ], [ %i.ew, %bytestream2_get_byte.exit238.i ] ; 4 uses
   %i.ez = ptrtoint ptr %.sroa.0.7410.i to i64     ; 2 uses
   %i.fa = sub i64 %i.ez, %i.ac
@@ -227,7 +227,7 @@ bb.z:                                             ; preds = %bb.y
 bytestream2_get_byte.exit236.i:                   ; preds = %bb.z, %bb.y
   %.pre-phi479.i = phi i64 [ %i.ab, %bb.y ], [ %.pre478.i, %bb.z ]
   %.sroa.0.23.i = phi ptr [ %i.l, %bb.y ], [ %i.fe, %bb.z ] ; 3 uses
-  %.0.i235.i = phi i64 [ 0, %bb.y ], [ %i.fg, %bb.z ]
+  %.0.i235.i = phi i64 [ 0, %bb.y ], [ %i.fg, %bb.z ] ; 2 uses
   %i.fh = add i64 %.0.i235.i, %.5177411.i         ; 7 uses
   %i.fi = sub i64 %i.ab, %.pre-phi479.i
   %i.fj = icmp slt i64 %i.fi, 1
@@ -236,7 +236,7 @@ bytestream2_get_byte.exit236.i:                   ; preds = %bb.z, %bb.y
 bytestream2_get_byte.exit234.i:                   ; preds = %bytestream2_get_byte.exit236.i
   %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.0.23.i, i64 1 ; 7 uses
   %i.fl = load i8, ptr %.sroa.0.23.i, align 1, !tbaa !34 ; 6 uses
-  %i.fm = sext i8 %i.fl to i32                    ; 4 uses
+  %i.fm = sext i8 %i.fl to i32                    ; 5 uses
   %i.fn = icmp sgt i8 %i.fl, 0
   br i1 %i.fn, label %bb.aa, label %bb.ae
 
@@ -328,8 +328,8 @@ bytestream2_get_byte.exit.i:                      ; preds = %bb.ag, %bb.af
   %.sroa.0.20.i = phi ptr [ %i.gq, %bb.ag ], [ %i.l, %bb.af ]
   %.0.i230.i = phi i8 [ %i.gr, %bb.ag ], [ 0, %bb.af ]
   %i.gs = sub nsw i32 0, %i.fm
-  %i.gt = zext nneg i32 %i.gs to i64              ; 2 uses
-  %i.gu = add i64 %i.fh, %i.gt                    ; 3 uses
+  %i.gt = zext nneg i32 %i.gs to i64
+  %i.gu = add nsw i64 %i.fh, %i.gt                ; 2 uses
   br i1 %i.t, label %.critedge.i260.i, label %bb.ah
 
 bb.ah:                                            ; preds = %bytestream2_get_byte.exit.i
@@ -342,7 +342,13 @@ bb.ah:                                            ; preds = %bytestream2_get_byt
 
 .lr.ph.preheader.i:                               ; preds = %.critedge.i260.i, %bb.ah
   %scevgep.i = getelementptr i8, ptr %i.u, i64 %i.fh
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 %.0.i230.i, i64 %i.gt, i1 false), !tbaa !34
+  %4 = xor i32 %i.fm, -1
+  %5 = zext nneg i32 %4 to i64                    ; 2 uses
+  %6 = add nuw nsw i64 %5, 1
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i, i8 %.0.i230.i, i64 %6, i1 false), !tbaa !34
+  %7 = add i64 %.5177411.i, 1
+  %8 = add i64 %7, %.0.i235.i
+  %9 = add i64 %8, %5
   br label %.thread360.i
 
 .thread360.i.loopexit.unr-lcssa:                  ; preds = %bytestream2_get_byte.exit232.i.1
@@ -375,7 +381,7 @@ bytestream2_get_byte.exit232.i.epil:              ; preds = %bb.ai, %.lr.ph406.i
 
 .thread360.i:                                     ; preds = %bytestream2_get_byte.exit232.i.epil, %.thread360.i.loopexit.unr-lcssa, %.lr.ph.preheader.i, %bb.ae, %bytestream2_get_byte.exit236.i
   %.sroa.0.9.i = phi ptr [ %.sroa.0.20.i, %.lr.ph.preheader.i ], [ %i.l, %bytestream2_get_byte.exit236.i ], [ %i.fk, %bb.ae ], [ %.sroa.0.21.i.1, %.thread360.i.loopexit.unr-lcssa ], [ %.sroa.0.21.i.epil, %bytestream2_get_byte.exit232.i.epil ] ; 2 uses
-  %.9181.i = phi i64 [ %i.gu, %.lr.ph.preheader.i ], [ %i.fh, %bytestream2_get_byte.exit236.i ], [ %i.fh, %bb.ae ], [ %i.gj, %.thread360.i.loopexit.unr-lcssa ], [ %i.hd, %bytestream2_get_byte.exit232.i.epil ]
+  %.9181.i = phi i64 [ %9, %.lr.ph.preheader.i ], [ %i.fh, %bytestream2_get_byte.exit236.i ], [ %i.fh, %bb.ae ], [ %i.gj, %.thread360.i.loopexit.unr-lcssa ], [ %i.hd, %bytestream2_get_byte.exit232.i.epil ]
   %i.hf = add nuw nsw i32 %.0165412.i, 1          ; 2 uses
   %exitcond472.not.i = icmp eq i32 %i.hf, %i.ey
   br i1 %exitcond472.not.i, label %bytestream2_get_byte.exit238.thread.loopexit.i, label %.preheader382.i, !llvm.loop !48
@@ -778,7 +784,7 @@ bytestream2_get_byte.exit410.i:                   ; preds = %bb.cg
 
 .preheader660.i:                                  ; preds = %bytestream2_get_byte.exit410.i, %.thread.i45
   %.2309748.i = phi i32 [ %i.ww, %.thread.i45 ], [ 0, %bytestream2_get_byte.exit410.i ]
-  %.4322747.i = phi i64 [ %.7325.i, %.thread.i45 ], [ %.2292752.i, %bytestream2_get_byte.exit410.i ]
+  %.4322747.i = phi i64 [ %.7325.i, %.thread.i45 ], [ %.2292752.i, %bytestream2_get_byte.exit410.i ] ; 2 uses
   %.sroa.0.10746.i = phi ptr [ %.sroa.0.12.i, %.thread.i45 ], [ %i.un, %bytestream2_get_byte.exit410.i ] ; 4 uses
   %i.uq = ptrtoint ptr %.sroa.0.10746.i to i64    ; 2 uses
   %i.ur = sub i64 %i.uq, %i.jc
@@ -801,7 +807,7 @@ bb.ci:                                            ; preds = %bb.ch
 bytestream2_get_byte.exit408.i:                   ; preds = %bb.ci, %bb.ch
   %.pre-phi850.i = phi i64 [ %i.jb, %bb.ch ], [ %.pre849.i, %bb.ci ]
   %.sroa.0.39.i = phi ptr [ %i.il, %bb.ch ], [ %i.uv, %bb.ci ] ; 3 uses
-  %.0.i407.i = phi i64 [ 0, %bb.ch ], [ %i.ux, %bb.ci ]
+  %.0.i407.i = phi i64 [ 0, %bb.ch ], [ %i.ux, %bb.ci ] ; 2 uses
   %i.uy = add i64 %.0.i407.i, %.4322747.i         ; 7 uses
   %i.uz = sub i64 %i.jb, %.pre-phi850.i
   %i.va = icmp slt i64 %i.uz, 1
@@ -810,7 +816,7 @@ bytestream2_get_byte.exit408.i:                   ; preds = %bb.ci, %bb.ch
 bytestream2_get_byte.exit406.i:                   ; preds = %bytestream2_get_byte.exit408.i
   %i.vb = getelementptr inbounds nuw i8, ptr %.sroa.0.39.i, i64 1 ; 7 uses
   %i.vc = load i8, ptr %.sroa.0.39.i, align 1, !tbaa !34 ; 6 uses
-  %i.vd = sext i8 %i.vc to i32                    ; 4 uses
+  %i.vd = sext i8 %i.vc to i32                    ; 5 uses
   %i.ve = icmp sgt i8 %i.vc, 0
   br i1 %i.ve, label %bb.cj, label %bb.cn
 
@@ -902,8 +908,8 @@ bb.cp:                                            ; preds = %bb.co
 bytestream2_get_byte.exit402.i:                   ; preds = %bb.cp, %bb.co
   %.sroa.0.36.i = phi ptr [ %i.wi, %bb.cp ], [ %i.il, %bb.co ]
   %.0.i401.i = phi i8 [ %i.wj, %bb.cp ], [ 0, %bb.co ]
-  %i.wk = zext nneg i32 %i.we to i64              ; 2 uses
-  %i.wl = add i64 %i.uy, %i.wk                    ; 3 uses
+  %i.wk = zext nneg i32 %i.we to i64
+  %i.wl = add nsw i64 %i.uy, %i.wk                ; 2 uses
   br i1 %i.it, label %.critedge.i458.i, label %bb.cq
 
 bb.cq:                                            ; preds = %bytestream2_get_byte.exit402.i
@@ -916,7 +922,13 @@ bb.cq:                                            ; preds = %bytestream2_get_byt
 
 .lr.ph735.preheader.i:                            ; preds = %.critedge.i458.i, %bb.cq
   %scevgep.i46 = getelementptr i8, ptr %i.iu, i64 %i.uy
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i46, i8 %.0.i401.i, i64 %i.wk, i1 false), !tbaa !34
+  %10 = xor i32 %i.vd, -1
+  %11 = zext nneg i32 %10 to i64                  ; 2 uses
+  %12 = add nuw nsw i64 %11, 1
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i46, i8 %.0.i401.i, i64 %12, i1 false), !tbaa !34
+  %13 = add i64 %.4322747.i, 1
+  %14 = add i64 %13, %.0.i407.i
+  %15 = add i64 %14, %11
   br label %.thread.i45
 
 .thread.i45.loopexit.unr-lcssa:                   ; preds = %bytestream2_get_byte.exit404.i.1
@@ -949,7 +961,7 @@ bytestream2_get_byte.exit404.i.epil:              ; preds = %bb.cr, %.lr.ph742.i
 
 .thread.i45:                                      ; preds = %bytestream2_get_byte.exit404.i.epil, %.thread.i45.loopexit.unr-lcssa, %.lr.ph735.preheader.i, %bb.cn, %bytestream2_get_byte.exit408.i
   %.sroa.0.12.i = phi ptr [ %i.il, %bytestream2_get_byte.exit408.i ], [ %.sroa.0.36.i, %.lr.ph735.preheader.i ], [ %i.vb, %bb.cn ], [ %.sroa.0.37.i.1, %.thread.i45.loopexit.unr-lcssa ], [ %.sroa.0.37.i.epil, %bytestream2_get_byte.exit404.i.epil ] ; 2 uses
-  %.7325.i = phi i64 [ %i.uy, %bytestream2_get_byte.exit408.i ], [ %i.wl, %.lr.ph735.preheader.i ], [ %i.uy, %bb.cn ], [ %i.wa, %.thread.i45.loopexit.unr-lcssa ], [ %i.wu, %bytestream2_get_byte.exit404.i.epil ]
+  %.7325.i = phi i64 [ %i.uy, %bytestream2_get_byte.exit408.i ], [ %15, %.lr.ph735.preheader.i ], [ %i.uy, %bb.cn ], [ %i.wa, %.thread.i45.loopexit.unr-lcssa ], [ %i.wu, %bytestream2_get_byte.exit404.i.epil ]
   %i.ww = add nuw nsw i32 %.2309748.i, 1          ; 2 uses
   %exitcond838.not.i = icmp eq i32 %i.ww, %i.up
   br i1 %exitcond838.not.i, label %bytestream2_get_byte.exit410.thread.loopexit.i, label %.preheader660.i, !llvm.loop !59

@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 31 uses
   %i.c = alloca [8 x i8], align 8                 ; 5 uses
   %i.d = alloca [8 x i8], align 8                 ; 5 uses
-  %i.e = alloca [48 x i8], align 16               ; 18 uses
+  %i.e = alloca [48 x i8], align 8                ; 21 uses
   %i.f = alloca [8 x i8], align 8                 ; 5 uses
   %i.g = alloca [8 x i8], align 8                 ; 5 uses
   %i.h = alloca [48 x i8], align 8                ; 5 uses
@@ -411,7 +411,10 @@ _RNvNtNtNtNtCs5yxAJGbRKSL_4ring2ec7suite_b5ecdsa13digest_scalar13digest_scalar.e
   %i.cn = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.co = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %i.cp = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.cq = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %i.cr = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.cs = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.ct = getelementptr inbounds nuw i8, ptr %i.z, i64 16
@@ -483,7 +486,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !2671
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.e, i8 0, i64 48, i1 false), !noalias !2671
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.e, i8 0, i64 48, i1 false), !noalias !2671
   call void @llvm.experimental.noalias.scope.decl(metadata !2672), !noalias !2673
   %i.eh = icmp samesign ugt i64 %i.dd, %..i.i.i.i.i
   br i1 %i.eh, label %_RNvNtNtNtCs5yxAJGbRKSL_4ring2ec7suite_b11private_key28scalar_from_big_endian_bytes.exit.sink.split.i.i.i, label %.lr.ph.i.i.i, !prof !16
@@ -496,7 +499,7 @@ bb.n:                                             ; preds = %bb.m
   store i64 %i.ej, ptr %i.b, align 8, !alias.scope !2675, !noalias !2676
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2674
   %i.ek = call i64 @llvm.bswap.i64(i64 %i.ej)
-  store i64 %i.ek, ptr %i.e, align 16, !alias.scope !2677, !noalias !2678
+  store i64 %i.ek, ptr %i.e, align 8, !alias.scope !2677, !noalias !2678
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2674
   store i64 0, ptr %i.b, align 8, !noalias !2674
   %i.el = load i64, ptr %i.dh, align 1, !alias.scope !2675, !noalias !2676 ; 2 uses
@@ -528,7 +531,7 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uni
   %.sroa.0.0.copyload.pre.i.i.i.i.i.2 = load i64, ptr %i.b, align 8, !noalias !2674
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2674
   %i.ep = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i.i.i.2)
-  store i64 %i.ep, ptr %i.cl, align 16, !alias.scope !2677, !noalias !2678
+  store i64 %i.ep, ptr %i.cl, align 8, !alias.scope !2677, !noalias !2678
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2674
   store i64 0, ptr %i.b, align 8, !noalias !2674
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dr, ptr nonnull readonly align 1 %i.dp, i64 range(i64 0, -9223372036854775808) %i.do, i1 false), !alias.scope !2675, !noalias !2676
@@ -551,7 +554,7 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uni
 
 .lr.ph.i.i.i.i.i.i.i.i.4:                         ; preds = %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4
   %i.er = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i.i.i.4)
-  store i64 %i.er, ptr %i.cn, align 16, !alias.scope !2677, !noalias !2678
+  store i64 %i.er, ptr %i.cn, align 8, !alias.scope !2677, !noalias !2678
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2674
   store i64 0, ptr %i.b, align 8, !noalias !2674
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.eb, ptr nonnull readonly align 1 %i.dz, i64 range(i64 0, -9223372036854775808) %i.dy, i1 false), !alias.scope !2675, !noalias !2676
@@ -606,14 +609,19 @@ _RNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded.exit.i: ; preds = %_R
   br i1 %.not.i.i.i.i.i.i.i, label %_RNvNtNtNtCs5yxAJGbRKSL_4ring2ec7suite_b11private_key28scalar_from_big_endian_bytes.exit.sink.split.i.i.i, label %vector.body75.1
 
 vector.body75.1:                                  ; preds = %_RNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded.exit.i
-  %wide.load78 = load <2 x i64>, ptr %i.e, align 16, !alias.scope !2672, !noalias !2671
-  %wide.load78.1 = load <2 x i64>, ptr %i.cp, align 16, !alias.scope !2672, !noalias !2671
-  %6 = or <2 x i64> %wide.load78.1, %wide.load78  ; 2 uses
-  %wide.load78.2 = load <2 x i64>, ptr %i.cq, align 16
-  %7 = or <2 x i64> %wide.load78.2, %6
-  %.lcssa86 = select i1 %i.ef, <2 x i64> %7, <2 x i64> %6
-  %8 = call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %.lcssa86)
-  %i.fa = call noundef i64 @ring_core_0_17_16000__LIMB_is_zero(i64 noundef %8) #36, !noalias !2683
+  %.val.i.i.i.i.i.i.i.2 = load i64, ptr %i.cp, align 8, !alias.scope !2672, !noalias !2671, !noundef !15
+  %.val.i.i.i.i.i.i.i.1 = load i64, ptr %6, align 8, !alias.scope !2672, !noalias !2671, !noundef !15
+  %.val.i.i.i.i.i.i.i = load i64, ptr %i.e, align 8, !alias.scope !2672, !noalias !2671, !noundef !15
+  %9 = or i64 %.val.i.i.i.i.i.i.i.1, %.val.i.i.i.i.i.i.i
+  %10 = or i64 %.val.i.i.i.i.i.i.i.2, %9
+  %.val.i.i.i.i.i.i.i.3 = load i64, ptr %7, align 8, !alias.scope !2672, !noalias !2671, !noundef !15
+  %11 = or i64 %.val.i.i.i.i.i.i.i.3, %10         ; 2 uses
+  %.val.i.i.i.i.i.i.i.4 = load i64, ptr %i.cq, align 8
+  %.val.i.i.i.i.i.i.i.5 = load i64, ptr %8, align 8
+  %12 = or i64 %.val.i.i.i.i.i.i.i.4, %.val.i.i.i.i.i.i.i.5
+  %13 = or i64 %12, %11
+  %.lcssa79 = select i1 %i.ef, i64 %13, i64 %11
+  %i.fa = call noundef i64 @ring_core_0_17_16000__LIMB_is_zero(i64 noundef %.lcssa79) #36, !noalias !2683
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2685
   store i64 %i.fa, ptr %i.d, align 8, !noalias !2685
   call void asm sideeffect "", "r,~{memory}"(ptr nonnull %i.d) #36, !noalias !2683, !srcloc !37

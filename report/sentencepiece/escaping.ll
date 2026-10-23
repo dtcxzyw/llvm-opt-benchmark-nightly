@@ -186,11 +186,15 @@ bb.b:                                             ; preds = %.lr.ph
 .critedge:                                        ; preds = %.lr.ph, %bb.a
   %.1210 = phi i64 [ 0, %bb.a ], [ %.0192709, %.lr.ph ] ; 4 uses
   %.not728 = icmp ult i64 %.1210, %0
-  br i1 %.not728, label %.lr.ph725, label %._crit_edge
+  br i1 %.not728, label %.lr.ph725.preheader, label %._crit_edge
 
-.lr.ph725:                                        ; preds = %.critedge, %bb.ef
-  %.2194724 = phi i64 [ %.13, %bb.ef ], [ %.1210, %.critedge ] ; 23 uses
-  %.2211723 = phi i64 [ %.12221, %bb.ef ], [ %.1210, %.critedge ] ; 34 uses
+.lr.ph725.preheader:                              ; preds = %.critedge
+  %21 = add i64 %0, -1                            ; 4 uses
+  br label %.lr.ph725
+
+.lr.ph725:                                        ; preds = %.lr.ph725.preheader, %bb.ef
+  %.2194724 = phi i64 [ %.13, %bb.ef ], [ %.1210, %.lr.ph725.preheader ] ; 23 uses
+  %.2211723 = phi i64 [ %.12221, %bb.ef ], [ %.1210, %.lr.ph725.preheader ] ; 34 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %.2194724
   %i.l = load i8, ptr %i.k, align 1, !tbaa !17    ; 2 uses
   %.not277 = icmp eq i8 %i.l, 92
@@ -203,7 +207,7 @@ bb.c:                                             ; preds = %.lr.ph725
   br label %bb.ef
 
 bb.d:                                             ; preds = %.lr.ph725
-  %i.o = add nuw i64 %.2194724, 1                 ; 25 uses
+  %i.o = add nuw i64 %.2194724, 1                 ; 26 uses
   %.not278 = icmp ult i64 %i.o, %0
   br i1 %.not278, label %bb.g, label %bb.e
 
@@ -606,7 +610,7 @@ bb.ar:                                            ; preds = %bb.w, %bb.v
   br label %bb.ef
 
 bb.as:                                            ; preds = %bb.g, %bb.g
-  %i.ew = add nuw i64 %.2194724, 2                ; 3 uses
+  %i.ew = add nuw i64 %.2194724, 2                ; 2 uses
   %.not293 = icmp ult i64 %i.ew, %0
   br i1 %.not293, label %bb.av, label %bb.at
 
@@ -625,14 +629,15 @@ bb.av:                                            ; preds = %bb.as
   %i.fb = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052614ascii_internal13kPropertyBitsE, i64 %i.fa
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !17
   %i.fd = icmp slt i8 %i.fc, 0
-  br i1 %i.fd, label %.preheader.preheader.a, label %bb.aw
+  br i1 %i.fd, label %.preheader.preheader, label %bb.aw
 
-.preheader.preheader.a:                           ; preds = %bb.av
-  %umax = tail call i64 @llvm.umax.i64(i64 %0, i64 %i.ew)
-  %21 = add i64 %umax, -1                         ; 2 uses
-  %i.fe = add nuw i64 %.2194724, 2                ; 2 uses
-  %22 = icmp ult i64 %i.fe, %0
-  br i1 %22, label %.lr.ph43, label %.preheader._crit_edge
+.preheader.preheader:                             ; preds = %bb.av
+  %exitcond778.not41 = icmp eq i64 %i.o, %21
+  br i1 %exitcond778.not41, label %.preheader._crit_edge, label %.preheader.preheader.a
+
+.preheader.preheader.a:                           ; preds = %.preheader.preheader
+  %i.fe = add nuw i64 %.2194724, 2
+  br label %.lr.ph43
 
 bb.aw:                                            ; preds = %bb.av
   %.not294 = icmp eq ptr %4, null
@@ -650,14 +655,14 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fj = and i32 %spec.select.i, 15
   %i.fk = shl nuw nsw i32 %.023341, 4
   %i.fl = or disjoint i32 %i.fj, %i.fk            ; 2 uses
-  %i.fm = add nuw i64 %i.fn, 1                    ; 2 uses
-  %23 = icmp ult i64 %i.fm, %0
-  br i1 %23, label %.lr.ph43, label %.preheader._crit_edge.loopexit, !llvm.loop !27
+  %i.fm = add nuw i64 %i.fn, 1
+  %exitcond778.not = icmp eq i64 %i.fn, %21
+  br i1 %exitcond778.not, label %.preheader._crit_edge.loopexit, label %.lr.ph43, !llvm.loop !27
 
 .lr.ph43:                                         ; preds = %.preheader.preheader.a, %.preheader
-  %i.fn = phi i64 [ %i.fm, %.preheader ], [ %i.fe, %.preheader.preheader.a ] ; 3 uses
-  %.519742 = phi i64 [ %i.fn, %.preheader ], [ %i.o, %.preheader.preheader.a ] ; 2 uses
-  %.023341 = phi i32 [ %i.fl, %.preheader ], [ 0, %.preheader.preheader.a ] ; 3 uses
+  %i.fn = phi i64 [ %i.fe, %.preheader.preheader.a ], [ %i.fm, %.preheader ] ; 4 uses
+  %.519742 = phi i64 [ %i.o, %.preheader.preheader.a ], [ %i.fn, %.preheader ] ; 2 uses
+  %.023341 = phi i32 [ 0, %.preheader.preheader.a ], [ %i.fl, %.preheader ] ; 3 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %1, i64 %i.fn
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !17  ; 3 uses
   %i.fq = zext i8 %i.fp to i64
@@ -970,9 +975,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit380: ; preds = %_Z
   %i.iy = trunc nuw i32 %.0233.lcssa.ph to i8
   br label %.preheader._crit_edge
 
-.preheader._crit_edge:                            ; preds = %.preheader._crit_edge.loopexit, %.preheader.preheader.a
-  %.0233.lcssa = phi i8 [ 0, %.preheader.preheader.a ], [ %i.iy, %.preheader._crit_edge.loopexit ]
-  %.5197.lcssa = phi i64 [ %21, %.preheader.preheader.a ], [ %.5197.lcssa.ph, %.preheader._crit_edge.loopexit ]
+.preheader._crit_edge:                            ; preds = %.preheader._crit_edge.loopexit, %.preheader.preheader
+  %.0233.lcssa = phi i8 [ 0, %.preheader.preheader ], [ %i.iy, %.preheader._crit_edge.loopexit ]
+  %.5197.lcssa = phi i64 [ %21, %.preheader.preheader ], [ %.5197.lcssa.ph, %.preheader._crit_edge.loopexit ]
   %i.iz = add i64 %.2211723, 1
   %i.ja = getelementptr inbounds nuw i8, ptr %2, i64 %.2211723
   store i8 %.0233.lcssa, ptr %i.ja, align 1, !tbaa !17
@@ -1374,9 +1379,6 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
