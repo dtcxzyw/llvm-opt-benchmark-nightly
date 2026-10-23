@@ -202,8 +202,8 @@ bb.ax:                                            ; preds = %bb.ax, %fill_table.
 bb.ay:                                            ; preds = %bb.e, %bb.e
   %i.xj = load i32, ptr %i.a, align 4, !tbaa !32
   %i.xk = and i32 %i.xj, -3
-  %i.xl = icmp eq i32 %i.xk, 25
-  %i.xm = select i1 %i.xl, i32 8, i32 0           ; 3 uses
+  %i.xl = icmp eq i32 %i.xk, 25                   ; 2 uses
+  %i.xm = select i1 %i.xl, i32 8, i32 0           ; 2 uses
   %i.xn = insertelement <2 x i1> poison, i1 %i.c, i64 0
   %i.xo = shufflevector <2 x i1> %i.xn, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.xp = select <2 x i1> %i.xo, <2 x i32> <i32 16, i32 0>, <2 x i32> <i32 0, i32 16>
@@ -241,10 +241,8 @@ isALPHA.exit:                                     ; preds = %bb.ba, %bb.bb
   br i1 %.not437, label %fill_gv_table.exit, label %vector.ph
 
 vector.ph:                                        ; preds = %isALPHA.exit
-  %6 = add nuw nsw i32 %i.xm, 24
-  %7 = and i32 %6, 24
-  %8 = shl nuw i32 255, %7
-  %i.yd = select i1 %.0.i, i32 %8, i32 0
+  %.finite = select i1 %i.xl, i32 255, i32 -16777216
+  %i.yd = select i1 %.0.i, i32 %.finite, i32 0
   %.neg712 = mul nsw i64 %i.bk, -512
   %reass.sub = sub nsw i64 %.neg712, %i.ah
   %i.ye = add nsw i64 %reass.sub, -25165824

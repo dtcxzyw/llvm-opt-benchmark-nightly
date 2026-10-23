@@ -204,19 +204,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.loopexit
   %i.br = and i64 %i.bm, 4294967288
-  %.not.not = icmp eq i64 %i.br, 0                ; 3 uses
-  %. = select i1 %.not.not, i64 36, i64 70        ; 2 uses
-  %2 = mul nuw nsw i64 %., 220000
-  %3 = add nuw nsw i64 %2, 20000000000
-  %4 = mul nuw nsw i64 %., 16896000               ; 2 uses
-  %5 = udiv i64 %3, %4
-  %.lhs.trunc = trunc nuw nsw i64 %4 to i32
-  %6 = udiv i32 %.lhs.trunc, 1000                 ; 2 uses
-  %.lhs.trunc200 = add nuw nsw i32 %6, 80000000
-  %7 = udiv i32 %.lhs.trunc200, %6
-  %.zext201 = zext nneg i32 %7 to i64
-  %.v = select i1 %.not.not, i64 %5, i64 %.zext201
-  %8 = lshr i64 %.v, 1                            ; 2 uses
+  %.not.not = icmp eq i64 %i.br, 0                ; 2 uses
+  %2 = icmp eq i1 %.not.not, false
+  %.v = select i1 %2, i64 34, i64 16              ; 2 uses
   br i1 %.not.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -239,7 +229,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.cb = shl nuw nsw i32 %i.bf, 6                ; 2 uses
   %i.cc = add nuw nsw i32 %.161, %i.cb            ; 3 uses
   %i.cd = select i1 %i.bz, i64 33792, i64 29440
-  %i.ce = add nuw nsw i64 %i.cd, %8               ; 2 uses
+  %i.ce = add nuw nsw i64 %i.cd, %.v              ; 2 uses
   %i.cf = add nuw nsw i64 %i.ce, %i.bx
   %i.cg = add nuw nsw i64 %i.cf, %i.by            ; 2 uses
   %i.ch = select i1 %i.bz, i32 4, i32 3           ; 2 uses
@@ -378,7 +368,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.fm = trunc nuw i64 %i.fl to i8
   %i.fn = getelementptr i8, ptr %0, i64 44
   store i8 %i.fm, ptr %i.fn, align 4
-  %i.fo = trunc nuw nsw i64 %8 to i8
+  %i.fo = trunc nuw nsw i64 %.v to i8
   %i.fp = getelementptr i8, ptr %0, i64 45
   store i8 %i.fo, ptr %i.fp, align 1
   %i.fq = getelementptr i8, ptr %0, i64 46

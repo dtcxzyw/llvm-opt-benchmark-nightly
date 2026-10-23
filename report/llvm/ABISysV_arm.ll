@@ -202,7 +202,7 @@ bb.bu:                                            ; preds = %bb.bl
   br i1 %i.hn, label %bb.bv, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread383
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.ho = call noundef i32 @_ZNK12lldb_private12CompilerType12GetNumFieldsEv(ptr noundef nonnull align 8 dereferenceable(24) %3) #20 ; 3 uses
+  %i.ho = call noundef i32 @_ZNK12lldb_private12CompilerType12GetNumFieldsEv(ptr noundef nonnull align 8 dereferenceable(24) %3) #20 ; 2 uses
   %i.hp = add i32 %i.ho, -1
   %or.cond6 = icmp ult i32 %i.hp, 2
   br i1 %or.cond6, label %.lr.ph, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread383
@@ -416,14 +416,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.thre
   br i1 %i.jx, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread389, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread383
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread389: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.tr391 = trunc nuw nsw i32 %i.ho to i8
-  %46 = shl nuw nsw i8 %.tr391, 1
   %.7392 = lshr i8 %.5166.peel, 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread383
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread383: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.bt, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread389, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread, %bb.bp, %bb.bq, %bb.bo, %bb.bs, %bb.br, %bb.bv, %bb.bu
   %.9 = phi i8 [ 0, %bb.bv ], [ 0, %bb.bu ], [ %.7392, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread389 ], [ 8, %bb.bq ], [ 0, %bb.bp ], [ 0, %bb.bo ], [ 0, %bb.bs ], [ %spec.select, %bb.bt ], [ 0, %bb.br ], [ %.5166.peel, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel ], [ %.7377, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread ], [ %.5166.peel, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
-  %.3158 = phi i8 [ 0, %bb.bv ], [ 0, %bb.bu ], [ %46, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread389 ], [ %i.hh, %bb.bq ], [ 0, %bb.bp ], [ 0, %bb.bo ], [ 0, %bb.bs ], [ %i.hm, %bb.bt ], [ 0, %bb.br ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel ], [ 2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
+  %.3158 = phi i8 [ 0, %bb.bv ], [ 0, %bb.bu ], [ 4, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread389 ], [ %i.hh, %bb.bq ], [ 0, %bb.bp ], [ 0, %bb.bo ], [ 0, %bb.bs ], [ %i.hm, %bb.bt ], [ 0, %bb.br ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel ], [ 2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
   %.3152 = phi i1 [ false, %bb.bv ], [ false, %bb.bu ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread389 ], [ true, %bb.bq ], [ false, %bb.bp ], [ false, %bb.bo ], [ false, %bb.bs ], [ true, %bb.bt ], [ false, %bb.br ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.thread ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %32, i64 8
   %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !82 ; 4 uses

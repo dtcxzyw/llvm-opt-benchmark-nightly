@@ -205,15 +205,14 @@ select.unfold.i.i.i.i.i.i:                        ; preds = %.lr.ph
   %i.ba = phi ptr [ %i.bb, %select.unfold.i.i.i.i.i.i ], [ %i.av, %select.unfold.i.i.i.i.i.i.preheader ] ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 24 ; 4 uses
   %i.bc = getelementptr i8, ptr %i.ba, i64 16
-  %.val4.i.i.i.i.i.i = load i64, ptr %i.bc, align 8, !noalias !11620, !noundef !32 ; 3 uses
+  %.val4.i.i.i.i.i.i = load i64, ptr %i.bc, align 8, !noalias !11620, !noundef !32 ; 2 uses
   %i.bd = icmp eq i64 %.val4.i.i.i.i.i.i, 0
   br i1 %i.bd, label %select.unfold.i.i.i.i.i.i, label %_RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlattenINtNtNtBb_5slice4iter4IterINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEEENCNCNvMs_NtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard5queryNtB3e_10LocalShard28fill_with_payload_or_vectors00ENtNtNtB9_6traits8iterator8Iterator4nextB3i_.exit.i.loopexit.i.i.loopexit
 
 select.unfold.i.i.i.i.i.i._crit_edge.loopexit:    ; preds = %select.unfold.i.i.i.i.i.i
   %i.be = getelementptr i8, ptr %i.ba, i64 8
   %.val.i.i.i.i.i.i.le61 = load ptr, ptr %i.be, align 8, !noalias !11620, !nonnull !32, !noundef !32
-  %.idx.i.le58 = mul nuw nsw i64 %.val4.i.i.i.i.i.i, 208
-  %i.bf = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.le61, i64 %.idx.i.le58
+  %i.bf = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.le61, i64 0
   br label %select.unfold.i.i.i.i.i.i._crit_edge
 
 select.unfold.i.i.i.i.i.i._crit_edge:             ; preds = %select.unfold.i.i.i.i.i.i._crit_edge.loopexit, %select.unfold.i.i.i.i.i.i.preheader

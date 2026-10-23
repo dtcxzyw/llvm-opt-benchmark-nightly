@@ -204,7 +204,7 @@ bb.a:
   %i.d = call noundef i32 @_ZN2cv12countNonZeroERKNS_11_InputArrayE(ptr noundef nonnull align 8 dereferenceable(24) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   %i.e = load i32, ptr %0, align 8, !tbaa !107
-  %i.f = and i32 %i.e, 4095                       ; 4 uses
+  %i.f = and i32 %i.e, 4095                       ; 3 uses
   switch i32 %i.f, label %bb.b [
     i32 6, label %bb.e
     i32 5, label %bb.e
@@ -273,8 +273,7 @@ _ZSt8_DestroyIPN2cv6Point_IiEES2_EvT_S4_RSaIT0_E.exit.i.i: ; preds = %bb.h
   br label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE6resizeEm.exit
 
 _ZNSt6vectorIN2cv6Point_IiEESaIS2_EE6resizeEm.exit: ; preds = %bb.f, %bb.g, %bb.h, %_ZSt8_DestroyIPN2cv6Point_IiEES2_EvT_S4_RSaIT0_E.exit.i.i
-  %6 = lshr i32 %i.f, 5
-  %i.y = add nuw nsw i32 %6, 1
+  %i.y = add nuw nsw i32 0, 1
   %i.z = shl nuw nsw i32 %i.f, 2
   %i.aa = and i32 %i.z, 124
   %i.ab = zext nneg i32 %i.aa to i64

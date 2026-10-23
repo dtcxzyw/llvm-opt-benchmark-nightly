@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.g
   br i1 %i.ab, label %bb.k, label %bb.t
 
 bb.k:                                             ; preds = %bb.j
-  %i.ac = and i32 %i.v, 15                        ; 3 uses
+  %i.ac = and i32 %i.v, 15
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   store i32 %i.ac, ptr %i.ad, align 8, !tbaa !31
   %i.ae = icmp eq ptr %i.t, %2
@@ -245,10 +245,9 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.al = getelementptr inbounds nuw i8, ptr %i.s, i64 2 ; 2 uses
   store ptr %i.al, ptr %1, align 8, !tbaa !15
-  %3 = shl nuw nsw i32 %i.ac, 6
   %i.am = and i8 %i.aj, 63
   %i.an = zext nneg i8 %i.am to i32
-  %i.ao = or disjoint i32 %3, %i.an
+  %i.ao = or disjoint i32 0, %i.an
   store i32 %i.ao, ptr %i.ad, align 8, !tbaa !31
   br label %bb.ad
 
@@ -260,10 +259,9 @@ bb.r:                                             ; preds = %bb.o
 bb.s:                                             ; preds = %bb.r
   %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 2 ; 2 uses
   store ptr %i.aq, ptr %1, align 8, !tbaa !15
-  %4 = shl nuw nsw i32 %i.ac, 6
   %i.ar = and i8 %i.ap, 31
   %i.as = zext nneg i8 %i.ar to i32
-  %i.at = or disjoint i32 %4, %i.as
+  %i.at = or disjoint i32 832, %i.as
   store i32 %i.at, ptr %i.ad, align 8, !tbaa !31
   br label %bb.ad
 
@@ -272,7 +270,7 @@ bb.t:                                             ; preds = %bb.j
   br i1 %i.au, label %bb.u, label %bb.al
 
 bb.u:                                             ; preds = %bb.t
-  %i.av = and i32 %i.v, 7                         ; 3 uses
+  %i.av = and i32 %i.v, 7
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   store i32 %i.av, ptr %i.aw, align 8, !tbaa !31
   %i.ax = icmp eq ptr %i.t, %2
@@ -313,10 +311,9 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.be = getelementptr inbounds nuw i8, ptr %i.s, i64 2 ; 2 uses
   store ptr %i.be, ptr %1, align 8, !tbaa !15
-  %5 = shl nuw nsw i32 %i.av, 6
   %i.bf = and i8 %i.bc, 63
   %i.bg = zext nneg i8 %i.bf to i32
-  %i.bh = or disjoint i32 %5, %i.bg
+  %i.bh = or disjoint i32 0, %i.bg
   store i32 %i.bh, ptr %i.aw, align 8, !tbaa !31
   br label %bb.ad
 
@@ -328,10 +325,9 @@ bb.ab:                                            ; preds = %bb.y
 bb.ac:                                            ; preds = %bb.ab
   %i.bj = getelementptr inbounds nuw i8, ptr %i.s, i64 2 ; 2 uses
   store ptr %i.bj, ptr %1, align 8, !tbaa !15
-  %6 = shl nuw nsw i32 %i.av, 6
   %i.bk = and i8 %i.bi, 15
   %i.bl = zext nneg i8 %i.bk to i32
-  %i.bm = or disjoint i32 %6, %i.bl
+  %i.bm = or disjoint i32 256, %i.bl
   store i32 %i.bm, ptr %i.aw, align 8, !tbaa !31
   br label %bb.ad
 

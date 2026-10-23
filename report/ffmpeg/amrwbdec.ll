@@ -205,10 +205,9 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.a
   %i.et = lshr i32 %1, %2
-  %4 = mul nuw nsw i32 %2, 3
-  %5 = add nsw i32 %4, -2
-  %notmask.i58 = shl nsw i32 -1, %5
-  %i.eu = xor i32 %notmask.i58, -1
+  %4 = icmp eq i32 %2, 3
+  %notmask.i58.finite = select i1 %4, i32 -128, i32 -1024
+  %i.eu = xor i32 %notmask.i58.finite, -1
   %i.ev = and i32 %i.et, %i.eu                    ; 3 uses
   %i.ew = shl nuw nsw i32 %i.a, 1                 ; 2 uses
   %i.ex = add nsw i32 %i.ew, -1                   ; 2 uses

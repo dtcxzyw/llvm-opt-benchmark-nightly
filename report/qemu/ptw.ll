@@ -204,9 +204,14 @@ bb.lt:                                            ; preds = %bb.ls
   br i1 %i.arj, label %.thread241.sink.split, label %bb.lu
 
 bb.lu:                                            ; preds = %bb.lt
-  %i.ark = lshr i32 %.0130.i, 1                   ; 2 uses
+  %i.ark = lshr i32 %.0130.i, 1                   ; 4 uses
   %i.arl = tail call fastcc i32 @simple_ap_to_rw_prot(i32 noundef %i.alw, i32 noundef %i.ark), !inline_history !19
-  %8 = tail call fastcc i32 @simple_ap_to_rw_prot_is_user(i32 noundef %i.ark, i1 noundef zeroext true), !inline_history !19
+  %8 = icmp eq i32 %i.ark, 2
+  %.finite = select i1 %8, i32 0, i32 1
+  %9 = icmp eq i32 %i.ark, 1
+  %.finite1015 = select i1 %9, i32 3, i32 %.finite
+  %10 = icmp eq i32 %i.ark, 0
+  %.finite1016 = select i1 %10, i32 0, i32 %.finite1015
   br label %bb.lw
 
 bb.lv:                                            ; preds = %bb.ls, %bb.lr
@@ -215,7 +220,7 @@ bb.lv:                                            ; preds = %bb.ls, %bb.lr
   br label %bb.lw
 
 bb.lw:                                            ; preds = %bb.lv, %bb.lu
-  %.0121.i = phi i32 [ %8, %bb.lu ], [ %i.arn, %bb.lv ]
+  %.0121.i = phi i32 [ %.finite1016, %bb.lu ], [ %i.arn, %bb.lv ]
   %.0120.i = phi i32 [ %i.arl, %bb.lu ], [ %i.arm, %bb.lv ]
   %i.aro = load i32, ptr %i.c, align 8
   %i.arp = tail call fastcc i32 @get_S1prot(ptr noundef nonnull %0, i32 noundef %i.alw, i1 noundef zeroext false, i32 noundef %.0121.i, i32 noundef %.0120.i, i32 noundef %.0133.i, i32 noundef %.1132.i, i32 noundef %i.aro, i32 noundef %spec.store.select.i), !inline_history !19 ; 2 uses

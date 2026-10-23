@@ -205,12 +205,9 @@ _ZNSt6vectorIP6aiNodeSaIS1_EE9push_backERKS1_.exit: ; preds = %bb.b, %_ZNSt6vect
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 8 ; 17 uses
   store i32 %i.au, ptr %i.av, align 8
   %i.ax = zext nneg i32 %i.au to i64              ; 3 uses
-  %i.ay = mul nuw nsw i64 %i.ax, 1028             ; 3 uses
+  %i.ay = mul nuw nsw i64 %i.ax, 1028             ; 2 uses
   %i.az = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ay) #26 ; 2 uses
-  %18 = trunc nuw nsw i64 %i.ay to i16
-  %.lhs.trunc = add nsw i16 %18, -1028
-  %19 = urem i16 %.lhs.trunc, 1028
-  %.zext = zext nneg i16 %19 to i64
+  %.zext = zext nneg i16 0 to i64
   %i.ba = sub nuw nsw i64 %i.ay, %.zext
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.az, i8 0, i64 %i.ba, i1 false)
   store ptr %i.az, ptr %i.aw, align 8

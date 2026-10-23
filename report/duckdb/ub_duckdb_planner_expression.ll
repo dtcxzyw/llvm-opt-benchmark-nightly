@@ -202,13 +202,10 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 488
   %i.f = load i8, ptr %i.e, align 8, !tbaa !161
   %i.g = icmp eq i8 %i.f, 2
-  %i.h = select i1 %i.g, i64 -2960836687051489901, i64 0 ; 2 uses
-  %1 = lshr i64 %i.h, 32
-  %2 = xor i64 %1, %i.h
-  %3 = mul i64 %2, -2960836687051489901           ; 2 uses
-  %i.i = lshr i64 %3, 32
+  %i.h = select i1 %i.g, i64 4717996018018898097, i64 0 ; 2 uses
+  %i.i = lshr i64 %i.h, 32
   %i.j = xor i64 %i.d, %i.i
-  %i.k = xor i64 %i.j, %3
+  %i.k = xor i64 %i.j, %i.h
   ret i64 %i.k
 }
 

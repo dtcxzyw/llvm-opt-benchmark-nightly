@@ -205,11 +205,9 @@ iter.check:                                       ; preds = %.preheader
   br i1 %or.cond.not, label %.lr.ph.preheader, label %vec.epilog.ph
 
 vec.epilog.ph:                                    ; preds = %iter.check
-  %n.vec11 = and i64 %i.bk, 536870908             ; 4 uses
+  %n.vec11 = and i64 %i.bk, 536870908             ; 3 uses
   %i.bl = add nuw nsw i64 %i.bh, %n.vec11
-  %4 = trunc nuw nsw i64 %n.vec11 to i32
-  %5 = shl i32 %4, 4
-  %i.bm = add i32 %.3, %5
+  %i.bm = add i32 %.3, 64
   %i.bn = trunc i32 %.3 to i16
   %broadcast.splatinsert12 = insertelement <4 x i16> poison, i16 %i.bn, i64 0
   %broadcast.splat13 = shufflevector <4 x i16> %broadcast.splatinsert12, <4 x i16> poison, <4 x i32> zeroinitializer

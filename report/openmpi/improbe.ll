@@ -97,13 +97,18 @@ bb.h:                                             ; preds = %bb.f, %ompi_comm_pe
   br i1 %.not, label %.thread, label %bb.i, !prof !48
 
 .thread:                                          ; preds = %bb.g, %bb.e, %ompi_comm_peer_invalid.exit, %ompi_comm_invalid.exit, %bb.d, %bb.h
-  %.04056 = phi i32 [ 7, %bb.h ], [ 5, %bb.e ], [ 4, %bb.d ], [ 6, %ompi_comm_peer_invalid.exit ], [ 5, %ompi_comm_invalid.exit ], [ 6, %bb.g ]
-  %6 = tail call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.04056) ; 2 uses
+  %.04056 = phi i32 [ 7, %bb.h ], [ 5, %bb.e ], [ 4, %bb.d ], [ 6, %ompi_comm_peer_invalid.exit ], [ 5, %ompi_comm_invalid.exit ], [ 6, %bb.g ] ; 3 uses
+  %6 = icmp eq i32 %.04056, 6
+  %.finite = select i1 %6, i32 6, i32 7
+  %7 = icmp eq i32 %.04056, 5
+  %.finite61 = select i1 %7, i32 5, i32 %.finite
+  %8 = icmp eq i32 %.04056, 4
+  %.finite62 = select i1 %8, i32 4, i32 %.finite61 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 312
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !49
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 320
   %i.u = load i32, ptr %i.t, align 8, !tbaa !50
-  %i.v = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.s, ptr noundef %2, i32 noundef %i.u, i32 noundef %6, ptr noundef nonnull @FUNC_NAME) #5 ; 0 uses
+  %i.v = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.s, ptr noundef %2, i32 noundef %i.u, i32 noundef %.finite62, ptr noundef nonnull @FUNC_NAME) #5 ; 0 uses
   br label %bb.o
 
 bb.i:                                             ; preds = %bb.h, %bb.a
@@ -146,7 +151,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n, %bb.l, %.thread
-  %.0 = phi i32 [ %6, %.thread ], [ 0, %bb.l ], [ %i.ae, %bb.n ], [ 0, %bb.m ]
+  %.0 = phi i32 [ %.finite62, %.thread ], [ 0, %bb.l ], [ %i.ae, %bb.n ], [ 0, %bb.m ]
   ret i32 %.0
 }
 

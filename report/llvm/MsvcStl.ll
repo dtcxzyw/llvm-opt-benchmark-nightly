@@ -202,9 +202,11 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.y
 
 bb.j:                                             ; preds = %bb.h
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i8
-  %12 = udiv i8 16, %.rhs.trunc
-  %.zext = zext nneg i8 %12 to i64
+  %12 = icmp eq i64 %2, 2
+  %.finite = select i1 %12, i8 8, i8 5
+  %13 = icmp eq i64 %2, 1
+  %.finite54 = select i1 %13, i8 16, i8 %.finite
+  %.zext = zext nneg i8 %.finite54 to i64
   %i.an = icmp ult i64 %i.aj, %.zext
   br i1 %i.an, label %bb.k, label %bb.r
 

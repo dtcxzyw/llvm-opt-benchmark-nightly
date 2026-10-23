@@ -146,10 +146,9 @@ bb.p:                                             ; preds = %bb.o
   %i.au = add nsw i32 %i.as, -1
   %i.av = getelementptr inbounds nuw i8, ptr %i.ae, i64 220
   store i32 %i.au, ptr %i.av, align 4, !tbaa !41
-  %8 = trunc nuw nsw i32 %i.ar to i8
-  %.lhs.trunc = add nuw nsw i8 %8, 9
-  %9 = udiv i8 %.lhs.trunc, 3
-  %.zext = zext nneg i8 %9 to i32
+  %8 = icmp eq i32 %i.ar, 8
+  %.finite = select i1 %8, i8 5, i8 6
+  %.zext = zext nneg i8 %.finite to i32
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ae, i64 224
   store i32 %.zext, ptr %i.aw, align 8, !tbaa !42
   %i.ax = load ptr, ptr %i.g, align 8, !tbaa !19

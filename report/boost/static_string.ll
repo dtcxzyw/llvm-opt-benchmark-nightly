@@ -206,7 +206,7 @@ _ZN5boost14static_stringseqILm20EcSt11char_traitsIcEEEbRKNS0_19basic_static_stri
   %i.ya = call noundef nonnull align 1 dereferenceable(22) ptr @_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE6assignIPKcEENSt9enable_ifIXsr6detail17is_input_iteratorIT_EE5valueERS4_E4typeES9_S9_(ptr noundef nonnull align 1 dereferenceable(22) %32, ptr noundef nonnull @.str.1353, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.1353, i64 10)) ; 0 uses
   %i.yb = getelementptr inbounds nuw i8, ptr %32, i64 1 ; 3 uses
   %i.yc = getelementptr inbounds nuw i8, ptr %32, i64 6 ; 4 uses
-  %i.yd = load i8, ptr %32, align 1, !tbaa !82    ; 6 uses
+  %i.yd = load i8, ptr %32, align 1, !tbaa !82    ; 5 uses
   %i.ye = zext i8 %i.yd to i64                    ; 6 uses
   %i.yf = getelementptr inbounds nuw i8, ptr %i.yb, i64 %i.ye ; 3 uses
   %i.yg = icmp ugt i8 %i.yd, 20
@@ -230,8 +230,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 _ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeEPKcSD_S8_S8_.exit.thread749: ; preds = %bb.bh
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(18446744073709551612) %i.yf, ptr noundef nonnull align 1 dereferenceable(18446744073709551612) %i.yc, i64 -4, i1 false)
-  %reass.add750 = shl nuw nsw i8 %i.yd, 1
-  %i.yj = add nuw nsw i8 %reass.add750, -5
+  %i.yj = add nuw nsw i8 0, -5
   store i8 %i.yj, ptr %32, align 1, !tbaa !82
   br label %_ZN5boost14static_stringseqILm20EcSt11char_traitsIcEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit188
 

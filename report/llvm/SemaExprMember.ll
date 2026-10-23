@@ -204,16 +204,14 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN5clang21ElementAccessExprBaseINS_20ExtVectorElementExprEEC2ENS_4Stmt9StmtClassENS_8QualTypeENS_13ExprValueKindEPNS_4ExprERNS_14IdentifierInfoENS_14SourceLocationENS_14ExprObjectKindE.exit: ; preds = %bb.a, %bb.b
   %i.f = icmp eq i32 %2, 0
-  %6 = select i1 %i.f, i32 0, i32 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = load i24, ptr %0, align 8
   %i.i = trunc i32 %2 to i24
   %i.j = shl i24 %i.i, 9
   %i.k = and i24 %i.j, 1536
   %i.l = and i24 %i.h, -523777
-  %7 = trunc nuw nsw i32 %6 to i24
-  %8 = shl nuw nsw i24 %7, 11
-  %i.m = or disjoint i24 %8, %i.k
+  %.finite = select i1 %i.f, i24 0, i24 4096
+  %i.m = or disjoint i24 %.finite, %i.k
   %i.n = or disjoint i24 %i.l, %i.m
   store i24 %i.n, ptr %0, align 8
   store i64 %1, ptr %i.g, align 8, !tbaa !803

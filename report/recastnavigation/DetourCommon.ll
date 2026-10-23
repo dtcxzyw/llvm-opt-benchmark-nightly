@@ -204,7 +204,7 @@ _Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit:         ; preds = %bb.e, %.sink.split.
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define noundef zeroext i1 @_Z19dtOverlapPolyPoly2DPKfiS0_i(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) local_unnamed_addr #3 {
 bb.a:
-  %i.a = add nsw i32 %1, -1                       ; 2 uses
+  %i.a = add nsw i32 %1, -1
   %.not123 = icmp sgt i32 %1, 0
   br i1 %.not123, label %.lr.ph, label %.critedge
 
@@ -302,8 +302,7 @@ _ZL11projectPolyPKfS0_iRfS1_.exit.loopexit.us:    ; preds = %.lr.ph.i.us
   br i1 %i.h, label %.lr.ph.i59.us, label %_ZL11projectPolyPKfS0_iRfS1_.exit64.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  %4 = mul nuw nsw i32 %i.a, 3
-  %i.ay = zext nneg i32 %4 to i64
+  %i.ay = zext nneg i32 0 to i64
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ay ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.bb = load float, ptr %i.ba, align 4, !tbaa !12

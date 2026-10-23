@@ -182,12 +182,13 @@ bb.r:                                             ; preds = %bb.q
 
 .thread:                                          ; preds = %bb.q, %.lr.ph, %bb.r
   %.1125173 = phi i32 [ 3, %.lr.ph ], [ 2, %bb.q ], [ 3, %bb.r ]
-  %11 = call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.1125173) ; 2 uses
+  %11 = icmp eq i32 %.1125173, 2
+  %.finite218 = select i1 %11, i32 2, i32 3       ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %8, i64 312
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !47
   %i.az = getelementptr inbounds nuw i8, ptr %8, i64 320
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !48
-  %i.bb = call i32 @ompi_errhandler_invoke(ptr noundef %i.ay, ptr noundef nonnull %8, i32 noundef %i.ba, i32 noundef %11, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
+  %i.bb = call i32 @ompi_errhandler_invoke(ptr noundef %i.ay, ptr noundef nonnull %8, i32 noundef %i.ba, i32 noundef %.finite218, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
   br label %bb.af
 
 bb.s:                                             ; preds = %bb.u
@@ -219,12 +220,13 @@ bb.u:                                             ; preds = %bb.t
 
 .thread175:                                       ; preds = %bb.t, %.lr.ph199, %bb.u
   %.3127178 = phi i32 [ 3, %.lr.ph199 ], [ 2, %bb.t ], [ 3, %bb.u ]
-  %12 = call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.3127178) ; 2 uses
+  %12 = icmp eq i32 %.3127178, 2
+  %.finite = select i1 %12, i32 2, i32 3          ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %8, i64 312
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !47
   %i.bn = getelementptr inbounds nuw i8, ptr %8, i64 320
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !48
-  %i.bp = call i32 @ompi_errhandler_invoke(ptr noundef %i.bm, ptr noundef nonnull %8, i32 noundef %i.bo, i32 noundef %12, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
+  %i.bp = call i32 @ompi_errhandler_invoke(ptr noundef %i.bm, ptr noundef nonnull %8, i32 noundef %i.bo, i32 noundef %.finite, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
   br label %bb.af
 
 ._crit_edge:                                      ; preds = %bb.s, %.preheader
@@ -333,7 +335,7 @@ bb.ae:                                            ; preds = %.thread179
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ac, %bb.z, %bb.w, %bb.ad, %bb.ae, %.thread175, %.thread, %bb.n, %bb.h, %bb.f, %ompi_comm_invalid.exit.thread
-  %.3 = phi i32 [ %i.n, %ompi_comm_invalid.exit.thread ], [ %i.r, %bb.h ], [ %i.an, %bb.n ], [ %11, %.thread ], [ %12, %.thread175 ], [ %i.dn, %bb.ae ], [ %i.p, %bb.f ], [ %i.cd, %bb.w ], [ %i.cn, %bb.z ], [ %i.dd, %bb.ac ], [ 0, %bb.ad ]
+  %.3 = phi i32 [ %i.n, %ompi_comm_invalid.exit.thread ], [ %i.r, %bb.h ], [ %i.an, %bb.n ], [ %.finite218, %.thread ], [ %.finite, %.thread175 ], [ %i.dn, %bb.ae ], [ %i.p, %bb.f ], [ %i.cd, %bb.w ], [ %i.cn, %bb.z ], [ %i.dd, %bb.ac ], [ 0, %bb.ad ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.3

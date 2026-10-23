@@ -126,12 +126,13 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
   %.0120.ph = phi i32 [ 3, %bb.m ], [ 3, %bb.k ], [ 2, %bb.l ]
-  %8 = tail call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.0120.ph) ; 2 uses
+  %8 = icmp eq i32 %.0120.ph, 2
+  %.finite148 = select i1 %8, i32 2, i32 3        ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %7, i64 312
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !45
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 320
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !46
-  %i.am = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.aj, ptr noundef nonnull %7, i32 noundef %i.al, i32 noundef %8, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
+  %i.am = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.aj, ptr noundef nonnull %7, i32 noundef %i.al, i32 noundef %.finite148, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
   br label %bb.ae
 
 bb.o:                                             ; preds = %bb.m
@@ -271,13 +272,16 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.thread130, %bb.ab
-  %.2122.ph = phi i32 [ 77, %.thread130 ], [ 75, %bb.ab ]
-  %9 = call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.2122.ph) ; 2 uses
+  %.2122.ph = phi i32 [ 77, %.thread130 ], [ 75, %bb.ab ] ; 2 uses
+  %9 = icmp eq i32 %.2122.ph, 76
+  %.finite = select i1 %9, i32 76, i32 77
+  %10 = icmp eq i32 %.2122.ph, 75
+  %.finite147 = select i1 %10, i32 75, i32 %.finite ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %7, i64 312
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !45
   %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 320
   %i.cz = load i32, ptr %i.cy, align 8, !tbaa !46
-  %i.da = call i32 @ompi_errhandler_invoke(ptr noundef %i.cx, ptr noundef nonnull %7, i32 noundef %i.cz, i32 noundef %9, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
+  %i.da = call i32 @ompi_errhandler_invoke(ptr noundef %i.cx, ptr noundef nonnull %7, i32 noundef %i.cz, i32 noundef %.finite147, ptr noundef nonnull @FUNC_NAME) #6 ; 0 uses
   br label %bb.ae
 
 ompi_comm_iface_coll_check.exit:                  ; preds = %bb.aa
@@ -301,7 +305,7 @@ bb.ad:                                            ; preds = %ompi_comm_iface_col
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.z, %bb.w, %bb.t, %.thread128, %ompi_comm_iface_coll_check.exit, %bb.ad, %bb.ac, %bb.q, %bb.n, %bb.j, %bb.h, %bb.f, %ompi_comm_invalid.exit.thread
-  %.4 = phi i32 [ %i.n, %ompi_comm_invalid.exit.thread ], [ %i.w, %bb.h ], [ %i.ac, %bb.j ], [ %8, %bb.n ], [ %i.bc, %bb.q ], [ %9, %bb.ac ], [ %i.p, %bb.f ], [ %i.di, %bb.ad ], [ 0, %ompi_comm_iface_coll_check.exit ], [ %i.bq, %bb.t ], [ %i.ca, %bb.w ], [ %i.cq, %bb.z ], [ %i.aw, %.thread128 ]
+  %.4 = phi i32 [ %i.n, %ompi_comm_invalid.exit.thread ], [ %i.w, %bb.h ], [ %i.ac, %bb.j ], [ %.finite148, %bb.n ], [ %i.bc, %bb.q ], [ %.finite147, %bb.ac ], [ %i.p, %bb.f ], [ %i.di, %bb.ad ], [ 0, %ompi_comm_iface_coll_check.exit ], [ %i.bq, %bb.t ], [ %i.ca, %bb.w ], [ %i.cq, %bb.z ], [ %i.aw, %.thread128 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.4

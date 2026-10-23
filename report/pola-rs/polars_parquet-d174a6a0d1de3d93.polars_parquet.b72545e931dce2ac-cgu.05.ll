@@ -205,9 +205,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !13884
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !13884
-  %.zext = zext nneg i16 %3 to i64, !dbg !13884   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !13884
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !13884
+  %4 = icmp eq i64 %2, 1, !dbg !13884
+  %.finite260 = select i1 %4, i16 256, i16 %.finite, !dbg !13884
+  %.zext = zext nneg i16 %.finite260 to i64, !dbg !13884 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !13885
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !13886
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !13887 ; 6 uses
@@ -610,9 +612,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !14486
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !14486
-  %.zext = zext nneg i16 %3 to i64, !dbg !14486   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !14486
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !14486
+  %4 = icmp eq i64 %2, 1, !dbg !14486
+  %.finite316 = select i1 %4, i16 256, i16 %.finite, !dbg !14486
+  %.zext = zext nneg i16 %.finite316 to i64, !dbg !14486 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !14487
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !14488
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !14489 ; 6 uses
@@ -1015,9 +1019,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !15182
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !15182
-  %.zext = zext nneg i16 %3 to i64, !dbg !15182   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !15182
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !15182
+  %4 = icmp eq i64 %2, 1, !dbg !15182
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !15182
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !15182 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !15183
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !15184
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !15185 ; 6 uses
@@ -1420,9 +1426,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !15872
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !15872
-  %.zext = zext nneg i16 %3 to i64, !dbg !15872   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !15872
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !15872
+  %4 = icmp eq i64 %2, 1, !dbg !15872
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !15872
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !15872 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !15873
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !15874
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !15875 ; 6 uses
@@ -1825,9 +1833,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !16562
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !16562
-  %.zext = zext nneg i16 %3 to i64, !dbg !16562   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !16562
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !16562
+  %4 = icmp eq i64 %2, 1, !dbg !16562
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !16562
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !16562 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !16563
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !16564
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !16565 ; 6 uses
@@ -2230,9 +2240,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !17252
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !17252
-  %.zext = zext nneg i16 %3 to i64, !dbg !17252   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !17252
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !17252
+  %4 = icmp eq i64 %2, 1, !dbg !17252
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !17252
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !17252 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !17253
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !17254
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !17255 ; 6 uses
@@ -2635,9 +2647,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !17942
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !17942
-  %.zext = zext nneg i16 %3 to i64, !dbg !17942   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !17942
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !17942
+  %4 = icmp eq i64 %2, 1, !dbg !17942
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !17942
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !17942 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !17943
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !17944
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !17945 ; 6 uses
@@ -3040,9 +3054,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !18632
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !18632
-  %.zext = zext nneg i16 %3 to i64, !dbg !18632   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !18632
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !18632
+  %4 = icmp eq i64 %2, 1, !dbg !18632
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !18632
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !18632 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !18633
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !18634
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !18635 ; 6 uses
@@ -3445,9 +3461,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !19309
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !19309
-  %.zext = zext nneg i16 %3 to i64, !dbg !19309   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !19309
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !19309
+  %4 = icmp eq i64 %2, 1, !dbg !19309
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !19309
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !19309 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !19310
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !19311
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !19312 ; 6 uses
@@ -3850,9 +3868,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %2 to i16, !dbg !19984
-  %3 = udiv i16 256, %.rhs.trunc, !dbg !19984
-  %.zext = zext nneg i16 %3 to i64, !dbg !19984   ; 7 uses
+  %3 = icmp eq i64 %2, 2, !dbg !19984
+  %.finite = select i1 %3, i16 128, i16 64, !dbg !19984
+  %4 = icmp eq i64 %2, 1, !dbg !19984
+  %.finite314 = select i1 %4, i16 256, i16 %.finite, !dbg !19984
+  %.zext = zext nneg i16 %.finite314 to i64, !dbg !19984 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !19985
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !19986
   %i.j = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !19987 ; 6 uses
@@ -4255,9 +4275,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !20587
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !20587
-  %.zext = zext nneg i16 %4 to i64, !dbg !20587   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !20587
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !20587
+  %5 = icmp eq i64 %3, 1, !dbg !20587
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !20587
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !20587 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !20588
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !20589
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !20590 ; 6 uses
@@ -4660,9 +4682,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !21098
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !21098
-  %.zext = zext nneg i16 %4 to i64, !dbg !21098   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !21098
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !21098
+  %5 = icmp eq i64 %3, 1, !dbg !21098
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !21098
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !21098 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !21099
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !21100
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !21101 ; 6 uses
@@ -5065,9 +5089,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !21609
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !21609
-  %.zext = zext nneg i16 %4 to i64, !dbg !21609   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !21609
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !21609
+  %5 = icmp eq i64 %3, 1, !dbg !21609
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !21609
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !21609 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !21610
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !21611
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !21612 ; 6 uses
@@ -5470,9 +5496,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !22120
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !22120
-  %.zext = zext nneg i16 %4 to i64, !dbg !22120   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !22120
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !22120
+  %5 = icmp eq i64 %3, 1, !dbg !22120
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !22120
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !22120 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !22121
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !22122
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !22123 ; 6 uses
@@ -5875,9 +5903,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !22631
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !22631
-  %.zext = zext nneg i16 %4 to i64, !dbg !22631   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !22631
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !22631
+  %5 = icmp eq i64 %3, 1, !dbg !22631
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !22631
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !22631 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !22632
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !22633
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !22634 ; 6 uses
@@ -6280,9 +6310,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !23142
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !23142
-  %.zext = zext nneg i16 %4 to i64, !dbg !23142   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !23142
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !23142
+  %5 = icmp eq i64 %3, 1, !dbg !23142
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !23142
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !23142 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !23143
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !23144
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !23145 ; 6 uses
@@ -6685,9 +6717,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !23647
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !23647
-  %.zext = zext nneg i16 %4 to i64, !dbg !23647   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !23647
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !23647
+  %5 = icmp eq i64 %3, 1, !dbg !23647
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !23647
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !23647 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !23648
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !23649
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !23650 ; 6 uses
@@ -7090,9 +7124,11 @@ _RNvXsJ_NtNtCscgRAwXFJnXP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.e
   unreachable
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %.rhs.trunc = trunc nuw nsw i64 %3 to i16, !dbg !24150
-  %4 = udiv i16 256, %.rhs.trunc, !dbg !24150
-  %.zext = zext nneg i16 %4 to i64, !dbg !24150   ; 7 uses
+  %4 = icmp eq i64 %3, 2, !dbg !24150
+  %.finite = select i1 %4, i16 128, i16 64, !dbg !24150
+  %5 = icmp eq i64 %3, 1, !dbg !24150
+  %.finite252 = select i1 %5, i16 256, i16 %.finite, !dbg !24150
+  %.zext = zext nneg i16 %.finite252 to i64, !dbg !24150 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !24151
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !dbg !24152
   %i.l = call noundef i64 @_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286encode(i64 noundef 256, ptr noalias noundef nonnull %i.i, i64 noundef 10), !dbg !24153 ; 6 uses

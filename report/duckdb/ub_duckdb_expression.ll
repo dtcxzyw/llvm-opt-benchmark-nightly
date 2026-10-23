@@ -204,24 +204,18 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.i = load i8, ptr %i.h, align 8, !tbaa !129, !range !78, !noundef !79
   %i.j = trunc nuw i8 %i.i to i1
-  %i.k = select i1 %i.j, i64 -2960836687051489901, i64 0 ; 2 uses
-  %1 = lshr i64 %i.k, 32
-  %2 = xor i64 %1, %i.k
-  %3 = mul i64 %2, -2960836687051489901           ; 2 uses
+  %i.k = select i1 %i.j, i64 4717996018018898097, i64 0 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.m = load i8, ptr %i.l, align 8, !tbaa !131, !range !78, !noundef !79
   %i.n = trunc nuw i8 %i.m to i1
-  %i.o = select i1 %i.n, i64 -2960836687051489901, i64 0 ; 2 uses
-  %4 = lshr i64 %i.o, 32
-  %5 = xor i64 %4, %i.o
-  %6 = mul i64 %5, -2960836687051489901           ; 2 uses
-  %i.p = xor i64 %6, %3
+  %i.o = select i1 %i.n, i64 4717996018018898097, i64 0 ; 2 uses
+  %i.p = xor i64 %i.o, %i.k
   %i.q = lshr i64 %i.p, 32
   %i.r = xor i64 %i.a, %i.d
   %i.s = xor i64 %i.r, %i.g
   %i.t = xor i64 %i.s, %i.q
-  %i.u = xor i64 %i.t, %3
-  %i.v = xor i64 %i.u, %6
+  %i.u = xor i64 %i.t, %i.k
+  %i.v = xor i64 %i.u, %i.o
   ret i64 %i.v
 }
 

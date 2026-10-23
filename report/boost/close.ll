@@ -205,14 +205,12 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !1765
   %.not.i.i = icmp eq i64 %i.c, 0                 ; 2 uses
-  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32 ; 2 uses
+  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32
   %.0.i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.0.v.i.i
   br i1 %.not.i.i, label %bb.b, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.a
-  %3 = add nuw nsw i64 %.0.v.i.i, 112
-  %4 = lshr exact i64 %3, 4
-  %i.d = add nuw nsw i64 %4, 1
+  %i.d = add nuw nsw i64 9, 1
   %xtraiter = and i64 %i.d, 7                     ; 2 uses
   %lcmp.mod47 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod47)
@@ -615,14 +613,12 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !1765
   %.not.i.i = icmp eq i64 %i.c, 0                 ; 2 uses
-  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32 ; 2 uses
+  %.0.v.i.i = select i1 %.not.i.i, i64 16, i64 32
   %.0.i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.0.v.i.i
   br i1 %.not.i.i, label %bb.b, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.a
-  %3 = add nuw nsw i64 %.0.v.i.i, 112
-  %4 = lshr exact i64 %3, 4
-  %i.d = add nuw nsw i64 %4, 1
+  %i.d = add nuw nsw i64 9, 1
   %xtraiter = and i64 %i.d, 7                     ; 2 uses
   %lcmp.mod47 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod47)
@@ -1025,7 +1021,7 @@ bb.i:                                             ; preds = %bb.h
 
 _ZNK5boost5beast6detail17buffer_bytes_implclINS1_12buffers_pairILb1EEEvEEmRKT_.exit153: ; preds = %.lr.ph.i.i.i149.epil
   %.not.not.not = icmp eq i32 %i.bf, 0            ; 2 uses
-  %i.bn = select i1 %.not.not.not, i8 2, i8 0     ; 3 uses
+  %i.bn = select i1 %.not.not.not, i8 2, i8 0
   %i.bo = or disjoint i8 %i.bn, %.sroa.29.0634    ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.g, i64 2240
   %i.bq = load i8, ptr %i.bp, align 8, !tbaa !2217, !range !1300, !noundef !1301
@@ -1428,9 +1424,8 @@ bb.an:                                            ; preds = %bb.ae
   %i.ia = getelementptr inbounds nuw i8, ptr %18, i64 24
   %.sroa.gep376 = getelementptr inbounds nuw i8, ptr %18, i64 16
   %i.ib = shl nsw i8 %.sroa.29.0634, 4            ; 2 uses
-  %33 = shl nuw i8 %i.bn, 6                       ; 3 uses
-  %i.ic = or disjoint i8 %33, 127
-  %i.id = or disjoint i8 %33, 126
+  %i.ic = or disjoint i8 0, 127
+  %i.id = or disjoint i8 0, 126
   %i.ie = shl nuw nsw i8 %i.bo, 1
   %i.if = and i8 %i.ie, 4
   %i.ig = zext nneg i8 %i.if to i64
@@ -1461,7 +1456,7 @@ bb.ao:                                            ; preds = %_ZN5boost5beast14bu
 
 bb.ap:                                            ; preds = %bb.ao
   %i.io = trunc nuw nsw i64 %..i to i8
-  %i.ip = or disjoint i8 %33, %i.io
+  %i.ip = or disjoint i8 0, %i.io
   store i8 %i.ip, ptr %.1..1..1..1..sroa_idx701, align 1, !tbaa !1271
   br label %bb.at
 
@@ -1864,9 +1859,8 @@ bb.cg:                                            ; preds = %bb.bf
   %i.qc = getelementptr inbounds nuw i8, ptr %32, i64 24
   %.ptr4.i.i.i.i.i.i341 = getelementptr inbounds nuw i8, ptr %32, i64 32
   %i.qd = shl nsw i8 %.sroa.29.0634, 4            ; 2 uses
-  %34 = shl nuw i8 %i.bn, 6                       ; 3 uses
-  %i.qe = or disjoint i8 %34, 127
-  %i.qf = or disjoint i8 %34, 126
+  %i.qe = or disjoint i8 -128, 127
+  %i.qf = or disjoint i8 -128, 126
   %i.qg = or i8 %i.bd, %i.qd
   %.1..1..1..1..sroa_idx712 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %.2..2..2..2.gep.sroa_idx715 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -1968,7 +1962,7 @@ _ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS3_6
 
 bb.cm:                                            ; preds = %_ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS3_6detail12buffers_pairILb1EEEEEEEmRKT_RKT0_.exit319
   %i.rh = trunc nuw nsw i64 %..i294 to i8
-  %i.ri = or disjoint i8 %34, %i.rh
+  %i.ri = or disjoint i8 -128, %i.rh
   store i8 %i.ri, ptr %.1..1..1..1..sroa_idx714, align 1, !tbaa !1271
   br label %bb.cq
 

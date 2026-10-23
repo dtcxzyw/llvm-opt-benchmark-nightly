@@ -204,14 +204,12 @@ bb.n:                                             ; preds = %.lr.ph.i.5
   br i1 %.not.i.6, label %bb.o, label %_ZN4bsslL24FirstUnmarkedRangeInByteEh.exit
 
 bb.o:                                             ; preds = %.lr.ph.i.6
-  %i.bi = add nuw nsw i64 %.011.lcssa.ph.i, 7     ; 3 uses
+  %i.bi = add nuw nsw i64 %.011.lcssa.ph.i, 7     ; 2 uses
   %exitcond.not.i.6 = icmp eq i64 %i.bi, 8
   br i1 %exitcond.not.i.6, label %_ZN4bsslL24FirstUnmarkedRangeInByteEh.exit.thread, label %.lr.ph.i.7
 
 .lr.ph.i.7:                                       ; preds = %bb.o
-  %2 = trunc nuw nsw i64 %i.bi to i32
-  %3 = shl nuw nsw i32 1, %2
-  %i.bj = and i32 %3, %i.r
+  %i.bj = and i32 128, %i.r
   %.not.i.7 = icmp eq i32 %i.bj, 0
   br i1 %.not.i.7, label %_ZN4bsslL24FirstUnmarkedRangeInByteEh.exit.thread, label %_ZN4bsslL24FirstUnmarkedRangeInByteEh.exit
 
@@ -370,14 +368,12 @@ bb.ab:                                            ; preds = %.lr.ph.i41.5
   br i1 %.not.i43.6, label %bb.ac, label %_ZN4bsslL24FirstUnmarkedRangeInByteEh.exit45
 
 bb.ac:                                            ; preds = %.lr.ph.i41.6
-  %i.dn = add nuw nsw i64 %.013.i42.ph, 7         ; 3 uses
+  %i.dn = add nuw nsw i64 %.013.i42.ph, 7         ; 2 uses
   %exitcond.not.i44.6 = icmp eq i64 %i.dn, 8
   br i1 %exitcond.not.i44.6, label %_ZN4bsslL24FirstUnmarkedRangeInByteEh.exit45, label %.lr.ph.i41.7
 
 .lr.ph.i41.7:                                     ; preds = %bb.ac
-  %4 = trunc nuw nsw i64 %i.dn to i32
-  %5 = shl nuw nsw i32 1, %4
-  %i.do = and i32 %5, %i.bw
+  %i.do = and i32 128, %i.bw
   %.not.i43.7 = icmp eq i32 %i.do, 0
   %spec.select90 = select i1 %.not.i43.7, i64 8, i64 %i.dn
   br label %_ZN4bsslL24FirstUnmarkedRangeInByteEh.exit45

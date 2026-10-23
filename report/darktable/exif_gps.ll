@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.c
   %i.bx = load ptr, ptr %i.h, align 8, !tbaa !74  ; 2 uses
-  %.lhs.trunc = trunc nuw nsw i32 %i.v to i8
-  %2 = udiv i8 %.lhs.trunc, 3
-  %i.by = zext nneg i8 %2 to i64
+  %2 = icmp eq i32 %i.v, 18
+  %.finite = select i1 %2, i8 6, i8 9
+  %i.by = zext nneg i8 %.finite to i64
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.by
   %i.ca = call i32 @llvm.umin.i32(i32 %i.n, i32 12)
   %i.cb = load ptr, ptr %i.bx, align 8, !tbaa !76

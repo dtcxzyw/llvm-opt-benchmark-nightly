@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 2232 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !425
   %.not.not.not = icmp eq i32 %i.ay, 0            ; 2 uses
-  %i.az = select i1 %.not.not.not, i8 2, i8 0     ; 3 uses
+  %i.az = select i1 %.not.not.not, i8 2, i8 0
   %i.ba = or disjoint i8 %i.az, %.sroa.29.0579    ; 2 uses
   %.sroa.229.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.229.0.copyload = load i64, ptr %.sroa.229.0..sroa_idx, align 8, !tbaa !84 ; 15 uses
@@ -608,9 +608,8 @@ bb.ao:                                            ; preds = %bb.af
   %.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 24
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.gx = shl nsw i8 %.sroa.29.0579, 4            ; 2 uses
-  %32 = shl nuw i8 %i.az, 6                       ; 3 uses
-  %i.gy = or disjoint i8 %32, 127
-  %i.gz = or disjoint i8 %32, 126
+  %i.gy = or disjoint i8 0, 127
+  %i.gz = or disjoint i8 0, 126
   %i.ha = shl nuw nsw i8 %i.ba, 1
   %i.hb = and i8 %i.ha, 4
   %i.hc = zext nneg i8 %i.hb to i64
@@ -641,7 +640,7 @@ bb.ap:                                            ; preds = %_ZN5boost5beast14bu
 
 bb.aq:                                            ; preds = %bb.ap
   %i.hk = trunc nuw nsw i64 %..i to i8
-  %i.hl = or disjoint i8 %32, %i.hk
+  %i.hl = or disjoint i8 0, %i.hk
   store i8 %i.hl, ptr %.1..1..1..1..sroa_idx623, align 1, !tbaa !87
   br label %bb.au
 
@@ -1044,9 +1043,8 @@ bb.cf:                                            ; preds = %bb.bg
   %i.oh = getelementptr inbounds nuw i8, ptr %31, i64 24
   %.ptr4.i.i.i.i.i.i321 = getelementptr inbounds nuw i8, ptr %31, i64 32
   %i.oi = shl nsw i8 %.sroa.29.0579, 4            ; 2 uses
-  %33 = shl nuw i8 %i.az, 6                       ; 3 uses
-  %i.oj = or disjoint i8 %33, 127
-  %i.ok = or disjoint i8 %33, 126
+  %i.oj = or disjoint i8 -128, 127
+  %i.ok = or disjoint i8 -128, 126
   %i.ol = or i8 %i.aw, %i.oi
   %.1..1..1..1..sroa_idx634 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %.2..2..2..2.gep.sroa_idx637 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -1145,7 +1143,7 @@ _ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS0_1
 
 bb.cl:                                            ; preds = %_ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS0_12const_bufferEEEEEmRKT_RKT0_.exit299
   %i.pl = trunc nuw nsw i64 %..i277 to i8
-  %i.pm = or disjoint i8 %33, %i.pl
+  %i.pm = or disjoint i8 -128, %i.pl
   store i8 %i.pm, ptr %.1..1..1..1..sroa_idx636, align 1, !tbaa !87
   br label %bb.cp
 
@@ -1548,7 +1546,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 2232 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !425
   %.not.not.not = icmp eq i32 %i.ay, 0            ; 2 uses
-  %i.az = select i1 %.not.not.not, i8 2, i8 0     ; 3 uses
+  %i.az = select i1 %.not.not.not, i8 2, i8 0
   %i.ba = or disjoint i8 %i.az, %.sroa.29.0580    ; 2 uses
   %.sroa.229.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.229.0.copyload = load i64, ptr %.sroa.229.0..sroa_idx, align 8, !tbaa !84 ; 15 uses
@@ -1951,9 +1949,8 @@ bb.ao:                                            ; preds = %bb.af
   %.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 24
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.gz = shl nsw i8 %.sroa.29.0580, 4            ; 2 uses
-  %32 = shl nuw i8 %i.az, 6                       ; 3 uses
-  %i.ha = or disjoint i8 %32, 127
-  %i.hb = or disjoint i8 %32, 126
+  %i.ha = or disjoint i8 0, 127
+  %i.hb = or disjoint i8 0, 126
   %i.hc = shl nuw nsw i8 %i.ba, 1
   %i.hd = and i8 %i.hc, 4
   %i.he = zext nneg i8 %i.hd to i64
@@ -1984,7 +1981,7 @@ bb.ap:                                            ; preds = %_ZN5boost5beast14bu
 
 bb.aq:                                            ; preds = %bb.ap
   %i.hm = trunc nuw nsw i64 %..i to i8
-  %i.hn = or disjoint i8 %32, %i.hm
+  %i.hn = or disjoint i8 0, %i.hm
   store i8 %i.hn, ptr %.1..1..1..1..sroa_idx624, align 1, !tbaa !87
   br label %bb.au
 
@@ -2387,9 +2384,8 @@ bb.cf:                                            ; preds = %bb.bg
   %i.oj = getelementptr inbounds nuw i8, ptr %31, i64 24
   %.ptr4.i.i.i.i.i.i322 = getelementptr inbounds nuw i8, ptr %31, i64 32
   %i.ok = shl nsw i8 %.sroa.29.0580, 4            ; 2 uses
-  %33 = shl nuw i8 %i.az, 6                       ; 3 uses
-  %i.ol = or disjoint i8 %33, 127
-  %i.om = or disjoint i8 %33, 126
+  %i.ol = or disjoint i8 -128, 127
+  %i.om = or disjoint i8 -128, 126
   %i.on = or i8 %i.aw, %i.ok
   %.1..1..1..1..sroa_idx635 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %.2..2..2..2.gep.sroa_idx638 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -2488,7 +2484,7 @@ _ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixIS2_EE
 
 bb.cl:                                            ; preds = %_ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixIS2_EEEEmRKT_RKT0_.exit300
   %i.pn = trunc nuw nsw i64 %..i278 to i8
-  %i.po = or disjoint i8 %33, %i.pn
+  %i.po = or disjoint i8 -128, %i.pn
   store i8 %i.po, ptr %.1..1..1..1..sroa_idx637, align 1, !tbaa !87
   br label %bb.cp
 
@@ -2891,7 +2887,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ck = getelementptr inbounds nuw i8, ptr %i.g, i64 2232 ; 2 uses
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !425
   %.not.not.not = icmp eq i32 %i.cl, 0            ; 2 uses
-  %i.cm = select i1 %.not.not.not, i8 2, i8 0     ; 3 uses
+  %i.cm = select i1 %.not.not.not, i8 2, i8 0
   %i.cn = or disjoint i8 %i.cm, %.sroa.29.0857    ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !392, !noalias !1965
@@ -3294,9 +3290,8 @@ _ZN5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS0_18basic_multi_buff
   %i.yg = getelementptr inbounds nuw i8, ptr %14, i64 56
   %i.yh = getelementptr inbounds nuw i8, ptr %14, i64 64
   %i.yi = shl nsw i8 %.sroa.29.0857, 4            ; 2 uses
-  %41 = shl nuw i8 %i.cm, 6                       ; 3 uses
-  %i.yj = or disjoint i8 %41, 127
-  %i.yk = or disjoint i8 %41, 126
+  %i.yj = or disjoint i8 0, 127
+  %i.yk = or disjoint i8 0, 126
   %i.yl = shl nuw nsw i8 %i.cn, 1
   %i.ym = and i8 %i.yl, 4
   %i.yn = zext nneg i8 %i.ym to i64
@@ -3327,7 +3322,7 @@ bb.ba:                                            ; preds = %_ZN5boost5beast14bu
 
 bb.bb:                                            ; preds = %bb.ba
   %i.yv = trunc nuw nsw i64 %..i to i8
-  %i.yw = or disjoint i8 %41, %i.yv
+  %i.yw = or disjoint i8 0, %i.yv
   store i8 %i.yw, ptr %.1..1..1..1..sroa_idx1134, align 1, !tbaa !87
   br label %bb.bf
 
@@ -3730,9 +3725,8 @@ _ZN5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS0_18basic_multi_buff
   %i.bbg = getelementptr inbounds nuw i8, ptr %40, i64 24
   %.ptr4.i.i.i.i.i.i314 = getelementptr inbounds nuw i8, ptr %40, i64 32
   %i.bbh = shl nsw i8 %.sroa.29.0857, 4           ; 2 uses
-  %42 = shl nuw i8 %i.cm, 6                       ; 3 uses
-  %i.bbi = or disjoint i8 %42, 127
-  %i.bbj = or disjoint i8 %42, 126
+  %i.bbi = or disjoint i8 -128, 127
+  %i.bbj = or disjoint i8 -128, 126
   %i.bbk = or i8 %i.cj, %i.bbh
   %.1..1..1..1..sroa_idx1145 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %.2..2..2..2.gep.sroa_idx1148 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -3806,7 +3800,7 @@ _ZN5boost5beast9websocket6streamINS0_12basic_streamINS_4asio2ip3tcpENS4_15any_io
 
 bb.dm:                                            ; preds = %_ZN5boost5beast9websocket6streamINS0_12basic_streamINS_4asio2ip3tcpENS4_15any_io_executorENS0_21unlimited_rate_policyEEELb1EE9impl_type11create_maskEv.exit288
   %i.bcg = trunc nuw nsw i64 %..i289 to i8
-  %i.bch = or disjoint i8 %42, %i.bcg
+  %i.bch = or disjoint i8 -128, %i.bcg
   store i8 %i.bch, ptr %.1..1..1..1..sroa_idx1147, align 1, !tbaa !87
   br label %bb.dq
 
@@ -4209,7 +4203,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ca = getelementptr inbounds nuw i8, ptr %i.g, i64 2232 ; 2 uses
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !425
   %.not.not.not = icmp eq i32 %i.cb, 0            ; 2 uses
-  %i.cc = select i1 %.not.not.not, i8 2, i8 0     ; 3 uses
+  %i.cc = select i1 %.not.not.not, i8 2, i8 0
   %i.cd = or disjoint i8 %i.cc, %.sroa.29.0758    ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !392, !noalias !2606
@@ -4612,9 +4606,8 @@ _ZN5boost5beast14buffers_suffixINS1_INS0_18basic_multi_bufferISaIcEE8subrangeILb
   %i.qw = getelementptr inbounds nuw i8, ptr %10, i64 56
   %i.qx = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.qy = shl nsw i8 %.sroa.29.0758, 4            ; 2 uses
-  %37 = shl nuw i8 %i.cc, 6                       ; 3 uses
-  %i.qz = or disjoint i8 %37, 127
-  %i.ra = or disjoint i8 %37, 126
+  %i.qz = or disjoint i8 0, 127
+  %i.ra = or disjoint i8 0, 126
   %i.rb = shl nuw nsw i8 %i.cd, 1
   %i.rc = and i8 %i.rb, 4
   %i.rd = zext nneg i8 %i.rc to i64
@@ -4645,7 +4638,7 @@ bb.ay:                                            ; preds = %_ZN5boost5beast14bu
 
 bb.az:                                            ; preds = %bb.ay
   %i.rl = trunc nuw nsw i64 %..i to i8
-  %i.rm = or disjoint i8 %37, %i.rl
+  %i.rm = or disjoint i8 0, %i.rl
   store i8 %i.rm, ptr %.1..1..1..1..sroa_idx995, align 1, !tbaa !87
   br label %bb.bd
 
@@ -5048,9 +5041,8 @@ _ZN5boost5beast14buffers_suffixINS1_INS0_18basic_multi_bufferISaIcEE8subrangeILb
   %i.are = getelementptr inbounds nuw i8, ptr %36, i64 24
   %.ptr4.i.i.i.i.i.i391 = getelementptr inbounds nuw i8, ptr %36, i64 32
   %i.arf = shl nsw i8 %.sroa.29.0758, 4           ; 2 uses
-  %38 = shl nuw i8 %i.cc, 6                       ; 3 uses
-  %i.arg = or disjoint i8 %38, 127
-  %i.arh = or disjoint i8 %38, 126
+  %i.arg = or disjoint i8 -128, 127
+  %i.arh = or disjoint i8 -128, 126
   %i.ari = or i8 %i.bz, %i.arf
   %.1..1..1..1..sroa_idx1006 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %.2..2..2..2.gep.sroa_idx1009 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -5153,7 +5145,7 @@ _ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS4_I
 
 bb.cx:                                            ; preds = %_ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS4_INS3_18basic_multi_bufferISaIcEE8subrangeILb0EEEEEEEEEmRKT_RKT0_.exit369
   %i.ass = trunc nuw nsw i64 %..i353 to i8
-  %i.ast = or disjoint i8 %38, %i.ass
+  %i.ast = or disjoint i8 -128, %i.ass
   store i8 %i.ast, ptr %.1..1..1..1..sroa_idx1008, align 1, !tbaa !87
   br label %bb.db
 

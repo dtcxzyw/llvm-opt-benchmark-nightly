@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.f
   %i.bk = xor i64 %i.bj, %i.ar
   %i.bl = and i64 %i.bk, 6148914691236517205
   %.not30.us.i = icmp eq i64 %i.bl, 0             ; 2 uses
-  %.1.us.i = select i1 %.not30.us.i, i32 0, i32 1 ; 5 uses
+  %.1.us.i = select i1 %.not30.us.i, i32 0, i32 1 ; 4 uses
   %exitcond44.not.i = icmp eq i32 %.val109, 1
   br i1 %exitcond44.not.i, label %._crit_edge.i, label %.lr.ph.split.us.i.1
 
@@ -223,8 +223,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bp = zext nneg i32 %.1.us.i to i64
   %i.bq = getelementptr inbounds nuw [144 x i8], ptr @s_PPMasks, i64 %i.bp ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 24
-  %.neg.i.us.i.1 = shl nsw i32 -1, %.1.us.i
-  %i.bs = add nsw i32 %.neg.i.us.i.1, 2
+  %i.bs = add nsw i32 -1, 2
   %i.bt = load i64, ptr %i.br, align 8, !tbaa !47
   %i.bu = and i64 %i.bt, %i.ar
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bq, i64 32
@@ -421,7 +420,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.fq = xor i64 %i.fp, %i.ar
   %i.fr = and i64 %i.fq, 6148914691236517205
   %.not30.i = icmp eq i64 %i.fr, 0                ; 2 uses
-  %.1.i = select i1 %.not30.i, i32 0, i32 1       ; 5 uses
+  %.1.i = select i1 %.not30.i, i32 0, i32 1       ; 4 uses
   %exitcond.not.i = icmp eq i32 %.val109, 1
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.split.i.1
 
@@ -443,8 +442,7 @@ bb.ak:                                            ; preds = %bb.aj
   store i32 %i.fx, ptr %i.fy, align 4, !tbaa !46
   %i.fz = getelementptr inbounds nuw [144 x i8], ptr @s_PPMasks, i64 %i.fv ; 3 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 24
-  %.neg.i.i.1 = shl nsw i32 -1, %.1.i
-  %i.gb = add nsw i32 %.neg.i.i.1, 2
+  %i.gb = add nsw i32 -1, 2
   %i.gc = load i64, ptr %i.ga, align 8, !tbaa !47
   %i.gd = and i64 %i.gc, %i.ar
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fz, i64 32
@@ -847,7 +845,7 @@ bb.k:                                             ; preds = %bb.i
   %i.bi = xor i64 %i.bh, %i.bf
   %i.bj = and i64 %i.bi, 6148914691236517205
   %.not30.us.i = icmp eq i64 %i.bj, 0             ; 2 uses
-  %.1.us.i = select i1 %.not30.us.i, i32 0, i32 1 ; 5 uses
+  %.1.us.i = select i1 %.not30.us.i, i32 0, i32 1 ; 4 uses
   %exitcond44.not.i = icmp eq i32 %.val70, 1
   br i1 %exitcond44.not.i, label %._crit_edge.i, label %.lr.ph.split.us.i.1
 
@@ -865,8 +863,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bn = zext nneg i32 %.1.us.i to i64
   %i.bo = getelementptr inbounds nuw [144 x i8], ptr @s_PPMasks, i64 %i.bn ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
-  %.neg.i.us.i.1 = shl nsw i32 -1, %.1.us.i
-  %i.bq = add nsw i32 %.neg.i.us.i.1, 2
+  %i.bq = add nsw i32 -1, 2
   %i.br = load i64, ptr %i.bp, align 8, !tbaa !47
   %i.bs = and i64 %i.br, %i.bf
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bo, i64 32
@@ -1063,7 +1060,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.fo = xor i64 %i.fn, %i.bf
   %i.fp = and i64 %i.fo, 6148914691236517205
   %.not30.i = icmp eq i64 %i.fp, 0                ; 2 uses
-  %.1.i = select i1 %.not30.i, i32 0, i32 1       ; 5 uses
+  %.1.i = select i1 %.not30.i, i32 0, i32 1       ; 4 uses
   %exitcond.not.i = icmp eq i32 %.val70, 1
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.split.i.1
 
@@ -1085,8 +1082,7 @@ bb.af:                                            ; preds = %bb.ae
   store i32 %i.fv, ptr %i.fw, align 4, !tbaa !46
   %i.fx = getelementptr inbounds nuw [144 x i8], ptr @s_PPMasks, i64 %i.ft ; 3 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 24
-  %.neg.i.i.1 = shl nsw i32 -1, %.1.i
-  %i.fz = add nsw i32 %.neg.i.i.1, 2
+  %i.fz = add nsw i32 -1, 2
   %i.ga = load i64, ptr %i.fy, align 8, !tbaa !47
   %i.gb = and i64 %i.ga, %i.bf
   %i.gc = getelementptr inbounds nuw i8, ptr %i.fx, i64 32

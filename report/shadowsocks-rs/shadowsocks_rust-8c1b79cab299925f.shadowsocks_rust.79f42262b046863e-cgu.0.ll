@@ -205,15 +205,14 @@ select.unfold.i.i.i.i:                            ; preds = %.lr.ph
   %.sroa.44.0.copyload.i9861118 = phi ptr [ %i.aoj, %select.unfold.i.i.i.i ], [ %.sroa.6782.sroa.0.0.copyload, %select.unfold.i.i.i.i.preheader ] ; 4 uses
   %i.aoj = getelementptr inbounds nuw i8, ptr %.sroa.44.0.copyload.i9861118, i64 24 ; 4 uses
   %i.aok = getelementptr i8, ptr %.sroa.44.0.copyload.i9861118, i64 16
-  %.val4.i.i.i.i = load i64, ptr %i.aok, align 8, !noalias !7942, !noundef !14 ; 3 uses
+  %.val4.i.i.i.i = load i64, ptr %i.aok, align 8, !noalias !7942, !noundef !14 ; 2 uses
   %i.aol = icmp eq i64 %.val4.i.i.i.i, 0
   br i1 %i.aol, label %select.unfold.i.i.i.i, label %_RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCslDQ48jUgq5Q_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtCsgCecv3eZDcN_5alloc6string6StringEENtNtNtB8_6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i.loopexit.loopexit
 
 select.unfold.i.i.i.i._crit_edge.loopexit:        ; preds = %select.unfold.i.i.i.i
   %i.aom = getelementptr i8, ptr %.sroa.44.0.copyload.i9861118, i64 8
   %.val.i.i.i.i707.le1154 = load ptr, ptr %i.aom, align 8, !noalias !7942, !nonnull !14, !noundef !14
-  %.idx.le1151 = shl nuw nsw i64 %.val4.i.i.i.i, 5
-  %i.aon = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i707.le1154, i64 %.idx.le1151
+  %i.aon = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i707.le1154, i64 0
   br label %select.unfold.i.i.i.i._crit_edge
 
 select.unfold.i.i.i.i._crit_edge:                 ; preds = %select.unfold.i.i.i.i._crit_edge.loopexit, %select.unfold.i.i.i.i.preheader

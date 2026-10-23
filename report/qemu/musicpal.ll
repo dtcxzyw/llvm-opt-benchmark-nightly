@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.aj = tail call ptr @blk_by_legacy_dinfo(ptr noundef nonnull %i.ai) #9 ; 2 uses
-  %i.ak = tail call i64 @blk_getlength(ptr noundef %i.aj) #9 ; 3 uses
+  %i.ak = tail call i64 @blk_getlength(ptr noundef %i.aj) #9 ; 4 uses
   switch i64 %i.ak, label %bb.e [
     i64 33554432, label %bb.f
     i64 16777216, label %bb.f
@@ -217,9 +217,11 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d, %bb.d, %bb.d
-  %.rhs.trunc = trunc nuw nsw i64 %i.ak to i32
-  %1 = udiv i32 33554432, %.rhs.trunc
-  %i.al = tail call ptr @pflash_cfi02_register(i64 noundef 4261412864, ptr noundef nonnull @.str.14, i64 noundef %i.ak, ptr noundef %i.aj, i32 noundef 65536, i32 noundef %1, i32 noundef 2, i16 noundef zeroext 191, i16 noundef zeroext 9069, i16 noundef zeroext 0, i16 noundef zeroext 0, i16 noundef zeroext 21845, i16 noundef zeroext 10922, i32 noundef 0) #9 ; 0 uses
+  %1 = icmp eq i64 %i.ak, 16777216
+  %.finite = select i1 %1, i32 2, i32 4
+  %2 = icmp eq i64 %i.ak, 33554432
+  %.finite104 = select i1 %2, i32 1, i32 %.finite
+  %i.al = tail call ptr @pflash_cfi02_register(i64 noundef 4261412864, ptr noundef nonnull @.str.14, i64 noundef %i.ak, ptr noundef %i.aj, i32 noundef 65536, i32 noundef %.finite104, i32 noundef 2, i16 noundef zeroext 191, i16 noundef zeroext 9069, i16 noundef zeroext 0, i16 noundef zeroext 0, i16 noundef zeroext 21845, i16 noundef zeroext 10922, i32 noundef 0) #9 ; 0 uses
   br label %.preheader99.preheader
 
 .preheader99.preheader:                           ; preds = %bb.f, %bb.c

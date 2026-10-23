@@ -158,13 +158,18 @@ bb.o:                                             ; preds = %bb.f, %bb.i
   br i1 %.not, label %.thread, label %bb.p, !prof !58
 
 .thread:                                          ; preds = %bb.e, %bb.o
-  %.05578 = phi i32 [ 13, %bb.o ], [ 10, %bb.e ]
-  %7 = tail call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.05578) ; 2 uses
+  %.05578 = phi i32 [ 13, %bb.o ], [ 10, %bb.e ]  ; 3 uses
+  %7 = icmp eq i32 %.05578, 12
+  %.finite93 = select i1 %7, i32 12, i32 13
+  %8 = icmp eq i32 %.05578, 11
+  %.finite94 = select i1 %8, i32 11, i32 %.finite93
+  %9 = icmp eq i32 %.05578, 10
+  %.finite95 = select i1 %9, i32 10, i32 %.finite94 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %5, i64 312
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !55
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 320
   %i.av = load i32, ptr %i.au, align 8, !tbaa !56
-  %i.aw = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.at, ptr noundef nonnull %5, i32 noundef %i.av, i32 noundef %7, ptr noundef nonnull @FUNC_NAME) #7 ; 0 uses
+  %i.aw = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.at, ptr noundef nonnull %5, i32 noundef %i.av, i32 noundef %.finite95, ptr noundef nonnull @FUNC_NAME) #7 ; 0 uses
   br label %.thread84
 
 bb.p:                                             ; preds = %bb.o
@@ -186,16 +191,17 @@ bb.r:                                             ; preds = %bb.q
 
 .thread79:                                        ; preds = %bb.r, %bb.p, %bb.q
   %.15682 = phi i32 [ 2, %bb.q ], [ 3, %bb.r ], [ 3, %bb.p ]
-  %8 = tail call fastcc i32 @ompi_errcode_get_mpi_code(i32 noundef %.15682) ; 2 uses
+  %10 = icmp eq i32 %.15682, 2
+  %.finite = select i1 %10, i32 2, i32 3          ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 312
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !55
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 320
   %i.bf = load i32, ptr %i.be, align 8, !tbaa !56
-  %i.bg = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.bd, ptr noundef nonnull %5, i32 noundef %i.bf, i32 noundef %8, ptr noundef nonnull @FUNC_NAME) #7 ; 0 uses
+  %i.bg = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.bd, ptr noundef nonnull %5, i32 noundef %i.bf, i32 noundef %.finite, ptr noundef nonnull @FUNC_NAME) #7 ; 0 uses
   br label %.thread84
 
 .thread84:                                        ; preds = %ompi_comm_invalid.exit.thread, %.thread, %.thread79, %bb.n
-  %.0.ph = phi i32 [ %i.aq, %bb.n ], [ %8, %.thread79 ], [ %7, %.thread ], [ %i.l, %ompi_comm_invalid.exit.thread ]
+  %.0.ph = phi i32 [ %i.aq, %bb.n ], [ %.finite, %.thread79 ], [ %.finite95, %.thread ], [ %i.l, %ompi_comm_invalid.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %bb.y
 
