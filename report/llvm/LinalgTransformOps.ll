@@ -205,7 +205,7 @@ begin_hunk_0
 @.str.706 = private unnamed_addr constant [92 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::transform::TransposeMatmulInputAttr]\00", align 1
 @.str.707 = private unnamed_addr constant [86 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::linalg::WinogradConv2DFmrAttr]\00", align 1
 @switch.table._ZN4mlir9transform27stringifyMatchInterfaceEnumENS0_18MatchInterfaceEnumE = private unnamed_addr constant [3 x i8] c"\08\0F\11", align 8
-@switch.table._ZN4mlir9transform27stringifyMatchInterfaceEnumENS0_18MatchInterfaceEnumE.560 = private unnamed_addr constant [3 x ptr] [ptr @.str.144, ptr @.str.145, ptr @.str.146], align 8
+@switch.table._ZN4mlir9transform27stringifyMatchInterfaceEnumENS0_18MatchInterfaceEnumE.558 = private unnamed_addr constant [3 x ptr] [ptr @.str.144, ptr @.str.145, ptr @.str.146], align 8
 
 @_ZN4mlir9transform6detail54ApplyDataLayoutPropagationPatternsOpGenericAdaptorBaseC1ENS0_36ApplyDataLayoutPropagationPatternsOpE = unnamed_addr alias void (ptr, ptr), ptr @_ZN4mlir9transform6detail54ApplyDataLayoutPropagationPatternsOpGenericAdaptorBaseC2ENS0_36ApplyDataLayoutPropagationPatternsOpE
 @_ZN4mlir9transform43ApplyDataLayoutPropagationPatternsOpAdaptorC1ENS0_36ApplyDataLayoutPropagationPatternsOpE = unnamed_addr alias void (ptr, ptr), ptr @_ZN4mlir9transform43ApplyDataLayoutPropagationPatternsOpAdaptorC2ENS0_36ApplyDataLayoutPropagationPatternsOpE
@@ -608,7 +608,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4mlir9transform27stringifyMatchInterfaceEnumENS0_18MatchInterfaceEnumE.560, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4mlir9transform27stringifyMatchInterfaceEnumENS0_18MatchInterfaceEnumE.558, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   br label %bb.b
 

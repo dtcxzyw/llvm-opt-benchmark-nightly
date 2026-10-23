@@ -205,33 +205,33 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit31
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit31: ; preds = %bb.y, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i30
-  %i.cq = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10158, !inline_history !10134 ; 2 uses
+  %i.cq = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10134 ; 2 uses
   %.not8.i.i = icmp eq ptr %i.cq, null
   br i1 %.not8.i.i, label %thread-pre-split, label %bb.af
 
 bb.ab:                                            ; preds = %bb.x
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !10159)
-  %i.cr = load ptr, ptr %i.az, align 8, !alias.scope !10159, !noalias !10156, !align !59, !noundef !58
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !10158)
+  %i.cr = load ptr, ptr %i.az, align 8, !alias.scope !10158, !noalias !10156, !align !59, !noundef !58
   %.not.i = icmp eq ptr %i.cr, null
   br i1 %.not.i, label %bb.ac, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 bb.ac:                                            ; preds = %bb.ab
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !10160
-  %i.cs = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #44, !noalias !10160 ; 3 uses
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !10159
+  %i.cs = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #44, !noalias !10159 ; 3 uses
   %i.ct = icmp eq ptr %i.cs, null
   br i1 %i.ct, label %bb.ad, label %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i, !prof !57
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @_RNvNtCs40k4W9msRzi_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 40) #49, !noalias !10160
+  tail call void @_RNvNtCs40k4W9msRzi_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 40) #49, !noalias !10159
   unreachable
 
 _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i: ; preds = %bb.ac
-  store i64 -1, ptr %i.cs, align 8, !noalias !10160
-  store ptr %i.cs, ptr %i.az, align 8, !alias.scope !10159, !noalias !10156
+  store i64 -1, ptr %i.cs, align 8, !noalias !10159
+  store ptr %i.cs, ptr %i.az, align 8, !alias.scope !10158, !noalias !10156
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ab, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cu = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.az, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10158, !inline_history !10134 ; 2 uses
+  %i.cu = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.az, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10134 ; 2 uses
   %.not7.i.i = icmp eq ptr %i.cu, null
   br i1 %.not7.i.i, label %thread-pre-split, label %bb.ah
 
@@ -242,14 +242,14 @@ bb.ae:                                            ; preds = %bb.x
 
 bb.af:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.cq, ptr %i.a, align 8, !noalias !10161
+  store ptr %i.cq, ptr %i.a, align 8, !noalias !10160
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @360, i64 noundef 10, ptr noalias noundef nonnull readonly captures(address, read_provenance) @325, i64 noundef 7)
-          to label %_RNCINvXs3F_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_10DictionaryNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ag, !noalias !10158
+          to label %_RNCINvXs3F_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_10DictionaryNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ag, !noalias !10161
 
 common.resume:                                    ; preds = %bb.ak, %bb.ai, %bb.ag
   %.sink = phi ptr [ %i.c, %bb.ak ], [ %i.b, %bb.ai ], [ %i.a, %bb.ag ]
   %common.resume.op = phi { ptr, i32 } [ %i.da, %bb.ak ], [ %i.cy, %bb.ai ], [ %i.cw, %bb.ag ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10158
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10161
   resume { ptr, i32 } %common.resume.op
 
 bb.ag:                                            ; preds = %bb.af
@@ -258,7 +258,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %common.resume
 
 _RNCINvXs3F_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_10DictionaryNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.af
-  %i.cx = load ptr, ptr %i.a, align 8, !noalias !10161, !nonnull !58, !align !59, !noundef !58
+  %i.cx = load ptr, ptr %i.a, align 8, !noalias !10160, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2110DictionaryEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread54
 
@@ -266,7 +266,7 @@ bb.ah:                                            ; preds = %_RINvMNtCscI6d9CVNm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.cu, ptr %i.b, align 8, !noalias !10162
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @360, i64 noundef 10, ptr noalias noundef nonnull readonly captures(address, read_provenance) @362, i64 noundef 5)
-          to label %_RNCINvXs3F_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_10DictionaryNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ai, !noalias !10158
+          to label %_RNCINvXs3F_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_10DictionaryNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ai, !noalias !10161
 
 bb.ai:                                            ; preds = %bb.ah
   %i.cy = landingpad { ptr, i32 }
@@ -608,20 +608,20 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.z, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cp = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10212, !inline_history !10192 ; 2 uses
+  %i.cp = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10192 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cp, null
   br i1 %.not.i.i, label %thread-pre-split, label %bb.ae
 
 bb.ac:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.cl, ptr %i.a, align 8, !noalias !10213
+  store ptr %i.cl, ptr %i.a, align 8, !noalias !10212
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @328, i64 noundef 12, ptr noalias noundef nonnull readonly captures(address, read_provenance) @298, i64 noundef 14)
           to label %_RNCINvXs3X_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_12PackedStructNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ad, !noalias !10210
 
 common.resume:                                    ; preds = %bb.af, %bb.ad
   %.sink = phi ptr [ %i.b, %bb.af ], [ %i.a, %bb.ad ]
   %common.resume.op = phi { ptr, i32 } [ %i.cs, %bb.af ], [ %i.cq, %bb.ad ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10212
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10213
   resume { ptr, i32 } %common.resume.op
 
 bb.ad:                                            ; preds = %bb.ac
@@ -630,7 +630,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %common.resume
 
 _RNCINvXs3X_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_12PackedStructNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ac
-  %i.cr = load ptr, ptr %i.a, align 8, !noalias !10213, !nonnull !58, !align !59, !noundef !58
+  %i.cr = load ptr, ptr %i.a, align 8, !noalias !10212, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2112PackedStructEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread51
 
@@ -638,7 +638,7 @@ bb.ae:                                            ; preds = %_RINvMNtCscI6d9CVNm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.cp, ptr %i.b, align 8, !noalias !10214
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @328, i64 noundef 12, ptr noalias noundef nonnull readonly captures(address, read_provenance) @367, i64 noundef 6)
-          to label %_RNCINvXs3X_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_12PackedStructNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10212
+          to label %_RNCINvXs3X_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_12PackedStructNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10213
 
 bb.af:                                            ; preds = %bb.ae
   %i.cs = landingpad { ptr, i32 }
@@ -967,7 +967,7 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.z, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cr = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.az, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10264, !inline_history !10242 ; 2 uses
+  %i.cr = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.az, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10242 ; 2 uses
   %.not7.i.i = icmp eq ptr %i.cr, null
   br i1 %.not7.i.i, label %thread-pre-split, label %bb.af
 
@@ -978,14 +978,14 @@ bb.ac:                                            ; preds = %bb.x
 
 bb.ad:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.cn, ptr %i.a, align 8, !noalias !10265
+  store ptr %i.cn, ptr %i.a, align 8, !noalias !10264
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @371, i64 noundef 13, ptr noalias noundef nonnull readonly captures(address, read_provenance) @372, i64 noundef 15)
-          to label %_RNCINvXs3R_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_13FixedSizeListNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ae, !noalias !10266
+          to label %_RNCINvXs3R_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_13FixedSizeListNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ae, !noalias !10265
 
 common.resume:                                    ; preds = %bb.ai, %bb.ag, %bb.ae
   %.sink = phi ptr [ %i.c, %bb.ai ], [ %i.b, %bb.ag ], [ %i.a, %bb.ae ]
   %common.resume.op = phi { ptr, i32 } [ %i.cx, %bb.ai ], [ %i.cv, %bb.ag ], [ %i.ct, %bb.ae ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10264
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10266
   resume { ptr, i32 } %common.resume.op
 
 bb.ae:                                            ; preds = %bb.ad
@@ -994,7 +994,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %common.resume
 
 _RNCINvXs3R_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_13FixedSizeListNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ad
-  %i.cu = load ptr, ptr %i.a, align 8, !noalias !10265, !nonnull !58, !align !59, !noundef !58
+  %i.cu = load ptr, ptr %i.a, align 8, !noalias !10264, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2113FixedSizeListEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread51
 
@@ -1002,7 +1002,7 @@ bb.af:                                            ; preds = %_RINvMNtCscI6d9CVNm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.cr, ptr %i.b, align 8, !noalias !10267
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @371, i64 noundef 13, ptr noalias noundef nonnull readonly captures(address, read_provenance) @367, i64 noundef 6)
-          to label %_RNCINvXs3R_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_13FixedSizeListNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ag, !noalias !10264
+          to label %_RNCINvXs3R_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_13FixedSizeListNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ag, !noalias !10266
 
 bb.ag:                                            ; preds = %bb.af
   %i.cv = landingpad { ptr, i32 }
@@ -1018,7 +1018,7 @@ bb.ah:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.cs, ptr %i.c, align 8, !noalias !10268
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.c, ptr noalias noundef nonnull readonly captures(address, read_provenance) @371, i64 noundef 13, ptr noalias noundef nonnull readonly captures(address, read_provenance) @373, i64 noundef 12)
-          to label %_RNCINvXs3R_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_13FixedSizeListNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs0_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ai, !noalias !10266
+          to label %_RNCINvXs3R_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_13FixedSizeListNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs0_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ai, !noalias !10265
 
 bb.ai:                                            ; preds = %bb.ah
   %i.cx = landingpad { ptr, i32 }
@@ -1335,24 +1335,24 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.y, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cn = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.av, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10314, !inline_history !10296 ; 2 uses
+  %i.cn = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.av, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10296 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cn, null
   br i1 %.not.i.i, label %thread-pre-split, label %bb.ab
 
 bb.ab:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.cn, ptr %i.a, align 8, !noalias !10315
+  store ptr %i.cn, ptr %i.a, align 8, !noalias !10314
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @379, i64 noundef 15, ptr noalias noundef nonnull readonly captures(address, read_provenance) @367, i64 noundef 6)
-          to label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2115ByteStreamSplitEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread50 unwind label %bb.ac, !noalias !10314
+          to label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2115ByteStreamSplitEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread50 unwind label %bb.ac, !noalias !10315
 
 bb.ac:                                            ; preds = %bb.ab
   %i.co = landingpad { ptr, i32 }
           cleanup
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a) #50, !noalias !10314
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a) #50, !noalias !10315
   resume { ptr, i32 } %i.co
 
 _RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2115ByteStreamSplitEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread50: ; preds = %bb.ab
-  %i.cp = load ptr, ptr %i.a, align 8, !noalias !10315, !nonnull !58, !align !59, !noundef !58
+  %i.cp = load ptr, ptr %i.a, align 8, !noalias !10314, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file.exit.thread
 
@@ -1670,20 +1670,20 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.z, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cp = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10363, !inline_history !10343 ; 2 uses
+  %i.cp = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10343 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cp, null
   br i1 %.not.i.i, label %thread-pre-split, label %bb.ae
 
 bb.ac:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.cl, ptr %i.a, align 8, !noalias !10364
+  store ptr %i.cl, ptr %i.a, align 8, !noalias !10363
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @310, i64 noundef 19, ptr noalias noundef nonnull readonly captures(address, read_provenance) @306, i64 noundef 27)
-          to label %_RNCINvXs3j_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_19OutOfLineBitpackingNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ad, !noalias !10365
+          to label %_RNCINvXs3j_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_19OutOfLineBitpackingNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ad, !noalias !10364
 
 common.resume:                                    ; preds = %bb.af, %bb.ad
   %.sink = phi ptr [ %i.b, %bb.af ], [ %i.a, %bb.ad ]
   %common.resume.op = phi { ptr, i32 } [ %i.cs, %bb.af ], [ %i.cq, %bb.ad ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10363
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10365
   resume { ptr, i32 } %common.resume.op
 
 bb.ad:                                            ; preds = %bb.ac
@@ -1692,7 +1692,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %common.resume
 
 _RNCINvXs3j_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_19OutOfLineBitpackingNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ac
-  %i.cr = load ptr, ptr %i.a, align 8, !noalias !10364, !nonnull !58, !align !59, !noundef !58
+  %i.cr = load ptr, ptr %i.a, align 8, !noalias !10363, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119OutOfLineBitpackingEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread51
 
@@ -1700,7 +1700,7 @@ bb.ae:                                            ; preds = %_RINvMNtCscI6d9CVNm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.cp, ptr %i.b, align 8, !noalias !10366
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @310, i64 noundef 19, ptr noalias noundef nonnull readonly captures(address, read_provenance) @367, i64 noundef 6)
-          to label %_RNCINvXs3j_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_19OutOfLineBitpackingNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10363
+          to label %_RNCINvXs3j_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_19OutOfLineBitpackingNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10365
 
 bb.af:                                            ; preds = %bb.ae
   %i.cs = landingpad { ptr, i32 }
@@ -2021,46 +2021,46 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit31
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit31: ; preds = %bb.y, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i30
-  %i.co = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.aw, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10416, !inline_history !10394 ; 2 uses
+  %i.co = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.aw, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10394 ; 2 uses
   %.not5.i.i = icmp eq ptr %i.co, null
   br i1 %.not5.i.i, label %thread-pre-split, label %bb.ae
 
 bb.ab:                                            ; preds = %bb.x
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !10417)
-  %i.cp = load ptr, ptr %i.ax, align 8, !alias.scope !10417, !noalias !10414, !align !59, !noundef !58
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !10416)
+  %i.cp = load ptr, ptr %i.ax, align 8, !alias.scope !10416, !noalias !10414, !align !59, !noundef !58
   %.not.i = icmp eq ptr %i.cp, null
   br i1 %.not.i, label %bb.ac, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 bb.ac:                                            ; preds = %bb.ab
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !10418
-  %i.cq = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #44, !noalias !10418 ; 3 uses
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !10417
+  %i.cq = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #44, !noalias !10417 ; 3 uses
   %i.cr = icmp eq ptr %i.cq, null
   br i1 %i.cr, label %bb.ad, label %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i, !prof !57
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @_RNvNtCs40k4W9msRzi_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 40) #49, !noalias !10418
+  tail call void @_RNvNtCs40k4W9msRzi_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 40) #49, !noalias !10417
   unreachable
 
 _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i: ; preds = %bb.ac
-  store i64 -1, ptr %i.cq, align 8, !noalias !10418
-  store ptr %i.cq, ptr %i.ax, align 8, !alias.scope !10417, !noalias !10414
+  store i64 -1, ptr %i.cq, align 8, !noalias !10417
+  store ptr %i.cq, ptr %i.ax, align 8, !alias.scope !10416, !noalias !10414
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ab, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cs = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10416, !inline_history !10394 ; 2 uses
+  %i.cs = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10394 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cs, null
   br i1 %.not.i.i, label %thread-pre-split, label %bb.ag
 
 bb.ae:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.co, ptr %i.a, align 8, !noalias !10419
+  store ptr %i.co, ptr %i.a, align 8, !noalias !10418
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @365, i64 noundef 3, ptr noalias noundef nonnull readonly captures(address, read_provenance) @367, i64 noundef 6)
-          to label %_RNCINvXs3L_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_3RleNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10416
+          to label %_RNCINvXs3L_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_3RleNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10419
 
 common.resume:                                    ; preds = %bb.ah, %bb.af
   %.sink = phi ptr [ %i.b, %bb.ah ], [ %i.a, %bb.af ]
   %common.resume.op = phi { ptr, i32 } [ %i.cv, %bb.ah ], [ %i.ct, %bb.af ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10416
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10419
   resume { ptr, i32 } %common.resume.op
 
 bb.af:                                            ; preds = %bb.ae
@@ -2069,7 +2069,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %common.resume
 
 _RNCINvXs3L_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_3RleNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ae
-  %i.cu = load ptr, ptr %i.a, align 8, !noalias !10419, !nonnull !58, !align !59, !noundef !58
+  %i.cu = load ptr, ptr %i.a, align 8, !noalias !10418, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb213RleEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread54
 
@@ -2077,7 +2077,7 @@ bb.ag:                                            ; preds = %_RINvMNtCscI6d9CVNm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.cs, ptr %i.b, align 8, !noalias !10420
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @365, i64 noundef 3, ptr noalias noundef nonnull readonly captures(address, read_provenance) @370, i64 noundef 11)
-          to label %_RNCINvXs3L_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_3RleNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ah, !noalias !10416
+          to label %_RNCINvXs3L_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_3RleNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ah, !noalias !10419
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cv = landingpad { ptr, i32 }
@@ -2403,20 +2403,20 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.z, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cp = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10468, !inline_history !10448 ; 2 uses
+  %i.cp = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10448 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cp, null
   br i1 %.not.i.i, label %thread-pre-split, label %bb.ae
 
 bb.ac:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.cl, ptr %i.a, align 8, !noalias !10469
+  store ptr %i.cl, ptr %i.a, align 8, !noalias !10468
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @350, i64 noundef 4, ptr noalias noundef nonnull readonly captures(address, read_provenance) @352, i64 noundef 12)
-          to label %_RNCINvXs3z_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_4FsstNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ad, !noalias !10470
+          to label %_RNCINvXs3z_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_4FsstNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ad, !noalias !10469
 
 common.resume:                                    ; preds = %bb.af, %bb.ad
   %.sink = phi ptr [ %i.b, %bb.af ], [ %i.a, %bb.ad ]
   %common.resume.op = phi { ptr, i32 } [ %i.cs, %bb.af ], [ %i.cq, %bb.ad ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10468
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10470
   resume { ptr, i32 } %common.resume.op
 
 bb.ad:                                            ; preds = %bb.ac
@@ -2425,7 +2425,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %common.resume
 
 _RNCINvXs3z_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_4FsstNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ac
-  %i.cr = load ptr, ptr %i.a, align 8, !noalias !10469, !nonnull !58, !align !59, !noundef !58
+  %i.cr = load ptr, ptr %i.a, align 8, !noalias !10468, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb214FsstEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread51
 
@@ -2433,7 +2433,7 @@ bb.ae:                                            ; preds = %_RINvMNtCscI6d9CVNm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.cp, ptr %i.b, align 8, !noalias !10471
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @350, i64 noundef 4, ptr noalias noundef nonnull readonly captures(address, read_provenance) @367, i64 noundef 6)
-          to label %_RNCINvXs3z_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_4FsstNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10468
+          to label %_RNCINvXs3z_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_4FsstNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.af, !noalias !10470
 
 bb.af:                                            ; preds = %bb.ae
   %i.cs = landingpad { ptr, i32 }
@@ -2745,46 +2745,46 @@ bb.z:                                             ; preds = %bb.y
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.y, %bb.z
-  %i.cm = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 4 dereferenceable(12) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10521, !inline_history !10499 ; 2 uses
+  %i.cm = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 4 dereferenceable(12) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10499 ; 2 uses
   %.not5.i.i = icmp eq ptr %i.cm, null
   br i1 %.not5.i.i, label %thread-pre-split, label %bb.ad
 
 bb.aa:                                            ; preds = %bb.x
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !10522)
-  %i.cn = load ptr, ptr %i.aw, align 8, !alias.scope !10522, !noalias !10523, !align !59, !noundef !58
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !10521)
+  %i.cn = load ptr, ptr %i.aw, align 8, !alias.scope !10521, !noalias !10522, !align !59, !noundef !58
   %.not.i = icmp eq ptr %i.cn, null
   br i1 %.not.i, label %bb.ab, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 bb.ab:                                            ; preds = %bb.aa
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !10524
-  %i.co = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #44, !noalias !10524 ; 3 uses
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !10523
+  %i.co = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #44, !noalias !10523 ; 3 uses
   %i.cp = icmp eq ptr %i.co, null
   br i1 %i.cp, label %bb.ac, label %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i, !prof !57
 
 bb.ac:                                            ; preds = %bb.ab
-  tail call void @_RNvNtCs40k4W9msRzi_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 40) #49, !noalias !10524
+  tail call void @_RNvNtCs40k4W9msRzi_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 40) #49, !noalias !10523
   unreachable
 
 _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i: ; preds = %bb.ab
-  store i64 -1, ptr %i.co, align 8, !noalias !10524
-  store ptr %i.co, ptr %i.aw, align 8, !alias.scope !10522, !noalias !10523
+  store i64 -1, ptr %i.co, align 8, !noalias !10523
+  store ptr %i.co, ptr %i.aw, align 8, !alias.scope !10521, !noalias !10522
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.aa, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.cq = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.aw, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10521, !inline_history !10499 ; 2 uses
+  %i.cq = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.aw, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10499 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cq, null
   br i1 %.not.i.i, label %thread-pre-split, label %bb.af
 
 bb.ad:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.cm, ptr %i.a, align 8, !noalias !10525
+  store ptr %i.cm, ptr %i.a, align 8, !noalias !10524
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @387, i64 noundef 7, ptr noalias noundef nonnull readonly captures(address, read_provenance) @299, i64 noundef 11)
-          to label %_RNCINvXs49_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_7GeneralNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ae, !noalias !10526
+          to label %_RNCINvXs49_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_7GeneralNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ae, !noalias !10525
 
 common.resume:                                    ; preds = %bb.ag, %bb.ae
   %.sink = phi ptr [ %i.b, %bb.ag ], [ %i.a, %bb.ae ]
   %common.resume.op = phi { ptr, i32 } [ %i.ct, %bb.ag ], [ %i.cr, %bb.ae ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10521
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10526
   resume { ptr, i32 } %common.resume.op
 
 bb.ae:                                            ; preds = %bb.ad
@@ -2793,7 +2793,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %common.resume
 
 _RNCINvXs49_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_7GeneralNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ad
-  %i.cs = load ptr, ptr %i.a, align 8, !noalias !10525, !nonnull !58, !align !59, !noundef !58
+  %i.cs = load ptr, ptr %i.a, align 8, !noalias !10524, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb217GeneralEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread52
 
@@ -2801,7 +2801,7 @@ bb.af:                                            ; preds = %_RINvMNtCscI6d9CVNm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.cq, ptr %i.b, align 8, !noalias !10527
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @387, i64 noundef 7, ptr noalias noundef nonnull readonly captures(address, read_provenance) @367, i64 noundef 6)
-          to label %_RNCINvXs49_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_7GeneralNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ag, !noalias !10521
+          to label %_RNCINvXs49_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_7GeneralNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShEs_0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ag, !noalias !10526
 
 bb.ag:                                            ; preds = %bb.af
   %i.ct = landingpad { ptr, i32 }
@@ -3124,35 +3124,35 @@ _RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.y, %_RNvYNvYINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingENtNtCscI6d9CVNmLh_4core7default7Default7defaultINtNtNtB1Q_3ops8function6FnOnceuE9call_onceCsaSXGKSfiU2E_10lance_file.exit.i
-  %i.co = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.aw, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10578, !inline_history !10556 ; 2 uses
+  %i.co = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 8 dereferenceable(8) %i.aw, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10556 ; 2 uses
   %.not5.i.i = icmp eq ptr %i.co, null
   br i1 %.not5.i.i, label %thread-pre-split, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.x
-  %i.cp = load i32, ptr %i.ax, align 4, !range !76, !alias.scope !10579, !noalias !10580, !noundef !58
+  %i.cp = load i32, ptr %i.ax, align 4, !range !76, !alias.scope !10578, !noalias !10579, !noundef !58
   %.not.i = icmp eq i32 %i.cp, -1
   br i1 %.not.i, label %bb.ac, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 bb.ac:                                            ; preds = %bb.ab
-  store i32 0, ptr %i.ax, align 4, !alias.scope !10579, !noalias !10580
-  store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !10579, !noalias !10580
+  store i32 0, ptr %i.ax, align 4, !alias.scope !10578, !noalias !10579
+  store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !10578, !noalias !10579
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ab, %bb.ac
-  %i.cq = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 4 dereferenceable(12) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !noalias !10578, !inline_history !10556 ; 2 uses
+  %i.cq = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2117BufferCompressionQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc, ptr noalias noundef align 4 dereferenceable(12) %i.ax, ptr noalias noundef nonnull align 8 dereferenceable(8) %1, i32 noundef range(i32 0, -3) %2), !inline_history !10556 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cq, null
   br i1 %.not.i.i, label %thread-pre-split, label %bb.af
 
 bb.ad:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2119CompressiveEncodingEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECsaSXGKSfiU2E_10lance_file.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.co, ptr %i.a, align 8, !noalias !10581
+  store ptr %i.co, ptr %i.a, align 8, !noalias !10580
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @345, i64 noundef 8, ptr noalias noundef nonnull readonly captures(address, read_provenance) @366, i64 noundef 7)
-          to label %_RNCINvXs34_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_8VariableNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ae, !noalias !10578
+          to label %_RNCINvXs34_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_8VariableNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit unwind label %bb.ae, !noalias !10581
 
 common.resume:                                    ; preds = %bb.ag, %bb.ae
   %.sink = phi ptr [ %i.b, %bb.ag ], [ %i.a, %bb.ae ]
   %common.resume.op = phi { ptr, i32 } [ %i.ct, %bb.ag ], [ %i.cr, %bb.ae ]
-  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10578
+  call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCskAO0uQb8M5a_5prost5error11DecodeErrorECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink) #50, !noalias !10581
   resume { ptr, i32 } %common.resume.op
 
 bb.ae:                                            ; preds = %bb.ad
@@ -3161,7 +3161,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %common.resume
 
 _RNCINvXs34_NtNtCsjjpCCFGI3ul_14lance_encoding6format4pb21NtB9_8VariableNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0CsaSXGKSfiU2E_10lance_file.exit: ; preds = %bb.ad
-  %i.cs = load ptr, ptr %i.a, align 8, !noalias !10581, !nonnull !58, !align !59, !noundef !58
+  %i.cs = load ptr, ptr %i.a, align 8, !noalias !10580, !nonnull !58, !align !59, !noundef !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeINtNtCs40k4W9msRzi_5alloc5boxed3BoxNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb218VariableEQRShE0CsaSXGKSfiU2E_10lance_file.exit.thread52
 
@@ -3564,10 +3564,10 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10155 = !{!10128}
 !10156 = !{!10133, !10131, !10130}
 !10157 = !{!10128, !10133, !10131, !10130}
-!10158 = !{!10131}
-!10159 = !{!10136}
-!10160 = !{!10136, !10133, !10131, !10130}
-!10161 = !{!10138, !10131}
+!10158 = !{!10136}
+!10159 = !{!10136, !10133, !10131, !10130}
+!10160 = !{!10138, !10131}
+!10161 = !{!10131}
 !10162 = !{!10140, !10131}
 !10163 = !{!10143, !10141, !10133, !10131, !10130}
 !10164 = !{!10141, !10133, !10131, !10130}
@@ -3618,8 +3618,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10209 = !{!10186}
 !10210 = !{!10191, !10189, !10188}
 !10211 = !{!10186, !10191, !10189, !10188}
-!10212 = !{!10189}
-!10213 = !{!10194, !10191, !10189, !10188}
+!10212 = !{!10194, !10191, !10189, !10188}
+!10213 = !{!10189}
 !10214 = !{!10196, !10189}
 !10215 = !{!10197, !10189}
 !10216 = distinct !{!10216, i1 true, !"_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file"}
@@ -3670,9 +3670,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10261 = !{!10236}
 !10262 = !{!10241, !10239, !10238}
 !10263 = !{!10236, !10241, !10239, !10238}
-!10264 = !{!10239}
-!10265 = !{!10245, !10243, !10241, !10239, !10238}
-!10266 = !{!10243, !10241, !10239, !10238}
+!10264 = !{!10245, !10243, !10241, !10239, !10238}
+!10265 = !{!10243, !10241, !10239, !10238}
+!10266 = !{!10239}
 !10267 = !{!10247, !10239}
 !10268 = !{!10249, !10243, !10241, !10239, !10238}
 !10269 = !{!10243, !10239}
@@ -3720,8 +3720,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10311 = !{!10290}
 !10312 = !{!10295, !10293, !10292}
 !10313 = !{!10290, !10295, !10293, !10292}
-!10314 = !{!10293}
-!10315 = !{!10298, !10293}
+!10314 = !{!10298, !10293}
+!10315 = !{!10293}
 !10316 = !{!10299, !10293}
 !10317 = distinct !{!10317, i1 true, !"_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file"}
 !10318 = distinct !{!10318, !10317, !"_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file: argument 0"}
@@ -3769,9 +3769,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10360 = !{!10337}
 !10361 = !{!10342, !10340, !10339}
 !10362 = !{!10337, !10342, !10340, !10339}
-!10363 = !{!10340}
-!10364 = !{!10346, !10344, !10342, !10340, !10339}
-!10365 = !{!10344, !10342, !10340, !10339}
+!10363 = !{!10346, !10344, !10342, !10340, !10339}
+!10364 = !{!10344, !10342, !10340, !10339}
+!10365 = !{!10340}
 !10366 = !{!10348, !10340}
 !10367 = !{!10344, !10340}
 !10368 = distinct !{!10368, i1 true, !"_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file"}
@@ -3822,10 +3822,10 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10413 = !{!10388}
 !10414 = !{!10393, !10391, !10390}
 !10415 = !{!10388, !10393, !10391, !10390}
-!10416 = !{!10391}
-!10417 = !{!10396}
-!10418 = !{!10396, !10393, !10391, !10390}
-!10419 = !{!10398, !10391}
+!10416 = !{!10396}
+!10417 = !{!10396, !10393, !10391, !10390}
+!10418 = !{!10398, !10391}
+!10419 = !{!10391}
 !10420 = !{!10400, !10391}
 !10421 = !{!10401, !10391}
 !10422 = distinct !{!10422, i1 true, !"_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file"}
@@ -3874,9 +3874,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10465 = !{!10442}
 !10466 = !{!10447, !10445, !10444}
 !10467 = !{!10442, !10447, !10445, !10444}
-!10468 = !{!10445}
-!10469 = !{!10451, !10449, !10447, !10445, !10444}
-!10470 = !{!10449, !10447, !10445, !10444}
+!10468 = !{!10451, !10449, !10447, !10445, !10444}
+!10469 = !{!10449, !10447, !10445, !10444}
+!10470 = !{!10445}
 !10471 = !{!10453, !10445}
 !10472 = !{!10449, !10445}
 !10473 = distinct !{!10473, i1 true, !"_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file"}
@@ -3927,12 +3927,12 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10518 = !{!10493}
 !10519 = !{!10495, !10493}
 !10520 = !{!10498, !10497}
-!10521 = !{!10498}
-!10522 = !{!10501}
-!10523 = !{!10502, !10498, !10497}
-!10524 = !{!10501, !10502, !10498, !10497}
-!10525 = !{!10504, !10493, !10502, !10498, !10497}
-!10526 = !{!10493, !10502, !10498, !10497}
+!10521 = !{!10501}
+!10522 = !{!10502, !10498, !10497}
+!10523 = !{!10501, !10502, !10498, !10497}
+!10524 = !{!10504, !10493, !10502, !10498, !10497}
+!10525 = !{!10493, !10502, !10498, !10497}
+!10526 = !{!10498}
 !10527 = !{!10506, !10498}
 !10528 = !{!10493, !10498}
 !10529 = distinct !{!10529, i1 true, !"_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_10lance_file"}
@@ -3984,10 +3984,10 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !10575 = !{!10551}
 !10576 = !{!10555, !10554, !10553}
 !10577 = !{!10551, !10555, !10554, !10553}
-!10578 = !{!10554}
-!10579 = !{!10558, !10549}
-!10580 = !{!10554, !10553}
-!10581 = !{!10560, !10554}
+!10578 = !{!10558, !10549}
+!10579 = !{!10554, !10553}
+!10580 = !{!10560, !10554}
+!10581 = !{!10554}
 !10582 = !{!10562, !10549, !10555, !10554, !10553}
 !10583 = !{!10549, !10555, !10554, !10553}
 !10584 = !{!10549, !10554}

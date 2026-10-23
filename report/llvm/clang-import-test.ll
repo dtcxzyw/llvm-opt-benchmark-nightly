@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
   %8 = alloca %"class.llvm::Error", align 8       ; 3 uses
   %9 = alloca %"struct.(anonymous namespace)::CIAndOrigins", align 8 ; 10 uses
-  %10 = alloca %"class.llvm::Expected", align 8   ; 8 uses
+  %10 = alloca %"class.llvm::Expected", align 8   ; 7 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
   %12 = alloca %"class.llvm::Error", align 8      ; 3 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !64     ; 3 uses
@@ -607,11 +607,7 @@ _ZNSt6vectorIN12_GLOBAL__N_112CIAndOriginsESaIS1_EE9push_backEOS1_.exit59: ; pre
   %i.gv = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.gw = load i8, ptr %i.gv, align 8, !noalias !395
   %i.gx = trunc i8 %i.gw to i1
-  br i1 %i.gx, label %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEE9takeErrorEv.exit62, label %.loopexit._ZN4llvm5ErrorD2Ev.exit64_crit_edge
-
-.loopexit._ZN4llvm5ErrorD2Ev.exit64_crit_edge:    ; preds = %.loopexit
-  %.val27.pre = load ptr, ptr %10, align 8
-  br label %_ZN4llvm5ErrorD2Ev.exit64
+  br i1 %i.gx, label %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEE9takeErrorEv.exit62, label %_ZN4llvm5ErrorD2Ev.exit64
 
 _ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEE9takeErrorEv.exit62: ; preds = %.loopexit
   %i.gy = load i64, ptr %10, align 8, !tbaa !105, !noalias !395 ; 2 uses
@@ -645,8 +641,7 @@ _ZN4llvm5ErrorD2Ev.exit63.a:                      ; preds = %bb.y, %bb.z
   call void @exit(i32 noundef -1) #25
   unreachable
 
-_ZN4llvm5ErrorD2Ev.exit64:                        ; preds = %.loopexit._ZN4llvm5ErrorD2Ev.exit64_crit_edge, %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEE9takeErrorEv.exit62
-  %.val27 = phi ptr [ %.val27.pre, %.loopexit._ZN4llvm5ErrorD2Ev.exit64_crit_edge ], [ null, %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEE9takeErrorEv.exit62 ]
+_ZN4llvm5ErrorD2Ev.exit64:                        ; preds = %.loopexit, %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEE9takeErrorEv.exit62
   %i.hj = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL6Direct, i64 120), align 8, !tbaa !78, !range !29, !noundef !30
   %i.hk = trunc nuw i8 %i.hj to i1
   %.not152 = xor i1 %i.hk, true
@@ -681,18 +676,19 @@ _ZN4llvm5ErrorD2Ev.exit64:                        ; preds = %.loopexit._ZN4llvm5
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %_ZN4llvm5ErrorD2Ev.exit64
   %i.hv = phi i64 [ %i.hu, %._crit_edge.loopexit.i ], [ 0, %_ZN4llvm5ErrorD2Ev.exit64 ]
   %i.hw = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ %i.hn, %_ZN4llvm5ErrorD2Ev.exit64 ]
-  %i.hx = getelementptr inbounds nuw i8, ptr %.val27, i64 136
+  %13 = load ptr, ptr %10, align 8, !tbaa !81     ; 3 uses
+  %i.hx = getelementptr inbounds nuw i8, ptr %13, i64 136
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !111
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 18624
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !118
   call void @_ZN5clang17ExternalASTMerger13RemoveSourcesEN4llvm8ArrayRefINS0_14ImporterSourceEEE(ptr noundef nonnull align 8 dereferenceable(128) %i.ia, ptr %i.hw, i64 %i.hv) #21
   %i.ib = load ptr, ptr %2, align 8, !tbaa !33    ; 2 uses
   %i.ic = icmp eq ptr %i.ib, %i.hn
-  br i1 %i.ic, label %_ZN12_GLOBAL__N_16ForgetERNS_12CIAndOriginsEN4llvm15MutableArrayRefIS0_EE.exit, label %bb.aa
+  br i1 %i.ic, label %_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68, label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge.i
   call void @free(ptr noundef %i.ib) #21
-  br label %_ZN12_GLOBAL__N_16ForgetERNS_12CIAndOriginsEN4llvm15MutableArrayRefIS0_EE.exit
+  br label %_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68
 
 bb.ab:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN5clang17ExternalASTMerger14ImporterSourceELb1EE9push_backERKS3_.exit.i, %.lr.ph.i
   %.04.i = phi ptr [ %.sroa.speculated, %.lr.ph.i ], [ %i.iw, %_ZN4llvm23SmallVectorTemplateBaseIN5clang17ExternalASTMerger14ImporterSourceELb1EE9push_backERKS3_.exit.i ] ; 3 uses
@@ -758,26 +754,18 @@ _ZN4llvm23SmallVectorTemplateBaseIN5clang17ExternalASTMerger14ImporterSourceELb1
   %.not.i65 = icmp eq ptr %i.iw, %.sroa.phi97.sroa.speculated
   br i1 %.not.i65, label %._crit_edge.loopexit.i, label %bb.ab
 
-_ZN12_GLOBAL__N_16ForgetERNS_12CIAndOriginsEN4llvm15MutableArrayRefIS0_EE.exit: ; preds = %._crit_edge.i, %bb.aa
+_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68: ; preds = %._crit_edge.i, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
-  %.val15 = load ptr, ptr %10, align 8            ; 3 uses
-  %.not.i.i67 = icmp eq ptr %.val15, null
-  br i1 %.not.i.i67, label %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEED2Ev.exit69, label %_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68
-
-_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68: ; preds = %_ZN12_GLOBAL__N_16ForgetERNS_12CIAndOriginsEN4llvm15MutableArrayRefIS0_EE.exit
-  %i.ix = load ptr, ptr %.val15, align 8, !tbaa !15
+  %i.ix = load ptr, ptr %13, align 8, !tbaa !15
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 8
   %i.iz = load ptr, ptr %i.iy, align 8
-  call void %i.iz(ptr noundef nonnull align 8 dereferenceable(8) %.val15) #21, !inline_history !343
-  br label %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEED2Ev.exit69
-
-_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEED2Ev.exit69: ; preds = %_ZN12_GLOBAL__N_16ForgetERNS_12CIAndOriginsEN4llvm15MutableArrayRefIS0_EE.exit, %_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68
+  call void %i.iz(ptr noundef nonnull align 8 dereferenceable(8) %13) #21, !inline_history !343
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   %.not4.i.i.i = icmp eq ptr %.sroa.0100.3, %.sroa.11.3
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN12_GLOBAL__N_112CIAndOriginsEEvT_S3_.exit.i, label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i:                                     ; preds = %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEED2Ev.exit69, %_ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.jd, %_ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i ], [ %.sroa.0100.3, %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEED2Ev.exit69 ] ; 2 uses
+.lr.ph.i.i.i:                                     ; preds = %_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68, %_ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i
+  %.05.i.i.i = phi ptr [ %i.jd, %_ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i ], [ %.sroa.0100.3, %_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68 ] ; 2 uses
   %.0.val.i.i.i = load ptr, ptr %.05.i.i.i, align 8, !tbaa !81 ; 3 uses
   %.not.i.i.i.i.i.i70 = icmp eq ptr %.0.val.i.i.i, null
   br i1 %.not.i.i.i.i.i.i70, label %_ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i, label %_ZNKSt14default_deleteIN5clang16CompilerInstanceEEclEPS1_.exit.i.i.i.i.i.i
@@ -794,7 +782,7 @@ _ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i: ; preds = %_ZNKSt1
   %.not.i.i.i = icmp eq ptr %i.jd, %.sroa.11.3
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPN12_GLOBAL__N_112CIAndOriginsEEvT_S3_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !373
 
-_ZSt8_DestroyIPN12_GLOBAL__N_112CIAndOriginsEEvT_S3_.exit.i: ; preds = %_ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i, %_ZN4llvm8ExpectedIN12_GLOBAL__N_112CIAndOriginsEED2Ev.exit69
+_ZSt8_DestroyIPN12_GLOBAL__N_112CIAndOriginsEEvT_S3_.exit.i: ; preds = %_ZSt8_DestroyIN12_GLOBAL__N_112CIAndOriginsEEvPT_.exit.i.i.i, %_ZN12_GLOBAL__N_112CIAndOriginsD2Ev.exit.sink.split.i68
   %.not.i.i2.i = icmp eq ptr %.sroa.0100.3, null
   br i1 %.not.i.i2.i, label %_ZNSt6vectorIN12_GLOBAL__N_112CIAndOriginsESaIS1_EED2Ev.exit, label %bb.ag
 

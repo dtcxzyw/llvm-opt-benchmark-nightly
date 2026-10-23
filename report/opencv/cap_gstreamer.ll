@@ -205,7 +205,7 @@ bb.a:
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %9 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 20 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %11 = alloca %"class.cv::(anonymous namespace)::GSafePtr.14", align 8 ; 9 uses
+  %11 = alloca %"class.cv::(anonymous namespace)::GSafePtr.14", align 8 ; 11 uses
   %12 = alloca %"class.cv::(anonymous namespace)::GSafePtr.15", align 8 ; 5 uses
   %13 = alloca %"class.cv::(anonymous namespace)::GSafePtr", align 8 ; 10 uses
   %14 = alloca %"class.cv::(anonymous namespace)::GSafePtr", align 8 ; 18 uses
@@ -608,7 +608,7 @@ _ZN2cv12_GLOBAL__N_18GSafePtrIcE6attachEPc.exit:  ; preds = %bb.dw
   br label %bb.dx
 
 bb.dx:                                            ; preds = %bb.du, %bb.cv, %_ZN2cv12_GLOBAL__N_18GSafePtrIcE6attachEPc.exit
-  %.val728 = phi ptr [ %i.nr, %_ZN2cv12_GLOBAL__N_18GSafePtrIcE6attachEPc.exit ], [ %.val729, %bb.cv ], [ null, %bb.du ] ; 7 uses
+  %.val728 = phi ptr [ %i.nr, %_ZN2cv12_GLOBAL__N_18GSafePtrIcE6attachEPc.exit ], [ %.val729, %bb.cv ], [ null, %bb.du ] ; 3 uses
   %.val655 = phi i1 [ true, %_ZN2cv12_GLOBAL__N_18GSafePtrIcE6attachEPc.exit ], [ true, %bb.cv ], [ false, %bb.du ]
   %.1254 = phi i1 [ false, %_ZN2cv12_GLOBAL__N_18GSafePtrIcE6attachEPc.exit ], [ true, %bb.cv ], [ false, %bb.du ] ; 2 uses
   %.1252 = phi i1 [ false, %_ZN2cv12_GLOBAL__N_18GSafePtrIcE6attachEPc.exit ], [ false, %bb.cv ], [ true, %bb.du ] ; 4 uses
@@ -891,11 +891,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit886: ; preds = %bb
   br i1 %i.qx, label %bb.fb, label %bb.fn
 
 bb.fb:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit886
-  %i.qy = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrIcE3getEv(ptr %.val728)
+  %.val710 = load ptr, ptr %11, align 8, !tbaa !160 ; 2 uses
+  %i.qy = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrIcE3getEv(ptr %.val710)
           to label %bb.fc unwind label %bb.fx     ; 0 uses
 
 bb.fc:                                            ; preds = %bb.fb
-  %i.qz = invoke noalias ptr @gst_element_make_from_uri(i32 noundef 2, ptr noundef nonnull %.val728, ptr noundef nonnull @.str.111, ptr noundef null)
+  %i.qz = invoke noalias ptr @gst_element_make_from_uri(i32 noundef 2, ptr noundef nonnull %.val710, ptr noundef nonnull @.str.111, ptr noundef null)
           to label %bb.fd unwind label %bb.fx
 
 bb.fd:                                            ; preds = %bb.fc
@@ -1029,11 +1030,12 @@ bb.fu:                                            ; preds = %bb.fo
           to label %bb.fv unwind label %bb.fx     ; 0 uses
 
 bb.fv:                                            ; preds = %bb.fu
-  %i.sc = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrIcE3getEv(ptr %.val728)
+  %.val709 = load ptr, ptr %11, align 8, !tbaa !160 ; 2 uses
+  %i.sc = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrIcE3getEv(ptr %.val709)
           to label %bb.fw unwind label %bb.fx     ; 0 uses
 
 bb.fw:                                            ; preds = %bb.fv
-  invoke void (ptr, ptr, ...) @g_object_set(ptr noundef nonnull %.val653, ptr noundef nonnull @.str.113, ptr noundef nonnull %.val728, i64 noundef 0)
+  invoke void (ptr, ptr, ...) @g_object_set(ptr noundef nonnull %.val653, ptr noundef nonnull @.str.113, ptr noundef nonnull %.val709, i64 noundef 0)
           to label %.critedge unwind label %bb.fx
 
 bb.fx:                                            ; preds = %bb.fb, %bb.fv, %bb.fu, %bb.fc, %bb.fn, %bb.fw
@@ -1436,7 +1438,7 @@ bb.kc:                                            ; preds = %bb.kb, %bb.hb, %bb.
   br label %.body796
 
 bb.kd:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit759, %bb.fl
-  %.val429 = phi ptr [ null, %bb.fl ], [ %.val429982, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit759 ] ; 4 uses
+  %.val429 = phi ptr [ null, %bb.fl ], [ %.val429982, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit759 ] ; 2 uses
   %.val417907 = phi ptr [ %i.uh, %bb.fl ], [ %i.ye, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit759 ] ; 10 uses
   %.3281 = phi i32 [ %2, %bb.fl ], [ %.2280, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit759 ]
   br label %bb.ke
@@ -1839,11 +1841,12 @@ bb.no:                                            ; preds = %bb.nn
           to label %bb.np unwind label %bb.ox     ; 0 uses
 
 bb.np:                                            ; preds = %bb.no
-  %i.ajv = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrI11_GstElementE3getEv(ptr nonnull %.val429)
+  %.val425 = load ptr, ptr %38, align 8, !tbaa !66 ; 4 uses
+  %i.ajv = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrI11_GstElementE3getEv(ptr %.val425)
           to label %bb.nq unwind label %bb.ox     ; 0 uses
 
 bb.nq:                                            ; preds = %bb.np
-  invoke void (ptr, ptr, ...) @gst_bin_add_many(ptr noundef nonnull %.val428, ptr noundef nonnull %.val427, ptr noundef nonnull %.val417907, ptr noundef nonnull %.val429, i64 noundef 0)
+  invoke void (ptr, ptr, ...) @gst_bin_add_many(ptr noundef nonnull %.val428, ptr noundef nonnull %.val427, ptr noundef nonnull %.val417907, ptr noundef nonnull %.val425, i64 noundef 0)
           to label %bb.nr unwind label %bb.ox
 
 bb.nr:                                            ; preds = %bb.nq
@@ -1856,12 +1859,11 @@ bb.ns:                                            ; preds = %bb.nr
           to label %bb.nt unwind label %bb.ox     ; 0 uses
 
 bb.nt:                                            ; preds = %bb.ns
-  %.val422 = load ptr, ptr %38, align 8, !tbaa !66 ; 2 uses
-  %i.ajy = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrI11_GstElementE3getEv(ptr %.val422)
+  %i.ajy = invoke fastcc noundef ptr @_ZN2cv12_GLOBAL__N_18GSafePtrI11_GstElementE3getEv(ptr nonnull %.val425)
           to label %bb.nu unwind label %bb.ox     ; 0 uses
 
 bb.nu:                                            ; preds = %bb.nt
-  %i.ajz = invoke i32 (ptr, ptr, ...) @gst_element_link_many(ptr noundef nonnull %.val424, ptr noundef nonnull %.val417907, ptr noundef nonnull %.val422, i64 noundef 0)
+  %i.ajz = invoke i32 (ptr, ptr, ...) @gst_element_link_many(ptr noundef nonnull %.val424, ptr noundef nonnull %.val417907, ptr noundef nonnull %.val425, i64 noundef 0)
           to label %bb.nv unwind label %bb.ox
 
 bb.nv:                                            ; preds = %bb.nu

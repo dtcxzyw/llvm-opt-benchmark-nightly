@@ -205,7 +205,7 @@ bb.ny:                                            ; preds = %.noexc
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsidf7BFzONoc_6krilla8graphics5paint4FillECs8jFhWeO2DFb_9typst_pdf.exit272
 
 bb.nz:                                            ; preds = %bb.nu
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.612.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.419.0..sroa_idx.i, i64 56, i1 false), !noalias !15920
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.612.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.419.0..sroa_idx.i, i64 56, i1 false), !noalias !10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !16171
   store float %i.bqx, ptr %.sroa.13.24..sroa.612.0..sroa_idx.i.sroa_idx, align 8, !noalias !15784
   store i8 0, ptr %.sroa.14.24..sroa.612.0..sroa_idx.i.sroa_idx, align 4, !noalias !15784
@@ -248,7 +248,7 @@ bb.oe:                                            ; preds = %bb.oa
   %i.bre = getelementptr [112 x i8], ptr %i.brd, i64 %i.brc
   %i.brf = getelementptr i8, ptr %i.bre, i64 -112
   invoke fastcc void @_RNvNtCs8jFhWeO2DFb_9typst_pdf5paint14convert_stroke(ptr noalias nofree noundef align 8 captures(none) dereferenceable(128) %i.ep, ptr noalias nofree noundef nonnull align 8 dereferenceable(672) %5, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bra, i1 noundef zeroext true, ptr noalias nofree noundef align 8 dereferenceable(976) %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(112) %i.brf, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(136) null)
-          to label %bb.of unwind label %.thread428.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !15920, !inline_history !14736
+          to label %bb.of unwind label %.thread428.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !14736
 
 bb.of:                                            ; preds = %bb.oe
   %i.brg = load i64, ptr %i.ep, align 8, !range !38, !noalias !15784, !noundef !10 ; 2 uses
@@ -339,7 +339,7 @@ bb.om:                                            ; preds = %bb.ok
   store <4 x float> %i.bsg, ptr %i.eo, align 16, !alias.scope !16177, !noalias !15784
   store <2 x float> %i.bsj, ptr %.sroa.7.0..sroa_idx.i, align 16, !alias.scope !16177, !noalias !15784
   invoke void @_RNvMNtCsidf7BFzONoc_6krilla7surfaceNtB2_7Surface14push_transform(ptr noalias nofree noundef nonnull align 8 dereferenceable(976) %4, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(24) %i.eo)
-          to label %bb.on unwind label %.loopexit525, !noalias !15920, !inline_history !14736
+          to label %bb.on unwind label %.loopexit525, !inline_history !14736
 
 bb.on:                                            ; preds = %bb.om
   call void @llvm.lifetime.end.p0(ptr nonnull %i.eo), !noalias !15784
@@ -349,7 +349,7 @@ bb.on:                                            ; preds = %bb.om
   call void @llvm.lifetime.start.p0(ptr nonnull %i.em), !noalias !15784
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.em, ptr noundef nonnull align 8 dereferenceable(88) %i.er, i64 88, i1 false), !noalias !15784
   invoke void @_RNvMNtCsidf7BFzONoc_6krilla7surfaceNtB2_7Surface8set_fill(ptr noalias nofree noundef nonnull align 8 dereferenceable(976) %4, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %i.em)
-          to label %bb.op unwind label %bb.oo, !noalias !15920, !inline_history !14736
+          to label %bb.op unwind label %bb.oo, !inline_history !14736
 
 .body264:                                         ; preds = %bb.os, %bb.pr, %bb.pq, %bb.pl, %bb.ph, %bb.oy, %bb.oo
   %.sroa.027.3.i = phi i8 [ %.sroa.027.4.i, %bb.oo ], [ 0, %bb.oy ], [ 0, %bb.ph ], [ 0, %bb.pl ], [ 0, %bb.pq ], [ 0, %bb.pr ], [ 0, %bb.os ]
@@ -752,7 +752,7 @@ _RNvMNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags4tree5buildNtB2_11TreeBuilder7current.ex
   %i.bt = getelementptr [4 x i8], ptr %.val.i, i64 %.val6.i
   %i.bu = getelementptr i8, ptr %i.bt, i64 -4
   %i.bv = load i32, ptr %i.bu, align 4, !noalias !20982, !noundef !10 ; 2 uses
-  %i.bw = load i64, ptr %i.y, align 8, !alias.scope !20980, !noundef !10 ; 5 uses
+  %i.bw = load i64, ptr %i.y, align 8, !noundef !10 ; 5 uses
   %i.bx = icmp ult i64 %i.bw, 192153584101141163
   call void @llvm.assume(i1 %i.bx)
   call void @llvm.experimental.noalias.scope.decl(metadata !20983)
@@ -1155,8 +1155,8 @@ begin_hunk_2_@llvm.fabs.v2f32
 !16168 = !{!15339}
 !16169 = !{!15339, !15337, !15335}
 !16170 = !{!15339, !15337, !15335, !14735}
-!16171 = !{!15346, !15345, !15344, !15343, !15342, !15341, !14735}
-!16172 = !{!15346, !15342, !14735}
+!16171 = !{!15346, !15345, !15344, !15343, !15342, !15341}
+!16172 = !{!15346, !15342}
 !16173 = !{!15349}
 !16174 = !{!15351, !14732}
 !16175 = !{!15353}

@@ -204,7 +204,7 @@ bb.dp:                                            ; preds = %bb.dn
   %i.kj = getelementptr inbounds nuw i8, ptr %4, i64 24, !dbg !17262
   %i.kk = load ptr, ptr %i.kj, align 8, !dbg !17262, !alias.scope !16774, !nonnull !1442, !noundef !1442
   invoke void @_RINvNtNtCs8774dFTUdNv_12polars_arrow4mmap5array9get_arrayNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.av, ptr noundef nonnull %1, i64 noundef %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.jm, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.kk, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %5, ptr noalias noundef nonnull align 8 dereferenceable(32) %6, ptr noalias noundef nonnull align 8 dereferenceable(32) %7, ptr noalias noundef nonnull align 8 dereferenceable(32) %8)
-          to label %bb.dt unwind label %bb.dr, !dbg !17254, !noalias !16788, !inline_history !15959
+          to label %bb.dt unwind label %bb.dr, !dbg !17254, !inline_history !15959
 
 bb.dq:                                            ; preds = %bb.dn
   invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @43) #38
@@ -259,7 +259,7 @@ bb.dv:                                            ; preds = %bb.dt
   store i64 1, ptr %.sroa.4132.0..sroa_idx.i, align 8, !dbg !17273, !noalias !16775
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq), !dbg !17278, !noalias !16775
   store i64 0, ptr %i.aq, align 8, !dbg !17278, !noalias !16775
-  call void @_RINvNtNtCs8774dFTUdNv_12polars_arrow3ffi4mmap12create_arrayNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreINtNtNtCscgRAwXFJnXP_4core5array4iter8IntoIterINtNtB1S_6option6OptionPhEKj2_EIB1M_NtNtB4_9generated10ArrowArrayKj1_EECslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.at, ptr noundef nonnull %1, i64 noundef %i.jq, i64 noundef %i.js, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.as, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(96) %i.ar, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.aq, i64 noundef 0, i64 undef), !dbg !17279, !noalias !16788, !inline_history !15959
+  call void @_RINvNtNtCs8774dFTUdNv_12polars_arrow3ffi4mmap12create_arrayNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreINtNtNtCscgRAwXFJnXP_4core5array4iter8IntoIterINtNtB1S_6option6OptionPhEKj2_EIB1M_NtNtB4_9generated10ArrowArrayKj1_EECslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.at, ptr noundef nonnull %1, i64 noundef %i.jq, i64 noundef %i.js, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.as, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(96) %i.ar, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.aq, i64 noundef 0, i64 undef), !dbg !17279, !noalias !16790, !inline_history !15959
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !dbg !17280, !noalias !16775
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !dbg !17280, !noalias !16775
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !dbg !17280, !noalias !16775
@@ -277,14 +277,14 @@ bb.dw:                                            ; preds = %bb.dq
   br i1 %i.kt, label %bb.dx, label %.thread, !dbg !17285
 
 bb.dx:                                            ; preds = %bb.dw
-  fence acquire, !dbg !17286, !noalias !16788
+  fence acquire, !dbg !17286, !noalias !16790
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreE9drop_slowCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.au) #40
           to label %.thread unwind label %bb.dy, !dbg !17287
 
 bb.dy:                                            ; preds = %bb.dx, %bb.eb
   %i.ku = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #39, !dbg !17288, !noalias !16788, !inline_history !15959
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #39, !dbg !17288, !noalias !16790, !inline_history !15959
   unreachable, !dbg !17288
 
 bb.dz:                                            ; preds = %bb.du, %bb.dl, %bb.di, %bb.df, %bb.dc
@@ -304,7 +304,7 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %i.ky, label %bb.eb, label %common.resume, !dbg !17294
 
 bb.eb:                                            ; preds = %.thread
-  fence acquire, !dbg !17295, !noalias !16788
+  fence acquire, !dbg !17295, !noalias !16790
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreE9drop_slowCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.ba) #40
           to label %common.resume unwind label %bb.dy, !dbg !17296
 
@@ -707,7 +707,7 @@ begin_hunk_1_@llvm.umin.i8
 !16021 = distinct !DILexicalBlock(scope: !15962, file: !1455, line: 2189, column: 13)
 !16022 = distinct !DILexicalBlock(scope: !15991, file: !1758, line: 371, column: 6)
 !16023 = distinct !DILexicalBlock(scope: !16022, file: !1758, line: 371, column: 6)
-!16024 = distinct !DILocation(line: 362, column: 18, scope: !16789, inlinedAt: !15958)
+!16024 = distinct !DILocation(line: 362, column: 18, scope: !16788, inlinedAt: !15958)
 !16025 = distinct !DISubprogram(name: "into_iter<polars_arrow::ffi::generated::ArrowArray, 1>", linkageName: "_RNvXs_NtNtCscgRAwXFJnXP_4core5array4iterANtNtNtCs8774dFTUdNv_12polars_arrow3ffi9generated10ArrowArrayj1_NtNtNtNtB8_4iter6traits7collect12IntoIterator9into_iterCslpwjCj2YNBy_9polars_io", scope: !1773, file: !1770, line: 54, type: !1443, scopeLine: 54, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1442)
 !16026 = distinct !DILexicalBlock(scope: !16025, file: !1770, line: 68, column: 9)
 !16027 = distinct !DILexicalBlock(scope: !16026, file: !1770, line: 71, column: 9)
@@ -1110,9 +1110,9 @@ begin_hunk_2_@llvm.umin.i8
 !16785 = !DILexicalBlockFile(scope: !15975, file: !1545, discriminator: 0)
 !16786 = !DILexicalBlockFile(scope: !15989, file: !1758, discriminator: 2)
 !16787 = !DILexicalBlockFile(scope: !15984, file: !1545, discriminator: 0)
-!16788 = !{!15949, !15950}
-!16789 = !DILexicalBlockFile(scope: !16023, file: !1758, discriminator: 2)
-!16790 = !DILexicalBlockFile(scope: !15991, file: !1545, discriminator: 0)
+!16788 = !DILexicalBlockFile(scope: !16023, file: !1758, discriminator: 2)
+!16789 = !DILexicalBlockFile(scope: !15991, file: !1545, discriminator: 0)
+!16790 = !{!15949, !15950}
 !16791 = !{!16037, !16035, !15949, !15950}
 !16792 = !{!16046, !16044}
 !16793 = !{!16055, !16053, !15949, !15950}
@@ -1515,7 +1515,7 @@ begin_hunk_3_@llvm.umin.i8
 !17268 = !DILocation(line: 371, column: 6, scope: !15991, inlinedAt: !15958)
 !17269 = !DILocation(line: 2189, column: 23, scope: !16021, inlinedAt: !16024)
 !17270 = !DILocation(line: 371, column: 7, scope: !15991, inlinedAt: !15958)
-!17271 = !DILocation(line: 0, scope: !16790, inlinedAt: !15958)
+!17271 = !DILocation(line: 0, scope: !16789, inlinedAt: !15958)
 !17272 = !DILocation(line: 2174, column: 16, scope: !16019, inlinedAt: !16020)
 !17273 = !DILocation(line: 72, column: 9, scope: !16027, inlinedAt: !16029)
 !17274 = !DILocation(line: 380, column: 13, scope: !16028, inlinedAt: !15958)

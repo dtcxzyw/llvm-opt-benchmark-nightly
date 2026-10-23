@@ -202,7 +202,7 @@ bb.at:                                            ; preds = %bb.ar
 bb.au:                                            ; preds = %bb.at
     #dbg_value(ptr undef, !40950, !DIExpression(), !40384)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
-  %i.js = load i8, ptr %.sroa.5.0.copyload, align 8, !dbg !41730, !range !3690, !noalias !41167, !noundef !1314 ; 3 uses
+  %i.js = load i8, ptr %.sroa.5.0.copyload, align 8, !dbg !41730, !range !3690, !noundef !1314 ; 3 uses
   %i.jt = icmp ne i8 %i.js, 10, !dbg !41730
   tail call void @llvm.assume(i1 %i.jt), !dbg !41730
   %i.ju = add nsw i8 %i.js, -2, !dbg !41730
@@ -215,7 +215,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au
   %i.jw = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 8, !dbg !41732
-  %i.jx = load i64, ptr %i.jw, align 8, !dbg !41732, !noalias !41167, !noundef !1314
+  %i.jx = load i64, ptr %i.jw, align 8, !dbg !41732, !noundef !1314
     #dbg_value(i64 %i.jx, !40951, !DIExpression(), !40385)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ch), !dbg !41733, !noalias !41287
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cg), !dbg !41734, !noalias !41287
@@ -261,7 +261,7 @@ bb.ay:                                            ; preds = %bb.av, %bb.az
 
 bb.az:                                            ; preds = %bb.au
   %i.kg = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 8, !dbg !41744
-  %i.kh = load double, ptr %i.kg, align 8, !dbg !41744, !noalias !41167, !noundef !1314
+  %i.kh = load double, ptr %i.kg, align 8, !dbg !41744, !noundef !1314
     #dbg_value(double %i.kh, !40952, !DIExpression(), !40392)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ce), !dbg !41745, !noalias !41287
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cd), !dbg !41746, !noalias !41287
@@ -664,7 +664,7 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultTNtNtNt
   br i1 %or.cond, label %bb.ee, label %bb.ef, !dbg !41965
 
 bb.ee:                                            ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultTNtNtNtCs5yXxDE1DkoT_4tera7parsing5lexer5TokenNtNtB1f_5utils4SpanENtNtB1f_6errors5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB32_8PeekableINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB36_6traits8iterator8Iteratorp4ItemBM_EL_EE4peek0EB1f_.exit
-  %i.pn = load ptr, ptr %i.fm, align 8, !dbg !41966, !alias.scope !41168, !nonnull !1314, !noundef !1314
+  %i.pn = load ptr, ptr %i.fm, align 8, !dbg !41966, !nonnull !1314, !noundef !1314
     #dbg_value(ptr %i.pn, !41293, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !40621)
     #dbg_value(ptr %i.pn, !41211, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !40201)
     #dbg_value(ptr %i.pn, !41315, !DIExpression(), !40626)

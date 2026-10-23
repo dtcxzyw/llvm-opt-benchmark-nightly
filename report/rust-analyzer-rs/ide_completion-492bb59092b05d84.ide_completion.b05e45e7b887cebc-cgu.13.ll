@@ -204,31 +204,31 @@ bb.f:                                             ; preds = %bb.d
   %i.aa = add nuw i32 %i.t, 2
   store i32 %i.aa, ptr %i.s, align 4, !noalias !682
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store ptr %.val, ptr %i.c, align 8, !noalias !682
+  store ptr %.val, ptr %i.c, align 8
   %i.ab = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.c)
-          to label %bb.i unwind label %bb.g, !noalias !682
+          to label %bb.i unwind label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.ad = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.ad = load i32, ptr %i.s, align 4, !noundef !5
   %i.ae = add i32 %i.ad, -1                       ; 2 uses
-  store i32 %i.ae, ptr %i.s, align 4, !noalias !682
+  store i32 %i.ae, ptr %i.s, align 4
   %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %bb.h, label %.body
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val) #31
-          to label %.body unwind label %bb.l, !noalias !682
+          to label %.body unwind label %bb.l
 
 bb.i:                                             ; preds = %bb.f
   %i.ag = icmp eq i16 %i.ab, 214
   br i1 %i.ag, label %bb.m, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ah = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.ah = load i32, ptr %i.s, align 4, !noundef !5
   %i.ai = add i32 %i.ah, -1                       ; 3 uses
-  store i32 %i.ai, ptr %i.s, align 4, !noalias !682
+  store i32 %i.ai, ptr %i.s, align 4
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.k, label %bb.n
 
@@ -239,7 +239,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.h
   %i.ak = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29, !noalias !682
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29
   unreachable
 
 bb.m:                                             ; preds = %bb.i
@@ -375,31 +375,31 @@ bb.aa:                                            ; preds = %bb.n
   %i.bs = add nuw i32 %i.am, 1
   store i32 %i.bs, ptr %i.s, align 4, !noalias !682
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store ptr %.val, ptr %i.d, align 8, !noalias !682
+  store ptr %.val, ptr %i.d, align 8
   %i.bt = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.d)
-          to label %bb.ad unwind label %bb.ab, !noalias !682
+          to label %bb.ad unwind label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bu = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.bv = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.bv = load i32, ptr %i.s, align 4, !noundef !5
   %i.bw = add i32 %i.bv, -1                       ; 2 uses
-  store i32 %i.bw, ptr %i.s, align 4, !noalias !682
+  store i32 %i.bw, ptr %i.s, align 4
   %i.bx = icmp eq i32 %i.bw, 0
   br i1 %i.bx, label %bb.ac, label %.body
 
 bb.ac:                                            ; preds = %bb.ab
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val) #31
-          to label %.body unwind label %bb.ag, !noalias !682
+          to label %.body unwind label %bb.ag
 
 bb.ad:                                            ; preds = %bb.aa
   %i.by = icmp eq i16 %i.bt, 324
   br i1 %i.by, label %bb.ah, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.bz = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.bz = load i32, ptr %i.s, align 4, !noundef !5
   %i.ca = add i32 %i.bz, -1                       ; 3 uses
-  store i32 %i.ca, ptr %i.s, align 4, !noalias !682
+  store i32 %i.ca, ptr %i.s, align 4
   %i.cb = icmp eq i32 %i.ca, 0
   br i1 %i.cb, label %bb.af, label %bb.ai
 
@@ -410,7 +410,7 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.ac
   %i.cc = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29, !noalias !682
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29
   unreachable
 
 bb.ah:                                            ; preds = %bb.ad
@@ -525,31 +525,31 @@ bb.as:                                            ; preds = %bb.ai
   %i.dd = add nuw i32 %i.ce, 1
   store i32 %i.dd, ptr %i.s, align 4, !noalias !682
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store ptr %.val, ptr %i.e, align 8, !noalias !682
+  store ptr %.val, ptr %i.e, align 8
   %i.de = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.e)
-          to label %bb.av unwind label %bb.at, !noalias !682
+          to label %bb.av unwind label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.df = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.dg = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.dg = load i32, ptr %i.s, align 4, !noundef !5
   %i.dh = add i32 %i.dg, -1                       ; 2 uses
-  store i32 %i.dh, ptr %i.s, align 4, !noalias !682
+  store i32 %i.dh, ptr %i.s, align 4
   %i.di = icmp eq i32 %i.dh, 0
   br i1 %i.di, label %bb.au, label %.body
 
 bb.au:                                            ; preds = %bb.at
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val) #31
-          to label %.body unwind label %bb.ay, !noalias !682
+          to label %.body unwind label %bb.ay
 
 bb.av:                                            ; preds = %bb.as
   %i.dj = icmp eq i16 %i.de, 244
   br i1 %i.dj, label %bb.az, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.dk = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.dk = load i32, ptr %i.s, align 4, !noundef !5
   %i.dl = add i32 %i.dk, -1                       ; 3 uses
-  store i32 %i.dl, ptr %i.s, align 4, !noalias !682
+  store i32 %i.dl, ptr %i.s, align 4
   %i.dm = icmp eq i32 %i.dl, 0
   br i1 %i.dm, label %bb.ax, label %bb.ba
 
@@ -560,7 +560,7 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.au
   %i.dn = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29, !noalias !682
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29
   unreachable
 
 bb.az:                                            ; preds = %bb.av
@@ -675,31 +675,31 @@ bb.bk:                                            ; preds = %bb.ba
   %i.eo = add nuw i32 %i.dp, 1
   store i32 %i.eo, ptr %i.s, align 4, !noalias !682
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  store ptr %.val, ptr %i.f, align 8, !noalias !682
+  store ptr %.val, ptr %i.f, align 8
   %i.ep = invoke noundef i16 @_RNvMs4_NtCs9GitHPCrz2Q_5rowan3apiINtB5_10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageE4kindCsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.f)
-          to label %bb.bn unwind label %bb.bl, !noalias !682
+          to label %bb.bn unwind label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.eq = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.er = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.er = load i32, ptr %i.s, align 4, !noundef !5
   %i.es = add i32 %i.er, -1                       ; 2 uses
-  store i32 %i.es, ptr %i.s, align 4, !noalias !682
+  store i32 %i.es, ptr %i.s, align 4
   %i.et = icmp eq i32 %i.es, 0
   br i1 %i.et, label %bb.bm, label %.body
 
 bb.bm:                                            ; preds = %bb.bl
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val) #31
-          to label %.body unwind label %bb.bq, !noalias !682
+          to label %.body unwind label %bb.bq
 
 bb.bn:                                            ; preds = %bb.bk
   %i.eu = icmp eq i16 %i.ep, 179
   br i1 %i.eu, label %bb.br, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.ev = load i32, ptr %i.s, align 4, !noalias !682, !noundef !5
+  %i.ev = load i32, ptr %i.s, align 4, !noundef !5
   %i.ew = add i32 %i.ev, -1                       ; 3 uses
-  store i32 %i.ew, ptr %i.s, align 4, !noalias !682
+  store i32 %i.ew, ptr %i.s, align 4
   %i.ex = icmp eq i32 %i.ew, 0
   br i1 %i.ex, label %bb.bp, label %bb.bs
 
@@ -710,7 +710,7 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bm
   %i.ey = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29, !noalias !682
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29
   unreachable
 
 bb.br:                                            ; preds = %bb.bn
@@ -859,7 +859,7 @@ bb.ci:                                            ; preds = %bb.bs
   %i.gb = add nuw i32 %i.fa, 1
   store i32 %i.gb, ptr %i.s, align 4, !noalias !682
   %i.gc = invoke fastcc { i64, ptr } @_RNvXsmZ_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_4ExprNtBa_7AstNode4cast(ptr noundef nonnull %.val)
-          to label %bb.cj unwind label %.split.thread, !noalias !682, !inline_history !680 ; 2 uses
+          to label %bb.cj unwind label %.split.thread, !inline_history !680 ; 2 uses
 
 bb.cj:                                            ; preds = %bb.ci
   %i.gd = extractvalue { i64, ptr } %i.gc, 0      ; 2 uses

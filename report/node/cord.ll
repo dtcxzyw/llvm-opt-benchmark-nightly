@@ -202,7 +202,7 @@ _ZN4absl13cord_internal7CordRep3RefEPS1_.exit32.i: ; preds = %bb.ao
   store ptr %i.da, ptr %i.dz, align 8
   br label %bb.ap
 
-bb.ap:                                            ; preds = %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit32.i, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit.i
+bb.ap:                                            ; preds = %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit.i, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit32.i
   %.0.i = phi ptr [ %i.da, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit.i ], [ %i.dt, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit32.i ] ; 2 uses
   %i.ea = tail call fastcc noundef ptr @_ZN4abslL10VerifyTreeEPNS_13cord_internal7CordRepE(ptr noundef nonnull %.0.i) ; 0 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 8

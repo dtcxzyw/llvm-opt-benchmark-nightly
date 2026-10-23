@@ -204,16 +204,16 @@ bb.dm:                                            ; preds = %bb.dh
           to label %_RNvXs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7displayNtB5_10TypeWriterNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_str.exit688.thread unwind label %bb.dl
 
 _RNvXs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7displayNtB5_10TypeWriterNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_str.exit688.thread: ; preds = %bb.dm
-  %i.za = load i64, ptr %i.yp, align 8, !alias.scope !14033, !noalias !14024, !noundef !9 ; 2 uses
+  %i.za = load i64, ptr %i.yp, align 8, !alias.scope !14033, !noundef !9 ; 2 uses
   %i.zb = icmp sgt i64 %i.za, -1
-  tail call void @llvm.assume(i1 %i.zb), !noalias !14024
+  tail call void @llvm.assume(i1 %i.zb)
   %i.zc = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.zd = load ptr, ptr %i.zc, align 8, !alias.scope !14033, !noalias !14024, !nonnull !9, !noundef !9
+  %i.zd = load ptr, ptr %i.zc, align 8, !alias.scope !14033, !nonnull !9, !noundef !9
   %i.ze = getelementptr inbounds nuw i8, ptr %i.zd, i64 %i.za
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ze, ptr noundef nonnull readonly align 1 dereferenceable(6) @42, i64 6, i1 false), !noalias !14024
-  %.pre.i.i.i683 = load i64, ptr %i.yp, align 8, !alias.scope !14033, !noalias !14024
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ze, ptr noundef nonnull readonly align 1 dereferenceable(6) @42, i64 6, i1 false)
+  %.pre.i.i.i683 = load i64, ptr %i.yp, align 8, !alias.scope !14033
   %i.zf = add i64 %.pre.i.i.i683, 6
-  store i64 %i.zf, ptr %i.yp, align 8, !alias.scope !14033, !noalias !14024
+  store i64 %i.zf, ptr %i.yp, align 8, !alias.scope !14033
   br label %bb.dp
 
 bb.dn:                                            ; preds = %bb.dg
@@ -224,7 +224,7 @@ bb.dn:                                            ; preds = %bb.dg
   store i32 0, ptr %i.zh, align 8, !alias.scope !14032, !noalias !14024
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !14021
   %i.zi = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.zj = load ptr, ptr %i.zi, align 8, !alias.scope !14034, !noalias !14024, !nonnull !9, !align !17, !noundef !9
+  %i.zj = load ptr, ptr %i.zi, align 8, !alias.scope !14034, !nonnull !9, !align !17, !noundef !9
   %i.zk = invoke noundef zeroext i1 @_RNvXsb_NtCs4NRVxsYgnAr_4core3fmtNtB5_9FormatterNtB5_5Write9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.zj, ptr noalias noundef nonnull readonly captures(address, read_provenance) @42, i64 noundef 6)
           to label %_RNvXs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7displayNtB5_10TypeWriterNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_str.exit688 unwind label %bb.dl
 
@@ -436,16 +436,16 @@ bb.ek:                                            ; preds = %bb.ef
           to label %_RNvXs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7displayNtB5_10TypeWriterNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_str.exit708.thread unwind label %bb.ej
 
 _RNvXs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7displayNtB5_10TypeWriterNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_str.exit708.thread: ; preds = %bb.ek
-  %i.abi = load i64, ptr %i.aax, align 8, !alias.scope !14062, !noalias !14053, !noundef !9 ; 2 uses
+  %i.abi = load i64, ptr %i.aax, align 8, !alias.scope !14062, !noundef !9 ; 2 uses
   %i.abj = icmp sgt i64 %i.abi, -1
-  tail call void @llvm.assume(i1 %i.abj), !noalias !14053
+  tail call void @llvm.assume(i1 %i.abj)
   %i.abk = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.abl = load ptr, ptr %i.abk, align 8, !alias.scope !14062, !noalias !14053, !nonnull !9, !noundef !9
+  %i.abl = load ptr, ptr %i.abk, align 8, !alias.scope !14062, !nonnull !9, !noundef !9
   %i.abm = getelementptr inbounds nuw i8, ptr %i.abl, i64 %i.abi
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.abm, ptr noundef nonnull readonly align 1 dereferenceable(9) @45, i64 9, i1 false), !noalias !14053
-  %.pre.i.i.i703 = load i64, ptr %i.aax, align 8, !alias.scope !14062, !noalias !14053
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.abm, ptr noundef nonnull readonly align 1 dereferenceable(9) @45, i64 9, i1 false)
+  %.pre.i.i.i703 = load i64, ptr %i.aax, align 8, !alias.scope !14062
   %i.abn = add i64 %.pre.i.i.i703, 9
-  store i64 %i.abn, ptr %i.aax, align 8, !alias.scope !14062, !noalias !14053
+  store i64 %i.abn, ptr %i.aax, align 8, !alias.scope !14062
   br label %bb.en
 
 bb.el:                                            ; preds = %bb.ee
@@ -456,7 +456,7 @@ bb.el:                                            ; preds = %bb.ee
   store i32 0, ptr %i.abp, align 8, !alias.scope !14061, !noalias !14053
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !14050
   %i.abq = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.abr = load ptr, ptr %i.abq, align 8, !alias.scope !14063, !noalias !14053, !nonnull !9, !align !17, !noundef !9
+  %i.abr = load ptr, ptr %i.abq, align 8, !alias.scope !14063, !nonnull !9, !align !17, !noundef !9
   %i.abs = invoke noundef zeroext i1 @_RNvXsb_NtCs4NRVxsYgnAr_4core3fmtNtB5_9FormatterNtB5_5Write9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.abr, ptr noalias noundef nonnull readonly captures(address, read_provenance) @45, i64 noundef 9)
           to label %_RNvXs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7displayNtB5_10TypeWriterNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_str.exit708 unwind label %bb.ej
 

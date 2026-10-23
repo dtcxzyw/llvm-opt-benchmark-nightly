@@ -205,80 +205,80 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @_ZTVN4llvm2cl11OptionValueIbEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIbE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
 @_ZTVN4llvm2cl6parserIbEE = external unnamed_addr constant { [6 x ptr] }, align 8
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_X86ISelLowering.cpp, ptr null }]
-@switch.table._ZL14TranslateX86CCN4llvm3ISD8CondCodeERKNS_5SDLocEbRNS_7SDValueES6_RNS_12SelectionDAGE.922 = private unnamed_addr constant [8 x i8] c"\07\03\05\0B\0A\04\02\06", align 4
+@switch.table._ZL14TranslateX86CCN4llvm3ISD8CondCodeERKNS_5SDLocEbRNS_7SDValueES6_RNS_12SelectionDAGE.919 = private unnamed_addr constant [8 x i8] c"\07\03\05\0B\0A\04\02\06", align 4
 @switch.table._ZL11LowerVSETCCN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE = private unnamed_addr constant [22 x i8] c"\00\01\01\01\01\00\00\00\00\01\01\01\01\00\01\01\00\01\01\01\01\00", align 1
-@switch.table._ZL11LowerVSETCCN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.923 = private unnamed_addr constant [13 x i8] [i8 2, i8 3, i8 0, i8 1, i8 poison, i8 poison, i8 poison, i8 4, i8 2, i8 3, i8 0, i8 1, i8 5], align 8
+@switch.table._ZL11LowerVSETCCN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.920 = private unnamed_addr constant [13 x i8] [i8 2, i8 3, i8 0, i8 1, i8 poison, i8 poison, i8 poison, i8 4, i8 2, i8 3, i8 0, i8 1, i8 5], align 8
 @switch.table._ZNK4llvm17X86TargetLowering15LowerSETCCCARRYENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [13 x i8] [i8 7, i8 3, i8 2, i8 6, i8 poison, i8 poison, i8 poison, i8 4, i8 15, i8 13, i8 12, i8 14, i8 5], align 8
 @switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [12 x i16] [i16 995, i16 995, i16 995, i16 995, i16 995, i16 poison, i16 poison, i16 994, i16 994, i16 994, i16 994, i16 994], align 4
-@switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.924 = private unnamed_addr constant [12 x i8] [i8 7, i8 2, i8 0, i8 8, i8 4, i8 poison, i8 poison, i8 7, i8 2, i8 0, i8 8, i8 4], align 8
-@switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.925 = private unnamed_addr constant [13 x i16] [i16 15941, i16 15942, i16 15943, i16 poison, i16 poison, i16 15947, i16 15948, i16 poison, i16 poison, i16 poison, i16 15951, i16 15952, i16 15953], align 8
+@switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.921 = private unnamed_addr constant [12 x i8] [i8 7, i8 2, i8 0, i8 8, i8 4, i8 poison, i8 poison, i8 7, i8 2, i8 0, i8 8, i8 4], align 8
+@switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.922 = private unnamed_addr constant [13 x i16] [i16 15941, i16 15942, i16 15943, i16 poison, i16 poison, i16 15947, i16 15948, i16 poison, i16 poison, i16 poison, i16 15951, i16 15952, i16 15953], align 8
 @switch.table._ZL26getTargetVShiftByConstNodejRKN4llvm5SDLocENS_3MVTENS_7SDValueEmRNS_12SelectionDAGE = private unnamed_addr constant [9 x i8] [i8 -58, i8 poison, i8 poison, i8 poison, i8 -57, i8 poison, i8 poison, i8 poison, i8 -56], align 4
 @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE = private unnamed_addr constant [17 x i8] c"\01\00\00\00\02\00\00\00\00\00\00\00\00\00\00\00\03", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.926 = private unnamed_addr constant [17 x i8] c"\04\00\00\00\05\00\00\00\06\00\00\00\00\00\00\00\09", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.927 = private unnamed_addr constant [17 x i8] c"\0A\00\00\00\0B\00\00\00\00\00\00\0C\00\00\00\00\0D", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.928 = private unnamed_addr constant [17 x i8] c"\0F\10\00\00\13\00\00\00\00\00\00\14\00\00\00\00\15", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.929 = private unnamed_addr constant [12 x i8] c">\00\00\00\00\00\00A\00\00D\7F", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.930 = private unnamed_addr constant [10 x i16] [i16 121, i16 122, i16 123, i16 124, i16 125, i16 126, i16 292, i16 293, i16 294, i16 295], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.931 = private unnamed_addr constant [22 x i8] c"\97\00\A7\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\AF", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.932 = private unnamed_addr constant [22 x i8] c"\98\00\A8\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B0", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.933 = private unnamed_addr constant [22 x i8] c"\99\00\A9\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B1", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.934 = private unnamed_addr constant [22 x i8] c"\9A\00\AA\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B2", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.935 = private unnamed_addr constant [22 x i8] c"\9B\00\AB\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B3", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.936 = private unnamed_addr constant [22 x i8] c"\9C\00\AC\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B4", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.937 = private unnamed_addr constant [22 x i8] c"\9D\00\AD\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B5", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.938 = private unnamed_addr constant [22 x i8] c"\9E\00\AE\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B6", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.939 = private unnamed_addr constant [22 x i16] [i16 308, i16 0, i16 340, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 356], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.940 = private unnamed_addr constant [22 x i16] [i16 309, i16 0, i16 341, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 357], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.941 = private unnamed_addr constant [22 x i16] [i16 310, i16 0, i16 342, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 358], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.942 = private unnamed_addr constant [22 x i16] [i16 311, i16 0, i16 343, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 359], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.943 = private unnamed_addr constant [22 x i16] [i16 312, i16 0, i16 344, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 360], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.944 = private unnamed_addr constant [22 x i16] [i16 313, i16 0, i16 345, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 361], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.945 = private unnamed_addr constant [22 x i16] [i16 314, i16 0, i16 346, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 362], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.946 = private unnamed_addr constant [22 x i16] [i16 315, i16 0, i16 347, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 363], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.947 = private unnamed_addr constant [22 x i16] [i16 316, i16 0, i16 348, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 364], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.948 = private unnamed_addr constant [22 x i16] [i16 317, i16 0, i16 349, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 365], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.949 = private unnamed_addr constant [22 x i16] [i16 318, i16 0, i16 350, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 366], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.950 = private unnamed_addr constant [22 x i16] [i16 319, i16 0, i16 351, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 367], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.951 = private unnamed_addr constant [22 x i16] [i16 320, i16 0, i16 352, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 368], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.952 = private unnamed_addr constant [22 x i16] [i16 321, i16 0, i16 353, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 369], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.953 = private unnamed_addr constant [22 x i16] [i16 322, i16 0, i16 354, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 370], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.954 = private unnamed_addr constant [22 x i16] [i16 323, i16 0, i16 355, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 371], align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.955 = private unnamed_addr constant [10 x i8] c"\91\92\93\94\95\96\D7\D8\D9\DA", align 4
-@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.956 = private unnamed_addr constant [10 x i8] c"\C9\CA\CB\CC\CD\CE\E7\E8\E9\EA", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.923 = private unnamed_addr constant [17 x i8] c"\04\00\00\00\05\00\00\00\06\00\00\00\00\00\00\00\09", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.924 = private unnamed_addr constant [17 x i8] c"\0A\00\00\00\0B\00\00\00\00\00\00\0C\00\00\00\00\0D", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.925 = private unnamed_addr constant [17 x i8] c"\0F\10\00\00\13\00\00\00\00\00\00\14\00\00\00\00\15", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.926 = private unnamed_addr constant [12 x i8] c">\00\00\00\00\00\00A\00\00D\7F", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.927 = private unnamed_addr constant [10 x i16] [i16 121, i16 122, i16 123, i16 124, i16 125, i16 126, i16 292, i16 293, i16 294, i16 295], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.928 = private unnamed_addr constant [22 x i8] c"\97\00\A7\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\AF", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.929 = private unnamed_addr constant [22 x i8] c"\98\00\A8\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B0", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.930 = private unnamed_addr constant [22 x i8] c"\99\00\A9\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B1", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.931 = private unnamed_addr constant [22 x i8] c"\9A\00\AA\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B2", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.932 = private unnamed_addr constant [22 x i8] c"\9B\00\AB\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B3", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.933 = private unnamed_addr constant [22 x i8] c"\9C\00\AC\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B4", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.934 = private unnamed_addr constant [22 x i8] c"\9D\00\AD\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B5", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.935 = private unnamed_addr constant [22 x i8] c"\9E\00\AE\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\B6", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.936 = private unnamed_addr constant [22 x i16] [i16 308, i16 0, i16 340, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 356], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.937 = private unnamed_addr constant [22 x i16] [i16 309, i16 0, i16 341, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 357], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.938 = private unnamed_addr constant [22 x i16] [i16 310, i16 0, i16 342, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 358], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.939 = private unnamed_addr constant [22 x i16] [i16 311, i16 0, i16 343, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 359], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.940 = private unnamed_addr constant [22 x i16] [i16 312, i16 0, i16 344, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 360], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.941 = private unnamed_addr constant [22 x i16] [i16 313, i16 0, i16 345, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 361], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.942 = private unnamed_addr constant [22 x i16] [i16 314, i16 0, i16 346, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 362], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.943 = private unnamed_addr constant [22 x i16] [i16 315, i16 0, i16 347, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 363], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.944 = private unnamed_addr constant [22 x i16] [i16 316, i16 0, i16 348, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 364], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.945 = private unnamed_addr constant [22 x i16] [i16 317, i16 0, i16 349, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 365], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.946 = private unnamed_addr constant [22 x i16] [i16 318, i16 0, i16 350, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 366], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.947 = private unnamed_addr constant [22 x i16] [i16 319, i16 0, i16 351, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 367], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.948 = private unnamed_addr constant [22 x i16] [i16 320, i16 0, i16 352, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 368], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.949 = private unnamed_addr constant [22 x i16] [i16 321, i16 0, i16 353, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 369], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.950 = private unnamed_addr constant [22 x i16] [i16 322, i16 0, i16 354, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 370], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.951 = private unnamed_addr constant [22 x i16] [i16 323, i16 0, i16 355, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 371], align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.952 = private unnamed_addr constant [10 x i8] c"\91\92\93\94\95\96\D7\D8\D9\DA", align 4
+@switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.953 = private unnamed_addr constant [10 x i8] c"\C9\CA\CB\CC\CD\CE\E7\E8\E9\EA", align 4
 @switch.table._ZNK4llvm17X86TargetLowering17LowerSET_ROUNDINGENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [4 x i16] [i16 3072, i16 0, i16 2048, i16 1024], align 8
 @switch.table._ZNK4llvm17X86TargetLowering17LowerWin64_i128OPENS_7SDValueERNS_12SelectionDAGE = private unnamed_addr constant [4 x i16] [i16 1242, i16 1562, i16 1379, i16 1604], align 8
 @switch.table._ZNK4llvm17X86TargetLowering29emitBitTestAtomicRMWIntrinsicEPNS_13AtomicRMWInstE = private unnamed_addr constant [4 x i16] [i16 14721, i16 poison, i16 14723, i16 14719], align 4
-@switch.table._ZNK4llvm17X86TargetLowering29emitBitTestAtomicRMWIntrinsicEPNS_13AtomicRMWInstE.957 = private unnamed_addr constant [4 x i16] [i16 14720, i16 poison, i16 14722, i16 14718], align 4
+@switch.table._ZNK4llvm17X86TargetLowering29emitBitTestAtomicRMWIntrinsicEPNS_13AtomicRMWInstE.954 = private unnamed_addr constant [4 x i16] [i16 14720, i16 poison, i16 14722, i16 14718], align 4
 @switch.table._ZNK4llvm17X86TargetLowering30emitCmpArithAtomicRMWIntrinsicEPNS_13AtomicRMWInstE = private unnamed_addr constant [6 x i16] [i16 14716, i16 14725, i16 14717, i16 poison, i16 14724, i16 14726], align 4
 @switch.table._ZNK4llvm17X86TargetLowering32lowerIdempotentRMWIntoFencedLoadEPNS_13AtomicRMWInstE = private unnamed_addr constant [6 x i16] [i16 256, i16 poison, i16 512, i16 256, i16 512, i16 896], align 2
 @switch.table._ZL13LowerCMP_SWAPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE = private unnamed_addr constant [4 x i8] c"\01\02\04\08", align 8
-@switch.table._ZL13LowerCMP_SWAPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.958 = private unnamed_addr constant [4 x i8] c"\02\03\163", align 4
+@switch.table._ZL13LowerCMP_SWAPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.955 = private unnamed_addr constant [4 x i8] c"\02\03\163", align 4
 @switch.table._ZL10LowerCTPOPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE = private unnamed_addr constant [32 x i8] [i8 55, i8 56, i8 57, i8 58, i8 59, i8 60, i8 61, i8 62, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 64], align 2
-@switch.table._ZL10LowerCTPOPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.959 = private unnamed_addr constant [7 x i8] c"ABCD\00\00E", align 2
+@switch.table._ZL10LowerCTPOPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.956 = private unnamed_addr constant [7 x i8] c"ABCD\00\00E", align 2
 @switch.table._ZL19lowerVECTOR_SHUFFLEN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE = private unnamed_addr constant [5 x i8] [i8 13, i8 14, i8 poison, i8 15, i8 16], align 2
 @switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE = private unnamed_addr constant [6 x i16] [i16 542, i16 543, i16 poison, i16 poison, i16 544, i16 545], align 4
-@switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.960 = private unnamed_addr constant [6 x i16] [i16 1000, i16 1002, i16 poison, i16 poison, i16 999, i16 1001], align 4
-@switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.961 = private unnamed_addr constant [11 x i16] [i16 712, i16 713, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 723, i16 724, i16 726], align 4
+@switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.957 = private unnamed_addr constant [6 x i16] [i16 1000, i16 1002, i16 poison, i16 poison, i16 999, i16 1001], align 4
+@switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.958 = private unnamed_addr constant [11 x i16] [i16 712, i16 713, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 723, i16 724, i16 726], align 4
 @switch.table._ZNK4llvm17X86TargetLowering24EmitLoweredIndirectThunkERNS_12MachineInstrEPNS_17MachineBasicBlockE = private unnamed_addr constant [4 x i64] [i64 -1168, i64 -1164, i64 -4972, i64 -4973], align 8
 @switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE = private unnamed_addr constant [11 x i64] [i64 -1990, i64 -1993, i64 -1996, i64 -1991, i64 -1994, i64 -1997, i64 poison, i64 poison, i64 -1992, i64 -1995, i64 -1998], align 8
-@switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.963 = private unnamed_addr constant [37 x i64] [i64 -4967, i64 poison, i64 -4968, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -4992, i64 -4993, i64 poison, i64 -4994, i64 poison, i64 -4995, i64 -4996, i64 -4997, i64 -4998, i64 -4999, i64 -5000, i64 poison, i64 -5001], align 8
-@switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.964 = private unnamed_addr constant [41 x i64] [i64 -4982, i64 poison, i64 poison, i64 poison, i64 -4984, i64 poison, i64 poison, i64 poison, i64 -4986, i64 poison, i64 poison, i64 poison, i64 -4988, i64 poison, i64 poison, i64 poison, i64 -4990, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -5032], align 8
-@switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.965 = private unnamed_addr constant [41 x i64] [i64 -4981, i64 poison, i64 poison, i64 poison, i64 -4983, i64 poison, i64 poison, i64 poison, i64 -4985, i64 poison, i64 poison, i64 poison, i64 -4987, i64 poison, i64 poison, i64 poison, i64 -4989, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -5031], align 8
+@switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.960 = private unnamed_addr constant [37 x i64] [i64 -4967, i64 poison, i64 -4968, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -4992, i64 -4993, i64 poison, i64 -4994, i64 poison, i64 -4995, i64 -4996, i64 -4997, i64 -4998, i64 -4999, i64 -5000, i64 poison, i64 -5001], align 8
+@switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.961 = private unnamed_addr constant [41 x i64] [i64 -4982, i64 poison, i64 poison, i64 poison, i64 -4984, i64 poison, i64 poison, i64 poison, i64 -4986, i64 poison, i64 poison, i64 poison, i64 -4988, i64 poison, i64 poison, i64 poison, i64 -4990, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -5032], align 8
+@switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.962 = private unnamed_addr constant [41 x i64] [i64 -4981, i64 poison, i64 poison, i64 poison, i64 -4983, i64 poison, i64 poison, i64 poison, i64 -4985, i64 poison, i64 poison, i64 poison, i64 -4987, i64 poison, i64 poison, i64 poison, i64 -4989, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -5031], align 8
 @switch.table._ZL13combineSelectPN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_12X86SubtargetE = private unnamed_addr constant [11 x i8] [i8 11, i8 poison, i8 13, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 19, i8 poison, i8 21], align 4
 @switch.table._ZL26combineEXTEND_VECTOR_INREGPN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_12X86SubtargetE = private unnamed_addr constant [13 x i8] [i8 -29, i8 -28, i8 -27, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -27, i8 -29, i8 -28], align 4
 @switch.table._ZNK4llvm17X86TargetLowering17getConstraintTypeENS_9StringRefE = private unnamed_addr constant [57 x i8] [i8 0, i8 poison, i8 5, i8 0, i8 poison, i8 poison, i8 4, i8 poison, i8 4, i8 4, i8 4, i8 4, i8 4, i8 4, i8 poison, i8 poison, i8 1, i8 1, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 5, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 5, i8 1, i8 poison, i8 poison, i8 poison, i8 poison, i8 1, i8 1, i8 poison, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 1, i8 1, i8 1, i8 poison, i8 1, i8 1], align 4
 @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE = private unnamed_addr constant [26 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 640), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 896), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 704), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 640), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 896), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 704)], align 8
-@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.966 = private unnamed_addr constant [23 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2816), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 5760), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2816), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 5760)], align 8
-@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.967 = private unnamed_addr constant [13 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 320), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 320), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1344), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3072), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3072)], align 8
-@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.968 = private unnamed_addr constant [13 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 192), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 192), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 576), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2752), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2752)], align 8
-@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.969 = private unnamed_addr constant [26 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1024), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1216), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 960), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1024), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1216), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 960)], align 8
-@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.970 = private unnamed_addr constant [23 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3008), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 6208), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3008), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 6208)], align 8
-@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.971 = private unnamed_addr constant [10 x i8] c"\16\17\18\19\1A\1B\00\00\00 ", align 4
-@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.972 = private unnamed_addr constant [10 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3264), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3392), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3456), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3520), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3648), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3584), ptr null, ptr null, ptr null, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3712)], align 8
+@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.963 = private unnamed_addr constant [23 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2816), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 5760), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2816), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 5760)], align 8
+@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.964 = private unnamed_addr constant [13 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 320), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 320), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1344), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3072), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3072)], align 8
+@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.965 = private unnamed_addr constant [13 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 192), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 192), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 576), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2752), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 2752)], align 8
+@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.966 = private unnamed_addr constant [26 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1024), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1216), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 960), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1024), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 1216), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 960)], align 8
+@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.967 = private unnamed_addr constant [23 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3008), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 6208), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3008), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 6208)], align 8
+@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.968 = private unnamed_addr constant [10 x i8] c"\16\17\18\19\1A\1B\00\00\00 ", align 4
+@switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.969 = private unnamed_addr constant [10 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3264), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3392), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3456), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3520), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3648), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3584), ptr null, ptr null, ptr null, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 3712)], align 8
 @switch.table._ZL24lowerAtomicArithWithLOCKN4llvm7SDValueERNS_12SelectionDAGERKNS_12X86SubtargetE = private unnamed_addr constant [6 x i16] [i16 712, i16 724, i16 713, i16 poison, i16 723, i16 726], align 4
 @switch.table._ZL30lowerShuffleAsElementInsertionRKN4llvm5SDLocENS_3MVTENS_7SDValueES4_NS_8ArrayRefIiEERKNS_5APIntERKNS_12X86SubtargetERNS_12SelectionDAGE = private unnamed_addr constant [3 x i16] [i16 748, i16 751, i16 747], align 4
 @switch.table._ZL18lowerV4X128ShuffleRKN4llvm5SDLocENS_3MVTENS_8ArrayRefIiEERKNS_5APIntENS_7SDValueES9_RKNS_12X86SubtargetERNS_12SelectionDAGE = private unnamed_addr constant [14 x i8] c"\16\00\00+:I`\00\00\00{l\88\9C", align 2
-@switch.table._ZL18lowerV4X128ShuffleRKN4llvm5SDLocENS_3MVTENS_8ArrayRefIiEERKNS_5APIntENS_7SDValueES9_RKNS_12X86SubtargetERNS_12SelectionDAGE.973 = private unnamed_addr constant [14 x i8] c"\14\00\00)8G^h\00\00yj\86\9A", align 2
+@switch.table._ZL18lowerV4X128ShuffleRKN4llvm5SDLocENS_3MVTENS_8ArrayRefIiEERKNS_5APIntENS_7SDValueES9_RKNS_12X86SubtargetERNS_12SelectionDAGE.970 = private unnamed_addr constant [14 x i8] c"\14\00\00)8G^h\00\00yj\86\9A", align 2
 @switch.table._ZL14LowerAVXExtendN4llvm7SDValueERKNS_5SDLocERNS_12SelectionDAGERKNS_12X86SubtargetE = private unnamed_addr constant [13 x i8] [i8 -18, i8 -17, i8 -19, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -19, i8 -18, i8 -17], align 4
 @switch.table._ZL22combineX86ShuffleChainN4llvm8ArrayRefINS_7SDValueEEEjNS_3MVTENS0_IiEEiNS0_IPKNS_6SDNodeEEEbbbRNS_12SelectionDAGERKNS_5SDLocERKNS_12X86SubtargetE = private unnamed_addr constant [3 x i8] c"\EE\EF\ED", align 4
 @switch.table._ZL18combineSetCCEFLAGSN4llvm7SDValueERNS_3X868CondCodeERNS_12SelectionDAGERKNS_12X86SubtargetE = private unnamed_addr constant [6 x i8] c"\04\05\02\03\06\07", align 4
@@ -681,7 +681,7 @@ switch.lookup83:                                  ; preds = %_ZN4llvm3ISD13isNON
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %4, ptr noundef nonnull align 8 dereferenceable(12) %6, i64 12, i1 false), !tbaa.struct !683
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.br = sext i32 %.042 to i64
-  %i.bs = getelementptr i8, ptr @switch.table._ZL14TranslateX86CCN4llvm3ISD8CondCodeERKNS_5SDLocEbRNS_7SDValueES6_RNS_12SelectionDAGE.922, i64 %i.br
+  %i.bs = getelementptr i8, ptr @switch.table._ZL14TranslateX86CCN4llvm3ISD8CondCodeERKNS_5SDLocEbRNS_7SDValueES6_RNS_12SelectionDAGE.919, i64 %i.br
   %switch.gep84 = getelementptr i8, ptr %i.bs, i64 -4
   %switch.load85 = load i8, ptr %switch.gep84, align 1
   %switch.ext86 = zext i8 %switch.load85 to i32
@@ -1084,7 +1084,7 @@ bb.bm:                                            ; preds = %_ZNK4llvm3MVT14is12
 
 switch.lookup1960:                                ; preds = %bb.bm
   %i.jq = sext i32 %i.w to i64
-  %i.jr = getelementptr i8, ptr @switch.table._ZL11LowerVSETCCN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.923, i64 %i.jq
+  %i.jr = getelementptr i8, ptr @switch.table._ZL11LowerVSETCCN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.920, i64 %i.jq
   %switch.gep1961 = getelementptr i8, ptr %i.jr, i64 -10
   %switch.load1962 = load i8, ptr %switch.gep1961, align 1
   %switch.ext = zext i8 %switch.load1962 to i64
@@ -1487,7 +1487,7 @@ switch.lookup3162:                                ; preds = %bb.eo, %bb.eo, %bb.
   %switch.load = load i16, ptr %switch.gep, align 2
   %switch.ext = zext i16 %switch.load to i32
   %i.aln = zext nneg i32 %switch.tableidx to i64
-  %switch.gep3163 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.924, i64 %i.aln
+  %switch.gep3163 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.921, i64 %i.aln
   %switch.load3164 = load i8, ptr %switch.gep3163, align 1
   %switch.ext3165 = zext i8 %switch.load3164 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %116) #39
@@ -1890,7 +1890,7 @@ _ZNK4llvm5APInt15getLimitedValueEm.exit.thread:   ; preds = %_ZNK4llvm5APInt13ge
   %i.ask = load <2 x i32>, ptr %.sroa.7.0..sroa_idx2416, align 8
   %switch.tableidx3166 = add i64 %.0.i.i.i.i.i, 4294951352
   %i.asl = and i64 %switch.tableidx3166, 4294967295
-  %switch.gep3168 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.925, i64 %i.asl
+  %switch.gep3168 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering23LowerINTRINSIC_WO_CHAINENS_7SDValueERNS_12SelectionDAGE.922, i64 %i.asl
   %switch.load3169 = load i16, ptr %switch.gep3168, align 2
   %switch.ext3170 = zext i16 %switch.load3169 to i64
   store ptr %.sroa.02413.0.copyload, ptr %143, align 8, !tbaa !465
@@ -2293,217 +2293,217 @@ switch.lookup:                                    ; preds = %bb.h
 
 switch.lookup213:                                 ; preds = %bb.i
   %i.pz = zext nneg i8 %switch.tableidx212 to i64
-  %switch.gep214 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.926, i64 %i.pz
+  %switch.gep214 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.923, i64 %i.pz
   %switch.load215 = load i8, ptr %switch.gep214, align 1
   %switch.ext216 = zext i8 %switch.load215 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup218:                                 ; preds = %bb.j
   %i.qa = zext nneg i8 %switch.tableidx217 to i64
-  %switch.gep219 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.927, i64 %i.qa
+  %switch.gep219 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.924, i64 %i.qa
   %switch.load220 = load i8, ptr %switch.gep219, align 1
   %switch.ext221 = zext i8 %switch.load220 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup223:                                 ; preds = %bb.k
   %i.qb = zext nneg i8 %switch.tableidx222 to i64
-  %switch.gep224 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.928, i64 %i.qb
+  %switch.gep224 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.925, i64 %i.qb
   %switch.load225 = load i8, ptr %switch.gep224, align 1
   %switch.ext226 = zext i8 %switch.load225 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup228:                                 ; preds = %bb.r
   %i.qc = zext nneg i8 %switch.tableidx227 to i64
-  %switch.gep229 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.929, i64 %i.qc
+  %switch.gep229 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.926, i64 %i.qc
   %switch.load230 = load i8, ptr %switch.gep229, align 1
   %switch.ext231 = zext i8 %switch.load230 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup233:                                 ; preds = %bb.ak
   %i.qd = zext nneg i8 %switch.tableidx232 to i64
-  %switch.gep234 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.930, i64 %i.qd
+  %switch.gep234 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.927, i64 %i.qd
   %switch.load235 = load i16, ptr %switch.gep234, align 2
   %switch.ext236 = zext i16 %switch.load235 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup238:                                 ; preds = %bb.an
   %i.qe = zext nneg i8 %switch.tableidx237 to i64
-  %switch.gep239 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.931, i64 %i.qe
+  %switch.gep239 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.928, i64 %i.qe
   %switch.load240 = load i8, ptr %switch.gep239, align 1
   %switch.ext241 = zext i8 %switch.load240 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup243:                                 ; preds = %bb.ao
   %i.qf = zext nneg i8 %switch.tableidx242 to i64
-  %switch.gep244 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.932, i64 %i.qf
+  %switch.gep244 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.929, i64 %i.qf
   %switch.load245 = load i8, ptr %switch.gep244, align 1
   %switch.ext246 = zext i8 %switch.load245 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup248:                                 ; preds = %bb.bk
   %i.qg = zext nneg i8 %switch.tableidx247 to i64
-  %switch.gep249 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.933, i64 %i.qg
+  %switch.gep249 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.930, i64 %i.qg
   %switch.load250 = load i8, ptr %switch.gep249, align 1
   %switch.ext251 = zext i8 %switch.load250 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup253:                                 ; preds = %bb.bl
   %i.qh = zext nneg i8 %switch.tableidx252 to i64
-  %switch.gep254 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.934, i64 %i.qh
+  %switch.gep254 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.931, i64 %i.qh
   %switch.load255 = load i8, ptr %switch.gep254, align 1
   %switch.ext256 = zext i8 %switch.load255 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup258:                                 ; preds = %bb.bm
   %i.qi = zext nneg i8 %switch.tableidx257 to i64
-  %switch.gep259 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.935, i64 %i.qi
+  %switch.gep259 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.932, i64 %i.qi
   %switch.load260 = load i8, ptr %switch.gep259, align 1
   %switch.ext261 = zext i8 %switch.load260 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup263:                                 ; preds = %bb.bn
   %i.qj = zext nneg i8 %switch.tableidx262 to i64
-  %switch.gep264 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.936, i64 %i.qj
+  %switch.gep264 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.933, i64 %i.qj
   %switch.load265 = load i8, ptr %switch.gep264, align 1
   %switch.ext266 = zext i8 %switch.load265 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup268:                                 ; preds = %bb.bo
   %i.qk = zext nneg i8 %switch.tableidx267 to i64
-  %switch.gep269 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.937, i64 %i.qk
+  %switch.gep269 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.934, i64 %i.qk
   %switch.load270 = load i8, ptr %switch.gep269, align 1
   %switch.ext271 = zext i8 %switch.load270 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup273:                                 ; preds = %bb.bp
   %i.ql = zext nneg i8 %switch.tableidx272 to i64
-  %switch.gep274 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.938, i64 %i.ql
+  %switch.gep274 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.935, i64 %i.ql
   %switch.load275 = load i8, ptr %switch.gep274, align 1
   %switch.ext276 = zext i8 %switch.load275 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup278:                                 ; preds = %bb.bq
   %i.qm = zext nneg i8 %switch.tableidx277 to i64
-  %switch.gep279 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.939, i64 %i.qm
+  %switch.gep279 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.936, i64 %i.qm
   %switch.load280 = load i16, ptr %switch.gep279, align 2
   %switch.ext281 = zext i16 %switch.load280 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup283:                                 ; preds = %bb.br
   %i.qn = zext nneg i8 %switch.tableidx282 to i64
-  %switch.gep284 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.940, i64 %i.qn
+  %switch.gep284 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.937, i64 %i.qn
   %switch.load285 = load i16, ptr %switch.gep284, align 2
   %switch.ext286 = zext i16 %switch.load285 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup288:                                 ; preds = %bb.bs
   %i.qo = zext nneg i8 %switch.tableidx287 to i64
-  %switch.gep289 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.941, i64 %i.qo
+  %switch.gep289 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.938, i64 %i.qo
   %switch.load290 = load i16, ptr %switch.gep289, align 2
   %switch.ext291 = zext i16 %switch.load290 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup293:                                 ; preds = %bb.bt
   %i.qp = zext nneg i8 %switch.tableidx292 to i64
-  %switch.gep294 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.942, i64 %i.qp
+  %switch.gep294 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.939, i64 %i.qp
   %switch.load295 = load i16, ptr %switch.gep294, align 2
   %switch.ext296 = zext i16 %switch.load295 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup298:                                 ; preds = %bb.bv
   %i.qq = zext nneg i8 %switch.tableidx297 to i64
-  %switch.gep299 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.943, i64 %i.qq
+  %switch.gep299 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.940, i64 %i.qq
   %switch.load300 = load i16, ptr %switch.gep299, align 2
   %switch.ext301 = zext i16 %switch.load300 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup303:                                 ; preds = %bb.bw
   %i.qr = zext nneg i8 %switch.tableidx302 to i64
-  %switch.gep304 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.944, i64 %i.qr
+  %switch.gep304 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.941, i64 %i.qr
   %switch.load305 = load i16, ptr %switch.gep304, align 2
   %switch.ext306 = zext i16 %switch.load305 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup308:                                 ; preds = %bb.bx
   %i.qs = zext nneg i8 %switch.tableidx307 to i64
-  %switch.gep309 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.945, i64 %i.qs
+  %switch.gep309 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.942, i64 %i.qs
   %switch.load310 = load i16, ptr %switch.gep309, align 2
   %switch.ext311 = zext i16 %switch.load310 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup313:                                 ; preds = %bb.by
   %i.qt = zext nneg i8 %switch.tableidx312 to i64
-  %switch.gep314 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.946, i64 %i.qt
+  %switch.gep314 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.943, i64 %i.qt
   %switch.load315 = load i16, ptr %switch.gep314, align 2
   %switch.ext316 = zext i16 %switch.load315 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup318:                                 ; preds = %bb.bz
   %i.qu = zext nneg i8 %switch.tableidx317 to i64
-  %switch.gep319 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.947, i64 %i.qu
+  %switch.gep319 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.944, i64 %i.qu
   %switch.load320 = load i16, ptr %switch.gep319, align 2
   %switch.ext321 = zext i16 %switch.load320 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup323:                                 ; preds = %bb.ca
   %i.qv = zext nneg i8 %switch.tableidx322 to i64
-  %switch.gep324 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.948, i64 %i.qv
+  %switch.gep324 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.945, i64 %i.qv
   %switch.load325 = load i16, ptr %switch.gep324, align 2
   %switch.ext326 = zext i16 %switch.load325 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup328:                                 ; preds = %bb.cb
   %i.qw = zext nneg i8 %switch.tableidx327 to i64
-  %switch.gep329 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.949, i64 %i.qw
+  %switch.gep329 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.946, i64 %i.qw
   %switch.load330 = load i16, ptr %switch.gep329, align 2
   %switch.ext331 = zext i16 %switch.load330 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup333:                                 ; preds = %bb.cc
   %i.qx = zext nneg i8 %switch.tableidx332 to i64
-  %switch.gep334 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.950, i64 %i.qx
+  %switch.gep334 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.947, i64 %i.qx
   %switch.load335 = load i16, ptr %switch.gep334, align 2
   %switch.ext336 = zext i16 %switch.load335 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup338:                                 ; preds = %bb.cd
   %i.qy = zext nneg i8 %switch.tableidx337 to i64
-  %switch.gep339 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.951, i64 %i.qy
+  %switch.gep339 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.948, i64 %i.qy
   %switch.load340 = load i16, ptr %switch.gep339, align 2
   %switch.ext341 = zext i16 %switch.load340 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup343:                                 ; preds = %bb.ce
   %i.qz = zext nneg i8 %switch.tableidx342 to i64
-  %switch.gep344 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.952, i64 %i.qz
+  %switch.gep344 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.949, i64 %i.qz
   %switch.load345 = load i16, ptr %switch.gep344, align 2
   %switch.ext346 = zext i16 %switch.load345 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup348:                                 ; preds = %bb.cg
   %i.ra = zext nneg i8 %switch.tableidx347 to i64
-  %switch.gep349 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.953, i64 %i.ra
+  %switch.gep349 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.950, i64 %i.ra
   %switch.load350 = load i16, ptr %switch.gep349, align 2
   %switch.ext351 = zext i16 %switch.load350 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup353:                                 ; preds = %bb.ch
   %i.rb = zext nneg i8 %switch.tableidx352 to i64
-  %switch.gep354 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.954, i64 %i.rb
+  %switch.gep354 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.951, i64 %i.rb
   %switch.load355 = load i16, ptr %switch.gep354, align 2
   %switch.ext356 = zext i16 %switch.load355 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup358:                                 ; preds = %bb.de
   %i.rc = zext nneg i8 %switch.tableidx357 to i64
-  %switch.gep359 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.955, i64 %i.rc
+  %switch.gep359 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.952, i64 %i.rc
   %switch.load360 = load i8, ptr %switch.gep359, align 1
   %switch.ext361 = zext i8 %switch.load360 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 switch.lookup363:                                 ; preds = %bb.dj
   %i.rd = zext nneg i8 %switch.tableidx362 to i64
-  %switch.gep364 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.956, i64 %i.rd
+  %switch.gep364 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering17getRegisterByNameEPKcNS_3LLTERKNS_15MachineFunctionE.953, i64 %i.rd
   %switch.load365 = load i8, ptr %switch.gep364, align 1
   %switch.ext366 = zext i8 %switch.load365 to i32
   br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
@@ -2906,7 +2906,7 @@ _ZNSt14_Function_baseD2Ev.exit:
   %switch.load = load i16, ptr %switch.gep, align 2
   %switch.ext = zext i16 %switch.load to i32
   %i.ap = zext nneg i16 %switch.tableidx to i64
-  %switch.gep97 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering29emitBitTestAtomicRMWIntrinsicEPNS_13AtomicRMWInstE.957, i64 %i.ap
+  %switch.gep97 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering29emitBitTestAtomicRMWIntrinsicEPNS_13AtomicRMWInstE.954, i64 %i.ap
   %switch.load98 = load i16, ptr %switch.gep97, align 2
   %switch.ext99 = zext i16 %switch.load98 to i32
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
@@ -3309,7 +3309,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.k = zext nneg i16 %switch.tableidx to i64
-  %switch.gep64 = getelementptr inbounds nuw i8, ptr @switch.table._ZL13LowerCMP_SWAPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.958, i64 %i.k
+  %switch.gep64 = getelementptr inbounds nuw i8, ptr @switch.table._ZL13LowerCMP_SWAPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.955, i64 %i.k
   %switch.load65 = load i8, ptr %switch.gep64, align 1
   %switch.ext66 = zext i8 %switch.load65 to i32   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -3712,7 +3712,7 @@ switch.lookup:                                    ; preds = %_ZN4llvm3MVT11getVe
 
 switch.lookup572:                                 ; preds = %.split.i.i
   %i.hb = zext nneg i32 %switch.tableidx571 to i64
-  %switch.gep573 = getelementptr inbounds nuw i8, ptr @switch.table._ZL10LowerCTPOPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.959, i64 %i.hb
+  %switch.gep573 = getelementptr inbounds nuw i8, ptr @switch.table._ZL10LowerCTPOPN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.956, i64 %i.hb
   %switch.load574 = load i8, ptr %switch.gep573, align 1
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit266.i.i
 
@@ -4115,7 +4115,7 @@ switch.lookup1562:                                ; preds = %_ZN4llvmL21getIntri
   %i.gj = load ptr, ptr %i.a, align 8, !tbaa !638 ; 10 uses
   %switch.tableidx1561 = add i64 %.0.i.i.i.i.i, 4294952602
   %i.gk = and i64 %switch.tableidx1561, 4294967295
-  %switch.gep1563 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.960, i64 %i.gk
+  %switch.gep1563 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.957, i64 %i.gk
   %switch.load1564 = load i16, ptr %switch.gep1563, align 2
   %switch.ext1565 = zext i16 %switch.load1564 to i32
   %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -4518,7 +4518,7 @@ switch.lookup1567:                                ; preds = %_ZN4llvmL21getIntri
   %.sroa.0.0.copyload.i.i.i1029 = load i16, ptr %i.pb, align 8, !tbaa !345
   %switch.tableidx1566 = add i64 %.0.i.i.i.i.i, 4294952580
   %i.pc = and i64 %switch.tableidx1566, 4294967295
-  %switch.gep1568 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.961, i64 %i.pc
+  %switch.gep1568 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL22LowerINTRINSIC_W_CHAINN4llvm7SDValueERKNS_12X86SubtargetERNS_12SelectionDAGE.958, i64 %i.pc
   %switch.load1569 = load i16, ptr %switch.gep1568, align 2
   %switch.ext1570 = zext i16 %switch.load1569 to i32
   %i.pd = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -4921,7 +4921,7 @@ bb.aw:                                            ; preds = %_ZN4llvm10MIMetadat
 
 switch.lookup589:                                 ; preds = %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit
   %i.vj = sext i32 %i.bm to i64
-  %i.vk = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.963, i64 %i.vj
+  %i.vk = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.960, i64 %i.vj
   %switch.gep590 = getelementptr i8, ptr %i.vk, i64 -27584
   %switch.load591 = load i64, ptr %switch.gep590, align 8
   %i.vl = getelementptr inbounds nuw i8, ptr %i.d, i64 768
@@ -5137,7 +5137,7 @@ bb.bk:                                            ; preds = %bb.bi, %bb.bj
 
 switch.lookup593:                                 ; preds = %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit
   %i.zp = sext i32 %i.bm to i64
-  %i.zq = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.964, i64 %i.zp
+  %i.zq = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.961, i64 %i.zp
   %switch.gep594 = getelementptr i8, ptr %i.zq, i64 -27632
   %switch.load595 = load i64, ptr %switch.gep594, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #39
@@ -5185,7 +5185,7 @@ switch.lookup593:                                 ; preds = %_ZN4llvm10MIMetadat
 
 switch.lookup597:                                 ; preds = %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit, %_ZN4llvm10MIMetadataC2ERKNS_12MachineInstrE.exit
   %i.aao = sext i32 %i.bm to i64
-  %i.aap = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.965, i64 %i.aao
+  %i.aap = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering27EmitInstrWithCustomInserterERNS_12MachineInstrEPNS_17MachineBasicBlockE.962, i64 %i.aao
   %switch.gep598 = getelementptr i8, ptr %i.aap, i64 -27616
   %switch.load599 = load i64, ptr %switch.gep598, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #39
@@ -5588,19 +5588,19 @@ switch.hole_check1115:                            ; preds = %bb.g
 
 switch.lookup1116:                                ; preds = %switch.hole_check1115
   %i.uf = zext nneg i16 %switch.tableidx1113 to i64
-  %switch.gep1120 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.966, i64 %i.uf
+  %switch.gep1120 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.963, i64 %i.uf
   %switch.load1121 = load ptr, ptr %switch.gep1120, align 8
   br label %.critedge
 
 switch.lookup1125:                                ; preds = %bb.m
   %i.ug = zext nneg i16 %switch.tableidx1122 to i64
-  %switch.gep1128 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.967, i64 %i.ug
+  %switch.gep1128 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.964, i64 %i.ug
   %switch.load1129 = load ptr, ptr %switch.gep1128, align 8
   br label %.critedge
 
 switch.lookup1133:                                ; preds = %bb.u
   %i.uh = zext nneg i16 %switch.tableidx1130 to i64
-  %switch.gep1136 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.968, i64 %i.uh
+  %switch.gep1136 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.965, i64 %i.uh
   %switch.load1137 = load ptr, ptr %switch.gep1136, align 8
   br label %.critedge
 
@@ -5612,7 +5612,7 @@ switch.hole_check1140:                            ; preds = %bb.cf
 
 switch.lookup1141:                                ; preds = %switch.hole_check1140
   %i.ui = zext nneg i16 %switch.tableidx1138 to i64
-  %switch.gep1145 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.969, i64 %i.ui
+  %switch.gep1145 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.966, i64 %i.ui
   %switch.load1146 = load ptr, ptr %switch.gep1145, align 8
   br label %.critedge
 
@@ -5624,17 +5624,17 @@ switch.hole_check1149:                            ; preds = %bb.ch
 
 switch.lookup1150:                                ; preds = %switch.hole_check1149
   %i.uj = zext nneg i16 %switch.tableidx1147 to i64
-  %switch.gep1154 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.970, i64 %i.uj
+  %switch.gep1154 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.967, i64 %i.uj
   %switch.load1155 = load ptr, ptr %switch.gep1154, align 8
   br label %.critedge
 
 switch.lookup1157:                                ; preds = %bb.eg
   %i.uk = zext nneg i32 %switch.tableidx1156 to i64
-  %switch.gep1158 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.971, i64 %i.uk
+  %switch.gep1158 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.968, i64 %i.uk
   %switch.load1159 = load i8, ptr %switch.gep1158, align 1
   %switch.ext = zext i8 %switch.load1159 to i32
   %i.ul = zext nneg i32 %switch.tableidx1156 to i64
-  %switch.gep1160 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.972, i64 %i.ul
+  %switch.gep1160 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm17X86TargetLowering28getRegForInlineAsmConstraintEPKNS_18TargetRegisterInfoENS_9StringRefENS_3MVTE.969, i64 %i.ul
   %switch.load1161 = load ptr, ptr %switch.gep1160, align 8
   br label %.critedge
 
@@ -6037,7 +6037,7 @@ bb.aa:                                            ; preds = %_ZN4llvm5APIntD2Ev.
 
 switch.lookup:                                    ; preds = %bb.aa
   %i.fc = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZL18lowerV4X128ShuffleRKN4llvm5SDLocENS_3MVTENS_8ArrayRefIiEERKNS_5APIntENS_7SDValueES9_RKNS_12X86SubtargetERNS_12SelectionDAGE.973, i64 %i.fc
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZL18lowerV4X128ShuffleRKN4llvm5SDLocENS_3MVTENS_8ArrayRefIiEERKNS_5APIntENS_7SDValueES9_RKNS_12X86SubtargetERNS_12SelectionDAGE.970, i64 %i.fc
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i16
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit
@@ -6440,7 +6440,7 @@ bb.as:                                            ; preds = %bb.ao
 
 switch.lookup406:                                 ; preds = %.thread400
   %i.im = zext nneg i16 %switch.tableidx405 to i64
-  %switch.gep407 = getelementptr inbounds nuw i8, ptr @switch.table._ZL18lowerV4X128ShuffleRKN4llvm5SDLocENS_3MVTENS_8ArrayRefIiEERKNS_5APIntENS_7SDValueES9_RKNS_12X86SubtargetERNS_12SelectionDAGE.973, i64 %i.im
+  %switch.gep407 = getelementptr inbounds nuw i8, ptr @switch.table._ZL18lowerV4X128ShuffleRKN4llvm5SDLocENS_3MVTENS_8ArrayRefIiEERKNS_5APIntENS_7SDValueES9_RKNS_12X86SubtargetERNS_12SelectionDAGE.970, i64 %i.im
   %switch.load408 = load i8, ptr %switch.gep407, align 1
   %switch.ext409 = zext i8 %switch.load408 to i16
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit245

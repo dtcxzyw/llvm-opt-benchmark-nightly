@@ -205,8 +205,7 @@ bb.ho:                                            ; preds = %bb.hi
 bb.hp:                                            ; preds = %._crit_edge295, %bb.hn
   %.val.i = phi ptr [ %.val.i.pre, %._crit_edge295 ], [ %i.xa, %bb.hn ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.at)
-  call void @llvm.experimental.noalias.scope.decl(metadata !71305)
-  call fastcc void @_RNCNvMs_NtCs8AjStw0eGtC_16hickory_resolver14caching_clientINtB6_13CachingClientINtNtB8_8resolver12LookupEitherNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEE12inner_lookup0CsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(168) %i.at, ptr noundef nonnull align 8 %.val.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2) #60, !noalias !71305, !inline_history !71286
+  call fastcc void @_RNCNvMs_NtCs8AjStw0eGtC_16hickory_resolver14caching_clientINtB6_13CachingClientINtNtB8_8resolver12LookupEitherNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEE12inner_lookup0CsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(168) %i.at, ptr noundef nonnull align 8 %.val.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2) #60, !inline_history !71286
   %i.xv = load i64, ptr %i.at, align 8, !range !245, !noundef !177 ; 3 uses
   %i.xw = icmp eq i64 %i.xv, -2
   br i1 %i.xw, label %bb.ia, label %bb.ib

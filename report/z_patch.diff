@@ -1,0 +1,50 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 36b004e3e808c..cb02fb3512978 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -7355,8 +7355,6 @@ llvm::getArgumentAliasingToReturnedPointer(const CallBase *Call,
+                                            bool MustPreserveProvenance) {
+   assert(Call &&
+          "getArgumentAliasingToReturnedPointer only works on nonnull calls");
+-  if (const Value *RV = Call->getReturnedArgOperand())
+-    return RV;
+   // This can be used only as a aliasing property.
+   if (isIntrinsicReturningPointerAliasingArgumentWithoutCapturing(
+           Call, MustPreserveOffset, MustPreserveProvenance))
+@@ -7648,12 +7646,6 @@ AllocaInst *llvm::findAllocaForValue(Value *V, bool OffsetZero) {
+       if (OffsetZero && !GEP->hasAllZeroIndices())
+         return nullptr;
+       AddWork(GEP->getPointerOperand());
+-    } else if (CallBase *CB = dyn_cast<CallBase>(V)) {
+-      Value *Returned = CB->getReturnedArgOperand();
+-      if (Returned)
+-        AddWork(Returned);
+-      else
+-        return nullptr;
+     } else {
+       return nullptr;
+     }
+diff --git a/llvm/lib/IR/Value.cpp b/llvm/lib/IR/Value.cpp
+index 4829eec1ae36a..679f0e3d35b0c 100644
+--- a/llvm/lib/IR/Value.cpp
++++ b/llvm/lib/IR/Value.cpp
+@@ -684,10 +684,6 @@ static const Value *stripPointerCastsAndOffsets(
+       V = cast<PHINode>(V)->getIncomingValue(0);
+     } else {
+       if (const auto *Call = dyn_cast<CallBase>(V)) {
+-        if (const Value *RV = Call->getReturnedArgOperand()) {
+-          V = RV;
+-          continue;
+-        }
+         // The result of launder.invariant.group must alias it's argument,
+         // but it can't be marked with returned attribute, that's why it needs
+         // special case.
+@@ -790,8 +786,6 @@ const Value *Value::stripAndAccumulateConstantOffsets(
+       if (!GA->isInterposable())
+         V = GA->getAliasee();
+     } else if (const auto *Call = dyn_cast<CallBase>(V)) {
+-      if (const Value *RV = Call->getReturnedArgOperand())
+-        V = RV;
+       if (AllowInvariantGroup &&
+           Call->getIntrinsicID() == Intrinsic::launder_invariant_group)
+         V = Call->getArgOperand(0);

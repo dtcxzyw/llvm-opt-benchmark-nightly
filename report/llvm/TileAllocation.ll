@@ -205,7 +205,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_19FunctionOpInterfaceEvE13resolveTypeIDEv
 @_ZZN4mlir6detail14TypeIDResolverINS_19FunctionOpInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_19FunctionOpInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str.29 = private unnamed_addr constant [76 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::FunctionOpInterface]\00", align 1
-@switch.table._ZN4mlir7arm_sme16allocateSMETilesENS_19FunctionOpInterfaceEb.371 = private unnamed_addr constant [5 x i8] c"\04\08\10 @", align 8
+@switch.table._ZN4mlir7arm_sme16allocateSMETilesENS_19FunctionOpInterfaceEb.370 = private unnamed_addr constant [5 x i8] c"\04\08\10 @", align 8
 @"switch.table._ZN9__gnu_cxx5__ops10_Iter_predIZZN4llvm9SetVectorIPN12_GLOBAL__N_19LiveRangeENS2_11SmallVectorIS6_Lj0EEENS2_8DenseSetIS6_NS2_12DenseMapInfoIS6_vEEEELj0EE9remove_ifIZNS4_25allocateTilesToLiveRangesENS2_8ArrayRefIS6_EEE3$_1EEbT_ENKUlvE_clEvEUlRKS6_E_EclIPS6_EEbSI_" = private unnamed_addr constant [5 x ptr] [ptr @_ZZN12_GLOBAL__N_18getMasksEN4mlir7arm_sme14ArmSMETileTypeEE10ZA_B_MASKS, ptr @_ZZN12_GLOBAL__N_18getMasksEN4mlir7arm_sme14ArmSMETileTypeEE10ZA_H_MASKS, ptr @_ZZN12_GLOBAL__N_18getMasksEN4mlir7arm_sme14ArmSMETileTypeEE10ZA_S_MASKS, ptr @_ZZN12_GLOBAL__N_18getMasksEN4mlir7arm_sme14ArmSMETileTypeEE10ZA_D_MASKS, ptr @_ZZN12_GLOBAL__N_18getMasksEN4mlir7arm_sme14ArmSMETileTypeEE10ZA_Q_MASKS], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -608,7 +608,7 @@ _ZN4llvm15SmallVectorImplIPN12_GLOBAL__N_19LiveRangeEE5eraseEPKS3_S6_.exit.i76.i
   %i.wm = inttoptr i64 %i.wl to ptr
   %i.wn = call i64 @_ZN4mlir7arm_sme14getSMETileTypeENS_10VectorTypeE(ptr %i.wm) #27 ; 4 uses
   %i.wo = and i64 %i.wn, 4294967295
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4mlir7arm_sme16allocateSMETilesENS_19FunctionOpInterfaceEb.371, i64 %i.wo
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4mlir7arm_sme16allocateSMETilesENS_19FunctionOpInterfaceEb.370, i64 %i.wo
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.wp = and i64 %i.wn, 4294967295
@@ -1011,7 +1011,7 @@ switch.lookup502:                                 ; preds = %_ZN12_GLOBAL__N_126
   %i.akb = xor i32 %i.aka, %i.ajz                 ; 3 uses
   store i32 %i.akb, ptr %37, align 4, !tbaa !74
   %i.akc = and i64 %i.wn, 4294967295
-  %switch.gep509 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4mlir7arm_sme16allocateSMETilesENS_19FunctionOpInterfaceEb.371, i64 %i.akc
+  %switch.gep509 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4mlir7arm_sme16allocateSMETilesENS_19FunctionOpInterfaceEb.370, i64 %i.akc
   %switch.load510 = load i8, ptr %switch.gep509, align 1
   %switch.ext511 = zext i8 %switch.load510 to i64
   %i.akd = and i64 %i.wn, 4294967295

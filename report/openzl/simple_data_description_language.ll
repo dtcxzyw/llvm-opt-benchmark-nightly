@@ -205,7 +205,7 @@ switch.lookup.peel.newph:                         ; preds = %bb.m, %.thread258
   %.lcssa = phi i32 [ %i.al, %.thread.peel405 ], [ %i.ac, %.thread.peel ], [ %i.au, %.thread ]
   %i.ax = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !alias.scope !276
-  %i.az = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %11, i32 %.lcssa, ptr %i.ay, ptr nonnull @ZL_SDDL_State_execExpr_op.__zl_static_error_info.246, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.244, i32 noundef 2743, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !276, !inline_history !260 ; 2 uses
+  %i.az = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %11, i32 %.lcssa, ptr %i.ay, ptr nonnull @ZL_SDDL_State_execExpr_op.__zl_static_error_info.246, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.244, i32 noundef 2743, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !260 ; 2 uses
   %i.ba = extractvalue { i32, ptr } %i.az, 0
   %i.bb = extractvalue { i32, ptr } %i.az, 1
   store i32 %i.ba, ptr %15, align 8, !tbaa !66, !alias.scope !276
@@ -495,7 +495,7 @@ bb.aj:                                            ; preds = %ZL_SDDL_State_execE
 bb.ak:                                            ; preds = %bb.aj
   %.sroa.39.0..sroa_idx79 = getelementptr inbounds nuw i8, ptr %6, i64 4
   %.sroa.39.0.copyload80 = load i32, ptr %.sroa.39.0..sroa_idx79, align 4
-  %i.dr = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload72, ptr %.sroa.40.0.copyload90, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.484, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2847, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !278, !inline_history !267 ; 2 uses
+  %i.dr = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload72, ptr %.sroa.40.0.copyload90, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.484, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2847, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !267 ; 2 uses
   %i.ds = extractvalue { i32, ptr } %i.dr, 0
   %i.dt = extractvalue { i32, ptr } %i.dr, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15, !noalias !278
@@ -521,7 +521,7 @@ bb.al:                                            ; preds = %bb.ag
 bb.am:                                            ; preds = %bb.al
   %.sroa.39.0..sroa_idx77 = getelementptr inbounds nuw i8, ptr %7, i64 4
   %.sroa.39.0.copyload78 = load i32, ptr %.sroa.39.0..sroa_idx77, align 4
-  %i.dy = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload71, ptr %.sroa.40.0.copyload88, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.485, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2856, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !278, !inline_history !267 ; 2 uses
+  %i.dy = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload71, ptr %.sroa.40.0.copyload88, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.485, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2856, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !267 ; 2 uses
   %i.dz = extractvalue { i32, ptr } %i.dy, 0
   %i.ea = extractvalue { i32, ptr } %i.dy, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15, !noalias !278
@@ -545,7 +545,7 @@ ZL_SDDL_State_execExpr_field_record_isExprConsume.exit.thread: ; preds = %bb.ag,
 bb.an:                                            ; preds = %ZL_SDDL_State_execExpr_field_record_isExprConsume.exit.thread
   %.sroa.39.0..sroa_idx75 = getelementptr inbounds nuw i8, ptr %8, i64 4
   %.sroa.39.0.copyload76 = load i32, ptr %.sroa.39.0..sroa_idx75, align 4
-  %i.ed = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload70, ptr %.sroa.40.0.copyload86, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.486, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2861, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !278, !inline_history !267 ; 2 uses
+  %i.ed = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload70, ptr %.sroa.40.0.copyload86, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.486, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2861, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !267 ; 2 uses
   %i.ee = extractvalue { i32, ptr } %i.ed, 0
   %i.ef = extractvalue { i32, ptr } %i.ed, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15, !noalias !278
@@ -591,7 +591,7 @@ bb.ar:                                            ; preds = %.critedge169.i
   %.sroa.40.0.copyload92 = load ptr, ptr %.sroa.40.0..sroa_idx91, align 8, !tbaa !54
   %.sroa.39.0..sroa_idx81 = getelementptr inbounds nuw i8, ptr %9, i64 4
   %.sroa.39.0.copyload82 = load i32, ptr %.sroa.39.0..sroa_idx81, align 4
-  %i.en = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload73, ptr %.sroa.40.0.copyload92, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.490, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2878, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !278, !inline_history !267 ; 2 uses
+  %i.en = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload73, ptr %.sroa.40.0.copyload92, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.490, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2878, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !267 ; 2 uses
   %i.eo = extractvalue { i32, ptr } %i.en, 0
   %i.ep = extractvalue { i32, ptr } %i.en, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #15, !noalias !278
@@ -621,7 +621,7 @@ bb.as:                                            ; preds = %.critedge169.i
 bb.at:                                            ; preds = %bb.as
   %.sroa.39.0..sroa_idx83 = getelementptr inbounds nuw i8, ptr %10, i64 4
   %.sroa.39.0.copyload84 = load i32, ptr %.sroa.39.0..sroa_idx83, align 4
-  %i.ev = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload74, ptr %.sroa.40.0.copyload94, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.491, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2882, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !278, !inline_history !267 ; 2 uses
+  %i.ev = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.0.0.copyload74, ptr %.sroa.40.0.copyload94, ptr nonnull @ZL_SDDL_State_execExpr_field.__zl_static_error_info.491, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_SDDL_State_execExpr_field, i32 noundef 2882, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !267 ; 2 uses
   %i.ew = extractvalue { i32, ptr } %i.ev, 0
   %i.ex = extractvalue { i32, ptr } %i.ev, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #15, !noalias !278
@@ -1024,7 +1024,7 @@ bb.ay:                                            ; preds = %bb.ax
   %.sroa.23.0.copyload87 = load ptr, ptr %.sroa.23.0..sroa_idx86, align 8, !tbaa !54
   %.sroa.22.0..sroa_idx82 = getelementptr inbounds nuw i8, ptr %6, i64 4
   %.sroa.22.0.copyload83 = load i32, ptr %.sroa.22.0..sroa_idx82, align 4
-  %i.fq = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.076.0.copyload80, ptr %.sroa.23.0.copyload87, ptr nonnull @ZL_SDDL_State_execExpr_bind.__zl_static_error_info.474, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.459, i32 noundef 2469, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !324, !inline_history !318
+  %i.fq = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.076.0.copyload80, ptr %.sroa.23.0.copyload87, ptr nonnull @ZL_SDDL_State_execExpr_bind.__zl_static_error_info.474, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.459, i32 noundef 2469, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !318
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15, !noalias !324
   br label %.critedge96.i
 
@@ -1042,7 +1042,7 @@ bb.az:                                            ; preds = %bb.ax
   br i1 %.not87.i, label %bb.bb, label %bb.ba, !prof !42
 
 bb.ba:                                            ; preds = %bb.az
-  %i.fs = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.076.0.copyload81, ptr %.sroa.23.0.copyload89, ptr nonnull @ZL_SDDL_State_execExpr_bind.__zl_static_error_info.475, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.459, i32 noundef 2471, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !324, !inline_history !318
+  %i.fs = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %.sroa.076.0.copyload81, ptr %.sroa.23.0.copyload89, ptr nonnull @ZL_SDDL_State_execExpr_bind.__zl_static_error_info.475, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.459, i32 noundef 2471, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !318
   br label %.critedge96.i
 
 bb.bb:                                            ; preds = %bb.az
@@ -1445,7 +1445,7 @@ ZL_SDDL_Expr_decref.exit:                         ; preds = %bb.j, %bb.k, %bb.l,
 .critedge50.i:                                    ; preds = %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !333
-  %i.af = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %3, i32 %i.z, ptr %i.ae, ptr nonnull @ZL_SDDL_State_consumeFunc.__zl_static_error_info.417, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.413, i32 noundef 2320, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !333, !inline_history !327 ; 2 uses
+  %i.af = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %3, i32 %i.z, ptr %i.ae, ptr nonnull @ZL_SDDL_State_consumeFunc.__zl_static_error_info.417, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.413, i32 noundef 2320, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !327 ; 2 uses
   %i.ag = extractvalue { i32, ptr } %i.af, 0
   %i.ah = extractvalue { i32, ptr } %i.af, 1
   store i32 %i.ag, ptr %0, align 8, !tbaa !66, !alias.scope !333
@@ -1848,7 +1848,7 @@ bb.bj:                                            ; preds = %.critedge.i17
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %0, i8 0, i64 72, i1 false), !alias.scope !386
   %.sroa.54.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.cast = inttoptr i64 %i.gw to ptr
-  %i.gx = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %6, i32 %i.gv, ptr %.cast, ptr nonnull @ZL_SDDL_State_consumeRecord.__zl_static_error_info.371, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.370, i32 noundef 2142, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !386, !inline_history !362 ; 2 uses
+  %i.gx = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %6, i32 %i.gv, ptr %.cast, ptr nonnull @ZL_SDDL_State_consumeRecord.__zl_static_error_info.371, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.370, i32 noundef 2142, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !362 ; 2 uses
   %i.gy = extractvalue { i32, ptr } %i.gx, 0
   %i.gz = extractvalue { i32, ptr } %i.gx, 1
   store i32 %i.gy, ptr %0, align 8, !tbaa !66, !alias.scope !386
@@ -2251,7 +2251,7 @@ bb.de:                                            ; preds = %bb.dd
 
 bb.df:                                            ; preds = %bb.de
   %i.mw = inttoptr i64 %i.mv to ptr
-  %i.mx = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %i.mu, ptr %i.mw, ptr nonnull @ZL_SDDL_State_consumeArray.__zl_static_error_info.391, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.381, i32 noundef 2232, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !388, !inline_history !367 ; 2 uses
+  %i.mx = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %i.mu, ptr %i.mw, ptr nonnull @ZL_SDDL_State_consumeArray.__zl_static_error_info.391, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.381, i32 noundef 2232, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !367 ; 2 uses
   %i.my = extractvalue { i32, ptr } %i.mx, 0
   %i.mz = extractvalue { i32, ptr } %i.mx, 1
   store i32 %i.my, ptr %0, align 8, !tbaa !66, !alias.scope !388
@@ -2425,7 +2425,7 @@ bb.dz:                                            ; preds = %.lr.ph
 
 bb.ea:                                            ; preds = %.lr.ph
   %i.pi = inttoptr i64 %i.ph to ptr
-  %i.pj = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %i.pg, ptr %i.pi, ptr nonnull @ZL_SDDL_State_consumeArray.__zl_static_error_info.392, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.381, i32 noundef 2248, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !388, !inline_history !367 ; 2 uses
+  %i.pj = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %i.pg, ptr %i.pi, ptr nonnull @ZL_SDDL_State_consumeArray.__zl_static_error_info.392, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.381, i32 noundef 2248, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !367 ; 2 uses
   %i.pk = extractvalue { i32, ptr } %i.pj, 0
   %i.pl = extractvalue { i32, ptr } %i.pj, 1
   store i32 %i.pk, ptr %0, align 8, !tbaa !66, !alias.scope !388
@@ -2510,7 +2510,7 @@ ZL_SDDL_Expr_decref.exit:                         ; preds = %bb.ed, %bb.ee, %bb.
 .critedge107.i:                                   ; preds = %bb.ec
   %i.pr = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ps = load ptr, ptr %i.pr, align 8, !alias.scope !388
-  %i.pt = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %i.po, ptr %i.ps, ptr nonnull @ZL_SDDL_State_consumeArray.__zl_static_error_info.393, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.381, i32 noundef 2258, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !noalias !388, !inline_history !367 ; 2 uses
+  %i.pt = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %4, i32 %i.po, ptr %i.ps, ptr nonnull @ZL_SDDL_State_consumeArray.__zl_static_error_info.393, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.381, i32 noundef 2258, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.8) #15, !inline_history !367 ; 2 uses
   %i.pu = extractvalue { i32, ptr } %i.pt, 0
   %i.pv = extractvalue { i32, ptr } %i.pt, 1
   store i32 %i.pu, ptr %0, align 8, !tbaa !66, !alias.scope !388
