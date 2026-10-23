@@ -202,11 +202,11 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.te = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 56) ; 2 uses
   %i.tf = zext i16 %i.te to i32                   ; 2 uses
   %i.tg = lshr i16 %i.te, 1
-  %i.th = and i16 %i.tg, 2047                     ; 2 uses
+  %i.th = and i16 %i.tg, 2047                     ; 3 uses
   %i.ti = and i32 %i.tf, 1
   %.not.i = icmp eq i32 %i.ti, 0
   %i.tj = sub nsw i16 0, %i.th
-  %i.tk = select i1 %.not.i, i16 %i.th, i16 %i.tj ; 2 uses
+  %i.tk = select i1 %.not.i, i16 %i.th, i16 %i.tj
   %i.tl = load i32, ptr @hf_dis_iff_mode_c_altitude_indicator, align 4
   %i.tm = call ptr @proto_tree_add_item(ptr noundef %i.td, i32 noundef %i.tl, ptr noundef %0, i32 noundef 56, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.tn = load i32, ptr @hf_dis_iff_mode_c_altitude, align 4
@@ -315,7 +315,7 @@ bb.as:                                            ; preds = %bb.ar
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar, %bb.aq
-  %.not440.i = icmp eq i16 %i.tk, 0
+  %.not440.i = icmp eq i16 %i.th, 0
   %i.vs = and i32 %i.tf, 8192
   %.not441.i = icmp eq i32 %i.vs, 0
   %or.cond.i = select i1 %.not440.i, i1 %.not441.i, i1 false

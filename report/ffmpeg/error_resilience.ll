@@ -205,12 +205,12 @@ bb.j:                                             ; preds = %bb.i, %bb.o
   %i.cv = add nuw nsw i32 %i.ct, 1
   %i.cw = add nuw nsw i32 %i.cv, %i.cu
   %i.cx = lshr i32 %i.cw, 1
-  %i.cy = sub nsw i32 %i.cs, %i.cx
+  %i.cy = sub nsw i32 %i.cs, %i.cx                ; 2 uses
   %i.cz = tail call i32 @llvm.smax.i32(i32 %i.cy, i32 0) ; 2 uses
   %i.da = icmp slt i32 %i.cn, 0
   %i.db = sub nsw i32 0, %i.cz
-  %spec.select = select i1 %i.da, i32 %i.db, i32 %i.cz ; 3 uses
-  %6 = icmp eq i32 %spec.select, 0
+  %spec.select = select i1 %i.da, i32 %i.db, i32 %i.cz ; 2 uses
+  %6 = icmp slt i32 %i.cy, 1
   br i1 %6, label %bb.o, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -495,12 +495,12 @@ bb.j:                                             ; preds = %bb.i, %bb.o
   %i.dn = add nuw nsw i32 %i.dl, 1
   %i.do = add nuw nsw i32 %i.dn, %i.dm
   %i.dp = lshr i32 %i.do, 1
-  %i.dq = sub nsw i32 %i.dk, %i.dp
+  %i.dq = sub nsw i32 %i.dk, %i.dp                ; 2 uses
   %i.dr = tail call i32 @llvm.smax.i32(i32 %i.dq, i32 0) ; 2 uses
   %i.ds = icmp slt i32 %i.df, 0
   %i.dt = sub nsw i32 0, %i.dr
-  %spec.select = select i1 %i.ds, i32 %i.dt, i32 %i.dr ; 3 uses
-  %6 = icmp eq i32 %spec.select, 0
+  %spec.select = select i1 %i.ds, i32 %i.dt, i32 %i.dr ; 2 uses
+  %6 = icmp slt i32 %i.dq, 1
   br i1 %6, label %bb.o, label %bb.k
 
 bb.k:                                             ; preds = %bb.j

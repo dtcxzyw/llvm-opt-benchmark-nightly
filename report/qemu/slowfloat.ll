@@ -204,17 +204,17 @@ roundFloatXTo53.exit:                             ; preds = %bb.p, %bb.i, %bb.j,
   %.sroa.11.2 = phi i64 [ %.sroa.11.1, %.loopexit ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.i ], [ 0, %bb.l ], [ 0, %bb.m ], [ 0, %bb.n ]
   %i.ap = tail call { i64, i64 } @shortShiftRightJam128(i64 %.sroa.11.2, i64 %.sroa.18.2, i32 noundef 3) #10
   %i.aq = extractvalue { i64, i64 } %i.ap, 1      ; 2 uses
-  %i.ar = trunc i64 %i.aq to i32                  ; 2 uses
+  %i.ar = trunc i64 %i.aq to i32                  ; 3 uses
   %i.as = trunc nuw i8 %.sroa.3.0.copyload to i1  ; 2 uses
   %i.at = sub i32 0, %i.ar
-  %spec.select = select i1 %i.as, i32 %i.at, i32 %i.ar ; 3 uses
+  %spec.select = select i1 %i.as, i32 %i.at, i32 %i.ar ; 2 uses
   %i.au = icmp sgt i64 %.1, -1
   %.not = icmp ult i64 %i.aq, 4294967296
   %or.cond = select i1 %i.au, i1 %.not, i1 false
   br i1 %or.cond, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %roundFloatXTo53.exit
-  %.not22 = icmp eq i32 %spec.select, 0
+  %.not22 = icmp eq i32 %i.ar, 0
   %i.av = zext nneg i8 %.sroa.3.0.copyload to i32
   %.sroa.03.0.lobit = lshr i32 %spec.select, 31
   %.not23 = icmp eq i32 %.sroa.03.0.lobit, %i.av
@@ -448,18 +448,18 @@ roundFloatXTo113.exit:                            ; preds = %bb.n, %bb.h, %bb.i,
   %.sroa.18.3 = phi i64 [ %.sroa.18.0.lcssa, %._crit_edge ], [ %spec.select46, %bb.n ], [ %.sroa.18.142, %bb.h ], [ %.sroa.18.142, %bb.m ], [ %.sroa.18.142, %bb.l ], [ %.sroa.18.142, %bb.k ], [ %.sroa.18.142, %bb.j ], [ %.sroa.18.142, %bb.i ]
   %.sroa.11.2 = phi i64 [ %.sroa.11.0.lcssa, %._crit_edge ], [ %i.al, %bb.n ], [ %i.ac, %bb.h ], [ %i.ak, %bb.m ], [ %i.ac, %bb.l ], [ %i.ac, %bb.k ], [ %i.ac, %bb.j ], [ %i.ac, %bb.i ]
   %i.ap = tail call { i64, i64 } @shortShiftRightJam128(i64 %.sroa.11.2, i64 %.sroa.18.3, i32 noundef 7) #10 ; 2 uses
-  %i.aq = extractvalue { i64, i64 } %i.ap, 0      ; 2 uses
+  %i.aq = extractvalue { i64, i64 } %i.ap, 0      ; 3 uses
   %i.ar = extractvalue { i64, i64 } %i.ap, 1
   %i.as = trunc nuw i8 %.sroa.3.0.copyload to i1  ; 2 uses
   %i.at = sub i64 0, %i.aq
-  %spec.select = select i1 %i.as, i64 %i.at, i64 %i.aq ; 3 uses
+  %spec.select = select i1 %i.as, i64 %i.at, i64 %i.aq ; 2 uses
   %i.au = icmp slt i64 %.145, 0
   %i.av = icmp ne i64 %i.ar, 0
   %or.cond = select i1 %i.au, i1 true, i1 %i.av
   br i1 %or.cond, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %roundFloatXTo113.exit
-  %.not = icmp eq i64 %spec.select, 0
+  %.not = icmp eq i64 %i.aq, 0
   br i1 %.not, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o

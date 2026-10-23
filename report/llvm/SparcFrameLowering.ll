@@ -204,16 +204,16 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !460
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load i64, ptr %i.g, align 8, !tbaa !131
-  %i.i = trunc i64 %i.h to i32                    ; 2 uses
+  %i.i = trunc i64 %i.h to i32                    ; 3 uses
+  %.not = icmp eq i32 %i.i, 0
+  br i1 %.not, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
   %4 = getelementptr inbounds nuw i8, ptr %3, i64 52
   %5 = load i32, ptr %4, align 4, !tbaa !372
   %6 = icmp eq i32 %5, 331
   %7 = sub nsw i32 0, %i.i
-  %spec.select = select i1 %6, i32 %7, i32 %i.i   ; 2 uses
-  %.not = icmp eq i32 %spec.select, 0
-  br i1 %.not, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %bb.b
+  %spec.select = select i1 %6, i32 %7, i32 %i.i
   tail call void @_ZNK4llvm18SparcFrameLowering16emitSPAdjustmentERNS_15MachineFunctionERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEijj(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef nonnull align 8 dereferenceable(360) %2, ptr nonnull %3, i32 noundef %spec.select, i32 noundef 359, i32 noundef 358)
   br label %bb.d
 

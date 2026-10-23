@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.ad, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.us
-  %.not31.i.us = icmp eq i32 %i.ac, %1
+  %.not31.i.us = icmp eq i32 %1, %i.ac
   br i1 %.not31.i.us, label %_ZL15hb_bsearch_implIKN2OT15MathValueRecordEiJiP9hb_font_tPKNS0_8MathKernEEEbPjRKT0_PT_mmPFiPKvSF_DpT1_ESH_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

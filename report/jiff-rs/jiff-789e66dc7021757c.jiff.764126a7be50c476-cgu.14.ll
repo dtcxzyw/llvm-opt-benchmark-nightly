@@ -202,7 +202,7 @@ _RNvMs1_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span21to_invariant_duration.exit.i: ; pr
   %.decomposed = sub i128 %.frozen, %i.fl         ; 3 uses
   %.lobit.i.i = ashr i128 %.decomposed, 127
   %.sroa.0.0.i38.i = add nsw i128 %.lobit.i.i, %i.fk ; 2 uses
-  %i.fm = trunc nsw i128 %.sroa.0.0.i38.i to i64  ; 3 uses
+  %i.fm = trunc nsw i128 %.sroa.0.0.i38.i to i64  ; 4 uses
   %i.fn = add nsw i64 %i.fm, -7304485
   %or.cond.i39.i = icmp ult i64 %i.fn, -14608969
   br i1 %or.cond.i39.i, label %bb.bd, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
@@ -214,8 +214,8 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6boun
   %.sroa.622.0.extract.trunc.i.i = trunc i128 %.sroa.0.0.i38.i to i32 ; 2 uses
   %i.fq = icmp slt i64 %i.fm, 0
   %i.fr = sub nsw i32 0, %.sroa.622.0.extract.trunc.i.i
-  %.sroa.016.0.i.i = select i1 %i.fq, i32 %i.fr, i32 %.sroa.622.0.extract.trunc.i.i ; 2 uses
-  %i.fs = icmp eq i32 %.sroa.016.0.i.i, 0
+  %.sroa.016.0.i.i = select i1 %i.fq, i32 %i.fr, i32 %.sroa.622.0.extract.trunc.i.i
+  %i.fs = icmp eq i64 %i.fm, 0
   %masksel.i.i = select i1 %i.fs, i16 0, i16 64
   %.sroa.0.0.i.i.i = tail call i8 @llvm.scmp.i8.i64(i64 %i.fm, i64 0)
   %i.ft = trunc nsw i128 %spec.select.i.i to i64  ; 4 uses
@@ -618,7 +618,7 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4ti
   %i.cy = load i8, ptr %i.cx, align 1, !noundef !4
   %i.cz = sext i8 %i.cy to i64
   %i.da = add nsw i64 %i.cc, -1
-  %i.db = add nsw i64 %i.da, %i.cz                ; 4 uses
+  %i.db = add nsw i64 %i.da, %i.cz                ; 5 uses
   %i.dc = add nsw i64 %i.db, -7304485
   %or.cond.i28 = icmp ult i64 %i.dc, -14608969
   br i1 %or.cond.i28, label %bb.ak, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
@@ -634,8 +634,8 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6boun
   %.sroa.622.0.extract.trunc.i = trunc nsw i64 %i.db to i32 ; 2 uses
   %i.df = icmp slt i64 %i.db, 0
   %i.dg = sub nsw i32 0, %.sroa.622.0.extract.trunc.i
-  %.sroa.016.0.i = select i1 %i.df, i32 %i.dg, i32 %.sroa.622.0.extract.trunc.i ; 2 uses
-  %i.dh = icmp eq i32 %.sroa.016.0.i, 0
+  %.sroa.016.0.i = select i1 %i.df, i32 %i.dg, i32 %.sroa.622.0.extract.trunc.i
+  %i.dh = icmp eq i64 %i.db, 0
   %masksel.i = select i1 %i.dh, i16 0, i16 64
   %.sroa.0.0.i.i = tail call i8 @llvm.scmp.i8.i64(i64 %i.db, i64 0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)

@@ -205,11 +205,11 @@ _RINvMs4_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedWriter23if_will_fill_t
   %i.db = icmp slt i16 %i.cz, 0
   %i.dc = sub nsw i8 0, %i.da
   %.sroa.031.0.i.i = select i1 %i.db, i8 %i.dc, i8 %i.da ; 2 uses
-  %i.dd = srem i32 %i.l, 60                       ; 2 uses
+  %i.dd = srem i32 %i.l, 60                       ; 3 uses
   %i.de = trunc nsw i32 %i.dd to i8               ; 2 uses
   %i.df = icmp slt i32 %i.dd, 0
   %i.dg = sub nsw i8 0, %i.de
-  %.sroa.032.0.i.i = select i1 %i.df, i8 %i.dg, i8 %i.de ; 3 uses
+  %.sroa.032.0.i.i = select i1 %i.df, i8 %i.dg, i8 %i.de ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   %i.di = shl nuw nsw i8 %.sroa.030.0.i.i, 1
   %i.dj = zext nneg i8 %i.di to i64
@@ -239,7 +239,7 @@ bb.aa:                                            ; preds = %_RINvMs4_NtNtCs5oRR
   %i.dy = load i8, ptr %i.dx, align 1, !noalias !558, !noundef !5
   store i8 %i.dy, ptr %i.dw, align 1, !noalias !559
   store i16 6, ptr %i.f, align 8, !alias.scope !557, !noalias !538
-  %.not.i.i = icmp eq i8 %.sroa.032.0.i.i, 0
+  %.not.i.i = icmp eq i32 %i.dd, 0
   br i1 %.not.i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs5oRRSLMQMUC_4jiff2tz6offset6OffsetNtNtB13_5error5ErrorEEB13_.exit44.i, label %_RINvMs4_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedWriter23if_will_fill_then_flushjEBa_.exit59.thread.i.i
 
 _RINvMs4_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedWriter23if_will_fill_then_flushjEBa_.exit59.thread.i.i: ; preds = %bb.aa

@@ -205,21 +205,21 @@ bb.c:                                             ; preds = %bb.a
   %i.p = trunc nuw i64 %i.l to i32                ; 2 uses
   %i.q = tail call i64 @ffio_read_varlen(ptr noundef %i.g) #12 ; 2 uses
   %i.r = add i64 %i.q, 1
-  %1 = and i64 %i.q, 1
-  %.not.not.i = icmp eq i64 %1, 0
-  %i.s = ashr i64 %i.r, 1                         ; 2 uses
-  %2 = sub nsw i64 0, %i.s
-  %.0.i = select i1 %.not.not.i, i64 %2, i64 %i.s ; 2 uses
+  %i.s = ashr i64 %i.r, 1                         ; 3 uses
   %i.t = tail call i64 @ffio_read_varlen(ptr noundef %i.g) #12 ; 2 uses
   %i.u = tail call i64 @ffio_read_varlen(ptr noundef %i.g) #12
   %i.v = tail call i64 @ffio_read_varlen(ptr noundef %i.g) #12
   %i.w = trunc i64 %i.v to i32                    ; 2 uses
-  %i.x = icmp eq i64 %.0.i, 0                     ; 2 uses
+  %i.x = icmp eq i64 %i.s, 0                      ; 2 uses
   %i.y = icmp ne i64 %i.l, 0                      ; 4 uses
   %or.cond = or i1 %i.y, %i.x
   br i1 %or.cond, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %1 = and i64 %i.q, 1
+  %.not.not.i = icmp eq i64 %1, 0
+  %2 = sub nsw i64 0, %i.s
+  %.0.i = select i1 %.not.not.i, i64 %2, i64 %i.s
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 4268
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !41
   %i.ab = zext i32 %i.aa to i64                   ; 2 uses

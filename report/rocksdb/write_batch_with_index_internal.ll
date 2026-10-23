@@ -204,15 +204,15 @@ bb.t:                                             ; preds = %_ZNK7rocksdb17BaseD
   %i.cs = load ptr, ptr %i.ck, align 8, !tbaa !26
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 232
   %i.cu = load ptr, ptr %i.ct, align 8
-  %i.cv = call noundef i32 %i.cu(ptr noundef nonnull align 8 dereferenceable(48) %i.ck, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i1 noundef zeroext false, ptr noundef nonnull align 8 dereferenceable(16) %4, i1 noundef zeroext false) ; 2 uses
+  %i.cv = call noundef i32 %i.cu(ptr noundef nonnull align 8 dereferenceable(48) %i.ck, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i1 noundef zeroext false, ptr noundef nonnull align 8 dereferenceable(16) %4, i1 noundef zeroext false) ; 3 uses
   %i.cw = sub nsw i32 0, %i.cv
-  %i.cx = select i1 %i.cj, i32 %i.cv, i32 %i.cw   ; 2 uses
+  %i.cx = select i1 %i.cj, i32 %i.cv, i32 %i.cw
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   %i.cy = icmp slt i32 %i.cx, 1
   br i1 %i.cy, label %bb.u, label %bb.ac
 
 bb.u:                                             ; preds = %bb.t
-  %i.cz = icmp eq i32 %i.cx, 0
+  %i.cz = icmp eq i32 %i.cv, 0
   br i1 %i.cz, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u

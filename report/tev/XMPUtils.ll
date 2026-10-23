@@ -205,9 +205,9 @@ bb.k:                                             ; preds = %_ZL9GatherIntPKcPmS
   unreachable
 
 bb.l:                                             ; preds = %_ZL9GatherIntPKcPmS0_.exit, %_ZL9GatherIntPKcPmS0_.exit
-  %i.an = trunc i64 %i.z to i32                   ; 2 uses
+  %i.an = trunc i64 %i.z to i32                   ; 4 uses
   %i.ao = sub nsw i32 0, %i.an
-  %spec.select = select i1 %i.s, i32 %i.ao, i32 %i.an ; 2 uses
+  %spec.select = select i1 %i.s, i32 %i.ao, i32 %i.an
   store i32 %spec.select, ptr %1, align 4, !tbaa !29
   %i.ap = load i8, ptr %.0.in.i.le, align 1, !tbaa !14
   %i.aq = icmp eq i8 %i.ap, 0
@@ -283,7 +283,7 @@ bb.p:                                             ; preds = %_ZL9GatherIntPKcPmS
 
 bb.q:                                             ; preds = %_ZL9GatherIntPKcPmS0_.exit156, %_ZL9GatherIntPKcPmS0_.exit156
   %i.bm = trunc i64 %i.ay to i32                  ; 2 uses
-  %.not123 = icmp eq i32 %spec.select, 0          ; 2 uses
+  %.not123 = icmp eq i32 %i.an, 0
   %i.bn = tail call i32 @llvm.smax.i32(i32 %i.bm, i32 1)
   %spec.store.select6 = select i1 %.not123, i32 %i.bm, i32 %i.bn ; 3 uses
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %spec.store.select6, i32 12)
@@ -372,8 +372,8 @@ bb.v:                                             ; preds = %_ZL9GatherIntPKcPmS
 
 bb.w:                                             ; preds = %bb.v
   %i.cq = or i32 %spec.store.select6, %i.cj
-  %or.cond = icmp eq i32 %i.cq, 0
-  %or.cond276 = select i1 %.not123, i1 %or.cond, i1 false
+  %2 = or i32 %i.cq, %i.an
+  %or.cond276 = icmp eq i32 %2, 0
   br i1 %or.cond276, label %bb.ab, label %bb.x
 
 bb.x:                                             ; preds = %bb.w

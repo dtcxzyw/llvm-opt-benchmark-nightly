@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %.outer, %bb.k
   br label %.critedge.i
 
 .preheader.i:                                     ; preds = %.critedge.i, %bb.i
-  %.037.i = phi i32 [ %.138.i, %bb.i ], [ 0, %.critedge.i ] ; 4 uses
+  %.037.i = phi i32 [ %.138.i, %bb.i ], [ 0, %.critedge.i ] ; 5 uses
   %.0.i = phi i32 [ %.1.i, %bb.i ], [ 0, %.critedge.i ] ; 2 uses
   %i.q = call i32 @fgetc(ptr noundef nonnull %i.b) ; 5 uses
   switch i32 %i.q, label %bb.g [
@@ -231,10 +231,7 @@ bb.i:                                             ; preds = %bb.g
   br label %.preheader.i
 
 bb.j:                                             ; preds = %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i
-  %.not.i = icmp eq i32 %.0.i, 0
-  %1 = sub nsw i32 0, %.037.i
-  %2 = select i1 %.not.i, i32 %.037.i, i32 %1     ; 4 uses
-  %i.w = icmp eq i32 %2, 0
+  %i.w = icmp eq i32 %.037.i, 0
   br i1 %i.w, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -244,6 +241,9 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.f
 
 bb.l:                                             ; preds = %bb.j
+  %.not.i.le = icmp eq i32 %.0.i, 0
+  %1 = sub nsw i32 0, %.037.i
+  %2 = select i1 %.not.i.le, i32 %.037.i, i32 %1  ; 3 uses
   %i.aa = icmp eq i32 %.045, %.043.ph
   br i1 %i.aa, label %bb.m, label %bb.p
 
