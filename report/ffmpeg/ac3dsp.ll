@@ -205,9 +205,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.el, %vec.epilog.iter.check ], [ %i.i, %vector.main.loop.iter.check ]
-  %3 = getelementptr i8, ptr %.01823.us, i64 %i.g
   %broadcast.splatinsert66 = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat67 = shufflevector <8 x i8> %broadcast.splatinsert66, <8 x i8> poison, <8 x i32> zeroinitializer
+  %3 = getelementptr i8, ptr %.01823.us, i64 %i.g
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

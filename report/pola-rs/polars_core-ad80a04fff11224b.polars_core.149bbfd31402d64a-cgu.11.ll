@@ -205,8 +205,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %.preheader.i.i.preheader, label %vec.epilog.ph, !prof !4032
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !171536
-  %bc.merge.rdx = phi i8 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !171540
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
+  %bc.merge.rdx = phi i8 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec12 = and i64 %i.bl, -4                    ; 3 uses
   %i.bw = insertelement <4 x i8> <i8 poison, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
@@ -536,8 +536,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %.preheader.i.i.preheader, label %vec.epilog.ph, !prof !4032
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !171808
-  %bc.merge.rdx = phi i8 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !171812
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
+  %bc.merge.rdx = phi i8 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec12 = and i64 %i.bl, -4                    ; 3 uses
   %i.bw = insertelement <4 x i8> <i8 poison, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
@@ -940,8 +940,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %.preheader.i.i.preheader, label %vec.epilog.ph, !prof !3686
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !172830
-  %bc.merge.rdx = phi i16 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !172834
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
+  %bc.merge.rdx = phi i16 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec12 = and i64 %i.bl, -4                    ; 3 uses
   %i.bw = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
@@ -1197,8 +1197,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %.preheader.i.i.preheader, label %vec.epilog.ph, !prof !3686
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !173038
-  %bc.merge.rdx = phi i16 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !173042
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
+  %bc.merge.rdx = phi i16 [ %i.bv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec12 = and i64 %i.bl, -4                    ; 3 uses
   %i.bw = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body

@@ -205,18 +205,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.bm, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
   %bc.merge.rdx283 = phi i8 [ %i.bn, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
-  %n.vec284 = and i64 %i.bb, -8                   ; 3 uses
-  %19 = or disjoint i64 %n.vec284, 1
+  %broadcast.splatinsert289 = insertelement <8 x i8> poison, i8 %bc.merge.rdx283, i64 0
+  %broadcast.splat290 = shufflevector <8 x i8> %broadcast.splatinsert289, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert285 = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat286 = shufflevector <8 x i8> %broadcast.splatinsert285, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert287 = insertelement <8 x i8> poison, i8 %bc.merge.rdx283, i64 0
-  %broadcast.splat288 = shufflevector <8 x i8> %broadcast.splatinsert287, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec284 = and i64 %i.bb, -8                   ; 3 uses
+  %19 = or disjoint i64 %n.vec284, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index289 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next293, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi290 = phi <8 x i8> [ %broadcast.splat286, %vec.epilog.ph ], [ %i.br, %vec.epilog.vector.body ]
-  %vec.phi291 = phi <8 x i8> [ %broadcast.splat288, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
+  %vec.phi291 = phi <8 x i8> [ %broadcast.splat290, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 %index289
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 1
   %wide.load292 = load <8 x i8>, ptr %i.bp, align 1, !tbaa !881 ; 2 uses
@@ -619,18 +619,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.bm, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
   %bc.merge.rdx283 = phi i8 [ %i.bn, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
-  %n.vec284 = and i64 %i.bb, -8                   ; 3 uses
-  %19 = or disjoint i64 %n.vec284, 1
+  %broadcast.splatinsert289 = insertelement <8 x i8> poison, i8 %bc.merge.rdx283, i64 0
+  %broadcast.splat290 = shufflevector <8 x i8> %broadcast.splatinsert289, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert285 = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat286 = shufflevector <8 x i8> %broadcast.splatinsert285, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert287 = insertelement <8 x i8> poison, i8 %bc.merge.rdx283, i64 0
-  %broadcast.splat288 = shufflevector <8 x i8> %broadcast.splatinsert287, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec284 = and i64 %i.bb, -8                   ; 3 uses
+  %19 = or disjoint i64 %n.vec284, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index289 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next293, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi290 = phi <8 x i8> [ %broadcast.splat286, %vec.epilog.ph ], [ %i.br, %vec.epilog.vector.body ]
-  %vec.phi291 = phi <8 x i8> [ %broadcast.splat288, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
+  %vec.phi291 = phi <8 x i8> [ %broadcast.splat290, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 %index289
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 1
   %wide.load292 = load <8 x i8>, ptr %i.bp, align 1, !tbaa !881 ; 2 uses
@@ -1033,18 +1033,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.bm, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
   %bc.merge.rdx283 = phi i16 [ %i.bn, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
-  %n.vec284 = and i64 %i.bb, -4                   ; 3 uses
-  %19 = or disjoint i64 %n.vec284, 1
+  %broadcast.splatinsert289 = insertelement <4 x i16> poison, i16 %bc.merge.rdx283, i64 0
+  %broadcast.splat290 = shufflevector <4 x i16> %broadcast.splatinsert289, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert285 = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat286 = shufflevector <4 x i16> %broadcast.splatinsert285, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert287 = insertelement <4 x i16> poison, i16 %bc.merge.rdx283, i64 0
-  %broadcast.splat288 = shufflevector <4 x i16> %broadcast.splatinsert287, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec284 = and i64 %i.bb, -4                   ; 3 uses
+  %19 = or disjoint i64 %n.vec284, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index289 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next293, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi290 = phi <4 x i16> [ %broadcast.splat286, %vec.epilog.ph ], [ %i.br, %vec.epilog.vector.body ]
-  %vec.phi291 = phi <4 x i16> [ %broadcast.splat288, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
+  %vec.phi291 = phi <4 x i16> [ %broadcast.splat290, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
   %i.bo = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index289
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 2
   %wide.load292 = load <4 x i16>, ptr %i.bp, align 2, !tbaa !900 ; 2 uses
@@ -1447,18 +1447,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.bm, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
   %bc.merge.rdx283 = phi i16 [ %i.bn, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
-  %n.vec284 = and i64 %i.bb, -4                   ; 3 uses
-  %19 = or disjoint i64 %n.vec284, 1
+  %broadcast.splatinsert289 = insertelement <4 x i16> poison, i16 %bc.merge.rdx283, i64 0
+  %broadcast.splat290 = shufflevector <4 x i16> %broadcast.splatinsert289, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert285 = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat286 = shufflevector <4 x i16> %broadcast.splatinsert285, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert287 = insertelement <4 x i16> poison, i16 %bc.merge.rdx283, i64 0
-  %broadcast.splat288 = shufflevector <4 x i16> %broadcast.splatinsert287, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec284 = and i64 %i.bb, -4                   ; 3 uses
+  %19 = or disjoint i64 %n.vec284, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index289 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next293, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi290 = phi <4 x i16> [ %broadcast.splat286, %vec.epilog.ph ], [ %i.br, %vec.epilog.vector.body ]
-  %vec.phi291 = phi <4 x i16> [ %broadcast.splat288, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
+  %vec.phi291 = phi <4 x i16> [ %broadcast.splat290, %vec.epilog.ph ], [ %i.bq, %vec.epilog.vector.body ]
   %i.bo = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index289
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 2
   %wide.load292 = load <4 x i16>, ptr %i.bp, align 2, !tbaa !900 ; 2 uses
@@ -1861,18 +1861,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.u, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
   %bc.merge.rdx219 = phi i8 [ %i.v, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
-  %n.vec220 = and i64 %i.j, -8                    ; 3 uses
-  %12 = or disjoint i64 %n.vec220, 1
+  %broadcast.splatinsert225 = insertelement <8 x i8> poison, i8 %bc.merge.rdx219, i64 0
+  %broadcast.splat226 = shufflevector <8 x i8> %broadcast.splatinsert225, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert221 = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat222 = shufflevector <8 x i8> %broadcast.splatinsert221, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert223 = insertelement <8 x i8> poison, i8 %bc.merge.rdx219, i64 0
-  %broadcast.splat224 = shufflevector <8 x i8> %broadcast.splatinsert223, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec220 = and i64 %i.j, -8                    ; 3 uses
+  %12 = or disjoint i64 %n.vec220, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index225 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next229, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi226 = phi <8 x i8> [ %broadcast.splat222, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
-  %vec.phi227 = phi <8 x i8> [ %broadcast.splat224, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
+  %vec.phi227 = phi <8 x i8> [ %broadcast.splat226, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %index225
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1
   %wide.load228 = load <8 x i8>, ptr %i.x, align 1, !tbaa !881 ; 2 uses
@@ -2275,18 +2275,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.u, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
   %bc.merge.rdx219 = phi i8 [ %i.v, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
-  %n.vec220 = and i64 %i.j, -8                    ; 3 uses
-  %12 = or disjoint i64 %n.vec220, 1
+  %broadcast.splatinsert225 = insertelement <8 x i8> poison, i8 %bc.merge.rdx219, i64 0
+  %broadcast.splat226 = shufflevector <8 x i8> %broadcast.splatinsert225, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert221 = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat222 = shufflevector <8 x i8> %broadcast.splatinsert221, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert223 = insertelement <8 x i8> poison, i8 %bc.merge.rdx219, i64 0
-  %broadcast.splat224 = shufflevector <8 x i8> %broadcast.splatinsert223, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec220 = and i64 %i.j, -8                    ; 3 uses
+  %12 = or disjoint i64 %n.vec220, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index225 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next229, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi226 = phi <8 x i8> [ %broadcast.splat222, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
-  %vec.phi227 = phi <8 x i8> [ %broadcast.splat224, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
+  %vec.phi227 = phi <8 x i8> [ %broadcast.splat226, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %index225
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1
   %wide.load228 = load <8 x i8>, ptr %i.x, align 1, !tbaa !881 ; 2 uses
@@ -2689,18 +2689,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.u, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
   %bc.merge.rdx219 = phi i16 [ %i.v, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
-  %n.vec220 = and i64 %i.j, -4                    ; 3 uses
-  %12 = or disjoint i64 %n.vec220, 1
+  %broadcast.splatinsert225 = insertelement <4 x i16> poison, i16 %bc.merge.rdx219, i64 0
+  %broadcast.splat226 = shufflevector <4 x i16> %broadcast.splatinsert225, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert221 = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat222 = shufflevector <4 x i16> %broadcast.splatinsert221, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert223 = insertelement <4 x i16> poison, i16 %bc.merge.rdx219, i64 0
-  %broadcast.splat224 = shufflevector <4 x i16> %broadcast.splatinsert223, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec220 = and i64 %i.j, -4                    ; 3 uses
+  %12 = or disjoint i64 %n.vec220, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index225 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next229, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi226 = phi <4 x i16> [ %broadcast.splat222, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
-  %vec.phi227 = phi <4 x i16> [ %broadcast.splat224, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
+  %vec.phi227 = phi <4 x i16> [ %broadcast.splat226, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
   %i.w = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index225
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 2
   %wide.load228 = load <4 x i16>, ptr %i.x, align 2, !tbaa !900 ; 2 uses
@@ -3103,18 +3103,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.u, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
   %bc.merge.rdx219 = phi i16 [ %i.v, %vec.epilog.iter.check ], [ %i.h, %vector.main.loop.iter.check ]
-  %n.vec220 = and i64 %i.j, -4                    ; 3 uses
-  %12 = or disjoint i64 %n.vec220, 1
+  %broadcast.splatinsert225 = insertelement <4 x i16> poison, i16 %bc.merge.rdx219, i64 0
+  %broadcast.splat226 = shufflevector <4 x i16> %broadcast.splatinsert225, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert221 = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat222 = shufflevector <4 x i16> %broadcast.splatinsert221, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert223 = insertelement <4 x i16> poison, i16 %bc.merge.rdx219, i64 0
-  %broadcast.splat224 = shufflevector <4 x i16> %broadcast.splatinsert223, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec220 = and i64 %i.j, -4                    ; 3 uses
+  %12 = or disjoint i64 %n.vec220, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index225 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next229, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi226 = phi <4 x i16> [ %broadcast.splat222, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
-  %vec.phi227 = phi <4 x i16> [ %broadcast.splat224, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
+  %vec.phi227 = phi <4 x i16> [ %broadcast.splat226, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
   %i.w = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index225
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 2
   %wide.load228 = load <4 x i16>, ptr %i.x, align 2, !tbaa !900 ; 2 uses
@@ -3517,18 +3517,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.z, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
   %bc.merge.rdx205 = phi i8 [ %i.aa, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
-  %n.vec206 = and i64 %i.o, -8                    ; 3 uses
-  %11 = or disjoint i64 %n.vec206, 1
+  %broadcast.splatinsert211 = insertelement <8 x i8> poison, i8 %bc.merge.rdx205, i64 0
+  %broadcast.splat212 = shufflevector <8 x i8> %broadcast.splatinsert211, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert207 = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat208 = shufflevector <8 x i8> %broadcast.splatinsert207, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert209 = insertelement <8 x i8> poison, i8 %bc.merge.rdx205, i64 0
-  %broadcast.splat210 = shufflevector <8 x i8> %broadcast.splatinsert209, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec206 = and i64 %i.o, -8                    ; 3 uses
+  %11 = or disjoint i64 %n.vec206, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index211 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next215, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi212 = phi <8 x i8> [ %broadcast.splat208, %vec.epilog.ph ], [ %i.ae, %vec.epilog.vector.body ]
-  %vec.phi213 = phi <8 x i8> [ %broadcast.splat210, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
+  %vec.phi213 = phi <8 x i8> [ %broadcast.splat212, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 %index211
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
   %wide.load214 = load <8 x i8>, ptr %i.ac, align 1, !tbaa !881 ; 2 uses
@@ -3639,31 +3639,31 @@ vec.epilog.ph247:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val240 = phi i64 [ %n.vec224, %vec.epilog.iter.check245 ], [ 0, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx241 = phi i8 [ %i.bh, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx242 = phi i8 [ %i.bi, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
-  %n.vec248 = and i64 %i.aw, -8                   ; 3 uses
-  %12 = or disjoint i64 %n.vec248, 1
+  %broadcast.splatinsert253 = insertelement <8 x i8> poison, i8 %bc.merge.rdx242, i64 0
+  %broadcast.splat254 = shufflevector <8 x i8> %broadcast.splatinsert253, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert249 = insertelement <8 x i8> poison, i8 %bc.merge.rdx241, i64 0
   %broadcast.splat250 = shufflevector <8 x i8> %broadcast.splatinsert249, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert251 = insertelement <8 x i8> poison, i8 %bc.merge.rdx242, i64 0
-  %broadcast.splat252 = shufflevector <8 x i8> %broadcast.splatinsert251, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec247 = and i64 %i.aw, -8                   ; 3 uses
+  %12 = or disjoint i64 %n.vec247, 1
   br label %vec.epilog.vector.body253
 
 vec.epilog.vector.body253:                        ; preds = %vec.epilog.vector.body253, %vec.epilog.ph247
   %index254 = phi i64 [ %vec.epilog.resume.val240, %vec.epilog.ph247 ], [ %index.next258, %vec.epilog.vector.body253 ] ; 2 uses
   %vec.phi255.a = phi <8 x i8> [ %broadcast.splat250, %vec.epilog.ph247 ], [ %i.bm, %vec.epilog.vector.body253 ]
-  %vec.phi256 = phi <8 x i8> [ %broadcast.splat252, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
+  %vec.phi256 = phi <8 x i8> [ %broadcast.splat254, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 %index254
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 1
   %wide.load257 = load <8 x i8>, ptr %i.bk, align 1, !tbaa !881 ; 2 uses
   %i.bl = tail call <8 x i8> @llvm.smin.v8i8(<8 x i8> %wide.load257, <8 x i8> %vec.phi256) ; 2 uses
   %i.bm = tail call <8 x i8> @llvm.smax.v8i8(<8 x i8> %wide.load257, <8 x i8> %vec.phi255.a) ; 2 uses
   %index.next258 = add nuw i64 %index254, 8       ; 2 uses
-  %i.bn = icmp eq i64 %index.next258, %n.vec248
+  %i.bn = icmp eq i64 %index.next258, %n.vec247
   br i1 %i.bn, label %vec.epilog.middle.block259, label %vec.epilog.vector.body253, !llvm.loop !3047
 
 vec.epilog.middle.block259:                       ; preds = %vec.epilog.vector.body253
   %i.bo = tail call i8 @llvm.vector.reduce.smax.v8i8(<8 x i8> %i.bm) ; 2 uses
   %i.bp = tail call i8 @llvm.vector.reduce.smin.v8i8(<8 x i8> %i.bl) ; 2 uses
-  %cmp.n260 = icmp eq i64 %i.aw, %n.vec248
+  %cmp.n260 = icmp eq i64 %i.aw, %n.vec247
   br i1 %cmp.n260, label %_ZL13ImMinMaxArrayIaEvPKT_iPS0_S3_.exit95, label %.lr.ph.i87.preheader
 
 .lr.ph.i87.preheader:                             ; preds = %iter.check243, %vec.epilog.iter.check245, %vec.epilog.middle.block259
@@ -4066,18 +4066,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.z, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
   %bc.merge.rdx205 = phi i8 [ %i.aa, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
-  %n.vec206 = and i64 %i.o, -8                    ; 3 uses
-  %11 = or disjoint i64 %n.vec206, 1
+  %broadcast.splatinsert211 = insertelement <8 x i8> poison, i8 %bc.merge.rdx205, i64 0
+  %broadcast.splat212 = shufflevector <8 x i8> %broadcast.splatinsert211, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert207 = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat208 = shufflevector <8 x i8> %broadcast.splatinsert207, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert209 = insertelement <8 x i8> poison, i8 %bc.merge.rdx205, i64 0
-  %broadcast.splat210 = shufflevector <8 x i8> %broadcast.splatinsert209, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec206 = and i64 %i.o, -8                    ; 3 uses
+  %11 = or disjoint i64 %n.vec206, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index211 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next215, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi212 = phi <8 x i8> [ %broadcast.splat208, %vec.epilog.ph ], [ %i.ae, %vec.epilog.vector.body ]
-  %vec.phi213 = phi <8 x i8> [ %broadcast.splat210, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
+  %vec.phi213 = phi <8 x i8> [ %broadcast.splat212, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 %index211
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
   %wide.load214 = load <8 x i8>, ptr %i.ac, align 1, !tbaa !881 ; 2 uses
@@ -4188,31 +4188,31 @@ vec.epilog.ph247:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val240 = phi i64 [ %n.vec224, %vec.epilog.iter.check245 ], [ 0, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx241 = phi i8 [ %i.bh, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx242 = phi i8 [ %i.bi, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
-  %n.vec248 = and i64 %i.aw, -8                   ; 3 uses
-  %12 = or disjoint i64 %n.vec248, 1
+  %broadcast.splatinsert253 = insertelement <8 x i8> poison, i8 %bc.merge.rdx242, i64 0
+  %broadcast.splat254 = shufflevector <8 x i8> %broadcast.splatinsert253, <8 x i8> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert249 = insertelement <8 x i8> poison, i8 %bc.merge.rdx241, i64 0
   %broadcast.splat250 = shufflevector <8 x i8> %broadcast.splatinsert249, <8 x i8> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert251 = insertelement <8 x i8> poison, i8 %bc.merge.rdx242, i64 0
-  %broadcast.splat252 = shufflevector <8 x i8> %broadcast.splatinsert251, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec247 = and i64 %i.aw, -8                   ; 3 uses
+  %12 = or disjoint i64 %n.vec247, 1
   br label %vec.epilog.vector.body253
 
 vec.epilog.vector.body253:                        ; preds = %vec.epilog.vector.body253, %vec.epilog.ph247
   %index254 = phi i64 [ %vec.epilog.resume.val240, %vec.epilog.ph247 ], [ %index.next258, %vec.epilog.vector.body253 ] ; 2 uses
   %vec.phi255.a = phi <8 x i8> [ %broadcast.splat250, %vec.epilog.ph247 ], [ %i.bm, %vec.epilog.vector.body253 ]
-  %vec.phi256 = phi <8 x i8> [ %broadcast.splat252, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
+  %vec.phi256 = phi <8 x i8> [ %broadcast.splat254, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 %index254
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 1
   %wide.load257 = load <8 x i8>, ptr %i.bk, align 1, !tbaa !881 ; 2 uses
   %i.bl = tail call <8 x i8> @llvm.umin.v8i8(<8 x i8> %wide.load257, <8 x i8> %vec.phi256) ; 2 uses
   %i.bm = tail call <8 x i8> @llvm.umax.v8i8(<8 x i8> %wide.load257, <8 x i8> %vec.phi255.a) ; 2 uses
   %index.next258 = add nuw i64 %index254, 8       ; 2 uses
-  %i.bn = icmp eq i64 %index.next258, %n.vec248
+  %i.bn = icmp eq i64 %index.next258, %n.vec247
   br i1 %i.bn, label %vec.epilog.middle.block259, label %vec.epilog.vector.body253, !llvm.loop !3058
 
 vec.epilog.middle.block259:                       ; preds = %vec.epilog.vector.body253
   %i.bo = tail call i8 @llvm.vector.reduce.umax.v8i8(<8 x i8> %i.bm) ; 2 uses
   %i.bp = tail call i8 @llvm.vector.reduce.umin.v8i8(<8 x i8> %i.bl) ; 2 uses
-  %cmp.n260 = icmp eq i64 %i.aw, %n.vec248
+  %cmp.n260 = icmp eq i64 %i.aw, %n.vec247
   br i1 %cmp.n260, label %_ZL13ImMinMaxArrayIhEvPKT_iPS0_S3_.exit95, label %.lr.ph.i87.preheader
 
 .lr.ph.i87.preheader:                             ; preds = %iter.check243, %vec.epilog.iter.check245, %vec.epilog.middle.block259
@@ -4615,18 +4615,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.z, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
   %bc.merge.rdx205 = phi i16 [ %i.aa, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
-  %n.vec206 = and i64 %i.o, -4                    ; 3 uses
-  %11 = or disjoint i64 %n.vec206, 1
+  %broadcast.splatinsert211 = insertelement <4 x i16> poison, i16 %bc.merge.rdx205, i64 0
+  %broadcast.splat212 = shufflevector <4 x i16> %broadcast.splatinsert211, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert207 = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat208 = shufflevector <4 x i16> %broadcast.splatinsert207, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert209 = insertelement <4 x i16> poison, i16 %bc.merge.rdx205, i64 0
-  %broadcast.splat210 = shufflevector <4 x i16> %broadcast.splatinsert209, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec206 = and i64 %i.o, -4                    ; 3 uses
+  %11 = or disjoint i64 %n.vec206, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index211 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next215, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi212 = phi <4 x i16> [ %broadcast.splat208, %vec.epilog.ph ], [ %i.ae, %vec.epilog.vector.body ]
-  %vec.phi213 = phi <4 x i16> [ %broadcast.splat210, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
+  %vec.phi213 = phi <4 x i16> [ %broadcast.splat212, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
   %i.ab = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index211
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 2
   %wide.load214 = load <4 x i16>, ptr %i.ac, align 2, !tbaa !900 ; 2 uses
@@ -4737,31 +4737,31 @@ vec.epilog.ph247:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val240 = phi i64 [ %n.vec224, %vec.epilog.iter.check245 ], [ 0, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx241 = phi i16 [ %i.bh, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx242 = phi i16 [ %i.bi, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
-  %n.vec248 = and i64 %i.aw, -4                   ; 3 uses
-  %12 = or disjoint i64 %n.vec248, 1
+  %broadcast.splatinsert253 = insertelement <4 x i16> poison, i16 %bc.merge.rdx242, i64 0
+  %broadcast.splat254 = shufflevector <4 x i16> %broadcast.splatinsert253, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert249 = insertelement <4 x i16> poison, i16 %bc.merge.rdx241, i64 0
   %broadcast.splat250 = shufflevector <4 x i16> %broadcast.splatinsert249, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert251 = insertelement <4 x i16> poison, i16 %bc.merge.rdx242, i64 0
-  %broadcast.splat252 = shufflevector <4 x i16> %broadcast.splatinsert251, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec247 = and i64 %i.aw, -4                   ; 3 uses
+  %12 = or disjoint i64 %n.vec247, 1
   br label %vec.epilog.vector.body253
 
 vec.epilog.vector.body253:                        ; preds = %vec.epilog.vector.body253, %vec.epilog.ph247
   %index254 = phi i64 [ %vec.epilog.resume.val240, %vec.epilog.ph247 ], [ %index.next258, %vec.epilog.vector.body253 ] ; 2 uses
   %vec.phi255.a = phi <4 x i16> [ %broadcast.splat250, %vec.epilog.ph247 ], [ %i.bm, %vec.epilog.vector.body253 ]
-  %vec.phi256 = phi <4 x i16> [ %broadcast.splat252, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
+  %vec.phi256 = phi <4 x i16> [ %broadcast.splat254, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
   %i.bj = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index254
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 2
   %wide.load257 = load <4 x i16>, ptr %i.bk, align 2, !tbaa !900 ; 2 uses
   %i.bl = tail call <4 x i16> @llvm.smin.v4i16(<4 x i16> %wide.load257, <4 x i16> %vec.phi256) ; 2 uses
   %i.bm = tail call <4 x i16> @llvm.smax.v4i16(<4 x i16> %wide.load257, <4 x i16> %vec.phi255.a) ; 2 uses
   %index.next258 = add nuw i64 %index254, 4       ; 2 uses
-  %i.bn = icmp eq i64 %index.next258, %n.vec248
+  %i.bn = icmp eq i64 %index.next258, %n.vec247
   br i1 %i.bn, label %vec.epilog.middle.block259, label %vec.epilog.vector.body253, !llvm.loop !3069
 
 vec.epilog.middle.block259:                       ; preds = %vec.epilog.vector.body253
   %i.bo = tail call i16 @llvm.vector.reduce.smax.v4i16(<4 x i16> %i.bm) ; 2 uses
   %i.bp = tail call i16 @llvm.vector.reduce.smin.v4i16(<4 x i16> %i.bl) ; 2 uses
-  %cmp.n260 = icmp eq i64 %i.aw, %n.vec248
+  %cmp.n260 = icmp eq i64 %i.aw, %n.vec247
   br i1 %cmp.n260, label %_ZL13ImMinMaxArrayIsEvPKT_iPS0_S3_.exit95, label %.lr.ph.i87.preheader
 
 .lr.ph.i87.preheader:                             ; preds = %iter.check243, %vec.epilog.iter.check245, %vec.epilog.middle.block259
@@ -5164,18 +5164,18 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.z, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
   %bc.merge.rdx205 = phi i16 [ %i.aa, %vec.epilog.iter.check ], [ %i.m, %vector.main.loop.iter.check ]
-  %n.vec206 = and i64 %i.o, -4                    ; 3 uses
-  %11 = or disjoint i64 %n.vec206, 1
+  %broadcast.splatinsert211 = insertelement <4 x i16> poison, i16 %bc.merge.rdx205, i64 0
+  %broadcast.splat212 = shufflevector <4 x i16> %broadcast.splatinsert211, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert207 = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat208 = shufflevector <4 x i16> %broadcast.splatinsert207, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert209 = insertelement <4 x i16> poison, i16 %bc.merge.rdx205, i64 0
-  %broadcast.splat210 = shufflevector <4 x i16> %broadcast.splatinsert209, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec206 = and i64 %i.o, -4                    ; 3 uses
+  %11 = or disjoint i64 %n.vec206, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index211 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next215, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi212 = phi <4 x i16> [ %broadcast.splat208, %vec.epilog.ph ], [ %i.ae, %vec.epilog.vector.body ]
-  %vec.phi213 = phi <4 x i16> [ %broadcast.splat210, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
+  %vec.phi213 = phi <4 x i16> [ %broadcast.splat212, %vec.epilog.ph ], [ %i.ad, %vec.epilog.vector.body ]
   %i.ab = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index211
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 2
   %wide.load214 = load <4 x i16>, ptr %i.ac, align 2, !tbaa !900 ; 2 uses
@@ -5286,31 +5286,31 @@ vec.epilog.ph247:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val240 = phi i64 [ %n.vec224, %vec.epilog.iter.check245 ], [ 0, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx241 = phi i16 [ %i.bh, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
   %bc.merge.rdx242 = phi i16 [ %i.bi, %vec.epilog.iter.check245 ], [ %i.au, %vector.main.loop.iter.check221 ]
-  %n.vec248 = and i64 %i.aw, -4                   ; 3 uses
-  %12 = or disjoint i64 %n.vec248, 1
+  %broadcast.splatinsert253 = insertelement <4 x i16> poison, i16 %bc.merge.rdx242, i64 0
+  %broadcast.splat254 = shufflevector <4 x i16> %broadcast.splatinsert253, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert249 = insertelement <4 x i16> poison, i16 %bc.merge.rdx241, i64 0
   %broadcast.splat250 = shufflevector <4 x i16> %broadcast.splatinsert249, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert251 = insertelement <4 x i16> poison, i16 %bc.merge.rdx242, i64 0
-  %broadcast.splat252 = shufflevector <4 x i16> %broadcast.splatinsert251, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec247 = and i64 %i.aw, -4                   ; 3 uses
+  %12 = or disjoint i64 %n.vec247, 1
   br label %vec.epilog.vector.body253
 
 vec.epilog.vector.body253:                        ; preds = %vec.epilog.vector.body253, %vec.epilog.ph247
   %index254 = phi i64 [ %vec.epilog.resume.val240, %vec.epilog.ph247 ], [ %index.next258, %vec.epilog.vector.body253 ] ; 2 uses
   %vec.phi255.a = phi <4 x i16> [ %broadcast.splat250, %vec.epilog.ph247 ], [ %i.bm, %vec.epilog.vector.body253 ]
-  %vec.phi256 = phi <4 x i16> [ %broadcast.splat252, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
+  %vec.phi256 = phi <4 x i16> [ %broadcast.splat254, %vec.epilog.ph247 ], [ %i.bl, %vec.epilog.vector.body253 ]
   %i.bj = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index254
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 2
   %wide.load257 = load <4 x i16>, ptr %i.bk, align 2, !tbaa !900 ; 2 uses
   %i.bl = tail call <4 x i16> @llvm.umin.v4i16(<4 x i16> %wide.load257, <4 x i16> %vec.phi256) ; 2 uses
   %i.bm = tail call <4 x i16> @llvm.umax.v4i16(<4 x i16> %wide.load257, <4 x i16> %vec.phi255.a) ; 2 uses
   %index.next258 = add nuw i64 %index254, 4       ; 2 uses
-  %i.bn = icmp eq i64 %index.next258, %n.vec248
+  %i.bn = icmp eq i64 %index.next258, %n.vec247
   br i1 %i.bn, label %vec.epilog.middle.block259, label %vec.epilog.vector.body253, !llvm.loop !3080
 
 vec.epilog.middle.block259:                       ; preds = %vec.epilog.vector.body253
   %i.bo = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.bm) ; 2 uses
   %i.bp = tail call i16 @llvm.vector.reduce.umin.v4i16(<4 x i16> %i.bl) ; 2 uses
-  %cmp.n260 = icmp eq i64 %i.aw, %n.vec248
+  %cmp.n260 = icmp eq i64 %i.aw, %n.vec247
   br i1 %cmp.n260, label %_ZL13ImMinMaxArrayItEvPKT_iPS0_S3_.exit95, label %.lr.ph.i87.preheader
 
 .lr.ph.i87.preheader:                             ; preds = %iter.check243, %vec.epilog.iter.check245, %vec.epilog.middle.block259

@@ -205,14 +205,14 @@ vec.epilog.iter.check1490:                        ; preds = %middle.block1481
 vec.epilog.ph1492:                                ; preds = %vector.main.loop.iter.check1466, %vec.epilog.iter.check1490
   %vec.epilog.resume.val1486 = phi i64 [ %n.vec1469, %vec.epilog.iter.check1490 ], [ 0, %vector.main.loop.iter.check1466 ]
   %bc.merge.rdx1487 = phi i32 [ %i.ug, %vec.epilog.iter.check1490 ], [ 0, %vector.main.loop.iter.check1466 ]
+  %broadcast.splatinsert1496 = insertelement <4 x i32> poison, i32 %bc.merge.rdx1487, i64 0
+  %broadcast.splat1497 = shufflevector <4 x i32> %broadcast.splatinsert1496, <4 x i32> poison, <4 x i32> zeroinitializer
   %n.vec1493 = and i64 %wide.trip.count1035, 2147483644 ; 3 uses
-  %broadcast.splatinsert1494 = insertelement <4 x i32> poison, i32 %bc.merge.rdx1487, i64 0
-  %broadcast.splat1495 = shufflevector <4 x i32> %broadcast.splatinsert1494, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body1496
 
 vec.epilog.vector.body1496:                       ; preds = %vec.epilog.vector.body1496, %vec.epilog.ph1492
   %index1497 = phi i64 [ %vec.epilog.resume.val1486, %vec.epilog.ph1492 ], [ %index.next1500, %vec.epilog.vector.body1496 ] ; 2 uses
-  %vec.phi1498 = phi <4 x i32> [ %broadcast.splat1495, %vec.epilog.ph1492 ], [ %i.ui, %vec.epilog.vector.body1496 ]
+  %vec.phi1498 = phi <4 x i32> [ %broadcast.splat1497, %vec.epilog.ph1492 ], [ %i.ui, %vec.epilog.vector.body1496 ]
   %i.uh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index1497
   %wide.load1499 = load <4 x i32>, ptr %i.uh, align 16, !tbaa !10
   %i.ui = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %wide.load1499, <4 x i32> %vec.phi1498) ; 2 uses
@@ -343,9 +343,9 @@ vec.epilog.iter.check1452:                        ; preds = %middle.block1444
 vec.epilog.ph1454:                                ; preds = %vector.main.loop.iter.check1430, %vec.epilog.iter.check1452
   %vec.epilog.resume.val1448 = phi i64 [ %n.vec1433, %vec.epilog.iter.check1452 ], [ 0, %vector.main.loop.iter.check1430 ]
   %bc.merge.rdx1449 = phi i32 [ %i.vl, %vec.epilog.iter.check1452 ], [ 0, %vector.main.loop.iter.check1430 ]
-  %n.vec1455 = and i64 %wide.trip.count1046, 4294967292 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %bc.merge.rdx1449, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
+  %n.vec1455 = and i64 %wide.trip.count1046, 4294967292 ; 3 uses
   br label %vec.epilog.vector.body1456
 
 vec.epilog.vector.body1456:                       ; preds = %vec.epilog.vector.body1456, %vec.epilog.ph1454

@@ -205,7 +205,7 @@ bb.gv:                                            ; preds = %.thread94, %bb.gu
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.vb) ]
   %i.vc = extractelement <2 x ptr> %i.va, i64 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.vc) ]
-  %1 = shufflevector <2 x ptr> %i.va, <2 x ptr> poison, <2 x i32> <i32 1, i32 poison>, !dbg !258163
+  %1 = shufflevector <2 x ptr> %i.va, <2 x ptr> <ptr poison, ptr undef>, <2 x i32> <i32 1, i32 3>, !dbg !258163
   br label %bb.gz, !dbg !258162
 
 bb.gw:                                            ; preds = %.thread101, %bb.gu

@@ -205,11 +205,11 @@ vec.epilog.iter.check1688:                        ; preds = %middle.block1681
 vec.epilog.ph1690:                                ; preds = %vector.main.loop.iter.check1660, %vec.epilog.iter.check1688
   %vec.epilog.resume.val1685 = phi i64 [ %n.vec1663, %vec.epilog.iter.check1688 ], [ 0, %vector.main.loop.iter.check1660 ]
   %bc.merge.rdx = phi i64 [ %i.abh, %vec.epilog.iter.check1688 ], [ 0, %vector.main.loop.iter.check1660 ]
-  %n.vec1691 = and i64 %i.aau, 4611686018427387900 ; 3 uses
-  %37 = shl i64 %n.vec1691, 3
-  %38 = getelementptr i8, ptr %.sroa.0577.0.lcssa1293, i64 %37
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
+  %n.vec1689 = and i64 %i.aau, 4611686018427387900 ; 3 uses
+  %37 = shl i64 %n.vec1689, 3
+  %38 = getelementptr i8, ptr %.sroa.0577.0.lcssa1293, i64 %37
   br label %vec.epilog.vector.body1692
 
 vec.epilog.vector.body1692:                       ; preds = %vec.epilog.vector.body1692, %vec.epilog.ph1690
@@ -222,12 +222,12 @@ vec.epilog.vector.body1692:                       ; preds = %vec.epilog.vector.b
   %wide.masked.gather1698 = call <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr> align 8 %wide.gep1697, <4 x i1> splat (i1 true), <4 x i64> poison), !tbaa !2023
   %i.abj = call <4 x i64> @llvm.umax.v4i64(<4 x i64> %vec.phi1694, <4 x i64> %wide.masked.gather1698) ; 2 uses
   %index.next1699 = add nuw i64 %index1693, 4     ; 2 uses
-  %i.abk = icmp eq i64 %index.next1699, %n.vec1691
+  %i.abk = icmp eq i64 %index.next1699, %n.vec1689
   br i1 %i.abk, label %vec.epilog.middle.block1700, label %vec.epilog.vector.body1692, !llvm.loop !3523
 
 vec.epilog.middle.block1700:                      ; preds = %vec.epilog.vector.body1692
   %i.abl = call i64 @llvm.vector.reduce.umax.v4i64(<4 x i64> %i.abj) ; 2 uses
-  %cmp.n1701 = icmp eq i64 %i.aau, %n.vec1691
+  %cmp.n1701 = icmp eq i64 %i.aau, %n.vec1689
   br i1 %cmp.n1701, label %._crit_edge986, label %.lr.ph985.preheader
 
 .lr.ph985.preheader:                              ; preds = %iter.check1686, %vec.epilog.iter.check1688, %vec.epilog.middle.block1700

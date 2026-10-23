@@ -205,17 +205,17 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec113, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx131 = phi i16 [ %i.v, %vec.epilog.iter.check ], [ %.promoted61, %vector.main.loop.iter.check ]
   %bc.merge.rdx132 = phi i16 [ %i.w, %vec.epilog.iter.check ], [ %.promoted59, %vector.main.loop.iter.check ]
-  %n.vec133 = and i64 %3, -4                      ; 3 uses
-  %broadcast.splatinsert134 = insertelement <4 x i16> poison, i16 %bc.merge.rdx131, i64 0
+  %broadcast.splatinsert134 = insertelement <4 x i16> poison, i16 %bc.merge.rdx132, i64 0
   %broadcast.splat135 = shufflevector <4 x i16> %broadcast.splatinsert134, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert136 = insertelement <4 x i16> poison, i16 %bc.merge.rdx132, i64 0
+  %broadcast.splatinsert136 = insertelement <4 x i16> poison, i16 %bc.merge.rdx131, i64 0
   %broadcast.splat137 = shufflevector <4 x i16> %broadcast.splatinsert136, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec133 = and i64 %3, -4                      ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index138 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next142, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi139 = phi <4 x i16> [ %broadcast.splat135, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
-  %vec.phi140 = phi <4 x i16> [ %broadcast.splat137, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
+  %vec.phi139 = phi <4 x i16> [ %broadcast.splat137, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
+  %vec.phi140 = phi <4 x i16> [ %broadcast.splat135, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
   %i.x = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %index138
   %wide.load141 = load <4 x i16>, ptr %i.x, align 2, !tbaa !317, !alias.scope !4711 ; 2 uses
   %i.y = tail call <4 x i16> @llvm.smin.v4i16(<4 x i16> %vec.phi140, <4 x i16> %wide.load141) ; 2 uses
@@ -618,17 +618,17 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec113, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx131 = phi i16 [ %i.v, %vec.epilog.iter.check ], [ %.promoted61, %vector.main.loop.iter.check ]
   %bc.merge.rdx132 = phi i16 [ %i.w, %vec.epilog.iter.check ], [ %.promoted59, %vector.main.loop.iter.check ]
-  %n.vec133 = and i64 %3, -4                      ; 3 uses
-  %broadcast.splatinsert134 = insertelement <4 x i16> poison, i16 %bc.merge.rdx131, i64 0
+  %broadcast.splatinsert134 = insertelement <4 x i16> poison, i16 %bc.merge.rdx132, i64 0
   %broadcast.splat135 = shufflevector <4 x i16> %broadcast.splatinsert134, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert136 = insertelement <4 x i16> poison, i16 %bc.merge.rdx132, i64 0
+  %broadcast.splatinsert136 = insertelement <4 x i16> poison, i16 %bc.merge.rdx131, i64 0
   %broadcast.splat137 = shufflevector <4 x i16> %broadcast.splatinsert136, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec133 = and i64 %3, -4                      ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index138 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next142, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi139 = phi <4 x i16> [ %broadcast.splat135, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
-  %vec.phi140 = phi <4 x i16> [ %broadcast.splat137, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
+  %vec.phi139 = phi <4 x i16> [ %broadcast.splat137, %vec.epilog.ph ], [ %i.z, %vec.epilog.vector.body ]
+  %vec.phi140 = phi <4 x i16> [ %broadcast.splat135, %vec.epilog.ph ], [ %i.y, %vec.epilog.vector.body ]
   %i.x = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %index138
   %wide.load141 = load <4 x i16>, ptr %i.x, align 2, !tbaa !317, !alias.scope !4755 ; 2 uses
   %i.y = tail call <4 x i16> @llvm.umin.v4i16(<4 x i16> %vec.phi140, <4 x i16> %wide.load141) ; 2 uses

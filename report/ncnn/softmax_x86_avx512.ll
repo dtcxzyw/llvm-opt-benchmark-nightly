@@ -204,13 +204,13 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi float [ %i.az, %vec.epilog.iter.check ], [ f0xFF7FFFFF, %vector.main.loop.iter.check ]
+  %broadcast.splatinsert = insertelement <8 x float> poison, float %bc.merge.rdx, i64 0
+  %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
   %n.vec459 = and i64 %i.ak, 8589934584           ; 4 uses
   %i.ba = shl nuw nsw i64 %n.vec459, 2
   %i.bb = getelementptr i8, ptr %.2.lcssa, i64 %i.ba
   %i.bc = trunc i64 %n.vec459 to i32
   %i.bd = add i32 %.2108.lcssa, %i.bc
-  %broadcast.splatinsert = insertelement <8 x float> poison, float %bc.merge.rdx, i64 0
-  %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -613,13 +613,13 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi float [ %i.cj, %vec.epilog.iter.check ], [ f0xFF7FFFFF, %vector.main.loop.iter.check ]
+  %broadcast.splatinsert = insertelement <8 x float> poison, float %bc.merge.rdx, i64 0
+  %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
   %n.vec481 = and i64 %i.bi, 8589934584           ; 4 uses
   %i.ck = shl nuw nsw i64 %n.vec481, 1
   %i.cl = getelementptr i8, ptr %.2111.lcssa, i64 %i.ck
   %i.cm = trunc i64 %n.vec481 to i32
   %i.cn = add i32 %.2115.lcssa, %i.cm
-  %broadcast.splatinsert = insertelement <8 x float> poison, float %bc.merge.rdx, i64 0
-  %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

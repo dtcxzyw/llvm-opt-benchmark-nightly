@@ -204,10 +204,10 @@ vec.epilog.iter.check:                            ; preds = %middle.block368
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec360, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx371 = phi i8 [ %i.cc, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec372 = and i64 %1, 2305843009213693944     ; 3 uses
-  %7 = getelementptr i8, ptr %2, i64 %n.vec372
   %broadcast.splatinsert = insertelement <8 x i8> poison, i8 %bc.merge.rdx371, i64 0
   %broadcast.splat = shufflevector <8 x i8> %broadcast.splatinsert, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec371 = and i64 %1, 2305843009213693944     ; 3 uses
+  %7 = getelementptr i8, ptr %2, i64 %n.vec371
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -217,12 +217,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %wide.load376 = load <8 x i8>, ptr %next.gep375, align 1
   %i.cd = call <8 x i8> @llvm.umax.v8i8(<8 x i8> %wide.load376, <8 x i8> %vec.phi374) ; 2 uses
   %index.next377 = add nuw i64 %index373, 8       ; 2 uses
-  %i.ce = icmp eq i64 %index.next377, %n.vec372
+  %i.ce = icmp eq i64 %index.next377, %n.vec371
   br i1 %i.ce, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !16
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.cf = call i8 @llvm.vector.reduce.umax.v8i8(<8 x i8> %i.cd) ; 2 uses
-  %cmp.n378 = icmp eq i64 %1, %n.vec372
+  %cmp.n378 = icmp eq i64 %1, %n.vec371
   br i1 %cmp.n378, label %._crit_edge166, label %.lr.ph165.preheader
 
 .lr.ph165.preheader:                              ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

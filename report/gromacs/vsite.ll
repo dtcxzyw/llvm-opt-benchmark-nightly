@@ -205,26 +205,26 @@ vec.epilog.iter.check233:                         ; preds = %middle.block225
 vec.epilog.ph235:                                 ; preds = %vector.main.loop.iter.check209, %vec.epilog.iter.check233
   %vec.epilog.resume.val229 = phi i64 [ %n.vec212, %vec.epilog.iter.check233 ], [ 0, %vector.main.loop.iter.check209 ]
   %bc.merge.rdx230 = phi i32 [ %i.aw, %vec.epilog.iter.check233 ], [ %.promoted9596, %vector.main.loop.iter.check209 ]
-  %n.vec236 = and i64 %i.aj, -8                   ; 3 uses
-  %9 = add i64 %indvars.iv, %n.vec236
-  %broadcast.splatinsert237 = insertelement <8 x i32> poison, i32 %bc.merge.rdx230, i64 0
-  %broadcast.splat238 = shufflevector <8 x i32> %broadcast.splatinsert237, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert238 = insertelement <8 x i32> poison, i32 %bc.merge.rdx230, i64 0
+  %broadcast.splat239 = shufflevector <8 x i32> %broadcast.splatinsert238, <8 x i32> poison, <8 x i32> zeroinitializer
+  %n.vec235 = and i64 %i.aj, -8                   ; 3 uses
+  %9 = add i64 %indvars.iv, %n.vec235
   %i.ax = getelementptr [4 x i8], ptr %i.o, i64 %indvars.iv
   br label %vec.epilog.vector.body239
 
 vec.epilog.vector.body239:                        ; preds = %vec.epilog.vector.body239, %vec.epilog.ph235
   %index240 = phi i64 [ %vec.epilog.resume.val229, %vec.epilog.ph235 ], [ %index.next243, %vec.epilog.vector.body239 ] ; 2 uses
-  %vec.phi241 = phi <8 x i32> [ %broadcast.splat238, %vec.epilog.ph235 ], [ %i.az, %vec.epilog.vector.body239 ]
+  %vec.phi241 = phi <8 x i32> [ %broadcast.splat239, %vec.epilog.ph235 ], [ %i.az, %vec.epilog.vector.body239 ]
   %i.ay = getelementptr [4 x i8], ptr %i.ax, i64 %index240
   %wide.load242 = load <8 x i32>, ptr %i.ay, align 4, !tbaa !90
   %i.az = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %vec.phi241, <8 x i32> %wide.load242) ; 2 uses
   %index.next243 = add nuw i64 %index240, 8       ; 2 uses
-  %i.ba = icmp eq i64 %index.next243, %n.vec236
+  %i.ba = icmp eq i64 %index.next243, %n.vec235
   br i1 %i.ba, label %vec.epilog.middle.block244, label %vec.epilog.vector.body239, !llvm.loop !335
 
 vec.epilog.middle.block244:                       ; preds = %vec.epilog.vector.body239
   %i.bb = tail call i32 @llvm.vector.reduce.smax.v8i32(<8 x i32> %i.az) ; 3 uses
-  %cmp.n245 = icmp eq i64 %i.aj, %n.vec236
+  %cmp.n245 = icmp eq i64 %i.aj, %n.vec235
   br i1 %cmp.n245, label %.loopexit88, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %iter.check231, %vec.epilog.iter.check233, %vec.epilog.middle.block244
@@ -350,20 +350,20 @@ middle.block:                                     ; preds = %vector.body
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %middle.block
   %vec.epilog.resume.val = phi i64 [ %n.vec, %middle.block ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.dd, %middle.block ], [ %i.bz, %vector.main.loop.iter.check ]
+  %broadcast.splatinsert199 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
+  %broadcast.splat200 = shufflevector <8 x i32> %broadcast.splatinsert199, <8 x i32> poison, <8 x i32> zeroinitializer
   %i.de = and i64 %i.ci, 7                        ; 2 uses
   %i.df = icmp eq i64 %i.de, 0
   %i.dg = select i1 %i.df, i64 8, i64 %i.de
   %n.vec197 = sub nsw i64 %i.ci, %i.dg            ; 2 uses
   %i.dh = mul i64 %n.vec197, 3
   %i.di = add i64 %i.dh, %i.br
-  %broadcast.splatinsert198 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
-  %broadcast.splat199 = shufflevector <8 x i32> %broadcast.splatinsert198, <8 x i32> poison, <8 x i32> zeroinitializer
   %invariant.gep = getelementptr [4 x i8], ptr %i.bh, i64 %i.br
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index200 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next204, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi201 = phi <8 x i32> [ %broadcast.splat199, %vec.epilog.ph ], [ %i.dk, %vec.epilog.vector.body ]
+  %vec.phi201 = phi <8 x i32> [ %broadcast.splat200, %vec.epilog.ph ], [ %i.dk, %vec.epilog.vector.body ]
   %.idx = mul i64 %index200, 12
   %gep = getelementptr i8, ptr %invariant.gep, i64 %.idx
   %i.dj = getelementptr i8, ptr %gep, i64 8
