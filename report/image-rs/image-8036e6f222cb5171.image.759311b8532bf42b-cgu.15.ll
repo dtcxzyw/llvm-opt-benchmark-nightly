@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %.lr.ph, %.loopexit
   %.val.i.5.i = load i8, ptr %.ptr.5.i, align 1, !alias.scope !920, !noundef !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !922
   %i.ah = load i16, ptr %.sroa.0.023, align 1, !alias.scope !920 ; 5 uses
-  %4 = zext i16 %i.ah to i64
   %i.ai = trunc i16 %i.ah to i8
   %i.aj = lshr i16 %i.ah, 8                       ; 8 uses
   %i.ak = trunc nuw i16 %i.aj to i8
@@ -262,6 +261,7 @@ bb.g:                                             ; preds = %bb.f
 _RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt5_block.exit: ; preds = %.preheader9.i.i, %.preheader.i.i
   %.sroa.15.0.insert.insert.i.i = phi i64 [ %i.bw, %.preheader.i.i ], [ -72057594037927936, %.preheader9.i.i ]
   %i.bx = phi <4 x i16> [ %i.bk, %.preheader.i.i ], [ %i.ay, %.preheader9.i.i ] ; 4 uses
+  %4 = zext i16 %i.ah to i64
   %i.by = zext i8 %.val.i.i to i64                ; 3 uses
   %i.bz = shl nuw nsw i64 %i.by, 16
   %i.ca = zext i8 %.val.i.1.i to i64              ; 3 uses

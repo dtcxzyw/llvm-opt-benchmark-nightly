@@ -19,6 +19,8 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 define void @_ZN6google8protobuf4json18BinaryToJsonStreamEPNS0_4util12TypeResolverERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_2io19ZeroCopyInputStreamEPNSD_20ZeroCopyOutputStreamERKNS1_12PrintOptionsE(ptr dead_on_unwind noalias writable sret(%"class.absl::lts_20250512::Status") align 8 %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(6) %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %6 = load i32, ptr %i.a, align 1
+  %7 = zext i32 %6 to i48
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 5
   %i.c = load i8, ptr %i.b, align 1, !tbaa !10, !range !11, !noundef !12
   %i.d = load i8, ptr %5, align 1, !tbaa !13, !range !11, !noundef !12
@@ -26,8 +28,6 @@ bb.a:
   %.sroa.9.0.insert.shift = shl nuw nsw i48 %.sroa.9.0.insert.ext, 40
   %.sroa.8.0.insert.ext = zext nneg i8 %i.c to i48
   %.sroa.8.0.insert.shift = shl nuw nsw i48 %.sroa.8.0.insert.ext, 32
-  %6 = load i32, ptr %i.a, align 1
-  %7 = zext i32 %6 to i48
   %op.rdx = or disjoint i48 %.sroa.8.0.insert.shift, %7
   %op.rdx10 = or disjoint i48 %op.rdx, %.sroa.9.0.insert.shift
   tail call void @_ZN6google8protobuf13json_internal18BinaryToJsonStreamEPNS0_4util12TypeResolverERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_2io19ZeroCopyInputStreamEPNSD_20ZeroCopyOutputStreamENS1_13WriterOptionsE(ptr dead_on_unwind writable sret(%"class.absl::lts_20250512::Status") align 8 %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef %3, ptr noundef %4, i48 %op.rdx10)
@@ -56,6 +56,8 @@ _ZN6google8protobuf4json18BinaryToJsonStreamEPNS0_4util12TypeResolverERKNSt7__cx
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #3
   call void @_ZN6google8protobuf2io18StringOutputStreamC1EPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef %4)
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %8 = load i32, ptr %i.e, align 1, !noalias !29
+  %9 = zext i32 %8 to i48
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 5
   %i.g = load i8, ptr %i.f, align 1, !tbaa !10, !range !11, !noalias !29, !noundef !12
   %i.h = load i8, ptr %5, align 1, !tbaa !13, !range !11, !noalias !29, !noundef !12
@@ -63,8 +65,6 @@ _ZN6google8protobuf4json18BinaryToJsonStreamEPNS0_4util12TypeResolverERKNSt7__cx
   %.sroa.9.0.insert.shift.i = shl nuw nsw i48 %.sroa.9.0.insert.ext.i, 40
   %.sroa.8.0.insert.ext.i = zext nneg i8 %i.g to i48
   %.sroa.8.0.insert.shift.i = shl nuw nsw i48 %.sroa.8.0.insert.ext.i, 32
-  %8 = load i32, ptr %i.e, align 1
-  %9 = zext i32 %8 to i48
   %op.rdx = or disjoint i48 %.sroa.8.0.insert.shift.i, %9
   %op.rdx9 = or disjoint i48 %op.rdx, %.sroa.9.0.insert.shift.i
   call void @_ZN6google8protobuf13json_internal18BinaryToJsonStreamEPNS0_4util12TypeResolverERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_2io19ZeroCopyInputStreamEPNSD_20ZeroCopyOutputStreamENS1_13WriterOptionsE(ptr dead_on_unwind writable sret(%"class.absl::lts_20250512::Status") align 8 %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull %6, ptr noundef nonnull %7, i48 %op.rdx9)
@@ -139,6 +139,8 @@ _ZN6google8protobuf4json19MessageToJsonStreamERKNS0_7MessageEPNS0_2io20ZeroCopyO
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #3
   call void @_ZN6google8protobuf2io18StringOutputStreamC1EPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef %2)
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %5 = load i32, ptr %i.a, align 1, !noalias !35
+  %6 = zext i32 %5 to i48
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 5
   %i.c = load i8, ptr %i.b, align 1, !tbaa !10, !range !11, !noalias !35, !noundef !12
   %i.d = load i8, ptr %3, align 1, !tbaa !13, !range !11, !noalias !35, !noundef !12
@@ -146,8 +148,6 @@ _ZN6google8protobuf4json19MessageToJsonStreamERKNS0_7MessageEPNS0_2io20ZeroCopyO
   %.sroa.9.0.insert.shift.i = shl nuw nsw i48 %.sroa.9.0.insert.ext.i, 40
   %.sroa.8.0.insert.ext.i = zext nneg i8 %i.c to i48
   %.sroa.8.0.insert.shift.i = shl nuw nsw i48 %.sroa.8.0.insert.ext.i, 32
-  %5 = load i32, ptr %i.a, align 1
-  %6 = zext i32 %5 to i48
   %op.rdx = or disjoint i48 %.sroa.8.0.insert.shift.i, %6
   %op.rdx4 = or disjoint i48 %op.rdx, %.sroa.9.0.insert.shift.i
   call void @_ZN6google8protobuf13json_internal19MessageToJsonStreamERKNS0_7MessageEPNS0_2io20ZeroCopyOutputStreamENS1_13WriterOptionsE(ptr dead_on_unwind writable sret(%"class.absl::lts_20250512::Status") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %4, i48 %op.rdx4)
@@ -159,6 +159,8 @@ _ZN6google8protobuf4json19MessageToJsonStreamERKNS0_7MessageEPNS0_2io20ZeroCopyO
 define void @_ZN6google8protobuf4json19MessageToJsonStreamERKNS0_7MessageEPNS0_2io20ZeroCopyOutputStreamERKNS1_12PrintOptionsE(ptr dead_on_unwind noalias writable sret(%"class.absl::lts_20250512::Status") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(6) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %4 = load i32, ptr %i.a, align 1
+  %5 = zext i32 %4 to i48
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 5
   %i.c = load i8, ptr %i.b, align 1, !tbaa !10, !range !11, !noundef !12
   %i.d = load i8, ptr %3, align 1, !tbaa !13, !range !11, !noundef !12
@@ -166,8 +168,6 @@ bb.a:
   %.sroa.9.0.insert.shift = shl nuw nsw i48 %.sroa.9.0.insert.ext, 40
   %.sroa.8.0.insert.ext = zext nneg i8 %i.c to i48
   %.sroa.8.0.insert.shift = shl nuw nsw i48 %.sroa.8.0.insert.ext, 32
-  %4 = load i32, ptr %i.a, align 1
-  %5 = zext i32 %4 to i48
   %op.rdx = or disjoint i48 %.sroa.8.0.insert.shift, %5
   %op.rdx8 = or disjoint i48 %op.rdx, %.sroa.9.0.insert.shift
   tail call void @_ZN6google8protobuf13json_internal19MessageToJsonStreamERKNS0_7MessageEPNS0_2io20ZeroCopyOutputStreamENS1_13WriterOptionsE(ptr dead_on_unwind writable sret(%"class.absl::lts_20250512::Status") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, i48 %op.rdx8)
