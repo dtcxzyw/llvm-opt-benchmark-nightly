@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !81
   %i.ac = call fastcc { i64, i64 } @_ZN12_GLOBAL__N_125getAndValidateClusterInfoEN4mlir3gpu16SubgroupReduceOpEj(ptr %.sroa.04.0.copyload, i32 noundef %i.ab) ; 2 uses
-  %i.ad = extractvalue { i64, i64 } %i.ac, 0      ; 9 uses
-  %i.ae = extractvalue { i64, i64 } %i.ac, 1      ; 2 uses
+  %i.ad = extractvalue { i64, i64 } %i.ac, 0      ; 8 uses
+  %i.ae = extractvalue { i64, i64 } %i.ac, 1      ; 3 uses
   %i.af = and i64 %i.ae, 4294967296
   %.not33 = icmp eq i64 %i.af, 0
   br i1 %.not33, label %bb.bb, label %bb.e
@@ -304,7 +304,6 @@ bb.k:                                             ; preds = %bb.h
   %i.bl = call noundef i32 @_ZN4mlir3gpu16SubgroupReduceOp5getOpEv(ptr noundef nonnull align 8 dereferenceable(8) %10) #17 ; 8 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 104
   %.sroa.024.0.copyload = load i32, ptr %i.bm, align 8, !tbaa !83 ; 2 uses
-  %.sroa.5.8.extract.trunc = trunc i64 %i.ae to i32 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload, i64 24 ; 2 uses
   %.sroa.0.0.copyload.i.i.i20 = load ptr, ptr %i.bn, align 8 ; 25 uses
   %i.bo = icmp ugt i64 %i.ad, 8589934591
@@ -387,15 +386,14 @@ bb.q:                                             ; preds = %bb.p
   %i.dk = call ptr @_ZN4mlir6amdgpu5DPPOp6createERNS_9OpBuilderENS_8LocationENS_4TypeENS_5ValueES6_NS0_7DPPPermENS_9AttributeEjjb(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, ptr %i.dh, ptr %i.dc, ptr %i.dc, i32 noundef 10, i64 %i.dj, i32 noundef 10, i32 noundef 15, i1 noundef zeroext false) #17
   %i.dl = getelementptr inbounds i8, ptr %i.dk, i64 -16
   %i.dm = call noundef i32 @_ZN4mlir3gpu20convertReductionKindENS0_18AllReduceOperationE(i32 noundef %i.bl) #17
-  %i.dn = call ptr @_ZN4mlir6vector18makeArithReductionERNS_9OpBuilderENS_8LocationENS0_13CombiningKindENS_5ValueES5_NS_5arith17FastMathFlagsAttrES5_(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, i32 noundef %i.dm, ptr %i.dc, ptr nonnull %i.dl, ptr null, i64 0) #17 ; 4 uses
-  %i.do = icmp eq i32 %.sroa.5.8.extract.trunc, 64
-  br i1 %i.do, label %15, label %bb.aa
-
-15:                                               ; preds = %bb.q
+  %i.dn = call ptr @_ZN4mlir6vector18makeArithReductionERNS_9OpBuilderENS_8LocationENS0_13CombiningKindENS_5ValueES5_NS_5arith17FastMathFlagsAttrES5_(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, i32 noundef %i.dm, ptr %i.dc, ptr nonnull %i.dl, ptr null, i64 0) #17 ; 2 uses
+  %15 = and i64 %i.ae, 4294967295                 ; 2 uses
+  %i.do = icmp eq i64 %15, 64
   %16 = icmp ult i64 %i.ad, 141733920768
-  br i1 %16, label %.thread73.thread.i, label %.thread73.thread89.i
+  %or.cond = and i1 %i.do, %16
+  br i1 %or.cond, label %.thread73.thread.i, label %bb.aa
 
-.thread73.thread.i:                               ; preds = %15
+.thread73.thread.i:                               ; preds = %bb.q
   %i.dp = call ptr @_ZN4mlir6amdgpu16SwizzleBitModeOp6createERNS_9OpBuilderENS_8LocationENS_5ValueEjjj(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, ptr %i.dn, i32 noundef 0, i32 noundef 31, i32 noundef 0) #17
   %i.dq = getelementptr inbounds i8, ptr %i.dp, i64 -16
   br label %_ZNRSt8optionalIN4mlir5ValueEE5valueEv.exit
@@ -485,6 +483,7 @@ _ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterf
   %i.ey = getelementptr inbounds i8, ptr %i.ex, i64 -16
   %i.ez = call noundef i32 @_ZN4mlir3gpu20convertReductionKindENS0_18AllReduceOperationE(i32 noundef %i.bl) #17
   %i.fa = call ptr @_ZN4mlir6vector18makeArithReductionERNS_9OpBuilderENS_8LocationENS0_13CombiningKindENS_5ValueES5_NS_5arith17FastMathFlagsAttrES5_(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, i32 noundef %i.ez, ptr %i.dc, ptr nonnull %i.ey, ptr null, i64 0) #17
+  %.pre = and i64 %i.ae, 4294967295
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.r
@@ -515,8 +514,9 @@ _ZN4llvm19dyn_cast_if_presentIN4mlir12RewriterBase8ListenerENS1_9OpBuilder8Liste
   br label %bb.ay
 
 bb.aa:                                            ; preds = %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit.i, %bb.q
-  %.sroa.046.4.i = phi ptr [ %i.dn, %bb.q ], [ %i.fa, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit.i ] ; 3 uses
-  %i.fk = icmp eq i32 %.sroa.5.8.extract.trunc, 32
+  %.pre-phi = phi i64 [ %.pre, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit.i ], [ %15, %bb.q ]
+  %.sroa.046.4.i = phi ptr [ %i.fa, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit.i ], [ %i.dn, %bb.q ] ; 3 uses
+  %i.fk = icmp eq i64 %.pre-phi, 32
   br i1 %i.fk, label %bb.ab, label %.thread73.i
 
 bb.ab:                                            ; preds = %bb.aa
@@ -600,29 +600,24 @@ _ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterf
   br label %.thread73.i
 
 .thread73.i:                                      ; preds = %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit219.i, %bb.aa
-  %.sroa.046.5.i = phi ptr [ %i.gq, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit219.i ], [ %.sroa.046.4.i, %bb.aa ] ; 5 uses
+  %.sroa.046.5.i = phi ptr [ %.sroa.046.4.i, %bb.aa ], [ %i.gq, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit219.i ] ; 8 uses
   %i.gr = icmp ugt i64 %i.ad, 274877906943
   br i1 %i.gr, label %bb.ah, label %_ZNRSt8optionalIN4mlir5ValueEE5valueEv.exit
-
-.thread73.thread89.i:                             ; preds = %15
-  %17 = icmp ugt i64 %i.ad, 274877906943
-  br i1 %17, label %.thread.i, label %_ZNRSt8optionalIN4mlir5ValueEE5valueEv.exit
 
 bb.ah:                                            ; preds = %.thread73.i
   br i1 %i.de, label %.thread.i, label %bb.an
 
-.thread.i:                                        ; preds = %bb.ah, %.thread73.thread89.i
-  %.sroa.046.59193.i = phi ptr [ %.sroa.046.5.i, %bb.ah ], [ %i.dn, %.thread73.thread89.i ] ; 4 uses
-  %i.gs = getelementptr inbounds nuw i8, ptr %.sroa.046.59193.i, i64 8
+.thread.i:                                        ; preds = %bb.ah
+  %i.gs = getelementptr inbounds nuw i8, ptr %.sroa.046.5.i, i64 8
   %.0.copyload.i.i.i.i.i221.i = load i64, ptr %i.gs, align 8
   %i.gt = and i64 %.0.copyload.i.i.i.i.i221.i, -8
   %i.gu = inttoptr i64 %i.gt to ptr
   %i.gv = call ptr @_ZN4mlir7Builder11getUnitAttrEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bp) #17
   %i.gw = ptrtoint ptr %i.gv to i64
-  %i.gx = call ptr @_ZN4mlir6amdgpu5DPPOp6createERNS_9OpBuilderENS_8LocationENS_4TypeENS_5ValueES6_NS0_7DPPPermENS_9AttributeEjjb(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, ptr %i.gu, ptr %.sroa.046.59193.i, ptr %.sroa.046.59193.i, i32 noundef 11, i64 %i.gw, i32 noundef 15, i32 noundef 15, i1 noundef zeroext true) #17
+  %i.gx = call ptr @_ZN4mlir6amdgpu5DPPOp6createERNS_9OpBuilderENS_8LocationENS_4TypeENS_5ValueES6_NS0_7DPPPermENS_9AttributeEjjb(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, ptr %i.gu, ptr %.sroa.046.5.i, ptr %.sroa.046.5.i, i32 noundef 11, i64 %i.gw, i32 noundef 15, i32 noundef 15, i1 noundef zeroext true) #17
   %i.gy = getelementptr inbounds i8, ptr %i.gx, i64 -16
   %i.gz = call noundef i32 @_ZN4mlir3gpu20convertReductionKindENS0_18AllReduceOperationE(i32 noundef %i.bl) #17
-  %i.ha = call ptr @_ZN4mlir6vector18makeArithReductionERNS_9OpBuilderENS_8LocationENS0_13CombiningKindENS_5ValueES5_NS_5arith17FastMathFlagsAttrES5_(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, i32 noundef %i.gz, ptr nonnull %i.gy, ptr %.sroa.046.59193.i, ptr null, i64 0) #17 ; 2 uses
+  %i.ha = call ptr @_ZN4mlir6vector18makeArithReductionERNS_9OpBuilderENS_8LocationENS0_13CombiningKindENS_5ValueES5_NS_5arith17FastMathFlagsAttrES5_(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr %.sroa.0.0.copyload.i.i.i20, i32 noundef %i.gz, ptr nonnull %i.gy, ptr %.sroa.046.5.i, ptr null, i64 0) #17 ; 2 uses
   %i.hb = call ptr @_ZN4mlir7Builder10getI32TypeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bp) #17
   %i.hc = call ptr @_ZN4mlir7Builder17getI32IntegerAttrEi(ptr noundef nonnull align 8 dereferenceable(8) %i.bp, i32 noundef 63) #17 ; 3 uses
   %.not.i.i.i223.i = icmp eq ptr %i.hc, null
@@ -865,8 +860,8 @@ bb.ay:                                            ; preds = %_ZN4llvm19dyn_cast_
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   br label %bb.az
 
-_ZNRSt8optionalIN4mlir5ValueEE5valueEv.exit:      ; preds = %.thread73.thread89.i, %.thread73.thread.i, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %.thread73.i, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit282.i, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit241.i
-  %.sroa.061.0.i.ph = phi ptr [ %i.dn, %.thread73.thread89.i ], [ %i.dq, %.thread73.thread.i ], [ %.sroa.0.0.copyload.i.i.i.i19, %bb.k ], [ %i.by, %bb.l ], [ %i.ci, %bb.m ], [ %i.cs, %bb.n ], [ %i.dc, %bb.o ], [ %.sroa.046.5.i, %.thread73.i ], [ %i.kt, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit282.i ], [ %i.ig, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit241.i ]
+_ZNRSt8optionalIN4mlir5ValueEE5valueEv.exit:      ; preds = %.thread73.thread.i, %bb.k, %bb.l, %bb.n, %bb.m, %bb.o, %.thread73.i, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit282.i, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit241.i
+  %.sroa.061.0.i.ph = phi ptr [ %.sroa.0.0.copyload.i.i.i.i19, %bb.k ], [ %i.by, %bb.l ], [ %i.cs, %bb.n ], [ %i.ci, %bb.m ], [ %i.dc, %bb.o ], [ %.sroa.046.5.i, %.thread73.i ], [ %i.kt, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit282.i ], [ %i.ig, %_ZN4mlir9TypedAttrCI2NS_6detail9InterfaceIS0_NS_9AttributeENS1_24TypedAttrInterfaceTraitsES3_NS_14AttributeTrait9TraitBaseEEEINS_11IntegerAttrETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S3_S4_S3_S6_E5TraitIT_EESB_EE5valueEvE4typeELPv0EEESB_.exit241.i ], [ %i.dq, %.thread73.thread.i ]
   store ptr %.sroa.061.0.i.ph, ptr %14, align 8
   %i.ku = getelementptr inbounds nuw i8, ptr %14, i64 8
   store i8 1, ptr %i.ku, align 8

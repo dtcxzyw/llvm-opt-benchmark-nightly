@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.lr.ph368, %.backed
   %i.eu = icmp ugt i8 %i.en, -49
   %i.ev = load ptr, ptr %i.ek, align 8, !alias.scope !661, !noalias !657
   %.sroa.01.0.i100 = select i1 %i.eu, ptr %i.ev, ptr %i.ek
-  %i.ew = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dx, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i100, i64 noundef %.sroa.0.0.i99), !noalias !657, !inline_history !504 ; 2 uses
+  %i.ew = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dx, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i100, i64 noundef %.sroa.0.0.i99), !noalias !654, !inline_history !504 ; 2 uses
   %.not100.i.i = icmp eq ptr %i.ew, null
   br i1 %.not100.i.i, label %bb.z, label %bb.aa
 
@@ -304,7 +304,7 @@ bb.q:                                             ; preds = %bb.r, %bb.n
 .lr.ph371:                                        ; preds = %_RNvXsc_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictRNtB5_15TypedDictSchemaNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit93, %.backedge
   %.pn376 = phi { ptr, ptr } [ %i.fl, %.backedge ], [ %i.fh, %_RNvXsc_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictRNtB5_15TypedDictSchemaNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit93 ]
   %i.fj = phi ptr [ %i.fm, %.backedge ], [ %i.fi, %_RNvXsc_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictRNtB5_15TypedDictSchemaNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit93 ]
-  %i.fk = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3getB17_EB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dw, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.fj), !noalias !657, !inline_history !504
+  %i.fk = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3getB17_EB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dw, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.fj), !noalias !654, !inline_history !504
   %.not99.i.i = icmp eq ptr %i.fk, null
   br i1 %.not99.i.i, label %bb.v, label %.backedge
 
@@ -707,13 +707,13 @@ bb.ax:                                            ; preds = %bb.ba, %bb.av
 
 bb.ay:                                            ; preds = %bb.av
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax), !noalias !658
-  %i.ja = load ptr, ptr %i.gb, align 8, !noalias !657, !noundef !12 ; 3 uses
+  %i.ja = load ptr, ptr %i.gb, align 8, !noalias !654, !noundef !12 ; 3 uses
   %.not78.i.i = icmp eq ptr %i.ja, null
   br i1 %.not78.i.i, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   %i.jb = getelementptr inbounds nuw i8, ptr %i.gb, i64 8
-  %i.jc = load <2 x i64>, ptr %i.jb, align 8, !noalias !657
+  %i.jc = load <2 x i64>, ptr %i.jb, align 8, !noalias !654
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay
@@ -861,7 +861,7 @@ bb.bi:                                            ; preds = %bb.be
   %i.kb = phi ptr [ %i.kh, %bb.bk ], [ %i.jx, %.lr.ph362.preheader ]
   %i.kc = extractvalue { ptr, ptr } %.pn373, 1    ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kc) ], !noalias !654
-  %i.kd = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3getB17_EB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gc, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.kb), !noalias !657, !inline_history !504
+  %i.kd = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3getB17_EB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gc, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.kb), !noalias !654, !inline_history !504
   %.not77.i.i = icmp eq ptr %i.kd, null
   br i1 %.not77.i.i, label %bb.bj, label %bb.bk
 
@@ -1038,7 +1038,7 @@ _RNvXsc_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictRNtB5_15TypedDict
 bb.bu:                                            ; preds = %.lr.ph365, %bb.bw
   %.pn374 = phi { ptr, ptr } [ %i.kx, %.lr.ph365 ], [ %i.ld, %bb.bw ]
   %i.kz = phi ptr [ %i.ky, %.lr.ph365 ], [ %i.le, %bb.bw ]
-  %i.la = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3getB17_EB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gc, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.kz), !noalias !657, !inline_history !504
+  %i.la = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3getB17_EB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gc, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.kz), !noalias !654, !inline_history !504
   %.not82.i.i = icmp eq ptr %i.la, null
   br i1 %.not82.i.i, label %bb.bv, label %bb.bw
 
@@ -1088,7 +1088,7 @@ bb.bx:                                            ; preds = %bb.at
   %i.lo = icmp ugt i8 %i.lh, -49
   %i.lp = load ptr, ptr %i.ip, align 8, !noalias !657
   %.sroa.01.0.i48 = select i1 %i.lo, ptr %i.lp, ptr %i.ip
-  %i.lq = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gb, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i48, i64 noundef %.sroa.0.0.i47), !noalias !657 ; 5 uses
+  %i.lq = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gb, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i48, i64 noundef %.sroa.0.0.i47), !noalias !654 ; 5 uses
   %.not83.i.i = icmp eq ptr %i.lq, null           ; 2 uses
   br i1 %.not, label %bb.bz, label %bb.ca
 
@@ -1106,7 +1106,7 @@ bb.by:                                            ; preds = %bb.at
   %i.lz = icmp ugt i8 %i.ls, -49
   %i.ma = load ptr, ptr %i.ip, align 8, !alias.scope !703, !noalias !657
   %.sroa.01.0.i51 = select i1 %i.lz, ptr %i.ma, ptr %i.ip
-  %i.mb = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gb, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i51, i64 noundef %.sroa.0.0.i50), !noalias !657, !inline_history !504 ; 5 uses
+  %i.mb = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gb, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i51, i64 noundef %.sroa.0.0.i50), !noalias !654, !inline_history !504 ; 5 uses
   %.not89.i.i = icmp eq ptr %i.mb, null
   br i1 %.not89.i.i, label %bb.cy, label %bb.cx
 
@@ -1509,7 +1509,7 @@ _RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_19TypeRelationC
   %i.py = icmp ugt i8 %i.pr, -49
   %i.pz = load ptr, ptr %i.ip, align 8, !alias.scope !744, !noalias !657
   %.sroa.01.0.i = select i1 %i.py, ptr %i.pz, ptr %i.ip
-  %i.qa = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gb, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i, i64 noundef %.sroa.0.0.i5), !noalias !657, !inline_history !504 ; 2 uses
+  %i.qa = call noundef align 4 ptr @_RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldE3geteEB1W_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gb, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0.i, i64 noundef %.sroa.0.0.i5), !noalias !654, !inline_history !504 ; 2 uses
   %.not94.i.i = icmp eq ptr %i.qa, null
   br i1 %.not94.i.i, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_19TypeRelationChecker14report_context.exit.thread, label %bb.dq
 
@@ -1912,14 +1912,13 @@ bb.s:                                             ; preds = %bb.r
 .loopexit21:                                      ; preds = %bb.p, %bb.s, %_RINvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB6_4FuseINtNtB8_3map3MapINtNtNtBc_5slice4iter7IterMutNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15BindingsElementENvMs1_B1K_B1I_9items_mutEEINtB6_8FuseImplBZ_E8try_folduNCINvNvMsg_NtB8_7flattenINtB3Z_13FlattenCompatppE13iter_try_fold7flattenIB1g_NtB1K_12CallableItemEuINtNtNtBc_3ops12control_flow11ControlFlowQNtNtB1K_11constructor18ConstructorBindingENCINvNvXsi_B3Z_B4c_NtNtNtBa_6traits8iterator8Iterator8try_fold7flattenB4Y_uB5p_NCINvNvB74_8find_map5checkQB53_B64_QNvMs0_B1K_B53_18as_constructor_mutE0E0E0B5p_EB1Q_.exit.i
   %.sroa.0.0.i10.ph = phi ptr [ %i.bm, %bb.s ], [ %i.bj, %_RINvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB6_4FuseINtNtB8_3map3MapINtNtNtBc_5slice4iter7IterMutNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15BindingsElementENvMs1_B1K_B1I_9items_mutEEINtB6_8FuseImplBZ_E8try_folduNCINvNvMsg_NtB8_7flattenINtB3Z_13FlattenCompatppE13iter_try_fold7flattenIB1g_NtB1K_12CallableItemEuINtNtNtBc_3ops12control_flow11ControlFlowQNtNtB1K_11constructor18ConstructorBindingENCINvNvXsi_B3Z_B4c_NtNtNtBa_6traits8iterator8Iterator8try_fold7flattenB4Y_uB5p_NCINvNvB74_8find_map5checkQB53_B64_QNvMs0_B1K_B53_18as_constructor_mutE0E0E0B5p_EB1Q_.exit.i ], [ %i.be, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.experimental.noalias.scope.decl(metadata !13923)
   %i.bq = getelementptr i8, ptr %.sroa.0.0.i10.ph, i64 328
   %.val.i = load ptr, ptr %i.bq, align 8, !alias.scope !13923, !align !13, !noundef !12 ; 2 uses
   %.not.i11 = icmp eq ptr %.val.i, null
   br i1 %.not.i11, label %_RNvMNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind11constructorNtB2_18ConstructorBinding28check_downstream_constructor.exit, label %bb.t
 
 bb.t:                                             ; preds = %.loopexit21
-  %i.br = call noundef i8 @_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings16check_types_impl(ptr noalias noundef nonnull align 8 dereferenceable(432) %.val.i, ptr noundef nonnull %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %2, ptr noundef nonnull align 4 %3, ptr noundef nonnull align 8 %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %5, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %6, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) %7, i64 noundef range(i64 0, 576460752303423488) %8, i1 noundef zeroext false), !noalias !13923, !inline_history !13893 ; 0 uses
+  %i.br = call noundef i8 @_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings16check_types_impl(ptr noalias noundef nonnull align 8 dereferenceable(432) %.val.i, ptr noundef nonnull %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %2, ptr noundef nonnull align 4 %3, ptr noundef nonnull align 8 %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %5, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %6, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) %7, i64 noundef range(i64 0, 576460752303423488) %8, i1 noundef zeroext false), !inline_history !13893 ; 0 uses
   br label %_RNvMNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind11constructorNtB2_18ConstructorBinding28check_downstream_constructor.exit
 
 _RNvMNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind11constructorNtB2_18ConstructorBinding28check_downstream_constructor.exit: ; preds = %.loopexit21, %bb.t
@@ -2322,18 +2321,18 @@ bb.j:                                             ; preds = %.lr.ph199, %_RNvMs3
   %.sroa.02.0198 = phi ptr [ %i.cz, %.lr.ph199 ], [ %i.dj, %_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings26report_element_diagnostics.exit ] ; 10 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.02.0198, i64 384 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !16244)
-  %.val8.i = load ptr, ptr %.val21, align 8, !noalias !16245, !nonnull !12, !noundef !12
-  %.val9.i = load ptr, ptr %i.o, align 8, !noalias !16245, !nonnull !12, !align !13, !noundef !12
-  %i.dk = call fastcc noundef i8 @_RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement9as_result(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(384) %.sroa.02.0198, ptr noundef nonnull %.val8.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val9.i), !noalias !16246, !inline_history !16074
+  %.val8.i = load ptr, ptr %.val21, align 8, !nonnull !12, !noundef !12
+  %.val9.i = load ptr, ptr %i.o, align 8, !nonnull !12, !align !13, !noundef !12
+  %i.dk = call fastcc noundef i8 @_RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement9as_result(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(384) %.sroa.02.0198, ptr noundef nonnull %.val8.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val9.i), !noalias !16245, !inline_history !16074
   %i.dl = icmp eq i8 %i.dk, -1
   br i1 %i.dl, label %_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings26report_element_diagnostics.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.02.0198, i64 16 ; 2 uses
-  %i.dn = load i64, ptr %i.dm, align 8, !alias.scope !16247, !noundef !12 ; 2 uses
+  %i.dn = load i64, ptr %i.dm, align 8, !alias.scope !16246, !noundef !12 ; 2 uses
   %i.do = icmp ugt i64 %i.dn, 1                   ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.02.0198, i64 32
-  %i.dq = load i64, ptr %i.dp, align 8, !alias.scope !16247 ; 3 uses
+  %i.dq = load i64, ptr %i.dp, align 8, !alias.scope !16246 ; 3 uses
   %i.dr = icmp ugt i64 %i.dq, 1
   %i.ds = select i1 %i.do, i1 %i.dr, i1 false
   br i1 %i.ds, label %_RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement14error_priority.exit, label %bb.l
@@ -2344,24 +2343,24 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i32, label %_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings26report_element_diagnostics.exit, label %bb.m
 
 _RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement14error_priority.exit: ; preds = %bb.k
-  %.val6.i = load ptr, ptr %.val21, align 8, !noalias !16248, !nonnull !12, !noundef !12 ; 2 uses
-  %.val7.i = load ptr, ptr %i.o, align 8, !noalias !16248, !nonnull !12, !align !13, !noundef !12 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !16249)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !16250
+  %.val6.i = load ptr, ptr %.val21, align 8, !nonnull !12, !noundef !12 ; 2 uses
+  %.val7.i = load ptr, ptr %i.o, align 8, !nonnull !12, !align !13, !noundef !12 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !16247)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !16248
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.02.0198, i64 24
-  %i.du = load ptr, ptr %i.dt, align 8, !alias.scope !16251, !noalias !16248, !nonnull !12 ; 3 uses
+  %i.du = load ptr, ptr %i.dt, align 8, !alias.scope !16249, !noalias !16250, !nonnull !12 ; 3 uses
   %.idx.i = mul nuw nsw i64 %i.dq, 360
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 %.idx.i
-  store ptr %i.dv, ptr %i.dd, align 8, !noalias !16250
-  store ptr %.val6.i, ptr %i.de, align 8, !noalias !16250
-  store ptr %.val7.i, ptr %i.df, align 8, !noalias !16250
-  call void @llvm.experimental.noalias.scope.decl(metadata !16252), !noalias !16248
+  store ptr %i.dv, ptr %i.dd, align 8, !noalias !16248
+  store ptr %.val6.i, ptr %i.de, align 8, !noalias !16248
+  store ptr %.val7.i, ptr %i.df, align 8, !noalias !16248
+  call void @llvm.experimental.noalias.scope.decl(metadata !16251), !noalias !16250
   %i.dw = getelementptr inbounds nuw i8, ptr %i.du, i64 360
-  store ptr %i.dw, ptr %i.a, align 8, !alias.scope !16253, !noalias !16250
-  %i.dx = call noundef range(i8 0, 3) i8 @_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem14error_priority(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(360) %i.du, ptr noundef nonnull %.val6.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val7.i), !noalias !16254, !inline_history !16092
-  %i.dy = call noundef i8 @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind12CallableItemENCNvMs1_B1p_NtB1p_15BindingsElement14error_priority0ENtNtNtBa_6traits8iterator8Iterator4foldNtB1p_17CallErrorPriorityNCINvNvB3o_6max_by4foldB41_NvYB41_NtNtBc_3cmp3Ord3cmpE0EB1v_(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, i8 noundef %i.dx), !noalias !16248, !inline_history !16093
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !16250
-  %i.dz = call { ptr, ptr } @_RNvXsN_Csheqz6YZvxwl_8smallvecRINtB5_8SmallVecANtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind12CallableItemj1_ENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterBR_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(368) %i.dm), !noalias !16248, !inline_history !16074 ; 2 uses
+  store ptr %i.dw, ptr %i.a, align 8, !alias.scope !16252, !noalias !16248
+  %i.dx = call noundef range(i8 0, 3) i8 @_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem14error_priority(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(360) %i.du, ptr noundef nonnull %.val6.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val7.i), !noalias !16253, !inline_history !16092
+  %i.dy = call noundef i8 @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind12CallableItemENCNvMs1_B1p_NtB1p_15BindingsElement14error_priority0ENtNtNtBa_6traits8iterator8Iterator4foldNtB1p_17CallErrorPriorityNCINvNvB3o_6max_by4foldB41_NvYB41_NtNtBc_3cmp3Ord3cmpE0EB1v_(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, i8 noundef %i.dx), !noalias !16250, !inline_history !16093
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !16248
+  %i.dz = call { ptr, ptr } @_RNvXsN_Csheqz6YZvxwl_8smallvecRINtB5_8SmallVecANtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind12CallableItemj1_ENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterBR_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(368) %i.dm), !noalias !16250, !inline_history !16074 ; 2 uses
   %i.ea = extractvalue { ptr, ptr } %i.dz, 0      ; 3 uses
   %i.eb = extractvalue { ptr, ptr } %i.dz, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eb) ]
@@ -2371,27 +2370,27 @@ _RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsEl
 
 bb.m:                                             ; preds = %bb.l
   %i.ed = getelementptr inbounds nuw i8, ptr %.sroa.02.0198, i64 24 ; 2 uses
-  %i.ee = load ptr, ptr %i.ed, align 8, !alias.scope !16255, !noalias !16246, !nonnull !12
+  %i.ee = load ptr, ptr %i.ed, align 8, !alias.scope !16254, !noalias !16245, !nonnull !12
   %.sink10.i114 = select i1 %i.do, ptr %i.ee, ptr %i.ed ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !16256)
-  %i.ef = load i64, ptr %.sink10.i114, align 8, !range !15, !alias.scope !16256, !noalias !16248, !noundef !12
+  call void @llvm.experimental.noalias.scope.decl(metadata !16255)
+  %i.ef = load i64, ptr %.sink10.i114, align 8, !range !15, !alias.scope !16255, !noalias !16250, !noundef !12
   %.not.i79 = icmp eq i64 %i.ef, 2
   %.sroa.0.0.idx.i80 = select i1 %.not.i79, i64 8, i64 0
   %.sroa.0.0.i81 = getelementptr inbounds nuw i8, ptr %.sink10.i114, i64 %.sroa.0.0.idx.i80 ; 5 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !16257), !noalias !16248
+  call void @llvm.experimental.noalias.scope.decl(metadata !16256), !noalias !16250
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i81, i64 80
-  %i.eh = load i64, ptr %i.eg, align 8, !alias.scope !16258, !noalias !16248, !noundef !12 ; 2 uses
+  %i.eh = load i64, ptr %i.eg, align 8, !alias.scope !16257, !noalias !16250, !noundef !12 ; 2 uses
   %i.ei = icmp ugt i64 %i.eh, 1                   ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i81, i64 96
-  %i.ek = load i64, ptr %i.ej, align 8, !alias.scope !16258, !noalias !16248
+  %i.ek = load i64, ptr %i.ej, align 8, !alias.scope !16257, !noalias !16250
   %.sink9.i.i.i.i82 = select i1 %i.ei, i64 %i.ek, i64 %i.eh ; 2 uses
   %.not.i.i83 = icmp eq i64 %.sink9.i.i.i.i82, 0
   br i1 %.not.i.i83, label %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  call void @llvm.experimental.noalias.scope.decl(metadata !16259), !noalias !16248
+  call void @llvm.experimental.noalias.scope.decl(metadata !16258), !noalias !16250
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i81, i64 88 ; 2 uses
-  %i.em = load ptr, ptr %i.el, align 8, !alias.scope !16260, !noalias !16248, !nonnull !12
+  %i.em = load ptr, ptr %i.el, align 8, !alias.scope !16259, !noalias !16250, !nonnull !12
   %.sink10.i.i.i.i.i84 = select i1 %i.ei, ptr %i.em, ptr %i.el ; 2 uses
   %.idx.i.i.i85 = mul nuw nsw i64 %.sink9.i.i.i.i82, 232
   %i.en = getelementptr inbounds nuw i8, ptr %.sink10.i.i.i.i.i84, i64 %.idx.i.i.i85 ; 4 uses
@@ -2400,13 +2399,13 @@ bb.n:                                             ; preds = %bb.m
 .lr.ph.i.i.i.i86:                                 ; preds = %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind7BindinguINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB3P_QNCNvMs7_B28_NtB28_15CallableBinding18matching_overloads0E0E0B2e_.exit.i.i.i.i95, %bb.n
   %i.eo = phi ptr [ %i.ep, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind7BindinguINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB3P_QNCNvMs7_B28_NtB28_15CallableBinding18matching_overloads0E0E0B2e_.exit.i.i.i.i95 ], [ %.sink10.i.i.i.i.i84, %bb.n ] ; 3 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 232 ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !16261), !noalias !16248
-  call void @llvm.experimental.noalias.scope.decl(metadata !16262), !noalias !16248
-  call void @llvm.experimental.noalias.scope.decl(metadata !16263), !noalias !16248
+  call void @llvm.experimental.noalias.scope.decl(metadata !16260), !noalias !16250
+  call void @llvm.experimental.noalias.scope.decl(metadata !16261), !noalias !16250
+  call void @llvm.experimental.noalias.scope.decl(metadata !16262), !noalias !16250
   %i.eq = getelementptr inbounds nuw i8, ptr %i.eo, i64 80
-  %i.er = load ptr, ptr %i.eq, align 8, !alias.scope !16264, !noalias !16265, !nonnull !12, !noundef !12 ; 2 uses
+  %i.er = load ptr, ptr %i.eq, align 8, !alias.scope !16263, !noalias !16264, !nonnull !12, !noundef !12 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 88
-  %i.et = load i64, ptr %i.es, align 8, !alias.scope !16264, !noalias !16265, !noundef !12 ; 2 uses
+  %i.et = load i64, ptr %i.es, align 8, !alias.scope !16263, !noalias !16264, !noundef !12 ; 2 uses
   %.idx.i.i.i.i.i.i.i.i.i87 = mul nuw nsw i64 %i.et, 144
   %i.eu = getelementptr inbounds nuw i8, ptr %i.er, i64 %.idx.i.i.i.i.i.i.i.i.i87
   %.not.i.i.i.i.i.i.i.i.i.i88 = icmp eq i64 %i.et, 0
@@ -2418,7 +2417,7 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i89:                     ; preds = %.lr.ph.i.i.i.i86, %_RNvYNvMsq_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB8_12BindingError27affects_overload_resolutionINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRB11_EE8call_mutBe_.exit.i.i.i.i.i.i.i.i.i.i91
   %i.ev = phi ptr [ %i.ex, %_RNvYNvMsq_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB8_12BindingError27affects_overload_resolutionINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRB11_EE8call_mutBe_.exit.i.i.i.i.i.i.i.i.i.i91 ], [ %i.er, %.lr.ph.i.i.i.i86 ] ; 2 uses
-  %.val.i.i.i.i.i.i.i.i.i.i90 = load i64, ptr %i.ev, align 8, !range !35, !noalias !16266, !noundef !12
+  %.val.i.i.i.i.i.i.i.i.i.i90 = load i64, ptr %i.ev, align 8, !range !35, !noalias !16265, !noundef !12
   %i.ew = call i64 @llvm.usub.sat.i64(i64 %.val.i.i.i.i.i.i.i.i.i.i90, i64 1)
   switch i64 %i.ew, label %default.unreachable [
     i64 0, label %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind7BindinguINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB3P_QNCNvMs7_B28_NtB28_15CallableBinding18matching_overloads0E0E0B2e_.exit.i.i.i.i95
@@ -2458,13 +2457,13 @@ _RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
 .lr.ph.i14.i.i.i101:                              ; preds = %.preheader.i.preheader.i.i97, %.lr.ph.i14.i.i.i101.backedge
   %i.ez = phi ptr [ %i.fa, %.lr.ph.i14.i.i.i101.backedge ], [ %i.ep, %.preheader.i.preheader.i.i97 ] ; 3 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 232 ; 3 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !16267), !noalias !16248
-  call void @llvm.experimental.noalias.scope.decl(metadata !16268), !noalias !16248
-  call void @llvm.experimental.noalias.scope.decl(metadata !16269), !noalias !16248
+  call void @llvm.experimental.noalias.scope.decl(metadata !16266), !noalias !16250
+  call void @llvm.experimental.noalias.scope.decl(metadata !16267), !noalias !16250
+  call void @llvm.experimental.noalias.scope.decl(metadata !16268), !noalias !16250
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 80
-  %i.fc = load ptr, ptr %i.fb, align 8, !alias.scope !16270, !noalias !16271, !nonnull !12, !noundef !12 ; 2 uses
+  %i.fc = load ptr, ptr %i.fb, align 8, !alias.scope !16269, !noalias !16270, !nonnull !12, !noundef !12 ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ez, i64 88
-  %i.fe = load i64, ptr %i.fd, align 8, !alias.scope !16270, !noalias !16271, !noundef !12 ; 2 uses
+  %i.fe = load i64, ptr %i.fd, align 8, !alias.scope !16269, !noalias !16270, !noundef !12 ; 2 uses
   %.idx.i.i.i.i.i.i15.i.i.i102 = mul nuw nsw i64 %i.fe, 144
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fc, i64 %.idx.i.i.i.i.i.i15.i.i.i102
   %.not.i.i.i.i.i.i.i16.i.i.i103 = icmp eq i64 %i.fe, 0
@@ -2472,7 +2471,7 @@ _RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
 
 .lr.ph.i.i.i.i.i.i.i17.i.i.i104:                  ; preds = %.lr.ph.i14.i.i.i101, %_RNvYNvMsq_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB8_12BindingError27affects_overload_resolutionINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRB11_EE8call_mutBe_.exit.i.i.i.i.i.i.i19.i.i.i106
   %i.fg = phi ptr [ %i.fi, %_RNvYNvMsq_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB8_12BindingError27affects_overload_resolutionINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRB11_EE8call_mutBe_.exit.i.i.i.i.i.i.i19.i.i.i106 ], [ %i.fc, %.lr.ph.i14.i.i.i101 ] ; 2 uses
-  %.val.i.i.i.i.i.i.i18.i.i.i105 = load i64, ptr %i.fg, align 8, !range !35, !noalias !16272, !noundef !12
+  %.val.i.i.i.i.i.i.i18.i.i.i105 = load i64, ptr %i.fg, align 8, !range !35, !noalias !16271, !noundef !12
   %i.fh = call i64 @llvm.usub.sat.i64(i64 %.val.i.i.i.i.i.i.i18.i.i.i105, i64 1)
   switch i64 %i.fh, label %default.unreachable [
     i64 0, label %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind7BindinguINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB3P_QNCNvMs7_B28_NtB28_15CallableBinding18matching_overloads0E0E0B2e_.exit.i24.i.i.i109
@@ -2510,23 +2509,23 @@ _RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
 
 _RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113: ; preds = %.preheader.i.loopexit.i.i111, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind7BindinguINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB3P_QNCNvMs7_B28_NtB28_15CallableBinding18matching_overloads0E0E0B2e_.exit.i24.i.i.i109, %.preheader.i.preheader.i.i97
   %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i81, i64 320
-  %i.fl = load i8, ptr %i.fk, align 8, !range !17, !alias.scope !16273, !noalias !16248, !noundef !12
+  %i.fl = load i8, ptr %i.fk, align 8, !range !17, !alias.scope !16272, !noalias !16250, !noundef !12
   %i.fm = trunc nuw i8 %i.fl to i1
   br i1 %i.fm, label %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113.thread, label %_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings26report_element_diagnostics.exit
 
 _RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113.thread: ; preds = %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind7BindinguINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB3P_QNCNvMs7_B28_NtB28_15CallableBinding18matching_overloads0E0E0B2e_.exit.i.i.i.i95, %_RNvYNvMsq_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB8_12BindingError27affects_overload_resolutionINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRB11_EE8call_mutBe_.exit.i.i.i.i.i.i.i.i.i.i91, %_RNvYNvMsq_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB8_12BindingError27affects_overload_resolutionINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRB11_EE8call_mutBe_.exit.i.i.i.i.i.i.i19.i.i.i106, %bb.m, %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113
-  %.val4.i = load ptr, ptr %.val21, align 8, !noalias !16248, !nonnull !12, !noundef !12
-  %.val5.i = load ptr, ptr %i.o, align 8, !noalias !16248, !nonnull !12, !align !13, !noundef !12
-  %i.fn = call fastcc noundef i8 @_RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement9as_result(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(384) %.sroa.02.0198, ptr noundef nonnull %.val4.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val5.i), !noalias !16248, !inline_history !16074
+  %.val4.i = load ptr, ptr %.val21, align 8, !nonnull !12, !noundef !12
+  %.val5.i = load ptr, ptr %i.o, align 8, !nonnull !12, !align !13, !noundef !12
+  %i.fn = call fastcc noundef i8 @_RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement9as_result(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(384) %.sroa.02.0198, ptr noundef nonnull %.val4.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val5.i), !noalias !16250, !inline_history !16074
   %i.fo = icmp eq i8 %i.fn, -1
   br i1 %i.fo, label %_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings26report_element_diagnostics.exit, label %bb.o
 
 bb.o:                                             ; preds = %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !16245
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.c, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !noalias !16245
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.dc, ptr noundef nonnull readonly align 8 dereferenceable(384) %.sroa.02.0198, i64 16, i1 false), !noalias !16246
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !16273
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.c, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !noalias !16273
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.dc, ptr noundef nonnull readonly align 8 dereferenceable(384) %.sroa.02.0198, i64 16, i1 false), !noalias !16245
   call fastcc void @_RNvMs7_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15CallableBinding18report_diagnostics(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %.sroa.0.0.i81, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef range(i64 0, 94) %2, ptr noundef %3, ptr noundef nonnull %i.c, ptr nonnull @171), !inline_history !16074
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !16245
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !16273
   br label %_RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings26report_element_diagnostics.exit
 
 .lr.ph:                                           ; preds = %_RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement14error_priority.exit, %.backedge149
@@ -2692,20 +2691,20 @@ _RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableIt
   br i1 %i.as, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit72.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !16245
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(384) %.sroa.02.0198, i64 16, i1 false), !noalias !16246
-  store ptr %.sroa.0.0.i75, ptr %i.di, align 8, !noalias !16245
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !16273
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(384) %.sroa.02.0198, i64 16, i1 false), !noalias !16245
+  store ptr %.sroa.0.0.i75, ptr %i.di, align 8, !noalias !16273
   call fastcc void @_RNvMs7_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15CallableBinding18report_diagnostics(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %.sroa.0.0.i75, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef range(i64 0, 94) %2, ptr noundef %3, ptr noundef nonnull %i.d, ptr nonnull @172), !inline_history !16074
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !16245
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !16273
   br label %.backedge149
 
 bb.s:                                             ; preds = %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit72.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !16245
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !noalias !16245
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dg, ptr noundef nonnull readonly align 8 dereferenceable(384) %.sroa.02.0198, i64 16, i1 false), !noalias !16246
-  store ptr %.sroa.0.0.i75, ptr %i.dh, align 8, !noalias !16245
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !16273
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !noalias !16273
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dg, ptr noundef nonnull readonly align 8 dereferenceable(384) %.sroa.02.0198, i64 16, i1 false), !noalias !16245
+  store ptr %.sroa.0.0.i75, ptr %i.dh, align 8, !noalias !16273
   call fastcc void @_RNvMs7_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15CallableBinding18report_diagnostics(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %.sroa.0.0.i75, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef range(i64 0, 94) %2, ptr noundef %3, ptr noundef nonnull %i.e, ptr nonnull @173), !inline_history !16074
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !16245
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !16273
   br label %.backedge149
 
 _RNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_8Bindings26report_element_diagnostics.exit: ; preds = %.backedge149, %_RNvMs1_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_15BindingsElement14error_priority.exit, %bb.j, %bb.l, %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113, %_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB5_12CallableItem19has_own_diagnostics.exit113.thread, %bb.o
@@ -3108,35 +3107,35 @@ begin_hunk_5_@llvm.umax.i8
 !16242 = !{!16069, !16062, !16067, !16060, !16058, !16065, !16064, !16039, !16033, !16031}
 !16243 = !{!16033, !16031}
 !16244 = !{!16071}
-!16245 = !{!16073, !16072, !16071}
-!16246 = !{!16073, !16072}
-!16247 = !{!16078, !16076, !16071}
-!16248 = !{!16072}
-!16249 = !{!16080}
-!16250 = !{!16080, !16081, !16072}
-!16251 = !{!16083, !16080}
-!16252 = !{!16085}
-!16253 = !{!16089, !16087, !16085}
-!16254 = !{!16091, !16085, !16072}
-!16255 = !{!16095}
-!16256 = !{!16097}
-!16257 = !{!16099}
-!16258 = !{!16103, !16101, !16099, !16097}
-!16259 = !{!16105}
-!16260 = !{!16109, !16107, !16105, !16099, !16097}
-!16261 = !{!16111}
-!16262 = !{!16113}
-!16263 = !{!16115}
-!16264 = !{!16115, !16113, !16111}
-!16265 = !{!16120, !16118, !16117, !16072}
-!16266 = !{!16122, !16115, !16120, !16113, !16111, !16118, !16117, !16105, !16099, !16097, !16072}
-!16267 = !{!16124}
-!16268 = !{!16126}
-!16269 = !{!16128}
-!16270 = !{!16128, !16126, !16124}
-!16271 = !{!16133, !16131, !16130, !16072}
-!16272 = !{!16135, !16128, !16133, !16126, !16124, !16131, !16130, !16105, !16099, !16097, !16072}
-!16273 = !{!16099, !16097}
+!16245 = !{!16073, !16072}
+!16246 = !{!16078, !16076, !16071}
+!16247 = !{!16080}
+!16248 = !{!16080, !16081, !16072}
+!16249 = !{!16083, !16080}
+!16250 = !{!16072}
+!16251 = !{!16085}
+!16252 = !{!16089, !16087, !16085}
+!16253 = !{!16091, !16085, !16072}
+!16254 = !{!16095}
+!16255 = !{!16097}
+!16256 = !{!16099}
+!16257 = !{!16103, !16101, !16099, !16097}
+!16258 = !{!16105}
+!16259 = !{!16109, !16107, !16105, !16099, !16097}
+!16260 = !{!16111}
+!16261 = !{!16113}
+!16262 = !{!16115}
+!16263 = !{!16115, !16113, !16111}
+!16264 = !{!16120, !16118, !16117, !16072}
+!16265 = !{!16122, !16115, !16120, !16113, !16111, !16118, !16117, !16105, !16099, !16097, !16072}
+!16266 = !{!16124}
+!16267 = !{!16126}
+!16268 = !{!16128}
+!16269 = !{!16128, !16126, !16124}
+!16270 = !{!16133, !16131, !16130, !16072}
+!16271 = !{!16135, !16128, !16133, !16126, !16124, !16131, !16130, !16105, !16099, !16097, !16072}
+!16272 = !{!16099, !16097}
+!16273 = !{!16073, !16072, !16071}
 !16274 = !{!16137}
 !16275 = !{!16139}
 !16276 = !{!16141}
