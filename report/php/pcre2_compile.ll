@@ -205,7 +205,7 @@ bb.jn:                                            ; preds = %bb.jm
   br i1 %i.apa, label %bb.jo, label %bb.jr
 
 bb.jo:                                            ; preds = %bb.jn
-  %i.apb = load i32, ptr %i.gy, align 4, !tbaa !37 ; 2 uses
+  %i.apb = load i32, ptr %i.gy, align 4, !tbaa !37 ; 3 uses
   %i.apc = icmp ugt i32 %i.apb, 65534
   br i1 %i.apc, label %bb.jp, label %bb.jq
 
@@ -214,9 +214,9 @@ bb.jp:                                            ; preds = %bb.jo
   br label %.thread1444
 
 bb.jq:                                            ; preds = %bb.jo
-  %i.apd = add nuw nsw i32 %i.apb, 1              ; 2 uses
+  %i.apd = add nuw nsw i32 %i.apb, 1
   store i32 %i.apd, ptr %i.gy, align 4, !tbaa !37
-  %4 = or disjoint i32 %i.apd, -2146959360
+  %4 = add nuw nsw i32 %i.apb, -2146959359
   %i.ape = getelementptr inbounds nuw i8, ptr %.9859, i64 4
   store i32 %4, ptr %.9859, align 4, !tbaa !28
   br label %bb.ma
@@ -619,7 +619,7 @@ bb.rj:                                            ; preds = %bb.md, %bb.qz, %bb.
   br i1 %.not1100, label %.thread1444, label %bb.rk
 
 bb.rk:                                            ; preds = %bb.rj
-  %i.bju = load i32, ptr %i.gy, align 4, !tbaa !37 ; 2 uses
+  %i.bju = load i32, ptr %i.gy, align 4, !tbaa !37 ; 3 uses
   %i.bjv = icmp ugt i32 %i.bju, 65534
   br i1 %i.bjv, label %bb.rl, label %bb.rm
 
@@ -628,9 +628,9 @@ bb.rl:                                            ; preds = %bb.rk
   br label %.thread1444
 
 bb.rm:                                            ; preds = %bb.rk
-  %i.bjw = add nuw nsw i32 %i.bju, 1              ; 2 uses
+  %i.bjw = add nuw nsw i32 %i.bju, 1
   store i32 %i.bjw, ptr %i.gy, align 4, !tbaa !37
-  %5 = or disjoint i32 %i.bjw, -2146959360
+  %5 = add nuw nsw i32 %i.bju, -2146959359
   %i.bjx = getelementptr inbounds nuw i8, ptr %.9859, i64 4 ; 2 uses
   store i32 %5, ptr %.9859, align 4, !tbaa !28
   %i.bjy = add i16 %.08022060, 1                  ; 2 uses

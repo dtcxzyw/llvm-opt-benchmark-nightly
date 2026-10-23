@@ -205,14 +205,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr.i.i28.lcssa = phi i64 [ %.fr.i.i25, %.lr.ph ], [ %.fr.i.i, %bb.b ] ; 3 uses
   %storemerge26.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i.i28.lcssa, 4             ; 2 uses
-  %i.l = add nsw i64 %i.k, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.k, -2
   %i.m = lshr i64 %i.l, 1                         ; 3 uses
-  %i.n = add nsw i64 %i.k, -1
+  %i.n = add nsw i64 %i.k, -1                     ; 3 uses
   %i.o = lshr i64 %i.n, 1                         ; 2 uses
   %i.p = and i64 %.fr.i.i28.lcssa, 16
   %i.q = icmp eq i64 %i.p, 0
-  %3 = or disjoint i64 %i.l, 1                    ; 2 uses
-  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %3 ; 2 uses
+  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.n ; 2 uses
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.m ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 8
@@ -265,7 +264,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.ap = icmp sgt i64 %.1.i.i.i.i, %.011.i.i.i
   br i1 %i.ap, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_T0_SI_T1_T2_.exit.i.i.i"
 
@@ -668,14 +667,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr53.i26.lcssa = phi i64 [ %.fr53.i23, %.lr.ph ], [ %.fr53.i, %bb.b ]
   %storemerge24.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.j = udiv exact i64 %.fr53.i26.lcssa, 40      ; 3 uses
-  %i.k = add nsw i64 %i.j, -2                     ; 2 uses
+  %i.k = add nsw i64 %i.j, -2
   %i.l = lshr i64 %i.k, 1                         ; 3 uses
-  %i.m = add nsw i64 %i.j, -1
+  %i.m = add nsw i64 %i.j, -1                     ; 3 uses
   %i.n = lshr i64 %i.m, 1                         ; 2 uses
   %i.o = and i64 %i.j, 1
   %i.p = icmp eq i64 %i.o, 0
-  %10 = or disjoint i64 %i.k, 1                   ; 2 uses
-  %i.q = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %10
+  %i.q = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %i.m
   %i.r = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %i.l
   br label %bb.c
 
@@ -721,7 +719,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.m, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.ag = icmp sgt i64 %.1.i.i.i.i, %.08.i.i.i
   br i1 %i.ag, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6hermes15ProfileAnalyzer19dumpBasicBlockStatsEvE27BasicBlockRuntimeStatisticsSt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS3_19dumpBasicBlockStatsEvE3$_1EEEvT_T0_SF_T1_T2_.exit.i.i.i"
 

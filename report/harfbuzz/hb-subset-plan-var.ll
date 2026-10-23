@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader.i17.i.i:                               ; preds = %.preheader.i17.i.loopexit.i, %bb.d
   %.0.lcssa.i18.i.i = phi i32 [ 0, %bb.d ], [ %i.ak, %.preheader.i17.i.loopexit.i ] ; 2 uses
-  %i.al = icmp samesign ult i32 %.0.lcssa.i18.i.i, %i.u
+  %i.al = icmp ult i32 %.0.lcssa.i18.i.i, %i.u
   br i1 %i.al, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.l
 
 .preheader.i17.i.i:                               ; preds = %.preheader.i17.i.loopexit.i, %bb.m
   %.0.lcssa.i18.i.i = phi i32 [ 0, %bb.m ], [ %i.dh, %.preheader.i17.i.loopexit.i ] ; 2 uses
-  %i.di = icmp samesign ult i32 %.0.lcssa.i18.i.i, %i.cr
+  %i.di = icmp ult i32 %.0.lcssa.i18.i.i, %i.cr
   br i1 %i.di, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
@@ -1011,7 +1011,7 @@ bb.v:                                             ; preds = %bb.u
 
 .preheader.i17.i.i:                               ; preds = %.preheader.i17.i.loopexit.i, %bb.v
   %.0.lcssa.i18.i.i = phi i32 [ 0, %bb.v ], [ %i.eb, %.preheader.i17.i.loopexit.i ] ; 2 uses
-  %i.ec = icmp samesign ult i32 %.0.lcssa.i18.i.i, %i.dl
+  %i.ec = icmp ult i32 %.0.lcssa.i18.i.i, %i.dl
   br i1 %i.ec, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
@@ -1189,7 +1189,7 @@ bb.z:                                             ; preds = %bb.y
 
 .preheader.i17.i.i91:                             ; preds = %.preheader.i17.i.loopexit.i103, %bb.z
   %.0.lcssa.i18.i.i92 = phi i32 [ 0, %bb.z ], [ %i.gv, %.preheader.i17.i.loopexit.i103 ] ; 2 uses
-  %i.gw = icmp samesign ult i32 %.0.lcssa.i18.i.i92, %i.gf
+  %i.gw = icmp ult i32 %.0.lcssa.i18.i.i92, %i.gf
   br i1 %i.gw, label %.lr.ph18.preheader.i19.i.i94, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit104
 
 .lr.ph18.preheader.i19.i.i94:                     ; preds = %.preheader.i17.i.i91

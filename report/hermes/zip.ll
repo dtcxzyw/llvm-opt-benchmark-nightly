@@ -115,7 +115,7 @@ bb.a:
   br label %.lr.ph
 
 .preheader.loopexit:                              ; preds = %.lr.ph
-  %i.h = zext nneg i32 %i.be to i64
+  %i.h = zext i32 %i.be to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.preheader67
@@ -162,7 +162,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.172 = phi i32 [ %i.bd, %.lr.ph ], [ %.05488, %.lr.ph.preheader ]
   %.15671 = phi i32 [ %i.bc, %.lr.ph ], [ %.05587, %.lr.ph.preheader ]
-  %.05870 = phi i32 [ %i.be, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.05870 = phi i32 [ %i.be, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.16269 = phi ptr [ %i.bf, %.lr.ph ], [ %.06185, %.lr.ph.preheader ] ; 9 uses
   %i.r = load i8, ptr %.16269, align 1, !tbaa !19
   %i.s = zext i8 %i.r to i32
@@ -203,10 +203,10 @@ bb.a:
   %i.bb = zext i8 %i.ba to i32
   %i.bc = add i32 %i.ax, %i.bb                    ; 3 uses
   %i.bd = add i32 %i.ay, %i.bc                    ; 2 uses
-  %i.be = add nuw nsw i32 %.05870, 8              ; 3 uses
+  %i.be = add nuw i32 %.05870, 8                  ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.16269, i64 8 ; 2 uses
-  %3 = or disjoint i32 %i.be, 7
-  %i.bg = icmp samesign ult i32 %3, %i.g
+  %3 = add nuw i32 %.05870, 15
+  %i.bg = icmp ult i32 %3, %i.g
   br i1 %i.bg, label %.lr.ph, label %.preheader.loopexit, !llvm.loop !182
 
 .lr.ph80:                                         ; preds = %.lr.ph80.prol.loopexit, %.lr.ph80
@@ -609,7 +609,7 @@ bb.hf:                                            ; preds = %bb.he
   br label %.lr.ph1988
 
 .preheader.loopexit:                              ; preds = %.lr.ph1988
-  %i.aks = zext nneg i32 %i.amp to i64
+  %i.aks = zext i32 %i.amp to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.preheader1908
@@ -656,7 +656,7 @@ bb.hf:                                            ; preds = %bb.he
 .lr.ph1988:                                       ; preds = %.lr.ph1988.preheader, %.lr.ph1988
   %.11987 = phi i32 [ %i.amo, %.lr.ph1988 ], [ %.08742006, %.lr.ph1988.preheader ]
   %.18761986 = phi i32 [ %i.amn, %.lr.ph1988 ], [ %.08752005, %.lr.ph1988.preheader ]
-  %.08781985 = phi i32 [ %i.amp, %.lr.ph1988 ], [ 0, %.lr.ph1988.preheader ]
+  %.08781985 = phi i32 [ %i.amp, %.lr.ph1988 ], [ 0, %.lr.ph1988.preheader ] ; 2 uses
   %.18821984 = phi ptr [ %i.amq, %.lr.ph1988 ], [ %.08812003, %.lr.ph1988.preheader ] ; 9 uses
   %i.alc = load i8, ptr %.18821984, align 1, !tbaa !19
   %i.ald = zext i8 %i.alc to i32
@@ -697,10 +697,10 @@ bb.hf:                                            ; preds = %bb.he
   %i.amm = zext i8 %i.aml to i32
   %i.amn = add i32 %i.ami, %i.amm                 ; 3 uses
   %i.amo = add i32 %i.amj, %i.amn                 ; 2 uses
-  %i.amp = add nuw nsw i32 %.08781985, 8          ; 3 uses
+  %i.amp = add nuw i32 %.08781985, 8              ; 2 uses
   %i.amq = getelementptr inbounds nuw i8, ptr %.18821984, i64 8 ; 2 uses
-  %7 = or disjoint i32 %i.amp, 7
-  %i.amr = icmp samesign ult i32 %7, %i.akr
+  %7 = add nuw i32 %.08781985, 15
+  %i.amr = icmp ult i32 %7, %i.akr
   br i1 %i.amr, label %.lr.ph1988, label %.preheader.loopexit, !llvm.loop !243
 
 .lr.ph1997:                                       ; preds = %.lr.ph1997.prol.loopexit, %.lr.ph1997

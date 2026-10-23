@@ -205,7 +205,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.026 = phi i64 [ %i.ce, %.lr.ph ], [ %.026.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %.02425 = phi i64 [ %i.cf, %.lr.ph ], [ %.02425.unr, %.lr.ph.prol.loopexit ] ; 7 uses
+  %.02425 = phi i64 [ %i.cf, %.lr.ph ], [ %.02425.unr, %.lr.ph.prol.loopexit ] ; 9 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.026
   %i.at = load float, ptr %i.as, align 4, !tbaa !34 ; 2 uses
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.02425
@@ -229,7 +229,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store float %i.bi, ptr %i.bj, align 4, !tbaa !34
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bb, i64 12
   store float %i.at, ptr %i.bk, align 4, !tbaa !34
-  %i.bl = add i64 %.02425, 4                      ; 5 uses
+  %i.bl = add i64 %.02425, 4                      ; 3 uses
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.026
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
   %i.bo = load float, ptr %i.bn, align 4, !tbaa !34 ; 2 uses
@@ -242,12 +242,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bv = fadd reassoc nsz arcp contract afn float %i.bu, %i.bq
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bl ; 2 uses
   store float %i.bv, ptr %i.bw, align 4, !tbaa !34
-  %5 = or disjoint i64 %i.bl, 1                   ; 2 uses
+  %5 = add i64 %.02425, 5                         ; 2 uses
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %5
   %i.by = load float, ptr %i.bx, align 4, !tbaa !34
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   store float %i.by, ptr %i.bz, align 4, !tbaa !34
-  %6 = or disjoint i64 %i.bl, 2                   ; 2 uses
+  %6 = add i64 %.02425, 6                         ; 2 uses
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %6
   %i.cb = load float, ptr %i.ca, align 4, !tbaa !34
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
@@ -369,7 +369,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.026 = phi i64 [ %i.cg, %.lr.ph ], [ %.026.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %.02425 = phi i64 [ %i.ch, %.lr.ph ], [ %.02425.unr, %.lr.ph.prol.loopexit ] ; 6 uses
+  %.02425 = phi i64 [ %i.ch, %.lr.ph ], [ %.02425.unr, %.lr.ph.prol.loopexit ] ; 8 uses
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.026
   %i.av = load float, ptr %i.au, align 4, !tbaa !34 ; 2 uses
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.02425
@@ -393,7 +393,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store float %i.bk, ptr %i.bl, align 4, !tbaa !34
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ay, i64 12
   store float %i.av, ptr %i.bm, align 4, !tbaa !34
-  %i.bn = add i64 %.02425, 4                      ; 4 uses
+  %i.bn = add i64 %.02425, 4                      ; 2 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.026
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 4
   %i.bq = load float, ptr %i.bp, align 4, !tbaa !34 ; 2 uses
@@ -401,7 +401,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bs = load float, ptr %i.br, align 4, !tbaa !34
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bn ; 2 uses
   store float %i.bs, ptr %i.bt, align 4, !tbaa !34
-  %5 = or disjoint i64 %i.bn, 1                   ; 3 uses
+  %5 = add i64 %.02425, 5                         ; 3 uses
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %5
   %i.bv = load float, ptr %i.bu, align 4, !tbaa !34 ; 2 uses
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %5
@@ -411,7 +411,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ca = fadd reassoc nsz arcp contract afn float %i.bz, %i.bv
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   store float %i.ca, ptr %i.cb, align 4, !tbaa !34
-  %6 = or disjoint i64 %i.bn, 2                   ; 2 uses
+  %6 = add i64 %.02425, 6                         ; 2 uses
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %6
   %i.cd = load float, ptr %i.cc, align 4, !tbaa !34
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
@@ -530,7 +530,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.026 = phi i64 [ %i.cf, %.lr.ph ], [ %.026.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %.02425 = phi i64 [ %i.cg, %.lr.ph ], [ %.02425.unr, %.lr.ph.prol.loopexit ] ; 6 uses
+  %.02425 = phi i64 [ %i.cg, %.lr.ph ], [ %.02425.unr, %.lr.ph.prol.loopexit ] ; 8 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.026
   %i.au = load float, ptr %i.at, align 4, !tbaa !34 ; 2 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.02425
@@ -554,7 +554,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store float %i.bj, ptr %i.bk, align 4, !tbaa !34
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ax, i64 12
   store float %i.au, ptr %i.bl, align 4, !tbaa !34
-  %i.bm = add i64 %.02425, 4                      ; 4 uses
+  %i.bm = add i64 %.02425, 4                      ; 2 uses
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.026
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
   %i.bp = load float, ptr %i.bo, align 4, !tbaa !34 ; 2 uses
@@ -562,12 +562,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.br = load float, ptr %i.bq, align 4, !tbaa !34
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bm ; 2 uses
   store float %i.br, ptr %i.bs, align 4, !tbaa !34
-  %5 = or disjoint i64 %i.bm, 1                   ; 2 uses
+  %5 = add i64 %.02425, 5                         ; 2 uses
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %5
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !34
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   store float %i.bu, ptr %i.bv, align 4, !tbaa !34
-  %6 = or disjoint i64 %i.bm, 2                   ; 3 uses
+  %6 = add i64 %.02425, 6                         ; 3 uses
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %6
   %i.bx = load float, ptr %i.bw, align 4, !tbaa !34 ; 2 uses
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %6

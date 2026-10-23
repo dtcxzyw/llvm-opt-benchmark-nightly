@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = add i64 %2, 64
-  %i.b = tail call noalias ptr @av_mallocz(i64 noundef %i.a) #10 ; 39 uses
+  %i.b = tail call noalias ptr @av_mallocz(i64 noundef %i.a) #10 ; 40 uses
   %.not213 = icmp eq ptr %i.b, null
   br i1 %.not213, label %bb.bn, label %bb.c
 
@@ -279,7 +279,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.g
-  %.sroa.29.0 = phi i32 [ 16, %bb.g ], [ 32, %bb.i ] ; 7 uses
+  %.sroa.29.0 = phi i32 [ 16, %bb.g ], [ 32, %bb.i ] ; 8 uses
   %.not217 = icmp eq i8 %i.y, 0
   br i1 %.not217, label %.thread435, label %bb.k
 
@@ -306,27 +306,33 @@ bb.m:                                             ; preds = %bb.l
   %i.au = lshr exact i32 %i.ar, 3
   %i.av = zext nneg i32 %i.au to i64
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.av
-  %i.ax = load i32, ptr %i.aw, align 1, !tbaa !21 ; 4 uses
+  %i.ax = load i32, ptr %i.aw, align 1, !tbaa !21 ; 2 uses
+  %3 = add nuw nsw i32 %.sroa.29.0, 16
   %i.ay = trunc i32 %i.ax to i8                   ; 2 uses
   %i.az = lshr i8 %i.ay, 7
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %i.az, ptr %i.ba, align 2, !tbaa !61
   %.not218 = icmp sgt i8 %i.ay, -1
+  %4 = lshr exact i32 %3, 3
+  %5 = zext nneg i32 %4 to i64
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 %5
+  %7 = load i32, ptr %6, align 1, !tbaa !21       ; 2 uses
   br i1 %.not218, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %.mask = and i32 %i.ax, 127
+  %.mask = and i32 %7, 127
   %.not232 = icmp eq i32 %.mask, 0
   %i.bb = select i1 %.not232, i32 0, i32 -1094995529
   br label %.thread435
 
 bb.o:                                             ; preds = %bb.m
-  %i.bc = tail call i32 @llvm.bswap.i32(i32 %i.ax) ; 2 uses
-  %i.bd = lshr i32 %i.bc, 28                      ; 3 uses
+  %i.bc = tail call i32 @llvm.bswap.i32(i32 %7)
+  %8 = shl i32 %i.bc, 1                           ; 2 uses
+  %i.bd = lshr i32 %8, 29                         ; 3 uses
   %i.be = trunc nuw nsw i32 %i.bd to i8
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %i.be, ptr %i.bf, align 1, !tbaa !62
-  %i.bg = icmp ugt i32 %i.bc, 1342177279
+  %i.bg = icmp ugt i32 %8, -1610612737
   br i1 %i.bg, label %.thread435, label %bb.p
 
 bb.p:                                             ; preds = %bb.o

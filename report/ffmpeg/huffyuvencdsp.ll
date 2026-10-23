@@ -32,11 +32,11 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.f = zext nneg i32 %4 to i64
-  %invariant.op = add nsw i64 %i.f, -3
+  %invariant.op = add nsw i64 %i.f, -7
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.063 = phi i64 [ %i.ax, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 7 uses
+  %.063 = phi i64 [ %i.ax, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 8 uses
   %i.g = or disjoint i64 %.063, 3                 ; 3 uses
   %i.h = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.063
   %i.i = load i16, ptr %i.h, align 2, !tbaa !10
@@ -84,8 +84,8 @@ bb.a:
   %i.av = trunc i32 %i.au to i16
   %i.aw = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.g
   store i16 %i.av, ptr %i.aw, align 2, !tbaa !10
-  %i.ax = add nuw nsw i64 %.063, 4                ; 3 uses
-  %i.ay = icmp slt i64 %i.ax, %invariant.op
+  %i.ax = add nuw nsw i64 %.063, 4                ; 2 uses
+  %i.ay = icmp slt i64 %.063, %invariant.op
   br i1 %i.ay, label %.lr.ph, label %.loopexit, !llvm.loop !18
 
 bb.b:                                             ; preds = %bb.a

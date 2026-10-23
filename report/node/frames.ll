@@ -205,8 +205,8 @@ bb.af:                                            ; preds = %bb.ad
 
 .lr.ph.i43:                                       ; preds = %.lr.ph.i43.preheader, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph.i43.preheader ], [ %indvars.iv.next, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ] ; 3 uses
-  %i.ik = load i64, ptr %i.ih, align 8
-  %i.il = add i64 %i.ik, -1                       ; 3 uses
+  %i.ik = load i64, ptr %i.ih, align 8            ; 3 uses
+  %i.il = add i64 %i.ik, -1                       ; 2 uses
   %i.im = inttoptr i64 %i.il to ptr
   %i.in = load ptr, ptr %1, align 8
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 104
@@ -220,7 +220,6 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %i.iu, label %bb.ag, label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
 
 bb.ag:                                            ; preds = %.lr.ph.i43
-  %10 = or disjoint i64 %i.il, 1                  ; 2 uses
   %i.iv = ptrtoint ptr %i.it to i64               ; 2 uses
   %i.iw = and i64 %i.il, -262144
   %i.ix = inttoptr i64 %i.iw to ptr
@@ -240,14 +239,14 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %.not39.i.i.i.i.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %10, i64 noundef %i.iv, i64 %i.ir) #25
+  call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %i.ik, i64 noundef %i.iv, i64 %i.ir) #25
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.ag
   br i1 %.not.i.i.i.i.i, label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit, label %bb.ak, !prof !33
 
 bb.ak:                                            ; preds = %bb.aj
-  call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %10, i64 %i.iv, i64 %i.ir) #25
+  call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %i.ik, i64 %i.iv, i64 %i.ir) #25
   br label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
 
 _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit: ; preds = %.lr.ph.i43, %bb.aj, %bb.ak

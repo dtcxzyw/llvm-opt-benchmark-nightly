@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
 
 dav1d_get_bits.exit:                              ; preds = %bb.c, %bb.a, %.loopexit.i.i
   %i.o = phi i64 [ %i.n, %.loopexit.i.i ], [ %.promoted17, %bb.c ], [ %.promoted17, %bb.a ] ; 3 uses
-  %i.p = phi i32 [ %i.i, %.loopexit.i.i ], [ %.promoted, %bb.c ], [ %.promoted, %bb.a ] ; 2 uses
-  %i.q = add nsw i32 %i.p, -8                     ; 5 uses
+  %i.p = phi i32 [ %i.i, %.loopexit.i.i ], [ %.promoted, %bb.c ], [ %.promoted, %bb.a ] ; 3 uses
+  %i.q = add nsw i32 %i.p, -8                     ; 4 uses
   store i32 %i.q, ptr %i.a, align 8, !tbaa !15
   %i.r = shl i64 %i.o, 8                          ; 4 uses
   store i64 %i.r, ptr %0, align 8, !tbaa !18
@@ -232,7 +232,6 @@ bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %.promoted.i.i.1, i64 1
   store ptr %i.x, ptr %i.b, align 8, !tbaa !13
   %i.y = load i8, ptr %.promoted.i.i.1, align 1, !tbaa !17
-  %1 = or disjoint i32 %i.q, 8
   %i.z = zext i8 %i.y to i64
   %i.aa = sub nuw nsw i32 64, %i.p
   %i.ab = zext nneg i32 %i.aa to i64
@@ -242,8 +241,8 @@ bb.f:                                             ; preds = %bb.e
 
 dav1d_get_bits.exit.1:                            ; preds = %.loopexit.i.i.1, %bb.f, %bb.d
   %i.ae = phi i64 [ %i.ad, %.loopexit.i.i.1 ], [ %i.r, %bb.f ], [ %i.r, %bb.d ] ; 3 uses
-  %i.af = phi i32 [ %1, %.loopexit.i.i.1 ], [ %i.q, %bb.f ], [ %i.q, %bb.d ] ; 2 uses
-  %i.ag = add nsw i32 %i.af, -8                   ; 5 uses
+  %i.af = phi i32 [ %i.p, %.loopexit.i.i.1 ], [ %i.q, %bb.f ], [ %i.q, %bb.d ] ; 3 uses
+  %i.ag = add nsw i32 %i.af, -8                   ; 4 uses
   store i32 %i.ag, ptr %i.a, align 8, !tbaa !15
   %i.ah = shl i64 %i.ae, 8                        ; 4 uses
   store i64 %i.ah, ptr %0, align 8, !tbaa !18
@@ -271,7 +270,6 @@ bb.i:                                             ; preds = %bb.h
   %i.ao = getelementptr inbounds nuw i8, ptr %.promoted.i.i.2, i64 1
   store ptr %i.ao, ptr %i.b, align 8, !tbaa !13
   %i.ap = load i8, ptr %.promoted.i.i.2, align 1, !tbaa !17
-  %2 = or disjoint i32 %i.ag, 8
   %i.aq = zext i8 %i.ap to i64
   %i.ar = sub nuw nsw i32 64, %i.af
   %i.as = zext nneg i32 %i.ar to i64
@@ -281,8 +279,8 @@ bb.i:                                             ; preds = %bb.h
 
 dav1d_get_bits.exit.2:                            ; preds = %.loopexit.i.i.2, %bb.i, %bb.g
   %i.av = phi i64 [ %i.au, %.loopexit.i.i.2 ], [ %i.ah, %bb.i ], [ %i.ah, %bb.g ] ; 3 uses
-  %i.aw = phi i32 [ %2, %.loopexit.i.i.2 ], [ %i.ag, %bb.i ], [ %i.ag, %bb.g ] ; 2 uses
-  %i.ax = add nsw i32 %i.aw, -8                   ; 5 uses
+  %i.aw = phi i32 [ %i.af, %.loopexit.i.i.2 ], [ %i.ag, %bb.i ], [ %i.ag, %bb.g ] ; 3 uses
+  %i.ax = add nsw i32 %i.aw, -8                   ; 4 uses
   store i32 %i.ax, ptr %i.a, align 8, !tbaa !15
   %i.ay = shl i64 %i.av, 8                        ; 4 uses
   store i64 %i.ay, ptr %0, align 8, !tbaa !18
@@ -310,7 +308,6 @@ bb.l:                                             ; preds = %bb.k
   %i.bf = getelementptr inbounds nuw i8, ptr %.promoted.i.i.3, i64 1
   store ptr %i.bf, ptr %i.b, align 8, !tbaa !13
   %i.bg = load i8, ptr %.promoted.i.i.3, align 1, !tbaa !17
-  %3 = or disjoint i32 %i.ax, 8
   %i.bh = zext i8 %i.bg to i64
   %i.bi = sub nuw nsw i32 64, %i.aw
   %i.bj = zext nneg i32 %i.bi to i64
@@ -320,8 +317,8 @@ bb.l:                                             ; preds = %bb.k
 
 dav1d_get_bits.exit.3:                            ; preds = %.loopexit.i.i.3, %bb.l, %bb.j
   %i.bm = phi i64 [ %i.bl, %.loopexit.i.i.3 ], [ %i.ay, %bb.l ], [ %i.ay, %bb.j ] ; 3 uses
-  %i.bn = phi i32 [ %3, %.loopexit.i.i.3 ], [ %i.ax, %bb.l ], [ %i.ax, %bb.j ] ; 2 uses
-  %i.bo = add nsw i32 %i.bn, -8                   ; 5 uses
+  %i.bn = phi i32 [ %i.aw, %.loopexit.i.i.3 ], [ %i.ax, %bb.l ], [ %i.ax, %bb.j ] ; 3 uses
+  %i.bo = add nsw i32 %i.bn, -8                   ; 4 uses
   store i32 %i.bo, ptr %i.a, align 8, !tbaa !15
   %i.bp = shl i64 %i.bm, 8                        ; 4 uses
   store i64 %i.bp, ptr %0, align 8, !tbaa !18
@@ -349,7 +346,6 @@ bb.o:                                             ; preds = %bb.n
   %i.bw = getelementptr inbounds nuw i8, ptr %.promoted.i.i.4, i64 1
   store ptr %i.bw, ptr %i.b, align 8, !tbaa !13
   %i.bx = load i8, ptr %.promoted.i.i.4, align 1, !tbaa !17
-  %4 = or disjoint i32 %i.bo, 8
   %i.by = zext i8 %i.bx to i64
   %i.bz = sub nuw nsw i32 64, %i.bn
   %i.ca = zext nneg i32 %i.bz to i64
@@ -359,8 +355,8 @@ bb.o:                                             ; preds = %bb.n
 
 dav1d_get_bits.exit.4:                            ; preds = %.loopexit.i.i.4, %bb.o, %bb.m
   %i.cd = phi i64 [ %i.cc, %.loopexit.i.i.4 ], [ %i.bp, %bb.o ], [ %i.bp, %bb.m ] ; 3 uses
-  %i.ce = phi i32 [ %4, %.loopexit.i.i.4 ], [ %i.bo, %bb.o ], [ %i.bo, %bb.m ] ; 2 uses
-  %i.cf = add nsw i32 %i.ce, -8                   ; 5 uses
+  %i.ce = phi i32 [ %i.bn, %.loopexit.i.i.4 ], [ %i.bo, %bb.o ], [ %i.bo, %bb.m ] ; 3 uses
+  %i.cf = add nsw i32 %i.ce, -8                   ; 4 uses
   store i32 %i.cf, ptr %i.a, align 8, !tbaa !15
   %i.cg = shl i64 %i.cd, 8                        ; 4 uses
   store i64 %i.cg, ptr %0, align 8, !tbaa !18
@@ -388,7 +384,6 @@ bb.r:                                             ; preds = %bb.q
   %i.cn = getelementptr inbounds nuw i8, ptr %.promoted.i.i.5, i64 1
   store ptr %i.cn, ptr %i.b, align 8, !tbaa !13
   %i.co = load i8, ptr %.promoted.i.i.5, align 1, !tbaa !17
-  %5 = or disjoint i32 %i.cf, 8
   %i.cp = zext i8 %i.co to i64
   %i.cq = sub nuw nsw i32 64, %i.ce
   %i.cr = zext nneg i32 %i.cq to i64
@@ -398,8 +393,8 @@ bb.r:                                             ; preds = %bb.q
 
 dav1d_get_bits.exit.5:                            ; preds = %.loopexit.i.i.5, %bb.r, %bb.p
   %i.cu = phi i64 [ %i.ct, %.loopexit.i.i.5 ], [ %i.cg, %bb.r ], [ %i.cg, %bb.p ] ; 3 uses
-  %i.cv = phi i32 [ %5, %.loopexit.i.i.5 ], [ %i.cf, %bb.r ], [ %i.cf, %bb.p ] ; 2 uses
-  %i.cw = add nsw i32 %i.cv, -8                   ; 5 uses
+  %i.cv = phi i32 [ %i.ce, %.loopexit.i.i.5 ], [ %i.cf, %bb.r ], [ %i.cf, %bb.p ] ; 3 uses
+  %i.cw = add nsw i32 %i.cv, -8                   ; 4 uses
   store i32 %i.cw, ptr %i.a, align 8, !tbaa !15
   %i.cx = shl i64 %i.cu, 8                        ; 4 uses
   store i64 %i.cx, ptr %0, align 8, !tbaa !18
@@ -427,7 +422,6 @@ bb.u:                                             ; preds = %bb.t
   %i.de = getelementptr inbounds nuw i8, ptr %.promoted.i.i.6, i64 1
   store ptr %i.de, ptr %i.b, align 8, !tbaa !13
   %i.df = load i8, ptr %.promoted.i.i.6, align 1, !tbaa !17
-  %6 = or disjoint i32 %i.cw, 8
   %i.dg = zext i8 %i.df to i64
   %i.dh = sub nuw nsw i32 64, %i.cv
   %i.di = zext nneg i32 %i.dh to i64
@@ -437,8 +431,8 @@ bb.u:                                             ; preds = %bb.t
 
 dav1d_get_bits.exit.6:                            ; preds = %.loopexit.i.i.6, %bb.u, %bb.s
   %i.dl = phi i64 [ %i.dk, %.loopexit.i.i.6 ], [ %i.cx, %bb.u ], [ %i.cx, %bb.s ] ; 3 uses
-  %i.dm = phi i32 [ %6, %.loopexit.i.i.6 ], [ %i.cw, %bb.u ], [ %i.cw, %bb.s ] ; 2 uses
-  %i.dn = add nsw i32 %i.dm, -8                   ; 5 uses
+  %i.dm = phi i32 [ %i.cv, %.loopexit.i.i.6 ], [ %i.cw, %bb.u ], [ %i.cw, %bb.s ] ; 3 uses
+  %i.dn = add nsw i32 %i.dm, -8                   ; 4 uses
   store i32 %i.dn, ptr %i.a, align 8, !tbaa !15
   %i.do = shl i64 %i.dl, 8                        ; 4 uses
   store i64 %i.do, ptr %0, align 8, !tbaa !18
@@ -466,7 +460,6 @@ bb.x:                                             ; preds = %bb.w
   %i.dv = getelementptr inbounds nuw i8, ptr %.promoted.i.i.7, i64 1
   store ptr %i.dv, ptr %i.b, align 8, !tbaa !13
   %i.dw = load i8, ptr %.promoted.i.i.7, align 1, !tbaa !17
-  %7 = or disjoint i32 %i.dn, 8
   %i.dx = zext i8 %i.dw to i64
   %i.dy = sub nuw nsw i32 64, %i.dm
   %i.dz = zext nneg i32 %i.dy to i64
@@ -476,7 +469,7 @@ bb.x:                                             ; preds = %bb.w
 
 dav1d_get_bits.exit.7:                            ; preds = %.loopexit.i.i.7, %bb.x, %bb.v
   %i.ec = phi i64 [ %i.eb, %.loopexit.i.i.7 ], [ %i.do, %bb.x ], [ %i.do, %bb.v ] ; 3 uses
-  %i.ed = phi i32 [ %7, %.loopexit.i.i.7 ], [ %i.dn, %bb.x ], [ %i.dn, %bb.v ]
+  %i.ed = phi i32 [ %i.dm, %.loopexit.i.i.7 ], [ %i.dn, %bb.x ], [ %i.dn, %bb.v ]
   %i.ee = add nsw i32 %i.ed, -8
   store i32 %i.ee, ptr %i.a, align 8, !tbaa !15
   %i.ef = shl i64 %i.ec, 8

@@ -205,12 +205,12 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 2                   ; 3 uses
+  %i.d = ashr exact i64 %.fr, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %.split
@@ -623,19 +623,19 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 4                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 4                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 2 uses
   %i.j = and i64 %i.c, 16
   %i.k = icmp eq i64 %i.j, 0
   %i.l = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %3 ; 2 uses
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.l ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 8

@@ -205,14 +205,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa39 = phi i64 [ %i.c, %.lr.ph ], [ %i.co, %bb.b ]
   %storemerge19.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.lcssa39, 20             ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %10 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %10
+  %i.o = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %i.k
   %i.p = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %i.j
   br label %bb.c
 
@@ -254,7 +253,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.07.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i11, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7openvdb5v13_05tools23mesh_to_volume_internal16ExpandNarrowbandINS3_4tree4TreeINS7_8RootNodeINS7_12InternalNodeINSA_INS7_8LeafNodeIfLj3EEELj4EEELj5EEEEEEENS4_26QuadAndTriangleDataAdapterINS3_4math4Vec3IfEENSJ_IjEEEEE8FragmentESt6vectorISO_SaISO_EEEElSO_NS0_5__ops15_Iter_less_iterEEvT_T0_SX_T1_T2_.exit.i.i
 
@@ -657,14 +656,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa39 = phi i64 [ %i.c, %.lr.ph ], [ %i.co, %bb.b ]
   %storemerge19.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.lcssa39, 24             ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %10 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %10
+  %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.k
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.j
   br label %bb.c
 
@@ -706,7 +704,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.07.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i11, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7openvdb5v13_05tools23mesh_to_volume_internal16ExpandNarrowbandINS3_4tree4TreeINS7_8RootNodeINS7_12InternalNodeINSA_INS7_8LeafNodeIdLj3EEELj4EEELj5EEEEEEENS4_26QuadAndTriangleDataAdapterINS3_4math4Vec3IfEENSJ_IjEEEEE8FragmentESt6vectorISO_SaISO_EEEElSO_NS0_5__ops15_Iter_less_iterEEvT_T0_SX_T1_T2_.exit.i.i
 
@@ -1109,14 +1107,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa39 = phi i64 [ %i.c, %.lr.ph ], [ %i.co, %bb.b ]
   %storemerge19.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.lcssa39, 20             ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %10 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %10
+  %i.o = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %i.k
   %i.p = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %i.j
   br label %bb.c
 
@@ -1158,7 +1155,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.07.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i11, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7openvdb5v13_05tools23mesh_to_volume_internal16ExpandNarrowbandINS3_4tree4TreeINS7_8RootNodeINS7_12InternalNodeINSA_INS7_8LeafNodeIfLj3EEELj4EEELj5EEEEEEENS4_26QuadAndTriangleDataAdapterINS3_4math4Vec3IfEENSI_4Vec4IjEEEEE8FragmentESt6vectorISP_SaISP_EEEElSP_NS0_5__ops15_Iter_less_iterEEvT_T0_SY_T1_T2_.exit.i.i
 
@@ -1561,14 +1558,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa39 = phi i64 [ %i.c, %.lr.ph ], [ %i.co, %bb.b ]
   %storemerge19.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.lcssa39, 24             ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %10 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %10
+  %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.k
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.j
   br label %bb.c
 
@@ -1610,7 +1606,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.07.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i11, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7openvdb5v13_05tools23mesh_to_volume_internal16ExpandNarrowbandINS3_4tree4TreeINS7_8RootNodeINS7_12InternalNodeINSA_INS7_8LeafNodeIdLj3EEELj4EEELj5EEEEEEENS4_26QuadAndTriangleDataAdapterINS3_4math4Vec3IfEENSI_4Vec4IjEEEEE8FragmentESt6vectorISP_SaISP_EEEElSP_NS0_5__ops15_Iter_less_iterEEvT_T0_SY_T1_T2_.exit.i.i
 

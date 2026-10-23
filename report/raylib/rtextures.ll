@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.cy = sub i8 %i.bk, %.sroa.0.0219             ; 3 uses
-  %i.cz = sub i8 %i.bm, %.sroa.7.0218             ; 5 uses
+  %i.cz = sub i8 %i.bm, %.sroa.7.0218             ; 6 uses
   %i.da = sub i8 %i.bo, %.sroa.9.0217             ; 2 uses
   %i.db = add i8 %i.cy, 2
   %or.cond6 = icmp ult i8 %i.db, 4
@@ -236,7 +236,7 @@ bb.u:                                             ; preds = %bb.s
   %i.dr = sub i8 %i.cy, %i.cz                     ; 2 uses
   %i.ds = add i8 %i.dr, 8
   %or.cond21 = icmp ult i8 %i.ds, 16
-  %i.dt = add i8 %i.cz, 32                        ; 2 uses
+  %i.dt = add i8 %i.cz, 32
   %i.du = icmp ult i8 %i.dt, 64
   %or.cond27 = select i1 %or.cond21, i1 %i.du, i1 false
   %i.dv = add i8 %i.dq, 8                         ; 2 uses
@@ -245,7 +245,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %or.cond33, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %4 = or disjoint i8 %i.dt, -128
+  %4 = add nsw i8 %i.cz, -96
   %i.dx = sext i32 %.1211 to i64
   %i.dy = getelementptr i8, ptr %i.u, i64 %i.dx   ; 2 uses
   store i8 %4, ptr %i.dy, align 1

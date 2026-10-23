@@ -202,12 +202,14 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.e
-  %i.i = add nuw i32 %.078105162, 1
+  %12 = add nuw i32 %.078105162, 1
+  %i.i = add i32 %.075106161, 3                   ; 2 uses
   %i.j = icmp eq i32 %i.q, 32
-  br i1 %i.j, label %._crit_edge.loopexit.split.loop.exit186, label %.lr.ph.preheader, !llvm.loop !10
+  br i1 %i.j, label %._crit_edge.loopexit, label %.lr.ph.preheader, !llvm.loop !10
 
 .lr.ph.preheader:                                 ; preds = %bb.c, %.lr.ph
-  %.078105162 = phi i32 [ %i.i, %.lr.ph ], [ %1, %bb.c ] ; 2 uses
+  %13 = phi i32 [ %i.i, %.lr.ph ], [ 1, %bb.c ]
+  %.078105162 = phi i32 [ %12, %.lr.ph ], [ %1, %bb.c ] ; 2 uses
   %.075106161 = phi i32 [ %i.q, %.lr.ph ], [ 0, %bb.c ] ; 2 uses
   %.073107160 = phi i32 [ %i.p, %.lr.ph ], [ %i.g, %bb.c ] ; 3 uses
   %i.k = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.078105162) ; 4 uses
@@ -219,10 +221,10 @@ bb.c:                                             ; preds = %bb.a
   tail call void @wmem_strbuf_append_c(ptr noundef %i.f, i8 noundef signext %.0.i)
   %i.p = add nsw i32 %.073107160, -1
   %.not = icmp eq i32 %.073107160, 1
-  br i1 %.not, label %._crit_edge.loopexit.split.loop.exit, label %bb.d
+  br i1 %.not, label %._crit_edge.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.preheader
-  %i.q = add i32 %.075106161, 2                   ; 5 uses
+  %i.q = add i32 %.075106161, 2                   ; 4 uses
   %i.r = icmp sgt i32 %i.q, 32
   br i1 %i.r, label %._crit_edge.loopexit, label %bb.e
 
@@ -236,16 +238,8 @@ bb.e:                                             ; preds = %bb.d
   %i.w = icmp sgt i32 %.073107160, 1
   br i1 %i.w, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !10
 
-._crit_edge.loopexit.split.loop.exit:             ; preds = %.lr.ph.preheader
-  %12 = or disjoint i32 %.075106161, 1
-  br label %._crit_edge.loopexit
-
-._crit_edge.loopexit.split.loop.exit186:          ; preds = %.lr.ph
-  %13 = or disjoint i32 %i.q, 1
-  br label %._crit_edge.loopexit
-
-._crit_edge.loopexit:                             ; preds = %bb.e, %bb.d, %._crit_edge.loopexit.split.loop.exit186, %._crit_edge.loopexit.split.loop.exit
-  %.2.ph = phi i32 [ %13, %._crit_edge.loopexit.split.loop.exit186 ], [ 33, %bb.d ], [ %12, %._crit_edge.loopexit.split.loop.exit ], [ %i.q, %bb.e ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph.preheader, %bb.d, %.lr.ph, %bb.e
+  %.2.ph = phi i32 [ %i.q, %bb.e ], [ %i.i, %.lr.ph ], [ 33, %bb.d ], [ %13, %.lr.ph.preheader ]
   %i.x = add i32 %.2.ph, 1
   %i.y = icmp slt i32 %i.x, 32
   br label %._crit_edge

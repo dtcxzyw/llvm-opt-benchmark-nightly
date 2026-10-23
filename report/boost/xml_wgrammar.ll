@@ -202,11 +202,10 @@ bb.d:                                             ; preds = %_ZN5boost6spirit7cl
 
 .lr.ph.i:                                         ; preds = %bb.d, %bb.g
   %.226 = phi i64 [ %i.x, %bb.g ], [ %.125, %bb.d ] ; 2 uses
-  %.1 = phi i32 [ %i.s, %bb.g ], [ 0, %bb.d ]     ; 3 uses
+  %.1 = phi i32 [ %4, %bb.g ], [ 0, %bb.d ]       ; 3 uses
   %i.m = phi ptr [ %i.w, %bb.g ], [ %i.i, %bb.d ]
   %.011.i.a = phi i64 [ %i.t, %bb.g ], [ 0, %bb.d ] ; 2 uses
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !34   ; 2 uses
-  %3 = add nsw i32 %i.n, -48                      ; 2 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !34   ; 3 uses
   %i.o = tail call i32 @iswdigit(i32 noundef %i.n) #20
   %.not.i = icmp eq i32 %i.o, 0
   br i1 %.not.i, label %_ZN5boost6spirit7classic4impl11extract_intILi10ELj1ELin1ENS2_19negative_accumulateIiLi10EEEE1fIKNS1_7scannerIN9__gnu_cxx17__normal_iteratorIPwNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEEENS1_16scanner_policiesINS1_16iteration_policyENS1_12match_policyENS1_13action_policyEEEEEiEEbRT_RT0_Rm.exit, label %bb.e
@@ -217,12 +216,13 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.e
   %i.q = mul nsw i32 %.1, 10                      ; 2 uses
-  %4 = or disjoint i32 %3, -2147483648
-  %i.r = icmp slt i32 %i.q, %4
+  %3 = add i32 %i.n, 2147483600
+  %i.r = icmp slt i32 %i.q, %3
   br i1 %i.r, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.s = sub nsw i32 %i.q, %3                     ; 2 uses
+  %i.s = sub i32 %i.q, %i.n
+  %4 = add i32 %i.s, 48                           ; 2 uses
   %i.t = add i64 %.011.i.a, 1                     ; 2 uses
   %i.u = load ptr, ptr %2, align 8, !tbaa !87, !nonnull !88, !align !89 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !90
@@ -278,7 +278,7 @@ bb.k:                                             ; preds = %bb.j
 
 _ZN5boost6spirit7classic4impl11extract_intILi10ELj1ELin1ENS2_19negative_accumulateIiLi10EEEE1fIKNS1_7scannerIN9__gnu_cxx17__normal_iteratorIPwNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEEENS1_16scanner_policiesINS1_16iteration_policyENS1_12match_policyENS1_13action_policyEEEEEiEEbRT_RT0_Rm.exit: ; preds = %.lr.ph.i, %bb.g
   %.327 = phi i64 [ %.226, %.lr.ph.i ], [ %i.x, %bb.g ]
-  %.2 = phi i32 [ %.1, %.lr.ph.i ], [ %i.s, %bb.g ]
+  %.2 = phi i32 [ %.1, %.lr.ph.i ], [ %4, %bb.g ]
   %.0.lcssa.ph.i = phi i64 [ %.011.i.a, %.lr.ph.i ], [ %i.t, %bb.g ]
   %.not40 = icmp eq i64 %.0.lcssa.ph.i, 0
   br i1 %.not40, label %.thread, label %bb.l

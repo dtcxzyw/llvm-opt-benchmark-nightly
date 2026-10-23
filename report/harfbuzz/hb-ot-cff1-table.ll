@@ -204,9 +204,9 @@ _ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !220
 
 ._crit_edge:                                      ; preds = %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit
-  %i.ay = and i32 %i.c, -2                        ; 5 uses
+  %i.ay = and i32 %i.c, -2                        ; 6 uses
   %i.az = add i32 %i.ay, -4                       ; 2 uses
-  %i.ba = add i32 %i.ay, -6                       ; 3 uses
+  %i.ba = add i32 %i.ay, -6                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #5
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 4448
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.bb, i64 16, i1 false), !tbaa.struct !167
@@ -227,7 +227,7 @@ bb.w:                                             ; preds = %._crit_edge
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit34: ; preds = %bb.v, %bb.w
   %.0.i.i33 = phi ptr [ @_hb_CrapPool, %bb.v ], [ %i.bf, %bb.w ]
-  %5 = or disjoint i32 %i.ba, 1                   ; 2 uses
+  %5 = add i32 %i.ay, -5                          ; 2 uses
   %.not.i.i35 = icmp ult i32 %5, %i.c
   br i1 %.not.i.i35, label %bb.y, label %bb.x, !prof !58
 

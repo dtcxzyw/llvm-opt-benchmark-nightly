@@ -205,9 +205,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.fk = zext i8 %i.fj to i64
   %i.fl = getelementptr inbounds nuw i8, ptr @3, i64 %i.fk
   %i.fm = load i8, ptr %i.fl, align 1, !noalias !99, !noundef !5
-  %i.fn = add i8 %i.fm, 1
-  %i.fo = tail call i8 @llvm.umin.i8(i8 %i.fn, i8 64) ; 2 uses
-  %4 = or i8 %i.fo, -64
+  %i.fn = add i8 %i.fm, -63
+  %i.fo = tail call i8 @llvm.umax.i8(i8 %i.fn, i8 -64) ; 2 uses
   %i.fp = and i8 %i.fo, 63
   %i.fq = icmp eq i8 %i.fp, 0
   br i1 %i.fq, label %bb.aj, label %bb.ak
@@ -222,7 +221,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !99
-  store i8 %4, ptr %i.f, align 1, !noalias !99
+  store i8 %i.fo, ptr %i.f, align 1, !noalias !99
   %i.fs = call noundef ptr @_RNvYINtNtNtCsjsNuU4yXw23_3fst3raw15counting_writer14CountingWriterINtNtCsbSS6DM8SDEO_5alloc3vec3VechEENtNtNtCshzWfHUSfYae_4core2io5write5Write9write_allCs6oosyzwIepl_6ide_db(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !99
   br label %_RINvMs4_NtNtCsjsNuU4yXw23_3fst3raw4nodeNtB6_13StateAnyTrans7compileQINtNtB8_15counting_writer14CountingWriterINtNtCsbSS6DM8SDEO_5alloc3vec3VechEEECs6oosyzwIepl_6ide_db.exit
@@ -455,11 +454,11 @@ _RINvNtNtCsjsNuU4yXw23_3fst3raw4node10pack_deltaQQINtNtB4_15counting_writer14Cou
 bb.ax:                                            ; preds = %_RINvNtNtCsjsNuU4yXw23_3fst3raw4node10pack_deltaQQINtNtB4_15counting_writer14CountingWriterINtNtCsbSS6DM8SDEO_5alloc3vec3VechEEECs6oosyzwIepl_6ide_db.exit.i
   %i.ib = zext i8 %.sroa.5.0.copyload23 to i64
   %i.ic = getelementptr inbounds nuw i8, ptr @3, i64 %i.ib
-  %i.id = load i8, ptr %i.ic, align 1, !noalias !104, !noundef !5
-  %i.ie = add i8 %i.id, 1                         ; 2 uses
-  %5 = icmp ugt i8 %i.ie, 63
-  %6 = or disjoint i8 %i.ie, -128
-  %i.if = select i1 %5, i8 -128, i8 %6            ; 2 uses
+  %i.id = load i8, ptr %i.ic, align 1, !noalias !104, !noundef !5 ; 2 uses
+  %i.ie = add i8 %i.id, -63
+  %4 = icmp ult i8 %i.ie, -64
+  %5 = add nsw i8 %i.id, -127
+  %i.if = select i1 %4, i8 -128, i8 %5            ; 2 uses
   %i.ig = and i8 %i.if, 63
   %i.ih = icmp eq i8 %i.ig, 0
   br i1 %i.ih, label %bb.ay, label %bb.az
@@ -862,29 +861,26 @@ declare hidden { i64, ptr } @_RNvXs0_NtCsjJXvCMGntp8_6syntax3astINtCs83ee1IJTiSq
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXs_NtCsjJXvCMGntp8_6syntax3astINtB4_11AstChildrenNtNtNtB4_9generated5nodes4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs6oosyzwIepl_6ide_db(ptr dead_on_unwind noalias nofree noundef writable sret([16 x i8]) align 8 captures(none) dereferenceable(16), ptr noalias nofree noundef align 8 dereferenceable(8)) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #31
-
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #32
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #31
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #33
+declare void @llvm.experimental.noalias.scope.decl(metadata) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umax.i8(i8, i8) #31
+declare i8 @llvm.umax.i8(i8, i8) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #31
+declare i32 @llvm.umin.i32(i32, i32) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #31
+declare i64 @llvm.umin.i64(i64, i64) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #31
+declare i32 @llvm.smax.i32(i32, i32) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #31
+declare i64 @llvm.umax.i64(i64, i64) #33
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -917,9 +913,9 @@ attributes #27 = { nounwind }
 attributes #28 = { cold noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #29 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #30 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #31 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #32 = { nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read) }
-attributes #33 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #31 = { nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read) }
+attributes #32 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #33 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #34 = { noreturn }
 attributes #35 = { cold }
 attributes #36 = { cold noreturn nounwind }

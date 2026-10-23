@@ -205,7 +205,7 @@ _ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i: ; 
   br i1 %.not3.i.i.i.i.i.i.i.i.i, label %_ZL22isMetadataKillLocationPN4llvm20DbgVariableIntrinsicE.exit.thread.sink.split, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i, %bb.f
-  %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i.i.a, %bb.f ], [ %i.aa, %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i ] ; 5 uses
+  %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i.i, %bb.f ], [ %i.aa, %_ZNK4llvm18RawLocationWrapper25getNumVariableLocationOpsEv.exit.thread.i.i.i ] ; 6 uses
   %i.ad = and i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i, 4
   %i.ae = icmp eq i64 %i.ad, 0                    ; 2 uses
   br i1 %i.ae, label %bb.d, label %bb.e
@@ -229,9 +229,11 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKN
   br i1 %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK4llvm20DbgVariableIntrinsic14isKillLocationEv.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predIZNK4llvm18RawLocationWrapper14isKillLocationEPKNS2_12DIExpressionEEUlPNS2_5ValueEE_EclINS2_20location_op_iteratorEEEbT_.exit.i.i.i.i.i.i.i.i.i
-  %storemerge.v.i.i.i.i.i.i.i.i.i.i = select i1 %i.ae, i64 144, i64 8
-  %storemerge.i.i.i.i.i.i.i.i.i.i.a = add nuw i64 %storemerge.v.i.i.i.i.i.i.i.i.i.i, %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i = icmp eq i64 %storemerge.i.i.i.i.i.i.i.i.i.i.a, %i.ac
+  %9 = and i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i, -5
+  %10 = add nuw i64 %9, 12
+  %storemerge.i.i.i.i.i.i.i.i.i.i.a = add nuw i64 %.sroa.01.0.copyload.i.i4.i.i.i.i.i.i.i.i.i, 144
+  %storemerge.i.i.i.i.i.i.i.i.i.i = select i1 %i.ae, i64 %storemerge.i.i.i.i.i.i.i.i.i.i.a, i64 %10 ; 2 uses
+  %.not.i.i.i.i.i.i.i.i.i = icmp eq i64 %storemerge.i.i.i.i.i.i.i.i.i.i, %i.ac
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZL22isMetadataKillLocationPN4llvm20DbgVariableIntrinsicE.exit.thread.sink.split, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !1320
 
 _ZNK4llvm20DbgVariableIntrinsic14isKillLocationEv.exit.thread.i: ; preds = %bb.c

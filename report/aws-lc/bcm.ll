@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 23 uses
   %i.v = load i32, ptr %i.u, align 8, !tbaa !93   ; 2 uses
-  %i.w = shl i32 %i.v, 6                          ; 5 uses
+  %i.w = shl i32 %i.v, 6                          ; 7 uses
   %i.x = icmp eq i32 %i.v, 0
   br i1 %i.x, label %bb.h, label %bb.k
 
@@ -553,9 +553,8 @@ bb.ac:                                            ; preds = %._crit_edge314
   br i1 %i.em, label %.lr.ph320.preheader, label %._crit_edge321
 
 .lr.ph320.preheader:                              ; preds = %bb.ac
-  %i.en = add i32 %i.w, -64                       ; 3 uses
-  %8 = or disjoint i32 %i.en, 63                  ; 5 uses
-  %i.eo = zext i32 %8 to i64                      ; 5 uses
+  %i.en = add i32 %i.w, -1                        ; 6 uses
+  %i.eo = zext i32 %i.en to i64                   ; 5 uses
   %.not387 = icmp sgt i32 %i.en, -1
   br i1 %.not387, label %bb.ad, label %BN_is_bit_set.exit
 
@@ -582,7 +581,7 @@ BN_is_bit_set.exit:                               ; preds = %.lr.ph320.preheader
 
 .lr.ph320.1:                                      ; preds = %BN_is_bit_set.exit
   %i.ex = shl nsw i32 %.0.i277, 1                 ; 3 uses
-  %.not387.1 = icmp ult i32 %8, -2147483647
+  %.not387.1 = icmp ult i32 %i.en, -2147483647
   br i1 %.not387.1, label %bb.af, label %BN_is_bit_set.exit.1
 
 bb.af:                                            ; preds = %.lr.ph320.1
@@ -610,7 +609,7 @@ BN_is_bit_set.exit.1:                             ; preds = %bb.ag, %bb.af, %.lr
 
 .lr.ph320.2:                                      ; preds = %BN_is_bit_set.exit.1
   %i.fj = shl nsw i32 %.0.i277.1, 1               ; 3 uses
-  %.not387.2 = icmp ult i32 %8, -2147483646
+  %.not387.2 = icmp ult i32 %i.en, -2147483646
   br i1 %.not387.2, label %bb.ah, label %BN_is_bit_set.exit.2
 
 bb.ah:                                            ; preds = %.lr.ph320.2
@@ -638,7 +637,7 @@ BN_is_bit_set.exit.2:                             ; preds = %bb.ai, %bb.ah, %.lr
 
 .lr.ph320.3:                                      ; preds = %BN_is_bit_set.exit.2
   %i.fu = shl i32 %.0.i277.2, 1                   ; 3 uses
-  %.not387.3 = icmp ult i32 %8, -2147483645
+  %.not387.3 = icmp ult i32 %i.en, -2147483645
   br i1 %.not387.3, label %bb.aj, label %BN_is_bit_set.exit.3
 
 bb.aj:                                            ; preds = %.lr.ph320.3
@@ -666,7 +665,7 @@ BN_is_bit_set.exit.3:                             ; preds = %bb.ak, %bb.aj, %.lr
 
 .lr.ph320.4:                                      ; preds = %BN_is_bit_set.exit.3
   %i.gg = shl i32 %.0.i277.3, 1                   ; 3 uses
-  %.not387.4 = icmp ult i32 %8, -2147483644
+  %.not387.4 = icmp ult i32 %i.en, -2147483644
   br i1 %.not387.4, label %bb.al, label %._crit_edge321.loopexit
 
 bb.al:                                            ; preds = %.lr.ph320.4
@@ -688,8 +687,8 @@ bb.am:                                            ; preds = %bb.al
 
 ._crit_edge321.loopexit:                          ; preds = %.lr.ph320.4, %bb.al, %bb.am, %BN_is_bit_set.exit.3, %BN_is_bit_set.exit.2, %BN_is_bit_set.exit.1, %BN_is_bit_set.exit
   %.0.i277.lcssa = phi i32 [ %.0.i277, %BN_is_bit_set.exit ], [ %.0.i277.1, %BN_is_bit_set.exit.1 ], [ %.0.i277.2, %BN_is_bit_set.exit.2 ], [ %.0.i277.3, %BN_is_bit_set.exit.3 ], [ %i.gg, %.lr.ph320.4 ], [ %i.gq, %bb.am ], [ %i.gg, %bb.al ]
-  %9 = or disjoint i32 %i.en, 62
-  %i.gr = sub nuw nsw i32 %9, %i.el
+  %8 = add i32 %i.w, -2
+  %i.gr = sub nuw nsw i32 %8, %i.el
   %i.gs = sext i32 %.0.i277.lcssa to i64
   br label %._crit_edge321
 
@@ -926,9 +925,8 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %i.kx, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.be
-  %i.ky = add i32 %i.w, -64                       ; 3 uses
-  %10 = or disjoint i32 %i.ky, 63                 ; 5 uses
-  %i.kz = zext i32 %10 to i64                     ; 5 uses
+  %i.ky = add i32 %i.w, -1                        ; 6 uses
+  %i.kz = zext i32 %i.ky to i64                   ; 5 uses
   %.not386 = icmp sgt i32 %i.ky, -1
   br i1 %.not386, label %bb.bf, label %BN_is_bit_set.exit283
 
@@ -955,7 +953,7 @@ BN_is_bit_set.exit283:                            ; preds = %.lr.ph.preheader, %
 
 .lr.ph.1:                                         ; preds = %BN_is_bit_set.exit283
   %i.li = shl nsw i32 %.0.i282, 1                 ; 3 uses
-  %.not386.1 = icmp ult i32 %10, -2147483647
+  %.not386.1 = icmp ult i32 %i.ky, -2147483647
   br i1 %.not386.1, label %bb.bh, label %BN_is_bit_set.exit283.1
 
 bb.bh:                                            ; preds = %.lr.ph.1
@@ -983,7 +981,7 @@ BN_is_bit_set.exit283.1:                          ; preds = %bb.bi, %bb.bh, %.lr
 
 .lr.ph.2:                                         ; preds = %BN_is_bit_set.exit283.1
   %i.lu = shl nsw i32 %.0.i282.1, 1               ; 3 uses
-  %.not386.2 = icmp ult i32 %10, -2147483646
+  %.not386.2 = icmp ult i32 %i.ky, -2147483646
   br i1 %.not386.2, label %bb.bj, label %BN_is_bit_set.exit283.2
 
 bb.bj:                                            ; preds = %.lr.ph.2
@@ -1011,7 +1009,7 @@ BN_is_bit_set.exit283.2:                          ; preds = %bb.bk, %bb.bj, %.lr
 
 .lr.ph.3:                                         ; preds = %BN_is_bit_set.exit283.2
   %i.mf = shl i32 %.0.i282.2, 1                   ; 3 uses
-  %.not386.3 = icmp ult i32 %10, -2147483645
+  %.not386.3 = icmp ult i32 %i.ky, -2147483645
   br i1 %.not386.3, label %bb.bl, label %BN_is_bit_set.exit283.3
 
 bb.bl:                                            ; preds = %.lr.ph.3
@@ -1039,7 +1037,7 @@ BN_is_bit_set.exit283.3:                          ; preds = %bb.bm, %bb.bl, %.lr
 
 .lr.ph.4:                                         ; preds = %BN_is_bit_set.exit283.3
   %i.mr = shl i32 %.0.i282.3, 1                   ; 3 uses
-  %.not386.4 = icmp ult i32 %10, -2147483644
+  %.not386.4 = icmp ult i32 %i.ky, -2147483644
   br i1 %.not386.4, label %bb.bn, label %._crit_edge.loopexit
 
 bb.bn:                                            ; preds = %.lr.ph.4
@@ -1061,8 +1059,8 @@ bb.bo:                                            ; preds = %bb.bn
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph.4, %bb.bn, %bb.bo, %BN_is_bit_set.exit283.3, %BN_is_bit_set.exit283.2, %BN_is_bit_set.exit283.1, %BN_is_bit_set.exit283
   %.0.i282.lcssa = phi i32 [ %.0.i282, %BN_is_bit_set.exit283 ], [ %.0.i282.1, %BN_is_bit_set.exit283.1 ], [ %.0.i282.2, %BN_is_bit_set.exit283.2 ], [ %.0.i282.3, %BN_is_bit_set.exit283.3 ], [ %i.mr, %.lr.ph.4 ], [ %i.nb, %bb.bo ], [ %i.mr, %bb.bn ]
-  %11 = or disjoint i32 %i.ky, 62
-  %i.nc = sub nuw nsw i32 %11, %i.kw
+  %9 = add i32 %i.w, -2
+  %i.nc = sub nuw nsw i32 %9, %i.kw
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.be

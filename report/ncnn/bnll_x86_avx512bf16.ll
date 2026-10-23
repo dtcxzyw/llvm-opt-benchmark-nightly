@@ -96,7 +96,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.v, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.noexc, %.lr.ph
-  %.05287 = phi i32 [ %i.cm, %.lr.ph ], [ 0, %.noexc ]
+  %.05287 = phi i32 [ %i.cm, %.lr.ph ], [ 0, %.noexc ] ; 2 uses
   %.05386 = phi ptr [ %i.cl, %.lr.ph ], [ %i.u, %.noexc ] ; 3 uses
   %i.w = load <16 x bfloat>, ptr %.05386, align 1, !tbaa !33 ; 3 uses
   %i.x = fpext fast <16 x bfloat> %i.w to <16 x float>
@@ -167,8 +167,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ck = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %i.cj)
   store <16 x bfloat> %i.ck, ptr %.05386, align 1, !tbaa !33
   %i.cl = getelementptr inbounds nuw i8, ptr %.05386, i64 32 ; 2 uses
-  %i.cm = add nuw nsw i32 %.05287, 16             ; 3 uses
-  %5 = or disjoint i32 %i.cm, 15
+  %i.cm = add nuw nsw i32 %.05287, 16             ; 2 uses
+  %5 = add nuw nsw i32 %.05287, 31
   %i.cn = load i32, ptr %4, align 4, !tbaa !14    ; 2 uses
   %i.co = icmp slt i32 %5, %i.cn
   br i1 %i.co, label %.lr.ph, label %._crit_edge, !llvm.loop !27
@@ -296,7 +296,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.gd = trunc nuw i32 %i.gc to i16
   store i16 %i.gd, ptr %.15490, align 2, !tbaa !36
   %i.ge = getelementptr inbounds nuw i8, ptr %.15490, i64 2
-  %i.gf = add nuw nsw i32 %.291, 1                ; 2 uses
+  %i.gf = add nsw i32 %.291, 1                    ; 2 uses
   %exitcond.not = icmp eq i32 %i.gf, %i.fm
   br i1 %exitcond.not, label %._crit_edge94, label %.lr.ph93, !llvm.loop !28
 

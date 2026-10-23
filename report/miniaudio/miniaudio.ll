@@ -205,14 +205,14 @@ vector.body237:                                   ; preds = %vector.body237, %ve
   %i.dc = load float, ptr %i.db, align 4, !tbaa !349
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.da
   store float %i.dc, ptr %i.dd, align 4, !tbaa !349
-  %i.de = shl i64 %.165.i.i, 1
-  %i.df = add i64 %i.de, 2                        ; 3 uses
+  %i.de = shl i64 %.165.i.i, 1                    ; 2 uses
+  %i.df = add i64 %i.de, 2                        ; 2 uses
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.df
   %i.dh = load float, ptr %i.dg, align 4, !tbaa !349
   %i.di = fmul float %i.y, %i.dh
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.df
   store float %i.di, ptr %i.dj, align 4, !tbaa !349
-  %4 = or disjoint i64 %i.df, 1                   ; 2 uses
+  %4 = add i64 %i.de, 3                           ; 2 uses
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4
   %i.dl = load float, ptr %i.dk, align 4, !tbaa !349
   %i.dm = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %4
@@ -407,13 +407,13 @@ vector.body190:                                   ; preds = %vector.body190, %ve
   %i.gj = fmul float %i.do, %i.gi
   %i.gk = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gg
   store float %i.gj, ptr %i.gk, align 4, !tbaa !349
-  %i.gl = shl i64 %.362.i.i, 1
-  %i.gm = add i64 %i.gl, 2                        ; 3 uses
+  %i.gl = shl i64 %.362.i.i, 1                    ; 2 uses
+  %i.gm = add i64 %i.gl, 2                        ; 2 uses
   %i.gn = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.gm
   %i.go = load float, ptr %i.gn, align 4, !tbaa !349
   %i.gp = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gm
   store float %i.go, ptr %i.gp, align 4, !tbaa !349
-  %5 = or disjoint i64 %i.gm, 1                   ; 2 uses
+  %5 = add i64 %i.gl, 3                           ; 2 uses
   %i.gq = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   %i.gr = load float, ptr %i.gq, align 4, !tbaa !349
   %i.gs = fmul float %i.do, %i.gr
@@ -574,12 +574,12 @@ middle.block145:                                  ; preds = %vector.body138
   store float %i.ip, ptr %i.iu, align 4, !tbaa !349
   %i.iv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.iq
   store float %i.it, ptr %i.iv, align 4, !tbaa !349
-  %i.iw = shl i64 %.042.i.i, 1
-  %i.ix = add i64 %i.iw, 2                        ; 3 uses
+  %i.iw = shl i64 %.042.i.i, 1                    ; 2 uses
+  %i.ix = add i64 %i.iw, 2                        ; 2 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ix
   %i.iz = load float, ptr %i.iy, align 4, !tbaa !349 ; 2 uses
   %i.ja = fmul float %i.hq, %i.iz
-  %6 = or disjoint i64 %i.ix, 1                   ; 2 uses
+  %6 = add i64 %i.iw, 3                           ; 2 uses
   %i.jb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
   %i.jc = load float, ptr %i.jb, align 4, !tbaa !349
   %i.jd = tail call float @llvm.fmuladd.f32(float %i.iz, float %i.k, float %i.jc)
@@ -680,11 +680,11 @@ middle.block:                                     ; preds = %vector.body
   store float %i.kk, ptr %i.km, align 4, !tbaa !349
   %i.kn = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.kh
   store float %i.kl, ptr %i.kn, align 4, !tbaa !349
-  %i.ko = shl i64 %.141.i.i, 1
-  %i.kp = add i64 %i.ko, 2                        ; 3 uses
+  %i.ko = shl i64 %.141.i.i, 1                    ; 2 uses
+  %i.kp = add i64 %i.ko, 2                        ; 2 uses
   %i.kq = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.kp
   %i.kr = load float, ptr %i.kq, align 4, !tbaa !349
-  %7 = or disjoint i64 %i.kp, 1                   ; 2 uses
+  %7 = add i64 %i.ko, 3                           ; 2 uses
   %i.ks = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %7
   %i.kt = load float, ptr %i.ks, align 4, !tbaa !349 ; 2 uses
   %i.ku = tail call float @llvm.fmuladd.f32(float %i.kt, float %i.jh, float %i.kr)

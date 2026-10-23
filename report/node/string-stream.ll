@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZNK2v88internal18SharedFunctionInfo4NameEv.exit
 
 _ZNK2v88internal18SharedFunctionInfo4NameEv.exit: ; preds = %bb.b, %_ZNK2v88internal18SharedFunctionInfo13HasSharedNameEv.exit.thread.i, %_ZN2v88internal11IsScopeInfoENS0_6TaggedINS0_6ObjectEEE.exit.i, %bb.d, %bb.e
-  %.sroa.014.1.i = phi i64 [ %i.u, %bb.b ], [ %i.af, %bb.d ], [ %i.ak, %bb.e ], [ %i.v, %_ZN2v88internal11IsScopeInfoENS0_6TaggedINS0_6ObjectEEE.exit.i ], [ %i.v, %_ZNK2v88internal18SharedFunctionInfo13HasSharedNameEv.exit.thread.i ] ; 13 uses
+  %.sroa.014.1.i = phi i64 [ %i.u, %bb.b ], [ %i.af, %bb.d ], [ %i.ak, %bb.e ], [ %i.v, %_ZN2v88internal11IsScopeInfoENS0_6TaggedINS0_6ObjectEEE.exit.i ], [ %i.v, %_ZNK2v88internal18SharedFunctionInfo13HasSharedNameEv.exit.thread.i ] ; 14 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 648 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 664 ; 2 uses
   %i.an = load i64, ptr %i.am, align 8
@@ -299,7 +299,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cf, label %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit48, label %.critedge2.thread
 
 _ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit48: ; preds = %bb.k
-  %i.cg = add nsw i64 %.sroa.014.1.i, -1          ; 2 uses
+  %i.cg = add nsw i64 %.sroa.014.1.i, -1
   %i.ch = inttoptr i64 %i.cg to ptr               ; 5 uses
   %i.ci = load atomic volatile i64, ptr %i.ch monotonic, align 8
   %i.cj = add i64 %i.ci, 11
@@ -321,8 +321,7 @@ _ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit47: ; preds = %_ZN2v88in
   br i1 %i.cu, label %bb.l, label %.thread233
 
 bb.l:                                             ; preds = %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit47
-  %15 = or disjoint i64 %i.cg, 1
-  %i.cv = icmp eq i64 %i.cc, %15
+  %i.cv = icmp eq i64 %i.cc, %.sroa.014.1.i
   br i1 %i.cv, label %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l

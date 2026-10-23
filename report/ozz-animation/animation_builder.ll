@@ -205,12 +205,12 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 2                   ; 3 uses
+  %i.d = ashr exact i64 %.fr, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %.split
@@ -623,14 +623,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.fr37.i24.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cb, %bb.b ]
   %storemerge22.lcssa = phi ptr [ %.fr26, %.lr.ph ], [ %.sroa.013.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.fr37.i24.lcssa, 24      ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %15 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [24 x i8], ptr %.fr25, i64 %15
+  %i.o = getelementptr inbounds nuw [24 x i8], ptr %.fr25, i64 %i.k
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %.fr25, i64 %i.j
   br label %bb.c
 
@@ -668,7 +667,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %15, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, ptr noundef nonnull readonly align 8 dereferenceable(24) %14, i64 24, i1 false)
   %i.ac = icmp sgt i64 %.1.i.i.i.i, %.08.i.i.i
@@ -1071,14 +1070,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.fr37.i24.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cb, %bb.b ]
   %storemerge22.lcssa = phi ptr [ %.fr26, %.lr.ph ], [ %.sroa.013.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.fr37.i24.lcssa, 28      ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %15 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [28 x i8], ptr %.fr25, i64 %15
+  %i.o = getelementptr inbounds nuw [28 x i8], ptr %.fr25, i64 %i.k
   %i.p = getelementptr inbounds nuw [28 x i8], ptr %.fr25, i64 %i.j
   br label %bb.c
 
@@ -1116,7 +1114,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %15, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %13, ptr noundef nonnull readonly align 8 dereferenceable(28) %14, i64 28, i1 false)
   %i.ac = icmp sgt i64 %.1.i.i.i.i, %.08.i.i.i
@@ -1519,14 +1517,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.fr37.i24.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cb, %bb.b ]
   %storemerge22.lcssa = phi ptr [ %.fr26, %.lr.ph ], [ %.sroa.013.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.fr37.i24.lcssa, 24      ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %15 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [24 x i8], ptr %.fr25, i64 %15
+  %i.o = getelementptr inbounds nuw [24 x i8], ptr %.fr25, i64 %i.k
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %.fr25, i64 %i.j
   br label %bb.c
 
@@ -1564,7 +1561,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %15, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, ptr noundef nonnull readonly align 8 dereferenceable(24) %14, i64 24, i1 false)
   %i.ac = icmp sgt i64 %.1.i.i.i.i, %.08.i.i.i

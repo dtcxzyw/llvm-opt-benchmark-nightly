@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
   br i1 %.not3241, label %._crit_edge, label %.preheader
 
 .preheader:                                       ; preds = %bb.f, %.preheader.backedge
-  %indvars.iv = phi i64 [ %indvars.iv.be, %.preheader.backedge ], [ 0, %bb.f ] ; 7 uses
+  %indvars.iv = phi i64 [ %indvars.iv.be, %.preheader.backedge ], [ 0, %bb.f ] ; 8 uses
   %.140 = phi i32 [ %.2, %.preheader.backedge ], [ 0, %bb.f ]
   %.12638 = phi i32 [ %.227, %.preheader.backedge ], [ %2, %bb.f ] ; 2 uses
   %.12937 = phi ptr [ %i.q, %.preheader.backedge ], [ %1, %bb.f ] ; 3 uses
@@ -242,7 +242,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %.preheader, !llvm.loop !28
 
 bb.j:                                             ; preds = %bb.i
-  %i.u = trunc nuw nsw i64 %indvars.iv.next to i32 ; 2 uses
+  %i.u = trunc nuw nsw i64 %indvars.iv.next to i32
   %i.v = load i32, ptr @dbgp_endpoint_out, align 4
   %i.w = load ptr, ptr @ehci_debug, align 8
   %i.x = getelementptr i8, ptr %i.w, i64 4
@@ -291,14 +291,15 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
 
 .preheader.i.i:                                   ; preds = %bb.k, %.preheader.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.br, %.preheader.i.i.unr-lcssa ], [ %i.aj, %bb.k ]
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
   %i.ak = or disjoint i32 %i.v, 32512
   %i.al = and i32 %i.y, -65536
   %i.am = shl nuw nsw i32 %i.aa, 8
   %i.an = or i32 %i.al, %i.am
   %i.ao = or disjoint i32 %i.an, 225
   %i.ap = and i32 %i.ac, -64
-  %3 = or disjoint i32 %i.ap, %i.u
-  %i.aq = or disjoint i32 %3, 48
+  %4 = add nuw nsw i32 %3, 49
+  %i.aq = or disjoint i32 %4, %i.ap
   %i.ar = icmp samesign ugt i64 %indvars.iv, 3
   br i1 %i.ar, label %.lr.ph.i.i.preheader, label %dbgp_bulk_write.exit
 

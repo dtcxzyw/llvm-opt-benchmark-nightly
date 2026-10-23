@@ -204,11 +204,10 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
+  %indvars.iv.next51.lcssa.a = phi i64 [ 3, %bb.d ], [ 5, %bb.e ], [ 7, %bb.f ], [ 9, %bb.g ], [ 11, %bb.h ], [ 13, %bb.i ], [ 15, %bb.j ], [ 17, %bb.k ] ; 3 uses
   %indvars.iv.next51.lcssa.sroa.phi = phi ptr [ %.2.gep.sroa_idx, %bb.d ], [ %.4.gep62.sroa_idx, %bb.e ], [ %.6.gep63.sroa_idx, %bb.f ], [ %.8.gep64.sroa_idx, %bb.g ], [ %.10.gep65.sroa_idx, %bb.h ], [ %.12.gep66.sroa_idx, %bb.i ], [ %.14.gep67.sroa_idx, %bb.j ], [ %.16.gep68.sroa_idx, %bb.k ]
-  %indvars.iv.next51.lcssa.a = phi i64 [ 2, %bb.d ], [ 4, %bb.e ], [ 6, %bb.f ], [ 8, %bb.g ], [ 10, %bb.h ], [ 12, %bb.i ], [ 14, %bb.j ], [ 16, %bb.k ] ; 2 uses
-  %3 = trunc nuw nsw i64 %indvars.iv.next51.lcssa.a to i32
-  %4 = lshr exact i32 %3, 1
-  %i.cv = icmp ugt i32 %4, %.03648
+  %indvars.iv.next51.lcssa = phi i32 [ 1, %bb.d ], [ 2, %bb.e ], [ 3, %bb.f ], [ 4, %bb.g ], [ 5, %bb.h ], [ 6, %bb.i ], [ 7, %bb.j ], [ 8, %bb.k ]
+  %i.cv = icmp ugt i32 %indvars.iv.next51.lcssa, %.03648
   br i1 %i.cv, label %.critedge41, label %.critedge, !prof !33
 
 .critedge41:                                      ; preds = %bb.l
@@ -232,9 +231,8 @@ bb.m:                                             ; preds = %.critedge
 
 bb.n:                                             ; preds = %bb.m, %.critedge
   %.val.i = phi i64 [ %.val.pre.i, %bb.m ], [ %i.cw, %.critedge ] ; 2 uses
-  %5 = or disjoint i64 %indvars.iv.next51.lcssa.a, 1 ; 3 uses
   %.val13.i = load i64, ptr %i.e, align 8         ; 2 uses
-  %i.cy = add i64 %.val13.i, %5
+  %i.cy = add i64 %.val13.i, %indvars.iv.next51.lcssa.a
   %.not.i = icmp ugt i64 %i.cy, %.val.i
   br i1 %.not.i, label %seq_buf_putmem.exit.thread, label %seq_buf_putmem.exit
 
@@ -246,9 +244,9 @@ seq_buf_putmem.exit.thread:                       ; preds = %bb.n
 seq_buf_putmem.exit:                              ; preds = %bb.n
   %i.da = load ptr, ptr %0, align 8
   %i.db = getelementptr i8, ptr %i.da, i64 %.val13.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.db, ptr noundef nonnull readonly align 16 dereferenceable(1) %i.a, i64 %5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.db, ptr noundef nonnull readonly align 16 dereferenceable(1) %i.a, i64 %indvars.iv.next51.lcssa.a, i1 false)
   %i.dc = load i64, ptr %i.e, align 8
-  %i.dd = add i64 %i.dc, %5                       ; 2 uses
+  %i.dd = add i64 %i.dc, %indvars.iv.next51.lcssa.a ; 2 uses
   %.val.pre = load i64, ptr %i.b, align 8
   %i.de = icmp ugt i64 %i.dd, %.val.pre
   store i64 %i.dd, ptr %i.e, align 8

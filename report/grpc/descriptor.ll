@@ -205,14 +205,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr.i.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.du, %bb.b ] ; 3 uses
   %storemerge25.lcssa = phi ptr [ %.fr29, %.lr.ph ], [ %.sroa.019.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i.i27.lcssa, 3             ; 2 uses
-  %i.j = add nsw i64 %i.i, -2                     ; 2 uses
+  %i.j = add nsw i64 %i.i, -2
   %i.k = lshr i64 %i.j, 1                         ; 3 uses
-  %i.l = add nsw i64 %i.i, -1
+  %i.l = add nsw i64 %i.i, -1                     ; 3 uses
   %i.m = lshr i64 %i.l, 1                         ; 2 uses
   %i.n = and i64 %.fr.i.i27.lcssa, 8
   %i.o = icmp eq i64 %i.n, 0
-  %3 = or disjoint i64 %i.j, 1                    ; 2 uses
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %.fr28, i64 %3
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %.fr28, i64 %i.l
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %.fr28, i64 %i.k
   br label %bb.c
 
@@ -263,7 +262,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.l, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.ai = icmp sgt i64 %.1.i.i.i.i, %.010.i.i.i
   br i1 %i.ai, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6google8protobuf17DescriptorBuilder19SuggestFieldNumbersEPNS3_14FileDescriptorERKNS3_19FileDescriptorProtoEE5RangeSt6vectorISA_SaISA_EEEElSA_NS0_5__ops15_Iter_comp_iterIZNS4_19SuggestFieldNumbersES6_S9_E3$_3EEEvT_T0_SL_T1_T2_.exit.i.i.i"
 
