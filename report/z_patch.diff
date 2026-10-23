@@ -1,0 +1,246 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index ff507918b782d6..4de23231c78f28 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -157,6 +157,7 @@ class VectorCombine {
+   bool foldBitcastOfVPLoad(Instruction &I);
+   bool foldBitOrderReverseAndSwap(Instruction &I);
+   bool shrinkType(Instruction &I);
++  bool foldShufflesOfConsecutiveLoads(Instruction &I);
+   bool shrinkLoadForShuffles(Instruction &I);
+   bool shrinkPhiOfShuffles(Instruction &I);
+   bool foldInterleaveOfDeinterleaveChains(Instruction &I);
+@@ -6739,6 +6740,91 @@ bool VectorCombine::foldBitOrderReverseAndSwap(Instruction &I) {
+   return true;
+ }
+ 
++/// Expose consecutive load pairs before shrinking their unused elements:
++///   {X0[1], Y0[0], X1[1], Y1[0]} -> shuffle(concat(X0, X1), concat(Y0, Y1)).
++/// Keep the loads in place so that memory combining is left to the backend.
++bool VectorCombine::foldShufflesOfConsecutiveLoads(Instruction &I) {
++  auto *Load = cast<LoadInst>(&I);
++  auto *LoadTy = FixedVectorType::get(Builder.getDoubleTy(), 2);
++  auto *WideTy = FixedVectorType::get(Builder.getDoubleTy(), 4);
++  if (Load->getType() != LoadTy || !Load->isSimple() || !Load->hasOneUse() ||
++      !TTI.isTypeLegal(WideTy))
++    return false;
++
++  // Look ahead before shrinkLoadForShuffles loses the complete load sizes.
++  Instruction *Root = Load;
++  unsigned NumVisited = 0;
++  while (Root->hasOneUse()) {
++    auto *Shuf = dyn_cast<ShuffleVectorInst>(*Root->user_begin());
++    if (!Shuf || Shuf->getParent() != Load->getParent())
++      break;
++    if (++NumVisited > Opts.vector_combine_max_scan_instrs)
++      return false;
++    Root = Shuf;
++  }
++  if (Root->getType() != WideTy)
++    return false;
++
++  // Bound the tree before looking through its lanes. Every inner shuffle must
++  // die with Root, so the single-use tree needs no visited set.
++  SmallVector<ShuffleVectorInst *, 8> Shuffles{cast<ShuffleVectorInst>(Root)};
++  for (unsigned Index = 0; Index != Shuffles.size(); ++Index) {
++    for (Value *Op : Shuffles[Index]->operands()) {
++      auto *Shuf = dyn_cast<ShuffleVectorInst>(Op);
++      if (!Shuf)
++        continue;
++      if (!Shuf->hasOneUse() || Shuf->getParent() != Root->getParent())
++        return false;
++      Shuffles.push_back(Shuf);
++    }
++    if (Shuffles.size() > Opts.vector_combine_max_scan_instrs)
++      return false;
++  }
++
++  LoadInst *Loads[4];
++  for (unsigned Index = 0; Index != 4; ++Index) {
++    auto [V, Lane] = lookThroughShuffles(Root, Index);
++    auto *LI = dyn_cast_or_null<LoadInst>(V);
++    if (!LI || LI->getType() != LoadTy || !LI->isSimple() || !LI->hasOneUse() ||
++        LI->getParent() != Load->getParent() || Lane != int(1 - Index % 2))
++      return false;
++    Loads[Index] = LI;
++  }
++
++  // The even output lanes select the high elements of consecutive X loads;
++  // the odd output lanes select the low elements of consecutive Y loads.
++  for (unsigned Index : {0, 1}) {
++    int64_t Offset0, Offset1;
++    Value *Base0 = GetPointerBaseWithConstantOffset(
++        Loads[Index]->getPointerOperand(), Offset0, *DL);
++    Value *Base1 = GetPointerBaseWithConstantOffset(
++        Loads[Index + 2]->getPointerOperand(), Offset1, *DL);
++    if (Base0 != Base1 ||
++        uint64_t(Offset1) - uint64_t(Offset0) != DL->getTypeStoreSize(LoadTy))
++      return false;
++  }
++
++  constexpr int ConcatMask[] = {0, 1, 2, 3};
++  constexpr int Mask[] = {1, 4, 3, 6};
++  InstructionCost OldCost = 0;
++  for (auto *Shuf : Shuffles)
++    OldCost += TTI.getInstructionCost(Shuf, CostKind);
++  InstructionCost NewCost =
++      2 * TTI.getShuffleCost(TTI::SK_PermuteTwoSrc, WideTy, LoadTy, CostKind,
++                             ConcatMask) +
++      TTI.getShuffleCost(TTI::SK_PermuteTwoSrc, WideTy, WideTy, CostKind, Mask);
++  if (!NewCost.isValid() || !OldCost.isValid() || NewCost >= OldCost)
++    return false;
++
++  Builder.SetInsertPoint(Root);
++  Builder.SetCurrentDebugLocation(Root->getDebugLoc());
++  Value *X = Builder.CreateShuffleVector(Loads[0], Loads[2], ConcatMask);
++  Value *Y = Builder.CreateShuffleVector(Loads[1], Loads[3], ConcatMask);
++  Value *Result = Builder.CreateShuffleVector(X, Y, Mask);
++  replaceValue(*Root, *Result);
++  return true;
++}
++
+ /// Given the maximum shuffle index and load vector type, compute the number of
+ /// elements for the shrunk load, rounding up to the next full vector register
+ /// boundary to avoid scalar remainders that legalize poorly.
+@@ -7107,6 +7193,8 @@ bool VectorCombine::run() {
+           return true;
+         break;
+       case Instruction::Load:
++        if (foldShufflesOfConsecutiveLoads(I))
++          return true;
+         if (shrinkLoadForShuffles(I))
+           return true;
+         break;
+diff --git a/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll b/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll
+index 7eae698a23dd6d..5776f67921e596 100644
+--- a/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll
++++ b/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll
+@@ -7,11 +7,8 @@
+ define <4 x double> @interleave_loads(ptr %px, ptr %py) {
+ ; CHECK-LABEL: interleave_loads:
+ ; CHECK:       # %bb.0:
+-; CHECK-NEXT:    vmovapd (%rsi), %xmm0
+-; CHECK-NEXT:    vmovupd (%rdi), %ymm1
+-; CHECK-NEXT:    vshufpd {{.*#+}} ymm0 = ymm1[1],ymm0[0],ymm1[3],ymm0[3]
+-; CHECK-NEXT:    vbroadcastsd 16(%rsi), %ymm1
+-; CHECK-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0,1,2],ymm1[3]
++; CHECK-NEXT:    vmovupd (%rdi), %ymm0
++; CHECK-NEXT:    vshufpd {{.*#+}} ymm0 = ymm0[1],mem[0],ymm0[3],mem[2]
+ ; CHECK-NEXT:    retq
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+diff --git a/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll b/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll
+index cfecbb95792880..b91c7708261318 100644
+--- a/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll
++++ b/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll
+@@ -6,20 +6,33 @@
+ ; PR140234: Expose the consecutive pairs before load shrinking.
+ 
+ define <4 x double> @interleave_loads(ptr %px, ptr %py) {
+-; CHECK-LABEL: define <4 x double> @interleave_loads(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+-; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
++; AVX-LABEL: define <4 x double> @interleave_loads(
++; AVX-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
++; AVX-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; AVX-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; AVX-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; AVX-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; AVX-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; AVX-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 1, i32 4, i32 3, i32 6>
++; AVX-NEXT:    ret <4 x double> [[SHUF4]]
++;
++; SSE-LABEL: define <4 x double> @interleave_loads(
++; SSE-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
++; SSE-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; SSE-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; SSE-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SSE-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SSE-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SSE-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
++; SSE-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SSE-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
++; SSE-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+@@ -38,7 +51,7 @@ define <4 x double> @interleave_loads(ptr %px, ptr %py) {
+ ; The X loads must be adjacent.
+ define <4 x double> @nonconsecutive(ptr %px, ptr %py) {
+ ; CHECK-LABEL: define <4 x double> @nonconsecutive(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
+ ; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 32
+ ; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+ ; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+@@ -163,19 +176,33 @@ define <4 x double> @volatile_load(ptr %px, ptr %py) {
+ 
+ ; Match by element provenance, including commuted operands and multiple root uses.
+ define <4 x double> @balanced_tree(ptr %px, ptr %py, ptr %out) {
+-; CHECK-LABEL: define <4 x double> @balanced_tree(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[LO:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[HI:%.*]] = shufflevector <2 x double> [[Y1]], <2 x double> [[X1]], <4 x i32> <i32 3, i32 0, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[R:%.*]] = shufflevector <4 x double> [[HI]], <4 x double> [[LO]], <4 x i32> <i32 4, i32 5, i32 0, i32 1>
+-; CHECK-NEXT:    store <4 x double> [[R]], ptr [[OUT]], align 1
+-; CHECK-NEXT:    ret <4 x double> [[R]]
++; AVX-LABEL: define <4 x double> @balanced_tree(
++; AVX-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; AVX-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; AVX-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; AVX-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; AVX-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; AVX-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; AVX-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[R:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 1, i32 4, i32 3, i32 6>
++; AVX-NEXT:    store <4 x double> [[R]], ptr [[OUT]], align 1
++; AVX-NEXT:    ret <4 x double> [[R]]
++;
++; SSE-LABEL: define <4 x double> @balanced_tree(
++; SSE-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; SSE-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; SSE-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; SSE-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SSE-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SSE-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SSE-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; SSE-NEXT:    [[LO:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
++; SSE-NEXT:    [[HI:%.*]] = shufflevector <2 x double> [[Y1]], <2 x double> [[X1]], <4 x i32> <i32 3, i32 0, i32 poison, i32 poison>
++; SSE-NEXT:    [[R:%.*]] = shufflevector <4 x double> [[HI]], <4 x double> [[LO]], <4 x i32> <i32 4, i32 5, i32 0, i32 1>
++; SSE-NEXT:    store <4 x double> [[R]], ptr [[OUT]], align 1
++; SSE-NEXT:    ret <4 x double> [[R]]
+ ;
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+@@ -316,6 +343,3 @@ define <4 x double> @balanced_narrow(ptr %px, ptr %py) {
+   %r = shufflevector <2 x double> %lo, <2 x double> %hi, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+   ret <4 x double> %r
+ }
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; AVX: {{.*}}
+-; SSE: {{.*}}
