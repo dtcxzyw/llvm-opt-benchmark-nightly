@@ -204,12 +204,12 @@ bb.a:
   %i.br = alloca [104 x i8], align 8              ; 9 uses
   %.sroa.11278 = alloca [88 x i8], align 8        ; 6 uses
   %i.bs = alloca [104 x i8], align 8              ; 24 uses
-  %i.bt = alloca [112 x i8], align 8              ; 17 uses
+  %i.bt = alloca [112 x i8], align 8              ; 22 uses
   %i.bu = alloca [48 x i8], align 8               ; 5 uses
   %i.bv = alloca [48 x i8], align 8               ; 8 uses
   %i.bw = alloca [24 x i8], align 8               ; 5 uses
   %i.bx = alloca [72 x i8], align 8               ; 8 uses
-  %i.by = alloca [72 x i8], align 8               ; 16 uses
+  %i.by = alloca [72 x i8], align 8               ; 19 uses
   %i.bz = alloca [48 x i8], align 8               ; 13 uses
   %i.ca = alloca [48 x i8], align 8               ; 12 uses
   %i.cb = alloca [24 x i8], align 8               ; 17 uses
@@ -350,12 +350,12 @@ bb.e:                                             ; preds = %_RNvMs_NtNtCs607s0N
 
 bb.f:                                             ; preds = %bb.e
   %.sroa.10.0..sroa_idx219 = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 16
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.10.0..sroa_idx219, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bx)
   store i8 1, ptr %i.cq, align 1
   store i64 %i.dn, ptr %i.by, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 8 ; 2 uses
   store ptr %i.dq, ptr %.sroa.4.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bv)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bu)
@@ -392,17 +392,23 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.dv, ptr %.sroa.4229.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bt)
   store i8 0, ptr %i.cq, align 1
-  %3 = load <6 x i64>, ptr %i.by, align 8         ; 6 uses
-  %.sroa.13250.sroa.10.0..sroa.13250.0..sroa_idx.sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.by, i64 48
-  %4 = load <2 x i64>, ptr %.sroa.13250.sroa.10.0..sroa.13250.0..sroa_idx.sroa_idx.a, align 8 ; 3 uses
-  %5 = extractelement <6 x i64> %3, i64 0         ; 3 uses
-  %i.dx = icmp ne i64 %5, -9223372036854775806
+  %.sroa.0242.0.copyload = load i64, ptr %i.by, align 8 ; 4 uses
+  %.sroa.6.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.10244.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.12247.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 24
+  %.sroa.12247.0.copyload = load i64, ptr %.sroa.12247.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.13250.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 32
+  %.sroa.13250.sroa.0.0.copyload = load i64, ptr %.sroa.13250.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.13250.sroa.10.0..sroa.13250.0..sroa_idx.sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.by, i64 40
+  %.sroa.13250.sroa.7.0.copyload = load i64, ptr %.sroa.13250.sroa.10.0..sroa.13250.0..sroa_idx.sroa_idx.a, align 8 ; 3 uses
+  %.sroa.13250.sroa.10.0..sroa.13250.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 48
+  %3 = load <2 x i64>, ptr %.sroa.13250.sroa.10.0..sroa.13250.0..sroa_idx.sroa_idx, align 8 ; 3 uses
+  %i.dx = icmp ne i64 %.sroa.0242.0.copyload, -9223372036854775806
   tail call void @llvm.assume(i1 %i.dx)
-  %i.dy = xor i64 %5, -9223372036854775808
-  %i.dz = icmp slt i64 %5, 0
+  %i.dy = xor i64 %.sroa.0242.0.copyload, -9223372036854775808
+  %i.dz = icmp slt i64 %.sroa.0242.0.copyload, 0
   %i.ea = select i1 %i.dz, i64 %i.dy, i64 2
-  %6 = shufflevector <6 x i64> %3, <6 x i64> poison, <2 x i32> <i32 3, i32 poison>
-  %7 = shufflevector <6 x i64> %3, <6 x i64> <i64 -1, i64 undef, i64 undef, i64 -9223372036854775808, i64 poison, i64 poison>, <6 x i32> <i32 6, i32 7, i32 8, i32 9, i32 1, i32 2>
+  %4 = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %.sroa.12247.0.copyload, i64 0
   switch i64 %i.ea, label %bb.j [
     i64 0, label %_RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit
     i64 1, label %bb.k
@@ -414,8 +420,7 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 bb.k:                                             ; preds = %bb.i
-  %i.eb = insertelement <2 x i64> %4, i64 undef, i64 1
-  %8 = shufflevector <6 x i64> %3, <6 x i64> <i64 poison, i64 poison, i64 poison, i64 -9223372036854775808, i64 poison, i64 poison>, <6 x i32> <i32 1, i32 2, i32 3, i32 9, i32 4, i32 5>
+  %i.eb = insertelement <2 x i64> %3, i64 undef, i64 1
   br label %_RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit
 
 bb.l:                                             ; preds = %bb.i
@@ -424,15 +429,29 @@ bb.l:                                             ; preds = %bb.i
   br label %_RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit
 
 bb.m:                                             ; preds = %bb.i
-  %9 = shufflevector <6 x i64> %3, <6 x i64> <i64 poison, i64 poison, i64 poison, i64 -9223372036854775806, i64 poison, i64 poison>, <6 x i32> <i32 1, i32 2, i32 3, i32 9, i32 4, i32 5>
   br label %_RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit
 
 _RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit: ; preds = %bb.m, %bb.l, %bb.k, %bb.i
+  %.sroa.12.sroa.8.0 = phi i64 [ %.sroa.13250.sroa.7.0.copyload, %bb.m ], [ %.sroa.13250.sroa.7.0.copyload, %bb.k ], [ %.sroa.13250.sroa.7.0.copyload, %bb.l ], [ %.sroa.10244.0.copyload, %bb.i ]
+  %.sroa.12.sroa.0.0 = phi i64 [ %.sroa.13250.sroa.0.0.copyload, %bb.m ], [ %.sroa.13250.sroa.0.0.copyload, %bb.k ], [ %.sroa.13250.sroa.0.0.copyload, %bb.l ], [ %.sroa.6.0.copyload, %bb.i ]
+  %.sroa.8235.sroa.7.0 = phi i64 [ %.sroa.12247.0.copyload, %bb.m ], [ %.sroa.12247.0.copyload, %bb.k ], [ %.sroa.10244.0.copyload, %bb.l ], [ undef, %bb.i ]
+  %.sroa.8235.sroa.0.0 = phi i64 [ %.sroa.10244.0.copyload, %bb.m ], [ %.sroa.10244.0.copyload, %bb.k ], [ %.sroa.6.0.copyload, %bb.l ], [ undef, %bb.i ]
   %.sroa.15241.0 = phi i64 [ undef, %bb.m ], [ undef, %bb.k ], [ %.sroa.16251.0.copyload, %bb.l ], [ undef, %bb.i ]
-  %i.ec = phi <2 x i64> [ %4, %bb.m ], [ %i.eb, %bb.k ], [ %4, %bb.l ], [ %6, %bb.i ]
-  %10 = phi <6 x i64> [ %9, %bb.m ], [ %8, %bb.k ], [ %3, %bb.l ], [ %7, %bb.i ]
-  %i.ed = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
-  store <6 x i64> %10, ptr %i.ed, align 8
+  %.sroa.8239.0 = phi i64 [ -9223372036854775806, %bb.m ], [ -9223372036854775808, %bb.k ], [ %.sroa.12247.0.copyload, %bb.l ], [ -9223372036854775808, %bb.i ]
+  %.sroa.0231.0 = phi i64 [ %.sroa.6.0.copyload, %bb.m ], [ %.sroa.6.0.copyload, %bb.k ], [ %.sroa.0242.0.copyload, %bb.l ], [ -1, %bb.i ]
+  %i.ec = phi <2 x i64> [ %3, %bb.m ], [ %i.eb, %bb.k ], [ %3, %bb.l ], [ %4, %bb.i ]
+  %5 = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  store i64 %.sroa.0231.0, ptr %5, align 8
+  %.sroa.8235.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
+  store i64 %.sroa.8235.sroa.0.0, ptr %.sroa.8235.0..sroa_idx, align 8
+  %.sroa.8235.sroa.7.0..sroa.8235.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bt, i64 24
+  store i64 %.sroa.8235.sroa.7.0, ptr %.sroa.8235.sroa.7.0..sroa.8235.0..sroa_idx.sroa_idx, align 8
+  %.sroa.8239.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bt, i64 32
+  store i64 %.sroa.8239.0, ptr %.sroa.8239.0..sroa_idx, align 8
+  %.sroa.12.0..sroa_idx240 = getelementptr inbounds nuw i8, ptr %i.bt, i64 40
+  store i64 %.sroa.12.sroa.0.0, ptr %.sroa.12.0..sroa_idx240, align 8
+  %i.ed = getelementptr inbounds nuw i8, ptr %i.bt, i64 48
+  store i64 %.sroa.12.sroa.8.0, ptr %i.ed, align 8
   %.sroa.12.sroa.9.0..sroa.12.0..sroa_idx240.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bt, i64 56
   store <2 x i64> %i.ec, ptr %.sroa.12.sroa.9.0..sroa.12.0..sroa_idx240.sroa_idx, align 8
   %.sroa.15241.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bt, i64 72
