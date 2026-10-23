@@ -202,7 +202,7 @@ bb.a:
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
@@ -576,13 +576,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118: ; preds = %_Z
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
   %i.dm = load ptr, ptr %i.j, align 8, !tbaa !276
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 272
-  %i.do = load i8, ptr %i.dn, align 8, !tbaa !234, !range !179, !noundef !77
-  %29 = trunc nuw i8 %i.do to i1                  ; 3 uses
+  %i.do = load i8, ptr %i.dn, align 8, !tbaa !234, !range !179, !noundef !77 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 7 uses
   store ptr %i.dp, ptr %13, align 8, !tbaa !20
-  %not. = xor i1 %29, true
-  %i.dq = zext i1 %not. to i64
-  br i1 %29, label %bb.r, label %bb.q
+  %29 = xor i8 %i.do, 1
+  %i.dq = zext nneg i8 %29 to i64                 ; 2 uses
+  %trunc = icmp eq i8 %i.do, 0
+  br i1 %trunc, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118
   store i8 63, ptr %i.dp, align 8, !tbaa !21
@@ -591,9 +591,8 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.r:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118, %bb.q
   %i.dr = getelementptr inbounds nuw i8, ptr %13, i64 8
   store i64 %i.dq, ptr %i.dr, align 8, !tbaa !27
-  %.sroa.gep = getelementptr inbounds nuw i8, ptr %13, i64 17
-  %.sroa.sel = select i1 %29, ptr %i.dp, ptr %.sroa.gep
-  store i8 0, ptr %.sroa.sel, align 1, !tbaa !21
+  %.sroa.gep = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.dq
+  store i8 0, ptr %.sroa.gep, align 1, !tbaa !21
   %i.ds = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4lessIS5_ESaISt4pairIKS5_S5_EEEixERS9_(ptr noundef nonnull align 8 dereferenceable(477) %i.cv, ptr noundef nonnull align 8 dereferenceable(32) %12)
           to label %.noexc127 unwind label %bb.ap
 

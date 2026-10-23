@@ -202,10 +202,10 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 81 ; 2 uses
   %i.aa = load i8, ptr %i.z, align 1, !range !18, !noundef !7
-  %3 = trunc nuw i8 %i.aa to i1
-  %4 = icmp ne ptr %i.y, null
-  %or.cond.not = and i1 %4, %3
-  br i1 %or.cond.not, label %bb.s, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3ops6OpReadEBH_.exit
+  %.not = icmp eq i8 %i.aa, 0
+  %3 = icmp eq ptr %i.y, null
+  %or.cond = or i1 %.not, %3
+  br i1 %or.cond, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3ops6OpReadEBH_.exit, label %bb.s
 
 bb.e:                                             ; preds = %bb.a
   tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const28panic_const_async_fn_resumed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #23
@@ -608,10 +608,10 @@ bb.bm:                                            ; preds = %bb.bl
   %.pn2.i = phi { ptr, i32 } [ %i.jd, %bb.bq ], [ %i.ju, %bb.by ], [ %i.jo, %bb.bx ], [ %i.jo, %bb.bw ]
   %i.ix = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.iy = load i8, ptr %i.ix, align 8, !range !18, !noalias !971, !noundef !7
-  %3 = trunc nuw i8 %i.iy to i1
-  %4 = icmp ne ptr %i.iw, null
-  %or.cond.not.i = and i1 %4, %3
-  br i1 %or.cond.not.i, label %bb.ca, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3ops6OpStatEBH_.exit.i
+  %.not.i114 = icmp eq i8 %i.iy, 0
+  %3 = icmp eq ptr %i.iw, null
+  %or.cond.i = or i1 %3, %.not.i114
+  br i1 %or.cond.i, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3ops6OpStatEBH_.exit.i, label %bb.ca
 
 bb.bn:                                            ; preds = %bb.bj
   invoke void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const28panic_const_async_fn_resumed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31) #23
@@ -924,12 +924,11 @@ bb.k:                                             ; preds = %bb.g, %_RINvNtCsgxB
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   %.val12 = load i8, ptr %i.x, align 8, !range !18, !noundef !7 ; 2 uses
   %i.bm = trunc nuw i8 %.val12 to i1
-  %.not = xor i1 %i.bm, true
   %i.bn = getelementptr inbounds nuw i8, ptr %i.k, i64 167
   %i.bo = load i8, ptr %i.bn, align 1, !range !18
-  %3 = trunc nuw i8 %i.bo to i1
-  %or.cond = select i1 %.not, i1 true, i1 %3
-  br i1 %or.cond, label %.thread, label %bb.l
+  %.not4 = icmp eq i8 %i.bo, 0
+  %or.cond = select i1 %i.bm, i1 %.not4, i1 false
+  br i1 %or.cond, label %bb.l, label %.thread
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -1332,12 +1331,11 @@ bb.x:                                             ; preds = %bb.m, %bb.t, %bb.l,
   %i.do = getelementptr i8, ptr %1, i64 136
   %.val26 = load i8, ptr %i.do, align 8, !noundef !7
   %i.dp = trunc i8 %.val26 to i1                  ; 2 uses
-  %.not = xor i1 %i.dp, true
   %i.dq = getelementptr inbounds nuw i8, ptr %i.ac, i64 165
   %i.dr = load i8, ptr %i.dq, align 1, !range !18
-  %3 = trunc nuw i8 %i.dr to i1
-  %or.cond = select i1 %.not, i1 true, i1 %3
-  br i1 %or.cond, label %bb.ab, label %bb.y
+  %.not6 = icmp eq i8 %i.dr, 0
+  %or.cond = select i1 %i.dp, i1 %.not6, i1 false
+  br i1 %or.cond, label %bb.y, label %bb.ab
 
 bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)

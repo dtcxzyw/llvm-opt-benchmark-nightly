@@ -202,12 +202,11 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.d
-  %2 = trunc nuw i8 %i.ad to i1
-  %3 = xor i1 %2, true
+  %2 = icmp eq i8 %i.ad, 0
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.d, %bb.h, %bb.g
-  %.sroa.03.0 = phi i1 [ %3, %bb.h ], [ false, %bb.g ], [ true, %bb.d ]
+  %.sroa.03.0 = phi i1 [ %2, %bb.h ], [ false, %bb.g ], [ true, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %.sroa.0.0.copyload, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -428,12 +427,11 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.d
-  %2 = trunc nuw i8 %i.ad to i1
-  %3 = xor i1 %2, true
+  %2 = icmp eq i8 %i.ad, 0
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.d, %bb.h, %bb.g
-  %.sroa.03.0 = phi i1 [ %3, %bb.h ], [ false, %bb.g ], [ true, %bb.d ]
+  %.sroa.03.0 = phi i1 [ %2, %bb.h ], [ false, %bb.g ], [ true, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %.sroa.0.0.copyload, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -658,12 +656,11 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.e
-  %2 = trunc nuw i8 %i.ah to i1
-  %3 = xor i1 %2, true
+  %2 = icmp eq i8 %i.ah, 0
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.e, %bb.i, %bb.h
-  %.sroa.03.0 = phi i1 [ %3, %bb.i ], [ false, %bb.h ], [ true, %bb.e ]
+  %.sroa.03.0 = phi i1 [ %2, %bb.i ], [ false, %bb.h ], [ true, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %.sroa.0.0.copyload, ptr %i.b, align 8
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -892,12 +889,11 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.e
-  %2 = trunc nuw i8 %i.ah to i1
-  %3 = xor i1 %2, true
+  %2 = icmp eq i8 %i.ah, 0
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.e, %bb.i, %bb.h
-  %.sroa.03.0 = phi i1 [ %3, %bb.i ], [ false, %bb.h ], [ true, %bb.e ]
+  %.sroa.03.0 = phi i1 [ %2, %bb.i ], [ false, %bb.h ], [ true, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %.sroa.0.0.copyload, ptr %i.b, align 8
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8

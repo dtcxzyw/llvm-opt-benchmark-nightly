@@ -204,13 +204,12 @@ bb.n:                                             ; preds = %bb.i, %bb.h
   store i8 0, ptr %i.a, align 1, !tbaa !112
   call void @Curl_attach_connection(ptr noundef nonnull %1, ptr noundef nonnull %0) #7
   %i.aq = call zeroext i1 @Curl_conn_is_alive(ptr noundef nonnull %1, ptr noundef nonnull %0, ptr noundef nonnull %i.a) #7
-  %3 = xor i1 %i.aq, true
   %i.ar = load i8, ptr %i.a, align 1, !tbaa !112, !range !113, !noundef !207
-  %4 = trunc nuw i8 %i.ar to i1
-  %narrow = select i1 %4, i1 true, i1 %3
+  %.not40 = icmp eq i8 %i.ar, 0
+  %narrow = select i1 %.not40, i1 %i.aq, i1 false
   call void @Curl_detach_connection(ptr noundef nonnull %1) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
-  br i1 %narrow, label %bb.p, label %.critedge
+  br i1 %narrow, label %.critedge, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   call void @Curl_attach_connection(ptr noundef nonnull %1, ptr noundef nonnull %0) #7

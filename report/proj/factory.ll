@@ -205,8 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178: ; preds = %bb
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread279: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %bb.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   %i.hr = load i8, ptr %8, align 1, !tbaa !582, !range !160, !noundef !161
-  %22 = trunc nuw i8 %i.hr to i1
-  %.not = xor i1 %22, true
+  %.not = icmp eq i8 %i.hr, 0
   %or.cond = and i1 %2, %.not
   br i1 %or.cond, label %bb.af, label %bb.am
 

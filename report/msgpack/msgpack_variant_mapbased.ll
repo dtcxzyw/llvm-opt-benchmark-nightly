@@ -202,9 +202,8 @@ _ZN7msgpack2v113object_parser4elem4nextINS0_24object_stringize_visitorEEENS1_8ne
   %i.gh = load ptr, ptr %i.gd, align 8
   %i.gi = getelementptr inbounds i8, ptr %i.gc, i64 -7
   %i.gj = load i8, ptr %i.gi, align 1, !range !121
-  %2 = trunc nuw i8 %i.gj to i1
-  %3 = xor i1 %2, true
-  %i.gk = select i1 %i.gg, i1 %3, i1 false
+  %2 = icmp eq i8 %i.gj, 0
+  %i.gk = select i1 %i.gg, i1 %2, i1 false
   %.0.idx.i = select i1 %i.gk, i64 24, i64 0
   %.0.i38 = getelementptr inbounds nuw i8, ptr %i.gh, i64 %.0.idx.i ; 2 uses
   store ptr %.0.i38, ptr %0, align 8, !tbaa !69

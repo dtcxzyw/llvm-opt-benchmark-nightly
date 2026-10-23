@@ -204,8 +204,7 @@ _ZNK2OT4cff119accelerator_templ_tIN3CFF25cff1_private_dict_opset_tENS2_31cff1_pr
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 4480
   %i.ck = load i8, ptr %i.cj, align 8, !tbaa !101, !range !110, !noundef !111
-  %4 = trunc nuw i8 %i.ck to i1
-  %.not = xor i1 %4, true
+  %.not = icmp eq i8 %i.ck, 0
   %i.cl = icmp ne i32 %.0.i31, 0
   %or.cond = and i1 %i.cl, %.not
   %i.cm = icmp ne i32 %.0.i39, 0
@@ -608,8 +607,7 @@ _ZNK2OT4cff119accelerator_templ_tIN3CFF25cff1_private_dict_opset_tENS2_31cff1_pr
   %.0.i42 = phi i32 [ %..i46, %bb.p ], [ %i.cz, %bb.o ] ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 4480
   %i.df = load i8, ptr %i.de, align 8, !tbaa !101, !range !110, !noundef !111
-  %3 = trunc nuw i8 %i.df to i1
-  %.not = xor i1 %3, true
+  %.not = icmp eq i8 %i.df, 0
   %i.dg = icmp ne i32 %.0.i34, 0
   %or.cond = and i1 %i.dg, %.not
   %i.dh = icmp ne i32 %.0.i42, 0

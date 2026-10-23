@@ -204,10 +204,10 @@ bb.an:                                            ; preds = %.lr.ph2330.split._c
   unreachable, !nosanitize !9
 
 bb.ao:                                            ; preds = %.lr.ph2330.split._crit_edge
-  %5 = trunc nuw i8 %i.ja to i1
-  %or.cond728 = icmp ult i32 %i.iz, 24403224
-  %or.cond5525.not = select i1 %5, i1 %or.cond728, i1 false
-  br i1 %or.cond5525.not, label %b3SnapCheckCount.exit, label %.thread643.thread
+  %.not5524 = icmp ne i8 %i.ja, 1
+  %or.cond728 = icmp ugt i32 %i.iz, 24403223
+  %or.cond5525.not = select i1 %.not5524, i1 true, i1 %or.cond728
+  br i1 %or.cond5525.not, label %.thread643.thread, label %b3SnapCheckCount.exit
 
 b3SnapCheckCount.exit:                            ; preds = %bb.ao
   %i.lc = load i32, ptr %i.an, align 4, !tbaa !203
@@ -610,8 +610,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable, !nosanitize !9
 
 bb.h:                                             ; preds = %bb.f
-  %2 = trunc nuw i8 %i.v to i1
-  %.not39 = xor i1 %2, true
+  %.not39 = icmp ne i8 %i.v, 1
   %brmerge = select i1 %.not39, i1 true, i1 %i.t
   br i1 %brmerge, label %bb.k, label %bb.i
 

@@ -205,12 +205,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 3 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !168, !range !71, !noundef !72
   %i.g = trunc nuw i8 %i.f to i1                  ; 2 uses
-  %.not.i.i.i.i.i = xor i1 %i.g, true
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 232
   %i.i = load i8, ptr %i.h, align 8, !range !71
-  %2 = trunc nuw i8 %i.i to i1                    ; 3 uses
-  %or.cond.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i1 %2, i1 false
-  br i1 %or.cond.i.i.i.i.i, label %bb.b, label %bb.c
+  %.not6.i.i.i.i.i = icmp eq i8 %i.i, 0           ; 3 uses
+  %or.cond.i.i.i.i.i = select i1 %i.g, i1 true, i1 %.not6.i.i.i.i.i
+  br i1 %or.cond.i.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN4LIEF2PE13CodeIntegrityE, i64 16), ptr %i.c, align 8, !tbaa !60
@@ -224,7 +223,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %2, label %bb.e, label %bb.f
+  br i1 %.not6.i.i.i.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 216
@@ -243,7 +242,7 @@ bb.f:                                             ; preds = %bb.d
   br label %_ZN4LIEF8optionalINS_2PE13CodeIntegrityEEaSEOS3_.exit
 
 bb.g:                                             ; preds = %bb.c
-  br i1 %2, label %_ZN4LIEF8optionalINS_2PE13CodeIntegrityEEaSEOS3_.exit, label %bb.h
+  br i1 %.not6.i.i.i.i.i, label %bb.h, label %_ZN4LIEF8optionalINS_2PE13CodeIntegrityEEaSEOS3_.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.r = load i32, ptr %i.d, align 8, !tbaa !192
@@ -646,12 +645,11 @@ bb.b:                                             ; preds = %bb.a
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 3 uses
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !168, !range !71, !noundef !72
   %i.ay = trunc nuw i8 %i.ax to i1                ; 2 uses
-  %.not.i.i.i.i.i.i = xor i1 %i.ay, true
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 232
   %i.ba = load i8, ptr %i.az, align 8, !range !71
-  %3 = trunc nuw i8 %i.ba to i1                   ; 3 uses
-  %or.cond.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i1 %3, i1 false
-  br i1 %or.cond.i.i.i.i.i.i, label %bb.c, label %bb.d
+  %.not6.i.i.i.i.i.i = icmp eq i8 %i.ba, 0        ; 3 uses
+  %or.cond.i.i.i.i.i.i = select i1 %i.ay, i1 true, i1 %.not6.i.i.i.i.i.i
+  br i1 %or.cond.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN4LIEF6ObjectC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(25) %i.av, ptr noundef nonnull align 8 dereferenceable(25) %i.au) #25
@@ -666,7 +664,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.ay, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %3, label %bb.f, label %bb.g
+  br i1 %.not6.i.i.i.i.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.bd = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN4LIEF6ObjectaSERKS0_(ptr noundef nonnull align 8 dereferenceable(25) %i.av, ptr noundef nonnull align 8 dereferenceable(25) %i.au) #25 ; 0 uses
@@ -686,7 +684,7 @@ bb.g:                                             ; preds = %bb.e
   br label %_ZN4LIEF8optionalINS_2PE13CodeIntegrityEEaSERKS3_.exit
 
 bb.h:                                             ; preds = %bb.d
-  br i1 %3, label %_ZN4LIEF8optionalINS_2PE13CodeIntegrityEEaSERKS3_.exit, label %bb.i
+  br i1 %.not6.i.i.i.i.i.i, label %bb.i, label %_ZN4LIEF8optionalINS_2PE13CodeIntegrityEEaSERKS3_.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.bk = load i32, ptr %i.au, align 8, !tbaa !192

@@ -204,8 +204,7 @@ bb.hl:                                            ; preds = %bb.hk
 
 bb.hm:                                            ; preds = %bb.hk
   %i.mf = load i8, ptr getelementptr inbounds nuw (i8, ptr @settings, i64 236), align 4, !tbaa !193, !range !66, !noundef !67
-  %10 = trunc nuw i8 %i.mf to i1
-  %.not = xor i1 %10, true
+  %.not = icmp eq i8 %i.mf, 0
   %or.cond28 = select i1 %.not, i1 true, i1 %.0212.lcssa
   br i1 %or.cond28, label %bb.ho, label %bb.hn
 
@@ -327,10 +326,10 @@ bb.ii:                                            ; preds = %bb.ih
 
 bb.ij:                                            ; preds = %bb.ih
   %i.nb = load i8, ptr getelementptr inbounds nuw (i8, ptr @settings, i64 138), align 2, !tbaa !218, !range !66, !noundef !67
-  %11 = trunc nuw i8 %i.nb to i1
-  %12 = icmp eq i32 %i.mx, 0
-  %or.cond44.not = and i1 %12, %11
-  br i1 %or.cond44.not, label %bb.ik, label %bb.il
+  %.not42 = icmp eq i8 %i.nb, 0
+  %10 = icmp ne i32 %i.mx, 0
+  %or.cond44 = or i1 %10, %.not42
+  br i1 %or.cond44, label %bb.il, label %bb.ik
 
 bb.ik:                                            ; preds = %bb.ij
   %i.nc = load ptr, ptr @stderr, align 8, !tbaa !59

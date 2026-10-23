@@ -202,10 +202,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ol, label %bb.h, label %bb.g
 
 ._crit_edge.loopexit.i:                           ; preds = %.noexc200
-  %5 = trunc nuw i8 %.sroa.08.0.i to i1
-  %6 = trunc nuw i8 %.sroa.07.0.i to i1
-  %not. = xor i1 %5, true
-  %i.om = select i1 %not., i1 true, i1 %6
+  %.not293 = icmp eq i8 %.sroa.08.0.i, 0
+  %5 = icmp ne i8 %.sroa.07.0.i, 0
+  %i.om = select i1 %.not293, i1 true, i1 %5
   br label %bb.k
 
 bb.g:                                             ; preds = %.lr.ph.i

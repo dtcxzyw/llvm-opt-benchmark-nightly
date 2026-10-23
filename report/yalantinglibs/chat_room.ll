@@ -205,8 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ar = load ptr, ptr %5, align 8, !tbaa !637, !nonnull !295, !align !426 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 48
   %i.at = load i8, ptr %i.as, align 8, !tbaa !565, !range !294, !noundef !295
-  %6 = trunc nuw i8 %i.at to i1
-  %.not16 = xor i1 %6, true
+  %.not16 = icmp eq i8 %i.at, 0
   %i.au = load i8, ptr %i.ap, align 8, !range !294
   %i.av = trunc nuw i8 %i.au to i1
   %or.cond = select i1 %.not16, i1 true, i1 %i.av
@@ -318,8 +317,8 @@ bb.a:
   %7 = alloca %"struct.asio::detail::scheduler::work_cleanup", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !622, !range !294, !noundef !295
-  %8 = trunc nuw i8 %i.b to i1
-  br i1 %8, label %.loopexit, label %.lr.ph
+  %.not.not37 = icmp eq i8 %i.b, 0
+  br i1 %.not.not37, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
@@ -722,8 +721,8 @@ _ZN4asio6detail27conditionally_enabled_event5clearERNS0_27conditionally_enabled_
 
 _ZN4asio6detail27conditionally_enabled_event4waitERNS0_27conditionally_enabled_mutex11scoped_lockE.exit: ; preds = %.lr.ph.i.i, %_ZN4asio6detail27conditionally_enabled_event5clearERNS0_27conditionally_enabled_mutex11scoped_lockE.exit, %.thread
   %i.eq = load i8, ptr %i.a, align 8, !tbaa !622, !range !294, !noundef !295
-  %9 = trunc nuw i8 %i.eq to i1
-  br i1 %9, label %.loopexit, label %bb.b, !llvm.loop !3391
+  %.not.not = icmp eq i8 %i.eq, 0
+  br i1 %.not.not, label %bb.b, label %.loopexit, !llvm.loop !3391
 
 .loopexit:                                        ; preds = %_ZN4asio6detail27conditionally_enabled_event4waitERNS0_27conditionally_enabled_mutex11scoped_lockE.exit, %bb.a, %bb.an
   %.3 = phi i64 [ 1, %bb.an ], [ 0, %bb.a ], [ 0, %_ZN4asio6detail27conditionally_enabled_event4waitERNS0_27conditionally_enabled_mutex11scoped_lockE.exit ]
@@ -1126,12 +1125,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load i8, ptr %i.c, align 8, !tbaa !564, !range !294, !noundef !295
-  %2 = trunc nuw i8 %i.d to i1
+  %.not26 = icmp eq i8 %i.d, 0
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4asio6detail15keyword_tss_ptrINS0_10call_stackINS0_14thread_contextENS0_16thread_info_baseEE7contextEE6value_E)
   %.08.i = load ptr, ptr %i.e, align 8            ; 2 uses
-  %.not9.i = icmp ne ptr %.08.i, null
-  %or.cond.not = select i1 %2, i1 %.not9.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i, label %.thread
+  %.not9.i = icmp eq ptr %.08.i, null
+  %or.cond.not = select i1 %.not26, i1 true, i1 %.not9.i
+  br i1 %or.cond.not, label %.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
   %.010.i = phi ptr [ %.0.i, %bb.c ], [ %.08.i, %bb.b ] ; 3 uses
@@ -1534,8 +1533,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bg = load ptr, ptr %5, align 8, !tbaa !637, !nonnull !295, !align !426 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 48
   %i.bi = load i8, ptr %i.bh, align 8, !tbaa !565, !range !294, !noundef !295
-  %6 = trunc nuw i8 %i.bi to i1
-  %.not26 = xor i1 %6, true
+  %.not26 = icmp eq i8 %i.bi, 0
   %i.bj = load i8, ptr %i.ap, align 8, !range !294
   %i.bk = trunc nuw i8 %i.bj to i1
   %or.cond = select i1 %.not26, i1 true, i1 %i.bk
@@ -1938,8 +1936,8 @@ bb.d:                                             ; preds = %bb.b
 _ZN12async_simple11logicAssertEbPKc.exit:         ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !905, !range !294, !noundef !295
-  %2 = trunc nuw i8 %i.e to i1
-  br i1 %2, label %bb.e, label %_ZN12async_simple6FutureISt10error_codeEC2EPNS_11FutureStateIS1_EE.exit, !prof !227
+  %2 = icmp eq i8 %i.e, 0
+  br i1 %2, label %_ZN12async_simple6FutureISt10error_codeEC2EPNS_11FutureStateIS1_EE.exit, label %bb.e, !prof !575
 
 bb.e:                                             ; preds = %_ZN12async_simple11logicAssertEbPKc.exit
   %i.f = tail call ptr @__cxa_allocate_exception(i64 16) #43 ; 3 uses
@@ -2342,8 +2340,8 @@ AfterCoroSuspend1089:                             ; preds = %resume.entry
           to label %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit387 unwind label %bb.df, !inline_history !181
 
 _ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit387: ; preds = %.noexc383
-  %16 = trunc nuw i8 %i.uz to i1
   store ptr null, ptr %.reload.addr1593, align 8, !tbaa !1393
+  %16 = icmp eq i8 %i.uz, 0
   %i.vd = load ptr, ptr %.reload.addr1595, align 8, !tbaa !1393 ; 3 uses
   %.not.i388 = icmp eq ptr %i.vd, null
   br i1 %.not.i388, label %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit389, label %bb.di
@@ -2362,7 +2360,7 @@ bb.dj:                                            ; preds = %bb.di
   unreachable
 
 _ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit389: ; preds = %bb.di, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit387
-  br i1 %16, label %bb.dm, label %.from._ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit389
+  br i1 %16, label %.from._ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit389, label %bb.dm
 
 _ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit382: ; preds = %bb.dg, %bb.df, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit382.from.1275
   %.pn199 = phi { ptr, i32 } [ %i.up, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit382.from.1275 ], [ %i.uq, %bb.df ], [ %i.uq, %bb.dg ] ; 2 uses
@@ -2703,8 +2701,8 @@ AfterCoroSuspend1097:                             ; preds = %resume.entry
           to label %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit429 unwind label %bb.ec, !inline_history !181
 
 _ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit429: ; preds = %.noexc425
-  %17 = trunc nuw i8 %i.za to i1
   store ptr null, ptr %.reload.addr1596, align 8, !tbaa !1393
+  %17 = icmp eq i8 %i.za, 0
   %i.ze = load ptr, ptr %.reload.addr1595, align 8, !tbaa !1393 ; 3 uses
   %.not.i430 = icmp eq ptr %i.ze, null
   br i1 %.not.i430, label %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit431, label %bb.ef
@@ -2723,7 +2721,7 @@ bb.eg:                                            ; preds = %bb.ef
   unreachable
 
 _ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit431: ; preds = %bb.ef, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit429
-  br i1 %17, label %.preheader840, label %.thread778
+  br i1 %17, label %.thread778, label %.preheader840
 
 .preheader840:                                    ; preds = %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit431
   %i.zj = getelementptr inbounds nuw i8, ptr %0, i64 864
@@ -3126,8 +3124,8 @@ AfterCoroSuspend1113:                             ; preds = %resume.entry
           to label %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit528 unwind label %bb.gl, !inline_history !181
 
 _ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit528: ; preds = %.noexc524
-  %18 = trunc nuw i8 %i.aki to i1
   store ptr null, ptr %.reload.addr1587, align 8, !tbaa !1393
+  %18 = icmp eq i8 %i.aki, 0
   %i.akm = load ptr, ptr %.reload.addr1593, align 8, !tbaa !1393 ; 3 uses
   %.not.i529 = icmp eq ptr %i.akm, null
   br i1 %.not.i529, label %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit530, label %bb.go
@@ -3146,7 +3144,7 @@ bb.gp:                                            ; preds = %bb.go
   unreachable
 
 _ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit530: ; preds = %bb.go, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit528
-  br i1 %18, label %.from.1397, label %.thread822
+  br i1 %18, label %.thread822, label %.from.1397
 
 _ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit523: ; preds = %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit523.from.1392, %bb.gj, %bb.gm, %bb.gl
   %.pn185 = phi { ptr, i32 } [ %i.ajz, %bb.gm ], [ %i.ajz, %bb.gl ], [ %i.ajy, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit523.from.1392 ], [ %i.ajq, %bb.gj ] ; 2 uses
@@ -3549,7 +3547,7 @@ bb.aa:                                            ; preds = %bb.z
   tail call void @__clang_call_terminate(ptr %i.bl) #53
   unreachable
 
-.from._ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit404: ; preds = %bb.v, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit387, %bb.z, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit402
+.from._ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit404: ; preds = %bb.z, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit402, %bb.v, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit387
   %i.bm = load ptr, ptr %.reload.addr1587, align 8, !tbaa !230 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 784 ; 2 uses
   %i.bo = icmp eq ptr %i.bm, %i.bn
@@ -3711,7 +3709,7 @@ bb.aq:                                            ; preds = %bb.ap
   tail call void @__clang_call_terminate(ptr %i.dd) #53
   unreachable
 
-.thread778:                                       ; preds = %bb.ad, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit429, %bb.ap, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit490, %bb.al, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit459, %bb.ah, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit442
+.thread778:                                       ; preds = %bb.ap, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit490, %bb.al, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit459, %bb.ah, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit442, %bb.ad, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit429
   %i.de = load ptr, ptr %.reload.addr1582.a, align 8, !tbaa !230 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 688 ; 2 uses
   %i.dg = icmp eq ptr %i.de, %i.df
@@ -3878,7 +3876,7 @@ bb.bf:                                            ; preds = %bb.be
   tail call void @__clang_call_terminate(ptr %i.ex) #53
   unreachable
 
-.thread822:                                       ; preds = %bb.ba, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit565, %bb.au, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit528, %bb.be, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit576, %bb.aw, %AfterCoroSuspend1117
+.thread822:                                       ; preds = %bb.ba, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit565, %bb.be, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit576, %bb.aw, %AfterCoroSuspend1117, %bb.au, %_ZN12async_simple4coro6detail15LazyAwaiterBaseIbED2Ev.exit528
   %i.ey = load ptr, ptr %.reload.addr1582.a, align 8, !tbaa !230 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 688 ; 2 uses
   %i.fa = icmp eq ptr %i.ey, %i.ez

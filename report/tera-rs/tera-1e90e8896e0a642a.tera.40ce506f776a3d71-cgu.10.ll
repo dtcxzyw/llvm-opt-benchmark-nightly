@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %bb.a
   %i.y = icmp eq i8 %.pr, 13, !dbg !22629
   br i1 %i.y, label %bb.ai, label %thread-pre-split, !dbg !22629
 
-_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit: ; preds = %.lr.ph, %bb.ae, %bb.bq, %bb.bf, %bb.k, %2, %bb.ah, %bb.ag, %bb.bg, %bb.as, %bb.at, %bb.aj, %bb.ai, %bb.af, %bb.ad, %bb.ac, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit75, %bb.c, %bb.b, %bb.ak, %bb.ab, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, %bb.j
-  %.sroa.0.0 = phi i1 [ %i.fi, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86 ], [ false, %bb.aj ], [ %spec.select, %bb.k ], [ false, %bb.as ], [ false, %bb.ag ], [ true, %bb.ai ], [ true, %bb.b ], [ %i.ad, %bb.j ], [ true, %bb.c ], [ %spec.select108, %bb.bq ], [ %i.bm, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit ], [ %i.ck, %bb.ab ], [ %3, %2 ], [ false, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit75 ], [ %spec.select107, %bb.bf ], [ true, %bb.ac ], [ false, %bb.ad ], [ %i.dp, %bb.ah ], [ true, %bb.af ], [ %i.ee, %bb.ak ], [ false, %bb.at ], [ false, %bb.bg ], [ true, %bb.ae ], [ %i.db, %.lr.ph ], !dbg !22232
+_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit: ; preds = %.lr.ph, %bb.ae, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit100, %bb.bq, %bb.bf, %bb.k, %bb.ah, %bb.ag, %bb.bg, %bb.as, %bb.at, %bb.aj, %bb.ai, %bb.af, %bb.ad, %bb.ac, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit75, %bb.c, %bb.b, %bb.ak, %bb.ab, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, %bb.j
+  %.sroa.0.0 = phi i1 [ %i.fi, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86 ], [ false, %bb.aj ], [ %spec.select, %bb.k ], [ false, %bb.as ], [ false, %bb.ag ], [ true, %bb.ai ], [ true, %bb.b ], [ %i.ad, %bb.j ], [ true, %bb.c ], [ %spec.select108, %bb.bq ], [ %i.bm, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit ], [ %i.ck, %bb.ab ], [ %i.dp, %bb.ah ], [ false, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit75 ], [ %spec.select107, %bb.bf ], [ true, %bb.ac ], [ false, %bb.ad ], [ %2, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit100 ], [ true, %bb.af ], [ %i.ee, %bb.ak ], [ false, %bb.at ], [ false, %bb.bg ], [ true, %bb.ae ], [ %i.db, %.lr.ph ], !dbg !22232
   ret i1 %.sroa.0.0, !dbg !22630
 
 bb.j:                                             ; preds = %bb.d
@@ -609,17 +609,14 @@ bb.bp:                                            ; preds = %_RNvMs7_NtCs5yXxDE1
 
 _RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit100: ; preds = %bb.bm, %bb.bn, %bb.bp, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit, %bb.bo, %.sink.split.i97
   %.sroa.5.0 = phi i128 [ undef, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit ], [ undef, %bb.bo ], [ %i.hd, %bb.bm ], [ %i.hn, %bb.bp ], [ %i.hg, %bb.bn ], [ %i.hj, %.sink.split.i97 ], !dbg !22790
-  %storemerge.sink.i99.off0 = phi i1 [ false, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit ], [ false, %bb.bo ], [ true, %bb.bm ], [ true, %bb.bp ], [ true, %bb.bn ], [ true, %.sink.split.i97 ] ; 2 uses
+  %2 = phi i1 [ true, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit ], [ true, %bb.bo ], [ false, %bb.bm ], [ false, %bb.bp ], [ false, %bb.bn ], [ false, %.sink.split.i97 ]
+  %storemerge.sink.i99.off0 = phi i1 [ false, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit ], [ false, %bb.bo ], [ true, %bb.bm ], [ true, %bb.bp ], [ true, %bb.bn ], [ true, %.sink.split.i97 ]
     #dbg_value(ptr undef, !22206, !DIExpression(), !22215)
-  br i1 %storemerge.sink.i95.off0, label %bb.bq, label %2, !dbg !22802
+  br i1 %storemerge.sink.i95.off0, label %bb.bq, label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, !dbg !22802
 
 bb.bq:                                            ; preds = %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit100
   %i.ho = icmp eq i128 %.sroa.4.0, %.sroa.5.0
-  %spec.select108 = and i1 %storemerge.sink.i99.off0, %i.ho, !dbg !22802
-  br label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, !dbg !22802
-
-2:                                                ; preds = %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit100
-  %3 = xor i1 %storemerge.sink.i99.off0, true, !dbg !22802
+  %spec.select108 = and i1 %i.ho, %storemerge.sink.i99.off0, !dbg !22802
   br label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, !dbg !22802
 }
 

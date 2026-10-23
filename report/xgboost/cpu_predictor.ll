@@ -205,13 +205,12 @@ bb.ac:                                            ; preds = %_ZSt8_DestroyIPN7xg
   br label %_ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EED2Ev.exit
 
 _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EED2Ev.exit: ; preds = %_ZSt8_DestroyIPN7xgboost7RegTree4FVecES2_EvT_S4_RSaIT0_E.exit.i.i, %bb.ac
-  %16 = trunc nuw i8 %i.eo to i1
-  %17 = xor i1 %16, true
+  %16 = icmp eq i8 %i.eo, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  ret i1 %17
+  ret i1 %16
 
 bb.ad:                                            ; preds = %bb.l
   %i.fj = landingpad { ptr, i32 }
@@ -614,12 +613,12 @@ _ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor14Predic
   call void @llvm.lifetime.end.p0(ptr nonnull %199) #18
   %i.cl = getelementptr inbounds nuw i8, ptr %i.bt, i64 48
   %i.cm = load i32, ptr %i.cl, align 8, !tbaa !237
-  %200 = icmp eq i32 %i.cm, 0
+  %200 = icmp ne i32 %i.cm, 0
   %i.cn = getelementptr inbounds nuw i8, ptr %i.bt, i64 72
   %i.co = load i8, ptr %i.cn, align 8, !range !140
-  %201 = trunc nuw i8 %i.co to i1
-  %.not25 = select i1 %200, i1 true, i1 %201
-  br i1 %.not25, label %bb.jc, label %bb.j
+  %201 = icmp eq i8 %i.co, 0
+  %.not25 = select i1 %200, i1 %201, i1 false
+  br i1 %.not25, label %bb.j, label %bb.jc
 
 bb.j:                                             ; preds = %_ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor14PredictDMatrixEPNS_7DMatrixEPSt6vectorIfSaIfEERKNS_3gbm11GBTreeModelEiiNS_6common15OptionalWeightsEEUlOT_E_EEvPKNS_7ContextES5_SD_SH_ENKUlPKS4_E_clESN_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %198) #18
@@ -1022,12 +1021,12 @@ _ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor14Predic
   call void @llvm.lifetime.end.p0(ptr nonnull %81) #18
   %i.bgp = getelementptr inbounds nuw i8, ptr %i.bfx, i64 48
   %i.bgq = load i32, ptr %i.bgp, align 8, !tbaa !237
-  %202 = icmp eq i32 %i.bgq, 0
+  %202 = icmp ne i32 %i.bgq, 0
   %i.bgr = getelementptr inbounds nuw i8, ptr %i.bfx, i64 72
   %i.bgs = load i8, ptr %i.bgr, align 8, !range !140
-  %203 = trunc nuw i8 %i.bgs to i1
-  %.not22 = select i1 %202, i1 true, i1 %203
-  br i1 %.not22, label %bb.yn, label %bb.st
+  %203 = icmp eq i8 %i.bgs, 0
+  %.not22 = select i1 %202, i1 %203, i1 false
+  br i1 %.not22, label %bb.st, label %bb.yn
 
 bb.st:                                            ; preds = %_ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor14PredictDMatrixEPNS_7DMatrixEPSt6vectorIfSaIfEERKNS_3gbm11GBTreeModelEiiNS_6common15OptionalWeightsEEUlOT_E_EEvPKNS_7ContextES5_SD_SH_ENKUlPKS4_E_clESN_.exit286
   call void @llvm.lifetime.start.p0(ptr nonnull %80) #18
@@ -1430,12 +1429,12 @@ _ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor11Predic
   call void @llvm.lifetime.end.p0(ptr nonnull %125) #18
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ar, i64 48
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !237
-  %126 = icmp eq i32 %i.bk, 0
+  %126 = icmp ne i32 %i.bk, 0
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ar, i64 72
   %i.bm = load i8, ptr %i.bl, align 8, !range !140
-  %127 = trunc nuw i8 %i.bm to i1
-  %.not25 = select i1 %126, i1 true, i1 %127
-  br i1 %.not25, label %bb.el, label %bb.j
+  %127 = icmp eq i8 %i.bm, 0
+  %.not25 = select i1 %126, i1 %127, i1 false
+  br i1 %.not25, label %bb.j, label %bb.el
 
 bb.j:                                             ; preds = %_ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor11PredictLeafEPNS_7DMatrixEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEiEUlOT_E_EEvPKNS_7ContextES5_SC_SE_ENKUlPKS4_E_clESK_.exit
   %i.bn = load ptr, ptr %3, align 8, !tbaa !1740, !nonnull !141, !align !245 ; 2 uses
@@ -1838,12 +1837,12 @@ _ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor11Predic
   call void @llvm.lifetime.end.p0(ptr nonnull %64) #18
   %i.adb = getelementptr inbounds nuw i8, ptr %i.acj, i64 48
   %i.adc = load i32, ptr %i.adb, align 8, !tbaa !237
-  %128 = icmp eq i32 %i.adc, 0
+  %128 = icmp ne i32 %i.adc, 0
   %i.add = getelementptr inbounds nuw i8, ptr %i.acj, i64 72
   %i.ade = load i8, ptr %i.add, align 8, !range !140
-  %129 = trunc nuw i8 %i.ade to i1
-  %.not22 = select i1 %128, i1 true, i1 %129
-  br i1 %.not22, label %bb.ot, label %bb.jr
+  %129 = icmp eq i8 %i.ade, 0
+  %.not22 = select i1 %128, i1 %129, i1 false
+  br i1 %.not22, label %bb.jr, label %bb.ot
 
 bb.jr:                                            ; preds = %_ZZN7xgboost9predictor12_GLOBAL__N_113LaunchPredictIZNKS0_12CPUPredictor11PredictLeafEPNS_7DMatrixEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEiEUlOT_E_EEvPKNS_7ContextES5_SC_SE_ENKUlPKS4_E_clESK_.exit156
   %i.adf = load ptr, ptr %3, align 8, !tbaa !1740, !nonnull !141, !align !245 ; 2 uses

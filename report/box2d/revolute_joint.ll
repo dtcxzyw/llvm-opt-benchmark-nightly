@@ -202,8 +202,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bh = fcmp oeq float %i.bg, 0.000000e+00      ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.bj = load i8, ptr %i.bi, align 4, !tbaa !111, !range !70, !noundef !71
-  %4 = trunc nuw i8 %i.bj to i1
-  %.not254 = xor i1 %4, true
+  %.not254 = icmp eq i8 %i.bj, 0
   %brmerge = select i1 %.not254, i1 true, i1 %i.bh
   br i1 %brmerge, label %bb.g, label %bb.f
 
@@ -254,8 +253,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %.0 = phi float [ %i.ct, %bb.f ], [ %i.aa, %bb.e ] ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 209
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !143, !range !70, !noundef !71
-  %5 = trunc nuw i8 %i.cx to i1
-  %.not256 = xor i1 %5, true
+  %.not256 = icmp eq i8 %i.cx, 0
   %brmerge258 = select i1 %.not256, i1 true, i1 %i.bh
   br i1 %brmerge258, label %bb.i, label %bb.h
 
@@ -293,8 +291,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %.1 = phi float [ %i.du, %bb.h ], [ %.0, %bb.g ] ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 210
   %i.dy = load i8, ptr %i.dx, align 2, !tbaa !113, !range !70, !noundef !71
-  %6 = trunc nuw i8 %i.dy to i1
-  %.not259 = xor i1 %6, true
+  %.not259 = icmp eq i8 %i.dy, 0
   %brmerge261 = select i1 %.not259, i1 true, i1 %i.bh
   br i1 %brmerge261, label %bb.s, label %bb.j
 
