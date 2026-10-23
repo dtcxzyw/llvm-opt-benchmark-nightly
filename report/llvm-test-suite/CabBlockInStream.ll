@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #7
 define dso_local noundef i32 @_ZN8NArchive4NCab17CCabBlockInStream7PreReadERjS2_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(50) %0, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %3 = alloca %"class.NArchive::NCab::CTempCabInBuffer2", align 4 ; 12 uses
-  %4 = alloca %"class.NArchive::NCab::CCheckSum2", align 4 ; 16 uses
+  %4 = alloca %"class.NArchive::NCab::CCheckSum2", align 4 ; 15 uses
   %i.a = alloca [2 x i8], align 1                 ; 7 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
@@ -387,8 +387,7 @@ bb.m:                                             ; preds = %bb.l
   %.pre.i = load i32, ptr %i.bm, align 4, !tbaa !24
   %i.cw = load i8, ptr %i.cv, align 4
   %i.cx = zext i8 %i.cw to i32
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 9
-  %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 10
+  %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 9
   %i.cz = getelementptr inbounds nuw i8, ptr %4, i64 11
   br label %bb.n
 
@@ -415,14 +414,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.di, label %.preheader.preheader.i, label %.loopexit.i
 
 .preheader.preheader.i:                           ; preds = %bb.o
-  %6 = load i8, ptr %5, align 1, !tbaa !25
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 8
-  %9 = or disjoint i32 %8, %i.cx
-  %10 = load i8, ptr %i.cy, align 2, !tbaa !25
-  %i.dj = zext i8 %10 to i32
-  %i.dk = shl nuw nsw i32 %i.dj, 16
-  %i.dl = or disjoint i32 %9, %i.dk
+  %5 = load i16, ptr %i.cy, align 1
+  %i.dj = zext i16 %5 to i32
+  %i.dk = shl nuw nsw i32 %i.dj, 8
+  %i.dl = or disjoint i32 %i.dk, %i.cx
   %i.dm = load i8, ptr %i.cz, align 1, !tbaa !25
   %i.dn = zext i8 %i.dm to i32
   %i.do = shl nuw i32 %i.dn, 24

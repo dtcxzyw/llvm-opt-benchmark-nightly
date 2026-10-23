@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 10 uses
   %i.c = alloca [8 x i8], align 8                 ; 10 uses
-  %i.d = alloca [24 x i8], align 8                ; 11 uses
+  %i.d = alloca [24 x i8], align 8                ; 10 uses
   %.sroa.11 = alloca [24 x i8], align 8           ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !186)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 244 ; 3 uses
@@ -234,22 +234,17 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   store i8 1, ptr %i.e, align 4, !alias.scope !186
   %.sroa.9.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %.sroa.9.0.copyload7 = load i8, ptr %.sroa.9.0..sroa_idx6, align 4, !noalias !186
-  %.sroa.10.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %i.d, i64 5
-  %.sroa.10.sroa.0.0.copyload = load i24, ptr %.sroa.10.0..sroa_idx10, align 1, !noalias !186
+  %.sroa.9.0.copyload7 = load i32, ptr %.sroa.9.0..sroa_idx6, align 4, !noalias !186
+  %2 = zext i32 %.sroa.9.0.copyload7 to i64
+  %3 = shl nuw i64 %2, 32
   %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %.sroa.10.sroa.6.0.copyload = load i64, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx10.sroa_idx, align 8, !noalias !186
   %.sroa.10.sroa.7.0..sroa.10.0..sroa_idx10.sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.10.sroa.7.0.copyload = load ptr, ptr %.sroa.10.sroa.7.0..sroa.10.0..sroa_idx10.sroa_idx, align 8, !noalias !186
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !187
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11)
-  %.sroa.012.5.insert.ext = zext i24 %.sroa.10.sroa.0.0.copyload to i64
-  %.sroa.012.5.insert.shift = shl nuw i64 %.sroa.012.5.insert.ext, 40
   %.sroa.012.0.insert.ext = zext nneg i32 %i.h to i64
-  %.sroa.012.4.insert.ext = zext i8 %.sroa.9.0.copyload7 to i64
-  %.sroa.012.4.insert.shift = shl nuw nsw i64 %.sroa.012.4.insert.ext, 32
-  %.sroa.012.0.insert.insert = or disjoint i64 %.sroa.012.4.insert.shift, %.sroa.012.0.insert.ext
-  %.sroa.012.4.insert.insert = or disjoint i64 %.sroa.012.0.insert.insert, %.sroa.012.5.insert.shift
+  %.sroa.012.4.insert.insert = or disjoint i64 %3, %.sroa.012.0.insert.ext
   %i.l = inttoptr i64 %.sroa.012.4.insert.insert to ptr
   br label %_RNCNvXs4_NtNtCsarohYtwVpE2_13libcst_native9tokenizer4coreNtB7_13TokenIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next0Bb_.exit
 

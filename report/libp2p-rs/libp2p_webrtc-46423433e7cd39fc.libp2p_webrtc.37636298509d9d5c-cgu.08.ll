@@ -205,7 +205,7 @@ bb.a:
   store ptr inttoptr (i64 8 to ptr), ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %.sroa.4141.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 10
+  %.sroa.4141.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 10 ; 2 uses
   %.sroa.5142.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 11
   %.sroa.6143.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 12
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 2
@@ -378,12 +378,12 @@ bb.f:                                             ; preds = %bb.d
   %i.ba = load i64, ptr %i.ab, align 8, !range !267, !noalias !266, !noundef !7 ; 2 uses
   %.not.i = icmp eq i64 %i.ba, -1
   %.sroa.0140.0.copyload.i = load i16, ptr %i.ag, align 8, !noalias !266 ; 3 uses
-  %.sroa.4141.0.copyload.i = load i8, ptr %.sroa.4141.0..sroa_idx.i, align 2, !noalias !266 ; 4 uses
-  %.sroa.5142.0.copyload.i = load i8, ptr %.sroa.5142.0..sroa_idx.i, align 1, !noalias !266 ; 3 uses
-  %.sroa.6143.0.copyload.i = load i16, ptr %.sroa.6143.0..sroa_idx.i, align 4, !noalias !266 ; 2 uses
   br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.noexc
+  %.sroa.5151.0.copyload.i = load i32, ptr %.sroa.4141.0..sroa_idx.i, align 2, !noalias !266
+  %2 = zext i32 %.sroa.5151.0.copyload.i to i64
+  %3 = shl nuw nsw i64 %2, 16
   %.sroa.8154.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 14
   %.sroa.24.6.copyload = load i16, ptr %.sroa.8154.0..sroa_idx.i, align 2, !noalias !265
   %.sroa.24.6.insert.ext = zext i16 %.sroa.24.6.copyload to i64
@@ -396,20 +396,15 @@ bb.g:                                             ; preds = %.noexc
   %.sroa.58.14.copyload = load i64, ptr %.sroa.58.14..sroa.8154.0..sroa_idx.i.sroa_idx, align 8, !noalias !265
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !266
   %.sroa.24.0.insert.ext94 = zext i16 %.sroa.0140.0.copyload.i to i64
-  %.sroa.24.2.insert.ext = zext i8 %.sroa.4141.0.copyload.i to i64
-  %.sroa.24.2.insert.shift = shl nuw nsw i64 %.sroa.24.2.insert.ext, 16
-  %.sroa.24.3.insert.ext = zext i8 %.sroa.5142.0.copyload.i to i64
-  %.sroa.24.3.insert.shift = shl nuw nsw i64 %.sroa.24.3.insert.ext, 24
-  %.sroa.24.4.insert.ext103 = zext i16 %.sroa.6143.0.copyload.i to i64
-  %.sroa.24.4.insert.shift104 = shl nuw nsw i64 %.sroa.24.4.insert.ext103, 32
-  %.sroa.24.0.insert.insert96 = or disjoint i64 %.sroa.24.2.insert.shift, %.sroa.24.0.insert.ext94
-  %.sroa.24.2.insert.insert = or disjoint i64 %.sroa.24.0.insert.insert96, %.sroa.24.3.insert.shift
-  %.sroa.24.3.insert.insert = or disjoint i64 %.sroa.24.2.insert.insert, %.sroa.24.4.insert.shift104
+  %.sroa.24.3.insert.insert = or disjoint i64 %3, %.sroa.24.0.insert.ext94
   %.sroa.24.4.insert.insert106 = or disjoint i64 %.sroa.24.3.insert.insert, %.sroa.24.6.insert.shift
   %i.bb = inttoptr i64 %.sroa.24.4.insert.insert106 to ptr
   br label %.loopexit.sink.split
 
 bb.h:                                             ; preds = %.noexc
+  %.sroa.4141.0.copyload.i = load i8, ptr %.sroa.4141.0..sroa_idx.i, align 2, !noalias !266 ; 3 uses
+  %.sroa.5142.0.copyload.i = load i8, ptr %.sroa.5142.0..sroa_idx.i, align 1, !noalias !266 ; 2 uses
+  %.sroa.6143.0.copyload.i = load i16, ptr %.sroa.6143.0..sroa_idx.i, align 4, !noalias !266
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !266
   store i16 %.sroa.0140.0.copyload.i, ptr %i.ac, align 2, !noalias !266
   store i8 %.sroa.4141.0.copyload.i, ptr %.sroa.3.0..sroa_idx.i, align 2, !noalias !266

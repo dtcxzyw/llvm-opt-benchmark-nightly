@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %._crit_edge.i
   %i.j = add nuw i64 %2, 31
   %i.k = lshr i64 %i.j, 3
   %i.l = and i64 %i.k, 3
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %i.e ; 22 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %i.e ; 20 uses
   switch i64 %i.l, label %default.unreachable [
     i64 0, label %bb.d
     i64 1, label %bb.n
@@ -270,33 +270,23 @@ bb.j:                                             ; preds = %bb.d
 
 bb.k:                                             ; preds = %bb.d
   %i.ah = load i32, ptr %i.m, align 1, !alias.scope !19728
-  %3 = zext i32 %i.ah to i64
-  %4 = shl nuw nsw i64 %3, 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 5
-  %6 = load i8, ptr %5, align 1, !alias.scope !19725, !noundef !14
-  %i.ai = zext i8 %6 to i64
-  %i.aj = shl nuw nsw i64 %i.ai, 8
-  %7 = or disjoint i64 %i.aj, %4
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.m, i64 4
-  %8 = load i8, ptr %i.ak, align 1, !alias.scope !19725, !noundef !14
-  %i.al = zext i8 %8 to i64
-  %i.am = or disjoint i64 %7, %i.al
+  %i.ai = zext i32 %i.ah to i64
+  %i.aj = shl nuw nsw i64 %i.ai, 16
+  %i.ak = getelementptr i8, ptr %i.m, i64 4
+  %3 = load i16, ptr %i.ak, align 1, !alias.scope !19725
+  %i.al = zext i16 %3 to i64
+  %i.am = or disjoint i64 %i.aj, %i.al
   br label %_RNvNtCs5tRDsWtv0pR_6wyhash9functions9read_rest.exit.i
 
 bb.l:                                             ; preds = %bb.d
   %i.an = load i32, ptr %i.m, align 1, !alias.scope !19729
-  %9 = zext i32 %i.an to i64
-  %10 = shl nuw nsw i64 %9, 24
-  %11 = getelementptr inbounds nuw i8, ptr %i.m, i64 5
-  %12 = load i8, ptr %11, align 1, !alias.scope !19725, !noundef !14
-  %i.ao = zext i8 %12 to i64
-  %i.ap = shl nuw nsw i64 %i.ao, 16
-  %13 = or disjoint i64 %i.ap, %10
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.m, i64 4
-  %14 = load i8, ptr %i.aq, align 1, !alias.scope !19725, !noundef !14
-  %i.ar = zext i8 %14 to i64
+  %i.ao = zext i32 %i.an to i64
+  %i.ap = shl nuw nsw i64 %i.ao, 24
+  %i.aq = getelementptr i8, ptr %i.m, i64 4
+  %4 = load i16, ptr %i.aq, align 1, !alias.scope !19725
+  %i.ar = zext i16 %4 to i64
   %i.as = shl nuw nsw i64 %i.ar, 8
-  %i.at = or disjoint i64 %13, %i.as
+  %i.at = or disjoint i64 %i.as, %i.ap
   %i.au = getelementptr inbounds nuw i8, ptr %i.m, i64 6
   %i.av = load i8, ptr %i.au, align 1, !alias.scope !19725, !noundef !14
   %i.aw = zext i8 %i.av to i64
@@ -359,7 +349,7 @@ bb.r:                                             ; preds = %_RNvNtCs5tRDsWtv0pR
   %i.bx = or disjoint i64 %i.bt, %i.bw
   %i.by = xor i64 %i.bx, %i.g
   %i.bz = sub nuw nsw i64 %2, %i.bq
-  %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 %i.bq ; 16 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 %i.bq ; 14 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19737)
   switch i64 %i.bz, label %bb.s [
     i64 1, label %bb.t
@@ -413,33 +403,23 @@ bb.x:                                             ; preds = %bb.r
 
 bb.y:                                             ; preds = %bb.r
   %i.cv = load i32, ptr %i.ca, align 1, !alias.scope !19741
-  %15 = zext i32 %i.cv to i64
-  %16 = shl nuw nsw i64 %15, 16
-  %17 = getelementptr inbounds nuw i8, ptr %i.ca, i64 5
-  %18 = load i8, ptr %17, align 1, !alias.scope !19738, !noundef !14
-  %i.cw = zext i8 %18 to i64
-  %i.cx = shl nuw nsw i64 %i.cw, 8
-  %19 = or disjoint i64 %i.cx, %16
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.ca, i64 4
-  %20 = load i8, ptr %i.cy, align 1, !alias.scope !19738, !noundef !14
-  %i.cz = zext i8 %20 to i64
-  %i.da = or disjoint i64 %19, %i.cz
+  %i.cw = zext i32 %i.cv to i64
+  %i.cx = shl nuw nsw i64 %i.cw, 16
+  %i.cy = getelementptr i8, ptr %i.ca, i64 4
+  %5 = load i16, ptr %i.cy, align 1, !alias.scope !19738
+  %i.cz = zext i16 %5 to i64
+  %i.da = or disjoint i64 %i.cx, %i.cz
   br label %_RNvNtCs5tRDsWtv0pR_6wyhash9functions9read_rest.exit26.i
 
 bb.z:                                             ; preds = %bb.r
   %i.db = load i32, ptr %i.ca, align 1, !alias.scope !19742
-  %21 = zext i32 %i.db to i64
-  %22 = shl nuw nsw i64 %21, 24
-  %23 = getelementptr inbounds nuw i8, ptr %i.ca, i64 5
-  %24 = load i8, ptr %23, align 1, !alias.scope !19738, !noundef !14
-  %i.dc = zext i8 %24 to i64
-  %i.dd = shl nuw nsw i64 %i.dc, 16
-  %25 = or disjoint i64 %i.dd, %22
-  %i.de = getelementptr inbounds nuw i8, ptr %i.ca, i64 4
-  %26 = load i8, ptr %i.de, align 1, !alias.scope !19738, !noundef !14
-  %i.df = zext i8 %26 to i64
+  %i.dc = zext i32 %i.db to i64
+  %i.dd = shl nuw nsw i64 %i.dc, 24
+  %i.de = getelementptr i8, ptr %i.ca, i64 4
+  %6 = load i16, ptr %i.de, align 1, !alias.scope !19738
+  %i.df = zext i16 %6 to i64
   %i.dg = shl nuw nsw i64 %i.df, 8
-  %i.dh = or disjoint i64 %25, %i.dg
+  %i.dh = or disjoint i64 %i.dg, %i.dd
   %i.di = getelementptr inbounds nuw i8, ptr %i.ca, i64 6
   %i.dj = load i8, ptr %i.di, align 1, !alias.scope !19738, !noundef !14
   %i.dk = zext i8 %i.dj to i64
@@ -540,7 +520,7 @@ _RNvNtCs5tRDsWtv0pR_6wyhash9functions14read64_swapped.exit28.i: ; preds = %bb.ai
   %i.fc = zext i64 %i.fb to i128
   %i.fd = mul nuw i128 %i.fc, %i.fa               ; 2 uses
   %i.fe = sub nuw nsw i64 %2, %i.es
-  %i.ff = getelementptr inbounds nuw i8, ptr %1, i64 %i.es ; 16 uses
+  %i.ff = getelementptr inbounds nuw i8, ptr %1, i64 %i.es ; 14 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19755)
   switch i64 %i.fe, label %bb.al [
     i64 1, label %bb.am
@@ -598,33 +578,23 @@ bb.aq:                                            ; preds = %_RNvNtCs5tRDsWtv0pR
 
 bb.ar:                                            ; preds = %_RNvNtCs5tRDsWtv0pR_6wyhash9functions14read64_swapped.exit28.i
   %i.ga = load i32, ptr %i.ff, align 1, !alias.scope !19759
-  %27 = zext i32 %i.ga to i64
-  %28 = shl nuw nsw i64 %27, 16
-  %29 = getelementptr inbounds nuw i8, ptr %i.ff, i64 5
-  %30 = load i8, ptr %29, align 1, !alias.scope !19756, !noundef !14
-  %i.gb = zext i8 %30 to i64
-  %i.gc = shl nuw nsw i64 %i.gb, 8
-  %31 = or disjoint i64 %i.gc, %28
-  %i.gd = getelementptr inbounds nuw i8, ptr %i.ff, i64 4
-  %32 = load i8, ptr %i.gd, align 1, !alias.scope !19756, !noundef !14
-  %i.ge = zext i8 %32 to i64
-  %i.gf = or disjoint i64 %31, %i.ge
+  %i.gb = zext i32 %i.ga to i64
+  %i.gc = shl nuw nsw i64 %i.gb, 16
+  %i.gd = getelementptr i8, ptr %i.ff, i64 4
+  %7 = load i16, ptr %i.gd, align 1, !alias.scope !19756
+  %i.ge = zext i16 %7 to i64
+  %i.gf = or disjoint i64 %i.gc, %i.ge
   br label %_RNvNtCs5tRDsWtv0pR_6wyhash9functions9read_rest.exit30.i
 
 bb.as:                                            ; preds = %_RNvNtCs5tRDsWtv0pR_6wyhash9functions14read64_swapped.exit28.i
   %i.gg = load i32, ptr %i.ff, align 1, !alias.scope !19760
-  %33 = zext i32 %i.gg to i64
-  %34 = shl nuw nsw i64 %33, 24
-  %35 = getelementptr inbounds nuw i8, ptr %i.ff, i64 5
-  %36 = load i8, ptr %35, align 1, !alias.scope !19756, !noundef !14
-  %i.gh = zext i8 %36 to i64
-  %i.gi = shl nuw nsw i64 %i.gh, 16
-  %37 = or disjoint i64 %i.gi, %34
-  %i.gj = getelementptr inbounds nuw i8, ptr %i.ff, i64 4
-  %38 = load i8, ptr %i.gj, align 1, !alias.scope !19756, !noundef !14
-  %i.gk = zext i8 %38 to i64
+  %i.gh = zext i32 %i.gg to i64
+  %i.gi = shl nuw nsw i64 %i.gh, 24
+  %i.gj = getelementptr i8, ptr %i.ff, i64 4
+  %8 = load i16, ptr %i.gj, align 1, !alias.scope !19756
+  %i.gk = zext i16 %8 to i64
   %i.gl = shl nuw nsw i64 %i.gk, 8
-  %i.gm = or disjoint i64 %37, %i.gl
+  %i.gm = or disjoint i64 %i.gl, %i.gi
   %i.gn = getelementptr inbounds nuw i8, ptr %i.ff, i64 6
   %i.go = load i8, ptr %i.gn, align 1, !alias.scope !19756, !noundef !14
   %i.gp = zext i8 %i.go to i64
@@ -758,7 +728,7 @@ _RNvNtCs5tRDsWtv0pR_6wyhash9functions14read64_swapped.exit33.i: ; preds = %bb.be
   %i.ix = or disjoint i64 %i.it, %i.iw
   %i.iy = xor i64 %i.ix, %i.g
   %i.iz = sub nuw nsw i64 %2, %i.ir
-  %i.ja = getelementptr inbounds nuw i8, ptr %1, i64 %i.ir ; 16 uses
+  %i.ja = getelementptr inbounds nuw i8, ptr %1, i64 %i.ir ; 14 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19778)
   switch i64 %i.iz, label %bb.bg [
     i64 1, label %bb.bh
@@ -812,33 +782,23 @@ bb.bl:                                            ; preds = %_RNvNtCs5tRDsWtv0pR
 
 bb.bm:                                            ; preds = %_RNvNtCs5tRDsWtv0pR_6wyhash9functions14read64_swapped.exit33.i
   %i.jv = load i32, ptr %i.ja, align 1, !alias.scope !19782
-  %39 = zext i32 %i.jv to i64
-  %40 = shl nuw nsw i64 %39, 16
-  %41 = getelementptr inbounds nuw i8, ptr %i.ja, i64 5
-  %42 = load i8, ptr %41, align 1, !alias.scope !19779, !noundef !14
-  %i.jw = zext i8 %42 to i64
-  %i.jx = shl nuw nsw i64 %i.jw, 8
-  %43 = or disjoint i64 %i.jx, %40
-  %i.jy = getelementptr inbounds nuw i8, ptr %i.ja, i64 4
-  %44 = load i8, ptr %i.jy, align 1, !alias.scope !19779, !noundef !14
-  %i.jz = zext i8 %44 to i64
-  %i.ka = or disjoint i64 %43, %i.jz
+  %i.jw = zext i32 %i.jv to i64
+  %i.jx = shl nuw nsw i64 %i.jw, 16
+  %i.jy = getelementptr i8, ptr %i.ja, i64 4
+  %9 = load i16, ptr %i.jy, align 1, !alias.scope !19779
+  %i.jz = zext i16 %9 to i64
+  %i.ka = or disjoint i64 %i.jx, %i.jz
   br label %_RNvNtCs5tRDsWtv0pR_6wyhash9functions9read_rest.exit35.i
 
 bb.bn:                                            ; preds = %_RNvNtCs5tRDsWtv0pR_6wyhash9functions14read64_swapped.exit33.i
   %i.kb = load i32, ptr %i.ja, align 1, !alias.scope !19783
-  %45 = zext i32 %i.kb to i64
-  %46 = shl nuw nsw i64 %45, 24
-  %47 = getelementptr inbounds nuw i8, ptr %i.ja, i64 5
-  %48 = load i8, ptr %47, align 1, !alias.scope !19779, !noundef !14
-  %i.kc = zext i8 %48 to i64
-  %i.kd = shl nuw nsw i64 %i.kc, 16
-  %49 = or disjoint i64 %i.kd, %46
-  %i.ke = getelementptr inbounds nuw i8, ptr %i.ja, i64 4
-  %50 = load i8, ptr %i.ke, align 1, !alias.scope !19779, !noundef !14
-  %i.kf = zext i8 %50 to i64
+  %i.kc = zext i32 %i.kb to i64
+  %i.kd = shl nuw nsw i64 %i.kc, 24
+  %i.ke = getelementptr i8, ptr %i.ja, i64 4
+  %10 = load i16, ptr %i.ke, align 1, !alias.scope !19779
+  %i.kf = zext i16 %10 to i64
   %i.kg = shl nuw nsw i64 %i.kf, 8
-  %i.kh = or disjoint i64 %49, %i.kg
+  %i.kh = or disjoint i64 %i.kg, %i.kd
   %i.ki = getelementptr inbounds nuw i8, ptr %i.ja, i64 6
   %i.kj = load i8, ptr %i.ki, align 1, !alias.scope !19779, !noundef !14
   %i.kk = zext i8 %i.kj to i64

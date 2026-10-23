@@ -204,7 +204,7 @@ bb.a:
   %9 = alloca %"class.std::unique_ptr", align 8   ; 6 uses
   %10 = alloca %"class.std::unique_ptr", align 8  ; 5 uses
   %11 = alloca %"struct.rocksdb::FSReadRequest", align 8 ; 18 uses
-  %12 = alloca %"class.rocksdb::IOStatus", align 8 ; 11 uses
+  %12 = alloca %"class.rocksdb::IOStatus", align 8 ; 10 uses
   %13 = alloca %"struct.rocksdb::InjectedErrorLog::TaggedEntryDetail", align 8 ; 7 uses
   %14 = alloca %"class.rocksdb::IOStatus", align 8 ; 13 uses
   %15 = alloca %"class.std::function", align 8    ; 10 uses
@@ -351,20 +351,15 @@ _ZN7rocksdb20FaultInjectionTestFS27MaybeInjectThreadLocalErrorENS_20FaultInjecti
   %i.ay = getelementptr inbounds nuw i8, ptr %12, i64 1 ; 2 uses
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !134
   store i8 0, ptr %i.ay, align 1, !tbaa !68
-  %16 = getelementptr inbounds nuw i8, ptr %12, i64 3
-  %17 = load i8, ptr %16, align 1, !tbaa !57, !range !58, !noundef !59
-  %.sroa.13.3.insert.ext71 = zext nneg i8 %17 to i32
-  %.sroa.13.3.insert.shift72 = shl nuw nsw i32 %.sroa.13.3.insert.ext71, 8
-  %i.ba = getelementptr inbounds nuw i8, ptr %12, i64 4
-  %18 = load i8, ptr %i.ba, align 4, !tbaa !60, !range !58, !noundef !59
-  %.sroa.13.4.insert.ext76 = zext nneg i8 %18 to i32
-  %.sroa.13.4.insert.shift77 = shl nuw nsw i32 %.sroa.13.4.insert.ext76, 16
-  %.sroa.13.4.insert.insert79 = or disjoint i32 %.sroa.13.3.insert.shift72, %.sroa.13.4.insert.shift77
+  %i.ba = getelementptr inbounds nuw i8, ptr %12, i64 3
+  %16 = load i16, ptr %i.ba, align 1
+  %.sroa.13.4.insert.ext76 = zext i16 %16 to i32
+  %.sroa.13.4.insert.shift77 = shl nuw nsw i32 %.sroa.13.4.insert.ext76, 8
   %i.bb = getelementptr inbounds nuw i8, ptr %12, i64 5 ; 2 uses
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !135
   %.sroa.13.5.insert.ext81 = zext i8 %i.bc to i32
   %.sroa.13.5.insert.shift82 = shl nuw i32 %.sroa.13.5.insert.ext81, 24
-  %.sroa.13.5.insert.insert84 = or disjoint i32 %.sroa.13.4.insert.insert79, %.sroa.13.5.insert.shift82
+  %.sroa.13.5.insert.insert84 = or disjoint i32 %.sroa.13.4.insert.shift77, %.sroa.13.5.insert.shift82
   store i8 0, ptr %i.bb, align 1, !tbaa !135
   %i.bd = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !63 ; 3 uses

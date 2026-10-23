@@ -109,14 +109,9 @@ bb.c:                                             ; preds = %bb.b
   %i.m = zext i8 %i.l to i64
   %i.n = shl nuw nsw i64 %i.m, 16
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %7 = load i8, ptr %i.o, align 1, !tbaa !14
-  %8 = zext i8 %7 to i64
-  %9 = or disjoint i64 %i.n, %8
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %11 = load i8, ptr %10, align 1, !tbaa !14
-  %i.p = zext i8 %11 to i64
-  %12 = shl nuw nsw i64 %i.p, 8
-  %i.q = or disjoint i64 %9, %12
+  %7 = load i16, ptr %i.o, align 1
+  %i.p = zext i16 %7 to i64
+  %i.q = or disjoint i64 %i.n, %i.p
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.s = load i32, ptr %i.r, align 1
   br label %bb.e

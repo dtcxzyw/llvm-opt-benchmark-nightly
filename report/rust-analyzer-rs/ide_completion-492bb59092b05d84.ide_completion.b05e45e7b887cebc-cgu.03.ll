@@ -204,24 +204,19 @@ bb.i:                                             ; preds = %.lr.ph, %bb.q
   store i32 %i.bg, ptr %i.av, align 4
   store i32 %i.bi, ptr %i.aw, align 4
   store i8 3, ptr %i.f, align 4
-  %i.bm = load ptr, ptr %i.ax, align 8, !nonnull !7, !align !10, !noundef !7 ; 3 uses
+  %i.bm = load ptr, ptr %i.ax, align 8, !nonnull !7, !align !10, !noundef !7 ; 2 uses
   %i.bn = load i8, ptr %i.ay, align 4, !range !15, !noundef !7
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 128
-  %6 = load i8, ptr %i.bo, align 8, !range !15, !noundef !7
-  %7 = getelementptr inbounds nuw i8, ptr %i.bm, i64 129
-  %8 = load i8, ptr %7, align 1, !range !15, !noundef !7
+  %6 = load i16, ptr %i.bo, align 8
+  %7 = zext i16 %6 to i32
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bm, i64 130
   %i.bq = load i8, ptr %i.bp, align 2, !range !15, !noundef !7
-  %.sroa.620.0.insert.ext = zext nneg i8 %i.bn to i32
-  %.sroa.620.0.insert.shift = shl nuw nsw i32 %.sroa.620.0.insert.ext, 24
-  %.sroa.519.0.insert.ext.a = zext nneg i8 %i.bq to i32
-  %.sroa.519.0.insert.shift.a = shl nuw nsw i32 %.sroa.519.0.insert.ext.a, 16
-  %.sroa.418.0.insert.ext = zext nneg i8 %8 to i32
-  %.sroa.418.0.insert.shift = shl nuw nsw i32 %.sroa.418.0.insert.ext, 8
-  %.sroa.017.0.insert.ext = zext nneg i8 %6 to i32
-  %.sroa.519.0.insert.insert = or disjoint i32 %.sroa.620.0.insert.shift, %.sroa.017.0.insert.ext
-  %.sroa.418.0.insert.insert = or disjoint i32 %.sroa.519.0.insert.insert, %.sroa.418.0.insert.shift
-  %.sroa.017.0.insert.insert = or disjoint i32 %.sroa.418.0.insert.insert, %.sroa.519.0.insert.shift.a
+  %.sroa.519.0.insert.ext.a = zext nneg i8 %i.bn to i32
+  %.sroa.519.0.insert.shift.a = shl nuw nsw i32 %.sroa.519.0.insert.ext.a, 24
+  %.sroa.418.0.insert.ext = zext nneg i8 %i.bq to i32
+  %.sroa.418.0.insert.shift = shl nuw nsw i32 %.sroa.418.0.insert.ext, 16
+  %.sroa.418.0.insert.insert = or disjoint i32 %.sroa.519.0.insert.shift.a, %7
+  %.sroa.017.0.insert.insert = or disjoint i32 %.sroa.418.0.insert.insert, %.sroa.418.0.insert.shift
   invoke void @_RINvMs4_Cs8Xq8PKFYOms_3hirNtB6_6Module9find_pathNtB6_9ModuleDefECsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.g, i32 noundef %i.bj, i32 noundef %i.bk, ptr noundef nonnull %i.bl, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(240) @16, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(16) %i.f, i32 noundef %.sroa.017.0.insert.insert)
           to label %bb.j unwind label %bb.l
 
@@ -488,24 +483,19 @@ bb.i:                                             ; preds = %.lr.ph, %bb.q
   store i32 %i.bg, ptr %i.av, align 4
   store i32 %i.bi, ptr %i.aw, align 4
   store i8 3, ptr %i.f, align 4
-  %i.bm = load ptr, ptr %i.ax, align 8, !nonnull !7, !align !10, !noundef !7 ; 3 uses
+  %i.bm = load ptr, ptr %i.ax, align 8, !nonnull !7, !align !10, !noundef !7 ; 2 uses
   %i.bn = load i8, ptr %i.ay, align 4, !range !15, !noundef !7
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 128
-  %6 = load i8, ptr %i.bo, align 8, !range !15, !noundef !7
-  %7 = getelementptr inbounds nuw i8, ptr %i.bm, i64 129
-  %8 = load i8, ptr %7, align 1, !range !15, !noundef !7
+  %6 = load i16, ptr %i.bo, align 8
+  %7 = zext i16 %6 to i32
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bm, i64 130
   %i.bq = load i8, ptr %i.bp, align 2, !range !15, !noundef !7
-  %.sroa.620.0.insert.ext = zext nneg i8 %i.bn to i32
-  %.sroa.620.0.insert.shift = shl nuw nsw i32 %.sroa.620.0.insert.ext, 24
-  %.sroa.519.0.insert.ext.a = zext nneg i8 %i.bq to i32
-  %.sroa.519.0.insert.shift.a = shl nuw nsw i32 %.sroa.519.0.insert.ext.a, 16
-  %.sroa.418.0.insert.ext = zext nneg i8 %8 to i32
-  %.sroa.418.0.insert.shift = shl nuw nsw i32 %.sroa.418.0.insert.ext, 8
-  %.sroa.017.0.insert.ext = zext nneg i8 %6 to i32
-  %.sroa.519.0.insert.insert = or disjoint i32 %.sroa.620.0.insert.shift, %.sroa.017.0.insert.ext
-  %.sroa.418.0.insert.insert = or disjoint i32 %.sroa.519.0.insert.insert, %.sroa.418.0.insert.shift
-  %.sroa.017.0.insert.insert = or disjoint i32 %.sroa.418.0.insert.insert, %.sroa.519.0.insert.shift.a
+  %.sroa.519.0.insert.ext.a = zext nneg i8 %i.bn to i32
+  %.sroa.519.0.insert.shift.a = shl nuw nsw i32 %.sroa.519.0.insert.ext.a, 24
+  %.sroa.418.0.insert.ext = zext nneg i8 %i.bq to i32
+  %.sroa.418.0.insert.shift = shl nuw nsw i32 %.sroa.418.0.insert.ext, 16
+  %.sroa.418.0.insert.insert = or disjoint i32 %.sroa.519.0.insert.shift.a, %7
+  %.sroa.017.0.insert.insert = or disjoint i32 %.sroa.418.0.insert.insert, %.sroa.418.0.insert.shift
   invoke void @_RINvMs4_Cs8Xq8PKFYOms_3hirNtB6_6Module9find_pathNtB6_9ModuleDefECsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.g, i32 noundef %i.bj, i32 noundef %i.bk, ptr noundef nonnull %i.bl, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(240) @16, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(16) %i.f, i32 noundef %.sroa.017.0.insert.insert)
           to label %bb.j unwind label %bb.l
 

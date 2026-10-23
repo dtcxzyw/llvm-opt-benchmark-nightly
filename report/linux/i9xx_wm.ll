@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @vlv_program_watermarks(ptr noundef %0) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %1 = alloca %struct.vlv_wm_values, align 2      ; 43 uses
+  %1 = alloca %struct.vlv_wm_values, align 2      ; 40 uses
   %i.a = getelementptr i8, ptr %0, i64 5448       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(86) %1, i8 0, i64 84, i1 false)
@@ -214,7 +214,7 @@ bb.a:
   %i.d = add i8 %i.c, -1                          ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 84 ; 9 uses
   store i8 %i.d, ptr %i.e, align 2
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 85 ; 8 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 85 ; 7 uses
   store i8 1, ptr %i.f, align 1
   %i.g = getelementptr i8, ptr %0, i64 40         ; 4 uses
   %.pn60.i = load ptr, ptr %i.g, align 8          ; 3 uses
@@ -412,22 +412,17 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br label %trace_vlv_wm.exit.i
 
 trace_vlv_wm.exit.i:                              ; preds = %bb.u, %arch_test_bit.exit.i.i.i, %bb.r
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 67
-  %3 = load i8, ptr %2, align 1
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw i32 %4, 24
-  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 62
-  %i.ci = load i8, ptr %i.ch, align 2
+  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 67
+  %i.ci = load i8, ptr %i.ch, align 1
   %i.cj = zext i8 %i.ci to i32
-  %i.ck = shl nuw nsw i32 %i.cj, 16
-  %6 = or disjoint i32 %i.ck, %5
-  %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 61
-  %i.cm = load i8, ptr %i.cl, align 1
+  %i.ck = shl nuw i32 %i.cj, 24
+  %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 62
+  %i.cm = load i8, ptr %i.cl, align 2
   %i.cn = zext i8 %i.cm to i32
-  %i.co = shl nuw nsw i32 %i.cn, 8
-  %i.cp = or disjoint i32 %6, %i.co
-  %7 = load i8, ptr %i.br, align 2
-  %i.cq = zext i8 %7 to i32
+  %i.co = shl nuw nsw i32 %i.cn, 16
+  %i.cp = or disjoint i32 %i.co, %i.ck
+  %2 = load i16, ptr %i.br, align 2
+  %i.cq = zext i16 %2 to i32
   %i.cr = or disjoint i32 %i.cp, %i.cq
   call void @intel_dmc_wl_get(ptr noundef %0, i32 2031696) #12
   %.val.i.i = load ptr, ptr %0, align 8
@@ -481,23 +476,18 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br label %trace_vlv_wm.exit.1.i
 
 trace_vlv_wm.exit.1.i:                            ; preds = %bb.z, %arch_test_bit.exit.i.i.1.i, %bb.w
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %i.di = getelementptr inbounds nuw i8, ptr %1, i64 75
-  %9 = load i8, ptr %i.di, align 1
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw i32 %10, 24
-  %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 70
-  %i.dk = load i8, ptr %i.dj, align 2
+  %i.di = getelementptr inbounds nuw i8, ptr %1, i64 68
+  %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 75
+  %i.dk = load i8, ptr %i.dj, align 1
   %i.dl = zext i8 %i.dk to i32
-  %i.dm = shl nuw nsw i32 %i.dl, 16
-  %12 = or disjoint i32 %i.dm, %11
-  %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 69
-  %i.do = load i8, ptr %i.dn, align 1
+  %i.dm = shl nuw i32 %i.dl, 24
+  %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 70
+  %i.do = load i8, ptr %i.dn, align 2
   %i.dp = zext i8 %i.do to i32
-  %i.dq = shl nuw nsw i32 %i.dp, 8
-  %i.dr = or disjoint i32 %12, %i.dq
-  %13 = load i8, ptr %8, align 2
-  %i.ds = zext i8 %13 to i32
+  %i.dq = shl nuw nsw i32 %i.dp, 16
+  %i.dr = or disjoint i32 %i.dq, %i.dm
+  %3 = load i16, ptr %i.di, align 2
+  %i.ds = zext i16 %3 to i32
   %i.dt = or disjoint i32 %i.dr, %i.ds
   call void @intel_dmc_wl_get(ptr noundef %0, i32 2031700) #12
   %.val.i.1.i = load ptr, ptr %0, align 8
@@ -551,23 +541,18 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br label %trace_vlv_wm.exit.2.i
 
 trace_vlv_wm.exit.2.i:                            ; preds = %bb.ae, %arch_test_bit.exit.i.i.2.i, %bb.ab
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 83
-  %15 = load i8, ptr %i.ek, align 1
-  %16 = zext i8 %15 to i32
-  %17 = shl nuw i32 %16, 24
-  %i.el = getelementptr inbounds nuw i8, ptr %1, i64 78
-  %i.em = load i8, ptr %i.el, align 2
+  %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 76
+  %i.el = getelementptr inbounds nuw i8, ptr %1, i64 83
+  %i.em = load i8, ptr %i.el, align 1
   %i.en = zext i8 %i.em to i32
-  %i.eo = shl nuw nsw i32 %i.en, 16
-  %18 = or disjoint i32 %i.eo, %17
-  %i.ep = getelementptr inbounds nuw i8, ptr %1, i64 77
-  %i.eq = load i8, ptr %i.ep, align 1
+  %i.eo = shl nuw i32 %i.en, 24
+  %i.ep = getelementptr inbounds nuw i8, ptr %1, i64 78
+  %i.eq = load i8, ptr %i.ep, align 2
   %i.er = zext i8 %i.eq to i32
-  %i.es = shl nuw nsw i32 %i.er, 8
-  %i.et = or disjoint i32 %18, %i.es
-  %19 = load i8, ptr %14, align 2
-  %i.eu = zext i8 %19 to i32
+  %i.es = shl nuw nsw i32 %i.er, 16
+  %i.et = or disjoint i32 %i.es, %i.eo
+  %4 = load i16, ptr %i.ek, align 2
+  %i.eu = zext i16 %4 to i32
   %i.ev = or disjoint i32 %i.et, %i.eu
   call void @intel_dmc_wl_get(ptr noundef %0, i32 2031704) #12
   %.val.i.2.i = load ptr, ptr %0, align 8
@@ -626,16 +611,12 @@ trace_vlv_wm.exit.3.i:                            ; preds = %bb.aj, %arch_test_b
   %i.fo = zext i8 %i.fn to i32
   %i.fp = shl nuw i32 %i.fo, 24
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 86
-  %20 = load i8, ptr %i.fq, align 2
-  %21 = zext i8 %20 to i32
-  %22 = shl nuw nsw i32 %21, 16
-  %23 = or disjoint i32 %22, %i.fp
-  %i.fr = load i8, ptr %i.f, align 1
+  %i.fr = load i8, ptr %i.fq, align 2
   %i.fs = zext i8 %i.fr to i32
-  %i.ft = shl nuw nsw i32 %i.fs, 8
-  %i.fu = or disjoint i32 %23, %i.ft
-  %24 = load i8, ptr %i.e, align 2
-  %i.fv = zext i8 %24 to i32
+  %i.ft = shl nuw nsw i32 %i.fs, 16
+  %i.fu = or disjoint i32 %i.ft, %i.fp
+  %5 = load i16, ptr %i.e, align 2
+  %i.fv = zext i16 %5 to i32
   %i.fw = or disjoint i32 %i.fu, %i.fv
   call void @intel_dmc_wl_get(ptr noundef %0, i32 2031708) #12
   %.val.i.3.i = load ptr, ptr %0, align 8

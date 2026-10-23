@@ -205,16 +205,11 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.032 = phi i64 [ %i.l, %bb.c ], [ %i.q, %bb.d ]
-  %2 = getelementptr i8, ptr %0, i64 19
-  %3 = load i8, ptr %2, align 1
-  %4 = zext i8 %3 to i64
-  %5 = shl nuw nsw i64 %4, 16
-  %6 = or i64 %5, %.032
   %i.r = getelementptr i8, ptr %0, i64 18
-  %7 = load i8, ptr %i.r, align 2
-  %i.s = zext i8 %7 to i64
+  %2 = load i16, ptr %i.r, align 2
+  %i.s = zext i16 %2 to i64
   %i.t = shl nuw nsw i64 %i.s, 8
-  %i.u = or i64 %6, %i.t
+  %i.u = or i64 %i.t, %.032
   %i.v = getelementptr i8, ptr %0, i64 17
   %i.w = load i8, ptr %i.v, align 1
   %i.x = zext i8 %i.w to i64
@@ -617,18 +612,13 @@ bb.a:
   %i.d = zext nneg i8 %i.c to i64
   %i.e = shl nuw nsw i64 %i.d, 24
   %i.f = getelementptr i8, ptr %0, i64 19
-  %1 = load i8, ptr %i.f, align 1
-  %2 = zext i8 %1 to i64
-  %3 = shl nuw nsw i64 %2, 16
-  %4 = or disjoint i64 %i.e, %3
-  %5 = getelementptr i8, ptr %0, i64 18
-  %i.g = load i8, ptr %5, align 2
+  %i.g = load i8, ptr %i.f, align 1
   %i.h = zext i8 %i.g to i64
-  %i.i = shl nuw nsw i64 %i.h, 8
-  %i.j = or disjoint i64 %4, %i.i
+  %i.i = shl nuw nsw i64 %i.h, 16
+  %i.j = or disjoint i64 %i.e, %i.i
   %i.k = getelementptr i8, ptr %0, i64 17
-  %6 = load i8, ptr %i.k, align 1
-  %i.l = zext i8 %6 to i64
+  %1 = load i16, ptr %i.k, align 1
+  %i.l = zext i16 %1 to i64
   %i.m = or disjoint i64 %i.j, %i.l
   ret i64 %i.m
 }
@@ -1031,7 +1021,7 @@ bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a,
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local i32 @ata_dev_configure(ptr noundef %0) local_unnamed_addr #1 align 16 prefalign(16) {
 bb.a:
-  %1 = alloca %struct.ata_taskfile, align 8       ; 16 uses
+  %1 = alloca %struct.ata_taskfile, align 8       ; 18 uses
   %i.a = alloca [7 x i8], align 4                 ; 6 uses
   %i.b = alloca [9 x i8], align 1                 ; 17 uses
   %i.c = alloca [41 x i8], align 16               ; 49 uses
@@ -1434,20 +1424,43 @@ bb.ak:                                            ; preds = %ata_id_has_lba48.ex
 bb.al:                                            ; preds = %bb.ak
   %i.ha = getelementptr inbounds nuw i8, ptr %1, i64 13
   %i.hb = load i16, ptr %i.ha, align 1
-  %i.hc = zext i16 %i.hb to i64
-  %i.hd = shl nuw nsw i64 %i.hc, 32
-  %i.he = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.hf = load i8, ptr %i.he, align 4
+  %2 = zext i16 %i.hb to i64
+  %3 = shl nuw nsw i64 %2, 32
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %5 = load i8, ptr %4, align 4
+  %6 = zext i8 %5 to i64
+  %7 = shl nuw nsw i64 %6, 24
+  %8 = or disjoint i64 %7, %3
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 19
+  %10 = load i8, ptr %9, align 1
+  %i.hc = zext i8 %10 to i64
+  %i.hd = shl nuw nsw i64 %i.hc, 16
+  %11 = or disjoint i64 %8, %i.hd
+  %i.he = getelementptr inbounds nuw i8, ptr %1, i64 18
+  %i.hf = load i8, ptr %i.he, align 2
   %i.hg = zext i8 %i.hf to i64
-  %i.hh = shl nuw nsw i64 %i.hg, 24
-  %i.hi = or disjoint i64 %i.hh, %i.hd
+  %i.hh = shl nuw nsw i64 %i.hg, 8
+  %12 = or disjoint i64 %11, %i.hh
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %14 = load i8, ptr %13, align 1
+  %15 = zext i8 %14 to i64
+  %i.hi = or disjoint i64 %12, %15
   br label %bb.ao
 
 bb.am:                                            ; preds = %bb.ak
   %i.hj = load i8, ptr %i.gi, align 4
   %i.hk = and i8 %i.hj, 15
-  %i.hl = zext nneg i8 %i.hk to i64
-  %i.hm = shl nuw nsw i64 %i.hl, 24
+  %16 = zext nneg i8 %i.hk to i64
+  %17 = shl nuw nsw i64 %16, 24
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 19
+  %19 = load i8, ptr %18, align 1
+  %i.hl = zext i8 %19 to i64
+  %i.hm = shl nuw nsw i64 %i.hl, 16
+  %20 = or disjoint i64 %17, %i.hm
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %22 = load i16, ptr %21, align 1
+  %23 = zext i16 %22 to i64
+  %24 = or disjoint i64 %20, %23
   br label %bb.ao
 
 bb.an:                                            ; preds = %bb.aj, %bb.ai
@@ -1455,26 +1468,12 @@ bb.an:                                            ; preds = %bb.aj, %bb.ai
   br i1 %i.dm, label %ata_hpa_resize.exit.thread273, label %ata_hpa_resize.exit
 
 bb.ao:                                            ; preds = %bb.am, %bb.al
-  %.sink.i.i = phi i64 [ %i.hm, %bb.am ], [ %i.hi, %bb.al ]
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 19
-  %3 = load i8, ptr %2, align 1
-  %4 = zext i8 %3 to i64
-  %5 = shl nuw nsw i64 %4, 16
-  %6 = add nuw nsw i64 %5, %.sink.i.i
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %8 = load i8, ptr %7, align 2
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 8
-  %11 = add nuw nsw i64 %6, %10
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %13 = load i8, ptr %12, align 1
-  %14 = zext i8 %13 to i64
-  %15 = add nuw nsw i64 %11, %14
+  %.sink.i.i = phi i64 [ %24, %bb.am ], [ %i.hi, %bb.al ]
   %i.hn = load i64, ptr %i.n, align 16
   %i.ho = lshr i64 %i.hn, 5
   %i.hp = and i64 %i.ho, 1
   %i.hq = xor i64 %i.hp, 1
-  %spec.store.select.i.i = add nuw nsw i64 %15, %i.hq ; 9 uses
+  %spec.store.select.i.i = add nuw nsw i64 %i.hq, %.sink.i.i ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.hr = getelementptr i8, ptr %0, i64 832
   store i64 %spec.store.select.i.i, ptr %i.hr, align 64

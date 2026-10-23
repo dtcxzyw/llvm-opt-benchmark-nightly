@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.loopexit
   br i1 %i.cx, label %bb.h, label %bb.g
 
 _RNvMs0_NtNtCs98D8VPWzHuM_14regex_automata4util8alphabetNtB5_11ByteClasses10singletons.exit: ; preds = %vector.ph, %bb.h
-  %.val51 = phi ptr [ %.val51.pre, %vector.ph ], [ %.val50, %bb.h ] ; 6 uses
+  %.val51 = phi ptr [ %.val51.pre, %vector.ph ], [ %.val50, %bb.h ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0123)
   %i.cy = getelementptr inbounds nuw i8, ptr %.val51, i64 360
@@ -265,20 +265,15 @@ bb.k:                                             ; preds = %_RNvMs0_NtNtCs98D8V
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.az, i64 24
   store i8 %.sink, ptr %.sroa.6.0..sroa_idx, align 8
   %i.dq = getelementptr inbounds nuw i8, ptr %.val51, i64 386
-  %3 = load i8, ptr %i.dq, align 2, !range !7, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %.val51, i64 387
-  %5 = load i8, ptr %4, align 1, !range !7, !noundef !4
+  %3 = load i16, ptr %i.dq, align 2
+  %4 = zext i16 %3 to i24
   %i.dr = getelementptr inbounds nuw i8, ptr %.val51, i64 368
   %i.ds = load i32, ptr %i.dr, align 16, !noundef !4
   %i.dt = getelementptr inbounds nuw i8, ptr %.val51, i64 372
   %i.du = load i32, ptr %i.dt, align 4, !noundef !4
   %i.dv = icmp eq i32 %i.ds, %i.du
   %.sroa.3.0.insert.shift.i = select i1 %i.dv, i24 65536, i24 0
-  %.sroa.2.0.insert.ext.i = zext nneg i8 %5 to i24
-  %.sroa.2.0.insert.shift.i = shl nuw nsw i24 %.sroa.2.0.insert.ext.i, 8
-  %.sroa.2.0.insert.insert.i = or disjoint i24 %.sroa.3.0.insert.shift.i, %.sroa.2.0.insert.shift.i
-  %.sroa.0.0.insert.ext.i = zext nneg i8 %3 to i24
-  %.sroa.0.0.insert.insert.i = or disjoint i24 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
+  %.sroa.0.0.insert.insert.i = or disjoint i24 %.sroa.3.0.insert.shift.i, %4
   %.val56 = load i8, ptr %i.dc, align 16          ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !611)
   call void @llvm.experimental.noalias.scope.decl(metadata !612)
