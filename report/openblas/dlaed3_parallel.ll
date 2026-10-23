@@ -205,14 +205,14 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.bu, %vec.epilog.iter.check ], [ %.pre256, %vector.main.loop.iter.check ]
+  %broadcast.splatinsert281 = insertelement <4 x i32> poison, i32 %bc.merge.rdx, i64 0
+  %broadcast.splat282 = shufflevector <4 x i32> %broadcast.splatinsert281, <4 x i32> poison, <4 x i32> zeroinitializer
   %n.vec279 = and i64 %indvars.iv.next221, 9223372036854775804 ; 3 uses
-  %broadcast.splatinsert280 = insertelement <4 x i32> poison, i32 %bc.merge.rdx, i64 0
-  %broadcast.splat281 = shufflevector <4 x i32> %broadcast.splatinsert280, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index282 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next285, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi283 = phi <4 x i32> [ %broadcast.splat281, %vec.epilog.ph ], [ %i.bw, %vec.epilog.vector.body ]
+  %vec.phi283 = phi <4 x i32> [ %broadcast.splat282, %vec.epilog.ph ], [ %i.bw, %vec.epilog.vector.body ]
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %index282
   %wide.load284 = load <4 x i32>, ptr %i.bv, align 16, !tbaa !8
   %i.bw = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %wide.load284, <4 x i32> %vec.phi283) ; 2 uses

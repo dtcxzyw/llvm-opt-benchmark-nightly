@@ -205,7 +205,7 @@ bb.cf:                                            ; preds = %bb.ce
   %.sroa.3292.sroa.5.0..sroa.3292.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1520
   %i.hr = load <2 x i64>, ptr %.sroa.3292.sroa.5.0..sroa.3292.0..sroa_idx.sroa_idx, align 16 ; 3 uses
   %i.hs = icmp eq i64 %i.hq, -9223372036854775808
-  %3 = shufflevector <2 x i64> %i.hr, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %3 = shufflevector <2 x i64> %i.hr, <2 x i64> <i64 poison, i64 undef>, <2 x i32> <i32 1, i32 3>
   %i.ht = extractelement <2 x i64> %i.hr, i64 0
   br i1 %i.hs, label %bb.cr, label %bb.cg
 
@@ -608,7 +608,7 @@ bb.es:                                            ; preds = %bb.er
   %.sroa.3288.sroa.5.0..sroa.3288.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 3344
   %i.mn = load <2 x i64>, ptr %.sroa.3288.sroa.5.0..sroa.3288.0..sroa_idx.sroa_idx, align 16 ; 3 uses
   %i.mo = icmp eq i64 %i.mm, -9223372036854775808
-  %3 = shufflevector <2 x i64> %i.mn, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %3 = shufflevector <2 x i64> %i.mn, <2 x i64> <i64 poison, i64 undef>, <2 x i32> <i32 1, i32 3>
   %i.mp = extractelement <2 x i64> %i.mn, i64 0
   br i1 %i.mo, label %bb.fe, label %bb.et
 

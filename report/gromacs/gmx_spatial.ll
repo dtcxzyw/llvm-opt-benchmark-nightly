@@ -205,19 +205,19 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %bc.merge.rdx = phi i64 [ %i.ow, %vec.epilog.iter.check ], [ %.1180473.us.us.us, %vector.main.loop.iter.check ]
   %bc.merge.rdx692 = phi i32 [ %i.ox, %vec.epilog.iter.check ], [ %.1183472.us.us.us, %vector.main.loop.iter.check ]
   %bc.merge.rdx693 = phi i32 [ %i.oy, %vec.epilog.iter.check ], [ %.1187471.us.us.us, %vector.main.loop.iter.check ]
-  %11 = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx, i64 0
-  %broadcast.splatinsert695 = insertelement <4 x i32> poison, i32 %bc.merge.rdx692, i64 0
+  %broadcast.splatinsert695 = insertelement <4 x i32> poison, i32 %bc.merge.rdx693, i64 0
   %broadcast.splat696 = shufflevector <4 x i32> %broadcast.splatinsert695, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert697 = insertelement <4 x i32> poison, i32 %bc.merge.rdx693, i64 0
+  %broadcast.splatinsert697 = insertelement <4 x i32> poison, i32 %bc.merge.rdx692, i64 0
   %broadcast.splat698 = shufflevector <4 x i32> %broadcast.splatinsert697, <4 x i32> poison, <4 x i32> zeroinitializer
+  %11 = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx, i64 0
   %invariant.gep780 = getelementptr [4 x i8], ptr %i.oa, i64 %i.nm
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index699 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next704, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi700 = phi <4 x i64> [ %11, %vec.epilog.ph ], [ %i.pa, %vec.epilog.vector.body ]
-  %vec.phi701 = phi <4 x i32> [ %broadcast.splat696, %vec.epilog.ph ], [ %i.pc, %vec.epilog.vector.body ]
-  %vec.phi702 = phi <4 x i32> [ %broadcast.splat698, %vec.epilog.ph ], [ %i.pb, %vec.epilog.vector.body ]
+  %vec.phi701 = phi <4 x i32> [ %broadcast.splat698, %vec.epilog.ph ], [ %i.pc, %vec.epilog.vector.body ]
+  %vec.phi702 = phi <4 x i32> [ %broadcast.splat696, %vec.epilog.ph ], [ %i.pb, %vec.epilog.vector.body ]
   %gep781 = getelementptr [4 x i8], ptr %invariant.gep780, i64 %index699
   %wide.load703 = load <4 x i32>, ptr %gep781, align 4, !tbaa !38 ; 3 uses
   %i.oz = sext <4 x i32> %wide.load703 to <4 x i64>

@@ -205,7 +205,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !4226
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !84660
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.e, 9223372036854775804    ; 4 uses
   %i.q = add i64 %.sroa.4.0.copyload, %n.vec11    ; 2 uses
   %i.r = getelementptr [2 x i8], ptr %.sroa.55.0.copyload, i64 %.sroa.4.0.copyload
@@ -351,7 +351,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !4227
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !84740
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.d, -4                     ; 4 uses
   %i.o = add i64 %.sroa.4.0.copyload, %n.vec11    ; 2 uses
   %i.p = getelementptr i8, ptr %.sroa.55.0.copyload, i64 %.sroa.4.0.copyload
@@ -735,7 +735,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !4227
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !84978
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.d, -4                     ; 4 uses
   %i.o = add i64 %.sroa.4.0.copyload, %n.vec11    ; 2 uses
   %i.p = getelementptr i8, ptr %.sroa.55.0.copyload, i64 %.sroa.4.0.copyload
@@ -1138,7 +1138,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !4226
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !85368
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.e, 9223372036854775804    ; 4 uses
   %i.q = add i64 %.sroa.4.0.copyload, %n.vec11    ; 2 uses
   %i.r = getelementptr [2 x i8], ptr %.sroa.55.0.copyload, i64 %.sroa.4.0.copyload
@@ -1286,7 +1286,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !4226
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !85448
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.e, 9223372036854775804    ; 4 uses
   %i.q = add i64 %.sroa.4.0.copyload, %n.vec11    ; 2 uses
   %i.r = getelementptr [2 x i8], ptr %.sroa.55.0.copyload, i64 %.sroa.4.0.copyload

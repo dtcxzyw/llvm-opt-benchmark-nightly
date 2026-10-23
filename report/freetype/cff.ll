@@ -205,9 +205,9 @@ vec.epilog.iter.check158:                         ; preds = %middle.block153
 vec.epilog.ph160:                                 ; preds = %vector.main.loop.iter.check144, %vec.epilog.iter.check158
   %vec.epilog.resume.val155 = phi i64 [ %n.vec147, %vec.epilog.iter.check158 ], [ 0, %vector.main.loop.iter.check144 ]
   %bc.merge.rdx = phi i16 [ %i.cr, %vec.epilog.iter.check158 ], [ 0, %vector.main.loop.iter.check144 ]
-  %n.vec161 = and i64 %wide.trip.count.i, 4294967292 ; 3 uses
   %broadcast.splatinsert162 = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat163 = shufflevector <4 x i16> %broadcast.splatinsert162, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec159 = and i64 %wide.trip.count.i, 4294967292 ; 3 uses
   br label %vec.epilog.vector.body164
 
 vec.epilog.vector.body164:                        ; preds = %vec.epilog.vector.body164, %vec.epilog.ph160
@@ -217,16 +217,16 @@ vec.epilog.vector.body164:                        ; preds = %vec.epilog.vector.b
   %wide.load167 = load <4 x i16>, ptr %i.cs, align 2, !tbaa !66
   %i.ct = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %wide.load167, <4 x i16> %vec.phi166) ; 2 uses
   %index.next168 = add nuw i64 %index165, 4       ; 2 uses
-  %i.cu = icmp eq i64 %index.next168, %n.vec161
+  %i.cu = icmp eq i64 %index.next168, %n.vec159
   br i1 %i.cu, label %vec.epilog.middle.block169, label %vec.epilog.vector.body164, !llvm.loop !619
 
 vec.epilog.middle.block169:                       ; preds = %vec.epilog.vector.body164
   %i.cv = call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.ct) ; 2 uses
-  %cmp.n170 = icmp eq i64 %n.vec161, %wide.trip.count.i
+  %cmp.n170 = icmp eq i64 %n.vec159, %wide.trip.count.i
   br i1 %cmp.n170, label %._crit_edge.i, label %vec.epilog.scalar.ph157.preheader
 
 vec.epilog.scalar.ph157.preheader:                ; preds = %iter.check156, %vec.epilog.iter.check158, %vec.epilog.middle.block169
-  %indvars.iv.i.ph = phi i64 [ 0, %iter.check156 ], [ %n.vec147, %vec.epilog.iter.check158 ], [ %n.vec161, %vec.epilog.middle.block169 ]
+  %indvars.iv.i.ph = phi i64 [ 0, %iter.check156 ], [ %n.vec147, %vec.epilog.iter.check158 ], [ %n.vec159, %vec.epilog.middle.block169 ]
   %.029.i.ph = phi i16 [ 0, %iter.check156 ], [ %i.cr, %vec.epilog.iter.check158 ], [ %i.cv, %vec.epilog.middle.block169 ]
   br label %vec.epilog.scalar.ph157
 
@@ -629,9 +629,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.eb, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec234 = and i64 %wide.trip.count.i, 4294967292 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <4 x i16> %broadcast.splatinsert, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec234 = and i64 %wide.trip.count.i, 4294967292 ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

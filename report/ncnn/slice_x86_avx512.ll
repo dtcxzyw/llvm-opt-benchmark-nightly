@@ -204,9 +204,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %bc.merge.rdx = phi i32 [ %i.gc, %vec.epilog.iter.check ], [ %i.fv, %vector.main.loop.iter.check ]
+  %broadcast.splatinsert3232 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
+  %broadcast.splat3233 = shufflevector <8 x i32> %broadcast.splatinsert3232, <8 x i32> poison, <8 x i32> zeroinitializer
   %n.vec3227 = and i64 %i.fs, -8                  ; 3 uses
-  %broadcast.splatinsert3228 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
-  %broadcast.splat3229 = shufflevector <8 x i32> %broadcast.splatinsert3228, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert3230 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val, i64 0
   %broadcast.splat3231 = shufflevector <8 x i64> %broadcast.splatinsert3230, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = or disjoint <8 x i64> %broadcast.splat3231, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -215,7 +215,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index3232 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next3238, %vec.epilog.vector.body ]
   %vec.ind3233 = phi <8 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next3239, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi3234 = phi <8 x i32> [ %broadcast.splat3229, %vec.epilog.ph ], [ %i.gd, %vec.epilog.vector.body ]
+  %vec.phi3234 = phi <8 x i32> [ %broadcast.splat3233, %vec.epilog.ph ], [ %i.gd, %vec.epilog.vector.body ]
   %wide.gep3235 = getelementptr inbounds nuw [72 x i8], ptr %i.fo, <8 x i64> %vec.ind3233
   %wide.gep3236 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep3235, i64 24
   %wide.masked.gather3237 = tail call <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr> align 4 %wide.gep3236, <8 x i1> splat (i1 true), <8 x i32> poison), !tbaa !28
@@ -618,9 +618,9 @@ vec.epilog.iter.check3896:                        ; preds = %middle.block3887
 vec.epilog.ph3898:                                ; preds = %vector.main.loop.iter.check3857, %vec.epilog.iter.check3896
   %vec.epilog.resume.val3892 = phi i64 [ %n.vec3860, %vec.epilog.iter.check3896 ], [ 0, %vector.main.loop.iter.check3857 ] ; 2 uses
   %bc.merge.rdx3893 = phi i32 [ %i.asu, %vec.epilog.iter.check3896 ], [ %i.asn, %vector.main.loop.iter.check3857 ]
-  %n.vec3899 = and i64 %i.ask, -8                 ; 3 uses
-  %broadcast.splatinsert3900 = insertelement <8 x i32> poison, i32 %bc.merge.rdx3893, i64 0
-  %broadcast.splat3901 = shufflevector <8 x i32> %broadcast.splatinsert3900, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert3873 = insertelement <8 x i32> poison, i32 %bc.merge.rdx3893, i64 0
+  %broadcast.splat3874 = shufflevector <8 x i32> %broadcast.splatinsert3873, <8 x i32> poison, <8 x i32> zeroinitializer
+  %n.vec3866 = and i64 %i.ask, -8                 ; 3 uses
   %broadcast.splatinsert3902 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val3892, i64 0
   %broadcast.splat3903 = shufflevector <8 x i64> %broadcast.splatinsert3902, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction3904 = or disjoint <8 x i64> %broadcast.splat3903, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -629,23 +629,23 @@ vec.epilog.ph3898:                                ; preds = %vector.main.loop.it
 vec.epilog.vector.body3905:                       ; preds = %vec.epilog.vector.body3905, %vec.epilog.ph3898
   %index3906 = phi i64 [ %vec.epilog.resume.val3892, %vec.epilog.ph3898 ], [ %index.next3912, %vec.epilog.vector.body3905 ]
   %vec.ind3907 = phi <8 x i64> [ %induction3904, %vec.epilog.ph3898 ], [ %vec.ind.next3913, %vec.epilog.vector.body3905 ] ; 2 uses
-  %vec.phi3908 = phi <8 x i32> [ %broadcast.splat3901, %vec.epilog.ph3898 ], [ %i.asv, %vec.epilog.vector.body3905 ]
+  %vec.phi3908 = phi <8 x i32> [ %broadcast.splat3874, %vec.epilog.ph3898 ], [ %i.asv, %vec.epilog.vector.body3905 ]
   %wide.gep3909 = getelementptr inbounds nuw [72 x i8], ptr %i.asg, <8 x i64> %vec.ind3907
   %wide.gep3910 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep3909, i64 24
   %wide.masked.gather3911 = call <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr> align 4 %wide.gep3910, <8 x i1> splat (i1 true), <8 x i32> poison), !tbaa !28
   %i.asv = call <8 x i32> @llvm.smin.v8i32(<8 x i32> %wide.masked.gather3911, <8 x i32> %vec.phi3908) ; 2 uses
   %index.next3912 = add nuw i64 %index3906, 8     ; 2 uses
   %vec.ind.next3913 = add nuw <8 x i64> %vec.ind3907, splat (i64 8)
-  %i.asw = icmp eq i64 %index.next3912, %n.vec3899
+  %i.asw = icmp eq i64 %index.next3912, %n.vec3866
   br i1 %i.asw, label %vec.epilog.middle.block3914, label %vec.epilog.vector.body3905, !llvm.loop !136
 
 vec.epilog.middle.block3914:                      ; preds = %vec.epilog.vector.body3905
   %i.asx = call i32 @llvm.vector.reduce.smin.v8i32(<8 x i32> %i.asv) ; 2 uses
-  %cmp.n3915 = icmp eq i64 %i.ask, %n.vec3899
+  %cmp.n3915 = icmp eq i64 %i.ask, %n.vec3866
   br i1 %cmp.n3915, label %._crit_edge2723, label %.lr.ph2722.preheader
 
 .lr.ph2722.preheader:                             ; preds = %iter.check3894, %vec.epilog.iter.check3896, %vec.epilog.middle.block3914
-  %.010862721.ph = phi i64 [ 0, %iter.check3894 ], [ %n.vec3860, %vec.epilog.iter.check3896 ], [ %n.vec3899, %vec.epilog.middle.block3914 ]
+  %.010862721.ph = phi i64 [ 0, %iter.check3894 ], [ %n.vec3860, %vec.epilog.iter.check3896 ], [ %n.vec3866, %vec.epilog.middle.block3914 ]
   %.025292719.ph = phi i32 [ %i.asn, %iter.check3894 ], [ %i.asu, %vec.epilog.iter.check3896 ], [ %i.asx, %vec.epilog.middle.block3914 ]
   br label %.lr.ph2722
 
@@ -1048,9 +1048,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %bc.merge.rdx = phi i32 [ %i.fy, %vec.epilog.iter.check ], [ %i.fr, %vector.main.loop.iter.check ]
+  %broadcast.splatinsert3226 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
+  %broadcast.splat3227 = shufflevector <8 x i32> %broadcast.splatinsert3226, <8 x i32> poison, <8 x i32> zeroinitializer
   %n.vec3221 = and i64 %i.fo, -8                  ; 3 uses
-  %broadcast.splatinsert3222 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
-  %broadcast.splat3223 = shufflevector <8 x i32> %broadcast.splatinsert3222, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert3224 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val, i64 0
   %broadcast.splat3225 = shufflevector <8 x i64> %broadcast.splatinsert3224, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = or disjoint <8 x i64> %broadcast.splat3225, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -1059,7 +1059,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index3226 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next3232, %vec.epilog.vector.body ]
   %vec.ind3227 = phi <8 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next3233, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi3228 = phi <8 x i32> [ %broadcast.splat3223, %vec.epilog.ph ], [ %i.fz, %vec.epilog.vector.body ]
+  %vec.phi3228 = phi <8 x i32> [ %broadcast.splat3227, %vec.epilog.ph ], [ %i.fz, %vec.epilog.vector.body ]
   %wide.gep3229 = getelementptr inbounds nuw [72 x i8], ptr %i.fk, <8 x i64> %vec.ind3227
   %wide.gep3230 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep3229, i64 24
   %wide.masked.gather3231 = tail call <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr> align 4 %wide.gep3230, <8 x i1> splat (i1 true), <8 x i32> poison), !tbaa !28
@@ -1462,9 +1462,9 @@ vec.epilog.iter.check3562:                        ; preds = %middle.block3553
 vec.epilog.ph3564:                                ; preds = %vector.main.loop.iter.check3523, %vec.epilog.iter.check3562
   %vec.epilog.resume.val3558 = phi i64 [ %n.vec3526, %vec.epilog.iter.check3562 ], [ 0, %vector.main.loop.iter.check3523 ] ; 2 uses
   %bc.merge.rdx3559 = phi i32 [ %i.alr, %vec.epilog.iter.check3562 ], [ %i.alk, %vector.main.loop.iter.check3523 ]
-  %n.vec3565 = and i64 %i.alh, -8                 ; 3 uses
-  %broadcast.splatinsert3566 = insertelement <8 x i32> poison, i32 %bc.merge.rdx3559, i64 0
-  %broadcast.splat3567 = shufflevector <8 x i32> %broadcast.splatinsert3566, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert3552 = insertelement <8 x i32> poison, i32 %bc.merge.rdx3559, i64 0
+  %broadcast.splat3553 = shufflevector <8 x i32> %broadcast.splatinsert3552, <8 x i32> poison, <8 x i32> zeroinitializer
+  %n.vec3545 = and i64 %i.alh, -8                 ; 3 uses
   %broadcast.splatinsert3568 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val3558, i64 0
   %broadcast.splat3569 = shufflevector <8 x i64> %broadcast.splatinsert3568, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction3570 = or disjoint <8 x i64> %broadcast.splat3569, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -1473,23 +1473,23 @@ vec.epilog.ph3564:                                ; preds = %vector.main.loop.it
 vec.epilog.vector.body3571:                       ; preds = %vec.epilog.vector.body3571, %vec.epilog.ph3564
   %index3572 = phi i64 [ %vec.epilog.resume.val3558, %vec.epilog.ph3564 ], [ %index.next3578, %vec.epilog.vector.body3571 ]
   %vec.ind3573 = phi <8 x i64> [ %induction3570, %vec.epilog.ph3564 ], [ %vec.ind.next3579, %vec.epilog.vector.body3571 ] ; 2 uses
-  %vec.phi3574 = phi <8 x i32> [ %broadcast.splat3567, %vec.epilog.ph3564 ], [ %i.als, %vec.epilog.vector.body3571 ]
+  %vec.phi3574 = phi <8 x i32> [ %broadcast.splat3553, %vec.epilog.ph3564 ], [ %i.als, %vec.epilog.vector.body3571 ]
   %wide.gep3575 = getelementptr inbounds nuw [72 x i8], ptr %i.ald, <8 x i64> %vec.ind3573
   %wide.gep3576 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep3575, i64 24
   %wide.masked.gather3577 = call <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr> align 4 %wide.gep3576, <8 x i1> splat (i1 true), <8 x i32> poison), !tbaa !28
   %i.als = call <8 x i32> @llvm.smin.v8i32(<8 x i32> %wide.masked.gather3577, <8 x i32> %vec.phi3574) ; 2 uses
   %index.next3578 = add nuw i64 %index3572, 8     ; 2 uses
   %vec.ind.next3579 = add nuw <8 x i64> %vec.ind3573, splat (i64 8)
-  %i.alt = icmp eq i64 %index.next3578, %n.vec3565
+  %i.alt = icmp eq i64 %index.next3578, %n.vec3545
   br i1 %i.alt, label %vec.epilog.middle.block3580, label %vec.epilog.vector.body3571, !llvm.loop !386
 
 vec.epilog.middle.block3580:                      ; preds = %vec.epilog.vector.body3571
   %i.alu = call i32 @llvm.vector.reduce.smin.v8i32(<8 x i32> %i.als) ; 2 uses
-  %cmp.n3581 = icmp eq i64 %i.alh, %n.vec3565
+  %cmp.n3581 = icmp eq i64 %i.alh, %n.vec3545
   br i1 %cmp.n3581, label %._crit_edge2718, label %.lr.ph2717.preheader
 
 .lr.ph2717.preheader:                             ; preds = %iter.check3560, %vec.epilog.iter.check3562, %vec.epilog.middle.block3580
-  %.010602716.ph = phi i64 [ 0, %iter.check3560 ], [ %n.vec3526, %vec.epilog.iter.check3562 ], [ %n.vec3565, %vec.epilog.middle.block3580 ]
+  %.010602716.ph = phi i64 [ 0, %iter.check3560 ], [ %n.vec3526, %vec.epilog.iter.check3562 ], [ %n.vec3545, %vec.epilog.middle.block3580 ]
   %.025242714.ph = phi i32 [ %i.alk, %iter.check3560 ], [ %i.alr, %vec.epilog.iter.check3562 ], [ %i.alu, %vec.epilog.middle.block3580 ]
   br label %.lr.ph2717
 

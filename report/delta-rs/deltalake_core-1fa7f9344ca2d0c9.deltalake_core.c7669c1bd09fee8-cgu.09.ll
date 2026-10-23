@@ -205,9 +205,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.s, %vec.epilog.iter.check ], [ -128, %vector.main.loop.iter.check ]
-  %n.vec10 = and i64 %i.f, -8                     ; 3 uses
   %broadcast.splatinsert = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <8 x i8> %broadcast.splatinsert, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec10 = and i64 %i.f, -8                     ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -325,9 +325,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.s, %vec.epilog.iter.check ], [ 127, %vector.main.loop.iter.check ]
-  %n.vec10 = and i64 %i.f, -8                     ; 3 uses
   %broadcast.splatinsert = insertelement <8 x i8> poison, i8 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <8 x i8> %broadcast.splatinsert, <8 x i8> poison, <8 x i32> zeroinitializer
+  %n.vec10 = and i64 %i.f, -8                     ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -730,9 +730,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.s, %vec.epilog.iter.check ], [ -32768, %vector.main.loop.iter.check ]
-  %n.vec10 = and i64 %i.g, 9223372036854775804    ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <4 x i16> %broadcast.splatinsert, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec10 = and i64 %i.g, 9223372036854775804    ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -852,9 +852,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.s, %vec.epilog.iter.check ], [ 32767, %vector.main.loop.iter.check ]
-  %n.vec10 = and i64 %i.g, 9223372036854775804    ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i16> poison, i16 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <4 x i16> %broadcast.splatinsert, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec10 = and i64 %i.g, 9223372036854775804    ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

@@ -204,23 +204,23 @@ vec.epilog.ph979:                                 ; preds = %vector.main.loop.it
   %bc.merge.rdx972 = phi i32 [ %i.bh, %vec.epilog.iter.check977 ], [ 2147483647, %vector.main.loop.iter.check920 ]
   %bc.merge.rdx973 = phi i32 [ %i.bi, %vec.epilog.iter.check977 ], [ -2147483648, %vector.main.loop.iter.check920 ]
   %bc.merge.rdx974 = phi i32 [ %i.bj, %vec.epilog.iter.check977 ], [ 2147483647, %vector.main.loop.iter.check920 ]
-  %n.vec980 = and i64 %i.d, 4294967292            ; 3 uses
-  %broadcast.splatinsert.a = insertelement <4 x i32> poison, i32 %bc.merge.rdx, i64 0
+  %broadcast.splatinsert.a = insertelement <4 x i32> poison, i32 %bc.merge.rdx974, i64 0
   %broadcast.splat.a = shufflevector <4 x i32> %broadcast.splatinsert.a, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert981 = insertelement <4 x i32> poison, i32 %bc.merge.rdx972, i64 0
+  %broadcast.splatinsert981 = insertelement <4 x i32> poison, i32 %bc.merge.rdx973, i64 0
   %broadcast.splat982 = shufflevector <4 x i32> %broadcast.splatinsert981, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert983 = insertelement <4 x i32> poison, i32 %bc.merge.rdx973, i64 0
+  %broadcast.splatinsert983 = insertelement <4 x i32> poison, i32 %bc.merge.rdx972, i64 0
   %broadcast.splat984 = shufflevector <4 x i32> %broadcast.splatinsert983, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert985 = insertelement <4 x i32> poison, i32 %bc.merge.rdx974, i64 0
+  %broadcast.splatinsert985 = insertelement <4 x i32> poison, i32 %bc.merge.rdx, i64 0
   %broadcast.splat986 = shufflevector <4 x i32> %broadcast.splatinsert985, <4 x i32> poison, <4 x i32> zeroinitializer
+  %n.vec976 = and i64 %i.d, 4294967292            ; 3 uses
   br label %vec.epilog.vector.body987
 
 vec.epilog.vector.body987:                        ; preds = %vec.epilog.vector.body987, %vec.epilog.ph979
   %index988 = phi i64 [ %vec.epilog.resume.val971, %vec.epilog.ph979 ], [ %index.next997, %vec.epilog.vector.body987 ] ; 5 uses
-  %vec.phi989 = phi <4 x i32> [ %broadcast.splat.a, %vec.epilog.ph979 ], [ %i.bt, %vec.epilog.vector.body987 ]
-  %vec.phi990 = phi <4 x i32> [ %broadcast.splat982, %vec.epilog.ph979 ], [ %i.bn, %vec.epilog.vector.body987 ]
-  %vec.phi991 = phi <4 x i32> [ %broadcast.splat984, %vec.epilog.ph979 ], [ %i.bq, %vec.epilog.vector.body987 ]
-  %vec.phi992 = phi <4 x i32> [ %broadcast.splat986, %vec.epilog.ph979 ], [ %i.bl, %vec.epilog.vector.body987 ]
+  %vec.phi989 = phi <4 x i32> [ %broadcast.splat986, %vec.epilog.ph979 ], [ %i.bt, %vec.epilog.vector.body987 ]
+  %vec.phi990 = phi <4 x i32> [ %broadcast.splat984, %vec.epilog.ph979 ], [ %i.bn, %vec.epilog.vector.body987 ]
+  %vec.phi991 = phi <4 x i32> [ %broadcast.splat982, %vec.epilog.ph979 ], [ %i.bq, %vec.epilog.vector.body987 ]
+  %vec.phi992 = phi <4 x i32> [ %broadcast.splat.a, %vec.epilog.ph979 ], [ %i.bl, %vec.epilog.vector.body987 ]
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %index988
   %wide.load993 = load <4 x i32>, ptr %i.bk, align 4, !tbaa !78 ; 2 uses
   %i.bl = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %vec.phi992, <4 x i32> %wide.load993) ; 2 uses
@@ -236,7 +236,7 @@ vec.epilog.vector.body987:                        ; preds = %vec.epilog.vector.b
   %i.bs = add nsw <4 x i32> %wide.load996, %wide.load994
   %i.bt = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi989, <4 x i32> %i.bs) ; 2 uses
   %index.next997 = add nuw i64 %index988, 4       ; 2 uses
-  %i.bu = icmp eq i64 %index.next997, %n.vec980
+  %i.bu = icmp eq i64 %index.next997, %n.vec976
   br i1 %i.bu, label %vec.epilog.middle.block998, label %vec.epilog.vector.body987, !llvm.loop !129
 
 vec.epilog.middle.block998:                       ; preds = %vec.epilog.vector.body987
@@ -244,11 +244,11 @@ vec.epilog.middle.block998:                       ; preds = %vec.epilog.vector.b
   %i.bw = tail call i32 @llvm.vector.reduce.smin.v4i32(<4 x i32> %i.bn) ; 2 uses
   %i.bx = tail call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %i.bq) ; 2 uses
   %i.by = tail call i32 @llvm.vector.reduce.smin.v4i32(<4 x i32> %i.bl) ; 2 uses
-  %cmp.n999 = icmp eq i64 %n.vec980, %i.d
+  %cmp.n999 = icmp eq i64 %n.vec976, %i.d
   br i1 %cmp.n999, label %.loopexit1174, label %.preheader500.preheader
 
 .preheader500.preheader:                          ; preds = %iter.check975, %vec.epilog.iter.check977, %vec.epilog.middle.block998
-  %indvars.iv580.ph = phi i64 [ 0, %iter.check975 ], [ %n.vec923, %vec.epilog.iter.check977 ], [ %n.vec980, %vec.epilog.middle.block998 ]
+  %indvars.iv580.ph = phi i64 [ 0, %iter.check975 ], [ %n.vec923, %vec.epilog.iter.check977 ], [ %n.vec976, %vec.epilog.middle.block998 ]
   %.0430514.ph = phi i32 [ -2147483648, %iter.check975 ], [ %i.bg, %vec.epilog.iter.check977 ], [ %i.bv, %vec.epilog.middle.block998 ]
   %.0431513.ph = phi i32 [ 2147483647, %iter.check975 ], [ %i.bh, %vec.epilog.iter.check977 ], [ %i.bw, %vec.epilog.middle.block998 ]
   %.0432512.ph = phi i32 [ -2147483648, %iter.check975 ], [ %i.bi, %vec.epilog.iter.check977 ], [ %i.bx, %vec.epilog.middle.block998 ]

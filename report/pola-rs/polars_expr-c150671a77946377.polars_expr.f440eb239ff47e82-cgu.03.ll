@@ -205,7 +205,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i8 [ %i.l, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !178774
+  %bc.merge.rdx = phi i8 [ %i.l, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.e, -8                     ; 3 uses
   %i.m = getelementptr i8, ptr %i.d, i64 %n.vec11
   %i.n = insertelement <8 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx, i64 0
@@ -219,7 +219,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.o = add <8 x i8> %wide.load15, %vec.phi13, !dbg !178773 ; 2 uses
   %index.next16 = add nuw i64 %index12, 8         ; 2 uses
   %i.p = icmp eq i64 %index.next16, %n.vec11, !dbg !178770
-  br i1 %i.p, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !178770, !llvm.loop !178762
+  br i1 %i.p, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !178770, !llvm.loop !178761
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.q = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %i.o), !dbg !178770 ; 2 uses
@@ -232,13 +232,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !178770
 
 bb.d:                                             ; preds = %._crit_edge.i
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !178775, !noalias !178764
-  unreachable, !dbg !178775
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !178774, !noalias !178764
+  unreachable, !dbg !178774
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.r = phi i8 [ %i.u, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !178774
+  %i.r = phi i8 [ %i.u, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !178775
   %.sroa.06.015.i = phi ptr [ %i.s, %vec.epilog.scalar.ph ], [ %.sroa.06.015.i.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 1, !dbg !178774 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 1, !dbg !178775 ; 2 uses
   %i.t = load i8, ptr %.sroa.06.015.i, align 1, !dbg !178772, !noalias !178764, !noundef !3817
   %i.u = add i8 %i.t, %i.r, !dbg !178773          ; 2 uses
   %i.v = icmp eq ptr %i.s, %i.b, !dbg !178769
@@ -352,7 +352,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i8 [ %i.z, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ], !dbg !178850
+  %bc.merge.rdx = phi i8 [ %i.z, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ]
   %n.vec33 = and i64 %i.r, -8                     ; 3 uses
   %i.aa = getelementptr i8, ptr %i.p, i64 %n.vec33
   %i.ab = insertelement <8 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx, i64 0
@@ -379,13 +379,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !178817
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !178851
-  unreachable, !dbg !178851
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !178850
+  unreachable, !dbg !178850
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.af = phi i8 [ %i.ai, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !178850
+  %i.af = phi i8 [ %i.ai, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !178851
   %.sroa.03.014 = phi ptr [ %i.ag, %vec.epilog.scalar.ph ], [ %.sroa.03.014.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 1, !dbg !178850 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 1, !dbg !178851 ; 2 uses
   %i.ah = load i8, ptr %.sroa.03.014, align 1, !dbg !178848, !noundef !3817
   %i.ai = sub i8 %i.af, %i.ah, !dbg !178849       ; 2 uses
   %i.aj = icmp eq ptr %i.ag, %i.n, !dbg !178846
@@ -452,7 +452,7 @@ vec.epilog.iter.check62:                          ; preds = %middle.block55
 
 vec.epilog.ph64:                                  ; preds = %vector.main.loop.iter.check43, %vec.epilog.iter.check62
   %vec.epilog.resume.val58 = phi i64 [ %n.vec46, %vec.epilog.iter.check62 ], [ 0, %vector.main.loop.iter.check43 ]
-  %bc.merge.rdx59 = phi i8 [ %i.ax, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ], !dbg !178859
+  %bc.merge.rdx59 = phi i8 [ %i.ax, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ]
   %n.vec65 = and i64 %i.ap, -8                    ; 3 uses
   %i.ay = getelementptr i8, ptr %i.an, i64 %n.vec65
   %i.az = insertelement <8 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx59, i64 0
@@ -479,13 +479,13 @@ vec.epilog.scalar.ph61.preheader:                 ; preds = %iter.check60, %vec.
   br label %vec.epilog.scalar.ph61, !dbg !178855
 
 bb.h:                                             ; preds = %bb.f
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !178860
-  unreachable, !dbg !178860
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !178859
+  unreachable, !dbg !178859
 
 vec.epilog.scalar.ph61:                           ; preds = %vec.epilog.scalar.ph61.preheader, %vec.epilog.scalar.ph61
-  %i.bd = phi i8 [ %i.bg, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !178859
+  %i.bd = phi i8 [ %i.bg, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !178860
   %.sroa.06.015 = phi ptr [ %i.be, %vec.epilog.scalar.ph61 ], [ %.sroa.06.015.ph, %vec.epilog.scalar.ph61.preheader ] ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 1, !dbg !178859 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 1, !dbg !178860 ; 2 uses
   %i.bf = load i8, ptr %.sroa.06.015, align 1, !dbg !178857, !noundef !3817
   %i.bg = add i8 %i.bd, %i.bf, !dbg !178858       ; 2 uses
   %i.bh = icmp eq ptr %i.be, %i.al, !dbg !178854
@@ -888,7 +888,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i8 [ %i.l, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !179447
+  %bc.merge.rdx = phi i8 [ %i.l, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.e, -8                     ; 3 uses
   %i.m = getelementptr i8, ptr %i.d, i64 %n.vec11
   %i.n = insertelement <8 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx, i64 0
@@ -902,7 +902,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.o = add <8 x i8> %wide.load15, %vec.phi13, !dbg !179446 ; 2 uses
   %index.next16 = add nuw i64 %index12, 8         ; 2 uses
   %i.p = icmp eq i64 %index.next16, %n.vec11, !dbg !179443
-  br i1 %i.p, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !179443, !llvm.loop !179435
+  br i1 %i.p, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !179443, !llvm.loop !179434
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.q = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %i.o), !dbg !179443 ; 2 uses
@@ -915,13 +915,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !179443
 
 bb.d:                                             ; preds = %._crit_edge.i
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !179448, !noalias !179437
-  unreachable, !dbg !179448
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !179447, !noalias !179437
+  unreachable, !dbg !179447
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.r = phi i8 [ %i.u, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !179447
+  %i.r = phi i8 [ %i.u, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !179448
   %.sroa.06.015.i = phi ptr [ %i.s, %vec.epilog.scalar.ph ], [ %.sroa.06.015.i.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 1, !dbg !179447 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 1, !dbg !179448 ; 2 uses
   %i.t = load i8, ptr %.sroa.06.015.i, align 1, !dbg !179445, !noalias !179437, !noundef !3817
   %i.u = add i8 %i.t, %i.r, !dbg !179446          ; 2 uses
   %i.v = icmp eq ptr %i.s, %i.b, !dbg !179442
@@ -1035,7 +1035,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i8 [ %i.z, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ], !dbg !179523
+  %bc.merge.rdx = phi i8 [ %i.z, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ]
   %n.vec33 = and i64 %i.r, -8                     ; 3 uses
   %i.aa = getelementptr i8, ptr %i.p, i64 %n.vec33
   %i.ab = insertelement <8 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx, i64 0
@@ -1062,13 +1062,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !179490
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !179524
-  unreachable, !dbg !179524
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !179523
+  unreachable, !dbg !179523
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.af = phi i8 [ %i.ai, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !179523
+  %i.af = phi i8 [ %i.ai, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !179524
   %.sroa.03.014 = phi ptr [ %i.ag, %vec.epilog.scalar.ph ], [ %.sroa.03.014.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 1, !dbg !179523 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 1, !dbg !179524 ; 2 uses
   %i.ah = load i8, ptr %.sroa.03.014, align 1, !dbg !179521, !noundef !3817
   %i.ai = sub i8 %i.af, %i.ah, !dbg !179522       ; 2 uses
   %i.aj = icmp eq ptr %i.ag, %i.n, !dbg !179519
@@ -1135,7 +1135,7 @@ vec.epilog.iter.check62:                          ; preds = %middle.block55
 
 vec.epilog.ph64:                                  ; preds = %vector.main.loop.iter.check43, %vec.epilog.iter.check62
   %vec.epilog.resume.val58 = phi i64 [ %n.vec46, %vec.epilog.iter.check62 ], [ 0, %vector.main.loop.iter.check43 ]
-  %bc.merge.rdx59 = phi i8 [ %i.ax, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ], !dbg !179532
+  %bc.merge.rdx59 = phi i8 [ %i.ax, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ]
   %n.vec65 = and i64 %i.ap, -8                    ; 3 uses
   %i.ay = getelementptr i8, ptr %i.an, i64 %n.vec65
   %i.az = insertelement <8 x i8> <i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i8 %bc.merge.rdx59, i64 0
@@ -1162,13 +1162,13 @@ vec.epilog.scalar.ph61.preheader:                 ; preds = %iter.check60, %vec.
   br label %vec.epilog.scalar.ph61, !dbg !179528
 
 bb.h:                                             ; preds = %bb.f
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !179533
-  unreachable, !dbg !179533
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !179532
+  unreachable, !dbg !179532
 
 vec.epilog.scalar.ph61:                           ; preds = %vec.epilog.scalar.ph61.preheader, %vec.epilog.scalar.ph61
-  %i.bd = phi i8 [ %i.bg, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !179532
+  %i.bd = phi i8 [ %i.bg, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !179533
   %.sroa.06.015 = phi ptr [ %i.be, %vec.epilog.scalar.ph61 ], [ %.sroa.06.015.ph, %vec.epilog.scalar.ph61.preheader ] ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 1, !dbg !179532 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 1, !dbg !179533 ; 2 uses
   %i.bf = load i8, ptr %.sroa.06.015, align 1, !dbg !179530, !noundef !3817
   %i.bg = add i8 %i.bd, %i.bf, !dbg !179531       ; 2 uses
   %i.bh = icmp eq ptr %i.be, %i.al, !dbg !179527
@@ -1571,7 +1571,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i16 [ %i.s, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !180150
+  %bc.merge.rdx = phi i16 [ %i.s, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.j, -4                     ; 3 uses
   %i.t = shl i64 %n.vec11, 1
   %i.u = getelementptr i8, ptr %i.d, i64 %i.t
@@ -1587,7 +1587,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.x = add <4 x i16> %wide.load15, %vec.phi13, !dbg !180149 ; 2 uses
   %index.next16 = add nuw i64 %index12, 4         ; 2 uses
   %i.y = icmp eq i64 %index.next16, %n.vec11, !dbg !180146
-  br i1 %i.y, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !180146, !llvm.loop !180138
+  br i1 %i.y, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !180146, !llvm.loop !180137
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.z = tail call i16 @llvm.vector.reduce.add.v4i16(<4 x i16> %i.x), !dbg !180146 ; 2 uses
@@ -1600,13 +1600,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !180146
 
 bb.d:                                             ; preds = %._crit_edge.i
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180151, !noalias !180140
-  unreachable, !dbg !180151
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180150, !noalias !180140
+  unreachable, !dbg !180150
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.aa = phi i16 [ %i.ad, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !180150
+  %i.aa = phi i16 [ %i.ad, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !180151
   %.sroa.06.015.i = phi ptr [ %i.ab, %vec.epilog.scalar.ph ], [ %.sroa.06.015.i.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 2, !dbg !180150 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 2, !dbg !180151 ; 2 uses
   %i.ac = load i16, ptr %.sroa.06.015.i, align 2, !dbg !180148, !noalias !180140, !noundef !3817
   %i.ad = add i16 %i.ac, %i.aa, !dbg !180149      ; 2 uses
   %i.ae = icmp eq ptr %i.ab, %i.b, !dbg !180145
@@ -1727,7 +1727,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i16 [ %i.ag, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ], !dbg !180226
+  %bc.merge.rdx = phi i16 [ %i.ag, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ]
   %n.vec33 = and i64 %i.w, -4                     ; 3 uses
   %i.ah = shl i64 %n.vec33, 1
   %i.ai = getelementptr i8, ptr %i.p, i64 %i.ah
@@ -1756,13 +1756,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !180193
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !180227
-  unreachable, !dbg !180227
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !180226
+  unreachable, !dbg !180226
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.ao = phi i16 [ %i.ar, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !180226
+  %i.ao = phi i16 [ %i.ar, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !180227
   %.sroa.03.014 = phi ptr [ %i.ap, %vec.epilog.scalar.ph ], [ %.sroa.03.014.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 2, !dbg !180226 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 2, !dbg !180227 ; 2 uses
   %i.aq = load i16, ptr %.sroa.03.014, align 2, !dbg !180224, !noundef !3817
   %i.ar = sub i16 %i.ao, %i.aq, !dbg !180225      ; 2 uses
   %i.as = icmp eq ptr %i.ap, %i.n, !dbg !180222
@@ -1836,7 +1836,7 @@ vec.epilog.iter.check62:                          ; preds = %middle.block55
 
 vec.epilog.ph64:                                  ; preds = %vector.main.loop.iter.check43, %vec.epilog.iter.check62
   %vec.epilog.resume.val58 = phi i64 [ %n.vec46, %vec.epilog.iter.check62 ], [ 0, %vector.main.loop.iter.check43 ]
-  %bc.merge.rdx59 = phi i16 [ %i.bn, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ], !dbg !180235
+  %bc.merge.rdx59 = phi i16 [ %i.bn, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ]
   %n.vec65 = and i64 %i.bd, -4                    ; 3 uses
   %i.bo = shl i64 %n.vec65, 1
   %i.bp = getelementptr i8, ptr %i.aw, i64 %i.bo
@@ -1865,13 +1865,13 @@ vec.epilog.scalar.ph61.preheader:                 ; preds = %iter.check60, %vec.
   br label %vec.epilog.scalar.ph61, !dbg !180231
 
 bb.h:                                             ; preds = %bb.f
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180236
-  unreachable, !dbg !180236
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180235
+  unreachable, !dbg !180235
 
 vec.epilog.scalar.ph61:                           ; preds = %vec.epilog.scalar.ph61.preheader, %vec.epilog.scalar.ph61
-  %i.bv = phi i16 [ %i.by, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !180235
+  %i.bv = phi i16 [ %i.by, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !180236
   %.sroa.06.015 = phi ptr [ %i.bw, %vec.epilog.scalar.ph61 ], [ %.sroa.06.015.ph, %vec.epilog.scalar.ph61.preheader ] ; 2 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 2, !dbg !180235 ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 2, !dbg !180236 ; 2 uses
   %i.bx = load i16, ptr %.sroa.06.015, align 2, !dbg !180233, !noundef !3817
   %i.by = add i16 %i.bv, %i.bx, !dbg !180234      ; 2 uses
   %i.bz = icmp eq ptr %i.bw, %i.au, !dbg !180230
@@ -2003,7 +2003,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i16 [ %i.s, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !180295
+  %bc.merge.rdx = phi i16 [ %i.s, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec11 = and i64 %i.j, -4                     ; 3 uses
   %i.t = shl i64 %n.vec11, 1
   %i.u = getelementptr i8, ptr %i.d, i64 %i.t
@@ -2019,7 +2019,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.x = add <4 x i16> %wide.load15, %vec.phi13, !dbg !180294 ; 2 uses
   %index.next16 = add nuw i64 %index12, 4         ; 2 uses
   %i.y = icmp eq i64 %index.next16, %n.vec11, !dbg !180291
-  br i1 %i.y, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !180291, !llvm.loop !180283
+  br i1 %i.y, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !180291, !llvm.loop !180282
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.z = tail call i16 @llvm.vector.reduce.add.v4i16(<4 x i16> %i.x), !dbg !180291 ; 2 uses
@@ -2032,13 +2032,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !180291
 
 bb.d:                                             ; preds = %._crit_edge.i
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180296, !noalias !180285
-  unreachable, !dbg !180296
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180295, !noalias !180285
+  unreachable, !dbg !180295
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.aa = phi i16 [ %i.ad, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !180295
+  %i.aa = phi i16 [ %i.ad, %vec.epilog.scalar.ph ], [ %.ph, %vec.epilog.scalar.ph.preheader ], !dbg !180296
   %.sroa.06.015.i = phi ptr [ %i.ab, %vec.epilog.scalar.ph ], [ %.sroa.06.015.i.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 2, !dbg !180295 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.06.015.i, i64 2, !dbg !180296 ; 2 uses
   %i.ac = load i16, ptr %.sroa.06.015.i, align 2, !dbg !180293, !noalias !180285, !noundef !3817
   %i.ad = add i16 %i.ac, %i.aa, !dbg !180294      ; 2 uses
   %i.ae = icmp eq ptr %i.ab, %i.b, !dbg !180290
@@ -2159,7 +2159,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i16 [ %i.ag, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ], !dbg !180371
+  %bc.merge.rdx = phi i16 [ %i.ag, %vec.epilog.iter.check ], [ %.promoted, %vector.main.loop.iter.check ]
   %n.vec33 = and i64 %i.w, -4                     ; 3 uses
   %i.ah = shl i64 %n.vec33, 1
   %i.ai = getelementptr i8, ptr %i.p, i64 %i.ah
@@ -2188,13 +2188,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph, !dbg !180338
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !180372
-  unreachable, !dbg !180372
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %1, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @397) #45, !dbg !180371
+  unreachable, !dbg !180371
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %i.ao = phi i16 [ %i.ar, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !180371
+  %i.ao = phi i16 [ %i.ar, %vec.epilog.scalar.ph ], [ %.ph80, %vec.epilog.scalar.ph.preheader ], !dbg !180372
   %.sroa.03.014 = phi ptr [ %i.ap, %vec.epilog.scalar.ph ], [ %.sroa.03.014.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 2, !dbg !180371 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.03.014, i64 2, !dbg !180372 ; 2 uses
   %i.aq = load i16, ptr %.sroa.03.014, align 2, !dbg !180369, !noundef !3817
   %i.ar = sub i16 %i.ao, %i.aq, !dbg !180370      ; 2 uses
   %i.as = icmp eq ptr %i.ap, %i.n, !dbg !180367
@@ -2268,7 +2268,7 @@ vec.epilog.iter.check62:                          ; preds = %middle.block55
 
 vec.epilog.ph64:                                  ; preds = %vector.main.loop.iter.check43, %vec.epilog.iter.check62
   %vec.epilog.resume.val58 = phi i64 [ %n.vec46, %vec.epilog.iter.check62 ], [ 0, %vector.main.loop.iter.check43 ]
-  %bc.merge.rdx59 = phi i16 [ %i.bn, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ], !dbg !180380
+  %bc.merge.rdx59 = phi i16 [ %i.bn, %vec.epilog.iter.check62 ], [ %.promoted19, %vector.main.loop.iter.check43 ]
   %n.vec65 = and i64 %i.bd, -4                    ; 3 uses
   %i.bo = shl i64 %n.vec65, 1
   %i.bp = getelementptr i8, ptr %i.aw, i64 %i.bo
@@ -2297,13 +2297,13 @@ vec.epilog.scalar.ph61.preheader:                 ; preds = %iter.check60, %vec.
   br label %vec.epilog.scalar.ph61, !dbg !180376
 
 bb.h:                                             ; preds = %bb.f
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180381
-  unreachable, !dbg !180381
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.h, i64 noundef %2, i64 noundef %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @396) #45, !dbg !180380
+  unreachable, !dbg !180380
 
 vec.epilog.scalar.ph61:                           ; preds = %vec.epilog.scalar.ph61.preheader, %vec.epilog.scalar.ph61
-  %i.bv = phi i16 [ %i.by, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !180380
+  %i.bv = phi i16 [ %i.by, %vec.epilog.scalar.ph61 ], [ %.ph, %vec.epilog.scalar.ph61.preheader ], !dbg !180381
   %.sroa.06.015 = phi ptr [ %i.bw, %vec.epilog.scalar.ph61 ], [ %.sroa.06.015.ph, %vec.epilog.scalar.ph61.preheader ] ; 2 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 2, !dbg !180380 ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 2, !dbg !180381 ; 2 uses
   %i.bx = load i16, ptr %.sroa.06.015, align 2, !dbg !180378, !noundef !3817
   %i.by = add i16 %i.bv, %i.bx, !dbg !180379      ; 2 uses
   %i.bz = icmp eq ptr %i.bw, %i.au, !dbg !180375
@@ -2706,8 +2706,8 @@ begin_hunk_3_@llvm.vector.reduce.add.v4i16
 !178758 = distinct !DILocation(line: 144, column: 18, scope: !3162, inlinedAt: !178742)
 !178759 = distinct !DILocation(line: 79, column: 13, scope: !2510, inlinedAt: !178758)
 !178760 = distinct !{!178760, !4188, !4189}
-!178761 = distinct !DILocation(line: 185, column: 40, scope: !5307, inlinedAt: !178755)
-!178762 = distinct !{!178762, !4188, !4189}
+!178761 = distinct !{!178761, !4188, !4189}
+!178762 = distinct !DILocation(line: 185, column: 40, scope: !5307, inlinedAt: !178755)
 !178763 = distinct !{!178763, !4189, !4188}
 !178764 = !{!178747}
 !178765 = !DILocation(line: 977, column: 16, scope: !3145, inlinedAt: !178745)
@@ -2719,8 +2719,8 @@ begin_hunk_3_@llvm.vector.reduce.add.v4i16
 !178771 = !DILocation(line: 89, column: 24, scope: !3161, inlinedAt: !178757)
 !178772 = !DILocation(line: 144, column: 22, scope: !3162, inlinedAt: !178742)
 !178773 = !DILocation(line: 792, column: 51, scope: !2508, inlinedAt: !178759)
-!178774 = !DILocation(line: 659, column: 28, scope: !3163, inlinedAt: !178761)
-!178775 = !DILocation(line: 443, column: 13, scope: !3146, inlinedAt: !178749)
+!178774 = !DILocation(line: 443, column: 13, scope: !3146, inlinedAt: !178749)
+!178775 = !DILocation(line: 659, column: 28, scope: !3163, inlinedAt: !178762)
 !178776 = !DILocation(line: 0, scope: !178740)
 !178777 = !DILocation(line: 127, column: 9, scope: !178741)
 !178778 = !DILocation(line: 128, column: 6, scope: !178740)
@@ -2795,8 +2795,8 @@ begin_hunk_3_@llvm.vector.reduce.add.v4i16
 !178847 = !DILocation(line: 89, column: 24, scope: !178787, inlinedAt: !178818)
 !178848 = !DILocation(line: 140, column: 22, scope: !178792)
 !178849 = !DILocation(line: 863, column: 51, scope: !2512, inlinedAt: !178794)
-!178850 = !DILocation(line: 659, column: 28, scope: !3163, inlinedAt: !178820)
-!178851 = !DILocation(line: 443, column: 13, scope: !3146, inlinedAt: !178809)
+!178850 = !DILocation(line: 443, column: 13, scope: !3146, inlinedAt: !178809)
+!178851 = !DILocation(line: 659, column: 28, scope: !3163, inlinedAt: !178820)
 !178852 = !DILocation(line: 977, column: 16, scope: !3145, inlinedAt: !178823)
 !178853 = !DILocation(line: 961, column: 18, scope: !3149, inlinedAt: !178827)
 !178854 = !DILocation(line: 1717, column: 9, scope: !3155, inlinedAt: !178829)
@@ -2804,8 +2804,8 @@ begin_hunk_3_@llvm.vector.reduce.add.v4i16
 !178856 = !DILocation(line: 89, column: 24, scope: !3161, inlinedAt: !178830)
 !178857 = !DILocation(line: 144, column: 22, scope: !3162)
 !178858 = !DILocation(line: 792, column: 51, scope: !2508, inlinedAt: !178803)
-!178859 = !DILocation(line: 659, column: 28, scope: !3163, inlinedAt: !178832)
-!178860 = !DILocation(line: 443, column: 13, scope: !3146, inlinedAt: !178822)
+!178859 = !DILocation(line: 443, column: 13, scope: !3146, inlinedAt: !178822)
+!178860 = !DILocation(line: 659, column: 28, scope: !3163, inlinedAt: !178832)
 !178861 = !DILocation(line: 147, column: 9, scope: !3148)
 !178862 = !DILocation(line: 148, column: 9, scope: !3148)
 !178863 = !DILocation(line: 149, column: 6, scope: !3148)
@@ -3208,8 +3208,8 @@ begin_hunk_4_@llvm.vector.reduce.add.v4i16
 !179431 = distinct !DILocation(line: 144, column: 18, scope: !3181, inlinedAt: !179415)
 !179432 = distinct !DILocation(line: 79, column: 13, scope: !2584, inlinedAt: !179431)
 !179433 = distinct !{!179433, !4188, !4189}
-!179434 = distinct !DILocation(line: 185, column: 40, scope: !5315, inlinedAt: !179428)
-!179435 = distinct !{!179435, !4188, !4189}
+!179434 = distinct !{!179434, !4188, !4189}
+!179435 = distinct !DILocation(line: 185, column: 40, scope: !5315, inlinedAt: !179428)
 !179436 = distinct !{!179436, !4189, !4188}
 !179437 = !{!179420}
 !179438 = !DILocation(line: 977, column: 16, scope: !3164, inlinedAt: !179418)
@@ -3221,8 +3221,8 @@ begin_hunk_4_@llvm.vector.reduce.add.v4i16
 !179444 = !DILocation(line: 89, column: 24, scope: !3180, inlinedAt: !179430)
 !179445 = !DILocation(line: 144, column: 22, scope: !3181, inlinedAt: !179415)
 !179446 = !DILocation(line: 792, column: 51, scope: !2582, inlinedAt: !179432)
-!179447 = !DILocation(line: 659, column: 28, scope: !3182, inlinedAt: !179434)
-!179448 = !DILocation(line: 443, column: 13, scope: !3165, inlinedAt: !179422)
+!179447 = !DILocation(line: 443, column: 13, scope: !3165, inlinedAt: !179422)
+!179448 = !DILocation(line: 659, column: 28, scope: !3182, inlinedAt: !179435)
 !179449 = !DILocation(line: 0, scope: !179413)
 !179450 = !DILocation(line: 127, column: 9, scope: !179414)
 !179451 = !DILocation(line: 128, column: 6, scope: !179413)
@@ -3297,8 +3297,8 @@ begin_hunk_4_@llvm.vector.reduce.add.v4i16
 !179520 = !DILocation(line: 89, column: 24, scope: !179460, inlinedAt: !179491)
 !179521 = !DILocation(line: 140, column: 22, scope: !179465)
 !179522 = !DILocation(line: 863, column: 51, scope: !2586, inlinedAt: !179467)
-!179523 = !DILocation(line: 659, column: 28, scope: !3182, inlinedAt: !179493)
-!179524 = !DILocation(line: 443, column: 13, scope: !3165, inlinedAt: !179482)
+!179523 = !DILocation(line: 443, column: 13, scope: !3165, inlinedAt: !179482)
+!179524 = !DILocation(line: 659, column: 28, scope: !3182, inlinedAt: !179493)
 !179525 = !DILocation(line: 977, column: 16, scope: !3164, inlinedAt: !179496)
 !179526 = !DILocation(line: 961, column: 18, scope: !3168, inlinedAt: !179500)
 !179527 = !DILocation(line: 1717, column: 9, scope: !3174, inlinedAt: !179502)
@@ -3306,8 +3306,8 @@ begin_hunk_4_@llvm.vector.reduce.add.v4i16
 !179529 = !DILocation(line: 89, column: 24, scope: !3180, inlinedAt: !179503)
 !179530 = !DILocation(line: 144, column: 22, scope: !3181)
 !179531 = !DILocation(line: 792, column: 51, scope: !2582, inlinedAt: !179476)
-!179532 = !DILocation(line: 659, column: 28, scope: !3182, inlinedAt: !179505)
-!179533 = !DILocation(line: 443, column: 13, scope: !3165, inlinedAt: !179495)
+!179532 = !DILocation(line: 443, column: 13, scope: !3165, inlinedAt: !179495)
+!179533 = !DILocation(line: 659, column: 28, scope: !3182, inlinedAt: !179505)
 !179534 = !DILocation(line: 147, column: 9, scope: !3167)
 !179535 = !DILocation(line: 148, column: 9, scope: !3167)
 !179536 = !DILocation(line: 149, column: 6, scope: !3167)
@@ -3710,8 +3710,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180134 = distinct !DILocation(line: 144, column: 18, scope: !3276, inlinedAt: !180118)
 !180135 = distinct !DILocation(line: 79, column: 13, scope: !2713, inlinedAt: !180134)
 !180136 = distinct !{!180136, !4188, !4189}
-!180137 = distinct !DILocation(line: 185, column: 40, scope: !5350, inlinedAt: !180131)
-!180138 = distinct !{!180138, !4188, !4189}
+!180137 = distinct !{!180137, !4188, !4189}
+!180138 = distinct !DILocation(line: 185, column: 40, scope: !5350, inlinedAt: !180131)
 !180139 = distinct !{!180139, !4189, !4188}
 !180140 = !{!180123}
 !180141 = !DILocation(line: 977, column: 16, scope: !3259, inlinedAt: !180121)
@@ -3723,8 +3723,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180147 = !DILocation(line: 89, column: 24, scope: !3275, inlinedAt: !180133)
 !180148 = !DILocation(line: 144, column: 22, scope: !3276, inlinedAt: !180118)
 !180149 = !DILocation(line: 792, column: 51, scope: !2711, inlinedAt: !180135)
-!180150 = !DILocation(line: 659, column: 28, scope: !3277, inlinedAt: !180137)
-!180151 = !DILocation(line: 443, column: 13, scope: !3260, inlinedAt: !180125)
+!180150 = !DILocation(line: 443, column: 13, scope: !3260, inlinedAt: !180125)
+!180151 = !DILocation(line: 659, column: 28, scope: !3277, inlinedAt: !180138)
 !180152 = !DILocation(line: 0, scope: !180116)
 !180153 = !DILocation(line: 127, column: 9, scope: !180117)
 !180154 = !DILocation(line: 128, column: 6, scope: !180116)
@@ -3799,8 +3799,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180223 = !DILocation(line: 89, column: 24, scope: !180163, inlinedAt: !180194)
 !180224 = !DILocation(line: 140, column: 22, scope: !180168)
 !180225 = !DILocation(line: 863, column: 51, scope: !2715, inlinedAt: !180170)
-!180226 = !DILocation(line: 659, column: 28, scope: !3277, inlinedAt: !180196)
-!180227 = !DILocation(line: 443, column: 13, scope: !3260, inlinedAt: !180185)
+!180226 = !DILocation(line: 443, column: 13, scope: !3260, inlinedAt: !180185)
+!180227 = !DILocation(line: 659, column: 28, scope: !3277, inlinedAt: !180196)
 !180228 = !DILocation(line: 977, column: 16, scope: !3259, inlinedAt: !180199)
 !180229 = !DILocation(line: 961, column: 18, scope: !3263, inlinedAt: !180203)
 !180230 = !DILocation(line: 1717, column: 9, scope: !3269, inlinedAt: !180205)
@@ -3808,8 +3808,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180232 = !DILocation(line: 89, column: 24, scope: !3275, inlinedAt: !180206)
 !180233 = !DILocation(line: 144, column: 22, scope: !3276)
 !180234 = !DILocation(line: 792, column: 51, scope: !2711, inlinedAt: !180179)
-!180235 = !DILocation(line: 659, column: 28, scope: !3277, inlinedAt: !180208)
-!180236 = !DILocation(line: 443, column: 13, scope: !3260, inlinedAt: !180198)
+!180235 = !DILocation(line: 443, column: 13, scope: !3260, inlinedAt: !180198)
+!180236 = !DILocation(line: 659, column: 28, scope: !3277, inlinedAt: !180208)
 !180237 = !DILocation(line: 147, column: 9, scope: !3262)
 !180238 = !DILocation(line: 148, column: 9, scope: !3262)
 !180239 = !DILocation(line: 149, column: 6, scope: !3262)
@@ -3855,8 +3855,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180279 = distinct !DILocation(line: 144, column: 18, scope: !3295, inlinedAt: !180263)
 !180280 = distinct !DILocation(line: 79, column: 13, scope: !2739, inlinedAt: !180279)
 !180281 = distinct !{!180281, !4188, !4189}
-!180282 = distinct !DILocation(line: 185, column: 40, scope: !5357, inlinedAt: !180276)
-!180283 = distinct !{!180283, !4188, !4189}
+!180282 = distinct !{!180282, !4188, !4189}
+!180283 = distinct !DILocation(line: 185, column: 40, scope: !5357, inlinedAt: !180276)
 !180284 = distinct !{!180284, !4189, !4188}
 !180285 = !{!180268}
 !180286 = !DILocation(line: 977, column: 16, scope: !3278, inlinedAt: !180266)
@@ -3868,8 +3868,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180292 = !DILocation(line: 89, column: 24, scope: !3294, inlinedAt: !180278)
 !180293 = !DILocation(line: 144, column: 22, scope: !3295, inlinedAt: !180263)
 !180294 = !DILocation(line: 792, column: 51, scope: !2737, inlinedAt: !180280)
-!180295 = !DILocation(line: 659, column: 28, scope: !3296, inlinedAt: !180282)
-!180296 = !DILocation(line: 443, column: 13, scope: !3279, inlinedAt: !180270)
+!180295 = !DILocation(line: 443, column: 13, scope: !3279, inlinedAt: !180270)
+!180296 = !DILocation(line: 659, column: 28, scope: !3296, inlinedAt: !180283)
 !180297 = !DILocation(line: 0, scope: !180261)
 !180298 = !DILocation(line: 127, column: 9, scope: !180262)
 !180299 = !DILocation(line: 128, column: 6, scope: !180261)
@@ -3944,8 +3944,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180368 = !DILocation(line: 89, column: 24, scope: !180308, inlinedAt: !180339)
 !180369 = !DILocation(line: 140, column: 22, scope: !180313)
 !180370 = !DILocation(line: 863, column: 51, scope: !2741, inlinedAt: !180315)
-!180371 = !DILocation(line: 659, column: 28, scope: !3296, inlinedAt: !180341)
-!180372 = !DILocation(line: 443, column: 13, scope: !3279, inlinedAt: !180330)
+!180371 = !DILocation(line: 443, column: 13, scope: !3279, inlinedAt: !180330)
+!180372 = !DILocation(line: 659, column: 28, scope: !3296, inlinedAt: !180341)
 !180373 = !DILocation(line: 977, column: 16, scope: !3278, inlinedAt: !180344)
 !180374 = !DILocation(line: 961, column: 18, scope: !3282, inlinedAt: !180348)
 !180375 = !DILocation(line: 1717, column: 9, scope: !3288, inlinedAt: !180350)
@@ -3953,8 +3953,8 @@ begin_hunk_5_@llvm.vector.reduce.add.v4i16
 !180377 = !DILocation(line: 89, column: 24, scope: !3294, inlinedAt: !180351)
 !180378 = !DILocation(line: 144, column: 22, scope: !3295)
 !180379 = !DILocation(line: 792, column: 51, scope: !2737, inlinedAt: !180324)
-!180380 = !DILocation(line: 659, column: 28, scope: !3296, inlinedAt: !180353)
-!180381 = !DILocation(line: 443, column: 13, scope: !3279, inlinedAt: !180343)
+!180380 = !DILocation(line: 443, column: 13, scope: !3279, inlinedAt: !180343)
+!180381 = !DILocation(line: 659, column: 28, scope: !3296, inlinedAt: !180353)
 !180382 = !DILocation(line: 147, column: 9, scope: !3281)
 !180383 = !DILocation(line: 148, column: 9, scope: !3281)
 !180384 = !DILocation(line: 149, column: 6, scope: !3281)

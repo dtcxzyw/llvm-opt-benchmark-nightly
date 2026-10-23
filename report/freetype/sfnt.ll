@@ -205,11 +205,11 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.dv, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
+  %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %bc.merge.rdx, i64 0
+  %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer
   %n.vec131 = and i64 %i.d, 65528                 ; 4 uses
   %4 = shl nuw nsw i64 %n.vec131, 1
   %5 = getelementptr i8, ptr %i.k, i64 %4
-  %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %bc.merge.rdx, i64 0
-  %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

@@ -205,32 +205,32 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec7, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx21 = phi i16 [ %i.aj, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx22 = phi i16 [ %i.ak, %vec.epilog.iter.check ], [ -1, %vector.main.loop.iter.check ]
-  %n.vec24 = and i64 %i.y, -4                     ; 3 uses
-  %3 = shl i64 %n.vec24, 1
-  %4 = getelementptr i8, ptr %i.q, i64 %3
+  %broadcast.splatinsert26 = insertelement <4 x i16> poison, i16 %bc.merge.rdx22, i64 0
+  %broadcast.splat27 = shufflevector <4 x i16> %broadcast.splatinsert26, <4 x i16> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert = insertelement <4 x i16> poison, i16 %bc.merge.rdx21, i64 0
   %broadcast.splat = shufflevector <4 x i16> %broadcast.splatinsert, <4 x i16> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert25 = insertelement <4 x i16> poison, i16 %bc.merge.rdx22, i64 0
-  %broadcast.splat26 = shufflevector <4 x i16> %broadcast.splatinsert25, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec23 = and i64 %i.y, -4                     ; 3 uses
+  %3 = shl i64 %n.vec23, 1
+  %4 = getelementptr i8, ptr %i.q, i64 %3
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index27 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next32, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi28.a = phi <4 x i16> [ %broadcast.splat, %vec.epilog.ph ], [ %i.an, %vec.epilog.vector.body ]
-  %vec.phi29 = phi <4 x i16> [ %broadcast.splat26, %vec.epilog.ph ], [ %i.am, %vec.epilog.vector.body ]
+  %vec.phi29 = phi <4 x i16> [ %broadcast.splat27, %vec.epilog.ph ], [ %i.am, %vec.epilog.vector.body ]
   %i.al = shl i64 %index27, 1
   %next.gep30 = getelementptr i8, ptr %i.q, i64 %i.al
   %wide.load31 = load <4 x i16>, ptr %next.gep30, align 2, !alias.scope !213 ; 2 uses
   %i.am = tail call <4 x i16> @llvm.umin.v4i16(<4 x i16> %wide.load31, <4 x i16> %vec.phi29) ; 2 uses
   %i.an = tail call <4 x i16> @llvm.umax.v4i16(<4 x i16> %wide.load31, <4 x i16> %vec.phi28.a) ; 2 uses
   %index.next32 = add nuw i64 %index27, 4         ; 2 uses
-  %i.ao = icmp eq i64 %index.next32, %n.vec24
+  %i.ao = icmp eq i64 %index.next32, %n.vec23
   br i1 %i.ao, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !188
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.ap = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.an) ; 2 uses
   %i.aq = tail call i16 @llvm.vector.reduce.umin.v4i16(<4 x i16> %i.am) ; 2 uses
-  %cmp.n33 = icmp eq i64 %i.y, %n.vec24
+  %cmp.n33 = icmp eq i64 %i.y, %n.vec23
   br i1 %cmp.n33, label %.loopexit.loopexit.i.i, label %.lr.ph.i17.i.i.preheader
 
 .lr.ph.i17.i.i.preheader:                         ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

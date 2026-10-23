@@ -204,7 +204,7 @@ bb.cfe:                                           ; preds = %bb.cgu, %bb.cfc, %b
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCNvNtNtCs844E4pPEVZX_17influxdb3_catalog6format5apply27preload_restore_for_records0ECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i1375: ; preds = %bb.cfc, %bb.cez
   %i.kal = icmp eq i64 %i.jzt, -2
-  %3 = shufflevector <2 x i64> %i.jzv, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %3 = shufflevector <2 x i64> %i.jzv, <2 x i64> <i64 poison, i64 undef>, <2 x i32> <i32 1, i32 3>
   %i.kam = extractelement <2 x i64> %i.jzv, i64 0
   br i1 %i.kal, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs844E4pPEVZX_17influxdb3_catalog6format5apply14RestorePreloadECsgsNUVCRJO2f_13influxdb3_lib.exit155.i.i.i.i1309, label %bb.cff
 
@@ -607,7 +607,7 @@ bb.dcb:                                           ; preds = %bb.ddr, %bb.dbz, %b
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCNvNtNtCs844E4pPEVZX_17influxdb3_catalog6format5apply27preload_restore_for_records0ECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i2195: ; preds = %bb.dbz, %bb.dbw
   %i.msm = icmp eq i64 %i.mru, -2
-  %4 = shufflevector <2 x i64> %i.mrw, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %4 = shufflevector <2 x i64> %i.mrw, <2 x i64> <i64 poison, i64 undef>, <2 x i32> <i32 1, i32 3>
   %i.msn = extractelement <2 x i64> %i.mrw, i64 0
   br i1 %i.msm, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs844E4pPEVZX_17influxdb3_catalog6format5apply14RestorePreloadECsgsNUVCRJO2f_13influxdb3_lib.exit155.i.i.i.i2013, label %bb.dcc
 
@@ -1010,7 +1010,7 @@ bb.euz:                                           ; preds = %bb.ewp, %bb.eux, %b
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCNvNtNtCs844E4pPEVZX_17influxdb3_catalog6format5apply27preload_restore_for_records0ECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i3819: ; preds = %bb.eux, %bb.euu
   %i.sed = icmp eq i64 %i.sdl, -2
-  %5 = shufflevector <2 x i64> %i.sdn, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %5 = shufflevector <2 x i64> %i.sdn, <2 x i64> <i64 poison, i64 undef>, <2 x i32> <i32 1, i32 3>
   %i.see = extractelement <2 x i64> %i.sdn, i64 0
   br i1 %i.sed, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs844E4pPEVZX_17influxdb3_catalog6format5apply14RestorePreloadECsgsNUVCRJO2f_13influxdb3_lib.exit155.i.i.i.i3708, label %bb.eva
 
