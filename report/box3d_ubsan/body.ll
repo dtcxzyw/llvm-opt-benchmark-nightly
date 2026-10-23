@@ -202,10 +202,10 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
   %i.bk = getelementptr inbounds nuw i8, ptr %phi.call, i64 120 ; 2 uses
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !116
-  %i.bm = icmp eq i32 %i.bl, 0                    ; 2 uses
-  %i.bn = select i1 %i.bm, i64 0, i64 2           ; 2 uses
-  %3 = mul nuw nsw i64 %i.bn, 88
-  %i.bo = add i64 %3, %i.bd, !nosanitize !9       ; 2 uses
+  %i.bm = icmp eq i32 %i.bl, 0                    ; 3 uses
+  %i.bn = select i1 %i.bm, i64 0, i64 2
+  %.finite = select i1 %i.bm, i64 0, i64 176
+  %i.bo = add i64 %.finite, %i.bd, !nosanitize !9 ; 2 uses
   %.not114 = icmp ult i64 %i.bo, %i.bd, !nosanitize !9
   br i1 %.not114, label %bb.s, label %bb.t, !prof !71, !nosanitize !9
 
