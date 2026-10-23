@@ -204,6 +204,10 @@ bb.g:                                             ; preds = %bb.f
   %.not21.i = icmp eq ptr %malloc, null
   br i1 %.not21.i, label %compose_path.exit.thread.i, label %.thread.i
 
+compose_path.exit.thread.i:                       ; preds = %bb.g, %bb.f
+  call void (i32, ptr, ...) @fatal(i32 noundef 1, ptr noundef nonnull @.str.2)
+  unreachable
+
 .thread.i:                                        ; preds = %bb.g
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 12
   store ptr %malloc, ptr %3, align 8, !tbaa !39
@@ -212,10 +216,6 @@ bb.g:                                             ; preds = %bb.f
   %i.r = call noalias dereferenceable_or_null(10) ptr @strdup(ptr noundef nonnull readonly @.str.52) #40 ; 2 uses
   %.not.i179 = icmp eq ptr %i.r, null
   br i1 %.not.i179, label %compose_path.exit.thread.i184, label %namelist_add.exit185
-
-compose_path.exit.thread.i:                       ; preds = %bb.g, %bb.f
-  call void (i32, ptr, ...) @fatal(i32 noundef 1, ptr noundef nonnull @.str.2)
-  unreachable
 
 compose_path.exit.thread.i184:                    ; preds = %.thread.i
   call void (i32, ptr, ...) @fatal(i32 noundef 1, ptr noundef nonnull @.str.2)
@@ -318,7 +318,7 @@ find_tag.exit:                                    ; preds = %bb.p
   store ptr %i.at, ptr %i.c, align 8, !tbaa !29
   %i.au = call fastcc ptr @get_option(ptr noundef %i.c, ptr noundef %i.d) ; 2 uses
   %.not145273 = icmp eq ptr %i.au, null
-  br i1 %.not145273, label %.loopexit267, label %.lr.ph
+  br i1 %.not145273, label %find_tag.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %find_tag.exit
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -326,36 +326,37 @@ find_tag.exit:                                    ; preds = %bb.p
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph, %bb.u
-  %4 = phi i32 [ %i.t, %.lr.ph ], [ %i.bn, %bb.u ] ; 5 uses
-  %5 = phi i32 [ %i.u, %.lr.ph ], [ %i.bo, %bb.u ] ; 4 uses
-  %i.ax = phi ptr [ %i.au, %.lr.ph ], [ %i.bq, %bb.u ] ; 3 uses
-  %.0100274 = phi i8 [ 0, %.lr.ph ], [ %.1101, %bb.u ]
-  %6 = phi ptr [ %.promoted, %.lr.ph ], [ %i.bp, %bb.u ] ; 3 uses
+  %4 = phi ptr [ %i.au, %.lr.ph ], [ %i.bq, %bb.u ] ; 3 uses
+  %.0100286 = phi i8 [ 0, %.lr.ph ], [ %.1101, %bb.u ]
+  %i.ax = phi ptr [ %.promoted, %.lr.ph ], [ %i.bp, %bb.u ] ; 3 uses
+  %5 = phi i32 [ %i.u, %.lr.ph ], [ %i.bo, %bb.u ] ; 6 uses
+  %6 = phi i32 [ %i.t, %.lr.ph ], [ %i.bn, %bb.u ] ; 3 uses
   %i.ay = load ptr, ptr @harness_exclude, align 8, !tbaa !29
-  %i.az = call ptr @find_word(ptr noundef %i.ay, ptr noundef nonnull %i.ax)
+  %i.az = call ptr @find_word(ptr noundef %i.ay, ptr noundef nonnull %4)
   %.not165 = icmp eq ptr %i.az, null
   br i1 %.not165, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %bb.q
-  %i.ba = call noalias ptr @strdup(ptr noundef nonnull readonly %i.ax) #40 ; 2 uses
+  %i.ba = call noalias ptr @strdup(ptr noundef nonnull readonly %4) #40 ; 2 uses
   %.not.i188 = icmp eq ptr %i.ba, null
   br i1 %.not.i188, label %compose_path.exit.thread.i193, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.bb = icmp eq i32 %5, %4
+  %i.bb = icmp eq i32 %5, %6
   br i1 %i.bb, label %bb.t, label %namelist_add.exit194
 
 bb.t:                                             ; preds = %bb.s
-  %i.bc = ashr i32 %4, 1
-  %i.bd = add i32 %4, 4
+  %i.bc = ashr i32 %5, 1
+  %i.bd = add i32 %5, 4
   %i.be = add i32 %i.bd, %i.bc                    ; 3 uses
   %i.bf = sext i32 %i.be to i64
   %i.bg = shl nsw i64 %i.bf, 3
-  %i.bh = call ptr @realloc(ptr noundef %6, i64 noundef %i.bg) #47 ; 2 uses
+  %i.bh = call ptr @realloc(ptr noundef %i.ax, i64 noundef %i.bg) #47 ; 3 uses
   %.not21.i190 = icmp eq ptr %i.bh, null
   br i1 %.not21.i190, label %compose_path.exit.thread.i193, label %.thread.i191
 
 .thread.i191:                                     ; preds = %bb.t
+  store ptr %i.bh, ptr %3, align 8, !tbaa !39
   store i32 %i.be, ptr %i.aw, align 4, !tbaa !40
   br label %namelist_add.exit194
 
@@ -364,8 +365,8 @@ compose_path.exit.thread.i193:                    ; preds = %bb.t, %bb.r
   unreachable
 
 namelist_add.exit194:                             ; preds = %bb.s, %.thread.i191
-  %i.bi = phi i32 [ %i.be, %.thread.i191 ], [ %4, %bb.s ]
-  %i.bj = phi ptr [ %i.bh, %.thread.i191 ], [ %6, %bb.s ] ; 2 uses
+  %i.bi = phi i32 [ %i.be, %.thread.i191 ], [ %6, %bb.s ]
+  %i.bj = phi ptr [ %i.bh, %.thread.i191 ], [ %i.ax, %bb.s ] ; 2 uses
   %i.bk = sext i32 %5 to i64
   %i.bl = getelementptr inbounds [8 x i8], ptr %i.bj, i64 %i.bk
   store ptr %i.ba, ptr %i.bl, align 8, !tbaa !29
@@ -374,28 +375,20 @@ namelist_add.exit194:                             ; preds = %bb.s, %.thread.i191
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.q, %namelist_add.exit194
-  %i.bn = phi i32 [ %i.bi, %namelist_add.exit194 ], [ %4, %bb.q ] ; 2 uses
+  %i.bn = phi i32 [ %i.bi, %namelist_add.exit194 ], [ %6, %bb.q ] ; 2 uses
   %i.bo = phi i32 [ %i.bm, %namelist_add.exit194 ], [ %5, %bb.q ] ; 2 uses
-  %i.bp = phi ptr [ %i.bj, %namelist_add.exit194 ], [ %6, %bb.q ] ; 2 uses
-  %.1101 = phi i8 [ %.0100274, %namelist_add.exit194 ], [ 1, %bb.q ] ; 2 uses
-  call void @free(ptr noundef nonnull %i.ax) #40
+  %i.bp = phi ptr [ %i.bj, %namelist_add.exit194 ], [ %i.ax, %bb.q ] ; 2 uses
+  %.1101 = phi i8 [ %.0100286, %namelist_add.exit194 ], [ 1, %bb.q ] ; 2 uses
+  call void @free(ptr noundef nonnull %4) #40
   %i.bq = call fastcc ptr @get_option(ptr noundef %i.c, ptr noundef %i.d) ; 2 uses
   %.not145 = icmp eq ptr %i.bq, null
-  br i1 %.not145, label %.loopexit267, label %bb.q, !llvm.loop !108
+  br i1 %.not145, label %find_tag.exit.thread, label %bb.q, !llvm.loop !108
 
-.loopexit267:                                     ; preds = %bb.u, %find_tag.exit
-  %7 = phi i32 [ %i.t, %find_tag.exit ], [ %i.bn, %bb.u ]
-  %8 = phi i32 [ %i.u, %find_tag.exit ], [ %i.bo, %bb.u ]
-  %.lcssa271 = phi ptr [ %.promoted, %find_tag.exit ], [ %i.bp, %bb.u ] ; 2 uses
-  %.0100.lcssa = phi i8 [ 0, %find_tag.exit ], [ %.1101, %bb.u ]
-  store ptr %.lcssa271, ptr %3, align 8
-  br label %find_tag.exit.thread
-
-find_tag.exit.thread:                             ; preds = %bb.p, %.loopexit267
-  %.pre.i216 = phi ptr [ %.lcssa271, %.loopexit267 ], [ %.promoted, %bb.p ] ; 3 uses
-  %9 = phi i32 [ %7, %.loopexit267 ], [ %i.t, %bb.p ] ; 3 uses
-  %10 = phi i32 [ %8, %.loopexit267 ], [ %i.u, %bb.p ] ; 4 uses
-  %.2102 = phi i8 [ %.0100.lcssa, %.loopexit267 ], [ 0, %bb.p ] ; 3 uses
+find_tag.exit.thread:                             ; preds = %bb.u, %bb.p, %find_tag.exit
+  %7 = phi i32 [ %i.t, %bb.p ], [ %i.t, %find_tag.exit ], [ %i.bn, %bb.u ] ; 3 uses
+  %8 = phi i32 [ %i.u, %bb.p ], [ %i.u, %find_tag.exit ], [ %i.bo, %bb.u ] ; 4 uses
+  %.pre.i227 = phi ptr [ %.promoted, %bb.p ], [ %.promoted, %find_tag.exit ], [ %i.bp, %bb.u ] ; 3 uses
+  %.2102 = phi i8 [ 0, %bb.p ], [ 0, %find_tag.exit ], [ %.1101, %bb.u ] ; 3 uses
   %i.br = call ptr @strstr(ptr noundef nonnull readonly dereferenceable(1) %i.ap, ptr noundef nonnull dereferenceable(1) @.str.54) #45 ; 2 uses
   %.not.i195 = icmp eq ptr %i.br, null
   br i1 %.not.i195, label %.loopexit266, label %find_tag.exit197
@@ -608,16 +601,16 @@ bb.am:                                            ; preds = %.loopexit
 bb.an:                                            ; preds = %bb.am
   %i.ea = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.eb = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %i.ec = icmp eq i32 %10, %9
+  %i.ec = icmp eq i32 %8, %7
   br i1 %i.ec, label %bb.ao, label %namelist_add.exit221
 
 bb.ao:                                            ; preds = %bb.an
-  %i.ed = ashr i32 %9, 1
-  %i.ee = add i32 %9, 4
+  %i.ed = ashr i32 %7, 1
+  %i.ee = add i32 %7, 4
   %i.ef = add i32 %i.ee, %i.ed                    ; 2 uses
   %i.eg = sext i32 %i.ef to i64
   %i.eh = shl nsw i64 %i.eg, 3
-  %i.ei = call ptr @realloc(ptr noundef %.pre.i216, i64 noundef %i.eh) #47 ; 3 uses
+  %i.ei = call ptr @realloc(ptr noundef %.pre.i227, i64 noundef %i.eh) #47 ; 3 uses
   %.not21.i217 = icmp eq ptr %i.ei, null
   br i1 %.not21.i217, label %compose_path.exit.thread.i220, label %.thread.i218
 
@@ -631,27 +624,27 @@ compose_path.exit.thread.i220:                    ; preds = %bb.ao, %bb.am
   unreachable
 
 namelist_add.exit221:                             ; preds = %bb.an, %.thread.i218
-  %i.ej = phi ptr [ %i.ei, %.thread.i218 ], [ %.pre.i216, %bb.an ] ; 2 uses
-  %i.ek = sext i32 %10 to i64
+  %i.ej = phi ptr [ %i.ei, %.thread.i218 ], [ %.pre.i227, %bb.an ] ; 2 uses
+  %i.ek = sext i32 %8 to i64
   %i.el = getelementptr inbounds [8 x i8], ptr %i.ej, i64 %i.ek
   store ptr %i.dz, ptr %i.el, align 8, !tbaa !29
-  %i.em = add nsw i32 %10, 1                      ; 2 uses
+  %i.em = add nsw i32 %8, 1                       ; 2 uses
   store i32 %i.em, ptr %i.ea, align 8, !tbaa !38
   br label %.thread
 
 .thread:                                          ; preds = %bb.i, %bb.n, %namelist_add.exit221, %.loopexit
-  %.pre = phi ptr [ %.pre.i216, %.loopexit ], [ %i.ej, %namelist_add.exit221 ], [ %.promoted, %bb.n ], [ %.promoted, %bb.i ] ; 2 uses
-  %11 = phi i32 [ %10, %.loopexit ], [ %i.em, %namelist_add.exit221 ], [ %i.u, %bb.n ], [ %i.u, %bb.i ] ; 2 uses
-  %.3256 = phi i1 [ %.2, %.loopexit ], [ %.2, %namelist_add.exit221 ], [ true, %bb.n ], [ true, %bb.i ] ; 2 uses
-  %.395255 = phi i1 [ %.294, %.loopexit ], [ %.294, %namelist_add.exit221 ], [ false, %bb.n ], [ false, %bb.i ] ; 2 uses
-  %.399254 = phi i1 [ %.298, %.loopexit ], [ %.298, %namelist_add.exit221 ], [ true, %bb.n ], [ true, %bb.i ]
-  %.9253 = phi i1 [ %i.dy, %.loopexit ], [ %i.dy, %namelist_add.exit221 ], [ false, %bb.n ], [ false, %bb.i ]
-  %.3107252 = phi i8 [ %.2106, %.loopexit ], [ %.2106, %namelist_add.exit221 ], [ 0, %bb.n ], [ %i.v, %bb.i ] ; 2 uses
-  %.3112251 = phi i1 [ false, %.loopexit ], [ true, %namelist_add.exit221 ], [ false, %bb.n ], [ false, %bb.i ] ; 2 uses
-  %.3116250 = phi i1 [ %.2115, %.loopexit ], [ %.2115, %namelist_add.exit221 ], [ false, %bb.n ], [ false, %bb.i ] ; 6 uses
-  %.3120249 = phi i1 [ %.2119, %.loopexit ], [ %.2119, %namelist_add.exit221 ], [ false, %bb.n ], [ false, %bb.i ] ; 6 uses
-  %.1122248 = phi i1 [ %.not.i206, %.loopexit ], [ %.not.i206, %namelist_add.exit221 ], [ false, %bb.n ], [ false, %bb.i ] ; 2 uses
-  %.2131247 = phi ptr [ %.1130, %.loopexit ], [ %.1130, %namelist_add.exit221 ], [ null, %bb.n ], [ null, %bb.i ] ; 3 uses
+  %.3256 = phi i1 [ %.2, %namelist_add.exit221 ], [ %.2, %.loopexit ], [ true, %bb.n ], [ true, %bb.i ] ; 2 uses
+  %.395255 = phi i1 [ %.294, %namelist_add.exit221 ], [ %.294, %.loopexit ], [ false, %bb.n ], [ false, %bb.i ] ; 2 uses
+  %.399254 = phi i1 [ %.298, %namelist_add.exit221 ], [ %.298, %.loopexit ], [ true, %bb.n ], [ true, %bb.i ]
+  %.9253 = phi i1 [ %i.dy, %namelist_add.exit221 ], [ %i.dy, %.loopexit ], [ false, %bb.n ], [ false, %bb.i ]
+  %.3107252 = phi i8 [ %.2106, %namelist_add.exit221 ], [ %.2106, %.loopexit ], [ 0, %bb.n ], [ %i.v, %bb.i ] ; 2 uses
+  %.3112251 = phi i1 [ true, %namelist_add.exit221 ], [ false, %.loopexit ], [ false, %bb.n ], [ false, %bb.i ] ; 2 uses
+  %.3116250 = phi i1 [ %.2115, %namelist_add.exit221 ], [ %.2115, %.loopexit ], [ false, %bb.n ], [ false, %bb.i ] ; 6 uses
+  %.3120249 = phi i1 [ %.2119, %namelist_add.exit221 ], [ %.2119, %.loopexit ], [ false, %bb.n ], [ false, %bb.i ] ; 6 uses
+  %.1122248 = phi i1 [ %.not.i206, %namelist_add.exit221 ], [ %.not.i206, %.loopexit ], [ false, %bb.n ], [ false, %bb.i ] ; 2 uses
+  %.2131247 = phi ptr [ %.1130, %namelist_add.exit221 ], [ %.1130, %.loopexit ], [ null, %bb.n ], [ null, %bb.i ] ; 3 uses
+  %9 = phi i32 [ %i.em, %namelist_add.exit221 ], [ %8, %.loopexit ], [ %i.u, %bb.n ], [ %i.u, %bb.i ] ; 2 uses
+  %.pre.i228 = phi ptr [ %i.ej, %namelist_add.exit221 ], [ %.pre.i227, %.loopexit ], [ %.promoted, %bb.n ], [ %.promoted, %bb.i ] ; 2 uses
   %i.en = load i32, ptr @test_mode, align 4, !tbaa !41
   switch i32 %i.en, label %.thread257 [
     i32 0, label %bb.ap
@@ -724,17 +717,17 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.az, %bb.ba, %.thread257
   %.1128 = phi i32 [ -2, %.thread257 ], [ %i.ez, %bb.ba ], [ %.0127, %bb.az ]
   %i.fa = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.fb = icmp sgt i32 %11, 0
+  %i.fb = icmp sgt i32 %9, 0
   br i1 %i.fb, label %.lr.ph.i.preheader, label %namelist_free.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.bb
-  %i.fc = zext nneg i32 %11 to i64
+  %i.fc = zext nneg i32 %9 to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %indvars.iv = phi i64 [ %i.fc, %.lr.ph.i.preheader ], [ %i.fd, %.lr.ph.i ]
   %i.fd = add nsw i64 %indvars.iv, -1             ; 3 uses
-  %i.fe = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.fd
+  %i.fe = getelementptr inbounds nuw [8 x i8], ptr %.pre.i228, i64 %i.fd
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !29
   call void @free(ptr noundef %i.ff) #40
   %.not265.wide = icmp eq i64 %i.fd, 0
@@ -745,7 +738,7 @@ namelist_free.exit.loopexit:                      ; preds = %.lr.ph.i
   br label %namelist_free.exit
 
 namelist_free.exit:                               ; preds = %namelist_free.exit.loopexit, %bb.bb
-  call void @free(ptr noundef %.pre) #40
+  call void @free(ptr noundef %.pre.i228) #40
   store ptr null, ptr %3, align 8, !tbaa !39
   %i.fg = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 0, ptr %i.fg, align 4, !tbaa !40

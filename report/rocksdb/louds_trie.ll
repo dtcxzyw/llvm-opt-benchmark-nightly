@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.a, %_ZNSt6vector
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEv(ptr noundef nonnull align 8 dereferenceable(432) initializes((148, 152)) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.std::vector.35", align 8    ; 10 uses
+  %1 = alloca %"class.std::vector.35", align 8    ; 8 uses
   %2 = alloca %"class.std::vector.20", align 16   ; 14 uses
   %3 = alloca %"class.std::vector.25", align 16   ; 16 uses
   %4 = alloca %"class.std::vector.5", align 16    ; 17 uses
@@ -337,12 +337,11 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   %.sroa.speculated379 = tail call i32 @llvm.umin.i32(i32 %i.ap, i32 %i.am)
   store i32 %.sroa.speculated379, ptr %i.an, align 8, !tbaa !131
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
-  store i64 0, ptr %1, align 8
+  %9 = zext i32 %i.ap to i64                      ; 2 uses
   %.not.i.i.i.i = icmp ne i32 %i.ap, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
-  %9 = zext i32 %i.ap to i64                      ; 2 uses
   %i.aq = mul nuw nsw i64 %9, 144                 ; 3 uses
-  %i.ar = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #27 ; 11 uses
+  %i.ar = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #27 ; 12 uses
   store ptr %i.ar, ptr %1, align 8, !tbaa !135
   %i.as = getelementptr inbounds nuw [144 x i8], ptr %i.ar, i64 %9
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ar, i8 0, i64 %i.aq, i1 false)
@@ -352,7 +351,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   store ptr %i.as, ptr %i.au, align 8, !tbaa !136
   store ptr %scevgep.i.i.i.i.i, ptr %i.at, align 8, !tbaa !137
   invoke fastcc void @_ZZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEvEN12PerLevelData9StartNodeEv(ptr noundef nonnull align 8 dereferenceable(144) %i.ar)
-          to label %.preheader414 unwind label %.loopexit.split-lp411.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.preheader415 unwind label %.loopexit.split-lp411.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.preheader415:                                    ; preds = %.lr.ph.preheader.i.i.i.i.i
+  %10 = load ptr, ptr %i.c, align 8, !tbaa !101
+  %11 = load ptr, ptr %0, align 8, !tbaa !128     ; 2 uses
+  %.not457 = icmp eq ptr %10, %11
+  br i1 %.not457, label %._crit_edge426, label %.lr.ph425
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %.sroa.0387.0418 = phi ptr [ %i.az, %vec.epilog.scalar.ph ], [ %.sroa.0387.0418.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
@@ -365,13 +370,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ba = icmp eq ptr %i.az, %i.d
   br i1 %i.ba, label %.lr.ph.preheader.i.i.i.i.i, label %vec.epilog.scalar.ph, !llvm.loop !217
 
-.preheader414:                                    ; preds = %.lr.ph.preheader.i.i.i.i.i
-  %10 = load ptr, ptr %i.c, align 8, !tbaa !101
-  %11 = load ptr, ptr %0, align 8, !tbaa !128     ; 2 uses
-  %.not456 = icmp eq ptr %10, %11
-  br i1 %.not456, label %._crit_edge426, label %.lr.ph425
-
-._crit_edge426:                                   ; preds = %._crit_edge, %.preheader414
+._crit_edge426:                                   ; preds = %._crit_edge, %.preheader415
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 10 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !109 ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 9 uses
@@ -565,9 +564,9 @@ _ZNSt12_Vector_baseIN7rocksdb10trie_index15TrieBlockHandleESaIS2_EE13_M_dealloca
   store ptr %i.ed, ptr %i.dr, align 16, !tbaa !96
   br label %_ZNSt6vectorIN7rocksdb10trie_index15TrieBlockHandleESaIS2_EE7reserveEm.exit
 
-.lr.ph425:                                        ; preds = %.preheader414, %._crit_edge
-  %i.ee = phi ptr [ %i.iw, %._crit_edge ], [ %11, %.preheader414 ]
-  %.0138424 = phi i64 [ %i.iu, %._crit_edge ], [ 0, %.preheader414 ] ; 5 uses
+.lr.ph425:                                        ; preds = %.preheader415, %._crit_edge
+  %i.ee = phi ptr [ %i.iw, %._crit_edge ], [ %11, %.preheader415 ]
+  %.0138424 = phi i64 [ %i.iu, %._crit_edge ], [ 0, %.preheader415 ] ; 5 uses
   %i.ef = getelementptr [32 x i8], ptr %i.ee, i64 %.0138424 ; 6 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   %i.eh = load i64, ptr %i.eg, align 8, !tbaa !92 ; 3 uses
@@ -970,7 +969,6 @@ _ZNSt6vectorImSaImEE7reserveEm.exit243:           ; preds = %_ZNSt12_Vector_base
   %i.uw = getelementptr inbounds nuw i8, ptr %8, i64 48
   store ptr %7, ptr %i.uw, align 8, !tbaa !240
   %i.ux = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 3 uses
-  %.val.pre = load ptr, ptr %1, align 8, !tbaa !135
   %i.uy = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.uz = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.va = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -984,7 +982,7 @@ bb.br:                                            ; preds = %.loopexit406
 bb.bs:                                            ; preds = %_ZNSt6vectorImSaImEE7reserveEm.exit243, %.loopexit406
   %.0133453 = phi i32 [ 0, %_ZNSt6vectorImSaImEE7reserveEm.exit243 ], [ %i.amx, %.loopexit406 ] ; 4 uses
   %i.vd = zext i32 %.0133453 to i64
-  %i.ve = getelementptr inbounds nuw [144 x i8], ptr %.val.pre, i64 %i.vd ; 11 uses
+  %i.ve = getelementptr inbounds nuw [144 x i8], ptr %i.ar, i64 %i.vd ; 11 uses
   %i.vf = getelementptr i8, ptr %i.ve, i64 72     ; 6 uses
   %.val181 = load ptr, ptr %i.vf, align 8, !tbaa !139 ; 4 uses
   %i.vg = getelementptr i8, ptr %i.ve, i64 80     ; 3 uses

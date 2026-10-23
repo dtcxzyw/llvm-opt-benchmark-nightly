@@ -206,8 +206,8 @@ sqlite3GetVdbe.exit:                              ; preds = %bb.a, %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 24
   store i32 %4, ptr %i.ai, align 8, !tbaa !2519
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !2289 ; 12 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %5, i64 52 ; 2 uses
+  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !2289 ; 14 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %5, i64 52
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !2520
   %i.am = add nsw i32 %i.ak, 1                    ; 6 uses
   %i.an = add nsw i32 %i.ak, 2                    ; 3 uses
@@ -610,13 +610,12 @@ sqlite3VdbeJumpHere.exit453:                      ; preds = %bb.fi, %bb.fj
   %.0.i.i.i452 = phi ptr [ %i.aih, %bb.fj ], [ @sqlite3VdbeGetOp.dummy, %bb.fi ]
   %i.aii = getelementptr inbounds nuw i8, ptr %.0.i.i.i452, i64 8
   store i32 %i.aid, ptr %i.aii, align 8, !tbaa !955
-  %6 = load i32, ptr %i.al, align 4, !tbaa !2520  ; 2 uses
   %i.aij = load i32, ptr %i.eb, align 4, !tbaa !1207
   %.not.i.i454 = icmp sgt i32 %i.aij, %i.aid
   br i1 %.not.i.i454, label %bb.fl, label %bb.fk
 
 bb.fk:                                            ; preds = %sqlite3VdbeJumpHere.exit453
-  %i.aik = tail call fastcc i32 @growOp3(ptr noundef nonnull %.0.i, i32 noundef 147, i32 noundef %6, i32 noundef 0, i32 noundef 0), !inline_history !1235 ; 0 uses
+  %i.aik = tail call fastcc i32 @growOp3(ptr noundef nonnull %.0.i, i32 noundef 147, i32 noundef %i.ak, i32 noundef 0, i32 noundef 0), !inline_history !1235 ; 0 uses
   br label %sqlite3VdbeAddOp1.exit456
 
 bb.fl:                                            ; preds = %sqlite3VdbeJumpHere.exit453
@@ -630,7 +629,7 @@ bb.fl:                                            ; preds = %sqlite3VdbeJumpHere
   %i.aiq = getelementptr inbounds nuw i8, ptr %i.aip, i64 2
   store i16 0, ptr %i.aiq, align 2, !tbaa !957
   %i.air = getelementptr inbounds nuw i8, ptr %i.aip, i64 4
-  store i32 %6, ptr %i.air, align 4, !tbaa !954
+  store i32 %i.ak, ptr %i.air, align 4, !tbaa !954
   %i.ais = getelementptr inbounds nuw i8, ptr %i.aip, i64 8
   %i.ait = getelementptr inbounds nuw i8, ptr %i.aip, i64 1
   store i8 0, ptr %i.ait, align 1, !tbaa !939

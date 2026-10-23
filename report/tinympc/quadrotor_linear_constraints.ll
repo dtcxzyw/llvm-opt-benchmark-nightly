@@ -125,7 +125,7 @@ bb.a:
   %19 = alloca %"class.Eigen::Matrix.23", align 8 ; 5 uses
   %20 = alloca %"class.Eigen::Matrix.61", align 16 ; 28 uses
   %i.b = ptrtoaddr ptr %20 to i64                 ; 2 uses
-  %21 = alloca %"class.Eigen::Matrix.61", align 16 ; 16 uses
+  %21 = alloca %"class.Eigen::Matrix.61", align 16 ; 15 uses
   %22 = alloca %"class.Eigen::Matrix.23", align 8 ; 7 uses
   %23 = alloca %"class.Eigen::CwiseBinaryOp.126", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
@@ -528,8 +528,7 @@ bb.x:                                             ; preds = %bb.w
   store <2 x double> splat (double 2.000000e+00), ptr %21, align 16, !tbaa !29
   %i.dv = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
   store double 4.000000e+00, ptr %i.dv, align 16, !tbaa !29
-  %24 = getelementptr inbounds nuw i8, ptr %21, i64 24
-  %i.dw = getelementptr inbounds nuw i8, ptr %21, i64 80
+  %i.dw = getelementptr inbounds nuw i8, ptr %21, i64 24
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dn, i64 1224
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dn, i64 1232
   %i.dz = getelementptr inbounds nuw i8, ptr %22, i64 8
@@ -552,7 +551,7 @@ bb.x:                                             ; preds = %bb.w
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %24, i8 0, i64 72, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.dw, i8 0, i64 72, i1 false)
   %i.em = load <2 x double>, ptr %i.dv, align 16  ; 2 uses
   %i.en = fmul <2 x double> %i.em, splat (double 2.000000e-02)
   %i.eo = extractelement <2 x double> %i.em, i64 0
@@ -955,10 +954,8 @@ bb.bh:                                            ; preds = %_ZNSolsEPFRSoS_E.ex
   %i.sy = fadd <2 x double> %i.sx, zeroinitializer
   store <2 x double> %i.sy, ptr %i.dt, align 16, !tbaa !27
   %i.sz = load <2 x double>, ptr %i.du, align 16, !tbaa !27
-  %25 = fmul <2 x double> %i.sz, splat (double f0x3FEF5C28F5C28F5C)
-  %26 = load <2 x double>, ptr %i.dw, align 16, !tbaa !27
-  %i.ta = fmul <2 x double> %26, splat (double 2.000000e-02)
-  %i.tb = fadd <2 x double> %25, %i.ta
+  %i.ta = fmul <2 x double> %i.sz, splat (double f0x3FEF5C28F5C28F5C)
+  %i.tb = fadd <2 x double> %i.ta, zeroinitializer
   store <2 x double> %i.tb, ptr %i.du, align 16, !tbaa !27
   br label %bb.bi
 

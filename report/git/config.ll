@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %struct.strbuf, align 8             ; 8 uses
   %8 = alloca %struct.stat, align 8               ; 4 uses
   %9 = alloca %struct.strbuf, align 8             ; 11 uses
-  %10 = alloca %struct.config_store_data, align 8 ; 10 uses
+  %10 = alloca %struct.config_store_data, align 8 ; 6 uses
   %11 = alloca %struct.strbuf, align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
@@ -257,7 +257,7 @@ bb.e:                                             ; preds = %.loopexit
 _.exit:                                           ; preds = %.loopexit, %bb.e
   %.0.i105 = phi ptr [ %i.i, %bb.e ], [ @.str.165, %.loopexit ]
   %i.j = tail call i32 (ptr, ...) @error(ptr noundef %.0.i105, ptr noundef nonnull %3) #29 ; 0 uses
-  br label %12
+  br label %config_store_data_clear.exit
 
 section_name_is_ok.exit:                          ; preds = %.preheader.i, %.preheader.i, %bb.a
   %.not87 = icmp eq ptr %1, null
@@ -660,32 +660,12 @@ _.exit130:                                        ; preds = %bb.bf, %bb.bg
 .thread153:                                       ; preds = %bb.k, %bb.be, %_.exit130, %_.exit108, %.thread160
   %.6157 = phi i32 [ -1, %_.exit108 ], [ %.6164, %.thread160 ], [ %i.r, %bb.k ], [ %.5, %bb.be ], [ -1, %_.exit130 ]
   %i.eq = call i32 @rollback_lock_file(ptr noundef nonnull %6) #29 ; 0 uses
-  br label %12
+  br label %config_store_data_clear.exit
 
-12:                                               ; preds = %.thread153, %_.exit
+config_store_data_clear.exit:                     ; preds = %_.exit, %.thread153
   %.7 = phi i32 [ %.6157, %.thread153 ], [ -1, %_.exit ]
   %.165 = phi ptr [ %.064, %.thread153 ], [ null, %_.exit ]
   call void @free(ptr noundef %.165) #29
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %14 = load ptr, ptr %13, align 8, !tbaa !135
-  call void @free(ptr noundef %14) #29
-  %15 = getelementptr inbounds nuw i8, ptr %10, i64 32
-  %16 = load ptr, ptr %15, align 8, !tbaa !137    ; 3 uses
-  %switch.i = icmp ult ptr %16, inttoptr (i64 2 to ptr)
-  br i1 %switch.i, label %config_store_data_clear.exit, label %17
-
-17:                                               ; preds = %12
-  call void @regfree(ptr noundef nonnull %16) #29
-  call void @free(ptr noundef %16) #29
-  br label %config_store_data_clear.exit
-
-config_store_data_clear.exit:                     ; preds = %12, %17
-  %18 = getelementptr inbounds nuw i8, ptr %10, i64 48
-  %19 = load ptr, ptr %18, align 8, !tbaa !139
-  call void @free(ptr noundef %19) #29
-  %20 = getelementptr inbounds nuw i8, ptr %10, i64 64
-  %21 = load ptr, ptr %20, align 8, !tbaa !150
-  call void @free(ptr noundef %21) #29
   call void @strbuf_release(ptr noundef nonnull %7) #29
   call void @strbuf_release(ptr noundef nonnull %9) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #29

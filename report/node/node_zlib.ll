@@ -204,15 +204,10 @@ _ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit: ; preds = %bb.aw, %bb.ax
   %.sroa.0131.0 = phi ptr [ %i.il, %bb.ax ], [ %i.ik, %bb.aw ]
   %i.im = call noundef i64 @_ZN2v810TypedArray6LengthEv(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.0131.0) #31 ; 2 uses
   %.not252 = icmp eq i64 %i.im, 0
-  br i1 %.not252, label %.loopexit, label %.lr.ph
+  br i1 %.not252, label %.loopexit, label %bb.ay
 
-.lr.ph:                                           ; preds = %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  br label %bb.ay
-
-bb.ay:                                            ; preds = %.lr.ph, %bb.bb
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.bb ] ; 3 uses
+bb.ay:                                            ; preds = %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit, %bb.bb
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.bb ], [ 0, %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit ] ; 3 uses
   %i.in = getelementptr inbounds nuw [4 x i8], ptr %i.ic, i64 %indvars.iv
   %i.io = load i32, ptr %i.in, align 4            ; 2 uses
   %i.ip = icmp eq i32 %i.io, -1
@@ -230,7 +225,9 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   store ptr @.str.397, ptr %4, align 8, !alias.scope !280
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr @.str.446, ptr %5, align 8, !alias.scope !280
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i32 -1, ptr %6, align 8, !alias.scope !280
   call fastcc void @_ZN4node12_GLOBAL__N_117CompressionStreamINS0_19ZstdCompressContextEE9EmitErrorERKNS0_16CompressionErrorE(ptr noundef nonnull align 8 dereferenceable(416) %.0.i.i98, ptr noundef nonnull align 8 dereferenceable(20) %4)
   %i.it = getelementptr i8, ptr %.0.i.i98, i64 88
@@ -633,15 +630,10 @@ _ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit: ; preds = %bb.aw, %bb.ax
   %.sroa.0131.0 = phi ptr [ %i.ii, %bb.ax ], [ %i.ih, %bb.aw ]
   %i.ij = call noundef i64 @_ZN2v810TypedArray6LengthEv(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.0131.0) #31 ; 2 uses
   %.not252 = icmp eq i64 %i.ij, 0
-  br i1 %.not252, label %.loopexit, label %.lr.ph
+  br i1 %.not252, label %.loopexit, label %bb.ay
 
-.lr.ph:                                           ; preds = %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  br label %bb.ay
-
-bb.ay:                                            ; preds = %.lr.ph, %bb.bb
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.bb ] ; 3 uses
+bb.ay:                                            ; preds = %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit, %bb.bb
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.bb ], [ 0, %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit ] ; 3 uses
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.hz, i64 %indvars.iv
   %i.il = load i32, ptr %i.ik, align 4            ; 2 uses
   %i.im = icmp eq i32 %i.il, -1
@@ -659,7 +651,9 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   store ptr @.str.397, ptr %4, align 8, !alias.scope !304
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr @.str.446, ptr %5, align 8, !alias.scope !304
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i32 -1, ptr %6, align 8, !alias.scope !304
   call fastcc void @_ZN4node12_GLOBAL__N_117CompressionStreamINS0_21ZstdDecompressContextEE9EmitErrorERKNS0_16CompressionErrorE(ptr noundef nonnull align 8 dereferenceable(408) %.0.i.i98, ptr noundef nonnull align 8 dereferenceable(20) %4)
   %i.iq = getelementptr i8, ptr %.0.i.i98, i64 88

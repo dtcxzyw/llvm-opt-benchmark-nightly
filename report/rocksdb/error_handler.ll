@@ -205,7 +205,7 @@ _ZN7rocksdb6StatusD2Ev.exit:                      ; preds = %.thread186, %bb.r
   %.sroa.21147.0 = phi ptr [ null, %.thread186 ], [ %.pre.i, %bb.r ] ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
   store i8 %i.d, ptr %7, align 8, !tbaa !87
-  %i.cs = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %7, i64 1
   store i8 %i.l, ptr %i.cs, align 1, !tbaa !131
   %i.ct = getelementptr inbounds nuw i8, ptr %7, i64 2
   store i8 %.4, ptr %i.ct, align 2, !tbaa !136
@@ -323,13 +323,13 @@ bb.z:                                             ; preds = %bb.x
   br label %.body
 
 bb.aa:                                            ; preds = %_ZN7rocksdb6StatusD2Ev.exit82, %_ZN7rocksdb6StatusD2Ev.exit92
+  %10 = phi ptr [ %i.du, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %.sroa.21147.0, %_ZN7rocksdb6StatusD2Ev.exit82 ] ; 6 uses
   %i.ea = phi i8 [ %i.ds, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %i.cp, %_ZN7rocksdb6StatusD2Ev.exit82 ]
   %i.eb = phi i8 [ %i.dq, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %i.cn, %_ZN7rocksdb6StatusD2Ev.exit82 ]
   %i.ec = phi i8 [ %i.dy, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %i.cl, %_ZN7rocksdb6StatusD2Ev.exit82 ]
   %i.ed = phi i8 [ %i.dx, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %.4, %_ZN7rocksdb6StatusD2Ev.exit82 ]
-  %i.ee = phi i8 [ %i.dw, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %i.l, %_ZN7rocksdb6StatusD2Ev.exit82 ]
+  %i.ee = phi i8 [ %i.dw, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %i.l, %_ZN7rocksdb6StatusD2Ev.exit82 ] ; 2 uses
   %i.ef = phi i8 [ %i.dv, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %i.d, %_ZN7rocksdb6StatusD2Ev.exit82 ] ; 2 uses
-  %10 = phi ptr [ %i.du, %_ZN7rocksdb6StatusD2Ev.exit92 ], [ %.sroa.21147.0, %_ZN7rocksdb6StatusD2Ev.exit82 ] ; 6 uses
   %i.eg = icmp eq i8 %i.ef, 0
   br i1 %i.eg, label %bb.ao, label %bb.ab
 
@@ -515,8 +515,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap
   store i8 1, ptr %i.cx, align 1, !tbaa !83
-  %11 = load i8, ptr %i.cs, align 1, !tbaa !131
-  switch i8 %11, label %bb.at [
+  switch i8 %i.ee, label %bb.at [
     i8 4, label %bb.ar
     i8 8, label %bb.ar
   ]

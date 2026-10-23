@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.c, %bb.b, %bb.a,
 define internal fastcc i32 @add_object(ptr noundef %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 9 uses
-  %i.b = alloca [4 x ptr], align 16               ; 14 uses
+  %i.b = alloca [4 x ptr], align 16               ; 8 uses
   store ptr %0, ptr %i.a, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 0, i64 32, i1 false)
@@ -311,37 +311,40 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not59, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.af = call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 799) #12 ; 2 uses
+  %i.af = call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 799) #12 ; 3 uses
   store ptr %i.af, ptr %i.b, align 16, !tbaa !36
   %i.ag = icmp eq ptr %i.af, null
   br i1 %i.ag, label %bb.an, label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
+  %2 = phi ptr [ %i.af, %bb.q ], [ null, %bb.p ], [ null, %bb.o ] ; 9 uses
   %i.ah = load ptr, ptr %.042, align 8, !tbaa !20
   %.not60 = icmp eq ptr %i.ah, null
   br i1 %.not60, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.ai = call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 801) #12 ; 2 uses
+  %i.ai = call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 801) #12 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !36
   %i.ak = icmp eq ptr %i.ai, null
   br i1 %i.ak, label %bb.an, label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
+  %3 = phi ptr [ %i.ai, %bb.s ], [ null, %bb.r ]  ; 8 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.042, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !21
   %.not61 = icmp eq ptr %i.am, null
   br i1 %.not61, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.an = call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 803) #12 ; 2 uses
+  %i.an = call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 803) #12 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.an, ptr %i.ao, align 16, !tbaa !36
   %i.ap = icmp eq ptr %i.an, null
   br i1 %i.ap, label %bb.an, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
+  %4 = phi ptr [ %i.an, %bb.u ], [ null, %bb.t ]  ; 7 uses
   %i.aq = call i32 @OPENSSL_init_crypto(i64 noundef 64, ptr noundef null) #12 ; 0 uses
   %i.ar = call i32 @CRYPTO_THREAD_run_once(ptr noundef nonnull @ossl_obj_api_init, ptr noundef nonnull @obj_api_initialise_ossl_) #12
   %.not.i.i = icmp eq i32 %i.ar, 0
@@ -357,7 +360,6 @@ ossl_obj_write_lock.exit:                         ; preds = %bb.v
   br i1 %.not62, label %ossl_obj_write_lock.exit.thread, label %.preheader71.preheader
 
 .preheader71.preheader:                           ; preds = %ossl_obj_write_lock.exit
-  %2 = load ptr, ptr %i.b, align 16, !tbaa !36    ; 5 uses
   %i.av = icmp eq ptr %2, null                    ; 2 uses
   br i1 %i.av, label %.preheader71.1, label %bb.w
 
@@ -383,17 +385,15 @@ bb.x:                                             ; preds = %bb.w
 
 .preheader71.1:                                   ; preds = %bb.w, %bb.x, %.preheader71.preheader
   %.141 = phi ptr [ null, %.preheader71.preheader ], [ %i.ba, %bb.x ], [ null, %bb.w ] ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %4 = load ptr, ptr %3, align 8, !tbaa !36       ; 5 uses
-  %i.bb = icmp eq ptr %4, null                    ; 2 uses
+  %i.bb = icmp eq ptr %3, null                    ; 2 uses
   br i1 %i.bb, label %.preheader71.2, label %bb.y
 
 bb.y:                                             ; preds = %.preheader71.1
-  store i32 1, ptr %4, align 8, !tbaa !19
-  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i32 1, ptr %3, align 8, !tbaa !19
+  %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %.042, ptr %i.bc, align 8, !tbaa !14
   %i.bd = load ptr, ptr @added, align 8, !tbaa !10
-  %i.be = call ptr @OPENSSL_LH_retrieve(ptr noundef %i.bd, ptr noundef nonnull %4) #12 ; 2 uses
+  %i.be = call ptr @OPENSSL_LH_retrieve(ptr noundef %i.bd, ptr noundef nonnull %3) #12 ; 2 uses
   %.not67.1 = icmp eq ptr %i.be, null
   br i1 %.not67.1, label %.preheader71.2, label %bb.z
 
@@ -404,17 +404,15 @@ bb.z:                                             ; preds = %bb.y
 
 .preheader71.2:                                   ; preds = %bb.z, %bb.y, %.preheader71.1
   %.141.1 = phi ptr [ %.141, %.preheader71.1 ], [ %i.bg, %bb.z ], [ %.141, %bb.y ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %6 = load ptr, ptr %5, align 16, !tbaa !36      ; 5 uses
-  %i.bh = icmp eq ptr %6, null                    ; 2 uses
+  %i.bh = icmp eq ptr %4, null                    ; 2 uses
   br i1 %i.bh, label %.preheader71.3, label %bb.aa
 
 bb.aa:                                            ; preds = %.preheader71.2
-  store i32 2, ptr %6, align 8, !tbaa !19
-  %i.bi = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store i32 2, ptr %4, align 8, !tbaa !19
+  %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %.042, ptr %i.bi, align 8, !tbaa !14
   %i.bj = load ptr, ptr @added, align 8, !tbaa !10
-  %i.bk = call ptr @OPENSSL_LH_retrieve(ptr noundef %i.bj, ptr noundef nonnull %6) #12 ; 2 uses
+  %i.bk = call ptr @OPENSSL_LH_retrieve(ptr noundef %i.bj, ptr noundef nonnull %4) #12 ; 2 uses
   %.not67.2 = icmp eq ptr %i.bk, null
   br i1 %.not67.2, label %.preheader71.3, label %bb.ab
 
@@ -497,7 +495,7 @@ bb.ai:                                            ; preds = %bb.ah, %.lr.ph
 
 bb.aj:                                            ; preds = %.preheader70.1
   %i.ci = load ptr, ptr @added, align 8, !tbaa !10
-  %i.cj = call ptr @OPENSSL_LH_insert(ptr noundef %i.ci, ptr noundef nonnull %4) #12 ; 0 uses
+  %i.cj = call ptr @OPENSSL_LH_insert(ptr noundef %i.ci, ptr noundef nonnull %3) #12 ; 0 uses
   %i.ck = load ptr, ptr @added, align 8, !tbaa !10
   %i.cl = call i32 @OPENSSL_LH_error(ptr noundef %i.ck) #12
   %.not64.1 = icmp eq i32 %i.cl, 0
@@ -508,7 +506,7 @@ bb.aj:                                            ; preds = %.preheader70.1
 
 bb.ak:                                            ; preds = %.preheader70.2
   %i.cm = load ptr, ptr @added, align 8, !tbaa !10
-  %i.cn = call ptr @OPENSSL_LH_insert(ptr noundef %i.cm, ptr noundef nonnull %6) #12 ; 0 uses
+  %i.cn = call ptr @OPENSSL_LH_insert(ptr noundef %i.cm, ptr noundef nonnull %4) #12 ; 0 uses
   %i.co = load ptr, ptr @added, align 8, !tbaa !10
   %i.cp = call i32 @OPENSSL_LH_error(ptr noundef %i.co) #12
   %.not64.2 = icmp eq i32 %i.cp, 0
@@ -544,15 +542,13 @@ bb.am:                                            ; preds = %bb.af, %bb.ae, %._c
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.n, %bb.q, %bb.s, %bb.u, %bb.am, %ossl_obj_write_lock.exit.thread
+  %5 = phi ptr [ null, %bb.n ], [ null, %bb.q ], [ null, %bb.s ], [ null, %bb.u ], [ %4, %bb.am ], [ %4, %ossl_obj_write_lock.exit.thread ]
+  %6 = phi ptr [ null, %bb.n ], [ null, %bb.q ], [ null, %bb.s ], [ %3, %bb.u ], [ %3, %bb.am ], [ %3, %ossl_obj_write_lock.exit.thread ]
+  %7 = phi ptr [ null, %bb.n ], [ null, %bb.q ], [ %2, %bb.s ], [ %2, %bb.u ], [ %2, %bb.am ], [ %2, %ossl_obj_write_lock.exit.thread ]
   %.1 = phi i32 [ 0, %bb.n ], [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.u ], [ %.0, %bb.am ], [ 0, %ossl_obj_write_lock.exit.thread ]
-  %7 = load ptr, ptr %i.b, align 16, !tbaa !36
   call void @CRYPTO_free(ptr noundef %7, ptr noundef nonnull @.str, i32 noundef 858) #12
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %9 = load ptr, ptr %8, align 8, !tbaa !36
-  call void @CRYPTO_free(ptr noundef %9, ptr noundef nonnull @.str, i32 noundef 858) #12
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %11 = load ptr, ptr %10, align 16, !tbaa !36
-  call void @CRYPTO_free(ptr noundef %11, ptr noundef nonnull @.str, i32 noundef 858) #12
+  call void @CRYPTO_free(ptr noundef %6, ptr noundef nonnull @.str, i32 noundef 858) #12
+  call void @CRYPTO_free(ptr noundef %5, ptr noundef nonnull @.str, i32 noundef 858) #12
   call void @CRYPTO_free(ptr noundef %i.x, ptr noundef nonnull @.str, i32 noundef 858) #12
   call void @ASN1_OBJECT_free(ptr noundef nonnull %.042) #12
   br label %bb.ao

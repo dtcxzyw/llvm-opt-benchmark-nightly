@@ -205,7 +205,7 @@ bb.cw:                                            ; preds = %bb.cv
   %i.kp = getelementptr inbounds nuw i8, ptr %32, i64 8
   store i64 0, ptr %i.kp, align 8
   %i.kq = invoke noalias noundef nonnull dereferenceable(432) ptr @_Znwm(i64 noundef 432) #44
-          to label %.noexc7.i unwind label %.body.i.thread ; 70 uses
+          to label %.noexc7.i unwind label %.body.i.thread ; 68 uses
 
 .noexc7.i:                                        ; preds = %.noexc358
   store ptr %i.kq, ptr %32, align 8, !tbaa !2630
@@ -214,8 +214,8 @@ bb.cw:                                            ; preds = %bb.cv
   store ptr %i.kr, ptr %i.ks, align 8, !tbaa !2631
   %i.kt = load ptr, ptr %33, align 8, !tbaa !12411
   store ptr %i.kt, ptr %i.kq, align 8, !tbaa !12411
-  %i.ku = getelementptr inbounds nuw i8, ptr %i.kq, i64 8 ; 4 uses
-  %i.kv = getelementptr inbounds nuw i8, ptr %i.kq, i64 24 ; 3 uses
+  %i.ku = getelementptr inbounds nuw i8, ptr %i.kq, i64 8 ; 5 uses
+  %i.kv = getelementptr inbounds nuw i8, ptr %i.kq, i64 24 ; 5 uses
   store ptr %i.kv, ptr %i.ku, align 8, !tbaa !1103
   %i.kw = load ptr, ptr %i.hz, align 8, !tbaa !1102 ; 2 uses
   %i.kx = load i64, ptr %i.ib, align 8, !tbaa !1104 ; 4 uses
@@ -618,8 +618,8 @@ bb.dy:                                            ; preds = %.noexc354
           cleanup
   br label %.preheader.preheader
 
-.body368:                                         ; preds = %.body.i.thread, %bb.dt
-  %eh.lpad-body.i685 = phi { ptr, i32 } [ %i.qh, %.body.i.thread ], [ %i.qe, %bb.dt ] ; 2 uses
+.body368:                                         ; preds = %bb.dt, %.body.i.thread
+  %eh.lpad-body.i685 = phi { ptr, i32 } [ %i.qe, %bb.dt ], [ %i.qh, %.body.i.thread ] ; 2 uses
   %i.tf = getelementptr inbounds nuw i8, ptr %33, i64 392
   %i.tg = load ptr, ptr %i.tf, align 8, !tbaa !1102 ; 2 uses
   %i.th = getelementptr inbounds nuw i8, ptr %33, i64 408 ; 2 uses
@@ -1022,15 +1022,13 @@ bb.gw:                                            ; preds = %bb.gv, %bb.ed
   call fastcc void @_ZNSt6vectorIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseSaIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %32) #45
   br label %bb.hj
 
-.lr.ph.i.i.i:                                     ; preds = %_ZNSt10unique_ptrI10ssl_ctx_stN4bssl8internal7DeleterEED2Ev.exit464, %_ZNSt10unique_ptrI10ssl_ctx_stN4bssl8internal7DeleterEED2Ev.exit
-  %54 = getelementptr inbounds nuw i8, ptr %i.kq, i64 8
-  %i.abm = load ptr, ptr %54, align 8, !tbaa !1102 ; 2 uses
-  %55 = getelementptr inbounds nuw i8, ptr %i.kq, i64 24 ; 2 uses
-  %i.abn = icmp eq ptr %i.abm, %55
+.lr.ph.i.i.i:                                     ; preds = %_ZNSt10unique_ptrI10ssl_ctx_stN4bssl8internal7DeleterEED2Ev.exit, %_ZNSt10unique_ptrI10ssl_ctx_stN4bssl8internal7DeleterEED2Ev.exit464
+  %i.abm = load ptr, ptr %i.ku, align 8, !tbaa !1102 ; 2 uses
+  %i.abn = icmp eq ptr %i.abm, %i.kv
   br i1 %i.abn, label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i
-  %i.abo = load i64, ptr %55, align 8, !tbaa !1106
+  %i.abo = load i64, ptr %i.kv, align 8, !tbaa !1106
   %i.abp = add i64 %i.abo, 1
   call void @_ZdlPvm(ptr noundef %i.abm, i64 noundef %i.abp) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i
@@ -1048,7 +1046,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.abr, i64 noundef %i.abv) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.1
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.1: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.1, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.1: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.1
   %i.abw = getelementptr inbounds nuw i8, ptr %i.kq, i64 104
   %i.abx = load ptr, ptr %i.abw, align 8, !tbaa !1102 ; 2 uses
   %i.aby = getelementptr inbounds nuw i8, ptr %i.kq, i64 120 ; 2 uses
@@ -1061,7 +1059,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.abx, i64 noundef %i.acb) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.2
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.2: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.2, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.1
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.2: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.2
   %i.acc = getelementptr inbounds nuw i8, ptr %i.kq, i64 152
   %i.acd = load ptr, ptr %i.acc, align 8, !tbaa !1102 ; 2 uses
   %i.ace = getelementptr inbounds nuw i8, ptr %i.kq, i64 168 ; 2 uses
@@ -1074,7 +1072,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.acd, i64 noundef %i.ach) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.3
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.3: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.3, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.2
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.3: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.2, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.3
   %i.aci = getelementptr inbounds nuw i8, ptr %i.kq, i64 200
   %i.acj = load ptr, ptr %i.aci, align 8, !tbaa !1102 ; 2 uses
   %i.ack = getelementptr inbounds nuw i8, ptr %i.kq, i64 216 ; 2 uses
@@ -1087,7 +1085,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.acj, i64 noundef %i.acn) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.4
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.4: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.4, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.3
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.4: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.4
   %i.aco = getelementptr inbounds nuw i8, ptr %i.kq, i64 248
   %i.acp = load ptr, ptr %i.aco, align 8, !tbaa !1102 ; 2 uses
   %i.acq = getelementptr inbounds nuw i8, ptr %i.kq, i64 264 ; 2 uses
@@ -1100,7 +1098,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.acp, i64 noundef %i.act) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.5
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.5: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.5, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.4
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.5: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.4, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.5
   %i.acu = getelementptr inbounds nuw i8, ptr %i.kq, i64 296
   %i.acv = load ptr, ptr %i.acu, align 8, !tbaa !1102 ; 2 uses
   %i.acw = getelementptr inbounds nuw i8, ptr %i.kq, i64 312 ; 2 uses
@@ -1113,7 +1111,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.acv, i64 noundef %i.acz) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.6
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.6: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.6, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.5
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.6: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.5, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.6
   %i.ada = getelementptr inbounds nuw i8, ptr %i.kq, i64 344
   %i.adb = load ptr, ptr %i.ada, align 8, !tbaa !1102 ; 2 uses
   %i.adc = getelementptr inbounds nuw i8, ptr %i.kq, i64 360 ; 2 uses
@@ -1126,7 +1124,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.adb, i64 noundef %i.adf) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.7
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.7: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.7, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.6
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.7: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.6, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.7
   %i.adg = getelementptr inbounds nuw i8, ptr %i.kq, i64 392
   %i.adh = load ptr, ptr %i.adg, align 8, !tbaa !1102 ; 2 uses
   %i.adi = getelementptr inbounds nuw i8, ptr %i.kq, i64 408 ; 2 uses
@@ -1139,7 +1137,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.adh, i64 noundef %i.adl) #43
   br label %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.8
 
-_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.8: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.8, %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.7
+_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.8: ; preds = %_ZSt8_DestroyIZN4bssl12_GLOBAL__N_125SSLTest_HostMatching_Test8TestBodyEvE8TestCaseEvPT_.exit.i.i.i.7, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.8
   call void @_ZdlPvm(ptr noundef nonnull %i.kq, i64 noundef 432) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #45
   br label %bb.gx

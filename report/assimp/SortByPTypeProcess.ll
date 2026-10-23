@@ -205,7 +205,7 @@ declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #6
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6Assimp18SortByPTypeProcess7ExecuteEP7aiScene(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(28) %0, ptr nofree noundef captures(none) %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::vector", align 8       ; 15 uses
+  %2 = alloca %"class.std::vector", align 8       ; 11 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca [4 x i32], align 16               ; 7 uses
   %i.c = alloca [1024 x i8], align 16             ; 5 uses
@@ -258,19 +258,21 @@ bb.d:                                             ; preds = %_ZNSt6vectorIP6aiMe
   store ptr %i.r, ptr %2, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store ptr %i.r, ptr %i.s, align 8
-  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.n
+  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.n ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.t, ptr %i.u, align 8
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.r, i8 -1, i64 %i.q, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.q
   %.pre1336 = load i32, ptr %i.d, align 8
+  %3 = ptrtoint ptr %i.t to i64
   br label %.loopexit649
 
 .loopexit649:                                     ; preds = %.noexc437, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i
   %.sroa.21.61424 = phi ptr [ %.sroa.21.61425, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %i.k, %.noexc437 ] ; 3 uses
   %.sroa.39.121422 = phi ptr [ %.sroa.39.121423, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %i.l, %.noexc437 ] ; 2 uses
-  %3 = phi ptr [ null, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %i.r, %.noexc437 ]
   %4 = phi i32 [ %i.o, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %.pre1336, %.noexc437 ]
+  %5 = phi i64 [ 0, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %3, %.noexc437 ] ; 2 uses
+  %6 = phi ptr [ null, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %i.r, %.noexc437 ] ; 7 uses
   %i.w = phi ptr [ %i.p, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %i.s, %.noexc437 ]
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i ], [ %i.v, %.noexc437 ]
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.w, align 8
@@ -303,7 +305,7 @@ bb.e:                                             ; preds = %.lr.ph1041, %bb.id
   %.sroa.0533.01033 = phi ptr [ %.sroa.21.61424, %.lr.ph1041 ], [ %.sroa.0533.6, %bb.id ] ; 16 uses
   %.sroa.21.01032 = phi ptr [ %.sroa.21.61424, %.lr.ph1041 ], [ %.sroa.21.5, %bb.id ] ; 11 uses
   %.sroa.39.01031 = phi ptr [ %.sroa.39.121422, %.lr.ph1041 ], [ %.sroa.39.6, %bb.id ] ; 8 uses
-  %.sroa.0527.01030 = phi ptr [ %3, %.lr.ph1041 ], [ %.sroa.0527.3, %bb.id ] ; 4 uses
+  %.sroa.0527.01030 = phi ptr [ %6, %.lr.ph1041 ], [ %.sroa.0527.3, %bb.id ] ; 4 uses
   %i.ac = load ptr, ptr %i.x, align 8
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv1324
   %i.ae = load ptr, ptr %i.ad, align 8            ; 48 uses
@@ -706,17 +708,13 @@ bb.it:                                            ; preds = %bb.ir, %bb.iq, %bb.
   br label %bb.ix
 
 bb.iu:                                            ; preds = %bb.is, %bb.in
-  %5 = load ptr, ptr %2, align 8                  ; 3 uses
-  %.not.i.i.i469 = icmp eq ptr %5, null
+  %.not.i.i.i469 = icmp eq ptr %6, null
   br i1 %.not.i.i.i469, label %_ZNSt6vectorIjSaIjEED2Ev.exit, label %bb.iv
 
 bb.iv:                                            ; preds = %bb.iu
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %7 = load ptr, ptr %6, align 8
-  %8 = ptrtoint ptr %7 to i64
-  %i.aor = ptrtoint ptr %5 to i64
-  %i.aos = sub i64 %8, %i.aor
-  call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %i.aos) #20
+  %i.aor = ptrtoint ptr %6 to i64
+  %i.aos = sub i64 %5, %i.aor
+  call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef %i.aos) #20
   br label %_ZNSt6vectorIjSaIjEED2Ev.exit
 
 _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.iu, %bb.iv
@@ -737,17 +735,13 @@ bb.ix:                                            ; preds = %.loopexit644, %.loo
   %.sroa.39.9 = phi ptr [ %.sroa.39.6, %bb.it ], [ %.sroa.39.7, %.loopexit.split-lp635 ], [ %.sroa.39.0.lcssa1434, %bb.if ], [ %.sroa.39.01031, %bb.j ], [ %.sroa.39.01031, %bb.i ], [ %.sroa.21.01032, %.loopexit644 ], [ %.sroa.39.0945, %.loopexit.split-lp645 ]
   %.sroa.0533.9 = phi ptr [ %.sroa.0533.6, %bb.it ], [ %.sroa.0533.7, %.loopexit.split-lp635 ], [ %.sroa.0533.0.lcssa1435, %bb.if ], [ %.sroa.0533.01033, %bb.j ], [ %.sroa.0533.01033, %bb.i ], [ %.sroa.0533.01033, %.loopexit644 ], [ %.sroa.0533.0904, %.loopexit.split-lp645 ] ; 2 uses
   %.pn429.pn = phi { ptr, i32 } [ %i.aoq, %bb.it ], [ %.pn424, %.loopexit.split-lp635 ], [ %i.ann, %bb.if ], [ %i.as, %bb.j ], [ %i.ar, %bb.i ], [ %lpad.loopexit646, %.loopexit644 ], [ %lpad.loopexit.split-lp647, %.loopexit.split-lp645 ] ; 2 uses
-  %9 = load ptr, ptr %2, align 8                  ; 3 uses
-  %.not.i.i.i471 = icmp eq ptr %9, null
+  %.not.i.i.i471 = icmp eq ptr %6, null
   br i1 %.not.i.i.i471, label %bb.iz, label %bb.iy
 
 bb.iy:                                            ; preds = %bb.ix
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %11 = load ptr, ptr %10, align 8
-  %12 = ptrtoint ptr %11 to i64
-  %i.aov = ptrtoint ptr %9 to i64
-  %i.aow = sub i64 %12, %i.aov
-  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.aow) #20
+  %i.aov = ptrtoint ptr %6 to i64
+  %i.aow = sub i64 %5, %i.aov
+  call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef %i.aow) #20
   br label %bb.iz
 
 bb.iz:                                            ; preds = %bb.ix, %bb.iy

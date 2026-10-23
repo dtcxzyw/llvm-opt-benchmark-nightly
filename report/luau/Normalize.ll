@@ -204,8 +204,8 @@ bb.a:
   %5 = alloca %"class.std::allocator.5", align 1  ; 3 uses
   %6 = alloca %"struct.Luau::NormalizedType", align 8 ; 11 uses
   %7 = alloca %"class.Luau::Set", align 8         ; 8 uses
-  %8 = alloca %"class.Luau::Set.176", align 8     ; 6 uses
-  %9 = alloca %"class.std::shared_ptr.181", align 16 ; 8 uses
+  %8 = alloca %"class.Luau::Set.176", align 8     ; 4 uses
+  %9 = alloca %"class.std::shared_ptr.181", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 320
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !257
   %.not = icmp eq ptr %i.b, null
@@ -349,7 +349,6 @@ bb.q:                                             ; preds = %bb.o
   store i64 0, ptr %i.at, align 8, !tbaa !187
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %8, i8 0, i64 40, i1 false)
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 316 ; 5 uses
   %i.av = load i8, ptr %i.au, align 4, !tbaa !189, !range !77, !noundef !78 ; 3 uses
   %i.aw = trunc nuw i8 %i.av to i1                ; 2 uses
@@ -437,20 +436,20 @@ bb.ac:                                            ; preds = %bb.x, %bb.aa, %_ZN4
 bb.ad:                                            ; preds = %bb.ab, %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #32
   call void @llvm.experimental.noalias.scope.decl(metadata !497)
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.bk = invoke noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #36
-          to label %bb.ae unwind label %bb.at     ; 9 uses
+          to label %bb.ae unwind label %bb.au     ; 10 uses
 
 bb.ae:                                            ; preds = %bb.ad
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8 ; 4 uses
   store i32 1, ptr %i.bl, align 8, !tbaa !265, !noalias !497
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 12
   store i32 1, ptr %i.bm, align 4, !tbaa !266, !noalias !497
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN4Luau14NormalizedTypeESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.bk, align 8, !tbaa !227, !noalias !497
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 4 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 5 uses
   call void @_ZN4Luau14NormalizedTypeC2EOS0_(ptr noundef nonnull align 8 dereferenceable(489) %i.bn, ptr noundef nonnull align 8 dereferenceable(489) %6) #32, !noalias !497
   store ptr %i.bk, ptr %10, align 8, !tbaa !262, !alias.scope !497
-  store ptr %i.bn, ptr %9, align 16, !tbaa !229, !alias.scope !497
+  store ptr %i.bn, ptr %9, align 8, !tbaa !229, !alias.scope !497
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bk, i64 504
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !161, !range !77, !noundef !78
   %i.bq = trunc nuw i8 %i.bp to i1
@@ -499,7 +498,7 @@ bb.ai:                                            ; preds = %.lr.ph.i.i.i.i27
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
   store ptr %1, ptr %3, align 8, !tbaa !498
   %i.ci = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #36
-          to label %.noexc unwind label %bb.au    ; 5 uses
+          to label %.noexc unwind label %.body.a  ; 5 uses
 
 .noexc:                                           ; preds = %.loopexit.i.i
   %i.cj = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -521,7 +520,7 @@ bb.aj:                                            ; preds = %.noexc
           cleanup
   call void @_ZNSt10_HashtableIPKN4Luau4TypeESt4pairIKS3_St10shared_ptrINS0_14NormalizedTypeEEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS3_ESt4hashIS3_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
-  br label %.body.a
+  br label %bb.av
 
 .loopexit:                                        ; preds = %bb.ah, %_ZNSt10_HashtableIPKN4Luau4TypeESt4pairIKS3_St10shared_ptrINS0_14NormalizedTypeEEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS3_ESt4hashIS3_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i, %bb.ag
   %.pn.i.i = phi ptr [ %i.cm, %_ZNSt10_HashtableIPKN4Luau4TypeESt4pairIKS3_St10shared_ptrINS0_14NormalizedTypeEEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS3_ESt4hashIS3_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i ], [ %i.by, %bb.ag ], [ %i.cd, %bb.ah ] ; 2 uses
@@ -551,7 +550,7 @@ bb.am:                                            ; preds = %bb.ak
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i: ; preds = %bb.am, %bb.al
   %i.cu = phi ptr [ %.pr.pre.i.i.i, %bb.am ], [ %i.cp, %bb.al ] ; 8 uses
   %.not8.i.i.i = icmp eq ptr %i.cu, null
-  br i1 %.not8.i.i.i, label %_ZN4Luau15FuelInitializerD2Ev.exit, label %bb.an
+  br i1 %.not8.i.i.i, label %bb.at, label %bb.an
 
 bb.an:                                            ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8 ; 4 uses
@@ -572,7 +571,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
   %i.df = load ptr, ptr %i.de, align 8
   call void %i.df(ptr noundef nonnull align 8 dereferenceable(16) %i.cu) #32, !inline_history !496
-  br label %_ZN4Luau15FuelInitializerD2Ev.exit
+  br label %bb.at
 
 bb.ap:                                            ; preds = %bb.an
   %i.dg = load i8, ptr @__libc_single_threaded, align 1, !tbaa !86
@@ -591,53 +590,48 @@ bb.ar:                                            ; preds = %bb.ap
 _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i: ; preds = %bb.ar, %bb.aq
   %.0.i.i.i.i.i = phi i32 [ %i.cy, %bb.aq ], [ %i.di, %bb.ar ]
   %i.dj = icmp eq i32 %.0.i.i.i.i.i, 1
-  br i1 %i.dj, label %bb.as, label %_ZN4Luau15FuelInitializerD2Ev.exit, !prof !50
+  br i1 %i.dj, label %bb.as, label %bb.at, !prof !50
 
 bb.as:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cu) #32
+  br label %bb.at
+
+bb.at:                                            ; preds = %bb.as, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.ao, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i
+  store ptr %i.bk, ptr %i.co, align 8, !tbaa !262
+  %.pre = load ptr, ptr %9, align 8, !tbaa !503
+  %.pre73 = load ptr, ptr %10, align 8, !tbaa !262
+  br label %_ZN4Luau15FuelInitializerD2Ev.exit.thread93
+
+bb.au:                                            ; preds = %bb.ad
+  %i.dk = landingpad { ptr, i32 }
+          cleanup
   br label %_ZN4Luau15FuelInitializerD2Ev.exit
 
-bb.at:                                            ; preds = %bb.ad
+.body.a:                                          ; preds = %.loopexit.i.i
   %11 = landingpad { ptr, i32 }
           cleanup
   br label %bb.av
 
-bb.au:                                            ; preds = %.loopexit.i.i
-  %i.dk = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.a
-
-.body.a:                                          ; preds = %bb.aj, %bb.au
-  %eh.lpad-body = phi { ptr, i32 } [ %i.dk, %bb.au ], [ %i.cn, %bb.aj ]
+bb.av:                                            ; preds = %bb.aj, %.body.a
+  %.pn18.a = phi { ptr, i32 } [ %11, %.body.a ], [ %i.cn, %bb.aj ]
   call void @_ZNSt12__shared_ptrIN4Luau14NormalizedTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %9) #32
-  br label %bb.av
+  br label %_ZN4Luau15FuelInitializerD2Ev.exit
 
-bb.av:                                            ; preds = %.body.a, %bb.at
-  %.pn18.a = phi { ptr, i32 } [ %eh.lpad-body, %.body.a ], [ %11, %bb.at ]
+_ZN4Luau15FuelInitializerD2Ev.exit.thread93:      ; preds = %bb.ae, %.loopexit, %bb.at
+  %12 = phi ptr [ %i.bk, %bb.ae ], [ %i.bk, %.loopexit ], [ %.pre73, %bb.at ]
+  %13 = phi ptr [ %i.bn, %bb.ae ], [ %i.bn, %.loopexit ], [ %.pre, %bb.at ]
+  store ptr %13, ptr %0, align 8, !tbaa !253
+  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %12, ptr %i.dl, align 8, !tbaa !262
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #32
+  br label %_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit
+
+_ZN4Luau15FuelInitializerD2Ev.exit:               ; preds = %bb.av, %bb.au
+  %.pn18 = phi { ptr, i32 } [ %.pn18.a, %bb.av ], [ %i.dk, %bb.au ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #32
   br label %_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit39
 
-_ZN4Luau15FuelInitializerD2Ev.exit.thread93:      ; preds = %bb.ae, %.loopexit
-  store ptr %i.bn, ptr %0, align 8, !tbaa !253
-  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.bk, ptr %i.dl, align 8, !tbaa !262
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #32
-  br label %_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit
-
-_ZN4Luau15FuelInitializerD2Ev.exit:               ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i, %bb.ao, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.as
-  store ptr %i.bk, ptr %i.co, align 8, !tbaa !262
-  %.pre74.pre = load ptr, ptr %8, align 8, !tbaa !271 ; 2 uses
-  %12 = load <2 x ptr>, ptr %9, align 16, !tbaa !47
-  store <2 x ptr> %12, ptr %0, align 8, !tbaa !47
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #32
-  %.not.i.i.i36 = icmp eq ptr %.pre74.pre, null
-  br i1 %.not.i.i.i36, label %_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit, label %13
-
-13:                                               ; preds = %_ZN4Luau15FuelInitializerD2Ev.exit
-  call void @_ZdlPv(ptr noundef nonnull %.pre74.pre) #32
-  br label %_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit
-
-_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit: ; preds = %bb.x, %bb.t, %bb.u, %_ZN4Luau15FuelInitializerD2Ev.exit.thread93, %_ZN4Luau15FuelInitializerD2Ev.exit, %13
+_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit: ; preds = %_ZN4Luau15FuelInitializerD2Ev.exit.thread93, %bb.x, %bb.t, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #32
   %i.dm = load ptr, ptr %7, align 8, !tbaa !104   ; 2 uses
   %.not.i.i.i37 = icmp eq ptr %i.dm, null
@@ -653,8 +647,8 @@ _ZN4Luau3SetIPKNS_4TypeENS_16DenseHashPointerEED2Ev.exit: ; preds = %_ZN4Luau3Se
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #32
   br label %_ZNSt10shared_ptrIKN4Luau14NormalizedTypeEEC2IS1_vEERKS_IT_E.exit
 
-_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit39: ; preds = %bb.av, %bb.ac, %_ZN4Luau15FuelInitializerD2Ev.exit24
-  %.merged21 = phi { ptr, i32 } [ %i.ba, %_ZN4Luau15FuelInitializerD2Ev.exit24 ], [ %.pn18.a, %bb.av ], [ %i.bj, %bb.ac ]
+_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_14TypeIdPairHashEED2Ev.exit39: ; preds = %_ZN4Luau15FuelInitializerD2Ev.exit, %bb.ac, %_ZN4Luau15FuelInitializerD2Ev.exit24
+  %.merged21 = phi { ptr, i32 } [ %i.ba, %_ZN4Luau15FuelInitializerD2Ev.exit24 ], [ %.pn18, %_ZN4Luau15FuelInitializerD2Ev.exit ], [ %i.bj, %bb.ac ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #32
   %i.dn = load ptr, ptr %7, align 8, !tbaa !104   ; 2 uses
   %.not.i.i.i40 = icmp eq ptr %i.dn, null

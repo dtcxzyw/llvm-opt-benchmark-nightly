@@ -25,7 +25,7 @@ bb.a:
   %i.b = alloca [256 x i8], align 16              ; 15 uses
   %i.c = alloca [256 x i8], align 16              ; 8 uses
   %i.d = alloca [3 x i64], align 16               ; 7 uses
-  %i.e = alloca [8 x i64], align 16               ; 15 uses
+  %i.e = alloca [8 x i64], align 16               ; 14 uses
   %i.f = alloca [256 x i8], align 16              ; 6 uses
   %i.g = alloca [256 x i8], align 16              ; 9 uses
   %i.h = alloca [64 x i8], align 16               ; 6 uses
@@ -76,14 +76,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .preheader:                                       ; preds = %bb.d
   %i.ae = icmp samesign ult i32 %5, 3             ; 2 uses
   %i.af = mul nuw nsw i64 %i.z, 3
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 48 ; 2 uses
   %i.ag = add i64 %3, -1
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ak = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 40
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
-  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.am = mul nsw i64 %i.z, -3
   %i.an = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -95,7 +94,7 @@ bb.e:                                             ; preds = %.preheader, %_ZN7me
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %8, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, i8 0, i64 16, i1 false)
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 %.091171 ; 2 uses
   %i.aq = load i32, ptr %i.ap, align 1
   br label %.preheader53.i

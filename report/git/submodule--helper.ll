@@ -204,10 +204,8 @@ bb.v:                                             ; preds = %module_list_active.
   br i1 %.not22, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.kh = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 2 uses
-  %25 = load i32, ptr %i.kh, align 16, !tbaa !119
-  %26 = or i32 %25, 1
-  store i32 %26, ptr %i.kh, align 16, !tbaa !119
+  %i.kh = getelementptr inbounds nuw i8, ptr %24, i64 16
+  store i32 1, ptr %i.kh, align 16, !tbaa !119
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
@@ -610,10 +608,8 @@ bb.j:                                             ; preds = %module_list_active.
   br i1 %.not8, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  %8 = load i32, ptr %i.an, align 8, !tbaa !119
-  %9 = or i32 %8, 1
-  store i32 %9, ptr %i.an, align 8, !tbaa !119
+  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i32 1, ptr %i.an, align 8, !tbaa !119
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -1016,17 +1012,14 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   %i.cf = getelementptr inbounds nuw i8, ptr %8, i64 16
   store ptr %2, ptr %i.cf, align 8, !tbaa !175
   %i.cg = icmp ne i32 %.pre, 0                    ; 4 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.ci = zext i1 %i.cg to i8
-  %11 = load i8, ptr %i.ch, align 8
-  %12 = and i8 %11, -8
-  %13 = or disjoint i8 %12, %i.cd
-  %i.cj = or disjoint i8 %13, %i.ci
+  %i.cj = or disjoint i8 %i.cd, %i.ci
   %i.ck = load i32, ptr %i.c, align 4, !tbaa !24
   %.fr = freeze i32 %i.ck
   %.not30 = icmp eq i32 %.fr, 0                   ; 2 uses
   %i.cl = select i1 %.not30, i8 0, i8 2
-  %i.cm = or disjoint i8 %i.cj, %i.cl
+  %i.cm = or disjoint i8 %i.cl, %i.cj
   store i8 %i.cm, ptr %i.ch, align 8
   %i.cn = load i32, ptr %i.e, align 4, !tbaa !24
   %i.co = getelementptr inbounds nuw i8, ptr %8, i64 36
