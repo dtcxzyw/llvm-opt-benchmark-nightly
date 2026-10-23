@@ -204,7 +204,7 @@ _Z26check_shifted_variable_sumIs19custom_add_variableIsEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs19custom_add_variableIsEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = add i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs19custom_add_variableIsEEvT_S2_.exit, label %bb.c
 
@@ -592,7 +592,7 @@ _Z26check_shifted_variable_sumIs28custom_add_multiple_variableIsEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.as, %_Z26check_shifted_variable_sumIs28custom_add_multiple_variableIsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.al = fptosi double %i.ak to i16
   %i.am = add i16 %.reass, %i.al
-  %7 = mul i16 %i.am, 8000
+  %7 = and i16 %i.am, 1023
   %i.an = icmp eq i16 %7, 0
   br i1 %i.an, label %_Z26check_shifted_variable_sumIs28custom_add_multiple_variableIsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -787,7 +787,7 @@ _Z26check_shifted_variable_sumIs19custom_sub_variableIsEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs19custom_sub_variableIsEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = sub i16 %i.ak, %2
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs19custom_sub_variableIsEEvT_S2_.exit, label %bb.c
 
@@ -985,7 +985,7 @@ _Z26check_shifted_variable_sumIs28custom_sub_multiple_variableIsEEvT_S2_S2_S2_S2
   %.01831 = phi i32 [ %i.au, %_Z26check_shifted_variable_sumIs28custom_sub_multiple_variableIsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.an = fptosi double %i.am to i16
   %i.ao = sub i16 %i.an, %i.g
-  %7 = mul i16 %i.ao, 8000
+  %7 = and i16 %i.ao, 1023
   %i.ap = icmp eq i16 %7, 0
   br i1 %i.ap, label %_Z26check_shifted_variable_sumIs28custom_sub_multiple_variableIsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -1388,7 +1388,7 @@ _Z26check_shifted_variable_sumIs34custom_multiply_multiple_variable2IsEEvT_S2_S2
   %.01825 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs34custom_multiply_multiple_variable2IsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = add i16 %.reass.reass, %i.ak
-  %7 = mul i16 %i.al, 8000
+  %7 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %7, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs34custom_multiply_multiple_variable2IsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -1595,9 +1595,8 @@ _Z26check_shifted_variable_sumIs22custom_divide_variableIsEEvT_S2_.exit.us: ; pr
   %i.av = fptosi double %i.au to i16
   %i.aw = sext i16 %i.av to i32
   %i.ax = sdiv i32 %i.aw, %i.e
-  %4 = trunc i32 %i.ax to i16
-  %5 = mul i16 %4, 8000
-  %i.ay = icmp eq i16 %5, 0
+  %4 = and i32 %i.ax, 1023
+  %i.ay = icmp eq i32 %4, 0
   br i1 %i.ay, label %_Z26check_shifted_variable_sumIs22custom_divide_variableIsEEvT_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -1836,9 +1835,8 @@ _Z26check_shifted_variable_sumIs31custom_divide_multiple_variableIsEEvT_S2_S2_S2
   %i.bq = sdiv i32 %i.bp, %i.f
   %i.br = sdiv i32 %i.bq, %i.g
   %i.bs = sdiv i32 %i.br, %i.h
-  %7 = trunc i32 %i.bs to i16
-  %8 = mul i16 %7, 8000
-  %i.bt = icmp eq i16 %8, 0
+  %7 = and i32 %i.bs, 1023
+  %i.bt = icmp eq i32 %7, 0
   br i1 %i.bt, label %_Z26check_shifted_variable_sumIs31custom_divide_multiple_variableIsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -2040,7 +2038,7 @@ _Z26check_shifted_variable_sumIs32custom_divide_multiple_variable2IsEEvT_S2_S2_S
   %.01821 = phi i32 [ %i.az, %_Z26check_shifted_variable_sumIs32custom_divide_multiple_variable2IsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.as = fptosi double %i.ar to i16
   %i.at = add i16 %i.l, %i.as
-  %7 = mul i16 %i.at, 8000
+  %7 = and i16 %i.at, 1023
   %i.au = icmp eq i16 %7, 0
   br i1 %i.au, label %_Z26check_shifted_variable_sumIs32custom_divide_multiple_variable2IsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -2242,7 +2240,7 @@ _Z26check_shifted_variable_sumIs30custom_mixed_multiple_variableIsEEvT_S2_S2_S2_
   %.01822 = phi i32 [ %i.av, %_Z26check_shifted_variable_sumIs30custom_mixed_multiple_variableIsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ap = fptosi double %i.ao to i16
   %.reass25 = add i16 %invariant.op24, %i.ap
-  %7 = mul i16 %.reass25, 8000
+  %7 = and i16 %.reass25, 1023
   %i.aq = icmp eq i16 %7, 0
   br i1 %i.aq, label %_Z26check_shifted_variable_sumIs30custom_mixed_multiple_variableIsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -2323,6 +2321,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre18 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i16 %2, 1023
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -2436,9 +2435,8 @@ _Z26check_shifted_variable_sumIs19custom_variable_andIsEEvT_S2_.exit.us: ; preds
   %i.aj = phi double [ %i.aq, %_Z26check_shifted_variable_sumIs19custom_variable_andIsEEvT_S2_.exit ], [ %.pre18, %.preheader.preheader ] ; 2 uses
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs19custom_variable_andIsEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %i.al = and i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %4, 0
+  %i.al = and i16 %invariant.op, %i.ak
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs19custom_variable_andIsEEvT_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -2521,6 +2519,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre26 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i16 %.reass22, 1023
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -2652,9 +2651,8 @@ _Z26check_shifted_variable_sumIs28custom_multiple_variable_andIsEEvT_S2_S2_S2_S2
   %i.aj = phi double [ %i.aq, %_Z26check_shifted_variable_sumIs28custom_multiple_variable_andIsEEvT_S2_S2_S2_S2_.exit ], [ %.pre26, %.preheader.preheader ] ; 2 uses
   %.01823 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs28custom_multiple_variable_andIsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
-  %i.al = and i16 %.reass22, %i.ak
-  %7 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %7, 0
+  %i.al = and i16 %invariant.op, %i.ak
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs28custom_multiple_variable_andIsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -2848,7 +2846,7 @@ _Z26check_shifted_variable_sumIs18custom_variable_orIsEEvT_S2_.exit.us: ; preds 
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs18custom_variable_orIsEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = or i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs18custom_variable_orIsEEvT_S2_.exit, label %bb.c
 
@@ -3064,7 +3062,7 @@ _Z26check_shifted_variable_sumIs27custom_multiple_variable_orIsEEvT_S2_S2_S2_S2_
   %.01823 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs27custom_multiple_variable_orIsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = or i16 %.reass22, %i.ak
-  %7 = mul i16 %i.al, 8000
+  %7 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %7, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs27custom_multiple_variable_orIsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -3259,7 +3257,7 @@ _Z26check_shifted_variable_sumIs19custom_variable_xorIsEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs19custom_variable_xorIsEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = xor i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs19custom_variable_xorIsEEvT_S2_.exit, label %bb.c
 
@@ -3475,7 +3473,7 @@ _Z26check_shifted_variable_sumIs28custom_multiple_variable_xorIsEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIs28custom_multiple_variable_xorIsEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptosi double %i.aj to i16
   %i.al = xor i16 %.reass22, %i.ak
-  %7 = mul i16 %i.al, 8000
+  %7 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %7, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIs28custom_multiple_variable_xorIsEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -3670,7 +3668,7 @@ _Z26check_shifted_variable_sumIt19custom_add_variableItEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt19custom_add_variableItEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = add i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt19custom_add_variableItEEvT_S2_.exit, label %bb.c
 
@@ -4058,7 +4056,7 @@ _Z26check_shifted_variable_sumIt28custom_add_multiple_variableItEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.as, %_Z26check_shifted_variable_sumIt28custom_add_multiple_variableItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.al = fptoui double %i.ak to i16
   %i.am = add i16 %.reass, %i.al
-  %7 = mul i16 %i.am, 8000
+  %7 = and i16 %i.am, 1023
   %i.an = icmp eq i16 %7, 0
   br i1 %i.an, label %_Z26check_shifted_variable_sumIt28custom_add_multiple_variableItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -4253,7 +4251,7 @@ _Z26check_shifted_variable_sumIt19custom_sub_variableItEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt19custom_sub_variableItEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = sub i16 %i.ak, %2
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt19custom_sub_variableItEEvT_S2_.exit, label %bb.c
 
@@ -4451,7 +4449,7 @@ _Z26check_shifted_variable_sumIt28custom_sub_multiple_variableItEEvT_S2_S2_S2_S2
   %.01831 = phi i32 [ %i.au, %_Z26check_shifted_variable_sumIt28custom_sub_multiple_variableItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.an = fptoui double %i.am to i16
   %i.ao = sub i16 %i.an, %i.g
-  %7 = mul i16 %i.ao, 8000
+  %7 = and i16 %i.ao, 1023
   %i.ap = icmp eq i16 %7, 0
   br i1 %i.ap, label %_Z26check_shifted_variable_sumIt28custom_sub_multiple_variableItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -4854,7 +4852,7 @@ _Z26check_shifted_variable_sumIt34custom_multiply_multiple_variable2ItEEvT_S2_S2
   %.01825 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt34custom_multiply_multiple_variable2ItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = add i16 %.reass.reass, %i.ak
-  %7 = mul i16 %i.al, 8000
+  %7 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %7, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt34custom_multiply_multiple_variable2ItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -5049,7 +5047,7 @@ _Z26check_shifted_variable_sumIt22custom_divide_variableItEEvT_S2_.exit.us: ; pr
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt22custom_divide_variableItEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = udiv i16 %i.ak, %2
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt22custom_divide_variableItEEvT_S2_.exit, label %bb.c
 
@@ -5274,7 +5272,7 @@ _Z26check_shifted_variable_sumIt31custom_divide_multiple_variableItEEvT_S2_S2_S2
   %i.bb = udiv i16 %i.ba, %3
   %i.bc = udiv i16 %i.bb, %4
   %i.bd = udiv i16 %i.bc, %5
-  %7 = mul i16 %i.bd, 8000
+  %7 = and i16 %i.bd, 1023
   %i.be = icmp eq i16 %7, 0
   br i1 %i.be, label %_Z26check_shifted_variable_sumIt31custom_divide_multiple_variableItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -5472,7 +5470,7 @@ _Z26check_shifted_variable_sumIt32custom_divide_multiple_variable2ItEEvT_S2_S2_S
   %.01821 = phi i32 [ %i.au, %_Z26check_shifted_variable_sumIt32custom_divide_multiple_variable2ItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.an = fptoui double %i.am to i16
   %i.ao = add i16 %i.g, %i.an
-  %7 = mul i16 %i.ao, 8000
+  %7 = and i16 %i.ao, 1023
   %i.ap = icmp eq i16 %7, 0
   br i1 %i.ap, label %_Z26check_shifted_variable_sumIt32custom_divide_multiple_variable2ItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -5674,7 +5672,7 @@ _Z26check_shifted_variable_sumIt30custom_mixed_multiple_variableItEEvT_S2_S2_S2_
   %.01822 = phi i32 [ %i.av, %_Z26check_shifted_variable_sumIt30custom_mixed_multiple_variableItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ap = fptoui double %i.ao to i16
   %.reass25 = add i16 %invariant.op24, %i.ap
-  %7 = mul i16 %.reass25, 8000
+  %7 = and i16 %.reass25, 1023
   %i.aq = icmp eq i16 %7, 0
   br i1 %i.aq, label %_Z26check_shifted_variable_sumIt30custom_mixed_multiple_variableItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -5755,6 +5753,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre18 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i16 %2, 1023
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -5868,9 +5867,8 @@ _Z26check_shifted_variable_sumIt19custom_variable_andItEEvT_S2_.exit.us: ; preds
   %i.aj = phi double [ %i.aq, %_Z26check_shifted_variable_sumIt19custom_variable_andItEEvT_S2_.exit ], [ %.pre18, %.preheader.preheader ] ; 2 uses
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt19custom_variable_andItEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %i.al = and i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %4, 0
+  %i.al = and i16 %invariant.op, %i.ak
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt19custom_variable_andItEEvT_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -5953,6 +5951,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre26 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i16 %.reass22, 1023
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -6084,9 +6083,8 @@ _Z26check_shifted_variable_sumIt28custom_multiple_variable_andItEEvT_S2_S2_S2_S2
   %i.aj = phi double [ %i.aq, %_Z26check_shifted_variable_sumIt28custom_multiple_variable_andItEEvT_S2_S2_S2_S2_.exit ], [ %.pre26, %.preheader.preheader ] ; 2 uses
   %.01823 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt28custom_multiple_variable_andItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
-  %i.al = and i16 %.reass22, %i.ak
-  %7 = mul i16 %i.al, 8000
-  %i.am = icmp eq i16 %7, 0
+  %i.al = and i16 %invariant.op, %i.ak
+  %i.am = icmp eq i16 %i.al, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt28custom_multiple_variable_andItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -6280,7 +6278,7 @@ _Z26check_shifted_variable_sumIt18custom_variable_orItEEvT_S2_.exit.us: ; preds 
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt18custom_variable_orItEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = or i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt18custom_variable_orItEEvT_S2_.exit, label %bb.c
 
@@ -6496,7 +6494,7 @@ _Z26check_shifted_variable_sumIt27custom_multiple_variable_orItEEvT_S2_S2_S2_S2_
   %.01823 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt27custom_multiple_variable_orItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = or i16 %.reass22, %i.ak
-  %7 = mul i16 %i.al, 8000
+  %7 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %7, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt27custom_multiple_variable_orItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -6691,7 +6689,7 @@ _Z26check_shifted_variable_sumIt19custom_variable_xorItEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt19custom_variable_xorItEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = xor i16 %2, %i.ak
-  %4 = mul i16 %i.al, 8000
+  %4 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %4, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt19custom_variable_xorItEEvT_S2_.exit, label %bb.c
 
@@ -6907,7 +6905,7 @@ _Z26check_shifted_variable_sumIt28custom_multiple_variable_xorItEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.ar, %_Z26check_shifted_variable_sumIt28custom_multiple_variable_xorItEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ak = fptoui double %i.aj to i16
   %i.al = xor i16 %.reass22, %i.ak
-  %7 = mul i16 %i.al, 8000
+  %7 = and i16 %i.al, 1023
   %i.am = icmp eq i16 %7, 0
   br i1 %i.am, label %_Z26check_shifted_variable_sumIt28custom_multiple_variable_xorItEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -7310,7 +7308,7 @@ _Z26check_shifted_variable_sumIj19custom_add_variableIjEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIj19custom_add_variableIjEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
   %i.ae = add i32 %2, %i.ad
-  %4 = mul i32 %i.ae, 8000
+  %4 = and i32 %i.ae, 67108863
   %i.af = icmp eq i32 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIj19custom_add_variableIjEEvT_S2_.exit, label %bb.c
 
@@ -7632,7 +7630,7 @@ _Z26check_shifted_variable_sumIj28custom_add_multiple_variableIjEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.al, %_Z26check_shifted_variable_sumIj28custom_add_multiple_variableIjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ae = fptoui double %i.ad to i32
   %i.af = add i32 %.reass, %i.ae
-  %7 = mul i32 %i.af, 8000
+  %7 = and i32 %i.af, 67108863
   %i.ag = icmp eq i32 %7, 0
   br i1 %i.ag, label %_Z26check_shifted_variable_sumIj28custom_add_multiple_variableIjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -7793,7 +7791,7 @@ _Z26check_shifted_variable_sumIj19custom_sub_variableIjEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIj19custom_sub_variableIjEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
   %i.ae = sub i32 %i.ad, %2
-  %4 = mul i32 %i.ae, 8000
+  %4 = and i32 %i.ae, 67108863
   %i.af = icmp eq i32 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIj19custom_sub_variableIjEEvT_S2_.exit, label %bb.c
 
@@ -7957,7 +7955,7 @@ _Z26check_shifted_variable_sumIj28custom_sub_multiple_variableIjEEvT_S2_S2_S2_S2
   %.01831 = phi i32 [ %i.an, %_Z26check_shifted_variable_sumIj28custom_sub_multiple_variableIjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ag = fptoui double %i.af to i32
   %i.ah = sub i32 %i.ag, %i.g
-  %7 = mul i32 %i.ah, 8000
+  %7 = and i32 %i.ah, 67108863
   %i.ai = icmp eq i32 %7, 0
   br i1 %i.ai, label %_Z26check_shifted_variable_sumIj28custom_sub_multiple_variableIjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -8360,7 +8358,7 @@ _Z26check_shifted_variable_sumIj34custom_multiply_multiple_variable2IjEEvT_S2_S2
   %.01825 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIj34custom_multiply_multiple_variable2IjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
   %i.ae = add i32 %.reass.reass, %i.ad
-  %7 = mul i32 %i.ae, 8000
+  %7 = and i32 %i.ae, 67108863
   %i.af = icmp eq i32 %7, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIj34custom_multiply_multiple_variable2IjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -8534,7 +8532,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %.01215 = phi i32 [ %i.aw, %_Z26check_shifted_variable_sumIj22custom_divide_variableIjEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ap = fptoui double %i.ao to i32
   %i.aq = udiv i32 %i.ap, %2
-  %4 = mul i32 %i.aq, 8000
+  %4 = and i32 %i.aq, 67108863
   %i.ar = icmp eq i32 %4, 0
   br i1 %i.ar, label %_Z26check_shifted_variable_sumIj22custom_divide_variableIjEEvT_S2_.exit, label %bb.d
 
@@ -8704,7 +8702,7 @@ _Z26check_shifted_variable_sumIj31custom_divide_multiple_variableIjEEvT_S2_S2_S2
   %i.at = udiv i32 %i.as, %3
   %i.au = udiv i32 %i.at, %4
   %i.av = udiv i32 %i.au, %5
-  %7 = mul i32 %i.av, 8000
+  %7 = and i32 %i.av, 67108863
   %i.aw = icmp eq i32 %7, 0
   br i1 %i.aw, label %_Z26check_shifted_variable_sumIj31custom_divide_multiple_variableIjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -8868,7 +8866,7 @@ _Z26check_shifted_variable_sumIj32custom_divide_multiple_variable2IjEEvT_S2_S2_S
   %.01821 = phi i32 [ %i.an, %_Z26check_shifted_variable_sumIj32custom_divide_multiple_variable2IjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ag = fptoui double %i.af to i32
   %i.ah = add i32 %i.g, %i.ag
-  %7 = mul i32 %i.ah, 8000
+  %7 = and i32 %i.ah, 67108863
   %i.ai = icmp eq i32 %7, 0
   br i1 %i.ai, label %_Z26check_shifted_variable_sumIj32custom_divide_multiple_variable2IjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -9037,7 +9035,7 @@ _Z26check_shifted_variable_sumIj30custom_mixed_multiple_variableIjEEvT_S2_S2_S2_
   %.01822 = phi i32 [ %i.an, %_Z26check_shifted_variable_sumIj30custom_mixed_multiple_variableIjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ah = fptoui double %i.ag to i32
   %.reass = add i32 %invariant.op, %i.ah
-  %7 = mul i32 %.reass, 8000
+  %7 = and i32 %.reass, 67108863
   %i.ai = icmp eq i32 %7, 0
   br i1 %i.ai, label %_Z26check_shifted_variable_sumIj30custom_mixed_multiple_variableIjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -9118,6 +9116,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre19 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i32 %2, 67108863
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -9197,9 +9196,8 @@ _Z26check_shifted_variable_sumIj19custom_variable_andIjEEvT_S2_.exit.us: ; preds
   %i.ac = phi double [ %i.aj, %_Z26check_shifted_variable_sumIj19custom_variable_andIjEEvT_S2_.exit ], [ %.pre19, %.preheader.preheader ] ; 2 uses
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIj19custom_variable_andIjEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
-  %i.ae = and i32 %2, %i.ad
-  %4 = mul i32 %i.ae, 8000
-  %i.af = icmp eq i32 %4, 0
+  %i.ae = and i32 %invariant.op, %i.ad
+  %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIj19custom_variable_andIjEEvT_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -9282,6 +9280,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre27 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i32 %.reass22, 67108863
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -9376,9 +9375,8 @@ _Z26check_shifted_variable_sumIj28custom_multiple_variable_andIjEEvT_S2_S2_S2_S2
   %i.aa = phi double [ %i.ah, %_Z26check_shifted_variable_sumIj28custom_multiple_variable_andIjEEvT_S2_S2_S2_S2_.exit ], [ %.pre27, %.preheader.preheader ] ; 2 uses
   %.01823 = phi i32 [ %i.ai, %_Z26check_shifted_variable_sumIj28custom_multiple_variable_andIjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ab = fptoui double %i.aa to i32
-  %i.ac = and i32 %.reass22, %i.ab
-  %7 = mul i32 %i.ac, 8000
-  %i.ad = icmp eq i32 %7, 0
+  %i.ac = and i32 %invariant.op, %i.ab
+  %i.ad = icmp eq i32 %i.ac, 0
   br i1 %i.ad, label %_Z26check_shifted_variable_sumIj28custom_multiple_variable_andIjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -9538,7 +9536,7 @@ _Z26check_shifted_variable_sumIj18custom_variable_orIjEEvT_S2_.exit.us: ; preds 
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIj18custom_variable_orIjEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
   %i.ae = or i32 %2, %i.ad
-  %4 = mul i32 %i.ae, 8000
+  %4 = and i32 %i.ae, 67108863
   %i.af = icmp eq i32 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIj18custom_variable_orIjEEvT_S2_.exit, label %bb.c
 
@@ -9717,7 +9715,7 @@ _Z26check_shifted_variable_sumIj27custom_multiple_variable_orIjEEvT_S2_S2_S2_S2_
   %.01823 = phi i32 [ %i.ai, %_Z26check_shifted_variable_sumIj27custom_multiple_variable_orIjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ab = fptoui double %i.aa to i32
   %i.ac = or i32 %.reass22, %i.ab
-  %7 = mul i32 %i.ac, 8000
+  %7 = and i32 %i.ac, 67108863
   %i.ad = icmp eq i32 %7, 0
   br i1 %i.ad, label %_Z26check_shifted_variable_sumIj27custom_multiple_variable_orIjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -9878,7 +9876,7 @@ _Z26check_shifted_variable_sumIj19custom_variable_xorIjEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIj19custom_variable_xorIjEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i32
   %i.ae = xor i32 %2, %i.ad
-  %4 = mul i32 %i.ae, 8000
+  %4 = and i32 %i.ae, 67108863
   %i.af = icmp eq i32 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIj19custom_variable_xorIjEEvT_S2_.exit, label %bb.c
 
@@ -10057,7 +10055,7 @@ _Z26check_shifted_variable_sumIj28custom_multiple_variable_xorIjEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.ai, %_Z26check_shifted_variable_sumIj28custom_multiple_variable_xorIjEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ab = fptoui double %i.aa to i32
   %i.ac = xor i32 %.reass22, %i.ab
-  %7 = mul i32 %i.ac, 8000
+  %7 = and i32 %i.ac, 67108863
   %i.ad = icmp eq i32 %7, 0
   br i1 %i.ad, label %_Z26check_shifted_variable_sumIj28custom_multiple_variable_xorIjEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -10460,7 +10458,7 @@ _Z26check_shifted_variable_sumIm19custom_add_variableImEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIm19custom_add_variableImEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
   %i.ae = add i64 %2, %i.ad
-  %4 = mul i64 %i.ae, 8000
+  %4 = and i64 %i.ae, 288230376151711743
   %i.af = icmp eq i64 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIm19custom_add_variableImEEvT_S2_.exit, label %bb.c
 
@@ -10783,7 +10781,7 @@ _Z26check_shifted_variable_sumIm28custom_add_multiple_variableImEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.al, %_Z26check_shifted_variable_sumIm28custom_add_multiple_variableImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ae = fptoui double %i.ad to i64
   %i.af = add i64 %.reass, %i.ae
-  %7 = mul i64 %i.af, 8000
+  %7 = and i64 %i.af, 288230376151711743
   %i.ag = icmp eq i64 %7, 0
   br i1 %i.ag, label %_Z26check_shifted_variable_sumIm28custom_add_multiple_variableImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -10944,7 +10942,7 @@ _Z26check_shifted_variable_sumIm19custom_sub_variableImEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIm19custom_sub_variableImEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
   %i.ae = sub i64 %i.ad, %2
-  %4 = mul i64 %i.ae, 8000
+  %4 = and i64 %i.ae, 288230376151711743
   %i.af = icmp eq i64 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIm19custom_sub_variableImEEvT_S2_.exit, label %bb.c
 
@@ -11108,7 +11106,7 @@ _Z26check_shifted_variable_sumIm28custom_sub_multiple_variableImEEvT_S2_S2_S2_S2
   %.01831 = phi i32 [ %i.an, %_Z26check_shifted_variable_sumIm28custom_sub_multiple_variableImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ag = fptoui double %i.af to i64
   %i.ah = sub i64 %i.ag, %i.g
-  %7 = mul i64 %i.ah, 8000
+  %7 = and i64 %i.ah, 288230376151711743
   %i.ai = icmp eq i64 %7, 0
   br i1 %i.ai, label %_Z26check_shifted_variable_sumIm28custom_sub_multiple_variableImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -11511,7 +11509,7 @@ _Z26check_shifted_variable_sumIm34custom_multiply_multiple_variable2ImEEvT_S2_S2
   %.01825 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIm34custom_multiply_multiple_variable2ImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
   %i.ae = add i64 %.reass.reass, %i.ad
-  %7 = mul i64 %i.ae, 8000
+  %7 = and i64 %i.ae, 288230376151711743
   %i.af = icmp eq i64 %7, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIm34custom_multiply_multiple_variable2ImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -11685,7 +11683,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %.01215 = phi i32 [ %i.aw, %_Z26check_shifted_variable_sumIm22custom_divide_variableImEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ap = fptoui double %i.ao to i64
   %i.aq = udiv i64 %i.ap, %2
-  %4 = mul i64 %i.aq, 8000
+  %4 = and i64 %i.aq, 288230376151711743
   %i.ar = icmp eq i64 %4, 0
   br i1 %i.ar, label %_Z26check_shifted_variable_sumIm22custom_divide_variableImEEvT_S2_.exit, label %bb.d
 
@@ -11855,7 +11853,7 @@ _Z26check_shifted_variable_sumIm31custom_divide_multiple_variableImEEvT_S2_S2_S2
   %i.at = udiv i64 %i.as, %3
   %i.au = udiv i64 %i.at, %4
   %i.av = udiv i64 %i.au, %5
-  %7 = mul i64 %i.av, 8000
+  %7 = and i64 %i.av, 288230376151711743
   %i.aw = icmp eq i64 %7, 0
   br i1 %i.aw, label %_Z26check_shifted_variable_sumIm31custom_divide_multiple_variableImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -12019,7 +12017,7 @@ _Z26check_shifted_variable_sumIm32custom_divide_multiple_variable2ImEEvT_S2_S2_S
   %.01821 = phi i32 [ %i.an, %_Z26check_shifted_variable_sumIm32custom_divide_multiple_variable2ImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ag = fptoui double %i.af to i64
   %i.ah = add i64 %i.g, %i.ag
-  %7 = mul i64 %i.ah, 8000
+  %7 = and i64 %i.ah, 288230376151711743
   %i.ai = icmp eq i64 %7, 0
   br i1 %i.ai, label %_Z26check_shifted_variable_sumIm32custom_divide_multiple_variable2ImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -12188,7 +12186,7 @@ _Z26check_shifted_variable_sumIm30custom_mixed_multiple_variableImEEvT_S2_S2_S2_
   %.01822 = phi i32 [ %i.an, %_Z26check_shifted_variable_sumIm30custom_mixed_multiple_variableImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ah = fptoui double %i.ag to i64
   %.reass = add i64 %invariant.op, %i.ah
-  %7 = mul i64 %.reass, 8000
+  %7 = and i64 %.reass, 288230376151711743
   %i.ai = icmp eq i64 %7, 0
   br i1 %i.ai, label %_Z26check_shifted_variable_sumIm30custom_mixed_multiple_variableImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -12269,6 +12267,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre19 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i64 %2, 288230376151711743
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -12348,9 +12347,8 @@ _Z26check_shifted_variable_sumIm19custom_variable_andImEEvT_S2_.exit.us: ; preds
   %i.ac = phi double [ %i.aj, %_Z26check_shifted_variable_sumIm19custom_variable_andImEEvT_S2_.exit ], [ %.pre19, %.preheader.preheader ] ; 2 uses
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIm19custom_variable_andImEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
-  %i.ae = and i64 %2, %i.ad
-  %4 = mul i64 %i.ae, 8000
-  %i.af = icmp eq i64 %4, 0
+  %i.ae = and i64 %invariant.op, %i.ad
+  %i.af = icmp eq i64 %i.ae, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIm19custom_variable_andImEEvT_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -12433,6 +12431,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre27 = load double, ptr @init_value, align 8, !tbaa !20
+  %invariant.op = and i64 %.reass22, 288230376151711743
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -12527,9 +12526,8 @@ _Z26check_shifted_variable_sumIm28custom_multiple_variable_andImEEvT_S2_S2_S2_S2
   %i.aa = phi double [ %i.ah, %_Z26check_shifted_variable_sumIm28custom_multiple_variable_andImEEvT_S2_S2_S2_S2_.exit ], [ %.pre27, %.preheader.preheader ] ; 2 uses
   %.01823 = phi i32 [ %i.ai, %_Z26check_shifted_variable_sumIm28custom_multiple_variable_andImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ab = fptoui double %i.aa to i64
-  %i.ac = and i64 %.reass22, %i.ab
-  %7 = mul i64 %i.ac, 8000
-  %i.ad = icmp eq i64 %7, 0
+  %i.ac = and i64 %invariant.op, %i.ab
+  %i.ad = icmp eq i64 %i.ac, 0
   br i1 %i.ad, label %_Z26check_shifted_variable_sumIm28custom_multiple_variable_andImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
@@ -12689,7 +12687,7 @@ _Z26check_shifted_variable_sumIm18custom_variable_orImEEvT_S2_.exit.us: ; preds 
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIm18custom_variable_orImEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
   %i.ae = or i64 %2, %i.ad
-  %4 = mul i64 %i.ae, 8000
+  %4 = and i64 %i.ae, 288230376151711743
   %i.af = icmp eq i64 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIm18custom_variable_orImEEvT_S2_.exit, label %bb.c
 
@@ -12868,7 +12866,7 @@ _Z26check_shifted_variable_sumIm27custom_multiple_variable_orImEEvT_S2_S2_S2_S2_
   %.01823 = phi i32 [ %i.ai, %_Z26check_shifted_variable_sumIm27custom_multiple_variable_orImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ab = fptoui double %i.aa to i64
   %i.ac = or i64 %.reass22, %i.ab
-  %7 = mul i64 %i.ac, 8000
+  %7 = and i64 %i.ac, 288230376151711743
   %i.ad = icmp eq i64 %7, 0
   br i1 %i.ad, label %_Z26check_shifted_variable_sumIm27custom_multiple_variable_orImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
@@ -13029,7 +13027,7 @@ _Z26check_shifted_variable_sumIm19custom_variable_xorImEEvT_S2_.exit.us: ; preds
   %.01215 = phi i32 [ %i.ak, %_Z26check_shifted_variable_sumIm19custom_variable_xorImEEvT_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ad = fptoui double %i.ac to i64
   %i.ae = xor i64 %2, %i.ad
-  %4 = mul i64 %i.ae, 8000
+  %4 = and i64 %i.ae, 288230376151711743
   %i.af = icmp eq i64 %4, 0
   br i1 %i.af, label %_Z26check_shifted_variable_sumIm19custom_variable_xorImEEvT_S2_.exit, label %bb.c
 
@@ -13208,7 +13206,7 @@ _Z26check_shifted_variable_sumIm28custom_multiple_variable_xorImEEvT_S2_S2_S2_S2
   %.01823 = phi i32 [ %i.ai, %_Z26check_shifted_variable_sumIm28custom_multiple_variable_xorImEEvT_S2_S2_S2_S2_.exit ], [ 0, %.preheader.preheader ]
   %i.ab = fptoui double %i.aa to i64
   %i.ac = xor i64 %.reass22, %i.ab
-  %7 = mul i64 %i.ac, 8000
+  %7 = and i64 %i.ac, 288230376151711743
   %i.ad = icmp eq i64 %7, 0
   br i1 %i.ad, label %_Z26check_shifted_variable_sumIm28custom_multiple_variable_xorImEEvT_S2_S2_S2_S2_.exit, label %bb.c
 
