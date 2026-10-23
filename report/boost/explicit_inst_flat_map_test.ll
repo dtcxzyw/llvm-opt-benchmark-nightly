@@ -204,7 +204,6 @@ bb.a:
   br i1 %.not304, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %14 = mul i64 %2, -2
   %i.o = sub i64 0, %2
   br i1 %i.l, label %iter.check398, label %iter.check
 
@@ -378,7 +377,7 @@ _ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPSt4p
   %i.ag = add i64 %.018.i.lcssa, 2
   %i.ah = tail call i64 @llvm.umax.i64(i64 %.val300305, i64 %i.ag) ; 2 uses
   %.sroa.speculated242 = tail call i64 @llvm.umin.i64(i64 %i.ah, i64 %.0253311)
-  %.neg268 = mul i64 %14, %.018.i.lcssa
+  %.neg268 = mul i64 %.018.i.lcssa, %2
   %i.ai = getelementptr inbounds [2 x i8], ptr %.sroa.0189.0307, i64 %i.o ; 2 uses
   %i.aj = sub i64 0, %.018.i.lcssa
   %i.ak = getelementptr inbounds [2 x i8], ptr %.sroa.0179.0306, i64 %i.aj ; 2 uses
@@ -403,7 +402,8 @@ bb.b:                                             ; preds = %_ZN5boost7movelib15
 
 bb.c:                                             ; preds = %bb.b, %_ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPSt4pairI5emptyS5_EEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSB_9select1stIS5_EEEEEES8_SI_EENS0_9iter_sizeIT1_E4typeET_T0_SK_SM_SM_SM_T2_.exit
   %.sroa.0218.1 = phi ptr [ %.sroa.0218.0309, %_ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPSt4pairI5emptyS5_EEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSB_9select1stIS5_EEEEEES8_SI_EENS0_9iter_sizeIT1_E4typeET_T0_SK_SM_SM_SM_T2_.exit ], [ %i.aq, %bb.b ] ; 2 uses
-  %.not.i72 = icmp eq i64 %.neg268, 0
+  %14 = and i64 %.neg268, 9223372036854775807
+  %.not.i72 = icmp eq i64 %14, 0
   br i1 %.not.i72, label %.sink.split.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPSt4pairI5emptyS4_EEES7_EET0_T_S9_S8_.exit.i
 
 _ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPSt4pairI5emptyS4_EEES7_EET0_T_S9_S8_.exit.i: ; preds = %bb.c
@@ -558,7 +558,6 @@ bb.a:
   br i1 %.not308, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %14 = mul i64 %2, -2
   %i.o = sub i64 0, %2
   br i1 %i.l, label %iter.check402, label %iter.check
 
@@ -732,7 +731,7 @@ _ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPSt4p
   %i.ag = add i64 %.018.i.lcssa, 2
   %i.ah = tail call i64 @llvm.umax.i64(i64 %.val304309, i64 %i.ag) ; 2 uses
   %.sroa.speculated246 = tail call i64 @llvm.umin.i64(i64 %i.ah, i64 %.0257315)
-  %.neg272 = mul i64 %14, %.018.i.lcssa
+  %.neg272 = mul i64 %.018.i.lcssa, %2
   %i.ai = getelementptr inbounds [2 x i8], ptr %.sroa.0193.0311, i64 %i.o ; 2 uses
   %i.aj = sub i64 0, %.018.i.lcssa
   %i.ak = getelementptr inbounds [2 x i8], ptr %.sroa.0183.0310, i64 %i.aj ; 2 uses
@@ -757,7 +756,8 @@ bb.b:                                             ; preds = %_ZN5boost7movelib15
 
 bb.c:                                             ; preds = %bb.b, %_ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPSt4pairI5emptyS5_EEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSB_9select1stIS5_EEEEEES8_SI_EENS0_9iter_sizeIT1_E4typeET_T0_SK_SM_SM_SM_T2_.exit
   %.sroa.0222.1 = phi ptr [ %.sroa.0222.0313, %_ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPSt4pairI5emptyS5_EEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSB_9select1stIS5_EEEEEES8_SI_EENS0_9iter_sizeIT1_E4typeET_T0_SK_SM_SM_SM_T2_.exit ], [ %i.aq, %bb.b ] ; 2 uses
-  %.not.i72 = icmp eq i64 %.neg272, 0
+  %14 = and i64 %.neg272, 9223372036854775807
+  %.not.i72 = icmp eq i64 %14, 0
   br i1 %.not.i72, label %.sink.split.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPSt4pairI5emptyS4_EEES7_EET0_T_S9_S8_.exit.i
 
 _ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPSt4pairI5emptyS4_EEES7_EET0_T_S9_S8_.exit.i: ; preds = %bb.c

@@ -205,8 +205,8 @@ _ZN11flatbuffers21FlatBufferBuilderImplILb0EE11StartStructEm.exit: ; preds = %_Z
   %i.zo = getelementptr inbounds nuw i8, ptr %1, i64 568 ; 5 uses
   %i.zp = getelementptr inbounds nuw i8, ptr %1, i64 536 ; 22 uses
   %i.zq = getelementptr inbounds nuw i8, ptr %1, i64 540 ; 21 uses
-  %.idx1825 = mul i64 %.3, -80
-  %i.zr = icmp eq i64 %.idx1825, 0
+  %21 = and i64 %.3, 1152921504606846975
+  %i.zr = icmp eq i64 %21, 0
   br i1 %i.zr, label %.critedge821.preheader, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE11StartStructEm.exit.split.preheader
 
 _ZN11flatbuffers21FlatBufferBuilderImplILb0EE11StartStructEm.exit.split.preheader: ; preds = %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE11StartStructEm.exit

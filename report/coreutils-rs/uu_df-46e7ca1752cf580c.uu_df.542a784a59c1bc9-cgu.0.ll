@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %bb.a
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bu = load ptr, ptr %i.bt, align 8, !nonnull !6, !noundef !6
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.bw = load i64, ptr %i.bv, align 8, !noundef !6 ; 6 uses
-  %.idx = mul nuw i64 %i.bw, 24                   ; 5 uses
+  %i.bw = load i64, ptr %i.bv, align 8, !noundef !6 ; 5 uses
+  %.idx = mul nuw i64 %i.bw, 24                   ; 6 uses
   %i.bx = icmp eq i64 %i.bw, 0                    ; 2 uses
   br i1 %i.bx, label %_RINvNtCs7tKScEop1B6_5alloc3str17join_generic_copyehNtNtB4_6string6StringECss03989lGqH_5uu_df.exit, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i
 
@@ -487,7 +487,7 @@ _RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtB8_6stri
   br i1 %i.ex, label %_RINvYINtNtNtCs6JMX4GRUq9U_4core5slice4iter4IterNtNtCs7tKScEop1B6_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1s_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_Es_00NvMs9_NtBa_3numj11checked_addE0B2V_ECss03989lGqH_5uu_df.exit.i, label %.preheader.i.preheader, !prof !11
 
 .preheader.i.preheader:                           ; preds = %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtB8_6string6StringEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtNtB22_5slice4iter4IterB13_ENCNvXs4_Css03989lGqH_5uu_dfNtB3l_12OptionsErrorNtNtB22_3fmt7Display3fmt0EE9from_iterB3l_.exit
-  %i.ey = icmp eq i64 %i.bw, 1
+  %i.ey = icmp samesign eq i64 %.idx, 24
   br i1 %i.ey, label %.preheader.i._crit_edge, label %.lr.ph
 
 .preheader.i:                                     ; preds = %.lr.ph

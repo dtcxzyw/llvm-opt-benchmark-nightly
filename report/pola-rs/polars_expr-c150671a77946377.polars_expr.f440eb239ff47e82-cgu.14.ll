@@ -204,9 +204,9 @@ bb.l:                                             ; preds = %.lr.ph
           to label %bb.j unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !154335 ; 0 uses
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.i
-  %.idx97 = mul nuw i64 %2, 160, !dbg !154336
+  %.idx97 = mul nuw i64 %2, 160, !dbg !154336     ; 2 uses
   %i.aw = getelementptr i8, ptr %1, i64 %.idx97, !dbg !154336
-  %i.ax = icmp eq i64 %2, 1, !dbg !154337
+  %i.ax = icmp eq i64 %.idx97, 160, !dbg !154337
   br i1 %i.ax, label %._crit_edge96, label %.lr.ph95, !dbg !154338
 
 .lr.ph95:                                         ; preds = %._crit_edge
