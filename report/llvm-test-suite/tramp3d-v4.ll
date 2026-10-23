@@ -205,13 +205,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %spec.select.i.i.i = tail call i32 @llvm.smax.i32(i32 %i.i, i32 %i.d) ; 2 uses
   %.016.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.m, i32 %i.h)
-  %reass.sub.a = sub i32 %.016.i.i.i, %spec.select.i.i.i
+  %reass.sub.a = sub i32 %.016.i.i.i, %spec.select.i.i.i ; 2 uses
   %i.p = add i32 %reass.sub.a, 1
+  %9 = icmp ugt i32 %reass.sub.a, 2147483646
   br label %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i
 
 _ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i: ; preds = %bb.b, %bb.a
   %.sroa.13.0110 = phi i32 [ 0, %bb.a ], [ %spec.select.i.i.i, %bb.b ] ; 2 uses
-  %.sroa.15104.0 = phi i32 [ 0, %bb.a ], [ %i.p, %bb.b ] ; 2 uses
+  %.sroa.15104.0 = phi i32 [ 0, %bb.a ], [ %i.p, %bb.b ]
+  %10 = phi i1 [ true, %bb.a ], [ %9, %bb.b ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.s = load i32, ptr %i.q, align 8, !tbaa !165, !noalias !6517 ; 3 uses
@@ -232,13 +234,15 @@ _ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S
 bb.c:                                             ; preds = %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i
   %spec.select.i.i.i.i = tail call i32 @llvm.smax.i32(i32 %i.x, i32 %i.s) ; 2 uses
   %.016.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ab, i32 %i.w)
-  %reass.sub78 = sub i32 %.016.i.i.i.i, %spec.select.i.i.i.i
+  %reass.sub78 = sub i32 %.016.i.i.i.i, %spec.select.i.i.i.i ; 2 uses
   %i.ae = add i32 %reass.sub78, 1
+  %11 = icmp ugt i32 %reass.sub78, 2147483646
   br label %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi2ELb0EE9intersectERKS1_S5_RS2_.exit.i.i.i
 
 _ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi2ELb0EE9intersectERKS1_S5_RS2_.exit.i.i.i: ; preds = %bb.c, %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i
   %.sroa.8101.0 = phi i32 [ 0, %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i ], [ %spec.select.i.i.i.i, %bb.c ] ; 2 uses
-  %.sroa.10102.0 = phi i32 [ 0, %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i ], [ %i.ae, %bb.c ] ; 2 uses
+  %.sroa.10102.0 = phi i32 [ 0, %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i ], [ %i.ae, %bb.c ]
+  %12 = phi i1 [ true, %_ZN21IntersectDomainSingleI8IntervalILi1EES1_S0_ILi3EELi3ELb0EE9intersectERKS1_S5_RS2_.exit.i.i ], [ %11, %bb.c ]
   %i.af = load i32, ptr %i.a, align 8, !tbaa !165, !noalias !6517 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !165, !noalias !6517
@@ -259,9 +263,7 @@ _Z9intersectI8IntervalILi3EES1_EN19IntersectReturnTypeIT_T0_E6Type_tERKS3_RKS4_.
   %.016.i.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ao, i32 %i.aj) ; 2 uses
   %reass.sub79 = sub i32 %.016.i.i.i.i.i, %spec.select.i.i.i.i.i
   %i.ar = icmp ugt i32 %reass.sub79, 2147483646
-  %9 = icmp slt i32 %.sroa.10102.0, 1
-  %or.cond.i = select i1 %i.ar, i1 true, i1 %9
-  %10 = icmp slt i32 %.sroa.15104.0, 1
+  %or.cond.i = select i1 %i.ar, i1 true, i1 %12
   %or.cond14.i = select i1 %or.cond.i, i1 true, i1 %10
   br i1 %or.cond14.i, label %_Z9intersectI8IntervalILi3EES1_EN19IntersectReturnTypeIT_T0_E6Type_tERKS3_RKS4_.exit.thread, label %.preheader
 

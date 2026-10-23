@@ -205,21 +205,33 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.o
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 3 uses
-  %i.h = phi float [ 0.000000e+00, %.lr.ph ], [ %i.ay, %bb.o ] ; 8 uses
-  %i.i = phi i32 [ 0, %.lr.ph ], [ %i.az, %bb.o ] ; 8 uses
-  %i.j = phi float [ 0.000000e+00, %.lr.ph ], [ %i.ba, %bb.o ] ; 8 uses
-  %i.k = phi i32 [ 0, %.lr.ph ], [ %i.bb, %bb.o ] ; 8 uses
-  %i.l = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bc, %bb.o ] ; 8 uses
-  %i.m = phi i32 [ 0, %.lr.ph ], [ %i.bd, %bb.o ] ; 8 uses
-  %i.n = phi float [ 0.000000e+00, %.lr.ph ], [ %i.be, %bb.o ] ; 8 uses
-  %i.o = phi i32 [ 0, %.lr.ph ], [ %i.bf, %bb.o ] ; 8 uses
-  %i.p = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bg, %bb.o ] ; 8 uses
-  %i.q = phi i32 [ 0, %.lr.ph ], [ %i.bh, %bb.o ] ; 8 uses
+  %i.h = phi float [ 0.000000e+00, %.lr.ph ], [ %i.ay, %bb.o ] ; 7 uses
+  %i.i = phi i32 [ 0, %.lr.ph ], [ %i.az, %bb.o ] ; 7 uses
+  %i.j = phi float [ 0.000000e+00, %.lr.ph ], [ %i.ba, %bb.o ] ; 7 uses
+  %i.k = phi i32 [ 0, %.lr.ph ], [ %i.bb, %bb.o ] ; 7 uses
+  %i.l = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bc, %bb.o ] ; 7 uses
+  %i.m = phi i32 [ 0, %.lr.ph ], [ %i.bd, %bb.o ] ; 7 uses
+  %i.n = phi float [ 0.000000e+00, %.lr.ph ], [ %i.be, %bb.o ] ; 7 uses
+  %i.o = phi i32 [ 0, %.lr.ph ], [ %i.bf, %bb.o ] ; 7 uses
+  %i.p = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bg, %bb.o ] ; 7 uses
+  %2 = phi i32 [ 0, %.lr.ph ], [ %i.bh, %bb.o ]   ; 7 uses
+  %3 = phi i32 [ 0, %.lr.ph ], [ %25, %bb.o ]     ; 8 uses
+  %4 = phi i32 [ 0, %.lr.ph ], [ %24, %bb.o ]     ; 8 uses
+  %5 = phi i32 [ 0, %.lr.ph ], [ %23, %bb.o ]     ; 8 uses
+  %6 = phi i32 [ 0, %.lr.ph ], [ %22, %bb.o ]     ; 8 uses
+  %7 = phi i32 [ 0, %.lr.ph ], [ %21, %bb.o ]     ; 8 uses
+  %i.q = phi i32 [ 0, %.lr.ph ], [ %20, %bb.o ]   ; 8 uses
+  %8 = phi float [ 0.000000e+00, %.lr.ph ], [ %19, %bb.o ] ; 8 uses
+  %9 = phi float [ 0.000000e+00, %.lr.ph ], [ %18, %bb.o ] ; 8 uses
+  %10 = phi float [ 0.000000e+00, %.lr.ph ], [ %17, %bb.o ] ; 8 uses
+  %11 = phi float [ 0.000000e+00, %.lr.ph ], [ %16, %bb.o ] ; 8 uses
+  %12 = phi float [ 0.000000e+00, %.lr.ph ], [ %15, %bb.o ] ; 8 uses
+  %13 = phi float [ 0.000000e+00, %.lr.ph ], [ %14, %bb.o ] ; 8 uses
   %.070 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.o ]  ; 3 uses
   %.04869 = phi i32 [ 0, %.lr.ph ], [ %.149, %bb.o ] ; 3 uses
   %.05267 = phi float [ 0.000000e+00, %.lr.ph ], [ %.153, %bb.o ] ; 3 uses
-  %i.r = phi i32 [ 0, %.lr.ph ], [ %i.bj, %bb.o ] ; 8 uses
-  %i.s = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bi, %bb.o ] ; 8 uses
+  %i.r = phi i32 [ 0, %.lr.ph ], [ %i.bj, %bb.o ] ; 7 uses
+  %i.s = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bi, %bb.o ] ; 7 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %.val59.val, i64 %indvars.iv
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !40   ; 3 uses
   %i.v = icmp eq ptr %i.u, null
@@ -249,8 +261,8 @@ bb.d:                                             ; preds = %bb.c, %bb.c
   br i1 %i.ah, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ai = add nsw i32 %i.q, 1
-  %i.aj = fadd float %i.ae, %i.p
+  %i.ai = add nsw i32 %i.q, 1                     ; 2 uses
+  %i.aj = fadd float %13, %i.ae                   ; 2 uses
   br label %bb.o
 
 bb.f:                                             ; preds = %bb.d
@@ -258,8 +270,8 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.ak, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.al = add nsw i32 %i.o, 1
-  %i.am = fadd float %i.ae, %i.n
+  %i.al = add nsw i32 %7, 1                       ; 2 uses
+  %i.am = fadd float %12, %i.ae                   ; 2 uses
   br label %bb.o
 
 bb.h:                                             ; preds = %bb.f
@@ -267,8 +279,8 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.an, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ao = add nsw i32 %i.m, 1
-  %i.ap = fadd float %i.ae, %i.l
+  %i.ao = add nsw i32 %6, 1                       ; 2 uses
+  %i.ap = fadd float %11, %i.ae                   ; 2 uses
   br label %bb.o
 
 bb.j:                                             ; preds = %bb.h
@@ -276,8 +288,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.aq, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ar = add nsw i32 %i.k, 1
-  %i.as = fadd float %i.ae, %i.j
+  %i.ar = add nsw i32 %5, 1                       ; 2 uses
+  %i.as = fadd float %10, %i.ae                   ; 2 uses
   br label %bb.o
 
 bb.l:                                             ; preds = %bb.j
@@ -285,13 +297,13 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.at, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.au = add nsw i32 %i.i, 1
-  %i.av = fadd float %i.ae, %i.h
+  %i.au = add nsw i32 %4, 1                       ; 2 uses
+  %i.av = fadd float %9, %i.ae                    ; 2 uses
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
-  %i.aw = add nsw i32 %i.r, 1
-  %i.ax = fadd float %i.ae, %i.s
+  %i.aw = add nsw i32 %3, 1                       ; 2 uses
+  %i.ax = fadd float %8, %i.ae                    ; 2 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.c, %bb.b, %bb.g, %bb.k, %bb.n, %bb.m, %bb.i, %bb.e
@@ -304,12 +316,24 @@ bb.o:                                             ; preds = %bb.c, %bb.b, %bb.g,
   %i.be = phi float [ %i.n, %bb.b ], [ %i.n, %bb.e ], [ %i.am, %bb.g ], [ %i.n, %bb.i ], [ %i.n, %bb.k ], [ %i.n, %bb.m ], [ %i.n, %bb.n ], [ %i.n, %bb.c ] ; 2 uses
   %i.bf = phi i32 [ %i.o, %bb.b ], [ %i.o, %bb.e ], [ %i.al, %bb.g ], [ %i.o, %bb.i ], [ %i.o, %bb.k ], [ %i.o, %bb.m ], [ %i.o, %bb.n ], [ %i.o, %bb.c ] ; 2 uses
   %i.bg = phi float [ %i.p, %bb.b ], [ %i.aj, %bb.e ], [ %i.p, %bb.g ], [ %i.p, %bb.i ], [ %i.p, %bb.k ], [ %i.p, %bb.m ], [ %i.p, %bb.n ], [ %i.p, %bb.c ] ; 2 uses
-  %i.bh = phi i32 [ %i.q, %bb.b ], [ %i.ai, %bb.e ], [ %i.q, %bb.g ], [ %i.q, %bb.i ], [ %i.q, %bb.k ], [ %i.q, %bb.m ], [ %i.q, %bb.n ], [ %i.q, %bb.c ] ; 2 uses
+  %i.bh = phi i32 [ %2, %bb.b ], [ %i.ai, %bb.e ], [ %2, %bb.g ], [ %2, %bb.i ], [ %2, %bb.k ], [ %2, %bb.m ], [ %2, %bb.n ], [ %2, %bb.c ] ; 2 uses
   %i.bi = phi float [ %i.s, %bb.b ], [ %i.s, %bb.e ], [ %i.s, %bb.g ], [ %i.s, %bb.i ], [ %i.s, %bb.k ], [ %i.s, %bb.m ], [ %i.ax, %bb.n ], [ %i.s, %bb.c ] ; 2 uses
   %i.bj = phi i32 [ %i.r, %bb.b ], [ %i.r, %bb.e ], [ %i.r, %bb.g ], [ %i.r, %bb.i ], [ %i.r, %bb.k ], [ %i.r, %bb.m ], [ %i.aw, %bb.n ], [ %i.r, %bb.c ] ; 2 uses
   %.153 = phi float [ %.05267, %bb.b ], [ %i.af, %bb.e ], [ %i.af, %bb.g ], [ %i.af, %bb.i ], [ %i.af, %bb.k ], [ %i.af, %bb.m ], [ %i.af, %bb.n ], [ %.05267, %bb.c ] ; 2 uses
   %.149 = phi i32 [ %.04869, %bb.b ], [ %i.y, %bb.e ], [ %i.y, %bb.g ], [ %i.y, %bb.i ], [ %i.y, %bb.k ], [ %i.y, %bb.m ], [ %i.y, %bb.n ], [ %.04869, %bb.c ] ; 2 uses
   %.1 = phi i32 [ %.070, %bb.b ], [ %i.aa, %bb.e ], [ %i.aa, %bb.g ], [ %i.aa, %bb.i ], [ %i.aa, %bb.k ], [ %i.aa, %bb.m ], [ %i.aa, %bb.n ], [ %.070, %bb.c ] ; 2 uses
+  %14 = phi float [ %13, %bb.b ], [ %i.aj, %bb.e ], [ %13, %bb.g ], [ %13, %bb.i ], [ %13, %bb.k ], [ %13, %bb.m ], [ %13, %bb.n ], [ %13, %bb.c ]
+  %15 = phi float [ %12, %bb.b ], [ %12, %bb.e ], [ %i.am, %bb.g ], [ %12, %bb.i ], [ %12, %bb.k ], [ %12, %bb.m ], [ %12, %bb.n ], [ %12, %bb.c ]
+  %16 = phi float [ %11, %bb.b ], [ %11, %bb.e ], [ %11, %bb.g ], [ %i.ap, %bb.i ], [ %11, %bb.k ], [ %11, %bb.m ], [ %11, %bb.n ], [ %11, %bb.c ]
+  %17 = phi float [ %10, %bb.b ], [ %10, %bb.e ], [ %10, %bb.g ], [ %10, %bb.i ], [ %i.as, %bb.k ], [ %10, %bb.m ], [ %10, %bb.n ], [ %10, %bb.c ]
+  %18 = phi float [ %9, %bb.b ], [ %9, %bb.e ], [ %9, %bb.g ], [ %9, %bb.i ], [ %9, %bb.k ], [ %i.av, %bb.m ], [ %9, %bb.n ], [ %9, %bb.c ]
+  %19 = phi float [ %8, %bb.b ], [ %8, %bb.e ], [ %8, %bb.g ], [ %8, %bb.i ], [ %8, %bb.k ], [ %8, %bb.m ], [ %i.ax, %bb.n ], [ %8, %bb.c ]
+  %20 = phi i32 [ %i.q, %bb.b ], [ %i.ai, %bb.e ], [ %i.q, %bb.g ], [ %i.q, %bb.i ], [ %i.q, %bb.k ], [ %i.q, %bb.m ], [ %i.q, %bb.n ], [ %i.q, %bb.c ]
+  %21 = phi i32 [ %7, %bb.b ], [ %7, %bb.e ], [ %i.al, %bb.g ], [ %7, %bb.i ], [ %7, %bb.k ], [ %7, %bb.m ], [ %7, %bb.n ], [ %7, %bb.c ]
+  %22 = phi i32 [ %6, %bb.b ], [ %6, %bb.e ], [ %6, %bb.g ], [ %i.ao, %bb.i ], [ %6, %bb.k ], [ %6, %bb.m ], [ %6, %bb.n ], [ %6, %bb.c ]
+  %23 = phi i32 [ %5, %bb.b ], [ %5, %bb.e ], [ %5, %bb.g ], [ %5, %bb.i ], [ %i.ar, %bb.k ], [ %5, %bb.m ], [ %5, %bb.n ], [ %5, %bb.c ]
+  %24 = phi i32 [ %4, %bb.b ], [ %4, %bb.e ], [ %4, %bb.g ], [ %4, %bb.i ], [ %4, %bb.k ], [ %i.au, %bb.m ], [ %4, %bb.n ], [ %4, %bb.c ]
+  %25 = phi i32 [ %3, %bb.b ], [ %3, %bb.e ], [ %3, %bb.g ], [ %3, %bb.i ], [ %3, %bb.k ], [ %3, %bb.m ], [ %i.aw, %bb.n ], [ %3, %bb.c ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %..critedge_crit_edge, label %bb.b, !llvm.loop !104

@@ -205,7 +205,7 @@ bb.a:
   %i.k = alloca ptr, align 8                      ; 31 uses
   %i.l = alloca ptr, align 8                      ; 4 uses
   %i.m = alloca i32, align 4                      ; 7 uses
-  %2 = alloca %struct._chop_t, align 8            ; 11 uses
+  %2 = alloca %struct._chop_t, align 8            ; 10 uses
   %i.n = alloca i64, align 8                      ; 4 uses
   %i.o = alloca i64, align 8                      ; 15 uses
   %i.p = alloca i64, align 8                      ; 8 uses
@@ -299,11 +299,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ap = load i32, ptr %i.x, align 4
   call void @wtap_init(i1 noundef zeroext true, ptr noundef %i.an, ptr noundef %i.ao, i32 noundef %i.ap)
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %i.as = getelementptr inbounds nuw i8, ptr %2, i64 20
+  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.au = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.av = getelementptr inbounds nuw i8, ptr %2, i64 4
   br label %bb.d
 
 bb.d:                                             ; preds = %.backedge2059, %bb.c
@@ -313,6 +313,12 @@ bb.d:                                             ; preds = %.backedge2059, %bb.
   %.0308 = phi i1 [ false, %bb.c ], [ %.1309, %.backedge2059 ] ; 3 uses
   %.0306 = phi i1 [ false, %bb.c ], [ %.0306.be, %.backedge2059 ] ; 35 uses
   %.0298 = phi i8 [ 0, %bb.c ], [ %.0298.be, %.backedge2059 ] ; 35 uses
+  %13 = phi i32 [ 0, %bb.c ], [ %.be, %.backedge2059 ] ; 39 uses
+  %14 = phi i32 [ 0, %bb.c ], [ %.be2065, %.backedge2059 ] ; 39 uses
+  %15 = phi i32 [ 0, %bb.c ], [ %.be2066, %.backedge2059 ] ; 38 uses
+  %16 = phi i32 [ 0, %bb.c ], [ %.be2067, %.backedge2059 ] ; 39 uses
+  %17 = phi i32 [ 0, %bb.c ], [ %.be2068, %.backedge2059 ] ; 39 uses
+  %18 = phi i32 [ 0, %bb.c ], [ %.be2069, %.backedge2059 ] ; 38 uses
   %i.aw = load i32, ptr %i.g, align 4
   %i.ax = call i32 @ws_getopt_long(i32 noundef %i.aw, ptr noundef %1, ptr noundef @main.optstring, ptr noundef @main.long_options, ptr noundef null) ; 4 uses
   switch i32 %i.ax, label %bb.e [
@@ -715,22 +721,19 @@ bb.az:                                            ; preds = %thread-pre-split, %
   br i1 %i.es, label %bb.ba, label %bb.bd
 
 bb.ba:                                            ; preds = %bb.az
-  %13 = load i32, ptr %2, align 8
-  %i.et = add i32 %13, %i.er
+  %i.et = add i32 %i.er, %18                      ; 3 uses
   store i32 %i.et, ptr %2, align 8
   %i.eu = load i32, ptr %i.ac, align 4            ; 3 uses
   %i.ev = icmp sgt i32 %i.eu, 0
   br i1 %i.ev, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  %14 = load i32, ptr %i.av, align 4
-  %i.ew = add i32 %14, %i.eu
+  %i.ew = add i32 %i.eu, %17                      ; 2 uses
   store i32 %i.ew, ptr %i.av, align 4
   br label %.thread610
 
 bb.bc:                                            ; preds = %bb.ba
-  %15 = load i32, ptr %i.au, align 8
-  %i.ex = add i32 %15, %i.eu
+  %i.ex = add i32 %i.eu, %16                      ; 2 uses
   store i32 %i.ex, ptr %i.au, align 8
   br label %.thread610
 
@@ -739,26 +742,29 @@ bb.bd:                                            ; preds = %bb.az
   br i1 %i.ey, label %bb.be, label %.thread610
 
 bb.be:                                            ; preds = %bb.bd
-  %16 = load i32, ptr %i.ar, align 4
-  %i.ez = add i32 %16, %i.er
+  %i.ez = add i32 %i.er, %15                      ; 3 uses
   store i32 %i.ez, ptr %i.ar, align 4
   %i.fa = load i32, ptr %i.ac, align 4            ; 3 uses
   %i.fb = icmp sgt i32 %i.fa, 0
   br i1 %i.fb, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %bb.be
-  %17 = load i32, ptr %i.at, align 8
-  %i.fc = add i32 %17, %i.fa
+  %i.fc = add i32 %i.fa, %14                      ; 2 uses
   store i32 %i.fc, ptr %i.at, align 8
   br label %.thread610
 
 bb.bg:                                            ; preds = %bb.be
-  %18 = load i32, ptr %i.as, align 4
-  %i.fd = add i32 %18, %i.fa
+  %i.fd = add i32 %i.fa, %13                      ; 2 uses
   store i32 %i.fd, ptr %i.as, align 4
   br label %.thread610
 
 .thread610:                                       ; preds = %bb.bd, %bb.bg, %bb.bf, %bb.bb, %bb.bc
+  %.ph = phi i32 [ %13, %bb.bc ], [ %13, %bb.bb ], [ %13, %bb.bf ], [ %i.fd, %bb.bg ], [ %13, %bb.bd ]
+  %.ph610 = phi i32 [ %14, %bb.bc ], [ %14, %bb.bb ], [ %i.fc, %bb.bf ], [ %14, %bb.bg ], [ %14, %bb.bd ]
+  %.ph611 = phi i32 [ %15, %bb.bc ], [ %15, %bb.bb ], [ %i.ez, %bb.bf ], [ %i.ez, %bb.bg ], [ %15, %bb.bd ]
+  %.ph612 = phi i32 [ %i.ex, %bb.bc ], [ %16, %bb.bb ], [ %16, %bb.bf ], [ %16, %bb.bg ], [ %16, %bb.bd ]
+  %.ph613 = phi i32 [ %17, %bb.bc ], [ %i.ew, %bb.bb ], [ %17, %bb.bf ], [ %17, %bb.bg ], [ %17, %bb.bd ]
+  %.ph614 = phi i32 [ %i.et, %bb.bc ], [ %i.et, %bb.bb ], [ %18, %bb.bf ], [ %18, %bb.bg ], [ %18, %bb.bd ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab) #18
   br label %.backedge2059
@@ -1161,6 +1167,12 @@ set_rel_time.exit.thread:                         ; preds = %._crit_edge.i578, %
   %.0310.be = phi i1 [ %.0310, %bb.dz ], [ %.0310, %bb.g ], [ %.0310, %bb.h ], [ %.0310, %set_rel_time.exit.thread ], [ %.0310, %bb.y ], [ %.0310, %bb.z ], [ %.0310, %bb.aa ], [ %.0310, %g_strdup_inline.exit534 ], [ %.0310, %bb.af ], [ %.0310, %bb.ag ], [ %.0310, %bb.ah ], [ %.0310, %bb.ai ], [ %.0310, %bb.aj ], [ %.0310, %bb.ak ], [ true, %bb.i ], [ %.0310, %bb.as ], [ %.0310, %.thread606 ], [ %.0310, %bb.aw ], [ %.0310, %.thread610 ], [ %.0310, %bb.bi ], [ %.0310, %bb.bk ], [ %.0310, %bb.bm ], [ %.0310, %bb.bo ], [ %.0310, %bb.bu ], [ %.0310, %bb.bv ], [ %.0310, %bb.bw ], [ %.0310, %bb.bx ], [ %.0310, %bb.ca ], [ %.0310, %bb.ci ], [ %.0310, %bb.cj ], [ %.0310, %bb.cv ], [ %.0310, %set_time_adjustment.exit.thread ], [ %.0310, %bb.dh ], [ %.0310, %bb.dl ], [ %.0310, %bb.f ]
   %.0306.be = phi i1 [ %.0306, %bb.dz ], [ %.0306, %bb.g ], [ %.0306, %bb.h ], [ %.0306, %set_rel_time.exit.thread ], [ %.0306, %bb.y ], [ %.0306, %bb.z ], [ %.0306, %bb.aa ], [ %.0306, %g_strdup_inline.exit534 ], [ %.0306, %bb.af ], [ %.0306, %bb.ag ], [ %.0306, %bb.ah ], [ %.0306, %bb.ai ], [ %.0306, %bb.aj ], [ %.0306, %bb.ak ], [ %.0306, %bb.i ], [ %.0306, %bb.as ], [ %.0306, %.thread606 ], [ %.0306, %bb.aw ], [ %.0306, %.thread610 ], [ %.0306, %bb.bi ], [ %.0306, %bb.bk ], [ %.0306, %bb.bm ], [ %.0306, %bb.bo ], [ %.0306, %bb.bu ], [ %.0306, %bb.bv ], [ %.0306, %bb.bw ], [ %.0306, %bb.bx ], [ %.0306, %bb.ca ], [ %.0306, %bb.ci ], [ %.0306, %bb.cj ], [ %.0306, %bb.cv ], [ %.0306, %set_time_adjustment.exit.thread ], [ %.0306, %bb.dh ], [ %.0306, %bb.dl ], [ true, %bb.f ]
   %.0298.be = phi i8 [ %.0298, %bb.dz ], [ %.0298, %bb.g ], [ %.0298, %bb.h ], [ %.0298, %set_rel_time.exit.thread ], [ %.0298, %bb.y ], [ %.0298, %bb.z ], [ %.0298, %bb.aa ], [ %.0298, %g_strdup_inline.exit534 ], [ %.0298, %bb.af ], [ %.0298, %bb.ag ], [ %.0298, %bb.ah ], [ %.0298, %bb.ai ], [ %.0298, %bb.aj ], [ %.0298, %bb.ak ], [ %.0298, %bb.i ], [ %.0298, %bb.as ], [ %.0298, %.thread606 ], [ %.0298, %bb.aw ], [ %.0298, %.thread610 ], [ %.0298, %bb.bi ], [ %.0298, %bb.bk ], [ %.0298, %bb.bm ], [ %.0298, %bb.bo ], [ %.0298, %bb.bu ], [ %.0298, %bb.bv ], [ 1, %bb.bw ], [ %.0298, %bb.bx ], [ %.0298, %bb.ca ], [ %.0298, %bb.ci ], [ %.0298, %bb.cj ], [ %.0298, %bb.cv ], [ %.0298, %set_time_adjustment.exit.thread ], [ %.0298, %bb.dh ], [ %.0298, %bb.dl ], [ %.0298, %bb.f ]
+  %.be = phi i32 [ %13, %bb.dz ], [ %13, %bb.g ], [ %13, %bb.h ], [ %13, %set_rel_time.exit.thread ], [ %13, %bb.y ], [ %13, %bb.z ], [ %13, %bb.aa ], [ %13, %g_strdup_inline.exit534 ], [ %13, %bb.af ], [ %13, %bb.ag ], [ %13, %bb.ah ], [ %13, %bb.ai ], [ %13, %bb.aj ], [ %13, %bb.ak ], [ %13, %bb.i ], [ %13, %bb.as ], [ %13, %.thread606 ], [ %13, %bb.aw ], [ %.ph, %.thread610 ], [ %13, %bb.bi ], [ %13, %bb.bk ], [ %13, %bb.bm ], [ %13, %bb.bo ], [ %13, %bb.bu ], [ %13, %bb.bv ], [ %13, %bb.bw ], [ %13, %bb.bx ], [ %13, %bb.ca ], [ %13, %bb.ci ], [ %13, %bb.cj ], [ %13, %bb.cv ], [ %13, %set_time_adjustment.exit.thread ], [ %13, %bb.dh ], [ %13, %bb.dl ], [ %13, %bb.f ]
+  %.be2065 = phi i32 [ %14, %bb.dz ], [ %14, %bb.g ], [ %14, %bb.h ], [ %14, %set_rel_time.exit.thread ], [ %14, %bb.y ], [ %14, %bb.z ], [ %14, %bb.aa ], [ %14, %g_strdup_inline.exit534 ], [ %14, %bb.af ], [ %14, %bb.ag ], [ %14, %bb.ah ], [ %14, %bb.ai ], [ %14, %bb.aj ], [ %14, %bb.ak ], [ %14, %bb.i ], [ %14, %bb.as ], [ %14, %.thread606 ], [ %14, %bb.aw ], [ %.ph610, %.thread610 ], [ %14, %bb.bi ], [ %14, %bb.bk ], [ %14, %bb.bm ], [ %14, %bb.bo ], [ %14, %bb.bu ], [ %14, %bb.bv ], [ %14, %bb.bw ], [ %14, %bb.bx ], [ %14, %bb.ca ], [ %14, %bb.ci ], [ %14, %bb.cj ], [ %14, %bb.cv ], [ %14, %set_time_adjustment.exit.thread ], [ %14, %bb.dh ], [ %14, %bb.dl ], [ %14, %bb.f ]
+  %.be2066 = phi i32 [ %15, %bb.dz ], [ %15, %bb.g ], [ %15, %bb.h ], [ %15, %set_rel_time.exit.thread ], [ %15, %bb.y ], [ %15, %bb.z ], [ %15, %bb.aa ], [ %15, %g_strdup_inline.exit534 ], [ %15, %bb.af ], [ %15, %bb.ag ], [ %15, %bb.ah ], [ %15, %bb.ai ], [ %15, %bb.aj ], [ %15, %bb.ak ], [ %15, %bb.i ], [ %15, %bb.as ], [ %15, %.thread606 ], [ %15, %bb.aw ], [ %.ph611, %.thread610 ], [ %15, %bb.bi ], [ %15, %bb.bk ], [ %15, %bb.bm ], [ %15, %bb.bo ], [ %15, %bb.bu ], [ %15, %bb.bv ], [ %15, %bb.bw ], [ %15, %bb.bx ], [ %15, %bb.ca ], [ %15, %bb.ci ], [ %15, %bb.cj ], [ %15, %bb.cv ], [ %15, %set_time_adjustment.exit.thread ], [ %15, %bb.dh ], [ %15, %bb.dl ], [ %15, %bb.f ]
+  %.be2067 = phi i32 [ %16, %bb.dz ], [ %16, %bb.g ], [ %16, %bb.h ], [ %16, %set_rel_time.exit.thread ], [ %16, %bb.y ], [ %16, %bb.z ], [ %16, %bb.aa ], [ %16, %g_strdup_inline.exit534 ], [ %16, %bb.af ], [ %16, %bb.ag ], [ %16, %bb.ah ], [ %16, %bb.ai ], [ %16, %bb.aj ], [ %16, %bb.ak ], [ %16, %bb.i ], [ %16, %bb.as ], [ %16, %.thread606 ], [ %16, %bb.aw ], [ %.ph612, %.thread610 ], [ %16, %bb.bi ], [ %16, %bb.bk ], [ %16, %bb.bm ], [ %16, %bb.bo ], [ %16, %bb.bu ], [ %16, %bb.bv ], [ %16, %bb.bw ], [ %16, %bb.bx ], [ %16, %bb.ca ], [ %16, %bb.ci ], [ %16, %bb.cj ], [ %16, %bb.cv ], [ %16, %set_time_adjustment.exit.thread ], [ %16, %bb.dh ], [ %16, %bb.dl ], [ %16, %bb.f ]
+  %.be2068 = phi i32 [ %17, %bb.dz ], [ %17, %bb.g ], [ %17, %bb.h ], [ %17, %set_rel_time.exit.thread ], [ %17, %bb.y ], [ %17, %bb.z ], [ %17, %bb.aa ], [ %17, %g_strdup_inline.exit534 ], [ %17, %bb.af ], [ %17, %bb.ag ], [ %17, %bb.ah ], [ %17, %bb.ai ], [ %17, %bb.aj ], [ %17, %bb.ak ], [ %17, %bb.i ], [ %17, %bb.as ], [ %17, %.thread606 ], [ %17, %bb.aw ], [ %.ph613, %.thread610 ], [ %17, %bb.bi ], [ %17, %bb.bk ], [ %17, %bb.bm ], [ %17, %bb.bo ], [ %17, %bb.bu ], [ %17, %bb.bv ], [ %17, %bb.bw ], [ %17, %bb.bx ], [ %17, %bb.ca ], [ %17, %bb.ci ], [ %17, %bb.cj ], [ %17, %bb.cv ], [ %17, %set_time_adjustment.exit.thread ], [ %17, %bb.dh ], [ %17, %bb.dl ], [ %17, %bb.f ]
+  %.be2069 = phi i32 [ %18, %bb.dz ], [ %18, %bb.g ], [ %18, %bb.h ], [ %18, %set_rel_time.exit.thread ], [ %18, %bb.y ], [ %18, %bb.z ], [ %18, %bb.aa ], [ %18, %g_strdup_inline.exit534 ], [ %18, %bb.af ], [ %18, %bb.ag ], [ %18, %bb.ah ], [ %18, %bb.ai ], [ %18, %bb.aj ], [ %18, %bb.ak ], [ %18, %bb.i ], [ %18, %bb.as ], [ %18, %.thread606 ], [ %18, %bb.aw ], [ %.ph614, %.thread610 ], [ %18, %bb.bi ], [ %18, %bb.bk ], [ %18, %bb.bm ], [ %18, %bb.bo ], [ %18, %bb.bu ], [ %18, %bb.bv ], [ %18, %bb.bw ], [ %18, %bb.bx ], [ %18, %bb.ca ], [ %18, %bb.ci ], [ %18, %bb.cj ], [ %18, %bb.cv ], [ %18, %set_time_adjustment.exit.thread ], [ %18, %bb.dh ], [ %18, %bb.dl ], [ %18, %bb.f ]
   br label %bb.d, !llvm.loop !18
 
 set_rel_time.exit:                                ; preds = %bb.dw, %bb.dx, %bb.ds, %bb.dq, %bb.dr

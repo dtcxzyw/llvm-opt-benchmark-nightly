@@ -204,10 +204,13 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %.not164.i.i, label %.thread131.i.i, label %.lr.ph148.i.i
 
 .lr.ph148.i.i:                                    ; preds = %bb.be, %.thread122.i.i
-  %.084146156.i.i = phi i32 [ %.084146155.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
-  %.084146152.i.i = phi i32 [ %.084146151.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
+  %.093170186.i.i = phi i32 [ %.084146155.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
+  %.093170182.i.i = phi i32 [ %.084146151.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
+  %.0.load3858174.i.i = phi i32 [ %.0.load3857.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
+  %.084146156.i.i = phi i32 [ %.0.load3960.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
+  %.084146152.i.i = phi i32 [ %.0.load4063.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
   %.082147.i.i = phi i32 [ %i.fv, %.thread122.i.i ], [ 0, %bb.be ]
-  %.084146.i.i = phi i32 [ %.185.lcssa.i.i, %.thread122.i.i ], [ 23, %bb.be ] ; 5 uses
+  %.084146.i.i = phi i32 [ %.185.lcssa.i.i, %.thread122.i.i ], [ 23, %bb.be ] ; 8 uses
   %.084143145.i.i = phi i32 [ %.084142.i.i, %.thread122.i.i ], [ 0, %bb.be ] ; 3 uses
   %i.fc = add nsw i32 %.084146.i.i, 3             ; 3 uses
   %i.fd = icmp sgt i32 %i.fc, %.189.i.i
@@ -234,9 +237,12 @@ bb.bi:                                            ; preds = %bb.bf
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.bg, %bb.bf
-  %.084146155.i.i = phi i32 [ %.084146156.i.i, %bb.bf ], [ %.084146.i.i, %bb.bh ], [ %.084146156.i.i, %bb.bi ], [ %.084146156.i.i, %bb.bg ] ; 4 uses
-  %.084146151.i.i = phi i32 [ %.084146152.i.i, %bb.bf ], [ %.084146152.i.i, %bb.bh ], [ %.084146.i.i, %bb.bi ], [ %.084146152.i.i, %bb.bg ] ; 4 uses
-  %.084142.i.i = phi i32 [ %.084143145.i.i, %bb.bf ], [ %.084143145.i.i, %bb.bh ], [ %.084143145.i.i, %bb.bi ], [ %.084146.i.i, %bb.bg ] ; 4 uses
+  %.084146155.i.i = phi i32 [ %.084146.i.i, %bb.bh ], [ %.093170186.i.i, %bb.bi ], [ %.093170186.i.i, %bb.bf ], [ %.093170186.i.i, %bb.bg ] ; 3 uses
+  %.084146151.i.i = phi i32 [ %.093170182.i.i, %bb.bh ], [ %.084146.i.i, %bb.bi ], [ %.093170182.i.i, %bb.bf ], [ %.093170182.i.i, %bb.bg ] ; 3 uses
+  %.084142.i.i = phi i32 [ %.084143145.i.i, %bb.bh ], [ %.084143145.i.i, %bb.bi ], [ %.084143145.i.i, %bb.bf ], [ %.084146.i.i, %bb.bg ] ; 3 uses
+  %.0.load4063.i.i = phi i32 [ %.084146152.i.i, %bb.bh ], [ %.084146.i.i, %bb.bi ], [ %.084146152.i.i, %bb.bf ], [ %.084146152.i.i, %bb.bg ] ; 2 uses
+  %.0.load3960.i.i = phi i32 [ %.084146.i.i, %bb.bh ], [ %.084146156.i.i, %bb.bi ], [ %.084146156.i.i, %bb.bf ], [ %.084146156.i.i, %bb.bg ] ; 2 uses
+  %.0.load3857.i.i = phi i32 [ %.0.load3858174.i.i, %bb.bh ], [ %.0.load3858174.i.i, %bb.bi ], [ %.0.load3858174.i.i, %bb.bf ], [ %.084146.i.i, %bb.bg ] ; 2 uses
   %i.fi = getelementptr i8, ptr %i.ff, i64 1
   %i.fj = load i16, ptr %i.fi, align 1, !tbaa !34 ; 2 uses
   %i.fk = call i16 @llvm.bswap.i16(i16 %i.fj)
@@ -273,10 +279,10 @@ bb.bl:                                            ; preds = %.lr.ph.i.i
   br i1 %exitcond176.not.i.i, label %._crit_edge.i280.i, label %.lr.ph148.i.i, !llvm.loop !41
 
 ._crit_edge.i280.i:                               ; preds = %.thread122.i.i
-  %i.fw = icmp ne i32 %.084142.i.i, 0
-  %i.fx = icmp ne i32 %.084146155.i.i, 0
+  %i.fw = icmp ne i32 %.0.load3857.i.i, 0
+  %i.fx = icmp ne i32 %.0.load3960.i.i, 0
   %or.cond.i281.i = select i1 %i.fw, i1 %i.fx, i1 false
-  %i.fy = icmp ne i32 %.084146151.i.i, 0
+  %i.fy = icmp ne i32 %.0.load4063.i.i, 0
   %or.cond5.i.i = select i1 %or.cond.i281.i, i1 %i.fy, i1 false
   br i1 %or.cond5.i.i, label %bb.bm, label %.thread131.i.i
 

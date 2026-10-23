@@ -205,7 +205,7 @@ _ZNK4pbrt6Vertex15IsInfiniteLightEv.exit.thread68.i: ; preds = %_ZN4pbrt14Sample
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
   %i.bg = load float, ptr %i.bf, align 8, !tbaa !283 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !264 ; 3 uses
+  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !264 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !456 ; 3 uses
   %.sroa.07.4.vec.insert.i.i.i = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> zeroinitializer
@@ -224,8 +224,8 @@ _ZNK4pbrt6Vertex15IsInfiniteLightEv.exit.thread68.i: ; preds = %_ZN4pbrt14Sample
   %.sroa.23.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %10, i64 36
   store float %i.be, ptr %.sroa.23.0..sroa_idx.i.i, align 4
   %i.bp = getelementptr inbounds nuw i8, ptr %10, i64 40
-  %i.bq = getelementptr inbounds nuw i8, ptr %10, i64 64
-  %i.br = getelementptr inbounds nuw i8, ptr %10, i64 72
+  %i.bq = getelementptr inbounds nuw i8, ptr %10, i64 64 ; 2 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %10, i64 72 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.bp, i8 0, i64 20, i1 false)
   store i64 0, ptr %i.bq, align 8
   store i64 %i.bi, ptr %i.br, align 8
@@ -266,7 +266,7 @@ _ZNK4pbrt6Vertex15IsInfiniteLightEv.exit.thread68.i: ; preds = %_ZN4pbrt14Sample
   %i.cr = fadd float %i.cp, %i.cq                 ; 2 uses
   %i.cs = fcmp oeq float %i.cr, 0.000000e+00
   %i.ct = fdiv float 1.000000e+00, %i.cr
-  %i.cu = fmul float %i.ct, %i.bv
+  %i.cu = fmul float %i.bv, %i.ct
   %.1.i = select i1 %i.cs, float 0.000000e+00, float %i.cu
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !3369, !nonnull !137, !align !686 ; 17 uses
@@ -339,14 +339,14 @@ bb.e:                                             ; preds = %_ZNK4pbrt6Vertex15I
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #39, !noalias !3372
   %i.dw = load float, ptr %i.dv, align 4, !tbaa !472, !noalias !3372
   %i.dx = call { <2 x float>, float } @_ZN4pbrt22SampleHenyeyGreensteinENS_7Vector3IfEEfNS_6Point2IfEEPf(<2 x float> %i.di, float %i.dl, float noundef %i.dw, <2 x float> %i.dt, ptr noundef nonnull %i.a), !noalias !3372 ; 2 uses
+  %.fca.0.extract.i.i.i.i.i = extractvalue { <2 x float>, float } %i.dx, 0 ; 4 uses
+  %.fca.1.extract.i.i.i.i.i = extractvalue { <2 x float>, float } %i.dx, 1 ; 4 uses
   %i.dy = load float, ptr %i.a, align 4, !tbaa !189, !noalias !3372 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #39, !noalias !3372
   %i.dz = fcmp oeq float %i.dy, 0.000000e+00
-  br i1 %i.dz, label %bb.g, label %bb.f
+  br i1 %i.dz, label %bb.g, label %.noexc73
 
-bb.f:                                             ; preds = %bb.e
-  %.fca.1.extract.i.i.i.i.i = extractvalue { <2 x float>, float } %i.dx, 1 ; 2 uses
-  %.fca.0.extract.i.i.i.i.i = extractvalue { <2 x float>, float } %i.dx, 0 ; 2 uses
+.noexc73:                                         ; preds = %bb.e
   %11 = load ptr, ptr %i.bt, align 8, !tbaa !3367, !nonnull !137, !align !637
   store float %i.dy, ptr %11, align 4, !tbaa !189
   %12 = fdiv float %i.dy, %i.dy
@@ -357,8 +357,29 @@ bb.f:                                             ; preds = %bb.e
   %17 = fmul <4 x float> %16, %14
   store <4 x float> %17, ptr %13, align 4, !tbaa !189
   %18 = call { <2 x float>, float } @_ZN4pbrt15OffsetRayOriginENS_8Point3fiENS_7Normal3IfEENS_7Vector3IfEE(ptr noundef nonnull byval(%"class.pbrt::Point3fi") align 8 %10, <2 x float> zeroinitializer, float 0.000000e+00, <2 x float> %.fca.0.extract.i.i.i.i.i, float %.fca.1.extract.i.i.i.i.i) ; 2 uses
+  %19 = load ptr, ptr %i.bq, align 8              ; 2 uses
+  %.not.i.i = icmp eq ptr %19, null
+  br i1 %.not.i.i, label %bb.f, label %20
+
+20:                                               ; preds = %.noexc73
+  %.sroa.04.0.vec.extract.i.i.i = extractelement <2 x float> %.fca.0.extract.i.i.i.i.i, i64 0
+  %.sroa.04.4.vec.extract.i.i.i = extractelement <2 x float> %.fca.0.extract.i.i.i.i.i, i64 1
+  %21 = fmul float %.fca.1.extract.i.i.i.i.i, 0.000000e+00 ; 2 uses
+  %22 = call noundef float @llvm.fma.f32(float %.sroa.04.4.vec.extract.i.i.i, float 0.000000e+00, float %21)
+  %23 = fneg float %21
+  %24 = call noundef float @llvm.fma.f32(float %.fca.1.extract.i.i.i.i.i, float 0.000000e+00, float %23)
+  %25 = fadd float %22, %24
+  %26 = call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i.i, float 0.000000e+00, float %25)
+  %27 = fcmp ogt float %26, 0.000000e+00
+  %spec.select.idx.i.i = select i1 %27, i64 8, i64 0
+  %spec.select.i.i = getelementptr inbounds nuw i8, ptr %19, i64 %spec.select.idx.i.i
+  br label %bb.f
+
+bb.f:                                             ; preds = %.noexc73, %20
+  %storemerge.in.i.i = phi ptr [ %spec.select.i.i, %20 ], [ %i.br, %.noexc73 ]
   %.fca.1.extract.i = extractvalue { <2 x float>, float } %18, 1
   %.fca.0.extract.i = extractvalue { <2 x float>, float } %18, 0
+  %storemerge.i.i = load i64, ptr %storemerge.in.i.i, align 8
   %i.ea = load ptr, ptr %i.ax, align 8, !tbaa !3366, !nonnull !137, !align !686 ; 8 uses
   store <2 x float> %.fca.0.extract.i, ptr %i.ea, align 8
   %.sroa.5150.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
@@ -370,7 +391,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ea, i64 24
   store float %i.bg, ptr %.sroa.8.0..sroa_idx, align 8
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 32
-  store i64 %i.bi, ptr %i.eb, align 8, !tbaa !264
+  store i64 %storemerge.i.i, ptr %i.eb, align 8, !tbaa !264
   %i.ec = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
   store i8 0, ptr %i.ec, align 8
   %i.ed = getelementptr i8, ptr %i.ea, i64 44

@@ -204,7 +204,7 @@ define internal fastcc void @_ZN12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPri
 bb.a:
   %2 = alloca %"class.llvm::Twine", align 8       ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 3 uses
-  %4 = alloca %"struct.(anonymous namespace)::DiagTextVisitor<(anonymous namespace)::DiagTextPrinter>::SubstitutionContext", align 8 ; 7 uses
+  %4 = alloca %"struct.(anonymous namespace)::DiagTextVisitor<(anonymous namespace)::DiagTextPrinter>::SubstitutionContext", align 8 ; 8 uses
   %i.a = getelementptr i8, ptr %1, i64 8
   %.val = load i32, ptr %i.a, align 8, !tbaa !264
   switch i32 %.val, label %_ZN12_GLOBAL__N_115DiagTextPrinter10VisitMultiEPNS_10MultiPieceE.exit [
@@ -607,8 +607,12 @@ bb.aj:                                            ; preds = %_ZNK4llvm9StringMap
   br i1 %i.es, label %bb.ak, label %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i24
 
 bb.ak:                                            ; preds = %bb.aj
-  %5 = load <2 x ptr>, ptr %i.ep, align 8, !tbaa !156 ; 2 uses
-  store <2 x ptr> %5, ptr %i.dw, align 8, !tbaa !156
+  %5 = load ptr, ptr %i.ep, align 8, !tbaa !107   ; 2 uses
+  store ptr %5, ptr %i.dw, align 8, !tbaa !107
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %8 = load ptr, ptr %7, align 8, !tbaa !280      ; 2 uses
+  store ptr %8, ptr %6, align 8, !tbaa !280
   %i.et = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !108 ; 2 uses
@@ -617,10 +621,11 @@ bb.ak:                                            ; preds = %bb.aj
   br label %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i24
 
 _ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i24: ; preds = %bb.aj, %bb.ak
+  %9 = phi i8 [ 1, %bb.ak ], [ 0, %bb.aj ]        ; 3 uses
   %i.ew = phi ptr [ %i.ev, %bb.ak ], [ undef, %bb.aj ] ; 2 uses
-  %6 = phi <2 x ptr> [ %5, %bb.ak ], [ undef, %bb.aj ] ; 2 uses
-  %7 = phi i8 [ 1, %bb.ak ], [ 0, %bb.aj ]        ; 3 uses
-  store i8 %7, ptr %i.dx, align 8, !tbaa !101
+  %10 = phi ptr [ %8, %bb.ak ], [ undef, %bb.aj ] ; 2 uses
+  %11 = phi ptr [ %5, %bb.ak ], [ undef, %bb.aj ] ; 2 uses
+  store i8 %9, ptr %i.dx, align 8, !tbaa !101
   %i.ex = getelementptr i8, ptr %1, i64 48
   %.val.i25 = load ptr, ptr %i.ex, align 8, !tbaa !156 ; 2 uses
   %i.ey = getelementptr i8, ptr %1, i64 56
@@ -709,7 +714,7 @@ _ZNK12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE23getSubstitutionMappi
   %.sroa.9.1.i = phi ptr [ null, %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i24 ], [ %.sroa.9.0.i, %_ZNK12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE23getSubstitutionMappingsEPNS_17SubstitutionPieceERKSt8optionalISt6vectorIiSaIiEEE.exit.i.loopexit ] ; 2 uses
   %.sroa.13.2.i = phi ptr [ null, %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i24 ], [ %.sroa.13.1.i, %_ZNK12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE23getSubstitutionMappingsEPNS_17SubstitutionPieceERKSt8optionalISt6vectorIiSaIiEEE.exit.i.loopexit ] ; 2 uses
   %i.fw = trunc nuw i8 %i.fv to i1
-  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   br i1 %i.fw, label %bb.aq, label %bb.as
 
 bb.aq:                                            ; preds = %_ZNK12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE23getSubstitutionMappingsEPNS_17SubstitutionPieceERKSt8optionalISt6vectorIiSaIiEEE.exit.i
@@ -741,7 +746,7 @@ _ZN12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE19SubstitutionContextC2
   tail call fastcc void @_ZN12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE5VisitEPNS_5PieceE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef %i.en), !inline_history !720
   %i.gf = load i8, ptr %i.eq, align 8, !tbaa !101, !range !103, !noundef !104 ; 2 uses
   %i.gg = trunc nuw i8 %i.gf to i1
-  %i.gh = and i8 %i.gf, %7
+  %i.gh = and i8 %i.gf, %9
   %or.cond.i.i.i.i.i.i.not = icmp eq i8 %i.gh, 0
   br i1 %or.cond.i.i.i.i.i.i.not, label %bb.av, label %bb.at
 
@@ -749,7 +754,8 @@ bb.at:                                            ; preds = %_ZN12_GLOBAL__N_115
   %i.gi = load ptr, ptr %i.ep, align 8, !tbaa !107 ; 3 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !108
-  store <2 x ptr> %6, ptr %i.ep, align 8, !tbaa !156
+  store ptr %11, ptr %i.ep, align 8, !tbaa !107
+  store ptr %10, ptr %i.fx, align 8, !tbaa !280
   store ptr %i.ew, ptr %i.gj, align 8, !tbaa !108
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.gi, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_ZN12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE19SubstitutionContextD2Ev.exit, label %bb.au
@@ -762,11 +768,12 @@ bb.au:                                            ; preds = %bb.at
   br label %_ZN12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE19SubstitutionContextD2Ev.exit
 
 bb.av:                                            ; preds = %_ZN12_GLOBAL__N_115DiagTextVisitorINS_15DiagTextPrinterEE19SubstitutionContextC2ERS2_PNS_17SubstitutionPieceE.exit
-  %i.go = trunc nuw i8 %7 to i1
+  %i.go = trunc nuw i8 %9 to i1
   br i1 %i.go, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  store <2 x ptr> %6, ptr %i.ep, align 8, !tbaa !156
+  store ptr %11, ptr %i.ep, align 8, !tbaa !107
+  store ptr %10, ptr %i.fx, align 8, !tbaa !280
   %i.gp = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.ew, ptr %i.gp, align 8, !tbaa !108
   store i8 1, ptr %i.eq, align 8, !tbaa !101
@@ -1169,7 +1176,7 @@ bb.a:
   %2 = alloca %"class.llvm::Twine", align 8       ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 3 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %5 = alloca %"struct.(anonymous namespace)::DiagTextVisitor<(anonymous namespace)::DiagTextDocPrinter>::SubstitutionContext", align 8 ; 7 uses
+  %5 = alloca %"struct.(anonymous namespace)::DiagTextVisitor<(anonymous namespace)::DiagTextDocPrinter>::SubstitutionContext", align 8 ; 8 uses
   %6 = alloca %"struct.(anonymous namespace)::PlaceholderPiece", align 8 ; 7 uses
   %7 = alloca %"struct.(anonymous namespace)::PlaceholderPiece", align 8 ; 7 uses
   %8 = alloca %"struct.(anonymous namespace)::MultiPiece", align 8 ; 10 uses
@@ -1572,32 +1579,31 @@ _ZNSt6vectorIPN12_GLOBAL__N_15PieceESaIS2_EE9push_backERKS2_.exit94: ; preds = %
   %i.to = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #30 ; 3 uses
   store ptr %8, ptr %i.to, align 8, !tbaa !90
   %i.tp = getelementptr inbounds nuw i8, ptr %.tr137, i64 40
-  %i.tq = call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #30 ; 6 uses
+  %i.tq = call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #30 ; 5 uses
   %i.tr = getelementptr inbounds nuw i8, ptr %i.tq, i64 8
   %i.ts = load ptr, ptr %i.tp, align 8, !tbaa !90
   store ptr %i.ts, ptr %i.tr, align 8, !tbaa !90
   %i.tt = load i64, ptr %i.to, align 8
   store i64 %i.tt, ptr %i.tq, align 8
-  %i.tu = getelementptr inbounds nuw i8, ptr %i.tq, i64 16
+  %i.tu = getelementptr inbounds nuw i8, ptr %i.tq, i64 16 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %i.to, i64 noundef 8) #29
   store ptr %i.tq, ptr %i.tk, align 8, !tbaa !87
   store ptr %i.tu, ptr %i.tm, align 8, !tbaa !265
-  %24 = getelementptr inbounds nuw i8, ptr %i.tq, i64 16
-  store ptr %24, ptr %i.tn, align 8, !tbaa !88
+  store ptr %i.tu, ptr %i.tn, align 8, !tbaa !88
   call fastcc void @_ZN12_GLOBAL__N_118DiagTextDocPrinter11VisitSelectEPNS_11SelectPieceE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %9), !inline_history !773
   call void @_ZdlPvm(ptr noundef nonnull %i.tq, i64 noundef 16) #29, !inline_history !774
-  %.val.i57.pre = load ptr, ptr %i.sm, align 8, !tbaa !87 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #27
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_110MultiPieceE, i64 16), ptr %8, align 8, !tbaa !92
-  %.not.i.i.i.i58 = icmp eq ptr %.val.i57.pre, null
+  %.val.i57 = load ptr, ptr %i.sm, align 8, !tbaa !87 ; 3 uses
+  %.not.i.i.i.i58 = icmp eq ptr %.val.i57, null
   br i1 %.not.i.i.i.i58, label %_ZN12_GLOBAL__N_110MultiPieceD2Ev.exit, label %bb.bc
 
 bb.bc:                                            ; preds = %_ZNSt6vectorIPN12_GLOBAL__N_15PieceESaIS2_EE9push_backERKS2_.exit94
   %.val1.i59 = load ptr, ptr %i.sq, align 8, !tbaa !88
   %i.tv = ptrtoint ptr %.val1.i59 to i64
-  %i.tw = ptrtoint ptr %.val.i57.pre to i64
+  %i.tw = ptrtoint ptr %.val.i57 to i64
   %i.tx = sub i64 %i.tv, %i.tw
-  call void @_ZdlPvm(ptr noundef nonnull %.val.i57.pre, i64 noundef %i.tx) #29, !inline_history !775
+  call void @_ZdlPvm(ptr noundef nonnull %.val.i57, i64 noundef %i.tx) #29, !inline_history !775
   br label %_ZN12_GLOBAL__N_110MultiPieceD2Ev.exit
 
 _ZN12_GLOBAL__N_110MultiPieceD2Ev.exit:           ; preds = %_ZNSt6vectorIPN12_GLOBAL__N_15PieceESaIS2_EE9push_backERKS2_.exit94, %bb.bc
@@ -1657,8 +1663,12 @@ bb.be:                                            ; preds = %_ZNK4llvm9StringMap
   br i1 %i.uu, label %bb.bf, label %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i117
 
 bb.bf:                                            ; preds = %bb.be
-  %25 = load <2 x ptr>, ptr %i.ur, align 8, !tbaa !156 ; 2 uses
-  store <2 x ptr> %25, ptr %i.ty, align 8, !tbaa !156
+  %24 = load ptr, ptr %i.ur, align 8, !tbaa !107  ; 2 uses
+  store ptr %24, ptr %i.ty, align 8, !tbaa !107
+  %25 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %27 = load ptr, ptr %26, align 8, !tbaa !280    ; 2 uses
+  store ptr %27, ptr %25, align 8, !tbaa !280
   %i.uv = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.uw = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ux = load ptr, ptr %i.uw, align 8, !tbaa !108 ; 2 uses
@@ -1667,10 +1677,11 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i117
 
 _ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i117: ; preds = %bb.be, %bb.bf
+  %28 = phi i8 [ 1, %bb.bf ], [ 0, %bb.be ]       ; 3 uses
   %i.uy = phi ptr [ %i.ux, %bb.bf ], [ undef, %bb.be ] ; 2 uses
-  %26 = phi <2 x ptr> [ %25, %bb.bf ], [ undef, %bb.be ] ; 2 uses
-  %27 = phi i8 [ 1, %bb.bf ], [ 0, %bb.be ]       ; 3 uses
-  store i8 %27, ptr %i.tz, align 8, !tbaa !101
+  %29 = phi ptr [ %27, %bb.bf ], [ undef, %bb.be ] ; 2 uses
+  %30 = phi ptr [ %24, %bb.bf ], [ undef, %bb.be ] ; 2 uses
+  store i8 %28, ptr %i.tz, align 8, !tbaa !101
   %i.uz = getelementptr i8, ptr %.tr137, i64 48
   %.val.i118 = load ptr, ptr %i.uz, align 8, !tbaa !156 ; 2 uses
   %i.va = getelementptr i8, ptr %.tr137, i64 56
@@ -1759,7 +1770,7 @@ _ZNK12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE23getSubstitutionMa
   %.sroa.9.1.i = phi ptr [ null, %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i117 ], [ %.sroa.9.0.i, %_ZNK12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE23getSubstitutionMappingsEPNS_17SubstitutionPieceERKSt8optionalISt6vectorIiSaIiEEE.exit.i.loopexit ] ; 2 uses
   %.sroa.13.2.i = phi ptr [ null, %_ZNSt8optionalISt6vectorIiSaIiEEEaSEOS3_.exit.i117 ], [ %.sroa.13.1.i, %_ZNK12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE23getSubstitutionMappingsEPNS_17SubstitutionPieceERKSt8optionalISt6vectorIiSaIiEEE.exit.i.loopexit ] ; 2 uses
   %i.vy = trunc nuw i8 %i.vx to i1
-  %i.vz = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.vz = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   br i1 %i.vy, label %bb.bl, label %bb.bn
 
 bb.bl:                                            ; preds = %_ZNK12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE23getSubstitutionMappingsEPNS_17SubstitutionPieceERKSt8optionalISt6vectorIiSaIiEEE.exit.i
@@ -1791,7 +1802,7 @@ _ZN12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE19SubstitutionContex
   tail call fastcc void @_ZN12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE5VisitEPNS_5PieceE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef %i.up), !inline_history !778
   %i.wh = load i8, ptr %i.us, align 8, !tbaa !101, !range !103, !noundef !104 ; 2 uses
   %i.wi = trunc nuw i8 %i.wh to i1
-  %i.wj = and i8 %i.wh, %27
+  %i.wj = and i8 %i.wh, %28
   %or.cond.i.i.i.i.i.i.not = icmp eq i8 %i.wj, 0
   br i1 %or.cond.i.i.i.i.i.i.not, label %bb.bq, label %bb.bo
 
@@ -1799,7 +1810,8 @@ bb.bo:                                            ; preds = %_ZN12_GLOBAL__N_115
   %i.wk = load ptr, ptr %i.ur, align 8, !tbaa !107 ; 3 uses
   %i.wl = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.wm = load ptr, ptr %i.wl, align 8, !tbaa !108
-  store <2 x ptr> %26, ptr %i.ur, align 8, !tbaa !156
+  store ptr %30, ptr %i.ur, align 8, !tbaa !107
+  store ptr %29, ptr %i.vz, align 8, !tbaa !280
   store ptr %i.uy, ptr %i.wl, align 8, !tbaa !108
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.wk, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_ZN12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE19SubstitutionContextD2Ev.exit, label %bb.bp
@@ -1812,11 +1824,12 @@ bb.bp:                                            ; preds = %bb.bo
   br label %_ZN12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE19SubstitutionContextD2Ev.exit
 
 bb.bq:                                            ; preds = %_ZN12_GLOBAL__N_115DiagTextVisitorINS_18DiagTextDocPrinterEE19SubstitutionContextC2ERS2_PNS_17SubstitutionPieceE.exit
-  %i.wq = trunc nuw i8 %27 to i1
+  %i.wq = trunc nuw i8 %28 to i1
   br i1 %i.wq, label %bb.br, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
-  store <2 x ptr> %26, ptr %i.ur, align 8, !tbaa !156
+  store ptr %30, ptr %i.ur, align 8, !tbaa !107
+  store ptr %29, ptr %i.vz, align 8, !tbaa !280
   %i.wr = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.uy, ptr %i.wr, align 8, !tbaa !108
   store i8 1, ptr %i.us, align 8, !tbaa !101

@@ -205,7 +205,7 @@ define hidden noundef zeroext i1 @_ZN11OpenImageIO4v3_19SgiOutput21write_buffere
 bb.a:
   %1 = alloca %"class.std::vector.28", align 8    ; 9 uses
   %2 = alloca %"class.std::vector.28", align 8    ; 9 uses
-  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !95
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.p = load i32, ptr %i.o, align 4, !tbaa !102
   %i.q = mul nsw i32 %i.p, %i.n                   ; 7 uses
-  %i.r = sext i32 %i.q to i64                     ; 6 uses
+  %i.r = sext i32 %i.q to i64                     ; 5 uses
   %i.s = shl nsw i64 %i.r, 2                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
@@ -264,8 +264,8 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i:  ; preds = %bb.e
 
 .noexc73:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
   store i32 0, ptr %i.w, align 4, !tbaa !42
-  %i.x = add nsw i64 %i.r, -1                     ; 2 uses
-  %i.y = icmp eq i64 %i.x, 0
+  %i.x = add nsw i64 %i.r, -1                     ; 3 uses
+  %i.y = icmp eq i64 %i.x, 0                      ; 2 uses
   br i1 %i.y, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i80, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i
 
 _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i: ; preds = %.noexc73
@@ -286,13 +286,11 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i80: ; preds = %.noexc73, %_ZSt6fi
 
 .noexc89:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i80
   store i32 0, ptr %i.ad, align 4, !tbaa !42
-  %3 = add nsw i64 %i.r, -1                       ; 2 uses
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i84, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i82
+  br i1 %i.y, label %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i84, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i82
 
 _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i82: ; preds = %.noexc89
   %i.ae = getelementptr i8, ptr %i.ad, i64 4
-  %.idx.i.i.i.i.i31.i83 = shl nuw nsw i64 %3, 2
+  %.idx.i.i.i.i.i31.i83 = shl nuw nsw i64 %i.x, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.ae, i8 0, i64 %.idx.i.i.i.i.i31.i83, i1 false), !tbaa !42
   br label %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i84
 
@@ -343,13 +341,6 @@ bb.g:                                             ; preds = %bb.h
   %i.ax = trunc nuw nsw i64 %indvars.iv101 to i32
   %i.ay = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_19SgiOutput18write_scanline_rleEiPKhRlRSt6vectorIiSaIiEES8_(ptr noundef nonnull align 8 dereferenceable(272) %0, i32 noundef %i.ax, ptr noundef nonnull %i.aw, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2)
           to label %bb.h unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph98, %_ZNSt6vectorIiSaIiEE6resizeEm.exit54, %.critedge, %_ZN11OpenImageIO4v3_111swap_endianIiEEvPT_i.exit61, %bb.k
-  %lpad.loopexit.split-lp132 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
-  %.not.i.i.i64 = icmp eq ptr %i.ak, null
-  br i1 %.not.i.i.i64, label %_ZNSt6vectorIiSaIiEED2Ev.exit65, label %bb.l
 
 bb.h:                                             ; preds = %.lr.ph98
   br i1 %i.ay, label %bb.g, label %.critedge48
@@ -452,7 +443,13 @@ bb.j:                                             ; preds = %_ZN11OpenImageIO4v3
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull %i.ak, i64 noundef 1, i64 noundef %i.s)
-          to label %_ZNSt6vectorIiSaIiEED2Ev.exit63 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %_ZNSt6vectorIiSaIiEED2Ev.exit63 unwind label %.thread94
+
+.thread94:                                        ; preds = %bb.k
+  %3 = landingpad { ptr, i32 }
+          cleanup
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
+  br label %bb.l
 
 _ZNSt6vectorIiSaIiEED2Ev.exit63:                  ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
@@ -467,14 +464,22 @@ _ZNSt6vectorIiSaIiEED2Ev.exit63:                  ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   br i1 %i.bs, label %.critedge50, label %.loopexit93
 
-bb.l:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph98, %_ZN11OpenImageIO4v3_111swap_endianIiEEvPT_i.exit61, %.critedge, %_ZNSt6vectorIiSaIiEE6resizeEm.exit54
+  %lpad.loopexit.split-lp128 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
+  %.not.i.i.i64 = icmp eq ptr %i.ak, null
+  br i1 %.not.i.i.i64, label %_ZNSt6vectorIiSaIiEED2Ev.exit65, label %bb.l
+
+bb.l:                                             ; preds = %.thread94, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %4 = phi { ptr, i32 } [ %3, %.thread94 ], [ %lpad.loopexit.split-lp128, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %i.by = ptrtoint ptr %i.ak to i64
   %i.bz = sub i64 %i.aj, %i.by
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.bz) #30
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit65
 
 _ZNSt6vectorIiSaIiEED2Ev.exit65:                  ; preds = %.thread, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.l
-  %.pn.pn117 = phi { ptr, i32 } [ %i.at, %.thread ], [ %lpad.loopexit.split-lp132, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp132, %bb.l ]
+  %.pn.pn117 = phi { ptr, i32 } [ %i.at, %.thread ], [ %lpad.loopexit.split-lp128, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %4, %bb.l ]
   %i.ca = phi ptr [ %i.as, %.thread ], [ %i.ah, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.ah, %bb.l ] ; 3 uses
   %i.cb = phi ptr [ %i.ar, %.thread ], [ %i.ai, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.ai, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph161, %bb.q
   %i.cs = sext i32 %i.cl to i64
   %.idx = shl i64 %indvars.iv175, 8
   %invariant.gep = getelementptr i8, ptr %i.cr, i64 %.idx
-  br label %bb.c
+  br label %2
 
 .preheader:                                       ; preds = %bb.b
   br i1 %i.cn, label %.lr.ph146, label %bb.k
@@ -220,39 +220,56 @@ bb.b:                                             ; preds = %.lr.ph161, %bb.q
   %invariant.gep191 = getelementptr i8, ptr %i.cw, i64 %.idx185
   br label %bb.e
 
-bb.c:                                             ; preds = %.lr.ph, %bb.c
+2:                                                ; preds = %.lr.ph, %bb.c
   %indvars.iv = phi i64 [ %smin169, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 4 uses
-  %i.cy = phi float [ 0.000000e+00, %.lr.ph ], [ %7, %bb.c ] ; 2 uses
-  %i.cz = phi float [ 0.000000e+00, %.lr.ph ], [ %8, %bb.c ] ; 2 uses
+  %3 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.cy, %bb.c ]
+  %4 = phi float [ 0.000000e+00, %.lr.ph ], [ %15, %bb.c ] ; 2 uses
+  %5 = phi float [ 0.000000e+00, %.lr.ph ], [ %14, %bb.c ] ; 2 uses
+  %6 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.cz, %bb.c ]
   %gep = getelementptr [16 x i8], ptr %invariant.gep, i64 %indvars.iv
-  %2 = icmp sgt i64 %indvars.iv, %i.ce            ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %gep, i64 4
-  %4 = load float, ptr %3, align 4, !tbaa !88     ; 2 uses
-  %5 = fadd nsz float %4, %i.cz
-  %6 = fadd nsz float %4, %i.cy
-  %7 = select i1 %2, float %6, float %i.cy        ; 2 uses
-  %8 = select i1 %2, float %i.cz, float %5        ; 2 uses
+  %7 = icmp sgt i64 %indvars.iv, %i.ce
+  %8 = getelementptr inbounds nuw i8, ptr %gep, i64 4
+  %9 = load float, ptr %8, align 4, !tbaa !88     ; 2 uses
+  br i1 %7, label %10, label %12
+
+10:                                               ; preds = %2
+  %11 = fadd nsz float %5, %9                     ; 2 uses
+  br label %bb.c
+
+12:                                               ; preds = %2
+  %13 = fadd nsz float %4, %9                     ; 2 uses
+  br label %bb.c
+
+bb.c:                                             ; preds = %12, %10
+  %i.cy = phi float [ %3, %12 ], [ %11, %10 ]     ; 2 uses
+  %i.cz = phi float [ %13, %12 ], [ %6, %10 ]     ; 2 uses
+  %14 = phi float [ %5, %12 ], [ %11, %10 ]
+  %15 = phi float [ %13, %12 ], [ %4, %10 ]       ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.da = icmp slt i64 %indvars.iv.next, %i.cs
   %i.db = icmp slt i64 %indvars.iv, %i.ad
   %i.dc = and i1 %i.db, %i.da
-  br i1 %i.dc, label %bb.c, label %._crit_edge, !llvm.loop !49
+  br i1 %i.dc, label %2, label %._crit_edge, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %bb.c
-  store float %7, ptr %i.ax, align 4
+  store float %i.cy, ptr %i.ax, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge, %.preheader138
-  %.lcssa = phi float [ %8, %._crit_edge ], [ 0.000000e+00, %.preheader138 ] ; 2 uses
-  store float %.lcssa, ptr %i.b, align 16
+  %.lcssa141 = phi float [ %i.cz, %._crit_edge ], [ 0.000000e+00, %.preheader138 ]
+  %.lcssa = phi float [ %15, %._crit_edge ], [ 0.000000e+00, %.preheader138 ]
+  store float %.lcssa141, ptr %i.b, align 16
   store float %.lcssa, ptr %i.ay, align 8, !tbaa !23
   br label %bb.l
 
 bb.e:                                             ; preds = %.lr.ph146, %bb.j
   %indvars.iv170 = phi i64 [ %smin169, %.lr.ph146 ], [ %indvars.iv.next171, %bb.j ] ; 5 uses
-  %i.dd = phi float [ 0.000000e+00, %.lr.ph146 ], [ %i.dp, %bb.j ] ; 3 uses
-  %i.de = phi float [ 0.000000e+00, %.lr.ph146 ], [ %i.dq, %bb.j ] ; 3 uses
-  %i.df = phi float [ 0.000000e+00, %.lr.ph146 ], [ %i.dr, %bb.j ] ; 3 uses
+  %16 = phi float [ 0.000000e+00, %.lr.ph146 ], [ %i.dp, %bb.j ] ; 2 uses
+  %17 = phi float [ 0.000000e+00, %.lr.ph146 ], [ %i.dq, %bb.j ] ; 2 uses
+  %18 = phi float [ 0.000000e+00, %.lr.ph146 ], [ %21, %bb.j ] ; 3 uses
+  %i.dd = phi float [ 0.000000e+00, %.lr.ph146 ], [ %20, %bb.j ] ; 3 uses
+  %i.de = phi float [ 0.000000e+00, %.lr.ph146 ], [ %19, %bb.j ] ; 3 uses
+  %i.df = phi float [ 0.000000e+00, %.lr.ph146 ], [ %i.dr, %bb.j ] ; 2 uses
   %gep192 = getelementptr [16 x i8], ptr %invariant.gep191, i64 %indvars.iv170 ; 2 uses
   %i.dg = icmp sgt i64 %indvars.iv170, %i.cg
   br i1 %i.dg, label %bb.f, label %bb.g
@@ -260,7 +277,7 @@ bb.e:                                             ; preds = %.lr.ph146, %bb.j
 bb.f:                                             ; preds = %bb.e
   %i.dh = getelementptr inbounds nuw i8, ptr %gep192, i64 4
   %i.di = load float, ptr %i.dh, align 4, !tbaa !88
-  %i.dj = fadd nsz float %i.di, %i.dd
+  %i.dj = fadd nsz float %i.de, %i.di             ; 2 uses
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.e
@@ -270,17 +287,20 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.dk, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.dn = fadd nsz float %i.dm, %i.de
+  %i.dn = fadd nsz float %i.dd, %i.dm             ; 2 uses
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.do = fadd nsz float %i.dm, %i.df
+  %i.do = fadd nsz float %18, %i.dm               ; 2 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.f
-  %i.dp = phi float [ %i.dd, %bb.h ], [ %i.dd, %bb.i ], [ %i.dj, %bb.f ] ; 2 uses
-  %i.dq = phi float [ %i.dn, %bb.h ], [ %i.de, %bb.i ], [ %i.de, %bb.f ] ; 2 uses
+  %i.dp = phi float [ %16, %bb.h ], [ %16, %bb.i ], [ %i.dj, %bb.f ] ; 2 uses
+  %i.dq = phi float [ %i.dn, %bb.h ], [ %17, %bb.i ], [ %17, %bb.f ] ; 2 uses
   %i.dr = phi float [ %i.df, %bb.h ], [ %i.do, %bb.i ], [ %i.df, %bb.f ] ; 2 uses
+  %19 = phi float [ %i.de, %bb.h ], [ %i.de, %bb.i ], [ %i.dj, %bb.f ]
+  %20 = phi float [ %i.dn, %bb.h ], [ %i.dd, %bb.i ], [ %i.dd, %bb.f ]
+  %21 = phi float [ %18, %bb.h ], [ %i.do, %bb.i ], [ %18, %bb.f ] ; 2 uses
   %indvars.iv.next171 = add nsw i64 %indvars.iv170, 1 ; 2 uses
   %i.ds = icmp slt i64 %indvars.iv.next171, %i.cx
   %i.dt = icmp slt i64 %indvars.iv170, %i.ad
@@ -293,9 +313,10 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.f
   br label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge147, %.preheader
-  %.lcssa144 = phi float [ %i.dr, %._crit_edge147 ], [ 0.000000e+00, %.preheader ] ; 2 uses
+  %.lcssa144 = phi float [ %i.dr, %._crit_edge147 ], [ 0.000000e+00, %.preheader ]
+  %.lcssa140 = phi float [ %21, %._crit_edge147 ], [ 0.000000e+00, %.preheader ]
   store float %.lcssa144, ptr %i.b, align 16
-  store float %.lcssa144, ptr %i.bc, align 4, !tbaa !23
+  store float %.lcssa140, ptr %i.bc, align 4, !tbaa !23
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.d

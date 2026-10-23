@@ -205,7 +205,7 @@ define dso_local void @_ZN4Luau9Subtyping15isCovariantWithERNS_20SubtypingEnviro
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %6 = alloca [1 x %"struct.Luau::SubtypingEnvironment::GenericBounds"], align 8 ; 13 uses
-  %7 = alloca %"class.std::vector.23", align 8    ; 11 uses
+  %7 = alloca %"class.std::vector.23", align 8    ; 9 uses
   %8 = alloca %"struct.Luau::SubtypingResult", align 8 ; 4 uses
   %9 = alloca %"struct.Luau::SubtypingResult", align 8 ; 8 uses
   %10 = alloca %"class.Luau::Variant.53", align 8 ; 5 uses
@@ -443,15 +443,15 @@ bb.v:                                             ; preds = %.loopexit244
 
 bb.w:                                             ; preds = %bb.v
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.88) #34
-          to label %.noexc129 unwind label %.loopexit.split-lp238
+          to label %.noexc129 unwind label %27
 
 .noexc129:                                        ; preds = %bb.w
   unreachable
 
 _ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.v
-  %i.bw = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.bx = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bu) #35
-          to label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit unwind label %.loopexit.split-lp238 ; 6 uses
+          to label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit unwind label %27 ; 6 uses
 
 _ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i
   %i.by = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
@@ -465,20 +465,25 @@ _ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit: ; preds = %_ZNSt12_V
   br i1 %.not233254, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit
-  %i.ca = phi ptr [ %i.bx, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ], [ %i.db, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ] ; 4 uses
-  %i.cb = phi ptr [ %i.bz, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ], [ %i.dc, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ] ; 3 uses
-  store ptr %i.cb, ptr %i.bw, align 8
-  store ptr %i.ca, ptr %7, align 8
+  %i.ca = phi ptr [ %i.bz, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ], [ %i.da, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ] ; 2 uses
+  %i.cb = phi ptr [ %i.bx, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ], [ %i.dc, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ] ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %2, i64 48
   invoke void @_ZN4Luau24MappedGenericEnvironment9pushFrameERKSt6vectorIPKNS_11TypePackVarESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(40) %i.cc, ptr noundef nonnull align 8 dereferenceable(24) %7)
-          to label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit unwind label %.loopexit.split-lp238
+          to label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit unwind label %27
+
+27:                                               ; preds = %_ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i, %bb.w, %._crit_edge
+  %28 = phi ptr [ null, %_ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i ], [ null, %bb.w ], [ %i.ca, %._crit_edge ]
+  %29 = phi ptr [ null, %_ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i ], [ null, %bb.w ], [ %i.cb, %._crit_edge ]
+  %30 = landingpad { ptr, i32 }
+          cleanup
+  br label %31
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit
-  %i.cd = phi ptr [ %i.da, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %i.bx, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 7 uses
-  %.sroa.0213.0255 = phi ptr [ %i.dd, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %.pre.a, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 2 uses
-  %i.ce = phi ptr [ %i.dc, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %i.bz, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 7 uses
-  %i.cf = phi ptr [ %i.db, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %i.bx, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 10 uses
-  %i.cg = load ptr, ptr %.sroa.0213.0255, align 8, !tbaa !91
+  %i.cd = phi ptr [ %i.dc, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %i.bx, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 8 uses
+  %.sroa.0213.0255 = phi ptr [ %i.db, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %i.bx, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 8 uses
+  %i.ce = phi ptr [ %i.da, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %i.bz, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 5 uses
+  %i.cf = phi ptr [ %i.dd, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit ], [ %.pre.a, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE7reserveEm.exit ] ; 2 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !91
   %i.ch = invoke noundef ptr @_ZN4Luau6followEPKNS_11TypePackVarE(ptr noundef %i.cg)
           to label %bb.x unwind label %.loopexit237 ; 4 uses
 
@@ -492,25 +497,23 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.cj, label %_ZN4Luau3getINS_15GenericTypePackEEEPKT_PKNS_11TypePackVarE.exit, label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit
 
 _ZN4Luau3getINS_15GenericTypePackEEEPKT_PKNS_11TypePackVarE.exit: ; preds = %bb.y
-  %.not.i132 = icmp eq ptr %i.cd, %i.ce
+  %.not.i132 = icmp eq ptr %.sroa.0213.0255, %i.ce
   br i1 %.not.i132, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %_ZN4Luau3getINS_15GenericTypePackEEEPKT_PKNS_11TypePackVarE.exit
-  store ptr %i.ch, ptr %i.cd, align 8, !tbaa !91
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.cd, i64 8 ; 2 uses
+  store ptr %i.ch, ptr %.sroa.0213.0255, align 8, !tbaa !91
+  %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0213.0255, i64 8 ; 2 uses
   store ptr %i.ck, ptr %i.by, align 8, !tbaa !447
   br label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit
 
 bb.aa:                                            ; preds = %_ZN4Luau3getINS_15GenericTypePackEEEPKT_PKNS_11TypePackVarE.exit
-  %i.cl = ptrtoint ptr %i.cd to i64
-  %i.cm = ptrtoint ptr %i.cf to i64
+  %i.cl = ptrtoint ptr %.sroa.0213.0255 to i64
+  %i.cm = ptrtoint ptr %i.cd to i64
   %i.cn = sub i64 %i.cl, %i.cm                    ; 6 uses
   %i.co = icmp eq i64 %i.cn, 9223372036854775800
   br i1 %i.co, label %bb.ab, label %_ZNKSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.ab:                                            ; preds = %bb.aa
-  store ptr %i.ce, ptr %i.bw, align 8
-  store ptr %i.cf, ptr %7, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.87) #34
           to label %.noexc133 unwind label %.loopexit.split-lp238
 
@@ -528,7 +531,7 @@ _ZNKSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; pred
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.cu = shl nuw nsw i64 %i.ct, 3
   %i.cv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cu) #35
-          to label %.noexc134 unwind label %.loopexit237 ; 4 uses
+          to label %.noexc134 unwind label %.loopexit237 ; 5 uses
 
 .noexc134:                                        ; preds = %_ZNKSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.cw = getelementptr inbounds i8, ptr %i.cv, i64 %i.cn ; 2 uses
@@ -537,61 +540,60 @@ _ZNKSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; pred
   br i1 %i.cx, label %bb.ac, label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 bb.ac:                                            ; preds = %.noexc134
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cv, ptr align 8 %i.cf, i64 %i.cn, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cv, ptr align 8 %i.cd, i64 %i.cn, i1 false)
   br label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.ac, %.noexc134
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 8 ; 2 uses
-  call void @_ZdlPvm(ptr noundef nonnull %i.cf, i64 noundef %i.cn) #33
+  call void @_ZdlPvm(ptr noundef nonnull %i.cd, i64 noundef %i.cn) #33
+  store ptr %i.cv, ptr %7, align 8, !tbaa !448
   store ptr %i.cy, ptr %i.by, align 8, !tbaa !447
-  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %i.ct
+  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %i.ct ; 2 uses
+  store ptr %i.cz, ptr %i.bw, align 8, !tbaa !449
   br label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit
 
 .loopexit237:                                     ; preds = %.lr.ph, %_ZNKSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12_M_check_lenEmPKc.exit.i.i
+  %.lcssa258 = phi ptr [ %i.ce, %.lr.ph ], [ %.sroa.0213.0255, %_ZNKSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12_M_check_lenEmPKc.exit.i.i ]
   %lpad.loopexit239 = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.ce, ptr %i.bw, align 8
-  store ptr %i.cf, ptr %7, align 8
-  br label %29
+  br label %31
 
-.loopexit.split-lp238:                            ; preds = %bb.ab, %_ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i, %bb.w, %._crit_edge
-  %27 = phi ptr [ %i.cd, %bb.ab ], [ null, %_ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i ], [ null, %bb.w ], [ %i.cb, %._crit_edge ]
-  %28 = phi ptr [ %i.cf, %bb.ab ], [ null, %_ZNSt12_Vector_baseIPKN4Luau11TypePackVarESaIS3_EE11_M_allocateEm.exit.i ], [ null, %bb.w ], [ %i.ca, %._crit_edge ]
+.loopexit.split-lp238:                            ; preds = %bb.ab
   %lpad.loopexit.split-lp240 = landingpad { ptr, i32 }
           cleanup
-  br label %29
-
-29:                                               ; preds = %.loopexit.split-lp238, %.loopexit237
-  %30 = phi ptr [ %i.ce, %.loopexit237 ], [ %27, %.loopexit.split-lp238 ]
-  %31 = phi ptr [ %i.cf, %.loopexit237 ], [ %28, %.loopexit.split-lp238 ] ; 3 uses
-  %lpad.phi241 = phi { ptr, i32 } [ %lpad.loopexit239, %.loopexit237 ], [ %lpad.loopexit.split-lp240, %.loopexit.split-lp238 ]
-  %.not.i.i.i136 = icmp eq ptr %31, null
-  br i1 %.not.i.i.i136, label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137, label %bb.ad
+  br label %31
 
 _ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit: ; preds = %bb.x, %bb.y, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, %bb.z
-  %i.da = phi ptr [ %i.cd, %bb.x ], [ %i.cd, %bb.y ], [ %i.cy, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.ck, %bb.z ]
-  %i.db = phi ptr [ %i.cf, %bb.x ], [ %i.cf, %bb.y ], [ %i.cv, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.cf, %bb.z ] ; 2 uses
-  %i.dc = phi ptr [ %i.ce, %bb.x ], [ %i.ce, %bb.y ], [ %i.cz, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.ce, %bb.z ] ; 2 uses
-  %i.dd = getelementptr inbounds nuw i8, ptr %.sroa.0213.0255, i64 8 ; 2 uses
+  %i.da = phi ptr [ %i.ce, %bb.z ], [ %i.cz, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.ce, %bb.y ], [ %i.ce, %bb.x ] ; 2 uses
+  %i.db = phi ptr [ %i.ck, %bb.z ], [ %i.cy, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %.sroa.0213.0255, %bb.y ], [ %.sroa.0213.0255, %bb.x ]
+  %i.dc = phi ptr [ %i.cd, %bb.z ], [ %i.cv, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.cd, %bb.y ], [ %i.cd, %bb.x ] ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.cf, i64 8 ; 2 uses
   %.not233 = icmp eq ptr %i.dd, %.pre268.a
   br i1 %.not233, label %._crit_edge, label %.lr.ph
 
 _ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit: ; preds = %._crit_edge
-  %i.de = ptrtoint ptr %i.cb to i64
-  %i.df = ptrtoint ptr %i.ca to i64
+  %i.de = ptrtoint ptr %i.ca to i64
+  %i.df = ptrtoint ptr %i.cb to i64
   %i.dg = sub i64 %i.de, %i.df
-  call void @_ZdlPvm(ptr noundef nonnull %i.ca, i64 noundef %i.dg) #33
+  call void @_ZdlPvm(ptr noundef nonnull %i.cb, i64 noundef %i.dg) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #31
   br label %bb.ae
 
-bb.ad:                                            ; preds = %29
-  %i.dh = ptrtoint ptr %30 to i64
-  %i.di = ptrtoint ptr %31 to i64
+31:                                               ; preds = %.loopexit237, %.loopexit.split-lp238, %27
+  %32 = phi ptr [ %28, %27 ], [ %.lcssa258, %.loopexit237 ], [ %.sroa.0213.0255, %.loopexit.split-lp238 ]
+  %33 = phi ptr [ %29, %27 ], [ %i.cd, %.loopexit237 ], [ %i.cd, %.loopexit.split-lp238 ] ; 3 uses
+  %.pn96 = phi { ptr, i32 } [ %30, %27 ], [ %lpad.loopexit239, %.loopexit237 ], [ %lpad.loopexit.split-lp240, %.loopexit.split-lp238 ]
+  %.not.i.i.i136 = icmp eq ptr %33, null
+  br i1 %.not.i.i.i136, label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137, label %bb.ad
+
+bb.ad:                                            ; preds = %31
+  %i.dh = ptrtoint ptr %32 to i64
+  %i.di = ptrtoint ptr %33 to i64
   %i.dj = sub i64 %i.dh, %i.di
-  call void @_ZdlPvm(ptr noundef nonnull %31, i64 noundef %i.dj) #33
+  call void @_ZdlPvm(ptr noundef nonnull %33, i64 noundef %i.dj) #33
   br label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137
 
-_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137: ; preds = %29, %bb.ad
+_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137: ; preds = %31, %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #31
   br label %.loopexit.split-lp
 
@@ -994,7 +996,7 @@ bb.dw:                                            ; preds = %.loopexit235, %_ZN4
   ret void
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.dt, %bb.dd, %bb.da, %bb.cr, %bb.co, %bb.cn, %_ZNSt4pairISt6vectorIPKN4Luau4TypeESaIS4_EESt8optionalIPKNS1_11TypePackVarEEED2Ev.exit150, %bb.bf, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137, %bb.u
-  %.pn124 = phi { ptr, i32 } [ %i.qn, %bb.dt ], [ %.pn92.pn, %bb.u ], [ %.pn116.pn, %bb.dd ], [ %i.ny, %bb.da ], [ %.pn112.pn, %bb.cr ], [ %i.kx, %bb.co ], [ %.pn108.pn, %bb.cn ], [ %.pn102.pn.pn.pn.pn, %_ZNSt4pairISt6vectorIPKN4Luau4TypeESaIS4_EESt8optionalIPKNS1_11TypePackVarEEED2Ev.exit150 ], [ %.pn98.pn, %bb.bf ], [ %lpad.phi241, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137 ], [ %lpad.loopexit.split-lp458, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %.pn124 = phi { ptr, i32 } [ %i.qn, %bb.dt ], [ %.pn92.pn, %bb.u ], [ %.pn116.pn, %bb.dd ], [ %i.ny, %bb.da ], [ %.pn112.pn, %bb.cr ], [ %i.kx, %bb.co ], [ %.pn108.pn, %bb.cn ], [ %.pn102.pn.pn.pn.pn, %_ZNSt4pairISt6vectorIPKN4Luau4TypeESaIS4_EESt8optionalIPKNS1_11TypePackVarEEED2Ev.exit150 ], [ %.pn98.pn, %bb.bf ], [ %.pn96, %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit137 ], [ %lpad.loopexit.split-lp458, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZN4Luau15SubtypingResultD2Ev(ptr noundef nonnull align 8 dead_on_return(168) dereferenceable(168) %0) #31
   br label %common.resume
 }

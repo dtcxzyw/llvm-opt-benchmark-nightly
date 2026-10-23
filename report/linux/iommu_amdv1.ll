@@ -58,8 +58,8 @@ bb.a:
   %i.g = and i8 %i.f, 7                           ; 4 uses
   %i.h = getelementptr i8, ptr %0, i64 153
   %i.i = load i8, ptr %i.h, align 1, !noalias !28 ; 2 uses
-  %.not.i = icmp ne i8 %i.g, 5                    ; 2 uses
-  br i1 %.not.i, label %bb.b, label %bb.c
+  %.not.i = icmp eq i8 %i.g, 5
+  br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %narrow.i = mul nuw nsw i8 %i.g, 9
@@ -97,6 +97,7 @@ make_range_ul.exit:                               ; preds = %bb.c
     i8 2, label %pt_range_to_index.exit.i.i18
     i8 3, label %bb.k
     i8 4, label %pt_range_to_index.exit.i.i29
+    i8 5, label %3
   ]
 
 pt_range_to_index.exit.i.i:                       ; preds = %make_range_ul.exit
@@ -296,12 +297,15 @@ pt_entry_oa_exact.exit.i34:                       ; preds = %bb.o, %amdv1pt_entr
   %i.dn = or i64 %i.dm, %i.dk
   br label %__iova_to_phys.exit.thread65
 
-pt_range_to_index.exit.i.i42:                     ; preds = %make_range_ul.exit
+3:                                                ; preds = %make_range_ul.exit
   %notmask.i.i.i.i53 = shl nsw i64 -1, %i.m
-  %3 = xor i64 %notmask.i.i.i.i53, -1
-  %.not = or i1 %.not.i, %i.l
-  %.0.i.i.i.i54 = select i1 %.not, i64 -144115188075855872, i64 %3
-  %.0.i.i.in.in.i = and i64 %1, %.0.i.i.i.i54
+  %4 = xor i64 %notmask.i.i.i.i53, -1
+  %5 = select i1 %i.l, i64 -144115188075855872, i64 %4
+  %.0.i.i.i.i54 = and i64 %5, %1
+  br label %pt_range_to_index.exit.i.i42
+
+pt_range_to_index.exit.i.i42:                     ; preds = %make_range_ul.exit, %3
+  %.0.i.i.in.in.i = phi i64 [ %.0.i.i.i.i54, %3 ], [ %1, %make_range_ul.exit ]
   %.0.i.i.in.i = lshr i64 %.0.i.i.in.in.i, 57
   %i.do = getelementptr [8 x i8], ptr %i.e, i64 %.0.i.i.in.i
   %i.dp = load volatile i64, ptr %i.do, align 8   ; 6 uses

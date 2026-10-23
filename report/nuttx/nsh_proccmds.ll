@@ -202,7 +202,7 @@ declare dso_local ptr @strcpy(ptr noundef, ptr noundef) local_unnamed_addr #9
 ; Function Attrs: noredzone nounwind optsize uwtable
 define internal i32 @ps_callback(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readonly captures(none) %3) #3 {
 bb.a:
-  %4 = alloca %struct.nsh_taskstatus_s, align 8   ; 28 uses
+  %4 = alloca %struct.nsh_taskstatus_s, align 8   ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.b = load i8, ptr %i.a, align 4
@@ -234,28 +234,28 @@ bb.d:                                             ; preds = %bb.c
 ps_skipfile.exit:                                 ; preds = %bb.c, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 80
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.h, i8 0, i64 32, i1 false)
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 88 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 88
   store ptr %i.i, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 96
   store i64 1024, ptr %i.k, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
   store <4 x ptr> <ptr @.str.24, ptr @.str.24, ptr @.str.24, ptr @.str.24>, ptr %4, align 8
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 56
   store <4 x ptr> <ptr @.str.24, ptr @.str.24, ptr @.str.24, ptr @.str.24>, ptr %i.o, align 8
-  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 64
   store ptr @.str.24, ptr %i.s, align 8
   %i.t = tail call i32 @atoi(ptr noundef nonnull %i.d) #16 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 72
   store i32 %i.t, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 76 ; 2 uses
   store i32 -1, ptr %i.v, align 4
-  %i.w = call i64 @ps_readprocfs(ptr noundef %0, ptr noundef nonnull @.str.42, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %4) #16 ; 2 uses
+  %i.w = call i64 @ps_readprocfs(ptr noundef %0, ptr noundef nonnull @.str.42, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %4) #16 ; 3 uses
   %i.x = icmp sgt i64 %i.w, -1
   br i1 %i.x, label %bb.e, label %.loopexit97.i
 
@@ -265,6 +265,14 @@ bb.e:                                             ; preds = %ps_skipfile.exit
   br label %bb.f
 
 bb.f:                                             ; preds = %nsh_parse_statusline.exit.i, %bb.e
+  %.str.2435 = phi ptr [ @.str.24, %bb.e ], [ %.str.2434, %nsh_parse_statusline.exit.i ] ; 8 uses
+  %.str.2432 = phi ptr [ @.str.24, %bb.e ], [ %.str.2431, %nsh_parse_statusline.exit.i ] ; 8 uses
+  %.str.2429 = phi ptr [ @.str.24, %bb.e ], [ %.str.2428, %nsh_parse_statusline.exit.i ] ; 8 uses
+  %.str.2426 = phi ptr [ @.str.24, %bb.e ], [ %.str.2425, %nsh_parse_statusline.exit.i ] ; 8 uses
+  %.str.2423 = phi ptr [ @.str.24, %bb.e ], [ %.str.2422, %nsh_parse_statusline.exit.i ] ; 8 uses
+  %.str.2420 = phi ptr [ @.str.24, %bb.e ], [ %.str.2419, %nsh_parse_statusline.exit.i ] ; 7 uses
+  %.str.2417 = phi ptr [ @.str.24, %bb.e ], [ %.str.2416, %nsh_parse_statusline.exit.i ] ; 8 uses
+  %.str.2414 = phi ptr [ @.str.24, %bb.e ], [ %.str.2413, %nsh_parse_statusline.exit.i ] ; 8 uses
   %.0.i = phi ptr [ %i.i, %bb.e ], [ %.2.i, %nsh_parse_statusline.exit.i ] ; 15 uses
   br label %bb.g
 
@@ -291,7 +299,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.loopexit96.i
   %i.ae = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
-  %i.af = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.ae) #15
+  %i.af = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.ae) #15 ; 2 uses
   store ptr %i.af, ptr %4, align 8
   br label %nsh_parse_statusline.exit.i
 
@@ -303,7 +311,7 @@ bb.j:                                             ; preds = %.loopexit96.i
 
 bb.k:                                             ; preds = %bb.j
   %i.aj = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
-  %i.ak = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.aj) #15
+  %i.ak = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.aj) #15 ; 2 uses
   store ptr %i.ak, ptr %i.l, align 8
   br label %nsh_parse_statusline.exit.i
 
@@ -315,7 +323,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ao = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
-  %i.ap = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.ao) #15 ; 2 uses
+  %i.ap = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.ao) #15 ; 4 uses
   store ptr %i.ap, ptr %i.m, align 8
   %i.aq = tail call ptr @strchr(ptr noundef %i.ap, i32 noundef 44) #16 ; 3 uses
   %.not.i.i = icmp eq ptr %i.aq, null
@@ -324,7 +332,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
   store i8 0, ptr %i.aq, align 1
-  %i.as = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.ar) #15
+  %i.as = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.ar) #15 ; 2 uses
   store ptr %i.as, ptr %i.n, align 8
   br label %nsh_parse_statusline.exit.i
 
@@ -336,7 +344,7 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %bb.o
   %i.aw = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
-  %i.ax = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.aw) #15
+  %i.ax = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.aw) #15 ; 2 uses
   store ptr %i.ax, ptr %i.o, align 8
   br label %nsh_parse_statusline.exit.i
 
@@ -348,7 +356,7 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.bb = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
-  %i.bc = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.bb) #15 ; 2 uses
+  %i.bc = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.bb) #15 ; 3 uses
   store ptr %i.bc, ptr %i.p, align 8
   br label %bb.s
 
@@ -373,7 +381,7 @@ bb.u:                                             ; preds = %bb.q
 
 bb.v:                                             ; preds = %bb.u
   %i.bj = getelementptr inbounds nuw i8, ptr %.0.i, i64 18
-  %i.bk = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.bj) #15
+  %i.bk = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.bj) #15 ; 2 uses
   store ptr %i.bk, ptr %i.q, align 8
   br label %nsh_parse_statusline.exit.i
 
@@ -385,24 +393,38 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %bb.w
   %i.bo = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
-  %i.bp = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.bo) #15
+  %i.bp = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.bo) #15 ; 2 uses
   store ptr %i.bp, ptr %i.r, align 8
   br label %nsh_parse_statusline.exit.i
 
 nsh_parse_statusline.exit.i:                      ; preds = %bb.x, %bb.w, %bb.v, %bb.t, %bb.p, %bb.n, %bb.m, %bb.k, %bb.i
+  %.str.2434 = phi ptr [ %i.bp, %bb.x ], [ %.str.2435, %bb.w ], [ %.str.2435, %bb.v ], [ %.str.2435, %bb.t ], [ %.str.2435, %bb.p ], [ %.str.2435, %bb.n ], [ %.str.2435, %bb.m ], [ %.str.2435, %bb.k ], [ %.str.2435, %bb.i ] ; 2 uses
+  %.str.2431 = phi ptr [ %.str.2432, %bb.x ], [ %.str.2432, %bb.w ], [ %i.bk, %bb.v ], [ %.str.2432, %bb.t ], [ %.str.2432, %bb.p ], [ %.str.2432, %bb.n ], [ %.str.2432, %bb.m ], [ %.str.2432, %bb.k ], [ %.str.2432, %bb.i ] ; 2 uses
+  %.str.2428 = phi ptr [ %.str.2429, %bb.x ], [ %.str.2429, %bb.w ], [ %.str.2429, %bb.v ], [ %i.bc, %bb.t ], [ %.str.2429, %bb.p ], [ %.str.2429, %bb.n ], [ %.str.2429, %bb.m ], [ %.str.2429, %bb.k ], [ %.str.2429, %bb.i ] ; 2 uses
+  %.str.2425 = phi ptr [ %.str.2426, %bb.x ], [ %.str.2426, %bb.w ], [ %.str.2426, %bb.v ], [ %.str.2426, %bb.t ], [ %i.ax, %bb.p ], [ %.str.2426, %bb.n ], [ %.str.2426, %bb.m ], [ %.str.2426, %bb.k ], [ %.str.2426, %bb.i ] ; 2 uses
+  %.str.2422 = phi ptr [ %.str.2423, %bb.x ], [ %.str.2423, %bb.w ], [ %.str.2423, %bb.v ], [ %.str.2423, %bb.t ], [ %.str.2423, %bb.p ], [ %i.as, %bb.n ], [ %.str.2423, %bb.m ], [ %.str.2423, %bb.k ], [ %.str.2423, %bb.i ] ; 2 uses
+  %.str.2419 = phi ptr [ %.str.2420, %bb.x ], [ %.str.2420, %bb.w ], [ %.str.2420, %bb.v ], [ %.str.2420, %bb.t ], [ %.str.2420, %bb.p ], [ %i.ap, %bb.n ], [ %i.ap, %bb.m ], [ %.str.2420, %bb.k ], [ %.str.2420, %bb.i ] ; 2 uses
+  %.str.2416 = phi ptr [ %.str.2417, %bb.x ], [ %.str.2417, %bb.w ], [ %.str.2417, %bb.v ], [ %.str.2417, %bb.t ], [ %.str.2417, %bb.p ], [ %.str.2417, %bb.n ], [ %.str.2417, %bb.m ], [ %i.ak, %bb.k ], [ %.str.2417, %bb.i ] ; 2 uses
+  %.str.2413 = phi ptr [ %.str.2414, %bb.x ], [ %.str.2414, %bb.w ], [ %.str.2414, %bb.v ], [ %.str.2414, %bb.t ], [ %.str.2414, %bb.p ], [ %.str.2414, %bb.n ], [ %.str.2414, %bb.m ], [ %.str.2414, %bb.k ], [ %i.af, %bb.i ] ; 2 uses
   %.not86.i = icmp eq ptr %.2.i, null
   br i1 %.not86.i, label %.loopexit97.i, label %bb.f, !llvm.loop !12
 
 .loopexit97.i:                                    ; preds = %nsh_parse_statusline.exit.i, %ps_skipfile.exit
+  %5 = phi i64 [ 0, %ps_skipfile.exit ], [ %i.w, %nsh_parse_statusline.exit.i ] ; 3 uses
+  %.str.2433 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2434, %nsh_parse_statusline.exit.i ]
+  %.str.2430 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2431, %nsh_parse_statusline.exit.i ]
+  %.str.2427 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2428, %nsh_parse_statusline.exit.i ]
+  %.str.2424 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2425, %nsh_parse_statusline.exit.i ]
+  %.str.2421 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2422, %nsh_parse_statusline.exit.i ]
+  %.str.2418 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2419, %nsh_parse_statusline.exit.i ]
+  %.str.2415 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2416, %nsh_parse_statusline.exit.i ]
+  %.str.24 = phi ptr [ @.str.24, %ps_skipfile.exit ], [ %.str.2413, %nsh_parse_statusline.exit.i ]
   %i.bq = call i64 @ps_readprocfs(ptr noundef %0, ptr noundef nonnull @.str.43, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %4) #16
   %i.br = icmp sgt i64 %i.bq, -1
   br i1 %i.br, label %bb.y, label %.loopexit95.i
 
 bb.y:                                             ; preds = %.loopexit97.i
-  %5 = load ptr, ptr %i.j, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 104
-  %7 = load i64, ptr %6, align 8
-  %i.bs = getelementptr inbounds nuw i8, ptr %5, i64 %7
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.i, i64 %5
   br label %bb.z
 
 bb.z:                                             ; preds = %nsh_parse_gstatusline.exit.i, %bb.y
@@ -427,7 +449,7 @@ bb.ab:                                            ; preds = %bb.aa
 .loopexit94.i:                                    ; preds = %bb.aa, %bb.ab
   %.5.i = phi ptr [ %i.bv, %bb.ab ], [ null, %bb.aa ] ; 2 uses
   %i.bw = tail call i64 @strlen(ptr noundef nonnull @g_ppid) #16
-  %i.bx = tail call i32 @strncmp(ptr noundef %.3.i, ptr noundef nonnull @g_ppid, i64 noundef %i.bw) #16
+  %i.bx = tail call i32 @strncmp(ptr noundef nonnull %.3.i, ptr noundef nonnull @g_ppid, i64 noundef %i.bw) #16
   %i.by = icmp eq i32 %i.bx, 0
   br i1 %i.by, label %bb.ac, label %nsh_parse_gstatusline.exit.i
 
@@ -449,14 +471,12 @@ nsh_parse_gstatusline.exit.i:                     ; preds = %bb.ac, %.loopexit94
   br i1 %i.ce, label %bb.ad, label %.loopexit93.i
 
 bb.ad:                                            ; preds = %.loopexit95.i
-  %8 = load ptr, ptr %i.j, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 104
-  %10 = load i64, ptr %9, align 8
-  %i.cf = getelementptr inbounds nuw i8, ptr %8, i64 %10
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.i, i64 %5
   %i.cg = getelementptr inbounds nuw i8, ptr %4, i64 80
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ai, %bb.ad
+  %6 = phi i64 [ 0, %bb.ad ], [ %7, %bb.ai ]
   %.6.i = phi ptr [ %i.cf, %bb.ad ], [ %.8.i, %bb.ai ] ; 3 uses
   br label %bb.af
 
@@ -477,21 +497,23 @@ bb.ag:                                            ; preds = %bb.af
 .loopexit.i:                                      ; preds = %bb.af, %bb.ag
   %.8.i = phi ptr [ %i.ci, %bb.ag ], [ null, %bb.af ] ; 2 uses
   %i.cj = tail call i64 @strlen(ptr noundef nonnull @g_stacksize) #16
-  %i.ck = tail call i32 @strncmp(ptr noundef %.6.i, ptr noundef nonnull @g_stacksize, i64 noundef %i.cj) #16
+  %i.ck = tail call i32 @strncmp(ptr noundef nonnull %.6.i, ptr noundef nonnull @g_stacksize, i64 noundef %i.cj) #16
   %i.cl = icmp eq i32 %i.ck, 0
   br i1 %i.cl, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %.loopexit.i
   %i.cm = getelementptr inbounds nuw i8, ptr %.6.i, i64 12
-  %i.cn = tail call i64 @strtoul(ptr noundef nonnull captures(none) %i.cm, ptr noundef null, i32 noundef 0) #16
+  %i.cn = tail call i64 @strtoul(ptr noundef nonnull captures(none) %i.cm, ptr noundef null, i32 noundef 0) #16 ; 2 uses
   store i64 %i.cn, ptr %i.cg, align 8
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %.loopexit.i
+  %7 = phi i64 [ %i.cn, %bb.ah ], [ %6, %.loopexit.i ] ; 2 uses
   %.not92.i = icmp eq ptr %.8.i, null
   br i1 %.not92.i, label %.loopexit93.i, label %bb.ae, !llvm.loop !14
 
 .loopexit93.i:                                    ; preds = %bb.ai, %.loopexit95.i
+  %8 = phi i64 [ 0, %.loopexit95.i ], [ %7, %bb.ai ]
   %i.co = call i64 @ps_readprocfs(ptr noundef %0, ptr noundef nonnull @.str.45, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %4) #16 ; 3 uses
   %i.cp = icmp sgt i64 %i.co, -1
   br i1 %i.cp, label %bb.aj, label %ps_record.exit.thread
@@ -501,26 +523,12 @@ ps_record.exit.thread:                            ; preds = %.loopexit93.i
   br label %ps_skipfile.exit.thread
 
 bb.aj:                                            ; preds = %.loopexit93.i
-  %11 = load ptr, ptr %i.j, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 104
-  %13 = load i64, ptr %12, align 8
-  %i.cr = getelementptr inbounds nuw i8, ptr %11, i64 %13
-  %i.cs = tail call ptr @nsh_trimspaces(ptr noundef %i.cr) #15 ; 2 uses
-  store ptr %i.cs, ptr %i.s, align 8
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.i, i64 %5
+  %i.cs = tail call ptr @nsh_trimspaces(ptr noundef nonnull %i.cr) #15
   %i.ct = trunc nuw nsw i64 %i.co to i32
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %14 = load ptr, ptr %i.cu, align 8
-  %15 = load ptr, ptr %i.l, align 8
-  %16 = load ptr, ptr %i.p, align 8
-  %17 = load ptr, ptr %i.q, align 8
-  %18 = load ptr, ptr %4, align 8
-  %19 = load ptr, ptr %i.o, align 8
-  %20 = load ptr, ptr %i.m, align 8
-  %21 = load ptr, ptr %i.n, align 8
-  %i.cv = load ptr, ptr %i.r, align 8
-  %22 = getelementptr inbounds nuw i8, ptr %4, i64 80
-  %23 = load i64, ptr %22, align 8
-  %i.cw = tail call i32 (ptr, ptr, ...) %14(ptr noundef %0, ptr noundef nonnull @.str.46, i32 noundef %i.t, ptr noundef %15, i32 noundef %i.cc, ptr noundef %16, ptr noundef %17, ptr noundef %18, ptr noundef %19, ptr noundef %20, ptr noundef %21, ptr noundef %i.cv, i64 noundef %23, ptr noundef %i.cs) #15, !inline_history !15 ; 0 uses
+  %i.cv = load ptr, ptr %i.cu, align 8
+  %i.cw = tail call i32 (ptr, ptr, ...) %i.cv(ptr noundef %0, ptr noundef nonnull @.str.46, i32 noundef %i.t, ptr noundef %.str.2415, i32 noundef %i.cc, ptr noundef %.str.2427, ptr noundef %.str.2430, ptr noundef %.str.24, ptr noundef %.str.2424, ptr noundef %.str.2418, ptr noundef %.str.2421, ptr noundef %.str.2433, i64 noundef %8, ptr noundef %i.cs) #15, !inline_history !15 ; 0 uses
   br label %ps_skipfile.exit.thread
 
 ps_skipfile.exit.thread:                          ; preds = %bb.d, %ps_record.exit.thread, %bb.a, %bb.aj

@@ -205,7 +205,7 @@ bb.a:
 define internal void @_ZN3gmx15analysismodules12_GLOBAL__N_14Dssp11writeOutputEv(ptr noundef nonnull align 8 dereferenceable(320) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %1 = alloca %"class.std::vector.18", align 8    ; 8 uses
+  %1 = alloca %"class.std::vector.18", align 8    ; 9 uses
   %2 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
@@ -243,15 +243,21 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt10filesystem7__cxx114pathD2Ev.exit:          ; preds = %_ZNSt10filesystem7__cxx114path5_ListD2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 272
-  %.val30.i = load ptr, ptr %i.k, align 8, !tbaa !82 ; 4 uses
+  %.val30.i = load ptr, ptr %i.k, align 8, !tbaa !82 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 280
-  %.val31.i = load ptr, ptr %i.l, align 8, !tbaa !83 ; 4 uses
+  %.val31.i = load ptr, ptr %i.l, align 8, !tbaa !83 ; 3 uses
   %i.m = ptrtoint ptr %.val31.i to i64
   %i.n = ptrtoint ptr %.val30.i to i64
-  %i.o = sub i64 %i.m, %i.n                       ; 5 uses
+  %i.o = sub i64 %i.m, %i.n                       ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.not52 = icmp eq ptr %.val31.i, %.val30.i
-  br i1 %.not52, label %.loopexit, label %bb.e
+  %.not52 = icmp eq ptr %.val31.i, %.val30.i      ; 2 uses
+  br i1 %.not52, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i.thread.thread, label %bb.e
+
+_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i.thread.thread: ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit
+  %3 = getelementptr inbounds nuw i8, ptr null, i64 %i.o ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store ptr %3, ptr %4, align 8, !tbaa !83
+  br label %.loopexit
 
 bb.e:                                             ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit
   %i.q = sdiv exact i64 %i.o, 40
@@ -267,7 +273,7 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.e
   %i.s = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #27
-          to label %.lr.ph.i.i.i.i.i.i unwind label %bb.t ; 6 uses
+          to label %.lr.ph.i.i.i.i.i.i unwind label %bb.t ; 8 uses
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.preheader.i, %bb.i
   %.014.i.i.i.i.i.i = phi ptr [ %i.ak, %bb.i ], [ %i.s, %.lr.ph.i.i.i.i.i.preheader.i ] ; 6 uses
@@ -378,19 +384,16 @@ _ZNSt12_Vector_baseIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3
   %i.aw = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.o ; 2 uses
   store ptr %i.aw, ptr %i.p, align 8, !tbaa !85
   %i.ax = ptrtoint ptr %i.aw to i64
-  br label %.loopexit
+  %5 = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.o ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store ptr %5, ptr %6, align 8, !tbaa !83
+  br label %.lr.ph
 
-.loopexit:                                        ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit, %_ZNSt12_Vector_baseIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EE13_M_deallocateEPS3_m.exit.i
-  %.val1.i = phi i64 [ %i.ax, %_ZNSt12_Vector_baseIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ 0, %_ZNSt10filesystem7__cxx114pathD2Ev.exit ]
-  %i.ay = phi ptr [ %i.s, %_ZNSt12_Vector_baseIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ null, %_ZNSt10filesystem7__cxx114pathD2Ev.exit ] ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.o ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr %3, ptr %4, align 8, !tbaa !83
-  %.not30 = icmp eq ptr %.val31.i, %.val30.i      ; 2 uses
-  br i1 %.not30, label %._crit_edge, label %.lr.ph
-
-._crit_edge:                                      ; preds = %.lr.ph, %.loopexit
-  %5 = invoke noundef i32 @_Z11gmx_ffcloseP8_IO_FILE(ptr noundef %i.c)
+.loopexit:                                        ; preds = %.lr.ph, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i.thread.thread
+  %i.ay = phi ptr [ %3, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i.thread.thread ], [ %5, %.lr.ph ]
+  %.val2746 = phi ptr [ null, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i.thread.thread ], [ %i.s, %.lr.ph ] ; 4 uses
+  %.val33.i2845 = phi i64 [ 0, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i.thread.thread ], [ %i.ax, %.lr.ph ]
+  %7 = invoke noundef i32 @_Z11gmx_ffcloseP8_IO_FILE(ptr noundef %i.c)
           to label %bb.u unwind label %bb.t       ; 0 uses
 
 bb.q:                                             ; preds = %bb.a
@@ -409,25 +412,25 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   br label %.body
 
-bb.t:                                             ; preds = %.lr.ph.i.i.i.i.i.preheader.i, %bb.f, %._crit_edge
+bb.t:                                             ; preds = %.lr.ph.i.i.i.i.i.preheader.i, %bb.f, %.loopexit
   %i.bb = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.lr.ph:                                           ; preds = %.loopexit, %.lr.ph
-  %.sroa.026.031 = phi ptr [ %i.bf, %.lr.ph ], [ %i.ay, %.loopexit ] ; 2 uses
+.lr.ph:                                           ; preds = %_ZNSt12_Vector_baseIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EE13_M_deallocateEPS3_m.exit.i, %.lr.ph
+  %.sroa.026.031 = phi ptr [ %i.bf, %.lr.ph ], [ %i.s, %_ZNSt12_Vector_baseIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EE13_M_deallocateEPS3_m.exit.i ] ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.026.031, i64 8
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !80
   %i.be = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.c, ptr noundef nonnull @.str.78, ptr noundef %i.bd) #28 ; 0 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.026.031, i64 40 ; 2 uses
-  %.not = icmp eq ptr %i.bf, %3
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  %.not = icmp eq ptr %i.bf, %5
+  br i1 %.not, label %.loopexit, label %.lr.ph
 
-bb.u:                                             ; preds = %._crit_edge
-  br i1 %.not30, label %_ZSt8_DestroyIPN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameES3_EvT_S5_RSaIT0_E.exit.i, label %.lr.ph.i.i.i20
+bb.u:                                             ; preds = %.loopexit
+  br i1 %.not52, label %_ZSt8_DestroyIPN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameES3_EvT_S5_RSaIT0_E.exit.i, label %.lr.ph.i.i.i20
 
 .lr.ph.i.i.i20:                                   ; preds = %bb.u, %_ZSt8_DestroyIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameEEvPT_.exit.i.i.i23
-  %.05.i.i.i21 = phi ptr [ %i.bm, %_ZSt8_DestroyIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameEEvPT_.exit.i.i.i23 ], [ %i.ay, %bb.u ] ; 3 uses
+  %.05.i.i.i21 = phi ptr [ %i.bm, %_ZSt8_DestroyIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameEEvPT_.exit.i.i.i23 ], [ %.val2746, %bb.u ] ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.05.i.i.i21, i64 8
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !80 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.05.i.i.i21, i64 24 ; 2 uses
@@ -442,17 +445,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameEEvPT_.exit.i.i.i23: ; preds = %.lr.ph.i.i.i20, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i22
   %i.bm = getelementptr inbounds nuw i8, ptr %.05.i.i.i21, i64 40 ; 2 uses
-  %.not.i.i.i24 = icmp eq ptr %i.bm, %3
+  %.not.i.i.i24 = icmp eq ptr %i.bm, %i.ay
   br i1 %.not.i.i.i24, label %_ZSt8_DestroyIPN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameES3_EvT_S5_RSaIT0_E.exit.i, label %.lr.ph.i.i.i20, !llvm.loop !0
 
 _ZSt8_DestroyIPN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameES3_EvT_S5_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameEEvPT_.exit.i.i.i23, %bb.u
-  %.not.i.i2.i = icmp eq ptr %i.ay, null
+  %.not.i.i2.i = icmp eq ptr %.val2746, null
   br i1 %.not.i.i2.i, label %_ZNSt6vectorIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EED2Ev.exit, label %bb.v
 
 bb.v:                                             ; preds = %_ZSt8_DestroyIPN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameES3_EvT_S5_RSaIT0_E.exit.i
-  %i.bn = ptrtoint ptr %i.ay to i64
-  %i.bo = sub i64 %.val1.i, %i.bn
-  call void @_ZdlPvm(ptr noundef nonnull %i.ay, i64 noundef %i.bo) #29
+  %i.bn = ptrtoint ptr %.val2746 to i64
+  %i.bo = sub i64 %.val33.i2845, %i.bn
+  call void @_ZdlPvm(ptr noundef nonnull %.val2746, i64 noundef %i.bo) #29
   br label %_ZNSt6vectorIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EED2Ev.exit
 
 _ZNSt6vectorIN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameESaIS3_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPN3gmx15analysismodules12_GLOBAL__N_116DsspStorageFrameES3_EvT_S5_RSaIT0_E.exit.i, %bb.v

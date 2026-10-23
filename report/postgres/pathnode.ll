@@ -202,8 +202,10 @@ bb.m:                                             ; preds = %bb.d
 
 .lr.ph127:                                        ; preds = %.lr.ph, %bb.q
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.lr.ph ] ; 3 uses
+  %5 = phi ptr [ %8, %bb.q ], [ null, %.lr.ph ]
+  %6 = phi ptr [ %i.dv, %bb.q ], [ null, %.lr.ph ] ; 2 uses
   %i.dl = phi ptr [ %i.dw, %bb.q ], [ null, %.lr.ph ] ; 2 uses
-  %i.dm = phi ptr [ %i.dv, %bb.q ], [ null, %.lr.ph ] ; 2 uses
+  %i.dm = phi ptr [ %7, %bb.q ], [ null, %.lr.ph ]
   %i.dn = load ptr, ptr %i.dg, align 8
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.dn, i64 %indvars.iv
   %i.dp = load ptr, ptr %i.do, align 8
@@ -218,16 +220,18 @@ bb.n:                                             ; preds = %.lr.ph127
   br i1 %i.ds, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.dt = tail call ptr @lappend(ptr noundef %i.dl, ptr noundef nonnull %i.dq) #9
+  %i.dt = tail call ptr @lappend(ptr noundef %i.dl, ptr noundef nonnull %i.dq) #9 ; 2 uses
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.n
-  %i.du = tail call ptr @lappend(ptr noundef %i.dm, ptr noundef nonnull %i.dq) #9
+  %i.du = tail call ptr @lappend(ptr noundef %6, ptr noundef nonnull %i.dq) #9 ; 2 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p
-  %i.dv = phi ptr [ %i.dm, %bb.o ], [ %i.du, %bb.p ] ; 2 uses
-  %i.dw = phi ptr [ %i.dt, %bb.o ], [ %i.dl, %bb.p ] ; 2 uses
+  %7 = phi ptr [ %i.du, %bb.p ], [ %i.dm, %bb.o ] ; 2 uses
+  %8 = phi ptr [ %5, %bb.p ], [ %i.dt, %bb.o ]    ; 2 uses
+  %i.dv = phi ptr [ %i.du, %bb.p ], [ %6, %bb.o ]
+  %i.dw = phi ptr [ %i.dl, %bb.p ], [ %i.dt, %bb.o ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dx = load i32, ptr %i.df, align 4
   %i.dy = sext i32 %i.dx to i64
@@ -235,8 +239,8 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   br i1 %i.dz, label %.lr.ph127, label %..critedge109_crit_edge114
 
 ..critedge109_crit_edge114:                       ; preds = %bb.q, %.lr.ph
-  %.lcssa117 = phi ptr [ null, %.lr.ph ], [ %i.dv, %bb.q ]
-  %split115 = phi ptr [ null, %.lr.ph ], [ %i.dw, %bb.q ]
+  %.lcssa117 = phi ptr [ null, %.lr.ph ], [ %7, %bb.q ]
+  %split115 = phi ptr [ null, %.lr.ph ], [ %8, %bb.q ]
   store ptr %.lcssa117, ptr %i.di, align 8
   br label %.critedge109
 

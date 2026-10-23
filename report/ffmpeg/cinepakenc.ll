@@ -205,9 +205,9 @@ get_sub_picture.exit.i:                           ; preds = %bb.d, %bb.c
   %i.gv = getelementptr inbounds nuw i8, ptr %i.m, i64 48 ; 3 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %i.m, i64 420 ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %4, i64 6144 ; 4 uses
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %i.gz = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
-  %i.ha = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  %i.gy = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.gz = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %i.ha = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.hb = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.hc = getelementptr inbounds nuw i8, ptr %i.m, i64 72 ; 2 uses
   br label %bb.e
@@ -392,7 +392,7 @@ get_sub_picture.exit226.i:                        ; preds = %bb.i, %get_sub_pict
   %i.lo = phi ptr [ %i.jx, %bb.i ], [ %i.in, %get_sub_picture.exit225.i ] ; 3 uses
   %.sroa.10.8.i = phi ptr [ %i.lg, %bb.i ], [ %.sroa.10.4472.i, %get_sub_picture.exit225.i ] ; 2 uses
   %.sroa.6243.8.i = phi ptr [ %i.lc, %bb.i ], [ %.sroa.6243.4473.i, %get_sub_picture.exit225.i ] ; 2 uses
-  %i.lp = phi <2 x i32> [ %i.ky, %bb.i ], [ %i.hq, %get_sub_picture.exit225.i ] ; 5 uses
+  %i.lp = phi <2 x i32> [ %i.ky, %bb.i ], [ %i.hq, %get_sub_picture.exit225.i ] ; 4 uses
   store ptr %.sink573.i, ptr %i.h, align 16, !tbaa !44
   store i32 %.sink.i, ptr %i.i, align 16, !tbaa !49
   %i.lq = load ptr, ptr %i.gg, align 8, !tbaa !46
@@ -548,9 +548,9 @@ bb.k:                                             ; preds = %calculate_skip_erro
   %i.ns = zext nneg i32 %i.hx to i64
   %i.nt = sext i32 %.sroa.6236.4269.i to i64
   %i.nu = sext i32 %.sroa.9238.4267.i to i64
-  %i.nv = extractelement <2 x i32> %i.lp, i64 0
+  %i.nv = extractelement <2 x i32> %i.lp, i64 0   ; 2 uses
   %i.nw = sext i32 %i.nv to i64
-  %i.nx = extractelement <2 x i32> %i.lp, i64 1
+  %i.nx = extractelement <2 x i32> %i.lp, i64 1   ; 2 uses
   %i.ny = sext i32 %i.nx to i64
   br label %.preheader.lr.ph.i.i
 
@@ -953,21 +953,22 @@ bb.bf:                                            ; preds = %encode_codebook.exi
 
 .preheader244.i.i.i:                              ; preds = %bb.bf, %._crit_edge.i186.i.i
   %indvars.iv564.i = phi i64 [ %indvars.iv.next565.i, %._crit_edge.i186.i.i ], [ 0, %bb.bf ] ; 4 uses
-  %i.agy = phi i32 [ %i.akw, %._crit_edge.i186.i.i ], [ %i.agw, %bb.bf ] ; 2 uses
-  %.0180267.i.i.i = phi i32 [ %.1181.lcssa.i.i.i, %._crit_edge.i186.i.i ], [ 0, %bb.bf ] ; 2 uses
+  %5 = phi i32 [ %i.akw, %._crit_edge.i186.i.i ], [ %i.agw, %bb.bf ] ; 2 uses
+  %.0180272.i.i.i = phi i32 [ %.1181.lcssa.i.i.i, %._crit_edge.i186.i.i ], [ 0, %bb.bf ] ; 2 uses
+  %i.agy = phi i32 [ %.lcssa246.i.i.i, %._crit_edge.i186.i.i ], [ 0, %bb.bf ] ; 2 uses
+  %.0180267.i.i.i = phi i32 [ %.lcssa247.i.i.i, %._crit_edge.i186.i.i ], [ 0, %bb.bf ] ; 2 uses
+  %6 = phi ptr [ %.lcssa248.i.i.i, %._crit_edge.i186.i.i ], [ null, %bb.bf ] ; 2 uses
+  %7 = phi ptr [ %.lcssa249.i.i.i, %._crit_edge.i186.i.i ], [ null, %bb.bf ] ; 2 uses
   %.sroa.9.0265.i.i.i = phi i32 [ %.sroa.9.1.lcssa.i.i.i, %._crit_edge.i186.i.i ], [ 0, %bb.bf ] ; 2 uses
   %.sroa.7.0264.i.i.i = phi i32 [ %.sroa.7.1.lcssa.i.i.i, %._crit_edge.i186.i.i ], [ 0, %bb.bf ] ; 2 uses
   %.sroa.11237.0263.i.i.i = phi ptr [ %.sroa.11237.1.lcssa.i.i.i, %._crit_edge.i186.i.i ], [ null, %bb.bf ] ; 2 uses
   %.sroa.8.0262.i.i.i = phi ptr [ %.sroa.8.1.lcssa.i.i.i, %._crit_edge.i186.i.i ], [ null, %bb.bf ] ; 2 uses
-  %i.agz = icmp sgt i32 %i.agy, 0
+  %i.agz = icmp sgt i32 %5, 0
   br i1 %i.agz, label %.lr.ph.i187.i.i, label %._crit_edge.i186.i.i
 
 .lr.ph.i187.i.i:                                  ; preds = %.preheader244.i.i.i
   %i.aha = lshr exact i64 %indvars.iv564.i, 1     ; 4 uses
-  %.promoted.i.i.i = load ptr, ptr %i.gy, align 8
-  %.promoted260.i.i.i = load ptr, ptr %i.ha, align 16
-  %5 = load <2 x i32>, ptr %i.gz, align 4
-  %i.ahb = sext i32 %.0180267.i.i.i to i64
+  %i.ahb = sext i32 %.0180272.i.i.i to i64
   %i.ahc = mul nsw i64 %indvars.iv564.i, %i.ni
   %invariant.gep460.i = getelementptr i8, ptr %i.lh, i64 %i.ahc
   %i.ahd = mul nsw i64 %i.aha, %i.nw
@@ -985,13 +986,14 @@ bb.bf:                                            ; preds = %encode_codebook.exi
 bb.bg:                                            ; preds = %copy_mb.exit.i.i.i, %.lr.ph.i187.i.i
   %indvars.iv313.i.i.i = phi i64 [ 0, %.lr.ph.i187.i.i ], [ %indvars.iv.next314.i.i.i, %copy_mb.exit.i.i.i ] ; 5 uses
   %indvars.iv.i188.i.i = phi i64 [ %i.ahb, %.lr.ph.i187.i.i ], [ %indvars.iv.next.i190.i.i, %copy_mb.exit.i.i.i ] ; 2 uses
-  %i.ahi = phi ptr [ %.promoted260.i.i.i, %.lr.ph.i187.i.i ], [ %i.ahp, %copy_mb.exit.i.i.i ]
-  %i.ahj = phi ptr [ %.promoted.i.i.i, %.lr.ph.i187.i.i ], [ %i.ahq, %copy_mb.exit.i.i.i ]
+  %8 = phi i32 [ %i.agy, %.lr.ph.i187.i.i ], [ %11, %copy_mb.exit.i.i.i ]
+  %9 = phi i32 [ %.0180267.i.i.i, %.lr.ph.i187.i.i ], [ %10, %copy_mb.exit.i.i.i ]
+  %i.ahi = phi ptr [ %6, %.lr.ph.i187.i.i ], [ %i.ahq, %copy_mb.exit.i.i.i ]
+  %i.ahj = phi ptr [ %7, %.lr.ph.i187.i.i ], [ %i.ahp, %copy_mb.exit.i.i.i ]
   %.sroa.9.1250.i.i.i = phi i32 [ %.sroa.9.0265.i.i.i, %.lr.ph.i187.i.i ], [ %.sroa.9.2.i.i.i, %copy_mb.exit.i.i.i ] ; 4 uses
   %.sroa.7.1249.i.i.i = phi i32 [ %.sroa.7.0264.i.i.i, %.lr.ph.i187.i.i ], [ %.sroa.7.2.i.i.i, %copy_mb.exit.i.i.i ] ; 4 uses
   %.sroa.11237.1248.i.i.i = phi ptr [ %.sroa.11237.0263.i.i.i, %.lr.ph.i187.i.i ], [ %.sroa.11237.2.i.i.i, %copy_mb.exit.i.i.i ] ; 4 uses
   %.sroa.8.1247.i.i.i = phi ptr [ %.sroa.8.0262.i.i.i, %.lr.ph.i187.i.i ], [ %.sroa.8.2.i.i.i, %copy_mb.exit.i.i.i ] ; 4 uses
-  %6 = phi <2 x i32> [ %5, %.lr.ph.i187.i.i ], [ %7, %copy_mb.exit.i.i.i ]
   %i.ahk = load ptr, ptr %i.gq, align 8, !tbaa !47
   %i.ahl = getelementptr inbounds [36 x i8], ptr %i.ahk, i64 %indvars.iv.i188.i.i ; 4 uses
   %gep461.i = getelementptr i8, ptr %invariant.gep460.i, i64 %indvars.iv313.i.i.i ; 12 uses
@@ -1011,9 +1013,10 @@ bb.bh:                                            ; preds = %bb.bg
   br label %get_sub_picture.exit.i189.i.i
 
 get_sub_picture.exit.i189.i.i:                    ; preds = %bb.bh, %bb.bg
-  %i.ahp = phi ptr [ %i.ahi, %bb.bg ], [ %gep465.i, %bb.bh ] ; 6 uses
-  %i.ahq = phi ptr [ %i.ahj, %bb.bg ], [ %gep463.i, %bb.bh ] ; 6 uses
-  %7 = phi <2 x i32> [ %6, %bb.bg ], [ %i.lp, %bb.bh ] ; 5 uses
+  %i.ahp = phi ptr [ %i.ahj, %bb.bg ], [ %gep465.i, %bb.bh ] ; 7 uses
+  %i.ahq = phi ptr [ %i.ahi, %bb.bg ], [ %gep463.i, %bb.bh ] ; 7 uses
+  %10 = phi i32 [ %9, %bb.bg ], [ %i.nx, %bb.bh ] ; 4 uses
+  %11 = phi i32 [ %8, %bb.bg ], [ %i.nv, %bb.bh ] ; 4 uses
   %i.ahr = load i32, ptr %i.gt, align 4, !tbaa !108
   switch i32 %i.ahr, label %get_sub_picture.exit..thread_crit_edge.i.i.i [
     i32 2, label %bb.bi
@@ -1067,8 +1070,7 @@ get_sub_picture.exit225.i.i.i:                    ; preds = %bb.bk, %bb.bj
 .preheader.preheader.i227.i.i.i:                  ; preds = %get_sub_picture.exit225.i.i.i
   %i.aii = load i16, ptr %.sroa.8.3.i.i.i, align 1
   store i16 %i.aii, ptr %i.ahq, align 1
-  %8 = extractelement <2 x i32> %7, i64 0
-  %i.aij = sext i32 %8 to i64
+  %i.aij = sext i32 %11 to i64
   %i.aik = getelementptr inbounds i8, ptr %i.ahq, i64 %i.aij
   %i.ail = sext i32 %.sroa.7.3.i.i.i to i64
   %i.aim = getelementptr inbounds i8, ptr %.sroa.8.3.i.i.i, i64 %i.ail
@@ -1076,8 +1078,7 @@ get_sub_picture.exit225.i.i.i:                    ; preds = %bb.bk, %bb.bj
   store i16 %i.ain, ptr %i.aik, align 1
   %i.aio = load i16, ptr %.sroa.11237.3.i.i.i, align 1
   store i16 %i.aio, ptr %i.ahp, align 1
-  %9 = extractelement <2 x i32> %7, i64 1
-  %i.aip = sext i32 %9 to i64
+  %i.aip = sext i32 %10 to i64
   %i.aiq = getelementptr inbounds i8, ptr %i.ahp, i64 %i.aip
   %i.air = sext i32 %.sroa.9.3.i.i.i to i64
   %i.ais = getelementptr inbounds i8, ptr %.sroa.11237.3.i.i.i, i64 %i.air
@@ -1146,8 +1147,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.akd = getelementptr i8, ptr %i.aja, i64 16
   %i.ake = load i32, ptr %i.akd, align 4, !tbaa !49
   %i.akf = trunc i32 %i.ake to i8                 ; 4 uses
-  %10 = extractelement <2 x i32> %7, i64 0
-  %i.akg = sext i32 %10 to i64
+  %i.akg = sext i32 %11 to i64
   %i.akh = getelementptr i8, ptr %i.ahq, i64 %i.akg ; 2 uses
   %i.aki = getelementptr i8, ptr %i.akh, i64 1
   store i8 %i.akf, ptr %i.aki, align 1, !tbaa !55
@@ -1158,8 +1158,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.akk = getelementptr i8, ptr %i.aja, i64 20
   %i.akl = load i32, ptr %i.akk, align 4, !tbaa !49
   %i.akm = trunc i32 %i.akl to i8                 ; 4 uses
-  %11 = extractelement <2 x i32> %7, i64 1
-  %i.akn = sext i32 %11 to i64
+  %i.akn = sext i32 %10 to i64
   %i.ako = getelementptr i8, ptr %i.ahp, i64 %i.akn ; 2 uses
   %i.akp = getelementptr i8, ptr %i.ako, i64 1
   store i8 %i.akm, ptr %i.akp, align 1, !tbaa !55
@@ -1191,12 +1190,16 @@ copy_mb.exit.i.i.i:                               ; preds = %bb.bn, %bb.bm, %bb.
   br label %._crit_edge.i186.i.i
 
 ._crit_edge.i186.i.i:                             ; preds = %._crit_edge.loopexit.i.i.i, %.preheader244.i.i.i
-  %i.akw = phi i32 [ %i.agy, %.preheader244.i.i.i ], [ %i.aks, %._crit_edge.loopexit.i.i.i ]
+  %i.akw = phi i32 [ %5, %.preheader244.i.i.i ], [ %i.aks, %._crit_edge.loopexit.i.i.i ]
   %.sroa.8.1.lcssa.i.i.i = phi ptr [ %.sroa.8.0262.i.i.i, %.preheader244.i.i.i ], [ %.sroa.8.2.i.i.i, %._crit_edge.loopexit.i.i.i ]
   %.sroa.11237.1.lcssa.i.i.i = phi ptr [ %.sroa.11237.0263.i.i.i, %.preheader244.i.i.i ], [ %.sroa.11237.2.i.i.i, %._crit_edge.loopexit.i.i.i ]
   %.sroa.7.1.lcssa.i.i.i = phi i32 [ %.sroa.7.0264.i.i.i, %.preheader244.i.i.i ], [ %.sroa.7.2.i.i.i, %._crit_edge.loopexit.i.i.i ]
   %.sroa.9.1.lcssa.i.i.i = phi i32 [ %.sroa.9.0265.i.i.i, %.preheader244.i.i.i ], [ %.sroa.9.2.i.i.i, %._crit_edge.loopexit.i.i.i ]
-  %.1181.lcssa.i.i.i = phi i32 [ %.0180267.i.i.i, %.preheader244.i.i.i ], [ %i.akv, %._crit_edge.loopexit.i.i.i ]
+  %.lcssa249.i.i.i = phi ptr [ %7, %.preheader244.i.i.i ], [ %i.ahp, %._crit_edge.loopexit.i.i.i ]
+  %.lcssa248.i.i.i = phi ptr [ %6, %.preheader244.i.i.i ], [ %i.ahq, %._crit_edge.loopexit.i.i.i ]
+  %.lcssa247.i.i.i = phi i32 [ %.0180267.i.i.i, %.preheader244.i.i.i ], [ %10, %._crit_edge.loopexit.i.i.i ]
+  %.lcssa246.i.i.i = phi i32 [ %i.agy, %.preheader244.i.i.i ], [ %11, %._crit_edge.loopexit.i.i.i ]
+  %.1181.lcssa.i.i.i = phi i32 [ %.0180272.i.i.i, %.preheader244.i.i.i ], [ %i.akv, %._crit_edge.loopexit.i.i.i ]
   %indvars.iv.next565.i = add nuw nsw i64 %indvars.iv564.i, 4 ; 2 uses
   %i.akx = icmp samesign ult i64 %indvars.iv.next565.i, %i.ns
   br i1 %i.akx, label %.preheader244.i.i.i, label %.split269.us.i.i.i, !llvm.loop !81

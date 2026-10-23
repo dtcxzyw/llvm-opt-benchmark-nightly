@@ -205,7 +205,7 @@ bb.a:
 
 ._crit_edge100:                                   ; preds = %._crit_edge, %bb.a
   %i.y = phi <8 x float> [ <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF, float f0xFF7FFFFF, float f0xFF7FFFFF, float f0xFF7FFFFF>, %bb.a ], [ %i.au, %._crit_edge ]
-  %i.z = phi <4 x float> [ zeroinitializer, %bb.a ], [ %i.av, %._crit_edge ]
+  %i.z = phi <4 x float> [ zeroinitializer, %bb.a ], [ %6, %._crit_edge ]
   %i.aa = sub nsw i32 %i.r, %i.s
   %i.ab = sub nsw i32 %i.n, %i.p
   %i.ac = mul nsw i32 %i.aa, %i.ab
@@ -224,12 +224,13 @@ bb.b:                                             ; preds = %.lr.ph99, %._crit_e
   %i.aj = phi i32 [ %i.n, %.lr.ph99 ], [ %i.as, %._crit_edge ]
   %i.ak = phi i32 [ %i.r, %.lr.ph99 ], [ %i.at, %._crit_edge ] ; 2 uses
   %.03297 = phi i64 [ %i.u, %.lr.ph99 ], [ %i.aw, %._crit_edge ] ; 2 uses
-  %i.al = phi <4 x float> [ splat (float f0x7F7FFFFF), %.lr.ph99 ], [ %i.az, %._crit_edge ] ; 2 uses
-  %i.am = phi <4 x float> [ splat (float f0xFF7FFFFF), %.lr.ph99 ], [ %i.ba, %._crit_edge ] ; 2 uses
+  %5 = phi <4 x float> [ splat (float f0x7F7FFFFF), %.lr.ph99 ], [ %i.az, %._crit_edge ] ; 2 uses
+  %i.al = phi <4 x float> [ splat (float f0xFF7FFFFF), %.lr.ph99 ], [ %i.ba, %._crit_edge ] ; 2 uses
+  %i.am = phi <4 x float> [ zeroinitializer, %.lr.ph99 ], [ %6, %._crit_edge ]
   %i.an = phi <4 x float> [ zeroinitializer, %.lr.ph99 ], [ %i.av, %._crit_edge ] ; 2 uses
   %i.ao = load i32, ptr %2, align 4, !tbaa !49    ; 2 uses
   %i.ap = icmp ult i32 %i.ao, %i.ak
-  %i.aq = shufflevector <4 x float> %i.al, <4 x float> %i.am, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.aq = shufflevector <4 x float> %5, <4 x float> %i.al, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br i1 %i.ap, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.b
@@ -244,7 +245,8 @@ bb.b:                                             ; preds = %.lr.ph99, %._crit_e
   %i.as = phi i32 [ %i.aj, %bb.b ], [ %.pre, %._crit_edge.loopexit ] ; 2 uses
   %i.at = phi i32 [ %i.ak, %bb.b ], [ %i.ft, %._crit_edge.loopexit ]
   %i.au = phi <8 x float> [ %i.aq, %bb.b ], [ %i.fr, %._crit_edge.loopexit ] ; 3 uses
-  %i.av = phi <4 x float> [ %i.an, %bb.b ], [ %i.fl, %._crit_edge.loopexit ] ; 2 uses
+  %6 = phi <4 x float> [ %i.am, %bb.b ], [ %i.fl, %._crit_edge.loopexit ] ; 2 uses
+  %i.av = phi <4 x float> [ %i.an, %bb.b ], [ %i.fl, %._crit_edge.loopexit ]
   %i.aw = add i64 %.03297, 1                      ; 2 uses
   %i.ax = sext i32 %i.as to i64
   %i.ay = icmp ult i64 %i.aw, %i.ax
@@ -254,8 +256,8 @@ bb.b:                                             ; preds = %.lr.ph99, %._crit_e
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.03168 = phi i64 [ %i.fs, %.lr.ph ], [ %i.ar, %.lr.ph.preheader ] ; 2 uses
-  %i.bb = phi <4 x float> [ %i.fw, %.lr.ph ], [ %i.al, %.lr.ph.preheader ] ; 2 uses
-  %i.bc = phi <4 x float> [ %i.fx, %.lr.ph ], [ %i.am, %.lr.ph.preheader ] ; 2 uses
+  %i.bb = phi <4 x float> [ %i.fw, %.lr.ph ], [ %5, %.lr.ph.preheader ] ; 2 uses
+  %i.bc = phi <4 x float> [ %i.fx, %.lr.ph ], [ %i.al, %.lr.ph.preheader ] ; 2 uses
   %i.bd = phi <4 x float> [ %i.fl, %.lr.ph ], [ %i.an, %.lr.ph.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
@@ -385,7 +387,7 @@ bb.b:                                             ; preds = %.lr.ph99, %._crit_e
   %i.fi = insertelement <4 x float> %i.fh, float %i.fb, i64 1
   %i.fj = insertelement <4 x float> %i.fi, float %i.fe, i64 2
   %i.fk = insertelement <4 x float> %i.fj, float %i.fg, i64 3 ; 4 uses
-  %i.fl = fadd reassoc nsz arcp contract afn <4 x float> %i.fk, %i.bd ; 2 uses
+  %i.fl = fadd reassoc nsz arcp contract afn <4 x float> %i.fk, %i.bd ; 3 uses
   %i.fm = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.bb, %i.fk
   %i.fn = fcmp reassoc nsz arcp contract afn ogt <4 x float> %i.bc, %i.fk
   %i.fo = shufflevector <4 x i1> %i.fm, <4 x i1> %i.fn, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>

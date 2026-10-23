@@ -204,7 +204,7 @@ declare i32 @PyDict_SetItemString(ptr noundef, ptr noundef, ptr noundef) local_u
 define dso_local range(i32 -1, 1) i32 @_PyConfig_FromDict(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %2 = alloca %struct.PyWideStringList, align 8   ; 14 uses
+  %2 = alloca %struct.PyWideStringList, align 8   ; 16 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 8 uses
   %i.d = alloca ptr, align 8                      ; 8 uses
@@ -221,7 +221,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   br label %bb.c
 
@@ -606,15 +606,15 @@ bb.bd:                                            ; preds = %bb.bc
   br label %.thread.i
 
 bb.be:                                            ; preds = %bb.bc
-  %4 = icmp sgt i64 %i.dm, 0
-  br i1 %4, label %.lr.ph.split.i.i.i, label %_PyWideStringList_Clear.exit.i
+  %.not5.i = icmp eq i64 %i.dm, 0
+  br i1 %.not5.i, label %_PyWideStringList_Clear.exit.i, label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %bb.be, %.lr.ph.split.i.i.i
   %.012.i.i.i = phi i64 [ %i.ds, %.lr.ph.split.i.i.i ], [ 0, %bb.be ] ; 2 uses
   %i.dq = getelementptr [8 x i8], ptr %i.dl, i64 %.012.i.i.i
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !32
   call void @PyMem_RawFree(ptr noundef %i.dr) #28
-  %i.ds = add nuw nsw i64 %.012.i.i.i, 1          ; 2 uses
+  %i.ds = add nuw i64 %.012.i.i.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.dm
   br i1 %exitcond.not.i, label %_PyWideStringList_Clear.exit.i, label %.lr.ph.split.i.i.i, !llvm.loop !0
 
@@ -638,15 +638,15 @@ bb.bf:                                            ; preds = %_PyWideStringList_C
 .thread.i:                                        ; preds = %.thread.loopexit.i, %bb.bd, %bb.ba
   %i.dw = phi ptr [ %i.cn, %.thread.loopexit.i ], [ %i.cn, %bb.ba ], [ %i.dl, %bb.bd ] ; 2 uses
   %i.dx = phi i64 [ %i.co, %.thread.loopexit.i ], [ %i.co, %bb.ba ], [ %i.dm, %bb.bd ] ; 2 uses
-  %5 = icmp sgt i64 %i.dx, 0
-  br i1 %5, label %.lr.ph.split.i.i38.i, label %_PyWideStringList_Clear.exit40.i
+  %.not6.i = icmp eq i64 %i.dx, 0
+  br i1 %.not6.i, label %_PyWideStringList_Clear.exit40.i, label %.lr.ph.split.i.i38.i
 
 .lr.ph.split.i.i38.i:                             ; preds = %.thread.i, %.lr.ph.split.i.i38.i
   %.012.i.i39.i = phi i64 [ %i.ea, %.lr.ph.split.i.i38.i ], [ 0, %.thread.i ] ; 2 uses
   %i.dy = getelementptr [8 x i8], ptr %i.dw, i64 %.012.i.i39.i
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !32
   call void @PyMem_RawFree(ptr noundef %i.dz) #28
-  %i.ea = add nuw nsw i64 %.012.i.i39.i, 1        ; 2 uses
+  %i.ea = add nuw i64 %.012.i.i39.i, 1            ; 2 uses
   %exitcond32.not.i = icmp eq i64 %i.ea, %i.dx
   br i1 %exitcond32.not.i, label %_PyWideStringList_Clear.exit40.i, label %.lr.ph.split.i.i38.i, !llvm.loop !0
 
@@ -822,8 +822,9 @@ bb.bv:                                            ; preds = %bb.bu
 
 .split.us.i:                                      ; preds = %.lr.ph.split.i, %.lr.ph.split.us.i
   %.us-phi.i = phi ptr [ %i.ex, %.lr.ph.split.us.i ], [ %i.fo, %.lr.ph.split.i ] ; 2 uses
-  %.us-phi27.i = phi i64 [ %.019.us.i, %.lr.ph.split.us.i ], [ %.019.i, %.lr.ph.split.i ]
+  %.us-phi27.i = phi i64 [ %.019.us.i, %.lr.ph.split.us.i ], [ %.019.i, %.lr.ph.split.i ] ; 2 uses
   store ptr %.us-phi.i, ptr %i.k, align 8
+  store i64 %.us-phi27.i, ptr %2, align 8
   %i.fr = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !24
   %i.fs = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.fr, ptr noundef nonnull @.str.134, ptr noundef nonnull %i.n) #28 ; 0 uses
   br label %bb.cg
@@ -839,8 +840,9 @@ bb.bw:                                            ; preds = %.lr.ph.split.i
 
 .split29.us.i:                                    ; preds = %bb.bw, %bb.br
   %.us-phi30.i = phi ptr [ %i.ex, %bb.br ], [ %i.fo, %bb.bw ] ; 2 uses
-  %.us-phi31.i = phi i64 [ %.019.us.i, %bb.br ], [ %.019.i, %bb.bw ]
+  %.us-phi31.i = phi i64 [ %.019.us.i, %bb.br ], [ %.019.i, %bb.bw ] ; 2 uses
   store ptr %.us-phi30.i, ptr %i.k, align 8
+  store i64 %.us-phi31.i, ptr %2, align 8
   %i.fw = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !24
   %i.fx = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.fw, ptr noundef nonnull @.str.133, ptr noundef nonnull %i.n) #28 ; 0 uses
   br label %bb.cg
@@ -863,8 +865,8 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.gf, label %.split38.us.i, label %bb.cb
 
 .split38.us.i:                                    ; preds = %bb.bz, %bb.bu
-  %.us-phi39.i = phi ptr [ %i.ex, %bb.bu ], [ %i.fo, %bb.bz ]
-  %.us-phi40.i = phi i64 [ %.019.us.i, %bb.bu ], [ %.019.i, %bb.bz ]
+  %.us-phi39.i = phi ptr [ %i.ex, %bb.bu ], [ %i.fo, %bb.bz ] ; 2 uses
+  %.us-phi40.i = phi i64 [ %.019.us.i, %bb.bu ], [ %.019.i, %bb.bz ] ; 2 uses
   %.us-phi41.i = phi ptr [ %i.fg, %bb.bu ], [ %i.ga, %bb.bz ]
   %.us-phi42.i = phi ptr [ %i.fe, %bb.bu ], [ %i.fy, %bb.bz ]
   store ptr %.us-phi39.i, ptr %i.k, align 8
@@ -873,8 +875,8 @@ bb.bz:                                            ; preds = %bb.by
   br label %bb.ca
 
 .loopexit10.i:                                    ; preds = %bb.by, %bb.bt
-  %.us-phi34.i = phi ptr [ %i.ex, %bb.bt ], [ %i.fo, %bb.by ]
-  %.us-phi35.i = phi i64 [ %.019.us.i, %bb.bt ], [ %.019.i, %bb.by ]
+  %.us-phi34.i = phi ptr [ %i.ex, %bb.bt ], [ %i.fo, %bb.by ] ; 2 uses
+  %.us-phi35.i = phi i64 [ %.019.us.i, %bb.bt ], [ %.019.i, %bb.by ] ; 2 uses
   %.us-phi36.i = phi ptr [ %i.fe, %bb.bt ], [ %i.fy, %bb.by ]
   store ptr %.us-phi34.i, ptr %i.k, align 8
   store i64 %.us-phi35.i, ptr %2, align 8
@@ -882,10 +884,10 @@ bb.bz:                                            ; preds = %bb.by
 
 bb.ca:                                            ; preds = %.loopexit10.i, %.split38.us.i
   %i.gg = phi ptr [ %.us-phi36.i, %.loopexit10.i ], [ %.us-phi42.i, %.split38.us.i ]
+  %4 = phi ptr [ %.us-phi34.i, %.loopexit10.i ], [ %.us-phi39.i, %.split38.us.i ]
+  %5 = phi i64 [ %.us-phi35.i, %.loopexit10.i ], [ %.us-phi40.i, %.split38.us.i ]
   call void @PyMem_Free(ptr noundef nonnull %i.gg) #28
   %6 = call ptr @PyErr_NoMemory() #28             ; 0 uses
-  %.pre.i = load i64, ptr %2, align 8, !tbaa !29
-  %.pre = load ptr, ptr %i.k, align 8, !tbaa !30
   br label %bb.cg
 
 bb.cb:                                            ; preds = %bb.bz
@@ -897,15 +899,15 @@ bb.cb:                                            ; preds = %bb.bz
   br i1 %exitcond93.not.i, label %._crit_edge.i77, label %.lr.ph.split.i, !llvm.loop !317
 
 ._crit_edge.i77:                                  ; preds = %bb.cb, %bb.bv
-  %.us-phi43.i = phi ptr [ %i.fk, %bb.bv ], [ %i.ge, %bb.cb ] ; 2 uses
-  %.us-phi44.i = phi i64 [ %i.er, %bb.bv ], [ %i.et, %bb.cb ]
-  store ptr %.us-phi43.i, ptr %i.k, align 8
+  %7 = phi i64 [ %i.er, %bb.bv ], [ %i.et, %bb.cb ]
+  %.us-phi70.i = phi ptr [ %i.fk, %bb.bv ], [ %i.ge, %bb.cb ] ; 2 uses
+  store ptr %.us-phi70.i, ptr %i.k, align 8
   br label %bb.cc
 
 bb.cc:                                            ; preds = %._crit_edge.i77, %.thread.i71, %bb.bq
-  %7 = phi ptr [ %.us-phi43.i, %._crit_edge.i77 ], [ null, %bb.bq ], [ null, %.thread.i71 ] ; 3 uses
-  %8 = phi i64 [ %.us-phi44.i, %._crit_edge.i77 ], [ 0, %bb.bq ], [ 0, %.thread.i71 ] ; 4 uses
-  store i64 %8, ptr %2, align 8
+  %.lcssa28.i = phi i64 [ %7, %._crit_edge.i77 ], [ 0, %bb.bq ], [ 0, %.thread.i71 ] ; 4 uses
+  %.lcssa18.i = phi ptr [ %.us-phi70.i, %._crit_edge.i77 ], [ null, %bb.bq ], [ null, %.thread.i71 ] ; 3 uses
+  store i64 %.lcssa28.i, ptr %2, align 8
   %i.gj = call fastcc range(i32 -1, 1) i32 @_PyWideStringList_CopyEx(ptr noundef %i.q, ptr noundef nonnull readonly %2, i1 noundef zeroext false)
   %i.gk = icmp slt i32 %i.gj, 0
   br i1 %i.gk, label %bb.cd, label %bb.ce
@@ -915,20 +917,20 @@ bb.cd:                                            ; preds = %bb.cc
   br label %bb.cg
 
 bb.ce:                                            ; preds = %bb.cc
-  %9 = icmp sgt i64 %8, 0
-  br i1 %9, label %.lr.ph.split.i.i.i73, label %_PyWideStringList_Clear.exit.i72
+  %.not10.i = icmp eq i64 %.lcssa28.i, 0
+  br i1 %.not10.i, label %_PyWideStringList_Clear.exit.i72, label %.lr.ph.split.i.i.i73
 
 .lr.ph.split.i.i.i73:                             ; preds = %bb.ce, %.lr.ph.split.i.i.i73
   %.012.i.i.i74 = phi i64 [ %i.go, %.lr.ph.split.i.i.i73 ], [ 0, %bb.ce ] ; 2 uses
-  %i.gm = getelementptr [8 x i8], ptr %7, i64 %.012.i.i.i74
+  %i.gm = getelementptr [8 x i8], ptr %.lcssa18.i, i64 %.012.i.i.i74
   %i.gn = load ptr, ptr %i.gm, align 8, !tbaa !32
   call void @PyMem_RawFree(ptr noundef %i.gn) #28
   %i.go = add nuw nsw i64 %.012.i.i.i74, 1        ; 2 uses
-  %exitcond97.not.i = icmp eq i64 %i.go, %8
+  %exitcond97.not.i = icmp eq i64 %i.go, %.lcssa28.i
   br i1 %exitcond97.not.i, label %_PyWideStringList_Clear.exit.i72, label %.lr.ph.split.i.i.i73, !llvm.loop !0
 
 _PyWideStringList_Clear.exit.i72:                 ; preds = %.lr.ph.split.i.i.i73, %bb.ce
-  call void @PyMem_RawFree(ptr noundef %7) #28
+  call void @PyMem_RawFree(ptr noundef %.lcssa18.i) #28
   %i.gp = load i32, ptr %i.eg, align 8, !tbaa !36 ; 2 uses
   %.not.i42.i = icmp sgt i32 %i.gp, -1
   br i1 %.not.i42.i, label %bb.cf, label %config_dict_get_wstrlist.exit.thread98
@@ -941,22 +943,23 @@ bb.cf:                                            ; preds = %_PyWideStringList_C
 
 .loopexit.i78:                                    ; preds = %bb.bx, %bb.bs
   %.us-phi32.i = phi ptr [ %i.ex, %bb.bs ], [ %i.fo, %bb.bx ] ; 2 uses
-  %.us-phi33.i = phi i64 [ %.019.us.i, %bb.bs ], [ %.019.i, %bb.bx ]
+  %.us-phi33.i = phi i64 [ %.019.us.i, %bb.bs ], [ %.019.i, %bb.bx ] ; 2 uses
   store ptr %.us-phi32.i, ptr %i.k, align 8
+  store i64 %.us-phi33.i, ptr %2, align 8
   br label %bb.cg
 
 bb.cg:                                            ; preds = %.loopexit.i78, %bb.cd, %bb.ca, %.split29.us.i, %.split.us.i
-  %i.gs = phi ptr [ %.us-phi32.i, %.loopexit.i78 ], [ %.pre, %bb.ca ], [ %.us-phi30.i, %.split29.us.i ], [ %.us-phi.i, %.split.us.i ], [ %7, %bb.cd ] ; 2 uses
-  %i.gt = phi i64 [ %.us-phi33.i, %.loopexit.i78 ], [ %.pre.i, %bb.ca ], [ %.us-phi31.i, %.split29.us.i ], [ %.us-phi27.i, %.split.us.i ], [ %8, %bb.cd ] ; 2 uses
-  %10 = icmp sgt i64 %i.gt, 0
-  br i1 %10, label %.lr.ph.split.i.i55.i, label %_PyWideStringList_Clear.exit57.i
+  %i.gs = phi ptr [ %.us-phi32.i, %.loopexit.i78 ], [ %4, %bb.ca ], [ %.us-phi30.i, %.split29.us.i ], [ %.us-phi.i, %.split.us.i ], [ %.lcssa18.i, %bb.cd ] ; 2 uses
+  %i.gt = phi i64 [ %.us-phi33.i, %.loopexit.i78 ], [ %5, %bb.ca ], [ %.us-phi31.i, %.split29.us.i ], [ %.us-phi27.i, %.split.us.i ], [ %.lcssa28.i, %bb.cd ] ; 2 uses
+  %.not11.i75 = icmp eq i64 %i.gt, 0
+  br i1 %.not11.i75, label %_PyWideStringList_Clear.exit57.i, label %.lr.ph.split.i.i55.i
 
 .lr.ph.split.i.i55.i:                             ; preds = %bb.cg, %.lr.ph.split.i.i55.i
   %.012.i.i56.i = phi i64 [ %i.gw, %.lr.ph.split.i.i55.i ], [ 0, %bb.cg ] ; 2 uses
   %i.gu = getelementptr [8 x i8], ptr %i.gs, i64 %.012.i.i56.i
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !32
   call void @PyMem_RawFree(ptr noundef %i.gv) #28
-  %i.gw = add nuw nsw i64 %.012.i.i56.i, 1        ; 2 uses
+  %i.gw = add nuw i64 %.012.i.i56.i, 1            ; 2 uses
   %exitcond98.not.i = icmp eq i64 %i.gw, %i.gt
   br i1 %exitcond98.not.i, label %_PyWideStringList_Clear.exit57.i, label %.lr.ph.split.i.i55.i, !llvm.loop !0
 
