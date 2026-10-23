@@ -204,8 +204,8 @@ bb.p:                                             ; preds = %bb.p, %_RNvMNtCsfG1
   %i.bl = add i64 %i.bh, 12
   %i.bm = add i64 %i.bl, %.val.i.1
   %i.bn = add i64 %i.bm, %.val11.i.1              ; 3 uses
-  %i.bo = add nuw i64 %.sroa.04.0.i, 2            ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %i.bo = add nuw nsw i64 %.sroa.04.0.i, 2        ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1O_8adapters3map8map_foldRBQ_jjNvNtCsfG1pxJcRFT5_4raft4util22entry_approximate_sizeNCINvXsK_NtB1M_5accumjNtB47_3Sum3sumINtB2y_3MapBF_B38_EE0E0EB3c_.exit.unr-lcssa, label %bb.p
 

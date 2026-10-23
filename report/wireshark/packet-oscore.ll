@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-oscore?download=true
 inline.NumInlined: 6
 inline.NumDeleted: 6
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@oscore_context_post_update_cb:bb.a
 
 bb.g:                                             ; preds = %bb.e
@@ -202,8 +204,8 @@ declare ptr @register_dissector(ptr noundef, ptr noundef, i32 noundef) local_unn
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal i32 @oscore_dissect(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3) #0 {
 bb.a:
-  %i.a = alloca [13 x i8], align 1                ; 8 uses
-  %i.b = alloca [13 x i8], align 1                ; 11 uses
+  %i.a = alloca [13 x i8], align 1                ; 11 uses
+  %i.b = alloca [13 x i8], align 1                ; 14 uses
   %i.c = alloca [16 x i8], align 16               ; 11 uses
   %i.d = alloca [16 x i8], align 16               ; 11 uses
   %i.e = alloca [16 x i8], align 16               ; 9 uses
@@ -482,50 +484,81 @@ bb.aj:                                            ; preds = %bb.ah
 iter.check:                                       ; preds = %bb.aj
   %i.dn = getelementptr i8, ptr %i.af, i64 104
   %i.do = load ptr, ptr %i.dn, align 8
-  %.pre.i = load ptr, ptr %i.do, align 8          ; 2 uses
-  %i.dp = zext nneg i32 %i.cf to i64              ; 3 uses
+  %.pre.i = load ptr, ptr %i.do, align 8          ; 5 uses
+  %i.dp = zext nneg i32 %i.cf to i64              ; 2 uses
+  %xtraiter = and i64 %i.dp, 3                    ; 3 uses
   %min.iters.check = icmp ult i32 %i.cf, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph
 
 vec.epilog.ph:                                    ; preds = %iter.check
-  %n.vec113 = and i64 %i.dp, 12                   ; 3 uses
+  %n.vec113 = and i64 %i.dp, 12
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index114 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next117, %vec.epilog.vector.body ] ; 4 uses
-  %i.dq = getelementptr i8, ptr %i.a, i64 %index114
-  %wide.load115 = load <4 x i8>, ptr %i.dq, align 1
-  %i.dr = getelementptr i8, ptr %.pre.i, i64 %index114
-  %wide.load116 = load <4 x i8>, ptr %i.dr, align 1
-  %4 = xor <4 x i8> %wide.load116, %wide.load115
-  %i.ds = getelementptr i8, ptr %i.b, i64 %index114
-  store <4 x i8> %4, ptr %i.ds, align 1
-  %index.next117 = add nuw i64 %index114, 4       ; 2 uses
+  %indvars.iv.i.i = phi i64 [ 0, %vec.epilog.ph ], [ %indvars.iv.next.i.i.3, %vec.epilog.vector.body ] ; 7 uses
+  %index114 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next117, %vec.epilog.vector.body ]
+  %4 = getelementptr i8, ptr %i.a, i64 %indvars.iv.i.i
+  %5 = load i8, ptr %4, align 1
+  %6 = getelementptr i8, ptr %.pre.i, i64 %indvars.iv.i.i
+  %7 = load i8, ptr %6, align 1
+  %8 = xor i8 %7, %5
+  %9 = getelementptr i8, ptr %i.b, i64 %indvars.iv.i.i
+  store i8 %8, ptr %9, align 1
+  %indvars.iv.next.i.i = or disjoint i64 %indvars.iv.i.i, 1 ; 3 uses
+  %10 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.i.i
+  %11 = load i8, ptr %10, align 1
+  %12 = getelementptr i8, ptr %.pre.i, i64 %indvars.iv.next.i.i
+  %13 = load i8, ptr %12, align 1
+  %14 = xor i8 %13, %11
+  %15 = getelementptr i8, ptr %i.b, i64 %indvars.iv.next.i.i
+  store i8 %14, ptr %15, align 1
+  %indvars.iv.next.i.i.1 = or disjoint i64 %indvars.iv.i.i, 2 ; 3 uses
+  %16 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.i.i.1
+  %17 = load i8, ptr %16, align 1
+  %18 = getelementptr i8, ptr %.pre.i, i64 %indvars.iv.next.i.i.1
+  %19 = load i8, ptr %18, align 1
+  %20 = xor i8 %19, %17
+  %21 = getelementptr i8, ptr %i.b, i64 %indvars.iv.next.i.i.1
+  store i8 %20, ptr %21, align 1
+  %indvars.iv.next.i.i.2 = or disjoint i64 %indvars.iv.i.i, 3 ; 3 uses
+  %i.dq = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.i.i.2
+  %22 = load i8, ptr %i.dq, align 1
+  %i.dr = getelementptr i8, ptr %.pre.i, i64 %indvars.iv.next.i.i.2
+  %23 = load i8, ptr %i.dr, align 1
+  %24 = xor i8 %23, %22
+  %i.ds = getelementptr i8, ptr %i.b, i64 %indvars.iv.next.i.i.2
+  store i8 %24, ptr %i.ds, align 1
+  %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
+  %index.next117 = add i64 %index114, 4           ; 2 uses
   %i.dt = icmp eq i64 %index.next117, %n.vec113
   br i1 %i.dt, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !17
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n118 = icmp eq i64 %n.vec113, %i.dp
+  %cmp.n118 = icmp eq i64 %xtraiter, 0
   br i1 %cmp.n118, label %oscore_create_nonce.exit.i, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.middle.block
-  %indvars.iv.i.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec113, %vec.epilog.middle.block ]
+vec.epilog.scalar.ph.preheader:                   ; preds = %vec.epilog.middle.block, %iter.check
+  %indvars.iv.i.i.ph = phi i64 [ 0, %iter.check ], [ %indvars.iv.next.i.i.3, %vec.epilog.middle.block ]
+  %lcmp.mod110 = icmp ne i64 %xtraiter, 0
+  call void @llvm.assume(i1 %lcmp.mod110)
   br label %vec.epilog.scalar.ph
 
-vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i.a, %vec.epilog.scalar.ph ], [ %indvars.iv.i.i.ph, %vec.epilog.scalar.ph.preheader ] ; 4 uses
-  %i.du = getelementptr i8, ptr %i.a, i64 %indvars.iv.i.i.a
+vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph, %vec.epilog.scalar.ph.preheader
+  %indvars.iv.i.i.epil = phi i64 [ %indvars.iv.i.i.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.i.i.epil, %vec.epilog.scalar.ph ] ; 4 uses
+  %indvars.iv.i.i.a = phi i64 [ 0, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.i.i.a, %vec.epilog.scalar.ph ]
+  %i.du = getelementptr i8, ptr %i.a, i64 %indvars.iv.i.i.epil
   %i.dv = load i8, ptr %i.du, align 1
-  %i.dw = getelementptr i8, ptr %.pre.i, i64 %indvars.iv.i.i.a
+  %i.dw = getelementptr i8, ptr %.pre.i, i64 %indvars.iv.i.i.epil
   %i.dx = load i8, ptr %i.dw, align 1
   %i.dy = xor i8 %i.dx, %i.dv
-  %i.dz = getelementptr i8, ptr %i.b, i64 %indvars.iv.i.i.a
+  %i.dz = getelementptr i8, ptr %i.b, i64 %indvars.iv.i.i.epil
   store i8 %i.dy, ptr %i.dz, align 1
-  %indvars.iv.next.i.i.a = add nuw nsw i64 %indvars.iv.i.i.a, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next.i.i.a, %i.dp
+  %indvars.iv.next.i.i.epil = add nuw nsw i64 %indvars.iv.i.i.epil, 1
+  %indvars.iv.next.i.i.a = add i64 %indvars.iv.i.i.a, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next.i.i.a, %xtraiter
   br i1 %exitcond.not, label %oscore_create_nonce.exit.i, label %vec.epilog.scalar.ph, !llvm.loop !18
 
-oscore_create_nonce.exit.i:                       ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %bb.aj
+oscore_create_nonce.exit.i:                       ; preds = %vec.epilog.middle.block, %vec.epilog.scalar.ph, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   call void @ccm_init_block(ptr noundef nonnull %i.c, i1 noundef zeroext false, i32 noundef 0, i64 noundef 0, i32 noundef 0, i8 noundef zeroext 0, i32 noundef 0, ptr noundef nonnull %i.b)
   %i.ea = getelementptr i8, ptr %1, i64 416
@@ -928,12 +961,11 @@ attributes #14 = { noreturn }
 !14 = distinct !{!14, i1 true, !"memcpy.inline"}
 !15 = distinct !{!15, !14, !"memcpy.inline: argument 1"}
 !16 = distinct !{!16, !14, !"memcpy.inline: argument 0"}
-!17 = distinct !{!17, !6, !23, !24}
-!18 = distinct !{!18, !6, !24, !23}
+!17 = distinct !{!17, !6}
+!18 = distinct !{!18, !23}
 !19 = !{i8 0, i8 2}
 !20 = !{}
 !21 = !{!13, !12}
 !22 = !{!16, !15}
-!23 = !{!"llvm.loop.isvectorized", i32 1}
-!24 = !{!"llvm.loop.unroll.runtime.disable"}
+!23 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

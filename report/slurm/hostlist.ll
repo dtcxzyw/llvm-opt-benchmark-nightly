@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0113 = phi i32 [ %3, %bb.a ], [ %i.b, %bb.b ] ; 22 uses
+  %.0113 = phi i32 [ %3, %bb.a ], [ %i.b, %bb.b ] ; 20 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.c) #21 ; 2 uses
   %.not136 = icmp eq i32 %i.d, 0
@@ -405,8 +405,7 @@ bb.v:                                             ; preds = %._crit_edge200
 
 .lr.ph217.preheader:                              ; preds = %bb.v
   %i.bv = zext nneg i32 %i.br to i64
-  %smax264 = tail call i32 @llvm.smax.i32(i32 %.0113, i32 1)
-  %wide.trip.count265 = zext nneg i32 %smax264 to i64
+  %wide.trip.count265 = zext nneg i32 %.0113 to i64
   br label %.lr.ph217
 
 .lr.ph217:                                        ; preds = %.lr.ph217.preheader, %.lr.ph217
@@ -426,7 +425,7 @@ bb.v:                                             ; preds = %._crit_edge200
   br i1 %exitcond266.not, label %.loopexit182.loopexit, label %.lr.ph217, !llvm.loop !33
 
 .preheader.preheader.i:                           ; preds = %._crit_edge200
-  %wide.trip.count.i = zext nneg i32 %.0113 to i64
+  %wide.trip.count.i = zext nneg i32 %.0113 to i64 ; 3 uses
   br label %.preheader.i
 
 bb.w:                                             ; preds = %.preheader.i
@@ -518,14 +517,12 @@ bb.ad:                                            ; preds = %bb.ac
 
 .lr.ph204.preheader:                              ; preds = %bb.ac, %bb.ad
   %.2 = phi i32 [ %i.dl, %bb.ad ], [ %i.df, %bb.ac ]
-  %5 = zext nneg i32 %.2 to i64
-  %smax245 = tail call i32 @llvm.smax.i32(i32 %.0113, i32 1)
-  %wide.trip.count = zext nneg i32 %smax245 to i64
+  %wide.trip.count = zext nneg i32 %.2 to i64
   br label %.lr.ph204
 
 .lr.ph204:                                        ; preds = %.lr.ph204.preheader, %.lr.ph204
   %indvars.iv240 = phi i64 [ 0, %.lr.ph204.preheader ], [ %indvars.iv.next241, %.lr.ph204 ] ; 2 uses
-  %indvars.iv238 = phi i64 [ %5, %.lr.ph204.preheader ], [ %indvars.iv.next239, %.lr.ph204 ] ; 3 uses
+  %indvars.iv238 = phi i64 [ %wide.trip.count, %.lr.ph204.preheader ], [ %indvars.iv.next239, %.lr.ph204 ] ; 3 uses
   %i.do = load ptr, ptr @alpha_num, align 8
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr @grid_start, i64 %indvars.iv240
   %i.dq = load i32, ptr %i.dp, align 4
@@ -536,7 +533,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.du = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv238
   store i8 %i.dt, ptr %i.du, align 1
   %indvars.iv.next241 = add nuw nsw i64 %indvars.iv240, 1 ; 2 uses
-  %exitcond246.not = icmp eq i64 %indvars.iv.next241, %wide.trip.count
+  %exitcond246.not = icmp eq i64 %indvars.iv.next241, %wide.trip.count.i
   br i1 %exitcond246.not, label %.lr.ph211.preheader, label %.lr.ph204, !llvm.loop !35
 
 .lr.ph211.preheader:                              ; preds = %.lr.ph204
@@ -544,8 +541,6 @@ bb.ad:                                            ; preds = %bb.ac
   store i8 120, ptr %i.dv, align 1
   %.4207 = add nuw i64 %indvars.iv238, 2
   %i.dw = and i64 %.4207, 4294967295
-  %smax254 = tail call i32 @llvm.smax.i32(i32 %.0113, i32 1)
-  %wide.trip.count255 = zext nneg i32 %smax254 to i64
   br label %.lr.ph211
 
 .lr.ph211:                                        ; preds = %.lr.ph211.preheader, %.lr.ph211
@@ -561,7 +556,7 @@ bb.ad:                                            ; preds = %bb.ac
   store i8 %i.ec, ptr %i.ed, align 1
   %indvars.iv.next250 = add nuw nsw i64 %indvars.iv249, 1 ; 2 uses
   %indvars.iv.next248 = add nuw nsw i64 %indvars.iv247, 1 ; 3 uses
-  %exitcond256.not = icmp eq i64 %indvars.iv.next250, %wide.trip.count255
+  %exitcond256.not = icmp eq i64 %indvars.iv.next250, %wide.trip.count.i
   br i1 %exitcond256.not, label %._crit_edge212, label %.lr.ph211, !llvm.loop !36
 
 ._crit_edge212:                                   ; preds = %.lr.ph211

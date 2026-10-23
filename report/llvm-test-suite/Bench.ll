@@ -205,7 +205,7 @@ bb.a:
   %6 = alloca %struct.CCrcThreads, align 8        ; 11 uses
   %spec.store.select = tail call i32 @llvm.umax.i32(i32 %0, i32 1)
   %i.a = zext i32 %1 to i64                       ; 16 uses
-  %i.b = zext i32 %spec.store.select to i64       ; 5 uses
+  %i.b = zext i32 %spec.store.select to i64       ; 3 uses
   %i.c = mul nuw i64 %i.a, %i.b                   ; 2 uses
   invoke void @MidFree(ptr noundef null)
           to label %.noexc unwind label %bb.c
@@ -468,6 +468,7 @@ bb.j:                                             ; preds = %.split149.us
 _ZL12GetTimeCountv.exit:                          ; preds = %bb.i, %bb.j
   %.0.i93 = phi i64 [ %i.ct, %bb.i ], [ %i.cv, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
+  %wide.trip.count176 = zext i32 %0 to i64        ; 2 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZL12GetTimeCountv.exit, %bb.l
@@ -493,7 +494,7 @@ bb.l:                                             ; preds = %_ZN8NWindows7CThrea
   %i.da = add i32 %i.cz, 1                        ; 2 uses
   store i32 %i.da, ptr %6, align 8, !tbaa !99
   %indvars.iv.next174 = add nuw nsw i64 %indvars.iv173, 1 ; 2 uses
-  %exitcond177.not = icmp eq i64 %indvars.iv.next174, %i.b
+  %exitcond177.not = icmp eq i64 %indvars.iv.next174, %wide.trip.count176
   br i1 %exitcond177.not, label %bb.m, label %bb.k, !llvm.loop !182
 
 bb.m:                                             ; preds = %bb.l
@@ -525,7 +526,7 @@ _ZN11CCrcThreads7WaitAllEv.exit:                  ; preds = %.noexc97, %bb.m
 
 bb.n:                                             ; preds = %bb.o
   %indvars.iv.next179 = add nuw nsw i64 %indvars.iv178, 1 ; 2 uses
-  %exitcond182.not = icmp eq i64 %indvars.iv.next179, %i.b
+  %exitcond182.not = icmp eq i64 %indvars.iv.next179, %wide.trip.count176
   br i1 %exitcond182.not, label %.critedge, label %bb.o, !llvm.loop !183
 
 bb.o:                                             ; preds = %_ZN11CCrcThreads7WaitAllEv.exit, %bb.n

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/maglev-regalloc?download=true
 inline.NumInlined: 3627
 inline.NumDeleted: 1327
-loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN2v88internal6maglev32StraightForwardRegisterAllocator13ForceAllocateINS0_8RegisterEEENS0_8compiler16AllocatedOperandERNS1_18RegisterFrameStateIT_EES8_PNS1_9ValueNodeE:bb.a
   %i.ab = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.ab)
@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.f, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = zext nneg i8 %i.e to i32                 ; 3 uses
+  %i.g = zext nneg i8 %i.e to i32                 ; 4 uses
   %i.h = load ptr, ptr %2, align 8                ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   %i.j = load i16, ptr %i.i, align 2              ; 2 uses
@@ -257,53 +257,65 @@ _ZN2v88internal6maglev12_GLOBAL__N_120GetReservedRegistersINS0_8RegisterEEENS0_1
   %i.ai = load i16, ptr %i.ag, align 8
   %i.aj = or i16 %.sroa.0.0.copyload.i, %.sroa.08.1.i
   %i.ak = xor i16 %i.aj, -1
-  %i.al = and i16 %i.ai, %i.ak                    ; 4 uses
+  %i.al = and i16 %i.ai, %i.ak                    ; 5 uses
   %.not4243 = icmp eq i16 %i.al, 0
   br i1 %.not4243, label %.lr.ph.preheader, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader
 
 _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader: ; preds = %_ZN2v88internal6maglev12_GLOBAL__N_120GetReservedRegistersINS0_8RegisterEEENS0_11RegListBaseIT_EEPNS1_8NodeBaseE.exit
   %neg84 = sub i16 0, %i.al
   %i.am = and i16 %i.al, %neg84                   ; 2 uses
-  %i.an = or i16 %.sroa.0.0.copyload.i, %i.am     ; 2 uses
-  %i.ao = or i16 %i.am, %i.j                      ; 2 uses
-  %i.ap = add nsw i32 %i.g, -1                    ; 2 uses
+  %i.an = or i16 %.sroa.0.0.copyload.i, %i.am     ; 3 uses
+  %i.ao = or i16 %i.am, %i.j                      ; 3 uses
+  %i.ap = add nsw i32 %i.g, -1                    ; 3 uses
   %.not85 = icmp eq i32 %i.ap, 0
   br i1 %.not85, label %.thread70, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit
 
 _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit: ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit
   %neg = sub i16 0, %i.av
   %i.aq = and i16 %i.av, %neg                     ; 2 uses
-  %i.ar = or i16 %5, %i.aq                        ; 2 uses
-  %i.as = or i16 %i.aq, %4                        ; 2 uses
-  %i.at = add nsw i32 %3, -1                      ; 2 uses
+  %i.ar = or i16 %i.an, %i.aq                     ; 3 uses
+  %i.as = or i16 %i.aq, %i.ao                     ; 3 uses
+  %i.at = add nsw i32 %i.g, -2                    ; 2 uses
   %.not = icmp eq i32 %i.at, 0
-  br i1 %.not, label %.thread70, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit
+  br i1 %.not, label %.thread70, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1
 
-_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit: ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit
-  %3 = phi i32 [ %i.at, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ], [ %i.ap, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ] ; 3 uses
-  %4 = phi i16 [ %i.as, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ], [ %i.ao, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ] ; 3 uses
-  %5 = phi i16 [ %i.ar, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ], [ %i.an, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ] ; 2 uses
-  %.sroa.0.04587 = phi i16 [ %i.av, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ], [ %i.al, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ] ; 2 uses
-  %.0304686 = phi i32 [ %3, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ], [ %i.g, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ]
-  %i.au = add i16 %.sroa.0.04587, -1
-  %i.av = and i16 %i.au, %.sroa.0.04587           ; 4 uses
+_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1: ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit
+  %3 = add i16 %i.av, -2
+  %4 = and i16 %3, %i.av                          ; 3 uses
+  %.not42.1 = icmp eq i16 %4, 0
+  br i1 %.not42.1, label %bb.f, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.1
+
+_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.1: ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1
+  %neg.1 = sub i16 0, %4
+  %5 = and i16 %4, %neg.1                         ; 2 uses
+  %6 = or i16 %i.ar, %5
+  %7 = or i16 %5, %i.as
+  br label %.thread70
+
+_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit: ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader
+  %i.au = add i16 %i.al, -1
+  %i.av = and i16 %i.au, %i.al                    ; 5 uses
   %.not42 = icmp eq i16 %i.av, 0
   br i1 %.not42, label %bb.f, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit
 
-.thread70:                                        ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader
-  %.lcssa81 = phi i16 [ %i.an, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ], [ %i.ar, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ]
-  %.lcssa79 = phi i16 [ %i.ao, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ], [ %i.as, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ]
+.thread70:                                        ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.1, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader
+  %.lcssa81 = phi i16 [ %i.an, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ], [ %i.ar, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ], [ %6, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.1 ]
+  %.lcssa79 = phi i16 [ %i.ao, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.preheader ], [ %i.as, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit ], [ %7, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratordeEv.exit.1 ]
   store i16 %.lcssa81, ptr %i.ah, align 2
   br label %._crit_edge54
 
-bb.f:                                             ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit
-  store i16 %5, ptr %i.ah, align 2
-  %i.aw = icmp sgt i32 %.0304686, 1
+bb.f:                                             ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit
+  %.lcssa93 = phi i32 [ %i.ap, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit ], [ %i.at, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1 ]
+  %.lcssa91 = phi i16 [ %i.ao, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit ], [ %i.as, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1 ] ; 2 uses
+  %.lcssa = phi i16 [ %i.an, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit ], [ %i.ar, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1 ]
+  %.0304686.lcssa = phi i32 [ %i.g, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit ], [ %i.ap, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.1 ]
+  store i16 %.lcssa, ptr %i.ah, align 2
+  %i.aw = icmp sgt i32 %.0304686.lcssa, 1
   br i1 %i.aw, label %.lr.ph.preheader, label %._crit_edge54
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal6maglev12_GLOBAL__N_120GetReservedRegistersINS0_8RegisterEEENS0_11RegListBaseIT_EEPNS1_8NodeBaseE.exit, %bb.f
-  %.169 = phi i32 [ %3, %bb.f ], [ %i.g, %_ZN2v88internal6maglev12_GLOBAL__N_120GetReservedRegistersINS0_8RegisterEEENS0_11RegListBaseIT_EEPNS1_8NodeBaseE.exit ]
-  %.sroa.038.168 = phi i16 [ %4, %bb.f ], [ %i.j, %_ZN2v88internal6maglev12_GLOBAL__N_120GetReservedRegistersINS0_8RegisterEEENS0_11RegListBaseIT_EEPNS1_8NodeBaseE.exit ]
+  %.169 = phi i32 [ %.lcssa93, %bb.f ], [ %i.g, %_ZN2v88internal6maglev12_GLOBAL__N_120GetReservedRegistersINS0_8RegisterEEENS0_11RegListBaseIT_EEPNS1_8NodeBaseE.exit ]
+  %.sroa.038.168 = phi i16 [ %.lcssa91, %bb.f ], [ %i.j, %_ZN2v88internal6maglev12_GLOBAL__N_120GetReservedRegistersINS0_8RegisterEEENS0_11RegListBaseIT_EEPNS1_8NodeBaseE.exit ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit
@@ -331,7 +343,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit: ; preds = %.lr.ph, %b
   br i1 %exitcond.not, label %._crit_edge54, label %.lr.ph, !llvm.loop !91
 
 ._crit_edge54:                                    ; preds = %_ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit, %.thread70, %bb.f
-  %.sroa.038.2.lcssa = phi i16 [ %4, %bb.f ], [ %.lcssa79, %.thread70 ], [ %.sroa.038.3, %_ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit ]
+  %.sroa.038.2.lcssa = phi i16 [ %.lcssa91, %bb.f ], [ %.lcssa79, %.thread70 ], [ %.sroa.038.3, %_ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit ]
   %i.bf = load ptr, ptr %2, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 4
   store i16 %.sroa.038.2.lcssa, ptr %i.bg, align 2
@@ -734,10 +746,10 @@ declare i32 @llvm.umax.i32(i32, i32) #23
 declare i64 @llvm.usub.sat.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #23
+declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #23
+declare i32 @llvm.smax.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #23

@@ -205,8 +205,8 @@ bb.fg:                                            ; preds = %._crit_edge.thread.
   %i.atp = getelementptr inbounds nuw i8, ptr %i.aox, i64 744 ; 3 uses
   %i.atq = zext nneg i32 %i.atc to i64            ; 2 uses
   %i.atr = sub i32 1, %i.aoz
-  %i.ats = add i32 %i.aoz, -1
-  %i.att = zext i32 %i.ats to i64                 ; 2 uses
+  %i.ats = add i32 %i.aoz, -1                     ; 2 uses
+  %i.att = zext nneg i32 %i.ats to i64            ; 2 uses
   %i.atu = shl nuw nsw i64 %i.atq, 5
   %i.atv = add nuw nsw i64 %i.atu, 776
   %i.atw = sub nsw i32 3, %i.aoz
@@ -270,15 +270,15 @@ bb.fh:                                            ; preds = %bb.fh, %.peel.next.
 
 bb.fi:                                            ; preds = %._crit_edge451.i.i, %.lr.ph454.i.i
   %indvars.iv77.i = phi i32 [ %indvars.iv.next78.i.pre-phi, %._crit_edge451.i.i ], [ %i.atw, %.lr.ph454.i.i ] ; 2 uses
-  %indvar.i.i = phi i64 [ %indvar.next.i.i, %._crit_edge451.i.i ], [ 0, %.lr.ph454.i.i ] ; 6 uses
-  %indvars.iv488.i.i = phi i64 [ %indvars.iv.next489.i.i, %._crit_edge451.i.i ], [ %i.att, %.lr.ph454.i.i ] ; 6 uses
+  %indvar.i.i = phi i64 [ %indvar.next.i.i, %._crit_edge451.i.i ], [ 0, %.lr.ph454.i.i ] ; 7 uses
+  %indvars.iv488.i.i = phi i64 [ %indvars.iv.next489.i.i, %._crit_edge451.i.i ], [ %i.att, %.lr.ph454.i.i ] ; 5 uses
   %indvars.iv480.i.i = phi i32 [ %indvars.iv.next481.i.i, %._crit_edge451.i.i ], [ %i.atr, %.lr.ph454.i.i ] ; 5 uses
   %indvars.iv471.i.i = phi i64 [ %indvars.iv.next472.i.i, %._crit_edge451.i.i ], [ %i.atq, %.lr.ph454.i.i ] ; 28 uses
   %i.auz = trunc i64 %indvar.i.i to i32
   %i.ava = sub i32 %i.aoz, %i.auz
   %i.avb = trunc i64 %indvar.i.i to i32
   %i.avc = sub i32 %i.avb, %i.aoz
-  %i.avd = trunc i64 %indvars.iv488.i.i to i32
+  %i.avd = trunc i64 %indvar.i.i to i32
   %i.ave = trunc i64 %indvars.iv471.i.i to i32
   %smax = call i32 @llvm.smax.i32(i32 %i.ave, i32 1)
   %i.avf = trunc i64 %indvar.i.i to i32
@@ -453,6 +453,7 @@ bb.fm:                                            ; preds = %bb.fl, %bb.fk
   %i.ayb = xor i32 %indvars79.i, -1               ; 2 uses
   %i.ayc = getelementptr inbounds nuw [12 x i8], ptr %41, i64 %indvars.iv471.i.i ; 3 uses
   store ptr %i.ayc, ptr %42, align 8
+  %74 = sub i32 %i.ats, %i.avd
   br label %bb.fn
 
 .preheader410.i.i:                                ; preds = %.loopexit409.i.i, %bb.fm
@@ -549,7 +550,7 @@ bb.fo:                                            ; preds = %bb.fn
   br i1 %i.azw, label %.lr.ph423.i.i.preheader, label %.loopexit409.i.i
 
 .lr.ph423.i.i.preheader:                          ; preds = %.preheader408.i.i
-  %i.azx = call i32 @llvm.smax.i32(i32 %i.avd, i32 %i.azu)
+  %i.azx = call i32 @llvm.smax.i32(i32 %74, i32 %i.azu)
   %i.azy = add i32 %i.azx, %indvars.iv480.i.i     ; 2 uses
   %i.azz = zext i32 %i.azy to i64
   %i.baa = add nuw nsw i64 %i.azz, 1              ; 2 uses
@@ -628,7 +629,7 @@ middle.block1241:                                 ; preds = %vector.body1229
   %indvars.iv.next78.i.pre-phi = phi i32 [ %.pre816, %.preheader410.i.i.._crit_edge451.i.i_crit_edge ], [ %i.ayx, %.critedge.i.i ]
   %indvars.iv.next472.i.i = add nsw i64 %indvars.iv471.i.i, -1
   %indvars.iv.next481.i.i = add i32 %indvars.iv480.i.i, 1
-  %indvars.iv.next489.i.i = add i64 %indvars.iv488.i.i, -1
+  %indvars.iv.next489.i.i = add nsw i64 %indvars.iv488.i.i, -1
   %indvar.next.i.i = add nuw nsw i64 %indvar.i.i, 1 ; 2 uses
   %exitcond522.not.i.i = icmp eq i64 %indvar.next.i.i, %i.att
   br i1 %exitcond522.not.i.i, label %._crit_edge455.i.i, label %bb.fi, !llvm.loop !483

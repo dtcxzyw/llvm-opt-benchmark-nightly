@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %i.c = zext nneg i32 %2 to i64
+  %i.c = zext nneg i32 %2 to i64                  ; 2 uses
   %i.d = getelementptr [8 x i8], ptr %0, i64 %i.c
   %i.e = getelementptr i8, ptr %i.d, i64 -8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !122  ; 2 uses
@@ -322,7 +322,6 @@ bb.l:                                             ; preds = %bb.k
   %.not86 = icmp eq ptr %1, null
   %i.bi = getelementptr inbounds nuw i8, ptr %i.m, i64 136
   %i.bj = getelementptr i8, ptr %i.m, i64 472
-  %wide.trip.count = zext nneg i32 %2 to i64
   %i.bk = zext nneg i32 %i.y to i64
   %i.bl = shl nuw nsw i32 %i.y, 3
   %i.bm = zext nneg i32 %i.bl to i64
@@ -480,7 +479,7 @@ ggml_backend_event_new.exit:                      ; preds = %.lr.ph.split, %bb.z
 .loopexit:                                        ; preds = %ggml_backend_event_new.exit, %.lr.ph.split.us, %bb.y
   %i.dq = phi i32 [ 1, %bb.y ], [ %i.y, %.lr.ph.split.us ], [ %i.y, %ggml_backend_event_new.exit ]
   %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next101, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next101, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !315
 }
 

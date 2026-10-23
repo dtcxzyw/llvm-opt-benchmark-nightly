@@ -205,11 +205,11 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i248:     ; preds = %bb.dm
 .lr.ph:                                           ; preds = %bb.dl, %bb.dm, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i248, %._ZNSt6vectorIfSaIfEE6resizeEm.exit250_crit_edge
   %i.op = phi ptr [ %.pre387, %._ZNSt6vectorIfSaIfEE6resizeEm.exit250_crit_edge ], [ %i.og, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i248 ], [ %i.og, %bb.dm ], [ %i.og, %bb.dl ] ; 9 uses
   %.not = icmp eq ptr %2, null
-  %31 = zext nneg i32 %4 to i64                   ; 6 uses
   br i1 %.not, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.oq = ptrtoaddr ptr %i.op to i64
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %4, 8
   %i.or = sub i64 %i.a, %i.oq
   %diff.check = icmp ugt i64 %i.or, -32
@@ -217,7 +217,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i248:     ; preds = %bb.dm
   br i1 %or.cond454, label %.lr.ph.split.preheader455, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %31, 2147483640                ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -235,12 +235,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ow, label %middle.block, label %vector.body, !llvm.loop !134
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %31
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.split.preheader455
 
 .lr.ph.split.preheader455:                        ; preds = %.lr.ph.split.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph.split.preheader ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %31, 3                      ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.split.prol.loopexit, label %.lr.ph.split.prol
 
@@ -258,13 +258,16 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.prol.loopexit:                       ; preds = %.lr.ph.split.prol, %.lr.ph.split.preheader455
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.lr.ph.split.preheader455 ], [ %indvars.iv.next.prol, %.lr.ph.split.prol ]
-  %i.pa = sub nsw i64 %indvars.iv.ph, %31
+  %i.pa = sub nsw i64 %indvars.iv.ph, %wide.trip.count
   %i.pb = icmp ugt i64 %i.pa, -4
   br i1 %i.pb, label %._crit_edge, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %i.pc = shl nuw nsw i64 %31, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %i.op, i8 0, i64 %i.pc, i1 false), !tbaa !99
+  %31 = add nsw i32 %4, -1
+  %32 = zext nneg i32 %31 to i64
+  %i.pc = shl nuw nsw i64 %32, 2
+  %33 = add nuw nsw i64 %i.pc, 4
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.op, i8 0, i64 %33, i1 false), !tbaa !99
   br label %._crit_edge
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.prol.loopexit, %.lr.ph.split
@@ -289,7 +292,7 @@ middle.block:                                     ; preds = %vector.body
   %i.po = getelementptr inbounds nuw [4 x i8], ptr %i.op, i64 %indvars.iv.next.2
   store float %i.pn, ptr %i.po, align 4, !tbaa !99
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %31
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph.split, !llvm.loop !136
 
 bb.dn:                                            ; preds = %bb.dk

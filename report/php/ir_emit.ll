@@ -205,8 +205,7 @@ bb.s:                                             ; preds = %bb.l, %bb.r
   %i.bw = getelementptr inbounds nuw i8, ptr %4, i64 2
   %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.by = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %umax879 = tail call i32 @llvm.umax.i32(i32 %i.j, i32 3)
-  %i.bz = add nuw nsw i32 %umax879, 1
+  %i.bz = add nuw nsw i32 %i.j, 1
   %wide.trip.count880 = zext nneg i32 %i.bz to i64
   br label %bb.t
 
@@ -477,8 +476,7 @@ bb.ba:                                            ; preds = %bb.az, %._crit_edge
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 300 ; 3 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.fv = sext i8 %spec.store.select to i32
-  %umax885 = tail call i32 @llvm.umax.i32(i32 %i.j, i32 3)
-  %i.fw = add nuw nsw i32 %umax885, 1
+  %i.fw = add nuw nsw i32 %i.j, 1
   %wide.trip.count886 = zext nneg i32 %i.fw to i64
   br label %bb.bb
 

@@ -205,7 +205,7 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAI
 
 _RNvXs3_NtNtNtCsgCecv3eZDcN_5alloc11collections9vec_deque5drainINtB5_5DrainNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrENtNtNtNtB1g_4iter6traits8iterator8Iterator4nextCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i.i.i: ; preds = %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAIVb0XKpv_9ssservice.exit.i.i, %bb.o
   %i.bf = phi ptr [ %i.bz, %bb.o ], [ %.sroa.10.0.i.i.i, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAIVb0XKpv_9ssservice.exit.i.i ]
-  %i.bg = phi i64 [ %i.cb, %bb.o ], [ 1, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAIVb0XKpv_9ssservice.exit.i.i ] ; 5 uses
+  %i.bg = phi i64 [ %i.cb, %bb.o ], [ 1, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAIVb0XKpv_9ssservice.exit.i.i ] ; 4 uses
   %.sroa.12.0.i.i = phi ptr [ %i.bq, %bb.o ], [ %i.au, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAIVb0XKpv_9ssservice.exit.i.i ] ; 4 uses
   %.in.i = phi i64 [ %i.bh, %bb.o ], [ 0, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAIVb0XKpv_9ssservice.exit.i.i ]
   %.val.i.i1314.i.i.i.i = phi i64 [ %i.bm, %bb.o ], [ %i.ar, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZAIVb0XKpv_9ssservice.exit.i.i ]
@@ -231,8 +231,6 @@ bb.n:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   %i.br = load <2 x ptr>, ptr %.sroa.12.0.i.i, align 8, !noalias !79241
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.7.0..sroa_idx8.i.i.i.i.i.i, i64 30, i1 false), !noalias !79242
-  %4 = icmp samesign ult i64 %i.bg, 192153584101141163
-  call void @llvm.assume(i1 %4)
   %i.bs = load i64, ptr %i.a, align 8, !range !179, !alias.scope !79243, !noalias !79232, !noundef !177
   %i.bt = icmp eq i64 %i.bg, %i.bs
   br i1 %i.bt, label %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecTNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationEE7reserveCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i, label %bb.o

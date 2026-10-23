@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %.split.us.preheader
   %i.cy = getelementptr inbounds nuw i8, ptr %.0193237.us.1, i64 28
   store i8 0, ptr %i.cy, align 1, !tbaa !37
   %i.cz = getelementptr inbounds nuw i8, ptr %.0193237.us.1, i64 32 ; 2 uses
-  %niter340.next.7 = add i32 %niter340, 8         ; 2 uses
+  %niter340.next.7 = add nuw nsw i32 %niter340, 8 ; 2 uses
   %niter340.ncmp.7 = icmp eq i32 %niter340.next.7, %unroll_iter339
   br i1 %niter340.ncmp.7, label %..loopexit235_crit_edge.us.1.thread.unr-lcssa, label %.preheader234.us.1, !llvm.loop !181
 
@@ -271,7 +271,7 @@ bb.ac:                                            ; preds = %..loopexit235_crit_
   %i.dm = getelementptr inbounds nuw i8, ptr %.0193237.us.2, i64 28
   store i8 0, ptr %i.dm, align 1, !tbaa !37
   %i.dn = getelementptr inbounds nuw i8, ptr %.0193237.us.2, i64 32 ; 2 uses
-  %niter346.next.7 = add i32 %niter346, 8         ; 2 uses
+  %niter346.next.7 = add nuw nsw i32 %niter346, 8 ; 2 uses
   %niter346.ncmp.7 = icmp eq i32 %niter346.next.7, %unroll_iter345
   br i1 %niter346.ncmp.7, label %..loopexit235_crit_edge.us.2.thread.unr-lcssa, label %.preheader234.us.2, !llvm.loop !181
 
@@ -338,7 +338,7 @@ bb.ad:                                            ; preds = %..loopexit235_crit_
   %i.ea = getelementptr inbounds nuw i8, ptr %.0193237.us.3, i64 28
   store i8 -1, ptr %i.ea, align 1, !tbaa !37
   %i.eb = getelementptr inbounds nuw i8, ptr %.0193237.us.3, i64 32 ; 2 uses
-  %niter352.next.7 = add i32 %niter352, 8         ; 2 uses
+  %niter352.next.7 = add nuw nsw i32 %niter352, 8 ; 2 uses
   %niter352.ncmp.7 = icmp eq i32 %niter352.next.7, %unroll_iter351
   br i1 %niter352.ncmp.7, label %.loopexit.loopexit324.unr-lcssa, label %.preheader234.us.3, !llvm.loop !181
 
@@ -741,7 +741,7 @@ bb.o:                                             ; preds = %bb.l, %bb.n, %bb.m,
   %i.ah = icmp samesign ugt i32 %i.w, 2           ; 2 uses
   %or.cond3.not285 = select i1 %i.x, i1 true, i1 %i.ah
   %or.cond5 = select i1 %or.cond3.not285, i1 true, i1 %i.ag
-  %. = select i1 %or.cond5, i32 %i.u, i32 1       ; 3 uses
+  %. = select i1 %or.cond5, i32 %i.u, i32 1       ; 2 uses
   %i.ai = icmp slt i32 %., 1
   br i1 %i.ai, label %bb.p, label %bb.x
 
@@ -808,7 +808,7 @@ bb.x:                                             ; preds = %bb.o
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 18056
   %i.az = add i32 %i.au, -1
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 18560
-  %wide.trip.count = zext nneg i32 %. to i64
+  %wide.trip.count = zext nneg i32 %. to i64      ; 2 uses
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %.thread333
@@ -992,7 +992,6 @@ stbi__malloc_mad3.exit:                           ; preds = %stbi__mad3sizes_val
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 7 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 7 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 18552 ; 2 uses
-  %wide.trip.count420 = zext nneg i32 %. to i64
   br label %.lr.ph.preheader
 
 stbi__malloc_mad3.exit.thread:                    ; preds = %stbi__mul2sizes_valid.exit.thread16.i.i, %bb.am, %stbi__mul2sizes_valid.exit.i.i, %stbi__mul2sizes_valid.exit12.i.i, %stbi__mad3sizes_valid.exit.i, %stbi__malloc_mad3.exit
@@ -1115,7 +1114,7 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.aw, %bb.ax, %.lr.ph
   %indvars.iv.next418 = add nuw nsw i64 %indvars.iv417, 1 ; 2 uses
-  %exitcond421.not = icmp eq i64 %indvars.iv.next418, %wide.trip.count420
+  %exitcond421.not = icmp eq i64 %indvars.iv.next418, %wide.trip.count
   br i1 %exitcond421.not, label %._crit_edge, label %.lr.ph, !llvm.loop !407
 
 ._crit_edge:                                      ; preds = %bb.ay

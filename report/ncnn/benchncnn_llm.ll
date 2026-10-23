@@ -205,7 +205,6 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.i:             ; preds = %.lr.ph.preheader.i,
 bb.b:                                             ; preds = %_ZN4ncnn3Mat4fillEf.exit.i, %_ZN4ncnn3Mat4fillEf.exit.preheader.i
   %indvars.iv27.i = phi i64 [ 0, %_ZN4ncnn3Mat4fillEf.exit.preheader.i ], [ %indvars.iv.next28.i, %_ZN4ncnn3Mat4fillEf.exit.i ] ; 4 uses
   %indvars.iv.i = phi i64 [ %i.al, %_ZN4ncnn3Mat4fillEf.exit.preheader.i ], [ %indvars.iv.next.i, %_ZN4ncnn3Mat4fillEf.exit.i ] ; 4 uses
-  %20 = sub i64 %i.ap, %indvars.iv27.i            ; 3 uses
   %.reass.i = mul i64 %factor.op.mul.i, %indvars.iv27.i
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.reass.i ; 2 uses
   %i.ar = add nuw nsw i64 %indvars.iv27.i, %i.al
@@ -213,6 +212,7 @@ bb.b:                                             ; preds = %_ZN4ncnn3Mat4fillEf
   br i1 %i.as, label %.lr.ph22.i.preheader, label %_ZN4ncnn3Mat4fillEf.exit.i
 
 .lr.ph22.i.preheader:                             ; preds = %bb.b
+  %20 = sub i64 %i.ap, %indvars.iv27.i            ; 3 uses
   %min.iters.check6 = icmp ult i64 %20, 8
   br i1 %min.iters.check6, label %.lr.ph22.i.preheader30, label %vector.ph7
 

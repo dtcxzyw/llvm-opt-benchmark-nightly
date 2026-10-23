@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pingora-rs/original/pingora_core-a5e7685b4b87ec55.pingora_core.ebac96924b791bb8-cgu.02?download=true
 inline.NumInlined: 716
 inline.NumDeleted: 218
-loop-unroll.NumCompletelyUnrolled: 44
+loop-unroll.NumCompletelyUnrolled: 45
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 59
+loop-unroll.NumUnrolled: 60
 begin_hunk_0_@_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream32BrotliStoreUncompressedMetaBlockNCNvMs2_NtB4_6writerINtB1u_24CompressorWriterCustomIoNtNtNtCskKLDkoKarTP_4core2io5error5ErrorINtNtCsfQhfhXbPrjn_19brotli_decompressor11io_wrappers12IntoIoWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEEINtNtCsc389t4z7aPt_12alloc_stdlib10heap_alloc7WrapBoxhENtNtB4B_9std_alloc13StandardAllocE14flush_or_close0B5p_ECskeugdADtBsi_12pingora_core:bb.a
   %.sroa.59.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 112
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.59.0..sroa_idx.i, align 8, !alias.scope !1109
@@ -205,7 +205,7 @@ _RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream18JumpToByteBoundary.exit8: 
 define hidden void @_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream34BrotliBuildAndStoreHuffmanTreeFastNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocECskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 4 captures(none) %1, i64 noundef range(i64 0, 2305843009213693952) %2, i64 noundef %3, i64 noundef %4, ptr noalias nofree noundef nonnull captures(address, read_provenance) %5, i64 noundef range(i64 0, -9223372036854775808) %6, ptr noalias nofree noundef nonnull align 2 %7, i64 noundef range(i64 0, 4611686018427387904) %8, ptr noalias nofree noundef align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef range(i64 0, -9223372036854775808) %11) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 4                ; 8 uses
-  %i.b = alloca [32 x i8], align 8                ; 12 uses
+  %i.b = alloca [32 x i8], align 8                ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, i8 0, i64 32, i1 false)
   %i.c = icmp eq i64 %3, 0
@@ -479,7 +479,8 @@ bb.s:                                             ; preds = %_RINvNtCskKLDkoKarT
   tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef 2, i64 noundef 1, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
   %i.bt = add nsw i64 %.sroa.02.1, -1
   tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef 2, i64 noundef %i.bt, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
-  br label %bb.ag
+  %.promoted = load i64, ptr %i.b, align 8
+  br label %bb.al
 
 .split383:                                        ; preds = %.split383.preheader, %.loopexit232
   %.sroa.075.0396 = phi i8 [ %.sroa.075.1, %.loopexit232 ], [ 8, %.split383.preheader ] ; 2 uses
@@ -616,50 +617,113 @@ bb.ae:                                            ; preds = %.lr.ph393
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.co, i64 noundef 18, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @94) #22
   unreachable
 
-.loopexit:                                        ; preds = %bb.aq, %bb.ag
-  %exitcond522.not = icmp eq i64 %15, %.sroa.02.1
-  br i1 %exitcond522.not, label %bb.af, label %bb.ag
+.loopexit:                                        ; preds = %bb.aq
+  store i64 %46, ptr %i.b, align 8
+  %exitcond522.not = icmp eq i64 %.sroa.02.1, 2
+  br i1 %exitcond522.not, label %.loopexit.3, label %.lr.ph399.1
 
-bb.af:                                            ; preds = %.loopexit
-  %12 = trunc i64 %4 to i8                        ; 5 uses
-  %13 = load i64, ptr %i.b, align 8, !noundef !4  ; 4 uses
-  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %12, i64 noundef %13, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %14 = load i64, ptr %i.dk, align 8, !noundef !4
-  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %12, i64 noundef %14, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
+.lr.ph399.1:                                      ; preds = %.loopexit
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  br label %13
+
+13:                                               ; preds = %25, %.lr.ph399.1
+  %.sroa.070.0397.1 = phi i64 [ 2, %.lr.ph399.1 ], [ %26, %25 ] ; 2 uses
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.070.0397.1 ; 2 uses
+  %15 = load i64, ptr %14, align 8, !noundef !4   ; 4 uses
+  %16 = icmp ult i64 %15, %6
+  br i1 %16, label %17, label %bb.an
+
+17:                                               ; preds = %13
+  %18 = load i64, ptr %12, align 8, !noundef !4   ; 4 uses
+  %19 = icmp ult i64 %18, %6
+  br i1 %19, label %bb.af, label %bb.ap
+
+bb.af:                                            ; preds = %17
+  %20 = getelementptr inbounds nuw i8, ptr %5, i64 %15
+  %21 = load i8, ptr %20, align 1, !noundef !4
+  %i.dk = getelementptr inbounds nuw i8, ptr %5, i64 %18
+  %22 = load i8, ptr %i.dk, align 1, !noundef !4
+  %23 = icmp ult i8 %21, %22
+  br i1 %23, label %24, label %25
+
+24:                                               ; preds = %bb.af
+  store i64 %18, ptr %14, align 8
+  store i64 %15, ptr %12, align 8
+  br label %25
+
+25:                                               ; preds = %24, %bb.af
+  %26 = add nuw i64 %.sroa.070.0397.1, 1          ; 2 uses
+  %exitcond521.not.1 = icmp eq i64 %26, %.sroa.02.1
+  br i1 %exitcond521.not.1, label %.loopexit.1, label %13
+
+.loopexit.1:                                      ; preds = %25
+  %cond868 = icmp eq i64 %.sroa.02.1, 4
+  br i1 %cond868, label %.lr.ph399.2, label %.loopexit.3
+
+.lr.ph399.2:                                      ; preds = %.loopexit.1
+  %27 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  br label %bb.ag
+
+bb.ag:                                            ; preds = %39, %.lr.ph399.2
+  %.sroa.065.0400 = phi i64 [ 3, %.lr.ph399.2 ], [ %40, %39 ] ; 2 uses
+  %28 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.065.0400 ; 2 uses
+  %29 = load i64, ptr %28, align 8, !noundef !4   ; 4 uses
+  %i.dl = icmp ult i64 %29, %6
+  br i1 %i.dl, label %30, label %bb.an
+
+30:                                               ; preds = %bb.ag
+  %31 = load i64, ptr %27, align 8, !noundef !4   ; 4 uses
+  %32 = icmp ult i64 %31, %6
+  br i1 %32, label %33, label %bb.ap
+
+33:                                               ; preds = %30
+  %34 = getelementptr inbounds nuw i8, ptr %5, i64 %29
+  %35 = load i8, ptr %34, align 1, !noundef !4
+  %36 = getelementptr inbounds nuw i8, ptr %5, i64 %31
+  %37 = load i8, ptr %36, align 1, !noundef !4
+  %38 = icmp ult i8 %35, %37
+  br i1 %38, label %.lr.ph399, label %39
+
+.lr.ph399:                                        ; preds = %33
+  store i64 %31, ptr %28, align 8
+  store i64 %29, ptr %27, align 8
+  br label %39
+
+39:                                               ; preds = %.lr.ph399, %33
+  %40 = add nuw i64 %.sroa.065.0400, 1            ; 2 uses
+  %exitcond521.not.2 = icmp eq i64 %40, %.sroa.02.1
+  br i1 %exitcond521.not.2, label %.loopexit.3, label %bb.ag
+
+.loopexit.3:                                      ; preds = %39, %.loopexit.1, %.loopexit
+  %41 = trunc i64 %4 to i8                        ; 5 uses
+  %42 = load i64, ptr %i.b, align 8, !noundef !4  ; 4 uses
+  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %41, i64 noundef %42, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
+  %43 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %44 = load i64, ptr %43, align 8, !noundef !4
+  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %41, i64 noundef %44, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
   switch i64 %.sroa.02.1, label %bb.ai [
     i64 2, label %.loopexit233
     i64 3, label %bb.ah
   ]
 
-bb.ag:                                            ; preds = %bb.s, %.loopexit
-  %.sroa.065.0400 = phi i64 [ 0, %bb.s ], [ %15, %.loopexit ] ; 2 uses
-  %15 = add nuw nsw i64 %.sroa.065.0400, 1        ; 4 uses
-  %i.dl = icmp ult i64 %15, %.sroa.02.1
-  br i1 %i.dl, label %.lr.ph399, label %.loopexit
-
-.lr.ph399:                                        ; preds = %bb.ag
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.065.0400 ; 2 uses
-  br label %bb.al
-
-bb.ah:                                            ; preds = %bb.af
+bb.ah:                                            ; preds = %.loopexit.3
   %i.dm = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.dn = load i64, ptr %i.dm, align 8, !noundef !4
-  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %12, i64 noundef %i.dn, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
+  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %41, i64 noundef %i.dn, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
   br label %.loopexit233
 
-bb.ai:                                            ; preds = %bb.af
+bb.ai:                                            ; preds = %.loopexit.3
   %i.do = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.dp = load i64, ptr %i.do, align 8, !noundef !4
-  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %12, i64 noundef %i.dp, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
+  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %41, i64 noundef %i.dp, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
   %i.dq = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.dr = load i64, ptr %i.dq, align 8, !noundef !4
-  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %12, i64 noundef %i.dr, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
-  %i.ds = icmp ult i64 %13, %6
+  tail call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17brotli_bit_stream15BrotliWriteBits(i8 noundef %41, i64 noundef %i.dr, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %9, ptr noalias nofree noundef nonnull %10, i64 noundef %11)
+  %i.ds = icmp ult i64 %42, %6
   br i1 %i.ds, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.dt = getelementptr inbounds nuw i8, ptr %5, i64 %13
+  %i.dt = getelementptr inbounds nuw i8, ptr %5, i64 %42
   %i.du = load i8, ptr %i.dt, align 1, !noundef !4
   %i.dv = icmp eq i8 %i.du, 1
   %. = zext i1 %i.dv to i64
@@ -667,49 +731,59 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.loopexit233
 
 bb.ak:                                            ; preds = %bb.ai
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %13, i64 noundef %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @95) #22
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %42, i64 noundef %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @95) #22
   unreachable
 
-.loopexit233:                                     ; preds = %.loopexit232, %bb.aj, %bb.ah, %bb.af, %bb.bf
+.loopexit233:                                     ; preds = %.loopexit232, %bb.aj, %bb.ah, %.loopexit.3, %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void
 
-bb.al:                                            ; preds = %.lr.ph399, %bb.aq
-  %.sroa.070.0397 = phi i64 [ %15, %.lr.ph399 ], [ %i.ef, %bb.aq ] ; 2 uses
+bb.al:                                            ; preds = %bb.s, %bb.aq
+  %45 = phi i64 [ %.promoted, %bb.s ], [ %46, %bb.aq ] ; 7 uses
+  %.sroa.070.0397 = phi i64 [ 1, %bb.s ], [ %i.ef, %bb.aq ] ; 2 uses
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.070.0397 ; 2 uses
   %i.dx = load i64, ptr %i.dw, align 8, !noundef !4 ; 4 uses
   %i.dy = icmp ult i64 %i.dx, %6
-  br i1 %i.dy, label %bb.am, label %bb.an
+  br i1 %i.dy, label %bb.am, label %.loopexit801
 
 bb.am:                                            ; preds = %bb.al
-  %17 = load i64, ptr %16, align 8, !noundef !4   ; 4 uses
-  %i.dz = icmp ult i64 %17, %6
-  br i1 %i.dz, label %bb.ao, label %bb.ap
+  %i.dz = icmp ult i64 %45, %6
+  br i1 %i.dz, label %bb.ao, label %.loopexit802
 
-bb.an:                                            ; preds = %bb.al
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.dx, i64 noundef %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @96) #22
+.loopexit801:                                     ; preds = %bb.al
+  store i64 %45, ptr %i.b, align 8
+  br label %bb.an
+
+bb.an:                                            ; preds = %bb.ag, %13, %.loopexit801
+  %.lcssa = phi i64 [ %15, %13 ], [ %i.dx, %.loopexit801 ], [ %29, %bb.ag ]
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.lcssa, i64 noundef %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @96) #22
   unreachable
 
 bb.ao:                                            ; preds = %bb.am
   %i.ea = getelementptr inbounds nuw i8, ptr %5, i64 %i.dx
   %i.eb = load i8, ptr %i.ea, align 1, !noundef !4
-  %i.ec = getelementptr inbounds nuw i8, ptr %5, i64 %17
+  %i.ec = getelementptr inbounds nuw i8, ptr %5, i64 %45
   %i.ed = load i8, ptr %i.ec, align 1, !noundef !4
   %i.ee = icmp ult i8 %i.eb, %i.ed
   br i1 %i.ee, label %bb.ar, label %bb.aq
 
-bb.ap:                                            ; preds = %bb.am
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %17, i64 noundef %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @97) #22
+.loopexit802:                                     ; preds = %bb.am
+  store i64 %45, ptr %i.b, align 8
+  br label %bb.ap
+
+bb.ap:                                            ; preds = %30, %17, %.loopexit802
+  %.lcssa760 = phi i64 [ %18, %17 ], [ %45, %.loopexit802 ], [ %31, %30 ]
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.lcssa760, i64 noundef %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @97) #22
   unreachable
 
 bb.aq:                                            ; preds = %bb.ao, %bb.ar
+  %46 = phi i64 [ %45, %bb.ao ], [ %i.dx, %bb.ar ] ; 2 uses
   %i.ef = add nuw i64 %.sroa.070.0397, 1          ; 2 uses
   %exitcond521.not = icmp eq i64 %i.ef, %.sroa.02.1
   br i1 %exitcond521.not, label %.loopexit, label %bb.al
 
 bb.ar:                                            ; preds = %bb.ao
-  store i64 %17, ptr %i.dw, align 8
-  store i64 %i.dx, ptr %16, align 8
+  store i64 %45, ptr %i.dw, align 8
   br label %bb.aq
 
 .lr.ph369:                                        ; preds = %.lr.ph369.preheader, %bb.ay
@@ -873,7 +947,7 @@ bb.bh:                                            ; preds = %.lr.ph757
   br i1 %i.gl, label %bb.bj, label %bb.bk
 
 bb.bi:                                            ; preds = %.lr.ph757, %bb.bk
-  %.sroa.02.1 = phi i64 [ %.sroa.02.0350755, %.lr.ph757 ], [ %i.gp, %bb.bk ] ; 8 uses
+  %.sroa.02.1 = phi i64 [ %.sroa.02.0350755, %.lr.ph757 ], [ %i.gp, %bb.bk ] ; 10 uses
   %.sroa.0.1 = phi i64 [ %.sroa.0.0351754, %.lr.ph757 ], [ %i.gr, %bb.bk ] ; 2 uses
   %i.gm = add nuw nsw i64 %.sroa.012.0349756, 1   ; 8 uses
   %i.gn = icmp eq i64 %.sroa.0.1, 0

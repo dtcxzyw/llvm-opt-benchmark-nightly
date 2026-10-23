@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %.sink.split, %bb.q
 
 .thread320:                                       ; preds = %bb.w, %bb.x, %bb.y, %bb.z
   %.3226325 = phi i32 [ 1, %bb.z ], [ 0, %bb.y ], [ 0, %bb.x ], [ 0, %bb.w ]
-  %i.dp = add i64 %.2352, 1                       ; 2 uses
+  %i.dp = add nuw i64 %.2352, 1                   ; 2 uses
   %.not286 = icmp eq i64 %i.dp, %i.o
   br i1 %.not286, label %bb.aa, label %bb.n, !llvm.loop !491
 
@@ -250,7 +250,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.preheader340, %bb.ac, %bb.ad, %bb.ae, %bb.af
-  %i.ec = add i64 %.3353, 1                       ; 2 uses
+  %i.ec = add nuw i64 %.3353, 1                   ; 2 uses
   %.not297 = icmp eq i64 %i.ec, %i.o
   br i1 %.not297, label %.loopexit341, label %.preheader340, !llvm.loop !492
 
@@ -653,7 +653,7 @@ bb.h:                                             ; preds = %bb.h, %_ZL18lodepng
   %i.br = getelementptr i8, ptr %i.z, i64 %i.bl
   %i.bs = getelementptr i8, ptr %i.br, i64 8
   store i8 %i.bq, ptr %i.bs, align 1, !tbaa !35
-  %i.bt = add i64 %.146111, 4                     ; 2 uses
+  %i.bt = add nuw i64 %.146111, 4                 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.thread99.loopexit.unr-lcssa, label %bb.h, !llvm.loop !719
@@ -809,7 +809,7 @@ bb.u:                                             ; preds = %bb.u, %.epil.prehea
   %i.ej = getelementptr i8, ptr %i.z, i64 %.146111.epil
   %i.ek = getelementptr i8, ptr %i.ej, i64 8
   store i8 %i.ei, ptr %i.ek, align 1, !tbaa !35
-  %i.el = add i64 %.146111.epil, 1
+  %i.el = add nuw i64 %.146111.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.thread99, label %bb.u, !llvm.loop !726
