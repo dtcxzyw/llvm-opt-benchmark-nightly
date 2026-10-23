@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load i32, ptr %i.q, align 8, !tbaa !460  ; 2 uses
   %i.w = and i32 %i.v, 32
   %.not100 = icmp eq i32 %i.w, 0                  ; 2 uses
-  %7 = extractelement <2 x float> %i.t, i64 1     ; 2 uses
   %i.x = extractelement <2 x float> %i.t, i64 0
   %i.y = extractelement <2 x float> %i.r, i64 1
   %i.z = and i32 %i.v, 16
@@ -410,41 +409,41 @@ bb.m:                                             ; preds = %nk_rgb_factor.exit1
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 8864
   %i.cw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %foldExtExtBinop = fadd <2 x float> %i.r, %i.t
-  %8 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %9 = fsub float %8, %7
+  %shift = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop189 = fsub <2 x float> %foldExtExtBinop, %shift
+  %7 = extractelement <2 x float> %foldExtExtBinop189, i64 0
   %i.cx = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.cy = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 8776
+  %8 = load <2 x float>, ptr %i.cz, align 8, !tbaa !54 ; 2 uses
   %i.da = load float, ptr %i.cv, align 8, !tbaa !654 ; 2 uses
   %i.db = load float, ptr %i.cu, align 4, !tbaa !1219
-  %i.dc = fsub float %9, %i.db                    ; 3 uses
+  %i.dc = fsub float %7, %i.db                    ; 3 uses
   store float %i.dc, ptr %6, align 4, !tbaa !112
   %i.dd = fadd float %i.da, %i.y                  ; 2 uses
   store float %i.dd, ptr %i.cx, align 4, !tbaa !114
-  %10 = load <2 x float>, ptr %i.cz, align 8, !tbaa !54 ; 3 uses
   %i.de = insertelement <2 x float> poison, float %i.dc, i64 0
   %i.df = insertelement <2 x float> %i.de, float %i.dd, i64 1
-  %i.dg = fadd <2 x float> %i.df, %10
+  %i.dg = fadd <2 x float> %i.df, %8
   store <2 x float> zeroinitializer, ptr %5, align 8, !tbaa !54
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 8852
   %i.di = load <2 x float>, ptr %i.dh, align 4, !tbaa !54 ; 4 uses
   %i.dj = fadd <2 x float> %i.r, %i.di            ; 3 uses
-  %11 = tail call float @llvm.fmuladd.f32(float %i.da, float -2.000000e+00, float %7) ; 4 uses
-  store float %11, ptr %i.cw, align 4, !tbaa !113
-  store float %11, ptr %i.cy, align 4, !tbaa !115
-  %i.dk = extractelement <2 x float> %10, i64 0
-  %12 = tail call float @llvm.fmuladd.f32(float %i.dk, float -2.000000e+00, float %11)
-  %.sroa.5.8.vec.insert = insertelement <2 x float> poison, float %12, i64 0
-  %13 = shufflevector <2 x float> %10, <2 x float> %i.di, <2 x i32> <i32 1, i32 3>
-  %14 = insertelement <2 x float> %i.t, float %11, i64 0
-  %i.dl = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> splat (float -2.000000e+00), <2 x float> %14) ; 3 uses
-  %15 = shufflevector <2 x float> %.sroa.5.8.vec.insert, <2 x float> %i.dl, <2 x i32> <i32 0, i32 2>
+  %9 = insertelement <2 x float> %i.di, float %i.da, i64 0
+  %10 = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %11 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> splat (float -2.000000e+00), <2 x float> %10) ; 3 uses
+  %i.dk = extractelement <2 x float> %11, i64 0   ; 2 uses
+  store float %i.dk, ptr %i.cw, align 4, !tbaa !113
+  store float %i.dk, ptr %i.cy, align 4, !tbaa !115
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dl = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %8, <2 x float> splat (float -2.000000e+00), <2 x float> %12)
+  %13 = insertelement <2 x float> %11, float undef, i64 0 ; 2 uses
   br i1 %.not104, label %.thread, label %bb.n
 
 .thread:                                          ; preds = %bb.m
   %i.dm = extractelement <2 x float> %i.di, i64 0
   %i.dn = tail call float @llvm.fmuladd.f32(float %i.dm, float -2.000000e+00, float %i.x)
-  %.sroa.6.8.vec.insert14 = insertelement <2 x float> %i.dl, float %i.dn, i64 0
+  %.sroa.6.8.vec.insert14 = insertelement <2 x float> %13, float %i.dn, i64 0
   %i.do = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.dp = load ptr, ptr %i.g, align 8, !tbaa !426
   call fastcc void @nk_widget_text(ptr noundef nonnull %i.do, <2 x float> %i.dj, <2 x float> %.sroa.6.8.vec.insert14, ptr noundef nonnull %1, i32 noundef %2, ptr noundef %5, i32 noundef 17, ptr noundef %i.dp)
@@ -459,7 +458,7 @@ bb.n:                                             ; preds = %bb.m
   %i.dv = fsub float %i.dc, %i.du
   %i.dw = extractelement <2 x float> %i.dj, i64 0
   %i.dx = fsub float %i.dv, %i.dw
-  %.sroa.6.8.vec.insert = insertelement <2 x float> %i.dl, float %i.dx, i64 0
+  %.sroa.6.8.vec.insert = insertelement <2 x float> %13, float %i.dx, i64 0
   %i.dy = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 3 uses
   %i.dz = load ptr, ptr %i.g, align 8, !tbaa !426
   call fastcc void @nk_widget_text(ptr noundef nonnull %i.dy, <2 x float> %i.dj, <2 x float> %.sroa.6.8.vec.insert, ptr noundef nonnull %1, i32 noundef %2, ptr noundef %5, i32 noundef 17, ptr noundef %i.dz)
@@ -521,7 +520,7 @@ nk_draw_button_symbol.exit:                       ; preds = %bb.o, %bb.p
   %.sroa.3.0.insert.insert.i.i = or disjoint i32 %.sroa.512.0.insert.insert.i.i, %.sroa.3.0.insert.shift.i.i
   %.sroa.011.0.insert.ext.i.i = zext i8 %.sroa.011.0.i.i to i32
   %.sroa.011.0.insert.insert.i.i = or disjoint i32 %.sroa.3.0.insert.insert.i.i, %.sroa.011.0.insert.ext.i.i
-  tail call fastcc void @nk_draw_symbol(ptr noundef nonnull %i.dy, i32 noundef %.092, <2 x float> %i.dg, <2 x float> %15, i32 %.sroa.02.0.i, i32 %.sroa.011.0.insert.insert.i.i, float noundef 1.000000e+00, ptr noundef %i.eb)
+  tail call fastcc void @nk_draw_symbol(ptr noundef nonnull %i.dy, i32 noundef %.092, <2 x float> %i.dg, <2 x float> %i.dl, i32 %.sroa.02.0.i, i32 %.sroa.011.0.insert.insert.i.i, float noundef 1.000000e+00, ptr noundef %i.eb)
   br label %bb.q
 
 bb.q:                                             ; preds = %.thread, %nk_draw_button_symbol.exit
