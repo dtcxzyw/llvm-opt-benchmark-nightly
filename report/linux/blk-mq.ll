@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.ad, %bb.s
   %i.bv = phi i32 [ %i.bt, %bb.s ], [ %i.ed, %bb.ad ]
   %.0.i47 = phi i32 [ 0, %bb.s ], [ %.2.i, %bb.ad ] ; 4 uses
-  %i.bw = sub i32 %i.bv, %.0.i47
+  %i.bw = sub nuw i32 %i.bv, %.0.i47
   %i.bx = call i64 @blk_mq_get_tags(ptr noundef %0, i32 noundef %i.bw, ptr noundef nonnull %i.a) #23 ; 2 uses
   %.not.i48 = icmp eq i64 %i.bx, 0
   br i1 %.not.i48, label %bb.u, label %bb.v, !prof !36

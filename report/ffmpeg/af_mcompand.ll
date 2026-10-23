@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %bb.x, %._crit_edge.
   br label %bb.aa
 
 .lr.ph253.i:                                      ; preds = %.loopexit.i, %.lr.ph253.preheader.i
-  %.1226251.i = phi i32 [ %.2227.i, %.loopexit.i ], [ %i.ht, %.lr.ph253.preheader.i ] ; 5 uses
-  %.1230250.i = phi i32 [ %.2231.i, %.loopexit.i ], [ 2, %.lr.ph253.preheader.i ] ; 9 uses
+  %.1226251.i = phi i32 [ %.2227.i, %.loopexit.i ], [ %i.ht, %.lr.ph253.preheader.i ] ; 4 uses
+  %.1230250.i = phi i32 [ %.2231.i, %.loopexit.i ], [ 2, %.lr.ph253.preheader.i ] ; 7 uses
   %i.ie = load ptr, ptr %i.gi, align 8, !tbaa !54 ; 3 uses
   %i.if = shl i32 %.1230250.i, 1                  ; 3 uses
   %i.ig = add i32 %i.if, -2
@@ -228,18 +228,14 @@ bb.y:                                             ; preds = %bb.x, %._crit_edge.
   %foldExtExtBinop = fsub nsz <2 x double> %i.iu, %shift
   %i.iv = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.iw = fcmp nsz une double %i.iv, 0.000000e+00
-  br i1 %i.iw, label %bb.z, label %1
+  br i1 %i.iw, label %bb.z, label %.lr.ph249.preheader.i
 
 bb.z:                                             ; preds = %.lr.ph253.i
   %i.ix = add nsw i32 %.1230250.i, 1
   br label %.loopexit.i
 
-1:                                                ; preds = %.lr.ph253.i
-  %2 = add nsw i32 %.1226251.i, -1                ; 4 uses
-  %3 = icmp slt i32 %.1230250.i, %.1226251.i
-  br i1 %3, label %.lr.ph249.preheader.i, label %.loopexit.i
-
-.lr.ph249.preheader.i:                            ; preds = %1
+.lr.ph249.preheader.i:                            ; preds = %.lr.ph253.i
+  %1 = add nsw i32 %.1226251.i, -1                ; 3 uses
   %i.iy = add i32 %.1230250.i, -1
   %i.iz = sext i32 %i.iy to i64                   ; 3 uses
   %i.ja = sub i32 %.1226251.i, %.1230250.i
@@ -280,12 +276,12 @@ bb.z:                                             ; preds = %.lr.ph253.i
   %i.jk = getelementptr inbounds i8, ptr %i.ji, i64 %.idx296.i.1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.jj, ptr noundef nonnull align 8 dereferenceable(32) %i.jk, i64 32, i1 false), !tbaa.struct !125
   %lftr.wideiv.1 = trunc i64 %indvars.iv.next269.i.1 to i32
-  %exitcond345.1 = icmp eq i32 %2, %lftr.wideiv.1
+  %exitcond345.1 = icmp eq i32 %1, %lftr.wideiv.1
   br i1 %exitcond345.1, label %.loopexit.i, label %.lr.ph249.i, !llvm.loop !108
 
-.loopexit.i:                                      ; preds = %.lr.ph249.i.prol.loopexit, %.lr.ph249.i, %1, %bb.z
-  %.2231.i = phi i32 [ %i.ix, %bb.z ], [ %.1230250.i, %1 ], [ %.1230250.i, %.lr.ph249.i ], [ %.1230250.i, %.lr.ph249.i.prol.loopexit ] ; 2 uses
-  %.2227.i = phi i32 [ %.1226251.i, %bb.z ], [ %2, %1 ], [ %2, %.lr.ph249.i ], [ %2, %.lr.ph249.i.prol.loopexit ] ; 2 uses
+.loopexit.i:                                      ; preds = %.lr.ph249.i.prol.loopexit, %.lr.ph249.i, %bb.z
+  %.2231.i = phi i32 [ %i.ix, %bb.z ], [ %.1230250.i, %.lr.ph249.i ], [ %.1230250.i, %.lr.ph249.i.prol.loopexit ] ; 2 uses
+  %.2227.i = phi i32 [ %.1226251.i, %bb.z ], [ %1, %.lr.ph249.i ], [ %1, %.lr.ph249.i.prol.loopexit ] ; 2 uses
   %i.jl = icmp slt i32 %.2231.i, %.2227.i
   br i1 %i.jl, label %.lr.ph253.i, label %.preheader241.loopexit.i, !llvm.loop !109
 

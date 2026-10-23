@@ -205,7 +205,7 @@ bb.a:
   store i32 %1, ptr %i.r, align 4, !tbaa !133
   %i.s = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %3) #21
   %i.t = trunc i64 %i.s to i32                    ; 7 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 36 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 35 uses
   store i32 %i.t, ptr %i.u, align 8, !tbaa !134
   %i.v = mul nsw i32 %i.t, %i.t                   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 12 ; 22 uses
@@ -608,41 +608,39 @@ Tn_Init.exit:                                     ; preds = %._crit_edge.i119.i,
   %i.xo = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   %i.xp = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.xq = getelementptr inbounds nuw i8, ptr %i.j, i64 12
+  %.pre.i41 = load i32, ptr %i.u, align 8, !tbaa !134
   br label %.preheader164.i.i
 
 .preheader164.i.i:                                ; preds = %._crit_edge168.i.i, %.preheader164.preheader.i.i
-  %i.xr = phi i32 [ %13, %._crit_edge168.i.i ], [ %i.xj, %.preheader164.preheader.i.i ] ; 5 uses
+  %10 = phi i32 [ %16, %._crit_edge168.i.i ], [ %.pre.i41, %.preheader164.preheader.i.i ] ; 5 uses
+  %i.xr = phi i32 [ %17, %._crit_edge168.i.i ], [ %i.xj, %.preheader164.preheader.i.i ] ; 3 uses
   %.0169.i.i = phi i32 [ %i.za, %._crit_edge168.i.i ], [ 0, %.preheader164.preheader.i.i ] ; 3 uses
-  %.not127166.i.i = icmp slt i32 %i.xr, 1
-  br i1 %.not127166.i.i, label %._crit_edge168.i.i, label %.preheader163.lr.ph.i.i
-
-.preheader163.lr.ph.i.i:                          ; preds = %.preheader164.i.i
-  %10 = load i32, ptr %i.u, align 8, !tbaa !134   ; 3 uses
   %11 = icmp sgt i32 %10, 0
   br i1 %11, label %.preheader163.i.i, label %._crit_edge168.i.i
 
 .preheader162.i.i:                                ; preds = %._crit_edge168.i.i
-  %i.xs = icmp sgt i32 %13, 0
+  %i.xs = icmp sgt i32 %17, 0
   br i1 %i.xs, label %.preheader161.lr.ph.i.i, label %._crit_edge175.i.i
 
 .preheader161.lr.ph.i.i:                          ; preds = %.preheader162.i.i
   %i.xt = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.xu = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.xv = getelementptr inbounds nuw i8, ptr %i.i, i64 12
-  %12 = load i32, ptr %i.u, align 8, !tbaa !134   ; 2 uses
-  %i.xw = icmp sgt i32 %12, 0
+  %i.xw = icmp sgt i32 %16, 0
   br i1 %i.xw, label %.preheader161.i.i, label %._crit_edge175.i.i
 
-.preheader163.i.i:                                ; preds = %.preheader163.lr.ph.i.i, %._crit_edge.i.i42
-  %i.xx = phi i32 [ %i.yv, %._crit_edge.i.i42 ], [ %i.xr, %.preheader163.lr.ph.i.i ]
-  %i.xy = phi i32 [ %i.yw, %._crit_edge.i.i42 ], [ %i.xr, %.preheader163.lr.ph.i.i ]
-  %i.xz = phi i32 [ %i.yx, %._crit_edge.i.i42 ], [ %10, %.preheader163.lr.ph.i.i ] ; 2 uses
-  %i.ya = phi i32 [ %i.yy, %._crit_edge.i.i42 ], [ %10, %.preheader163.lr.ph.i.i ] ; 3 uses
-  %.0120167.i.i = phi i32 [ %i.yz, %._crit_edge.i.i42 ], [ 1, %.preheader163.lr.ph.i.i ] ; 5 uses
+.preheader163.i.i:                                ; preds = %.preheader164.i.i, %._crit_edge.i.i42
+  %12 = phi i32 [ %15, %._crit_edge.i.i42 ], [ %10, %.preheader164.i.i ] ; 2 uses
+  %i.xx = phi i32 [ %i.yv, %._crit_edge.i.i42 ], [ %i.xr, %.preheader164.i.i ]
+  %i.xy = phi i32 [ %i.yw, %._crit_edge.i.i42 ], [ %i.xr, %.preheader164.i.i ]
+  %i.xz = phi i32 [ %i.yx, %._crit_edge.i.i42 ], [ %10, %.preheader164.i.i ] ; 2 uses
+  %i.ya = phi i32 [ %i.yy, %._crit_edge.i.i42 ], [ %10, %.preheader164.i.i ] ; 3 uses
+  %.0120167.i.i = phi i32 [ %i.yz, %._crit_edge.i.i42 ], [ 1, %.preheader164.i.i ] ; 5 uses
   %i.yb = icmp sgt i32 %i.ya, 0
   br i1 %i.yb, label %.lr.ph.i.i43, label %._crit_edge.i.i42
 
 .lr.ph.i.i43:                                     ; preds = %.preheader163.i.i, %bb.al
+  %13 = phi i32 [ %14, %bb.al ], [ %12, %.preheader163.i.i ]
   %i.yc = phi i32 [ %i.ys, %bb.al ], [ %i.xz, %.preheader163.i.i ]
   %i.yd = phi i32 [ %i.ys, %bb.al ], [ %i.ya, %.preheader163.i.i ]
   %.0117165.i.i = phi i32 [ %i.yt, %bb.al ], [ 0, %.preheader163.i.i ] ; 4 uses
@@ -681,10 +679,11 @@ bb.ak:                                            ; preds = %.lr.ph.i.i43
   store i32 0, ptr %i.xq, align 4, !tbaa !10
   call fastcc void @Tn_GenClause(ptr noundef nonnull %i.q, ptr noundef nonnull %i.j, i32 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #18
-  %.pre.i.i44 = load i32, ptr %i.u, align 8, !tbaa !134
+  %.pre.i.i44 = load i32, ptr %i.u, align 8, !tbaa !134 ; 2 uses
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %.lr.ph.i.i43
+  %14 = phi i32 [ %13, %.lr.ph.i.i43 ], [ %.pre.i.i44, %bb.ak ] ; 2 uses
   %i.ys = phi i32 [ %i.yc, %.lr.ph.i.i43 ], [ %.pre.i.i44, %bb.ak ] ; 5 uses
   %i.yt = add nuw nsw i32 %.0117165.i.i, 1        ; 2 uses
   %i.yu = icmp slt i32 %i.yt, %i.ys
@@ -695,6 +694,7 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph.i.i4
   br label %._crit_edge.i.i42
 
 ._crit_edge.i.i42:                                ; preds = %._crit_edge.loopexit.i.i45, %.preheader163.i.i
+  %15 = phi i32 [ %14, %._crit_edge.loopexit.i.i45 ], [ %12, %.preheader163.i.i ] ; 2 uses
   %i.yv = phi i32 [ %.pre200.i.i, %._crit_edge.loopexit.i.i45 ], [ %i.xx, %.preheader163.i.i ] ; 2 uses
   %i.yw = phi i32 [ %.pre200.i.i, %._crit_edge.loopexit.i.i45 ], [ %i.xy, %.preheader163.i.i ] ; 2 uses
   %i.yx = phi i32 [ %i.ys, %._crit_edge.loopexit.i.i45 ], [ %i.xz, %.preheader163.i.i ]
@@ -703,15 +703,16 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph.i.i4
   %.not127.not.i.i = icmp slt i32 %.0120167.i.i, %i.yw
   br i1 %.not127.not.i.i, label %.preheader163.i.i, label %._crit_edge168.i.i, !llvm.loop !85
 
-._crit_edge168.i.i:                               ; preds = %._crit_edge.i.i42, %.preheader163.lr.ph.i.i, %.preheader164.i.i
-  %13 = phi i32 [ %i.xr, %.preheader164.i.i ], [ %i.xr, %.preheader163.lr.ph.i.i ], [ %i.yv, %._crit_edge.i.i42 ] ; 6 uses
+._crit_edge168.i.i:                               ; preds = %._crit_edge.i.i42, %.preheader164.i.i
+  %16 = phi i32 [ %10, %.preheader164.i.i ], [ %15, %._crit_edge.i.i42 ] ; 3 uses
+  %17 = phi i32 [ %i.xr, %.preheader164.i.i ], [ %i.yv, %._crit_edge.i.i42 ] ; 6 uses
   %i.za = add nuw nsw i32 %.0169.i.i, 1           ; 2 uses
-  %i.zb = icmp slt i32 %i.za, %13
+  %i.zb = icmp slt i32 %i.za, %17
   br i1 %i.zb, label %.preheader164.i.i, label %.preheader162.i.i, !llvm.loop !86
 
 .preheader161.i.i:                                ; preds = %.preheader161.lr.ph.i.i, %._crit_edge173.i.i
-  %i.zc = phi i32 [ %i.zp, %._crit_edge173.i.i ], [ %13, %.preheader161.lr.ph.i.i ]
-  %i.zd = phi i32 [ %i.zq, %._crit_edge173.i.i ], [ %12, %.preheader161.lr.ph.i.i ] ; 3 uses
+  %i.zc = phi i32 [ %i.zp, %._crit_edge173.i.i ], [ %17, %.preheader161.lr.ph.i.i ]
+  %i.zd = phi i32 [ %i.zq, %._crit_edge173.i.i ], [ %16, %.preheader161.lr.ph.i.i ] ; 3 uses
   %.1174.i.i = phi i32 [ %i.zr, %._crit_edge173.i.i ], [ 0, %.preheader161.lr.ph.i.i ] ; 2 uses
   %i.ze = icmp sgt i32 %i.zd, 0
   br i1 %i.ze, label %.lr.ph172.i.i, label %._crit_edge173.i.i
@@ -750,7 +751,7 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph.i.i4
   br i1 %i.zs, label %.preheader161.i.i, label %._crit_edge175.i.i, !llvm.loop !88
 
 ._crit_edge175.i.i:                               ; preds = %._crit_edge173.i.i, %.preheader161.lr.ph.i.i, %.preheader162.i.i, %Tn_Init.exit
-  %i.zt = phi i32 [ %i.xj, %Tn_Init.exit ], [ %13, %.preheader161.lr.ph.i.i ], [ %13, %.preheader162.i.i ], [ %i.zp, %._crit_edge173.i.i ] ; 3 uses
+  %i.zt = phi i32 [ %i.xj, %Tn_Init.exit ], [ %17, %.preheader161.lr.ph.i.i ], [ %17, %.preheader162.i.i ], [ %i.zp, %._crit_edge173.i.i ] ; 3 uses
   %i.zu = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #19 ; 10 uses
   store i32 0, ptr %i.zu, align 8, !tbaa !15
   %i.zv = getelementptr inbounds nuw i8, ptr %i.zu, i64 4 ; 6 uses

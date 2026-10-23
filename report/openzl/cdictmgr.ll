@@ -205,9 +205,9 @@ XXH3_accumulate_sse2.exit47.i.i.i:                ; preds = %.lr.ph.i, %bb.d
   %i.ej = mul nuw <2 x i64> %i.ei, splat (i64 2654435761)
   %i.ek = mul <2 x i64> %i.eh, splat (i64 -7046029290881679360)
   %i.el = add <2 x i64> %i.ek, %i.ej              ; 2 uses
-  %i.em = shl i64 %.0.i.i.i, 6
+  %i.em = shl nuw nsw i64 %.0.i.i.i, 6
   %i.en = getelementptr inbounds nuw i8, ptr %.036.i.i.i, i64 %i.em ; 2 uses
-  %i.eo = sub i64 %.038.i.i.i, %.0.i.i.i          ; 3 uses
+  %i.eo = sub nuw nsw i64 %.038.i.i.i, %.0.i.i.i  ; 3 uses
   %.not44.i.i.i = icmp ult i64 %i.eo, %i.ag
   br i1 %.not44.i.i.i, label %.loopexit.i, label %bb.d, !llvm.loop !1
 
@@ -610,9 +610,9 @@ XXH3_accumulate_sse2.exit47.i8:                   ; preds = %XXH3_accumulate_512
   %i.eq = mul <2 x i64> %i.en, splat (i64 -7046029290881679360)
   %i.er = add <2 x i64> %i.eq, %i.ep              ; 2 uses
   store <2 x i64> %i.er, ptr %i.am, align 16, !tbaa !26, !alias.scope !178, !noalias !172
-  %i.es = shl i64 %.0.i6, 6
+  %i.es = shl nuw nsw i64 %.0.i6, 6
   %i.et = getelementptr inbounds nuw i8, ptr %.036.i4, i64 %i.es ; 2 uses
-  %i.eu = sub i64 %.038.i3, %.0.i6                ; 4 uses
+  %i.eu = sub nuw nsw i64 %.038.i3, %.0.i6        ; 4 uses
   %.not44.i11 = icmp ult i64 %i.eu, %i.aa
   br i1 %.not44.i11, label %bb.e, label %bb.d, !llvm.loop !1
 

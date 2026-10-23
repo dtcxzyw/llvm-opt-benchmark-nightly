@@ -205,8 +205,8 @@ _RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7IterMutNtNtNtCs7tN9tvpkfrg_12typst_l
           to label %bb.by unwind label %.loopexit.split-lp275.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bx:                                            ; preds = %.lr.ph310, %bb.cc
-  %i.sg = phi i64 [ %.pr, %.lr.ph310 ], [ %i.te, %bb.cc ] ; 6 uses
-  %.sroa.071.0308 = phi i64 [ 0, %.lr.ph310 ], [ %.sroa.071.1, %bb.cc ] ; 7 uses
+  %i.sg = phi i64 [ %.pr, %.lr.ph310 ], [ %i.te, %bb.cc ] ; 4 uses
+  %.sroa.071.0308 = phi i64 [ 0, %.lr.ph310 ], [ %.sroa.071.1, %bb.cc ] ; 6 uses
   %i.sh = load ptr, ptr %i.fk, align 8, !nonnull !41, !noundef !41
   %i.si = getelementptr inbounds nuw [112 x i8], ptr %i.sh, i64 %.sroa.071.0308 ; 2 uses
   %i.sj = getelementptr i8, ptr %i.si, i64 48
@@ -251,24 +251,20 @@ bb.ca:                                            ; preds = %._crit_edge339, %bb
   %i.sw = icmp eq i64 %i.su, %i.sd
   %or.cond = select i1 %i.sw, i1 %.sroa.045.0, i1 false
   %or.cond190 = select i1 %i.sv, i1 true, i1 %or.cond
-  br i1 %or.cond190, label %3, label %bb.cb
+  br i1 %or.cond190, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.i, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.bx, %._crit_edge337
   %i.sx = add nuw i64 %.sroa.071.0308, 1
   br label %bb.cc
 
-3:                                                ; preds = %._crit_edge337
+_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.i: ; preds = %._crit_edge337
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.experimental.noalias.scope.decl(metadata !27945)
   call void @llvm.experimental.noalias.scope.decl(metadata !27946)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !27947)
-  %4 = icmp ult i64 %i.sg, 82351536043346213
-  call void @llvm.assume(i1 %4)
-  %.not.i.i = icmp ult i64 %.sroa.071.0308, %i.sg
-  br i1 %.not.i.i, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.i, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.thread.i
-
-_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.i: ; preds = %3
+  %3 = icmp ult i64 %i.sg, 82351536043346213
+  call void @llvm.assume(i1 %3)
   %i.sy = getelementptr inbounds nuw [112 x i8], ptr %i.se, i64 %.sroa.071.0308 ; 4 uses
   %.sroa.0.0.copyload1.i204 = load i64, ptr %i.sy, align 8, !noalias !27948 ; 2 uses
   %.sroa.6.0..sroa_idx2.i = getelementptr inbounds nuw i8, ptr %i.sy, i64 8
@@ -283,11 +279,8 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4gr
   %.not.i205 = icmp eq i64 %.sroa.0.0.copyload1.i204, 2
   br i1 %.not.i205, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.thread.i, label %bb.cd, !prof !47
 
-_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.thread.i: ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.i, %3
-  %5 = phi i64 [ %i.sg, %3 ], [ %i.td, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.i ] ; 2 uses
-  %6 = icmp samesign ult i64 %5, 82351536043346213
-  call void @llvm.assume(i1 %6)
-  invoke void @_RNvNvMs_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecppE6remove13assert_failed(i64 noundef %.sroa.071.0308, i64 noundef %5, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @421) #53
+_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.thread.i: ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.i
+  invoke void @_RNvNvMs_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecppE6remove13assert_failed(i64 noundef %.sroa.071.0308, i64 noundef %i.td, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @421) #53
           to label %.noexc206 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc206:                                        ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8rowspans7RowspanE10try_removeBK_.exit.thread.i

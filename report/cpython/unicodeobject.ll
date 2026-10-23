@@ -205,8 +205,8 @@ bb.x:                                             ; preds = %.critedge.i, %bb.t
   br i1 %i.ct, label %bb.t, label %charmap_decode_string.exit.thread, !llvm.loop !587
 
 bb.y:                                             ; preds = %.backedge.i, %.lr.ph124.i
-  %i.cu = phi ptr [ %i.bg, %.lr.ph124.i ], [ %i.fk, %.backedge.i ] ; 5 uses
-  %i.cv = phi ptr [ %0, %.lr.ph124.i ], [ %i.fl, %.backedge.i ] ; 9 uses
+  %i.cu = phi ptr [ %i.bg, %.lr.ph124.i ], [ %i.fk, %.backedge.i ] ; 3 uses
+  %i.cv = phi ptr [ %0, %.lr.ph124.i ], [ %i.fl, %.backedge.i ] ; 7 uses
   br i1 %or.cond3.i, label %bb.z, label %bb.ae
 
 bb.z:                                             ; preds = %bb.y
@@ -219,8 +219,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.cx = load ptr, ptr %i.bm, align 8, !tbaa !251
   %i.cy = load i32, ptr %i.ao, align 4, !tbaa !247
-  %5 = icmp ult ptr %i.cv, %i.cu
-  br i1 %5, label %.lr.ph120.i, label %.thread.i
+  br label %.lr.ph120.i
 
 .lr.ph120.i:                                      ; preds = %bb.aa, %bb.ab
   %i.cz = phi ptr [ %i.dl, %bb.ab ], [ %i.cv, %bb.aa ] ; 4 uses
@@ -246,8 +245,7 @@ bb.ab:                                            ; preds = %.lr.ph120.i
 
 bb.ac:                                            ; preds = %bb.z
   %i.dm = load ptr, ptr %i.bm, align 8, !tbaa !251
-  %6 = icmp ult ptr %i.cv, %i.cu
-  br i1 %6, label %.lr.ph.i, label %.thread.i
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ac, %bb.ad
   %i.dn = phi ptr [ %i.dw, %bb.ad ], [ %i.cv, %bb.ac ] ; 4 uses
@@ -393,7 +391,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.
   %i.fm = icmp ult ptr %i.fl, %i.fk
   br i1 %i.fm, label %bb.y, label %.thread.i, !llvm.loop !590
 
-.thread.i:                                        ; preds = %.backedge.i, %bb.ac, %bb.aa, %bb.ad, %bb.ab, %.preheader.i
+.thread.i:                                        ; preds = %.backedge.i, %bb.ad, %bb.ab, %.preheader.i
   %i.fn = load ptr, ptr %i.n, align 8, !tbaa !227 ; 4 uses
   %.not.i86.i = icmp eq ptr %i.fn, null
   br i1 %.not.i86.i, label %Py_XDECREF.exit.i, label %bb.ap

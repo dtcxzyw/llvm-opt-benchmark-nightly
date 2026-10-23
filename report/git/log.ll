@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 bb.y:                                             ; preds = %skip_prefix_impl.exit.i, %.lr.ph.i
-  %i.da = phi i64 [ %i.cz, %.lr.ph.i ], [ %i.ee, %skip_prefix_impl.exit.i ] ; 10 uses
+  %i.da = phi i64 [ %i.cz, %.lr.ph.i ], [ %i.ee, %skip_prefix_impl.exit.i ] ; 12 uses
   %.02234.i = phi i64 [ 0, %.lr.ph.i ], [ %.1.i, %skip_prefix_impl.exit.i ] ; 4 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.cu, i64 %.02234.i ; 8 uses
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !81  ; 2 uses
@@ -213,13 +213,12 @@ bb.y:                                             ; preds = %skip_prefix_impl.ex
   br i1 %.not26.i, label %bb.ai, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.dd = add nuw i64 %.02234.i, 1                ; 3 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %i.da, i64 %i.dd) ; 3 uses
-  %exitcond.not.i138.not = icmp ult i64 %i.dd, %i.da
-  br i1 %exitcond.not.i138.not, label %.lr.ph140, label %.critedge2.i
+  %i.dd = add nuw i64 %.02234.i, 1                ; 2 uses
+  %exitcond.not.i139 = icmp eq i64 %i.dd, %i.da
+  br i1 %exitcond.not.i139, label %.critedge2.i, label %.lr.ph140
 
 bb.aa:                                            ; preds = %.lr.ph140
-  %exitcond.not.i = icmp eq i64 %i.de, %umax.i
+  %exitcond.not.i = icmp eq i64 %i.de, %i.da
   br i1 %exitcond.not.i, label %.critedge2.i, label %.lr.ph140, !llvm.loop !208
 
 .lr.ph140:                                        ; preds = %bb.z, %bb.aa
@@ -234,7 +233,7 @@ bb.aa:                                            ; preds = %.lr.ph140
   br label %.critedge2.i, !llvm.loop !208
 
 .critedge2.i:                                     ; preds = %bb.aa, %..critedge2.i_crit_edge, %bb.z
-  %.1.i = phi i64 [ %i.de, %..critedge2.i_crit_edge ], [ %umax.i, %bb.z ], [ %umax.i, %bb.aa ] ; 2 uses
+  %.1.i = phi i64 [ %i.de, %..critedge2.i_crit_edge ], [ %i.da, %bb.z ], [ %i.da, %bb.aa ] ; 2 uses
   %scevgep39.i = getelementptr i8, ptr %scevgep.i, i64 %.02234.i
   %i.dh = icmp eq i8 %i.dc, 116
   br i1 %i.dh, label %bb.ab, label %skip_prefix_impl.exit.i
@@ -636,9 +635,6 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #18
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

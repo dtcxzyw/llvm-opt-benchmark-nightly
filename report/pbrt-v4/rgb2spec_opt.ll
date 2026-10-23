@@ -205,23 +205,25 @@ bb.a:
   %i.h = fdiv double %i.c, %i.g                   ; 2 uses
   %i.i = load ptr, ptr @stdout, align 8, !tbaa !67
   %i.j = tail call i32 @fflush(ptr noundef %i.i)  ; 0 uses
-  %i.k = load ptr, ptr %.val, align 8, !tbaa !171, !nonnull !50, !align !172 ; 2 uses
+  %i.k = load ptr, ptr %.val, align 8, !tbaa !171, !nonnull !50, !align !172
   %i.l = load i32, ptr %i.k, align 4, !tbaa !14   ; 2 uses
   %i.m = icmp sgt i32 %i.l, 0
   br i1 %i.m, label %.lr.ph72.i.i.i, label %"_ZSt10__invoke_rIvRZ4mainE3$_0JlEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES3_E4typeEOS4_DpOS5_.exit"
 
 .lr.ph72.i.i.i:                                   ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %.val, i64 16 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.val, i64 16 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.r = trunc i64 %.val2 to i32                  ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.val, i64 24 ; 2 uses
+  %.pre.i.pre.i.i = load ptr, ptr %i.o, align 8, !tbaa !173
+  %.pre78.i.pre.i.i = load i32, ptr %.pre.i.pre.i.i, align 4, !tbaa !14
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge69.i.i.i, %.lr.ph72.i.i.i
-  %2 = phi ptr [ %i.k, %.lr.ph72.i.i.i ], [ %6, %._crit_edge69.i.i.i ]
-  %i.t = phi i32 [ %i.l, %.lr.ph72.i.i.i ], [ %7, %._crit_edge69.i.i.i ] ; 4 uses
+  %.pre78.i.i.i = phi i32 [ %.pre78.i.pre.i.i, %.lr.ph72.i.i.i ], [ %i.da, %._crit_edge69.i.i.i ]
+  %i.t = phi i32 [ %i.l, %.lr.ph72.i.i.i ], [ %i.dc, %._crit_edge69.i.i.i ] ; 2 uses
   %.070.i.i.i = phi i32 [ 0, %.lr.ph72.i.i.i ], [ %i.cc, %._crit_edge69.i.i.i ] ; 4 uses
   %i.u = uitofp nneg i32 %.070.i.i.i to double
   %i.v = add nsw i32 %i.t, -1
@@ -230,34 +232,13 @@ bb.b:                                             ; preds = %._crit_edge69.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
-  %i.y = sdiv i32 %i.t, 5                         ; 2 uses
-  %3 = icmp sgt i32 %i.t, 0
-  br i1 %3, label %.lr.ph.preheader.i.i.i, label %._crit_edge.i.i.i
-
-.lr.ph.preheader.i.i.i:                           ; preds = %bb.b
-  %4 = zext nneg i32 %i.y to i64                  ; 2 uses
-  %.pre.i.i.i = load ptr, ptr %i.o, align 8, !tbaa !173
-  %.pre78.i.i.i = load i32, ptr %.pre.i.i.i, align 4, !tbaa !14
+  %i.y = sdiv i32 %i.t, 5
+  %2 = zext i32 %i.y to i64                       ; 2 uses
   br label %.lr.ph.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %bb.b
-  %5 = icmp sgt i32 %i.t, -5
-  br i1 %5, label %._crit_edge.i..lr.ph68.preheader.i_crit_edge.i.i, label %._crit_edge69.i.i.i
-
-._crit_edge.i..lr.ph68.preheader.i_crit_edge.i.i: ; preds = %._crit_edge.i.i.i
-  %.pre79.i.pre.i.i = load ptr, ptr %i.o, align 8, !tbaa !173
-  %.pre80.i.pre.i.i = load i32, ptr %.pre79.i.pre.i.i, align 4, !tbaa !14
-  %.pre.i.i = zext i32 %i.y to i64
-  br label %.lr.ph68.i.i.i.preheader
-
-.lr.ph68.i.i.i.preheader:                         ; preds = %._crit_edge.thread.i.i.i, %._crit_edge.i..lr.ph68.preheader.i_crit_edge.i.i
-  %.ph = phi i32 [ %i.av, %._crit_edge.thread.i.i.i ], [ %.pre80.i.pre.i.i, %._crit_edge.i..lr.ph68.preheader.i_crit_edge.i.i ]
-  %indvars.iv75.i.i.i.ph = phi i64 [ %4, %._crit_edge.thread.i.i.i ], [ %.pre.i.i, %._crit_edge.i..lr.ph68.preheader.i_crit_edge.i.i ]
-  br label %.lr.ph68.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
-  %i.z = phi i32 [ %.pre78.i.i.i, %.lr.ph.preheader.i.i.i ], [ %i.av, %.lr.ph.i.i.i ] ; 3 uses
-  %indvars.iv.i.i.i = phi i64 [ %4, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %bb.b
+  %i.z = phi i32 [ %.pre78.i.i.i, %bb.b ], [ %i.av, %.lr.ph.i.i.i ] ; 3 uses
+  %indvars.iv.i.i.i = phi i64 [ %2, %bb.b ], [ %indvars.iv.next.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.aa = load ptr, ptr %i.n, align 8, !tbaa !174, !nonnull !50, !align !82
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !69
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv.i.i.i
@@ -323,20 +304,18 @@ bb.b:                                             ; preds = %._crit_edge69.i.i.i
 
 ._crit_edge.thread.i.i.i:                         ; preds = %.lr.ph.i.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
-  br label %.lr.ph68.i.i.i.preheader
+  br label %.lr.ph68.i.i.i
 
-._crit_edge69.i.i.i:                              ; preds = %.lr.ph68.i.i.i, %._crit_edge.i.i.i
-  %6 = phi ptr [ %2, %._crit_edge.i.i.i ], [ %i.db, %.lr.ph68.i.i.i ] ; 2 uses
+._crit_edge69.i.i.i:                              ; preds = %.lr.ph68.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #32
   %i.cc = add nuw nsw i32 %.070.i.i.i, 1          ; 2 uses
-  %7 = load i32, ptr %6, align 4, !tbaa !14       ; 2 uses
-  %i.cd = icmp slt i32 %i.cc, %7
+  %i.cd = icmp slt i32 %i.cc, %i.dc
   br i1 %i.cd, label %bb.b, label %"_ZSt10__invoke_rIvRZ4mainE3$_0JlEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES3_E4typeEOS4_DpOS5_.exit", !llvm.loop !168
 
-.lr.ph68.i.i.i:                                   ; preds = %.lr.ph68.i.i.i.preheader, %.lr.ph68.i.i.i
-  %i.ce = phi i32 [ %i.da, %.lr.ph68.i.i.i ], [ %.ph, %.lr.ph68.i.i.i.preheader ] ; 3 uses
-  %indvars.iv75.i.i.i = phi i64 [ %indvars.iv.next76.i.i.i, %.lr.ph68.i.i.i ], [ %indvars.iv75.i.i.i.ph, %.lr.ph68.i.i.i.preheader ] ; 4 uses
+.lr.ph68.i.i.i:                                   ; preds = %.lr.ph68.i.i.i, %._crit_edge.thread.i.i.i
+  %i.ce = phi i32 [ %i.av, %._crit_edge.thread.i.i.i ], [ %i.da, %.lr.ph68.i.i.i ] ; 3 uses
+  %indvars.iv75.i.i.i = phi i64 [ %2, %._crit_edge.thread.i.i.i ], [ %indvars.iv.next76.i.i.i, %.lr.ph68.i.i.i ] ; 4 uses
   %i.cf = load ptr, ptr %i.n, align 8, !tbaa !174, !nonnull !50, !align !82
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !69
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.cg, i64 %indvars.iv75.i.i.i
@@ -362,9 +341,9 @@ bb.b:                                             ; preds = %._crit_edge69.i.i.i
   %i.cx = load double, ptr %i.p, align 8, !tbaa !13 ; 2 uses
   %i.cy = load double, ptr %i.q, align 16, !tbaa !13
   %i.cz = load ptr, ptr %i.o, align 8, !tbaa !173
-  %i.da = load i32, ptr %i.cz, align 4, !tbaa !14 ; 2 uses
-  %i.db = load ptr, ptr %.val, align 8, !tbaa !171, !nonnull !50, !align !172 ; 2 uses
-  %i.dc = load i32, ptr %i.db, align 4, !tbaa !14 ; 3 uses
+  %i.da = load i32, ptr %i.cz, align 4, !tbaa !14 ; 3 uses
+  %i.db = load ptr, ptr %.val, align 8, !tbaa !171, !nonnull !50, !align !172
+  %i.dc = load i32, ptr %i.db, align 4, !tbaa !14 ; 5 uses
   %i.dd = mul nsw i32 %i.dc, %i.da
   %i.de = trunc nuw nsw i64 %indvars.iv75.i.i.i to i32
   %i.df = add nsw i32 %i.dd, %i.de

@@ -205,13 +205,9 @@ bb.c:                                             ; preds = %bb.b
   br label %.preheader199.i.i.i
 
 .preheader199.i.i.i:                              ; preds = %._crit_edge218.i.i.i, %.preheader199.preheader.i.i.i
-  %i.ay = phi i32 [ %11, %._crit_edge218.i.i.i ], [ %i.av, %.preheader199.preheader.i.i.i ] ; 4 uses
+  %i.ay = phi i32 [ %i.hw, %._crit_edge218.i.i.i ], [ %i.av, %.preheader199.preheader.i.i.i ] ; 2 uses
   %.050219.i.i.i = phi i32 [ %i.bd, %._crit_edge218.i.i.i ], [ 0, %.preheader199.preheader.i.i.i ] ; 4 uses
-  %7 = icmp sgt i32 %i.ay, 0
-  br i1 %7, label %.preheader.preheader.i.i.i, label %._crit_edge218.i.i.i
-
-.preheader.preheader.i.i.i:                       ; preds = %.preheader199.i.i.i
-  %8 = uitofp nneg i32 %.050219.i.i.i to float
+  %7 = uitofp nneg i32 %.050219.i.i.i to float
   br label %.preheader.i.i.i
 
 ._crit_edge221.i.i.i:                             ; preds = %._crit_edge218.i.i.i, %bb.c
@@ -227,36 +223,29 @@ bb.d:                                             ; preds = %._crit_edge221.i.i.
 .noexc.i.i.i:                                     ; preds = %bb.d
   unreachable
 
-.preheader.i.i.i:                                 ; preds = %._crit_edge.i.i.i, %.preheader.preheader.i.i.i
-  %i.bb = phi i32 [ %12, %._crit_edge.i.i.i ], [ %i.ay, %.preheader.preheader.i.i.i ] ; 2 uses
-  %i.bc = phi i32 [ %13, %._crit_edge.i.i.i ], [ %i.ay, %.preheader.preheader.i.i.i ] ; 4 uses
-  %.051217.i.i.i = phi i32 [ %i.bf, %._crit_edge.i.i.i ], [ 0, %.preheader.preheader.i.i.i ] ; 4 uses
+.preheader.i.i.i:                                 ; preds = %._crit_edge.i.i.i, %.preheader199.i.i.i
+  %i.bb = phi i32 [ %i.hw, %._crit_edge.i.i.i ], [ %i.ay, %.preheader199.i.i.i ]
+  %i.bc = phi i32 [ %i.hx, %._crit_edge.i.i.i ], [ %i.ay, %.preheader199.i.i.i ] ; 2 uses
+  %.051217.i.i.i = phi i32 [ %i.bf, %._crit_edge.i.i.i ], [ 0, %.preheader199.i.i.i ] ; 4 uses
   %invariant.smax.i.i.i = call i32 @llvm.smax.i32(i32 %.050219.i.i.i, i32 %.051217.i.i.i)
-  %9 = icmp sgt i32 %i.bc, 0
-  br i1 %9, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i
-  %10 = uitofp nneg i32 %.051217.i.i.i to float
+  %8 = uitofp nneg i32 %.051217.i.i.i to float
   br label %bb.e
 
-._crit_edge218.i.i.i:                             ; preds = %._crit_edge.i.i.i, %.preheader199.i.i.i
-  %11 = phi i32 [ %i.ay, %.preheader199.i.i.i ], [ %12, %._crit_edge.i.i.i ] ; 2 uses
+._crit_edge218.i.i.i:                             ; preds = %._crit_edge.i.i.i
   %i.bd = add nuw nsw i32 %.050219.i.i.i, 1       ; 2 uses
-  %i.be = icmp slt i32 %i.bd, %11
+  %i.be = icmp slt i32 %i.bd, %i.hw
   br i1 %i.be, label %.preheader199.i.i.i, label %._crit_edge221.i.i.i, !llvm.loop !492
 
-._crit_edge.i.i.i:                                ; preds = %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i, %.preheader.i.i.i
-  %12 = phi i32 [ %i.bb, %.preheader.i.i.i ], [ %i.hw, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
-  %13 = phi i32 [ %i.bc, %.preheader.i.i.i ], [ %i.hx, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
+._crit_edge.i.i.i:                                ; preds = %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i
   %i.bf = add nuw nsw i32 %.051217.i.i.i, 1       ; 2 uses
-  %i.bg = icmp slt i32 %i.bf, %13
+  %i.bg = icmp slt i32 %i.bf, %i.hx
   br i1 %i.bg, label %.preheader.i.i.i, label %._crit_edge218.i.i.i, !llvm.loop !493
 
-bb.e:                                             ; preds = %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i, %.lr.ph.i.i.i
-  %i.bh = phi i32 [ %i.bb, %.lr.ph.i.i.i ], [ %i.hw, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
-  %i.bi = phi i32 [ %i.bc, %.lr.ph.i.i.i ], [ %i.hx, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
-  %i.bj = phi i32 [ %i.bc, %.lr.ph.i.i.i ], [ %i.hy, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
-  %.052216.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i ], [ %i.hz, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 4 uses
+bb.e:                                             ; preds = %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i, %.preheader.i.i.i
+  %i.bh = phi i32 [ %i.bb, %.preheader.i.i.i ], [ %i.hw, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
+  %i.bi = phi i32 [ %i.bc, %.preheader.i.i.i ], [ %i.hx, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
+  %i.bj = phi i32 [ %i.bc, %.preheader.i.i.i ], [ %i.hy, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 2 uses
+  %.052216.i.i.i = phi i32 [ 0, %.preheader.i.i.i ], [ %i.hz, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i ] ; 4 uses
   %i.bk = load ptr, ptr %i.k, align 8, !tbaa !506, !nonnull !92, !align !194
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !208 ; 2 uses
   %or.cond197.i.i.i = icmp sle i32 %i.bl, %invariant.smax.i.i.i
@@ -298,8 +287,8 @@ bb.f:                                             ; preds = %_ZN2cv3_atERNS_3Mat
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.cm = load ptr, ptr %i.m, align 8, !tbaa !509, !nonnull !92, !align !194
   %i.cn = load float, ptr %i.cm, align 4, !tbaa !41 ; 3 uses
-  %i.co = fmul float %i.cn, %8
-  %i.cp = fmul float %i.cn, %10
+  %i.co = fmul float %i.cn, %7
+  %i.cp = fmul float %i.cn, %8
   %i.cq = uitofp nneg i32 %.052216.i.i.i to float
   %i.cr = fmul float %i.cn, %i.cq
   %i.cs = load ptr, ptr %i.n, align 8, !tbaa !510, !nonnull !92, !align !194
@@ -565,8 +554,8 @@ _ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i: ; preds = %.n
   br label %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i
 
 _ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.thread.i.i.i: ; preds = %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.i.i.i, %bb.e
-  %i.hw = phi i32 [ %i.bh, %bb.e ], [ %.pre240.i.i.i, %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i ], [ %i.bh, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.i.i.i ] ; 2 uses
-  %i.hx = phi i32 [ %i.bi, %bb.e ], [ %.pre240.i.i.i, %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i ], [ %i.bi, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.i.i.i ] ; 2 uses
+  %i.hw = phi i32 [ %i.bh, %bb.e ], [ %.pre240.i.i.i, %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i ], [ %i.bh, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.i.i.i ] ; 4 uses
+  %i.hx = phi i32 [ %i.bi, %bb.e ], [ %.pre240.i.i.i, %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i ], [ %i.bi, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.i.i.i ] ; 3 uses
   %i.hy = phi i32 [ %i.bj, %bb.e ], [ %.pre240.i.i.i, %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i ], [ %i.bj, %_ZN2cv3_atERNS_3MatERKNS_3VecIiLi3EEEiiNS2_IiLi4EEE.exit.i.i.i ] ; 2 uses
   %i.hz = add nuw nsw i32 %.052216.i.i.i, 1       ; 2 uses
   %i.ia = icmp slt i32 %i.hz, %i.hy

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i
 
 ._crit_edge.loopexit.i.i:                         ; preds = %bb.g
   %i.es = trunc nuw nsw i64 %indvars.iv.next36.i.i to i32
-  %i.et = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.et = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %._crit_edge175.i
@@ -285,7 +285,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i152.
 
 ._crit_edge.loopexit.i157.i:                      ; preds = %bb.i
   %i.gl = trunc nuw nsw i64 %indvars.iv.next36.i155.i to i32
-  %i.gm = trunc nsw i64 %indvars.iv.next.i156.i to i32
+  %i.gm = trunc nuw nsw i64 %indvars.iv.next.i156.i to i32
   br label %._crit_edge.i149.i
 
 ._crit_edge.i149.i:                               ; preds = %._crit_edge.loopexit.i157.i, %.lr.ph181.i

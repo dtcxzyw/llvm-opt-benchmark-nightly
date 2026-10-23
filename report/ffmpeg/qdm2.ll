@@ -205,19 +205,15 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.all, label %.preheader118.i.i, label %.thread171.i.i
 
 .preheader118.i.i:                                ; preds = %.preheader119.i.i, %.loopexit.i78.i
-  %i.alm = phi i32 [ %i.aos, %.loopexit.i78.i ], [ %i.alk, %.preheader119.i.i ] ; 6 uses
+  %i.alm = phi i32 [ %i.aos, %.loopexit.i78.i ], [ %i.alk, %.preheader119.i.i ] ; 5 uses
   %.085130.i.i = phi i32 [ %.187.i.i.lcssa, %.loopexit.i78.i ], [ 256, %.preheader119.i.i ] ; 3 uses
   %.191129.i.i = phi i32 [ %i.aot, %.loopexit.i78.i ], [ 0, %.preheader119.i.i ] ; 2 uses
-  %8 = icmp sgt i32 %i.alm, 0
-  br i1 %8, label %.lr.ph.preheader.i.i, label %qdm2_fft_tone_synthesizer.exit.thread.i
-
-.lr.ph.preheader.i.i:                             ; preds = %.preheader118.i.i
   %wide.trip.count.i.i = zext nneg i32 %i.alm to i64 ; 2 uses
-  %xtraiter281 = and i64 %wide.trip.count.i.i, 1
-  %9 = icmp eq i32 %i.alm, 1
-  br i1 %9, label %.lr.ph.i70.i.epil.preheader, label %.lr.ph.preheader.i.i.new
+  %xtraiter280 = and i64 %wide.trip.count.i.i, 1
+  %8 = icmp eq i32 %i.alm, 1
+  br i1 %8, label %.lr.ph.i70.i.epil.preheader, label %.lr.ph.preheader.i.i.new
 
-.lr.ph.preheader.i.i.new:                         ; preds = %.lr.ph.preheader.i.i
+.lr.ph.preheader.i.i.new:                         ; preds = %.preheader118.i.i
   %unroll_iter287 = and i64 %wide.trip.count.i.i, 2147483646
   br label %.lr.ph.i70.i
 
@@ -259,13 +255,13 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %niter288.ncmp.1, label %._crit_edge.i74.i.unr-lcssa, label %.lr.ph.i70.i, !llvm.loop !105
 
 ._crit_edge.i74.i.unr-lcssa:                      ; preds = %.lr.ph.i70.i
-  %lcmp.mod283.not = icmp eq i64 %xtraiter281, 0
+  %lcmp.mod283.not = icmp eq i64 %xtraiter280, 0
   br i1 %lcmp.mod283.not, label %._crit_edge.i74.i, label %.lr.ph.i70.i.epil.preheader
 
-.lr.ph.i70.i.epil.preheader:                      ; preds = %._crit_edge.i74.i.unr-lcssa, %.lr.ph.preheader.i.i
-  %indvars.iv.i71.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i72.i.1, %._crit_edge.i74.i.unr-lcssa ]
-  %.0124.i.i.epil.init = phi ptr [ null, %.lr.ph.preheader.i.i ], [ %.1.i.i.1, %._crit_edge.i74.i.unr-lcssa ]
-  %.086123.i.i.epil.init = phi i32 [ 0, %.lr.ph.preheader.i.i ], [ %.187.i.i.1, %._crit_edge.i74.i.unr-lcssa ] ; 2 uses
+.lr.ph.i70.i.epil.preheader:                      ; preds = %._crit_edge.i74.i.unr-lcssa, %.preheader118.i.i
+  %indvars.iv.i71.i.epil.init = phi i64 [ 0, %.preheader118.i.i ], [ %indvars.iv.next.i72.i.1, %._crit_edge.i74.i.unr-lcssa ]
+  %.0124.i.i.epil.init = phi ptr [ null, %.preheader118.i.i ], [ %.1.i.i.1, %._crit_edge.i74.i.unr-lcssa ]
+  %.086123.i.i.epil.init = phi i32 [ 0, %.preheader118.i.i ], [ %.187.i.i.1, %._crit_edge.i74.i.unr-lcssa ] ; 2 uses
   %lcmp.mod286 = trunc i32 %i.alm to i1
   call void @llvm.assume(i1 %lcmp.mod286)
   %i.amb = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %indvars.iv.i71.i.epil.init
@@ -502,7 +498,7 @@ bb.cy:                                            ; preds = %.thread169.i.i
   store i32 %i.apn, ptr %i.app, align 4, !tbaa !57
   br label %.thread171.i.i
 
-qdm2_fft_tone_synthesizer.exit.thread.i:          ; preds = %bb.cj, %bb.cn, %bb.cm, %bb.cl, %._crit_edge.i74.i, %.preheader118.i.i
+qdm2_fft_tone_synthesizer.exit.thread.i:          ; preds = %bb.cj, %bb.cn, %bb.cm, %bb.cl, %._crit_edge.i74.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   br label %qdm2_decode.exit.thread
 

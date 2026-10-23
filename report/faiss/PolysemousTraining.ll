@@ -204,33 +204,27 @@ bb.c:                                             ; preds = %.lr.ph117, %_ZNSt6v
   %i.ai = mul i64 %i.ag, %i.ah
   %i.aj = load ptr, ptr %i.o, align 8, !tbaa !84
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.ai ; 4 uses
-  %i.al = load i32, ptr %3, align 4, !tbaa !18    ; 3 uses
+  %i.al = load i32, ptr %3, align 4, !tbaa !18    ; 2 uses
   %i.am = icmp sgt i32 %i.al, 0
   br i1 %i.am, label %.preheader.i.i.i.i, label %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit"
 
 .preheader.i.i.i.i:                               ; preds = %bb.c, %._crit_edge.i.i.i.i
-  %.sroa.0.071 = phi ptr [ %.sroa.0.172, %._crit_edge.i.i.i.i ], [ null, %bb.c ] ; 2 uses
-  %.sroa.8.0 = phi ptr [ %.sroa.8.1, %._crit_edge.i.i.i.i ], [ null, %bb.c ] ; 2 uses
-  %.sroa.12.0 = phi ptr [ %.sroa.12.1, %._crit_edge.i.i.i.i ], [ null, %bb.c ] ; 2 uses
-  %11 = phi i32 [ %13, %._crit_edge.i.i.i.i ], [ %i.al, %bb.c ] ; 2 uses
+  %.sroa.0.071 = phi ptr [ %.sroa.0.3.a, %._crit_edge.i.i.i.i ], [ null, %bb.c ]
+  %.sroa.8.0 = phi ptr [ %.sroa.8.3.a, %._crit_edge.i.i.i.i ], [ null, %bb.c ]
+  %.sroa.12.0 = phi ptr [ %.sroa.12.3.a, %._crit_edge.i.i.i.i ], [ null, %bb.c ]
   %.069.i.i.i.i = phi i32 [ %i.an, %._crit_edge.i.i.i.i ], [ 0, %bb.c ] ; 2 uses
-  %12 = icmp sgt i32 %11, 0
-  br i1 %12, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
+  br label %.lr.ph.i.i.i.i
 
-._crit_edge.i.i.i.i:                              ; preds = %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i, %.preheader.i.i.i.i
-  %.sroa.0.172 = phi ptr [ %.sroa.0.071, %.preheader.i.i.i.i ], [ %.sroa.0.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 2 uses
-  %.sroa.8.1 = phi ptr [ %.sroa.8.0, %.preheader.i.i.i.i ], [ %.sroa.8.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 2 uses
-  %.sroa.12.1 = phi ptr [ %.sroa.12.0, %.preheader.i.i.i.i ], [ %.sroa.12.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 2 uses
-  %13 = phi i32 [ %11, %.preheader.i.i.i.i ], [ %i.bo, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 3 uses
+._crit_edge.i.i.i.i:                              ; preds = %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i
   %i.an = add nuw nsw i32 %.069.i.i.i.i, 1        ; 2 uses
-  %i.ao = icmp slt i32 %i.an, %13
+  %i.ao = icmp slt i32 %i.an, %i.bo
   br i1 %i.ao, label %.preheader.i.i.i.i, label %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit", !llvm.loop !122
 
-.lr.ph.i.i.i.i:                                   ; preds = %.preheader.i.i.i.i, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i
-  %.sroa.0.2.a = phi ptr [ %.sroa.0.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ], [ %.sroa.0.071, %.preheader.i.i.i.i ] ; 5 uses
-  %.sroa.8.2.a = phi ptr [ %.sroa.8.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ], [ %.sroa.8.0, %.preheader.i.i.i.i ] ; 4 uses
-  %.sroa.12.2.a = phi ptr [ %.sroa.12.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ], [ %.sroa.12.0, %.preheader.i.i.i.i ] ; 2 uses
-  %.08.i.i.i.i = phi i32 [ %i.bn, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ], [ 0, %.preheader.i.i.i.i ] ; 2 uses
+.lr.ph.i.i.i.i:                                   ; preds = %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i, %.preheader.i.i.i.i
+  %.sroa.0.2.a = phi ptr [ %.sroa.0.071, %.preheader.i.i.i.i ], [ %.sroa.0.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 5 uses
+  %.sroa.8.2.a = phi ptr [ %.sroa.8.0, %.preheader.i.i.i.i ], [ %.sroa.8.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 4 uses
+  %.sroa.12.2.a = phi ptr [ %.sroa.12.0, %.preheader.i.i.i.i ], [ %.sroa.12.3.a, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 2 uses
+  %.08.i.i.i.i = phi i32 [ 0, %.preheader.i.i.i.i ], [ %i.bn, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i ] ; 2 uses
   %i.ap = load i32, ptr %4, align 4, !tbaa !18    ; 3 uses
   %i.aq = mul nsw i32 %i.ap, %.069.i.i.i.i
   %i.ar = sext i32 %i.aq to i64
@@ -294,23 +288,23 @@ _ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS
   br label %_ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i
 
 _ZNSt6vectorIdSaIdEE9push_backEOd.exit.i.i.i.i:   ; preds = %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i.i.i.i.i, %bb.d
-  %.sroa.0.3.a = phi ptr [ %i.bj, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i.i.i.i.i ], [ %.sroa.0.2.a, %bb.d ] ; 2 uses
+  %.sroa.0.3.a = phi ptr [ %i.bj, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i.i.i.i.i ], [ %.sroa.0.2.a, %bb.d ] ; 3 uses
   %.pn = phi ptr [ %i.bk, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i.i.i.i.i ], [ %.sroa.8.2.a, %bb.d ]
-  %.sroa.12.3.a = phi ptr [ %i.bm, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i.i.i.i.i ], [ %.sroa.12.2.a, %bb.d ] ; 2 uses
-  %.sroa.8.3.a = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 2 uses
+  %.sroa.12.3.a = phi ptr [ %i.bm, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i.i.i.i.i ], [ %.sroa.12.2.a, %bb.d ] ; 3 uses
+  %.sroa.8.3.a = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 3 uses
   %i.bn = add nuw nsw i32 %.08.i.i.i.i, 1         ; 2 uses
-  %i.bo = load i32, ptr %3, align 4, !tbaa !18    ; 2 uses
+  %i.bo = load i32, ptr %3, align 4, !tbaa !18    ; 3 uses
   %i.bp = icmp slt i32 %i.bn, %i.bo
   br i1 %i.bp, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !123
 
 "_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit": ; preds = %._crit_edge.i.i.i.i
-  %i.bq = ptrtoint ptr %.sroa.8.1 to i64
-  %i.br = ptrtoint ptr %.sroa.12.1 to i64
+  %i.bq = ptrtoint ptr %.sroa.8.3.a to i64
+  %i.br = ptrtoint ptr %.sroa.12.3.a to i64
   br label %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit"
 
 "_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit": ; preds = %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit", %bb.c
-  %i.bs = phi i32 [ %i.al, %bb.c ], [ %13, %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit" ] ; 3 uses
-  %.sroa.0.4 = phi ptr [ null, %bb.c ], [ %.sroa.0.172, %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit" ] ; 9 uses
+  %i.bs = phi i32 [ %i.al, %bb.c ], [ %i.bo, %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit" ] ; 3 uses
+  %.sroa.0.4 = phi ptr [ null, %bb.c ], [ %.sroa.0.3.a, %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit" ] ; 9 uses
   %.sroa.8.4 = phi i64 [ 0, %bb.c ], [ %i.bq, %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit" ]
   %.sroa.12.4 = phi i64 [ 0, %bb.c ], [ %i.br, %"_ZN5faiss15with_simd_levelIRZNKS_18PolysemousTraining28optimize_reproduce_distancesERNS_16ProductQuantizerEE3$_0EEDaOT_.exit.loopexit" ]
   %i.bt = sext i32 %i.bs to i64                   ; 3 uses
