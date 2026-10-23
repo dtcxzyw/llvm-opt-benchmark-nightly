@@ -204,13 +204,12 @@ bb.a:
   %i.p = load i64, ptr %i.o, align 8, !noundef !4 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !617)
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 408 ; 2 uses
-  %i.r = load ptr, ptr %i.q, align 8, !noalias !618, !nonnull !4, !align !6, !noundef !4 ; 3 uses
+  %i.r = load ptr, ptr %i.q, align 8, !noalias !618, !nonnull !4, !align !6, !noundef !4 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 628
   %i.t = load i8, ptr %i.s, align 4, !range !8, !noalias !618, !noundef !4
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 128
-  %3 = load i8, ptr %i.u, align 8, !range !8, !noalias !618, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 129
-  %5 = load i8, ptr %4, align 1, !range !8, !noalias !618, !noundef !4
+  %3 = load i16, ptr %i.u, align 8, !noalias !618
+  %4 = zext i16 %3 to i32
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 130
   %i.w = load i8, ptr %i.v, align 2, !range !8, !noalias !618, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !618
@@ -258,13 +257,9 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.7.0.insert.ext.i = zext nneg i8 %i.t to i32
   %.sroa.7.0.insert.shift.i = shl nuw nsw i32 %.sroa.7.0.insert.ext.i, 24
   %.sroa.631.0.insert.ext.i = zext nneg i8 %i.w to i32
-  %.sroa.631.0.insert.shift.i = shl nuw nsw i32 %.sroa.631.0.insert.ext.i, 16
-  %.sroa.5.0.insert.ext.i = zext nneg i8 %5 to i32
-  %.sroa.5.0.insert.shift.i = shl nuw nsw i32 %.sroa.5.0.insert.ext.i, 8
-  %.sroa.0.0.insert.ext.i = zext nneg i8 %3 to i32
-  %.sroa.631.0.insert.insert.i = or disjoint i32 %.sroa.7.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  %.sroa.5.0.insert.insert.i = or disjoint i32 %.sroa.631.0.insert.insert.i, %.sroa.5.0.insert.shift.i
-  %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.5.0.insert.insert.i, %.sroa.631.0.insert.shift.i
+  %.sroa.5.0.insert.shift.i = shl nuw nsw i32 %.sroa.631.0.insert.ext.i, 16
+  %.sroa.5.0.insert.insert.i = or disjoint i32 %.sroa.7.0.insert.shift.i, %4
+  %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.5.0.insert.insert.i, %.sroa.5.0.insert.shift.i
   %.sroa.411.0..sroa_idx12.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.aq = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %i.h, i64 24
@@ -667,13 +662,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z)
   store ptr %i.ad, ptr %i.z, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 408 ; 2 uses
-  %i.ag = load ptr, ptr %i.af, align 8, !nonnull !4, !align !6, !noundef !4 ; 3 uses
+  %i.ag = load ptr, ptr %i.af, align 8, !nonnull !4, !align !6, !noundef !4 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 628
   %i.ai = load i8, ptr %i.ah, align 4, !range !8, !noundef !4
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 128
-  %3 = load i8, ptr %i.aj, align 8, !range !8, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %i.ag, i64 129
-  %5 = load i8, ptr %4, align 1, !range !8, !noundef !4
+  %3 = load i16, ptr %i.aj, align 8
+  %4 = zext i16 %3 to i32
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 130
   %i.al = load i8, ptr %i.ak, align 2, !range !8, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
@@ -682,16 +676,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 616 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.w, ptr noundef nonnull align 8 dereferenceable(12) %i.an, i64 12, i1 false)
-  %.sroa.673.0.insert.ext = zext nneg i8 %i.ai to i32
-  %.sroa.673.0.insert.shift = shl nuw nsw i32 %.sroa.673.0.insert.ext, 24
-  %.sroa.572.0.insert.ext.a = zext nneg i8 %i.al to i32
-  %.sroa.572.0.insert.shift.a = shl nuw nsw i32 %.sroa.572.0.insert.ext.a, 16
-  %.sroa.471.0.insert.ext = zext nneg i8 %5 to i32
-  %.sroa.471.0.insert.shift = shl nuw nsw i32 %.sroa.471.0.insert.ext, 8
-  %.sroa.070.0.insert.ext = zext nneg i8 %3 to i32
-  %.sroa.572.0.insert.insert = or disjoint i32 %.sroa.673.0.insert.shift, %.sroa.070.0.insert.ext
-  %.sroa.471.0.insert.insert = or disjoint i32 %.sroa.572.0.insert.insert, %.sroa.471.0.insert.shift
-  %.sroa.070.0.insert.insert = or disjoint i32 %.sroa.471.0.insert.insert, %.sroa.572.0.insert.shift.a ; 3 uses
+  %.sroa.572.0.insert.ext.a = zext nneg i8 %i.ai to i32
+  %.sroa.572.0.insert.shift.a = shl nuw nsw i32 %.sroa.572.0.insert.ext.a, 24
+  %.sroa.471.0.insert.ext = zext nneg i8 %i.al to i32
+  %.sroa.471.0.insert.shift = shl nuw nsw i32 %.sroa.471.0.insert.ext, 16
+  %.sroa.471.0.insert.insert = or disjoint i32 %.sroa.572.0.insert.shift.a, %4
+  %.sroa.070.0.insert.insert = or disjoint i32 %.sroa.471.0.insert.insert, %.sroa.471.0.insert.shift ; 3 uses
   call void @_RNvMNtNtCs8Xq8PKFYOms_3hir11term_search4exprNtB2_4Expr15gen_source_code(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.x, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(88) %i.am, ptr noundef nonnull %i.z, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @33, i32 noundef %.sroa.070.0.insert.insert, ptr noalias nofree noundef nonnull readonly align 4 captures(address) dereferenceable(12) %i.w)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w)
   %i.ao = load i64, ptr %i.x, align 8, !range !14, !noundef !4 ; 2 uses

@@ -205,21 +205,16 @@ _ZNSt10shared_ptrIN7libfsst11SymbolTableEEaSERKS2_.exit: ; preds = %bb.a, %_ZNSt
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden i32 @duckdb_fsst_export(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 17)) %1) local_unnamed_addr #8 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !65     ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 156162
-  %3 = load i16, ptr %2, align 2, !tbaa !20
-  %4 = zext i16 %3 to i64
-  %5 = shl nuw nsw i64 %4, 24
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 156164
-  %6 = load i16, ptr %i.b, align 4, !tbaa !21
-  %i.c = zext i16 %6 to i64
-  %i.d = shl nuw nsw i64 %i.c, 16
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 156160
-  %i.f = load i16, ptr %i.e, align 8, !tbaa !42
+  %i.a = load ptr, ptr %0, align 8, !tbaa !65     ; 2 uses
+  %i.b = getelementptr i8, ptr %i.a, i64 156160
+  %2 = load i32, ptr %i.b, align 8
+  %i.c = zext i32 %2 to i64
+  %i.d = shl nuw nsw i64 %i.c, 8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 156164
+  %i.f = load i16, ptr %i.e, align 4, !tbaa !21
   %i.g = zext i16 %i.f to i64
-  %i.h = shl nuw nsw i64 %i.g, 8
-  %7 = or i64 %5, %i.d
-  %i.i = or i64 %7, %i.h
+  %i.h = shl nuw nsw i64 %i.g, 16
+  %i.i = or i64 %i.d, %i.h
   %i.j = or i64 %i.i, 86716326009110529
   store i64 %i.j, ptr %1, align 1
   %i.k = load ptr, ptr %0, align 8, !tbaa !65

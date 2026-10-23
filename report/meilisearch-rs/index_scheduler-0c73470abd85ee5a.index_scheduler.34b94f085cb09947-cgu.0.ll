@@ -206,7 +206,7 @@ bb.gq:                                            ; preds = %"_ZN4core3ptr42drop
   %.sroa.12.sroa.6.sroa.0.0.copyload496.i.i.i.i.i.i.a = phi i24 [ %.sroa.12.sroa.6.sroa.0.0.copyload495.i.i.i.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ undef, %.loopexit.i.i.i5.i.i.i ] ; 9 uses
   %.sroa.12.sroa.0.0.copyload491.i.i.i.i.i.i.a = phi i32 [ %.sroa.12.sroa.0.0.copyload490.i.i.i.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ undef, %.loopexit.i.i.i5.i.i.i ] ; 9 uses
   %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a = phi i24 [ %.sroa.0156.sroa.4.0.copyload485.i.i.i.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ undef, %.loopexit.i.i.i5.i.i.i ] ; 9 uses
-  %i.ui = phi ptr [ %i.uj, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ %.sroa.20.sroa.7.0.copyload.i.i.i, %.loopexit.i.i.i5.i.i.i ] ; 11 uses
+  %i.ui = phi ptr [ %i.uj, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ %.sroa.20.sroa.7.0.copyload.i.i.i, %.loopexit.i.i.i5.i.i.i ] ; 10 uses
   %.sroa.4157.0.copyload457475.i.i.i.i.i.i = phi i8 [ %.sroa.4157.0.copyload456.i.i.i.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ 2, %.loopexit.i.i.i5.i.i.i ] ; 7 uses
   %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i = phi i32 [ %.sroa.0156.sroa.0.0.copyload461.i.i.i.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ undef, %.loopexit.i.i.i5.i.i.i ] ; 9 uses
   %.sroa.5158.0.copyload467473.i.i.i.i.i.i = phi i64 [ %.sroa.5158.0.copyload466.i.i.i.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17he52df50a9b2815cbE.exit223.i.i.i.i.i.i" ], [ undef, %.loopexit.i.i.i5.i.i.i ] ; 9 uses
@@ -217,9 +217,11 @@ bb.gq:                                            ; preds = %"_ZN4core3ptr42drop
   %.sroa.9286.sroa.0.sroa.6.0..sroa.9286.0..sroa_idx.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ui, i64 4
   %.sroa.9286.sroa.0.sroa.6.0.copyload.i.i.i.i.i.i = load i32, ptr %.sroa.9286.sroa.0.sroa.6.0..sroa.9286.0..sroa_idx.sroa_idx.i.i.i.i.i.i, align 4, !noalias !4311 ; 4 uses
   %.sroa.9286.sroa.6.0..sroa.9286.0..sroa_idx.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ui, i64 8
-  %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i = load i24, ptr %.sroa.9286.sroa.6.0..sroa.9286.0..sroa_idx.sroa_idx.i.i.i.i.i.i, align 8, !noalias !4311 ; 7 uses
-  %.sroa.10287.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ui, i64 11
-  %.sroa.10287.0.copyload.i.i.i.i.i.i = load i8, ptr %.sroa.10287.0..sroa_idx.i.i.i.i.i.i, align 1, !noalias !4311 ; 6 uses
+  %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i = load i32, ptr %.sroa.9286.sroa.6.0..sroa.9286.0..sroa_idx.sroa_idx.i.i.i.i.i.i, align 8, !noalias !4311 ; 4 uses
+  %2 = zext i32 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i to i64 ; 3 uses
+  %3 = trunc i32 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i to i24 ; 3 uses
+  %4 = lshr i32 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i, 24 ; 3 uses
+  %5 = trunc nuw i32 %4 to i8
   %.sroa.12.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ui, i64 20
   %.sroa.12.sroa.0.0.copyload.i.i.i.i.i.i = load i32, ptr %.sroa.12.0..sroa_idx.i.i.i.i.i.i, align 4, !noalias !4311 ; 5 uses
   %.sroa.12.sroa.6.0..sroa.12.0..sroa_idx.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ui, i64 24
@@ -332,11 +334,7 @@ bb.gy:                                            ; preds = %bb.gx
 
 bb.gz:                                            ; preds = %bb.gx
   %.sroa.0292.sroa.8.0.insert.shift317.i.i.i.i.i.i = shl nuw i64 %.sroa.11288.sroa.0.0.insert.ext.i.i.i.i.i.i, 32
-  %.sroa.0292.sroa.7.0.insert.ext308.i.i.i.i.i.i = zext i8 %.sroa.10287.0.copyload.i.i.i.i.i.i to i64
-  %.sroa.0292.sroa.7.0.insert.shift309.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.0292.sroa.7.0.insert.ext308.i.i.i.i.i.i, 24
-  %.sroa.0292.sroa.7.0.insert.insert311.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.8.0.insert.shift317.i.i.i.i.i.i, %.sroa.0292.sroa.7.0.insert.shift309.i.i.i.i.i.i
-  %.sroa.0292.sroa.0.0.insert.ext301.i.i.i.i.i.i = zext i24 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i to i64
-  %.sroa.0292.sroa.0.0.insert.insert303.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.7.0.insert.insert311.i.i.i.i.i.i, %.sroa.0292.sroa.0.0.insert.ext301.i.i.i.i.i.i
+  %.sroa.0292.sroa.0.0.insert.insert303.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.8.0.insert.shift317.i.i.i.i.i.i, %2
   store i64 %.sroa.0292.sroa.0.0.insert.insert303.i.i.i.i.i.i, ptr %i.k, align 8, !noalias !4297
   store ptr %i.vd, ptr %.sroa.gep271.i.i.i.i.i.i, align 8, !noalias !4297
   store i24 %.sroa.12.sroa.6.sroa.0.0.copyload.i.i.i.i.i.i, ptr %.sroa.gep270.i.i.i.i.i.i, align 8, !noalias !4297
@@ -348,20 +346,12 @@ bb.gz:                                            ; preds = %bb.gx
 bb.ha:                                            ; preds = %bb.gy
   %.not177.i.i.i.i.i.i = icmp eq i64 %i.ve, -9223372036854775808
   %.sroa.0292.sroa.8.0.insert.shift.i.i.i.i.i.i = shl nuw i64 %.sroa.11288.sroa.0.0.insert.ext.i.i.i.i.i.i, 32
-  %.sroa.0292.sroa.7.0.insert.ext.i.i.i.i.i.i = zext i8 %.sroa.10287.0.copyload.i.i.i.i.i.i to i64
-  %.sroa.0292.sroa.7.0.insert.shift.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.0292.sroa.7.0.insert.ext.i.i.i.i.i.i, 24
-  %.sroa.0292.sroa.7.0.insert.insert.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.8.0.insert.shift.i.i.i.i.i.i, %.sroa.0292.sroa.7.0.insert.shift.i.i.i.i.i.i
-  %.sroa.0292.sroa.0.0.insert.ext.i.i.i.i.i.i = zext i24 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i to i64
-  %.sroa.0292.sroa.0.0.insert.insert.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.7.0.insert.insert.i.i.i.i.i.i, %.sroa.0292.sroa.0.0.insert.ext.i.i.i.i.i.i ; 6 uses
+  %.sroa.0292.sroa.0.0.insert.insert.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.8.0.insert.shift.i.i.i.i.i.i, %2 ; 6 uses
   br i1 %.not177.i.i.i.i.i.i, label %bb.hi, label %bb.hh
 
 bb.hb:                                            ; preds = %bb.gy
   %.sroa.0292.sroa.8.0.insert.shift313.i.i.i.i.i.i = shl nuw i64 %.sroa.11288.sroa.0.0.insert.ext.i.i.i.i.i.i, 32
-  %.sroa.0292.sroa.7.0.insert.ext304.i.i.i.i.i.i = zext i8 %.sroa.10287.0.copyload.i.i.i.i.i.i to i64
-  %.sroa.0292.sroa.7.0.insert.shift305.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.0292.sroa.7.0.insert.ext304.i.i.i.i.i.i, 24
-  %.sroa.0292.sroa.7.0.insert.insert307.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.8.0.insert.shift313.i.i.i.i.i.i, %.sroa.0292.sroa.7.0.insert.shift305.i.i.i.i.i.i
-  %.sroa.0292.sroa.0.0.insert.ext298.i.i.i.i.i.i = zext i24 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i to i64
-  %.sroa.0292.sroa.0.0.insert.insert300.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.7.0.insert.insert307.i.i.i.i.i.i, %.sroa.0292.sroa.0.0.insert.ext298.i.i.i.i.i.i ; 2 uses
+  %.sroa.0292.sroa.0.0.insert.insert300.i.i.i.i.i.i = or disjoint i64 %.sroa.0292.sroa.8.0.insert.shift313.i.i.i.i.i.i, %2 ; 2 uses
   switch i64 %.sroa.0292.sroa.0.0.insert.insert300.i.i.i.i.i.i, label %bb.hc [
     i64 -9223372036854775808, label %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$alloc..string..String$GT$$GT$17hd9220220a7cf1ae9E.exit.i.i.i.i.i.i"
     i64 0, label %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$alloc..string..String$GT$$GT$17hd9220220a7cf1ae9E.exit.i.i.i.i.i.i"
@@ -519,23 +509,23 @@ bb.hq:                                            ; preds = %bb.hp
   %.sroa.13.0.copyload500.i.i.i.i.i.i = phi i8 [ %.sroa.13.0.copyload501.i.i.i.i.i.i.a, %bb.hp ], [ %.sroa.13.0.copyload501.i.i.i.i.i.i.a, %bb.hq ], [ %.sroa.13.0.copyload501.i.i.i.i.i.i.a, %bb.gz ], [ %.sroa.13.0.copyload501.i.i.i.i.i.i.a, %bb.hi ], [ %.sroa.13.0.copyload501.i.i.i.i.i.i.a, %bb.hh ], [ %.sroa.13.0.copyload.i.i.i.i.i.i, %bb.gw ], [ 0, %bb.hw ], [ 1, %.thread423.i.i.i.i.i.i ], [ 0, %bb.hy ] ; 2 uses
   %.sroa.12.sroa.6.sroa.0.0.copyload495.i.i.i.i.i.i = phi i24 [ %.sroa.12.sroa.6.sroa.0.0.copyload496.i.i.i.i.i.i.a, %bb.hp ], [ %.sroa.12.sroa.6.sroa.0.0.copyload496.i.i.i.i.i.i.a, %bb.hq ], [ %.sroa.12.sroa.6.sroa.0.0.copyload496.i.i.i.i.i.i.a, %bb.gz ], [ %.sroa.12.sroa.6.sroa.0.0.copyload496.i.i.i.i.i.i.a, %bb.hi ], [ %.sroa.12.sroa.6.sroa.0.0.copyload496.i.i.i.i.i.i.a, %bb.hh ], [ %.sroa.12.sroa.6.sroa.0.0.copyload.i.i.i.i.i.i, %bb.gw ], [ %.sroa.082.sroa.7.0.i.i.i.i.i.i, %bb.hw ], [ undef, %.thread423.i.i.i.i.i.i ], [ %.sroa.082.sroa.7.0.i.i.i.i.i.i, %bb.hy ] ; 2 uses
   %.sroa.12.sroa.0.0.copyload490.i.i.i.i.i.i = phi i32 [ %.sroa.12.sroa.0.0.copyload491.i.i.i.i.i.i.a, %bb.hp ], [ %.sroa.12.sroa.0.0.copyload491.i.i.i.i.i.i.a, %bb.hq ], [ %.sroa.12.sroa.0.0.copyload491.i.i.i.i.i.i.a, %bb.gz ], [ %.sroa.12.sroa.0.0.copyload491.i.i.i.i.i.i.a, %bb.hi ], [ %.sroa.12.sroa.0.0.copyload491.i.i.i.i.i.i.a, %bb.hh ], [ %.sroa.12.sroa.0.0.copyload.i.i.i.i.i.i, %bb.gw ], [ %.sroa.082.sroa.0.0.i.i.i.i.i.i, %bb.hw ], [ undef, %.thread423.i.i.i.i.i.i ], [ %.sroa.082.sroa.0.0.i.i.i.i.i.i, %bb.hy ] ; 2 uses
-  %.sroa.0156.sroa.4.0.copyload485.i.i.i.i.i.i = phi i24 [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hp ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hq ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.gz ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hi ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hh ], [ %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i, %bb.gw ], [ %.sroa.050.sroa.7.0.i.i.i.i.i.i, %bb.hw ], [ %.sroa.050.sroa.7.0.i.i.i.i.i.i, %.thread423.i.i.i.i.i.i ], [ %.sroa.050.sroa.7.0.i.i.i.i.i.i, %bb.hy ] ; 2 uses
+  %.sroa.0156.sroa.4.0.copyload485.i.i.i.i.i.i = phi i24 [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hp ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hq ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.gz ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hi ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hh ], [ %3, %bb.gw ], [ %.sroa.050.sroa.7.0.i.i.i.i.i.i, %bb.hw ], [ %.sroa.050.sroa.7.0.i.i.i.i.i.i, %.thread423.i.i.i.i.i.i ], [ %.sroa.050.sroa.7.0.i.i.i.i.i.i, %bb.hy ] ; 2 uses
   %.sroa.5158.0.copyload466.i.i.i.i.i.i = phi i64 [ %.sroa.5158.0.copyload467473.i.i.i.i.i.i, %bb.hp ], [ %.sroa.5158.0.copyload467473.i.i.i.i.i.i, %bb.hq ], [ %.sroa.5158.0.copyload467473.i.i.i.i.i.i, %bb.gz ], [ %.sroa.5158.0.copyload467473.i.i.i.i.i.i, %bb.hi ], [ %.sroa.5158.0.copyload467473.i.i.i.i.i.i, %bb.hh ], [ %.sroa.11288.0.copyload.i.i.i.i.i.i, %bb.gw ], [ %.sroa.8.0.i.i.i.i.i.i, %bb.hw ], [ %.sroa.8.0.i.i.i.i.i.i, %.thread423.i.i.i.i.i.i ], [ %.sroa.8.0.i.i.i.i.i.i, %bb.hy ] ; 2 uses
   %.sroa.0156.sroa.0.0.copyload461.i.i.i.i.i.i = phi i32 [ %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i, %bb.hp ], [ %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i, %bb.hq ], [ %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i, %bb.gz ], [ %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i, %bb.hi ], [ %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i, %bb.hh ], [ %.sroa.9286.sroa.0.sroa.6.0.copyload.i.i.i.i.i.i, %bb.gw ], [ %.sroa.050.sroa.0.0.i.i.i.i.i.i, %bb.hw ], [ %.sroa.050.sroa.0.0.i.i.i.i.i.i, %.thread423.i.i.i.i.i.i ], [ %.sroa.050.sroa.0.0.i.i.i.i.i.i, %bb.hy ] ; 2 uses
-  %.sroa.4157.0.copyload456.i.i.i.i.i.i = phi i8 [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hp ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hq ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.gz ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hi ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hh ], [ %.sroa.10287.0.copyload.i.i.i.i.i.i, %bb.gw ], [ 1, %bb.hw ], [ %.sroa.7.0.i.i.i.i.i.i, %.thread423.i.i.i.i.i.i ], [ 0, %bb.hy ] ; 2 uses
+  %.sroa.4157.0.copyload456.i.i.i.i.i.i = phi i8 [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hp ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hq ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.gz ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hi ], [ %.sroa.4157.0.copyload457475.i.i.i.i.i.i, %bb.hh ], [ %5, %bb.gw ], [ 1, %bb.hw ], [ %.sroa.7.0.i.i.i.i.i.i, %.thread423.i.i.i.i.i.i ], [ 0, %bb.hy ] ; 2 uses
   %i.wx = icmp eq ptr %i.uj, %i.uf
   br i1 %i.wx, label %"_ZN4core3ptr73drop_in_place$LT$$u5b$index_scheduler..upgrade..v1_49..Condition$u5d$$GT$17hfd688ac8d6eb5359E.exit.i.i.i.i.i.i.i.i", label %"_ZN103_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hded5e640afe2e52fE.exit.i.i.i.i.i.i"
 
 bb.hr:                                            ; preds = %bb.gw
-  %i.wy = trunc nuw i8 %.sroa.10287.0.copyload.i.i.i.i.i.i to i1
+  %i.wy = trunc i32 %4 to i1
   br i1 %i.wy, label %bb.hs, label %bb.hu
 
 .thread.i.i.i.i.i.i:                              ; preds = %bb.gw
-  %i.wz = trunc nuw i8 %.sroa.10287.0.copyload.i.i.i.i.i.i to i1
+  %i.wz = trunc i32 %4 to i1
   br i1 %i.wz, label %bb.hs, label %bb.ht
 
 bb.hs:                                            ; preds = %bb.hu, %bb.ht, %.thread.i.i.i.i.i.i, %bb.hr
-  %.sroa.050.sroa.7.0.i.i.i.i.i.i = phi i24 [ undef, %.thread.i.i.i.i.i.i ], [ %.sroa.4366.0.copyload.i.i.i.i.i.i, %bb.hu ], [ %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i, %bb.ht ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hr ] ; 4 uses
+  %.sroa.050.sroa.7.0.i.i.i.i.i.i = phi i24 [ undef, %.thread.i.i.i.i.i.i ], [ %.sroa.4366.0.copyload.i.i.i.i.i.i, %bb.hu ], [ %3, %bb.ht ], [ %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, %bb.hr ] ; 4 uses
   %.sroa.050.sroa.0.0.i.i.i.i.i.i = phi i32 [ undef, %.thread.i.i.i.i.i.i ], [ %.sroa.0365.0.copyload.i.i.i.i.i.i, %bb.hu ], [ %.sroa.9286.sroa.0.sroa.6.0.copyload.i.i.i.i.i.i, %bb.ht ], [ %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i, %bb.hr ] ; 4 uses
   %.sroa.8.0.i.i.i.i.i.i = phi i64 [ undef, %.thread.i.i.i.i.i.i ], [ %.sroa.6368.0.copyload.i.i.i.i.i.i, %bb.hu ], [ %.sroa.11288.0.copyload.i.i.i.i.i.i, %bb.ht ], [ %.sroa.5158.0.copyload467473.i.i.i.i.i.i, %bb.hr ] ; 6 uses
   %.sroa.7.0.i.i.i.i.i.i = phi i8 [ 1, %.thread.i.i.i.i.i.i ], [ 0, %bb.hu ], [ 0, %bb.ht ], [ 0, %bb.hr ] ; 2 uses
@@ -557,7 +547,8 @@ bb.hu:                                            ; preds = %bb.hr
   %i.xc = ashr i32 %.sroa.7.8.extract.trunc.i.i.i.i.i.i, 10
   %i.xd = trunc i64 %.sroa.11288.0.copyload.i.i.i.i.i.i to i16
   %i.xe = and i16 %i.xd, 511
-  %.sroa.3566.0.insert.ext.i.i.i.i.i.i = zext i24 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i to i64
+  %.mask.i.i.i.i.i.i = and i32 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i, 16777215
+  %.sroa.3566.0.insert.ext.i.i.i.i.i.i = zext nneg i32 %.mask.i.i.i.i.i.i to i64
   %.sroa.3566.0.insert.shift.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.3566.0.insert.ext.i.i.i.i.i.i, 32
   %.sroa.0565.0.insert.ext.i.i.i.i.i.i = zext i32 %.sroa.9286.sroa.0.sroa.6.0.copyload.i.i.i.i.i.i to i64
   %.sroa.0565.0.insert.insert.i.i.i.i.i.i = or disjoint i64 %.sroa.3566.0.insert.shift.i.i.i.i.i.i, %.sroa.0565.0.insert.ext.i.i.i.i.i.i
@@ -583,7 +574,7 @@ bb.hu:                                            ; preds = %bb.hr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !4342
   %i.xv = icmp slt i128 %i.xl, %i.xu              ; 3 uses
   %.sroa.0365.0.copyload.i.i.i.i.i.i = select i1 %i.xv, i32 %.sroa.0156.sroa.0.0.copyload462474.i.i.i.i.i.i, i32 %.sroa.9286.sroa.0.sroa.6.0.copyload.i.i.i.i.i.i
-  %.sroa.4366.0.copyload.i.i.i.i.i.i = select i1 %i.xv, i24 %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, i24 %.sroa.9286.sroa.6.0.copyload.i.i.i.i.i.i
+  %.sroa.4366.0.copyload.i.i.i.i.i.i = select i1 %i.xv, i24 %.sroa.0156.sroa.4.0.copyload486.i.i.i.i.i.i.a, i24 %3
   %.sroa.6368.0.copyload.i.i.i.i.i.i = select i1 %i.xv, i64 %.sroa.5158.0.copyload467473.i.i.i.i.i.i, i64 %.sroa.11288.0.copyload.i.i.i.i.i.i
   br label %bb.hs
 

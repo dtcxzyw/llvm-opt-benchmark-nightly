@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal i64 @gen11_dsi_host_transfer(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #0 align 16 prefalign(16) {
 bb.a:
-  %2 = alloca %struct.mipi_dsi_packet, align 8    ; 11 uses
+  %2 = alloca %struct.mipi_dsi_packet, align 8    ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false), !annotation !141
   %i.a = call i32 @mipi_dsi_create_packet(ptr noundef nonnull %2, ptr noundef %1) #8 ; 2 uses
@@ -374,19 +374,14 @@ bb.m:                                             ; preds = %bb.l
   %i.by = and i32 %i.bx, 12288
   %i.bz = and i32 %i.bw, 63
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 9
-  %3 = load i8, ptr %i.ca, align 1
-  %i.cb = zext i8 %3 to i32
+  %3 = load i16, ptr %i.ca, align 1
+  %i.cb = zext i16 %3 to i32
   %i.cc = shl nuw nsw i32 %i.cb, 8
-  %.028.i = or disjoint i32 %i.bt, %.1.v.i
-  %.1.i.a = or disjoint i32 %.028.i, %masksel.i
-  %i.cd = or disjoint i32 %.1.i.a, %i.bz
-  %i.ce = or disjoint i32 %i.cd, %i.by
-  %i.cf = or i32 %i.ce, %i.cc
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 10
-  %5 = load i8, ptr %4, align 2
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw nsw i32 %6, 16
-  %i.cg = or disjoint i32 %i.cf, %7
+  %.1.i.a = or disjoint i32 %i.bt, %.1.v.i
+  %i.cd = or disjoint i32 %.1.i.a, %masksel.i
+  %i.ce = or disjoint i32 %i.cd, %i.bz
+  %i.cf = or disjoint i32 %i.ce, %i.by
+  %i.cg = or i32 %i.cf, %i.cc
   call void @intel_dmc_wl_get(ptr noundef %i.bg, i32 %i.bm) #8
   %.val.i31.i = load ptr, ptr %i.bg, align 8
   %i.ch = call ptr @to_intel_uncore(ptr noundef %.val.i31.i) #8 ; 2 uses

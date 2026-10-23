@@ -205,12 +205,15 @@ _ZN10Pathfinder15getIndexElementEN4core8vector3dIsEE.exit: ; preds = %bb.b
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN10Pathfinder12isValidIndexEN4core8vector3dIsEE.exit
   %i.at = phi ptr [ %i.an, %.lr.ph ], [ %i.fs, %_ZN10Pathfinder12isValidIndexEN4core8vector3dIsEE.exit ] ; 3 uses
-  %i.au = phi ptr [ %i.am, %.lr.ph ], [ %i.fr, %_ZN10Pathfinder12isValidIndexEN4core8vector3dIsEE.exit ] ; 6 uses
+  %i.au = phi ptr [ %i.am, %.lr.ph ], [ %i.fr, %_ZN10Pathfinder12isValidIndexEN4core8vector3dIsEE.exit ] ; 5 uses
   %.sroa.0171.0.copyload = load i16, ptr %i.au, align 2, !tbaa !37 ; 4 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 2
-  %.sroa.9.0.copyload = load i16, ptr %.sroa.9.0..sroa_idx, align 2, !tbaa !37 ; 4 uses
-  %.sroa.12181.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 4
-  %.sroa.12181.0.copyload = load i16, ptr %.sroa.12181.0..sroa_idx, align 2, !tbaa !37 ; 4 uses
+  %.sroa.9.0.copyload = load i32, ptr %.sroa.9.0..sroa_idx, align 2 ; 3 uses
+  %7 = zext i32 %.sroa.9.0.copyload to i48
+  %8 = shl nuw i48 %7, 16
+  %9 = trunc i32 %.sroa.9.0.copyload to i16       ; 3 uses
+  %10 = lshr i32 %.sroa.9.0.copyload, 16
+  %11 = trunc nuw i32 %10 to i16                  ; 3 uses
   %i.av = ptrtoint ptr %i.at to i64
   %i.aw = ptrtoint ptr %i.au to i64               ; 2 uses
   %i.ax = sub i64 %i.av, %i.aw
@@ -236,19 +239,14 @@ bb.e:                                             ; preds = %bb.c, %.noexc
   %i.bd = phi ptr [ %i.at, %bb.c ], [ %.pre.i, %.noexc ]
   %i.be = getelementptr inbounds i8, ptr %i.bd, i64 -6
   store ptr %i.be, ptr %i.a, align 8, !tbaa !156
-  %.sroa.12181.0.insert.ext182 = zext i16 %.sroa.12181.0.copyload to i48
-  %.sroa.12181.0.insert.shift183 = shl nuw i48 %.sroa.12181.0.insert.ext182, 32
-  %.sroa.9.0.insert.ext176 = zext i16 %.sroa.9.0.copyload to i48
-  %.sroa.9.0.insert.shift177 = shl nuw nsw i48 %.sroa.9.0.insert.ext176, 16
   %.sroa.0171.0.insert.ext173 = zext i16 %.sroa.0171.0.copyload to i48
-  %7 = or disjoint i48 %.sroa.9.0.insert.shift177, %.sroa.0171.0.insert.ext173
-  %.sroa.0171.0.insert.insert175 = or disjoint i48 %7, %.sroa.12181.0.insert.shift183
+  %.sroa.0171.0.insert.insert175 = or disjoint i48 %8, %.sroa.0171.0.insert.ext173
   %i.bf = load i16, ptr %i.e, align 2, !tbaa !145
   %i.bg = sub i16 %.sroa.0171.0.copyload, %i.bf   ; 2 uses
   %i.bh = load i16, ptr %i.h, align 8, !tbaa !146
-  %i.bi = sub i16 %.sroa.9.0.copyload, %i.bh
+  %i.bi = sub i16 %9, %i.bh
   %i.bj = load i16, ptr %i.k, align 2, !tbaa !147
-  %i.bk = sub i16 %.sroa.12181.0.copyload, %i.bj  ; 3 uses
+  %i.bk = sub i16 %11, %i.bj                      ; 3 uses
   %.sroa.3.0.insert.ext.i.i118 = zext i16 %i.bk to i48
   %.sroa.3.0.insert.shift.i.i119 = shl nuw i48 %.sroa.3.0.insert.ext.i.i118, 32
   %.sroa.2.0.insert.ext.i.i120 = zext i16 %i.bi to i48
@@ -304,9 +302,9 @@ _ZN10Pathfinder15getIndexElementEN4core8vector3dIsEE.exit131: ; preds = %bb.h
 
 bb.i:                                             ; preds = %_ZN10Pathfinder15getIndexElementEN4core8vector3dIsEE.exit131
   %i.cg = icmp eq i16 %.sroa.0171.0.copyload, %i.n
-  %i.ch = icmp eq i16 %.sroa.9.0.copyload, %i.o
+  %i.ch = icmp eq i16 %i.o, %9
   %or.cond203 = select i1 %i.cg, i1 %i.ch, i1 false
-  %i.ci = icmp eq i16 %.sroa.12181.0.copyload, %i.p
+  %i.ci = icmp eq i16 %i.p, %11
   %or.cond204 = select i1 %or.cond203, i1 %i.ci, i1 false
   br i1 %or.cond204, label %_ZN10Pathfinder12isValidIndexEN4core8vector3dIsEE.exit.thread201, label %_ZNK4core8vector3dIsEeqERKS1_.exit.preheader
 
@@ -443,8 +441,8 @@ bb.s:                                             ; preds = %.sink.split19.i, %b
   %i.eb = trunc i32 %.sroa.21.0 to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   %i.ec = add i16 %.sroa.0171.0.copyload, %.sroa.0.0.extract.trunc.i132 ; 2 uses
-  %i.ed = add i16 %.sroa.9.0.copyload, %i.eb      ; 2 uses
-  %i.ee = add i16 %.sroa.12181.0.copyload, %.sroa.8.0.extract.trunc ; 2 uses
+  %i.ed = add i16 %9, %i.eb                       ; 2 uses
+  %i.ee = add i16 %11, %.sroa.8.0.extract.trunc   ; 2 uses
   %.sroa.3.0.insert.ext.i = zext i16 %i.ee to i48
   %.sroa.3.0.insert.shift.i = shl nuw i48 %.sroa.3.0.insert.ext.i, 32
   %.sroa.2.0.insert.ext.i = zext i16 %i.ed to i48

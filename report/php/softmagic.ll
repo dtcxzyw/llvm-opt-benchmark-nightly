@@ -204,17 +204,12 @@ bb.ig:                                            ; preds = %bb.if
 
 bb.ih:                                            ; preds = %cvt_flip.exit.i, %cvt_flip.exit.i, %cvt_flip.exit.i
   %i.adu = load i16, ptr %i.e, align 8
-  %19 = zext i16 %i.adu to i32
-  %20 = shl nuw i32 %19, 16
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 139
-  %22 = load i8, ptr %21, align 1, !tbaa !35
-  %i.adv = zext i8 %22 to i32
-  %i.adw = shl nuw nsw i32 %i.adv, 8
-  %23 = or disjoint i32 %i.adw, %20
-  %i.adx = getelementptr inbounds nuw i8, ptr %0, i64 138
-  %24 = load i8, ptr %i.adx, align 2, !tbaa !35
-  %i.ady = zext i8 %24 to i32
-  %i.adz = or disjoint i32 %23, %i.ady            ; 10 uses
+  %i.adv = zext i16 %i.adu to i32
+  %i.adw = shl nuw i32 %i.adv, 16
+  %i.adx = getelementptr i8, ptr %0, i64 138
+  %19 = load i16, ptr %i.adx, align 2
+  %i.ady = zext i16 %19 to i32
+  %i.adz = or disjoint i32 %i.adw, %i.ady         ; 10 uses
   store i32 %i.adz, ptr %i.e, align 8, !tbaa !35
   %i.aea = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.aeb = load i64, ptr %i.aea, align 8, !tbaa !35 ; 2 uses

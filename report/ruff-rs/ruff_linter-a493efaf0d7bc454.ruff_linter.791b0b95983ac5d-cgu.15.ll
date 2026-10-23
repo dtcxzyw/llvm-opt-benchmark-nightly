@@ -205,15 +205,10 @@ bb.w:                                             ; preds = %bb.a
   %.sroa.24.0.insert.shift.i = shl nuw nsw i32 %.sroa.24.0.insert.ext.i, 24
   %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.24.0.insert.shift.i, %.sroa.04.0.insert.ext.i
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 45
-  %7 = load i8, ptr %i.as, align 1, !range !20, !noundef !13
-  %8 = zext nneg i8 %7 to i32
-  %.sroa.28.0.insert.shift.i = shl nuw nsw i32 %8, 8
-  %.sroa.07.0.insert.insert.i = or disjoint i32 %.sroa.0.0.insert.insert.i, %.sroa.28.0.insert.shift.i
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 46
-  %10 = load i8, ptr %9, align 2, !range !20, !noundef !13
-  %i.at = zext nneg i8 %10 to i32
-  %.sroa.28.0.insert.shift.i44 = shl nuw nsw i32 %i.at, 16
-  %.sroa.07.0.insert.insert.i45 = or disjoint i32 %.sroa.07.0.insert.insert.i, %.sroa.28.0.insert.shift.i44
+  %7 = load i16, ptr %i.as, align 1
+  %i.at = zext i16 %7 to i32
+  %.sroa.28.0.insert.shift.i44 = shl nuw nsw i32 %i.at, 8
+  %.sroa.07.0.insert.insert.i45 = or disjoint i32 %.sroa.0.0.insert.insert.i, %.sroa.28.0.insert.shift.i44
   store i32 %.sroa.07.0.insert.insert.i45, ptr %i.b, align 4
   %i.au = invoke noundef ptr @_RNvXs0_NtNtCsEhZmuQNqkz_11ruff_linter7message7groupedNtB5_14GroupedEmitterNtB7_7Emitter4emit(ptr noalias noundef nonnull dereferenceable(4) %i.b, ptr noundef nonnull %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %5, i64 noundef %6, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %4)
           to label %bb.x unwind label %bb.ao      ; 2 uses

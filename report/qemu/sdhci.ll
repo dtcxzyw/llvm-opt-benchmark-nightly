@@ -202,7 +202,7 @@ declare void @qdev_prop_set_uint8(ptr noundef, ptr noundef, i8 noundef zeroext) 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal range(i64 0, 4294967296) i64 @esdhc_read(ptr noundef %0, i64 noundef %1, i32 noundef %2) #0 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.117, ptr noundef nonnull @.str.123, i32 noundef 124, ptr noundef nonnull @__func__.SYSBUS_SDHCI) #10 ; 5 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.117, ptr noundef nonnull @.str.123, i32 noundef 124, ptr noundef nonnull @__func__.SYSBUS_SDHCI) #10 ; 4 uses
   %i.b = add i64 %1, -36                          ; 2 uses
   %i.c = tail call i64 @llvm.fshl.i64(i64 %i.b, i64 %i.b, i64 62)
   switch i64 %i.c, label %bb.b [
@@ -231,17 +231,12 @@ bb.c:                                             ; preds = %bb.a
   %i.j = and i8 %i.i, 4
   %i.k = and i8 %i.f, 2
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 3414
-  %3 = load i8, ptr %i.l, align 2
-  %4 = zext i8 %3 to i64
-  %5 = shl nuw nsw i64 %4, 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 3415
-  %7 = load i8, ptr %6, align 1
-  %i.m = zext i8 %7 to i64
-  %i.n = shl nuw nsw i64 %i.m, 24
+  %3 = load i16, ptr %i.l, align 2
+  %i.m = zext i16 %3 to i64
+  %i.n = shl nuw nsw i64 %i.m, 16
   %spec.select27 = or disjoint i8 %i.j, %i.k
   %spec.select.a = zext nneg i8 %spec.select27 to i64
-  %.1 = or disjoint i64 %i.h, %spec.select.a
-  %i.o = or disjoint i64 %.1, %5
+  %i.o = or disjoint i64 %i.h, %spec.select.a
   %i.p = or disjoint i64 %i.o, %i.n
   br label %bb.f
 

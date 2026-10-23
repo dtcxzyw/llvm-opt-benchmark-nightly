@@ -204,7 +204,7 @@ bb.a:
   %i.dk = trunc nuw i32 %i.dj to i8               ; 2 uses
   %i.dl = lshr i32 %1, 16
   %i.dm = trunc i32 %i.dl to i8                   ; 4 uses
-  %i.dn = lshr i32 %1, 8                          ; 3 uses
+  %i.dn = lshr i32 %1, 8                          ; 2 uses
   %i.do = trunc i32 %i.dn to i8                   ; 2 uses
   br i1 %.not.i93, label %bb.b, label %_RNvMs1_NtNtNtCs3JjgEOiFeOI_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_11PosixCustomE1fCsiibOIv6tv3q_7uu_date.exit
 
@@ -607,6 +607,9 @@ _RINvMNtCs6JMX4GRUq9U_4core6resultINtB3_6ResultNtNtNtNtCs3JjgEOiFeOI_4jiff3fmt7s
 bb.el:                                            ; preds = %_RNvMs1_NtNtNtCs3JjgEOiFeOI_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_11PosixCustomE1fCsiibOIv6tv3q_7uu_date.exit
   %i.yu = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val51 = load ptr, ptr %i.yu, align 8, !nonnull !6, !align !13, !noundef !6 ; 2 uses
+  %2 = and i32 %1, 65535
+  %3 = zext nneg i32 %2 to i64
+  %4 = shl nuw nsw i64 %3, 32
   %i.yv = getelementptr inbounds nuw i8, ptr %.val51, i64 64
   %i.yw = load i32, ptr %i.yv, align 8, !range !24, !noalias !1930, !noundef !6
   %i.yx = trunc nuw i32 %i.yw to i1
@@ -629,14 +632,7 @@ bb.eo:                                            ; preds = %bb.em
 
 bb.ep:                                            ; preds = %bb.eo, %bb.en
   %.sroa.0711.0.insert.ext = zext i32 %.sroa.024.0.i to i64
-  %2 = and i32 %1, 255
-  %.sroa.0711.4.insert.ext = zext nneg i32 %2 to i64
-  %.sroa.0711.4.insert.shift = shl nuw nsw i64 %.sroa.0711.4.insert.ext, 32
-  %.sroa.0711.4.insert.insert = or disjoint i64 %.sroa.0711.4.insert.shift, %.sroa.0711.0.insert.ext
-  %.mask2453 = and i32 %i.dn, 255
-  %.sroa.0711.5.insert.ext = zext nneg i32 %.mask2453 to i64
-  %.sroa.0711.5.insert.shift = shl nuw nsw i64 %.sroa.0711.5.insert.ext, 40
-  %.sroa.0711.5.insert.insert = or disjoint i64 %.sroa.0711.4.insert.insert, %.sroa.0711.5.insert.shift
+  %.sroa.0711.5.insert.insert = or disjoint i64 %4, %.sroa.0711.0.insert.ext
   %i.zd = inttoptr i64 %.sroa.0711.5.insert.insert to ptr
   br label %bb.er
 

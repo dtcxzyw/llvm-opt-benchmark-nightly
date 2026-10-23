@@ -205,9 +205,7 @@ bb.et:                                            ; preds = %.noexc445
   %i.vg = getelementptr inbounds nuw i8, ptr %32, i64 8 ; 3 uses
   store ptr %i.ux, ptr %i.vg, align 8, !tbaa !228, !alias.scope !607
   %i.vh = getelementptr inbounds nuw i8, ptr %1, i64 180
-  %75 = load i16, ptr %i.vh, align 4, !tbaa !91
-  %76 = getelementptr inbounds nuw i8, ptr %1, i64 182
-  %77 = load i16, ptr %76, align 2, !tbaa !92
+  %75 = load i32, ptr %i.vh, align 4
   %i.vi = getelementptr inbounds nuw i8, ptr %1, i64 184
   %i.vj = load i16, ptr %i.vi, align 8, !tbaa !93
   %i.vk = getelementptr inbounds nuw i8, ptr %1, i64 156
@@ -219,6 +217,7 @@ bb.et:                                            ; preds = %.noexc445
           to label %_ZNSt3__110shared_ptrIK13color_profileEC2B8ne180100ERKS3_.exit.i.i unwind label %bb.gi ; 9 uses
 
 _ZNSt3__110shared_ptrIK13color_profileEC2B8ne180100ERKS3_.exit.i.i: ; preds = %bb.et
+  %76 = zext i32 %75 to i64
   %i.vn = getelementptr inbounds nuw i8, ptr %i.vm, i64 8 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.vn, i8 0, i64 16, i1 false), !noalias !610
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVNSt3__120__shared_ptr_emplaceI18color_profile_nclxNS_9allocatorIS1_EEEE, i64 16), ptr %i.vm, align 8, !tbaa !31, !noalias !610
@@ -228,12 +227,8 @@ _ZNSt3__110shared_ptrIK13color_profileEC2B8ne180100ERKS3_.exit.i.i: ; preds = %b
   %.sroa.10.0.insert.ext = zext nneg i8 %i.vl to i64
   %.sroa.10.0.insert.shift = shl nuw nsw i64 %.sroa.10.0.insert.ext, 48
   %.sroa.8.0.insert.ext = zext i16 %i.vj to i64
-  %.sroa.8.0.insert.shift = shl nuw nsw i64 %.sroa.8.0.insert.ext, 32
-  %.sroa.6.0.insert.ext = zext i16 %77 to i64
-  %.sroa.6.0.insert.shift = shl nuw nsw i64 %.sroa.6.0.insert.ext, 16
-  %.sroa.0802.0.insert.ext = zext i16 %75 to i64
-  %.sroa.8.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.shift, %.sroa.0802.0.insert.ext
-  %.sroa.6.0.insert.insert = or disjoint i64 %.sroa.8.0.insert.insert, %.sroa.8.0.insert.shift
+  %.sroa.6.0.insert.shift = shl nuw nsw i64 %.sroa.8.0.insert.ext, 32
+  %.sroa.6.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.shift, %76
   %.sroa.0802.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.insert, %.sroa.10.0.insert.shift
   store i64 %.sroa.0802.0.insert.insert, ptr %i.vp, align 8, !noalias !610
   store ptr %i.vo, ptr %33, align 8, !tbaa !611, !alias.scope !612

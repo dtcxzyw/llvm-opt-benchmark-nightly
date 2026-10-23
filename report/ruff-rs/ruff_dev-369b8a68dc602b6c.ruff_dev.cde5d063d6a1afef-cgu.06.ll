@@ -205,7 +205,7 @@ bb.a:
   %i.ec = alloca [8 x i8], align 8                ; 8 uses
   %i.ed = alloca [8 x i8], align 8                ; 9 uses
   %i.ee = alloca [16 x i8], align 8               ; 5 uses
-  %i.ef = alloca [24 x i8], align 8               ; 7 uses
+  %i.ef = alloca [24 x i8], align 8               ; 6 uses
   %i.eg = alloca [80 x i8], align 8               ; 9 uses
   %i.eh = alloca [112 x i8], align 8              ; 6 uses
   %i.ei = alloca [112 x i8], align 8              ; 8 uses
@@ -603,16 +603,11 @@ bb.aj:                                            ; preds = %bb.ah
   %i.jp = load i16, ptr %i.jo, align 8, !noalias !1260
   %i.jq = zext i16 %i.jp to i64
   %i.jr = getelementptr inbounds nuw i8, ptr %i.ef, i64 19
-  %2 = load i8, ptr %i.jr, align 1, !range !21, !noalias !1260, !noundef !4
-  %3 = getelementptr inbounds nuw i8, ptr %i.ef, i64 20
-  %4 = load i8, ptr %3, align 4, !range !21, !noalias !1260, !noundef !4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ef), !noalias !1260
-  %.sroa.747.15.insert.ext.i = zext nneg i8 %2 to i64
+  %2 = load i16, ptr %i.jr, align 1, !noalias !1260
+  %.sroa.747.15.insert.ext.i = zext i16 %2 to i64
   %.sroa.747.15.insert.shift.i = shl nuw nsw i64 %.sroa.747.15.insert.ext.i, 24
-  %.sroa.747.15.insert.insert.i = or disjoint i64 %.sroa.747.15.insert.shift.i, %i.jq
-  %.sroa.747.16.insert.ext.i = zext nneg i8 %4 to i64
-  %.sroa.747.16.insert.shift.i = shl nuw nsw i64 %.sroa.747.16.insert.ext.i, 32
-  %.sroa.747.16.insert.insert.i = or disjoint i64 %.sroa.747.15.insert.insert.i, %.sroa.747.16.insert.shift.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ef), !noalias !1260
+  %.sroa.747.16.insert.insert.i = or disjoint i64 %.sroa.747.15.insert.shift.i, %i.jq
   %.sroa.046.0.extract.trunc.i = trunc i64 %.sroa.0.0.copyload.i.i to i8
   %.sroa.046.1.extract.shift.i = lshr i64 %.sroa.0.0.copyload.i.i, 8
   %.sroa.046.1.extract.trunc.i = trunc nuw i64 %.sroa.046.1.extract.shift.i to i56

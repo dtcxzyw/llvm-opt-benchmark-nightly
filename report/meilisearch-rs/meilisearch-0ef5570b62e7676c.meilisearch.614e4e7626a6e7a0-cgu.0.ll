@@ -205,7 +205,7 @@ bb.a:
   %i.j = alloca [24 x i8], align 8                ; 4 uses
   %i.k = alloca [56 x i8], align 8                ; 5 uses
   %i.l = alloca [176 x i8], align 8               ; 6 uses
-  %i.m = alloca [112 x i8], align 8               ; 16 uses
+  %i.m = alloca [112 x i8], align 8               ; 15 uses
   %.sroa.0106.i.i = alloca [176 x i8], align 8    ; 4 uses
   %i.n = alloca [128 x i8], align 8               ; 4 uses
   %i.o = alloca [120 x i8], align 8               ; 4 uses
@@ -588,16 +588,11 @@ bb.ak:                                            ; preds = %bb.aj
   %.sroa.620.106.insert.mask.i.i.i = and i64 %.sroa.11.0.copyload.i.i.i, -16777216
   %.sroa.620.106.insert.insert.i.i.i = or disjoint i64 %.sroa.620.106.insert.shift.i.i.i, %.sroa.620.106.insert.mask.i.i.i
   %i.dp = getelementptr inbounds nuw i8, ptr %i.m, i64 104
-  %1 = load i8, ptr %i.dp, align 8, !range !52, !alias.scope !5975, !noalias !5953, !noundef !45
-  %.sroa.616.104.insert.ext.i.i.i = zext nneg i8 %1 to i64
-  %.sroa.616.104.insert.insert.i.i.i = or disjoint i64 %.sroa.620.106.insert.insert.i.i.i, %.sroa.616.104.insert.ext.i.i.i
+  %1 = load i16, ptr %i.dp, align 8, !alias.scope !5975, !noalias !5953
+  %.sroa.616.104.insert.ext.i.i.i = zext i16 %1 to i64
   %.sroa.09.sroa.6.48..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.sroa.6.i.i.i, i64 20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.09.sroa.6.48..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.04.sroa.6.sroa.7.0..sroa.04.sroa.6.0..sroa_idx.sroa_idx.i.i, i64 32, i1 false), !noalias !5953
-  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 105
-  %3 = load i8, ptr %2, align 1, !range !52, !alias.scope !5975, !noalias !5953, !noundef !45
-  %.sroa.6.105.insert.ext.i.i.i = zext nneg i8 %3 to i64
-  %.sroa.6.105.insert.shift.i.i.i = shl nuw nsw i64 %.sroa.6.105.insert.ext.i.i.i, 8
-  %.sroa.6.105.insert.insert.i.i.i = or disjoint i64 %.sroa.6.105.insert.shift.i.i.i, %.sroa.616.104.insert.insert.i.i.i
+  %.sroa.6.105.insert.insert.i.i.i = or disjoint i64 %.sroa.620.106.insert.insert.i.i.i, %.sroa.616.104.insert.ext.i.i.i
   %i.dq = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   store i64 %i.dg, ptr %i.e, align 8, !noalias !5977
   %.sroa.0.sroa.0.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -1000,7 +995,7 @@ bb.a:
   %i.q = alloca [232 x i8], align 8               ; 20 uses
   %i.r = alloca [56 x i8], align 8                ; 5 uses
   %i.s = alloca [176 x i8], align 8               ; 6 uses
-  %i.t = alloca [112 x i8], align 8               ; 16 uses
+  %i.t = alloca [112 x i8], align 8               ; 15 uses
   %i.u = alloca [208 x i8], align 8               ; 9 uses
   %i.v = alloca [128 x i8], align 8               ; 4 uses
   %i.w = alloca [120 x i8], align 8               ; 4 uses
@@ -1396,16 +1391,11 @@ bb.am:                                            ; preds = %bb.al
   %.sroa.620.106.insert.mask.i.i.i = and i64 %.sroa.11.0.copyload.i.i.i, -16777216
   %.sroa.620.106.insert.insert.i.i.i = or disjoint i64 %.sroa.620.106.insert.shift.i.i.i, %.sroa.620.106.insert.mask.i.i.i
   %i.ec = getelementptr inbounds nuw i8, ptr %i.t, i64 104
-  %1 = load i8, ptr %i.ec, align 8, !range !52, !alias.scope !6244, !noalias !6219, !noundef !45
-  %.sroa.616.104.insert.ext.i.i.i = zext nneg i8 %1 to i64
-  %.sroa.616.104.insert.insert.i.i.i = or disjoint i64 %.sroa.620.106.insert.insert.i.i.i, %.sroa.616.104.insert.ext.i.i.i
+  %1 = load i16, ptr %i.ec, align 8, !alias.scope !6244, !noalias !6219
+  %.sroa.616.104.insert.ext.i.i.i = zext i16 %1 to i64
   %.sroa.09.sroa.6.48..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.sroa.6.i.i.i, i64 20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.09.sroa.6.48..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.sroa.0.sroa.7.0..sroa.6.0..sroa_idx5.sroa_idx.i.i, i64 32, i1 false), !noalias !6219
-  %2 = getelementptr inbounds nuw i8, ptr %i.t, i64 105
-  %3 = load i8, ptr %2, align 1, !range !52, !alias.scope !6244, !noalias !6219, !noundef !45
-  %.sroa.6.105.insert.ext.i.i.i = zext nneg i8 %3 to i64
-  %.sroa.6.105.insert.shift.i.i.i = shl nuw nsw i64 %.sroa.6.105.insert.ext.i.i.i, 8
-  %.sroa.6.105.insert.insert.i.i.i = or disjoint i64 %.sroa.6.105.insert.shift.i.i.i, %.sroa.616.104.insert.insert.i.i.i
+  %.sroa.6.105.insert.insert.i.i.i = or disjoint i64 %.sroa.620.106.insert.insert.i.i.i, %.sroa.616.104.insert.ext.i.i.i
   %i.ed = getelementptr inbounds nuw i8, ptr %i.t, i64 96
   store i64 %i.dt, ptr %i.k, align 8, !noalias !6246
   %.sroa.0.sroa.0.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 8

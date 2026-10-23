@@ -205,10 +205,11 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.ae
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.a
-  %i.h = load ptr, ptr %0, align 8, !tbaa !149    ; 3 uses
-  %2 = load i8, ptr %i.h, align 1, !tbaa !58      ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 1
-  %4 = load i8, ptr %3, align 1, !tbaa !58        ; 2 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !149    ; 2 uses
+  %2 = load i16, ptr %i.h, align 1                ; 3 uses
+  %3 = trunc i16 %2 to i8
+  %4 = lshr i16 %2, 8
+  %5 = trunc nuw i16 %4 to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   tail call void @llvm.experimental.noalias.scope.decl(metadata !498)
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
@@ -249,7 +250,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds =
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.q
   store i8 0, ptr %i.t, align 1, !tbaa !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20, !noalias !498
-  switch i8 %2, label %bb.g [
+  switch i8 %3, label %bb.g [
     i8 124, label %_ZN3npy8in_arrayIcLm3EEEbT_RKSt5arrayIS1_XT0_EE.exit.thread
     i8 62, label %_ZN3npy8in_arrayIcLm3EEEbT_RKSt5arrayIS1_XT0_EE.exit.thread
     i8 60, label %_ZN3npy8in_arrayIcLm3EEEbT_RKSt5arrayIS1_XT0_EE.exit.thread
@@ -275,7 +276,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.body
 
 _ZN3npy8in_arrayIcLm3EEEbT_RKSt5arrayIS1_XT0_EE.exit.thread: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit
-  switch i8 %4, label %bb.i [
+  switch i8 %5, label %bb.i [
     i8 117, label %_ZN3npy8in_arrayIcLm4EEEbT_RKSt5arrayIS1_XT0_EE.exit.thread
     i8 105, label %_ZN3npy8in_arrayIcLm4EEEbT_RKSt5arrayIS1_XT0_EE.exit.thread
     i8 102, label %_ZN3npy8in_arrayIcLm4EEEbT_RKSt5arrayIS1_XT0_EE.exit.thread
@@ -477,13 +478,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.ac, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  %.sroa.2.0.insert.ext = zext i16 %2 to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   %.sroa.36.0.insert.ext = shl i64 %i.bs, 32
-  %.sroa.2.0.insert.ext = zext nneg i8 %4 to i64
-  %.sroa.2.0.insert.shift = shl nuw nsw i64 %.sroa.2.0.insert.ext, 8
-  %.sroa.2.0.insert.insert = or disjoint i64 %.sroa.36.0.insert.ext, %.sroa.2.0.insert.shift
-  %.sroa.0.0.insert.ext = zext nneg i8 %2 to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.insert, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.36.0.insert.ext, %.sroa.2.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 bb.ad:                                            ; preds = %.invoke

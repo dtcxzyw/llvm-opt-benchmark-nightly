@@ -202,30 +202,18 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.y, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %8 = load i8, ptr %7, align 1, !tbaa !33
-  %9 = zext i8 %8 to i32
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %11 = load i8, ptr %10, align 1, !tbaa !33
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = or disjoint i32 %13, %9
-  %15 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %16 = load i8, ptr %15, align 1, !tbaa !33
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 16
-  %19 = or disjoint i32 %14, %18
+  %7 = load i32, ptr %3, align 1
+  %8 = tail call i32 @llvm.bswap.i32(i32 %7)
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 2
   %i.aa = load i16, ptr %i.z, align 1
   %i.ab = zext i16 %i.aa to i32
-  %20 = load i8, ptr %3, align 1, !tbaa !33
-  %i.ac = zext i8 %20 to i32
-  %i.ad = shl nuw nsw i32 %i.ac, 16
+  %9 = load i16, ptr %3, align 1
+  %i.ac = zext i16 %9 to i32
+  %i.ad = shl nuw i32 %i.ac, 16
   %i.ae = or disjoint i32 %i.ad, %i.ab
-  %21 = getelementptr inbounds nuw i8, ptr %3, i64 1
   br label %bb.o
 
 _ZL17readInstruction32N4llvm8ArrayRefIhEEmRmRjbb.exit: ; preds = %bb.k
@@ -233,12 +221,7 @@ _ZL17readInstruction32N4llvm8ArrayRefIhEEmRmRjbb.exit: ; preds = %bb.k
   br label %_ZL17readInstruction16N4llvm8ArrayRefIhEEmRmRjb.exit
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %.sink220.in = phi ptr [ %21, %bb.n ], [ %3, %bb.m ]
-  %.sink = phi i32 [ %i.ae, %bb.n ], [ %19, %bb.m ]
-  %.sink220 = load i8, ptr %.sink220.in, align 1, !tbaa !33
-  %22 = zext i8 %.sink220 to i32
-  %23 = shl nuw i32 %22, 24
-  %24 = or disjoint i32 %.sink, %23               ; 3 uses
+  %.sink = phi i32 [ %i.ae, %bb.n ], [ %8, %bb.m ] ; 3 uses
   %.val116 = load ptr, ptr %i.q, align 8, !tbaa !34 ; 3 uses
   %i.af = getelementptr i8, ptr %.val116, i64 240
   %.val116.val = load i64, ptr %i.af, align 8, !tbaa !18
@@ -247,7 +230,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %.not166, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ah = tail call fastcc noundef i32 @_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE(ptr noundef nonnull @_ZN12_GLOBAL__N_125DecoderTableMicroMipsR632E, ptr noundef nonnull align 8 dereferenceable(128) %1, i32 noundef %24, i64 noundef %5, ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(320) %.val116) ; 2 uses
+  %i.ah = tail call fastcc noundef i32 @_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE(ptr noundef nonnull @_ZN12_GLOBAL__N_125DecoderTableMicroMipsR632E, ptr noundef nonnull align 8 dereferenceable(128) %1, i32 noundef %.sink, i64 noundef %5, ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(320) %.val116) ; 2 uses
   %.not111 = icmp eq i32 %i.ah, 0
   br i1 %.not111, label %._crit_edge201, label %bb.q
 
@@ -261,7 +244,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %._crit_edge201, %bb.o
   %i.ai = phi ptr [ %.pre202, %._crit_edge201 ], [ %.val116, %bb.o ]
-  %i.aj = tail call fastcc noundef i32 @_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE(ptr noundef nonnull @_ZN12_GLOBAL__N_123DecoderTableMicroMips32E, ptr noundef nonnull align 8 dereferenceable(128) %1, i32 noundef %24, i64 noundef %5, ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(320) %i.ai) ; 2 uses
+  %i.aj = tail call fastcc noundef i32 @_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE(ptr noundef nonnull @_ZN12_GLOBAL__N_123DecoderTableMicroMips32E, ptr noundef nonnull align 8 dereferenceable(128) %1, i32 noundef %.sink, i64 noundef %5, ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(320) %i.ai) ; 2 uses
   %.not112 = icmp eq i32 %i.aj, 0
   br i1 %.not112, label %bb.t, label %bb.s
 
@@ -278,7 +261,7 @@ bb.t:                                             ; preds = %bb.r
   br i1 %.not167, label %bb.w, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.am = tail call fastcc noundef i32 @_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE(ptr noundef nonnull @_ZN12_GLOBAL__N_127DecoderTableMicroMipsFP6432E, ptr noundef nonnull align 8 dereferenceable(128) %1, i32 noundef %24, i64 noundef %5, ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(320) %.val121) ; 2 uses
+  %i.am = tail call fastcc noundef i32 @_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE(ptr noundef nonnull @_ZN12_GLOBAL__N_127DecoderTableMicroMipsFP6432E, ptr noundef nonnull align 8 dereferenceable(128) %1, i32 noundef %.sink, i64 noundef %5, ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(320) %.val121) ; 2 uses
   %.not113 = icmp eq i32 %i.am, 0
   br i1 %.not113, label %bb.w, label %bb.v
 

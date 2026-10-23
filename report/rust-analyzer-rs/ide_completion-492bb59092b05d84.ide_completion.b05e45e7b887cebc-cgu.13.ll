@@ -204,24 +204,19 @@ bb.ao:                                            ; preds = %_RNvXs44_Cs8Xq8PKFY
   store i32 %.sroa.811.sroa.9.0.copyload.i.i, ptr %.sroa.10.0..sroa_idx56, align 4
   store i8 2, ptr %i.u, align 4
   %i.ff = getelementptr inbounds nuw i8, ptr %1, i64 408
-  %i.fg = load ptr, ptr %i.ff, align 8, !nonnull !5, !align !13, !noundef !5 ; 3 uses
+  %i.fg = load ptr, ptr %i.ff, align 8, !nonnull !5, !align !13, !noundef !5 ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 628
-  %4 = load i8, ptr %i.fh, align 4, !range !11, !noundef !5
-  %5 = getelementptr inbounds nuw i8, ptr %i.fg, i64 128
-  %i.fi = load i8, ptr %5, align 8, !range !11, !alias.scope !655, !noundef !5
-  %i.fj = getelementptr inbounds nuw i8, ptr %i.fg, i64 129
-  %i.fk = load i8, ptr %i.fj, align 1, !range !11, !alias.scope !655, !noundef !5
-  %i.fl = getelementptr inbounds nuw i8, ptr %i.fg, i64 130
-  %6 = load i8, ptr %i.fl, align 2, !range !11, !alias.scope !655, !noundef !5
-  %7 = zext nneg i8 %4 to i32
-  %.sroa.4.0.insert.shift.i = shl nuw nsw i32 %7, 24
-  %.sroa.3.0.insert.ext.i = zext nneg i8 %6 to i32
-  %.sroa.3.0.insert.shift.i352 = shl nuw nsw i32 %.sroa.3.0.insert.ext.i, 16
-  %.sroa.2.0.insert.ext.i = zext nneg i8 %i.fk to i32
-  %.sroa.2.0.insert.shift.i353 = shl nuw nsw i32 %.sroa.2.0.insert.ext.i, 8
-  %.sroa.0.0.insert.ext.i355.a = zext nneg i8 %i.fi to i32
-  %.sroa.3.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.shift.i, %.sroa.0.0.insert.ext.i355.a
-  %.sroa.2.0.insert.insert.i354 = or disjoint i32 %.sroa.3.0.insert.insert.i, %.sroa.2.0.insert.shift.i353
+  %i.fi = load i8, ptr %i.fh, align 4, !range !11, !noundef !5
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.fg, i64 128
+  %i.fk = load i8, ptr %i.fj, align 8, !range !11, !alias.scope !655, !noundef !5
+  %i.fl = getelementptr inbounds nuw i8, ptr %i.fg, i64 129
+  %4 = load i16, ptr %i.fl, align 1, !alias.scope !655
+  %.sroa.3.0.insert.ext.i = zext i16 %4 to i32
+  %.sroa.3.0.insert.shift.i352 = shl nuw nsw i32 %.sroa.3.0.insert.ext.i, 8
+  %.sroa.2.0.insert.ext.i = zext nneg i8 %i.fi to i32
+  %.sroa.2.0.insert.shift.i353 = shl nuw nsw i32 %.sroa.2.0.insert.ext.i, 24
+  %.sroa.0.0.insert.ext.i355.a = zext nneg i8 %i.fk to i32
+  %.sroa.2.0.insert.insert.i354 = or disjoint i32 %.sroa.2.0.insert.shift.i353, %.sroa.0.0.insert.ext.i355.a
   %.sroa.0.0.insert.insert.i356.a = or disjoint i32 %.sroa.2.0.insert.insert.i354, %.sroa.3.0.insert.shift.i352
   invoke void @_RINvMs4_Cs8Xq8PKFYOms_3hirNtB6_6Module9find_pathNtB6_9ModuleDefECsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.v, i32 noundef %i.fa, i32 noundef %i.fc, ptr noundef nonnull %i.fd, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(240) @38, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(16) %i.u, i32 noundef %.sroa.0.0.insert.insert.i356.a)
           to label %bb.ap unwind label %bb.j
@@ -272,24 +267,19 @@ bb.av:                                            ; preds = %_RNvXs44_Cs8Xq8PKFY
   store i32 %.sroa.811.sroa.9.0.copyload.i.i, ptr %.sroa.10.0..sroa_idx58, align 4
   store i8 2, ptr %i.q, align 4
   %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 408
-  %i.fu = load ptr, ptr %i.ft, align 8, !nonnull !5, !align !13, !noundef !5 ; 3 uses
+  %i.fu = load ptr, ptr %i.ft, align 8, !nonnull !5, !align !13, !noundef !5 ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %1, i64 628
-  %8 = load i8, ptr %i.fv, align 4, !range !11, !noundef !5
-  %9 = getelementptr inbounds nuw i8, ptr %i.fu, i64 128
-  %i.fw = load i8, ptr %9, align 8, !range !11, !alias.scope !656, !noundef !5
-  %i.fx = getelementptr inbounds nuw i8, ptr %i.fu, i64 129
-  %i.fy = load i8, ptr %i.fx, align 1, !range !11, !alias.scope !656, !noundef !5
-  %i.fz = getelementptr inbounds nuw i8, ptr %i.fu, i64 130
-  %10 = load i8, ptr %i.fz, align 2, !range !11, !alias.scope !656, !noundef !5
-  %11 = zext nneg i8 %8 to i32
-  %.sroa.4.0.insert.shift.i357 = shl nuw nsw i32 %11, 24
-  %.sroa.3.0.insert.ext.i358 = zext nneg i8 %10 to i32
-  %.sroa.3.0.insert.shift.i359 = shl nuw nsw i32 %.sroa.3.0.insert.ext.i358, 16
-  %.sroa.2.0.insert.ext.i361 = zext nneg i8 %i.fy to i32
-  %.sroa.2.0.insert.shift.i362 = shl nuw nsw i32 %.sroa.2.0.insert.ext.i361, 8
-  %.sroa.0.0.insert.ext.i364 = zext nneg i8 %i.fw to i32
-  %.sroa.3.0.insert.insert.i360 = or disjoint i32 %.sroa.4.0.insert.shift.i357, %.sroa.0.0.insert.ext.i364
-  %.sroa.2.0.insert.insert.i363 = or disjoint i32 %.sroa.3.0.insert.insert.i360, %.sroa.2.0.insert.shift.i362
+  %i.fw = load i8, ptr %i.fv, align 4, !range !11, !noundef !5
+  %i.fx = getelementptr inbounds nuw i8, ptr %i.fu, i64 128
+  %i.fy = load i8, ptr %i.fx, align 8, !range !11, !alias.scope !656, !noundef !5
+  %i.fz = getelementptr inbounds nuw i8, ptr %i.fu, i64 129
+  %5 = load i16, ptr %i.fz, align 1, !alias.scope !656
+  %.sroa.3.0.insert.ext.i358 = zext i16 %5 to i32
+  %.sroa.3.0.insert.shift.i359 = shl nuw nsw i32 %.sroa.3.0.insert.ext.i358, 8
+  %.sroa.2.0.insert.ext.i361 = zext nneg i8 %i.fw to i32
+  %.sroa.2.0.insert.shift.i362 = shl nuw nsw i32 %.sroa.2.0.insert.ext.i361, 24
+  %.sroa.0.0.insert.ext.i364 = zext nneg i8 %i.fy to i32
+  %.sroa.2.0.insert.insert.i363 = or disjoint i32 %.sroa.2.0.insert.shift.i362, %.sroa.0.0.insert.ext.i364
   %.sroa.0.0.insert.insert.i365 = or disjoint i32 %.sroa.2.0.insert.insert.i363, %.sroa.3.0.insert.shift.i359
   invoke void @_RINvMs4_Cs8Xq8PKFYOms_3hirNtB6_6Module9find_pathNtB6_9ModuleDefECsf8NQSppxkmK_14ide_completion(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.r, i32 noundef %i.fo, i32 noundef %i.fq, ptr noundef nonnull %i.fr, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(240) @38, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(16) %i.q, i32 noundef %.sroa.0.0.insert.insert.i365)
           to label %bb.aw unwind label %bb.j
@@ -692,24 +682,19 @@ bb.ap:                                            ; preds = %bb.ai, %bb.ao, %bb.
   store ptr %.sink996, ptr %i.go, align 8, !captures !36
   %i.lj = getelementptr inbounds nuw i8, ptr %i.go, i64 8
   store i64 %.sink994, ptr %i.lj, align 8
-  %i.lk = load ptr, ptr %i.gt, align 8, !nonnull !5, !align !13, !noundef !5 ; 3 uses
+  %i.lk = load ptr, ptr %i.gt, align 8, !nonnull !5, !align !13, !noundef !5 ; 2 uses
   %i.ll = getelementptr inbounds nuw i8, ptr %1, i64 628
-  %3 = load i8, ptr %i.ll, align 4, !range !11, !noundef !5
-  %4 = getelementptr inbounds nuw i8, ptr %i.lk, i64 128
-  %i.lm = load i8, ptr %4, align 8, !range !11, !alias.scope !838, !noundef !5
-  %i.ln = getelementptr inbounds nuw i8, ptr %i.lk, i64 129
-  %i.lo = load i8, ptr %i.ln, align 1, !range !11, !alias.scope !838, !noundef !5
-  %i.lp = getelementptr inbounds nuw i8, ptr %i.lk, i64 130
-  %5 = load i8, ptr %i.lp, align 2, !range !11, !alias.scope !838, !noundef !5
-  %6 = zext nneg i8 %3 to i32
-  %.sroa.4.0.insert.shift.i = shl nuw nsw i32 %6, 24
-  %.sroa.3.0.insert.ext.i = zext nneg i8 %5 to i32
-  %.sroa.3.0.insert.shift.i = shl nuw nsw i32 %.sroa.3.0.insert.ext.i, 16
-  %.sroa.2.0.insert.ext.i = zext nneg i8 %i.lo to i32
-  %.sroa.2.0.insert.shift.i = shl nuw nsw i32 %.sroa.2.0.insert.ext.i, 8
-  %.sroa.0.0.insert.ext.i = zext nneg i8 %i.lm to i32
-  %.sroa.3.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.shift.i, %.sroa.0.0.insert.ext.i
-  %.sroa.2.0.insert.insert.i = or disjoint i32 %.sroa.3.0.insert.insert.i, %.sroa.2.0.insert.shift.i
+  %i.lm = load i8, ptr %i.ll, align 4, !range !11, !noundef !5
+  %i.ln = getelementptr inbounds nuw i8, ptr %i.lk, i64 128
+  %i.lo = load i8, ptr %i.ln, align 8, !range !11, !alias.scope !838, !noundef !5
+  %i.lp = getelementptr inbounds nuw i8, ptr %i.lk, i64 129
+  %3 = load i16, ptr %i.lp, align 1, !alias.scope !838
+  %.sroa.3.0.insert.ext.i = zext i16 %3 to i32
+  %.sroa.3.0.insert.shift.i = shl nuw nsw i32 %.sroa.3.0.insert.ext.i, 8
+  %.sroa.2.0.insert.ext.i = zext nneg i8 %i.lm to i32
+  %.sroa.2.0.insert.shift.i = shl nuw nsw i32 %.sroa.2.0.insert.ext.i, 24
+  %.sroa.0.0.insert.ext.i = zext nneg i8 %i.lo to i32
+  %.sroa.2.0.insert.insert.i = or disjoint i32 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.2.0.insert.insert.i, %.sroa.3.0.insert.shift.i ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.gn)
   call void @llvm.experimental.noalias.scope.decl(metadata !839)
