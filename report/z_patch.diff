@@ -1,0 +1,57 @@
+diff --git a/llvm/lib/Analysis/InlineCost.cpp b/llvm/lib/Analysis/InlineCost.cpp
+index d418968a4a41c1..90a3bc21f519b5 100644
+--- a/llvm/lib/Analysis/InlineCost.cpp
++++ b/llvm/lib/Analysis/InlineCost.cpp
+@@ -2318,7 +2318,15 @@ bool CallAnalyzer::visitBinaryOperator(BinaryOperator &I) {
+       !match(&I, m_FNeg(m_Value())))
+     onCallPenalty();
+ 
+-  return false;
++  // Free binary operators are, in practice, fused vector idioms and logic on
++  // i1 conditions. Skip the TTI query, which is comparatively expensive, for
++  // the scalar operations that dominate most code.
++  Type *Ty = I.getType();
++  if (!Ty->isVectorTy() && !Ty->isIntegerTy(1))
++    return false;
++
++  return TTI.getInstructionCost(&I, TargetTransformInfo::TCK_SizeAndLatency) ==
++         TargetTransformInfo::TCC_Free;
+ }
+ 
+ bool CallAnalyzer::visitFNeg(UnaryOperator &I) {
+diff --git a/llvm/test/Transforms/Inline/free-binop-cost.ll b/llvm/test/Transforms/Inline/free-binop-cost.ll
+new file mode 100644
+index 00000000000000..449c3f6c19ae19
+--- /dev/null
++++ b/llvm/test/Transforms/Inline/free-binop-cost.ll
+@@ -0,0 +1,30 @@
++; RUN: opt -passes="print<inline-cost>" -disable-output %s 2>&1 | FileCheck %s
++
++; CHECK:      Analyzing call of inner_sel... (caller:outer_sel)
++; CHECK:      NumInstructionsSimplified: 3
++; CHECK:      Cost: -35
++; CHECK:      Analyzing call of inner_and... (caller:outer_and)
++; CHECK:      NumInstructionsSimplified: 3
++; CHECK:      Cost: -35
++
++define i1 @outer_sel(i1 %x) {
++  %r = call i1 @inner_sel(i1 %x)
++  ret i1 %r
++}
++
++define i1 @outer_and(i1 %x) {
++  %r = call i1 @inner_and(i1 %x)
++  ret i1 %r
++}
++
++define i1 @inner_sel(i1 %x) {
++  %wc = call i1 @llvm.experimental.widenable.condition()
++  %a = select i1 %x, i1 %wc, i1 false
++  ret i1 %a
++}
++
++define i1 @inner_and(i1 %x) {
++  %wc = call i1 @llvm.experimental.widenable.condition()
++  %a = and i1 %x, %wc
++  ret i1 %a
++}
