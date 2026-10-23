@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.t, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.u = sub i32 %i.g, %i.l
+  %i.u = sub nuw i32 %i.g, %i.l
   br label %.sink.split.i
 
 bb.f:                                             ; preds = %bb.d
