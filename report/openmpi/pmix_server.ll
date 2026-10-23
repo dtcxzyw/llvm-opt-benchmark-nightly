@@ -202,9 +202,10 @@ bb.ae:                                            ; preds = %bb.ac
   %i.br = call ptr @getenv(ptr noundef nonnull @.str.45) #17
   %.not185 = icmp eq ptr %i.br, null
   %i.bs = load i8, ptr @prte_persistent, align 1, !range !51
-  %3 = xor i8 %i.bs, 1
-  %not.or.cond = select i1 %.not185, i8 %3, i8 0
-  store i8 %not.or.cond, ptr %i.c, align 1, !tbaa !75
+  %.not186 = icmp eq i8 %i.bs, 0
+  %or.cond.not = select i1 %.not185, i1 %.not186, i1 false
+  %. = zext i1 %or.cond.not to i8
+  store i8 %., ptr %i.c, align 1, !tbaa !75
   %i.bt = call i32 @PMIx_Info_list_add(ptr noundef %i.aq, ptr noundef nonnull @.str.46, ptr noundef nonnull %i.c, i16 noundef zeroext 1) #17 ; 2 uses
   %.not131 = icmp eq i32 %i.bt, 0
   br i1 %.not131, label %bb.ag, label %bb.af

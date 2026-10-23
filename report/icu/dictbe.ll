@@ -204,7 +204,7 @@ bb.ca:                                            ; preds = %bb.bv
 
 bb.cb:                                            ; preds = %.lr.ph663, %bb.cy
   %indvars.iv729 = phi i64 [ 0, %.lr.ph663 ], [ %indvars.iv.next730, %bb.cy ] ; 9 uses
-  %.0244660 = phi i1 [ false, %.lr.ph663 ], [ %.1245, %bb.cy ] ; 2 uses
+  %.0244660 = phi i8 [ 0, %.lr.ph663 ], [ %.1245, %bb.cy ] ; 2 uses
   %.0246659 = phi i32 [ 0, %.lr.ph663 ], [ %i.pw, %bb.cy ] ; 5 uses
   %i.lu = load i32, ptr %i.jm, align 8
   %i.lv = sext i32 %i.lu to i64
@@ -358,8 +358,9 @@ bb.cp:                                            ; preds = %._crit_edge653
   %i.oa = add i32 %i.mt, -65382
   %i.ob = icmp ult i32 %i.oa, 58
   %i.oc = or i1 %i.ob, %or.cond3.i                ; 2 uses
-  %.not = xor i1 %.0244660, true
-  %or.cond = and i1 %i.oc, %.not
+  %20 = zext i1 %i.oc to i8                       ; 5 uses
+  %.not = icmp eq i8 %.0244660, 0
+  %or.cond = and i1 %.not, %i.oc
   br i1 %or.cond, label %bb.cq, label %_ZNK6icu_789UVector3210elementAtiEi.exit477.thread
 
 bb.cq:                                            ; preds = %bb.cp
@@ -466,7 +467,7 @@ bb.cx:                                            ; preds = %bb.cw
   br label %.loopexit.split-lp581
 
 _ZNK6icu_789UVector3210elementAtiEi.exit477.thread: ; preds = %_ZN6icu_78L15getKatakanaCostEi.exit, %bb.cp, %_ZNK6icu_789UVector3210elementAtiEi.exit477, %bb.cx, %.critedge, %_ZNK6icu_789UVector3210elementAtiEi.exit460
-  %.1245 = phi i1 [ %.0244660, %_ZNK6icu_789UVector3210elementAtiEi.exit460 ], [ true, %.critedge ], [ true, %bb.cx ], [ true, %_ZNK6icu_789UVector3210elementAtiEi.exit477 ], [ %i.oc, %bb.cp ], [ true, %_ZN6icu_78L15getKatakanaCostEi.exit ]
+  %.1245 = phi i8 [ %.0244660, %_ZNK6icu_789UVector3210elementAtiEi.exit460 ], [ %20, %.critedge ], [ %20, %bb.cx ], [ %20, %_ZNK6icu_789UVector3210elementAtiEi.exit477 ], [ %20, %bb.cp ], [ %20, %_ZN6icu_78L15getKatakanaCostEi.exit ]
   %i.pw = invoke noundef i32 @_ZNK6icu_7813UnicodeString11moveIndex32Eii(ptr noundef nonnull align 8 dereferenceable(64) %7, i32 noundef %.0246659, i32 noundef 1)
           to label %bb.cy unwind label %.loopexit.split-lp581.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

@@ -202,12 +202,12 @@ bb.h:                                             ; preds = %_ZNSt5dequeISt10uni
 bb.i:                                             ; preds = %bb.k, %bb.h
   %i.ar = load i32, ptr %i.p, align 4, !tbaa !321
   %.not = icmp eq i32 %i.ar, 0
-  %.pre62 = load i8, ptr %i.g, align 1, !tbaa !169, !range !88
-  %.pre64 = trunc nuw i8 %.pre62 to i1            ; 2 uses
+  %.pre62 = load i8, ptr %i.g, align 1, !tbaa !169, !range !88 ; 2 uses
   br i1 %.not, label %.critedge, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  br i1 %.pre64, label %.thread, label %bb.k
+  %.not9.not = icmp eq i8 %.pre62, 0
+  br i1 %.not9.not, label %bb.k, label %.thread
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE(ptr noundef nonnull align 8 dereferenceable(48) %i.q, ptr noundef nonnull align 8 dereferenceable(9) %2)
@@ -247,7 +247,8 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit
 
 .critedge:                                        ; preds = %bb.i
-  br i1 %.pre64, label %.thread, label %bb.n
+  %3 = trunc nuw i8 %.pre62 to i1
+  br i1 %3, label %.thread, label %bb.n
 
 .thread:                                          ; preds = %.critedge, %bb.j
   store i8 0, ptr %i.l, align 2, !tbaa !317

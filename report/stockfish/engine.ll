@@ -205,10 +205,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
   %i.dh = load i8, ptr %i.m, align 8, !tbaa !60, !range !61, !noundef !62 ; 2 uses
-  %15 = trunc nuw i8 %i.dh to i1
+  %.not = icmp ne i8 %i.dh, 0
   %i.di = load i64, ptr %i.n, align 8
   %i.dj = icmp ne i64 %i.di, 0
-  %or.cond.not = select i1 %15, i1 %i.dj, i1 false ; 2 uses
+  %or.cond.not = select i1 %.not, i1 %i.dj, i1 false ; 2 uses
   br i1 %or.cond.not, label %bb.o, label %bb.ad
 
 bb.o:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17
@@ -611,12 +611,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.u = load i8, ptr %i.t, align 8, !tbaa !60, !range !61, !noundef !62
-  %13 = trunc nuw i8 %i.u to i1
+  %.not = icmp eq i8 %i.u, 0
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.w = load i64, ptr %i.v, align 8
-  %14 = icmp ne i64 %i.w, 0
-  %or.cond.not = select i1 %13, i1 %14, i1 false
-  br i1 %or.cond.not, label %bb.b, label %bb.a
+  %13 = icmp eq i64 %i.w, 0
+  %or.cond.not = select i1 %.not, i1 true, i1 %13
+  br i1 %or.cond.not, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   call void @_ZZN9Stockfish10NumaConfig16from_system_numaIRZNS0_11from_systemERKSt7variantIJNS_16SystemNumaPolicyENS_15L3DomainsPolicyENS_15BundledL3PolicyEEEbEUlmE_EES0_bOT_ENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(16) %3)
@@ -1019,7 +1019,7 @@ _ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit.thread:
   %i.p = load ptr, ptr %i.g, align 8, !tbaa !67
   %i.q = call i32 @shm_open(ptr noundef %i.p, i32 noundef 194, i32 noundef 438) #28 ; 2 uses
   store i32 %i.q, ptr %i.d, align 8, !tbaa !189
-  %i.r = icmp ne i32 %i.q, -1                     ; 7 uses
+  %i.r = icmp ne i32 %i.q, -1                     ; 6 uses
   br i1 %i.r, label %.preheader.i.preheader, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit.thread
@@ -1118,6 +1118,7 @@ bb.l:                                             ; preds = %bb.g
   br label %.thread64
 
 .thread57:                                        ; preds = %.split, %.thread61
+  %.05562 = phi i8 [ 1, %.thread61 ], [ 0, %.split ] ; 2 uses
   %i.aw = load ptr, ptr %i.g, align 8, !tbaa !67
   %i.ax = call i32 @shm_unlink(ptr noundef %i.aw) #28 ; 0 uses
   %.pr = load ptr, ptr %i.e, align 8, !tbaa !266  ; 2 uses
@@ -1131,7 +1132,7 @@ _ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit: ;
   br label %.thread64
 
 .thread64:                                        ; preds = %bb.l, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit, %.thread57
-  %.not26 = phi i1 [ %i.r, %.thread57 ], [ %i.r, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit ], [ true, %bb.l ]
+  %.0556170 = phi i8 [ %.05562, %.thread57 ], [ %.05562, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit ], [ 0, %bb.l ]
   %i.ba = load i32, ptr %i.d, align 8, !tbaa !189
   %i.bb = icmp eq i32 %i.ba, -1
   br i1 %i.bb, label %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE11unlock_fileEv.exit, label %.preheader.i35
@@ -1160,7 +1161,9 @@ _ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE11unlock_fileEv.exit: ; 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   %i.bk = load ptr, ptr %i.k, align 8, !tbaa !67
   store i8 0, ptr %i.bk, align 1, !tbaa !69
-  %or.cond5 = or i1 %.not26, %.020
+  %.not26 = icmp eq i8 %.0556170, 0
+  %or.cond3.not27 = or i1 %i.r, %.not26
+  %or.cond5 = or i1 %or.cond3.not27, %.020
   br i1 %or.cond5, label %.thread70, label %.backedge.backedge
 
 bb.n:                                             ; preds = %.split

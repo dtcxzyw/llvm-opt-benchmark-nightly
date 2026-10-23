@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph23, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit
-  %.sroa.02.020 = phi i1 [ false, %.lr.ph23 ], [ %.sroa.02.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ]
+  %.sroa.02.020 = phi i8 [ 0, %.lr.ph23 ], [ %.sroa.02.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ]
   %.sroa.06.019 = phi i64 [ %i.a, %.lr.ph23 ], [ %.sroa.06.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %.sroa.0.018 = phi i64 [ 0, %.lr.ph23 ], [ %.sroa.0.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %i.f = and i64 %.sroa.06.019, 2251799813685247
@@ -295,10 +295,11 @@ bb.g:                                             ; preds = %._crit_edge
 _RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit: ; preds = %bb.g, %bb.f, %bb.b
   %.sroa.0.1 = phi i64 [ 0, %bb.b ], [ %.sroa.0.018, %bb.g ], [ %i.u, %bb.f ]
   %.sroa.06.1 = phi i64 [ %.sroa.01.0.i, %bb.b ], [ %.sroa.06.019, %bb.g ], [ %.sroa.06.019, %bb.f ] ; 2 uses
-  %.sroa.02.1 = phi i1 [ %.sroa.02.020, %bb.b ], [ true, %bb.g ], [ true, %bb.f ] ; 2 uses
+  %.sroa.02.1 = phi i8 [ %.sroa.02.020, %bb.b ], [ 1, %bb.g ], [ 1, %bb.f ] ; 2 uses
   %i.v = lshr i64 %.sroa.06.1, 51
+  %.not = icmp ne i8 %.sroa.02.1, 0
   %i.w = icmp eq i64 %1, %i.v
-  %or.cond.not = or i1 %.sroa.02.1, %i.w
+  %or.cond.not = or i1 %.not, %i.w
   br i1 %or.cond.not, label %bb.b, label %.loopexit
 }
 
@@ -318,7 +319,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph24, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit
-  %.sroa.02.021 = phi i1 [ false, %.lr.ph24 ], [ %.sroa.02.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ]
+  %.sroa.02.021 = phi i8 [ 0, %.lr.ph24 ], [ %.sroa.02.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ]
   %.sroa.06.020 = phi i64 [ %i.a, %.lr.ph24 ], [ %.sroa.06.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %.sroa.0.019 = phi i64 [ 0, %.lr.ph24 ], [ %.sroa.0.1, %_RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %i.f = and i64 %.sroa.06.020, 2251799813685247
@@ -415,10 +416,11 @@ bb.h:                                             ; preds = %._crit_edge
 _RNvNtNtCs8Bp9JeovReN_12sharded_slab4page4slot19exponential_backoff.exit: ; preds = %bb.h, %bb.g, %bb.b
   %.sroa.0.1 = phi i64 [ 0, %bb.b ], [ %.sroa.0.019, %bb.h ], [ %i.v, %bb.g ]
   %.sroa.06.1 = phi i64 [ %.sroa.01.0.i, %bb.b ], [ %.sroa.06.020, %bb.h ], [ %.sroa.06.020, %bb.g ] ; 2 uses
-  %.sroa.02.1 = phi i1 [ %.sroa.02.021, %bb.b ], [ true, %bb.h ], [ true, %bb.g ] ; 2 uses
+  %.sroa.02.1 = phi i8 [ %.sroa.02.021, %bb.b ], [ 1, %bb.h ], [ 1, %bb.g ] ; 2 uses
   %i.w = lshr i64 %.sroa.06.1, 51
+  %.not = icmp ne i8 %.sroa.02.1, 0
   %i.x = icmp eq i64 %1, %i.w
-  %or.cond.not = or i1 %.sroa.02.1, %i.x
+  %or.cond.not = or i1 %.not, %i.x
   br i1 %or.cond.not, label %bb.b, label %_RINvXs_NtNtCs8Bp9JeovReN_12sharded_slab4page5stackNtB5_13TransferStackINtB7_8FreeListNtNtB9_3cfg13DefaultConfigE4pushNtNtNtCs4DT25d3JcKH_18tracing_subscriber8registry7sharded9DataInnerECsgsNUVCRJO2f_13influxdb3_lib.exit
 }
 
@@ -821,11 +823,11 @@ bb.ro:                                            ; preds = %bb.py
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsgsNUVCRJO2f_13influxdb3_lib.exit.i
   %i.bae = getelementptr inbounds nuw i8, ptr %1, i64 972 ; 2 uses
   %i.baf = load i8, ptr %i.bae, align 4, !range !20, !noalias !7874, !noundef !13
-  %3 = trunc nuw i8 %i.baf to i1
+  %.not.i = icmp eq i8 %i.baf, 0
   %i.bag = load i64, ptr %i.ai, align 8, !range !12, !noalias !7874
-  %4 = icmp ne i64 %i.bag, -1
-  %or.cond386.not.i = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond386.not.i, label %bb.rp, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsgsNUVCRJO2f_13influxdb3_lib.exit203.i
+  %3 = icmp eq i64 %i.bag, -1
+  %or.cond386.not.i = select i1 %.not.i, i1 true, i1 %3
+  br i1 %or.cond386.not.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsgsNUVCRJO2f_13influxdb3_lib.exit203.i, label %bb.rp
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsgsNUVCRJO2f_13influxdb3_lib.exit203.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsgsNUVCRJO2f_13influxdb3_lib.exit.i199.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
   store i8 0, ptr %i.bae, align 4, !noalias !7874
@@ -1228,10 +1230,10 @@ bb.agw:                                           ; preds = %.body87.i, %bb.agr,
   %.pn37.pn.pn.i = phi { ptr, i32 } [ %.pn37.pn.i, %.body87.i ], [ %i.eon, %bb.agr ], [ %.pn10.pn.pn.pn.pn.pn.i, %bb.agp ], [ %i.ena, %bb.agc ]
   %i.epl = getelementptr inbounds nuw i8, ptr %1, i64 1237 ; 2 uses
   %i.epm = load i8, ptr %i.epl, align 1, !range !20, !noalias !12556, !noundef !13
-  %3 = trunc nuw i8 %i.epm to i1
-  %4 = icmp ne ptr %i.epk, null
-  %or.cond.not.i = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond.not.i, label %bb.aiy, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
+  %.not333.i = icmp eq i8 %i.epm, 0
+  %3 = icmp eq ptr %i.epk, null
+  %or.cond.not.i = select i1 %.not333.i, i1 true, i1 %3
+  br i1 %or.cond.not.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsEECsgsNUVCRJO2f_13influxdb3_lib.exit.i, label %bb.aiy
 
 bb.agx:                                           ; preds = %bb.afy
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.23.sroa.5.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.12162.sroa.3.i, i64 32, i1 false), !noalias !12556
@@ -1634,11 +1636,11 @@ bb.amm:                                           ; preds = %bb.ati, %bb.aml, %b
   %.pn43.pn.i866 = phi { ptr, i32 } [ %.pn43.i, %bb.aml ], [ %.pn38.pn.pn.pn.i, %bb.ati ], [ %i.fce, %bb.ami ], [ %.pn11.pn.pn.pn.pn.pn.i, %bb.amg ], [ %i.far, %bb.alt ]
   %i.fcp = getelementptr inbounds nuw i8, ptr %1, i64 1237 ; 2 uses
   %i.fcq = load i8, ptr %i.fcp, align 1, !range !20, !noalias !12591, !noundef !13
-  %5 = trunc nuw i8 %i.fcq to i1
+  %.not401.i = icmp eq i8 %i.fcq, 0
   %i.fcr = load ptr, ptr %i.agx, align 8, !noalias !12591
-  %6 = icmp ne ptr %i.fcr, null
-  %or.cond.not.i867 = select i1 %5, i1 %6, i1 false
-  br i1 %or.cond.not.i867, label %bb.atk, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsEECsgsNUVCRJO2f_13influxdb3_lib.exit.i868
+  %4 = icmp eq ptr %i.fcr, null
+  %or.cond.not.i867 = select i1 %.not401.i, i1 true, i1 %4
+  br i1 %or.cond.not.i867, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsEECsgsNUVCRJO2f_13influxdb3_lib.exit.i868, label %bb.atk
 
 bb.amn:                                           ; preds = %bb.alp
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.31.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12159.sroa.5.i, i64 24, i1 false), !noalias !12591
@@ -2041,11 +2043,11 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1hWu9vWSLgD_
   store i8 0, ptr %i.fqk, align 1, !noalias !12616
   %i.fqr = getelementptr inbounds nuw i8, ptr %1, i64 1605 ; 2 uses
   %i.fqs = load i8, ptr %i.fqr, align 1, !range !20, !noalias !12616, !noundef !13
-  %7 = trunc nuw i8 %i.fqs to i1
+  %.not.i83.i = icmp eq i8 %i.fqs, 0
   %i.fqt = load i64, ptr %i.afv, align 8, !range !12, !noalias !12616
-  %8 = icmp ne i64 %i.fqt, -1
-  %or.cond.not.i.i = select i1 %7, i1 %8, i1 false
-  br i1 %or.cond.not.i.i, label %bb.ard, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i
+  %5 = icmp eq i64 %i.fqt, -1
+  %or.cond.not.i.i = select i1 %.not.i83.i, i1 true, i1 %5
+  br i1 %or.cond.not.i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i, label %bb.ard
 
 bb.arb:                                           ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2lpxFwhfAIc_5trace3ctx11SpanContextEECsgsNUVCRJO2f_13influxdb3_lib.exit141.i.i
   %i.fqu = getelementptr inbounds nuw i8, ptr %1, i64 1616 ; 2 uses

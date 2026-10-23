@@ -204,9 +204,9 @@ bb.m:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.512)
   %i.cs = getelementptr inbounds nuw i8, ptr %3, i64 225
-  %i.ct = load i8, ptr %i.cs, align 1, !range !15, !noundef !4
-  %5 = trunc nuw i8 %i.ct to i1                   ; 4 uses
-  br i1 %5, label %bb.u, label %bb.n
+  %i.ct = load i8, ptr %i.cs, align 1, !range !15, !noundef !4 ; 2 uses
+  %.not88.not = icmp eq i8 %i.ct, 0
+  br i1 %.not88.not, label %bb.n, label %bb.u
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
@@ -416,9 +416,9 @@ bb.an:                                            ; preds = %bb.de
   br label %.body119
 
 bb.ao:                                            ; preds = %bb.ak
+  %5 = getelementptr inbounds nuw i8, ptr %i.ao, i64 192
   %6 = xor i8 %i.cj, 1
-  %7 = getelementptr inbounds nuw i8, ptr %i.ao, i64 192
-  store i8 %6, ptr %7, align 8
+  store i8 %6, ptr %5, align 8
   %i.eb = getelementptr inbounds nuw i8, ptr %3, i64 227
   %i.ec = load i8, ptr %i.eb, align 1, !range !15, !noundef !4
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ao, i64 280
@@ -468,22 +468,23 @@ _RNvMs3_NtCs30WoLBgco1_6ignore4walkNtB5_11WalkBuilder9max_depth.exit: ; preds = 
   %i.ep = load i8, ptr %i.eo, align 1, !range !15, !noundef !4
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ao, i64 281
   store i8 %i.ep, ptr %i.eq, align 1
+  %7 = trunc nuw i8 %i.ct to i1                   ; 3 uses
   %i.er = getelementptr inbounds nuw i8, ptr %3, i64 231
   %i.es = load i8, ptr %i.er, align 1, !range !15
   %i.et = xor i8 %i.es, 1
-  %.sroa.016.0 = select i1 %5, i8 0, i8 %i.et
+  %.sroa.016.0 = select i1 %7, i8 0, i8 %i.et
   %i.eu = getelementptr inbounds nuw i8, ptr %i.ao, i64 193
   store i8 %.sroa.016.0, ptr %i.eu, align 1
   %i.ev = getelementptr inbounds nuw i8, ptr %i.ao, i64 194
   %i.ew = getelementptr inbounds nuw i8, ptr %3, i64 236
   %i.ex = load i8, ptr %i.ew, align 4, !range !15, !noundef !4 ; 2 uses
-  %8 = xor i8 %i.ex, 1
-  %9 = getelementptr inbounds nuw i8, ptr %i.ao, i64 199
-  store i8 %8, ptr %9, align 1
+  %8 = getelementptr inbounds nuw i8, ptr %i.ao, i64 199
+  %9 = xor i8 %i.ex, 1
+  store i8 %9, ptr %8, align 1
   %i.ey = getelementptr inbounds nuw i8, ptr %3, i64 232
   %i.ez = load <4 x i8>, ptr %i.ey, align 8
   %i.fa = xor <4 x i8> %i.ez, splat (i8 1)
-  %i.fb = insertelement <4 x i1> poison, i1 %5, i64 0
+  %i.fb = insertelement <4 x i1> poison, i1 %7, i64 0
   %i.fc = shufflevector <4 x i1> %i.fb, <4 x i1> poison, <4 x i32> zeroinitializer
   %i.fd = select <4 x i1> %i.fc, <4 x i8> zeroinitializer, <4 x i8> %i.fa
   %i.fe = shufflevector <4 x i8> %i.fd, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 3, i32 0>
@@ -886,7 +887,7 @@ bb.cp:                                            ; preds = %bb.ck
   %i.jg = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.jg, i64 24, i1 false), !alias.scope !1425
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
-  invoke fastcc void @_RNvNtCsbzNSmZPCnTx_10tgrep_core6walker17finish_visibility(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.ac, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.in, i64 noundef %i.ip, i1 noundef zeroext %5, i1 noundef zeroext %i.iq, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.is, i64 noundef %i.iu, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.iw, i64 noundef %i.iy, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.ab, ptr noundef %4)
+  invoke fastcc void @_RNvNtCsbzNSmZPCnTx_10tgrep_core6walker17finish_visibility(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.ac, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.in, i64 noundef %i.ip, i1 noundef zeroext %7, i1 noundef zeroext %i.iq, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.is, i64 noundef %i.iu, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.iw, i64 noundef %i.iy, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.ab, ptr noundef %4)
           to label %bb.cq unwind label %bb.cj
 
 bb.cq:                                            ; preds = %bb.cp
@@ -1266,8 +1267,7 @@ bb.a:
   %i.ar = alloca [8 x i8], align 8                ; 3 uses
   store ptr %4, ptr %i.ar, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 64
-  %i.at = load i8, ptr %i.as, align 8, !range !15, !noundef !4 ; 2 uses
-  %5 = trunc nuw i8 %i.at to i1                   ; 2 uses
+  %i.at = load i8, ptr %i.as, align 8, !range !15, !noundef !4 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
   %i.au = load <2 x i64>, ptr %3, align 8
   store <2 x i64> %i.au, ptr %i.aq, align 16
@@ -1402,8 +1402,8 @@ bb.j:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.512)
-  %6 = xor i8 %i.at, 1                            ; 5 uses
-  br i1 %5, label %bb.s, label %bb.k
+  %5 = icmp eq i8 %i.at, 0
+  br i1 %5, label %bb.k, label %bb.s
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
@@ -1551,14 +1551,15 @@ bb.aa:                                            ; preds = %bb.z
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ab, i64 192
   store i8 0, ptr %i.cg, align 8
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ab, i64 193
+  %6 = xor i8 %i.at, 1                            ; 5 uses
   store i8 %6, ptr %i.ch, align 1
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ab, i64 194
   store i8 %6, ptr %i.ci, align 2
   %i.cj = getelementptr inbounds nuw i8, ptr %3, i64 65
   %i.ck = load i8, ptr %i.cj, align 1, !range !15, !noundef !4 ; 2 uses
-  %7 = xor i8 %i.ck, 1
-  %8 = getelementptr inbounds nuw i8, ptr %i.ab, i64 199
-  store i8 %7, ptr %8, align 1
+  %7 = getelementptr inbounds nuw i8, ptr %i.ab, i64 199
+  %8 = xor i8 %i.ck, 1
+  store i8 %8, ptr %7, align 1
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ab, i64 196
   store i8 %6, ptr %i.cl, align 4
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ab, i64 195
@@ -1785,6 +1786,7 @@ bb.aw:                                            ; preds = %bb.ar
   %i.ee = load ptr, ptr %i.ed, align 8, !nonnull !4, !noundef !4
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.eg = load i64, ptr %i.ef, align 8, !noundef !4
+  %9 = trunc nuw i8 %i.at to i1
   %i.eh = trunc nuw i8 %i.ck to i1
   %i.ei = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.ej = load ptr, ptr %i.ei, align 8, !nonnull !4, !noundef !4
@@ -1852,7 +1854,7 @@ bb.bd:                                            ; preds = %bb.ay
   %i.ex = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.ex, i64 24, i1 false), !alias.scope !1534
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
-  invoke fastcc void @_RNvNtCsbzNSmZPCnTx_10tgrep_core6walker17finish_visibility(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ee, i64 noundef %i.eg, i1 noundef zeroext %5, i1 noundef zeroext %i.eh, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.ej, i64 noundef %i.el, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.en, i64 noundef %i.ep, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.s, ptr noundef %4)
+  invoke fastcc void @_RNvNtCsbzNSmZPCnTx_10tgrep_core6walker17finish_visibility(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ee, i64 noundef %i.eg, i1 noundef zeroext %9, i1 noundef zeroext %i.eh, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.ej, i64 noundef %i.el, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.en, i64 noundef %i.ep, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.s, ptr noundef %4)
           to label %bb.be unwind label %bb.ax
 
 bb.be:                                            ; preds = %bb.bd

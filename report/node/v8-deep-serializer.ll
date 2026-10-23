@@ -202,9 +202,12 @@ _ZNK2v85Value13QuickIsStringEv.exit.thread.i:     ; preds = %_ZNK2v85Value13Quic
   unreachable
 
 bb.i:                                             ; preds = %_ZNK2v85Value13QuickIsStringEv.exit.i
-  %i.by = call i16 @_ZN2v86Object20HasRealNamedPropertyENS_5LocalINS_7ContextEEENS1_INS_4NameEEE(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr %2, ptr nonnull %i.bn) #8
-  %i.bz = and i16 %i.by, 257
-  %or.cond.i = icmp eq i16 %i.bz, 257
+  %i.by = call i16 @_ZN2v86Object20HasRealNamedPropertyENS_5LocalINS_7ContextEEENS1_INS_4NameEEE(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr %2, ptr nonnull %i.bn) #8 ; 2 uses
+  %17 = and i16 %i.by, 255
+  %18 = icmp ne i16 %17, 0
+  %i.bz = and i16 %i.by, 256
+  %19 = icmp ne i16 %i.bz, 0
+  %or.cond.i = and i1 %18, %19
   br i1 %or.cond.i, label %bb.j, label %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.jt6.i
 
 bb.j:                                             ; preds = %bb.i

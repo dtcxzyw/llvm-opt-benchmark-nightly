@@ -205,7 +205,7 @@ _ZNK6vectorI8rationalLb1EjE4sizeEv.exit.lr.ph:    ; preds = %bb.a
 _ZNK6vectorI8rationalLb1EjE4sizeEv.exit:          ; preds = %_ZNK6vectorI8rationalLb1EjE4sizeEv.exit.lr.ph, %bb.ah
   %i.o = phi ptr [ %i.a, %_ZNK6vectorI8rationalLb1EjE4sizeEv.exit.lr.ph ], [ %i.fv, %bb.ah ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %_ZNK6vectorI8rationalLb1EjE4sizeEv.exit.lr.ph ], [ %indvars.iv.next, %bb.ah ] ; 9 uses
-  %.03562 = phi i1 [ true, %_ZNK6vectorI8rationalLb1EjE4sizeEv.exit.lr.ph ], [ %.136, %bb.ah ] ; 2 uses
+  %.03561 = phi i8 [ 1, %_ZNK6vectorI8rationalLb1EjE4sizeEv.exit.lr.ph ], [ %.136, %bb.ah ] ; 2 uses
   %i.p = getelementptr inbounds i8, ptr %i.o, i64 -4
   %i.q = load i32, ptr %i.p, align 4, !tbaa !234
   %i.r = zext i32 %i.q to i64
@@ -335,9 +335,10 @@ bb.h:                                             ; preds = %_ZNK6vectorI8ration
   br i1 %i.bn, label %bb.ah, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %9 = icmp slt i32 %i.bm, 1
-  %or.cond.not = or i1 %.03562, %9
-  br i1 %or.cond.not, label %bb.k, label %bb.j
+  %.not = icmp eq i8 %.03561, 0
+  %9 = icmp sgt i32 %i.bm, 0
+  %or.cond = and i1 %.not, %9
+  br i1 %or.cond, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bo = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.9, i64 noundef 2) ; 0 uses
@@ -626,7 +627,7 @@ bb.ag:                                            ; preds = %_ZlsRSoRK8rational.
 
 bb.ah:                                            ; preds = %bb.h, %bb.ag
   %i.fv = phi ptr [ %i.o, %bb.h ], [ %.pre66, %bb.ag ] ; 2 uses
-  %.136 = phi i1 [ %.03562, %bb.h ], [ false, %bb.ag ]
+  %.136 = phi i8 [ %.03561, %bb.h ], [ 0, %bb.ag ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.fw = icmp eq ptr %i.fv, null
   br i1 %i.fw, label %.critedge61, label %_ZNK6vectorI8rationalLb1EjE4sizeEv.exit, !llvm.loop !381

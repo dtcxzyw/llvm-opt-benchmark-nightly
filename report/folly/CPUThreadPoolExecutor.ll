@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   br label %.thread.i.us, !llvm.loop !15625
 
 .split:                                           ; preds = %bb.a, %bb.s
-  %.0 = phi i1 [ %spec.select, %bb.s ], [ false, %bb.a ]
+  %.0 = phi i8 [ %spec.select, %bb.s ], [ 0, %bb.a ]
   %.033 = phi i1 [ %.1, %bb.s ], [ undef, %bb.a ] ; 2 uses
   %.032 = phi i64 [ %i.t, %bb.s ], [ 0, %bb.a ]   ; 2 uses
   %.031 = phi i64 [ %.030, %bb.s ], [ 0, %bb.a ]  ; 2 uses
@@ -216,7 +216,7 @@ bb.i:                                             ; preds = %bb.h
   %i.u = sub i64 %.030, %.031
   %i.v = icmp ugt i64 %i.u, 199
   %or.cond24.i = and i1 %.not21.i, %i.v
-  %spec.select = select i1 %or.cond24.i, i1 true, i1 %.0 ; 2 uses
+  %spec.select = select i1 %or.cond24.i, i8 1, i8 %.0 ; 2 uses
   %.not40 = icmp eq i64 %.032, 0
   br i1 %.not40, label %.thread.i, label %bb.j
 
@@ -224,7 +224,8 @@ bb.j:                                             ; preds = %.split
   %i.w = icmp ult i64 %.029, 40000
   %i.x = shl i64 %.030, 8
   %i.y = select i1 %i.w, i64 %i.x, i64 0
-  br i1 %spec.select, label %.thread.i, label %bb.k
+  %.not.i.not = icmp eq i8 %spec.select, 0
+  br i1 %.not.i.not, label %bb.k, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.j, %.split
   %i.z = phi i64 [ %i.y, %bb.j ], [ -256, %.split ]

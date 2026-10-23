@@ -204,7 +204,7 @@ Classify.exit.i:                                  ; preds = %bb.n, %bb.m
 .preheader.i:                                     ; preds = %PickSeeds.exit.i, %.preheader.i.backedge
   %indvars.iv.i = phi i64 [ %indvars.iv.i.be, %.preheader.i.backedge ], [ 0, %PickSeeds.exit.i ] ; 4 uses
   %.05082.i = phi i64 [ %.05082.i.be, %.preheader.i.backedge ], [ 0, %PickSeeds.exit.i ] ; 5 uses
-  %.05181.i = phi i1 [ %.05181.i.be, %.preheader.i.backedge ], [ false, %PickSeeds.exit.i ] ; 2 uses
+  %.05180.i = phi i8 [ %.05180.i.be, %.preheader.i.backedge ], [ 0, %PickSeeds.exit.i ] ; 2 uses
   %.15580.i = phi i32 [ %.3.i, %.preheader.i.backedge ], [ 0, %PickSeeds.exit.i ] ; 4 uses
   %.15879.i = phi i32 [ %.360.i, %.preheader.i.backedge ], [ 0, %PickSeeds.exit.i ] ; 3 uses
   %i.cj = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv.i
@@ -233,10 +233,11 @@ bb.o:                                             ; preds = %.preheader.i
   %i.ct = sub nuw i64 %i.co, %i.cr
   %.061.i = zext i1 %.not68.i to i32              ; 2 uses
   %.048.i = select i1 %.not68.i, i64 %i.ct, i64 %i.cs ; 3 uses
-  %14 = icmp ule i64 %.048.i, %.05082.i
-  %or.cond71.not.i = select i1 %.05181.i, i1 %14, i1 false
+  %.not70.i = icmp eq i8 %.05180.i, 0
+  %14 = icmp ugt i64 %.048.i, %.05082.i
+  %or.cond71.not.i = select i1 %.not70.i, i1 true, i1 %14
   %i.cu = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
-  br i1 %or.cond71.not.i, label %bb.p, label %bb.r
+  br i1 %or.cond71.not.i, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.cv = icmp eq i64 %.048.i, %.05082.i
@@ -265,7 +266,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
 bb.s:                                             ; preds = %bb.r, %.preheader.i
   %.360.i = phi i32 [ %.15879.i, %.preheader.i ], [ %.259.i, %bb.r ] ; 2 uses
   %.3.i = phi i32 [ %.15580.i, %.preheader.i ], [ %.256.i, %bb.r ] ; 3 uses
-  %.253.i = phi i1 [ %.05181.i, %.preheader.i ], [ true, %bb.r ]
+  %.253.i = phi i8 [ %.05180.i, %.preheader.i ], [ 1, %bb.r ]
   %.2.i = phi i64 [ %.05082.i, %.preheader.i ], [ %.1.i, %bb.r ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i11 = icmp eq i64 %indvars.iv.next.i, 65
@@ -274,7 +275,7 @@ bb.s:                                             ; preds = %bb.r, %.preheader.i
 .preheader.i.backedge:                            ; preds = %bb.s, %Classify.exit.i
   %indvars.iv.i.be = phi i64 [ %indvars.iv.next.i, %bb.s ], [ 0, %Classify.exit.i ]
   %.05082.i.be = phi i64 [ %.2.i, %bb.s ], [ 0, %Classify.exit.i ]
-  %.05181.i.be = phi i1 [ %.253.i, %bb.s ], [ false, %Classify.exit.i ]
+  %.05180.i.be = phi i8 [ %.253.i, %bb.s ], [ 0, %Classify.exit.i ]
   br label %.preheader.i, !llvm.loop !13
 
 .critedge.i:                                      ; preds = %Classify.exit.i, %PickSeeds.exit.i

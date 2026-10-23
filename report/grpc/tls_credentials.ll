@@ -202,12 +202,13 @@ define linkonce_odr noundef zeroext i1 @_ZSteqINSt7__cxx1112basic_stringIcSt11ch
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i8, ptr %i.a, align 8, !tbaa !28, !range !29, !noundef !30 ; 2 uses
-  %2 = trunc nuw i8 %i.b to i1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = load i8, ptr %i.c, align 8, !tbaa !28, !range !29, !noundef !30
-  %i.e = icmp eq i8 %i.b, %i.d                    ; 2 uses
-  %brmerge.not = and i1 %i.e, %2
-  br i1 %brmerge.not, label %bb.b, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
+  %2 = icmp ne i8 %i.b, %i.d                      ; 2 uses
+  %i.e = icmp eq i8 %i.b, 0
+  %brmerge = or i1 %i.e, %2
+  %not. = xor i1 %2, true
+  br i1 %brmerge, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -229,7 +230,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %bb.a, %bb.d, %bb.c, %bb.b
-  %i.o = phi i1 [ %i.e, %bb.a ], [ true, %bb.c ], [ false, %bb.b ], [ %i.n, %bb.d ]
+  %i.o = phi i1 [ %not., %bb.a ], [ true, %bb.c ], [ false, %bb.b ], [ %i.n, %bb.d ]
   ret i1 %i.o
 }
 

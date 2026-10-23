@@ -205,17 +205,17 @@ declare void @_ZN3tev10ThreadPoolD1Ev(ptr noundef nonnull align 8 dead_on_return
 define linkonce_odr hidden void @_ZNSt3__123__optional_storage_baseIN3tev16MultiChannelViewIfEELb0EE13__assign_fromB8ne180100INS_27__optional_move_assign_baseIS3_Lb0EEEEEvOT_(ptr noundef nonnull align 8 dereferenceable(145) %0, ptr noundef nonnull align 8 dereferenceable(145) %1) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !96, !range !97, !noundef !98 ; 2 uses
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !96, !range !97, !noundef !98 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.d = load i8, ptr %i.c, align 8, !tbaa !96, !range !97, !noundef !98
   %i.e = icmp eq i8 %i.b, %i.d
-  %2 = trunc nuw i8 %i.b to i1                    ; 2 uses
   br i1 %i.e, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %.not.i.i.i = icmp ne ptr %1, %0
-  %or.cond.not = and i1 %.not.i.i.i, %2
-  br i1 %or.cond.not, label %bb.c, label %_ZN3tev16MultiChannelViewIfEaSEOS1_.exit
+  %.not = icmp eq i8 %i.b, 0
+  %.not.i.i.i = icmp eq ptr %1, %0
+  %or.cond = or i1 %.not.i.i.i, %.not
+  br i1 %or.cond, label %_ZN3tev16MultiChannelViewIfEaSEOS1_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -262,6 +262,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.a
+  %2 = trunc nuw i8 %i.b to i1
   br i1 %2, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h

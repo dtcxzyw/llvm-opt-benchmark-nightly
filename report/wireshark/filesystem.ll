@@ -202,10 +202,11 @@ getc_unlocked.exit:                               ; preds = %bb.c, %bb.d
 
 getc_unlocked.exit27:                             ; preds = %getc_unlocked.exit27.backedge, %getc_unlocked.exit
   %phi.call = phi i32 [ %i.k, %getc_unlocked.exit ], [ %phi.call.be, %getc_unlocked.exit27.backedge ] ; 5 uses
-  %.014 = phi i1 [ true, %getc_unlocked.exit ], [ %.1, %getc_unlocked.exit27.backedge ] ; 2 uses
-  %.not19 = icmp ne i32 %phi.call, %i.l
-  %or.cond.not = select i1 %.014, i1 %.not19, i1 false
-  br i1 %or.cond.not, label %bb.e, label %bb.f
+  %.014 = phi i8 [ 1, %getc_unlocked.exit ], [ %.1, %getc_unlocked.exit27.backedge ] ; 2 uses
+  %.not24 = icmp eq i8 %.014, 0
+  %.not19 = icmp eq i32 %phi.call, %i.l
+  %or.cond.not = select i1 %.not24, i1 true, i1 %.not19
+  br i1 %or.cond.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %getc_unlocked.exit27
   %i.n = and i32 %phi.call, 255
@@ -230,10 +231,11 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not22, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g, %bb.f
+  %2 = zext i1 %i.s to i8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %.1 = phi i1 [ %i.s, %bb.h ], [ %.014, %bb.g ]
+  %.1 = phi i8 [ %2, %bb.h ], [ %.014, %bb.g ]
   %.not23 = icmp eq i32 %phi.call, -1
   br i1 %.not23, label %bb.l, label %.split, !llvm.loop !23
 

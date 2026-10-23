@@ -202,37 +202,36 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.at = call i32 @llvm.abs.i32(i32 %i.as, i1 true)
   %i.au = call i32 @llvm.abs.i32(i32 %i.ar, i1 true)
   %i.av = icmp samesign ugt i32 %i.at, %i.au      ; 2 uses
-  %..0137 = select i1 %i.av, i8 1, i8 %.0137184   ; 5 uses
+  %..0137 = select i1 %i.av, i8 1, i8 %.0137184   ; 4 uses
   %.0135. = select i1 %i.av, i8 %.0135185, i8 1   ; 5 uses
   %i.aw = call zeroext i1 @lv_obj_has_flag(ptr noundef nonnull %.0139183, i32 noundef 16) #6
+  %.not176 = icmp eq i8 %..0137, 0                ; 3 uses
   br i1 %i.aw, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ax = call zeroext i1 @lv_obj_has_flag(ptr noundef nonnull %.0139183, i32 noundef 256) #6
-  %3 = xor i1 %i.ax, true
-  %4 = trunc nuw i8 %..0137 to i1
-  %or.cond5 = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond5, label %.thread, label %bb.h
+  %or.cond5 = select i1 %i.ax, i1 true, i1 %.not176
+  br i1 %or.cond5, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.ay = call zeroext i1 @lv_obj_has_flag(ptr noundef nonnull %.0139183, i32 noundef 512) #6
-  %5 = xor i1 %i.ay, true
-  %6 = trunc nuw i8 %.0135. to i1
-  %or.cond7 = select i1 %5, i1 %6, i1 false
-  br i1 %or.cond7, label %.thread, label %bb.y, !llvm.loop !58
+  %.not175 = icmp eq i8 %.0135., 0
+  %or.cond7 = select i1 %i.ay, i1 true, i1 %.not175
+  br i1 %or.cond7, label %bb.y, label %.thread, !llvm.loop !58
 
 bb.i:                                             ; preds = %bb.f
-  %7 = trunc nuw i8 %.0135. to i1
-  %8 = trunc nuw i8 %..0137 to i1                 ; 2 uses
-  %9 = call i32 @lv_obj_get_scroll_dir(ptr noundef nonnull %.0139183) #6 ; 4 uses
-  %10 = trunc i32 %9 to i1
-  %i.az = and i32 %9, 2
+  %.not177 = icmp eq i8 %.0135., 0
+  %3 = call i32 @lv_obj_get_scroll_dir(ptr noundef nonnull %.0139183) #6 ; 4 uses
+  %4 = and i32 %3, 1
+  %5 = icmp eq i32 %4, 0
+  %spec.select = select i1 %5, i8 0, i8 %..0137   ; 2 uses
+  %i.az = and i32 %3, 2
   %i.ba = icmp eq i32 %i.az, 0
   %.0115 = select i1 %i.ba, i8 0, i8 %..0137      ; 2 uses
-  %i.bb = and i32 %9, 4
+  %i.bb = and i32 %3, 4
   %i.bc = icmp eq i32 %i.bb, 0
   %.0120 = select i1 %i.bc, i8 0, i8 %.0135.      ; 2 uses
-  %i.bd = and i32 %9, 8
+  %i.bd = and i32 %3, 8
   %i.be = icmp eq i32 %i.bd, 0
   %.0118 = select i1 %i.be, i8 0, i8 %.0135.      ; 2 uses
   %i.bf = call i32 @lv_obj_get_scroll_snap_x(ptr noundef nonnull %.0139183) #6
@@ -291,42 +290,48 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %or.cond9, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %11 = trunc nuw i8 %.0120 to i1
+  %.not152 = icmp eq i8 %.0120, 0
   %i.bz = load i32, ptr %i.p, align 4             ; 2 uses
-  %.not143 = icmp sge i32 %i.bz, %i.g
-  %or.cond153.not = select i1 %11, i1 %.not143, i1 false
-  %12 = trunc nuw i8 %.0118 to i1
-  %.not144 = icmp sle i32 %i.bz, %i.q
-  %or.cond167.not = select i1 %12, i1 %.not144, i1 false
-  %or.cond189 = select i1 %or.cond153.not, i1 true, i1 %or.cond167.not ; 2 uses
-  %spec.select191 = select i1 %or.cond189, i16 12, i16 %.0126186
-  %spec.select192 = select i1 %or.cond189, ptr %.0139183, ptr %.0124187
+  %.not143 = icmp slt i32 %i.bz, %i.g
+  %or.cond189 = select i1 %.not152, i1 true, i1 %.not143
+  br i1 %or.cond189, label %6, label %7
+
+6:                                                ; preds = %bb.p
+  %.not166 = icmp eq i8 %.0118, 0
+  %.not144 = icmp sgt i32 %i.bz, %i.q
+  %or.cond167 = select i1 %.not166, i1 true, i1 %.not144
+  br i1 %or.cond167, label %bb.q, label %7
+
+7:                                                ; preds = %6, %bb.p
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %bb.o
-  %.1127 = phi i16 [ %spec.select191, %bb.p ], [ %.0126186, %bb.o ] ; 2 uses
-  %.1125 = phi ptr [ %spec.select192, %bb.p ], [ %.0124187, %bb.o ] ; 2 uses
+bb.q:                                             ; preds = %bb.o, %7, %6
+  %.1127 = phi i16 [ 12, %7 ], [ %.0126186, %bb.o ], [ %.0126186, %6 ] ; 2 uses
+  %.1125 = phi ptr [ %.0139183, %7 ], [ %.0124187, %bb.o ], [ %.0124187, %6 ] ; 2 uses
   %or.cond11 = select i1 %.0114, i1 true, i1 %.0113
   %.pre199 = load i32, ptr %2, align 8            ; 4 uses
-  %13 = trunc nuw i8 %..0137 to i1
-  %14 = select i1 %10, i1 %13, i1 false           ; 2 uses
-  br i1 %or.cond11, label %bb.r, label %._crit_edge
+  br i1 %or.cond11, label %8, label %._crit_edge
 
-bb.r:                                             ; preds = %bb.q
-  %.not145 = icmp sge i32 %.pre199, %i.g
-  %or.cond155.not = select i1 %14, i1 %.not145, i1 false
-  %15 = trunc nuw i8 %.0115 to i1
-  %.not146 = icmp sle i32 %.pre199, %i.q
-  %or.cond169.not = select i1 %15, i1 %.not146, i1 false
-  %or.cond190 = select i1 %or.cond155.not, i1 true, i1 %or.cond169.not ; 2 uses
-  %spec.select193 = select i1 %or.cond190, i16 3, i16 %.1127
-  %spec.select194 = select i1 %or.cond190, ptr %.0139183, ptr %.1125
+8:                                                ; preds = %bb.q
+  %.not154 = icmp eq i8 %spec.select, 0
+  %.not145 = icmp slt i32 %.pre199, %i.g
+  %or.cond155 = select i1 %.not154, i1 true, i1 %.not145
+  br i1 %or.cond155, label %bb.r, label %9
+
+bb.r:                                             ; preds = %8
+  %.not168 = icmp eq i8 %.0115, 0
+  %.not146 = icmp sgt i32 %.pre199, %i.q
+  %or.cond190 = select i1 %.not168, i1 true, i1 %.not146
+  br i1 %or.cond190, label %._crit_edge, label %9
+
+9:                                                ; preds = %bb.r, %8
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.q, %bb.r
-  %.2128 = phi i16 [ %spec.select193, %bb.r ], [ %.1127, %bb.q ] ; 4 uses
-  %.2 = phi ptr [ %spec.select194, %bb.r ], [ %.1125, %bb.q ] ; 4 uses
-  %i.ca = select i1 %.0114, i1 %14, i1 false
+._crit_edge:                                      ; preds = %bb.q, %9, %bb.r
+  %.2128 = phi i16 [ 3, %9 ], [ %.1127, %bb.q ], [ %.1127, %bb.r ] ; 4 uses
+  %.2 = phi ptr [ %.0139183, %9 ], [ %.1125, %bb.q ], [ %.1125, %bb.r ] ; 4 uses
+  %10 = trunc nuw i8 %spec.select to i1
+  %i.ca = select i1 %.0114, i1 %10, i1 false
   %.not147 = icmp sge i32 %.pre199, %i.g
   %or.cond158.not = select i1 %i.ca, i1 %.not147, i1 false
   br i1 %or.cond158.not, label %bb.v, label %bb.s
@@ -354,7 +359,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond173.not, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u, %bb.s, %bb.t, %._crit_edge
-  %i.ci = select i1 %8, i16 3, i16 12
+  %i.ci = select i1 %.not176, i16 12, i16 3
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 2 uses
   %i.ck = load i16, ptr %i.cj, align 4
   %i.cl = and i16 %i.ck, -16
@@ -364,15 +369,13 @@ bb.v:                                             ; preds = %bb.u, %bb.s, %bb.t,
 
 bb.w:                                             ; preds = %bb.u
   %i.cn = call zeroext i1 @lv_obj_has_flag(ptr noundef nonnull %.0139183, i32 noundef 256) #6
-  %16 = xor i1 %i.cn, true
-  %or.cond13 = select i1 %16, i1 %8, i1 false
-  br i1 %or.cond13, label %.thread, label %bb.x
+  %or.cond13 = select i1 %i.cn, i1 true, i1 %.not176
+  br i1 %or.cond13, label %bb.x, label %.thread
 
 bb.x:                                             ; preds = %bb.w
   %i.co = call zeroext i1 @lv_obj_has_flag(ptr noundef nonnull %.0139183, i32 noundef 512) #6
-  %17 = xor i1 %i.co, true
-  %or.cond15 = select i1 %17, i1 %7, i1 false
-  br i1 %or.cond15, label %.thread, label %bb.y
+  %or.cond15 = select i1 %i.co, i1 true, i1 %.not177
+  br i1 %or.cond15, label %bb.y, label %.thread
 
 .thread:                                          ; preds = %bb.h, %bb.g, %bb.w, %bb.x, %bb.v
   %.3129.ph = phi i16 [ %.2128, %bb.v ], [ %.0126186, %bb.h ], [ %.0126186, %bb.g ], [ %.2128, %bb.x ], [ %.2128, %bb.w ]

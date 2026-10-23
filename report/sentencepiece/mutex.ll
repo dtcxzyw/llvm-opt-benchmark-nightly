@@ -202,8 +202,8 @@ bb.r:                                             ; preds = %._crit_edge, %bb.b
 bb.s:                                             ; preds = %._crit_edge18
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.ai = load i8, ptr %i.ah, align 4, !tbaa !70, !range !47, !noundef !48
-  %3 = trunc nuw i8 %i.ai to i1
-  br i1 %3, label %.critedge, label %bb.t, !prof !14
+  %3 = icmp eq i8 %i.ai, 0
+  br i1 %3, label %bb.t, label %.critedge, !prof !71
 
 bb.t:                                             ; preds = %bb.s
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2026052616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 44), i32 noundef 1202, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3)
@@ -365,8 +365,9 @@ bb.a:
 _ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load i64, ptr %i.e, align 8, !tbaa !75
-  %trunc.i = trunc i32 %4 to i1
-  %..i = select i1 %trunc.i, i64 -3, i64 -1
+  %6 = and i32 %4, 1
+  %.not.not.i = icmp eq i32 %6, 0
+  %..i = select i1 %.not.not.i, i64 -1, i64 -3
   %i.g = and i64 %i.a, %..i
   %i.h = or i64 %i.f, %i.g
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -630,8 +631,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 20
   %i.s = load i8, ptr %i.r, align 4, !tbaa !70, !range !47, !noundef !48
-  %3 = trunc nuw i8 %i.s to i1
-  br i1 %3, label %.outer.preheader, label %.invoke, !prof !14
+  %3 = icmp eq i8 %i.s, 0
+  br i1 %3, label %.invoke, label %.outer.preheader, !prof !71
 
 .outer.preheader:                                 ; preds = %bb.h, %bb.g, %bb.i
   br label %.outer
@@ -790,8 +791,8 @@ bb.z:                                             ; preds = %bb.s, %bb.t
 bb.aa:                                            ; preds = %bb.z
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bg, i64 19
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !67, !range !47, !noundef !48
-  %4 = trunc nuw i8 %i.bu to i1
-  br i1 %4, label %.critedge219, label %.invoke, !prof !14
+  %4 = icmp eq i8 %i.bu, 0
+  br i1 %4, label %.invoke, label %.critedge219, !prof !71
 
 .critedge219:                                     ; preds = %bb.aa
   %i.bv = getelementptr inbounds nuw i8, ptr %.0144, i64 16 ; 2 uses
@@ -999,7 +1000,7 @@ bb.aw:                                            ; preds = %bb.ah
 .preheader274:                                    ; preds = %.preheader274.preheader, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i
   %.024.i = phi ptr [ %.12532.i, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i ], [ %.4150490, %.preheader274.preheader ] ; 8 uses
   %.022.i = phi ptr [ %.12333.i, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i ], [ %i.a, %.preheader274.preheader ] ; 4 uses
-  %.019.i = phi i1 [ %.12034.i, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i ], [ false, %.preheader274.preheader ]
+  %.019.i = phi i8 [ %.12032.i, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i ], [ 0, %.preheader274.preheader ]
   %.0.i = phi ptr [ %.135.i, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i ], [ %i.bg, %.preheader274.preheader ] ; 13 uses
   %.021.i = load ptr, ptr %.024.i, align 8, !tbaa !51 ; 10 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %.021.i, i64 17
@@ -1140,12 +1141,13 @@ bb.bj:                                            ; preds = %.preheader274
 
 _ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i: ; preds = %._crit_edge.i.i, %bb.bj, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i
   %.135.i = phi ptr [ %.0.i.i, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i ], [ %.0.i, %bb.bj ], [ %.0.i, %._crit_edge.i.i ] ; 3 uses
-  %.12034.i = phi i1 [ %.019.i, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i ], [ true, %bb.bj ], [ true, %._crit_edge.i.i ] ; 2 uses
+  %.12032.i = phi i8 [ %.019.i, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i ], [ 1, %bb.bj ], [ 1, %._crit_edge.i.i ] ; 2 uses
   %.12333.i = phi ptr [ %.021.i, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i ], [ %.022.i, %bb.bj ], [ %.022.i, %._crit_edge.i.i ]
   %.12532.i = phi ptr [ %.024.i, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i ], [ %.021.i, %bb.bj ], [ %.0.lcssa.i.i, %._crit_edge.i.i ] ; 2 uses
-  %i.gk = icmp eq ptr %.12532.i, %.135.i
-  %.not27.i = select i1 %i.gk, i1 %.12034.i, i1 false
-  br i1 %.not27.i, label %_ZN4absl12lts_20260526L18DequeueAllWakeableEPNS0_13base_internal14PerThreadSynchES3_PS3_.exit, label %.preheader274, !llvm.loop !118
+  %5 = icmp ne ptr %.12532.i, %.135.i
+  %i.gk = icmp eq i8 %.12032.i, 0
+  %.not27.i = select i1 %5, i1 true, i1 %i.gk
+  br i1 %.not27.i, label %.preheader274, label %_ZN4absl12lts_20260526L18DequeueAllWakeableEPNS0_13base_internal14PerThreadSynchES3_PS3_.exit, !llvm.loop !118
 
 _ZN4absl12lts_20260526L18DequeueAllWakeableEPNS0_13base_internal14PerThreadSynchES3_PS3_.exit: ; preds = %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i
   %.2.i = phi ptr [ %.0.i.i, %_ZN4absl12lts_20260526L7DequeueEPNS0_13base_internal14PerThreadSynchES3_.exit.i ], [ %.135.i, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit.thread.i ] ; 2 uses
@@ -1354,8 +1356,8 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20260
 bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 20
   %i.r = load i8, ptr %i.q, align 4, !tbaa !70, !range !47, !noundef !48
-  %4 = trunc nuw i8 %i.r to i1
-  br i1 %4, label %.critedge.preheader, label %.invoke, !prof !14
+  %4 = icmp eq i8 %i.r, 0
+  br i1 %4, label %.invoke, label %.critedge.preheader, !prof !71
 
 .critedge:                                        ; preds = %.critedge.preheader, %.critedge88
   %.067 = phi i32 [ %.572, %.critedge88 ], [ %2, %.critedge.preheader ] ; 13 uses
@@ -1408,9 +1410,10 @@ _ZN4absl12lts_20260526L23CheckForMutexCorruptionElPKc.exit: ; preds = %bb.h, %.c
 bb.j:                                             ; preds = %_ZN4absl12lts_20260526L23CheckForMutexCorruptionElPKc.exit
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.am = load i64, ptr %i.al, align 8, !tbaa !75
-  %trunc.i = trunc i32 %.067 to i1
-  %..i = select i1 %trunc.i, i64 -3, i64 -1
-  %i.an = and i64 %i.s, %..i
+  %5 = and i32 %.067, 1
+  %.not.not.i = icmp eq i32 %5, 0
+  %..i = select i1 %.not.not.i, i64 -1, i64 -3
+  %i.an = and i64 %..i, %i.s
   %i.ao = or i64 %i.am, %i.an
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !76
@@ -1460,9 +1463,10 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not78, label %.invoke, label %bb.s, !prof !71
 
 bb.s:                                             ; preds = %bb.r
-  %trunc.i97 = trunc i32 %.067 to i1
-  %..i98 = select i1 %trunc.i97, i64 249, i64 251
-  %i.be = and i64 %i.s, %..i98
+  %6 = and i32 %.067, 1
+  %.not.not.i97 = icmp eq i32 %6, 0
+  %..i98 = select i1 %.not.not.i97, i64 187, i64 185
+  %i.be = and i64 %..i98, %i.s
   %i.bf = load ptr, ptr %1, align 8, !tbaa !59
   %i.bg = icmp eq ptr %i.bf, @_ZN4absl12lts_20260526L11kExclusiveSE
   %.not79 = trunc i64 %i.s to i1
@@ -1484,16 +1488,17 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.p
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !129
-  %trunc.i99 = trunc i32 %.067 to i1              ; 3 uses
-  %..i100 = select i1 %trunc.i99, i64 -33, i64 -1
+  %7 = and i32 %.067, 1
+  %.not.not.i99 = icmp eq i32 %7, 0               ; 3 uses
+  %..i100 = select i1 %.not.not.i99, i64 -1, i64 -33
   %i.bq = and i64 %..i100, %i.bp
   %i.br = and i64 %i.bq, %i.s
   %i.bs = icmp eq i64 %i.br, 0
   br i1 %i.bs, label %bb.v, label %bb.ac
 
 bb.v:                                             ; preds = %bb.u
-  %..i102 = select i1 %trunc.i99, i64 -68, i64 -66
-  %i.bt = and i64 %i.s, %..i102
+  %..i102 = select i1 %.not.not.i99, i64 -66, i64 -68
+  %i.bt = and i64 %..i102, %i.s
   %i.bu = or disjoint i64 %i.bt, 65
   %i.bv = cmpxchg ptr %0, i64 %i.s, i64 %i.bu acquire monotonic, align 8
   %i.bw = extractvalue { i64, i1 } %i.bv, 1
@@ -1549,8 +1554,8 @@ bb.ac:                                            ; preds = %bb.u
   br i1 %i.cp, label %bb.ad, label %.thread147
 
 bb.ad:                                            ; preds = %bb.ac
-  %..i106 = select i1 %trunc.i99, i64 -71, i64 -69
-  %i.cq = and i64 %i.s, %..i106
+  %..i106 = select i1 %.not.not.i99, i64 -69, i64 -71
+  %i.cq = and i64 %..i106, %i.s
   %i.cr = or disjoint i64 %i.cq, 68
   %i.cs = cmpxchg ptr %0, i64 %i.s, i64 %i.cr acquire monotonic, align 8
   %i.ct = extractvalue { i64, i1 } %i.cs, 1
@@ -1613,8 +1618,8 @@ bb.ah:                                            ; preds = %_ZNSt13__atomic_bas
 bb.ai:                                            ; preds = %.thread147
   %i.dm = getelementptr inbounds nuw i8, ptr %i.di, i64 20
   %i.dn = load i8, ptr %i.dm, align 4, !tbaa !70, !range !47, !noundef !48
-  %5 = trunc nuw i8 %i.dn to i1
-  br i1 %5, label %.critedge88, label %.invoke, !prof !14
+  %8 = icmp eq i8 %i.dn, 0
+  br i1 %8, label %.invoke, label %.critedge88, !prof !71
 
 .critedge88:                                      ; preds = %.thread147, %bb.ai
   %i.do = invoke noundef i32 @_ZN4absl12lts_2026052624synchronization_internal10MutexDelayEii(i32 noundef %.5, i32 noundef 1)
@@ -1631,8 +1636,8 @@ bb.aj:                                            ; preds = %bb.x, %_ZN4absl12lt
 bb.ak:                                            ; preds = %bb.aj
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dp, i64 20
   %i.du = load i8, ptr %i.dt, align 4, !tbaa !70, !range !47, !noundef !48
-  %6 = trunc nuw i8 %i.du to i1
-  br i1 %6, label %.critedge90, label %.invoke, !prof !14
+  %9 = icmp eq i8 %i.du, 0
+  br i1 %9, label %.invoke, label %.critedge90, !prof !71
 
 .critedge90:                                      ; preds = %bb.aj, %bb.ak
   %i.dv = and i64 %.2, 16
@@ -2035,8 +2040,8 @@ bb.v:                                             ; preds = %bb.a
 bb.w:                                             ; preds = %bb.v
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 20
   %i.at = load i8, ptr %i.as, align 4, !tbaa !70, !range !47, !noundef !48
-  %6 = trunc nuw i8 %i.at to i1
-  br i1 %6, label %.critedge, label %bb.x, !prof !14
+  %6 = icmp eq i8 %i.at, 0
+  br i1 %6, label %bb.x, label %.critedge, !prof !71
 
 bb.x:                                             ; preds = %bb.w
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2026052616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 44), i32 noundef 938, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.67, ptr noundef nonnull @.str.9)

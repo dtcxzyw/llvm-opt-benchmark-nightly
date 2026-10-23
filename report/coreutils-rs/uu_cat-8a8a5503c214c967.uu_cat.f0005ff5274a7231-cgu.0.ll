@@ -204,11 +204,12 @@ _RINvNtNtCskBwnbTnIhiv_6uu_cat8platform4unix17is_safe_overwriteNtNtNtCs2vKOLqTMY
   %i.ck = load i8, ptr %2, align 1, !range !7, !alias.scope !658
   %i.cl = trunc nuw i8 %i.ck to i1
   %or.cond7.i = select i1 %or.cond5.i, i1 true, i1 %i.cl
+  %or.cond7.not.i = xor i1 %or.cond7.i, true
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.cn = load i8, ptr %i.cm, align 1, !range !9, !alias.scope !658
-  %4 = icmp ne i8 %i.cn, 0                        ; 2 uses
-  %or.cond10.not.i = select i1 %or.cond7.i, i1 true, i1 %4
-  br i1 %or.cond10.not.i, label %bb.w, label %bb.bs
+  %4 = icmp eq i8 %i.cn, 0                        ; 2 uses
+  %or.cond10.not.i = select i1 %or.cond7.not.i, i1 %4, i1 false
+  br i1 %or.cond10.not.i, label %bb.bs, label %bb.w
 
 bb.w:                                             ; preds = %_RINvNtNtCskBwnbTnIhiv_6uu_cat8platform4unix17is_safe_overwriteNtNtNtCs2vKOLqTMYjT_3std2io5stdio5StdinNtB10_6StdoutEB6_.exit.thread
   call void @llvm.experimental.noalias.scope.decl(metadata !660)
@@ -368,10 +369,10 @@ bb.ak:                                            ; preds = %bb.ah
 
 bb.al:                                            ; preds = %bb.ai
   %.pre.i.i = load i8, ptr %i.cv, align 8, !range !7, !alias.scope !672
-  %5 = trunc nuw i8 %.pre.i.i to i1
-  %i.ej = select i1 %5, i1 %4, i1 false
+  %5 = icmp eq i8 %.pre.i.i, 0
+  %i.ej = select i1 %5, i1 true, i1 %4
   store i8 0, ptr %i.cw, align 2, !alias.scope !672
-  br i1 %i.ej, label %bb.ar, label %bb.aq
+  br i1 %i.ej, label %bb.aq, label %bb.ar
 
 bb.am:                                            ; preds = %bb.ai
   %i.ek = load i64, ptr %i.m, align 8, !range !11, !noalias !663, !noundef !8
@@ -774,11 +775,12 @@ _RINvNtNtCskBwnbTnIhiv_6uu_cat8platform4unix17is_safe_overwriteNtNtCs2vKOLqTMYjT
   %i.jp = load i8, ptr %2, align 1, !range !7, !alias.scope !721
   %i.jq = trunc nuw i8 %i.jp to i1
   %or.cond7.i55 = select i1 %or.cond5.i54, i1 true, i1 %i.jq
+  %or.cond7.not.i56 = xor i1 %or.cond7.i55, true
   %i.jr = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.js = load i8, ptr %i.jr, align 1, !range !9, !alias.scope !721
-  %6 = icmp ne i8 %i.js, 0                        ; 2 uses
-  %or.cond10.not.i56 = select i1 %or.cond7.i55, i1 true, i1 %6
-  br i1 %or.cond10.not.i56, label %bb.cj, label %bb.ef
+  %6 = icmp eq i8 %i.js, 0                        ; 2 uses
+  %or.cond10.not.i56 = select i1 %or.cond7.not.i56, i1 %6, i1 false
+  br i1 %or.cond10.not.i56, label %bb.ef, label %bb.cj
 
 bb.cj:                                            ; preds = %_RINvNtNtCskBwnbTnIhiv_6uu_cat8platform4unix17is_safe_overwriteNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtB12_2io5stdio6StdoutEB6_.exit.thread
   call void @llvm.experimental.noalias.scope.decl(metadata !723)
@@ -938,10 +940,10 @@ bb.cx:                                            ; preds = %bb.cu
 
 bb.cy:                                            ; preds = %bb.cv
   %.pre.i.i72 = load i8, ptr %i.ka, align 8, !range !7, !alias.scope !734
-  %7 = trunc nuw i8 %.pre.i.i72 to i1
-  %i.lo = select i1 %7, i1 %6, i1 false
+  %7 = icmp eq i8 %.pre.i.i72, 0
+  %i.lo = select i1 %7, i1 true, i1 %6
   store i8 0, ptr %i.kb, align 2, !alias.scope !734
-  br i1 %i.lo, label %bb.de, label %bb.dd
+  br i1 %i.lo, label %bb.dd, label %bb.de
 
 bb.cz:                                            ; preds = %bb.cv
   %i.lp = load i64, ptr %i.d, align 8, !range !11, !noalias !726, !noundef !8

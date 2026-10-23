@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef zeroext i1 @kissat_find_executable(ptr noundef %0) local_unnamed_addr #3 {
+define zeroext i1 @kissat_find_executable(ptr noundef %0) local_unnamed_addr #3 {
 bb.a:
   %1 = alloca %struct.stat, align 8               ; 3 uses
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #13
@@ -213,7 +213,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #13 ; 2 uses
   %i.d = add i64 %i.c, 1
-  %i.e = tail call noalias ptr @malloc(i64 noundef %i.d) #15 ; 5 uses
+  %i.e = tail call noalias ptr @malloc(i64 noundef %i.d) #15 ; 6 uses
   %.not46 = icmp eq ptr %i.e, null
   br i1 %.not46, label %bb.g, label %.preheader.lr.ph
 
@@ -244,7 +244,7 @@ bb.c:                                             ; preds = %bb.c, %.preheader
   %i.n = add i64 %i.m, %i.k
   %i.o = tail call noalias ptr @malloc(i64 noundef %i.n) #15 ; 5 uses
   %.not51.not = icmp eq ptr %i.o, null
-  br i1 %.not51.not, label %.sink.split, label %bb.d
+  br i1 %.not51.not, label %3, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
   %i.p = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull %.03555, ptr noundef nonnull %0) #12 ; 0 uses
@@ -256,23 +256,29 @@ bb.d:                                             ; preds = %.critedge
 bb.e:                                             ; preds = %bb.d
   %i.r = tail call i32 @access(ptr noundef nonnull readonly %i.o, i32 noundef 4) #12
   %.not6.i = icmp eq i32 %i.r, 0
+  %2 = zext i1 %.not6.i to i8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.0.i = phi i1 [ false, %bb.d ], [ %.not6.i, %bb.e ] ; 2 uses
+  %.0.i = phi i8 [ 0, %bb.d ], [ %2, %bb.e ]      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
   tail call void @free(ptr noundef nonnull %i.o) #12
   %i.s = icmp eq ptr %.0, %i.g
-  %.not48 = select i1 %.0.i, i1 true, i1 %i.s
+  %not. = icmp ne i8 %.0.i, 0
+  %.not48 = select i1 %not., i1 true, i1 %i.s
   br i1 %.not48, label %.sink.split, label %.preheader, !llvm.loop !27
 
-.sink.split:                                      ; preds = %bb.f, %.critedge
-  %.5.ph = phi i1 [ false, %.critedge ], [ %.0.i, %bb.f ]
+3:                                                ; preds = %.critedge
   tail call void @free(ptr noundef %i.e) #12
   br label %bb.g
 
-bb.g:                                             ; preds = %.sink.split, %bb.b, %bb.a
-  %.5 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ %.5.ph, %.sink.split ]
+.sink.split:                                      ; preds = %bb.f
+  tail call void @free(ptr noundef %i.e) #12
+  %4 = trunc nuw i8 %.0.i to i1
+  br label %bb.g
+
+bb.g:                                             ; preds = %3, %bb.b, %.sink.split, %bb.a
+  %.5 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ %4, %.sink.split ], [ false, %3 ]
   ret i1 %.5
 }
 

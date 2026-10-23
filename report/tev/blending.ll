@@ -29,7 +29,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a, %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.d = load i32, ptr %i.c, align 8, !tbaa !42
-  %i.e = icmp eq i32 %i.d, 0                      ; 2 uses
+  %i.e = icmp eq i32 %i.d, 0
+  %1 = zext i1 %i.e to i8                         ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !43   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -38,21 +39,21 @@ bb.b:                                             ; preds = %bb.a, %bb.a
   br i1 %.not1820, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
-  %.0.lcssa = phi i1 [ %i.e, %bb.b ], [ %spec.select, %.lr.ph ]
+  %.0.lcssa = phi i8 [ %1, %bb.b ], [ %spec.select, %.lr.ph ]
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.k = load i8, ptr %i.j, align 8, !tbaa !45, !range !18, !noundef !19
-  %1 = trunc nuw i8 %i.k to i1
-  %.not19 = xor i1 %.0.lcssa, true
-  %.011 = select i1 %1, i1 true, i1 %.not19
+  %.not = icmp ne i8 %i.k, 0
+  %.not14 = icmp eq i8 %.0.lcssa, 0
+  %.011 = select i1 %.not, i1 true, i1 %.not14
   br label %bb.c
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %.022 = phi i1 [ %spec.select, %.lr.ph ], [ %i.e, %bb.b ]
+  %.022 = phi i8 [ %spec.select, %.lr.ph ], [ %1, %bb.b ]
   %.sroa.015.021 = phi ptr [ %i.n, %.lr.ph ], [ %i.g, %bb.b ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.015.021, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !42
   %.not14.a = icmp eq i32 %i.m, 0
-  %spec.select = select i1 %.not14.a, i1 %.022, i1 false ; 2 uses
+  %spec.select = select i1 %.not14.a, i8 %.022, i8 0 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.015.021, i64 40 ; 2 uses
   %.not18 = icmp eq ptr %i.n, %i.i
   br i1 %.not18, label %._crit_edge, label %.lr.ph

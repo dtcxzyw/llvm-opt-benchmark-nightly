@@ -176,16 +176,17 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !48
   %i.az = add i64 %i.au, -1
   %i.ba = add i64 %i.az, %i.ay                    ; 6 uses
-  %14 = icmp ne i64 %i.ar, 0
-  %15 = icmp ult i64 %i.ba, 65535
-  %or.cond.i.a = select i1 %14, i1 true, i1 %15
-  %16 = icmp ne i64 %4, 0
-  %or.cond75.i = and i1 %16, %or.cond.i.a
-  br i1 %or.cond75.i, label %.lr.ph.i.preheader, label %.thread31.i
+  %14 = icmp eq i64 %i.ar, 0
+  %15 = icmp ugt i64 %i.ba, 65534
+  %or.cond.i.a = select i1 %14, i1 %15, i1 false
+  %.not.i = icmp eq i64 %4, 0
+  %or.cond90.i = or i1 %.not.i, %or.cond.i.a
+  br i1 %or.cond90.i, label %.thread31.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.g
+  %16 = add i64 %4, -1
   %xtraiter185 = and i64 %4, 3                    ; 3 uses
-  %i.bb = icmp ult i64 %4, 4
+  %i.bb = icmp ult i64 %16, 3
   br i1 %i.bb, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
@@ -197,67 +198,68 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   br i1 %lcmp.mod187.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i.preheader
-  %.011855.i.epil.init = phi i1 [ true, %.lr.ph.i.preheader ], [ %.1119.i.3, %._crit_edge.i.unr-lcssa ]
+  %.011855.i.epil.init = phi i8 [ 1, %.lr.ph.i.preheader ], [ %.1119.i.3, %._crit_edge.i.unr-lcssa ]
   %.012054.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.cb, %._crit_edge.i.unr-lcssa ]
   %lcmp.mod189 = icmp ne i64 %xtraiter185, 0
   call void @llvm.assume(i1 %lcmp.mod189)
   br label %.lr.ph.i.epil
 
 .lr.ph.i.epil:                                    ; preds = %.lr.ph.i.epil, %.lr.ph.i.epil.preheader
-  %.011855.i.epil = phi i1 [ %.1119.i.epil, %.lr.ph.i.epil ], [ %.011855.i.epil.init, %.lr.ph.i.epil.preheader ]
+  %.011855.i.epil = phi i8 [ %.1119.i.epil, %.lr.ph.i.epil ], [ %.011855.i.epil.init, %.lr.ph.i.epil.preheader ]
   %.012054.i.epil = phi i64 [ %i.bf, %.lr.ph.i.epil ], [ %.012054.i.epil.init, %.lr.ph.i.epil.preheader ] ; 2 uses
   %epil.iter186 = phi i64 [ %epil.iter186.next, %.lr.ph.i.epil ], [ 0, %.lr.ph.i.epil.preheader ]
   %i.bc = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %.012054.i.epil
   %i.bd = load i16, ptr %i.bc, align 2, !tbaa !51
   %i.be = zext i16 %i.bd to i64                   ; 2 uses
-  %17 = icmp ule i64 %i.ar, %i.be
-  %18 = icmp uge i64 %i.ba, %i.be
-  %or.cond128.not.i.epil = select i1 %17, i1 %18, i1 false
-  %.1119.i.epil = select i1 %or.cond128.not.i.epil, i1 %.011855.i.epil, i1 false ; 2 uses
+  %17 = icmp ugt i64 %i.ar, %i.be
+  %18 = icmp ult i64 %i.ba, %i.be
+  %or.cond128.not.i.epil = select i1 %17, i1 true, i1 %18
+  %.1119.i.epil = select i1 %or.cond128.not.i.epil, i8 0, i8 %.011855.i.epil ; 2 uses
   %i.bf = add nuw i64 %.012054.i.epil, 1
   %epil.iter186.next = add i64 %epil.iter186, 1   ; 2 uses
   %epil.iter186.cmp.not = icmp eq i64 %epil.iter186.next, %xtraiter185
   br i1 %epil.iter186.cmp.not, label %._crit_edge.i, label %.lr.ph.i.epil, !llvm.loop !13
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.epil, %._crit_edge.i.unr-lcssa
-  %.1119.i.lcssa = phi i1 [ %.1119.i.3, %._crit_edge.i.unr-lcssa ], [ %.1119.i.epil, %.lr.ph.i.epil ]
-  br i1 %.1119.i.lcssa, label %.thread31.i, label %bb.h, !prof !53
+  %.1119.i.lcssa = phi i8 [ %.1119.i.3, %._crit_edge.i.unr-lcssa ], [ %.1119.i.epil, %.lr.ph.i.epil ]
+  %19 = icmp eq i8 %.1119.i.lcssa, 0
+  br i1 %19, label %bb.h, label %.thread31.i, !prof !53
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
-  %.011855.i = phi i1 [ true, %.lr.ph.i.preheader.new ], [ %.1119.i.3, %.lr.ph.i ]
+  %.011855.i = phi i8 [ 1, %.lr.ph.i.preheader.new ], [ %.1119.i.3, %.lr.ph.i ]
   %.012054.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %i.cb, %.lr.ph.i ] ; 5 uses
   %niter191 = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter191.next.3, %.lr.ph.i ]
   %i.bg = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %.012054.i
   %i.bh = load i16, ptr %i.bg, align 2, !tbaa !51
   %i.bi = zext i16 %i.bh to i64                   ; 2 uses
-  %19 = icmp ule i64 %i.ar, %i.bi
-  %20 = icmp uge i64 %i.ba, %i.bi
+  %20 = icmp ugt i64 %i.ar, %i.bi
+  %21 = icmp ult i64 %i.ba, %i.bi
   %i.bj = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %.012054.i
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 2
   %i.bl = load i16, ptr %i.bk, align 2, !tbaa !51
   %i.bm = zext i16 %i.bl to i64                   ; 2 uses
-  %21 = icmp ule i64 %i.ar, %i.bm
-  %22 = icmp uge i64 %i.ba, %i.bm
+  %22 = icmp ugt i64 %i.ar, %i.bm
+  %23 = icmp ult i64 %i.ba, %i.bm
   %i.bn = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %.012054.i
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
   %i.bp = load i16, ptr %i.bo, align 2, !tbaa !51
   %i.bq = zext i16 %i.bp to i64                   ; 2 uses
-  %23 = icmp ule i64 %i.ar, %i.bq
-  %24 = icmp uge i64 %i.ba, %i.bq
+  %24 = icmp ugt i64 %i.ar, %i.bq
+  %25 = icmp ult i64 %i.ba, %i.bq
   %i.br = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %.012054.i
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 6
   %i.bt = load i16, ptr %i.bs, align 2, !tbaa !51
   %i.bu = zext i16 %i.bt to i64                   ; 2 uses
-  %25 = icmp ule i64 %i.ar, %i.bu
-  %26 = icmp uge i64 %i.ba, %i.bu
-  %or.cond128.not.i.3 = select i1 %25, i1 %26, i1 false
-  %i.bv = select i1 %or.cond128.not.i.3, i1 %23, i1 false
-  %i.bw = select i1 %i.bv, i1 %24, i1 false
-  %i.bx = select i1 %i.bw, i1 %21, i1 false
-  %i.by = select i1 %i.bx, i1 %22, i1 false
-  %i.bz = select i1 %i.by, i1 %19, i1 false
-  %i.ca = select i1 %i.bz, i1 %20, i1 false
-  %.1119.i.3 = select i1 %i.ca, i1 %.011855.i, i1 false ; 3 uses
+  %26 = icmp ugt i64 %i.ar, %i.bu
+  %27 = icmp ult i64 %i.ba, %i.bu
+  %or.cond128.not.i.3 = select i1 %26, i1 true, i1 %27
+  %i.bv = select i1 %or.cond128.not.i.3, i1 true, i1 %24
+  %i.bw = select i1 %i.bv, i1 true, i1 %25
+  %i.bx = select i1 %i.bw, i1 true, i1 %22
+  %i.by = select i1 %i.bx, i1 true, i1 %23
+  %i.bz = select i1 %i.by, i1 true, i1 %20
+  %i.ca = select i1 %i.bz, i1 true, i1 %21
+  %.1119.i.3 = select i1 %i.ca, i8 0, i8 %.011855.i ; 3 uses
   %i.cb = add nuw i64 %.012054.i, 4               ; 2 uses
   %niter191.next.3 = add nuw i64 %niter191, 4     ; 2 uses
   %niter191.ncmp.3 = icmp eq i64 %niter191.next.3, %unroll_iter190
@@ -660,16 +662,17 @@ bb.w:                                             ; preds = %bb.v, %._crit_edge.
   %i.mo = load i64, ptr %i.mn, align 8, !tbaa !48
   %i.mp = add i64 %i.mk, -1
   %i.mq = add i64 %i.mp, %i.mo                    ; 7 uses
-  %27 = icmp ne i64 %i.mh, 0
-  %28 = icmp ult i64 %i.mq, 4294967295
-  %or.cond.i38 = select i1 %27, i1 true, i1 %28
-  %29 = icmp ne i64 %4, 0
-  %or.cond76.i = and i1 %29, %or.cond.i38
-  br i1 %or.cond76.i, label %.lr.ph.i81.preheader, label %.thread31.i39
+  %28 = icmp eq i64 %i.mh, 0
+  %29 = icmp ugt i64 %i.mq, 4294967294
+  %or.cond.i38 = select i1 %28, i1 %29, i1 false
+  %.not.i37 = icmp eq i64 %4, 0
+  %or.cond98.i = or i1 %.not.i37, %or.cond.i38
+  br i1 %or.cond98.i, label %.thread31.i39, label %.lr.ph.i81.preheader
 
 .lr.ph.i81.preheader:                             ; preds = %bb.w
+  %30 = add i64 %4, -1
   %xtraiter = and i64 %4, 3                       ; 3 uses
-  %i.mr = icmp ult i64 %4, 4
+  %i.mr = icmp ult i64 %30, 3
   br i1 %i.mr, label %.lr.ph.i81.epil.preheader, label %.lr.ph.i81.preheader.new
 
 .lr.ph.i81.preheader.new:                         ; preds = %.lr.ph.i81.preheader
@@ -681,67 +684,68 @@ bb.w:                                             ; preds = %bb.v, %._crit_edge.
   br i1 %lcmp.mod.not, label %._crit_edge.i83, label %.lr.ph.i81.epil.preheader
 
 .lr.ph.i81.epil.preheader:                        ; preds = %._crit_edge.i83.unr-lcssa, %.lr.ph.i81.preheader
-  %.011255.i.epil.init = phi i1 [ true, %.lr.ph.i81.preheader ], [ %.1113.i.3, %._crit_edge.i83.unr-lcssa ]
+  %.011255.i.epil.init = phi i8 [ 1, %.lr.ph.i81.preheader ], [ %.1113.i.3, %._crit_edge.i83.unr-lcssa ]
   %.011454.i.epil.init = phi i64 [ 0, %.lr.ph.i81.preheader ], [ %i.nr, %._crit_edge.i83.unr-lcssa ]
   %lcmp.mod178 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod178)
   br label %.lr.ph.i81.epil
 
 .lr.ph.i81.epil:                                  ; preds = %.lr.ph.i81.epil, %.lr.ph.i81.epil.preheader
-  %.011255.i.epil = phi i1 [ %.1113.i.epil, %.lr.ph.i81.epil ], [ %.011255.i.epil.init, %.lr.ph.i81.epil.preheader ]
+  %.011255.i.epil = phi i8 [ %.1113.i.epil, %.lr.ph.i81.epil ], [ %.011255.i.epil.init, %.lr.ph.i81.epil.preheader ]
   %.011454.i.epil = phi i64 [ %i.mv, %.lr.ph.i81.epil ], [ %.011454.i.epil.init, %.lr.ph.i81.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i81.epil ], [ 0, %.lr.ph.i81.epil.preheader ]
   %i.ms = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.011454.i.epil
   %i.mt = load i32, ptr %i.ms, align 4, !tbaa !54
   %i.mu = zext i32 %i.mt to i64                   ; 2 uses
-  %30 = icmp ule i64 %i.mh, %i.mu
-  %31 = icmp uge i64 %i.mq, %i.mu
-  %or.cond123.not.i.epil = select i1 %30, i1 %31, i1 false
-  %.1113.i.epil = select i1 %or.cond123.not.i.epil, i1 %.011255.i.epil, i1 false ; 2 uses
+  %31 = icmp ugt i64 %i.mh, %i.mu
+  %32 = icmp ult i64 %i.mq, %i.mu
+  %or.cond123.not.i.epil = select i1 %31, i1 true, i1 %32
+  %.1113.i.epil = select i1 %or.cond123.not.i.epil, i8 0, i8 %.011255.i.epil ; 2 uses
   %i.mv = add nuw i64 %.011454.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge.i83, label %.lr.ph.i81.epil, !llvm.loop !24
 
 ._crit_edge.i83:                                  ; preds = %.lr.ph.i81.epil, %._crit_edge.i83.unr-lcssa
-  %.1113.i.lcssa = phi i1 [ %.1113.i.3, %._crit_edge.i83.unr-lcssa ], [ %.1113.i.epil, %.lr.ph.i81.epil ]
-  br i1 %.1113.i.lcssa, label %.thread31.i39, label %bb.x, !prof !53
+  %.1113.i.lcssa = phi i8 [ %.1113.i.3, %._crit_edge.i83.unr-lcssa ], [ %.1113.i.epil, %.lr.ph.i81.epil ]
+  %33 = icmp eq i8 %.1113.i.lcssa, 0
+  br i1 %33, label %bb.x, label %.thread31.i39, !prof !53
 
 .lr.ph.i81:                                       ; preds = %.lr.ph.i81, %.lr.ph.i81.preheader.new
-  %.011255.i = phi i1 [ true, %.lr.ph.i81.preheader.new ], [ %.1113.i.3, %.lr.ph.i81 ]
+  %.011255.i = phi i8 [ 1, %.lr.ph.i81.preheader.new ], [ %.1113.i.3, %.lr.ph.i81 ]
   %.011454.i = phi i64 [ 0, %.lr.ph.i81.preheader.new ], [ %i.nr, %.lr.ph.i81 ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.i81.preheader.new ], [ %niter.next.3, %.lr.ph.i81 ]
   %i.mw = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.011454.i
   %i.mx = load i32, ptr %i.mw, align 4, !tbaa !54
   %i.my = zext i32 %i.mx to i64                   ; 2 uses
-  %32 = icmp ule i64 %i.mh, %i.my
-  %33 = icmp uge i64 %i.mq, %i.my
+  %34 = icmp ugt i64 %i.mh, %i.my
+  %35 = icmp ult i64 %i.mq, %i.my
   %i.mz = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.011454.i
   %i.na = getelementptr inbounds nuw i8, ptr %i.mz, i64 4
   %i.nb = load i32, ptr %i.na, align 4, !tbaa !54
   %i.nc = zext i32 %i.nb to i64                   ; 2 uses
-  %34 = icmp ule i64 %i.mh, %i.nc
-  %35 = icmp uge i64 %i.mq, %i.nc
+  %36 = icmp ugt i64 %i.mh, %i.nc
+  %37 = icmp ult i64 %i.mq, %i.nc
   %i.nd = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.011454.i
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nd, i64 8
   %i.nf = load i32, ptr %i.ne, align 4, !tbaa !54
   %i.ng = zext i32 %i.nf to i64                   ; 2 uses
-  %36 = icmp ule i64 %i.mh, %i.ng
-  %37 = icmp uge i64 %i.mq, %i.ng
+  %38 = icmp ugt i64 %i.mh, %i.ng
+  %39 = icmp ult i64 %i.mq, %i.ng
   %i.nh = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.011454.i
   %i.ni = getelementptr inbounds nuw i8, ptr %i.nh, i64 12
   %i.nj = load i32, ptr %i.ni, align 4, !tbaa !54
   %i.nk = zext i32 %i.nj to i64                   ; 2 uses
-  %38 = icmp ule i64 %i.mh, %i.nk
-  %39 = icmp uge i64 %i.mq, %i.nk
-  %or.cond123.not.i.3 = select i1 %38, i1 %39, i1 false
-  %i.nl = select i1 %or.cond123.not.i.3, i1 %36, i1 false
-  %i.nm = select i1 %i.nl, i1 %37, i1 false
-  %i.nn = select i1 %i.nm, i1 %34, i1 false
-  %i.no = select i1 %i.nn, i1 %35, i1 false
-  %i.np = select i1 %i.no, i1 %32, i1 false
-  %i.nq = select i1 %i.np, i1 %33, i1 false
-  %.1113.i.3 = select i1 %i.nq, i1 %.011255.i, i1 false ; 3 uses
+  %40 = icmp ugt i64 %i.mh, %i.nk
+  %41 = icmp ult i64 %i.mq, %i.nk
+  %or.cond123.not.i.3 = select i1 %40, i1 true, i1 %41
+  %i.nl = select i1 %or.cond123.not.i.3, i1 true, i1 %38
+  %i.nm = select i1 %i.nl, i1 true, i1 %39
+  %i.nn = select i1 %i.nm, i1 true, i1 %36
+  %i.no = select i1 %i.nn, i1 true, i1 %37
+  %i.np = select i1 %i.no, i1 true, i1 %34
+  %i.nq = select i1 %i.np, i1 true, i1 %35
+  %.1113.i.3 = select i1 %i.nq, i8 0, i8 %.011255.i ; 3 uses
   %i.nr = add nuw i64 %.011454.i, 4               ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -1144,7 +1148,7 @@ attributes #9 = { nounwind willreturn memory(none) }
 !50 = !{!"short", !7, i64 0}
 !51 = !{!50, !50, i64 0}
 !52 = !{!"llvm.loop.unroll.disable"}
-!53 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!53 = !{!"branch_weights", !"expected", i32 1717128, i32 2145766520}
 !54 = !{!8, !8, i64 0}
 !55 = !{!7, !7, i64 0}
 !56 = !{!"branch_weights", !"expected", i32 2145337238, i32 2146410}

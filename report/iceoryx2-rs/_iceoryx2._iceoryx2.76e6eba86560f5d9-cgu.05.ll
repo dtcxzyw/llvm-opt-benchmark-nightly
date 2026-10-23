@@ -204,15 +204,16 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %i.gg = load i64, ptr %i.cx, align 8, !range !9, !alias.scope !5762, !noalias !5738, !noundef !5
   %i.gh = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.gi = trunc nuw i64 %i.gg to i1
-  %i.gj = load i64, ptr %i.cw, align 8, !range !9, !alias.scope !5763, !noalias !5738, !noundef !5
-  %4 = trunc nuw i64 %i.gj to i1                  ; 2 uses
+  %i.gj = load i64, ptr %i.cw, align 8, !range !9, !alias.scope !5763, !noalias !5738, !noundef !5 ; 2 uses
   br i1 %i.gi, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
+  %4 = trunc nuw i64 %i.gj to i1
   br i1 %4, label %.split5.i.i.i.i.i, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
 
 bb.at:                                            ; preds = %bb.ar
-  br i1 %4, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i, label %bb.au
+  %5 = icmp eq i64 %i.gj, 0
+  br i1 %5, label %bb.au, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
 
 .split5.i.i.i.i.i:                                ; preds = %bb.as
   %i.gk = getelementptr inbounds nuw i8, ptr %i.z, i64 16
@@ -227,15 +228,16 @@ bb.au:                                            ; preds = %.split5.i.i.i.i.i, 
   %i.gq = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %i.gr = trunc nuw i64 %i.gp to i1
   %i.gs = getelementptr inbounds nuw i8, ptr %i.z, i64 24
-  %i.gt = load i64, ptr %i.gs, align 8, !range !9, !alias.scope !5763, !noalias !5738, !noundef !5
-  %5 = trunc nuw i64 %i.gt to i1                  ; 2 uses
+  %i.gt = load i64, ptr %i.gs, align 8, !range !9, !alias.scope !5763, !noalias !5738, !noundef !5 ; 2 uses
   br i1 %i.gr, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  br i1 %5, label %.split6.i.i.i.i.i, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
+  %6 = trunc nuw i64 %i.gt to i1
+  br i1 %6, label %.split6.i.i.i.i.i, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
 
 bb.aw:                                            ; preds = %bb.au
-  br i1 %5, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i, label %bb.ax
+  %7 = icmp eq i64 %i.gt, 0
+  br i1 %7, label %bb.ax, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
 
 .split6.i.i.i.i.i:                                ; preds = %bb.av
   %i.gu = getelementptr inbounds nuw i8, ptr %i.z, i64 32
@@ -250,12 +252,12 @@ bb.ax:                                            ; preds = %.split6.i.i.i.i.i, 
   %i.ha = getelementptr inbounds nuw i8, ptr %i.w, i64 48
   %i.hb = trunc nuw i64 %i.gz to i1
   %i.hc = getelementptr inbounds nuw i8, ptr %i.z, i64 40
-  %i.hd = load i64, ptr %i.hc, align 8, !range !9, !alias.scope !5763, !noalias !5738, !noundef !5
-  %6 = trunc nuw i64 %i.hd to i1                  ; 2 uses
+  %i.hd = load i64, ptr %i.hc, align 8, !range !9, !alias.scope !5763, !noalias !5738, !noundef !5 ; 2 uses
   br i1 %i.hb, label %bb.ay, label %_RNvXsT_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_5EventNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i.i
 
 bb.ay:                                            ; preds = %bb.ax
-  br i1 %6, label %.split.i.i.i.i, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
+  %8 = trunc nuw i64 %i.hd to i1
+  br i1 %8, label %.split.i.i.i.i, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
 
 .split.i.i.i.i:                                   ; preds = %bb.ay
   %i.he = getelementptr inbounds nuw i8, ptr %i.z, i64 48
@@ -265,7 +267,8 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %i.hh, label %bb.az, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
 
 _RNvXsT_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_5EventNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i.i: ; preds = %bb.ax
-  br i1 %6, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i, label %bb.az
+  %9 = icmp eq i64 %i.hd, 0
+  br i1 %9, label %bb.az, label %_RNvXsJ_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_8DefaultsNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i
 
 bb.az:                                            ; preds = %_RNvXsT_NtCsg6ZEkMtNi4J_8iceoryx26configNtB5_5EventNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.i.i.i.i, %.split.i.i.i.i
   %i.hi = getelementptr inbounds nuw i8, ptr %i.w, i64 176
@@ -557,8 +560,8 @@ bb.ch:                                            ; preds = %bb.cf
 bb.ci:                                            ; preds = %bb.cf
   %i.mc = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.md = load i8, ptr %i.mc, align 1, !range !13, !noalias !5774, !noundef !5
-  %7 = trunc nuw i8 %i.md to i1
-  %_Py_FalseStruct._Py_TrueStruct.i = select i1 %7, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct ; 2 uses
+  %.not.not.i = icmp eq i8 %i.md, 0
+  %_Py_FalseStruct._Py_TrueStruct.i = select i1 %.not.not.i, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct ; 2 uses
   call void @Py_IncRef(ptr noundef nonnull %_Py_FalseStruct._Py_TrueStruct.i) #21, !noalias !5774
   %i.me = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %_Py_FalseStruct._Py_TrueStruct.i, ptr %i.me, align 8, !alias.scope !5774

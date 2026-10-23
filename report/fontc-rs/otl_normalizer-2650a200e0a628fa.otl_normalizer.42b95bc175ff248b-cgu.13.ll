@@ -202,17 +202,18 @@ define hidden void @_RNvMs1_NtCs5JazJsyow1H_14otl_normalizer6commonNtB5_8GlyphSe
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %.sroa.5.i = alloca [30 x i8], align 2          ; 4 uses
-  %i.b = load i16, ptr %0, align 8, !range !12, !noundef !6
-  %2 = trunc nuw i16 %i.b to i1                   ; 2 uses
+  %i.b = load i16, ptr %0, align 8, !range !12, !noundef !6 ; 2 uses
+  %.not = icmp eq i16 %i.b, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %i.d = load i16, ptr %i.c, align 2              ; 2 uses
-  %3 = icmp ne i16 %i.d, %1
-  %or.cond.not = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond.not, label %bb.b, label %bb.c
+  %2 = icmp eq i16 %i.d, %1
+  %or.cond.not = select i1 %.not, i1 %2, i1 false
+  br i1 %or.cond.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61)
-  br i1 %2, label %_RNvMs1_NtCs5JazJsyow1H_14otl_normalizer6commonNtB5_8GlyphSet8make_set.exit, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5JazJsyow1H_14otl_normalizer6common8GlyphSetEBF_.exit.i
+  %3 = trunc nuw i16 %i.b to i1
+  br i1 %3, label %_RNvMs1_NtCs5JazJsyow1H_14otl_normalizer6commonNtB5_8GlyphSet8make_set.exit, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5JazJsyow1H_14otl_normalizer6common8GlyphSetEBF_.exit.i
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5JazJsyow1H_14otl_normalizer6common8GlyphSetEBF_.exit.i: ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i)

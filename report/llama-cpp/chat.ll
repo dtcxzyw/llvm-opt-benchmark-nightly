@@ -205,9 +205,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit545: ; preds = %_Z
 
 bb.ik:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit545
   %i.ato = load i8, ptr %i.k, align 1, !range !166
-  %71 = xor i8 %i.ato, 1
-  %72 = select i1 %i.ms, i8 %71, i8 0
-  store i8 %72, ptr %i.s, align 8, !tbaa !181
+  %71 = icmp eq i8 %i.ato, 0
+  %72 = select i1 %i.ms, i1 %71, i1 false
+  %73 = zext i1 %72 to i8
+  store i8 %73, ptr %i.s, align 8, !tbaa !181
   call void @llvm.lifetime.start.p0(ptr nonnull %67) #32
   call void @llvm.lifetime.start.p0(ptr nonnull %68) #32
   %i.atp = getelementptr inbounds nuw i8, ptr %68, i64 16 ; 3 uses
@@ -610,13 +611,13 @@ bb.a:
   %i.c = load i8, ptr %i.b, align 1, !tbaa !190, !range !166, !noundef !167
   %i.d = trunc nuw i8 %i.c to i1                  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !191, !range !166, !noundef !167
-  %17 = trunc nuw i8 %i.f to i1                   ; 3 uses
-  %18 = xor i1 %17, true                          ; 2 uses
-  %i.g = and i1 %i.d, %18
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !191, !range !166, !noundef !167 ; 2 uses
+  %17 = icmp eq i8 %i.f, 0                        ; 2 uses
+  %18 = trunc nuw i8 %i.f to i1                   ; 2 uses
+  %i.g = and i1 %17, %i.d
   %not. = xor i1 %i.d, true
-  %i.h = and i1 %not., %17
-  %or.cond = select i1 %i.d, i1 %18, i1 %17
+  %i.h = and i1 %not., %18
+  %or.cond = select i1 %i.d, i1 %17, i1 %18
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a

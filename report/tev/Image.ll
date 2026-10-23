@@ -205,8 +205,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !270  ; 17 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 3 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !3792, !range !174, !noundef !175
-  %2 = trunc nuw i8 %i.g to i1
-  br i1 %2, label %.critedge, label %bb.b
+  %.not49.not = icmp eq i8 %i.g, 0
+  br i1 %.not49.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 16
@@ -609,11 +609,15 @@ bb.g:                                             ; preds = %bb.e
   %i.ax = getelementptr inbounds nuw i8, ptr %9, i64 8
   br label %.from._ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit
 
-._crit_edge:                                      ; preds = %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit, %bb.g
-  %.034.lcssa = phi i1 [ true, %bb.g ], [ %.135, %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit ]
-  %10 = icmp ne i32 %i.ao, %i.ak
-  %or.cond.not = and i1 %10, %.034.lcssa
-  br i1 %or.cond.not, label %bb.p, label %bb.n
+._crit_edge.from.._crit_edge.loopexit:            ; preds = %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit
+  %10 = icmp eq i8 %.135, 0
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.g, %._crit_edge.from.._crit_edge.loopexit
+  %.034.lcssa = phi i1 [ %10, %._crit_edge.from.._crit_edge.loopexit ], [ false, %bb.g ]
+  %11 = icmp eq i32 %i.ao, %i.ak
+  %or.cond = or i1 %11, %.034.lcssa
+  br i1 %or.cond, label %bb.n, label %bb.p
 
 _ZNSt3__16vectorIPN3tev7ChannelENS_9allocatorIS3_EEED2B8ne180100Ev.exit115.from.278: ; preds = %bb.f
   %i.ay = landingpad { ptr, i32 }
@@ -621,7 +625,7 @@ _ZNSt3__16vectorIPN3tev7ChannelENS_9allocatorIS3_EEED2B8ne180100Ev.exit115.from.
   br label %_ZNSt3__16vectorIPN3tev7ChannelENS_9allocatorIS3_EEED2B8ne180100Ev.exit115
 
 .from._ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit: ; preds = %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit, %.from..lr.ph
-  %.034146 = phi i1 [ true, %.from..lr.ph ], [ %.135, %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit ]
+  %.034145 = phi i8 [ 1, %.from..lr.ph ], [ %.135, %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit ]
   %.sroa.0.0145 = phi ptr [ %i.ac, %.from..lr.ph ], [ %.06.i.i.i, %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit ] ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.0145, i64 48
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !325 ; 7 uses
@@ -761,7 +765,7 @@ _ZNSt3__16vectorIPN3tev7ChannelENS_9allocatorIS3_EEED2B8ne180100Ev.exit115.from.
   br label %_ZNSt3__16vectorIPN3tev7ChannelENS_9allocatorIS3_EEED2B8ne180100Ev.exit115
 
 .from.224:                                        ; preds = %bb.h, %.from._ZN4tlog7warningIJNSt3__117basic_string_viewIcNS1_11char_traitsIcEEEES5_S5_S5_S5_S5_EEEvN3fmt3v127fstringIJDpT_EE1tEDpOS9_.exit
-  %.135 = phi i1 [ false, %.from._ZN4tlog7warningIJNSt3__117basic_string_viewIcNS1_11char_traitsIcEEEES5_S5_S5_S5_S5_EEEvN3fmt3v127fstringIJDpT_EE1tEDpOS9_.exit ], [ %.034146, %bb.h ] ; 2 uses
+  %.135 = phi i8 [ 0, %.from._ZN4tlog7warningIJNSt3__117basic_string_viewIcNS1_11char_traitsIcEEEES5_S5_S5_S5_S5_EEEvN3fmt3v127fstringIJDpT_EE1tEDpOS9_.exit ], [ %.034145, %bb.h ] ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0.0145, i64 8
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !273 ; 2 uses
   %.not.i.i.i75 = icmp eq ptr %i.cy, null
@@ -790,7 +794,7 @@ _ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptr
 _ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit: ; preds = %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit.from..preheader.i.i.i, %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit.from..preheader8.i.i.i
   %.06.i.i.i = phi ptr [ %i.db, %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit.from..preheader.i.i.i ], [ %.0.i.i.i.i, %_ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit.from..preheader8.i.i.i ] ; 2 uses
   %.not137 = icmp eq ptr %.06.i.i.i, %i.af
-  br i1 %.not137, label %._crit_edge, label %.from._ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit
+  br i1 %.not137, label %._crit_edge.from.._crit_edge.loopexit, label %.from._ZNSt3__114__map_iteratorINS_15__tree_iteratorINS_12__value_typeINS_10shared_ptrIN3tev11PixelBufferEEEPNS4_7ChannelEEEPNS_11__tree_nodeIS9_PvEElEEEppB8ne180100Ev.exit
 
 bb.n:                                             ; preds = %._crit_edge
   invoke void @_ZNSt3__17promiseIvE9set_valueEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr304)

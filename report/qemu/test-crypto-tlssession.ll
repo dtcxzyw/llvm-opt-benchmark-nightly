@@ -202,9 +202,10 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s, %bb.p
   %.1 = phi i8 [ 1, %bb.p ], [ %spec.select68, %bb.s ] ; 2 uses
-  %0 = and i8 %.1, %.148
-  %.not63 = icmp eq i8 %0, 0
-  br i1 %.not63, label %bb.l, label %bb.u, !llvm.loop !11
+  %0 = icmp eq i8 %.148, 0
+  %.not63 = icmp eq i8 %.1, 0
+  %1 = or i1 %0, %.not63
+  br i1 %1, label %bb.l, label %bb.u, !llvm.loop !11
 
 bb.u:                                             ; preds = %bb.t
   %i.x = call i32 @qcrypto_tls_session_check_credentials(ptr noundef nonnull %i.o, ptr noundef nonnull @error_abort) #10
@@ -342,9 +343,10 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s, %bb.p
   %.1 = phi i8 [ 1, %bb.p ], [ %spec.select68, %bb.s ] ; 2 uses
-  %0 = and i8 %.1, %.148
-  %.not63 = icmp eq i8 %0, 0
-  br i1 %.not63, label %bb.l, label %bb.u, !llvm.loop !12
+  %0 = icmp eq i8 %.148, 0
+  %.not63 = icmp eq i8 %.1, 0
+  %1 = or i1 %0, %.not63
+  br i1 %1, label %bb.l, label %bb.u, !llvm.loop !12
 
 bb.u:                                             ; preds = %bb.t
   %i.x = call i32 @qcrypto_tls_session_check_credentials(ptr noundef nonnull %i.o, ptr noundef nonnull @error_abort) #10
@@ -584,9 +586,10 @@ bb.ae:                                            ; preds = %bb.ac
 
 bb.af:                                            ; preds = %bb.ae, %bb.ab
   %.1 = phi i8 [ 1, %bb.ab ], [ %spec.select129, %bb.ae ] ; 2 uses
-  %1 = and i8 %.1, %.188
-  %.not124 = icmp eq i8 %1, 0
-  br i1 %.not124, label %bb.x, label %bb.ag, !llvm.loop !13
+  %1 = icmp eq i8 %.188, 0
+  %.not124 = icmp eq i8 %.1, 0
+  %2 = or i1 %1, %.not124
+  br i1 %2, label %bb.x, label %bb.ag, !llvm.loop !13
 
 bb.ag:                                            ; preds = %bb.af
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses

@@ -205,11 +205,11 @@ bb.u:                                             ; preds = %_ZN8ImVectorI13ImTe
   %.pr83 = phi i32 [ %.pr, %_ZN8ImVectorI13ImTextureRectE6resizeEi.exit ], [ %i.cs, %bb.p ] ; 3 uses
   %i.dg = icmp eq i32 %.pr83, 1
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cq, i64 87
-  %i.di = load i8, ptr %i.dh, align 1, !tbaa !306, !range !189, !noundef !190
-  %3 = trunc nuw i8 %i.di to i1                   ; 2 uses
+  %i.di = load i8, ptr %i.dh, align 1, !tbaa !306, !range !189, !noundef !190 ; 2 uses
   br i1 %i.dg, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
+  %3 = trunc nuw i8 %i.di to i1
   br i1 %3, label %.thread89.thread120, label %.thread89.thread
 
 .thread89.thread:                                 ; preds = %bb.v
@@ -217,9 +217,10 @@ bb.v:                                             ; preds = %bb.u
   br label %.thread89
 
 bb.w:                                             ; preds = %bb.u
-  %.not79 = icmp ne i32 %.pr83, 4
-  %or.cond.not = and i1 %.not79, %3
-  br i1 %or.cond.not, label %.thread, label %bb.x
+  %.not81 = icmp eq i8 %i.di, 0
+  %.not79 = icmp eq i32 %.pr83, 4
+  %or.cond = or i1 %.not79, %.not81
+  br i1 %or.cond, label %bb.x, label %.thread
 
 .thread:                                          ; preds = %bb.w
   store i32 4, ptr %i.cr, align 4, !tbaa !303
@@ -622,10 +623,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !268  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 82
   %i.d = load i8, ptr %i.c, align 2, !tbaa !280, !range !189, !noundef !190
-  %5 = trunc nuw i8 %i.d to i1
-  %6 = icmp ne ptr %i.b, null
-  %or.cond.not.i = select i1 %5, i1 %6, i1 false
-  br i1 %or.cond.not.i, label %bb.b, label %bb.c
+  %.not.i = icmp eq i8 %i.d, 0
+  %5 = icmp eq ptr %i.b, null
+  %or.cond.not.i = select i1 %.not.i, i1 true, i1 %5
+  br i1 %or.cond.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -696,10 +697,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !268  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 82
   %i.d = load i8, ptr %i.c, align 2, !tbaa !280, !range !189, !noundef !190
-  %5 = trunc nuw i8 %i.d to i1
-  %6 = icmp ne ptr %i.b, null
-  %or.cond.not.i = select i1 %5, i1 %6, i1 false
-  br i1 %or.cond.not.i, label %bb.b, label %bb.c
+  %.not.i = icmp eq i8 %i.d, 0
+  %5 = icmp eq ptr %i.b, null
+  %or.cond.not.i = select i1 %.not.i, i1 true, i1 %5
+  br i1 %or.cond.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 40

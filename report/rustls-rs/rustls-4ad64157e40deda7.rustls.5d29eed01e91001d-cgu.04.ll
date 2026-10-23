@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rustls-rs/original/rustls-4ad64157e40deda7.rustls.5d29eed01e91001d-cgu.04?download=true
-inline.NumInlined: 680
+inline.NumInlined: 681
 inline.NumDeleted: 217
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,11 +204,11 @@ bb.f:                                             ; preds = %bb.e
   %i.ap = load ptr, ptr %i.aa, align 8, !nonnull !6, !noundef !6
   %i.aq = getelementptr inbounds nuw [32 x i8], ptr %i.ap, i64 %.sroa.013.0
   %i.ar = load i8, ptr %i.aq, align 8, !range !12, !noundef !6
-  %3 = trunc nuw i8 %i.ar to i1
+  %.not28 = icmp eq i8 %i.ar, 0
   %i.as = load i8, ptr %i.ab, align 1, !range !19
-  %.not22 = icmp ne i8 %i.as, 2
-  %or.cond.not = select i1 %3, i1 %.not22, i1 false
-  br i1 %or.cond.not, label %bb.j, label %bb.g
+  %.not22 = icmp eq i8 %i.as, 2
+  %or.cond.not = select i1 %.not28, i1 true, i1 %.not22
+  br i1 %or.cond.not, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.p)
@@ -611,9 +611,8 @@ bb.l:                                             ; preds = %bb.n, %bb.k
   %i.by = trunc nuw i8 %i.bx to i1
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bt, i64 356
   %i.ca = load i8, ptr %i.bz, align 4, !range !12, !noundef !6
-  %6 = trunc nuw i8 %i.ca to i1
-  %.not6 = xor i1 %6, true
-  %brmerge7 = or i1 %i.by, %.not6
+  %.not6 = icmp eq i8 %i.ca, 0
+  %brmerge7 = or i1 %.not6, %i.by
   br i1 %brmerge7, label %bb.p, label %bb.q
 
 bb.m:                                             ; preds = %bb.j
@@ -1016,13 +1015,13 @@ _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterRDNtNtCs7ZUl82OSlxp_6rust
   %.sroa.9.0 = phi ptr [ undef, %bb.q ], [ %i.ch, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterRDNtNtCs7ZUl82OSlxp_6rustls8compress14CertCompressorEL_ENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNCNvMNtNtNtBW_6server5tls1312client_helloNtB2B_27CompleteClientHelloHandling19handle_client_hellos_00EBW_.exit.i ], [ undef, %bb.r ], [ undef, %bb.s ] ; 2 uses
   %.sroa.020.0 = phi ptr [ null, %bb.q ], [ %i.cg, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterRDNtNtCs7ZUl82OSlxp_6rustls8compress14CertCompressorEL_ENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNCNvMNtNtNtBW_6server5tls1312client_helloNtB2B_27CompleteClientHelloHandling19handle_client_hellos_00EBW_.exit.i ], [ null, %bb.r ], [ null, %bb.s ] ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %.val202, i64 551
-  %i.cj = load i8, ptr %i.ci, align 1, !range !12, !noundef !6 ; 2 uses
-  %i.ck = trunc nuw i8 %i.cj to i1
+  %i.cj = load i8, ptr %i.ci, align 1, !range !12, !noundef !6
+  %i.ck = trunc nuw i8 %i.cj to i1                ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 3 uses
   %i.cm = load i8, ptr %i.cl, align 8, !range !12, !noundef !6
-  %9 = and i8 %i.cm, %i.cj
-  %.not = icmp eq i8 %9, 0
-  br i1 %.not, label %bb.t, label %bb.w
+  %.not = icmp ne i8 %i.cm, 0
+  %brmerge.not = and i1 %.not, %i.ck
+  br i1 %brmerge.not, label %bb.w, label %bb.t
 
 bb.t:                                             ; preds = %.loopexit370
   %i.cn = getelementptr inbounds nuw i8, ptr %.val202, i64 272
@@ -1372,7 +1371,7 @@ bb.be:                                            ; preds = %bb.fo, %bb.fm, %bb.
   unreachable
 
 bb.bf:                                            ; preds = %bb.ah, %bb.bc, %bb.ei, %bb.bj, %bb.bi, %bb.bh
-  %.sroa.086.4 = phi i8 [ 1, %bb.bj ], [ 1, %bb.bi ], [ 1, %bb.bh ], [ %.sroa.086.9, %bb.ei ], [ 1, %bb.bc ], [ 1, %bb.ah ] ; 3 uses
+  %.sroa.086.4 = phi i8 [ 1, %bb.bj ], [ 1, %bb.bi ], [ 1, %bb.bh ], [ %.sroa.086.9, %bb.ei ], [ 1, %bb.bc ], [ 1, %bb.ah ] ; 4 uses
   %i.gf = load i64, ptr %i.ak, align 8, !range !5, !alias.scope !718, !noundef !6
   %i.gg = icmp eq i64 %i.gf, -1
   br i1 %i.gg, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243, label %bb.bg
@@ -1775,9 +1774,9 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlx
   %cond = icmp eq i8 %.sroa.092.7, 0
   br i1 %cond, label %bb.fn, label %.body233.thread
 
-bb.ee:                                            ; preds = %.invoke, %bb.j, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243
-  %.sroa.086.8 = phi i8 [ 1, %bb.j ], [ %.sroa.086.4, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243 ], [ 0, %.invoke ]
-  %.sroa.092.8 = phi i8 [ 1, %bb.j ], [ 1, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243 ], [ 0, %.invoke ]
+bb.ee:                                            ; preds = %.invoke, %11, %bb.j
+  %.sroa.086.8 = phi i8 [ 1, %bb.j ], [ %.sroa.086.4, %11 ], [ 0, %.invoke ]
+  %.sroa.092.8 = phi i8 [ 1, %bb.j ], [ 1, %11 ], [ 0, %.invoke ]
   %i.oc = landingpad { ptr, i32 }
           cleanup
   br label %.body233
@@ -1821,11 +1820,27 @@ bb.ek:                                            ; preds = %bb.cg, %bb.ej
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243: ; preds = %bb.bf, %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEEB1c_(ptr noalias nofree noundef align 8 dereferenceable(24) %8)
+  invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %8)
+          to label %11 unwind label %9
+
+9:                                                ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243
+  %10 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBQ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %8)
+          to label %.body233.thread unwind label %12
+
+11:                                               ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBQ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %8)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEEB1c_.exit unwind label %bb.ee
 
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEEB1c_.exit: ; preds = %bb.j, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243
-  %.sroa.086.11 = phi i8 [ %.sroa.086.4, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs7persist18ServerSessionValueEEB13_.exit243 ], [ 1, %bb.j ] ; 2 uses
+12:                                               ; preds = %9
+  %13 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #26
+  unreachable
+
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEEB1c_.exit: ; preds = %11, %bb.j
+  %.sroa.086.11 = phi i8 [ 1, %bb.j ], [ %.sroa.086.4, %11 ] ; 2 uses
   %i.oe = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !725)
   call void @llvm.experimental.noalias.scope.decl(metadata !726)
@@ -2038,9 +2053,9 @@ bb.fl:                                            ; preds = %bb.fi
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake19TransportParametersEEB13_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake21ServerExtensionsInputEBH_.exit unwind label %bb.be
 
-.body233.thread:                                  ; preds = %bb.i, %.body233
-  %.pn177362 = phi { ptr, i32 } [ %.pn177, %.body233 ], [ %i.bc, %bb.i ]
-  %.sroa.086.7360 = phi i8 [ %.sroa.086.7, %.body233 ], [ 1, %bb.i ]
+.body233.thread:                                  ; preds = %9, %bb.i, %.body233
+  %.pn177369 = phi { ptr, i32 } [ %.pn177, %.body233 ], [ %10, %9 ], [ %i.bc, %bb.i ]
+  %.sroa.086.7367 = phi i8 [ %.sroa.086.7, %.body233 ], [ %.sroa.086.4, %9 ], [ 1, %bb.i ]
   %i.qe = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !730)
   call void @llvm.experimental.noalias.scope.decl(metadata !731)
@@ -2055,8 +2070,8 @@ bb.fm:                                            ; preds = %.body233.thread
           to label %.noexc258 unwind label %bb.be
 
 bb.fn:                                            ; preds = %.body233, %.noexc258
-  %.pn177363 = phi { ptr, i32 } [ %.pn177, %.body233 ], [ %.pn177362, %.noexc258 ] ; 2 uses
-  %.sroa.086.7361 = phi i8 [ %.sroa.086.7, %.body233 ], [ %.sroa.086.7360, %.noexc258 ]
+  %.pn177363 = phi { ptr, i32 } [ %.pn177, %.body233 ], [ %.pn177369, %.noexc258 ] ; 2 uses
+  %.sroa.086.7361 = phi i8 [ %.sroa.086.7, %.body233 ], [ %.sroa.086.7367, %.noexc258 ]
   %i.qi = trunc nuw i8 %.sroa.086.7361 to i1
   br i1 %i.qi, label %bb.fo, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake21ServerExtensionsInputEBH_.exit
 

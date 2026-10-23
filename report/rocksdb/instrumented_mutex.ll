@@ -204,15 +204,15 @@ bb.e:                                             ; preds = %_ZN7rocksdb12_GLOBA
 _ZTWN7rocksdb10perf_levelE.exit.i:                ; preds = %bb.e, %_ZN7rocksdb12_GLOBAL__N_116stats_for_reportEPNS_11SystemClockEPNS_10StatisticsE.exit
   %i.o = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN7rocksdb10perf_levelE)
   %i.p = load i8, ptr %i.o, align 1, !tbaa !21
-  %i.q = icmp ugt i8 %i.p, 5                      ; 3 uses
+  %i.q = icmp ugt i8 %i.p, 5                      ; 4 uses
   %i.r = zext i1 %i.q to i8
   store i8 %i.r, ptr %1, align 8, !tbaa !25
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 0, ptr %i.s, align 1, !tbaa !26
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.n, ptr %i.t, align 4, !tbaa !27
-  %i.u = icmp ne ptr %i.l, null                   ; 2 uses
-  %or.cond.i2 = or i1 %i.u, %i.q                  ; 2 uses
+  %i.u = icmp ne ptr %i.l, null                   ; 3 uses
+  %or.cond.i2 = or i1 %i.u, %i.q
   br i1 %or.cond.i2, label %bb.f, label %_ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10StatisticsEj.exit
 
 bb.f:                                             ; preds = %_ZTWN7rocksdb10perf_levelE.exit.i
@@ -232,7 +232,8 @@ _ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10Statistics
   store ptr %i.l, ptr %i.ab, align 8, !tbaa !35
   %i.ac = load i32, ptr %i.m, align 8, !tbaa !49
   %i.ad = icmp eq i32 %i.ac, 77
-  %or.cond = and i1 %i.ad, %or.cond.i2
+  %or.cond.i4.demorgan = or i1 %i.u, %i.q
+  %or.cond = and i1 %i.ad, %or.cond.i4.demorgan
   br i1 %or.cond, label %bb.g, label %_ZN7rocksdb13PerfStepTimer5StartEv.exit
 
 bb.g:                                             ; preds = %_ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10StatisticsEj.exit
@@ -419,15 +420,15 @@ bb.e:                                             ; preds = %_ZN7rocksdb12_GLOBA
 _ZTWN7rocksdb10perf_levelE.exit.i:                ; preds = %bb.e, %_ZN7rocksdb12_GLOBAL__N_116stats_for_reportEPNS_11SystemClockEPNS_10StatisticsE.exit
   %i.o = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN7rocksdb10perf_levelE)
   %i.p = load i8, ptr %i.o, align 1, !tbaa !21
-  %i.q = icmp ugt i8 %i.p, 5                      ; 3 uses
+  %i.q = icmp ugt i8 %i.p, 5                      ; 4 uses
   %i.r = zext i1 %i.q to i8
   store i8 %i.r, ptr %1, align 8, !tbaa !25
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 0, ptr %i.s, align 1, !tbaa !26
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.n, ptr %i.t, align 4, !tbaa !27
-  %i.u = icmp ne ptr %i.l, null                   ; 2 uses
-  %or.cond.i2 = or i1 %i.u, %i.q                  ; 2 uses
+  %i.u = icmp ne ptr %i.l, null                   ; 3 uses
+  %or.cond.i2 = or i1 %i.u, %i.q
   br i1 %or.cond.i2, label %bb.f, label %_ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10StatisticsEj.exit
 
 bb.f:                                             ; preds = %_ZTWN7rocksdb10perf_levelE.exit.i
@@ -447,7 +448,8 @@ _ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10Statistics
   store ptr %i.l, ptr %i.ab, align 8, !tbaa !35
   %i.ac = load i32, ptr %i.m, align 8, !tbaa !44
   %i.ad = icmp eq i32 %i.ac, 77
-  %or.cond = and i1 %i.ad, %or.cond.i2
+  %or.cond.i4.demorgan = or i1 %i.u, %i.q
+  %or.cond = and i1 %i.ad, %or.cond.i4.demorgan
   br i1 %or.cond, label %bb.g, label %_ZN7rocksdb13PerfStepTimer5StartEv.exit
 
 bb.g:                                             ; preds = %_ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10StatisticsEj.exit
@@ -572,15 +574,15 @@ bb.e:                                             ; preds = %_ZN7rocksdb12_GLOBA
 _ZTWN7rocksdb10perf_levelE.exit.i:                ; preds = %bb.e, %_ZN7rocksdb12_GLOBAL__N_116stats_for_reportEPNS_11SystemClockEPNS_10StatisticsE.exit
   %i.o = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN7rocksdb10perf_levelE)
   %i.p = load i8, ptr %i.o, align 1, !tbaa !21
-  %i.q = icmp ugt i8 %i.p, 5                      ; 3 uses
+  %i.q = icmp ugt i8 %i.p, 5                      ; 4 uses
   %i.r = zext i1 %i.q to i8
   store i8 %i.r, ptr %2, align 8, !tbaa !25
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 1
   store i8 0, ptr %i.s, align 1, !tbaa !26
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.n, ptr %i.t, align 4, !tbaa !27
-  %i.u = icmp ne ptr %i.l, null                   ; 2 uses
-  %or.cond.i3 = or i1 %i.u, %i.q                  ; 2 uses
+  %i.u = icmp ne ptr %i.l, null                   ; 3 uses
+  %or.cond.i3 = or i1 %i.u, %i.q
   br i1 %or.cond.i3, label %bb.f, label %_ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10StatisticsEj.exit
 
 bb.f:                                             ; preds = %_ZTWN7rocksdb10perf_levelE.exit.i
@@ -600,7 +602,8 @@ _ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10Statistics
   store ptr %i.l, ptr %i.ab, align 8, !tbaa !35
   %i.ac = load i32, ptr %i.m, align 8, !tbaa !44
   %i.ad = icmp eq i32 %i.ac, 77
-  %or.cond = and i1 %i.ad, %or.cond.i3
+  %or.cond.i5.demorgan = or i1 %i.u, %i.q
+  %or.cond = and i1 %i.ad, %or.cond.i5.demorgan
   br i1 %or.cond, label %bb.g, label %_ZN7rocksdb13PerfStepTimer5StartEv.exit
 
 bb.g:                                             ; preds = %_ZN7rocksdb13PerfStepTimerC2EPmPNS_11SystemClockEbNS_9PerfLevelEPNS_10StatisticsEj.exit

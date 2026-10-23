@@ -205,15 +205,16 @@ _ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread: ; preds = %bb.e
 bb.g:                                             ; preds = %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !44
-  %11 = icmp ne i32 %i.ar, 0
+  %11 = icmp eq i32 %i.ar, 0
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 68
-  %i.at = load i8, ptr %i.as, align 4, !range !30
-  %12 = trunc nuw i8 %i.at to i1                  ; 2 uses
-  %.not98 = select i1 %11, i1 true, i1 %12
-  br i1 %.not98, label %bb.h, label %.thread
+  %i.at = load i8, ptr %i.as, align 4, !range !30 ; 2 uses
+  %12 = icmp eq i8 %i.at, 0
+  %.not98 = select i1 %11, i1 %12, i1 false
+  br i1 %.not98, label %.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  br i1 %12, label %bb.j, label %bb.i
+  %13 = trunc nuw i8 %i.at to i1
+  br i1 %13, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.au = load i8, ptr %3, align 1, !tbaa !175, !range !30, !noundef !31

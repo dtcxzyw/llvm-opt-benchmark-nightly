@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %bb.f
   %i.ba = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !noalias !865, !nonnull !14, !align !27, !noundef !14
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 183
   %i.bc = load i8, ptr %i.bb, align 1, !range !19, !noalias !865, !noundef !14
-  %1 = trunc nuw i8 %i.bc to i1
-  %.not34.i.i = icmp ne ptr %i.az, null           ; 2 uses
-  %or.cond.not.i.i = and i1 %.not34.i.i, %1
-  br i1 %or.cond.not.i.i, label %bb.p, label %bb.o
+  %.not37.i.i = icmp eq i8 %i.bc, 0
+  %.not34.i.i = icmp eq ptr %i.az, null           ; 2 uses
+  %or.cond.i.i = or i1 %.not34.i.i, %.not37.i.i
+  br i1 %or.cond.i.i, label %bb.o, label %bb.p
 
 .split.i.i:                                       ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !865
@@ -346,7 +346,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   br i1 %.not36.i.i, label %.critedge.i.i, label %bb.x
 
 bb.o:                                             ; preds = %bb.h
-  br i1 %.not34.i.i, label %bb.u, label %bb.s
+  br i1 %.not34.i.i, label %bb.s, label %bb.u
 
 bb.p:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !865
@@ -601,10 +601,10 @@ bb.h:                                             ; preds = %bb.f
   %i.bd = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !noalias !911, !nonnull !14, !align !27, !noundef !14
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 47
   %i.bf = load i8, ptr %i.be, align 1, !range !19, !noalias !911, !noundef !14
-  %1 = trunc nuw i8 %i.bf to i1
-  %.not34.i.i = icmp ne ptr %i.bc, null           ; 2 uses
-  %or.cond.not.i.i = and i1 %.not34.i.i, %1
-  br i1 %or.cond.not.i.i, label %bb.o, label %bb.n
+  %.not37.i.i = icmp eq i8 %i.bf, 0
+  %.not34.i.i = icmp eq ptr %i.bc, null           ; 2 uses
+  %or.cond.i.i = or i1 %.not34.i.i, %.not37.i.i
+  br i1 %or.cond.i.i, label %bb.n, label %bb.o
 
 .split.i.i:                                       ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !911
@@ -736,7 +736,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   br i1 %.not36.i.i, label %.critedge.i.i, label %bb.v
 
 bb.n:                                             ; preds = %bb.h
-  br i1 %.not34.i.i, label %bb.s, label %bb.r
+  br i1 %.not34.i.i, label %bb.r, label %bb.s
 
 bb.o:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !911
@@ -969,10 +969,10 @@ bb.h:                                             ; preds = %bb.f
   %i.av = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !noalias !955, !nonnull !14, !noundef !14
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 15
   %i.ax = load i8, ptr %i.aw, align 1, !range !19, !noalias !955, !noundef !14
-  %1 = trunc nuw i8 %i.ax to i1
-  %.not34.i.i = icmp ne ptr %i.au, null           ; 2 uses
-  %or.cond.not.i.i = and i1 %.not34.i.i, %1
-  br i1 %or.cond.not.i.i, label %bb.o, label %bb.n
+  %.not37.i.i = icmp eq i8 %i.ax, 0
+  %.not34.i.i = icmp eq ptr %i.au, null           ; 2 uses
+  %or.cond.i.i = or i1 %.not34.i.i, %.not37.i.i
+  br i1 %or.cond.i.i, label %bb.n, label %bb.o
 
 .split.i.i:                                       ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !955
@@ -1093,7 +1093,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   br i1 %.not36.i.i, label %.critedge.i.i, label %bb.v
 
 bb.n:                                             ; preds = %bb.h
-  br i1 %.not34.i.i, label %bb.s, label %bb.r
+  br i1 %.not34.i.i, label %bb.r, label %bb.s
 
 bb.o:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !955
@@ -1331,10 +1331,10 @@ bb.h:                                             ; preds = %bb.f
   %i.ba = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !noalias !997, !nonnull !14, !align !27, !noundef !14
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 180
   %i.bc = load i8, ptr %i.bb, align 4, !range !19, !noalias !997, !noundef !14
-  %1 = trunc nuw i8 %i.bc to i1
-  %.not34.i.i = icmp ne ptr %i.az, null           ; 2 uses
-  %or.cond.not.i.i = and i1 %.not34.i.i, %1
-  br i1 %or.cond.not.i.i, label %bb.p, label %bb.o
+  %.not37.i.i = icmp eq i8 %i.bc, 0
+  %.not34.i.i = icmp eq ptr %i.az, null           ; 2 uses
+  %or.cond.i.i = or i1 %.not34.i.i, %.not37.i.i
+  br i1 %or.cond.i.i, label %bb.o, label %bb.p
 
 .split.i.i:                                       ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !997
@@ -1472,7 +1472,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   br i1 %.not36.i.i, label %.critedge.i.i, label %bb.x
 
 bb.o:                                             ; preds = %bb.h
-  br i1 %.not34.i.i, label %bb.u, label %bb.s
+  br i1 %.not34.i.i, label %bb.s, label %bb.u
 
 bb.p:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !997
@@ -1727,10 +1727,10 @@ bb.h:                                             ; preds = %bb.f
   %i.bd = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !noalias !1043, !nonnull !14, !align !27, !noundef !14
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 44
   %i.bf = load i8, ptr %i.be, align 4, !range !19, !noalias !1043, !noundef !14
-  %1 = trunc nuw i8 %i.bf to i1
-  %.not34.i.i = icmp ne ptr %i.bc, null           ; 2 uses
-  %or.cond.not.i.i = and i1 %.not34.i.i, %1
-  br i1 %or.cond.not.i.i, label %bb.o, label %bb.n
+  %.not37.i.i = icmp eq i8 %i.bf, 0
+  %.not34.i.i = icmp eq ptr %i.bc, null           ; 2 uses
+  %or.cond.i.i = or i1 %.not34.i.i, %.not37.i.i
+  br i1 %or.cond.i.i, label %bb.n, label %bb.o
 
 .split.i.i:                                       ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !1043
@@ -1862,7 +1862,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   br i1 %.not36.i.i, label %.critedge.i.i, label %bb.v
 
 bb.n:                                             ; preds = %bb.h
-  br i1 %.not34.i.i, label %bb.s, label %bb.r
+  br i1 %.not34.i.i, label %bb.r, label %bb.s
 
 bb.o:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !1043
@@ -2095,10 +2095,10 @@ bb.h:                                             ; preds = %bb.f
   %i.av = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !noalias !1087, !nonnull !14, !noundef !14
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 12
   %i.ax = load i8, ptr %i.aw, align 1, !range !19, !noalias !1087, !noundef !14
-  %1 = trunc nuw i8 %i.ax to i1
-  %.not34.i.i = icmp ne ptr %i.au, null           ; 2 uses
-  %or.cond.not.i.i = and i1 %.not34.i.i, %1
-  br i1 %or.cond.not.i.i, label %bb.o, label %bb.n
+  %.not37.i.i = icmp eq i8 %i.ax, 0
+  %.not34.i.i = icmp eq ptr %i.au, null           ; 2 uses
+  %or.cond.i.i = or i1 %.not34.i.i, %.not37.i.i
+  br i1 %or.cond.i.i, label %bb.n, label %bb.o
 
 .split.i.i:                                       ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !1087
@@ -2219,7 +2219,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   br i1 %.not36.i.i, label %.critedge.i.i, label %bb.v
 
 bb.n:                                             ; preds = %bb.h
-  br i1 %.not34.i.i, label %bb.s, label %bb.r
+  br i1 %.not34.i.i, label %bb.r, label %bb.s
 
 bb.o:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !1087
@@ -2622,7 +2622,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i, %.lr.ph21.i.i.i.i
-  %.sroa.02.018.i.i.i.i = phi i1 [ false, %.lr.ph21.i.i.i.i ], [ %.sroa.02.1.i.i.i.i, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ]
+  %.sroa.02.018.i.i.i.i = phi i8 [ 0, %.lr.ph21.i.i.i.i ], [ %.sroa.02.1.i.i.i.i, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ]
   %.sroa.06.017.i.i.i.i = phi i64 [ %i.ah, %.lr.ph21.i.i.i.i ], [ %.sroa.06.1.i.i.i.i, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ] ; 4 uses
   %.sroa.0.016.i.i.i.i = phi i64 [ 0, %.lr.ph21.i.i.i.i ], [ %.sroa.0.1.i.i.i.i, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i ] ; 4 uses
   %i.am = and i64 %.sroa.06.017.i.i.i.i, 2251799813685247
@@ -2714,10 +2714,11 @@ bb.n:                                             ; preds = %._crit_edge.i.i.i.i
 _RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i: ; preds = %bb.n, %bb.m, %bb.h
   %.sroa.0.1.i.i.i.i = phi i64 [ 0, %bb.h ], [ %.sroa.0.016.i.i.i.i, %bb.n ], [ %i.bb, %bb.m ]
   %.sroa.06.1.i.i.i.i = phi i64 [ %.sroa.01.0.i.i.i.i.i, %bb.h ], [ %.sroa.06.017.i.i.i.i, %bb.n ], [ %.sroa.06.017.i.i.i.i, %bb.m ] ; 2 uses
-  %.sroa.02.1.i.i.i.i = phi i1 [ %.sroa.02.018.i.i.i.i, %bb.h ], [ true, %bb.n ], [ true, %bb.m ] ; 2 uses
+  %.sroa.02.1.i.i.i.i = phi i8 [ %.sroa.02.018.i.i.i.i, %bb.h ], [ 1, %bb.n ], [ 1, %bb.m ] ; 2 uses
   %i.bc = lshr i64 %.sroa.06.1.i.i.i.i, 51
+  %.not.i.i.i.i = icmp ne i8 %.sroa.02.1.i.i.i.i, 0
   %i.bd = icmp eq i64 %i.w, %i.bc
-  %or.cond.not.i.i.i.i = or i1 %.sroa.02.1.i.i.i.i, %i.bd
+  %or.cond.not.i.i.i.i = or i1 %.not.i.i.i.i, %i.bd
   br i1 %or.cond.not.i.i.i.i, label %bb.h, label %_RNvMs0_NtCsfl4DFYTbOu6_12sharded_slab5shardINtB5_5ShardNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE12clear_remoteCsat9HgdBb3qc_16shadowsocks_rust.exit
 
 bb.o:                                             ; preds = %_RNvMs_NtCsfl4DFYTbOu6_12sharded_slab3tidINtB4_3TidNtNtB6_3cfg13DefaultConfigE7currentCsat9HgdBb3qc_16shadowsocks_rust.exit
@@ -2779,7 +2780,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i10, %.lr.ph20.i.i.i.i
-  %.sroa.02.017.i.i.i.i = phi i1 [ false, %.lr.ph20.i.i.i.i ], [ %.sroa.02.1.i.i.i.i13, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i10 ]
+  %.sroa.02.017.i.i.i.i = phi i8 [ 0, %.lr.ph20.i.i.i.i ], [ %.sroa.02.1.i.i.i.i13, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i10 ]
   %.sroa.06.016.i.i.i.i = phi i64 [ %i.cd, %.lr.ph20.i.i.i.i ], [ %.sroa.06.1.i.i.i.i12, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i10 ] ; 4 uses
   %.sroa.0.015.i.i.i.i = phi i64 [ 0, %.lr.ph20.i.i.i.i ], [ %.sroa.0.1.i.i.i.i11, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i10 ] ; 4 uses
   %i.ci = and i64 %.sroa.06.016.i.i.i.i, 2251799813685247
@@ -2865,10 +2866,11 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.i
 _RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i10: ; preds = %bb.y, %bb.x, %bb.t
   %.sroa.0.1.i.i.i.i11 = phi i64 [ 0, %bb.t ], [ %.sroa.0.015.i.i.i.i, %bb.y ], [ %i.cw, %bb.x ]
   %.sroa.06.1.i.i.i.i12 = phi i64 [ %.sroa.01.0.i.i.i.i.i9, %bb.t ], [ %.sroa.06.016.i.i.i.i, %bb.y ], [ %.sroa.06.016.i.i.i.i, %bb.x ] ; 2 uses
-  %.sroa.02.1.i.i.i.i13 = phi i1 [ %.sroa.02.017.i.i.i.i, %bb.t ], [ true, %bb.y ], [ true, %bb.x ] ; 2 uses
+  %.sroa.02.1.i.i.i.i13 = phi i8 [ %.sroa.02.017.i.i.i.i, %bb.t ], [ 1, %bb.y ], [ 1, %bb.x ] ; 2 uses
   %i.cx = lshr i64 %.sroa.06.1.i.i.i.i12, 51
+  %.not.i.i.i.i14 = icmp ne i8 %.sroa.02.1.i.i.i.i13, 0
   %i.cy = icmp eq i64 %i.bo, %i.cx
-  %or.cond.not.i.i.i.i14 = or i1 %.sroa.02.1.i.i.i.i13, %i.cy
+  %or.cond.not.i.i.i.i14 = or i1 %.not.i.i.i.i14, %i.cy
   br i1 %or.cond.not.i.i.i.i14, label %bb.t, label %_RNvMs0_NtCsfl4DFYTbOu6_12sharded_slab5shardINtB5_5ShardNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE12clear_remoteCsat9HgdBb3qc_16shadowsocks_rust.exit
 
 _RNvMs0_NtCsfl4DFYTbOu6_12sharded_slab5shardINtB5_5ShardNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE12clear_remoteCsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i, %bb.k, %_RNvNtNtCsfl4DFYTbOu6_12sharded_slab4page4slot19exponential_backoff.exit.i.i.i.i10, %bb.v, %bb.s, %bb.r, %_RNvMs0_NtCsfl4DFYTbOu6_12sharded_slab5shardINtB5_5ShardNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry7sharded9DataInnerNtNtB7_3cfg13DefaultConfigE5localCsat9HgdBb3qc_16shadowsocks_rust.exit.i, %bb.o, %bb.g, %bb.f, %bb.e, %bb.d
@@ -3271,9 +3273,9 @@ bb.a:
   %i.s = getelementptr i8, ptr %i.r, i64 -1
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.u = load i8, ptr %i.t, align 8, !range !19, !alias.scope !10422
-  %2 = trunc nuw i8 %i.u to i1
   %.phi.trans.insert.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.pre2.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i.i.i, align 8, !alias.scope !10422 ; 2 uses
+  %.not3.i.i.i.i.i.i = icmp eq i8 %i.u, 0
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -3363,15 +3365,15 @@ _RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10nex
 _RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i: ; preds = %bb.e, %.loopexit15.i.i.i.i.i.i, %bb.b
   %i.av = phi i64 [ %i.aa, %bb.b ], [ %i.l, %.loopexit15.i.i.i.i.i.i ], [ %i.aq, %bb.e ]
   store i8 1, ptr %i.f, align 1, !alias.scope !10430
-  %.not.i3.i.i.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.lcssa242930.i.i.i
-  %or.cond.not.i.i.i.i.i.i = select i1 %2, i1 true, i1 %.not.i3.i.i.i.i.i
-  br i1 %or.cond.not.i.i.i.i.i.i, label %select.unfold.i.i.i, label %_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters6filter6FilterINtNtNtBc_3str4iter5SplitcENCINvMNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env7builderNtB1u_7Builder11parse_lossyNtNtCsgCecv3eZDcN_5alloc6string6StringE0ENtNtNtBa_6traits8iterator8Iterator8find_mapNtNtB1w_9directive9DirectiveQNCB1q_s_0ECsat9HgdBb3qc_16shadowsocks_rust.exit
+  %.not.i3.i.i.i.i.i = icmp eq i64 %.pre2.i.i.i.i.i.i, %.lcssa242930.i.i.i
+  %or.cond.not.i.i.i.i.i.i = select i1 %.not3.i.i.i.i.i.i, i1 %.not.i3.i.i.i.i.i, i1 false
+  br i1 %or.cond.not.i.i.i.i.i.i, label %_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters6filter6FilterINtNtNtBc_3str4iter5SplitcENCINvMNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env7builderNtB1u_7Builder11parse_lossyNtNtCsgCecv3eZDcN_5alloc6string6StringE0ENtNtNtBa_6traits8iterator8Iterator8find_mapNtNtB1w_9directive9DirectiveQNCB1q_s_0ECsat9HgdBb3qc_16shadowsocks_rust.exit, label %select.unfold.i.i.i
 
 select.unfold.i.i.i:                              ; preds = %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i
-  %i.aw = phi i64 [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ %i.av, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ]
-  %.lcssa2428.i.i.i = phi i64 [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ %.lcssa242930.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ]
-  %i.ax = phi i1 [ false, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ true, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ]
-  %.pn34.i.i.i = phi i64 [ %i.as, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ %.pre2.i.i.i.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ] ; 2 uses
+  %i.aw = phi i64 [ %i.av, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ]
+  %.lcssa2428.i.i.i = phi i64 [ %.lcssa242930.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ]
+  %i.ax = phi i1 [ true, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ false, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ]
+  %.pn34.i.i.i = phi i64 [ %.pre2.i.i.i.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ %i.as, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ] ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %.pn34.i.i.i, %.lcssa242930.i.i.i
   br i1 %.not.i.i.i.i, label %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters6filter15filter_try_foldReuINtNtNtBa_3ops12control_flow11ControlFlowNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENCINvMNtB1R_7builderNtB35_7Builder11parse_lossyNtNtCsgCecv3eZDcN_5alloc6string6StringE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8find_map5checkB15_B1N_QNCB31_s_0E0E0Csat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i, label %bb.g
 
@@ -3492,9 +3494,9 @@ bb.a:
   %i.s = getelementptr i8, ptr %i.r, i64 -1
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.u = load i8, ptr %i.t, align 8, !range !19, !alias.scope !10481
-  %2 = trunc nuw i8 %i.u to i1
   %.phi.trans.insert.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.pre2.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i.i.i, align 8, !alias.scope !10481 ; 2 uses
+  %.not3.i.i.i.i.i.i = icmp eq i8 %i.u, 0
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -3584,15 +3586,15 @@ _RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10nex
 _RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i: ; preds = %bb.e, %.loopexit15.i.i.i.i.i.i, %bb.b
   %i.av = phi i64 [ %i.aa, %bb.b ], [ %i.l, %.loopexit15.i.i.i.i.i.i ], [ %i.aq, %bb.e ]
   store i8 1, ptr %i.f, align 1, !alias.scope !10489
-  %.not.i3.i.i.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.lcssa242930.i.i.i
-  %or.cond.not.i.i.i.i.i.i = select i1 %2, i1 true, i1 %.not.i3.i.i.i.i.i
-  br i1 %or.cond.not.i.i.i.i.i.i, label %select.unfold.i.i.i, label %_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters6filter6FilterINtNtNtBc_3str4iter5SplitcENCINvMNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env7builderNtB1u_7Builder11parse_lossyReE0ENtNtNtBa_6traits8iterator8Iterator8find_mapNtNtB1w_9directive9DirectiveQNCB1q_s_0ECsat9HgdBb3qc_16shadowsocks_rust.exit
+  %.not.i3.i.i.i.i.i = icmp eq i64 %.pre2.i.i.i.i.i.i, %.lcssa242930.i.i.i
+  %or.cond.not.i.i.i.i.i.i = select i1 %.not3.i.i.i.i.i.i, i1 %.not.i3.i.i.i.i.i, i1 false
+  br i1 %or.cond.not.i.i.i.i.i.i, label %_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters6filter6FilterINtNtNtBc_3str4iter5SplitcENCINvMNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env7builderNtB1u_7Builder11parse_lossyReE0ENtNtNtBa_6traits8iterator8Iterator8find_mapNtNtB1w_9directive9DirectiveQNCB1q_s_0ECsat9HgdBb3qc_16shadowsocks_rust.exit, label %select.unfold.i.i.i
 
 select.unfold.i.i.i:                              ; preds = %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i
-  %i.aw = phi i64 [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ %i.av, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ]
-  %.lcssa2428.i.i.i = phi i64 [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ %.lcssa242930.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ]
-  %i.ax = phi i1 [ false, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ true, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ]
-  %.pn34.i.i.i = phi i64 [ %i.as, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ], [ %.pre2.i.i.i.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ] ; 2 uses
+  %i.aw = phi i64 [ %i.av, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ]
+  %.lcssa2428.i.i.i = phi i64 [ %.lcssa242930.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ %i.aq, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ]
+  %i.ax = phi i1 [ true, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ false, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ]
+  %.pn34.i.i.i = phi i64 [ %.pre2.i.i.i.i.i.i, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i ], [ %i.as, %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i.i ] ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %.pn34.i.i.i, %.lcssa242930.i.i.i
   br i1 %.not.i.i.i.i, label %_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters6filter15filter_try_foldReuINtNtNtBa_3ops12control_flow11ControlFlowNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENCINvMNtB1R_7builderNtB35_7Builder11parse_lossyB15_E0NCINvNvNtNtNtB8_6traits8iterator8Iterator8find_map5checkB15_B1N_QNCB31_s_0E0E0Csat9HgdBb3qc_16shadowsocks_rust.exit.thread.i.i.i, label %bb.g
 
@@ -3995,13 +3997,13 @@ _RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any
 _RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutINtNtNtBa_3fmt9fmt_layer15FormattedFieldsNtNtB1C_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any6TypeIdINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtBQ_3AnyNtNtBS_6marker4SendNtB27_4SyncEL_EINtNtBS_4hash18BuildHasherDefaultNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensions8IdHasherEE7get_mutBO_ECsat9HgdBb3qc_16shadowsocks_rust.exit.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCslHe4oyxs8Ro_18tracing_subscriber3fmt9fmt_layer15FormattedFieldsNtNtBG_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.cq = load i8, ptr %i.cp, align 8, !range !19, !noundef !14
-  %5 = trunc nuw i8 %i.cq to i1
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 33
   %i.cs = load i8, ptr %i.cr, align 1             ; 2 uses
+  %.not = icmp eq i8 %i.cq, 0
   %i.ct = and i8 %i.cs, 8
-  %.not15 = icmp ne i8 %i.ct, 0
-  %or.cond.not = select i1 %5, i1 %.not15, i1 false
-  br i1 %or.cond.not, label %bb.n, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit
+  %.not15 = icmp eq i8 %i.ct, 0
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not15
+  br i1 %or.cond.not, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.n
 
 bb.k:                                             ; preds = %.loopexit93
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
@@ -4404,13 +4406,13 @@ _RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any
 _RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutINtNtNtBa_3fmt9fmt_layer15FormattedFieldsNtNtB1C_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any6TypeIdINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtBQ_3AnyNtNtBS_6marker4SendNtB27_4SyncEL_EINtNtBS_4hash18BuildHasherDefaultNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensions8IdHasherEE7get_mutBO_ECsat9HgdBb3qc_16shadowsocks_rust.exit.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCslHe4oyxs8Ro_18tracing_subscriber3fmt9fmt_layer15FormattedFieldsNtNtBG_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 11
   %i.cq = load i8, ptr %i.cp, align 1, !range !19, !noundef !14
-  %5 = trunc nuw i8 %i.cq to i1
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.cs = load i8, ptr %i.cr, align 1             ; 2 uses
+  %.not = icmp eq i8 %i.cq, 0
   %i.ct = and i8 %i.cs, 8
-  %.not15 = icmp ne i8 %i.ct, 0
-  %or.cond.not = select i1 %5, i1 %.not15, i1 false
-  br i1 %or.cond.not, label %bb.n, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit
+  %.not15 = icmp eq i8 %i.ct, 0
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not15
+  br i1 %or.cond.not, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.n
 
 bb.k:                                             ; preds = %.loopexit93
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
@@ -4813,13 +4815,13 @@ _RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any
 _RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutINtNtNtBa_3fmt9fmt_layer15FormattedFieldsNtNtB1C_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any6TypeIdINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtBQ_3AnyNtNtBS_6marker4SendNtB27_4SyncEL_EINtNtBS_4hash18BuildHasherDefaultNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensions8IdHasherEE7get_mutBO_ECsat9HgdBb3qc_16shadowsocks_rust.exit.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCslHe4oyxs8Ro_18tracing_subscriber3fmt9fmt_layer15FormattedFieldsNtNtBG_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.cq = load i8, ptr %i.cp, align 8, !range !19, !noundef !14
-  %5 = trunc nuw i8 %i.cq to i1
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 41
   %i.cs = load i8, ptr %i.cr, align 1             ; 2 uses
+  %.not = icmp eq i8 %i.cq, 0
   %i.ct = and i8 %i.cs, 8
-  %.not15 = icmp ne i8 %i.ct, 0
-  %or.cond.not = select i1 %5, i1 %.not15, i1 false
-  br i1 %or.cond.not, label %bb.n, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit
+  %.not15 = icmp eq i8 %i.ct, 0
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not15
+  br i1 %or.cond.not, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.n
 
 bb.k:                                             ; preds = %.loopexit93
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
@@ -5222,13 +5224,13 @@ _RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any
 _RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutINtNtNtBa_3fmt9fmt_layer15FormattedFieldsNtNtB1C_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsf3Ta7LF998c_4core3any6TypeIdINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtBQ_3AnyNtNtBS_6marker4SendNtB27_4SyncEL_EINtNtBS_4hash18BuildHasherDefaultNtNtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensions8IdHasherEE7get_mutBO_ECsat9HgdBb3qc_16shadowsocks_rust.exit.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCslHe4oyxs8Ro_18tracing_subscriber3fmt9fmt_layer15FormattedFieldsNtNtBG_6format13DefaultFieldsEECsat9HgdBb3qc_16shadowsocks_rust.exit
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cq = load i8, ptr %i.cp, align 1, !range !19, !noundef !14
-  %5 = trunc nuw i8 %i.cq to i1
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.cs = load i8, ptr %i.cr, align 1             ; 2 uses
+  %.not = icmp eq i8 %i.cq, 0
   %i.ct = and i8 %i.cs, 8
-  %.not15 = icmp ne i8 %i.ct, 0
-  %or.cond.not = select i1 %5, i1 %.not15, i1 false
-  br i1 %or.cond.not, label %bb.n, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit
+  %.not15 = icmp eq i8 %i.ct, 0
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not15
+  br i1 %or.cond.not, label %_RINvMs1_NtNtCslHe4oyxs8Ro_18tracing_subscriber8registry10extensionsNtB6_15ExtensionsInner7get_mutNtNtNtBa_3fmt9fmt_layer7TimingsECsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.n
 
 bb.k:                                             ; preds = %.loopexit93
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)

@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %.lr.ph.preheader.i.
 
 .lr.ph130:                                        ; preds = %bb.v, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit72
   %.030128.in = phi i64 [ %.030128, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit72 ], [ %i.bo, %bb.v ]
-  %.031127 = phi i1 [ %.132.lcssa, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit72 ], [ false, %bb.v ] ; 2 uses
+  %.031127 = phi i8 [ %.132.lcssa, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit72 ], [ 0, %bb.v ] ; 2 uses
   %.sroa.0111.0126 = phi ptr [ %i.gv, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit72 ], [ %i.bw, %bb.v ] ; 2 uses
   %.030128 = lshr i64 %.030128.in, 1              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #21
@@ -271,7 +271,7 @@ _ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit: ; preds = %bb.ax
   br i1 %.not164, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.bg, %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit
-  %.132.lcssa = phi i1 [ %.031127, %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit ], [ %19, %bb.bg ]
+  %.132.lcssa = phi i8 [ %.031127, %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit ], [ %20, %bb.bg ]
   %i.gb = load ptr, ptr %13, align 8, !tbaa !283  ; 3 uses
   %i.gc = load i64, ptr %i.gb, align 8            ; 3 uses
   %i.gd = and i64 %i.gc, 1152920405095219200
@@ -345,9 +345,10 @@ bb.bf:                                            ; preds = %_ZN4cvc58internal12
 .lr.ph:                                           ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit, %bb.bg
   %.028123 = phi i64 [ %i.gz, %bb.bg ], [ 0, %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit ]
   %.029122 = phi i64 [ %i.gy, %bb.bg ], [ 0, %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit ] ; 2 uses
-  %.132121 = phi i1 [ %19, %bb.bg ], [ %.031127, %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit ] ; 2 uses
-  %19 = xor i1 %.132121, true                     ; 2 uses
-  %. = select i1 %.132121, ptr %13, ptr %12       ; 2 uses
+  %.132121 = phi i8 [ %20, %bb.bg ], [ %.031127, %_ZNK4cvc58internal12NodeTemplateILb1EE7notNodeEv.exit ] ; 2 uses
+  %19 = icmp eq i8 %.132121, 0
+  %20 = xor i8 %.132121, 1                        ; 2 uses
+  %. = select i1 %19, ptr %12, ptr %13            ; 2 uses
   %i.gy = add i64 %.030128, %.029122              ; 2 uses
   br label %bb.bh
 

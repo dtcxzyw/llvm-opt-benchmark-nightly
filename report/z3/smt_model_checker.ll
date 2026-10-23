@@ -205,13 +205,13 @@ bb.d:                                             ; preds = %_ZN13ast_fast_markI
 
 thread-pre-splitthread-pre-split.i.i:             ; preds = %._crit_edge.i.i, %_ZNK22special_relations_util19is_special_relationEP9func_decl.exit.i.i124.i.i, %bb.at
   %.sroa.7.6 = phi i32 [ %.sroa.7.1, %bb.at ], [ %.sroa.7.7, %_ZNK22special_relations_util19is_special_relationEP9func_decl.exit.i.i124.i.i ], [ %.sroa.7.4, %._crit_edge.i.i ]
-  %.sroa.6.5 = phi i1 [ %.sroa.6.1, %bb.at ], [ %8, %_ZNK22special_relations_util19is_special_relationEP9func_decl.exit.i.i124.i.i ], [ %.sroa.6.4, %._crit_edge.i.i ]
+  %.sroa.6.5 = phi i8 [ %.sroa.6.1, %bb.at ], [ %10, %_ZNK22special_relations_util19is_special_relationEP9func_decl.exit.i.i124.i.i ], [ %.sroa.6.4, %._crit_edge.i.i ]
   %.pr.pr.i.i = load i32, ptr %i.s, align 8, !tbaa !649
   br label %thread-pre-split.i.i
 
 thread-pre-split.i.i:                             ; preds = %.thread203.i.i, %bb.e, %thread-pre-splitthread-pre-split.i.i
   %.sroa.7.3 = phi i32 [ %.sroa.7.6, %thread-pre-splitthread-pre-split.i.i ], [ %.sroa.7.1, %bb.e ], [ %.sroa.7.1, %.thread203.i.i ]
-  %.sroa.6.3 = phi i1 [ %.sroa.6.5, %thread-pre-splitthread-pre-split.i.i ], [ %.sroa.6.1, %bb.e ], [ %.sroa.6.1, %.thread203.i.i ] ; 2 uses
+  %.sroa.6.3 = phi i8 [ %.sroa.6.5, %thread-pre-splitthread-pre-split.i.i ], [ %.sroa.6.1, %bb.e ], [ %.sroa.6.1, %.thread203.i.i ] ; 2 uses
   %.pr.i.i = phi i32 [ %.pr.pr.i.i, %thread-pre-splitthread-pre-split.i.i ], [ %i.x, %bb.e ], [ %i.x, %.thread203.i.i ] ; 2 uses
   %i.u = icmp eq i32 %.pr.i.i, 0
   br i1 %i.u, label %bb.av, label %.preheader.i.i
@@ -219,13 +219,13 @@ thread-pre-split.i.i:                             ; preds = %.thread203.i.i, %bb
 .preheader.i.i.sink.split:                        ; preds = %bb.au, %bb.d
   %.sink = phi i32 [ 1, %bb.d ], [ %i.hz, %bb.au ] ; 2 uses
   %.sroa.7.1.ph = phi i32 [ -1, %bb.d ], [ %.sroa.7.2, %bb.au ]
-  %.sroa.6.1.ph = phi i1 [ false, %bb.d ], [ %.sroa.6.2, %bb.au ]
+  %.sroa.6.1.ph = phi i8 [ 0, %bb.d ], [ %.sroa.6.2, %bb.au ]
   store i32 %.sink, ptr %i.s, align 8, !tbaa !649
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.sink.split, %thread-pre-split.i.i
   %.sroa.7.1 = phi i32 [ %.sroa.7.3, %thread-pre-split.i.i ], [ %.sroa.7.1.ph, %.preheader.i.i.sink.split ] ; 7 uses
-  %.sroa.6.1 = phi i1 [ %.sroa.6.3, %thread-pre-split.i.i ], [ %.sroa.6.1.ph, %.preheader.i.i.sink.split ] ; 7 uses
+  %.sroa.6.1 = phi i8 [ %.sroa.6.3, %thread-pre-split.i.i ], [ %.sroa.6.1.ph, %.preheader.i.i.sink.split ] ; 7 uses
   %i.v = phi i32 [ %.pr.i.i, %thread-pre-split.i.i ], [ %.sink, %.preheader.i.i.sink.split ] ; 2 uses
   %i.w = load ptr, ptr %4, align 8, !tbaa !647
   %i.x = add i32 %i.v, -1                         ; 6 uses
@@ -259,7 +259,7 @@ bb.f:                                             ; preds = %.preheader.i.i
 
 bb.g:                                             ; preds = %bb.aa, %.lr.ph.i.i
   %.sroa.7.8 = phi i32 [ %.sroa.7.1, %.lr.ph.i.i ], [ %.sroa.7.10, %bb.aa ] ; 9 uses
-  %.sroa.6.6 = phi i1 [ %.sroa.6.1, %.lr.ph.i.i ], [ %.sroa.6.7, %bb.aa ] ; 8 uses
+  %.sroa.6.6 = phi i8 [ %.sroa.6.1, %.lr.ph.i.i ], [ %.sroa.6.7, %bb.aa ] ; 8 uses
   %i.aj = phi i32 [ %i.ag, %.lr.ph.i.i ], [ %i.dz, %bb.aa ] ; 2 uses
   %i.ak = zext i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.ak
@@ -544,7 +544,8 @@ bb.t:                                             ; preds = %_ZNK4decl13get_fami
 _ZZNK3smt13model_checker16is_safe_for_mbqiEP10quantifierEN4procclEP3app.exit.i.i: ; preds = %.noexc103.i.i, %_ZNK4decl13get_family_idEv.exit.i.i.i.i.i
   %.sroa.7.9 = phi i32 [ %i.di, %.noexc103.i.i ], [ %.sroa.7.8, %_ZNK4decl13get_family_idEv.exit.i.i.i.i.i ] ; 2 uses
   %i.dj = icmp eq i32 %i.dg, %.sroa.7.9
-  %7 = or i1 %.sroa.6.6, %i.dj
+  %7 = zext i1 %i.dj to i8
+  %8 = or i8 %.sroa.6.6, %7
   br label %bb.aa
 
 bb.u:                                             ; preds = %bb.q
@@ -638,7 +639,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z, %_ZZNK3smt13model_checker16is_safe_for_mbqiEP10quantifierEN4procclEP3app.exit.i.i, %bb.l, %bb.h
   %.sroa.7.10 = phi i32 [ %.sroa.7.8, %bb.z ], [ %.sroa.7.8, %bb.l ], [ %.sroa.7.9, %_ZZNK3smt13model_checker16is_safe_for_mbqiEP10quantifierEN4procclEP3app.exit.i.i ], [ %.sroa.7.8, %bb.h ] ; 2 uses
-  %.sroa.6.7 = phi i1 [ %.sroa.6.6, %bb.z ], [ %.sroa.6.6, %bb.l ], [ %7, %_ZZNK3smt13model_checker16is_safe_for_mbqiEP10quantifierEN4procclEP3app.exit.i.i ], [ %.sroa.6.6, %bb.h ] ; 2 uses
+  %.sroa.6.7 = phi i8 [ %.sroa.6.6, %bb.z ], [ %.sroa.6.6, %bb.l ], [ %8, %_ZZNK3smt13model_checker16is_safe_for_mbqiEP10quantifierEN4procclEP3app.exit.i.i ], [ %.sroa.6.6, %bb.h ] ; 2 uses
   %i.dz = load i32, ptr %i.af, align 8, !tbaa !652 ; 2 uses
   %i.ea = icmp ult i32 %i.dz, %i.ae
   br i1 %i.ea, label %bb.g, label %._crit_edge242.i.i
@@ -650,7 +651,7 @@ bb.aa:                                            ; preds = %bb.z, %_ZZNK3smt13m
 
 ._crit_edge.i.i:                                  ; preds = %bb.f, %._crit_edge242.i.i
   %.sroa.7.4 = phi i32 [ %.sroa.7.10, %._crit_edge242.i.i ], [ %.sroa.7.1, %bb.f ] ; 3 uses
-  %.sroa.6.4 = phi i1 [ %.sroa.6.7, %._crit_edge242.i.i ], [ %.sroa.6.1, %bb.f ] ; 2 uses
+  %.sroa.6.4 = phi i8 [ %.sroa.6.7, %._crit_edge242.i.i ], [ %.sroa.6.1, %bb.f ] ; 2 uses
   %.pre-phi.i.i = phi i32 [ %.pre272.i.i, %._crit_edge242.i.i ], [ %i.x, %bb.f ]
   %i.eb = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
   store i32 %.pre-phi.i.i, ptr %i.s, align 8, !tbaa !649
@@ -692,7 +693,8 @@ bb.ad:                                            ; preds = %_ZNK4decl13get_fami
 _ZNK22special_relations_util19is_special_relationEP9func_decl.exit.i.i124.i.i: ; preds = %.noexc126.i.i, %_ZNK4decl13get_family_idEv.exit.i.i.i123.i.i
   %.sroa.7.7 = phi i32 [ %i.en, %.noexc126.i.i ], [ %.sroa.7.4, %_ZNK4decl13get_family_idEv.exit.i.i.i123.i.i ] ; 2 uses
   %i.eo = icmp eq i32 %i.el, %.sroa.7.7
-  %8 = or i1 %.sroa.6.4, %i.eo
+  %9 = zext i1 %i.eo to i8
+  %10 = or i8 %.sroa.6.4, %9
   br label %thread-pre-splitthread-pre-split.i.i
 
 bb.ae:                                            ; preds = %.preheader.i.i
@@ -998,7 +1000,7 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i162.i.i, %._crit_edge.i164.i.i, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i116.i.i, %._crit_edge.i118.i.i, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i95.i.i, %._crit_edge.i97.i.i
   %.sroa.7.2 = phi i32 [ %.sroa.7.8, %._crit_edge.i97.i.i ], [ %.sroa.7.8, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i95.i.i ], [ %.sroa.7.8, %._crit_edge.i118.i.i ], [ %.sroa.7.8, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i116.i.i ], [ %.sroa.7.1, %._crit_edge.i164.i.i ], [ %.sroa.7.1, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i162.i.i ]
-  %.sroa.6.2 = phi i1 [ %.sroa.6.6, %._crit_edge.i97.i.i ], [ %.sroa.6.6, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i95.i.i ], [ %.sroa.6.6, %._crit_edge.i118.i.i ], [ %.sroa.6.6, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i116.i.i ], [ %.sroa.6.1, %._crit_edge.i164.i.i ], [ %.sroa.6.1, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i162.i.i ]
+  %.sroa.6.2 = phi i8 [ %.sroa.6.6, %._crit_edge.i97.i.i ], [ %.sroa.6.6, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i95.i.i ], [ %.sroa.6.6, %._crit_edge.i118.i.i ], [ %.sroa.6.6, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i116.i.i ], [ %.sroa.6.1, %._crit_edge.i164.i.i ], [ %.sroa.6.1, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i162.i.i ]
   %.sink.i.i = phi i32 [ %i.ci, %._crit_edge.i97.i.i ], [ %.pre2.i96.i.i, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i95.i.i ], [ %i.dk, %._crit_edge.i118.i.i ], [ %.pre2.i117.i.i, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i116.i.i ], [ %i.hh, %._crit_edge.i164.i.i ], [ %.pre2.i163.i.i, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i162.i.i ]
   %.sink333.i.i = phi ptr [ %.pre.i98.i.i, %._crit_edge.i97.i.i ], [ %i.cn, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i95.i.i ], [ %.pre.i119.i.i, %._crit_edge.i118.i.i ], [ %i.dp, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i116.i.i ], [ %.pre.i165.i.i, %._crit_edge.i164.i.i ], [ %i.hm, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i162.i.i ]
   %.0.i301.sink.i.i = phi ptr [ %i.am, %._crit_edge.i97.i.i ], [ %i.am, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i95.i.i ], [ %i.am, %._crit_edge.i118.i.i ], [ %i.am, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i116.i.i ], [ %.0.i.i.i, %._crit_edge.i164.i.i ], [ %.0.i.i.i, %_ZN6bufferISt4pairIP4exprjELb0ELj16EE6expandEv.exit.i162.i.i ]
@@ -1031,7 +1033,7 @@ bb.ax:                                            ; preds = %bb.aw
 
 _Z19quick_for_each_exprIZNK3smt13model_checker16is_safe_for_mbqiEP10quantifierE4procEvRT_R13ast_fast_markILj1EEP4expr.exit: ; preds = %bb.av, %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
-  %9 = xor i1 %.sroa.6.3, true                    ; 2 uses
+  %11 = icmp eq i8 %.sroa.6.3, 0                  ; 2 uses
   %.pre = load ptr, ptr %6, align 8, !tbaa !642   ; 4 uses
   %.pre107 = load i32, ptr %i.i, align 8, !tbaa !643 ; 2 uses
   %i.ie = zext i32 %.pre107 to i64
@@ -1119,7 +1121,7 @@ bb.az:                                            ; preds = %bb.ay
   unreachable
 
 _ZN13ast_fast_markILj1EED2Ev.exit:                ; preds = %bb.c, %.loopexit.i, %bb.ay
-  %.sroa.6.8133137 = phi i1 [ %9, %bb.ay ], [ %9, %.loopexit.i ], [ true, %bb.c ]
+  %.sroa.6.8133137 = phi i1 [ %11, %bb.ay ], [ %11, %.loopexit.i ], [ true, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
   br label %bb.ba
 

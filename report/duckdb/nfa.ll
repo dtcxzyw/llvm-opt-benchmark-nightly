@@ -204,8 +204,8 @@ bb.q:                                             ; preds = %bb.m
   store i32 %i.bb, ptr %i.bc, align 4, !tbaa !96
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 %.076, ptr %i.bd, align 8, !tbaa !97
-  %11 = icmp ne i32 %6, 0                         ; 2 uses
-  br i1 %11, label %bb.s, label %bb.r
+  %11 = icmp eq i32 %6, 0                         ; 2 uses
+  br i1 %11, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   store i32 2, ptr %i.bc, align 4, !tbaa !96
@@ -523,9 +523,10 @@ bb.aw:                                            ; preds = %bb.av
 
 ._crit_edge:                                      ; preds = %_ZN10duckdb_re23NFA6DecrefEPNS0_6ThreadE.exit, %_ZN10duckdb_re23NFA6DecrefEPNS0_6ThreadE.exit107, %.critedge87
   %i.gb = load i8, ptr %i.bm, align 8, !tbaa !142, !range !140, !noundef !141
-  %12 = trunc nuw i8 %i.gb to i1                  ; 2 uses
-  %brmerge.not = and i1 %11, %12
-  br i1 %brmerge.not, label %.lr.ph143, label %.loopexit
+  %.not186 = icmp eq i8 %i.gb, 0                  ; 2 uses
+  %brmerge = or i1 %.not186, %11
+  %not..not186 = xor i1 %.not186, true
+  br i1 %brmerge, label %.loopexit, label %.lr.ph143
 
 .lr.ph143:                                        ; preds = %._crit_edge
   %i.gc = load ptr, ptr %i.bi, align 8, !tbaa !109 ; 3 uses
@@ -623,7 +624,7 @@ bb.ba:                                            ; preds = %bb.ba, %.lr.ph143.n
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %._crit_edge, %bb.h, %bb.j, %_ZN10LogMessageD2Ev.exit102, %_ZN10LogMessageD2Ev.exit
-  %.174 = phi i1 [ false, %_ZN10LogMessageD2Ev.exit ], [ false, %bb.j ], [ false, %bb.h ], [ false, %_ZN10LogMessageD2Ev.exit102 ], [ %12, %._crit_edge ], [ true, %.loopexit.loopexit.unr-lcssa ], [ true, %.epil.preheader ]
+  %.174 = phi i1 [ false, %_ZN10LogMessageD2Ev.exit ], [ false, %bb.j ], [ false, %bb.h ], [ false, %_ZN10LogMessageD2Ev.exit102 ], [ %not..not186, %._crit_edge ], [ true, %.loopexit.loopexit.unr-lcssa ], [ true, %.epil.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
   br label %bb.bc
 

@@ -185,13 +185,7 @@ bb.f:                                             ; preds = %.critedge.i
 _ZN3tbb6detail2r110arena_slot17acquire_task_poolEv.exit: ; preds = %bb.d, %bb.c
   %i.y = load atomic i64, ptr %i.e monotonic, align 16 ; 5 uses
   %i.z = icmp sgt i64 %i.y, %i.i
-  br i1 %i.z, label %3, label %bb.g
-
-3:                                                ; preds = %_ZN3tbb6detail2r110arena_slot17acquire_task_poolEv.exit
-  store atomic i64 0, ptr %i.c monotonic, align 16
-  store atomic i64 0, ptr %i.e monotonic, align 16
-  store atomic ptr null, ptr %i.f monotonic, align 8
-  br label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59
+  br i1 %i.z, label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59, label %bb.g
 
 bb.g:                                             ; preds = %_ZN3tbb6detail2r110arena_slot17acquire_task_poolEv.exit
   %i.aa = icmp eq i64 %i.y, %i.i
@@ -214,8 +208,9 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN3tbb6detail2r110arena_slot17release_task_poolEv.exit
 
 _ZN3tbb6detail2r110arena_slot17release_task_poolEv.exit: ; preds = %bb.j, %bb.i, %bb.h, %bb.b
-  %.130 = phi i64 [ %i.i, %bb.h ], [ %.029, %bb.b ], [ %i.y, %bb.i ], [ %i.y, %bb.j ] ; 4 uses
-  %.1 = phi i1 [ true, %bb.h ], [ false, %bb.b ], [ false, %bb.i ], [ false, %bb.j ] ; 3 uses
+  %.130 = phi i64 [ %i.i, %bb.h ], [ %.029, %bb.b ], [ %i.y, %bb.i ], [ %i.y, %bb.j ] ; 2 uses
+  %.not40.not = phi i1 [ false, %bb.h ], [ true, %bb.b ], [ true, %bb.i ], [ true, %bb.j ]
+  %.1 = phi i1 [ true, %bb.h ], [ false, %bb.b ], [ false, %bb.i ], [ false, %bb.j ]
   %i.ad = load ptr, ptr %i.g, align 32, !tbaa !19
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.i
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !21 ; 10 uses
@@ -235,7 +230,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !24
   %i.ak = trunc i64 %i.aj to i1
-  br i1 %i.ak, label %bb.m, label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59
+  br i1 %i.ak, label %bb.m, label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread60
 
 bb.m:                                             ; preds = %.thread.i
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 88
@@ -274,7 +269,7 @@ _ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit
   %i.ba = inttoptr i64 %i.ar to ptr
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 10
   store i16 %i.am, ptr %i.bb, align 2, !tbaa !40
-  br label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59
+  br label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread60
 
 _ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread: ; preds = %_ZN3tbb6detail2r110arena_slot17release_task_poolEv.exit
   %i.bc = trunc nuw i8 %.052 to i1
@@ -286,30 +281,38 @@ _ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit
 _ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread: ; preds = %bb.o, %bb.l, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread67, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread
   %.2545866 = phi i8 [ 1, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread ], [ 0, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread67 ], [ 1, %bb.o ], [ 1, %bb.l ] ; 2 uses
   %.133 = phi i64 [ %.032, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread ], [ %i.i, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread67 ], [ %.032, %bb.o ], [ %.032, %bb.l ] ; 2 uses
-  br i1 %.1, label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59, label %bb.b, !llvm.loop !92
+  br i1 %.not40.not, label %bb.b, label %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread60, !llvm.loop !92
 
-_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59: ; preds = %.thread.i, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit, %3
-  %.153 = phi i8 [ %.052, %3 ], [ %.052, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ %.052, %.thread.i ], [ %.2545866, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ]
-  %.234 = phi i64 [ %.032, %3 ], [ %.032, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ %.032, %.thread.i ], [ %.133, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ] ; 3 uses
-  %.231 = phi i64 [ %i.y, %3 ], [ %.130, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ %.130, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ], [ %.130, %.thread.i ]
-  %.128 = phi ptr [ null, %3 ], [ %i.ba, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ %i.af, %.thread.i ], [ null, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ] ; 2 uses
-  %.2 = phi i1 [ true, %3 ], [ %.1, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ %.1, %.thread.i ], [ true, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ]
-  %i.bd = trunc nuw i8 %.153 to i1
-  br i1 %i.bd, label %bb.p, label %_ZN3tbb6detail2r15arena18advertise_new_workILNS2_13new_work_typeE1EEEvv.exit
+_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread60: ; preds = %.thread.i, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit
+  %.154 = phi i8 [ %.052, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ %.2545866, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ], [ %.052, %.thread.i ]
+  %.234 = phi i64 [ %.032, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ %.133, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ], [ %.032, %.thread.i ] ; 2 uses
+  %.128 = phi ptr [ %i.ba, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit ], [ null, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread.thread ], [ %i.af, %.thread.i ] ; 6 uses
+  %3 = trunc nuw i8 %.154 to i1
+  br i1 %3, label %bb.p, label %_ZN3tbb6detail2r15arena18advertise_new_workILNS2_13new_work_typeE1EEEvv.exit
 
-bb.p:                                             ; preds = %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59
-  br i1 %.2, label %bb.q, label %bb.v
+_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59: ; preds = %_ZN3tbb6detail2r110arena_slot17acquire_task_poolEv.exit
+  store atomic i64 0, ptr %i.c monotonic, align 16
+  store atomic i64 0, ptr %i.e monotonic, align 16
+  store atomic ptr null, ptr %i.f monotonic, align 8
+  %i.bd = trunc nuw i8 %.052 to i1
+  br i1 %i.bd, label %bb.q, label %_ZN3tbb6detail2r15arena18advertise_new_workILNS2_13new_work_typeE1EEEvv.exit
 
-bb.q:                                             ; preds = %bb.p
-  %.not40 = icmp ne ptr %.128, null
+bb.p:                                             ; preds = %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread60
+  br i1 %.1, label %bb.q, label %bb.v
+
+bb.q:                                             ; preds = %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59, %bb.p
+  %.234108119 = phi i64 [ %.234, %bb.p ], [ %.032, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59 ] ; 2 uses
+  %.231109118 = phi i64 [ %.130, %bb.p ], [ %i.y, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59 ]
+  %.128110117 = phi ptr [ %.128, %bb.p ], [ null, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59 ] ; 6 uses
+  %.not40 = icmp ne ptr %.128110117, null
   %i.be = zext i1 %.not40 to i64
-  %spec.select = add i64 %.231, %i.be             ; 2 uses
-  %i.bf = icmp ult i64 %spec.select, %.234
+  %spec.select = add i64 %.231109118, %i.be       ; 2 uses
+  %i.bf = icmp ult i64 %spec.select, %.234108119
   br i1 %i.bf, label %bb.r, label %_ZN3tbb6detail2r15arena18advertise_new_workILNS2_13new_work_typeE1EEEvv.exit
 
 bb.r:                                             ; preds = %bb.q
   store atomic i64 %spec.select, ptr %i.e monotonic, align 16
-  store atomic i64 %.234, ptr %i.c monotonic, align 16
+  store atomic i64 %.234108119, ptr %i.c monotonic, align 16
   %i.bg = load ptr, ptr %i.g, align 32, !tbaa !19
   store atomic ptr %i.bg, ptr %i.f release, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -407,8 +410,9 @@ _ZN3tbb6detail2r120thread_leave_manager15reset_if_neededEv.exit.i46: ; preds = %
   call void @_ZN3tbb6detail2r15arena15request_workersEiib(ptr noundef nonnull align 128 dereferenceable(768) %i.cf, i32 noundef 0, i32 noundef %i.co, i1 noundef zeroext true)
   br label %_ZN3tbb6detail2r15arena18advertise_new_workILNS2_13new_work_typeE1EEEvv.exit
 
-_ZN3tbb6detail2r15arena18advertise_new_workILNS2_13new_work_typeE1EEEvv.exit: ; preds = %_ZN3tbb6detail2r120thread_leave_manager15reset_if_neededEv.exit.i46, %_ZN3tbb6detail2r111atomic_flag12test_and_setEv.exit.i45, %bb.w, %bb.v, %_ZN3tbb6detail2r120thread_leave_manager15reset_if_neededEv.exit.i, %_ZN3tbb6detail2r111atomic_flag12test_and_setEv.exit.i, %bb.s, %bb.r, %bb.q, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59
-  ret ptr %.128
+_ZN3tbb6detail2r15arena18advertise_new_workILNS2_13new_work_typeE1EEEvv.exit: ; preds = %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59, %_ZN3tbb6detail2r120thread_leave_manager15reset_if_neededEv.exit.i46, %_ZN3tbb6detail2r111atomic_flag12test_and_setEv.exit.i45, %bb.w, %bb.v, %_ZN3tbb6detail2r120thread_leave_manager15reset_if_neededEv.exit.i, %_ZN3tbb6detail2r111atomic_flag12test_and_setEv.exit.i, %bb.s, %bb.r, %bb.q, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread60
+  %.128111 = phi ptr [ null, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread59 ], [ %.128, %_ZN3tbb6detail2r120thread_leave_manager15reset_if_neededEv.exit.i46 ], [ %.128, %_ZN3tbb6detail2r111atomic_flag12test_and_setEv.exit.i45 ], [ %.128, %bb.w ], [ %.128, %bb.v ], [ %.128110117, %_ZN3tbb6detail2r120thread_leave_manager15reset_if_neededEv.exit.i ], [ %.128110117, %_ZN3tbb6detail2r111atomic_flag12test_and_setEv.exit.i ], [ %.128110117, %bb.s ], [ %.128110117, %bb.r ], [ %.128110117, %bb.q ], [ %.128, %_ZN3tbb6detail2r110arena_slot13get_task_implEmRNS1_18execution_data_extERbl.exit.thread60 ]
+  ret ptr %.128111
 }
 
 ; Function Attrs: mustprogress sspstrong uwtable

@@ -204,7 +204,7 @@ bb.a:
     #dbg_value(i64 %1, !13231, !DIExpression(), !13234)
     #dbg_value(i64 poison, !13235, !DIExpression(), !13240)
     #dbg_value(i64 poison, !13083, !DIExpression(), !13241)
-    #dbg_value(i8 poison, !13081, !DIExpression(), !13242)
+    #dbg_value(i8 0, !13081, !DIExpression(), !13242)
     #dbg_value(i64 %i.b, !13080, !DIExpression(), !13243)
     #dbg_value(i64 %i.b, !13244, !DIExpression(), !13248)
   %i.c = lshr i64 %i.b, 51, !dbg !13375
@@ -221,9 +221,10 @@ bb.a:
   br label %bb.b, !dbg !13376
 
 bb.b:                                             ; preds = %.lr.ph49, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit
-  %.sroa.02.046 = phi i1 [ false, %.lr.ph49 ], [ %.sroa.02.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ]
+  %.sroa.02.046 = phi i8 [ 0, %.lr.ph49 ], [ %.sroa.02.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ]
   %.sroa.06.045 = phi i64 [ %i.b, %.lr.ph49 ], [ %.sroa.06.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %.sroa.0.044 = phi i64 [ 0, %.lr.ph49 ], [ %.sroa.0.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
+    #dbg_value(i8 %.sroa.02.046, !13081, !DIExpression(), !13242)
     #dbg_value(ptr %0, !13179, !DIExpression(DW_OP_plus_uconst, 80, DW_OP_stack_value), !13249)
     #dbg_value(ptr %0, !13225, !DIExpression(DW_OP_plus_uconst, 80, DW_OP_stack_value), !13251)
     #dbg_value(i64 %.sroa.06.045, !13180, !DIExpression(), !13185)
@@ -427,14 +428,15 @@ bb.g:                                             ; preds = %._crit_edge
 _RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit: ; preds = %bb.g, %bb.f, %bb.b
   %.sroa.0.1 = phi i64 [ 0, %bb.b ], [ %.sroa.0.044, %bb.g ], [ %i.w, %bb.f ], !dbg !13242
   %.sroa.06.1 = phi i64 [ %i.k, %bb.b ], [ %.sroa.06.045, %bb.g ], [ %.sroa.06.045, %bb.f ], !dbg !13138 ; 2 uses
-  %.sroa.02.1 = phi i1 [ %.sroa.02.046, %bb.b ], [ true, %bb.g ], [ true, %bb.f ], !dbg !13243 ; 2 uses
-    #dbg_value(i8 poison, !13081, !DIExpression(), !13242)
+  %.sroa.02.1 = phi i8 [ %.sroa.02.046, %bb.b ], [ 1, %bb.g ], [ 1, %bb.f ], !dbg !13243 ; 2 uses
+    #dbg_value(i8 %.sroa.02.1, !13081, !DIExpression(), !13242)
     #dbg_value(i64 %.sroa.06.1, !13080, !DIExpression(), !13243)
     #dbg_value(i64 %.sroa.06.1, !13244, !DIExpression(), !13248)
   %i.x = lshr i64 %.sroa.06.1, 51, !dbg !13375
     #dbg_value(i64 %i.x, !13084, !DIExpression(), !13372)
+  %.not = icmp ne i8 %.sroa.02.1, 0, !dbg !13376
   %i.y = icmp eq i64 %1, %i.x
-  %or.cond.not = or i1 %.sroa.02.1, %i.y, !dbg !13376
+  %or.cond.not = or i1 %.not, %i.y, !dbg !13376
   br i1 %or.cond.not, label %bb.b, label %.loopexit, !dbg !13376
 }
 
@@ -467,7 +469,7 @@ bb.a:
     #dbg_value(i64 %1, !13657, !DIExpression(), !13660)
     #dbg_value(i64 poison, !13661, !DIExpression(), !13666)
     #dbg_value(i64 poison, !13509, !DIExpression(), !13667)
-    #dbg_value(i8 poison, !13507, !DIExpression(), !13668)
+    #dbg_value(i8 0, !13507, !DIExpression(), !13668)
     #dbg_value(i64 %i.b, !13506, !DIExpression(), !13669)
     #dbg_value(i64 %i.b, !13670, !DIExpression(), !13674)
   %i.c = lshr i64 %i.b, 51, !dbg !13718
@@ -484,9 +486,10 @@ bb.a:
   br label %bb.b, !dbg !13719
 
 bb.b:                                             ; preds = %.lr.ph49, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit
-  %.sroa.02.046 = phi i1 [ false, %.lr.ph49 ], [ %.sroa.02.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ]
+  %.sroa.02.046 = phi i8 [ 0, %.lr.ph49 ], [ %.sroa.02.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ]
   %.sroa.06.045 = phi i64 [ %i.b, %.lr.ph49 ], [ %.sroa.06.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %.sroa.0.044 = phi i64 [ 0, %.lr.ph49 ], [ %.sroa.0.1, %_RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
+    #dbg_value(i8 %.sroa.02.046, !13507, !DIExpression(), !13668)
     #dbg_value(ptr %0, !13605, !DIExpression(DW_OP_plus_uconst, 80, DW_OP_stack_value), !13675)
     #dbg_value(ptr %0, !13651, !DIExpression(DW_OP_plus_uconst, 80, DW_OP_stack_value), !13677)
     #dbg_value(i64 %.sroa.06.045, !13606, !DIExpression(), !13611)
@@ -665,14 +668,15 @@ bb.g:                                             ; preds = %._crit_edge
 _RNvNtNtCskXT5ShPYifM_12sharded_slab4page4slot19exponential_backoff.exit: ; preds = %bb.g, %bb.f, %bb.b
   %.sroa.0.1 = phi i64 [ 0, %bb.b ], [ %.sroa.0.044, %bb.g ], [ %i.u, %bb.f ], !dbg !13668
   %.sroa.06.1 = phi i64 [ %i.k, %bb.b ], [ %.sroa.06.045, %bb.g ], [ %.sroa.06.045, %bb.f ], !dbg !13564 ; 2 uses
-  %.sroa.02.1 = phi i1 [ %.sroa.02.046, %bb.b ], [ true, %bb.g ], [ true, %bb.f ], !dbg !13669 ; 2 uses
-    #dbg_value(i8 poison, !13507, !DIExpression(), !13668)
+  %.sroa.02.1 = phi i8 [ %.sroa.02.046, %bb.b ], [ 1, %bb.g ], [ 1, %bb.f ], !dbg !13669 ; 2 uses
+    #dbg_value(i8 %.sroa.02.1, !13507, !DIExpression(), !13668)
     #dbg_value(i64 %.sroa.06.1, !13506, !DIExpression(), !13669)
     #dbg_value(i64 %.sroa.06.1, !13670, !DIExpression(), !13674)
   %i.v = lshr i64 %.sroa.06.1, 51, !dbg !13718
     #dbg_value(i64 %i.v, !13510, !DIExpression(), !13715)
+  %.not = icmp ne i8 %.sroa.02.1, 0, !dbg !13719
   %i.w = icmp eq i64 %1, %i.v
-  %or.cond.not = or i1 %.sroa.02.1, %i.w, !dbg !13719
+  %or.cond.not = or i1 %.not, %i.w, !dbg !13719
   br i1 %or.cond.not, label %bb.b, label %.loopexit, !dbg !13719
 }
 

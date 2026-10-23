@@ -205,33 +205,38 @@ bb.g:                                             ; preds = %bb.f
   %i.ae = load i32, ptr %.sroa.02.0, align 8, !dbg !34190, !range !3244, !noundef !2656
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 4, !dbg !34190
   %i.ag = trunc nuw i32 %i.ae to i1, !dbg !34191
-  %i.ah = load i32, ptr %.sroa.06.0, align 8, !dbg !34190, !range !3244, !noundef !2656
-  %2 = trunc nuw i32 %i.ah to i1, !dbg !34191     ; 2 uses
-  br i1 %i.ag, label %bb.h, label %bb.i, !dbg !34191
+  %i.ah = load i32, ptr %.sroa.06.0, align 8, !dbg !34190, !range !3244, !noundef !2656 ; 2 uses
+  br i1 %i.ag, label %bb.h, label %3, !dbg !34191
 
 _RNvXsl_NtCs2mZqlW55729_12polars_utils6pl_strNtB5_10PlSmallStrNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eqCsfISxE4fmY1Y_14polars_parquet.exit.thread: ; preds = %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit32, %bb.h, %bb.f, %_RNvXsl_NtCs2mZqlW55729_12polars_utils6pl_strNtB5_10PlSmallStrNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eqCsfISxE4fmY1Y_14polars_parquet.exit
   %brmerge22.not = and i1 %i.c, %i.e, !dbg !34192
   br i1 %brmerge22.not, label %bb.p, label %bb.au, !dbg !34192
 
 bb.h:                                             ; preds = %bb.g
+  %2 = trunc nuw i32 %i.ah to i1, !dbg !34191
   br i1 %2, label %bb.j, label %_RNvXsl_NtCs2mZqlW55729_12polars_utils6pl_strNtB5_10PlSmallStrNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eqCsfISxE4fmY1Y_14polars_parquet.exit.thread, !dbg !34191
 
-bb.i:                                             ; preds = %bb.g, %bb.j
-  %.sroa.01.0 = phi i1 [ %3, %bb.j ], [ %2, %bb.g ], !dbg !34193
+3:                                                ; preds = %bb.g
+  %4 = icmp eq i32 %i.ah, 0, !dbg !34191
+  br label %bb.i, !dbg !34191
+
+bb.i:                                             ; preds = %bb.j, %3
+  %.sroa.01.0 = phi i1 [ %5, %bb.j ], [ %4, %3 ], !dbg !34193
   br i1 %i.c, label %bb.k, label %bb.l, !dbg !34192
 
 bb.j:                                             ; preds = %bb.h
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.06.0, i64 4, !dbg !34190
   %i.aj = load i32, ptr %i.af, align 4, !dbg !34194, !noundef !2656
   %i.ak = load i32, ptr %i.ai, align 4, !dbg !34195, !noundef !2656
-  %3 = icmp ne i32 %i.aj, %i.ak, !dbg !34194
+  %5 = icmp eq i32 %i.aj, %i.ak, !dbg !34194
   br label %bb.i, !dbg !34196
 
 bb.k:                                             ; preds = %bb.i
   br i1 %i.e, label %bb.p, label %bb.au, !dbg !34192
 
 bb.l:                                             ; preds = %bb.i
-  %brmerge = select i1 %i.e, i1 true, i1 %.sroa.01.0, !dbg !34192
+  %.sroa.01.0.not = xor i1 %.sroa.01.0, true, !dbg !34192
+  %brmerge = or i1 %i.e, %.sroa.01.0.not, !dbg !34192
   br i1 %brmerge, label %bb.au, label %bb.m, !dbg !34192
 
 bb.m:                                             ; preds = %bb.l
@@ -634,15 +639,16 @@ bb.n:                                             ; preds = %bb.m
   %i.bd = load i32, ptr %i.ac, align 8, !dbg !55504, !range !3244, !alias.scope !55387, !noundef !2656
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 44, !dbg !55504
   %i.bf = trunc nuw i32 %i.bd to i1, !dbg !55505
-  %i.bg = load i32, ptr %i.ae, align 8, !dbg !55504, !range !3244, !alias.scope !55389, !noundef !2656
-  %2 = trunc nuw i32 %i.bg to i1, !dbg !55505     ; 2 uses
+  %i.bg = load i32, ptr %i.ae, align 8, !dbg !55504, !range !3244, !alias.scope !55389, !noundef !2656 ; 2 uses
   br i1 %i.bf, label %bb.o, label %bb.p, !dbg !55505
 
 bb.o:                                             ; preds = %bb.n
+  %2 = trunc nuw i32 %i.bg to i1, !dbg !55505
   br i1 %2, label %.split.i, label %_RNvXs4_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet6schema5types12parquet_typeNtB5_13PrimitiveTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !55505
 
 bb.p:                                             ; preds = %bb.n
-  br i1 %2, label %_RNvXs4_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet6schema5types12parquet_typeNtB5_13PrimitiveTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, label %bb.q, !dbg !55506
+  %3 = icmp eq i32 %i.bg, 0, !dbg !55505
+  br i1 %3, label %bb.q, label %_RNvXs4_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet6schema5types12parquet_typeNtB5_13PrimitiveTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !55506
 
 .split.i:                                         ; preds = %bb.o
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 44, !dbg !55504
@@ -800,15 +806,16 @@ bb.ag:                                            ; preds = %bb.af
   %i.ed = load i32, ptr %i.f, align 8, !dbg !55551, !range !3244, !noundef !2656
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 36, !dbg !55551
   %i.ef = trunc nuw i32 %i.ed to i1, !dbg !55552
-  %i.eg = load i32, ptr %i.h, align 8, !dbg !55551, !range !3244, !noundef !2656
-  %3 = trunc nuw i32 %i.eg to i1, !dbg !55552     ; 2 uses
+  %i.eg = load i32, ptr %i.h, align 8, !dbg !55551, !range !3244, !noundef !2656 ; 2 uses
   br i1 %i.ef, label %bb.ah, label %bb.ai, !dbg !55552
 
 bb.ah:                                            ; preds = %bb.ag
-  br i1 %3, label %.split, label %_RNvXs4_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet6schema5types12parquet_typeNtB5_13PrimitiveTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !55552
+  %4 = trunc nuw i32 %i.eg to i1, !dbg !55552
+  br i1 %4, label %.split, label %_RNvXs4_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet6schema5types12parquet_typeNtB5_13PrimitiveTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !55552
 
 bb.ai:                                            ; preds = %bb.ag
-  br i1 %3, label %_RNvXs4_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet6schema5types12parquet_typeNtB5_13PrimitiveTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, label %bb.aj, !dbg !55382
+  %5 = icmp eq i32 %i.eg, 0, !dbg !55552
+  br i1 %5, label %bb.aj, label %_RNvXs4_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet6schema5types12parquet_typeNtB5_13PrimitiveTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !55382
 
 .split:                                           ; preds = %bb.ah
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 36, !dbg !55551

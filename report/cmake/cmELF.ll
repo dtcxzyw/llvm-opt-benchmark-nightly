@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.o
-  %.070 = phi i1 [ false, %bb.i ], [ %.1, %bb.o ] ; 2 uses
+  %.073 = phi i8 [ 0, %bb.i ], [ %.1, %bb.o ]     ; 2 uses
   %.03169 = phi i64 [ %i.br, %bb.i ], [ %i.cn, %bb.o ] ; 3 uses
   %i.cc = load ptr, ptr %i.bt, align 8, !tbaa !49
   %i.cd = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi3getERc(ptr noundef nonnull align 8 dereferenceable(16) %i.cc, ptr noundef nonnull align 1 dereferenceable(1) %i.b) ; 2 uses
@@ -219,14 +219,15 @@ bb.j:                                             ; preds = %bb.i, %bb.o
   br i1 %.not.i, label %bb.k, label %.critedge
 
 bb.k:                                             ; preds = %bb.j
+  %.not43 = icmp eq i8 %.073, 0
   %i.cl = load i8, ptr %i.b, align 1              ; 2 uses
-  %4 = icmp ne i8 %i.cl, 0                        ; 2 uses
-  %i.cm = select i1 %.070, i1 %4, i1 false
-  br i1 %i.cm, label %.critedge, label %bb.l
+  %4 = icmp eq i8 %i.cl, 0                        ; 2 uses
+  %i.cm = select i1 %.not43, i1 true, i1 %4
+  br i1 %i.cm, label %bb.l, label %.critedge
 
 bb.l:                                             ; preds = %bb.k
   %i.cn = add i64 %.03169, 1                      ; 2 uses
-  br i1 %4, label %bb.m, label %bb.o
+  br i1 %4, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.co = load i64, ptr %i.ca, align 8, !tbaa !21 ; 4 uses
@@ -265,7 +266,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit
-  %.1 = phi i1 [ %.070, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ true, %bb.l ]
+  %.1 = phi i8 [ %.073, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ 1, %bb.l ]
   %.not42 = icmp eq i64 %i.cn, %i.bs
   br i1 %.not42, label %.critedge, label %bb.j, !llvm.loop !196
 
@@ -668,7 +669,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.o
-  %.070 = phi i1 [ false, %bb.i ], [ %.1, %bb.o ] ; 2 uses
+  %.073 = phi i8 [ 0, %bb.i ], [ %.1, %bb.o ]     ; 2 uses
   %.03169 = phi i64 [ %i.bi, %bb.i ], [ %i.cl, %bb.o ] ; 3 uses
   %i.ca = load ptr, ptr %i.bs, align 8, !tbaa !49
   %i.cb = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi3getERc(ptr noundef nonnull align 8 dereferenceable(16) %i.ca, ptr noundef nonnull align 1 dereferenceable(1) %i.b) ; 2 uses
@@ -683,14 +684,15 @@ bb.j:                                             ; preds = %bb.i, %bb.o
   br i1 %.not.i, label %bb.k, label %.critedge
 
 bb.k:                                             ; preds = %bb.j
+  %.not43 = icmp eq i8 %.073, 0
   %i.cj = load i8, ptr %i.b, align 1              ; 2 uses
-  %4 = icmp ne i8 %i.cj, 0                        ; 2 uses
-  %i.ck = select i1 %.070, i1 %4, i1 false
-  br i1 %i.ck, label %.critedge, label %bb.l
+  %4 = icmp eq i8 %i.cj, 0                        ; 2 uses
+  %i.ck = select i1 %.not43, i1 true, i1 %4
+  br i1 %i.ck, label %bb.l, label %.critedge
 
 bb.l:                                             ; preds = %bb.k
   %i.cl = add i64 %.03169, 1                      ; 2 uses
-  br i1 %4, label %bb.m, label %bb.o
+  br i1 %4, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.cm = load i64, ptr %i.by, align 8, !tbaa !21 ; 4 uses
@@ -729,7 +731,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit
-  %.1 = phi i1 [ %.070, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ true, %bb.l ]
+  %.1 = phi i8 [ %.073, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ 1, %bb.l ]
   %.not42 = icmp eq i64 %i.cl, %i.bk
   br i1 %.not42, label %.critedge, label %bb.j, !llvm.loop !234
 

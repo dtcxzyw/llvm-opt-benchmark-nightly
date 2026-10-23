@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.cn = getelementptr inbounds nuw i8, ptr %i.bq, i64 29
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !191, !range !223, !noundef !72
-  %13 = trunc nuw i8 %i.co to i1
-  %.not = xor i1 %13, true
+  %.not = icmp eq i8 %i.co, 0
   %or.cond7 = select i1 %.not, i1 true, i1 %i.cg
   br i1 %or.cond7, label %bb.h, label %bb.i
 
@@ -609,10 +608,10 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %bb.ap, %bb.ap, %bb.ar, %bb.as, %bb.at, %bb.aq
   %i.ks = load i8, ptr %i.ct, align 1, !tbaa !282, !range !223, !noundef !72
-  %16 = trunc nuw i8 %i.ks to i1
-  %17 = icmp samesign ugt i32 %.1, 13
-  %or.cond10.not = select i1 %16, i1 true, i1 %17
-  br i1 %or.cond10.not, label %bb.ay, label %bb.av
+  %.not = icmp eq i8 %i.ks, 0
+  %16 = icmp samesign ult i32 %.1, 14
+  %or.cond10.not = select i1 %.not, i1 %16, i1 false
+  br i1 %or.cond10.not, label %bb.av, label %bb.ay
 
 bb.av:                                            ; preds = %bb.au
   %i.kt = load i8, ptr %i.bi, align 2, !tbaa !278, !range !223, !noundef !72
@@ -1015,10 +1014,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #32
   %i.dh = load i8, ptr %i.m, align 8, !tbaa !365, !range !223, !noundef !72 ; 2 uses
-  %15 = trunc nuw i8 %i.dh to i1
+  %.not = icmp ne i8 %i.dh, 0
   %i.di = load i64, ptr %i.n, align 8
   %i.dj = icmp ne i64 %i.di, 0
-  %or.cond.not = select i1 %15, i1 %i.dj, i1 false ; 2 uses
+  %or.cond.not = select i1 %.not, i1 %i.dj, i1 false ; 2 uses
   br i1 %or.cond.not, label %bb.o, label %bb.ad
 
 bb.o:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17
@@ -1421,12 +1420,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.u = load i8, ptr %i.t, align 8, !tbaa !365, !range !223, !noundef !72
-  %13 = trunc nuw i8 %i.u to i1
+  %.not = icmp eq i8 %i.u, 0
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.w = load i64, ptr %i.v, align 8
-  %14 = icmp ne i64 %i.w, 0
-  %or.cond.not = select i1 %13, i1 %14, i1 false
-  br i1 %or.cond.not, label %bb.b, label %bb.a
+  %13 = icmp eq i64 %i.w, 0
+  %or.cond.not = select i1 %.not, i1 true, i1 %13
+  br i1 %or.cond.not, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   call void @_ZZN9Stockfish10NumaConfig16from_system_numaIRZNS0_11from_systemERKSt7variantIJNS_16SystemNumaPolicyENS_15L3DomainsPolicyENS_15BundledL3PolicyEEEbEUlmE_EES0_bOT_ENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(16) %3)
@@ -1829,7 +1828,7 @@ _ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit.thread:
   %i.p = load ptr, ptr %i.g, align 8, !tbaa !229
   %i.q = call i32 @shm_open(ptr noundef %i.p, i32 noundef 194, i32 noundef 438) #32 ; 2 uses
   store i32 %i.q, ptr %i.d, align 8, !tbaa !347
-  %i.r = icmp ne i32 %i.q, -1                     ; 7 uses
+  %i.r = icmp ne i32 %i.q, -1                     ; 6 uses
   br i1 %i.r, label %.preheader.i.preheader, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit.thread
@@ -1928,6 +1927,7 @@ bb.l:                                             ; preds = %bb.g
   br label %.thread64
 
 .thread57:                                        ; preds = %.split, %.thread61
+  %.05562 = phi i8 [ 1, %.thread61 ], [ 0, %.split ] ; 2 uses
   %i.aw = load ptr, ptr %i.g, align 8, !tbaa !229
   %i.ax = call i32 @shm_unlink(ptr noundef %i.aw) #32 ; 0 uses
   %.pr = load ptr, ptr %i.e, align 8, !tbaa !395  ; 2 uses
@@ -1941,7 +1941,7 @@ _ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit: ;
   br label %.thread64
 
 .thread64:                                        ; preds = %bb.l, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit, %.thread57
-  %.not26 = phi i1 [ %i.r, %.thread57 ], [ %i.r, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit ], [ true, %bb.l ]
+  %.0556170 = phi i8 [ %.05562, %.thread57 ], [ %.05562, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit ], [ 0, %bb.l ]
   %i.ba = load i32, ptr %i.d, align 8, !tbaa !347
   %i.bb = icmp eq i32 %i.ba, -1
   br i1 %i.bb, label %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE11unlock_fileEv.exit, label %.preheader.i35
@@ -1970,7 +1970,9 @@ _ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE11unlock_fileEv.exit: ; 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   %i.bk = load ptr, ptr %i.k, align 8, !tbaa !229
   store i8 0, ptr %i.bk, align 1, !tbaa !143
-  %or.cond5 = or i1 %.not26, %.020
+  %.not26 = icmp eq i8 %.0556170, 0
+  %or.cond3.not27 = or i1 %i.r, %.not26
+  %or.cond5 = or i1 %or.cond3.not27, %.020
   br i1 %or.cond5, label %.thread70, label %.backedge.backedge
 
 bb.n:                                             ; preds = %.split
@@ -2373,10 +2375,10 @@ bb.cb:                                            ; preds = %bb.bz
   %i.pu = load ptr, ptr %i.a, align 8, !tbaa !409
   %i.pv = getelementptr inbounds nuw i8, ptr %i.pu, i64 45
   %i.pw = load i8, ptr %i.pv, align 1, !tbaa !282, !range !223, !noundef !72
-  %15 = trunc nuw i8 %i.pw to i1
-  %16 = icmp samesign ugt i32 %.11035, 13
-  %or.cond23.not = select i1 %15, i1 true, i1 %16
-  br i1 %or.cond23.not, label %bb.cf, label %bb.cc
+  %.not = icmp eq i8 %i.pw, 0
+  %15 = icmp samesign ult i32 %.11035, 14
+  %or.cond23.not = select i1 %.not, i1 %15, i1 false
+  br i1 %or.cond23.not, label %bb.cc, label %bb.cf
 
 bb.cc:                                            ; preds = %bb.cb
   %i.px = call noundef i32 @_ZZN9Stockfish6Search6Worker6searchILNS_8NodeTypeE0EEEiRNS_8PositionEPNS0_5StackEiiibENKUliE_clEi(ptr noundef nonnull align 8 dereferenceable(32) %12, i32 noundef %.11035)
@@ -2779,9 +2781,9 @@ bb.dm:                                            ; preds = %bb.dl
   %i.abs = add i32 %i.abr, %i.abm                 ; 4 uses
   %i.abt = getelementptr inbounds nuw i8, ptr %i.abj, i64 44
   %i.abu = load i8, ptr %i.abt, align 4, !tbaa !270, !range !223, !noundef !72
-  %17 = trunc nuw i8 %i.abu to i1
+  %.not42 = icmp ne i8 %i.abu, 0
   %i.abv = icmp sgt i32 %i.abi, 12
-  %or.cond44.not = select i1 %17, i1 true, i1 %i.abv
+  %or.cond44.not = select i1 %.not42, i1 true, i1 %i.abv
   %.not602.a = icmp sgt i32 %i.abs, %.11031.ph1247
   %or.cond657 = select i1 %or.cond44.not, i1 true, i1 %.not602.a
   br i1 %or.cond657, label %bb.dp, label %bb.dn
@@ -3184,12 +3186,12 @@ define internal fastcc void @_ZN9Stockfish12_GLOBAL__N_129update_continuation_hi
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.b = load i8, ptr %i.a, align 4, !tbaa !270, !range !223, !noundef !72
-  %4 = trunc nuw i8 %i.b to i1
+  %.not16 = icmp eq i8 %i.b, 0
   %i.c = zext i8 %1 to i64                        ; 8 uses
   %i.d = zext i8 %2 to i64                        ; 8 uses
   %i.e = getelementptr inbounds i8, ptr %0, i64 -28
   %i.f = load i16, ptr %i.e, align 4, !tbaa !234  ; 2 uses
-  br i1 %4, label %.split.preheader, label %.split.us.preheader
+  br i1 %.not16, label %.split.us.preheader, label %.split.preheader
 
 .split.us.preheader:                              ; preds = %bb.a
   switch i16 %i.f, label %bb.b [
@@ -3592,10 +3594,10 @@ bb.bj:                                            ; preds = %bb.be, %bb.be, %bb.
   store ptr %i.d, ptr %i.ng, align 8, !tbaa !304
   %i.nh = getelementptr inbounds nuw i8, ptr %i.nd, i64 45
   %i.ni = load i8, ptr %i.nh, align 1, !tbaa !282, !range !223, !noundef !72
-  %15 = trunc nuw i8 %i.ni to i1
-  %16 = icmp samesign ugt i32 %.1983, 13
-  %or.cond18.not = select i1 %15, i1 true, i1 %16
-  br i1 %or.cond18.not, label %bb.bn, label %bb.bk
+  %.not = icmp eq i8 %i.ni, 0
+  %15 = icmp samesign ult i32 %.1983, 14
+  %or.cond18.not = select i1 %.not, i1 %15, i1 false
+  br i1 %or.cond18.not, label %bb.bk, label %bb.bn
 
 bb.bk:                                            ; preds = %bb.bj
   %i.nj = call noundef i32 @_ZZN9Stockfish6Search6Worker6searchILNS_8NodeTypeE1EEEiRNS_8PositionEPNS0_5StackEiiibENKUliE_clEi(ptr noundef nonnull align 8 dereferenceable(32) %12, i32 noundef %.1983)
@@ -3998,9 +4000,9 @@ bb.cu:                                            ; preds = %bb.ct
   %i.zh = add i32 %i.zg, %i.zb                    ; 4 uses
   %i.zi = getelementptr inbounds nuw i8, ptr %i.yy, i64 44
   %i.zj = load i8, ptr %i.zi, align 4, !tbaa !270, !range !223, !noundef !72
-  %17 = trunc nuw i8 %i.zj to i1
+  %.not34 = icmp ne i8 %i.zj, 0
   %i.zk = icmp sgt i32 %i.yx, 12
-  %or.cond36.not = select i1 %17, i1 true, i1 %i.zk
+  %or.cond36.not = select i1 %.not34, i1 true, i1 %i.zk
   %.not507.a = icmp sgt i32 %i.zh, %.5980.ph1215
   %or.cond558 = select i1 %or.cond36.not, i1 true, i1 %.not507.a
   br i1 %or.cond558, label %bb.cw, label %bb.cv

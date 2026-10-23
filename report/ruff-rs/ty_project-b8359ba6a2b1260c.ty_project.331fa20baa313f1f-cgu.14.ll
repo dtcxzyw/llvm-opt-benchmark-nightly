@@ -205,7 +205,7 @@ _RNvMs2_NtNtNtCs98D8VPWzHuM_14regex_automata4util4pool5innerINtB5_4PoolINtNtCscd
           to label %bb.h unwind label %bb.g
 
 .sink.split:                                      ; preds = %.split24.us, %bb.n
-  %.sroa.0.0.ph = phi i8 [ %.20, %bb.n ], [ 0, %.split24.us ]
+  %.sroa.0.0.ph = phi i8 [ %.21, %bb.n ], [ 0, %.split24.us ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCs98D8VPWzHuM_14regex_automata4util4pool9PoolGuardINtNtCscdodAO9FK5_5alloc3vec3VecjEFEB1w_EECs4o81Y09oZk1_10ty_project(ptr noalias noundef align 8 dereferenceable(32) %i.b)
   br label %bb.e
@@ -291,8 +291,8 @@ bb.l:                                             ; preds = %.lr.ph
   %i.ax = getelementptr inbounds nuw [32 x i8], ptr %i.ao, i64 %i.av
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 25
   %i.az = load i8, ptr %i.ay, align 1, !range !11, !noundef !4
-  %4 = trunc nuw i8 %i.az to i1
-  br i1 %4, label %.split, label %.split28
+  %.not = icmp eq i8 %i.az, 0
+  br i1 %.not, label %.split28, label %.split
 
 .split26.us:                                      ; preds = %.lr.ph, %bb.k
   %.us-phi = phi i64 [ %i.ar, %bb.k ], [ %i.av, %.lr.ph ]
@@ -311,7 +311,8 @@ bb.m:                                             ; preds = %.split26.us
           to label %bb.n unwind label %bb.g
 
 bb.n:                                             ; preds = %.split28
-  %.20 = add nuw nsw i8 %i.bd, 1
+  %.not18.not = icmp eq i8 %i.bd, 0
+  %.21 = select i1 %.not18.not, i8 1, i8 2
   br label %.sink.split
 
 bb.o:                                             ; preds = %bb.i, %bb.f

@@ -205,6 +205,7 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE11setConstantERKd.exit.
 
 _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE7setZeroEv.exit: ; preds = %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE11setConstantERKd.exit.loopexit.i, %.loopexit516
   %i.ko = icmp sge i32 %.0165596, %i.c            ; 2 uses
+  %4 = zext i1 %i.ko to i8
   %i.kp = load ptr, ptr %i.jw, align 8, !tbaa !134
   %i.kq = load ptr, ptr %i.jx, align 8, !tbaa !135
   %i.kr = load ptr, ptr %i.jy, align 8, !tbaa !127
@@ -230,21 +231,22 @@ bb.ag:                                            ; preds = %_ZN5Eigen9DenseBase
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit: ; preds = %bb.af, %bb.ag
   %.sink.i = phi i64 [ %i.kz, %bb.af ], [ %i.ld, %bb.ag ] ; 2 uses
-  %4 = icmp sle i64 %.sink.i, %i.ku               ; 2 uses
-  %.not506553 = and i1 %4, %i.ko
-  br i1 %.not506553, label %.preheader511, label %.lr.ph558
+  %5 = icmp sgt i64 %.sink.i, %i.ku               ; 2 uses
+  %6 = xor i1 %i.ko, true
+  %7 = or i1 %5, %6
+  br i1 %7, label %.lr.ph558, label %.preheader511
 
 .lr.ph558:                                        ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
   %i.le = load ptr, ptr %i.jz, align 8, !tbaa !94
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.lr.ph558, %bb.ar
-  %i.lf = phi i1 [ %4, %.lr.ph558 ], [ %5, %bb.ar ] ; 2 uses
-  %.0159557 = phi i1 [ %i.ko, %.lr.ph558 ], [ %spec.select, %bb.ar ]
+  %i.lf = phi i1 [ %5, %.lr.ph558 ], [ %8, %bb.ar ] ; 2 uses
+  %.0159555 = phi i8 [ %4, %.lr.ph558 ], [ %spec.select, %bb.ar ]
   %.0172556 = phi i64 [ 1, %.lr.ph558 ], [ %.2174, %bb.ar ] ; 4 uses
   %.0176555 = phi i64 [ 0, %.lr.ph558 ], [ %.1177.lcssa, %bb.ar ] ; 4 uses
   %.sroa.8336.0554 = phi i64 [ %i.ku, %.lr.ph558 ], [ %i.nm, %bb.ar ] ; 3 uses
-  br i1 %i.lf, label %bb.aj, label %bb.ai
+  br i1 %i.lf, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
   %i.lg = getelementptr inbounds [4 x i8], ptr %i.kq, i64 %.sroa.8336.0554
@@ -256,7 +258,7 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai
   %.pre-phi = phi i64 [ %i.kl, %bb.ah ], [ %.pre, %bb.ai ] ; 3 uses
   %.0158 = phi i32 [ %.0165596, %bb.ah ], [ %i.lh, %bb.ai ] ; 3 uses
   %i.li = icmp eq i32 %.0158, %.0165596
-  %spec.select = select i1 %i.li, i1 true, i1 %.0159557 ; 2 uses
+  %spec.select = select i1 %i.li, i8 1, i8 %.0159555 ; 2 uses
   %i.lj = getelementptr inbounds [4 x i8], ptr %i.le, i64 %.pre-phi
   %i.lk = load i32, ptr %i.lj, align 4, !tbaa !113 ; 3 uses
   %i.ll = icmp sgt i32 %i.lk, -1
@@ -335,7 +337,7 @@ bb.al:                                            ; preds = %.lr.ph546, %bb.al
   br label %._crit_edge552
 
 ._crit_edge552:                                   ; preds = %.epil.preheader803, %._crit_edge552.loopexit.unr-lcssa, %._crit_edge547
-  br i1 %i.lf, label %bb.ao, label %bb.an
+  br i1 %i.lf, label %bb.an, label %bb.ao
 
 bb.am:                                            ; preds = %bb.am, %.lr.ph551.new
   %.0156549 = phi i64 [ 0, %.lr.ph551.new ], [ %i.nc, %bb.am ] ; 5 uses
@@ -389,9 +391,10 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.ao
   %.2174 = phi i64 [ %.0172556, %bb.ao ], [ %i.nl, %bb.aq ], [ %.0172556, %bb.ap ] ; 3 uses
   %i.nm = add nsw i64 %.sroa.8336.0554, 1         ; 2 uses
-  %5 = icmp sge i64 %i.nm, %.sink.i               ; 2 uses
-  %.not506.a = select i1 %5, i1 %spec.select, i1 false
-  br i1 %.not506.a, label %.thread487, label %bb.ah, !llvm.loop !508
+  %8 = icmp slt i64 %i.nm, %.sink.i               ; 2 uses
+  %9 = icmp eq i8 %spec.select, 0
+  %.not506.a = select i1 %8, i1 true, i1 %9
+  br i1 %.not506.a, label %bb.ah, label %.thread487, !llvm.loop !508
 
 .thread487:                                       ; preds = %bb.ar
   %i.nn = add nsw i64 %.1177.lcssa, -1            ; 2 uses
@@ -794,6 +797,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
 bb.o:                                             ; preds = %.lr.ph201, %._crit_edge199
   %indvars.iv211 = phi i64 [ 0, %.lr.ph201 ], [ %indvars.iv.next212, %._crit_edge199 ] ; 12 uses
   %i.du = icmp sge i64 %indvars.iv211, %i.da      ; 2 uses
+  %4 = zext i1 %i.du to i8
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0129.0179, i64 %indvars.iv211
   %i.dw = trunc nuw nsw i64 %indvars.iv211 to i32 ; 5 uses
   store i32 %i.dw, ptr %i.dv, align 4, !tbaa !113
@@ -837,9 +841,10 @@ bb.t:                                             ; preds = %bb.r
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107: ; preds = %bb.s, %bb.t
   %.sink.i106 = phi i64 [ %i.ei, %bb.s ], [ %i.em, %bb.t ] ; 2 uses
-  %4 = icmp sle i64 %.sink.i106, %i.ef            ; 2 uses
-  %.not188194 = select i1 %4, i1 %i.du, i1 false
-  br i1 %.not188194, label %._crit_edge199, label %.lr.ph198
+  %5 = icmp sgt i64 %.sink.i106, %i.ef            ; 2 uses
+  %6 = xor i1 %i.du, true
+  %.not188194 = select i1 %5, i1 true, i1 %6
+  br i1 %.not188194, label %.lr.ph198, label %._crit_edge199
 
 ._crit_edge199:                                   ; preds = %bb.y, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107
   %indvars.iv.next212 = add nuw nsw i64 %indvars.iv211, 1 ; 2 uses
@@ -847,11 +852,11 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   br i1 %exitcond215.not, label %._crit_edge202, label %bb.o, !llvm.loop !557
 
 .lr.ph198:                                        ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107, %bb.y
-  %i.en = phi i1 [ %5, %bb.y ], [ %4, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107 ]
+  %i.en = phi i1 [ %7, %bb.y ], [ %5, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107 ]
   %.057197 = phi i32 [ %.2, %bb.y ], [ %i.dw, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107 ] ; 3 uses
-  %.059196 = phi i1 [ %spec.select, %bb.y ], [ %i.du, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107 ]
+  %.059193 = phi i8 [ %spec.select, %bb.y ], [ %4, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107 ]
   %.sroa.7.0195 = phi i64 [ %i.fe, %bb.y ], [ %i.ef, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit107 ] ; 2 uses
-  br i1 %i.en, label %bb.v, label %bb.u
+  br i1 %i.en, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.lr.ph198
   %i.eo = getelementptr inbounds [4 x i8], ptr %i.cu, i64 %.sroa.7.0195
@@ -862,7 +867,7 @@ bb.u:                                             ; preds = %.lr.ph198
 bb.v:                                             ; preds = %.lr.ph198, %bb.u
   %.0 = phi i64 [ %i.eq, %bb.u ], [ %indvars.iv211, %.lr.ph198 ] ; 2 uses
   %i.er = icmp eq i64 %.0, %indvars.iv211
-  %spec.select = select i1 %i.er, i1 true, i1 %.059196 ; 2 uses
+  %spec.select = select i1 %i.er, i8 1, i8 %.059193 ; 2 uses
   %i.es = getelementptr inbounds [4 x i8], ptr %.pre, i64 %.0
   %i.et = load i32, ptr %i.es, align 4, !tbaa !113 ; 2 uses
   %i.eu = sext i32 %i.et to i64                   ; 2 uses
@@ -915,9 +920,10 @@ bb.x:                                             ; preds = %.loopexit
 bb.y:                                             ; preds = %.loopexit, %bb.x, %bb.v
   %.2 = phi i32 [ %.057197, %bb.v ], [ %.014.lcssa.i, %bb.x ], [ %.057197, %.loopexit ]
   %i.fe = add nsw i64 %.sroa.7.0195, 1            ; 2 uses
-  %5 = icmp sge i64 %i.fe, %.sink.i106            ; 2 uses
-  %.not188 = select i1 %5, i1 %spec.select, i1 false
-  br i1 %.not188, label %._crit_edge199, label %.lr.ph198, !llvm.loop !559
+  %7 = icmp slt i64 %i.fe, %.sink.i106            ; 2 uses
+  %8 = icmp eq i8 %spec.select, 0
+  %.not188 = select i1 %7, i1 true, i1 %8
+  br i1 %.not188, label %.lr.ph198, label %._crit_edge199, !llvm.loop !559
 
 .body:                                            ; preds = %bb.q, %bb.e
   %.sroa.0137.0165 = phi ptr [ %calloc, %bb.e ], [ %.sroa.0137.0164171178, %bb.q ]

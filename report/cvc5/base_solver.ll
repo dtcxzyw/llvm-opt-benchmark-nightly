@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %._crit_edge, %bb.d
 .preheader:                                       ; preds = %bb.e
   %i.l = load i64, ptr %4, align 8, !tbaa !113
   %i.m = icmp ugt i64 %i.l, 1
-  br i1 %i.m, label %.lr.ph137, label %._crit_edge138
+  br i1 %i.m, label %.lr.ph137, label %._crit_edge138.loopexit.a
 
 .lr.ph137:                                        ; preds = %.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -422,8 +422,8 @@ bb.ac:                                            ; preds = %bb.ab
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit79: ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EE8getConstIbEERKT_v.exit, %bb.aa, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #23
-  %17 = trunc nuw i8 %i.br to i1
-  br label %._crit_edge138
+  %17 = icmp eq i8 %i.br, 0
+  br label %._crit_edge138.loopexit.a
 
 bb.ad:                                            ; preds = %bb.f
   %i.cc = landingpad { ptr, i32 }
@@ -583,23 +583,28 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit85: ; preds = %bb.ar, %bb.av, %bb.
   %i.di = load i64, ptr %4, align 8, !tbaa !113   ; 2 uses
   %i.dj = icmp ult i64 %spec.select, %i.di
   %i.dk = and i1 %i.cs, %i.dj
-  br i1 %i.dk, label %bb.ao, label %._crit_edge138.loopexit.a, !llvm.loop !598
+  br i1 %i.dk, label %bb.ao, label %._crit_edge138.loopexit, !llvm.loop !598
 
 bb.ay:                                            ; preds = %bb.au, %_ZN4cvc58internal8RationalD2Ev.exit82
   %.pn = phi { ptr, i32 } [ %i.da, %bb.au ], [ %i.cx, %_ZN4cvc58internal8RationalD2Ev.exit82 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #23
   br label %bb.az
 
-._crit_edge138.loopexit.a:                        ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit85
-  %18 = icmp uge i64 %spec.select, %i.di
+._crit_edge138.loopexit:                          ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit85
+  %18 = icmp ult i64 %spec.select, %i.di
+  br label %._crit_edge138.loopexit.a
+
+._crit_edge138.loopexit.a:                        ; preds = %.preheader, %._crit_edge138.loopexit, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit79
+  %.025 = phi i1 [ %17, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit79 ], [ false, %.preheader ], [ %18, %._crit_edge138.loopexit ]
+  %19 = xor i1 %.025, true
   br label %._crit_edge138
 
 bb.az:                                            ; preds = %bb.ay, %bb.an
   %.pn35.pn.pn = phi { ptr, i32 } [ %.pn35.pn, %bb.an ], [ %.pn, %bb.ay ]
   resume { ptr, i32 } %.pn35.pn.pn
 
-._crit_edge138:                                   ; preds = %.preheader, %._crit_edge138.loopexit.a, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit79, %bb.a, %bb.c
-  %.027 = phi i1 [ true, %bb.a ], [ false, %bb.c ], [ %17, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit79 ], [ true, %.preheader ], [ %18, %._crit_edge138.loopexit.a ]
+._crit_edge138:                                   ; preds = %bb.a, %._crit_edge138.loopexit.a, %bb.c
+  %.027 = phi i1 [ %19, %._crit_edge138.loopexit.a ], [ false, %bb.c ], [ true, %bb.a ]
   ret i1 %.027
 }
 

@@ -204,15 +204,16 @@ bb.a:
   %i.h = alloca [16 x i8], align 8                ; 6 uses
   %i.i = alloca [24 x i8], align 8                ; 13 uses
   %i.j = trunc nuw i64 %1 to i1
-  %5 = trunc nuw i64 %3 to i1                     ; 2 uses
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %.not = icmp ne i64 %2, %4
-  %or.cond.not = select i1 %5, i1 %.not, i1 false
-  br i1 %or.cond.not, label %bb.d, label %bb.as
+  %.not21 = icmp eq i64 %3, 0
+  %.not = icmp eq i64 %2, %4
+  %or.cond.not = select i1 %.not21, i1 true, i1 %.not
+  br i1 %or.cond.not, label %bb.as, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
+  %5 = trunc nuw i64 %3 to i1
   br i1 %5, label %bb.as, label %bb.at
 
 bb.d:                                             ; preds = %bb.b

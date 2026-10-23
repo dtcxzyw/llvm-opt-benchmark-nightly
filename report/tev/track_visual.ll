@@ -202,17 +202,17 @@ _ZNSt3__111char_traitsIcE4copyB8ne180100EPcPKcm.exit: ; preds = %bb.c, %bb.b, %_
 define linkonce_odr hidden void @_ZNSt3__123__optional_storage_baseINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEELb0EE13__assign_fromB8ne180100IRKNS_27__optional_copy_assign_baseIS6_Lb0EEEEEvOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(25) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !334, !range !209, !noundef !210 ; 2 uses
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !334, !range !209, !noundef !210 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.d = load i8, ptr %i.c, align 8, !tbaa !334, !range !209, !noundef !210
   %i.e = icmp eq i8 %i.b, %i.d
-  %2 = trunc nuw i8 %i.b to i1                    ; 2 uses
   br i1 %i.e, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %.not.i = icmp ne ptr %0, %1
-  %or.cond.not = and i1 %.not.i, %2
-  br i1 %or.cond.not, label %bb.c, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_.exit
+  %.not = icmp eq i8 %i.b, 0
+  %.not.i = icmp eq ptr %0, %1
+  %or.cond = or i1 %.not.i, %.not
+  br i1 %or.cond, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load i8, ptr %0, align 8
@@ -250,6 +250,7 @@ bb.g:                                             ; preds = %bb.c
   br label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_.exit
 
 bb.h:                                             ; preds = %bb.a
+  %2 = trunc nuw i8 %i.b to i1
   br i1 %2, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -408,8 +409,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !132  ; 17 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 3 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !344, !range !209, !noundef !210
-  %2 = trunc nuw i8 %i.g to i1
-  br i1 %2, label %.critedge, label %bb.b
+  %.not49.not = icmp eq i8 %i.g, 0
+  br i1 %.not49.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 16
@@ -812,10 +813,10 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !132 ; 4 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 24
   %i.ep = load i8, ptr %i.eo, align 8, !tbaa !344, !range !209, !noundef !210
-  %2 = trunc nuw i8 %i.ep to i1
-  %3 = icmp ne ptr %i.en, %.6119
-  %or.cond144.not = select i1 %2, i1 %3, i1 false
-  br i1 %or.cond144.not, label %bb.bj, label %bb.ay
+  %.not143 = icmp eq i8 %i.ep, 0
+  %2 = icmp eq ptr %i.en, %.6119
+  %or.cond144.not = select i1 %.not143, i1 true, i1 %2
+  br i1 %or.cond144.not, label %bb.ay, label %bb.bj
 
 bb.ay:                                            ; preds = %bb.ax
   %i.eq = getelementptr inbounds nuw i8, ptr %i.en, i64 24

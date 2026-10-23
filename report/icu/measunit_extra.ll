@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.i
   br i1 %i.ae, label %.critedge.sink.split, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i
-  %.0127 = phi i1 [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ true, %bb.l ]
+  %.0127 = phi i8 [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ], [ 1, %bb.l ]
   %.sroa.7.0.i = phi i32 [ 1, %bb.i ], [ -1, %bb.j ], [ %spec.select.i, %bb.k ], [ 1, %bb.l ]
   %i.af = invoke fastcc { i64, i32 } @_ZN6icu_7812_GLOBAL__N_16Parser9nextTokenER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(122) %1, ptr noundef nonnull align 4 dereferenceable(4) %2)
           to label %.noexc38 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
@@ -218,7 +218,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   br i1 %i.ah, label %bb.n, label %.critedge
 
 bb.n:                                             ; preds = %.noexc38, %.noexc37, %bb.f
-  %.1128 = phi i1 [ false, %.noexc37 ], [ false, %bb.f ], [ %.0127, %.noexc38 ] ; 2 uses
+  %.1128 = phi i8 [ 0, %.noexc37 ], [ 0, %bb.f ], [ %.0127, %.noexc38 ] ; 2 uses
   %.sroa.7.1.i = phi i32 [ -1, %.noexc37 ], [ 1, %bb.f ], [ %.sroa.7.0.i, %.noexc38 ]
   %.sroa.14.1.i = phi i32 [ %.fca.1.extract14.i, %.noexc37 ], [ %.sroa.14.0.i, %bb.f ], [ %.fca.1.extract7.i, %.noexc38 ] ; 2 uses
   %.sroa.0.1.i = phi i64 [ %.fca.0.extract13.i, %.noexc37 ], [ %.sroa.0.0.i, %bb.f ], [ %.fca.0.extract6.i, %.noexc38 ] ; 2 uses
@@ -329,8 +329,8 @@ bb.y:                                             ; preds = %bb.w
   br label %.loopexit.split-lp
 
 bb.z:                                             ; preds = %bb.x
-  %.not = xor i1 %.1128, true
-  %or.cond = or i1 %i.ay, %.not
+  %.not = icmp eq i8 %.1128, 0
+  %or.cond = or i1 %.not, %i.ay
   br i1 %or.cond, label %bb.aa, label %.critedge.sink.split
 
 bb.aa:                                            ; preds = %bb.z
@@ -339,7 +339,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.bd, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.be = select i1 %.1128, i32 2, i32 1          ; 2 uses
+  %4 = trunc nuw i8 %.1128 to i1
+  %i.be = select i1 %4, i32 2, i32 1              ; 2 uses
   %i.bf = icmp eq i32 %i.bc, 2
   br i1 %i.bf, label %.sink.split, label %bb.ac
 

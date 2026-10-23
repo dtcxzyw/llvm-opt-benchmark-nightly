@@ -205,8 +205,8 @@ bb.bt:                                            ; preds = %.loopexit237.i, %.l
   %i.ym = getelementptr inbounds nuw [8 x i8], ptr %.0212.i, i64 %indvars.iv68.i.i
   %i.yn = load ptr, ptr %i.ym, align 8, !tbaa !95 ; 6 uses
   %i.yo = load i8, ptr %i.yn, align 8, !tbaa !98, !range !79, !noundef !80
-  %49 = trunc nuw i8 %i.yo to i1
-  br i1 %49, label %.lr.ph.i197.i, label %.loopexit.i196.i
+  %.not50.i.i = icmp eq i8 %i.yo, 0
+  br i1 %.not50.i.i, label %.loopexit.i196.i, label %.lr.ph.i197.i
 
 .lr.ph.i197.i:                                    ; preds = %.preheader48.i.i, %bb.bw
   %indvars.iv.i198.i = phi i64 [ %indvars.iv.next.i199.i, %bb.bw ], [ 0, %.preheader48.i.i ] ; 2 uses
@@ -235,9 +235,8 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu, %.lr
   %indvars.iv.next.i199.i = add nuw nsw i64 %indvars.iv.i198.i, 1 ; 2 uses
   %i.zc = getelementptr inbounds nuw [32 x i8], ptr %i.yn, i64 %indvars.iv.next.i199.i
   %i.zd = load i8, ptr %i.zc, align 8, !tbaa !98, !range !79, !noundef !80
-  %50 = trunc nuw i8 %i.zd to i1
-  %not..i.i = xor i1 %50, true
-  %i.ze = select i1 %not..i.i, i1 true, i1 %i.zb
+  %.not.i.i = icmp eq i8 %i.zd, 0
+  %i.ze = select i1 %.not.i.i, i1 true, i1 %i.zb
   br i1 %i.ze, label %._crit_edge.i200.i, label %.lr.ph.i197.i, !llvm.loop !48
 
 ._crit_edge.i200.i:                               ; preds = %bb.bw
@@ -263,20 +262,25 @@ bb.by:                                            ; preds = %bb.bx
   %i.zo = load ptr, ptr %i.zn, align 8, !tbaa !101
   %i.zp = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.zo, ptr noundef nonnull readonly dereferenceable(1) %i.yl) #18
   %i.zq = icmp eq i32 %i.zp, 0
+  %49 = zext i1 %i.zq to i8
   br label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %bb.bx, %.lr.ph55.i.i
-  %51 = phi i1 [ false, %bb.bx ], [ false, %.lr.ph55.i.i ], [ %i.zq, %bb.by ] ; 2 uses
+  %50 = phi i8 [ 0, %bb.bx ], [ 0, %.lr.ph55.i.i ], [ %49, %bb.by ] ; 2 uses
   %indvars.iv.next66.i202.i = add nuw nsw i64 %indvars.iv65.i201.i, 1 ; 2 uses
   %i.zr = getelementptr inbounds nuw [32 x i8], ptr %i.yn, i64 %indvars.iv.next66.i202.i
   %i.zs = load i8, ptr %i.zr, align 8, !tbaa !98, !range !79, !noundef !80
   %i.zt = trunc nuw i8 %i.zs to i1
-  %not.47.i.i = xor i1 %i.zt, true
-  %i.zu = select i1 %not.47.i.i, i1 true, i1 %51
-  br i1 %i.zu, label %.loopexit.i196.i, label %.lr.ph55.i.i, !llvm.loop !49
+  %51 = icmp eq i8 %50, 0
+  %i.zu = select i1 %i.zt, i1 %51, i1 false
+  br i1 %i.zu, label %.lr.ph55.i.i, label %.loopexit.loopexit.i.i, !llvm.loop !49
 
-.loopexit.i196.i:                                 ; preds = %bb.bz, %._crit_edge.i200.i, %.preheader48.i.i
-  %.3.i.i = phi i1 [ false, %._crit_edge.i200.i ], [ false, %.preheader48.i.i ], [ %51, %bb.bz ] ; 2 uses
+.loopexit.loopexit.i.i:                           ; preds = %bb.bz
+  %52 = trunc nuw i8 %50 to i1
+  br label %.loopexit.i196.i
+
+.loopexit.i196.i:                                 ; preds = %.loopexit.loopexit.i.i, %._crit_edge.i200.i, %.preheader48.i.i
+  %.3.i.i = phi i1 [ false, %._crit_edge.i200.i ], [ false, %.preheader48.i.i ], [ %52, %.loopexit.loopexit.i.i ] ; 2 uses
   %indvars.iv.next69.i.i = add nuw nsw i64 %indvars.iv68.i.i, 1 ; 2 uses
   %i.zv = icmp samesign uge i64 %indvars.iv.next69.i.i, %i.xf
   %.not46.i.i = select i1 %i.zv, i1 true, i1 %.3.i.i

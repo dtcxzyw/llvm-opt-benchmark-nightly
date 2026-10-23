@@ -205,7 +205,9 @@ _ZNK5folly7dynamic6asBoolEv.exit46:               ; preds = %bb.l
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !43, !range !44, !noundef !45
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.at = load i8, ptr %i.as, align 8, !tbaa !43, !range !44, !noundef !45
-  %.not121 = icmp eq i8 %i.at, %i.ar
+  %5 = trunc nuw i8 %i.at to i1
+  %.not121 = icmp eq i8 %i.ar, 0
+  %6 = xor i1 %.not121, %5
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
 
 bb.s:                                             ; preds = %bb.l
@@ -361,7 +363,7 @@ bb.ad:                                            ; preds = %bb.l
   unreachable
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %_ZNK5folly7dynamic3endEv.exit, %bb.q, %bb.ac, %bb.ab, %_ZNKR5folly7dynamic9getStringB5cxx11Ev.exit, %bb.u, %bb.m, %bb.l, %bb.b, %"_ZSt9__find_ifIN5folly7dynamic19const_item_iteratorEN9__gnu_cxx5__ops12_Iter_negateIZNS0_27compareDynamicWithToleranceERKS1_S7_dE3$_0EEET_SA_SA_T0_St18input_iterator_tag.exit", %bb.t, %bb.s, %_ZNK5folly7dynamic6asBoolEv.exit46, %_ZN5folly2toIdlEENSt9enable_ifIXsr6detail14IsArithToArithIT_T0_EE5valueES2_E4typeERKS3_.exit
-  %.1 = phi i1 [ %i.x, %_ZN5folly2toIdlEENSt9enable_ifIXsr6detail14IsArithToArithIT_T0_EE5valueES2_E4typeERKS3_.exit ], [ true, %bb.ab ], [ false, %bb.b ], [ true, %bb.l ], [ false, %bb.m ], [ false, %bb.u ], [ %.not121, %_ZNK5folly7dynamic6asBoolEv.exit46 ], [ %i.ay, %bb.s ], [ %i.bb, %bb.t ], [ %i.dg, %bb.ac ], [ %i.cv, %"_ZSt9__find_ifIN5folly7dynamic19const_item_iteratorEN9__gnu_cxx5__ops12_Iter_negateIZNS0_27compareDynamicWithToleranceERKS1_S7_dE3$_0EEET_SA_SA_T0_St18input_iterator_tag.exit" ], [ false, %_ZNKR5folly7dynamic9getStringB5cxx11Ev.exit ], [ %i.al, %bb.q ], [ %i.al, %_ZNK5folly7dynamic3endEv.exit ]
+  %.1 = phi i1 [ %i.x, %_ZN5folly2toIdlEENSt9enable_ifIXsr6detail14IsArithToArithIT_T0_EE5valueES2_E4typeERKS3_.exit ], [ true, %bb.ab ], [ false, %bb.b ], [ true, %bb.l ], [ false, %bb.m ], [ false, %bb.u ], [ %6, %_ZNK5folly7dynamic6asBoolEv.exit46 ], [ %i.ay, %bb.s ], [ %i.bb, %bb.t ], [ %i.dg, %bb.ac ], [ %i.cv, %"_ZSt9__find_ifIN5folly7dynamic19const_item_iteratorEN9__gnu_cxx5__ops12_Iter_negateIZNS0_27compareDynamicWithToleranceERKS1_S7_dE3$_0EEET_SA_SA_T0_St18input_iterator_tag.exit" ], [ false, %_ZNKR5folly7dynamic9getStringB5cxx11Ev.exit ], [ %i.al, %bb.q ], [ %i.al, %_ZNK5folly7dynamic3endEv.exit ]
   ret i1 %.1
 }
 

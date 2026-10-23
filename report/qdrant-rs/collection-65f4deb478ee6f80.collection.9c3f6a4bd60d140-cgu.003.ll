@@ -205,15 +205,16 @@ bb.n:                                             ; preds = %.split.i.i.i.i, %bb
   %i.bf = getelementptr inbounds i8, ptr %i.l, i64 -4
   %i.bg = trunc nuw i32 %i.be to i1
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ac, i64 184
-  %i.bi = load i32, ptr %i.bh, align 8, !range !27, !alias.scope !2923, !noundef !10
-  %4 = trunc nuw i32 %i.bi to i1                  ; 2 uses
+  %i.bi = load i32, ptr %i.bh, align 8, !range !27, !alias.scope !2923, !noundef !10 ; 2 uses
   br i1 %i.bg, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
+  %4 = trunc nuw i32 %i.bi to i1
   br i1 %4, label %.split7.i.i.i.i, label %_RNvXsoJ_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_6VectorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i.i
 
 bb.p:                                             ; preds = %bb.n
-  br i1 %4, label %_RNvXsoJ_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_6VectorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i.i, label %bb.q
+  %5 = icmp eq i32 %i.bi, 0
+  br i1 %5, label %bb.q, label %_RNvXsoJ_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_6VectorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i.i
 
 .split7.i.i.i.i:                                  ; preds = %bb.o
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ac, i64 188

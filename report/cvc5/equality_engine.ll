@@ -205,8 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.c = load i8, ptr %i.b, align 8, !tbaa !56, !range !200, !noundef !189
-  %8 = trunc nuw i8 %i.c to i1
-  br label %.critedge
+  %8 = icmp eq i8 %i.c, 0
+  br label %11
 
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1280 ; 2 uses
@@ -275,11 +275,11 @@ bb.d:                                             ; preds = %.lr.ph158, %.crited
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 4
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !208
   %.not33 = icmp eq i32 %i.az, %i.bd
-  %i.be = load i8, ptr %i.l, align 8, !tbaa !56, !range !200, !noundef !189
-  %9 = trunc nuw i8 %i.be to i1                   ; 2 uses
+  %i.be = load i8, ptr %i.l, align 8, !tbaa !56, !range !200, !noundef !189 ; 2 uses
   br i1 %.not33, label %.critedge2.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.d
+  %9 = trunc nuw i8 %i.be to i1
   br i1 %9, label %.critedge2.thread204, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
@@ -287,8 +287,9 @@ bb.d:                                             ; preds = %.lr.ph158, %.crited
   br label %bb.e
 
 .critedge2.thread:                                ; preds = %bb.d
+  %10 = icmp eq i8 %i.be, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #32
-  br label %.critedge
+  br label %11
 
 bb.e:                                             ; preds = %.lr.ph, %bb.ae
   %i.bg = call noundef i32 @_ZN4cvc58internal6theory15TheoryIdSetUtil6setPopERj(ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 7 uses
@@ -691,10 +692,14 @@ bb.ae:                                            ; preds = %.split, %bb.ab, %_Z
   %or.cond.not = select i1 %i.iq, i1 true, i1 %i.is
   br i1 %or.cond.not, label %.critedge, label %bb.d, !llvm.loop !697
 
-.critedge:                                        ; preds = %.critedge2, %bb.c, %.critedge2.thread204, %.critedge2.thread, %bb.b
-  %.3.in = phi i1 [ %8, %bb.b ], [ %9, %.critedge2.thread ], [ %i.n, %bb.c ], [ true, %.critedge2.thread204 ], [ %i.iq, %.critedge2 ]
-  %.3.a = xor i1 %.3.in, true
-  ret i1 %.3.a
+.critedge:                                        ; preds = %.critedge2, %.critedge2.thread204, %bb.c
+  %.lcssa145 = phi i1 [ %i.n, %bb.c ], [ true, %.critedge2.thread204 ], [ %i.iq, %.critedge2 ]
+  %.3.a = xor i1 %.lcssa145, true
+  br label %11
+
+11:                                               ; preds = %.critedge, %.critedge2.thread, %bb.b
+  %.3 = phi i1 [ %8, %bb.b ], [ %.3.a, %.critedge ], [ %10, %.critedge2.thread ]
+  ret i1 %.3
 }
 
 declare noundef i32 @_ZN4cvc58internal6theory15TheoryIdSetUtil8setUnionEjj(i32 noundef, i32 noundef) local_unnamed_addr #1

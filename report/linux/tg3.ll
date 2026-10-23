@@ -205,7 +205,7 @@ tg3_fiber_aneg_smachine.exit.thread113.i.i.i.loopexit: ; preds = %bb.bh
 tg3_fiber_aneg_smachine.exit.thread113.i.i.i:     ; preds = %tg3_fiber_aneg_smachine.exit.thread.i.i.i, %bb.bz, %bb.bu, %bb.bh, %tg3_fiber_aneg_smachine.exit.thread113.i.i.i.loopexit, %bb.ce
   %.sroa.7564.0131.i.i.i = phi i32 [ %.sroa.7564.0141.i.i.i, %bb.ce ], [ %.sroa.7564.0141.i.i.i, %bb.bh ], [ %.sroa.7564.0141.i.i.i, %bb.bu ], [ %.sroa.7564.0141.i.i.i, %bb.bz ], [ %.sroa.7564.5108.i.i.i, %tg3_fiber_aneg_smachine.exit.thread.i.i.i ], [ %.sroa.7564.0141.i.i.i, %tg3_fiber_aneg_smachine.exit.thread113.i.i.i.loopexit ] ; 2 uses
   %.sroa.25.1.i.i.i = phi i32 [ %i.od, %bb.ce ], [ %.sroa.25.0135.i.i.i, %bb.bh ], [ %.sroa.25.0135.i.i.i, %bb.bu ], [ %.sroa.25.0135.i.i.i, %bb.bz ], [ %.sroa.25.3102.i.i.i, %tg3_fiber_aneg_smachine.exit.thread.i.i.i ], [ %.sroa.25.0135.i.i.i, %tg3_fiber_aneg_smachine.exit.thread113.i.i.i.loopexit ] ; 2 uses
-  %.1.i.not.not.i.i = phi i1 [ true, %bb.ce ], [ true, %bb.bh ], [ false, %bb.bu ], [ false, %bb.bz ], [ false, %tg3_fiber_aneg_smachine.exit.thread.i.i.i ], [ false, %tg3_fiber_aneg_smachine.exit.thread113.i.i.i.loopexit ]
+  %.1.i.not.not.i.i = phi i1 [ false, %bb.ce ], [ false, %bb.bh ], [ true, %bb.bu ], [ true, %bb.bz ], [ true, %tg3_fiber_aneg_smachine.exit.thread.i.i.i ], [ true, %tg3_fiber_aneg_smachine.exit.thread113.i.i.i.loopexit ]
   %i.of = load i32, ptr %i.bl, align 8
   %i.og = and i32 %i.of, -131073                  ; 3 uses
   store i32 %i.og, ptr %i.bl, align 8
@@ -236,9 +236,9 @@ bb.cg:                                            ; preds = %_tg3_flag.exit21.i4
 fiber_autoneg.exit.i.i:                           ; preds = %bb.cg, %bb.cf
   tail call void @__const_udelay(i64 noundef 171800) #27
   %i.oq = and i32 %.sroa.25.1.i.i.i, -2147483580
-  %.not.i.i106.i = icmp ne i32 %i.oq, 0
-  %narrow.i.not.not.i.i = select i1 %.1.i.not.not.i.i, i1 %.not.i.i106.i, i1 false ; 2 uses
-  br i1 %narrow.i.not.not.i.i, label %bb.ch, label %_tg3_flag.exit.i.i107.i.preheader
+  %.not.i.i106.i = icmp eq i32 %i.oq, 0
+  %narrow.i.not.not.i.i = select i1 %.1.i.not.not.i.i, i1 true, i1 %.not.i.i106.i ; 3 uses
+  br i1 %narrow.i.not.not.i.i, label %_tg3_flag.exit.i.i107.i.preheader, label %bb.ch
 
 bb.ch:                                            ; preds = %fiber_autoneg.exit.i.i
   %i.or = lshr i32 %.sroa.7564.0131.i.i.i, 8
@@ -295,11 +295,13 @@ _tw32_flush.exit.i108.i:                          ; preds = %bb.cj, %bb.ci
   br i1 %or.cond.i110.i, label %bb.ck, label %_tg3_flag.exit.i.i107.i, !llvm.loop !264
 
 bb.ck:                                            ; preds = %_tw32_flush.exit.i108.i
+  %.030.i.i = xor i1 %narrow.i.not.not.i.i, true
   %i.pk = load ptr, ptr %i.eg, align 16
   %i.pl = tail call i32 %i.pk(ptr noundef %0, i32 noundef 1028) #27, !inline_history !263
   %i.pm = and i32 %i.pl, 5
   %i.pn = icmp eq i32 %i.pm, 1
-  %i.po = select i1 %narrow.i.not.not.i.i, i1 true, i1 %i.pn
+  %i.po = select i1 %narrow.i.not.not.i.i, i1 %i.pn, i1 false
+  %3 = or i1 %i.po, %.030.i.i
   br label %tg3_setup_fiber_hw_autoneg.exit.i
 
 _tg3_flag.exit.i45.i.i:                           ; preds = %bb.ax
@@ -366,7 +368,7 @@ _tw32_flush.exit59.i.i:                           ; preds = %bb.co, %bb.cn
   br label %tg3_setup_fiber_hw_autoneg.exit.i
 
 tg3_setup_fiber_hw_autoneg.exit.i:                ; preds = %_tw32_flush.exit59.i.i, %bb.ck, %bb.aw, %bb.av, %bb.au, %bb.aq, %bb.ao, %bb.an, %_tw32_flush.exit157.i.i, %bb.ad, %bb.z, %_tw32_flush.exit133.i.i
-  %.064.in.i = phi i1 [ false, %bb.av ], [ true, %bb.z ], [ false, %_tw32_flush.exit133.i.i ], [ true, %bb.ad ], [ false, %_tw32_flush.exit157.i.i ], [ true, %bb.an ], [ false, %bb.ao ], [ false, %bb.aq ], [ true, %bb.au ], [ %i.po, %bb.ck ], [ true, %_tw32_flush.exit59.i.i ], [ false, %bb.aw ]
+  %.064.in.i = phi i1 [ false, %bb.av ], [ true, %bb.z ], [ false, %_tw32_flush.exit133.i.i ], [ true, %bb.ad ], [ false, %_tw32_flush.exit157.i.i ], [ true, %bb.an ], [ false, %bb.ao ], [ false, %bb.aq ], [ true, %bb.au ], [ %3, %bb.ck ], [ true, %_tw32_flush.exit59.i.i ], [ false, %bb.aw ]
   %i.qo = getelementptr i8, ptr %0, i64 904
   %i.qp = load ptr, ptr %i.qo, align 8            ; 2 uses
   %i.qq = load i32, ptr %i.qp, align 4

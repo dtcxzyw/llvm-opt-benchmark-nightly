@@ -205,8 +205,8 @@ define hidden noundef nonnull ptr @_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thre
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !range !4, !noundef !5
-  %trunc = trunc nuw i8 %i.b to i1
-  br i1 %trunc, label %bb.f, label %bb.b
+  %.not9.not = icmp eq i8 %i.b, 0
+  br i1 %.not9.not, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %.not = icmp eq ptr %1, null
@@ -410,8 +410,8 @@ define hidden noundef nonnull ptr @_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thre
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !range !4, !noundef !5
-  %trunc = trunc nuw i8 %i.b to i1
-  br i1 %trunc, label %bb.g, label %bb.b
+  %.not8.not = icmp eq i8 %i.b, 0
+  br i1 %.not8.not, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
   %.not = icmp eq ptr %1, null
@@ -814,10 +814,10 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2Ji
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit66 unwind label %bb.o
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit66: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i62
-  %2 = icmp ne i64 %i.cc, %.sroa.07.0
-  %3 = trunc nuw i8 %.sroa.011.0 to i1
-  %or.cond.not = or i1 %2, %3
-  %spec.store.select = select i1 %or.cond.not, i8 %.sroa.011.0, i8 1
+  %.not = icmp eq i8 %.sroa.011.0, 0
+  %2 = icmp eq i64 %i.cc, %.sroa.07.0
+  %or.cond = and i1 %.not, %2
+  %spec.store.select = select i1 %or.cond, i8 1, i8 %.sroa.011.0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -1220,10 +1220,10 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2Ji
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit198.i unwind label %bb.de, !noalias !1091
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit198.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i194.i
-  %4 = icmp ne i64 %i.le, %.sroa.023.0.i
-  %5 = trunc nuw i8 %.sroa.021.0.i to i1
-  %or.cond.not.i = or i1 %4, %5
-  %spec.store.select.i = select i1 %or.cond.not.i, i8 %.sroa.021.0.i, i8 1
+  %.not.i = icmp eq i8 %.sroa.021.0.i, 0
+  %4 = icmp eq i64 %i.le, %.sroa.023.0.i
+  %or.cond.i = and i1 %.not.i, %4
+  %spec.store.select.i = select i1 %or.cond.i, i8 1, i8 %.sroa.021.0.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !1084
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !1084
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !1084
@@ -1626,15 +1626,16 @@ bb.a:
   %i.a = load i64, ptr %0, align 8, !range !9, !noundef !5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = trunc nuw i64 %i.a to i1
-  %i.d = load i64, ptr %1, align 8, !range !9, !noundef !5
-  %2 = trunc nuw i64 %i.d to i1                   ; 2 uses
+  %i.d = load i64, ptr %1, align 8, !range !9, !noundef !5 ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %2 = trunc nuw i64 %i.d to i1
   br i1 %2, label %.split, label %bb.j
 
 bb.c:                                             ; preds = %bb.a
-  br i1 %2, label %bb.j, label %bb.d
+  %3 = icmp eq i64 %i.d, 0
+  br i1 %3, label %bb.d, label %bb.j
 
 .split:                                           ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1665,15 +1666,16 @@ bb.f:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.v = trunc nuw i64 %i.t to i1
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.x = load i64, ptr %i.w, align 8, !range !9, !noundef !5
-  %3 = trunc nuw i64 %i.x to i1                   ; 2 uses
+  %i.x = load i64, ptr %i.w, align 8, !range !9, !noundef !5 ; 2 uses
   br i1 %i.v, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  br i1 %3, label %.split3, label %bb.j
+  %4 = trunc nuw i64 %i.x to i1
+  br i1 %4, label %.split3, label %bb.j
 
 bb.h:                                             ; preds = %bb.f
-  br i1 %3, label %bb.j, label %bb.i
+  %5 = icmp eq i64 %i.x, 0
+  br i1 %5, label %bb.i, label %bb.j
 
 .split3:                                          ; preds = %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1688,19 +1690,19 @@ bb.i:                                             ; preds = %.split3, %bb.h
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.af = trunc nuw i64 %i.ad to i1
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.ah = load i64, ptr %i.ag, align 8, !range !9, !noundef !5
-  %4 = trunc nuw i64 %i.ah to i1                  ; 2 uses
+  %i.ah = load i64, ptr %i.ag, align 8, !range !9, !noundef !5 ; 2 uses
   br i1 %i.af, label %bb.k, label %bb.l
 
 bb.j:                                             ; preds = %.split3, %.split, %bb.k, %bb.c, %bb.e, %bb.h, %bb.b, %bb.d, %bb.g, %bb.l, %bb.m
-  %.sroa.0.0 = phi i1 [ %i.al, %bb.m ], [ false, %bb.c ], [ %5, %bb.l ], [ false, %bb.g ], [ false, %bb.d ], [ false, %bb.b ], [ false, %bb.h ], [ false, %bb.e ], [ false, %bb.k ], [ false, %.split ], [ false, %.split3 ]
+  %.sroa.0.0 = phi i1 [ %i.al, %bb.m ], [ false, %bb.c ], [ %7, %bb.l ], [ false, %bb.g ], [ false, %bb.d ], [ false, %bb.b ], [ false, %bb.h ], [ false, %bb.e ], [ false, %bb.k ], [ false, %.split ], [ false, %.split3 ]
   ret i1 %.sroa.0.0
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %4, label %bb.m, label %bb.j
+  %6 = trunc nuw i64 %i.ah to i1
+  br i1 %6, label %bb.m, label %bb.j
 
 bb.l:                                             ; preds = %bb.i
-  %5 = xor i1 %4, true
+  %7 = icmp eq i64 %i.ah, 0
   br label %bb.j
 
 bb.m:                                             ; preds = %bb.k

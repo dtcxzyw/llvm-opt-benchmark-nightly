@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %.lr.ph, %.thread
   %i.dt = phi i32 [ %i.db, %.lr.ph ], [ %i.fh, %.thread ] ; 2 uses
   %.095132 = phi i16 [ %i.dd, %.lr.ph ], [ %i.fg, %.thread ] ; 2 uses
   %.096131 = phi i8 [ 0, %.lr.ph ], [ %.2127, %.thread ]
-  %.097130 = phi i1 [ false, %.lr.ph ], [ %.299126, %.thread ] ; 2 uses
+  %.097132 = phi i8 [ 0, %.lr.ph ], [ %.299126, %.thread ] ; 2 uses
   %i.du = load ptr, ptr %i.de, align 8, !tbaa !72
   %i.dv = sitofp i16 %.095132 to float            ; 2 uses
   %i.dw = load i32, ptr %i.q, align 8, !tbaa !59
@@ -263,13 +263,14 @@ bb.o:                                             ; preds = %bb.l, %bb.n, %bb.m,
 
 bb.p:                                             ; preds = %bb.o
   %i.fe = add i8 %.096131, 1                      ; 2 uses
-  %i.ff = icmp eq i8 %i.fe, 3
-  %or.cond = select i1 %i.ff, i1 %.097130, i1 false
-  br i1 %or.cond, label %.loopexit.loopexit.split.loop.exit, label %.thread
+  %2 = icmp ne i8 %i.fe, 3
+  %i.ff = icmp eq i8 %.097132, 0
+  %or.cond = select i1 %2, i1 true, i1 %i.ff
+  br i1 %or.cond, label %.thread, label %.loopexit.loopexit.split.loop.exit
 
 .thread:                                          ; preds = %bb.o, %bb.p
   %.2127 = phi i8 [ %i.fe, %bb.p ], [ 0, %bb.o ]
-  %.299126 = phi i1 [ %.097130, %bb.p ], [ true, %bb.o ]
+  %.299126 = phi i8 [ %.097132, %bb.p ], [ 1, %bb.o ]
   %i.fg = add i16 %.095132, 1                     ; 2 uses
   %i.fh = sext i16 %i.fg to i32                   ; 2 uses
   %i.fi = load i32, ptr %i.cz, align 4, !tbaa !56

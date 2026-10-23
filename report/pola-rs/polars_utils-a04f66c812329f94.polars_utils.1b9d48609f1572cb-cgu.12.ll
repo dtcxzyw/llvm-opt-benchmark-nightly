@@ -165,10 +165,10 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtNtCshIrAnp6Nu95_5regex5regex6string5RegexNtNtB18_5error5ErrorEECs2mZqlW55729_12polars_utils.exit.i, %bb.h
   %i.bm = phi i64 [ %i.by, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtNtCshIrAnp6Nu95_5regex5regex6string5RegexNtNtB18_5error5ErrorEECs2mZqlW55729_12polars_utils.exit.i ], [ %.promoted13.i, %bb.h ] ; 2 uses
-  %i.bn = phi i64 [ %i.bx, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtNtCshIrAnp6Nu95_5regex5regex6string5RegexNtNtB18_5error5ErrorEECs2mZqlW55729_12polars_utils.exit.i ], [ %.promoted.i, %bb.h ]
+  %i.bn = phi i64 [ %i.bx, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtNtCshIrAnp6Nu95_5regex5regex6string5RegexNtNtB18_5error5ErrorEECs2mZqlW55729_12polars_utils.exit.i ], [ %.promoted.i, %bb.h ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !806, !noalias !657
   call void @_RNvMNtNtCshIrAnp6Nu95_5regex8builders6stringNtB2_12RegexBuilder3new(ptr noalias noundef nonnull sret([168 x i8]) align 8 captures(none) dereferenceable(168) %i.g, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3), !dbg !807, !noalias !658
-  %i.bo = trunc nuw i64 %i.bn to i1, !dbg !808    ; 3 uses
+  %i.bo = trunc nuw i64 %i.bn to i1, !dbg !808    ; 2 uses
   br i1 %i.bo, label %bb.j, label %bb.k, !dbg !808
 
 bb.j:                                             ; preds = %bb.i
@@ -221,7 +221,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond11.not.i, label %bb.y, label %bb.s, !dbg !817
 
 bb.r:                                             ; preds = %bb.p
-  br i1 %i.bo, label %bb.s, label %bb.y, !dbg !818
+  %5 = icmp eq i64 %i.bn, 0, !dbg !817
+  br i1 %5, label %bb.y, label %bb.s, !dbg !818
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   store i64 %i.bx, ptr %4, align 8, !dbg !819, !alias.scope !652

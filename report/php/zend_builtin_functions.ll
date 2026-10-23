@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 .split100.thread:                                 ; preds = %bb.f, %.split100.thread.fold.split
   %storemerge.i = phi i8 [ 1, %bb.f ], [ 0, %.split100.thread.fold.split ] ; 2 uses
   store i8 %storemerge.i, ptr %i.c, align 1, !tbaa !93
-  br label %.critedge.a
+  br label %.critedge
 
 zend_parse_arg_bool_ex.exit:                      ; preds = %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -214,7 +214,8 @@ zend_parse_arg_bool_ex.exit:                      ; preds = %bb.f
 
 zend_parse_arg_bool_ex.exit..critedge_crit_edge:  ; preds = %zend_parse_arg_bool_ex.exit
   %.pre = load i8, ptr %i.c, align 1, !tbaa !93, !range !79
-  br label %.critedge.a
+  %2 = freeze i8 %.pre
+  br label %.critedge
 
 .thread90:                                        ; preds = %zend_parse_arg_bool_ex.exit, %zend_parse_arg_str_ex.exit, %zend_parse_arg_str_ex.exit76, %bb.b
   %.06599 = phi i32 [ 1, %bb.b ], [ 9, %zend_parse_arg_str_ex.exit76 ], [ 9, %zend_parse_arg_str_ex.exit ], [ 9, %zend_parse_arg_bool_ex.exit ]
@@ -224,12 +225,16 @@ zend_parse_arg_bool_ex.exit..critedge_crit_edge:  ; preds = %zend_parse_arg_bool
   call void @zend_wrong_parameter_error(i32 noundef %.06599, i32 noundef %.06896, ptr noundef null, i32 noundef %.06698, ptr noundef %.06797) #13
   br label %bb.k
 
-.critedge.a:                                      ; preds = %zend_parse_arg_bool_ex.exit..critedge_crit_edge, %.split100.thread, %bb.e
-  %2 = phi i8 [ %.pre, %zend_parse_arg_bool_ex.exit..critedge_crit_edge ], [ %storemerge.i, %.split100.thread ], [ 1, %bb.e ]
+.critedge:                                        ; preds = %zend_parse_arg_bool_ex.exit..critedge_crit_edge, %.split100.thread
+  %.fr = phi i8 [ %2, %zend_parse_arg_bool_ex.exit..critedge_crit_edge ], [ %storemerge.i, %.split100.thread ]
+  %.not71.not = icmp eq i8 %.fr, 0
+  %spec.select = select i1 %.not71.not, i32 128, i32 0
+  br label %.critedge.a
+
+.critedge.a:                                      ; preds = %bb.e, %.critedge
+  %3 = phi i32 [ %spec.select, %.critedge ], [ 0, %bb.e ]
   %i.x = load ptr, ptr %i.a, align 8, !tbaa !71
-  %3 = trunc nuw i8 %2 to i1
-  %4 = select i1 %3, i32 0, i32 128
-  %i.y = call ptr @zend_lookup_class_ex(ptr noundef %i.x, ptr noundef null, i32 noundef %4) #13 ; 3 uses
+  %i.y = call ptr @zend_lookup_class_ex(ptr noundef %i.x, ptr noundef null, i32 noundef %3) #13 ; 3 uses
   %.not71 = icmp eq ptr %i.y, null
   br i1 %.not71, label %bb.j, label %bb.g
 

@@ -204,8 +204,8 @@ bb.av:                                            ; preds = %bb.au
   %i.eu = load ptr, ptr %20, align 8, !tbaa !382  ; 3 uses
   %i.ev = icmp eq ptr %i.et, %i.eu
   %i.ew = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
-  %i.ex = load i8, ptr %i.ew, align 8, !range !157
-  %i.ey = trunc nuw i8 %i.ex to i1                ; 2 uses
+  %i.ex = load i8, ptr %i.ew, align 8, !range !157 ; 2 uses
+  %i.ey = trunc nuw i8 %i.ex to i1
   %or.cond.i = select i1 %i.ev, i1 %i.ey, i1 false, !prof !604
   br i1 %or.cond.i, label %bb.ba, label %.critedge.i, !prof !604
 
@@ -225,9 +225,10 @@ bb.aw:                                            ; preds = %.critedge.i
           to label %.thread unwind label %bb.az   ; 0 uses
 
 bb.ax:                                            ; preds = %.critedge.i
-  %21 = icmp ne ptr %i.et, null
-  %or.cond5.not.i = and i1 %21, %i.ey
-  br i1 %or.cond5.not.i, label %bb.ay, label %.thread
+  %.not.i106 = icmp eq i8 %i.ex, 0
+  %21 = icmp eq ptr %i.et, null
+  %or.cond5.i = or i1 %21, %.not.i106
+  br i1 %or.cond5.i, label %.thread, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   call void @_ZN7rocksdb5BlockD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %i.et) #22

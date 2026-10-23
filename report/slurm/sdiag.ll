@@ -202,10 +202,9 @@ bb.ao:                                            ; preds = %._crit_edge99.i
   %i.sn = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.sm) #11
   %i.so = trunc i64 %i.sn to i32                  ; 2 uses
   %i.sp = load i8, ptr getelementptr inbounds nuw (i8, ptr @params, i64 8), align 8, !range !18, !noundef !19
-  %4 = trunc nuw i8 %i.sp to i1
-  %5 = icmp slt i32 %i.so, 81
-  %or.cond.not.i = select i1 %4, i1 true, i1 %5
-  %spec.store.select.i = select i1 %or.cond.not.i, i32 %i.so, i32 80
+  %.not.i34 = icmp eq i8 %i.sp, 0
+  %4 = call i32 @llvm.smin.i32(i32 %i.so, i32 80)
+  %spec.store.select.i = select i1 %.not.i34, i32 %4, i32 %i.so
   %indvars.iv.next128.i = add nuw nsw i64 %indvars.iv127.i, 1 ; 3 uses
   %i.sq = getelementptr inbounds nuw i8, ptr %i.si, i64 344
   %i.sr = load ptr, ptr %i.sq, align 8
@@ -347,6 +346,9 @@ declare void @qsort(ptr noundef, i64 noundef, i64 noundef, ptr noundef captures(
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #9

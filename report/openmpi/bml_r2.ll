@@ -204,15 +204,14 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.m, %bb.o, %bb.n, %bb.i, %bb.g
-  %.065 = phi i8 [ 0, %bb.g ], [ 0, %bb.i ], [ 1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.m ] ; 3 uses
-  %4 = trunc nuw i8 %.065 to i1
+  %.not78.not = phi i1 [ false, %bb.g ], [ false, %bb.i ], [ true, %bb.n ], [ true, %bb.o ], [ true, %bb.m ] ; 2 uses
   %i.bu = and i32 %.1, 6
   %.not76 = icmp ne i32 %i.bu, 0
-  %or.cond.not86 = and i1 %.not76, %4
+  %or.cond.not86 = and i1 %.not76, %.not78.not
   %i.bv = and i32 %.1, 65542
   %i.bw = icmp eq i32 %i.bv, 65542
   %or.cond80 = or i1 %i.bw, %or.cond.not86
-  br i1 %or.cond80, label %bb.q, label %bb.w
+  br i1 %or.cond80, label %bb.q, label %4
 
 bb.q:                                             ; preds = %bb.p
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -227,7 +226,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cc = load i32, ptr %i.a, align 4, !tbaa !134
   %i.cd = and i32 %i.cc, 256
   %i.ce = icmp eq i32 %i.cd, 0
-  br i1 %i.ce, label %bb.w, label %bb.s
+  br i1 %i.ce, label %4, label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 208
@@ -261,17 +260,21 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !77 ; 2 uses
   %i.cx = icmp ult i64 %i.cu, %i.cw
-  br i1 %i.cx, label %bb.v, label %bb.w
+  br i1 %i.cx, label %bb.v, label %.thread
 
 bb.v:                                             ; preds = %bb.u
   store i64 %i.cw, ptr %i.ct, align 8, !tbaa !78
+  br label %.thread
+
+4:                                                ; preds = %bb.p, %bb.r
+  br i1 %.not78.not, label %.thread, label %bb.w
+
+.thread:                                          ; preds = %bb.u, %bb.v, %4
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.u, %bb.v, %bb.p, %bb.r
-  %.166 = phi i8 [ %.065, %bb.r ], [ %.065, %bb.p ], [ 1, %bb.v ], [ 1, %bb.u ]
-  %5 = trunc nuw i8 %.166 to i1
-  %6 = select i1 %5, i32 0, i32 -16
-  ret i32 %6
+bb.w:                                             ; preds = %4, %.thread
+  %5 = phi i32 [ 0, %.thread ], [ -16, %4 ]
+  ret i32 %5
 }
 
 declare ptr @ompi_pmix_print_name(ptr noundef) local_unnamed_addr #3

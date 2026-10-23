@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %.preheader
   %i.ai = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %i.ag
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !81, !range !49, !noundef !92
-  %2 = trunc nuw i8 %i.ak to i1
-  br i1 %2, label %.critedge2, label %.preheader, !llvm.loop !134
+  %.not23.not = icmp eq i8 %i.ak, 0
+  br i1 %.not23.not, label %.preheader, label %.critedge2, !llvm.loop !134
 
 .critedge2:                                       ; preds = %bb.f, %.preheader, %bb.c
   %.2 = phi i32 [ %.01847, %bb.c ], [ %.1, %.preheader ], [ %.1, %bb.f ] ; 2 uses
@@ -608,13 +608,13 @@ _ZStneIwSt11char_traitsIwESaIwEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.m = load i8, ptr %i.l, align 8, !tbaa !105, !range !49, !noundef !92 ; 2 uses
-  %2 = trunc nuw i8 %i.m to i1                    ; 2 uses
+  %i.m = load i8, ptr %i.l, align 8, !tbaa !105, !range !49, !noundef !92 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.o = load i8, ptr %i.n, align 8, !tbaa !105, !range !49, !noundef !92 ; 2 uses
-  %i.p = icmp eq i8 %i.m, %i.o                    ; 2 uses
-  %brmerge.not.i = and i1 %i.p, %2
-  br i1 %brmerge.not.i, label %bb.c, label %_ZSteqINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEES5_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS7_ERKSG_ISA_E.exit
+  %2 = icmp ne i8 %i.m, %i.o                      ; 2 uses
+  %i.p = icmp eq i8 %i.m, 0
+  %brmerge.i = or i1 %i.p, %2
+  br i1 %brmerge.i, label %_ZSteqINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEES5_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS7_ERKSG_ISA_E.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZStneIwSt11char_traitsIwESaIwEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -636,10 +636,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %_ZStneIwSt11char_traitsIwESaIwEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %.thread
 
 _ZSteqINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEES5_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS7_ERKSG_ISA_E.exit: ; preds = %_ZStneIwSt11char_traitsIwESaIwEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread8
-  br i1 %i.p, label %_ZStneIwSt11char_traitsIwESaIwEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %bb.e
+  br i1 %2, label %bb.e, label %_ZStneIwSt11char_traitsIwESaIwEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
 
 bb.e:                                             ; preds = %_ZSteqINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEES5_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS7_ERKSG_ISA_E.exit
-  br i1 %2, label %..thread_crit_edge, label %_ZSteqINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEES5_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS7_ESC_.exit.thread
+  %3 = trunc nuw i8 %i.m to i1
+  br i1 %3, label %..thread_crit_edge, label %_ZSteqINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEES5_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS7_ESC_.exit.thread
 
 ..thread_crit_edge:                               ; preds = %bb.e
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 40

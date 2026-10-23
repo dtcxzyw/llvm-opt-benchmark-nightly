@@ -204,15 +204,16 @@ bb.d:                                             ; preds = %bb.c
   %i.n = trunc nuw i8 %i.m to i1
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 5
   %i.p = getelementptr i8, ptr %i.g, i64 -4
-  %i.q = load i8, ptr %i.p, align 4, !range !10, !alias.scope !47, !noundef !7
-  %1 = trunc nuw i8 %i.q to i1                    ; 2 uses
+  %i.q = load i8, ptr %i.p, align 4, !range !10, !alias.scope !47, !noundef !7 ; 2 uses
   br i1 %i.n, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
+  %1 = trunc nuw i8 %i.q to i1
   br i1 %1, label %.split.i, label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  br i1 %1, label %bb.g, label %bb.h
+  %2 = icmp eq i8 %i.q, 0
+  br i1 %2, label %bb.h, label %bb.g
 
 .split.i:                                         ; preds = %bb.e
   %i.r = getelementptr i8, ptr %i.g, i64 -3
@@ -259,15 +260,16 @@ bb.i:                                             ; preds = %.lr.ph
   %i.ae = trunc nuw i8 %i.ad to i1
   %i.af = getelementptr inbounds nuw i8, ptr %i.w, i64 5
   %i.ag = getelementptr i8, ptr %i.x, i64 -4
-  %i.ah = load i8, ptr %i.ag, align 4, !range !10, !alias.scope !49, !noundef !7
-  %2 = trunc nuw i8 %i.ah to i1                   ; 2 uses
+  %i.ah = load i8, ptr %i.ag, align 4, !range !10, !alias.scope !49, !noundef !7 ; 2 uses
   br i1 %i.ae, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  br i1 %2, label %.split.i10, label %bb.l
+  %3 = trunc nuw i8 %i.ah to i1
+  br i1 %3, label %.split.i10, label %bb.l
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %2, label %bb.l, label %bb.m
+  %4 = icmp eq i8 %i.ah, 0
+  br i1 %4, label %bb.m, label %bb.l
 
 .split.i10:                                       ; preds = %bb.j
   %i.ai = getelementptr i8, ptr %i.x, i64 -3

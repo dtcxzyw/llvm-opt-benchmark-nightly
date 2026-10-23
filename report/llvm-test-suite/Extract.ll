@@ -204,11 +204,11 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.bs
   %i.mg = load i8, ptr %5, align 8, !tbaa !103, !range !104, !noundef !105
-  %26 = trunc nuw i8 %i.mg to i1
+  %.not491 = icmp eq i8 %i.mg, 0
   %i.mh = load i32, ptr %i.dh, align 4            ; 2 uses
-  %27 = icmp slt i32 %i.mh, 1
-  %or.cond492.not = select i1 %26, i1 true, i1 %27
-  br i1 %or.cond492.not, label %.loopexit384, label %.lr.ph472
+  %26 = icmp sgt i32 %i.mh, 0
+  %or.cond492.not = select i1 %.not491, i1 %26, i1 false
+  br i1 %or.cond492.not, label %.lr.ph472, label %.loopexit384
 
 .lr.ph472:                                        ; preds = %bb.bt, %_ZNK13CObjectVectorI11CStringBaseIwEE12FindInSortedERKS1_.exit.thread
   %indvars.iv515 = phi i64 [ %indvars.iv.next516, %_ZNK13CObjectVectorI11CStringBaseIwEE12FindInSortedERKS1_.exit.thread ], [ 0, %bb.bt ] ; 2 uses
@@ -521,13 +521,14 @@ bb.ck:                                            ; preds = %bb.cj
   %i.qh = getelementptr [8 x i8], ptr %i.qg, i64 %.pre-phi
   %i.qi = getelementptr i8, ptr %i.qh, i64 -8
   %i.qj = load ptr, ptr %i.qi, align 8, !tbaa !33 ; 6 uses
-  %i.qk = load i8, ptr %5, align 8, !tbaa !103, !range !104, !noundef !105
-  %28 = trunc nuw i8 %i.qk to i1                  ; 2 uses
-  %29 = load i8, ptr %i.dq, align 4, !range !104
-  %30 = xor i8 %29, 1
-  %31 = select i1 %28, i8 0, i8 %30
+  %i.qk = load i8, ptr %5, align 8, !tbaa !103, !range !104, !noundef !105 ; 2 uses
+  %27 = load i8, ptr %i.dq, align 4, !range !104
+  %28 = icmp eq i8 %27, 0
+  %not. = icmp eq i8 %i.qk, 0
+  %29 = select i1 %not., i1 %28, i1 false
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qj, i64 56
-  store i8 %31, ptr %i.ql, align 8, !tbaa !119
+  %30 = zext i1 %29 to i8
+  store i8 %30, ptr %i.ql, align 8, !tbaa !119
   %i.qm = getelementptr inbounds nuw i8, ptr %i.qj, i64 48
   %i.qn = load i64, ptr %i.dr, align 8, !tbaa !8
   store i64 %i.qn, ptr %i.qm, align 8, !tbaa !8
@@ -539,7 +540,8 @@ bb.ck:                                            ; preds = %bb.cj
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ds, i8 0, i64 16, i1 false)
   store i64 4, ptr %i.dt, align 8, !tbaa !12
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV13CRecordVectorIjE, i64 16), ptr %10, align 8, !tbaa !14
-  br i1 %28, label %bb.dg, label %bb.cl
+  %31 = trunc nuw i8 %i.qk to i1
+  br i1 %31, label %bb.dg, label %bb.cl
 
 bb.cl:                                            ; preds = %._crit_edge479
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
@@ -701,9 +703,8 @@ bb.cs:                                            ; preds = %bb.cr
 
 bb.ct:                                            ; preds = %bb.cs
   %i.sh = load i8, ptr %i.b, align 1, !tbaa !120, !range !104, !noundef !105
-  %32 = trunc nuw i8 %i.sh to i1
-  %33 = xor i1 %32, true
-  %i.si = invoke noundef zeroext i1 @_ZNK9NWildcard11CCensorNode9CheckPathERK11CStringBaseIwEb(ptr noundef nonnull align 8 dereferenceable(120) %4, ptr noundef nonnull align 8 dereferenceable(16) %11, i1 noundef zeroext %33)
+  %32 = icmp eq i8 %i.sh, 0
+  %i.si = invoke noundef zeroext i1 @_ZNK9NWildcard11CCensorNode9CheckPathERK11CStringBaseIwEb(ptr noundef nonnull align 8 dereferenceable(120) %4, ptr noundef nonnull align 8 dereferenceable(16) %11, i1 noundef zeroext %32)
           to label %bb.cu unwind label %bb.cv
 
 bb.cu:                                            ; preds = %bb.ct

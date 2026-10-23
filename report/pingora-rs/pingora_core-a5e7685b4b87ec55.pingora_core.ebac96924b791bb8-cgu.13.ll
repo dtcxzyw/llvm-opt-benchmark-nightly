@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %bb.i, %bb.i, %bb.j
 bb.l:                                             ; preds = %bb.j, %bb.i, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtNtCskxN0Kp1MEon_2h25codec5error9UserErrorE6expectCskeugdADtBsi_12pingora_core.exit, %bb.am, %bb.k
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 124 ; 2 uses
   %i.av = load i8, ptr %i.au, align 4, !range !24, !alias.scope !152, !noundef !15
-  %5 = trunc nuw i8 %i.av to i1
   store i8 1, ptr %i.au, align 4, !alias.scope !152
+  %5 = icmp eq i8 %i.av, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %.val = load ptr, ptr %4, align 8, !nonnull !15, !noundef !15
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -326,7 +326,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
-  br i1 %5, label %bb.z, label %bb.aa
+  br i1 %5, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.aa, %bb.y, %bb.x
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bi, i64 288
@@ -729,8 +729,8 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   %.sink68.i.i.i = phi i64 [ 68, %bb.bd ], [ 69, %bb.bc ]
   %i.fi = getelementptr inbounds nuw i8, ptr %i.et, i64 %.sink68.i.i.i
   %.sroa.0.0.i.in.i.i.i = load i8, ptr %i.fi, align 1, !range !24, !noalias !1676, !noundef !15
-  %3 = trunc nuw i8 %.sroa.0.0.i.in.i.i.i to i1
-  br i1 %3, label %.thread64.i.i.i, label %.thread62.i.i.i
+  %.not.not.i.i.i = icmp eq i8 %.sroa.0.0.i.in.i.i.i, 0
+  br i1 %.not.not.i.i.i, label %.thread62.i.i.i, label %.thread64.i.i.i
 
 .thread62.i.i.i:                                  ; preds = %bb.be, %bb.bc, %bb.bc
   %i.fj = getelementptr inbounds nuw i8, ptr %i.o, i64 288 ; 4 uses
@@ -1133,10 +1133,11 @@ bb.di:                                            ; preds = %bb.dl, %bb.dk, %bb.
   br label %.body.i8.i
 
 bb.dj:                                            ; preds = %bb.dg, %_RNvMNtNtCsG258MDvU3F_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i.i
+  %3 = trunc nuw i8 %i.jo to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !2067
-  %3 = and i8 %i.jo, %.sroa.21.256.i
-  %.not.i10.i = icmp eq i8 %3, 0
-  br i1 %.not.i10.i, label %bb.dk, label %bb.dl
+  %.not1.i.i = icmp ne i8 %.sroa.21.256.i, 0
+  %brmerge.not.i.i = and i1 %.not1.i.i, %3
+  br i1 %brmerge.not.i.i, label %bb.dl, label %bb.dk
 
 bb.dk:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCskxN0Kp1MEon_2h25proto7streams7streams15OpaqueStreamRefEECskeugdADtBsi_12pingora_core.exit.i.i, %bb.dj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !2063

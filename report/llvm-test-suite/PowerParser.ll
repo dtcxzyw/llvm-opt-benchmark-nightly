@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit561: ; preds = %_Z
   br label %.outer
 
 .outer:                                           ; preds = %bb.fh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit561
-  %.0179.ph = phi i1 [ true, %bb.fh ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit561 ]
+  %.0179.ph = phi i1 [ false, %bb.fh ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit561 ]
   %.0177.ph = phi i32 [ %.0177, %bb.fh ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit561 ]
   br label %bb.em
 
@@ -608,13 +608,14 @@ bb.fr:                                            ; preds = %bb.fq
   %i.alx = zext i16 %i.alw to i32
   %i.aly = xor i32 %i.alx, 26213
   %i.alz = or i32 %i.alu, %i.aly
-  %i.ama = icmp ne i32 %i.alz, 0                  ; 2 uses
-  %i.amb = zext i1 %i.ama to i32                  ; 0 uses
-  %67 = or i1 %i.ama, %.0179.ph
+  %i.ama = icmp ne i32 %i.alz, 0
+  %i.amb = zext i1 %i.ama to i32
+  %67 = icmp eq i32 %i.amb, 0
+  %68 = and i1 %67, %.0179.ph
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit599
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit599: ; preds = %bb.fr, %bb.fq
-  %.not6 = phi i1 [ true, %bb.fq ], [ %67, %bb.fr ]
+  %.not6 = phi i1 [ false, %bb.fq ], [ %68, %bb.fr ]
   %i.amc = icmp eq ptr %.pre1566, %i.afy
   br i1 %i.amc, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i601, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i600
 
@@ -631,7 +632,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i60
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit602: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i601, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i600
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #29
-  br i1 %.not6, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit, label %bb.fs
+  br i1 %.not6, label %bb.fs, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
 
 bb.fs:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit602
   %i.amg = load i64, ptr %i.afu, align 8, !tbaa !54
@@ -1034,10 +1035,10 @@ _ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit:           ; preds = %bb.d, %bb.e
   %storemerge.i.i.i.i = phi ptr [ %i.as, %bb.e ], [ %i.aq, %bb.d ]
   %i.at = call noundef zeroext i1 @_ZN2PP3Cmd19find_matching_enddoERiRb(ptr noundef nonnull align 8 dereferenceable(432) %storemerge.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 1 dereferenceable(1) %i.b) ; 2 uses
   %i.au = load i8, ptr %i.b, align 1, !range !257
-  %7 = trunc nuw i8 %i.au to i1
+  %not. = icmp ne i8 %i.au, 0
   %i.av = trunc nsw i64 %indvars.iv.next to i32
   %.1 = select i1 %i.at, i32 %i.av, i32 %.028     ; 2 uses
-  %i.aw = select i1 %i.at, i1 true, i1 %7
+  %i.aw = select i1 %i.at, i1 true, i1 %not.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #29
   br i1 %i.aw, label %bb.f, label %bb.b, !llvm.loop !919
 

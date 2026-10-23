@@ -205,8 +205,7 @@ bb.h:                                             ; preds = %bb.c
   %i.ah = trunc nuw i8 %i.ag to i1
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ak = load i8, ptr %i.aj, align 8, !range !29, !noundef !24
-  %2 = trunc nuw i8 %i.ak to i1                   ; 2 uses
+  %i.ak = load i8, ptr %i.aj, align 8, !range !29, !noundef !24 ; 2 uses
   br i1 %i.ah, label %bb.p, label %bb.q
 
 bb.i:                                             ; preds = %bb.c
@@ -266,10 +265,11 @@ bb.o:                                             ; preds = %bb.g
   br label %bb.b
 
 bb.p:                                             ; preds = %bb.h
+  %2 = trunc nuw i8 %i.ak to i1
   br i1 %2, label %bb.r, label %bb.b
 
 bb.q:                                             ; preds = %bb.h
-  %3 = xor i1 %2, true
+  %3 = icmp eq i8 %i.ak, 0
   br label %bb.b
 
 bb.r:                                             ; preds = %bb.p
@@ -672,8 +672,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.s = load i64, ptr %0, align 8, !range !25, !noundef !24
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.u = trunc nuw i64 %i.s to i1
-  %i.v = load i64, ptr %1, align 8, !range !25, !noundef !24
-  %2 = trunc nuw i64 %i.v to i1                   ; 2 uses
+  %i.v = load i64, ptr %1, align 8, !range !25, !noundef !24 ; 2 uses
   br i1 %i.u, label %bb.g, label %bb.h
 
 bb.f:                                             ; preds = %bb.g, %bb.b, %bb.d, %bb.a, %bb.h, %bb.i
@@ -681,10 +680,11 @@ bb.f:                                             ; preds = %bb.g, %bb.b, %bb.d,
   ret i1 %.sroa.0.0
 
 bb.g:                                             ; preds = %bb.e
+  %2 = trunc nuw i64 %i.v to i1
   br i1 %2, label %bb.i, label %bb.f
 
 bb.h:                                             ; preds = %bb.e
-  %3 = xor i1 %2, true
+  %3 = icmp eq i64 %i.v, 0
   br label %bb.f
 
 bb.i:                                             ; preds = %bb.g
@@ -1087,11 +1087,11 @@ bb.l:                                             ; preds = %.split7.i.i, %bb.k
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 76
   %i.an = trunc nuw i32 %i.al to i1
   %i.ao = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  %i.ap = load i32, ptr %i.ao, align 8, !range !103, !alias.scope !11923, !noundef !24
-  %2 = trunc nuw i32 %i.ap to i1                  ; 2 uses
+  %i.ap = load i32, ptr %i.ao, align 8, !range !103, !alias.scope !11923, !noundef !24 ; 2 uses
   br i1 %i.an, label %bb.m, label %_RNvXsn_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_13BasicTypeInfoNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i
 
 bb.m:                                             ; preds = %bb.l
+  %2 = trunc nuw i32 %i.ap to i1
   br i1 %2, label %.split, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 .split:                                           ; preds = %bb.m
@@ -1102,7 +1102,8 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.at, label %bb.ac, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 _RNvXsn_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_13BasicTypeInfoNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i: ; preds = %bb.l
-  br i1 %2, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.ac
+  %3 = icmp eq i32 %i.ap, 0
+  br i1 %3, label %bb.ac, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.n:                                             ; preds = %bb.b
   tail call void @llvm.assume(i1 %i.h)
@@ -1197,12 +1198,12 @@ bb.z:                                             ; preds = %.split7.i7.i, %bb.y
   %i.cm = getelementptr inbounds nuw i8, ptr %i.a, i64 84
   %i.cn = trunc nuw i32 %i.cl to i1
   %i.co = getelementptr inbounds nuw i8, ptr %i.c, i64 80
-  %i.cp = load i32, ptr %i.co, align 8, !range !103, !alias.scope !11928, !noundef !24
-  %3 = trunc nuw i32 %i.cp to i1                  ; 2 uses
+  %i.cp = load i32, ptr %i.co, align 8, !range !103, !alias.scope !11928, !noundef !24 ; 2 uses
   br i1 %i.cn, label %bb.aa, label %_RNvXsn_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_13BasicTypeInfoNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit8.i
 
 bb.aa:                                            ; preds = %bb.z
-  br i1 %3, label %.split3, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
+  %4 = trunc nuw i32 %i.cp to i1
+  br i1 %4, label %.split3, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 .split3:                                          ; preds = %bb.aa
   %i.cq = getelementptr inbounds nuw i8, ptr %i.c, i64 84
@@ -1212,7 +1213,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.ct, label %bb.ab, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 _RNvXsn_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_13BasicTypeInfoNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit8.i: ; preds = %bb.z
-  br i1 %3, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.ab
+  %5 = icmp eq i32 %i.cp, 0
+  br i1 %5, label %bb.ab, label %_RNvXsj_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_4TypeNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.ab:                                            ; preds = %.split3, %_RNvXsn_NtNtCs4tdlwR1I4n2_7parquet6schema5typesNtB5_13BasicTypeInfoNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit8.i
   %i.cu = getelementptr inbounds nuw i8, ptr %i.a, i64 108

@@ -205,17 +205,17 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [32 x i8], align 8                ; 7 uses
   %i.h = alloca [40 x i8], align 8                ; 8 uses
-  %i.i = alloca [1 x i8], align 1                 ; 4 uses
+  %i.i = alloca [1 x i8], align 1                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.k = load ptr, ptr %i.j, align 8, !invariant.load !19, !nonnull !19
   %i.l = tail call { i64, ptr } %i.k(ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %3) ; 2 uses
   %i.m = extractvalue { i64, ptr } %i.l, 0
   switch i64 %i.m, label %bb.b [
-    i64 0, label %bb.e
+    i64 0, label %bb.d
     i64 1, label %bb.c
     i64 2, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
-    i64 3, label %bb.d
+    i64 3, label %4
   ]
 
 default.unreachable384:                           ; preds = %bb.e
@@ -224,20 +224,22 @@ default.unreachable384:                           ; preds = %bb.e
 bb.b:                                             ; preds = %bb.a
   unreachable
 
+4:                                                ; preds = %bb.a
+  %5 = extractvalue { i64, ptr } %i.l, 1          ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
+  br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
+
 bb.c:                                             ; preds = %bb.a
+  store i8 0, ptr %i.i, align 1
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  %4 = extractvalue { i64, ptr } %i.l, 1          ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
-
-bb.e:                                             ; preds = %bb.a, %bb.c
-  %storemerge = phi i8 [ 0, %bb.c ], [ 1, %bb.a ] ; 2 uses
-  store i8 %storemerge, ptr %i.i, align 1
-  %5 = trunc nuw i8 %storemerge to i1
+  store i8 1, ptr %i.i, align 1
   %6 = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %.sroa.03.0 = select i1 %5, ptr %6, ptr %3      ; 25 uses
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %7 = phi ptr [ %6, %bb.d ], [ %3, %bb.c ]       ; 25 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.o = load i8, ptr %i.n, align 8, !range !29, !noundef !19
   switch i8 %i.o, label %default.unreachable384 [
@@ -284,7 +286,7 @@ bb.g:                                             ; preds = %"_ZN128_$LT$nickel_
   br i1 %.not.i61, label %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3fb1e9ee925762E.exit", label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph451
-  %i.y = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %.sroa.0119.0449, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1910, !inline_history !1736
+  %i.y = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %.sroa.0119.0449, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1910, !inline_history !1736
   br label %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3fb1e9ee925762E.exit"
 
 "_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3fb1e9ee925762E.exit": ; preds = %.lr.ph451, %bb.h
@@ -311,12 +313,12 @@ bb.j:                                             ; preds = %.lr.ph447
 
 .lr.ph447:                                        ; preds = %bb.i, %bb.j
   %.sroa.0124.0445 = phi ptr [ %i.ah, %bb.j ], [ %i.aa, %bb.i ] ; 2 uses
-  %i.aj = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN141_$LT$nickel_lang_parser..ast..pattern..Pattern$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17hc4d3c296b72c9892E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %.sroa.0124.0445, ptr noundef nonnull align 1 %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1911, !inline_history !1741 ; 2 uses
+  %i.aj = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN141_$LT$nickel_lang_parser..ast..pattern..Pattern$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17hc4d3c296b72c9892E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %.sroa.0124.0445, ptr noundef nonnull align 1 %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1911, !inline_history !1741 ; 2 uses
   %.not7.i30 = icmp eq ptr %i.aj, null
   br i1 %.not7.i30, label %bb.j, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 ._crit_edge448:                                   ; preds = %bb.j, %bb.i
-  %i.ak = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ae, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1912, !inline_history !1747
+  %i.ak = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ae, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1912, !inline_history !1747
   br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 bb.k:                                             ; preds = %bb.e
@@ -354,7 +356,7 @@ bb.m:                                             ; preds = %select.unfold.peel.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1915
   store ptr %1, ptr %i.d, align 8, !noalias !1915
   store ptr %2, ptr %i.as, align 8, !noalias !1915
-  %i.bd = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.0138.0444, ptr noundef nonnull align 1 %i.d, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1916, !inline_history !1768 ; 2 uses
+  %i.bd = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.0138.0444, ptr noundef nonnull align 1 %i.d, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1916, !inline_history !1768 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1915
   %.not7.i.i.peel = icmp eq ptr %i.bd, null
   br i1 %.not7.i.i.peel, label %.preheader.preheader, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
@@ -373,19 +375,19 @@ bb.m:                                             ; preds = %select.unfold.peel.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1917
   store ptr %1, ptr %i.c, align 8, !noalias !1917
   store ptr %2, ptr %i.at, align 8, !noalias !1917
-  %i.bh = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.8231.0442, ptr noundef nonnull align 1 %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1918, !inline_history !1779 ; 2 uses
+  %i.bh = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.8231.0442, ptr noundef nonnull align 1 %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1918, !inline_history !1779 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1917
   %.not7.i11.i = icmp eq ptr %i.bh, null
   br i1 %.not7.i11.i, label %.preheader, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 "_ZN4core6option15Option$LT$T$GT$7or_else17h240af93cce7e4cd3E.exit": ; preds = %.preheader, %.preheader.preheader
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0138.0444, i64 200
-  %i.bj = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bi, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1919, !inline_history !1785 ; 2 uses
+  %i.bj = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bi, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1919, !inline_history !1785 ; 2 uses
   %.not7.i35 = icmp eq ptr %i.bj, null
   br i1 %.not7.i35, label %bb.l, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 ._crit_edge:                                      ; preds = %bb.l, %bb.k
-  %i.bk = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.aq, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1920, !inline_history !1791
+  %i.bk = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.aq, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1920, !inline_history !1791
   br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 bb.n:                                             ; preds = %bb.e
@@ -395,7 +397,7 @@ bb.n:                                             ; preds = %bb.e
   %i.bo = load ptr, ptr %i.bn, align 8, !nonnull !19, !align !24, !noundef !19
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bq = load i64, ptr %i.bp, align 8, !noundef !19
-  %i.br = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bm, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0) ; 2 uses
+  %i.br = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bm, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7) ; 2 uses
   %.not.i39 = icmp eq ptr %i.br, null
   br i1 %.not.i39, label %bb.o, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
@@ -409,7 +411,7 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.6150.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store ptr %2, ptr %.sroa.6150.0..sroa_idx, align 8, !noalias !1922
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  store ptr %.sroa.03.0, ptr %.sroa.7.0..sroa_idx, align 8, !noalias !1922
+  store ptr %7, ptr %.sroa.7.0..sroa_idx, align 8, !noalias !1922
   %i.bs = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3970acf4166134E"(ptr noalias noundef readonly align 8 captures(address) dereferenceable(40) %i.h), !noalias !1921, !inline_history !1795
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1921
   br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
@@ -464,7 +466,7 @@ bb.s:                                             ; preds = %"_ZN141_$LT$nickel_
   br i1 %.not.i.i89, label %"_ZN141_$LT$nickel_lang_parser..ast..record..FieldDef$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h58874e327dc43e76E.exit.i", label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph433
-  %i.cq = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.0196.0432, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1929, !inline_history !1809
+  %i.cq = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.0196.0432, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1929, !inline_history !1809
   br label %"_ZN141_$LT$nickel_lang_parser..ast..record..FieldDef$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h58874e327dc43e76E.exit.i"
 
 "_ZN141_$LT$nickel_lang_parser..ast..record..FieldDef$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h58874e327dc43e76E.exit.i": ; preds = %bb.t, %.lr.ph433
@@ -487,7 +489,7 @@ bb.u:                                             ; preds = %select.unfold292.pe
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1932
   store ptr %1, ptr %i.b, align 8, !noalias !1932
   store ptr %2, ptr %i.cc, align 8, !noalias !1932
-  %i.cx = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.0151.0436, ptr noundef nonnull align 1 %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1933, !inline_history !1831 ; 2 uses
+  %i.cx = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.0151.0436, ptr noundef nonnull align 1 %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1933, !inline_history !1831 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1932
   %.not7.i.i110.peel = icmp eq ptr %i.cx, null
   br i1 %.not7.i.i110.peel, label %.preheader327.preheader, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
@@ -506,7 +508,7 @@ bb.u:                                             ; preds = %select.unfold292.pe
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1934
   store ptr %1, ptr %i.a, align 8, !noalias !1934
   store ptr %2, ptr %i.cd, align 8, !noalias !1934
-  %i.db = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.8246.0434, ptr noundef nonnull align 1 %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1935, !inline_history !1842 ; 2 uses
+  %i.db = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.8246.0434, ptr noundef nonnull align 1 %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1935, !inline_history !1842 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1934
   %.not7.i11.i103 = icmp eq ptr %i.db, null
   br i1 %.not7.i11.i103, label %.preheader327, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
@@ -518,7 +520,7 @@ bb.u:                                             ; preds = %select.unfold292.pe
   br i1 %.not.i.i81, label %"_ZN4core6option15Option$LT$T$GT$7or_else17hbe27006e95a50665E.exit", label %bb.v
 
 bb.v:                                             ; preds = %.preheader327._crit_edge
-  %i.de = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dc, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1937, !inline_history !1850
+  %i.de = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dc, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1937, !inline_history !1850
   br label %"_ZN4core6option15Option$LT$T$GT$7or_else17hbe27006e95a50665E.exit"
 
 "_ZN4core6option15Option$LT$T$GT$7or_else17hbe27006e95a50665E.exit": ; preds = %.preheader327._crit_edge, %bb.v
@@ -533,17 +535,17 @@ bb.w:                                             ; preds = %bb.e
   %i.di = load ptr, ptr %i.dh, align 8, !nonnull !19, !align !24, !noundef !19
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.dk = load ptr, ptr %i.dj, align 8, !nonnull !19, !align !24, !noundef !19
-  %i.dl = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dg, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0) ; 2 uses
+  %i.dl = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dg, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7) ; 2 uses
   %.not.i44 = icmp eq ptr %i.dl, null
   br i1 %.not.i44, label %"_ZN4core6option15Option$LT$T$GT$7or_else17h39ab7a722079dfc0E.exit", label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 "_ZN4core6option15Option$LT$T$GT$7or_else17h39ab7a722079dfc0E.exit": ; preds = %bb.w
-  %i.dm = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.di, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1938, !inline_history !1856 ; 2 uses
+  %i.dm = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.di, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1938, !inline_history !1856 ; 2 uses
   %.not.i46 = icmp eq ptr %i.dm, null
   br i1 %.not.i46, label %bb.x, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 bb.x:                                             ; preds = %"_ZN4core6option15Option$LT$T$GT$7or_else17h39ab7a722079dfc0E.exit"
-  %i.dn = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dk, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1939, !inline_history !1862
+  %i.dn = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dk, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1939, !inline_history !1862
   br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 bb.y:                                             ; preds = %bb.e
@@ -565,7 +567,7 @@ bb.z:                                             ; preds = %"_ZN128_$LT$nickel_
   %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.0156.0425, i64 160 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %.sroa.0156.0425, i64 112 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %.sroa.0156.0425, i64 64
-  %i.dy = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN141_$LT$nickel_lang_parser..ast..pattern..Pattern$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17hc4d3c296b72c9892E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(160) %.sroa.0156.0425, ptr noundef nonnull align 1 %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1940, !inline_history !1867 ; 2 uses
+  %i.dy = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN141_$LT$nickel_lang_parser..ast..pattern..Pattern$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17hc4d3c296b72c9892E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(160) %.sroa.0156.0425, ptr noundef nonnull align 1 %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1940, !inline_history !1867 ; 2 uses
   %.not.i.i = icmp eq ptr %i.dy, null
   br i1 %.not.i.i, label %bb.aa, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
@@ -575,12 +577,12 @@ bb.aa:                                            ; preds = %.lr.ph426
   br i1 %.not.i92, label %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h633e6d44b8e0c4dfE.exit", label %"_ZN4core6option15Option$LT$T$GT$7or_else17he79cc9e58726855bE.exit.i"
 
 "_ZN4core6option15Option$LT$T$GT$7or_else17he79cc9e58726855bE.exit.i": ; preds = %bb.aa
-  %i.ea = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dw, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1941, !inline_history !1873 ; 2 uses
+  %i.ea = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dw, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1941, !inline_history !1873 ; 2 uses
   %.not.i1.i = icmp eq ptr %i.ea, null
   br i1 %.not.i1.i, label %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h633e6d44b8e0c4dfE.exit", label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 "_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h633e6d44b8e0c4dfE.exit": ; preds = %bb.aa, %"_ZN4core6option15Option$LT$T$GT$7or_else17he79cc9e58726855bE.exit.i"
-  %i.eb = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dx, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1942, !inline_history !1879 ; 2 uses
+  %i.eb = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.dx, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1942, !inline_history !1879 ; 2 uses
   %.not7.i49 = icmp eq ptr %i.eb, null
   br i1 %.not7.i49, label %bb.z, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
@@ -601,7 +603,7 @@ bb.ac:                                            ; preds = %.lr.ph421
 
 .lr.ph421:                                        ; preds = %bb.ab, %bb.ac
   %.sroa.0164.0420 = phi ptr [ %i.ei, %bb.ac ], [ %i.ed, %bb.ab ] ; 2 uses
-  %i.ek = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.0164.0420, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1943, !inline_history !1884 ; 2 uses
+  %i.ek = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.0164.0420, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1943, !inline_history !1884 ; 2 uses
   %.not7.i52 = icmp eq ptr %i.ek, null
   br i1 %.not7.i52, label %bb.ac, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
@@ -622,7 +624,7 @@ bb.ae:                                            ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ad, %bb.ae
   %.sroa.0133.0417 = phi ptr [ %i.er, %bb.ae ], [ %i.em, %bb.ad ] ; 2 uses
-  %i.et = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.0133.0417, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1944, !inline_history !1889 ; 2 uses
+  %i.et = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.0133.0417, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1944, !inline_history !1889 ; 2 uses
   %.not7.i55 = icmp eq ptr %i.et, null
   br i1 %.not7.i55, label %bb.ae, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
@@ -653,7 +655,7 @@ bb.af:                                            ; preds = %bb.e
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %2, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1946
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  store ptr %.sroa.03.0, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !1946
+  store ptr %7, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !1946
   %i.fh = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN106_$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h87f6053fb7ef4dafE"(ptr noalias noundef align 8 dereferenceable(32) %i.g, ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.f), !inline_history !1896 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1946
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !1946
@@ -661,7 +663,7 @@ bb.af:                                            ; preds = %bb.e
   br i1 %.not.i59, label %bb.ag, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 bb.ag:                                            ; preds = %bb.af
-  %i.fi = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ex, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !noalias !1949, !inline_history !1902
+  %i.fi = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ex, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !noalias !1949, !inline_history !1902
   br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 bb.ah:                                            ; preds = %bb.e
@@ -671,16 +673,16 @@ bb.ah:                                            ; preds = %bb.e
   store ptr %1, ptr %i.e, align 8, !noalias !1950
   %i.fl = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %2, ptr %i.fl, align 8, !noalias !1950
-  %i.fm = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.fk, ptr noundef nonnull align 1 %i.e, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0), !inline_history !1907
+  %i.fm = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.fk, ptr noundef nonnull align 1 %i.e, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7), !inline_history !1907
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1950
   br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
 bb.ai:                                            ; preds = %bb.p
-  %i.fn = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bu, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.03.0)
+  %i.fn = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref17had6f0c22304a76e5E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bu, ptr noundef nonnull align 1 %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %7)
   br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit"
 
-"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit": ; preds = %bb.ae, %.lr.ph, %bb.ac, %.lr.ph421, %.lr.ph426, %"_ZN4core6option15Option$LT$T$GT$7or_else17he79cc9e58726855bE.exit.i", %bb.z, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h633e6d44b8e0c4dfE.exit", %bb.r, %"_ZN4core6option15Option$LT$T$GT$7or_else17hbe27006e95a50665E.exit", %bb.u, %"_ZN141_$LT$nickel_lang_parser..ast..record..FieldDef$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h58874e327dc43e76E.exit.i", %.lr.ph435, %bb.m, %"_ZN4core6option15Option$LT$T$GT$7or_else17h240af93cce7e4cd3E.exit", %.lr.ph443, %.lr.ph447, %bb.g, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3fb1e9ee925762E.exit", %bb.ad, %bb.ab, %bb.y, %bb.q, %bb.f, %bb.p, %bb.a, %bb.d, %bb.ai, %bb.ah, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %._crit_edge448, %._crit_edge, %bb.n, %bb.o, %"_ZN4core6option15Option$LT$T$GT$7or_else17h39ab7a722079dfc0E.exit", %bb.x, %bb.af, %bb.ag, %bb.w
-  %.sroa.0.2 = phi ptr [ %.sroa.0.0.i8.i, %"_ZN141_$LT$nickel_lang_parser..ast..record..FieldDef$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h58874e327dc43e76E.exit.i" ], [ null, %bb.e ], [ %i.db, %.lr.ph435 ], [ %i.bh, %.lr.ph443 ], [ %.sroa.0.0.i62, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3fb1e9ee925762E.exit" ], [ %i.fn, %bb.ai ], [ %i.br, %bb.n ], [ null, %bb.ad ], [ null, %bb.y ], [ %i.dl, %bb.w ], [ %i.fi, %bb.ag ], [ null, %bb.p ], [ %i.fm, %bb.ah ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ %i.fh, %bb.af ], [ %i.ak, %._crit_edge448 ], [ %i.bk, %._crit_edge ], [ %i.bs, %bb.o ], [ %i.bd, %bb.m ], [ %4, %bb.d ], [ %i.dn, %bb.x ], [ %i.dm, %"_ZN4core6option15Option$LT$T$GT$7or_else17h39ab7a722079dfc0E.exit" ], [ %i.cx, %bb.u ], [ null, %bb.a ], [ null, %bb.ac ], [ null, %bb.f ], [ %i.eb, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h633e6d44b8e0c4dfE.exit" ], [ %i.aj, %.lr.ph447 ], [ null, %bb.ab ], [ null, %bb.q ], [ null, %bb.g ], [ %i.bj, %"_ZN4core6option15Option$LT$T$GT$7or_else17h240af93cce7e4cd3E.exit" ], [ %.sroa.0.0.i80, %"_ZN4core6option15Option$LT$T$GT$7or_else17hbe27006e95a50665E.exit" ], [ null, %bb.r ], [ null, %bb.z ], [ %i.ea, %"_ZN4core6option15Option$LT$T$GT$7or_else17he79cc9e58726855bE.exit.i" ], [ %i.dy, %.lr.ph426 ], [ %i.ek, %.lr.ph421 ], [ %i.et, %.lr.ph ], [ null, %bb.ae ]
+"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17he0caea9ea9e7d968E.exit": ; preds = %bb.ae, %.lr.ph, %bb.ac, %.lr.ph421, %.lr.ph426, %"_ZN4core6option15Option$LT$T$GT$7or_else17he79cc9e58726855bE.exit.i", %bb.z, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h633e6d44b8e0c4dfE.exit", %bb.r, %"_ZN4core6option15Option$LT$T$GT$7or_else17hbe27006e95a50665E.exit", %bb.u, %"_ZN141_$LT$nickel_lang_parser..ast..record..FieldDef$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h58874e327dc43e76E.exit.i", %.lr.ph435, %bb.m, %"_ZN4core6option15Option$LT$T$GT$7or_else17h240af93cce7e4cd3E.exit", %.lr.ph443, %.lr.ph447, %bb.g, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3fb1e9ee925762E.exit", %bb.ad, %bb.ab, %bb.y, %bb.q, %bb.f, %bb.p, %bb.a, %4, %bb.ai, %bb.ah, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %._crit_edge448, %._crit_edge, %bb.n, %bb.o, %"_ZN4core6option15Option$LT$T$GT$7or_else17h39ab7a722079dfc0E.exit", %bb.x, %bb.af, %bb.ag, %bb.w
+  %.sroa.0.2 = phi ptr [ %.sroa.0.0.i8.i, %"_ZN141_$LT$nickel_lang_parser..ast..record..FieldDef$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h58874e327dc43e76E.exit.i" ], [ null, %bb.e ], [ %i.db, %.lr.ph435 ], [ %i.bh, %.lr.ph443 ], [ %.sroa.0.0.i62, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17heb3fb1e9ee925762E.exit" ], [ %i.fn, %bb.ai ], [ %i.br, %bb.n ], [ null, %bb.ad ], [ null, %bb.y ], [ %i.dl, %bb.w ], [ %i.fi, %bb.ag ], [ null, %bb.p ], [ %i.fm, %bb.ah ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ null, %bb.e ], [ %i.fh, %bb.af ], [ %i.ak, %._crit_edge448 ], [ %i.bk, %._crit_edge ], [ %i.bs, %bb.o ], [ %i.bd, %bb.m ], [ %5, %4 ], [ %i.dn, %bb.x ], [ %i.dm, %"_ZN4core6option15Option$LT$T$GT$7or_else17h39ab7a722079dfc0E.exit" ], [ %i.cx, %bb.u ], [ null, %bb.a ], [ null, %bb.ac ], [ null, %bb.f ], [ %i.eb, %"_ZN128_$LT$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..Ast$GT$$GT$12traverse_ref28_$u7b$$u7b$closure$u7d$$u7d$17h633e6d44b8e0c4dfE.exit" ], [ %i.aj, %.lr.ph447 ], [ null, %bb.ab ], [ null, %bb.q ], [ null, %bb.g ], [ %i.bj, %"_ZN4core6option15Option$LT$T$GT$7or_else17h240af93cce7e4cd3E.exit" ], [ %.sroa.0.0.i80, %"_ZN4core6option15Option$LT$T$GT$7or_else17hbe27006e95a50665E.exit" ], [ null, %bb.r ], [ null, %bb.z ], [ %i.ea, %"_ZN4core6option15Option$LT$T$GT$7or_else17he79cc9e58726855bE.exit.i" ], [ %i.dy, %.lr.ph426 ], [ %i.ek, %.lr.ph421 ], [ %i.et, %.lr.ph ], [ null, %bb.ae ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   ret ptr %.sroa.0.2
 }
@@ -1083,8 +1085,8 @@ bb.a:
   %i.a = alloca [48 x i8], align 8                ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !range !21, !noundef !19
-  %trunc = trunc nuw i8 %i.c to i1
-  br i1 %trunc, label %bb.g, label %bb.b
+  %.not8.not = icmp eq i8 %i.c, 0
+  br i1 %.not8.not, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
   %.not = icmp eq ptr %1, null
@@ -1487,10 +1489,10 @@ bb.h:                                             ; preds = %bb.f, %bb.d
   %.pre11.i107 = phi i64 [ %.pre11.i108, %bb.f ], [ %i.s, %bb.d ]
   %i.ad = phi i64 [ 0, %bb.f ], [ %i.s, %bb.d ]
   %.sroa.016.0.in = phi ptr [ %i.ac, %bb.f ], [ %i.w, %bb.d ]
-  %.sroa.014.1 = phi i8 [ 0, %bb.f ], [ %.sroa.014.0, %bb.d ] ; 3 uses
+  %.sroa.014.1 = phi i8 [ 0, %bb.f ], [ %.sroa.014.0, %bb.d ] ; 4 uses
   %.sroa.010.1 = phi i64 [ %i.x, %bb.f ], [ %.sroa.010.0, %bb.d ] ; 2 uses
   %.sroa.016.0 = load ptr, ptr %.sroa.016.0.in, align 8, !nonnull !19, !align !24, !noundef !19
-  %i.ae = trunc nuw i8 %.sroa.014.1 to i1         ; 2 uses
+  %i.ae = trunc nuw i8 %.sroa.014.1 to i1
   %.sroa.032.0.in.v = select i1 %i.ae, i64 16, i64 8
   br label %.backedge.outer
 
@@ -1638,7 +1640,7 @@ bb.n:                                             ; preds = %.backedge, %.backed
   br label %bb.af
 
 bb.o:                                             ; preds = %.backedge
-  %4 = xor i1 %i.ae, true
+  %4 = icmp eq i8 %.sroa.014.1, 0
   br label %.loopexit74
 
 bb.p:                                             ; preds = %.backedge
@@ -2041,15 +2043,15 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !nonnull !19, !noundef !19 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %i.h = load i64, ptr %i.g, align 8, !noundef !19 ; 2 uses
-  %3 = icmp ule i64 %i.h, %i.d                    ; 2 uses
+  %.not38 = icmp ugt i64 %i.h, %i.d               ; 2 uses
   %i.i = sub nuw i64 %i.d, %i.h
-  %spec.select = select i1 %3, i64 %i.i, i64 undef
+  %spec.select = select i1 %.not38, i64 undef, i64 %i.i
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.j = phi ptr [ %.pre, %._crit_edge ], [ %i.f, %bb.b ] ; 3 uses
   %.sroa.7.0 = phi i64 [ undef, %._crit_edge ], [ %spec.select, %bb.b ]
-  %.sroa.024.0 = phi i1 [ false, %._crit_edge ], [ %3, %bb.b ]
+  %.sroa.024.0 = phi i1 [ true, %._crit_edge ], [ %.not38, %bb.b ]
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.m = load i64, ptr %i.l, align 8, !noundef !19
@@ -2132,9 +2134,9 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %.thread.i.i.i.i, %bb.k
   %.sroa.02.126.i.i.i.i = phi i64 [ %i.ao, %.thread.i.i.i.i ], [ %i.ak, %bb.k ] ; 7 uses
   %i.ap = add i64 %.sroa.02.126.i.i.i.i, 48       ; 3 uses
-  %4 = icmp ult i64 %.sroa.7.0, %.sroa.02.126.i.i.i.i
-  %or.cond.not.i.i.i.i = select i1 %.sroa.024.0, i1 %4, i1 false
-  br i1 %or.cond.not.i.i.i.i, label %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17h7a02229a0aae9bbbE.exit.thread.i", label %bb.m
+  %3 = icmp uge i64 %.sroa.7.0, %.sroa.02.126.i.i.i.i
+  %or.cond.not.i.i.i.i = select i1 %.sroa.024.0, i1 true, i1 %3
+  br i1 %or.cond.not.i.i.i.i, label %bb.m, label %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17h7a02229a0aae9bbbE.exit.thread.i"
 
 bb.m:                                             ; preds = %bb.l
   %i.aq = tail call noundef zeroext i1 @_ZN4core5alloc6layout6Layout19is_size_align_valid17h26adf6c6175f55f5E(i64 noundef %i.ap, i64 noundef %.sroa.0.0.i.i.i.i.i), !noalias !504950

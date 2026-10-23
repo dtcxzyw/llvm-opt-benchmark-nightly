@@ -204,7 +204,7 @@ bb.a:
   %9 = alloca %"struct.rocksdb::IOErrorInfo", align 8 ; 9 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %10 = alloca %"struct.rocksdb::IOErrorInfo", align 8 ; 9 uses
-  %i.b = alloca i64, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 7 uses
   %11 = alloca %"class.rocksdb::StopWatch", align 8 ; 35 uses
   %12 = alloca %"class.rocksdb::PerfStepTimer", align 8 ; 16 uses
   %13 = alloca %"class.rocksdb::AlignedBuffer", align 8 ; 14 uses
@@ -424,7 +424,7 @@ bb.q:                                             ; preds = %bb.m, %.thread320
           to label %bb.r unwind label %bb.ad, !inline_history !5
 
 bb.r:                                             ; preds = %bb.q, %.sink.split
-  %.not.i239 = phi i1 [ false, %bb.q ], [ true, %.sink.split ] ; 2 uses
+  %25 = phi ptr [ null, %bb.q ], [ %i.b, %.sink.split ] ; 2 uses
   %i.ck = phi ptr [ %i.bw, %bb.q ], [ %i.bc, %.sink.split ]
   %i.cl = phi ptr [ %i.bx, %bb.q ], [ %i.bd, %.sink.split ] ; 2 uses
   %i.cm = phi i64 [ 0, %bb.q ], [ %i.cj, %.sink.split ]
@@ -569,6 +569,8 @@ _ZNK7rocksdb22RandomAccessFileReader13use_direct_ioEv.exit: ; preds = %_ZNK7rock
   %i.ey = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.ez = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %.not.i241 = icmp eq ptr %25, null
+  %.not.i233 = icmp ne ptr %25, null
   br label %bb.cd
 
 bb.aa:                                            ; preds = %_ZNK7rocksdb22RandomAccessFileReader13use_direct_ioEv.exit
@@ -971,8 +973,8 @@ bb.cf:                                            ; preds = %bb.ce
 
 bb.cg:                                            ; preds = %bb.cf
   %i.ma = icmp eq i64 %i.lu, 0
-  %25 = and i1 %i.lz, %.not.i239
-  %or.cond492 = select i1 %25, i1 %i.ma, i1 false
+  %or.cond384 = select i1 %.not.i233, i1 %i.ma, i1 false
+  %or.cond492 = select i1 %i.lz, i1 %or.cond384, i1 false
   br i1 %or.cond492, label %bb.ch, label %_ZN7rocksdb9StopWatch10DelayStartEv.exit
 
 bb.ch:                                            ; preds = %bb.cg
@@ -1039,9 +1041,9 @@ bb.cl:                                            ; preds = %bb.ck
   br i1 %i.nc, label %bb.cm, label %bb.co
 
 bb.cm:                                            ; preds = %bb.cl
-  %.not1.i = icmp ne i64 %i.mf, 0
-  %or.cond381.not = select i1 %.not.i239, i1 %.not1.i, i1 false
-  br i1 %or.cond381.not, label %bb.cn, label %_ZN7rocksdb9StopWatch9DelayStopEv.exit
+  %.not1.i243 = icmp eq i64 %i.mf, 0
+  %or.cond381.not = select i1 %.not.i241, i1 true, i1 %.not1.i243
+  br i1 %or.cond381.not, label %_ZN7rocksdb9StopWatch9DelayStopEv.exit, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
   %i.nd = load ptr, ptr %i.aj, align 8, !tbaa !31

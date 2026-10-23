@@ -205,7 +205,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph22, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit
-  %.sroa.02.019 = phi i1 [ false, %.lr.ph22 ], [ %.sroa.02.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ]
+  %.sroa.02.019 = phi i8 [ 0, %.lr.ph22 ], [ %.sroa.02.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ]
   %.sroa.06.018 = phi i64 [ %i.b, %.lr.ph22 ], [ %.sroa.06.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %.sroa.0.017 = phi i64 [ 0, %.lr.ph22 ], [ %.sroa.0.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %i.g = and i64 %.sroa.06.018, 2251799813685247
@@ -295,10 +295,11 @@ bb.g:                                             ; preds = %._crit_edge
 _RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit: ; preds = %bb.g, %bb.f, %bb.b
   %.sroa.0.1 = phi i64 [ 0, %bb.b ], [ %.sroa.0.017, %bb.g ], [ %i.w, %bb.f ]
   %.sroa.06.1 = phi i64 [ %i.k, %bb.b ], [ %.sroa.06.018, %bb.g ], [ %.sroa.06.018, %bb.f ] ; 2 uses
-  %.sroa.02.1 = phi i1 [ %.sroa.02.019, %bb.b ], [ true, %bb.g ], [ true, %bb.f ] ; 2 uses
+  %.sroa.02.1 = phi i8 [ %.sroa.02.019, %bb.b ], [ 1, %bb.g ], [ 1, %bb.f ] ; 2 uses
   %i.x = lshr i64 %.sroa.06.1, 51
+  %.not = icmp ne i8 %.sroa.02.1, 0
   %i.y = icmp eq i64 %1, %i.x
-  %or.cond.not = or i1 %.sroa.02.1, %i.y
+  %or.cond.not = or i1 %.not, %i.y
   br i1 %or.cond.not, label %bb.b, label %.loopexit
 }
 
@@ -319,7 +320,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph22, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit
-  %.sroa.02.019 = phi i1 [ false, %.lr.ph22 ], [ %.sroa.02.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ]
+  %.sroa.02.019 = phi i8 [ 0, %.lr.ph22 ], [ %.sroa.02.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ]
   %.sroa.06.018 = phi i64 [ %i.b, %.lr.ph22 ], [ %.sroa.06.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %.sroa.0.017 = phi i64 [ 0, %.lr.ph22 ], [ %.sroa.0.1, %_RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit ] ; 4 uses
   %i.g = and i64 %.sroa.06.018, 2251799813685247
@@ -406,10 +407,11 @@ bb.g:                                             ; preds = %._crit_edge
 _RNvNtNtCskeoOuuhwsQF_12sharded_slab4page4slot19exponential_backoff.exit: ; preds = %bb.g, %bb.f, %bb.b
   %.sroa.0.1 = phi i64 [ 0, %bb.b ], [ %.sroa.0.017, %bb.g ], [ %i.u, %bb.f ]
   %.sroa.06.1 = phi i64 [ %i.k, %bb.b ], [ %.sroa.06.018, %bb.g ], [ %.sroa.06.018, %bb.f ] ; 2 uses
-  %.sroa.02.1 = phi i1 [ %.sroa.02.019, %bb.b ], [ true, %bb.g ], [ true, %bb.f ] ; 2 uses
+  %.sroa.02.1 = phi i8 [ %.sroa.02.019, %bb.b ], [ 1, %bb.g ], [ 1, %bb.f ] ; 2 uses
   %i.v = lshr i64 %.sroa.06.1, 51
+  %.not = icmp ne i8 %.sroa.02.1, 0
   %i.w = icmp eq i64 %1, %i.v
-  %or.cond.not = or i1 %.sroa.02.1, %i.w
+  %or.cond.not = or i1 %.not, %i.w
   br i1 %or.cond.not, label %bb.b, label %.loopexit
 }
 
@@ -812,11 +814,11 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.c,
 
 bb.i:                                             ; preds = %bb.b
   %i.an = load i8, ptr %i.a, align 8, !range !6, !noalias !104, !noundef !5
-  %4 = trunc nuw i8 %i.an to i1
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ap = load double, ptr %i.ao, align 8, !noalias !104 ; 5 uses
+  %not..i.not.not = icmp eq i8 %i.an, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !104
-  br i1 %4, label %bb.j, label %bb.ad
+  br i1 %not..i.not.not, label %bb.ad, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.aq = load atomic i64, ptr @_RNvNtCs94TQx44N27d_12tracing_core8metadata9MAX_LEVEL monotonic, align 8

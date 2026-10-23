@@ -204,15 +204,16 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.m = load i8, ptr %i.l, align 4, !tbaa !140, !range !105, !noundef !106 ; 2 uses
-  %3 = trunc nuw i8 %i.m to i1
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.o = load i8, ptr %i.n, align 4, !tbaa !140, !range !105, !noundef !106
-  %i.p = icmp eq i8 %i.m, %i.o                    ; 2 uses
-  %brmerge.not.i = and i1 %i.p, %3
+  %3 = icmp ne i8 %i.m, %i.o                      ; 2 uses
+  %i.p = icmp eq i8 %i.m, 0
+  %brmerge.i = or i1 %i.p, %3
+  %not..i = xor i1 %3, true
   %i.q = load i32, ptr %i.e, align 4
   %i.r = load i32, ptr %2, align 4
   %i.s = icmp eq i32 %i.q, %i.r
-  %i.t = select i1 %brmerge.not.i, i1 %i.s, i1 %i.p
+  %i.t = select i1 %brmerge.i, i1 %not..i, i1 %i.s
   %i.u = select i1 %i.t, ptr %2, ptr null
   br label %_ZN4entt7type_idISt8optionalIiEEERKNS_9type_infoEv.exit
 

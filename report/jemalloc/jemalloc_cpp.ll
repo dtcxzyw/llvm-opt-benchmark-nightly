@@ -202,8 +202,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !39
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %1 = trunc i64 %i.o to i1
-  br i1 %1, label %.noexc2, label %.noexc.thread, !prof !34
+  %1 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %1, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -272,8 +273,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !42
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %1 = trunc i64 %i.o to i1
-  br i1 %1, label %.noexc2, label %.noexc.thread, !prof !34
+  %1 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %1, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -342,8 +344,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !45
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %2 = trunc i64 %i.o to i1
-  br i1 %2, label %.noexc2, label %.noexc.thread, !prof !34
+  %2 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %2, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -412,8 +415,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !48
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %2 = trunc i64 %i.o to i1
-  br i1 %2, label %.noexc2, label %.noexc.thread, !prof !34
+  %2 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %2, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -604,8 +608,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !51
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %2 = trunc i64 %i.o to i1
-  br i1 %2, label %.noexc2, label %.noexc.thread, !prof !34
+  %2 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %2, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -674,8 +679,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !54
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %2 = trunc i64 %i.o to i1
-  br i1 %2, label %.noexc2, label %.noexc.thread, !prof !34
+  %2 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %2, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -744,8 +750,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !57
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %3 = trunc i64 %i.o to i1
-  br i1 %3, label %.noexc2, label %.noexc.thread, !prof !34
+  %3 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %3, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -814,8 +821,9 @@ bb.a:
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !60
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %3 = trunc i64 %i.o to i1
-  br i1 %3, label %.noexc2, label %.noexc.thread, !prof !34
+  %3 = and i64 %i.o, 1
+  %.not26.i = icmp eq i64 %3, 0
+  br i1 %.not26.i, label %.noexc.thread, label %.noexc2, !prof !34
 
 .noexc2:                                          ; preds = %.noexc
   %i.p = lshr i64 %i.o, 48                        ; 2 uses
@@ -1218,7 +1226,7 @@ attributes #19 = { nounwind allocsize(0) }
 !31 = !{!"_ZTS21rtree_ctx_cache_elm_s", !16, i64 0, !30, i64 8}
 !32 = !{!31, !16, i64 0}
 !33 = !{!31, !30, i64 8}
-!34 = !{!"branch_weights", i32 2146410443, i32 1073205}
+!34 = !{!"branch_weights", i32 1073205, i32 2146410443}
 !35 = !{!24, !22, i64 18}
 !36 = !{!"branch_weights", i32 1, i32 1048575}
 !37 = distinct !{!37, i1 true, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}

@@ -204,7 +204,6 @@ bb.ac:                                            ; preds = %bb.ab
 
 .thread186:                                       ; preds = %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #10
-  %.pre222 = trunc nuw i8 %i.bv to i1
   br label %bb.ca
 
 bb.ad:                                            ; preds = %.thread, %bb.q
@@ -226,10 +225,11 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 
 bb.ag:                                            ; preds = %bb.af
   %i.cx = call zeroext i1 @defGetBoolean(ptr noundef nonnull %.0..0..0..0.133) #10
+  %4 = zext i1 %i.cx to i8
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.af, %bb.ag
-  %.0113 = phi i1 [ %i.cx, %bb.ag ], [ true, %bb.af ] ; 3 uses
+  %.0113 = phi i8 [ %4, %bb.ag ], [ 1, %bb.af ]   ; 3 uses
   %.0..0..0..0.131 = load ptr, ptr %i.h, align 8  ; 2 uses
   %.not167 = icmp eq ptr %.0..0..0..0.131, null
   br i1 %.not167, label %bb.aj, label %bb.ai
@@ -404,8 +404,8 @@ bb.bo:                                            ; preds = %bb.bk, %bb.bl, %bb.
 
 bb.bp:                                            ; preds = %bb.be, %bb.bo, %bb.bg, %bb.ba
   %.4 = phi ptr [ %i.dv, %bb.ba ], [ %.1119, %bb.be ], [ %.3, %bb.bo ], [ %.1119, %bb.bg ] ; 3 uses
-  %.not = xor i1 %.0113, true
-  %or.cond4 = and i1 %i.dm, %.not
+  %.not = icmp eq i8 %.0113, 0
+  %or.cond4 = and i1 %.not, %i.dm
   br i1 %or.cond4, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %bb.bp
@@ -459,9 +459,9 @@ bb.bz:                                            ; preds = %bb.bu, %bb.by, %bb.
   br i1 %.not180, label %bb.ca, label %bb.cb
 
 bb.ca:                                            ; preds = %.thread186, %bb.bz
-  %.pre.pre-phi = phi i1 [ %.pre222, %.thread186 ], [ %.0113, %bb.bz ]
   %.1110209 = phi i8 [ %i.bt, %.thread186 ], [ %.0109, %bb.bz ] ; 3 uses
   %.1112207 = phi i32 [ %i.bx, %.thread186 ], [ %.1112, %bb.bz ]
+  %.1114205 = phi i8 [ %i.bv, %.thread186 ], [ %.0113, %bb.bz ]
   %.2117203 = phi ptr [ %.0115, %.thread186 ], [ %.1116, %bb.bz ]
   %.5201 = phi ptr [ %.0118, %.thread186 ], [ %.4, %bb.bz ] ; 2 uses
   %.3124199 = phi ptr [ %.0121, %.thread186 ], [ %.2123, %bb.bz ]
@@ -472,17 +472,18 @@ bb.ca:                                            ; preds = %.thread186, %bb.bz
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %bb.bz
-  %.pre-phi = phi i1 [ %.pre.pre-phi, %bb.ca ], [ %.0113, %bb.bz ]
-  %.1110208 = phi i8 [ %.1110209, %bb.ca ], [ %.0109, %bb.bz ]
-  %.1112206 = phi i32 [ %.1112207, %bb.ca ], [ %.1112, %bb.bz ]
-  %.2117202 = phi ptr [ %.2117203, %bb.ca ], [ %.1116, %bb.bz ]
-  %.5200 = phi ptr [ %.5201, %bb.ca ], [ %.4, %bb.bz ]
-  %.3124198 = phi ptr [ %.3124199, %bb.ca ], [ %.2123, %bb.bz ]
-  %.3128196 = phi ptr [ %.3128197, %bb.ca ], [ %.2127, %bb.bz ]
-  %.2 = phi ptr [ %i.fa, %bb.ca ], [ %.0108, %bb.bz ]
+  %.1110208 = phi i8 [ %.0109, %bb.bz ], [ %.1110209, %bb.ca ]
+  %.1112206 = phi i32 [ %.1112, %bb.bz ], [ %.1112207, %bb.ca ]
+  %.1114204 = phi i8 [ %.0113, %bb.bz ], [ %.1114205, %bb.ca ]
+  %.2117202 = phi ptr [ %.1116, %bb.bz ], [ %.2117203, %bb.ca ]
+  %.5200 = phi ptr [ %.4, %bb.bz ], [ %.5201, %bb.ca ]
+  %.3124198 = phi ptr [ %.2123, %bb.bz ], [ %.3124199, %bb.ca ]
+  %.3128196 = phi ptr [ %.2127, %bb.bz ], [ %.3128197, %bb.ca ]
+  %.2 = phi ptr [ %.0108, %bb.bz ], [ %i.fa, %bb.ca ]
   %i.fb = load ptr, ptr %i.a, align 8
   %i.fc = call i32 @GetUserId() #10
-  %i.fd = call i32 @CollationCreate(ptr noundef %i.fb, i32 noundef %i.k, i32 noundef %i.fc, i8 noundef signext %.1110208, i1 noundef zeroext %.pre-phi, i32 noundef %.1112206, ptr noundef %.3128196, ptr noundef %.3124198, ptr noundef %.5200, ptr noundef %.2117202, ptr noundef %.2, i1 noundef zeroext %3, i1 noundef zeroext false) #10 ; 3 uses
+  %5 = trunc nuw i8 %.1114204 to i1
+  %i.fd = call i32 @CollationCreate(ptr noundef %i.fb, i32 noundef %i.k, i32 noundef %i.fc, i8 noundef signext %.1110208, i1 noundef zeroext %5, i32 noundef %.1112206, ptr noundef %.3128196, ptr noundef %.3124198, ptr noundef %.5200, ptr noundef %.2117202, ptr noundef %.2, i1 noundef zeroext %3, i1 noundef zeroext false) #10 ; 3 uses
   %.not181 = icmp eq i32 %i.fd, 0
   br i1 %.not181, label %bb.cc, label %bb.cd
 

@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.b, ptr %i.d, align 8, !tbaa !68
   %i.e = call noundef nonnull align 1 dereferenceable(1) ptr @_ZN4Luau12DenseHashMapISt4pairIPKNS_4TypeES4_EbNS_12TypePairHashESt8equal_toIS5_EEixERKS5_(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !69, !range !54, !noundef !55
-  %8 = trunc nuw i8 %i.f to i1
-  br i1 %8, label %_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_12TypePairHashEE6insertERKS5_.exit, label %bb.c
+  %8 = icmp eq i8 %i.f, 0
+  br i1 %8, label %bb.c, label %_ZN4Luau3SetISt4pairIPKNS_4TypeES4_ENS_12TypePairHashEE6insertERKS5_.exit
 
 bb.c:                                             ; preds = %bb.b
   store i8 1, ptr %i.e, align 1, !tbaa !69
@@ -608,28 +608,30 @@ bb.dl:                                            ; preds = %bb.df, %bb.di
   %i.rn = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 208
   %i.ro = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 216
   %i.rp = load i8, ptr %i.ro, align 8, !tbaa !85, !range !54, !noundef !55 ; 2 uses
-  %19 = trunc nuw i8 %i.rp to i1
-  %20 = load i8, ptr %i.qt, align 8, !tbaa !85, !range !54, !noundef !55
-  %i.rq = icmp eq i8 %i.rp, %20                   ; 2 uses
-  %brmerge.not.i = and i1 %i.rq, %19
+  %19 = load i8, ptr %i.qt, align 8, !tbaa !85, !range !54, !noundef !55
+  %20 = icmp ne i8 %i.rp, %19                     ; 2 uses
+  %i.rq = icmp eq i8 %i.rp, 0
+  %brmerge.i = or i1 %i.rq, %20
+  %not..i = xor i1 %20, true
   %i.rr = load ptr, ptr %i.rn, align 8
   %i.rs = load ptr, ptr %i.qs, align 8
   %i.rt = icmp eq ptr %i.rr, %i.rs
-  %i.ru = select i1 %brmerge.not.i, i1 %i.rt, i1 %i.rq
+  %i.ru = select i1 %brmerge.i, i1 %not..i, i1 %i.rt
   br i1 %i.ru, label %bb.dm, label %bb.dn
 
 bb.dm:                                            ; preds = %.critedge14
   %i.rv = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 224
   %i.rw = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 232
   %i.rx = load i8, ptr %i.rw, align 8, !tbaa !85, !range !54, !noundef !55 ; 2 uses
-  %21 = trunc nuw i8 %i.rx to i1
-  %22 = load i8, ptr %i.rd, align 8, !tbaa !85, !range !54, !noundef !55
-  %i.ry = icmp eq i8 %i.rx, %22                   ; 2 uses
-  %brmerge.not.i295 = and i1 %i.ry, %21
+  %21 = load i8, ptr %i.rd, align 8, !tbaa !85, !range !54, !noundef !55
+  %22 = icmp ne i8 %i.rx, %21                     ; 2 uses
+  %i.ry = icmp eq i8 %i.rx, 0
+  %brmerge.i297 = or i1 %i.ry, %22
+  %not..i298 = xor i1 %22, true
   %i.rz = load ptr, ptr %i.rv, align 8
   %i.sa = load ptr, ptr %i.rc, align 8
   %i.sb = icmp eq ptr %i.rz, %i.sa
-  %i.sc = select i1 %brmerge.not.i295, i1 %i.sb, i1 %i.ry
+  %i.sc = select i1 %brmerge.i297, i1 %not..i298, i1 %i.sb
   br i1 %i.sc, label %bb.ds, label %bb.dn
 
 bb.dn:                                            ; preds = %bb.dm, %.critedge14

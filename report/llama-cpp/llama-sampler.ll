@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.c
   %i.u = load float, ptr %i.t, align 4, !tbaa !290 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.w = load i8, ptr %i.v, align 8, !tbaa !95, !range !78, !noundef !79
-  %2 = trunc nuw i8 %i.w to i1
-  br i1 %2, label %.loopexit, label %.lr.ph.preheader
+  %.not = icmp eq i8 %i.w, 0
+  br i1 %.not, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.e
   %i.x = add i64 %i.d, -1                         ; 3 uses
@@ -609,11 +609,11 @@ bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   %i.j = load float, ptr %i.i, align 4, !tbaa !290 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
-  %i.l = load i8, ptr %i.k, align 8, !tbaa !95, !range !78, !noundef !79
-  %2 = trunc nuw i8 %i.l to i1                    ; 3 uses
-  %3 = icmp eq i64 %i.g, 1
-  %or.cond.not.i = or i1 %3, %2
-  br i1 %or.cond.not.i, label %.lr.ph38.preheader.i, label %.lr.ph.i.preheader
+  %i.l = load i8, ptr %i.k, align 8, !tbaa !95, !range !78, !noundef !79 ; 2 uses
+  %.not55.i = icmp eq i8 %i.l, 0
+  %2 = icmp ne i64 %i.g, 1
+  %or.cond.i = and i1 %2, %.not55.i
+  br i1 %or.cond.i, label %.lr.ph.i.preheader, label %.lr.ph38.preheader.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.d
   %i.m = add i64 %i.g, -1                         ; 3 uses
@@ -740,8 +740,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 _ZL26llama_sampler_softmax_implP22llama_token_data_arrayb.exit: ; preds = %.lr.ph42.i
   %i.bn = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 5 uses
+  %3 = trunc nuw i8 %i.l to i1                    ; 2 uses
   %i.bo = icmp ult i64 %i.g, 1025
-  %or.cond.not = or i1 %i.bo, %2
+  %or.cond.not = or i1 %i.bo, %3
   br i1 %or.cond.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZL26llama_sampler_softmax_implP22llama_token_data_arrayb.exit
@@ -750,7 +751,7 @@ bb.e:                                             ; preds = %_ZL26llama_sampler_
   br label %bb.h
 
 bb.f:                                             ; preds = %_ZL26llama_sampler_softmax_implP22llama_token_data_arrayb.exit
-  br i1 %2, label %bb.h, label %bb.g
+  br i1 %3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.bq = trunc i64 %i.g to i32
@@ -790,11 +791,11 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.cc = load i8, ptr %i.k, align 8, !tbaa !95, !range !78, !noundef !79
-  %4 = trunc nuw i8 %i.cc to i1
+  %.not51 = icmp eq i8 %i.cc, 0
   %i.cd = add i64 %.14757, -1
-  %5 = icmp ne i64 %.060, %i.cd
-  %or.cond53.not = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond53.not, label %bb.m, label %bb.l
+  %4 = icmp eq i64 %.060, %i.cd
+  %or.cond53.not = select i1 %.not51, i1 %4, i1 false
+  br i1 %or.cond53.not, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ce = trunc i64 %i.bt to i32
@@ -1105,10 +1106,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.i = load float, ptr %i.h, align 4, !tbaa !290 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load i8, ptr %i.j, align 8, !tbaa !95, !range !78, !noundef !79
-  %2 = trunc nuw i8 %i.k to i1
-  %3 = icmp ult i64 %.pre, 2
-  %or.cond.not = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond.not, label %.loopexit, label %.lr.ph.preheader
+  %.not55 = icmp eq i8 %i.k, 0
+  %2 = icmp ugt i64 %.pre, 1
+  %or.cond.not = select i1 %.not55, i1 %2, i1 false
+  br i1 %or.cond.not, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.f
   %i.l = add i64 %.pre, -1                        ; 3 uses
@@ -1511,10 +1512,10 @@ bb.c:                                             ; preds = %bb.a
   %i.g = load float, ptr %i.f, align 4, !tbaa !290 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.i = load i8, ptr %i.h, align 8, !tbaa !95, !range !78, !noundef !79
-  %2 = trunc nuw i8 %i.i to i1
-  %3 = icmp eq i64 %i.d, 1
-  %or.cond.not.i = or i1 %3, %2
-  br i1 %or.cond.not.i, label %.lr.ph38.preheader.i, label %.lr.ph.i.preheader
+  %.not55.i = icmp eq i8 %i.i, 0
+  %2 = icmp ne i64 %i.d, 1
+  %or.cond.i = and i1 %2, %.not55.i
+  br i1 %or.cond.i, label %.lr.ph.i.preheader, label %.lr.ph38.preheader.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.j = add i64 %i.d, -1                         ; 3 uses
@@ -1848,10 +1849,10 @@ bb.i:                                             ; preds = %.cont, %bb.h
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 4
   %i.fs = load float, ptr %i.fr, align 4, !tbaa !290 ; 3 uses
   %i.ft = load i8, ptr %i.h, align 8, !tbaa !95, !range !78, !noundef !79
-  %4 = trunc nuw i8 %i.ft to i1
-  %5 = icmp eq i64 %i.ee, 1
-  %or.cond.not.i51 = or i1 %5, %4
-  br i1 %or.cond.not.i51, label %.lr.ph38.preheader.i57, label %.lr.ph.i52.preheader
+  %.not55.i51 = icmp eq i8 %i.ft, 0
+  %3 = icmp ne i64 %i.ee, 1
+  %or.cond.i52 = and i1 %3, %.not55.i51
+  br i1 %or.cond.i52, label %.lr.ph.i52.preheader, label %.lr.ph38.preheader.i57
 
 .lr.ph.i52.preheader:                             ; preds = %._crit_edge
   %i.fu = add i64 %i.ee, -1                       ; 3 uses

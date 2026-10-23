@@ -204,11 +204,13 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.bc = getelementptr inbounds i8, ptr %i.am, i64 -8
-  %i.bd = load i8, ptr %i.bc, align 8, !range !32, !noalias !2252, !noundef !9
-  %3 = trunc nuw i8 %i.bd to i1
-  br i1 %3, label %bb.m, label %bb.q
+  %i.bd = load i8, ptr %i.bc, align 8, !range !32, !noalias !2252, !noundef !9 ; 2 uses
+  %3 = icmp eq i8 %i.bd, 0
+  %4 = xor i8 %i.bd, 1
+  br i1 %3, label %bb.q, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
+  %.sroa.0.0.i = phi i8 [ %4, %bb.l ], [ 0, %bb.k ]
   %i.be = load atomic i64, ptr @_RNvCscIBp6mpAwK8_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8, !noalias !2252 ; 2 uses
   %i.bf = icmp ult i64 %i.be, 6
   call void @llvm.assume(i1 %i.bf)
@@ -245,7 +247,7 @@ bb.p:                                             ; preds = %bb.n
 
 .noexc:                                           ; preds = %bb.u, %bb.o
   %.sroa.021.0.i = phi ptr [ %i.cb, %bb.u ], [ %i.bm, %bb.o ]
-  %.sroa.0.2.i = phi i8 [ 1, %bb.u ], [ 0, %bb.o ]
+  %.sroa.0.2.i = phi i8 [ 1, %bb.u ], [ %.sroa.0.0.i, %bb.o ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2252
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.d, ptr noundef nonnull align 8 dereferenceable(72) %1, i64 72, i1 false)
   %i.bn = getelementptr inbounds nuw i8, ptr %i.d, i64 80

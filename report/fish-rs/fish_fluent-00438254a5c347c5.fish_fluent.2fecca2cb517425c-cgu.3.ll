@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.a
-  %i.n = load i64, ptr %1, align 8, !range !6, !noundef !4 ; 3 uses
+  %i.n = load i64, ptr %1, align 8, !range !6, !noundef !4 ; 4 uses
   %i.o = icmp ne i64 %i.n, 3
   tail call void @llvm.assume(i1 %i.o)
   %i.p = icmp samesign ult i64 %i.n, 2
@@ -243,7 +243,7 @@ bb.f:                                             ; preds = %bb.b
   ]
 
 _RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit: ; preds = %bb.ak, %bb.aj, %bb.ai, %.split10.i, %bb.ag, %bb.af, %.split9.i, %bb.ad, %bb.ac, %.split8.i, %bb.aa, %bb.z, %.split7.i, %bb.x, %bb.w, %bb.u, %.split.i, %bb.t, %bb.s, %bb.r, %bb.p, %bb.o, %bb.n, %bb.e, %bb.d, %bb.m, %bb.a, %bb.b, %bb.c, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultbReE6unwrapCs476pBYQK2Ku_11fish_fluent.exit, %.thread23
-  %.sroa.0.0.shrunk = phi i1 [ false, %bb.a ], [ false, %bb.m ], [ %i.bz, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultbReE6unwrapCs476pBYQK2Ku_11fish_fluent.exit ], [ false, %.thread23 ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ %i.r, %bb.e ], [ %i.fh, %bb.ak ], [ false, %bb.o ], [ %9, %bb.aj ], [ false, %bb.af ], [ false, %bb.ac ], [ false, %bb.z ], [ false, %bb.w ], [ false, %bb.t ], [ false, %bb.r ], [ false, %bb.n ], [ false, %bb.ag ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.x ], [ false, %bb.u ], [ false, %bb.s ], [ false, %bb.p ], [ false, %bb.ai ], [ false, %.split.i ], [ false, %.split7.i ], [ false, %.split8.i ], [ false, %.split9.i ], [ false, %.split10.i ]
+  %.sroa.0.0.shrunk = phi i1 [ false, %bb.a ], [ false, %bb.m ], [ %i.bz, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultbReE6unwrapCs476pBYQK2Ku_11fish_fluent.exit ], [ false, %.thread23 ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ %i.r, %bb.e ], [ %i.fh, %bb.ak ], [ false, %bb.o ], [ %12, %bb.aj ], [ false, %bb.af ], [ false, %bb.ac ], [ false, %bb.z ], [ false, %bb.w ], [ false, %bb.t ], [ false, %bb.r ], [ false, %bb.n ], [ false, %bb.ag ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.x ], [ false, %bb.u ], [ false, %bb.s ], [ false, %bb.p ], [ false, %bb.ai ], [ false, %.split.i ], [ false, %.split7.i ], [ false, %.split8.i ], [ false, %.split9.i ], [ false, %.split10.i ]
   ret i1 %.sroa.0.0.shrunk
 
 bb.g:                                             ; preds = %bb.f
@@ -320,8 +320,7 @@ bb.k:                                             ; preds = %bb.j, %.critedge19,
   %.sroa.01.0 = phi i8 [ 4, %.critedge19 ], [ 0, %bb.g ], [ 1, %bb.h ], [ 2, %bb.i ], [ 3, %.critedge ], [ 5, %bb.j ]
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.bp = load i8, ptr %i.bo, align 8, !range !11, !noundef !4
-  %3 = trunc nuw i8 %i.bp to i1
-  %.sroa.013.0 = xor i1 %3, true
+  %.sroa.013.0 = icmp eq i8 %i.bp, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.br = load ptr, ptr %i.bq, align 8, !nonnull !4, !align !5, !noundef !4
@@ -427,14 +426,15 @@ bb.u:                                             ; preds = %.split.i, %bb.s
 bb.v:                                             ; preds = %bb.u
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dp = trunc nuw i64 %i.d to i1
-  %4 = trunc nuw i64 %i.n to i1                   ; 2 uses
   br i1 %i.dp, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  br i1 %4, label %.split7.i, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
+  %3 = trunc nuw i64 %i.n to i1
+  br i1 %3, label %.split7.i, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 bb.x:                                             ; preds = %bb.v
-  br i1 %4, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit, label %bb.y
+  %4 = icmp eq i64 %i.n, 0
+  br i1 %4, label %bb.y, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 .split7.i:                                        ; preds = %bb.w
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -449,15 +449,16 @@ bb.y:                                             ; preds = %.split7.i, %bb.x
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.dx = trunc nuw i64 %i.dv to i1
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.dz = load i64, ptr %i.dy, align 8, !range !13, !alias.scope !142, !noundef !4
-  %5 = trunc nuw i64 %i.dz to i1                  ; 2 uses
+  %i.dz = load i64, ptr %i.dy, align 8, !range !13, !alias.scope !142, !noundef !4 ; 2 uses
   br i1 %i.dx, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
+  %5 = trunc nuw i64 %i.dz to i1
   br i1 %5, label %.split8.i, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 bb.aa:                                            ; preds = %bb.y
-  br i1 %5, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit, label %bb.ab
+  %6 = icmp eq i64 %i.dz, 0
+  br i1 %6, label %bb.ab, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 .split8.i:                                        ; preds = %bb.z
   %i.ea = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -472,15 +473,16 @@ bb.ab:                                            ; preds = %.split8.i, %bb.aa
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.eh = trunc nuw i64 %i.ef to i1
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.ej = load i64, ptr %i.ei, align 8, !range !13, !alias.scope !142, !noundef !4
-  %6 = trunc nuw i64 %i.ej to i1                  ; 2 uses
+  %i.ej = load i64, ptr %i.ei, align 8, !range !13, !alias.scope !142, !noundef !4 ; 2 uses
   br i1 %i.eh, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  br i1 %6, label %.split9.i, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
+  %7 = trunc nuw i64 %i.ej to i1
+  br i1 %7, label %.split9.i, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 bb.ad:                                            ; preds = %bb.ab
-  br i1 %6, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit, label %bb.ae
+  %8 = icmp eq i64 %i.ej, 0
+  br i1 %8, label %bb.ae, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 .split9.i:                                        ; preds = %bb.ac
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -495,15 +497,16 @@ bb.ae:                                            ; preds = %.split9.i, %bb.ad
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.er = trunc nuw i64 %i.ep to i1
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.et = load i64, ptr %i.es, align 8, !range !13, !alias.scope !142, !noundef !4
-  %7 = trunc nuw i64 %i.et to i1                  ; 2 uses
+  %i.et = load i64, ptr %i.es, align 8, !range !13, !alias.scope !142, !noundef !4 ; 2 uses
   br i1 %i.er, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  br i1 %7, label %.split10.i, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
+  %9 = trunc nuw i64 %i.et to i1
+  br i1 %9, label %.split10.i, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 bb.ag:                                            ; preds = %bb.ae
-  br i1 %7, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit, label %bb.ah
+  %10 = icmp eq i64 %i.et, 0
+  br i1 %10, label %bb.ah, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 .split10.i:                                       ; preds = %bb.af
   %i.eu = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -518,15 +521,15 @@ bb.ah:                                            ; preds = %.split10.i, %bb.ag
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.fb = trunc nuw i64 %i.ez to i1
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.fd = load i64, ptr %i.fc, align 8, !range !13, !alias.scope !142, !noundef !4
-  %8 = trunc nuw i64 %i.fd to i1                  ; 2 uses
+  %i.fd = load i64, ptr %i.fc, align 8, !range !13, !alias.scope !142, !noundef !4 ; 2 uses
   br i1 %i.fb, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  br i1 %8, label %bb.ak, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
+  %11 = trunc nuw i64 %i.fd to i1
+  br i1 %11, label %bb.ak, label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 bb.aj:                                            ; preds = %bb.ah
-  %9 = xor i1 %8, true
+  %12 = icmp eq i64 %i.fd, 0
   br label %_RNvXs8_NtCs1xwejQucwHj_5alloc6borrowINtB5_3CoweENtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eqCs476pBYQK2Ku_11fish_fluent.exit
 
 bb.ak:                                            ; preds = %bb.ai

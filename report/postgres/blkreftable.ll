@@ -204,18 +204,19 @@ blockreftable_start_iterate.exit:                 ; preds = %bb.b, %bb.c, %bb.a
 
 bb.d:                                             ; preds = %.critedge, %blockreftable_start_iterate.exit
   %i.x = phi ptr [ %i.m, %blockreftable_start_iterate.exit ], [ %.pre75, %.critedge ] ; 2 uses
-  %.sroa.7.0 = phi i1 [ false, %blockreftable_start_iterate.exit ], [ %spec.select, %.critedge ] ; 2 uses
+  %.sroa.7.0 = phi i8 [ 0, %blockreftable_start_iterate.exit ], [ %spec.select, %.critedge ] ; 2 uses
   %.sroa.0.0 = phi i32 [ %.2.i, %blockreftable_start_iterate.exit ], [ %i.ag, %.critedge ]
   %.042 = phi i32 [ 0, %blockreftable_start_iterate.exit ], [ %i.al, %.critedge ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 12
+  %6 = icmp eq i8 %.sroa.7.0, 0
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %bb.d
-  %.sroa.7.1 = phi i1 [ %.sroa.7.0, %bb.d ], [ %spec.select, %bb.f ]
+  %.sroa.7.1 = phi i8 [ %.sroa.7.0, %bb.d ], [ %spec.select, %bb.f ]
   %.sroa.0.1 = phi i32 [ %.sroa.0.0, %bb.d ], [ %i.ag, %bb.f ] ; 2 uses
-  %i.aa = phi i1 [ %.sroa.7.0, %bb.d ], [ %6, %bb.f ]
-  br i1 %i.aa, label %bb.i, label %bb.f
+  %i.aa = phi i1 [ %6, %bb.d ], [ %7, %bb.f ]
+  br i1 %i.aa, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   %i.ab = load ptr, ptr %i.y, align 8
@@ -226,8 +227,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = and i32 %i.af, %i.ae                    ; 2 uses
   %i.ah = xor i32 %i.ae, %.2.i
   %i.ai = and i32 %i.af, %i.ah
-  %6 = icmp eq i32 %i.ai, 0                       ; 2 uses
-  %spec.select = select i1 %6, i1 true, i1 %.sroa.7.1 ; 2 uses
+  %7 = icmp ne i32 %i.ai, 0                       ; 2 uses
+  %spec.select = select i1 %7, i8 %.sroa.7.1, i8 1 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 20
   %i.ak = load i8, ptr %i.aj, align 4
   %.not.i49 = icmp eq i8 %i.ak, 1

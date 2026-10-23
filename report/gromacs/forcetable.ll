@@ -205,8 +205,8 @@ bb.aq:                                            ; preds = %.preheader456
   %i.dt = mul nsw i64 %i.ah, %i.ds
   %i.du = getelementptr inbounds [8 x i8], ptr %.sroa.35394.0.copyload, i64 %i.dt ; 4 uses
   %i.dv = load double, ptr %i.dr, align 8, !tbaa !80 ; 2 uses
-  %22 = fcmp oeq double %i.dv, 0.000000e+00       ; 3 uses
-  br i1 %22, label %bb.as, label %bb.ar
+  %22 = fcmp une double %i.dv, 0.000000e+00
+  br i1 %22, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
   %i.dw = trunc nuw i8 %.0136524 to i1
@@ -218,6 +218,7 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.ar, %bb.aq
   %storemerge167500.peel = phi i32 [ %spec.select.peel, %bb.ar ], [ %.promoted, %bb.aq ] ; 2 uses
   %.3139.peel = phi i8 [ 0, %bb.ar ], [ %.0136524, %bb.aq ] ; 2 uses
+  %.1135.peel = phi i8 [ 0, %bb.ar ], [ 1, %bb.aq ] ; 2 uses
   %i.dy = load double, ptr %i.du, align 8, !tbaa !80 ; 2 uses
   %i.dz = fcmp oeq double %i.dy, 0.000000e+00     ; 3 uses
   br i1 %i.dz, label %bb.au, label %bb.at
@@ -250,7 +251,7 @@ bb.av:                                            ; preds = %.peel.next
 bb.aw:                                            ; preds = %bb.av, %.peel.next
   %storemerge167500.peel559 = phi i32 [ %spec.select.peel557, %bb.av ], [ %storemerge167498.peel, %.peel.next ] ; 2 uses
   %.3139.peel560 = phi i8 [ 0, %bb.av ], [ %.5141.peel, %.peel.next ] ; 2 uses
-  %.1135.peel561 = phi i1 [ false, %bb.av ], [ %22, %.peel.next ] ; 2 uses
+  %.1135.peel561 = phi i8 [ 0, %bb.av ], [ %.1135.peel, %.peel.next ] ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   %i.ei = load double, ptr %i.eh, align 8, !tbaa !80 ; 2 uses
   %i.ej = fcmp une double %i.ei, 0.000000e+00
@@ -272,7 +273,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
 .peel.next556:                                    ; preds = %bb.ay, %bb.bs
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.bs ], [ 2, %bb.ay ] ; 9 uses
   %.0132509 = phi i1 [ %.1133, %bb.bs ], [ %.1133.peel566, %bb.ay ]
-  %.0134508 = phi i1 [ %.1135, %bb.bs ], [ %.1135.peel561, %bb.ay ]
+  %.0134508 = phi i8 [ %.1135, %bb.bs ], [ %.1135.peel561, %bb.ay ]
   %.1137507 = phi i8 [ %.5141, %bb.bs ], [ %.5141.peel565, %bb.ay ] ; 2 uses
   %storemerge167502504 = phi i32 [ %storemerge167498, %bb.bs ], [ %storemerge167498.peel564, %bb.ay ] ; 3 uses
   %i.em = getelementptr [8 x i8], ptr %.sroa.35394.0.copyload, i64 %indvars.iv ; 4 uses
@@ -380,7 +381,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
 bb.bl:                                            ; preds = %bb.bf, %bb.be
   %storemerge167500 = phi i32 [ %spec.select, %bb.bf ], [ %storemerge167502504, %bb.be ] ; 2 uses
   %.3139 = phi i8 [ 0, %bb.bf ], [ %.1137507, %bb.be ] ; 2 uses
-  %.1135 = phi i1 [ false, %bb.bf ], [ %.0134508, %bb.be ] ; 2 uses
+  %.1135 = phi i8 [ 0, %bb.bf ], [ %.0134508, %bb.be ] ; 2 uses
   %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %indvars.iv
   %i.ft = load double, ptr %i.fs, align 8, !tbaa !80 ; 2 uses
   %i.fu = fcmp une double %i.ft, 0.000000e+00
@@ -440,8 +441,8 @@ bb.bs:                                            ; preds = %bb.bm, %bb.bl
   %storemerge167498.lcssa = phi i32 [ %storemerge167498.peel564, %bb.ay ], [ %storemerge167498.peel, %bb.au ], [ %storemerge167498, %bb.bs ] ; 6 uses
   %.5141.lcssa = phi i8 [ %.5141.peel565, %bb.ay ], [ %.5141.peel, %bb.au ], [ %.5141, %bb.bs ] ; 5 uses
   %.1133.lcssa = phi i1 [ %.1133.peel566, %bb.ay ], [ %i.dz, %bb.au ], [ %.1133, %bb.bs ]
-  %.1135.lcssa541 = phi i1 [ %.1135.peel561, %bb.ay ], [ %22, %bb.au ], [ %.1135, %bb.bs ]
-  %23 = xor i1 %.1135.lcssa541, true
+  %.1135.lcssa541 = phi i8 [ %.1135.peel561, %bb.ay ], [ %.1135.peel, %bb.au ], [ %.1135, %bb.bs ]
+  %23 = icmp eq i8 %.1135.lcssa541, 0
   %i.gd = select i1 %23, i1 %.1133.lcssa, i1 false
   store i32 %storemerge167498.lcssa, ptr %i.f, align 4
   br i1 %i.gd, label %bb.bt, label %.preheader

@@ -56,8 +56,8 @@ bb.a:
   %i.af = load i8, ptr %i.ae, align 8, !dbg !812, !range !149, !alias.scope !626, !noundef !147
   %i.ag = trunc nuw i8 %i.af to i1, !dbg !812     ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 25
-  %i.ai = load i8, ptr %i.ah, align 1, !range !149, !alias.scope !626
-  %i.aj = trunc nuw i8 %i.ai to i1                ; 2 uses
+  %i.ai = load i8, ptr %i.ah, align 1, !range !149, !alias.scope !626 ; 2 uses
+  %i.aj = trunc nuw i8 %i.ai to i1
   %or.cond.i = select i1 %i.ag, i1 true, i1 %i.aj, !dbg !812
   br i1 %or.cond.i, label %._RINvMs_NtCsdq8xsXUia3c_10grep_regex6configNtB5_6Config16is_fixed_stringsReEB7_.exit_crit_edge, label %bb.b, !dbg !812
 
@@ -460,7 +460,8 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.ak
   %i.iq = extractvalue { i1, i1 } %i.ip, 0, !dbg !945
   %i.ir = extractvalue { i1, i1 } %i.ip, 1, !dbg !945
-  %i.is = select i1 %i.aj, i1 %i.ir, i1 false, !dbg !949
+  %.not = icmp ne i8 %i.ai, 0, !dbg !949
+  %i.is = select i1 %.not, i1 %i.ir, i1 false, !dbg !949
   %.not147 = xor i1 %i.is, true, !dbg !949
   %brmerge = select i1 %.not147, i1 true, i1 %i.iq, !dbg !949
   br i1 %brmerge, label %bb.an, label %bb.am, !dbg !949
