@@ -202,7 +202,7 @@ declare i32 @CVodeInit(ptr noundef, ptr noundef, double noundef, ptr noundef) lo
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @f(double %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3) #0 {
 bb.a:
-  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #9 ; 17 uses
+  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #9 ; 18 uses
   %i.b = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #9 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.d = load double, ptr %i.c, align 8, !tbaa !13 ; 5 uses
@@ -211,7 +211,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.h = load double, ptr %i.g, align 8, !tbaa !12 ; 5 uses
   %i.i = getelementptr i8, ptr %i.a, i64 8
-  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  %i.j = getelementptr i8, ptr %i.a, i64 160
   %i.k = insertelement <2 x double> poison, double %i.h, i64 0
   %i.l = insertelement <2 x double> %i.k, double %i.d, i64 1 ; 2 uses
   br label %.preheader
@@ -287,13 +287,13 @@ bb.a:
   %indvars.iv53 = phi i64 [ 2, %.thread.us.peel.next ], [ %indvars.iv.next54, %.thread46.us ] ; 2 uses
   %i.bf = mul nuw nsw i64 %indvars.iv53, 20       ; 3 uses
   %i.bg = add nsw i64 %i.bf, -20                  ; 2 uses
-  %i.bh = getelementptr [8 x i8], ptr %i.a, i64 %i.bg ; 2 uses
+  %i.bh = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.bg
   %i.bi = load double, ptr %i.bh, align 8, !tbaa !10
-  %i.bj = getelementptr i8, ptr %i.bh, i64 8
+  %4 = getelementptr [8 x i8], ptr %i.a, i64 %i.bf ; 2 uses
+  %i.bj = getelementptr i8, ptr %4, i64 -152
   %i.bk = load double, ptr %i.bj, align 8, !tbaa !10
   %gep73 = getelementptr [8 x i8], ptr %invariant.gep72, i64 %i.bf
   %i.bl = load double, ptr %gep73, align 8, !tbaa !10 ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bf
   %i.bm = load double, ptr %4, align 8, !tbaa !10 ; 2 uses
   %i.bn = insertelement <2 x double> poison, double %i.bi, i64 0
   %i.bo = shufflevector <2 x double> %i.bn, <2 x double> poison, <2 x i32> zeroinitializer
@@ -360,11 +360,12 @@ bb.a:
   br i1 %exitcond.not, label %.preheader.split.peel, label %.preheader.split, !llvm.loop !26
 
 .split.us.loopexit.peel.begin:                    ; preds = %.thread46.us
-  %i.de = mul nuw nsw i64 %indvars.iv.next54, 20  ; 2 uses
+  %i.de = mul nuw nsw i64 %indvars.iv.next54, 20  ; 3 uses
   %i.df = add nsw i64 %i.de, -20                  ; 2 uses
-  %i.dg = getelementptr [8 x i8], ptr %i.a, i64 %i.df ; 2 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.df
   %i.dh = load double, ptr %i.dg, align 8, !tbaa !10
-  %i.di = getelementptr i8, ptr %i.dg, i64 8
+  %5 = getelementptr [8 x i8], ptr %i.a, i64 %i.de
+  %i.di = getelementptr i8, ptr %5, i64 -152
   %i.dj = load double, ptr %i.di, align 8, !tbaa !10
   %gep73.peel = getelementptr [8 x i8], ptr %invariant.gep72, i64 %i.de
   %i.dk = load double, ptr %gep73.peel, align 8, !tbaa !10 ; 2 uses
@@ -598,7 +599,7 @@ declare i32 @CVodeInitB(ptr noundef, i32 noundef, ptr noundef, double noundef, p
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @fB(double %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4) #0 {
 bb.a:
-  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #9 ; 17 uses
+  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #9 ; 18 uses
   %i.b = tail call ptr @N_VGetArrayPointer(ptr noundef %3) #9 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.d = load double, ptr %i.c, align 8, !tbaa !13 ; 6 uses
@@ -607,7 +608,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.h = load double, ptr %i.g, align 8, !tbaa !12 ; 6 uses
   %i.i = getelementptr i8, ptr %i.a, i64 8
-  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  %i.j = getelementptr i8, ptr %i.a, i64 160
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %.split.us
@@ -677,13 +678,13 @@ bb.a:
   %indvars.iv53 = phi i64 [ 2, %.thread.us.peel.next ], [ %indvars.iv.next54, %.thread46.us ] ; 2 uses
   %i.az = mul nuw nsw i64 %indvars.iv53, 20       ; 3 uses
   %i.ba = add nsw i64 %i.az, -20                  ; 2 uses
-  %i.bb = getelementptr [8 x i8], ptr %i.a, i64 %i.ba ; 2 uses
+  %i.bb = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.ba
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !10
-  %i.bd = getelementptr i8, ptr %i.bb, i64 8
+  %5 = getelementptr [8 x i8], ptr %i.a, i64 %i.az ; 2 uses
+  %i.bd = getelementptr i8, ptr %5, i64 -152
   %i.be = load double, ptr %i.bd, align 8, !tbaa !10
   %gep73 = getelementptr [8 x i8], ptr %invariant.gep72, i64 %i.az
   %i.bf = load double, ptr %gep73, align 8, !tbaa !10 ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.az
   %i.bg = load double, ptr %5, align 8, !tbaa !10 ; 2 uses
   %i.bh = insertelement <2 x double> poison, double %i.bf, i64 0
   %i.bi = insertelement <2 x double> %i.bh, double %i.be, i64 1
@@ -753,11 +754,12 @@ bb.a:
   br i1 %exitcond.not, label %.preheader.split.peel, label %.preheader.split, !llvm.loop !28
 
 .split.us.loopexit.peel.begin:                    ; preds = %.thread46.us
-  %i.db = mul nuw nsw i64 %indvars.iv.next54, 20  ; 2 uses
+  %i.db = mul nuw nsw i64 %indvars.iv.next54, 20  ; 3 uses
   %i.dc = add nsw i64 %i.db, -20                  ; 2 uses
-  %i.dd = getelementptr [8 x i8], ptr %i.a, i64 %i.dc ; 2 uses
+  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.dc
   %i.de = load double, ptr %i.dd, align 8, !tbaa !10
-  %i.df = getelementptr i8, ptr %i.dd, i64 8
+  %6 = getelementptr [8 x i8], ptr %i.a, i64 %i.db
+  %i.df = getelementptr i8, ptr %6, i64 -152
   %i.dg = load double, ptr %i.df, align 8, !tbaa !10
   %gep73.peel = getelementptr [8 x i8], ptr %invariant.gep72, i64 %i.db
   %i.dh = load double, ptr %gep73.peel, align 8, !tbaa !10 ; 2 uses

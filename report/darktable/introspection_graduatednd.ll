@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = fmul reassoc nsz arcp contract afn float %i.r, 2.500000e-01
   %i.ak = fdiv reassoc nsz arcp contract afn float %i.aj, %i.ai ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.am = load i32, ptr %i.al, align 4, !tbaa !175 ; 8 uses
+  %i.am = load i32, ptr %i.al, align 4, !tbaa !175 ; 10 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !176 ; 3 uses
   %i.ap = sitofp reassoc nsz arcp contract afn i32 %i.f to float
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.be, label %.lr.ph218, label %._crit_edge241
 
 .lr.ph218:                                        ; preds = %.preheader203
-  %i.bf = sext i32 %i.am to i64                   ; 3 uses
+  %i.bf = sext i32 %i.am to i64                   ; 2 uses
   %i.bg = shl nsw i64 %i.bf, 2
   %i.bh = icmp sgt i32 %i.am, 3
   %i.bi = fneg reassoc nsz arcp contract afn float %i.ay ; 2 uses
@@ -241,7 +241,6 @@ bb.b:                                             ; preds = %bb.a
   %i.bm = insertelement <4 x float> poison, float %i.ax, i64 0
   %i.bn = shufflevector <4 x float> %i.bm, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bo = fmul reassoc nsz arcp contract afn <4 x float> %i.bn, <float 3.000000e+00, float 2.000000e+00, float 1.000000e+00, float 0.000000e+00>
-  %invariant.op = add nsw i64 %i.bf, -3
   %i.bp = insertelement <4 x float> poison, float %i.bi, i64 0
   %i.bq = shufflevector <4 x float> %i.bp, <4 x float> poison, <4 x i32> zeroinitializer
   br label %bb.d
@@ -250,7 +249,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.be, label %.lr.ph240, label %._crit_edge241
 
 .lr.ph240:                                        ; preds = %.preheader201
-  %i.br = sext i32 %i.am to i64                   ; 3 uses
+  %i.br = sext i32 %i.am to i64                   ; 2 uses
   %i.bs = shl nsw i64 %i.br, 2
   %i.bt = icmp sgt i32 %i.am, 3
   %i.bu = fmul reassoc nsz arcp contract afn float %i.ax, 4.000000e+00
@@ -261,7 +260,6 @@ bb.b:                                             ; preds = %bb.a
   %i.bx = insertelement <4 x float> poison, float %i.ax, i64 0
   %i.by = shufflevector <4 x float> %i.bx, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bz = fmul reassoc nsz arcp contract afn <4 x float> %i.by, <float 0.000000e+00, float 1.000000e+00, float 2.000000e+00, float 3.000000e+00>
-  %invariant.op418 = add nsw i64 %i.br, -3
   %i.ca = insertelement <4 x float> poison, float %i.ay, i64 0
   %i.cb = shufflevector <4 x float> %i.ca, <4 x float> poison, <4 x i32> zeroinitializer
   br label %bb.c
@@ -284,7 +282,7 @@ bb.c:                                             ; preds = %.lr.ph240, %._crit_
   br i1 %.not243, label %._crit_edge238, label %.lr.ph237
 
 .lr.ph228:                                        ; preds = %bb.c, %.lr.ph228
-  %indvars.iv259 = phi i64 [ %indvars.iv.next260, %.lr.ph228 ], [ 0, %bb.c ] ; 5 uses
+  %indvars.iv259 = phi i64 [ %indvars.iv.next260, %.lr.ph228 ], [ 0, %bb.c ] ; 6 uses
   %.0189225 = phi float [ %i.el, %.lr.ph228 ], [ %i.ck, %bb.c ] ; 2 uses
   %i.cl = fadd reassoc nsz arcp contract afn float %.0189225, 5.000000e-01
   %i.cm = insertelement <4 x float> poison, float %i.cl, i64 0
@@ -347,8 +345,10 @@ bb.c:                                             ; preds = %.lr.ph240, %._crit_
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %i.ed
   store <4 x float> %i.ej, ptr %i.ek, align 16, !tbaa !136, !alias.scope !178, !nontemporal !179
   %i.el = fadd reassoc nsz arcp contract afn float %.0189225, %i.bu ; 2 uses
-  %indvars.iv.next260 = add nuw nsw i64 %indvars.iv259, 4 ; 2 uses
-  %i.em = icmp slt i64 %indvars.iv.next260, %invariant.op418
+  %indvars.iv.next260 = add nuw nsw i64 %indvars.iv259, 4
+  %6 = trunc i64 %indvars.iv259 to i32
+  %7 = add i32 %6, 7
+  %i.em = icmp slt i32 %7, %i.am
   br i1 %i.em, label %.lr.ph228, label %._crit_edge229
 
 ._crit_edge238:                                   ; preds = %.lr.ph237, %._crit_edge229
@@ -399,7 +399,7 @@ bb.d:                                             ; preds = %.lr.ph218, %._crit_
   br i1 %.not242, label %._crit_edge216, label %.lr.ph215
 
 .lr.ph:                                           ; preds = %bb.d, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.d ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.d ] ; 6 uses
   %.0181207 = phi float [ %i.hn, %.lr.ph ], [ %i.fm, %bb.d ] ; 2 uses
   %i.fn = insertelement <4 x float> poison, float %.0181207, i64 0
   %i.fo = shufflevector <4 x float> %i.fn, <4 x float> poison, <4 x i32> zeroinitializer
@@ -462,8 +462,10 @@ bb.d:                                             ; preds = %.lr.ph218, %._crit_
   %i.hm = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %i.hf
   store <4 x float> %i.hl, ptr %i.hm, align 16, !tbaa !136, !alias.scope !181, !nontemporal !179
   %i.hn = fadd reassoc nsz arcp contract afn float %.0181207, %i.bj ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %i.ho = icmp slt i64 %indvars.iv.next, %invariant.op
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4
+  %8 = trunc i64 %indvars.iv to i32
+  %9 = add i32 %8, 7
+  %i.ho = icmp slt i32 %9, %i.am
   br i1 %i.ho, label %.lr.ph, label %._crit_edge
 
 ._crit_edge216:                                   ; preds = %.lr.ph215, %._crit_edge

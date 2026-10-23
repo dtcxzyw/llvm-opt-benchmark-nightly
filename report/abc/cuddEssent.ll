@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %i.f, label %bb.n, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = load ptr, ptr %i.a, align 8, !tbaa !34   ; 5 uses
+  %i.g = load ptr, ptr %i.a, align 8, !tbaa !34   ; 8 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !36
   %.fr122 = freeze ptr %i.i                       ; 4 uses
@@ -219,7 +219,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not54, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.h
-  %indvars.iv137 = phi i64 [ %indvars.iv.next138, %bb.h ], [ 0, %.lr.ph ] ; 6 uses
+  %indvars.iv137 = phi i64 [ %indvars.iv.next138, %bb.h ], [ 0, %.lr.ph ] ; 7 uses
   %i.o = phi i32 [ %i.aq, %bb.h ], [ %i.l, %.lr.ph ] ; 2 uses
   %i.p = phi i32 [ %i.ao, %bb.h ], [ %i.j, %.lr.ph ] ; 2 uses
   %i.q = icmp eq i32 %i.o, 2147483647
@@ -278,9 +278,10 @@ bb.g:                                             ; preds = %bitVectorRead.exit6
 
 bb.h:                                             ; preds = %bb.g, %bitVectorRead.exit70.thread.us
   %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 2 ; 2 uses
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next138 ; 2 uses
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next138
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !35 ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 4
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv137
+  %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !35 ; 2 uses
   %i.ar = or i32 %i.aq, %i.ao
   %.not.us = icmp eq i32 %i.ar, 0
@@ -290,7 +291,7 @@ bb.h:                                             ; preds = %bb.g, %bitVectorRea
   br i1 %i.n, label %.lr.ph.split.split.us.split.us, label %.lr.ph.split.split.split
 
 .lr.ph.split.split.us.split.us:                   ; preds = %.lr.ph.split, %bb.i
-  %indvars.iv134 = phi i64 [ %indvars.iv.next135, %bb.i ], [ 0, %.lr.ph.split ]
+  %indvars.iv134 = phi i64 [ %indvars.iv.next135, %bb.i ], [ 0, %.lr.ph.split ] ; 2 uses
   %i.as = phi i32 [ %i.bg, %bb.i ], [ %i.l, %.lr.ph.split ] ; 2 uses
   %i.at = phi i32 [ %i.be, %bb.i ], [ %i.j, %.lr.ph.split ]
   %i.au = icmp eq i32 %i.as, 2147483647
@@ -312,16 +313,17 @@ bitVectorRead.exit.thread.us.us:                  ; preds = %.lr.ph.split.split.
 
 bb.i:                                             ; preds = %bitVectorRead.exit.thread.us.us, %bitVectorRead.exit64.thread.us.us
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 2 ; 2 uses
-  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next135 ; 2 uses
+  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next135
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !35 ; 2 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv134
+  %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !35 ; 2 uses
   %i.bh = or i32 %i.bg, %i.be
   %.not.us111.us = icmp eq i32 %i.bh, 0
   br i1 %.not.us111.us, label %._crit_edge, label %.lr.ph.split.split.us.split.us, !llvm.loop !48
 
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split, %bb.j
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %.lr.ph.split ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %.lr.ph.split ] ; 5 uses
   %i.bi = phi i32 [ %i.cj, %bb.j ], [ %i.l, %.lr.ph.split ] ; 2 uses
   %i.bj = phi i32 [ %i.ch, %bb.j ], [ %i.j, %.lr.ph.split ] ; 2 uses
   %i.bk = icmp eq i32 %i.bi, 2147483647
@@ -367,9 +369,10 @@ bitVectorRead.exit62:                             ; preds = %.lr.ph.split.split.
 
 bb.j:                                             ; preds = %bitVectorRead.exit62, %bitVectorRead.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next ; 2 uses
+  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !35 ; 2 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 4
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv
+  %i.ci = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !35 ; 2 uses
   %i.ck = or i32 %i.cj, %i.ch
   %.not = icmp eq i32 %i.ck, 0
@@ -772,12 +775,12 @@ bb.e:                                             ; preds = %bb.d
 bitVectorRead.exit.us:                            ; preds = %.lr.ph, %bitVectorRead.exit.us
   %indvars.iv27 = phi i64 [ %indvars.iv.next28, %bitVectorRead.exit.us ], [ 0, %.lr.ph ] ; 6 uses
   %i.x = phi i32 [ %i.ap, %bitVectorRead.exit.us ], [ %i.u, %.lr.ph ]
+  %2 = phi i64 [ %3, %bitVectorRead.exit.us ], [ 1, %.lr.ph ]
   %i.y = phi i32 [ %i.an, %bitVectorRead.exit.us ], [ %i.s, %.lr.ph ]
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv27
   store i32 %i.y, ptr %i.z, align 4, !tbaa !35
-  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv27
-  %2 = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
-  store i32 %i.x, ptr %2, align 4, !tbaa !35
+  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %2
+  store i32 %i.x, ptr %i.aa, align 4, !tbaa !35
   %i.ab = lshr i64 %indvars.iv27, 6
   %i.ac = and i64 %indvars.iv27, 62
   %i.ad = and i64 %indvars.iv27, 62
@@ -790,10 +793,10 @@ bitVectorRead.exit.us:                            ; preds = %.lr.ph, %bitVectorR
   %i.ak = xor i64 %i.aj, -1
   %i.al = and i64 %i.ah, %i.ak
   store i64 %i.al, ptr %i.ag, align 8, !tbaa !41
-  %indvars.iv.next28 = add nuw nsw i64 %indvars.iv27, 2 ; 5 uses
+  %indvars.iv.next28 = add nuw nsw i64 %indvars.iv27, 2 ; 4 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %.0.val, i64 %indvars.iv.next28
   %i.an = load i32, ptr %i.am, align 4, !tbaa !35 ; 2 uses
-  %3 = or disjoint i64 %indvars.iv.next28, 1      ; 2 uses
+  %3 = add nuw nsw i64 %indvars.iv27, 3           ; 3 uses
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %.0.val, i64 %3
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !35 ; 2 uses
   %i.aq = or i32 %i.ap, %i.an
@@ -803,12 +806,12 @@ bitVectorRead.exit.us:                            ; preds = %.lr.ph, %bitVectorR
 bitVectorRead.exit:                               ; preds = %.lr.ph, %bitVectorRead.exit
   %indvars.iv24 = phi i64 [ %indvars.iv.next25, %bitVectorRead.exit ], [ 0, %.lr.ph ] ; 6 uses
   %i.ar = phi i32 [ %i.bv, %bitVectorRead.exit ], [ %i.u, %.lr.ph ]
+  %4 = phi i64 [ %5, %bitVectorRead.exit ], [ 1, %.lr.ph ]
   %i.as = phi i32 [ %i.bt, %bitVectorRead.exit ], [ %i.s, %.lr.ph ]
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv24
   store i32 %i.as, ptr %i.at, align 4, !tbaa !35
-  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv24
-  %4 = getelementptr inbounds nuw i8, ptr %i.au, i64 4
-  store i32 %i.ar, ptr %4, align 4, !tbaa !35
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %4
+  store i32 %i.ar, ptr %i.au, align 4, !tbaa !35
   %i.av = lshr i64 %indvars.iv24, 6
   %i.aw = and i64 %indvars.iv24, 62               ; 3 uses
   %i.ax = and i64 %i.av, 67108863                 ; 2 uses
@@ -833,10 +836,10 @@ bitVectorRead.exit:                               ; preds = %.lr.ph, %bitVectorR
   %i.bq = shl nuw i64 %i.bm, %i.bk
   %i.br = or i64 %i.bp, %i.bq
   store i64 %i.br, ptr %i.be, align 8, !tbaa !41
-  %indvars.iv.next25 = add nuw nsw i64 %indvars.iv24, 2 ; 5 uses
+  %indvars.iv.next25 = add nuw nsw i64 %indvars.iv24, 2 ; 4 uses
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %.0.val, i64 %indvars.iv.next25
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !35 ; 2 uses
-  %5 = or disjoint i64 %indvars.iv.next25, 1      ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv24, 3           ; 3 uses
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %.0.val, i64 %5
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !35 ; 2 uses
   %i.bw = or i32 %i.bv, %i.bt
