@@ -204,6 +204,9 @@ bb.a:
   br i1 %i.a, label %bb.ac, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %3 = and i32 %1, 2147483647
+  %4 = icmp ne i32 %3, 0
+  tail call void @llvm.assume(i1 %4)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i32, ptr %i.b, align 8, !tbaa !31   ; 2 uses
   %i.d = and i32 %i.c, 8
