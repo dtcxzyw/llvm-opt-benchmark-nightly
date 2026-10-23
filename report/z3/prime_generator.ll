@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 .lr.ph117:                                        ; preds = %.lr.ph117.preheader, %bb.af
   %i.dy = phi ptr [ %i.ag, %.lr.ph117.preheader ], [ %i.ej, %bb.af ] ; 3 uses
-  %indvars.iv145 = phi i64 [ 0, %.lr.ph117.preheader ], [ %indvars.iv.next146, %bb.af ] ; 7 uses
+  %indvars.iv145 = phi i64 [ 0, %.lr.ph117.preheader ], [ %indvars.iv.next146, %bb.af ] ; 6 uses
   %i.dz = load ptr, ptr %4, align 8, !tbaa !11    ; 8 uses
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %indvars.iv145 ; 2 uses
   %i.eb = load i64, ptr %i.ea, align 8, !tbaa !14 ; 2 uses
@@ -250,14 +250,13 @@ bb.af:                                            ; preds = %.noexc80, %bb.ad
   br i1 %exitcond149.not, label %._crit_edge126, label %.lr.ph117, !llvm.loop !38
 
 ._crit_edge118:                                   ; preds = %.lr.ph117
-  %i.ep = trunc nuw i64 %indvars.iv145 to i32     ; 2 uses
+  %i.ep = trunc nuw i64 %indvars.iv145 to i32     ; 3 uses
   %i.eq = icmp ugt i32 %i.dq, %i.ep
   br i1 %i.eq, label %.lr.ph125, label %._crit_edge126.thread
 
 .lr.ph125:                                        ; preds = %._crit_edge118
   %i.er = sub nuw i32 %i.dq, %i.ep                ; 3 uses
-  %5 = trunc i64 %indvars.iv145 to i32
-  %i.es = xor i32 %5, -1
+  %i.es = xor i32 %i.ep, -1
   %i.et = add i32 %i.dq, %i.es                    ; 2 uses
   %i.eu = zext i32 %i.et to i64
   %i.ev = add nuw nsw i64 %i.eu, 1                ; 2 uses

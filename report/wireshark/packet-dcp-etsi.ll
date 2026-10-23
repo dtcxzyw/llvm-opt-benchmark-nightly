@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.v
   %i.dw = add nsw i64 %wide.trip.count.i.i.i, -1  ; 2 uses
   %min.iters.check = icmp samesign ult i32 %i.bd, 4
   %ident.check = icmp ne i32 %i.bk, 1
-  %i.dx = trunc nsw i64 %i.dw to i32              ; 2 uses
+  %i.dx = trunc nsw i64 %i.dw to i32
   %i.dy = icmp ugt i64 %i.dw, 4294967295
   %invariant.op = or i1 %i.dy, %ident.check
   %min.iters.check119 = icmp samesign ult i32 %i.bd, 32
@@ -220,17 +220,14 @@ bb.x:                                             ; preds = %bb.v
   br label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge.i.i.i, %.preheader.preheader.i.i.i
-  %.01317.i.i.i = phi i32 [ %i.ga, %._crit_edge.i.i.i ], [ 0, %.preheader.preheader.i.i.i ] ; 8 uses
+  %.01317.i.i.i = phi i32 [ %i.ga, %._crit_edge.i.i.i ], [ 0, %.preheader.preheader.i.i.i ] ; 7 uses
   %i.eb = mul i32 %.01317.i.i.i, %i.bd            ; 6 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
   %i.ec = xor i32 %i.eb, -1
-  %4 = icmp ult i32 %i.ec, %i.dx
-  %5 = xor i32 %.01317.i.i.i, -1
-  %i.ed = icmp ult i32 %5, %i.dx
-  %.reass = or i1 %4, %invariant.op
-  %i.ee = or i1 %i.ed, %.reass
+  %i.ed = icmp ult i32 %i.ec, %i.dx
+  %i.ee = or i1 %i.ed, %invariant.op
   br i1 %i.ee, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.scevcheck

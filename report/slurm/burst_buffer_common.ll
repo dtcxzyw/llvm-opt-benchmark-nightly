@@ -202,7 +202,7 @@ bb.a:
   %.sroa.1617.0.copyload = load i64, ptr %.sroa.1617.0..sroa_idx, align 8
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 408
   %.sroa.18.0.copyload = load i64, ptr %.sroa.18.0..sroa_idx, align 8
-  %i.i = add i32 %.sroa.8.0.copyload.fr, 1        ; 6 uses
+  %i.i = add i32 %.sroa.8.0.copyload.fr, 1        ; 5 uses
   %i.j = sext i32 %i.i to i64                     ; 7 uses
   %i.k = tail call ptr @slurm_xcalloc(i64 noundef %i.j, i64 noundef 8, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str, i32 noundef 1736, ptr noundef nonnull @__func__.bb_test_size_limit) #17 ; 3 uses
   store ptr %i.k, ptr %i.a, align 8
@@ -605,7 +605,7 @@ bb.af:                                            ; preds = %bb.o, %_rm_active_j
   %i.gt = load ptr, ptr %i.f, align 8
   %i.gu = load ptr, ptr %i.e, align 8             ; 3 uses
   %i.gv = load ptr, ptr %i.b, align 8             ; 3 uses
-  %wide.trip.count388 = zext nneg i32 %i.i to i64 ; 3 uses
+  %wide.trip.count388 = zext nneg i32 %i.i to i64 ; 4 uses
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.lr.ph319, %bb.ah
@@ -795,9 +795,7 @@ bb.aw:                                            ; preds = %.lr.ph334, %bb.av
   br i1 %.not238337, label %._crit_edge338, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.critedge
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1)
   %.pre410 = load ptr, ptr %i.g, align 8
-  %wide.trip.count407 = zext nneg i32 %smax to i64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %..loopexit_crit_edge.us
@@ -807,7 +805,7 @@ bb.aw:                                            ; preds = %.lr.ph334, %bb.av
 
 bb.ax:                                            ; preds = %bb.ay
   %indvars.iv.next405 = add nuw nsw i64 %indvars.iv404, 1 ; 2 uses
-  %exitcond408.not = icmp eq i64 %indvars.iv.next405, %wide.trip.count407
+  %exitcond408.not = icmp eq i64 %indvars.iv.next405, %wide.trip.count388
   br i1 %exitcond408.not, label %..loopexit_crit_edge.us, label %bb.ay, !llvm.loop !65
 
 bb.ay:                                            ; preds = %.preheader.us, %bb.ax
@@ -1183,9 +1181,6 @@ declare range(i32 -1, 2) i32 @llvm.scmp.i32.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #16
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %.lr.ph.i.i
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.bb = load i32, ptr @_hb_NullPool, align 16
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.b, i32 2)
-  %i.bc = add i32 %umax, -1
+  %i.bc = add i32 %i.b, -1
   %wide.trip.count = zext i32 %i.bc to i64
   br label %bb.v
 
@@ -609,7 +608,6 @@ bb.dd:                                            ; preds = %_ZN11hb_vector_tIcL
 
 .lr.ph548:                                        ; preds = %bb.dd, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.i.i.i156, %bb.cx, %._crit_edge546
   %i.rk = load i8, ptr @_hb_NullPool, align 16
-  %umax596 = call i32 @llvm.umax.i32(i32 %i.b, i32 2)
   br label %bb.eb
 
 bb.de:                                            ; preds = %.lr.ph545, %bb.dm
@@ -1012,7 +1010,7 @@ bb.eq:                                            ; preds = %_ZN11hb_vector_tIcL
 
 _ZN15hb_vector_buf_t10append_strEPKc.exit254:     ; preds = %bb.ej, %bb.ek, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.i.i.i250, %bb.eq
   %i.wn = add nuw i32 %i.uq, 1                    ; 2 uses
-  %exitcond597.not = icmp eq i32 %i.wn, %umax596
+  %exitcond597.not = icmp eq i32 %i.wn, %i.b
   br i1 %exitcond597.not, label %._crit_edge549, label %bb.eb, !llvm.loop !1163
 
 _ZN11hb_vector_tIjLb0EED2Ev.exit:                 ; preds = %bb.ea, %_ZN11hb_vector_tIcLb0EED2Ev.exit215, %_ZN11hb_vector_tIcLb0EED2Ev.exit60, %_ZN11hb_vector_tIcLb0EED2Ev.exit

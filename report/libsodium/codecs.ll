@@ -204,11 +204,9 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 .preheader:                                       ; preds = %.lr.ph105.preheader, %.preheader81
-  %.5.lcssa = phi i64 [ %.4133, %.preheader81 ], [ %.062, %.lr.ph105.preheader ] ; 3 uses
+  %.5.lcssa = phi i64 [ %.4133, %.preheader81 ], [ %.062, %.lr.ph105.preheader ] ; 2 uses
   %scevgep116 = getelementptr i8, ptr %0, i64 %.5.lcssa
-  %5 = add i64 %.5.lcssa, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %1, i64 %5)
-  %i.kr = sub i64 %umax, %.5.lcssa
+  %i.kr = sub i64 %1, %.5.lcssa
   tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep116, i8 0, i64 %i.kr, i1 false)
   ret ptr %0
 }

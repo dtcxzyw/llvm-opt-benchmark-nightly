@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond663.not, label %._crit_edge, label %scalar.ph, !llvm.loop !196
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %.preheader580
-  %.1513.lcssa = phi i32 [ %.0512613, %.preheader580 ], [ %i.pb, %middle.block ], [ %spec.select, %scalar.ph ] ; 15 uses
+  %.1513.lcssa = phi i32 [ %.0512613, %.preheader580 ], [ %i.pb, %middle.block ], [ %spec.select, %scalar.ph ] ; 14 uses
   %indvars.iv.next665 = add nuw nsw i64 %indvars.iv664, 1 ; 2 uses
   %exitcond668.not = icmp eq i64 %indvars.iv.next665, %wide.trip.count667
   br i1 %exitcond668.not, label %._crit_edge614, label %.preheader580, !llvm.loop !197
@@ -215,7 +215,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %i.pg, label %bb.aj, label %.loopexit575
 
 bb.aj:                                            ; preds = %._crit_edge614
-  %i.ph = zext nneg i32 %.1513.lcssa to i64       ; 5 uses
+  %i.ph = zext nneg i32 %.1513.lcssa to i64       ; 6 uses
   %i.pi = mul nuw nsw i64 %i.ph, 24
   %i.pj = tail call noalias ptr @malloc(i64 noundef %i.pi) #13 ; 19 uses
   %i.pk = icmp eq ptr %i.pj, null
@@ -618,7 +618,6 @@ local_heap_sort.exit:                             ; preds = %bb.aq, %._crit_edge
 
 .lr.ph629:                                        ; preds = %._crit_edge627
   %i.vx = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
-  %wide.trip.count689 = zext nneg i32 %.1513.lcssa to i64
   %.pre739.a = load ptr, ptr %i.vx, align 8, !tbaa !71
   %.pre741.a = load ptr, ptr %3, align 8, !tbaa !68
   br label %bb.bi
@@ -667,7 +666,7 @@ bb.bl:                                            ; preds = %bb.bj, %bb.bk
   %i.wu = phi ptr [ %i.vy, %bb.bj ], [ %.pre740, %bb.bk ]
   %i.wv = phi ptr [ %i.vz, %bb.bj ], [ %.pre738, %bb.bk ]
   %indvars.iv.next686 = add nuw nsw i64 %indvars.iv685, 1 ; 2 uses
-  %exitcond690.not = icmp eq i64 %indvars.iv.next686, %wide.trip.count689
+  %exitcond690.not = icmp eq i64 %indvars.iv.next686, %i.ph
   br i1 %exitcond690.not, label %._crit_edge630, label %bb.bi, !llvm.loop !205
 
 ._crit_edge630:                                   ; preds = %bb.bl

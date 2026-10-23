@@ -171,7 +171,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 384220
   %i.d = load i32, ptr %i.c, align 4, !tbaa !94
   %i.e = shl i32 %i.d, 16                         ; 2 uses
-  %i.f = ashr exact i32 %i.e, 16                  ; 5 uses
+  %i.f = ashr exact i32 %i.e, 16                  ; 4 uses
   %i.g = icmp slt i32 %i.f, 0
   br i1 %i.g, label %bb.bb, label %bb.b
 
@@ -183,7 +183,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 382168 ; 6 uses
   %umin = tail call i32 @llvm.umin.i32(i32 %i.f, i32 15)
   %i.i = add nuw nsw i32 %umin, 1                 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.i to i64    ; 7 uses
+  %wide.trip.count = zext nneg i32 %i.i to i64    ; 8 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.j = icmp eq i32 %i.e, 0
   br i1 %i.j, label %.epil.preheader, label %.new
@@ -586,9 +586,6 @@ _ZN6LibRaw14selectCRXFrameEsj.exit:               ; preds = %bb.v
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 193496
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 193512 ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 193520
-  %umin341 = tail call i32 @llvm.umin.i32(i32 %i.f, i32 15)
-  %1 = add nuw nsw i32 %umin341, 1
-  %wide.trip.count342 = zext nneg i32 %1 to i64
   %i.gh = getelementptr inbounds nuw i8, ptr %0, i64 193544
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 193576
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 193608
@@ -991,7 +988,7 @@ bb.aw:                                            ; preds = %.lr.ph284.5
   %.1155 = phi i32 [ %.0154285, %_ZN6LibRaw14selectCRXFrameEsj.exit214 ], [ %.0154285, %bb.x ], [ %i.ks, %bb.aq ], [ %.0154285, %_ZN6LibRaw14selectCRXFrameEsj.exit244 ], [ %i.ks, %.critedge ], [ %i.ks, %.lr.ph284.6 ], [ %i.ks, %.lr.ph284.5 ], [ %i.ks, %.lr.ph284.4 ], [ %i.ks, %.lr.ph284.3 ], [ %i.ks, %.lr.ph284.2 ], [ %i.ks, %.lr.ph284.1 ], [ %i.ks, %.lr.ph284 ]
   %.1140 = phi i32 [ %i.jg, %_ZN6LibRaw14selectCRXFrameEsj.exit214 ], [ %.0139286, %bb.x ], [ %.0139286, %bb.aq ], [ %.0139286, %_ZN6LibRaw14selectCRXFrameEsj.exit244 ], [ %.0139286, %.critedge ], [ %.0139286, %.lr.ph284.6 ], [ %.0139286, %.lr.ph284.5 ], [ %.0139286, %.lr.ph284.4 ], [ %.0139286, %.lr.ph284.3 ], [ %.0139286, %.lr.ph284.2 ], [ %.0139286, %.lr.ph284.1 ], [ %.0139286, %.lr.ph284 ] ; 2 uses
   %indvars.iv.next338 = add nuw nsw i64 %indvars.iv337, 1 ; 2 uses
-  %exitcond343.not = icmp eq i64 %indvars.iv.next338, %wide.trip.count342
+  %exitcond343.not = icmp eq i64 %indvars.iv.next338, %wide.trip.count
   br i1 %exitcond343.not, label %._crit_edge291, label %bb.x, !llvm.loop !127
 
 switch.lookup:                                    ; preds = %._crit_edge291

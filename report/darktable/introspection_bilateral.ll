@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g
   %i.cl = mul nuw nsw i32 %i.ck, %spec.select
   %i.cm = zext nneg i32 %i.cl to i64
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.cm
-  %i.co = zext nneg i32 %spec.select to i64       ; 7 uses
+  %i.co = zext nneg i32 %spec.select to i64       ; 8 uses
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %i.co ; 3 uses
   %i.cq = fmul reassoc nsz arcp contract afn float %i.al, %i.al
   %i.cr = fmul reassoc nsz arcp contract afn <2 x float> %i.an, %i.an
@@ -500,10 +500,9 @@ vec.epilog.scalar.ph484.preheader:                ; preds = %iter.check483, %vec
   %.not337 = icmp eq i32 %i.i, 0
   %i.gy = sub nsw i64 %i.j, %i.co                 ; 3 uses
   %i.gz = icmp ugt i64 %i.gy, %i.co
-  %i.ha = sext i32 %i.cs to i64                   ; 3 uses
+  %i.ha = sext i32 %i.cs to i64                   ; 2 uses
   %i.hb = zext nneg i32 %i.ck to i64
   %.not338 = icmp ugt i32 %spec.select, %i.i
-  %smax368 = tail call i64 @llvm.smax.i64(i64 %i.ha, i64 %i.co) ; 2 uses
   %xtraiter = and i64 %i.j, 7
   %i.hc = icmp ult i32 %i.i, 8
   %unroll_iter = and i64 %i.j, -8
@@ -693,7 +692,7 @@ bb.j:                                             ; preds = %.lr.ph331, %.loopex
 
 ._crit_edge314:                                   ; preds = %bb.k
   %i.jo = add nsw i64 %.0221318, 1
-  %exitcond370.not = icmp eq i64 %.0221318, %smax368
+  %exitcond370.not = icmp eq i64 %.0221318, %i.co
   br i1 %exitcond370.not, label %.preheader264, label %.preheader, !llvm.loop !139
 
 bb.k:                                             ; preds = %.preheader, %bb.k
@@ -732,7 +731,7 @@ bb.k:                                             ; preds = %.preheader, %bb.k
   %i.kr = fadd reassoc nsz arcp contract afn <4 x float> %.sroa.0377.2, %i.kq ; 3 uses
   %i.ks = fadd reassoc nsz arcp contract afn float %i.kn, %.1311 ; 3 uses
   %i.kt = add nsw i64 %.0220312, 1
-  %exitcond369.not = icmp eq i64 %.0220312, %smax368
+  %exitcond369.not = icmp eq i64 %.0220312, %i.co
   br i1 %exitcond369.not, label %._crit_edge314, label %bb.k, !llvm.loop !140
 
 .lr.ph329:                                        ; preds = %.preheader265, %.lr.ph329
@@ -1133,9 +1132,6 @@ declare void @llvm.assume(i1 noundef) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.exp.v8f32(<8 x float>) #7

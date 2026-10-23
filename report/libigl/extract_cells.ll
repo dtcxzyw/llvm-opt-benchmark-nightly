@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274: ; preds = %_Z
   %i.cp = getelementptr inbounds nuw i8, ptr %32, i64 31
   store i8 0, ptr %i.cp, align 1, !tbaa !56
   %i.cq = getelementptr inbounds nuw i8, ptr %31, i64 8
-  %i.cr = load i64, ptr %i.cq, align 8, !tbaa !55 ; 31 uses
+  %i.cr = load i64, ptr %i.cq, align 8, !tbaa !55 ; 32 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #22
   %i.cs = icmp ugt i64 %i.cr, 384307168202282325
   br i1 %i.cs, label %bb.j, label %_ZNSt6vectorIS_ImSaImEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
@@ -608,7 +608,6 @@ _ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i.lr.ph: ; preds = %bb.bn, %_ZN4
   %i.jz = getelementptr inbounds nuw i8, ptr %46, i64 8 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %47, i64 8
   %i.kb = getelementptr inbounds nuw i8, ptr %25, i64 8
-  %umax = call i64 @llvm.umax.i64(i64 %i.cr, i64 1) ; 2 uses
   br label %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i
 
 bb.az:                                            ; preds = %._crit_edge
@@ -1011,7 +1010,7 @@ _ZNSt6vectorImSaImEE9push_backERKm.exit405:       ; preds = %.noexc780, %.noexc3
   %.sroa.14828.1 = phi ptr [ %.sroa.14828.01576, %bb.dl ], [ %i.vu, %bb.dz ], [ %.sroa.14828.01576, %_ZZN3igl8copyleft4cgal13extract_cellsIN5Eigen6MatrixIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEELin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELi1ELi0ELin1ELi1EEESM_SN_SN_SN_SM_EEmRKNS3_10MatrixBaseIT_EERKNSO_IT0_EERKNSO_IT1_EERKNSO_IT2_EERKNSO_IT3_EERKNSO_IT4_EERKNSO_IT5_EERNS3_15PlainObjectBaseIT6_EEENKUlmmE_clEmm.exit ], [ %i.wi, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i402 ], [ %.sroa.14828.01576, %.noexc394 ], [ %.sroa.14828.01576, %.noexc393 ], [ %.sroa.14828.01576, %.noexc392 ], [ %.sroa.14828.01576, %.noexc391 ], [ %.sroa.14828.01576, %.noexc390 ], [ %.sroa.14828.01576, %.noexc780 ] ; 3 uses
   %.sroa.21.1 = phi ptr [ %.sroa.21.01577, %bb.dl ], [ %.sroa.21.01577, %bb.dz ], [ %.sroa.21.01577, %_ZZN3igl8copyleft4cgal13extract_cellsIN5Eigen6MatrixIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEELin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELi1ELi0ELin1ELi1EEESM_SN_SN_SN_SM_EEmRKNS3_10MatrixBaseIT_EERKNSO_IT0_EERKNSO_IT1_EERKNSO_IT2_EERKNSO_IT3_EERKNSO_IT4_EERKNSO_IT5_EERNS3_15PlainObjectBaseIT6_EEENKUlmmE_clEmm.exit ], [ %i.wj, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i402 ], [ %.sroa.21.01577, %.noexc394 ], [ %.sroa.21.01577, %.noexc393 ], [ %.sroa.21.01577, %.noexc392 ], [ %.sroa.21.01577, %.noexc391 ], [ %.sroa.21.01577, %.noexc390 ], [ %.sroa.21.01577, %.noexc780 ] ; 4 uses
   %i.wk = add nuw i64 %storemerge2171578, 1       ; 2 uses
-  %exitcond1674.not = icmp eq i64 %i.wk, %umax
+  %exitcond1674.not = icmp eq i64 %i.wk, %i.cr
   br i1 %exitcond1674.not, label %bb.dk, label %bb.dl, !llvm.loop !280
 
 bb.ed:                                            ; preds = %bb.dk
@@ -1414,7 +1413,7 @@ _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.dk, %_ZN5Eigen15
   %i.ahp = sub i64 %i.aho, %i.st
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0820.1, i64 noundef %i.ahp) #34
   %i.ahq = add nuw i64 %storemerge2061584, 1      ; 2 uses
-  %exitcond1679.not = icmp eq i64 %i.ahq, %umax
+  %exitcond1679.not = icmp eq i64 %i.ahq, %i.cr
   br i1 %exitcond1679.not, label %._crit_edge1586, label %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i, !llvm.loop !295
 
 .body406:                                         ; preds = %.body413, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ef
@@ -1817,7 +1816,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274: ; preds = %_Z
   %i.cp = getelementptr inbounds nuw i8, ptr %32, i64 31
   store i8 0, ptr %i.cp, align 1, !tbaa !56
   %i.cq = getelementptr inbounds nuw i8, ptr %31, i64 8
-  %i.cr = load i64, ptr %i.cq, align 8, !tbaa !55 ; 31 uses
+  %i.cr = load i64, ptr %i.cq, align 8, !tbaa !55 ; 32 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #22
   %i.cs = icmp ugt i64 %i.cr, 384307168202282325
   br i1 %i.cs, label %bb.j, label %_ZNSt6vectorIS_ImSaImEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
@@ -2220,7 +2219,6 @@ _ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i.lr.ph: ; preds = %bb.bn, %_ZN4
   %i.jw = getelementptr inbounds nuw i8, ptr %47, i64 8
   %i.jx = getelementptr inbounds nuw i8, ptr %25, i64 8
   %i.jy = getelementptr inbounds nuw i8, ptr %46, i64 8
-  %umax = call i64 @llvm.umax.i64(i64 %i.cr, i64 1) ; 2 uses
   br label %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i
 
 bb.az:                                            ; preds = %._crit_edge
@@ -2623,7 +2621,7 @@ _ZNSt6vectorImSaImEE9push_backERKm.exit408:       ; preds = %.noexc783, %.noexc3
   %.sroa.14831.1 = phi ptr [ %.sroa.14831.01577, %bb.dl ], [ %i.vb, %bb.dz ], [ %.sroa.14831.01577, %_ZZN3igl8copyleft4cgal13extract_cellsIN5Eigen6MatrixIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELi1ELi0ELin1ELi1EEESM_SN_SN_SN_SM_EEmRKNS3_10MatrixBaseIT_EERKNSO_IT0_EERKNSO_IT1_EERKNSO_IT2_EERKNSO_IT3_EERKNSO_IT4_EERKNSO_IT5_EERNS3_15PlainObjectBaseIT6_EEENKUlmmE_clEmm.exit ], [ %i.vp, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i405 ], [ %.sroa.14831.01577, %.noexc397 ], [ %.sroa.14831.01577, %.noexc396 ], [ %.sroa.14831.01577, %.noexc395 ], [ %.sroa.14831.01577, %.noexc394 ], [ %.sroa.14831.01577, %.noexc393 ], [ %.sroa.14831.01577, %.noexc783 ] ; 3 uses
   %.sroa.21.1 = phi ptr [ %.sroa.21.01578, %bb.dl ], [ %.sroa.21.01578, %bb.dz ], [ %.sroa.21.01578, %_ZZN3igl8copyleft4cgal13extract_cellsIN5Eigen6MatrixIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELi1ELi0ELin1ELi1EEESM_SN_SN_SN_SM_EEmRKNS3_10MatrixBaseIT_EERKNSO_IT0_EERKNSO_IT1_EERKNSO_IT2_EERKNSO_IT3_EERKNSO_IT4_EERKNSO_IT5_EERNS3_15PlainObjectBaseIT6_EEENKUlmmE_clEmm.exit ], [ %i.vq, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i405 ], [ %.sroa.21.01578, %.noexc397 ], [ %.sroa.21.01578, %.noexc396 ], [ %.sroa.21.01578, %.noexc395 ], [ %.sroa.21.01578, %.noexc394 ], [ %.sroa.21.01578, %.noexc393 ], [ %.sroa.21.01578, %.noexc783 ] ; 4 uses
   %i.vr = add nuw i64 %storemerge2171579, 1       ; 2 uses
-  %exitcond1675.not = icmp eq i64 %i.vr, %umax
+  %exitcond1675.not = icmp eq i64 %i.vr, %i.cr
   br i1 %exitcond1675.not, label %bb.dk, label %bb.dl, !llvm.loop !324
 
 bb.ed:                                            ; preds = %bb.dk
@@ -3026,7 +3024,7 @@ _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.dk, %_ZN5Eigen15
   %i.agy = sub i64 %i.agx, %i.si
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0823.1, i64 noundef %i.agy) #34
   %i.agz = add nuw i64 %storemerge2061585, 1      ; 2 uses
-  %exitcond1680.not = icmp eq i64 %i.agz, %umax
+  %exitcond1680.not = icmp eq i64 %i.agz, %i.cr
   br i1 %exitcond1680.not, label %._crit_edge1587, label %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i, !llvm.loop !339
 
 .body409:                                         ; preds = %.body415, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ef
@@ -3429,7 +3427,7 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 bb.e:                                             ; preds = %.lr.ph.i101
   store i64 %i.ao, ptr %i.aj, align 16, !tbaa !184
-  %i.ar = add i64 %i.ao, -1                       ; 2 uses
+  %i.ar = add nsw i64 %i.ao, -1                   ; 2 uses
   %.not.i.i103 = icmp eq i64 %i.ar, 0
   br i1 %.not.i.i103, label %_ZN5boost14multiprecision8backends15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEC2EPKymm.exit104, label %.lr.ph.i101, !llvm.loop !14
 

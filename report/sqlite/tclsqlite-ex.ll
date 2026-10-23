@@ -206,21 +206,17 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph212, %qrfStringInArray.exit180.thread
-  %indvars.iv240 = phi i64 [ 0, %.lr.ph212 ], [ %indvars.iv.next241, %qrfStringInArray.exit180.thread ] ; 19 uses
+  %indvars.iv240 = phi i64 [ 0, %.lr.ph212 ], [ %indvars.iv.next241, %qrfStringInArray.exit180.thread ] ; 18 uses
   %.0142210 = phi i64 [ 0, %.lr.ph212 ], [ %.1143, %qrfStringInArray.exit180.thread ] ; 3 uses
   %.0145209 = phi ptr [ null, %.lr.ph212 ], [ %.1146, %qrfStringInArray.exit180.thread ] ; 3 uses
   %.0148208 = phi ptr [ null, %.lr.ph212 ], [ %.1149, %qrfStringInArray.exit180.thread ] ; 3 uses
-  %1 = trunc i64 %indvars.iv240 to i32
-  %2 = add i32 %1, 1
   %i.e = trunc i64 %indvars.iv240 to i32
   %i.f = add i32 %i.e, 1
-  %3 = add i64 %indvars.iv240, 1                  ; 2 uses
-  %4 = trunc i64 %3 to i32
   %i.g = trunc i64 %indvars.iv240 to i32
   %i.h = add i32 %i.g, 1
   %i.i = load i32, ptr %i.d, align 8, !tbaa !48
   %.not = icmp eq i32 %i.i, 0
-  %i.j = trunc nuw nsw i64 %indvars.iv240 to i32  ; 3 uses
+  %i.j = trunc i64 %indvars.iv240 to i32          ; 5 uses
   br i1 %.not, label %bb.c, label %.critedge.loopexit
 
 bb.c:                                             ; preds = %bb.b
@@ -338,7 +334,8 @@ qrfStringInArray.exit172:                         ; preds = %.lr.ph.i167.5, %.lr
   %i.be = add i32 %i.r, %i.j
   %i.bf = sub i32 %i.be, %i.l
   %i.bg = zext i32 %i.bf to i64                   ; 4 uses
-  %i.bh = add i32 %i.r, %2
+  %1 = add i32 %i.j, 1
+  %i.bh = add i32 %i.r, %1
   %i.bi = sub i32 %i.bh, %i.l
   %i.bj = sext i32 %i.bi to i64                   ; 2 uses
   %i.bk = tail call i64 @llvm.smax.i64(i64 %indvars.iv240, i64 %i.bj)
@@ -422,10 +419,12 @@ bb.f:                                             ; preds = %qrfStringInArray.ex
   %i.cp = add i32 %i.r, %i.j
   %i.cq = sub i32 %i.cp, %i.l
   %i.cr = sext i32 %i.cq to i64                   ; 4 uses
-  %i.cs = add i32 %i.r, %4
+  %2 = add nuw i64 %indvars.iv240, 1
+  %3 = add i32 %i.j, 1
+  %i.cs = add i32 %i.r, %3
   %i.ct = sub i32 %i.cs, %i.l
   %i.cu = zext i32 %i.ct to i64
-  %i.cv = sub i64 %3, %i.cu                       ; 3 uses
+  %i.cv = sub i64 %2, %i.cu                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.cv, 12
   br i1 %min.iters.check, label %.lr.ph207.preheader299, label %vector.scevcheck
 

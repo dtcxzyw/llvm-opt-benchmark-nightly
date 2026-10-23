@@ -205,8 +205,7 @@ bb.aq:                                            ; preds = %bb.an, %bb.am
   %i.fm = add nuw nsw i64 %i.fl, 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.fi, i8 0, i64 %i.fm, i1 false)
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ee, i64 2776
-  %smax258 = call i32 @llvm.smax.i32(i32 %i.ej, i32 1)
-  %wide.trip.count = zext nneg i32 %smax258 to i64
+  %wide.trip.count = zext nneg i32 %i.ej to i64
   br label %bb.ar
 
 ._crit_edge240:                                   ; preds = %bb.as

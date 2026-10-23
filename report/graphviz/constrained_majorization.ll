@@ -42,7 +42,7 @@ bb.a:
   br i1 %or.cond740, label %.preheader609.preheader, label %.critedge
 
 .preheader609.preheader:                          ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 18 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 27 uses
   br label %.preheader609
 
 .preheader609:                                    ; preds = %.preheader609.preheader, %._crit_edge
@@ -445,12 +445,10 @@ bb.af:                                            ; preds = %bb.ae, %.thread562
   br i1 %or.cond1108, label %.preheader603.us.preheader, label %.loopexit602
 
 .preheader603.us.preheader:                       ; preds = %bb.af
-  %smax = call i32 @llvm.smax.i32(i32 %1, i32 1)
   %wide.trip.count778 = zext nneg i32 %4 to i64
-  %wide.trip.count773 = zext nneg i32 %smax to i64 ; 5 uses
-  %min.iters.check998 = icmp slt i32 %1, 4
-  %n.vec1000 = and i64 %wide.trip.count773, 2147483644 ; 3 uses
-  %cmp.n1009 = icmp ne i64 %n.vec1000, %wide.trip.count773
+  %min.iters.check995 = icmp ult i32 %1, 4
+  %n.vec1000 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %cmp.n1009 = icmp ne i64 %n.vec1000, %wide.trip.count
   br label %.preheader603.us
 
 .preheader603.us:                                 ; preds = %.preheader603.us.preheader, %._crit_edge630.us
@@ -458,7 +456,7 @@ bb.af:                                            ; preds = %bb.ae, %.thread562
   %.0465632.us = phi double [ 1.000000e+00, %.preheader603.us.preheader ], [ %.lcssa974, %._crit_edge630.us ] ; 2 uses
   %i.fy = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv775
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !68 ; 2 uses
-  br i1 %min.iters.check998, label %scalar.ph997.preheader, label %vector.ph999
+  br i1 %min.iters.check995, label %scalar.ph997.preheader, label %vector.ph999
 
 vector.ph999:                                     ; preds = %.preheader603.us
   %broadcast.splatinsert = insertelement <2 x double> poison, double %.0465632.us, i64 0
@@ -509,7 +507,7 @@ scalar.ph997:                                     ; preds = %scalar.ph997.prehea
   %i.gr = call nsz double @llvm.fabs.f64(double %i.gq)
   %i.gs = call nsz double @llvm.maxnum.f64(double %.1466627.us, double %i.gr) ; 2 uses
   %indvars.iv.next771 = add nuw nsw i64 %indvars.iv770, 1 ; 2 uses
-  %exitcond774.not = icmp eq i64 %indvars.iv.next771, %wide.trip.count773
+  %exitcond774.not = icmp eq i64 %indvars.iv.next771, %wide.trip.count
   br i1 %exitcond774.not, label %._crit_edge630.us, label %scalar.ph997, !llvm.loop !19
 
 ._crit_edge630.us:                                ; preds = %scalar.ph997, %middle.block1008
@@ -520,21 +518,19 @@ scalar.ph997:                                     ; preds = %scalar.ph997.prehea
 
 .preheader600.preheader:                          ; preds = %._crit_edge630.us
   %i.gt = fdiv double 1.000000e+01, %.lcssa974    ; 2 uses
-  %smax783 = call i32 @llvm.smax.i32(i32 %1, i32 1)
   %wide.trip.count789 = zext nneg i32 %4 to i64
-  %wide.trip.count784 = zext nneg i32 %smax783 to i64
-  %min.iters.check1013 = icmp slt i32 %1, 4
-  %n.vec1015 = and i64 %wide.trip.count773, 2147483644 ; 3 uses
+  %min.iters.check1010 = icmp ult i32 %1, 4
+  %n.vec1015 = and i64 %wide.trip.count, 2147483644 ; 3 uses
   %broadcast.splatinsert1016 = insertelement <2 x double> poison, double %i.gt, i64 0
   %broadcast.splat1017 = shufflevector <2 x double> %broadcast.splatinsert1016, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %cmp.n1024 = icmp eq i64 %n.vec1015, %wide.trip.count773
+  %cmp.n1024 = icmp eq i64 %n.vec1015, %wide.trip.count
   br label %.preheader600
 
 .preheader600:                                    ; preds = %.preheader600.preheader, %._crit_edge637
   %indvars.iv786 = phi i64 [ 0, %.preheader600.preheader ], [ %indvars.iv.next787, %._crit_edge637 ] ; 2 uses
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv786
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !68 ; 2 uses
-  br i1 %min.iters.check1013, label %scalar.ph1012.preheader, label %vector.body1018
+  br i1 %min.iters.check1010, label %scalar.ph1012.preheader, label %vector.body1018
 
 vector.body1018:                                  ; preds = %.preheader600, %vector.body1018
   %index1019 = phi i64 [ %index.next1022, %vector.body1018 ], [ 0, %.preheader600 ] ; 2 uses
@@ -569,7 +565,7 @@ scalar.ph1012:                                    ; preds = %scalar.ph1012.prehe
   %i.hd = fmul double %i.gt, %i.hc
   store double %i.hd, ptr %i.hb, align 8, !tbaa !70
   %indvars.iv.next781 = add nuw nsw i64 %indvars.iv780, 1 ; 2 uses
-  %exitcond785.not = icmp eq i64 %indvars.iv.next781, %wide.trip.count784
+  %exitcond785.not = icmp eq i64 %indvars.iv.next781, %wide.trip.count
   br i1 %exitcond785.not, label %._crit_edge637, label %scalar.ph1012, !llvm.loop !23
 
 .loopexit602:                                     ; preds = %._crit_edge637, %bb.af
@@ -676,13 +672,11 @@ middle.block1037:                                 ; preds = %vector.body1032
   %i.if = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !68 ; 3 uses
   %i.ih = load double, ptr %i.ig, align 8, !tbaa !70 ; 2 uses
-  %smax811 = call i32 @llvm.smax.i32(i32 %1, i32 1)
-  %wide.trip.count812 = zext nneg i32 %smax811 to i64 ; 7 uses
-  %min.iters.check1041 = icmp slt i32 %1, 4
-  br i1 %min.iters.check1041, label %.lr.ph663.preheader1115, label %vector.ph1042
+  %min.iters.check1038 = icmp ult i32 %1, 4
+  br i1 %min.iters.check1038, label %.lr.ph663.preheader1115, label %vector.ph1042
 
 vector.ph1042:                                    ; preds = %.lr.ph663.preheader
-  %n.vec1043 = and i64 %wide.trip.count812, 2147483644 ; 3 uses
+  %n.vec1043 = and i64 %wide.trip.count, 2147483644 ; 3 uses
   %broadcast.splatinsert1044 = insertelement <2 x double> poison, double %i.ih, i64 0
   %broadcast.splat1045 = shufflevector <2 x double> %broadcast.splatinsert1044, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body1046
@@ -702,7 +696,7 @@ vector.body1046:                                  ; preds = %vector.body1046, %v
   br i1 %i.im, label %middle.block1051, label %vector.body1046, !llvm.loop !28
 
 middle.block1051:                                 ; preds = %vector.body1046
-  %cmp.n1052 = icmp eq i64 %n.vec1043, %wide.trip.count812
+  %cmp.n1052 = icmp eq i64 %n.vec1043, %wide.trip.count
   br i1 %cmp.n1052, label %._crit_edge664, label %.lr.ph663.preheader1115
 
 .lr.ph663.preheader1115:                          ; preds = %.lr.ph663.preheader, %middle.block1051
@@ -767,10 +761,10 @@ gv_calloc.exit520:                                ; preds = %._crit_edge664
 .lr.ph670:                                        ; preds = %bb.ak
   %smax817 = call i32 @llvm.smax.i32(i32 %1, i32 1)
   %wide.trip.count823 = zext nneg i32 %4 to i64
-  %wide.trip.count818 = zext nneg i32 %smax817 to i64
+  %wide.trip.count818 = zext nneg i32 %smax817 to i64 ; 3 uses
   %min.iters.check1055 = icmp slt i32 %1, 4
-  %n.vec1057 = and i64 %wide.trip.count812, 2147483644 ; 3 uses
-  %cmp.n1064 = icmp eq i64 %n.vec1057, %wide.trip.count812
+  %n.vec1057 = and i64 %wide.trip.count818, 2147483644 ; 3 uses
+  %cmp.n1064 = icmp eq i64 %n.vec1057, %wide.trip.count818
   br label %.lr.ph667
 
 .lr.ph663:                                        ; preds = %.lr.ph663.preheader1115, %.lr.ph663
@@ -780,7 +774,7 @@ gv_calloc.exit520:                                ; preds = %._crit_edge664
   %i.ji = fsub double %i.jh, %i.ih
   store double %i.ji, ptr %i.jg, align 8, !tbaa !70
   %indvars.iv.next809 = add nuw nsw i64 %indvars.iv808, 1 ; 2 uses
-  %exitcond813.not = icmp eq i64 %indvars.iv.next809, %wide.trip.count812
+  %exitcond813.not = icmp eq i64 %indvars.iv.next809, %wide.trip.count
   br i1 %exitcond813.not, label %._crit_edge664, label %.lr.ph663, !llvm.loop !30
 
 ._crit_edge671:                                   ; preds = %._crit_edge668, %gv_calloc.exit520
@@ -891,7 +885,7 @@ bb.ao:                                            ; preds = %bb.an
 
 .lr.ph685.preheader:                              ; preds = %._crit_edge677
   %smax848 = call i32 @llvm.smax.i32(i32 %1, i32 1) ; 3 uses
-  %wide.trip.count849 = zext nneg i32 %smax848 to i64 ; 5 uses
+  %wide.trip.count849 = zext nneg i32 %smax848 to i64 ; 7 uses
   %i.ks = add nsw i64 %wide.trip.count849, -1     ; 2 uses
   %xtraiter1134 = and i64 %wide.trip.count849, 1
   %i.kt = icmp eq i64 %i.ks, 0
@@ -1209,8 +1203,8 @@ gv_calloc.exit550:                                ; preds = %bb.ay
   %wide.trip.count928 = zext nneg i32 %4 to i64
   %wide.trip.count923 = zext nneg i32 %smax922 to i64
   %min.iters.check1093 = icmp slt i32 %1, 4
-  %n.vec1095 = and i64 %wide.trip.count812, 2147483644 ; 3 uses
-  %cmp.n1102 = icmp eq i64 %n.vec1095, %wide.trip.count812
+  %n.vec1095 = and i64 %wide.trip.count849, 2147483644 ; 3 uses
+  %cmp.n1102 = icmp eq i64 %n.vec1095, %wide.trip.count849
   br label %.preheader
 
 .lr.ph708.preheader:                              ; preds = %._crit_edge730, %.lr.ph733

@@ -204,7 +204,7 @@ bb.a:
   br label %.loopexit
 
 .noexc:                                           ; preds = %bb.a
-  %i.c = zext nneg i32 %2 to i64                  ; 10 uses
+  %i.c = zext nneg i32 %2 to i64                  ; 13 uses
   %i.d = shl nuw nsw i64 %i.c, 3                  ; 7 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #34 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !191
@@ -340,7 +340,6 @@ _ZN8LightGBM6CommonL7SoftmaxEPKdPdi.exit:         ; preds = %.lr.ph35.i, %middle
   %i.at = fcmp ogt double %i.bk, f0x3CD203AFA0000000
   %.sroa.speculated = select i1 %i.at, double %i.bk, double f0x3CD203AFA0000000
   %i.au = fdiv double 1.000000e+00, %.sroa.speculated
-  %wide.trip.count139 = zext nneg i32 %2 to i64
   br label %.lr.ph122
 
 _ZNSt6vectorIdSaIdEED2Ev.exit82:                  ; preds = %_ZN8LightGBM6CommonL7SoftmaxEPKdPdi.exit
@@ -372,10 +371,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.c
   br i1 %exitcond.not, label %.lr.ph122.preheader, label %bb.b, !llvm.loop !696
 
-.lr.ph126.preheader:                              ; preds = %.lr.ph122
-  %wide.trip.count145 = zext nneg i32 %2 to i64
-  br label %.lr.ph126
-
 .lr.ph122:                                        ; preds = %.lr.ph122.preheader, %.lr.ph122
   %indvars.iv136 = phi i64 [ 0, %.lr.ph122.preheader ], [ %indvars.iv.next137, %.lr.ph122 ] ; 4 uses
   %.066119 = phi double [ 0.000000e+00, %.lr.ph122.preheader ], [ %i.bv, %.lr.ph122 ]
@@ -393,11 +388,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store double %i.bu, ptr %i.bl, align 8, !tbaa !191
   %i.bv = fadd double %.066119, %i.bu             ; 2 uses
   %indvars.iv.next137 = add nuw nsw i64 %indvars.iv136, 1 ; 2 uses
-  %exitcond140.not = icmp eq i64 %indvars.iv.next137, %wide.trip.count139
-  br i1 %exitcond140.not, label %.lr.ph126.preheader, label %.lr.ph122, !llvm.loop !697
+  %exitcond140.not = icmp eq i64 %indvars.iv.next137, %i.c
+  br i1 %exitcond140.not, label %.lr.ph126, label %.lr.ph122, !llvm.loop !697
 
 .lr.ph129.preheader:                              ; preds = %.lr.ph126
-  %wide.trip.count151 = zext nneg i32 %2 to i64
   %min.iters.check = icmp ult i32 %2, 4
   br i1 %min.iters.check, label %.lr.ph129.preheader177, label %vector.memcheck
 
@@ -446,9 +440,9 @@ middle.block175:                                  ; preds = %vector.body169
   %indvars.iv147.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph129.preheader ], [ %n.vec166, %middle.block175 ]
   br label %.lr.ph129
 
-.lr.ph126:                                        ; preds = %.lr.ph126.preheader, %.lr.ph126
-  %indvars.iv141 = phi i64 [ 0, %.lr.ph126.preheader ], [ %indvars.iv.next142, %.lr.ph126 ] ; 4 uses
-  %.063124 = phi double [ 0.000000e+00, %.lr.ph126.preheader ], [ %i.cx, %.lr.ph126 ]
+.lr.ph126:                                        ; preds = %.lr.ph122, %.lr.ph126
+  %indvars.iv141 = phi i64 [ %indvars.iv.next142, %.lr.ph126 ], [ 0, %.lr.ph122 ] ; 4 uses
+  %.063124 = phi double [ %i.cx, %.lr.ph126 ], [ 0.000000e+00, %.lr.ph122 ]
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv141
   %i.cm = load double, ptr %i.cl, align 8, !tbaa !191 ; 2 uses
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %indvars.iv141 ; 2 uses
@@ -465,7 +459,7 @@ middle.block175:                                  ; preds = %vector.body169
   store double %i.cw, ptr %i.cn, align 8, !tbaa !191
   %i.cx = fadd double %.063124, %i.cw             ; 3 uses
   %indvars.iv.next142 = add nuw nsw i64 %indvars.iv141, 1 ; 2 uses
-  %exitcond146.not = icmp eq i64 %indvars.iv.next142, %wide.trip.count145
+  %exitcond146.not = icmp eq i64 %indvars.iv.next142, %i.c
   br i1 %exitcond146.not, label %.lr.ph129.preheader, label %.lr.ph126, !llvm.loop !702
 
 _ZNSt6vectorIdSaIdEED2Ev.exit80:                  ; preds = %.lr.ph129, %middle.block175
@@ -492,7 +486,7 @@ _ZNSt6vectorIdSaIdEED2Ev.exit80:                  ; preds = %.lr.ph129, %middle.
   %i.dl = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv147
   store float %i.dk, ptr %i.dl, align 4, !tbaa !169
   %indvars.iv.next148 = add nuw nsw i64 %indvars.iv147, 1 ; 2 uses
-  %exitcond152.not = icmp eq i64 %indvars.iv.next148, %wide.trip.count151
+  %exitcond152.not = icmp eq i64 %indvars.iv.next148, %i.c
   br i1 %exitcond152.not, label %_ZNSt6vectorIdSaIdEED2Ev.exit80, label %.lr.ph129, !llvm.loop !703
 
 .loopexit:                                        ; preds = %.preheader, %.lr.ph130.split, %_ZNSt6vectorIdSaIdEED2Ev.exit80

@@ -205,12 +205,9 @@ bb.c:                                             ; preds = %_ZNSt6vectorIiSaIiE
 bb.d:                                             ; preds = %.preheader, %_ZNSt6vectorIiSaIiEED2Ev.exit852
   %indvars.iv9137 = phi i64 [ 2, %.preheader ], [ %indvars.iv.next9138, %_ZNSt6vectorIiSaIiEED2Ev.exit852 ] ; 2 uses
   %indvars.iv = phi i64 [ 1, %.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIiSaIiEED2Ev.exit852 ] ; 2 uses
-  %.0605593 = phi i64 [ 0, %.preheader ], [ %i.gi, %_ZNSt6vectorIiSaIiEED2Ev.exit852 ] ; 82 uses
-  %66 = shl nuw nsw i64 %.0605593, 2
-  %67 = add nuw i64 %66, 4
+  %.0605593 = phi i64 [ 0, %.preheader ], [ %i.gi, %_ZNSt6vectorIiSaIiEED2Ev.exit852 ] ; 81 uses
   %i.db = shl nuw nsw i64 %.0605593, 2
-  %i.dc = add nuw i64 %i.db, 16
-  %68 = shl i64 %.0605593, 2
+  %i.dc = add nuw i64 %i.db, 4
   %i.dd = shl nuw nsw i64 %.0605593, 2
   %i.de = add nuw i64 %i.dd, 20
   %i.df = shl nuw nsw i64 %.0605593, 2
@@ -453,7 +450,7 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
   br label %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EEOi.exit
 
 _ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EEOi.exit: ; preds = %bb.n, %_ZNSt6vectorIiSaIiEE13_M_insert_auxIiEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEOT_.exit.i, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i
-  %.idx1312.pre-phi = phi i64 [ %.idx, %bb.n ], [ %.idx, %_ZNSt6vectorIiSaIiEE13_M_insert_auxIiEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEOT_.exit.i ], [ %.pre, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 15 uses
+  %.idx1312.pre-phi = phi i64 [ %.idx, %bb.n ], [ %.idx, %_ZNSt6vectorIiSaIiEE13_M_insert_auxIiEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEOT_.exit.i ], [ %.pre, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 16 uses
   %.sroa.21.5 = phi ptr [ %.sroa.21.3, %bb.n ], [ %.sroa.21.3, %_ZNSt6vectorIiSaIiEE13_M_insert_auxIiEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEOT_.exit.i ], [ %i.ga, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 2 uses
   %.sroa.131263.2 = phi ptr [ %i.ev, %bb.n ], [ %i.ex, %_ZNSt6vectorIiSaIiEE13_M_insert_auxIiEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEOT_.exit.i ], [ %i.fz, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 2 uses
   %.sroa.01257.5 = phi ptr [ %.sroa.01257.3, %bb.n ], [ %.sroa.01257.3, %_ZNSt6vectorIiSaIiEE13_M_insert_auxIiEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEOT_.exit.i ], [ %i.ft, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 7 uses
@@ -609,7 +606,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIiEE9
   br i1 %min.iters.check13982, label %.lr.ph.i.i864.preheader14064, label %vector.memcheck13978
 
 vector.memcheck13978:                             ; preds = %.lr.ph.i.i864.preheader
-  %i.hz = add i64 %67, %i.gp
+  %i.hz = add i64 %i.dc, %i.gp
   %i.ia = sub i64 %.sroa.090.0.i13979, %i.hz
   %diff.check13980 = icmp ugt i64 %i.ia, -32
   br i1 %diff.check13980, label %.lr.ph.i.i864.preheader14064, label %vector.ph13983
@@ -1012,7 +1009,8 @@ bb.cp:                                            ; preds = %bb.ck
 bb.cq:                                            ; preds = %bb.cp
   %.idx.i.i.i.i.i.i = sub nuw nsw i64 20, %i.qs
   %i.rg = getelementptr inbounds nuw i8, ptr %.sroa.141238.11289, i64 %.idx.i.i.i.i.i.i ; 5 uses
-  %i.rh = add i64 %i.dc, %i.qo
+  %66 = add nuw i64 %.idx1312.pre-phi, 16
+  %i.rh = add i64 %66, %i.qo
   %i.ri = sub i64 %i.rh, %i.qq                    ; 2 uses
   %i.rj = lshr i64 %i.ri, 2
   %i.rk = add nuw nsw i64 %i.rj, 1                ; 2 uses
@@ -1076,8 +1074,9 @@ _ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69.i: ; preds = %bb.
   br i1 %.not5.i.i.i70.i, label %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EEmRS4_.exit, label %.lr.ph.i.i.i71.i.preheader
 
 .lr.ph.i.i.i71.i.preheader:                       ; preds = %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69.i
+  %67 = shl i64 %.0605593, 2
   %i.rv = add i64 %i.qq, -4
-  %i.rw = add i64 %68, %i.qo
+  %i.rw = add i64 %67, %i.qo
   %i.rx = sub i64 %i.rv, %i.rw                    ; 2 uses
   %i.ry = lshr i64 %i.rx, 2
   %i.rz = add nuw nsw i64 %i.ry, 1                ; 2 uses

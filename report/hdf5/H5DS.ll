@@ -201,12 +201,12 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ao, label %bb.eb, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ap = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.an) #10 ; 2 uses
+  %i.ap = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.an) #10 ; 3 uses
   %i.aq = icmp slt i32 %i.ap, 0
   br i1 %i.aq, label %.thread464, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %spec.store.select = call i32 @llvm.umax.i32(i32 %i.ap, i32 1) ; 4 uses
+  %spec.store.select = call i32 @llvm.umax.i32(i32 %i.ap, i32 1) ; 3 uses
   %i.ar = call i32 @H5Sclose(i64 noundef %i.an) #10
   %i.as = icmp slt i32 %i.ar, 0
   %i.at = add nsw i32 %spec.store.select, -1
@@ -301,7 +301,8 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.cb, label %.thread464, label %._crit_edge489
 
 ._crit_edge489:                                   ; preds = %bb.ae
-  %i.cc = zext nneg i32 %spec.store.select to i64
+  %10 = call i32 @llvm.umax.i32(i32 %i.ap, i32 1)
+  %i.cc = zext nneg i32 %10 to i64
   %i.cd = shl nuw nsw i64 %i.cc, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ca, i8 0, i64 %i.cd, i1 false), !tbaa !18
   %i.ce = zext nneg i32 %2 to i64
@@ -704,7 +705,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ae, label %bb.dg, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.af = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.ad) #10 ; 7 uses
+  %i.af = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.ad) #10 ; 6 uses
   %i.ag = icmp slt i32 %i.af, 0
   br i1 %i.ag, label %.thread324, label %bb.l
 
@@ -737,7 +738,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ar, label %.thread324, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.as = zext nneg i32 %i.af to i64
+  %i.as = zext nneg i32 %i.af to i64              ; 2 uses
   %i.at = shl nuw nsw i64 %i.as, 4
   %i.au = call noalias ptr @malloc(i64 noundef %i.at) #11 ; 21 uses
   %i.av = icmp eq ptr %i.au, null
@@ -863,19 +864,15 @@ bb.ai:                                            ; preds = %.thread320, %bb.y
 bb.aj:                                            ; preds = %bb.af, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
   %.not291358.not = icmp eq i32 %i.af, 0
-  br i1 %.not291358.not, label %.critedge, label %.lr.ph360.preheader
-
-.lr.ph360.preheader:                              ; preds = %bb.aj
-  %wide.trip.count = zext nneg i32 %i.af to i64
-  br label %.lr.ph360
+  br i1 %.not291358.not, label %.critedge, label %.lr.ph360
 
 bb.ak:                                            ; preds = %.lr.ph360
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.as
   br i1 %exitcond.not, label %.critedge, label %.lr.ph360, !llvm.loop !40
 
-.lr.ph360:                                        ; preds = %.lr.ph360.preheader, %bb.ak
-  %indvars.iv = phi i64 [ 0, %.lr.ph360.preheader ], [ %indvars.iv.next, %bb.ak ] ; 2 uses
+.lr.ph360:                                        ; preds = %bb.aj, %bb.ak
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ak ], [ 0, %bb.aj ] ; 2 uses
   %i.cm = getelementptr inbounds nuw [16 x i8], ptr %i.au, i64 %indvars.iv
   %i.cn = load i64, ptr %i.cm, align 8, !tbaa !21
   %.not289 = icmp eq i64 %i.cn, 0

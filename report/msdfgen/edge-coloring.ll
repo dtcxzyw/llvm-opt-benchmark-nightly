@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.qe = sub i64 %i.qc, %i.qd
   %i.qf = lshr exact i64 %i.qe, 2
   %i.qg = trunc i64 %i.qf to i32                  ; 5 uses
-  %i.qh = add nsw i32 %i.qg, -1                   ; 21 uses
+  %i.qh = add nsw i32 %i.qg, -1                   ; 20 uses
   %.not = icmp eq i32 %i.qh, 0
   br i1 %.not, label %bb.fq, label %bb.dj
 
@@ -301,8 +301,7 @@ _ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc342
   br i1 %epil.iter.cmp.not, label %.lr.ph1349.preheader, label %.lr.ph1344.epil, !llvm.loop !84
 
 .lr.ph1349.preheader:                             ; preds = %.lr.ph1344.epil, %.lr.ph1349.preheader.unr-lcssa
-  %wide.trip.count1752 = zext nneg i32 %i.qh to i64
-  %wide.trip.count1746 = zext i32 %i.qh to i64
+  %wide.trip.count1746 = zext nneg i32 %i.qh to i64 ; 2 uses
   br label %.lr.ph1349
 
 bb.dl:                                            ; preds = %bb.dj
@@ -344,7 +343,7 @@ bb.dm:                                            ; preds = %_ZNSt6vectorIPdSaIS
 
 .loopexit714:                                     ; preds = %_ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit, %.lr.ph1349
   %indvars.iv.next1742 = add nuw nsw i64 %indvars.iv1741, 1
-  %exitcond1753.not = icmp eq i64 %indvars.iv.next1749, %wide.trip.count1752
+  %exitcond1753.not = icmp eq i64 %indvars.iv.next1749, %wide.trip.count1746
   br i1 %exitcond1753.not, label %._crit_edge1350, label %.lr.ph1349, !llvm.loop !86
 
 ._crit_edge1350:                                  ; preds = %.loopexit714
@@ -378,9 +377,7 @@ _ZNSt12_Vector_baseIPKdSaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %_ZNSt12_
 .lr.ph1364.preheader:                             ; preds = %_ZNSt12_Vector_baseIPKdSaIS1_EE13_M_deallocateEPS1_m.exit.i, %bb.do
   %.sroa.0454.4 = phi ptr [ %i.rw, %_ZNSt12_Vector_baseIPKdSaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %bb.do ] ; 2 uses
   %.sroa.27.4 = phi ptr [ %i.rx, %_ZNSt12_Vector_baseIPKdSaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %bb.do ]
-  %smax1764 = call i32 @llvm.smax.i32(i32 %i.qh, i32 1)
-  %wide.trip.count1765 = zext nneg i32 %smax1764 to i64 ; 3 uses
-  %wide.trip.count1759 = zext i32 %i.qh to i64
+  %wide.trip.count1759 = zext i32 %i.qh to i64    ; 2 uses
   br label %.lr.ph1364
 
 .lr.ph1349:                                       ; preds = %.lr.ph1349.preheader, %.loopexit714
@@ -664,7 +661,7 @@ _ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit: ; preds = %
   %.sroa.18.1.lcssa = phi ptr [ %.sroa.18.01361, %.lr.ph1364 ], [ %.sroa.18.3, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 3 uses
   %.sroa.27.1.lcssa = phi ptr [ %.sroa.27.01362, %.lr.ph1364 ], [ %.sroa.27.5, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 5 uses
   %indvars.iv.next1755 = add nuw nsw i64 %indvars.iv1754, 1
-  %exitcond1766.not = icmp eq i64 %indvars.iv.next1762, %wide.trip.count1765
+  %exitcond1766.not = icmp eq i64 %indvars.iv.next1762, %wide.trip.count1759
   br i1 %exitcond1766.not, label %._crit_edge1365, label %.lr.ph1364, !llvm.loop !93
 
 ._crit_edge1365:                                  ; preds = %.loopexit
@@ -808,12 +805,14 @@ _ZSt6fill_nIPPimS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc373
   br label %.lr.ph1370.preheader
 
 .lr.ph1370.preheader:                             ; preds = %.noexc373, %_ZSt6fill_nIPPimS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i
-  %xtraiter3217 = and i64 %wide.trip.count1765, 3 ; 3 uses
+  %smax = call i32 @llvm.smax.i32(i32 %i.qh, i32 1)
+  %wide.trip.count1768 = zext nneg i32 %smax to i64 ; 2 uses
+  %xtraiter3217 = and i64 %wide.trip.count1768, 3 ; 3 uses
   %i.yq = icmp slt i32 %i.qg, 5
   br i1 %i.yq, label %.lr.ph1370.epil.preheader, label %.lr.ph1370.preheader.new
 
 .lr.ph1370.preheader.new:                         ; preds = %.lr.ph1370.preheader
-  %unroll_iter3221 = and i64 %wide.trip.count1765, 2147483644
+  %unroll_iter3221 = and i64 %wide.trip.count1768, 2147483644
   br label %.lr.ph1370
 
 .preheader701.unr-lcssa:                          ; preds = %.lr.ph1370
