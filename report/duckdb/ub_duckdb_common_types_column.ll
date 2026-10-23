@@ -204,26 +204,52 @@ _ZN6duckdb19ColumnDataScanStateD2Ev.exit:         ; preds = %_ZN6duckdb20ChunkMa
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIterator4NextEv(ptr noundef nonnull align 8 dereferenceable(168) %0) local_unnamed_addr #0 align 2 {
 bb.a:
+  %1 = alloca i64, align 8                        ; 5 uses
+  %2 = alloca i64, align 8                        ; 5 uses
+  %3 = alloca i64, align 8                        ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !341
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZNK6duckdb12optional_ptrIKNS_20ColumnDataCollectionELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
-  %i.b = load ptr, ptr %0, align 8, !tbaa !341
+  %i.b = load ptr, ptr %0, align 8, !tbaa !341    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
-  %i.e = tail call noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
-  %1 = tail call noundef zeroext i1 @_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(112) %i.b, ptr noundef nonnull align 8 dereferenceable(144) %i.c, ptr noundef nonnull align 8 dereferenceable(72) %i.e)
-  br i1 %1, label %bb.d, label %bb.c
+  %i.e = tail call noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d) ; 3 uses
+  tail call void @_ZN6duckdb9DataChunk5ResetEv(ptr noundef nonnull align 8 dereferenceable(72) %i.e)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
+  %4 = call noundef zeroext i1 @_ZNK6duckdb20ColumnDataCollection13NextScanIndexERNS_19ColumnDataScanStateERmS3_S3_(ptr noundef nonnull align 8 dereferenceable(112) %i.b, ptr noundef nonnull align 8 dereferenceable(144) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3)
+  br i1 %4, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   store i64 0, ptr %0, align 8, !tbaa !330
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 160
   store i64 0, ptr %i.f, align 8, !tbaa !340
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
+  %7 = load i64, ptr %2, align 8, !tbaa !141
+  %8 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6duckdb6vectorINS_10unique_ptrINS_27ColumnDataCollectionSegmentESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %7)
+  %9 = tail call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK6duckdb10unique_ptrINS_27ColumnDataCollectionSegmentESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %8)
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 120
+  %11 = load i8, ptr %10, align 8, !tbaa !326
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  store i8 %11, ptr %13, align 8, !tbaa !327
+  %14 = load i64, ptr %1, align 8, !tbaa !141
+  tail call void @_ZN6duckdb27ColumnDataCollectionSegment9ReadChunkEmRNS_20ChunkManagementStateERNS_9DataChunkERKNS_6vectorImLb1ESaImEEE(ptr noundef nonnull align 8 dereferenceable(136) %9, i64 noundef %14, ptr noundef nonnull align 8 dereferenceable(57) %12, ptr noundef nonnull align 8 dereferenceable(72) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %5)
+  tail call void @_ZN6duckdb9DataChunk6VerifyEv(ptr noundef nonnull align 8 dereferenceable(72) %i.e)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   %i.g = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.i = load i64, ptr %i.h, align 8, !tbaa !312
@@ -239,36 +265,8 @@ bb.e:                                             ; preds = %bb.a, %bb.d, %bb.c
 
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(168) ptr @_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv(ptr noundef nonnull returned align 8 dereferenceable(168) %0) local_unnamed_addr #0 align 2 {
-  %2 = load ptr, ptr %0, align 8, !tbaa !341
-  %.not.i = icmp eq ptr %2, null
-  br i1 %.not.i, label %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIterator4NextEv.exit, label %bb.a
-
-bb.a:                                             ; preds = %1
-  tail call void @_ZNK6duckdb12optional_ptrIKNS_20ColumnDataCollectionELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(168) %0)
-  %3 = load ptr, ptr %0, align 8, !tbaa !341
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
-  %6 = tail call noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
-  %7 = tail call noundef zeroext i1 @_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(112) %3, ptr noundef nonnull align 8 dereferenceable(144) %4, ptr noundef nonnull align 8 dereferenceable(72) %6)
-  br i1 %7, label %10, label %8
-
-8:                                                ; preds = %bb.a
-  store i64 0, ptr %0, align 8, !tbaa !330
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store i64 0, ptr %9, align 8, !tbaa !340
-  br label %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIterator4NextEv.exit
-
-10:                                               ; preds = %bb.a
-  %11 = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 24
-  %13 = load i64, ptr %12, align 8, !tbaa !312
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
-  %15 = load i64, ptr %14, align 8, !tbaa !340
-  %16 = add i64 %15, %13
-  store i64 %16, ptr %14, align 8, !tbaa !340
-  br label %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIterator4NextEv.exit
-
-_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIterator4NextEv.exit: ; preds = %1, %8, %10
+bb.a:
+  tail call void @_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIterator4NextEv(ptr noundef nonnull align 8 dereferenceable(168) %0)
   ret ptr %0
 }
 
@@ -613,6 +611,9 @@ _ZNSt12__shared_ptrIN6duckdb9DataChunkELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv(ptr noundef nonnull align 8 dereferenceable(192) %0) local_unnamed_addr #0 align 2 {
 bb.a:
+  %1 = alloca i64, align 8                        ; 5 uses
+  %2 = alloca i64, align 8                        ; 5 uses
+  %3 = alloca i64, align 8                        ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !351
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.e, label %bb.b
@@ -638,18 +639,44 @@ bb.c:                                             ; preds = %bb.b
   %i.n = add i64 %i.m, %i.k
   store i64 %i.n, ptr %i.l, align 8, !tbaa !354
   store i64 0, ptr %i.b, align 8, !tbaa !353
-  %i.o = load ptr, ptr %0, align 8, !tbaa !351
+  %i.o = load ptr, ptr %0, align 8, !tbaa !351    ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.q = tail call noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10shared_ptrINS_9DataChunkELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(16) %i.e)
-  %1 = tail call noundef zeroext i1 @_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(112) %i.o, ptr noundef nonnull align 8 dereferenceable(144) %i.p, ptr noundef nonnull align 8 dereferenceable(72) %i.q)
-  br i1 %1, label %bb.e, label %bb.d
+  %i.q = tail call noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10shared_ptrINS_9DataChunkELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(16) %i.e) ; 3 uses
+  tail call void @_ZN6duckdb9DataChunk5ResetEv(ptr noundef nonnull align 8 dereferenceable(72) %i.q)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
+  %4 = call noundef zeroext i1 @_ZNK6duckdb20ColumnDataCollection13NextScanIndexERNS_19ColumnDataScanStateERmS3_S3_(ptr noundef nonnull align 8 dereferenceable(112) %i.o, ptr noundef nonnull align 8 dereferenceable(144) %i.p, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3)
+  br i1 %4, label %_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE.exit.thread, label %bb.d
+
+_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE.exit.thread: ; preds = %bb.c
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %6 = getelementptr inbounds nuw i8, ptr %i.o, i64 48
+  %7 = load i64, ptr %2, align 8, !tbaa !141
+  %8 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6duckdb6vectorINS_10unique_ptrINS_27ColumnDataCollectionSegmentESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %7)
+  %9 = tail call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK6duckdb10unique_ptrINS_27ColumnDataCollectionSegmentESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %8)
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 120
+  %11 = load i8, ptr %10, align 8, !tbaa !326
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  store i8 %11, ptr %13, align 8, !tbaa !327
+  %14 = load i64, ptr %1, align 8, !tbaa !141
+  tail call void @_ZN6duckdb27ColumnDataCollectionSegment9ReadChunkEmRNS_20ChunkManagementStateERNS_9DataChunkERKNS_6vectorImLb1ESaImEEE(ptr noundef nonnull align 8 dereferenceable(136) %9, i64 noundef %14, ptr noundef nonnull align 8 dereferenceable(57) %12, ptr noundef nonnull align 8 dereferenceable(72) %i.q, ptr noundef nonnull align 8 dereferenceable(24) %5)
+  tail call void @_ZN6duckdb9DataChunk6VerifyEv(ptr noundef nonnull align 8 dereferenceable(72) %i.q)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   store i64 0, ptr %i.l, align 8, !tbaa !354
   store ptr null, ptr %0, align 8, !tbaa !351
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a, %bb.b
+bb.e:                                             ; preds = %_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE.exit.thread, %bb.d, %bb.a, %bb.b
   ret void
 }
 
@@ -741,43 +768,8 @@ bb.a:
 
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(192) ptr @_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIteratorppEv(ptr noundef nonnull returned align 8 dereferenceable(192) %0) local_unnamed_addr #0 align 2 {
-  %2 = load ptr, ptr %0, align 8, !tbaa !351
-  %.not.i = icmp eq ptr %2, null
-  br i1 %.not.i, label %_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv.exit, label %3
-
-3:                                                ; preds = %1
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
-  %5 = load i64, ptr %4, align 8, !tbaa !353
-  %6 = add i64 %5, 1                              ; 2 uses
-  store i64 %6, ptr %4, align 8, !tbaa !353
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
-  %8 = tail call noundef ptr @_ZNK6duckdb10shared_ptrINS_9DataChunkELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %7)
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %10 = load i64, ptr %9, align 8, !tbaa !312
-  %.not1.i = icmp ult i64 %6, %10
-  br i1 %.not1.i, label %_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv.exit, label %11
-
-11:                                               ; preds = %3
-  %12 = tail call noundef ptr @_ZNK6duckdb10shared_ptrINS_9DataChunkELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %7)
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  %14 = load i64, ptr %13, align 8, !tbaa !312
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
-  %16 = load i64, ptr %15, align 8, !tbaa !354
-  %17 = add i64 %16, %14
-  store i64 %17, ptr %15, align 8, !tbaa !354
-  store i64 0, ptr %4, align 8, !tbaa !353
-  %18 = load ptr, ptr %0, align 8, !tbaa !351
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %20 = tail call noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10shared_ptrINS_9DataChunkELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(16) %7)
-  %21 = tail call noundef zeroext i1 @_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(112) %18, ptr noundef nonnull align 8 dereferenceable(144) %19, ptr noundef nonnull align 8 dereferenceable(72) %20)
-  br i1 %21, label %_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv.exit, label %22
-
-22:                                               ; preds = %11
-  store i64 0, ptr %15, align 8, !tbaa !354
-  store ptr null, ptr %0, align 8, !tbaa !351
-  br label %_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv.exit
-
-_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv.exit: ; preds = %1, %3, %11, %22
+_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv.exit:
+  tail call void @_ZN6duckdb28ColumnDataRowIterationHelper21ColumnDataRowIterator4NextEv(ptr noundef nonnull align 8 dereferenceable(192) %0)
   ret ptr %0
 }
 
@@ -1180,8 +1172,8 @@ bb.a:
   %4 = alloca %"class.duckdb::vector.578", align 8 ; 8 uses
   %5 = alloca %"class.duckdb::vector.657", align 8 ; 12 uses
   %6 = alloca %"class.duckdb::ColumnDataChunkIterationHelper", align 8 ; 7 uses
-  %7 = alloca %"class.duckdb::ColumnDataChunkIterationHelper::ColumnDataChunkIterator", align 8 ; 27 uses
-  %8 = alloca %"class.duckdb::ColumnDataChunkIterationHelper::ColumnDataChunkIterator", align 8 ; 21 uses
+  %7 = alloca %"class.duckdb::ColumnDataChunkIterationHelper::ColumnDataChunkIterator", align 8 ; 21 uses
+  %8 = alloca %"class.duckdb::ColumnDataChunkIterationHelper::ColumnDataChunkIterator", align 8 ; 20 uses
   %9 = alloca %"class.duckdb::Value", align 8     ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
@@ -1348,26 +1340,25 @@ bb.r:                                             ; preds = %bb.q
 
 _ZN6duckdb30ColumnDataChunkIterationHelper3endEv.exit: ; preds = %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %i.at = getelementptr inbounds nuw i8, ptr %7, i64 160 ; 5 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %8, i64 160 ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !341
-  %11 = load ptr, ptr %8, align 8, !tbaa !341
-  %12 = icmp ne ptr %10, %11
-  %13 = load i64, ptr %i.at, align 8
-  %14 = load i64, ptr %i.au, align 8
-  %15 = icmp ne i64 %13, %14
-  %16 = select i1 %12, i1 true, i1 %15
-  br i1 %16, label %.lr.ph152, label %._crit_edge153
+  %i.at = getelementptr inbounds nuw i8, ptr %7, i64 160
+  %i.au = getelementptr inbounds nuw i8, ptr %8, i64 160
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 152 ; 2 uses
+  %11 = ptrtoint ptr %i.r to i64
+  %12 = sub i64 %i.s, %11
+  %13 = sdiv exact i64 %12, 24                    ; 2 uses
+  br label %.lr.ph152
 
-.lr.ph152:                                        ; preds = %_ZN6duckdb30ColumnDataChunkIterationHelper3endEv.exit
-  %17 = getelementptr inbounds nuw i8, ptr %7, i64 152 ; 3 uses
-  %18 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %19 = ptrtoint ptr %i.r to i64
-  %20 = sub i64 %i.s, %19
-  %21 = sdiv exact i64 %20, 24                    ; 2 uses
-  br label %bb.ak
+.lr.ph152:                                        ; preds = %bb.al, %_ZN6duckdb30ColumnDataChunkIterationHelper3endEv.exit
+  %14 = load ptr, ptr %7, align 8, !tbaa !341
+  %15 = load ptr, ptr %8, align 8, !tbaa !341
+  %16 = icmp ne ptr %14, %15
+  %17 = load i64, ptr %i.at, align 8
+  %18 = load i64, ptr %i.au, align 8
+  %19 = icmp ne i64 %17, %18
+  %20 = select i1 %16, i1 true, i1 %19
+  br i1 %20, label %bb.ak, label %._crit_edge153
 
-._crit_edge153:                                   ; preds = %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit, %_ZN6duckdb30ColumnDataChunkIterationHelper3endEv.exit
+._crit_edge153:                                   ; preds = %.lr.ph152
   %i.av = getelementptr inbounds nuw i8, ptr %8, i64 152
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !277 ; 3 uses
   %.not.i.i40 = icmp eq ptr %i.aw, null
@@ -1472,8 +1463,7 @@ bb.z:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN6duckdb19ColumnDataScanStateD2Ev.exit:         ; preds = %_ZN6duckdb20ChunkManagementStateD2Ev.exit.i, %bb.v, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %22 = getelementptr inbounds nuw i8, ptr %7, i64 152
-  %i.cc = load ptr, ptr %22, align 8, !tbaa !277  ; 3 uses
+  %i.cc = load ptr, ptr %10, align 8, !tbaa !277  ; 3 uses
   %.not.i.i41 = icmp eq ptr %i.cc, null
   br i1 %.not.i.i41, label %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorD2Ev.exit43, label %_ZNKSt14default_deleteIN6duckdb9DataChunkEEclEPS1_.exit.i.i42
 
@@ -1659,8 +1649,8 @@ bb.aj:                                            ; preds = %_ZNSt15__new_alloca
           cleanup
   br label %.body
 
-bb.ak:                                            ; preds = %.lr.ph152, %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit
-  %i.el = invoke noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %17)
+bb.ak:                                            ; preds = %.lr.ph152
+  %i.el = invoke noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %10)
           to label %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.preheader unwind label %bb.am ; 5 uses
 
 _ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.preheader: ; preds = %bb.ak
@@ -1668,13 +1658,13 @@ _ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.pr
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !284 ; 2 uses
   %i.eo = load ptr, ptr %i.el, align 8, !tbaa !285 ; 2 uses
   %.not = icmp eq ptr %i.en, %i.eo
-  br i1 %.not, label %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge, label %.preheader.lr.ph
+  br i1 %.not, label %bb.al, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.preheader
   %i.ep = getelementptr inbounds nuw i8, ptr %i.el, i64 24 ; 2 uses
   %i.eq = load i64, ptr %i.ep, align 8, !tbaa !312
   %.not154 = icmp eq i64 %i.eq, 0
-  br i1 %.not154, label %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge, label %.preheader
+  br i1 %.not154, label %bb.al, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit
   %i.er = phi ptr [ %i.ex, %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit ], [ %i.eo, %.preheader.lr.ph ]
@@ -1685,64 +1675,15 @@ _ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.pr
   br i1 %.not155, label %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %.not.i.i.i = icmp ult i64 %.016151, %21
+  %.not.i.i.i = icmp ult i64 %.016151, %13
   %i.eu = getelementptr inbounds nuw [24 x i8], ptr %i.r, i64 %.016151 ; 4 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 8 ; 4 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.eu, i64 16 ; 2 uses
   br label %.lr.ph
 
-_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge: ; preds = %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit, %.preheader.lr.ph, %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.preheader
-  %23 = load ptr, ptr %7, align 8, !tbaa !341
-  %.not.i.i54 = icmp eq ptr %23, null
-  br i1 %.not.i.i54, label %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge._ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit_crit_edge, label %bb.al
-
-_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge._ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit_crit_edge: ; preds = %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge
-  %.pre162 = load i64, ptr %i.at, align 8
-  br label %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit
-
-bb.al:                                            ; preds = %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge
-  invoke void @_ZNK6duckdb12optional_ptrIKNS_20ColumnDataCollectionELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(168) %7)
-          to label %.noexc55 unwind label %bb.am
-
-.noexc55:                                         ; preds = %bb.al
-  %24 = load ptr, ptr %7, align 8, !tbaa !341
-  %25 = invoke noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %17)
-          to label %.noexc56 unwind label %bb.am
-
-.noexc56:                                         ; preds = %.noexc55
-  %26 = invoke noundef zeroext i1 @_ZNK6duckdb20ColumnDataCollection4ScanERNS_19ColumnDataScanStateERNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(112) %24, ptr noundef nonnull align 8 dereferenceable(144) %18, ptr noundef nonnull align 8 dereferenceable(72) %25)
-          to label %.noexc57 unwind label %bb.am
-
-.noexc57:                                         ; preds = %.noexc56
-  br i1 %26, label %28, label %27
-
-27:                                               ; preds = %.noexc57
-  store i64 0, ptr %7, align 8, !tbaa !330
-  store i64 0, ptr %i.at, align 8, !tbaa !340
-  br label %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit
-
-28:                                               ; preds = %.noexc57
-  %29 = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %17)
-          to label %.noexc58 unwind label %bb.am
-
-.noexc58:                                         ; preds = %28
-  %30 = getelementptr inbounds nuw i8, ptr %29, i64 24
-  %31 = load i64, ptr %30, align 8, !tbaa !312
-  %32 = load i64, ptr %i.at, align 8, !tbaa !340
-  %33 = add i64 %32, %31                          ; 2 uses
-  store i64 %33, ptr %i.at, align 8, !tbaa !340
-  %.pre161 = load ptr, ptr %7, align 8, !tbaa !341
-  br label %_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit
-
-_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit: ; preds = %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge._ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit_crit_edge, %27, %.noexc58
-  %34 = phi i64 [ %.pre162, %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge._ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit_crit_edge ], [ 0, %27 ], [ %33, %.noexc58 ]
-  %35 = phi ptr [ null, %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge._ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratorppEv.exit_crit_edge ], [ null, %27 ], [ %.pre161, %.noexc58 ]
-  %36 = load ptr, ptr %8, align 8, !tbaa !341
-  %37 = icmp ne ptr %35, %36
-  %38 = load i64, ptr %i.au, align 8
-  %39 = icmp ne i64 %34, %38
-  %40 = select i1 %37, i1 true, i1 %39
-  br i1 %40, label %bb.ak, label %._crit_edge153
+bb.al:                                            ; preds = %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit, %.preheader.lr.ph, %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.preheader
+  invoke void @_ZN6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIterator4NextEv(ptr noundef nonnull align 8 dereferenceable(168) %7)
+          to label %.lr.ph152 unwind label %bb.am
 
 _ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit.loopexit: ; preds = %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit
   %.pre = load ptr, ptr %i.em, align 8, !tbaa !284
@@ -1759,9 +1700,9 @@ _ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit: ;
   %i.fd = sub i64 %i.fb, %i.fc
   %i.fe = sdiv exact i64 %i.fd, 104
   %i.ff = icmp ult i64 %i.fa, %i.fe
-  br i1 %i.ff, label %.preheader, label %_ZNK6duckdb30ColumnDataChunkIterationHelper23ColumnDataChunkIteratordeEv.exit._crit_edge, !llvm.loop !1188
+  br i1 %i.ff, label %.preheader, label %bb.al, !llvm.loop !1188
 
-bb.am:                                            ; preds = %28, %.noexc56, %.noexc55, %bb.al, %bb.ak
+bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.fg = landingpad { ptr, i32 }
           cleanup
   br label %.body59
@@ -1771,7 +1712,7 @@ bb.am:                                            ; preds = %28, %.noexc56, %.no
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 %.016151, ptr %i.b, align 8, !tbaa !141
-  store i64 %21, ptr %i.c, align 8, !tbaa !141
+  store i64 %13, ptr %i.c, align 8, !tbaa !141
   br i1 %.not.i.i.i, label %bb.ar, label %.noexc.i, !prof !142
 
 .noexc.i:                                         ; preds = %.lr.ph
