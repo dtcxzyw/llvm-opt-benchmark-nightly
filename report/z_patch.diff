@@ -1,0 +1,17 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index c9c7fc766004a..1fbcc4bece51c 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -3158,6 +3158,12 @@ Value *InstCombiner::getFreelyInvertedImpl(Value *V, bool WillInvertAllUses,
+     if (auto *AV = getFreelyInvertedImpl(A, A->hasOneUse(), Builder,
+                                          DoesConsume, Depth))
+       return Builder ? Builder->CreateTrunc(AV, V->getType()) : NonNull;
++    if (V->getType()->getScalarSizeInBits() == 1 &&
++        cast<TruncInst>(V)->hasNoUnsignedWrap() &&
++        computeKnownBits(A, cast<Instruction>(V)).countMaxActiveBits() == 1)
++      return Builder ? Builder->CreateCmp(CmpInst::ICMP_NE, A,
++                                          ConstantInt::get(A->getType(), 1))
++                     : NonNull;
+     return nullptr;
+   }
+ 
