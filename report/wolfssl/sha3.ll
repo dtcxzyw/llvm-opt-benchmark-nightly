@@ -205,25 +205,21 @@ xorbuf.exit:                                      ; preds = %vec.epilog.vector.b
 ._crit_edge136:                                   ; preds = %bb.a, %._crit_edge, %xorbuf.exit
   %.050 = phi i32 [ %i.ap, %xorbuf.exit ], [ %i.ap, %._crit_edge ], [ %2, %bb.a ] ; 4 uses
   %.049 = phi ptr [ %i.ao, %xorbuf.exit ], [ %i.ao, %._crit_edge ], [ %1, %bb.a ] ; 4 uses
+  %.049106 = ptrtoaddr ptr %.049 to i64           ; 6 uses
   %.not55108 = icmp ult i32 %.050, %.pre138
   br i1 %.not55108, label %._crit_edge115, label %.lr.ph114
 
 .lr.ph114:                                        ; preds = %._crit_edge136
-  %.049106 = ptrtoaddr ptr %.049 to i64           ; 4 uses
   %i.fm = udiv i32 %.050, %.pre138                ; 2 uses
   %i.fn = ptrtoint ptr %0 to i64                  ; 2 uses
-  %.idx.i.i83 = zext i8 %.pre137 to i64           ; 4 uses
+  %.idx.i.i83 = zext i8 %.pre137 to i64           ; 5 uses
   %scevgep = getelementptr i8, ptr %0, i64 8
   %i.fo = add i64 %.049106, %.idx.i.i83
   %i.fp = zext nneg i8 %3 to i64                  ; 2 uses
   %i.fq = shl nuw nsw i64 %i.fp, 3
-  %i.fr = add i64 %.049106, 8                     ; 2 uses
-  %i.fs = xor i64 %.049106, -1                    ; 2 uses
-  %4 = mul nsw i64 %i.fp, -8
-  %5 = zext nneg i8 %3 to i64                     ; 2 uses
-  %i.ft = mul nsw i64 %5, -8
-  %6 = shl nuw nsw i64 %5, 3
-  %7 = add i64 %.049106, %.idx.i.i83
+  %i.fr = add i64 %.049106, 8
+  %i.fs = xor i64 %.049106, -1
+  %i.ft = mul nsw i64 %i.fp, -8
   %i.fu = zext i8 %.pre137 to i64                 ; 4 uses
   %scevgep131 = getelementptr i8, ptr %0, i64 1
   %i.fv = add nsw i32 %.pre138, -1
@@ -251,6 +247,11 @@ xorbuf.exit:                                      ; preds = %vec.epilog.vector.b
   %min.epilog.iters.check162 = icmp eq i64 %i.fx, 0
   %.idx.i30.i72 = zext i8 %.pre137 to i64         ; 3 uses
   %scevgep178 = getelementptr i8, ptr %0, i64 8
+  %4 = add i64 %.049106, %.idx.i.i83
+  %5 = add i64 %.049106, 8
+  %6 = xor i64 %.049106, -1
+  %7 = zext nneg i8 %3 to i64
+  %8 = mul nsw i64 %7, -8
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph114, %xorbuf.exit90
@@ -261,7 +262,7 @@ bb.f:                                             ; preds = %.lr.ph114, %xorbuf.
   %i.gl = add i64 %i.fo, %i.gk
   %i.gm = add i64 %i.fr, %i.gk
   %umax = tail call i64 @llvm.umax.i64(i64 %i.gl, i64 %i.gm)
-  %i.gn = mul i64 %4, %indvar
+  %i.gn = mul i64 %i.ft, %indvar
   %i.go = add i64 %i.gn, %i.fs
   %i.gp = add i64 %umax, %i.go
   %i.gq = and i64 %i.gp, -8                       ; 2 uses
@@ -276,14 +277,14 @@ bb.f:                                             ; preds = %.lr.ph114, %xorbuf.
   br i1 %or.cond.i57, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %8 = mul i64 %6, %indvar                        ; 2 uses
-  %9 = add i64 %7, %8
-  %i.gv = add i64 %i.fr, %8
-  %10 = mul i64 %i.ft, %indvar
-  %11 = add i64 %10, %i.fs
-  %12 = getelementptr inbounds nuw i8, ptr %.1110, i64 %.idx.i.i83
-  %13 = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.gv)
-  %i.gw = add i64 %13, %11                        ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.1110, i64 %.idx.i.i83
+  %10 = mul nuw nsw i64 %indvar, %.idx.i.i83      ; 2 uses
+  %i.gv = add i64 %4, %10
+  %11 = add i64 %5, %10
+  %12 = tail call i64 @llvm.umax.i64(i64 %i.gv, i64 %11)
+  %13 = mul nsw i64 %indvar, %8
+  %14 = add i64 %13, %6
+  %i.gw = add i64 %12, %14                        ; 2 uses
   %i.gx = lshr i64 %i.gw, 3
   %i.gy = add nuw nsw i64 %i.gx, 1                ; 2 uses
   %min.iters.check114 = icmp ult i64 %i.gw, 24
@@ -339,7 +340,7 @@ middle.block126:                                  ; preds = %vector.body117
   %i.hm = load i64, ptr %.sroa.039.0.i86, align 8, !tbaa !9
   %i.hn = xor i64 %i.hm, %i.hk
   store i64 %i.hn, ptr %.sroa.039.0.i86, align 8, !tbaa !9
-  %i.ho = icmp ult ptr %i.hj, %12
+  %i.ho = icmp ult ptr %i.hj, %9
   br i1 %i.ho, label %.lr.ph.i.i85, label %xorbuf.exit90, !llvm.loop !42
 
 bb.h:                                             ; preds = %bb.f

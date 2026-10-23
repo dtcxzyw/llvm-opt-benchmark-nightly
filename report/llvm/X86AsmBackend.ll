@@ -205,12 +205,13 @@ _ZNK12_GLOBAL__N_119DarwinX86AsmBackend22getCompactUnwindRegNumEj.exit: ; preds 
 
 .preheader.preheader:                             ; preds = %._crit_edge
   %i.v = zext nneg i32 %i.t to i64                ; 8 uses
-  %i.w = sub i32 7, %1                            ; 2 uses
+  %i.w = sub i32 7, %1
   %i.x = zext i32 %i.w to i64
   %i.y = sub nsw i64 %i.v, %i.x
-  %2 = add nuw nsw i64 %i.v, 1
-  %i.z = zext i32 %i.w to i64
-  %i.aa = sub nsw i64 %2, %i.z
+  %2 = sub i32 7, %1
+  %i.z = zext i32 %2 to i64
+  %3 = add nuw nsw i64 %i.v, 1
+  %i.aa = sub nsw i64 %3, %i.z
   %i.ab = add i32 %1, -8
   %invariant.gep = getelementptr [4 x i8], ptr %i.n, i64 %i.v
   br label %.preheader
@@ -218,7 +219,6 @@ _ZNK12_GLOBAL__N_119DarwinX86AsmBackend22getCompactUnwindRegNumEj.exit: ; preds 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge49
   %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge49 ] ; 3 uses
   %indvars.iv58 = phi i64 [ %i.v, %.preheader.preheader ], [ %indvars.iv.next59, %._crit_edge49 ] ; 5 uses
-  %3 = add i64 %i.aa, %indvar                     ; 3 uses
   %i.ac = add i64 %i.y, %indvar                   ; 2 uses
   %i.ad = icmp samesign ugt i64 %indvars.iv58, %i.v
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv58
@@ -226,7 +226,8 @@ _ZNK12_GLOBAL__N_119DarwinX86AsmBackend22getCompactUnwindRegNumEj.exit: ; preds 
   br i1 %i.ad, label %.lr.ph48.preheader, label %._crit_edge49
 
 .lr.ph48.preheader:                               ; preds = %.preheader
-  %min.iters.check = icmp ult i64 %3, 8
+  %4 = add i64 %i.aa, %indvar                     ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 8
   br i1 %min.iters.check, label %.lr.ph48.preheader72, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph48.preheader
@@ -237,7 +238,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph48.preheader
   br i1 %i.aj, label %.lr.ph48.preheader72, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %3, -8                         ; 3 uses
+  %n.vec = and i64 %4, -8                         ; 3 uses
   %i.ak = or disjoint i64 %n.vec, %i.v
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.af, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -264,7 +265,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.ar, %i.aq
   %i.at = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %._crit_edge49.loopexit, label %.lr.ph48.preheader72
 
 .lr.ph48.preheader72:                             ; preds = %vector.scevcheck, %.lr.ph48.preheader, %middle.block

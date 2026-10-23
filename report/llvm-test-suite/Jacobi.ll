@@ -160,30 +160,27 @@ bb.a:
   %i.g = add nsw i64 %i.f, -8
   %i.h = mul i32 %1, 3
   %i.i = zext i32 %i.h to i64
-  %i.j = sub nsw i32 1, %1                        ; 2 uses
+  %i.j = sub nsw i32 1, %1
   %i.k = zext i32 %i.j to i64
-  %i.l = sub nsw i32 0, %1                        ; 2 uses
-  %2 = zext i32 %i.l to i64
-  %3 = zext i32 %i.j to i64
+  %i.l = sub nsw i32 0, %1
   %i.m = zext i32 %i.l to i64
   %i.n = shl nuw i32 %1, 1
   %i.o = zext i32 %i.n to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge75
-  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge75 ] ; 8 uses
+  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge75 ] ; 7 uses
   %indvars.iv = phi i64 [ %i.e, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge75 ] ; 10 uses
   %i.p = shl i64 %indvar, 1
   %i.q = sub i64 %i.o, %i.p
-  %4 = add i64 %indvar, %3
-  %5 = add i64 %indvar, %i.m
+  %2 = trunc i64 %indvar to i32                   ; 2 uses
   %i.r = mul nsw i64 %indvar, -8                  ; 2 uses
   %i.s = add i64 %i.g, %i.r
   %i.t = add i64 %i.f, %i.r                       ; 2 uses
   %i.u = mul i64 %indvar, 4294967293
   %i.v = add i64 %i.u, %i.i
   %i.w = add i64 %indvar, %i.k
-  %i.x = add i64 %indvar, %2
+  %i.x = add i64 %indvar, %i.m
   %i.y = sub nsw i64 51, %indvars.iv              ; 3 uses
   %i.z = icmp samesign ult i64 %indvars.iv, 51
   br i1 %i.z, label %.lr.ph.i.lr.ph, label %._crit_edge75
@@ -191,14 +188,15 @@ bb.a:
 .lr.ph.i.lr.ph:                                   ; preds = %.preheader
   %i.aa = shl nuw nsw i64 %indvars.iv, 1          ; 2 uses
   %i.ab = trunc nuw nsw i64 %indvars.iv to i32
-  %invariant.op.a = add nsw i32 %i.ab, -1
+  %invariant.op = add nsw i32 %i.ab, -1
+  %invariant.op.a = add i32 %2, 1
+  %3 = sub i32 %2, %1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %._crit_edge
-  %indvars.iv83 = phi i64 [ 0, %.lr.ph.i.lr.ph ], [ %indvars.iv.next84, %._crit_edge ] ; 18 uses
+  %indvars.iv83 = phi i64 [ 0, %.lr.ph.i.lr.ph ], [ %indvars.iv.next84, %._crit_edge ] ; 17 uses
   %indvars.iv78 = phi i64 [ %indvars.iv, %.lr.ph.i.lr.ph ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
-  %i.ac = trunc i64 %indvars.iv83 to i32          ; 2 uses
-  %6 = sub i64 %4, %indvars.iv83
+  %i.ac = trunc i64 %indvars.iv83 to i32          ; 3 uses
   %i.ad = shl nuw nsw i64 %indvars.iv83, 3        ; 3 uses
   %i.ae = add i64 %i.s, %i.ad
   %i.af = add i64 %i.t, %i.ad
@@ -209,7 +207,7 @@ bb.a:
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !11 ; 2 uses
   %i.ak = add nuw nsw i64 %indvars.iv83, %indvars.iv ; 6 uses
   %i.al = add nsw i64 %i.ak, -1                   ; 3 uses
-  %.reass = add i32 %invariant.op.a, %indvars86
+  %.reass = add i32 %invariant.op, %indvars86
   %i.am = getelementptr inbounds [8 x i8], ptr %i.aj, i64 %i.al
   %i.an = load double, ptr %i.am, align 8, !tbaa !13
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %i.ak
@@ -346,11 +344,16 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %i.dg = trunc nsw i64 %i.ak to i32
   call void @ApplyRGivens(ptr noundef %i.c, double noundef %i.de, double noundef %i.df, i32 noundef %.reass, i32 noundef %i.dg) #5
   %i.dh = icmp slt i64 %i.ak, %i.y
-  br i1 %i.dh, label %.lr.ph, label %._crit_edge
+  br i1 %i.dh, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %ApplyGivens.exit.loopexit, %ApplyGivens.exit72
-  %indvar94 = phi i64 [ %indvar.next95, %ApplyGivens.exit72 ], [ 0, %ApplyGivens.exit.loopexit ] ; 5 uses
-  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %ApplyGivens.exit72 ], [ %indvars.iv78, %ApplyGivens.exit.loopexit ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %ApplyGivens.exit.loopexit
+  %4 = add i32 %1, %i.ac
+  %5 = sub i32 %invariant.op.a, %4
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %ApplyGivens.exit72
+  %indvar94 = phi i64 [ %indvar.next95, %ApplyGivens.exit72 ], [ 0, %.lr.ph.preheader ] ; 5 uses
+  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %ApplyGivens.exit72 ], [ %indvars.iv78, %.lr.ph.preheader ] ; 3 uses
   %i.di = mul i64 %i.t, %indvar94                 ; 2 uses
   %i.dj = add i64 %i.ae, %i.di                    ; 2 uses
   %i.dk = add i64 %i.af, %i.di
@@ -387,15 +390,15 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   br i1 %.not49.i61, label %ApplyGivens.exit72, label %.lr.ph.i62
 
 .lr.ph.i62:                                       ; preds = %.lr.ph
-  %7 = mul i64 %5, %indvar94
-  %8 = add i64 %6, %7
-  %i.ek = trunc i64 %8 to i32
+  %i.ek = trunc i64 %indvar94 to i32
   %i.el = getelementptr inbounds [8 x i8], ptr %0, i64 %i.dy
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !11 ; 4 uses
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next81
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !11 ; 4 uses
   %i.ep = add nuw nsw i32 %i.ei, 1                ; 2 uses
-  %i.eq = add i32 %i.ei, %i.ek                    ; 2 uses
+  %6 = mul i32 %3, %i.ek
+  %7 = add i32 %5, %6
+  %i.eq = add i32 %i.ei, %7                       ; 2 uses
   %i.er = zext i32 %i.eq to i64
   %i.es = add nuw nsw i64 %i.er, 1                ; 2 uses
   %min.iters.check = icmp eq i32 %i.eq, 0

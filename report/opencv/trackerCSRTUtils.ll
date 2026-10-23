@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %_ZN2cv3MataSERKNS_7
 
 bb.x:                                             ; preds = %bb.w
   %i.cg = invoke noundef i64 @_ZNK2cv3Mat5step1Ei(ptr noundef nonnull align 8 dereferenceable(208) %13, i32 noundef 0)
-          to label %bb.y unwind label %bb.bv      ; 10 uses
+          to label %bb.y unwind label %bb.bv      ; 11 uses
 
 bb.y:                                             ; preds = %bb.x
   %i.ch = invoke noundef i64 @_ZNK2cv3Mat5step1Ei(ptr noundef nonnull align 8 dereferenceable(208) %16, i32 noundef 0)
@@ -285,8 +285,10 @@ bb.z:                                             ; preds = %bb.y
   %i.ee = mul i64 %i.cg, -8
   %i.ef = shl i64 %i.cf, 3
   %i.eg = add i64 %.idx.i, %i.co
+  %23 = shl i64 %i.cg, 3
   %i.eh = add i64 %i.co, 8
   %i.ei = xor i64 %i.co, -1
+  %24 = mul i64 %i.cg, -8
   br label %.lr.ph.preheader.i
 
 bb.aa:                                            ; preds = %_ZNK2cv7MatExprcvNS_3MatEEv.exit.i
@@ -616,20 +618,19 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.
   br label %.preheader487.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.preheader.i.preheader, %._crit_edge501.i.loopexit
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge501.i.loopexit ], [ 0, %.lr.ph.preheader.i.preheader ] ; 7 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge501.i.loopexit ], [ 0, %.lr.ph.preheader.i.preheader ] ; 8 uses
   %i.ke = mul i64 %indvars.iv.i, %i.cg
   %i.kf = getelementptr [8 x i8], ptr %i.cn, i64 %i.ke ; 6 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.idx.i
   %i.kh = mul i64 %indvars.iv.i, %i.cf
   %i.ki = getelementptr [8 x i8], ptr %i.cl, i64 %i.kh ; 6 uses
-  %i.kj = mul i64 %indvars.iv.i, %i.cg            ; 2 uses
-  %23 = shl i64 %i.kj, 3                          ; 2 uses
-  %i.kk = add i64 %i.eg, %23
-  %i.kl = add i64 %i.eh, %23
+  %i.kj = mul i64 %indvars.iv.i, %23              ; 2 uses
+  %i.kk = add i64 %i.eg, %i.kj
+  %i.kl = add i64 %i.eh, %i.kj
   %i.km = call i64 @llvm.umax.i64(i64 %i.kk, i64 %i.kl)
-  %24 = shl i64 %i.kj, 3
-  %25 = sub i64 %i.ei, %24
-  %i.kn = add i64 %i.km, %25
+  %25 = mul i64 %indvars.iv.i, %24
+  %26 = add i64 %25, %i.ei
+  %i.kn = add i64 %i.km, %26
   %i.ko = lshr i64 %i.kn, 3                       ; 2 uses
   %i.kp = add nuw nsw i64 %i.ko, 1                ; 2 uses
   %min.iters.check = icmp eq i64 %i.ko, 0

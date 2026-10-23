@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1
 inline.NumDeleted: 1
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 15
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@BZ2_decompress:bb.a
 .preheader1920:                                   ; preds = %.lr.ph2270, %.lr.ph2270.prol.loopexit
   %.lcssa3634 = phi i32 [ %.lcssa3634.unr, %.lr.ph2270.prol.loopexit ], [ %i.dnh, %.lr.ph2270 ] ; 2 uses
@@ -205,19 +205,19 @@ vec.epilog.middle.block3486:                      ; preds = %vec.epilog.vector.b
   br label %.loopexit1923
 
 bb.gy:                                            ; preds = %bb.gw
-  %i.dob = lshr i32 %i.djl, 4
+  %i.dob = lshr i32 %i.djl, 4                     ; 2 uses
   %i.doc = and i32 %i.djl, 15                     ; 2 uses
-  %i.dod = getelementptr inbounds nuw i8, ptr %0, i64 7820 ; 6 uses
-  %i.doe = zext nneg i32 %i.dob to i64            ; 2 uses
+  %i.dod = getelementptr inbounds nuw i8, ptr %0, i64 7820 ; 8 uses
+  %i.doe = zext nneg i32 %i.dob to i64            ; 5 uses
   %i.dof = getelementptr inbounds nuw [4 x i8], ptr %i.dod, i64 %i.doe ; 3 uses
   %i.dog = load i32, ptr %i.dof, align 4, !tbaa !98 ; 3 uses
   %i.doh = add nsw i32 %i.dog, %i.doc
-  %i.doi = getelementptr inbounds nuw i8, ptr %0, i64 3724 ; 37 uses
+  %i.doi = getelementptr inbounds nuw i8, ptr %0, i64 3724 ; 41 uses
   %i.doj = sext i32 %i.doh to i64
   %i.dok = getelementptr inbounds i8, ptr %i.doi, i64 %i.doj
   %i.dol = load i8, ptr %i.dok, align 1, !tbaa !76 ; 3 uses
   %.not2401 = icmp eq i32 %i.doc, 0
-  br i1 %.not2401, label %.lr.ph2262.preheader.a, label %.lr.ph2257.preheader
+  br i1 %.not2401, label %.lr.ph2262.preheader, label %.lr.ph2257.preheader
 
 .lr.ph2257.preheader:                             ; preds = %bb.gy
   %i.dom = sext i32 %i.dog to i64
@@ -237,21 +237,59 @@ bb.gy:                                            ; preds = %bb.gw
   %i.dou = load i32, ptr %i.dof, align 4, !tbaa !98 ; 2 uses
   %i.dov = sext i32 %i.dou to i64
   %i.dow = icmp sgt i64 %indvars.iv.next2548, %i.dov
-  br i1 %i.dow, label %.lr.ph2257, label %.lr.ph2262.preheader.a, !llvm.loop !31
+  br i1 %i.dow, label %.lr.ph2257, label %.lr.ph2262.preheader, !llvm.loop !31
 
-.lr.ph2262.preheader.a:                           ; preds = %.lr.ph2257, %bb.gy
+.lr.ph2262.preheader:                             ; preds = %.lr.ph2257, %bb.gy
   %.lcssa2040 = phi i32 [ %i.dog, %bb.gy ], [ %i.dou, %.lr.ph2257 ]
-  %i.dox = add nsw i32 %.lcssa2040, 1
-  store i32 %i.dox, ptr %i.dof, align 4, !tbaa !98
-  br label %.lr.ph2262
+  %1 = add nsw i32 %.lcssa2040, 1
+  store i32 %1, ptr %i.dof, align 4, !tbaa !98
+  %xtraiter3724 = and i64 %i.doe, 1
+  %lcmp.mod3725.not = icmp eq i64 %xtraiter3724, 0
+  br i1 %lcmp.mod3725.not, label %.lr.ph2262.prol.loopexit, label %.lr.ph2262.preheader.a
 
-.lr.ph2262:                                       ; preds = %.lr.ph2262.preheader.a, %.lr.ph2262
-  %indvars.iv2550 = phi i64 [ %i.doe, %.lr.ph2262.preheader.a ], [ %indvars.iv.next2551, %.lr.ph2262 ] ; 3 uses
-  %i.doy = getelementptr inbounds nuw [4 x i8], ptr %i.dod, i64 %indvars.iv2550 ; 3 uses
-  %i.doz = load i32, ptr %i.doy, align 4, !tbaa !98
+.lr.ph2262.preheader.a:                           ; preds = %.lr.ph2262.preheader
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.dod, i64 %i.doe ; 3 uses
+  %3 = load i32, ptr %2, align 4, !tbaa !98
+  %i.dox = add nsw i32 %3, -1                     ; 2 uses
+  store i32 %i.dox, ptr %2, align 4, !tbaa !98
+  %4 = getelementptr i8, ptr %2, i64 -4
+  %5 = load i32, ptr %4, align 4, !tbaa !98
+  %6 = sext i32 %5 to i64
+  %7 = getelementptr i8, ptr %i.doi, i64 %6
+  %8 = getelementptr i8, ptr %7, i64 15
+  %9 = load i8, ptr %8, align 1, !tbaa !76
+  %10 = sext i32 %i.dox to i64
+  %11 = getelementptr inbounds i8, ptr %i.doi, i64 %10
+  store i8 %9, ptr %11, align 1, !tbaa !76
+  %indvars.iv.next2551.prol = add nsw i64 %i.doe, -1
+  br label %.lr.ph2262.prol.loopexit
+
+.lr.ph2262.prol.loopexit:                         ; preds = %.lr.ph2262.preheader.a, %.lr.ph2262.preheader
+  %indvars.iv2550.unr = phi i64 [ %i.doe, %.lr.ph2262.preheader ], [ %indvars.iv.next2551.prol, %.lr.ph2262.preheader.a ]
+  %12 = icmp eq i32 %i.dob, 1
+  br i1 %12, label %._crit_edge2263, label %.lr.ph2262
+
+.lr.ph2262:                                       ; preds = %.lr.ph2262.prol.loopexit, %.lr.ph2262
+  %indvars.iv2550 = phi i64 [ %indvars.iv.next2551, %.lr.ph2262 ], [ %indvars.iv2550.unr, %.lr.ph2262.prol.loopexit ] ; 4 uses
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.dod, i64 %indvars.iv2550 ; 3 uses
+  %14 = load i32, ptr %13, align 4, !tbaa !98
+  %15 = add nsw i32 %14, -1                       ; 2 uses
+  store i32 %15, ptr %13, align 4, !tbaa !98
+  %16 = getelementptr i8, ptr %13, i64 -4
+  %17 = load i32, ptr %16, align 4, !tbaa !98
+  %18 = sext i32 %17 to i64
+  %19 = getelementptr i8, ptr %i.doi, i64 %18
+  %20 = getelementptr i8, ptr %19, i64 15
+  %21 = load i8, ptr %20, align 1, !tbaa !76
+  %22 = sext i32 %15 to i64
+  %23 = getelementptr inbounds i8, ptr %i.doi, i64 %22
+  store i8 %21, ptr %23, align 1, !tbaa !76
+  %i.doy = getelementptr [4 x i8], ptr %i.dod, i64 %indvars.iv2550 ; 2 uses
+  %24 = getelementptr i8, ptr %i.doy, i64 -4      ; 2 uses
+  %i.doz = load i32, ptr %24, align 4, !tbaa !98
   %i.dpa = add nsw i32 %i.doz, -1                 ; 2 uses
-  store i32 %i.dpa, ptr %i.doy, align 4, !tbaa !98
-  %i.dpb = getelementptr i8, ptr %i.doy, i64 -4
+  store i32 %i.dpa, ptr %24, align 4, !tbaa !98
+  %i.dpb = getelementptr i8, ptr %i.doy, i64 -8
   %i.dpc = load i32, ptr %i.dpb, align 4, !tbaa !98
   %i.dpd = sext i32 %i.dpc to i64
   %i.dpe = getelementptr i8, ptr %i.doi, i64 %i.dpd
@@ -260,11 +298,11 @@ bb.gy:                                            ; preds = %bb.gw
   %i.dph = sext i32 %i.dpa to i64
   %i.dpi = getelementptr inbounds i8, ptr %i.doi, i64 %i.dph
   store i8 %i.dpg, ptr %i.dpi, align 1, !tbaa !76
-  %indvars.iv.next2551 = add nsw i64 %indvars.iv2550, -1
-  %1 = icmp samesign ugt i64 %indvars.iv2550, 1
-  br i1 %1, label %.lr.ph2262, label %._crit_edge2263, !llvm.loop !32
+  %indvars.iv.next2551 = add nsw i64 %indvars.iv2550, -2
+  %25 = icmp sgt i64 %indvars.iv2550, 2
+  br i1 %25, label %.lr.ph2262, label %._crit_edge2263, !llvm.loop !32
 
-._crit_edge2263:                                  ; preds = %.lr.ph2262
+._crit_edge2263:                                  ; preds = %.lr.ph2262, %.lr.ph2262.prol.loopexit
   %i.dpj = load i32, ptr %i.dod, align 4, !tbaa !98
   %i.dpk = add nsw i32 %i.dpj, -1                 ; 2 uses
   store i32 %i.dpk, ptr %i.dod, align 4, !tbaa !98

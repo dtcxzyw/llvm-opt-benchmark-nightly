@@ -8,7 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @sgefa(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !25     ; 14 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !25     ; 17 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !26
   %.not = icmp eq i32 %i.a, %i.c
@@ -24,32 +24,30 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph108.preheader:                              ; preds = %bb.b
   %i.h = zext nneg i32 %i.a to i64                ; 2 uses
   %wide.trip.count127 = zext nneg i32 %i.d to i64
-  %i.i = add nsw i32 %i.a, -2                     ; 5 uses
+  %2 = add nsw i32 %i.a, -2                       ; 2 uses
+  %3 = add nsw i32 %i.a, -2
+  %4 = add nsw i32 %i.a, -2
+  %i.i = add nsw i32 %i.a, -2
   br label %.lr.ph108
 
 .lr.ph108:                                        ; preds = %.lr.ph108.preheader, %.loopexit
-  %indvar = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvar.next, %.loopexit ] ; 8 uses
-  %indvars.iv124 = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvars.iv.next125.pre-phi, %.loopexit ] ; 8 uses
+  %indvar = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvar.next, %.loopexit ] ; 5 uses
+  %indvars.iv124 = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvars.iv.next125.pre-phi, %.loopexit ] ; 9 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph108.preheader ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %.084107 = phi i32 [ 0, %.lr.ph108.preheader ], [ %.185, %.loopexit ] ; 2 uses
   %.090105 = phi ptr [ %1, %.lr.ph108.preheader ], [ %i.es, %.loopexit ] ; 2 uses
-  %2 = trunc i64 %indvar to i32
-  %3 = sub i32 %i.i, %2                           ; 2 uses
-  %4 = trunc i64 %indvar to i32
-  %5 = sub i32 %i.i, %4                           ; 2 uses
   %i.j = shl nuw nsw i64 %indvar, 2               ; 2 uses
   %i.k = add nuw i64 %i.j, 8
   %i.l = trunc i64 %indvar to i32
-  %i.m = sub i32 %i.i, %i.l
+  %i.m = sub i32 %2, %i.l
   %i.n = zext i32 %i.m to i64
   %i.o = shl nuw nsw i64 %i.n, 2
   %i.p = add i64 %i.k, %i.o                       ; 2 uses
-  %i.q = trunc i64 %indvar to i32
-  %6 = sub i32 %i.i, %i.q                         ; 2 uses
+  %i.q = trunc i64 %indvars.iv124 to i32
   %i.r = shl nuw nsw i64 %indvar, 2               ; 2 uses
   %i.s = add nuw i64 %i.r, 8
   %i.t = trunc i64 %indvar to i32
-  %i.u = sub i32 %i.i, %i.t
+  %i.u = sub i32 %2, %i.t
   %i.v = zext i32 %i.u to i64
   %i.w = shl nuw nsw i64 %i.v, 2
   %i.x = add i64 %i.s, %i.w                       ; 2 uses
@@ -59,7 +57,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = trunc i64 %indvars.iv124 to i32
   %i.ac = sub i32 %i.a, %i.ab
   %i.ad = tail call i32 (i32, ptr, i32, ...) @isamax(i32 noundef %i.ac, ptr noundef %i.aa, i32 noundef 1) #3 ; 2 uses
-  %i.ae = trunc nuw nsw i64 %indvars.iv124 to i32 ; 2 uses
+  %i.ae = trunc nuw nsw i64 %indvars.iv124 to i32 ; 4 uses
   %i.af = add nsw i32 %i.ad, %i.ae                ; 2 uses
   store i32 %i.af, ptr %.090105, align 4, !tbaa !7
   %i.ag = load ptr, ptr %i.y, align 8, !tbaa !29
@@ -89,9 +87,10 @@ bb.d:                                             ; preds = %bb.c
   %i.an = add nuw nsw i64 %indvars.iv124, 1       ; 4 uses
   %i.ao = getelementptr i8, ptr %i.aa, i64 4      ; 13 uses
   %i.ap = trunc nuw nsw i64 %i.an to i32          ; 2 uses
-  %i.aq = zext i32 %3 to i64
+  %5 = sub i32 %3, %i.ae                          ; 2 uses
+  %i.aq = zext i32 %5 to i64
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
-  %min.iters.check171 = icmp ult i32 %3, 7
+  %min.iters.check171 = icmp ult i32 %5, 7
   br i1 %min.iters.check171, label %.lr.ph.preheader187, label %vector.ph172
 
 vector.ph172:                                     ; preds = %.lr.ph.preheader
@@ -134,9 +133,10 @@ middle.block182:                                  ; preds = %vector.body176
 
 .lr.ph102.us.preheader:                           ; preds = %.lr.ph104
   %scevgep146 = getelementptr i8, ptr %i.z, i64 %i.p
-  %i.bc = zext i32 %5 to i64
+  %6 = sub i32 %4, %i.ae                          ; 2 uses
+  %i.bc = zext i32 %6 to i64
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses
-  %min.iters.check151 = icmp ult i32 %5, 7
+  %min.iters.check151 = icmp ult i32 %6, 7
   %n.vec153 = and i64 %i.bd, 8589934584           ; 4 uses
   %i.be = shl nuw nsw i64 %n.vec153, 2            ; 2 uses
   %i.bf = getelementptr i8, ptr %i.ao, i64 %i.be
@@ -147,9 +147,10 @@ middle.block182:                                  ; preds = %vector.body176
 
 .lr.ph102.us.us.preheader:                        ; preds = %.lr.ph104
   %scevgep136 = getelementptr i8, ptr %i.z, i64 %i.x
-  %i.bi = zext i32 %6 to i64
+  %7 = sub i32 %i.i, %i.q                         ; 2 uses
+  %i.bi = zext i32 %7 to i64
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
-  %min.iters.check = icmp ult i32 %6, 7
+  %min.iters.check = icmp ult i32 %7, 7
   %n.vec = and i64 %i.bj, 8589934584              ; 4 uses
   %i.bk = shl nuw nsw i64 %n.vec, 2               ; 2 uses
   %i.bl = getelementptr i8, ptr %i.ao, i64 %i.bk

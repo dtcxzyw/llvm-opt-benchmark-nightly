@@ -205,11 +205,13 @@ bb.ab:                                            ; preds = %._crit_edge
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !155
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 1712
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !156
-  %i.cn = zext nneg i32 %1 to i64
-  %i.co = shl nuw nsw i64 %i.cn, 3                ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ci, i8 0, i64 %i.co, i1 false), !tbaa !65
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ck, i8 0, i64 %i.co, i1 false), !tbaa !65
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cm, i8 0, i64 %i.co, i1 false), !tbaa !65
+  %5 = add nsw i32 %1, -1
+  %i.cn = zext nneg i32 %5 to i64
+  %i.co = shl nuw nsw i64 %i.cn, 3
+  %6 = add nuw nsw i64 %i.co, 8                   ; 3 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ci, i8 0, i64 %6, i1 false), !tbaa !65
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ck, i8 0, i64 %6, i1 false), !tbaa !65
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.cm, i8 0, i64 %6, i1 false), !tbaa !65
   br label %.lr.ph196
 
 .lr.ph196:                                        ; preds = %bb.ab, %.lr.ph193
@@ -612,10 +614,10 @@ bb.p:                                             ; preds = %._crit_edge.i.i
   %.0106135.i.i = phi double [ %i.gk, %.loopexit.i.i ], [ 1.000000e+00, %bb.p ] ; 2 uses
   %.0107134.i.i = phi double [ %i.gl, %.loopexit.i.i ], [ 1.000000e+00, %bb.p ]
   %i.gu = phi <2 x double> [ %i.gt, %.loopexit.i.i ], [ <double 1.000000e+00, double -1.000000e+00>, %bb.p ] ; 2 uses
-  %2 = add i32 %indvar44, 3                       ; 2 uses
   %indvars.iv.next152.i.i = add nuw nsw i64 %indvars.iv151.i.i, 1 ; 4 uses
   %i.gv = getelementptr inbounds nuw [8 x i8], ptr %i.gi, i64 %indvars.iv.next152.i.i
   %i.gw = load double, ptr %i.gv, align 8, !tbaa !29
+  %2 = add nuw i32 %indvar44, 3                   ; 2 uses
   %i.gx = tail call i32 @llvm.smin.i32(i32 %2, i32 2)
   %i.gy = sub i32 %2, %i.gx                       ; 2 uses
   %i.gz = zext i32 %i.gy to i64
@@ -922,16 +924,16 @@ bb.y:                                             ; preds = %bb.n
   br label %.lr.ph74.preheader.i.i
 
 .lr.ph74.preheader.i.i:                           ; preds = %._crit_edge75.i.i, %.lr.ph80.i.i
-  %indvar = phi i64 [ %indvar.next, %._crit_edge75.i.i ], [ 0, %.lr.ph80.i.i ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge75.i.i ], [ 0, %.lr.ph80.i.i ] ; 3 uses
   %indvars.iv88.i.i = phi i64 [ %indvars.iv.next89.i.i, %._crit_edge75.i.i ], [ 1, %.lr.ph80.i.i ] ; 2 uses
   %indvars.iv.i5.i = phi i64 [ %indvars.iv.next.i6.i, %._crit_edge75.i.i ], [ 3, %.lr.ph80.i.i ] ; 4 uses
   %.06277.i.i = phi double [ %i.ml, %._crit_edge75.i.i ], [ 0.000000e+00, %.lr.ph80.i.i ]
-  %3 = add i64 %indvar, 2                         ; 3 uses
   %i.mj = getelementptr inbounds nuw [8 x i8], ptr %i.mf, i64 %indvars.iv88.i.i
   %i.mk = load double, ptr %i.mj, align 8, !tbaa !29
   %i.ml = fadd double %.06277.i.i, %i.mk          ; 2 uses
   %i.mm = fdiv double %i.ml, %i.mh                ; 2 uses
-  %min.iters.check = icmp ult i64 %3, 4
+  %3 = add nuw i64 %indvar, 2                     ; 2 uses
+  %min.iters.check = icmp ult i64 %indvar, 2
   br i1 %min.iters.check, label %.lr.ph74.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph74.preheader.i.i

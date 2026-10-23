@@ -205,7 +205,7 @@ declare i32 @If_CutSopBalanceEvalInt(ptr noundef, ptr noundef, ptr noundef, ptr 
 ; Function Attrs: inlinehint nounwind memory(readwrite, target_mem: none) uwtable
 define internal fastcc i32 @If_LogCounterAddAig(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef nonnull captures(none) %1, ptr nofree noundef nonnull captures(none) %2, i32 noundef range(i32 0, -1) %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6, i32 noundef range(i32 0, 2) %7) unnamed_addr #26 {
 bb.a:
-  %i.a = load i32, ptr %1, align 4, !tbaa !55     ; 5 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !55     ; 7 uses
   %.not = icmp eq ptr %5, null                    ; 3 uses
   %.pre = sext i32 %i.a to i64                    ; 2 uses
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -224,22 +224,22 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %._crit_edge
   %.not.i = icmp eq i32 %7, 0
-  %i.f = sub nuw i32 -2, %i.a                     ; 3 uses
   %scevgep3 = getelementptr i8, ptr %0, i64 8
   %scevgep6 = getelementptr i8, ptr %2, i64 8
+  %i.f = sub i32 -2, %i.a
+  %invariant.op27 = sub i32 -2, %i.a
+  %invariant.op29 = sub i32 -2, %i.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader, %.loopexit
   %indvar = phi i32 [ 0, %.preheader ], [ %indvar.next, %.loopexit ] ; 4 uses
   %.081 = phi i32 [ %i.c, %.preheader ], [ %.1, %.loopexit ] ; 8 uses
   %.07180 = phi i32 [ %i.a, %.preheader ], [ %i.m, %.loopexit ] ; 6 uses
-  %8 = add i32 %i.f, %indvar
   %i.g = zext i32 %.07180 to i64                  ; 2 uses
   %i.h = shl nuw nsw i64 %i.g, 2                  ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %0, i64 %i.h
-  %i.i = add i32 %i.f, %indvar
+  %i.i = add i32 %indvar, %i.f
   %scevgep5 = getelementptr i8, ptr %2, i64 %i.h
-  %9 = add i32 %i.f, %indvar
   %i.j = zext nneg i32 %.07180 to i64             ; 10 uses
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.j ; 2 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !55   ; 3 uses
@@ -301,7 +301,8 @@ bb.k:                                             ; preds = %bb.g
   br i1 %i.al, label %.lr.ph.split.us.preheader, label %.loopexit
 
 .lr.ph.split.us.preheader:                        ; preds = %bb.k
-  %i.am = add i32 %.081, %9                       ; 2 uses
+  %.reass30 = add i32 %indvar, %invariant.op29
+  %i.am = add i32 %.081, %.reass30                ; 2 uses
   %i.an = zext i32 %i.am to i64
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.am, 7
@@ -344,7 +345,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.az, label %.lr.ph.split.preheader, label %.loopexit
 
 .lr.ph.split.preheader:                           ; preds = %.thread
-  %i.ba = add i32 %.081, %8                       ; 2 uses
+  %.reass28 = add i32 %indvar, %invariant.op27
+  %i.ba = add i32 %.081, %.reass28                ; 2 uses
   %i.bb = zext i32 %i.ba to i64
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
   %min.iters.check9 = icmp ult i32 %i.ba, 7

@@ -206,12 +206,13 @@ bb.a:
 
 .preheader49.lr.ph:                               ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.n = sext i32 %i.j to i64                     ; 3 uses
+  %i.n = sext i32 %i.j to i64                     ; 4 uses
   %i.o = add nsw i64 %i.n, -1
-  %i.p = add nsw i64 %i.n, -2                     ; 2 uses
+  %i.p = add nsw i64 %i.n, -2
   %broadcast.splatinsert118 = insertelement <4 x i32> poison, i32 %i.d, i64 0
   %broadcast.splat119 = shufflevector <4 x i32> %broadcast.splatinsert118, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = add <4 x i32> splat (i32 4), %broadcast.splat119
+  %1 = add nsw i64 %i.n, -2
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.d, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op150 = add <4 x i32> splat (i32 4), %broadcast.splat
@@ -222,18 +223,17 @@ bb.a:
   %indvars.iv78 = phi i64 [ %i.n, %.preheader49.lr.ph ], [ %indvars.iv.next79, %._crit_edge.1 ] ; 4 uses
   %indvars.iv = phi i64 [ %i.o, %.preheader49.lr.ph ], [ %indvars.iv.next, %._crit_edge.1 ] ; 2 uses
   %.sroa.8.055 = phi i32 [ 0, %.preheader49.lr.ph ], [ %.sroa.8.2.lcssa.1, %._crit_edge.1 ] ; 4 uses
-  %1 = add i64 %i.p, %indvar                      ; 3 uses
-  %2 = add i64 %i.p, %indvar                      ; 3 uses
   %i.q = getelementptr inbounds [512 x i8], ptr %i.m, i64 %indvars.iv78 ; 3 uses
   %i.r = icmp sgt i64 %indvars.iv78, 2
   br i1 %i.r, label %.lr.ph.preheader, label %._crit_edge.1
 
 .lr.ph.preheader:                                 ; preds = %.preheader49
-  %min.iters.check115 = icmp ult i64 %1, 8
+  %2 = add i64 %i.p, %indvar                      ; 3 uses
+  %min.iters.check115 = icmp ult i64 %2, 8
   br i1 %min.iters.check115, label %.lr.ph.preheader136, label %vector.ph116
 
 vector.ph116:                                     ; preds = %.lr.ph.preheader
-  %n.vec117 = and i64 %1, -8                      ; 4 uses
+  %n.vec117 = and i64 %2, -8                      ; 4 uses
   %i.s = or disjoint i64 %n.vec117, 2
   %i.t = trunc i64 %n.vec117 to i32
   %i.u = add i32 %.sroa.8.055, %i.t               ; 2 uses
@@ -258,7 +258,7 @@ vector.body123:                                   ; preds = %vector.body123, %ve
   br i1 %i.z, label %middle.block129, label %vector.body123, !llvm.loop !465
 
 middle.block129:                                  ; preds = %vector.body123
-  %cmp.n130 = icmp eq i64 %1, %n.vec117
+  %cmp.n130 = icmp eq i64 %2, %n.vec117
   br i1 %cmp.n130, label %.lr.ph.1, label %.lr.ph.preheader136
 
 .lr.ph.preheader136:                              ; preds = %.lr.ph.preheader, %middle.block129
@@ -296,11 +296,12 @@ middle.block129:                                  ; preds = %vector.body123
 .lr.ph.1:                                         ; preds = %.lr.ph, %middle.block129
   %.lcssa106 = phi i32 [ %i.u, %middle.block129 ], [ %i.ai, %.lr.ph ] ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.q, i64 256 ; 2 uses
-  %min.iters.check = icmp ult i64 %2, 8
+  %3 = add i64 %1, %indvar                        ; 3 uses
+  %min.iters.check = icmp ult i64 %3, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.1
-  %n.vec = and i64 %2, -8                         ; 4 uses
+  %n.vec = and i64 %3, -8                         ; 4 uses
   %i.am = or disjoint i64 %n.vec, 1
   %i.an = trunc i64 %n.vec to i32
   %i.ao = add i32 %.lcssa106, %i.an               ; 2 uses
@@ -325,7 +326,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !467
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %2, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %._crit_edge.1, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.1, %middle.block
@@ -728,12 +729,13 @@ bb.a:
 
 .preheader47.lr.ph:                               ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.m = sext i32 %i.i to i64                     ; 3 uses
+  %i.m = sext i32 %i.i to i64                     ; 4 uses
   %i.n = add nsw i64 %i.m, -1
-  %i.o = add nsw i64 %i.m, -2                     ; 2 uses
+  %i.o = add nsw i64 %i.m, -2
   %broadcast.splatinsert113 = insertelement <4 x i32> poison, i32 %i.d, i64 0
   %broadcast.splat114 = shufflevector <4 x i32> %broadcast.splatinsert113, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = add <4 x i32> splat (i32 4), %broadcast.splat114
+  %1 = add nsw i64 %i.m, -2
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.d, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op145 = add <4 x i32> splat (i32 4), %broadcast.splat
@@ -744,18 +746,17 @@ bb.a:
   %indvars.iv74 = phi i64 [ %i.m, %.preheader47.lr.ph ], [ %indvars.iv.next75, %._crit_edge.1 ] ; 4 uses
   %indvars.iv = phi i64 [ %i.n, %.preheader47.lr.ph ], [ %indvars.iv.next, %._crit_edge.1 ] ; 2 uses
   %.sroa.8.053 = phi i32 [ 0, %.preheader47.lr.ph ], [ %.sroa.8.2.lcssa.1, %._crit_edge.1 ] ; 4 uses
-  %1 = add i64 %i.o, %indvar                      ; 3 uses
-  %2 = add i64 %i.o, %indvar                      ; 3 uses
   %i.p = getelementptr inbounds [512 x i8], ptr %i.l, i64 %indvars.iv74 ; 3 uses
   %i.q = icmp sgt i64 %indvars.iv74, 2
   br i1 %i.q, label %.lr.ph.preheader, label %._crit_edge.1
 
 .lr.ph.preheader:                                 ; preds = %.preheader47
-  %min.iters.check110 = icmp ult i64 %1, 8
+  %2 = add i64 %i.o, %indvar                      ; 3 uses
+  %min.iters.check110 = icmp ult i64 %2, 8
   br i1 %min.iters.check110, label %.lr.ph.preheader131, label %vector.ph111
 
 vector.ph111:                                     ; preds = %.lr.ph.preheader
-  %n.vec112 = and i64 %1, -8                      ; 4 uses
+  %n.vec112 = and i64 %2, -8                      ; 4 uses
   %i.r = or disjoint i64 %n.vec112, 2
   %i.s = trunc i64 %n.vec112 to i32
   %i.t = add i32 %.sroa.8.053, %i.s               ; 2 uses
@@ -780,7 +781,7 @@ vector.body118:                                   ; preds = %vector.body118, %ve
   br i1 %i.y, label %middle.block124, label %vector.body118, !llvm.loop !615
 
 middle.block124:                                  ; preds = %vector.body118
-  %cmp.n125 = icmp eq i64 %1, %n.vec112
+  %cmp.n125 = icmp eq i64 %2, %n.vec112
   br i1 %cmp.n125, label %.lr.ph.1, label %.lr.ph.preheader131
 
 .lr.ph.preheader131:                              ; preds = %.lr.ph.preheader, %middle.block124
@@ -817,11 +818,12 @@ middle.block124:                                  ; preds = %vector.body118
 .lr.ph.1:                                         ; preds = %.lr.ph, %middle.block124
   %.lcssa101 = phi i32 [ %i.t, %middle.block124 ], [ %i.ag, %.lr.ph ] ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.p, i64 256 ; 2 uses
-  %min.iters.check = icmp ult i64 %2, 8
+  %3 = add i64 %1, %indvar                        ; 3 uses
+  %min.iters.check = icmp ult i64 %3, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.1
-  %n.vec = and i64 %2, -8                         ; 4 uses
+  %n.vec = and i64 %3, -8                         ; 4 uses
   %i.ak = or disjoint i64 %n.vec, 1
   %i.al = trunc i64 %n.vec to i32
   %i.am = add i32 %.lcssa101, %i.al               ; 2 uses
@@ -846,7 +848,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !617
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %2, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %._crit_edge.1, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.1, %middle.block

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 293
 inline.NumDeleted: 40
 loop-unroll.NumCompletelyUnrolled: 14
-loop-unroll.NumRuntimeUnrolled: 57
-loop-unroll.NumUnrolled: 75
+loop-unroll.NumRuntimeUnrolled: 59
+loop-unroll.NumUnrolled: 77
 begin_hunk_0_@_sp_submod:bb.a
   br i1 %i.ah, label %.loopexit116, label %bb.l
 
@@ -205,7 +205,7 @@ sp_sub.exit:                                      ; preds = %bb.d, %.loopexit117
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define range(i32 -98, 1) i32 @sp_addmod_ct(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(address) %2, ptr nofree noundef captures(address) %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i16, align 2                      ; 8 uses
+  %i.a = alloca i16, align 2                      ; 14 uses
   %i.b = alloca i64, align 8                      ; 7 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca i64, align 8                      ; 6 uses
@@ -215,7 +215,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store volatile i64 -1, ptr %i.d, align 8, !tbaa !36
   %i.e = load i16, ptr %2, align 8, !tbaa !40
-  %.fr = freeze i16 %i.e                          ; 7 uses
+  %.fr = freeze i16 %i.e                          ; 9 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 2
   %i.g = load i16, ptr %i.f, align 2, !tbaa !39
   %.not = icmp ule i16 %.fr, %i.g
@@ -240,7 +240,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.n = zext i16 %i.i to i64
-  %wide.trip.count = zext i16 %.fr to i64         ; 3 uses
+  %wide.trip.count = zext i16 %.fr to i64         ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
@@ -361,15 +361,51 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph71.new
 .lr.ph.i:                                         ; preds = %.lr.ph.i.unr-lcssa, %.epil.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store volatile i16 -1, ptr %i.a, align 2, !tbaa !46
-  %i.bz = zext i16 %.fr to i64
-  br label %bb.d
+  %i.bz = zext i16 %.fr to i64                    ; 3 uses
+  %xtraiter97 = and i64 %wide.trip.count, 1
+  %lcmp.mod98.not = icmp eq i64 %xtraiter97, 0
+  br i1 %lcmp.mod98.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.d:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %i.bz, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 3 uses
-  %.01112.i = phi i16 [ %.fr, %.lr.ph.i ], [ %i.ch, %bb.d ]
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i
+  %indvars.iv.next.i.prol = add nsw i64 %i.bz, -1
+  %4 = getelementptr [8 x i8], ptr %3, i64 %i.bz
+  %5 = load i64, ptr %4, align 8, !tbaa !36
+  %6 = zext i64 %5 to i128
+  %7 = add nuw nsw i128 %6, 1208925819614629174706175
+  %8 = lshr i128 %7, 64
+  %9 = trunc i128 %8 to i16
+  %.0..0..0..0..0..0..i.prol = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %10 = and i16 %.0..0..0..0..0..0..i.prol, %9
+  store volatile i16 %10, ptr %i.a, align 2, !tbaa !46
+  %.0..0..0..0..0..0.1.i.prol = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %11 = add i16 %.0..0..0..0..0..0.1.i.prol, %.fr ; 2 uses
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i
+  %indvars.iv.i.unr = phi i64 [ %i.bz, %.lr.ph.i ], [ %indvars.iv.next.i.prol, %.prol.loopexit.unr-lcssa ]
+  %.01112.i.unr = phi i16 [ %.fr, %.lr.ph.i ], [ %11, %.prol.loopexit.unr-lcssa ]
+  %.lcssa.unr = phi i16 [ poison, %.lr.ph.i ], [ %11, %.prol.loopexit.unr-lcssa ]
+  %12 = icmp eq i16 %.fr, 1
+  br i1 %12, label %sp_clamp_ct.exit, label %bb.d
+
+bb.d:                                             ; preds = %.prol.loopexit, %bb.d
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ %indvars.iv.i.unr, %.prol.loopexit ] ; 4 uses
+  %.01112.i = phi i16 [ %i.ch, %bb.d ], [ %.01112.i.unr, %.prol.loopexit ]
+  %13 = getelementptr [8 x i8], ptr %3, i64 %indvars.iv.i
+  %14 = load i64, ptr %13, align 8, !tbaa !36
+  %15 = zext i64 %14 to i128
+  %16 = add nuw nsw i128 %15, 1208925819614629174706175
+  %17 = lshr i128 %16, 64
+  %18 = trunc i128 %17 to i16
+  %.0..0..0..0..0..0..i = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %19 = and i16 %.0..0..0..0..0..0..i, %18
+  store volatile i16 %19, ptr %i.a, align 2, !tbaa !46
+  %.0..0..0..0..0..0.1.i = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %20 = add i16 %.0..0..0..0..0..0.1.i, %.01112.i
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -2
   %i.ca = getelementptr [8 x i8], ptr %3, i64 %indvars.iv.i
-  %i.cb = load i64, ptr %i.ca, align 8, !tbaa !36
+  %21 = getelementptr i8, ptr %i.ca, i64 -8
+  %i.cb = load i64, ptr %21, align 8, !tbaa !36
   %i.cc = zext i64 %i.cb to i128
   %i.cd = add nuw nsw i128 %i.cc, 1208925819614629174706175
   %i.ce = lshr i128 %i.cd, 64
@@ -378,12 +414,12 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %i.cg = and i16 %.0..0..0..0..0..0..i.a, %i.cf
   store volatile i16 %i.cg, ptr %i.a, align 2, !tbaa !46
   %.0..0..0..0..0..0.1.i.a = load volatile i16, ptr %i.a, align 2, !tbaa !46
-  %i.ch = add i16 %.0..0..0..0..0..0.1.i.a, %.01112.i ; 2 uses
-  %4 = icmp samesign ugt i64 %indvars.iv.i, 1
-  br i1 %4, label %bb.d, label %sp_clamp_ct.exit, !llvm.loop !20
+  %i.ch = add i16 %.0..0..0..0..0..0.1.i.a, %20   ; 2 uses
+  %22 = icmp sgt i64 %indvars.iv.i, 2
+  br i1 %22, label %bb.d, label %sp_clamp_ct.exit, !llvm.loop !20
 
-sp_clamp_ct.exit:                                 ; preds = %bb.d, %._crit_edge72.thread
-  %.011.lcssa.i = phi i16 [ 0, %._crit_edge72.thread ], [ %i.ch, %bb.d ]
+sp_clamp_ct.exit:                                 ; preds = %.prol.loopexit, %bb.d, %._crit_edge72.thread
+  %.011.lcssa.i = phi i16 [ 0, %._crit_edge72.thread ], [ %.lcssa.unr, %.prol.loopexit ], [ %i.ch, %bb.d ]
   store i16 %.011.lcssa.i, ptr %3, align 8, !tbaa !40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.e
@@ -420,7 +456,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define internal fastcc void @_sp_submod_ct(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef range(i32 0, 65537) %3, ptr nofree noundef captures(none) %4) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i16, align 2                      ; 8 uses
+  %i.a = alloca i16, align 2                      ; 14 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca i64, align 8                      ; 6 uses
@@ -485,7 +521,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.038.lcssa.off0 = phi i64 [ 0, %bb.a ], [ %extract.t, %._crit_edge.loopexit ]
   store volatile i64 %.038.lcssa.off0, ptr %i.b, align 8, !tbaa !36
   %i.af = load i16, ptr %2, align 8, !tbaa !40
-  %.fr = freeze i16 %i.af                         ; 6 uses
+  %.fr = freeze i16 %i.af                         ; 8 uses
   %.not49 = icmp eq i16 %.fr, 0
   br i1 %.not49, label %._crit_edge47.thread, label %.lr.ph46
 
@@ -497,7 +533,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 .lr.ph46:                                         ; preds = %._crit_edge
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %wide.trip.count56 = zext i16 %.fr to i64       ; 2 uses
+  %wide.trip.count56 = zext i16 %.fr to i64       ; 3 uses
   %xtraiter = and i64 %wide.trip.count56, 1
   %i.ai = icmp eq i16 %.fr, 1
   br i1 %i.ai, label %.epil.preheader, label %.lr.ph46.new
@@ -566,15 +602,51 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph46.new
 .lr.ph.i:                                         ; preds = %.lr.ph.i.unr-lcssa, %.epil.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store volatile i16 -1, ptr %i.a, align 2, !tbaa !46
-  %i.bm = zext i16 %.fr to i64
-  br label %bb.d
+  %i.bm = zext i16 %.fr to i64                    ; 3 uses
+  %xtraiter64 = and i64 %wide.trip.count56, 1
+  %lcmp.mod65.not = icmp eq i64 %xtraiter64, 0
+  br i1 %lcmp.mod65.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.d:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %i.bm, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 3 uses
-  %.01112.i = phi i16 [ %.fr, %.lr.ph.i ], [ %i.bu, %bb.d ]
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i
+  %indvars.iv.next.i.prol = add nsw i64 %i.bm, -1
+  %5 = getelementptr [8 x i8], ptr %4, i64 %i.bm
+  %6 = load i64, ptr %5, align 8, !tbaa !36
+  %7 = zext i64 %6 to i128
+  %8 = add nuw nsw i128 %7, 1208925819614629174706175
+  %9 = lshr i128 %8, 64
+  %10 = trunc i128 %9 to i16
+  %.0..0..0..0..0..0..i.prol = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %11 = and i16 %.0..0..0..0..0..0..i.prol, %10
+  store volatile i16 %11, ptr %i.a, align 2, !tbaa !46
+  %.0..0..0..0..0..0.1.i.prol = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %12 = add i16 %.0..0..0..0..0..0.1.i.prol, %.fr ; 2 uses
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i
+  %indvars.iv.i.unr = phi i64 [ %i.bm, %.lr.ph.i ], [ %indvars.iv.next.i.prol, %.prol.loopexit.unr-lcssa ]
+  %.01112.i.unr = phi i16 [ %.fr, %.lr.ph.i ], [ %12, %.prol.loopexit.unr-lcssa ]
+  %.lcssa.unr = phi i16 [ poison, %.lr.ph.i ], [ %12, %.prol.loopexit.unr-lcssa ]
+  %13 = icmp eq i16 %.fr, 1
+  br i1 %13, label %sp_clamp_ct.exit, label %bb.d
+
+bb.d:                                             ; preds = %.prol.loopexit, %bb.d
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ %indvars.iv.i.unr, %.prol.loopexit ] ; 4 uses
+  %.01112.i = phi i16 [ %i.bu, %bb.d ], [ %.01112.i.unr, %.prol.loopexit ]
+  %14 = getelementptr [8 x i8], ptr %4, i64 %indvars.iv.i
+  %15 = load i64, ptr %14, align 8, !tbaa !36
+  %16 = zext i64 %15 to i128
+  %17 = add nuw nsw i128 %16, 1208925819614629174706175
+  %18 = lshr i128 %17, 64
+  %19 = trunc i128 %18 to i16
+  %.0..0..0..0..0..0..i = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %20 = and i16 %.0..0..0..0..0..0..i, %19
+  store volatile i16 %20, ptr %i.a, align 2, !tbaa !46
+  %.0..0..0..0..0..0.1.i = load volatile i16, ptr %i.a, align 2, !tbaa !46
+  %21 = add i16 %.0..0..0..0..0..0.1.i, %.01112.i
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -2
   %i.bn = getelementptr [8 x i8], ptr %4, i64 %indvars.iv.i
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !36
+  %22 = getelementptr i8, ptr %i.bn, i64 -8
+  %i.bo = load i64, ptr %22, align 8, !tbaa !36
   %i.bp = zext i64 %i.bo to i128
   %i.bq = add nuw nsw i128 %i.bp, 1208925819614629174706175
   %i.br = lshr i128 %i.bq, 64
@@ -583,12 +655,12 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %i.bt = and i16 %.0..0..0..0..0..0..i.a, %i.bs
   store volatile i16 %i.bt, ptr %i.a, align 2, !tbaa !46
   %.0..0..0..0..0..0.1.i.a = load volatile i16, ptr %i.a, align 2, !tbaa !46
-  %i.bu = add i16 %.0..0..0..0..0..0.1.i.a, %.01112.i ; 2 uses
-  %5 = icmp samesign ugt i64 %indvars.iv.i, 1
-  br i1 %5, label %bb.d, label %sp_clamp_ct.exit, !llvm.loop !20
+  %i.bu = add i16 %.0..0..0..0..0..0.1.i.a, %21   ; 2 uses
+  %23 = icmp sgt i64 %indvars.iv.i, 2
+  br i1 %23, label %bb.d, label %sp_clamp_ct.exit, !llvm.loop !20
 
-sp_clamp_ct.exit:                                 ; preds = %bb.d, %._crit_edge47.thread
-  %.011.lcssa.i = phi i16 [ 0, %._crit_edge47.thread ], [ %i.bu, %bb.d ]
+sp_clamp_ct.exit:                                 ; preds = %.prol.loopexit, %bb.d, %._crit_edge47.thread
+  %.011.lcssa.i = phi i16 [ 0, %._crit_edge47.thread ], [ %.lcssa.unr, %.prol.loopexit ], [ %i.bu, %bb.d ]
   store i16 %.011.lcssa.i, ptr %4, align 8, !tbaa !40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
