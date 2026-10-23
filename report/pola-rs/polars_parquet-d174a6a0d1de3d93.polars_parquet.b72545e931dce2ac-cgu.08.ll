@@ -205,7 +205,7 @@ _RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfISxE4fmY1Y_14p
   %i.dz = add i64 %i.du, %i.dy, !dbg !16898
   %i.ea = add i64 %i.dz, %.val13.i105.3, !dbg !16899 ; 3 uses
   %i.eb = add nuw nsw i64 %.sroa.04.0.i102, 4, !dbg !16900 ; 2 uses
-  %niter334.next.3 = add i64 %niter334, 4, !dbg !16892 ; 2 uses
+  %niter334.next.3 = add nuw nsw i64 %niter334, 4, !dbg !16892 ; 2 uses
   %niter334.ncmp.3 = icmp eq i64 %niter334.next.3, %unroll_iter333, !dbg !16892
   br i1 %niter334.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet5write4page13PageWriteSpecENtNtNtNtBb_4iter6traits8iterator8Iterator4foldxNCINvNtNtB27_8adapters3map8map_foldRBQ_xxNCNvNtBU_12column_chunk18build_column_chunks0_0NCINvXse_NtB25_5accumxNtB4l_3Sum3sumINtB2R_3MapBF_B3r_EE0E0EBY_.exit.unr-lcssa, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet5write4page13PageWriteSpecENtNtNtNtBb_4iter6traits8iterator8Iterator4foldxNCINvNtNtB27_8adapters3map8map_foldRBQ_xxNCNvNtBU_12column_chunk18build_column_chunks_0NCINvXse_NtB25_5accumxNtB4k_3Sum3sumINtB2R_3MapBF_B3r_EE0E0EBY_.exit, !dbg !16892
 

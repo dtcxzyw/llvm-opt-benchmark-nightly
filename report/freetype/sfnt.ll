@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.fr = zext i8 %i.fq to i32
   %i.fs = or disjoint i32 %i.fo, %i.fr            ; 2 uses
   %i.ft = icmp ult i32 %i.i, %i.fs
-  %i.fu = trunc nuw i64 %indvars.iv.next481 to i32 ; 2 uses
+  %i.fu = trunc nuw nsw i64 %indvars.iv.next481 to i32 ; 2 uses
   br i1 %i.ft, label %._crit_edge441.loopexit, label %.lr.ph577, !llvm.loop !830
 
 .lr.ph577:                                        ; preds = %.lr.ph440.preheader, %.lr.ph440

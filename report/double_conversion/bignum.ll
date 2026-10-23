@@ -205,12 +205,12 @@ bb.d:                                             ; preds = %.lr.ph66, %._crit_e
   %indvars.iv102 = phi i64 [ %i.br, %.lr.ph66 ], [ %indvars.iv.next103, %._crit_edge ] ; 3 uses
   %indvars.iv91 = phi i64 [ 1, %.lr.ph66 ], [ %indvars.iv.next92, %._crit_edge ] ; 4 uses
   %.265 = phi i64 [ %.0.lcssa, %.lr.ph66 ], [ %i.du, %._crit_edge ] ; 3 uses
-  %1 = xor i64 %indvar, -1
-  %2 = add i64 %1, %wide.trip.count100            ; 3 uses
   %i.cq = icmp slt i64 %indvars.iv102, %invariant.op
   br i1 %i.cq, label %.lr.ph62.preheader, label %._crit_edge
 
 .lr.ph62.preheader:                               ; preds = %bb.d
+  %1 = xor i64 %indvar, -1
+  %2 = add i64 %1, %wide.trip.count100            ; 3 uses
   %min.iters.check142 = icmp ult i64 %2, 4
   br i1 %min.iters.check142, label %.lr.ph62.preheader162, label %vector.ph143
 

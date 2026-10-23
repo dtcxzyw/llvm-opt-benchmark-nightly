@@ -200,15 +200,15 @@ bb.bdo:                                           ; preds = %bb.bdn, %bb.bdm
   br label %.loopexit1310
 
 .loopexit1310.loopexit:                           ; preds = %.lr.ph2024
-  %i.boa = trunc nuw i64 %indvars.iv2718 to i32
+  %i.boa = trunc nuw nsw i64 %indvars.iv2718 to i32
   br label %.loopexit1310
 
 .loopexit1310.loopexit2267:                       ; preds = %.lr.ph2014
-  %i.bob = trunc nuw i64 %indvars.iv2713 to i32
+  %i.bob = trunc nuw nsw i64 %indvars.iv2713 to i32
   br label %.loopexit1310
 
 .loopexit1310.loopexit2268:                       ; preds = %.lr.ph2004
-  %i.boc = trunc nuw i64 %indvars.iv2708 to i32
+  %i.boc = trunc nuw nsw i64 %indvars.iv2708 to i32
   br label %.loopexit1310
 
 .loopexit1310.loopexit2269:                       ; preds = %bb.afg
