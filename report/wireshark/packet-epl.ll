@@ -205,10 +205,19 @@ declare ptr @g_hash_table_new(ptr noundef, ptr noundef) local_unnamed_addr #5
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: read) uwtable
 define internal i32 @epl_duplication_hash(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
-  %1 = load <4 x i8>, ptr %0, align 1
-  %2 = shufflevector <4 x i8> %1, <4 x i8> poison, <4 x i32> <i32 2, i32 3, i32 1, i32 0>
-  %3 = bitcast <4 x i8> %2 to i32
-  ret i32 %3
+  %1 = load i8, ptr %0, align 1
+  %2 = zext i8 %1 to i32
+  %3 = shl nuw i32 %2, 24
+  %4 = getelementptr i8, ptr %0, i64 1
+  %5 = load i8, ptr %4, align 1
+  %6 = zext i8 %5 to i32
+  %7 = shl nuw nsw i32 %6, 16
+  %8 = or disjoint i32 %7, %3
+  %9 = getelementptr i8, ptr %0, i64 2
+  %10 = load i16, ptr %9, align 1
+  %11 = zext i16 %10 to i32
+  %12 = or disjoint i32 %8, %11
+  ret i32 %12
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: read) uwtable

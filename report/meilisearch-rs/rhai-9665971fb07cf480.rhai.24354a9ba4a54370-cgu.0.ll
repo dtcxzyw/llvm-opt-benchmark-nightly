@@ -205,7 +205,7 @@ bb.a:
   %i.w = alloca [48 x i8], align 8                ; 4 uses
   %i.x = alloca [16 x i8], align 8                ; 4 uses
   %i.y = alloca [16 x i8], align 8                ; 5 uses
-  %i.z = alloca [24 x i8], align 8                ; 9 uses
+  %i.z = alloca [24 x i8], align 8                ; 10 uses
   %i.aa = alloca [24 x i8], align 8               ; 5 uses
   %.sroa.643 = alloca [16 x i8], align 8          ; 6 uses
   %i.ab = alloca [16 x i8], align 8               ; 6 uses
@@ -221,7 +221,7 @@ bb.a:
   %i.al = alloca [144 x i8], align 8              ; 6 uses
   %i.am = alloca [24 x i8], align 8               ; 7 uses
   %i.an = alloca [24 x i8], align 8               ; 13 uses
-  %i.ao = alloca [24 x i8], align 8               ; 9 uses
+  %i.ao = alloca [24 x i8], align 8               ; 10 uses
   %i.ap = alloca [24 x i8], align 8               ; 5 uses
   %.sroa.634 = alloca [16 x i8], align 8          ; 6 uses
   %i.aq = alloca [144 x i8], align 16             ; 16 uses
@@ -303,9 +303,11 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.e
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %4 = load <2 x i16>, ptr %i.bj, align 8         ; 6 uses
-  %5 = extractelement <2 x i16> %4, i64 1
-  %6 = extractelement <2 x i16> %4, i64 0
+  %4 = load i32, ptr %i.bj, align 8               ; 5 uses
+  %5 = zext i32 %4 to i64
+  %6 = trunc i32 %4 to i16                        ; 2 uses
+  %7 = lshr i32 %4, 16
+  %8 = trunc nuw i32 %7 to i16                    ; 2 uses
   call void @"_ZN4core3ptr43drop_in_place$LT$rhai..tokenizer..Token$GT$17ha4e996b9761910c4E"(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.ay)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36712)
@@ -457,7 +459,8 @@ bb.x:                                             ; preds = %bb.k
   %.sroa.467.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aq, i64 128 ; 5 uses
   store i64 0, ptr %.sroa.467.0..sroa_idx, align 16
   %i.cu = getelementptr inbounds nuw i8, ptr %i.aq, i64 136
-  %i.cv = shufflevector <2 x i16> %4, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %9 = bitcast i32 %4 to <2 x i16>
+  %i.cv = shufflevector <2 x i16> %9, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   store <4 x i16> %i.cv, ptr %i.cu, align 8
   %i.cw = and i8 %i.cr, 16
   %.not105 = icmp eq i8 %i.cw, 0
@@ -473,6 +476,7 @@ bb.y:                                             ; preds = %bb.x
   %i.dc = and i8 %i.cr, -18
   %.sroa.01.sroa.6.0..sroa_idx286 = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %.sroa.62.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %i.z, i64 16
+  %.sroa.9.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %i.z, i64 18
   %.sroa.12.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %i.z, i64 20
   %.sroa.1219.0..sroa_idx22 = getelementptr inbounds nuw i8, ptr %i.z, i64 22
   %.sroa.15.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %i.z, i64 23
@@ -490,7 +494,9 @@ bb.z:                                             ; preds = %bb.x
   %.sroa.01.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   store i64 %i.bl, ptr %.sroa.01.sroa.6.0..sroa_idx, align 8
   %.sroa.62.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
-  store <2 x i16> %4, ptr %.sroa.62.0..sroa_idx3, align 8
+  store i16 %6, ptr %.sroa.62.0..sroa_idx3, align 8
+  %.sroa.9.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.ao, i64 18
+  store i16 %8, ptr %.sroa.9.0..sroa_idx9, align 2
   %.sroa.12.0..sroa_idx15 = getelementptr inbounds nuw i8, ptr %i.ao, i64 20
   store i16 %i.ct, ptr %.sroa.12.0..sroa_idx15, align 4
   %.sroa.1219.0..sroa_idx20 = getelementptr inbounds nuw i8, ptr %i.ao, i64 22
@@ -549,7 +555,8 @@ bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z)
   store i64 %i.cp, ptr %i.z, align 8
   store i64 %i.bl, ptr %.sroa.01.sroa.6.0..sroa_idx286, align 8
-  store <2 x i16> %4, ptr %.sroa.62.0..sroa_idx5, align 8
+  store i16 %6, ptr %.sroa.62.0..sroa_idx5, align 8
+  store i16 %8, ptr %.sroa.9.0..sroa_idx11, align 2
   store i16 %i.ct, ptr %.sroa.12.0..sroa_idx17, align 4
   store i8 %i.dc, ptr %.sroa.1219.0..sroa_idx22, align 2
   store i8 0, ptr %.sroa.15.0..sroa_idx27, align 1
@@ -952,13 +959,9 @@ bb.bn:                                            ; preds = %.noexc206, %.lr.ph.
   %.sroa.694.0.insert.ext = zext i16 %.pn353 to i64
   %.sroa.694.0.insert.shift = shl nuw i64 %.sroa.694.0.insert.ext, 48
   %.sroa.593.0.insert.ext = zext i16 %.pn355 to i64
-  %.sroa.593.0.insert.shift = shl nuw nsw i64 %.sroa.593.0.insert.ext, 32
-  %.sroa.593.0.insert.insert = or disjoint i64 %.sroa.694.0.insert.shift, %.sroa.593.0.insert.shift
-  %.sroa.492.0.insert.ext = zext i16 %5 to i64
-  %.sroa.492.0.insert.shift = shl nuw nsw i64 %.sroa.492.0.insert.ext, 16
-  %.sroa.492.0.insert.insert = or disjoint i64 %.sroa.593.0.insert.insert, %.sroa.492.0.insert.shift
-  %.sroa.091.0.insert.ext = zext i16 %6 to i64
-  %.sroa.091.0.insert.insert = or disjoint i64 %.sroa.492.0.insert.insert, %.sroa.091.0.insert.ext
+  %.sroa.492.0.insert.shift = shl nuw nsw i64 %.sroa.593.0.insert.ext, 32
+  %.sroa.492.0.insert.insert = or disjoint i64 %.sroa.694.0.insert.shift, %.sroa.492.0.insert.shift
+  %.sroa.091.0.insert.insert = or disjoint i64 %.sroa.492.0.insert.insert, %5
   call void @llvm.experimental.noalias.scope.decl(metadata !36740)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !36739
   call void @llvm.experimental.noalias.scope.decl(metadata !36741)
@@ -1310,8 +1313,7 @@ bb.dc:                                            ; preds = %bb.cx
   %i.il = zext i32 %i.ik to i64
   %i.im = shl nuw i64 %i.il, 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
-  %.sroa.498.0.insert.insert.v = shufflevector <2 x i16> %4, <2 x i16> <i16 0, i16 poison>, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
-  %.sroa.498.0.insert.insert = bitcast <4 x i16> %.sroa.498.0.insert.insert.v to i64
+  %.sroa.498.0.insert.insert = zext i32 %4 to i64
   %.sroa.097.0.insert.insert = or disjoint i64 %i.im, %.sroa.498.0.insert.insert
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36755)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !36756
