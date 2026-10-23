@@ -205,22 +205,22 @@ image_add_line.exit264.i:                         ; preds = %bb.au, %hash_line.e
   %.not196.i = icmp eq i32 %i.jw, 0
   br i1 %.not196.i, label %.thread345.i, label %.thread357.i
 
+10:                                               ; preds = %image_add_line.exit264.i
+  %11 = load i64, ptr %i.v, align 8, !tbaa !79
+  br label %bb.aw
+
 .thread345.i:                                     ; preds = %.thread335.i
   %i.jx = load i64, ptr %i.v, align 8, !tbaa !79  ; 3 uses
   %i.jy = load i32, ptr %i.w, align 8, !tbaa !108
   %.not198.i = icmp eq i32 %i.jy, 0
   br i1 %.not198.i, label %bb.aw, label %bb.av
 
-10:                                               ; preds = %image_add_line.exit264.i
-  %11 = load i64, ptr %i.v, align 8, !tbaa !79
-  br label %bb.aw
-
 bb.av:                                            ; preds = %.thread345.i
   %i.jz = load i32, ptr %i.x, align 8, !tbaa !43
   %.not199.i = icmp eq i32 %i.jz, 3
   br i1 %.not199.i, label %bb.ax, label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av, %10, %.thread345.i
+bb.aw:                                            ; preds = %bb.av, %.thread345.i, %10
   %i.ka = phi i64 [ %i.jx, %bb.av ], [ %i.jx, %.thread345.i ], [ %11, %10 ]
   %.1173342354.i = phi ptr [ %.0172517.i, %bb.av ], [ %.0172517.i, %.thread345.i ], [ %i.jv, %10 ]
   %.1344351.i = phi i32 [ 0, %bb.av ], [ 0, %.thread345.i ], [ %.0149.i, %10 ]
@@ -623,8 +623,8 @@ bb.cn:                                            ; preds = %bb.cs, %.lr.ph.i.i.
   %i.tg = load i64, ptr %i.tf, align 8, !tbaa !162 ; 3 uses
   %gep.i.i.i.i = getelementptr [16 x i8], ptr %invariant.gep.i.i.i.i, i64 %indvars.iv.i.i.i.i
   %i.th = load i64, ptr %gep.i.i.i.i, align 8, !tbaa !162 ; 3 uses
-  %i.ti = getelementptr inbounds nuw i8, ptr %i.td, i64 %.04874.i.i.i.i ; 5 uses
-  %i.tj = getelementptr inbounds nuw i8, ptr %i.te, i64 %.04775.i.i.i.i ; 5 uses
+  %i.ti = getelementptr inbounds nuw i8, ptr %i.td, i64 %.04874.i.i.i.i ; 6 uses
+  %i.tj = getelementptr inbounds nuw i8, ptr %i.te, i64 %.04775.i.i.i.i ; 6 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %i.ti, i64 %i.th ; 2 uses
   %i.tl = getelementptr inbounds nuw i8, ptr %i.tj, i64 %i.tg ; 2 uses
   %.not81.i.i.i.i.i = icmp eq i64 %i.th, 0
@@ -660,10 +660,10 @@ bb.cn:                                            ; preds = %bb.cs, %.lr.ph.i.i.
 
 .critedge6.i.i.i.i.i:                             ; preds = %.lr.ph62.i.i.i.i.i, %.lr.ph62.i.i.i.i.i
   %i.tr = icmp ult ptr %i.tj, %i.tp
-  br i1 %i.tr, label %.lr.ph62.i.i.i.i.i, label %.critedge4.i.i.i.i.i, !llvm.loop !247
+  br i1 %i.tr, label %.lr.ph62.i.i.i.i.i, label %fuzzy_matchlines.exit.i.i.i.i, !llvm.loop !247
 
-.critedge4.i.i.i.i.i:                             ; preds = %.critedge6.i.i.i.i.i, %.lr.ph62.i.i.i.i.i, %.critedge.i.i.i.i.i
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.tl, %.critedge.i.i.i.i.i ], [ %i.tp, %.critedge6.i.i.i.i.i ], [ %.061.i.i.i.i.i, %.lr.ph62.i.i.i.i.i ] ; 5 uses
+.critedge4.i.i.i.i.i:                             ; preds = %.lr.ph62.i.i.i.i.i, %.critedge.i.i.i.i.i
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.tl, %.critedge.i.i.i.i.i ], [ %.061.i.i.i.i.i, %.lr.ph62.i.i.i.i.i ] ; 7 uses
   %.0.lcssa86.i.i.i.i.i = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i to i64
   %i.ts = icmp ult ptr %i.ti, %.044.lcssa.i.i.i.i.i
   %i.tt = icmp ult ptr %i.tj, %.0.lcssa.i.i.i.i.i
@@ -720,7 +720,7 @@ bb.cp:                                            ; preds = %.lr.ph67.i.i.i.i.i
 .critedge8.i.i.i.i.i:                             ; preds = %bb.cp, %.lr.ph67.i.i.i.i.i, %.preheader.i.i.i.i.i
   %.148.lcssa.i.i.i.i.i = phi ptr [ %.04776.i.i.i.i.i, %.preheader.i.i.i.i.i ], [ %.14866.i.i.i.i.i, %.lr.ph67.i.i.i.i.i ], [ %scevgep85.i.i.i.i.i, %bb.cp ] ; 3 uses
   %i.un = icmp ult ptr %.04677.i.i.i.i.i, %.0.lcssa.i.i.i.i.i
-  br i1 %i.un, label %.lr.ph72.preheader.i.i.i.i.i, label %.critedge10.i.i.i.i.i
+  br i1 %i.un, label %.lr.ph72.preheader.i.i.i.i.i, label %fuzzy_matchlines.exit.i.i.i.i
 
 .lr.ph72.preheader.i.i.i.i.i:                     ; preds = %.critedge8.i.i.i.i.i
   %scevgep87.i.i.i.i.i = getelementptr i8, ptr %.04677.i.i.i.i.i, i64 %.0.lcssa86.i.i.i.i.i
@@ -750,19 +750,20 @@ bb.cr:                                            ; preds = %.lr.ph78.i.i.i.i.i
   %.not52.i.i.i.i.i = icmp eq i8 %i.tv, %i.ux
   br i1 %.not52.i.i.i.i.i, label %.critedge10.i.i.i.i.i, label %.critedge88.i.i
 
-.critedge10.i.i.i.i.i:                            ; preds = %bb.cq, %.lr.ph72.i.i.i.i.i, %bb.cr, %.critedge8.i.i.i.i.i
-  %.249.i.i.i.i.i = phi ptr [ %i.uv, %bb.cr ], [ %.148.lcssa.i.i.i.i.i, %.critedge8.i.i.i.i.i ], [ %.148.lcssa.i.i.i.i.i, %.lr.ph72.i.i.i.i.i ], [ %.148.lcssa.i.i.i.i.i, %bb.cq ] ; 3 uses
-  %.2.i.i.i.i.i = phi ptr [ %i.uw, %bb.cr ], [ %.04677.i.i.i.i.i, %.critedge8.i.i.i.i.i ], [ %scevgep89.i.i.i.i.i, %bb.cq ], [ %.171.i.i.i.i.i, %.lr.ph72.i.i.i.i.i ] ; 3 uses
+.critedge10.i.i.i.i.i:                            ; preds = %bb.cq, %.lr.ph72.i.i.i.i.i, %bb.cr
+  %.249.i.i.i.i.i = phi ptr [ %i.uv, %bb.cr ], [ %.148.lcssa.i.i.i.i.i, %.lr.ph72.i.i.i.i.i ], [ %.148.lcssa.i.i.i.i.i, %bb.cq ] ; 3 uses
+  %.2.i.i.i.i.i = phi ptr [ %i.uw, %bb.cr ], [ %scevgep89.i.i.i.i.i, %bb.cq ], [ %.171.i.i.i.i.i, %.lr.ph72.i.i.i.i.i ] ; 3 uses
   %i.uy = icmp ult ptr %.249.i.i.i.i.i, %.044.lcssa.i.i.i.i.i
   %i.uz = icmp ult ptr %.2.i.i.i.i.i, %.0.lcssa.i.i.i.i.i
   %i.va = select i1 %i.uy, i1 %i.uz, i1 false
   br i1 %i.va, label %.lr.ph78.i.i.i.i.i, label %fuzzy_matchlines.exit.i.i.i.i, !llvm.loop !250
 
-fuzzy_matchlines.exit.i.i.i.i:                    ; preds = %.critedge10.i.i.i.i.i, %.critedge4.i.i.i.i.i
-  %.047.lcssa.i.i.i.i.i = phi ptr [ %i.ti, %.critedge4.i.i.i.i.i ], [ %.249.i.i.i.i.i, %.critedge10.i.i.i.i.i ]
-  %.046.lcssa.i.i.i.i.i = phi ptr [ %i.tj, %.critedge4.i.i.i.i.i ], [ %.2.i.i.i.i.i, %.critedge10.i.i.i.i.i ]
+fuzzy_matchlines.exit.i.i.i.i:                    ; preds = %.critedge6.i.i.i.i.i, %.critedge10.i.i.i.i.i, %.critedge8.i.i.i.i.i, %.critedge4.i.i.i.i.i
+  %.0.lcssa99.i.i.i.i.i = phi ptr [ %.0.lcssa.i.i.i.i.i, %.critedge4.i.i.i.i.i ], [ %.0.lcssa.i.i.i.i.i, %.critedge10.i.i.i.i.i ], [ %.0.lcssa.i.i.i.i.i, %.critedge8.i.i.i.i.i ], [ %i.tp, %.critedge6.i.i.i.i.i ]
+  %.047.lcssa.i.i.i.i.i = phi ptr [ %i.ti, %.critedge4.i.i.i.i.i ], [ %.249.i.i.i.i.i, %.critedge10.i.i.i.i.i ], [ %.148.lcssa.i.i.i.i.i, %.critedge8.i.i.i.i.i ], [ %i.ti, %.critedge6.i.i.i.i.i ]
+  %.046.lcssa.i.i.i.i.i = phi ptr [ %i.tj, %.critedge4.i.i.i.i.i ], [ %.2.i.i.i.i.i, %.critedge10.i.i.i.i.i ], [ %.04677.i.i.i.i.i, %.critedge8.i.i.i.i.i ], [ %i.tj, %.critedge6.i.i.i.i.i ]
   %i.vb = icmp ne ptr %.047.lcssa.i.i.i.i.i, %.044.lcssa.i.i.i.i.i
-  %i.vc = icmp ne ptr %.046.lcssa.i.i.i.i.i, %.0.lcssa.i.i.i.i.i
+  %i.vc = icmp ne ptr %.046.lcssa.i.i.i.i.i, %.0.lcssa99.i.i.i.i.i
   %.not64.i.i.i.i = select i1 %i.vb, i1 true, i1 %i.vc
   br i1 %.not64.i.i.i.i, label %.critedge88.i.i, label %bb.cs
 

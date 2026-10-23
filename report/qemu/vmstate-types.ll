@@ -202,9 +202,9 @@ trace_load_gtree.exit:                            ; preds = %bb.i, %bb.j, %bb.k,
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.n
   %.06482.us = phi i32 [ %i.am, %bb.n ], [ 0, %.lr.ph ]
-  %i.am = add i32 %.06482.us, 1                   ; 4 uses
+  %i.am = add i32 %.06482.us, 1                   ; 3 uses
   %i.an = icmp sgt i32 %i.am, %i.ae
-  br i1 %i.an, label %._crit_edge, label %bb.m
+  br i1 %i.an, label %bb.r, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.split.us
   %i.ao = tail call i64 @qemu_get_be64(ptr noundef %0) #8
@@ -221,9 +221,9 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.q
   %.06482 = phi i32 [ %i.at, %bb.q ], [ 0, %.lr.ph ]
-  %i.at = add i32 %.06482, 1                      ; 4 uses
+  %i.at = add i32 %.06482, 1                      ; 3 uses
   %i.au = icmp sgt i32 %i.at, %i.ae
-  br i1 %i.au, label %._crit_edge, label %bb.o
+  br i1 %i.au, label %bb.r, label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph.split
   %i.av = tail call noalias ptr @g_malloc0(i64 noundef %i.b) #10 ; 4 uses
@@ -241,17 +241,18 @@ bb.q:                                             ; preds = %bb.p
   %.not70 = icmp eq i32 %i.az, 0
   br i1 %.not70, label %._crit_edge, label %.lr.ph.split, !llvm.loop !18
 
-._crit_edge:                                      ; preds = %bb.q, %.lr.ph.split, %bb.n, %.lr.ph.split.us, %trace_load_gtree.exit
-  %.165 = phi i32 [ 0, %trace_load_gtree.exit ], [ %i.am, %bb.n ], [ %i.am, %.lr.ph.split.us ], [ %i.at, %.lr.ph.split ], [ %i.at, %bb.q ]
+._crit_edge:                                      ; preds = %bb.q, %bb.n, %trace_load_gtree.exit
+  %.165 = phi i32 [ 0, %trace_load_gtree.exit ], [ %i.am, %bb.n ], [ %i.at, %bb.q ]
   %.not71 = icmp eq i32 %.165, %i.ae
-  %5 = load ptr, ptr %3, align 8                  ; 2 uses
   br i1 %.not71, label %bb.s, label %bb.r
 
-bb.r:                                             ; preds = %._crit_edge
+bb.r:                                             ; preds = %.lr.ph.split, %.lr.ph.split.us, %._crit_edge
+  %5 = load ptr, ptr %3, align 8
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %4, ptr noundef nonnull @.str.26, i32 noundef 837, ptr noundef nonnull @__func__.load_gtree, ptr noundef nonnull @.str.38, ptr noundef %5) #8
   br label %trace_load_gtree_end.exit
 
 bb.s:                                             ; preds = %._crit_edge
+  %6 = load ptr, ptr %3, align 8
   %i.ba = load ptr, ptr %i.q, align 8
   %i.bb = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i72 = icmp eq i32 %i.bb, 0
@@ -269,7 +270,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not4.i74, label %trace_load_gtree_end.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.40, ptr noundef %5, ptr noundef %i.s, ptr noundef %i.ba) #8
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.40, ptr noundef %6, ptr noundef %i.s, ptr noundef %i.ba) #8
   br label %trace_load_gtree_end.exit
 
 .split.us:                                        ; preds = %bb.p, %bb.m

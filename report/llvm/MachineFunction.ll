@@ -204,7 +204,7 @@ _ZNK4llvm19MachineRegisterInfo9def_beginENS_8RegisterE.exit85: ; preds = %bb.m, 
   %i.da = load i24, ptr %i.cz, align 8, !noalias !1173 ; 2 uses
   %i.db = zext i24 %i.da to i64
   %.idx.i = shl nuw nsw i64 %i.db, 5
-  %i.dc = getelementptr i8, ptr %i.cy, i64 %.idx.i ; 7 uses
+  %i.dc = getelementptr i8, ptr %i.cy, i64 %.idx.i ; 6 uses
   %.not1.i.i.i.i.i = icmp eq i24 %i.da, 0
   br i1 %.not1.i.i.i.i.i, label %_ZN4llvm12MachineInstr8all_defsEv.exit, label %.lr.ph.i.i.i.i.i.preheader
 
@@ -331,8 +331,9 @@ _ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i: ; 
 .thread227:                                       ; preds = %_ZN4llvm12MachineInstr8all_defsEv.exit, %_ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_iterator_tagEppEv.exit
   %.sroa.0194.2.sink371 = phi ptr [ %.sroa.0194.2, %_ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_iterator_tagEppEv.exit ], [ %.sroa.011.1.i.i, %_ZN4llvm12MachineInstr8all_defsEv.exit ]
   %i.et = getelementptr inbounds nuw i8, ptr %.sroa.0194.2.sink371, i64 32 ; 2 uses
-  %.not1.i.i = icmp eq ptr %i.et, %i.dc
-  br i1 %.not1.i.i, label %_ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_iterator_tagEppEv.exit, label %.lr.ph.i.i
+  %.not1.i.i = icmp ne ptr %i.et, %i.dc
+  call void @llvm.assume(i1 %.not1.i.i)
+  br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.thread227, %bb.s
   %.sroa.0194.1 = phi ptr [ %i.ex, %bb.s ], [ %i.et, %.thread227 ] ; 3 uses
@@ -346,8 +347,8 @@ bb.s:                                             ; preds = %.lr.ph.i.i
   %.not.i.i90 = icmp eq ptr %i.ex, %i.dc
   br i1 %.not.i.i90, label %_ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_iterator_tagEppEv.exit, label %.lr.ph.i.i, !llvm.loop !1096
 
-_ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_iterator_tagEppEv.exit: ; preds = %.lr.ph.i.i, %bb.s, %.thread227
-  %.sroa.0194.2 = phi ptr [ %i.dc, %.thread227 ], [ %.sroa.0194.1, %.lr.ph.i.i ], [ %i.dc, %bb.s ] ; 4 uses
+_ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_iterator_tagEppEv.exit: ; preds = %.lr.ph.i.i, %bb.s
+  %.sroa.0194.2 = phi ptr [ %i.dc, %bb.s ], [ %.sroa.0194.1, %.lr.ph.i.i ] ; 4 uses
   %.not284 = icmp ne ptr %.sroa.0194.2, %i.dc
   call void @llvm.assume(i1 %.not284)
   %i.ey = getelementptr inbounds nuw i8, ptr %.sroa.0194.2, i64 4
@@ -728,7 +729,7 @@ _ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i156:
   br i1 %.not.i157, label %.thread251, label %.peel.next.i150, !llvm.loop !1095
 
 .thread251:                                       ; preds = %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i130, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i156, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i, %.lr.ph281._crit_edge, %_ZNK4llvm18TargetRegisterInfo11regsOverlapENS_8RegisterES1_.exit.thread, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i148, %.thread256, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i122
-  %.sroa.051.9 = phi i64 [ %.sroa.02.0.insert.ext.i128, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i130 ], [ %i.gr, %_ZNK4llvm18TargetRegisterInfo11regsOverlapENS_8RegisterES1_.exit.thread ], [ %.sroa.02.0.insert.ext.peel.i120, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i122 ], [ %.sroa.02.0.insert.ext.i154, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i156 ], [ %.sroa.02.0.insert.ext.peel.i146, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i148 ], [ %i.ir, %.thread256 ], [ %.sroa.02.0.insert.ext.peel.i, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i ], [ %i.do, %.lr.ph281._crit_edge ], [ %.sroa.02.0.insert.ext.i87, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i ]
+  %.sroa.051.9 = phi i64 [ %.sroa.02.0.insert.ext.i128, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i130 ], [ %i.gr, %_ZNK4llvm18TargetRegisterInfo11regsOverlapENS_8RegisterES1_.exit.thread ], [ %.sroa.02.0.insert.ext.peel.i120, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i122 ], [ %i.do, %.lr.ph281._crit_edge ], [ %.sroa.02.0.insert.ext.peel.i146, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i148 ], [ %i.ir, %.thread256 ], [ %.sroa.02.0.insert.ext.peel.i, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.peel.i ], [ %.sroa.02.0.insert.ext.i154, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i156 ], [ %.sroa.02.0.insert.ext.i87, %_ZN4llvm15MachineFunction26makeDebugValueSubstitutionESt4pairIjjES2_j.exit.i ]
   %i.jx = load ptr, ptr %10, align 8, !tbaa !40   ; 2 uses
   %i.jy = icmp eq ptr %i.jx, %i.al
   br i1 %i.jy, label %_ZN4llvm11SmallVectorIjLj4EED2Ev.exit, label %bb.ai

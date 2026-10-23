@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.lq = getelementptr inbounds [32 x i8], ptr %i.lo, i64 %i.lp ; 5 uses
   %i.lr = load i32, ptr %i.jp, align 8, !tbaa !23 ; 4 uses
   %.not.i = icmp eq i32 %i.lr, 0
-  br i1 %.not.i, label %window_sum.exit.thread, label %.lr.ph.i
+  br i1 %.not.i, label %bb.o, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.l
   %wide.trip.count.i = zext i32 %i.lr to i64      ; 2 uses
@@ -291,12 +291,11 @@ window_sum.exit:                                  ; preds = %bb.n, %window_sum.e
   %or.cond = select i1 %i.ng, i1 %i.jr, i1 false
   br i1 %or.cond, label %bb.r, label %window_sum.exit.thread
 
-window_sum.exit.thread:                           ; preds = %bb.l, %window_sum.exit
-  %.sroa.10.0121 = phi i32 [ %.lcssa, %window_sum.exit ], [ 0, %bb.l ]
-  %.not107 = icmp ult i32 %.sroa.10.0121, %i.lr
+window_sum.exit.thread:                           ; preds = %window_sum.exit
+  %.not107 = icmp ult i32 %.lcssa, %i.lr
   br i1 %.not107, label %bb.p, label %bb.o
 
-bb.o:                                             ; preds = %window_sum.exit.thread
+bb.o:                                             ; preds = %bb.l, %window_sum.exit.thread
   store i32 %i.jz, ptr %1, align 4, !tbaa !35
   store i32 0, ptr %2, align 4, !tbaa !35
   br label %bb.p

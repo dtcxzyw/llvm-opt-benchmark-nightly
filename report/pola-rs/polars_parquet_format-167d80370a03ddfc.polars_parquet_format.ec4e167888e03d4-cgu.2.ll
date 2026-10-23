@@ -204,7 +204,7 @@ bb.a:
 
 .loopexit.thread.i:                               ; preds = %bb.a
   %.not1529.i = icmp eq i64 %2, 0, !dbg !513
-  br i1 %.not1529.i, label %bb.b, label %._crit_edge.i, !dbg !513, !prof !90
+  br i1 %.not1529.i, label %bb.b, label %_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit, !dbg !513, !prof !90
 
 .preheader.i:                                     ; preds = %.loopexit.i
   %i.c = icmp ugt i32 %0, 127, !dbg !514
@@ -231,9 +231,9 @@ bb.b:                                             ; preds = %.loopexit.thread.i,
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 52, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #24, !dbg !516, !noalias !509
   unreachable, !dbg !516
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.preheader.1, %.lr.ph.i.preheader.2, %.lr.ph.i.preheader.3, %.preheader.i, %.loopexit.thread.i
-  %.sroa.010.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.loopexit.thread.i ], [ 1, %.lr.ph.i.preheader ], [ 2, %.lr.ph.i.preheader.1 ], [ 3, %.lr.ph.i.preheader.2 ], [ 4, %.lr.ph.i.preheader.3 ], !dbg !517 ; 4 uses
-  %.sroa.0.0.lcssa.i = phi i64 [ %i.a, %.preheader.i ], [ 0, %.loopexit.thread.i ], [ %i.u, %.lr.ph.i.preheader ], [ %i.h, %.lr.ph.i.preheader.1 ], [ %i.m, %.lr.ph.i.preheader.2 ], [ %i.r, %.lr.ph.i.preheader.3 ]
+._crit_edge.i:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.preheader.1, %.lr.ph.i.preheader.2, %.lr.ph.i.preheader.3, %.preheader.i
+  %.sroa.010.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 1, %.lr.ph.i.preheader ], [ 2, %.lr.ph.i.preheader.1 ], [ 3, %.lr.ph.i.preheader.2 ], [ 4, %.lr.ph.i.preheader.3 ], !dbg !517 ; 3 uses
+  %.sroa.0.0.lcssa.i = phi i64 [ %i.a, %.preheader.i ], [ %i.u, %.lr.ph.i.preheader ], [ %i.h, %.lr.ph.i.preheader.1 ], [ %i.m, %.lr.ph.i.preheader.2 ], [ %i.r, %.lr.ph.i.preheader.3 ]
   %i.d = icmp samesign ult i64 %.sroa.010.0.lcssa.i, %2, !dbg !518
   br i1 %i.d, label %_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit, label %bb.c, !dbg !518
 
@@ -291,11 +291,13 @@ bb.d:                                             ; preds = %.lr.ph.i.2, %.lr.ph
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef range(i64 0, -9223372036854775808) %2, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #24, !dbg !519, !noalias !509
   unreachable, !dbg !519
 
-_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit: ; preds = %._crit_edge.i
-  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.010.0.lcssa.i, !dbg !518
-  %i.x = trunc nuw nsw i64 %.sroa.0.0.lcssa.i to i8, !dbg !518
+_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit: ; preds = %.loopexit.thread.i, %._crit_edge.i
+  %.sroa.0.0.lcssa33.i = phi i64 [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ 0, %.loopexit.thread.i ]
+  %.sroa.010.0.lcssa32.i = phi i64 [ %.sroa.010.0.lcssa.i, %._crit_edge.i ], [ 0, %.loopexit.thread.i ] ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.010.0.lcssa32.i, !dbg !518
+  %i.x = trunc nuw nsw i64 %.sroa.0.0.lcssa33.i to i8, !dbg !518
   store i8 %i.x, ptr %i.w, align 1, !dbg !518, !alias.scope !509
-  %i.y = add nuw nsw i64 %.sroa.010.0.lcssa.i, 1, !dbg !522
+  %i.y = add nuw nsw i64 %.sroa.010.0.lcssa32.i, 1, !dbg !522
   ret i64 %i.y, !dbg !523
 }
 
@@ -342,7 +344,7 @@ bb.a:
 
 .loopexit.thread.i:                               ; preds = %bb.a
   %.not1529.i = icmp eq i64 %2, 0, !dbg !546
-  br i1 %.not1529.i, label %bb.b, label %._crit_edge.i, !dbg !546, !prof !90
+  br i1 %.not1529.i, label %bb.b, label %_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit, !dbg !546, !prof !90
 
 .preheader.i:                                     ; preds = %.preheader16.i
   %i.c = icmp ugt i16 %0, 127, !dbg !547
@@ -360,9 +362,9 @@ bb.b:                                             ; preds = %.loopexit.thread.i,
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 52, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #24, !dbg !549, !noalias !542
   unreachable, !dbg !549
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.preheader.1, %.preheader.i, %.loopexit.thread.i
-  %.sroa.010.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.loopexit.thread.i ], [ 1, %.lr.ph.i.preheader ], [ 2, %.lr.ph.i.preheader.1 ], !dbg !550 ; 4 uses
-  %.sroa.0.0.lcssa.i = phi i64 [ %i.a, %.preheader.i ], [ 0, %.loopexit.thread.i ], [ %i.k, %.lr.ph.i.preheader ], [ %i.h, %.lr.ph.i.preheader.1 ]
+._crit_edge.i:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.preheader.1, %.preheader.i
+  %.sroa.010.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 1, %.lr.ph.i.preheader ], [ 2, %.lr.ph.i.preheader.1 ], !dbg !550 ; 3 uses
+  %.sroa.0.0.lcssa.i = phi i64 [ %i.a, %.preheader.i ], [ %i.k, %.lr.ph.i.preheader ], [ %i.h, %.lr.ph.i.preheader.1 ]
   %i.d = icmp samesign ult i64 %.sroa.010.0.lcssa.i, %2, !dbg !551
   br i1 %i.d, label %_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit, label %bb.c, !dbg !551
 
@@ -394,11 +396,13 @@ bb.d:                                             ; preds = %.lr.ph.i
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef range(i64 0, -9223372036854775808) %2, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #24, !dbg !552, !noalias !542
   unreachable, !dbg !552
 
-_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit: ; preds = %._crit_edge.i
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.010.0.lcssa.i, !dbg !551
-  %i.n = trunc nuw nsw i64 %.sroa.0.0.lcssa.i to i8, !dbg !551
+_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit: ; preds = %.loopexit.thread.i, %._crit_edge.i
+  %.sroa.0.0.lcssa33.i = phi i64 [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ 0, %.loopexit.thread.i ]
+  %.sroa.010.0.lcssa32.i = phi i64 [ %.sroa.010.0.lcssa.i, %._crit_edge.i ], [ 0, %.loopexit.thread.i ] ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.010.0.lcssa32.i, !dbg !551
+  %i.n = trunc nuw nsw i64 %.sroa.0.0.lcssa33.i to i8, !dbg !551
   store i8 %i.n, ptr %i.m, align 1, !dbg !551, !alias.scope !542
-  %i.o = add nuw nsw i64 %.sroa.010.0.lcssa.i, 1, !dbg !555
+  %i.o = add nuw nsw i64 %.sroa.010.0.lcssa32.i, 1, !dbg !555
   ret i64 %i.o, !dbg !556
 }
 
@@ -444,7 +448,7 @@ bb.a:
 
 .loopexit.thread.i:                               ; preds = %bb.a
   %.not1529.i = icmp eq i64 %2, 0, !dbg !578
-  br i1 %.not1529.i, label %bb.b, label %._crit_edge.i, !dbg !578, !prof !90
+  br i1 %.not1529.i, label %bb.b, label %_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit, !dbg !578, !prof !90
 
 .preheader.i:                                     ; preds = %.preheader16.i
   %i.b = icmp slt i8 %0, 0, !dbg !579
@@ -460,9 +464,9 @@ bb.b:                                             ; preds = %.loopexit.thread.i,
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 52, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #24, !dbg !581, !noalias !575
   unreachable, !dbg !581
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %.preheader.i, %.loopexit.thread.i
-  %.sroa.010.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.loopexit.thread.i ], [ 1, %.lr.ph.i ], !dbg !582 ; 4 uses
-  %.sroa.0.0.lcssa.i = phi i8 [ %0, %.preheader.i ], [ 0, %.loopexit.thread.i ], [ 1, %.lr.ph.i ]
+._crit_edge.i:                                    ; preds = %.lr.ph.i, %.preheader.i
+  %.sroa.010.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 1, %.lr.ph.i ], !dbg !582 ; 3 uses
+  %.sroa.0.0.lcssa.i = phi i8 [ %0, %.preheader.i ], [ 1, %.lr.ph.i ]
   %i.c = icmp samesign ult i64 %.sroa.010.0.lcssa.i, %2, !dbg !583
   br i1 %i.c, label %_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit, label %bb.c, !dbg !583
 
@@ -474,10 +478,12 @@ bb.c:                                             ; preds = %._crit_edge.i
   store i8 %0, ptr %1, align 1, !dbg !584, !alias.scope !575
   br label %._crit_edge.i, !dbg !579
 
-_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit: ; preds = %._crit_edge.i
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.010.0.lcssa.i, !dbg !583
-  store i8 %.sroa.0.0.lcssa.i, ptr %i.d, align 1, !dbg !583, !alias.scope !575
-  %i.e = add nuw nsw i64 %.sroa.010.0.lcssa.i, 1, !dbg !585
+_RNvXs_NtNtNtCs1gC9x3uey1Y_21polars_parquet_format6thrift6varint6decodeyNtB4_6VarInt10encode_var.exit: ; preds = %.loopexit.thread.i, %._crit_edge.i
+  %.sroa.0.0.lcssa33.i = phi i8 [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ 0, %.loopexit.thread.i ]
+  %.sroa.010.0.lcssa32.i = phi i64 [ %.sroa.010.0.lcssa.i, %._crit_edge.i ], [ 0, %.loopexit.thread.i ] ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.010.0.lcssa32.i, !dbg !583
+  store i8 %.sroa.0.0.lcssa33.i, ptr %i.d, align 1, !dbg !583, !alias.scope !575
+  %i.e = add nuw nsw i64 %.sroa.010.0.lcssa32.i, 1, !dbg !585
   ret i64 %i.e, !dbg !586
 }
 

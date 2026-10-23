@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.c
   br i1 %or.cond7.i, label %.thread49.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 324 ; 8 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 324 ; 5 uses
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !274 ; 2 uses
   %.not.i = icmp ne i32 %i.aq, 0
   %i.ar = load i32, ptr %i.c, align 4
@@ -374,7 +374,7 @@ _ZN7CaDiCaL8Internal10preprocessEv.exit:          ; preds = %bb.w, %.lr.ph.i, %b
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.r, %_ZN7CaDiCaL8Internal10preprocessEv.exit
-  %.1 = phi i32 [ %.0, %bb.r ], [ %..i, %_ZN7CaDiCaL8Internal10preprocessEv.exit ] ; 3 uses
+  %.1 = phi i32 [ %..i, %_ZN7CaDiCaL8Internal10preprocessEv.exit ], [ %.0, %bb.r ] ; 3 uses
   br i1 %1, label %.thread49.thread, label %bb.x
 
 bb.x:                                             ; preds = %.critedge
@@ -382,8 +382,10 @@ bb.x:                                             ; preds = %.critedge
   br i1 %.not27, label %bb.y, label %.thread49
 
 bb.y:                                             ; preds = %bb.x
-  %.pr = load i32, ptr %i.ap, align 4, !tbaa !274
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 324
+  %.pr = load i32, ptr %.phi.trans.insert, align 4, !tbaa !274
   %.not28 = icmp eq i32 %.pr, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 324
   br i1 %.not28, label %bb.z, label %.thread55
 
 bb.z:                                             ; preds = %bb.y
@@ -392,7 +394,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not29, label %.thread52, label %.thread49
 
 .thread52:                                        ; preds = %bb.z
-  %.pre = load i32, ptr %i.ap, align 4, !tbaa !274
+  %.pre = load i32, ptr %2, align 4, !tbaa !274
   %i.dh = icmp eq i32 %.pre, 0
   br i1 %i.dh, label %bb.aa, label %.thread55
 
@@ -414,7 +416,8 @@ bb.ab:                                            ; preds = %.thread49
   br i1 %i.dl, label %bb.ac, label %.thread49.thread
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dm = load i32, ptr %i.ap, align 4, !tbaa !274
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 324
+  %i.dm = load i32, ptr %3, align 4, !tbaa !274
   %.not32 = icmp eq i32 %i.dm, 0
   br i1 %.not32, label %.thread55, label %bb.ad
 
@@ -426,8 +429,8 @@ bb.ad:                                            ; preds = %bb.ac
   %i.dn = tail call noundef i32 @_ZN7CaDiCaL8Internal27cdcl_loop_with_inprocessingEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br label %.thread49.thread
 
-.thread49.thread:                                 ; preds = %bb.u, %bb.j, %.thread49, %bb.ab, %.thread55, %.critedge
-  %.4 = phi i32 [ %.1, %.critedge ], [ %i.dn, %.thread55 ], [ 10, %bb.ab ], [ %.3, %.thread49 ], [ 20, %bb.j ], [ 0, %bb.u ] ; 4 uses
+.thread49.thread:                                 ; preds = %bb.j, %bb.u, %.thread49, %bb.ab, %.thread55, %.critedge
+  %.4 = phi i32 [ %.1, %.critedge ], [ %i.dn, %.thread55 ], [ 10, %bb.ab ], [ %.3, %.thread49 ], [ 0, %bb.u ], [ 20, %bb.j ] ; 4 uses
   tail call void @_ZN7CaDiCaL8Internal8finalizeEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %.4)
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 5680 ; 2 uses
   %i.dp = load volatile i8, ptr %i.do, align 8, !tbaa !171, !range !220, !noundef !221

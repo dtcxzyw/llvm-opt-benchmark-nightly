@@ -77,7 +77,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f
   %.pre202204 = phi i32 [ %i.x, %bb.f ], [ %i.o, %bb.e ], [ 0, %bb.d ] ; 6 uses
   %i.aa = phi i32 [ %.pre, %bb.f ], [ %i.m, %bb.e ], [ %i.m, %bb.d ]
-  %.0142 = phi i32 [ %i.w, %bb.f ], [ undef, %bb.e ], [ undef, %bb.d ] ; 6 uses
+  %.0142 = phi i32 [ %i.w, %bb.f ], [ undef, %bb.e ], [ undef, %bb.d ] ; 5 uses
   %.0140 = phi i32 [ %spec.select167, %bb.f ], [ 1, %bb.e ], [ 1, %bb.d ]
   %.0 = phi double [ %i.z, %bb.f ], [ 1.000000e+00, %bb.e ], [ 1.000000e+00, %bb.d ] ; 2 uses
   store double %.0, ptr %5, align 8, !tbaa !11
@@ -130,10 +130,10 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.am = tail call i32 @ilaenv_(ptr noundef nonnull @c__3, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull @c_n1, ptr noundef nonnull @c_n1, i32 noundef 6, i32 noundef 1) #5
-  %i.an = tail call i32 @llvm.smax.i32(i32 %i.am, i32 0) ; 4 uses
+  %i.an = tail call i32 @llvm.smax.i32(i32 %i.am, i32 0) ; 3 uses
   %i.ao = load i32, ptr %0, align 4, !tbaa !9     ; 6 uses
   %i.ap = icmp slt i32 %i.an, %i.ao
-  br i1 %i.ap, label %bb.m, label %.thread180
+  br i1 %i.ap, label %bb.m, label %bb.t
 
 bb.m:                                             ; preds = %bb.l
   store i32 %i.ao, ptr %i.h, align 4, !tbaa !9
@@ -157,10 +157,10 @@ bb.o:                                             ; preds = %bb.n, %bb.k
   %.not162 = icmp slt i32 %.2, %.0144
   br i1 %.not162, label %bb.t, label %.thread180
 
-.thread180:                                       ; preds = %bb.o, %bb.l, %bb.m
-  %8 = phi i32 [ %i.ao, %bb.l ], [ %i.ao, %bb.m ], [ %.pre202, %bb.o ] ; 8 uses
-  %.0141186 = phi i32 [ %i.an, %bb.l ], [ %i.an, %bb.m ], [ %.0141, %bb.o ] ; 2 uses
-  %.2185 = phi i32 [ %.0142, %bb.l ], [ %.0142, %bb.m ], [ %.2, %bb.o ] ; 6 uses
+.thread180:                                       ; preds = %bb.o, %bb.m
+  %8 = phi i32 [ %.pre202, %bb.o ], [ %i.ao, %bb.m ] ; 8 uses
+  %.0141186 = phi i32 [ %.0141, %bb.o ], [ %i.an, %bb.m ] ; 2 uses
+  %.2185 = phi i32 [ %.2, %bb.o ], [ %.0142, %bb.m ] ; 7 uses
   %i.aw = icmp slt i32 %.2185, %8
   %i.ax = icmp slt i32 %.0141186, %8
   %or.cond169 = and i1 %i.aw, %i.ax
@@ -173,13 +173,14 @@ bb.p:                                             ; preds = %.thread180
   %.fr = freeze i32 %i.ba                         ; 2 uses
   %i.bb = srem i32 %.fr, %.2185
   %i.bc = sub nsw i32 %.fr, %i.bb                 ; 2 uses
-  %i.bd = add nsw i32 %i.bc, %.2185               ; 2 uses
-  store i32 %i.bd, ptr %i.b, align 4, !tbaa !9
+  %i.bd = add nsw i32 %i.bc, %.2185
   %9 = tail call i32 @llvm.smin.i32(i32 %8, i32 %i.bd)
-  %i.be = sub nsw i32 %8, %9                      ; 2 uses
-  %10 = add nuw i32 %i.be, 1                      ; 2 uses
-  %i.bf = add i32 %10, %i.bc                      ; 3 uses
-  %i.bg = icmp sgt i32 %i.bf, %i.be
+  %10 = sub nsw i32 %8, %9                        ; 2 uses
+  %11 = add nuw i32 %10, 1                        ; 2 uses
+  %i.be = sub nsw i32 0, %.2185
+  store i32 %i.be, ptr %i.b, align 4, !tbaa !9
+  %i.bf = add i32 %11, %i.bc                      ; 3 uses
+  %i.bg = icmp sgt i32 %i.bf, %10
   br i1 %i.bg, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.p
@@ -241,7 +242,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q, %bb.r
   %i.co = sub nsw i32 %.1146193, %.2185           ; 3 uses
-  %.not212 = icmp slt i32 %i.co, %10
+  %.not212 = icmp slt i32 %i.co, %11
   br i1 %.not212, label %._crit_edge, label %bb.q, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %bb.s, %bb.p
@@ -250,8 +251,8 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   %i.cq = add i32 %i.cp, %.1146.lcssa
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.o, %.thread180, %._crit_edge
-  %storemerge = phi i32 [ %i.cq, %._crit_edge ], [ %8, %.thread180 ], [ %.pre202, %bb.o ] ; 2 uses
+bb.t:                                             ; preds = %bb.l, %bb.o, %.thread180, %._crit_edge
+  %storemerge = phi i32 [ %i.cq, %._crit_edge ], [ %8, %.thread180 ], [ %.pre202, %bb.o ], [ %i.ao, %bb.l ] ; 2 uses
   store i32 %storemerge, ptr %i.g, align 4, !tbaa !9
   %i.cr = icmp sgt i32 %storemerge, 0
   br i1 %i.cr, label %bb.u, label %bb.v

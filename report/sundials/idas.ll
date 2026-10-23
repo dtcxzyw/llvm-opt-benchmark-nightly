@@ -204,12 +204,10 @@ bb.s:                                             ; preds = %.backedge.i, %.lr.p
   %i.et = phi double [ %i.cj, %.lr.ph299.i ], [ %i.ja, %.backedge.i ] ; 3 uses
   %.0215298.i = phi i32 [ -1, %.lr.ph299.i ], [ %.0216297.i, %.backedge.i ]
   %.0216297.i = phi i32 [ 0, %.lr.ph299.i ], [ %.0216.be.i, %.backedge.i ] ; 2 uses
-  %.v296.i = phi double [ 5.000000e-01, %.lr.ph299.i ], [ %.v.be.i, %.backedge.i ]
   %.2219295.i = phi i32 [ %.1218388395.i, %.lr.ph299.i ], [ %.3220.lcssa405.i, %.backedge.i ] ; 3 uses
-  %.0232294.i = phi double [ 1.000000e+00, %.lr.ph299.i ], [ %.1233.i, %.backedge.i ]
+  %.0232294.i = phi double [ 5.000000e-01, %.lr.ph299.i ], [ %3, %.backedge.i ]
   %i.eu = icmp eq i32 %.0215298.i, %.0216297.i
-  %3 = fmul double %.v296.i, %.0232294.i
-  %.1233.i = select i1 %i.eu, double %3, double 1.000000e+00 ; 2 uses
+  %.1233.i = select i1 %i.eu, double %.0232294.i, double 1.000000e+00 ; 2 uses
   %i.ev = load ptr, ptr %i.x, align 8, !tbaa !162
   %i.ew = sext i32 %.2219295.i to i64             ; 2 uses
   %i.ex = getelementptr inbounds [8 x i8], ptr %i.ev, i64 %i.ew
@@ -458,15 +456,15 @@ scalar.ph183:                                     ; preds = %scalar.ph183.prol.l
 
 .backedge.i:                                      ; preds = %._crit_edge293.i, %._crit_edge289.loopexit.i
   %.3220.lcssa405.i = phi i32 [ %.4415422.i, %._crit_edge289.loopexit.i ], [ %.3220.lcssa406426429.i, %._crit_edge293.i ]
-  %.pre-phi361.i = phi double [ %i.iv, %._crit_edge289.loopexit.i ], [ %i.lh, %._crit_edge293.i ] ; 2 uses
+  %.pre-phi361.i = phi double [ %i.iv, %._crit_edge289.loopexit.i ], [ %i.lh, %._crit_edge293.i ]
   %.pre-phi.i = phi double [ %i.iu, %._crit_edge289.loopexit.i ], [ %i.lg, %._crit_edge293.i ]
-  %i.iy = phi double [ %i.iw, %._crit_edge289.loopexit.i ], [ %i.li, %._crit_edge293.i ] ; 2 uses
+  %i.iy = phi double [ %i.iw, %._crit_edge289.loopexit.i ], [ %i.li, %._crit_edge293.i ]
   %i.iz = phi double [ %i.it, %._crit_edge289.loopexit.i ], [ %i.le, %._crit_edge293.i ]
-  %i.ja = phi double [ %.pre.i, %._crit_edge289.loopexit.i ], [ %i.lf, %._crit_edge293.i ] ; 2 uses
+  %i.ja = phi double [ %.pre.i, %._crit_edge289.loopexit.i ], [ %i.lf, %._crit_edge293.i ]
   %.v.be.i = phi double [ 5.000000e-01, %._crit_edge289.loopexit.i ], [ 2.000000e+00, %._crit_edge293.i ]
   %.0216.be.i = phi i32 [ 1, %._crit_edge289.loopexit.i ], [ 2, %._crit_edge293.i ]
-  %4 = fcmp ugt double %.pre-phi361.i, %i.iy
-  br i1 %4, label %bb.s, label %.loopexit252.i.loopexit
+  %3 = fmul double %.1233.i, %.v.be.i
+  br label %bb.s
 
 bb.ae:                                            ; preds = %._crit_edge281.i
   %i.jb = icmp eq i32 %.3214.i, 0
@@ -658,8 +656,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store double %.pre357.i, ptr %i.lk, align 8, !tbaa !350
   br label %.lr.ph310.i
 
-.loopexit252.i.loopexit:                          ; preds = %._crit_edge289.loopexit.i, %.backedge.i, %._crit_edge293.i
-  %.ph = phi double [ %i.lf, %._crit_edge293.i ], [ %i.ja, %.backedge.i ], [ %.pre.i, %._crit_edge289.loopexit.i ]
+.loopexit252.i.loopexit:                          ; preds = %._crit_edge289.loopexit.i, %._crit_edge293.i
+  %.ph = phi double [ %i.lf, %._crit_edge293.i ], [ %.pre.i, %._crit_edge289.loopexit.i ]
   %i.ll = icmp sgt i32 %i.gi, 0
   %i.lm = getelementptr inbounds nuw i8, ptr %0, i64 1960
   store double %.ph, ptr %i.lm, align 8, !tbaa !350

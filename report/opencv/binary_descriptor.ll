@@ -205,9 +205,9 @@ bb.u:                                             ; preds = %.lr.ph692, %._crit_
           to label %bb.v unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 3 uses
 
 bb.v:                                             ; preds = %.lr.ph
-  %i.eu = load double, ptr %i.do, align 8, !tbaa !217 ; 3 uses
+  %i.eu = load double, ptr %i.do, align 8, !tbaa !217 ; 2 uses
   %i.ev = fcmp ugt double %i.et, %i.eu
-  br i1 %i.ev, label %bb.w, label %._crit_edge
+  br i1 %i.ev, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
   %i.ew = add i32 %.1212611, 2                    ; 3 uses
@@ -216,18 +216,20 @@ bb.w:                                             ; preds = %bb.v
   %i.ez = icmp ugt i32 %i.el, %i.ey
   br i1 %i.ez, label %.lr.ph, label %._crit_edge, !llvm.loop !387
 
-._crit_edge:                                      ; preds = %bb.w, %bb.v, %.preheader442.._crit_edge_crit_edge
-  %9 = phi double [ %.pre728, %.preheader442.._crit_edge_crit_edge ], [ %i.eu, %bb.v ], [ %i.eu, %bb.w ]
-  %.1212.lcssa = phi i32 [ %.0211673, %.preheader442.._crit_edge_crit_edge ], [ %i.ew, %bb.w ], [ %.1212611, %bb.v ] ; 3 uses
-  %.3230 = phi double [ %.1228670, %.preheader442.._crit_edge_crit_edge ], [ %i.et, %bb.v ], [ %i.et, %bb.w ] ; 4 uses
+._crit_edge:                                      ; preds = %bb.w, %.preheader442.._crit_edge_crit_edge
+  %9 = phi double [ %.pre728, %.preheader442.._crit_edge_crit_edge ], [ %i.eu, %bb.w ]
+  %.1212.lcssa = phi i32 [ %.0211673, %.preheader442.._crit_edge_crit_edge ], [ %i.ew, %bb.w ]
+  %.3230 = phi double [ %.1228670, %.preheader442.._crit_edge_crit_edge ], [ %i.et, %bb.w ] ; 3 uses
   %i.fa = fcmp ogt double %.3230, %9
   br i1 %i.fa, label %._crit_edge674.loopexit, label %bb.x
 
-bb.x:                                             ; preds = %._crit_edge
+bb.x:                                             ; preds = %bb.v, %._crit_edge
+  %.3230808 = phi double [ %.3230, %._crit_edge ], [ %i.et, %bb.v ] ; 2 uses
+  %.1212.lcssa807 = phi i32 [ %.1212.lcssa, %._crit_edge ], [ %.1212611, %bb.v ] ; 3 uses
   %i.fb = zext i32 %.1223671 to i64
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr %.1238669, i64 %i.fb ; 9 uses
   store i32 %.1421668, ptr %i.fc, align 4, !tbaa !25
-  %i.fd = zext i32 %.1212.lcssa to i64            ; 2 uses
+  %i.fd = zext i32 %.1212.lcssa807 to i64         ; 2 uses
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %i.fd
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !25
   %i.fg = load i32, ptr %i.bu, align 8, !tbaa !186
@@ -244,9 +246,9 @@ bb.x:                                             ; preds = %._crit_edge
 .preheader436:                                    ; preds = %bb.x, %._crit_edge653
   %.0197667 = phi i32 [ %i.fp, %._crit_edge653 ], [ 0, %bb.x ] ; 2 uses
   %.0200666 = phi i1 [ false, %._crit_edge653 ], [ true, %bb.x ]
-  %.2213664 = phi i32 [ %i.hj, %._crit_edge653 ], [ %.1212.lcssa, %bb.x ] ; 3 uses
+  %.2213664 = phi i32 [ %i.hj, %._crit_edge653 ], [ %.1212.lcssa807, %bb.x ] ; 3 uses
   %.2219663 = phi i32 [ %.4424, %._crit_edge653 ], [ %.1218672, %bb.x ]
-  %.4231662 = phi double [ %.5232, %._crit_edge653 ], [ %.3230, %bb.x ] ; 2 uses
+  %.4231662 = phi double [ %.5232, %._crit_edge653 ], [ %.3230808, %bb.x ] ; 2 uses
   %.2422661 = phi i32 [ %i.hi, %._crit_edge653 ], [ %.1421668, %bb.x ] ; 4 uses
   %i.fp = add nuw nsw i32 %.0197667, 1
   br i1 %.0200666, label %.preheader, label %bb.y
@@ -649,9 +651,9 @@ _ZNSt6vectorIdSaIdEED2Ev.exit329:                 ; preds = %bb.bc, %bb.bb, %bb.
 .preheader438:                                    ; preds = %bb.x, %._crit_edge627
   %.1641 = phi i32 [ %i.mx, %._crit_edge627 ], [ 0, %bb.x ] ; 2 uses
   %.2202640 = phi i1 [ false, %._crit_edge627 ], [ true, %bb.x ]
-  %.7638 = phi i32 [ %i.or, %._crit_edge627 ], [ %.1212.lcssa, %bb.x ] ; 3 uses
+  %.7638 = phi i32 [ %i.or, %._crit_edge627 ], [ %.1212.lcssa807, %bb.x ] ; 3 uses
   %.3220637 = phi i32 [ %.10430, %._crit_edge627 ], [ %.1218672, %bb.x ]
-  %.6233636 = phi double [ %.7234, %._crit_edge627 ], [ %.3230, %bb.x ] ; 2 uses
+  %.6233636 = phi double [ %.7234, %._crit_edge627 ], [ %.3230808, %bb.x ] ; 2 uses
   %.8428635 = phi i32 [ %i.oq, %._crit_edge627 ], [ %.1421668, %bb.x ] ; 4 uses
   %i.mx = add nuw nsw i32 %.1641, 1
   br i1 %.2202640, label %.preheader434, label %bb.bd

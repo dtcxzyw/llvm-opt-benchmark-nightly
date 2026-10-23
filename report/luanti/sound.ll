@@ -202,24 +202,27 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %bb.
 bb.c:                                             ; preds = %._crit_edge.i.i25
   %i.u = load ptr, ptr %3, align 8, !tbaa !28     ; 2 uses
   %i.v = icmp eq ptr %i.u, %i.q
-  br i1 %i.v, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29
+  br i1 %i.v, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29: ; preds = %bb.c
   %i.w = load i64, ptr %i.q, align 8, !tbaa !29
   %i.x = add i64 %i.w, 1
   call void @_ZdlPvm(ptr noundef %i.u, i64 noundef %i.x) #19
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   %6 = fcmp nsz olt float %i.t, 0.000000e+00
+  br i1 %6, label %._crit_edge.i.i32, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
   %i.y = fcmp nsz ogt float %i.t, 1.000000e+00
-  %..i = select nsz i1 %i.y, float 1.000000e+00, float %i.t
-  %.0.i = select nsz i1 %6, float 0.000000e+00, float %..i ; 4 uses
+  %.0.i = select nsz i1 %i.y, float 1.000000e+00, float %i.t ; 3 uses
   %i.z = fcmp nsz une float %i.t, %.0.i
   br i1 %i.z, label %._crit_edge.i.i32, label %bb.g
 
-._crit_edge.i.i32:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a
+._crit_edge.i.i32:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a
+  %.0.i71 = phi float [ %.0.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a ], [ 0.000000e+00, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31 ] ; 2 uses
   %i.aa = load ptr, ptr @g_settings, align 8, !tbaa !121
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
@@ -229,7 +232,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a: ; preds = %b
   store i64 12, ptr %i.ac, align 8, !tbaa !31
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 28
   store i8 0, ptr %i.ad, align 4, !tbaa !29
-  %i.ae = invoke noundef zeroext i1 @_ZN8Settings8setFloatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEf(ptr noundef nonnull align 8 dereferenceable(236) %i.aa, ptr noundef nonnull align 8 dereferenceable(32) %4, float noundef %.0.i)
+  %i.ae = invoke noundef zeroext i1 @_ZN8Settings8setFloatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEf(ptr noundef nonnull align 8 dereferenceable(236) %i.aa, ptr noundef nonnull align 8 dereferenceable(32) %4, float noundef %.0.i71)
           to label %bb.d unwind label %bb.f       ; 0 uses
 
 bb.d:                                             ; preds = %._crit_edge.i.i32
@@ -282,6 +285,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44: ; preds = %bb.
   br label %bb.l
 
 bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit38, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a
+  %.0.i72 = phi float [ %.0.i71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit38 ], [ %.0.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.a ] ; 2 uses
   br i1 %1, label %_Z8rangelimIfffET_RKS0_RKT0_RKT1_.exit54, label %.noexc.i46
 
 .noexc.i46:                                       ; preds = %bb.g
@@ -309,7 +313,7 @@ bb.g:                                             ; preds = %_ZNSt7__cxx1112basi
           to label %bb.h unwind label %bb.k
 
 bb.h:                                             ; preds = %.noexc47
-  %i.bb = fmul nsz float %.0.i, %i.ba             ; 3 uses
+  %i.bb = fmul nsz float %.0.i72, %i.ba           ; 3 uses
   %i.bc = load ptr, ptr %5, align 8, !tbaa !28    ; 2 uses
   %i.bd = icmp eq ptr %i.bc, %i.au
   br i1 %i.bd, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit51, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i49
@@ -354,7 +358,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57: ; preds = %bb.
   br label %bb.l
 
 _Z8rangelimIfffET_RKS0_RKT0_RKT1_.exit54:         ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit51, %bb.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.0.sink = phi float [ 0.000000e+00, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.0.i, %bb.g ], [ 0.000000e+00, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit51 ], [ %..i52, %bb.i ]
+  %.0.sink = phi float [ 0.000000e+00, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.0.i72, %bb.g ], [ 0.000000e+00, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit51 ], [ %..i52, %bb.i ]
   %i.bo = load ptr, ptr %0, align 8, !tbaa !17
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 48
   %i.bq = load ptr, ptr %i.bp, align 8

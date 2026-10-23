@@ -204,7 +204,7 @@ bb.ep:                                            ; preds = %.lr.ph2968, %_ZN8fa
   %.07422967 = phi float [ 0.000000e+00, %.lr.ph2968 ], [ %i.cng, %_ZN8facebook4yoga8FlexLineD2Ev.exit ] ; 4 uses
   %.07812966 = phi float [ 0.000000e+00, %.lr.ph2968 ], [ %i.cnj, %_ZN8facebook4yoga8FlexLineD2Ev.exit ] ; 2 uses
   %.07822965 = phi i64 [ 0, %.lr.ph2968 ], [ %i.cno, %_ZN8facebook4yoga8FlexLineD2Ev.exit ] ; 3 uses
-  %.07842964 = phi float [ %i.rk, %.lr.ph2968 ], [ %.37872370, %_ZN8facebook4yoga8FlexLineD2Ev.exit ] ; 5 uses
+  %.07842964 = phi float [ %i.rk, %.lr.ph2968 ], [ %.37872370, %_ZN8facebook4yoga8FlexLineD2Ev.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #15
   invoke void @_ZN8facebook4yoga17calculateFlexLineEPNS0_4NodeENS0_9DirectionEffffRNS0_18LayoutableChildrenIS1_E8IteratorEm(ptr dead_on_unwind nonnull writable sret(%"struct.facebook::yoga::FlexLine") align 8 %20, ptr noundef nonnull %0, i8 noundef zeroext %3, float noundef %6, float noundef %i.pl, float noundef %i.rh, float noundef %.07842964, ptr noundef nonnull align 8 dereferenceable(24) %19, i64 noundef %.07822965)
           to label %bb.eq unwind label %bb.gf
@@ -607,10 +607,10 @@ bb.ge:                                            ; preds = %_ZNK8facebook4yoga5
   %.v = select i1 %i.pj, float %.sroa.010.1.i, float %.sroa.010.1.i932
   %i.azb = fsub float %.v, %i.qs                  ; 3 uses
   %i.azc = fcmp ord float %i.azb, 0.000000e+00
-  %i.azd = load float, ptr %i.aqo, align 8        ; 2 uses
+  %i.azd = load float, ptr %i.aqo, align 8        ; 4 uses
   %i.aze = fcmp olt float %i.azd, %i.azb
   %or.cond852 = select i1 %i.azc, i1 %i.aze, i1 false
-  br i1 %or.cond852, label %.thread2367, label %bb.gg
+  br i1 %or.cond852, label %bb.go, label %bb.gg
 
 bb.gf:                                            ; preds = %bb.ep
   %i.azf = landingpad { ptr, i32 }
@@ -623,7 +623,7 @@ bb.gg:                                            ; preds = %bb.ge
   %i.azh = fcmp ord float %i.azg, 0.000000e+00
   %i.azi = fcmp ogt float %i.azd, %i.azg
   %or.cond855 = select i1 %i.azh, i1 %i.azi, i1 false
-  br i1 %or.cond855, label %.thread2367, label %bb.gh
+  br i1 %or.cond855, label %bb.go, label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg
   %i.azj = load ptr, ptr %i.u, align 8, !tbaa !75
@@ -658,25 +658,28 @@ bb.gn:                                            ; preds = %bb.gi, %bb.gm
   %i.azr = load float, ptr %i.aqo, align 8, !tbaa !167 ; 2 uses
   br label %.thread2374
 
-.thread2367:                                      ; preds = %bb.gg, %bb.ge, %bb.eq, %_ZNK8facebook4yoga4Node9hasErrataENS0_6ErrataE.exit
-  %.37872372 = phi float [ %.07842964, %_ZNK8facebook4yoga4Node9hasErrataENS0_6ErrataE.exit ], [ %i.azg, %bb.gg ], [ %i.azb, %bb.ge ], [ %.07842964, %bb.eq ] ; 4 uses
-  %i.azs = fcmp ord float %.37872372, 0.000000e+00
-  br i1 %i.azs, label %bb.go, label %.thread2374thread-pre-split
+.thread2367:                                      ; preds = %bb.eq, %_ZNK8facebook4yoga4Node9hasErrataENS0_6ErrataE.exit
+  %i.azs = fcmp ord float %.07842964, 0.000000e+00
+  br i1 %i.azs, label %.thread2367..thread2367.thread_crit_edge, label %.thread2374thread-pre-split
 
-bb.go:                                            ; preds = %.thread2367
-  %26 = load float, ptr %i.aqo, align 8, !tbaa !167
-  %i.azt = fsub float %.37872372, %26             ; 2 uses
+.thread2367..thread2367.thread_crit_edge:         ; preds = %.thread2367
+  %.pre3227 = load float, ptr %i.aqo, align 8, !tbaa !167
+  br label %bb.go
+
+bb.go:                                            ; preds = %.thread2367..thread2367.thread_crit_edge, %bb.gg, %bb.ge
+  %26 = phi float [ %i.azd, %bb.ge ], [ %.pre3227, %.thread2367..thread2367.thread_crit_edge ], [ %i.azd, %bb.gg ]
+  %.378723722462 = phi float [ %i.azb, %bb.ge ], [ %.07842964, %.thread2367..thread2367.thread_crit_edge ], [ %i.azg, %bb.gg ] ; 2 uses
+  %i.azt = fsub float %.378723722462, %26         ; 2 uses
   store float %i.azt, ptr %i.aqq, align 8, !tbaa !168
   br label %bb.gq
 
 .thread2374thread-pre-split:                      ; preds = %.thread2367, %bb.gk, %bb.gm
-  %.37872371.ph = phi float [ %.07842964, %bb.gm ], [ %.07842964, %bb.gk ], [ %.37872372, %.thread2367 ]
   %.pr3472 = load float, ptr %i.aqo, align 8, !tbaa !167
   br label %.thread2374
 
 .thread2374:                                      ; preds = %.thread2374thread-pre-split, %bb.gn
   %i.azu = phi float [ %.pr3472, %.thread2374thread-pre-split ], [ %i.azr, %bb.gn ] ; 2 uses
-  %.37872371 = phi float [ %.37872371.ph, %.thread2374thread-pre-split ], [ %i.azr, %bb.gn ] ; 2 uses
+  %.37872371 = phi float [ %.07842964, %.thread2374thread-pre-split ], [ %i.azr, %bb.gn ] ; 2 uses
   %i.azv = fcmp olt float %i.azu, 0.000000e+00
   br i1 %i.azv, label %bb.gp, label %.thread2374._crit_edge
 
@@ -691,7 +694,7 @@ bb.gp:                                            ; preds = %.thread2374
 
 bb.gq:                                            ; preds = %.thread2374._crit_edge, %bb.gp, %bb.go
   %.pre3228.a = phi float [ %.pre3228.pre, %.thread2374._crit_edge ], [ %i.azw, %bb.gp ], [ %i.azt, %bb.go ] ; 2 uses
-  %.37872370 = phi float [ %.37872371, %.thread2374._crit_edge ], [ %.37872371, %bb.gp ], [ %.37872372, %bb.go ] ; 9 uses
+  %.37872370 = phi float [ %.37872371, %.thread2374._crit_edge ], [ %.37872371, %bb.gp ], [ %.378723722462, %bb.go ] ; 9 uses
   br i1 %i.aqe, label %bb.jx, label %bb.gr
 
 bb.gr:                                            ; preds = %bb.gq

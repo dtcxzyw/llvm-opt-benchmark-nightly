@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.j
   %i.dy = tail call ptr @i915_gem_stolen_lmem_setup(ptr noundef %0, i16 noundef zeroext 3, i16 noundef zeroext 0) #12 ; 4 uses
   %i.dz = icmp ugt ptr %i.dy, inttoptr (i64 -4096 to ptr)
-  br i1 %i.dz, label %bb.r, label %bb.o
+  br i1 %i.dz, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   store ptr %i.dy, ptr %i.b, align 8
@@ -213,20 +213,21 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.j
   %i.ea = tail call ptr @i915_gem_stolen_smem_setup(ptr noundef %0, i16 noundef zeroext 2, i16 noundef zeroext 0) #12 ; 4 uses
   %i.eb = icmp ugt ptr %i.ea, inttoptr (i64 -4096 to ptr)
-  br i1 %i.eb, label %bb.r, label %bb.q
+  br i1 %i.eb, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   store ptr %i.ea, ptr %i.b, align 8
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.p, %bb.q, %bb.n, %bb.o, %bb.l, %bb.m
-  %.060 = phi ptr [ %i.dw, %bb.l ], [ %i.dx, %bb.m ], [ %i.dy, %bb.n ], [ %i.dy, %bb.o ], [ %i.ea, %bb.p ], [ %i.ea, %bb.q ] ; 5 uses
+bb.r:                                             ; preds = %bb.q, %bb.o, %bb.l, %bb.m
+  %.060 = phi ptr [ %i.dw, %bb.l ], [ %i.dx, %bb.m ], [ %i.ea, %bb.q ], [ %i.dy, %bb.o ] ; 5 uses
   %i.ec = icmp ugt ptr %.060, inttoptr (i64 -4096 to ptr)
   br i1 %i.ec, label %bb.s, label %bb.u
 
-bb.s:                                             ; preds = %bb.r
+bb.s:                                             ; preds = %bb.p, %bb.n, %bb.r
+  %.06084 = phi ptr [ %i.ea, %bb.p ], [ %i.dy, %bb.n ], [ %.060, %bb.r ]
   %i.ed = zext nneg i16 %i.ds to i32
-  %i.ee = ptrtoint ptr %.060 to i64
+  %i.ee = ptrtoint ptr %.06084 to i64
   %i.ef = trunc i64 %i.ee to i32                  ; 2 uses
   %.not.i = icmp eq ptr %0, null
   br i1 %.not.i, label %bb.ae, label %bb.t

@@ -205,9 +205,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %.0.i.i = phi i64 [ 0, %bb.a ], [ %i.h, %bb.b ] ; 10 uses
+  %.0.i.i = phi i64 [ 0, %bb.a ], [ %i.h, %bb.b ] ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.i.i
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !32    ; 2 uses
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !32    ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.i.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !32
   %i.g = icmp ne i8 %i.d, %i.f                    ; 2 uses
@@ -223,7 +223,7 @@ _ZL42cm_strverscmp_find_first_difference_or_endPKcS0_.exit.i: ; preds = %bb.b
 
 bb.c:                                             ; preds = %_ZL42cm_strverscmp_find_first_difference_or_endPKcS0_.exit.i
   %.not5.i.i = icmp eq i64 %.0.i.i, 0
-  br i1 %.not5.i.i, label %_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i, label %.lr.ph.i.i
+  br i1 %.not5.i.i, label %bb.e, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %bb.d
   %.06.i.i = phi i64 [ %i.o, %bb.d ], [ %.0.i.i, %bb.c ] ; 3 uses
@@ -239,13 +239,17 @@ bb.d:                                             ; preds = %.lr.ph.i.i
   %.not.i54.i = icmp eq i64 %i.o, 0
   br i1 %.not.i54.i, label %_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i, label %.lr.ph.i.i, !llvm.loop !761
 
-_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i:  ; preds = %bb.d, %.lr.ph.i.i, %bb.c
-  %.0.lcssa.i.i = phi i64 [ 0, %bb.c ], [ 0, %bb.d ], [ %.06.i.i, %.lr.ph.i.i ] ; 6 uses
+_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i:  ; preds = %bb.d, %.lr.ph.i.i
+  %.0.lcssa.i.i = phi i64 [ %.06.i.i, %.lr.ph.i.i ], [ 0, %bb.d ] ; 2 uses
   %.not48.i = icmp eq i64 %.0.lcssa.i.i, %.0.i.i
-  br i1 %.not48.i, label %bb.e, label %.preheader
+  br i1 %.not48.i, label %_ZL31cm_strverscmp_find_digits_beginPKcm.exit._ZL31cm_strverscmp_find_digits_beginPKcm.exit.thread_crit_edge.i, label %.preheader
 
-bb.e:                                             ; preds = %_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i
-  %2 = load i8, ptr %i.i, align 1, !tbaa !32
+_ZL31cm_strverscmp_find_digits_beginPKcm.exit._ZL31cm_strverscmp_find_digits_beginPKcm.exit.thread_crit_edge.i: ; preds = %_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i
+  %.pre.i = load i8, ptr %i.i, align 1, !tbaa !32
+  br label %bb.e
+
+bb.e:                                             ; preds = %_ZL31cm_strverscmp_find_digits_beginPKcm.exit._ZL31cm_strverscmp_find_digits_beginPKcm.exit.thread_crit_edge.i, %bb.c
+  %2 = phi i8 [ %.pre.i, %_ZL31cm_strverscmp_find_digits_beginPKcm.exit._ZL31cm_strverscmp_find_digits_beginPKcm.exit.thread_crit_edge.i ], [ %i.d, %bb.c ]
   %i.p = tail call i32 @cmsysString_isdigit(i8 noundef signext %2)
   %.not49.i = icmp eq i32 %i.p, 0
   br i1 %.not49.i, label %.thread.i, label %bb.f
@@ -257,10 +261,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not50.i, label %.thread.i, label %.preheader
 
 .preheader:                                       ; preds = %bb.f, %_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i
+  %.0.lcssa.i67.i = phi i64 [ %.0.i.i, %bb.f ], [ %.0.lcssa.i.i, %_ZL31cm_strverscmp_find_digits_beginPKcm.exit.i ] ; 5 uses
   br label %bb.g
 
-bb.g:                                             ; preds = %.preheader, %bb.h
-  %.0.i55.i = phi i64 [ %i.v, %bb.h ], [ %.0.lcssa.i.i, %.preheader ] ; 5 uses
+bb.g:                                             ; preds = %bb.h, %.preheader
+  %.0.i55.i = phi i64 [ %.0.lcssa.i67.i, %.preheader ], [ %i.v, %bb.h ] ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.i55.i
   %i.t = load i8, ptr %i.s, align 1, !tbaa !32
   %i.u = icmp eq i8 %i.t, 48
@@ -275,11 +280,11 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i56.i, label %_ZL33cm_strverscmp_count_leading_zerosPKcm.exit.i, label %bb.g, !llvm.loop !762
 
 _ZL33cm_strverscmp_count_leading_zerosPKcm.exit.i: ; preds = %bb.h, %bb.g
-  %i.z = sub i64 %.0.i55.i, %.0.lcssa.i.i
+  %i.z = sub i64 %.0.i55.i, %.0.lcssa.i67.i
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.j, %_ZL33cm_strverscmp_count_leading_zerosPKcm.exit.i
-  %.0.i57.i = phi i64 [ %.0.lcssa.i.i, %_ZL33cm_strverscmp_count_leading_zerosPKcm.exit.i ], [ %i.ad, %bb.j ] ; 4 uses
+  %.0.i57.i = phi i64 [ %.0.lcssa.i67.i, %_ZL33cm_strverscmp_count_leading_zerosPKcm.exit.i ], [ %i.ad, %bb.j ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.i57.i
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !32
   %i.ac = icmp eq i8 %i.ab, 48
@@ -298,13 +303,13 @@ _ZL33cm_strverscmp_count_leading_zerosPKcm.exit59.i: ; preds = %bb.j, %bb.i
   br i1 %.not51.i, label %bb.k, label %.thread67.i
 
 .thread67.i:                                      ; preds = %_ZL33cm_strverscmp_count_leading_zerosPKcm.exit59.i
-  %i.ah = sub i64 %.0.i57.i, %.0.lcssa.i.i
+  %i.ah = sub i64 %.0.i57.i, %.0.lcssa.i67.i
   %i.ai = icmp ugt i64 %i.ah, %i.z
   %i.aj = select i1 %i.ai, i32 1, i32 -1
   br label %_ZL13cm_strverscmpPKcS0_.exit
 
 bb.k:                                             ; preds = %_ZL33cm_strverscmp_count_leading_zerosPKcm.exit59.i
-  %i.ak = icmp eq i64 %.0.i55.i, %.0.lcssa.i.i
+  %i.ak = icmp eq i64 %.0.i55.i, %.0.lcssa.i67.i
   br i1 %i.ak, label %.preheader.i, label %.thread.i
 
 .preheader.i:                                     ; preds = %bb.k, %.preheader.i

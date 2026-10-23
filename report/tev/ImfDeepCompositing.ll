@@ -204,10 +204,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %_ZN7Imf_3_411sort_helperclEii.exit.preheader, label %bb.c
 
 _ZN7Imf_3_411sort_helperclEii.exit.preheader:     ; preds = %.split, %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.o = icmp ult ptr %i.n, %1
-  br i1 %i.o, label %.lr.ph.a, label %.critedge
+  br i1 %i.o, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %_ZN7Imf_3_411sort_helperclEii.exit.preheader
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  br label %.lr.ph.a
 
 bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -267,8 +270,8 @@ _ZN7Imf_3_411sort_helperclEii.exit17.backedge:    ; preds = %.split52, %.lr.ph74
   %i.ax = fcmp olt float %i.h, %i.aw
   br i1 %i.ax, label %.critedge, label %.lr.ph74, !llvm.loop !52
 
-.lr.ph.a:                                         ; preds = %_ZN7Imf_3_411sort_helperclEii.exit.preheader, %_ZN7Imf_3_411sort_helperclEii.exit.backedge
-  %i.ay = phi ptr [ %i.bn, %_ZN7Imf_3_411sort_helperclEii.exit.backedge ], [ %i.n, %_ZN7Imf_3_411sort_helperclEii.exit.preheader ] ; 5 uses
+.lr.ph.a:                                         ; preds = %.lr.ph, %_ZN7Imf_3_411sort_helperclEii.exit.backedge
+  %i.ay = phi ptr [ %i.n, %.lr.ph ], [ %i.bn, %_ZN7Imf_3_411sort_helperclEii.exit.backedge ] ; 5 uses
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !18 ; 2 uses
   %i.ba = sext i32 %i.az to i64                   ; 2 uses
   %i.bb = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.ba
@@ -298,12 +301,12 @@ bb.f:                                             ; preds = %bb.e
 _ZN7Imf_3_411sort_helperclEii.exit.backedge:      ; preds = %.split54, %bb.e
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ay, i64 4 ; 3 uses
   %i.bo = icmp ult ptr %i.bn, %1
-  br i1 %i.bo, label %.lr.ph.a, label %.critedge, !llvm.loop !53
+  br i1 %i.bo, label %.lr.ph.a, label %._crit_edge, !llvm.loop !53
 
-.critedge:                                        ; preds = %_ZN7Imf_3_411sort_helperclEii.exit.backedge, %.split54, %.lr.ph.a, %bb.f, %.split52, %_ZN7Imf_3_411sort_helperclEii.exit17.backedge, %bb.d, %_ZN7Imf_3_411sort_helperclEii.exit.preheader, %_ZN7Imf_3_411sort_helperclEii.exit17.preheader
-  %.249 = phi ptr [ %i.ai, %bb.d ], [ %i.z, %_ZN7Imf_3_411sort_helperclEii.exit17.preheader ], [ %i.n, %_ZN7Imf_3_411sort_helperclEii.exit.preheader ], [ %i.ai, %.split52 ], [ %i.as, %_ZN7Imf_3_411sort_helperclEii.exit17.backedge ], [ %i.bn, %_ZN7Imf_3_411sort_helperclEii.exit.backedge ], [ %i.ay, %.split54 ], [ %i.ay, %.lr.ph.a ], [ %i.ay, %bb.f ] ; 5 uses
+.critedge:                                        ; preds = %bb.f, %.lr.ph.a, %.split54, %.split52, %_ZN7Imf_3_411sort_helperclEii.exit17.backedge, %bb.d, %_ZN7Imf_3_411sort_helperclEii.exit17.preheader
+  %.249 = phi ptr [ %i.ai, %bb.d ], [ %i.z, %_ZN7Imf_3_411sort_helperclEii.exit17.preheader ], [ %i.ai, %.split52 ], [ %i.as, %_ZN7Imf_3_411sort_helperclEii.exit17.backedge ], [ %i.ay, %.split54 ], [ %i.ay, %.lr.ph.a ], [ %i.ay, %bb.f ] ; 6 uses
   %i.bp = icmp ult ptr %.249, %1
-  br i1 %i.bp, label %.preheader62, label %_ZN7Imf_3_411sort_helperclEii.exit23.thread
+  br i1 %i.bp, label %.preheader62, label %._crit_edge
 
 .preheader62:                                     ; preds = %.critedge
   %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -313,7 +316,7 @@ bb.g:                                             ; preds = %.backedge63, %.preh
   %i.br = phi float [ %i.k, %.preheader62 ], [ %.pre91, %.backedge63 ] ; 2 uses
   %i.bs = phi i32 [ %i.c, %.preheader62 ], [ %.pre, %.backedge63 ] ; 2 uses
   %.0 = phi ptr [ %1, %.preheader62 ], [ %i.bt, %.backedge63 ] ; 2 uses
-  %i.bt = getelementptr inbounds i8, ptr %.0, i64 -4 ; 3 uses
+  %i.bt = getelementptr inbounds i8, ptr %.0, i64 -4 ; 4 uses
   %i.bu = sext i32 %i.bs to i64
   %i.bv = fcmp olt float %i.h, %i.br
   br i1 %i.bv, label %.backedge63, label %bb.h
@@ -345,21 +348,20 @@ bb.i:                                             ; preds = %bb.h
   %.pre91 = load float, ptr %.phi.trans.insert90, align 4, !tbaa !11
   br label %bb.g, !llvm.loop !54
 
-_ZN7Imf_3_411sort_helperclEii.exit23.thread:      ; preds = %bb.h, %.split56, %.critedge
-  %.1 = phi ptr [ %1, %.critedge ], [ %i.bt, %.split56 ], [ %i.bt, %bb.h ] ; 3 uses
-  %i.cf = icmp ult ptr %.249, %.1
+_ZN7Imf_3_411sort_helperclEii.exit23.thread:      ; preds = %bb.h, %.split56
+  %i.cf = icmp ult ptr %.249, %i.bt
   br i1 %i.cf, label %.lr.ph83, label %._crit_edge
 
 .lr.ph83:                                         ; preds = %_ZN7Imf_3_411sort_helperclEii.exit23.thread
   %i.cg = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %.pre92 = load i32, ptr %.249, align 4, !tbaa !18
-  %.pre93 = load i32, ptr %.1, align 4, !tbaa !18
+  %.pre93 = load i32, ptr %i.bt, align 4, !tbaa !18
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph83, %_ZN7Imf_3_411sort_helperclEii.exit29.thread
   %i.ch = phi i32 [ %.pre93, %.lr.ph83 ], [ %i.dl, %_ZN7Imf_3_411sort_helperclEii.exit29.thread ]
   %i.ci = phi i32 [ %.pre92, %.lr.ph83 ], [ %i.di, %_ZN7Imf_3_411sort_helperclEii.exit29.thread ]
-  %.282 = phi ptr [ %.1, %.lr.ph83 ], [ %i.dk, %_ZN7Imf_3_411sort_helperclEii.exit29.thread ] ; 2 uses
+  %.282 = phi ptr [ %i.bt, %.lr.ph83 ], [ %i.dk, %_ZN7Imf_3_411sort_helperclEii.exit29.thread ] ; 2 uses
   %.35081 = phi ptr [ %.249, %.lr.ph83 ], [ %i.dj, %_ZN7Imf_3_411sort_helperclEii.exit29.thread ] ; 2 uses
   store i32 %i.ch, ptr %.35081, align 4, !tbaa !18
   store i32 %i.ci, ptr %.282, align 4, !tbaa !18
@@ -444,8 +446,8 @@ _ZN7Imf_3_411sort_helperclEii.exit29.thread:      ; preds = %bb.l, %.split59
   %i.dz = icmp ult ptr %i.dj, %i.dk
   br i1 %i.dz, label %bb.j, label %._crit_edge, !llvm.loop !57
 
-._crit_edge:                                      ; preds = %_ZN7Imf_3_411sort_helperclEii.exit29.thread, %_ZN7Imf_3_411sort_helperclEii.exit23.thread
-  %.350.lcssa = phi ptr [ %.249, %_ZN7Imf_3_411sort_helperclEii.exit23.thread ], [ %i.dj, %_ZN7Imf_3_411sort_helperclEii.exit29.thread ] ; 2 uses
+._crit_edge:                                      ; preds = %_ZN7Imf_3_411sort_helperclEii.exit.backedge, %_ZN7Imf_3_411sort_helperclEii.exit29.thread, %.critedge, %_ZN7Imf_3_411sort_helperclEii.exit.preheader, %_ZN7Imf_3_411sort_helperclEii.exit23.thread
+  %.350.lcssa = phi ptr [ %.249, %_ZN7Imf_3_411sort_helperclEii.exit23.thread ], [ %i.n, %_ZN7Imf_3_411sort_helperclEii.exit.preheader ], [ %i.dj, %_ZN7Imf_3_411sort_helperclEii.exit29.thread ], [ %.249, %.critedge ], [ %i.bn, %_ZN7Imf_3_411sort_helperclEii.exit.backedge ] ; 2 uses
   %i.ea = getelementptr inbounds i8, ptr %.350.lcssa, i64 -4 ; 3 uses
   %.not = icmp eq ptr %0, %i.ea
   br i1 %.not, label %bb.o, label %bb.n
@@ -473,7 +475,7 @@ bb.a:
   br label %.backedge58
 
 .backedge58:                                      ; preds = %.backedge58.backedge, %bb.a
-  %.045 = phi ptr [ %0, %bb.a ], [ %i.h, %.backedge58.backedge ] ; 3 uses
+  %.045 = phi ptr [ %0, %bb.a ], [ %i.h, %.backedge58.backedge ] ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.045, i64 4 ; 7 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !18   ; 3 uses
   %i.j = sext i32 %i.i to i64                     ; 2 uses
@@ -519,7 +521,7 @@ _ZN7Imf_3_411sort_helperclEii.exit21.preheader:   ; preds = %_ZN7Imf_3_411sort_h
 
 _ZN7Imf_3_411sort_helperclEii.exit18.preheader:   ; preds = %_ZN7Imf_3_411sort_helperclEii.exit.thread
   %i.ad = icmp ult ptr %i.h, %1
-  br i1 %i.ad, label %.lr.ph69.preheader, label %.critedge
+  br i1 %i.ad, label %.lr.ph69.preheader, label %._crit_edge
 
 .lr.ph69.preheader:                               ; preds = %_ZN7Imf_3_411sort_helperclEii.exit18.preheader
   %i.ae = getelementptr inbounds i8, ptr %1, i64 -4 ; 3 uses
@@ -534,7 +536,7 @@ _ZN7Imf_3_411sort_helperclEii.exit18.preheader:   ; preds = %_ZN7Imf_3_411sort_h
   %i.ak = phi float [ %i.bc, %.lr.ph69.backedge ], [ %i.ai, %.lr.ph69.preheader ]
   %i.al = phi i64 [ %i.ba, %.lr.ph69.backedge ], [ %i.ag, %.lr.ph69.preheader ]
   %i.am = phi i32 [ %i.az, %.lr.ph69.backedge ], [ %i.af, %.lr.ph69.preheader ]
-  %i.an = phi ptr [ %i.ay, %.lr.ph69.backedge ], [ %i.ae, %.lr.ph69.preheader ] ; 6 uses
+  %i.an = phi ptr [ %i.ay, %.lr.ph69.backedge ], [ %i.ae, %.lr.ph69.preheader ] ; 5 uses
   %i.ao = fcmp ogt float %i.ak, %i.f
   br i1 %i.ao, label %_ZN7Imf_3_411sort_helperclEii.exit18.backedge, label %bb.d
 
@@ -557,7 +559,7 @@ bb.d:                                             ; preds = %.lr.ph124
 
 _ZN7Imf_3_411sort_helperclEii.exit18.backedge:    ; preds = %.lr.ph124
   %.old = icmp ult ptr %i.h, %i.an
-  br i1 %.old, label %.lr.ph69.backedge, label %.critedge
+  br i1 %.old, label %.lr.ph69.backedge, label %._crit_edge
 
 .lr.ph69.backedge:                                ; preds = %_ZN7Imf_3_411sort_helperclEii.exit18.backedge, %.split50
   %i.ay = getelementptr inbounds i8, ptr %i.an, i64 -4 ; 3 uses
@@ -600,10 +602,10 @@ _ZN7Imf_3_411sort_helperclEii.exit21.backedge:    ; preds = %.split52, %.lr.ph
   %i.bw = fcmp olt float %i.bv, %i.f
   br i1 %i.bw, label %.critedge, label %.lr.ph, !llvm.loop !60
 
-.critedge:                                        ; preds = %.split52, %_ZN7Imf_3_411sort_helperclEii.exit21.backedge, %bb.e, %bb.d, %.lr.ph69.backedge, %.split50, %_ZN7Imf_3_411sort_helperclEii.exit18.backedge, %.lr.ph69.preheader, %_ZN7Imf_3_411sort_helperclEii.exit21.preheader, %_ZN7Imf_3_411sort_helperclEii.exit18.preheader
-  %.2 = phi ptr [ %i.x, %_ZN7Imf_3_411sort_helperclEii.exit21.preheader ], [ %1, %_ZN7Imf_3_411sort_helperclEii.exit18.preheader ], [ %i.an, %_ZN7Imf_3_411sort_helperclEii.exit18.backedge ], [ %i.ae, %.lr.ph69.preheader ], [ %i.an, %.split50 ], [ %i.ay, %.lr.ph69.backedge ], [ %i.an, %bb.d ], [ %i.br, %_ZN7Imf_3_411sort_helperclEii.exit21.backedge ], [ %i.bh, %bb.e ], [ %i.bh, %.split52 ] ; 3 uses
-  %3 = icmp uge ptr %i.h, %.2                     ; 2 uses
-  br i1 %3, label %._crit_edge, label %.lr.ph81
+.critedge:                                        ; preds = %.split52, %_ZN7Imf_3_411sort_helperclEii.exit21.backedge, %bb.e, %bb.d, %.lr.ph69.backedge, %.split50, %.lr.ph69.preheader, %_ZN7Imf_3_411sort_helperclEii.exit21.preheader
+  %.2 = phi ptr [ %i.x, %_ZN7Imf_3_411sort_helperclEii.exit21.preheader ], [ %i.an, %.split50 ], [ %i.ae, %.lr.ph69.preheader ], [ %i.ay, %.lr.ph69.backedge ], [ %i.an, %bb.d ], [ %i.bh, %bb.e ], [ %i.bh, %.split52 ], [ %i.br, %_ZN7Imf_3_411sort_helperclEii.exit21.backedge ] ; 3 uses
+  %.not122 = icmp ult ptr %i.h, %.2
+  br i1 %.not122, label %.lr.ph81, label %._crit_edge
 
 .lr.ph81:                                         ; preds = %.critedge
   %.pre = load i32, ptr %.2, align 4, !tbaa !18
@@ -697,8 +699,9 @@ _ZN7Imf_3_411sort_helperclEii.exit27.thread:      ; preds = %.split55, %_ZN7Imf_
   %i.do = icmp ult ptr %i.bz, %.lcssa59
   br i1 %i.do, label %bb.f, label %._crit_edge, !llvm.loop !63
 
-._crit_edge:                                      ; preds = %_ZN7Imf_3_411sort_helperclEii.exit27.thread, %.critedge
-  %4 = phi ptr [ %.045, %.critedge ], [ %.247, %_ZN7Imf_3_411sort_helperclEii.exit27.thread ] ; 4 uses
+._crit_edge:                                      ; preds = %_ZN7Imf_3_411sort_helperclEii.exit18.backedge, %_ZN7Imf_3_411sort_helperclEii.exit27.thread, %_ZN7Imf_3_411sort_helperclEii.exit18.preheader, %.critedge
+  %3 = phi i8 [ 1, %.critedge ], [ 1, %_ZN7Imf_3_411sort_helperclEii.exit18.preheader ], [ 0, %_ZN7Imf_3_411sort_helperclEii.exit27.thread ], [ 1, %_ZN7Imf_3_411sort_helperclEii.exit18.backedge ]
+  %4 = phi ptr [ %.045, %.critedge ], [ %.045, %_ZN7Imf_3_411sort_helperclEii.exit18.preheader ], [ %.247, %_ZN7Imf_3_411sort_helperclEii.exit27.thread ], [ %.045, %_ZN7Imf_3_411sort_helperclEii.exit18.backedge ] ; 4 uses
   %.not = icmp eq ptr %0, %4
   br i1 %.not, label %bb.k, label %bb.j
 
@@ -708,10 +711,9 @@ bb.j:                                             ; preds = %._crit_edge
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge
-  %5 = zext i1 %3 to i8
   store i32 %i.a, ptr %4, align 4, !tbaa !18
   %.fca.0.insert.i = insertvalue { ptr, i8 } poison, ptr %4, 0
-  %.fca.1.insert.i = insertvalue { ptr, i8 } %.fca.0.insert.i, i8 %5, 1
+  %.fca.1.insert.i = insertvalue { ptr, i8 } %.fca.0.insert.i, i8 %3, 1
   ret { ptr, i8 } %.fca.1.insert.i
 }
 

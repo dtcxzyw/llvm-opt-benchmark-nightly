@@ -204,7 +204,7 @@ _ZN12_GLOBAL__N_116simplifyAsNumberEPN6hermes12AsNumberInstE.exit.i: ; preds = %
   %.3.i.i.i16.i = phi ptr [ %i.gj, %bb.bg ], [ %spec.select17.i.i.i19.i, %.thread.i.i.i17.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #10
   %i.gn = icmp eq ptr %.3.i.i.i16.i, %i.ap
-  br i1 %i.gn, label %.thread54, label %.thread47
+  br i1 %i.gn, label %.thread54, label %bb.cz
 
 bb.bh:                                            ; preds = %.lr.ph
   %i.go = call noundef zeroext i1 @_ZNK6hermes5Value10hasOneUserEv(ptr noundef nonnull align 8 dereferenceable(40) %i.ap) #10
@@ -229,7 +229,7 @@ bb.bj:                                            ; preds = %bb.bi
 _ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.i.i: ; preds = %bb.bj
   %i.gw = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.027.067, i32 noundef 0) #10 ; 2 uses
   %i.gx = icmp eq ptr %i.gw, %i.ap
-  br i1 %i.gx, label %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.thread15.i.i, label %_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i
+  br i1 %i.gx, label %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.thread15.i.i, label %bb.cy
 
 _ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.thread15.i.i: ; preds = %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.i.i, %bb.bj, %bb.bi, %bb.bh
   %i.gy = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.027.067, i32 noundef 0) #10 ; 2 uses
@@ -273,10 +273,10 @@ _ZN12_GLOBAL__N_118reduceAsNumberLikeIN6hermes13AsNumericInstEEEPNS1_5ValueEPT_.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   br label %_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i
 
-_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i: ; preds = %_ZN12_GLOBAL__N_118reduceAsNumberLikeIN6hermes13AsNumericInstEEEPNS1_5ValueEPT_.exit.i.i.i, %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.thread15.i.i, %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.i.i
-  %.1.i.i = phi ptr [ %i.gw, %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.i.i ], [ %.3.i.i.i21.i, %_ZN12_GLOBAL__N_118reduceAsNumberLikeIN6hermes13AsNumericInstEEEPNS1_5ValueEPT_.exit.i.i.i ], [ %i.gy, %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.thread15.i.i ] ; 2 uses
+_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i: ; preds = %_ZN12_GLOBAL__N_118reduceAsNumberLikeIN6hermes13AsNumericInstEEEPNS1_5ValueEPT_.exit.i.i.i, %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.thread15.i.i
+  %.1.i.i = phi ptr [ %i.gy, %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.thread15.i.i ], [ %.3.i.i.i21.i, %_ZN12_GLOBAL__N_118reduceAsNumberLikeIN6hermes13AsNumericInstEEEPNS1_5ValueEPT_.exit.i.i.i ] ; 2 uses
   %i.hq = icmp eq ptr %.1.i.i, %i.ap
-  br i1 %i.hq, label %.thread54, label %bb.cy
+  br i1 %i.hq, label %.thread54, label %bb.cz
 
 bb.bm:                                            ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
@@ -304,7 +304,7 @@ _ZN12_GLOBAL__N_115simplifyAsInt32EPN6hermes11AsInt32InstE.exit.i: ; preds = %bb
   %spec.select.i.i.i = select i1 %.not14.i.i26.i, ptr %i.ap, ptr %i.ib ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   %i.ic = icmp eq ptr %spec.select.i.i.i, %i.ap
-  br i1 %i.ic, label %.thread54, label %.thread47
+  br i1 %i.ic, label %.thread54, label %bb.cz
 
 bb.bn:                                            ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
@@ -707,18 +707,19 @@ bb.cx:                                            ; preds = %bb.cw
   %i.nq = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.027.067, i32 noundef 0) #10
   br label %bb.cy
 
-bb.cy:                                            ; preds = %_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i, %bb.cx, %bb.cu, %_ZN12_GLOBAL__N_122simplifyAddEmptyStringEPN6hermes18AddEmptyStringInstE.exit.i, %_ZN12_GLOBAL__N_112simplifyUnOpEPN6hermes17UnaryOperatorInstE.exit.i, %_ZN12_GLOBAL__N_113simplifyBinOpEPN6hermes18BinaryOperatorInstE.exit.i
-  %.sroa.0.0.i = phi ptr [ %i.nl, %bb.cu ], [ %.4.i.i, %_ZN12_GLOBAL__N_113simplifyBinOpEPN6hermes18BinaryOperatorInstE.exit.i ], [ %.3.i.i, %_ZN12_GLOBAL__N_112simplifyUnOpEPN6hermes17UnaryOperatorInstE.exit.i ], [ %.3.i28.i, %_ZN12_GLOBAL__N_122simplifyAddEmptyStringEPN6hermes18AddEmptyStringInstE.exit.i ], [ %.1.i.i, %_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i ], [ %i.nq, %bb.cx ] ; 2 uses
+bb.cy:                                            ; preds = %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.i.i, %bb.cx, %bb.cu, %_ZN12_GLOBAL__N_122simplifyAddEmptyStringEPN6hermes18AddEmptyStringInstE.exit.i, %_ZN12_GLOBAL__N_112simplifyUnOpEPN6hermes17UnaryOperatorInstE.exit.i, %_ZN12_GLOBAL__N_113simplifyBinOpEPN6hermes18BinaryOperatorInstE.exit.i
+  %.sroa.0.0.i = phi ptr [ %i.nl, %bb.cu ], [ %.4.i.i, %_ZN12_GLOBAL__N_113simplifyBinOpEPN6hermes18BinaryOperatorInstE.exit.i ], [ %.3.i.i, %_ZN12_GLOBAL__N_112simplifyUnOpEPN6hermes17UnaryOperatorInstE.exit.i ], [ %.3.i28.i, %_ZN12_GLOBAL__N_122simplifyAddEmptyStringEPN6hermes18AddEmptyStringInstE.exit.i ], [ %i.nq, %bb.cx ], [ %i.gw, %_ZN12_GLOBAL__N_115isUnaryIncOrDecEPN6hermes5ValueE.exit.i.i ] ; 2 uses
   %.not = icmp eq ptr %.sroa.0.0.i, null
   br i1 %.not, label %.thread54, label %.thread47, !llvm.loop !40
 
-.thread47:                                        ; preds = %bb.cv, %_ZN12_GLOBAL__N_115simplifyAsInt32EPN6hermes11AsInt32InstE.exit.i, %_ZN12_GLOBAL__N_116simplifyAsNumberEPN6hermes12AsNumberInstE.exit.i, %bb.cy
-  %.sroa.0.0.i52 = phi ptr [ %.sroa.0.0.i, %bb.cy ], [ %.3.i.i.i16.i, %_ZN12_GLOBAL__N_116simplifyAsNumberEPN6hermes12AsNumberInstE.exit.i ], [ %i.nc, %bb.cv ], [ %spec.select.i.i.i, %_ZN12_GLOBAL__N_115simplifyAsInt32EPN6hermes11AsInt32InstE.exit.i ] ; 2 uses
+.thread47:                                        ; preds = %bb.cv, %bb.cy
+  %.sroa.0.0.i52 = phi ptr [ %.sroa.0.0.i, %bb.cy ], [ %i.nc, %bb.cv ] ; 2 uses
   %i.nr = icmp eq ptr %i.ap, %.sroa.0.0.i52
   br i1 %i.nr, label %.thread54, label %bb.cz, !llvm.loop !40
 
-bb.cz:                                            ; preds = %.thread47
-  call void @_ZN6hermes5Value18replaceAllUsesWithEPS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.ap, ptr noundef nonnull %.sroa.0.0.i52) #10
+bb.cz:                                            ; preds = %_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i, %_ZN12_GLOBAL__N_115simplifyAsInt32EPN6hermes11AsInt32InstE.exit.i, %_ZN12_GLOBAL__N_116simplifyAsNumberEPN6hermes12AsNumberInstE.exit.i, %.thread47
+  %.sroa.0.0.i5267 = phi ptr [ %.sroa.0.0.i52, %.thread47 ], [ %spec.select.i.i.i, %_ZN12_GLOBAL__N_115simplifyAsInt32EPN6hermes11AsInt32InstE.exit.i ], [ %.3.i.i.i16.i, %_ZN12_GLOBAL__N_116simplifyAsNumberEPN6hermes12AsNumberInstE.exit.i ], [ %.1.i.i, %_ZN12_GLOBAL__N_117simplifyAsNumericEPN6hermes13AsNumericInstE.exit.i ]
+  call void @_ZN6hermes5Value18replaceAllUsesWithEPS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.ap, ptr noundef nonnull %.sroa.0.0.i5267) #10
   %i.ns = load i32, ptr %i.b, align 8, !tbaa !43  ; 2 uses
   %i.nt = load i32, ptr %i.c, align 4, !tbaa !44
   %.not.i.i17 = icmp ult i32 %i.ns, %i.nt

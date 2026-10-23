@@ -204,8 +204,9 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i
   %i.ho = icmp slt i64 %indvars.iv.next102.i, %i.hn
   br i1 %i.ho, label %.critedge.i, label %.critedge2.preheader.i, !llvm.loop !139
 
-.preheader.i:                                     ; preds = %Bac_BoxDup.exit.i
-  %i.hp = icmp sgt i32 %.val65.i, 0
+.preheader.i:                                     ; preds = %Bac_BoxNtk.exit.thread.i.i, %Bac_BoxDup.exit.i
+  %.val65.i131 = phi i32 [ %.val65.i, %Bac_BoxDup.exit.i ], [ %.val4696.i.i, %Bac_BoxNtk.exit.thread.i.i ] ; 2 uses
+  %i.hp = icmp sgt i32 %.val65.i131, 0
   br i1 %i.hp, label %.lr.ph99.i, label %Bac_NtkDupUserBoxes.exit
 
 .lr.ph99.i:                                       ; preds = %.preheader.i
@@ -477,11 +478,11 @@ Bac_BoxSetNtkId.exit.i.i:                         ; preds = %._crit_edge.i.i.i79
   br label %Bac_BoxNtk.exit.thread.i.i
 
 Bac_BoxNtk.exit.thread.i.i:                       ; preds = %Bac_BoxSetNtkId.exit.i.i, %Bac_ManNtkIsOk.exit.i.i.i.i, %bb.ar
-  %i.km = add nuw nsw i64 %indvars.iv104.i, 1     ; 7 uses
+  %i.km = add nuw nsw i64 %indvars.iv104.i, 1     ; 6 uses
   %.val4696.i.i = load i32, ptr %i.cf, align 4, !tbaa !56 ; 3 uses
-  %i.kn = sext i32 %.val4696.i.i to i64           ; 3 uses
+  %i.kn = sext i32 %.val4696.i.i to i64           ; 2 uses
   %i.ko = icmp slt i64 %i.km, %i.kn
-  br i1 %i.ko, label %.lr.ph98.i.i.preheader, label %Bac_BoxDup.exit.i
+  br i1 %i.ko, label %.lr.ph98.i.i.preheader, label %.preheader.i
 
 .lr.ph98.i.i.preheader:                           ; preds = %Bac_BoxNtk.exit.thread.i.i
   %.val45.i.i67 = load ptr, ptr %i.hc, align 8, !tbaa !46
@@ -512,15 +513,15 @@ Bac_BoxNtk.exit.thread.i.i:                       ; preds = %Bac_BoxSetNtkId.exi
 .Bac_BoxDup.exit.i.loopexit_crit_edge:            ; preds = %.lr.ph
   br label %Bac_BoxDup.exit.i, !llvm.loop !142
 
-Bac_BoxDup.exit.i:                                ; preds = %.lr.ph98.i.i, %.lr.ph98.i.i.preheader, %.Bac_BoxDup.exit.i.loopexit_crit_edge, %Bac_BoxNtk.exit.thread.i.i, %.Bac_BoxDup.exit_crit_edge.i
-  %.pre-phi = phi i64 [ %.pre, %.Bac_BoxDup.exit_crit_edge.i ], [ %i.kn, %.lr.ph98.i.i.preheader ], [ %i.kv, %.Bac_BoxDup.exit.i.loopexit_crit_edge ], [ %i.kn, %Bac_BoxNtk.exit.thread.i.i ], [ %i.kv, %.lr.ph98.i.i ]
-  %indvars.iv.next105.pre-phi.i = phi i64 [ %.pre.i, %.Bac_BoxDup.exit_crit_edge.i ], [ %i.km, %.lr.ph98.i.i.preheader ], [ %i.km, %.Bac_BoxDup.exit.i.loopexit_crit_edge ], [ %i.km, %Bac_BoxNtk.exit.thread.i.i ], [ %i.km, %.lr.ph98.i.i ] ; 2 uses
-  %.val65.i = phi i32 [ %.val65111.i, %.Bac_BoxDup.exit_crit_edge.i ], [ %.val4696.i.i, %.lr.ph98.i.i.preheader ], [ %.val46.i.i, %.Bac_BoxDup.exit.i.loopexit_crit_edge ], [ %.val4696.i.i, %Bac_BoxNtk.exit.thread.i.i ], [ %.val46.i.i, %.lr.ph98.i.i ] ; 3 uses
+Bac_BoxDup.exit.i:                                ; preds = %.lr.ph98.i.i, %.lr.ph98.i.i.preheader, %.Bac_BoxDup.exit.i.loopexit_crit_edge, %.Bac_BoxDup.exit_crit_edge.i
+  %.pre-phi = phi i64 [ %.pre, %.Bac_BoxDup.exit_crit_edge.i ], [ %i.kn, %.lr.ph98.i.i.preheader ], [ %i.kv, %.Bac_BoxDup.exit.i.loopexit_crit_edge ], [ %i.kv, %.lr.ph98.i.i ]
+  %indvars.iv.next105.pre-phi.i = phi i64 [ %.pre.i, %.Bac_BoxDup.exit_crit_edge.i ], [ %i.km, %.lr.ph98.i.i.preheader ], [ %i.km, %.Bac_BoxDup.exit.i.loopexit_crit_edge ], [ %i.km, %.lr.ph98.i.i ] ; 2 uses
+  %.val65.i = phi i32 [ %.val65111.i, %.Bac_BoxDup.exit_crit_edge.i ], [ %.val4696.i.i, %.lr.ph98.i.i.preheader ], [ %.val46.i.i, %.Bac_BoxDup.exit.i.loopexit_crit_edge ], [ %.val46.i.i, %.lr.ph98.i.i ] ; 2 uses
   %i.kx = icmp slt i64 %indvars.iv.next105.pre-phi.i, %.pre-phi
   br i1 %i.kx, label %bb.ak, label %.preheader.i, !llvm.loop !143
 
 bb.bc:                                            ; preds = %bb.bp, %.lr.ph99.i
-  %.val64116.i = phi i32 [ %.val65.i, %.lr.ph99.i ], [ %.val64.i, %bb.bp ] ; 3 uses
+  %.val64116.i = phi i32 [ %.val65.i131, %.lr.ph99.i ], [ %.val64.i, %bb.bp ] ; 3 uses
   %indvars.iv108.i = phi i64 [ 0, %.lr.ph99.i ], [ %indvars.iv.next109.i, %bb.bp ] ; 4 uses
   %.val59.i = load ptr, ptr %i.hc, align 8, !tbaa !46
   %i.ky = getelementptr inbounds nuw i8, ptr %.val59.i, i64 %indvars.iv108.i

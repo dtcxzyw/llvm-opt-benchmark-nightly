@@ -205,11 +205,12 @@ bb.ar:                                            ; preds = %bb.aq
   %i.dj = load i32, ptr %i.bd, align 4, !tbaa !28
   %i.dk = load i32, ptr %i.aw, align 8, !tbaa !27
   %i.dl = shl nuw nsw i32 %.0606768, 2
-  %i.dm = zext nneg i32 %i.dl to i64
+  %76 = and i32 %i.dl, 124
+  %i.dm = zext nneg i32 %76 to i64
   %i.dn = lshr i64 1275511473185297, %i.dm
   %i.do = trunc i64 %i.dn to i32
   %i.dp = and i32 %i.do, 15
-  %i.dq = mul i32 %i.dj, %i.dp
+  %i.dq = mul i32 %i.dp, %i.dj
   %i.dr = mul i32 %i.dq, %i.dk
   br label %bb.at
 

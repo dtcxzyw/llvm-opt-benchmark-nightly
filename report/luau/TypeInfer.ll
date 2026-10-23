@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %_ZN4Luau3getINS_12F
 
 bb.t:                                             ; preds = %bb.s
   invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.178) #38
-          to label %.noexc unwind label %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc unwind label %._crit_edge260
 
 .noexc:                                           ; preds = %bb.t
   unreachable
@@ -219,7 +219,7 @@ bb.u:                                             ; preds = %bb.s
 
 .noexc.i:                                         ; preds = %bb.u
   %i.cx = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %12, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0)
-          to label %.noexc105 unwind label %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %.noexc105 unwind label %._crit_edge260 ; 2 uses
 
 .noexc105:                                        ; preds = %.noexc.i
   store ptr %i.cx, ptr %12, align 8, !tbaa !81
@@ -343,17 +343,17 @@ bb.aa:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #35
   %i.ea = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 64
   invoke void @_ZN4Luau8PropertyC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(176) %13, ptr noundef nonnull align 8 dereferenceable(176) %i.ea)
-          to label %bb.ab unwind label %bb.ae
+          to label %bb.ab unwind label %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ab:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #35
   %i.eb = invoke noundef ptr @_ZNK4Luau8Property15type_DEPRECATEDEv(ptr noundef nonnull align 8 dereferenceable(176) %13)
-          to label %bb.ac unwind label %bb.af
+          to label %bb.ac unwind label %bb.ae
 
 bb.ac:                                            ; preds = %bb.ab
   %i.ec = getelementptr inbounds nuw i8, ptr %i.bm, i64 12
   invoke void @_ZN4Luau11TypeChecker9tryUnify_IPKNS_4TypeEEESt6vectorINS_9TypeErrorESaIS6_EET_S9_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.264") align 8 %14, ptr noundef nonnull align 8 dereferenceable(2040) %0, ptr noundef %.060, ptr noundef %i.eb, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %i.ec)
-          to label %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit unwind label %bb.af
+          to label %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit unwind label %bb.ae
 
 _ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit: ; preds = %bb.ac
   %i.ed = load ptr, ptr %14, align 8, !tbaa !536  ; 2 uses
@@ -363,41 +363,41 @@ _ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8L
 
 bb.ad:                                            ; preds = %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit
   %i.eg = invoke noundef ptr @_ZNK4Luau8Property15type_DEPRECATEDEv(ptr noundef nonnull align 8 dereferenceable(176) %13)
-          to label %._crit_edge260 unwind label %bb.ag
+          to label %bb.ag unwind label %bb.af     ; 2 uses
 
-._crit_edge260:                                   ; preds = %bb.ad
-  %.pre261 = load ptr, ptr %14, align 8, !tbaa !557
-  %.pre262 = load ptr, ptr %i.z, align 8, !tbaa !548
-  br label %bb.ah
-
-.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc.i, %bb.t
-  %lpad.loopexit.split-lp341 = landingpad { ptr, i32 }
+._crit_edge260:                                   ; preds = %.noexc.i, %bb.t
+  %lpad.loopexit.split-lp346 = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #35
   br label %.loopexit.split-lp
 
-bb.ae:                                            ; preds = %bb.aa
-  %i.eh = landingpad { ptr, i32 }
+.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.aa
+  %lpad.loopexit.split-lp341 = landingpad { ptr, i32 }
           cleanup
   br label %bb.an
 
-bb.af:                                            ; preds = %bb.ac, %bb.ab
-  %i.ei = landingpad { ptr, i32 }
+bb.ae:                                            ; preds = %bb.ac, %bb.ab
+  %i.eh = landingpad { ptr, i32 }
           cleanup
   br label %bb.am
 
-bb.ag:                                            ; preds = %bb.ad
-  %24 = landingpad { ptr, i32 }
+bb.af:                                            ; preds = %bb.ad
+  %i.ei = landingpad { ptr, i32 }
           cleanup
   call void @_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %14) #35
   br label %bb.am
 
-bb.ah:                                            ; preds = %._crit_edge260, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit
-  %i.ej = phi ptr [ %i.ee, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ], [ %.pre262, %._crit_edge260 ] ; 2 uses
-  %i.ek = phi ptr [ %i.ed, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ], [ %.pre261, %._crit_edge260 ] ; 3 uses
-  %.161 = phi ptr [ %.060, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ], [ %i.eg, %._crit_edge260 ]
-  %.not4.i.i.i = icmp eq ptr %i.ek, %i.ej
-  br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i.i.i111
+bb.ag:                                            ; preds = %bb.ad
+  %.pre261 = load ptr, ptr %14, align 8, !tbaa !557 ; 3 uses
+  %.pre262 = load ptr, ptr %i.z, align 8, !tbaa !548 ; 2 uses
+  %.not4.i.i.i = icmp eq ptr %.pre261, %.pre262
+  br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i, label %bb.ah
+
+bb.ah:                                            ; preds = %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit, %bb.ag
+  %i.ej = phi ptr [ %i.eg, %bb.ag ], [ %.060, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ]
+  %i.ek = phi ptr [ %.pre261, %bb.ag ], [ %i.ed, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ]
+  %.161 = phi ptr [ %.pre262, %bb.ag ], [ %i.ee, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ]
+  br label %.lr.ph.i.i.i111
 
 .lr.ph.i.i.i111:                                  ; preds = %bb.ah, %_ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i
   %.05.i.i.i = phi ptr [ %i.ez, %_ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i ], [ %i.ek, %bb.ah ] ; 5 uses
@@ -432,15 +432,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i:  ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExternTy, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
   %i.ez = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 184 ; 2 uses
-  %.not.i.i.i112 = icmp eq ptr %i.ez, %i.ej
+  %.not.i.i.i112 = icmp eq ptr %i.ez, %.161
   br i1 %.not.i.i.i112, label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i111, !llvm.loop !4
 
 _ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i
   %.pr.i = load ptr, ptr %14, align 8, !tbaa !557
   br label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i
 
-_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, %bb.ah
-  %i.fa = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %i.ek, %bb.ah ] ; 3 uses
+_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, %bb.ag
+  %.161337 = phi ptr [ %i.ej, %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %i.eg, %bb.ag ]
+  %i.fa = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %.pre261, %bb.ag ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %i.fa, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit, label %bb.aj
 
@@ -526,14 +527,14 @@ _ZN4Luau8PropertyD2Ev.exit:                       ; preds = %_ZNSt6vectorINSt7__
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #35
   br label %bb.av
 
-bb.am:                                            ; preds = %bb.ag, %bb.af
-  %.pn90 = phi { ptr, i32 } [ %24, %bb.ag ], [ %i.ei, %bb.af ]
+bb.am:                                            ; preds = %bb.af, %bb.ae
+  %.pn90 = phi { ptr, i32 } [ %i.ei, %bb.af ], [ %i.eh, %bb.ae ]
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #35
   call void @_ZN4Luau8PropertyD2Ev(ptr noundef nonnull align 8 dead_on_return(176) dereferenceable(176) %13) #35
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %bb.ae
-  %.pn90.pn = phi { ptr, i32 } [ %.pn90, %bb.am ], [ %i.eh, %bb.ae ]
+bb.an:                                            ; preds = %bb.am, %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn90.pn = phi { ptr, i32 } [ %.pn90, %bb.am ], [ %lpad.loopexit.split-lp341, %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #35
   br label %.loopexit.split-lp
 
@@ -637,7 +638,7 @@ _ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130: ; preds = %_ZSt8_DestroyIPN4
   br label %bb.av
 
 bb.av:                                            ; preds = %_ZN4Luau8PropertyD2Ev.exit, %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130, %bb.aq, %bb.ao, %_ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit
-  %.4 = phi ptr [ %.060, %_ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit ], [ %.161, %_ZN4Luau8PropertyD2Ev.exit ], [ %.2225, %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130 ], [ %.060, %bb.aq ], [ %.060, %bb.ao ]
+  %.4 = phi ptr [ %.060, %_ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit ], [ %.161337, %_ZN4Luau8PropertyD2Ev.exit ], [ %.2225, %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130 ], [ %.060, %bb.aq ], [ %.060, %bb.ao ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #35
   store ptr %i.ao, ptr %17, align 8, !tbaa !287
@@ -1040,8 +1041,8 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #35
   br label %.loopexit.split-lp
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit176, %bb.as, %bb.an, %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.bx
-  %.pn100.pn = phi { ptr, i32 } [ %.pn90.pn, %bb.an ], [ %.pn, %bb.bx ], [ %i.gm, %bb.as ], [ %lpad.loopexit.split-lp341, %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn94.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit176 ], [ %lpad.loopexit.split-lp339, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit176, %bb.as, %bb.an, %._crit_edge260, %bb.bx
+  %.pn100.pn = phi { ptr, i32 } [ %.pn90.pn, %bb.an ], [ %.pn, %bb.bx ], [ %i.gm, %bb.as ], [ %lpad.loopexit.split-lp346, %._crit_edge260 ], [ %.pn94.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit176 ], [ %lpad.loopexit.split-lp339, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #35
   call void @_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau8PropertyESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %10) #35
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #35

@@ -205,22 +205,23 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.d, label %.lr.ph.i, label %._crit_edge.i.i.i.i.i.i.i.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i
-  br i1 %.not.i60, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i
+  br i1 %.not.i60, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %bb.f, %bb.g
-  %16 = phi i64 [ %i.u, %bb.f ], [ 0, %bb.g ], [ %i.v, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 5 uses
+._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %bb.f
+  %16 = phi i64 [ %i.u, %bb.f ], [ %i.v, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.bj = icmp slt i64 %16, %i.c
   br i1 %i.bj, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, label %.loopexit251
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i
-  %i.bk = sub i64 %i.c, %16                       ; 3 uses
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %bb.g, %._crit_edge.i.i.i.i.i.i.i.i.i
+  %17 = phi i64 [ %16, %._crit_edge.i.i.i.i.i.i.i.i.i ], [ 0, %bb.g ] ; 4 uses
+  %i.bk = sub i64 %i.c, %17                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.bk, 2
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader428, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.bk, -2                      ; 3 uses
-  %i.bl = add i64 %16, %n.vec
-  %i.bm = getelementptr [8 x i8], ptr %.sroa.0209.0, i64 %16
+  %i.bl = add i64 %17, %n.vec
+  %i.bm = getelementptr [8 x i8], ptr %.sroa.0209.0, i64 %17
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -239,7 +240,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %.loopexit251, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader428
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.preheader428:          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block
-  %.05.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %16, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bl, %middle.block ]
+  %.05.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %17, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bl, %middle.block ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader428, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -342,22 +343,23 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %.lr.ph.i69
   %i.dp = and i64 %i.dl, 9223372036854775806      ; 2 uses
   %.not.i76 = icmp eq i64 %i.dl, 1
-  br i1 %.not.i76, label %._crit_edge.i.i.i.i.i.i.i.i.i65, label %.lr.ph.i.i.i.i.i.i.i.i.i77
+  br i1 %.not.i76, label %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader, label %.lr.ph.i.i.i.i.i.i.i.i.i77
 
-._crit_edge.i.i.i.i.i.i.i.i.i65:                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i77, %bb.j, %.thread.i63
-  %17 = phi i64 [ %i.do, %.thread.i63 ], [ 0, %bb.j ], [ %i.dp, %.lr.ph.i.i.i.i.i.i.i.i.i77 ] ; 5 uses
-  %i.dq = icmp slt i64 %17, %i.dl
+._crit_edge.i.i.i.i.i.i.i.i.i65:                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i77, %.thread.i63
+  %18 = phi i64 [ %i.do, %.thread.i63 ], [ %i.dp, %.lr.ph.i.i.i.i.i.i.i.i.i77 ] ; 2 uses
+  %i.dq = icmp slt i64 %18, %i.dl
   br i1 %i.dq, label %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader, label %.loopexit252
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader:           ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i65
-  %i.dr = sub i64 %i.dl, %17                      ; 3 uses
+.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader:           ; preds = %bb.j, %._crit_edge.i.i.i.i.i.i.i.i.i65
+  %19 = phi i64 [ %18, %._crit_edge.i.i.i.i.i.i.i.i.i65 ], [ 0, %bb.j ] ; 4 uses
+  %i.dr = sub i64 %i.dl, %19                      ; 3 uses
   %min.iters.check416 = icmp ult i64 %i.dr, 2
   br i1 %min.iters.check416, label %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader429, label %vector.ph417
 
 vector.ph417:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader
   %n.vec418 = and i64 %i.dr, -2                   ; 3 uses
-  %i.ds = add i64 %17, %n.vec418
-  %i.dt = getelementptr [8 x i8], ptr %.pre.i62, i64 %17
+  %i.ds = add i64 %19, %n.vec418
+  %i.dt = getelementptr [8 x i8], ptr %.pre.i62, i64 %19
   br label %vector.body419
 
 vector.body419:                                   ; preds = %vector.body419, %vector.ph417
@@ -376,7 +378,7 @@ middle.block423:                                  ; preds = %vector.body419
   br i1 %cmp.n424, label %.loopexit252, label %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader429
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader429:        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader, %middle.block423
-  %.05.i.i.i.i.i.i.i.i.i.i67.ph = phi i64 [ %17, %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader ], [ %i.ds, %middle.block423 ]
+  %.05.i.i.i.i.i.i.i.i.i.i67.ph = phi i64 [ %19, %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader ], [ %i.ds, %middle.block423 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i66
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i66:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i66.preheader429, %.lr.ph.i.i.i.i.i.i.i.i.i.i66
@@ -779,23 +781,25 @@ bb.d:                                             ; preds = %bb.e
   store i64 %.1.i.i, ptr %1, align 8, !tbaa !99
   %i.k = and i64 %2, 2305843009213693950          ; 2 uses
   %.not.i = icmp eq i64 %2, 1
-  br i1 %.not.i, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i
+  br i1 %.not.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %bb.d, %.thread.i
-  %.pre.i4 = phi ptr [ null, %.thread.i ], [ %i.d, %bb.d ], [ %i.d, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 2 uses
-  %3 = phi i64 [ %i.i, %.thread.i ], [ 0, %bb.d ], [ %i.k, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 5 uses
+._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %.thread.i
+  %.pre.i4 = phi ptr [ null, %.thread.i ], [ %i.d, %.lr.ph.i.i.i.i.i.i.i.i.i ]
+  %3 = phi i64 [ %i.i, %.thread.i ], [ %i.k, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.l = icmp slt i64 %3, %2
   br i1 %i.l, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, label %_ZN7Spectra12SimpleRandomIdE10random_vecERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEE.exit
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i
-  %i.m = sub i64 %2, %3                           ; 3 uses
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %bb.d, %._crit_edge.i.i.i.i.i.i.i.i.i
+  %4 = phi i64 [ %3, %._crit_edge.i.i.i.i.i.i.i.i.i ], [ 0, %bb.d ] ; 4 uses
+  %.pre.i414 = phi ptr [ %.pre.i4, %._crit_edge.i.i.i.i.i.i.i.i.i ], [ %i.d, %bb.d ] ; 2 uses
+  %i.m = sub i64 %2, %4                           ; 3 uses
   %min.iters.check = icmp ult i64 %i.m, 2
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.m, -2                       ; 3 uses
-  %i.n = add i64 %3, %n.vec
-  %i.o = getelementptr [8 x i8], ptr %.pre.i4, i64 %3
+  %i.n = add i64 %4, %n.vec
+  %i.o = getelementptr [8 x i8], ptr %.pre.i414, i64 %4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -814,12 +818,12 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %_ZN7Spectra12SimpleRandomIdE10random_vecERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEE.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader13
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.preheader13:           ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block
-  %.05.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %3, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.n, %middle.block ]
+  %.05.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %4, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.n, %middle.block ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader13, %.lr.ph.i.i.i.i.i.i.i.i.i.i
   %.05.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.x, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %.05.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader13 ] ; 2 uses
-  %i.t = getelementptr inbounds [8 x i8], ptr %.pre.i4, i64 %.05.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %i.t = getelementptr inbounds [8 x i8], ptr %.pre.i414, i64 %.05.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %i.u = load double, ptr %i.t, align 8, !tbaa !56
   %i.v = fdiv double %i.u, f0x41DFFFFFFFC00000
   %i.w = fadd double %i.v, -5.000000e-01

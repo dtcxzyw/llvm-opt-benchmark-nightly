@@ -205,13 +205,13 @@ bb.f:                                             ; preds = %bb.c
   br i1 %i.r, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %.thread529, %bb.f
-  %i.s = phi ptr [ %i.f, %.thread529 ], [ %i.q, %bb.f ] ; 3 uses
+  %i.s = phi ptr [ %i.f, %.thread529 ], [ %i.q, %bb.f ] ; 4 uses
   %i.t = phi ptr [ null, %.thread529 ], [ %i.k, %bb.f ]
   %i.u = phi ptr [ null, %.thread529 ], [ %i.m, %bb.f ] ; 2 uses
   %i.v = phi i64 [ 0, %.thread529 ], [ %i.p, %bb.f ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #31
   invoke void @_ZN8hf_cache16get_cached_filesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.49") align 8 %15, ptr noundef nonnull align 8 dereferenceable(32) %13)
-          to label %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59 unwind label %bb.i
+          to label %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59 unwind label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70
 
 _ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59: ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %12, i64 16
@@ -225,7 +225,7 @@ _ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59: ; preds = %bb
   store ptr %i.ab, ptr %i.w, align 8, !tbaa !172
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 24, i1 false)
   %.not.i.i1.i.i.i60 = icmp eq ptr %i.u, null
-  br i1 %.not.i.i1.i.i.i60, label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70, label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EEaSEOS3_.exit61
+  br i1 %.not.i.i1.i.i.i60, label %bb.i, label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EEaSEOS3_.exit61
 
 _ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EEaSEOS3_.exit61: ; preds = %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59
   %i.ac = ptrtoint ptr %i.u to i64
@@ -250,7 +250,7 @@ _ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i66: ;
 _ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68: ; preds = %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i66, %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EEaSEOS3_.exit61
   %i.af = phi ptr [ %.pr.i67, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i66 ], [ %.pre, %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EEaSEOS3_.exit61 ] ; 3 uses
   %.not.i.i1.i69 = icmp eq ptr %i.af, null
-  br i1 %.not.i.i1.i69, label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70, label %bb.h
+  br i1 %.not.i.i1.i69, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68
   %i.ag = load ptr, ptr %i.aa, align 8, !tbaa !172
@@ -260,29 +260,29 @@ bb.h:                                             ; preds = %_ZSt8_DestroyIPN8hf
   call void @_ZdlPvm(ptr noundef nonnull %i.af, i64 noundef %i.aj) #32
   %.pre356.pre = load ptr, ptr %12, align 8, !tbaa !173
   %.pre357.pre = load ptr, ptr %i.s, align 8, !tbaa !173
-  br label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70
+  br label %bb.i
 
-_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70: ; preds = %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68, %bb.h
-  %.pre357 = phi ptr [ %i.z, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68 ], [ %.pre357.pre, %bb.h ], [ %i.z, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59 ]
-  %.pre356 = phi ptr [ %i.x, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68 ], [ %.pre356.pre, %bb.h ], [ %i.x, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %15) #31
-  br label %bb.j
-
-bb.i:                                             ; preds = %bb.g
+_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70: ; preds = %bb.g
   %24 = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #31
   br label %bb.bq
 
-bb.j:                                             ; preds = %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70, %bb.f
-  %i.ak = phi ptr [ %i.s, %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70 ], [ %i.q, %bb.f ] ; 3 uses
-  %i.al = phi ptr [ %.pre357, %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70 ], [ %i.m, %bb.f ] ; 3 uses
-  %i.am = phi ptr [ %.pre356, %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70 ], [ %i.k, %bb.f ] ; 3 uses
-  %25 = icmp eq ptr %i.am, %i.al
-  br i1 %25, label %.critedge52, label %.preheader
+bb.i:                                             ; preds = %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59, %bb.h, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68
+  %.pre357 = phi ptr [ %i.z, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68 ], [ %.pre357.pre, %bb.h ], [ %i.z, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59 ] ; 2 uses
+  %.pre356 = phi ptr [ %i.x, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i68 ], [ %.pre356.pre, %bb.h ], [ %i.x, %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i.i.i59 ] ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %15) #31
+  %25 = icmp eq ptr %.pre356, %.pre357
+  br i1 %25, label %.critedge52, label %bb.j
+
+bb.j:                                             ; preds = %bb.f, %bb.i
+  %i.ak = phi ptr [ %.pre356, %bb.i ], [ %i.k, %bb.f ] ; 2 uses
+  %i.al = phi ptr [ %.pre357, %bb.i ], [ %i.m, %bb.f ] ; 2 uses
+  %i.am = phi ptr [ %i.s, %bb.i ], [ %i.q, %bb.f ] ; 3 uses
+  br label %.preheader
 
 .preheader:                                       ; preds = %bb.j, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread321
-  %.sroa.0318.0349 = phi ptr [ %i.bn, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread321 ], [ %i.am, %bb.j ] ; 9 uses
+  %.sroa.0318.0349 = phi ptr [ %i.bn, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread321 ], [ %i.ak, %bb.j ] ; 9 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0318.0349, i64 8
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !60
   %i.ap = icmp eq i64 %i.ao, 10
@@ -391,7 +391,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.ci, label %bb.o, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.critedge54, %.critedge
-  %.sroa.0314.0351 = phi ptr [ %i.cu, %.critedge ], [ %i.am, %.critedge54 ] ; 9 uses
+  %.sroa.0314.0351 = phi ptr [ %i.cu, %.critedge ], [ %i.ak, %.critedge54 ] ; 9 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.0314.0351, i64 8
   %i.ck = load i64, ptr %i.cj, align 8, !tbaa !60
   %i.cl = icmp eq i64 %i.ck, %i.ch
@@ -791,7 +791,7 @@ bb.ad:                                            ; preds = %bb.x
 bb.ae:                                            ; preds = %.noexc91
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %18, i8 0, i64 24, i1 false), !alias.scope !741
   %i.hj = load ptr, ptr %12, align 8, !tbaa !173, !noalias !741 ; 2 uses
-  %i.hk = load ptr, ptr %i.ak, align 8, !tbaa !173, !noalias !741 ; 2 uses
+  %i.hk = load ptr, ptr %i.am, align 8, !tbaa !173, !noalias !741 ; 2 uses
   %.not30.i = icmp eq ptr %i.hj, %i.hk
   br i1 %.not30.i, label %.loopexit29.i, label %.lr.ph.i
 
@@ -1194,7 +1194,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.
 _ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i260, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i261
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
   %i.wr = load ptr, ptr %12, align 8, !tbaa !170  ; 4 uses
-  %i.ws = load ptr, ptr %i.ak, align 8, !tbaa !171 ; 2 uses
+  %i.ws = load ptr, ptr %i.am, align 8, !tbaa !171 ; 2 uses
   %.not4.i.i.i265 = icmp eq ptr %i.wr, %i.ws
   br i1 %.not4.i.i.i265, label %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i271, label %.lr.ph.i.i.i266
 
@@ -1209,8 +1209,8 @@ _ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i271: ; preds = %.lr.p
   %.not.i.i1.i272 = icmp eq ptr %i.wr, null
   br i1 %.not.i.i1.i272, label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit273, label %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit273.sink.split
 
-bb.bq:                                            ; preds = %bb.bp, %bb.k, %bb.i, %bb.e
-  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.bp ], [ %i.bm, %bb.k ], [ %24, %bb.i ], [ %i.h, %bb.e ]
+bb.bq:                                            ; preds = %bb.bp, %bb.k, %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70, %bb.e
+  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.bp ], [ %i.bm, %bb.k ], [ %24, %_ZNSt6vectorIN8hf_cache7hf_fileESaIS1_EED2Ev.exit70 ], [ %i.h, %bb.e ]
   call void @_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %13) #31
   br label %bb.br
 
@@ -1222,7 +1222,8 @@ bb.br:                                            ; preds = %bb.bq, %bb.d
   call void @_ZN23common_download_hf_planD2Ev(ptr noundef nonnull align 8 dead_on_return(1368) dereferenceable(1368) %0) #31
   resume { ptr, i32 } %.pn.pn.pn
 
-.critedge52:                                      ; preds = %bb.j, %_ZN8hf_cache7hf_fileD2Ev.exit258
+.critedge52:                                      ; preds = %bb.i, %_ZN8hf_cache7hf_fileD2Ev.exit258
+  %26 = phi ptr [ %i.s, %bb.i ], [ %i.am, %_ZN8hf_cache7hf_fileD2Ev.exit258 ]
   %i.wu = load ptr, ptr %i.b, align 8, !tbaa !59  ; 2 uses
   %i.wv = getelementptr inbounds nuw i8, ptr %13, i64 48 ; 2 uses
   %i.ww = icmp eq ptr %i.wu, %i.wv
@@ -1249,7 +1250,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.
 _ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit280: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i275, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i276
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
   %i.xe = load ptr, ptr %12, align 8, !tbaa !170  ; 4 uses
-  %i.xf = load ptr, ptr %i.ak, align 8, !tbaa !171 ; 2 uses
+  %i.xf = load ptr, ptr %26, align 8, !tbaa !171  ; 2 uses
   %.not4.i.i.i281 = icmp eq ptr %i.xe, %i.xf
   br i1 %.not4.i.i.i281, label %_ZSt8_DestroyIPN8hf_cache7hf_fileES1_EvT_S3_RSaIT0_E.exit.i287, label %.lr.ph.i.i.i282
 

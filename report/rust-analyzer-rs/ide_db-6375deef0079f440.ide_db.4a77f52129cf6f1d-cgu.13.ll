@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %.lr.ph, %_RINvNtCsh
           to label %bb.es unwind label %.thread471 ; 3 uses
 
 ._crit_edge:                                      ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit265, %bb.l
-  %.sroa.0346.0.lcssa = phi i8 [ 0, %bb.l ], [ %.sroa.0346.6, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit265 ] ; 3 uses
+  %.sroa.0346.0.lcssa = phi i8 [ 0, %bb.l ], [ %.sroa.0346.6, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit265 ] ; 4 uses
   invoke void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6oosyzwIepl_6ide_db(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.t)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit170 unwind label %bb.al
 
@@ -235,7 +235,7 @@ bb.am:                                            ; preds = %_RINvNtCshzWfHUSfYa
           to label %bb.ao unwind label %bb.al     ; 2 uses
 
 bb.an:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit170, %bb.ao
-  %storemerge = phi ptr [ %i.cw, %bb.ao ], [ %0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit170 ] ; 23 uses
+  %storemerge = phi ptr [ %i.cw, %bb.ao ], [ %0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit170 ] ; 24 uses
   %.sroa.061.9 = phi i8 [ 1, %bb.ao ], [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit170 ] ; 14 uses
   %.sroa.058.2 = phi i8 [ 0, %bb.ao ], [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit170 ] ; 8 uses
   store ptr %storemerge, ptr %i.q, align 8
@@ -341,7 +341,7 @@ bb.ba:                                            ; preds = %bb.az
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179 unwind label %.loopexit.split-lp517
 
 .body193:                                         ; preds = %.loopexit.split-lp517, %.body206, %bb.ch, %bb.ca, %bb.bn, %bb.bo, %bb.br
-  %i.dq = phi ptr [ %i.fk, %bb.ca ], [ %i.ex, %bb.br ], [ %4, %bb.bn ], [ %i.fs, %.body206 ], [ %4, %bb.bo ], [ %i.fs, %bb.ch ], [ %.ph518, %.loopexit.split-lp517 ] ; 2 uses
+  %i.dq = phi ptr [ %i.fk, %bb.ca ], [ %i.ex, %bb.br ], [ %3, %bb.bn ], [ %i.fs, %.body206 ], [ %3, %bb.bo ], [ %i.fs, %bb.ch ], [ %.ph518, %.loopexit.split-lp517 ] ; 2 uses
   %.pn95.pn = phi { ptr, i32 } [ %i.fl, %bb.ca ], [ %.pn, %bb.br ], [ %i.eq, %bb.bn ], [ %.pn87.pn, %.body206 ], [ %i.eq, %bb.bo ], [ %.pn87.pn, %bb.ch ], [ %lpad.loopexit.split-lp520, %.loopexit.split-lp517 ] ; 2 uses
   %.sroa.069.3 = phi i1 [ true, %bb.ca ], [ true, %bb.br ], [ true, %bb.bn ], [ true, %.body206 ], [ true, %bb.bo ], [ true, %bb.ch ], [ %.sroa.069.4.ph, %.loopexit.split-lp517 ] ; 2 uses
   %.sroa.055.0 = phi i8 [ %.sroa.055.2, %bb.ca ], [ %.sroa.055.2, %bb.br ], [ %.sroa.055.2, %bb.bn ], [ %.sroa.055.2, %.body206 ], [ %.sroa.055.2, %bb.bo ], [ %.sroa.055.2, %bb.ch ], [ %.sroa.055.1.ph, %.loopexit.split-lp517 ]
@@ -349,7 +349,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.dr, label %.thread411, label %bb.aq
 
 .loopexit.split-lp517:                            ; preds = %bb.dr, %bb.bh, %bb.bg, %bb.bc, %bb.ba, %bb.cb, %bb.cr, %bb.cx, %bb.df
-  %.ph518 = phi ptr [ %storemerge, %bb.bc ], [ %4, %bb.bh ], [ %i.fk, %bb.cb ], [ %i.eg, %bb.bg ], [ %i.eg, %bb.cx ], [ %i.gm, %bb.cr ], [ %i.hg, %bb.df ], [ %storemerge, %bb.dr ], [ %storemerge, %bb.ba ]
+  %.ph518 = phi ptr [ %storemerge, %bb.bc ], [ %3, %bb.bh ], [ %i.fk, %bb.cb ], [ %i.eg, %bb.bg ], [ %i.eg, %bb.cx ], [ %i.gm, %bb.cr ], [ %i.hg, %bb.df ], [ %storemerge, %bb.dr ], [ %storemerge, %bb.ba ]
   %.sroa.069.4.ph = phi i1 [ true, %bb.bc ], [ true, %bb.bh ], [ true, %bb.cb ], [ true, %bb.bg ], [ true, %bb.cx ], [ true, %bb.cr ], [ false, %bb.df ], [ true, %bb.dr ], [ true, %bb.ba ]
   %.sroa.055.1.ph = phi i8 [ 0, %bb.bc ], [ %.sroa.055.2, %bb.bh ], [ %.sroa.055.2, %bb.cb ], [ %.sroa.055.2, %bb.bg ], [ %.sroa.055.2, %bb.cx ], [ %.sroa.055.2, %bb.cr ], [ %.sroa.055.2, %bb.df ], [ 1, %bb.dr ], [ 1, %bb.ba ]
   %lpad.loopexit.split-lp520 = landingpad { ptr, i32 }
@@ -368,30 +368,31 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   %i.dv = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 3 uses
   br label %bb.bb
 
-.loopexit515:                                     ; preds = %bb.el, %bb.bb
-  %3 = phi i64 [ %i.dx, %bb.bb ], [ %i.jh, %bb.el ] ; 2 uses
-  %.sroa.031.1.lcssa = phi i1 [ %.sroa.031.0707, %bb.bb ], [ %.sroa.031.2, %bb.el ] ; 2 uses
-  %i.dw = icmp samesign ult i64 %i.dy, %3
+.loopexit515:                                     ; preds = %bb.el
+  %i.dw = icmp samesign ult i64 %i.dy, %i.jh
   br i1 %i.dw, label %bb.bb, label %._crit_edge710
 
 ._crit_edge710:                                   ; preds = %.loopexit515
-  br i1 %.sroa.031.1.lcssa, label %bb.bc, label %.critedge
+  br i1 %.sroa.031.2, label %bb.bc, label %.critedge
 
 bb.bb:                                            ; preds = %.lr.ph709, %.loopexit515
-  %i.dx = phi i64 [ %i.dt, %.lr.ph709 ], [ %3, %.loopexit515 ] ; 3 uses
+  %i.dx = phi i64 [ %i.dt, %.lr.ph709 ], [ %i.jh, %.loopexit515 ] ; 2 uses
   %.sroa.026.0708 = phi i64 [ 0, %.lr.ph709 ], [ %i.dy, %.loopexit515 ] ; 7 uses
-  %.sroa.031.0707 = phi i1 [ false, %.lr.ph709 ], [ %.sroa.031.1.lcssa, %.loopexit515 ] ; 2 uses
+  %.sroa.031.0707 = phi i1 [ false, %.lr.ph709 ], [ %.sroa.031.2, %.loopexit515 ] ; 2 uses
   %i.dy = add nuw nsw i64 %.sroa.026.0708, 1      ; 4 uses
   %i.dz = icmp samesign ult i64 %i.dy, %i.dx
-  br i1 %i.dz, label %.lr.ph705, label %.loopexit515
+  br i1 %i.dz, label %.lr.ph705, label %.loopexit515.thread
 
-.critedge:                                        ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181, %._crit_edge710
-  %.sroa.0346.1 = phi i8 [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181 ], [ %.sroa.0346.0.lcssa, %._crit_edge710 ], [ %.sroa.0346.0.lcssa, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179 ] ; 3 uses
-  %4 = phi ptr [ %i.ea, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181 ], [ %storemerge, %._crit_edge710 ], [ %storemerge, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179 ] ; 12 uses
-  %.sroa.055.2 = phi i8 [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181 ], [ 1, %._crit_edge710 ], [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179 ] ; 14 uses
+.loopexit515.thread:                              ; preds = %bb.bb
+  br i1 %.sroa.031.0707, label %bb.bc, label %.critedge
+
+.critedge:                                        ; preds = %.loopexit515.thread, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181, %._crit_edge710
+  %.sroa.0346.1 = phi i8 [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181 ], [ %.sroa.0346.0.lcssa, %._crit_edge710 ], [ %.sroa.0346.0.lcssa, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179 ], [ %.sroa.0346.0.lcssa, %.loopexit515.thread ] ; 3 uses
+  %3 = phi ptr [ %i.ea, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181 ], [ %storemerge, %._crit_edge710 ], [ %storemerge, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179 ], [ %storemerge, %.loopexit515.thread ] ; 12 uses
+  %.sroa.055.2 = phi i8 [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit181 ], [ 1, %._crit_edge710 ], [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit179 ], [ 1, %.loopexit515.thread ] ; 14 uses
   br i1 %1, label %bb.bg, label %bb.bh
 
-bb.bc:                                            ; preds = %._crit_edge710
+bb.bc:                                            ; preds = %.loopexit515.thread, %._crit_edge710
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false)
   %i.ea = invoke fastcc noundef ptr @_RNvNtNtCs6oosyzwIepl_6ide_db7imports13merge_imports18with_use_tree_list(ptr nonnull %storemerge, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %i.m, ptr noundef nonnull align 8 %2)
@@ -426,13 +427,13 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
 
 bb.bg:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit195, %.critedge
   %.sroa.0346.2 = phi i8 [ %.sroa.0346.1, %.critedge ], [ %.sroa.0346.3, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit195 ] ; 2 uses
-  %i.eg = phi ptr [ %4, %.critedge ], [ %i.fk, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit195 ] ; 14 uses
+  %i.eg = phi ptr [ %3, %.critedge ], [ %i.fk, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db.exit195 ] ; 14 uses
   %i.eh = invoke fastcc noundef ptr @_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db(ptr %i.eg)
           to label %bb.cd unwind label %.loopexit.split-lp517 ; 6 uses
 
 bb.bh:                                            ; preds = %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  %i.ei = invoke fastcc noundef ptr @_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db(ptr %4)
+  %i.ei = invoke fastcc noundef ptr @_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db(ptr %3)
           to label %bb.bi unwind label %.loopexit.split-lp517 ; 5 uses
 
 bb.bi:                                            ; preds = %bb.bh
@@ -463,7 +464,7 @@ bb.bm:                                            ; preds = %bb.bi
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit216
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit216: ; preds = %bb.cx, %bb.cw, %bb.bm
-  %i.eo = phi ptr [ %4, %bb.bm ], [ %i.eg, %bb.cw ], [ %i.eg, %bb.cx ] ; 3 uses
+  %i.eo = phi ptr [ %3, %bb.bm ], [ %i.eg, %bb.cw ], [ %i.eg, %bb.cx ] ; 3 uses
   %i.ep = trunc nuw i8 %.sroa.055.2 to i1
   br i1 %i.ep, label %bb.cy, label %bb.av
 
@@ -496,7 +497,7 @@ bb.bq:                                            ; preds = %bb.bp
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit188 unwind label %bb.bs
 
 bb.br:                                            ; preds = %bb.by, %bb.bs
-  %i.ex = phi ptr [ %i.fe, %bb.by ], [ %4, %bb.bs ]
+  %i.ex = phi ptr [ %i.fe, %bb.by ], [ %3, %bb.bs ]
   %.pn = phi { ptr, i32 } [ %i.fj, %bb.by ], [ %i.ey, %bb.bs ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEECs6oosyzwIepl_6ide_db(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #35
           to label %.body193 unwind label %bb.x
@@ -527,8 +528,8 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %.not83, label %bb.bz, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.ff = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
+  %i.ff = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   %i.fg = load i32, ptr %i.ff, align 4, !noundef !4
   %i.fh = add i32 %i.fg, -1                       ; 2 uses
   store i32 %i.fh, ptr %i.ff, align 4
@@ -536,7 +537,7 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %i.fi, label %bb.bx, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit190
 
 bb.bx:                                            ; preds = %bb.bw
-  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %4) #34
+  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %3) #34
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit190 unwind label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
@@ -551,7 +552,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
 
 bb.bz:                                            ; preds = %bb.bv, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit188, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit190
   %.sroa.0346.3 = phi i8 [ %.sroa.0346.1, %bb.bv ], [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit190 ], [ %.sroa.0346.1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit188 ]
-  %i.fk = phi ptr [ %4, %bb.bv ], [ %i.fe, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit190 ], [ %4, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit188 ] ; 3 uses
+  %i.fk = phi ptr [ %3, %bb.bv ], [ %i.fe, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit190 ], [ %3, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11UseTreeListECs6oosyzwIepl_6ide_db.exit188 ] ; 3 uses
   invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6oosyzwIepl_6ide_db(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l)
           to label %bb.cb unwind label %bb.ca
 
@@ -954,8 +955,8 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
 
 bb.el:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit245, %bb.dz
   %.sroa.032.1 = phi i64 [ %.sroa.032.0702, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit245 ], [ %i.im, %bb.dz ] ; 2 uses
-  %.sroa.031.2 = phi i1 [ true, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit245 ], [ %.sroa.031.1703, %bb.dz ] ; 2 uses
-  %i.jh = load i64, ptr %i.ds, align 8, !noundef !4 ; 4 uses
+  %.sroa.031.2 = phi i1 [ true, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeECs6oosyzwIepl_6ide_db.exit245 ], [ %.sroa.031.1703, %bb.dz ] ; 3 uses
+  %i.jh = load i64, ptr %i.ds, align 8, !noundef !4 ; 5 uses
   %i.ji = icmp ult i64 %i.jh, 1152921504606846976
   call void @llvm.assume(i1 %i.ji)
   %i.jj = icmp samesign ult i64 %.sroa.032.1, %i.jh

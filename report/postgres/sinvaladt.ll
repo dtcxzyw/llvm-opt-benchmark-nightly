@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %SpinLockAcquire.exi
   br label %.sink.split
 
 bb.e:                                             ; preds = %.lr.ph, %bb.f
-  %i.x = phi i32 [ %.pre31, %.lr.ph ], [ %i.ae, %bb.f ] ; 3 uses
+  %i.x = phi i32 [ %.pre31, %.lr.ph ], [ %i.ae, %bb.f ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 3 uses
   %i.y = icmp slt i32 %i.x, %i.p
-  br i1 %i.y, label %bb.f, label %.critedge.loopexit.split.loop.exit33
+  br i1 %i.y, label %bb.f, label %.critedge.thread.loopexit
 
 bb.f:                                             ; preds = %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -222,17 +222,18 @@ bb.f:                                             ; preds = %bb.e
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.e, !llvm.loop !21
 
-.critedge.loopexit.split.loop.exit33:             ; preds = %bb.e
-  %2 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %bb.f, %.critedge.loopexit.split.loop.exit33, %.preheader
-  %3 = phi i32 [ %.pre31, %.preheader ], [ %i.x, %.critedge.loopexit.split.loop.exit33 ], [ %i.ae, %bb.f ]
-  %.0.lcssa = phi i32 [ 0, %.preheader ], [ %2, %.critedge.loopexit.split.loop.exit33 ], [ %1, %bb.f ] ; 2 uses
-  %.not = icmp slt i32 %3, %i.p
+.critedge:                                        ; preds = %bb.f, %.preheader
+  %2 = phi i32 [ %.pre31, %.preheader ], [ %i.ae, %bb.f ]
+  %.0.lcssa = phi i32 [ 0, %.preheader ], [ %1, %bb.f ] ; 2 uses
+  %.not = icmp slt i32 %2, %i.p
   br i1 %.not, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %.critedge
+.critedge.thread.loopexit:                        ; preds = %bb.e
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %bb.g
+
+bb.g:                                             ; preds = %.critedge.thread.loopexit, %.critedge
+  %.0.lcssa36 = phi i32 [ %.0.lcssa, %.critedge ], [ %3, %.critedge.thread.loopexit ]
   %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 9
   store i8 0, ptr %i.af, align 1
   br label %.sink.split
@@ -242,7 +243,7 @@ bb.h:                                             ; preds = %.critedge
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.g, %bb.h, %bb.d
-  %.025.ph = phi i32 [ -1, %bb.d ], [ %.0.lcssa, %bb.h ], [ %.0.lcssa, %bb.g ]
+  %.025.ph = phi i32 [ -1, %bb.d ], [ %.0.lcssa, %bb.h ], [ %.0.lcssa36, %bb.g ]
   %i.ag = load ptr, ptr @MainLWLockArray, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 640
   tail call void @LWLockRelease(ptr noundef nonnull %i.ah) #8
