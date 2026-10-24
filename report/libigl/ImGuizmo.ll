@@ -204,7 +204,7 @@ bb.dz:                                            ; preds = %bb.ed, %bb.dx
   %i.cuq = getelementptr inbounds nuw [4 x i8], ptr %37, i64 %indvars.iv118.i
   %indvars.iv.next119.i = add nuw nsw i64 %indvars.iv118.i, 1 ; 3 uses
   %.not.i95 = icmp eq i64 %indvars.iv.next119.i, 3 ; 2 uses
-  %i.cur = select i1 %.not.i95, i64 0, i64 %indvars.iv.next119.i
+  %i.cur = select i1 %.not.i95, i64 0, i64 %indvars.iv.next119.i, !prof !77
   %i.cus = getelementptr inbounds nuw [4 x i8], ptr %37, i64 %i.cur
   %i.cut = trunc nuw nsw i64 %indvars.iv118.i to i32
   %i.cuu = add nuw nsw i32 %i.cut, 2
@@ -266,8 +266,8 @@ bb.ea:                                            ; preds = %bb.eb
   %i.cws = fadd float %i.cwr, %i.cwo
   %i.cwt = extractelement <2 x float> %i.cvi, i64 1
   %i.cwu = fadd float %i.cwt, %i.cwq
-  %.val44.i = load float, ptr %36, align 16, !tbaa !77
-  %.val45.i = load float, ptr %i.css, align 4, !tbaa !78
+  %.val44.i = load float, ptr %36, align 16, !tbaa !78
+  %.val45.i = load float, ptr %i.css, align 4, !tbaa !79
   %i.cwv = fsub float %i.cws, %.val44.i           ; 2 uses
   %i.cww = fsub float %i.cwu, %.val45.i           ; 2 uses
   %i.cwx = fmul float %i.cww, %i.cww
@@ -422,7 +422,7 @@ bb.ef:                                            ; preds = %_ZN8ImGuizmo8matrix
   %i.dbe = sext i32 %.0 to i64
   %i.dbf = getelementptr [8 x i8], ptr @_ZN8ImGuizmoL16rotationInfoMaskE, i64 %i.dbe
   %i.dbg = getelementptr i8, ptr %i.dbf, i64 -64
-  %i.dbh = load ptr, ptr %i.dbg, align 8, !tbaa !79
+  %i.dbh = load ptr, ptr %i.dbg, align 8, !tbaa !80
   %i.dbi = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 752), align 8, !tbaa !74 ; 2 uses
   %i.dbj = fdiv float %i.dbi, f0x40490FDB
   %i.dbk = fmul float %i.dbj, 1.800000e+02
@@ -825,7 +825,7 @@ bb.ew:                                            ; preds = %bb.ep
   %i.drz = mul nsw i32 %i.dry, 3
   %i.dsa = sext i32 %i.dry to i64
   %i.dsb = getelementptr inbounds [8 x i8], ptr @_ZN8ImGuizmoL19translationInfoMaskE, i64 %i.dsa
-  %i.dsc = load ptr, ptr %i.dsb, align 8, !tbaa !79
+  %i.dsc = load ptr, ptr %i.dsb, align 8, !tbaa !80
   %i.dsd = sext i32 %i.drz to i64
   %i.dse = getelementptr inbounds [4 x i8], ptr @_ZN8ImGuizmoL20translationInfoIndexE, i64 %i.dsd ; 3 uses
   %i.dsf = load i32, ptr %i.dse, align 4, !tbaa !52
@@ -1170,7 +1170,7 @@ bb.fn:                                            ; preds = %bb.ff
   %i.eag = mul nsw i32 %i.eaf, 3
   %i.eah = sext i32 %i.eaf to i64
   %i.eai = getelementptr inbounds [8 x i8], ptr @_ZN8ImGuizmoL13scaleInfoMaskE, i64 %i.eah
-  %i.eaj = load ptr, ptr %i.eai, align 8, !tbaa !79
+  %i.eaj = load ptr, ptr %i.eai, align 8, !tbaa !80
   %i.eak = sext i32 %i.eag to i64
   %i.eal = getelementptr inbounds [4 x i8], ptr @_ZN8ImGuizmoL20translationInfoIndexE, i64 %i.eak
   %i.eam = load i32, ptr %i.eal, align 4, !tbaa !52
@@ -1573,7 +1573,7 @@ bb.h:                                             ; preds = %.critedge.loopexit,
 .loopexit:                                        ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.h
   %i.ms = add nuw nsw i32 %.043203, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.ms, 6
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !80
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !81
 }
 
 declare void @_ZN10ImDrawList19AddConvexPolyFilledEPK6ImVec2ij(ptr noundef nonnull align 8 dereferenceable(196), ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #12
@@ -1819,7 +1819,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20
   %i.gw = fadd float %.098, 1.000000e+00          ; 2 uses
   %i.gx = fcmp ugt float %i.gw, %3
-  br i1 %i.gx, label %._crit_edge, label %bb.b, !llvm.loop !81
+  br i1 %i.gx, label %._crit_edge, label %bb.b, !llvm.loop !82
 }
 
 declare void @_ZN10ImDrawList7AddLineERK6ImVec2S2_jf(ptr noundef nonnull align 8 dereferenceable(196), ptr noundef nonnull align 4 dereferenceable(8), ptr noundef nonnull align 4 dereferenceable(8), i32 noundef, float noundef) local_unnamed_addr #12
@@ -2222,7 +2222,7 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   %i.bx = add nuw nsw i32 %.052, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.bx, 10
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !82
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !83
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
@@ -2368,10 +2368,11 @@ attributes #20 = { nounwind }
 !74 = !{!24, !9, i64 752}
 !75 = !{!24, !9, i64 792}
 !76 = !{!24, !6, i64 880}
-!77 = !{!22, !9, i64 0}
-!78 = !{!22, !9, i64 4}
-!79 = !{!35, !35, i64 0}
-!80 = distinct !{!80, !48}
+!77 = !{!"branch_weights", i32 1, i32 2}
+!78 = !{!22, !9, i64 0}
+!79 = !{!22, !9, i64 4}
+!80 = !{!35, !35, i64 0}
 !81 = distinct !{!81, !48}
 !82 = distinct !{!82, !48}
+!83 = distinct !{!83, !48}
 end_hunk_3
