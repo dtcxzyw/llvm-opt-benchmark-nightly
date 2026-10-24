@@ -113,7 +113,7 @@ bb.k:                                             ; preds = %.lr.ph96, %._crit_e
   br i1 %i.ad, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.k
-  %i.ae = mul nsw i64 %indvars.iv106, %i.m
+  %i.ae = mul nuw nsw i64 %indvars.iv106, %i.m
   %i.af = getelementptr [16 x i8], ptr %4, i64 %i.ae
   br label %bb.m
 

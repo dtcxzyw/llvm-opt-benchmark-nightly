@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i601.prol ], [ 0, %.lr.ph.i601.preheader4484 ]
   %i.ejd = getelementptr inbounds nuw [8 x i8], ptr %i.eit, i64 %.sroa.8.0281.i.prol
   %i.eje = getelementptr inbounds nuw [8 x i8], ptr %.sroa.06.0285.i, i64 %.sroa.8.0281.i.prol
-  %i.ejf = add nuw i64 %.sroa.8.0281.i.prol, 1    ; 2 uses
+  %i.ejf = add nuw nsw i64 %.sroa.8.0281.i.prol, 1 ; 2 uses
   %i.ejg = load i64, ptr %i.eje, align 8, !noalias !36405, !noundef !45
   store i64 %i.ejg, ptr %i.ejd, align 8, !noalias !36405
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -242,22 +242,22 @@ bb.ado:                                           ; preds = %bb.adn
   %.sroa.8.0281.i = phi i64 [ %i.ekc, %.lr.ph.i601 ], [ %.sroa.8.0281.i.unr, %.lr.ph.i601.prol.loopexit ] ; 6 uses
   %i.ejo = getelementptr inbounds nuw [8 x i8], ptr %i.eit, i64 %.sroa.8.0281.i
   %i.ejp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.06.0285.i, i64 %.sroa.8.0281.i
-  %i.ejq = add nuw i64 %.sroa.8.0281.i, 1         ; 2 uses
+  %i.ejq = add nuw nsw i64 %.sroa.8.0281.i, 1     ; 2 uses
   %i.ejr = load i64, ptr %i.ejp, align 8, !noalias !36405, !noundef !45
   store i64 %i.ejr, ptr %i.ejo, align 8, !noalias !36405
   %i.ejs = getelementptr inbounds nuw [8 x i8], ptr %i.eit, i64 %i.ejq
   %i.ejt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.06.0285.i, i64 %i.ejq
-  %i.eju = add nuw i64 %.sroa.8.0281.i, 2         ; 2 uses
+  %i.eju = add nuw nsw i64 %.sroa.8.0281.i, 2     ; 2 uses
   %i.ejv = load i64, ptr %i.ejt, align 8, !noalias !36405, !noundef !45
   store i64 %i.ejv, ptr %i.ejs, align 8, !noalias !36405
   %i.ejw = getelementptr inbounds nuw [8 x i8], ptr %i.eit, i64 %i.eju
   %i.ejx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.06.0285.i, i64 %i.eju
-  %i.ejy = add nuw i64 %.sroa.8.0281.i, 3         ; 2 uses
+  %i.ejy = add nuw nsw i64 %.sroa.8.0281.i, 3     ; 2 uses
   %i.ejz = load i64, ptr %i.ejx, align 8, !noalias !36405, !noundef !45
   store i64 %i.ejz, ptr %i.ejw, align 8, !noalias !36405
   %i.eka = getelementptr inbounds nuw [8 x i8], ptr %i.eit, i64 %i.ejy
   %i.ekb = getelementptr inbounds nuw [8 x i8], ptr %.sroa.06.0285.i, i64 %i.ejy
-  %i.ekc = add nuw i64 %.sroa.8.0281.i, 4         ; 2 uses
+  %i.ekc = add nuw nsw i64 %.sroa.8.0281.i, 4     ; 2 uses
   %i.ekd = load i64, ptr %i.ekb, align 8, !noalias !36405, !noundef !45
   store i64 %i.ekd, ptr %i.eka, align 8, !noalias !36405
   %exitcond.not.i602.3 = icmp eq i64 %i.ekc, %.sroa.0.0288.i

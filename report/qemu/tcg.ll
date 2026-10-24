@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.f
   %.not218.i.i = icmp eq i64 %i.av, 0
   tail call void @llvm.assume(i1 %.not218.i.i)
   %i.aw = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %indvars.iv.i.i ; 2 uses
-  %i.ax = shl nsw i64 %i.ar, 24
+  %i.ax = shl nuw nsw i64 %i.ar, 24
   %i.ay = and i64 %i.ax, 251658240
   %.lobit219.i.i = and i64 %i.at, 4294967296
   %i.az = or disjoint i64 %i.ay, %.lobit219.i.i
@@ -238,7 +238,7 @@ bb.j:                                             ; preds = %bb.f
   %.not216.i.i = icmp eq i64 %i.bp, 0
   tail call void @llvm.assume(i1 %.not216.i.i)
   %i.bq = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %indvars.iv.i.i ; 2 uses
-  %i.br = shl nsw i64 %i.bl, 24
+  %i.br = shl nuw nsw i64 %i.bl, 24
   %i.bs = and i64 %i.br, 251658240
   %.lobit.i.i = and i64 %i.bn, 4294967296
   %i.bt = or disjoint i64 %i.bs, %.lobit.i.i

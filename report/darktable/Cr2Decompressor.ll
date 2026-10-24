@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %.preheader236.prehe
   %.sroa.51151.3312 = phi i32 [ %.sroa.51151.5, %bb.k ], [ %.sroa.51151.2324, %.preheader.preheader ]
   %.sroa.0124.3311 = phi i64 [ %.sroa.0124.6, %bb.k ], [ %.sroa.0124.2323, %.preheader.preheader ]
   %.sroa.18.3310 = phi i32 [ %.sroa.18.6, %bb.k ], [ %.sroa.18.2322, %.preheader.preheader ]
-  %i.gj = mul nsw i32 %.147314, 6
-  %i.gk = zext i32 %i.gj to i64
+  %i.gj = mul nuw nsw i32 %.147314, 6
+  %i.gk = zext nneg i32 %i.gj to i64
   br label %bb.l
 
 bb.k:                                             ; preds = %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit
@@ -608,8 +608,8 @@ bb.j:                                             ; preds = %.preheader236.prehe
   %.sroa.51151.3312 = phi i32 [ %.sroa.51151.5, %bb.k ], [ %.sroa.51151.2324, %.preheader.preheader ]
   %.sroa.0124.3311 = phi i64 [ %.sroa.0124.6, %bb.k ], [ %.sroa.0124.2323, %.preheader.preheader ]
   %.sroa.18.3310 = phi i32 [ %.sroa.18.6, %bb.k ], [ %.sroa.18.2322, %.preheader.preheader ]
-  %i.gj = shl nsw i32 %.147314, 2
-  %i.gk = zext i32 %i.gj to i64
+  %i.gj = shl nuw nsw i32 %.147314, 2
+  %i.gk = zext nneg i32 %i.gj to i64
   br label %bb.l
 
 bb.k:                                             ; preds = %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit
@@ -1012,8 +1012,8 @@ bb.j:                                             ; preds = %.preheader238.prehe
   %.sroa.51153.3314 = phi i32 [ %.sroa.51153.5, %bb.k ], [ %.sroa.51153.2326, %.preheader.preheader ]
   %.sroa.0126.3313 = phi i64 [ %.sroa.0126.6, %bb.k ], [ %.sroa.0126.2325, %.preheader.preheader ]
   %.sroa.18.3312 = phi i32 [ %.sroa.18.6, %bb.k ], [ %.sroa.18.2324, %.preheader.preheader ]
-  %i.gd = shl nsw i32 %.147316, 1
-  %i.ge = zext i32 %i.gd to i64
+  %i.gd = shl nuw nsw i32 %.147316, 1
+  %i.ge = zext nneg i32 %i.gd to i64
   br label %bb.l
 
 bb.k:                                             ; preds = %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit
@@ -1416,8 +1416,8 @@ bb.j:                                             ; preds = %.preheader236.prehe
   %.sroa.51151.3312 = phi i32 [ %.sroa.51151.5, %bb.k ], [ %.sroa.51151.2324, %.preheader.preheader ]
   %.sroa.0124.3311 = phi i64 [ %.sroa.0124.6, %bb.k ], [ %.sroa.0124.2323, %.preheader.preheader ]
   %.sroa.18.3310 = phi i32 [ %.sroa.18.6, %bb.k ], [ %.sroa.18.2322, %.preheader.preheader ]
-  %i.gk = shl nsw i32 %.147314, 2
-  %i.gl = zext i32 %i.gk to i64
+  %i.gk = shl nuw nsw i32 %.147314, 2
+  %i.gl = zext nneg i32 %i.gk to i64
   br label %bb.l
 
 bb.k:                                             ; preds = %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit

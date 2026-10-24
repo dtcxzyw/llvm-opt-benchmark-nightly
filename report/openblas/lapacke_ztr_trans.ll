@@ -181,7 +181,7 @@ scalar.ph148.prol:                                ; preds = %scalar.ph148.prehea
   %indvars.iv99.prol = phi i64 [ %indvars.iv.next100.prol, %scalar.ph148.prol ], [ %indvars.iv99.ph, %scalar.ph148.preheader ] ; 3 uses
   %prol.iter169 = phi i64 [ %prol.iter169.next, %scalar.ph148.prol ], [ 0, %scalar.ph148.preheader ]
   %gep118.prol = getelementptr [16 x i8], ptr %invariant.gep117, i64 %indvars.iv99.prol
-  %i.bj = mul nsw i64 %indvars.iv99.prol, %i.ag
+  %i.bj = mul nuw nsw i64 %indvars.iv99.prol, %i.ag
   %gep120.prol = getelementptr [16 x i8], ptr %invariant.gep119, i64 %i.bj
   %i.bk = load <2 x double>, ptr %gep118.prol, align 8
   store <2 x double> %i.bk, ptr %gep120.prol, align 8
@@ -199,25 +199,25 @@ scalar.ph148.prol.loopexit:                       ; preds = %scalar.ph148.prol, 
 scalar.ph148:                                     ; preds = %scalar.ph148.prol.loopexit, %scalar.ph148
   %indvars.iv99 = phi i64 [ %indvars.iv.next100.3, %scalar.ph148 ], [ %indvars.iv99.unr, %scalar.ph148.prol.loopexit ] ; 6 uses
   %gep118 = getelementptr [16 x i8], ptr %invariant.gep117, i64 %indvars.iv99
-  %i.bn = mul nsw i64 %indvars.iv99, %i.ag
+  %i.bn = mul nuw nsw i64 %indvars.iv99, %i.ag
   %gep120 = getelementptr [16 x i8], ptr %invariant.gep119, i64 %i.bn
   %i.bo = load <2 x double>, ptr %gep118, align 8
   store <2 x double> %i.bo, ptr %gep120, align 8
   %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
   %gep118.1 = getelementptr [16 x i8], ptr %invariant.gep117, i64 %indvars.iv.next100
-  %i.bp = mul nsw i64 %indvars.iv.next100, %i.ag
+  %i.bp = mul nuw nsw i64 %indvars.iv.next100, %i.ag
   %gep120.1 = getelementptr [16 x i8], ptr %invariant.gep119, i64 %i.bp
   %i.bq = load <2 x double>, ptr %gep118.1, align 8
   store <2 x double> %i.bq, ptr %gep120.1, align 8
   %indvars.iv.next100.1 = add nuw nsw i64 %indvars.iv99, 2 ; 2 uses
   %gep118.2 = getelementptr [16 x i8], ptr %invariant.gep117, i64 %indvars.iv.next100.1
-  %i.br = mul nsw i64 %indvars.iv.next100.1, %i.ag
+  %i.br = mul nuw nsw i64 %indvars.iv.next100.1, %i.ag
   %gep120.2 = getelementptr [16 x i8], ptr %invariant.gep119, i64 %i.br
   %i.bs = load <2 x double>, ptr %gep118.2, align 8
   store <2 x double> %i.bs, ptr %gep120.2, align 8
   %indvars.iv.next100.2 = add nuw nsw i64 %indvars.iv99, 3 ; 2 uses
   %gep118.3 = getelementptr [16 x i8], ptr %invariant.gep117, i64 %indvars.iv.next100.2
-  %i.bt = mul nsw i64 %indvars.iv.next100.2, %i.ag
+  %i.bt = mul nuw nsw i64 %indvars.iv.next100.2, %i.ag
   %gep120.3 = getelementptr [16 x i8], ptr %invariant.gep119, i64 %i.bt
   %i.bu = load <2 x double>, ptr %gep118.3, align 8
   store <2 x double> %i.bu, ptr %gep120.3, align 8
@@ -246,7 +246,7 @@ bb.h:                                             ; preds = %.lr.ph86, %._crit_e
   br i1 %i.cd, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.h
-  %i.ce = mul nsw i64 %indvars.iv94, %i.r
+  %i.ce = mul nuw nsw i64 %indvars.iv94, %i.r
   %invariant.gep = getelementptr [16 x i8], ptr %4, i64 %i.ce ; 7 uses
   %invariant.gep115 = getelementptr [16 x i8], ptr %6, i64 %indvars.iv94 ; 7 uses
   %i.cf = add nuw i64 %indvars.iv94, %i.o

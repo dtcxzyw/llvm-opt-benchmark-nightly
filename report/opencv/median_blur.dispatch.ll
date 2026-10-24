@@ -205,7 +205,7 @@ middle.block1476:                                 ; preds = %vector.body1450
   br i1 %i.kds, label %.lr.ph493.i, label %._crit_edge494.i
 
 .lr.ph493.i:                                      ; preds = %.preheader448.i
-  %i.lki = mul nsw i64 %indvars.iv560.i, %i.kdm   ; 2 uses
+  %i.lki = mul nuw nsw i64 %indvars.iv560.i, %i.kdm ; 2 uses
   %invariant.gep.i551 = getelementptr i8, ptr %i.kmj, i64 %indvars.iv560.i
   br label %.preheader445.preheader.i
 
@@ -468,7 +468,7 @@ bb.pd:                                            ; preds = %bb.pc
   %i.lpv = trunc nuw nsw i64 %i.lpq to i32
   %i.lpw = or disjoint i64 %.1312475.lcssa.wide.i, %i.kmk
   %i.lpx = trunc nuw nsw i64 %i.lpw to i32
-  %i.lpy = mul nsw i32 %i.kcz, %i.lpx
+  %i.lpy = mul nuw nsw i32 %i.kcz, %i.lpx
   %i.lpz = add i32 %i.lpy, %i.lpv
   %i.lqa = shl nsw i32 %i.lpz, 4
   %i.lqb = sext i32 %i.lqa to i64
@@ -581,7 +581,7 @@ bb.pd:                                            ; preds = %bb.pc
 bb.pe:                                            ; preds = %bb.pc
   %i.lth = or disjoint i64 %.1312475.lcssa.wide.i, %i.kmk
   %i.lti = trunc nuw nsw i64 %i.lth to i32
-  %i.ltj = mul nsw i32 %i.kde, %i.lti
+  %i.ltj = mul nuw nsw i32 %i.kde, %i.lti
   %i.ltk = sext i32 %i.ltj to i64
   %i.ltl = getelementptr inbounds [2 x i8], ptr %i.kbj, i64 %i.ltk ; 2 uses
   %.not346487.i = icmp samesign ult i64 %i.lkx, %i.lpr
