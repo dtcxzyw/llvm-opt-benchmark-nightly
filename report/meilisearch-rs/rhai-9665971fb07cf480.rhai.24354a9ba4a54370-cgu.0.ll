@@ -205,8 +205,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.rr, -4                      ; 3 uses
   %i.se = add i64 %i.re, %n.vec
   %i.sf = add i64 %i.rd, 2
-  %i.sg = load i16, ptr %i.qz, align 8, !alias.scope !27063, !noundef !53
-  %i.sh = load i16, ptr %i.ra, align 2, !alias.scope !27063, !noundef !53
+  %i.sg = load i16, ptr %i.qz, align 8, !alias.scope !27063
+  %i.sh = load i16, ptr %i.ra, align 2, !alias.scope !27063
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

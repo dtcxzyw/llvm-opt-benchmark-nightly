@@ -205,10 +205,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 48
   %i.t = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %index ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 72
-  %i.v = load i16, ptr %i.o, align 8, !range !15, !alias.scope !619, !noalias !620, !noundef !5
-  %i.w = load i16, ptr %i.q, align 8, !range !15, !alias.scope !619, !noalias !620, !noundef !5
-  %i.x = load i16, ptr %i.s, align 8, !range !15, !alias.scope !619, !noalias !620, !noundef !5
-  %i.y = load i16, ptr %i.u, align 8, !range !15, !alias.scope !619, !noalias !620, !noundef !5
+  %i.v = load i16, ptr %i.o, align 8, !alias.scope !619, !noalias !620
+  %i.w = load i16, ptr %i.q, align 8, !alias.scope !619, !noalias !620
+  %i.x = load i16, ptr %i.s, align 8, !alias.scope !619, !noalias !620
+  %i.y = load i16, ptr %i.u, align 8, !alias.scope !619, !noalias !620
   %i.z = insertelement <4 x i16> poison, i16 %i.v, i64 0
   %i.aa = insertelement <4 x i16> %i.z, i16 %i.w, i64 1
   %i.ab = insertelement <4 x i16> %i.aa, i16 %i.x, i64 2
@@ -611,7 +611,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !681, !noundef !5 ; 3 uses
-  %i.l = load i64, ptr %1, align 8, !range !19, !alias.scope !681, !noundef !5
+  %i.l = load i64, ptr %1, align 8, !range !18, !alias.scope !681, !noundef !5
   %i.m = icmp eq i64 %i.k, %i.l
   br i1 %i.m, label %bb.i, label %bb.l
 
@@ -816,7 +816,7 @@ bb.f:                                             ; preds = %_RNvMs2_NtNtNtCs7ZU
 _RNvMs2_NtNtNtCs7ZUl82OSlxp_6rustls4msgs7message8outboundNtB5_15PrefixedPayload18extend_from_chunks.exit: ; preds = %_RNvMs2_NtNtNtCs7ZUl82OSlxp_6rustls4msgs7message8outboundNtB5_15PrefixedPayload13with_capacity.exit
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 34
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.z = load i8, ptr %i.y, align 8, !range !20, !noundef !5
+  %i.z = load i8, ptr %i.y, align 8, !range !19, !noundef !5
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 33
   %i.ab = load i8, ptr %i.aa, align 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
@@ -848,7 +848,7 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %i.i = load i64, ptr %1, align 8, !range !21, !noundef !5
+  %i.i = load i64, ptr %1, align 8, !range !20, !noundef !5
   switch i64 %i.i, label %default.unreachable34 [
     i64 0, label %bb.c
     i64 2, label %bb.e
@@ -1205,7 +1205,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.cc, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.cd = load i64, ptr %i.i, align 8, !range !19, !alias.scope !736, !noundef !5
+  %i.cd = load i64, ptr %i.i, align 8, !range !18, !alias.scope !736, !noundef !5
   %i.ce = icmp eq i64 %.pre, %i.cd
   br i1 %i.ce, label %bb.w, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmE8push_mutBL_.exit
 
@@ -1277,8 +1277,8 @@ bb.y:                                             ; preds = %.lr.ph94, %bb.ap
   %.sroa.01.04.i.prol = phi ptr [ %i.de, %bb.ab ], [ %2, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %bb.ab ], [ 0, %.lr.ph.i.preheader ]
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i.prol, i64 8 ; 2 uses
-  %i.df = load ptr, ptr %.sroa.01.04.i.prol, align 8, !alias.scope !737, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dg = load i16, ptr %i.df, align 2, !range !23, !noalias !737, !noundef !5
+  %i.df = load ptr, ptr %.sroa.01.04.i.prol, align 8, !alias.scope !737, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dg = load i16, ptr %i.df, align 2, !range !22, !noalias !737, !noundef !5
   switch i16 %i.dg, label %bb.ab [
     i16 4, label %bb.aa
     i16 5, label %bb.z
@@ -1311,8 +1311,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %.lr.
   %.sroa.3.05.i = phi ptr [ %.sroa.3.1.i.3, %bb.ai ], [ %.sroa.3.05.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
   %.sroa.01.04.i = phi ptr [ %i.dr, %bb.ai ], [ %.sroa.01.04.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 8
-  %i.dj = load ptr, ptr %.sroa.01.04.i, align 8, !alias.scope !737, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dk = load i16, ptr %i.dj, align 2, !range !23, !noalias !737, !noundef !5
+  %i.dj = load ptr, ptr %.sroa.01.04.i, align 8, !alias.scope !737, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dk = load i16, ptr %i.dj, align 2, !range !22, !noalias !737, !noundef !5
   switch i16 %i.dk, label %.lr.ph.i.1 [
     i16 4, label %bb.aj
     i16 5, label %bb.ak
@@ -1322,8 +1322,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %.lr.
   %.sroa.3.1.i = phi ptr [ %.sroa.3.05.i, %.lr.ph.i ], [ %.sroa.3.05.i, %bb.aj ], [ %i.dj, %bb.ak ] ; 2 uses
   %.sroa.0.1.i = phi ptr [ %.sroa.0.06.i, %.lr.ph.i ], [ %i.dj, %bb.aj ], [ %.sroa.0.06.i, %bb.ak ] ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 16
-  %i.dm = load ptr, ptr %i.di, align 8, !alias.scope !737, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dn = load i16, ptr %i.dm, align 2, !range !23, !noalias !737, !noundef !5
+  %i.dm = load ptr, ptr %i.di, align 8, !alias.scope !737, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dn = load i16, ptr %i.dm, align 2, !range !22, !noalias !737, !noundef !5
   switch i16 %i.dn, label %.lr.ph.i.2 [
     i16 4, label %bb.ad
     i16 5, label %bb.ac
@@ -1339,8 +1339,8 @@ bb.ad:                                            ; preds = %.lr.ph.i.1
   %.sroa.3.1.i.1 = phi ptr [ %.sroa.3.1.i, %.lr.ph.i.1 ], [ %.sroa.3.1.i, %bb.ad ], [ %i.dm, %bb.ac ] ; 2 uses
   %.sroa.0.1.i.1 = phi ptr [ %.sroa.0.1.i, %.lr.ph.i.1 ], [ %i.dm, %bb.ad ], [ %.sroa.0.1.i, %bb.ac ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 24
-  %i.dp = load ptr, ptr %i.dl, align 8, !alias.scope !737, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dq = load i16, ptr %i.dp, align 2, !range !23, !noalias !737, !noundef !5
+  %i.dp = load ptr, ptr %i.dl, align 8, !alias.scope !737, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dq = load i16, ptr %i.dp, align 2, !range !22, !noalias !737, !noundef !5
   switch i16 %i.dq, label %.lr.ph.i.3 [
     i16 4, label %bb.af
     i16 5, label %bb.ae
@@ -1356,8 +1356,8 @@ bb.af:                                            ; preds = %.lr.ph.i.2
   %.sroa.3.1.i.2 = phi ptr [ %.sroa.3.1.i.1, %.lr.ph.i.2 ], [ %.sroa.3.1.i.1, %bb.af ], [ %i.dp, %bb.ae ] ; 2 uses
   %.sroa.0.1.i.2 = phi ptr [ %.sroa.0.1.i.1, %.lr.ph.i.2 ], [ %i.dp, %bb.af ], [ %.sroa.0.1.i.1, %bb.ae ] ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 32 ; 2 uses
-  %i.ds = load ptr, ptr %i.do, align 8, !alias.scope !737, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dt = load i16, ptr %i.ds, align 2, !range !23, !noalias !737, !noundef !5
+  %i.ds = load ptr, ptr %i.do, align 8, !alias.scope !737, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dt = load i16, ptr %i.ds, align 2, !range !22, !noalias !737, !noundef !5
   switch i16 %i.dt, label %bb.ai [
     i16 4, label %bb.ah
     i16 5, label %bb.ag
@@ -1760,7 +1760,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.cc, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.cd = load i64, ptr %i.i, align 8, !range !19, !alias.scope !786, !noundef !5
+  %i.cd = load i64, ptr %i.i, align 8, !range !18, !alias.scope !786, !noundef !5
   %i.ce = icmp eq i64 %.pre, %i.cd
   br i1 %i.ce, label %bb.w, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmE8push_mutBL_.exit
 
@@ -1832,8 +1832,8 @@ bb.y:                                             ; preds = %.lr.ph94, %bb.ap
   %.sroa.01.04.i.prol = phi ptr [ %i.de, %bb.ab ], [ %2, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %bb.ab ], [ 0, %.lr.ph.i.preheader ]
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i.prol, i64 8 ; 2 uses
-  %i.df = load ptr, ptr %.sroa.01.04.i.prol, align 8, !alias.scope !787, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dg = load i16, ptr %i.df, align 2, !range !23, !noalias !787, !noundef !5
+  %i.df = load ptr, ptr %.sroa.01.04.i.prol, align 8, !alias.scope !787, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dg = load i16, ptr %i.df, align 2, !range !22, !noalias !787, !noundef !5
   switch i16 %i.dg, label %bb.ab [
     i16 4, label %bb.aa
     i16 5, label %bb.z
@@ -1866,8 +1866,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %.lr.
   %.sroa.3.05.i = phi ptr [ %.sroa.3.1.i.3, %bb.ai ], [ %.sroa.3.05.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
   %.sroa.01.04.i = phi ptr [ %i.dr, %bb.ai ], [ %.sroa.01.04.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 8
-  %i.dj = load ptr, ptr %.sroa.01.04.i, align 8, !alias.scope !787, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dk = load i16, ptr %i.dj, align 2, !range !23, !noalias !787, !noundef !5
+  %i.dj = load ptr, ptr %.sroa.01.04.i, align 8, !alias.scope !787, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dk = load i16, ptr %i.dj, align 2, !range !22, !noalias !787, !noundef !5
   switch i16 %i.dk, label %.lr.ph.i.1 [
     i16 4, label %bb.aj
     i16 5, label %bb.ak
@@ -1877,8 +1877,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %.lr.
   %.sroa.3.1.i = phi ptr [ %.sroa.3.05.i, %.lr.ph.i ], [ %.sroa.3.05.i, %bb.aj ], [ %i.dj, %bb.ak ] ; 2 uses
   %.sroa.0.1.i = phi ptr [ %.sroa.0.06.i, %.lr.ph.i ], [ %i.dj, %bb.aj ], [ %.sroa.0.06.i, %bb.ak ] ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 16
-  %i.dm = load ptr, ptr %i.di, align 8, !alias.scope !787, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dn = load i16, ptr %i.dm, align 2, !range !23, !noalias !787, !noundef !5
+  %i.dm = load ptr, ptr %i.di, align 8, !alias.scope !787, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dn = load i16, ptr %i.dm, align 2, !range !22, !noalias !787, !noundef !5
   switch i16 %i.dn, label %.lr.ph.i.2 [
     i16 4, label %bb.ad
     i16 5, label %bb.ac
@@ -1894,8 +1894,8 @@ bb.ad:                                            ; preds = %.lr.ph.i.1
   %.sroa.3.1.i.1 = phi ptr [ %.sroa.3.1.i, %.lr.ph.i.1 ], [ %.sroa.3.1.i, %bb.ad ], [ %i.dm, %bb.ac ] ; 2 uses
   %.sroa.0.1.i.1 = phi ptr [ %.sroa.0.1.i, %.lr.ph.i.1 ], [ %i.dm, %bb.ad ], [ %.sroa.0.1.i, %bb.ac ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 24
-  %i.dp = load ptr, ptr %i.dl, align 8, !alias.scope !787, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dq = load i16, ptr %i.dp, align 2, !range !23, !noalias !787, !noundef !5
+  %i.dp = load ptr, ptr %i.dl, align 8, !alias.scope !787, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dq = load i16, ptr %i.dp, align 2, !range !22, !noalias !787, !noundef !5
   switch i16 %i.dq, label %.lr.ph.i.3 [
     i16 4, label %bb.af
     i16 5, label %bb.ae
@@ -1911,8 +1911,8 @@ bb.af:                                            ; preds = %.lr.ph.i.2
   %.sroa.3.1.i.2 = phi ptr [ %.sroa.3.1.i.1, %.lr.ph.i.2 ], [ %.sroa.3.1.i.1, %bb.af ], [ %i.dp, %bb.ae ] ; 2 uses
   %.sroa.0.1.i.2 = phi ptr [ %.sroa.0.1.i.1, %.lr.ph.i.2 ], [ %i.dp, %bb.af ], [ %.sroa.0.1.i.1, %bb.ae ] ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 32 ; 2 uses
-  %i.ds = load ptr, ptr %i.do, align 8, !alias.scope !787, !nonnull !5, !align !22, !noundef !5 ; 3 uses
-  %i.dt = load i16, ptr %i.ds, align 2, !range !23, !noalias !787, !noundef !5
+  %i.ds = load ptr, ptr %i.do, align 8, !alias.scope !787, !nonnull !5, !align !21, !noundef !5 ; 3 uses
+  %i.dt = load i16, ptr %i.ds, align 2, !range !22, !noalias !787, !noundef !5
   switch i16 %i.dt, label %bb.ai [
     i16 4, label %bb.ah
     i16 5, label %bb.ag
@@ -2315,7 +2315,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.c = load <2 x i16>, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.e = load i8, ptr %i.d, align 4, !range !20, !noundef !5
+  %i.e = load i8, ptr %i.d, align 4, !range !19, !noundef !5
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 29
   %i.g = load i8, ptr %i.f, align 1
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -2481,7 +2481,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.j = load i8, ptr %i.i, align 4, !range !20, !noundef !5
+  %i.j = load i8, ptr %i.i, align 4, !range !19, !noundef !5
   switch i8 %i.j, label %default.unreachable11 [
     i8 0, label %bb.g
     i8 1, label %bb.b
@@ -2542,7 +2542,7 @@ bb.l:                                             ; preds = %bb.h
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.u = load i16, ptr %i.t, align 8, !range !23, !noundef !5
+  %i.u = load i16, ptr %i.t, align 8, !range !22, !noundef !5
   switch i16 %i.u, label %default.unreachable11 [
     i16 0, label %bb.v
     i16 1, label %bb.m
@@ -2945,7 +2945,7 @@ bb.a:
   %i.b = alloca [48 x i8], align 8                ; 3 uses
   %i.c = alloca [48 x i8], align 8                ; 6 uses
   %i.d = alloca [48 x i8], align 8                ; 6 uses
-  %i.e = load i64, ptr %1, align 8, !range !21, !noundef !5
+  %i.e = load i64, ptr %1, align 8, !range !20, !noundef !5
   switch i64 %i.e, label %default.unreachable6 [
     i64 1, label %bb.b
     i64 2, label %bb.c
@@ -3172,7 +3172,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !957, !noundef !5 ; 2 uses
-  %i.f = load i64, ptr %i.c, align 8, !range !19, !alias.scope !957, !noundef !5 ; 2 uses
+  %i.f = load i64, ptr %i.c, align 8, !range !18, !alias.scope !957, !noundef !5 ; 2 uses
   %.not8.i = icmp ult i64 %i.e, %i.f
   %i.g = select i1 %.not8.i, i64 0, i64 %i.f
   %.sroa.02.0.i = sub nuw i64 %i.e, %i.g
@@ -3228,7 +3228,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_RNvXs5_NtNtCs4wP2HXfJTCR_5alloc2io5implsRShNtNtB7_4read4Read4read.exit
   %.sroa.04.023 = phi i64 [ 0, %.lr.ph ], [ %i.z, %_RNvXs5_NtNtCs4wP2HXfJTCR_5alloc2io5implsRShNtNtB7_4read4Read4read.exit ] ; 3 uses
   %i.i = load i64, ptr %i.f, align 8, !noundef !5 ; 2 uses
-  %i.j = load i64, ptr %i.e, align 8, !range !19, !noundef !5 ; 2 uses
+  %i.j = load i64, ptr %i.e, align 8, !range !18, !noundef !5 ; 2 uses
   %.not19 = icmp ult i64 %i.i, %i.j
   %i.k = select i1 %.not19, i64 0, i64 %i.j
   %.sroa.012.0 = sub nuw i64 %i.i, %i.k
@@ -3296,7 +3296,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i64, ptr %i.d, align 8, !noundef !5 ; 2 uses
-  %i.f = load i64, ptr %i.c, align 8, !range !19, !noundef !5 ; 2 uses
+  %i.f = load i64, ptr %i.c, align 8, !range !18, !noundef !5 ; 2 uses
   %.not8 = icmp ult i64 %i.e, %i.f
   %i.g = select i1 %.not8, i64 0, i64 %i.f
   %.sroa.02.0 = sub nuw i64 %i.e, %i.g
@@ -3350,7 +3350,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECs7ZUl82OSlxp_6rustls.exit
   %i.j = load i64, ptr %i.h, align 8, !noundef !5 ; 2 uses
-  %i.k = load i64, ptr %i.e, align 8, !range !19, !noundef !5 ; 2 uses
+  %i.k = load i64, ptr %i.e, align 8, !range !18, !noundef !5 ; 2 uses
   %.not5 = icmp ult i64 %i.j, %i.k
   %i.l = select i1 %.not5, i64 0, i64 %i.k
   %.sroa.01.0 = sub nuw i64 %i.j, %i.l
@@ -3753,7 +3753,7 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @_RNvXsm_NtCs7ZUl82OSlxp_6rustls5enumsNtB5_11ContentTypeNtNtNtB7_4msgs5codec5Codec4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0)
-  %i.d = load i8, ptr %i.c, align 8, !range !24, !noundef !5
+  %i.d = load i8, ptr %i.c, align 8, !range !23, !noundef !5
   %.not = icmp eq i8 %i.d, -1
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -3763,7 +3763,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %i.f = load i8, ptr %i.e, align 1, !range !20, !noundef !5 ; 3 uses
+  %i.f = load i8, ptr %i.e, align 1, !range !19, !noundef !5 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   %i.h = load i8, ptr %i.g, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -3773,7 +3773,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvXsx_NtCs7ZUl82OSlxp_6rustls5enumsNtB5_15ProtocolVersionNtNtNtB7_4msgs5codec5Codec4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0)
-  %i.j = load i8, ptr %i.b, align 8, !range !24, !noundef !5
+  %i.j = load i8, ptr %i.b, align 8, !range !23, !noundef !5
   %.not27 = icmp eq i8 %i.j, -1
   br i1 %.not27, label %bb.f, label %bb.e
 
@@ -3783,7 +3783,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %i.l = load i16, ptr %i.k, align 2, !range !23, !noundef !5 ; 2 uses
+  %i.l = load i16, ptr %i.k, align 2, !range !22, !noundef !5 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.n = load i16, ptr %i.m, align 4              ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -3796,7 +3796,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvXs0_NtNtCs7ZUl82OSlxp_6rustls4msgs5codectNtB5_5Codec4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0)
-  %i.r = load i8, ptr %i.a, align 8, !range !24, !noundef !5
+  %i.r = load i8, ptr %i.a, align 8, !range !23, !noundef !5
   %.not28 = icmp eq i8 %i.r, -1
   br i1 %.not28, label %bb.i, label %bb.h
 
@@ -4199,7 +4199,7 @@ bb.l:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs4wP2HXfJTCR_5alloc4sync3ArcDNtNtNtCs7ZUl82OSlxp_6rustls6crypto6signer10SigningKeyEL_ENtNtB1C_5error5ErrorEEB1C_.exit17: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4sign13RsaSigningKeyNtNtB15_5error5ErrorEEB15_.exit16
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %i.z = load i64, ptr %1, align 8, !range !21, !noundef !5
+  %i.z = load i64, ptr %1, align 8, !range !20, !noundef !5
   %i.aa = icmp eq i64 %i.z, 2
   br i1 %i.aa, label %bb.m, label %bb.n
 
@@ -4281,7 +4281,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvXs_NtNtCs7ZUl82OSlxp_6rustls4msgs5codechNtB4_5Codec4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
-  %i.b = load i8, ptr %i.a, align 8, !range !24, !noundef !5 ; 2 uses
+  %i.b = load i8, ptr %i.a, align 8, !range !23, !noundef !5 ; 2 uses
   %.not = icmp eq i8 %i.b, -1
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.d = load i8, ptr %i.c, align 1               ; 2 uses
@@ -4684,7 +4684,7 @@ bb.k:                                             ; preds = %bb.j
 define internal { i16, i16 } @_RNvXs2_NtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4signNtB5_9RsaSignerNtNtB9_6signer6Signer6scheme(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #13 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load i16, ptr %i.a, align 8, !range !15, !noundef !5
+  %i.b = load i16, ptr %i.a, align 8, !range !24, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.d = load i16, ptr %i.c, align 2
   %i.e = insertvalue { i16, i16 } poison, i16 %i.b, 0
@@ -4767,7 +4767,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvXsT_NtCs7ZUl82OSlxp_6rustls5enumsNtB5_15SignatureSchemeNtNtNtB7_4msgs5codec5Codec4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
-  %i.c = load i8, ptr %i.b, align 8, !range !24, !noundef !5 ; 2 uses
+  %i.c = load i8, ptr %i.b, align 8, !range !23, !noundef !5 ; 2 uses
   %.not = icmp eq i8 %i.c, -1
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -4871,7 +4871,7 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 11 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load i16, ptr %i.e, align 8, !range !15, !noundef !5
+  %i.f = load i16, ptr %i.e, align 8, !range !24, !noundef !5
   switch i16 %i.f, label %bb.b [
     i16 3, label %bb.e
     i16 5, label %bb.c
@@ -5085,7 +5085,7 @@ bb.i:                                             ; preds = %bb.b
 define internal { i8, i8 } @_RNvXs5_NtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4signNtB5_15EcdsaSigningKeyNtNtB9_6signer10SigningKey9algorithm(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #13 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i16, ptr %i.a, align 8, !range !15, !noundef !5 ; 2 uses
+  %i.b = load i16, ptr %i.a, align 8, !range !24, !noundef !5 ; 2 uses
   %i.c = icmp samesign ult i16 %i.b, 13
   br i1 %i.c, label %switch.lookup, label %bb.b
 
@@ -5202,7 +5202,7 @@ bb.a:
   call void @_RNvMsa_NtCsj6eKBz9Db1c_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @112, i64 noundef 15)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i16, ptr %i.c, align 8, !range !15, !noundef !5
+  %i.d = load i16, ptr %i.c, align 8, !range !24, !noundef !5
   switch i16 %i.d, label %bb.b [
     i16 0, label %bb.c
     i16 1, label %bb.d
@@ -5605,7 +5605,7 @@ bb.ar:                                            ; preds = %_RNCNvXs7_NtNtNtCs7
 define internal { i16, i16 } @_RNvXs7_NtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4signNtB5_11EcdsaSignerNtNtB9_6signer6Signer6scheme(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #13 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i16, ptr %i.a, align 8, !range !15, !noundef !5
+  %i.b = load i16, ptr %i.a, align 8, !range !24, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.d = load i16, ptr %i.c, align 2
   %i.e = insertvalue { i16, i16 } poison, i16 %i.b, 0
@@ -5849,7 +5849,7 @@ _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtCs7ZUl82OSlxp_6rustls
 
 bb.g:                                             ; preds = %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXs_NtNtNtBU_6crypto9aws_lc_rs4signNtB2u_13RsaSigningKeyNtNtB2y_6signer10SigningKey13choose_scheme0EBU_.exit
   %i.n = load <2 x i16>, ptr %.ptr.lcssa, align 2
-  %i.o = load i16, ptr %.ptr.lcssa, align 2, !range !15, !noundef !5
+  %i.o = load i16, ptr %.ptr.lcssa, align 2, !range !24, !noundef !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.i, ptr %i.b, align 8
   %switch.tableidx = add nsw i16 %i.o, -2         ; 3 uses
@@ -6252,7 +6252,7 @@ bb.i:                                             ; preds = %bb.b
 define internal { i8, i8 } @_RNvXsa_NtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4signNtB5_17Ed25519SigningKeyNtNtB9_6signer10SigningKey9algorithm(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #13 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i16, ptr %i.a, align 8, !range !15, !noundef !5 ; 2 uses
+  %i.b = load i16, ptr %i.a, align 8, !range !24, !noundef !5 ; 2 uses
   %i.c = icmp samesign ult i16 %i.b, 13
   br i1 %i.c, label %switch.lookup, label %bb.b
 
@@ -6278,7 +6278,7 @@ bb.a:
   call void @_RNvMsa_NtCsj6eKBz9Db1c_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @122, i64 noundef 17)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i16, ptr %i.c, align 8, !range !15, !noundef !5
+  %i.d = load i16, ptr %i.c, align 8, !range !24, !noundef !5
   switch i16 %i.d, label %bb.b [
     i16 0, label %bb.c
     i16 1, label %bb.d
@@ -6409,7 +6409,7 @@ bb.j:                                             ; preds = %bb.h
 define internal { i16, i16 } @_RNvXsc_NtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4signNtB5_13Ed25519SignerNtNtB9_6signer6Signer6scheme(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #13 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i16, ptr %i.a, align 8, !range !15, !noundef !5
+  %i.b = load i16, ptr %i.a, align 8, !range !24, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.d = load i16, ptr %i.c, align 2
   %i.e = insertvalue { i16, i16 } poison, i16 %i.b, 0
@@ -6499,7 +6499,7 @@ define internal void @_RNvYNtNtNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs2pq5m
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 5 uses
   %i.b = alloca [32 x i8], align 8                ; 7 uses
-  %i.c = load i16, ptr %4, align 2, !range !23, !noundef !5
+  %i.c = load i16, ptr %4, align 2, !range !22, !noundef !5
   %i.d = icmp eq i16 %i.c, 4
   br i1 %i.d, label %bb.d, label %bb.b
 
@@ -6902,16 +6902,16 @@ attributes #35 = { noinline noreturn }
 !12 = !{i16 0, i16 44}
 !13 = !{i64 0, i64 -9223372036854775807}
 !14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!15 = !{i16 0, i16 17}
-!16 = !{!"llvm.loop.isvectorized", i32 1}
-!17 = !{!"llvm.loop.unroll.runtime.disable"}
-!18 = !{!"llvm.loop.unroll.disable"}
-!19 = !{i64 0, i64 -9223372036854775808}
-!20 = !{i8 0, i8 6}
-!21 = !{i64 0, i64 3}
-!22 = !{i64 2}
-!23 = !{i16 0, i16 10}
-!24 = !{i8 -1, i8 28}
+!15 = !{!"llvm.loop.isvectorized", i32 1}
+!16 = !{!"llvm.loop.unroll.runtime.disable"}
+!17 = !{!"llvm.loop.unroll.disable"}
+!18 = !{i64 0, i64 -9223372036854775808}
+!19 = !{i8 0, i8 6}
+!20 = !{i64 0, i64 3}
+!21 = !{i64 2}
+!22 = !{i16 0, i16 10}
+!23 = !{i8 -1, i8 28}
+!24 = !{i16 0, i16 17}
 !25 = !{i16 0, i16 16}
 !26 = distinct !{!26, i1 true, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4sign13RsaSigningKeyEBJ_"}
 !27 = distinct !{!27, !26, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4sign13RsaSigningKeyEBJ_: argument 0"}
@@ -7314,9 +7314,9 @@ begin_hunk_11_@llvm.vector.reduce.add.v2i64
 !613 = distinct !{!613, !612, !"_RNCINvNvNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator8for_each4callNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB2a_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapINtNtNtBe_5slice4iter4IterTB1f_RSRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_EENCNvMNtNtB1j_6webpki6verifyNtB5k_25WebPkiSupportedAlgorithms17supported_schemes0EE0E0B1j_: argument 0"}
 !614 = distinct !{!614, i1 true, !"_RNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB8_3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeE14extend_trustedINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1U_5slice4iter4IterTBI_RSRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_EENCNvMNtNtBM_6webpki6verifyNtB4m_25WebPkiSupportedAlgorithms17supported_schemes0EE0BM_"}
 !615 = distinct !{!615, !614, !"_RNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB8_3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeE14extend_trustedINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1U_5slice4iter4IterTBI_RSRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_EENCNvMNtNtBM_6webpki6verifyNtB4m_25WebPkiSupportedAlgorithms17supported_schemes0EE0BM_: argument 0"}
-!616 = distinct !{!616, !16, !17}
-!617 = distinct !{!617, !18}
-!618 = distinct !{!618, !16}
+!616 = distinct !{!616, !15, !16}
+!617 = distinct !{!617, !17}
+!618 = distinct !{!618, !15}
 !619 = !{!606}
 !620 = !{!608}
 !621 = !{!609}
@@ -7411,7 +7411,7 @@ begin_hunk_11_@llvm.vector.reduce.add.v2i64
 !710 = distinct !{!710, !709, !"_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmE8push_mutBL_: argument 0"}
 !711 = distinct !{!711, i1 true, !"_RNvMs0_NtCs7ZUl82OSlxp_6rustls8versionsNtB5_15EnabledVersions3new"}
 !712 = distinct !{!712, !711, !"_RNvMs0_NtCs7ZUl82OSlxp_6rustls8versionsNtB5_15EnabledVersions3new: argument 0"}
-!713 = distinct !{!713, !18}
+!713 = distinct !{!713, !17}
 !714 = distinct !{!714, i1 true, !"_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMs0_NtBW_7builderINtB2K_13ConfigBuilderNtNtNtBW_6client11client_conn12ClientConfigNtB2K_13WantsVersionsE22with_protocol_versions0EBW_"}
 !715 = distinct !{!715, !714, !"_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMs0_NtBW_7builderINtB2K_13ConfigBuilderNtNtNtBW_6client11client_conn12ClientConfigNtB2K_13WantsVersionsE22with_protocol_versions0EBW_: argument 1"}
 !716 = distinct !{!716, i1 true, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs7ZUl82OSlxp_6rustls6crypto14CryptoProviderEEB1d_"}
@@ -7461,7 +7461,7 @@ begin_hunk_11_@llvm.vector.reduce.add.v2i64
 !760 = distinct !{!760, !759, !"_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmE8push_mutBL_: argument 0"}
 !761 = distinct !{!761, i1 true, !"_RNvMs0_NtCs7ZUl82OSlxp_6rustls8versionsNtB5_15EnabledVersions3new"}
 !762 = distinct !{!762, !761, !"_RNvMs0_NtCs7ZUl82OSlxp_6rustls8versionsNtB5_15EnabledVersions3new: argument 0"}
-!763 = distinct !{!763, !18}
+!763 = distinct !{!763, !17}
 !764 = distinct !{!764, i1 true, !"_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMs0_NtBW_7builderINtB2K_13ConfigBuilderNtNtNtBW_6server11server_conn12ServerConfigNtB2K_13WantsVersionsE22with_protocol_versions0EBW_"}
 !765 = distinct !{!765, !764, !"_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20KeyExchangeAlgorithmENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMs0_NtBW_7builderINtB2K_13ConfigBuilderNtNtNtBW_6server11server_conn12ServerConfigNtB2K_13WantsVersionsE22with_protocol_versions0EBW_: argument 1"}
 !766 = distinct !{!766, i1 true, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs7ZUl82OSlxp_6rustls6crypto14CryptoProviderEEB1d_"}
@@ -7671,8 +7671,8 @@ begin_hunk_11_@llvm.vector.reduce.add.v2i64
 !970 = distinct !{!970, i1 true, !"_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutNtNtNtBa_2io8io_slice7IoSliceENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtNtNtNtCs4wP2HXfJTCR_5alloc11collections9vec_deque4iter4IterINtNtB28_3vec3VechEEECs7ZUl82OSlxp_6rustls"}
 !971 = distinct !{!971, !970, !"_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutNtNtNtBa_2io8io_slice7IoSliceENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtNtNtNtCs4wP2HXfJTCR_5alloc11collections9vec_deque4iter4IterINtNtB28_3vec3VechEEECs7ZUl82OSlxp_6rustls: argument 1"}
 !972 = distinct !{!972, !970, !"_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutNtNtNtBa_2io8io_slice7IoSliceENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtNtNtNtCs4wP2HXfJTCR_5alloc11collections9vec_deque4iter4IterINtNtB28_3vec3VechEEECs7ZUl82OSlxp_6rustls: argument 0"}
-!973 = distinct !{!973, !16, !17}
-!974 = distinct !{!974, !17, !16}
+!973 = distinct !{!973, !15, !16}
+!974 = distinct !{!974, !16, !15}
 !975 = distinct !{!975, !978}
 !976 = !{!972, !971}
 !977 = !{!971}
@@ -7812,8 +7812,8 @@ begin_hunk_11_@llvm.vector.reduce.add.v2i64
 !1111 = distinct !{!1111, !1110, !"_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE15append_elementsCs7ZUl82OSlxp_6rustls: argument 0"}
 !1112 = !{!1109}
 !1113 = !{!1111}
-!1114 = distinct !{!1114, !16, !17}
-!1115 = distinct !{!1115, !17, !16}
+!1114 = distinct !{!1114, !15, !16}
+!1115 = distinct !{!1115, !16, !15}
 !1116 = distinct !{!1116, i1 true, !"_RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs7ZUl82OSlxp_6rustls"}
 !1117 = distinct !{!1117, !1116, !"_RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs7ZUl82OSlxp_6rustls: argument 0"}
 !1118 = !{!1117}

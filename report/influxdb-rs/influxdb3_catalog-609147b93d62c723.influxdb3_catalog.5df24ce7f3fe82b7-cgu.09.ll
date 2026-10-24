@@ -204,14 +204,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ak = getelementptr i8, ptr %i.ac, i64 248
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3475)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3476)
-  %i.al = load i16, ptr %i.ad, align 2, !alias.scope !3477, !noundef !5
-  %i.am = load i16, ptr %i.ae, align 2, !alias.scope !3477, !noundef !5
-  %i.an = load i16, ptr %i.af, align 2, !alias.scope !3477, !noundef !5
-  %i.ao = load i16, ptr %i.ag, align 2, !alias.scope !3477, !noundef !5
-  %i.ap = load i16, ptr %i.ah, align 2, !alias.scope !3477, !noundef !5
-  %i.aq = load i16, ptr %i.ai, align 2, !alias.scope !3477, !noundef !5
-  %i.ar = load i16, ptr %i.aj, align 2, !alias.scope !3477, !noundef !5
-  %i.as = load i16, ptr %i.ak, align 2, !alias.scope !3477, !noundef !5
+  %i.al = load i16, ptr %i.ad, align 2, !alias.scope !3477
+  %i.am = load i16, ptr %i.ae, align 2, !alias.scope !3477
+  %i.an = load i16, ptr %i.af, align 2, !alias.scope !3477
+  %i.ao = load i16, ptr %i.ag, align 2, !alias.scope !3477
+  %i.ap = load i16, ptr %i.ah, align 2, !alias.scope !3477
+  %i.aq = load i16, ptr %i.ai, align 2, !alias.scope !3477
+  %i.ar = load i16, ptr %i.aj, align 2, !alias.scope !3477
+  %i.as = load i16, ptr %i.ak, align 2, !alias.scope !3477
   %i.at = insertelement <8 x i16> poison, i16 %i.al, i64 0
   %i.au = insertelement <8 x i16> %i.at, i16 %i.am, i64 1
   %i.av = insertelement <8 x i16> %i.au, i16 %i.an, i64 2

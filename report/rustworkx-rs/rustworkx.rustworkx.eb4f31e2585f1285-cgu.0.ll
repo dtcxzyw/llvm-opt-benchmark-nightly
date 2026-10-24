@@ -205,7 +205,7 @@ bb.be:                                            ; preds = %.lr.ph605, %.loopex
   br label %.split.split.split.us560.us
 
 vector.ph55:                                      ; preds = %.split.split.split.us560.us.preheader
-  %i.iy = load double, ptr %i.iw, align 8, !alias.scope !34163, !noundef !56
+  %i.iy = load double, ptr %i.iw, align 8, !alias.scope !34163
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.iy, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body57
@@ -608,7 +608,7 @@ bb.be:                                            ; preds = %.lr.ph603, %.loopex
   br label %.split.split.split.us558.us
 
 vector.ph800:                                     ; preds = %.split.split.split.us558.us.preheader
-  %i.iy = load double, ptr %i.iw, align 8, !alias.scope !34377, !noundef !56
+  %i.iy = load double, ptr %i.iw, align 8, !alias.scope !34377
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.iy, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body802
@@ -1011,14 +1011,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep118 = getelementptr i8, ptr %i.aeb, i64 12
   %i.aec = getelementptr i8, ptr %.val3.i.i.i.i, i64 %i.adv ; 2 uses
   %next.gep119 = getelementptr i8, ptr %i.aec, i64 14
-  %i.aed = load i8, ptr %next.gep, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
-  %i.aee = load i8, ptr %next.gep113, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
-  %i.aef = load i8, ptr %next.gep114, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
-  %i.aeg = load i8, ptr %next.gep115, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
-  %i.aeh = load i8, ptr %next.gep116, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
-  %i.aei = load i8, ptr %next.gep117, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
-  %i.aej = load i8, ptr %next.gep118, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
-  %i.aek = load i8, ptr %next.gep119, align 1, !range !155, !alias.scope !95146, !noalias !95148, !noundef !56
+  %i.aed = load i8, ptr %next.gep, align 1, !alias.scope !95146, !noalias !95148
+  %i.aee = load i8, ptr %next.gep113, align 1, !alias.scope !95146, !noalias !95148
+  %i.aef = load i8, ptr %next.gep114, align 1, !alias.scope !95146, !noalias !95148
+  %i.aeg = load i8, ptr %next.gep115, align 1, !alias.scope !95146, !noalias !95148
+  %i.aeh = load i8, ptr %next.gep116, align 1, !alias.scope !95146, !noalias !95148
+  %i.aei = load i8, ptr %next.gep117, align 1, !alias.scope !95146, !noalias !95148
+  %i.aej = load i8, ptr %next.gep118, align 1, !alias.scope !95146, !noalias !95148
+  %i.aek = load i8, ptr %next.gep119, align 1, !alias.scope !95146, !noalias !95148
   %i.ael = insertelement <8 x i8> poison, i8 %i.aed, i64 0
   %i.aem = insertelement <8 x i8> %i.ael, i8 %i.aee, i64 1
   %i.aen = insertelement <8 x i8> %i.aem, i8 %i.aef, i64 2
@@ -1421,7 +1421,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %rhsv, 1152921504606846972     ; 3 uses
-  %i.ad = load double, ptr %.sroa.039.0, align 8, !alias.scope !160465, !noalias !160466, !noundef !56
+  %i.ad = load double, ptr %.sroa.039.0, align 8, !alias.scope !160465, !noalias !160466
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.ad, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
