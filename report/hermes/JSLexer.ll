@@ -205,9 +205,8 @@ bb.bb:                                            ; preds = %bb.b
 bb.bc:                                            ; preds = %bb.bb
   %i.dp = getelementptr inbounds nuw i8, ptr %i.ai, i64 2 ; 2 uses
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !72
-  %11 = sext i8 %i.dq to i32
-  %isdigittmp = add nsw i32 %11, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %11 = add i8 %i.dq, -48
+  %isdigit = icmp ult i8 %11, 10
   br i1 %isdigit, label %.thread, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
@@ -491,9 +490,8 @@ bb.cp:                                            ; preds = %bb.co
 
 _ZN6hermes22isASCIIIdentifierStartEj.exit.i:      ; preds = %.critedge55
   %i.gq = or i8 %i.gp, 32
-  %12 = sext i8 %i.gq to i32
-  %13 = add nsw i32 %12, -97
-  %i.gr = icmp ult i32 %13, 26
+  %12 = add i8 %i.gq, -97
+  %i.gr = icmp ult i8 %12, 26
   br i1 %i.gr, label %_ZN6hermes22isASCIIIdentifierStartEj.exit.thread.i, label %bb.cq, !prof !134
 
 _ZN6hermes22isASCIIIdentifierStartEj.exit.thread.i: ; preds = %_ZN6hermes22isASCIIIdentifierStartEj.exit.i, %.critedge55, %.critedge55
@@ -896,9 +894,8 @@ bb.d:                                             ; preds = %"_ZZN6hermes6parser
 
 _ZN6hermes22isASCIIIdentifierStartEj.exit:        ; preds = %bb.d
   %i.f = or i8 %i.c, 32
-  %1 = sext i8 %i.f to i32
-  %2 = add nsw i32 %1, -97
-  %i.g = icmp ult i32 %2, 26
+  %1 = add i8 %i.f, -97
+  %i.g = icmp ult i8 %1, 26
   br i1 %i.g, label %_ZN6hermes22isASCIIIdentifierStartEj.exit.thread, label %bb.f
 
 _ZN6hermes22isASCIIIdentifierStartEj.exit.thread: ; preds = %_ZN6hermes22isASCIIIdentifierStartEj.exit
@@ -1301,9 +1298,8 @@ bb.a:
 
 _ZN6hermes22isASCIIIdentifierStartEj.exit:        ; preds = %bb.a
   %i.e = or i8 %i.d, 32
-  %2 = sext i8 %i.e to i32
-  %3 = add nsw i32 %2, -97
-  %i.f = icmp ult i32 %3, 26
+  %2 = add i8 %i.e, -97
+  %i.f = icmp ult i8 %2, 26
   br i1 %i.f, label %_ZN6hermes22isASCIIIdentifierStartEj.exit.thread, label %bb.b, !prof !134
 
 _ZN6hermes22isASCIIIdentifierStartEj.exit.thread: ; preds = %bb.a, %bb.a, %_ZN6hermes22isASCIIIdentifierStartEj.exit
@@ -1411,9 +1407,8 @@ bb.h:                                             ; preds = %bb.g
   %.0207.ph = phi i8 [ 0, %bb.a ], [ %.0207.ph.ph, %.split.preheader.sink.split ] ; 2 uses
   %.087.ph = phi ptr [ %i.c, %bb.a ], [ %.087.ph.ph, %.split.preheader.sink.split ] ; 2 uses
   %i.o = load i8, ptr %.promoted.ph, align 1, !tbaa !72 ; 3 uses
-  %16 = sext i8 %i.o to i32
-  %isdigittmp363 = add nsw i32 %16, -48
-  %isdigit364 = icmp ult i32 %isdigittmp363, 10
+  %16 = add i8 %i.o, -48
+  %isdigit364 = icmp ult i8 %16, 10
   %.old365 = icmp eq i8 %i.o, 95                  ; 2 uses
   %or.cond265366 = or i1 %isdigit364, %.old365
   br i1 %or.cond265366, label %.critedge, label %.split244.us
@@ -1456,9 +1451,8 @@ bb.i:                                             ; preds = %.split.us
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 1 ; 4 uses
   store ptr %i.ac, ptr %i.b, align 8, !tbaa !55
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !72  ; 3 uses
-  %17 = sext i8 %i.ad to i32
-  %isdigittmp = add nsw i32 %17, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %17 = add i8 %i.ad, -48
+  %isdigit = icmp ult i8 %17, 10
   %.old = icmp eq i8 %i.ad, 95                    ; 2 uses
   %or.cond265 = or i1 %isdigit, %.old
   br i1 %or.cond265, label %.critedge, label %.split244.us, !llvm.loop !265
@@ -1499,9 +1493,8 @@ bb.n:                                             ; preds = %bb.k, %bb.f
   %.188 = phi ptr [ %i.c, %bb.f ], [ %.087313, %bb.k ] ; 2 uses
   store ptr %storemerge, ptr %i.b, align 8, !tbaa !55
   %i.ak = load i8, ptr %storemerge, align 1, !tbaa !72 ; 3 uses
-  %18 = sext i8 %i.ak to i32
-  %isdigittmp111249 = add nsw i32 %18, -48
-  %isdigit112250 = icmp ult i32 %isdigittmp111249, 10
+  %18 = add i8 %i.ak, -48
+  %isdigit112250 = icmp ult i8 %18, 10
   %i.al = icmp eq i8 %i.ak, 95                    ; 2 uses
   %or.cond129251 = or i1 %i.al, %isdigit112250
   br i1 %or.cond129251, label %.critedge4, label %._crit_edge
@@ -1515,9 +1508,8 @@ bb.n:                                             ; preds = %bb.k, %bb.f
   %i.ap = getelementptr inbounds nuw i8, ptr %storemerge110252, i64 1 ; 4 uses
   store ptr %i.ap, ptr %i.b, align 8, !tbaa !55
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !72  ; 3 uses
-  %19 = sext i8 %i.aq to i32
-  %isdigittmp111 = add nsw i32 %19, -48
-  %isdigit112 = icmp ult i32 %isdigittmp111, 10
+  %19 = add i8 %i.aq, -48
+  %isdigit112 = icmp ult i8 %19, 10
   %i.ar = icmp eq i8 %i.aq, 95                    ; 2 uses
   %or.cond129 = or i1 %i.ar, %isdigit112
   br i1 %or.cond129, label %.critedge4, label %._crit_edge, !llvm.loop !266
@@ -1556,9 +1548,8 @@ bb.q:                                             ; preds = %bb.p, %bb.p
 bb.r:                                             ; preds = %bb.p, %bb.q
   %i.ax = phi i8 [ %i.av, %bb.p ], [ %.pre, %bb.q ] ; 2 uses
   %.promoted256 = phi ptr [ %.sink349, %bb.p ], [ %i.aw, %bb.q ]
-  %20 = sext i8 %i.ax to i32
-  %isdigittmp113 = add nsw i32 %20, -48
-  %isdigit114 = icmp ult i32 %isdigittmp113, 10
+  %20 = add i8 %i.ax, -48
+  %isdigit114 = icmp ult i8 %20, 10
   br i1 %isdigit114, label %.critedge6, label %.loopexit239.thread
 
 .critedge6:                                       ; preds = %bb.r, %.critedge6
@@ -1571,9 +1562,8 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 1 ; 3 uses
   store ptr %i.bd, ptr %i.b, align 8, !tbaa !55
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !72  ; 3 uses
-  %21 = sext i8 %i.be to i32
-  %isdigittmp115 = add nsw i32 %21, -48
-  %isdigit116 = icmp ult i32 %isdigittmp115, 10
+  %21 = add i8 %i.be, -48
+  %isdigit116 = icmp ult i8 %21, 10
   %i.bf = icmp eq i8 %i.be, 95
   %or.cond130 = or i1 %i.bf, %isdigit116
   br i1 %or.cond130, label %.critedge6, label %.loopexit239, !llvm.loop !267
@@ -1976,17 +1966,12 @@ bb.d:                                             ; preds = %bb.g
   br label %bb.ag
 
 .lr.ph98:                                         ; preds = %bb.c, %bb.d
-  %.03396 = phi i8 [ %.033, %bb.d ], [ %.03393, %bb.c ] ; 3 uses
+  %.03396 = phi i8 [ %.033, %bb.d ], [ %.03393, %bb.c ] ; 2 uses
   %.033.in95.idx = phi i64 [ %.033.in95.add, %bb.d ], [ 3, %bb.c ]
   %.05794 = phi i32 [ %i.q, %bb.d ], [ 0, %bb.c ]
-  %2 = sext i8 %.03396 to i32
-  %isdigittmp43 = add nsw i32 %2, -48
-  %isdigit44 = icmp ult i32 %isdigittmp43, 10
-  br i1 %isdigit44, label %3, label %bb.e
-
-3:                                                ; preds = %.lr.ph98
-  %4 = add nsw i8 %.03396, -48
-  br label %bb.g
+  %2 = add i8 %.03396, -48                        ; 2 uses
+  %isdigit44 = icmp ult i8 %2, 10
+  br i1 %isdigit44, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph98
   %i.m = or i8 %.03396, 32                        ; 2 uses
@@ -1998,11 +1983,11 @@ bb.f:                                             ; preds = %bb.e
   %i.o = add nsw i8 %i.m, -87
   br label %bb.g
 
-bb.g:                                             ; preds = %3, %bb.f
-  %.134 = phi i8 [ %4, %3 ], [ %i.o, %bb.f ]
+bb.g:                                             ; preds = %.lr.ph98, %bb.f
+  %.134 = phi i8 [ %i.o, %bb.f ], [ %2, %.lr.ph98 ]
   %i.p = shl i32 %.05794, 4
-  %5 = sext i8 %.134 to i32
-  %i.q = add nsw i32 %i.p, %5                     ; 3 uses
+  %3 = zext nneg i8 %.134 to i32
+  %i.q = add nuw nsw i32 %i.p, %3                 ; 3 uses
   %i.r = icmp ugt i32 %i.q, 1114111
   br i1 %i.r, label %.thread60, label %bb.d
 

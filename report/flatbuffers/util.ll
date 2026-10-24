@@ -202,7 +202,7 @@ common.resume:                                    ; preds = %.loopexit.split-lp.
   %.049.i = phi i64 [ %i.ck, %bb.t ], [ 1, %bb.g ] ; 3 uses
   %i.ae = load ptr, ptr %1, align 8, !tbaa !15, !noalias !128
   %i.af = getelementptr i8, ptr %i.ae, i64 %.049.i ; 2 uses
-  %i.ag = load i8, ptr %i.af, align 1, !tbaa !18  ; 4 uses
+  %i.ag = load i8, ptr %i.af, align 1, !tbaa !18  ; 5 uses
   %i.ah = icmp eq i8 %i.ag, 95
   br i1 %i.ah, label %bb.i, label %bb.k
 
@@ -242,25 +242,25 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit30.i: ; preds = %.
   br label %bb.t
 
 bb.k:                                             ; preds = %.lr.ph.i.peel.next
-  %i.as = sext i8 %i.ag to i32                    ; 2 uses
+  %i.as = sext i8 %i.ag to i32
   %i.at = call i32 @islower(i32 noundef %i.as) #23
   %.not.i = icmp eq i32 %i.at, 0
   br i1 %.not.i, label %bb.l, label %bb.r
 
 bb.l:                                             ; preds = %bb.k
   %i.au = getelementptr i8, ptr %i.af, i64 -1
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !18
-  %i.aw = sext i8 %i.av to i32                    ; 2 uses
+  %i.av = load i8, ptr %i.au, align 1, !tbaa !18  ; 2 uses
+  %i.aw = sext i8 %i.av to i32
   %i.ax = call i32 @islower(i32 noundef %i.aw) #23
   %.not22.i = icmp eq i32 %i.ax, 0
   br i1 %.not22.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %8 = add nsw i32 %i.aw, -58
-  %isdigit.i = icmp ult i32 %8, -10
-  %isdigittmp23.i = add nsw i32 %i.as, -48
-  %isdigit24.i = icmp ult i32 %isdigittmp23.i, 10
-  %or.cond.i = select i1 %isdigit.i, i1 true, i1 %isdigit24.i
+  %8 = add i8 %i.av, -58
+  %isdigit.i = icmp ult i8 %8, -10
+  %9 = add i8 %i.ag, -48
+  %isdigit24.i = icmp ult i8 %9, 10
+  %or.cond.i = or i1 %isdigit24.i, %isdigit.i
   br i1 %or.cond.i, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -663,7 +663,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %.058.i = phi i64 [ %i.hr, %bb.ay ], [ 1, %bb.al ] ; 3 uses
   %i.fi = load ptr, ptr %1, align 8, !tbaa !15, !noalias !131
   %i.fj = getelementptr i8, ptr %i.fi, i64 %.058.i ; 2 uses
-  %i.fk = load i8, ptr %i.fj, align 1, !tbaa !18  ; 4 uses
+  %i.fk = load i8, ptr %i.fj, align 1, !tbaa !18  ; 5 uses
   %i.fl = icmp eq i8 %i.fk, 95
   br i1 %i.fl, label %bb.an, label %bb.ap
 
@@ -703,25 +703,25 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit39.i: ; preds = %.
   br label %bb.ay
 
 bb.ap:                                            ; preds = %.lr.ph.i45.peel.next
-  %i.fw = sext i8 %i.fk to i32                    ; 2 uses
+  %i.fw = sext i8 %i.fk to i32
   %i.fx = tail call i32 @islower(i32 noundef %i.fw) #23
   %.not.i46 = icmp eq i32 %i.fx, 0
   br i1 %.not.i46, label %bb.aq, label %bb.aw
 
 bb.aq:                                            ; preds = %bb.ap
   %i.fy = getelementptr i8, ptr %i.fj, i64 -1
-  %i.fz = load i8, ptr %i.fy, align 1, !tbaa !18
-  %i.ga = sext i8 %i.fz to i32                    ; 2 uses
+  %i.fz = load i8, ptr %i.fy, align 1, !tbaa !18  ; 2 uses
+  %i.ga = sext i8 %i.fz to i32
   %i.gb = tail call i32 @islower(i32 noundef %i.ga) #23
   %.not31.i = icmp eq i32 %i.gb, 0
   br i1 %.not31.i, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
-  %9 = add nsw i32 %i.ga, -58
-  %isdigit.i53 = icmp ult i32 %9, -10
-  %isdigittmp32.i = add nsw i32 %i.fw, -48
-  %isdigit33.i = icmp ult i32 %isdigittmp32.i, 10
-  %or.cond.i54 = select i1 %isdigit.i53, i1 true, i1 %isdigit33.i
+  %10 = add i8 %i.fz, -58
+  %isdigit.i53 = icmp ult i8 %10, -10
+  %11 = add i8 %i.fk, -48
+  %isdigit33.i = icmp ult i8 %11, 10
+  %or.cond.i54 = or i1 %isdigit33.i, %isdigit.i53
   br i1 %or.cond.i54, label %bb.au, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
@@ -997,9 +997,8 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bp
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jc, i64 %i.jg
   %i.jj = load i8, ptr %i.ji, align 1, !tbaa !18
-  %10 = sext i8 %i.jj to i32
-  %isdigittmp.i = add nsw i32 %10, -48
-  %isdigit.i83 = icmp ult i32 %isdigittmp.i, 10
+  %12 = add i8 %i.jj, -48
+  %isdigit.i83 = icmp ult i8 %12, 10
   br i1 %isdigit.i83, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i74, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp
@@ -1170,9 +1169,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit.i: ; pred
 bb.by:                                            ; preds = %.lr.ph.i86
   %i.lm = getelementptr inbounds nuw i8, ptr %i.lj, i64 1
   %i.ln = load i8, ptr %i.lm, align 1, !tbaa !18
-  %11 = sext i8 %i.ln to i32
-  %isdigittmp.i93 = add nsw i32 %11, -48
-  %isdigit.i94 = icmp ult i32 %isdigittmp.i93, 10
+  %13 = add i8 %i.ln, -48
+  %isdigit.i94 = icmp ult i8 %13, 10
   br i1 %isdigit.i94, label %bb.cg, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %.lr.ph.i86
@@ -1215,9 +1213,8 @@ bb.cb:                                            ; preds = %.noexc31.i, %_ZNKSt
   %i.ma = load ptr, ptr %1, align 8, !tbaa !15, !noalias !133
   %i.mb = getelementptr inbounds nuw i8, ptr %i.ma, i64 %.042.i ; 2 uses
   %i.mc = load i8, ptr %i.mb, align 1, !tbaa !18
-  %12 = sext i8 %i.mc to i32
-  %isdigittmp23.i87 = add nsw i32 %12, -48
-  %isdigit24.i88 = icmp ult i32 %isdigittmp23.i87, 10
+  %14 = add i8 %i.mc, -48
+  %isdigit24.i88 = icmp ult i8 %14, 10
   br i1 %isdigit24.i88, label %bb.cc, label %bb.cg
 
 bb.cc:                                            ; preds = %bb.cb
@@ -1411,9 +1408,8 @@ bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1
   %i.y = load i8, ptr %i.x, align 1, !tbaa !18    ; 2 uses
   %i.z = and i8 %i.y, -33
-  %3 = sext i8 %i.z to i32
-  %4 = add nsw i32 %3, -65
-  %i.aa = icmp ult i32 %4, 26
+  %3 = add i8 %i.z, -65
+  %i.aa = icmp ult i8 %3, 26
   br i1 %i.aa, label %bb.g, label %bb.t
 
 bb.g:                                             ; preds = %bb.f

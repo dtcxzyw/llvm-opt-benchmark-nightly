@@ -205,9 +205,8 @@ bb.k:                                             ; preds = %_ZNK2v88internal10J
   %i.bz = add nuw nsw i64 %i.bu, 89
   %i.ca = inttoptr i64 %i.bz to ptr
   %i.cb = load i16, ptr %i.ca, align 2
-  %5 = sext i16 %i.cb to i32
-  %.off.i = add nsw i32 %5, -1313
-  %switch.i = icmp ult i32 %.off.i, 3
+  %5 = add i16 %i.cb, -1313
+  %switch.i = icmp ult i16 %5, 3
   br i1 %switch.i, label %_ZN2v88internal20WasmExportedFunction22IsWasmExportedFunctionENS0_6TaggedINS0_6ObjectEEE.exit, label %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit.i51
 
 _ZN2v88internal20WasmExportedFunction22IsWasmExportedFunctionENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.k, %_ZNK2v88internal10JSFunction4codeENS0_17IsolateForSandboxE.exit.i
@@ -610,9 +609,8 @@ bb.d:                                             ; preds = %_ZNK2v88internal10J
   %i.ac = add nuw nsw i64 %i.x, 89
   %i.ad = inttoptr i64 %i.ac to ptr
   %i.ae = load i16, ptr %i.ad, align 2
-  %1 = sext i16 %i.ae to i32
-  %.off = add nsw i32 %1, -1313
-  %switch = icmp ult i32 %.off, 3
+  %1 = add i16 %i.ae, -1313
+  %switch = icmp ult i16 %1, 3
   br i1 %switch, label %.critedge, label %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit.thread
 
 .critedge:                                        ; preds = %bb.d, %_ZNK2v88internal10JSFunction4codeENS0_17IsolateForSandboxE.exit
@@ -1015,9 +1013,8 @@ bb.h:                                             ; preds = %_ZNK2v88internal10J
   %i.bz = add nuw nsw i64 %i.bu, 89
   %i.ca = inttoptr i64 %i.bz to ptr
   %i.cb = load i16, ptr %i.ca, align 2
-  %8 = sext i16 %i.cb to i32
-  %.off.i = add nsw i32 %8, -1313
-  %switch.i = icmp ult i32 %.off.i, 3
+  %8 = add i16 %i.cb, -1313
+  %switch.i = icmp ult i16 %8, 3
   br i1 %switch.i, label %_ZN2v88internal20WasmExportedFunction22IsWasmExportedFunctionENS0_6TaggedINS0_6ObjectEEE.exit, label %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit.i55
 
 _ZN2v88internal20WasmExportedFunction22IsWasmExportedFunctionENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.h, %_ZNK2v88internal10JSFunction4codeENS0_17IsolateForSandboxE.exit.i
@@ -1420,9 +1417,8 @@ bb.d:                                             ; preds = %_ZNK2v88internal10J
   %i.ac = add nuw nsw i64 %i.x, 89
   %i.ad = inttoptr i64 %i.ac to ptr
   %i.ae = load i16, ptr %i.ad, align 2
-  %1 = sext i16 %i.ae to i32
-  %.off.i = add nsw i32 %1, -1313
-  %switch.i = icmp ult i32 %.off.i, 3
+  %1 = add i16 %i.ae, -1313
+  %switch.i = icmp ult i16 %1, 3
   br i1 %switch.i, label %_ZN2v88internal20WasmExportedFunction22IsWasmExportedFunctionENS0_6TaggedINS0_6ObjectEEE.exit, label %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit.i6
 
 _ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit.i6: ; preds = %bb.d, %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit.i
@@ -1825,9 +1821,8 @@ bb.bk:                                            ; preds = %_ZNK2v88internal10J
   %i.hz = add nuw nsw i64 %i.hu, 89
   %i.ia = inttoptr i64 %i.hz to ptr
   %i.ib = load i16, ptr %i.ia, align 2
-  %9 = sext i16 %i.ib to i32
-  %.off.i = add nsw i32 %9, -1313
-  %switch.i = icmp ult i32 %.off.i, 3
+  %9 = add i16 %i.ib, -1313
+  %switch.i = icmp ult i16 %9, 3
   br i1 %switch.i, label %_ZN2v88internal20WasmExportedFunction22IsWasmExportedFunctionENS0_6TaggedINS0_6ObjectEEE.exit, label %bb.bo
 
 _ZN2v88internal20WasmExportedFunction22IsWasmExportedFunctionENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.bk, %_ZNK2v88internal10JSFunction4codeENS0_17IsolateForSandboxE.exit.i

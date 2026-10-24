@@ -205,9 +205,8 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %1 = sext i8 %i.b to i32
-  %2 = add nsw i32 %1, -48
-  %i.o = icmp ult i32 %2, 10
+  %1 = add i8 %i.b, -48
+  %i.o = icmp ult i8 %1, 10
   br i1 %i.o, label %bb.g, label %tryParseDouble.exit
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -256,10 +255,9 @@ bb.i:                                             ; preds = %.critedge.thread.i
   %.299152.i = phi ptr [ %.299.i, %.epilog-lcssa ], [ %.299148.i, %.preheader135.i ] ; 4 uses
   %.195151.i = phi i32 [ %i.an, %.epilog-lcssa ], [ 1, %.preheader135.i ] ; 3 uses
   %.1107150.i = phi double [ %i.am, %.epilog-lcssa ], [ %.0106142.i, %.preheader135.i ] ; 4 uses
-  %i.z = load i8, ptr %.299152.i, align 1         ; 2 uses
-  %3 = sext i8 %i.z to i32
-  %4 = add nsw i32 %3, -48                        ; 2 uses
-  %i.aa = icmp ult i32 %4, 10
+  %i.z = load i8, ptr %.299152.i, align 1         ; 3 uses
+  %2 = add i8 %i.z, -48
+  %i.aa = icmp ult i8 %2, 10
   br i1 %i.aa, label %.preheader134.i.preheader, label %bb.j
 
 .preheader134.i.preheader:                        ; preds = %.lr.ph153.i
@@ -306,6 +304,8 @@ bb.i:                                             ; preds = %.critedge.thread.i
 
 .epilog-lcssa:                                    ; preds = %.preheader134.i.epil, %.unr-lcssa
   %.lcssa97 = phi double [ %i.aj, %.unr-lcssa ], [ %i.ak, %.preheader134.i.epil ]
+  %3 = zext nneg i8 %i.z to i32
+  %4 = add nsw i32 %3, -48
   %i.al = uitofp nneg i32 %4 to double
   %i.am = tail call double @llvm.fmuladd.f64(double %i.al, double %.lcssa97, double %.1107150.i) ; 2 uses
   %i.an = add nuw i32 %.195151.i, 1
@@ -339,9 +339,8 @@ bb.l:                                             ; preds = %bb.k, %bb.k
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k, %.thread130.i
-  %5 = sext i8 %.pre.i to i32
-  %6 = add nsw i32 %5, -48
-  %i.aq = icmp ult i32 %6, 10
+  %5 = add i8 %.pre.i, -48
+  %i.aq = icmp ult i8 %5, 10
   br i1 %i.aq, label %bb.n, label %tryParseDouble.exit
 
 bb.n:                                             ; preds = %bb.m, %bb.l

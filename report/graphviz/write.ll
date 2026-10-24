@@ -99,11 +99,10 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph:                                           ; preds = %bb.c
   %.081121 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %i.g = add i8 %i.e, -45
-  %i.h = icmp ult i8 %i.g, 2
-  %2 = sext i8 %i.e to i32
-  %3 = add nsw i32 %2, -48
-  %i.i = icmp ult i32 %3, 10
+  %i.g = add i8 %i.e, -48
+  %i.h = icmp ult i8 %i.g, 10
+  %2 = add i8 %i.e, -45
+  %i.i = icmp ult i8 %2, 2
   %narrow = or i1 %i.h, %i.i                      ; 2 uses
   %i.j = load i32, ptr @Max_outputline, align 4, !tbaa !16 ; 2 uses
   %.not95 = icmp eq i32 %i.j, 0
@@ -456,9 +455,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i8, ptr %i.a, align 1, !tbaa !15
-  %3 = sext i8 %i.b to i32
-  %4 = add nsw i32 %3, -48
-  %i.c = icmp ult i32 %4, 10
+  %3 = add i8 %i.b, -48
+  %i.c = icmp ult i8 %3, 10
   br i1 %i.c, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b

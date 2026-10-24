@@ -204,52 +204,45 @@ bb.c:                                             ; preds = %bb.a
   %i.c = icmp eq i32 %2, 1
   %i.d = icmp samesign ugt i32 %2, 36
   %or.cond = or i1 %i.c, %i.d
-  br i1 %or.cond, label %bb.d, label %.preheader
-
-.preheader:                                       ; preds = %bb.c
-  %3 = load i8, ptr %0, align 1, !tbaa !12        ; 2 uses
-  %cond61 = icmp eq i8 %3, 0
-  br i1 %cond61, label %.thread, label %.lr.ph
+  br i1 %or.cond, label %bb.d, label %.lr.ph
 
 bb.d:                                             ; preds = %bb.c
   %i.e = tail call ptr @rb_errno_ptr() #24
   store i32 22, ptr %i.e, align 4, !tbaa !11
   br label %bb.r
 
-.lr.ph:                                           ; preds = %.preheader, %bb.e
-  %4 = phi i8 [ %9, %bb.e ], [ %3, %.preheader ]  ; 3 uses
-  %.04062 = phi ptr [ %i.f, %bb.e ], [ %0, %.preheader ] ; 4 uses
-  %5 = sext i8 %4 to i32
-  %6 = icmp ne i8 %4, 32
-  %7 = add nsw i32 %5, -14
-  %8 = icmp ult i32 %7, -5
-  %narrow.i.not = select i1 %6, i1 %8, i1 false
-  br i1 %narrow.i.not, label %.critedge, label %bb.e
-
-bb.e:                                             ; preds = %.lr.ph
-  %i.f = getelementptr i8, ptr %.04062, i64 1     ; 3 uses
-  %9 = load i8, ptr %i.f, align 1, !tbaa !12      ; 2 uses
-  %cond = icmp eq i8 %9, 0
-  br i1 %cond, label %.thread, label %.lr.ph, !llvm.loop !28
-
-.critedge:                                        ; preds = %.lr.ph
-  switch i8 %4, label %bb.h [
-    i8 43, label %bb.f
-    i8 45, label %bb.g
+.lr.ph:                                           ; preds = %bb.c, %bb.e
+  %.04062 = phi ptr [ %i.f, %bb.e ], [ %0, %bb.c ] ; 5 uses
+  %3 = load i8, ptr %.04062, align 1, !tbaa !12   ; 2 uses
+  switch i8 %3, label %bb.h [
+    i8 0, label %.thread
+    i8 32, label %bb.e
+    i8 13, label %bb.e
+    i8 12, label %bb.e
+    i8 11, label %bb.e
+    i8 10, label %bb.e
+    i8 9, label %bb.e
+    i8 43, label %bb.g
+    i8 45, label %bb.f
   ]
 
-bb.f:                                             ; preds = %.critedge
-  %10 = getelementptr i8, ptr %.04062, i64 1
+bb.e:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
+  %i.f = getelementptr i8, ptr %.04062, i64 1
+  br label %.lr.ph, !llvm.loop !28
+
+bb.f:                                             ; preds = %.lr.ph
+  br label %bb.g
+
+bb.g:                                             ; preds = %.lr.ph, %bb.f
+  %.ph.ph = phi i1 [ true, %bb.f ], [ false, %.lr.ph ]
+  %i.g = getelementptr i8, ptr %.04062, i64 1     ; 2 uses
+  %.pr.pr = load i8, ptr %i.g, align 1, !tbaa !12
   br label %bb.h
 
-bb.g:                                             ; preds = %.critedge
-  %i.g = getelementptr i8, ptr %.04062, i64 1
-  br label %bb.h
-
-bb.h:                                             ; preds = %.critedge, %bb.g, %bb.f
-  %.141.ph = phi ptr [ %.04062, %.critedge ], [ %i.g, %bb.g ], [ %10, %bb.f ] ; 4 uses
-  %.ph = phi i1 [ false, %.critedge ], [ true, %bb.g ], [ false, %bb.f ] ; 4 uses
-  %.pr = load i8, ptr %.141.ph, align 1, !tbaa !12
+bb.h:                                             ; preds = %.lr.ph, %bb.g
+  %.pr = phi i8 [ %.pr.pr, %bb.g ], [ %3, %.lr.ph ]
+  %.141.ph = phi ptr [ %i.g, %bb.g ], [ %.04062, %.lr.ph ] ; 3 uses
+  %.ph = phi i1 [ %.ph.ph, %bb.g ], [ false, %.lr.ph ] ; 4 uses
   %i.h = icmp eq i8 %.pr, 48
   br i1 %i.h, label %bb.i, label %.thread
 
@@ -276,15 +269,15 @@ bb.l:                                             ; preds = %bb.j
   %i.m = select i1 %i.j, i32 8, i32 16
   br label %bb.m
 
-.thread:                                          ; preds = %bb.e, %.preheader, %bb.h
-  %11 = phi i1 [ %.ph, %bb.h ], [ false, %.preheader ], [ false, %bb.e ]
-  %.14156 = phi ptr [ %.141.ph, %bb.h ], [ %0, %.preheader ], [ %i.f, %bb.e ]
+.thread:                                          ; preds = %.lr.ph, %bb.h
+  %4 = phi i1 [ %.ph, %bb.h ], [ false, %.lr.ph ]
+  %.14156 = phi ptr [ %.141.ph, %bb.h ], [ %.04062, %.lr.ph ]
   %i.n = icmp eq i32 %2, 0
   %i.o = select i1 %i.n, i32 10, i32 %2
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.i, %bb.l, %bb.k, %.thread
-  %i.p = phi i1 [ %.ph, %bb.k ], [ %.ph, %bb.l ], [ %11, %.thread ], [ %.ph, %bb.i ]
+  %i.p = phi i1 [ %.ph, %bb.k ], [ %.ph, %bb.l ], [ %4, %.thread ], [ %.ph, %bb.i ]
   %.2 = phi ptr [ %i.l, %bb.k ], [ %i.i, %bb.l ], [ %.14156, %.thread ], [ %i.i, %bb.i ] ; 6 uses
   %.038 = phi i32 [ 16, %bb.k ], [ %i.m, %bb.l ], [ %i.o, %.thread ], [ %2, %bb.i ] ; 3 uses
   %.0 = phi ptr [ %i.i, %bb.k ], [ %i.i, %bb.l ], [ %0, %.thread ], [ %i.i, %bb.i ]
@@ -687,9 +680,8 @@ bb.r:                                             ; preds = %.preheader951, %bb.
   %.131076 = phi ptr [ %i.bu, %.lr.ph1077 ], [ %i.bn, %.preheader949 ]
   %i.bu = getelementptr i8, ptr %.131076, i64 1   ; 3 uses
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !12
-  %2 = sext i8 %i.bv to i32
-  %3 = add nsw i32 %2, -48
-  %i.bw = icmp ult i32 %3, 10
+  %2 = add i8 %i.bv, -48
+  %i.bw = icmp ult i8 %2, 10
   br i1 %i.bw, label %.lr.ph1077, label %.loopexit950, !llvm.loop !40
 
 bb.s:                                             ; preds = %bb.r

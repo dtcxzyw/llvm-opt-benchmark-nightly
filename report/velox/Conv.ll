@@ -205,9 +205,8 @@ bb.a:
 define weak_odr i24 @_ZN5folly6detail9digits_toIcEENS_8ExpectedIT_NS_14ConversionCodeEEEPKcS7_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !37      ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -465,9 +464,8 @@ declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64
 define weak_odr i24 @_ZN5folly6detail9digits_toIaEENS_8ExpectedIT_NS_14ConversionCodeEEEPKcS7_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !37      ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -870,9 +868,8 @@ bb.k:                                             ; preds = %.thread69, %bb.h, %
 define weak_odr i32 @_ZN5folly6detail9digits_toIsEENS_8ExpectedIT_NS_14ConversionCodeEEEPKcS7_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !37      ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1275,9 +1272,8 @@ bb.l:                                             ; preds = %.thread71, %bb.i, %
 define weak_odr i64 @_ZN5folly6detail9digits_toIiEENS_8ExpectedIT_NS_14ConversionCodeEEEPKcS7_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !37      ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1680,9 +1676,8 @@ bb.l:                                             ; preds = %.thread72, %bb.i, %
 define weak_odr { i64, i64 } @_ZN5folly6detail9digits_toIlEENS_8ExpectedIT_NS_14ConversionCodeEEEPKcS7_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !37      ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2085,9 +2080,8 @@ bb.l:                                             ; preds = %.thread75, %bb.i, %
 define weak_odr { i64, i64 } @_ZN5folly6detail9digits_toIxEENS_8ExpectedIT_NS_14ConversionCodeEEEPKcS7_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !37      ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2490,9 +2484,8 @@ bb.l:                                             ; preds = %.thread75, %bb.i, %
 define weak_odr void @_ZN5folly6detail9digits_toInEENS_8ExpectedIT_NS_14ConversionCodeEEEPKcS7_(ptr dead_on_unwind noalias writable sret(%"class.folly::Expected.51") align 16 %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %1, align 1, !tbaa !37      ; 2 uses
-  %3 = sext i8 %i.a to i32
-  %isdigittmp.i = add nsw i32 %3, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %3 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %3, 10
   br i1 %isdigit.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2895,9 +2888,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIcLb1EE4initERPKc.exit, label %.lr.ph, !prof !74, !llvm.loop !167
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.e, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -2922,9 +2914,8 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %i.h = load i8, ptr %.1.ph, align 1, !tbaa !37
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
+  %2 = add i8 %i.h, -58
+  %isdigit = icmp ult i8 %2, -10
   br i1 %isdigit, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIcLb1EE4initERPKc.exit, label %bb.i, !prof !39
 
 bb.i:                                             ; preds = %bb.h
@@ -3112,9 +3103,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIaLb1EE4initERPKc.exit, label %.lr.ph, !prof !74, !llvm.loop !168
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.e, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -3139,9 +3129,8 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %i.h = load i8, ptr %.1.ph, align 1, !tbaa !37
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
+  %2 = add i8 %i.h, -58
+  %isdigit = icmp ult i8 %2, -10
   br i1 %isdigit, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIaLb1EE4initERPKc.exit, label %bb.i, !prof !39
 
 bb.i:                                             ; preds = %bb.h
@@ -3280,9 +3269,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZNR5folly8ExpectedIhNS_14ConversionCodeEE5errorEv.exit13, label %.lr.ph, !prof !74, !llvm.loop !169
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %2 = add nsw i32 %1, -58
-  %isdigit = icmp ult i32 %2, -10
+  %1 = add i8 %i.e, -58
+  %isdigit = icmp ult i8 %1, -10
   br i1 %isdigit, label %_ZNR5folly8ExpectedIhNS_14ConversionCodeEE5errorEv.exit13, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %bb.c
@@ -3404,9 +3392,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIsLb1EE4initERPKc.exit, label %.lr.ph, !prof !74, !llvm.loop !170
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.e, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -3431,9 +3418,8 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %i.h = load i8, ptr %.1.ph, align 1, !tbaa !37
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
+  %2 = add i8 %i.h, -58
+  %isdigit = icmp ult i8 %2, -10
   br i1 %isdigit, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIsLb1EE4initERPKc.exit, label %bb.i, !prof !39
 
 bb.i:                                             ; preds = %bb.h
@@ -3569,9 +3555,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZNR5folly8ExpectedItNS_14ConversionCodeEE5errorEv.exit13, label %.lr.ph, !prof !74, !llvm.loop !171
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %2 = add nsw i32 %1, -58
-  %isdigit = icmp ult i32 %2, -10
+  %1 = add i8 %i.e, -58
+  %isdigit = icmp ult i8 %1, -10
   br i1 %isdigit, label %_ZNR5folly8ExpectedItNS_14ConversionCodeEE5errorEv.exit13, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %bb.c
@@ -3684,9 +3669,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIiLb1EE4initERPKc.exit, label %.lr.ph, !prof !74, !llvm.loop !172
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.e, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -3711,9 +3695,8 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %i.h = load i8, ptr %.1.ph, align 1, !tbaa !37
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
+  %2 = add i8 %i.h, -58
+  %isdigit = icmp ult i8 %2, -10
   br i1 %isdigit, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIiLb1EE4initERPKc.exit, label %bb.i, !prof !39
 
 bb.i:                                             ; preds = %bb.h
@@ -3849,9 +3832,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZNR5folly8ExpectedIjNS_14ConversionCodeEE5errorEv.exit13, label %.lr.ph, !prof !74, !llvm.loop !173
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %2 = add nsw i32 %1, -58
-  %isdigit = icmp ult i32 %2, -10
+  %1 = add i8 %i.e, -58
+  %isdigit = icmp ult i8 %1, -10
   br i1 %isdigit, label %_ZNR5folly8ExpectedIjNS_14ConversionCodeEE5errorEv.exit13, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %bb.c
@@ -3964,9 +3946,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIlLb1EE4initERPKc.exit, label %.lr.ph, !prof !74, !llvm.loop !174
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.e, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -3991,9 +3972,8 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %i.h = load i8, ptr %.1.ph, align 1, !tbaa !37
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
+  %2 = add i8 %i.h, -58
+  %isdigit = icmp ult i8 %2, -10
   br i1 %isdigit, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIlLb1EE4initERPKc.exit, label %bb.i, !prof !39
 
 bb.i:                                             ; preds = %bb.h
@@ -4129,9 +4109,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZNR5folly8ExpectedImNS_14ConversionCodeEE5errorEv.exit13, label %.lr.ph, !prof !74, !llvm.loop !175
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %2 = add nsw i32 %1, -58
-  %isdigit = icmp ult i32 %2, -10
+  %1 = add i8 %i.e, -58
+  %isdigit = icmp ult i8 %1, -10
   br i1 %isdigit, label %_ZNR5folly8ExpectedImNS_14ConversionCodeEE5errorEv.exit13, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %bb.c
@@ -4247,9 +4226,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIxLb1EE4initERPKc.exit, label %.lr.ph, !prof !74, !llvm.loop !176
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.e, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -4274,9 +4252,8 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %i.h = load i8, ptr %.1.ph, align 1, !tbaa !37
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
+  %2 = add i8 %i.h, -58
+  %isdigit = icmp ult i8 %2, -10
   br i1 %isdigit, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIxLb1EE4initERPKc.exit, label %bb.i, !prof !39
 
 bb.i:                                             ; preds = %bb.h
@@ -4412,9 +4389,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %_ZNR5folly8ExpectedIyNS_14ConversionCodeEE5errorEv.exit13, label %.lr.ph, !prof !74, !llvm.loop !177
 
 bb.c:                                             ; preds = %.lr.ph
-  %1 = sext i8 %i.e to i32
-  %2 = add nsw i32 %1, -58
-  %isdigit = icmp ult i32 %2, -10
+  %1 = add i8 %i.e, -58
+  %isdigit = icmp ult i8 %1, -10
   br i1 %isdigit, label %_ZNR5folly8ExpectedIyNS_14ConversionCodeEE5errorEv.exit13, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %bb.c
@@ -4537,9 +4513,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !prof !74, !llvm.loop !178
 
 bb.c:                                             ; preds = %.lr.ph
-  %3 = sext i8 %i.f to i32
-  %isdigittmp.i = add nsw i32 %3, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %3 = add i8 %i.f, -48
+  %isdigit.i = icmp ult i8 %3, 10
   br i1 %isdigit.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -4576,9 +4551,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.k = load i8, ptr %.1.ph, align 1, !tbaa !37
-  %4 = sext i8 %i.k to i32
-  %5 = add nsw i32 %4, -58
-  %isdigit = icmp ult i32 %5, -10
+  %4 = add i8 %i.k, -58
+  %isdigit = icmp ult i8 %4, -10
   br i1 %isdigit, label %bb.j, label %bb.k, !prof !39
 
 bb.j:                                             ; preds = %bb.i
@@ -4737,9 +4711,8 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !prof !74, !llvm.loop !182
 
 bb.c:                                             ; preds = %.lr.ph
-  %3 = sext i8 %i.f to i32
-  %4 = add nsw i32 %3, -58
-  %isdigit = icmp ult i32 %4, -10
+  %3 = add i8 %i.f, -58
+  %isdigit = icmp ult i8 %3, -10
   br i1 %isdigit, label %bb.d, label %bb.e, !prof !39
 
 bb.d:                                             ; preds = %bb.c
@@ -4904,14 +4877,13 @@ bb.c:                                             ; preds = %.lr.ph, %.lr.ph
   %.0133 = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]   ; 2 uses
   %.188132 = phi ptr [ %i.o, %bb.e ], [ %.087129, %bb.c ] ; 3 uses
   %i.j = load i8, ptr %.188132, align 1, !tbaa !37 ; 3 uses
-  %1 = sext i8 %i.j to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.j, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %.lr.ph134
   %i.k = trunc nuw i8 %.0133 to i1
-  %i.l = and i8 %i.j, -2
+  %i.l = and i8 %i.j, 62
   %switch = icmp ne i8 %i.l, 48
   %or.cond21.not = or i1 %switch, %i.k
   br i1 %or.cond21.not, label %.loopexit, label %bb.e

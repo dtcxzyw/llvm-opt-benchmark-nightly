@@ -205,9 +205,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %spec.select = select i1 %.not98, i32 0, i32 5  ; 2 uses
   %i.ar = or disjoint i32 %spec.select, 10
   %.174 = select i1 %.084124, i32 %spec.select, i32 %i.ar ; 2 uses
-  %4 = sext i8 %i.g to i32                        ; 2 uses
-  %5 = add nsw i32 %4, -91
-  %or.cond.i115 = icmp ult i32 %5, -26
+  %4 = add i8 %i.g, -91
+  %or.cond.i115 = icmp ult i8 %4, -26
   %i.as = add nuw nsw i32 %.174, 10
   %i.at = select i1 %.085123, i1 true, i1 %or.cond.i115
   %.275 = select i1 %i.at, i32 %.174, i32 %i.as   ; 2 uses
@@ -224,18 +223,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %.thread149
   %i.au = add nsw i32 %.1, -1
-  %.pre = sext i8 %i.g to i32
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.pre-phi = phi i32 [ %.pre, %bb.h ], [ %4, %bb.g ]
-  %.291 = phi ptr [ %.089119, %bb.h ], [ %spec.select107, %bb.g ] ; 2 uses
-  %.187 = phi i32 [ 0, %bb.h ], [ 1, %bb.g ]
-  %.383 = phi ptr [ %i.al, %bb.h ], [ %.282, %bb.g ] ; 2 uses
-  %.379 = phi i32 [ %i.aj, %bb.h ], [ %.278, %bb.g ] ; 2 uses
-  %.5 = phi i32 [ %i.au, %bb.h ], [ %.4, %bb.g ]  ; 2 uses
-  %6 = add nsw i32 %.pre-phi, -123
-  %or.cond.i116 = icmp ult i32 %6, -26
+  %.291 = phi ptr [ %spec.select107, %bb.g ], [ %.089119, %bb.h ] ; 2 uses
+  %.187 = phi i32 [ 1, %bb.g ], [ 0, %bb.h ]
+  %.383 = phi ptr [ %.282, %bb.g ], [ %i.al, %bb.h ] ; 2 uses
+  %.379 = phi i32 [ %.278, %bb.g ], [ %i.aj, %bb.h ] ; 2 uses
+  %.5 = phi i32 [ %.4, %bb.g ], [ %i.au, %bb.h ]  ; 2 uses
+  %5 = add i8 %i.g, -123
+  %or.cond.i116 = icmp ult i8 %5, -26
   %i.av = icmp ne i8 %i.g, 95
   %i.aw = icmp ne i8 %i.g, 32
   %.not102 = and i1 %i.av, %i.aw

@@ -205,9 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = load i8, ptr %i.g, align 1, !tbaa !106   ; 4 uses
-  %8 = sext i8 %i.h to i32
-  %9 = add nsw i32 %8, -48
-  %or.cond = icmp ult i32 %9, 10
+  %8 = add i8 %i.h, -48
+  %or.cond = icmp ult i8 %8, 10
   br i1 %or.cond, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %bb.b
@@ -233,9 +232,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.preheader.i
   %i.n = mul nuw nsw i32 %.017.i, 10
-  %10 = sext i8 %i.l to i32
-  %i.o = add nsw i32 %10, -48
-  %i.p = add i32 %i.o, %i.n                       ; 4 uses
+  %9 = zext nneg i8 %i.l to i32
+  %i.o = add nsw i32 %9, -48
+  %i.p = add nuw i32 %i.o, %i.n                   ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.3, i64 1 ; 4 uses
   %.not.i = icmp eq ptr %i.q, %1
   br i1 %.not.i, label %.critedge.i, label %bb.f
@@ -638,11 +637,10 @@ bb.p:                                             ; preds = %_ZN6duckdb20Decimal
 bb.q:                                             ; preds = %bb.q, %.preheader
   %i.bw = phi i16 [ %.promoted60, %.preheader ], [ %i.bx, %bb.q ] ; 3 uses
   %.03359 = phi i64 [ 0, %.preheader ], [ %i.ca, %bb.q ]
-  %2 = sext i16 %i.bw to i32
   %i.bx = sdiv i16 %i.bw, 10                      ; 3 uses
   %i.by = srem i16 %i.bw, 10
-  %3 = add nsw i32 %2, 9
-  %i.bz = icmp ult i32 %3, 19
+  %2 = add i16 %i.bw, 9
+  %i.bz = icmp ult i16 %2, 19
   %i.ca = add nuw i64 %.03359, 1                  ; 2 uses
   %exitcond66.not = icmp eq i64 %i.ca, %i.bv
   %or.cond = select i1 %i.bz, i1 true, i1 %exitcond66.not
@@ -947,11 +945,10 @@ bb.p:                                             ; preds = %_ZN6duckdb20Decimal
 bb.q:                                             ; preds = %bb.q, %.preheader
   %i.bt = phi i16 [ %.promoted60, %.preheader ], [ %i.bu, %bb.q ] ; 3 uses
   %.03359 = phi i64 [ 0, %.preheader ], [ %i.bx, %bb.q ]
-  %2 = sext i16 %i.bt to i32
   %i.bu = sdiv i16 %i.bt, 10                      ; 3 uses
   %i.bv = srem i16 %i.bt, 10
-  %3 = add nsw i32 %2, 9
-  %i.bw = icmp ult i32 %3, 19
+  %2 = add i16 %i.bt, 9
+  %i.bw = icmp ult i16 %2, 19
   %i.bx = add nuw i64 %.03359, 1                  ; 2 uses
   %exitcond66.not = icmp eq i64 %i.bx, %i.bs
   %or.cond = select i1 %i.bw, i1 true, i1 %exitcond66.not

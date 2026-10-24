@@ -205,9 +205,8 @@ bb.bh:                                            ; preds = %bb.bi, %.lr.ph.i
   %.01314.i = phi i64 [ 0, %.lr.ph.i ], [ %i.kw, %bb.bi ] ; 3 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.ks, i64 %.01314.i
   %i.ku = load i8, ptr %i.kt, align 1, !tbaa !19
-  %51 = sext i8 %i.ku to i32
-  %52 = add nsw i32 %51, -91
-  %i.kv = icmp ult i32 %52, -26                   ; 3 uses
+  %51 = add i8 %i.ku, -91
+  %i.kv = icmp ult i8 %51, -26                    ; 3 uses
   br i1 %i.kv, label %.critedge.i, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
@@ -241,20 +240,18 @@ bb.bi:                                            ; preds = %bb.bh
   %i.la = load ptr, ptr %29, align 8, !tbaa !18, !alias.scope !178
   %i.lb = getelementptr inbounds nuw i8, ptr %i.la, i64 %.019.i ; 2 uses
   %i.lc = load i8, ptr %i.lb, align 1, !tbaa !19  ; 3 uses
-  %53 = sext i8 %i.lc to i32
-  %54 = add nsw i32 %53, -65
-  %i.ld = icmp ult i32 %54, 26
-  %i.le = add i8 %i.lc, 32
+  %52 = add i8 %i.lc, -65
+  %i.ld = icmp ult i8 %52, 26
+  %i.le = add nuw nsw i8 %i.lc, 32
   %i.lf = select i1 %i.ld, i8 %i.le, i8 %i.lc
   store i8 %i.lf, ptr %i.lb, align 1, !tbaa !19
   %i.lg = load ptr, ptr %29, align 8, !tbaa !18, !alias.scope !178
   %i.lh = getelementptr inbounds nuw i8, ptr %i.lg, i64 %.019.i
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 1 ; 2 uses
   %i.lj = load i8, ptr %i.li, align 1, !tbaa !19  ; 3 uses
-  %55 = sext i8 %i.lj to i32
-  %56 = add nsw i32 %55, -65
-  %i.lk = icmp ult i32 %56, 26
-  %i.ll = add i8 %i.lj, 32
+  %53 = add i8 %i.lj, -65
+  %i.lk = icmp ult i8 %53, 26
+  %i.ll = add nuw nsw i8 %i.lj, 32
   %i.lm = select i1 %i.lk, i8 %i.ll, i8 %i.lj
   store i8 %i.lm, ptr %i.li, align 1, !tbaa !19
   %i.ln = add nuw i64 %.019.i, 2                  ; 2 uses
@@ -273,10 +270,9 @@ _ZN6google8protobuf8compiler4java21GetKotlinPropertyNameENSt7__cxx1112basic_stri
   %i.lo = load ptr, ptr %29, align 8, !tbaa !18, !alias.scope !178
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 %.019.i.epil.init ; 2 uses
   %i.lq = load i8, ptr %i.lp, align 1, !tbaa !19  ; 3 uses
-  %57 = sext i8 %i.lq to i32
-  %58 = add nsw i32 %57, -65
-  %i.lr = icmp ult i32 %58, 26
-  %i.ls = add i8 %i.lq, 32
+  %54 = add i8 %i.lq, -65
+  %i.lr = icmp ult i8 %54, 26
+  %i.ls = add nuw nsw i8 %i.lq, 32
   %i.lt = select i1 %i.lr, i8 %i.ls, i8 %i.lq
   store i8 %i.lt, ptr %i.lp, align 1, !tbaa !19
   br label %_ZN6google8protobuf8compiler4java21GetKotlinPropertyNameENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
@@ -679,9 +675,8 @@ bb.d:                                             ; preds = %.lr.ph, %bb.e
   %.01314 = phi i64 [ 0, %.lr.ph ], [ %i.t, %bb.e ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %.01314
   %i.r = load i8, ptr %i.q, align 1, !tbaa !19
-  %2 = sext i8 %i.r to i32
-  %3 = add nsw i32 %2, -91
-  %i.s = icmp ult i32 %3, -26                     ; 3 uses
+  %2 = add i8 %i.r, -91
+  %i.s = icmp ult i8 %2, -26                      ; 3 uses
   br i1 %i.s, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -715,20 +710,18 @@ bb.e:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %0, align 8, !tbaa !18
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %.019 ; 2 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !19    ; 3 uses
-  %4 = sext i8 %i.z to i32
-  %5 = add nsw i32 %4, -65
-  %i.aa = icmp ult i32 %5, 26
-  %i.ab = add i8 %i.z, 32
+  %3 = add i8 %i.z, -65
+  %i.aa = icmp ult i8 %3, 26
+  %i.ab = add nuw nsw i8 %i.z, 32
   %i.ac = select i1 %i.aa, i8 %i.ab, i8 %i.z
   store i8 %i.ac, ptr %i.y, align 1, !tbaa !19
   %i.ad = load ptr, ptr %0, align 8, !tbaa !18
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.019
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1 ; 2 uses
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !19  ; 3 uses
-  %6 = sext i8 %i.ag to i32
-  %7 = add nsw i32 %6, -65
-  %i.ah = icmp ult i32 %7, 26
-  %i.ai = add i8 %i.ag, 32
+  %4 = add i8 %i.ag, -65
+  %i.ah = icmp ult i8 %4, 26
+  %i.ai = add nuw nsw i8 %i.ag, 32
   %i.aj = select i1 %i.ah, i8 %i.ai, i8 %i.ag
   store i8 %i.aj, ptr %i.af, align 1, !tbaa !19
   %i.ak = add nuw i64 %.019, 2                    ; 2 uses
@@ -747,10 +740,9 @@ bb.e:                                             ; preds = %bb.d
   %i.al = load ptr, ptr %0, align 8, !tbaa !18
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %.019.epil.init ; 2 uses
   %i.an = load i8, ptr %i.am, align 1, !tbaa !19  ; 3 uses
-  %8 = sext i8 %i.an to i32
-  %9 = add nsw i32 %8, -65
-  %i.ao = icmp ult i32 %9, 26
-  %i.ap = add i8 %i.an, 32
+  %5 = add i8 %i.an, -65
+  %i.ao = icmp ult i8 %5, 26
+  %i.ap = add nuw nsw i8 %i.an, 32
   %i.aq = select i1 %i.ao, i8 %i.ap, i8 %i.an
   store i8 %i.aq, ptr %i.am, align 1, !tbaa !19
   br label %._crit_edge

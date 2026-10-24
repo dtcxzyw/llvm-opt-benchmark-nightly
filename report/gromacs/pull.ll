@@ -205,9 +205,8 @@ define noundef nonnull ptr @_Z21pull_coordinate_unitsRK12t_pull_coord(ptr nofree
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load i32, ptr %i.a, align 8, !tbaa !80
-  %1 = sext i32 %i.b to i64
-  %2 = add nsw i64 %1, -5
-  %i.c = icmp ult i64 %2, 3
+  %1 = add i32 %i.b, -5
+  %i.c = icmp ult i32 %1, 3
   %i.d = select i1 %i.c, ptr @.str.4, ptr @.str.5
   ret ptr %i.d
 }
@@ -217,9 +216,8 @@ define noundef double @_Z41pull_conversion_factor_userinput2internalRK12t_pull_c
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load i32, ptr %i.a, align 8, !tbaa !80
-  %1 = sext i32 %i.b to i64
-  %2 = add nsw i64 %1, -5
-  %i.c = icmp ult i64 %2, 3
+  %1 = add i32 %i.b, -5
+  %i.c = icmp ult i32 %1, 3
   %. = select i1 %i.c, double f0x3F91DF46A2529D39, double 1.000000e+00
   ret double %.
 }
@@ -229,9 +227,8 @@ define noundef double @_Z41pull_conversion_factor_internal2userinputRK12t_pull_c
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load i32, ptr %i.a, align 8, !tbaa !80
-  %1 = sext i32 %i.b to i64
-  %2 = add nsw i64 %1, -5
-  %i.c = icmp ult i64 %2, 3
+  %1 = add i32 %i.b, -5
+  %i.c = icmp ult i32 %1, 3
   %. = select i1 %i.c, double f0x404CA5DC1A63C1F8, double 1.000000e+00
   ret double %.
 }
@@ -634,9 +631,8 @@ bb.j:                                             ; preds = %bb.i
   %i.be = tail call double @llvm.fmuladd.f64(double %i.bd, double %5, double %i.bc)
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.022.043, i64 40
   %i.bg = load i32, ptr %i.bf, align 8, !tbaa !80
-  %18 = sext i32 %i.bg to i64
-  %19 = add nsw i64 %18, -5
-  %i.bh = icmp ult i64 %19, 3
+  %18 = add i32 %i.bg, -5
+  %i.bh = icmp ult i32 %18, 3
   %..i.i.i.i = select i1 %i.bh, double f0x3F91DF46A2529D39, double 1.000000e+00
   %i.bi = fmul double %i.be, %..i.i.i.i
   %i.bj = tail call fastcc noundef double @_ZL31sanitizePullCoordReferenceValueRK12t_pull_coordd(ptr noundef nonnull readonly align 8 dereferenceable(176) %.sroa.022.043, double noundef %i.bi)
@@ -931,9 +927,8 @@ bb.g:                                             ; preds = %bb.f
   %i.k = load i32, ptr %i.j, align 4, !tbaa !175
   %i.l = add nsw i32 %i.k, 1
   %i.m = load i32, ptr %i.a, align 8, !tbaa !80
-  %4 = sext i32 %i.m to i64
-  %5 = add nsw i64 %4, -5
-  %i.n = icmp ult i64 %5, 3
+  %4 = add i32 %i.m, -5
+  %i.n = icmp ult i32 %4, 3
   %..i = select i1 %i.n, double f0x404CA5DC1A63C1F8, double 1.000000e+00
   %i.o = fmul double %1, %..i
   invoke void (i32, ptr, i32, ptr, ...) @_Z9gmx_fataliRKNSt10filesystem7__cxx114pathEiPKcz(i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(40) %3, i32 noundef 671, ptr noundef nonnull @.str.32, i32 noundef %i.l, double noundef %i.o) #28
@@ -1336,9 +1331,8 @@ bb.l:                                             ; preds = %bb.k
   %i.hj = call double @llvm.fmuladd.f64(double %i.hi, double %6, double %i.hh)
   %i.hk = getelementptr inbounds nuw i8, ptr %i.gz, i64 40
   %i.hl = load i32, ptr %i.hk, align 8, !tbaa !80 ; 2 uses
-  %21 = sext i32 %i.hl to i64
-  %22 = add nsw i64 %21, -5
-  %i.hm = icmp ult i64 %22, 3
+  %21 = add i32 %i.hl, -5
+  %i.hm = icmp ult i32 %21, 3
   %..i.i.i = select i1 %i.hm, double f0x3F91DF46A2529D39, double 1.000000e+00
   %i.hn = fmul double %i.hj, %..i.i.i             ; 12 uses
   switch i32 %i.hl, label %_ZL31sanitizePullCoordReferenceValueRK12t_pull_coordd.exit.i [
@@ -1385,9 +1379,8 @@ bb.r:                                             ; preds = %bb.q
   %i.hx = load i32, ptr %i.hw, align 4, !tbaa !175
   %i.hy = add nsw i32 %i.hx, 1
   %i.hz = load i32, ptr %i.hv, align 8, !tbaa !80
-  %23 = sext i32 %i.hz to i64
-  %24 = add nsw i64 %23, -5
-  %i.ia = icmp ult i64 %24, 3
+  %22 = add i32 %i.hz, -5
+  %i.ia = icmp ult i32 %22, 3
   %..i.i384.i = select i1 %i.ia, double f0x404CA5DC1A63C1F8, double 1.000000e+00
   %i.ib = fmul double %i.hn, %..i.i384.i
   invoke void (i32, ptr, i32, ptr, ...) @_Z9gmx_fataliRKNSt10filesystem7__cxx114pathEiPKcz(i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(40) %12, i32 noundef 671, ptr noundef nonnull @.str.32, i32 noundef %i.hy, double noundef %i.ib) #28
@@ -1790,9 +1783,8 @@ bb.be:                                            ; preds = %bb.bd
   %i.jf = getelementptr inbounds i8, ptr %i.cv, i64 -332
   %i.jg = load float, ptr %i.jf, align 4, !tbaa !376
   %i.jh = fpext float %i.jg to double
-  %15 = sext i32 %i.cy to i64
-  %16 = add nsw i64 %15, -5
-  %i.ji = icmp ult i64 %16, 3
+  %15 = add i32 %i.cy, -5
+  %i.ji = icmp ult i32 %15, 3
   %..i268 = select i1 %i.ji, double f0x3F91DF46A2529D39, double 1.000000e+00
   %i.jj = fmul double %..i268, %i.jh
   %i.jk = call fastcc noundef double @_ZL31sanitizePullCoordReferenceValueRK12t_pull_coordd(ptr noundef nonnull align 8 dereferenceable(176) %i.cw, double noundef %i.jj)

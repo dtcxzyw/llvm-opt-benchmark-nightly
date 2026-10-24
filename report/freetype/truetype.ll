@@ -205,49 +205,43 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load i8, ptr %i.c, align 1, !tbaa !186
-  %1 = sext i8 %i.d to i32
-  %2 = add nsw i32 %1, -65
-  %i.e = icmp ult i32 %2, 26
+  %1 = add i8 %i.d, -65
+  %i.e = icmp ult i8 %1, 26
   br i1 %i.e, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.g = load i8, ptr %i.f, align 1, !tbaa !186
-  %3 = sext i8 %i.g to i32
-  %4 = add nsw i32 %3, -65
-  %i.h = icmp ult i32 %4, 26
+  %2 = add i8 %i.g, -65
+  %i.h = icmp ult i8 %2, 26
   br i1 %i.h, label %bb.e, label %bb.k
 
 bb.e:                                             ; preds = %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   %i.j = load i8, ptr %i.i, align 1, !tbaa !186
-  %5 = sext i8 %i.j to i32
-  %6 = add nsw i32 %5, -65
-  %i.k = icmp ult i32 %6, 26
+  %3 = add i8 %i.j, -65
+  %i.k = icmp ult i8 %3, 26
   br i1 %i.k, label %bb.f, label %bb.k
 
 bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 3
   %i.m = load i8, ptr %i.l, align 1, !tbaa !186
-  %7 = sext i8 %i.m to i32
-  %8 = add nsw i32 %7, -65
-  %i.n = icmp ult i32 %8, 26
+  %4 = add i8 %i.m, -65
+  %i.n = icmp ult i8 %4, 26
   br i1 %i.n, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.p = load i8, ptr %i.o, align 1, !tbaa !186
-  %9 = sext i8 %i.p to i32
-  %10 = add nsw i32 %9, -65
-  %i.q = icmp ult i32 %10, 26
+  %5 = add i8 %i.p, -65
+  %i.q = icmp ult i8 %5, 26
   br i1 %i.q, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 5
   %i.s = load i8, ptr %i.r, align 1, !tbaa !186
-  %11 = sext i8 %i.s to i32
-  %12 = add nsw i32 %11, -65
-  %i.t = icmp ult i32 %12, 26
+  %6 = add i8 %i.s, -65
+  %i.t = icmp ult i8 %6, 26
   br i1 %i.t, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h

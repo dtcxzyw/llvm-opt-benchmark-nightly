@@ -202,9 +202,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i = freeze i8 %i.l                       ; 2 uses
-  %4 = sext i8 %.fr26.i to i32
-  %isdigittmp.i = add nsw i32 %4, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %4 = add i8 %.fr26.i, -48
+  %isdigit.i = icmp ult i8 %4, 10
   br i1 %isdigit.i, label %bb.d, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.c
@@ -298,9 +297,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i = freeze i8 %i.l                       ; 2 uses
-  %4 = sext i8 %.fr26.i to i32
-  %isdigittmp.i = add nsw i32 %4, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %4 = add i8 %.fr26.i, -48
+  %isdigit.i = icmp ult i8 %4, 10
   br i1 %isdigit.i, label %bb.d, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.c
@@ -400,9 +398,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %4 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %4, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %4 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %4, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -497,9 +494,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %4 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %4, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %4 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %4, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -602,9 +598,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %4 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %4, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %4 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %4, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -699,9 +694,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %4 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %4, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %4 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %4, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -804,9 +798,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i = freeze i8 %i.l                       ; 2 uses
-  %4 = sext i8 %.fr26.i to i32
-  %isdigittmp.i = add nsw i32 %4, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %4 = add i8 %.fr26.i, -48
+  %isdigit.i = icmp ult i8 %4, 10
   br i1 %isdigit.i, label %bb.d, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.c
@@ -897,9 +890,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i = freeze i8 %i.l                       ; 2 uses
-  %4 = sext i8 %.fr26.i to i32
-  %isdigittmp.i = add nsw i32 %4, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %4 = add i8 %.fr26.i, -48
+  %isdigit.i = icmp ult i8 %4, 10
   br i1 %isdigit.i, label %bb.d, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.c
@@ -1105,9 +1097,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1202,9 +1193,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1299,9 +1289,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1396,9 +1385,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1493,9 +1481,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1598,9 +1585,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1703,9 +1689,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1808,9 +1793,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -1913,9 +1897,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2010,9 +1993,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2107,9 +2089,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2204,9 +2185,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2301,9 +2281,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2406,9 +2385,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2511,9 +2489,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2616,9 +2593,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i.i = freeze i8 %i.l                   ; 2 uses
-  %3 = sext i8 %.fr26.i.i.i to i32
-  %isdigittmp.i.i.i = add nsw i32 %3, -48
-  %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
+  %3 = add i8 %.fr26.i.i.i, -48
+  %isdigit.i.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i.i, label %bb.d, label %switch.early.test.i.i.i
 
 switch.early.test.i.i.i:                          ; preds = %bb.c
@@ -2721,9 +2697,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -2811,9 +2786,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -2901,9 +2875,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -2991,9 +2964,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3081,9 +3053,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3180,9 +3151,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3279,9 +3249,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3378,9 +3347,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3477,9 +3445,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3567,9 +3534,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3657,9 +3623,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3747,9 +3712,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3837,9 +3801,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -3936,9 +3899,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -4035,9 +3997,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c
@@ -4134,9 +4095,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !28
   %.fr26.i.i = freeze i8 %i.l                     ; 2 uses
-  %3 = sext i8 %.fr26.i.i to i32
-  %isdigittmp.i.i = add nsw i32 %3, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %3 = add i8 %.fr26.i.i, -48
+  %isdigit.i.i = icmp ult i8 %3, 10
   br i1 %isdigit.i.i, label %bb.d, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.c

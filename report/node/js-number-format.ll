@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/js-number-format?download=true
-inline.NumInlined: 3488
-inline.NumDeleted: 1452
+inline.NumInlined: 3489
+inline.NumDeleted: 1453
 begin_hunk_0_@_ZN2v88internal14JSNumberFormat3NewEPNS0_7IsolateENS0_12DirectHandleINS0_3MapEEENS4_INS0_6ObjectEEES8_PKc:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
   br i1 %i.bj, label %_ZNKR2v85MaybeIbE8FromJustEv.exit185, label %bb.k
@@ -202,12 +202,35 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i21
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit215: ; preds = %bb.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i213
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #22
-  %.val189 = load ptr, ptr %32, align 8
+  %.val189 = load ptr, ptr %32, align 8           ; 3 uses
   %.val190 = load i64, ptr %i.eg, align 8
-  %78 = call fastcc noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_124IsWellFormedCurrencyCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr %.val189, i64 %.val190)
-  br i1 %78, label %bb.y, label %bb.v
+  %.not.i = icmp eq i64 %.val190, 3
+  br i1 %.not.i, label %78, label %bb.v
 
-bb.v:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit215
+78:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit215
+  %79 = load i8, ptr %.val189, align 1
+  %80 = or i8 %79, 32
+  %81 = add i8 %80, -97
+  %82 = icmp ult i8 %81, 26
+  br i1 %82, label %83, label %bb.v
+
+83:                                               ; preds = %78
+  %84 = getelementptr inbounds nuw i8, ptr %.val189, i64 1
+  %85 = load i8, ptr %84, align 1
+  %86 = or i8 %85, 32
+  %87 = add i8 %86, -97
+  %88 = icmp ult i8 %87, 26
+  br i1 %88, label %_ZN2v88internal12_GLOBAL__N_124IsWellFormedCurrencyCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.v
+
+_ZN2v88internal12_GLOBAL__N_124IsWellFormedCurrencyCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %83
+  %89 = getelementptr inbounds nuw i8, ptr %.val189, i64 2
+  %90 = load i8, ptr %89, align 1
+  %91 = or i8 %90, 32
+  %92 = add i8 %91, -97
+  %93 = icmp ult i8 %92, 26
+  br i1 %93, label %bb.y, label %bb.v
+
+bb.v:                                             ; preds = %78, %83, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit215, %_ZN2v88internal12_GLOBAL__N_124IsWellFormedCurrencyCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.er = call ptr @_ZN2v88internal7Factory24NewStringFromStaticCharsILm14EEENS0_6HandleINS0_6StringEEERAT__KcNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(14) @.str.52, i8 noundef zeroext 0)
   %.sroa.076.0.copyload = load ptr, ptr %31, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
@@ -230,7 +253,7 @@ bb.x:                                             ; preds = %bb.w
   %i.ez = call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %0, i64 %i.ey, ptr noundef null) #22 ; 0 uses
   br label %bb.bn
 
-bb.y:                                             ; preds = %bb.w, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit215
+bb.y:                                             ; preds = %bb.w, %_ZN2v88internal12_GLOBAL__N_124IsWellFormedCurrencyCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 2264
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %34, ptr noundef nonnull align 8 dereferenceable(64) @constinit.57, i64 16, i1 false)
@@ -631,42 +654,6 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.b,
   store i64 0, ptr %i.y, align 8
   store i8 0, ptr %i.x, align 1
   ret ptr %0
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal fastcc noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_124IsWellFormedCurrencyCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree readonly captures(none) %.0.val, i64 %.8.val) unnamed_addr #7 {
-  %.not = icmp eq i64 %.8.val, 3
-  br i1 %.not, label %1, label %21
-
-1:                                                ; preds = %0
-  %2 = load i8, ptr %.0.val, align 1
-  %3 = or i8 %2, 32
-  %4 = sext i8 %3 to i32
-  %5 = add nsw i32 %4, -97
-  %6 = icmp ult i32 %5, 26
-  br i1 %6, label %7, label %21
-
-7:                                                ; preds = %1
-  %8 = getelementptr inbounds nuw i8, ptr %.0.val, i64 1
-  %9 = load i8, ptr %8, align 1
-  %10 = or i8 %9, 32
-  %11 = sext i8 %10 to i32
-  %12 = add nsw i32 %11, -97
-  %13 = icmp ult i32 %12, 26
-  br i1 %13, label %14, label %21
-
-14:                                               ; preds = %7
-  %15 = getelementptr inbounds nuw i8, ptr %.0.val, i64 2
-  %16 = load i8, ptr %15, align 1
-  %17 = or i8 %16, 32
-  %18 = sext i8 %17 to i32
-  %19 = add nsw i32 %18, -97
-  %20 = icmp ult i32 %19, 26
-  br label %21
-
-21:                                               ; preds = %1, %7, %14, %0
-  %.0 = phi i1 [ false, %0 ], [ false, %7 ], [ false, %1 ], [ %20, %14 ]
-  ret i1 %.0
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
@@ -1071,7 +1058,7 @@ bb.g:                                             ; preds = %.thread, %bb.a, %_Z
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare i32 @toupper(i32 noundef) local_unnamed_addr #8
+declare i32 @toupper(i32 noundef) local_unnamed_addr #7
 
 ; Function Attrs: nounwind
 declare noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64), ptr noundef nonnull align 8 dereferenceable(64)) local_unnamed_addr #3
@@ -1474,7 +1461,7 @@ declare void @_ZN6icu_786number24LocalizedNumberFormatterD1Ev(ptr noundef nonnul
 declare void @_ZN6icu_786LocaleD1Ev(ptr noundef nonnull align 8 dereferenceable(40)) unnamed_addr #3
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef zeroext i1 @_ZNK2v88internal21IntlMathematicalValue5IsNaNEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #9 align 2 {
+define hidden noundef zeroext i1 @_ZNK2v88internal21IntlMathematicalValue5IsNaNEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8
@@ -1877,7 +1864,7 @@ _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.bf, %_ZNSt6vecto
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_120cmp_NumberFormatSpanERKNS0_16NumberFormatSpanES4_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) #7 {
+define internal noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_120cmp_NumberFormatSpanERKNS0_16NumberFormatSpanES4_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) #9 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
@@ -2280,10 +2267,10 @@ bb.e:                                             ; preds = %_ZNKSt4lessIvEclIRK
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #8
+declare noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #8
+declare noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: nounwind
 declare void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext, ptr noundef, ptr noundef, ptr noundef nonnull align 8 dereferenceable(32)) local_unnamed_addr #3
@@ -2686,9 +2673,9 @@ attributes #3 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stac
 attributes #4 = { inlinehint mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree nounwind willreturn memory(read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nofree nounwind willreturn memory(read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nobuiltin allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

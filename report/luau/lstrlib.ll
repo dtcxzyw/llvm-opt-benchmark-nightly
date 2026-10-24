@@ -205,9 +205,8 @@ bb.m:                                             ; preds = %bb.a
 
 bb.n:                                             ; preds = %bb.a
   %i.d = load i8, ptr %i.b, align 1, !tbaa !13
-  %3 = sext i8 %i.d to i32
-  %4 = add nsw i32 %3, -58
-  %i.e = icmp ult i32 %4, -10
+  %3 = add i8 %i.d, -58
+  %i.e = icmp ult i8 %3, -10
   br i1 %i.e, label %_ZL11getnumlimitP6HeaderPPKci.exit, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.n, %.preheader.i.i
@@ -221,16 +220,15 @@ bb.n:                                             ; preds = %bb.a
   %i.k = add i32 %i.g, -48
   %i.l = add i32 %i.k, %i.j                       ; 6 uses
   %i.m = load i8, ptr %i.h, align 1, !tbaa !13
-  %5 = sext i8 %i.m to i32
-  %6 = add nsw i32 %5, -48
-  %i.n = icmp ult i32 %6, 10                      ; 2 uses
+  %4 = add i8 %i.m, -48
+  %i.n = icmp ult i8 %4, 10                       ; 2 uses
   %i.o = icmp slt i32 %i.l, 214748364
   %i.p = select i1 %i.n, i1 %i.o, i1 false
   br i1 %i.p, label %.preheader.i.i, label %bb.o, !llvm.loop !114
 
 bb.o:                                             ; preds = %.preheader.i.i
   %i.q = icmp sgt i32 %i.l, 1073741824
-  %or.cond.not.i.i = or i1 %i.q, %i.n
+  %or.cond.not.i.i = or i1 %i.n, %i.q
   br i1 %or.cond.not.i.i, label %bb.p, label %_ZL6getnumP6HeaderPPKci.exit.i
 
 bb.p:                                             ; preds = %bb.o
@@ -255,9 +253,8 @@ _ZL11getnumlimitP6HeaderPPKci.exit:               ; preds = %bb.n, %_ZL6getnumP6
 
 bb.r:                                             ; preds = %bb.a
   %i.u = load i8, ptr %i.b, align 1, !tbaa !13
-  %7 = sext i8 %i.u to i32
-  %8 = add nsw i32 %7, -58
-  %i.v = icmp ult i32 %8, -10
+  %5 = add i8 %i.u, -58
+  %i.v = icmp ult i8 %5, -10
   br i1 %i.v, label %_ZL11getnumlimitP6HeaderPPKci.exit44, label %.preheader.i.i38
 
 .preheader.i.i38:                                 ; preds = %bb.r, %.preheader.i.i38
@@ -271,16 +268,15 @@ bb.r:                                             ; preds = %bb.a
   %i.ab = add i32 %i.x, -48
   %i.ac = add i32 %i.ab, %i.aa                    ; 6 uses
   %i.ad = load i8, ptr %i.y, align 1, !tbaa !13
-  %9 = sext i8 %i.ad to i32
-  %10 = add nsw i32 %9, -48
-  %i.ae = icmp ult i32 %10, 10                    ; 2 uses
+  %6 = add i8 %i.ad, -48
+  %i.ae = icmp ult i8 %6, 10                      ; 2 uses
   %i.af = icmp slt i32 %i.ac, 214748364
   %i.ag = select i1 %i.ae, i1 %i.af, i1 false
   br i1 %i.ag, label %.preheader.i.i38, label %bb.s, !llvm.loop !114
 
 bb.s:                                             ; preds = %.preheader.i.i38
   %i.ah = icmp sgt i32 %i.ac, 1073741824
-  %or.cond.not.i.i40 = or i1 %i.ah, %i.ae
+  %or.cond.not.i.i40 = or i1 %i.ae, %i.ah
   br i1 %or.cond.not.i.i40, label %bb.t, label %_ZL6getnumP6HeaderPPKci.exit.i41
 
 bb.t:                                             ; preds = %bb.s
@@ -305,9 +301,8 @@ _ZL11getnumlimitP6HeaderPPKci.exit44:             ; preds = %bb.r, %_ZL6getnumP6
 
 bb.v:                                             ; preds = %bb.a
   %i.al = load i8, ptr %i.b, align 1, !tbaa !13
-  %11 = sext i8 %i.al to i32
-  %12 = add nsw i32 %11, -58
-  %i.am = icmp ult i32 %12, -10
+  %7 = add i8 %i.al, -58
+  %i.am = icmp ult i8 %7, -10
   br i1 %i.am, label %_ZL11getnumlimitP6HeaderPPKci.exit51, label %.preheader.i.i45
 
 .preheader.i.i45:                                 ; preds = %bb.v, %.preheader.i.i45
@@ -321,16 +316,15 @@ bb.v:                                             ; preds = %bb.a
   %i.as = add i32 %i.ao, -48
   %i.at = add i32 %i.as, %i.ar                    ; 6 uses
   %i.au = load i8, ptr %i.ap, align 1, !tbaa !13
-  %13 = sext i8 %i.au to i32
-  %14 = add nsw i32 %13, -48
-  %i.av = icmp ult i32 %14, 10                    ; 2 uses
+  %8 = add i8 %i.au, -48
+  %i.av = icmp ult i8 %8, 10                      ; 2 uses
   %i.aw = icmp slt i32 %i.at, 214748364
   %i.ax = select i1 %i.av, i1 %i.aw, i1 false
   br i1 %i.ax, label %.preheader.i.i45, label %bb.w, !llvm.loop !114
 
 bb.w:                                             ; preds = %.preheader.i.i45
   %i.ay = icmp sgt i32 %i.at, 1073741824
-  %or.cond.not.i.i47 = or i1 %i.ay, %i.av
+  %or.cond.not.i.i47 = or i1 %i.av, %i.ay
   br i1 %or.cond.not.i.i47, label %bb.x, label %_ZL6getnumP6HeaderPPKci.exit.i48
 
 bb.x:                                             ; preds = %bb.w
@@ -355,9 +349,8 @@ _ZL11getnumlimitP6HeaderPPKci.exit51:             ; preds = %bb.v, %_ZL6getnumP6
 
 bb.z:                                             ; preds = %bb.a
   %i.bc = load i8, ptr %i.b, align 1, !tbaa !13
-  %15 = sext i8 %i.bc to i32
-  %16 = add nsw i32 %15, -58
-  %i.bd = icmp ult i32 %16, -10
+  %9 = add i8 %i.bc, -58
+  %i.bd = icmp ult i8 %9, -10
   br i1 %i.bd, label %_ZL6getnumP6HeaderPPKci.exit.thread, label %.preheader.i
 
 _ZL6getnumP6HeaderPPKci.exit.thread:              ; preds = %bb.z
@@ -375,16 +368,15 @@ _ZL6getnumP6HeaderPPKci.exit.thread:              ; preds = %bb.z
   %i.bj = add i32 %i.bf, -48
   %i.bk = add i32 %i.bj, %i.bi                    ; 5 uses
   %i.bl = load i8, ptr %i.bg, align 1, !tbaa !13
-  %17 = sext i8 %i.bl to i32
-  %18 = add nsw i32 %17, -48
-  %i.bm = icmp ult i32 %18, 10                    ; 2 uses
+  %10 = add i8 %i.bl, -48
+  %i.bm = icmp ult i8 %10, 10                     ; 2 uses
   %i.bn = icmp slt i32 %i.bk, 214748364
   %i.bo = select i1 %i.bm, i1 %i.bn, i1 false
   br i1 %i.bo, label %.preheader.i, label %bb.aa, !llvm.loop !114
 
 bb.aa:                                            ; preds = %.preheader.i
   %i.bp = icmp sgt i32 %i.bk, 1073741824
-  %or.cond.not.i = or i1 %i.bp, %i.bm
+  %or.cond.not.i = or i1 %i.bm, %i.bp
   br i1 %or.cond.not.i, label %bb.ab, label %_ZL6getnumP6HeaderPPKci.exit
 
 bb.ab:                                            ; preds = %bb.aa
@@ -426,9 +418,8 @@ bb.ah:                                            ; preds = %bb.a
 
 bb.ai:                                            ; preds = %bb.a
   %i.bw = load i8, ptr %i.b, align 1, !tbaa !13
-  %19 = sext i8 %i.bw to i32
-  %20 = add nsw i32 %19, -58
-  %i.bx = icmp ult i32 %20, -10
+  %11 = add i8 %i.bw, -58
+  %i.bx = icmp ult i8 %11, -10
   br i1 %i.bx, label %_ZL11getnumlimitP6HeaderPPKci.exit58, label %.preheader.i.i52
 
 .preheader.i.i52:                                 ; preds = %bb.ai, %.preheader.i.i52
@@ -442,16 +433,15 @@ bb.ai:                                            ; preds = %bb.a
   %i.cd = add i32 %i.bz, -48
   %i.ce = add i32 %i.cd, %i.cc                    ; 6 uses
   %i.cf = load i8, ptr %i.ca, align 1, !tbaa !13
-  %21 = sext i8 %i.cf to i32
-  %22 = add nsw i32 %21, -48
-  %i.cg = icmp ult i32 %22, 10                    ; 2 uses
+  %12 = add i8 %i.cf, -48
+  %i.cg = icmp ult i8 %12, 10                     ; 2 uses
   %i.ch = icmp slt i32 %i.ce, 214748364
   %i.ci = select i1 %i.cg, i1 %i.ch, i1 false
   br i1 %i.ci, label %.preheader.i.i52, label %bb.aj, !llvm.loop !114
 
 bb.aj:                                            ; preds = %.preheader.i.i52
   %i.cj = icmp sgt i32 %i.ce, 1073741824
-  %or.cond.not.i.i54 = or i1 %i.cj, %i.cg
+  %or.cond.not.i.i54 = or i1 %i.cg, %i.cj
   br i1 %or.cond.not.i.i54, label %bb.ak, label %_ZL6getnumP6HeaderPPKci.exit.i55
 
 bb.ak:                                            ; preds = %bb.aj

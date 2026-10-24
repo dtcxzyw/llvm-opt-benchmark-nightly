@@ -205,11 +205,9 @@ luaM_realloc_.exit77:                             ; preds = %bb.w
   %i.gj = load i32, ptr %i.fa, align 4, !tbaa !262
   store i32 %i.gj, ptr %i.ff, align 8, !tbaa !196
   %i.gk = getelementptr inbounds nuw i8, ptr %i.d, i64 72 ; 2 uses
-  %i.gl = load i16, ptr %i.gk, align 8, !tbaa !263 ; 2 uses
-  %1 = sext i16 %i.gl to i64                      ; 2 uses
-  %2 = add nsw i64 %1, 1
-  %3 = icmp ult i64 %2, 1152921504606846976
-  br i1 %3, label %bb.ad, label %bb.aj
+  %i.gl = load i16, ptr %i.gk, align 8, !tbaa !263 ; 3 uses
+  %1 = icmp sgt i16 %i.gl, -2
+  br i1 %1, label %bb.ad, label %bb.aj
 
 bb.ac:                                            ; preds = %luaM_realloc_.exit72
   tail call void (ptr, ptr, ...) @luaG_runerror(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.5), !inline_history !9
@@ -222,7 +220,8 @@ bb.ad:                                            ; preds = %luaM_realloc_.exit7
   %i.gp = load i32, ptr %i.go, align 4, !tbaa !197
   %i.gq = sext i32 %i.gp to i64
   %i.gr = shl nsw i64 %i.gq, 4                    ; 2 uses
-  %i.gs = shl nsw i64 %1, 4                       ; 2 uses
+  %2 = sext i16 %i.gl to i64
+  %i.gs = shl nsw i64 %2, 4                       ; 2 uses
   %i.gt = load ptr, ptr %i.bi, align 8, !tbaa !68 ; 3 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 16
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !78

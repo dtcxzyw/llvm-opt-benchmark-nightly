@@ -184,9 +184,8 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN2v88internal6maglev12_GLOBAL__N_120LoadNewAllocationTopEPNS1_15MaglevAssemblerENS0_8RegisterES5_i.exit.i
 
 bb.i:                                             ; preds = %bb.f
-  %10 = sext i32 %3 to i64
-  %11 = add nsw i64 %10, 128
-  %i.an = icmp ult i64 %11, 256
+  %10 = add i32 %3, 128
+  %i.an = icmp ult i32 %10, 256
   br i1 %i.an, label %.thread.i.i, label %bb.j
 
 .thread.i.i:                                      ; preds = %bb.i, %bb.g, %bb.g
@@ -198,7 +197,7 @@ bb.i:                                             ; preds = %bb.f
   %i.ar = lshr i8 %2, 3
   %i.as = or i8 %i.ah, %i.ar
   store i8 %i.as, ptr %i.y, align 1
-  %i.at = trunc i32 %3 to i8
+  %i.at = trunc nsw i32 %3 to i8
   %i.au = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ag
   store i8 %i.at, ptr %i.au, align 1
   %i.av = add nuw nsw i64 %i.ag, 1
@@ -404,13 +403,11 @@ _ZN2v88internal7OperandC2ENS0_8RegisterES2_NS0_11ScaleFactorEi.exit:
   %i.a = tail call noundef i32 @_ZN2v88internal18MacroAssemblerBase30RootRegisterOffsetForRootIndexENS0_9RootIndexE(i16 noundef zeroext 328) #11 ; 3 uses
   %i.b = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.b)
-  %4 = sext i32 %i.a to i64
-  %5 = add nsw i64 %4, 128
-  %i.c = icmp ult i64 %5, 256                     ; 3 uses
+  %4 = add i32 %i.a, 128
+  %i.c = icmp ult i32 %4, 256                     ; 3 uses
   %.sroa.12.sroa.4.0.extract.shift = and i32 %i.a, -256
   %.sroa.12.sroa.4.sroa.0.0 = select i1 %i.c, i32 0, i32 %.sroa.12.sroa.4.0.extract.shift
-  %.sroa.7.0 = select i1 %i.c, i64 4456448, i64 8650752
-  %storemerge = select i1 %i.c, i64 3, i64 6
+  %storemerge = select i1 %i.c, i64 4456448, i64 8650752
   %i.d = lshr i8 %2, 2
   %i.e = or i8 %i.d, 1
   %i.f = shl nuw nsw i8 %2, 3
@@ -422,11 +419,11 @@ _ZN2v88internal7OperandC2ENS0_8RegisterES2_NS0_11ScaleFactorEi.exit:
   %.sroa.10.0.insert.ext = zext i8 %i.g to i64
   %.sroa.10.0.insert.shift = shl nuw nsw i64 %.sroa.10.0.insert.ext, 24
   %.sroa.10.0.insert.insert = or disjoint i64 %.sroa.12.0.insert.shift, %.sroa.10.0.insert.shift
-  %.sroa.7.0.insert.insert = or disjoint i64 %.sroa.10.0.insert.insert, %.sroa.7.0
+  %.sroa.7.0.insert.insert = or disjoint i64 %.sroa.10.0.insert.insert, %storemerge
   %.sroa.2.0.insert.ext = zext nneg i8 %i.e to i64
   %.sroa.2.0.insert.shift = shl nuw nsw i64 %.sroa.2.0.insert.ext, 8
   %.sroa.2.0.insert.insert = or disjoint i64 %.sroa.7.0.insert.insert, %.sroa.2.0.insert.shift
-  %.cast = inttoptr i64 %storemerge to ptr
+  %.cast = select i1 %i.c, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr)
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 %1, i64 %.sroa.2.0.insert.insert, ptr nonnull %.cast, i32 noundef 8) #11
   ret void
 }
@@ -665,13 +662,11 @@ bb.o:                                             ; preds = %bb.n, %"_ZN2v88inte
   %i.co = call noundef i32 @_ZN2v88internal18MacroAssemblerBase30RootRegisterOffsetForRootIndexENS0_9RootIndexE(i16 noundef zeroext 328) #11 ; 3 uses
   %i.cp = icmp samesign ult i8 %4, 16
   call void @llvm.assume(i1 %i.cp)
-  %8 = sext i32 %i.co to i64
-  %9 = add nsw i64 %8, 128
-  %i.cq = icmp ult i64 %9, 256                    ; 3 uses
+  %8 = add i32 %i.co, 128
+  %i.cq = icmp ult i32 %8, 256                    ; 3 uses
   %.sroa.12.sroa.4.0.extract.shift.i = and i32 %i.co, -256
   %.sroa.12.sroa.4.sroa.0.0.i = select i1 %i.cq, i32 0, i32 %.sroa.12.sroa.4.0.extract.shift.i
-  %.sroa.7.0.i = select i1 %i.cq, i64 4456448, i64 8650752
-  %storemerge.i = select i1 %i.cq, i64 3, i64 6
+  %storemerge.i = select i1 %i.cq, i64 4456448, i64 8650752
   %i.cr = lshr i8 %4, 2
   %i.cs = or i8 %i.cr, 1
   %i.ct = shl nuw nsw i8 %4, 3
@@ -683,11 +678,11 @@ bb.o:                                             ; preds = %bb.n, %"_ZN2v88inte
   %.sroa.10.0.insert.ext.i = zext i8 %i.cu to i64
   %.sroa.10.0.insert.shift.i = shl nuw nsw i64 %.sroa.10.0.insert.ext.i, 24
   %.sroa.10.0.insert.insert.i = or disjoint i64 %.sroa.12.0.insert.shift.i, %.sroa.10.0.insert.shift.i
-  %.sroa.7.0.insert.insert.i = or disjoint i64 %.sroa.10.0.insert.insert.i, %.sroa.7.0.i
+  %.sroa.7.0.insert.insert.i = or disjoint i64 %.sroa.10.0.insert.insert.i, %storemerge.i
   %.sroa.2.0.insert.ext.i = zext nneg i8 %i.cs to i64
   %.sroa.2.0.insert.shift.i = shl nuw nsw i64 %.sroa.2.0.insert.ext.i, 8
   %.sroa.2.0.insert.insert.i = or disjoint i64 %.sroa.7.0.insert.insert.i, %.sroa.2.0.insert.shift.i
-  %.cast.i = inttoptr i64 %storemerge.i to ptr
+  %.cast.i = select i1 %i.cq, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr)
   call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 %3, i64 %.sroa.2.0.insert.insert.i, ptr nonnull %.cast.i, i32 noundef 8) #11
   call void @_ZN2v88internal9Assembler4bindEPNS0_5LabelE(ptr noundef nonnull align 8 dereferenceable(408) %0, ptr noundef nonnull %i.k) #11
   ret void

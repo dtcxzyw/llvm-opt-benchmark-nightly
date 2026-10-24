@@ -202,9 +202,8 @@ bb.y:                                             ; preds = %.backedge
   %i.ch = and i32 %.1588, -1695801
   %i.ci = or disjoint i32 %i.ch, 524288           ; 3 uses
   %i.cj = load i8, ptr %i.ak, align 1, !tbaa !8   ; 3 uses
-  %3 = sext i8 %i.cj to i32
-  %4 = add nsw i32 %3, -48
-  %i.ck = icmp ult i32 %4, 10
+  %3 = add i8 %i.cj, -48
+  %i.ck = icmp ult i8 %3, 10
   br i1 %i.ck, label %.lr.ph, label %bb.z
 
 .lr.ph:                                           ; preds = %bb.y, %.lr.ph
@@ -212,14 +211,13 @@ bb.y:                                             ; preds = %.backedge
   %.9995 = phi ptr [ %i.cp, %.lr.ph ], [ %i.ak, %bb.y ]
   %.1595994 = phi i64 [ %i.co, %.lr.ph ], [ 0, %bb.y ]
   %i.cm = mul nsw i64 %.1595994, 10
-  %5 = sext i8 %i.cl to i64
+  %4 = zext nneg i8 %i.cl to i64
   %i.cn = add i64 %i.cm, -48
-  %i.co = add i64 %i.cn, %5                       ; 2 uses
+  %i.co = add i64 %i.cn, %4                       ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.9995, i64 1 ; 3 uses
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !8   ; 2 uses
-  %6 = sext i8 %i.cq to i32
-  %7 = add nsw i32 %6, -48
-  %i.cr = icmp ult i32 %7, 10
+  %5 = add i8 %i.cq, -48
+  %i.cr = icmp ult i8 %5, 10
   br i1 %i.cr, label %.lr.ph, label %.backedge.backedge, !llvm.loop !14
 
 bb.z:                                             ; preds = %bb.y

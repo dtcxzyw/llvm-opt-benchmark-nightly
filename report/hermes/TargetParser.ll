@@ -204,13 +204,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.h = load i8, ptr %i.g, align 1, !tbaa !43    ; 2 uses
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit.i = icmp ult i32 %3, -10
-  %4 = icmp slt i8 %i.h, 56
-  %or.cond = or i1 %4, %isdigit.i
-  br i1 %or.cond, label %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread, label %bb.d
+  %i.h = load i8, ptr %i.g, align 1, !tbaa !43
+  %2 = add i8 %i.h, -58
+  %isdigit.i = icmp ult i8 %2, -2
+  br i1 %isdigit.i, label %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.i = tail call fastcc { ptr, i64 } @_ZL14getArchSynonymN4llvh9StringRefE(ptr nonnull %i.b, i64 %i.c)
@@ -297,8 +294,8 @@ _ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread.loopexit.split.loo
   %.sroa.527.0.copyload.le35 = load i32, ptr %.sroa.527.0..021.ptr.sroa_idx.le, align 8, !tbaa !44
   br label %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread
 
-_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread: ; preds = %bb.d, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.5, %_ZNK4llvh9StringRef8endswithES0_.exit.6, %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread.loopexit.split.loop.exit, %bb.b, %bb.c, %bb.a
-  %.4 = phi i32 [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.5 ], [ %.sroa.527.0.copyload.le35, %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread.loopexit.split.loop.exit ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.6 ], [ 0, %bb.d ]
+_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread: ; preds = %bb.d, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.5, %_ZNK4llvh9StringRef8endswithES0_.exit.6, %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread.loopexit.split.loop.exit, %bb.a, %bb.b, %bb.c
+  %.4 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.5 ], [ %.sroa.527.0.copyload.le35, %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread.loopexit.split.loop.exit ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.6 ], [ 0, %bb.d ]
   ret i32 %.4
 }
 
@@ -315,15 +312,18 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !43
-  %2 = sext i8 %i.e to i32
-  %isdigittmp = add nsw i32 %2, -48               ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
-  %spec.select = select i1 %isdigit, i32 %isdigittmp, i32 0
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !43    ; 2 uses
+  %2 = add i8 %i.e, -48
+  %isdigit = icmp ult i8 %2, 10
+  br i1 %isdigit, label %3, label %bb.d
+
+3:                                                ; preds = %bb.c
+  %4 = zext nneg i8 %i.e to i32
+  %5 = add nsw i32 %4, -48
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.a, %bb.b
-  %.0 = phi i32 [ 0, %bb.a ], [ %spec.select, %bb.c ], [ 0, %bb.b ]
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c, %3
+  %.0 = phi i32 [ %5, %3 ], [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ]
   ret i32 %.0
 }
 
@@ -517,9 +517,8 @@ bb.c:                                             ; preds = %thread-pre-split.th
 bb.d:                                             ; preds = %bb.c
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 1
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !43
-  %3 = sext i8 %i.cp to i32
-  %isdigittmp = add nsw i32 %3, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %3 = add i8 %i.cp, -48
+  %isdigit = icmp ult i8 %3, 10
   br i1 %isdigit, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %thread-pre-split.thread, %bb.d

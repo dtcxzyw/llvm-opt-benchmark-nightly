@@ -59,9 +59,8 @@ bb.g:                                             ; preds = %.preheader142
   br label %.backedge
 
 bb.h:                                             ; preds = %.preheader142
-  %3 = sext i8 %i.e to i32
-  %4 = add nsw i32 %3, -58
-  %i.g = icmp ult i32 %4, -10
+  %3 = add i8 %i.e, -58
+  %i.g = icmp ult i8 %3, -10
   br i1 %i.g, label %bb.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.i
@@ -70,13 +69,12 @@ bb.h:                                             ; preds = %.preheader142
   %i.i = phi ptr [ %i.k, %.lr.ph.i ], [ %i.d, %bb.h ]
   %i.j = mul nsw i32 %.03.i, 10
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i32 1 ; 3 uses
-  %5 = sext i8 %i.h to i32
+  %4 = zext nneg i8 %i.h to i32
   %i.l = add i32 %i.j, -48
-  %i.m = add i32 %i.l, %5                         ; 2 uses
+  %i.m = add i32 %i.l, %4                         ; 2 uses
   %i.n = load i8, ptr %i.k, align 1               ; 3 uses
-  %6 = sext i8 %i.n to i32
-  %7 = add nsw i32 %6, -58
-  %i.o = icmp ult i32 %7, -10
+  %5 = add i8 %i.n, -58
+  %i.o = icmp ult i8 %5, -10
   br i1 %i.o, label %skip_atoi.exit, label %.lr.ph.i, !llvm.loop !7
 
 bb.i:                                             ; preds = %bb.h
@@ -115,9 +113,8 @@ skip_atoi.exit:                                   ; preds = %.lr.ph.i, %skip_ato
 bb.l:                                             ; preds = %skip_atoi.exit
   %i.y = getelementptr inbounds nuw i8, ptr %.1130, i32 1 ; 3 uses
   %i.z = load i8, ptr %i.y, align 1               ; 3 uses
-  %8 = sext i8 %i.z to i32
-  %9 = add nsw i32 %8, -58
-  %i.aa = icmp ult i32 %9, -10
+  %6 = add i8 %i.z, -58
+  %i.aa = icmp ult i8 %6, -10
   br i1 %i.aa, label %bb.m, label %.lr.ph.i117
 
 .lr.ph.i117:                                      ; preds = %bb.l, %.lr.ph.i117
@@ -126,13 +123,12 @@ bb.l:                                             ; preds = %skip_atoi.exit
   %i.ac = phi ptr [ %i.ae, %.lr.ph.i117 ], [ %i.y, %bb.l ]
   %i.ad = mul nsw i32 %.03.i118, 10
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i32 1 ; 3 uses
-  %10 = sext i8 %i.ab to i32
+  %7 = zext nneg i8 %i.ab to i32
   %i.af = add i32 %i.ad, -48
-  %i.ag = add i32 %i.af, %10                      ; 2 uses
+  %i.ag = add i32 %i.af, %7                       ; 2 uses
   %i.ah = load i8, ptr %i.ae, align 1             ; 2 uses
-  %11 = sext i8 %i.ah to i32
-  %12 = add nsw i32 %11, -58
-  %i.ai = icmp ult i32 %12, -10
+  %8 = add i8 %i.ah, -58
+  %i.ai = icmp ult i8 %8, -10
   br i1 %i.ai, label %skip_atoi.exit120, label %.lr.ph.i117, !llvm.loop !7
 
 bb.m:                                             ; preds = %bb.l

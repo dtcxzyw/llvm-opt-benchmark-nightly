@@ -205,9 +205,8 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !254 ; 4 uses
-  %26 = sext i8 %i.ci to i32
-  %27 = add nsw i32 %26, -48
-  %or.cond = icmp ult i32 %27, 10
+  %26 = add i8 %i.ci, -48
+  %or.cond = icmp ult i8 %26, 10
   br i1 %or.cond, label %bb.o, label %bb.u
 
 bb.o:                                             ; preds = %bb.n
@@ -230,9 +229,9 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.preheader.i
   %i.co = mul nuw nsw i32 %.017.i, 10
-  %28 = sext i8 %i.cl to i32
-  %i.cp = add nsw i32 %28, -48
-  %i.cq = add i32 %i.cp, %i.co                    ; 3 uses
+  %27 = zext nneg i8 %i.cl to i32
+  %i.cp = add nsw i32 %27, -48
+  %i.cq = add nuw i32 %i.cp, %i.co                ; 3 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cm, i64 1 ; 4 uses
   store ptr %i.cr, ptr %i.b, align 8, !tbaa !230
   %.not.i = icmp eq ptr %i.cr, %i.g

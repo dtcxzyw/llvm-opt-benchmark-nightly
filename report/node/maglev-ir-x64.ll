@@ -152,16 +152,15 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.s = phi i64 [ 1, %bb.b ], [ 2, %bb.c ]       ; 3 uses
   %i.t = phi i8 [ 0, %bb.b ], [ %i.r, %bb.c ]
-  %4 = sext i32 %i.b to i64
-  %5 = add nsw i64 %4, 128
-  %i.u = icmp ult i64 %5, 256
+  %4 = add i32 %i.b, 128
+  %i.u = icmp ult i32 %4, 256
   %i.v = and i8 %i.k, 7                           ; 2 uses
   br i1 %i.u, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.w = or disjoint i8 %i.v, 64
   store i8 %i.w, ptr %i.n, align 2
-  %i.x = trunc i32 %i.b to i8
+  %i.x = trunc nsw i32 %i.b to i8
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.s
   store i8 %i.x, ptr %i.y, align 1
   %i.z = add nuw nsw i64 %i.s, 1

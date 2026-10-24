@@ -202,9 +202,8 @@ bb.bi:                                            ; preds = %bb.bg
   ]
 
 bb.bj:                                            ; preds = %bb.bi
-  %3 = sext i8 %i.df to i32
-  %isdigittmp = add nsw i32 %3, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %3 = add i8 %i.df, -48
+  %isdigit = icmp ult i8 %3, 10
   br i1 %isdigit, label %bb.bl, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.bj
@@ -245,9 +244,8 @@ bb.bm:                                            ; preds = %.lr.ph
   %indvars.iv = phi i64 [ %umax, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.bm ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.de, i64 %indvars.iv
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !28
-  %4 = sext i8 %i.dp to i32
-  %isdigittmp57 = add nsw i32 %4, -48
-  %isdigit58 = icmp ult i32 %isdigittmp57, 10
+  %4 = add i8 %i.dp, -48
+  %isdigit58 = icmp ult i8 %4, 10
   br i1 %isdigit58, label %bb.bm, label %.lr.ph114.preheader.a
 
 .lr.ph114.preheader.a:                            ; preds = %.lr.ph
@@ -263,9 +261,8 @@ bb.bm:                                            ; preds = %.lr.ph
   %i.dq = getelementptr inbounds nuw i8, ptr %i.de, i64 %indvars.iv120
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !28
   %.fr105 = freeze i8 %i.dr                       ; 2 uses
-  %5 = sext i8 %.fr105 to i32
-  %isdigittmp60 = add nsw i32 %5, -48
-  %isdigit61 = icmp ult i32 %isdigittmp60, 10
+  %5 = add i8 %.fr105, -48
+  %isdigit61 = icmp ult i8 %5, 10
   br i1 %isdigit61, label %bb.bn, label %switch.early.test104
 
 switch.early.test104:                             ; preds = %.lr.ph114.a
@@ -668,9 +665,8 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %4 = sext i8 %i.e to i32
-  %isdigittmp = add nsw i32 %4, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %4 = add i8 %i.e, -48
+  %isdigit = icmp ult i8 %4, 10
   br i1 %isdigit, label %bb.d, label %.critedge
 
 .thread23:                                        ; preds = %bb.b, %bb.b
@@ -691,9 +687,8 @@ bb.d:                                             ; preds = %bb.c, %.thread23
   %indvars.iv = phi i64 [ %i.g, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv
   %i.j = load i8, ptr %i.i, align 1, !tbaa !28
-  %5 = sext i8 %i.j to i32
-  %isdigittmp21 = add nsw i32 %5, -48
-  %isdigit22 = icmp ult i32 %isdigittmp21, 10     ; 2 uses
+  %5 = add i8 %i.j, -48
+  %isdigit22 = icmp ult i8 %5, 10                 ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp ne i32 %i.h, %lftr.wideiv
@@ -817,9 +812,8 @@ bb.f:                                             ; preds = %.lr.ph96
   %indvars.iv123 = phi i64 [ %indvars.iv.next124, %.critedge74.a ], [ %i.i, %.critedge74.preheader ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv123
   %i.x = load i8, ptr %i.w, align 1, !tbaa !28
-  %4 = sext i8 %i.x to i32
-  %isdigittmp = add nsw i32 %4, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %4 = add i8 %i.x, -48
+  %isdigit = icmp ult i8 %4, 10
   br i1 %isdigit, label %.critedge74.a, label %.critedge82
 
 .critedge78:                                      ; preds = %.lr.ph163
@@ -832,9 +826,8 @@ bb.f:                                             ; preds = %.lr.ph96
   %indvars.iv.next133 = add nuw nsw i64 %indvars.iv132162, 1 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next133
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !28
-  %5 = sext i8 %i.aa to i32
-  %isdigittmp68 = add nsw i32 %5, -48
-  %isdigit69 = icmp ult i32 %isdigittmp68, 10
+  %5 = add i8 %i.aa, -48
+  %isdigit69 = icmp ult i8 %5, 10
   br i1 %isdigit69, label %.critedge78, label %.critedge82, !llvm.loop !109
 
 .critedge76:                                      ; preds = %.critedge, %.critedge78, %.critedge78.preheader, %bb.f
@@ -851,9 +844,8 @@ bb.f:                                             ; preds = %.lr.ph96
   %indvars.iv135 = phi i64 [ %i.ab, %.lr.ph102.preheader ], [ %indvars.iv.next136, %.lr.ph102 ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv135
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !28
-  %6 = sext i8 %i.ae to i32
-  %isdigittmp71 = add nsw i32 %6, -48
-  %isdigit72 = icmp ult i32 %isdigittmp71, 10     ; 2 uses
+  %6 = add i8 %i.ae, -48
+  %isdigit72 = icmp ult i8 %6, 10                 ; 2 uses
   %indvars.iv.next136 = add nsw i64 %indvars.iv135, 1 ; 2 uses
   %lftr.wideiv138 = trunc i64 %indvars.iv.next136 to i32
   %exitcond139.not = icmp ne i32 %i.ac, %lftr.wideiv138
@@ -1256,9 +1248,8 @@ bb.ae:                                            ; preds = %bb.a
   %.030116 = phi i1 [ false, %.lr.ph.preheader ], [ %.1, %.thread ]
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fn, i64 %indvars.iv
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !28  ; 3 uses
-  %3 = sext i8 %i.fz to i32
-  %isdigittmp = add nsw i32 %3, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %3 = add i8 %i.fz, -48
+  %isdigit = icmp ult i8 %3, 10
   br i1 %isdigit, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph
@@ -1272,8 +1263,8 @@ bb.ah:                                            ; preds = %bb.ag
   %.not38 = icmp eq i8 %i.fz, 48
   br i1 %.not38, label %.thread, label %bb.ai
 
-.thread:                                          ; preds = %bb.ag, %bb.af, %bb.ah
-  %.1 = phi i1 [ true, %bb.af ], [ true, %bb.ah ], [ false, %bb.ag ]
+.thread:                                          ; preds = %bb.af, %bb.ag, %bb.ah
+  %.1 = phi i1 [ false, %bb.ag ], [ true, %bb.ah ], [ true, %bb.af ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !117
@@ -1676,9 +1667,8 @@ bb.ae:                                            ; preds = %bb.a
   %.032115 = phi i1 [ false, %.lr.ph.preheader ], [ %.133, %.thread ]
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fo, i64 %indvars.iv
   %i.ga = load i8, ptr %i.fz, align 1, !tbaa !28  ; 3 uses
-  %4 = sext i8 %i.ga to i32
-  %isdigittmp = add nsw i32 %4, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %4 = add i8 %i.ga, -48
+  %isdigit = icmp ult i8 %4, 10
   br i1 %isdigit, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph
@@ -1692,8 +1682,8 @@ bb.ah:                                            ; preds = %bb.ag
   %.not37 = icmp eq i8 %i.ga, 48
   br i1 %.not37, label %.thread, label %bb.ai
 
-.thread:                                          ; preds = %bb.ag, %bb.af, %bb.ah
-  %.133 = phi i1 [ true, %bb.af ], [ true, %bb.ah ], [ false, %bb.ag ]
+.thread:                                          ; preds = %bb.af, %bb.ag, %bb.ah
+  %.133 = phi i1 [ false, %bb.ag ], [ true, %bb.ah ], [ true, %bb.af ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !124

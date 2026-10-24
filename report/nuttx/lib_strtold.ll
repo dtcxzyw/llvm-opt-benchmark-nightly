@@ -29,7 +29,7 @@ bb.a:
 ; Function Attrs: noredzone nounwind optsize uwtable
 define internal fastcc x86_fp80 @strtox(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1, i32 noundef range(i32 1, 4) %2) unnamed_addr #2 {
 switch.lookup:
-  %i.a = alloca ptr, align 8                      ; 8 uses
+  %i.a = alloca ptr, align 8                      ; 9 uses
   %i.b = alloca ptr, align 8                      ; 8 uses
   %switch.tableidx = add nsw i32 %2, -1           ; 2 uses
   %i.c = zext nneg i32 %switch.tableidx to i64
@@ -432,9 +432,8 @@ hexfloat.exit:                                    ; preds = %bb.at, %bb.z, %bb.a
   br label %bb.cb
 
 bb.au:                                            ; preds = %.critedge3.thread
-  %3 = sext i8 %i.ab to i32
-  %isdigittmp = add nsw i32 %3, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %3 = add i8 %i.ab, -48
+  %isdigit = icmp ult i8 %3, 10
   br i1 %isdigit, label %.thread, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
@@ -444,9 +443,8 @@ bb.av:                                            ; preds = %bb.au
 bb.aw:                                            ; preds = %bb.av
   %i.ed = getelementptr inbounds nuw i8, ptr %i.aa, i64 1
   %i.ee = load i8, ptr %i.ed, align 1
-  %4 = sext i8 %i.ee to i32
-  %isdigittmp65 = add nsw i32 %4, -48
-  %isdigit66 = icmp ult i32 %isdigittmp65, 10
+  %4 = add i8 %i.ee, -48
+  %isdigit66 = icmp ult i8 %4, 10
   br i1 %isdigit66, label %.thread, label %bb.bz
 
 .thread:                                          ; preds = %bb.n, %bb.aw, %bb.au
@@ -496,16 +494,15 @@ bb.ay:                                            ; preds = %ifallzero.exit.i._c
 
 .preheader90.i:                                   ; preds = %bb.ay, %.preheader90.i
   %.0.in.in.i64.i = phi ptr [ %.08.i66.i, %.preheader90.i ], [ %storemerge63.i.lcssa, %bb.ay ] ; 2 uses
-  %.0.in.i65.i = load i8, ptr %.0.in.in.i64.i, align 1 ; 2 uses
+  %.0.in.i65.i = load i8, ptr %.0.in.in.i64.i, align 1 ; 3 uses
   %i.ej = icmp eq i8 %.0.in.i65.i, 48
-  %.08.i66.i = getelementptr inbounds nuw i8, ptr %.0.in.in.i64.i, i64 1 ; 2 uses
+  %.08.i66.i = getelementptr inbounds nuw i8, ptr %.0.in.in.i64.i, i64 1 ; 3 uses
   br i1 %i.ej, label %.preheader90.i, label %ifallzero.exit69.i, !llvm.loop !19
 
 ifallzero.exit69.i:                               ; preds = %.preheader90.i
-  %.0.i67.i = sext i8 %.0.in.i65.i to i32         ; 2 uses
-  %5 = add nsw i32 %.0.i67.i, -58
-  %isdigit.i68.i = icmp ult i32 %5, -10
-  br i1 %isdigit.i68.i, label %.sink.split.i84, label %.preheader.i83
+  %5 = add i8 %.0.in.i65.i, -58
+  %isdigit.i68.i = icmp ult i8 %5, -10
+  br i1 %isdigit.i68.i, label %6, label %.preheader.i83
 
 .preheader.i83:                                   ; preds = %ifallzero.exit69.i
   %storemerge101.i = getelementptr inbounds nuw i8, ptr %.041.in.in100.i.lcssa, i64 2 ; 2 uses
@@ -514,6 +511,11 @@ ifallzero.exit69.i:                               ; preds = %.preheader90.i
   %isdigittmp54104.i = add nsw i32 %.142103.i, -48
   %isdigit55105.i = icmp ult i32 %isdigittmp54104.i, 10
   br i1 %isdigit55105.i, label %.lr.ph.i85, label %.sink.split.i84
+
+6:                                                ; preds = %ifallzero.exit69.i
+  store ptr %.08.i66.i, ptr %i.a, align 8
+  %7 = sext i8 %.0.in.i65.i to i32
+  br label %bb.az
 
 .lr.ph.i85:                                       ; preds = %.preheader.i83, %.lr.ph.i85
   %storemerge108.i = phi ptr [ %storemerge.i, %.lr.ph.i85 ], [ %storemerge101.i, %.preheader.i83 ] ; 2 uses
@@ -528,28 +530,27 @@ ifallzero.exit69.i:                               ; preds = %.preheader90.i
   %isdigit55.i = icmp ult i32 %isdigittmp54.i, 10
   br i1 %isdigit55.i, label %.lr.ph.i85, label %.sink.split.i84, !llvm.loop !21
 
-.sink.split.i84:                                  ; preds = %.lr.ph.i85, %.preheader.i83, %ifallzero.exit69.i
-  %storemerge.lcssa.sink.i = phi ptr [ %.08.i66.i, %ifallzero.exit69.i ], [ %storemerge101.i, %.preheader.i83 ], [ %storemerge.i, %.lr.ph.i85 ] ; 2 uses
-  %.243.ph.i = phi i32 [ %.0.i67.i, %ifallzero.exit69.i ], [ %.142103.i, %.preheader.i83 ], [ %.142.i, %.lr.ph.i85 ]
-  %.237.ph.i = phi i64 [ %.lcssa102, %ifallzero.exit69.i ], [ %.035.i.lcssa, %.preheader.i83 ], [ %i.ek, %.lr.ph.i85 ]
-  %.1.ph.i = phi i64 [ 0, %ifallzero.exit69.i ], [ 0, %.preheader.i83 ], [ %i.el, %.lr.ph.i85 ]
-  store ptr %storemerge.lcssa.sink.i, ptr %i.a, align 8
+.sink.split.i84:                                  ; preds = %.lr.ph.i85, %.preheader.i83
+  %storemerge.lcssa.i = phi ptr [ %storemerge101.i, %.preheader.i83 ], [ %storemerge.i, %.lr.ph.i85 ] ; 2 uses
+  %.136.lcssa.i = phi i64 [ %.035.i.lcssa, %.preheader.i83 ], [ %i.ek, %.lr.ph.i85 ]
+  %.034.lcssa.i = phi i64 [ 0, %.preheader.i83 ], [ %i.el, %.lr.ph.i85 ]
+  %.142.lcssa.i = phi i32 [ %.142103.i, %.preheader.i83 ], [ %.142.i, %.lr.ph.i85 ]
+  store ptr %storemerge.lcssa.i, ptr %i.a, align 8
   br label %bb.az
 
-bb.az:                                            ; preds = %.sink.split.i84, %bb.ay
-  %6 = phi ptr [ %storemerge63.i.lcssa, %bb.ay ], [ %storemerge.lcssa.sink.i, %.sink.split.i84 ] ; 3 uses
-  %.243.i = phi i32 [ %.041.i.lcssa, %bb.ay ], [ %.243.ph.i, %.sink.split.i84 ]
-  %.237.i = phi i64 [ %.035.i.lcssa, %bb.ay ], [ %.237.ph.i, %.sink.split.i84 ] ; 3 uses
-  %.1.i = phi i64 [ 0, %bb.ay ], [ %.1.ph.i, %.sink.split.i84 ] ; 2 uses
+bb.az:                                            ; preds = %.sink.split.i84, %6, %bb.ay
+  %8 = phi ptr [ %.08.i66.i, %6 ], [ %storemerge63.i.lcssa, %bb.ay ], [ %storemerge.lcssa.i, %.sink.split.i84 ] ; 3 uses
+  %.243.i = phi i32 [ %7, %6 ], [ %.041.i.lcssa, %bb.ay ], [ %.142.lcssa.i, %.sink.split.i84 ]
+  %.237.i = phi i64 [ %.lcssa102, %6 ], [ %.035.i.lcssa, %bb.ay ], [ %.136.lcssa.i, %.sink.split.i84 ] ; 3 uses
+  %.1.i = phi i64 [ 0, %6 ], [ 0, %bb.ay ], [ %.034.lcssa.i, %.sink.split.i84 ] ; 2 uses
   %i.em = and i32 %.243.i, -33
   %i.en = icmp eq i32 %i.em, 69
   br i1 %i.en, label %bb.ba, label %bb.bg
 
 bb.ba:                                            ; preds = %bb.az
-  %i.eo = load i8, ptr %6, align 1                ; 2 uses
-  %7 = sext i8 %i.eo to i32
-  %isdigittmp56.i = add nsw i32 %7, -48
-  %isdigit57.i = icmp ult i32 %isdigittmp56.i, 10
+  %i.eo = load i8, ptr %8, align 1                ; 2 uses
+  %9 = add i8 %i.eo, -48
+  %isdigit57.i = icmp ult i8 %9, 10
   br i1 %isdigit57.i, label %bb.bd, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
@@ -559,11 +560,10 @@ bb.bb:                                            ; preds = %bb.ba
   ]
 
 bb.bc:                                            ; preds = %bb.bb, %bb.bb
-  %i.ep = getelementptr inbounds nuw i8, ptr %6, i64 1
+  %i.ep = getelementptr inbounds nuw i8, ptr %8, i64 1
   %i.eq = load i8, ptr %i.ep, align 1
-  %8 = sext i8 %i.eq to i32
-  %isdigittmp58.i = add nsw i32 %8, -48
-  %isdigit59.i = icmp ult i32 %isdigittmp58.i, 10
+  %10 = add i8 %i.eq, -48
+  %isdigit59.i = icmp ult i8 %10, 10
   br i1 %isdigit59.i, label %bb.bd, label %bb.bg
 
 bb.bd:                                            ; preds = %bb.bc, %bb.ba
@@ -582,7 +582,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %decfloat.exit
 
 bb.bg:                                            ; preds = %bb.bc, %bb.bb, %bb.az
-  %i.ev = getelementptr inbounds i8, ptr %6, i64 -1
+  %i.ev = getelementptr inbounds i8, ptr %8, i64 -1
   store ptr %i.ev, ptr %i.a, align 8
   br label %bb.bh
 
@@ -648,9 +648,8 @@ bb.bm:                                            ; preds = %bb.bm, %bb.bl
   br i1 %i.fk, label %bb.bm, label %ifallzero.exit76.i, !llvm.loop !19
 
 ifallzero.exit76.i:                               ; preds = %bb.bm
-  %.0.i74.i = sext i8 %.0.in.i72.i to i32
-  %9 = add nsw i32 %.0.i74.i, -58
-  %isdigit.i75.i = icmp ult i32 %9, -10
+  %11 = add i8 %.0.in.i72.i, -58
+  %isdigit.i75.i = icmp ult i8 %11, -10
   br i1 %isdigit.i75.i, label %.loopexit.i71, label %bb.bk, !llvm.loop !22
 
 .loopexit.i71:                                    ; preds = %ifallzero.exit76.i, %chtou.exit.i

@@ -204,9 +204,8 @@ bb.f:                                             ; preds = %bb.c
 .lr.ph.i.i.i:                                     ; preds = %bb.f, %bb.g
   %i.an = phi i8 [ %i.aq, %bb.g ], [ %i.am, %bb.f ] ; 2 uses
   %.034.i.i.i = phi ptr [ %i.ap, %bb.g ], [ %i.al, %bb.f ] ; 2 uses
-  %5 = sext i8 %i.an to i32
-  %6 = add nsw i32 %5, -48
-  %i.ao = icmp ult i32 %6, 10
+  %5 = add i8 %i.an, -48
+  %i.ao = icmp ult i8 %5, 10
   br i1 %i.ao, label %.critedge.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i.i.i
@@ -567,9 +566,8 @@ bb.f:                                             ; preds = %bb.c
 .lr.ph.i.i.i:                                     ; preds = %bb.f, %bb.g
   %i.an = phi i8 [ %i.aq, %bb.g ], [ %i.am, %bb.f ] ; 2 uses
   %.034.i.i.i = phi ptr [ %i.ap, %bb.g ], [ %i.al, %bb.f ] ; 2 uses
-  %5 = sext i8 %i.an to i32
-  %6 = add nsw i32 %5, -48
-  %i.ao = icmp ult i32 %6, 10
+  %5 = add i8 %i.an, -48
+  %i.ao = icmp ult i8 %5, 10
   br i1 %i.ao, label %.critedge.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i.i.i
@@ -831,9 +829,8 @@ bb.f:                                             ; preds = %bb.c
 .lr.ph.i.i.i:                                     ; preds = %bb.f, %bb.g
   %i.an = phi i8 [ %i.aq, %bb.g ], [ %i.am, %bb.f ] ; 2 uses
   %.034.i.i.i = phi ptr [ %i.ap, %bb.g ], [ %i.al, %bb.f ] ; 2 uses
-  %5 = sext i8 %i.an to i32
-  %6 = add nsw i32 %5, -48
-  %i.ao = icmp ult i32 %6, 10
+  %5 = add i8 %i.an, -48
+  %i.ao = icmp ult i8 %5, 10
   br i1 %i.ao, label %.critedge.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i.i.i
@@ -1106,10 +1103,9 @@ bb.h:                                             ; preds = %bb.c
   %.014.i.i = phi ptr [ %i.ap, %.preheader.i.i ], [ %i.ak, %bb.h ] ; 4 uses
   %i.an = load i8, ptr %.014.i.i, align 1, !tbaa !42 ; 2 uses
   %.not17.i.i = icmp eq i8 %i.an, 0
-  %5 = sext i8 %i.an to i32
-  %6 = add nsw i32 %5, -48
-  %i.ao = icmp ult i32 %6, 10
-  %or.cond.i.i = select i1 %.not17.i.i, i1 true, i1 %i.ao
+  %5 = add i8 %i.an, -48
+  %i.ao = icmp ult i8 %5, 10
+  %or.cond.i.i = or i1 %.not17.i.i, %i.ao
   %i.ap = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 1
   br i1 %or.cond.i.i, label %.critedge.i.i, label %.preheader.i.i, !llvm.loop !280
 
@@ -1512,9 +1508,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %.preheader ] ; 2 uses
   %.034 = phi ptr [ %i.h, %bb.b ], [ %1, %.preheader ] ; 2 uses
-  %4 = sext i8 %i.f to i32
-  %5 = add nsw i32 %4, -48
-  %i.g = icmp ult i32 %5, 10
+  %4 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %4, 10
   br i1 %i.g, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
@@ -1917,9 +1912,8 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i = phi ptr [ %i.h, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
-  %1 = sext i8 %i.f to i32
-  %2 = add nsw i32 %1, -48
-  %i.g = icmp ult i32 %2, 10
+  %1 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %1, 10
   br i1 %i.g, label %.critedge.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i
@@ -2322,9 +2316,8 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i = phi ptr [ %i.h, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
-  %1 = sext i8 %i.f to i32
-  %2 = add nsw i32 %1, -48
-  %i.g = icmp ult i32 %2, 10
+  %1 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %1, 10
   br i1 %i.g, label %.critedge.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i
@@ -2727,9 +2720,8 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i = phi ptr [ %i.h, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
-  %1 = sext i8 %i.f to i32
-  %2 = add nsw i32 %1, -48
-  %i.g = icmp ult i32 %2, 10
+  %1 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %1, 10
   br i1 %i.g, label %.critedge.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i
@@ -3132,9 +3124,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %.preheader ] ; 2 uses
   %.034 = phi ptr [ %i.h, %bb.b ], [ %1, %.preheader ] ; 2 uses
-  %4 = sext i8 %i.f to i32
-  %5 = add nsw i32 %4, -48
-  %i.g = icmp ult i32 %5, 10
+  %4 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %4, 10
   br i1 %i.g, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
@@ -3537,9 +3528,8 @@ _ZNK11flexbuffers9Reference5AsKeyEv.exit118:      ; preds = %bb.bz, %bb.ca, %bb.
   %i.jd = getelementptr inbounds i8, ptr %i.it, i64 %i.jc ; 2 uses
   %i.je = load i8, ptr %i.jd, align 1, !tbaa !42  ; 2 uses
   %i.jf = and i8 %i.je, -33
-  %17 = sext i8 %i.jf to i32
-  %18 = add nsw i32 %17, -65
-  %i.jg = icmp ult i32 %18, 26
+  %17 = add i8 %i.jf, -65
+  %i.jg = icmp ult i8 %17, 26
   %.not = icmp eq i8 %i.je, 95
   %or.cond = or i1 %.not, %i.jg
   br i1 %or.cond, label %.preheader, label %.loopexit
@@ -3553,15 +3543,13 @@ _ZNK11flexbuffers9Reference5AsKeyEv.exit118:      ; preds = %bb.bz, %bb.ca, %bb.
 
 bb.ce:                                            ; preds = %.preheader
   %i.jj = and i8 %i.ji, -33
-  %19 = sext i8 %i.jj to i32
-  %20 = add nsw i32 %19, -65
-  %i.jk = icmp ult i32 %20, 26
-  %21 = sext i8 %i.ji to i32
-  %22 = add nsw i32 %21, -48
-  %i.jl = icmp ult i32 %22, 10
-  %23 = select i1 %i.jk, i1 true, i1 %i.jl
+  %18 = add i8 %i.jj, -65
+  %i.jk = icmp ult i8 %18, 26
+  %19 = add i8 %i.ji, -48
+  %i.jl = icmp ult i8 %19, 10
+  %20 = or i1 %i.jl, %i.jk
   %.not85 = icmp eq i8 %i.ji, 95
-  %or.cond143 = or i1 %.not85, %23
+  %or.cond143 = or i1 %.not85, %20
   br i1 %or.cond143, label %.preheader, label %.loopexit, !llvm.loop !445
 
 .loopexit:                                        ; preds = %bb.ce, %.preheader, %_ZNK11flexbuffers9Reference5AsKeyEv.exit118, %bb.bw

@@ -161,11 +161,10 @@ bb.d:                                             ; preds = %bb.c, %Abc_Clock.ex
 
 .lr.ph.i357:                                      ; preds = %.lr.ph.i.epil, %.lr.ph.i357.unr-lcssa
   %i.an = shl nsw i32 %1, 2
-  %6 = sext i32 %i.an to i64                      ; 9 uses
-  %i.ao = sext i32 %.val290.val to i64
-  %7 = add nsw i64 %i.ao, 1
+  %i.ao = sext i32 %i.an to i64                   ; 9 uses
   %xtraiter862 = and i64 %i.r, 7
-  %i.ap = icmp ult i64 %7, 7
+  %6 = add i32 %.val290.val, 1
+  %i.ap = icmp ult i32 %6, 7
   br i1 %i.ap, label %.epil.preheader, label %.lr.ph.i357.new
 
 .lr.ph.i357.new:                                  ; preds = %.lr.ph.i357
@@ -177,35 +176,35 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i357.
   %niter867 = phi i64 [ 0, %.lr.ph.i357.new ], [ %niter867.next.7, %bb.e ]
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.ar, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.ar, i8 0, i64 %i.ao, i1 false)
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.au, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.au, i8 0, i64 %i.ao, i1 false)
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.ax, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.ax, i8 0, i64 %i.ao, i1 false)
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.ba, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.ba, i8 0, i64 %i.ao, i1 false)
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 32
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bd, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bd, i8 0, i64 %i.ao, i1 false)
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 40
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 0, i64 %i.ao, i1 false)
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 48
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bj, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bj, i8 0, i64 %i.ao, i1 false)
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 56
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bm, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bm, i8 0, i64 %i.ao, i1 false)
   %indvars.iv.next.i359.7 = add nuw nsw i64 %indvars.iv.i358, 8 ; 2 uses
   %niter867.next.7 = add i64 %niter867, 8         ; 2 uses
   %niter867.ncmp.7 = icmp eq i64 %niter867.next.7, %unroll_iter866
@@ -228,7 +227,7 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %epil.iter863 = phi i64 [ 0, %.epil.preheader ], [ %epil.iter863.next, %bb.f ]
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i358.epil
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !32
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bq, i8 0, i64 %6, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bq, i8 0, i64 %i.ao, i1 false)
   %indvars.iv.next.i359.epil = add nuw nsw i64 %indvars.iv.i358.epil, 1
   %epil.iter863.next = add i64 %epil.iter863, 1   ; 2 uses
   %epil.iter863.cmp.not = icmp eq i64 %epil.iter863.next, %xtraiter862
