@@ -204,11 +204,9 @@ bb.c:                                             ; preds = %bb.a
   %not..i.i = xor i1 %i.k, true, !dbg !1100
   %i.l = zext i1 %not..i.i to i64, !dbg !1100
   %.sroa.58.0.copyload.i.i = add nuw i64 %i.i, %i.l, !dbg !1100 ; 3 uses
-  %i.m = udiv i64 %0, %i.i, !dbg !1101            ; 3 uses
-  %2 = icmp ult i64 %i.m, %1, !dbg !1102
-  %3 = sub nuw i64 %1, %i.m, !dbg !1102
-  %i.n = sub nuw i64 %i.m, %1, !dbg !1102
-  %.sroa.0.0.i.i3.i.i.i = select i1 %2, i64 %3, i64 %i.n, !dbg !1102 ; 2 uses
+  %i.m = udiv i64 %0, %i.i, !dbg !1101
+  %i.n = sub nsw i64 %i.m, %1, !dbg !1102
+  %.sroa.0.0.i.i3.i.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.n, i1 true), !dbg !1102 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !1066
   store ptr %i.g, ptr %i.e, align 8, !noalias !1067
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
@@ -237,12 +235,10 @@ _RNCINvMs0_NtNtCscgRAwXFJnXP_4core3ops9try_traitINtB8_17NeverShortCircuitTyyEE10
   %.val5.i.i.i.i.i.i.i = load ptr, ptr %i.o, align 8, !dbg !1109, !alias.scope !1079, !noalias !1067, !nonnull !77, !noundef !77
   %.val.i.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !dbg !1109, !alias.scope !1079, !noalias !1067, !nonnull !77, !noundef !77
   %i.v = load i64, ptr %.val.i.i.i.i.i.i.i, align 8, !dbg !1110, !noalias !1080, !noundef !77
-  %i.w = udiv i64 %i.v, %i.t, !dbg !1111          ; 3 uses
-  %i.x = load i64, ptr %.val5.i.i.i.i.i.i.i, align 8, !dbg !1112, !range !1081, !noalias !1080, !noundef !77 ; 3 uses
-  %4 = icmp ult i64 %i.w, %i.x, !dbg !1113
-  %5 = sub nuw i64 %i.x, %i.w, !dbg !1113
-  %i.y = sub nuw i64 %i.w, %i.x, !dbg !1113
-  %.sroa.0.0.i.i.i.i.i.i.i.i.i = select i1 %4, i64 %5, i64 %i.y, !dbg !1113 ; 2 uses
+  %i.w = udiv i64 %i.v, %i.t, !dbg !1111
+  %i.x = load i64, ptr %.val5.i.i.i.i.i.i.i, align 8, !dbg !1112, !range !1081, !noalias !1080, !noundef !77
+  %i.y = sub nsw i64 %i.w, %i.x, !dbg !1113
+  %.sroa.0.0.i.i.i.i.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.y, i1 true), !dbg !1113 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1082
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1082
   store i64 %.sroa.01.036.i.i.i.i.i, ptr %i.d, align 8, !noalias !1083
@@ -268,15 +264,13 @@ _RNCINvMs0_NtNtCscgRAwXFJnXP_4core3ops9try_traitINtB8_17NeverShortCircuitTyyEE10
   br label %_RNCINvMs0_NtNtCscgRAwXFJnXP_4core3ops9try_traitINtB8_17NeverShortCircuitTyyEE10wrap_mut_2B18_yNCINvNtNtNtBc_4iter8adapters3map8map_foldyB18_B18_NCINvNvNtNtNtB1D_6traits8iterator8Iterator10min_by_key3keyyyNCNvNtCs2mZqlW55729_12polars_utils17calc_morsel_split12calc_n_parts0E0NCINvNvB2p_6min_by4foldB18_INvB2n_7compareyyEE0E0E0B3m_.exit30.i.i.i.i.i, !dbg !1122
 
 _RNCINvMs0_NtNtCscgRAwXFJnXP_4core3ops9try_traitINtB8_17NeverShortCircuitTyyEE10wrap_mut_2B18_yNCINvNtNtNtBc_4iter8adapters3map8map_foldyB18_B18_NCINvNvNtNtNtB1D_6traits8iterator8Iterator10min_by_key3keyyyNCNvNtCs2mZqlW55729_12polars_utils17calc_morsel_split12calc_n_parts0E0NCINvNvB2p_6min_by4foldB18_INvB2n_7compareyyEE0E0E0B3m_.exit30.i.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i, %.preheader.i.i.i.i.i
-  %i.ab = phi i64 [ %.pre10.i, %._crit_edge.i.i.i.i.i ], [ %1, %.preheader.i.i.i.i.i ], !dbg !1121 ; 3 uses
+  %i.ab = phi i64 [ %.pre10.i, %._crit_edge.i.i.i.i.i ], [ %1, %.preheader.i.i.i.i.i ], !dbg !1121
   %i.ac = phi i64 [ %.pre.i, %._crit_edge.i.i.i.i.i ], [ %0, %.preheader.i.i.i.i.i ], !dbg !1120
   %.sroa.8.0.lcssa47.i.i.i21.i.i = phi i64 [ %.sroa.3.0.i.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %i.i, %.preheader.i.i.i.i.i ] ; 2 uses
   %.sroa.01.0.lcssa48.i.i.i20.i.i = phi i64 [ %.sroa.0.0.i.i6.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %.sroa.0.0.i.i3.i.i.i, %.preheader.i.i.i.i.i ]
-  %i.ad = udiv i64 %i.ac, %i.j, !dbg !1122        ; 3 uses
-  %6 = icmp ult i64 %i.ad, %i.ab, !dbg !1123
-  %7 = sub nuw i64 %i.ab, %i.ad, !dbg !1123
-  %i.ae = sub nuw i64 %i.ad, %i.ab, !dbg !1123
-  %.sroa.0.0.i.i.i.i27.i.i.i.i.i = select i1 %6, i64 %7, i64 %i.ae, !dbg !1123
+  %i.ad = udiv i64 %i.ac, %i.j, !dbg !1122
+  %i.ae = sub nsw i64 %i.ad, %i.ab, !dbg !1123
+  %.sroa.0.0.i.i.i.i27.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ae, i1 true), !dbg !1123
   %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 16, !dbg !1124
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1092
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1092
@@ -678,6 +672,9 @@ declare i8 @llvm.umax.i8(i8, i8) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #15
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #15

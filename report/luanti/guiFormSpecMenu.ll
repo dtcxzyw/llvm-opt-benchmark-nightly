@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.ae
 
 bb.ah:                                            ; preds = %bb.ag
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 1984
-  %i.hs = load i64, ptr %i.hr, align 8, !tbaa !277 ; 3 uses
+  %i.hs = load i64, ptr %i.hr, align 8, !tbaa !277
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
   %i.ht = call i32 @clock_gettime(i32 noundef 4, ptr noundef nonnull %2) #32 ; 0 uses
   %i.hu = load i64, ptr %2, align 8, !tbaa !1009
@@ -213,12 +213,10 @@ bb.ah:                                            ; preds = %bb.ag
   %i.hw = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.hx = load i64, ptr %i.hw, align 8, !tbaa !1010
   %i.hy = udiv i64 %i.hx, 1000000
-  %12 = add i64 %i.hy, %i.hv                      ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
-  %.not.i176 = icmp ult i64 %12, %i.hs
-  %i.hz = sub nuw i64 %12, %i.hs
-  %13 = sub nuw i64 %i.hs, %12
-  %.0.i = select i1 %.not.i176, i64 %13, i64 %i.hz
+  %i.hz = sub i64 %i.hv, %i.hs
+  %12 = add i64 %i.hz, %i.hy
+  %.0.i = call noundef i64 @llvm.abs.i64(i64 %12, i1 true)
   br label %bb.ak
 
 bb.ai:                                            ; preds = %bb.ag
@@ -620,6 +618,9 @@ declare i16 @llvm.umin.i16(i16, i16) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #14
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #14

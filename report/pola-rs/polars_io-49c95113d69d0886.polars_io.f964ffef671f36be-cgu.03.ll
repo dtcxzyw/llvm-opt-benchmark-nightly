@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c, !dbg !38299
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.2.8.load12 = phi i64 [ %i.h, %bb.b ], [ %4, %bb.a ] ; 7 uses
+  %.sroa.2.8.load12 = phi i64 [ %i.h, %bb.b ], [ %4, %bb.a ] ; 5 uses
   store i64 %.sroa.2.8.load12, ptr %i.d, align 8, !dbg !38300
   %.sroa.010.0 = tail call i64 @llvm.usub.sat.i64(i64 %2, i64 %1), !dbg !38301 ; 6 uses
   %i.i = icmp eq i64 %.sroa.2.8.load12, 0, !dbg !38302
@@ -235,11 +235,9 @@ bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !38309
   store ptr %i.d, ptr %i.n, align 8, !dbg !38309, !alias.scope !38273, !noalias !38269
   store i64 1, ptr %i.m, align 8, !dbg !38310, !alias.scope !38274, !noalias !38269
-  %i.o = udiv i64 %.sroa.010.0, %.sroa.0.0.i, !dbg !38311 ; 3 uses
-  %5 = icmp ult i64 %i.o, %.sroa.2.8.load12, !dbg !38312
-  %6 = sub nuw i64 %.sroa.2.8.load12, %i.o, !dbg !38312
-  %i.p = sub nuw i64 %i.o, %.sroa.2.8.load12, !dbg !38312
-  %.sroa.0.0.i.i3.i.i.i = select i1 %5, i64 %6, i64 %i.p, !dbg !38312
+  %i.o = udiv i64 %.sroa.010.0, %.sroa.0.0.i, !dbg !38311
+  %i.p = sub nsw i64 %i.o, %.sroa.2.8.load12, !dbg !38312
+  %.sroa.0.0.i.i3.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.p, i1 true), !dbg !38312
   %i.q = call { i64, i64 } @_RINvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5array4iter8IntoIterjKj2_ENCINvNvNtNtNtBa_6traits8iterator8Iterator10min_by_key3keyjjNCNvNtNtCslpwjCj2YNBy_9polars_io5cloud19polars_object_store11split_range0E0EB1E_4foldTjjENCINvNvB1E_6min_by4foldB3R_INvB1C_7comparejjEE0EB2C_(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a, i64 noundef %.sroa.0.0.i.i3.i.i.i, i64 noundef %.sroa.0.0.i), !dbg !38313, !noalias !38291
   %i.r = extractvalue { i64, i64 } %i.q, 1, !dbg !38314 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !38315, !noalias !38269
@@ -641,6 +639,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #30
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #24
 
 attributes #0 = { cold inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

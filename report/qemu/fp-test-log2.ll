@@ -81,11 +81,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
-  %4 = icmp ugt i64 %1, %2
-  %i.j = sub nuw i64 %1, %2
-  %5 = sub nuw i64 %2, %1
-  %.0 = select i1 %4, i64 %i.j, i64 %5            ; 2 uses
-  %i.k = icmp ugt i64 %.0, 4
+  %i.j = sub nsw i64 %1, %2
+  %.0 = tail call i64 @llvm.abs.i64(i64 %i.j, i1 true) ; 2 uses
+  %i.k = icmp samesign ugt i64 %.0, 4
   %or.cond.not = select i1 %3, i1 true, i1 %i.k
   br i1 %or.cond.not, label %.thread, label %bb.j
 
@@ -147,6 +145,9 @@ declare i32 @__printf_chk(i32 noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nofree noreturn nounwind
 declare void @exit(i32 noundef) local_unnamed_addr #7
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #6
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

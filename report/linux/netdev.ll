@@ -205,20 +205,18 @@ bb.av:                                            ; preds = %bb.at
   br i1 %i.hk, label %bb.aw, label %e1000e_write_itr.exit
 
 bb.aw:                                            ; preds = %bb.av
-  %i.hl = load i32, ptr %i.gg, align 16           ; 4 uses
-  %i.hm = load i32, ptr %i.fz, align 8            ; 4 uses
+  %i.hl = load i32, ptr %i.gg, align 16           ; 2 uses
+  %i.hm = load i32, ptr %i.fz, align 8            ; 2 uses
   %i.hn = add i32 %i.hm, %i.hl                    ; 2 uses
   %.not192 = icmp ult i32 %i.hn, 10000
   br i1 %.not192, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %1 = icmp ugt i32 %i.hl, %i.hm
-  %i.ho = sub nuw i32 %i.hl, %i.hm
-  %2 = sub nuw i32 %i.hm, %i.hl
-  %3 = select i1 %1, i32 %i.ho, i32 %2
+  %i.ho = sub nsw i32 %i.hl, %i.hm
+  %1 = call i32 @llvm.abs.i32(i32 %i.ho, i1 true)
   %i.hp = udiv i32 %i.hn, 10000
-  %i.hq = udiv i32 %3, 10000
-  %i.hr = mul nuw i32 %i.hq, 6000
+  %i.hq = udiv i32 %1, 10000
+  %i.hr = mul nuw nsw i32 %i.hq, 6000
   %i.hs = udiv i32 %i.hr, %i.hp
   %i.ht = shl i32 %i.hs, 8
   %i.hu = add i32 %i.ht, 512000
@@ -620,6 +618,9 @@ declare i16 @llvm.umax.i16(i16, i16) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #12
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #22
 
 attributes #0 = { noredzone null_pointer_is_valid "no-builtin-wcslen" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
 attributes #1 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }

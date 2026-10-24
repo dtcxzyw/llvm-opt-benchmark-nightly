@@ -204,24 +204,21 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.av
 
 .preheader47.split.us.1.i.i:                      ; preds = %.loopexit.split.us.i.i
-  %i.s = mul nsw i64 %i.q, 15000                  ; 12 uses
-  %3 = icmp ugt i64 %i.s, 8400000000
+  %i.s = mul nsw i64 %i.q, 15000                  ; 6 uses
   %i.t = add nsw i64 %i.s, -8400000000
-  %4 = sub nuw nsw i64 8400000000, %i.s
-  %5 = select i1 %3, i64 %i.t, i64 %4
-  %6 = mul nsw i64 %5, 10000                      ; 3 uses
-  %i.u = udiv i64 %6, 8400000000                  ; 2 uses
+  %3 = tail call i64 @llvm.abs.i64(i64 %i.t, i1 true) ; 3 uses
+  %i.u = udiv i64 %3, 840000                      ; 2 uses
   %.not.i.us.1104.i.i = icmp ult i64 %i.s, 8400000000
   %i.v = icmp ult i64 %i.u, %.sroa.0.3.i.i        ; 2 uses
   br i1 %.not.i.us.1104.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.preheader47.split.us.1.i.i
-  %i.w = icmp ult i64 %6, 840000000000
+  %i.w = icmp samesign ult i64 %3, 84000000
   %or.cond45.us.1105.i.i = and i1 %i.w, %i.v
   br i1 %or.cond45.us.1105.i.i, label %.sink.split.i.us.1107.i.i, label %skl_wrpll_try_divider.exit.us.1111.i.i
 
 bb.f:                                             ; preds = %.preheader47.split.us.1.i.i
-  %i.x = icmp ult i64 %6, 5040000000000
+  %i.x = icmp samesign ult i64 %3, 504000000
   %or.cond46.us.1106.i.i = and i1 %i.x, %i.v
   br i1 %or.cond46.us.1106.i.i, label %.sink.split.i.us.1107.i.i, label %skl_wrpll_try_divider.exit.us.1111.i.i
 
@@ -236,561 +233,501 @@ skl_wrpll_try_divider.exit.us.1111.i.i:           ; preds = %.sink.split.i.us.11
   br i1 %i.y, label %.loopexit.split.us.1.i.i, label %bb.g
 
 bb.g:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.i.i
-  %i.z = mul nsw i64 %i.q, 25000                  ; 12 uses
-  %7 = icmp ugt i64 %i.z, 8400000000
+  %i.z = mul nsw i64 %i.q, 25000                  ; 6 uses
   %i.aa = add nsw i64 %i.z, -8400000000
-  %8 = sub nuw nsw i64 8400000000, %i.z
-  %9 = select i1 %7, i64 %i.aa, i64 %8
-  %10 = mul nsw i64 %9, 10000                     ; 4 uses
-  %i.ab = udiv i64 %10, 8400000000                ; 2 uses
+  %4 = tail call i64 @llvm.abs.i64(i64 %i.aa, i1 true) ; 4 uses
+  %i.ab = udiv i64 %4, 840000                     ; 2 uses
   %.not.i.us.1104.1.i.i = icmp ult i64 %i.z, 8400000000
   %i.ac = icmp ult i64 %i.ab, %.sroa.0.4.us.1110.i.i ; 2 uses
   br i1 %.not.i.us.1104.1.i.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ad = icmp ult i64 %10, 840000000000
+  %i.ad = icmp samesign ult i64 %4, 84000000
   %or.cond45.us.1105.1.i.i = and i1 %i.ad, %i.ac
   br i1 %or.cond45.us.1105.1.i.i, label %skl_wrpll_try_divider.exit.us.1111.1.i.i, label %skl_wrpll_try_divider.exit.us.1111.1.thread.i.i
 
 bb.i:                                             ; preds = %bb.g
-  %i.ae = icmp ult i64 %10, 5040000000000
+  %i.ae = icmp samesign ult i64 %4, 504000000
   %or.cond46.us.1106.1.i.i = and i1 %i.ae, %i.ac
   br i1 %or.cond46.us.1106.1.i.i, label %skl_wrpll_try_divider.exit.us.1111.1.i.i, label %skl_wrpll_try_divider.exit.us.1111.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.1.i.i:         ; preds = %bb.i, %bb.h
-  %i.af = icmp samesign ult i64 %10, 8400000000
+  %i.af = icmp samesign ult i64 %4, 840000
   br i1 %i.af, label %.sink.split.i29.i.thread36.i, label %skl_wrpll_try_divider.exit.us.1111.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.1.thread.i.i:  ; preds = %skl_wrpll_try_divider.exit.us.1111.1.i.i, %bb.i, %bb.h
   %.sroa.0.4.us.1110.1124.i.i = phi i64 [ %i.ab, %skl_wrpll_try_divider.exit.us.1111.1.i.i ], [ %.sroa.0.4.us.1110.i.i, %bb.h ], [ %.sroa.0.4.us.1110.i.i, %bb.i ] ; 3 uses
   %.sroa.7.5.us.1109.1123.i.i = phi i64 [ 8400000000, %skl_wrpll_try_divider.exit.us.1111.1.i.i ], [ %.sroa.7.5.us.1109.i.i, %bb.h ], [ %.sroa.7.5.us.1109.i.i, %bb.i ] ; 2 uses
   %.sroa.10.5.us.1108.1122.i.i = phi i32 [ 5, %skl_wrpll_try_divider.exit.us.1111.1.i.i ], [ %.sroa.10.5.us.1108.i.i, %bb.h ], [ %.sroa.10.5.us.1108.i.i, %bb.i ] ; 2 uses
-  %i.ag = mul nsw i64 %i.q, 35000                 ; 12 uses
-  %11 = icmp ugt i64 %i.ag, 8400000000
+  %i.ag = mul nsw i64 %i.q, 35000                 ; 6 uses
   %i.ah = add nsw i64 %i.ag, -8400000000
-  %12 = sub nuw nsw i64 8400000000, %i.ag
-  %13 = select i1 %11, i64 %i.ah, i64 %12
-  %14 = mul nsw i64 %13, 10000                    ; 4 uses
-  %i.ai = udiv i64 %14, 8400000000                ; 2 uses
+  %5 = tail call i64 @llvm.abs.i64(i64 %i.ah, i1 true) ; 4 uses
+  %i.ai = udiv i64 %5, 840000                     ; 2 uses
   %.not.i.us.1104.2.i.i = icmp ult i64 %i.ag, 8400000000
   %i.aj = icmp ult i64 %i.ai, %.sroa.0.4.us.1110.1124.i.i ; 2 uses
   br i1 %.not.i.us.1104.2.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.1.thread.i.i
-  %i.ak = icmp ult i64 %14, 840000000000
+  %i.ak = icmp samesign ult i64 %5, 84000000
   %or.cond45.us.1105.2.i.i = and i1 %i.ak, %i.aj
   br i1 %or.cond45.us.1105.2.i.i, label %skl_wrpll_try_divider.exit.us.1111.2.i.i, label %skl_wrpll_try_divider.exit.us.1111.2.thread.i.i
 
 bb.k:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.1.thread.i.i
-  %i.al = icmp ult i64 %14, 5040000000000
+  %i.al = icmp samesign ult i64 %5, 504000000
   %or.cond46.us.1106.2.i.i = and i1 %i.al, %i.aj
   br i1 %or.cond46.us.1106.2.i.i, label %skl_wrpll_try_divider.exit.us.1111.2.i.i, label %skl_wrpll_try_divider.exit.us.1111.2.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.2.i.i:         ; preds = %bb.k, %bb.j
-  %i.am = icmp samesign ult i64 %14, 8400000000
+  %i.am = icmp samesign ult i64 %5, 840000
   br i1 %i.am, label %.thread.i, label %skl_wrpll_try_divider.exit.us.1111.2.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.2.thread.i.i:  ; preds = %skl_wrpll_try_divider.exit.us.1111.2.i.i, %bb.k, %bb.j
   %.sroa.0.4.us.1110.2130.i.i = phi i64 [ %i.ai, %skl_wrpll_try_divider.exit.us.1111.2.i.i ], [ %.sroa.0.4.us.1110.1124.i.i, %bb.j ], [ %.sroa.0.4.us.1110.1124.i.i, %bb.k ] ; 3 uses
   %.sroa.7.5.us.1109.2129.i.i = phi i64 [ 8400000000, %skl_wrpll_try_divider.exit.us.1111.2.i.i ], [ %.sroa.7.5.us.1109.1123.i.i, %bb.j ], [ %.sroa.7.5.us.1109.1123.i.i, %bb.k ] ; 2 uses
   %.sroa.10.5.us.1108.2128.i.i = phi i32 [ 7, %skl_wrpll_try_divider.exit.us.1111.2.i.i ], [ %.sroa.10.5.us.1108.1122.i.i, %bb.j ], [ %.sroa.10.5.us.1108.1122.i.i, %bb.k ] ; 2 uses
-  %i.an = mul nsw i64 %i.q, 45000                 ; 12 uses
-  %15 = icmp ugt i64 %i.an, 8400000000
+  %i.an = mul nsw i64 %i.q, 45000                 ; 6 uses
   %i.ao = add nsw i64 %i.an, -8400000000
-  %16 = sub nuw nsw i64 8400000000, %i.an
-  %17 = select i1 %15, i64 %i.ao, i64 %16
-  %18 = mul nsw i64 %17, 10000                    ; 4 uses
-  %i.ap = udiv i64 %18, 8400000000                ; 2 uses
+  %6 = tail call i64 @llvm.abs.i64(i64 %i.ao, i1 true) ; 4 uses
+  %i.ap = udiv i64 %6, 840000                     ; 2 uses
   %.not.i.us.1104.3.i.i = icmp ult i64 %i.an, 8400000000
   %i.aq = icmp ult i64 %i.ap, %.sroa.0.4.us.1110.2130.i.i ; 2 uses
   br i1 %.not.i.us.1104.3.i.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.2.thread.i.i
-  %i.ar = icmp ult i64 %18, 840000000000
+  %i.ar = icmp samesign ult i64 %6, 84000000
   %or.cond45.us.1105.3.i.i = and i1 %i.ar, %i.aq
   br i1 %or.cond45.us.1105.3.i.i, label %skl_wrpll_try_divider.exit.us.1111.3.i.i, label %skl_wrpll_try_divider.exit.us.1111.3.thread.i.i
 
 bb.m:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.2.thread.i.i
-  %i.as = icmp ult i64 %18, 5040000000000
+  %i.as = icmp samesign ult i64 %6, 504000000
   %or.cond46.us.1106.3.i.i = and i1 %i.as, %i.aq
   br i1 %or.cond46.us.1106.3.i.i, label %skl_wrpll_try_divider.exit.us.1111.3.i.i, label %skl_wrpll_try_divider.exit.us.1111.3.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.3.i.i:         ; preds = %bb.m, %bb.l
-  %i.at = icmp samesign ult i64 %18, 8400000000
+  %i.at = icmp samesign ult i64 %6, 840000
   br i1 %i.at, label %.thread.thread.thread259.i.i, label %skl_wrpll_try_divider.exit.us.1111.3.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.3.thread.i.i:  ; preds = %skl_wrpll_try_divider.exit.us.1111.3.i.i, %bb.m, %bb.l
   %.sroa.0.4.us.1110.3136.i.i = phi i64 [ %i.ap, %skl_wrpll_try_divider.exit.us.1111.3.i.i ], [ %.sroa.0.4.us.1110.2130.i.i, %bb.l ], [ %.sroa.0.4.us.1110.2130.i.i, %bb.m ] ; 3 uses
   %.sroa.7.5.us.1109.3135.i.i = phi i64 [ 8400000000, %skl_wrpll_try_divider.exit.us.1111.3.i.i ], [ %.sroa.7.5.us.1109.2129.i.i, %bb.l ], [ %.sroa.7.5.us.1109.2129.i.i, %bb.m ] ; 2 uses
   %.sroa.10.5.us.1108.3134.i.i = phi i32 [ 9, %skl_wrpll_try_divider.exit.us.1111.3.i.i ], [ %.sroa.10.5.us.1108.2128.i.i, %bb.l ], [ %.sroa.10.5.us.1108.2128.i.i, %bb.m ] ; 2 uses
-  %i.au = mul nsw i64 %i.q, 75000                 ; 12 uses
-  %19 = icmp ugt i64 %i.au, 8400000000
+  %i.au = mul nsw i64 %i.q, 75000                 ; 6 uses
   %i.av = add nsw i64 %i.au, -8400000000
-  %20 = sub nuw nsw i64 8400000000, %i.au
-  %21 = select i1 %19, i64 %i.av, i64 %20
-  %22 = mul nsw i64 %21, 10000                    ; 4 uses
-  %i.aw = udiv i64 %22, 8400000000                ; 2 uses
+  %7 = tail call i64 @llvm.abs.i64(i64 %i.av, i1 true) ; 4 uses
+  %i.aw = udiv i64 %7, 840000                     ; 2 uses
   %.not.i.us.1104.4.i.i = icmp ult i64 %i.au, 8400000000
   %i.ax = icmp ult i64 %i.aw, %.sroa.0.4.us.1110.3136.i.i ; 2 uses
   br i1 %.not.i.us.1104.4.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.3.thread.i.i
-  %i.ay = icmp ult i64 %22, 840000000000
+  %i.ay = icmp samesign ult i64 %7, 84000000
   %or.cond45.us.1105.4.i.i = and i1 %i.ay, %i.ax
   br i1 %or.cond45.us.1105.4.i.i, label %skl_wrpll_try_divider.exit.us.1111.4.i.i, label %skl_wrpll_try_divider.exit.us.1111.4.thread.i.i
 
 bb.o:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.3.thread.i.i
-  %i.az = icmp ult i64 %22, 5040000000000
+  %i.az = icmp samesign ult i64 %7, 504000000
   %or.cond46.us.1106.4.i.i = and i1 %i.az, %i.ax
   br i1 %or.cond46.us.1106.4.i.i, label %skl_wrpll_try_divider.exit.us.1111.4.i.i, label %skl_wrpll_try_divider.exit.us.1111.4.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.4.i.i:         ; preds = %bb.o, %bb.n
-  %i.ba = icmp samesign ult i64 %22, 8400000000
+  %i.ba = icmp samesign ult i64 %7, 840000
   br i1 %i.ba, label %.thread.i, label %skl_wrpll_try_divider.exit.us.1111.4.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.4.thread.i.i:  ; preds = %skl_wrpll_try_divider.exit.us.1111.4.i.i, %bb.o, %bb.n
   %.sroa.0.4.us.1110.4142.i.i = phi i64 [ %i.aw, %skl_wrpll_try_divider.exit.us.1111.4.i.i ], [ %.sroa.0.4.us.1110.3136.i.i, %bb.n ], [ %.sroa.0.4.us.1110.3136.i.i, %bb.o ] ; 3 uses
   %.sroa.7.5.us.1109.4141.i.i = phi i64 [ 8400000000, %skl_wrpll_try_divider.exit.us.1111.4.i.i ], [ %.sroa.7.5.us.1109.3135.i.i, %bb.n ], [ %.sroa.7.5.us.1109.3135.i.i, %bb.o ] ; 2 uses
   %.sroa.10.5.us.1108.4140.i.i = phi i32 [ 15, %skl_wrpll_try_divider.exit.us.1111.4.i.i ], [ %.sroa.10.5.us.1108.3134.i.i, %bb.n ], [ %.sroa.10.5.us.1108.3134.i.i, %bb.o ] ; 2 uses
-  %i.bb = mul nsw i64 %i.q, 105000                ; 12 uses
-  %23 = icmp ugt i64 %i.bb, 8400000000
+  %i.bb = mul nsw i64 %i.q, 105000                ; 6 uses
   %i.bc = add nsw i64 %i.bb, -8400000000
-  %24 = sub nuw nsw i64 8400000000, %i.bb
-  %25 = select i1 %23, i64 %i.bc, i64 %24
-  %26 = mul nsw i64 %25, 10000                    ; 4 uses
-  %i.bd = udiv i64 %26, 8400000000                ; 2 uses
+  %8 = tail call i64 @llvm.abs.i64(i64 %i.bc, i1 true) ; 4 uses
+  %i.bd = udiv i64 %8, 840000                     ; 2 uses
   %.not.i.us.1104.5.i.i = icmp ult i64 %i.bb, 8400000000
   %i.be = icmp ult i64 %i.bd, %.sroa.0.4.us.1110.4142.i.i ; 2 uses
   br i1 %.not.i.us.1104.5.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.4.thread.i.i
-  %i.bf = icmp ult i64 %26, 840000000000
+  %i.bf = icmp samesign ult i64 %8, 84000000
   %or.cond45.us.1105.5.i.i = and i1 %i.bf, %i.be
   br i1 %or.cond45.us.1105.5.i.i, label %skl_wrpll_try_divider.exit.us.1111.5.i.i, label %skl_wrpll_try_divider.exit.us.1111.5.thread.i.i
 
 bb.q:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.4.thread.i.i
-  %i.bg = icmp ult i64 %26, 5040000000000
+  %i.bg = icmp samesign ult i64 %8, 504000000
   %or.cond46.us.1106.5.i.i = and i1 %i.bg, %i.be
   br i1 %or.cond46.us.1106.5.i.i, label %skl_wrpll_try_divider.exit.us.1111.5.i.i, label %skl_wrpll_try_divider.exit.us.1111.5.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.5.i.i:         ; preds = %bb.q, %bb.p
-  %i.bh = icmp samesign ult i64 %26, 8400000000
+  %i.bh = icmp samesign ult i64 %8, 840000
   br i1 %i.bh, label %.thread.i, label %skl_wrpll_try_divider.exit.us.1111.5.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1111.5.thread.i.i:  ; preds = %skl_wrpll_try_divider.exit.us.1111.5.i.i, %bb.q, %bb.p
   %.sroa.0.4.us.1110.5148.i.i = phi i64 [ %i.bd, %skl_wrpll_try_divider.exit.us.1111.5.i.i ], [ %.sroa.0.4.us.1110.4142.i.i, %bb.p ], [ %.sroa.0.4.us.1110.4142.i.i, %bb.q ] ; 3 uses
   %.sroa.7.5.us.1109.5147.i.i = phi i64 [ 8400000000, %skl_wrpll_try_divider.exit.us.1111.5.i.i ], [ %.sroa.7.5.us.1109.4141.i.i, %bb.p ], [ %.sroa.7.5.us.1109.4141.i.i, %bb.q ] ; 2 uses
   %.sroa.10.5.us.1108.5146.i.i = phi i32 [ 21, %skl_wrpll_try_divider.exit.us.1111.5.i.i ], [ %.sroa.10.5.us.1108.4140.i.i, %bb.p ], [ %.sroa.10.5.us.1108.4140.i.i, %bb.q ] ; 2 uses
-  %i.bi = mul nsw i64 %i.q, 175000                ; 12 uses
-  %27 = icmp ugt i64 %i.bi, 8400000000
+  %i.bi = mul nsw i64 %i.q, 175000                ; 6 uses
   %i.bj = add nsw i64 %i.bi, -8400000000
-  %28 = sub nuw nsw i64 8400000000, %i.bi
-  %29 = select i1 %27, i64 %i.bj, i64 %28
-  %30 = mul nsw i64 %29, 10000                    ; 4 uses
-  %i.bk = udiv i64 %30, 8400000000                ; 2 uses
+  %9 = tail call i64 @llvm.abs.i64(i64 %i.bj, i1 true) ; 4 uses
+  %i.bk = udiv i64 %9, 840000                     ; 2 uses
   %.not.i.us.1104.6.i.i = icmp ult i64 %i.bi, 8400000000
   %i.bl = icmp ult i64 %i.bk, %.sroa.0.4.us.1110.5148.i.i ; 2 uses
   br i1 %.not.i.us.1104.6.i.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.5.thread.i.i
-  %i.bm = icmp ult i64 %30, 840000000000
+  %i.bm = icmp samesign ult i64 %9, 84000000
   %or.cond45.us.1105.6.i.i = and i1 %i.bm, %i.bl
   br i1 %or.cond45.us.1105.6.i.i, label %skl_wrpll_try_divider.exit.us.1111.6.i.i, label %._crit_edge.us.1117.i.i
 
 bb.s:                                             ; preds = %skl_wrpll_try_divider.exit.us.1111.5.thread.i.i
-  %i.bn = icmp ult i64 %30, 5040000000000
+  %i.bn = icmp samesign ult i64 %9, 504000000
   %or.cond46.us.1106.6.i.i = and i1 %i.bn, %i.bl
   br i1 %or.cond46.us.1106.6.i.i, label %skl_wrpll_try_divider.exit.us.1111.6.i.i, label %._crit_edge.us.1117.i.i
 
 skl_wrpll_try_divider.exit.us.1111.6.i.i:         ; preds = %bb.s, %bb.r
-  %i.bo = icmp samesign ult i64 %30, 8400000000
+  %i.bo = icmp samesign ult i64 %9, 840000
   br i1 %i.bo, label %.thread.i, label %._crit_edge.us.1117.i.i
 
 ._crit_edge.us.1117.i.i:                          ; preds = %skl_wrpll_try_divider.exit.us.1111.6.i.i, %bb.s, %bb.r
   %.sroa.0.4.us.1110.6154.i.i = phi i64 [ %i.bk, %skl_wrpll_try_divider.exit.us.1111.6.i.i ], [ %.sroa.0.4.us.1110.5148.i.i, %bb.r ], [ %.sroa.0.4.us.1110.5148.i.i, %bb.s ] ; 3 uses
   %.sroa.7.5.us.1109.6153.i.i = phi i64 [ 8400000000, %skl_wrpll_try_divider.exit.us.1111.6.i.i ], [ %.sroa.7.5.us.1109.5147.i.i, %bb.r ], [ %.sroa.7.5.us.1109.5147.i.i, %bb.s ] ; 2 uses
   %.sroa.10.5.us.1108.6152.i.i = phi i32 [ 35, %skl_wrpll_try_divider.exit.us.1111.6.i.i ], [ %.sroa.10.5.us.1108.5146.i.i, %bb.r ], [ %.sroa.10.5.us.1108.5146.i.i, %bb.s ] ; 2 uses
-  %31 = icmp ugt i64 %i.s, 9000000000
   %i.bp = add nsw i64 %i.s, -9000000000
-  %32 = sub nuw nsw i64 9000000000, %i.s
-  %33 = select i1 %31, i64 %i.bp, i64 %32
-  %34 = mul nsw i64 %33, 10000                    ; 4 uses
-  %i.bq = udiv i64 %34, 9000000000                ; 2 uses
+  %10 = tail call i64 @llvm.abs.i64(i64 %i.bp, i1 true) ; 4 uses
+  %i.bq = udiv i64 %10, 900000                    ; 2 uses
   %.not.i.us.1.1.i.i = icmp ult i64 %i.s, 9000000000
   %i.br = icmp ult i64 %i.bq, %.sroa.0.4.us.1110.6154.i.i ; 2 uses
   br i1 %.not.i.us.1.1.i.i, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge.us.1117.i.i
-  %i.bs = icmp ult i64 %34, 900000000000
+  %i.bs = icmp samesign ult i64 %10, 90000000
   %or.cond45.us.1.1.i.i = and i1 %i.bs, %i.br
   br i1 %or.cond45.us.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.thread.i.i
 
 bb.u:                                             ; preds = %._crit_edge.us.1117.i.i
-  %i.bt = icmp ult i64 %34, 5400000000000
+  %i.bt = icmp samesign ult i64 %10, 540000000
   %or.cond46.us.1.1.i.i = and i1 %i.bt, %i.br
   br i1 %or.cond46.us.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.i.i:            ; preds = %bb.u, %bb.t
-  %i.bu = icmp samesign ult i64 %34, 9000000000
+  %i.bu = icmp samesign ult i64 %10, 900000
   br i1 %i.bu, label %.thread.thread.thread259.i.i, label %skl_wrpll_try_divider.exit.us.1.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.thread.i.i:     ; preds = %skl_wrpll_try_divider.exit.us.1.1.i.i, %bb.u, %bb.t
   %.sroa.0.4.us.1.1160.i.i = phi i64 [ %i.bq, %skl_wrpll_try_divider.exit.us.1.1.i.i ], [ %.sroa.0.4.us.1110.6154.i.i, %bb.t ], [ %.sroa.0.4.us.1110.6154.i.i, %bb.u ] ; 3 uses
   %.sroa.7.5.us.1.1159.i.i = phi i64 [ 9000000000, %skl_wrpll_try_divider.exit.us.1.1.i.i ], [ %.sroa.7.5.us.1109.6153.i.i, %bb.t ], [ %.sroa.7.5.us.1109.6153.i.i, %bb.u ] ; 2 uses
   %.sroa.10.5.us.1.1158.i.i = phi i32 [ 3, %skl_wrpll_try_divider.exit.us.1.1.i.i ], [ %.sroa.10.5.us.1108.6152.i.i, %bb.t ], [ %.sroa.10.5.us.1108.6152.i.i, %bb.u ] ; 2 uses
-  %35 = icmp ugt i64 %i.z, 9000000000
   %i.bv = add nsw i64 %i.z, -9000000000
-  %36 = sub nuw nsw i64 9000000000, %i.z
-  %37 = select i1 %35, i64 %i.bv, i64 %36
-  %38 = mul nsw i64 %37, 10000                    ; 4 uses
-  %i.bw = udiv i64 %38, 9000000000                ; 2 uses
+  %11 = tail call i64 @llvm.abs.i64(i64 %i.bv, i1 true) ; 4 uses
+  %i.bw = udiv i64 %11, 900000                    ; 2 uses
   %.not.i.us.1.1.1.i.i = icmp ult i64 %i.z, 9000000000
   %i.bx = icmp ult i64 %i.bw, %.sroa.0.4.us.1.1160.i.i ; 2 uses
   br i1 %.not.i.us.1.1.1.i.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %skl_wrpll_try_divider.exit.us.1.1.thread.i.i
-  %i.by = icmp ult i64 %38, 900000000000
+  %i.by = icmp samesign ult i64 %11, 90000000
   %or.cond45.us.1.1.1.i.i = and i1 %i.by, %i.bx
   br i1 %or.cond45.us.1.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.1.thread.i.i
 
 bb.w:                                             ; preds = %skl_wrpll_try_divider.exit.us.1.1.thread.i.i
-  %i.bz = icmp ult i64 %38, 5400000000000
+  %i.bz = icmp samesign ult i64 %11, 540000000
   %or.cond46.us.1.1.1.i.i = and i1 %i.bz, %i.bx
   br i1 %or.cond46.us.1.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.1.i.i, label %skl_wrpll_try_divider.exit.us.1.1.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.1.i.i:          ; preds = %bb.w, %bb.v
-  %i.ca = icmp samesign ult i64 %38, 9000000000
+  %i.ca = icmp samesign ult i64 %11, 900000
   br i1 %i.ca, label %.sink.split.i29.i.thread36.i, label %skl_wrpll_try_divider.exit.us.1.1.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.1.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.1.1.1.i.i, %bb.w, %bb.v
   %.sroa.0.4.us.1.1.1166.i.i = phi i64 [ %i.bw, %skl_wrpll_try_divider.exit.us.1.1.1.i.i ], [ %.sroa.0.4.us.1.1160.i.i, %bb.v ], [ %.sroa.0.4.us.1.1160.i.i, %bb.w ] ; 3 uses
   %.sroa.7.5.us.1.1.1165.i.i = phi i64 [ 9000000000, %skl_wrpll_try_divider.exit.us.1.1.1.i.i ], [ %.sroa.7.5.us.1.1159.i.i, %bb.v ], [ %.sroa.7.5.us.1.1159.i.i, %bb.w ] ; 2 uses
   %.sroa.10.5.us.1.1.1164.i.i = phi i32 [ 5, %skl_wrpll_try_divider.exit.us.1.1.1.i.i ], [ %.sroa.10.5.us.1.1158.i.i, %bb.v ], [ %.sroa.10.5.us.1.1158.i.i, %bb.w ] ; 2 uses
-  %39 = icmp ugt i64 %i.ag, 9000000000
   %i.cb = add nsw i64 %i.ag, -9000000000
-  %40 = sub nuw nsw i64 9000000000, %i.ag
-  %41 = select i1 %39, i64 %i.cb, i64 %40
-  %42 = mul nsw i64 %41, 10000                    ; 4 uses
-  %i.cc = udiv i64 %42, 9000000000                ; 2 uses
+  %12 = tail call i64 @llvm.abs.i64(i64 %i.cb, i1 true) ; 4 uses
+  %i.cc = udiv i64 %12, 900000                    ; 2 uses
   %.not.i.us.1.1.2.i.i = icmp ult i64 %i.ag, 9000000000
   %i.cd = icmp ult i64 %i.cc, %.sroa.0.4.us.1.1.1166.i.i ; 2 uses
   br i1 %.not.i.us.1.1.2.i.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %skl_wrpll_try_divider.exit.us.1.1.1.thread.i.i
-  %i.ce = icmp ult i64 %42, 900000000000
+  %i.ce = icmp samesign ult i64 %12, 90000000
   %or.cond45.us.1.1.2.i.i = and i1 %i.ce, %i.cd
   br i1 %or.cond45.us.1.1.2.i.i, label %skl_wrpll_try_divider.exit.us.1.1.2.i.i, label %skl_wrpll_try_divider.exit.us.1.1.2.thread.i.i
 
 bb.y:                                             ; preds = %skl_wrpll_try_divider.exit.us.1.1.1.thread.i.i
-  %i.cf = icmp ult i64 %42, 5400000000000
+  %i.cf = icmp samesign ult i64 %12, 540000000
   %or.cond46.us.1.1.2.i.i = and i1 %i.cf, %i.cd
   br i1 %or.cond46.us.1.1.2.i.i, label %skl_wrpll_try_divider.exit.us.1.1.2.i.i, label %skl_wrpll_try_divider.exit.us.1.1.2.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.2.i.i:          ; preds = %bb.y, %bb.x
-  %i.cg = icmp samesign ult i64 %42, 9000000000
+  %i.cg = icmp samesign ult i64 %12, 900000
   br i1 %i.cg, label %.thread.i, label %skl_wrpll_try_divider.exit.us.1.1.2.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.2.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.1.1.2.i.i, %bb.y, %bb.x
   %.sroa.0.4.us.1.1.2172.i.i = phi i64 [ %i.cc, %skl_wrpll_try_divider.exit.us.1.1.2.i.i ], [ %.sroa.0.4.us.1.1.1166.i.i, %bb.x ], [ %.sroa.0.4.us.1.1.1166.i.i, %bb.y ] ; 3 uses
   %.sroa.7.5.us.1.1.2171.i.i = phi i64 [ 9000000000, %skl_wrpll_try_divider.exit.us.1.1.2.i.i ], [ %.sroa.7.5.us.1.1.1165.i.i, %bb.x ], [ %.sroa.7.5.us.1.1.1165.i.i, %bb.y ] ; 2 uses
   %.sroa.10.5.us.1.1.2170.i.i = phi i32 [ 7, %skl_wrpll_try_divider.exit.us.1.1.2.i.i ], [ %.sroa.10.5.us.1.1.1164.i.i, %bb.x ], [ %.sroa.10.5.us.1.1.1164.i.i, %bb.y ] ; 2 uses
-  %43 = icmp ugt i64 %i.an, 9000000000
   %i.ch = add nsw i64 %i.an, -9000000000
-  %44 = sub nuw nsw i64 9000000000, %i.an
-  %45 = select i1 %43, i64 %i.ch, i64 %44
-  %46 = mul nsw i64 %45, 10000                    ; 4 uses
-  %i.ci = udiv i64 %46, 9000000000                ; 2 uses
+  %13 = tail call i64 @llvm.abs.i64(i64 %i.ch, i1 true) ; 4 uses
+  %i.ci = udiv i64 %13, 900000                    ; 2 uses
   %.not.i.us.1.1.3.i.i = icmp ult i64 %i.an, 9000000000
   %i.cj = icmp ult i64 %i.ci, %.sroa.0.4.us.1.1.2172.i.i ; 2 uses
   br i1 %.not.i.us.1.1.3.i.i, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %skl_wrpll_try_divider.exit.us.1.1.2.thread.i.i
-  %i.ck = icmp ult i64 %46, 900000000000
+  %i.ck = icmp samesign ult i64 %13, 90000000
   %or.cond45.us.1.1.3.i.i = and i1 %i.ck, %i.cj
   br i1 %or.cond45.us.1.1.3.i.i, label %skl_wrpll_try_divider.exit.us.1.1.3.i.i, label %skl_wrpll_try_divider.exit.us.1.1.3.thread.i.i
 
 bb.aa:                                            ; preds = %skl_wrpll_try_divider.exit.us.1.1.2.thread.i.i
-  %i.cl = icmp ult i64 %46, 5400000000000
+  %i.cl = icmp samesign ult i64 %13, 540000000
   %or.cond46.us.1.1.3.i.i = and i1 %i.cl, %i.cj
   br i1 %or.cond46.us.1.1.3.i.i, label %skl_wrpll_try_divider.exit.us.1.1.3.i.i, label %skl_wrpll_try_divider.exit.us.1.1.3.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.3.i.i:          ; preds = %bb.aa, %bb.z
-  %i.cm = icmp samesign ult i64 %46, 9000000000
+  %i.cm = icmp samesign ult i64 %13, 900000
   br i1 %i.cm, label %.thread.thread.thread259.i.i, label %skl_wrpll_try_divider.exit.us.1.1.3.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.3.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.1.1.3.i.i, %bb.aa, %bb.z
   %.sroa.0.4.us.1.1.3178.i.i = phi i64 [ %i.ci, %skl_wrpll_try_divider.exit.us.1.1.3.i.i ], [ %.sroa.0.4.us.1.1.2172.i.i, %bb.z ], [ %.sroa.0.4.us.1.1.2172.i.i, %bb.aa ] ; 3 uses
   %.sroa.7.5.us.1.1.3177.i.i = phi i64 [ 9000000000, %skl_wrpll_try_divider.exit.us.1.1.3.i.i ], [ %.sroa.7.5.us.1.1.2171.i.i, %bb.z ], [ %.sroa.7.5.us.1.1.2171.i.i, %bb.aa ] ; 2 uses
   %.sroa.10.5.us.1.1.3176.i.i = phi i32 [ 9, %skl_wrpll_try_divider.exit.us.1.1.3.i.i ], [ %.sroa.10.5.us.1.1.2170.i.i, %bb.z ], [ %.sroa.10.5.us.1.1.2170.i.i, %bb.aa ] ; 2 uses
-  %47 = icmp ugt i64 %i.au, 9000000000
   %i.cn = add nsw i64 %i.au, -9000000000
-  %48 = sub nuw nsw i64 9000000000, %i.au
-  %49 = select i1 %47, i64 %i.cn, i64 %48
-  %50 = mul nsw i64 %49, 10000                    ; 4 uses
-  %i.co = udiv i64 %50, 9000000000                ; 2 uses
+  %14 = tail call i64 @llvm.abs.i64(i64 %i.cn, i1 true) ; 4 uses
+  %i.co = udiv i64 %14, 900000                    ; 2 uses
   %.not.i.us.1.1.4.i.i = icmp ult i64 %i.au, 9000000000
   %i.cp = icmp ult i64 %i.co, %.sroa.0.4.us.1.1.3178.i.i ; 2 uses
   br i1 %.not.i.us.1.1.4.i.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %skl_wrpll_try_divider.exit.us.1.1.3.thread.i.i
-  %i.cq = icmp ult i64 %50, 900000000000
+  %i.cq = icmp samesign ult i64 %14, 90000000
   %or.cond45.us.1.1.4.i.i = and i1 %i.cq, %i.cp
   br i1 %or.cond45.us.1.1.4.i.i, label %skl_wrpll_try_divider.exit.us.1.1.4.i.i, label %skl_wrpll_try_divider.exit.us.1.1.4.thread.i.i
 
 bb.ac:                                            ; preds = %skl_wrpll_try_divider.exit.us.1.1.3.thread.i.i
-  %i.cr = icmp ult i64 %50, 5400000000000
+  %i.cr = icmp samesign ult i64 %14, 540000000
   %or.cond46.us.1.1.4.i.i = and i1 %i.cr, %i.cp
   br i1 %or.cond46.us.1.1.4.i.i, label %skl_wrpll_try_divider.exit.us.1.1.4.i.i, label %skl_wrpll_try_divider.exit.us.1.1.4.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.4.i.i:          ; preds = %bb.ac, %bb.ab
-  %i.cs = icmp samesign ult i64 %50, 9000000000
+  %i.cs = icmp samesign ult i64 %14, 900000
   br i1 %i.cs, label %.thread.i, label %skl_wrpll_try_divider.exit.us.1.1.4.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.4.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.1.1.4.i.i, %bb.ac, %bb.ab
   %.sroa.0.4.us.1.1.4184.i.i = phi i64 [ %i.co, %skl_wrpll_try_divider.exit.us.1.1.4.i.i ], [ %.sroa.0.4.us.1.1.3178.i.i, %bb.ab ], [ %.sroa.0.4.us.1.1.3178.i.i, %bb.ac ] ; 3 uses
   %.sroa.7.5.us.1.1.4183.i.i = phi i64 [ 9000000000, %skl_wrpll_try_divider.exit.us.1.1.4.i.i ], [ %.sroa.7.5.us.1.1.3177.i.i, %bb.ab ], [ %.sroa.7.5.us.1.1.3177.i.i, %bb.ac ] ; 2 uses
   %.sroa.10.5.us.1.1.4182.i.i = phi i32 [ 15, %skl_wrpll_try_divider.exit.us.1.1.4.i.i ], [ %.sroa.10.5.us.1.1.3176.i.i, %bb.ab ], [ %.sroa.10.5.us.1.1.3176.i.i, %bb.ac ] ; 2 uses
-  %51 = icmp ugt i64 %i.bb, 9000000000
   %i.ct = add nsw i64 %i.bb, -9000000000
-  %52 = sub nuw nsw i64 9000000000, %i.bb
-  %53 = select i1 %51, i64 %i.ct, i64 %52
-  %54 = mul nsw i64 %53, 10000                    ; 4 uses
-  %i.cu = udiv i64 %54, 9000000000                ; 2 uses
+  %15 = tail call i64 @llvm.abs.i64(i64 %i.ct, i1 true) ; 4 uses
+  %i.cu = udiv i64 %15, 900000                    ; 2 uses
   %.not.i.us.1.1.5.i.i = icmp ult i64 %i.bb, 9000000000
   %i.cv = icmp ult i64 %i.cu, %.sroa.0.4.us.1.1.4184.i.i ; 2 uses
   br i1 %.not.i.us.1.1.5.i.i, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %skl_wrpll_try_divider.exit.us.1.1.4.thread.i.i
-  %i.cw = icmp ult i64 %54, 900000000000
+  %i.cw = icmp samesign ult i64 %15, 90000000
   %or.cond45.us.1.1.5.i.i = and i1 %i.cw, %i.cv
   br i1 %or.cond45.us.1.1.5.i.i, label %skl_wrpll_try_divider.exit.us.1.1.5.i.i, label %skl_wrpll_try_divider.exit.us.1.1.5.thread.i.i
 
 bb.ae:                                            ; preds = %skl_wrpll_try_divider.exit.us.1.1.4.thread.i.i
-  %i.cx = icmp ult i64 %54, 5400000000000
+  %i.cx = icmp samesign ult i64 %15, 540000000
   %or.cond46.us.1.1.5.i.i = and i1 %i.cx, %i.cv
   br i1 %or.cond46.us.1.1.5.i.i, label %skl_wrpll_try_divider.exit.us.1.1.5.i.i, label %skl_wrpll_try_divider.exit.us.1.1.5.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.5.i.i:          ; preds = %bb.ae, %bb.ad
-  %i.cy = icmp samesign ult i64 %54, 9000000000
+  %i.cy = icmp samesign ult i64 %15, 900000
   br i1 %i.cy, label %.thread.i, label %skl_wrpll_try_divider.exit.us.1.1.5.thread.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.5.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.1.1.5.i.i, %bb.ae, %bb.ad
   %.sroa.0.4.us.1.1.5190.i.i = phi i64 [ %i.cu, %skl_wrpll_try_divider.exit.us.1.1.5.i.i ], [ %.sroa.0.4.us.1.1.4184.i.i, %bb.ad ], [ %.sroa.0.4.us.1.1.4184.i.i, %bb.ae ] ; 3 uses
   %.sroa.7.5.us.1.1.5189.i.i = phi i64 [ 9000000000, %skl_wrpll_try_divider.exit.us.1.1.5.i.i ], [ %.sroa.7.5.us.1.1.4183.i.i, %bb.ad ], [ %.sroa.7.5.us.1.1.4183.i.i, %bb.ae ] ; 2 uses
   %.sroa.10.5.us.1.1.5188.i.i = phi i32 [ 21, %skl_wrpll_try_divider.exit.us.1.1.5.i.i ], [ %.sroa.10.5.us.1.1.4182.i.i, %bb.ad ], [ %.sroa.10.5.us.1.1.4182.i.i, %bb.ae ] ; 2 uses
-  %55 = icmp ugt i64 %i.bi, 9000000000
   %i.cz = add nsw i64 %i.bi, -9000000000
-  %56 = sub nuw nsw i64 9000000000, %i.bi
-  %57 = select i1 %55, i64 %i.cz, i64 %56
-  %58 = mul nsw i64 %57, 10000                    ; 4 uses
-  %i.da = udiv i64 %58, 9000000000                ; 2 uses
+  %16 = tail call i64 @llvm.abs.i64(i64 %i.cz, i1 true) ; 4 uses
+  %i.da = udiv i64 %16, 900000                    ; 2 uses
   %.not.i.us.1.1.6.i.i = icmp ult i64 %i.bi, 9000000000
   %i.db = icmp ult i64 %i.da, %.sroa.0.4.us.1.1.5190.i.i ; 2 uses
   br i1 %.not.i.us.1.1.6.i.i, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %skl_wrpll_try_divider.exit.us.1.1.5.thread.i.i
-  %i.dc = icmp ult i64 %58, 900000000000
+  %i.dc = icmp samesign ult i64 %16, 90000000
   %or.cond45.us.1.1.6.i.i = and i1 %i.dc, %i.db
   br i1 %or.cond45.us.1.1.6.i.i, label %skl_wrpll_try_divider.exit.us.1.1.6.i.i, label %._crit_edge.us.1.1.i.i
 
 bb.ag:                                            ; preds = %skl_wrpll_try_divider.exit.us.1.1.5.thread.i.i
-  %i.dd = icmp ult i64 %58, 5400000000000
+  %i.dd = icmp samesign ult i64 %16, 540000000
   %or.cond46.us.1.1.6.i.i = and i1 %i.dd, %i.db
   br i1 %or.cond46.us.1.1.6.i.i, label %skl_wrpll_try_divider.exit.us.1.1.6.i.i, label %._crit_edge.us.1.1.i.i
 
 skl_wrpll_try_divider.exit.us.1.1.6.i.i:          ; preds = %bb.ag, %bb.af
-  %i.de = icmp samesign ult i64 %58, 9000000000
+  %i.de = icmp samesign ult i64 %16, 900000
   br i1 %i.de, label %.thread.i, label %._crit_edge.us.1.1.i.i
 
 ._crit_edge.us.1.1.i.i:                           ; preds = %skl_wrpll_try_divider.exit.us.1.1.6.i.i, %bb.ag, %bb.af
   %.sroa.0.4.us.1.1.6196.i.i = phi i64 [ %i.da, %skl_wrpll_try_divider.exit.us.1.1.6.i.i ], [ %.sroa.0.4.us.1.1.5190.i.i, %bb.af ], [ %.sroa.0.4.us.1.1.5190.i.i, %bb.ag ] ; 3 uses
   %.sroa.7.5.us.1.1.6195.i.i = phi i64 [ 9000000000, %skl_wrpll_try_divider.exit.us.1.1.6.i.i ], [ %.sroa.7.5.us.1.1.5189.i.i, %bb.af ], [ %.sroa.7.5.us.1.1.5189.i.i, %bb.ag ] ; 2 uses
   %.sroa.10.5.us.1.1.6194.i.i = phi i32 [ 35, %skl_wrpll_try_divider.exit.us.1.1.6.i.i ], [ %.sroa.10.5.us.1.1.5188.i.i, %bb.af ], [ %.sroa.10.5.us.1.1.5188.i.i, %bb.ag ] ; 2 uses
-  %59 = icmp ugt i64 %i.s, 9600000000
   %i.df = add nsw i64 %i.s, -9600000000
-  %60 = sub nuw nsw i64 9600000000, %i.s
-  %61 = select i1 %59, i64 %i.df, i64 %60
-  %62 = mul nsw i64 %61, 10000                    ; 4 uses
-  %i.dg = udiv i64 %62, 9600000000                ; 2 uses
+  %17 = tail call i64 @llvm.abs.i64(i64 %i.df, i1 true) ; 4 uses
+  %i.dg = udiv i64 %17, 960000                    ; 2 uses
   %.not.i.us.2.1.i.i = icmp ult i64 %i.s, 9600000000
   %i.dh = icmp ult i64 %i.dg, %.sroa.0.4.us.1.1.6196.i.i ; 2 uses
   br i1 %.not.i.us.2.1.i.i, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %._crit_edge.us.1.1.i.i
-  %i.di = icmp ult i64 %62, 960000000000
+  %i.di = icmp samesign ult i64 %17, 96000000
   %or.cond45.us.2.1.i.i = and i1 %i.di, %i.dh
   br i1 %or.cond45.us.2.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.thread.i.i
 
 bb.ai:                                            ; preds = %._crit_edge.us.1.1.i.i
-  %i.dj = icmp ult i64 %62, 5760000000000
+  %i.dj = icmp samesign ult i64 %17, 576000000
   %or.cond46.us.2.1.i.i = and i1 %i.dj, %i.dh
   br i1 %or.cond46.us.2.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.i.i:            ; preds = %bb.ai, %bb.ah
-  %i.dk = icmp samesign ult i64 %62, 9600000000
+  %i.dk = icmp samesign ult i64 %17, 960000
   br i1 %i.dk, label %.thread.thread.thread259.i.i, label %skl_wrpll_try_divider.exit.us.2.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.thread.i.i:     ; preds = %skl_wrpll_try_divider.exit.us.2.1.i.i, %bb.ai, %bb.ah
   %.sroa.0.4.us.2.1202.i.i = phi i64 [ %i.dg, %skl_wrpll_try_divider.exit.us.2.1.i.i ], [ %.sroa.0.4.us.1.1.6196.i.i, %bb.ah ], [ %.sroa.0.4.us.1.1.6196.i.i, %bb.ai ] ; 3 uses
   %.sroa.7.5.us.2.1201.i.i = phi i64 [ 9600000000, %skl_wrpll_try_divider.exit.us.2.1.i.i ], [ %.sroa.7.5.us.1.1.6195.i.i, %bb.ah ], [ %.sroa.7.5.us.1.1.6195.i.i, %bb.ai ] ; 2 uses
   %.sroa.10.5.us.2.1200.i.i = phi i32 [ 3, %skl_wrpll_try_divider.exit.us.2.1.i.i ], [ %.sroa.10.5.us.1.1.6194.i.i, %bb.ah ], [ %.sroa.10.5.us.1.1.6194.i.i, %bb.ai ] ; 2 uses
-  %63 = icmp ugt i64 %i.z, 9600000000
   %i.dl = add nsw i64 %i.z, -9600000000
-  %64 = sub nuw nsw i64 9600000000, %i.z
-  %65 = select i1 %63, i64 %i.dl, i64 %64
-  %66 = mul nsw i64 %65, 10000                    ; 4 uses
-  %i.dm = udiv i64 %66, 9600000000                ; 2 uses
+  %18 = tail call i64 @llvm.abs.i64(i64 %i.dl, i1 true) ; 4 uses
+  %i.dm = udiv i64 %18, 960000                    ; 2 uses
   %.not.i.us.2.1.1.i.i = icmp ult i64 %i.z, 9600000000
   %i.dn = icmp ult i64 %i.dm, %.sroa.0.4.us.2.1202.i.i ; 2 uses
   br i1 %.not.i.us.2.1.1.i.i, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.thread.i.i
-  %i.do = icmp ult i64 %66, 960000000000
+  %i.do = icmp samesign ult i64 %18, 96000000
   %or.cond45.us.2.1.1.i.i = and i1 %i.do, %i.dn
   br i1 %or.cond45.us.2.1.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.1.thread.i.i
 
 bb.ak:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.thread.i.i
-  %i.dp = icmp ult i64 %66, 5760000000000
+  %i.dp = icmp samesign ult i64 %18, 576000000
   %or.cond46.us.2.1.1.i.i = and i1 %i.dp, %i.dn
   br i1 %or.cond46.us.2.1.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.1.i.i, label %skl_wrpll_try_divider.exit.us.2.1.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.1.i.i:          ; preds = %bb.ak, %bb.aj
-  %i.dq = icmp samesign ult i64 %66, 9600000000
+  %i.dq = icmp samesign ult i64 %18, 960000
   br i1 %i.dq, label %.sink.split.i29.i.thread36.i, label %skl_wrpll_try_divider.exit.us.2.1.1.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.1.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.2.1.1.i.i, %bb.ak, %bb.aj
   %.sroa.0.4.us.2.1.1208.i.i = phi i64 [ %i.dm, %skl_wrpll_try_divider.exit.us.2.1.1.i.i ], [ %.sroa.0.4.us.2.1202.i.i, %bb.aj ], [ %.sroa.0.4.us.2.1202.i.i, %bb.ak ] ; 3 uses
   %.sroa.7.5.us.2.1.1207.i.i = phi i64 [ 9600000000, %skl_wrpll_try_divider.exit.us.2.1.1.i.i ], [ %.sroa.7.5.us.2.1201.i.i, %bb.aj ], [ %.sroa.7.5.us.2.1201.i.i, %bb.ak ] ; 2 uses
   %.sroa.10.5.us.2.1.1206.i.i = phi i32 [ 5, %skl_wrpll_try_divider.exit.us.2.1.1.i.i ], [ %.sroa.10.5.us.2.1200.i.i, %bb.aj ], [ %.sroa.10.5.us.2.1200.i.i, %bb.ak ] ; 2 uses
-  %67 = icmp ugt i64 %i.ag, 9600000000
   %i.dr = add nsw i64 %i.ag, -9600000000
-  %68 = sub nuw nsw i64 9600000000, %i.ag
-  %69 = select i1 %67, i64 %i.dr, i64 %68
-  %70 = mul nsw i64 %69, 10000                    ; 4 uses
-  %i.ds = udiv i64 %70, 9600000000                ; 2 uses
+  %19 = tail call i64 @llvm.abs.i64(i64 %i.dr, i1 true) ; 4 uses
+  %i.ds = udiv i64 %19, 960000                    ; 2 uses
   %.not.i.us.2.1.2.i.i = icmp ult i64 %i.ag, 9600000000
   %i.dt = icmp ult i64 %i.ds, %.sroa.0.4.us.2.1.1208.i.i ; 2 uses
   br i1 %.not.i.us.2.1.2.i.i, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.1.thread.i.i
-  %i.du = icmp ult i64 %70, 960000000000
+  %i.du = icmp samesign ult i64 %19, 96000000
   %or.cond45.us.2.1.2.i.i = and i1 %i.du, %i.dt
   br i1 %or.cond45.us.2.1.2.i.i, label %skl_wrpll_try_divider.exit.us.2.1.2.i.i, label %skl_wrpll_try_divider.exit.us.2.1.2.thread.i.i
 
 bb.am:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.1.thread.i.i
-  %i.dv = icmp ult i64 %70, 5760000000000
+  %i.dv = icmp samesign ult i64 %19, 576000000
   %or.cond46.us.2.1.2.i.i = and i1 %i.dv, %i.dt
   br i1 %or.cond46.us.2.1.2.i.i, label %skl_wrpll_try_divider.exit.us.2.1.2.i.i, label %skl_wrpll_try_divider.exit.us.2.1.2.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.2.i.i:          ; preds = %bb.am, %bb.al
-  %i.dw = icmp samesign ult i64 %70, 9600000000
+  %i.dw = icmp samesign ult i64 %19, 960000
   br i1 %i.dw, label %.thread.i, label %skl_wrpll_try_divider.exit.us.2.1.2.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.2.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.2.1.2.i.i, %bb.am, %bb.al
   %.sroa.0.4.us.2.1.2214.i.i = phi i64 [ %i.ds, %skl_wrpll_try_divider.exit.us.2.1.2.i.i ], [ %.sroa.0.4.us.2.1.1208.i.i, %bb.al ], [ %.sroa.0.4.us.2.1.1208.i.i, %bb.am ] ; 3 uses
   %.sroa.7.5.us.2.1.2213.i.i = phi i64 [ 9600000000, %skl_wrpll_try_divider.exit.us.2.1.2.i.i ], [ %.sroa.7.5.us.2.1.1207.i.i, %bb.al ], [ %.sroa.7.5.us.2.1.1207.i.i, %bb.am ] ; 2 uses
   %.sroa.10.5.us.2.1.2212.i.i = phi i32 [ 7, %skl_wrpll_try_divider.exit.us.2.1.2.i.i ], [ %.sroa.10.5.us.2.1.1206.i.i, %bb.al ], [ %.sroa.10.5.us.2.1.1206.i.i, %bb.am ] ; 2 uses
-  %71 = icmp ugt i64 %i.an, 9600000000
   %i.dx = add nsw i64 %i.an, -9600000000
-  %72 = sub nuw nsw i64 9600000000, %i.an
-  %73 = select i1 %71, i64 %i.dx, i64 %72
-  %74 = mul nsw i64 %73, 10000                    ; 4 uses
-  %i.dy = udiv i64 %74, 9600000000                ; 2 uses
+  %20 = tail call i64 @llvm.abs.i64(i64 %i.dx, i1 true) ; 4 uses
+  %i.dy = udiv i64 %20, 960000                    ; 2 uses
   %.not.i.us.2.1.3.i.i = icmp ult i64 %i.an, 9600000000
   %i.dz = icmp ult i64 %i.dy, %.sroa.0.4.us.2.1.2214.i.i ; 2 uses
   br i1 %.not.i.us.2.1.3.i.i, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.2.thread.i.i
-  %i.ea = icmp ult i64 %74, 960000000000
+  %i.ea = icmp samesign ult i64 %20, 96000000
   %or.cond45.us.2.1.3.i.i = and i1 %i.ea, %i.dz
   br i1 %or.cond45.us.2.1.3.i.i, label %skl_wrpll_try_divider.exit.us.2.1.3.i.i, label %skl_wrpll_try_divider.exit.us.2.1.3.thread.i.i
 
 bb.ao:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.2.thread.i.i
-  %i.eb = icmp ult i64 %74, 5760000000000
+  %i.eb = icmp samesign ult i64 %20, 576000000
   %or.cond46.us.2.1.3.i.i = and i1 %i.eb, %i.dz
   br i1 %or.cond46.us.2.1.3.i.i, label %skl_wrpll_try_divider.exit.us.2.1.3.i.i, label %skl_wrpll_try_divider.exit.us.2.1.3.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.3.i.i:          ; preds = %bb.ao, %bb.an
-  %i.ec = icmp samesign ult i64 %74, 9600000000
+  %i.ec = icmp samesign ult i64 %20, 960000
   br i1 %i.ec, label %.thread.thread.thread259.i.i, label %skl_wrpll_try_divider.exit.us.2.1.3.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.3.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.2.1.3.i.i, %bb.ao, %bb.an
   %.sroa.0.4.us.2.1.3220.i.i = phi i64 [ %i.dy, %skl_wrpll_try_divider.exit.us.2.1.3.i.i ], [ %.sroa.0.4.us.2.1.2214.i.i, %bb.an ], [ %.sroa.0.4.us.2.1.2214.i.i, %bb.ao ] ; 3 uses
   %.sroa.7.5.us.2.1.3219.i.i = phi i64 [ 9600000000, %skl_wrpll_try_divider.exit.us.2.1.3.i.i ], [ %.sroa.7.5.us.2.1.2213.i.i, %bb.an ], [ %.sroa.7.5.us.2.1.2213.i.i, %bb.ao ] ; 2 uses
   %.sroa.10.5.us.2.1.3218.i.i = phi i32 [ 9, %skl_wrpll_try_divider.exit.us.2.1.3.i.i ], [ %.sroa.10.5.us.2.1.2212.i.i, %bb.an ], [ %.sroa.10.5.us.2.1.2212.i.i, %bb.ao ] ; 2 uses
-  %75 = icmp ugt i64 %i.au, 9600000000
   %i.ed = add nsw i64 %i.au, -9600000000
-  %76 = sub nuw nsw i64 9600000000, %i.au
-  %77 = select i1 %75, i64 %i.ed, i64 %76
-  %78 = mul nsw i64 %77, 10000                    ; 4 uses
-  %i.ee = udiv i64 %78, 9600000000                ; 2 uses
+  %21 = tail call i64 @llvm.abs.i64(i64 %i.ed, i1 true) ; 4 uses
+  %i.ee = udiv i64 %21, 960000                    ; 2 uses
   %.not.i.us.2.1.4.i.i = icmp ult i64 %i.au, 9600000000
   %i.ef = icmp ult i64 %i.ee, %.sroa.0.4.us.2.1.3220.i.i ; 2 uses
   br i1 %.not.i.us.2.1.4.i.i, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.3.thread.i.i
-  %i.eg = icmp ult i64 %78, 960000000000
+  %i.eg = icmp samesign ult i64 %21, 96000000
   %or.cond45.us.2.1.4.i.i = and i1 %i.eg, %i.ef
   br i1 %or.cond45.us.2.1.4.i.i, label %skl_wrpll_try_divider.exit.us.2.1.4.i.i, label %skl_wrpll_try_divider.exit.us.2.1.4.thread.i.i
 
 bb.aq:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.3.thread.i.i
-  %i.eh = icmp ult i64 %78, 5760000000000
+  %i.eh = icmp samesign ult i64 %21, 576000000
   %or.cond46.us.2.1.4.i.i = and i1 %i.eh, %i.ef
   br i1 %or.cond46.us.2.1.4.i.i, label %skl_wrpll_try_divider.exit.us.2.1.4.i.i, label %skl_wrpll_try_divider.exit.us.2.1.4.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.4.i.i:          ; preds = %bb.aq, %bb.ap
-  %i.ei = icmp samesign ult i64 %78, 9600000000
+  %i.ei = icmp samesign ult i64 %21, 960000
   br i1 %i.ei, label %.thread.i, label %skl_wrpll_try_divider.exit.us.2.1.4.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.4.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.2.1.4.i.i, %bb.aq, %bb.ap
   %.sroa.0.4.us.2.1.4226.i.i = phi i64 [ %i.ee, %skl_wrpll_try_divider.exit.us.2.1.4.i.i ], [ %.sroa.0.4.us.2.1.3220.i.i, %bb.ap ], [ %.sroa.0.4.us.2.1.3220.i.i, %bb.aq ] ; 3 uses
   %.sroa.7.5.us.2.1.4225.i.i = phi i64 [ 9600000000, %skl_wrpll_try_divider.exit.us.2.1.4.i.i ], [ %.sroa.7.5.us.2.1.3219.i.i, %bb.ap ], [ %.sroa.7.5.us.2.1.3219.i.i, %bb.aq ] ; 2 uses
   %.sroa.10.5.us.2.1.4224.i.i = phi i32 [ 15, %skl_wrpll_try_divider.exit.us.2.1.4.i.i ], [ %.sroa.10.5.us.2.1.3218.i.i, %bb.ap ], [ %.sroa.10.5.us.2.1.3218.i.i, %bb.aq ] ; 2 uses
-  %79 = icmp ugt i64 %i.bb, 9600000000
   %i.ej = add nsw i64 %i.bb, -9600000000
-  %80 = sub nuw nsw i64 9600000000, %i.bb
-  %81 = select i1 %79, i64 %i.ej, i64 %80
-  %82 = mul nsw i64 %81, 10000                    ; 4 uses
-  %i.ek = udiv i64 %82, 9600000000                ; 2 uses
+  %22 = tail call i64 @llvm.abs.i64(i64 %i.ej, i1 true) ; 4 uses
+  %i.ek = udiv i64 %22, 960000                    ; 2 uses
   %.not.i.us.2.1.5.i.i = icmp ult i64 %i.bb, 9600000000
   %i.el = icmp ult i64 %i.ek, %.sroa.0.4.us.2.1.4226.i.i ; 2 uses
   br i1 %.not.i.us.2.1.5.i.i, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.4.thread.i.i
-  %i.em = icmp ult i64 %82, 960000000000
+  %i.em = icmp samesign ult i64 %22, 96000000
   %or.cond45.us.2.1.5.i.i = and i1 %i.em, %i.el
   br i1 %or.cond45.us.2.1.5.i.i, label %skl_wrpll_try_divider.exit.us.2.1.5.i.i, label %skl_wrpll_try_divider.exit.us.2.1.5.thread.i.i
 
 bb.as:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.4.thread.i.i
-  %i.en = icmp ult i64 %82, 5760000000000
+  %i.en = icmp samesign ult i64 %22, 576000000
   %or.cond46.us.2.1.5.i.i = and i1 %i.en, %i.el
   br i1 %or.cond46.us.2.1.5.i.i, label %skl_wrpll_try_divider.exit.us.2.1.5.i.i, label %skl_wrpll_try_divider.exit.us.2.1.5.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.5.i.i:          ; preds = %bb.as, %bb.ar
-  %i.eo = icmp samesign ult i64 %82, 9600000000
+  %i.eo = icmp samesign ult i64 %22, 960000
   br i1 %i.eo, label %.thread.i, label %skl_wrpll_try_divider.exit.us.2.1.5.thread.i.i
 
 skl_wrpll_try_divider.exit.us.2.1.5.thread.i.i:   ; preds = %skl_wrpll_try_divider.exit.us.2.1.5.i.i, %bb.as, %bb.ar
   %.sroa.0.4.us.2.1.5232.i.i = phi i64 [ %i.ek, %skl_wrpll_try_divider.exit.us.2.1.5.i.i ], [ %.sroa.0.4.us.2.1.4226.i.i, %bb.ar ], [ %.sroa.0.4.us.2.1.4226.i.i, %bb.as ]
   %.sroa.7.5.us.2.1.5231.i.i = phi i64 [ 9600000000, %skl_wrpll_try_divider.exit.us.2.1.5.i.i ], [ %.sroa.7.5.us.2.1.4225.i.i, %bb.ar ], [ %.sroa.7.5.us.2.1.4225.i.i, %bb.as ] ; 2 uses
   %.sroa.10.5.us.2.1.5230.i.i = phi i32 [ 21, %skl_wrpll_try_divider.exit.us.2.1.5.i.i ], [ %.sroa.10.5.us.2.1.4224.i.i, %bb.ar ], [ %.sroa.10.5.us.2.1.4224.i.i, %bb.as ] ; 2 uses
-  %83 = icmp ugt i64 %i.bi, 9600000000
   %i.ep = add nsw i64 %i.bi, -9600000000
-  %84 = sub nuw nsw i64 9600000000, %i.bi
-  %85 = select i1 %83, i64 %i.ep, i64 %84
-  %86 = mul nsw i64 %85, 10000                    ; 3 uses
-  %i.eq = udiv i64 %86, 9600000000
+  %23 = tail call i64 @llvm.abs.i64(i64 %i.ep, i1 true) ; 3 uses
+  %i.eq = udiv i64 %23, 960000
   %.not.i.us.2.1.6.i.i = icmp ult i64 %i.bi, 9600000000
   %i.er = icmp ult i64 %i.eq, %.sroa.0.4.us.2.1.5232.i.i ; 2 uses
   br i1 %.not.i.us.2.1.6.i.i, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.5.thread.i.i
-  %i.es = icmp ult i64 %86, 960000000000
+  %i.es = icmp samesign ult i64 %23, 96000000
   %or.cond45.us.2.1.6.i.i = and i1 %i.es, %i.er
   br i1 %or.cond45.us.2.1.6.i.i, label %.thread.i, label %.loopexit.split.us.1.i.i
 
 bb.au:                                            ; preds = %skl_wrpll_try_divider.exit.us.2.1.5.thread.i.i
-  %i.et = icmp ult i64 %86, 5760000000000
+  %i.et = icmp samesign ult i64 %23, 576000000
   %or.cond46.us.2.1.6.i.i = and i1 %i.et, %i.er
   br i1 %or.cond46.us.2.1.6.i.i, label %.thread.i, label %.loopexit.split.us.1.i.i
 
@@ -817,12 +754,10 @@ bb.av:                                            ; preds = %skl_wrpll_try_divid
   %i.ev = load i8, ptr %i.eu, align 1             ; 2 uses
   %i.ew = zext i8 %i.ev to i32                    ; 2 uses
   %i.ex = zext i8 %i.ev to i64
-  %i.ey = mul nsw i64 %i.r, %i.ex                 ; 4 uses
-  %87 = icmp ugt i64 %i.ey, 8400000000
+  %i.ey = mul nsw i64 %i.r, %i.ex                 ; 2 uses
   %i.ez = add nsw i64 %i.ey, -8400000000
-  %88 = sub nuw nsw i64 8400000000, %i.ey
-  %89 = select i1 %87, i64 %i.ez, i64 %88
-  %i.fa = mul i64 %89, 10000                      ; 4 uses
+  %24 = tail call i64 @llvm.abs.i64(i64 %i.ez, i1 true)
+  %i.fa = mul i64 %24, 10000                      ; 4 uses
   %i.fb = udiv i64 %i.fa, 8400000000              ; 2 uses
   %.not.i.us.i.i = icmp ult i64 %i.ey, 8400000000
   %i.fc = icmp ult i64 %i.fb, %.sroa.0.259.us.i.i ; 2 uses
@@ -851,12 +786,10 @@ skl_wrpll_try_divider.exit.us.i.i:                ; preds = %bb.ax, %bb.aw
   %i.fh = load i8, ptr %i.fg, align 1             ; 2 uses
   %i.fi = zext i8 %i.fh to i32
   %i.fj = zext i8 %i.fh to i64
-  %i.fk = mul nsw i64 %i.r, %i.fj                 ; 4 uses
-  %90 = icmp ugt i64 %i.fk, 9000000000
+  %i.fk = mul nsw i64 %i.r, %i.fj                 ; 2 uses
   %i.fl = add nsw i64 %i.fk, -9000000000
-  %91 = sub nuw nsw i64 9000000000, %i.fk
-  %92 = select i1 %90, i64 %i.fl, i64 %91
-  %i.fm = mul i64 %92, 10000                      ; 3 uses
+  %25 = tail call i64 @llvm.abs.i64(i64 %i.fl, i1 true)
+  %i.fm = mul i64 %25, 10000                      ; 3 uses
   %i.fn = udiv i64 %i.fm, 9000000000              ; 2 uses
   %.not.i.us.1.i.i = icmp ult i64 %i.fk, 9000000000
   %i.fo = icmp ult i64 %i.fn, %.sroa.0.259.us.1.i.i ; 2 uses
@@ -896,12 +829,10 @@ bb.ba:                                            ; preds = %skl_wrpll_try_divid
   %i.ft = load i8, ptr %i.fs, align 1             ; 2 uses
   %i.fu = zext i8 %i.ft to i32                    ; 2 uses
   %i.fv = zext i8 %i.ft to i64
-  %i.fw = mul nsw i64 %i.r, %i.fv                 ; 4 uses
-  %93 = icmp ugt i64 %i.fw, 9600000000
+  %i.fw = mul nsw i64 %i.r, %i.fv                 ; 2 uses
   %i.fx = add nsw i64 %i.fw, -9600000000
-  %94 = sub nuw nsw i64 9600000000, %i.fw
-  %95 = select i1 %93, i64 %i.fx, i64 %94
-  %i.fy = mul i64 %95, 10000                      ; 4 uses
+  %26 = tail call i64 @llvm.abs.i64(i64 %i.fx, i1 true)
+  %i.fy = mul i64 %26, 10000                      ; 4 uses
   %i.fz = udiv i64 %i.fy, 9600000000              ; 2 uses
   %.not.i.us.2.i.i = icmp ult i64 %i.fw, 9600000000
   %i.ga = icmp ult i64 %i.fz, %.sroa.0.259.us.2.i.i ; 2 uses
@@ -1304,7 +1235,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i, %.
   %.sroa.9.140.i.i = phi i32 [ %.sroa.9.046.i.i, %.preheader.lr.ph.i.i ], [ %.sroa.9.3.i.i, %.loopexit.i.i ]
   %.sroa.0.139.i.i = phi i32 [ %.sroa.0.045.i.i, %.preheader.lr.ph.i.i ], [ %.sroa.0.3.i.i, %.loopexit.i.i ]
   %indvars.iv.next54.i.i = add nuw nsw i64 %indvars.iv53.i.i, 1 ; 4 uses
-  %i.aa = mul nuw nsw i64 %indvars.iv.next54.i.i, 5400000 ; 3 uses
+  %i.aa = mul i64 %indvars.iv.next54.i.i, -5400000
   %i.ab = trunc nuw nsw i64 %indvars.iv.next54.i.i to i32 ; 4 uses
   br label %bb.j
 
@@ -1324,20 +1255,16 @@ bb.k:                                             ; preds = %bb.j
   %i.ah = zext i32 %.sroa.15.235.i.i to i64
   %i.ai = mul nuw i64 %i.ag, %i.ah                ; 2 uses
   %i.aj = mul i64 %i.ai, %i.t
-  %i.ak = mul nsw i64 %i.ae, %i.r                 ; 3 uses
-  %3 = icmp ugt i64 %i.ak, %i.aa
-  %4 = sub nuw nsw i64 %i.ak, %i.aa
-  %5 = sub nuw nsw i64 %i.aa, %i.ak
-  %6 = select i1 %3, i64 %4, i64 %5               ; 2 uses
-  %i.al = mul i64 %i.ai, %i.r                     ; 3 uses
+  %i.ak = mul nsw i64 %i.ae, %i.r
+  %3 = add i64 %i.ak, %i.aa
+  %4 = tail call i64 @llvm.abs.i64(i64 %3, i1 true) ; 2 uses
+  %i.al = mul i64 %i.ai, %i.r
   %i.am = zext i32 %.sroa.9.234.i.i to i64
-  %i.an = mul nuw nsw i64 %i.am, 5400000          ; 3 uses
-  %7 = icmp ugt i64 %i.al, %i.an
-  %8 = sub nuw i64 %i.al, %i.an
-  %9 = sub nuw nsw i64 %i.an, %i.al
-  %10 = select i1 %7, i64 %8, i64 %9              ; 2 uses
-  %i.ao = mul nsw i64 %6, 1000000
-  %i.ap = mul i64 %10, 1000000
+  %i.an = mul nsw i64 %i.am, -5400000
+  %5 = add i64 %i.al, %i.an
+  %6 = tail call i64 @llvm.abs.i64(i64 %5, i1 true) ; 2 uses
+  %i.ao = mul nuw nsw i64 %4, 1000000
+  %i.ap = mul i64 %6, 1000000
   %i.aq = icmp ult i64 %i.af, %i.ao               ; 3 uses
   %i.ar = icmp ult i64 %i.aj, %i.ap               ; 3 uses
   %or.cond.i.i.i = select i1 %i.aq, i1 %i.ar, i1 false
@@ -1346,8 +1273,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.as = mul i32 %.sroa.0.233.i.i, %.sroa.15.235.i.i
   %i.at = zext i32 %i.as to i64
-  %i.au = mul i64 %6, %i.at
-  %i.av = mul i64 %10, %i.ae
+  %i.au = mul i64 %4, %i.at
+  %i.av = mul i64 %6, %i.ae
   %i.aw = icmp ult i64 %i.au, %i.av
   br i1 %i.aw, label %bb.m, label %hsw_wrpll_update_rnp.exit.i.i
 
@@ -1749,6 +1676,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #11
 
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

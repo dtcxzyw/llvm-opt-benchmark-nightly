@@ -205,15 +205,15 @@ bb.ye:                                            ; preds = %bb.yc
 _ZNK4llvm5APInt11countr_zeroEv.exit4652:          ; preds = %bb.yd, %bb.ye
   %.0.i46475713 = phi i32 [ %i.cll, %bb.yd ], [ %i.clo, %bb.ye ]
   %.0.i4650 = phi i32 [ %..i4651, %bb.yd ], [ %i.clp, %bb.ye ]
-  %i.clq = and i32 %.0.i46475713, -8              ; 4 uses
-  %i.clr = and i32 %.0.i4650, -8                  ; 4 uses
+  %i.clq = and i32 %.0.i46475713, -8              ; 3 uses
+  %i.clr = and i32 %.0.i4650, -8                  ; 3 uses
   %i.cls = add i32 %i.clq, %i.clr
   %i.clt = sub i32 %i.c, %i.cls
   %i.clu = icmp eq i32 %i.clt, 8
   br i1 %i.clu, label %bb.yf, label %.thread5716
 
 bb.yf:                                            ; preds = %_ZNK4llvm5APInt11countr_zeroEv.exit4652
-  %i.clv = icmp ugt i32 %i.clq, %i.clr            ; 2 uses
+  %i.clv = icmp ugt i32 %i.clq, %i.clr
   %i.clw = select i1 %i.clv, i32 200, i32 198     ; 2 uses
   %i.clx = getelementptr inbounds nuw i8, ptr %6, i64 9
   %i.cly = load i8, ptr %i.clx, align 1, !tbaa !400, !range !297, !noundef !55
@@ -251,11 +251,10 @@ _ZNK4llvm18TargetLoweringBase16isOperationLegalEjNS_3EVTE.exit4660: ; preds = %_
   br i1 %i.cmk, label %.thread5718, label %.thread5716
 
 .thread5718:                                      ; preds = %_ZNK4llvm18TargetLoweringBase16isOperationLegalEjNS_3EVTE.exit4660, %bb.yf
-  %i.cml = sub nuw i32 %i.clq, %i.clr
-  %355 = sub nuw i32 %i.clr, %i.clq
-  %356 = select i1 %i.clv, i32 %i.cml, i32 %355
+  %i.cml = sub nsw i32 %i.clq, %i.clr
+  %355 = call i32 @llvm.abs.i32(i32 %i.cml, i1 true)
   %i.cmm = load ptr, ptr %6, align 8, !tbaa !388, !nonnull !55, !align !56
-  %i.cmn = zext i32 %356 to i64
+  %i.cmn = zext nneg i32 %355 to i64
   %i.cmo = call { ptr, i32 } @_ZN4llvm12SelectionDAG22getShiftAmountConstantEmNS_3EVTERKNS_5SDLocE(ptr noundef nonnull align 8 dereferenceable(920) %i.cmm, i64 noundef %i.cmn, i16 %.sroa.01057.0.copyload.pre, ptr %.sroa.21059.0.copyload.pre, ptr noundef nonnull align 8 dereferenceable(12) %17) #28 ; 2 uses
   %.fca.0.extract1053 = extractvalue { ptr, i32 } %i.cmo, 0
   %.fca.1.extract1054 = extractvalue { ptr, i32 } %i.cmo, 1

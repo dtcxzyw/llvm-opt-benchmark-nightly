@@ -204,16 +204,14 @@ bb.gb:                                            ; preds = %bb.ff
     #dbg_value(ptr %i.aui, !44144, !DIExpression(DW_OP_constu, 88, DW_OP_minus, DW_OP_stack_value), !41218)
     #dbg_value(ptr %i.aui, !42256, !DIExpression(DW_OP_constu, 88, DW_OP_minus, DW_OP_plus_uconst, 8, DW_OP_stack_value), !41219)
   %i.auj = getelementptr inbounds nuw i8, ptr %3, i64 80, !dbg !45440
-  %i.auk = load i64, ptr %i.auj, align 8, !dbg !45440, !alias.scope !43938, !noundef !3838 ; 3 uses
+  %i.auk = load i64, ptr %i.auj, align 8, !dbg !45440, !alias.scope !43938, !noundef !3838
   %i.aul = getelementptr i8, ptr %i.aui, i64 -16, !dbg !45441
-  %i.aum = load i64, ptr %i.aul, align 8, !dbg !45441, !noalias !44058, !noundef !3838 ; 3 uses
-  %7 = icmp ugt i64 %i.auk, %i.aum, !dbg !45440
-  %8 = sub nuw i64 %i.auk, %i.aum, !dbg !45440
-  %i.aun = sub nuw i64 %i.aum, %i.auk, !dbg !45440
-  %.sroa.05.0.i = select i1 %7, i64 %8, i64 %i.aun, !dbg !45440
-    #dbg_value(i64 %.sroa.05.0.i, !42257, !DIExpression(), !41220)
-  %9 = icmp ugt i64 %.sroa.05.0.i, 1, !dbg !45442
-  br i1 %9, label %bb.gi, label %bb.gc, !dbg !45442
+  %i.aum = load i64, ptr %i.aul, align 8, !dbg !45441, !noalias !44058, !noundef !3838
+    #dbg_value(i64 poison, !42257, !DIExpression(), !41220)
+  %7 = add i64 %i.auk, -2, !dbg !45440
+  %i.aun = sub i64 %7, %i.aum, !dbg !45442
+  %8 = icmp ult i64 %i.aun, -3, !dbg !45442
+  br i1 %8, label %bb.gi, label %bb.gc, !dbg !45442
 
 bb.gc:                                            ; preds = %bb.gi, %bb.gb, %bb.ff
     #dbg_value(ptr %3, !44147, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !41222)

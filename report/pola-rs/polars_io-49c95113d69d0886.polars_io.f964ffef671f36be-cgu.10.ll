@@ -204,17 +204,15 @@ _RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldjTjjjETjBV_ENCNvMNtNt
   %.val.i.i.i.i.i.i.i = load ptr, ptr %i.g, align 8, !dbg !11573, !alias.scope !11529, !noalias !11514, !nonnull !1359, !noundef !1359
   %i.n = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16, !dbg !11574
   %i.o = load i64, ptr %i.n, align 8, !dbg !11574, !noalias !11530, !noundef !1359 ; 2 uses
-  %i.p = udiv i64 %i.o, %i.l, !dbg !11575         ; 4 uses
+  %i.p = udiv i64 %i.o, %i.l, !dbg !11575         ; 2 uses
   %i.q = urem i64 %i.o, %i.l, !dbg !11576
   call void @llvm.experimental.noalias.scope.decl(metadata !11531), !dbg !11577
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !11578, !noalias !11532
   %.val.i.i.i.i.i.i.i.i = load ptr, ptr %i.f, align 16, !dbg !11579, !alias.scope !11533, !noalias !11514, !nonnull !1359, !align !1596, !noundef !1359
   %i.r = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i.i, i64 8, !dbg !11580
-  %i.s = load i64, ptr %i.r, align 8, !dbg !11580, !range !11536, !noalias !11537, !noundef !1359 ; 3 uses
-  %3 = icmp ult i64 %i.p, %i.s, !dbg !11581
-  %4 = sub nuw i64 %i.s, %i.p, !dbg !11581
-  %i.t = sub nuw i64 %i.p, %i.s, !dbg !11581
-  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i = select i1 %3, i64 %4, i64 %i.t, !dbg !11581
+  %i.s = load i64, ptr %i.r, align 8, !dbg !11580, !range !11536, !noalias !11537, !noundef !1359
+  %i.t = sub nsw i64 %i.p, %i.s, !dbg !11581
+  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.t, i1 true), !dbg !11581
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %i.e, i64 32, i1 false), !dbg !11578, !noalias !11514
   store i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i, ptr %i.k, align 8, !dbg !11578, !noalias !11532
   store i64 %i.l, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !dbg !11578, !noalias !11532
@@ -250,17 +248,15 @@ _RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldjTjjjETjBV_ENCNvMNtNt
   %.val.i.i.i7.i.i.i.i = load ptr, ptr %i.g, align 8, !dbg !11597, !alias.scope !11548, !noalias !11514, !nonnull !1359, !noundef !1359
   %i.w = getelementptr inbounds nuw i8, ptr %.val.i.i.i7.i.i.i.i, i64 16, !dbg !11598
   %i.x = load i64, ptr %i.w, align 8, !dbg !11598, !noalias !11549, !noundef !1359 ; 2 uses
-  %i.y = udiv i64 %i.x, %.sroa.5.0.copyload, !dbg !11599 ; 4 uses
+  %i.y = udiv i64 %i.x, %.sroa.5.0.copyload, !dbg !11599 ; 2 uses
   %i.z = urem i64 %i.x, %.sroa.5.0.copyload, !dbg !11600
   call void @llvm.experimental.noalias.scope.decl(metadata !11550), !dbg !11601
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !11602, !noalias !11551
   %.val.i.i.i.i8.i.i.i.i = load ptr, ptr %i.f, align 16, !dbg !11603, !alias.scope !11552, !noalias !11514, !nonnull !1359, !align !1596, !noundef !1359
   %i.aa = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i8.i.i.i.i, i64 8, !dbg !11604
-  %i.ab = load i64, ptr %i.aa, align 8, !dbg !11604, !range !11536, !noalias !11553, !noundef !1359 ; 3 uses
-  %5 = icmp ult i64 %i.y, %i.ab, !dbg !11605
-  %6 = sub nuw i64 %i.ab, %i.y, !dbg !11605
-  %i.ac = sub nuw i64 %i.y, %i.ab, !dbg !11605
-  %.sroa.0.0.i.i.i.i.i.i9.i.i.i.i = select i1 %5, i64 %6, i64 %i.ac, !dbg !11605
+  %i.ab = load i64, ptr %i.aa, align 8, !dbg !11604, !range !11536, !noalias !11553, !noundef !1359
+  %i.ac = sub nsw i64 %i.y, %i.ab, !dbg !11605
+  %.sroa.0.0.i.i.i.i.i.i9.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ac, i1 true), !dbg !11605
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %i.e, i64 32, i1 false), !dbg !11602, !noalias !11514
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 32, !dbg !11602 ; 3 uses
   store i64 %.sroa.0.0.i.i.i.i.i.i9.i.i.i.i, ptr %i.ad, align 8, !dbg !11602, !noalias !11551
@@ -663,12 +659,10 @@ _RNCINvMs6_NtNtNtCscgRAwXFJnXP_4core5array4iter10iter_innerINtB8_15PolymorphicIt
   %i.aa = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 8, !dbg !18512
   %i.ab = load i64, ptr %i.aa, align 8, !dbg !18512, !noalias !18486, !noundef !1359
   %.sroa.01.0.i.i.i.i.i.i.i = call i64 @llvm.usub.sat.i64(i64 %i.ab, i64 %i.z), !dbg !18513
-  %i.ac = udiv i64 %.sroa.01.0.i.i.i.i.i.i.i, %i.x, !dbg !18509 ; 3 uses
-  %i.ad = load i64, ptr %.val5.i.i.i.i.i, align 8, !dbg !18514, !noalias !18486, !noundef !1359 ; 3 uses
-  %3 = icmp ult i64 %i.ac, %i.ad, !dbg !18515
-  %4 = sub nuw i64 %i.ad, %i.ac, !dbg !18515
-  %i.ae = sub nuw i64 %i.ac, %i.ad, !dbg !18515
-  %.sroa.0.0.i.i.i.i.i.i.i = select i1 %3, i64 %4, i64 %i.ae, !dbg !18515 ; 2 uses
+  %i.ac = udiv i64 %.sroa.01.0.i.i.i.i.i.i.i, %i.x, !dbg !18509
+  %i.ad = load i64, ptr %.val5.i.i.i.i.i, align 8, !dbg !18514, !noalias !18486, !noundef !1359
+  %i.ae = sub nsw i64 %i.ac, %i.ad, !dbg !18515
+  %.sroa.0.0.i.i.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ae, i1 true), !dbg !18515 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !18487
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !18487
   store i64 %.sroa.0.017.i.i, ptr %i.b, align 8, !noalias !18488
@@ -1070,6 +1064,9 @@ declare i8 @llvm.umin.i8(i8, i8) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #28
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #28

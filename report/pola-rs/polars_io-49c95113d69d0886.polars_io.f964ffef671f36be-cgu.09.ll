@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.a
 bb.h:                                             ; preds = %_RNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB2_13BytesBufferer18commit_copy_buffer.exit, %bb.k, %_RNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB2_13BytesBufferer18commit_copy_buffer.exit.thread
   %i.am = phi ptr [ %i.ae, %_RNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB2_13BytesBufferer18commit_copy_buffer.exit.thread ], [ %i.ah, %bb.k ], [ %i.ah, %_RNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB2_13BytesBufferer18commit_copy_buffer.exit ]
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !17465
-  %i.ao = load i64, ptr %i.an, align 8, !dbg !17465, !range !1971, !noundef !1375 ; 6 uses
+  %i.ao = load i64, ptr %i.an, align 8, !dbg !17465, !range !1971, !noundef !1375 ; 4 uses
   %i.ap = udiv i64 %i.m, %i.ao, !dbg !17466       ; 6 uses
   %i.aq = urem i64 %i.m, %i.ao, !dbg !17467
   %.not19.not = icmp eq i64 %i.aq, 0, !dbg !17468 ; 2 uses
@@ -319,12 +319,10 @@ bb.q:                                             ; preds = %bb.l
 
 bb.r:                                             ; preds = %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_3ops5range14RangeInclusivejENCNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB1J_13BytesBufferer10push_owneds_0ENtNtNtB9_6traits8iterator8Iterator4nextB1N_.exit.thread8.i.i.i.i, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_3ops5range14RangeInclusivejENCNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB1J_13BytesBufferer10push_owneds_0ENtNtNtB9_6traits8iterator8Iterator4nextB1N_.exit.thread4.i.i.i.i, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_3ops5range14RangeInclusivejENCNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB1J_13BytesBufferer10push_owneds_0ENtNtNtB9_6traits8iterator8Iterator4nextB1N_.exit.i.i.i.i
   %.sroa.5.0.i.i.i.i712.i.i.i.i = phi i64 [ %.mux, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_3ops5range14RangeInclusivejENCNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB1J_13BytesBufferer10push_owneds_0ENtNtNtB9_6traits8iterator8Iterator4nextB1N_.exit.thread4.i.i.i.i ], [ 1, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_3ops5range14RangeInclusivejENCNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB1J_13BytesBufferer10push_owneds_0ENtNtNtB9_6traits8iterator8Iterator4nextB1N_.exit.thread8.i.i.i.i ], [ %.sroa.06.0, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_3ops5range14RangeInclusivejENCNvMNtNtCslpwjCj2YNBy_9polars_io5utils14bytes_buffererNtB1J_13BytesBufferer10push_owneds_0ENtNtNtB9_6traits8iterator8Iterator4nextB1N_.exit.i.i.i.i ] ; 3 uses
-  %i.bi = udiv i64 %i.m, %.sroa.5.0.i.i.i.i712.i.i.i.i, !dbg !17506 ; 4 uses
+  %i.bi = udiv i64 %i.m, %.sroa.5.0.i.i.i.i712.i.i.i.i, !dbg !17506 ; 2 uses
   %i.bj = urem i64 %i.m, %.sroa.5.0.i.i.i.i712.i.i.i.i, !dbg !17507
-  %2 = icmp ult i64 %i.bi, %i.ao, !dbg !17508
-  %3 = sub nuw i64 %i.ao, %i.bi, !dbg !17508
-  %i.bk = sub nuw i64 %i.bi, %i.ao, !dbg !17508
-  %.sroa.0.0.i.i.i.i.i = select i1 %2, i64 %3, i64 %i.bk, !dbg !17508
+  %i.bk = sub nsw i64 %i.bi, %i.ao, !dbg !17508
+  %.sroa.0.0.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.bk, i1 true), !dbg !17508
   store i64 %.sroa.0.0.i.i.i.i.i, ptr %i.a, align 8, !dbg !17509, !noalias !17395
   %.sroa.4.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !17509
   store i64 %.sroa.5.0.i.i.i.i712.i.i.i.i, ptr %.sroa.4.sroa.5.0..sroa_idx.i.i, align 8, !dbg !17509, !noalias !17395
@@ -725,6 +723,9 @@ declare i64 @llvm.umin.i64(i64, i64) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #26
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i128 @llvm.abs.i128(i128, i1 immarg) #25

@@ -206,7 +206,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %sql
   br label %fts3EvalDeferredPhrase.exit
 
 .thread164.i:                                     ; preds = %.thread181.i, %bb.bf, %.lr.ph.i80
-  %.374173.i = phi i32 [ %i.jg, %.thread181.i ], [ %i.jg, %bb.bf ], [ %.071210.i, %.lr.ph.i80 ] ; 5 uses
+  %.374173.i = phi i32 [ %i.jg, %.thread181.i ], [ %i.jg, %bb.bf ], [ %.071210.i, %.lr.ph.i80 ] ; 4 uses
   %.479172.i = phi i32 [ %i.kb, %.thread181.i ], [ %i.ja, %bb.bf ], [ %.075209.i, %.lr.ph.i80 ] ; 3 uses
   %.484171.i = phi ptr [ %i.hl, %.thread181.i ], [ %i.hl, %bb.bf ], [ %.080208.i, %.lr.ph.i80 ] ; 12 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -221,7 +221,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %sql
 
 bb.bw:                                            ; preds = %._crit_edge.i83
   %i.ll = getelementptr inbounds nuw i8, ptr %i.gx, i64 60
-  %i.lm = load i32, ptr %i.ll, align 4, !tbaa !576 ; 4 uses
+  %i.lm = load i32, ptr %i.ll, align 4, !tbaa !576 ; 3 uses
   %i.ln = icmp slt i32 %i.lm, 0
   br i1 %i.ln, label %bb.bx, label %bb.by
 
@@ -241,14 +241,13 @@ bb.by:                                            ; preds = %bb.bw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #58
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #58
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #58
-  %i.lt = icmp samesign ugt i32 %i.lm, %.374173.i ; 3 uses
+  %i.lt = icmp samesign ugt i32 %i.lm, %.374173.i ; 2 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %i.gx, i64 40 ; 4 uses
   %i.lv = load ptr, ptr %i.lu, align 8, !tbaa !2949 ; 2 uses
-  %i.lw = sub nuw nsw i32 %i.lm, %.374173.i
-  %3 = sub nuw nsw i32 %.374173.i, %i.lm
+  %i.lw = sub nsw i32 %i.lm, %.374173.i
   %.sink.i = select i1 %i.lt, ptr %.484171.i, ptr %i.lv
   %.080.lcssa.sink.i = select i1 %i.lt, ptr %i.lv, ptr %.484171.i
-  %.0.i = select i1 %i.lt, i32 %i.lw, i32 %3
+  %.0.i = tail call i32 @llvm.abs.i32(i32 %i.lw, i1 true)
   store ptr %.sink.i, ptr %i.e, align 8, !tbaa !747
   store ptr %.080.lcssa.sink.i, ptr %i.f, align 8, !tbaa !747
   %i.lx = sext i32 %.479172.i to i64

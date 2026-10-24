@@ -204,45 +204,38 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 0, 71777214294589696) i64 @helper_neon_abdl_u16(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, 71777218572845056) i64 @helper_neon_abdl_u16(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = and i32 %0, 255                          ; 3 uses
-  %i.b = and i32 %1, 255                          ; 3 uses
-  %2 = icmp samesign ugt i32 %i.a, %i.b
-  %3 = sub nuw nsw i32 %i.a, %i.b
-  %i.c = sub nuw nsw i32 %i.b, %i.a
-  %4 = select i1 %2, i32 %3, i32 %i.c
+  %i.a = and i32 %0, 255
+  %i.b = and i32 %1, 255
+  %i.c = sub nsw i32 %i.a, %i.b
+  %2 = tail call i32 @llvm.abs.i32(i32 %i.c, i1 true)
   %i.d = lshr i32 %0, 8
-  %i.e = and i32 %i.d, 255                        ; 3 uses
+  %i.e = and i32 %i.d, 255
   %i.f = lshr i32 %1, 8
-  %i.g = and i32 %i.f, 255                        ; 3 uses
-  %5 = icmp samesign ugt i32 %i.e, %i.g
-  %6 = sub nuw nsw i32 %i.e, %i.g
-  %i.h = sub nuw nsw i32 %i.g, %i.e
-  %7 = select i1 %5, i32 %6, i32 %i.h
+  %i.g = and i32 %i.f, 255
+  %i.h = sub nsw i32 %i.e, %i.g
+  %3 = tail call i32 @llvm.abs.i32(i32 %i.h, i1 true)
   %i.i = lshr i32 %0, 16
-  %i.j = and i32 %i.i, 255                        ; 3 uses
+  %i.j = and i32 %i.i, 255
   %i.k = lshr i32 %1, 16
-  %i.l = and i32 %i.k, 255                        ; 3 uses
-  %8 = icmp samesign ugt i32 %i.j, %i.l
-  %9 = sub nuw nsw i32 %i.j, %i.l
-  %i.m = sub nuw nsw i32 %i.l, %i.j
-  %10 = select i1 %8, i32 %9, i32 %i.m
-  %i.n = lshr i32 %0, 24                          ; 3 uses
-  %i.o = lshr i32 %1, 24                          ; 3 uses
-  %11 = icmp samesign ugt i32 %i.n, %i.o
-  %12 = sub nuw nsw i32 %i.n, %i.o
-  %13 = sub nuw nsw i32 %i.o, %i.n
-  %14 = select i1 %11, i32 %12, i32 %13
-  %15 = shl nuw nsw i32 %7, 16
-  %16 = or disjoint i32 %15, %4
-  %17 = zext nneg i32 %16 to i64
-  %i.p = zext nneg i32 %10 to i64
-  %i.q = shl nuw nsw i64 %i.p, 32
-  %i.r = or disjoint i64 %i.q, %17
-  %18 = zext nneg i32 %14 to i64
-  %19 = shl nuw nsw i64 %18, 48
-  %i.s = or disjoint i64 %i.r, %19
+  %i.l = and i32 %i.k, 255
+  %i.m = sub nsw i32 %i.j, %i.l
+  %4 = tail call i32 @llvm.abs.i32(i32 %i.m, i1 true)
+  %i.n = lshr i32 %0, 24
+  %i.o = lshr i32 %1, 24
+  %5 = sub nsw i32 %i.n, %i.o
+  %6 = tail call i32 @llvm.abs.i32(i32 %5, i1 true)
+  %7 = zext nneg i32 %3 to i64
+  %8 = shl nuw nsw i64 %7, 16
+  %9 = zext nneg i32 %2 to i64
+  %10 = zext nneg i32 %4 to i64
+  %11 = shl nuw nsw i64 %10, 32
+  %i.p = zext nneg i32 %6 to i64
+  %i.q = shl nuw nsw i64 %i.p, 48
+  %i.r = or disjoint i64 %i.q, %9
+  %12 = or i64 %i.r, %8
+  %i.s = or i64 %12, %11
   ret i64 %i.s
 }
 
@@ -287,20 +280,16 @@ bb.a:
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
 define dso_local range(i64 0, 281470681808896) i64 @helper_neon_abdl_u32(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = and i32 %0, 65535                        ; 3 uses
-  %i.b = and i32 %1, 65535                        ; 3 uses
-  %2 = icmp samesign ugt i32 %i.a, %i.b
-  %3 = sub nuw nsw i32 %i.a, %i.b
-  %i.c = sub nuw nsw i32 %i.b, %i.a
-  %4 = select i1 %2, i32 %3, i32 %i.c
-  %i.d = lshr i32 %0, 16                          ; 3 uses
-  %i.e = lshr i32 %1, 16                          ; 3 uses
-  %5 = icmp samesign ugt i32 %i.d, %i.e
-  %6 = sub nuw nsw i32 %i.d, %i.e
-  %i.f = sub nuw nsw i32 %i.e, %i.d
-  %7 = select i1 %5, i32 %6, i32 %i.f
-  %i.g = zext nneg i32 %4 to i64
-  %i.h = zext nneg i32 %7 to i64
+  %i.a = and i32 %0, 65535
+  %i.b = and i32 %1, 65535
+  %i.c = sub nsw i32 %i.a, %i.b
+  %2 = tail call i32 @llvm.abs.i32(i32 %i.c, i1 true)
+  %i.d = lshr i32 %0, 16
+  %i.e = lshr i32 %1, 16
+  %i.f = sub nsw i32 %i.d, %i.e
+  %3 = tail call i32 @llvm.abs.i32(i32 %i.f, i1 true)
+  %i.g = zext nneg i32 %2 to i64
+  %i.h = zext nneg i32 %3 to i64
   %i.i = shl nuw nsw i64 %i.h, 32
   %i.j = or disjoint i64 %i.i, %i.g
   ret i64 %i.j
@@ -327,27 +316,23 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 -4294967295, 4294967296) i64 @helper_neon_abdl_u64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, 4294967296) i64 @helper_neon_abdl_u64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = zext i32 %0 to i64                       ; 2 uses
-  %i.b = zext i32 %1 to i64                       ; 2 uses
-  %2 = icmp ugt i32 %0, %1
-  %3 = sub nsw i64 %i.a, %i.b
-  %i.c = sub nsw i64 %i.b, %i.a
-  %4 = select i1 %2, i64 %3, i64 %i.c
-  ret i64 %4
+  %i.a = zext i32 %0 to i64
+  %i.b = zext i32 %1 to i64
+  %i.c = sub nsw i64 %i.a, %i.b
+  %2 = tail call i64 @llvm.abs.i64(i64 %i.c, i1 true)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 -4294967295, 4294967296) i64 @helper_neon_abdl_s64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, 4294967296) i64 @helper_neon_abdl_s64(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = sext i32 %0 to i64                       ; 2 uses
-  %i.b = sext i32 %1 to i64                       ; 2 uses
-  %2 = icmp sgt i32 %0, %1
-  %3 = sub nsw i64 %i.a, %i.b
-  %i.c = sub nsw i64 %i.b, %i.a
-  %4 = select i1 %2, i64 %3, i64 %i.c
-  ret i64 %4
+  %i.a = sext i32 %0 to i64
+  %i.b = sext i32 %1 to i64
+  %i.c = sub nsw i64 %i.a, %i.b
+  %2 = tail call i64 @llvm.abs.i64(i64 %i.c, i1 true)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable

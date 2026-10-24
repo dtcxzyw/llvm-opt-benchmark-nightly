@@ -205,8 +205,9 @@ _ZNRSt8optionalIN2v88internal8compiler10turboshaft10OffsetDiffEE5valueEv.exit626
   br i1 %.not.i.i.not, label %.thread876, label %_ZNK2v88internal8compiler10turboshaft10OffsetDiffeqEl.exit627
 
 _ZNK2v88internal8compiler10turboshaft10OffsetDiffeqEl.exit627: ; preds = %_ZNRSt8optionalIN2v88internal8compiler10turboshaft10OffsetDiffEE5valueEv.exit626
-  %i.kb = sub nuw i64 %i.jy, %i.ka
-  switch i64 %i.kb, label %.thread876 [
+  %i.kb = sub nuw nsw i64 %i.jy, %i.ka
+  %.sink8.i.i = call i64 @llvm.abs.i64(i64 %i.kb, i1 true)
+  switch i64 %.sink8.i.i, label %.thread876 [
     i64 16, label %bb.ck
     i64 0, label %bb.cl
   ]
@@ -609,13 +610,12 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.w = load i64, ptr %i.v, align 8              ; 3 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.y = load i64, ptr %i.x, align 8              ; 3 uses
-  %.not.i = icmp ult i64 %i.w, %i.y               ; 2 uses
-  %3 = sub nuw i64 %i.y, %i.w
-  %i.z = sub nuw i64 %i.w, %i.y
-  %.sink8.i = select i1 %.not.i, i64 %3, i64 %i.z
+  %i.y = load i64, ptr %i.x, align 8              ; 2 uses
+  %.not.i = icmp ult i64 %i.w, %i.y
+  %i.z = sub nsw i64 %i.w, %i.y
+  %.sink8.i = tail call i64 @llvm.abs.i64(i64 %i.z, i1 true)
   %.sink.i = zext i1 %.not.i to i8
   store i64 %.sink8.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1018,8 +1018,9 @@ _ZNRSt8optionalIN2v88internal8compiler10turboshaft10OffsetDiffEE5valueEv.exit: ;
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ea, i64 56
   %i.fb = load i64, ptr %i.fa, align 8, !noalias !90 ; 2 uses
   %.not.i.i44 = icmp uge i64 %i.ez, %i.fb
-  %i.fc = sub nuw i64 %i.ez, %i.fb
-  %i.fd = icmp eq i64 %i.fc, 16
+  %i.fc = sub nsw i64 %i.ez, %i.fb
+  %.sink8.i.i = call i64 @llvm.abs.i64(i64 %i.fc, i1 true)
+  %i.fd = icmp eq i64 %.sink8.i.i, 16
   %or.cond = select i1 %.not.i.i44, i1 %i.fd, i1 false
   br i1 %or.cond, label %bb.r, label %.thread.jt0
 
@@ -1421,6 +1422,9 @@ bb.f:                                             ; preds = %bb.e, %_ZN2v88inter
   store ptr %i.af, ptr %i.h, align 8
   ret void
 }
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #7
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
 declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #12

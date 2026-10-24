@@ -51,20 +51,20 @@ bb.c:                                             ; preds = %bb.c, %bb.a
 
 bb.d:                                             ; preds = %bb.d, %bb.b
   %.020.i = phi i64 [ 1, %bb.b ], [ %i.o, %bb.d ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %13) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #6
   %i.n = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %.020.i
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %13, ptr noundef nonnull byval(%struct.Rect) align 8 %i.g, ptr noundef nonnull byval(%struct.Rect) align 8 %i.n) #5
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %13, ptr noundef nonnull byval(%struct.Rect) align 8 %i.g, ptr noundef nonnull byval(%struct.Rect) align 8 %i.n) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %13, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %13) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #6
   %i.o = add nuw nsw i64 %.020.i, 1               ; 2 uses
   %exitcond21.not.i = icmp eq i64 %i.o, 65
   br i1 %exitcond21.not.i, label %GetBranches.exit, label %bb.d, !llvm.loop !9
 
 GetBranches.exit:                                 ; preds = %bb.d
-  %i.p = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.g) #5
+  %i.p = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.g) #6
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 2640
   store i64 %i.p, ptr %i.q, align 8, !tbaa !29
-  call void @InitNode(ptr noundef nonnull %1) #5
+  call void @InitNode(ptr noundef nonnull %1) #6
   %i.r = getelementptr i8, ptr %0, i64 2648       ; 6 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 3168 ; 10 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 3172 ; 5 uses
@@ -72,23 +72,23 @@ GetBranches.exit:                                 ; preds = %bb.d
   store i32 0, ptr %i.s, align 8, !tbaa !30
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 3176 ; 8 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 3208 ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #5
-  call void @NullRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %9) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #6
+  call void @NullRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %9) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.v, ptr noundef nonnull align 8 dereferenceable(32) %9, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.u, ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 32, i1 false), !tbaa.struct !23
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 3240 ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 2908 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.w, i8 0, i64 16, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(260) %i.r, i8 -1, i64 260, i1 false), !tbaa !30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(260) %i.x, i8 0, i64 260, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %GetBranches.exit
   %indvars.iv.i.i = phi i64 [ 0, %GetBranches.exit ], [ %indvars.iv.next.i.i, %bb.e ] ; 3 uses
   %i.y = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %indvars.iv.i.i
-  %i.z = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.y) #5
+  %i.z = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.y) #6
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i.i
   store i64 %i.z, ptr %i.aa, align 8, !tbaa !31
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
@@ -117,15 +117,15 @@ bb.g:                                             ; preds = %bb.f
   br label %Classify.exit.i.i
 
 bb.h:                                             ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #6
   %i.ah = getelementptr inbounds [40 x i8], ptr %i.d, i64 %i.ab
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %7, ptr noundef nonnull byval(%struct.Rect) align 8 %i.ah, ptr noundef nonnull byval(%struct.Rect) align 8 %i.u) #5
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %7, ptr noundef nonnull byval(%struct.Rect) align 8 %i.ah, ptr noundef nonnull byval(%struct.Rect) align 8 %i.u) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.u, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #6
   br label %Classify.exit.i.i
 
 Classify.exit.i.i:                                ; preds = %bb.h, %bb.g
-  %i.ai = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.u) #5
+  %i.ai = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.u) #6
   store i64 %i.ai, ptr %i.w, align 8, !tbaa !31
   %i.aj = load i32, ptr %i.s, align 8, !tbaa !30
   %i.ak = add nsw i32 %i.aj, 1
@@ -145,11 +145,11 @@ bb.i:                                             ; preds = %Classify.exit.i.i
   br label %PickSeeds.exit.i
 
 bb.j:                                             ; preds = %Classify.exit.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
   %i.ar = getelementptr inbounds [40 x i8], ptr %i.d, i64 %i.al
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %6, ptr noundef nonnull byval(%struct.Rect) align 8 %i.ar, ptr noundef nonnull byval(%struct.Rect) align 8 %i.v) #5
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %6, ptr noundef nonnull byval(%struct.Rect) align 8 %i.ar, ptr noundef nonnull byval(%struct.Rect) align 8 %i.v) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.v, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #6
   br label %PickSeeds.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e, %.loopexit.i.i
@@ -168,10 +168,10 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i.i
   %.140.i.i = phi i64 [ %.02546.i.i, %.lr.ph.i.i ], [ %.2.i.i, %bb.k ] ; 2 uses
   %.12839.i.i = phi i32 [ %.02745.i.i, %.lr.ph.i.i ], [ %.229.i.i, %bb.k ]
   %.13138.i.i = phi i32 [ %.03044.i.i, %.lr.ph.i.i ], [ %.232.i.i, %bb.k ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #6
   %i.av = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %indvars.iv51.i.i
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %8, ptr noundef nonnull byval(%struct.Rect) align 8 %i.as, ptr noundef nonnull byval(%struct.Rect) align 8 %i.av) #5
-  %i.aw = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %8) #5
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %8, ptr noundef nonnull byval(%struct.Rect) align 8 %i.as, ptr noundef nonnull byval(%struct.Rect) align 8 %i.av) #6
+  %i.aw = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %8) #6
   %i.ax = load i64, ptr %i.at, align 8, !tbaa !31
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv51.i.i
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !31
@@ -182,19 +182,19 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i.i
   %i.bd = trunc nuw nsw i64 %indvars.iv51.i.i to i32
   %.229.i.i = select i1 %i.bc, i32 %i.bd, i32 %.12839.i.i ; 3 uses
   %.2.i.i = call i64 @llvm.umax.i64(i64 %i.bb, i64 %.140.i.i) ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #6
   %indvars.iv.next52.i.i = add nuw nsw i64 %indvars.iv51.i.i, 1 ; 2 uses
   %exitcond54.not.i.i = icmp eq i64 %indvars.iv.next52.i.i, 65
   br i1 %exitcond54.not.i.i, label %.loopexit.i.i, label %bb.k, !llvm.loop !12
 
 PickSeeds.exit.i:                                 ; preds = %bb.j, %bb.i
-  %i.be = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.v) #5
+  %i.be = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.v) #6
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 3248 ; 2 uses
   store i64 %i.be, ptr %i.bf, align 8, !tbaa !31
   %i.bg = load i32, ptr %i.t, align 4, !tbaa !30  ; 2 uses
   %i.bh = add nsw i32 %i.bg, 1                    ; 2 uses
   store i32 %i.bh, ptr %i.t, align 4, !tbaa !30
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.bi = load i32, ptr %i.s, align 8, !tbaa !30  ; 3 uses
   %i.bj = add nsw i32 %i.bi, %i.bh
   %i.bk = icmp slt i32 %i.bj, 65                  ; 2 uses
@@ -223,15 +223,15 @@ bb.m:                                             ; preds = %bb.l
   br label %Classify.exit.i
 
 bb.n:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
   %i.bx = getelementptr inbounds [40 x i8], ptr %i.d, i64 %i.bo
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %5, ptr noundef nonnull byval(%struct.Rect) align 8 %i.bx, ptr noundef nonnull byval(%struct.Rect) align 8 %i.bv) #5
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %5, ptr noundef nonnull byval(%struct.Rect) align 8 %i.bx, ptr noundef nonnull byval(%struct.Rect) align 8 %i.bv) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bv, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
   br label %Classify.exit.i
 
 Classify.exit.i:                                  ; preds = %bb.n, %bb.m
-  %i.by = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.bv) #5
+  %i.by = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.bv) #6
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.br
   store i64 %i.by, ptr %i.bz, align 8, !tbaa !31
   %i.ca = load i32, ptr %i.bs, align 4, !tbaa !30
@@ -259,26 +259,25 @@ Classify.exit.i:                                  ; preds = %bb.n, %bb.m
   br i1 %.not67.i, label %bb.o, label %bb.s
 
 bb.o:                                             ; preds = %.preheader.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #6
   %i.cl = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %indvars.iv.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %10, ptr noundef nonnull align 8 dereferenceable(32) %i.cl, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #5
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %11, ptr noundef nonnull byval(%struct.Rect) align 8 %i.cl, ptr noundef nonnull byval(%struct.Rect) align 8 %i.u) #5
-  %i.cm = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %11) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #6
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %11, ptr noundef nonnull byval(%struct.Rect) align 8 %i.cl, ptr noundef nonnull byval(%struct.Rect) align 8 %i.u) #6
+  %i.cm = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %11) #6
   %i.cn = load i64, ptr %i.w, align 8, !tbaa !31
-  %i.co = sub i64 %i.cm, %i.cn                    ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #5
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %12, ptr noundef nonnull byval(%struct.Rect) align 8 %10, ptr noundef nonnull byval(%struct.Rect) align 8 %i.v) #5
+  %i.co = sub i64 %i.cm, %i.cn                    ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #6
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %12, ptr noundef nonnull byval(%struct.Rect) align 8 %10, ptr noundef nonnull byval(%struct.Rect) align 8 %i.v) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull align 8 dereferenceable(32) %12, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #5
-  %i.cp = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %11) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %12) #6
+  %i.cp = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %11) #6
   %i.cq = load i64, ptr %i.bf, align 8, !tbaa !31
-  %i.cr = sub i64 %i.cp, %i.cq                    ; 3 uses
-  %.not68.i = icmp ult i64 %i.cr, %i.co           ; 3 uses
-  %14 = sub nuw i64 %i.cr, %i.co
-  %i.cs = sub nuw i64 %i.co, %i.cr
+  %i.cr = sub i64 %i.cp, %i.cq                    ; 2 uses
+  %.not68.i = icmp ult i64 %i.cr, %i.co           ; 2 uses
+  %i.cs = sub nsw i64 %i.cr, %i.co
   %.061.i = zext i1 %.not68.i to i32              ; 2 uses
-  %.048.i = select i1 %.not68.i, i64 %i.cs, i64 %14 ; 3 uses
+  %.048.i = call i64 @llvm.abs.i64(i64 %i.cs, i1 true) ; 3 uses
   %i.ct = icmp ule i64 %.048.i, %.05082.i
   %or.cond71.not.i = select i1 %.05181.i, i1 %i.ct, i1 false
   %i.cu = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
@@ -304,8 +303,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %.259.i = phi i32 [ %.15879.i, %bb.p ], [ %i.cu, %bb.o ], [ %spec.select.i, %bb.q ]
   %.256.i = phi i32 [ %.15580.i, %bb.p ], [ %.061.i, %bb.o ], [ %spec.select72.i, %bb.q ]
   %.1.i = phi i64 [ %.05082.i, %bb.p ], [ %.048.i, %bb.o ], [ %.05082.i, %bb.q ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #6
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %.preheader.i
@@ -358,15 +357,15 @@ bb.w:                                             ; preds = %bb.v
   br label %Classify.exit74.i
 
 bb.x:                                             ; preds = %bb.v
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   %i.do = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %indvars.iv92.i
-  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %4, ptr noundef nonnull byval(%struct.Rect) align 8 %i.do, ptr noundef nonnull byval(%struct.Rect) align 8 %i.dg) #5
+  call void @CombineRect(ptr dead_on_unwind nonnull writable sret(%struct.Rect) align 8 %4, ptr noundef nonnull byval(%struct.Rect) align 8 %i.do, ptr noundef nonnull byval(%struct.Rect) align 8 %i.dg) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dg, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 32, i1 false), !tbaa.struct !23
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
   br label %Classify.exit74.i
 
 Classify.exit74.i:                                ; preds = %bb.x, %bb.w
-  %i.dp = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.dg) #5
+  %i.dp = call i64 @RectArea(ptr noundef nonnull byval(%struct.Rect) align 8 %i.dg) #6
   store i64 %i.dp, ptr %i.dh, align 8, !tbaa !31
   %i.dq = load i32, ptr %i.df, align 4, !tbaa !30
   %i.dr = add nsw i32 %i.dq, 1
@@ -379,7 +378,7 @@ bb.y:                                             ; preds = %Classify.exit74.i, 
   br i1 %exitcond95.not.i, label %MethodZero.exit, label %bb.u, !llvm.loop !14
 
 MethodZero.exit:                                  ; preds = %bb.y, %.critedge.i
-  %i.ds = call ptr @RTreeNewNode() #5             ; 3 uses
+  %i.ds = call ptr @RTreeNewNode() #6             ; 3 uses
   store ptr %i.ds, ptr %3, align 8, !tbaa !21
   store i32 %i.c, ptr %i.b, align 4, !tbaa !17
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 4
@@ -401,7 +400,7 @@ bb.aa:                                            ; preds = %bb.z
 .sink.split.i:                                    ; preds = %bb.aa, %bb.z
   %.sink15.i = phi ptr [ %i.ds, %bb.aa ], [ %1, %bb.z ]
   %i.dw = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %.014.i
-  %i.dx = call i32 @AddBranch(ptr noundef nonnull %0, ptr noundef nonnull %i.dw, ptr noundef %.sink15.i, ptr noundef null) #5 ; 0 uses
+  %i.dx = call i32 @AddBranch(ptr noundef nonnull %0, ptr noundef nonnull %i.dw, ptr noundef %.sink15.i, ptr noundef null) #6 ; 0 uses
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.sink.split.i, %bb.z
@@ -440,12 +439,16 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #4
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #5
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

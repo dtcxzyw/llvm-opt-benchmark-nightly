@@ -202,46 +202,40 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.o = getelementptr i8, ptr %.sroa.04.0, i64 8
   %.sroa.04.0.val14 = load ptr, ptr %i.o, align 8, !nonnull !3, !align !49, !noundef !3 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val13, i64 88
-  %i.q = load i64, ptr %i.p, align 8, !noundef !3 ; 3 uses
+  %i.q = load i64, ptr %i.p, align 8, !noundef !3
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val13, i64 56
-  %i.s = load i64, ptr %i.r, align 8, !noundef !3 ; 3 uses
-  %5 = icmp ult i64 %i.q, %i.s
-  %6 = sub nuw i64 %i.s, %i.q
-  %i.t = sub nuw i64 %i.q, %i.s
-  %.sroa.0.0.i.i = select i1 %5, i64 %6, i64 %i.t ; 4 uses
+  %i.s = load i64, ptr %i.r, align 8, !noundef !3
+  %i.t = sub nsw i64 %i.q, %i.s
+  %.sroa.0.0.i.i = tail call i64 @llvm.abs.i64(i64 %i.t, i1 true) ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val13, i64 105
   %i.v = load i8, ptr %i.u, align 1, !range !50, !noundef !3
   %i.w = icmp ne i8 %i.v, 0                       ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 88
-  %i.y = load i64, ptr %i.x, align 8, !noundef !3 ; 3 uses
+  %i.y = load i64, ptr %i.x, align 8, !noundef !3
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 56
-  %i.aa = load i64, ptr %i.z, align 8, !noundef !3 ; 3 uses
-  %7 = icmp ult i64 %i.y, %i.aa
-  %8 = sub nuw i64 %i.aa, %i.y
-  %i.ab = sub nuw i64 %i.y, %i.aa
-  %.sroa.0.0.i7.i = select i1 %7, i64 %8, i64 %i.ab ; 4 uses
+  %i.aa = load i64, ptr %i.z, align 8, !noundef !3
+  %i.ab = sub nsw i64 %i.y, %i.aa
+  %.sroa.0.0.i7.i = tail call i64 @llvm.abs.i64(i64 %i.ab, i1 true) ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 105
   %i.ad = load i8, ptr %i.ac, align 1, !range !50, !noundef !3
   %i.ae = icmp eq i8 %i.ad, 0                     ; 2 uses
   %cond.i.i.i.i = icmp eq i64 %.sroa.0.0.i7.i, %.sroa.0.0.i.i
-  %i.af = icmp ult i64 %.sroa.0.0.i7.i, %.sroa.0.0.i.i
+  %i.af = icmp samesign ult i64 %.sroa.0.0.i7.i, %.sroa.0.0.i.i
   %i.ag = and i1 %i.w, %i.ae
   %.sroa.0.0.i8.i = select i1 %cond.i.i.i.i, i1 %i.ag, i1 %i.af ; 2 uses
   %i.ah = getelementptr i8, ptr %.sroa.08.0, i64 8
   %.sroa.08.0.val12 = load ptr, ptr %i.ah, align 8, !nonnull !3, !align !49, !noundef !3 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 88
-  %i.aj = load i64, ptr %i.ai, align 8, !noundef !3 ; 3 uses
+  %i.aj = load i64, ptr %i.ai, align 8, !noundef !3
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 56
-  %i.al = load i64, ptr %i.ak, align 8, !noundef !3 ; 3 uses
-  %9 = icmp ult i64 %i.aj, %i.al
-  %10 = sub nuw i64 %i.al, %i.aj
-  %i.am = sub nuw i64 %i.aj, %i.al
-  %.sroa.0.0.i7.i16 = select i1 %9, i64 %10, i64 %i.am ; 4 uses
+  %i.al = load i64, ptr %i.ak, align 8, !noundef !3
+  %i.am = sub nsw i64 %i.aj, %i.al
+  %.sroa.0.0.i7.i16 = tail call i64 @llvm.abs.i64(i64 %i.am, i1 true) ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 105
   %i.ao = load i8, ptr %i.an, align 1, !range !50, !noundef !3
   %i.ap = icmp eq i8 %i.ao, 0                     ; 2 uses
   %cond.i.i.i.i17 = icmp eq i64 %.sroa.0.0.i7.i16, %.sroa.0.0.i.i
-  %i.aq = icmp ult i64 %.sroa.0.0.i7.i16, %.sroa.0.0.i.i
+  %i.aq = icmp samesign ult i64 %.sroa.0.0.i7.i16, %.sroa.0.0.i.i
   %i.ar = and i1 %i.w, %i.ap
   %.sroa.0.0.i8.i18 = select i1 %cond.i.i.i.i17, i1 %i.ar, i1 %i.aq
   %i.as = xor i1 %.sroa.0.0.i8.i, %.sroa.0.0.i8.i18
@@ -250,7 +244,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 bb.d:                                             ; preds = %bb.c
   %.not23 = xor i1 %i.ae, true
   %cond.i.i.i.i21 = icmp eq i64 %.sroa.0.0.i7.i16, %.sroa.0.0.i7.i
-  %i.at = icmp ult i64 %.sroa.0.0.i7.i16, %.sroa.0.0.i7.i
+  %i.at = icmp samesign ult i64 %.sroa.0.0.i7.i16, %.sroa.0.0.i7.i
   %i.au = and i1 %i.ap, %.not23
   %.sroa.0.0.i8.i22 = select i1 %cond.i.i.i.i21, i1 %i.au, i1 %i.at
   %i.av = xor i1 %.sroa.0.0.i8.i, %.sroa.0.0.i8.i22
@@ -372,7 +366,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.g
   %i.ah = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #9
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #10
   unreachable
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCs2sepWsjoOnX_17annotate_snippets8renderer13styled_buffer10StyledCharEEB1u_.exit: ; preds = %bb.g
@@ -458,6 +452,9 @@ declare void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() unnamed_ad
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i64(i64, i64) #8
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #9
+
 attributes #0 = { nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #2 = { nofree nosync nounwind nonlazybind memory(read, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -467,7 +464,8 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #7 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { cold noreturn nounwind }
+attributes #9 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { cold noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

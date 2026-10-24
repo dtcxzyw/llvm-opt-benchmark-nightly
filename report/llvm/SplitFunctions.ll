@@ -205,20 +205,18 @@ bb.o:                                             ; preds = %_ZN4llvm12DenseMapB
   %.fca.0.extract.i41.i.i = extractvalue { ptr, i8 } %i.fv, 0
   %i.fw = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i41.i.i, i64 8
   %i.fx = load i64, ptr %i.fw, align 8, !tbaa !453, !noalias !919
-  %i.fy = add i64 %i.fx, %i.fu                    ; 3 uses
+  %i.fy = add i64 %i.fx, %i.fu
   %i.fz = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIRKS5_JEEESt4pairIPSA_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.ao, ptr noundef nonnull align 8 dereferenceable(8) %i.b), !noalias !919
   %.fca.0.extract.i42.i.i = extractvalue { ptr, i8 } %i.fz, 0
   %i.ga = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i42.i.i, i64 8
-  %i.gb = load i64, ptr %i.ga, align 8, !tbaa !453, !noalias !919 ; 3 uses
-  %4 = icmp ugt i64 %i.fy, %i.gb
-  %5 = sub nuw i64 %i.fy, %i.gb
-  %i.gc = sub nuw i64 %i.gb, %i.fy
-  %6 = select i1 %4, i64 %5, i64 %i.gc            ; 2 uses
+  %i.gb = load i64, ptr %i.ga, align 8, !tbaa !453, !noalias !919
+  %i.gc = sub i64 %i.fy, %i.gb
+  %4 = call noundef i64 @llvm.abs.i64(i64 %i.gc, i1 true) ; 2 uses
   %.not.i43.i.i = icmp eq ptr %i.bx, %i.bw
   br i1 %.not.i43.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  store i64 %6, ptr %i.bx, align 8, !tbaa !453, !noalias !919
+  store i64 %4, ptr %i.bx, align 8, !tbaa !453, !noalias !919
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store i64 %spec.select.i38.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !453, !noalias !919
   %i.gd = getelementptr inbounds nuw i8, ptr %i.bx, i64 16 ; 2 uses
@@ -248,7 +246,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_118SplitCacheDirected8CallInfoESaIS2_EE12_M_check_le
   %i.go = shl nuw nsw i64 %i.gn, 4
   %i.gp = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.go) #32, !noalias !919 ; 5 uses
   %i.gq = getelementptr inbounds i8, ptr %i.gp, i64 %i.gg ; 3 uses
-  store i64 %6, ptr %i.gq, align 8, !tbaa !453, !noalias !919
+  store i64 %4, ptr %i.gq, align 8, !tbaa !453, !noalias !919
   %.sroa.5.0..sroa_idx47.i.i = getelementptr inbounds nuw i8, ptr %i.gq, i64 8
   store i64 %spec.select.i38.i.i, ptr %.sroa.5.0..sroa_idx47.i.i, align 8, !tbaa !453, !noalias !919
   %i.gr = icmp sgt i64 %i.gg, 0
@@ -651,7 +649,7 @@ bb.aq:                                            ; preds = %_ZN12_GLOBAL__N_118
 bb.ar:                                            ; preds = %.lr.ph69.i.i.i
   %i.si = getelementptr inbounds nuw i8, ptr %i.sd, i64 124
   %i.sj = load i32, ptr %i.si, align 4, !tbaa !930, !noalias !924
-  %i.sk = zext i32 %i.sj to i64                   ; 3 uses
+  %i.sk = zext i32 %i.sj to i64
   %i.sl = load ptr, ptr %i.hv, align 8, !tbaa !444, !noalias !931 ; 3 uses
   %i.sm = load ptr, ptr %i.hx, align 8, !tbaa !445, !noalias !931 ; 3 uses
   %i.sn = load i32, ptr %i.hy, align 4, !tbaa !446, !noalias !931 ; 4 uses
@@ -1054,14 +1052,12 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapI
   br label %bb.bf
 
 bb.bf:                                            ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIRKS5_JEEESt4pairIPSA_bEOT_DpOT0_.exit47.i.i.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIRKS5_JEEESt4pairIPSA_bEOT_DpOT0_.exit47.thread.i.i.i
-  %.0.i.i.i = phi i64 [ %i.zm, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIRKS5_JEEESt4pairIPSA_bEOT_DpOT0_.exit47.thread.i.i.i ], [ %spec.select.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIRKS5_JEEESt4pairIPSA_bEOT_DpOT0_.exit47.i.i.i ] ; 3 uses
-  %7 = icmp ult i64 %.0.i.i.i, %i.sk
-  %8 = sub nuw i64 %i.sk, %.0.i.i.i
-  %i.acx = sub nuw i64 %.0.i.i.i, %i.sk
-  %9 = select i1 %7, i64 %8, i64 %i.acx
+  %.0.i.i.i = phi i64 [ %i.zm, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIRKS5_JEEESt4pairIPSA_bEOT_DpOT0_.exit47.thread.i.i.i ], [ %spec.select.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIRKS5_JEEESt4pairIPSA_bEOT_DpOT0_.exit47.i.i.i ]
+  %i.acx = sub nsw i64 %i.sk, %.0.i.i.i
+  %5 = call noundef i64 @llvm.abs.i64(i64 %i.acx, i1 true)
   %i.acy = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL9CallScaleE, i64 120), align 8, !tbaa !558, !noalias !924
   %i.acz = fmul double %i.acy, %i.wb
-  %i.ada = add i64 %9, 1
+  %i.ada = add nuw i64 %5, 1
   %i.adb = uitofp i64 %i.ada to double
   %i.adc = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL9CallPowerE, i64 120), align 8, !tbaa !558, !noalias !924
   %i.add = call double @pow(double noundef %i.adb, double noundef %i.adc) #30, !noalias !924
@@ -1111,8 +1107,8 @@ bb.bg:                                            ; preds = %.loopexit.i20.i.i, 
 
 bb.bh:                                            ; preds = %bb.bg
   %i.adt = getelementptr inbounds nuw i8, ptr %i.ado, i64 124
-  %i.adu = load i32, ptr %i.adt, align 4, !tbaa !930, !noalias !924 ; 2 uses
-  %i.adv = zext i32 %i.adu to i64                 ; 2 uses
+  %i.adu = load i32, ptr %i.adt, align 4, !tbaa !930, !noalias !924
+  %i.adv = zext i32 %i.adu to i64
   %i.adw = getelementptr inbounds nuw i8, ptr %i.ado, i64 40
   %i.adx = load ptr, ptr %i.adw, align 8, !tbaa !42, !noalias !924 ; 2 uses
   %i.ady = getelementptr inbounds nuw i8, ptr %i.ado, i64 48
@@ -1144,14 +1140,12 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %.lr.ph.i22.i.i
   %i.aen = load ptr, ptr %.sroa.7.015.i.i.i, align 8, !tbaa !443, !noalias !924
   %i.aeo = getelementptr inbounds nuw i8, ptr %i.aen, i64 120
-  %i.aep = load i32, ptr %i.aeo, align 4, !tbaa !937, !noalias !924 ; 2 uses
-  %i.aeq = zext i32 %i.aep to i64                 ; 2 uses
-  %10 = icmp ugt i32 %i.adu, %i.aep
-  %11 = sub nuw nsw i64 %i.adv, %i.aeq
-  %i.aer = sub nuw nsw i64 %i.aeq, %i.adv
-  %12 = select i1 %10, i64 %11, i64 %i.aer
+  %i.aep = load i32, ptr %i.aeo, align 4, !tbaa !937, !noalias !924
+  %i.aeq = zext i32 %i.aep to i64
+  %i.aer = sub nsw i64 %i.adv, %i.aeq
+  %6 = call noundef i64 @llvm.abs.i64(i64 %i.aer, i1 true)
   %i.aes = uitofp i64 %i.ael to double
-  %i.aet = add nuw nsw i64 %12, 1
+  %i.aet = add nuw nsw i64 %6, 1
   %i.aeu = uitofp nneg i64 %i.aet to double
   %i.aev = call double @pow(double noundef %i.aeu, double noundef %i.adm) #30, !noalias !924
   %i.aew = fdiv double %i.aes, %i.aev
@@ -1553,6 +1547,9 @@ declare i64 @llvm.umax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #29
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #29

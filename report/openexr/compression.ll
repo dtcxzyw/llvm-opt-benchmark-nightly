@@ -205,75 +205,75 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 define internal fastcc noundef zeroext i1 @do_end_block_check(ptr nofree noundef captures(none) %0, i32 noundef %1) unnamed_addr #16 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !60   ; 7 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !60   ; 8 uses
   %.not = icmp eq i32 %i.b, 0
+  %.pre = load i32, ptr %0, align 4, !tbaa !16    ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.a
-  %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.phi.trans.insert46 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %.pre46 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !16
+  %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.phi.trans.insert46 = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.c = load <4 x i32>, ptr %.phi.trans.insert.a, align 4, !tbaa !16
   %i.d = load <4 x i32>, ptr %.phi.trans.insert46, align 4, !tbaa !16
-  %.phi.trans.insert60 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.phi.trans.insert62 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %.phi.trans.insert60 = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %.phi.trans.insert62 = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.e = load <4 x i32>, ptr %.phi.trans.insert60, align 4, !tbaa !16
   %i.f = load <4 x i32>, ptr %.phi.trans.insert62, align 4, !tbaa !16
+  %.phi.trans.insert79 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %.pre80 = load i32, ptr %.phi.trans.insert79, align 4, !tbaa !16
+  %.phi.trans.insert81 = getelementptr inbounds nuw i8, ptr %0, i64 76
+  %.pre82 = load i32, ptr %.phi.trans.insert81, align 4, !tbaa !16
   %.phi.trans.insert76 = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.pre77 = load i32, ptr %.phi.trans.insert76, align 4, !tbaa !55
   br label %bb.d
 
 .preheader:                                       ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %i.h = load i32, ptr %2, align 4, !tbaa !55     ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.k = load <4 x i32>, ptr %i.i, align 4, !tbaa !16 ; 2 uses
-  %i.l = load <4 x i32>, ptr %i.j, align 4, !tbaa !16 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.o = load <4 x i32>, ptr %i.m, align 4, !tbaa !16 ; 4 uses
-  %i.p = load <4 x i32>, ptr %i.n, align 4, !tbaa !16 ; 4 uses
-  %3 = load <2 x i32>, ptr %i.g, align 4, !tbaa !16
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %5 = shufflevector <4 x i32> %i.k, <4 x i32> %i.o, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
-  %6 = shufflevector <8 x i32> %4, <8 x i32> %5, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13>
-  %7 = load <2 x i32>, ptr %0, align 4, !tbaa !16
-  %8 = shufflevector <2 x i32> %7, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %9 = shufflevector <4 x i32> %i.l, <4 x i32> %i.p, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
-  %i.q = shufflevector <8 x i32> %8, <8 x i32> %9, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13>
-  %i.r = insertelement <8 x i32> poison, i32 %i.h, i64 0
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %2 = load i32, ptr %i.g, align 4, !tbaa !55     ; 5 uses
+  %i.h = load i32, ptr %.phi.trans.insert, align 4, !tbaa !16 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.k = load <4 x i32>, ptr %i.i, align 4, !tbaa !16 ; 3 uses
+  %i.l = load <4 x i32>, ptr %i.j, align 4, !tbaa !16 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 60
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.o = load <4 x i32>, ptr %i.m, align 4, !tbaa !16 ; 3 uses
+  %i.p = load <4 x i32>, ptr %i.n, align 4, !tbaa !16 ; 3 uses
+  %3 = insertelement <8 x i32> poison, i32 %i.b, i64 0
+  %4 = insertelement <8 x i32> %3, i32 %.pre, i64 1
+  %5 = shufflevector <4 x i32> %i.l, <4 x i32> %i.p, <8 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison>
+  %i.q = shufflevector <8 x i32> %4, <8 x i32> %5, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13>
+  %i.r = insertelement <8 x i32> poison, i32 %2, i64 0
   %i.s = shufflevector <8 x i32> %i.r, <8 x i32> poison, <8 x i32> zeroinitializer
-  %10 = mul <8 x i32> %i.s, %6                    ; 2 uses
-  %i.t = insertelement <8 x i32> poison, i32 %i.b, i64 0
-  %11 = shufflevector <8 x i32> %i.t, <8 x i32> poison, <8 x i32> zeroinitializer
-  %12 = mul <8 x i32> %i.q, %11                   ; 2 uses
-  %13 = icmp ugt <8 x i32> %12, %10
-  %14 = shufflevector <8 x i1> %13, <8 x i1> poison, <8 x i32> <i32 1, i32 0, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %15 = shufflevector <8 x i32> %12, <8 x i32> poison, <8 x i32> <i32 1, i32 0, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7> ; 2 uses
-  %16 = shufflevector <8 x i32> %10, <8 x i32> poison, <8 x i32> <i32 1, i32 0, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7> ; 2 uses
-  %17 = sub nuw <8 x i32> %15, %16
-  %i.u = sub nuw <8 x i32> %16, %15
-  %18 = select <8 x i1> %14, <8 x i32> %17, <8 x i32> %i.u
-  %i.v = extractelement <4 x i32> %i.o, i64 2
-  %i.w = mul i32 %i.h, %i.v                       ; 3 uses
-  %i.x = extractelement <4 x i32> %i.p, i64 2
-  %i.y = mul i32 %i.x, %i.b                       ; 3 uses
-  %19 = icmp ugt i32 %i.y, %i.w
-  %i.z = sub nuw i32 %i.y, %i.w
-  %20 = sub nuw i32 %i.w, %i.y
-  %21 = select i1 %19, i32 %i.z, i32 %20
-  %22 = extractelement <4 x i32> %i.o, i64 3
-  %i.aa = mul i32 %i.h, %22                       ; 3 uses
-  %23 = extractelement <4 x i32> %i.p, i64 3
-  %24 = mul i32 %23, %i.b                         ; 3 uses
-  %25 = icmp ugt i32 %24, %i.aa
-  %26 = sub nuw i32 %24, %i.aa
-  %i.ab = sub nuw i32 %i.aa, %24
-  %27 = select i1 %25, i32 %26, i32 %i.ab
-  %28 = load i32, ptr %2, align 4, !tbaa !55      ; 2 uses
-  %i.ac = add i32 %28, %i.b                       ; 3 uses
-  %i.ad = mul i32 %28, 200
+  %6 = shufflevector <4 x i32> %i.k, <4 x i32> poison, <8 x i32> <i32 0, i32 poison, i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.t = insertelement <8 x i32> %6, i32 %i.h, i64 1
+  %7 = shufflevector <4 x i32> %i.k, <4 x i32> %i.o, <8 x i32> <i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison>
+  %8 = shufflevector <8 x i32> %i.t, <8 x i32> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %9 = mul <8 x i32> %i.s, %8
+  %10 = shufflevector <4 x i32> %i.l, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
+  %11 = insertelement <2 x i32> %10, i32 %i.b, i64 1
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
+  %13 = mul <8 x i32> %i.q, %12
+  %i.u = sub nsw <8 x i32> %13, %9
+  %14 = tail call <8 x i32> @llvm.abs.v8i32(<8 x i32> %i.u, i1 true)
+  %i.v = extractelement <4 x i32> %i.o, i64 3
+  %i.w = mul i32 %2, %i.v
+  %i.x = extractelement <4 x i32> %i.p, i64 3
+  %i.y = mul i32 %i.x, %i.b
+  %i.z = sub nsw i32 %i.y, %i.w
+  %15 = tail call i32 @llvm.abs.i32(i32 %i.z, i1 true)
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 76
+  %17 = load i32, ptr %16, align 4, !tbaa !16     ; 2 uses
+  %i.aa = mul i32 %2, %17
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %19 = load i32, ptr %18, align 4, !tbaa !16     ; 2 uses
+  %20 = mul i32 %19, %i.b
+  %i.ab = sub nsw i32 %20, %i.aa
+  %21 = tail call i32 @llvm.abs.i32(i32 %i.ab, i1 true)
+  %i.ac = add i32 %2, %i.b                        ; 3 uses
+  %i.ad = mul i32 %2, 200
   %i.ae = lshr i32 %i.ad, 9
   %i.af = mul i32 %i.ae, %i.b                     ; 3 uses
   %i.ag = icmp ult i32 %1, 10000
@@ -295,36 +295,40 @@ bb.c:                                             ; preds = %bb.b, %.preheader
   %.034 = phi i32 [ %i.ao, %bb.b ], [ %i.af, %.preheader ]
   %i.ap = lshr i32 %1, 12
   %i.aq = mul i32 %i.b, %i.ap
-  %i.ar = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %18)
-  %op.rdx = add i32 %i.ar, %21
-  %op.rdx80 = add i32 %27, %i.aq
+  %i.ar = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %14)
+  %op.rdx = add i32 %i.ar, %15
+  %op.rdx80 = add i32 %21, %i.aq
   %op.rdx81 = add i32 %op.rdx, %op.rdx80
   %.not42.not = icmp ult i32 %op.rdx81, %.034
   br i1 %.not42.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
   %.pre-phi = phi i32 [ %.pre77, %._crit_edge ], [ %i.ac, %bb.c ]
+  %22 = phi i32 [ %.pre82, %._crit_edge ], [ %17, %bb.c ]
+  %23 = phi i32 [ %.pre80, %._crit_edge ], [ %19, %bb.c ]
+  %24 = phi i32 [ %.pre46, %._crit_edge ], [ %i.h, %bb.c ]
   %i.as = phi <4 x i32> [ %i.d, %._crit_edge ], [ %i.k, %bb.c ]
   %i.at = phi <4 x i32> [ %i.c, %._crit_edge ], [ %i.l, %bb.c ]
   %i.au = phi <4 x i32> [ %i.f, %._crit_edge ], [ %i.o, %bb.c ]
   %i.av = phi <4 x i32> [ %i.e, %._crit_edge ], [ %i.p, %bb.c ]
-  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %29 = load <2 x i32>, ptr %0, align 4, !tbaa !16
-  %30 = load <2 x i32>, ptr %i.aw, align 4, !tbaa !16
-  %31 = add <2 x i32> %30, %29
-  store <2 x i32> %31, ptr %i.aw, align 4, !tbaa !16
-  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %25 = add i32 %24, %.pre
+  store i32 %25, ptr %i.aw, align 4, !tbaa !16
+  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.ay = add <4 x i32> %i.as, %i.at
   store <4 x i32> zeroinitializer, ptr %0, align 4, !tbaa !16
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <4 x i32> %i.ay, ptr %i.ax, align 4, !tbaa !16
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.bb = add <4 x i32> %i.au, %i.av
   store <4 x i32> zeroinitializer, ptr %i.az, align 4, !tbaa !16
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store <4 x i32> %i.bb, ptr %i.ba, align 4, !tbaa !16
   store i32 0, ptr %i.bc, align 4, !tbaa !16
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store <4 x i32> %i.bb, ptr %i.ba, align 4, !tbaa !16
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 76
+  %27 = add i32 %22, %23
+  store i32 %27, ptr %26, align 4, !tbaa !16
   store i32 0, ptr %i.bd, align 4, !tbaa !16
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 %.pre-phi, ptr %i.a, align 4, !tbaa !60
@@ -727,131 +731,111 @@ bb.k:                                             ; preds = %deflate_choose_defa
   %i.oq = zext i32 %i.op to i64                   ; 11 uses
   %i.or = load i32, ptr %i.oj, align 32, !tbaa !36
   %i.os = zext i32 %i.or to i64
-  %i.ot = mul nuw i64 %i.os, %i.om                ; 3 uses
+  %i.ot = mul nuw i64 %i.os, %i.om
   %i.ou = load i32, ptr %i.on, align 16, !tbaa !16
   %i.ov = zext i32 %i.ou to i64
-  %i.ow = mul nuw i64 %i.ov, %i.oq                ; 3 uses
-  %9 = icmp ugt i64 %i.ot, %i.ow
-  %10 = sub nuw i64 %i.ot, %i.ow
-  %i.ox = sub nuw i64 %i.ow, %i.ot
-  %11 = select i1 %9, i64 %10, i64 %i.ox
+  %i.ow = mul nuw i64 %i.ov, %i.oq
+  %i.ox = sub nsw i64 %i.ot, %i.ow
+  %9 = tail call i64 @llvm.abs.i64(i64 %i.ox, i1 true)
   %i.oy = getelementptr inbounds nuw i8, ptr %0, i64 9009572
   %i.oz = load i32, ptr %i.oy, align 4, !tbaa !36
   %i.pa = zext i32 %i.oz to i64
-  %i.pb = mul nuw i64 %i.pa, %i.om                ; 3 uses
+  %i.pb = mul nuw i64 %i.pa, %i.om
   %i.pc = getelementptr inbounds nuw i8, ptr %0, i64 1364
   %i.pd = load i32, ptr %i.pc, align 4, !tbaa !16
   %i.pe = zext i32 %i.pd to i64
-  %i.pf = mul nuw i64 %i.pe, %i.oq                ; 3 uses
-  %12 = icmp ugt i64 %i.pb, %i.pf
-  %13 = sub nuw i64 %i.pb, %i.pf
-  %i.pg = sub nuw i64 %i.pf, %i.pb
-  %14 = select i1 %12, i64 %13, i64 %i.pg
-  %i.ph = add i64 %14, %11
+  %i.pf = mul nuw i64 %i.pe, %i.oq
+  %i.pg = sub nsw i64 %i.pb, %i.pf
+  %10 = tail call i64 @llvm.abs.i64(i64 %i.pg, i1 true)
+  %i.ph = add nuw i64 %10, %9
   %i.pi = getelementptr inbounds nuw i8, ptr %0, i64 9009576
   %i.pj = load i32, ptr %i.pi, align 8, !tbaa !36
   %i.pk = zext i32 %i.pj to i64
-  %i.pl = mul nuw i64 %i.pk, %i.om                ; 3 uses
+  %i.pl = mul nuw i64 %i.pk, %i.om
   %i.pm = getelementptr inbounds nuw i8, ptr %0, i64 1368
   %i.pn = load i32, ptr %i.pm, align 8, !tbaa !16
   %i.po = zext i32 %i.pn to i64
-  %i.pp = mul nuw i64 %i.po, %i.oq                ; 3 uses
-  %15 = icmp ugt i64 %i.pl, %i.pp
-  %16 = sub nuw i64 %i.pl, %i.pp
-  %i.pq = sub nuw i64 %i.pp, %i.pl
-  %17 = select i1 %15, i64 %16, i64 %i.pq
-  %i.pr = add i64 %i.ph, %17
+  %i.pp = mul nuw i64 %i.po, %i.oq
+  %i.pq = sub nsw i64 %i.pl, %i.pp
+  %11 = tail call i64 @llvm.abs.i64(i64 %i.pq, i1 true)
+  %i.pr = add i64 %i.ph, %11
   %i.ps = getelementptr inbounds nuw i8, ptr %0, i64 9009580
   %i.pt = load i32, ptr %i.ps, align 4, !tbaa !36
   %i.pu = zext i32 %i.pt to i64
-  %i.pv = mul nuw i64 %i.pu, %i.om                ; 3 uses
+  %i.pv = mul nuw i64 %i.pu, %i.om
   %i.pw = getelementptr inbounds nuw i8, ptr %0, i64 1372
   %i.px = load i32, ptr %i.pw, align 4, !tbaa !16
   %i.py = zext i32 %i.px to i64
-  %i.pz = mul nuw i64 %i.py, %i.oq                ; 3 uses
-  %18 = icmp ugt i64 %i.pv, %i.pz
-  %19 = sub nuw i64 %i.pv, %i.pz
-  %i.qa = sub nuw i64 %i.pz, %i.pv
-  %20 = select i1 %18, i64 %19, i64 %i.qa
-  %i.qb = add i64 %i.pr, %20
+  %i.pz = mul nuw i64 %i.py, %i.oq
+  %i.qa = sub nsw i64 %i.pv, %i.pz
+  %12 = tail call i64 @llvm.abs.i64(i64 %i.qa, i1 true)
+  %i.qb = add i64 %i.pr, %12
   %i.qc = getelementptr inbounds nuw i8, ptr %0, i64 9009584
   %i.qd = load i32, ptr %i.qc, align 16, !tbaa !36
   %i.qe = zext i32 %i.qd to i64
-  %i.qf = mul nuw i64 %i.qe, %i.om                ; 3 uses
+  %i.qf = mul nuw i64 %i.qe, %i.om
   %i.qg = getelementptr inbounds nuw i8, ptr %0, i64 1376
   %i.qh = load i32, ptr %i.qg, align 32, !tbaa !16
   %i.qi = zext i32 %i.qh to i64
-  %i.qj = mul nuw i64 %i.qi, %i.oq                ; 3 uses
-  %21 = icmp ugt i64 %i.qf, %i.qj
-  %22 = sub nuw i64 %i.qf, %i.qj
-  %i.qk = sub nuw i64 %i.qj, %i.qf
-  %23 = select i1 %21, i64 %22, i64 %i.qk
-  %i.ql = add i64 %i.qb, %23
+  %i.qj = mul nuw i64 %i.qi, %i.oq
+  %i.qk = sub nsw i64 %i.qf, %i.qj
+  %13 = tail call i64 @llvm.abs.i64(i64 %i.qk, i1 true)
+  %i.ql = add i64 %i.qb, %13
   %i.qm = getelementptr inbounds nuw i8, ptr %0, i64 9009588
   %i.qn = load i32, ptr %i.qm, align 4, !tbaa !36
   %i.qo = zext i32 %i.qn to i64
-  %i.qp = mul nuw i64 %i.qo, %i.om                ; 3 uses
+  %i.qp = mul nuw i64 %i.qo, %i.om
   %i.qq = getelementptr inbounds nuw i8, ptr %0, i64 1380
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !16
   %i.qs = zext i32 %i.qr to i64
-  %i.qt = mul nuw i64 %i.qs, %i.oq                ; 3 uses
-  %24 = icmp ugt i64 %i.qp, %i.qt
-  %25 = sub nuw i64 %i.qp, %i.qt
-  %i.qu = sub nuw i64 %i.qt, %i.qp
-  %26 = select i1 %24, i64 %25, i64 %i.qu
-  %i.qv = add i64 %i.ql, %26
+  %i.qt = mul nuw i64 %i.qs, %i.oq
+  %i.qu = sub nsw i64 %i.qp, %i.qt
+  %14 = tail call i64 @llvm.abs.i64(i64 %i.qu, i1 true)
+  %i.qv = add i64 %i.ql, %14
   %i.qw = getelementptr inbounds nuw i8, ptr %0, i64 9009592
   %i.qx = load i32, ptr %i.qw, align 8, !tbaa !36
   %i.qy = zext i32 %i.qx to i64
-  %i.qz = mul nuw i64 %i.qy, %i.om                ; 3 uses
+  %i.qz = mul nuw i64 %i.qy, %i.om
   %i.ra = getelementptr inbounds nuw i8, ptr %0, i64 1384
   %i.rb = load i32, ptr %i.ra, align 8, !tbaa !16
   %i.rc = zext i32 %i.rb to i64
-  %i.rd = mul nuw i64 %i.rc, %i.oq                ; 3 uses
-  %27 = icmp ugt i64 %i.qz, %i.rd
-  %28 = sub nuw i64 %i.qz, %i.rd
-  %i.re = sub nuw i64 %i.rd, %i.qz
-  %29 = select i1 %27, i64 %28, i64 %i.re
-  %i.rf = add i64 %i.qv, %29
+  %i.rd = mul nuw i64 %i.rc, %i.oq
+  %i.re = sub nsw i64 %i.qz, %i.rd
+  %15 = tail call i64 @llvm.abs.i64(i64 %i.re, i1 true)
+  %i.rf = add i64 %i.qv, %15
   %i.rg = getelementptr inbounds nuw i8, ptr %0, i64 9009596
   %i.rh = load i32, ptr %i.rg, align 4, !tbaa !36
   %i.ri = zext i32 %i.rh to i64
-  %i.rj = mul nuw i64 %i.ri, %i.om                ; 3 uses
+  %i.rj = mul nuw i64 %i.ri, %i.om
   %i.rk = getelementptr inbounds nuw i8, ptr %0, i64 1388
   %i.rl = load i32, ptr %i.rk, align 4, !tbaa !16
   %i.rm = zext i32 %i.rl to i64
-  %i.rn = mul nuw i64 %i.rm, %i.oq                ; 3 uses
-  %30 = icmp ugt i64 %i.rj, %i.rn
-  %31 = sub nuw i64 %i.rj, %i.rn
-  %i.ro = sub nuw i64 %i.rn, %i.rj
-  %32 = select i1 %30, i64 %31, i64 %i.ro
-  %i.rp = add i64 %i.rf, %32
+  %i.rn = mul nuw i64 %i.rm, %i.oq
+  %i.ro = sub nsw i64 %i.rj, %i.rn
+  %16 = tail call i64 @llvm.abs.i64(i64 %i.ro, i1 true)
+  %i.rp = add i64 %i.rf, %16
   %i.rq = getelementptr inbounds nuw i8, ptr %0, i64 9009600
   %i.rr = load i32, ptr %i.rq, align 32, !tbaa !36
   %i.rs = zext i32 %i.rr to i64
-  %i.rt = mul nuw i64 %i.rs, %i.om                ; 3 uses
+  %i.rt = mul nuw i64 %i.rs, %i.om
   %i.ru = getelementptr inbounds nuw i8, ptr %0, i64 1392
   %i.rv = load i32, ptr %i.ru, align 16, !tbaa !16
   %i.rw = zext i32 %i.rv to i64
-  %i.rx = mul nuw i64 %i.rw, %i.oq                ; 3 uses
-  %33 = icmp ugt i64 %i.rt, %i.rx
-  %34 = sub nuw i64 %i.rt, %i.rx
-  %i.ry = sub nuw i64 %i.rx, %i.rt
-  %35 = select i1 %33, i64 %34, i64 %i.ry
-  %i.rz = add i64 %i.rp, %35
+  %i.rx = mul nuw i64 %i.rw, %i.oq
+  %i.ry = sub nsw i64 %i.rt, %i.rx
+  %17 = tail call i64 @llvm.abs.i64(i64 %i.ry, i1 true)
+  %i.rz = add i64 %i.rp, %17
   %i.sa = getelementptr inbounds nuw i8, ptr %0, i64 9009604
   %i.sb = load i32, ptr %i.sa, align 4, !tbaa !36
   %i.sc = zext i32 %i.sb to i64
-  %i.sd = mul nuw i64 %i.sc, %i.om                ; 3 uses
+  %i.sd = mul nuw i64 %i.sc, %i.om
   %i.se = getelementptr inbounds nuw i8, ptr %0, i64 1396
   %i.sf = load i32, ptr %i.se, align 4, !tbaa !16
   %i.sg = zext i32 %i.sf to i64
-  %i.sh = mul nuw i64 %i.sg, %i.oq                ; 3 uses
-  %36 = icmp ugt i64 %i.sd, %i.sh
-  %37 = sub nuw i64 %i.sd, %i.sh
-  %i.si = sub nuw i64 %i.sh, %i.sd
-  %38 = select i1 %36, i64 %37, i64 %i.si
-  %i.sj = add i64 %i.rz, %38                      ; 3 uses
+  %i.sh = mul nuw i64 %i.sg, %i.oq
+  %i.si = sub nsw i64 %i.sd, %i.sh
+  %18 = tail call i64 @llvm.abs.i64(i64 %i.si, i1 true)
+  %i.sj = add i64 %i.rz, %18                      ; 3 uses
   %i.sk = mul nuw nsw i64 %i.om, 200
   %i.sl = mul i64 %i.sk, %i.oq
   %i.sm = lshr i64 %i.sl, 9                       ; 3 uses
@@ -1254,6 +1238,12 @@ declare i32 @llvm.smax.i32(i32, i32) #12
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #25
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #13
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #13
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12
 
@@ -1262,6 +1252,9 @@ declare void @llvm.assume(i1 noundef) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #12
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.abs.v8i32(<8 x i32>, i1 immarg) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #12

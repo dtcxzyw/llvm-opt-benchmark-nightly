@@ -118,34 +118,28 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot7median3TjRNtNtNtCslbzaB
   %.sroa.04.0.val14 = load ptr, ptr %i.o, align 8, !nonnull !3, !align !8, !noundef !3 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val13, i64 64
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.0.val13, i64 72
-  %i.r = load i64, ptr %i.q, align 8, !noundef !3 ; 3 uses
-  %i.s = load i64, ptr %i.p, align 8, !noundef !3 ; 3 uses
-  %5 = icmp ugt i64 %i.r, %i.s
-  %6 = sub nuw i64 %i.r, %i.s
-  %i.t = sub nuw i64 %i.s, %i.r
-  %.sroa.0.0.i.i = select i1 %5, i64 %6, i64 %i.t ; 2 uses
+  %i.r = load i64, ptr %i.q, align 8, !noundef !3
+  %i.s = load i64, ptr %i.p, align 8, !noundef !3
+  %i.t = sub nsw i64 %i.r, %i.s
+  %.sroa.0.0.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.t, i1 true) ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 64
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 72
-  %i.w = load i64, ptr %i.v, align 8, !noundef !3 ; 3 uses
-  %i.x = load i64, ptr %i.u, align 8, !noundef !3 ; 3 uses
-  %7 = icmp ugt i64 %i.w, %i.x
-  %8 = sub nuw i64 %i.w, %i.x
-  %i.y = sub nuw i64 %i.x, %i.w
-  %.sroa.0.0.i5.i = select i1 %7, i64 %8, i64 %i.y ; 2 uses
-  %i.z = icmp ult i64 %.sroa.0.0.i5.i, %.sroa.0.0.i.i ; 2 uses
+  %i.w = load i64, ptr %i.v, align 8, !noundef !3
+  %i.x = load i64, ptr %i.u, align 8, !noundef !3
+  %i.y = sub nsw i64 %i.w, %i.x
+  %.sroa.0.0.i5.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.y, i1 true) ; 2 uses
+  %i.z = icmp samesign ult i64 %.sroa.0.0.i5.i, %.sroa.0.0.i.i ; 2 uses
   %i.aa = getelementptr i8, ptr %.sroa.08.0, i64 8
   %.sroa.08.0.val12 = load ptr, ptr %i.aa, align 8, !nonnull !3, !align !8, !noundef !3 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 64
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 72
-  %i.ad = load i64, ptr %i.ac, align 8, !noundef !3 ; 3 uses
-  %i.ae = load i64, ptr %i.ab, align 8, !noundef !3 ; 3 uses
-  %9 = icmp ugt i64 %i.ad, %i.ae
-  %10 = sub nuw i64 %i.ad, %i.ae
-  %i.af = sub nuw i64 %i.ae, %i.ad
-  %.sroa.0.0.i5.i16 = select i1 %9, i64 %10, i64 %i.af ; 2 uses
-  %i.ag = icmp ult i64 %.sroa.0.0.i5.i16, %.sroa.0.0.i.i
+  %i.ad = load i64, ptr %i.ac, align 8, !noundef !3
+  %i.ae = load i64, ptr %i.ab, align 8, !noundef !3
+  %i.af = sub nsw i64 %i.ad, %i.ae
+  %.sroa.0.0.i5.i16 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.af, i1 true) ; 2 uses
+  %i.ag = icmp samesign ult i64 %.sroa.0.0.i5.i16, %.sroa.0.0.i.i
   %i.ah = xor i1 %i.z, %i.ag
-  %i.ai = icmp ult i64 %.sroa.0.0.i5.i16, %.sroa.0.0.i5.i
+  %i.ai = icmp samesign ult i64 %.sroa.0.0.i5.i16, %.sroa.0.0.i5.i
   %i.aj = xor i1 %i.z, %i.ai
   %..i = select i1 %i.aj, ptr %.sroa.08.0, ptr %.sroa.04.0
   %.sroa.0.0.i = select i1 %i.ah, ptr %.sroa.0.0, ptr %..i
@@ -193,7 +187,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.a, %bb.d, %bb.b
   %.sroa.5.0.i.ph = phi i64 [ undef, %bb.b ], [ %i.o, %bb.d ], [ undef, %bb.a ]
   %.sroa.0.0.i.ph = phi i64 [ 0, %bb.b ], [ %i.m, %bb.d ], [ 0, %bb.a ]
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.0.0.i.ph, i64 %.sroa.5.0.i.ph) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.0.0.i.ph, i64 %.sroa.5.0.i.ph) #15
   unreachable
 
 bb.f:                                             ; preds = %bb.c
@@ -228,7 +222,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !15
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -263,7 +257,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !18
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -298,7 +292,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !21
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -333,7 +327,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !24
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -368,7 +362,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !27
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -403,7 +397,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !30
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -438,7 +432,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !33
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -473,7 +467,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !36
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -508,7 +502,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !39
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #14
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %i.i, i64 %i.k) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -541,7 +535,7 @@ _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allo
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.g = icmp uge i64 %i.b, %i.f
   tail call void @llvm.assume(i1 %i.g)
-  %i.h = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.f, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #15
+  %i.h = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.f, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #16
   br label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -553,8 +547,8 @@ _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allo
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15
-  %i.k = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %2) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
+  %i.k = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %2) #16
   br label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit: ; preds = %bb.d, %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator4grow.exit
@@ -612,7 +606,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16
   br i1 %2, label %bb.g, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit
 
 bb.f:                                             ; preds = %bb.c, %bb.i, %bb.j, %bb.d
@@ -621,11 +615,11 @@ bb.f:                                             ; preds = %bb.c, %bb.i, %bb.j,
   ret void
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 1, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %3) #15
+  %i.j = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 1, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %3) #16
   br label %bb.h
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit: ; preds = %bb.e
-  %i.k = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %3) #15
+  %i.k = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %3) #16
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit
@@ -661,7 +655,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 24
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -679,7 +673,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = shl nuw i64 %.val, 4
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -697,7 +691,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 40
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -715,7 +709,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 88
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -733,7 +727,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 72
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -751,7 +745,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 80
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -769,7 +763,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 104
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -787,7 +781,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = shl nuw i64 %.val, 4
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -805,7 +799,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 24
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -823,7 +817,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 88
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -841,7 +835,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 20
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 4) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 4) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -859,7 +853,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = shl nuw i64 %.val, 4
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -877,7 +871,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = mul nuw i64 %.val, 48
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -895,7 +889,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
   %i.c = shl nuw i64 %.val, 4
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -912,7 +906,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %.val, i64 noundef range(i64 1, -9223372036854775807) 1) #15
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %.val, i64 noundef range(i64 1, -9223372036854775807) 1) #16
   br label %_RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit
 
 _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner10deallocateCslbzaBBLIgs6_17annotate_snippets.exit: ; preds = %bb.a, %bb.b
@@ -955,6 +949,9 @@ declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #12
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #13
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #14
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #12
 
@@ -972,8 +969,9 @@ attributes #10 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned")
 attributes #11 = { nounwind nonlazybind allockind("alloc,zeroed,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #14 = { noreturn }
-attributes #15 = { nounwind }
+attributes #14 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #15 = { noreturn }
+attributes #16 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

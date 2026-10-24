@@ -205,13 +205,11 @@ bb.r:                                             ; preds = %_RNvNtNtCskKLDkoKar
 define noundef range(i8 -1, 2) i8 @_RNvXs3_NtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms7qualityNtB5_12AtomsQualityNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i64, ptr %i.a, align 8, !noundef !9 ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !9 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.d = load i64, ptr %i.c, align 8, !noundef !9 ; 5 uses
-  %2 = icmp ult i64 %i.b, %i.d
-  %3 = sub nuw i64 %i.d, %i.b
-  %i.e = sub nuw i64 %i.b, %i.d
-  %.sroa.01.0 = select i1 %2, i64 %3, i64 %i.e
+  %i.d = load i64, ptr %i.c, align 8, !noundef !9 ; 3 uses
+  %i.e = sub nsw i64 %i.b, %i.d
+  %.sroa.01.0 = tail call i64 @llvm.abs.i64(i64 %i.e, i1 true)
   %i.f = icmp eq i64 %.sroa.01.0, 1
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -613,6 +611,9 @@ declare i32 @llvm.umin.i32(i32, i32) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #33
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #33

@@ -205,12 +205,27 @@ declare i64 @llvm.cttz.i64(i64, i1 immarg) #12
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define internal fastcc noundef zeroext i1 @do_end_block_check(ptr nofree noundef captures(none) %0, i32 noundef %1) unnamed_addr #13 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !157  ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !157  ; 14 uses
   %.not = icmp eq i32 %i.b, 0
+  %.pre = load i32, ptr %0, align 4, !tbaa !22    ; 3 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.a
+  %.pre48 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !22
+  %.phi.trans.insert49 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.pre50 = load i32, ptr %.phi.trans.insert49, align 4, !tbaa !22
+  %.phi.trans.insert54 = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %.pre55 = load i32, ptr %.phi.trans.insert54, align 4, !tbaa !22
+  %.phi.trans.insert56 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.pre57 = load i32, ptr %.phi.trans.insert56, align 4, !tbaa !22
+  %.phi.trans.insert61 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %.pre62 = load i32, ptr %.phi.trans.insert61, align 4, !tbaa !22
+  %.phi.trans.insert63 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %.pre64 = load i32, ptr %.phi.trans.insert63, align 4, !tbaa !22
+  %.phi.trans.insert68 = getelementptr inbounds nuw i8, ptr %0, i64 52
+  %.pre69 = load i32, ptr %.phi.trans.insert68, align 4, !tbaa !22
   %.phi.trans.insert59 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.pre60 = load i32, ptr %.phi.trans.insert59, align 4, !tbaa !22
   %.phi.trans.insert64 = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -238,101 +253,136 @@ bb.a:
   br label %bb.b
 
 .preheader:                                       ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !43   ; 3 uses
-  %2 = load <8 x i32>, ptr %i.c, align 4, !tbaa !22 ; 5 uses
-  %3 = insertelement <8 x i32> poison, i32 %i.e, i64 0
-  %4 = shufflevector <8 x i32> %3, <8 x i32> poison, <8 x i32> zeroinitializer
-  %5 = mul <8 x i32> %4, %2                       ; 3 uses
-  %6 = load <8 x i32>, ptr %0, align 4, !tbaa !22 ; 5 uses
-  %7 = insertelement <8 x i32> poison, i32 %i.b, i64 0
-  %8 = shufflevector <8 x i32> %7, <8 x i32> poison, <8 x i32> zeroinitializer
-  %9 = mul <8 x i32> %6, %8                       ; 3 uses
-  %10 = icmp ugt <8 x i32> %9, %5
-  %11 = sub nuw <8 x i32> %9, %5
-  %12 = sub nuw <8 x i32> %5, %9
-  %13 = select <8 x i1> %10, <8 x i32> %11, <8 x i32> %12
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %3 = load i32, ptr %2, align 4, !tbaa !43       ; 10 uses
+  %4 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !22 ; 2 uses
+  %5 = mul i32 %3, %4
+  %6 = mul i32 %.pre, %i.b
+  %7 = sub nsw i32 %6, %5
+  %8 = tail call i32 @llvm.abs.i32(i32 %7, i1 true)
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %9 = load i32, ptr %i.c, align 4, !tbaa !22     ; 2 uses
+  %10 = mul i32 %3, %9
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !22   ; 2 uses
+  %11 = mul i32 %i.e, %i.b
+  %12 = sub nsw i32 %11, %10
+  %13 = tail call i32 @llvm.abs.i32(i32 %12, i1 true)
+  %14 = add nuw i32 %13, %8
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %16 = load i32, ptr %15, align 4, !tbaa !22     ; 2 uses
+  %17 = mul i32 %3, %16
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %19 = load i32, ptr %18, align 4, !tbaa !22     ; 2 uses
+  %20 = mul i32 %19, %i.b
+  %21 = sub nsw i32 %20, %17
+  %22 = tail call i32 @llvm.abs.i32(i32 %21, i1 true)
+  %23 = add i32 %22, %14
+  %24 = getelementptr inbounds nuw i8, ptr %0, i64 52
+  %25 = load i32, ptr %24, align 4, !tbaa !22     ; 2 uses
+  %26 = mul i32 %3, %25
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.g = load i32, ptr %i.f, align 4, !tbaa !22   ; 2 uses
-  %i.h = mul i32 %i.e, %i.g                       ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.h = mul i32 %i.g, %i.b
+  %27 = sub nsw i32 %i.h, %26
+  %28 = tail call i32 @llvm.abs.i32(i32 %27, i1 true)
+  %29 = add i32 %28, %23
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.j = load i32, ptr %i.i, align 4, !tbaa !22   ; 2 uses
-  %i.k = mul i32 %i.j, %i.b                       ; 3 uses
-  %14 = icmp ugt i32 %i.k, %i.h
-  %i.l = sub nuw i32 %i.k, %i.h
-  %i.m = sub nuw i32 %i.h, %i.k
-  %15 = select i1 %14, i32 %i.l, i32 %i.m
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 76
+  %i.k = mul i32 %3, %i.j
+  %30 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %31 = load i32, ptr %30, align 4, !tbaa !22     ; 2 uses
+  %32 = mul i32 %31, %i.b
+  %i.l = sub nsw i32 %32, %i.k
+  %33 = tail call i32 @llvm.abs.i32(i32 %i.l, i1 true)
+  %34 = add i32 %33, %29
+  %35 = getelementptr inbounds nuw i8, ptr %0, i64 60
+  %36 = load i32, ptr %35, align 4, !tbaa !22     ; 2 uses
+  %37 = mul i32 %3, %36
+  %38 = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %39 = load i32, ptr %38, align 4, !tbaa !22     ; 2 uses
+  %40 = mul i32 %39, %i.b
+  %i.m = sub nsw i32 %40, %37
+  %41 = tail call i32 @llvm.abs.i32(i32 %i.m, i1 true)
+  %42 = add i32 %41, %34
+  %43 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %44 = load i32, ptr %43, align 4, !tbaa !22     ; 2 uses
+  %45 = mul i32 %3, %44
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load i32, ptr %i.n, align 4, !tbaa !22   ; 2 uses
-  %i.p = mul i32 %i.e, %i.o                       ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %i.p = mul i32 %i.o, %i.b
+  %46 = sub nsw i32 %i.p, %45
+  %47 = tail call i32 @llvm.abs.i32(i32 %46, i1 true)
+  %48 = add i32 %47, %42
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.r = load i32, ptr %i.q, align 4, !tbaa !22   ; 2 uses
-  %i.s = mul i32 %i.r, %i.b                       ; 3 uses
-  %16 = icmp ugt i32 %i.s, %i.p
-  %i.t = sub nuw i32 %i.s, %i.p
-  %i.u = sub nuw i32 %i.p, %i.s
-  %17 = select i1 %16, i32 %i.t, i32 %i.u
-  %18 = lshr i32 %1, 12
-  %i.v = mul i32 %i.b, %18
-  %19 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %13)
-  %op.rdx = add i32 %19, %15
-  %op.rdx101 = add i32 %17, %i.v
-  %op.rdx102 = add i32 %op.rdx, %op.rdx101
+  %i.s = mul i32 %3, %i.r
+  %49 = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %50 = load i32, ptr %49, align 4, !tbaa !22     ; 2 uses
+  %51 = mul i32 %50, %i.b
+  %i.t = sub nsw i32 %51, %i.s
+  %52 = tail call i32 @llvm.abs.i32(i32 %i.t, i1 true)
+  %53 = add i32 %52, %48
+  %54 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %55 = load i32, ptr %54, align 4, !tbaa !22     ; 2 uses
+  %56 = mul i32 %3, %55
+  %57 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %58 = load i32, ptr %57, align 4, !tbaa !22     ; 2 uses
+  %59 = mul i32 %58, %i.b
+  %i.u = sub nsw i32 %59, %56
+  %60 = tail call i32 @llvm.abs.i32(i32 %i.u, i1 true)
+  %61 = add i32 %60, %53
+  %62 = getelementptr inbounds nuw i8, ptr %0, i64 76
+  %63 = load i32, ptr %62, align 4, !tbaa !22     ; 2 uses
+  %64 = mul i32 %3, %63
+  %65 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %66 = load i32, ptr %65, align 4, !tbaa !22     ; 2 uses
+  %i.v = mul i32 %66, %i.b
+  %67 = sub nsw i32 %i.v, %64
+  %68 = tail call i32 @llvm.abs.i32(i32 %67, i1 true)
+  %op.rdx = add i32 %68, %61
+  %69 = lshr i32 %1, 12
+  %70 = mul i32 %i.b, %69
+  %op.rdx102 = add i32 %op.rdx, %70
   %i.w = mul i32 %i.b, 200
   %.not42 = icmp ult i32 %op.rdx102, %i.w
-  br i1 %.not42, label %.preheader._crit_edge, label %bb.c
+  br i1 %.not42, label %bb.b, label %bb.c
 
-.preheader._crit_edge:                            ; preds = %.preheader
-  %.pre = load i32, ptr %i.a, align 4, !tbaa !157
-  %20 = extractelement <8 x i32> %6, i64 4
-  %21 = extractelement <8 x i32> %6, i64 5
-  %22 = extractelement <8 x i32> %6, i64 6
-  %23 = extractelement <8 x i32> %6, i64 7
-  %24 = extractelement <8 x i32> %2, i64 4
-  %25 = extractelement <8 x i32> %2, i64 5
-  %26 = extractelement <8 x i32> %2, i64 6
-  %27 = extractelement <8 x i32> %2, i64 7
-  br label %bb.b
-
-bb.b:                                             ; preds = %._crit_edge, %.preheader._crit_edge
-  %i.x = phi i32 [ %i.o, %.preheader._crit_edge ], [ %.pre100, %._crit_edge ]
-  %i.y = phi i32 [ %i.r, %.preheader._crit_edge ], [ %.pre95, %._crit_edge ] ; 2 uses
-  %i.z = phi i32 [ %i.g, %.preheader._crit_edge ], [ %.pre93, %._crit_edge ]
-  %i.aa = phi i32 [ %i.j, %.preheader._crit_edge ], [ %.pre88, %._crit_edge ] ; 2 uses
-  %i.ab = phi i32 [ %27, %.preheader._crit_edge ], [ %.pre86, %._crit_edge ]
-  %i.ac = phi i32 [ %23, %.preheader._crit_edge ], [ %.pre81, %._crit_edge ] ; 2 uses
-  %i.ad = phi i32 [ %26, %.preheader._crit_edge ], [ %.pre79, %._crit_edge ]
-  %i.ae = phi i32 [ %22, %.preheader._crit_edge ], [ %.pre74, %._crit_edge ] ; 2 uses
-  %i.af = phi i32 [ %25, %.preheader._crit_edge ], [ %.pre72, %._crit_edge ]
-  %i.ag = phi i32 [ %21, %.preheader._crit_edge ], [ %.pre67, %._crit_edge ] ; 2 uses
-  %i.ah = phi i32 [ %24, %.preheader._crit_edge ], [ %.pre65, %._crit_edge ]
-  %i.ai = phi i32 [ %20, %.preheader._crit_edge ], [ %.pre60, %._crit_edge ] ; 2 uses
-  %i.aj = phi i32 [ %.pre, %.preheader._crit_edge ], [ 0, %._crit_edge ]
-  %.in105 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %28 = load i32, ptr %.in105, align 4, !tbaa !22 ; 2 uses
-  %.in104 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %29 = load i32, ptr %.in104, align 4, !tbaa !22
-  %.in103 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %30 = load i32, ptr %.in103, align 4, !tbaa !22 ; 2 uses
-  %.in = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %31 = load i32, ptr %.in, align 4, !tbaa !22
-  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %32 = load <2 x i32>, ptr %0, align 4, !tbaa !22 ; 3 uses
-  %33 = extractelement <2 x i32> %32, i64 0
-  %i.al = add i32 %i.aj, %33
-  %34 = extractelement <2 x i32> %32, i64 1
-  %i.am = add i32 %i.al, %34
-  %35 = load <2 x i32>, ptr %i.ak, align 4, !tbaa !22
-  %36 = add <2 x i32> %35, %32
-  store <2 x i32> %36, ptr %i.ak, align 4, !tbaa !22
-  %i.an = add i32 %i.am, %28
+bb.b:                                             ; preds = %._crit_edge, %.preheader
+  %i.x = phi i32 [ %.pre100, %._crit_edge ], [ %63, %.preheader ]
+  %i.y = phi i32 [ %.pre95, %._crit_edge ], [ %66, %.preheader ] ; 2 uses
+  %i.z = phi i32 [ %.pre93, %._crit_edge ], [ %55, %.preheader ]
+  %i.aa = phi i32 [ %.pre88, %._crit_edge ], [ %58, %.preheader ] ; 2 uses
+  %i.ab = phi i32 [ %.pre86, %._crit_edge ], [ %i.r, %.preheader ]
+  %i.ac = phi i32 [ %.pre81, %._crit_edge ], [ %50, %.preheader ] ; 2 uses
+  %i.ad = phi i32 [ %.pre79, %._crit_edge ], [ %44, %.preheader ]
+  %i.ae = phi i32 [ %.pre74, %._crit_edge ], [ %i.o, %.preheader ] ; 2 uses
+  %i.af = phi i32 [ %.pre72, %._crit_edge ], [ %36, %.preheader ]
+  %i.ag = phi i32 [ %.pre67, %._crit_edge ], [ %39, %.preheader ] ; 2 uses
+  %i.ah = phi i32 [ %.pre65, %._crit_edge ], [ %i.j, %.preheader ]
+  %i.ai = phi i32 [ %.pre60, %._crit_edge ], [ %31, %.preheader ] ; 2 uses
+  %i.aj = phi i32 [ %.pre69, %._crit_edge ], [ %25, %.preheader ]
+  %71 = phi i32 [ %.pre64, %._crit_edge ], [ %i.g, %.preheader ] ; 2 uses
+  %72 = phi i32 [ %.pre62, %._crit_edge ], [ %16, %.preheader ]
+  %73 = phi i32 [ %.pre57, %._crit_edge ], [ %19, %.preheader ] ; 2 uses
+  %74 = phi i32 [ %.pre55, %._crit_edge ], [ %9, %.preheader ]
+  %75 = phi i32 [ %.pre50, %._crit_edge ], [ %i.e, %.preheader ] ; 2 uses
+  %76 = phi i32 [ %.pre48, %._crit_edge ], [ %4, %.preheader ]
+  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %77 = add i32 %i.b, %.pre
+  %i.al = add i32 %76, %.pre
+  store i32 %i.al, ptr %i.ak, align 4, !tbaa !22
+  %i.am = add i32 %77, %75
+  %78 = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %79 = add i32 %74, %75
+  store i32 %79, ptr %78, align 4, !tbaa !22
+  %i.an = add i32 %i.am, %73
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.ap = add i32 %29, %28
+  %i.ap = add i32 %72, %73
   store i32 %i.ap, ptr %i.ao, align 4, !tbaa !22
-  %i.aq = add i32 %i.an, %30
+  %i.aq = add i32 %i.an, %71
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.as = add i32 %31, %30
+  %i.as = add i32 %i.aj, %71
   store i32 %i.as, ptr %i.ar, align 4, !tbaa !22
   store <4 x i32> zeroinitializer, ptr %0, align 4, !tbaa !22
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -735,14 +785,14 @@ declare i16 @llvm.bitreverse.i16(i16) #11
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #12
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i16> @llvm.bitreverse.v4i16(<4 x i16>) #11

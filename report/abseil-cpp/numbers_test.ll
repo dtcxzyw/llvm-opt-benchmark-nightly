@@ -204,22 +204,20 @@ bb.a:
   br i1 %or.cond, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit.thread, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit
 
 _ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit: ; preds = %bb.a
-  %9 = insertelement <2 x double> poison, double %4, i64 0
-  %10 = insertelement <2 x double> %9, double %3, i64 1 ; 2 uses
-  %11 = bitcast <2 x double> %10 to <2 x i64>     ; 2 uses
-  %12 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %10)
-  %13 = sub <2 x i64> zeroinitializer, %11
-  %14 = fneg <2 x double> %12
-  %15 = bitcast <2 x double> %14 to <2 x i64>
-  %16 = icmp slt <2 x i64> %11, zeroinitializer
-  %17 = select <2 x i1> %16, <2 x i64> %13, <2 x i64> %15 ; 2 uses
-  %18 = extractelement <2 x i64> %17, i64 0       ; 3 uses
-  %19 = extractelement <2 x i64> %17, i64 1       ; 3 uses
-  %.not.i.i = icmp ult i64 %19, %18
-  %20 = sub nuw i64 %19, %18
-  %21 = sub nuw i64 %18, %19
-  %22 = select i1 %.not.i.i, i64 %21, i64 %20
-  %i.a = icmp ult i64 %22, 5
+  %9 = bitcast double %4 to i64                   ; 3 uses
+  %10 = bitcast double %3 to i64                  ; 2 uses
+  %11 = sub i64 0, %10
+  %12 = tail call double @llvm.fabs.f64(double %3)
+  %13 = fneg double %12
+  %14 = bitcast double %13 to i64
+  %.not4.i.i.i = icmp slt i64 %10, 0
+  %.0.i.i.i = select i1 %.not4.i.i.i, i64 %11, i64 %14
+  %.neg.i = sub nuw i64 -9223372036854775808, %9
+  %.not4.i10.i.i = icmp slt i64 %9, 0
+  %.0.i11.i.neg4.i = select i1 %.not4.i10.i.i, i64 %9, i64 %.neg.i
+  %15 = add i64 %.0.i.i.i, 4
+  %16 = add i64 %15, %.0.i11.i.neg4.i
+  %i.a = icmp ult i64 %16, 9
   br i1 %i.a, label %bb.b, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit.thread
 
 bb.b:                                             ; preds = %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit
@@ -622,16 +620,14 @@ _ZN4absl12lts_2026052616strings_internal4ItoaIjEEbT_iPNSt7__cxx1112basic_stringI
   br label %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit.i
 
 .preheader.i.i:                                   ; preds = %_ZNSt24uniform_int_distributionIiEclIN4absl12lts_2026052614InsecureBitGenEEEiRT_RKNS0_10param_typeE.exit.i, %.noexc68.i
-  %.02733.i.i = phi i32 [ %i.df, %.noexc68.i ], [ %i.ca, %_ZNSt24uniform_int_distributionIiEclIN4absl12lts_2026052614InsecureBitGenEEEiRT_RKNS0_10param_typeE.exit.i ] ; 5 uses
+  %.02733.i.i = phi i32 [ %i.df, %.noexc68.i ], [ %i.ca, %_ZNSt24uniform_int_distributionIiEclIN4absl12lts_2026052614InsecureBitGenEEEiRT_RKNS0_10param_typeE.exit.i ] ; 3 uses
   %i.df = udiv i32 %.02733.i.i, %i.dd             ; 2 uses
-  %i.dg = mul i32 %i.df, %i.dd                    ; 2 uses
-  %26 = icmp ugt i32 %.02733.i.i, %i.dg
+  %i.dg = mul i32 %i.df, %i.dd                    ; 0 uses
   %.recomposed = urem i32 %.02733.i.i, %i.dd
-  %27 = sub nuw i32 %i.dg, %.02733.i.i
-  %28 = select i1 %26, i32 %.recomposed, i32 %27  ; 2 uses
-  %29 = icmp slt i32 %28, 10
-  %.v.i.i = select i1 %29, i32 48, i32 55
-  %i.dh = add nsw i32 %.v.i.i, %28
+  %26 = call i32 @llvm.abs.i32(i32 %.recomposed, i1 true) ; 2 uses
+  %27 = icmp samesign ult i32 %26, 10
+  %.v.i.i = select i1 %27, i32 48, i32 55
+  %i.dh = add nuw nsw i32 %.v.i.i, %26
   %i.di = trunc i32 %i.dh to i8
   %i.dj = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef 0, i64 noundef 0, i64 noundef 1, i8 noundef signext %i.di)
           to label %.noexc68.i unwind label %bb.c ; 0 uses
@@ -1034,14 +1030,12 @@ _ZN4absl12lts_2026052616strings_internal4ItoaImEEbT_iPNSt7__cxx1112basic_stringI
   br label %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit.i
 
 bb.c:                                             ; preds = %.noexc68.i, %.preheader.i.i
-  %.02733.i.i = phi i64 [ %.0.i.i.i.i.i.i.i, %.preheader.i.i ], [ %i.de, %.noexc68.i ] ; 5 uses
+  %.02733.i.i = phi i64 [ %.0.i.i.i.i.i.i.i, %.preheader.i.i ], [ %i.de, %.noexc68.i ] ; 3 uses
   %i.de = udiv i64 %.02733.i.i, %i.dd             ; 2 uses
-  %i.df = mul i64 %i.de, %i.dd                    ; 2 uses
-  %26 = icmp ugt i64 %.02733.i.i, %i.df
+  %i.df = mul i64 %i.de, %i.dd                    ; 0 uses
   %.recomposed = urem i64 %.02733.i.i, %i.dd
-  %27 = sub nuw i64 %i.df, %.02733.i.i
-  %28 = select i1 %26, i64 %.recomposed, i64 %27
-  %i.dg = trunc i64 %28 to i32                    ; 2 uses
+  %26 = call i64 @llvm.abs.i64(i64 %.recomposed, i1 true)
+  %i.dg = trunc i64 %26 to i32                    ; 2 uses
   %i.dh = icmp slt i32 %i.dg, 10
   %.v.i.i = select i1 %i.dh, i32 48, i32 55
   %i.di = add nsw i32 %.v.i.i, %i.dg
@@ -1443,9 +1437,6 @@ declare i128 @llvm.abs.i128(i128, i1 immarg) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #21
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

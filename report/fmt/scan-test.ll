@@ -205,22 +205,20 @@ bb.a:
   br i1 %or.cond, label %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit.thread, label %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit
 
 _ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit: ; preds = %bb.a
-  %9 = insertelement <2 x float> poison, float %4, i64 0
-  %10 = insertelement <2 x float> %9, float %3, i64 1 ; 2 uses
-  %11 = bitcast <2 x float> %10 to <2 x i32>      ; 2 uses
-  %12 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %10)
-  %13 = sub <2 x i32> zeroinitializer, %11
-  %14 = fneg <2 x float> %12
-  %15 = bitcast <2 x float> %14 to <2 x i32>
-  %16 = icmp slt <2 x i32> %11, zeroinitializer
-  %17 = select <2 x i1> %16, <2 x i32> %13, <2 x i32> %15 ; 2 uses
-  %18 = extractelement <2 x i32> %17, i64 0       ; 3 uses
-  %19 = extractelement <2 x i32> %17, i64 1       ; 3 uses
-  %.not.i.i = icmp ult i32 %19, %18
-  %20 = sub nuw i32 %19, %18
-  %21 = sub nuw i32 %18, %19
-  %22 = select i1 %.not.i.i, i32 %21, i32 %20
-  %i.a = icmp ult i32 %22, 5
+  %9 = bitcast float %3 to i32                    ; 2 uses
+  %10 = bitcast float %4 to i32                   ; 3 uses
+  %11 = sub i32 0, %9
+  %12 = tail call float @llvm.fabs.f32(float %3)
+  %13 = fneg float %12
+  %14 = bitcast float %13 to i32
+  %.not3.i.i.i = icmp slt i32 %9, 0
+  %.0.i.i.i = select i1 %.not3.i.i.i, i32 %11, i32 %14
+  %.neg.i = sub nuw i32 -2147483648, %10
+  %.not3.i9.i.i = icmp slt i32 %10, 0
+  %.0.i10.i.neg4.i = select i1 %.not3.i9.i.i, i32 %10, i32 %.neg.i
+  %15 = add i32 %.0.i.i.i, 4
+  %16 = add i32 %15, %.0.i10.i.neg4.i
+  %i.a = icmp ult i32 %16, 9
   br i1 %i.a, label %bb.b, label %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit.thread
 
 bb.b:                                             ; preds = %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit
@@ -461,22 +459,20 @@ bb.a:
   br i1 %or.cond, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit.thread, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit
 
 _ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit: ; preds = %bb.a
-  %9 = insertelement <2 x double> poison, double %4, i64 0
-  %10 = insertelement <2 x double> %9, double %3, i64 1 ; 2 uses
-  %11 = bitcast <2 x double> %10 to <2 x i64>     ; 2 uses
-  %12 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %10)
-  %13 = sub <2 x i64> zeroinitializer, %11
-  %14 = fneg <2 x double> %12
-  %15 = bitcast <2 x double> %14 to <2 x i64>
-  %16 = icmp slt <2 x i64> %11, zeroinitializer
-  %17 = select <2 x i1> %16, <2 x i64> %13, <2 x i64> %15 ; 2 uses
-  %18 = extractelement <2 x i64> %17, i64 0       ; 3 uses
-  %19 = extractelement <2 x i64> %17, i64 1       ; 3 uses
-  %.not.i.i = icmp ult i64 %19, %18
-  %20 = sub nuw i64 %19, %18
-  %21 = sub nuw i64 %18, %19
-  %22 = select i1 %.not.i.i, i64 %21, i64 %20
-  %i.a = icmp ult i64 %22, 5
+  %9 = bitcast double %3 to i64                   ; 2 uses
+  %10 = bitcast double %4 to i64                  ; 3 uses
+  %11 = sub i64 0, %9
+  %12 = tail call double @llvm.fabs.f64(double %3)
+  %13 = fneg double %12
+  %14 = bitcast double %13 to i64
+  %.not3.i.i.i = icmp slt i64 %9, 0
+  %.0.i.i.i = select i1 %.not3.i.i.i, i64 %11, i64 %14
+  %.neg.i = sub nuw i64 -9223372036854775808, %10
+  %.not3.i9.i.i = icmp slt i64 %10, 0
+  %.0.i10.i.neg4.i = select i1 %.not3.i9.i.i, i64 %10, i64 %.neg.i
+  %15 = add i64 %.0.i.i.i, 4
+  %16 = add i64 %15, %.0.i10.i.neg4.i
+  %i.a = icmp ult i64 %16, 9
   br i1 %i.a, label %bb.b, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit.thread
 
 bb.b:                                             ; preds = %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit
@@ -878,12 +874,6 @@ declare i64 @llvm.smax.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -202,14 +202,12 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah
   %i.iu = call noalias dereferenceable_or_null(8) ptr @wmem_alloc(ptr noundef %i.it, i64 noundef 8) #7 ; 3 uses
   %i.iv = load i32, ptr %i.b, align 4             ; 4 uses
-  %i.iw = trunc i32 %i.iv to i16                  ; 6 uses
+  %i.iw = trunc i32 %i.iv to i16                  ; 5 uses
   %i.ix = getelementptr i8, ptr %i.ge, i64 8      ; 3 uses
-  %i.iy = load i16, ptr %i.ix, align 8            ; 4 uses
-  %4 = icmp ugt i16 %i.iy, %i.iw                  ; 2 uses
-  %5 = sub nuw i16 %i.iy, %i.iw
-  %i.iz = sub nuw i16 %i.iw, %i.iy
-  %6 = select i1 %4, i16 %5, i16 %i.iz
-  %i.ja = icmp ult i16 %6, 8000
+  %i.iy = load i16, ptr %i.ix, align 8            ; 3 uses
+  %i.iz = sub i16 %i.iy, %i.iw
+  %4 = add i16 %i.iz, 7999
+  %i.ja = icmp ult i16 %4, 15999
   br i1 %i.ja, label %bb.aj, label %bb.am
 
 bb.aj:                                            ; preds = %bb.ai
@@ -228,7 +226,8 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br label %computeAndUpdateSeqContext.exit.i
 
 bb.am:                                            ; preds = %bb.ai
-  br i1 %4, label %bb.an, label %bb.ao
+  %5 = icmp ugt i16 %i.iy, %i.iw
+  br i1 %5, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
   store i16 %i.iw, ptr %i.ix, align 8
@@ -438,14 +437,12 @@ bb.bb:                                            ; preds = %bb.ba
   %i.nc = call ptr @wmem_file_scope()
   %i.nd = call noalias dereferenceable_or_null(8) ptr @wmem_alloc(ptr noundef %i.nc, i64 noundef 8) #7 ; 3 uses
   %i.ne = load i32, ptr %i.d, align 4             ; 4 uses
-  %i.nf = trunc i32 %i.ne to i16                  ; 6 uses
+  %i.nf = trunc i32 %i.ne to i16                  ; 5 uses
   %i.ng = getelementptr i8, ptr %i.nb, i64 8      ; 3 uses
-  %i.nh = load i16, ptr %i.ng, align 8            ; 4 uses
-  %7 = icmp ugt i16 %i.nh, %i.nf                  ; 2 uses
-  %8 = sub nuw i16 %i.nh, %i.nf
-  %i.ni = sub nuw i16 %i.nf, %i.nh
-  %9 = select i1 %7, i16 %8, i16 %i.ni
-  %i.nj = icmp ult i16 %9, 8000
+  %i.nh = load i16, ptr %i.ng, align 8            ; 3 uses
+  %i.ni = sub i16 %i.nh, %i.nf
+  %6 = add i16 %i.ni, 7999
+  %i.nj = icmp ult i16 %6, 15999
   br i1 %i.nj, label %bb.bc, label %bb.bf
 
 bb.bc:                                            ; preds = %bb.bb
@@ -464,6 +461,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   br label %computeAndUpdateSeqContext.exit290.i
 
 bb.bf:                                            ; preds = %bb.bb
+  %7 = icmp ugt i16 %i.nh, %i.nf
   br i1 %7, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf

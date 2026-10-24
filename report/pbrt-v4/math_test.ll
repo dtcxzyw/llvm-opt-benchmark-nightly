@@ -204,22 +204,20 @@ bb.a:
   br i1 %or.cond, label %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit.thread, label %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit
 
 _ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit: ; preds = %bb.a
-  %9 = insertelement <2 x float> poison, float %4, i64 0
-  %10 = insertelement <2 x float> %9, float %3, i64 1 ; 2 uses
-  %11 = bitcast <2 x float> %10 to <2 x i32>      ; 2 uses
-  %12 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %10)
-  %13 = sub <2 x i32> zeroinitializer, %11
-  %14 = fneg <2 x float> %12
-  %15 = bitcast <2 x float> %14 to <2 x i32>
-  %16 = icmp slt <2 x i32> %11, zeroinitializer
-  %17 = select <2 x i1> %16, <2 x i32> %13, <2 x i32> %15 ; 2 uses
-  %18 = extractelement <2 x i32> %17, i64 0       ; 3 uses
-  %19 = extractelement <2 x i32> %17, i64 1       ; 3 uses
-  %.not.i.i = icmp ult i32 %19, %18
-  %20 = sub nuw i32 %19, %18
-  %21 = sub nuw i32 %18, %19
-  %22 = select i1 %.not.i.i, i32 %21, i32 %20
-  %i.a = icmp ult i32 %22, 5
+  %9 = bitcast float %3 to i32                    ; 2 uses
+  %10 = bitcast float %4 to i32                   ; 3 uses
+  %11 = sub i32 0, %9
+  %12 = tail call float @llvm.fabs.f32(float %3)
+  %13 = fneg float %12
+  %14 = bitcast float %13 to i32
+  %.not3.i.i.i = icmp slt i32 %9, 0
+  %.0.i.i.i = select i1 %.not3.i.i.i, i32 %11, i32 %14
+  %.neg.i = sub nuw i32 -2147483648, %10
+  %.not3.i9.i.i = icmp slt i32 %10, 0
+  %.0.i10.i.neg4.i = select i1 %.not3.i9.i.i, i32 %10, i32 %.neg.i
+  %15 = add i32 %.0.i.i.i, 4
+  %16 = add i32 %15, %.0.i10.i.neg4.i
+  %i.a = icmp ult i32 %16, 9
   br i1 %i.a, label %bb.b, label %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit.thread
 
 bb.b:                                             ; preds = %_ZNK7testing8internal13FloatingPointIfE12AlmostEqualsERKS2_.exit
@@ -620,9 +618,6 @@ declare i32 @llvm.smax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.fshr.v2i32(<2 x i32>, <2 x i32>, <2 x i32>) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.fshr.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #16

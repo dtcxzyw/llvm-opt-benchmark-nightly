@@ -202,13 +202,11 @@ bb.k:                                             ; preds = %bb.j
   br label %hashTypeGetMinExpire.exit
 
 hashTypeGetMinExpire.exit:                        ; preds = %bb.g, %bb.h, %bb.j, %bb.k
-  %.2.i = phi i64 [ 281474976710656, %bb.j ], [ %i.ai, %bb.h ], [ 281474976710656, %bb.g ], [ %i.an, %bb.k ] ; 6 uses
-  %i.ao = load i64, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %1 = icmp ugt i64 %i.ao, %.2.i
-  %2 = sub nuw i64 %i.ao, %.2.i
-  %i.ap = sub nuw i64 %.2.i, %i.ao
-  %3 = select i1 %1, i64 %2, i64 %i.ap
-  %i.aq = icmp ult i64 %3, 4000
+  %.2.i = phi i64 [ 281474976710656, %bb.j ], [ %i.ai, %bb.h ], [ 281474976710656, %bb.g ], [ %i.an, %bb.k ] ; 4 uses
+  %i.ao = load i64, ptr %i.y, align 8, !tbaa !116
+  %i.ap = sub i64 %i.ao, %.2.i
+  %1 = add i64 %i.ap, 3999
+  %i.aq = icmp ult i64 %1, 7999
   br i1 %i.aq, label %bb.r, label %bb.l
 
 bb.l:                                             ; preds = %hashTypeGetMinExpire.exit

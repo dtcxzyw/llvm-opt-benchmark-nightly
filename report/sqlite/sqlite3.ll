@@ -206,7 +206,7 @@ bb.ay:                                            ; preds = %sqlite3VdbeSerialTy
   call fastcc void @sqlite3VdbeSerialGet(ptr noundef nonnull %i.he, i32 noundef %.08297.i, ptr noundef nonnull %5), !inline_history !4192
   %i.hf = load ptr, ptr %i.bv, align 8, !tbaa !1724
   %i.hg = getelementptr inbounds nuw [56 x i8], ptr %i.hf, i64 %indvars.iv.i ; 3 uses
-  %.val.i = load i64, ptr %5, align 8             ; 3 uses
+  %.val.i = load i64, ptr %5, align 8
   %.val66.i = load i16, ptr %i.bw, align 4
   %i.hh = icmp samesign ugt i64 %indvars.iv.i, 63
   br i1 %i.hh, label %bb.bd, label %bb.az
@@ -231,13 +231,11 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %or.cond.i.i, label %bb.bd, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %.0.copyload4.i.i = load i64, ptr %i.hg, align 8 ; 3 uses
-  %6 = icmp ult i64 %.0.copyload4.i.i, %.val.i
-  %7 = sub nuw i64 %.val.i, %.0.copyload4.i.i
-  %i.hp = sub nuw i64 %.0.copyload4.i.i, %.val.i
-  %8 = select i1 %6, i64 %7, i64 %i.hp
-  %9 = icmp ugt i64 %8, 2
-  br i1 %9, label %bb.bd, label %vdbeSkipField.exit.i
+  %.0.copyload4.i.i = load i64, ptr %i.hg, align 8
+  %i.hp = sub i64 %.0.copyload4.i.i, %.val.i
+  %6 = add i64 %i.hp, -3
+  %7 = icmp ult i64 %6, -5
+  br i1 %7, label %bb.bd, label %vdbeSkipField.exit.i
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.az, %bb.ay
   %i.hq = load ptr, ptr %2, align 8, !tbaa !1721
@@ -640,7 +638,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %sql
   br label %fts3EvalDeferredPhrase.exit
 
 .thread165.i:                                     ; preds = %.thread182.i, %bb.bf, %.lr.ph.i80
-  %.375174.i = phi i32 [ %i.jg, %.thread182.i ], [ %i.jg, %bb.bf ], [ %.072211.i, %.lr.ph.i80 ] ; 5 uses
+  %.375174.i = phi i32 [ %i.jg, %.thread182.i ], [ %i.jg, %bb.bf ], [ %.072211.i, %.lr.ph.i80 ] ; 4 uses
   %.480173.i = phi i32 [ %i.kb, %.thread182.i ], [ %i.ja, %bb.bf ], [ %.076210.i, %.lr.ph.i80 ] ; 3 uses
   %.485172.i = phi ptr [ %i.hl, %.thread182.i ], [ %i.hl, %bb.bf ], [ %.081209.i, %.lr.ph.i80 ] ; 12 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -655,7 +653,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %sql
 
 bb.bw:                                            ; preds = %._crit_edge.i83
   %i.ll = getelementptr inbounds nuw i8, ptr %i.gx, i64 60
-  %i.lm = load i32, ptr %i.ll, align 4, !tbaa !570 ; 4 uses
+  %i.lm = load i32, ptr %i.ll, align 4, !tbaa !570 ; 3 uses
   %i.ln = icmp slt i32 %i.lm, 0
   br i1 %i.ln, label %bb.bx, label %bb.by
 
@@ -678,14 +676,13 @@ bb.by:                                            ; preds = %bb.bw
   %i.lt = sext i32 %.480173.i to i64
   %i.lu = shl nsw i64 %i.lt, 1
   %i.lv = add nsw i64 %i.lu, 8                    ; 2 uses
-  %i.lw = icmp samesign ugt i32 %i.lm, %.375174.i ; 3 uses
+  %i.lw = icmp samesign ugt i32 %i.lm, %.375174.i ; 2 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %i.gx, i64 40 ; 4 uses
   %i.ly = load ptr, ptr %i.lx, align 8, !tbaa !2785 ; 2 uses
-  %i.lz = sub nuw nsw i32 %i.lm, %.375174.i
-  %3 = sub nuw nsw i32 %.375174.i, %i.lm
+  %i.lz = sub nsw i32 %i.lm, %.375174.i
   %.sink.i = select i1 %i.lw, ptr %.485172.i, ptr %i.ly
   %.081.lcssa.sink.i = select i1 %i.lw, ptr %i.ly, ptr %.485172.i
-  %.0.i = select i1 %i.lw, i32 %i.lz, i32 %3
+  %.0.i = tail call i32 @llvm.abs.i32(i32 %i.lz, i1 true)
   store ptr %.sink.i, ptr %i.e, align 8, !tbaa !741
   store ptr %.081.lcssa.sink.i, ptr %i.f, align 8, !tbaa !741
   %i.ma = tail call i32 @sqlite3_initialize(), !inline_history !6190
@@ -1088,14 +1085,14 @@ declare i16 @llvm.umax.i16(i16, i16) #46
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ssub.sat.i32(i32, i32) #46
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #27
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.sadd.sat.i16(i16, i16) #46
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #46
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.abs.i64(i64, i1 immarg) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #46

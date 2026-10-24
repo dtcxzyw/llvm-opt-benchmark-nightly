@@ -42,7 +42,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.o, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = tail call ptr @Mtr_InitGroupTree(i32 noundef 0, i32 noundef %i.b) #12 ; 4 uses
+  %i.p = tail call ptr @Mtr_InitGroupTree(i32 noundef 0, i32 noundef %i.b) #13 ; 4 uses
   store ptr %i.p, ptr %i.m, align 8, !tbaa !29
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %bb.i, label %bb.f
@@ -64,7 +64,7 @@ bb.g:                                             ; preds = %bb.f, %bb.d
   %i.x = load i32, ptr %i.w, align 8, !tbaa !33
   %spec.select = tail call i32 @llvm.umax.i32(i32 %., i32 %i.x)
   store i32 %spec.select, ptr %i.w, align 8, !tbaa !33
-  %i.y = tail call ptr @Mtr_MakeGroup(ptr noundef nonnull %.0, i32 noundef %i.i, i32 noundef %2, i32 noundef %3) #12 ; 3 uses
+  %i.y = tail call ptr @Mtr_MakeGroup(ptr noundef nonnull %.0, i32 noundef %i.i, i32 noundef %2, i32 noundef %3) #13 ; 3 uses
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %bb.i, label %bb.h
 
@@ -99,7 +99,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.e = load i32, ptr %i.d, align 8, !tbaa !26
-  %i.f = tail call ptr @Mtr_InitGroupTree(i32 noundef 0, i32 noundef %i.e) #12 ; 3 uses
+  %i.f = tail call ptr @Mtr_InitGroupTree(i32 noundef 0, i32 noundef %i.e) #13 ; 3 uses
   store ptr %i.f, ptr %i.a, align 8, !tbaa !29
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !30
@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   br i1 %i.c, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge
-  tail call void @Cudd_FreeTree(ptr noundef nonnull %0) #12
+  tail call void @Cudd_FreeTree(ptr noundef nonnull %0) #13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge
@@ -416,18 +416,18 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.f, %bb.f
-  %i.ar = tail call i32 @cuddSwapping(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2, i32 noundef %2) #12
+  %i.ar = tail call i32 @cuddSwapping(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2, i32 noundef %2) #13
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.f
-  %i.as = tail call i32 @cuddSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12
+  %i.as = tail call i32 @cuddSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13
   br label %.loopexit
 
 bb.i:                                             ; preds = %.preheader, %bb.i
   %i.at = phi i32 [ %.pre115, %.preheader ], [ %i.ay, %bb.i ]
   %i.au = phi i32 [ %.pre114, %.preheader ], [ %i.ax, %bb.i ]
   %i.av = sub i32 %i.au, %i.at
-  %i.aw = tail call i32 @cuddSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12 ; 2 uses
+  %i.aw = tail call i32 @cuddSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13 ; 2 uses
   %i.ax = load i32, ptr %i.ap, align 4, !tbaa !41 ; 2 uses
   %i.ay = load i32, ptr %i.aq, align 8, !tbaa !42 ; 2 uses
   %i.az = sub i32 %i.ax, %i.ay
@@ -437,11 +437,11 @@ bb.i:                                             ; preds = %.preheader, %bb.i
   br i1 %or.cond, label %bb.i, label %.loopexit, !llvm.loop !65
 
 bb.j:                                             ; preds = %bb.f
-  %i.bc = tail call i32 @cuddSymmSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12
+  %i.bc = tail call i32 @cuddSymmSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.f
-  %i.bd = tail call i32 @cuddSymmSiftingConv(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12
+  %i.bd = tail call i32 @cuddSymmSiftingConv(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13
   br label %.loopexit
 
 bb.l:                                             ; preds = %bb.f
@@ -500,7 +500,7 @@ bb.u:                                             ; preds = %bb.q
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.s, %bb.u, %bb.t, %bb.r
-  %i.bt = tail call i32 @cuddWindowReorder(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2, i32 noundef 10) #12 ; 2 uses
+  %i.bt = tail call i32 @cuddWindowReorder(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2, i32 noundef 10) #13 ; 2 uses
   %i.bu = load i32, ptr %i.al, align 4, !tbaa !41 ; 2 uses
   %i.bv = load i32, ptr %i.am, align 8, !tbaa !42 ; 2 uses
   %i.bw = sub i32 %i.bu, %i.bv
@@ -510,26 +510,26 @@ bb.v:                                             ; preds = %bb.s, %bb.u, %bb.t,
   br i1 %or.cond3, label %bb.q, label %.loopexit, !llvm.loop !66
 
 bb.w:                                             ; preds = %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f
-  %i.bz = tail call i32 @cuddWindowReorder(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2, i32 noundef %2) #12
+  %i.bz = tail call i32 @cuddWindowReorder(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2, i32 noundef %2) #13
   br label %.loopexit
 
 bb.x:                                             ; preds = %bb.f
-  %i.ca = tail call i32 @cuddAnnealing(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12
+  %i.ca = tail call i32 @cuddAnnealing(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13
   br label %.loopexit
 
 bb.y:                                             ; preds = %bb.f
-  %i.cb = tail call i32 @cuddGa(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12
+  %i.cb = tail call i32 @cuddGa(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13
   br label %.loopexit
 
 bb.z:                                             ; preds = %bb.f
-  %i.cc = tail call i32 @cuddLinearAndSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12
+  %i.cc = tail call i32 @cuddLinearAndSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13
   br label %.loopexit
 
 bb.aa:                                            ; preds = %.preheader103, %bb.aa
   %i.cd = phi i32 [ %.pre111, %.preheader103 ], [ %i.ci, %bb.aa ]
   %i.ce = phi i32 [ %.pre, %.preheader103 ], [ %i.ch, %bb.aa ]
   %i.cf = sub i32 %i.ce, %i.cd
-  %i.cg = tail call i32 @cuddLinearAndSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12 ; 2 uses
+  %i.cg = tail call i32 @cuddLinearAndSifting(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13 ; 2 uses
   %i.ch = load i32, ptr %i.aj, align 4, !tbaa !41 ; 2 uses
   %i.ci = load i32, ptr %i.ak, align 8, !tbaa !42 ; 2 uses
   %i.cj = sub i32 %i.ch, %i.ci
@@ -539,7 +539,7 @@ bb.aa:                                            ; preds = %.preheader103, %bb.
   br i1 %or.cond5, label %bb.aa, label %.loopexit, !llvm.loop !67
 
 bb.ab:                                            ; preds = %bb.f
-  %i.cm = tail call i32 @cuddExact(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #12
+  %i.cm = tail call i32 @cuddExact(ptr noundef nonnull %0, i32 noundef %i.k, i32 noundef %.2) #13
   br label %.loopexit
 
 bb.ac:                                            ; preds = %bb.f
@@ -686,12 +686,12 @@ bb.a:
   store ptr null, ptr @entry, align 8, !tbaa !43
   %i.c = sext i32 %i.b to i64
   %i.d = shl nsw i64 %i.c, 2                      ; 3 uses
-  %i.e = tail call noalias ptr @malloc(i64 noundef %i.d) #13 ; 8 uses
+  %i.e = tail call noalias ptr @malloc(i64 noundef %i.d) #14 ; 8 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %.thread282, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call noalias ptr @malloc(i64 noundef %i.d) #13 ; 4 uses
+  %i.g = tail call noalias ptr @malloc(i64 noundef %i.d) #14 ; 4 uses
   store ptr %i.g, ptr @entry, align 8, !tbaa !43
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %.thread285, label %bb.c
@@ -699,11 +699,11 @@ bb.b:                                             ; preds = %bb.a
 .thread285:                                       ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 632
   store i32 1, ptr %i.i, align 8, !tbaa !81
-  tail call void @free(ptr noundef nonnull %i.e) #12
+  tail call void @free(ptr noundef nonnull %i.e) #13
   br label %bb.ap
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = tail call noalias ptr @malloc(i64 noundef %i.d) #13 ; 9 uses
+  %i.j = tail call noalias ptr @malloc(i64 noundef %i.d) #14 ; 9 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %.loopexit.thread274, label %.preheader226
 
@@ -759,7 +759,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 ._crit_edge:                                      ; preds = %bb.f, %.preheader226
   %.0162.lcssa = phi i32 [ 0, %.preheader226 ], [ %.1163, %bb.f ] ; 3 uses
   %i.ag = sext i32 %.0162.lcssa to i64
-  tail call void @qsort(ptr noundef nonnull %i.e, i64 noundef %i.ag, i64 noundef 4, ptr noundef nonnull @ddUniqueCompareGroup) #12
+  tail call void @qsort(ptr noundef nonnull %i.e, i64 noundef %i.ag, i64 noundef 4, ptr noundef nonnull @ddUniqueCompareGroup) #13
   %.not = icmp eq i32 %4, 0                       ; 4 uses
   %i.ah = icmp slt i32 %i.b, 1
   %or.cond240.not = or i1 %i.ah, %.not
@@ -1107,14 +1107,14 @@ ddSetVarHandled.exit:                             ; preds = %.preheader, %bb.al,
   br i1 %i.gb, label %bb.k, label %._crit_edge238, !llvm.loop !80
 
 ._crit_edge238:                                   ; preds = %bb.k, %ddSetVarHandled.exit, %.loopexit225
-  tail call void @free(ptr noundef %i.j) #12
-  tail call void @free(ptr noundef %i.e) #12
+  tail call void @free(ptr noundef %i.j) #13
+  tail call void @free(ptr noundef %i.e) #13
   %i.gc = load ptr, ptr @entry, align 8, !tbaa !43 ; 2 uses
   %.not199 = icmp eq ptr %i.gc, null
   br i1 %.not199, label %bb.ap, label %bb.am
 
 bb.am:                                            ; preds = %._crit_edge238
-  tail call void @free(ptr noundef nonnull %i.gc) #12
+  tail call void @free(ptr noundef nonnull %i.gc) #13
   store ptr null, ptr @entry, align 8, !tbaa !43
   br label %bb.ap
 
@@ -1124,7 +1124,7 @@ bb.am:                                            ; preds = %._crit_edge238
   br i1 %.not201, label %.thread288, label %bb.an
 
 .thread288:                                       ; preds = %.loopexit
-  tail call void @free(ptr noundef nonnull %i.e) #12
+  tail call void @free(ptr noundef nonnull %i.e) #13
   br label %bb.ao
 
 .thread282:                                       ; preds = %bb.a
@@ -1134,14 +1134,14 @@ bb.am:                                            ; preds = %._crit_edge238
 
 bb.an:                                            ; preds = %.loopexit, %.loopexit.thread274
   %.pr278 = phi ptr [ %i.g, %.loopexit.thread274 ], [ %.pr.pre, %.loopexit ]
-  tail call void @free(ptr noundef nonnull %.pr278) #12
+  tail call void @free(ptr noundef nonnull %.pr278) #13
   store ptr null, ptr @entry, align 8, !tbaa !43
-  tail call void @free(ptr noundef nonnull %i.e) #12
+  tail call void @free(ptr noundef nonnull %i.e) #13
   %.not203 = icmp eq ptr %i.j, null
   br i1 %.not203, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %.thread288, %bb.an
-  tail call void @free(ptr noundef nonnull %i.j) #12
+  tail call void @free(ptr noundef nonnull %i.j) #13
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.thread285, %.thread282, %bb.an, %bb.ao, %bb.am, %._crit_edge238
@@ -1166,7 +1166,7 @@ bb.a:
   %i.f = sext i32 %2 to i64                       ; 2 uses
   %i.g = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.f
   %i.h = load i32, ptr %i.g, align 4, !tbaa !28   ; 4 uses
-  %i.i = tail call i32 @cuddTestInteract(ptr noundef %0, i32 noundef %i.e, i32 noundef %i.h) #12
+  %i.i = tail call i32 @cuddTestInteract(ptr noundef %0, i32 noundef %i.e, i32 noundef %i.h) #13
   %.not = icmp eq i32 %i.i, 0
   br i1 %.not, label %.loopexit, label %bb.b
 
@@ -1447,12 +1447,12 @@ bb.a:
   %i.f = sext i32 %2 to i64
   %i.g = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.f
   %i.h = load i32, ptr %i.g, align 4, !tbaa !28   ; 5 uses
-  %i.i = tail call i32 @Cudd_bddIsVarToBeUngrouped(ptr noundef %0, i32 noundef %i.e) #12
+  %i.i = tail call i32 @Cudd_bddIsVarToBeUngrouped(ptr noundef %0, i32 noundef %i.e) #13
   %.not = icmp eq i32 %i.i, 0
   br i1 %.not, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = tail call i32 @Cudd_bddReadPairIndex(ptr noundef nonnull %0, i32 noundef %i.e) #12
+  %i.j = tail call i32 @Cudd_bddReadPairIndex(ptr noundef nonnull %0, i32 noundef %i.e) #13
   %i.k = icmp eq i32 %i.j, %i.h
   br i1 %i.k, label %bb.c, label %bb.g
 
@@ -1497,12 +1497,12 @@ ddIsVarHandled.exit27:                            ; preds = %bb.d
   br i1 %.not21, label %bb.g, label %ddIsVarHandled.exit.thread
 
 ddIsVarHandled.exit.thread:                       ; preds = %bb.d, %bb.c, %ddIsVarHandled.exit27, %ddIsVarHandled.exit
-  %i.aj = tail call i32 @Cudd_bddIsVarToBeGrouped(ptr noundef nonnull %0, i32 noundef %i.e) #12
+  %i.aj = tail call i32 @Cudd_bddIsVarToBeGrouped(ptr noundef nonnull %0, i32 noundef %i.e) #13
   %.not22 = icmp eq i32 %i.aj, 0
   br i1 %.not22, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %ddIsVarHandled.exit.thread
-  %i.ak = tail call i32 @Cudd_bddIsVarToBeGrouped(ptr noundef nonnull %0, i32 noundef %i.h) #12
+  %i.ak = tail call i32 @Cudd_bddIsVarToBeGrouped(ptr noundef nonnull %0, i32 noundef %i.h) #13
   %.not23 = icmp eq i32 %i.ak, 0
   br i1 %.not23, label %bb.g, label %bb.f
 
@@ -1553,7 +1553,7 @@ bb.a:
 define internal fastcc range(i32 0, 2) i32 @ddGroupSiftingAux(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef range(i32 0, 2) %5) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 15 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.c = load i32, ptr %i.b, align 4, !tbaa !41
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 312
@@ -1577,7 +1577,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader158, %bb.b
   %.0123162 = phi i32 [ %i.u, %bb.b ], [ %1, %.preheader158 ] ; 3 uses
   %i.o = add nsw i32 %.0123162, -1                ; 2 uses
-  %i.p = tail call i32 %4(ptr noundef nonnull %0, i32 noundef %i.o, i32 noundef %.0123162) #12, !callees !50
+  %i.p = tail call i32 %4(ptr noundef nonnull %0, i32 noundef %i.o, i32 noundef %.0123162) #13, !callees !50
   %.not = icmp eq i32 %i.p, 0
   br i1 %.not, label %._crit_edge, label %bb.b
 
@@ -1601,7 +1601,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph167:                                        ; preds = %._crit_edge, %bb.d
   %.1165 = phi i32 [ %.0, %bb.d ], [ %1, %._crit_edge ] ; 3 uses
   %i.z = add nsw i32 %.1165, 1                    ; 3 uses
-  %i.aa = tail call i32 %4(ptr noundef nonnull %0, i32 noundef %.1165, i32 noundef %i.z) #12, !callees !50
+  %i.aa = tail call i32 %4(ptr noundef nonnull %0, i32 noundef %.1165, i32 noundef %i.z) #13, !callees !50
   %.not140 = icmp eq i32 %i.aa, 0
   br i1 %.not140, label %.loopexit157, label %.preheader
 
@@ -1662,7 +1662,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not152, label %bb.ad, label %bb.ab
 
 bb.j:                                             ; preds = %bb.f
-  %i.ax = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.0125) #12
+  %i.ax = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.0125) #13
   %i.ay = icmp sgt i32 %i.ax, %3
   br i1 %i.ay, label %bb.k, label %bb.m
 
@@ -1824,7 +1824,7 @@ bb.ae:                                            ; preds = %.lr.ph179, %bb.ae
 
 .loopexit:                                        ; preds = %bb.ab, %..loopexit156_crit_edge, %bb.ad, %..loopexit_crit_edge, %bb.g
   %.0124 = phi i32 [ 0, %bb.ad ], [ 1, %bb.g ], [ 0, %..loopexit_crit_edge ], [ 1, %..loopexit156_crit_edge ], [ 1, %bb.ab ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret i32 %.0124
 }
 
@@ -1872,7 +1872,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !28
   %i.af = getelementptr inbounds [4 x i8], ptr %i.ac, i64 %i.j
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !28
-  %i.ah = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.ae, i32 noundef %i.ag) #12
+  %i.ah = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.ae, i32 noundef %i.ag) #13
   %.not = icmp ne i32 %i.ah, 0
   %. = zext i1 %.not to i32
   br label %bb.d
@@ -1944,7 +1944,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.g
   br i1 %i.ag, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ah = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.af) #12
+  %i.ah = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.af) #13
   %.not216 = icmp eq i32 %i.ah, 0
   br i1 %.not216, label %bb.g, label %bb.f
 
@@ -1973,7 +1973,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 ._crit_edge:                                      ; preds = %bb.g, %.critedge219
   %.0177.lcssa = phi i32 [ 0, %.critedge219 ], [ %.1178, %bb.g ] ; 2 uses
-  %i.aw = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %1) #12 ; 2 uses
+  %i.aw = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %1) #13 ; 2 uses
   %.not241 = icmp sle i32 %i.aw, %2
   %i.ax = icmp sgt i32 %.0177.lcssa, 0
   %or.cond242 = select i1 %.not241, i1 %i.ax, i1 false
@@ -2007,7 +2007,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   br i1 %.not206, label %bb.j, label %bb.i, !llvm.loop !107
 
 bb.j:                                             ; preds = %bb.i
-  %i.bj = tail call i32 %3(ptr noundef nonnull %0, i32 noundef %.0190243, i32 noundef %.1188244) #12, !callees !50
+  %i.bj = tail call i32 %3(ptr noundef nonnull %0, i32 noundef %.0190243, i32 noundef %.1188244) #13, !callees !50
   %.not207 = icmp eq i32 %i.bj, 0
   %i.bk = load ptr, ptr %i.a, align 8, !tbaa !34  ; 3 uses
   %i.bl = sext i32 %.0190243 to i64
@@ -2021,7 +2021,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bp = getelementptr inbounds [56 x i8], ptr %i.bk, i64 %i.bf
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 28
   store i32 %i.bo, ptr %i.bq, align 4, !tbaa !35
-  %i.br = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #12 ; 7 uses
+  %i.br = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #13 ; 7 uses
   %i.bs = icmp eq ptr %i.br, null
   br i1 %i.bs, label %bb.af, label %bb.l
 
@@ -2057,7 +2057,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cg = load ptr, ptr %i.m, align 8, !tbaa !30
   %i.ch = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %i.bb
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !28 ; 2 uses
-  %i.cj = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.ci) #12
+  %i.cj = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.ci) #13
   %.not213 = icmp eq i32 %i.cj, 0
   br i1 %.not213, label %bb.q, label %bb.p
 
@@ -2080,12 +2080,12 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.3 = phi i32 [ %i.cv, %bb.p ], [ %.2179247, %bb.o ]
-  %i.cw = tail call i32 @cuddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.0190243, i32 noundef %.1188244) #12 ; 5 uses
+  %i.cw = tail call i32 @cuddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.0190243, i32 noundef %.1188244) #13 ; 5 uses
   %i.cx = icmp eq i32 %i.cw, 0
   br i1 %i.cx, label %bb.af, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.cy = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #12 ; 7 uses
+  %i.cy = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #13 ; 7 uses
   %i.cz = icmp eq ptr %i.cy, null
   br i1 %i.cz, label %bb.af, label %bb.s
 
@@ -2110,7 +2110,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %spec.select = tail call i32 @llvm.smin.i32(i32 %i.cw, i32 %.0181246)
-  %i.dk = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.1188244) #12 ; 0 uses
+  %i.dk = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.1188244) #13 ; 0 uses
   br label %.loopexit
 
 bb.u:                                             ; preds = %bb.n, %bb.m
@@ -2128,7 +2128,7 @@ bb.v:                                             ; preds = %bb.y, %bb.u
   br i1 %i.dp, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.dq = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.do) #12
+  %i.dq = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.do) #13
   %.not208 = icmp eq i32 %i.dq, 0
   br i1 %.not208, label %bb.y, label %bb.x
 
@@ -2191,7 +2191,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.es, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph239
-  %i.et = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.er) #12
+  %i.et = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.q, i32 noundef %i.er) #13
   %.not211 = icmp eq i32 %i.et, 0
   br i1 %.not211, label %bb.ae, label %bb.ad
 
@@ -2221,7 +2221,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad
   %.1186 = phi i32 [ %.0185245, %bb.l ], [ %i.cw, %bb.t ], [ %i.ed, %bb.ab ], [ %i.ed, %bb.ae ] ; 2 uses
   %.3184 = phi i32 [ %.0181246, %bb.l ], [ %spec.select, %bb.t ], [ %spec.select221, %bb.ab ], [ %spec.select221, %bb.ae ] ; 2 uses
   %.8 = phi i32 [ %.2179247, %bb.l ], [ %.3, %bb.t ], [ %.5, %bb.ab ], [ %.7, %bb.ae ] ; 2 uses
-  %i.fh = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.0180) #12 ; 2 uses
+  %i.fh = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.0180) #13 ; 2 uses
   %.not = icmp sle i32 %i.fh, %2
   %i.fi = sub nsw i32 %.1186, %.8
   %i.fj = icmp slt i32 %i.fi, %.3184
@@ -2292,7 +2292,7 @@ bb.a:
   br i1 %.not105, label %._crit_edge, label %.lr.ph, !llvm.loop !112
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %i.i = tail call i32 @Cudd_ReadSize(ptr noundef %0) #12
+  %i.i = tail call i32 @Cudd_ReadSize(ptr noundef %0) #13
   %i.j = add nsw i32 %i.i, 1                      ; 2 uses
   %.not107 = icmp eq i32 %3, 0                    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 336
@@ -2305,10 +2305,10 @@ bb.a:
   %i.o = load i32, ptr %i.n, align 4, !tbaa !28
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !27
-  %i.r = tail call i32 @Cudd_bddReadPairIndex(ptr noundef nonnull %0, i32 noundef %i.o) #12
+  %i.r = tail call i32 @Cudd_bddReadPairIndex(ptr noundef nonnull %0, i32 noundef %i.o) #13
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.s
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !28   ; 6 uses
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !28   ; 2 uses
   br i1 %.not107, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %._crit_edge, %bb.c
@@ -2322,14 +2322,12 @@ bb.a:
 
 bb.b:                                             ; preds = %.split.us
   %i.y = getelementptr inbounds nuw i8, ptr %.181130.us, i64 4
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !52   ; 3 uses
-  %5 = icmp ugt i32 %i.z, %i.u
-  %6 = sub nuw i32 %i.z, %i.u
-  %i.aa = sub nuw i32 %i.u, %i.z
-  %7 = select i1 %5, i32 %6, i32 %i.aa            ; 2 uses
-  %i.ab = icmp slt i32 %7, %.077132.us
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !52
+  %i.aa = sub nsw i32 %i.z, %i.u
+  %5 = tail call i32 @llvm.abs.i32(i32 %i.aa, i1 true) ; 2 uses
+  %i.ab = icmp slt i32 %5, %.077132.us
   %spec.select112.us = select i1 %i.ab, ptr %.181130.us, ptr %.2131.us
-  %spec.select113.us = tail call i32 @llvm.smin.i32(i32 %7, i32 %.077132.us)
+  %spec.select113.us = tail call i32 @llvm.smin.i32(i32 %5, i32 %.077132.us)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.split.us
@@ -2350,14 +2348,12 @@ bb.c:                                             ; preds = %bb.b, %.split.us
   br i1 %i.ag, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.split
-  %i.ah = load i32, ptr %.181130, align 8, !tbaa !53 ; 3 uses
-  %8 = icmp ugt i32 %i.ah, %i.u
-  %9 = sub nuw i32 %i.ah, %i.u
-  %i.ai = sub nuw i32 %i.u, %i.ah
-  %10 = select i1 %8, i32 %9, i32 %i.ai           ; 2 uses
-  %i.aj = icmp slt i32 %10, %.077132
+  %i.ah = load i32, ptr %.181130, align 8, !tbaa !53
+  %i.ai = sub nsw i32 %i.ah, %i.u
+  %6 = tail call i32 @llvm.abs.i32(i32 %i.ai, i1 true) ; 2 uses
+  %i.aj = icmp slt i32 %6, %.077132
   %spec.select112 = select i1 %i.aj, ptr %.181130, ptr %.2131
-  %spec.select113 = tail call i32 @llvm.smin.i32(i32 %10, i32 %.077132)
+  %spec.select113 = tail call i32 @llvm.smin.i32(i32 %6, i32 %.077132)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.split
@@ -2420,7 +2416,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bi, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.bj = tail call i32 @cuddSwapInPlace(ptr noundef nonnull %0, i32 noundef %i.aw, i32 noundef %i.bd) #12
+  %i.bj = tail call i32 @cuddSwapInPlace(ptr noundef nonnull %0, i32 noundef %i.aw, i32 noundef %i.bd) #13
   %.not111 = icmp eq i32 %i.bj, 0
   br i1 %.not111, label %ddGroupMoveBackward.exit.thread, label %bb.r
 
@@ -2485,7 +2481,7 @@ bb.o:                                             ; preds = %bb.n
 .preheader70.us.i:                                ; preds = %.preheader70.us.i, %.preheader70.us.preheader.i
   %.06078.us.i = phi i32 [ %i.cm, %.preheader70.us.i ], [ 1, %.preheader70.us.preheader.i ] ; 3 uses
   %i.ck = add nsw i32 %.06078.us.i, %i.bo
-  %i.cl = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %i.ck) #12 ; 0 uses
+  %i.cl = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %i.ck) #13 ; 0 uses
   %i.cm = add nuw i32 %.06078.us.i, 1
   %exitcond93.i = icmp eq i32 %.06078.us.i, %i.cj
   br i1 %exitcond93.i, label %.preheader.i, label %.preheader70.us.i, !llvm.loop !117
@@ -2504,19 +2500,19 @@ bb.p:                                             ; preds = %bb.q, %.preheader70
   %.05974.i = phi i32 [ 1, %.preheader70.i ], [ %i.cq, %bb.q ]
   %.16273.i = phi i32 [ %.06177.i, %.preheader70.i ], [ %.16572.i, %bb.q ]
   %.16572.i = phi i32 [ %.06476.i, %.preheader70.i ], [ %i.cp, %bb.q ] ; 3 uses
-  %i.cn = tail call i32 @cuddSwapInPlace(ptr noundef %0, i32 noundef %.16572.i, i32 noundef %.16273.i) #12
+  %i.cn = tail call i32 @cuddSwapInPlace(ptr noundef %0, i32 noundef %.16572.i, i32 noundef %.16273.i) #13
   %i.co = icmp eq i32 %i.cn, 0
   br i1 %i.co, label %ddGroupMoveBackward.exit.thread, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.cp = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %.16572.i) #12
+  %i.cp = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %.16572.i) #13
   %i.cq = add nuw i32 %.05974.i, 1                ; 2 uses
   %exitcond.i = icmp eq i32 %i.cq, %i.ch
   br i1 %exitcond.i, label %._crit_edge.i, label %bb.p, !llvm.loop !118
 
 ._crit_edge.i:                                    ; preds = %bb.q
   %i.cr = add nsw i32 %.06078.i, %i.bo            ; 2 uses
-  %i.cs = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %i.cr) #12
+  %i.cs = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %i.cr) #13
   %i.ct = add nuw i32 %.06078.i, 1
   %exitcond91.i = icmp eq i32 %.06078.i, %i.ci
   br i1 %exitcond91.i, label %.preheader.i, label %.preheader70.i, !llvm.loop !117
@@ -2524,13 +2520,13 @@ bb.q:                                             ; preds = %bb.p
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
   %.180.i = phi i32 [ %i.da, %.lr.ph.i ], [ 0, %.preheader.i ]
   %.26379.i = phi i32 [ %i.cz, %.lr.ph.i ], [ %i.by, %.preheader.i ] ; 3 uses
-  %i.cu = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.26379.i) #12
+  %i.cu = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.26379.i) #13
   %i.cv = load ptr, ptr %i.aq, align 8, !tbaa !34
   %i.cw = sext i32 %.26379.i to i64
   %i.cx = getelementptr inbounds [56 x i8], ptr %i.cv, i64 %i.cw
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 28
   store i32 %i.cu, ptr %i.cy, align 4, !tbaa !35
-  %i.cz = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.26379.i) #12 ; 2 uses
+  %i.cz = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.26379.i) #13 ; 2 uses
   %i.da = add nuw nsw i32 %.180.i, 1              ; 2 uses
   %exitcond94.not.i = icmp eq i32 %i.da, %i.cf
   br i1 %exitcond94.not.i, label %._crit_edge81.i, label %.lr.ph.i, !llvm.loop !119
@@ -2542,20 +2538,20 @@ bb.q:                                             ; preds = %bb.p
   %i.dd = getelementptr inbounds [56 x i8], ptr %i.db, i64 %i.dc
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 28
   store i32 %i.by, ptr %i.de, align 4, !tbaa !35
-  %i.df = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.263.lcssa.i) #12 ; 3 uses
+  %i.df = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.263.lcssa.i) #13 ; 3 uses
   %i.dg = icmp sgt i32 %i.ce, 0
   br i1 %i.dg, label %.lr.ph85.i, label %ddGroupMoveBackward.exit
 
 .lr.ph85.i:                                       ; preds = %._crit_edge81.i, %.lr.ph85.i
   %.283.i = phi i32 [ %i.dn, %.lr.ph85.i ], [ 0, %._crit_edge81.i ]
   %.26682.i = phi i32 [ %i.dm, %.lr.ph85.i ], [ %i.df, %._crit_edge81.i ] ; 3 uses
-  %i.dh = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.26682.i) #12
+  %i.dh = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.26682.i) #13
   %i.di = load ptr, ptr %i.aq, align 8, !tbaa !34
   %i.dj = sext i32 %.26682.i to i64
   %i.dk = getelementptr inbounds [56 x i8], ptr %i.di, i64 %i.dj
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 28
   store i32 %i.dh, ptr %i.dl, align 4, !tbaa !35
-  %i.dm = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.26682.i) #12 ; 2 uses
+  %i.dm = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.26682.i) #13 ; 2 uses
   %i.dn = add nuw nsw i32 %.283.i, 1              ; 2 uses
   %exitcond95.not.i = icmp eq i32 %i.dn, %i.ce
   br i1 %exitcond95.not.i, label %ddGroupMoveBackward.exit, label %.lr.ph85.i, !llvm.loop !120
@@ -2634,7 +2630,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
   br i1 %i.w, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.x = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.v, i32 noundef %i.e) #12
+  %i.x = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.v, i32 noundef %i.e) #13
   %.not170 = icmp eq i32 %i.x, 0
   br i1 %.not170, label %bb.f, label %bb.e
 
@@ -2662,7 +2658,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 
 ._crit_edge:                                      ; preds = %bb.f, %.preheader
   %.0.lcssa = phi i32 [ %i.q, %.preheader ], [ %.1, %bb.f ] ; 2 uses
-  %i.ak = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %1) #12 ; 2 uses
+  %i.ak = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %1) #13 ; 2 uses
   %i.al = icmp sge i32 %i.ak, %2
   %i.am = icmp sle i32 %.0.lcssa, %i.q
   %i.an = select i1 %i.al, i1 %i.am, i1 false
@@ -2683,7 +2679,7 @@ bb.g:                                             ; preds = %.lr.ph187, %bb.aa
   %i.as = getelementptr inbounds [56 x i8], ptr %i.aq, i64 %i.ar
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 28
   %i.au = load i32, ptr %i.at, align 4, !tbaa !35 ; 3 uses
-  %i.av = tail call i32 %3(ptr noundef nonnull %0, i32 noundef %.0151183, i32 noundef %.0153182) #12, !callees !50
+  %i.av = tail call i32 %3(ptr noundef nonnull %0, i32 noundef %.0151183, i32 noundef %.0153182) #13, !callees !50
   %.not = icmp eq i32 %i.av, 0
   %i.aw = load ptr, ptr %i.j, align 8, !tbaa !34  ; 4 uses
   %i.ax = getelementptr inbounds [56 x i8], ptr %i.aw, i64 %i.ar
@@ -2710,7 +2706,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 28
   store i32 %i.au, ptr %i.bh, align 4, !tbaa !35
-  %i.bi = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #12 ; 7 uses
+  %i.bi = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #13 ; 7 uses
   %i.bj = icmp eq ptr %i.bi, null
   br i1 %i.bj, label %bb.ab, label %bb.k
 
@@ -2748,12 +2744,12 @@ bb.n:                                             ; preds = %bb.m
   %i.bz = load ptr, ptr %i.a, align 8, !tbaa !30
   %i.ca = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %i.ar
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !28 ; 2 uses
-  %i.cc = tail call i32 @cuddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.0151183, i32 noundef %.0153182) #12 ; 4 uses
+  %i.cc = tail call i32 @cuddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.0151183, i32 noundef %.0153182) #13 ; 4 uses
   %i.cd = icmp eq i32 %i.cc, 0
   br i1 %i.cd, label %bb.ab, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ce = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.cb, i32 noundef %i.e) #12
+  %i.ce = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.cb, i32 noundef %i.e) #13
   %.not166 = icmp eq i32 %i.ce, 0
   br i1 %.not166, label %bb.q, label %bb.p
 
@@ -2776,7 +2772,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.3 = phi i32 [ %i.cr, %bb.p ], [ %.2185, %bb.o ]
-  %i.cs = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #12 ; 7 uses
+  %i.cs = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #13 ; 7 uses
   %i.ct = icmp eq ptr %i.cs, null
   br i1 %i.ct, label %bb.ab, label %bb.r
 
@@ -2821,7 +2817,7 @@ bb.v:                                             ; preds = %bb.x, %bb.u
   %i.dk = sext i32 %.1146 to i64                  ; 3 uses
   %i.dl = getelementptr inbounds [4 x i8], ptr %i.dj, i64 %i.dk
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !28 ; 2 uses
-  %i.dn = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.dm, i32 noundef %i.e) #12
+  %i.dn = tail call i32 @cuddTestInteract(ptr noundef nonnull %0, i32 noundef %i.dm, i32 noundef %i.e) #13
   %.not164 = icmp eq i32 %i.dn, 0
   %.pre = load ptr, ptr %i.j, align 8, !tbaa !34  ; 2 uses
   br i1 %.not164, label %bb.x, label %bb.w
@@ -2868,7 +2864,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z, %bb.s, %bb.k
   %.1148 = phi i32 [ %.0147184, %bb.k ], [ %spec.select, %bb.s ], [ %spec.select172, %bb.z ] ; 2 uses
   %.6 = phi i32 [ %.2185, %bb.k ], [ %.3, %bb.s ], [ %.5, %bb.z ] ; 2 uses
-  %i.el = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %i.au) #12 ; 2 uses
+  %i.el = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %i.au) #13 ; 2 uses
   %i.em = icmp sge i32 %i.el, %2
   %i.en = icmp sle i32 %.6, %.1148
   %i.eo = select i1 %i.em, i1 %i.en, i1 false
@@ -2957,7 +2953,7 @@ bb.c:                                             ; preds = %bb.b
 .preheader104.us:                                 ; preds = %.preheader104.us.preheader, %.preheader104.us
   %.090118.us = phi i32 [ %i.t, %.preheader104.us ], [ 1, %.preheader104.us.preheader ] ; 3 uses
   %i.r = add nsw i32 %.090118.us, %2
-  %i.s = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %i.r) #12 ; 0 uses
+  %i.s = tail call i32 @cuddNextLow(ptr noundef nonnull %0, i32 noundef %i.r) #13 ; 0 uses
   %i.t = add nuw i32 %.090118.us, 1
   %exitcond145 = icmp eq i32 %.090118.us, %i.q
   br i1 %exitcond145, label %.preheader, label %.preheader104.us, !llvm.loop !129
@@ -2978,19 +2974,19 @@ bb.d:                                             ; preds = %.preheader104, %bb.
   %.089113 = phi i32 [ 1, %.preheader104 ], [ %i.x, %bb.e ]
   %.194112 = phi i32 [ %.093117, %.preheader104 ], [ %.197111, %bb.e ] ; 2 uses
   %.197111 = phi i32 [ %.096116, %.preheader104 ], [ %i.w, %bb.e ] ; 4 uses
-  %i.u = tail call i32 @cuddSwapInPlace(ptr noundef %0, i32 noundef %.197111, i32 noundef %.194112) #12
+  %i.u = tail call i32 @cuddSwapInPlace(ptr noundef %0, i32 noundef %.197111, i32 noundef %.194112) #13
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %.loopexit105, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.w = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %.197111) #12
+  %i.w = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %.197111) #13
   %i.x = add nuw i32 %.089113, 1                  ; 2 uses
   %exitcond = icmp eq i32 %i.x, %i.o
   br i1 %exitcond, label %._crit_edge, label %bb.d, !llvm.loop !130
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.y = add nsw i32 %.090118, %2                 ; 2 uses
-  %i.z = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %i.y) #12
+  %i.z = tail call i32 @cuddNextLow(ptr noundef %0, i32 noundef %i.y) #13
   %i.aa = add nuw i32 %.090118, 1
   %exitcond143 = icmp eq i32 %.090118, %i.p
   br i1 %exitcond143, label %.preheader, label %.preheader104, !llvm.loop !129
@@ -2998,13 +2994,13 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %.191125 = phi i32 [ %i.ah, %.lr.ph ], [ 0, %.preheader ]
   %.295124 = phi i32 [ %i.ag, %.lr.ph ], [ %i.f, %.preheader ] ; 3 uses
-  %i.ab = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.295124) #12
+  %i.ab = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.295124) #13
   %i.ac = load ptr, ptr %i.a, align 8, !tbaa !34
   %i.ad = sext i32 %.295124 to i64
   %i.ae = getelementptr inbounds [56 x i8], ptr %i.ac, i64 %i.ad
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 28
   store i32 %i.ab, ptr %i.af, align 4, !tbaa !35
-  %i.ag = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.295124) #12 ; 2 uses
+  %i.ag = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.295124) #13 ; 2 uses
   %i.ah = add nuw nsw i32 %.191125, 1             ; 2 uses
   %exitcond146.not = icmp eq i32 %i.ah, %i.m
   br i1 %exitcond146.not, label %._crit_edge126, label %.lr.ph, !llvm.loop !131
@@ -3018,20 +3014,20 @@ bb.e:                                             ; preds = %bb.d
   %i.ak = getelementptr inbounds [56 x i8], ptr %i.ai, i64 %i.aj
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 28
   store i32 %i.f, ptr %i.al, align 4, !tbaa !35
-  %i.am = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.295.lcssa) #12 ; 3 uses
+  %i.am = tail call i32 @cuddNextHigh(ptr noundef %0, i32 noundef %.295.lcssa) #13 ; 3 uses
   %i.an = icmp sgt i32 %i.l, 0
   br i1 %i.an, label %.lr.ph131, label %._crit_edge132
 
 .lr.ph131:                                        ; preds = %._crit_edge126, %.lr.ph131
   %.2129 = phi i32 [ %i.au, %.lr.ph131 ], [ 0, %._crit_edge126 ]
   %.298128 = phi i32 [ %i.at, %.lr.ph131 ], [ %i.am, %._crit_edge126 ] ; 3 uses
-  %i.ao = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.298128) #12
+  %i.ao = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.298128) #13
   %i.ap = load ptr, ptr %i.a, align 8, !tbaa !34
   %i.aq = sext i32 %.298128 to i64
   %i.ar = getelementptr inbounds [56 x i8], ptr %i.ap, i64 %i.aq
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 28
   store i32 %i.ao, ptr %i.as, align 4, !tbaa !35
-  %i.at = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.298128) #12 ; 2 uses
+  %i.at = tail call i32 @cuddNextHigh(ptr noundef nonnull %0, i32 noundef %.298128) #13 ; 2 uses
   %i.au = add nuw nsw i32 %.2129, 1               ; 2 uses
   %exitcond147.not = icmp eq i32 %i.au, %i.l
   br i1 %exitcond147.not, label %._crit_edge132, label %.lr.ph131, !llvm.loop !132
@@ -3043,7 +3039,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ax = getelementptr inbounds [56 x i8], ptr %i.av, i64 %i.aw
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 28
   store i32 %i.am, ptr %i.ay, align 4, !tbaa !35
-  %i.az = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #12 ; 7 uses
+  %i.az = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #13 ; 7 uses
   %i.ba = icmp eq ptr %i.az, null
   br i1 %i.ba, label %.loopexit105, label %bb.f
 
@@ -3120,11 +3116,14 @@ declare i32 @llvm.umax.i32(i32, i32) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #10
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #11
+declare void @llvm.assume(i1 noundef) #12
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -3136,10 +3135,11 @@ attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #7 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { nofree nounwind }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #12 = { nounwind }
-attributes #13 = { nounwind allocsize(0) }
+attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #13 = { nounwind }
+attributes #14 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

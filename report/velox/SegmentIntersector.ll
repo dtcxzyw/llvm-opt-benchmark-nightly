@@ -23,11 +23,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  %5 = icmp ugt i64 %2, %4
-  %i.g = sub nuw i64 %2, %4
-  %6 = sub nuw i64 %4, %2
-  %7 = select i1 %5, i64 %i.g, i64 %6
-  %i.h = icmp eq i64 %7, 1
+  %i.g = sub nsw i64 %2, %4
+  %5 = tail call i64 @llvm.abs.i64(i64 %i.g, i1 true)
+  %i.h = icmp eq i64 %5, 1
   br i1 %i.h, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -142,11 +140,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.az, label %bb.g, label %_ZN4geos9geomgraph5index18SegmentIntersector21isTrivialIntersectionEPNS0_4EdgeEmS4_m.exit
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp ugt i64 %2, %4
-  %i.ba = sub nuw i64 %2, %4
-  %6 = sub nuw i64 %4, %2
-  %7 = select i1 %5, i64 %i.ba, i64 %6
-  %i.bb = icmp eq i64 %7, 1
+  %i.ba = sub nsw i64 %2, %4
+  %5 = tail call i64 @llvm.abs.i64(i64 %i.ba, i1 true)
+  %i.bb = icmp eq i64 %5, 1
   br i1 %i.bb, label %_ZN4geos9geomgraph5index18SegmentIntersector21isTrivialIntersectionEPNS0_4EdgeEmS4_m.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -413,9 +409,13 @@ _ZNK4geos9algorithm15LineIntersector14isIntersectionERKNS_4geom10CoordinateE.exi
   ret i1 %.3
 }
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #3
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

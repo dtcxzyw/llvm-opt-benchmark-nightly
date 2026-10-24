@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a
 .lr.ph:                                           ; preds = %bb.e, %bb.d
   %.sroa.0.1.i2 = phi i64 [ %i.c, %bb.d ], [ %.lcssa, %bb.e ] ; 2 uses
   %i.g = getelementptr inbounds nuw [208 x i8], ptr %0, i64 %.sroa.0.1.i2, !dbg !4296
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery13RecoveryEpochEBJ_(ptr noalias nofree noundef align 8 dereferenceable(208) %i.g) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery13RecoveryEpochEBJ_(ptr noalias nofree noundef align 8 dereferenceable(208) %i.g) #19
           to label %bb.d unwind label %bb.f, !dbg !4296
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.e
@@ -213,7 +213,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a
 bb.f:                                             ; preds = %.lr.ph
   %i.h = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4296
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4296
   unreachable, !dbg !4296
 }
 
@@ -239,7 +239,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4303
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4303
   unreachable, !dbg !4303
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCs5kGgRUzsVpH_8smallvec8SmallVecAyj1_EECs3f36owOmepS_6quiche.exit: ; preds = %bb.b
@@ -319,7 +319,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f
     #dbg_value(i8 2, !4530, !DIExpression(), !4362)
   fence acquire, !dbg !4563
-  tail call void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcShE9drop_slowCs3f36owOmepS_6quiche(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.h) #20, !dbg !4564
+  tail call void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcShE9drop_slowCs3f36owOmepS_6quiche(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.h) #21, !dbg !4564
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameEBF_.exit, !dbg !4564
 
 bb.h:                                             ; preds = %bb.b
@@ -338,7 +338,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.n = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4565
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4565
   unreachable, !dbg !4565
 
 common.resume.i:                                  ; preds = %bb.w, %bb.t, %bb.q, %bb.n, %bb.i
@@ -375,7 +375,7 @@ bb.k:                                             ; preds = %bb.b
 bb.l:                                             ; preds = %bb.k
     #dbg_value(i8 2, !4530, !DIExpression(), !4397)
   fence acquire, !dbg !4575
-  tail call void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcShE9drop_slowCs3f36owOmepS_6quiche(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.o) #20, !dbg !4576
+  tail call void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcShE9drop_slowCs3f36owOmepS_6quiche(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.o) #21, !dbg !4576
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameEBF_.exit, !dbg !4576
 
 bb.m:                                             ; preds = %bb.b
@@ -394,7 +394,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.u = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4577
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4577
   unreachable, !dbg !4577
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs3f36owOmepS_6quiche.exit3.i: ; preds = %bb.m
@@ -418,7 +418,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.x = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4580
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4580
   unreachable, !dbg !4580
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs3f36owOmepS_6quiche.exit5.i: ; preds = %bb.p
@@ -442,7 +442,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.aa = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4583
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4583
   unreachable, !dbg !4583
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs3f36owOmepS_6quiche.exit7.i: ; preds = %bb.s
@@ -466,7 +466,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.ad = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4586
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4586
   unreachable, !dbg !4586
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs3f36owOmepS_6quiche.exit9.i: ; preds = %bb.v
@@ -497,7 +497,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4594
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4594
   unreachable, !dbg !4594
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVecNtNtCs3f36owOmepS_6quiche5frame5FrameEEB1j_.exit: ; preds = %bb.b
@@ -522,7 +522,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4604
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4604
   unreachable, !dbg !4604
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVecTyINtNtB4_6option6OptionNtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sampler27ConnectionStateOnSentPacketEEEEB1N_.exit.i: ; preds = %bb.b
@@ -598,7 +598,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4652
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4652
   unreachable, !dbg !4652
 
 bb.e:                                             ; preds = %bb.c
@@ -609,7 +609,7 @@ bb.e:                                             ; preds = %bb.c
 .body:                                            ; preds = %bb.b, %bb.e
   %eh.lpad-body = phi { ptr, i32 } [ %i.d, %bb.e ], [ %i.b, %bb.b ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64, !dbg !4651
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtCs3f36owOmepS_6quiche5frame5FrameEEB1C_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.e) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtCs3f36owOmepS_6quiche5frame5FrameEEB1C_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.e) #19
           to label %.body5 unwind label %bb.p, !dbg !4651
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery10SentPacketEEB1G_.exit: ; preds = %bb.c
@@ -633,13 +633,13 @@ bb.g:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.h:                                             ; preds = %bb.f
   %i.h = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4655
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4655
   unreachable, !dbg !4655
 
 .body5:                                           ; preds = %bb.i, %bb.f, %.body
   %.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.j, %bb.i ], [ %i.g, %bb.f ]
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 96, !dbg !4651
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtCs3f36owOmepS_6quiche5frame5FrameEEB1C_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.i) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtCs3f36owOmepS_6quiche5frame5FrameEEB1C_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.i) #19
           to label %.body8 unwind label %bb.p, !dbg !4651
 
 bb.i:                                             ; preds = %bb.g
@@ -668,13 +668,13 @@ bb.k:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.l:                                             ; preds = %bb.j
   %i.m = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4658
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4658
   unreachable, !dbg !4658
 
 .body8:                                           ; preds = %bb.m, %bb.j, %.body5
   %.pn3 = phi { ptr, i32 } [ %.pn, %.body5 ], [ %i.o, %bb.m ], [ %i.l, %bb.j ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 128, !dbg !4651
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtCs3f36owOmepS_6quiche5frame5FrameEEB1C_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.n) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtCs3f36owOmepS_6quiche5frame5FrameEEB1C_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.n) #19
           to label %common.resume unwind label %bb.p, !dbg !4651
 
 bb.m:                                             ; preds = %bb.k
@@ -698,7 +698,7 @@ bb.n:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.o:                                             ; preds = %bb.n
   %i.r = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4661
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4661
   unreachable, !dbg !4661
 
 common.resume:                                    ; preds = %.body8, %bb.n
@@ -713,7 +713,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections
 bb.p:                                             ; preds = %.body8, %.body5, %.body
   %i.s = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4651
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4651
   unreachable, !dbg !4651
 }
 
@@ -742,7 +742,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4714
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4714
   unreachable, !dbg !4714
 
 bb.e:                                             ; preds = %bb.c
@@ -753,7 +753,7 @@ bb.e:                                             ; preds = %bb.c
 .body.i:                                          ; preds = %bb.e, %bb.b
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.d, %bb.e ], [ %i.b, %bb.b ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !4713
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sampler18ConnectionStateMapNtBE_27ConnectionStateOnSentPacketEEBM_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.e) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sampler18ConnectionStateMapNtBE_27ConnectionStateOnSentPacketEEBM_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.e) #19
           to label %common.resume.i unwind label %bb.h, !dbg !4713
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sampler8AckPointEEB1I_.exit.i: ; preds = %bb.c
@@ -773,7 +773,7 @@ bb.f:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.g:                                             ; preds = %bb.f
   %i.h = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4717
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4717
   unreachable, !dbg !4717
 
 common.resume.i:                                  ; preds = %bb.f, %.body.i
@@ -783,7 +783,7 @@ common.resume.i:                                  ; preds = %bb.f, %.body.i
 bb.h:                                             ; preds = %.body.i
   %i.i = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !4713
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !4713
   unreachable, !dbg !4713
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sampler16BandwidthSamplerEBL_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sampler8AckPointEEB1I_.exit.i
@@ -969,7 +969,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
     #dbg_value(ptr null, !5037, !DIExpression(), !5044)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #21, !dbg !5137
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #22, !dbg !5137
   unreachable, !dbg !5137
 
 bb.l:                                             ; preds = %bb.j
@@ -1058,7 +1058,7 @@ _RNvYNtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sample
   br i1 %i.bf, label %bb.t, label %bb.u, !dbg !5157
 
 bb.s:                                             ; preds = %bb.l
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #21, !dbg !5158
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #22, !dbg !5158
   unreachable, !dbg !5158
 
 bb.t:                                             ; preds = %_RNvYNtNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_sampler15ExtraAckedEventNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2gtBc_.exit118
@@ -1193,7 +1193,7 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %.not115, label %bb.an, label %bb.am, !dbg !5194, !prof !2357
 
 bb.ae:                                            ; preds = %bb.ac
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #21, !dbg !5195
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #22, !dbg !5195
   unreachable, !dbg !5195
 
 bb.af:                                            ; preds = %bb.ac
@@ -1260,7 +1260,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %_RNvXsd_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_samplerNtB5_15ExtraAckedEventNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit123.thread, !dbg !5129
 
 bb.ai:                                            ; preds = %_RNvXsd_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_samplerNtB5_15ExtraAckedEventNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @19) #21, !dbg !5208
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @19) #22, !dbg !5208
   unreachable, !dbg !5208
 
 bb.aj:                                            ; preds = %_RNvXsd_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_samplerNtB5_15ExtraAckedEventNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread
@@ -1334,7 +1334,7 @@ bb.am:                                            ; preds = %bb.ad
   br i1 %i.cr, label %bb.ao, label %_RNvXsd_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion3bbr17bandwidth_samplerNtB5_15ExtraAckedEventNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit123.thread, !dbg !5220
 
 bb.an:                                            ; preds = %bb.ad
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #21, !dbg !5221
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #22, !dbg !5221
   unreachable, !dbg !5221
 
 bb.ao:                                            ; preds = %bb.am
@@ -1518,13 +1518,13 @@ bb.e:                                             ; preds = %bb.d
 select.unfold.i:                                  ; preds = %bb.a
     #dbg_value(i64 poison, !2562, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5280)
     #dbg_value(i32 -1, !2562, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !5280)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #21, !dbg !5739, !noalias !5582
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #22, !dbg !5739, !noalias !5582
   unreachable, !dbg !5739
 
 bb.f:                                             ; preds = %bb.d, %bb.b
     #dbg_value(i64 poison, !2562, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5281)
     #dbg_value(i32 -1, !2562, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !5281)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #21, !dbg !5740, !noalias !5582
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #22, !dbg !5740, !noalias !5582
   unreachable, !dbg !5740
 
 _RNvXs2_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB5_9GRecoveryNtB9_11RecoveryOps3pto.exit: ; preds = %bb.c, %bb.e
@@ -1603,7 +1603,7 @@ bb.h:                                             ; preds = %bb.g
 select.unfold:                                    ; preds = %bb.g, %_RNvXs2_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB5_9GRecoveryNtB9_11RecoveryOps3pto.exit
     #dbg_value(i64 poison, !5443, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5563)
     #dbg_value(i32 -1, !5443, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !5563)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #21, !dbg !5755
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #22, !dbg !5755
   unreachable, !dbg !5755
 
 bb.i:                                             ; preds = %bb.h
@@ -2006,13 +2006,13 @@ bb.al:                                            ; preds = %bb.ak
 select.unfold138:                                 ; preds = %bb.z, %bb.s
     #dbg_value(i64 poison, !5443, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5574)
     #dbg_value(i32 -1, !5443, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !5574)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #21, !dbg !5786
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #22, !dbg !5786
   unreachable, !dbg !5786
 
 bb.am:                                            ; preds = %bb.ak, %bb.ai
     #dbg_value(i64 poison, !5443, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5575)
     #dbg_value(i32 -1, !5443, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !5575)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #21, !dbg !5787
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #22, !dbg !5787
   unreachable, !dbg !5787
 
 bb.an:                                            ; preds = %bb.aj, %bb.al, %bb.ah
@@ -2373,7 +2373,7 @@ _RNvMsc_NtCskKLDkoKarTP_4core4timeNtB5_8Duration17try_from_secs_f64.exit.i.i: ; 
   store ptr %i.g, ptr %i.f, align 8, !dbg !6614, !noalias !6222
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !6614
   store ptr @_RNvXsb_NtCskKLDkoKarTP_4core4timeNtB5_21TryFromFloatSecsErrorNtNtB7_3fmt7Display3fmt, ptr %.sroa.42.0..sroa_idx.i.i, align 8, !dbg !6614, !noalias !6222
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @11, ptr noundef nonnull %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #21, !dbg !6615, !noalias !6222
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @11, ptr noundef nonnull %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22, !dbg !6615, !noalias !6222
   unreachable, !dbg !6615
 
 _RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration13from_secs_f64.exit.i: ; preds = %bb.k, %bb.i
@@ -2488,7 +2488,7 @@ bb.l:                                             ; preds = %_RNvMs_NtNtCs3f36ow
           to label %bb.n unwind label %.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !6634, !noalias !6390
 
 bb.m:                                             ; preds = %_RNvMs_NtNtCs3f36owOmepS_6quiche8recovery3rttNtB4_8RttStats10loss_delay.exit
-  call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @33) #21, !dbg !6635, !noalias !6390
+  call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @33) #22, !dbg !6635, !noalias !6390
   unreachable, !dbg !6635
 
 .loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.aa, %bb.ab, %bb.ae, %bb.ai, %bb.w, %bb.l
@@ -2723,7 +2723,7 @@ bb.ad:                                            ; preds = %bb.ag, %bb.ac
   br i1 %i.ef, label %bb.ae, label %bb.aj, !dbg !6678
 
 bb.ae:                                            ; preds = %bb.ad
-  invoke void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4LostE8grow_oneBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ce) #20
+  invoke void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4LostE8grow_oneBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ce) #21
           to label %bb.aj unwind label %.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !6679, !noalias !6391
 
 bb.af:                                            ; preds = %bb.ac
@@ -2810,7 +2810,7 @@ bb.ak:                                            ; preds = %.noexc58.i, %bb.ah
 bb.al:                                            ; preds = %.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
   %i.ez = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !6704, !noalias !6391
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !6704, !noalias !6391
   unreachable, !dbg !6704
 
 common.resume:                                    ; preds = %bb.ap, %bb.ar, %bb.au, %.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -2877,13 +2877,13 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCs5kGgRUzsVpH_8smallvec8IntoIterAyj1_
 bb.aq:                                            ; preds = %bb.ap
   %i.fo = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !6721
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !6721
   unreachable, !dbg !6721
 
 bb.ar:                                            ; preds = %bb.as
   %i.fp = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCs5kGgRUzsVpH_8smallvec8IntoIterAyj1_EECs3f36owOmepS_6quiche(ptr noalias nofree noundef align 8 dereferenceable(40) %i.h) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCs5kGgRUzsVpH_8smallvec8IntoIterAyj1_EECs3f36owOmepS_6quiche(ptr noalias nofree noundef align 8 dereferenceable(40) %i.h) #19
           to label %common.resume unwind label %bb.at, !dbg !6724
 
 bb.as:                                            ; preds = %bb.an
@@ -2909,7 +2909,7 @@ bb.as:                                            ; preds = %bb.an
 bb.at:                                            ; preds = %bb.au, %bb.ar
   %i.fw = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !6733
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !6733
   unreachable, !dbg !6733
 
 bb.au:                                            ; preds = %_RNvMs_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB4_13RecoveryEpoch30detect_and_remove_lost_packets.exit
@@ -2941,7 +2941,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g, !dbg !6925
 
 bb.c:                                             ; preds = %bb.e
-  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr25BBRv2EBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(1088) %i.b) #18
+  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr25BBRv2EBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(1088) %i.b) #19
           to label %bb.i unwind label %bb.h, !dbg !6926
 
 bb.d:                                             ; preds = %bb.a
@@ -3059,7 +3059,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.y = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueANtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery13RecoveryEpochj3_EBK_(ptr noalias nofree noundef align 8 dereferenceable(624) %i.a) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueANtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery13RecoveryEpochj3_EBK_(ptr noalias nofree noundef align 8 dereferenceable(624) %i.a) #19
           to label %bb.c unwind label %bb.h, !dbg !6940
 
 bb.f:                                             ; preds = %bb.d
@@ -3247,7 +3247,7 @@ bb.g:                                             ; preds = %bb.f, %bb.b
 bb.h:                                             ; preds = %bb.e, %bb.c
   %i.ar = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !6953
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !6953
   unreachable, !dbg !6953
 
 bb.i:                                             ; preds = %bb.c
@@ -3542,7 +3542,7 @@ bb.i:                                             ; preds = %bb.g, %bb.e
 bb.j:                                             ; preds = %bb.f, %bb.d
     #dbg_value(i64 poison, !7174, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7249)
     #dbg_value(i32 -1, !7174, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !7249)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #21, !dbg !7460
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #22, !dbg !7460
   unreachable, !dbg !7460
 
 bb.k:                                             ; preds = %bb.i
@@ -3610,7 +3610,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
     #dbg_value(i64 poison, !7372, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7078)
     #dbg_value(i64 poison, !7372, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7078)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #21, !dbg !7474
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #22, !dbg !7474
   unreachable, !dbg !7474
 
 bb.s:                                             ; preds = %bb.o, %bb.q, %bb.i
@@ -3670,7 +3670,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.k, %bb.m
     #dbg_value(i64 poison, !7174, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7261)
     #dbg_value(i32 -1, !7174, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !7261)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32) #21, !dbg !7482
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32) #22, !dbg !7482
   unreachable, !dbg !7482
 
 _RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_div.exit140: ; preds = %bb.t
@@ -3726,23 +3726,20 @@ _RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_div.exit140: ; preds = %b
     #dbg_value(i64 %i.bs, !2671, !DIExpression(), !7115)
   %i.bt = load i64, ptr %i.bp, align 8, !dbg !7483, !noundef !1030 ; 2 uses
   %i.bu = zext i64 %i.bt to i128, !dbg !7483
-  %8 = mul nuw nsw i128 %i.bu, 1000000000, !dbg !7483
-    #dbg_value(!DIArgList(i128 %8, i32 %i.br), !7386, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 128, DW_ATE_unsigned, DW_OP_plus, DW_OP_stack_value), !7393)
+    #dbg_value(!DIArgList(i128 poison, i32 poison), !7386, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 128, DW_ATE_unsigned, DW_OP_plus, DW_OP_stack_value), !7393)
   %i.bv = zext nneg i32 %i.br to i128, !dbg !7484
-    #dbg_value(!DIArgList(i128 %8, i128 %i.bv), !7386, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !7393)
-  %9 = add nuw nsw i128 %8, %i.bv, !dbg !7483     ; 3 uses
-    #dbg_value(i128 %9, !7386, !DIExpression(), !7393)
+    #dbg_value(!DIArgList(i128 poison, i128 poison), !7386, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !7393)
+    #dbg_value(!DIArgList(i128 poison, i128 poison), !7386, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !7393)
   %i.bw = zext i64 %.sroa.05.0 to i128, !dbg !7486
-  %10 = mul nuw nsw i128 %i.bw, 1000000000, !dbg !7486
-    #dbg_value(!DIArgList(i128 %10, i32 %.sroa.4.0), !7390, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 128, DW_ATE_unsigned, DW_OP_plus, DW_OP_stack_value), !7393)
+    #dbg_value(!DIArgList(i128 poison, i32 poison), !7390, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 128, DW_ATE_unsigned, DW_OP_plus, DW_OP_stack_value), !7393)
   %i.bx = zext nneg i32 %.sroa.4.0 to i128, !dbg !7487
-    #dbg_value(!DIArgList(i128 %10, i128 %i.bx), !7390, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !7393)
-  %11 = add nuw nsw i128 %10, %i.bx, !dbg !7486   ; 3 uses
-    #dbg_value(i128 %11, !7390, !DIExpression(), !7393)
-  %12 = icmp samesign ult i128 %9, %11, !dbg !7488
-  %i.by = sub nuw nsw i128 %11, %9, !dbg !7488
-  %13 = sub nuw nsw i128 %9, %11, !dbg !7488
-  %.sroa.08.0.off0.v = select i1 %12, i128 %i.by, i128 %13, !dbg !7488
+    #dbg_value(!DIArgList(i128 poison, i128 poison), !7390, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !7393)
+    #dbg_value(!DIArgList(i128 poison, i128 poison), !7390, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !7393)
+  %reass.add = sub nsw i128 %i.bu, %i.bw, !dbg !7488
+  %reass.mul = mul nsw i128 %reass.add, 1000000000, !dbg !7488
+  %i.by = sub nsw i128 %i.bv, %i.bx, !dbg !7483
+  %8 = add nsw i128 %i.by, %reass.mul, !dbg !7488
+  %.sroa.08.0.off0.v = tail call i128 @llvm.abs.i128(i128 %8, i1 true), !dbg !7488
     #dbg_value(i128 %.sroa.08.0.off0.v, !7395, !DIExpression(DW_OP_LLVM_convert, 128, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_constu, 2, DW_OP_shr, DW_OP_stack_value), !7399)
   %.sroa.08.0.off0 = trunc i128 %.sroa.08.0.off0.v to i64, !dbg !7488 ; 2 uses
     #dbg_value(i64 %.sroa.08.0.off0, !7395, !DIExpression(DW_OP_constu, 2, DW_OP_shr, DW_OP_stack_value), !7399)
@@ -3834,7 +3831,7 @@ _RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_div.exit140: ; preds = %b
 select.unfold:                                    ; preds = %bb.t, %bb.s
     #dbg_value(i64 poison, !7174, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7263)
     #dbg_value(i32 -1, !7174, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !7263)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #21, !dbg !7501
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #22, !dbg !7501
   unreachable, !dbg !7501
 
 bb.v:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_div.exit140
@@ -4021,7 +4018,7 @@ _RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_div.exit150: ; preds = %b
 select.unfold171:                                 ; preds = %bb.v, %_RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_div.exit140
     #dbg_value(i64 poison, !7174, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7268)
     #dbg_value(i32 -1, !7174, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !7268)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #21, !dbg !7518
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #22, !dbg !7518
   unreachable, !dbg !7518
 }
 
@@ -4368,7 +4365,7 @@ bb.a:
   store i64 0, ptr %i.b, align 8, !dbg !7932
     #dbg_value(ptr %i.c, !7792, !DIExpression(DW_OP_deref), !7878)
     #dbg_value(ptr %i.b, !7793, !DIExpression(DW_OP_deref), !7890)
-  %i.d = call noundef i32 @SSL_SESSION_to_bytes(ptr noundef %1, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b) #22, !dbg !7933
+  %i.d = call noundef i32 @SSL_SESSION_to_bytes(ptr noundef %1, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b) #23, !dbg !7933
   %i.e = icmp eq i32 %i.d, 0, !dbg !7933
   br i1 %i.e, label %bb.b, label %bb.c, !dbg !7933
 
@@ -4418,7 +4415,7 @@ bb.e:                                             ; preds = %bb.c
   %i.n = load i64, ptr %i.m, align 8, !dbg !7942
     #dbg_value(i64 %i.l, !7854, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7915)
     #dbg_value(i64 %i.n, !7854, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7915)
-  call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %i.l, i64 %i.n) #23, !dbg !7943
+  call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %i.l, i64 %i.n) #24, !dbg !7943
   unreachable, !dbg !7943
 
 bb.f:                                             ; preds = %bb.c
@@ -4448,7 +4445,7 @@ bb.g:                                             ; preds = %bb.h, %bb.f
     #dbg_value(i64 %i.h, !7791, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7926)
   %i.q = load ptr, ptr %i.c, align 8, !dbg !7949, !noundef !1030
     #dbg_value(ptr %i.q, !7792, !DIExpression(), !7878)
-  call void @OPENSSL_free(ptr noundef %i.q) #22, !dbg !7950
+  call void @OPENSSL_free(ptr noundef %i.q) #23, !dbg !7950
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !7935
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !7936
   store i64 %i.l, ptr %0, align 8, !dbg !7951
@@ -4546,7 +4543,7 @@ bb.a:
   ], !dbg !8113, !prof !8111
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @47, ptr noundef nonnull inttoptr (i64 121 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #21, !dbg !8114
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @47, ptr noundef nonnull inttoptr (i64 121 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #22, !dbg !8114
   unreachable, !dbg !8114
 
 bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a
@@ -4949,7 +4946,7 @@ bb.g:                                             ; preds = %bb.d, %bb.f
   br i1 %i.y, label %bb.j, label %bb.i, !dbg !8835
 
 bb.h:                                             ; preds = %bb.f
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @67, ptr noundef nonnull inttoptr (i64 57 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @68) #23
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @67, ptr noundef nonnull inttoptr (i64 57 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @68) #24
           to label %bb.e unwind label %bb.w, !dbg !8836
 
 bb.i:                                             ; preds = %bb.g
@@ -5251,7 +5248,7 @@ bb.w:                                             ; preds = %bb.h
 bb.x:                                             ; preds = %bb.w
   %i.dh = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !8881
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !8881
   unreachable, !dbg !8881
 }
 
@@ -5320,7 +5317,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.g = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3f36owOmepS_6quiche5frame5FrameEEB11_(ptr noalias nofree noundef nonnull align 8 dereferenceable(128) %i.a) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs3f36owOmepS_6quiche5frame5FrameEEB11_(ptr noalias nofree noundef nonnull align 8 dereferenceable(128) %i.a) #19
           to label %bb.e unwind label %bb.f, !dbg !8986, !noalias !8977
 
 _RNCNvMs_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB6_13RecoveryEpoch15next_lost_frame0Bc_.exit.i.i: ; preds = %bb.c
@@ -5333,7 +5330,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.h = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !8989, !noalias !8977
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !8989, !noalias !8977
   unreachable, !dbg !8989
 
 _RNvMs_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB4_13RecoveryEpoch15next_lost_frame.exit: ; preds = %bb.b, %_RNCNvMs_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB6_13RecoveryEpoch15next_lost_frame0Bc_.exit.i.i
@@ -5532,7 +5529,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d, !dbg !10481
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #21, !dbg !10483, !noalias !10033
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #22, !dbg !10483, !noalias !10033
   unreachable, !dbg !10483
 
 bb.d:                                             ; preds = %_RNvXs1_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8iter_mutINtB5_7IterMutNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery10SentPacketENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB1n_.exit.thread.i, %.lr.ph.i
@@ -5935,7 +5932,7 @@ bb.r:                                             ; preds = %bb.t, %bb.p
   br i1 %i.ds, label %bb.s, label %bb.u, !dbg !10568
 
 bb.s:                                             ; preds = %bb.r
-  invoke void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion5AckedE8grow_oneBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z) #20
+  invoke void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion5AckedE8grow_oneBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z) #21
           to label %bb.u unwind label %bb.x, !dbg !10569, !noalias !10033
 
 bb.t:                                             ; preds = %bb.p
@@ -6022,7 +6019,7 @@ bb.x:                                             ; preds = %bb.s
 bb.y:                                             ; preds = %bb.x
   %i.ed = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !10590, !noalias !10033
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !10590, !noalias !10033
   unreachable, !dbg !10590
 
 bb.z:                                             ; preds = %bb.h
@@ -6101,7 +6098,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %_RNvMs0_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB5_13LossThreshold16on_spurious_loss.exit, !dbg !10607
 
 bb.ae:                                            ; preds = %bb.ac
-  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @21, i64 noundef 84, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @23) #21, !dbg !10608, !noalias !10298
+  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @21, i64 noundef 84, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @23) #22, !dbg !10608, !noalias !10298
   unreachable, !dbg !10608
 
 bb.af:                                            ; preds = %bb.ab
@@ -6151,7 +6148,7 @@ bb.ai:                                            ; preds = %_RNvMs0_NtNtNtCs3f3
 
 bb.aj:                                            ; preds = %bb.ah
     #dbg_value(ptr null, !10368, !DIExpression(), !10375)
-  call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #21, !dbg !10625
+  call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #22, !dbg !10625
   unreachable, !dbg !10625
 
 bb.ak:                                            ; preds = %bb.ah
@@ -6554,7 +6551,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.e
   %i.at = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !12173, !noalias !12096
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !12173, !noalias !12096
   unreachable, !dbg !12173
 
 bb.h:                                             ; preds = %.noexc.i.i, %bb.c
@@ -6575,7 +6572,7 @@ bb.h:                                             ; preds = %.noexc.i.i, %bb.c
 bb.i:                                             ; preds = %.body.i.i
   %i.aw = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !12178
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !12178
   unreachable, !dbg !12178
 
 common.resume.i:                                  ; preds = %bb.l, %bb.j, %.body.i.i
@@ -6622,7 +6619,7 @@ bb.j:                                             ; preds = %_RINvYINtNtNtNtCsex
 bb.k:                                             ; preds = %bb.j
   %i.ay = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !12185
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !12185
   unreachable, !dbg !12185
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery10SentPacketEEB1G_.exit.i: ; preds = %_RINvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque5drain5DrainNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery10SentPacketENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB2m_8adapters3map8map_foldB15_jjNCNvMs_B17_NtB17_13RecoveryEpoch7discard0NCINvXsK_NtB2k_5accumjNtB4K_3Sum3sumINtB3m_3MapB3_B3W_EE0E0EB1d_.exit.i
@@ -6668,7 +6665,7 @@ bb.l:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.m:                                             ; preds = %bb.l
   %i.bf = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !dbg !12198
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !12198
   unreachable, !dbg !12198
 
 _RNvMs_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recoveryNtB4_13RecoveryEpoch7discard.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque8VecDequeNtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion8recovery10SentPacketEEB1G_.exit.i
@@ -7071,7 +7068,7 @@ bb.e:                                             ; preds = %bb.d
 select.unfold:                                    ; preds = %bb.a
     #dbg_value(i64 poison, !2562, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14222)
     #dbg_value(i32 -1, !2562, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !14222)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #21, !dbg !14249
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #22, !dbg !14249
   unreachable, !dbg !14249
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -7086,7 +7083,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 bb.g:                                             ; preds = %bb.d, %bb.b
     #dbg_value(i64 poison, !2562, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14223)
     #dbg_value(i32 -1, !2562, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !14223)
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #21, !dbg !14253
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #22, !dbg !14253
   unreachable, !dbg !14253
 }
 
@@ -7489,6 +7486,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #16
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i128 @llvm.abs.i128(i128, i1 immarg) #18
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #11
 
@@ -7519,12 +7519,13 @@ attributes #14 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stac
 attributes #15 = { nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read) }
 attributes #16 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #17 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #18 = { cold }
-attributes #19 = { cold noreturn nounwind }
-attributes #20 = { noinline }
-attributes #21 = { noinline noreturn }
-attributes #22 = { nounwind }
-attributes #23 = { noreturn }
+attributes #18 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #19 = { cold }
+attributes #20 = { cold noreturn nounwind }
+attributes #21 = { noinline }
+attributes #22 = { noinline noreturn }
+attributes #23 = { nounwind }
+attributes #24 = { noreturn }
 
 !llvm.module.flags = !{!568, !569, !570, !571, !572}
 !llvm.ident = !{!573}

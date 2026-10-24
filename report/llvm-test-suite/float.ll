@@ -202,12 +202,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local range(i32 0, -2147483648) i32 @_F_ABSDIFF(i32 noundef %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i32 @llvm.abs.i32(i32 %0, i1 true) ; 3 uses
-  %i.b = tail call i32 @llvm.abs.i32(i32 %1, i1 true) ; 3 uses
-  %2 = icmp samesign ult i32 %i.a, %i.b
-  %3 = sub nuw nsw i32 %i.b, %i.a
-  %i.c = sub nuw nsw i32 %i.a, %i.b
-  %.0 = select i1 %2, i32 %3, i32 %i.c
+  %i.a = tail call i32 @llvm.abs.i32(i32 %0, i1 true)
+  %i.b = tail call i32 @llvm.abs.i32(i32 %1, i1 true)
+  %i.c = sub nsw i32 %i.a, %i.b
+  %.0 = tail call i32 @llvm.abs.i32(i32 %i.c, i1 true)
   ret i32 %.0
 }
 
@@ -235,12 +233,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.f = tail call i32 (ptr, ...) @R_getexp(ptr noundef %1) #13
-  %i.g = tail call i32 @llvm.abs.i32(i32 %i.e, i1 true) ; 3 uses
-  %i.h = tail call i32 @llvm.abs.i32(i32 %i.f, i1 true) ; 3 uses
-  %2 = icmp samesign ult i32 %i.g, %i.h
-  %3 = sub nuw nsw i32 %i.h, %i.g
-  %i.i = sub nuw nsw i32 %i.g, %i.h
-  %.0.i = select i1 %2, i32 %3, i32 %i.i
+  %i.g = tail call i32 @llvm.abs.i32(i32 %i.e, i1 true)
+  %i.h = tail call i32 @llvm.abs.i32(i32 %i.f, i1 true)
+  %i.i = sub nsw i32 %i.g, %i.h
+  %.0.i = tail call range(i32 0, -2147483648) i32 @llvm.abs.i32(i32 %i.i, i1 true)
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c

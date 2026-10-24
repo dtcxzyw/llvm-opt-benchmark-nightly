@@ -202,15 +202,13 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not45.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i131.i.i
 
 .lr.ph.i131.i.i:                                  ; preds = %bb.n, %.lr.ph.i131.i.i
-  %.147.i.i.i = phi i64 [ %i.cg, %.lr.ph.i131.i.i ], [ %i.cd, %bb.n ] ; 4 uses
-  %.13846.i.i.i = phi i64 [ %.2.i.i.i, %.lr.ph.i131.i.i ], [ %i.cc, %bb.n ] ; 4 uses
-  %6 = icmp ult i64 %.13846.i.i.i, %.147.i.i.i
-  %7 = sub nuw nsw i64 %.147.i.i.i, %.13846.i.i.i
-  %i.ce = sub nuw nsw i64 %.13846.i.i.i, %.147.i.i.i
+  %.147.i.i.i = phi i64 [ %i.cg, %.lr.ph.i131.i.i ], [ %i.cd, %bb.n ] ; 2 uses
+  %.13846.i.i.i = phi i64 [ %.2.i.i.i, %.lr.ph.i131.i.i ], [ %i.cc, %bb.n ] ; 2 uses
+  %i.ce = sub nsw i64 %.13846.i.i.i, %.147.i.i.i  ; 2 uses
   %.2.i.i.i = call i64 @llvm.umin.i64(i64 %.13846.i.i.i, i64 %.147.i.i.i) ; 3 uses
-  %.0.i.i.i = select i1 %6, i64 %7, i64 %i.ce     ; 2 uses
-  %i.cf = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0.i.i.i, i1 true)
-  %i.cg = lshr exact i64 %.0.i.i.i, %i.cf         ; 2 uses
+  %.0.i.i.i = call i64 @llvm.abs.i64(i64 %i.ce, i1 true)
+  %i.cf = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ce, i1 true)
+  %i.cg = lshr i64 %.0.i.i.i, %i.cf               ; 2 uses
   %.not.i132.i.i = icmp eq i64 %.2.i.i.i, %i.cg
   br i1 %.not.i132.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i131.i.i, !llvm.loop !24
 
@@ -342,15 +340,13 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not45.i148.i.i, label %._crit_edge.i155.i.i, label %.lr.ph.i149.i.i
 
 .lr.ph.i149.i.i:                                  ; preds = %bb.t, %.lr.ph.i149.i.i
-  %.147.i150.i.i = phi i64 [ %i.eh, %.lr.ph.i149.i.i ], [ %i.ee, %bb.t ] ; 4 uses
-  %.13846.i151.i.i = phi i64 [ %.2.i152.i.i, %.lr.ph.i149.i.i ], [ %i.ed, %bb.t ] ; 4 uses
-  %8 = icmp ult i64 %.13846.i151.i.i, %.147.i150.i.i
-  %9 = sub nuw nsw i64 %.147.i150.i.i, %.13846.i151.i.i
-  %i.ef = sub nuw nsw i64 %.13846.i151.i.i, %.147.i150.i.i
+  %.147.i150.i.i = phi i64 [ %i.eh, %.lr.ph.i149.i.i ], [ %i.ee, %bb.t ] ; 2 uses
+  %.13846.i151.i.i = phi i64 [ %.2.i152.i.i, %.lr.ph.i149.i.i ], [ %i.ed, %bb.t ] ; 2 uses
+  %i.ef = sub nsw i64 %.13846.i151.i.i, %.147.i150.i.i ; 2 uses
   %.2.i152.i.i = call i64 @llvm.umin.i64(i64 %.13846.i151.i.i, i64 %.147.i150.i.i) ; 3 uses
-  %.0.i153.i.i = select i1 %8, i64 %9, i64 %i.ef  ; 2 uses
-  %i.eg = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0.i153.i.i, i1 true)
-  %i.eh = lshr exact i64 %.0.i153.i.i, %i.eg      ; 2 uses
+  %.0.i153.i.i = call i64 @llvm.abs.i64(i64 %i.ef, i1 true)
+  %i.eg = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ef, i1 true)
+  %i.eh = lshr i64 %.0.i153.i.i, %i.eg            ; 2 uses
   %.not.i154.i.i = icmp eq i64 %.2.i152.i.i, %i.eh
   br i1 %.not.i154.i.i, label %._crit_edge.i155.i.i, label %.lr.ph.i149.i.i, !llvm.loop !24
 
@@ -479,15 +475,13 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not45.i180.i.i, label %._crit_edge.i187.i.i, label %.lr.ph.i181.i.i
 
 .lr.ph.i181.i.i:                                  ; preds = %bb.z, %.lr.ph.i181.i.i
-  %.147.i182.i.i = phi i64 [ %i.gf, %.lr.ph.i181.i.i ], [ %i.gc, %bb.z ] ; 4 uses
-  %.13846.i183.i.i = phi i64 [ %.2.i184.i.i, %.lr.ph.i181.i.i ], [ %i.gb, %bb.z ] ; 4 uses
-  %10 = icmp ult i64 %.13846.i183.i.i, %.147.i182.i.i
-  %11 = sub nuw nsw i64 %.147.i182.i.i, %.13846.i183.i.i
-  %i.gd = sub nuw nsw i64 %.13846.i183.i.i, %.147.i182.i.i
+  %.147.i182.i.i = phi i64 [ %i.gf, %.lr.ph.i181.i.i ], [ %i.gc, %bb.z ] ; 2 uses
+  %.13846.i183.i.i = phi i64 [ %.2.i184.i.i, %.lr.ph.i181.i.i ], [ %i.gb, %bb.z ] ; 2 uses
+  %i.gd = sub nsw i64 %.13846.i183.i.i, %.147.i182.i.i ; 2 uses
   %.2.i184.i.i = call i64 @llvm.umin.i64(i64 %.13846.i183.i.i, i64 %.147.i182.i.i) ; 3 uses
-  %.0.i185.i.i = select i1 %10, i64 %11, i64 %i.gd ; 2 uses
-  %i.ge = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0.i185.i.i, i1 true)
-  %i.gf = lshr exact i64 %.0.i185.i.i, %i.ge      ; 2 uses
+  %.0.i185.i.i = call i64 @llvm.abs.i64(i64 %i.gd, i1 true)
+  %i.ge = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.gd, i1 true)
+  %i.gf = lshr i64 %.0.i185.i.i, %i.ge            ; 2 uses
   %.not.i186.i.i = icmp eq i64 %.2.i184.i.i, %i.gf
   br i1 %.not.i186.i.i, label %._crit_edge.i187.i.i, label %.lr.ph.i181.i.i, !llvm.loop !24
 
@@ -609,15 +603,13 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not45.i212.i.i, label %._crit_edge.i219.i.i, label %.lr.ph.i213.i.i
 
 .lr.ph.i213.i.i:                                  ; preds = %bb.af, %.lr.ph.i213.i.i
-  %.147.i214.i.i = phi i64 [ %i.hx, %.lr.ph.i213.i.i ], [ %i.hu, %bb.af ] ; 4 uses
-  %.13846.i215.i.i = phi i64 [ %.2.i216.i.i, %.lr.ph.i213.i.i ], [ %i.ht, %bb.af ] ; 4 uses
-  %12 = icmp ult i64 %.13846.i215.i.i, %.147.i214.i.i
-  %13 = sub nuw i64 %.147.i214.i.i, %.13846.i215.i.i
-  %i.hv = sub nuw i64 %.13846.i215.i.i, %.147.i214.i.i
+  %.147.i214.i.i = phi i64 [ %i.hx, %.lr.ph.i213.i.i ], [ %i.hu, %bb.af ] ; 2 uses
+  %.13846.i215.i.i = phi i64 [ %.2.i216.i.i, %.lr.ph.i213.i.i ], [ %i.ht, %bb.af ] ; 2 uses
+  %i.hv = sub nsw i64 %.13846.i215.i.i, %.147.i214.i.i ; 2 uses
   %.2.i216.i.i = call i64 @llvm.umin.i64(i64 %.13846.i215.i.i, i64 %.147.i214.i.i) ; 3 uses
-  %.0.i217.i.i = select i1 %12, i64 %13, i64 %i.hv ; 2 uses
-  %i.hw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0.i217.i.i, i1 true)
-  %i.hx = lshr exact i64 %.0.i217.i.i, %i.hw      ; 2 uses
+  %.0.i217.i.i = call i64 @llvm.abs.i64(i64 %i.hv, i1 true)
+  %i.hw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.hv, i1 true)
+  %i.hx = lshr i64 %.0.i217.i.i, %i.hw            ; 2 uses
   %.not.i218.i.i = icmp eq i64 %.2.i216.i.i, %i.hx
   br i1 %.not.i218.i.i, label %._crit_edge.i219.i.i, label %.lr.ph.i213.i.i, !llvm.loop !24
 
@@ -1019,6 +1011,9 @@ declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #6

@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.t, label %bb.i, label %bb.h
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %.034127 = phi i64 [ %i.q, %.lr.ph ], [ %.135, %bb.g ] ; 4 uses
+  %.034127 = phi i64 [ %i.q, %.lr.ph ], [ %.135, %bb.g ] ; 2 uses
   %.sroa.098.0126 = phi ptr [ %i.m, %.lr.ph ], [ %i.al, %bb.g ] ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.098.0126, i64 32
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.098.0126, i64 64
@@ -228,17 +228,15 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.ad = mul i64 %i.ac, 1000
   %i.ae = load i64, ptr %i.r, align 8, !tbaa !208
   %i.af = udiv i64 %i.ae, 1000000
-  %i.ag = add i64 %i.af, %i.ad                    ; 4 uses
+  %i.ag = add i64 %i.af, %i.ad                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
-  %.not.i = icmp ult i64 %i.ag, %.034127
-  %10 = sub nuw i64 %i.ag, %.034127
-  %i.ah = sub nuw i64 %.034127, %i.ag
-  %.0.i = select i1 %.not.i, i64 %i.ah, i64 %10   ; 2 uses
-  %i.ai = icmp ugt i64 %.0.i, 32
+  %i.ah = sub nsw i64 %i.ag, %.034127
+  %.0.i = call noundef i64 @llvm.abs.i64(i64 %i.ah, i1 true) ; 2 uses
+  %i.ai = icmp samesign ugt i64 %.0.i, 32
   br i1 %i.ai, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.aj = uitofp nsz i64 %.0.i to float
+  %i.aj = uitofp nsz nneg i64 %.0.i to float
   %i.ak = fdiv nsz float %i.aj, 1.000000e+03
   invoke void @_ZN6Client14drawLoadScreenERKNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEfi(ptr noundef nonnull align 8 dereferenceable(1674) %1, ptr noundef nonnull align 8 dereferenceable(32) %4, float noundef %i.ak, i32 noundef 30)
           to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -640,6 +638,9 @@ declare i64 @llvm.umin.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #26
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #25

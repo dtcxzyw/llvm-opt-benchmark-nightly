@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.a
   %i.i = and i32 %2, 1
   %i.j = xor i32 %3, 1
-  %.0119 = lshr i32 %2, %i.j                      ; 9 uses
+  %.0119 = lshr i32 %2, %i.j                      ; 7 uses
   %i.k = icmp ult i64 %i.b, 2048
   br i1 %i.k, label %bb.l, label %.preheader145
 
@@ -226,13 +226,11 @@ bb.f:                                             ; preds = %.preheader145, %bb.
 bb.g:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.m
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !45   ; 3 uses
-  %.not126 = icmp ult i32 %i.t, %.0119
-  %5 = sub nuw i32 %i.t, %.0119
-  %i.u = sub nuw i32 %.0119, %i.t
-  %6 = select i1 %.not126, i32 %i.u, i32 %5       ; 2 uses
-  %i.v = icmp ult i32 %6, %.0109147
-  %spec.select129 = call i32 @llvm.umin.i32(i32 %6, i32 %.0109147)
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !45
+  %i.u = sub nsw i32 %i.t, %.0119
+  %5 = call i32 @llvm.abs.i32(i32 %i.u, i1 true)  ; 2 uses
+  %i.v = icmp ult i32 %5, %.0109147
+  %spec.select129 = call i32 @llvm.umin.i32(i32 %5, i32 %.0109147)
   %spec.select130 = select i1 %i.v, ptr %i.o, ptr %.0101148
   br label %bb.h
 
@@ -634,6 +632,9 @@ declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #15
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15

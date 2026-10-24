@@ -205,14 +205,12 @@ _ZN4geos9algorithm15LineIntersector22isInteriorIntersectionEv.exit: ; preds = %b
   br i1 %.not44, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %_ZN4geos9algorithm15LineIntersector22isInteriorIntersectionEv.exit
-  %9 = icmp ugt i64 %4, %2
-  %i.aq = sub nuw i64 %4, %2
-  %10 = sub nuw i64 %2, %4
-  %11 = select i1 %9, i64 %i.aq, i64 %10
-  %12 = icmp eq ptr %1, %3                        ; 2 uses
-  %i.ar = icmp ult i64 %11, 2
-  %13 = select i1 %12, i1 %i.ar, i1 false
-  br i1 %13, label %.critedge, label %bb.i
+  %9 = icmp eq ptr %1, %3                         ; 2 uses
+  %i.aq = sub i64 %4, %2
+  %10 = add i64 %i.aq, 1
+  %i.ar = icmp ult i64 %10, 3
+  %11 = and i1 %9, %i.ar
+  br i1 %11, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.as = load <2 x double>, ptr %i.d, align 8    ; 3 uses
@@ -272,7 +270,7 @@ bb.n:                                             ; preds = %_ZNK4geos9operation
   %i.bu = load i8, ptr %i.bt, align 8, !tbaa !101, !range !65, !noundef !66
   %i.bv = trunc nuw i8 %i.bu to i1
   %.not = xor i1 %i.bv, true
-  %or.cond = or i1 %12, %.not
+  %or.cond = or i1 %9, %.not
   br i1 %or.cond, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %bb.n

@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %dwt_get_image_layer
   %i.cd = shl nuw i32 1, %.097.i                  ; 2 uses
   %i.ce = sext i32 %i.cd to i64                   ; 2 uses
   %i.cf = add nsw i64 %i.cb, -1                   ; 2 uses
-  %..i.i.i = call i64 @llvm.umin.i64(i64 %i.cf, i64 %i.ce) ; 9 uses
+  %..i.i.i = call i64 @llvm.umin.i64(i64 %i.cf, i64 %i.ce) ; 5 uses
   %.not.i.i.i = icmp eq i32 %.val82.i, 0
   br i1 %.not.i.i.i, label %dwt_decompose_vert.exit.i.i, label %.lr.ph.i.i.i
 
@@ -263,19 +263,17 @@ bb.s:                                             ; preds = %.lr.ph.split.us.spl
 
 dwt_interleave_rows.exit.us.us.i.i.i:             ; preds = %bb.s, %bb.r
   %.1.i.us.us.i.i.i = phi i32 [ %i.dc, %bb.r ], [ %i.dg, %bb.s ]
-  %i.dh = sext i32 %.1.i.us.us.i.i.i to i64       ; 5 uses
+  %i.dh = sext i32 %.1.i.us.us.i.i.i to i64       ; 3 uses
   %i.di = shl nsw i64 %i.dh, 2
   %i.dj = mul i64 %i.di, %i.cc                    ; 2 uses
-  %3 = icmp ult i64 %..i.i.i, %i.dh
-  %4 = sub nuw nsw i64 %i.dh, %..i.i.i
-  %i.dk = sub nuw nsw i64 %..i.i.i, %i.dh
-  %5 = select i1 %3, i64 %4, i64 %i.dk
+  %i.dk = sub nsw i64 %..i.i.i, %i.dh
+  %3 = call i64 @llvm.abs.i64(i64 %i.dk, i1 true)
   %i.dl = add nsw i64 %..i.i.i, %i.dh             ; 3 uses
   %i.dm = icmp ult i64 %i.dl, %i.cb
   %i.dn = sub nsw i64 %i.ch, %i.dl
   %i.do = select i1 %i.dm, i64 %i.dl, i64 %i.dn
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.dj ; 2 uses
-  %i.dq = mul i64 %5, %i.ci
+  %i.dq = mul i64 %3, %i.ci
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.dq ; 2 uses
   %i.ds = mul i64 %i.do, %i.ci
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.ds ; 2 uses
@@ -343,19 +341,17 @@ dwt_interleave_rows.exit.i.i.i.preheader:         ; preds = %.lr.ph.split.i.i.i
   br label %dwt_interleave_rows.exit.i.i.i
 
 dwt_interleave_rows.exit.i.i.i:                   ; preds = %dwt_interleave_rows.exit.i.i.i.preheader, %._crit_edge.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %._crit_edge.i.i.i ], [ 0, %dwt_interleave_rows.exit.i.i.i.preheader ] ; 6 uses
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %._crit_edge.i.i.i ], [ 0, %dwt_interleave_rows.exit.i.i.i.preheader ] ; 4 uses
   %i.et = shl nuw nsw i64 %indvars.iv.i.i.i, 2
   %i.eu = mul i64 %i.et, %i.cc                    ; 2 uses
-  %6 = icmp ult i64 %..i.i.i, %indvars.iv.i.i.i
-  %7 = sub nuw i64 %indvars.iv.i.i.i, %..i.i.i
-  %i.ev = sub nuw i64 %..i.i.i, %indvars.iv.i.i.i
-  %8 = select i1 %6, i64 %7, i64 %i.ev
+  %i.ev = sub nsw i64 %..i.i.i, %indvars.iv.i.i.i
+  %4 = call i64 @llvm.abs.i64(i64 %i.ev, i1 true)
   %i.ew = add i64 %indvars.iv.i.i.i, %..i.i.i     ; 3 uses
   %i.ex = icmp ult i64 %i.ew, %i.cb
   %i.ey = sub i64 %i.ch, %i.ew
   %i.ez = select i1 %i.ex, i64 %i.ew, i64 %i.ey
   %i.fa = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.eu ; 2 uses
-  %i.fb = mul i64 %8, %i.ci
+  %i.fb = mul i64 %4, %i.ci
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.fb ; 2 uses
   %i.fd = mul i64 %i.ez, %i.ci
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.fd ; 2 uses
@@ -757,6 +753,9 @@ declare i32 @llvm.smin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #11
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #12
