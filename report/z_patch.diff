@@ -1,0 +1,59 @@
+diff --git a/llvm/lib/Analysis/LazyValueInfo.cpp b/llvm/lib/Analysis/LazyValueInfo.cpp
+index b15cee2fd6e9fa..b28f0bd4d9b456 100644
+--- a/llvm/lib/Analysis/LazyValueInfo.cpp
++++ b/llvm/lib/Analysis/LazyValueInfo.cpp
+@@ -1662,7 +1662,10 @@ LazyValueInfoImpl::getEdgeValueLocal(Value *Val, BasicBlock *BBFrom,
+         // instructions with many operands.
+         if (isa<IntegerType>(Usr->getType()) && isOperationFoldable(Usr)) {
+           const DataLayout &DL = BBTo->getDataLayout();
+-          if (usesOperand(Usr, Condition)) {
++          Value *TempCond = Condition;
++          if (usesOperand(Usr, Condition) ||
++              (match(Condition, m_Not(m_Value(TempCond))) &&
++               usesOperand(Usr, TempCond))) {
+             // If Val has Condition as an operand and Val can be folded into a
+             // constant with either Condition == true or Condition == false,
+             // propagate the constant.
+@@ -1670,8 +1673,8 @@ LazyValueInfoImpl::getEdgeValueLocal(Value *Val, BasicBlock *BBFrom,
+             //   ; %Val is true on the edge to %then.
+             //   %Val = and i1 %Condition, true.
+             //   br %Condition, label %then, label %else
+-            APInt ConditionVal(1, isTrueDest ? 1 : 0);
+-            Result = constantFoldUser(Usr, Condition, ConditionVal, DL);
++            APInt ConditionVal(1, isTrueDest ^ (TempCond != Condition) ? 1 : 0);
++            Result = constantFoldUser(Usr, TempCond, ConditionVal, DL);
+           } else if (isa<TruncInst, ZExtInst, SExtInst>(Usr)) {
+             ValueLatticeElement OpLatticeVal =
+                 *getValueFromCondition(Usr->getOperand(0), Condition,
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/basic.ll b/llvm/test/Transforms/CorrelatedValuePropagation/basic.ll
+index a0175f3ebdd731..c44bab391b3e32 100644
+--- a/llvm/test/Transforms/CorrelatedValuePropagation/basic.ll
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/basic.ll
+@@ -2091,6 +2091,27 @@ define range(i32 512, 1024) i32 @range_non_overlapping(i8 %x) {
+   ret i32 %zext
+ }
+ 
++define i32 @sext_cond_br_not_cond(i1 %a) {
++; CHECK-LABEL: define range(i32 -1, 1) i32 @sext_cond_br_not_cond
++; CHECK-SAME: (i1 [[A:%.*]]) {
++; CHECK-NEXT:    [[B:%.*]] = sext i1 [[A]] to i32
++; CHECK-NEXT:    [[NOT:%.*]] = xor i1 [[A]], true
++; CHECK-NEXT:    br i1 [[NOT]], label [[FALSE:%.*]], label [[TRUE:%.*]]
++; CHECK:       true:
++; CHECK-NEXT:    ret i32 -1
++; CHECK:       false:
++; CHECK-NEXT:    ret i32 0
++;
++  %b = sext i1 %a to i32
++  %not = xor i1 %a , true
++  br i1 %not, label %false, label %true
++
++true:
++  ret i32 %b
++false:
++  ret i32 %b
++}
++
+ declare i32 @llvm.uadd.sat.i32(i32, i32)
+ declare i32 @llvm.usub.sat.i32(i32, i32)
+ declare i32 @llvm.sadd.sat.i32(i32, i32)
