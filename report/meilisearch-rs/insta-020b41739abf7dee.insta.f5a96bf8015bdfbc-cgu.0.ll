@@ -205,14 +205,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep62 = getelementptr i8, ptr %i.uf, i64 12
   %i.ug = getelementptr i8, ptr %.val.i98.i, i64 %i.tz ; 2 uses
   %next.gep63 = getelementptr i8, ptr %i.ug, i64 14
-  %i.uh = load i8, ptr %next.gep, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
-  %i.ui = load i8, ptr %next.gep57, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
-  %i.uj = load i8, ptr %next.gep58, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
-  %i.uk = load i8, ptr %next.gep59, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
-  %i.ul = load i8, ptr %next.gep60, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
-  %i.um = load i8, ptr %next.gep61, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
-  %i.un = load i8, ptr %next.gep62, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
-  %i.uo = load i8, ptr %next.gep63, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
+  %i.uh = load i8, ptr %next.gep, align 1, !alias.scope !356, !noalias !358
+  %i.ui = load i8, ptr %next.gep57, align 1, !alias.scope !356, !noalias !358
+  %i.uj = load i8, ptr %next.gep58, align 1, !alias.scope !356, !noalias !358
+  %i.uk = load i8, ptr %next.gep59, align 1, !alias.scope !356, !noalias !358
+  %i.ul = load i8, ptr %next.gep60, align 1, !alias.scope !356, !noalias !358
+  %i.um = load i8, ptr %next.gep61, align 1, !alias.scope !356, !noalias !358
+  %i.un = load i8, ptr %next.gep62, align 1, !alias.scope !356, !noalias !358
+  %i.uo = load i8, ptr %next.gep63, align 1, !alias.scope !356, !noalias !358
   %i.up = insertelement <8 x i8> poison, i8 %i.uh, i64 0
   %i.uq = insertelement <8 x i8> %i.up, i8 %i.ui, i64 1
   %i.ur = insertelement <8 x i8> %i.uq, i8 %i.uj, i64 2
@@ -269,7 +269,7 @@ bb.gu:                                            ; preds = %.lr.ph.i.i.i.i
   %i.vy = add nsw i64 %.sroa.10.021.i.i.i.i, -1   ; 2 uses
   %i.vz = add nuw nsw i64 %.sroa.7.022.i.i.i.i, 1
   %i.wa = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i.i.i.i, i64 2
-  %.val.i.i.i.i = load i8, ptr %.sroa.014.023.i.i.i.i, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
+  %.val.i.i.i.i = load i8, ptr %.sroa.014.023.i.i.i.i, align 1, !range !28, !alias.scope !356, !noalias !358, !noundef !17
   %i.wb = getelementptr i8, ptr %.sroa.014.023.i.i.i.i, i64 1
   %.val11.i.i.i.i = load i8, ptr %i.wb, align 1, !alias.scope !356, !noalias !358
   %i.wc = getelementptr inbounds nuw [2 x i8], ptr %i.tl, i64 %.sroa.7.022.i.i.i.i ; 2 uses
@@ -672,7 +672,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !17, !align !31, !noundef !17 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1169)
-  %i.c = load i8, ptr %i.b, align 1, !range !26, !alias.scope !1169, !noundef !17
+  %i.c = load i8, ptr %i.b, align 1, !range !28, !alias.scope !1169, !noundef !17
   %.not.i = icmp eq i8 %i.c, 17
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -1075,7 +1075,7 @@ bb.b:                                             ; preds = %.peel.begin
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.02.0.peel = phi ptr [ %i.i, %bb.a ], [ %i.e, %bb.b ] ; 4 uses
-  %i.k = load i8, ptr %.sroa.02.0.peel, align 1, !range !26, !noundef !17 ; 2 uses
+  %i.k = load i8, ptr %.sroa.02.0.peel, align 1, !range !28, !noundef !17 ; 2 uses
   %i.l = icmp eq i8 %i.k, 17                      ; 3 uses
   br i1 %i.l, label %.peel.next, label %bb.d
 
@@ -1107,7 +1107,7 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.02.0.peel.pn117 = phi ptr [ %.sroa.0.052119, %bb.x ], [ %.sroa.02.0.peel, %.peel.next ]
   %i.r = phi i64 [ %i.di, %bb.x ], [ %i.p, %.peel.next ] ; 4 uses
   %i.s = phi ptr [ %i.dh, %bb.x ], [ %i.o, %.peel.next ] ; 2 uses
-  %i.t = load i8, ptr %.sroa.0.052119, align 1, !range !26, !noundef !17 ; 2 uses
+  %i.t = load i8, ptr %.sroa.0.052119, align 1, !range !28, !noundef !17 ; 2 uses
   %i.u = icmp eq i8 %i.t, 17
   br i1 %i.u, label %bb.x, label %bb.y
 
@@ -1209,9 +1209,9 @@ bb.k:                                             ; preds = %_ZN4core4iter6trait
   %i.ar = phi i64 [ %i.az, %.lr.ph.i.i.i.i.i.i.i.i.prol ], [ %i.an, %.lr.ph.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
   %i.as = phi ptr [ %i.aw, %.lr.ph.i.i.i.i.i.i.i.i.prol ], [ %.sroa.5.0.copyload, %.lr.ph.i.i.i.i.i.i.i.i.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.preheader ]
-  %i.at = load i8, ptr %i.as, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.at = load i8, ptr %i.as, align 1, !range !28, !noalias !4528, !noundef !17
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 1
-  %i.av = load i8, ptr %i.au, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.av = load i8, ptr %i.au, align 1, !range !28, !noalias !4528, !noundef !17
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 2 ; 2 uses
   %i.ax = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.ar ; 2 uses
   store i8 %i.at, ptr %i.ax, align 1, !noalias !4529
@@ -1232,35 +1232,35 @@ bb.k:                                             ; preds = %_ZN4core4iter6trait
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i
   %i.bb = phi i64 [ %i.ce, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.unr, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.bc = phi ptr [ %i.ca, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.unr126, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ] ; 9 uses
-  %i.bd = load i8, ptr %i.bc, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bd = load i8, ptr %i.bc, align 1, !range !28, !noalias !4528, !noundef !17
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 1
-  %i.bf = load i8, ptr %i.be, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bf = load i8, ptr %i.be, align 1, !range !28, !noalias !4528, !noundef !17
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 2
   %i.bh = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.bb ; 2 uses
   store i8 %i.bd, ptr %i.bh, align 1, !noalias !4529
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 1
   store i8 %i.bf, ptr %i.bi, align 1, !noalias !4529
-  %i.bj = load i8, ptr %i.bg, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bj = load i8, ptr %i.bg, align 1, !range !28, !noalias !4528, !noundef !17
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bc, i64 3
-  %i.bl = load i8, ptr %i.bk, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bl = load i8, ptr %i.bk, align 1, !range !28, !noalias !4528, !noundef !17
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bc, i64 4
   %i.bn = getelementptr [2 x i8], ptr %i.am, i64 %i.bb ; 2 uses
   %i.bo = getelementptr i8, ptr %i.bn, i64 2
   store i8 %i.bj, ptr %i.bo, align 1, !noalias !4529
   %i.bp = getelementptr i8, ptr %i.bn, i64 3
   store i8 %i.bl, ptr %i.bp, align 1, !noalias !4529
-  %i.bq = load i8, ptr %i.bm, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bq = load i8, ptr %i.bm, align 1, !range !28, !noalias !4528, !noundef !17
   %i.br = getelementptr inbounds nuw i8, ptr %i.bc, i64 5
-  %i.bs = load i8, ptr %i.br, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bs = load i8, ptr %i.br, align 1, !range !28, !noalias !4528, !noundef !17
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bc, i64 6
   %i.bu = getelementptr [2 x i8], ptr %i.am, i64 %i.bb ; 2 uses
   %i.bv = getelementptr i8, ptr %i.bu, i64 4
   store i8 %i.bq, ptr %i.bv, align 1, !noalias !4529
   %i.bw = getelementptr i8, ptr %i.bu, i64 5
   store i8 %i.bs, ptr %i.bw, align 1, !noalias !4529
-  %i.bx = load i8, ptr %i.bt, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bx = load i8, ptr %i.bt, align 1, !range !28, !noalias !4528, !noundef !17
   %i.by = getelementptr inbounds nuw i8, ptr %i.bc, i64 7
-  %i.bz = load i8, ptr %i.by, align 1, !range !26, !noalias !4528, !noundef !17
+  %i.bz = load i8, ptr %i.by, align 1, !range !28, !noalias !4528, !noundef !17
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 2 uses
   %i.cb = getelementptr [2 x i8], ptr %i.am, i64 %i.bb ; 2 uses
   %i.cc = getelementptr i8, ptr %i.cb, i64 6
@@ -1312,7 +1312,7 @@ bb.n:                                             ; preds = %.peel.begin88
 
 .thread73.peel:                                   ; preds = %bb.n, %bb.m
   %.sroa.07.080.peel = phi ptr [ %i.cp, %bb.m ], [ %i.ch, %bb.n ] ; 5 uses
-  %i.cr = load i8, ptr %.sroa.07.080.peel, align 1, !range !26, !noundef !17
+  %i.cr = load i8, ptr %.sroa.07.080.peel, align 1, !range !28, !noundef !17
   %i.cs = icmp eq i8 %i.cr, 17
   br i1 %i.cs, label %bb.p, label %bb.o
 
@@ -1337,7 +1337,7 @@ bb.q:                                             ; preds = %"_ZN4core3ptr158dro
 .thread73:                                        ; preds = %.peel.next89, %bb.t
   %.sroa.047.0123 = phi ptr [ %.sroa.047.0, %bb.t ], [ %.sroa.047.0121, %.peel.next89 ] ; 4 uses
   %.sroa.07.080.peel.pn122 = phi ptr [ %.sroa.047.0123, %bb.t ], [ %.sroa.07.080.peel, %.peel.next89 ]
-  %i.cw = load i8, ptr %.sroa.047.0123, align 1, !range !26, !noundef !17
+  %i.cw = load i8, ptr %.sroa.047.0123, align 1, !range !28, !noundef !17
   %i.cx = icmp eq i8 %i.cw, 17
   br i1 %i.cx, label %bb.r, label %bb.s
 
@@ -1740,7 +1740,7 @@ bb.b:                                             ; preds = %bb.a
 define internal noundef zeroext i1 @"_ZN78_$LT$pest..parser_state..ParseAttempt$LT$R$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h72b269f95b0f9eecE"(ptr noalias noundef readonly align 1 captures(address, read_provenance) dereferenceable(1) %0, ptr noalias noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
-  %i.b = load i8, ptr %0, align 1, !range !26, !noundef !17
+  %i.b = load i8, ptr %0, align 1, !range !28, !noundef !17
   %i.c = icmp eq i8 %i.b, 17
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -2143,9 +2143,9 @@ attributes #58 = { cold "function-inline-cost-multiplier"="2" }
 !23 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !24 = !{i8 0, i8 17}
 !25 = !{!"branch_weights", i32 2000, i32 2002}
-!26 = !{i8 0, i8 18}
-!27 = !{!"llvm.loop.isvectorized", i32 1}
-!28 = !{!"llvm.loop.unroll.runtime.disable"}
+!26 = !{!"llvm.loop.isvectorized", i32 1}
+!27 = !{!"llvm.loop.unroll.runtime.disable"}
+!28 = !{i8 0, i8 18}
 !29 = !{i64 8}
 !30 = !{i64 0, i64 -9223372036854775807}
 !31 = !{i64 1}
@@ -2383,8 +2383,8 @@ attributes #58 = { cold "function-inline-cost-multiplier"="2" }
 !263 = distinct !{!263, !262, !"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE: argument 0"}
 !264 = distinct !{!264, i1 true, !"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$15try_allocate_in17hf7c11f9eef45733cE"}
 !265 = distinct !{!265, !264, !"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$15try_allocate_in17hf7c11f9eef45733cE: argument 0"}
-!266 = distinct !{!266, !27, !28}
-!267 = distinct !{!267, !28, !27}
+!266 = distinct !{!266, !26, !27}
+!267 = distinct !{!267, !27, !26}
 !268 = distinct !{!268, i1 true, !"_ZN4core3ptr108drop_in_place$LT$alloc..vec..Vec$LT$pest..parser_state..RulesCallStack$LT$insta..redaction..Rule$GT$$GT$$GT$17hdf34b62bd341ef20E"}
 !269 = distinct !{!269, !268, !"_ZN4core3ptr108drop_in_place$LT$alloc..vec..Vec$LT$pest..parser_state..RulesCallStack$LT$insta..redaction..Rule$GT$$GT$$GT$17hdf34b62bd341ef20E: argument 0"}
 !270 = distinct !{!270, i1 true, !"_ZN4pest5error14Error$LT$R$GT$34new_from_pos_with_parsing_attempts17hdc6b4eb9eeb3519aE"}
@@ -2787,9 +2787,9 @@ begin_hunk_5_@llvm.abs.i64
 !3199 = distinct !{!3199, !3195, !"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7reverse7revswap17h220557e1034ea242E: argument 1"}
 !3200 = distinct !{!3200, i1 true, !"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7reverse17he4488fcc04a93190E"}
 !3201 = distinct !{!3201, !3200, !"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7reverse17he4488fcc04a93190E: argument 0"}
-!3202 = distinct !{!3202, !27, !28}
-!3203 = distinct !{!3203, !27, !28}
-!3204 = distinct !{!3204, !28, !27}
+!3202 = distinct !{!3202, !26, !27}
+!3203 = distinct !{!3203, !26, !27}
+!3204 = distinct !{!3204, !27, !26}
 !3205 = distinct !{null}
 !3206 = distinct !{!3206, i1 true, !"_ZN4core5slice4sort6stable5merge5merge17hf9183d32e24fda57E"}
 !3207 = distinct !{!3207, !3206, !"_ZN4core5slice4sort6stable5merge5merge17hf9183d32e24fda57E: argument 0"}
@@ -2981,9 +2981,9 @@ begin_hunk_5_@llvm.abs.i64
 !3393 = distinct !{!3393, !3392, !"_ZN4core5slice4sort6stable9quicksort23PartitionState$LT$T$GT$13partition_one17h67ca2d58277f5e9eE: argument 0"}
 !3394 = distinct !{!3394, i1 true, !"_ZN4core5slice4sort6stable9quicksort23PartitionState$LT$T$GT$13partition_one17h67ca2d58277f5e9eE"}
 !3395 = distinct !{!3395, !3394, !"_ZN4core5slice4sort6stable9quicksort23PartitionState$LT$T$GT$13partition_one17h67ca2d58277f5e9eE: argument 0"}
-!3396 = distinct !{!3396, !27, !28}
-!3397 = distinct !{!3397, !27, !28}
-!3398 = distinct !{!3398, !28, !27}
+!3396 = distinct !{!3396, !26, !27}
+!3397 = distinct !{!3397, !26, !27}
+!3398 = distinct !{!3398, !27, !26}
 !3399 = distinct !{!3399, i1 true, !"_ZN4core5slice4sort6stable9quicksort16stable_partition17h73e1800ab40b0d6fE"}
 !3400 = distinct !{!3400, !3399, !"_ZN4core5slice4sort6stable9quicksort16stable_partition17h73e1800ab40b0d6fE: argument 0"}
 !3401 = distinct !{!3401, !3399, !"_ZN4core5slice4sort6stable9quicksort16stable_partition17h73e1800ab40b0d6fE: argument 1"}
@@ -2999,9 +2999,9 @@ begin_hunk_5_@llvm.abs.i64
 !3411 = distinct !{!3411, !3410, !"_ZN4core5slice4sort6stable9quicksort23PartitionState$LT$T$GT$13partition_one17h67ca2d58277f5e9eE: argument 0"}
 !3412 = distinct !{!3412, i1 true, !"_ZN4core5slice4sort6stable9quicksort23PartitionState$LT$T$GT$13partition_one17h67ca2d58277f5e9eE"}
 !3413 = distinct !{!3413, !3412, !"_ZN4core5slice4sort6stable9quicksort23PartitionState$LT$T$GT$13partition_one17h67ca2d58277f5e9eE: argument 0"}
-!3414 = distinct !{!3414, !27, !28}
-!3415 = distinct !{!3415, !27, !28}
-!3416 = distinct !{!3416, !28, !27}
+!3414 = distinct !{!3414, !26, !27}
+!3415 = distinct !{!3415, !26, !27}
+!3416 = distinct !{!3416, !27, !26}
 !3417 = distinct !{!3417, i1 true, !"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17ha03d72f090748deaE"}
 !3418 = distinct !{!3418, !3417, !"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17ha03d72f090748deaE: argument 0"}
 !3419 = !{!3361}
@@ -3404,9 +3404,9 @@ begin_hunk_6_@llvm.abs.i64
 !5344 = distinct !{!5344, !5343, !"_ZN4core4iter6traits8iterator8Iterator8for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5df1d74408c06d99E: argument 0"}
 !5345 = distinct !{!5345, i1 true, !"_ZN5alloc3vec16Vec$LT$T$C$A$GT$14extend_trusted28_$u7b$$u7b$closure$u7d$$u7d$17ha818c170cb5ee416E"}
 !5346 = distinct !{!5346, !5345, !"_ZN5alloc3vec16Vec$LT$T$C$A$GT$14extend_trusted28_$u7b$$u7b$closure$u7d$$u7d$17ha818c170cb5ee416E: argument 0"}
-!5347 = distinct !{!5347, !27, !28}
-!5348 = distinct !{!5348, !27, !28}
-!5349 = distinct !{!5349, !28, !27}
+!5347 = distinct !{!5347, !26, !27}
+!5348 = distinct !{!5348, !26, !27}
+!5349 = distinct !{!5349, !27, !26}
 !5350 = distinct !{!5350, i1 true, !"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE"}
 !5351 = distinct !{!5351, !5350, !"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE: argument 0"}
 !5352 = distinct !{!5352, i1 true, !"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$15try_allocate_in17hf7c11f9eef45733cE"}
@@ -3809,9 +3809,9 @@ begin_hunk_7_@llvm.abs.i64
 !14831 = distinct !{!14831, !14830, !"_ZN4core4iter6traits8iterator8Iterator8for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5df1d74408c06d99E: argument 0"}
 !14832 = distinct !{!14832, i1 true, !"_ZN5alloc3vec16Vec$LT$T$C$A$GT$14extend_trusted28_$u7b$$u7b$closure$u7d$$u7d$17ha818c170cb5ee416E"}
 !14833 = distinct !{!14833, !14832, !"_ZN5alloc3vec16Vec$LT$T$C$A$GT$14extend_trusted28_$u7b$$u7b$closure$u7d$$u7d$17ha818c170cb5ee416E: argument 0"}
-!14834 = distinct !{!14834, !27, !28}
-!14835 = distinct !{!14835, !27, !28}
-!14836 = distinct !{!14836, !28, !27}
+!14834 = distinct !{!14834, !26, !27}
+!14835 = distinct !{!14835, !26, !27}
+!14836 = distinct !{!14836, !27, !26}
 !14837 = distinct !{!14837, i1 true, !"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17ha696533577fe6bb3E"}
 !14838 = distinct !{!14838, !14837, !"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17ha696533577fe6bb3E: argument 0"}
 !14839 = distinct !{!14839, i1 true, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17h108f1966201aa414E"}
