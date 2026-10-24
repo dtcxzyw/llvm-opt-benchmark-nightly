@@ -107,14 +107,14 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %.054142.us = phi i128 [ %i.u, %bb.h ], [ 0, %.lr.ph ] ; 3 uses
   %.260141.us = phi i64 [ %i.v, %bb.h ], [ %spec.select, %.lr.ph ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 %.260141.us
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !16    ; 3 uses
-  %12 = sext i8 %i.n to i32                       ; 2 uses
-  %13 = add nsw i32 %12, -58
-  %isdigit.us = icmp ult i32 %13, -10
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !16    ; 4 uses
+  %12 = add i8 %i.n, -58
+  %isdigit.us = icmp ult i8 %12, -10
   br i1 %isdigit.us, label %.split.us, label %bb.d, !prof !14
 
 bb.d:                                             ; preds = %.lr.ph.split.us
-  %i.o = add nsw i32 %12, -48                     ; 2 uses
+  %13 = zext nneg i8 %i.n to i32
+  %i.o = add nsw i32 %13, -48                     ; 2 uses
   %i.p = zext nneg i32 %i.o to i128
   %i.q = icmp sgt i128 %.054142.us, 17014118346046923173168730371588410572
   br i1 %i.q, label %.split145.us, label %bb.e
@@ -124,7 +124,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.r, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  %14 = icmp sgt i8 %i.n, 56
+  %14 = icmp ugt i8 %i.n, 56
   br i1 %14, label %.split149.us, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -142,10 +142,9 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   %.054142 = phi i128 [ %i.cn, %bb.ab ], [ 0, %.lr.ph.split.preheader ] ; 3 uses
   %.260141 = phi i64 [ %i.co, %bb.ab ], [ %.260141.ph, %.lr.ph.split.preheader ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 %.260141
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !16    ; 3 uses
-  %15 = sext i8 %i.x to i32                       ; 2 uses
-  %16 = add nsw i32 %15, -58
-  %isdigit = icmp ult i32 %16, -10
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !16    ; 4 uses
+  %15 = add i8 %i.x, -58
+  %isdigit = icmp ult i8 %15, -10
   br i1 %isdigit, label %.split.us, label %bb.k, !prof !14
 
 .split.us:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us
@@ -181,7 +180,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.j,
   br label %bb.ac
 
 bb.k:                                             ; preds = %.lr.ph.split
-  %i.af = add nsw i32 %15, -48                    ; 2 uses
+  %16 = zext nneg i8 %i.x to i32
+  %i.af = add nsw i32 %16, -48                    ; 2 uses
   %i.ag = zext nneg i32 %i.af to i128
   %i.ah = icmp sgt i128 %.054142, 17014118346046923173168730371588410572
   br i1 %i.ah, label %.split145.us, label %bb.p
@@ -260,7 +260,7 @@ bb.p:                                             ; preds = %bb.k
   br i1 %i.ba, label %bb.q, label %bb.ab
 
 bb.q:                                             ; preds = %bb.p
-  %17 = icmp sgt i8 %i.x, 55
+  %17 = icmp ugt i8 %i.x, 55
   br i1 %17, label %bb.v, label %bb.aa
 
 .split149.us:                                     ; preds = %bb.f

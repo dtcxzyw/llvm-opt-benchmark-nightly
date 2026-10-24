@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.h
   br label %bb.s
 
 bb.s:                                             ; preds = %.preheader217, %av_isspace.exit.thread
-  %i.cq = phi i8 [ %.pre, %av_isspace.exit.thread ], [ %i.cp, %.preheader217 ] ; 2 uses
+  %i.cq = phi i8 [ %.pre, %av_isspace.exit.thread ], [ %i.cp, %.preheader217 ] ; 3 uses
   %storemerge = phi ptr [ %i.cr, %av_isspace.exit.thread ], [ %i.b, %.preheader217 ] ; 2 uses
   switch i8 %i.cq, label %bb.t [
     i8 32, label %av_isspace.exit.thread
@@ -222,13 +222,13 @@ av_isspace.exit.thread:                           ; preds = %bb.s, %bb.s, %bb.s,
   br label %bb.s, !llvm.loop !33
 
 bb.t:                                             ; preds = %bb.s
-  %7 = sext i8 %i.cq to i32                       ; 2 uses
-  %8 = add nsw i32 %7, -58
-  %i.cs = icmp ult i32 %8, -10
+  %7 = add i8 %i.cq, -58
+  %i.cs = icmp ult i8 %7, -10
   br i1 %i.cs, label %.split, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.t
-  %i.ct = add nsw i32 %7, -48
+  %8 = zext nneg i8 %i.cq to i32
+  %i.ct = add nsw i32 %8, -48
   br label %.lr.ph.i
 
 .preheaderthread-pre-split.i.i:                   ; preds = %.lr.ph.i
@@ -254,14 +254,14 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %.preheader.i._crit_edge.i
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cz, i64 2 ; 2 uses
-  %i.de = load i8, ptr %i.dd, align 1, !tbaa !57
-  %9 = sext i8 %i.de to i32                       ; 2 uses
-  %10 = add nsw i32 %9, -58
-  %i.df = icmp ult i32 %10, -10
+  %i.de = load i8, ptr %i.dd, align 1, !tbaa !57  ; 2 uses
+  %9 = add i8 %i.de, -58
+  %i.df = icmp ult i8 %9, -10
   br i1 %i.df, label %.split, label %.lr.ph124.preheader.i
 
 .lr.ph124.preheader.i:                            ; preds = %bb.u
-  %i.dg = add nsw i32 %9, -48
+  %10 = zext nneg i8 %i.de to i32
+  %i.dg = add nsw i32 %10, -48
   br label %.lr.ph124.i
 
 .preheaderthread-pre-split.i39.i:                 ; preds = %.lr.ph124.i
@@ -287,14 +287,14 @@ bb.u:                                             ; preds = %.preheader.i._crit_
 
 bb.v:                                             ; preds = %.preheader.i37._crit_edge.i
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dm, i64 2 ; 2 uses
-  %i.dr = load i8, ptr %i.dq, align 1, !tbaa !57
-  %11 = sext i8 %i.dr to i32                      ; 2 uses
-  %12 = add nsw i32 %11, -58
-  %i.ds = icmp ult i32 %12, -10
+  %i.dr = load i8, ptr %i.dq, align 1, !tbaa !57  ; 2 uses
+  %11 = add i8 %i.dr, -58
+  %i.ds = icmp ult i8 %11, -10
   br i1 %i.ds, label %.split, label %.lr.ph127.preheader.i
 
 .lr.ph127.preheader.i:                            ; preds = %bb.v
-  %i.dt = add nsw i32 %11, -48
+  %12 = zext nneg i8 %i.dr to i32
+  %i.dt = add nsw i32 %12, -48
   br label %.lr.ph127.i
 
 .preheaderthread-pre-split.i47.i:                 ; preds = %.lr.ph127.i
@@ -329,14 +329,14 @@ bb.w:                                             ; preds = %.preheader.i45._cri
 
 bb.x:                                             ; preds = %bb.w
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dz, i64 2 ; 2 uses
-  %i.eh = load i8, ptr %i.eg, align 1, !tbaa !57
-  %13 = sext i8 %i.eh to i32                      ; 2 uses
-  %14 = add nsw i32 %13, -58
-  %i.ei = icmp ult i32 %14, -10
+  %i.eh = load i8, ptr %i.eg, align 1, !tbaa !57  ; 2 uses
+  %13 = add i8 %i.eh, -58
+  %i.ei = icmp ult i8 %13, -10
   br i1 %i.ei, label %.split, label %.lr.ph130.preheader.i
 
 .lr.ph130.preheader.i:                            ; preds = %bb.x
-  %i.ej = add nsw i32 %13, -48
+  %14 = zext nneg i8 %i.eh to i32
+  %i.ej = add nsw i32 %14, -48
   br label %.lr.ph130.i
 
 .preheaderthread-pre-split.i55.i:                 ; preds = %.lr.ph130.i
@@ -375,14 +375,14 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.ex, label %bb.aa, label %bb.ae
 
 bb.aa:                                            ; preds = %bb.z
-  %i.ey = load i8, ptr %i.ew, align 1, !tbaa !57
-  %15 = sext i8 %i.ey to i32                      ; 2 uses
-  %16 = add nsw i32 %15, -58
-  %i.ez = icmp ult i32 %16, -10
+  %i.ey = load i8, ptr %i.ew, align 1, !tbaa !57  ; 2 uses
+  %15 = add i8 %i.ey, -58
+  %i.ez = icmp ult i8 %15, -10
   br i1 %i.ez, label %.split, label %.lr.ph133.preheader.i
 
 .lr.ph133.preheader.i:                            ; preds = %bb.aa
-  %i.fa = add nsw i32 %15, -48
+  %16 = zext nneg i8 %i.ey to i32
+  %i.fa = add nsw i32 %16, -48
   br label %.lr.ph133.i
 
 .preheaderthread-pre-split.i63.i:                 ; preds = %.lr.ph133.i
@@ -421,14 +421,14 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.fo, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.fp = load i8, ptr %i.fn, align 1, !tbaa !57
-  %17 = sext i8 %i.fp to i32                      ; 2 uses
-  %18 = add nsw i32 %17, -58
-  %i.fq = icmp ult i32 %18, -10
+  %i.fp = load i8, ptr %i.fn, align 1, !tbaa !57  ; 2 uses
+  %17 = add i8 %i.fp, -58
+  %i.fq = icmp ult i8 %17, -10
   br i1 %i.fq, label %.split, label %.lr.ph136.preheader.i
 
 .lr.ph136.preheader.i:                            ; preds = %bb.ad
-  %i.fr = add nsw i32 %17, -48
+  %18 = zext nneg i8 %i.fp to i32
+  %i.fr = add nsw i32 %18, -48
   br label %.lr.ph136.i
 
 .preheaderthread-pre-split.i71.i:                 ; preds = %.lr.ph136.i

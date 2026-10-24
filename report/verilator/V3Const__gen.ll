@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %.028214 = phi i1 [ false, %.lr.ph ], [ %.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit ]
   %.043213 = phi ptr [ %i.o, %.lr.ph ], [ %.144, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit ] ; 10 uses
   %.sroa.0158.0212 = phi ptr [ %i.af, %.lr.ph ], [ %i.hw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit ] ; 4 uses
-  %i.az = load i8, ptr %.sroa.0158.0212, align 1, !tbaa !100 ; 4 uses
+  %i.az = load i8, ptr %.sroa.0158.0212, align 1, !tbaa !100 ; 5 uses
   br i1 %.028214, label %.critedge, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -262,9 +262,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
 
 .critedge:                                        ; preds = %bb.i
-  %12 = sext i8 %i.az to i32                      ; 2 uses
-  %isdigittmp = add nsw i32 %12, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %12 = add i8 %i.az, -48
+  %isdigit = icmp ult i8 %12, 10
   br i1 %isdigit, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %.critedge
@@ -307,7 +306,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit72: ; preds = %_ZN
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
 
 bb.q:                                             ; preds = %.critedge
-  %i.cc = call i32 @tolower(i32 noundef %12) #29
+  %13 = sext i8 %i.az to i32
+  %i.cc = call i32 @tolower(i32 noundef %13) #29
   %i.cd = trunc i32 %i.cc to i8
   %i.ce = invoke noundef zeroext i1 @_ZN8V3Number18displayedFmtHasArgEcb(i8 noundef signext %i.cd, i1 noundef zeroext false)
           to label %bb.r unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

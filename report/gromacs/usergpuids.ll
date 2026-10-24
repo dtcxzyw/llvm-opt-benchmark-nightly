@@ -203,10 +203,9 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.j = phi ptr [ null, %.lr.ph ], [ %i.aw, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 7 uses
   %i.k = phi ptr [ null, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
   %.sroa.086.0133 = phi ptr [ %i.c, %.lr.ph ], [ %i.ay, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
-  %i.l = load i8, ptr %.sroa.086.0133, align 1, !tbaa !26
-  %14 = sext i8 %i.l to i32                       ; 2 uses
-  %15 = add nsw i32 %14, -58
-  %isdigit = icmp ult i32 %15, -10
+  %i.l = load i8, ptr %.sroa.086.0133, align 1, !tbaa !26 ; 2 uses
+  %14 = add i8 %i.l, -58
+  %isdigit = icmp ult i8 %14, -10
   br i1 %isdigit, label %bb.d, label %bb.m
 
 bb.d:                                             ; preds = %bb.c
@@ -310,7 +309,8 @@ bb.l:                                             ; preds = %.sink.split, %_ZNKS
   br label %.loopexit.split-lp
 
 bb.m:                                             ; preds = %bb.c
-  %i.ae = add nsw i32 %14, -48                    ; 2 uses
+  %15 = zext nneg i8 %i.l to i32
+  %i.ae = add nsw i32 %15, -48                    ; 2 uses
   %.not.i.i = icmp eq ptr %i.k, %i.j
   br i1 %.not.i.i, label %bb.o, label %bb.n
 
