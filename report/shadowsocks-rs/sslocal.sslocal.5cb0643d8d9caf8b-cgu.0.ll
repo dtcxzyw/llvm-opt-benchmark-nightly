@@ -205,7 +205,7 @@ _RNCNvYINtNtNtCsf3Ta7LF998c_4core2io6cursor6CursorQShENtNtNtCsknai52m1gBp_5bytes
 _RNvYINtNtNtCsf3Ta7LF998c_4core2io6cursor6CursorQShENtNtNtCsknai52m1gBp_5bytes3buf8buf_impl3Buf7get_u64Cs7XnEB7DeNXr_7sslocal.exit.i.i: ; preds = %bb.dy
   %i.rq = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i.i.i, i64 1
   %.sroa.03.0.copyload.i.i.i.i = load i64, ptr %i.rq, align 1, !noalias !87338
-  %i.rr = call i64 @llvm.bswap.i64(i64 %.sroa.03.0.copyload.i.i.i.i) ; 5 uses
+  %i.rr = call i64 @llvm.bswap.i64(i64 %.sroa.03.0.copyload.i.i.i.i) ; 3 uses
   store i64 %i.rr, ptr %i.z, align 8, !noalias !87311
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !87339
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !87339
@@ -224,15 +224,13 @@ bb.dz:                                            ; preds = %_RNvYINtNtNtCsf3Ta7
   unreachable
 
 _RNvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay9aead_202217get_now_timestamp.exit.i.i: ; preds = %_RNvYINtNtNtCsf3Ta7LF998c_4core2io6cursor6CursorQShENtNtNtCsknai52m1gBp_5bytes3buf8buf_impl3Buf7get_u64Cs7XnEB7DeNXr_7sslocal.exit.i.i
-  %i.rx = load i64, ptr %i.nb, align 8, !noalias !87339, !noundef !145 ; 4 uses
+  %i.rx = load i64, ptr %i.nb, align 8, !noalias !87339, !noundef !145 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !87339
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !87339
-  %5 = icmp ult i64 %i.rx, %i.rr
-  %6 = sub nuw i64 %i.rr, %i.rx
-  %i.ry = sub nuw i64 %i.rx, %i.rr
-  %.sroa.059.0.i.i.i = select i1 %5, i64 %6, i64 %i.ry
-  %7 = icmp ugt i64 %.sroa.059.0.i.i.i, 30
-  br i1 %7, label %.loopexit183.i.i, label %bb.ea
+  %i.ry = sub i64 %i.rx, %i.rr
+  %5 = add i64 %i.ry, -31
+  %6 = icmp ult i64 %5, -61
+  br i1 %6, label %.loopexit183.i.i, label %bb.ea
 
 bb.ea:                                            ; preds = %_RNvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay9aead_202217get_now_timestamp.exit.i.i
   %.not162.i.i.i = icmp eq i64 %..i.i.i, 0
@@ -635,7 +633,7 @@ _RNCNvYINtNtNtCsf3Ta7LF998c_4core2io6cursor6CursorQShENtNtNtCsknai52m1gBp_5bytes
 _RNvYINtNtNtCsf3Ta7LF998c_4core2io6cursor6CursorQShENtNtNtCsknai52m1gBp_5bytes3buf8buf_impl3Buf7get_u64Cs7XnEB7DeNXr_7sslocal.exit.i.i: ; preds = %bb.dp
   %i.qt = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i.i.i, i64 1
   %.sroa.03.0.copyload.i.i.i.i = load i64, ptr %i.qt, align 1, !noalias !87747
-  %i.qu = call i64 @llvm.bswap.i64(i64 %.sroa.03.0.copyload.i.i.i.i) ; 5 uses
+  %i.qu = call i64 @llvm.bswap.i64(i64 %.sroa.03.0.copyload.i.i.i.i) ; 3 uses
   store i64 %i.qu, ptr %i.z, align 8, !noalias !87723
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !87748
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !87748
@@ -654,15 +652,13 @@ bb.dq:                                            ; preds = %_RNvYINtNtNtCsf3Ta7
   unreachable
 
 _RNvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay9aead_202217get_now_timestamp.exit.i.i: ; preds = %_RNvYINtNtNtCsf3Ta7LF998c_4core2io6cursor6CursorQShENtNtNtCsknai52m1gBp_5bytes3buf8buf_impl3Buf7get_u64Cs7XnEB7DeNXr_7sslocal.exit.i.i
-  %i.ra = load i64, ptr %i.mj, align 8, !noalias !87748, !noundef !145 ; 4 uses
+  %i.ra = load i64, ptr %i.mj, align 8, !noalias !87748, !noundef !145 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !87748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !87748
-  %5 = icmp ult i64 %i.ra, %i.qu
-  %6 = sub nuw i64 %i.qu, %i.ra
-  %i.rb = sub nuw i64 %i.ra, %i.qu
-  %.sroa.059.0.i.i.i = select i1 %5, i64 %6, i64 %i.rb
-  %7 = icmp ugt i64 %.sroa.059.0.i.i.i, 30
-  br i1 %7, label %.loopexit183.i.i, label %bb.dr
+  %i.rb = sub i64 %i.ra, %i.qu
+  %5 = add i64 %i.rb, -31
+  %6 = icmp ult i64 %5, -61
+  br i1 %6, label %.loopexit183.i.i, label %bb.dr
 
 bb.dr:                                            ; preds = %_RNvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay9aead_202217get_now_timestamp.exit.i.i
   %.not162.i.i.i = icmp eq i64 %..i.i.i, 0

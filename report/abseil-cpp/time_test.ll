@@ -204,8 +204,8 @@ bb.a:
   %i.a = load double, ptr %1, align 8, !tbaa !186 ; 5 uses
   %i.b = bitcast double %i.a to i64               ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.d = load double, ptr %i.c, align 8, !tbaa !199 ; 5 uses
-  %i.e = bitcast double %i.d to i64               ; 2 uses
+  %i.d = load double, ptr %i.c, align 8, !tbaa !199 ; 4 uses
+  %i.e = bitcast double %i.d to i64               ; 3 uses
   %i.f = fcmp uno double %i.a, 0.000000e+00
   %i.g = fcmp uno double %i.d, 0.000000e+00       ; 2 uses
   br i1 %i.f, label %bb.c, label %bb.b
@@ -273,18 +273,13 @@ _ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit: ; preds = %bb.
   %i.ae = fneg double %i.ad
   %i.af = bitcast double %i.ae to i64
   %.not4.i.i.i = icmp slt i64 %i.b, 0
-  %.0.i.i.i = select i1 %.not4.i.i.i, i64 %i.ac, i64 %i.af ; 3 uses
-  %i.ag = sub i64 0, %i.e
-  %3 = tail call double @llvm.fabs.f64(double %i.d)
-  %4 = fneg double %3
-  %5 = bitcast double %4 to i64
+  %.0.i.i.i = select i1 %.not4.i.i.i, i64 %i.ac, i64 %i.af
+  %i.ag = sub i64 -9223372036854775808, %i.e
   %.not4.i10.i.i = icmp slt i64 %i.e, 0
-  %.0.i11.i.i = select i1 %.not4.i10.i.i, i64 %i.ag, i64 %5 ; 3 uses
-  %.not.i.i = icmp ult i64 %.0.i.i.i, %.0.i11.i.i
-  %6 = sub nuw i64 %.0.i.i.i, %.0.i11.i.i
-  %7 = sub nuw i64 %.0.i11.i.i, %.0.i.i.i
-  %8 = select i1 %.not.i.i, i64 %7, i64 %6
-  %i.ah = icmp ult i64 %8, 5
+  %.0.i11.i.i = select i1 %.not4.i10.i.i, i64 %i.e, i64 %i.ag
+  %3 = add i64 %.0.i.i.i, 4
+  %4 = add i64 %3, %.0.i11.i.i
+  %i.ah = icmp ult i64 %4, 9
   br label %_ZN7testing19MatchResultListenerlsIdEERS0_RKT_.exit8
 
 _ZN7testing19MatchResultListenerlsIdEERS0_RKT_.exit8: ; preds = %bb.g, %bb.h, %_ZN7testing19MatchResultListenerlsIdEERS0_RKT_.exit, %bb.k, %bb.b, %bb.f, %bb.c, %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit, %bb.d

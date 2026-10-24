@@ -202,43 +202,35 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 1021) i32 @helper_usad8(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i32 0, 509) i32 @helper_usad8(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = trunc i32 %0 to i8
   %i.b = trunc i32 %1 to i8
-  %2 = icmp ugt i8 %i.a, %i.b
-  %narrow.i = sub i32 %0, %1
-  %3 = sub i32 %1, %0
-  %.0.i = select i1 %2, i32 %narrow.i, i32 %3
-  %4 = and i32 %.0.i, 255
-  %i.c = lshr i32 %0, 8                           ; 3 uses
+  %narrow.i = sub nsw i8 %i.a, %i.b
+  %.0.i = tail call range(i8 0, -128) i8 @llvm.abs.i8(i8 %narrow.i, i1 true)
+  %i.c = lshr i32 %0, 8
   %i.d = trunc i32 %i.c to i8
-  %i.e = lshr i32 %1, 8                           ; 3 uses
+  %i.e = lshr i32 %1, 8
   %i.f = trunc i32 %i.e to i8
-  %5 = icmp ugt i8 %i.d, %i.f
-  %narrow.i12 = sub nsw i32 %i.c, %i.e
-  %6 = sub nsw i32 %i.e, %i.c
-  %.0.i13 = select i1 %5, i32 %narrow.i12, i32 %6
-  %7 = and i32 %.0.i13, 255
-  %i.g = lshr i32 %0, 16                          ; 3 uses
+  %narrow.i12 = sub nsw i8 %i.d, %i.f
+  %.0.i13 = tail call range(i8 0, -128) i8 @llvm.abs.i8(i8 %narrow.i12, i1 true)
+  %narrow = add nuw i8 %.0.i13, %.0.i
+  %2 = zext i8 %narrow to i32
+  %i.g = lshr i32 %0, 16
   %i.h = trunc i32 %i.g to i8
-  %i.i = lshr i32 %1, 16                          ; 3 uses
+  %i.i = lshr i32 %1, 16
   %i.j = trunc i32 %i.i to i8
-  %8 = icmp ugt i8 %i.h, %i.j
-  %narrow.i14 = sub nsw i32 %i.g, %i.i
-  %9 = sub nsw i32 %i.i, %i.g
-  %.0.i15 = select i1 %8, i32 %narrow.i14, i32 %9
-  %10 = and i32 %.0.i15, 255
-  %i.k = lshr i32 %0, 24                          ; 3 uses
-  %11 = lshr i32 %1, 24                           ; 3 uses
-  %12 = icmp samesign ugt i32 %i.k, %11
-  %narrow.i16 = sub nsw i32 %i.k, %11
-  %13 = sub nsw i32 %11, %i.k
-  %.0.i17 = select i1 %12, i32 %narrow.i16, i32 %13
-  %14 = and i32 %.0.i17, 255
-  %15 = add nuw nsw i32 %14, %4
-  %16 = add nuw nsw i32 %15, %7
-  %i.l = add nuw nsw i32 %16, %10
+  %narrow.i14 = sub nsw i8 %i.h, %i.j
+  %.0.i15 = tail call range(i8 0, -128) i8 @llvm.abs.i8(i8 %narrow.i14, i1 true)
+  %i.k = lshr i32 %0, 24
+  %3 = trunc nuw i32 %i.k to i8
+  %4 = lshr i32 %1, 24
+  %5 = trunc nuw i32 %4 to i8
+  %narrow.i16 = sub nsw i8 %3, %5
+  %.0.i17 = tail call range(i8 0, -128) i8 @llvm.abs.i8(i8 %narrow.i16, i1 true)
+  %narrow18 = add nuw i8 %.0.i17, %.0.i15
+  %6 = zext i8 %narrow18 to i32
+  %i.l = add nuw nsw i32 %6, %2
   ret i32 %i.l
 }
 
@@ -271,14 +263,14 @@ bb.a:
 define dso_local i32 @helper_crc32(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   store i32 %1, ptr %i.a, align 4
   %i.b = xor i32 %0, -1
   %i.c = zext i32 %i.b to i64
-  %i.d = call i64 @crc32(i64 noundef %i.c, ptr noundef nonnull %i.a, i32 noundef %2) #6
+  %i.d = call i64 @crc32(i64 noundef %i.c, ptr noundef nonnull %i.a, i32 noundef %2) #7
   %i.e = trunc i64 %i.d to i32
   %i.f = xor i32 %i.e, -1
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %i.f
 }
 
@@ -288,11 +280,11 @@ declare i64 @crc32(i64 noundef, ptr noundef, i32 noundef) local_unnamed_addr #4
 define dso_local i32 @helper_crc32c(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   store i32 %1, ptr %i.a, align 4
-  %i.b = call i32 @crc32c(i32 noundef %0, ptr noundef nonnull %i.a, i32 noundef %2) #6
+  %i.b = call i32 @crc32c(i32 noundef %0, ptr noundef nonnull %i.a, i32 noundef %2) #7
   %i.c = xor i32 %i.b, -1
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %i.c
 }
 
@@ -303,6 +295,9 @@ declare i16 @llvm.uadd.sat.i16(i16, i16) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.usub.sat.i16(i16, i16) #5
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.abs.i8(i8, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i8> @llvm.uadd.sat.v4i8(<4 x i8>, <4 x i8>) #5
@@ -316,7 +311,8 @@ attributes #2 = { mustprogress nofree noinline norecurse nosync nounwind sspstro
 attributes #3 = { noinline nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nounwind }
+attributes #6 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

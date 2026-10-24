@@ -204,13 +204,11 @@ bb.k:                                             ; preds = %bb.j
   %.val11.i = load ptr, ptr %i.ac, align 8, !alias.scope !43, !nonnull !3, !align !44, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !45
   %i.ad = getelementptr inbounds nuw i8, ptr %.val10.i, i64 88
-  %i.ae = load i64, ptr %i.ad, align 8, !noalias !45, !noundef !3 ; 3 uses
+  %i.ae = load i64, ptr %i.ad, align 8, !noalias !45, !noundef !3
   %i.af = getelementptr inbounds nuw i8, ptr %.val10.i, i64 56
-  %i.ag = load i64, ptr %i.af, align 8, !noalias !45, !noundef !3 ; 3 uses
-  %6 = icmp ult i64 %i.ae, %i.ag
-  %7 = sub nuw i64 %i.ag, %i.ae
-  %i.ah = sub nuw i64 %i.ae, %i.ag
-  %.sroa.0.0.i.i.i = select i1 %6, i64 %7, i64 %i.ah
+  %i.ag = load i64, ptr %i.af, align 8, !noalias !45, !noundef !3
+  %i.ah = sub nsw i64 %i.ae, %i.ag
+  %.sroa.0.0.i.i.i = call i64 @llvm.abs.i64(i64 %i.ah, i1 true)
   %i.ai = getelementptr inbounds nuw i8, ptr %.val10.i, i64 105
   %i.aj = load i8, ptr %i.ai, align 1, !range !46, !noalias !45, !noundef !3
   %i.ak = icmp eq i8 %i.aj, 0                     ; 2 uses
@@ -219,13 +217,11 @@ bb.k:                                             ; preds = %bb.j
   store i8 %i.al, ptr %i.q, align 8, !noalias !45
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !45
   %i.am = getelementptr inbounds nuw i8, ptr %.val11.i, i64 88
-  %i.an = load i64, ptr %i.am, align 8, !noalias !45, !noundef !3 ; 3 uses
+  %i.an = load i64, ptr %i.am, align 8, !noalias !45, !noundef !3
   %i.ao = getelementptr inbounds nuw i8, ptr %.val11.i, i64 56
-  %i.ap = load i64, ptr %i.ao, align 8, !noalias !45, !noundef !3 ; 3 uses
-  %8 = icmp ult i64 %i.an, %i.ap
-  %9 = sub nuw i64 %i.ap, %i.an
-  %i.aq = sub nuw i64 %i.an, %i.ap
-  %.sroa.0.0.i3.i.i = select i1 %8, i64 %9, i64 %i.aq
+  %i.ap = load i64, ptr %i.ao, align 8, !noalias !45, !noundef !3
+  %i.aq = sub nsw i64 %i.an, %i.ap
+  %.sroa.0.0.i3.i.i = call i64 @llvm.abs.i64(i64 %i.aq, i1 true)
   %i.ar = getelementptr inbounds nuw i8, ptr %.val11.i, i64 105
   %i.as = load i8, ptr %i.ar, align 1, !range !46, !noalias !45, !noundef !3
   %i.at = icmp eq i8 %i.as, 0                     ; 2 uses
@@ -268,13 +264,11 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTjRNtNtNtCs2sepWsjoOnX_17annotate_snippets8r
   %.val8.i = load ptr, ptr %i.bc, align 8, !alias.scope !43, !nonnull !3, !align !44, !noundef !3 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !45
   %i.bd = getelementptr inbounds nuw i8, ptr %.val8.i, i64 88
-  %i.be = load i64, ptr %i.bd, align 8, !noalias !45, !noundef !3 ; 3 uses
+  %i.be = load i64, ptr %i.bd, align 8, !noalias !45, !noundef !3
   %i.bf = getelementptr inbounds nuw i8, ptr %.val8.i, i64 56
-  %i.bg = load i64, ptr %i.bf, align 8, !noalias !45, !noundef !3 ; 3 uses
-  %10 = icmp ult i64 %i.be, %i.bg
-  %11 = sub nuw i64 %i.bg, %i.be
-  %i.bh = sub nuw i64 %i.be, %i.bg
-  %.sroa.0.0.i.i12.i = select i1 %10, i64 %11, i64 %i.bh
+  %i.bg = load i64, ptr %i.bf, align 8, !noalias !45, !noundef !3
+  %i.bh = sub nsw i64 %i.be, %i.bg
+  %.sroa.0.0.i.i12.i = call i64 @llvm.abs.i64(i64 %i.bh, i1 true)
   %i.bi = getelementptr inbounds nuw i8, ptr %.val8.i, i64 105
   %i.bj = load i8, ptr %i.bi, align 1, !range !46, !noalias !45, !noundef !3
   %i.bk = icmp eq i8 %i.bj, 0                     ; 2 uses
@@ -283,13 +277,11 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTjRNtNtNtCs2sepWsjoOnX_17annotate_snippets8r
   store i8 %i.bl, ptr %i.s, align 8, !noalias !45
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !45
   %i.bm = getelementptr inbounds nuw i8, ptr %.val9.i, i64 88
-  %i.bn = load i64, ptr %i.bm, align 8, !noalias !45, !noundef !3 ; 3 uses
+  %i.bn = load i64, ptr %i.bm, align 8, !noalias !45, !noundef !3
   %i.bo = getelementptr inbounds nuw i8, ptr %.val9.i, i64 56
-  %i.bp = load i64, ptr %i.bo, align 8, !noalias !45, !noundef !3 ; 3 uses
-  %12 = icmp ult i64 %i.bn, %i.bp
-  %13 = sub nuw i64 %i.bp, %i.bn
-  %i.bq = sub nuw i64 %i.bn, %i.bp
-  %.sroa.0.0.i3.i13.i = select i1 %12, i64 %13, i64 %i.bq
+  %i.bp = load i64, ptr %i.bo, align 8, !noalias !45, !noundef !3
+  %i.bq = sub nsw i64 %i.bn, %i.bp
+  %.sroa.0.0.i3.i13.i = call i64 @llvm.abs.i64(i64 %i.bq, i1 true)
   %i.br = getelementptr inbounds nuw i8, ptr %.val9.i, i64 105
   %i.bs = load i8, ptr %i.br, align 1, !range !46, !noalias !45, !noundef !3
   %i.bt = icmp eq i8 %i.bs, 0                     ; 2 uses
@@ -329,13 +321,11 @@ bb.l:                                             ; preds = %_RNCINvMNtCscdodAO9
   %.val.i = load ptr, ptr %i.cd, align 8, !alias.scope !43, !nonnull !3, !align !44, !noundef !3 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !45
   %i.ce = getelementptr inbounds nuw i8, ptr %.val.i, i64 88
-  %i.cf = load i64, ptr %i.ce, align 8, !noalias !45, !noundef !3 ; 3 uses
+  %i.cf = load i64, ptr %i.ce, align 8, !noalias !45, !noundef !3
   %i.cg = getelementptr inbounds nuw i8, ptr %.val.i, i64 56
-  %i.ch = load i64, ptr %i.cg, align 8, !noalias !45, !noundef !3 ; 3 uses
-  %14 = icmp ult i64 %i.cf, %i.ch
-  %15 = sub nuw i64 %i.ch, %i.cf
-  %i.ci = sub nuw i64 %i.cf, %i.ch
-  %.sroa.0.0.i.i17.i = select i1 %14, i64 %15, i64 %i.ci
+  %i.ch = load i64, ptr %i.cg, align 8, !noalias !45, !noundef !3
+  %i.ci = sub nsw i64 %i.cf, %i.ch
+  %.sroa.0.0.i.i17.i = call i64 @llvm.abs.i64(i64 %i.ci, i1 true)
   %i.cj = getelementptr inbounds nuw i8, ptr %.val.i, i64 105
   %i.ck = load i8, ptr %i.cj, align 1, !range !46, !noalias !45, !noundef !3
   %i.cl = icmp eq i8 %i.ck, 0                     ; 2 uses
@@ -344,13 +334,11 @@ bb.l:                                             ; preds = %_RNCINvMNtCscdodAO9
   store i8 %i.cm, ptr %i.u, align 8, !noalias !45
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !45
   %i.cn = getelementptr inbounds nuw i8, ptr %.val7.i, i64 88
-  %i.co = load i64, ptr %i.cn, align 8, !noalias !45, !noundef !3 ; 3 uses
+  %i.co = load i64, ptr %i.cn, align 8, !noalias !45, !noundef !3
   %i.cp = getelementptr inbounds nuw i8, ptr %.val7.i, i64 56
-  %i.cq = load i64, ptr %i.cp, align 8, !noalias !45, !noundef !3 ; 3 uses
-  %16 = icmp ult i64 %i.co, %i.cq
-  %17 = sub nuw i64 %i.cq, %i.co
-  %i.cr = sub nuw i64 %i.co, %i.cq
-  %.sroa.0.0.i3.i18.i = select i1 %16, i64 %17, i64 %i.cr
+  %i.cq = load i64, ptr %i.cp, align 8, !noalias !45, !noundef !3
+  %i.cr = sub nsw i64 %i.co, %i.cq
+  %.sroa.0.0.i3.i18.i = call i64 @llvm.abs.i64(i64 %i.cr, i1 true)
   %i.cs = getelementptr inbounds nuw i8, ptr %.val7.i, i64 105
   %i.ct = load i8, ptr %i.cs, align 1, !range !46, !noalias !45, !noundef !3
   %i.cu = icmp eq i8 %i.ct, 0                     ; 2 uses
@@ -662,6 +650,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #6
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -49,14 +49,11 @@ bb.b:                                             ; preds = %bb.a
   %i.e = fneg float %i.d
   %i.f = bitcast float %i.e to i32
   %i.g = bitcast float %i.d to i32
-  %1 = sub nuw i32 -2147483648, %i.g
   %i.h = icmp slt i32 %i.a, 0
-  %2 = select i1 %i.h, i32 %1, i32 %i.f           ; 3 uses
-  %i.i = sub nuw i32 -2147483648, %2
-  %3 = xor i32 %2, -2147483648
-  %4 = icmp slt i32 %2, 0
-  %5 = select i1 %4, i32 %3, i32 %i.i
-  %i.j = icmp ult i32 %5, 3
+  %i.i = sub nsw i32 -2147483648, %i.f
+  %1 = select i1 %i.h, i32 %i.g, i32 %i.i
+  %2 = add i32 %1, 2
+  %i.j = icmp ult i32 %2, 3
   br label %_ZN16OpenColorIO_v2_512FloatsDifferEffib.exit
 
 _ZN16OpenColorIO_v2_512FloatsDifferEffib.exit:    ; preds = %bb.a, %bb.b
@@ -133,13 +130,11 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.023 = phi i32 [ %.0.i, %bb.f ], [ %i.af, %bb.g ] ; 3 uses
-  %.0 = phi i32 [ %.0.i26, %bb.f ], [ %i.am, %bb.g ] ; 3 uses
-  %4 = icmp ugt i32 %.023, %.0
-  %5 = sub nuw i32 %.023, %.0
-  %i.an = sub nuw i32 %.0, %.023
-  %6 = select i1 %4, i32 %5, i32 %i.an
-  %i.ao = icmp ugt i32 %6, %2
+  %.023 = phi i32 [ %.0.i, %bb.f ], [ %i.af, %bb.g ]
+  %.0 = phi i32 [ %.0.i26, %bb.f ], [ %i.am, %bb.g ]
+  %i.an = sub nsw i32 %.023, %.0
+  %4 = tail call i32 @llvm.abs.i32(i32 %i.an, i1 true)
+  %i.ao = icmp ugt i32 %4, %2
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.c, %bb.d, %bb.b, %bb.h
@@ -161,14 +156,11 @@ bb.b:                                             ; preds = %bb.a
   %i.f = fneg float %i.e
   %i.g = bitcast float %i.f to i32
   %i.h = bitcast float %i.e to i32
-  %1 = sub nuw i32 -2147483648, %i.h
   %i.i = icmp slt i32 %i.b, 0
-  %2 = select i1 %i.i, i32 %1, i32 %i.g           ; 3 uses
-  %i.j = sub nuw i32 -2147483648, %2
-  %3 = xor i32 %2, -2147483648
-  %4 = icmp slt i32 %2, 0
-  %5 = select i1 %4, i32 %3, i32 %i.j
-  %i.k = icmp ult i32 %5, 3
+  %i.j = sub nsw i32 -2147483648, %i.g
+  %1 = select i1 %i.i, i32 %i.h, i32 %i.j
+  %2 = add i32 %1, 2
+  %i.k = icmp ult i32 %2, 3
   br label %_ZN16OpenColorIO_v2_512FloatsDifferEffib.exit
 
 _ZN16OpenColorIO_v2_512FloatsDifferEffib.exit:    ; preds = %bb.a, %bb.b
@@ -191,12 +183,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = bitcast float %i.d to i32
   %i.h = sub nuw i32 -2147483648, %i.g
   %i.i = icmp slt i32 %i.a, 0
-  %i.j = select i1 %i.i, i32 %i.h, i32 %i.f       ; 3 uses
-  %1 = icmp ult i32 %i.j, -1082130432
-  %2 = sub nuw i32 -1082130432, %i.j
-  %i.k = add nsw i32 %i.j, 1082130432
-  %3 = select i1 %1, i32 %2, i32 %i.k
-  %i.l = icmp ult i32 %3, 3
+  %i.j = select i1 %i.i, i32 %i.h, i32 %i.f
+  %i.k = add i32 %i.j, 1082130434
+  %i.l = icmp ult i32 %i.k, 5
   br label %_ZN16OpenColorIO_v2_512FloatsDifferEffib.exit
 
 _ZN16OpenColorIO_v2_512FloatsDifferEffib.exit:    ; preds = %bb.a, %bb.b
@@ -220,12 +209,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = bitcast float %i.e to i32
   %i.i = sub nuw i32 -2147483648, %i.h
   %i.j = icmp slt i32 %i.b, 0
-  %i.k = select i1 %i.j, i32 %i.i, i32 %i.g       ; 3 uses
-  %1 = icmp ult i32 %i.k, -1082130432
-  %2 = sub nuw i32 -1082130432, %i.k
-  %i.l = add i32 %i.k, 1082130432
-  %3 = select i1 %1, i32 %2, i32 %i.l
-  %i.m = icmp ult i32 %3, 3
+  %i.k = select i1 %i.j, i32 %i.i, i32 %i.g
+  %i.l = add i32 %i.k, 1082130434
+  %i.m = icmp ult i32 %i.l, 5
   br label %_ZN16OpenColorIO_v2_512FloatsDifferEffib.exit
 
 _ZN16OpenColorIO_v2_512FloatsDifferEffib.exit:    ; preds = %bb.a, %bb.b
@@ -262,14 +248,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit: ; preds = %.lr.ph
   %i.h = fneg float %i.g
   %i.i = bitcast float %i.h to i32
   %i.j = bitcast float %i.g to i32
-  %2 = sub nuw i32 -2147483648, %i.j
   %i.k = icmp slt i32 %i.d, 0
-  %3 = select i1 %i.k, i32 %2, i32 %i.i           ; 3 uses
-  %i.l = sub nuw i32 -2147483648, %3
-  %4 = xor i32 %3, -2147483648
-  %5 = icmp slt i32 %3, 0
-  %6 = select i1 %5, i32 %4, i32 %i.l
-  %i.m = icmp ult i32 %6, 3
+  %i.l = sub nsw i32 -2147483648, %i.i
+  %2 = select i1 %i.k, i32 %i.j, i32 %i.l
+  %3 = add i32 %2, 2
+  %i.m = icmp ult i32 %3, 3
   br i1 %i.m, label %bb.b, label %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.thread
 
 _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.thread: ; preds = %bb.b, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit, %.lr.ph, %bb.a
@@ -313,14 +296,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit: ; preds = %.lr.ph
   %i.i = fneg float %i.h
   %i.j = bitcast float %i.i to i32
   %i.k = bitcast float %i.h to i32
-  %2 = sub nuw i32 -2147483648, %i.k
   %i.l = icmp slt i32 %i.e, 0
-  %3 = select i1 %i.l, i32 %2, i32 %i.j           ; 3 uses
-  %i.m = sub nuw i32 -2147483648, %3
-  %4 = xor i32 %3, -2147483648
-  %5 = icmp slt i32 %3, 0
-  %6 = select i1 %5, i32 %4, i32 %i.m
-  %i.n = icmp ult i32 %6, 3
+  %i.m = sub nsw i32 -2147483648, %i.j
+  %2 = select i1 %i.l, i32 %i.k, i32 %i.m
+  %3 = add i32 %2, 2
+  %i.n = icmp ult i32 %3, 3
   br i1 %i.n, label %bb.b, label %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.thread
 
 _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.thread: ; preds = %bb.b, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit, %.lr.ph, %bb.a
@@ -359,12 +339,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit: ; preds = %.lr.ph
   %i.j = bitcast float %i.g to i32
   %i.k = sub nuw i32 -2147483648, %i.j
   %i.l = icmp slt i32 %i.d, 0
-  %i.m = select i1 %i.l, i32 %i.k, i32 %i.i       ; 3 uses
-  %2 = icmp ult i32 %i.m, -1082130432
-  %3 = sub nuw i32 -1082130432, %i.m
-  %i.n = add nsw i32 %i.m, 1082130432
-  %4 = select i1 %2, i32 %3, i32 %i.n
-  %i.o = icmp ult i32 %4, 3
+  %i.m = select i1 %i.l, i32 %i.k, i32 %i.i
+  %i.n = add i32 %i.m, 1082130434
+  %i.o = icmp ult i32 %i.n, 5
   br i1 %i.o, label %bb.b, label %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.thread
 
 _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.thread: ; preds = %bb.b, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit, %.lr.ph, %bb.a
@@ -404,12 +381,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit: ; preds = %.lr.ph
   %i.k = bitcast float %i.h to i32
   %i.l = sub nuw i32 -2147483648, %i.k
   %i.m = icmp slt i32 %i.e, 0
-  %i.n = select i1 %i.m, i32 %i.l, i32 %i.j       ; 3 uses
-  %2 = icmp ult i32 %i.n, -1082130432
-  %3 = sub nuw i32 -1082130432, %i.n
-  %i.o = add i32 %i.n, 1082130432
-  %4 = select i1 %2, i32 %3, i32 %i.o
-  %i.p = icmp ult i32 %4, 3
+  %i.n = select i1 %i.m, i32 %i.l, i32 %i.j
+  %i.o = add i32 %i.n, 1082130434
+  %i.p = icmp ult i32 %i.o, 5
   br i1 %i.p, label %bb.b, label %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.thread
 
 _ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.thread: ; preds = %bb.b, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit, %.lr.ph, %bb.a
@@ -511,12 +485,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit: ; preds = %bb.a
   %i.h = bitcast float %i.e to i32
   %i.i = sub nuw i32 -2147483648, %i.h
   %i.j = icmp slt i32 %i.b, 0
-  %i.k = select i1 %i.j, i32 %i.i, i32 %i.g       ; 3 uses
-  %1 = icmp ult i32 %i.k, -1082130432
-  %2 = sub nuw i32 -1082130432, %i.k
-  %i.l = add nsw i32 %i.k, 1082130432
-  %3 = select i1 %1, i32 %2, i32 %i.l
-  %i.m = icmp ult i32 %3, 3
+  %i.k = select i1 %i.j, i32 %i.i, i32 %i.g
+  %i.l = add i32 %i.k, 1082130434
+  %i.m = icmp ult i32 %i.l, 5
   br i1 %i.m, label %bb.b, label %.critedge20.loopexit
 
 bb.b:                                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit
@@ -532,14 +503,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1: ; preds = %bb.b
   %i.t = fneg float %i.s
   %i.u = bitcast float %i.t to i32
   %i.v = bitcast float %i.s to i32
-  %4 = sub nuw i32 -2147483648, %i.v
   %i.w = icmp slt i32 %i.p, 0
-  %5 = select i1 %i.w, i32 %4, i32 %i.u           ; 3 uses
-  %i.x = sub nuw i32 -2147483648, %5
-  %6 = xor i32 %5, -2147483648
-  %7 = icmp slt i32 %5, 0
-  %8 = select i1 %7, i32 %6, i32 %i.x
-  %i.y = icmp ult i32 %8, 3
+  %i.x = sub nsw i32 -2147483648, %i.u
+  %1 = select i1 %i.w, i32 %i.v, i32 %i.x
+  %2 = add i32 %1, 2
+  %i.y = icmp ult i32 %2, 3
   br i1 %i.y, label %bb.c, label %.critedge20.loopexit
 
 bb.c:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1
@@ -555,14 +523,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2: ; preds = %bb.c
   %i.af = fneg float %i.ae
   %i.ag = bitcast float %i.af to i32
   %i.ah = bitcast float %i.ae to i32
-  %9 = sub nuw i32 -2147483648, %i.ah
   %i.ai = icmp slt i32 %i.ab, 0
-  %10 = select i1 %i.ai, i32 %9, i32 %i.ag        ; 3 uses
-  %i.aj = sub nuw i32 -2147483648, %10
-  %11 = xor i32 %10, -2147483648
-  %12 = icmp slt i32 %10, 0
-  %13 = select i1 %12, i32 %11, i32 %i.aj
-  %i.ak = icmp ult i32 %13, 3
+  %i.aj = sub nsw i32 -2147483648, %i.ag
+  %3 = select i1 %i.ai, i32 %i.ah, i32 %i.aj
+  %4 = add i32 %3, 2
+  %i.ak = icmp ult i32 %4, 3
   br i1 %i.ak, label %bb.d, label %.critedge20.loopexit
 
 bb.d:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2
@@ -578,14 +543,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3: ; preds = %bb.d
   %i.ar = fneg float %i.aq
   %i.as = bitcast float %i.ar to i32
   %i.at = bitcast float %i.aq to i32
-  %14 = sub nuw i32 -2147483648, %i.at
   %i.au = icmp slt i32 %i.an, 0
-  %15 = select i1 %i.au, i32 %14, i32 %i.as       ; 3 uses
-  %i.av = sub nuw i32 -2147483648, %15
-  %16 = xor i32 %15, -2147483648
-  %17 = icmp slt i32 %15, 0
-  %18 = select i1 %17, i32 %16, i32 %i.av
-  %i.aw = icmp ult i32 %18, 3
+  %i.av = sub nsw i32 -2147483648, %i.as
+  %5 = select i1 %i.au, i32 %i.at, i32 %i.av
+  %6 = add i32 %5, 2
+  %i.aw = icmp ult i32 %6, 3
   br i1 %i.aw, label %.critedge, label %.critedge20.loopexit
 
 .critedge:                                        ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3
@@ -601,14 +563,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.131: ; preds = %.critedge
   %i.bd = fneg float %i.bc
   %i.be = bitcast float %i.bd to i32
   %i.bf = bitcast float %i.bc to i32
-  %19 = sub nuw i32 -2147483648, %i.bf
   %i.bg = icmp slt i32 %i.az, 0
-  %20 = select i1 %i.bg, i32 %19, i32 %i.be       ; 3 uses
-  %i.bh = sub nuw i32 -2147483648, %20
-  %21 = xor i32 %20, -2147483648
-  %22 = icmp slt i32 %20, 0
-  %23 = select i1 %22, i32 %21, i32 %i.bh
-  %i.bi = icmp ult i32 %23, 3
+  %i.bh = sub nsw i32 -2147483648, %i.be
+  %7 = select i1 %i.bg, i32 %i.bf, i32 %i.bh
+  %8 = add i32 %7, 2
+  %i.bi = icmp ult i32 %8, 3
   br i1 %i.bi, label %bb.e, label %.critedge20.loopexit
 
 bb.e:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.131
@@ -626,12 +585,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.1.1: ; preds = %bb.e
   %i.br = bitcast float %i.bo to i32
   %i.bs = sub nuw i32 -2147483648, %i.br
   %i.bt = icmp slt i32 %i.bl, 0
-  %i.bu = select i1 %i.bt, i32 %i.bs, i32 %i.bq   ; 3 uses
-  %24 = icmp ult i32 %i.bu, -1082130432
-  %25 = sub nuw i32 -1082130432, %i.bu
-  %i.bv = add nsw i32 %i.bu, 1082130432
-  %26 = select i1 %24, i32 %25, i32 %i.bv
-  %i.bw = icmp ult i32 %26, 3
+  %i.bu = select i1 %i.bt, i32 %i.bs, i32 %i.bq
+  %i.bv = add i32 %i.bu, 1082130434
+  %i.bw = icmp ult i32 %i.bv, 5
   br i1 %i.bw, label %bb.f, label %.critedge20.loopexit
 
 bb.f:                                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.1.1
@@ -647,14 +603,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2.1: ; preds = %bb.f
   %i.cd = fneg float %i.cc
   %i.ce = bitcast float %i.cd to i32
   %i.cf = bitcast float %i.cc to i32
-  %27 = sub nuw i32 -2147483648, %i.cf
   %i.cg = icmp slt i32 %i.bz, 0
-  %28 = select i1 %i.cg, i32 %27, i32 %i.ce       ; 3 uses
-  %i.ch = sub nuw i32 -2147483648, %28
-  %29 = xor i32 %28, -2147483648
-  %30 = icmp slt i32 %28, 0
-  %31 = select i1 %30, i32 %29, i32 %i.ch
-  %i.ci = icmp ult i32 %31, 3
+  %i.ch = sub nsw i32 -2147483648, %i.ce
+  %9 = select i1 %i.cg, i32 %i.cf, i32 %i.ch
+  %10 = add i32 %9, 2
+  %i.ci = icmp ult i32 %10, 3
   br i1 %i.ci, label %bb.g, label %.critedge20.loopexit
 
 bb.g:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2.1
@@ -670,14 +623,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3.1: ; preds = %bb.g
   %i.cp = fneg float %i.co
   %i.cq = bitcast float %i.cp to i32
   %i.cr = bitcast float %i.co to i32
-  %32 = sub nuw i32 -2147483648, %i.cr
   %i.cs = icmp slt i32 %i.cl, 0
-  %33 = select i1 %i.cs, i32 %32, i32 %i.cq       ; 3 uses
-  %i.ct = sub nuw i32 -2147483648, %33
-  %34 = xor i32 %33, -2147483648
-  %35 = icmp slt i32 %33, 0
-  %36 = select i1 %35, i32 %34, i32 %i.ct
-  %i.cu = icmp ult i32 %36, 3
+  %i.ct = sub nsw i32 -2147483648, %i.cq
+  %11 = select i1 %i.cs, i32 %i.cr, i32 %i.ct
+  %12 = add i32 %11, 2
+  %i.cu = icmp ult i32 %12, 3
   br i1 %i.cu, label %.critedge.1, label %.critedge20.loopexit
 
 .critedge.1:                                      ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3.1
@@ -693,14 +643,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.233: ; preds = %.critedge
   %i.db = fneg float %i.da
   %i.dc = bitcast float %i.db to i32
   %i.dd = bitcast float %i.da to i32
-  %37 = sub nuw i32 -2147483648, %i.dd
   %i.de = icmp slt i32 %i.cx, 0
-  %38 = select i1 %i.de, i32 %37, i32 %i.dc       ; 3 uses
-  %i.df = sub nuw i32 -2147483648, %38
-  %39 = xor i32 %38, -2147483648
-  %40 = icmp slt i32 %38, 0
-  %41 = select i1 %40, i32 %39, i32 %i.df
-  %i.dg = icmp ult i32 %41, 3
+  %i.df = sub nsw i32 -2147483648, %i.dc
+  %13 = select i1 %i.de, i32 %i.dd, i32 %i.df
+  %14 = add i32 %13, 2
+  %i.dg = icmp ult i32 %14, 3
   br i1 %i.dg, label %bb.h, label %.critedge20.loopexit
 
 bb.h:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.233
@@ -716,14 +663,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1.2: ; preds = %bb.h
   %i.dn = fneg float %i.dm
   %i.do = bitcast float %i.dn to i32
   %i.dp = bitcast float %i.dm to i32
-  %42 = sub nuw i32 -2147483648, %i.dp
   %i.dq = icmp slt i32 %i.dj, 0
-  %43 = select i1 %i.dq, i32 %42, i32 %i.do       ; 3 uses
-  %i.dr = sub nuw i32 -2147483648, %43
-  %44 = xor i32 %43, -2147483648
-  %45 = icmp slt i32 %43, 0
-  %46 = select i1 %45, i32 %44, i32 %i.dr
-  %i.ds = icmp ult i32 %46, 3
+  %i.dr = sub nsw i32 -2147483648, %i.do
+  %15 = select i1 %i.dq, i32 %i.dp, i32 %i.dr
+  %16 = add i32 %15, 2
+  %i.ds = icmp ult i32 %16, 3
   br i1 %i.ds, label %bb.i, label %.critedge20.loopexit
 
 bb.i:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1.2
@@ -741,12 +685,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.2.2: ; preds = %bb.i
   %i.eb = bitcast float %i.dy to i32
   %i.ec = sub nuw i32 -2147483648, %i.eb
   %i.ed = icmp slt i32 %i.dv, 0
-  %i.ee = select i1 %i.ed, i32 %i.ec, i32 %i.ea   ; 3 uses
-  %47 = icmp ult i32 %i.ee, -1082130432
-  %48 = sub nuw i32 -1082130432, %i.ee
-  %i.ef = add nsw i32 %i.ee, 1082130432
-  %49 = select i1 %47, i32 %48, i32 %i.ef
-  %i.eg = icmp ult i32 %49, 3
+  %i.ee = select i1 %i.ed, i32 %i.ec, i32 %i.ea
+  %i.ef = add i32 %i.ee, 1082130434
+  %i.eg = icmp ult i32 %i.ef, 5
   br i1 %i.eg, label %bb.j, label %.critedge20.loopexit
 
 bb.j:                                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.2.2
@@ -762,14 +703,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3.2: ; preds = %bb.j
   %i.en = fneg float %i.em
   %i.eo = bitcast float %i.en to i32
   %i.ep = bitcast float %i.em to i32
-  %50 = sub nuw i32 -2147483648, %i.ep
   %i.eq = icmp slt i32 %i.ej, 0
-  %51 = select i1 %i.eq, i32 %50, i32 %i.eo       ; 3 uses
-  %i.er = sub nuw i32 -2147483648, %51
-  %52 = xor i32 %51, -2147483648
-  %53 = icmp slt i32 %51, 0
-  %54 = select i1 %53, i32 %52, i32 %i.er
-  %i.es = icmp ult i32 %54, 3
+  %i.er = sub nsw i32 -2147483648, %i.eo
+  %17 = select i1 %i.eq, i32 %i.ep, i32 %i.er
+  %18 = add i32 %17, 2
+  %i.es = icmp ult i32 %18, 3
   br i1 %i.es, label %.critedge.2, label %.critedge20.loopexit
 
 .critedge.2:                                      ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3.2
@@ -785,14 +723,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.335: ; preds = %.critedge
   %i.ez = fneg float %i.ey
   %i.fa = bitcast float %i.ez to i32
   %i.fb = bitcast float %i.ey to i32
-  %55 = sub nuw i32 -2147483648, %i.fb
   %i.fc = icmp slt i32 %i.ev, 0
-  %56 = select i1 %i.fc, i32 %55, i32 %i.fa       ; 3 uses
-  %i.fd = sub nuw i32 -2147483648, %56
-  %57 = xor i32 %56, -2147483648
-  %58 = icmp slt i32 %56, 0
-  %59 = select i1 %58, i32 %57, i32 %i.fd
-  %i.fe = icmp ult i32 %59, 3
+  %i.fd = sub nsw i32 -2147483648, %i.fa
+  %19 = select i1 %i.fc, i32 %i.fb, i32 %i.fd
+  %20 = add i32 %19, 2
+  %i.fe = icmp ult i32 %20, 3
   br i1 %i.fe, label %bb.k, label %.critedge20.loopexit
 
 bb.k:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.335
@@ -808,14 +743,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1.3: ; preds = %bb.k
   %i.fl = fneg float %i.fk
   %i.fm = bitcast float %i.fl to i32
   %i.fn = bitcast float %i.fk to i32
-  %60 = sub nuw i32 -2147483648, %i.fn
   %i.fo = icmp slt i32 %i.fh, 0
-  %61 = select i1 %i.fo, i32 %60, i32 %i.fm       ; 3 uses
-  %i.fp = sub nuw i32 -2147483648, %61
-  %62 = xor i32 %61, -2147483648
-  %63 = icmp slt i32 %61, 0
-  %64 = select i1 %63, i32 %62, i32 %i.fp
-  %i.fq = icmp ult i32 %64, 3
+  %i.fp = sub nsw i32 -2147483648, %i.fm
+  %21 = select i1 %i.fo, i32 %i.fn, i32 %i.fp
+  %22 = add i32 %21, 2
+  %i.fq = icmp ult i32 %22, 3
   br i1 %i.fq, label %bb.l, label %.critedge20.loopexit
 
 bb.l:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1.3
@@ -831,14 +763,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2.3: ; preds = %bb.l
   %i.fx = fneg float %i.fw
   %i.fy = bitcast float %i.fx to i32
   %i.fz = bitcast float %i.fw to i32
-  %65 = sub nuw i32 -2147483648, %i.fz
   %i.ga = icmp slt i32 %i.ft, 0
-  %66 = select i1 %i.ga, i32 %65, i32 %i.fy       ; 3 uses
-  %i.gb = sub nuw i32 -2147483648, %66
-  %67 = xor i32 %66, -2147483648
-  %68 = icmp slt i32 %66, 0
-  %69 = select i1 %68, i32 %67, i32 %i.gb
-  %i.gc = icmp ult i32 %69, 3
+  %i.gb = sub nsw i32 -2147483648, %i.fy
+  %23 = select i1 %i.ga, i32 %i.fz, i32 %i.gb
+  %24 = add i32 %23, 2
+  %i.gc = icmp ult i32 %24, 3
   br i1 %i.gc, label %bb.m, label %.critedge20.loopexit
 
 bb.m:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2.3
@@ -856,12 +785,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.3.3: ; preds = %bb.m
   %i.gl = bitcast float %i.gi to i32
   %i.gm = sub nuw i32 -2147483648, %i.gl
   %i.gn = icmp slt i32 %i.gf, 0
-  %i.go = select i1 %i.gn, i32 %i.gm, i32 %i.gk   ; 3 uses
-  %70 = icmp ult i32 %i.go, -1082130432
-  %71 = sub nuw i32 -1082130432, %i.go
-  %i.gp = add nsw i32 %i.go, 1082130432
-  %72 = select i1 %70, i32 %71, i32 %i.gp
-  %i.gq = icmp ult i32 %72, 3
+  %i.go = select i1 %i.gn, i32 %i.gm, i32 %i.gk
+  %i.gp = add i32 %i.go, 1082130434
+  %i.gq = icmp ult i32 %i.gp, 5
   br i1 %i.gq, label %.critedge20, label %.critedge20.loopexit
 
 .critedge20.loopexit:                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.3.3, %bb.m, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2.3, %bb.l, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1.3, %bb.k, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.335, %.critedge.2, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3.2, %bb.j, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.2.2, %bb.i, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1.2, %bb.h, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.233, %.critedge.1, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3.1, %bb.g, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2.1, %bb.f, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.1.1, %bb.e, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.131, %.critedge, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.3, %bb.d, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.2, %bb.c, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.1, %bb.b, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit, %bb.a
@@ -889,12 +815,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit: ; preds = %bb.a
   %i.i = bitcast float %i.f to i32
   %i.j = sub nuw i32 -2147483648, %i.i
   %i.k = icmp slt i32 %i.c, 0
-  %i.l = select i1 %i.k, i32 %i.j, i32 %i.h       ; 3 uses
-  %1 = icmp ult i32 %i.l, -1082130432
-  %2 = sub nuw i32 -1082130432, %i.l
-  %i.m = add i32 %i.l, 1082130432
-  %3 = select i1 %1, i32 %2, i32 %i.m
-  %i.n = icmp ult i32 %3, 3
+  %i.l = select i1 %i.k, i32 %i.j, i32 %i.h
+  %i.m = add i32 %i.l, 1082130434
+  %i.n = icmp ult i32 %i.m, 5
   br i1 %i.n, label %bb.b, label %.critedge20.loopexit
 
 bb.b:                                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit
@@ -911,14 +834,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1: ; preds = %bb.b
   %i.v = fneg float %i.u
   %i.w = bitcast float %i.v to i32
   %i.x = bitcast float %i.u to i32
-  %4 = sub nuw i32 -2147483648, %i.x
   %i.y = icmp slt i32 %i.r, 0
-  %5 = select i1 %i.y, i32 %4, i32 %i.w           ; 3 uses
-  %i.z = sub nuw i32 -2147483648, %5
-  %6 = xor i32 %5, -2147483648
-  %7 = icmp slt i32 %5, 0
-  %8 = select i1 %7, i32 %6, i32 %i.z
-  %i.aa = icmp ult i32 %8, 3
+  %i.z = sub nsw i32 -2147483648, %i.w
+  %1 = select i1 %i.y, i32 %i.x, i32 %i.z
+  %2 = add i32 %1, 2
+  %i.aa = icmp ult i32 %2, 3
   br i1 %i.aa, label %bb.c, label %.critedge20.loopexit
 
 bb.c:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1
@@ -935,14 +855,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2: ; preds = %bb.c
   %i.ai = fneg float %i.ah
   %i.aj = bitcast float %i.ai to i32
   %i.ak = bitcast float %i.ah to i32
-  %9 = sub nuw i32 -2147483648, %i.ak
   %i.al = icmp slt i32 %i.ae, 0
-  %10 = select i1 %i.al, i32 %9, i32 %i.aj        ; 3 uses
-  %i.am = sub nuw i32 -2147483648, %10
-  %11 = xor i32 %10, -2147483648
-  %12 = icmp slt i32 %10, 0
-  %13 = select i1 %12, i32 %11, i32 %i.am
-  %i.an = icmp ult i32 %13, 3
+  %i.am = sub nsw i32 -2147483648, %i.aj
+  %3 = select i1 %i.al, i32 %i.ak, i32 %i.am
+  %4 = add i32 %3, 2
+  %i.an = icmp ult i32 %4, 3
   br i1 %i.an, label %bb.d, label %.critedge20.loopexit
 
 bb.d:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2
@@ -959,14 +876,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3: ; preds = %bb.d
   %i.av = fneg float %i.au
   %i.aw = bitcast float %i.av to i32
   %i.ax = bitcast float %i.au to i32
-  %14 = sub nuw i32 -2147483648, %i.ax
   %i.ay = icmp slt i32 %i.ar, 0
-  %15 = select i1 %i.ay, i32 %14, i32 %i.aw       ; 3 uses
-  %i.az = sub nuw i32 -2147483648, %15
-  %16 = xor i32 %15, -2147483648
-  %17 = icmp slt i32 %15, 0
-  %18 = select i1 %17, i32 %16, i32 %i.az
-  %i.ba = icmp ult i32 %18, 3
+  %i.az = sub nsw i32 -2147483648, %i.aw
+  %5 = select i1 %i.ay, i32 %i.ax, i32 %i.az
+  %6 = add i32 %5, 2
+  %i.ba = icmp ult i32 %6, 3
   br i1 %i.ba, label %.critedge, label %.critedge20.loopexit
 
 .critedge:                                        ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3
@@ -983,14 +897,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.131: ; preds = %.critedge
   %i.bi = fneg float %i.bh
   %i.bj = bitcast float %i.bi to i32
   %i.bk = bitcast float %i.bh to i32
-  %19 = sub nuw i32 -2147483648, %i.bk
   %i.bl = icmp slt i32 %i.be, 0
-  %20 = select i1 %i.bl, i32 %19, i32 %i.bj       ; 3 uses
-  %i.bm = sub nuw i32 -2147483648, %20
-  %21 = xor i32 %20, -2147483648
-  %22 = icmp slt i32 %20, 0
-  %23 = select i1 %22, i32 %21, i32 %i.bm
-  %i.bn = icmp ult i32 %23, 3
+  %i.bm = sub nsw i32 -2147483648, %i.bj
+  %7 = select i1 %i.bl, i32 %i.bk, i32 %i.bm
+  %8 = add i32 %7, 2
+  %i.bn = icmp ult i32 %8, 3
   br i1 %i.bn, label %bb.e, label %.critedge20.loopexit
 
 bb.e:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.131
@@ -1009,12 +920,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.1.1: ; preds = %bb.e
   %i.bx = bitcast float %i.bu to i32
   %i.by = sub nuw i32 -2147483648, %i.bx
   %i.bz = icmp slt i32 %i.br, 0
-  %i.ca = select i1 %i.bz, i32 %i.by, i32 %i.bw   ; 3 uses
-  %24 = icmp ult i32 %i.ca, -1082130432
-  %25 = sub nuw i32 -1082130432, %i.ca
-  %i.cb = add i32 %i.ca, 1082130432
-  %26 = select i1 %24, i32 %25, i32 %i.cb
-  %i.cc = icmp ult i32 %26, 3
+  %i.ca = select i1 %i.bz, i32 %i.by, i32 %i.bw
+  %i.cb = add i32 %i.ca, 1082130434
+  %i.cc = icmp ult i32 %i.cb, 5
   br i1 %i.cc, label %bb.f, label %.critedge20.loopexit
 
 bb.f:                                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.1.1
@@ -1031,14 +939,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2.1: ; preds = %bb.f
   %i.ck = fneg float %i.cj
   %i.cl = bitcast float %i.ck to i32
   %i.cm = bitcast float %i.cj to i32
-  %27 = sub nuw i32 -2147483648, %i.cm
   %i.cn = icmp slt i32 %i.cg, 0
-  %28 = select i1 %i.cn, i32 %27, i32 %i.cl       ; 3 uses
-  %i.co = sub nuw i32 -2147483648, %28
-  %29 = xor i32 %28, -2147483648
-  %30 = icmp slt i32 %28, 0
-  %31 = select i1 %30, i32 %29, i32 %i.co
-  %i.cp = icmp ult i32 %31, 3
+  %i.co = sub nsw i32 -2147483648, %i.cl
+  %9 = select i1 %i.cn, i32 %i.cm, i32 %i.co
+  %10 = add i32 %9, 2
+  %i.cp = icmp ult i32 %10, 3
   br i1 %i.cp, label %bb.g, label %.critedge20.loopexit
 
 bb.g:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2.1
@@ -1055,14 +960,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3.1: ; preds = %bb.g
   %i.cx = fneg float %i.cw
   %i.cy = bitcast float %i.cx to i32
   %i.cz = bitcast float %i.cw to i32
-  %32 = sub nuw i32 -2147483648, %i.cz
   %i.da = icmp slt i32 %i.ct, 0
-  %33 = select i1 %i.da, i32 %32, i32 %i.cy       ; 3 uses
-  %i.db = sub nuw i32 -2147483648, %33
-  %34 = xor i32 %33, -2147483648
-  %35 = icmp slt i32 %33, 0
-  %36 = select i1 %35, i32 %34, i32 %i.db
-  %i.dc = icmp ult i32 %36, 3
+  %i.db = sub nsw i32 -2147483648, %i.cy
+  %11 = select i1 %i.da, i32 %i.cz, i32 %i.db
+  %12 = add i32 %11, 2
+  %i.dc = icmp ult i32 %12, 3
   br i1 %i.dc, label %.critedge.1, label %.critedge20.loopexit
 
 .critedge.1:                                      ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3.1
@@ -1079,14 +981,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.233: ; preds = %.critedge
   %i.dk = fneg float %i.dj
   %i.dl = bitcast float %i.dk to i32
   %i.dm = bitcast float %i.dj to i32
-  %37 = sub nuw i32 -2147483648, %i.dm
   %i.dn = icmp slt i32 %i.dg, 0
-  %38 = select i1 %i.dn, i32 %37, i32 %i.dl       ; 3 uses
-  %i.do = sub nuw i32 -2147483648, %38
-  %39 = xor i32 %38, -2147483648
-  %40 = icmp slt i32 %38, 0
-  %41 = select i1 %40, i32 %39, i32 %i.do
-  %i.dp = icmp ult i32 %41, 3
+  %i.do = sub nsw i32 -2147483648, %i.dl
+  %13 = select i1 %i.dn, i32 %i.dm, i32 %i.do
+  %14 = add i32 %13, 2
+  %i.dp = icmp ult i32 %14, 3
   br i1 %i.dp, label %bb.h, label %.critedge20.loopexit
 
 bb.h:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.233
@@ -1103,14 +1002,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1.2: ; preds = %bb.h
   %i.dx = fneg float %i.dw
   %i.dy = bitcast float %i.dx to i32
   %i.dz = bitcast float %i.dw to i32
-  %42 = sub nuw i32 -2147483648, %i.dz
   %i.ea = icmp slt i32 %i.dt, 0
-  %43 = select i1 %i.ea, i32 %42, i32 %i.dy       ; 3 uses
-  %i.eb = sub nuw i32 -2147483648, %43
-  %44 = xor i32 %43, -2147483648
-  %45 = icmp slt i32 %43, 0
-  %46 = select i1 %45, i32 %44, i32 %i.eb
-  %i.ec = icmp ult i32 %46, 3
+  %i.eb = sub nsw i32 -2147483648, %i.dy
+  %15 = select i1 %i.ea, i32 %i.dz, i32 %i.eb
+  %16 = add i32 %15, 2
+  %i.ec = icmp ult i32 %16, 3
   br i1 %i.ec, label %bb.i, label %.critedge20.loopexit
 
 bb.i:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1.2
@@ -1129,12 +1025,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.2.2: ; preds = %bb.i
   %i.em = bitcast float %i.ej to i32
   %i.en = sub nuw i32 -2147483648, %i.em
   %i.eo = icmp slt i32 %i.eg, 0
-  %i.ep = select i1 %i.eo, i32 %i.en, i32 %i.el   ; 3 uses
-  %47 = icmp ult i32 %i.ep, -1082130432
-  %48 = sub nuw i32 -1082130432, %i.ep
-  %i.eq = add i32 %i.ep, 1082130432
-  %49 = select i1 %47, i32 %48, i32 %i.eq
-  %i.er = icmp ult i32 %49, 3
+  %i.ep = select i1 %i.eo, i32 %i.en, i32 %i.el
+  %i.eq = add i32 %i.ep, 1082130434
+  %i.er = icmp ult i32 %i.eq, 5
   br i1 %i.er, label %bb.j, label %.critedge20.loopexit
 
 bb.j:                                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.2.2
@@ -1151,14 +1044,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3.2: ; preds = %bb.j
   %i.ez = fneg float %i.ey
   %i.fa = bitcast float %i.ez to i32
   %i.fb = bitcast float %i.ey to i32
-  %50 = sub nuw i32 -2147483648, %i.fb
   %i.fc = icmp slt i32 %i.ev, 0
-  %51 = select i1 %i.fc, i32 %50, i32 %i.fa       ; 3 uses
-  %i.fd = sub nuw i32 -2147483648, %51
-  %52 = xor i32 %51, -2147483648
-  %53 = icmp slt i32 %51, 0
-  %54 = select i1 %53, i32 %52, i32 %i.fd
-  %i.fe = icmp ult i32 %54, 3
+  %i.fd = sub nsw i32 -2147483648, %i.fa
+  %17 = select i1 %i.fc, i32 %i.fb, i32 %i.fd
+  %18 = add i32 %17, 2
+  %i.fe = icmp ult i32 %18, 3
   br i1 %i.fe, label %.critedge.2, label %.critedge20.loopexit
 
 .critedge.2:                                      ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3.2
@@ -1175,14 +1065,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.335: ; preds = %.critedge
   %i.fm = fneg float %i.fl
   %i.fn = bitcast float %i.fm to i32
   %i.fo = bitcast float %i.fl to i32
-  %55 = sub nuw i32 -2147483648, %i.fo
   %i.fp = icmp slt i32 %i.fi, 0
-  %56 = select i1 %i.fp, i32 %55, i32 %i.fn       ; 3 uses
-  %i.fq = sub nuw i32 -2147483648, %56
-  %57 = xor i32 %56, -2147483648
-  %58 = icmp slt i32 %56, 0
-  %59 = select i1 %58, i32 %57, i32 %i.fq
-  %i.fr = icmp ult i32 %59, 3
+  %i.fq = sub nsw i32 -2147483648, %i.fn
+  %19 = select i1 %i.fp, i32 %i.fo, i32 %i.fq
+  %20 = add i32 %19, 2
+  %i.fr = icmp ult i32 %20, 3
   br i1 %i.fr, label %bb.k, label %.critedge20.loopexit
 
 bb.k:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.335
@@ -1199,14 +1086,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1.3: ; preds = %bb.k
   %i.fz = fneg float %i.fy
   %i.ga = bitcast float %i.fz to i32
   %i.gb = bitcast float %i.fy to i32
-  %60 = sub nuw i32 -2147483648, %i.gb
   %i.gc = icmp slt i32 %i.fv, 0
-  %61 = select i1 %i.gc, i32 %60, i32 %i.ga       ; 3 uses
-  %i.gd = sub nuw i32 -2147483648, %61
-  %62 = xor i32 %61, -2147483648
-  %63 = icmp slt i32 %61, 0
-  %64 = select i1 %63, i32 %62, i32 %i.gd
-  %i.ge = icmp ult i32 %64, 3
+  %i.gd = sub nsw i32 -2147483648, %i.ga
+  %21 = select i1 %i.gc, i32 %i.gb, i32 %i.gd
+  %22 = add i32 %21, 2
+  %i.ge = icmp ult i32 %22, 3
   br i1 %i.ge, label %bb.l, label %.critedge20.loopexit
 
 bb.l:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1.3
@@ -1223,14 +1107,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2.3: ; preds = %bb.l
   %i.gm = fneg float %i.gl
   %i.gn = bitcast float %i.gm to i32
   %i.go = bitcast float %i.gl to i32
-  %65 = sub nuw i32 -2147483648, %i.go
   %i.gp = icmp slt i32 %i.gi, 0
-  %66 = select i1 %i.gp, i32 %65, i32 %i.gn       ; 3 uses
-  %i.gq = sub nuw i32 -2147483648, %66
-  %67 = xor i32 %66, -2147483648
-  %68 = icmp slt i32 %66, 0
-  %69 = select i1 %68, i32 %67, i32 %i.gq
-  %i.gr = icmp ult i32 %69, 3
+  %i.gq = sub nsw i32 -2147483648, %i.gn
+  %23 = select i1 %i.gp, i32 %i.go, i32 %i.gq
+  %24 = add i32 %23, 2
+  %i.gr = icmp ult i32 %24, 3
   br i1 %i.gr, label %bb.m, label %.critedge20.loopexit
 
 bb.m:                                             ; preds = %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2.3
@@ -1249,12 +1130,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.3.3: ; preds = %bb.m
   %i.hb = bitcast float %i.gy to i32
   %i.hc = sub nuw i32 -2147483648, %i.hb
   %i.hd = icmp slt i32 %i.gv, 0
-  %i.he = select i1 %i.hd, i32 %i.hc, i32 %i.ha   ; 3 uses
-  %70 = icmp ult i32 %i.he, -1082130432
-  %71 = sub nuw i32 -1082130432, %i.he
-  %i.hf = add i32 %i.he, 1082130432
-  %72 = select i1 %70, i32 %71, i32 %i.hf
-  %i.hg = icmp ult i32 %72, 3
+  %i.he = select i1 %i.hd, i32 %i.hc, i32 %i.ha
+  %i.hf = add i32 %i.he, 1082130434
+  %i.hg = icmp ult i32 %i.hf, 5
   br i1 %i.hg, label %.critedge20, label %.critedge20.loopexit
 
 .critedge20.loopexit:                             ; preds = %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.3.3, %bb.m, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2.3, %bb.l, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1.3, %bb.k, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.335, %.critedge.2, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3.2, %bb.j, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.2.2, %bb.i, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1.2, %bb.h, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.233, %.critedge.1, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3.1, %bb.g, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2.1, %bb.f, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit.1.1, %bb.e, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.131, %.critedge, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.3, %bb.d, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.2, %bb.c, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIdEEbT_.exit.1, %bb.b, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIdEEbT_.exit, %bb.a
@@ -1282,15 +1160,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit: ; preds = %bb.a
   %i.f = fneg float %i.e
   %i.g = bitcast float %i.f to i32
   %i.h = bitcast float %i.e to i32
-  %2 = sub nuw i32 -2147483648, %i.h
   %i.i = icmp slt i32 %i.a, 0
-  %3 = select i1 %i.i, i32 %2, i32 %i.g           ; 3 uses
-  %i.j = sub nuw i32 -2147483648, %3
-  %4 = xor i32 %3, -2147483648
-  %5 = icmp slt i32 %3, 0
-  %i.k = select i1 %5, i32 %4, i32 %i.j
-  %.fr = freeze i32 %i.k
-  %i.l = icmp ult i32 %.fr, 3
+  %i.j = sub nsw i32 -2147483648, %i.g
+  %i.k = select i1 %i.i, i32 %i.h, i32 %i.j
+  %2 = add i32 %i.k, 2
+  %i.l = icmp ult i32 %2, 3
   %i.m = fdiv float 1.000000e+00, %0
   br i1 %i.l, label %bb.b, label %bb.c
 
@@ -1326,14 +1200,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit: ; preds = %.lr.ph
   %i.h = fneg float %i.g
   %i.i = bitcast float %i.h to i32
   %i.j = bitcast float %i.g to i32
-  %2 = sub nuw i32 -2147483648, %i.j
   %i.k = icmp slt i32 %i.d, 0
-  %3 = select i1 %i.k, i32 %2, i32 %i.i           ; 3 uses
-  %i.l = sub nuw i32 -2147483648, %3
-  %4 = xor i32 %3, -2147483648
-  %5 = icmp slt i32 %3, 0
-  %6 = select i1 %5, i32 %4, i32 %i.l
-  %i.m = icmp ult i32 %6, 3
+  %i.l = sub nsw i32 -2147483648, %i.i
+  %2 = select i1 %i.k, i32 %i.j, i32 %i.l
+  %3 = add i32 %2, 2
+  %i.m = icmp ult i32 %3, 3
   br i1 %i.m, label %._crit_edge, label %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.thread
 
 _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.thread: ; preds = %.lr.ph, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit
@@ -1372,12 +1243,9 @@ _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit: ; preds = %.lr.ph
   %i.j = bitcast float %i.g to i32
   %i.k = sub nuw i32 -2147483648, %i.j
   %i.l = icmp slt i32 %i.d, 0
-  %i.m = select i1 %i.l, i32 %i.k, i32 %i.i       ; 3 uses
-  %2 = icmp ult i32 %i.m, -1082130432
-  %3 = sub nuw i32 -1082130432, %i.m
-  %i.n = add nsw i32 %i.m, 1082130432
-  %4 = select i1 %2, i32 %3, i32 %i.n
-  %i.o = icmp ult i32 %4, 3
+  %i.m = select i1 %i.l, i32 %i.k, i32 %i.i
+  %i.n = add i32 %i.m, 1082130434
+  %i.o = icmp ult i32 %i.n, 5
   br i1 %i.o, label %._crit_edge, label %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.thread
 
 _ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit.thread: ; preds = %.lr.ph, %_ZN16OpenColorIO_v2_518IsScalarEqualToOneIfEEbT_.exit
@@ -1539,14 +1407,11 @@ _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit: ; preds = %bb.a
   %i.ci = fneg float %i.ch
   %i.cj = bitcast float %i.ci to i32
   %i.ck = bitcast float %i.ch to i32
-  %2 = sub nuw i32 -2147483648, %i.ck
   %i.cl = icmp slt i32 %i.ce, 0
-  %3 = select i1 %i.cl, i32 %2, i32 %i.cj         ; 3 uses
-  %i.cm = sub nuw i32 -2147483648, %3
-  %4 = xor i32 %3, -2147483648
-  %5 = icmp slt i32 %3, 0
-  %6 = select i1 %5, i32 %4, i32 %i.cm
-  %i.cn = icmp ult i32 %6, 3
+  %i.cm = sub nsw i32 -2147483648, %i.cj
+  %2 = select i1 %i.cl, i32 %i.ck, i32 %i.cm
+  %3 = add i32 %2, 2
+  %i.cn = icmp ult i32 %3, 3
   br i1 %i.cn, label %bb.b, label %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.thread
 
 _ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit.thread: ; preds = %bb.a, %_ZN16OpenColorIO_v2_519IsScalarEqualToZeroIfEEbT_.exit

@@ -204,11 +204,7 @@ bb.a:
   %.sroa.2.0.extract.shift = lshr i64 %1, 32
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !24   ; 3 uses
-  %.not.i = icmp ult i64 %i.b, %2
-  %3 = sub nuw i64 %i.b, %2
-  %4 = sub nuw i64 %2, %i.b
-  %.0.i = select i1 %.not.i, i64 %4, i64 %3
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !24
   %i.c = load i32, ptr %0, align 8, !tbaa !25
   %i.d = sub nsw i32 %i.c, %.sroa.0.0.extract.trunc4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -218,7 +214,9 @@ bb.a:
   %i.i = sitofp nsz i32 %i.g to float             ; 2 uses
   %i.j = fmul nnan nsz float %i.i, %i.i
   %i.k = tail call nsz float @llvm.fmuladd.f32(float %i.h, float %i.h, float %i.j)
-  %i.l = icmp ult i64 %.0.i, 400
+  %reass.sub = sub i64 %i.b, %2
+  %3 = add i64 %reass.sub, 399
+  %i.l = icmp ult i64 %3, 799
   %i.m = fcmp nsz olt float %i.k, 9.000000e+02
   %i.n = select i1 %i.l, i1 %i.m, i1 false
   ret i1 %i.n
@@ -621,7 +619,7 @@ _ZN13PointerAction9fromEventERK6SEvent.exit:      ; preds = %bb.b, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 3 uses
   %.sroa.02.0.copyload25 = load i64, ptr %i.g, align 8, !tbaa !27 ; 2 uses
   %.sroa.5.0..sroa_idx26 = getelementptr inbounds nuw i8, ptr %0, i64 368
-  %.sroa.5.0.copyload27 = load i64, ptr %.sroa.5.0..sroa_idx26, align 8, !tbaa !94 ; 3 uses
+  %.sroa.5.0.copyload27 = load i64, ptr %.sroa.5.0..sroa_idx26, align 8, !tbaa !94
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -681,11 +679,7 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.0.0.extract.trunc4.i = trunc i64 %.sroa.02.0.copyload25 to i32
   %.sroa.2.0.extract.shift.i = lshr i64 %.sroa.02.0.copyload25, 32
   %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32
-  %i.ag = load i64, ptr %i.q, align 8, !tbaa !24  ; 3 uses
-  %.not.i.i = icmp ult i64 %i.ag, %.sroa.5.0.copyload27
-  %6 = sub nuw i64 %i.ag, %.sroa.5.0.copyload27
-  %7 = sub nuw i64 %.sroa.5.0.copyload27, %i.ag
-  %.0.i.i = select i1 %.not.i.i, i64 %7, i64 %6
+  %i.ag = load i64, ptr %i.q, align 8, !tbaa !24
   %i.ah = load i32, ptr %3, align 8, !tbaa !25
   %i.ai = sub nsw i32 %i.ah, %.sroa.0.0.extract.trunc4.i
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 4
@@ -695,7 +689,9 @@ bb.e:                                             ; preds = %bb.c
   %i.an = sitofp nsz i32 %i.al to float           ; 2 uses
   %i.ao = fmul nnan nsz float %i.an, %i.an
   %i.ap = call nsz float @llvm.fmuladd.f32(float %i.am, float %i.am, float %i.ao)
-  %i.aq = icmp ult i64 %.0.i.i, 400
+  %reass.sub = sub i64 %i.ag, %.sroa.5.0.copyload27
+  %6 = add i64 %reass.sub, 399
+  %i.aq = icmp ult i64 %6, 799
   %i.ar = fcmp nsz olt float %i.ap, 9.000000e+02
   %i.as = select i1 %i.aq, i1 %i.ar, i1 false
   br i1 %i.as, label %._crit_edge.i.i, label %bb.h
@@ -1098,7 +1094,7 @@ bb.u:                                             ; preds = %bb.r
   unreachable
 
 bb.v:                                             ; preds = %bb.s, %bb.t
-  %.sroa.5.0.i = phi i64 [ %i.dc, %bb.s ], [ %i.dl, %bb.t ] ; 4 uses
+  %.sroa.5.0.i = phi i64 [ %i.dc, %bb.s ], [ %i.dl, %bb.t ] ; 2 uses
   %.sroa.3.0.i = phi i32 [ %i.cv, %bb.s ], [ %i.de, %bb.t ] ; 2 uses
   %.sroa.0.0.i = phi i32 [ %i.ct, %bb.s ], [ %i.dd, %bb.t ] ; 2 uses
   %.sroa.3.0.insert.ext.i = zext i32 %.sroa.3.0.i to i64
@@ -1106,21 +1102,19 @@ bb.v:                                             ; preds = %bb.s, %bb.t
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.dm, align 8, !tbaa !27 ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
-  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !94 ; 3 uses
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !94
   %.sroa.0.0.extract.trunc4.i = trunc i64 %.sroa.0.0.copyload to i32
   %.sroa.2.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload, 32
   %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32
-  %.not.i.i49 = icmp ult i64 %.sroa.5.0.i, %.sroa.2.0.copyload
-  %8 = sub nuw i64 %.sroa.5.0.i, %.sroa.2.0.copyload
-  %9 = sub nuw i64 %.sroa.2.0.copyload, %.sroa.5.0.i
-  %.0.i.i = select i1 %.not.i.i49, i64 %9, i64 %8
   %i.dn = sub nsw i32 %.sroa.0.0.i, %.sroa.0.0.extract.trunc4.i
   %i.do = sub nsw i32 %.sroa.3.0.i, %.sroa.2.0.extract.trunc.i
   %i.dp = sitofp nsz i32 %i.dn to float           ; 2 uses
   %i.dq = sitofp nsz i32 %i.do to float           ; 2 uses
   %i.dr = fmul nnan nsz float %i.dq, %i.dq
   %i.ds = call nsz float @llvm.fmuladd.f32(float %i.dp, float %i.dp, float %i.dr)
-  %i.dt = icmp ult i64 %.0.i.i, 400
+  %reass.sub.i = add i64 %.sroa.5.0.i, 399
+  %8 = sub i64 %reass.sub.i, %.sroa.2.0.copyload
+  %i.dt = icmp ult i64 %8, 799
   %i.du = fcmp nsz olt float %i.ds, 9.000000e+02
   %i.dv = select i1 %i.dt, i1 %i.du, i1 false
   br i1 %i.dv, label %bb.w, label %bb.y

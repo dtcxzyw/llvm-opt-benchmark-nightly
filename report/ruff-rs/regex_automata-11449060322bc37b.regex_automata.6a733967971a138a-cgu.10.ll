@@ -204,13 +204,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val.i = load i64, ptr %i.e, align 8, !alias.scope !428, !noundef !5 ; 3 uses
+  %.val.i = load i64, ptr %i.e, align 8, !alias.scope !428, !noundef !5
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val5.i = load i64, ptr %i.f, align 8, !alias.scope !428, !noundef !5 ; 3 uses
-  %.not.i.i = icmp ugt i64 %.val.i, %.val5.i
-  %1 = sub nuw i64 %.val5.i, %.val.i
-  %i.g = sub nuw i64 %.val.i, %.val5.i
-  %.sroa.0.0.i.i = select i1 %.not.i.i, i64 %i.g, i64 %1
+  %.val5.i = load i64, ptr %i.f, align 8, !alias.scope !428, !noundef !5
+  %i.g = sub nsw i64 %.val.i, %.val5.i
+  %.sroa.0.0.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.g, i1 true)
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRNtNtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfa14SearchProgressE6map_orjNCNvMs1_BL_NtBL_5Cache16search_total_len0EBP_.exit
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRNtNtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfa14SearchProgressE6map_orjNCNvMs1_BL_NtBL_5Cache16search_total_len0EBP_.exit: ; preds = %bb.a, %bb.b
@@ -541,13 +539,11 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.dj = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val.i.i.i = load i64, ptr %i.dj, align 8, !alias.scope !616, !noalias !613, !noundef !5 ; 3 uses
+  %.val.i.i.i = load i64, ptr %i.dj, align 8, !alias.scope !616, !noalias !613, !noundef !5
   %i.dk = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.val5.i.i.i = load i64, ptr %i.dk, align 8, !alias.scope !616, !noalias !613, !noundef !5 ; 3 uses
-  %.not.i.i.i.i = icmp ugt i64 %.val.i.i.i, %.val5.i.i.i
-  %1 = sub nuw i64 %.val5.i.i.i, %.val.i.i.i
-  %i.dl = sub nuw i64 %.val.i.i.i, %.val5.i.i.i
-  %.sroa.0.0.i.i.i.i = select i1 %.not.i.i.i.i, i64 %i.dl, i64 %1
+  %.val5.i.i.i = load i64, ptr %i.dk, align 8, !alias.scope !616, !noalias !613, !noundef !5
+  %i.dl = sub nsw i64 %.val.i.i.i, %.val5.i.i.i
+  %.sroa.0.0.i.i.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.dl, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i: ; preds = %bb.j, %bb.i
@@ -604,17 +600,15 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val.i.i.i401 = load i64, ptr %i.ek, align 8, !alias.scope !619, !noalias !617, !noundef !5 ; 3 uses
+  %.val.i.i.i401 = load i64, ptr %i.ek, align 8, !alias.scope !619, !noalias !617, !noundef !5
   %i.el = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.val5.i.i.i402 = load i64, ptr %i.el, align 8, !alias.scope !619, !noalias !617, !noundef !5 ; 3 uses
-  %.not.i.i.i.i403 = icmp ugt i64 %.val.i.i.i401, %.val5.i.i.i402
-  %2 = sub nuw i64 %.val5.i.i.i402, %.val.i.i.i401
-  %i.em = sub nuw i64 %.val.i.i.i401, %.val5.i.i.i402
-  %.sroa.0.0.i.i.i.i404 = select i1 %.not.i.i.i.i403, i64 %i.em, i64 %2
+  %.val5.i.i.i402 = load i64, ptr %i.el, align 8, !alias.scope !619, !noalias !617, !noundef !5
+  %i.em = sub nsw i64 %.val.i.i.i401, %.val5.i.i.i402
+  %.sroa.0.0.i.i.i.i401 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.em, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i399
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i399: ; preds = %bb.p, %bb.o
-  %.sroa.02.0.i.i.i400 = phi i64 [ %.sroa.0.0.i.i.i.i404, %bb.p ], [ 0, %bb.o ]
+  %.sroa.02.0.i.i.i400 = phi i64 [ %.sroa.0.0.i.i.i.i401, %bb.p ], [ 0, %bb.o ]
   %i.en = add i64 %.sroa.02.0.i.i.i400, %i.eh
   %i.eo = load i64, ptr %i.bc, align 8, !noalias !617, !noundef !5 ; 2 uses
   %i.ep = icmp ult i64 %i.eo, 576460752303423488
@@ -986,17 +980,15 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val.i.i.i167 = load i64, ptr %i.jv, align 8, !alias.scope !640, !noalias !637, !noundef !5 ; 3 uses
+  %.val.i.i.i167 = load i64, ptr %i.jv, align 8, !alias.scope !640, !noalias !637, !noundef !5
   %i.jw = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.val5.i.i.i168 = load i64, ptr %i.jw, align 8, !alias.scope !640, !noalias !637, !noundef !5 ; 3 uses
-  %.not.i.i.i.i169 = icmp ugt i64 %.val.i.i.i167, %.val5.i.i.i168
-  %3 = sub nuw i64 %.val5.i.i.i168, %.val.i.i.i167
-  %i.jx = sub nuw i64 %.val.i.i.i167, %.val5.i.i.i168
-  %.sroa.0.0.i.i.i.i170 = select i1 %.not.i.i.i.i169, i64 %i.jx, i64 %3
+  %.val5.i.i.i168 = load i64, ptr %i.jw, align 8, !alias.scope !640, !noalias !637, !noundef !5
+  %i.jx = sub nsw i64 %.val.i.i.i167, %.val5.i.i.i168
+  %.sroa.0.0.i.i.i.i169 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.jx, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i164
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i164: ; preds = %bb.ay, %bb.ax
-  %.sroa.02.0.i.i.i165 = phi i64 [ %.sroa.0.0.i.i.i.i170, %bb.ay ], [ 0, %bb.ax ]
+  %.sroa.02.0.i.i.i165 = phi i64 [ %.sroa.0.0.i.i.i.i169, %bb.ay ], [ 0, %bb.ax ]
   %i.jy = add i64 %.sroa.02.0.i.i.i165, %i.js
   %i.jz = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.jp, i64 %i.ia) ; 2 uses
   %i.ka = extractvalue { i64, i1 } %i.jz, 0
@@ -1049,17 +1041,15 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   %i.kw = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val.i.i.i414 = load i64, ptr %i.kw, align 8, !alias.scope !643, !noalias !641, !noundef !5 ; 3 uses
+  %.val.i.i.i414 = load i64, ptr %i.kw, align 8, !alias.scope !643, !noalias !641, !noundef !5
   %i.kx = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.val5.i.i.i415 = load i64, ptr %i.kx, align 8, !alias.scope !643, !noalias !641, !noundef !5 ; 3 uses
-  %.not.i.i.i.i416 = icmp ugt i64 %.val.i.i.i414, %.val5.i.i.i415
-  %4 = sub nuw i64 %.val5.i.i.i415, %.val.i.i.i414
-  %i.ky = sub nuw i64 %.val.i.i.i414, %.val5.i.i.i415
-  %.sroa.0.0.i.i.i.i417 = select i1 %.not.i.i.i.i416, i64 %i.ky, i64 %4
+  %.val5.i.i.i415 = load i64, ptr %i.kx, align 8, !alias.scope !643, !noalias !641, !noundef !5
+  %i.ky = sub nsw i64 %.val.i.i.i414, %.val5.i.i.i415
+  %.sroa.0.0.i.i.i.i413 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ky, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i411
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i411: ; preds = %bb.be, %bb.bd
-  %.sroa.02.0.i.i.i412 = phi i64 [ %.sroa.0.0.i.i.i.i417, %bb.be ], [ 0, %bb.bd ]
+  %.sroa.02.0.i.i.i412 = phi i64 [ %.sroa.0.0.i.i.i.i413, %bb.be ], [ 0, %bb.bd ]
   %i.kz = add i64 %.sroa.02.0.i.i.i412, %i.kt
   %i.la = load i64, ptr %i.bc, align 8, !noalias !641, !noundef !5 ; 2 uses
   %i.lb = icmp ult i64 %i.la, 576460752303423488
@@ -1425,17 +1415,15 @@ bb.cn:                                            ; preds = %bb.cm
 
 bb.co:                                            ; preds = %bb.cn
   %i.qb = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val.i.i.i203 = load i64, ptr %i.qb, align 8, !alias.scope !664, !noalias !661, !noundef !5 ; 3 uses
+  %.val.i.i.i203 = load i64, ptr %i.qb, align 8, !alias.scope !664, !noalias !661, !noundef !5
   %i.qc = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.val5.i.i.i204 = load i64, ptr %i.qc, align 8, !alias.scope !664, !noalias !661, !noundef !5 ; 3 uses
-  %.not.i.i.i.i205 = icmp ugt i64 %.val.i.i.i203, %.val5.i.i.i204
-  %5 = sub nuw i64 %.val5.i.i.i204, %.val.i.i.i203
-  %i.qd = sub nuw i64 %.val.i.i.i203, %.val5.i.i.i204
-  %.sroa.0.0.i.i.i.i206 = select i1 %.not.i.i.i.i205, i64 %i.qd, i64 %5
+  %.val5.i.i.i204 = load i64, ptr %i.qc, align 8, !alias.scope !664, !noalias !661, !noundef !5
+  %i.qd = sub nsw i64 %.val.i.i.i203, %.val5.i.i.i204
+  %.sroa.0.0.i.i.i.i204 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.qd, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i200
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i200: ; preds = %bb.co, %bb.cn
-  %.sroa.02.0.i.i.i201 = phi i64 [ %.sroa.0.0.i.i.i.i206, %bb.co ], [ 0, %bb.cn ]
+  %.sroa.02.0.i.i.i201 = phi i64 [ %.sroa.0.0.i.i.i.i204, %bb.co ], [ 0, %bb.cn ]
   %i.qe = add i64 %.sroa.02.0.i.i.i201, %i.py
   %i.qf = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.pv, i64 %i.og) ; 2 uses
   %i.qg = extractvalue { i64, i1 } %i.qf, 0
@@ -1488,17 +1476,15 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.ct
   %i.rc = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val.i.i.i429 = load i64, ptr %i.rc, align 8, !alias.scope !667, !noalias !665, !noundef !5 ; 3 uses
+  %.val.i.i.i429 = load i64, ptr %i.rc, align 8, !alias.scope !667, !noalias !665, !noundef !5
   %i.rd = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.val5.i.i.i430 = load i64, ptr %i.rd, align 8, !alias.scope !667, !noalias !665, !noundef !5 ; 3 uses
-  %.not.i.i.i.i431 = icmp ugt i64 %.val.i.i.i429, %.val5.i.i.i430
-  %6 = sub nuw i64 %.val5.i.i.i430, %.val.i.i.i429
-  %i.re = sub nuw i64 %.val.i.i.i429, %.val5.i.i.i430
-  %.sroa.0.0.i.i.i.i432 = select i1 %.not.i.i.i.i431, i64 %i.re, i64 %6
+  %.val5.i.i.i430 = load i64, ptr %i.rd, align 8, !alias.scope !667, !noalias !665, !noundef !5
+  %i.re = sub nsw i64 %.val.i.i.i429, %.val5.i.i.i430
+  %.sroa.0.0.i.i.i.i427 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.re, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i426
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i426: ; preds = %bb.cu, %bb.ct
-  %.sroa.02.0.i.i.i427 = phi i64 [ %.sroa.0.0.i.i.i.i432, %bb.cu ], [ 0, %bb.ct ]
+  %.sroa.02.0.i.i.i427 = phi i64 [ %.sroa.0.0.i.i.i.i427, %bb.cu ], [ 0, %bb.ct ]
   %i.rf = add i64 %.sroa.02.0.i.i.i427, %i.qz
   %i.rg = load i64, ptr %i.bc, align 8, !noalias !665, !noundef !5 ; 2 uses
   %i.rh = icmp ult i64 %i.rg, 576460752303423488
@@ -1901,13 +1887,11 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.dr = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %.val.i.i.i = load i64, ptr %i.dr, align 8, !alias.scope !805, !noalias !802, !noundef !5 ; 3 uses
+  %.val.i.i.i = load i64, ptr %i.dr, align 8, !alias.scope !805, !noalias !802, !noundef !5
   %i.ds = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  %.val5.i.i.i = load i64, ptr %i.ds, align 8, !alias.scope !805, !noalias !802, !noundef !5 ; 3 uses
-  %.not.i.i.i.i = icmp ugt i64 %.val.i.i.i, %.val5.i.i.i
-  %1 = sub nuw i64 %.val5.i.i.i, %.val.i.i.i
-  %i.dt = sub nuw i64 %.val.i.i.i, %.val5.i.i.i
-  %.sroa.0.0.i.i.i.i = select i1 %.not.i.i.i.i, i64 %i.dt, i64 %1
+  %.val5.i.i.i = load i64, ptr %i.ds, align 8, !alias.scope !805, !noalias !802, !noundef !5
+  %i.dt = sub nsw i64 %.val.i.i.i, %.val5.i.i.i
+  %.sroa.0.0.i.i.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.dt, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i: ; preds = %bb.s, %bb.r
@@ -1962,17 +1946,15 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.eq = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %.val.i.i.i108 = load i64, ptr %i.eq, align 8, !alias.scope !808, !noalias !806, !noundef !5 ; 3 uses
+  %.val.i.i.i108 = load i64, ptr %i.eq, align 8, !alias.scope !808, !noalias !806, !noundef !5
   %i.er = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  %.val5.i.i.i109 = load i64, ptr %i.er, align 8, !alias.scope !808, !noalias !806, !noundef !5 ; 3 uses
-  %.not.i.i.i.i110 = icmp ugt i64 %.val.i.i.i108, %.val5.i.i.i109
-  %2 = sub nuw i64 %.val5.i.i.i109, %.val.i.i.i108
-  %i.es = sub nuw i64 %.val.i.i.i108, %.val5.i.i.i109
-  %.sroa.0.0.i.i.i.i111 = select i1 %.not.i.i.i.i110, i64 %i.es, i64 %2
+  %.val5.i.i.i109 = load i64, ptr %i.er, align 8, !alias.scope !808, !noalias !806, !noundef !5
+  %i.es = sub nsw i64 %.val.i.i.i108, %.val5.i.i.i109
+  %.sroa.0.0.i.i.i.i110 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.es, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i106
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i106: ; preds = %bb.y, %bb.x
-  %.sroa.02.0.i.i.i107 = phi i64 [ %.sroa.0.0.i.i.i.i111, %bb.y ], [ 0, %bb.x ]
+  %.sroa.02.0.i.i.i107 = phi i64 [ %.sroa.0.0.i.i.i.i110, %bb.y ], [ 0, %bb.x ]
   %i.et = add i64 %.sroa.02.0.i.i.i107, %i.en
   %i.eu = load i64, ptr %i.p, align 8, !noalias !806, !noundef !5 ; 2 uses
   %i.ev = icmp ult i64 %i.eu, 576460752303423488
@@ -2375,13 +2357,11 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.fs = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %.val.i.i.i.i.i = load i64, ptr %i.fs, align 8, !alias.scope !954, !noalias !951, !noundef !5 ; 3 uses
+  %.val.i.i.i.i.i = load i64, ptr %i.fs, align 8, !alias.scope !954, !noalias !951, !noundef !5
   %i.ft = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %.val5.i.i.i.i.i = load i64, ptr %i.ft, align 8, !alias.scope !954, !noalias !951, !noundef !5 ; 3 uses
-  %.not.i.i.i.i.i.i = icmp ugt i64 %.val.i.i.i.i.i, %.val5.i.i.i.i.i
-  %3 = sub nuw i64 %.val5.i.i.i.i.i, %.val.i.i.i.i.i
-  %i.fu = sub nuw i64 %.val.i.i.i.i.i, %.val5.i.i.i.i.i
-  %.sroa.0.0.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 %i.fu, i64 %3
+  %.val5.i.i.i.i.i = load i64, ptr %i.ft, align 8, !alias.scope !954, !noalias !951, !noundef !5
+  %i.fu = sub nsw i64 %.val.i.i.i.i.i, %.val5.i.i.i.i.i
+  %.sroa.0.0.i.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.fu, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i: ; preds = %bb.r, %bb.q
@@ -2438,17 +2418,15 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.gt = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %.val.i.i.i33.i.i = load i64, ptr %i.gt, align 8, !alias.scope !957, !noalias !955, !noundef !5 ; 3 uses
+  %.val.i.i.i33.i.i = load i64, ptr %i.gt, align 8, !alias.scope !957, !noalias !955, !noundef !5
   %i.gu = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %.val5.i.i.i34.i.i = load i64, ptr %i.gu, align 8, !alias.scope !957, !noalias !955, !noundef !5 ; 3 uses
-  %.not.i.i.i.i35.i.i = icmp ugt i64 %.val.i.i.i33.i.i, %.val5.i.i.i34.i.i
-  %4 = sub nuw i64 %.val5.i.i.i34.i.i, %.val.i.i.i33.i.i
-  %i.gv = sub nuw i64 %.val.i.i.i33.i.i, %.val5.i.i.i34.i.i
-  %.sroa.0.0.i.i.i.i36.i.i = select i1 %.not.i.i.i.i35.i.i, i64 %i.gv, i64 %4
+  %.val5.i.i.i34.i.i = load i64, ptr %i.gu, align 8, !alias.scope !957, !noalias !955, !noundef !5
+  %i.gv = sub nsw i64 %.val.i.i.i33.i.i, %.val5.i.i.i34.i.i
+  %.sroa.0.0.i.i.i.i35.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.gv, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i31.i.i
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i31.i.i: ; preds = %bb.x, %bb.w
-  %.sroa.02.0.i.i.i32.i.i = phi i64 [ %.sroa.0.0.i.i.i.i36.i.i, %bb.x ], [ 0, %bb.w ]
+  %.sroa.02.0.i.i.i32.i.i = phi i64 [ %.sroa.0.0.i.i.i.i35.i.i, %bb.x ], [ 0, %bb.w ]
   %i.gw = add i64 %.sroa.02.0.i.i.i32.i.i, %i.gq
   %i.gx = load i64, ptr %i.w, align 8, !noalias !955, !noundef !5 ; 2 uses
   %i.gy = icmp ult i64 %i.gx, 576460752303423488
@@ -2851,13 +2829,11 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.ej = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  %.val.i.i.i.i.i.i = load i64, ptr %i.ej, align 8, !alias.scope !1083, !noalias !1079, !noundef !5 ; 3 uses
+  %.val.i.i.i.i.i.i = load i64, ptr %i.ej, align 8, !alias.scope !1083, !noalias !1079, !noundef !5
   %i.ek = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %.val5.i.i.i.i.i.i = load i64, ptr %i.ek, align 8, !alias.scope !1083, !noalias !1079, !noundef !5 ; 3 uses
-  %.not.i.i.i.i.i.i.i = icmp ugt i64 %.val.i.i.i.i.i.i, %.val5.i.i.i.i.i.i
-  %4 = sub nuw i64 %.val5.i.i.i.i.i.i, %.val.i.i.i.i.i.i
-  %i.el = sub nuw i64 %.val.i.i.i.i.i.i, %.val5.i.i.i.i.i.i
-  %.sroa.0.0.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, i64 %i.el, i64 %4
+  %.val5.i.i.i.i.i.i = load i64, ptr %i.ek, align 8, !alias.scope !1083, !noalias !1079, !noundef !5
+  %i.el = sub nsw i64 %.val.i.i.i.i.i.i, %.val5.i.i.i.i.i.i
+  %.sroa.0.0.i.i.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.el, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i.i
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i.i: ; preds = %bb.v, %bb.u
@@ -2914,17 +2890,15 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fk = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  %.val.i.i.i34.i.i.i = load i64, ptr %i.fk, align 8, !alias.scope !1086, !noalias !1084, !noundef !5 ; 3 uses
+  %.val.i.i.i34.i.i.i = load i64, ptr %i.fk, align 8, !alias.scope !1086, !noalias !1084, !noundef !5
   %i.fl = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %.val5.i.i.i35.i.i.i = load i64, ptr %i.fl, align 8, !alias.scope !1086, !noalias !1084, !noundef !5 ; 3 uses
-  %.not.i.i.i.i36.i.i.i = icmp ugt i64 %.val.i.i.i34.i.i.i, %.val5.i.i.i35.i.i.i
-  %5 = sub nuw i64 %.val5.i.i.i35.i.i.i, %.val.i.i.i34.i.i.i
-  %i.fm = sub nuw i64 %.val.i.i.i34.i.i.i, %.val5.i.i.i35.i.i.i
-  %.sroa.0.0.i.i.i.i37.i.i.i = select i1 %.not.i.i.i.i36.i.i.i, i64 %i.fm, i64 %5
+  %.val5.i.i.i35.i.i.i = load i64, ptr %i.fl, align 8, !alias.scope !1086, !noalias !1084, !noundef !5
+  %i.fm = sub nsw i64 %.val.i.i.i34.i.i.i, %.val5.i.i.i35.i.i.i
+  %.sroa.0.0.i.i.i.i36.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.fm, i1 true)
   br label %_RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i32.i.i.i
 
 _RNvMs1_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i32.i.i.i: ; preds = %bb.ab, %bb.aa
-  %.sroa.02.0.i.i.i33.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i37.i.i.i, %bb.ab ], [ 0, %bb.aa ]
+  %.sroa.02.0.i.i.i33.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i36.i.i.i, %bb.ab ], [ 0, %bb.aa ]
   %i.fn = add i64 %.sroa.02.0.i.i.i33.i.i.i, %i.fh
   %i.fo = load i64, ptr %i.cf, align 8, !noalias !1084, !noundef !5 ; 2 uses
   %i.fp = icmp ult i64 %i.fo, 576460752303423488
@@ -3326,6 +3300,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #24
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #21
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

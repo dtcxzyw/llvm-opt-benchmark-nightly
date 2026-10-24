@@ -204,21 +204,17 @@ bb.k:                                             ; preds = %bb.j
   %.val11.i = load ptr, ptr %i.q, align 8, !alias.scope !25, !nonnull !3, !align !26, !noundef !3 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val10.i, i64 64
   %i.s = getelementptr inbounds nuw i8, ptr %.val10.i, i64 72
-  %i.t = load i64, ptr %i.s, align 8, !noalias !27, !noundef !3 ; 5 uses
-  %i.u = load i64, ptr %i.r, align 8, !noalias !27, !noundef !3 ; 5 uses
-  %6 = icmp ugt i64 %i.t, %i.u
-  %7 = sub nuw i64 %i.t, %i.u
-  %i.v = sub nuw i64 %i.u, %i.t
-  %.sroa.0.0.i.i.i = select i1 %6, i64 %7, i64 %i.v
+  %i.t = load i64, ptr %i.s, align 8, !noalias !27, !noundef !3 ; 3 uses
+  %i.u = load i64, ptr %i.r, align 8, !noalias !27, !noundef !3 ; 3 uses
+  %i.v = sub nsw i64 %i.t, %i.u
+  %.sroa.0.0.i.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.v, i1 true)
   %i.w = getelementptr inbounds nuw i8, ptr %.val11.i, i64 64
   %i.x = getelementptr inbounds nuw i8, ptr %.val11.i, i64 72
-  %i.y = load i64, ptr %i.x, align 8, !noalias !27, !noundef !3 ; 3 uses
-  %i.z = load i64, ptr %i.w, align 8, !noalias !27, !noundef !3 ; 3 uses
-  %8 = icmp ugt i64 %i.y, %i.z
-  %9 = sub nuw i64 %i.y, %i.z
-  %i.aa = sub nuw i64 %i.z, %i.y
-  %.sroa.0.0.i5.i.i = select i1 %8, i64 %9, i64 %i.aa
-  %i.ab = icmp ult i64 %.sroa.0.0.i5.i.i, %.sroa.0.0.i.i.i ; 2 uses
+  %i.y = load i64, ptr %i.x, align 8, !noalias !27, !noundef !3
+  %i.z = load i64, ptr %i.w, align 8, !noalias !27, !noundef !3
+  %i.aa = sub nsw i64 %i.y, %i.z
+  %.sroa.0.0.i5.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.aa, i1 true)
+  %i.ab = icmp samesign ult i64 %.sroa.0.0.i5.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not37.i = icmp eq i64 %i.m, 2                 ; 2 uses
   br i1 %i.ab, label %.preheader.i, label %.preheader26.i
 
@@ -229,25 +225,21 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not37.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTjRNtNtNtCslbzaBBLIgs6_17annotate_snippets8renderer12display_list23DisplaySourceAnnotationE12split_at_mutBD_.exit11.preheader.i.i.i, label %.lr.ph32.i
 
 .lr.ph.i:                                         ; preds = %.preheader26.i, %bb.l
-  %i.ac = phi i64 [ %i.aj, %bb.l ], [ %i.u, %.preheader26.i ] ; 3 uses
-  %i.ad = phi i64 [ %i.ai, %bb.l ], [ %i.t, %.preheader26.i ] ; 3 uses
+  %i.ac = phi i64 [ %i.aj, %bb.l ], [ %i.u, %.preheader26.i ]
+  %i.ad = phi i64 [ %i.ai, %bb.l ], [ %i.t, %.preheader26.i ]
   %.sroa.01.0.i28.i = phi i64 [ %i.an, %bb.l ], [ 2, %.preheader26.i ] ; 3 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %.sroa.01.0.i28.i
   %i.af = getelementptr i8, ptr %i.ae, i64 8
   %.val8.i = load ptr, ptr %i.af, align 8, !alias.scope !25, !nonnull !3, !align !26, !noundef !3 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.val8.i, i64 64
   %i.ah = getelementptr inbounds nuw i8, ptr %.val8.i, i64 72
-  %i.ai = load i64, ptr %i.ah, align 8, !noalias !27, !noundef !3 ; 4 uses
-  %i.aj = load i64, ptr %i.ag, align 8, !noalias !27, !noundef !3 ; 4 uses
-  %10 = icmp ugt i64 %i.ai, %i.aj
-  %11 = sub nuw i64 %i.ai, %i.aj
-  %i.ak = sub nuw i64 %i.aj, %i.ai
-  %.sroa.0.0.i.i12.i = select i1 %10, i64 %11, i64 %i.ak
-  %12 = icmp ugt i64 %i.ad, %i.ac
-  %13 = sub nuw i64 %i.ad, %i.ac
-  %i.al = sub nuw i64 %i.ac, %i.ad
-  %.sroa.0.0.i5.i13.i = select i1 %12, i64 %13, i64 %i.al
-  %i.am = icmp ult i64 %.sroa.0.0.i5.i13.i, %.sroa.0.0.i.i12.i
+  %i.ai = load i64, ptr %i.ah, align 8, !noalias !27, !noundef !3 ; 2 uses
+  %i.aj = load i64, ptr %i.ag, align 8, !noalias !27, !noundef !3 ; 2 uses
+  %i.ak = sub nsw i64 %i.ai, %i.aj
+  %.sroa.0.0.i.i12.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ak, i1 true)
+  %i.al = sub nsw i64 %i.ad, %i.ac
+  %.sroa.0.0.i5.i13.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.al, i1 true)
+  %i.am = icmp samesign ult i64 %.sroa.0.0.i5.i13.i, %.sroa.0.0.i.i12.i
   br i1 %i.am, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTjRNtNtNtCslbzaBBLIgs6_17annotate_snippets8renderer12display_list23DisplaySourceAnnotationENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReversejENCNvMs2_B17_NtB17_10DisplaySet11format_lines5_0E0EB1b_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i
@@ -256,25 +248,21 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTjRNtNtNtCslbzaBBLIgs6_17annotate_snippets8renderer12display_list23DisplaySourceAnnotationENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReversejENCNvMs2_B17_NtB17_10DisplaySet11format_lines5_0E0EB1b_.exit.i, label %.lr.ph.i
 
 .lr.ph32.i:                                       ; preds = %.preheader.i, %bb.m
-  %i.ao = phi i64 [ %i.av, %bb.m ], [ %i.u, %.preheader.i ] ; 3 uses
-  %i.ap = phi i64 [ %i.au, %bb.m ], [ %i.t, %.preheader.i ] ; 3 uses
+  %i.ao = phi i64 [ %i.av, %bb.m ], [ %i.u, %.preheader.i ]
+  %i.ap = phi i64 [ %i.au, %bb.m ], [ %i.t, %.preheader.i ]
   %.sroa.01.1.i31.i = phi i64 [ %i.az, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
   %i.aq = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %.sroa.01.1.i31.i
   %i.ar = getelementptr i8, ptr %i.aq, i64 8
   %.val.i = load ptr, ptr %i.ar, align 8, !alias.scope !25, !nonnull !3, !align !26, !noundef !3 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.val.i, i64 64
   %i.at = getelementptr inbounds nuw i8, ptr %.val.i, i64 72
-  %i.au = load i64, ptr %i.at, align 8, !noalias !27, !noundef !3 ; 4 uses
-  %i.av = load i64, ptr %i.as, align 8, !noalias !27, !noundef !3 ; 4 uses
-  %14 = icmp ugt i64 %i.au, %i.av
-  %15 = sub nuw i64 %i.au, %i.av
-  %i.aw = sub nuw i64 %i.av, %i.au
-  %.sroa.0.0.i.i14.i = select i1 %14, i64 %15, i64 %i.aw
-  %16 = icmp ugt i64 %i.ap, %i.ao
-  %17 = sub nuw i64 %i.ap, %i.ao
-  %i.ax = sub nuw i64 %i.ao, %i.ap
-  %.sroa.0.0.i5.i15.i = select i1 %16, i64 %17, i64 %i.ax
-  %i.ay = icmp ult i64 %.sroa.0.0.i5.i15.i, %.sroa.0.0.i.i14.i
+  %i.au = load i64, ptr %i.at, align 8, !noalias !27, !noundef !3 ; 2 uses
+  %i.av = load i64, ptr %i.as, align 8, !noalias !27, !noundef !3 ; 2 uses
+  %i.aw = sub nsw i64 %i.au, %i.av
+  %.sroa.0.0.i.i14.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.aw, i1 true)
+  %i.ax = sub nsw i64 %i.ap, %i.ao
+  %.sroa.0.0.i5.i15.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ax, i1 true)
+  %i.ay = icmp samesign ult i64 %.sroa.0.0.i5.i15.i, %.sroa.0.0.i.i14.i
   br i1 %i.ay, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTjRNtNtNtCslbzaBBLIgs6_17annotate_snippets8renderer12display_list23DisplaySourceAnnotationENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReversejENCNvMs2_B17_NtB17_10DisplaySet11format_lines5_0E0EB1b_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph32.i
@@ -545,6 +533,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #6
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

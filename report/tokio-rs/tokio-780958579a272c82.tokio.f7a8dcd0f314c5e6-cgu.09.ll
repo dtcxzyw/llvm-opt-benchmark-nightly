@@ -204,16 +204,14 @@ bb.s:                                             ; preds = %bb.q
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i, i64 32
   %i.da = getelementptr inbounds nuw i8, ptr %.val9.i, i64 40
   %i.db = invoke noundef i32 @_RNvMNtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread5statsNtB2_5Stats27tuned_global_queue_interval(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.cz, ptr noundef nonnull align 8 %i.da)
-          to label %.noexc22 unwind label %.thread101.loopexit.split-lp.loopexit ; 4 uses
+          to label %.noexc22 unwind label %.thread101.loopexit.split-lp.loopexit ; 2 uses
 
 .noexc22:                                         ; preds = %bb.s
-  %i.dc = load i32, ptr %i.cs, align 4, !alias.scope !519, !noundef !7 ; 3 uses
-  %2 = icmp ult i32 %i.dc, %i.db
-  %3 = sub nuw i32 %i.db, %i.dc
-  %i.dd = sub nuw i32 %i.dc, %i.db
-  %.sroa.0.0.i.i = select i1 %2, i32 %3, i32 %i.dd
-  %4 = icmp ugt i32 %.sroa.0.0.i.i, 2
-  br i1 %4, label %bb.t, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core26tune_global_queue_interval.exit.i
+  %i.dc = load i32, ptr %i.cs, align 4, !alias.scope !519, !noundef !7
+  %i.dd = sub i32 %i.dc, %i.db
+  %2 = add i32 %i.dd, -3
+  %3 = icmp ult i32 %2, -5
+  br i1 %3, label %bb.t, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core26tune_global_queue_interval.exit.i
 
 bb.t:                                             ; preds = %.noexc22
   store i32 %i.db, ptr %i.cs, align 4, !alias.scope !519

@@ -205,16 +205,14 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8600
     #dbg_value(ptr %i.e, !3522, !DIExpression(), !8584)
     #dbg_value(ptr %i.e, !3532, !DIExpression(), !8586)
-  %.val.i = load i64, ptr %i.e, align 8, !dbg !8602, !alias.scope !8597, !noundef !1285 ; 3 uses
+  %.val.i = load i64, ptr %i.e, align 8, !dbg !8602, !alias.scope !8597, !noundef !1285
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !8602
-  %.val6.i = load i64, ptr %i.f, align 8, !dbg !8602, !alias.scope !8597, !noundef !1285 ; 3 uses
+  %.val6.i = load i64, ptr %i.f, align 8, !dbg !8602, !alias.scope !8597, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !8590)
     #dbg_value(ptr poison, !3537, !DIExpression(), !8591)
     #dbg_value(ptr poison, !3539, !DIExpression(), !8593)
-  %.not.i.i = icmp ugt i64 %.val.i, %.val6.i, !dbg !8603
-  %1 = sub nuw i64 %.val6.i, %.val.i, !dbg !8603
-  %i.g = sub nuw i64 %.val.i, %.val6.i, !dbg !8603
-  %.sroa.0.0.i.i = select i1 %.not.i.i, i64 %i.g, i64 %1, !dbg !8603
+  %i.g = sub nsw i64 %.val.i, %.val6.i, !dbg !8603
+  %.sroa.0.0.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.g, i1 true), !dbg !8603
   br label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfa14SearchProgressE6map_orjNCNvMs1_BL_NtBL_5Cache16search_total_len0EBP_.exit, !dbg !8604
 
 _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfa14SearchProgressE6map_orjNCNvMs1_BL_NtBL_5Cache16search_total_len0EBP_.exit: ; preds = %bb.a, %bb.b
@@ -617,16 +615,14 @@ bb.j:                                             ; preds = %bb.i
   %i.dp = getelementptr inbounds nuw i8, ptr %i.at, i64 8, !dbg !10831
     #dbg_value(ptr %i.dp, !3522, !DIExpression(), !9073)
     #dbg_value(ptr %i.dp, !3532, !DIExpression(), !9075)
-  %.val.i.i.i = load i64, ptr %i.dp, align 8, !dbg !10833, !alias.scope !10451, !noalias !10448, !noundef !1285 ; 3 uses
+  %.val.i.i.i = load i64, ptr %i.dp, align 8, !dbg !10833, !alias.scope !10451, !noalias !10448, !noundef !1285
   %i.dq = getelementptr inbounds nuw i8, ptr %i.at, i64 16, !dbg !10833
-  %.val6.i.i.i = load i64, ptr %i.dq, align 8, !dbg !10833, !alias.scope !10451, !noalias !10448, !noundef !1285 ; 3 uses
+  %.val6.i.i.i = load i64, ptr %i.dq, align 8, !dbg !10833, !alias.scope !10451, !noalias !10448, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !9079)
     #dbg_value(ptr poison, !3537, !DIExpression(), !9080)
     #dbg_value(ptr poison, !3539, !DIExpression(), !9082)
-  %.not.i.i.i.i = icmp ugt i64 %.val.i.i.i, %.val6.i.i.i, !dbg !10834
-  %1 = sub nuw i64 %.val6.i.i.i, %.val.i.i.i, !dbg !10834
-  %i.dr = sub nuw i64 %.val.i.i.i, %.val6.i.i.i, !dbg !10834
-  %.sroa.0.0.i.i.i.i = select i1 %.not.i.i.i.i, i64 %i.dr, i64 %1, !dbg !10834
+  %i.dr = sub nsw i64 %.val.i.i.i, %.val6.i.i.i, !dbg !10834
+  %.sroa.0.0.i.i.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.dr, i1 true), !dbg !10834
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i, !dbg !10835
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i: ; preds = %bb.j, %bb.i
@@ -724,20 +720,18 @@ bb.p:                                             ; preds = %bb.o
   %i.eq = getelementptr inbounds nuw i8, ptr %i.at, i64 8, !dbg !10852
     #dbg_value(ptr %i.eq, !3522, !DIExpression(), !9122)
     #dbg_value(ptr %i.eq, !3532, !DIExpression(), !9124)
-  %.val.i.i.i344 = load i64, ptr %i.eq, align 8, !dbg !10854, !alias.scope !10454, !noalias !10452, !noundef !1285 ; 3 uses
+  %.val.i.i.i344 = load i64, ptr %i.eq, align 8, !dbg !10854, !alias.scope !10454, !noalias !10452, !noundef !1285
   %i.er = getelementptr inbounds nuw i8, ptr %i.at, i64 16, !dbg !10854
-  %.val6.i.i.i345 = load i64, ptr %i.er, align 8, !dbg !10854, !alias.scope !10454, !noalias !10452, !noundef !1285 ; 3 uses
+  %.val6.i.i.i345 = load i64, ptr %i.er, align 8, !dbg !10854, !alias.scope !10454, !noalias !10452, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !9128)
     #dbg_value(ptr poison, !3537, !DIExpression(), !9129)
     #dbg_value(ptr poison, !3539, !DIExpression(), !9131)
-  %.not.i.i.i.i346 = icmp ugt i64 %.val.i.i.i344, %.val6.i.i.i345, !dbg !10855
-  %2 = sub nuw i64 %.val6.i.i.i345, %.val.i.i.i344, !dbg !10855
-  %i.es = sub nuw i64 %.val.i.i.i344, %.val6.i.i.i345, !dbg !10855
-  %.sroa.0.0.i.i.i.i347 = select i1 %.not.i.i.i.i346, i64 %i.es, i64 %2, !dbg !10855
+  %i.es = sub nsw i64 %.val.i.i.i344, %.val6.i.i.i345, !dbg !10855
+  %.sroa.0.0.i.i.i.i344 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.es, i1 true), !dbg !10855
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i342, !dbg !10856
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i342: ; preds = %bb.p, %bb.o
-  %.sroa.02.0.i.i.i343 = phi i64 [ %.sroa.0.0.i.i.i.i347, %bb.p ], [ 0, %bb.o ], !dbg !10857
+  %.sroa.02.0.i.i.i343 = phi i64 [ %.sroa.0.0.i.i.i.i344, %bb.p ], [ 0, %bb.o ], !dbg !10857
   %i.et = add i64 %.sroa.02.0.i.i.i343, %i.en, !dbg !10850
     #dbg_value(i64 %i.et, !3840, !DIExpression(), !9132)
     #dbg_value(ptr %i.at, !3920, !DIExpression(DW_OP_plus_uconst, 72, DW_OP_stack_value), !9134)
@@ -1140,20 +1134,18 @@ bb.ay:                                            ; preds = %bb.ax
   %i.jv = getelementptr inbounds nuw i8, ptr %i.at, i64 8, !dbg !11001
     #dbg_value(ptr %i.jv, !3522, !DIExpression(), !9481)
     #dbg_value(ptr %i.jv, !3532, !DIExpression(), !9483)
-  %.val.i.i.i176 = load i64, ptr %i.jv, align 8, !dbg !11003, !alias.scope !10564, !noalias !10561, !noundef !1285 ; 3 uses
+  %.val.i.i.i176 = load i64, ptr %i.jv, align 8, !dbg !11003, !alias.scope !10564, !noalias !10561, !noundef !1285
   %i.jw = getelementptr inbounds nuw i8, ptr %i.at, i64 16, !dbg !11003
-  %.val6.i.i.i177 = load i64, ptr %i.jw, align 8, !dbg !11003, !alias.scope !10564, !noalias !10561, !noundef !1285 ; 3 uses
+  %.val6.i.i.i177 = load i64, ptr %i.jw, align 8, !dbg !11003, !alias.scope !10564, !noalias !10561, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !9487)
     #dbg_value(ptr poison, !3537, !DIExpression(), !9488)
     #dbg_value(ptr poison, !3539, !DIExpression(), !9490)
-  %.not.i.i.i.i178 = icmp ugt i64 %.val.i.i.i176, %.val6.i.i.i177, !dbg !11004
-  %3 = sub nuw i64 %.val6.i.i.i177, %.val.i.i.i176, !dbg !11004
-  %i.jx = sub nuw i64 %.val.i.i.i176, %.val6.i.i.i177, !dbg !11004
-  %.sroa.0.0.i.i.i.i179 = select i1 %.not.i.i.i.i178, i64 %i.jx, i64 %3, !dbg !11004
+  %i.jx = sub nsw i64 %.val.i.i.i176, %.val6.i.i.i177, !dbg !11004
+  %.sroa.0.0.i.i.i.i178 = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.jx, i1 true), !dbg !11004
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i173, !dbg !11005
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i173: ; preds = %bb.ay, %bb.ax
-  %.sroa.02.0.i.i.i174 = phi i64 [ %.sroa.0.0.i.i.i.i179, %bb.ay ], [ 0, %bb.ax ], !dbg !11006
+  %.sroa.02.0.i.i.i174 = phi i64 [ %.sroa.0.0.i.i.i.i178, %bb.ay ], [ 0, %bb.ax ], !dbg !11006
   %i.jy = add i64 %.sroa.02.0.i.i.i174, %i.js, !dbg !10999
     #dbg_value(i64 %i.jy, !3840, !DIExpression(), !9491)
     #dbg_value(i64 %i.ia, !3871, !DIExpression(), !9469)
@@ -1247,20 +1239,18 @@ bb.be:                                            ; preds = %bb.bd
   %i.kw = getelementptr inbounds nuw i8, ptr %i.at, i64 8, !dbg !11022
     #dbg_value(ptr %i.kw, !3522, !DIExpression(), !9530)
     #dbg_value(ptr %i.kw, !3532, !DIExpression(), !9532)
-  %.val.i.i.i357 = load i64, ptr %i.kw, align 8, !dbg !11024, !alias.scope !10567, !noalias !10565, !noundef !1285 ; 3 uses
+  %.val.i.i.i357 = load i64, ptr %i.kw, align 8, !dbg !11024, !alias.scope !10567, !noalias !10565, !noundef !1285
   %i.kx = getelementptr inbounds nuw i8, ptr %i.at, i64 16, !dbg !11024
-  %.val6.i.i.i358 = load i64, ptr %i.kx, align 8, !dbg !11024, !alias.scope !10567, !noalias !10565, !noundef !1285 ; 3 uses
+  %.val6.i.i.i358 = load i64, ptr %i.kx, align 8, !dbg !11024, !alias.scope !10567, !noalias !10565, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !9536)
     #dbg_value(ptr poison, !3537, !DIExpression(), !9537)
     #dbg_value(ptr poison, !3539, !DIExpression(), !9539)
-  %.not.i.i.i.i359 = icmp ugt i64 %.val.i.i.i357, %.val6.i.i.i358, !dbg !11025
-  %4 = sub nuw i64 %.val6.i.i.i358, %.val.i.i.i357, !dbg !11025
-  %i.ky = sub nuw i64 %.val.i.i.i357, %.val6.i.i.i358, !dbg !11025
-  %.sroa.0.0.i.i.i.i360 = select i1 %.not.i.i.i.i359, i64 %i.ky, i64 %4, !dbg !11025
+  %i.ky = sub nsw i64 %.val.i.i.i357, %.val6.i.i.i358, !dbg !11025
+  %.sroa.0.0.i.i.i.i356 = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ky, i1 true), !dbg !11025
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i354, !dbg !11026
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i354: ; preds = %bb.be, %bb.bd
-  %.sroa.02.0.i.i.i355 = phi i64 [ %.sroa.0.0.i.i.i.i360, %bb.be ], [ 0, %bb.bd ], !dbg !11027
+  %.sroa.02.0.i.i.i355 = phi i64 [ %.sroa.0.0.i.i.i.i356, %bb.be ], [ 0, %bb.bd ], !dbg !11027
   %i.kz = add i64 %.sroa.02.0.i.i.i355, %i.kt, !dbg !11020
     #dbg_value(i64 %i.kz, !3840, !DIExpression(), !9540)
     #dbg_value(ptr %i.at, !3920, !DIExpression(DW_OP_plus_uconst, 72, DW_OP_stack_value), !9542)
@@ -1663,20 +1653,18 @@ bb.co:                                            ; preds = %bb.cn
   %i.pv = getelementptr inbounds nuw i8, ptr %i.at, i64 8, !dbg !11170
     #dbg_value(ptr %i.pv, !3522, !DIExpression(), !9886)
     #dbg_value(ptr %i.pv, !3532, !DIExpression(), !9888)
-  %.val.i.i.i205 = load i64, ptr %i.pv, align 8, !dbg !11172, !alias.scope !10670, !noalias !10667, !noundef !1285 ; 3 uses
+  %.val.i.i.i205 = load i64, ptr %i.pv, align 8, !dbg !11172, !alias.scope !10670, !noalias !10667, !noundef !1285
   %i.pw = getelementptr inbounds nuw i8, ptr %i.at, i64 16, !dbg !11172
-  %.val6.i.i.i206 = load i64, ptr %i.pw, align 8, !dbg !11172, !alias.scope !10670, !noalias !10667, !noundef !1285 ; 3 uses
+  %.val6.i.i.i206 = load i64, ptr %i.pw, align 8, !dbg !11172, !alias.scope !10670, !noalias !10667, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !9892)
     #dbg_value(ptr poison, !3537, !DIExpression(), !9893)
     #dbg_value(ptr poison, !3539, !DIExpression(), !9895)
-  %.not.i.i.i.i207 = icmp ugt i64 %.val.i.i.i205, %.val6.i.i.i206, !dbg !11173
-  %5 = sub nuw i64 %.val6.i.i.i206, %.val.i.i.i205, !dbg !11173
-  %i.px = sub nuw i64 %.val.i.i.i205, %.val6.i.i.i206, !dbg !11173
-  %.sroa.0.0.i.i.i.i208 = select i1 %.not.i.i.i.i207, i64 %i.px, i64 %5, !dbg !11173
+  %i.px = sub nsw i64 %.val.i.i.i205, %.val6.i.i.i206, !dbg !11173
+  %.sroa.0.0.i.i.i.i206 = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.px, i1 true), !dbg !11173
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i202, !dbg !11174
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i202: ; preds = %bb.co, %bb.cn
-  %.sroa.02.0.i.i.i203 = phi i64 [ %.sroa.0.0.i.i.i.i208, %bb.co ], [ 0, %bb.cn ], !dbg !11175
+  %.sroa.02.0.i.i.i203 = phi i64 [ %.sroa.0.0.i.i.i.i206, %bb.co ], [ 0, %bb.cn ], !dbg !11175
   %i.py = add i64 %.sroa.02.0.i.i.i203, %i.ps, !dbg !11168
     #dbg_value(i64 %i.py, !3840, !DIExpression(), !9896)
     #dbg_value(i64 %i.oa, !3871, !DIExpression(), !9874)
@@ -1770,20 +1758,18 @@ bb.cu:                                            ; preds = %bb.ct
   %i.qw = getelementptr inbounds nuw i8, ptr %i.at, i64 8, !dbg !11191
     #dbg_value(ptr %i.qw, !3522, !DIExpression(), !9935)
     #dbg_value(ptr %i.qw, !3532, !DIExpression(), !9937)
-  %.val.i.i.i372 = load i64, ptr %i.qw, align 8, !dbg !11193, !alias.scope !10673, !noalias !10671, !noundef !1285 ; 3 uses
+  %.val.i.i.i372 = load i64, ptr %i.qw, align 8, !dbg !11193, !alias.scope !10673, !noalias !10671, !noundef !1285
   %i.qx = getelementptr inbounds nuw i8, ptr %i.at, i64 16, !dbg !11193
-  %.val6.i.i.i373 = load i64, ptr %i.qx, align 8, !dbg !11193, !alias.scope !10673, !noalias !10671, !noundef !1285 ; 3 uses
+  %.val6.i.i.i373 = load i64, ptr %i.qx, align 8, !dbg !11193, !alias.scope !10673, !noalias !10671, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !9941)
     #dbg_value(ptr poison, !3537, !DIExpression(), !9942)
     #dbg_value(ptr poison, !3539, !DIExpression(), !9944)
-  %.not.i.i.i.i374 = icmp ugt i64 %.val.i.i.i372, %.val6.i.i.i373, !dbg !11194
-  %6 = sub nuw i64 %.val6.i.i.i373, %.val.i.i.i372, !dbg !11194
-  %i.qy = sub nuw i64 %.val.i.i.i372, %.val6.i.i.i373, !dbg !11194
-  %.sroa.0.0.i.i.i.i375 = select i1 %.not.i.i.i.i374, i64 %i.qy, i64 %6, !dbg !11194
+  %i.qy = sub nsw i64 %.val.i.i.i372, %.val6.i.i.i373, !dbg !11194
+  %.sroa.0.0.i.i.i.i370 = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.qy, i1 true), !dbg !11194
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i369, !dbg !11195
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i369: ; preds = %bb.cu, %bb.ct
-  %.sroa.02.0.i.i.i370 = phi i64 [ %.sroa.0.0.i.i.i.i375, %bb.cu ], [ 0, %bb.ct ], !dbg !11196
+  %.sroa.02.0.i.i.i370 = phi i64 [ %.sroa.0.0.i.i.i.i370, %bb.cu ], [ 0, %bb.ct ], !dbg !11196
   %i.qz = add i64 %.sroa.02.0.i.i.i370, %i.qt, !dbg !11189
     #dbg_value(i64 %i.qz, !3840, !DIExpression(), !9945)
     #dbg_value(ptr %i.at, !3920, !DIExpression(DW_OP_plus_uconst, 72, DW_OP_stack_value), !9947)
@@ -2186,16 +2172,14 @@ bb.s:                                             ; preds = %bb.r
   %i.ds = getelementptr inbounds nuw i8, ptr %i.l, i64 8, !dbg !12318
     #dbg_value(ptr %i.ds, !3522, !DIExpression(), !11600)
     #dbg_value(ptr %i.ds, !3532, !DIExpression(), !11602)
-  %.val.i.i.i = load i64, ptr %i.ds, align 8, !dbg !12320, !alias.scope !12138, !noalias !12135, !noundef !1285 ; 3 uses
+  %.val.i.i.i = load i64, ptr %i.ds, align 8, !dbg !12320, !alias.scope !12138, !noalias !12135, !noundef !1285
   %i.dt = getelementptr inbounds nuw i8, ptr %i.l, i64 16, !dbg !12320
-  %.val6.i.i.i = load i64, ptr %i.dt, align 8, !dbg !12320, !alias.scope !12138, !noalias !12135, !noundef !1285 ; 3 uses
+  %.val6.i.i.i = load i64, ptr %i.dt, align 8, !dbg !12320, !alias.scope !12138, !noalias !12135, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !11606)
     #dbg_value(ptr poison, !3537, !DIExpression(), !11607)
     #dbg_value(ptr poison, !3539, !DIExpression(), !11609)
-  %.not.i.i.i.i = icmp ugt i64 %.val.i.i.i, %.val6.i.i.i, !dbg !12321
-  %1 = sub nuw i64 %.val6.i.i.i, %.val.i.i.i, !dbg !12321
-  %i.du = sub nuw i64 %.val.i.i.i, %.val6.i.i.i, !dbg !12321
-  %.sroa.0.0.i.i.i.i = select i1 %.not.i.i.i.i, i64 %i.du, i64 %1, !dbg !12321
+  %i.du = sub nsw i64 %.val.i.i.i, %.val6.i.i.i, !dbg !12321
+  %.sroa.0.0.i.i.i.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.du, i1 true), !dbg !12321
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i, !dbg !12322
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i: ; preds = %bb.s, %bb.r
@@ -2291,20 +2275,18 @@ bb.y:                                             ; preds = %bb.x
   %i.er = getelementptr inbounds nuw i8, ptr %i.l, i64 8, !dbg !12339
     #dbg_value(ptr %i.er, !3522, !DIExpression(), !11649)
     #dbg_value(ptr %i.er, !3532, !DIExpression(), !11651)
-  %.val.i.i.i111 = load i64, ptr %i.er, align 8, !dbg !12341, !alias.scope !12141, !noalias !12139, !noundef !1285 ; 3 uses
+  %.val.i.i.i111 = load i64, ptr %i.er, align 8, !dbg !12341, !alias.scope !12141, !noalias !12139, !noundef !1285
   %i.es = getelementptr inbounds nuw i8, ptr %i.l, i64 16, !dbg !12341
-  %.val6.i.i.i112 = load i64, ptr %i.es, align 8, !dbg !12341, !alias.scope !12141, !noalias !12139, !noundef !1285 ; 3 uses
+  %.val6.i.i.i112 = load i64, ptr %i.es, align 8, !dbg !12341, !alias.scope !12141, !noalias !12139, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !11655)
     #dbg_value(ptr poison, !3537, !DIExpression(), !11656)
     #dbg_value(ptr poison, !3539, !DIExpression(), !11658)
-  %.not.i.i.i.i113 = icmp ugt i64 %.val.i.i.i111, %.val6.i.i.i112, !dbg !12342
-  %2 = sub nuw i64 %.val6.i.i.i112, %.val.i.i.i111, !dbg !12342
-  %i.et = sub nuw i64 %.val.i.i.i111, %.val6.i.i.i112, !dbg !12342
-  %.sroa.0.0.i.i.i.i114 = select i1 %.not.i.i.i.i113, i64 %i.et, i64 %2, !dbg !12342
+  %i.et = sub nsw i64 %.val.i.i.i111, %.val6.i.i.i112, !dbg !12342
+  %.sroa.0.0.i.i.i.i113 = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.et, i1 true), !dbg !12342
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i109, !dbg !12343
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i109: ; preds = %bb.y, %bb.x
-  %.sroa.02.0.i.i.i110 = phi i64 [ %.sroa.0.0.i.i.i.i114, %bb.y ], [ 0, %bb.x ], !dbg !12344
+  %.sroa.02.0.i.i.i110 = phi i64 [ %.sroa.0.0.i.i.i.i113, %bb.y ], [ 0, %bb.x ], !dbg !12344
   %i.eu = add i64 %.sroa.02.0.i.i.i110, %i.eo, !dbg !12337
     #dbg_value(i64 %i.eu, !3840, !DIExpression(), !11659)
     #dbg_value(ptr %i.l, !3920, !DIExpression(DW_OP_plus_uconst, 72, DW_OP_stack_value), !11661)
@@ -2707,16 +2689,14 @@ bb.r:                                             ; preds = %bb.q
   %i.ft = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !13934
     #dbg_value(ptr %i.ft, !3522, !DIExpression(), !13030)
     #dbg_value(ptr %i.ft, !3532, !DIExpression(), !13032)
-  %.val.i.i.i.i.i = load i64, ptr %i.ft, align 8, !dbg !13936, !alias.scope !13638, !noalias !13635, !noundef !1285 ; 3 uses
+  %.val.i.i.i.i.i = load i64, ptr %i.ft, align 8, !dbg !13936, !alias.scope !13638, !noalias !13635, !noundef !1285
   %i.fu = getelementptr inbounds nuw i8, ptr %i.r, i64 16, !dbg !13936
-  %.val6.i.i.i.i.i = load i64, ptr %i.fu, align 8, !dbg !13936, !alias.scope !13638, !noalias !13635, !noundef !1285 ; 3 uses
+  %.val6.i.i.i.i.i = load i64, ptr %i.fu, align 8, !dbg !13936, !alias.scope !13638, !noalias !13635, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !13036)
     #dbg_value(ptr poison, !3537, !DIExpression(), !13037)
     #dbg_value(ptr poison, !3539, !DIExpression(), !13039)
-  %.not.i.i.i.i.i.i = icmp ugt i64 %.val.i.i.i.i.i, %.val6.i.i.i.i.i, !dbg !13937
-  %3 = sub nuw i64 %.val6.i.i.i.i.i, %.val.i.i.i.i.i, !dbg !13937
-  %i.fv = sub nuw i64 %.val.i.i.i.i.i, %.val6.i.i.i.i.i, !dbg !13937
-  %.sroa.0.0.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 %i.fv, i64 %3, !dbg !13937
+  %i.fv = sub nsw i64 %.val.i.i.i.i.i, %.val6.i.i.i.i.i, !dbg !13937
+  %.sroa.0.0.i.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.fv, i1 true), !dbg !13937
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i, !dbg !13938
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i: ; preds = %bb.r, %bb.q
@@ -2815,20 +2795,18 @@ bb.x:                                             ; preds = %bb.w
   %i.gu = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !13955
     #dbg_value(ptr %i.gu, !3522, !DIExpression(), !13081)
     #dbg_value(ptr %i.gu, !3532, !DIExpression(), !13083)
-  %.val.i.i.i72.i.i = load i64, ptr %i.gu, align 8, !dbg !13957, !alias.scope !13641, !noalias !13639, !noundef !1285 ; 3 uses
+  %.val.i.i.i72.i.i = load i64, ptr %i.gu, align 8, !dbg !13957, !alias.scope !13641, !noalias !13639, !noundef !1285
   %i.gv = getelementptr inbounds nuw i8, ptr %i.r, i64 16, !dbg !13957
-  %.val6.i.i.i73.i.i = load i64, ptr %i.gv, align 8, !dbg !13957, !alias.scope !13641, !noalias !13639, !noundef !1285 ; 3 uses
+  %.val6.i.i.i73.i.i = load i64, ptr %i.gv, align 8, !dbg !13957, !alias.scope !13641, !noalias !13639, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !13087)
     #dbg_value(ptr poison, !3537, !DIExpression(), !13088)
     #dbg_value(ptr poison, !3539, !DIExpression(), !13090)
-  %.not.i.i.i.i74.i.i = icmp ugt i64 %.val.i.i.i72.i.i, %.val6.i.i.i73.i.i, !dbg !13958
-  %4 = sub nuw i64 %.val6.i.i.i73.i.i, %.val.i.i.i72.i.i, !dbg !13958
-  %i.gw = sub nuw i64 %.val.i.i.i72.i.i, %.val6.i.i.i73.i.i, !dbg !13958
-  %.sroa.0.0.i.i.i.i75.i.i = select i1 %.not.i.i.i.i74.i.i, i64 %i.gw, i64 %4, !dbg !13958
+  %i.gw = sub nsw i64 %.val.i.i.i72.i.i, %.val6.i.i.i73.i.i, !dbg !13958
+  %.sroa.0.0.i.i.i.i74.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.gw, i1 true), !dbg !13958
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i70.i.i, !dbg !13959
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i70.i.i: ; preds = %bb.x, %bb.w
-  %.sroa.02.0.i.i.i71.i.i = phi i64 [ %.sroa.0.0.i.i.i.i75.i.i, %bb.x ], [ 0, %bb.w ], !dbg !13960
+  %.sroa.02.0.i.i.i71.i.i = phi i64 [ %.sroa.0.0.i.i.i.i74.i.i, %bb.x ], [ 0, %bb.w ], !dbg !13960
   %i.gx = add i64 %.sroa.02.0.i.i.i71.i.i, %i.gr, !dbg !13953
     #dbg_value(i64 %i.gx, !3840, !DIExpression(), !13091)
     #dbg_value(ptr %i.r, !3920, !DIExpression(DW_OP_plus_uconst, 72, DW_OP_stack_value), !13093)
@@ -3231,16 +3209,14 @@ bb.v:                                             ; preds = %bb.u
   %i.ek = getelementptr inbounds nuw i8, ptr %i.aa, i64 8, !dbg !15364
     #dbg_value(ptr %i.ek, !3522, !DIExpression(), !14437)
     #dbg_value(ptr %i.ek, !3532, !DIExpression(), !14439)
-  %.val.i.i.i.i.i.i = load i64, ptr %i.ek, align 8, !dbg !15366, !alias.scope !15042, !noalias !15038, !noundef !1285 ; 3 uses
+  %.val.i.i.i.i.i.i = load i64, ptr %i.ek, align 8, !dbg !15366, !alias.scope !15042, !noalias !15038, !noundef !1285
   %i.el = getelementptr inbounds nuw i8, ptr %i.aa, i64 16, !dbg !15366
-  %.val6.i.i.i.i.i.i = load i64, ptr %i.el, align 8, !dbg !15366, !alias.scope !15042, !noalias !15038, !noundef !1285 ; 3 uses
+  %.val6.i.i.i.i.i.i = load i64, ptr %i.el, align 8, !dbg !15366, !alias.scope !15042, !noalias !15038, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !14443)
     #dbg_value(ptr poison, !3537, !DIExpression(), !14444)
     #dbg_value(ptr poison, !3539, !DIExpression(), !14446)
-  %.not.i.i.i.i.i.i.i = icmp ugt i64 %.val.i.i.i.i.i.i, %.val6.i.i.i.i.i.i, !dbg !15367
-  %4 = sub nuw i64 %.val6.i.i.i.i.i.i, %.val.i.i.i.i.i.i, !dbg !15367
-  %i.em = sub nuw i64 %.val.i.i.i.i.i.i, %.val6.i.i.i.i.i.i, !dbg !15367
-  %.sroa.0.0.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, i64 %i.em, i64 %4, !dbg !15367
+  %i.em = sub nsw i64 %.val.i.i.i.i.i.i, %.val6.i.i.i.i.i.i, !dbg !15367
+  %.sroa.0.0.i.i.i.i.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.em, i1 true), !dbg !15367
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i.i, !dbg !15368
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i.i.i.i: ; preds = %bb.v, %bb.u
@@ -3339,20 +3315,18 @@ bb.ab:                                            ; preds = %bb.aa
   %i.fl = getelementptr inbounds nuw i8, ptr %i.aa, i64 8, !dbg !15385
     #dbg_value(ptr %i.fl, !3522, !DIExpression(), !14488)
     #dbg_value(ptr %i.fl, !3532, !DIExpression(), !14490)
-  %.val.i.i.i73.i.i.i = load i64, ptr %i.fl, align 8, !dbg !15387, !alias.scope !15045, !noalias !15043, !noundef !1285 ; 3 uses
+  %.val.i.i.i73.i.i.i = load i64, ptr %i.fl, align 8, !dbg !15387, !alias.scope !15045, !noalias !15043, !noundef !1285
   %i.fm = getelementptr inbounds nuw i8, ptr %i.aa, i64 16, !dbg !15387
-  %.val6.i.i.i74.i.i.i = load i64, ptr %i.fm, align 8, !dbg !15387, !alias.scope !15045, !noalias !15043, !noundef !1285 ; 3 uses
+  %.val6.i.i.i74.i.i.i = load i64, ptr %i.fm, align 8, !dbg !15387, !alias.scope !15045, !noalias !15043, !noundef !1285
     #dbg_declare(ptr poison, !3534, !DIExpression(), !14494)
     #dbg_value(ptr poison, !3537, !DIExpression(), !14495)
     #dbg_value(ptr poison, !3539, !DIExpression(), !14497)
-  %.not.i.i.i.i75.i.i.i = icmp ugt i64 %.val.i.i.i73.i.i.i, %.val6.i.i.i74.i.i.i, !dbg !15388
-  %5 = sub nuw i64 %.val6.i.i.i74.i.i.i, %.val.i.i.i73.i.i.i, !dbg !15388
-  %i.fn = sub nuw i64 %.val.i.i.i73.i.i.i, %.val6.i.i.i74.i.i.i, !dbg !15388
-  %.sroa.0.0.i.i.i.i76.i.i.i = select i1 %.not.i.i.i.i75.i.i.i, i64 %i.fn, i64 %5, !dbg !15388
+  %i.fn = sub nsw i64 %.val.i.i.i73.i.i.i, %.val6.i.i.i74.i.i.i, !dbg !15388
+  %.sroa.0.0.i.i.i.i75.i.i.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.fn, i1 true), !dbg !15388
   br label %_RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i71.i.i.i, !dbg !15389
 
 _RNvMs1_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_5Cache16search_total_len.exit.i71.i.i.i: ; preds = %bb.ab, %bb.aa
-  %.sroa.02.0.i.i.i72.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i76.i.i.i, %bb.ab ], [ 0, %bb.aa ], !dbg !15390
+  %.sroa.02.0.i.i.i72.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i75.i.i.i, %bb.ab ], [ 0, %bb.aa ], !dbg !15390
   %i.fo = add i64 %.sroa.02.0.i.i.i72.i.i.i, %i.fi, !dbg !15383
     #dbg_value(i64 %i.fo, !3840, !DIExpression(), !14498)
     #dbg_value(ptr %i.aa, !3920, !DIExpression(DW_OP_plus_uconst, 72, DW_OP_stack_value), !14500)
@@ -3754,6 +3728,9 @@ declare void @_RINvNtCsl4b0cIVMtRE_12aho_corasick9automaton12try_find_fwdRNtNtNt
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #19
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

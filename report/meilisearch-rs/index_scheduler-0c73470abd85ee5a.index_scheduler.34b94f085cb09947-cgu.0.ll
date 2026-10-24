@@ -206,7 +206,7 @@ bb.am:                                            ; preds = %.noexc16.i.i.i.i.i.
   %.sroa.0.020.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.gb, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %i.hl, %.noexc16.i.i.i.i.i.i.i.i ] ; 5 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %.sroa.0.020.i.i.i.i.i.i.i.i.i.i, i64 32 ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %.sroa.0.020.i.i.i.i.i.i.i.i.i.i, i64 24
-  %.val7.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.hm, align 8, !noalias !53991 ; 4 uses
+  %.val7.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.hm, align 8, !noalias !53991 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !53992)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.54.i.i.i.i.i.i.i.i.i.i.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i.i.i.i.i.i.i.i.i.i.i.i)
@@ -391,7 +391,7 @@ bb.ar:                                            ; preds = %._crit_edge.i.i.i.i
 bb.as:                                            ; preds = %"_ZN8indexmap3map25IndexMap$LT$K$C$V$C$S$GT$12get_index_of17h05cc7c51b029ebaaE.exit.thread3.i.i.i.i.i.i.i.i.i.i.i.i.i"
   %i.kz = getelementptr inbounds nuw [32 x i8], ptr %i.gs, i64 %.sroa.5.0.i6.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.la = getelementptr inbounds nuw i8, ptr %i.kz, i64 24
-  %.val21.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.la, align 8, !noalias !54011, !noundef !57 ; 5 uses
+  %.val21.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.la, align 8, !noalias !54011, !noundef !57 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !54012
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !54013
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !54013
@@ -405,10 +405,8 @@ bb.as:                                            ; preds = %"_ZN8indexmap3map25
   store double %i.lc, ptr %i.k, align 8, !noalias !54013
   store i8 %i.ld, ptr %i.hf, align 8, !noalias !54013
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !54013
-  %5 = icmp ult i64 %.val21.i.i.i.i.i.i.i.i.i.i.i.i, %.val7.i.i.i.i.i.i.i.i.i.i
-  %6 = sub nuw i64 %.val7.i.i.i.i.i.i.i.i.i.i, %.val21.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.le = sub nuw i64 %.val21.i.i.i.i.i.i.i.i.i.i.i.i, %.val7.i.i.i.i.i.i.i.i.i.i
-  %.sroa.0.0.i22.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %5, i64 %6, i64 %i.le
+  %i.le = sub nsw i64 %.val21.i.i.i.i.i.i.i.i.i.i.i.i, %.val7.i.i.i.i.i.i.i.i.i.i
+  %.sroa.0.0.i22.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.abs.i64(i64 %i.le, i1 true)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !54013
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !54013
   store i64 %.sroa.0.0.i22.i.i.i.i.i.i.i.i.i.i.i.i, ptr %i.h, align 8, !noalias !54013

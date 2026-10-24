@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.025.0 = phi i8 [ %i.g, %bb.f ], [ %i.g, %bb.g ], [ %i.y, %bb.h ], [ %i.g, %bb.e ], [ %i.g, %bb.b ], !dbg !91696
   %.sroa.10.0 = phi i64 [ %.sroa.10.0.copyload, %bb.f ], [ %.sroa.10.0.copyload, %bb.g ], [ %.sroa.324.0.copyload, %bb.h ], [ %.sroa.10.0.copyload, %bb.e ], [ %.sroa.10.0.copyload, %bb.b ], !dbg !91696 ; 2 uses
   %.sroa.8.0 = phi i64 [ 1, %bb.f ], [ 1, %bb.g ], [ %.sroa.2.0.copyload, %bb.h ], [ %.sroa.8.0.copyload, %bb.e ], [ %.sroa.8.0.copyload, %bb.b ], !dbg !91696 ; 3 uses
-  %.sroa.05.0 = phi i64 [ %.sroa.05.0.copyload, %bb.f ], [ %.sroa.05.0.copyload, %bb.g ], [ %.sroa.023.0.copyload, %bb.h ], [ %.sroa.05.0.copyload, %bb.e ], [ %.sroa.05.0.copyload, %bb.b ], !dbg !91696 ; 7 uses
+  %.sroa.05.0 = phi i64 [ %.sroa.05.0.copyload, %bb.f ], [ %.sroa.05.0.copyload, %bb.g ], [ %.sroa.023.0.copyload, %bb.h ], [ %.sroa.05.0.copyload, %bb.e ], [ %.sroa.05.0.copyload, %bb.b ], !dbg !91696 ; 5 uses
   %.sroa.04.0 = phi i8 [ 0, %bb.f ], [ 0, %bb.g ], [ %i.w, %bb.h ], [ 0, %bb.e ], [ 0, %bb.b ], !dbg !91697 ; 3 uses
   %i.i = icmp ne i8 %.sroa.025.0, 0, !dbg !91698
   %i.j = icmp ugt i64 %.sroa.8.0, 1
@@ -272,19 +272,15 @@ bb.h:                                             ; preds = %bb.e, %bb.g
   ret void, !dbg !91712
 
 bb.i:                                             ; preds = %._crit_edge
-  %i.aa = shl nuw i64 %.sroa.05.0, 1, !dbg !91713 ; 3 uses
+  %i.aa = shl nuw i64 %.sroa.05.0, 1, !dbg !91713
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !91714
   %i.ac = load i32, ptr %i.ab, align 8, !dbg !91714, !range !2388, !noundef !2145
-  %i.ad = zext i32 %i.ac to i64, !dbg !91715      ; 6 uses
-  %6 = icmp ult i64 %i.aa, %i.ad, !dbg !91716
-  %7 = sub nuw nsw i64 %i.ad, %i.aa, !dbg !91716
-  %i.ae = sub nuw i64 %i.aa, %i.ad, !dbg !91716
-  %.sroa.033.0 = select i1 %6, i64 %7, i64 %i.ae, !dbg !91716
-  %8 = icmp samesign ult i64 %.sroa.05.0, %i.ad, !dbg !91717
-  %9 = sub nuw nsw i64 %i.ad, %.sroa.05.0, !dbg !91717
-  %i.af = sub nuw nsw i64 %.sroa.05.0, %i.ad, !dbg !91717
-  %.sroa.034.0 = select i1 %8, i64 %9, i64 %i.af, !dbg !91717
-  %i.ag = icmp ult i64 %.sroa.033.0, %.sroa.034.0, !dbg !91684
+  %i.ad = zext i32 %i.ac to i64, !dbg !91715      ; 2 uses
+  %i.ae = sub nsw i64 %i.aa, %i.ad, !dbg !91716
+  %.sroa.033.0 = tail call i64 @llvm.abs.i64(i64 %i.ae, i1 true), !dbg !91716
+  %i.af = sub nsw i64 %.sroa.05.0, %i.ad, !dbg !91717
+  %.sroa.034.0 = tail call i64 @llvm.abs.i64(i64 %i.af, i1 true), !dbg !91717
+  %i.ag = icmp samesign ult i64 %.sroa.033.0, %.sroa.034.0, !dbg !91684
   br i1 %i.ag, label %bb.j, label %.thread, !dbg !91718
 
 bb.j:                                             ; preds = %bb.i
@@ -686,6 +682,9 @@ declare i32 @llvm.umin.i32(i32, i32) #53
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #53
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #48
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.fshl.v8i32(<8 x i32>, <8 x i32>, <8 x i32>) #53

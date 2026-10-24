@@ -204,13 +204,11 @@ bb.ao:                                            ; preds = %bb.ap, %bb.an
           to label %bb.aq unwind label %.loopexit
 
 bb.ap:                                            ; preds = %bb.am, %bb.al
-  %.sroa.01.0.i = phi i32 [ -1, %bb.am ], [ %i.fa, %bb.al ] ; 3 uses
-  %9 = sub i32 %.val207, %.sroa.6297.0.copyload   ; 3 uses
-  %10 = icmp ult i32 %.sroa.01.0.i, %9
-  %11 = sub nuw i32 %9, %.sroa.01.0.i
-  %i.ff = sub nuw i32 %.sroa.01.0.i, %9
-  %.sroa.0.0.i239 = select i1 %10, i32 %11, i32 %i.ff
-  %i.fg = icmp ult i32 %.sroa.0.0.i239, 60001
+  %.sroa.01.0.i = phi i32 [ -1, %bb.am ], [ %i.fa, %bb.al ]
+  %reass.sub.i = add i32 %.sroa.6297.0.copyload, 60000
+  %i.ff = sub i32 %reass.sub.i, %.val207
+  %9 = add i32 %i.ff, %.sroa.01.0.i
+  %i.fg = icmp ult i32 %9, 120001
   %i.fh = zext i1 %i.fg to i8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.ae, ptr noundef nonnull align 8 dereferenceable(120) %i.f, i64 120, i1 false)
   store <2 x i64> %i.ev, ptr %.sroa.4288.0..sroa_idx, align 8

@@ -202,22 +202,20 @@ bb.a:
   br i1 %or.cond, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit.thread, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit
 
 _ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit: ; preds = %bb.a
-  %9 = insertelement <2 x double> poison, double %4, i64 0
-  %10 = insertelement <2 x double> %9, double %3, i64 1 ; 2 uses
-  %11 = bitcast <2 x double> %10 to <2 x i64>     ; 2 uses
-  %12 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %10)
-  %13 = sub <2 x i64> zeroinitializer, %11
-  %14 = fneg <2 x double> %12
-  %15 = bitcast <2 x double> %14 to <2 x i64>
-  %16 = icmp slt <2 x i64> %11, zeroinitializer
-  %17 = select <2 x i1> %16, <2 x i64> %13, <2 x i64> %15 ; 2 uses
-  %18 = extractelement <2 x i64> %17, i64 0       ; 3 uses
-  %19 = extractelement <2 x i64> %17, i64 1       ; 3 uses
-  %.not.i.i = icmp ult i64 %19, %18
-  %20 = sub nuw i64 %19, %18
-  %21 = sub nuw i64 %18, %19
-  %22 = select i1 %.not.i.i, i64 %21, i64 %20
-  %i.a = icmp ult i64 %22, 5
+  %9 = bitcast double %3 to i64                   ; 2 uses
+  %10 = bitcast double %4 to i64                  ; 3 uses
+  %11 = sub i64 0, %9
+  %12 = tail call double @llvm.fabs.f64(double %3)
+  %13 = fneg double %12
+  %14 = bitcast double %13 to i64
+  %.not3.i.i.i = icmp slt i64 %9, 0
+  %.0.i.i.i = select i1 %.not3.i.i.i, i64 %11, i64 %14
+  %.neg.i = sub nuw i64 -9223372036854775808, %10
+  %.not3.i9.i.i = icmp slt i64 %10, 0
+  %.0.i10.i.neg4.i = select i1 %.not3.i9.i.i, i64 %10, i64 %.neg.i
+  %15 = add i64 %.0.i.i.i, 4
+  %16 = add i64 %15, %.0.i10.i.neg4.i
+  %i.a = icmp ult i64 %16, 9
   br i1 %i.a, label %bb.b, label %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit.thread
 
 bb.b:                                             ; preds = %_ZNK7testing8internal13FloatingPointIdE12AlmostEqualsERKS2_.exit
@@ -620,7 +618,7 @@ declare i64 @llvm.umax.i64(i64, i64) #28
 declare double @llvm.sqrt.f64(double) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #28
+declare double @llvm.fabs.f64(double) #28
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

@@ -204,7 +204,7 @@ bb.a:
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !46153
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !46153, !alias.scope !46128 ; 3 uses
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !46153
-  %.sroa.7.0.copyload.i = load i64, ptr %.sroa.7.0..sroa_idx.i, align 8, !dbg !46153, !alias.scope !46128 ; 6 uses
+  %.sroa.7.0.copyload.i = load i64, ptr %.sroa.7.0..sroa_idx.i, align 8, !dbg !46153, !alias.scope !46128 ; 2 uses
   %i.j = icmp ult i64 %i.g, %i.i, !dbg !46154
   br i1 %i.j, label %.lr.ph.i.i, label %_RINvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBc_3ops5range5RangejENCNvNtNtCslpwjCj2YNBy_9polars_io5cloud19polars_object_store12merge_ranges0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNtB8_3map8map_foldTB1b_jEINtB3z_3MapINtNtB8_9enumerate9EnumerateIB3Z_B1b_NCNvB1H_11split_ranges_0EENCNCB1F_s_00EuNCB1F_s_0NCINvNvMsg_NtB8_7flattenINtB5I_13FlattenCompatppE9iter_fold7flattenB3Y_uNCINvNvXsi_B5I_B5V_B2Q_4fold7flattenB3Y_uNCINvNvB2Q_8for_each4callB3R_NCINvNvNtB2U_7collect14default_extend8extenderTINtNtCsgZ49sUHp3tW_5alloc3vec3VecB1b_EIB8B_jEEB3R_E0E0E0E0E0ECs2g09Ig8GZd6_13polars_stream.exit, !dbg !46155
 
@@ -259,17 +259,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.w = sub nuw i64 %.sroa.0.0.i80.i.i.i.i, %.sroa.0.0.i79.i.i.i.i, !dbg !46165
-  %.sroa.011.0.i.i.i.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.i78.i.i.i.i, i64 %.sroa.0.0.i.i.i.i.i), !dbg !46166 ; 3 uses
-  %2 = icmp ult i64 %.sroa.011.0.i.i.i.i, %.sroa.7.0.copyload.i, !dbg !46167
-  %3 = sub nuw i64 %.sroa.7.0.copyload.i, %.sroa.011.0.i.i.i.i, !dbg !46167
-  %i.x = sub nuw i64 %.sroa.011.0.i.i.i.i, %.sroa.7.0.copyload.i, !dbg !46167
-  %.sroa.08.0.i.i.i.i = select i1 %2, i64 %3, i64 %i.x, !dbg !46167
-  %.sroa.019.0.i.i.i.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.i78.i.i15.i.i, i64 %.sroa.0.0.i.i.i11.i.i), !dbg !46168 ; 3 uses
-  %4 = icmp ult i64 %.sroa.019.0.i.i.i.i, %.sroa.7.0.copyload.i, !dbg !46169
-  %5 = sub nuw i64 %.sroa.7.0.copyload.i, %.sroa.019.0.i.i.i.i, !dbg !46169
-  %i.y = sub nuw i64 %.sroa.019.0.i.i.i.i, %.sroa.7.0.copyload.i, !dbg !46169
-  %.sroa.09.0.i.i.i.i = select i1 %4, i64 %5, i64 %i.y, !dbg !46169
-  %.not.i.i.i.i = icmp ugt i64 %.sroa.08.0.i.i.i.i, %.sroa.09.0.i.i.i.i, !dbg !46170
+  %.sroa.011.0.i.i.i.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.i78.i.i.i.i, i64 %.sroa.0.0.i.i.i.i.i), !dbg !46166
+  %i.x = sub nsw i64 %.sroa.011.0.i.i.i.i, %.sroa.7.0.copyload.i, !dbg !46167
+  %.sroa.08.0.i.i.i.i = call i64 @llvm.abs.i64(i64 %i.x, i1 true), !dbg !46167
+  %.sroa.019.0.i.i.i.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.i78.i.i15.i.i, i64 %.sroa.0.0.i.i.i11.i.i), !dbg !46168
+  %i.y = sub nsw i64 %.sroa.019.0.i.i.i.i, %.sroa.7.0.copyload.i, !dbg !46169
+  %.sroa.09.0.i.i.i.i = call i64 @llvm.abs.i64(i64 %i.y, i1 true), !dbg !46169
+  %.not.i.i.i.i = icmp samesign ugt i64 %.sroa.08.0.i.i.i.i, %.sroa.09.0.i.i.i.i, !dbg !46170
   %.sroa.027.0.i.i.i.i = call i64 @llvm.usub.sat.i64(i64 %.val75.i.i.i.i, i64 %.val74.i.i.i.i), !dbg !46171 ; 3 uses
   %.sroa.0.0.i81.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %.sroa.027.0.i.i.i.i, i64 %.sroa.027.0.i.i19.i.i), !dbg !46172
   %i.z = lshr i64 %.sroa.0.0.i81.i.i.i.i, 3, !dbg !46173
@@ -671,6 +667,9 @@ declare i8 @llvm.umin.i8(i8, i8) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #41
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #40
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #41
