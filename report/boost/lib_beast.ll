@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %bb.au, %bb.at
   br i1 %.not218, label %bb.av, label %bb.au, !llvm.loop !1240
 
 bb.av:                                            ; preds = %bb.au
-  %i.ht = add i32 %.3, -1
+  %i.ht = add nsw i32 %.3, -1
   %i.hu = shl nuw i32 1, %i.ht
   br label %bb.aw
 
