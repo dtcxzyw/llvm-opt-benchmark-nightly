@@ -202,7 +202,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.1, ptr noundef @.str.2, i32 noundef 166, ptr noundef @.str.118) #5
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.1, ptr noundef @.str.2, i32 noundef 166, ptr noundef @.str.118) #6
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -212,7 +212,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @except_throw(i64 noundef 1, i64 noundef 3, ptr noundef null) #5
+  tail call void @except_throw(i64 noundef 1, i64 noundef 3, ptr noundef null) #6
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -220,7 +220,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.g, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @except_throw(i64 noundef 1, i64 noundef 3, ptr noundef null) #5
+  tail call void @except_throw(i64 noundef 1, i64 noundef 3, ptr noundef null) #6
   unreachable
 
 bb.g:                                             ; preds = %bb.e
@@ -236,13 +236,13 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %.lr.ph, %bb.aa
   %.0121145 = phi i32 [ %i.i, %.lr.ph ], [ %i.bl, %bb.aa ] ; 3 uses
   %.0122144 = phi i32 [ %i.h, %.lr.ph ], [ %i.bk, %bb.aa ] ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.l = call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %.0122144, i32 noundef %i.e) ; 2 uses
   %i.m = icmp ult i16 %i.l, 4
   br i1 %i.m, label %.thread, label %bb.i
 
 .thread:                                          ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.h
@@ -365,7 +365,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.bj = add i32 %.1123, -4
   %i.bk = add i32 %i.bj, %i.bc                    ; 2 uses
   %i.bl = sub nuw nsw i32 %.0121145, %i.bc        ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %i.bm = icmp ugt i32 %i.bl, 3
   br i1 %i.bm, label %bb.h, label %.loopexit
 
@@ -392,7 +392,7 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.1, ptr noundef @.str.2, i32 noundef 309, ptr noundef @.str.3) #5
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.1, ptr noundef @.str.2, i32 noundef 309, ptr noundef @.str.3) #6
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -594,18 +594,14 @@ bb.b:                                             ; preds = %bb.a
   %i.k = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 14)
   %i.l = load i32, ptr @hf_netlink_family, align 4
   %i.m = tail call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.l, ptr noundef %0, i32 noundef 14, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %i.n = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 16) ; 6 uses
-  %i.o = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 16) ; 3 uses
-  %i.p = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef 16) ; 3 uses
-  %5 = icmp ugt i32 %i.p, %i.n
-  %6 = sub nuw i32 %i.p, %i.n
-  %i.q = sub nuw i32 %i.n, %i.p
-  %7 = select i1 %5, i32 %6, i32 %i.q
-  %8 = icmp ugt i32 %i.o, %i.n
-  %9 = sub nuw i32 %i.o, %i.n
-  %i.r = sub nuw i32 %i.n, %i.o
-  %10 = select i1 %8, i32 %9, i32 %i.r
-  %i.s = icmp ult i32 %7, %10
+  %i.n = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 16) ; 2 uses
+  %i.o = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 16)
+  %i.p = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef 16)
+  %i.q = sub nsw i32 %i.p, %i.n
+  %5 = tail call i32 @llvm.abs.i32(i32 %i.q, i1 true)
+  %i.r = sub nsw i32 %i.o, %i.n
+  %6 = tail call i32 @llvm.abs.i32(i32 %i.r, i1 true)
+  %i.s = icmp samesign ult i32 %5, %6
   %.0102 = select i1 %i.s, i32 0, i32 -2147483648 ; 8 uses
   %i.t = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 16)
   %i.u = icmp ugt i32 %i.t, 15
@@ -646,7 +642,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   store i32 1247464654, ptr %4, align 4
   store i32 %.0102, ptr %i.w, align 4
   store i16 %i.ah, ptr %i.x, align 4
@@ -654,7 +650,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ao = load ptr, ptr @netlink_dissector_table, align 8
   %i.ap = call i32 @dissector_try_uint_with_data(ptr noundef %i.ao, i32 noundef %i.y, ptr noundef %i.an, ptr noundef %1, ptr noundef %2, i1 noundef zeroext true, ptr noundef nonnull %4)
   %.not113.not = icmp eq i32 %i.ap, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   br i1 %.not113.not, label %.critedge, label %bb.i
 
 .critedge:                                        ; preds = %bb.d, %bb.e
@@ -755,13 +751,17 @@ declare i32 @call_data_dissector(ptr noundef, ptr noundef, ptr noundef) local_un
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #5
+
 attributes #0 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { noreturn }
-attributes #6 = { nounwind }
+attributes #5 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { noreturn }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

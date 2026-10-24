@@ -130,17 +130,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.t, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %i.aa, i64 24, i1 false), !tbaa.struct !19
   br i1 %i.v, label %.critedge57, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %6 = icmp ugt i64 %2, %4
-  %i.ab = sub nuw i64 %2, %4
-  %7 = sub nuw i64 %4, %2
-  %8 = select i1 %6, i64 %i.ab, i64 %7            ; 2 uses
-  %i.ac = icmp ult i64 %8, 2
+  %i.ab = sub nsw i64 %2, %4
+  %6 = tail call i64 @llvm.abs.i64(i64 %i.ab, i1 true) ; 2 uses
+  %i.ac = icmp samesign ult i64 %6, 2
   br i1 %i.ac, label %_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit.thread, label %_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit
 
 _ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit: ; preds = %bb.d
@@ -149,7 +147,7 @@ _ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6n
   %i.af = load ptr, ptr %i.ae, align 8
   %i.ag = tail call noundef i64 %i.af(ptr noundef nonnull align 8 dereferenceable(16) %1), !inline_history !33
   %i.ah = add i64 %i.ag, -2
-  %.not.i.not = icmp ult i64 %8, %i.ah
+  %.not.i.not = icmp ult i64 %6, %i.ah
   br i1 %.not.i.not, label %.critedge, label %_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit.thread
 
 .critedge:                                        ; preds = %_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit
@@ -282,7 +280,7 @@ bb.s:                                             ; preds = %bb.r
 
 _ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit.thread: ; preds = %bb.d, %bb.n, %bb.s, %bb.r, %.critedge57, %bb.e, %.critedge, %_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit
   %.1 = phi i32 [ -1, %_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit ], [ 6, %.critedge ], [ -1, %.critedge57 ], [ -1, %bb.e ], [ 5, %bb.n ], [ -1, %bb.s ], [ -1, %bb.r ], [ -1, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %bb.t
 
 bb.t:                                             ; preds = %_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm.exit.thread, %bb.b, %bb.a
@@ -301,11 +299,9 @@ declare void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geo
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZNK4geos9operation5valid27PolygonIntersectionAnalyzer16isAdjacentInRingEPKNS_6noding13SegmentStringEmm(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(200) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = icmp ugt i64 %2, %3
-  %i.a = sub nuw i64 %2, %3
-  %5 = sub nuw i64 %3, %2
-  %6 = select i1 %4, i64 %i.a, i64 %5             ; 2 uses
-  %i.b = icmp ult i64 %6, 2
+  %i.a = sub nsw i64 %2, %3
+  %4 = tail call i64 @llvm.abs.i64(i64 %i.a, i1 true) ; 2 uses
+  %i.b = icmp samesign ult i64 %4, 2
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -314,7 +310,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(16) %1)
   %i.g = add i64 %i.f, -2
-  %.not = icmp uge i64 %6, %i.g
+  %.not = icmp uge i64 %4, %i.g
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -362,9 +358,9 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call ptr @__cxa_allocate_exception(i64 16) #11 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #11
+  %i.d = tail call ptr @__cxa_allocate_exception(i64 16) #12 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull @.str, ptr noundef nonnull align 1 dereferenceable(1) %8)
           to label %bb.c unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread
 
@@ -373,14 +369,14 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN4geos4util21IllegalStateExceptionE, ptr nonnull @_ZNSt13runtime_errorD2Ev) #12
+  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN4geos4util21IllegalStateExceptionE, ptr nonnull @_ZNSt13runtime_errorD2Ev) #13
           to label %bb.i unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -393,19 +389,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.e
-  call void @_ZdlPv(ptr noundef %i.g) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
+  call void @_ZdlPv(ptr noundef %i.g) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
   br i1 %.0, label %bb.f, label %bb.g
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
   br i1 %.0, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.pn18 = phi { ptr, i32 } [ %i.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ], [ %i.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
-  call void @__cxa_free_exception(ptr %i.d) #11
+  call void @__cxa_free_exception(ptr %i.d) #12
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %bb.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -445,10 +441,10 @@ define linkonce_odr void @_ZN4geos4util21IllegalStateExceptionC2ERKNSt7__cxx1112
 .noexc.i:
   %i.a = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   store ptr %i.b, ptr %2, align 8, !tbaa !29
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i64 21, ptr %i.a, align 8, !tbaa !39
   %i.c = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.c, ptr %2, align 8, !tbaa !28
@@ -460,7 +456,7 @@ define linkonce_odr void @_ZN4geos4util21IllegalStateExceptionC2ERKNSt7__cxx1112
   %i.f = load ptr, ptr %2, align 8, !tbaa !28
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.d
   store i8 0, ptr %i.g, align 1, !tbaa !30
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   invoke void @_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
           to label %bb.a unwind label %bb.b
 
@@ -470,11 +466,11 @@ bb.a:                                             ; preds = %.noexc.i
   br i1 %i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.a
-  call void @_ZdlPv(ptr noundef %i.h) #13
+  call void @_ZdlPv(ptr noundef %i.h) #14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4geos4util21IllegalStateExceptionE, i64 16), ptr %0, align 8, !tbaa !21
   ret void
 
@@ -486,11 +482,11 @@ bb.b:                                             ; preds = %.noexc.i
   br i1 %i.l, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5: ; preds = %bb.b
-  call void @_ZdlPv(ptr noundef %i.k) #13
+  call void @_ZdlPv(ptr noundef %i.k) #14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   resume { ptr, i32 } %i.j
 }
 
@@ -526,7 +522,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN4geos9operation5valid27PolygonIntersectionAnalyzerD0Ev(ptr noundef nonnull align 8 dereferenceable(200) %0) unnamed_addr #6 comdat align 2 {
 bb.a:
-  tail call void @_ZdlPv(ptr noundef nonnull %0) #13
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #14
   ret void
 }
 
@@ -535,8 +531,8 @@ define linkonce_odr void @_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_st
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
   %i.a = load ptr, ptr %1, align 8, !tbaa !28, !noalias !46
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -567,7 +563,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i: ; pr
   br i1 %i.m, label %.invoke.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
 
 .invoke.i.i:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i, %bb.b
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.3) #12
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.3) #13
           to label %.cont.i.i unwind label %bb.c
 
 .cont.i.i:                                        ; preds = %.invoke.i.i
@@ -585,7 +581,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   br i1 %i.q, label %common.resume, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.c
-  call void @_ZdlPv(ptr noundef %i.p) #13
+  call void @_ZdlPv(ptr noundef %i.p) #14
   br label %common.resume
 
 common.resume:                                    ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16
@@ -602,7 +598,7 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.e
   br i1 %i.v, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
 
 bb.d:                                             ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.3) #12
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.3) #13
           to label %.noexc unwind label %bb.h
 
 .noexc:                                           ; preds = %bb.d
@@ -655,7 +651,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.al, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7: ; preds = %bb.g
-  call void @_ZdlPv(ptr noundef %i.ak) #13
+  call void @_ZdlPv(ptr noundef %i.ak) #14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7
@@ -664,12 +660,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g,
   br i1 %i.an, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit10, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  call void @_ZdlPv(ptr noundef %i.am) #13
+  call void @_ZdlPv(ptr noundef %i.am) #14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit10
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit10: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4geos4util13GEOSExceptionE, i64 16), ptr %0, align 8, !tbaa !21
   ret void
 
@@ -686,7 +682,7 @@ bb.i:                                             ; preds = %bb.f
   br i1 %i.ar, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11: ; preds = %bb.i
-  call void @_ZdlPv(ptr noundef %i.aq) #13
+  call void @_ZdlPv(ptr noundef %i.aq) #14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13: ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11, %bb.h
@@ -696,20 +692,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13: ; preds = %bb.
   br i1 %i.at, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13
-  call void @_ZdlPv(ptr noundef %i.as) #13
+  call void @_ZdlPv(ptr noundef %i.as) #14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %common.resume
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN4geos4util21IllegalStateExceptionD0Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #5 comdat align 2 {
 bb.a:
-  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #11
-  tail call void @_ZdlPv(ptr noundef nonnull %0) #13
+  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #12
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #14
   ret void
 }
 
@@ -721,8 +717,8 @@ declare void @_ZNSt13runtime_errorC2ERKNSt7__cxx1112basic_stringIcSt11char_trait
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN4geos4util13GEOSExceptionD0Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #6 comdat align 2 {
 bb.a:
-  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #11
-  tail call void @_ZdlPv(ptr noundef nonnull %0) #13
+  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #12
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #14
   ret void
 }
 
@@ -744,6 +740,9 @@ declare void @llvm.assume(i1 noundef) #9
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #10
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #11
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -755,9 +754,10 @@ attributes #7 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-siz
 attributes #8 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #11 = { nounwind }
-attributes #12 = { noreturn }
-attributes #13 = { builtin nounwind }
+attributes #11 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nounwind }
+attributes #13 = { noreturn }
+attributes #14 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

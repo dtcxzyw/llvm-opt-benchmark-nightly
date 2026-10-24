@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %1, ptr %i.b, align 8
   store ptr %2, ptr %i.a, align 8
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking19assert_failed_inner(i8 noundef %0, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noundef %3, ptr %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %5) #5
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking19assert_failed_inner(i8 noundef %0, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noundef %3, ptr %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %5) #6
   unreachable
 }
 
@@ -213,35 +213,31 @@ bb.a:
   %i.b = alloca [2 x i8], align 2                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = lshr i32 %1, 3
-  %i.d = trunc i32 %i.c to i16                    ; 3 uses
+  %i.d = trunc i32 %i.c to i16
   %i.e = lshr i32 %0, 3
-  %i.f = trunc i32 %i.e to i16                    ; 3 uses
-  %4 = icmp ult i16 %i.d, %i.f
-  %5 = sub nuw i16 %i.d, %i.f
-  %i.g = sub nuw i16 %i.f, %i.d
-  %storemerge = select i1 %4, i16 %i.g, i16 %5    ; 3 uses
+  %i.f = trunc i32 %i.e to i16
+  %i.g = sub nsw i16 %i.d, %i.f
+  %storemerge = tail call i16 @llvm.abs.i16(i16 %i.g, i1 true) ; 3 uses
   store i16 %storemerge, ptr %i.b, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.h = lshr i32 %3, 3
-  %i.i = trunc i32 %i.h to i16                    ; 3 uses
+  %i.i = trunc i32 %i.h to i16
   %i.j = lshr i32 %2, 3
-  %i.k = trunc i32 %i.j to i16                    ; 3 uses
-  %6 = icmp ult i16 %i.i, %i.k
-  %7 = sub nuw i16 %i.i, %i.k
-  %i.l = sub nuw i16 %i.k, %i.i
-  %storemerge15 = select i1 %6, i16 %i.l, i16 %7  ; 2 uses
+  %i.k = trunc i32 %i.j to i16
+  %i.l = sub nsw i16 %i.i, %i.k
+  %storemerge15 = tail call i16 @llvm.abs.i16(i16 %i.l, i1 true) ; 2 uses
   store i16 %storemerge15, ptr %i.a, align 2
   %i.m = icmp eq i16 %storemerge, %storemerge15
   br i1 %i.m, label %bb.c, label %bb.b, !prof !4
 
 bb.b:                                             ; preds = %bb.a
-  call void @_RINvNtCskKLDkoKarTP_4core9panicking13assert_failedttECs6kx5fqqPdgs_8wasmi_ir(i8 noundef 0, ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(2) %i.b, ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(2) %i.a, ptr noundef nonnull @1, ptr nonnull inttoptr (i64 101 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #5
+  call void @_RINvNtCskKLDkoKarTP_4core9panicking13assert_failedttECs6kx5fqqPdgs_8wasmi_ir(i8 noundef 0, ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(2) %i.b, ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(2) %i.a, ptr noundef nonnull @1, ptr nonnull inttoptr (i64 101 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #6
   unreachable
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.n = icmp ugt i16 %storemerge, 1
+  %i.n = icmp samesign ugt i16 %storemerge, 1
   %.not = icmp ult i32 %2, %0
   %or.cond = and i1 %.not, %i.n
   br i1 %or.cond, label %bb.d, label %bb.g
@@ -256,7 +252,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 38, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #5
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 38, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #6
   unreachable
 
 bb.g:                                             ; preds = %bb.c, %bb.e
@@ -271,7 +267,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #5
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #6
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -284,7 +280,7 @@ bb.d:                                             ; preds = %bb.c
   ret void
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 33, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #5
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 33, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #6
   unreachable
 }
 
@@ -454,12 +450,16 @@ declare noundef zeroext i1 @_RNvXso_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_8UpperH
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvXsm_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_8LowerHex3fmt(ptr noalias nofree noundef readonly align 2 captures(address, read_provenance) dereferenceable(2), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #1
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.abs.i16(i16, i1 immarg) #5
+
 attributes #0 = { cold minsize noinline noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #5 = { noinline noreturn }
+attributes #5 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { noinline noreturn }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

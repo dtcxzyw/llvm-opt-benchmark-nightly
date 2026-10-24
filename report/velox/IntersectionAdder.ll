@@ -79,11 +79,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not14, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  %5 = icmp ugt i64 %2, %4
-  %i.e = sub nuw i64 %2, %4
-  %6 = sub nuw i64 %4, %2
-  %7 = select i1 %5, i64 %i.e, i64 %6
-  %i.f = icmp eq i64 %7, 1
+  %i.e = sub nsw i64 %2, %4
+  %5 = tail call i64 @llvm.abs.i64(i64 %i.e, i1 true)
+  %i.f = icmp eq i64 %5, 1
   br i1 %i.f, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -251,11 +249,9 @@ _ZN4geos9algorithm15LineIntersector22isInteriorIntersectionEv.exit: ; preds = %b
   br i1 %or.cond37, label %bb.i, label %_ZN4geos6noding17IntersectionAdder21isTrivialIntersectionEPKNS0_13SegmentStringEmS4_m.exit.thread
 
 bb.i:                                             ; preds = %_ZN4geos9algorithm15LineIntersector22isInteriorIntersectionEv.exit
-  %5 = icmp ugt i64 %2, %4
-  %i.bw = sub nuw i64 %2, %4
-  %6 = sub nuw i64 %4, %2
-  %7 = select i1 %5, i64 %i.bw, i64 %6
-  %i.bx = icmp eq i64 %7, 1
+  %i.bw = sub nsw i64 %2, %4
+  %5 = tail call i64 @llvm.abs.i64(i64 %i.bw, i1 true)
+  %i.bx = icmp eq i64 %5, 1
   br i1 %i.bx, label %_ZN4geos6noding17IntersectionAdder21isTrivialIntersectionEPKNS0_13SegmentStringEmS4_m.exit.thread35, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -371,7 +367,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN4geos6noding17IntersectionAdderD0Ev(ptr noundef nonnull align 8 dereferenceable(64) %0) unnamed_addr #4 comdat align 2 {
 bb.a:
-  tail call void @_ZdlPv(ptr noundef nonnull %0) #12
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #13
   ret void
 }
 
@@ -389,9 +385,9 @@ bb.a:
   br i1 %i.f, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call ptr @__cxa_allocate_exception(i64 16) #13 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
+  %i.g = tail call ptr @__cxa_allocate_exception(i64 16) #14 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str, ptr noundef nonnull align 1 dereferenceable(1) %4)
           to label %bb.c unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread
 
@@ -400,14 +396,14 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.g, ptr nonnull @_ZTIN4geos4util24IllegalArgumentExceptionE, ptr nonnull @_ZNSt13runtime_errorD2Ev) #14
+  invoke void @__cxa_throw(ptr nonnull %i.g, ptr nonnull @_ZTIN4geos4util24IllegalArgumentExceptionE, ptr nonnull @_ZNSt13runtime_errorD2Ev) #15
           to label %bb.k unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -420,19 +416,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.l, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.e
-  call void @_ZdlPv(ptr noundef %i.j) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @_ZdlPv(ptr noundef %i.j) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   br i1 %.0, label %bb.f, label %bb.g
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   br i1 %.0, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.pn23 = phi { ptr, i32 } [ %i.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ], [ %i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
-  call void @__cxa_free_exception(ptr %i.g) #13
+  call void @__cxa_free_exception(ptr %i.g) #14
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %bb.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -486,10 +482,10 @@ define linkonce_odr void @_ZN4geos4util24IllegalArgumentExceptionC2ERKNSt7__cxx1
 .noexc.i:
   %i.a = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   store ptr %i.b, ptr %2, align 8, !tbaa !28
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   store i64 24, ptr %i.a, align 8, !tbaa !51
   %i.c = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.c, ptr %2, align 8, !tbaa !27
@@ -501,7 +497,7 @@ define linkonce_odr void @_ZN4geos4util24IllegalArgumentExceptionC2ERKNSt7__cxx1
   %i.f = load ptr, ptr %2, align 8, !tbaa !27
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.d
   store i8 0, ptr %i.g, align 1, !tbaa !29
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   invoke void @_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
           to label %bb.a unwind label %bb.b
 
@@ -511,11 +507,11 @@ bb.a:                                             ; preds = %.noexc.i
   br i1 %i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.a
-  call void @_ZdlPv(ptr noundef %i.h) #12
+  call void @_ZdlPv(ptr noundef %i.h) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4geos4util24IllegalArgumentExceptionE, i64 16), ptr %0, align 8, !tbaa !23
   ret void
 
@@ -527,11 +523,11 @@ bb.b:                                             ; preds = %.noexc.i
   br i1 %i.l, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5: ; preds = %bb.b
-  call void @_ZdlPv(ptr noundef %i.k) #12
+  call void @_ZdlPv(ptr noundef %i.k) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   resume { ptr, i32 } %i.j
 }
 
@@ -555,8 +551,8 @@ define linkonce_odr void @_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_st
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
   %i.a = load ptr, ptr %1, align 8, !tbaa !27, !noalias !58
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -587,7 +583,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i: ; pr
   br i1 %i.m, label %.invoke.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
 
 .invoke.i.i:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i, %bb.b
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #14
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #15
           to label %.cont.i.i unwind label %bb.c
 
 .cont.i.i:                                        ; preds = %.invoke.i.i
@@ -605,7 +601,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   br i1 %i.q, label %common.resume, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.c
-  call void @_ZdlPv(ptr noundef %i.p) #12
+  call void @_ZdlPv(ptr noundef %i.p) #13
   br label %common.resume
 
 common.resume:                                    ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16
@@ -622,7 +618,7 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.e
   br i1 %i.v, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
 
 bb.d:                                             ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #14
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #15
           to label %.noexc unwind label %bb.h
 
 .noexc:                                           ; preds = %bb.d
@@ -675,7 +671,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.al, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7: ; preds = %bb.g
-  call void @_ZdlPv(ptr noundef %i.ak) #12
+  call void @_ZdlPv(ptr noundef %i.ak) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7
@@ -684,12 +680,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g,
   br i1 %i.an, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit10, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  call void @_ZdlPv(ptr noundef %i.am) #12
+  call void @_ZdlPv(ptr noundef %i.am) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit10
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit10: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4geos4util13GEOSExceptionE, i64 16), ptr %0, align 8, !tbaa !23
   ret void
 
@@ -706,7 +702,7 @@ bb.i:                                             ; preds = %bb.f
   br i1 %i.ar, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11: ; preds = %bb.i
-  call void @_ZdlPv(ptr noundef %i.aq) #12
+  call void @_ZdlPv(ptr noundef %i.aq) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13: ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11, %bb.h
@@ -716,20 +712,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13: ; preds = %bb.
   br i1 %i.at, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13
-  call void @_ZdlPv(ptr noundef %i.as) #12
+  call void @_ZdlPv(ptr noundef %i.as) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   br label %common.resume
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN4geos4util24IllegalArgumentExceptionD0Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #3 comdat align 2 {
 bb.a:
-  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #13
-  tail call void @_ZdlPv(ptr noundef nonnull %0) #12
+  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #14
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #13
   ret void
 }
 
@@ -741,8 +737,8 @@ declare void @_ZNSt13runtime_errorC2ERKNSt7__cxx1112basic_stringIcSt11char_trait
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN4geos4util13GEOSExceptionD0Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #4 comdat align 2 {
 bb.a:
-  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #13
-  tail call void @_ZdlPv(ptr noundef nonnull %0) #12
+  tail call void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #14
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #13
   ret void
 }
 
@@ -759,6 +755,9 @@ declare void @llvm.assume(i1 noundef) #10
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #11
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #12
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -771,9 +770,10 @@ attributes #8 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #9 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #12 = { builtin nounwind }
-attributes #13 = { nounwind }
-attributes #14 = { noreturn }
+attributes #12 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #13 = { builtin nounwind }
+attributes #14 = { nounwind }
+attributes #15 = { noreturn }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
