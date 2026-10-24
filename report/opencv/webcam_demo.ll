@@ -205,14 +205,15 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit525: ; preds = %_ZSt
 
 bb.au:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit525
   %i.il = load ptr, ptr %10, align 8, !tbaa !31
-  %i.im = load i8, ptr %i.il, align 1, !tbaa !32
-  %117 = sext i8 %i.im to i32
-  %isdigittmp = add nsw i32 %117, -48             ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.im = load i8, ptr %i.il, align 1, !tbaa !32  ; 2 uses
+  %117 = add i8 %i.im, -48
+  %isdigit = icmp ult i8 %117, 10
   br i1 %isdigit, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  %i.in = invoke noundef zeroext i1 @_ZN2cv12VideoCapture4openEii(ptr noundef nonnull align 8 dereferenceable(25) %5, i32 noundef %isdigittmp, i32 noundef 0)
+  %118 = zext nneg i8 %i.im to i32
+  %119 = add nsw i32 %118, -48
+  %i.in = invoke noundef zeroext i1 @_ZN2cv12VideoCapture4openEii(ptr noundef nonnull align 8 dereferenceable(25) %5, i32 noundef %119, i32 noundef 0)
           to label %bb.ax unwind label %bb.ak     ; 0 uses
 
 bb.aw:                                            ; preds = %bb.au, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit525

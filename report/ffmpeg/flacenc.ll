@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph, %encode_res
   %i.be = getelementptr inbounds nuw [853192 x i8], ptr %i.as, i64 %indvars.iv ; 50 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 591004 ; 30 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 328864 ; 31 uses
-  %i.bh = load i32, ptr %i.au, align 16, !tbaa !67 ; 32 uses
+  %i.bh = load i32, ptr %i.au, align 16, !tbaa !67 ; 33 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 8 ; 21 uses
   %i.bj = load i32, ptr %i.bi, align 8, !tbaa !71 ; 6 uses
   %i.bk = icmp sgt i32 %i.bj, 32
@@ -608,7 +608,7 @@ middle.block298:                                  ; preds = %vector.body293
   %.1.i.i = select i1 %.not11.i.i21, i32 0, i32 24
   %i.nv = zext nneg i32 %i.nu to i64
   %i.nw = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.nv
-  %wide.trip.count58.i56.i = zext nneg i32 %i.bh to i64 ; 2 uses
+  %wide.trip.count58.i56.i = zext nneg i32 %i.bh to i64
   br label %.split.i
 
 .split.us.us.preheader.i:                         ; preds = %.lr.ph557.i, %middle.block298
@@ -1011,7 +1011,8 @@ bb.ca:                                            ; preds = %.preheader.i57.i
   %i.wt = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %indvars.iv55.i58.i
   store i32 %i.ws, ptr %i.wt, align 4, !tbaa !47
   %indvars.iv.next56.i60.i = add nsw i64 %indvars.iv55.i58.i, 1 ; 2 uses
-  %exitcond59.not.i61.i = icmp eq i64 %indvars.iv.next56.i60.i, %wide.trip.count58.i56.i
+  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next56.i60.i to i32
+  %exitcond59.not.i61.i = icmp eq i32 %i.bh, %lftr.wideiv.i.i
   br i1 %exitcond59.not.i61.i, label %.loopexit108, label %.preheader.i57.i, !llvm.loop !1
 
 lpc_encode_with_residual_limit_33bps.exit.sink.split.i: ; preds = %.thread109.i
@@ -1414,7 +1415,6 @@ middle.block140:                                  ; preds = %vector.body135
 
 .preheader.preheader.i55:                         ; preds = %.thread109
   %i.eb = sext i32 %6 to i64
-  %wide.trip.count58.i56 = zext nneg i32 %5 to i64
   br label %.preheader.i57
 
 .preheader.us.i72:                                ; preds = %bb.e, %.preheader.lr.ph.i69
@@ -1583,7 +1583,8 @@ bb.f:                                             ; preds = %.preheader.i57
   %i.hf = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv55.i58
   store i32 %i.he, ptr %i.hf, align 4, !tbaa !47
   %indvars.iv.next56.i60 = add nsw i64 %indvars.iv55.i58, 1 ; 2 uses
-  %exitcond59.not.i61 = icmp eq i64 %indvars.iv.next56.i60, %wide.trip.count58.i56
+  %lftr.wideiv.i = trunc i64 %indvars.iv.next56.i60 to i32
+  %exitcond59.not.i61 = icmp eq i32 %5, %lftr.wideiv.i
   br i1 %exitcond59.not.i61, label %lpc_encode_with_residual_limit_33bps.exit, label %.preheader.i57, !llvm.loop !1
 
 lpc_encode_with_residual_limit_33bps.exit.sink.split: ; preds = %.thread109, %bb.d

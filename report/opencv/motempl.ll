@@ -200,14 +200,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = load i8, ptr %i.c, align 1, !tbaa !21
-  %48 = sext i8 %i.f to i32
-  %isdigittmp = add nsw i32 %48, -48              ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
-  br i1 %isdigit, label %bb.d, label %bb.f
+  %i.f = load i8, ptr %i.c, align 1, !tbaa !21    ; 2 uses
+  %48 = add i8 %i.f, -48
+  %isdigit = icmp ult i8 %48, 10
+  br i1 %isdigit, label %49, label %bb.f
 
-bb.d:                                             ; preds = %bb.a, %bb.c
-  %i.g = phi i32 [ 0, %bb.a ], [ %isdigittmp, %bb.c ]
+49:                                               ; preds = %bb.c
+  %50 = zext nneg i8 %i.f to i32
+  %51 = add nsw i32 %50, -48
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.a, %49
+  %i.g = phi i32 [ %51, %49 ], [ 0, %bb.a ]
   %i.h = invoke noundef zeroext i1 @_ZN2cv12VideoCapture4openEii(ptr noundef nonnull align 8 dereferenceable(25) %40, i32 noundef %i.g, i32 noundef 0)
           to label %.critedge unwind label %bb.e  ; 0 uses
 

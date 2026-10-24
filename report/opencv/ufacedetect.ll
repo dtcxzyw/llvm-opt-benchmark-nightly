@@ -204,16 +204,20 @@ _ZNSolsEPFRSoS_E.exit215:                         ; preds = %.noexc321
 
 bb.aq:                                            ; preds = %_ZNSolsEPFRSoS_E.exit215
   %i.hj = load ptr, ptr %6, align 8, !tbaa !18
-  %i.hk = load i8, ptr %i.hj, align 1, !tbaa !16
-  %29 = sext i8 %i.hk to i32
-  %isdigittmp = add nsw i32 %29, -48              ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.hk = load i8, ptr %i.hj, align 1, !tbaa !16  ; 2 uses
+  %29 = add i8 %i.hk, -48
+  %isdigit = icmp ult i8 %29, 10
   %i.hl = icmp eq i64 %i.hh, 1
   %or.cond = and i1 %i.hl, %isdigit
-  br i1 %or.cond, label %.thread, label %bb.aw
+  br i1 %or.cond, label %30, label %bb.aw
 
-.thread:                                          ; preds = %bb.aq, %_ZNSolsEPFRSoS_E.exit215
-  %i.hm = phi i32 [ 0, %_ZNSolsEPFRSoS_E.exit215 ], [ %isdigittmp, %bb.aq ] ; 2 uses
+30:                                               ; preds = %bb.aq
+  %31 = zext nneg i8 %i.hk to i32
+  %32 = add nsw i32 %31, -48
+  br label %.thread
+
+.thread:                                          ; preds = %_ZNSolsEPFRSoS_E.exit215, %30
+  %i.hm = phi i32 [ %32, %30 ], [ 0, %_ZNSolsEPFRSoS_E.exit215 ] ; 2 uses
   %i.hn = invoke noundef zeroext i1 @_ZN2cv12VideoCapture4openEii(ptr noundef nonnull align 8 dereferenceable(25) %2, i32 noundef %i.hm, i32 noundef 0)
           to label %bb.ar unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

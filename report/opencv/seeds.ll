@@ -194,14 +194,18 @@ bb.e:                                             ; preds = %_ZL4helpv.exit
   br i1 %i.aj, label %bb.f, label %.thread.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.ak = load i8, ptr %i.ah, align 1, !tbaa !13
-  %44 = sext i8 %i.ak to i32
-  %isdigittmp = add nsw i32 %44, -48              ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
-  br i1 %isdigit, label %bb.g, label %.thread.thread
+  %i.ak = load i8, ptr %i.ah, align 1, !tbaa !13  ; 2 uses
+  %44 = add i8 %i.ak, -48
+  %isdigit = icmp ult i8 %44, 10
+  br i1 %isdigit, label %45, label %.thread.thread
 
-bb.g:                                             ; preds = %bb.f, %_ZL4helpv.exit
-  %i.al = phi i32 [ 0, %_ZL4helpv.exit ], [ %isdigittmp, %bb.f ]
+45:                                               ; preds = %bb.f
+  %46 = zext nneg i8 %i.ak to i32
+  %47 = add nsw i32 %46, -48
+  br label %bb.g
+
+bb.g:                                             ; preds = %_ZL4helpv.exit, %45
+  %i.al = phi i32 [ %47, %45 ], [ 0, %_ZL4helpv.exit ]
   %i.am = invoke noundef zeroext i1 @_ZN2cv12VideoCapture4openEii(ptr noundef nonnull align 8 dereferenceable(25) %8, i32 noundef %i.al, i32 noundef 0)
           to label %bb.u unwind label %bb.h       ; 0 uses
 

@@ -204,16 +204,20 @@ bb.p:                                             ; preds = %.noexc376
 
 bb.q:                                             ; preds = %bb.p
   %i.cq = load ptr, ptr %16, align 8, !tbaa !20
-  %i.cr = load i8, ptr %i.cq, align 1, !tbaa !19
-  %74 = sext i8 %i.cr to i32
-  %isdigittmp = add nsw i32 %74, -48              ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.cr = load i8, ptr %i.cq, align 1, !tbaa !19  ; 2 uses
+  %74 = add i8 %i.cr, -48
+  %isdigit = icmp ult i8 %74, 10
   %i.cs = icmp eq i64 %i.co, 1
   %or.cond704 = and i1 %i.cs, %isdigit
-  br i1 %or.cond704, label %.thread702, label %bb.ak
+  br i1 %or.cond704, label %75, label %bb.ak
 
-.thread702:                                       ; preds = %bb.q, %bb.p
-  %i.ct = phi i32 [ 0, %bb.p ], [ %isdigittmp, %bb.q ] ; 3 uses
+75:                                               ; preds = %bb.q
+  %76 = zext nneg i8 %i.cr to i32
+  %77 = add nsw i32 %76, -48
+  br label %.thread702
+
+.thread702:                                       ; preds = %bb.p, %75
+  %i.ct = phi i32 [ %77, %75 ], [ 0, %bb.p ]      ; 3 uses
   %i.cu = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.73, i64 noundef 23)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.aj ; 0 uses
 

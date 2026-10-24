@@ -205,30 +205,36 @@ _ZN4core6stringIcE7replaceEcc.exit.i:             ; preds = %bb.g, %vec.epilog.m
   br i1 %.not6.i.i3.i, label %_ZNK2io10SNamedPath10PathToNameERKN4core6stringIcEE.exit, label %iter.check152
 
 iter.check152:                                    ; preds = %_ZN4core6stringIcE7replaceEcc.exit.i
-  %min.iters.check140 = icmp ult i64 %.pr10.i, 4
+  %min.iters.check140 = icmp ult i64 %.pr10.i, 8
   br i1 %min.iters.check140, label %.lr.ph.i.i4.i.preheader, label %vector.main.loop.iter.check141
 
 vector.main.loop.iter.check141:                   ; preds = %iter.check152
-  %min.iters.check142 = icmp ult i64 %.pr10.i, 16
+  %min.iters.check142 = icmp ult i64 %.pr10.i, 32
   br i1 %min.iters.check142, label %vec.epilog.ph156, label %vector.ph143
 
 vector.ph143:                                     ; preds = %vector.main.loop.iter.check141
-  %i.dh = and i64 %.pr10.i, 12
-  %n.vec144 = and i64 %.pr10.i, -16               ; 4 uses
+  %i.dh = and i64 %.pr10.i, 24
+  %n.vec144 = and i64 %.pr10.i, -32               ; 4 uses
   %i.di = getelementptr i8, ptr %i.df, i64 %n.vec144
   br label %vector.body145
 
 vector.body145:                                   ; preds = %vector.ph143, %vector.body145
   %index146 = phi i64 [ 0, %vector.ph143 ], [ %index.next149, %vector.body145 ] ; 2 uses
-  %next.gep147.a = getelementptr i8, ptr %i.df, i64 %index146 ; 2 uses
+  %next.gep147 = getelementptr i8, ptr %i.df, i64 %index146 ; 3 uses
+  %next.gep147.a = getelementptr i8, ptr %next.gep147, i64 16 ; 2 uses
+  %wide.load148 = load <16 x i8>, ptr %next.gep147, align 1, !tbaa !137 ; 3 uses
   %wide.load148.a = load <16 x i8>, ptr %next.gep147.a, align 1, !tbaa !137 ; 3 uses
-  %2 = sext <16 x i8> %wide.load148.a to <16 x i32>
-  %3 = add nsw <16 x i32> %2, splat (i32 -65)
-  %i.dj = icmp ult <16 x i32> %3, splat (i32 26)
+  %2 = add <16 x i8> %wide.load148, splat (i8 -65)
+  %3 = add <16 x i8> %wide.load148.a, splat (i8 -65)
+  %4 = icmp ult <16 x i8> %2, splat (i8 26)
+  %i.dj = icmp ult <16 x i8> %3, splat (i8 26)
+  %5 = add <16 x i8> %wide.load148, splat (i8 32)
   %i.dk = add <16 x i8> %wide.load148.a, splat (i8 32)
+  %6 = select <16 x i1> %4, <16 x i8> %5, <16 x i8> %wide.load148
   %i.dl = select <16 x i1> %i.dj, <16 x i8> %i.dk, <16 x i8> %wide.load148.a
+  store <16 x i8> %6, ptr %next.gep147, align 1, !tbaa !137
   store <16 x i8> %i.dl, ptr %next.gep147.a, align 1, !tbaa !137
-  %index.next149 = add nuw i64 %index146, 16      ; 2 uses
+  %index.next149 = add nuw i64 %index146, 32      ; 2 uses
   %i.dm = icmp eq i64 %index.next149, %n.vec144
   br i1 %i.dm, label %middle.block150, label %vector.body145, !llvm.loop !603
 
@@ -238,25 +244,24 @@ middle.block150:                                  ; preds = %vector.body145
 
 vec.epilog.iter.check153:                         ; preds = %middle.block150
   %min.epilog.iters.check155 = icmp eq i64 %i.dh, 0
-  br i1 %min.epilog.iters.check155, label %.lr.ph.i.i4.i.preheader, label %vec.epilog.ph156, !prof !608
+  br i1 %min.epilog.iters.check155, label %.lr.ph.i.i4.i.preheader, label %vec.epilog.ph156, !prof !607
 
 vec.epilog.ph156:                                 ; preds = %vector.main.loop.iter.check141, %vec.epilog.iter.check153
   %vec.epilog.resume.val157 = phi i64 [ %n.vec144, %vec.epilog.iter.check153 ], [ 0, %vector.main.loop.iter.check141 ]
-  %n.vec158 = and i64 %.pr10.i, -4                ; 3 uses
+  %n.vec158 = and i64 %.pr10.i, -8                ; 3 uses
   %i.dn = getelementptr i8, ptr %i.df, i64 %n.vec158
   br label %vec.epilog.vector.body159
 
 vec.epilog.vector.body159:                        ; preds = %vec.epilog.vector.body159, %vec.epilog.ph156
   %index160 = phi i64 [ %vec.epilog.resume.val157, %vec.epilog.ph156 ], [ %index.next163, %vec.epilog.vector.body159 ] ; 2 uses
   %next.gep161 = getelementptr i8, ptr %i.df, i64 %index160 ; 2 uses
-  %wide.load162 = load <4 x i8>, ptr %next.gep161, align 1, !tbaa !137 ; 3 uses
-  %4 = sext <4 x i8> %wide.load162 to <4 x i32>
-  %5 = add nsw <4 x i32> %4, splat (i32 -65)
-  %6 = icmp ult <4 x i32> %5, splat (i32 26)
-  %7 = add <4 x i8> %wide.load162, splat (i8 32)
-  %8 = select <4 x i1> %6, <4 x i8> %7, <4 x i8> %wide.load162
-  store <4 x i8> %8, ptr %next.gep161, align 1, !tbaa !137
-  %index.next163 = add nuw i64 %index160, 4       ; 2 uses
+  %wide.load163 = load <8 x i8>, ptr %next.gep161, align 1, !tbaa !137 ; 3 uses
+  %7 = add <8 x i8> %wide.load163, splat (i8 -65)
+  %8 = icmp ult <8 x i8> %7, splat (i8 26)
+  %9 = add <8 x i8> %wide.load163, splat (i8 32)
+  %10 = select <8 x i1> %8, <8 x i8> %9, <8 x i8> %wide.load163
+  store <8 x i8> %10, ptr %next.gep161, align 1, !tbaa !137
+  %index.next163 = add nuw i64 %index160, 8       ; 2 uses
   %i.do = icmp eq i64 %index.next163, %n.vec158
   br i1 %i.do, label %vec.epilog.middle.block164, label %vec.epilog.vector.body159, !llvm.loop !604
 
@@ -271,9 +276,8 @@ vec.epilog.middle.block164:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.i4.i:                                    ; preds = %.lr.ph.i.i4.i.preheader, %.lr.ph.i.i4.i
   %.sroa.0.08.i.i.i = phi ptr [ %i.ds, %.lr.ph.i.i4.i ], [ %.sroa.0.08.i.i.i.ph, %.lr.ph.i.i4.i.preheader ] ; 3 uses
   %i.dp = load i8, ptr %.sroa.0.08.i.i.i, align 1, !tbaa !137 ; 3 uses
-  %9 = sext i8 %i.dp to i32
-  %10 = add nsw i32 %9, -65
-  %or.cond.i.i.i.i.i = icmp ult i32 %10, 26
+  %11 = add i8 %i.dp, -65
+  %or.cond.i.i.i.i.i = icmp ult i8 %11, 26
   %i.dq = add i8 %i.dp, 32
   %i.dr = select i1 %or.cond.i.i.i.i.i, i8 %i.dq, i8 %i.dp
   store i8 %i.dr, ptr %.sroa.0.08.i.i.i, align 1, !tbaa !137
@@ -676,7 +680,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.x = add i32 %.028, 2                         ; 2 uses
   %i.y = load i32, ptr %i.e, align 8, !tbaa !273
   %i.z = icmp ult i32 %i.x, %i.y
-  br i1 %i.z, label %bb.d, label %._crit_edge, !llvm.loop !609
+  br i1 %i.z, label %bb.d, label %._crit_edge, !llvm.loop !608
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -696,7 +700,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 528), align 8, !tbaa !610
+  %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 528), align 8, !tbaa !609
   invoke void %i.i(i32 noundef 1, ptr noundef nonnull %i.g)
           to label %bb.c unwind label %bb.l
 
@@ -1099,7 +1103,6 @@ begin_hunk_2_@llvm.fmuladd.v2f32
 !605 = distinct !{!605, !168, !269, !268}
 !606 = !{!599}
 !607 = !{!"branch_weights", i32 8, i32 24}
-!608 = !{!"branch_weights", i32 4, i32 12}
-!609 = distinct !{!609, !168}
-!610 = !{!207, !34, i64 528}
+!608 = distinct !{!608, !168}
+!609 = !{!207, !34, i64 528}
 end_hunk_2

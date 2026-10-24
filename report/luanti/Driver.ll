@@ -205,30 +205,36 @@ _ZN4core6stringIcE7replaceEcc.exit.i:             ; preds = %bb.g, %vec.epilog.m
   br i1 %.not6.i.i3.i, label %_ZNK2io10SNamedPath10PathToNameERKN4core6stringIcEE.exit, label %iter.check152
 
 iter.check152:                                    ; preds = %_ZN4core6stringIcE7replaceEcc.exit.i
-  %min.iters.check140 = icmp ult i64 %.pr10.i, 4
+  %min.iters.check140 = icmp ult i64 %.pr10.i, 8
   br i1 %min.iters.check140, label %.lr.ph.i.i4.i.preheader, label %vector.main.loop.iter.check141
 
 vector.main.loop.iter.check141:                   ; preds = %iter.check152
-  %min.iters.check142 = icmp ult i64 %.pr10.i, 16
+  %min.iters.check142 = icmp ult i64 %.pr10.i, 32
   br i1 %min.iters.check142, label %vec.epilog.ph156, label %vector.ph143
 
 vector.ph143:                                     ; preds = %vector.main.loop.iter.check141
-  %i.dh = and i64 %.pr10.i, 12
-  %n.vec144 = and i64 %.pr10.i, -16               ; 4 uses
+  %i.dh = and i64 %.pr10.i, 24
+  %n.vec144 = and i64 %.pr10.i, -32               ; 4 uses
   %i.di = getelementptr i8, ptr %i.df, i64 %n.vec144
   br label %vector.body145
 
 vector.body145:                                   ; preds = %vector.ph143, %vector.body145
   %index146 = phi i64 [ 0, %vector.ph143 ], [ %index.next149, %vector.body145 ] ; 2 uses
-  %next.gep147.a = getelementptr i8, ptr %i.df, i64 %index146 ; 2 uses
+  %next.gep147 = getelementptr i8, ptr %i.df, i64 %index146 ; 3 uses
+  %next.gep147.a = getelementptr i8, ptr %next.gep147, i64 16 ; 2 uses
+  %wide.load148 = load <16 x i8>, ptr %next.gep147, align 1, !tbaa !142 ; 3 uses
   %wide.load148.a = load <16 x i8>, ptr %next.gep147.a, align 1, !tbaa !142 ; 3 uses
-  %2 = sext <16 x i8> %wide.load148.a to <16 x i32>
-  %3 = add nsw <16 x i32> %2, splat (i32 -65)
-  %i.dj = icmp ult <16 x i32> %3, splat (i32 26)
+  %2 = add <16 x i8> %wide.load148, splat (i8 -65)
+  %3 = add <16 x i8> %wide.load148.a, splat (i8 -65)
+  %4 = icmp ult <16 x i8> %2, splat (i8 26)
+  %i.dj = icmp ult <16 x i8> %3, splat (i8 26)
+  %5 = add <16 x i8> %wide.load148, splat (i8 32)
   %i.dk = add <16 x i8> %wide.load148.a, splat (i8 32)
+  %6 = select <16 x i1> %4, <16 x i8> %5, <16 x i8> %wide.load148
   %i.dl = select <16 x i1> %i.dj, <16 x i8> %i.dk, <16 x i8> %wide.load148.a
+  store <16 x i8> %6, ptr %next.gep147, align 1, !tbaa !142
   store <16 x i8> %i.dl, ptr %next.gep147.a, align 1, !tbaa !142
-  %index.next149 = add nuw i64 %index146, 16      ; 2 uses
+  %index.next149 = add nuw i64 %index146, 32      ; 2 uses
   %i.dm = icmp eq i64 %index.next149, %n.vec144
   br i1 %i.dm, label %middle.block150, label %vector.body145, !llvm.loop !639
 
@@ -238,25 +244,24 @@ middle.block150:                                  ; preds = %vector.body145
 
 vec.epilog.iter.check153:                         ; preds = %middle.block150
   %min.epilog.iters.check155 = icmp eq i64 %i.dh, 0
-  br i1 %min.epilog.iters.check155, label %.lr.ph.i.i4.i.preheader, label %vec.epilog.ph156, !prof !644
+  br i1 %min.epilog.iters.check155, label %.lr.ph.i.i4.i.preheader, label %vec.epilog.ph156, !prof !643
 
 vec.epilog.ph156:                                 ; preds = %vector.main.loop.iter.check141, %vec.epilog.iter.check153
   %vec.epilog.resume.val157 = phi i64 [ %n.vec144, %vec.epilog.iter.check153 ], [ 0, %vector.main.loop.iter.check141 ]
-  %n.vec158 = and i64 %.pr10.i, -4                ; 3 uses
+  %n.vec158 = and i64 %.pr10.i, -8                ; 3 uses
   %i.dn = getelementptr i8, ptr %i.df, i64 %n.vec158
   br label %vec.epilog.vector.body159
 
 vec.epilog.vector.body159:                        ; preds = %vec.epilog.vector.body159, %vec.epilog.ph156
   %index160 = phi i64 [ %vec.epilog.resume.val157, %vec.epilog.ph156 ], [ %index.next163, %vec.epilog.vector.body159 ] ; 2 uses
   %next.gep161 = getelementptr i8, ptr %i.df, i64 %index160 ; 2 uses
-  %wide.load162 = load <4 x i8>, ptr %next.gep161, align 1, !tbaa !142 ; 3 uses
-  %4 = sext <4 x i8> %wide.load162 to <4 x i32>
-  %5 = add nsw <4 x i32> %4, splat (i32 -65)
-  %6 = icmp ult <4 x i32> %5, splat (i32 26)
-  %7 = add <4 x i8> %wide.load162, splat (i8 32)
-  %8 = select <4 x i1> %6, <4 x i8> %7, <4 x i8> %wide.load162
-  store <4 x i8> %8, ptr %next.gep161, align 1, !tbaa !142
-  %index.next163 = add nuw i64 %index160, 4       ; 2 uses
+  %wide.load163 = load <8 x i8>, ptr %next.gep161, align 1, !tbaa !142 ; 3 uses
+  %7 = add <8 x i8> %wide.load163, splat (i8 -65)
+  %8 = icmp ult <8 x i8> %7, splat (i8 26)
+  %9 = add <8 x i8> %wide.load163, splat (i8 32)
+  %10 = select <8 x i1> %8, <8 x i8> %9, <8 x i8> %wide.load163
+  store <8 x i8> %10, ptr %next.gep161, align 1, !tbaa !142
+  %index.next163 = add nuw i64 %index160, 8       ; 2 uses
   %i.do = icmp eq i64 %index.next163, %n.vec158
   br i1 %i.do, label %vec.epilog.middle.block164, label %vec.epilog.vector.body159, !llvm.loop !640
 
@@ -271,9 +276,8 @@ vec.epilog.middle.block164:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.i4.i:                                    ; preds = %.lr.ph.i.i4.i.preheader, %.lr.ph.i.i4.i
   %.sroa.0.08.i.i.i = phi ptr [ %i.ds, %.lr.ph.i.i4.i ], [ %.sroa.0.08.i.i.i.ph, %.lr.ph.i.i4.i.preheader ] ; 3 uses
   %i.dp = load i8, ptr %.sroa.0.08.i.i.i, align 1, !tbaa !142 ; 3 uses
-  %9 = sext i8 %i.dp to i32
-  %10 = add nsw i32 %9, -65
-  %or.cond.i.i.i.i.i = icmp ult i32 %10, 26
+  %11 = add i8 %i.dp, -65
+  %or.cond.i.i.i.i.i = icmp ult i8 %11, 26
   %i.dq = add i8 %i.dp, 32
   %i.dr = select i1 %or.cond.i.i.i.i.i, i8 %i.dq, i8 %i.dp
   store i8 %i.dr, ptr %.sroa.0.08.i.i.i, align 1, !tbaa !142
@@ -676,7 +680,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.x = add i32 %.028, 2                         ; 2 uses
   %i.y = load i32, ptr %i.e, align 8, !tbaa !305
   %i.z = icmp ult i32 %i.x, %i.y
-  br i1 %i.z, label %bb.d, label %._crit_edge, !llvm.loop !645
+  br i1 %i.z, label %bb.d, label %._crit_edge, !llvm.loop !644
 }
 
 declare void @_ZN5video15CColorConverter26convert_A8R8G8B8toA1B5G5R5EPKviPv(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #5
@@ -704,7 +708,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 528), align 8, !tbaa !646
+  %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 528), align 8, !tbaa !645
   invoke void %i.i(i32 noundef 1, ptr noundef nonnull %i.g)
           to label %bb.c unwind label %bb.l
 
@@ -894,7 +898,7 @@ __cxx_global_var_init.exit:                       ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 80 ; 2 uses
   store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vtStandardE, i64 24), align 8, !tbaa !33
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %i.a, ptr noundef nonnull align 4 dereferenceable(80) @constinit, i64 80, i1 false)
-  store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vtStandardE, i64 16), align 8, !tbaa !647
+  store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vtStandardE, i64 16), align 8, !tbaa !646
   %i.h = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5video10VertexTypeD2Ev, ptr nonnull @_ZN5videoL10vtStandardE, ptr nonnull @__dso_handle) #34 ; 0 uses
   store i32 48, ptr @_ZN5videoL10vt2TCoordsE, align 8, !tbaa !338
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vt2TCoordsE, i64 8), i8 0, i64 24, i1 false)
@@ -913,7 +917,7 @@ __cxx_global_var_init.1.exit:                     ; preds = %__cxx_global_var_in
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 80 ; 2 uses
   store ptr %i.l, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vt2TCoordsE, i64 24), align 8, !tbaa !33
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %i.i, ptr noundef nonnull align 4 dereferenceable(80) @constinit.2, i64 80, i1 false)
-  store ptr %i.l, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vt2TCoordsE, i64 16), align 8, !tbaa !647
+  store ptr %i.l, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vt2TCoordsE, i64 16), align 8, !tbaa !646
   %i.m = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5video10VertexTypeD2Ev, ptr nonnull @_ZN5videoL10vt2TCoordsE, ptr nonnull @__dso_handle) #34 ; 0 uses
   store i32 64, ptr @_ZN5videoL10vtTangentsE, align 8, !tbaa !338
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vtTangentsE, i64 8), i8 0, i64 24, i1 false)
@@ -932,7 +936,7 @@ __cxx_global_var_init.3.exit:                     ; preds = %__cxx_global_var_in
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 96 ; 2 uses
   store ptr %i.q, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vtTangentsE, i64 24), align 8, !tbaa !33
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(96) %i.n, ptr noundef nonnull align 4 dereferenceable(96) @constinit.4, i64 96, i1 false)
-  store ptr %i.q, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vtTangentsE, i64 16), align 8, !tbaa !647
+  store ptr %i.q, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL10vtTangentsE, i64 16), align 8, !tbaa !646
   %i.r = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5video10VertexTypeD2Ev, ptr nonnull @_ZN5videoL10vtTangentsE, ptr nonnull @__dso_handle) #34 ; 0 uses
   store i32 40, ptr @_ZN5videoL9vt2DImageE, align 8, !tbaa !338
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZN5videoL9vt2DImageE, i64 8), i8 0, i64 24, i1 false)
@@ -951,7 +955,7 @@ __cxx_global_var_init.5.exit:                     ; preds = %__cxx_global_var_in
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 48 ; 2 uses
   store ptr %i.v, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL9vt2DImageE, i64 24), align 8, !tbaa !33
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.s, ptr noundef nonnull align 4 dereferenceable(48) @constinit.6, i64 48, i1 false)
-  store ptr %i.v, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL9vt2DImageE, i64 16), align 8, !tbaa !647
+  store ptr %i.v, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL9vt2DImageE, i64 16), align 8, !tbaa !646
   %i.w = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5video10VertexTypeD2Ev, ptr nonnull @_ZN5videoL9vt2DImageE, ptr nonnull @__dso_handle) #34 ; 0 uses
   store i32 40, ptr @_ZN5videoL11vtPrimitiveE, align 8, !tbaa !338
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZN5videoL11vtPrimitiveE, i64 8), i8 0, i64 24, i1 false)
@@ -970,7 +974,7 @@ __cxx_global_var_init.7.exit:                     ; preds = %__cxx_global_var_in
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 32 ; 2 uses
   store ptr %i.aa, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL11vtPrimitiveE, i64 24), align 8, !tbaa !33
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.x, ptr noundef nonnull align 4 dereferenceable(32) @constinit.8, i64 32, i1 false)
-  store ptr %i.aa, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL11vtPrimitiveE, i64 16), align 8, !tbaa !647
+  store ptr %i.aa, ptr getelementptr inbounds nuw (i8, ptr @_ZN5videoL11vtPrimitiveE, i64 16), align 8, !tbaa !646
   %i.ab = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5video10VertexTypeD2Ev, ptr nonnull @_ZN5videoL11vtPrimitiveE, ptr nonnull @__dso_handle) #34 ; 0 uses
   ret void
 }
@@ -1373,8 +1377,7 @@ begin_hunk_2_@llvm.fmuladd.v4f32
 !641 = distinct !{!641, !175, !300, !299}
 !642 = !{!635}
 !643 = !{!"branch_weights", i32 8, i32 24}
-!644 = !{!"branch_weights", i32 4, i32 12}
-!645 = distinct !{!645, !175}
-!646 = !{!174, !29, i64 528}
-!647 = !{!31, !30, i64 8}
+!644 = distinct !{!644, !175}
+!645 = !{!174, !29, i64 528}
+!646 = !{!31, !30, i64 8}
 end_hunk_2

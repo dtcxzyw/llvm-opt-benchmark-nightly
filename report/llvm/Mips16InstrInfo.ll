@@ -204,10 +204,12 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.bb, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %11 = and i64 %i.az, 7
-  %i.bc = icmp eq i64 %11, 0
-  %i.bd = icmp ult i64 %2, 3065
-  %i.be = and i1 %i.bd, %i.bc
+  %11 = trunc nsw i64 %i.az to i32                ; 2 uses
+  %12 = and i32 %11, 7
+  %i.bc = icmp eq i32 %12, 0
+  %13 = add nsw i32 %11, 1024
+  %i.bd = icmp ult i32 %13, 2048
+  %i.be = and i1 %i.bc, %i.bd
   %i.bf = load ptr, ptr %i.l, align 8
   %.0.v.i.i = select i1 %i.be, i64 -29344, i64 -29376
   %.0.i.i = getelementptr inbounds i8, ptr %i.bf, i64 %.0.v.i.i
@@ -265,13 +267,12 @@ declare void @_ZNK4llvm16MipsRegisterInfo15getReservedRegsERKNS_15MachineFunctio
 define dso_local void @_ZNK4llvm15Mips16InstrInfo15BuildAddiuSpImmERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEl(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(448) %0, ptr noundef nonnull align 8 dereferenceable(360) %1, ptr %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit:
   %4 = alloca %"class.llvm::MachineOperand", align 8 ; 6 uses
-  %5 = and i64 %3, 7
-  %6 = icmp eq i64 %5, 0
-  %sext.i = shl i64 %3, 32
-  %7 = ashr exact i64 %sext.i, 32
-  %8 = add nsw i64 %7, 1024
-  %i.a = icmp ult i64 %8, 2048
-  %9 = select i1 %6, i1 %i.a, i1 false
+  %5 = trunc i64 %3 to i32                        ; 2 uses
+  %6 = and i32 %5, 7
+  %7 = icmp eq i32 %6, 0
+  %8 = add i32 %5, 1024
+  %i.a = icmp ult i32 %8, 2048
+  %9 = and i1 %7, %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8
   %.0.v.i = select i1 %9, i64 -29344, i64 -29376
@@ -451,15 +452,17 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %i.p, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = add nsw i64 %2, -2040                    ; 2 uses
+  %i.q = add nsw i64 %2, -2040                    ; 3 uses
   %i.r = add i64 %2, 30728
   %i.s = icmp ult i64 %i.r, 65536
   br i1 %i.s, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %10 = and i64 %2, 7
-  %i.t = icmp eq i64 %10, 0
-  %i.u = icmp ult i64 %2, 3064
+  %10 = trunc nsw i64 %i.q to i32                 ; 2 uses
+  %11 = and i32 %10, 7
+  %i.t = icmp eq i32 %11, 0
+  %12 = add nsw i32 %10, 1024
+  %i.u = icmp ult i32 %12, 2048
   %i.v = and i1 %i.t, %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.x = load ptr, ptr %i.w, align 8
@@ -624,14 +627,15 @@ bb.b:                                             ; preds = %bb.a
   %i.b = add i64 %2, 32768
   %i.c = icmp ult i64 %i.b, 65536
   tail call void @llvm.assume(i1 %i.c)
-  %6 = and i64 %2, 7
-  %i.d = icmp eq i64 %6, 0
-  %7 = add nsw i64 %2, 1024
-  %i.e = icmp ult i64 %7, 2048
-  %8 = select i1 %i.d, i1 %i.e, i1 false
+  %6 = trunc nsw i64 %2 to i32                    ; 2 uses
+  %7 = and i32 %6, 7
+  %i.d = icmp eq i32 %7, 0
+  %8 = add nsw i32 %6, 1024
+  %i.e = icmp ult i32 %8, 2048
+  %9 = and i1 %i.d, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8
-  %.0.v.i.i = select i1 %8, i64 -29344, i64 -29376
+  %.0.v.i.i = select i1 %9, i64 -29344, i64 -29376
   %.0.i.i = getelementptr inbounds i8, ptr %i.g, i64 %.0.v.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !82   ; 2 uses
@@ -1034,13 +1038,12 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef nonnull align 8 dereferenceable(32) ptr @_ZNK4llvm15Mips16InstrInfo10AddiuSpImmEl(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(448) %0, i64 noundef %1) local_unnamed_addr #7 align 2 {
 bb.a:
-  %2 = and i64 %1, 7
-  %3 = icmp eq i64 %2, 0
-  %sext = shl i64 %1, 32
-  %4 = ashr exact i64 %sext, 32
-  %5 = add nsw i64 %4, 1024
-  %i.a = icmp ult i64 %5, 2048
-  %6 = select i1 %3, i1 %i.a, i1 false
+  %2 = trunc i64 %1 to i32                        ; 2 uses
+  %3 = and i32 %2, 7
+  %4 = icmp eq i32 %3, 0
+  %5 = add i32 %2, 1024
+  %i.a = icmp ult i32 %5, 2048
+  %6 = and i1 %4, %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8
   %.0.v = select i1 %6, i64 -29344, i64 -29376

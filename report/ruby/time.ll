@@ -204,25 +204,29 @@ rb_num2ull_inline.exit:                           ; preds = %bb.g, %bb.f, %RSTRI
   br i1 %i.x, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %rb_num2ull_inline.exit
-  %i.y = load i8, ptr %i.n, align 1, !tbaa !51    ; 2 uses
-  %6 = sext i8 %i.y to i32
-  %7 = icmp ne i8 %i.y, 32
-  %8 = add nsw i32 %6, -14
-  %9 = icmp ult i32 %8, -5
-  %narrow.i.not = select i1 %7, i1 %9, i1 false
-  br i1 %narrow.i.not, label %bb.i, label %bb.j
+  %i.y = load i8, ptr %i.n, align 1, !tbaa !51
+  switch i8 %i.y, label %bb.i [
+    i8 32, label %bb.j
+    i8 13, label %bb.j
+    i8 12, label %bb.j
+    i8 11, label %bb.j
+    i8 10, label %bb.j
+    i8 9, label %bb.j
+  ]
 
 bb.i:                                             ; preds = %bb.h
   %i.z = getelementptr i8, ptr %i.r, i64 -1
-  %i.aa = load i8, ptr %i.z, align 1, !tbaa !51   ; 2 uses
-  %10 = sext i8 %i.aa to i32
-  %11 = icmp ne i8 %i.aa, 32
-  %12 = add nsw i32 %10, -14
-  %13 = icmp ult i32 %12, -5
-  %narrow.i136.not = select i1 %11, i1 %13, i1 false
-  br i1 %narrow.i136.not, label %bb.k, label %bb.j
+  %i.aa = load i8, ptr %i.z, align 1, !tbaa !51
+  switch i8 %i.aa, label %bb.k [
+    i8 32, label %bb.j
+    i8 13, label %bb.j
+    i8 12, label %bb.j
+    i8 11, label %bb.j
+    i8 10, label %bb.j
+    i8 9, label %bb.j
+  ]
 
-bb.j:                                             ; preds = %bb.i, %bb.h
+bb.j:                                             ; preds = %bb.i, %bb.i, %bb.i, %bb.i, %bb.i, %bb.i, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h
   %i.ab = load i64, ptr @rb_eArgError, align 8, !tbaa !17
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.ab, ptr noundef nonnull @.str.145, i64 noundef %i.c) #19
   unreachable
@@ -506,9 +510,8 @@ bb.as:                                            ; preds = %.lr.ph
 .lr.ph193:                                        ; preds = %.lr.ph193.preheader, %bb.at
   %i.er = phi ptr [ %i.eu, %bb.at ], [ %.promoted195.pre, %.lr.ph193.preheader ] ; 3 uses
   %i.es = load i8, ptr %i.er, align 1, !tbaa !51
-  %14 = sext i8 %i.es to i32
-  %15 = add nsw i32 %14, -58
-  %i.et = icmp ult i32 %15, -10
+  %6 = add i8 %i.es, -58
+  %i.et = icmp ult i8 %6, -10
   br i1 %i.et, label %.critedge2, label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph193
@@ -537,23 +540,25 @@ bb.at:                                            ; preds = %.lr.ph193
 
 .lr.ph196:                                        ; preds = %.lr.ph196.preheader, %bb.au
   %i.ey = phi ptr [ %i.fa, %bb.au ], [ %.promoted195, %.lr.ph196.preheader ] ; 4 uses
-  %i.ez = load i8, ptr %i.ey, align 1, !tbaa !51  ; 2 uses
-  %16 = sext i8 %i.ez to i32
-  %17 = icmp ne i8 %i.ez, 32
-  %18 = add nsw i32 %16, -14
-  %19 = icmp ult i32 %18, -5
-  %narrow.i137.not = select i1 %17, i1 %19, i1 false
-  br i1 %narrow.i137.not, label %.critedge4.loopexit, label %bb.au
+  %i.ez = load i8, ptr %i.ey, align 1, !tbaa !51
+  switch i8 %i.ez, label %.critedge4.loopexit [
+    i8 32, label %bb.au
+    i8 13, label %bb.au
+    i8 12, label %bb.au
+    i8 11, label %bb.au
+    i8 10, label %bb.au
+    i8 9, label %bb.au
+  ]
 
-bb.au:                                            ; preds = %.lr.ph196
+bb.au:                                            ; preds = %.lr.ph196, %.lr.ph196, %.lr.ph196, %.lr.ph196, %.lr.ph196, %.lr.ph196
   %i.fa = getelementptr i8, ptr %i.ey, i64 1      ; 4 uses
   store ptr %i.fa, ptr %i.a, align 8, !tbaa !60
   %exitcond210.not = icmp eq ptr %i.fa, %scevgep209
   br i1 %exitcond210.not, label %.critedge4.loopexit, label %.lr.ph196, !llvm.loop !92
 
-.critedge4.loopexit:                              ; preds = %bb.au, %.lr.ph196
-  %.promoted200220 = phi ptr [ %i.ey, %.lr.ph196 ], [ %i.fa, %bb.au ] ; 2 uses
-  %.lcssa188.ph = phi ptr [ %i.ey, %.lr.ph196 ], [ %scevgep209, %bb.au ]
+.critedge4.loopexit:                              ; preds = %.lr.ph196, %bb.au
+  %.promoted200220 = phi ptr [ %i.fa, %bb.au ], [ %i.ey, %.lr.ph196 ] ; 2 uses
+  %.lcssa188.ph = phi ptr [ %scevgep209, %bb.au ], [ %i.ey, %.lr.ph196 ]
   %.pre = ptrtoaddr ptr %.promoted200220 to i64
   br label %.critedge4
 
@@ -571,14 +576,16 @@ bb.au:                                            ; preds = %.lr.ph196
   br label %.lr.ph201
 
 .lr.ph201:                                        ; preds = %.lr.ph201.preheader, %bb.av
-  %i.fe = phi ptr [ %i.fg, %bb.av ], [ %.promoted200, %.lr.ph201.preheader ] ; 4 uses
-  %i.ff = load i8, ptr %i.fe, align 1, !tbaa !51  ; 2 uses
-  %20 = sext i8 %i.ff to i32
-  %21 = icmp ne i8 %i.ff, 32
-  %22 = add nsw i32 %20, -14
-  %23 = icmp ult i32 %22, -5
-  %narrow.i138.not = select i1 %21, i1 %23, i1 false
-  br i1 %narrow.i138.not, label %bb.av, label %.critedge6.loopexit
+  %i.fe = phi ptr [ %i.fg, %bb.av ], [ %.promoted200, %.lr.ph201.preheader ] ; 14 uses
+  %i.ff = load i8, ptr %i.fe, align 1, !tbaa !51
+  switch i8 %i.ff, label %bb.av [
+    i8 32, label %.critedge6.loopexit
+    i8 13, label %.critedge6.loopexit
+    i8 12, label %.critedge6.loopexit
+    i8 11, label %.critedge6.loopexit
+    i8 10, label %.critedge6.loopexit
+    i8 9, label %.critedge6.loopexit
+  ]
 
 bb.av:                                            ; preds = %.lr.ph201
   %i.fg = getelementptr i8, ptr %i.fe, i64 1      ; 4 uses
@@ -586,15 +593,15 @@ bb.av:                                            ; preds = %.lr.ph201
   %exitcond213.not = icmp eq ptr %i.fg, %scevgep212
   br i1 %exitcond213.not, label %.critedge6.loopexit, label %.lr.ph201, !llvm.loop !93
 
-.critedge6.loopexit:                              ; preds = %bb.av, %.lr.ph201
-  %.promoted205222 = phi ptr [ %i.fe, %.lr.ph201 ], [ %i.fg, %bb.av ] ; 2 uses
-  %.lcssa.ph = phi ptr [ %i.fe, %.lr.ph201 ], [ %scevgep212, %bb.av ]
-  %.pre223 = ptrtoaddr ptr %.promoted205222 to i64
+.critedge6.loopexit:                              ; preds = %.lr.ph201, %.lr.ph201, %.lr.ph201, %.lr.ph201, %.lr.ph201, %.lr.ph201, %bb.av
+  %.promoted215232 = phi ptr [ %i.fg, %bb.av ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ] ; 2 uses
+  %.lcssa.ph = phi ptr [ %scevgep212, %bb.av ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ], [ %i.fe, %.lr.ph201 ]
+  %.pre223 = ptrtoaddr ptr %.promoted215232 to i64
   br label %.critedge6
 
 .critedge6:                                       ; preds = %.critedge6.loopexit, %.critedge4
   %.promoted205214.pre-phi = phi i64 [ %.pre223, %.critedge6.loopexit ], [ %.promoted200211.pre-phi, %.critedge4 ]
-  %.promoted205 = phi ptr [ %.promoted205222, %.critedge6.loopexit ], [ %.promoted200, %.critedge4 ] ; 3 uses
+  %.promoted205 = phi ptr [ %.promoted215232, %.critedge6.loopexit ], [ %.promoted200, %.critedge4 ] ; 3 uses
   %.lcssa = phi ptr [ %.lcssa.ph, %.critedge6.loopexit ], [ %.promoted200, %.critedge4 ] ; 2 uses
   %i.fh = icmp ult ptr %.promoted205, %i.r
   br i1 %i.fh, label %.lr.ph206.preheader, label %.critedge8
@@ -607,15 +614,17 @@ bb.av:                                            ; preds = %.lr.ph201
 
 .lr.ph206:                                        ; preds = %.lr.ph206.preheader, %bb.aw
   %i.fk = phi ptr [ %i.fm, %bb.aw ], [ %.promoted205, %.lr.ph206.preheader ] ; 2 uses
-  %i.fl = load i8, ptr %i.fk, align 1, !tbaa !51  ; 2 uses
-  %24 = sext i8 %i.fl to i32
-  %25 = icmp ne i8 %i.fl, 32
-  %26 = add nsw i32 %24, -14
-  %27 = icmp ult i32 %26, -5
-  %narrow.i139.not = select i1 %25, i1 %27, i1 false
-  br i1 %narrow.i139.not, label %bb.ax, label %bb.aw
+  %i.fl = load i8, ptr %i.fk, align 1, !tbaa !51
+  switch i8 %i.fl, label %bb.ax [
+    i8 32, label %bb.aw
+    i8 13, label %bb.aw
+    i8 12, label %bb.aw
+    i8 11, label %bb.aw
+    i8 10, label %bb.aw
+    i8 9, label %bb.aw
+  ]
 
-bb.aw:                                            ; preds = %.lr.ph206
+bb.aw:                                            ; preds = %.lr.ph206, %.lr.ph206, %.lr.ph206, %.lr.ph206, %.lr.ph206, %.lr.ph206
   %i.fm = getelementptr i8, ptr %i.fk, i64 1      ; 3 uses
   store ptr %i.fm, ptr %i.a, align 8, !tbaa !60
   %exitcond216.not = icmp eq ptr %i.fm, %scevgep215
@@ -1018,17 +1027,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i8, ptr %0, align 1, !tbaa !51
-  %4 = sext i8 %i.e to i32
-  %5 = add nsw i32 %4, -58
-  %i.f = icmp ult i32 %5, -10
+  %4 = add i8 %i.e, -58
+  %i.f = icmp ult i8 %4, -10
   br i1 %i.f, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr i8, ptr %0, i64 1          ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !51
-  %6 = sext i8 %i.h to i32
-  %7 = add nsw i32 %6, -58
-  %i.i = icmp ult i32 %7, -10
+  %5 = add i8 %i.h, -58
+  %i.i = icmp ult i8 %5, -10
   br i1 %i.i, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -1038,9 +1045,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr i8, ptr %0, i64 2
   %i.k = load i8, ptr %i.j, align 1, !tbaa !51
-  %8 = sext i8 %i.k to i32
-  %9 = add nsw i32 %8, -58
-  %i.l = icmp ult i32 %9, -10
+  %6 = add i8 %i.k, -58
+  %i.l = icmp ult i8 %6, -10
   br i1 %i.l, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c, %bb.b, %bb.a
