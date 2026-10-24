@@ -206,26 +206,25 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.critedge.i, %.preheader.i
   %.02229.i = phi i64 [ 0, %.preheader.i ], [ %i.ay, %.critedge.i ] ; 2 uses
   %i.i = getelementptr [24 x i8], ptr %i.h, i64 %.02229.i
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !105  ; 2 uses
-  %.not.i11 = icmp eq ptr %i.j, null
-  br i1 %.not.i11, label %.critedge.i, label %.lr.ph
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !105
+  br label %bb.e
 
-bb.e:                                             ; preds = %mi_heap_page_check_owned.exit
-  %.not.i = icmp eq ptr %i.l, null
-  br i1 %.not.i, label %.critedge.i, label %.lr.ph, !llvm.loop !19
+bb.e:                                             ; preds = %mi_heap_page_check_owned.exit, %bb.d
+  %.0.i = phi ptr [ %i.j, %bb.d ], [ %i.l, %mi_heap_page_check_owned.exit ] ; 7 uses
+  %.not.i = icmp eq ptr %.0.i, null
+  br i1 %.not.i, label %.critedge.i, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.d, %bb.e
-  %.0.i12 = phi ptr [ %i.l, %bb.e ], [ %i.j, %bb.d ] ; 6 uses
-  %i.k = getelementptr i8, ptr %.0.i12, i64 56
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !171  ; 2 uses
-  %i.m = ptrtoint ptr %.0.i12 to i64              ; 3 uses
+.lr.ph:                                           ; preds = %bb.e
+  %i.k = getelementptr i8, ptr %.0.i, i64 56
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !171
+  %i.m = ptrtoint ptr %.0.i to i64                ; 3 uses
   %i.n = add i64 %i.m, -1
   %i.o = and i64 %i.n, -33554432
   %i.p = inttoptr i64 %i.o to ptr                 ; 4 uses
-  %i.q = getelementptr i8, ptr %.0.i12, i64 28
+  %i.q = getelementptr i8, ptr %.0.i, i64 28
   %i.r = load i32, ptr %i.q, align 4, !tbaa !65   ; 5 uses
   %i.s = zext i32 %i.r to i64                     ; 4 uses
-  %i.t = load i32, ptr %.0.i12, align 8, !tbaa !93
+  %i.t = load i32, ptr %.0.i, align 8, !tbaa !93
   %i.u = zext i32 %i.t to i64
   %i.v = icmp ugt i32 %i.r, 7
   br i1 %i.v, label %bb.f, label %_mi_page_start.exit.thread.i
@@ -247,7 +246,7 @@ _mi_page_start.exit.thread.i:                     ; preds = %bb.g, %.lr.ph
   %i.ac = shl i64 %i.ab, 16
   %i.ad = getelementptr i8, ptr %i.p, i64 %i.ac
   %i.ae = getelementptr i8, ptr %i.ad, i64 %.0.i.i.i.ph.i
-  %i.af = getelementptr i8, ptr %.0.i12, i64 10
+  %i.af = getelementptr i8, ptr %.0.i, i64 10
   %i.ag = load i16, ptr %i.af, align 2, !tbaa !114
   br label %mi_heap_page_check_owned.exit
 
@@ -261,7 +260,7 @@ _mi_page_start.exit.i:                            ; preds = %bb.f
   %i.am = shl i64 %i.al, 16
   %i.an = getelementptr i8, ptr %i.p, i64 %i.am
   %i.ao = getelementptr i8, ptr %i.an, i64 %spec.select.i.i.i.i ; 2 uses
-  %i.ap = getelementptr i8, ptr %.0.i12, i64 10
+  %i.ap = getelementptr i8, ptr %.0.i, i64 10
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !114 ; 2 uses
   %i.ar = icmp sgt i32 %i.r, -1
   br i1 %i.ar, label %mi_heap_page_check_owned.exit, label %_mi_segment_page_start.exit.i.i, !prof !97
@@ -277,12 +276,12 @@ mi_heap_page_check_owned.exit:                    ; preds = %_mi_page_start.exit
   %i.au = zext i16 %.in.i to i64
   %i.av = mul nuw i64 %.0.i.i, %i.au
   %i.aw = getelementptr i8, ptr %i.at, i64 %i.av
-  %2 = icmp uge ptr %1, %i.at
-  %3 = icmp ult ptr %1, %i.aw
-  %i.ax = select i1 %2, i1 %3, i1 false
-  br i1 %i.ax, label %mi_heap_visit_pages.exit, label %bb.e, !llvm.loop !19
+  %2 = icmp ult ptr %1, %i.at
+  %3 = icmp uge ptr %1, %i.aw
+  %i.ax = select i1 %2, i1 true, i1 %3
+  br i1 %i.ax, label %bb.e, label %mi_heap_visit_pages.exit, !llvm.loop !19
 
-.critedge.i:                                      ; preds = %bb.e, %bb.d
+.critedge.i:                                      ; preds = %bb.e
   %i.ay = add nuw nsw i64 %.02229.i, 1            ; 2 uses
   %exitcond.i = icmp eq i64 %i.ay, 75
   br i1 %exitcond.i, label %mi_heap_visit_pages.exit, label %bb.d, !llvm.loop !20
@@ -321,26 +320,25 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.critedge.i.i, %.preheader.i.i
   %.02229.i.i = phi i64 [ 0, %.preheader.i.i ], [ %i.ba, %.critedge.i.i ] ; 2 uses
   %i.k = getelementptr [24 x i8], ptr %i.j, i64 %.02229.i.i
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !105  ; 2 uses
-  %.not.i11.i = icmp eq ptr %i.l, null
-  br i1 %.not.i11.i, label %.critedge.i.i, label %.lr.ph.i
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !105
+  br label %bb.e
 
-bb.e:                                             ; preds = %mi_heap_page_check_owned.exit.i
-  %.not.i.i = icmp eq ptr %i.n, null
-  br i1 %.not.i.i, label %.critedge.i.i, label %.lr.ph.i, !llvm.loop !19
+bb.e:                                             ; preds = %mi_heap_page_check_owned.exit.i, %bb.d
+  %.0.i.i = phi ptr [ %i.l, %bb.d ], [ %i.n, %mi_heap_page_check_owned.exit.i ] ; 7 uses
+  %.not.i.i = icmp eq ptr %.0.i.i, null
+  br i1 %.not.i.i, label %.critedge.i.i, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %bb.e
-  %.0.i12.i = phi ptr [ %i.n, %bb.e ], [ %i.l, %bb.d ] ; 6 uses
-  %i.m = getelementptr i8, ptr %.0.i12.i, i64 56
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !171  ; 2 uses
-  %i.o = ptrtoint ptr %.0.i12.i to i64            ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.e
+  %i.m = getelementptr i8, ptr %.0.i.i, i64 56
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !171
+  %i.o = ptrtoint ptr %.0.i.i to i64              ; 3 uses
   %i.p = add i64 %i.o, -1
   %i.q = and i64 %i.p, -33554432
   %i.r = inttoptr i64 %i.q to ptr                 ; 4 uses
-  %i.s = getelementptr i8, ptr %.0.i12.i, i64 28
+  %i.s = getelementptr i8, ptr %.0.i.i, i64 28
   %i.t = load i32, ptr %i.s, align 4, !tbaa !65   ; 5 uses
   %i.u = zext i32 %i.t to i64                     ; 4 uses
-  %i.v = load i32, ptr %.0.i12.i, align 8, !tbaa !93
+  %i.v = load i32, ptr %.0.i.i, align 8, !tbaa !93
   %i.w = zext i32 %i.v to i64
   %i.x = icmp ugt i32 %i.t, 7
   br i1 %i.x, label %bb.f, label %_mi_page_start.exit.thread.i.i
@@ -362,7 +360,7 @@ _mi_page_start.exit.thread.i.i:                   ; preds = %bb.g, %.lr.ph.i
   %i.ae = shl i64 %i.ad, 16
   %i.af = getelementptr i8, ptr %i.r, i64 %i.ae
   %i.ag = getelementptr i8, ptr %i.af, i64 %.0.i.i.i.ph.i.i
-  %i.ah = getelementptr i8, ptr %.0.i12.i, i64 10
+  %i.ah = getelementptr i8, ptr %.0.i.i, i64 10
   %i.ai = load i16, ptr %i.ah, align 2, !tbaa !114
   br label %mi_heap_page_check_owned.exit.i
 
@@ -376,7 +374,7 @@ _mi_page_start.exit.i.i:                          ; preds = %bb.f
   %i.ao = shl i64 %i.an, 16
   %i.ap = getelementptr i8, ptr %i.r, i64 %i.ao
   %i.aq = getelementptr i8, ptr %i.ap, i64 %spec.select.i.i.i.i.i ; 2 uses
-  %i.ar = getelementptr i8, ptr %.0.i12.i, i64 10
+  %i.ar = getelementptr i8, ptr %.0.i.i, i64 10
   %i.as = load i16, ptr %i.ar, align 2, !tbaa !114 ; 2 uses
   %i.at = icmp sgt i32 %i.t, -1
   br i1 %i.at, label %mi_heap_page_check_owned.exit.i, label %_mi_segment_page_start.exit.i.i.i, !prof !97
@@ -392,12 +390,12 @@ mi_heap_page_check_owned.exit.i:                  ; preds = %_mi_segment_page_st
   %i.aw = zext i16 %.in.i.i to i64
   %i.ax = mul nuw i64 %.0.i.i.i, %i.aw
   %i.ay = getelementptr i8, ptr %i.av, i64 %i.ax
-  %1 = icmp uge ptr %0, %i.av
-  %2 = icmp ult ptr %0, %i.ay
-  %i.az = select i1 %1, i1 %2, i1 false
-  br i1 %i.az, label %mi_heap_check_owned.exit, label %bb.e, !llvm.loop !19
+  %1 = icmp ult ptr %0, %i.av
+  %2 = icmp uge ptr %0, %i.ay
+  %i.az = select i1 %1, i1 true, i1 %2
+  br i1 %i.az, label %bb.e, label %mi_heap_check_owned.exit, !llvm.loop !19
 
-.critedge.i.i:                                    ; preds = %bb.e, %bb.d
+.critedge.i.i:                                    ; preds = %bb.e
   %i.ba = add nuw nsw i64 %.02229.i.i, 1          ; 2 uses
   %exitcond.i.i = icmp eq i64 %i.ba, 75
   br i1 %exitcond.i.i, label %mi_heap_check_owned.exit, label %bb.d, !llvm.loop !20
