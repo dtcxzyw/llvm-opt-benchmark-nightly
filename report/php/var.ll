@@ -205,7 +205,7 @@ smart_str_alloc.exit268:                          ; preds = %bb.dg, %bb.dh
 bb.di:                                            ; preds = %smart_str_alloc.exit268, %bb.dc
   %i.qi = load ptr, ptr %.0186, align 8, !tbaa !13
   %i.qj = getelementptr inbounds nuw i8, ptr %i.qi, i64 16
-  %i.qk = load ptr, ptr %i.qj, align 8, !tbaa !42 ; 4 uses
+  %i.qk = load ptr, ptr %i.qj, align 8, !tbaa !42 ; 5 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 28
   %i.qm = load i32, ptr %i.ql, align 4, !tbaa !55
   %i.qn = and i32 %i.qm, 268435456
@@ -608,7 +608,12 @@ bb.fv:                                            ; preds = %bb.fu, %bb.ft
   %.pre505 = load i64, ptr %.phi.trans.insert504, align 8, !tbaa !28
   br label %smart_str_alloc.exit248
 
-smart_str_alloc.exit248:                          ; preds = %bb.fu, %bb.fv
+4:                                                ; preds = %bb.fs
+  %5 = load ptr, ptr @zend_standard_class_def, align 8, !tbaa !104
+  %6 = icmp eq ptr %i.qk, %5
+  br i1 %6, label %bb.fw, label %bb.fz
+
+smart_str_alloc.exit248:                          ; preds = %bb.fv, %bb.fu
   %i.aaz = phi i64 [ %i.aav, %bb.fu ], [ %.pre505, %bb.fv ]
   %i.aba = phi ptr [ %i.aat, %bb.fu ], [ %.pre503, %bb.fv ]
   %.1.i247 = phi i64 [ %i.aaw, %bb.fu ], [ %.0.i246, %bb.fv ]
@@ -621,14 +626,11 @@ smart_str_alloc.exit248:                          ; preds = %bb.fu, %bb.fv
   %i.abf = load ptr, ptr %i.o, align 8, !tbaa !97
   call void @_efree(ptr noundef %i.abf) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #12
-  br label %4
+  %7 = load ptr, ptr @zend_standard_class_def, align 8, !tbaa !104
+  %8 = icmp eq ptr %i.qk, %7
+  br i1 %8, label %bb.fw, label %bb.ga
 
-4:                                                ; preds = %smart_str_alloc.exit248, %bb.fs
-  %5 = load ptr, ptr @zend_standard_class_def, align 8, !tbaa !104
-  %6 = icmp eq ptr %i.qk, %5
-  br i1 %6, label %bb.fw, label %bb.fz
-
-bb.fw:                                            ; preds = %4
+bb.fw:                                            ; preds = %smart_str_alloc.exit248, %4
   %i.abg = load ptr, ptr %2, align 8, !tbaa !102  ; 3 uses
   %.not.i.i360 = icmp eq ptr %i.abg, null
   br i1 %.not.i.i360, label %bb.fy, label %bb.fx, !prof !36
@@ -662,7 +664,7 @@ smart_str_appendc_ex.exit364:                     ; preds = %bb.fx, %bb.fy
 bb.fz:                                            ; preds = %4
   br i1 %i.qo, label %zend_string_free.exit, label %bb.ga
 
-bb.ga:                                            ; preds = %bb.fz
+bb.ga:                                            ; preds = %smart_str_alloc.exit248, %bb.fz
   %i.abr = load ptr, ptr %2, align 8, !tbaa !102  ; 3 uses
   %.not.i239 = icmp eq ptr %i.abr, null
   br i1 %.not.i239, label %bb.gc, label %bb.gb, !prof !36

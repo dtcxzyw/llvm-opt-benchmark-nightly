@@ -205,7 +205,7 @@ declare ptr @g_realloc_n(ptr noundef, i64 noundef, i64 noundef) local_unnamed_ad
 define dso_local void @hbitmap_merge(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.HBitmapIter, align 8        ; 15 uses
-  %i.a = load i64, ptr %0, align 8                ; 2 uses
+  %i.a = load i64, ptr %0, align 8                ; 3 uses
   %i.b = load i64, ptr %2, align 8
   %i.c = icmp eq i64 %i.a, %i.b
   br i1 %i.c, label %bb.c, label %bb.b
@@ -344,13 +344,14 @@ bb.k:                                             ; preds = %bb.j
   store i64 -9223372036854775808, ptr %i.cf, align 8
   %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i64 0, ptr %i.cg, align 8
-  br label %bb.l
+  %.pre = load i64, ptr %0, align 8
+  br label %bb.m
 
-bb.l:                                             ; preds = %bb.k, %bb.j
+bb.l:                                             ; preds = %bb.j
   br i1 %i.s, label %hbitmap_sparse_merge.exit, label %bb.m
 
-bb.m:                                             ; preds = %bb.l
-  %4 = load i64, ptr %0, align 8                  ; 2 uses
+bb.m:                                             ; preds = %bb.k, %bb.l
+  %4 = phi i64 [ %.pre, %bb.k ], [ %i.a, %bb.l ]  ; 2 uses
   %or.cond.i10.i = icmp sgt i64 %4, -1
   br i1 %or.cond.i10.i, label %.lr.ph.i, label %._crit_edge.i
 

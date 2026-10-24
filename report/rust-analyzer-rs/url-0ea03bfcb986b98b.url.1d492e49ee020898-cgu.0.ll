@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.dc = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.dd = load ptr, ptr %i.dc, align 8, !nonnull !5, !noundef !5
   %i.de = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  %i.df = load i64, ptr %i.de, align 8, !noundef !5 ; 2 uses
+  %i.df = load i64, ptr %i.de, align 8, !noundef !5 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.dg = invoke { ptr, i64 } @_RNvMs_Cs2vT3jxLudSK_3urlNtB4_3Url4path(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(88) %2)
@@ -607,11 +607,15 @@ bb.bu:                                            ; preds = %bb.bm
   %i.jh = icmp eq i64 %i.jf, 0                    ; 2 uses
   %i.ji = icmp eq i64 %i.df, %i.dp
   %or.cond = and i1 %i.ji, %i.jh
-  br i1 %or.cond, label %bb.bw, label %bb.bv
+  br i1 %or.cond, label %bb.bw, label %3
 
-bb.bv:                                            ; preds = %bb.bw, %.thread459
-  %i.jj = icmp eq i64 %i.dp, 0
-  br i1 %i.jj, label %bb.by, label %bb.bz
+3:                                                ; preds = %.thread459
+  %4 = icmp eq i64 %i.dp, 0
+  br i1 %4, label %bb.by, label %bb.bz
+
+bb.bv:                                            ; preds = %bb.bw
+  %i.jj = icmp eq i64 %i.df, 0
+  br i1 %i.jj, label %bb.by, label %bb.cb
 
 bb.bw:                                            ; preds = %.thread459
   %bcmp90 = call i32 @bcmp(ptr nonnull %i.dd, ptr nonnull %i.dn, i64 %i.df)
@@ -627,7 +631,7 @@ bb.bx:                                            ; preds = %.sink.split, %bb.bw
   %i.jk = invoke { ptr, i64 } @_RNvMs_Cs2vT3jxLudSK_3urlNtB4_3Url5query(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(88) %2)
           to label %bb.cc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-bb.by:                                            ; preds = %bb.bv
+bb.by:                                            ; preds = %bb.bv, %3
   invoke void @_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE7reserveCs2vT3jxLudSK_3url(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef 1)
           to label %_RNvMNtCsbSS6DM8SDEO_5alloc6stringNtB2_6String4push.exit160 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -638,7 +642,7 @@ _RNvMNtCsbSS6DM8SDEO_5alloc6stringNtB2_6String4push.exit160: ; preds = %bb.by
   %i.jn = add nuw i64 %i.jf, 1
   br label %.sink.split
 
-bb.bz:                                            ; preds = %bb.bv
+bb.bz:                                            ; preds = %3
   br i1 %i.jh, label %bb.cb, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
@@ -653,7 +657,7 @@ _RNvMNtCsbSS6DM8SDEO_5alloc6stringNtB2_6String4push.exit162: ; preds = %bb.ca
   store i64 %i.jq, ptr %.sroa.528.0..sroa_idx, align 8, !alias.scope !453
   br label %bb.cb
 
-bb.cb:                                            ; preds = %_RNvMNtCsbSS6DM8SDEO_5alloc6stringNtB2_6String4push.exit162, %bb.bz
+bb.cb:                                            ; preds = %bb.bv, %_RNvMNtCsbSS6DM8SDEO_5alloc6stringNtB2_6String4push.exit162, %bb.bz
   invoke void @_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE7reserveCs2vT3jxLudSK_3url(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %i.dp)
           to label %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url.exit165 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

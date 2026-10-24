@@ -204,7 +204,7 @@ bb.a:
 tailrecurse:                                      ; preds = %tailrecurse.backedge, %bb.a
   %.pr = phi i32 [ %.pre, %bb.a ], [ %i.be, %tailrecurse.backedge ] ; 3 uses
   %.tr = phi i32 [ %0, %bb.a ], [ %.tr.be, %tailrecurse.backedge ] ; 7 uses
-  %.tr48 = phi i32 [ %1, %bb.a ], [ %.0.i, %tailrecurse.backedge ] ; 8 uses
+  %.tr48 = phi i32 [ %1, %bb.a ], [ %.0.i42, %tailrecurse.backedge ] ; 8 uses
   %ret.known.tr = phi i1 [ false, %bb.a ], [ true, %tailrecurse.backedge ]
   %i.a = icmp sgt i32 %.tr, -1                    ; 3 uses
   %.not.i = icmp slt i32 %.tr, %.pr               ; 2 uses
@@ -215,11 +215,10 @@ bb.b:                                             ; preds = %tailrecurse
   %i.b = load ptr, ptr @SDL_joystick_players, align 8
   %i.c = zext nneg i32 %.tr to i64
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.c
-  %i.e = load i32, ptr %i.d, align 4
-  br label %SDL_GetJoystickIDForPlayerIndex.exit
+  %i.e = load i32, ptr %i.d, align 4              ; 2 uses
+  br label %2
 
-SDL_GetJoystickIDForPlayerIndex.exit:             ; preds = %tailrecurse, %bb.b
-  %.0.i = phi i32 [ %i.e, %bb.b ], [ 0, %tailrecurse ] ; 2 uses
+SDL_GetJoystickIDForPlayerIndex.exit:             ; preds = %tailrecurse
   br i1 %.not.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %SDL_GetJoystickIDForPlayerIndex.exit
@@ -251,11 +250,17 @@ bb.f:                                             ; preds = %bb.e
   %i.r = zext nneg i32 %.tr to i64
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.r
   %i.t = load i32, ptr %i.s, align 4
-  %2 = icmp eq i32 %i.t, %.tr48
-  br i1 %2, label %.critedge, label %thread-pre-split
+  br label %2
 
-thread-pre-split:                                 ; preds = %bb.e, %bb.f, %bb.d
-  %i.u = phi i32 [ %i.g, %bb.d ], [ %.pr, %bb.f ], [ %.pr, %bb.e ] ; 3 uses
+2:                                                ; preds = %bb.f, %bb.b
+  %3 = phi i32 [ %i.t, %bb.f ], [ %i.e, %bb.b ]
+  %.0.i4345 = phi i32 [ 0, %bb.f ], [ %i.e, %bb.b ]
+  %4 = icmp eq i32 %3, %.tr48
+  br i1 %4, label %.critedge, label %thread-pre-split
+
+thread-pre-split:                                 ; preds = %bb.e, %2, %bb.d
+  %i.u = phi i32 [ %i.g, %bb.d ], [ %.pr, %2 ], [ %.pr, %bb.e ] ; 3 uses
+  %.0.i42 = phi i32 [ 0, %bb.d ], [ %.0.i4345, %2 ], [ 0, %bb.e ] ; 2 uses
   %i.v = icmp sgt i32 %i.u, 0
   br i1 %i.v, label %.lr.ph.i, label %SDL_GetPlayerIndexForJoystickID.exit
 
@@ -375,7 +380,7 @@ SDL_GetDriverAndJoystickIndex.exit:               ; preds = %.critedge.2.i, %bb.
   br label %bb.l
 
 bb.l:                                             ; preds = %SDL_GetDriverAndJoystickIndex.exit, %.loopexit
-  %.not28 = icmp eq i32 %.0.i, 0
+  %.not28 = icmp eq i32 %.0.i42, 0
   br i1 %.not28, label %.critedge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -408,8 +413,8 @@ bb.o:                                             ; preds = %bb.n
   %i.bk = trunc nuw nsw i64 %indvars.iv.i36 to i32
   br label %tailrecurse.backedge
 
-.critedge:                                        ; preds = %bb.c, %bb.l, %bb.f
-  %.1 = phi i1 [ true, %bb.f ], [ %ret.known.tr, %bb.c ], [ true, %bb.l ]
+.critedge:                                        ; preds = %bb.c, %bb.l, %2
+  %.1 = phi i1 [ true, %2 ], [ %ret.known.tr, %bb.c ], [ true, %bb.l ]
   ret i1 %.1
 }
 

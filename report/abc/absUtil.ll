@@ -204,7 +204,7 @@ bb.a:
   %.val62 = load ptr, ptr %i.g, align 8, !tbaa !39 ; 3 uses
   %i.h = getelementptr i8, ptr %.val62, i64 4     ; 3 uses
   %.not = icmp eq ptr %.val63.fr, null            ; 2 uses
-  %.val6183 = load i32, ptr %i.f, align 8, !tbaa !38 ; 2 uses
+  %.val6183 = load i32, ptr %i.f, align 8, !tbaa !38 ; 4 uses
   %.val62.val84 = load i32, ptr %i.h, align 4, !tbaa !33
   %i.i = icmp sle i32 %.val62.val84, %.val6183
   %or.cond85 = or i1 %i.i, %.not
@@ -215,17 +215,19 @@ bb.a:
   %.val67.val = load ptr, ptr %i.j, align 8, !tbaa !31
   br label %.lr.ph.split
 
-.critedge.preheader:                              ; preds = %.lr.ph.split, %bb.a
-  %.val6989 = phi i32 [ %.val6183, %bb.a ], [ %.val61, %.lr.ph.split ] ; 4 uses
-  %2 = icmp sgt i32 %.val6989, 0
-  br i1 %2, label %.lr.ph92, label %.critedge2
+.critedge.preheader:                              ; preds = %bb.a
+  %2 = icmp slt i32 %.val6183, 1
+  %brmerge = or i1 %2, %.not
+  br i1 %brmerge, label %.critedge2, label %.lr.ph92.split
 
-.lr.ph92:                                         ; preds = %.critedge.preheader
-  %3 = getelementptr i8, ptr %.val62, i64 8
-  %.val65.val = load ptr, ptr %3, align 8, !tbaa !31
-  br i1 %.not, label %.critedge2, label %.lr.ph92.split
+.lr.ph92:                                         ; preds = %.lr.ph.split
+  %3 = icmp sgt i32 %.val61, 0
+  br i1 %3, label %.lr.ph92.split, label %.critedge2
 
-.lr.ph92.split:                                   ; preds = %.lr.ph92
+.lr.ph92.split:                                   ; preds = %.critedge.preheader, %.lr.ph92
+  %.val6989135138 = phi i32 [ %.val6183, %.critedge.preheader ], [ %.val61, %.lr.ph92 ]
+  %.val65.val139.in = getelementptr i8, ptr %.val62, i64 8
+  %.val65.val139 = load ptr, ptr %.val65.val139.in, align 8, !tbaa !31
   %i.k = getelementptr i8, ptr %1, i64 8
   %.val57 = load ptr, ptr %i.k, align 8, !tbaa !31
   br label %bb.b
@@ -240,15 +242,15 @@ bb.a:
   %i.q = getelementptr inbounds i8, ptr %i.e, i64 %i.p
   store i32 %i.c, ptr %i.q, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.val61 = load i32, ptr %i.f, align 8, !tbaa !38 ; 2 uses
+  %.val61 = load i32, ptr %i.f, align 8, !tbaa !38 ; 4 uses
   %.val62.val = load i32, ptr %i.h, align 4, !tbaa !33
   %i.r = sub nsw i32 %.val62.val, %.val61
   %i.s = sext i32 %i.r to i64
   %.not105 = icmp slt i64 %indvars.iv.next, %i.s
-  br i1 %.not105, label %.lr.ph.split, label %.critedge.preheader, !llvm.loop !60
+  br i1 %.not105, label %.lr.ph.split, label %.lr.ph92, !llvm.loop !60
 
 bb.b:                                             ; preds = %.lr.ph92.split, %.critedge
-  %.val69117 = phi i32 [ %.val6989, %.lr.ph92.split ], [ %.val69, %.critedge ] ; 2 uses
+  %.val69117 = phi i32 [ %.val6989135138, %.lr.ph92.split ], [ %.val69, %.critedge ] ; 2 uses
   %indvars.iv107 = phi i64 [ 0, %.lr.ph92.split ], [ %indvars.iv.next108, %.critedge ] ; 3 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %.val57, i64 %indvars.iv107
   %i.u = load i32, ptr %i.t, align 4, !tbaa !10
@@ -261,7 +263,7 @@ bb.c:                                             ; preds = %bb.b
   %.val60.val = load i32, ptr %i.h, align 4, !tbaa !33
   %i.x = add i32 %i.w, %.val60.val
   %i.y = sext i32 %i.x to i64
-  %i.z = getelementptr inbounds [4 x i8], ptr %.val65.val, i64 %i.y
+  %i.z = getelementptr inbounds [4 x i8], ptr %.val65.val139, i64 %i.y
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !10
   %i.ab = zext i32 %i.aa to i64
   %i.ac = shl nuw i64 %i.ab, 32
@@ -278,8 +280,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ag = icmp slt i64 %indvars.iv.next108, %i.af
   br i1 %i.ag, label %bb.b, label %.critedge2, !llvm.loop !61
 
-.critedge2:                                       ; preds = %.critedge, %.lr.ph92, %.critedge.preheader
-  %.val7293 = phi i32 [ %.val6989, %.critedge.preheader ], [ %.val6989, %.lr.ph92 ], [ %.val69, %.critedge ] ; 3 uses
+.critedge2:                                       ; preds = %.critedge, %.critedge.preheader, %.lr.ph92
+  %.val7293 = phi i32 [ %.val61, %.lr.ph92 ], [ %.val6183, %.critedge.preheader ], [ %.val69, %.critedge ] ; 3 uses
   %i.ah = getelementptr i8, ptr %0, i64 24
   %.val = load i32, ptr %i.ah, align 8, !tbaa !30 ; 4 uses
   %i.ai = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #13 ; 6 uses

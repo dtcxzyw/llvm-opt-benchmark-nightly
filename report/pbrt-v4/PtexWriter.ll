@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.au, %.lr.ph177.preheader
   %i.ll = phi i32 [ 1, %.lr.ph177.preheader ], [ %i.mn, %bb.au ] ; 2 uses
-  %.4107173218 = phi i8 [ %.0103.lcssa, %.lr.ph177.preheader ], [ %.lobit149, %bb.au ]
+  %.4107173218 = phi i8 [ %.0103.lcssa, %.lr.ph177.preheader ], [ %.5108, %bb.au ]
   %.4174217 = phi i32 [ %i.lk, %.lr.ph177.preheader ], [ %.6, %bb.au ]
   %.497176216 = phi i32 [ %.497171, %.lr.ph177.preheader ], [ %.497, %bb.au ] ; 2 uses
   %i.lm = zext nneg i32 %.497176216 to i64
@@ -255,8 +255,9 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.as, %bb.at
-  %.pn.in = phi i32 [ %i.lv, %bb.as ], [ %i.mf, %bb.at ]
-  %.6 = phi i32 [ %i.mc, %bb.as ], [ %i.mj, %bb.at ]
+  %.5108 = phi i8 [ 1, %bb.at ], [ %.lobit149, %bb.as ]
+  %.pn.in = phi i32 [ %i.mf, %bb.at ], [ %i.lv, %bb.as ]
+  %.6 = phi i32 [ %i.mj, %bb.at ], [ %i.mc, %bb.as ]
   %.pn = sext i32 %.pn.in to i64
   %.699.in = getelementptr inbounds [4 x i8], ptr %i.lw, i64 %.pn
   %.497 = load i32, ptr %.699.in, align 4, !tbaa !48 ; 3 uses

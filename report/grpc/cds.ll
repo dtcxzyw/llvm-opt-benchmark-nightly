@@ -205,7 +205,7 @@ bb.bw:                                            ; preds = %.noexc91, %bb.bp
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.ci
-  %.053.i = phi ptr [ %.0.i331, %bb.ci ], [ %.050.i, %.lr.ph.i.preheader ] ; 8 uses
+  %.053.i = phi ptr [ %.0.i331, %bb.ci ], [ %.050.i, %.lr.ph.i.preheader ] ; 11 uses
   %.02252.i = phi ptr [ %.123.i, %bb.ci ], [ %i.c, %.lr.ph.i.preheader ] ; 4 uses
   %i.ri = getelementptr inbounds nuw i8, ptr %.053.i, i64 32
   %i.rj = load ptr, ptr %i.ri, align 8, !tbaa !65 ; 14 uses
@@ -215,7 +215,7 @@ bb.bw:                                            ; preds = %.noexc91, %bb.bp
 
 .split.i333:                                      ; preds = %.lr.ph.i
   %.not45.i = icmp eq ptr %.fr, %i.rj
-  br i1 %.not45.i, label %.split44.i, label %bb.ci
+  br i1 %.not45.i, label %10, label %bb.ci
 
 _ZNK9grpc_core15XdsLocalityName4LessclEPKS0_S3_.exit.i322: ; preds = %.lr.ph.i
   %i.rl = getelementptr inbounds nuw i8, ptr %i.rj, i64 24
@@ -369,19 +369,32 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i24.i463: ; preds = %_ZNSt11ch
   %i.to = icmp slt i32 %.0.i446, 0
   br i1 %i.to, label %bb.ci, label %.split44.i
 
-.split44.i:                                       ; preds = %.noexc335, %.split.i333
+10:                                               ; preds = %.split.i333
+  %11 = getelementptr inbounds nuw i8, ptr %.053.i, i64 16
+  %12 = load ptr, ptr %11, align 8, !tbaa !89     ; 3 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.053.i, i64 24
+  %14 = load ptr, ptr %13, align 8, !tbaa !90     ; 3 uses
+  %.not11.i.i = icmp eq ptr %12, null
+  br i1 %.not11.i.i, label %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i, label %.lr.ph.i.i323.preheader
+
+.split44.i:                                       ; preds = %.noexc335
   %i.tp = getelementptr inbounds nuw i8, ptr %.053.i, i64 16
-  %i.tq = load ptr, ptr %i.tp, align 8, !tbaa !89 ; 3 uses
+  %i.tq = load ptr, ptr %i.tp, align 8, !tbaa !89 ; 2 uses
   %i.tr = getelementptr inbounds nuw i8, ptr %.053.i, i64 24
   %i.ts = load ptr, ptr %i.tr, align 8, !tbaa !90 ; 2 uses
   %.not11.i.i.a = icmp eq ptr %i.tq, null
-  br i1 %.not11.i.i.a, label %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i, label %.lr.ph.i.i323.preheader
+  br i1 %.not11.i.i.a, label %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i, label %.lr.ph.i.i323.preheader738
 
-.lr.ph.i.i323.preheader:                          ; preds = %.split44.i
-  br i1 %i.rb, label %.lr.ph.i.i323.us, label %.lr.ph.i.i323
+.lr.ph.i.i323.preheader:                          ; preds = %10
+  br i1 %i.rb, label %.lr.ph.i.i323.us, label %.lr.ph.i.i323.preheader738
+
+.lr.ph.i.i323.preheader738:                       ; preds = %.split44.i, %.lr.ph.i.i323.preheader
+  %15 = phi ptr [ %12, %.lr.ph.i.i323.preheader ], [ %i.tq, %.split44.i ]
+  %16 = phi ptr [ %14, %.lr.ph.i.i323.preheader ], [ %i.ts, %.split44.i ]
+  br label %.lr.ph.i.i323
 
 .lr.ph.i.i323.us:                                 ; preds = %.lr.ph.i.i323.preheader, %.lr.ph.i.i323.us
-  %.013.i.i.us = phi ptr [ %.1.i.i.us, %.lr.ph.i.i323.us ], [ %i.tq, %.lr.ph.i.i323.preheader ] ; 3 uses
+  %.013.i.i.us = phi ptr [ %.1.i.i.us, %.lr.ph.i.i323.us ], [ %12, %.lr.ph.i.i323.preheader ] ; 3 uses
   %.0812.i.i.us = phi ptr [ %spec.select734, %.lr.ph.i.i323.us ], [ %.053.i, %.lr.ph.i.i323.preheader ]
   %i.tt = getelementptr inbounds nuw i8, ptr %.013.i.i.us, i64 32
   %i.tu = load ptr, ptr %i.tt, align 8, !tbaa !65
@@ -393,9 +406,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i24.i463: ; preds = %_ZNSt11ch
   %.not.i.i326.us = icmp eq ptr %.1.i.i.us, null
   br i1 %.not.i.i326.us, label %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i, label %.lr.ph.i.i323.us, !llvm.loop !241
 
-.lr.ph.i.i323:                                    ; preds = %.lr.ph.i.i323.preheader, %bb.cd
-  %.013.i.i = phi ptr [ %.1.i.i, %bb.cd ], [ %i.tq, %.lr.ph.i.i323.preheader ] ; 3 uses
-  %.0812.i.i = phi ptr [ %.19.i.i, %bb.cd ], [ %.053.i, %.lr.ph.i.i323.preheader ]
+.lr.ph.i.i323:                                    ; preds = %.lr.ph.i.i323.preheader738, %bb.cd
+  %.013.i.i = phi ptr [ %.1.i.i, %bb.cd ], [ %15, %.lr.ph.i.i323.preheader738 ] ; 3 uses
+  %.0812.i.i = phi ptr [ %.19.i.i, %bb.cd ], [ %.053.i, %.lr.ph.i.i323.preheader738 ]
   %i.tw = getelementptr inbounds nuw i8, ptr %.013.i.i, i64 32
   %i.tx = load ptr, ptr %i.tw, align 8, !tbaa !65 ; 7 uses
   %i.ty = icmp eq ptr %i.tx, null
@@ -488,13 +501,14 @@ bb.cd:                                            ; preds = %.split.i.i330, %.no
   %.not.i.i326 = icmp eq ptr %.1.i.i, null
   br i1 %.not.i.i326, label %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i, label %.lr.ph.i.i323, !llvm.loop !241
 
-_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i: ; preds = %bb.cd, %.lr.ph.i.i323.us, %.split44.i
-  %.08.lcssa.i.i = phi ptr [ %.053.i, %.split44.i ], [ %spec.select734, %.lr.ph.i.i323.us ], [ %.19.i.i, %bb.cd ] ; 2 uses
-  %.not11.i27.i = icmp eq ptr %i.ts, null
+_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i: ; preds = %bb.cd, %.lr.ph.i.i323.us, %.split44.i, %10
+  %17 = phi ptr [ %14, %10 ], [ %i.ts, %.split44.i ], [ %14, %.lr.ph.i.i323.us ], [ %16, %bb.cd ] ; 2 uses
+  %.08.lcssa.i.i = phi ptr [ %.053.i, %10 ], [ %.053.i, %.split44.i ], [ %spec.select734, %.lr.ph.i.i323.us ], [ %.19.i.i, %bb.cd ] ; 2 uses
+  %.not11.i27.i = icmp eq ptr %17, null
   br i1 %.not11.i27.i, label %.noexc237, label %.lr.ph.i28.i
 
 .lr.ph.i28.i:                                     ; preds = %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i, %bb.ch
-  %.013.i29.i = phi ptr [ %.1.i35.i, %bb.ch ], [ %i.ts, %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i ] ; 4 uses
+  %.013.i29.i = phi ptr [ %.1.i35.i, %bb.ch ], [ %17, %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i ] ; 4 uses
   %.0812.i30.i = phi ptr [ %.19.i34.i, %bb.ch ], [ %.02252.i, %_ZNSt8_Rb_treeIPN9grpc_core15XdsLocalityNameESt4pairIKS2_mESt10_Select1stIS5_ENS1_4LessESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS4_.exit.i ]
   %i.vc = getelementptr inbounds nuw i8, ptr %.013.i29.i, i64 32
   %i.vd = load ptr, ptr %i.vc, align 8, !tbaa !65 ; 8 uses

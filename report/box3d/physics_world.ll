@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x
   %i.ve = load i32, ptr %i.cs, align 4, !tbaa !190
   %i.vf = and i32 %i.ve, 4194304
   %.not299 = icmp eq i32 %i.vf, 0
-  br i1 %.not299, label %.thread524, label %bb.z
+  br i1 %.not299, label %.thread526thread-pre-split, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.vg = getelementptr inbounds nuw i8, ptr %i.av, i64 4
@@ -218,19 +218,19 @@ bb.z:                                             ; preds = %bb.y
   %i.vn = load i32, ptr %i.vm, align 8, !tbaa !250
   %i.vo = sext i32 %i.vn to i64
   %i.vp = getelementptr inbounds [12 x i8], ptr %i.vl, i64 %i.vo
-  %i.vq = load i32, ptr %i.uv, align 8, !tbaa !272
+  %i.vq = load i32, ptr %i.uv, align 8, !tbaa !272 ; 2 uses
   %i.vr = trunc i32 %i.vq to i16
   %i.vs = getelementptr inbounds nuw i8, ptr %i.vp, i64 8
   store i16 %i.vr, ptr %i.vs, align 4, !tbaa !652
-  br label %.thread524
+  br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.x
   %or.cond305 = and i1 %.not300, %i.uu
   br i1 %or.cond305, label %.sink.split, label %.thread524
 
-.thread524:                                       ; preds = %bb.y, %bb.z, %bb.aa
+.thread524:                                       ; preds = %bb.aa
   %brmerge306 = or i1 %.not300, %i.uu
-  br i1 %brmerge306, label %bb.ab, label %.sink.split
+  br i1 %brmerge306, label %.thread526thread-pre-split, label %.sink.split
 
 .sink.split:                                      ; preds = %.thread524, %bb.aa
   %.sink597 = phi i32 [ 262144, %bb.aa ], [ 524288, %.thread524 ]
@@ -247,10 +247,14 @@ bb.aa:                                            ; preds = %bb.x
   %i.wb = load i64, ptr %i.wa, align 8, !tbaa !245
   %i.wc = or i64 %i.wb, %i.vy
   store i64 %i.wc, ptr %i.wa, align 8, !tbaa !245
+  br label %.thread526thread-pre-split
+
+.thread526thread-pre-split:                       ; preds = %.sink.split, %.thread524, %bb.y
+  %.pr = load i32, ptr %i.uv, align 8, !tbaa !272
   br label %bb.ab
 
-bb.ab:                                            ; preds = %.sink.split, %.thread524
-  %6 = load i32, ptr %i.uv, align 8, !tbaa !272   ; 2 uses
+bb.ab:                                            ; preds = %.thread526thread-pre-split, %bb.z
+  %6 = phi i32 [ %.pr, %.thread526thread-pre-split ], [ %i.vq, %bb.z ] ; 2 uses
   %i.wd = icmp sgt i32 %6, 0
   br i1 %i.wd, label %.lr.ph551, label %.loopexit
 

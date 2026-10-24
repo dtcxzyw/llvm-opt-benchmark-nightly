@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %_RNvXs2K_NtNtCs3oUP
 
 bb.e:                                             ; preds = %bb.c, %bb.b
   %.sroa.2.3.ph = phi ptr [ %.sroa.2.1, %bb.c ], [ %i.a, %bb.b ] ; 3 uses
-  %spec.select.i.ph = phi i32 [ %i.t, %bb.c ], [ %i.j, %bb.b ] ; 80 uses
+  %spec.select.i.ph = phi i32 [ %i.t, %bb.c ], [ %i.j, %bb.b ] ; 81 uses
   %.not.i.i = icmp sgt i16 %.sroa.6.021, -1
   br i1 %.not.i.i, label %bb.m, label %bb.f
 
@@ -532,7 +532,7 @@ bb.ay:                                            ; preds = %bb.ap
 
 .thread105.i.i:                                   ; preds = %bb.ay, %bb.au, %bb.at, %bb.as, %bb.ar
   %i.ck = icmp samesign ugt i32 %spec.select.i.ph, 127461
-  %i.cl = zext i1 %i.ck to i8                     ; 4 uses
+  %i.cl = zext i1 %i.ck to i8                     ; 3 uses
   %i.cm = add nsw i32 %spec.select.i.ph, -127462
   %or.cond91.i.i = icmp ult i32 %i.cm, 26
   br i1 %or.cond91.i.i, label %bb.bh, label %bb.bk
@@ -544,14 +544,14 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.bg, %bb.bf, %bb.be, %bb.az
   %i.co = icmp samesign ugt i32 %spec.select.i.ph, 127461
-  %i.cp = zext i1 %i.co to i8                     ; 2 uses
+  %i.cp = zext i1 %i.co to i8
   %i.cq = add nsw i32 %spec.select.i.ph, -127462
   %or.cond89.i.i = icmp ult i32 %i.cq, 26
   br i1 %or.cond89.i.i, label %bb.bh, label %.thread112.i.i
 
 bb.bb:                                            ; preds = %bb.ay, %bb.ax
   %i.cr = tail call fastcc noundef zeroext i1 @_RNvNtCsfc8f8SDE2Co_13unicode_width6tables22is_emoji_modifier_base(i32 noundef range(i32 0, 1114112) %spec.select.i.ph) #35
-  br i1 %i.cr, label %_RNCNvNtCsfc8f8SDE2Co_13unicode_width6tables9str_width0Cs8frGy5WneL6_4fish.exit, label %bb.bj
+  br i1 %i.cr, label %_RNCNvNtCsfc8f8SDE2Co_13unicode_width6tables9str_width0Cs8frGy5WneL6_4fish.exit, label %2
 
 bb.bc:                                            ; preds = %bb.ay
   %i.cs = icmp samesign ugt i32 %spec.select.i.ph, 11568
@@ -583,7 +583,6 @@ bb.bg:                                            ; preds = %bb.bd
   br i1 %cond1.i.i, label %bb.bi, label %.thread114.i.i
 
 bb.bh:                                            ; preds = %bb.ba, %.thread105.i.i
-  %.sroa.059.0.i.i = phi i8 [ %i.cl, %.thread105.i.i ], [ %i.cp, %bb.ba ] ; 2 uses
   switch i16 %.sroa.0.1.i.i, label %.thread114.i.i [
     i16 3, label %_RNCNvNtCsfc8f8SDE2Co_13unicode_width6tables9str_width0Cs8frGy5WneL6_4fish.exit
     i16 4, label %_RNCNvNtCsfc8f8SDE2Co_13unicode_width6tables9str_width0Cs8frGy5WneL6_4fish.exit
@@ -606,7 +605,12 @@ bb.bi:                                            ; preds = %bb.bk, %.thread112.
     i16 4102, label %bb.bm
   ]
 
-bb.bj:                                            ; preds = %bb.bb
+2:                                                ; preds = %bb.bb
+  %3 = add nsw i32 %spec.select.i.ph, -127462
+  %or.cond90.i.i = icmp ult i32 %3, 26
+  br i1 %or.cond90.i.i, label %.thread114.i.i, label %bb.bj
+
+bb.bj:                                            ; preds = %2
   %i.da = icmp samesign ugt i32 %spec.select.i.ph, 127461
   %i.db = zext i1 %i.da to i8
   %cond.i.i = icmp eq i32 %spec.select.i.ph, 8205
@@ -622,15 +626,15 @@ bb.bl:                                            ; preds = %bb.bk
   %cond126.i.i = icmp eq i16 %.sroa.0.1.i.i, 4102
   br i1 %cond126.i.i, label %_RNCNvNtCsfc8f8SDE2Co_13unicode_width6tables9str_width0Cs8frGy5WneL6_4fish.exit, label %.thread114.i.i
 
-.thread114.i.i:                                   ; preds = %bb.bl, %bb.bj, %bb.bi, %.thread118.i.i, %bb.bh, %.thread112.i.i
-  %.sroa.059.3.i.i = phi i8 [ %.sroa.059.0.i.i, %bb.bh ], [ %i.db, %bb.bj ], [ %i.cl, %bb.bl ], [ %.sroa.059.1.i.i, %.thread118.i.i ], [ %.sroa.059.2.i.i, %bb.bi ], [ %i.cz, %.thread112.i.i ]
+.thread114.i.i:                                   ; preds = %bb.bl, %bb.bj, %2, %bb.bi, %.thread118.i.i, %bb.bh, %.thread112.i.i
+  %.sroa.059.3.i.i = phi i8 [ 1, %bb.bh ], [ %i.db, %bb.bj ], [ %i.cl, %bb.bl ], [ %.sroa.059.1.i.i, %.thread118.i.i ], [ %.sroa.059.2.i.i, %bb.bi ], [ 1, %2 ], [ %i.cz, %.thread112.i.i ]
   %i.dc = trunc nuw i8 %.sroa.059.3.i.i to i1
   %i.dd = icmp samesign ult i32 %spec.select.i.ph, 127488
   %or.cond10.i.i = and i1 %i.dd, %i.dc
   br i1 %or.cond10.i.i, label %bb.bn, label %.thread114.thread.i.i
 
 bb.bm:                                            ; preds = %bb.bi, %.thread118.i.i, %bb.bh
-  %.sroa.059.6.i.i = phi i8 [ %.sroa.059.0.i.i, %bb.bh ], [ %.sroa.059.1.i.i, %.thread118.i.i ], [ %.sroa.059.2.i.i, %bb.bi ]
+  %.sroa.059.6.i.i = phi i8 [ 1, %bb.bh ], [ %.sroa.059.1.i.i, %.thread118.i.i ], [ %.sroa.059.2.i.i, %bb.bi ]
   %i.de = trunc nuw i8 %.sroa.059.6.i.i to i1
   %i.df = icmp samesign ult i32 %spec.select.i.ph, 127488
   %or.cond29.i.i = and i1 %i.df, %i.de

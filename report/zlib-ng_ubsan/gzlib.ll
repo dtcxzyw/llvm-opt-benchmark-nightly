@@ -202,7 +202,7 @@ gz_state_init.exit:                               ; preds = %bb.ag, %bb.af
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.backedge, %gz_state_init.exit
-  %.056 = phi ptr [ %2, %gz_state_init.exit ], [ %i.ag, %.backedge ] ; 5 uses
+  %.056 = phi ptr [ %2, %gz_state_init.exit ], [ %i.ag, %.backedge ] ; 6 uses
   %.054 = phi i32 [ 0, %gz_state_init.exit ], [ %.155, %.backedge ] ; 12 uses
   %.0 = phi i32 [ 0, %gz_state_init.exit ], [ %.1, %.backedge ] ; 12 uses
   %.not84 = icmp eq ptr %.056, null, !nosanitize !13
@@ -211,20 +211,23 @@ bb.ah:                                            ; preds = %.backedge, %gz_stat
 bb.ai:                                            ; preds = %bb.ah
   %i.ab = ptrtoint ptr %.056 to i64, !nosanitize !13
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @184, i64 %i.ab) #12, !nosanitize !13
-  br label %bb.aj, !nosanitize !13
+  %3 = load i8, ptr %.056, align 4294967296, !tbaa !56 ; 2 uses
+  %.not = icmp eq i8 %3, 0
+  br i1 %.not, label %bb.bs, label %bb.ak
 
-bb.aj:                                            ; preds = %bb.ai, %bb.ah
-  %i.ac = load i8, ptr %.056, align 1, !tbaa !56  ; 4 uses
+bb.aj:                                            ; preds = %bb.ah
+  %i.ac = load i8, ptr %.056, align 1, !tbaa !56  ; 2 uses
   %.not.a = icmp eq i8 %i.ac, 0
   br i1 %.not.a, label %bb.bs, label %bb.ak
 
-bb.ak:                                            ; preds = %bb.aj
-  %i.ad = add i8 %i.ac, -48
+bb.ak:                                            ; preds = %bb.ai, %bb.aj
+  %4 = phi i8 [ %i.ac, %bb.aj ], [ %3, %bb.ai ]   ; 3 uses
+  %i.ad = add i8 %4, -48
   %or.cond = icmp ult i8 %i.ad, 10
   br i1 %or.cond, label %bb.al, label %bb.ao
 
 bb.al:                                            ; preds = %bb.ak
-  %i.ae = zext nneg i8 %i.ac to i32
+  %i.ae = zext nneg i8 %4 to i32
   %i.af = add nsw i32 %i.ae, -48
   br i1 %i.f, label %bb.an, label %bb.am, !prof !14, !nosanitize !13
 
@@ -237,7 +240,7 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   br label %bb.bq
 
 bb.ao:                                            ; preds = %bb.ak
-  switch i8 %i.ac, label %bb.bq [
+  switch i8 %4, label %bb.bq [
     i8 114, label %bb.ap
     i8 119, label %bb.as
     i8 97, label %bb.av
@@ -363,7 +366,7 @@ bb.br:                                            ; preds = %bb.bq
 .backedge:                                        ; preds = %bb.br, %bb.bq
   br label %bb.ah, !llvm.loop !48
 
-bb.bs:                                            ; preds = %bb.aj
+bb.bs:                                            ; preds = %bb.aj, %bb.ai
   br i1 %i.f, label %bb.bu, label %bb.bt, !prof !14, !nosanitize !13
 
 bb.bt:                                            ; preds = %bb.bs

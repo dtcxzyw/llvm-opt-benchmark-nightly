@@ -204,33 +204,38 @@ bb.ak:                                            ; preds = %bb.aj
   %i.bl = call i32 @curl_strnequal(ptr noundef nonnull %.1124, ptr noundef nonnull @.str.22, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %.0113) #5
   %.not43.4.i = icmp ne i32 %i.bl, 0
   %or.cond79.i = and i1 %.not47.i, %.not43.4.i
-  %spec.select.i = select i1 %or.cond79.i, ptr @zstd_encoding, ptr null
+  %or.cond79.i.fr = freeze i1 %or.cond79.i
+  %spec.select.i = select i1 %or.cond79.i.fr, ptr @zstd_encoding, ptr null
   br label %find_unencode_writer.exit
 
 find_unencode_writer.exit:                        ; preds = %bb.ab, %bb.ae, %.loopexit.i, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak
   %i.bm = phi i1 [ %i.be, %bb.ai ], [ %i.be, %bb.af ], [ %i.be, %.loopexit.i ], [ %i.ac, %bb.ab ], [ %i.be, %bb.ag ], [ %i.be, %bb.aj ], [ %i.be, %bb.ak ], [ %i.be, %bb.ah ], [ %i.ac, %bb.ae ] ; 3 uses
-  %.5.i = phi ptr [ @gzip_encoding, %bb.ai ], [ @identity_encoding, %bb.af ], [ @identity_encoding, %.loopexit.i ], [ @Curl_httpchunk_unencoder, %bb.ab ], [ @deflate_encoding, %bb.ag ], [ @brotli_encoding, %bb.aj ], [ %spec.select.i, %bb.ak ], [ @gzip_encoding, %bb.ah ], [ @Curl_httpchunk_unencoder, %bb.ae ] ; 3 uses
+  %.5.i = phi ptr [ @gzip_encoding, %bb.ai ], [ @identity_encoding, %bb.af ], [ @identity_encoding, %.loopexit.i ], [ @Curl_httpchunk_unencoder, %bb.ab ], [ @deflate_encoding, %bb.ag ], [ @brotli_encoding, %bb.aj ], [ %spec.select.i, %bb.ak ], [ @gzip_encoding, %bb.ah ], [ @Curl_httpchunk_unencoder, %bb.ae ] ; 4 uses
   %or.cond15 = select i1 %.not, i1 true, i1 %i.bm
   br i1 %or.cond15, label %bb.an, label %bb.al
 
 bb.al:                                            ; preds = %find_unencode_writer.exit
   %i.bn = call ptr @Curl_cwriter_get_by_name(ptr noundef nonnull %0, ptr noundef nonnull @.str.5) #5
   %.not149 = icmp eq ptr %i.bn, null
-  br i1 %.not149, label %bb.an, label %bb.am
+  br i1 %.not149, label %.thread163, label %bb.am
+
+.thread163:                                       ; preds = %bb.al
+  %.not228 = icmp eq ptr %.5.i, null
+  br i1 %.not228, label %bb.au, label %.thread211
 
 bb.am:                                            ; preds = %bb.al
   call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %0, ptr noundef nonnull @.str.10) #5
   br label %.thread169
 
-bb.an:                                            ; preds = %bb.al, %find_unencode_writer.exit
+bb.an:                                            ; preds = %find_unencode_writer.exit
   %i.bo = icmp ne ptr %.5.i, null                 ; 2 uses
   %or.cond18 = select i1 %i.bo, i1 %i.bm, i1 false
-  br i1 %or.cond18, label %bb.ao, label %bb.au
+  br i1 %or.cond18, label %bb.ao, label %3
 
 bb.ao:                                            ; preds = %bb.an
   %i.bp = call ptr @Curl_cwriter_get_by_type(ptr noundef nonnull %0, ptr noundef nonnull %.5.i) #5
   %.not150 = icmp eq ptr %i.bp, null
-  br i1 %.not150, label %bb.au, label %bb.ap
+  br i1 %.not150, label %.thread211, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   %i.bq = load i64, ptr %i.d, align 1
@@ -261,9 +266,15 @@ bb.at:                                            ; preds = %bb.ar, %bb.as
   call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.11) #5
   br label %bb.bc
 
-bb.au:                                            ; preds = %bb.an, %bb.ao
-  %spec.store.select = select i1 %i.bo, ptr %.5.i, ptr @error_writer ; 2 uses
-  %i.by = call i32 @Curl_cwriter_create(ptr noundef nonnull %i.a, ptr noundef nonnull %0, ptr noundef nonnull %spec.store.select, i32 noundef %i.c) #5 ; 3 uses
+3:                                                ; preds = %bb.an
+  br i1 %i.bo, label %.thread211, label %bb.au
+
+.thread211:                                       ; preds = %bb.ao, %.thread163, %3
+  br label %bb.au
+
+bb.au:                                            ; preds = %.thread163, %3, %.thread211
+  %4 = phi ptr [ %.5.i, %.thread211 ], [ @error_writer, %3 ], [ @error_writer, %.thread163 ] ; 2 uses
+  %i.by = call i32 @Curl_cwriter_create(ptr noundef nonnull %i.a, ptr noundef nonnull %0, ptr noundef nonnull %4, i32 noundef %i.c) #5 ; 3 uses
   %i.bz = load i64, ptr %i.d, align 1
   %i.ca = and i64 %i.bz, 536870912
   %.not151 = icmp eq i64 %i.ca, 0
@@ -289,7 +300,7 @@ bb.ax:                                            ; preds = %bb.av
   br i1 %.old23, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.aw, %bb.ax
-  %i.ch = load ptr, ptr %spec.store.select, align 8, !tbaa !12
+  %i.ch = load ptr, ptr %4, align 8, !tbaa !12
   call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.f, ptr noundef %i.ch, i32 noundef %i.by) #5
   br label %bb.az
 

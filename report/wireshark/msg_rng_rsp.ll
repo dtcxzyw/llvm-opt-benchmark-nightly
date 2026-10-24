@@ -200,7 +200,7 @@ bb.ao:                                            ; preds = %bb.d
   %.0324341 = phi ptr [ %.0324349, %bb.c ], [ %.1325, %.loopexit ] ; 3 uses
   %.0322339 = phi ptr [ %.0322350, %bb.c ], [ %.1323, %.loopexit ] ; 2 uses
   %.0321337 = phi ptr [ %.0321351, %bb.c ], [ %.1, %.loopexit ] ; 2 uses
-  %i.gt = icmp ne ptr %.0328345, null             ; 3 uses
+  %i.gt = icmp ne ptr %.0328345, null             ; 2 uses
   %i.gu = icmp ne ptr %.0326343, null
   %or.cond11 = select i1 %i.gt, i1 %i.gu, i1 false
   br i1 %or.cond11, label %bb.ap, label %bb.aq
@@ -210,6 +210,7 @@ bb.ap:                                            ; preds = %.loopexit334
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %.loopexit334
+  %6 = phi i1 [ %i.gt, %.loopexit334 ], [ true, %bb.ap ] ; 2 uses
   %i.gv = icmp ne ptr %.0324341, null             ; 2 uses
   %i.gw = icmp ne ptr %.0322339, null
   %or.cond13 = select i1 %i.gv, i1 %i.gw, i1 false
@@ -221,17 +222,18 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
+  %7 = phi i1 [ %i.gv, %bb.aq ], [ true, %bb.ar ]
   %i.gx = icmp ne ptr %.0321337, null
-  %or.cond15 = select i1 %i.gv, i1 %i.gx, i1 false
+  %or.cond15 = select i1 %7, i1 %i.gx, i1 false
   br i1 %or.cond15, label %.split, label %bb.at
 
 .split:                                           ; preds = %bb.as
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef nonnull %.0321337, ptr noundef @.str.189)
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef nonnull %.0324341, ptr noundef @.str.191)
-  br i1 %i.gt, label %bb.au, label %.thread388
+  br i1 %6, label %bb.au, label %.thread388
 
 bb.at:                                            ; preds = %bb.as
-  br i1 %i.gt, label %bb.au, label %.thread388
+  br i1 %6, label %bb.au, label %.thread388
 
 .thread388:                                       ; preds = %bb.a, %.split, %bb.at
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.e, ptr noundef @.str.192)

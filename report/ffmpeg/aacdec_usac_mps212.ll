@@ -204,7 +204,7 @@ huff_decode.exit.i:                               ; preds = %scalar.ph525.prol.l
   %i.ql = phi i1 [ true, %bb.ac ], [ false, %bb.ak ], [ false, %bb.ag ], [ false, %bb.ah ], [ false, %bb.ai ], [ false, %bb.ad ], [ false, %thread-pre-split.thread.i.i ], [ true, %middle.block533 ], [ true, %scalar.ph525 ], [ true, %scalar.ph525.prol.loopexit ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %i.qm = icmp ne i32 %.sroa.0.0.i, 0             ; 5 uses
-  %i.qn = icmp ne i32 %.sroa.9.0.i, 0             ; 6 uses
+  %i.qn = icmp ne i32 %.sroa.9.0.i, 0             ; 5 uses
   %or.cond6.i = select i1 %i.qm, i1 %i.qn, i1 false
   %brmerge.i = or i1 %.not94.i, %or.cond6.i
   br i1 %brmerge.i, label %.thread.i, label %bb.al
@@ -249,12 +249,13 @@ bb.am:                                            ; preds = %bb.al
   br i1 %or.cond3.not.i, label %bb.av, label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %.split.i
+  %9 = phi i1 [ true, %.split.i ], [ %i.qn, %bb.am ] ; 2 uses
   %i.rk = phi i32 [ %i.rg, %.split.i ], [ %i.rj, %bb.am ] ; 2 uses
   br i1 %i.qm, label %bb.ao, label %.preheader.i183
 
 .preheader.i183:                                  ; preds = %bb.an, %.thread.i, %huff_decode.exit.thread.i
   %i.rl = phi i32 [ %i.qq, %.thread.i ], [ %i.rk, %bb.an ], [ 0, %huff_decode.exit.thread.i ] ; 4 uses
-  %i.rm = phi i1 [ %i.qn, %.thread.i ], [ %i.qn, %bb.an ], [ %i.qk, %huff_decode.exit.thread.i ]
+  %i.rm = phi i1 [ %i.qn, %.thread.i ], [ %9, %bb.an ], [ %i.qk, %huff_decode.exit.thread.i ]
   br i1 %i.br, label %iter.check468, label %._crit_edge.i184
 
 iter.check468:                                    ; preds = %.preheader.i183
@@ -326,7 +327,7 @@ vec.epilog.scalar.ph470.preheader:                ; preds = %iter.check468, %vec
 
 bb.ao:                                            ; preds = %bb.an, %.thread.i, %huff_decode.exit.thread.i
   %i.sd = phi i32 [ %i.qq, %.thread.i ], [ %i.rk, %bb.an ], [ 0, %huff_decode.exit.thread.i ] ; 2 uses
-  %i.se = phi i1 [ %i.qn, %.thread.i ], [ %i.qn, %bb.an ], [ %i.qk, %huff_decode.exit.thread.i ] ; 2 uses
+  %i.se = phi i1 [ %i.qn, %.thread.i ], [ %9, %bb.an ], [ %i.qk, %huff_decode.exit.thread.i ] ; 2 uses
   %i.sf = load i16, ptr %i.d, align 16, !tbaa !23
   store i16 %i.sf, ptr %i.c, align 16, !tbaa !23
   br i1 %i.bq, label %.lr.ph.i120.i.preheader, label %diff_freq_decode.exit.i.thread

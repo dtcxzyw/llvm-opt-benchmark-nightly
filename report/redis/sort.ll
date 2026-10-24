@@ -202,7 +202,7 @@ bb.cm:                                            ; preds = %bb.cl
   br label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cl, %bb.cm, %bb.ck, %bb.cj
-  %.1421 = phi i32 [ %i.nb, %bb.cm ], [ %.0420, %bb.cl ], [ %.0420, %bb.ck ], [ %.0420, %bb.cj ] ; 14 uses
+  %.1421 = phi i32 [ %i.nb, %bb.cm ], [ %.0420, %bb.cl ], [ %.0420, %bb.ck ], [ %.0420, %bb.cj ] ; 15 uses
   %i.nc = sext i32 %.1421 to i64                  ; 3 uses
   %i.nd = shl nsw i64 %i.nc, 4
   %i.ne = call noalias ptr @zmalloc(i64 noundef %i.nd) #11 ; 18 uses
@@ -215,7 +215,7 @@ bb.cn:                                            ; preds = %bb.cl, %bb.cm, %bb.
 
 bb.co:                                            ; preds = %bb.cn
   %.not516 = icmp slt i64 %.1434, %.0436
-  br i1 %.not516, label %bb.ec, label %bb.cp
+  br i1 %.not516, label %.thread602, label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
@@ -604,14 +604,18 @@ bb.eb:                                            ; preds = %bb.dq
   call void @abort() #14
   unreachable
 
-bb.ec:                                            ; preds = %._crit_edge703, %._crit_edge691, %bb.ea, %bb.da, %bb.co, %.critedge
-  %.1437 = phi i64 [ 0, %.critedge ], [ %.0436, %bb.co ], [ %.0436, %._crit_edge703 ], [ %.0436, %bb.da ], [ 0, %._crit_edge691 ], [ %.0436, %bb.ea ] ; 6 uses
-  %.2435 = phi i64 [ %i.nu, %.critedge ], [ %.1434, %bb.co ], [ %.1434, %._crit_edge703 ], [ %.1434, %bb.da ], [ %i.ql, %._crit_edge691 ], [ %.1434, %bb.ea ] ; 9 uses
-  %.8 = phi i32 [ %.3430.lcssa, %.critedge ], [ 0, %bb.co ], [ %.4431.lcssa, %._crit_edge703 ], [ %.5432.lcssa, %bb.da ], [ %.6.lcssa, %._crit_edge691 ], [ %.7.lcssa, %bb.ea ]
+bb.ec:                                            ; preds = %._crit_edge703, %._crit_edge691, %bb.ea, %bb.da, %.critedge
+  %.1437 = phi i64 [ 0, %.critedge ], [ %.0436, %bb.ea ], [ %.0436, %._crit_edge703 ], [ %.0436, %bb.da ], [ 0, %._crit_edge691 ] ; 5 uses
+  %.2435 = phi i64 [ %i.nu, %.critedge ], [ %.1434, %bb.ea ], [ %.1434, %._crit_edge703 ], [ %.1434, %bb.da ], [ %i.ql, %._crit_edge691 ] ; 5 uses
+  %.8 = phi i32 [ %.3430.lcssa, %.critedge ], [ %.7.lcssa, %bb.ea ], [ %.4431.lcssa, %._crit_edge703 ], [ %.5432.lcssa, %bb.da ], [ %.6.lcssa, %._crit_edge691 ]
   %i.ry = icmp eq i32 %.8, %.1421
   br i1 %i.ry, label %bb.ee, label %bb.ed, !prof !122
 
-bb.ed:                                            ; preds = %bb.ec
+.thread602:                                       ; preds = %bb.co
+  %10 = icmp eq i32 %.1421, 0
+  br i1 %10, label %bb.ev, label %bb.ed, !prof !122
+
+bb.ed:                                            ; preds = %.thread602, %bb.ec
   call void @_serverAssertWithInfo(ptr noundef %0, ptr noundef nonnull %.0407, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.13, i32 noundef 502) #12
   call void @abort() #14
   unreachable
@@ -758,20 +762,22 @@ bb.eu:                                            ; preds = %bb.es, %._crit_edge
   call void @qsort(ptr noundef %i.ne, i64 noundef %i.nc, i64 noundef 16, ptr noundef nonnull @sortCompare) #12
   br label %bb.ev
 
-bb.ev:                                            ; preds = %bb.et, %bb.eu, %bb.ee
-  %.4415 = phi i32 [ 0, %bb.ee ], [ %.0411.lcssa, %bb.et ], [ %.0411.lcssa, %bb.eu ]
+bb.ev:                                            ; preds = %.thread602, %bb.et, %bb.eu, %bb.ee
+  %.1437606612 = phi i64 [ %.1437, %bb.ee ], [ %.1437, %bb.et ], [ %.1437, %bb.eu ], [ %.0436, %.thread602 ] ; 4 uses
+  %.2435607611 = phi i64 [ %.2435, %bb.ee ], [ %.2435, %bb.et ], [ %.2435, %bb.eu ], [ %.1434, %.thread602 ] ; 7 uses
+  %.4415 = phi i32 [ 0, %bb.ee ], [ %.0411.lcssa, %bb.et ], [ %.0411.lcssa, %bb.eu ], [ 0, %.thread602 ]
   %.not527 = icmp eq i32 %.0416.lcssa, 0          ; 3 uses
   br i1 %.not527, label %bb.ex, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev
   %i.tj = zext i32 %.0416.lcssa to i64
-  %reass.sub = sub i64 %.2435, %.1437
+  %reass.sub = sub i64 %.2435607611, %.1437606612
   %i.tk = add i64 %reass.sub, 1
   %i.tl = mul i64 %i.tk, %i.tj
   br label %bb.ey
 
 bb.ex:                                            ; preds = %bb.ev
-  %reass.sub746 = sub i64 %.2435, %.1437
+  %reass.sub746 = sub i64 %.2435607611, %.1437606612
   %i.tm = add i64 %reass.sub746, 1
   br label %bb.ey
 
@@ -791,9 +797,9 @@ bb.fa:                                            ; preds = %bb.ey
 bb.fb:                                            ; preds = %bb.fa
   %i.tp = and i64 %i.tn, 4294967295
   call void @addReplyArrayLen(ptr noundef %0, i64 noundef %i.tp) #12
-  %sext748 = shl i64 %.1437, 32
+  %sext748 = shl i64 %.1437606612, 32
   %i.tq = ashr exact i64 %sext748, 32             ; 2 uses
-  %.not534730 = icmp slt i64 %.2435, %i.tq
+  %.not534730 = icmp slt i64 %.2435607611, %i.tq
   br i1 %.not534730, label %.loopexit, label %.lr.ph733
 
 .lr.ph733:                                        ; preds = %bb.fb, %._crit_edge729
@@ -856,7 +862,7 @@ bb.fj:                                            ; preds = %bb.fg, %bb.fh
 ._crit_edge729:                                   ; preds = %bb.fj, %bb.fd
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   %indvars.iv.next782 = add nsw i64 %indvars.iv781, 1
-  %.not534.not = icmp sgt i64 %.2435, %indvars.iv781
+  %.not534.not = icmp sgt i64 %.2435607611, %indvars.iv781
   br i1 %.not534.not, label %.lr.ph733, label %.loopexit, !llvm.loop !72
 
 bb.fk:                                            ; preds = %bb.fa
@@ -865,9 +871,9 @@ bb.fk:                                            ; preds = %bb.fa
   %i.uh = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8036), align 4, !tbaa !107
   %i.ui = call ptr @createQuicklistObject(i32 noundef %i.ug, i32 noundef %i.uh) #12 ; 4 uses
   store ptr %i.ui, ptr %i.d, align 8, !tbaa !25
-  %sext747 = shl i64 %.1437, 32
+  %sext747 = shl i64 %.1437606612, 32
   %i.uj = ashr exact i64 %sext747, 32             ; 3 uses
-  %.not529721 = icmp slt i64 %.2435, %i.uj
+  %.not529721 = icmp slt i64 %.2435607611, %i.uj
   br i1 %.not529721, label %._crit_edge725, label %.lr.ph724
 
 .lr.ph724:                                        ; preds = %bb.fk
@@ -881,7 +887,7 @@ bb.fk:                                            ; preds = %bb.fa
   call void @listTypePush(ptr noundef %i.ui, ptr noundef %i.ul, i32 noundef 1) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   %indvars.iv.next779 = add nsw i64 %indvars.iv778, 1
-  %.not529.us.not = icmp sgt i64 %.2435, %indvars.iv778
+  %.not529.us.not = icmp sgt i64 %.2435607611, %indvars.iv778
   br i1 %.not529.us.not, label %.lr.ph724.split.us, label %._crit_edge725, !llvm.loop !73
 
 .lr.ph724.split:                                  ; preds = %.lr.ph724, %.loopexit624
@@ -933,7 +939,7 @@ bb.fp:                                            ; preds = %bb.fl
 .loopexit624:                                     ; preds = %bb.fo, %.lr.ph724.split
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   %indvars.iv.next776 = add nsw i64 %indvars.iv775, 1
-  %.not529.not = icmp sgt i64 %.2435, %indvars.iv775
+  %.not529.not = icmp sgt i64 %.2435607611, %indvars.iv775
   br i1 %.not529.not, label %.lr.ph724.split, label %._crit_edge725, !llvm.loop !73
 
 ._crit_edge725:                                   ; preds = %.loopexit624, %.lr.ph724.split.us, %bb.fk

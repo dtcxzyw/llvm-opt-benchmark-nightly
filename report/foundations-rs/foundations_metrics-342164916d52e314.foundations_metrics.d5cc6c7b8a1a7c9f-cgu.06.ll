@@ -202,7 +202,7 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !1185
   %i.t = load ptr, ptr %i.s, align 8, !dbg !1185, !nonnull !59 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !1185
-  %i.v = load i64, ptr %i.u, align 8, !dbg !1185  ; 3 uses
+  %i.v = load i64, ptr %i.u, align 8, !dbg !1185  ; 4 uses
   %.sroa.55.0 = select i1 %.not, i64 undef, i64 %i.v, !dbg !1185 ; 5 uses
   %.sroa.04.0 = select i1 %.not, ptr null, ptr %i.t, !dbg !1185
   %i.w = icmp eq i64 %.sroa.55.0, 0
@@ -239,6 +239,7 @@ bb.d:                                             ; preds = %.preheader.i.i.i.i.
   br i1 %exitcond.not.i.i.i.i.i.i, label %.loopexit24, label %.preheader.i.i.i.i.i.i, !dbg !1196
 
 .loopexit24:                                      ; preds = %bb.d, %bb.c
+  %.sroa.4.0.i = phi i64 [ %i.v, %bb.c ], [ %.sroa.55.0, %bb.d ]
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 96, !dbg !1197
   %i.ai = load i32, ptr %i.ah, align 8, !dbg !1197, !range !138, !noundef !59 ; 2 uses
   %i.aj = trunc nuw i32 %i.ai to i1, !dbg !1198   ; 2 uses
@@ -641,7 +642,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.
   %i.es = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !1339
   store ptr %i.t, ptr %i.es, align 8, !dbg !1339, !noalias !1183
   %i.et = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !1339
-  store i64 %.sroa.55.0, ptr %i.et, align 8, !dbg !1339, !noalias !1183
+  store i64 %.sroa.4.0.i, ptr %i.et, align 8, !dbg !1339, !noalias !1183
   invoke void @_RINvMs_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtNtCskerazqDcV1J_28foundations_metrics_registry5proto5model6MetricE10retain_mutNCNvNtCsim2LhUzKY4R_19foundations_metrics10validation13sanitize_rows0EB25_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.a)
           to label %bb.aq unwind label %bb.ap, !dbg !1340
 

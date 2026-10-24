@@ -202,7 +202,7 @@ bb.bn:                                            ; preds = %bb.bm
   br label %.thread128
 
 H5D__prepare_minimized_oh.exit:                   ; preds = %bb.bh, %H5D__use_minimized_dset_headers.exit.thread.thread, %bb.bm
-  %i.hr = call ptr @H5O_pin(ptr noundef nonnull %1) #11 ; 9 uses
+  %i.hr = call ptr @H5O_pin(ptr noundef nonnull %1) #11 ; 10 uses
   %i.hs = icmp eq ptr %i.hr, null
   br i1 %i.hs, label %bb.bo, label %bb.bp
 
@@ -273,7 +273,7 @@ bb.bz:                                            ; preds = %bb.bx
   %i.iw = load ptr, ptr %i.iv, align 8, !tbaa !85
   %i.ix = icmp eq ptr %i.iw, null
   %or.cond5 = select i1 %i.ix, i1 true, i1 %i.s
-  br i1 %or.cond5, label %bb.cc, label %bb.ca
+  br i1 %or.cond5, label %5, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
@@ -281,11 +281,7 @@ bb.ca:                                            ; preds = %bb.bz
   %i.iy = call i32 @H5O_msg_reset_share(i32 noundef 4, ptr noundef nonnull %4) #11 ; 0 uses
   %i.iz = call i32 @H5O_msg_append_oh(ptr noundef %0, ptr noundef nonnull %i.hr, i32 noundef 4, i32 noundef 1, i32 noundef 0, ptr noundef nonnull %4) #11
   %i.ja = icmp slt i32 %i.iz, 0
-  br i1 %i.ja, label %bb.cb, label %.thread118
-
-.thread118:                                       ; preds = %bb.ca
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
-  br label %bb.cc
+  br i1 %i.ja, label %bb.cb, label %bb.cc
 
 bb.cb:                                            ; preds = %bb.ca
   %i.jb = load i64, ptr @H5E_DATASET_g, align 8, !tbaa !15
@@ -294,21 +290,27 @@ bb.cb:                                            ; preds = %bb.ca
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   br label %bb.ch
 
-bb.cc:                                            ; preds = %.thread118, %bb.bz
+5:                                                ; preds = %bb.bz
+  %6 = call i32 @H5D__layout_oh_create(ptr noundef %0, ptr noundef nonnull %i.hr, ptr noundef nonnull %1, i64 noundef %2) #11
+  %7 = icmp slt i32 %6, 0
+  br i1 %7, label %bb.cd, label %bb.ce
+
+bb.cc:                                            ; preds = %bb.ca
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   %i.je = call i32 @H5D__layout_oh_create(ptr noundef %0, ptr noundef nonnull %i.hr, ptr noundef nonnull %1, i64 noundef %2) #11
   %i.jf = icmp slt i32 %i.je, 0
-  br i1 %i.jf, label %bb.cd, label %bb.ce
+  br i1 %i.jf, label %bb.cd, label %bb.cf
 
-bb.cd:                                            ; preds = %bb.cc
+bb.cd:                                            ; preds = %bb.cc, %5
   %i.jg = load i64, ptr @H5E_DATASET_g, align 8, !tbaa !15
   %i.jh = load i64, ptr @H5E_CANTINIT_g, align 8, !tbaa !15
   %i.ji = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.H5D__update_oh_info, i32 noundef 1041, i64 noundef %i.jg, i64 noundef %i.jh, ptr noundef nonnull @.str.224) #11 ; 0 uses
   br label %bb.ch
 
-bb.ce:                                            ; preds = %bb.cc
+bb.ce:                                            ; preds = %5
   br i1 %i.s, label %bb.ch, label %bb.cf
 
-bb.cf:                                            ; preds = %bb.ce
+bb.cf:                                            ; preds = %bb.cc, %bb.ce
   %i.jj = call i32 @H5O_touch_oh(ptr noundef %0, ptr noundef nonnull %i.hr, i1 noundef zeroext true) #11
   %i.jk = icmp slt i32 %i.jj, 0
   br i1 %i.jk, label %bb.cg, label %bb.ch

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !nonnull !8, !noundef !8 ; 14 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.n = load i64, ptr %i.m, align 8, !noundef !8 ; 18 uses
+  %i.n = load i64, ptr %i.m, align 8, !noundef !8 ; 20 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.o = load i8, ptr %3, align 1, !range !15, !noundef !8
   %i.p = load i8, ptr %4, align 1, !range !15, !noundef !8
@@ -213,12 +213,12 @@ bb.c:                                             ; preds = %bb.a
   %brmerge.i = icmp ne i8 %i.q, 0
   %.not.i.i = icmp eq i64 %i.n, 0                 ; 2 uses
   %or.cond.i = or i1 %.not.i.i, %brmerge.i
-  br i1 %or.cond.i, label %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7cXCwYFNYaI_8uu_split.exit.i
+  br i1 %or.cond.i, label %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7cXCwYFNYaI_8uu_split.exit.i
 
 _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7cXCwYFNYaI_8uu_split.exit.i: ; preds = %bb.c
   %rhsc.i = load i8, ptr %i.l, align 1, !alias.scope !1377
   %i.r = icmp eq i8 %rhsc.i, 45
-  br i1 %i.r, label %bb.d, label %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a
+  br i1 %i.r, label %bb.d, label %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.thread
 
 bb.d:                                             ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7cXCwYFNYaI_8uu_split.exit.i
   %.not.i = icmp eq i64 %i.n, 1
@@ -237,14 +237,22 @@ bb.d:                                             ; preds = %_RNvMNtCs6JMX4GRUq9
     i8 116, label %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a
   ]
 
-_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a: ; preds = %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7cXCwYFNYaI_8uu_split.exit.i, %bb.c
-  %.not.i9.a = icmp slt i64 %i.n, 0
-  br i1 %.not.i9.a, label %bb.ac, label %bb.e, !prof !19
+_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread: ; preds = %bb.c
+  %.not.i9 = icmp slt i64 %i.n, 0
+  br i1 %.not.i9, label %bb.ac, label %bb.e, !prof !19
 
-bb.e:                                             ; preds = %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a
+_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.thread: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7cXCwYFNYaI_8uu_split.exit.i
+  %.not.i931 = icmp slt i64 %i.n, 0
+  br i1 %.not.i931, label %bb.ac, label %bb.f, !prof !19
+
+_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a: ; preds = %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i
+  %.not.i9.a = icmp slt i64 %i.n, 0
+  br i1 %.not.i9.a, label %bb.ac, label %bb.f, !prof !19
+
+bb.e:                                             ; preds = %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread
   br i1 %.not.i.i, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7cXCwYFNYaI_8uu_split.exit.thread24, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.thread, %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a, %bb.e
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26, !noalias !1378
   %i.u = tail call noundef ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.n, i64 noundef range(i64 1, 9) 1) #26, !noalias !1378 ; 3 uses
   %i.v = icmp eq ptr %i.u, null
@@ -641,8 +649,8 @@ _RNvCs7cXCwYFNYaI_8uu_split24handle_extract_obs_lines.exit: ; preds = %_RINvNtCs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1382
   br label %bb.ae
 
-bb.ac:                                            ; preds = %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a, %bb.f
-  %.sroa.4.0.ph = phi i64 [ 1, %bb.f ], [ 0, %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a ]
+bb.ac:                                            ; preds = %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.thread, %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread, %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a, %bb.f
+  %.sroa.4.0.ph = phi i64 [ 1, %bb.f ], [ 0, %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.a ], [ 0, %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread ], [ 0, %_RNvCs7cXCwYFNYaI_8uu_split24should_extract_obs_lines.exit.thread.thread ]
   tail call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %i.n) #29
   unreachable
 

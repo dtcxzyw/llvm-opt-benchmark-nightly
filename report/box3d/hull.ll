@@ -205,22 +205,24 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph
-  %.0281 = phi i32 [ -1, %.lr.ph ], [ %.1282, %bb.c ]
-  %.0279 = phi i32 [ %i.bb, %.lr.ph ], [ %.1280, %bb.c ] ; 3 uses
+  %.0279 = phi i32 [ %i.bb, %.lr.ph ], [ %i.bg, %bb.c ] ; 3 uses
   %i.bc = zext nneg i32 %.0279 to i64
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %i.bc
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !80  ; 2 uses
   %i.bf = icmp eq i8 %i.be, %i.ba                 ; 3 uses
-  %i.bg = zext i8 %i.be to i32
-  %.1282 = select i1 %i.bf, i32 %.0279, i32 %.0281 ; 2 uses
-  %.1280 = select i1 %i.bf, i32 %.0279, i32 %i.bg ; 2 uses
+  %i.bg = zext i8 %i.be to i32                    ; 2 uses
+  %.1280 = select i1 %i.bf, i32 %.0279, i32 %i.bg
   %.not296 = icmp eq i32 %.1280, %i.bb
   %or.cond = or i1 %i.bf, %.not296
-  br i1 %or.cond, label %.preheader361.a, label %bb.c, !llvm.loop !256
+  br i1 %or.cond, label %.preheader361, label %bb.c, !llvm.loop !256
 
-.preheader361.a:                                  ; preds = %bb.c, %bb.e
-  %.2283 = phi i32 [ %.2, %bb.e ], [ %.1282, %bb.c ]
-  %.2 = phi i32 [ %i.bu, %bb.e ], [ %i.bb, %bb.c ] ; 3 uses
+.preheader361:                                    ; preds = %bb.c
+  %.1282.le = select i1 %i.bf, i32 %.0279, i32 -1
+  br label %.preheader361.a
+
+.preheader361.a:                                  ; preds = %.preheader361, %bb.e
+  %.2283 = phi i32 [ %.2, %bb.e ], [ %.1282.le, %.preheader361 ]
+  %.2 = phi i32 [ %i.bu, %bb.e ], [ %i.bb, %.preheader361 ] ; 3 uses
   %i.bh = zext nneg i32 %.2 to i64
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %.0.i, i64 %i.bh ; 4 uses
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !80  ; 2 uses

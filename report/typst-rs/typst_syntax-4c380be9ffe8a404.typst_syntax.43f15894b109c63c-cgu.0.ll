@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bi = load i32, ptr %i.bh, align 4            ; 2 uses
   %i.bj = icmp ne i32 %i.ax, %i.bi                ; 2 uses
   %or.cond.not = select i1 %i.bg, i1 %i.bj, i1 false
-  br i1 %or.cond.not, label %.thread.i, label %bb.i
+  br i1 %or.cond.not, label %.split84, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -217,7 +217,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bn = icmp ugt i32 %i.av, %i.bd
   br i1 %i.bn, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread82
 
-.thread.i:                                        ; preds = %bb.h, %bb.k
+.thread.i:                                        ; preds = %bb.k
   br i1 %i.bj, label %.split84, label %bb.j
 
 bb.j:                                             ; preds = %.thread.i
@@ -230,7 +230,7 @@ bb.j:                                             ; preds = %.thread.i
   %or.cond91 = select i1 %i.bq, i1 %i.bt, i1 false
   br i1 %or.cond91, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread82
 
-.split84:                                         ; preds = %.thread.i
+.split84:                                         ; preds = %bb.h, %.thread.i
   %i.bu = icmp ugt i32 %i.ax, %i.bi
   br i1 %i.bu, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread82
 
@@ -633,7 +633,7 @@ _RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
 ._crit_edge.i:                                    ; preds = %bb.j, %bb.i, %bb.e
   %.sroa.0163.0.lcssa.i = phi i64 [ 0, %bb.e ], [ %i.al, %bb.j ], [ %.sroa.0163.0286.i, %bb.i ] ; 27 uses
   %.promoted.i = phi i64 [ %1, %bb.e ], [ %i.ak, %bb.j ], [ %.sroa.0.0287.i, %bb.i ] ; 26 uses
-  %i.af = icmp ult i64 %.promoted.i, %2           ; 2 uses
+  %i.af = icmp ult i64 %.promoted.i, %2           ; 3 uses
   %i.ag = icmp samesign ult i64 %.sroa.0163.0.lcssa.i, %i.n
   %or.cond66.i344 = select i1 %i.af, i1 %i.ag, i1 false
   br i1 %or.cond66.i344, label %.lr.ph, label %._crit_edge
@@ -659,12 +659,13 @@ bb.j:                                             ; preds = %bb.i
   br i1 %or.cond.i, label %bb.h, label %._crit_edge.i
 
 bb.k:                                             ; preds = %bb.l
-  %i.ao = icmp ult i64 %.promoted.i, %i.aq        ; 2 uses
+  %i.ao = icmp ult i64 %.promoted.i, %i.aq        ; 3 uses
   %i.ap = icmp samesign ult i64 %.sroa.0163.0.lcssa.i, %i.as
   %or.cond66.i = select i1 %i.ao, i1 %i.ap, i1 false
   br i1 %or.cond66.i, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %._crit_edge.i, %bb.k
+  %4 = phi i1 [ %i.ao, %bb.k ], [ %i.af, %._crit_edge.i ]
   %.sroa.4.0.i346 = phi i64 [ %i.aq, %bb.k ], [ %2, %._crit_edge.i ] ; 2 uses
   %.sroa.6.0.i345 = phi i64 [ %i.as, %bb.k ], [ %i.n, %._crit_edge.i ] ; 2 uses
   %i.aq = add i64 %.sroa.4.0.i346, -1             ; 6 uses
@@ -721,7 +722,7 @@ _RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
 ._crit_edge:                                      ; preds = %bb.k, %bb.l, %._crit_edge.i
   %.sroa.6.0.i.lcssa = phi i64 [ %i.n, %._crit_edge.i ], [ %i.as, %bb.k ], [ %.sroa.6.0.i345, %bb.l ] ; 17 uses
   %.sroa.4.0.i.lcssa = phi i64 [ %2, %._crit_edge.i ], [ %i.aq, %bb.k ], [ %.sroa.4.0.i346, %bb.l ] ; 31 uses
-  %.lcssa160 = phi i1 [ %i.af, %._crit_edge.i ], [ %i.ao, %bb.k ], [ true, %bb.l ]
+  %.lcssa160 = phi i1 [ %i.af, %._crit_edge.i ], [ %i.ao, %bb.k ], [ %4, %bb.l ]
   %.sroa.0.0.copyload = load i64, ptr %3, align 8, !noalias !1922 ; 8 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.bc = icmp samesign ult i64 %.sroa.6.0.i.lcssa, %.sroa.0163.0.lcssa.i

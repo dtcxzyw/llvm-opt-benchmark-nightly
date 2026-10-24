@@ -205,13 +205,18 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 348
-  %i.e = load i32, ptr %i.d, align 4
+  %i.e = load i32, ptr %i.d, align 4              ; 2 uses
   %i.f = icmp ne i32 %i.e, %1
   %or.cond.not = select i1 %2, i1 %i.f, i1 false
-  br i1 %or.cond.not, label %bb.c, label %_ZN11OpenImageIO4v3_18webp_pvt9WebpInput16iter_to_subimageEi.exit
+  br i1 %or.cond.not, label %bb.f, label %_ZN11OpenImageIO4v3_18webp_pvt9WebpInput16iter_to_subimageEi.exit
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  br i1 %2, label %bb.f, label %bb.d
+bb.c:                                             ; preds = %bb.a
+  br i1 %2, label %..thread_crit_edge, label %bb.d
+
+..thread_crit_edge:                               ; preds = %bb.c
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 348
+  %.pre = load i32, ptr %.phi.trans.insert, align 4
+  br label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -226,11 +231,11 @@ bb.e:                                             ; preds = %bb.d
   store i32 %1, ptr %i.a, align 8, !tbaa !116
   br label %_ZN11OpenImageIO4v3_18webp_pvt9WebpInput16iter_to_subimageEi.exit
 
-bb.f:                                             ; preds = %bb.c
+bb.f:                                             ; preds = %..thread_crit_edge, %bb.b
+  %3 = phi i32 [ %.pre, %..thread_crit_edge ], [ %i.e, %bb.b ]
   %i.l = add nsw i32 %1, -1                       ; 2 uses
   %i.m = icmp eq i32 %i.b, %i.l
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 348 ; 3 uses
-  %3 = load i32, ptr %i.n, align 4
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 348 ; 2 uses
   %i.o = icmp eq i32 %3, %i.l
   %or.cond18 = select i1 %i.m, i1 %i.o, i1 false
   br i1 %or.cond18, label %bb.g, label %bb.h
@@ -633,7 +638,7 @@ _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT
 
 _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit: ; preds = %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit
   %.3 = phi ptr [ %.4, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit ], [ %.2, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader ] ; 2 uses
-  %.0 = phi ptr [ %.1, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit ], [ %i.b, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader ] ; 7 uses
+  %.0 = phi ptr [ %i.fw, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit ], [ %i.b, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader ] ; 6 uses
   %i.dm = load i8, ptr %.0, align 1, !tbaa !66
   %i.dn = zext i8 %i.dm to i32                    ; 2 uses
   %i.do = lshr i32 %i.dn, 3                       ; 2 uses
@@ -698,15 +703,14 @@ _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT
   %i.fs = select i1 %.not.i36, i32 %i.eu, i32 -1
   %i.ft = add nsw i64 %i.dv, %i.ds
   %i.fu = select i1 %.not.i36, i64 %i.ft, i64 1
-  %i.fv = call noundef zeroext i1 @_ZZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEENKUljNSA_IcEEE_clEjSF_(ptr noundef nonnull align 8 dereferenceable(40) %3, i32 noundef %i.fs, ptr %.3, i64 %i.fu) ; 3 uses
-  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 2 uses
+  %i.fv = call noundef zeroext i1 @_ZZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEENKUljNSA_IcEEE_clEjSF_(ptr noundef nonnull align 8 dereferenceable(40) %3, i32 noundef %i.fs, ptr %.3, i64 %i.fu) ; 2 uses
+  %i.fw = select i1 %.not.i36, ptr %i.dw, ptr %i.eb ; 3 uses
   %i.fx = ptrtoint ptr %i.fw to i64
-  %4 = ptrtoint ptr %.0 to i64
-  %5 = sub i64 %i.fx, %4
-  %.4.idx = select i1 %i.fv, i64 %5, i64 0
-  %.4 = getelementptr inbounds i8, ptr %.3, i64 %.4.idx
-  %.1 = select i1 %i.fv, ptr %i.fw, ptr %.0       ; 2 uses
-  %i.fy = icmp ult ptr %.1, %i.dl
+  %4 = select i1 %i.fv, i64 %i.fx, i64 0
+  %5 = ptrtoint ptr %.0 to i64
+  %6 = sub i64 %4, %5
+  %.4 = getelementptr inbounds i8, ptr %.3, i64 %6
+  %i.fy = icmp ult ptr %i.fw, %i.dl
   %or.cond = select i1 %i.fv, i1 %i.fy, i1 false
   br i1 %or.cond, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit, label %bb.e, !llvm.loop !721
 

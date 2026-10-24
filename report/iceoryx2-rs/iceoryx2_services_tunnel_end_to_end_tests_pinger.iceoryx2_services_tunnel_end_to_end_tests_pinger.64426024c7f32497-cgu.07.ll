@@ -204,8 +204,8 @@ _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsI
   %i.y = or i1 %.sroa.03.015.i, %i.x              ; 3 uses
   %i.z = and i1 %i.t, %i.y
   %i.aa = add nuw i64 %.sroa.09.014.i, 1          ; 2 uses
-  %3 = icmp uge i64 %i.aa, %i.n
-  %or.cond.not.i = select i1 %i.z, i1 true, i1 %3
+  %exitcond.not.i = icmp eq i64 %i.aa, %i.n
+  %or.cond.not.i = select i1 %i.z, i1 true, i1 %exitcond.not.i
   br i1 %or.cond.not.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit, label %bb.d
 
 _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i
@@ -608,11 +608,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 3360
   br label %bb.h
 
-bb.h:                                             ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i, %.lr.ph.i
-  %.sroa.0.016.i = phi i1 [ false, %.lr.ph.i ], [ %2, %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i ]
-  %.sroa.03.015.i = phi i1 [ false, %.lr.ph.i ], [ %i.aq, %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i ]
-  %.sroa.09.014.i = phi i64 [ 0, %.lr.ph.i ], [ %3, %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i ] ; 5 uses
+bb.h:                                             ; preds = %3, %.lr.ph.i
+  %.sroa.0.016.i = phi i1 [ false, %.lr.ph.i ], [ %2, %3 ]
+  %.sroa.03.015.i = phi i1 [ false, %.lr.ph.i ], [ %i.aq, %3 ]
+  %.sroa.09.014.i = phi i64 [ 0, %.lr.ph.i ], [ %4, %3 ] ; 5 uses
   %i.aj = tail call noundef zeroext i1 @_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver8has_dataCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger(ptr noundef nonnull align 8 %i.af, i64 noundef %.sroa.09.014.i) #20
+  %2 = or i1 %.sroa.0.016.i, %i.aj                ; 3 uses
   %i.ak = load i64, ptr %i.ah, align 8, !noundef !5 ; 2 uses
   %i.al = icmp ult i64 %.sroa.09.014.i, %i.ak
   br i1 %i.al, label %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i, label %bb.i
@@ -622,19 +623,20 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i: ; preds = %bb.h
-  %2 = or i1 %.sroa.0.016.i, %i.aj                ; 3 uses
   %i.am = load ptr, ptr %i.ai, align 16, !nonnull !5, !noundef !5
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %.sroa.09.014.i
   %i.ao = load i64, ptr %i.an, align 8, !noundef !5
   %i.ap = icmp ne i64 %i.ao, 0
   %i.aq = or i1 %.sroa.03.015.i, %i.ap            ; 5 uses
   %i.ar = and i1 %2, %i.aq
-  %3 = add nuw i64 %.sroa.09.014.i, 1             ; 2 uses
-  %4 = icmp uge i64 %3, %i.ag
-  %or.cond.not.i = select i1 %i.ar, i1 true, i1 %4
-  br i1 %or.cond.not.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit, label %bb.h
+  br i1 %i.ar, label %bb.j, label %3
 
-_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i
+3:                                                ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i
+  %4 = add nuw i64 %.sroa.09.014.i, 1             ; 2 uses
+  %exitcond.not.i = icmp eq i64 %4, %i.ag
+  br i1 %exitcond.not.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit, label %bb.h
+
+_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit: ; preds = %3
   %i.as = or i1 %i.aq, %2
   br i1 %i.as, label %bb.j, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.thread.a
 
@@ -645,7 +647,7 @@ _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.c
 
-bb.j:                                             ; preds = %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit
+bb.j:                                             ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i, %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 1232 ; 8 uses
   %i.au = tail call noundef i8 @_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtB9_7slotmap10SlotMapKeyNtNtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocator13HeapAllocatorEINtB7_6VectorB1o_E4pushCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.at, i64 noundef %i.ab) #20
   %.not80 = icmp eq i8 %i.au, 2
@@ -724,8 +726,8 @@ _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsI
   %i.bv = or i1 %.sroa.03.015.i.i, %i.bu          ; 3 uses
   %i.bw = and i1 %i.bq, %i.bv
   %i.bx = add nuw i64 %.sroa.09.014.i.i, 1        ; 2 uses
-  %5 = icmp uge i64 %i.bx, %i.bk
-  %or.cond.not.i.i = select i1 %i.bw, i1 true, i1 %5
+  %exitcond.not.i.i = icmp eq i64 %i.bx, %i.bk
+  %or.cond.not.i.i = select i1 %i.bw, i1 true, i1 %exitcond.not.i.i
   br i1 %or.cond.not.i.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i, label %bb.n
 
 _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i.i
@@ -1089,8 +1091,8 @@ _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsI
   %i.bb = or i1 %.sroa.03.015.i.i, %i.ba          ; 3 uses
   %i.bc = and i1 %i.aw, %i.bb
   %i.bd = add nuw i64 %.sroa.09.014.i.i, 1        ; 2 uses
-  %3 = icmp uge i64 %i.bd, %i.as
-  %or.cond.not.i.i = select i1 %i.bc, i1 true, i1 %3
+  %exitcond.not.i.i = icmp eq i64 %i.bd, %i.as
+  %or.cond.not.i.i = select i1 %i.bc, i1 true, i1 %exitcond.not.i.i
   br i1 %or.cond.not.i.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i, label %.lr.ph.i.i
 
 _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCs8BG1qU1UekR_48iceoryx2_services_tunnel_end_to_end_tests_pinger.exit.i.i

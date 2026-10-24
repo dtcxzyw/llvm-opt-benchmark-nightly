@@ -205,7 +205,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i47
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit481: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit478, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i479
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #40
-  br label %bb.af
+  br label %bb.aq
 
 bb.ad:                                            ; preds = %.noexc337
   %i.nw = landingpad { ptr, i32 }
@@ -254,8 +254,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit490: ; preds = %.b
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #40
   br label %common.resume
 
-bb.af:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit481, %_ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit
-  %.not2 = xor i1 %.0.i, true                     ; 3 uses
+bb.af:                                            ; preds = %_ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit
+  %.not2 = xor i1 %.0.i, true                     ; 2 uses
   %or.cond4 = or i1 %i.ll, %.not2
   br i1 %or.cond4, label %bb.aq, label %bb.ag
 
@@ -489,13 +489,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit514: ; preds = %.b
   call void @llvm.lifetime.end.p0(ptr nonnull %74) #40
   br label %common.resume
 
-bb.aq:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit505, %bb.af
+bb.aq:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit481, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit505, %bb.af
+  %.not21321 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit481 ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit505 ], [ %.not2, %bb.af ] ; 2 uses
   %i.qz = load ptr, ptr %.sroa.01190.01730, align 8, !tbaa !19899
   %i.ra = load ptr, ptr %1, align 8, !tbaa !821
   %i.rb = getelementptr inbounds nuw i8, ptr %i.ra, i64 16
   %i.rc = load ptr, ptr %i.rb, align 8
   %i.rd = call noundef zeroext i1 %i.rc(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull byval(%"class.folly::RegexMatchCacheKey") align 8 %i.go, ptr noundef %i.qz) ; 4 uses
-  %i.re = or i1 %.sroa.01276.0, %.not2
+  %i.re = or i1 %.sroa.01276.0, %.not21321
   %i.rf = and i1 %i.re, %i.rd
   br i1 %i.rf, label %bb.ar, label %_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread
 
@@ -608,7 +609,7 @@ _ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit525.thread: ; preds = %
   %i.th = phi i1 [ false, %bb.as ], [ false, %bb.ar ], [ false, %_ZNK5folly28RegexMatchCacheDynamicBitset13get_bit_span_Ev.exit.i518 ], [ %i.tg, %bb.az ], [ false, %bb.aw ], [ false, %bb.ax ]
   %i.ti = load i64, ptr %i.cg, align 8, !tbaa !19829 ; 2 uses
   %i.tj = icmp ult i64 %i.ti, 256
-  br i1 %i.tj, label %_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread, label %bb.ba
+  br i1 %i.tj, label %bb.bv, label %bb.ba
 
 bb.ba:                                            ; preds = %_ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit525.thread
   %i.tk = call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 0, i64 %i.ix) ; 2 uses
@@ -740,8 +741,8 @@ bb.bk:                                            ; preds = %bb.bj
   %.not.i371 = icmp eq i64 %i.wj, 0
   br i1 %.not.i371, label %_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread, label %bb.bh, !llvm.loop !787
 
-_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread: ; preds = %bb.bd, %bb.be, %bb.bj, %bb.bk, %bb.bi, %bb.bf, %bb.aq, %_ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit525.thread
-  %or.cond12 = phi i1 [ false, %bb.bj ], [ false, %bb.aq ], [ false, %_ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit525.thread ], [ %i.th, %bb.bi ], [ false, %bb.bf ], [ false, %bb.bk ], [ false, %bb.be ], [ false, %bb.bd ] ; 2 uses
+_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread: ; preds = %bb.bd, %bb.be, %bb.bj, %bb.bk, %bb.bi, %bb.bf, %bb.aq
+  %or.cond12 = phi i1 [ false, %bb.bj ], [ false, %bb.aq ], [ %i.th, %bb.bi ], [ false, %bb.bf ], [ false, %bb.bk ], [ false, %bb.be ], [ false, %bb.bd ] ; 2 uses
   %or.cond7 = or i1 %.sroa.01276.0, %i.rd
   br i1 %or.cond7, label %bb.bv, label %bb.bl
 
@@ -926,7 +927,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i54
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit545: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit542, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i543
   call void @llvm.lifetime.end.p0(ptr nonnull %77) #40
-  br label %bb.bv
+  br label %bb.cg
 
 bb.bt:                                            ; preds = %.noexc329
   %i.ym = landingpad { ptr, i32 }
@@ -975,10 +976,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit554: ; preds = %.b
   call void @llvm.lifetime.end.p0(ptr nonnull %77) #40
   br label %common.resume
 
-bb.bv:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit545, %_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread
+bb.bv:                                            ; preds = %_ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit525.thread, %_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread
+  %or.cond121428 = phi i1 [ %or.cond12, %_ZN5folly7get_ptrINS_10F14FastMapIPKNS_18RegexMatchCacheKeyENS_15RegexMatchCache23StringQueueReverseEntryENS_23HeterogeneousAccessHashIS4_vEENS_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_S6_EEEES4_EEDaRKT_RKT0_.exit.thread ], [ false, %_ZNK5folly28RegexMatchCacheDynamicBitset9get_valueEm.exit525.thread ] ; 2 uses
   %.not8 = xor i1 %i.rd, true                     ; 2 uses
   %or.cond10 = or i1 %i.ll, %.not8
-  %brmerge = or i1 %or.cond10, %or.cond12
+  %brmerge = or i1 %or.cond10, %or.cond121428
   br i1 %brmerge, label %bb.cg, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
@@ -1162,7 +1164,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit569: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit566, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i567
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #40
-  br label %bb.cg
+  br label %bb.cr
 
 bb.ce:                                            ; preds = %.noexc325
   %i.abb = landingpad { ptr, i32 }
@@ -1211,8 +1213,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit578: ; preds = %.b
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #40
   br label %common.resume
 
-bb.cg:                                            ; preds = %bb.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit569
-  %or.cond15 = or i1 %i.rd, %.not2
+bb.cg:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit545, %bb.bv
+  %or.cond121430 = phi i1 [ %or.cond12, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit545 ], [ %or.cond121428, %bb.bv ] ; 2 uses
+  %.not81346 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit545 ], [ %.not8, %bb.bv ] ; 2 uses
+  %or.cond15 = or i1 %.not21321, %i.rd
   br i1 %or.cond15, label %bb.cr, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
@@ -1445,9 +1449,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit602: ; preds = %.b
   call void @llvm.lifetime.end.p0(ptr nonnull %83) #40
   br label %common.resume
 
-bb.cr:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593, %bb.cg
-  %or.cond18 = or i1 %.0.i, %.not8
-  %brmerge293 = or i1 %or.cond18, %or.cond12
+bb.cr:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit569, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593, %bb.cg
+  %or.cond121429 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit569 ], [ %or.cond121430, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593 ], [ %or.cond121430, %bb.cg ]
+  %.not813461350 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit569 ], [ %.not81346, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593 ], [ %.not81346, %bb.cg ]
+  %or.cond18 = or i1 %or.cond121429, %.not813461350
+  %brmerge293 = or i1 %.0.i, %or.cond18
   br i1 %brmerge293, label %bb.dc, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr

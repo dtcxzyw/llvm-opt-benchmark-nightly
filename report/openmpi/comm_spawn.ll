@@ -44,7 +44,7 @@ bb.a:
   %i.d = alloca ptr, align 8                      ; 2 uses
   %i.e = alloca i32, align 4                      ; 3 uses
   %i.f = alloca ptr, align 8                      ; 6 uses
-  %i.g = alloca [1024 x i8], align 16             ; 9 uses
+  %i.g = alloca [1024 x i8], align 16             ; 10 uses
   %i.h = alloca ptr, align 8                      ; 7 uses
   %i.i = alloca i8, align 1                       ; 7 uses
   store ptr %0, ptr %i.a, align 8, !tbaa !34
@@ -167,7 +167,7 @@ ompi_comm_iface_coll_check.exit:                  ; preds = %bb.m
   %i.bb = trunc nuw i8 %i.ba to i1
   %i.bc = icmp eq i32 %.val69, %4                 ; 3 uses
   %or.cond67 = select i1 %i.bb, i1 %i.bc, i1 false
-  br i1 %or.cond67, label %bb.p, label %bb.w
+  br i1 %or.cond67, label %bb.p, label %8
 
 bb.p:                                             ; preds = %ompi_comm_iface_coll_check.exit
   %i.bd = icmp eq ptr %0, null
@@ -207,11 +207,19 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.bs = tail call i32 @ompi_errhandler_invoke(ptr noundef null, ptr noundef null, i32 noundef -1, i32 noundef 34, ptr noundef nonnull @FUNC_NAME) #8
   br label %bb.ar
 
-bb.w:                                             ; preds = %bb.u, %ompi_comm_iface_coll_check.exit
-  %i.bt = tail call zeroext i1 @ompi_mpi_dynamics_is_enabled(ptr noundef nonnull @FUNC_NAME) #8
-  br i1 %i.bt, label %bb.ac, label %bb.x
+8:                                                ; preds = %ompi_comm_iface_coll_check.exit
+  %9 = tail call zeroext i1 @ompi_mpi_dynamics_is_enabled(ptr noundef nonnull @FUNC_NAME) #8
+  br i1 %9, label %bb.ac, label %bb.x
 
-bb.x:                                             ; preds = %bb.w
+bb.w:                                             ; preds = %bb.u
+  %i.bt = tail call zeroext i1 @ompi_mpi_dynamics_is_enabled(ptr noundef nonnull @FUNC_NAME) #8
+  br i1 %i.bt, label %.thread82, label %bb.x
+
+.thread82:                                        ; preds = %bb.w
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.g, i8 0, i64 1024, i1 false)
+  br label %bb.ad
+
+bb.x:                                             ; preds = %bb.w, %8
   %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 312
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !62
   %i.bw = getelementptr inbounds nuw i8, ptr %5, i64 320
@@ -304,11 +312,11 @@ ompi_errcode_get_mpi_code.exit:                   ; preds = %bb.y, %bb.z, %bb.x,
   %i.dg = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.bv, ptr noundef %5, i32 noundef %i.bx, i32 noundef %.010.i, ptr noundef nonnull @FUNC_NAME) #8
   br label %bb.ar
 
-bb.ac:                                            ; preds = %bb.w
+bb.ac:                                            ; preds = %8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.g, i8 0, i64 1024, i1 false)
   br i1 %i.bc, label %bb.ad, label %.critedge.thread86
 
-bb.ad:                                            ; preds = %bb.ac
+bb.ad:                                            ; preds = %.thread82, %bb.ac
   %i.dh = call i32 @ompi_info_get_bool(ptr noundef %3, ptr noundef nonnull @.str, ptr noundef nonnull %i.i, ptr noundef nonnull %i.e) #8 ; 0 uses
   %i.di = load i8, ptr %i.i, align 1, !tbaa !14, !range !15, !noundef !16
   %i.dj = trunc nuw i8 %i.di to i1

@@ -202,7 +202,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cg
   %.3154 = phi i8 [ %i.nn, %bb.cg ], [ 0, %bb.ch ] ; 3 uses
-  %.083.shrunk = phi i1 [ %i.no, %bb.cg ], [ false, %bb.ch ] ; 3 uses
+  %.083.shrunk = phi i1 [ %i.no, %bb.cg ], [ false, %bb.ch ] ; 2 uses
   %i.nr = getelementptr inbounds nuw i8, ptr %0, i64 140
   %i.ns = load i32, ptr %i.nr, align 4, !tbaa !323 ; 2 uses
   %i.nt = icmp sgt i32 %i.ns, 0
@@ -219,24 +219,24 @@ bb.ck:                                            ; preds = %bb.cj
   %i.nw = getelementptr inbounds nuw i8, ptr %0, i64 223
   %i.nx = load i8, ptr %i.nw, align 1, !tbaa !128, !range !96, !noundef !97
   %i.ny = trunc nuw i8 %i.nx to i1
-  br i1 %i.ny, label %bb.co, label %bb.cl
+  br i1 %i.ny, label %bb.ef, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
   %i.nz = load i8, ptr %i.ix, align 4, !tbaa !99, !range !96, !noundef !97
   %i.oa = trunc nuw i8 %i.nz to i1
-  br i1 %i.oa, label %bb.co, label %bb.cm
+  br i1 %i.oa, label %bb.ef, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
   %i.ob = getelementptr inbounds nuw i8, ptr %0, i64 164
   %i.oc = load i32, ptr %i.ob, align 4, !tbaa !93
   %.not174 = icmp slt i32 %i.oc, %i.ns
-  br i1 %.not174, label %bb.co, label %bb.cn
+  br i1 %.not174, label %bb.ef, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
   invoke void @_ZN5Ipopt22BacktrackingLineSearch13StartWatchDogEv(ptr noundef nonnull align 8 dereferenceable(264) %0)
-          to label %bb.co unwind label %bb.if
+          to label %bb.ef unwind label %bb.if
 
-bb.co:                                            ; preds = %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.ci
+bb.co:                                            ; preds = %bb.cj, %bb.ci
   br i1 %.083.shrunk, label %bb.cp, label %bb.ef
 
 bb.cp:                                            ; preds = %bb.co
@@ -639,12 +639,13 @@ bb.ee:                                            ; preds = %_ZN5Ipopt8SmartPtrI
   store i8 0, ptr %i.wi, align 8, !tbaa !77
   br label %bb.eg
 
-bb.ef:                                            ; preds = %bb.co
+bb.ef:                                            ; preds = %bb.ck, %bb.cl, %bb.cm, %bb.cn, %bb.co
   %i.xl = getelementptr inbounds nuw i8, ptr %0, i64 232
   store i8 0, ptr %i.xl, align 8, !tbaa !77
   br label %bb.eg
 
 bb.eg:                                            ; preds = %bb.dx, %bb.ee, %bb.ef
+  %.086 = phi i1 [ false, %bb.ef ], [ true, %bb.ee ], [ true, %bb.dx ]
   %.285 = phi i1 [ false, %bb.ef ], [ %.184571, %bb.ee ], [ %.184571, %bb.dx ] ; 2 uses
   %i.xm = trunc nuw i8 %.3154 to i1
   %or.cond7 = or i1 %.285, %i.xm
@@ -873,7 +874,7 @@ bb.fb:                                            ; preds = %_ZNSt7__cxx1112basi
   br i1 %.lcssa, label %bb.hw, label %.thread583
 
 bb.fc:                                            ; preds = %bb.eg
-  br i1 %.083.shrunk, label %bb.hw, label %.thread583
+  br i1 %.086, label %bb.hw, label %.thread583
 
 .thread583:                                       ; preds = %.split804, %.split803, %bb.ei, %bb.fc
   %i.zo = getelementptr inbounds nuw i8, ptr %0, i64 221

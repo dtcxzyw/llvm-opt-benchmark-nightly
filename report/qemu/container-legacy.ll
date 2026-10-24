@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.t, %.lr.ph192, %
   %.0114.lcssa = phi i1 [ false, %trace_vfio_pci_hot_reset_has_dep_devices.exit ], [ %.2116.ph, %.loopexit172 ]
   %.lcssa178 = phi i32 [ 0, %trace_vfio_pci_hot_reset_has_dep_devices.exit ], [ %i.bt, %.loopexit172 ] ; 2 uses
   %or.cond = select i1 %1, i1 true, i1 %.0114.lcssa
-  br i1 %or.cond, label %.preheader171, label %.loopexit166
+  br i1 %or.cond, label %.preheader171, label %bb.ar
 
 .preheader171:                                    ; preds = %._crit_edge
   %.1200 = load ptr, ptr @vfio_group_list, align 8 ; 2 uses
@@ -460,16 +460,17 @@ bb.aq:                                            ; preds = %bb.ao, %.lr.ph220, 
   %i.fg = icmp ult i32 %i.fc, %i.ff
   br i1 %i.fg, label %bb.aj, label %.loopexit166, !llvm.loop !29
 
-.loopexit166:                                     ; preds = %.loopexit, %trace_vfio_pci_hot_reset_result.exit, %.critedge141, %._crit_edge, %bb.f
-  %.4 = phi i32 [ %i.k, %bb.f ], [ %.3126, %.critedge141 ], [ -22, %._crit_edge ], [ %.3126, %trace_vfio_pci_hot_reset_result.exit ], [ %.3126, %.loopexit ] ; 2 uses
+.loopexit166:                                     ; preds = %.loopexit, %trace_vfio_pci_hot_reset_result.exit, %.critedge141, %bb.f
+  %.4 = phi i32 [ %i.k, %bb.f ], [ %.3126, %.critedge141 ], [ %.3126, %trace_vfio_pci_hot_reset_result.exit ], [ %.3126, %.loopexit ] ; 2 uses
   br i1 %1, label %bb.as, label %bb.ar
 
-bb.ar:                                            ; preds = %.loopexit166
+bb.ar:                                            ; preds = %._crit_edge, %.loopexit166
+  %.4168 = phi i32 [ %.4, %.loopexit166 ], [ -22, %._crit_edge ]
   call void @vfio_pci_post_reset(ptr noundef nonnull %i.b) #13
   br label %bb.as
 
 bb.as:                                            ; preds = %.thread163, %bb.ar, %.loopexit166
-  %.4165 = phi i32 [ -22, %.thread163 ], [ %.4, %bb.ar ], [ %.4, %.loopexit166 ]
+  %.4165 = phi i32 [ -22, %.thread163 ], [ %.4168, %bb.ar ], [ %.4, %.loopexit166 ]
   %i.fh = load ptr, ptr %i.a, align 8
   call void @g_free(ptr noundef %i.fh) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13

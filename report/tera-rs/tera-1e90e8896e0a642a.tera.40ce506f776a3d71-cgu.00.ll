@@ -202,8 +202,6 @@ bb.em:                                            ; preds = %_RNvXs8_NtNtCsf3Ta7
   %.sroa.0281.0 = load ptr, ptr %.sroa.0281.0.in, align 8, !dbg !31493, !nonnull !1314, !noundef !1314
     #dbg_value(ptr %.sroa.0281.0, !28686, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29494)
     #dbg_value(ptr %.sroa.0281.0, !28697, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29502)
-    #dbg_value(ptr poison, !28685, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29494)
-    #dbg_value(ptr poison, !28696, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29502)
     #dbg_value(ptr poison, !28732, !DIExpression(), !29508)
     #dbg_value(ptr %.sroa.0281.0, !28733, !DIExpression(), !29508)
   %i.agk = load i16, ptr %i.de, align 1, !dbg !31494
@@ -606,8 +604,6 @@ bb.fk:                                            ; preds = %_RNvXs8_NtNtCsf3Ta7
   %.sroa.0226.0 = load ptr, ptr %.sroa.0226.0.in, align 8, !dbg !31616, !nonnull !1314, !noundef !1314
     #dbg_value(ptr %.sroa.0226.0, !28686, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29589)
     #dbg_value(ptr %.sroa.0226.0, !28697, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29597)
-    #dbg_value(ptr poison, !28685, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29589)
-    #dbg_value(ptr poison, !28696, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !29597)
     #dbg_value(ptr poison, !28732, !DIExpression(), !29603)
     #dbg_value(ptr %.sroa.0226.0, !28733, !DIExpression(), !29603)
   %i.aln = load i16, ptr %i.de, align 1, !dbg !31617

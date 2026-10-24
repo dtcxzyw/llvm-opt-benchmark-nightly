@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit
 
 _ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit:       ; preds = %bb.c, %bb.b
-  %.sink = phi ptr [ %i.k, %bb.c ], [ null, %bb.b ]
+  %.sink = phi ptr [ null, %bb.b ], [ %i.k, %bb.c ]
   store ptr %.sink, ptr %0, align 8, !tbaa !62
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
   ret void
@@ -608,9 +608,10 @@ _ZNK4llvm20iterator_facade_baseINS_22VarStreamArrayIteratorINS_8codeview17Inline
   br i1 %i.as, label %_ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit.thread, label %bb.e
 
 _ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit.thread: ; preds = %_ZNK4llvm20iterator_facade_baseINS_22VarStreamArrayIteratorINS_8codeview17InlineeSourceLineENS_23VarStreamArrayExtractorIS3_EEEESt20forward_iterator_tagKS3_lPS8_RS8_EneERKS6_.exit.thread
+  call void @llvm.experimental.noalias.scope.decl(metadata !898)
   %i.at = load i64, ptr %10, align 8, !tbaa !70, !noalias !898
   %i.au = inttoptr i64 %i.at to ptr
-  store ptr %i.au, ptr %0, align 8
+  store ptr %i.au, ptr %0, align 8, !tbaa !62, !alias.scope !898
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   call void @_ZN4llvm22VarStreamArrayIteratorINS_8codeview17InlineeSourceLineENS_23VarStreamArrayExtractorIS2_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(144) %9) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21

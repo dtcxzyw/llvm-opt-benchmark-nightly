@@ -204,8 +204,9 @@ bb.bd:                                            ; preds = %bb.bc
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc
+  %4 = phi i1 [ %i.gw, %bb.bc ], [ true, %bb.bd ]
   %i.gz = icmp ugt i32 %i.d, 20
-  %or.cond3 = select i1 %i.gz, i1 %i.gw, i1 false
+  %or.cond3 = select i1 %i.gz, i1 %4, i1 false
   br i1 %or.cond3, label %bb.bf, label %.thread129
 
 bb.bf:                                            ; preds = %bb.be

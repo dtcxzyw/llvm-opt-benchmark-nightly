@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %bb.am
   %i.da = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.db = load ptr, ptr %i.da, align 8, !nonnull !4, !noundef !4
   %i.dc = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  %i.dd = load i64, ptr %i.dc, align 8, !noundef !4 ; 2 uses
+  %i.dd = load i64, ptr %i.dc, align 8, !noundef !4 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.de = invoke { ptr, i64 } @_RNvMs_Csl4BgoAJVhPh_3urlNtB4_3Url4path(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(88) %2)
@@ -607,16 +607,20 @@ bb.by:                                            ; preds = %bb.bp
   %i.ix = icmp eq i64 %i.iv, 0                    ; 2 uses
   %i.iy = icmp eq i64 %i.dd, %i.dn
   %or.cond = and i1 %i.iy, %i.ix
-  br i1 %or.cond, label %bb.bz, label %bb.ca
+  br i1 %or.cond, label %bb.bz, label %3
 
 bb.bz:                                            ; preds = %.thread471
   %bcmp97 = call i32 @bcmp(ptr nonnull %i.db, ptr nonnull %i.dl, i64 %i.dd)
   %.not98 = icmp eq i32 %bcmp97, 0
   br i1 %.not98, label %bb.cb, label %bb.ca
 
-bb.ca:                                            ; preds = %.thread471, %bb.bz
-  %i.iz = icmp eq i64 %i.dn, 0
-  br i1 %i.iz, label %bb.cc, label %bb.cd
+3:                                                ; preds = %.thread471
+  %4 = icmp eq i64 %i.dn, 0
+  br i1 %4, label %bb.cc, label %bb.cd
+
+bb.ca:                                            ; preds = %bb.bz
+  %i.iz = icmp eq i64 %i.dd, 0
+  br i1 %i.iz, label %bb.cc, label %bb.cf
 
 .sink.split:                                      ; preds = %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4push.exit, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCsl4BgoAJVhPh_3url.exit
   %.sink = phi i64 [ %i.jl, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCsl4BgoAJVhPh_3url.exit ], [ %i.jd, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4push.exit ]
@@ -627,7 +631,7 @@ bb.cb:                                            ; preds = %.sink.split, %bb.bz
   %i.ja = invoke { ptr, i64 } @_RNvMs_Csl4BgoAJVhPh_3urlNtB4_3Url5query(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(88) %2)
           to label %bb.cg unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-bb.cc:                                            ; preds = %bb.ca
+bb.cc:                                            ; preds = %bb.ca, %3
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCsl4BgoAJVhPh_3url(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef 1)
           to label %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4push.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -638,7 +642,7 @@ _RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4push.exit: ; preds = %bb.cc
   %i.jd = add nuw i64 %i.iv, 1
   br label %.sink.split
 
-bb.cd:                                            ; preds = %bb.ca
+bb.cd:                                            ; preds = %3
   br i1 %i.ix, label %bb.cf, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
@@ -653,7 +657,7 @@ _RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4push.exit169: ; preds = %bb.ce
   store i64 %i.jg, ptr %.sroa.528.0..sroa_idx, align 8, !alias.scope !440
   br label %bb.cf
 
-bb.cf:                                            ; preds = %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4push.exit169, %bb.cd
+bb.cf:                                            ; preds = %bb.ca, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4push.exit169, %bb.cd
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCsl4BgoAJVhPh_3url(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %i.dn)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCsl4BgoAJVhPh_3url.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

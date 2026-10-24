@@ -204,9 +204,8 @@ bb.v:                                             ; preds = %._crit_edge489, %bb
 .lr.ph538:                                        ; preds = %.preheader435.a
   %i.fh = icmp eq ptr %.3321, null
   %or.cond3 = or i1 %.3325, %i.fh
-  %1 = icmp eq ptr %.2314, null
-  %not..2317 = xor i1 %.2317, true
-  %or.cond5 = or i1 %1, %not..2317
+  %1 = icmp ne ptr %.2314, null
+  %or.cond5 = and i1 %.2317, %1
   %wide.trip.count601 = zext i32 %indvars.iv581 to i64
   br label %bb.z
 
@@ -405,13 +404,15 @@ bb.aj:                                            ; preds = %.lr.ph520, %.thread
   %.not388 = icmp eq ptr %i.hw, null              ; 2 uses
   %spec.select400 = select i1 %.not388, ptr @.str.16, ptr %i.hw ; 4 uses
   %i.hx = add nsw i32 %i.hq, 1                    ; 2 uses
-  %brmerge432 = select i1 %or.cond5, i1 true, i1 %.not388
-  br i1 %brmerge432, label %bb.am, label %bb.ak
+  br i1 %or.cond5, label %2, label %bb.am
 
-bb.ak:                                            ; preds = %bb.aj
+2:                                                ; preds = %bb.aj
+  br i1 %.not388, label %bb.an, label %bb.ak
+
+bb.ak:                                            ; preds = %2
   %i.hy = call i32 @SDL_strcasecmp(ptr noundef nonnull %.2314, ptr noundef nonnull %i.hw) #8
   %.not390 = icmp eq i32 %i.hy, 0
-  br i1 %.not390, label %bb.am, label %bb.al
+  br i1 %.not390, label %bb.an, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.hz = load i8, ptr @SDLTest_Color, align 1, !range !27, !noundef !28
@@ -421,10 +422,10 @@ bb.al:                                            ; preds = %bb.ak
   call void (ptr, ...) @SDLTest_Log(ptr noundef nonnull @.str.21, i32 noundef %i.gb, i32 noundef %i.hx, ptr noundef nonnull %i.hw, ptr noundef nonnull %i.ib, ptr noundef nonnull %i.ic) #8
   br label %.thread423
 
-bb.am:                                            ; preds = %bb.aj, %bb.ak
+bb.am:                                            ; preds = %bb.aj
   br i1 %.2317, label %bb.an, label %bb.ap
 
-bb.an:                                            ; preds = %bb.am
+bb.an:                                            ; preds = %2, %bb.ak, %bb.am
   %i.id = getelementptr inbounds nuw i8, ptr %i.hu, i64 24
   %i.ie = load i32, ptr %i.id, align 8
   %.not391 = icmp eq i32 %i.ie, 0

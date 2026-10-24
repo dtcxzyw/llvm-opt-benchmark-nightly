@@ -206,6 +206,7 @@ _ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit: ; preds = %bb.j
   br i1 %.not3.i89, label %.lr.ph92, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph92, %_ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit
+  %9 = phi i1 [ %i.bq, %_ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit ], [ true, %.lr.ph92 ]
   %i.bs = lshr i64 %i.bm, 2                       ; 2 uses
   %.not.i25 = icmp eq i64 %i.bs, 0
   br i1 %.not.i25, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
@@ -337,7 +338,7 @@ _ZN4llvm23SmallVectorTemplateBaseIlLb1EE13growAndAssignEml.exit.i: ; preds = %bb
   br label %_ZN4llvm15SmallVectorImplIlE6assignEml.exit
 
 bb.t:                                             ; preds = %bb.s
-  br i1 %i.bq, label %.lr.ph.i.i.i.i.i.preheader, label %_ZN4llvm15SmallVectorImplIlE6assignEml.exit
+  br i1 %9, label %.lr.ph.i.i.i.i.i.preheader, label %_ZN4llvm15SmallVectorImplIlE6assignEml.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.t
   call void @llvm.memset.p0.i64(ptr align 8 %.pre, i8 0, i64 %.idx, i1 false), !tbaa !112

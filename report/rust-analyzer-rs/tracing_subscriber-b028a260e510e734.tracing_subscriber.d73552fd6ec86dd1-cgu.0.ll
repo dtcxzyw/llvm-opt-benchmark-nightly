@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_RNvXs0_NtCsity1gTxgZvF_18tracing_subscriber3fmtNtB5_10SubscriberNtNtCsaMQbKjKCVRW_12tracing_core10subscriber10Subscriber14max_level_hintB7_.exit
 
 _RNvXs0_NtCsity1gTxgZvF_18tracing_subscriber3fmtNtB5_10SubscriberNtNtCsaMQbKjKCVRW_12tracing_core10subscriber10Subscriber14max_level_hintB7_.exit: ; preds = %bb.a, %bb.b
-  %.sroa.07.0.i.i.i = phi i64 [ %spec.select.i.i, %bb.b ], [ %.val.i.i, %bb.a ] ; 9 uses
+  %.sroa.07.0.i.i.i = phi i64 [ %spec.select.i.i, %bb.b ], [ %.val.i.i, %bb.a ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) @8, i64 16, i1 false)
   %i.i = call { i64, ptr } @_RNvXs0_NtCsity1gTxgZvF_18tracing_subscriber3fmtNtB5_10SubscriberNtNtCsaMQbKjKCVRW_12tracing_core10subscriber10Subscriber12downcast_rawB7_(ptr noundef nonnull align 8 %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(16) %i.a)
@@ -231,29 +231,32 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.t, label %bb.h, label %bb.d
 
 bb.f:                                             ; preds = %bb.c
-  %.not.i.i = icmp eq i64 %.sroa.07.0.i.i.i, -1   ; 2 uses
-  %or.cond28.i = and i1 %.not.i.i, %i.k
-  br i1 %or.cond28.i, label %_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit, label %bb.g
+  %.not25.i = icmp ne i64 %.sroa.07.0.i.i.i, -2   ; 2 uses
+  %or.cond28.i = and i1 %.not25.i, %i.k
+  br i1 %or.cond28.i, label %1, label %bb.g
 
 .thread29.i:                                      ; preds = %bb.d
-  %.not.i33.i = icmp eq i64 %.sroa.07.0.i.i.i, -1 ; 2 uses
+  %.not.i33.i = icmp eq i64 %.sroa.07.0.i.i.i, -1
   %or.cond2834.i = and i1 %.not.i33.i, %i.k
   br i1 %or.cond2834.i, label %_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit, label %.thread37.i
 
 bb.g:                                             ; preds = %bb.f
-  %.not25.not.i = icmp eq i64 %.sroa.07.0.i.i.i, -2
-  br i1 %.not25.not.i, label %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i, label %.thread37.i
+  br i1 %.not25.i, label %.thread37.i, label %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i
 
-.thread37.i:                                      ; preds = %bb.g, %.thread29.i
-  %.not.i3640.i = phi i1 [ %.not.i.i, %bb.g ], [ %.not.i33.i, %.thread29.i ]
+.thread37.i:                                      ; preds = %1, %bb.g, %.thread29.i
   %.not.i.i.i.i.i = icmp eq i64 %.val, -1
   %..i.i.i.i.i = select i1 %.not.i.i.i.i.i, i64 5, i64 %.val
-  %.sroa.01.0.i.i.i.i.i = select i1 %.not.i3640.i, i64 5, i64 %.sroa.07.0.i.i.i
+  %.not2.i.i.i.i.i = icmp eq i64 %.sroa.07.0.i.i.i, -1
+  %.sroa.01.0.i.i.i.i.i = select i1 %.not2.i.i.i.i.i, i64 5, i64 %.sroa.07.0.i.i.i
   %i.u = icmp samesign ult i64 %..i.i.i.i.i, %.sroa.01.0.i.i.i.i.i
   br i1 %i.u, label %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i, label %_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit
 
 _RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i: ; preds = %.thread37.i, %bb.g
   br label %_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit
+
+1:                                                ; preds = %bb.f
+  %.not.i.old.i = icmp eq i64 %.sroa.07.0.i.i.i, -1
+  br i1 %.not.i.old.i, label %_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit, label %.thread37.i
 
 bb.h:                                             ; preds = %bb.e
   br i1 %.not13.i, label %_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit, label %bb.i
@@ -267,8 +270,8 @@ bb.i:                                             ; preds = %bb.h
   %..i24.i = select i1 %i.v, i64 %.val, i64 %.sroa.07.0.i.i.i
   br label %_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit
 
-_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit: ; preds = %_RNvXs0_NtCsity1gTxgZvF_18tracing_subscriber3fmtNtB5_10SubscriberNtNtCsaMQbKjKCVRW_12tracing_core10subscriber10Subscriber14max_level_hintB7_.exit, %bb.d, %bb.f, %.thread29.i, %.thread37.i, %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i, %bb.h, %bb.i
-  %.sroa.07.0.i = phi i64 [ -2, %bb.d ], [ %.val, %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i ], [ %.val, %_RNvXs0_NtCsity1gTxgZvF_18tracing_subscriber3fmtNtB5_10SubscriberNtNtCsaMQbKjKCVRW_12tracing_core10subscriber10Subscriber14max_level_hintB7_.exit ], [ -2, %bb.h ], [ %.val, %bb.f ], [ %.sroa.07.0.i.i.i, %.thread37.i ], [ %..i24.i, %bb.i ], [ %.val, %.thread29.i ]
+_RNvMs3_NtNtCsity1gTxgZvF_18tracing_subscriber5layer7layeredINtB5_7LayeredNtNtNtB9_6filter7targets7TargetsNtNtB9_3fmt10SubscriberE15pick_level_hintB9_.exit: ; preds = %_RNvXs0_NtCsity1gTxgZvF_18tracing_subscriber3fmtNtB5_10SubscriberNtNtCsaMQbKjKCVRW_12tracing_core10subscriber10Subscriber14max_level_hintB7_.exit, %bb.d, %.thread29.i, %.thread37.i, %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i, %1, %bb.h, %bb.i
+  %.sroa.07.0.i = phi i64 [ -2, %bb.d ], [ %.val, %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionNtNtCsaMQbKjKCVRW_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsity1gTxgZvF_18tracing_subscriber.exit.i.i ], [ %.val, %_RNvXs0_NtCsity1gTxgZvF_18tracing_subscriber3fmtNtB5_10SubscriberNtNtCsaMQbKjKCVRW_12tracing_core10subscriber10Subscriber14max_level_hintB7_.exit ], [ -2, %bb.h ], [ %.val, %1 ], [ %.sroa.07.0.i.i.i, %.thread37.i ], [ %..i24.i, %bb.i ], [ %.val, %.thread29.i ]
   ret i64 %.sroa.07.0.i
 }
 

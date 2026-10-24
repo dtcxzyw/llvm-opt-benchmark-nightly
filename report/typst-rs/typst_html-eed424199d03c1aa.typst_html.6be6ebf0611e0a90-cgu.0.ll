@@ -205,10 +205,13 @@ bb.ek:                                            ; preds = %bb.eg
 bb.el:                                            ; preds = %bb.ek
   %i.afa = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i, i64 16
   %i.afb = call fastcc noundef zeroext i1 @_RNvNtCs9gmjTwvRRSu_10typst_html6encode19wants_pretty_around(ptr noalias nofree noundef readonly align 16 captures(address, read_provenance) dereferenceable(112) %i.afa), !noalias !16117, !inline_history !15855 ; 2 uses
-  %2 = zext i1 %i.afb to i8                       ; 2 uses
   %i.afc = trunc nuw i8 %.sroa.03.0.ph.i to i1
   %or.cond.i = or i1 %i.afb, %i.afc
-  br i1 %or.cond.i, label %.thread.i179.a, label %_RNvNtCs9gmjTwvRRSu_10typst_html6encode12write_indent.exit30.i
+  br i1 %or.cond.i, label %.thread.i179, label %_RNvNtCs9gmjTwvRRSu_10typst_html6encode12write_indent.exit30.i
+
+.thread.i179:                                     ; preds = %bb.el
+  %2 = zext i1 %i.afb to i8
+  br label %.thread.i179.a
 
 .loopexit58.i:                                    ; preds = %bb.eg, %bb.eg, %bb.ek
   %i.afd = trunc nuw i8 %.sroa.03.0.ph.i to i1
@@ -220,8 +223,8 @@ bb.em:                                            ; preds = %.loopexit58.i
   call void @llvm.experimental.noalias.scope.decl(metadata !16131)
   br i1 %i.afe, label %.thread.i179.a, label %_RNvNtCs9gmjTwvRRSu_10typst_html6encode12write_indent.exit30.i
 
-.thread.i179.a:                                   ; preds = %bb.el, %bb.em
-  %.sroa.08.1117.i = phi i8 [ 0, %bb.em ], [ %2, %bb.el ] ; 2 uses
+.thread.i179.a:                                   ; preds = %bb.em, %.thread.i179
+  %.sroa.08.1117.i = phi i8 [ %2, %.thread.i179 ], [ 0, %bb.em ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !16132)
   %i.aff = load i64, ptr %i.ak, align 8, !alias.scope !16133, !noundef !52 ; 5 uses
   %i.afg = icmp sgt i64 %i.aff, -1
@@ -285,7 +288,7 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VechE15append_elementsCs9gmjTwvRRSu_10ty
   br i1 %exitcond.not.i26.i, label %_RNvNtCs9gmjTwvRRSu_10typst_html6encode12write_indent.exit30.i, label %.lr.ph.i22.i
 
 _RNvNtCs9gmjTwvRRSu_10typst_html6encode12write_indent.exit30.i: ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VechE15append_elementsCs9gmjTwvRRSu_10typst_html.exit.i25.i, %_RNvMNtCs1xwejQucwHj_5alloc6stringNtB2_6String4push.exit.i18.i, %bb.em, %.loopexit58.i, %bb.el
-  %.sroa.08.2.i = phi i8 [ 0, %.loopexit58.i ], [ %2, %bb.el ], [ 0, %bb.em ], [ %.sroa.08.1117.i, %_RNvMNtCs1xwejQucwHj_5alloc6stringNtB2_6String4push.exit.i18.i ], [ %.sroa.08.1117.i, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VechE15append_elementsCs9gmjTwvRRSu_10typst_html.exit.i25.i ]
+  %.sroa.08.2.i = phi i8 [ 0, %.loopexit58.i ], [ 0, %bb.el ], [ 0, %bb.em ], [ %.sroa.08.1117.i, %_RNvMNtCs1xwejQucwHj_5alloc6stringNtB2_6String4push.exit.i18.i ], [ %.sroa.08.1117.i, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VechE15append_elementsCs9gmjTwvRRSu_10typst_html.exit.i25.i ]
   %i.agb = load i64, ptr %.sroa.05.0.i, align 16, !range !56, !alias.scope !16140, !noalias !16117, !noundef !52
   switch i64 %i.agb, label %default.unreachable [
     i64 0, label %_RNvNtCs9gmjTwvRRSu_10typst_html6encode10write_node.exit.i

@@ -200,11 +200,11 @@ bb.ba:                                            ; preds = %bb.ag
 
 bb.bb:                                            ; preds = %.sink.split, %.loopexit408, %.loopexit407, %.loopexit411, %.loopexit406, %.loopexit409, %bb.ba
   %.4197.ph471 = phi ptr [ %.2195.peel, %.loopexit409 ], [ %.2195.peel, %bb.ba ], [ %.0193352, %.loopexit406 ], [ %.0193352, %.loopexit411 ], [ %.0193352, %.loopexit407 ], [ null, %.loopexit408 ], [ %.4197.ph471.ph, %.sink.split ]
-  %.1186344376470 = phi i64 [ 0, %.loopexit409 ], [ 0, %bb.ba ], [ 0, %.loopexit406 ], [ 0, %.loopexit411 ], [ 0, %.loopexit407 ], [ 0, %.loopexit408 ], [ %.1186344, %.sink.split ] ; 4 uses
+  %.1186344376470 = phi i64 [ 0, %.loopexit409 ], [ 0, %bb.ba ], [ 0, %.loopexit406 ], [ 0, %.loopexit411 ], [ 0, %.loopexit407 ], [ 0, %.loopexit408 ], [ %.1186344, %.sink.split ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #4
   %i.jf = icmp ult i64 %.0227347, %4
   %or.cond253 = select i1 %i.jf, i1 true, i1 %i.aw
-  br i1 %or.cond253, label %bb.bc, label %.loopexit279
+  br i1 %or.cond253, label %bb.bc, label %.loopexit279.thread
 
 bb.bc:                                            ; preds = %bb.bb
   %i.jg = sub i64 %4, %.0227347
@@ -229,12 +229,16 @@ bb.bc:                                            ; preds = %bb.bb
   %.not247 = icmp eq i64 %i.jl, 0
   br i1 %.not247, label %.loopexit279, label %.lr.ph358, !llvm.loop !10
 
-.loopexit279:                                     ; preds = %.lr.ph358, %bb.bc, %bb.bb
+.loopexit279:                                     ; preds = %.lr.ph358, %bb.bc
   %.not249359 = icmp eq i64 %.1186344376470, 0
   %or.cond573 = or i1 %i.aw, %.not249359
   br i1 %or.cond573, label %.loopexit, label %.lr.ph362.preheader
 
-.lr.ph362.preheader:                              ; preds = %.loopexit279
+.loopexit279.thread:                              ; preds = %bb.bb
+  %.not249359.old = icmp eq i64 %.1186344376470, 0
+  br i1 %.not249359.old, label %.loopexit, label %.lr.ph362.preheader
+
+.lr.ph362.preheader:                              ; preds = %.loopexit279, %.loopexit279.thread
   %i.jm = icmp sgt i64 %.2206, 0
   %.2200..2187 = select i1 %i.jm, i64 %.1199, i64 %.1186344376470
   %.pn248 = sub i64 %.0227347, %.2200..2187
@@ -252,7 +256,7 @@ bb.bc:                                            ; preds = %bb.bb
   %.not249 = icmp eq i64 %i.jp, 0
   br i1 %.not249, label %.loopexit, label %.lr.ph362, !llvm.loop !11
 
-.loopexit:                                        ; preds = %.lr.ph362, %.loopexit279
+.loopexit:                                        ; preds = %.lr.ph362, %.loopexit279.thread, %.loopexit279
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #4
   br label %.thread263
 

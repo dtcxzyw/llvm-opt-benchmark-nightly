@@ -202,7 +202,7 @@ bb.a:
   %8 = alloca %struct.StringInfoData, align 8     ; 4 uses
   %i.d = alloca [1024 x i8], align 16             ; 6 uses
   %i.e = alloca [1024 x i8], align 16             ; 4 uses
-  %9 = alloca %struct.LogicalRepStreamAbortData, align 8 ; 7 uses
+  %9 = alloca %struct.LogicalRepStreamAbortData, align 8 ; 8 uses
   %10 = alloca %struct.StringInfoData, align 8    ; 4 uses
   %i.f = alloca i8, align 1                       ; 4 uses
   %i.g = alloca i32, align 4                      ; 5 uses
@@ -605,9 +605,10 @@ get_transaction_apply_action.exit.thread32.i:     ; preds = %am_parallel_apply_w
 bb.ex:                                            ; preds = %get_transaction_apply_action.exit.thread32.i
   call void @BufFileClose(ptr noundef nonnull %i.yk) #15
   store ptr null, ptr @stream_fd, align 8
-  br label %bb.ey
+  call void @pa_stream_abort(ptr noundef nonnull %9) #15
+  br label %bb.fa
 
-bb.ey:                                            ; preds = %bb.ex, %get_transaction_apply_action.exit.thread32.i
+bb.ey:                                            ; preds = %get_transaction_apply_action.exit.thread32.i
   call void @pa_stream_abort(ptr noundef nonnull %9) #15
   br i1 %i.vo, label %bb.fa, label %bb.ez
 
@@ -615,7 +616,7 @@ bb.ez:                                            ; preds = %bb.ey
   call void @pa_decr_and_wait_stream_block() #15
   br label %bb.fa
 
-bb.fa:                                            ; preds = %bb.ez, %bb.ey
+bb.fa:                                            ; preds = %bb.ez, %bb.ey, %bb.ex
   %i.ym = call zeroext i1 @errstart(i32 noundef 14, ptr noundef null) #15
   br i1 %i.ym, label %bb.fb, label %apply_handle_stream_abort.exit
 

@@ -205,18 +205,17 @@ bb.he:                                            ; preds = %_ZN5arrow19is_base_
 
 .thread.i:                                        ; preds = %bb.he, %_ZN5arrow19is_base_binary_likeENS_4Type4typeE.exit33.i, %bb.gz
   %i.vg = phi ptr [ %i.ui, %_ZN5arrow19is_base_binary_likeENS_4Type4typeE.exit33.i ], [ %i.ui, %bb.gz ], [ %i.um, %bb.he ] ; 2 uses
-  %i.vh = phi i32 [ %i.uo, %_ZN5arrow19is_base_binary_likeENS_4Type4typeE.exit33.i ], [ %i.uo, %bb.gz ], [ %.pre14.i, %bb.he ] ; 5 uses
-  switch i32 %i.vh, label %.thread11.i [
+  %i.vh = phi i32 [ %i.uo, %_ZN5arrow19is_base_binary_likeENS_4Type4typeE.exit33.i ], [ %i.uo, %bb.gz ], [ %.pre14.i, %bb.he ] ; 8 uses
+  %switch.selectcmp.case2.i.i = icmp eq i32 %i.vh, 34
+  switch i32 %i.vh, label %bb.hg [
     i32 34, label %bb.hf
     i32 13, label %bb.hf
-    i32 35, label %bb.hh
-    i32 14, label %bb.hh
   ]
 
 bb.hf:                                            ; preds = %.thread.i, %.thread.i
   %i.vi = getelementptr inbounds nuw i8, ptr %i.vg, i64 40
-  %i.vj = load i32, ptr %i.vi, align 8, !tbaa !150, !noalias !1229 ; 3 uses
-  switch i32 %i.vj, label %bb.hg [
+  %i.vj = load i32, ptr %i.vi, align 8, !tbaa !150, !noalias !1229 ; 4 uses
+  switch i32 %i.vj, label %69 [
     i32 35, label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit46.i
     i32 14, label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit46.i
   ]
@@ -234,17 +233,26 @@ _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit46.i
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #38, !noalias !1229
   br label %_ZN5arrow12_GLOBAL__N_121MaybeMergeBinaryTypesERSt10shared_ptrINS_8DataTypeEES4_RKNS_5Field12MergeOptionsE.exitthread-pre-split
 
-bb.hg:                                            ; preds = %bb.hf
-  switch i32 %i.vh, label %.thread11.i [
-    i32 34, label %bb.hj
+69:                                               ; preds = %bb.hf
+  switch i32 %i.vh, label %bb.hj [
     i32 14, label %bb.hh
     i32 13, label %bb.hi
   ]
 
-bb.hh:                                            ; preds = %bb.hg, %.thread.i, %.thread.i
+bb.hg:                                            ; preds = %.thread.i
+  %switch.selectcmp.case1.i479.i = icmp eq i32 %i.vh, 14 ; 2 uses
+  %switch.selectcmp.case2.i4810.i = icmp eq i32 %i.vh, 35 ; 2 uses
+  switch i32 %i.vh, label %.thread11.i [
+    i32 35, label %bb.hh
+    i32 14, label %bb.hh
+  ]
+
+bb.hh:                                            ; preds = %bb.hg, %bb.hg, %69
+  %switch.selectcmp.case2.i4817.i = phi i1 [ %switch.selectcmp.case2.i4810.i, %bb.hg ], [ false, %69 ], [ %switch.selectcmp.case2.i4810.i, %bb.hg ]
+  %switch.selectcmp.case1.i4714.i = phi i1 [ %switch.selectcmp.case1.i479.i, %bb.hg ], [ true, %69 ], [ %switch.selectcmp.case1.i479.i, %bb.hg ]
   %i.vm = getelementptr inbounds nuw i8, ptr %i.vg, i64 40
-  %i.vn = load i32, ptr %i.vm, align 8, !tbaa !150, !noalias !1229 ; 3 uses
-  switch i32 %i.vn, label %.thread7.i [
+  %i.vn = load i32, ptr %i.vm, align 8, !tbaa !150, !noalias !1229 ; 2 uses
+  switch i32 %i.vn, label %bb.ho [
     i32 34, label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit57.i
     i32 13, label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit57.i
   ]
@@ -262,19 +270,14 @@ _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit57.i
   call void @llvm.lifetime.end.p0(ptr nonnull %43) #38, !noalias !1229
   br label %_ZN5arrow12_GLOBAL__N_121MaybeMergeBinaryTypesERSt10shared_ptrINS_8DataTypeEES4_RKNS_5Field12MergeOptionsE.exitthread-pre-split
 
-bb.hi:                                            ; preds = %bb.hg
+bb.hi:                                            ; preds = %69
   %i.vq = icmp eq i32 %i.vj, 34
   br i1 %i.vq, label %bb.hk, label %.thread11.i
 
-.thread7.i:                                       ; preds = %bb.hh
-  switch i32 %i.vh, label %.thread11.i [
-    i32 35, label %bb.ho
-    i32 14, label %69
-  ]
-
-bb.hj:                                            ; preds = %bb.hg
+bb.hj:                                            ; preds = %69
   %i.vr = icmp eq i32 %i.vj, 13
-  br i1 %i.vr, label %bb.hk, label %.thread11.i
+  %or.cond.i52 = and i1 %switch.selectcmp.case2.i.i, %i.vr
+  br i1 %or.cond.i52, label %bb.hk, label %bb.ho
 
 bb.hk:                                            ; preds = %bb.hj, %bb.hi
   %i.vs = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow10large_utf8Ev()
@@ -305,15 +308,18 @@ bb.hn:                                            ; preds = %bb.hl
   %i.wa = atomicrmw volatile add ptr %i.vw, i32 1 acq_rel, align 4, !noalias !1229 ; 0 uses
   br label %_ZN5arrow12_GLOBAL__N_121MaybeMergeBinaryTypesERSt10shared_ptrINS_8DataTypeEES4_RKNS_5Field12MergeOptionsE.exitthread-pre-split
 
-69:                                               ; preds = %.thread7.i
-  %70 = icmp eq i32 %i.vn, 35
-  br i1 %70, label %bb.hp, label %.thread11.i
+bb.ho:                                            ; preds = %bb.hh, %bb.hj
+  %switch.selectcmp.case1.i4712.i194 = phi i1 [ false, %bb.hj ], [ %switch.selectcmp.case1.i4714.i, %bb.hh ]
+  %switch.selectcmp.case2.i4815.i193 = phi i1 [ false, %bb.hj ], [ %switch.selectcmp.case2.i4817.i, %bb.hh ]
+  %70 = phi i32 [ %i.vj, %bb.hj ], [ %i.vn, %bb.hh ] ; 2 uses
+  %71 = icmp eq i32 %70, 35
+  %or.cond40.i = and i1 %switch.selectcmp.case1.i4712.i194, %71
+  %i.wb = icmp eq i32 %70, 14
+  %or.cond41.i = and i1 %switch.selectcmp.case2.i4815.i193, %i.wb
+  %or.cond45.i = or i1 %or.cond40.i, %or.cond41.i
+  br i1 %or.cond45.i, label %bb.hp, label %.thread11.i
 
-bb.ho:                                            ; preds = %.thread7.i
-  %i.wb = icmp eq i32 %i.vn, 14
-  br i1 %i.wb, label %bb.hp, label %.thread11.i
-
-bb.hp:                                            ; preds = %bb.ho, %69
+bb.hp:                                            ; preds = %bb.ho
   %i.wc = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow12large_binaryEv()
           to label %.noexc61 unwind label %bb.hu  ; 0 uses
 
@@ -342,7 +348,7 @@ bb.hs:                                            ; preds = %bb.hq
   %i.wk = atomicrmw volatile add ptr %i.wg, i32 1 acq_rel, align 4, !noalias !1229 ; 0 uses
   br label %_ZN5arrow12_GLOBAL__N_121MaybeMergeBinaryTypesERSt10shared_ptrINS_8DataTypeEES4_RKNS_5Field12MergeOptionsE.exitthread-pre-split
 
-.thread11.i:                                      ; preds = %bb.ha, %bb.ho, %69, %bb.hj, %.thread7.i, %bb.hi, %bb.hg, %.thread.i, %bb.gx
+.thread11.i:                                      ; preds = %bb.ha, %bb.ho, %bb.hi, %bb.hg, %bb.gx
   store i64 0, ptr %66, align 8
   br label %bb.hv
 

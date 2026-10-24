@@ -204,10 +204,10 @@ bb.an:                                            ; preds = %.thread.thread
   %i.ds = icmp eq ptr %4, %i.dr                   ; 3 uses
   %i.dt = getelementptr i8, ptr %.1, i64 80       ; 2 uses
   %i.du = load ptr, ptr %i.dt, align 8
-  %i.dv = icmp eq ptr %4, %i.du                   ; 3 uses
+  %i.dv = icmp eq ptr %4, %i.du                   ; 2 uses
   %i.dw = getelementptr i8, ptr %.1, i64 88       ; 2 uses
   %i.dx = load ptr, ptr %i.dw, align 8
-  %i.dy = icmp eq ptr %4, %i.dx                   ; 3 uses
+  %i.dy = icmp eq ptr %4, %i.dx                   ; 2 uses
   %i.dz = getelementptr i8, ptr %.1, i64 96       ; 2 uses
   %i.ea = load ptr, ptr %i.dz, align 8
   %i.eb = icmp eq ptr %4, %i.ea                   ; 2 uses
@@ -230,6 +230,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
+  %6 = phi i1 [ %i.dv, %bb.ap ], [ true, %bb.aq ] ; 2 uses
   %.not17 = xor i1 %i.dy, true
   %or.cond19 = or i1 %i.d, %.not17
   br i1 %or.cond19, label %bb.at, label %bb.as
@@ -240,6 +241,7 @@ bb.as:                                            ; preds = %bb.ar
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
+  %7 = phi i1 [ %i.dy, %bb.ar ], [ true, %bb.as ] ; 2 uses
   %.not20 = xor i1 %i.eb, true
   %or.cond22 = or i1 %i.d, %.not20
   br i1 %or.cond22, label %.thread244, label %bb.au
@@ -250,9 +252,9 @@ bb.au:                                            ; preds = %bb.at
   br label %.thread244
 
 .thread244:                                       ; preds = %bb.an, %bb.au, %bb.at
-  %i.ec = phi i1 [ %i.dy, %bb.at ], [ %i.dy, %bb.au ], [ false, %bb.an ]
+  %i.ec = phi i1 [ %7, %bb.at ], [ %7, %bb.au ], [ false, %bb.an ]
   %i.ed = phi i1 [ %i.ds, %bb.at ], [ %i.ds, %bb.au ], [ false, %bb.an ]
-  %i.ee = phi i1 [ %i.dv, %bb.at ], [ %i.dv, %bb.au ], [ false, %bb.an ]
+  %i.ee = phi i1 [ %6, %bb.at ], [ %6, %bb.au ], [ false, %bb.an ]
   %i.ef = phi i1 [ %i.eb, %bb.at ], [ true, %bb.au ], [ false, %bb.an ]
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8
   %i.eg = sext i8 %.0184.in to i64

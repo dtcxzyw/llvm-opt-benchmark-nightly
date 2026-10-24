@@ -205,16 +205,16 @@ bb.fs:                                            ; preds = %.noexc509, %bb.fr
   %i.yk = zext i1 %i.yj to i32
   %i.yl = add i32 %i.ye, %i.yk
   %i.ym = invoke noundef zeroext i1 @_ZN4cvc58internal6theory11quantifiers15CegInstantiator22constructInstantiationERNS2_10SolvedFormEj(ptr noundef nonnull align 8 dereferenceable(992) %0, ptr noundef nonnull align 8 dereferenceable(120) %4, i32 noundef %i.yl)
-          to label %bb.ft unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.ft unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 bb.ft:                                            ; preds = %bb.fs
   %.not = xor i1 %i.ym, true
   %or.cond = or i1 %5, %.not
-  br i1 %or.cond, label %bb.fu, label %..loopexit_crit_edge
+  br i1 %or.cond, label %bb.fu, label %45
 
 bb.fu:                                            ; preds = %bb.ft
   invoke void @_ZN4cvc58internal6theory11quantifiers10SolvedForm8pop_backERNS2_14TermPropertiesE(ptr noundef nonnull align 8 dereferenceable(120) %4, ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %45 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.fv:                                            ; preds = %bb.fi
   %i.yn = landingpad { ptr, i32 }
@@ -232,14 +232,19 @@ bb.fx:                                            ; preds = %bb.fw, %bb.fv
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %43) #23
   br label %.loopexit.split-lp
 
-..loopexit_crit_edge:                             ; preds = %bb.ft
+45:                                               ; preds = %bb.ft, %bb.fu
+  %.not2 = xor i1 %i.ym, true
+  %or.cond4 = or i1 %5, %.not2
+  br i1 %or.cond4, label %.thread, label %..loopexit_crit_edge
+
+..loopexit_crit_edge:                             ; preds = %45
   %.pre810 = load ptr, ptr %37, align 8, !tbaa !99
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %37, i64 8
   %.pre811 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !100
   br label %.loopexit
 
-.thread:                                          ; preds = %bb.fu, %._crit_edge
-  %i.yp = phi i1 [ false, %._crit_edge ], [ %i.ym, %bb.fu ] ; 2 uses
+.thread:                                          ; preds = %._crit_edge, %45
+  %i.yp = phi i1 [ %i.ym, %45 ], [ false, %._crit_edge ] ; 2 uses
   %i.yq = load ptr, ptr %i.hv, align 8, !tbaa !74 ; 2 uses
   %.not742788 = icmp eq ptr %i.yq, %i.ht
   br i1 %.not742788, label %._crit_edge790, label %.lr.ph

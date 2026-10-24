@@ -205,7 +205,7 @@ _RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer19finis
 bb.af:                                            ; preds = %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer19finish_rest_literal.exit, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer12prepare_line.exit
   %i.fs = phi i32 [ %.pre, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer19finish_rest_literal.exit ], [ %i.fb, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer12prepare_line.exit ] ; 2 uses
   %i.ft = icmp ne i32 %i.fs, 1
-  %i.fu = icmp eq i64 %i.ei, 0                    ; 4 uses
+  %i.fu = icmp eq i64 %i.ei, 0                    ; 2 uses
   %or.cond243 = select i1 %i.ft, i1 true, i1 %i.fu
   br i1 %or.cond243, label %bb.ai, label %bb.ag
 
@@ -283,6 +283,7 @@ _RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer18start
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer18start_rest_literal.exit, %bb.af
+  %4 = phi i1 [ false, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer18start_rest_literal.exit ], [ %i.fu, %bb.af ] ; 3 uses
   %i.gu = phi i32 [ %.pr392, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer18start_rest_literal.exit ], [ %i.fs, %bb.af ]
   %i.gv = icmp eq i32 %i.gu, 0
   br i1 %i.gv, label %bb.aj, label %bb.ak
@@ -292,7 +293,7 @@ bb.aj:                                            ; preds = %bb.ai
           to label %bb.al unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
 bb.ak:                                            ; preds = %.thread678, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer13start_doctest.exit, %bb.al, %bb.ai
-  %i.gx = phi i1 [ %i.fg, %.thread678 ], [ %i.fu, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer13start_doctest.exit ], [ %i.fu, %bb.al ], [ %i.fu, %bb.ai ] ; 2 uses
+  %i.gx = phi i1 [ %i.fg, %.thread678 ], [ %4, %_RNvMNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7generalNtB2_8Renderer13start_doctest.exit ], [ %4, %bb.al ], [ %4, %bb.ai ] ; 2 uses
   %i.gy = load i32, ptr %i.x, align 8, !range !1413, !noundef !4 ; 2 uses
   %i.gz = icmp eq i32 %i.gy, 0
   br i1 %i.gz, label %bb.an, label %bb.ao

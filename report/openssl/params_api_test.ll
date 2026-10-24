@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %or.cond = or i1 %i.h, %i.k
-  br i1 %or.cond, label %bb.p, label %bb.o
+  br i1 %or.cond, label %3, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ao = load i64, ptr %i.c, align 8
@@ -213,11 +213,15 @@ bb.o:                                             ; preds = %bb.n
   %.not47 = icmp eq i32 %i.ap, 0
   br i1 %.not47, label %bb.z, label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.aq = icmp samesign ult i64 %2, 8
-  br i1 %i.aq, label %bb.q, label %bb.y
+3:                                                ; preds = %bb.n
+  %4 = icmp samesign ult i64 %2, 8
+  br i1 %4, label %bb.q, label %bb.y
 
-bb.q:                                             ; preds = %bb.p
+bb.p:                                             ; preds = %bb.o
+  %i.aq = icmp samesign ult i64 %2, 8
+  br i1 %i.aq, label %bb.u, label %bb.y
+
+bb.q:                                             ; preds = %3
   br i1 %i.k, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %bb.q
@@ -242,7 +246,7 @@ bb.t:                                             ; preds = %bb.s
   %.not53 = icmp eq i32 %i.ba, 0
   br i1 %.not53, label %bb.z, label %bb.x
 
-bb.u:                                             ; preds = %bb.q
+bb.u:                                             ; preds = %bb.p, %bb.q
   %i.bb = call i32 @OSSL_PARAM_set_uint32(ptr noundef nonnull %0, i32 noundef 12345) #3
   %i.bc = icmp ne i32 %i.bb, 0
   %i.bd = zext i1 %i.bc to i32
@@ -272,7 +276,7 @@ bb.x:                                             ; preds = %bb.w, %bb.t
   %.not54 = icmp eq i32 %i.bo, 0
   br i1 %.not54, label %bb.z, label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %bb.p
+bb.y:                                             ; preds = %bb.p, %bb.x, %3
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.x, %bb.u, %bb.v, %bb.w, %bb.r, %bb.s, %bb.t, %bb.o, %bb.m, %bb.l, %bb.j, %bb.f, %bb.g, %bb.i, %bb.c, %bb.d, %bb.y

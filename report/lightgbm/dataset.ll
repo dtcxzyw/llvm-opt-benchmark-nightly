@@ -205,19 +205,22 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.noexc.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
   %or.cond = and i1 %5, %6
-  br i1 %or.cond, label %bb.a, label %bb.b
+  br i1 %or.cond, label %bb.b, label %bb.a
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  call void (ptr, ...) @_ZN8LightGBM3Log5FatalEPKcz(ptr noundef nonnull @.str.1)
-  br label %bb.b
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 432
+  %18 = load i32, ptr %17, align 8, !tbaa !95
+  %19 = icmp slt i32 %18, 1
+  br i1 %19, label %bb.c, label %bb.d
 
-bb.b:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+bb.b:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  call void (ptr, ...) @_ZN8LightGBM3Log5FatalEPKcz(ptr noundef nonnull @.str.1)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.p = load i32, ptr %i.o, align 8, !tbaa !95
   %i.q = icmp slt i32 %i.p, 1
-  br i1 %i.q, label %bb.c, label %bb.d
+  br i1 %i.q, label %bb.c, label %bb.e
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.a
   %i.r = call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #37 ; 7 uses
   store i32 0, ptr %i.r, align 8, !tbaa !113
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4
@@ -232,10 +235,10 @@ bb.c:                                             ; preds = %bb.b
   store i8 %i.e, ptr %i.t, align 1, !tbaa !116
   br label %bb.bm
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %bb.a
   br i1 %5, label %bb.e, label %bb.l
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.b, %bb.d
   %i.x = call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #37 ; 9 uses
   store i32 0, ptr %i.x, align 8, !tbaa !113
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4 ; 2 uses
@@ -638,19 +641,22 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.noexc.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
   %or.cond = and i1 %5, %6
-  br i1 %or.cond, label %bb.a, label %bb.b
+  br i1 %or.cond, label %bb.b, label %bb.a
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  call void (ptr, ...) @_ZN8LightGBM3Log5FatalEPKcz(ptr noundef nonnull @.str.1)
-  br label %bb.b
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 432
+  %18 = load i32, ptr %17, align 8, !tbaa !95
+  %19 = icmp slt i32 %18, 1
+  br i1 %19, label %bb.c, label %bb.d
 
-bb.b:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+bb.b:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  call void (ptr, ...) @_ZN8LightGBM3Log5FatalEPKcz(ptr noundef nonnull @.str.1)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.p = load i32, ptr %i.o, align 8, !tbaa !95
   %i.q = icmp slt i32 %i.p, 1
-  br i1 %i.q, label %bb.c, label %bb.d
+  br i1 %i.q, label %bb.c, label %bb.e
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.a
   %i.r = call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #37 ; 7 uses
   store i32 0, ptr %i.r, align 8, !tbaa !113
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4
@@ -665,10 +671,10 @@ bb.c:                                             ; preds = %bb.b
   store i8 %i.e, ptr %i.t, align 1, !tbaa !116
   br label %bb.bm
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %bb.a
   br i1 %5, label %bb.e, label %bb.l
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.b, %bb.d
   %i.x = call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #37 ; 9 uses
   store i32 0, ptr %i.x, align 8, !tbaa !113
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4 ; 2 uses
@@ -1071,19 +1077,22 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.noexc.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
   %or.cond = and i1 %5, %6
-  br i1 %or.cond, label %bb.a, label %bb.b
+  br i1 %or.cond, label %bb.b, label %bb.a
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  call void (ptr, ...) @_ZN8LightGBM3Log5FatalEPKcz(ptr noundef nonnull @.str.1)
-  br label %bb.b
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 432
+  %18 = load i32, ptr %17, align 8, !tbaa !95
+  %19 = icmp slt i32 %18, 1
+  br i1 %19, label %bb.c, label %bb.d
 
-bb.b:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+bb.b:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  call void (ptr, ...) @_ZN8LightGBM3Log5FatalEPKcz(ptr noundef nonnull @.str.1)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.p = load i32, ptr %i.o, align 8, !tbaa !95
   %i.q = icmp slt i32 %i.p, 1
-  br i1 %i.q, label %bb.c, label %bb.d
+  br i1 %i.q, label %bb.c, label %bb.e
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.a
   %i.r = call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #37 ; 7 uses
   store i32 0, ptr %i.r, align 8, !tbaa !113
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4
@@ -1098,10 +1107,10 @@ bb.c:                                             ; preds = %bb.b
   store i8 %i.e, ptr %i.t, align 1, !tbaa !116
   br label %bb.bm
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %bb.a
   br i1 %5, label %bb.e, label %bb.l
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.b, %bb.d
   %i.x = call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #37 ; 9 uses
   store i32 0, ptr %i.x, align 8, !tbaa !113
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4 ; 2 uses

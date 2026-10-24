@@ -204,12 +204,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = and i32 %4, 2
-  %.not58 = icmp ne i32 %i.g, 0                   ; 4 uses
-  %.not59 = icmp eq ptr %2, null                  ; 4 uses
+  %.not58 = icmp eq i32 %i.g, 0                   ; 4 uses
+  %.not59 = icmp eq ptr %2, null                  ; 5 uses
   br i1 %.not59, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %. = select i1 %.not58, ptr %i.a, ptr null
+  %. = select i1 %.not58, ptr null, ptr %i.a
   %i.h = tail call ptr (ptr, ...) @xstrfmt(ptr noundef nonnull @.str.14, ptr noundef %0) #18 ; 2 uses
   %i.i = call ptr @resolve_gitdir_gently(ptr noundef %i.h, ptr noundef %.) #18
   %.not.i.not = icmp eq ptr %i.i, null
@@ -230,8 +230,9 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %brmerge = or i1 %.not59, %.not58
-  br i1 %brmerge, label %bb.m, label %bb.g
+  %.not58.not = xor i1 %.not58, true
+  %brmerge = or i1 %.not59, %.not58.not
+  br i1 %brmerge, label %11, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
@@ -290,15 +291,20 @@ _.exit:                                           ; preds = %bb.k, %bb.l
   %i.ag = call i32 (ptr, ...) @error(ptr noundef %.0.i, ptr noundef %0) #18 ; 0 uses
   br label %bb.an
 
-bb.m:                                             ; preds = %bb.f, %submodule_has_dirty_index.exit
-  %i.ah = and i32 %4, 1
-  %.not63.a = icmp eq i32 %i.ah, 0                ; 2 uses
-  br i1 %.not63.a, label %bb.n, label %bb.z
+11:                                               ; preds = %bb.f
+  %12 = and i32 %4, 1
+  %.not63 = icmp eq i32 %12, 0
+  br i1 %.not63, label %bb.n, label %bb.z
 
-bb.n:                                             ; preds = %bb.m
+bb.m:                                             ; preds = %submodule_has_dirty_index.exit
+  %i.ah = and i32 %4, 1
+  %.not63.a = icmp eq i32 %i.ah, 0
+  br i1 %.not63.a, label %bb.o, label %bb.z
+
+bb.n:                                             ; preds = %11
   br i1 %.not59, label %bb.t, label %bb.o
 
-bb.o:                                             ; preds = %bb.n
+bb.o:                                             ; preds = %bb.m, %bb.n
   %i.ai = call i32 @submodule_uses_gitfile(ptr noundef %0)
   %.not64 = icmp eq i32 %i.ai, 0
   br i1 %.not64, label %bb.p, label %bb.q
@@ -382,7 +388,8 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.p, %bb.s
-  br i1 %.not58, label %bb.y, label %bb.z
+  %brmerge70 = or i1 %.not59, %.not58
+  br i1 %brmerge70, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
@@ -398,8 +405,8 @@ bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   br label %bb.z
 
-bb.z:                                             ; preds = %.thread, %bb.x, %bb.y, %bb.m
-  %.str.85..str.84 = phi ptr [ @.str.85, %.thread ], [ @.str.85, %bb.x ], [ @.str.85, %bb.y ], [ @.str.84, %bb.m ]
+bb.z:                                             ; preds = %.thread, %bb.m, %bb.x, %bb.y, %11
+  %.not6377 = phi i1 [ false, %bb.m ], [ true, %bb.x ], [ true, %bb.y ], [ false, %11 ], [ true, %.thread ] ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
   call void @prepare_other_repo_env(ptr noundef nonnull %i.bs, ptr noundef nonnull @.str.28) #18
   %i.bt = getelementptr inbounds nuw i8, ptr %7, i64 104 ; 4 uses
@@ -412,8 +419,9 @@ bb.z:                                             ; preds = %.thread, %bb.x, %bb
   %.not65 = icmp eq ptr %1, null
   %i.bx = select i1 %.not65, ptr @.str.83, ptr %1
   %i.by = call ptr (ptr, ptr, ...) @strvec_pushf(ptr noundef nonnull %7, ptr noundef nonnull @.str.82, ptr noundef nonnull %i.bx, ptr noundef %0) #18 ; 0 uses
+  %.str.85..str.84 = select i1 %.not6377, ptr @.str.85, ptr @.str.84
   %i.bz = call ptr @strvec_push(ptr noundef nonnull %7, ptr noundef nonnull %.str.85..str.84) #18 ; 0 uses
-  br i1 %.not58, label %bb.ac, label %bb.aa
+  br i1 %.not58, label %bb.aa, label %bb.ac
 
 bb.aa:                                            ; preds = %bb.z
   %i.ca = call ptr @strvec_push(ptr noundef nonnull %7, ptr noundef nonnull @.str.87) #18 ; 0 uses
@@ -461,7 +469,7 @@ _.exit75:                                         ; preds = %bb.af, %bb.ag
   br label %bb.an
 
 bb.ah:                                            ; preds = %bb.ae
-  br i1 %.not63.a, label %bb.ai, label %bb.an
+  br i1 %.not6377, label %bb.ai, label %bb.an
 
 bb.ai:                                            ; preds = %bb.ah
   br i1 %.not66, label %bb.ak, label %bb.aj

@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !15
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !15   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !15   ; 3 uses
   %i.e = tail call i64 @l_Lean_Meta_Sym_hashPtrExpr_unsafe__1(ptr noundef %1) #5
   %i.f = tail call ptr @l_Lean_PersistentHashMap_findAux___at___00Lean_PersistentHashMap_find_x3f___at___00Lean_Meta_Grind_Arith_Linear_getAssignment_x3f_spec__0_spec__0___redArg(ptr noundef %i.b, i64 noundef %i.e, ptr noundef %1) ; 11 uses
   %i.g = ptrtoint ptr %i.f to i64                 ; 2 uses
@@ -226,7 +226,7 @@ lean_obj_tag.exit.thread:                         ; preds = %bb.a
 
 bb.b:                                             ; preds = %lean_obj_tag.exit.thread, %lean_obj_tag.exit
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !15   ; 13 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !15   ; 14 uses
   %.val = load i32, ptr %i.f, align 8, !tbaa !12
   %i.o = icmp eq i32 %.val, 1                     ; 2 uses
   %.pre = ptrtoint ptr %i.n to i64                ; 2 uses
@@ -288,7 +288,12 @@ lean_dec.exit43:                                  ; preds = %bb.b, %lean_inc.exi
 
 .split:                                           ; preds = %lean_dec.exit43
   %i.aa = icmp ult ptr %i.n, %i.x
-  br i1 %i.aa, label %bb.r, label %bb.l
+  br i1 %i.aa, label %.thread, label %bb.l
+
+.thread:                                          ; preds = %.split
+  %2 = load ptr, ptr @l_instInhabitedRat, align 8, !tbaa !15
+  %3 = tail call ptr @l_Lean_PersistentArray_get_x21___redArg(ptr noundef %2, ptr noundef nonnull %i.d, ptr noundef %i.n) #5
+  br label %lean_dec.exit39
 
 lean_nat_lt.exit:                                 ; preds = %lean_dec.exit43
   %i.ab = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %i.n, ptr noundef %i.x) #5
@@ -325,9 +330,9 @@ bb.q:                                             ; preds = %bb.p
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.n) #5
   br label %lean_dec.exit41
 
-bb.r:                                             ; preds = %.split, %lean_nat_lt.exit
+bb.r:                                             ; preds = %lean_nat_lt.exit
   %i.ah = load ptr, ptr @l_instInhabitedRat, align 8, !tbaa !15
-  %i.ai = tail call ptr @l_Lean_PersistentArray_get_x21___redArg(ptr noundef %i.ah, ptr noundef nonnull %i.d, ptr noundef %i.n) #5 ; 2 uses
+  %i.ai = tail call ptr @l_Lean_PersistentArray_get_x21___redArg(ptr noundef %i.ah, ptr noundef nonnull %i.d, ptr noundef %i.n) #5 ; 4 uses
   br i1 %.not.i52, label %lean_dec.exit39, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -348,12 +353,13 @@ bb.v:                                             ; preds = %bb.u
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.n) #5
   br label %lean_dec.exit39
 
-lean_dec.exit39:                                  ; preds = %bb.v, %bb.u, %bb.t, %bb.r
+lean_dec.exit39:                                  ; preds = %.thread, %bb.v, %bb.u, %bb.t, %bb.r
+  %4 = phi ptr [ %3, %.thread ], [ %i.ai, %bb.v ], [ %i.ai, %bb.u ], [ %i.ai, %bb.t ], [ %i.ai, %bb.r ] ; 2 uses
   br i1 %i.o, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %lean_dec.exit39
   %i.am = getelementptr inbounds nuw i8, ptr %.037, i64 8
-  store ptr %i.ai, ptr %i.am, align 8, !tbaa !15
+  store ptr %4, ptr %i.am, align 8, !tbaa !15
   br label %lean_dec.exit41
 
 bb.x:                                             ; preds = %lean_dec.exit39
@@ -371,7 +377,7 @@ lean_alloc_ctor.exit:                             ; preds = %bb.x
   store i32 1, ptr %i.an, align 4, !tbaa !12
   store i32 16842768, ptr %i.ap, align 4
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 8
-  store ptr %i.ai, ptr %i.aq, align 8, !tbaa !15
+  store ptr %4, ptr %i.aq, align 8, !tbaa !15
   br label %lean_dec.exit41
 
 bb.z:                                             ; preds = %lean_obj_tag.exit

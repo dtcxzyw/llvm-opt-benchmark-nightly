@@ -205,7 +205,7 @@ bb.a:
   %i.i = getelementptr inbounds i8, ptr %i.d, i64 %i.h
   %i.j = load i8, ptr %i.i, align 1, !tbaa !196
   %i.k = icmp eq i8 %i.g, 0                       ; 6 uses
-  %i.l = icmp ne i8 %i.j, 0                       ; 4 uses
+  %i.l = icmp ne i8 %i.j, 0                       ; 5 uses
   %or.cond.i.i = and i1 %i.k, %i.l
   br i1 %or.cond.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit.thread.thread, label %bb.b
 
@@ -336,7 +336,11 @@ bb.i:                                             ; preds = %.thread56, %bb.h
   %i.cc = phi i1 [ %i.v, %.thread56 ], [ %i.cb, %bb.h ] ; 3 uses
   %i.cd = phi i32 [ %i.r, %.thread56 ], [ %i.bx, %bb.h ] ; 7 uses
   %or.cond3.i.i33 = or i1 %i.k, %i.cc
-  br i1 %or.cond3.i.i33, label %bb.j, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36.thread60
+  br i1 %or.cond3.i.i33, label %bb.j, label %.thread62
+
+.thread62:                                        ; preds = %bb.i
+  %.not = xor i1 %i.l, true
+  br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.ce = getelementptr inbounds nuw i8, ptr %4, i64 880
@@ -360,13 +364,14 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT
   %spec.select.i.i35 = select i1 %i.cr, i1 %i.cs, i1 false
   br i1 %spec.select.i.i35, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit26.thread, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36.thread60
 
-_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36.thread60: ; preds = %bb.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36
+_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36.thread60: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36
   %.not.a = xor i1 %i.l, true                     ; 2 uses
   %or.cond.i.i37 = and i1 %i.cc, %.not.a
   br i1 %or.cond.i.i37, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit26.thread, label %bb.k
 
-bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36.thread60
-  %or.cond3.i.i38 = or i1 %i.cc, %.not.a
+bb.k:                                             ; preds = %.thread62, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36.thread60
+  %5 = phi i1 [ %.not, %.thread62 ], [ %.not.a, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit36.thread60 ]
+  %or.cond3.i.i38 = or i1 %5, %i.cc
   br i1 %or.cond3.i.i38, label %bb.l, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7CaDiCaL18subsume_less_noccsEEclIPiS6_EEbT_T0_.exit41.thread63
 
 bb.l:                                             ; preds = %bb.k

@@ -202,16 +202,16 @@ bb.v:                                             ; preds = %xfer_recv_resp.exit
 bb.w:                                             ; preds = %xfer_recv_resp.exit.thread133.thread.i
   %i.cc = icmp ne i64 %i.bs, 0
   %or.cond.i.i = or i1 %i.bt, %i.cc
-  br i1 %or.cond.i.i, label %bb.x, label %bb.y
+  br i1 %or.cond.i.i, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
   %spec.select.i.i = select i1 %i.bt, i32 129, i32 1
   %i.cd = call i32 @Curl_client_write(ptr noundef nonnull %0, i32 noundef %spec.select.i.i, ptr noundef %i.ac, i64 noundef %i.bs) #7
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
-  %.031.i.i = phi i32 [ %i.cb, %bb.v ], [ %i.cd, %bb.x ], [ 0, %bb.w ] ; 3 uses
-  %i.ce = icmp eq i32 %.031.i.i, 0                ; 2 uses
+bb.y:                                             ; preds = %bb.x, %bb.v
+  %.031.i.i = phi i32 [ %i.cb, %bb.v ], [ %i.cd, %bb.x ] ; 2 uses
+  %i.ce = icmp eq i32 %.031.i.i, 0
   %or.cond3.i.i = and i1 %i.bt, %i.ce
   br i1 %or.cond3.i.i, label %bb.z, label %bb.aa
 
@@ -221,7 +221,8 @@ bb.z:                                             ; preds = %bb.y
   store i32 %i.cg, ptr %i.u, align 1
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %bb.y
+bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.w
+  %.03140.i.i = phi i32 [ 0, %bb.z ], [ %.031.i.i, %bb.y ], [ 0, %bb.w ] ; 3 uses
   %i.ch = load i64, ptr %i.x, align 1
   %i.ci = and i64 %i.ch, 536870912
   %.not36.i.i = icmp eq i64 %i.ci, 0
@@ -248,11 +249,12 @@ bb.ad:                                            ; preds = %bb.ab
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.cp = zext i1 %i.bt to i32
-  call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.11, i64 noundef %i.bs, i32 noundef %i.cp, i32 noundef %.031.i.i) #7
+  call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.11, i64 noundef %i.bs, i32 noundef %i.cp, i32 noundef %.03140.i.i) #7
   br label %Curl_xfer_write_resp.exit.i
 
 Curl_xfer_write_resp.exit.i:                      ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.aa
-  br i1 %i.ce, label %bb.af, label %sendrecv_dl.exit.thread
+  %.not113.i = icmp eq i32 %.03140.i.i, 0
+  br i1 %.not113.i, label %bb.af, label %sendrecv_dl.exit.thread
 
 bb.af:                                            ; preds = %Curl_xfer_write_resp.exit.i
   %i.cq = load i32, ptr %i.u, align 1             ; 2 uses
@@ -384,7 +386,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw, %bb.
   br label %.loopexit
 
 sendrecv_dl.exit.thread:                          ; preds = %Curl_xfer_write_resp.exit.i, %bb.t, %xfer_recv_resp.exit.i, %bb.e, %xfer_recv_resp.exit.thread.i
-  %.289.i.ph = phi i32 [ %i.s, %bb.e ], [ 2, %xfer_recv_resp.exit.thread.i ], [ %.031.i.i, %Curl_xfer_write_resp.exit.i ], [ %i.bp, %bb.t ], [ %.1.i.i, %xfer_recv_resp.exit.i ]
+  %.289.i.ph = phi i32 [ %i.s, %bb.e ], [ 2, %xfer_recv_resp.exit.thread.i ], [ %.03140.i.i, %Curl_xfer_write_resp.exit.i ], [ %i.bp, %bb.t ], [ %.1.i.i, %xfer_recv_resp.exit.i ]
   %i.ee = load ptr, ptr %i.b, align 8, !tbaa !83
   call void @Curl_multi_xfer_buf_release(ptr noundef nonnull %0, ptr noundef %i.ee) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
@@ -787,15 +789,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.j = icmp ne i64 %2, 0
   %or.cond = or i1 %i.j, %3
-  br i1 %or.cond, label %bb.d, label %bb.e
+  br i1 %or.cond, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
   %spec.select = select i1 %3, i32 129, i32 1
   %i.k = tail call i32 @Curl_client_write(ptr noundef nonnull %0, i32 noundef %spec.select, ptr noundef %1, i64 noundef %2) #7
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.031 = phi i32 [ %i.i, %bb.b ], [ %i.k, %bb.d ], [ 0, %bb.c ] ; 3 uses
+bb.e:                                             ; preds = %bb.d, %bb.b
+  %.031 = phi i32 [ %i.i, %bb.b ], [ %i.k, %bb.d ] ; 2 uses
   %i.l = icmp eq i32 %.031, 0
   %or.cond3 = and i1 %3, %i.l
   br i1 %or.cond3, label %bb.f, label %bb.g
@@ -807,7 +809,8 @@ bb.f:                                             ; preds = %bb.e
   store i32 %i.o, ptr %i.m, align 1
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e
+bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e
+  %.03140 = phi i32 [ 0, %bb.f ], [ %.031, %bb.e ], [ 0, %bb.c ] ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.q = load i64, ptr %i.p, align 1
   %i.r = and i64 %i.q, 536870912
@@ -836,11 +839,11 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.i, %bb.j
   %i.z = zext i1 %3 to i32
-  tail call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.11, i64 noundef %2, i32 noundef %i.z, i32 noundef %.031) #7
+  tail call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.11, i64 noundef %2, i32 noundef %i.z, i32 noundef %.03140) #7
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.g
-  ret i32 %.031
+  ret i32 %.03140
 }
 
 declare i32 @Curl_client_write(ptr noundef, i32 noundef, ptr noundef, i64 noundef) local_unnamed_addr #2
@@ -887,15 +890,15 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.m = icmp ne i64 %2, 0
   %or.cond.i = or i1 %i.m, %3
-  br i1 %or.cond.i, label %bb.f, label %bb.g
+  br i1 %or.cond.i, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   %spec.select.i = select i1 %3, i32 129, i32 1
   %i.n = tail call i32 @Curl_client_write(ptr noundef nonnull %0, i32 noundef %spec.select.i, ptr noundef %1, i64 noundef %2) #7
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
-  %.031.i = phi i32 [ %i.l, %bb.d ], [ %i.n, %bb.f ], [ 0, %bb.e ] ; 6 uses
+bb.g:                                             ; preds = %bb.f, %bb.d
+  %.031.i = phi i32 [ %i.l, %bb.d ], [ %i.n, %bb.f ] ; 2 uses
   %i.o = icmp eq i32 %.031.i, 0
   %or.cond3.i = and i1 %3, %i.o
   br i1 %or.cond3.i, label %bb.h, label %bb.i
@@ -907,7 +910,8 @@ bb.h:                                             ; preds = %bb.g
   store i32 %i.r, ptr %i.p, align 1
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g
+bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e
+  %.03140.i = phi i32 [ 0, %bb.h ], [ %.031.i, %bb.g ], [ 0, %bb.e ] ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.t = load i64, ptr %i.s, align 1
   %i.u = and i64 %i.t, 536870912
@@ -936,11 +940,11 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.ac = zext i1 %3 to i32
-  tail call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.11, i64 noundef %2, i32 noundef %i.ac, i32 noundef %.031.i) #7
+  tail call void (ptr, ptr, ...) @Curl_trc_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.11, i64 noundef %2, i32 noundef %i.ac, i32 noundef %.03140.i) #7
   br label %Curl_xfer_write_resp.exit
 
 Curl_xfer_write_resp.exit:                        ; preds = %bb.m, %bb.l, %bb.k, %bb.i, %bb.b
-  %.0 = phi i32 [ %i.i, %bb.b ], [ %.031.i, %bb.i ], [ %.031.i, %bb.k ], [ %.031.i, %bb.l ], [ %.031.i, %bb.m ]
+  %.0 = phi i32 [ %i.i, %bb.b ], [ %.03140.i, %bb.i ], [ %.03140.i, %bb.k ], [ %.03140.i, %bb.l ], [ %.03140.i, %bb.m ]
   ret i32 %.0
 }
 

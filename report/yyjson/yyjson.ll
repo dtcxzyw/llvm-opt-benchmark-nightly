@@ -205,28 +205,29 @@ bb.d:                                             ; preds = %.lr.ph154
   %i.ad = load i8, ptr %.048150, align 1, !tbaa !100
   %i.ae = add i8 %i.ad, -48
   %i.af = zext i8 %i.ae to i64
-  %i.ag = add i64 %i.ab, %i.af                    ; 3 uses
-  %i.ah = add i32 %.046151, 1                     ; 5 uses
+  %i.ag = add i64 %i.ab, %i.af                    ; 5 uses
+  %i.ah = add i32 %.046151, 1                     ; 6 uses
   %i.ai = icmp eq ptr %i.ac, %.050                ; 2 uses
   %i.aj = and i1 %i.n, %i.ai
-  br i1 %i.aj, label %bb.e, label %bb.f, !prof !45
+  br i1 %i.aj, label %bb.e, label %6, !prof !45
+
+6:                                                ; preds = %bb.d
+  %7 = icmp eq i32 %i.ah, 19
+  br i1 %7, label %bb.f, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   %i.ak = urem i64 %i.ag, 10
-  %i.al = add i64 %i.ag, 1
-  %6 = sub i64 %i.al, %i.ak
-  br label %bb.f
+  %8 = sub i64 %i.ag, %i.ak
+  %i.al = add i64 %8, 1                           ; 2 uses
+  %9 = icmp eq i32 %i.ah, 19
+  br i1 %9, label %bb.f, label %.split51.preheader
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1 = phi i64 [ %6, %bb.e ], [ %i.ag, %bb.d ]   ; 2 uses
-  %i.am = icmp eq i32 %i.ah, 19
-  br i1 %i.am, label %.split.preheader, label %bb.h
+bb.f:                                             ; preds = %bb.e, %6
+  %.1 = phi i64 [ %i.al, %bb.e ], [ %i.ag, %6 ]   ; 4 uses
+  %i.am = icmp eq i32 %.promoted131, 0
+  br i1 %i.am, label %._crit_edge121, label %.lr.ph120.preheader
 
-.split.preheader:                                 ; preds = %bb.f
-  %.not157 = icmp eq i32 %.promoted131, 0
-  br i1 %.not157, label %._crit_edge121, label %.lr.ph120.preheader
-
-.lr.ph120.preheader:                              ; preds = %.split.preheader
+.lr.ph120.preheader:                              ; preds = %bb.f
   %wide.trip.count187 = zext i32 %.promoted131 to i64
   br label %.lr.ph120
 
@@ -246,8 +247,8 @@ bb.g:                                             ; preds = %.lr.ph120
   %i.ap = trunc nuw i64 %indvars.iv184 to i32
   br label %._crit_edge121
 
-._crit_edge121:                                   ; preds = %._crit_edge121.loopexit, %.split.preheader
-  %.018.i.lcssa = phi i32 [ 0, %.split.preheader ], [ %i.ap, %._crit_edge121.loopexit ] ; 2 uses
+._crit_edge121:                                   ; preds = %._crit_edge121.loopexit, %bb.f
+  %.018.i.lcssa = phi i32 [ 0, %bb.f ], [ %i.ap, %._crit_edge121.loopexit ] ; 2 uses
   %i.aq = icmp ult i32 %.018.i.lcssa, %.promoted131
   br i1 %i.aq, label %.lr.ph128.preheader, label %bigint_mul_pow10.exit61
 
@@ -319,10 +320,11 @@ bb.g:                                             ; preds = %.lr.ph120
   %.not19.i = icmp eq i128 %.lcssa285, 0
   br i1 %.not19.i, label %bigint_mul_pow10.exit61, label %bigint_mul_pow10.exit61.sink.split
 
-bb.h:                                             ; preds = %bb.f
+bb.h:                                             ; preds = %6
   br i1 %i.ai, label %.split51.preheader, label %bigint_add_u64.exit
 
-.split51.preheader:                               ; preds = %bb.h
+.split51.preheader:                               ; preds = %bb.e, %bb.h
+  %.19297 = phi i64 [ %i.ag, %bb.h ], [ %i.al, %bb.e ] ; 5 uses
   %i.bv = icmp sgt i32 %i.ah, 18
   br i1 %i.bv, label %.lr.ph103, label %.split51._crit_edge
 
@@ -560,6 +562,7 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph115.ne
 bigint_mul_pow10.exit61.sink.split:               ; preds = %._crit_edge116, %._crit_edge129
   %.promoted131.sink257 = phi i32 [ %.promoted131, %._crit_edge129 ], [ %i.dq, %._crit_edge116 ] ; 2 uses
   %.lcssa250.sink = phi i64 [ %.lcssa284.a, %._crit_edge129 ], [ %.lcssa281, %._crit_edge116 ]
+  %.193.ph = phi i64 [ %.1, %._crit_edge129 ], [ %.19297, %._crit_edge116 ]
   %i.fd = add i32 %.promoted131.sink257, 1        ; 5 uses
   store i32 %i.fd, ptr %0, align 8, !tbaa !130
   %i.fe = zext i32 %.promoted131.sink257 to i64
@@ -568,12 +571,13 @@ bigint_mul_pow10.exit61.sink.split:               ; preds = %._crit_edge116, %._
   br label %bigint_mul_pow10.exit61
 
 bigint_mul_pow10.exit61:                          ; preds = %bb.l, %bb.g, %bigint_mul_pow10.exit61.sink.split, %._crit_edge108, %._crit_edge121, %._crit_edge129, %.split51._crit_edge, %._crit_edge116
-  %i.fg = phi i32 [ %i.dp, %.split51._crit_edge ], [ %i.dp, %._crit_edge116 ], [ %i.dp, %._crit_edge108 ], [ %i.z, %._crit_edge129 ], [ %i.z, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %i.z, %._crit_edge121 ], [ %i.dp, %bb.l ] ; 8 uses
-  %.promoted131213 = phi i32 [ %.promoted131214, %.split51._crit_edge ], [ %.promoted131214, %._crit_edge116 ], [ %.promoted131214, %._crit_edge108 ], [ %.promoted131, %._crit_edge129 ], [ %.promoted131, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %.promoted131, %._crit_edge121 ], [ %.promoted131214, %bb.l ]
-  %i.fh = phi i32 [ %i.dq, %.split51._crit_edge ], [ %i.dq, %._crit_edge116 ], [ %i.dq, %._crit_edge108 ], [ %.promoted131, %._crit_edge129 ], [ %.promoted131, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %.promoted131, %._crit_edge121 ], [ %i.dq, %bb.l ]
-  %.promoted206 = phi i32 [ %.promoted207, %.split51._crit_edge ], [ %i.dq, %._crit_edge116 ], [ %i.dq, %._crit_edge108 ], [ %.promoted131, %._crit_edge129 ], [ %.promoted131, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %.promoted131, %._crit_edge121 ], [ %i.dq, %bb.l ]
+  %i.fg = phi i32 [ %i.dp, %._crit_edge108 ], [ %i.dp, %.split51._crit_edge ], [ %i.dp, %._crit_edge116 ], [ %i.z, %._crit_edge129 ], [ %i.z, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %i.z, %._crit_edge121 ], [ %i.dp, %bb.l ] ; 8 uses
+  %.promoted131213 = phi i32 [ %.promoted131214, %._crit_edge108 ], [ %.promoted131214, %.split51._crit_edge ], [ %.promoted131214, %._crit_edge116 ], [ %.promoted131, %._crit_edge129 ], [ %.promoted131, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %.promoted131, %._crit_edge121 ], [ %.promoted131214, %bb.l ]
+  %i.fh = phi i32 [ %i.dq, %._crit_edge108 ], [ %i.dq, %.split51._crit_edge ], [ %i.dq, %._crit_edge116 ], [ %.promoted131, %._crit_edge129 ], [ %.promoted131, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %.promoted131, %._crit_edge121 ], [ %i.dq, %bb.l ]
+  %.promoted206 = phi i32 [ %i.dq, %._crit_edge108 ], [ %.promoted207, %.split51._crit_edge ], [ %i.dq, %._crit_edge116 ], [ %.promoted131, %._crit_edge129 ], [ %.promoted131, %bb.g ], [ %i.fd, %bigint_mul_pow10.exit61.sink.split ], [ %.promoted131, %._crit_edge121 ], [ %i.dq, %bb.l ]
+  %.193 = phi i64 [ %.19297, %._crit_edge108 ], [ %.19297, %.split51._crit_edge ], [ %.19297, %._crit_edge116 ], [ %.1, %._crit_edge129 ], [ %.1, %bb.g ], [ %.193.ph, %bigint_mul_pow10.exit61.sink.split ], [ %.1, %._crit_edge121 ], [ %.19297, %bb.l ]
   %i.fi = load i64, ptr %i.x, align 8, !tbaa !106 ; 2 uses
-  %i.fj = add i64 %i.fi, %.1                      ; 2 uses
+  %i.fj = add i64 %i.fi, %.193                    ; 2 uses
   store i64 %i.fj, ptr %i.x, align 8, !tbaa !106
   %.not.i62 = icmp ult i64 %i.fj, %i.fi
   br i1 %.not.i62, label %bb.n, label %bigint_add_u64.exit, !prof !45
@@ -619,7 +623,7 @@ bigint_add_u64.exit:                              ; preds = %._crit_edge149, %bb
   %.promoted205 = phi i32 [ %.promoted, %bb.q ], [ %.promoted, %bb.h ], [ %.promoted206, %bigint_mul_pow10.exit61 ], [ %i.fg, %bb.o ], [ %i.fo, %._crit_edge149 ]
   %.149 = phi ptr [ %i.fq, %bb.q ], [ %i.ac, %bb.h ], [ %i.ac, %bigint_mul_pow10.exit61 ], [ %i.ac, %bb.o ], [ %i.ac, %._crit_edge149 ] ; 2 uses
   %.147 = phi i32 [ %.046151, %bb.q ], [ %i.ah, %bb.h ], [ 0, %bigint_mul_pow10.exit61 ], [ 0, %bb.o ], [ 0, %._crit_edge149 ]
-  %.2 = phi i64 [ %.045152, %bb.q ], [ %.1, %bb.h ], [ 0, %bigint_mul_pow10.exit61 ], [ 0, %bb.o ], [ 0, %._crit_edge149 ]
+  %.2 = phi i64 [ %.045152, %bb.q ], [ %i.ag, %bb.h ], [ 0, %bigint_mul_pow10.exit61 ], [ 0, %bb.o ], [ 0, %._crit_edge149 ]
   %i.ft = icmp ult ptr %.149, %.050
   br i1 %i.ft, label %.lr.ph154, label %.loopexit, !llvm.loop !467
 

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %.044 = phi ptr [ %1, %bb.b ], [ %i.g, %bb.d ]  ; 11 uses
+  %.044 = phi ptr [ %1, %bb.b ], [ %i.g, %bb.d ]  ; 12 uses
   %i.e = icmp ult ptr %.044, %i.d
   br i1 %i.e, label %bb.d, label %bb.e
 
@@ -221,11 +221,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.k = and i1 %i.i, %i.j
   br i1 %i.k, label %.lr.ph, label %.preheader
 
-.preheader:                                       ; preds = %.lr.ph, %bb.e
-  %.041.lcssa = phi ptr [ %.044, %bb.e ], [ %i.o, %.lr.ph ] ; 2 uses
+.preheader:                                       ; preds = %bb.e
   br i1 %i.i, label %.lr.ph56, label %._crit_edge
 
-.lr.ph56:                                         ; preds = %.preheader
+.lr.ph56:                                         ; preds = %.lr.ph, %.preheader
+  %.041.lcssa68 = phi ptr [ %.044, %.preheader ], [ %i.o, %.lr.ph ]
   %i.l = ptrtoint ptr %.044 to i64
   br label %bb.f
 
@@ -239,7 +239,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.q = icmp ugt ptr %i.o, %1
   %i.r = icmp ult i64 %i.p, %2
   %i.s = select i1 %i.q, i1 %i.r, i1 false
-  br i1 %i.s, label %.lr.ph, label %.preheader, !llvm.loop !167
+  br i1 %i.s, label %.lr.ph, label %.lr.ph56, !llvm.loop !167
 
 bb.f:                                             ; preds = %.lr.ph56, %_ZN6opencc8UTF8Util48IsIncompleteIdeographicDescriptionSequencePrefixEPKcm.exit.thread
   %.055 = phi i64 [ 0, %.lr.ph56 ], [ %i.w, %_ZN6opencc8UTF8Util48IsIncompleteIdeographicDescriptionSequencePrefixEPKcm.exit.thread ] ; 2 uses
@@ -393,9 +393,10 @@ _ZN6opencc8UTF8Util48IsIncompleteIdeographicDescriptionSequencePrefixEPKcm.exit.
   br i1 %i.ci, label %bb.f, label %._crit_edge, !llvm.loop !169
 
 ._crit_edge:                                      ; preds = %_ZN6opencc8UTF8Util48IsIncompleteIdeographicDescriptionSequencePrefixEPKcm.exit.thread, %.preheader
+  %.041.lcssa67 = phi ptr [ %.044, %.preheader ], [ %.041.lcssa68, %_ZN6opencc8UTF8Util48IsIncompleteIdeographicDescriptionSequencePrefixEPKcm.exit.thread ] ; 2 uses
   %.038.lcssa = phi ptr [ %.044, %.preheader ], [ %i.cf, %_ZN6opencc8UTF8Util48IsIncompleteIdeographicDescriptionSequencePrefixEPKcm.exit.thread ] ; 2 uses
-  %i.cj = icmp ult ptr %.038.lcssa, %.041.lcssa
-  %spec.select48 = select i1 %i.cj, ptr %.038.lcssa, ptr %.041.lcssa
+  %i.cj = icmp ult ptr %.038.lcssa, %.041.lcssa67
+  %spec.select48 = select i1 %i.cj, ptr %.038.lcssa, ptr %.041.lcssa67
   %i.ck = ptrtoint ptr %spec.select48 to i64
   %i.cl = ptrtoint ptr %1 to i64
   %i.cm = sub i64 %i.ck, %i.cl

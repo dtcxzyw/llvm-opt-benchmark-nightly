@@ -204,16 +204,16 @@ bb.d:                                             ; preds = %.lr.ph126, %.split1
   %indvars.iv173 = phi i64 [ 0, %.lr.ph126 ], [ %indvars.iv.next174, %.split123.us ] ; 2 uses
   %i.ac = load ptr, ptr %i.f, align 8
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv173
-  %i.ae = load ptr, ptr %i.ad, align 8            ; 21 uses
+  %i.ae = load ptr, ptr %i.ad, align 8            ; 22 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1192
   %i.ag = load i32, ptr %i.af, align 8
   %.fr133 = freeze i32 %i.ag                      ; 39 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 1032 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8
   %.not = icmp ne ptr %i.ai, null
-  %i.aj = icmp ne i32 %.fr133, 0                  ; 4 uses
+  %i.aj = icmp ne i32 %.fr133, 0                  ; 5 uses
   %or.cond = and i1 %.not, %i.aj
-  br i1 %or.cond, label %.lr.ph106.preheader, label %.loopexit99.a
+  br i1 %or.cond, label %.lr.ph106.preheader, label %.loopexit99
 
 .lr.ph106.preheader:                              ; preds = %bb.d
   %wide.trip.count = zext i32 %.fr133 to i64
@@ -235,20 +235,28 @@ bb.d:                                             ; preds = %.lr.ph126, %.split1
   %exitcond.not = icmp eq i64 %indvars.iv.next143, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit99.a, label %.lr.ph106, !llvm.loop !27
 
-.loopexit99.a:                                    ; preds = %.lr.ph106, %bb.d
+.loopexit99:                                      ; preds = %bb.d
+  %1 = getelementptr inbounds nuw i8, ptr %i.ae, i64 1040 ; 2 uses
+  %2 = load ptr, ptr %1, align 8
+  %.not88 = icmp ne ptr %2, null
+  %or.cond128 = and i1 %.not88, %i.aj
+  br i1 %or.cond128, label %.lr.ph108.preheader, label %.loopexit97
+
+.loopexit99.a:                                    ; preds = %.lr.ph106
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ae, i64 1040 ; 2 uses
   %i.as = load ptr, ptr %i.ar, align 8
   %.not88.a = icmp ne ptr %i.as, null
   %or.cond128.a = and i1 %.not88.a, %i.aj
-  br i1 %or.cond128.a, label %.lr.ph108.preheader, label %.loopexit97
+  br i1 %or.cond128.a, label %.lr.ph108.preheader, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader
 
-.lr.ph108.preheader:                              ; preds = %.loopexit99.a
+.lr.ph108.preheader:                              ; preds = %.loopexit99.a, %.loopexit99
+  %3 = phi ptr [ %i.ar, %.loopexit99.a ], [ %1, %.loopexit99 ]
   %wide.trip.count148 = zext i32 %.fr133 to i64
   br label %.lr.ph108
 
 .lr.ph108:                                        ; preds = %.lr.ph108.preheader, %.lr.ph108
   %indvars.iv145 = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvars.iv.next146, %.lr.ph108 ] ; 3 uses
-  %i.at = load ptr, ptr %i.ar, align 8            ; 2 uses
+  %i.at = load ptr, ptr %3, align 8               ; 2 uses
   %i.au = getelementptr inbounds nuw [12 x i8], ptr %i.at, i64 %indvars.iv145 ; 2 uses
   %i.av = trunc nuw i64 %indvars.iv145 to i32
   %i.aw = xor i32 %i.av, -1
@@ -262,10 +270,10 @@ bb.d:                                             ; preds = %.lr.ph126, %.split1
   %exitcond149.not = icmp eq i64 %indvars.iv.next146, %wide.trip.count148
   br i1 %exitcond149.not, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader, label %.lr.ph108, !llvm.loop !28
 
-.loopexit97:                                      ; preds = %.loopexit99.a
+.loopexit97:                                      ; preds = %.loopexit99
   br i1 %i.aj, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader, label %.split123.us
 
-_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader: ; preds = %.lr.ph108, %.loopexit97
+_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader: ; preds = %.lr.ph108, %.loopexit99.a, %.loopexit97
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ae, i64 1128 ; 2 uses
   %i.bb = load ptr, ptr %i.ba, align 8
   %.not91.us = icmp eq ptr %i.bb, null

@@ -82,8 +82,7 @@ condstore.split:                                  ; preds = %bb.a
   %i.ad = or i32 %.3, %3
   %i.ae = icmp slt i32 %i.ad, 0
   %i.af = add i32 %1, -123
-  %i.ag = icmp ult i32 %i.af, -2                  ; 3 uses
-  %spec.select66 = select i1 %i.ag, i32 -1, i32 %.156
+  %i.ag = icmp ult i32 %i.af, -2                  ; 2 uses
   %i.ah = or i1 %i.ag, %i.ae
   br i1 %i.ah, label %.thread.thread89.sink.split, label %.thread
 
@@ -114,23 +113,25 @@ condstore.split69:                                ; preds = %bb.a
   %spec.select84 = select i1 %i.at, i32 7, i32 %spec.select83
   %storemerge = select i1 %i.au, i32 4, i32 %spec.select84 ; 2 uses
   store i32 %storemerge, ptr %i.c, align 4, !tbaa !23
-  %14 = icmp slt i32 %.459, 0                     ; 2 uses
-  %spec.select71 = select i1 %14, i32 -1, i32 %.459
   %i.av = or i32 %.459, %3
   %i.aw = or i32 %i.av, %.8
   %.not85 = icmp sgt i32 %i.aw, -1
-  br i1 %.not85, label %.thread, label %.thread.thread89.sink.split
+  br i1 %.not85, label %.thread, label %.thread74
+
+.thread74:                                        ; preds = %condstore.split69
+  %14 = icmp slt i32 %.459, 0
+  br label %.thread.thread89.sink.split
 
 .thread:                                          ; preds = %condstore.split, %condstore.split69
   %.pr.pr = phi i32 [ %storemerge86, %condstore.split ], [ %storemerge, %condstore.split69 ]
-  %.560.ph.ph = phi i32 [ %spec.select66, %condstore.split ], [ %spec.select71, %condstore.split69 ] ; 3 uses
+  %.560.ph.ph = phi i32 [ %.156, %condstore.split ], [ %.459, %condstore.split69 ] ; 3 uses
   %.9.ph.ph = phi i32 [ %.3, %condstore.split ], [ %.8, %condstore.split69 ] ; 3 uses
   %i.ax = icmp sgt i32 %.pr.pr, -1
   br i1 %i.ax, label %.thread.thread89, label %bb.b
 
-.thread.thread89.sink.split:                      ; preds = %condstore.split69, %condstore.split
-  %.3.sink = phi i32 [ %.3, %condstore.split ], [ %.8, %condstore.split69 ]
-  %.sink = phi i1 [ %i.ag, %condstore.split ], [ %14, %condstore.split69 ]
+.thread.thread89.sink.split:                      ; preds = %condstore.split, %.thread74
+  %.3.sink = phi i32 [ %.8, %.thread74 ], [ %.3, %condstore.split ]
+  %.sink = phi i1 [ %14, %.thread74 ], [ %i.ag, %condstore.split ]
   %i.ay = icmp slt i32 %.3.sink, 0
   %spec.select64 = select i1 %i.ay, i32 2, i32 3
   %spec.select65 = select i1 %.sink, i32 1, i32 %spec.select64

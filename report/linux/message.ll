@@ -205,21 +205,25 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %or.cond = select i1 %i.c, i1 true, i1 %i.f
-  br i1 %or.cond, label %bb.d, label %.thread
+  br i1 %or.cond, label %bb.d, label %..thread_crit_edge
+
+..thread_crit_edge:                               ; preds = %bb.c
+  %.pre = zext nneg i8 %i.b to i64
+  br label %.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr i8, ptr %0, i64 1112
-  %i.h = zext nneg i8 %i.b to i64
+  %i.h = zext nneg i8 %i.b to i64                 ; 2 uses
   %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h
   store ptr %1, ptr %i.i, align 8
   %i.j = xor i1 %i.c, true
   %or.cond3 = select i1 %i.j, i1 true, i1 %i.f
   br i1 %or.cond3, label %.thread, label %bb.e
 
-.thread:                                          ; preds = %bb.c, %bb.d
+.thread:                                          ; preds = %..thread_crit_edge, %bb.d
+  %.pre-phi = phi i64 [ %.pre, %..thread_crit_edge ], [ %i.h, %bb.d ]
   %3 = getelementptr i8, ptr %0, i64 984
-  %4 = zext nneg i8 %i.b to i64
-  %i.k = getelementptr [8 x i8], ptr %3, i64 %4
+  %i.k = getelementptr [8 x i8], ptr %3, i64 %.pre-phi
   store ptr %1, ptr %i.k, align 8
   br label %bb.e
 

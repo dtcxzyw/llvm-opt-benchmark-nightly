@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %.sroa.060.1.i = phi i32 [ %i.ek, %bb.v ], [ %.sroa.060.076.i, %bb.u ] ; 2 uses
   %.sroa.7.1.i = phi i32 [ 0, %bb.v ], [ %.sroa.7.077.i, %bb.u ] ; 2 uses
   %.131.i = phi i32 [ %i.eh, %bb.v ], [ %.03080.i, %bb.u ] ; 5 uses
-  %.1.i = phi i1 [ true, %bb.v ], [ %.02981.i, %bb.u ] ; 3 uses
+  %.1.i = phi i1 [ true, %bb.v ], [ %.02981.i, %bb.u ] ; 2 uses
   %i.em = icmp eq i32 %i.el, 7
   %or.cond.i = select i1 %i.em, i1 %.1.i, i1 false
   br i1 %or.cond.i, label %bb.x, label %bb.y
@@ -213,6 +213,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
+  %.1122.i = phi i1 [ true, %bb.x ], [ %.1.i, %bb.w ] ; 2 uses
   %i.en = phi i32 [ %.pr.i, %bb.x ], [ %i.el, %bb.w ] ; 2 uses
   %i.eo = icmp eq i32 %i.en, 17
   br i1 %i.eo, label %bb.z, label %.thread123.i
@@ -316,7 +317,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEE3Add
 
 .thread123.i:                                     ; preds = %._crit_edge.i, %bb.y, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i
   %.131121129.i = phi i32 [ %.131.i, %._crit_edge.i ], [ %.131.i, %bb.y ], [ %i.eh, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
-  %.1122128.i = phi i1 [ %.1.i, %._crit_edge.i ], [ %.1.i, %bb.y ], [ true, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
+  %.1122128.i = phi i1 [ %.1122.i, %._crit_edge.i ], [ %.1122.i, %bb.y ], [ true, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
   %i.fy = phi i8 [ %.pre90.i, %._crit_edge.i ], [ %i.du, %bb.y ], [ %i.du, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
   %i.fz = phi i32 [ %.pre89.i, %._crit_edge.i ], [ %i.en, %bb.y ], [ 15, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ] ; 4 uses
   %.sroa.060.2.i = phi i32 [ undef, %._crit_edge.i ], [ %.sroa.060.1.i, %bb.y ], [ %i.ek, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterIhE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
@@ -719,7 +720,7 @@ bb.hr:                                            ; preds = %bb.hq, %bb.hp
   %.sroa.060.1.i63 = phi i32 [ %i.aiq, %bb.hq ], [ %.sroa.060.076.i40, %bb.hp ] ; 2 uses
   %.sroa.7.1.i64 = phi i32 [ 0, %bb.hq ], [ %.sroa.7.077.i39, %bb.hp ] ; 2 uses
   %.131.i65 = phi i32 [ %i.ain, %bb.hq ], [ %.03080.i38, %bb.hp ] ; 5 uses
-  %.1.i66 = phi i1 [ true, %bb.hq ], [ %.02981.i37, %bb.hp ] ; 3 uses
+  %.1.i66 = phi i1 [ true, %bb.hq ], [ %.02981.i37, %bb.hp ] ; 2 uses
   %i.ais = icmp eq i32 %i.air, 7
   %or.cond.i67 = select i1 %i.ais, i1 %.1.i66, i1 false
   br i1 %or.cond.i67, label %bb.hs, label %bb.ht
@@ -730,6 +731,7 @@ bb.hs:                                            ; preds = %bb.hr
   br label %bb.ht
 
 bb.ht:                                            ; preds = %bb.hs, %bb.hr
+  %.1122.i68 = phi i1 [ true, %bb.hs ], [ %.1.i66, %bb.hr ] ; 2 uses
   %i.ait = phi i32 [ %.pr.i95, %bb.hs ], [ %i.air, %bb.hr ] ; 2 uses
   %i.aiu = icmp eq i32 %i.ait, 17
   br i1 %i.aiu, label %bb.hu, label %.thread123.i68
@@ -833,7 +835,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE10LookaroundEE3Add
 
 .thread123.i68:                                   ; preds = %._crit_edge.i86, %bb.ht, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterItE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i
   %.131121129.i69 = phi i32 [ %.131.i65, %._crit_edge.i86 ], [ %.131.i65, %bb.ht ], [ %i.ain, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterItE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
-  %.1122128.i70 = phi i1 [ %.1.i66, %._crit_edge.i86 ], [ %.1.i66, %bb.ht ], [ true, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterItE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
+  %.1122128.i70 = phi i1 [ %.1122.i68, %._crit_edge.i86 ], [ %.1122.i68, %bb.ht ], [ true, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterItE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
   %i.ake = phi i8 [ %.pre90.i91, %._crit_edge.i86 ], [ %i.aia, %bb.ht ], [ %i.aia, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterItE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]
   %i.akf = phi i32 [ %.pre89.i90, %._crit_edge.i86 ], [ %i.ait, %bb.ht ], [ 15, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterItE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ] ; 4 uses
   %.sroa.060.2.i71 = phi i32 [ undef, %._crit_edge.i86 ], [ %.sroa.060.1.i63, %bb.ht ], [ %i.aiq, %_ZNSt8optionalIN2v88internal12_GLOBAL__N_114NfaInterpreterItE10LookaroundEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i ]

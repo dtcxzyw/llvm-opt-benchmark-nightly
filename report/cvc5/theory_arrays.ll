@@ -202,13 +202,15 @@ bb.ak:                                            ; preds = %bb.aj
   %i.bs = load ptr, ptr %25, align 8, !tbaa !370
   store ptr %i.bs, ptr %35, align 8, !tbaa !370
   %i.bt = invoke noundef zeroext i1 @_ZNK4cvc58internal6theory2eq14EqualityEngine11areDisequalENS0_12NodeTemplateILb0EEES5_b(ptr noundef nonnull align 8 dereferenceable(1784) %i.bq, ptr noundef nonnull align 8 %34, ptr noundef nonnull align 8 %35, i1 noundef zeroext true)
-          to label %bb.al unwind label %bb.dg
+          to label %50 unwind label %bb.dg
 
-bb.al:                                            ; preds = %bb.ak
+50:                                               ; preds = %bb.ak
+  br i1 %i.bt, label %bb.al, label %.critedge
+
+bb.al:                                            ; preds = %50
   %i.bu = icmp ne i64 %i.bo, 1
   %i.bv = or i1 %i.bk, %i.bu
-  %or.cond = and i1 %i.bv, %i.bt
-  br i1 %or.cond, label %.critedge102, label %.critedge
+  br i1 %i.bv, label %.critedge102, label %.critedge106.thread
 
 .critedge102:                                     ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #25
@@ -584,7 +586,7 @@ bb.cd:                                            ; preds = %.body167, %bb.cc, %
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #25
   br label %bb.dt
 
-.critedge:                                        ; preds = %bb.al
+.critedge:                                        ; preds = %50
   br i1 %i.bk, label %bb.ce, label %.critedge106.thread
 
 bb.ce:                                            ; preds = %.critedge
@@ -902,7 +904,7 @@ bb.dm:                                            ; preds = %.body227, %.body239
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #25
   br label %bb.dt
 
-.critedge106.thread:                              ; preds = %.critedge, %bb.aj, %.critedge106, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit245, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit183
+.critedge106.thread:                              ; preds = %.critedge, %bb.al, %bb.aj, %.critedge106, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit245, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit183
   %i.iv = load ptr, ptr %31, align 8, !tbaa !43   ; 3 uses
   %i.iw = load i64, ptr %i.iv, align 8            ; 3 uses
   %i.ix = and i64 %i.iw, 1152920405095219200

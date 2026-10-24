@@ -204,9 +204,9 @@ bb.a:
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.preheader140.us ] ; 4 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit108.us.us, %.preheader137.us.us
-  %.076149.us.us = phi i32 [ 1, %.preheader137.us.us ], [ %4, %_ZNK6icu_789UVector3210elementAtiEi.exit108.us.us ] ; 2 uses
-  %.079148.us.us = phi i32 [ -1, %.preheader137.us.us ], [ %.281.us.us, %_ZNK6icu_789UVector3210elementAtiEi.exit108.us.us ] ; 3 uses
+bb.b:                                             ; preds = %4, %.preheader137.us.us
+  %.076149.us.us = phi i32 [ 1, %.preheader137.us.us ], [ %5, %4 ] ; 2 uses
+  %.079148.us.us = phi i32 [ -1, %.preheader137.us.us ], [ %.281.us.us, %4 ] ; 4 uses
   %i.o = load ptr, ptr %i.h, align 8, !tbaa !20
   %i.p = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %.076149.us.us)
           to label %bb.c unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -253,15 +253,18 @@ _ZNK6icu_789UVector3210elementAtiEi.exit108.us.us: ; preds = %bb.f, %bb.e
   %i.an = phi i32 [ %i.am, %bb.f ], [ 0, %bb.e ]  ; 3 uses
   %i.ao = icmp slt i32 %.079148.us.us, 0          ; 2 uses
   %.not103.us.us = icmp eq i32 %.079148.us.us, %i.an
-  %cond.us.us = select i1 %i.ao, i1 true, i1 %.not103.us.us
-  %.281.us.us = select i1 %i.ao, i32 %i.an, i32 %.079148.us.us ; 2 uses
-  %4 = add nuw nsw i32 %.076149.us.us, 1          ; 2 uses
-  %5 = icmp slt i32 %4, %i.k
-  %or.cond = select i1 %cond.us.us, i1 %5, i1 false
-  br i1 %or.cond, label %bb.b, label %_ZNK6icu_789UVector3210elementAtiEi.exit108._crit_edge.us.us, !llvm.loop !149
+  %or.cond = select i1 %i.ao, i1 true, i1 %.not103.us.us
+  br i1 %or.cond, label %4, label %_ZNK6icu_789UVector3210elementAtiEi.exit108._crit_edge.us.us
 
-_ZNK6icu_789UVector3210elementAtiEi.exit108._crit_edge.us.us: ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit108.us.us
-  %i.ap = icmp eq i32 %.281.us.us, %i.an
+4:                                                ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit108.us.us
+  %.281.us.us = select i1 %i.ao, i32 %i.an, i32 %.079148.us.us ; 2 uses
+  %5 = add nuw nsw i32 %.076149.us.us, 1          ; 2 uses
+  %exitcond.not = icmp eq i32 %5, %i.k
+  br i1 %exitcond.not, label %_ZNK6icu_789UVector3210elementAtiEi.exit108._crit_edge.us.us, label %bb.b, !llvm.loop !149
+
+_ZNK6icu_789UVector3210elementAtiEi.exit108._crit_edge.us.us: ; preds = %4, %_ZNK6icu_789UVector3210elementAtiEi.exit108.us.us
+  %.079.lcssa.us.us = phi i32 [ %.079148.us.us, %_ZNK6icu_789UVector3210elementAtiEi.exit108.us.us ], [ %.281.us.us, %4 ]
+  %i.ap = icmp eq i32 %.079.lcssa.us.us, %i.an
   br i1 %i.ap, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit108._crit_edge.us.us

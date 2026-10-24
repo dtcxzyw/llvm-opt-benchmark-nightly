@@ -202,7 +202,7 @@ bb.ae:                                            ; preds = %.sink.split, %bb.aa
   %i.ec = load ptr, ptr %i.a, align 8
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 24
   %i.ee = load i32, ptr %i.ed, align 8
-  %i.ef = call ptr @find_job_record(i32 noundef %i.ee) #14 ; 11 uses
+  %i.ef = call ptr @find_job_record(i32 noundef %i.ee) #14 ; 12 uses
   %.not84 = icmp eq ptr %i.ef, null
   br i1 %.not84, label %bb.af, label %bb.ag
 
@@ -248,21 +248,24 @@ bb.al:                                            ; preds = %bb.aj
   %i.er = call fastcc ptr @_get_bb_job(ptr noundef nonnull %i.ef) ; 3 uses
   %i.es = icmp ne ptr %i.er, null                 ; 2 uses
   %or.cond = select i1 %.not85, i1 %i.es, i1 false
-  br i1 %or.cond, label %bb.am, label %bb.an
+  br i1 %or.cond, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
+  %6 = call ptr @bb_find_alloc_rec(ptr noundef nonnull @bb_state, ptr noundef nonnull %i.ef) #14 ; 3 uses
+  %.not87 = icmp eq ptr %6, null
+  br i1 %.not87, label %bb.ba, label %bb.ao
+
+bb.an:                                            ; preds = %bb.al
   call void @bb_set_job_bb_state(ptr noundef nonnull %i.ef, ptr noundef nonnull %i.er, i32 noundef 65) #14
-  br label %bb.an
-
-bb.an:                                            ; preds = %bb.am, %bb.al
-  %i.et = call ptr @bb_find_alloc_rec(ptr noundef nonnull @bb_state, ptr noundef nonnull %i.ef) #14 ; 4 uses
+  %i.et = call ptr @bb_find_alloc_rec(ptr noundef nonnull @bb_state, ptr noundef nonnull %i.ef) #14 ; 2 uses
   %.not87.a = icmp eq ptr %i.et, null
-  br i1 %.not87.a, label %bb.ba, label %bb.ao
+  br i1 %.not87.a, label %bb.bb, label %bb.ap
 
-bb.ao:                                            ; preds = %bb.an
+bb.ao:                                            ; preds = %bb.am
   br i1 %.not85, label %bb.ap, label %bb.at
 
-bb.ap:                                            ; preds = %bb.ao
+bb.ap:                                            ; preds = %bb.an, %bb.ao
+  %7 = phi ptr [ %6, %bb.ao ], [ %i.et, %bb.an ]  ; 2 uses
   %i.eu = load i64, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 336), align 8
   %i.ev = and i64 %i.eu, 1099511627776
   %.not91 = icmp eq i64 %i.ev, 0
@@ -278,10 +281,10 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.aq, %bb.ar, %bb.ap
-  %i.ey = getelementptr inbounds nuw i8, ptr %i.et, i64 144
+  %i.ey = getelementptr inbounds nuw i8, ptr %7, i64 144
   store i16 65, ptr %i.ey, align 8
   %i.ez = call i64 @time(ptr noundef null) #14
-  %i.fa = getelementptr inbounds nuw i8, ptr %i.et, i64 152
+  %i.fa = getelementptr inbounds nuw i8, ptr %7, i64 152
   store i64 %i.ez, ptr %i.fa, align 8
   br label %bb.az
 
@@ -289,7 +292,7 @@ bb.at:                                            ; preds = %bb.ao
   %i.fb = load i32, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 64), align 8
   %i.fc = and i32 %i.fb, 16
   %.not89 = icmp eq i32 %i.fc, 0
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.et, i64 144 ; 2 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %6, i64 144 ; 2 uses
   br i1 %.not89, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
@@ -326,10 +329,10 @@ bb.az:                                            ; preds = %bb.aw, %bb.ay, %bb.
   store i64 %i.fn, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 264), align 8
   br label %bb.bd
 
-bb.ba:                                            ; preds = %bb.an
+bb.ba:                                            ; preds = %bb.am
   br i1 %i.es, label %bb.bb, label %bb.bd
 
-bb.bb:                                            ; preds = %bb.ba
+bb.bb:                                            ; preds = %bb.an, %bb.ba
   %i.fo = getelementptr inbounds nuw i8, ptr %i.er, i64 128
   %i.fp = load i64, ptr %i.fo, align 8
   %.not88 = icmp eq i64 %i.fp, 0

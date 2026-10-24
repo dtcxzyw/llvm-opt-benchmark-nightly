@@ -205,7 +205,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit50:                  ; preds = %_ZNSt6vectorIjSaIjE
 define linkonce_odr void @_ZN8LightGBM23AdvancedLeafConstraints30GoDownToFindConstrainingLeavesEiiibjjRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEEPNS_26FeatureMinOrMaxConstraintsEj(ptr noundef nonnull align 8 dereferenceable(144) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i1 noundef zeroext %4, i32 noundef %5, i32 noundef %6, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 8 dereferenceable(40) %9, ptr noundef %10, i32 noundef %11) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
-  %i.b = alloca i32, align 4                      ; 4 uses
+  %i.b = alloca i32, align 4                      ; 5 uses
   store i32 %6, ptr %i.a, align 4, !tbaa !198
   %i.c = icmp slt i32 %3, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -345,10 +345,11 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br label %_ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit
 
 _ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit: ; preds = %bb.b, %.preheader.i, %.loopexit.loopexit.i
-  %.3.i = phi i16 [ 257, %bb.b ], [ 257, %.preheader.i ], [ %i.bm, %.loopexit.loopexit.i ] ; 2 uses
+  %.3.i = phi i16 [ 257, %bb.b ], [ 257, %.preheader.i ], [ %i.bm, %.loopexit.loopexit.i ] ; 3 uses
+  %.sroa.5.0.extract.shift = lshr i16 %.3.i, 8    ; 2 uses
   %i.bn = icmp eq i32 %i.t, %1                    ; 3 uses
   %i.bo = and i1 %i.e, %i.bn
-  br i1 %i.bo, label %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit, label %bb.k
+  br i1 %i.bo, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %_ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit
   %i.bp = getelementptr inbounds nuw i8, ptr %i.o, i64 88
@@ -361,31 +362,35 @@ bb.k:                                             ; preds = %_ZN8LightGBM27Inter
   %i.bw = load ptr, ptr %i.bu, align 8, !tbaa !347
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bv
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !294 ; 2 uses
-  %i.bz = icmp eq i8 %i.by, 0
-  br i1 %i.bz, label %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit, label %bb.l
-
-bb.l:                                             ; preds = %bb.k
-  %or.cond10.not.i = icmp eq i8 %i.by, %or.cond10.v.i
-  %12 = select i1 %or.cond10.not.i, i16 1, i16 256
-  br label %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit
-
-_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit: ; preds = %_ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit, %bb.k, %bb.l
-  %.sroa.5.0.i = phi i16 [ 257, %bb.k ], [ 257, %_ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit ], [ %12, %bb.l ] ; 2 uses
-  %13 = trunc i16 %.3.i to i1                     ; 2 uses
-  %.not56 = xor i1 %13, true
-  %14 = trunc i16 %.sroa.5.0.i to i1
-  %.not = xor i1 %14, true
-  %15 = and i16 %.3.i, 256
-  %16 = icmp ne i16 %15, 0                        ; 2 uses
+  %12 = icmp eq i8 %i.by, 0
+  %i.bz = icmp eq i8 %i.by, %or.cond10.v.i
+  %13 = select i1 %i.bz, i16 1, i16 256
+  %.sroa.5.0.i = select i1 %12, i16 257, i16 %13  ; 4 uses
+  %14 = trunc i16 %.3.i to i1                     ; 2 uses
+  %.not56 = xor i1 %14, true
+  %15 = trunc i16 %.sroa.5.0.i to i1
+  %.not = xor i1 %15, true
+  %16 = trunc nuw i16 %.sroa.5.0.extract.shift to i1 ; 4 uses
   %or.cond = select i1 %.not, i1 %16, i1 false
   %or.cond58 = select i1 %.not56, i1 true, i1 %or.cond
-  br i1 %or.cond58, label %bb.p, label %bb.m
+  br i1 %or.cond58, label %21, label %bb.m
 
-bb.m:                                             ; preds = %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit
+bb.l:                                             ; preds = %_ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit
+  %17 = trunc i16 %.3.i to i1
+  %18 = trunc nuw i16 %.sroa.5.0.extract.shift to i1 ; 2 uses
+  br i1 %17, label %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit, label %21
+
+_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit: ; preds = %bb.l
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  br label %bb.n
+
+bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br i1 %i.bn, label %bb.n, label %bb.o
 
-bb.n:                                             ; preds = %bb.m
+bb.n:                                             ; preds = %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit, %bb.m
+  %.sroa.5.0.i7276 = phi i16 [ 257, %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit ], [ %.sroa.5.0.i, %bb.m ]
+  %19 = phi i1 [ %18, %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit ], [ %16, %bb.m ]
   %i.ca = add i32 %i.x, 1                         ; 2 uses
   store i32 %i.ca, ptr %i.b, align 4, !tbaa !198
   %i.cb = icmp ult i32 %6, %i.ca
@@ -393,6 +398,8 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
+  %.sroa.5.0.i7275 = phi i16 [ %.sroa.5.0.i7276, %bb.n ], [ %.sroa.5.0.i, %bb.m ]
+  %20 = phi i1 [ %19, %bb.n ], [ %16, %bb.m ]
   %.in = phi ptr [ %..i, %bb.n ], [ %i.a, %bb.m ]
   %i.cc = load i32, ptr %.in, align 4, !tbaa !198
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -401,14 +408,21 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %i.q
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !198
   tail call void @_ZN8LightGBM23AdvancedLeafConstraints30GoDownToFindConstrainingLeavesEiiibjjRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEEPNS_26FeatureMinOrMaxConstraintsEj(ptr noundef nonnull align 8 dereferenceable(144) %0, i32 noundef %1, i32 noundef %2, i32 noundef %i.cg, i1 noundef zeroext %4, i32 noundef %i.n, i32 noundef %i.cc, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 8 dereferenceable(40) %9, ptr noundef %10, i32 noundef %11)
-  br label %bb.p
+  br i1 %20, label %bb.p, label %.loopexit
 
-bb.p:                                             ; preds = %bb.o, %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit
-  %.not78 = xor i1 %16, true
-  %.not54 = icmp samesign ult i16 %.sroa.5.0.i, 256
-  %or.cond6 = and i1 %.not54, %13
-  %or.cond79 = select i1 %.not78, i1 true, i1 %or.cond6
-  br i1 %or.cond79, label %.loopexit, label %tailrecurse
+21:                                               ; preds = %bb.l, %bb.k
+  %22 = phi i1 [ %18, %bb.l ], [ %16, %bb.k ]
+  %23 = phi i1 [ false, %bb.l ], [ %14, %bb.k ]
+  %.sroa.5.0.i73 = phi i16 [ 257, %bb.l ], [ %.sroa.5.0.i, %bb.k ]
+  br i1 %22, label %bb.p, label %.loopexit
+
+bb.p:                                             ; preds = %bb.o, %21
+  %.sroa.5.0.i7378 = phi i16 [ %.sroa.5.0.i7275, %bb.o ], [ %.sroa.5.0.i73, %21 ]
+  %24 = phi i1 [ true, %bb.o ], [ %23, %21 ]
+  %25 = and i16 %.sroa.5.0.i7378, 256
+  %.not54 = icmp eq i16 %25, 0
+  %or.cond6 = and i1 %24, %.not54
+  br i1 %or.cond6, label %.loopexit, label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.p
   %i.ch = add i32 %i.x, 1
@@ -422,7 +436,7 @@ tailrecurse:                                      ; preds = %bb.p
   %i.co = icmp slt i32 %i.cn, 0
   br i1 %i.co, label %tailrecurse._crit_edge, label %bb.b
 
-.loopexit:                                        ; preds = %bb.p, %tailrecurse._crit_edge
+.loopexit:                                        ; preds = %bb.o, %21, %bb.p, %tailrecurse._crit_edge
   ret void
 }
 

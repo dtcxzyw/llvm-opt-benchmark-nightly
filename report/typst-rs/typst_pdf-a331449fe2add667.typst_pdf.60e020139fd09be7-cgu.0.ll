@@ -205,7 +205,7 @@ _RINvMNtNtCsdaEETE4DqmE_13typst_library6layout5sidesINtB3_5SidesRNtNtNtNtCs8jFhW
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !21741
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !21741
   %i.co = load i64, ptr %i.r, align 8, !range !38, !alias.scope !21753, !noalias !21754, !noundef !10 ; 2 uses
-  %.not.i.i.i.i.i.i.i = icmp ne i64 %i.co, -2     ; 7 uses
+  %.not.i.i.i.i.i.i.i = icmp ne i64 %i.co, -2     ; 8 uses
   %i.cp = load i64, ptr %i.cl, align 8, !range !38, !alias.scope !21755, !noalias !21754, !noundef !10 ; 4 uses
   %i.cq = load i64, ptr %i.cm, align 8, !range !38, !alias.scope !21756, !noalias !21754, !noundef !10 ; 2 uses
   %.not.i8.i.i.i.i.i.i = icmp ne i64 %i.cq, -2    ; 4 uses
@@ -214,7 +214,7 @@ _RINvMNtNtCsdaEETE4DqmE_13typst_library6layout5sidesINtB3_5SidesRNtNtNtNtCs8jFhW
   %.not.i12.i.i.i.i.i.i = icmp ne i64 %i.cr, -2   ; 4 uses
   %brmerge.i.i.i.i.i = or i1 %.not.i.i.i.i.i.i.i, %.not.i4.i.i.i.i.i.i
   %brmerge156.i.i.i.i.i = or i1 %brmerge.i.i.i.i.i, %.not.i8.i.i.i.i.i.i
-  %brmerge157.i.i.i.i.i = or i1 %brmerge156.i.i.i.i.i, %.not.i12.i.i.i.i.i.i ; 3 uses
+  %brmerge157.i.i.i.i.i = or i1 %brmerge156.i.i.i.i.i, %.not.i12.i.i.i.i.i.i ; 2 uses
   br i1 %brmerge157.i.i.i.i.i, label %_RNvXsI_NtNtNtCs3oUPovFnLWP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtNtBb_5array4iter8IntoIterRINtNtBb_6option6OptionNtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag11BorderStyleEKj4_EINtB1J_4IterB22_EENtNtNtB9_6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i, label %_RINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB2_34resolve_cell_border_and_backgrounds_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag11BorderStyleEB8_.exit.i.i.i.i
 
 _RNvXsI_NtNtNtCs3oUPovFnLWP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtNtBb_5array4iter8IntoIterRINtNtBb_6option6OptionNtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag11BorderStyleEKj4_EINtB1J_4IterB22_EENtNtNtB9_6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i: ; preds = %_RINvMNtNtCsdaEETE4DqmE_13typst_library6layout5sidesINtB3_5SidesRNtNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table16PrioritzedStrokeE3mapNCNvB12_34resolve_cell_border_and_background0INtNtCs3oUPovFnLWP_4core6option6OptionNtNtNtB7_9visualize6stroke11FixedStrokeEEB18_.exit.i.i.i.i
@@ -255,7 +255,7 @@ _RINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB2_34re
   %i.de = insertelement <2 x double> %i.cz, double %i.dd, i64 1
   %i.df = fdiv <2 x double> %i.de, splat (double 1.270000e+02) ; 2 uses
   %i.dg = extractelement <2 x double> %i.df, i64 0
-  %i.dh = fptrunc double %i.dg to float           ; 5 uses
+  %i.dh = fptrunc double %i.dg to float           ; 6 uses
   %i.di = extractelement <2 x double> %i.df, i64 1
   %i.dj = fptrunc double %i.di to float           ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.r, i64 296
@@ -270,6 +270,12 @@ _RINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB2_34re
   %.mux.mux.mux.i32.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, float %i.dh, float 0.000000e+00
   br i1 %brmerge157.i.i.i.i.i, label %.split.preheader.i.thread168.i.i.i.i.i, label %_RNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB4_34resolve_cell_border_and_backgrounds1_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag13NaiveRgbColorE0Ba_.exit.i.i.thread.i.i.i.i
 
+_RNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB4_34resolve_cell_border_and_backgrounds1_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag13NaiveRgbColorE0Ba_.exit.i.i.thread.i.i.i.i: ; preds = %.lr.ph.i.split.i.i.preheader.i.i.i.i.i
+  store i32 0, ptr %i.q, align 4, !alias.scope !21759, !noalias !21740
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !21740
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !21764
+  br label %_RNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB4_34resolve_cell_border_and_backgrounds1_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag13NaiveRgbColorE0Ba_.exit17.i.i.i.i.i.i
+
 .lr.ph.i.split.us.i.i.preheader.i.i.i.i.i:        ; preds = %_RINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB2_34resolve_cell_border_and_backgrounds_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag11BorderStyleEB8_.exit.i.i.i.i
   %i.dq = fcmp une float %i.bw, %i.dh
   %or.cond.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, i1 %i.dq, i1 false
@@ -279,20 +285,26 @@ _RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIt
   %i.dr = extractelement <2 x float> %i.do, i64 0
   %i.ds = fcmp une float %i.bw, %i.dr
   %or.cond173.i.i.i.i.i = select i1 %.not.i4.i.i.i.i.i.i, i1 %i.ds, i1 false
-  br i1 %or.cond173.i.i.i.i.i, label %.split.preheader.i.thread170.i.i.i.i.i, label %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a
+  br i1 %or.cond173.i.i.i.i.i, label %.split.preheader.i.thread170.i.i.i.i.i, label %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i
 
-_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a: ; preds = %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.i.i.i.i.i
+_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i: ; preds = %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.i.i.i.i.i
   %1 = fcmp une float %i.bw, %i.dj
   %or.cond174.i.i.i.i.i = select i1 %.not.i8.i.i.i.i.i.i, i1 %1, i1 false
+  br i1 %or.cond174.i.i.i.i.i, label %.split.preheader.i.i.i.i.i.i, label %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a
+
+_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a: ; preds = %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i
   %i.dt = extractelement <2 x float> %i.do, i64 1
   %i.du = fcmp une float %i.bw, %i.dt
-  %or.cond175.i.i.i.i.i = select i1 %.not.i12.i.i.i.i.i.i, i1 %i.du, i1 false
-  %or.cond.i.i.i.i.a = select i1 %or.cond174.i.i.i.i.i, i1 true, i1 %or.cond175.i.i.i.i.i
-  br i1 %or.cond.i.i.i.i.a, label %.split.preheader.i.i.i.i.i.i, label %bb.y
+  %or.cond.i.i.i.i.a = select i1 %.not.i12.i.i.i.i.i.i, i1 %i.du, i1 false
+  br i1 %or.cond.i.i.i.i.a, label %.split.preheader.i.i.thread.i.i.i.i, label %bb.y
 
-.split.preheader.i.i.i.i.i.i:                     ; preds = %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a
+.split.preheader.i.i.thread.i.i.i.i:              ; preds = %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a
+  %.mux185.mux.mux.i51.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, float %i.dh, float 0.000000e+00
+  br label %.split.preheader.i.thread168.i.i.i.i.i
+
+.split.preheader.i.i.i.i.i.i:                     ; preds = %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i
   %.mux185.mux.mux.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, float %i.dh, float 0.000000e+00
-  br i1 %brmerge157.i.i.i.i.i, label %.split.preheader.i.thread168.i.i.i.i.i, label %_RNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB4_34resolve_cell_border_and_backgrounds1_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag13NaiveRgbColorE0Ba_.exit.i.i.thread.i.i.i.i
+  br label %.split.preheader.i.thread168.i.i.i.i.i
 
 .split.preheader.i.thread170.i.i.i.i.i:           ; preds = %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.i.i.i.i.i
   br i1 %.not.i.i.i.i.i.i.i, label %.split.preheader.i.thread168.i.i.i.i.i, label %.split.i.thread171.i.i.i.i.i
@@ -300,8 +312,8 @@ _RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIt
 .split.i.thread171.i.i.i.i.i:                     ; preds = %.split.preheader.i.thread170.i.i.i.i.i
   br label %.split.preheader.i.thread168.i.i.i.i.i
 
-.split.preheader.i.thread168.i.i.i.i.i:           ; preds = %.split.i.thread171.i.i.i.i.i, %.split.preheader.i.thread170.i.i.i.i.i, %.split.preheader.i.i.i.i.i.i, %.lr.ph.i.split.us.i.i.preheader.i.i.i.i.i, %.lr.ph.i.split.i.i.preheader.i.i.i.i.i
-  %..i.i.i.i.i.i.i.i = phi float [ %i.dh, %.lr.ph.i.split.us.i.i.preheader.i.i.i.i.i ], [ 0.000000e+00, %.split.i.thread171.i.i.i.i.i ], [ %i.dh, %.split.preheader.i.thread170.i.i.i.i.i ], [ %.mux185.mux.mux.i.i.i.i.i, %.split.preheader.i.i.i.i.i.i ], [ %.mux.mux.mux.i32.i.i.i.i, %.lr.ph.i.split.i.i.preheader.i.i.i.i.i ]
+.split.preheader.i.thread168.i.i.i.i.i:           ; preds = %.split.i.thread171.i.i.i.i.i, %.split.preheader.i.thread170.i.i.i.i.i, %.split.preheader.i.i.i.i.i.i, %.split.preheader.i.i.thread.i.i.i.i, %.lr.ph.i.split.us.i.i.preheader.i.i.i.i.i, %.lr.ph.i.split.i.i.preheader.i.i.i.i.i
+  %..i.i.i.i.i.i.i.i = phi float [ %i.dh, %.lr.ph.i.split.us.i.i.preheader.i.i.i.i.i ], [ 0.000000e+00, %.split.i.thread171.i.i.i.i.i ], [ %i.dh, %.split.preheader.i.thread170.i.i.i.i.i ], [ %.mux185.mux.mux.i.i.i.i.i, %.split.preheader.i.i.i.i.i.i ], [ %.mux.mux.mux.i32.i.i.i.i, %.lr.ph.i.split.i.i.preheader.i.i.i.i.i ], [ %.mux185.mux.mux.i51.i.i.i.i, %.split.preheader.i.i.thread.i.i.i.i ]
   %i.dv = insertelement <2 x i1> poison, i1 %.not.i4.i.i.i.i.i.i, i64 0
   %i.dw = insertelement <2 x i1> %i.dv, i1 %.not.i12.i.i.i.i.i.i, i64 1
   %i.dx = select <2 x i1> %i.dw, <2 x float> %i.do, <2 x float> zeroinitializer
@@ -313,12 +325,6 @@ _RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIt
   %.sroa.6.0..sroa_idx.i.i54.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   store float %..i7.i.i.i.i.i.i.i, ptr %.sroa.6.0..sroa_idx.i.i54.i.i.i, align 4, !alias.scope !21759, !noalias !21740
   br label %bb.y
-
-_RNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB4_34resolve_cell_border_and_backgrounds1_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag13NaiveRgbColorE0Ba_.exit.i.i.thread.i.i.i.i: ; preds = %.split.preheader.i.i.i.i.i.i, %.lr.ph.i.split.i.i.preheader.i.i.i.i.i
-  store i32 0, ptr %i.q, align 4, !alias.scope !21759, !noalias !21740
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !21740
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !21764
-  br label %_RNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB4_34resolve_cell_border_and_backgrounds1_0NtNtNtNtCsidf7BFzONoc_6krilla11interchange7tagging3tag13NaiveRgbColorE0Ba_.exit17.i.i.i.i.i.i
 
 bb.y:                                             ; preds = %.split.preheader.i.thread168.i.i.i.i.i, %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a
   %storemerge.i.i.i.i.i = phi i32 [ 1, %.split.preheader.i.thread168.i.i.i.i.i ], [ 0, %_RNCINvMs8_NtNtNtCs3oUPovFnLWP_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitRINtNtBe_6option6OptionfEEE8try_folduNCINvNtNtNtBe_4iter8adapters7flatten15try_flatten_oneB1X_uINtNtNtBe_3ops12control_flow11ControlFlowuENCINvNvNtNtNtB2H_6traits8iterator8Iterator3all5checkRfNCINvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table13resolve_sidesNCNvB58_34resolve_cell_border_and_backgrounds0_0fEs_0E0E0B3u_E0B5e_.exit.backedge.i.us.i.i.1.i.i.i.i.i.a ]

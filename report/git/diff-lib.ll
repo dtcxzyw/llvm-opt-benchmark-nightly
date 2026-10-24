@@ -204,9 +204,9 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 5 uses
-  %i.d = alloca ptr, align 8                      ; 5 uses
-  %i.e = alloca i32, align 4                      ; 5 uses
-  %i.f = alloca i32, align 4                      ; 7 uses
+  %i.d = alloca ptr, align 8                      ; 6 uses
+  %i.e = alloca i32, align 4                      ; 6 uses
+  %i.f = alloca i32, align 4                      ; 9 uses
   %i.g = load ptr, ptr %0, align 8, !tbaa !98     ; 20 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !98   ; 15 uses
@@ -215,7 +215,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !194
   %i.n = icmp eq ptr %i.i, %i.m
-  %spec.store.select = select i1 %i.n, ptr null, ptr %i.i ; 8 uses
+  %spec.store.select = select i1 %i.n, ptr null, ptr %i.i ; 9 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 2096
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !65
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 432
@@ -287,7 +287,7 @@ bb.h:                                             ; preds = %bb.g
   %i.aw = trunc nuw nsw i64 %i.av to i32
   %i.ax = and i32 %i.aw, 1                        ; 3 uses
   %or.cond3.i = and i1 %.not, %i.ar
-  br i1 %or.cond3.i, label %bb.i, label %bb.l
+  br i1 %or.cond3.i, label %bb.i, label %2
 
 bb.i:                                             ; preds = %.thread.i
   %i.ay = getelementptr inbounds nuw i8, ptr %i.g, i64 56
@@ -312,9 +312,20 @@ bb.k:                                             ; preds = %bb.j
   tail call void @fill_filespec(ptr noundef %i.be, ptr noundef nonnull %i.bf, i32 noundef 1, i16 noundef zeroext %i.bi) #15
   br label %do_oneway_diff.exit
 
-bb.l:                                             ; preds = %bb.i, %.thread.i
+2:                                                ; preds = %.thread.i
+  %.not50.i = icmp eq ptr %spec.store.select, null
+  br i1 %.not50.i, label %bb.m, label %bb.q
+
+bb.l:                                             ; preds = %bb.i
   %.not50.i.a = icmp eq ptr %spec.store.select, null
-  br i1 %.not50.i.a, label %bb.m, label %bb.q
+  br i1 %.not50.i.a, label %.thread33.i, label %bb.t
+
+.thread33.i:                                      ; preds = %bb.l
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #15
+  store i32 0, ptr %i.f, align 4, !tbaa !99
+  br label %bb.n
 
 .thread7.i:                                       ; preds = %bb.f
   %.not509.i = icmp eq ptr %spec.store.select, null
@@ -332,14 +343,14 @@ bb.l:                                             ; preds = %bb.i, %.thread.i
   store i32 0, ptr %i.f, align 4, !tbaa !99
   br label %.split.i.i
 
-bb.m:                                             ; preds = %bb.l
+bb.m:                                             ; preds = %2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #15
   store i32 0, ptr %i.f, align 4, !tbaa !99
   br i1 %.not, label %bb.n, label %.split.i.i
 
-bb.n:                                             ; preds = %bb.m
+bb.n:                                             ; preds = %bb.m, %.thread33.i
   %i.bo = getelementptr inbounds nuw i8, ptr %i.g, i64 52
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !99
   %i.bq = icmp eq i32 %i.bp, 16384
@@ -381,7 +392,7 @@ show_new_file.exit.i:                             ; preds = %bb.p, %.split.i.i, 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #15
   br label %do_oneway_diff.exit
 
-bb.q:                                             ; preds = %bb.l
+bb.q:                                             ; preds = %2
   br i1 %.not, label %bb.t, label %.thread12.i
 
 .thread12.i:                                      ; preds = %bb.q, %.thread7.i, %bb.e
@@ -403,7 +414,7 @@ bb.s:                                             ; preds = %.thread12.i
   tail call void @diff_addremove(ptr noundef nonnull %i.cq, i32 noundef 45, i32 noundef %i.cl, ptr noundef nonnull %i.cn, i32 noundef 1, ptr noundef nonnull %i.cr, i32 noundef 0) #15
   br label %do_oneway_diff.exit
 
-bb.t:                                             ; preds = %bb.q
+bb.t:                                             ; preds = %bb.q, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15

@@ -202,16 +202,28 @@ bb.a:
   %i.a = icmp eq i32 %3, 0                        ; 2 uses
   %i.b = icmp ne i32 %4, 0
   %or.cond = or i1 %i.a, %i.b
-  %i.c = tail call ptr @jv_string_value(i64 %1, ptr %2) #11
-  %. = zext i1 %or.cond to i32
-  %10 = tail call { i64, ptr } @jv_load_file(ptr noundef %i.c, i32 noundef %.) #11 ; 2 uses
-  %.sroa.14.0 = extractvalue { i64, ptr } %10, 1  ; 10 uses
-  %.sroa.035.0 = extractvalue { i64, ptr } %10, 0 ; 10 uses
-  %11 = tail call i32 @jv_get_kind(i64 %.sroa.035.0, ptr %.sroa.14.0) #11
-  %.not106 = icmp eq i32 %11, 0
+  %i.c = tail call ptr @jv_string_value(i64 %1, ptr %2) #11 ; 2 uses
+  br i1 %or.cond, label %10, label %.thread
+
+10:                                               ; preds = %bb.a
+  %11 = tail call { i64, ptr } @jv_load_file(ptr noundef %i.c, i32 noundef 1) #11 ; 2 uses
+  %.sroa.14.0 = extractvalue { i64, ptr } %11, 1  ; 7 uses
+  %.sroa.035.0 = extractvalue { i64, ptr } %11, 0 ; 7 uses
+  %12 = tail call i32 @jv_get_kind(i64 %.sroa.035.0, ptr %.sroa.14.0) #11
+  %.not106 = icmp eq i32 %12, 0
   br i1 %.not106, label %bb.b, label %bb.g
 
-bb.b:                                             ; preds = %bb.a
+.thread:                                          ; preds = %bb.a
+  %13 = tail call { i64, ptr } @jv_load_file(ptr noundef %i.c, i32 noundef 0) #11 ; 2 uses
+  %.sroa.14.0109 = extractvalue { i64, ptr } %13, 1 ; 3 uses
+  %.sroa.035.0110 = extractvalue { i64, ptr } %13, 0 ; 3 uses
+  %14 = tail call i32 @jv_get_kind(i64 %.sroa.035.0110, ptr %.sroa.14.0109) #11
+  %.not106111 = icmp eq i32 %14, 0
+  br i1 %.not106111, label %bb.b, label %bb.h
+
+bb.b:                                             ; preds = %.thread, %10
+  %.sroa.035.0114 = phi i64 [ %.sroa.035.0110, %.thread ], [ %.sroa.035.0, %10 ] ; 3 uses
+  %.sroa.14.0112 = phi ptr [ %.sroa.14.0109, %.thread ], [ %.sroa.14.0, %10 ] ; 3 uses
   %i.d = tail call { ptr, ptr } @gen_noop() #11   ; 2 uses
   %i.e = extractvalue { ptr, ptr } %i.d, 0
   %i.f = extractvalue { ptr, ptr } %i.d, 1
@@ -222,7 +234,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not101, label %bb.c, label %bb.k
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call { i64, ptr } @jv_copy(i64 %.sroa.035.0, ptr %.sroa.14.0) #11 ; 2 uses
+  %i.g = tail call { i64, ptr } @jv_copy(i64 %.sroa.035.0114, ptr %.sroa.14.0112) #11 ; 2 uses
   %i.h = extractvalue { i64, ptr } %i.g, 0
   %i.i = extractvalue { i64, ptr } %i.g, 1
   %i.j = tail call i32 @jv_invalid_has_msg(i64 %i.h, ptr %i.i) #11
@@ -230,7 +242,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not102, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call { i64, ptr } @jv_invalid_get_msg(i64 %.sroa.035.0, ptr %.sroa.14.0) #11
+  %i.k = tail call { i64, ptr } @jv_invalid_get_msg(i64 %.sroa.035.0114, ptr %.sroa.14.0112) #11
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -249,11 +261,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   tail call void @jq_report_error(ptr noundef %0, i64 %i.p, ptr %i.q) #11
   br label %bb.k
 
-bb.g:                                             ; preds = %bb.a
+bb.g:                                             ; preds = %10
   br i1 %i.a, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %bb.g
-  %i.r = tail call { i64, ptr } @jv_copy(i64 %.sroa.035.0, ptr %.sroa.14.0) #11 ; 2 uses
+bb.h:                                             ; preds = %.thread, %bb.g
+  %.sroa.14.0113120 = phi ptr [ %.sroa.14.0, %bb.g ], [ %.sroa.14.0109, %.thread ] ; 2 uses
+  %.sroa.035.0115119 = phi i64 [ %.sroa.035.0, %bb.g ], [ %.sroa.035.0110, %.thread ] ; 2 uses
+  %i.r = tail call { i64, ptr } @jv_copy(i64 %.sroa.035.0115119, ptr %.sroa.14.0113120) #11 ; 2 uses
   %i.s = extractvalue { i64, ptr } %i.r, 0
   %i.t = extractvalue { i64, ptr } %i.r, 1
   %i.u = tail call { ptr, ptr } @gen_const_global(i64 %i.s, ptr %i.t, ptr noundef %6) #11 ; 2 uses
@@ -355,8 +369,8 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.h, %bb.j, %bb.i, %bb.b, %bb.f
-  %.sroa.035.2 = phi i64 [ %.sroa.035.0, %bb.h ], [ %.sroa.035.0, %bb.j ], [ %.sroa.035.0, %bb.i ], [ %.sroa.035.0, %bb.b ], [ %.sroa.035.1, %bb.f ]
-  %.sroa.14.2 = phi ptr [ %.sroa.14.0, %bb.h ], [ %.sroa.14.0, %bb.j ], [ %.sroa.14.0, %bb.i ], [ %.sroa.14.0, %bb.b ], [ %.sroa.14.1, %bb.f ]
+  %.sroa.035.2 = phi i64 [ %.sroa.035.0115119, %bb.h ], [ %.sroa.035.0, %bb.j ], [ %.sroa.035.0, %bb.i ], [ %.sroa.035.0114, %bb.b ], [ %.sroa.035.1, %bb.f ]
+  %.sroa.14.2 = phi ptr [ %.sroa.14.0113120, %bb.h ], [ %.sroa.14.0, %bb.j ], [ %.sroa.14.0, %bb.i ], [ %.sroa.14.0112, %bb.b ], [ %.sroa.14.1, %bb.f ]
   %.0 = phi i32 [ 0, %bb.h ], [ %i.by, %bb.j ], [ %i.au, %bb.i ], [ 0, %bb.b ], [ 1, %bb.f ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !35
   call void @jv_free(i64 %1, ptr %2) #11

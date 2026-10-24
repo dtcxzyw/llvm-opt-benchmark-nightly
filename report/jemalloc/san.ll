@@ -26,34 +26,48 @@ bb.b:                                             ; preds = %bb.a
 san_find_guarded_addr.exit.a:                     ; preds = %bb.b, %bb.a
   %i.a = getelementptr i8, ptr %2, i64 16         ; 3 uses
   %.val = load i64, ptr %i.a, align 8, !tbaa !12
-  %i.b = and i64 %.val, -4096
+  %i.b = and i64 %.val, -4096                     ; 2 uses
   %or.cond = and i1 %4, %5
-  %.v = select i1 %or.cond, i64 -8192, i64 -4096
-  %7 = add i64 %i.b, %.v                          ; 2 uses
   %i.c = getelementptr i8, ptr %2, i64 8          ; 2 uses
   %.val23 = load ptr, ptr %i.c, align 8, !tbaa !17 ; 2 uses
   %i.d = ptrtoint ptr %.val23 to i64
   %i.e = and i64 %i.d, 4095
   %i.f = sub nsw i64 0, %i.e
-  %8 = getelementptr inbounds i8, ptr %.val23, i64 %i.f ; 2 uses
-  %.0.idx = select i1 %4, i64 4096, i64 0
-  %.0 = getelementptr inbounds nuw i8, ptr %8, i64 %.0.idx ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = load atomic ptr, ptr %i.g acquire, align 8
-  %.not = icmp eq ptr %9, @je_ehooks_default_extent_hooks
+  %i.g = getelementptr inbounds i8, ptr %.val23, i64 %i.f ; 3 uses
+  br i1 %or.cond, label %.thread, label %8
+
+.thread:                                          ; preds = %san_find_guarded_addr.exit.a
+  %7 = add i64 %i.b, -8192
+  br label %10
+
+8:                                                ; preds = %san_find_guarded_addr.exit.a
+  %9 = add i64 %i.b, -4096                        ; 2 uses
+  br i1 %4, label %10, label %san_find_guarded_addr.exit
+
+10:                                               ; preds = %.thread, %8
+  %11 = phi i64 [ %7, %.thread ], [ %9, %8 ]
+  %12 = getelementptr inbounds nuw i8, ptr %i.g, i64 4096
+  br label %san_find_guarded_addr.exit
+
+san_find_guarded_addr.exit:                       ; preds = %8, %10
+  %13 = phi i64 [ %11, %10 ], [ %9, %8 ]          ; 2 uses
+  %.028 = phi ptr [ %i.g, %10 ], [ null, %8 ]
+  %.0 = phi ptr [ %12, %10 ], [ %i.g, %8 ]        ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %15 = load atomic ptr, ptr %14 acquire, align 8
+  %.not = icmp eq ptr %15, @je_ehooks_default_extent_hooks
   br i1 %.not, label %bb.c, label %ehooks_guard.exit
 
-bb.c:                                             ; preds = %san_find_guarded_addr.exit.a
-  %i.h = getelementptr inbounds nuw i8, ptr %.0, i64 %7
-  %storemerge.i = select i1 %5, ptr %i.h, ptr null
-  %.028.a = select i1 %4, ptr %8, ptr null
-  tail call void @je_ehooks_default_guard_impl(ptr noundef %.028.a, ptr noundef %storemerge.i) #4
+bb.c:                                             ; preds = %san_find_guarded_addr.exit
+  %i.h = getelementptr inbounds nuw i8, ptr %.0, i64 %13
+  %.028.a = select i1 %5, ptr %i.h, ptr null
+  tail call void @je_ehooks_default_guard_impl(ptr noundef %.028, ptr noundef %.028.a) #4
   br label %ehooks_guard.exit
 
-ehooks_guard.exit:                                ; preds = %san_find_guarded_addr.exit.a, %bb.c
+ehooks_guard.exit:                                ; preds = %san_find_guarded_addr.exit, %bb.c
   %i.i = load i64, ptr %i.a, align 8, !tbaa !12
   %i.j = and i64 %i.i, 4095
-  %i.k = or disjoint i64 %i.j, %7
+  %i.k = or i64 %i.j, %13
   store i64 %i.k, ptr %i.a, align 8, !tbaa !12
   store ptr %.0, ptr %i.c, align 8, !tbaa !17
   %i.l = load i64, ptr %2, align 8, !tbaa !18
@@ -79,34 +93,50 @@ bb.a:
   tail call void @je_emap_deregister_boundary(ptr noundef %0, ptr noundef %3, ptr noundef %2) #4
   %i.a = getelementptr i8, ptr %2, i64 16         ; 3 uses
   %.val.i = load i64, ptr %i.a, align 8, !tbaa !12
-  %i.b = and i64 %.val.i, -4096                   ; 2 uses
+  %i.b = and i64 %.val.i, -4096                   ; 3 uses
+  %or.cond.i = and i1 %4, %5
   %i.c = getelementptr i8, ptr %2, i64 8          ; 2 uses
   %.val23.i = load ptr, ptr %i.c, align 8, !tbaa !17 ; 2 uses
   %i.d = ptrtoint ptr %.val23.i to i64
   %i.e = and i64 %i.d, 4095
   %i.f = sub nsw i64 0, %i.e
-  %6 = getelementptr inbounds i8, ptr %.val23.i, i64 %i.f ; 3 uses
-  %i.g = getelementptr inbounds i8, ptr %6, i64 -4096 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %7 = load atomic ptr, ptr %i.h acquire, align 8
-  %.not.i = icmp eq ptr %7, @je_ehooks_default_extent_hooks
-  br i1 %.not.i, label %bb.b, label %san_unguard_pages_impl.exit
+  %i.g = getelementptr inbounds i8, ptr %.val23.i, i64 %i.f ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.b ; 2 uses
+  br i1 %or.cond.i, label %.thread.i, label %7
 
-bb.b:                                             ; preds = %bb.a
-  %.027.i = select i1 %4, ptr %i.g, ptr null
-  %i.i = getelementptr inbounds nuw i8, ptr %6, i64 %i.b
-  %storemerge.i.i = select i1 %5, ptr %i.i, ptr null
-  tail call void @je_ehooks_default_unguard_impl(ptr noundef %.027.i, ptr noundef %storemerge.i.i) #4
+.thread.i:                                        ; preds = %bb.a
+  %6 = add i64 %i.b, 8192
+  br label %9
+
+7:                                                ; preds = %bb.a
+  %8 = add i64 %i.b, 4096                         ; 2 uses
+  %storemerge.i.i = select i1 %5, ptr %i.h, ptr null ; 2 uses
+  br i1 %4, label %9, label %bb.b
+
+9:                                                ; preds = %7, %.thread.i
+  %storemerge.i31.i = phi ptr [ %i.h, %.thread.i ], [ %storemerge.i.i, %7 ]
+  %10 = phi i64 [ %6, %.thread.i ], [ %8, %7 ]
+  %11 = getelementptr inbounds i8, ptr %i.g, i64 -4096 ; 2 uses
+  br label %bb.b
+
+bb.b:                                             ; preds = %9, %7
+  %storemerge.i30.i = phi ptr [ %storemerge.i31.i, %9 ], [ %storemerge.i.i, %7 ]
+  %12 = phi i64 [ %10, %9 ], [ %8, %7 ]
+  %.027.i = phi ptr [ %11, %9 ], [ null, %7 ]
+  %.0.i = phi ptr [ %11, %9 ], [ %i.g, %7 ]
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %13 = load atomic ptr, ptr %i.i acquire, align 8
+  %.not.i = icmp eq ptr %13, @je_ehooks_default_extent_hooks
+  br i1 %.not.i, label %14, label %san_unguard_pages_impl.exit
+
+14:                                               ; preds = %bb.b
+  tail call void @je_ehooks_default_unguard_impl(ptr noundef %.027.i, ptr noundef %storemerge.i30.i) #4
   br label %san_unguard_pages_impl.exit
 
-san_unguard_pages_impl.exit:                      ; preds = %bb.a, %bb.b
-  %.0.i = select i1 %4, ptr %i.g, ptr %6
-  %or.cond.i = and i1 %4, %5
-  %.v.i = select i1 %or.cond.i, i64 8192, i64 4096
-  %8 = add i64 %i.b, %.v.i
+san_unguard_pages_impl.exit:                      ; preds = %bb.b, %14
   %i.j = load i64, ptr %i.a, align 8, !tbaa !12
   %i.k = and i64 %i.j, 4095
-  %i.l = or disjoint i64 %i.k, %8
+  %i.l = or i64 %i.k, %12
   store i64 %i.l, ptr %i.a, align 8, !tbaa !12
   store ptr %.0.i, ptr %i.c, align 8, !tbaa !17
   %i.m = load i64, ptr %2, align 8, !tbaa !18

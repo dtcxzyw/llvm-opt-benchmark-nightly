@@ -204,18 +204,19 @@ bb.i:                                             ; preds = %bb.h, %bb.g
           to label %bb.l unwind label %bb.k       ; 2 uses
 
 bb.j:                                             ; preds = %bb.dv, %bb.k
-  %.sroa.0298.1 = phi i1 [ %i.bp, %bb.k ], [ true, %bb.dv ]
+  %.sroa.0298.1 = phi i1 [ %5, %bb.k ], [ false, %bb.dv ]
   %.pn406 = phi { ptr, i32 } [ %i.bo, %bb.k ], [ %i.mh, %bb.dv ] ; 2 uses
   %i.bn = load i64, ptr %i.ac, align 8, !range !18, !noundef !13
-  %.not408 = icmp ne i64 %i.bn, -1
-  %brmerge.not = select i1 %.not408, i1 %.sroa.0298.1, i1 false
-  br i1 %brmerge.not, label %bb.gq, label %common.resume
+  %.not408 = icmp eq i64 %i.bn, -1
+  %brmerge.not = select i1 %.not408, i1 true, i1 %.sroa.0298.1
+  br i1 %brmerge.not, label %common.resume, label %bb.gq
 
 bb.k:                                             ; preds = %.invoke, %bb.gj, %bb.fn, %bb.ee, %.thread617, %bb.fx, %bb.fv, %bb.ft, %bb.fs, %bb.fm, %bb.fj, %bb.fi, %bb.ex, %bb.eu, %bb.es, %bb.ej, %bb.eg, %bb.ec, %bb.dy, %bb.ds, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelECskEUeM34gmJU_6ty_ide.exit, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelECskEUeM34gmJU_6ty_ide.exit523, %bb.bo, %bb.bk, %bb.bf, %bb.ap, %switch.lookup753, %bb.ag, %bb.z, %bb.s, %bb.o, %bb.i
   %.sroa.0298.2 = phi i8 [ 1, %bb.gj ], [ 1, %.thread617 ], [ 1, %bb.eg ], [ 1, %bb.ee ], [ 1, %bb.ec ], [ 1, %bb.ds ], [ 1, %bb.i ], [ 1, %bb.bf ], [ 1, %bb.eu ], [ 1, %bb.z ], [ 1, %bb.o ], [ 1, %bb.s ], [ 1, %bb.ag ], [ 1, %bb.dy ], [ 1, %bb.bk ], [ 1, %.invoke ], [ 1, %bb.ap ], [ 1, %switch.lookup753 ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelECskEUeM34gmJU_6ty_ide.exit523 ], [ %.sroa.0298.3, %bb.bo ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelECskEUeM34gmJU_6ty_ide.exit ], [ 1, %bb.fx ], [ 1, %bb.fv ], [ 1, %bb.ft ], [ 1, %bb.fs ], [ 1, %bb.ex ], [ 1, %bb.ej ], [ 1, %bb.fn ], [ 1, %bb.fm ], [ 1, %bb.fj ], [ 1, %bb.fi ], [ 1, %bb.es ]
   %i.bo = landingpad { ptr, i32 }
           cleanup
   %i.bp = trunc nuw i8 %.sroa.0298.2 to i1
+  %5 = xor i1 %i.bp, true
   br label %bb.j
 
 bb.l:                                             ; preds = %bb.i

@@ -205,8 +205,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit179.thread: ; preds = %bb.m
   %i.ca = or i32 %i.bv, %i.bz
   %i.cb = icmp ne i32 %i.ca, 0
   %i.cc = zext i1 %i.cb to i32
-  %i.cd = icmp eq i32 %i.cc, 0                    ; 2 uses
-  %9 = zext i1 %i.cd to i8
+  %i.cd = icmp eq i32 %i.cc, 0
   br label %_ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189
 
 _ZNK4llvh9StringRef10startswithES0_.exit179:      ; preds = %bb.m
@@ -214,7 +213,6 @@ _ZNK4llvh9StringRef10startswithES0_.exit179:      ; preds = %bb.m
   br i1 %.not.i176.not, label %_ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189, label %_ZNK4llvh9StringRef10startswithES0_.exit177
 
 _ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit179.thread, %_ZNK4llvh9StringRef10startswithES0_.exit179
-  %10 = phi i8 [ %9, %_ZNK4llvh9StringRef10startswithES0_.exit179.thread ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit179 ]
   %i.ce = phi i1 [ %i.cd, %_ZNK4llvh9StringRef10startswithES0_.exit179.thread ], [ false, %_ZNK4llvh9StringRef10startswithES0_.exit179 ]
   %i.cf = load i32, ptr %.sroa.0281.0.copyload, align 1
   %i.cg = xor i32 %i.cf, 1735289197
@@ -229,14 +227,12 @@ _ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189: ; preds = %_ZNK4llvh9StringRe
   br label %_ZNK4llvh9StringRef10startswithES0_.exit177
 
 _ZNK4llvh9StringRef10startswithES0_.exit177:      ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit179, %_ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189
-  %11 = phi i8 [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit179 ], [ %10, %_ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189 ] ; 2 uses
-  %i.cp = phi i1 [ false, %_ZNK4llvh9StringRef10startswithES0_.exit179 ], [ %i.ce, %_ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189 ]
+  %i.cp = phi i1 [ false, %_ZNK4llvh9StringRef10startswithES0_.exit179 ], [ %i.ce, %_ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189 ] ; 2 uses
   %i.cq = phi i1 [ false, %_ZNK4llvh9StringRef10startswithES0_.exit179 ], [ %i.co, %_ZN4llvh9StringRef13compareMemoryEPKcS2_m.exit189 ] ; 2 uses
-  %12 = zext i1 %i.cq to i8                       ; 2 uses
   %i.cr = icmp ne i32 %i.bt, 0
   %or.cond = or i1 %i.cr, %i.cp
   %i.cs = or i1 %or.cond, %i.cq
-  br i1 %i.cs, label %.thread330, label %.thread357
+  br i1 %i.cs, label %.thread330.split.loop.exit433, label %.thread357
 
 bb.n:                                             ; preds = %bb.k
   %i.ct = call fastcc noundef i32 @_ZL16parseEnvironmentN4llvh9StringRefE(ptr %.sroa.0281.0.copyload, i64 %.sroa.10.0.copyload) ; 2 uses
@@ -253,13 +249,18 @@ bb.o:                                             ; preds = %bb.k
   %.not386 = icmp eq i32 %i.cv, 0
   br i1 %.not386, label %.thread357, label %.thread330
 
-.thread330:                                       ; preds = %bb.n, %_ZNK4llvh9StringRef10startswithES0_.exit177, %.split352, %.split, %bb.o
-  %.3351 = phi i8 [ %12, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2440, %bb.o ], [ %.2440, %.split ], [ %.2440, %.split352 ], [ %.2440, %bb.n ]
-  %.3112349 = phi i8 [ %11, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2111439, %bb.o ], [ %.2111439, %.split ], [ %.2111439, %.split352 ], [ %.2111439, %bb.n ]
-  %.3121347 = phi i32 [ %.2120438, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %i.cv, %bb.o ], [ %.2120438, %.split ], [ %.2120438, %.split352 ], [ %.2120438, %bb.n ]
-  %.3128345 = phi i32 [ %i.bt, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2127437, %bb.o ], [ %.2127437, %.split ], [ %.2127437, %.split352 ], [ %.2127437, %bb.n ]
-  %.3135343 = phi i32 [ %.2134436, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2134436, %bb.o ], [ %.2134436, %.split ], [ 0, %.split352 ], [ %i.ct, %bb.n ]
-  %.3147341 = phi i32 [ %.2146435, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2146435, %bb.o ], [ %.2146435, %.split ], [ %i.cu, %.split352 ], [ %.2146435, %bb.n ]
+.thread330.split.loop.exit433:                    ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit177
+  %9 = zext i1 %i.cp to i8
+  %10 = zext i1 %i.cq to i8
+  br label %.thread330
+
+.thread330:                                       ; preds = %bb.o, %.split, %.split352, %bb.n, %.thread330.split.loop.exit433
+  %.3351 = phi i8 [ %10, %.thread330.split.loop.exit433 ], [ %.2440, %bb.n ], [ %.2440, %.split352 ], [ %.2440, %.split ], [ %.2440, %bb.o ]
+  %.3112349 = phi i8 [ %9, %.thread330.split.loop.exit433 ], [ %.2111439, %bb.n ], [ %.2111439, %.split352 ], [ %.2111439, %.split ], [ %.2111439, %bb.o ]
+  %.3121347 = phi i32 [ %.2120438, %.thread330.split.loop.exit433 ], [ %i.cv, %bb.o ], [ %.2120438, %.split ], [ %.2120438, %.split352 ], [ %.2120438, %bb.n ]
+  %.3128345 = phi i32 [ %i.bt, %.thread330.split.loop.exit433 ], [ %.2127437, %bb.n ], [ %.2127437, %.split352 ], [ %.2127437, %.split ], [ %.2127437, %bb.o ]
+  %.3135343 = phi i32 [ %.2134436, %.thread330.split.loop.exit433 ], [ %.2134436, %bb.o ], [ %.2134436, %.split ], [ 0, %.split352 ], [ %i.ct, %bb.n ]
+  %.3147341 = phi i32 [ %.2146435, %.thread330.split.loop.exit433 ], [ %.2146435, %bb.o ], [ %.2146435, %.split ], [ %i.cu, %.split352 ], [ %.2146435, %bb.n ]
   %i.cw = zext i32 %.0153434 to i64               ; 2 uses
   %i.cx = icmp samesign ult i64 %indvars.iv495, %i.cw
   br i1 %i.cx, label %bb.p, label %bb.t
@@ -478,8 +479,8 @@ bb.w:                                             ; preds = %.lr.ph607
   %.4136 = phi i32 [ %.2134436, %bb.j ], [ %.2134436, %bb.o ], [ %.2134436, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ 0, %.split352 ], [ %.2134436, %.split..thread357_crit_edge ] ; 2 uses
   %.4129 = phi i32 [ %.2127437, %bb.j ], [ %.2127437, %bb.o ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2127437, %.split352 ], [ %.2127437, %.split..thread357_crit_edge ] ; 2 uses
   %.4122 = phi i32 [ %.2120438, %bb.j ], [ 0, %bb.o ], [ %.2120438, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2120438, %.split352 ], [ %.2120438, %.split..thread357_crit_edge ] ; 2 uses
-  %.4113 = phi i8 [ %.2111439, %bb.j ], [ %.2111439, %bb.o ], [ %11, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2111439, %.split352 ], [ %.2111439, %.split..thread357_crit_edge ] ; 2 uses
-  %.4 = phi i8 [ %.2440, %bb.j ], [ %.2440, %bb.o ], [ %12, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2440, %.split352 ], [ %.2440, %.split..thread357_crit_edge ] ; 2 uses
+  %.4113 = phi i8 [ %.2111439, %bb.j ], [ %.2111439, %bb.o ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2111439, %.split352 ], [ %.2111439, %.split..thread357_crit_edge ] ; 2 uses
+  %.4 = phi i8 [ %.2440, %bb.j ], [ %.2440, %bb.o ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit177 ], [ %.2440, %.split352 ], [ %.2440, %.split..thread357_crit_edge ] ; 2 uses
   %i.fl = add i32 %.0153434, 1                    ; 3 uses
   %i.fm = zext i32 %i.fl to i64
   %.not173 = icmp eq i32 %i.fk, %i.fl

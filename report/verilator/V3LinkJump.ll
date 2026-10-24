@@ -204,7 +204,7 @@ bb.a:
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %13 = alloca %class.VNRelinker, align 8         ; 7 uses
+  %13 = alloca %class.VNRelinker, align 8         ; 9 uses
   %i.a = tail call noundef i32 @_ZL5debugv()
   %i.b = icmp sgt i32 %i.a, 3
   br i1 %i.b, label %bb.b, label %bb.r, !prof !22
@@ -607,19 +607,24 @@ bb.av:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !185
   %i.gh = icmp ne ptr %i.gg, null
   %or.cond = and i1 %.3282, %i.gh
-  br i1 %or.cond, label %bb.aw, label %_ZN7AstNode4castI12AstJumpBlockS_EEPT_PT0_.exit
+  br i1 %or.cond, label %.thread227, label %_ZN7AstNode4castI12AstJumpBlockS_EEPT_PT0_.exit
+
+.thread227:                                       ; preds = %bb.av
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #23
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %13, i8 0, i64 25, i1 false)
+  br label %bb.ax
 
 _ZN7AstNode4castI12AstJumpBlockS_EEPT_PT0_.exit:  ; preds = %bb.av
   %.sroa.0.0.copyload.i.i.i191 = load i16, ptr %i.dt, align 8, !tbaa !173
   %.not238 = icmp eq i16 %.sroa.0.0.copyload.i.i.i191, 433
   br i1 %.not238, label %_ZN7AstNode2asI12AstJumpBlockS_EEPT_PT0_.exit, label %bb.aw
 
-bb.aw:                                            ; preds = %_ZN7AstNode4castI12AstJumpBlockS_EEPT_PT0_.exit, %bb.av
+bb.aw:                                            ; preds = %_ZN7AstNode4castI12AstJumpBlockS_EEPT_PT0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %13, i8 0, i64 25, i1 false)
   br i1 %.3282, label %bb.ax, label %bb.ay
 
-bb.ax:                                            ; preds = %bb.aw
+bb.ax:                                            ; preds = %.thread227, %bb.aw
   %i.gi = invoke noundef ptr @_ZN7AstNode20unlinkFrBackWithNextEP10VNRelinker(ptr noundef nonnull align 8 dereferenceable(152) %.4241, ptr noundef nonnull %13)
           to label %bb.az unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 

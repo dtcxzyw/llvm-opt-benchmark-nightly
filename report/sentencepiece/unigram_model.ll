@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not45104, label %.thread, label %.lr.ph109
 
 ._crit_edge110:                                   ; preds = %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exit
-  %.not = icmp eq ptr %.sroa.0.1, %.sroa.11.1
   %i.av = icmp ult ptr %.sroa.0.1, %.pn
   br i1 %i.av, label %.lr.ph.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit
 
@@ -219,7 +218,14 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20260
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i.i, i64 8 ; 2 uses
   %.sroa.0.0.i.i = getelementptr inbounds i8, ptr %.sroa.0.010.i.i, i64 -8 ; 2 uses
   %i.az = icmp ult ptr %i.ay, %.sroa.0.0.i.i
-  br i1 %i.az, label %.lr.ph.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit, !llvm.loop !2
+  br i1 %i.az, label %.lr.ph.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit.thread, !llvm.loop !2
+
+_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit.thread: ; preds = %.lr.ph.i.i
+  %3 = ptrtoint ptr %.sroa.11.1 to i64
+  %4 = ptrtoint ptr %.sroa.0.1 to i64             ; 2 uses
+  %5 = sub i64 %3, %4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 0, i64 24, i1 false)
+  br label %bb.l
 
 .lr.ph109:                                        ; preds = %.critedge50, %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exit
   %storemerge108 = phi ptr [ %storemerge, %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exit ], [ %storemerge103, %.critedge50 ] ; 3 uses
@@ -283,10 +289,10 @@ _ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE17_M_realloc_insertI
   br label %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exit
 
 _ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exit: ; preds = %bb.g, %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
-  %.sroa.0.1 = phi ptr [ %i.bk, %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %.sroa.0.0105, %bb.g ] ; 13 uses
+  %.sroa.0.1 = phi ptr [ %i.bk, %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %.sroa.0.0105, %bb.g ] ; 14 uses
   %.pn = phi ptr [ %i.bl, %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %.sroa.11.0106, %bb.g ] ; 3 uses
   %.sroa.17.1 = phi ptr [ %i.bn, %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %.sroa.17.0107, %bb.g ] ; 7 uses
-  %.sroa.11.1 = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 3 uses
+  %.sroa.11.1 = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 4 uses
   %storemerge.in = getelementptr inbounds nuw i8, ptr %storemerge108, i64 40
   %storemerge = load ptr, ptr %storemerge.in, align 8, !tbaa !316 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %storemerge, i64 40
@@ -294,10 +300,11 @@ _ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exi
   %.not45 = icmp eq ptr %i.bp, null
   br i1 %.not45, label %._crit_edge110, label %.lr.ph109
 
-_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit: ; preds = %.lr.ph.i.i, %._crit_edge110
+_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit: ; preds = %._crit_edge110
+  %.not = icmp eq ptr %.sroa.0.1, %.sroa.11.1
   %i.bq = ptrtoint ptr %.sroa.11.1 to i64
-  %i.br = ptrtoint ptr %.sroa.0.1 to i64          ; 5 uses
-  %i.bs = sub i64 %i.bq, %i.br                    ; 7 uses
+  %i.br = ptrtoint ptr %.sroa.0.1 to i64          ; 3 uses
+  %i.bs = sub i64 %i.bq, %i.br                    ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 0, i64 24, i1 false)
   br i1 %.not, label %.thread, label %bb.l
 
@@ -313,8 +320,10 @@ _ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4N
   store ptr %i.bw, ptr %i.bx, align 8, !tbaa !53
   br label %bb.p
 
-bb.l:                                             ; preds = %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit
-  %i.by = icmp ugt i64 %i.bs, 9223372036854775800
+bb.l:                                             ; preds = %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit.thread, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit
+  %6 = phi i64 [ %5, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit.thread ], [ %i.bs, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit ] ; 6 uses
+  %7 = phi i64 [ %4, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit.thread ], [ %i.br, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit ] ; 3 uses
+  %i.by = icmp ugt i64 %6, 9223372036854775800
   br i1 %i.by, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIPN13sentencepiece7unigram7Lattice4NodeEE8allocateEmPKv.exit.i.i.i.i.i, !prof !88
 
 .noexc.i.i.i:                                     ; preds = %bb.l
@@ -325,25 +334,25 @@ bb.l:                                             ; preds = %_ZSt7reverseIN9__gn
   unreachable
 
 _ZNSt15__new_allocatorIPN13sentencepiece7unigram7Lattice4NodeEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.l
-  %i.bz = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bs) #32
+  %i.bz = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %6) #32
           to label %.noexc53 unwind label %.loopexit.split-lp ; 5 uses
 
 .noexc53:                                         ; preds = %_ZNSt15__new_allocatorIPN13sentencepiece7unigram7Lattice4NodeEE8allocateEmPKv.exit.i.i.i.i.i
   store ptr %i.bz, ptr %0, align 8, !tbaa !52
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   store ptr %i.bz, ptr %i.ca, align 8, !tbaa !83
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.bs ; 4 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 %6 ; 4 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.cb, ptr %i.cc, align 8, !tbaa !53
-  %i.cd = icmp samesign ugt i64 %i.bs, 8
+  %i.cd = icmp samesign ugt i64 %6, 8
   br i1 %i.cd, label %bb.m, label %bb.n, !prof !317
 
 bb.m:                                             ; preds = %.noexc53
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bz, ptr align 8 %.sroa.0.1, i64 %i.bs, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bz, ptr align 8 %.sroa.0.1, i64 %6, i1 false)
   br label %bb.p
 
 bb.n:                                             ; preds = %.noexc53
-  %i.ce = icmp eq i64 %i.bs, 8
+  %i.ce = icmp eq i64 %6, 8
   br i1 %i.ce, label %.thread77, label %bb.p
 
 .thread77:                                        ; preds = %bb.n
@@ -374,7 +383,7 @@ bb.o:                                             ; preds = %.loopexit.split-lp,
   br i1 %.not.i.i.i55, label %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EED2Ev.exit56, label %bb.r
 
 bb.p:                                             ; preds = %bb.n, %bb.m, %.thread
-  %i.ch = phi i64 [ %i.br, %bb.m ], [ %i.br, %bb.n ], [ %i.bu, %.thread ]
+  %i.ch = phi i64 [ %7, %bb.m ], [ %7, %bb.n ], [ %i.bu, %.thread ]
   %.sroa.0.0.lcssa132141 = phi ptr [ %.sroa.0.1, %bb.m ], [ %.sroa.0.1, %bb.n ], [ %.sroa.0.0.lcssa132142.a, %.thread ] ; 2 uses
   %.sroa.17.0.lcssa134139 = phi ptr [ %.sroa.17.1, %bb.m ], [ %.sroa.17.1, %bb.n ], [ %.sroa.17.0.lcssa134140.a, %.thread ]
   %i.ci = phi ptr [ %i.cb, %bb.m ], [ %i.cb, %bb.n ], [ %i.bw, %.thread ]
@@ -386,7 +395,7 @@ bb.p:                                             ; preds = %bb.n, %bb.m, %.thre
   br i1 %.not.i.i.i54, label %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EED2Ev.exit, label %bb.q
 
 bb.q:                                             ; preds = %.thread77, %bb.p
-  %i.cl = phi i64 [ %i.br, %.thread77 ], [ %i.ch, %bb.p ]
+  %i.cl = phi i64 [ %7, %.thread77 ], [ %i.ch, %bb.p ]
   %.sroa.0.0.lcssa132143 = phi ptr [ %.sroa.0.1, %.thread77 ], [ %.sroa.0.0.lcssa132141, %bb.p ]
   %.sroa.17.0.lcssa135 = phi ptr [ %.sroa.17.1, %.thread77 ], [ %.sroa.17.0.lcssa134139, %bb.p ]
   %i.cm = ptrtoint ptr %.sroa.17.0.lcssa135 to i64

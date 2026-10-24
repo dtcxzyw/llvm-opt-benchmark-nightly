@@ -205,9 +205,8 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit16
   br label %.lr.ph394
 
 .lr.ph394:                                        ; preds = %.lr.ph394.preheader, %.thread360
-  %.0393 = phi ptr [ %i.rb, %.thread360 ], [ %i.qc, %.lr.ph394.preheader ] ; 2 uses
-  %.053392 = phi ptr [ %.1367, %.thread360 ], [ null, %.lr.ph394.preheader ] ; 5 uses
-  %i.qd = load ptr, ptr %.0393, align 8, !tbaa !27 ; 5 uses
+  %.053392 = phi ptr [ %i.rb, %.thread360 ], [ %i.qc, %.lr.ph394.preheader ] ; 2 uses
+  %i.qd = load ptr, ptr %.053392, align 8, !tbaa !27 ; 5 uses
   %i.qe = getelementptr inbounds nuw i8, ptr %i.qd, i64 4
   %i.qf = load i32, ptr %i.qe, align 4
   %i.qg = and i32 %i.qf, 65535
@@ -250,18 +249,20 @@ bb.dl:                                            ; preds = %bb.dj
   %i.ra = icmp ne ptr %i.qz, %1                   ; 2 uses
   %.not91377 = icmp ne ptr %i.qx, %1              ; 2 uses
   %.not91.not = select i1 %i.ra, i1 %.not91377, i1 false
-  %spec.select376 = select i1 %.not91377, ptr %.053392, ptr %i.qz
-  %spec.select100 = select i1 %i.ra, ptr %spec.select376, ptr %i.qx ; 2 uses
-  br i1 %.not91.not, label %.thread360, label %._crit_edge
+  br i1 %.not91.not, label %.thread360, label %._crit_edge.split.loop.exit
 
 .thread360:                                       ; preds = %bb.dj, %_ZNK11ast_manager5is_eqEPK4expr.exit.i163, %.lr.ph394, %bb.di, %bb.dl
-  %.1367 = phi ptr [ %spec.select100, %bb.dl ], [ %.053392, %bb.di ], [ %.053392, %.lr.ph394 ], [ %.053392, %_ZNK11ast_manager5is_eqEPK4expr.exit.i163 ], [ %.053392, %bb.dj ] ; 2 uses
-  %i.rb = getelementptr inbounds nuw i8, ptr %.0393, i64 8 ; 2 uses
+  %i.rb = getelementptr inbounds nuw i8, ptr %.053392, i64 8 ; 2 uses
   %.not87 = icmp eq ptr %i.rb, %i.qb
   br i1 %.not87, label %._crit_edge, label %.lr.ph394
 
-._crit_edge:                                      ; preds = %bb.dl, %.thread360
-  %.2 = phi ptr [ %spec.select100, %bb.dl ], [ %.1367, %.thread360 ] ; 3 uses
+._crit_edge.split.loop.exit:                      ; preds = %bb.dl
+  %spec.select376.le = select i1 %.not91377, ptr null, ptr %i.qz
+  %spec.select100.le = select i1 %i.ra, ptr %spec.select376.le, ptr %i.qx
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.thread360, %._crit_edge.split.loop.exit
+  %.2 = phi ptr [ %spec.select100.le, %._crit_edge.split.loop.exit ], [ null, %.thread360 ] ; 3 uses
   %.not92 = icmp eq ptr %.2, null
   br i1 %.not92, label %._crit_edge.thread, label %bb.dm
 

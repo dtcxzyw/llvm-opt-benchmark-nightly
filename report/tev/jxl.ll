@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %struct.JxlChunkedFrameInputSource, align 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !100
-  %i.d = tail call ptr @JxlEncoderCreate(ptr noundef %i.c) #11, !noalias !101 ; 26 uses
+  %i.d = tail call ptr @JxlEncoderCreate(ptr noundef %i.c) #11, !noalias !101 ; 27 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.f = load i8, ptr %i.e, align 8, !tbaa !102, !range !14, !noundef !15
   %i.g = trunc nuw i8 %i.f to i1
@@ -373,7 +373,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 472 ; 3 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !73
   %i.bu = icmp eq ptr %i.br, %i.bt
-  br i1 %i.bu, label %bb.v, label %.thread
+  br i1 %i.bu, label %bb.v, label %bb.z
 
 bb.v:                                             ; preds = %bb.u
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 560
@@ -381,7 +381,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 568
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !73
   %i.bz = icmp eq ptr %i.bw, %i.by
-  br i1 %i.bz, label %bb.w, label %.thread
+  br i1 %i.bz, label %bb.w, label %bb.z
 
 bb.w:                                             ; preds = %bb.v
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 512
@@ -389,7 +389,7 @@ bb.w:                                             ; preds = %bb.v
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 520
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !73
   %i.ce = icmp eq ptr %i.cb, %i.cd
-  br i1 %i.ce, label %bb.x, label %.thread
+  br i1 %i.ce, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 536
@@ -397,7 +397,7 @@ bb.x:                                             ; preds = %bb.w
   %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 544
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !73
   %i.cj = icmp eq ptr %i.cg, %i.ci
-  br i1 %i.cj, label %bb.y, label %.thread
+  br i1 %i.cj, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 488
@@ -411,30 +411,32 @@ bb.y:                                             ; preds = %bb.x
   %or.cond = or i1 %i.co, %i.cr                   ; 2 uses
   %brmerge = or i1 %.not222, %or.cond
   %.mux = zext i1 %or.cond to i32
-  br i1 %brmerge, label %.thread, label %bb.z
+  br i1 %brmerge, label %bb.z, label %.thread
 
-bb.z:                                             ; preds = %bb.y
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 33
-  %9 = load i8, ptr %8, align 1, !tbaa !112, !range !14, !noundef !15
-  %10 = zext nneg i8 %9 to i32
-  br label %.thread
+bb.z:                                             ; preds = %bb.u, %bb.v, %bb.w, %bb.x, %bb.y
+  %8 = phi i1 [ %i.co, %bb.y ], [ true, %bb.x ], [ true, %bb.w ], [ true, %bb.v ], [ true, %bb.u ]
+  %9 = phi i32 [ %.mux, %bb.y ], [ 1, %bb.x ], [ 1, %bb.w ], [ 1, %bb.v ], [ 1, %bb.u ]
+  %10 = tail call i32 @JxlEncoderUseContainer(ptr noundef %i.d, i32 noundef %9) #11
+  %.not223 = icmp eq i32 %10, 0
+  br i1 %.not223, label %bb.ab, label %bb.aa
 
-.thread:                                          ; preds = %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z
-  %11 = phi i1 [ %i.co, %bb.y ], [ false, %bb.z ], [ true, %bb.x ], [ true, %bb.w ], [ true, %bb.v ], [ true, %bb.u ]
-  %12 = phi i32 [ %.mux, %bb.y ], [ %10, %bb.z ], [ 1, %bb.x ], [ 1, %bb.w ], [ 1, %bb.v ], [ 1, %bb.u ]
-  %i.cs = tail call i32 @JxlEncoderUseContainer(ptr noundef %i.d, i32 noundef %12) #11
+.thread:                                          ; preds = %bb.y
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 33
+  %12 = load i8, ptr %11, align 1, !tbaa !112, !range !14, !noundef !15
+  %13 = zext nneg i8 %12 to i32
+  %i.cs = tail call i32 @JxlEncoderUseContainer(ptr noundef %i.d, i32 noundef %13) #11
   %.not223.a = icmp eq i32 %i.cs, 0
-  br i1 %.not223.a, label %bb.ab, label %bb.aa
+  br i1 %.not223.a, label %bb.ac, label %bb.aa
 
-bb.aa:                                            ; preds = %.thread
+bb.aa:                                            ; preds = %.thread, %bb.z
   %i.ct = load ptr, ptr @stderr, align 8, !tbaa !28
   %i.cu = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ct, ptr noundef nonnull @.str.10) #12 ; 0 uses
   br label %bb.cw
 
-bb.ab:                                            ; preds = %.thread
+bb.ab:                                            ; preds = %bb.z
   br i1 %.not222, label %bb.ar, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab
+bb.ac:                                            ; preds = %.thread, %bb.ab
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 33 ; 3 uses
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !112, !range !14, !noundef !15
   %i.cx = trunc nuw i8 %i.cw to i1
@@ -739,7 +741,7 @@ bb.bq:                                            ; preds = %bb.bp
   br label %.critedge261
 
 bb.br:                                            ; preds = %bb.bp, %bb.bn
-  br i1 %11, label %bb.bs, label %bb.ci
+  br i1 %8, label %bb.bs, label %bb.ci
 
 bb.bs:                                            ; preds = %bb.br
   %i.ht = call i32 @JxlEncoderUseBoxes(ptr noundef %i.d) #11

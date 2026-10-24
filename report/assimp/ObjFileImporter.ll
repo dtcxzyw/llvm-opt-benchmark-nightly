@@ -205,9 +205,9 @@ _ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph:             ; preds = %bb.v
 _ZNSt6vectorIjSaIjEE2atEm.exit:                   ; preds = %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph, %bb.bb
   %i.cz = phi ptr [ %i.ct, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %i.id, %bb.bb ]
   %.0136221 = phi i64 [ 0, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %.2, %bb.bb ] ; 2 uses
-  %.0137220 = phi i64 [ 0, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %i.ib, %bb.bb ] ; 8 uses
-  %.1139219 = phi i32 [ %.0138230, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %.3, %bb.bb ] ; 4 uses
-  %.1142218 = phi i32 [ %.0141229, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %i.ia, %bb.bb ] ; 8 uses
+  %.0137220 = phi i64 [ 0, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %i.ib, %bb.bb ] ; 9 uses
+  %.1139219 = phi i32 [ %.0138230, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %.3, %bb.bb ] ; 6 uses
+  %.1142218 = phi i32 [ %.0141229, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %i.ia, %bb.bb ] ; 10 uses
   %.1146217 = phi i8 [ %.0145228, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %.3148, %bb.bb ]
   %.1150216 = phi i8 [ %.0149227, %_ZNSt6vectorIjSaIjEE2atEm.exit.lr.ph ], [ %.3152, %bb.bb ]
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %.0137220
@@ -382,7 +382,7 @@ bb.an:                                            ; preds = %bb.am, %_ZNSt6vecto
   %i.gj = load i32, ptr %i.cp, align 8
   %i.gk = icmp eq i32 %i.gj, 2
   %or.cond5 = select i1 %i.gk, i1 %i.gi, i1 false
-  br i1 %or.cond5, label %.thread.a, label %bb.ao
+  br i1 %or.cond5, label %.thread194, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.gl = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
@@ -399,12 +399,16 @@ bb.ap:                                            ; preds = %bb.ao
   %i.go = add i32 %.1139219, 1
   br label %bb.bb
 
-.thread.a:                                        ; preds = %bb.an, %bb.ao
+.thread.a:                                        ; preds = %bb.ao
   %not. = xor i1 %i.gi, true
   %i.gp = zext i1 %not. to i32
-  %spec.select = add i32 %.1139219, %i.gp         ; 2 uses
+  %spec.select = add i32 %.1139219, %i.gp         ; 4 uses
   %.not176 = icmp eq i64 %.0137220, 0
   br i1 %.not176, label %bb.bb, label %bb.aq
+
+.thread194:                                       ; preds = %bb.an
+  %.not176196 = icmp eq i64 %.0137220, 0
+  br i1 %.not176196, label %bb.bb, label %.loopexit
 
 bb.aq:                                            ; preds = %.thread.a
   br i1 %i.gi, label %.loopexit, label %bb.ar
@@ -478,8 +482,9 @@ bb.az:                                            ; preds = %.preheader
   %i.hu = add nuw nsw i64 %.0, 1
   br label %.preheader, !llvm.loop !47
 
-.loopexit:                                        ; preds = %.preheader, %bb.ay, %bb.aq
-  %.2143 = phi i32 [ %.1142218, %bb.aq ], [ %i.gr, %bb.ay ], [ %i.gr, %.preheader ] ; 2 uses
+.loopexit:                                        ; preds = %.preheader, %.thread194, %bb.ay, %bb.aq
+  %spec.select197200 = phi i32 [ %spec.select, %bb.aq ], [ %.1139219, %.thread194 ], [ %spec.select, %bb.ay ], [ %spec.select, %.preheader ]
+  %.2143 = phi i32 [ %.1142218, %bb.aq ], [ %.1142218, %.thread194 ], [ %i.gr, %bb.ay ], [ %i.gr, %.preheader ] ; 2 uses
   %i.hv = getelementptr inbounds i8, ptr %i.ga, i64 -8
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 4
@@ -492,10 +497,10 @@ bb.ba:                                            ; preds = %bb.ao
   %spec.select181 = add i32 %.1139219, %i.hz
   br label %bb.bb
 
-bb.bb:                                            ; preds = %bb.ba, %.loopexit, %.thread.a, %bb.ap
-  %.3144 = phi i32 [ %.1142218, %bb.ap ], [ %.2143, %.loopexit ], [ %.1142218, %.thread.a ], [ %.1142218, %bb.ba ]
-  %.3 = phi i32 [ %i.go, %bb.ap ], [ %spec.select, %.loopexit ], [ %spec.select, %.thread.a ], [ %spec.select181, %bb.ba ] ; 2 uses
-  %.2 = phi i64 [ 0, %bb.ap ], [ 0, %.loopexit ], [ 0, %.thread.a ], [ %i.hy, %bb.ba ]
+bb.bb:                                            ; preds = %.thread194, %bb.ba, %.loopexit, %.thread.a, %bb.ap
+  %.3144 = phi i32 [ %.1142218, %bb.ap ], [ %.2143, %.loopexit ], [ %.1142218, %.thread.a ], [ %.1142218, %bb.ba ], [ %.1142218, %.thread194 ]
+  %.3 = phi i32 [ %i.go, %bb.ap ], [ %spec.select197200, %.loopexit ], [ %spec.select, %.thread.a ], [ %spec.select181, %bb.ba ], [ %.1139219, %.thread194 ] ; 2 uses
+  %.2 = phi i64 [ 0, %bb.ap ], [ 0, %.loopexit ], [ 0, %.thread.a ], [ %i.hy, %bb.ba ], [ 0, %.thread194 ]
   %i.ia = add i32 %.3144, 1                       ; 2 uses
   %i.ib = add nuw i64 %.0137220, 1                ; 2 uses
   %i.ic = load ptr, ptr %i.cr, align 8

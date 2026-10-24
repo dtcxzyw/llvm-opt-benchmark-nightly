@@ -204,7 +204,7 @@ bb.cc:                                            ; preds = %bb.cb
   %i.ny = zext i32 %i.nw to i64
   %i.nz = load ptr, ptr %13, align 8, !tbaa !58
   %i.oa = getelementptr inbounds nuw i8, ptr %i.nz, i64 %i.ny
-  %i.ob = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 26 uses
+  %i.ob = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 25 uses
   %i.oc = load i32, ptr %i.ob, align 8, !tbaa !57 ; 2 uses
   %i.od = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 8 uses
   %i.oe = load i32, ptr %i.od, align 4, !tbaa !56
@@ -268,16 +268,15 @@ bb.cg:                                            ; preds = %bb.cf
   %.pre.i204 = load i32, ptr %i.ob, align 8, !tbaa !57
   br label %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205
 
-_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205: ; preds = %bb.cf, %bb.cg
+_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205: ; preds = %bb.cg, %bb.cf
   %i.oz = phi i32 [ %.pre.i204, %bb.cg ], [ %i.ou, %bb.cf ]
   %i.pa = load ptr, ptr %1, align 8, !tbaa !58
   %i.pb = zext i32 %i.oz to i64
   %i.pc = getelementptr inbounds nuw i8, ptr %i.pa, i64 %i.pb
   store i8 48, ptr %i.pc, align 1
   %i.pd = load i32, ptr %i.ob, align 8, !tbaa !57
-  %i.pe = add i32 %i.pd, 1                        ; 2 uses
-  store i32 %i.pe, ptr %i.ob, align 8, !tbaa !57
-  br label %.loopexit.a
+  %i.pe = add i32 %i.pd, 1
+  br label %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a
 
 bb.ch:                                            ; preds = %.lr.ph327, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit208
   %i.pf = phi i32 [ %i.ou, %.lr.ph327 ], [ %i.ps, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit208 ] ; 2 uses
@@ -311,8 +310,8 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit208: ; preds = %bb.ch
   %exitcond = icmp eq i32 %i.nh, %lftr.wideiv
   br i1 %exitcond, label %.loopexit.a, label %bb.ch, !llvm.loop !160
 
-.loopexit.a:                                      ; preds = %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit208, %.preheader, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205
-  %17 = phi i32 [ %i.pe, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205 ], [ %i.ou, %.preheader ], [ %i.ps, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit208 ] ; 4 uses
+.loopexit.a:                                      ; preds = %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit208, %.preheader
+  %17 = phi i32 [ %i.ou, %.preheader ], [ %i.ps, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit208 ] ; 4 uses
   br i1 %4, label %bb.cn, label %bb.cj
 
 bb.cj:                                            ; preds = %.loopexit.a
@@ -344,23 +343,28 @@ bb.cl:                                            ; preds = %bb.ck
   %i.qi = load ptr, ptr %1, align 8, !tbaa !58
   %i.qj = getelementptr inbounds nuw i8, ptr %i.qi, i64 %i.pz
   %i.qk = icmp eq i32 %i.pv, 0
-  br i1 %i.qk, label %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a, label %bb.cm
+  br i1 %i.qk, label %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %.thread.i210
   %i.ql = phi ptr [ %i.qh, %.thread.i210 ], [ %i.qj, %bb.cl ]
   call void @llvm.memset.p0.i64(ptr align 1 %i.ql, i8 48, i64 %i.pw, i1 false)
   %.pre.i209 = load i32, ptr %i.ob, align 8, !tbaa !57
+  br label %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211
+
+_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211: ; preds = %bb.cl, %bb.cm
+  %18 = phi i32 [ %17, %bb.cl ], [ %.pre.i209, %bb.cm ]
+  %19 = add i32 %18, %i.pv
   br label %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a
 
-_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a: ; preds = %bb.cl, %bb.cm
-  %i.qm = phi i32 [ %17, %bb.cl ], [ %.pre.i209, %bb.cm ]
-  %18 = add i32 %i.qm, %i.pv                      ; 2 uses
-  store i32 %18, ptr %i.ob, align 8, !tbaa !57
+_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a: ; preds = %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205
+  %i.qm = phi i32 [ %i.pe, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205 ], [ %19, %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211 ] ; 2 uses
+  %.ph438 = phi i8 [ 69, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit205 ], [ 101, %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211 ]
+  store i32 %i.qm, ptr %i.ob, align 8, !tbaa !57
   br label %bb.cn
 
 bb.cn:                                            ; preds = %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a, %bb.cj, %.loopexit.a
-  %i.qn = phi i32 [ %18, %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a ], [ %17, %bb.cj ], [ %17, %.loopexit.a ] ; 2 uses
-  %i.qo = phi i8 [ 101, %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a ], [ 101, %bb.cj ], [ 69, %.loopexit.a ]
+  %i.qn = phi i32 [ %17, %.loopexit.a ], [ %17, %bb.cj ], [ %i.qm, %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a ] ; 2 uses
+  %i.qo = phi i8 [ 69, %.loopexit.a ], [ 101, %bb.cj ], [ %.ph438, %_ZN4llvh15SmallVectorImplIcE6appendEmRKc.exit211.a ]
   %i.qp = load i32, ptr %i.od, align 4, !tbaa !56
   %.not.i212 = icmp ult i32 %i.qn, %i.qp
   br i1 %.not.i212, label %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit214, label %bb.co, !prof !59

@@ -205,7 +205,7 @@ bb.eo:                                            ; preds = %bb.en
   %i.agy = fcmp reassoc nsz arcp contract afn ogt float %i.afu, %i.afi
   %i.agz = select reassoc nsz arcp contract afn i1 %i.agy, float %i.afu, float %i.afi ; 3 uses
   %i.aha = fcmp reassoc nsz arcp contract afn ogt float %i.agz, f0x3C23D70A
-  br i1 %i.aha, label %bb.ep, label %bb.eq
+  br i1 %i.aha, label %bb.ep, label %bb.er
 
 bb.ep:                                            ; preds = %bb.eo
   %i.ahb = fcmp reassoc nsz arcp contract afn olt float %i.afu, %i.afi
@@ -214,13 +214,14 @@ bb.ep:                                            ; preds = %bb.eo
   %i.ahe = fcmp reassoc nsz arcp contract afn ogt float %i.agz, %i.ahd
   %i.ahf = fdiv reassoc nsz arcp contract afn float %i.agz, %i.ahc
   %spec.select329.us.i.i.i = select nsz i1 %i.ahe, float %i.ahf, float %.4.us.i173.i.i
-  br label %bb.eq
+  br label %bb.er
 
-bb.eq:                                            ; preds = %bb.ep, %bb.eo, %bb.en, %bb.ej, %.thread338.us.i.i.i
-  %.8.us.i.i.i = phi nsz float [ %.1355.us.i.i.i, %.thread338.us.i.i.i ], [ %.1355.us.i.i.i, %bb.ej ], [ %.4.us.i173.i.i, %bb.en ], [ %spec.select329.us.i.i.i, %bb.ep ], [ %.4.us.i173.i.i, %bb.eo ] ; 6 uses
+bb.eq:                                            ; preds = %bb.en, %bb.ej, %.thread338.us.i.i.i
+  %.8.us.i.i.i = phi nsz float [ %.1355.us.i.i.i, %.thread338.us.i.i.i ], [ %.1355.us.i.i.i, %bb.ej ], [ %.4.us.i173.i.i, %bb.en ] ; 2 uses
   br i1 %i.aft, label %bb.ff, label %bb.er
 
-bb.er:                                            ; preds = %bb.eq
+bb.er:                                            ; preds = %bb.eq, %bb.ep, %bb.eo
+  %.8343.us.i.i.i = phi float [ %.8.us.i.i.i, %bb.eq ], [ %.4.us.i173.i.i, %bb.eo ], [ %spec.select329.us.i.i.i, %bb.ep ] ; 5 uses
   %i.ahg = fcmp reassoc nsz arcp contract afn ogt float %i.afr, 5.000000e-03
   br i1 %i.ahg, label %bb.es, label %bb.ey
 
@@ -237,14 +238,14 @@ bb.et:                                            ; preds = %bb.es
 bb.eu:                                            ; preds = %bb.et
   %i.ahl = fcmp reassoc nsz arcp contract afn olt float %i.afi, %i.afr
   %i.ahm = select reassoc nsz arcp contract afn i1 %i.ahl, float %i.afi, float %i.afr ; 2 uses
-  %i.ahn = fmul reassoc nsz arcp contract afn float %.8.us.i.i.i, %i.ahm
+  %i.ahn = fmul reassoc nsz arcp contract afn float %.8343.us.i.i.i, %i.ahm
   %i.aho = fcmp reassoc nsz arcp contract afn ogt float %i.ahj, %i.ahn
   %i.ahp = fdiv reassoc nsz arcp contract afn float %i.ahj, %i.ahm
-  %spec.select330.us.i.i.i = select nsz i1 %i.aho, float %i.ahp, float %.8.us.i.i.i
+  %spec.select330.us.i.i.i = select nsz i1 %i.aho, float %i.ahp, float %.8343.us.i.i.i
   br label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu, %bb.et, %bb.es
-  %.11.us.i.i.i = phi nsz float [ %.8.us.i.i.i, %bb.es ], [ %spec.select330.us.i.i.i, %bb.eu ], [ %.8.us.i.i.i, %bb.et ] ; 4 uses
+  %.11.us.i.i.i = phi nsz float [ %.8343.us.i.i.i, %bb.es ], [ %spec.select330.us.i.i.i, %bb.eu ], [ %.8343.us.i.i.i, %bb.et ] ; 4 uses
   %i.ahq = getelementptr [4 x i8], ptr %i.aff, i64 %i.aex
   %i.ahr = getelementptr i8, ptr %i.ahq, i64 12
   %i.ahs = load float, ptr %i.ahr, align 4, !tbaa !12 ; 7 uses
@@ -278,7 +279,7 @@ bb.ex:                                            ; preds = %bb.ew
   br label %bb.ey
 
 bb.ey:                                            ; preds = %bb.ex, %bb.ew, %bb.ev, %bb.er
-  %.15.us.i.i.i = phi nsz float [ %.8.us.i.i.i, %bb.er ], [ %.11.us.i.i.i, %bb.ev ], [ %spec.select333.us.i.i.i, %bb.ex ], [ %.11.us.i.i.i, %bb.ew ] ; 5 uses
+  %.15.us.i.i.i = phi nsz float [ %.8343.us.i.i.i, %bb.er ], [ %.11.us.i.i.i, %bb.ev ], [ %spec.select333.us.i.i.i, %bb.ex ], [ %.11.us.i.i.i, %bb.ew ] ; 5 uses
   %i.aik = fcmp reassoc nsz arcp contract afn ogt float %i.afo, 5.000000e-03
   br i1 %i.aik, label %bb.ez, label %bb.ff
 

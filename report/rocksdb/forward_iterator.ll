@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZN7rocksdb6StatusD
   %i.t = load i8, ptr %i.s, align 16, !tbaa !130, !range !297, !noundef !298
   %i.u = icmp eq i8 %i.t, 0
   %or.cond3 = or i1 %2, %i.u
-  br i1 %or.cond3, label %.critedge5.a, label %bb.f
+  br i1 %or.cond3, label %.critedge5, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 240
@@ -290,23 +290,30 @@ _ZNK7rocksdb21InternalKeyComparator7CompareERKNS_5SliceES3_.exit: ; preds = %_ZN
   %i.be = icmp sgt i32 %.1.i, 0
   br i1 %i.be, label %.critedge5.a, label %.critedge
 
-.critedge5.a:                                     ; preds = %bb.e, %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_5SliceES3_.exit
+.critedge5.a:                                     ; preds = %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_5SliceES3_.exit
   call void @_ZN7rocksdb15ForwardIterator16RebuildIteratorsEb(ptr noundef nonnull align 16 dereferenceable(2960) %0, i1 noundef zeroext true)
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %21 = load ptr, ptr %20, align 8, !tbaa !294    ; 3 uses
-  %22 = load ptr, ptr %21, align 8, !tbaa !30     ; 2 uses
+  br label %bb.m
+
+.critedge5:                                       ; preds = %bb.e
+  tail call void @_ZN7rocksdb15ForwardIterator16RebuildIteratorsEb(ptr noundef nonnull align 16 dereferenceable(2960) %0, i1 noundef zeroext true)
   br i1 %2, label %bb.l, label %bb.m
 
-bb.l:                                             ; preds = %.critedge5.a
+bb.l:                                             ; preds = %.critedge5
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 312
+  %21 = load ptr, ptr %20, align 8, !tbaa !294    ; 2 uses
+  %22 = load ptr, ptr %21, align 8, !tbaa !30
   %i.bf = getelementptr inbounds nuw i8, ptr %22, i64 32
   %i.bg = load ptr, ptr %i.bf, align 8
-  call void %i.bg(ptr noundef nonnull align 8 dereferenceable(40) %21)
+  tail call void %i.bg(ptr noundef nonnull align 8 dereferenceable(40) %21)
   br label %.critedge
 
-bb.m:                                             ; preds = %.critedge5.a
-  %i.bh = getelementptr inbounds nuw i8, ptr %22, i64 48
+bb.m:                                             ; preds = %.critedge5.a, %.critedge5
+  %23 = getelementptr inbounds nuw i8, ptr %0, i64 312
+  %24 = load ptr, ptr %23, align 8, !tbaa !294    ; 2 uses
+  %25 = load ptr, ptr %24, align 8, !tbaa !30
+  %i.bh = getelementptr inbounds nuw i8, ptr %25, i64 48
   %i.bi = load ptr, ptr %i.bh, align 8
-  call void %i.bi(ptr noundef nonnull align 8 dereferenceable(40) %21, ptr noundef nonnull align 8 dereferenceable(16) %1)
+  call void %i.bi(ptr noundef nonnull align 8 dereferenceable(40) %24, ptr noundef nonnull align 8 dereferenceable(16) %1)
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.j, %_ZN7rocksdb6StatusD2Ev.exit, %bb.l, %bb.m, %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_5SliceES3_.exit

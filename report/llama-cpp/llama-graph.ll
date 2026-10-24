@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.o, %_ZNK17llm_gr
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.1345 = phi ptr [ %i.ku, %bb.p ], [ %.0344, %bb.q ] ; 9 uses
   %.1336 = phi ptr [ %i.la, %bb.p ], [ %i.ld, %bb.q ]
-  %i.le = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 38 uses
+  %i.le = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 39 uses
   %i.lf = load ptr, ptr %i.le, align 8, !tbaa !459
   %i.lg = call ptr @ggml_get_rows(ptr noundef %i.lf, ptr noundef %.1336, ptr noundef %.1345) ; 3 uses
   %i.lh = load ptr, ptr %i.ft, align 8, !tbaa !461, !nonnull !133, !align !167 ; 3 uses
@@ -607,7 +607,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ss = getelementptr inbounds nuw [4 x i8], ptr %i.sq, i64 %i.sr
   %i.st = load float, ptr %i.ss, align 4, !tbaa !113 ; 5 uses
   %i.su = fcmp ogt float %i.st, f0x358637BD
-  br i1 %i.su, label %bb.ai, label %_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit465
+  br i1 %i.su, label %bb.ai, label %bb.an
 
 bb.ai:                                            ; preds = %bb.ah
   %i.sv = load i32, ptr %i.ek, align 8, !tbaa !445
@@ -736,11 +736,11 @@ _ZNKSt8functionIFvRK12llama_ubatchP11ggml_tensorPKciEEclES2_S4_S6_i.exit.i464: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   br label %_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit468
 
-_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit465: ; preds = %bb.ah, %bb.ag
-  %25 = load ptr, ptr %i.le, align 8, !tbaa !459  ; 2 uses
+_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit465: ; preds = %bb.ag
   br i1 %i.sn, label %bb.an, label %bb.ao
 
-bb.an:                                            ; preds = %_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit465
+bb.an:                                            ; preds = %bb.ah, %_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit465
+  %25 = load ptr, ptr %i.le, align 8, !tbaa !459
   %i.ul = call ptr @ggml_swiglu_split(ptr noundef %25, ptr noundef %.2, ptr noundef %.1328) ; 3 uses
   %i.um = load ptr, ptr %i.ft, align 8, !tbaa !461, !nonnull !133, !align !167 ; 3 uses
   %i.un = getelementptr inbounds nuw i8, ptr %i.um, i64 16
@@ -766,7 +766,8 @@ _ZNKSt8functionIFvRK12llama_ubatchP11ggml_tensorPKciEEclES2_S4_S6_i.exit.i467: ;
   br label %_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit468
 
 bb.ao:                                            ; preds = %_ZNK17llm_graph_context2cbEP11ggml_tensorPKci.exit465
-  %i.ut = call ptr @ggml_silu(ptr noundef %25, ptr noundef %.2) ; 3 uses
+  %26 = load ptr, ptr %i.le, align 8, !tbaa !459
+  %i.ut = call ptr @ggml_silu(ptr noundef %26, ptr noundef %.2) ; 3 uses
   %i.uu = load ptr, ptr %i.ft, align 8, !tbaa !461, !nonnull !133, !align !167 ; 3 uses
   %i.uv = getelementptr inbounds nuw i8, ptr %i.uu, i64 16
   %i.uw = load ptr, ptr %i.uv, align 8, !tbaa !424

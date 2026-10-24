@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.x
 
 bb.m:                                             ; preds = %bb.d
-  %i.ci = icmp eq i32 %i.aq, 1                    ; 3 uses
+  %i.ci = icmp eq i32 %i.aq, 1                    ; 2 uses
   %or.cond6 = select i1 %i.av, i1 %i.ci, i1 false
   br i1 %or.cond6, label %bb.n, label %bb.o
 
@@ -216,6 +216,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
+  %7 = phi i1 [ %i.ci, %bb.m ], [ true, %bb.n ]   ; 2 uses
   %i.cl = icmp eq i32 %i.ad, 3                    ; 2 uses
   %i.cm = icmp eq i32 %i.ad, 4                    ; 2 uses
   %i.cn = add i32 %i.ad, -3
@@ -327,7 +328,7 @@ _ZN4ncnn3MatD2Ev.exit112:                         ; preds = %bb.r, %bb.q, %bb.t,
 bb.x:                                             ; preds = %.thread217, %.thread187, %_ZN4ncnn3MatD2Ev.exit112, %bb.o
   %i.eg = phi i1 [ false, %.thread187 ], [ %i.cm, %_ZN4ncnn3MatD2Ev.exit112 ], [ %i.cm, %bb.o ], [ false, %.thread217 ] ; 3 uses
   %i.eh = phi i1 [ false, %.thread187 ], [ %i.cl, %_ZN4ncnn3MatD2Ev.exit112 ], [ %i.cl, %bb.o ], [ false, %.thread217 ] ; 2 uses
-  %i.ei = phi i1 [ false, %.thread187 ], [ %i.ci, %_ZN4ncnn3MatD2Ev.exit112 ], [ %i.ci, %bb.o ], [ %i.au, %.thread217 ] ; 2 uses
+  %i.ei = phi i1 [ false, %.thread187 ], [ %7, %_ZN4ncnn3MatD2Ev.exit112 ], [ %7, %bb.o ], [ %i.au, %.thread217 ] ; 2 uses
   %or.cond12 = select i1 %i.eh, i1 %i.ei, i1 false
   %i.ej = icmp eq i32 %i.aq, 2                    ; 2 uses
   %or.cond14 = select i1 %i.eg, i1 %i.ej, i1 false
@@ -730,7 +731,7 @@ bb.j:                                             ; preds = %bb.g
   br label %bb.v
 
 bb.k:                                             ; preds = %bb.b
-  %i.by = icmp eq i32 %i.ag, 1                    ; 3 uses
+  %i.by = icmp eq i32 %i.ag, 1                    ; 2 uses
   %or.cond6 = select i1 %i.al, i1 %i.by, i1 false
   br i1 %or.cond6, label %bb.l, label %bb.m
 
@@ -742,6 +743,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
+  %7 = phi i1 [ %i.by, %bb.k ], [ true, %bb.l ]   ; 2 uses
   %i.cb = icmp eq i32 %i.r, 3                     ; 2 uses
   %i.cc = icmp eq i32 %i.r, 4                     ; 2 uses
   %i.cd = add i32 %i.r, -3
@@ -853,7 +855,7 @@ _ZN4ncnn3MatD2Ev.exit108:                         ; preds = %bb.p, %bb.o, %bb.r,
 bb.v:                                             ; preds = %.thread211, %.thread182, %_ZN4ncnn3MatD2Ev.exit108, %bb.m
   %i.dw = phi i1 [ false, %.thread182 ], [ %i.cc, %_ZN4ncnn3MatD2Ev.exit108 ], [ %i.cc, %bb.m ], [ false, %.thread211 ] ; 3 uses
   %i.dx = phi i1 [ false, %.thread182 ], [ %i.cb, %_ZN4ncnn3MatD2Ev.exit108 ], [ %i.cb, %bb.m ], [ false, %.thread211 ] ; 2 uses
-  %i.dy = phi i1 [ false, %.thread182 ], [ %i.by, %_ZN4ncnn3MatD2Ev.exit108 ], [ %i.by, %bb.m ], [ %i.ak, %.thread211 ] ; 2 uses
+  %i.dy = phi i1 [ false, %.thread182 ], [ %7, %_ZN4ncnn3MatD2Ev.exit108 ], [ %7, %bb.m ], [ %i.ak, %.thread211 ] ; 2 uses
   %or.cond12 = select i1 %i.dx, i1 %i.dy, i1 false
   %i.dz = icmp eq i32 %i.ag, 2                    ; 2 uses
   %or.cond14 = select i1 %i.dw, i1 %i.dz, i1 false

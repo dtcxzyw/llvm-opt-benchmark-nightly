@@ -205,7 +205,7 @@ ma_context_get_log.exit:                          ; preds = %bb.a, %ma_device_ge
 ; Function Attrs: nounwind uwtable
 define i32 @ma_device_get_name(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(address_is_null) %2, i64 noundef %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #8 {
 bb.a:
-  %5 = alloca %struct.ma_device_info, align 8     ; 5 uses
+  %5 = alloca %struct.ma_device_info, align 8     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #55
   %.not = icmp eq ptr %4, null                    ; 3 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -218,21 +218,23 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.a = icmp ne ptr %2, null                     ; 2 uses
   %i.b = icmp ne i64 %3, 0
   %or.cond = and i1 %i.a, %i.b
-  br i1 %or.cond, label %bb.d, label %bb.e
+  br i1 %or.cond, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr %2, align 1, !tbaa !119
-  br label %bb.e
+  %6 = call i32 @ma_device_get_info(ptr noundef %0, i32 noundef %1, ptr noundef nonnull %5) ; 2 uses
+  %.not22 = icmp eq i32 %6, 0
+  br i1 %.not22, label %bb.f, label %bb.j
 
-bb.e:                                             ; preds = %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.c
+  store i8 0, ptr %2, align 1, !tbaa !119
   %i.c = call i32 @ma_device_get_info(ptr noundef %0, i32 noundef %1, ptr noundef nonnull %5) ; 2 uses
   %.not22.a = icmp eq i32 %i.c, 0
-  br i1 %.not22.a, label %bb.f, label %bb.j
+  br i1 %.not22.a, label %bb.g, label %bb.j
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %bb.d
   br i1 %i.a, label %bb.g, label %bb.h
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %bb.e, %bb.f
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 256
   %i.e = call i32 @ma_strncpy_s(ptr noundef nonnull %2, i64 noundef %3, ptr noundef nonnull %i.d, i64 noundef -1) ; 0 uses
   br i1 %.not, label %bb.j, label %.sink.split
@@ -250,9 +252,10 @@ bb.i:                                             ; preds = %bb.h
   store i64 %i.g, ptr %4, align 8, !tbaa !154
   br label %bb.j
 
-bb.j:                                             ; preds = %.sink.split, %bb.g, %bb.h, %bb.e
+bb.j:                                             ; preds = %.sink.split, %bb.e, %bb.g, %bb.h, %bb.d
+  %.0 = phi i32 [ %6, %bb.d ], [ 0, %bb.h ], [ %i.c, %bb.e ], [ 0, %bb.g ], [ 0, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #55
-  ret i32 %i.c
+  ret i32 %.0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable

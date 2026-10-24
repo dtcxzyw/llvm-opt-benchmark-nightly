@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %.thread91, %.thread
 
 bb.ab:                                            ; preds = %bb.aa
   %i.dk = call zeroext i1 @errstart(i32 noundef 15, ptr noundef null) #11
-  br i1 %i.dk, label %bb.ac, label %bb.ad
+  br i1 %i.dk, label %bb.ac, label %.thread93
 
 bb.ac:                                            ; preds = %bb.ab
   %sext = shl i64 %i.cf, 32
@@ -210,13 +210,17 @@ bb.ac:                                            ; preds = %bb.ab
   %i.dm = call i32 (ptr, ptr, i64, ...) @errmsg_plural(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i64 noundef %i.dl, i32 noundef %i.cg) #11 ; 0 uses
   %i.dn = call i32 (ptr, ...) @errhint(ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4) #11 ; 0 uses
   call void @errfinish(ptr noundef nonnull @.str.5, i32 noundef 484, ptr noundef nonnull @__func__.CheckpointerMain) #11
-  br label %bb.ad
+  br label %.thread93
 
-bb.ad:                                            ; preds = %bb.ab, %bb.ac, %bb.aa
+.thread93:                                        ; preds = %bb.ab, %bb.ac
+  store i1 true, ptr @ckpt_active, align 1
+  br label %bb.ae
+
+bb.ad:                                            ; preds = %bb.aa
   store i1 true, ptr @ckpt_active, align 1
   br i1 %spec.select68, label %bb.af, label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ad
+bb.ae:                                            ; preds = %.thread93, %bb.ad
   %i.do = call i64 @GetInsertRecPtr() #11
   store i64 %i.do, ptr @ckpt_start_recptr, align 8
   store i64 %i.cd, ptr @ckpt_start_time, align 8

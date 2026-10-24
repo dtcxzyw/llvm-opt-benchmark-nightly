@@ -204,13 +204,13 @@ bb.bp:                                            ; preds = %bb.bn
   %.not = icmp eq i32 %3, 0                       ; 4 uses
   %i.id = or i1 %.not, %or.cond8                  ; 2 uses
   %i.ie = select i1 %i.id, i64 3, i64 4
-  %i.if = mul nuw nsw i64 %i.ie, %i.hs            ; 20 uses
+  %i.if = mul nuw nsw i64 %i.ie, %i.hs            ; 21 uses
   %i.ig = call i32 @ImgIoUtilCheckSizeArgumentsOverflow(i64 noundef %i.if, i64 noundef %i.ht) #11
   %.not121 = icmp eq i32 %i.ig, 0
   br i1 %.not121, label %bb.cq, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.ih = load i32, ptr %i.g, align 4, !tbaa !34  ; 16 uses
+  %i.ih = load i32, ptr %i.g, align 4, !tbaa !34  ; 17 uses
   %i.ii = sext i32 %i.ih to i64
   %i.ij = mul nsw i64 %i.if, %i.ii
   %i.ik = call noalias ptr @malloc(i64 noundef %i.ij) #16 ; 15 uses
@@ -219,7 +219,7 @@ bb.bq:                                            ; preds = %bb.bp
 
 .preheader135:                                    ; preds = %bb.bq
   %i.im = icmp sgt i32 %i.ih, 0
-  %.pre = load i32, ptr %i.h, align 8, !tbaa !33  ; 7 uses
+  %.pre = load i32, ptr %i.h, align 8, !tbaa !33  ; 8 uses
   br i1 %i.im, label %.lr.ph160, label %._crit_edge
 
 .lr.ph160:                                        ; preds = %.preheader135
@@ -282,7 +282,14 @@ bb.bq:                                            ; preds = %bb.bp
   br i1 %niter372.ncmp.3, label %._crit_edge.loopexit343.unr-lcssa, label %.lr.ph160.split.us.split.us, !llvm.loop !11
 
 .lr.ph160.split.us.split:                         ; preds = %.lr.ph160.split.us
-  br i1 %i.iz, label %.preheader.us.preheader, label %._crit_edge
+  br i1 %i.iz, label %.preheader.us.preheader, label %._crit_edge.thread
+
+._crit_edge.thread:                               ; preds = %.lr.ph160.split.us.split
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i32 %.pre, ptr %6, align 8, !tbaa !44
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  store i32 %i.ih, ptr %7, align 4, !tbaa !45
+  br label %bb.co
 
 .preheader.us.preheader:                          ; preds = %.lr.ph160.split.us.split
   %wide.trip.count253 = zext nneg i32 %.pre to i64 ; 2 uses
@@ -594,7 +601,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %..loopexit134_crit_edge.split.us.us.split.us.us.split.us.split.us.us, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
-  br i1 %min.epilog.iters.check.not.not, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !43
+  br i1 %min.epilog.iters.check.not.not, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !48
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -997,20 +1004,21 @@ bb.cm:                                            ; preds = %bb.cj, %bb.ck, %bb.
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.us.us172.epil, !llvm.loop !18
 
-._crit_edge:                                      ; preds = %..loopexit134_crit_edge.split, %..loopexit134_crit_edge.split.us.us.split.split, %._crit_edge.loopexit348.unr-lcssa, %.lr.ph.us.us172.epil, %..loopexit134_crit_edge.split.us.us.split.split.us.split.us179.us, %..loopexit134_crit_edge.split.us.us.split.us.us.split, %..loopexit134_crit_edge.split.us.us.split.us.us.split.us.split.us.us, %..loopexit134_crit_edge.split.us.us.split.us.us.split.us.split.us185.us, %._crit_edge.loopexit343.unr-lcssa, %.lr.ph160.split.us.split.us.epil, %..loopexit_crit_edge.us, %.lr.ph160.split.us.split, %.lr.ph160.split, %.preheader135
+._crit_edge:                                      ; preds = %..loopexit134_crit_edge.split, %..loopexit134_crit_edge.split.us.us.split.split, %._crit_edge.loopexit348.unr-lcssa, %.lr.ph.us.us172.epil, %..loopexit134_crit_edge.split.us.us.split.split.us.split.us179.us, %..loopexit134_crit_edge.split.us.us.split.us.us.split, %..loopexit134_crit_edge.split.us.us.split.us.us.split.us.split.us.us, %..loopexit134_crit_edge.split.us.us.split.us.us.split.us.split.us185.us, %._crit_edge.loopexit343.unr-lcssa, %.lr.ph160.split.us.split.us.epil, %..loopexit_crit_edge.us, %.lr.ph160.split, %.preheader135
   %i.yk = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %.pre, ptr %i.yk, align 8, !tbaa !48
+  store i32 %.pre, ptr %i.yk, align 8, !tbaa !44
   %i.yl = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i32 %i.ih, ptr %i.yl, align 4, !tbaa !49
-  %6 = trunc nuw nsw i64 %i.if to i32             ; 2 uses
+  store i32 %i.ih, ptr %i.yl, align 4, !tbaa !45
   br i1 %i.id, label %bb.co, label %bb.cn
 
 bb.cn:                                            ; preds = %._crit_edge
-  %i.ym = call i32 @WebPPictureImportRGBA(ptr noundef nonnull %2, ptr noundef nonnull %i.ik, i32 noundef %6) #11
+  %8 = trunc nuw nsw i64 %i.if to i32
+  %i.ym = call i32 @WebPPictureImportRGBA(ptr noundef nonnull %2, ptr noundef nonnull %i.ik, i32 noundef %8) #11
   br label %bb.cp
 
-bb.co:                                            ; preds = %._crit_edge
-  %i.yn = call i32 @WebPPictureImportRGB(ptr noundef nonnull %2, ptr noundef nonnull %i.ik, i32 noundef %6) #11
+bb.co:                                            ; preds = %._crit_edge.thread, %._crit_edge
+  %9 = trunc nuw nsw i64 %i.if to i32
+  %i.yn = call i32 @WebPPictureImportRGB(ptr noundef nonnull %2, ptr noundef nonnull %i.ik, i32 noundef %9) #11
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co, %bb.cn
@@ -1114,11 +1122,11 @@ attributes #16 = { nounwind allocsize(0) }
 !11 = distinct !{!11, !30}
 !12 = distinct !{!12, !30}
 !13 = distinct !{!13, !30}
-!14 = distinct !{!14, !30, !41, !42}
-!15 = distinct !{!15, !30, !41, !42}
-!16 = distinct !{!16, !30, !42, !41}
-!17 = distinct !{!17, !44}
-!18 = distinct !{!18, !44}
+!14 = distinct !{!14, !30, !46, !47}
+!15 = distinct !{!15, !30, !46, !47}
+!16 = distinct !{!16, !30, !47, !46}
+!17 = distinct !{!17, !49}
+!18 = distinct !{!18, !49}
 !19 = !{!"any pointer", !5, i64 0}
 !20 = !{!"p1 omnipotent char", !19, i64 0}
 !21 = !{!"long", !5, i64 0}
@@ -1141,13 +1149,13 @@ attributes #16 = { nounwind allocsize(0) }
 !38 = !{!"short", !5, i64 0}
 !39 = !{!38, !38, i64 0}
 !40 = !{!22, !6, i64 24}
-!41 = !{!"llvm.loop.isvectorized", i32 1}
-!42 = !{!"llvm.loop.unroll.runtime.disable"}
-!43 = !{!"branch_weights", i32 8, i32 8}
-!44 = !{!"llvm.loop.unroll.disable"}
-!45 = !{!"p1 int", !19, i64 0}
-!46 = !{!"p1 _ZTS12WebPAuxStats", !19, i64 0}
-!47 = !{!"WebPPicture", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !20, i64 16, !20, i64 24, !20, i64 32, !6, i64 40, !6, i64 44, !20, i64 48, !6, i64 56, !5, i64 60, !45, i64 72, !6, i64 80, !5, i64 84, !19, i64 96, !19, i64 104, !6, i64 112, !20, i64 120, !46, i64 128, !6, i64 136, !19, i64 144, !19, i64 152, !5, i64 160, !20, i64 176, !20, i64 184, !5, i64 192, !19, i64 224, !19, i64 232, !5, i64 240}
-!48 = !{!47, !6, i64 8}
-!49 = !{!47, !6, i64 12}
+!41 = !{!"p1 int", !19, i64 0}
+!42 = !{!"p1 _ZTS12WebPAuxStats", !19, i64 0}
+!43 = !{!"WebPPicture", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !20, i64 16, !20, i64 24, !20, i64 32, !6, i64 40, !6, i64 44, !20, i64 48, !6, i64 56, !5, i64 60, !41, i64 72, !6, i64 80, !5, i64 84, !19, i64 96, !19, i64 104, !6, i64 112, !20, i64 120, !42, i64 128, !6, i64 136, !19, i64 144, !19, i64 152, !5, i64 160, !20, i64 176, !20, i64 184, !5, i64 192, !19, i64 224, !19, i64 232, !5, i64 240}
+!44 = !{!43, !6, i64 8}
+!45 = !{!43, !6, i64 12}
+!46 = !{!"llvm.loop.isvectorized", i32 1}
+!47 = !{!"llvm.loop.unroll.runtime.disable"}
+!48 = !{!"branch_weights", i32 8, i32 8}
+!49 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

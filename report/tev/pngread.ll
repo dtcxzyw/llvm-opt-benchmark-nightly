@@ -205,7 +205,7 @@ bb.co:                                            ; preds = %bb.cn
 bb.cp:                                            ; preds = %bb.cn, %bb.co
   %i.abq = phi ptr [ %i.abp, %bb.co ], [ null, %bb.cn ] ; 3 uses
   %i.abr = getelementptr inbounds nuw i8, ptr %i.c, i64 600
-  %i.abs = load ptr, ptr %i.abr, align 8, !tbaa !44 ; 2 uses
+  %i.abs = load ptr, ptr %i.abr, align 8, !tbaa !44 ; 3 uses
   %i.abt = icmp ne ptr %i.abq, null               ; 2 uses
   %i.abu = and i32 %i.e, 1
   %i.abv = icmp eq i32 %i.abu, 0
@@ -233,9 +233,8 @@ bb.cq:                                            ; preds = %bb.cp
   unreachable
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.de
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.de ] ; 9 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.de ] ; 10 uses
   %i.ace = icmp samesign ult i64 %indvars.iv, %i.acd ; 2 uses
-  %5 = select i1 %i.abt, i1 %i.ace, i1 false
   %or.cond464 = select i1 %i.abw, i1 %i.ace, i1 false
   br i1 %or.cond464, label %bb.cr, label %bb.db
 
@@ -243,9 +242,18 @@ bb.cr:                                            ; preds = %.lr.ph
   %i.acf = getelementptr inbounds nuw i8, ptr %i.abq, i64 %indvars.iv ; 5 uses
   %i.acg = load i8, ptr %i.acf, align 1, !tbaa !36 ; 2 uses
   switch i8 %i.acg, label %bb.ct [
-    i8 -1, label %bb.db
+    i8 -1, label %.thread
     i8 0, label %bb.cs
   ]
+
+.thread:                                          ; preds = %bb.cr
+  %5 = getelementptr inbounds nuw [3 x i8], ptr %i.abs, i64 %indvars.iv ; 3 uses
+  %6 = load i8, ptr %5, align 1, !tbaa !78
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %8 = load i8, ptr %7, align 1, !tbaa !77
+  %9 = getelementptr inbounds nuw i8, ptr %5, i64 2
+  %10 = load i8, ptr %9, align 1, !tbaa !79
+  br label %bb.dd
 
 bb.cs:                                            ; preds = %bb.cr
   %i.ach = trunc nuw nsw i64 %indvars.iv to i32
@@ -382,17 +390,15 @@ bb.da:                                            ; preds = %bb.cz, %bb.cy
   tail call fastcc void @png_create_colormap_entry(ptr noundef nonnull %0, i32 noundef %i.afz, i32 noundef %.0.i478, i32 noundef %.0.i480, i32 noundef %.0.i482620, i32 noundef %i.afy, i32 noundef %i.g)
   br label %bb.de
 
-bb.db:                                            ; preds = %bb.cr, %.lr.ph
+bb.db:                                            ; preds = %.lr.ph
+  %11 = select i1 %i.abt, i1 %i.ace, i1 false
   %i.aga = getelementptr inbounds nuw [3 x i8], ptr %i.abs, i64 %indvars.iv ; 3 uses
-  %i.agb = load i8, ptr %i.aga, align 1, !tbaa !78
-  %6 = zext i8 %i.agb to i32
+  %i.agb = load i8, ptr %i.aga, align 1, !tbaa !78 ; 2 uses
   %i.agc = getelementptr inbounds nuw i8, ptr %i.aga, i64 1
-  %i.agd = load i8, ptr %i.agc, align 1, !tbaa !77
-  %7 = zext i8 %i.agd to i32
+  %i.agd = load i8, ptr %i.agc, align 1, !tbaa !77 ; 2 uses
   %i.age = getelementptr inbounds nuw i8, ptr %i.aga, i64 2
-  %i.agf = load i8, ptr %i.age, align 1, !tbaa !79
-  %8 = zext i8 %i.agf to i32
-  br i1 %5, label %bb.dc, label %bb.dd
+  %i.agf = load i8, ptr %i.age, align 1, !tbaa !79 ; 2 uses
+  br i1 %11, label %bb.dc, label %bb.dd
 
 bb.dc:                                            ; preds = %bb.db
   %i.agg = getelementptr inbounds nuw i8, ptr %i.abq, i64 %indvars.iv
@@ -400,10 +406,16 @@ bb.dc:                                            ; preds = %bb.db
   %i.agi = zext i8 %i.agh to i32
   br label %bb.dd
 
-bb.dd:                                            ; preds = %bb.db, %bb.dc
-  %9 = phi i32 [ %i.agi, %bb.dc ], [ 255, %bb.db ]
+bb.dd:                                            ; preds = %.thread, %bb.dc, %bb.db
+  %.in = phi i8 [ %i.agf, %bb.db ], [ %10, %.thread ], [ %i.agf, %bb.dc ]
+  %.in628 = phi i8 [ %i.agd, %bb.db ], [ %8, %.thread ], [ %i.agd, %bb.dc ]
+  %.in629 = phi i8 [ %i.agb, %bb.db ], [ %6, %.thread ], [ %i.agb, %bb.dc ]
+  %12 = phi i32 [ 255, %bb.db ], [ 255, %.thread ], [ %i.agi, %bb.dc ]
+  %13 = zext i8 %.in629 to i32
+  %14 = zext i8 %.in628 to i32
+  %15 = zext i8 %.in to i32
   %i.agj = trunc nuw nsw i64 %indvars.iv to i32
-  tail call fastcc void @png_create_colormap_entry(ptr noundef nonnull %0, i32 noundef %i.agj, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef 3)
+  tail call fastcc void @png_create_colormap_entry(ptr noundef nonnull %0, i32 noundef %i.agj, i32 noundef %13, i32 noundef %14, i32 noundef %15, i32 noundef %12, i32 noundef 3)
   br label %bb.de
 
 bb.de:                                            ; preds = %bb.dd, %bb.da, %bb.cs

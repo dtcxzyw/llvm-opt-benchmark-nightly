@@ -165,8 +165,8 @@ crec_reassoc_ofs.exit:                            ; preds = %bb.j, %bb.f, %bb.e,
 bb.k:                                             ; preds = %ctype_rawchild.exit, %crec_reassoc_ofs.exit
   %.1 = phi i64 [ %.0252, %crec_reassoc_ofs.exit ], [ %.5255284, %ctype_rawchild.exit ] ; 18 uses
   %.1196 = phi i32 [ %.0195, %crec_reassoc_ofs.exit ], [ %.6201285, %ctype_rawchild.exit ] ; 16 uses
-  %.0192 = phi ptr [ %i.j, %crec_reassoc_ofs.exit ], [ %.2194, %ctype_rawchild.exit ] ; 5 uses
-  %.2187 = phi ptr [ %.1186, %crec_reassoc_ofs.exit ], [ %.6191, %ctype_rawchild.exit ] ; 12 uses
+  %.0192 = phi ptr [ %i.j, %crec_reassoc_ofs.exit ], [ null, %ctype_rawchild.exit ] ; 4 uses
+  %.2187 = phi ptr [ %.1186, %crec_reassoc_ofs.exit ], [ %i.mb, %ctype_rawchild.exit ] ; 12 uses
   %i.bu = load ptr, ptr %i.b, align 8, !tbaa !30
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !31 ; 19 uses
@@ -569,23 +569,25 @@ bb.bm:                                            ; preds = %bb.ar, %bb.bd, %bb.
   %i.ly = phi i32 [ %i.mc, %.preheader ], [ %i.lw, %.thread277 ]
   %i.lz = and i32 %i.ly, 65535
   %i.ma = zext nneg i32 %i.lz to i64
-  %i.mb = getelementptr inbounds nuw [24 x i8], ptr %.pre330, i64 %i.ma ; 2 uses
+  %i.mb = getelementptr inbounds nuw [24 x i8], ptr %.pre330, i64 %i.ma ; 3 uses
   %i.mc = load i32, ptr %i.mb, align 8, !tbaa !58 ; 3 uses
   %i.md = icmp slt i32 %i.mc, -1879048192
   br i1 %i.md, label %.preheader, label %ctype_rawchild.exit, !llvm.loop !1
 
 ctype_rawchild.exit:                              ; preds = %.preheader
   %.mask222 = and i32 %i.mc, -268435456
-  %i.me = icmp ne i32 %.mask222, 268435456        ; 3 uses
+  %i.me = icmp ne i32 %.mask222, 268435456        ; 2 uses
   %i.mf = and i32 %.5287, 520093696
   %i.mg = icmp ne i32 %i.mf, 67108864
-  %.2194 = select i1 %i.me, ptr %.0192, ptr null
-  %.6191 = select i1 %i.me, ptr %.4189286, ptr %i.mb ; 2 uses
   %.not299 = select i1 %i.me, i1 true, i1 %i.mg
-  br i1 %.not299, label %bb.bn, label %bb.k
+  br i1 %.not299, label %.split.loop.exit, label %bb.k
 
-bb.bn:                                            ; preds = %ctype_rawchild.exit, %.thread277
-  %.7 = phi ptr [ %.6191, %ctype_rawchild.exit ], [ %.4189286, %.thread277 ]
+.split.loop.exit:                                 ; preds = %ctype_rawchild.exit
+  %.6191.le = select i1 %i.me, ptr %.4189286, ptr %i.mb
+  br label %bb.bn
+
+bb.bn:                                            ; preds = %.thread277, %.split.loop.exit
+  %.7 = phi ptr [ %.6191.le, %.split.loop.exit ], [ %.4189286, %.thread277 ]
   %i.mh = ptrtoint ptr %.7 to i64
   %i.mi = ptrtoint ptr %.pre330 to i64
   %i.mj = sub i64 %i.mh, %i.mi

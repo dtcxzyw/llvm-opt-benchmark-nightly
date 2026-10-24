@@ -204,7 +204,7 @@ bb.a:
   %i.ai = alloca [16 x i8], align 8               ; 5 uses
   %i.aj = alloca [24 x i8], align 8               ; 6 uses
   %i.ak = alloca [24 x i8], align 8               ; 7 uses
-  %i.al = alloca [24 x i8], align 8               ; 12 uses
+  %i.al = alloca [24 x i8], align 8               ; 13 uses
   %i.am = alloca [16 x i8], align 8               ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1059)
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 7 uses
@@ -301,14 +301,18 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond.i.i, label %bb.f, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.bx = load ptr, ptr %i.ba, align 8, !alias.scope !1063, !nonnull !6, !noundef !6 ; 2 uses
+  %i.bx = load ptr, ptr %i.ba, align 8, !alias.scope !1063, !nonnull !6, !noundef !6 ; 3 uses
   %i.by = getelementptr [24 x i8], ptr %i.bx, i64 %.sroa.08.0101.i ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 16
   %i.ca = load i64, ptr %i.bz, align 8, !noalias !1062, !noundef !6 ; 2 uses
   %i.cb = icmp sgt i64 %i.ca, -1
   call void @llvm.assume(i1 %i.cb)
   %i.cc = icmp eq i64 %i.ca, 0
-  br i1 %i.cc, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.i, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.thread.i
+  br i1 %i.cc, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.i, label %.thread63.i
+
+.thread63.i:                                      ; preds = %bb.f
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.al), !noalias !1059
+  br label %bb.j
 
 _RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.i: ; preds = %bb.f
   %i.cd = getelementptr i8, ptr %i.by, i64 -8
@@ -316,7 +320,11 @@ _RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.i: ; preds =
   %i.cf = icmp sgt i64 %i.ce, -1
   call void @llvm.assume(i1 %i.cf)
   %i.cg = icmp eq i64 %i.ce, 0
-  br i1 %i.cg, label %bb.i, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.thread.i
+  br i1 %i.cg, label %bb.i, label %.thread.i
+
+.thread.i:                                        ; preds = %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.al), !noalias !1059
+  br label %bb.j
 
 bb.g:                                             ; preds = %.lr.ph107.i
   %i.ch = add nuw i64 %.sroa.04.1106.i, 1         ; 2 uses
@@ -333,10 +341,6 @@ bb.g:                                             ; preds = %.lr.ph107.i
 bb.h:                                             ; preds = %.lr.ph107.i
   %i.cl = call { ptr, ptr } @_RNvXsf_NtNtCsh036I4OHgIr_6uucore4mods5errorINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtB5_6UErrorEL_EINtNtCs6JMX4GRUq9U_4core7convert4FromNtNtNtB1A_2io5error5ErrorE4from(ptr noundef nonnull %i.ck) #26
   br label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager10draw_lines.exit
-
-_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.thread.i: ; preds = %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.i, %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.al), !noalias !1059
-  br label %bb.j
 
 _RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.i: ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al), !noalias !1059
@@ -355,8 +359,8 @@ bb.i:                                             ; preds = %_RNvMs5_CsgN7rS7e43
   %i.cq = icmp ult i64 %.sroa.04.0.ph104.i, %i.cp
   br i1 %i.cq, label %bb.c, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager10draw_lines.exit.thread
 
-bb.j:                                             ; preds = %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.i._crit_edge, %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.thread.i
-  %2 = phi ptr [ %.pre.a, %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.i._crit_edge ], [ %i.bx, %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.thread.i ]
+bb.j:                                             ; preds = %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.i._crit_edge, %.thread.i, %.thread63.i
+  %2 = phi ptr [ %.pre.a, %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager19should_squeeze_line.exit.thread.i._crit_edge ], [ %i.bx, %.thread63.i ], [ %i.bx, %.thread.i ]
   %i.cr = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %.sroa.08.0101.i
   call void @_RNvXs4_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.al, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cr) #26
   %i.cs = load i64, ptr %i.bb, align 8, !range !12, !alias.scope !1059, !noundef !6

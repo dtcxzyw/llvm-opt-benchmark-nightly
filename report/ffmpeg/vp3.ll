@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.aa, %.critedge
   %.not129 = icmp ne i32 %.1110.lcssa, 0
   %i.gj = icmp slt i32 %3, 63                     ; 2 uses
   %or.cond = and i1 %.not129, %i.gj
-  br i1 %or.cond, label %.lr.ph158.preheader, label %.loopexit.a
+  br i1 %or.cond, label %.lr.ph158.preheader, label %.loopexit
 
 .lr.ph158.preheader:                              ; preds = %bb.ab
   %i.gk = sub nsw i64 63, %i.d                    ; 3 uses
@@ -253,11 +253,15 @@ middle.block195:                                  ; preds = %vector.body190
   %exitcond.not = icmp eq i64 %indvars.iv.next164, 63
   br i1 %exitcond.not, label %.loopexit.a, label %.lr.ph158, !llvm.loop !229
 
-.loopexit.a:                                      ; preds = %.lr.ph158, %middle.block195, %bb.ab
-  %i.gu = icmp samesign ult i32 %4, 2
-  br i1 %i.gu, label %bb.ac, label %bb.ad
+.loopexit:                                        ; preds = %bb.ab
+  %6 = icmp samesign ult i32 %4, 2
+  br i1 %6, label %bb.ac, label %bb.ad
 
-bb.ac:                                            ; preds = %.loopexit.a
+.loopexit.a:                                      ; preds = %.lr.ph158, %middle.block195
+  %i.gu = icmp samesign ult i32 %4, 2
+  br i1 %i.gu, label %bb.ac, label %bb.ae
+
+bb.ac:                                            ; preds = %.loopexit.a, %.loopexit
   %i.gv = zext nneg i32 %.1114.lcssa to i64
   %i.gw = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.gv
   %i.gx = getelementptr inbounds nuw i8, ptr %i.h, i64 512
@@ -265,10 +269,10 @@ bb.ac:                                            ; preds = %.loopexit.a
   store ptr %i.gw, ptr %i.gy, align 8, !tbaa !85
   br label %bb.af
 
-bb.ad:                                            ; preds = %.loopexit.a
+bb.ad:                                            ; preds = %.loopexit
   br i1 %i.gj, label %bb.ae, label %bb.af
 
-bb.ae:                                            ; preds = %bb.ad
+bb.ae:                                            ; preds = %.loopexit.a, %bb.ad
   %i.gz = zext nneg i32 %.1114.lcssa to i64
   %i.ha = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.gz
   %i.hb = getelementptr [8 x i8], ptr %i.g, i64 %i.d

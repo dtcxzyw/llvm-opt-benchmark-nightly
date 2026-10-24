@@ -202,8 +202,8 @@ fatal_signal_pending.exit.thread:                 ; preds = %task_sigpending.exi
   br label %bb.c
 
 bb.c:                                             ; preds = %folio_size.exit, %fatal_signal_pending.exit.thread
-  %.128 = phi i64 [ %.02742, %fatal_signal_pending.exit.thread ], [ %.229, %folio_size.exit ] ; 2 uses
-  %.1 = phi i64 [ %.043, %fatal_signal_pending.exit.thread ], [ %.2, %folio_size.exit ]
+  %.128 = phi i64 [ %.02742, %fatal_signal_pending.exit.thread ], [ %6, %folio_size.exit ] ; 3 uses
+  %.1 = phi i64 [ %.043, %fatal_signal_pending.exit.thread ], [ %7, %folio_size.exit ] ; 2 uses
   %i.x = load volatile i64, ptr %i.i, align 8
   %i.y = and i64 %i.x, 64
   %.not.i.i = icmp eq i64 %i.y, 0
@@ -220,17 +220,18 @@ folio_size.exit:                                  ; preds = %bb.c, %bb.d
   %i.ab = shl i64 %.128, 9
   %i.ac = tail call i64 @llvm.umin.i64(i64 %i.aa, i64 %i.ab) ; 2 uses
   %i.ad = and i64 %i.ac, 4294966784
-  %i.ae = tail call zeroext i1 @bio_add_folio(ptr noundef %i.v, ptr noundef %i.i, i64 noundef %i.ad, i64 noundef 0) #5 ; 2 uses
+  %i.ae = tail call zeroext i1 @bio_add_folio(ptr noundef %i.v, ptr noundef %i.i, i64 noundef %i.ad, i64 noundef 0) #5 ; 3 uses
   %i.af = lshr exact i64 %i.ac, 9
-  %i.ag = and i64 %i.af, 8388607
-  %6 = select i1 %i.ae, i64 %i.ag, i64 0          ; 2 uses
-  %.229 = sub i64 %.128, %6                       ; 3 uses
-  %.2 = add i64 %6, %.1                           ; 2 uses
+  %i.ag = and i64 %i.af, 8388607                  ; 2 uses
+  %6 = sub i64 %.128, %i.ag                       ; 2 uses
+  %7 = add i64 %i.ag, %.1                         ; 2 uses
+  %.229 = select i1 %i.ae, i64 %6, i64 %.128      ; 2 uses
   %.not35 = icmp ne i64 %.229, 0                  ; 2 uses
   %or.cond.not = select i1 %i.ae, i1 %.not35, i1 false
   br i1 %or.cond.not, label %bb.c, label %bb.e, !llvm.loop !15
 
 bb.e:                                             ; preds = %folio_size.exit
+  %.2 = select i1 %i.ae, i64 %7, i64 %.1
   %i.ah = load ptr, ptr %4, align 8
   %i.ai = tail call ptr @bio_chain_and_submit(ptr noundef %i.ah, ptr noundef %i.v) #5
   store ptr %i.ai, ptr %4, align 8

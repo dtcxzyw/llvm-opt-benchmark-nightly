@@ -202,8 +202,8 @@ bb.bi:                                            ; preds = %switch.early.test
   br label %bb.bj
 
 .thr_comm463:                                     ; preds = %switch.early.test, %switch.early.test, %bb.bh, %_ZN8facebook4yoga4Node17hasDefiniteLengthENS0_9DimensionEf.exit157.thread
-  %10 = fcmp uno float %.0141, 0.000000e+00
-  br i1 %10, label %.thread468, label %bb.bk
+  %10 = fcmp ord float %.0141, 0.000000e+00
+  br i1 %10, label %bb.bk, label %bb.cb
 
 bb.bj:                                            ; preds = %bb.bi, %_ZNK8facebook4yoga4Node20getResolvedDimensionENS0_9DirectionENS0_9DimensionEff.exit163
   %.0140 = phi float [ %i.on, %_ZNK8facebook4yoga4Node20getResolvedDimensionENS0_9DirectionENS0_9DimensionEff.exit163 ], [ %i.rz, %bb.bi ] ; 3 uses
@@ -391,27 +391,32 @@ _ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466: ; preds = %.thread519, %
   %.1142 = phi float [ %i.tx, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit183 ], [ %.0141, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit193 ], [ %.0141, %bb.bv ], [ %.0141, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit ], [ %.0141, %bb.bj ], [ %.0141, %bb.bk ], [ %.0141, %.thread519 ] ; 4 uses
   %.1 = phi float [ %.0140464, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit183 ], [ %i.uw, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit193 ], [ %.0140464, %bb.bv ], [ %.0140464, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit ], [ %.0140, %bb.bj ], [ %.0140464, %bb.bk ], [ %.0140464, %.thread519 ] ; 4 uses
   %i.ux = fcmp uno float %.1142, 0.000000e+00
-  br i1 %i.ux, label %.thread468, label %bb.cb
+  br i1 %i.ux, label %bb.cb, label %11
 
-bb.cb:                                            ; preds = %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466
-  %i.uy = fcmp uno float %.1, 0.000000e+00
-  br i1 %i.uy, label %.thread468, label %bb.cg
+11:                                               ; preds = %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466
+  %12 = fcmp uno float %.1, 0.000000e+00
+  br i1 %12, label %.thread468, label %bb.cg
 
-.thread468:                                       ; preds = %.thr_comm463, %bb.cb, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466
-  %i.uz = phi i1 [ true, %.thr_comm463 ], [ false, %bb.cb ], [ true, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466 ] ; 2 uses
-  %.1474.a = phi float [ +qnan, %.thr_comm463 ], [ %.1, %bb.cb ], [ %.1, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466 ] ; 2 uses
-  %.1142472.a = phi float [ %.0141, %.thr_comm463 ], [ %.1142, %bb.cb ], [ %.1142, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466 ]
-  %11 = zext i1 %i.uz to i32
-  %12 = fcmp uno float %.1474.a, 0.000000e+00
-  %i.va = zext i1 %12 to i32
+bb.cb:                                            ; preds = %.thr_comm463, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466
+  %.1474 = phi float [ +qnan, %.thr_comm463 ], [ %.1, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466 ] ; 3 uses
+  %.1142472 = phi float [ %.0141, %.thr_comm463 ], [ %.1142, %_ZNK8facebook4yoga5Style11aspectRatioEv.exit.thread466 ]
+  %i.uy = fcmp uno float %.1474, 0.000000e+00     ; 2 uses
   %13 = icmp ne i32 %5, 1
   %14 = and i1 %13, %i.o
   %15 = fcmp ogt float %3, 0.000000e+00
-  %16 = and i1 %15, %14
-  %or.cond484 = and i1 %16, %i.uz                 ; 2 uses
-  %.2143 = select i1 %or.cond484, float %3, float %.1142472.a
-  %.0 = select i1 %or.cond484, i32 2, i32 %11
-  %i.vb = tail call noundef zeroext i1 @_ZN8facebook4yoga23calculateLayoutInternalEPNS0_4NodeEffNS0_9DirectionENS0_10SizingModeES4_ffbNS0_16LayoutPassReasonERNS0_10LayoutDataEjj(ptr noundef nonnull %2, float noundef %.2143, float noundef %.1474.a, i8 noundef zeroext %6, i32 noundef %.0, i32 noundef %i.va, float noundef %3, float noundef %4, i1 noundef zeroext false, i32 noundef 6, ptr noundef nonnull align 4 dereferenceable(60) %7, i32 noundef %8, i32 noundef %9) ; 0 uses
+  %or.cond = and i1 %14, %15
+  br i1 %or.cond, label %16, label %.thread468
+
+16:                                               ; preds = %bb.cb
+  br label %.thread468
+
+.thread468:                                       ; preds = %11, %16, %bb.cb
+  %i.uz = phi i1 [ %i.uy, %bb.cb ], [ %i.uy, %16 ], [ true, %11 ]
+  %.1474.a = phi float [ %.1474, %bb.cb ], [ %.1474, %16 ], [ %.1, %11 ]
+  %.1142472.a = phi float [ %.1142472, %bb.cb ], [ %3, %16 ], [ %.1142, %11 ]
+  %.0 = phi i32 [ 1, %bb.cb ], [ 2, %16 ], [ 0, %11 ]
+  %i.va = zext i1 %i.uz to i32
+  %i.vb = tail call noundef zeroext i1 @_ZN8facebook4yoga23calculateLayoutInternalEPNS0_4NodeEffNS0_9DirectionENS0_10SizingModeES4_ffbNS0_16LayoutPassReasonERNS0_10LayoutDataEjj(ptr noundef nonnull %2, float noundef %.1142472.a, float noundef %.1474.a, i8 noundef zeroext %6, i32 noundef %.0, i32 noundef %i.va, float noundef %3, float noundef %4, i1 noundef zeroext false, i32 noundef 6, ptr noundef nonnull align 4 dereferenceable(60) %7, i32 noundef %8, i32 noundef %9) ; 0 uses
   %i.vc = getelementptr inbounds nuw i8, ptr %2, i64 592
   %i.vd = load float, ptr %i.vc, align 4, !tbaa !14
   %i.ve = load i16, ptr %i.r, align 1, !tbaa !11  ; 2 uses
@@ -497,9 +502,9 @@ _ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit3
   %i.wo = fadd float %i.wa, %i.wn
   br label %bb.cg
 
-bb.cg:                                            ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit346, %bb.cb
-  %.3 = phi float [ %i.vy, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit346 ], [ %.1142, %bb.cb ]
-  %.2 = phi float [ %i.wo, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit346 ], [ %.1, %bb.cb ]
+bb.cg:                                            ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit346, %11
+  %.3 = phi float [ %i.vy, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit346 ], [ %.1142, %11 ]
+  %.2 = phi float [ %i.wo, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit346 ], [ %.1, %11 ]
   %i.wp = tail call noundef zeroext i1 @_ZN8facebook4yoga23calculateLayoutInternalEPNS0_4NodeEffNS0_9DirectionENS0_10SizingModeES4_ffbNS0_16LayoutPassReasonERNS0_10LayoutDataEjj(ptr noundef nonnull %2, float noundef %.3, float noundef %.2, i8 noundef zeroext %6, i32 noundef 0, i32 noundef 0, float noundef %3, float noundef %4, i1 noundef zeroext true, i32 noundef 1, ptr noundef nonnull align 4 dereferenceable(60) %7, i32 noundef %8, i32 noundef %9) ; 0 uses
   tail call fastcc void @_ZN8facebook4yogaL21positionAbsoluteChildEPKNS0_4NodeES3_PS1_NS0_9DirectionENS0_13FlexDirectionEbff(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2, i8 noundef zeroext %6, i8 noundef zeroext %i.m, i1 noundef zeroext true, float noundef %3, float noundef %4)
   tail call fastcc void @_ZN8facebook4yogaL21positionAbsoluteChildEPKNS0_4NodeES3_PS1_NS0_9DirectionENS0_13FlexDirectionEbff(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2, i8 noundef zeroext %6, i8 noundef zeroext %i.n, i1 noundef zeroext false, float noundef %3, float noundef %4)

@@ -204,7 +204,7 @@ bb.ar:                                            ; preds = %._crit_edge307
   br label %.thread270.thread
 
 .thread270.thread:                                ; preds = %bb.ae, %bb.ac, %bb.ab, %._crit_edge307, %bb.ar, %.thread270, %bb.ad
-  %i.ek = phi i1 [ %i.bo, %bb.ab ], [ %i.bt, %._crit_edge307 ], [ %i.bt, %bb.ar ], [ %i.bt, %.thread270 ], [ %i.bt, %bb.ad ], [ %i.bo, %bb.ac ], [ %i.bt, %bb.ae ] ; 2 uses
+  %i.ek = phi i1 [ %i.bo, %bb.ab ], [ %i.bt, %._crit_edge307 ], [ %i.bt, %bb.ar ], [ %i.bt, %.thread270 ], [ %i.bt, %bb.ad ], [ %i.bo, %bb.ac ], [ %i.bt, %bb.ae ] ; 3 uses
   %.0209336 = phi i32 [ %i.ak, %bb.ab ], [ %.0209338, %._crit_edge307 ], [ %.0209338, %bb.ar ], [ %.0209338, %.thread270 ], [ %.0209338, %bb.ad ], [ %i.ak, %bb.ac ], [ %.0209338, %bb.ae ] ; 2 uses
   %.5215332 = phi i32 [ %.4214, %bb.ab ], [ %.5215334, %._crit_edge307 ], [ %.5215334, %bb.ar ], [ %.5215334, %.thread270 ], [ %.5215334, %bb.ad ], [ %.4214, %bb.ac ], [ %.5215334, %bb.ae ] ; 6 uses
   %.1217328 = phi i32 [ %.0216, %bb.ab ], [ %.1217330, %._crit_edge307 ], [ %.1217330, %bb.ar ], [ %.1217330, %.thread270 ], [ %.1217330, %bb.ad ], [ %.0216, %bb.ac ], [ %.1217330, %bb.ae ] ; 6 uses
@@ -244,6 +244,7 @@ bb.aw:                                            ; preds = %.thread270.thread
 
 .sink.split:                                      ; preds = %bb.aw, %bb.at, %bb.au, %bb.av
   %.str.51.sink = phi ptr [ @.str.52, %bb.at ], [ @.str.51, %bb.au ], [ @.str.51, %bb.av ], [ @.str.53, %bb.aw ]
+  %.ph = phi i1 [ true, %bb.at ], [ true, %bb.au ], [ true, %bb.av ], [ %i.ek, %bb.aw ]
   %i.ew = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull %.str.51.sink, i32 noundef 5) #11
   %i.ex = call ptr @gtk_menu_item_new_with_label(ptr noundef %i.ew) #11 ; 2 uses
   %i.ey = call i64 @g_signal_connect_data(ptr noundef %i.ex, ptr noundef nonnull @.str.44, ptr noundef nonnull @_tree_delete_shape, ptr noundef %2, ptr noundef null, i32 noundef 0) #11 ; 0 uses
@@ -251,8 +252,9 @@ bb.aw:                                            ; preds = %.thread270.thread
   br label %bb.ax
 
 bb.ax:                                            ; preds = %.sink.split, %bb.aw
+  %5 = phi i1 [ %i.ek, %bb.aw ], [ %.ph, %.sink.split ]
   %i.ez = icmp sgt i32 %i.ag, 1
-  %or.cond5.not = and i1 %i.ez, %i.ek
+  %or.cond5.not = and i1 %i.ez, %5
   br i1 %or.cond5.not, label %.thread276, label %bb.ay
 
 .thread276:                                       ; preds = %bb.ax

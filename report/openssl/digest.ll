@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
 
 evp_md_ctx_reset_ex.exit:                         ; preds = %bb.w, %bb.s
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !20
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !20 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !20 ; 4 uses
   %.not51 = icmp eq ptr %i.ax, %i.az              ; 2 uses
@@ -216,18 +216,19 @@ bb.x:                                             ; preds = %evp_md_ctx_reset_ex
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 24
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !21
   %i.bc = icmp eq i32 %i.bb, 0
-  br i1 %i.bc, label %bb.y, label %EVP_MD_up_ref.exit
+  br i1 %i.bc, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 64
   %i.be = atomicrmw add ptr %i.bd, i32 1 monotonic, align 4 ; 0 uses
-  br label %EVP_MD_up_ref.exit
+  %.pre = load ptr, ptr %i.aw, align 8, !tbaa !20
+  br label %bb.z
 
-EVP_MD_up_ref.exit:                               ; preds = %bb.y, %bb.x, %evp_md_ctx_reset_ex.exit
+EVP_MD_up_ref.exit:                               ; preds = %evp_md_ctx_reset_ex.exit
   br i1 %.not51, label %EVP_MD_free.exit61, label %bb.z
 
-bb.z:                                             ; preds = %EVP_MD_up_ref.exit
-  %2 = load ptr, ptr %i.aw, align 8, !tbaa !20    ; 6 uses
+bb.z:                                             ; preds = %bb.x, %bb.y, %EVP_MD_up_ref.exit
+  %2 = phi ptr [ %i.ax, %bb.x ], [ %.pre, %bb.y ], [ %i.ax, %EVP_MD_up_ref.exit ] ; 6 uses
   %.not53 = icmp eq ptr %2, null
   br i1 %.not53, label %EVP_MD_free.exit61, label %bb.aa
 

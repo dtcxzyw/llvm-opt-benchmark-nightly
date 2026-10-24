@@ -205,10 +205,10 @@ bb.ab:                                            ; preds = %bb.z, %context_safe
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !152
   tail call void @cli_event_time_start(ptr noundef %i.aq, i32 noundef %i.as) #24
-  %i.at = load i32, ptr %i.s, align 8, !tbaa !121
+  %i.at = load i32, ptr %i.s, align 8, !tbaa !121 ; 2 uses
   %i.au = icmp eq i32 %i.at, 3
   %or.cond3 = or i1 %.0128, %i.au
-  br i1 %or.cond3, label %bb.ac, label %bb.ae
+  br i1 %or.cond3, label %bb.ac, label %.thread
 
 bb.ac:                                            ; preds = %bb.ab
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 1312
@@ -258,7 +258,7 @@ bb.ac:                                            ; preds = %bb.ab
   store i32 0, ptr %i.bx, align 8, !tbaa !217
   tail call void @cli_event_time_start(ptr noundef %.0129, i32 noundef 11) #24
   %i.by = load ptr, ptr %i.d, align 8, !tbaa !85
-  %i.bz = call i32 @cli_vm_execute(ptr noundef %i.by, ptr noundef nonnull %2, ptr noundef nonnull %4, ptr noundef nonnull %3) #24 ; 4 uses
+  %i.bz = call i32 @cli_vm_execute(ptr noundef %i.by, ptr noundef nonnull %2, ptr noundef nonnull %4, ptr noundef nonnull %3) #24 ; 3 uses
   call void @cli_event_time_stop(ptr noundef %.0129, i32 noundef 11) #24
   %i.ca = zext i32 %i.bz to i64
   call void @cli_event_int(ptr noundef %.0129, i32 noundef 1, i64 noundef %i.ca) #24
@@ -276,12 +276,15 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ch = call i32 @cli_bcapi_extract_new(ptr noundef nonnull %2, i32 noundef -1) #24 ; 0 uses
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ac, %bb.ad, %bb.ab
-  %.0131 = phi i32 [ %i.bz, %bb.ad ], [ %i.bz, %bb.ac ], [ 0, %bb.ab ]
+bb.ae:                                            ; preds = %bb.ac, %bb.ad
   %i.ci = load i32, ptr %i.s, align 8, !tbaa !121
   %i.cj = icmp eq i32 %i.ci, 2
   %or.cond7 = or i1 %.0128, %i.cj
   br i1 %or.cond7, label %bb.af, label %bb.aj
+
+.thread:                                          ; preds = %bb.ab
+  %6 = icmp eq i32 %i.at, 2
+  br i1 %6, label %bb.ah, label %bb.aj
 
 bb.af:                                            ; preds = %bb.ae
   br i1 %.0128, label %bb.ag, label %bb.ah
@@ -291,7 +294,7 @@ bb.ag:                                            ; preds = %bb.af
   store i64 0, ptr %i.ck, align 8, !tbaa !74
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %bb.af
+bb.ah:                                            ; preds = %.thread, %bb.ag, %bb.af
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 1312
   store ptr %.0130, ptr %i.cl, align 8, !tbaa !216
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -324,8 +327,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.dd = call i32 @cli_bcapi_extract_new(ptr noundef nonnull %2, i32 noundef -1) #24 ; 0 uses
   br label %bb.aj
 
-bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.ae
-  %.1132 = phi i32 [ %i.cv, %bb.ai ], [ %i.cv, %bb.ah ], [ %.0131, %bb.ae ] ; 2 uses
+bb.aj:                                            ; preds = %.thread, %bb.ah, %bb.ai, %bb.ae
+  %.1132 = phi i32 [ %i.cv, %bb.ai ], [ %i.cv, %bb.ah ], [ %i.bz, %bb.ae ], [ 0, %.thread ] ; 2 uses
   %i.de = load ptr, ptr @g_sigevents, align 8, !tbaa !103
   %i.df = load i32, ptr %i.ar, align 8, !tbaa !152
   call void @cli_event_time_stop(ptr noundef %i.de, i32 noundef %i.df) #24

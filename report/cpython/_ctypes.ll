@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.g, %PyStgInfo_Fr
   br label %.critedge
 
 .critedge:                                        ; preds = %PyStgInfo_FromType.exit, %PyStgInfo_FromType.exit.thread, %bb.j
-  %i.ab = phi ptr [ %i.aa, %bb.j ], [ @.str.68, %PyStgInfo_FromType.exit ], [ @.str.68, %PyStgInfo_FromType.exit.thread ]
+  %i.ab = phi ptr [ %i.aa, %bb.j ], [ @.str.68, %PyStgInfo_FromType.exit.thread ], [ @.str.68, %PyStgInfo_FromType.exit ]
   %i.ac = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !36
   %i.ad = getelementptr i8, ptr %0, i64 24
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !66
@@ -608,7 +608,7 @@ bb.s:                                             ; preds = %bb.r
 
 .thread.i:                                        ; preds = %bb.s, %bb.r, %bb.q
   %i.cd = phi ptr [ %i.ca, %bb.s ], [ %i.ca, %bb.r ], [ null, %bb.q ] ; 3 uses
-  %i.ce = phi ptr [ %i.cc, %bb.s ], [ null, %bb.r ], [ null, %bb.q ] ; 11 uses
+  %i.ce = phi ptr [ %i.cc, %bb.s ], [ null, %bb.r ], [ null, %bb.q ] ; 12 uses
   %i.cf = and i32 %i.bx, 7
   switch i32 %i.cf, label %bb.aw [
     i32 5, label %bb.t
@@ -667,7 +667,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.w
   %i.cx = icmp ne ptr %i.cd, null                 ; 2 uses
   %or.cond.i.i = and i1 %i.bp, %i.cx
-  br i1 %or.cond.i.i, label %bb.aa, label %bb.ad
+  br i1 %or.cond.i.i, label %bb.aa, label %3
 
 bb.aa:                                            ; preds = %bb.z
   %i.cy = call i32 @PyDict_GetItemRef(ptr noundef nonnull %2, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.b) #17
@@ -683,11 +683,15 @@ bb.ac:                                            ; preds = %bb.ab
   %i.db = add i32 %.0539.i, 1
   br label %bb.aj
 
-bb.ad:                                            ; preds = %bb.ab, %bb.z
-  %.not19.i.i.a = icmp eq ptr %i.ce, null
-  br i1 %.not19.i.i.a, label %bb.ag, label %bb.ae
+3:                                                ; preds = %bb.z
+  %.not19.i.i = icmp eq ptr %i.ce, null
+  br i1 %.not19.i.i, label %bb.ag, label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ad
+bb.ad:                                            ; preds = %bb.ab
+  %.not19.i.i.a = icmp eq ptr %i.ce, null
+  br i1 %.not19.i.i.a, label %bb.ah, label %bb.ae
+
+bb.ae:                                            ; preds = %bb.ad, %3
   %i.dc = load i32, ptr %i.ce, align 8, !tbaa !32 ; 2 uses
   %i.dd = icmp ugt i32 %i.dc, -1073741825
   br i1 %i.dd, label %bb.aj, label %bb.af
@@ -697,16 +701,17 @@ bb.af:                                            ; preds = %bb.ae
   store i32 %i.de, ptr %i.ce, align 8, !tbaa !32
   br label %bb.aj
 
-bb.ag:                                            ; preds = %bb.ad
-  %3 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !36 ; 2 uses
+bb.ag:                                            ; preds = %3
   br i1 %i.cx, label %bb.ah, label %bb.ai
 
-bb.ah:                                            ; preds = %bb.ag
-  %i.df = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %3, ptr noundef nonnull @.str.216, ptr noundef nonnull %i.cd) #17 ; 0 uses
+bb.ah:                                            ; preds = %bb.ad, %bb.ag
+  %4 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !36
+  %i.df = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %4, ptr noundef nonnull @.str.216, ptr noundef nonnull %i.cd) #17 ; 0 uses
   br label %_get_arg.exit.i
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.dg = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %3, ptr noundef nonnull @.str.217) #17 ; 0 uses
+  %5 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !36
+  %i.dg = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %5, ptr noundef nonnull @.str.217) #17 ; 0 uses
   br label %_get_arg.exit.i
 
 _get_arg.exit.i:                                  ; preds = %bb.aa, %bb.ai, %bb.ah

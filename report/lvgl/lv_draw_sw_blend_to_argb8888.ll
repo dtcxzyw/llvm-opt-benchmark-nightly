@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %.2230 = phi ptr [ %i.k, %bb.b ], [ %i.bx, %._crit_edge365.us ] ; 3 uses
   %i.ch = icmp ult i8 %.fr434, -3                 ; 2 uses
   %or.cond5 = and i1 %i.ah, %i.ch
-  %i.ci = icmp sgt i32 %i.d, 0                    ; 3 uses
+  %i.ci = icmp sgt i32 %i.d, 0                    ; 4 uses
   %or.cond431 = select i1 %or.cond5, i1 %i.ci, i1 false
   br i1 %or.cond431, label %.preheader347.lr.ph, label %.loopexit349
 
@@ -539,12 +539,13 @@ lv_color_32_32_mix.exit274.us:                    ; preds = %bb.x, %bb.w, %bb.p,
   br i1 %exitcond510.not, label %.loopexit346, label %.preheader344.us, !llvm.loop !169
 
 .loopexit346:                                     ; preds = %._crit_edge411.us, %.preheader344.preheader, %.loopexit349
+  %3 = phi i1 [ %i.ci, %.loopexit349 ], [ true, %.preheader344.preheader ], [ %i.ci, %._crit_edge411.us ]
   %.6240 = phi ptr [ %.4238, %.loopexit349 ], [ %scevgep498, %.preheader344.preheader ], [ %i.gh, %._crit_edge411.us ]
   %.6 = phi ptr [ %.4232, %.loopexit349 ], [ %scevgep499, %.preheader344.preheader ], [ %i.gi, %._crit_edge411.us ]
   %.1224 = phi ptr [ %i.o, %.loopexit349 ], [ %scevgep500, %.preheader344.preheader ], [ %i.gj, %._crit_edge411.us ] ; 2 uses
   %i.gl = icmp ne ptr %.1224, null
   %or.cond11 = and i1 %i.gl, %i.ch
-  %or.cond433 = select i1 %or.cond11, i1 %i.ci, i1 false
+  %or.cond433 = select i1 %or.cond11, i1 %3, i1 false
   br i1 %or.cond433, label %.preheader.lr.ph, label %.loopexit
 
 .preheader.lr.ph:                                 ; preds = %.loopexit346

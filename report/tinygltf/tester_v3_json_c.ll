@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph390:                                        ; preds = %.lr.ph390.preheader, %tg3json__reserve_bytes_parser.exit.thread
   %.045.i388 = phi i64 [ %i.an, %tg3json__reserve_bytes_parser.exit.thread ], [ 0, %.lr.ph390.preheader ] ; 5 uses
   %.0146387 = phi i64 [ %.1147, %tg3json__reserve_bytes_parser.exit.thread ], [ 0, %.lr.ph390.preheader ] ; 5 uses
-  %.0148386 = phi ptr [ %.2, %tg3json__reserve_bytes_parser.exit.thread ], [ null, %.lr.ph390.preheader ] ; 4 uses
+  %.0148386 = phi ptr [ %.2, %tg3json__reserve_bytes_parser.exit.thread ], [ null, %.lr.ph390.preheader ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.an = add i64 %.045.i388, 1                   ; 9 uses
@@ -235,7 +235,7 @@ bb.n:                                             ; preds = %.lr.ph.i91
 
 bb.o:                                             ; preds = %._crit_edge.i
   %i.as = mul i64 %.0146387, 24                   ; 3 uses
-  %i.at = mul nuw i64 %.1.i88, 24                 ; 5 uses
+  %i.at = mul nuw i64 %.1.i88, 24                 ; 6 uses
   %i.au = tail call i64 @llvm.usub.sat.i64(i64 %i.at, i64 %i.as) ; 2 uses
   %i.av = load i64, ptr %i.aj, align 8, !tbaa !35 ; 2 uses
   %.not62.i = icmp ne i64 %i.av, 0
@@ -248,7 +248,7 @@ bb.p:                                             ; preds = %bb.o
   %i.ay = icmp ne i64 %i.ax, 0
   %i.az = icmp ugt i64 %i.at, %i.as               ; 2 uses
   %or.cond.i90 = and i1 %i.az, %i.ay
-  br i1 %or.cond.i90, label %bb.q, label %.critedge.i89.a
+  br i1 %or.cond.i90, label %bb.q, label %.critedge.i89
 
 bb.q:                                             ; preds = %bb.p
   %i.ba = icmp ugt i64 %i.au, %i.ax
@@ -260,24 +260,30 @@ bb.r:                                             ; preds = %bb.q
   %i.bd = icmp ugt i64 %i.bb, %i.bc
   br i1 %i.bd, label %.preheader, label %.critedge.i89.a
 
-.critedge.i89.a:                                  ; preds = %bb.r, %bb.p
-  %i.be = tail call ptr @realloc(ptr noundef %.0148386, i64 noundef %i.at) #21 ; 3 uses
-  %.not63.i.a = icmp eq ptr %i.be, null
-  br i1 %.not63.i.a, label %.preheader, label %bb.s
+.critedge.i89:                                    ; preds = %bb.p
+  %5 = tail call ptr @realloc(ptr noundef %.0148386, i64 noundef %i.at) #21 ; 3 uses
+  %.not63.i = icmp eq ptr %5, null
+  br i1 %.not63.i, label %.preheader, label %bb.s
 
-bb.s:                                             ; preds = %.critedge.i89.a
+.critedge.i89.a:                                  ; preds = %bb.r
+  %i.be = tail call ptr @realloc(ptr noundef %.0148386, i64 noundef %i.at) #21 ; 2 uses
+  %.not63.i.a = icmp eq ptr %i.be, null
+  br i1 %.not63.i.a, label %.preheader, label %bb.t
+
+bb.s:                                             ; preds = %.critedge.i89
   br i1 %i.az, label %bb.t, label %tg3json__reserve_bytes_parser.exit
 
-bb.t:                                             ; preds = %bb.s
-  %i.bf = sub nuw i64 %i.at, %i.as
+bb.t:                                             ; preds = %.critedge.i89.a, %bb.s
+  %6 = phi ptr [ %5, %bb.s ], [ %i.be, %.critedge.i89.a ]
+  %i.bf = sub i64 %i.at, %i.as
   %i.bg = load i64, ptr %i.al, align 8, !tbaa !28
   %i.bh = add i64 %i.bf, %i.bg
   store i64 %i.bh, ptr %i.al, align 8, !tbaa !28
   br label %tg3json__reserve_bytes_parser.exit
 
 tg3json__reserve_bytes_parser.exit:               ; preds = %.lr.ph390, %bb.t, %bb.s
-  %.2 = phi ptr [ %i.be, %bb.t ], [ %i.be, %bb.s ], [ %.0148386, %.lr.ph390 ] ; 6 uses
-  %.1147 = phi i64 [ %.1.i88, %bb.t ], [ %.1.i88, %bb.s ], [ %.0146387, %.lr.ph390 ]
+  %.2 = phi ptr [ %.0148386, %.lr.ph390 ], [ %6, %bb.t ], [ %5, %bb.s ] ; 6 uses
+  %.1147 = phi i64 [ %.0146387, %.lr.ph390 ], [ %.1.i88, %bb.t ], [ %.1.i88, %bb.s ]
   %i.bi = call fastcc i32 @tg3json__parse_value(ptr noundef nonnull %0, i64 noundef %i.am, ptr noundef %4), !inline_history !60
   %.not52.i = icmp eq i32 %i.bi, 0
   br i1 %.not52.i, label %.thread, label %bb.u
@@ -376,7 +382,7 @@ tg3json__reserve_bytes_parser.exit.thread:        ; preds = %bb.y, %.lr.ph.i75, 
   %i.cd = icmp ult ptr %.017.lcssa.i72, %i.bl
   br i1 %i.cd, label %.lr.ph390, label %.loopexit
 
-.preheader:                                       ; preds = %._crit_edge.i, %.critedge.i89.a, %bb.o, %bb.q, %bb.r
+.preheader:                                       ; preds = %._crit_edge.i, %.critedge.i89.a, %bb.o, %bb.q, %bb.r, %.critedge.i89
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   %.not54.i205 = icmp eq i64 %.045.i388, 0
   br i1 %.not54.i205, label %._crit_edge208, label %.lr.ph207
@@ -484,7 +490,7 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %.lr.ph384, %.loopexit295
   %.068.i382 = phi i64 [ 0, %.lr.ph384 ], [ %i.dx, %.loopexit295 ] ; 6 uses
   %.0335381 = phi i64 [ 0, %.lr.ph384 ], [ %.1336, %.loopexit295 ] ; 5 uses
-  %.0337380 = phi ptr [ null, %.lr.ph384 ], [ %.3, %.loopexit295 ] ; 5 uses
+  %.0337380 = phi ptr [ null, %.lr.ph384 ], [ %.3, %.loopexit295 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   store ptr null, ptr %i.a, align 8, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
@@ -597,7 +603,7 @@ bb.an:                                            ; preds = %.lr.ph.i330
 
 bb.ao:                                            ; preds = %._crit_edge.i323
   %i.ec = mul i64 %.0335381, 24                   ; 3 uses
-  %i.ed = mul nuw i64 %.1.i, 24                   ; 5 uses
+  %i.ed = mul nuw i64 %.1.i, 24                   ; 6 uses
   %i.ee = tail call i64 @llvm.usub.sat.i64(i64 %i.ed, i64 %i.ec) ; 2 uses
   %i.ef = load i64, ptr %i.dc, align 8, !tbaa !35 ; 2 uses
   %.not62.i327 = icmp ne i64 %i.ef, 0
@@ -610,7 +616,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ei = icmp ne i64 %i.eh, 0
   %i.ej = icmp ugt i64 %i.ed, %i.ec               ; 2 uses
   %or.cond.i329 = and i1 %i.ej, %i.ei
-  br i1 %or.cond.i329, label %bb.aq, label %.critedge.i325
+  br i1 %or.cond.i329, label %bb.aq, label %.critedge.i327
 
 bb.aq:                                            ; preds = %bb.ap
   %i.ek = icmp ugt i64 %i.ee, %i.eh
@@ -622,28 +628,34 @@ bb.ar:                                            ; preds = %bb.aq
   %i.en = icmp ugt i64 %i.el, %i.em
   br i1 %i.en, label %bb.au, label %.critedge.i325
 
-.critedge.i325:                                   ; preds = %bb.ar, %bb.ap
-  %i.eo = tail call ptr @realloc(ptr noundef %.0337380, i64 noundef %i.ed) #21 ; 3 uses
-  %.not63.i326 = icmp eq ptr %i.eo, null
-  br i1 %.not63.i326, label %bb.au, label %bb.as
+.critedge.i327:                                   ; preds = %bb.ap
+  %7 = tail call ptr @realloc(ptr noundef %.0337380, i64 noundef %i.ed) #21 ; 3 uses
+  %.not63.i328 = icmp eq ptr %7, null
+  br i1 %.not63.i328, label %bb.au, label %bb.as
 
-bb.as:                                            ; preds = %.critedge.i325
+.critedge.i325:                                   ; preds = %bb.ar
+  %i.eo = tail call ptr @realloc(ptr noundef %.0337380, i64 noundef %i.ed) #21 ; 2 uses
+  %.not63.i326 = icmp eq ptr %i.eo, null
+  br i1 %.not63.i326, label %bb.au, label %bb.at
+
+bb.as:                                            ; preds = %.critedge.i327
   br i1 %i.ej, label %bb.at, label %tg3json__reserve_bytes_parser.exit332
 
-bb.at:                                            ; preds = %bb.as
-  %i.ep = sub nuw i64 %i.ed, %i.ec
+bb.at:                                            ; preds = %.critedge.i325, %bb.as
+  %8 = phi ptr [ %7, %bb.as ], [ %i.eo, %.critedge.i325 ]
+  %i.ep = sub i64 %i.ed, %i.ec
   %i.eq = load i64, ptr %i.de, align 8, !tbaa !28
   %i.er = add i64 %i.ep, %i.eq
   store i64 %i.er, ptr %i.de, align 8, !tbaa !28
   br label %tg3json__reserve_bytes_parser.exit332
 
-bb.au:                                            ; preds = %._crit_edge.i323, %.critedge.i325, %bb.ao, %bb.aq, %bb.ar
+bb.au:                                            ; preds = %._crit_edge.i323, %.critedge.i325, %bb.ao, %bb.aq, %bb.ar, %.critedge.i327
   %i.es = load ptr, ptr %i.a, align 8, !tbaa !17
   br label %.preheader173
 
 tg3json__reserve_bytes_parser.exit332:            ; preds = %bb.al, %bb.at, %bb.as
-  %.3 = phi ptr [ %i.eo, %bb.at ], [ %i.eo, %bb.as ], [ %.0337380, %bb.al ] ; 7 uses
-  %.1336 = phi i64 [ %.1.i, %bb.at ], [ %.1.i, %bb.as ], [ %.0335381, %bb.al ]
+  %.3 = phi ptr [ %.0337380, %bb.al ], [ %8, %bb.at ], [ %7, %bb.as ] ; 7 uses
+  %.1336 = phi i64 [ %.0335381, %bb.al ], [ %.1.i, %bb.at ], [ %.1.i, %bb.as ]
   %i.et = load ptr, ptr %i.a, align 8, !tbaa !17  ; 2 uses
   %i.eu = getelementptr inbounds nuw [24 x i8], ptr %.3, i64 %.068.i382 ; 4 uses
   store ptr %i.et, ptr %i.eu, align 8, !tbaa !41

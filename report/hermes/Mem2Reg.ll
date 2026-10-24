@@ -204,7 +204,7 @@ _ZL20computeDomTreeLevelsPN6hermes13DominanceInfoERN4llvh8DenseMapIPNS2_15DomTre
   %i.ef = getelementptr inbounds nuw i8, ptr %21, i64 12 ; 3 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %20, i64 16
   %i.eh = getelementptr inbounds nuw i8, ptr %19, i64 16 ; 8 uses
-  %i.ei = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 7 uses
+  %i.ei = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 8 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %19, i64 12 ; 7 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %23, i64 16
   %i.el = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 4 uses
@@ -294,8 +294,8 @@ bb.q:                                             ; preds = %._crit_edge.i.i
   br i1 %.not.i.i27, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i
 
 .lr.ph223.i:                                      ; preds = %bb.p, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i
-  %.sroa.0174.0219.i = phi ptr [ %.sroa.0174.0.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i ], [ %.sroa.0174.0216.i, %bb.p ] ; 17 uses
-  %.066218.i = phi i1 [ %.672.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i ], [ false, %bb.p ] ; 15 uses
+  %.sroa.0174.0219.i = phi ptr [ %.sroa.0174.0.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i ], [ %.sroa.0174.0216.i, %bb.p ] ; 18 uses
+  %.066218.i = phi i1 [ %.672.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i ], [ false, %bb.p ] ; 16 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %.sroa.0174.0219.i, i64 16 ; 8 uses
   %i.fm = load i8, ptr %i.fl, align 8, !tbaa !65  ; 2 uses
   %i.fn = icmp ne i8 %i.fm, 50
@@ -698,29 +698,31 @@ bb.bk:                                            ; preds = %bb.bi, %_ZN4llvh12D
   %or.cond.i = and i1 %i.fc, %i.rq
   br i1 %or.cond.i, label %bb.bl, label %30
 
+30:                                               ; preds = %.thread186.i
+  %31 = call noundef i32 @_ZN6hermes11Instruction20getDerivedSideEffectEv(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.0174.0219.i) #10
+  %32 = icmp sgt i32 %31, 1
+  br i1 %32, label %bb.bm, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i
+
 bb.bl:                                            ; preds = %.thread186.i
   %i.rr = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.0174.0219.i, i32 noundef 0) #10 ; 2 uses
   %i.rs = icmp eq ptr %i.rr, null
   %i.rt = getelementptr inbounds i8, ptr %i.rr, i64 -16
   %i.ru = select i1 %i.rs, ptr null, ptr %i.rt
   call fastcc void @_ZL24collectCapturedVariablesRN4llvh8DenseSetIPN6hermes8VariableENS_12DenseMapInfoIS3_EEEES7_PNS1_8FunctionE(ptr noundef nonnull align 8 dereferenceable(24) %22, ptr noundef nonnull align 8 dereferenceable(24) %23, ptr noundef %i.ru)
-  br label %30
-
-30:                                               ; preds = %bb.bl, %.thread186.i
-  %31 = call noundef i32 @_ZN6hermes11Instruction20getDerivedSideEffectEv(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.0174.0219.i) #10
-  %32 = icmp sgt i32 %31, 1
-  br i1 %32, label %bb.bm, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i
+  %33 = call noundef i32 @_ZN6hermes11Instruction20getDerivedSideEffectEv(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.0174.0219.i) #10
+  %34 = icmp sgt i32 %33, 1
+  br i1 %34, label %bb.bn, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i
 
 bb.bm:                                            ; preds = %30
-  %.pre.i = load i32, ptr %i.ei, align 8, !tbaa !82 ; 5 uses
   br i1 %i.fc, label %bb.bn, label %bb.bv
 
-bb.bn:                                            ; preds = %bb.bm
-  %i.rv = icmp ult i32 %.pre.i, 128
+bb.bn:                                            ; preds = %bb.bm, %bb.bl
+  %35 = load i32, ptr %i.ei, align 8, !tbaa !82   ; 3 uses
+  %i.rv = icmp ult i32 %35, 128
   br i1 %i.rv, label %bb.bo, label %.thread193.i
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.rw = icmp eq i32 %.pre.i, 0
+  %i.rw = icmp eq i32 %35, 0
   %i.rx = load ptr, ptr %19, align 8, !tbaa !78   ; 5 uses
   %i.ry = load i32, ptr %i.eh, align 8, !tbaa !79 ; 2 uses
   %i.rz = zext i32 %i.ry to i64                   ; 3 uses
@@ -837,6 +839,7 @@ _ZN4llvh16DenseMapIteratorIPN6hermes8VariableEPNS1_5ValueENS_12DenseMapInfoIS3_E
   br i1 %.not205.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i, label %bb.br
 
 bb.bv:                                            ; preds = %bb.bm
+  %.pre.i = load i32, ptr %i.ei, align 8, !tbaa !82 ; 2 uses
   %i.tj = icmp eq i32 %.pre.i, 0
   br i1 %i.tj, label %bb.bw, label %.thread193.i
 
@@ -851,7 +854,8 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %i.tn, label %bb.cb, label %bb.cc
 
 .thread193.i:                                     ; preds = %bb.bv, %bb.bn
-  %i.to = shl i32 %.pre.i, 2
+  %36 = phi i32 [ %.pre.i, %bb.bv ], [ %35, %bb.bn ] ; 2 uses
+  %i.to = shl i32 %36, 2
   %i.tp = load i32, ptr %i.eh, align 8, !tbaa !79 ; 5 uses
   %i.tq = icmp ult i32 %i.to, %i.tp
   %i.tr = icmp ugt i32 %i.tp, 64
@@ -859,7 +863,7 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %or.cond.i194.i, label %bb.by, label %bb.cc
 
 bb.by:                                            ; preds = %.thread193.i
-  %i.ts = add i32 %.pre.i, -1
+  %i.ts = add i32 %36, -1
   %i.tt = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ts, i1 false)
   %i.tu = sub nuw nsw i32 33, %i.tt
   %i.tv = shl nuw i32 1, %i.tu
@@ -1055,8 +1059,8 @@ bb.cc:                                            ; preds = %.thread193.i, %bb.b
   %.not.i151.i.7 = icmp eq ptr %i.wo, %i.wb
   br i1 %.not.i151.i.7, label %._crit_edge.i152.i, label %.lr.ph.i150.i, !llvm.loop !204
 
-_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i: ; preds = %.lr.ph.i.i.i154.i.prol.loopexit, %.lr.ph.i.i.i154.i, %.lr.ph.i.i.i32.prol.loopexit, %.lr.ph.i.i.i32, %_ZN4llvh16DenseMapIteratorIPN6hermes8VariableEPNS1_5ValueENS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EELb0EEppEv.exit.i, %._crit_edge.i152.i, %bb.cb, %bb.ca, %bb.bw, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5beginEv.exit.i, %30, %bb.bk, %.thread189.i, %bb.aw, %.thread180.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructERKS4_.exit, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes14AllocStackInstEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructEOS4_.exit
-  %.672.i = phi i1 [ %.066218.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes14AllocStackInstEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructEOS4_.exit ], [ %.066218.i, %bb.bk ], [ %.066218.i, %bb.aw ], [ %.066218.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructERKS4_.exit ], [ true, %.thread189.i ], [ %.066218.i, %._crit_edge.i152.i ], [ %.066218.i, %30 ], [ true, %.thread180.i ], [ %.066218.i, %bb.cb ], [ %.066218.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5beginEv.exit.i ], [ %.066218.i, %bb.ca ], [ %.066218.i, %.lr.ph.i.i.i32.prol.loopexit ], [ %.066218.i, %bb.bw ], [ %.066218.i, %_ZN4llvh16DenseMapIteratorIPN6hermes8VariableEPNS1_5ValueENS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EELb0EEppEv.exit.i ], [ %.066218.i, %.lr.ph.i.i.i32 ], [ %.066218.i, %.lr.ph.i.i.i154.i ], [ %.066218.i, %.lr.ph.i.i.i154.i.prol.loopexit ] ; 3 uses
+_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5clearEv.exit.i: ; preds = %.lr.ph.i.i.i154.i.prol.loopexit, %.lr.ph.i.i.i154.i, %.lr.ph.i.i.i32.prol.loopexit, %.lr.ph.i.i.i32, %_ZN4llvh16DenseMapIteratorIPN6hermes8VariableEPNS1_5ValueENS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EELb0EEppEv.exit.i, %._crit_edge.i152.i, %bb.cb, %bb.ca, %bb.bw, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5beginEv.exit.i, %bb.bl, %30, %bb.bk, %.thread189.i, %bb.aw, %.thread180.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructERKS4_.exit, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes14AllocStackInstEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructEOS4_.exit
+  %.672.i = phi i1 [ %.066218.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes14AllocStackInstEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructEOS4_.exit ], [ %.066218.i, %bb.bk ], [ %.066218.i, %bb.aw ], [ %.066218.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructERKS4_.exit ], [ %.066218.i, %bb.bl ], [ %.066218.i, %._crit_edge.i152.i ], [ %.066218.i, %30 ], [ true, %.thread180.i ], [ true, %.thread189.i ], [ %.066218.i, %bb.cb ], [ %.066218.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes8VariableEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5beginEv.exit.i ], [ %.066218.i, %bb.ca ], [ %.066218.i, %.lr.ph.i.i.i32.prol.loopexit ], [ %.066218.i, %bb.bw ], [ %.066218.i, %_ZN4llvh16DenseMapIteratorIPN6hermes8VariableEPNS1_5ValueENS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EELb0EEppEv.exit.i ], [ %.066218.i, %.lr.ph.i.i.i32 ], [ %.066218.i, %.lr.ph.i.i.i154.i ], [ %.066218.i, %.lr.ph.i.i.i154.i.prol.loopexit ] ; 3 uses
   %i.wp = getelementptr inbounds nuw i8, ptr %.sroa.0174.0219.i, i64 8
   %.sroa.0174.0.i = load ptr, ptr %i.wp, align 8, !tbaa !43 ; 2 uses
   %.not196.i = icmp eq ptr %.sroa.0174.0.i, %i.fe

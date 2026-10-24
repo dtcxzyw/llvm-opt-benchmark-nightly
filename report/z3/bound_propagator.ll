@@ -204,7 +204,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !75
   %i.c = zext i32 %2 to i64                       ; 7 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !83   ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !83   ; 3 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.f, label %bb.b
 
@@ -257,16 +257,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 
 .thread.thread:                                   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
   %i.v = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.12, i64 noundef 3) ; 0 uses
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !75
+  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.c
+  %.pre54 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !83
   br label %bb.e
 
 .thread:                                          ; preds = %bb.b
   br i1 %3, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.thread.thread, %.thread
-  %7 = load ptr, ptr %i.a, align 8, !tbaa !75
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.c
-  %9 = load ptr, ptr %8, align 8, !tbaa !83
-  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 32
+  %7 = phi ptr [ %.pre54, %.thread.thread ], [ %i.e, %.thread ]
+  %i.w = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.x = load double, ptr %i.w, align 8, !tbaa !21
   %i.y = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %1, double noundef %i.x) ; 0 uses
   br label %.critedge
