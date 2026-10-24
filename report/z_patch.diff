@@ -1,0 +1,29 @@
+diff --git a/llvm/lib/Analysis/LazyValueInfo.cpp b/llvm/lib/Analysis/LazyValueInfo.cpp
+index b15cee2fd6e9fa..cfca00146455b4 100644
+--- a/llvm/lib/Analysis/LazyValueInfo.cpp
++++ b/llvm/lib/Analysis/LazyValueInfo.cpp
+@@ -1527,6 +1527,10 @@ std::optional<ValueLatticeElement>
+ LazyValueInfoImpl::getValueFromCondition(Value *Val, Value *Cond,
+                                          bool IsTrueDest, bool UseBlockValue,
+                                          unsigned Depth) {
++  if (Cond == Val)
++    return ValueLatticeElement::get(
++        ConstantInt::getBool(Val->getType(), IsTrueDest));
++
+   if (ICmpInst *ICI = dyn_cast<ICmpInst>(Cond))
+     return getValueFromICmpCondition(Val, ICI, IsTrueDest, UseBlockValue);
+ 
+@@ -1638,13 +1642,6 @@ LazyValueInfoImpl::getEdgeValueLocal(Value *Val, BasicBlock *BBFrom,
+              "BBTo isn't a successor of BBFrom");
+       Value *Condition = BI->getCondition();
+ 
+-      // If V is the condition of the branch itself, then we know exactly what
+-      // it is.
+-      // NB: The condition on a `br` can't be a vector type.
+-      if (Condition == Val)
+-        return ValueLatticeElement::get(ConstantInt::get(
+-                              Type::getInt1Ty(Val->getContext()), isTrueDest));
+-
+       // If the condition of the branch is an equality comparison, we may be
+       // able to infer the value.
+       std::optional<ValueLatticeElement> Result =
