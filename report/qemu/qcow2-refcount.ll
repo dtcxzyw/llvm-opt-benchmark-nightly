@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.t = load ptr, ptr %i.e, align 8
-  %i.u = tail call i64 %i.t(ptr noundef %5, i64 noundef %.04051) #15 ; 9 uses
-  %i.v = load i64, ptr %i.a, align 8              ; 9 uses
+  %i.u = tail call i64 %i.t(ptr noundef %5, i64 noundef %.04051) #15 ; 8 uses
+  %i.v = load i64, ptr %i.a, align 8              ; 8 uses
   %i.w = icmp ne i64 %i.v, 0                      ; 2 uses
   %i.x = icmp ne i64 %i.u, 0
   %or.cond = select i1 %i.w, i1 true, i1 %i.x
@@ -246,11 +246,10 @@ bb.i:                                             ; preds = %select.unfold
   %i.af = load i32, ptr %i.c, align 8
   %i.ag = zext nneg i32 %i.af to i64
   %i.ah = shl i64 %.04051, %i.ag
-  %7 = icmp ugt i64 %i.v, %i.u                    ; 2 uses
-  %i.ai = sub nuw i64 %i.v, %i.u
-  %8 = sub nuw i64 %i.u, %i.v
-  %9 = select i1 %7, i64 %i.ai, i64 %8
-  %i.aj = tail call fastcc i32 @update_refcount(ptr noundef %0, i64 noundef %i.ah, i64 noundef 1, i64 noundef %9, i1 noundef zeroext %7, i32 noundef 1)
+  %i.ai = sub nsw i64 %i.v, %i.u
+  %7 = tail call range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %i.ai, i1 true)
+  %8 = icmp ugt i64 %i.v, %i.u
+  %i.aj = tail call fastcc i32 @update_refcount(ptr noundef %0, i64 noundef %i.ah, i64 noundef 1, i64 noundef %7, i1 noundef zeroext %8, i32 noundef 1)
   %i.ak = icmp sgt i32 %i.aj, -1
   br i1 %i.ak, label %bb.j, label %bb.k
 
@@ -652,6 +651,9 @@ declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #11
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #11

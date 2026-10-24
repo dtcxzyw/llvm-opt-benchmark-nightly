@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZNK12_GLOBAL__N_11
   %i.bg = load i8, ptr %i.bf, align 8, !tbaa !541, !range !61, !noundef !62
   %i.bh = trunc nuw i8 %i.bg to i1
   %.val.i = load i64, ptr %i.be, align 8
-  %.0.i = select i1 %i.bh, i64 %.val.i, i64 undef ; 9 uses
+  %.0.i = select i1 %i.bh, i64 %.val.i, i64 undef ; 7 uses
   %i.bi = add i32 %.0114122, 1                    ; 5 uses
   %.not41 = icmp ne i64 %.0.i, 0
   %i.bj = zext i1 %.not41 to i32
@@ -214,7 +214,7 @@ bb.e:                                             ; preds = %_ZNK12_GLOBAL__N_11
   %i.bl = extractvalue { i64, i8 } %i.bk, 0
   %i.bm = extractvalue { i64, i8 } %i.bk, 1
   %i.bn = trunc nuw i8 %i.bm to i1
-  %.0 = select i1 %i.bn, i64 %i.bl, i64 0         ; 6 uses
+  %.0 = select i1 %i.bn, i64 %i.bl, i64 0         ; 4 uses
   br i1 %i.b, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
@@ -237,15 +237,13 @@ bb.h:                                             ; preds = %bb.e
   br i1 %or.cond118, label %"_ZN4llvm25OptimizationRemarkEmitter4emitIZL13verifyFuncBFIRN12_GLOBAL__N_110PGOUseFuncERNS_8LoopInfoERNS_21BranchProbabilityInfoEmmE3$_0EEvT_PDTclfL0p_EE.exit", label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %.not42 = icmp ult i64 %.0, %.0.i
-  %i.bu = sub nuw i64 %.0, %.0.i
-  %19 = sub nuw i64 %.0.i, %.0
-  %20 = select i1 %.not42, i64 %19, i64 %i.bu
+  %i.bu = sub nsw i64 %.0, %.0.i
+  %19 = call i64 @llvm.abs.i64(i64 %i.bu, i1 true)
   %i.bv = udiv i64 %.0.i, 100
   %i.bw = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvmL17PGOVerifyBFIRatioE, i64 120), align 8, !tbaa !234
   %i.bx = zext i32 %i.bw to i64
   %i.by = mul i64 %i.bv, %i.bx
-  %.not43 = icmp ugt i64 %20, %i.by
+  %.not43 = icmp ugt i64 %19, %i.by
   br i1 %.not43, label %.critedge, label %"_ZN4llvm25OptimizationRemarkEmitter4emitIZL13verifyFuncBFIRN12_GLOBAL__N_110PGOUseFuncERNS_8LoopInfoERNS_21BranchProbabilityInfoEmmE3$_0EEvT_PDTclfL0p_EE.exit"
 
 .critedge:                                        ; preds = %bb.g, %bb.f, %bb.i
@@ -647,6 +645,9 @@ declare i64 @llvm.smin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #21
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #21

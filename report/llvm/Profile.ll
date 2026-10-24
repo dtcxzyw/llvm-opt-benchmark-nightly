@@ -202,14 +202,12 @@ bb.n:                                             ; preds = %_ZN4llvm11SmallVect
 
 bb.o:                                             ; preds = %bb.n
   %i.ek = getelementptr inbounds i8, ptr %.val40, i64 -16
-  %.sroa.015.0.copyload = load i64, ptr %i.ek, align 8, !tbaa !73 ; 3 uses
+  %.sroa.015.0.copyload = load i64, ptr %i.ek, align 8, !tbaa !73
   %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %.val40, i64 -8
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !62
-  %i.el = load i64, ptr %i.eh, align 8, !tbaa !591 ; 3 uses
-  %10 = icmp ugt i64 %.sroa.015.0.copyload, %i.el
-  %11 = sub nuw i64 %.sroa.015.0.copyload, %i.el
-  %i.em = sub nuw i64 %i.el, %.sroa.015.0.copyload
-  %12 = select i1 %10, i64 %11, i64 %i.em
+  %i.el = load i64, ptr %i.eh, align 8, !tbaa !591
+  %i.em = sub nsw i64 %.sroa.015.0.copyload, %i.el
+  %10 = call noundef i64 @llvm.abs.i64(i64 %i.em, i1 true)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   store ptr %i.v, ptr %8, align 8, !tbaa !30
   store i32 0, ptr %i.w, align 8, !tbaa !31
@@ -517,7 +515,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIjNS_4xray7Profile4DataENS_12DenseMapInfoIjvE
   store i64 %i.lk, ptr %i.ll, align 8, !tbaa !598
   %i.lm = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i81, i64 16 ; 2 uses
   %i.ln = load i64, ptr %i.lm, align 8, !tbaa !599
-  %i.lo = add i64 %i.ln, %12
+  %i.lo = add i64 %i.ln, %10
   store i64 %i.lo, ptr %i.lm, align 8, !tbaa !599
   %i.lp = load ptr, ptr %i.eg, align 8, !tbaa !593
   %i.lq = getelementptr inbounds i8, ptr %i.lp, i64 -16
@@ -919,6 +917,9 @@ declare i64 @llvm.umin.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #14
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #11
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

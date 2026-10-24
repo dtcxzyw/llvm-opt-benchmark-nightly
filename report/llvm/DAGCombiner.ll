@@ -205,16 +205,16 @@ bb.am:                                            ; preds = %.split
   br label %_ZNK4llvm9KnownBits20countMinLeadingZerosEv.exit
 
 _ZNK4llvm9KnownBits20countMinLeadingZerosEv.exit: ; preds = %bb.al, %bb.am
-  %i.hu = phi i32 [ %i.hs, %bb.am ], [ %i.hn, %bb.al ] ; 4 uses
+  %i.hu = phi i32 [ %i.hs, %bb.am ], [ %i.hn, %bb.al ] ; 3 uses
   %.0.i.i239 = phi i32 [ %i.ht, %bb.am ], [ %i.hr, %bb.al ]
-  %i.hv = and i32 %.0.i.i239, -8                  ; 4 uses
+  %i.hv = and i32 %.0.i.i239, -8                  ; 3 uses
   %i.hw = add i32 %i.hu, %i.hv
   %i.hx = sub i32 %i.ba, %i.hw
   %i.hy = icmp eq i32 %i.hx, 8
   br i1 %i.hy, label %bb.an, label %bb.ap
 
 bb.an:                                            ; preds = %_ZNK4llvm9KnownBits20countMinLeadingZerosEv.exit
-  %i.hz = icmp ugt i32 %i.hv, %i.hu               ; 3 uses
+  %i.hz = icmp ugt i32 %i.hv, %i.hu               ; 2 uses
   %i.ia = select i1 %i.hz, i32 198, i32 200       ; 2 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 33
   %i.ic = load i8, ptr %i.ib, align 1, !tbaa !324, !range !52, !noundef !53
@@ -230,15 +230,14 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.if, label %.critedge195, label %bb.ap
 
 .critedge195:                                     ; preds = %bb.ao, %bb.an
-  %i.ig = sub nuw i32 %i.hv, %i.hu
-  %23 = sub nuw i32 %i.hu, %i.hv
-  %24 = select i1 %i.hz, i32 %i.ig, i32 %23
+  %i.ig = sub nsw i32 %i.hv, %i.hu
+  %23 = call noundef i32 @llvm.abs.i32(i32 %i.ig, i1 true)
   %i.ih = select i1 %i.hz, i32 1, i32 4
   %i.ii = load ptr, ptr %0, align 8, !tbaa !102, !nonnull !53, !align !197 ; 2 uses
   store ptr %.sroa.0241.0.copyload, ptr %21, align 8, !tbaa !74
   %.sroa.22.0..sroa_idx259 = getelementptr inbounds nuw i8, ptr %21, i64 8
   store <2 x i32> %i.c, ptr %.sroa.22.0..sroa_idx259, align 8
-  %i.ij = zext i32 %24 to i64
+  %i.ij = zext nneg i32 %23 to i64
   %i.ik = call { ptr, i32 } @_ZN4llvm12SelectionDAG22getShiftAmountConstantEmNS_3EVTERKNS_5SDLocE(ptr noundef nonnull align 8 dereferenceable(920) %i.ii, i64 noundef %i.ij, i16 %.sroa.011.0.copyload.pre, ptr %.sroa.213.0.copyload.pre, ptr noundef nonnull align 8 dereferenceable(12) %12) #36 ; 2 uses
   %.fca.0.extract4 = extractvalue { ptr, i32 } %i.ik, 0
   %.fca.1.extract5 = extractvalue { ptr, i32 } %i.ik, 1
@@ -640,6 +639,9 @@ declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #20
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #20

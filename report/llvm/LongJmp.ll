@@ -204,21 +204,19 @@ bb.q:                                             ; preds = %.lr.ph.i.i.i
 
 _ZN4llvm4bolt14BinaryFunction21getBasicBlockForLabelEPKNS_8MCSymbolE.exit: ; preds = %bb.p, %bb.n, %bb.o, %bb.q
   %i.cq = phi ptr [ %i.cp, %bb.q ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.p ]
-  %i.cr = call noundef i64 @_ZNK4llvm4bolt11LongJmpPass16getSymbolAddressERKNS0_13BinaryContextEPKNS_8MCSymbolEPKNS0_16BinaryBasicBlockE(ptr noundef nonnull align 8 dereferenceable(268) %1, ptr noundef nonnull align 8 dereferenceable(2268) %i.h, ptr noundef %i.bf, ptr noundef %i.cq) ; 3 uses
+  %i.cr = call noundef i64 @_ZNK4llvm4bolt11LongJmpPass16getSymbolAddressERKNS0_13BinaryContextEPKNS_8MCSymbolEPKNS0_16BinaryBasicBlockE(ptr noundef nonnull align 8 dereferenceable(268) %1, ptr noundef nonnull align 8 dereferenceable(2268) %i.h, ptr noundef %i.bf, ptr noundef %i.cq)
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 208
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   store ptr %2, ptr %i.b, align 8, !tbaa !209
   %i.ct = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_4bolt16BinaryBasicBlockEmNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_mEEEES5_mS7_SA_E24lookupOrInsertIntoBucketIS5_JEEESt4pairIPSA_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.cs, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
   %.fca.0.extract.i45 = extractvalue { ptr, i8 } %i.ct, 0
   %i.cu = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i45, i64 8
-  %i.cv = load i64, ptr %i.cu, align 8, !tbaa !281 ; 3 uses
+  %i.cv = load i64, ptr %i.cu, align 8, !tbaa !281
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
-  %7 = icmp ugt i64 %i.cv, %i.cr
-  %8 = sub nuw i64 %i.cv, %i.cr
-  %i.cw = sub nuw i64 %i.cr, %i.cv
-  %9 = select i1 %7, i64 %8, i64 %i.cw            ; 2 uses
+  %i.cw = sub nsw i64 %i.cv, %i.cr
+  %7 = call i64 @llvm.abs.i64(i64 %i.cw, i1 true) ; 2 uses
   %i.cx = load i64, ptr @_ZZN4llvm4bolt11LongJmpPass9relaxStubERNS0_16BinaryBasicBlockERbE15SingleInstrMask, align 8, !tbaa !281
-  %i.cy = and i64 %9, %i.cx
+  %i.cy = and i64 %7, %i.cx
   %.not42 = icmp eq i64 %i.cy, 0
   br i1 %.not42, label %_ZN4llvm5ErrorD2Ev.exit46, label %bb.r
 
@@ -228,7 +226,7 @@ _ZN4llvm5ErrorD2Ev.exit46:                        ; preds = %_ZN4llvm4bolt14Bina
 
 bb.r:                                             ; preds = %_ZN4llvm4bolt14BinaryFunction21getBasicBlockForLabelEPKNS_8MCSymbolE.exit
   %i.cz = load i64, ptr @_ZZN4llvm4bolt11LongJmpPass9relaxStubERNS0_16BinaryBasicBlockERbE12ShortJmpMask, align 8, !tbaa !281
-  %i.da = and i64 %i.cz, %9
+  %i.da = and i64 %i.cz, %7
   %.not43 = icmp eq i64 %i.da, 0
   br i1 %.not43, label %bb.s, label %bb.ad
 
@@ -630,6 +628,9 @@ declare i64 @llvm.umax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #20
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #12
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

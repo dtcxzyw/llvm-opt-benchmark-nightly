@@ -205,8 +205,9 @@ _ZNK12_GLOBAL__N_112MergedNodesT7forEachIZNKS_10CDSortImpl21distBasedLocalityGai
 
 .lr.ph.i3.i.i.i:                                  ; preds = %_ZNK12_GLOBAL__N_112MergedNodesT7forEachIZNKS_10CDSortImpl21distBasedLocalityGainERKS0_RKNS_12MergedJumpsTEEUlPKNS_5NodeTEE_EEvRKT_.exit.i.i.i
   %i.ch = load i64, ptr %i.i, align 8, !tbaa !168, !noalias !602 ; 2 uses
+  %3 = tail call i64 @llvm.abs.i64(i64 %i.ch, i1 true)
   %i.ci = icmp eq i64 %i.ch, 0
-  %i.cj = uitofp i64 %i.ch to double
+  %i.cj = uitofp nneg i64 %3 to double
   %i.ck = select i1 %i.ci, double 1.000000e-01, double %i.cj
   %.val7.i.i.i.i.i = load double, ptr %i.h, align 8, !tbaa !605, !noalias !602
   %i.cl = fneg double %.val7.i.i.i.i.i            ; 2 uses
@@ -222,19 +223,17 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i3.i.
   %i.cp = load i64, ptr %i.co, align 8, !tbaa !204, !noalias !602
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cm, i64 32
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !96, !noalias !602
-  %i.cs = add i64 %i.cr, %i.cp                    ; 3 uses
+  %i.cs = add i64 %i.cr, %i.cp                    ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !93, !noalias !602
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 40
-  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !204, !noalias !602 ; 3 uses
+  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !204, !noalias !602 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
   %i.cy = load i64, ptr %i.cx, align 8, !tbaa !94, !noalias !602
-  %.not.i.i.i.i.i.i = icmp ugt i64 %i.cs, %i.cw
-  %3 = sub nuw i64 %i.cw, %i.cs
-  %i.cz = sub nuw i64 %i.cs, %i.cw
-  %4 = select i1 %.not.i.i.i.i.i.i, i64 %i.cz, i64 %3 ; 2 uses
-  %i.da = icmp eq i64 %4, 0
-  %i.db = uitofp i64 %4 to double
+  %i.cz = sub nsw i64 %i.cs, %i.cw
+  %4 = tail call i64 @llvm.abs.i64(i64 %i.cz, i1 true)
+  %i.da = icmp eq i64 %i.cs, %i.cw
+  %i.db = uitofp nneg i64 %4 to double
   %i.dc = select i1 %i.da, double 1.000000e-01, double %i.db
   %i.dd = uitofp i64 %i.cy to double              ; 2 uses
   %i.de = tail call double @pow(double noundef %i.dc, double noundef %i.cl) #22, !noalias !602
@@ -382,8 +381,9 @@ _ZNK12_GLOBAL__N_112MergedNodesT7forEachIZNKS_10CDSortImpl21distBasedLocalityGai
 
 .lr.ph.i3.i.i.i.1:                                ; preds = %_ZNK12_GLOBAL__N_112MergedNodesT7forEachIZNKS_10CDSortImpl21distBasedLocalityGainERKS0_RKNS_12MergedJumpsTEEUlPKNS_5NodeTEE_EEvRKT_.exit.i.i.i.1
   %i.fk = load i64, ptr %i.i, align 8, !tbaa !168, !noalias !602 ; 2 uses
+  %5 = tail call i64 @llvm.abs.i64(i64 %i.fk, i1 true)
   %i.fl = icmp eq i64 %i.fk, 0
-  %i.fm = uitofp i64 %i.fk to double
+  %i.fm = uitofp nneg i64 %5 to double
   %i.fn = select i1 %i.fl, double 1.000000e-01, double %i.fm
   %.val7.i.i.i.i.i.1 = load double, ptr %i.h, align 8, !tbaa !605, !noalias !602
   %i.fo = fneg double %.val7.i.i.i.i.i.1          ; 2 uses
@@ -399,19 +399,17 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i3.i.
   %i.fs = load i64, ptr %i.fr, align 8, !tbaa !204, !noalias !602
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fp, i64 32
   %i.fu = load i64, ptr %i.ft, align 8, !tbaa !96, !noalias !602
-  %i.fv = add i64 %i.fu, %i.fs                    ; 3 uses
+  %i.fv = add i64 %i.fu, %i.fs                    ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
   %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !93, !noalias !602
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 40
-  %i.fz = load i64, ptr %i.fy, align 8, !tbaa !204, !noalias !602 ; 3 uses
+  %i.fz = load i64, ptr %i.fy, align 8, !tbaa !204, !noalias !602 ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fp, i64 16
   %i.gb = load i64, ptr %i.ga, align 8, !tbaa !94, !noalias !602
-  %.not.i.i.i.i.i.i.1 = icmp ugt i64 %i.fv, %i.fz
-  %5 = sub nuw i64 %i.fz, %i.fv
-  %i.gc = sub nuw i64 %i.fv, %i.fz
-  %6 = select i1 %.not.i.i.i.i.i.i.1, i64 %i.gc, i64 %5 ; 2 uses
-  %i.gd = icmp eq i64 %6, 0
-  %i.ge = uitofp i64 %6 to double
+  %i.gc = sub nsw i64 %i.fv, %i.fz
+  %6 = tail call i64 @llvm.abs.i64(i64 %i.gc, i1 true)
+  %i.gd = icmp eq i64 %i.fv, %i.fz
+  %i.ge = uitofp nneg i64 %6 to double
   %i.gf = select i1 %i.gd, double 1.000000e-01, double %i.ge
   %i.gg = uitofp i64 %i.gb to double              ; 2 uses
   %i.gh = tail call double @pow(double noundef %i.gf, double noundef %i.fo) #22, !noalias !602
@@ -813,6 +811,9 @@ declare i64 @llvm.umax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #11
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #11

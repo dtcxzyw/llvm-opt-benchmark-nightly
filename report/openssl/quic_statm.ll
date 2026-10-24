@@ -51,17 +51,15 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.03.0.i = tail call i64 @llvm.uadd.sat.i64(i64 %i.i, i64 %1)
   %.not45 = icmp ult i64 %.sroa.010.0, %.sroa.03.0.i
   %..i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.010.0, i64 %1)
-  %.sroa.021.0 = select i1 %.not45, i64 %.sroa.010.0, i64 %..i ; 4 uses
+  %.sroa.021.0 = select i1 %.not45, i64 %.sroa.010.0, i64 %..i ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8
   %i.l = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.k, i64 range(i64 3, 8) 3) ; 2 uses
   %i.m = extractvalue { i64, i1 } %i.l, 1
   %i.n = extractvalue { i64, i1 } %i.l, 0
-  %i.o = load i64, ptr %0, align 8                ; 4 uses
-  %3 = icmp ugt i64 %i.o, %.sroa.021.0
-  %..i.i = sub nuw i64 %i.o, %.sroa.021.0
-  %..i9.i = sub nuw i64 %.sroa.021.0, %i.o
-  %.sroa.06.0.i = select i1 %3, i64 %..i.i, i64 %..i9.i
+  %i.o = load i64, ptr %0, align 8                ; 2 uses
+  %..i9.i = sub nsw i64 %i.o, %.sroa.021.0
+  %.sroa.06.0.i = tail call range(i64 0, -9223372036854775808) i64 @llvm.abs.i64(i64 %..i9.i, i1 true)
   %i.p = tail call i64 @llvm.uadd.sat.i64(i64 %i.n, i64 %.sroa.06.0.i)
   %i.q = lshr i64 %i.p, 2
   %i.r = select i1 %i.m, i64 4611686018427387903, i64 %i.q
@@ -129,10 +127,14 @@ declare i64 @llvm.uadd.sat.i64(i64, i64) #3
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #3
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #4
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

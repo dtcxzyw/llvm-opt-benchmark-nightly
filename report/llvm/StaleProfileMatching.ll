@@ -204,7 +204,7 @@ declare void @_ZN4llvm4bolt14hashBlockCallsB5cxx11ERKNS_8DenseMapIjPNS_4yaml4bol
 define linkonce_odr hidden { ptr, i8 } @_ZN4llvm4bolt12StaleMatcher15matchBlockLooseENS0_16BlendedBlockHashEm(ptr noundef nonnull align 8 dereferenceable(144) %0, i64 %1, i64 noundef %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   %i.a = trunc i64 %1 to i32
-  %i.b = lshr i32 %i.a, 16                        ; 3 uses
+  %i.b = lshr i32 %i.a, 16
   %.not.i = icmp eq i64 %2, 0
   br i1 %.not.i, label %.thread, label %bb.b
 
@@ -284,12 +284,10 @@ _ZNKSt13unordered_mapImSt6vectorISt4pairIN4llvm4bolt16BlendedBlockHashEPNS2_9Flo
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.024.040.i, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.024.040.i, i64 2
   %i.ae = load i16, ptr %i.ad, align 2, !tbaa !193
-  %i.af = zext i16 %i.ae to i32                   ; 3 uses
-  %3 = icmp samesign ult i32 %i.b, %i.af
-  %4 = sub nuw nsw i32 %i.af, %i.b
-  %i.ag = sub nuw nsw i32 %i.b, %i.af
-  %5 = select i1 %3, i32 %4, i32 %i.ag
-  %i.ah = zext nneg i32 %5 to i64                 ; 2 uses
+  %i.af = zext i16 %i.ae to i32
+  %i.ag = sub nsw i32 %i.b, %i.af
+  %3 = tail call i32 @llvm.abs.i32(i32 %i.ag, i1 true)
+  %i.ah = zext nneg i32 %3 to i64                 ; 2 uses
   %i.ai = icmp eq ptr %.01641.i, null
   %i.aj = icmp ugt i64 %.042.i, %i.ah
   %or.cond.i = select i1 %i.ai, i1 true, i1 %i.aj ; 2 uses
@@ -692,7 +690,6 @@ _ZN4llvm8DenseMapIjSt4pairIPKNS_9FlowBlockEPKNS_4yaml4bolt23BinaryBasicBlockProf
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, i8 } @_ZNK4llvm4bolt12StaleMatcher16matchWithOpcodesENS0_16BlendedBlockHashE(ptr noundef nonnull align 8 dereferenceable(144) %0, i64 %1) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %.sroa.020.0.extract.trunc = trunc i64 %1 to i16
   %.sroa.3.0.extract.shift = lshr i64 %1, 16      ; 2 uses
   %.sroa.3.0.extract.trunc = trunc i64 %.sroa.3.0.extract.shift to i16 ; 3 uses
   %.sroa.5.0.extract.shift = lshr i64 %1, 32
@@ -772,7 +769,7 @@ _ZNKSt13unordered_mapItSt6vectorISt4pairIN4llvm4bolt16BlendedBlockHashEPNS2_9Flo
   br i1 %.not32, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNKSt13unordered_mapItSt6vectorISt4pairIN4llvm4bolt16BlendedBlockHashEPNS2_9FlowBlockEESaIS7_EESt4hashItESt8equal_toItESaIS1_IKtS9_EEE4findERSE_.exit
-  %i.ac = and i64 %1, 65535                       ; 2 uses
+  %i.ac = and i64 %1, 65535
   br label %bb.i
 
 ._crit_edge.loopexit:                             ; preds = %bb.k
@@ -798,12 +795,10 @@ bb.i:                                             ; preds = %.lr.ph, %bb.k
   %i.ak = load i8, ptr %i.aj, align 2, !tbaa !198
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.011.035, i64 4
   %i.am = load i16, ptr %i.al, align 2, !tbaa !192
-  %i.an = load i16, ptr %.sroa.011.035, align 2, !tbaa !66 ; 2 uses
-  %i.ao = zext i16 %i.an to i64                   ; 2 uses
-  %.not15.i = icmp ult i16 %i.an, %.sroa.020.0.extract.trunc
-  %2 = sub nsw i64 %i.ao, %i.ac
-  %i.ap = sub nsw i64 %i.ac, %i.ao
-  %3 = select i1 %.not15.i, i64 %i.ap, i64 %2
+  %i.an = load i16, ptr %.sroa.011.035, align 2, !tbaa !66
+  %i.ao = zext i16 %i.an to i64
+  %i.ap = sub nsw i64 %i.ao, %i.ac
+  %2 = tail call i64 @llvm.abs.i64(i64 %i.ap, i1 true)
   %i.aq = icmp ne i8 %i.ai, %.sroa.7.0.extract.trunc
   %i.ar = zext i1 %i.aq to i64
   %i.as = icmp ne i8 %i.ak, %.sroa.6.0.extract.trunc
@@ -813,7 +808,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.k
   %i.av = shl nuw nsw i64 %i.au, 32
   %i.aw = select i1 %.not.i, i64 0, i64 65536
   %i.ax = or disjoint i64 %i.av, %i.aw
-  %i.ay = add nsw i64 %i.ax, %3                   ; 2 uses
+  %i.ay = add nuw nsw i64 %i.ax, %2               ; 2 uses
   %i.az = icmp eq ptr %.02433, null
   %i.ba = icmp ult i64 %i.ay, %.036
   %or.cond = select i1 %i.az, i1 true, i1 %i.ba
@@ -1215,6 +1210,12 @@ declare i64 @llvm.umin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #18
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #11
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #18

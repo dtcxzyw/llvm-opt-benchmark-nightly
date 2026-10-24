@@ -45,46 +45,46 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %3 = alloca %struct.slurm_msg, align 8          ; 10 uses
   %i.b = alloca i32, align 4                      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.c = icmp eq ptr %0, null
   br i1 %i.c, label %_get_addr.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @slurm_init(ptr noundef null) #8
+  tail call void @slurm_init(ptr noundef null) #9
   %i.d = load i16, ptr @srun_port, align 2
   %.not.i = icmp eq i16 %i.d, 0
   br i1 %.not.i, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = tail call ptr @getenv(ptr noundef nonnull @.str.14) #8 ; 2 uses
-  %i.f = tail call ptr @getenv(ptr noundef nonnull @.str.15) #8 ; 2 uses
+  %i.e = tail call ptr @getenv(ptr noundef nonnull @.str.14) #9 ; 2 uses
+  %i.f = tail call ptr @getenv(ptr noundef nonnull @.str.15) #9 ; 2 uses
   %i.g = icmp ne ptr %i.e, null
   %i.h = icmp ne ptr %i.f, null
   %or.cond.i = and i1 %i.g, %i.h
   br i1 %or.cond.i, label %bb.d, label %_get_addr.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.f, ptr noundef null, i32 noundef 10) #8, !inline_history !0
+  %i.i = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.f, ptr noundef null, i32 noundef 10) #9, !inline_history !0
   %i.j = trunc i64 %i.i to i16                    ; 2 uses
   store i16 %i.j, ptr @srun_port, align 2
-  tail call void @slurm_set_addr(ptr noundef nonnull @srun_addr, i16 noundef zeroext %i.j, ptr noundef nonnull %i.e) #8
+  tail call void @slurm_set_addr(ptr noundef nonnull @srun_addr, i16 noundef zeroext %i.j, ptr noundef nonnull %i.e) #9
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.d
   store i32 0, ptr %i.b, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.k = load i32, ptr @pmi_time, align 4
   %.not.i18 = icmp eq i32 %i.k, 0
   br i1 %.not.i18, label %bb.f, label %_set_pmi_time.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.l = tail call ptr @getenv(ptr noundef nonnull @.str.16) #8 ; 3 uses
+  %i.l = tail call ptr @getenv(ptr noundef nonnull @.str.16) #9 ; 3 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %.sink.split.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.n = call i64 @strtol(ptr noundef nonnull %i.l, ptr noundef nonnull %i.a, i32 noundef 10) #8
+  %i.n = call i64 @strtol(ptr noundef nonnull %i.l, ptr noundef nonnull %i.a, i32 noundef 10) #9
   %i.o = trunc i64 %i.n to i32                    ; 2 uses
   store i32 %i.o, ptr @pmi_time, align 4
   %i.p = icmp slt i32 %i.o, 1
@@ -97,7 +97,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not3.i, label %_set_pmi_time.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.s = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.l) #8 ; 0 uses
+  %i.s = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.l) #9 ; 0 uses
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.i, %bb.f
@@ -105,15 +105,15 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %_set_pmi_time.exit
 
 _set_pmi_time.exit:                               ; preds = %bb.e, %bb.h, %.sink.split.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  call void @slurm_msg_t_init(ptr noundef nonnull %3) #8
-  call void @slurm_msg_set_r_uid(ptr noundef nonnull %3, i32 noundef -1) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @slurm_msg_t_init(ptr noundef nonnull %3) #9
+  call void @slurm_msg_set_r_uid(ptr noundef nonnull %3, i32 noundef -1) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %3, ptr noundef nonnull align 8 dereferenceable(128) @srun_addr, i64 128, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 226
   store i16 7201, ptr %i.t, align 2
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 192
   store ptr %0, ptr %i.u, align 8
-  %i.v = call ptr @getenv(ptr noundef nonnull @.str) #8
+  %i.v = call ptr @getenv(ptr noundef nonnull @.str) #9
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 208
   store ptr %i.v, ptr %i.w, align 8
   call fastcc void @_delay_rpc(i32 noundef %1, i32 noundef %2)
@@ -158,7 +158,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.l, %bb.o, %bb.p, %bb.n, %bb.j
   %.0 = phi i32 [ %i.aa, %bb.j ], [ %i.ae, %bb.l ], [ %i.ai, %bb.n ], [ %i.am, %bb.p ], [ 0, %bb.o ] ; 2 uses
-  %i.an = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #8
+  %i.an = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #9
   %i.ao = icmp slt i32 %i.an, 0
   br i1 %i.ao, label %.lr.ph.preheader, label %._crit_edge
 
@@ -168,22 +168,22 @@ bb.q:                                             ; preds = %bb.l, %bb.o, %bb.p,
   br i1 %exitcond, label %bb.r, label %.lr.ph.preheader, !llvm.loop !11
 
 bb.r:                                             ; preds = %.lr.ph
-  %i.aq = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.1) #8 ; 0 uses
+  %i.aq = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.1) #9 ; 0 uses
   br label %_get_addr.exit
 
 .lr.ph.preheader:                                 ; preds = %bb.q, %.lr.ph
   %i.ar = phi i32 [ %i.ap, %.lr.ph ], [ 1, %bb.q ] ; 3 uses
-  %i.as = call i32 @get_log_level() #8
+  %i.as = call i32 @get_log_level() #9
   %i.at = icmp sgt i32 %i.as, 4
   br i1 %i.at, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph.preheader
-  call void (i32, ptr, ...) @log_var(i32 noundef 5, ptr noundef nonnull @.str.2, i32 noundef %i.ar) #8
+  call void (i32, ptr, ...) @log_var(i32 noundef 5, ptr noundef nonnull @.str.2, i32 noundef %i.ar) #9
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph.preheader, %bb.s
   call fastcc void @_delay_rpc(i32 noundef %1, i32 noundef %2)
-  %i.au = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #8
+  %i.au = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #9
   %i.av = icmp slt i32 %i.au, 0
   br i1 %i.av, label %.lr.ph, label %._crit_edge, !llvm.loop !11
 
@@ -193,8 +193,8 @@ bb.t:                                             ; preds = %.lr.ph.preheader, %
 
 _get_addr.exit:                                   ; preds = %bb.c, %bb.a, %._crit_edge, %bb.r
   %.014 = phi i32 [ %i.aw, %._crit_edge ], [ 22, %bb.a ], [ -1, %bb.r ], [ -1, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   ret i32 %.014
 }
 
@@ -219,24 +219,24 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %struct.timeval, align 8            ; 6 uses
   %3 = alloca %struct.timeval, align 8            ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   %i.b = icmp eq i32 %0, 0
   br i1 %i.b, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.c = load i32, ptr @pmi_time, align 4
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %bb.c, label %_set_pmi_time.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call ptr @getenv(ptr noundef nonnull @.str.16) #8 ; 3 uses
+  %i.d = tail call ptr @getenv(ptr noundef nonnull @.str.16) #9 ; 3 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %.sink.split.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = call i64 @strtol(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, i32 noundef 10) #8
+  %i.f = call i64 @strtol(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, i32 noundef 10) #9
   %i.g = trunc i64 %i.f to i32                    ; 2 uses
   store i32 %i.g, ptr @pmi_time, align 4
   %i.h = icmp slt i32 %i.g, 1
@@ -249,7 +249,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not3.i, label %_set_pmi_time.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.k = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.d) #8 ; 0 uses
+  %i.k = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.d) #9 ; 0 uses
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.f, %bb.c
@@ -257,21 +257,21 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %_set_pmi_time.exit
 
 _set_pmi_time.exit:                               ; preds = %bb.b, %bb.e, %.sink.split.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   br label %.outer
 
 .outer:                                           ; preds = %bb.k, %_set_pmi_time.exit
   %.0.ph = phi i32 [ %i.at, %bb.k ], [ 0, %_set_pmi_time.exit ] ; 2 uses
-  %i.n = call i32 @gettimeofday(ptr noundef nonnull %2, ptr noundef null) #8
+  %i.n = call i32 @gettimeofday(ptr noundef nonnull %2, ptr noundef null) #9
   %.not38 = icmp eq i32 %i.n, 0
   br i1 %.not38, label %.lr.ph, label %.outer._crit_edge
 
 .outer._crit_edge:                                ; preds = %.outer, %bb.i
   %i.o = load i32, ptr @pmi_time, align 4
   %i.p = mul nsw i32 %i.o, %0
-  %i.q = tail call i32 @usleep(i32 noundef %i.p) #8 ; 0 uses
+  %i.q = tail call i32 @usleep(i32 noundef %i.p) #9 ; 0 uses
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.outer, %bb.i
@@ -288,43 +288,41 @@ _set_pmi_time.exit:                               ; preds = %bb.b, %bb.e, %.sink
   %i.ab = icmp ult i32 %i.aa, %i.z
   %i.ac = sub i32 %i.aa, %i.z
   %i.ad = select i1 %i.ab, i32 %i.y, i32 0
-  %.025 = add i32 %i.ad, %i.ac                    ; 4 uses
-  %i.ae = tail call i32 @usleep(i32 noundef %.025) #8
+  %.025 = add i32 %i.ad, %i.ac                    ; 2 uses
+  %i.ae = tail call i32 @usleep(i32 noundef %.025) #9
   %.not33 = icmp eq i32 %i.ae, 0
   br i1 %.not33, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.af = tail call ptr @__errno_location() #9
+  %i.af = tail call ptr @__errno_location() #10
   %i.ag = load i32, ptr %i.af, align 4
   %i.ah = icmp eq i32 %i.ag, 22
   br i1 %i.ah, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ai = tail call i32 @usleep(i32 noundef 900000) #8 ; 0 uses
+  %i.ai = tail call i32 @usleep(i32 noundef 900000) #9 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.aj = call i32 @gettimeofday(ptr noundef nonnull %2, ptr noundef null) #8
+  %i.aj = call i32 @gettimeofday(ptr noundef nonnull %2, ptr noundef null) #9
   %.not = icmp eq i32 %i.aj, 0
   br i1 %.not, label %.lr.ph, label %.outer._crit_edge
 
 bb.j:                                             ; preds = %.lr.ph
-  %i.ak = call i32 @gettimeofday(ptr noundef nonnull %3, ptr noundef null) #8
+  %i.ak = call i32 @gettimeofday(ptr noundef nonnull %3, ptr noundef null) #9
   %.not34 = icmp eq i32 %i.ak, 0
   br i1 %.not34, label %bb.k, label %.loopexit
 
 bb.k:                                             ; preds = %bb.j
   %i.al = load i64, ptr %3, align 8
   %i.am = sub nsw i64 %i.al, %i.r
-  %4 = mul i64 %i.am, 1000000
-  %5 = load i64, ptr %i.m, align 8
-  %i.an = sub i64 %5, %i.u
-  %i.ao = add i64 %i.an, %4
-  %i.ap = trunc i64 %i.ao to i32                  ; 3 uses
-  %.not35 = icmp ugt i32 %.025, %i.ap
-  %6 = sub nuw i32 %i.ap, %.025
-  %7 = sub nuw i32 %.025, %i.ap
-  %.024 = select i1 %.not35, i32 %7, i32 %6
+  %4 = load i64, ptr %i.m, align 8
+  %.neg40 = mul i64 %i.am, 4293967296
+  %i.an = sub i64 %i.u, %4
+  %i.ao = add i64 %i.an, %.neg40
+  %i.ap = trunc i64 %i.ao to i32
+  %5 = add i32 %.025, %i.ap
+  %.024 = tail call i32 @llvm.abs.i32(i32 %5, i1 true)
   %i.aq = load i32, ptr @pmi_time, align 4
   %i.ar = mul nsw i32 %i.aq, 15
   %i.as = icmp ugt i32 %.024, %i.ar
@@ -334,8 +332,8 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond, label %.outer, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.k, %bb.j, %bb.a, %.outer._crit_edge
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
   ret void
 }
 
@@ -361,56 +359,56 @@ bb.a:
   %6 = alloca %struct.sockaddr_storage, align 8   ; 3 uses
   %i.c = alloca [64 x i8], align 16               ; 5 uses
   %7 = alloca %struct.kvs_get_msg, align 8        ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
   %i.d = icmp eq ptr %0, null
   br i1 %i.d, label %bb.aq, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @slurm_init(ptr noundef null) #8
+  tail call void @slurm_init(ptr noundef null) #9
   store ptr null, ptr %0, align 8
   %i.e = load i16, ptr @srun_port, align 2
   %.not.i = icmp eq i16 %i.e, 0
   br i1 %.not.i, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call ptr @getenv(ptr noundef nonnull @.str.14) #8 ; 2 uses
-  %i.g = tail call ptr @getenv(ptr noundef nonnull @.str.15) #8 ; 2 uses
+  %i.f = tail call ptr @getenv(ptr noundef nonnull @.str.14) #9 ; 2 uses
+  %i.g = tail call ptr @getenv(ptr noundef nonnull @.str.15) #9 ; 2 uses
   %i.h = icmp ne ptr %i.f, null
   %i.i = icmp ne ptr %i.g, null
   %or.cond.i = and i1 %i.h, %i.i
   br i1 %or.cond.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.g, ptr noundef null, i32 noundef 10) #8, !inline_history !0
+  %i.j = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.g, ptr noundef null, i32 noundef 10) #9, !inline_history !0
   %i.k = trunc i64 %i.j to i16                    ; 2 uses
   store i16 %i.k, ptr @srun_port, align 2
-  tail call void @slurm_set_addr(ptr noundef nonnull @srun_addr, i16 noundef zeroext %i.k, ptr noundef nonnull %i.f) #8
+  tail call void @slurm_set_addr(ptr noundef nonnull @srun_addr, i16 noundef zeroext %i.k, ptr noundef nonnull %i.f) #9
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.l = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.3) #8 ; 0 uses
+  %i.l = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.3) #9 ; 0 uses
   br label %bb.aq
 
 bb.f:                                             ; preds = %bb.b, %bb.d
   store i32 0, ptr %i.b, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.m = load i32, ptr @pmi_time, align 4
   %.not.i37 = icmp eq i32 %i.m, 0
   br i1 %.not.i37, label %bb.g, label %_set_pmi_time.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.n = tail call ptr @getenv(ptr noundef nonnull @.str.16) #8 ; 3 uses
+  %i.n = tail call ptr @getenv(ptr noundef nonnull @.str.16) #9 ; 3 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %.sink.split.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.p = call i64 @strtol(ptr noundef nonnull %i.n, ptr noundef nonnull %i.a, i32 noundef 10) #8
+  %i.p = call i64 @strtol(ptr noundef nonnull %i.n, ptr noundef nonnull %i.a, i32 noundef 10) #9
   %i.q = trunc i64 %i.p to i32                    ; 2 uses
   store i32 %i.q, ptr @pmi_time, align 4
   %i.r = icmp slt i32 %i.q, 1
@@ -423,7 +421,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not3.i, label %_set_pmi_time.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.u = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.n) #8 ; 0 uses
+  %i.u = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.n) #9 ; 0 uses
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.j, %bb.g
@@ -431,47 +429,47 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %_set_pmi_time.exit
 
 _set_pmi_time.exit:                               ; preds = %bb.f, %bb.i, %.sink.split.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %i.v = load i32, ptr @pmi_fd, align 4           ; 2 uses
   %i.w = icmp slt i32 %i.v, 0
   br i1 %i.w, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %_set_pmi_time.exit
-  %i.x = tail call i32 @slurm_init_msg_engine_port(i16 noundef zeroext 0) #8 ; 3 uses
+  %i.x = tail call i32 @slurm_init_msg_engine_port(i16 noundef zeroext 0) #9 ; 3 uses
   store i32 %i.x, ptr @pmi_fd, align 4
   %i.y = icmp slt i32 %i.x, 0
   br i1 %i.y, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.z = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.4) #8 ; 0 uses
+  %i.z = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.4) #9 ; 0 uses
   br label %bb.aq
 
 bb.m:                                             ; preds = %bb.k
-  tail call void @fd_set_blocking(i32 noundef %i.x) #8
+  tail call void @fd_set_blocking(i32 noundef %i.x) #9
   %.pre = load i32, ptr @pmi_fd, align 4
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_set_pmi_time.exit
   %i.aa = phi i32 [ %.pre, %bb.m ], [ %i.v, %_set_pmi_time.exit ]
-  %i.ab = call i32 @slurm_get_stream_addr(i32 noundef %i.aa, ptr noundef nonnull %5) #8
+  %i.ab = call i32 @slurm_get_stream_addr(i32 noundef %i.aa, ptr noundef nonnull %5) #9
   %i.ac = icmp slt i32 %i.ab, 0
   br i1 %i.ac, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ad = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.5) #8 ; 0 uses
+  %i.ad = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.5) #9 ; 0 uses
   br label %bb.aq
 
 bb.p:                                             ; preds = %bb.n
-  %i.ae = call ptr @getenv(ptr noundef nonnull @.str.6) #8 ; 2 uses
+  %i.ae = call ptr @getenv(ptr noundef nonnull @.str.6) #9 ; 2 uses
   %.not31 = icmp eq ptr %i.ae, null
   br i1 %.not31, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.af = call i64 @strlcpy(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) %i.ae, i64 noundef 64) #8 ; 0 uses
+  %i.af = call i64 @strlcpy(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) %i.ae, i64 noundef 64) #9 ; 0 uses
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.p
-  %i.ag = call i32 @gethostname_short(ptr noundef nonnull %i.c, i64 noundef 64) #8 ; 0 uses
+  %i.ag = call i32 @gethostname_short(ptr noundef nonnull %i.c, i64 noundef 64) #9 ; 0 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
@@ -480,23 +478,23 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   store i32 %1, ptr %7, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %7, i64 4
   store i32 %2, ptr %i.ai, align 4
-  %i.aj = call zeroext i16 @slurm_get_port(ptr noundef nonnull %5) #8
+  %i.aj = call zeroext i16 @slurm_get_port(ptr noundef nonnull %5) #9
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i16 %i.aj, ptr %i.ak, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.c, ptr %i.al, align 8
-  %i.am = call ptr @conn_g_get_own_public_cert() #8
+  %i.am = call ptr @conn_g_get_own_public_cert() #9
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.am, ptr %i.an, align 8
-  call void @slurm_msg_t_init(ptr noundef nonnull %3) #8
-  call void @slurm_msg_set_r_uid(ptr noundef nonnull %3, i32 noundef -1) #8
-  call void @slurm_msg_t_init(ptr noundef nonnull %4) #8
+  call void @slurm_msg_t_init(ptr noundef nonnull %3) #9
+  call void @slurm_msg_set_r_uid(ptr noundef nonnull %3, i32 noundef -1) #9
+  call void @slurm_msg_t_init(ptr noundef nonnull %4) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %3, ptr noundef nonnull align 8 dereferenceable(128) @srun_addr, i64 128, i1 false)
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 226
   store i16 7203, ptr %i.ao, align 2
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 192
   store ptr %7, ptr %i.ap, align 8
-  %i.aq = call ptr @getenv(ptr noundef nonnull @.str) #8
+  %i.aq = call ptr @getenv(ptr noundef nonnull @.str) #9
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 208
   store ptr %i.aq, ptr %i.ar, align 8
   call fastcc void @_delay_rpc(i32 noundef %1, i32 noundef %2)
@@ -541,7 +539,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.v, %bb.y, %bb.z, %bb.x, %bb.t
   %.0 = phi i32 [ %i.av, %bb.t ], [ %i.az, %bb.v ], [ %i.bd, %bb.x ], [ %i.bh, %bb.z ], [ 0, %bb.y ] ; 3 uses
-  %i.bi = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #8
+  %i.bi = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #9
   %i.bj = icmp slt i32 %i.bi, 0
   br i1 %i.bj, label %.lr.ph.preheader, label %._crit_edge
 
@@ -551,64 +549,64 @@ bb.aa:                                            ; preds = %bb.v, %bb.y, %bb.z,
   br i1 %exitcond, label %bb.ab, label %.lr.ph.preheader, !llvm.loop !12
 
 bb.ab:                                            ; preds = %.lr.ph
-  %i.bl = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.7) #8 ; 0 uses
-  call void @slurm_xfree(ptr noundef nonnull %i.an) #8
+  %i.bl = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.7) #9 ; 0 uses
+  call void @slurm_xfree(ptr noundef nonnull %i.an) #9
   br label %bb.aq
 
 .lr.ph.preheader:                                 ; preds = %bb.aa, %.lr.ph
   %i.bm = phi i32 [ %i.bk, %.lr.ph ], [ 1, %bb.aa ] ; 3 uses
-  %i.bn = call i32 @get_log_level() #8
+  %i.bn = call i32 @get_log_level() #9
   %i.bo = icmp sgt i32 %i.bn, 4
   br i1 %i.bo, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph.preheader
-  call void (i32, ptr, ...) @log_var(i32 noundef 5, ptr noundef nonnull @.str.8, i32 noundef %i.bm) #8
+  call void (i32, ptr, ...) @log_var(i32 noundef 5, ptr noundef nonnull @.str.8, i32 noundef %i.bm) #9
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph.preheader, %bb.ac
   call fastcc void @_delay_rpc(i32 noundef %1, i32 noundef %2)
-  %i.bp = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #8
+  %i.bp = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef %.0) #9
   %i.bq = icmp slt i32 %i.bp, 0
   br i1 %i.bq, label %.lr.ph, label %._crit_edge, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %bb.ad, %bb.aa
-  call void @slurm_xfree(ptr noundef nonnull %i.an) #8
+  call void @slurm_xfree(ptr noundef nonnull %i.an) #9
   %i.br = load i32, ptr %i.b, align 4             ; 2 uses
   %.not32 = icmp eq i32 %i.br, 0
   br i1 %.not32, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %._crit_edge
-  %i.bs = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.9, i32 noundef %i.br) #8 ; 0 uses
+  %i.bs = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.9, i32 noundef %i.br) #9 ; 0 uses
   %i.bt = load i32, ptr %i.b, align 4
   br label %bb.aq
 
 bb.af:                                            ; preds = %._crit_edge
   %i.bu = load i32, ptr @pmi_fd, align 4
-  %i.bv = call ptr @slurm_accept_msg_conn(i32 noundef %i.bu, ptr noundef nonnull %6) #8 ; 5 uses
+  %i.bv = call ptr @slurm_accept_msg_conn(i32 noundef %i.bu, ptr noundef nonnull %6) #9 ; 5 uses
   %.not33 = icmp eq ptr %i.bv, null
   br i1 %.not33, label %bb.ag, label %.preheader
 
 bb.ag:                                            ; preds = %bb.af
-  %i.bw = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.10) #8 ; 0 uses
-  %i.bx = tail call ptr @__errno_location() #9
+  %i.bw = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.10) #9 ; 0 uses
+  %i.bx = tail call ptr @__errno_location() #10
   %i.by = load i32, ptr %i.bx, align 4
   br label %bb.aq
 
 .preheader:                                       ; preds = %bb.af, %bb.ah
-  %i.bz = call i32 @slurm_receive_msg(ptr noundef nonnull %i.bv, ptr noundef nonnull %4, i32 noundef %.0) #8 ; 2 uses
+  %i.bz = call i32 @slurm_receive_msg(ptr noundef nonnull %i.bv, ptr noundef nonnull %4, i32 noundef %.0) #9 ; 2 uses
   store i32 %i.bz, ptr %i.b, align 4
   %.not34 = icmp eq i32 %i.bz, 0
   br i1 %.not34, label %bb.aj, label %bb.ah
 
 bb.ah:                                            ; preds = %.preheader
-  %i.ca = tail call ptr @__errno_location() #9    ; 2 uses
+  %i.ca = tail call ptr @__errno_location() #10   ; 2 uses
   %i.cb = load i32, ptr %i.ca, align 4
   %i.cc = icmp eq i32 %i.cb, 4
   br i1 %i.cc, label %.preheader, label %bb.ai, !llvm.loop !13
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.cd = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.11) #8 ; 0 uses
-  call void @conn_g_destroy(ptr noundef nonnull %i.bv, i1 noundef zeroext true) #8
+  %i.cd = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.11) #9 ; 0 uses
+  call void @conn_g_destroy(ptr noundef nonnull %i.bv, i1 noundef zeroext true) #9
   %i.ce = load i32, ptr %i.ca, align 4
   br label %bb.aq
 
@@ -619,7 +617,7 @@ bb.aj:                                            ; preds = %.preheader
   br i1 %.not35, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  call void @auth_g_destroy(ptr noundef nonnull %i.cg) #8
+  call void @auth_g_destroy(ptr noundef nonnull %i.cg) #9
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
@@ -629,22 +627,22 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %.not36, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.cj = call ptr @rpc_num2string(i16 noundef zeroext %i.ci) #8
-  %i.ck = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.12, ptr noundef %i.cj) #8 ; 0 uses
-  call void @conn_g_destroy(ptr noundef nonnull %i.bv, i1 noundef zeroext true) #8
+  %i.cj = call ptr @rpc_num2string(i16 noundef zeroext %i.ci) #9
+  %i.ck = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.12, ptr noundef %i.cj) #9 ; 0 uses
+  call void @conn_g_destroy(ptr noundef nonnull %i.bv, i1 noundef zeroext true) #9
   br label %bb.aq
 
 bb.an:                                            ; preds = %bb.al
-  %i.cl = call i32 @slurm_send_rc_msg(ptr noundef nonnull %4, i32 noundef 0) #8
+  %i.cl = call i32 @slurm_send_rc_msg(ptr noundef nonnull %4, i32 noundef 0) #9
   %i.cm = icmp slt i32 %i.cl, 0
   br i1 %i.cm, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  %i.cn = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13) #8 ; 0 uses
+  %i.cn = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13) #9 ; 0 uses
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
-  call void @conn_g_destroy(ptr noundef nonnull %i.bv, i1 noundef zeroext true) #8
+  call void @conn_g_destroy(ptr noundef nonnull %i.bv, i1 noundef zeroext true) #9
   %i.co = getelementptr inbounds nuw i8, ptr %4, i64 192
   %i.cp = load ptr, ptr %i.co, align 8            ; 2 uses
   store ptr %i.cp, ptr %0, align 8
@@ -653,13 +651,13 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 bb.aq:                                            ; preds = %bb.a, %bb.ap, %bb.am, %bb.ai, %bb.ag, %bb.ae, %bb.ab, %bb.o, %bb.l, %bb.e
   %.024 = phi i32 [ %i.by, %bb.ag ], [ -1, %bb.e ], [ -1, %bb.l ], [ -1, %bb.o ], [ -1, %bb.ab ], [ %i.bt, %bb.ae ], [ %i.ce, %bb.ai ], [ 1000, %bb.am ], [ %i.cq, %bb.ap ], [ 22, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   ret i32 %.024
 }
 
@@ -701,8 +699,8 @@ bb.a:
   %1 = alloca %struct.slurm_msg, align 8          ; 9 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = load i16, ptr %0, align 8                ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i16 0, ptr %0, align 8
   %.not = icmp eq i16 %i.b, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
@@ -726,8 +724,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   br i1 %i.k, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @slurm_msg_t_init(ptr noundef nonnull %1) #8
-  call void @slurm_msg_set_r_uid(ptr noundef nonnull %1, i32 noundef -1) #8
+  call void @slurm_msg_t_init(ptr noundef nonnull %1) #9
+  call void @slurm_msg_set_r_uid(ptr noundef nonnull %1, i32 noundef -1) #9
   store i16 7204, ptr %i.d, align 2
   store ptr %0, ptr %i.e, align 8
   %i.l = load ptr, ptr %i.c, align 8
@@ -739,8 +737,8 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load i16, ptr %i.p, align 4
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.s = load ptr, ptr %i.r, align 8
-  call void @slurm_set_addr(ptr noundef nonnull %1, i16 noundef zeroext %i.q, ptr noundef %i.s) #8
-  %i.t = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i32 noundef 0) #8
+  call void @slurm_set_addr(ptr noundef nonnull %1, i16 noundef zeroext %i.q, ptr noundef %i.s) #9
+  %i.t = call i32 @slurm_send_recv_rc_msg_only_one(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i32 noundef 0) #9
   %i.u = icmp slt i32 %i.t, 0
   br i1 %i.u, label %bb.d, label %._crit_edge27
 
@@ -753,7 +751,7 @@ bb.d:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.v, i64 %indvars.iv
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.y = load ptr, ptr %i.x, align 8
-  %i.z = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.18, ptr noundef %i.y) #8 ; 0 uses
+  %i.z = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.18, ptr noundef %i.y) #9 ; 0 uses
   store i32 1, ptr %i.a, align 4
   br label %bb.e
 
@@ -763,11 +761,11 @@ bb.e:                                             ; preds = %._crit_edge27, %bb.
   %i.ac = load ptr, ptr %i.c, align 8
   %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %indvars.iv
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  call void @slurm_xfree(ptr noundef nonnull %i.ae) #8
+  call void @slurm_xfree(ptr noundef nonnull %i.ae) #9
   %i.af = load ptr, ptr %i.c, align 8
   %i.ag = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %indvars.iv
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  call void @slurm_xfree(ptr noundef nonnull %i.ah) #8
+  call void @slurm_xfree(ptr noundef nonnull %i.ah) #9
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.b, %bb.e
@@ -779,16 +777,16 @@ bb.f:                                             ; preds = %bb.b, %bb.e
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %.1, %bb.f ]
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @slurm_xfree(ptr noundef nonnull %i.ai) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #8
+  call void @slurm_xfree(ptr noundef nonnull %i.ai) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
   ret i32 %.0.lcssa
 }
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @slurm_pmi_free_kvs_comm_set(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  tail call void @slurm_free_kvs_comm_set(ptr noundef %0) #8
+  tail call void @slurm_free_kvs_comm_set(ptr noundef %0) #9
   ret void
 }
 
@@ -802,7 +800,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @close(i32 noundef %i.a) #8 ; 0 uses
+  %i.c = tail call i32 @close(i32 noundef %i.a) #9 ; 0 uses
   store i32 -1, ptr @pmi_fd, align 4
   br label %bb.c
 
@@ -817,7 +815,7 @@ declare i32 @close(i32 noundef) local_unnamed_addr #2
 define dso_local i32 @slurm_pmi_kill_job_step(i32 noundef %0, i32 noundef %1, i16 noundef zeroext %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.slurm_step_id_t, align 8    ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   store i64 0, ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %0, ptr %i.a, align 8
@@ -827,8 +825,8 @@ bb.a:
   store i32 %1, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 20
   store i32 0, ptr %i.d, align 4
-  %i.e = call i32 @slurm_kill_job_step(ptr noundef nonnull %3, i16 noundef zeroext %2, i16 noundef zeroext 0) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
+  %i.e = call i32 @slurm_kill_job_step(ptr noundef nonnull %3, i16 noundef zeroext %2, i16 noundef zeroext 0) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   ret i32 %i.e
 }
 
@@ -847,6 +845,9 @@ declare i32 @usleep(i32 noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #7
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #8
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -855,8 +856,9 @@ attributes #4 = { nofree nounwind "frame-pointer"="all" "no-trapping-math"="true
 attributes #5 = { mustprogress nofree nosync nounwind willreturn memory(none) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nocallback nofree nounwind willreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nounwind }
-attributes #9 = { nounwind willreturn memory(none) }
+attributes #8 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nounwind }
+attributes #10 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!1, !2, !3, !4, !5, !6, !7}
 !llvm.ident = !{!8}

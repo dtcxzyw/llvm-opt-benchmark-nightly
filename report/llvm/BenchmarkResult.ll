@@ -204,14 +204,12 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6
   %.sroa.08.127.i.i.i = getelementptr i8, ptr %i.eb, i64 %.pn.i.i.i ; 2 uses
   %.sroa.0.0.copyload1.i.i.i = load ptr, ptr %.sroa.08.127.i.i.i, align 8, !tbaa !98 ; 3 uses
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.127.i.i.i, i64 8
-  %.sroa.5.0.copyload.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !tbaa !99 ; 6 uses
-  %i.ey = load i64, ptr %i.ba, align 8, !tbaa !139 ; 3 uses
-  %8 = icmp ugt i64 %.sroa.5.0.copyload.i.i.i, %i.ey
-  %9 = sub nuw i64 %.sroa.5.0.copyload.i.i.i, %i.ey
-  %i.ez = sub nuw i64 %i.ey, %.sroa.5.0.copyload.i.i.i
-  %10 = select i1 %8, i64 %9, i64 %i.ez
+  %.sroa.5.0.copyload.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !tbaa !99 ; 4 uses
+  %i.ey = load i64, ptr %i.ba, align 8, !tbaa !139
+  %i.ez = sub nsw i64 %.sroa.5.0.copyload.i.i.i, %i.ey
+  %8 = call noundef i64 @llvm.abs.i64(i64 %i.ez, i1 true)
   %i.fa = zext nneg i32 %.028.i.i.i to i64
-  %.not.i8.i.i = icmp ult i64 %10, %i.fa
+  %.not.i8.i.i = icmp samesign ult i64 %8, %i.fa
   br i1 %.not.i8.i.i, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %.lr.ph.i.i.i
@@ -613,6 +611,9 @@ declare i64 @llvm.smin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #21
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #14
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

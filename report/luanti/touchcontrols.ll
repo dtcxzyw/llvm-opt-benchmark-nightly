@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %i.dg = load i64, ptr %i.df, align 8, !tbaa !232 ; 3 uses
+  %i.dg = load i64, ptr %i.df, align 8, !tbaa !232
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.dh = call i32 @clock_gettime(i32 noundef 4, ptr noundef nonnull %2) #22 ; 0 uses
   %i.di = load i64, ptr %2, align 8, !tbaa !230
@@ -213,16 +213,14 @@ bb.v:                                             ; preds = %bb.u
   %i.dk = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dl = load i64, ptr %i.dk, align 8, !tbaa !231
   %i.dm = udiv i64 %i.dl, 1000000
-  %8 = add i64 %i.dm, %i.dj                       ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
-  %.not.i17 = icmp ult i64 %8, %i.dg
-  %i.dn = sub nuw i64 %8, %i.dg
-  %9 = sub nuw i64 %i.dg, %8
-  %.0.i = select i1 %.not.i17, i64 %9, i64 %i.dn
+  %i.dn = sub i64 %i.dj, %i.dg
+  %8 = add i64 %i.dn, %i.dm
+  %.0.i = call noundef i64 @llvm.abs.i64(i64 %8, i1 true)
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.dp = load i16, ptr %i.do, align 8, !tbaa !179
   %i.dq = zext i16 %i.dp to i64
-  %i.dr = icmp ugt i64 %.0.i, %i.dq
+  %i.dr = icmp samesign ugt i64 %.0.i, %i.dq
   br i1 %i.dr, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
@@ -624,6 +622,9 @@ declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #21
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #12

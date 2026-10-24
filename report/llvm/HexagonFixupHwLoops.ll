@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %._crit_edge53.i, %.
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.q, %.lr.ph52.i
-  %.350.i = phi i32 [ %i.bb, %.lr.ph52.i ], [ %.4.i, %bb.q ] ; 5 uses
+  %.350.i = phi i32 [ %i.bb, %.lr.ph52.i ], [ %.4.i, %bb.q ] ; 3 uses
   %.13349.i = phi i1 [ %.03257.i, %.lr.ph52.i ], [ %.436.i, %bb.q ] ; 2 uses
   %.sroa.03.048.i = phi ptr [ %i.bd, %.lr.ph52.i ], [ %.sroa.03.3.i, %bb.q ] ; 33 uses
   %i.bg = call noundef i32 @_ZNK4llvm16HexagonInstrInfo7getSizeERKNS_12MachineInstrE(ptr noundef nonnull align 8 dereferenceable(440) %i.j, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.03.048.i) #17
@@ -384,13 +384,11 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoI
   br label %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPS9_bEOT_DpOT0_.exit.i
 
 _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPS9_bEOT_DpOT0_.exit.i: ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPS9_bEOT_DpOT0_.exit.loopexit.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E22findBucketForInsertionIS4_EEPS9_RKT_SD_.exit.i.i
-  %i.fl = phi i32 [ 0, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E22findBucketForInsertionIS4_EEPS9_RKT_SD_.exit.i.i ], [ %.pre.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPS9_bEOT_DpOT0_.exit.loopexit.i ] ; 3 uses
-  %3 = icmp ugt i32 %.350.i, %i.fl
-  %4 = sub nuw i32 %.350.i, %i.fl
-  %i.fm = sub nuw i32 %i.fl, %.350.i
-  %5 = select i1 %3, i32 %4, i32 %i.fm
+  %i.fl = phi i32 [ 0, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E22findBucketForInsertionIS4_EEPS9_RKT_SD_.exit.i.i ], [ %.pre.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPS9_bEOT_DpOT0_.exit.loopexit.i ]
+  %i.fm = sub nsw i32 %.350.i, %i.fl
+  %3 = call noundef i32 @llvm.abs.i32(i32 %i.fm, i1 true)
   %i.fn = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL12MaxLoopRange, i64 120), align 8, !tbaa !49
-  %i.fo = icmp ugt i32 %5, %i.fn
+  %i.fo = icmp ugt i32 %3, %i.fn
   br i1 %i.fo, label %switch.lookup, label %bb.o
 
 switch.lookup:                                    ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPS9_bEOT_DpOT0_.exit.i
@@ -792,6 +790,9 @@ declare i32 @llvm.umax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #12
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

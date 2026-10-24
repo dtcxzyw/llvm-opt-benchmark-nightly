@@ -183,7 +183,7 @@ tcp_is_cwnd_limited.exit.thread:                  ; preds = %bb.a
   br i1 %i.g, label %tcp_is_cwnd_limited.exit.thread.thread, label %bb.c
 
 tcp_is_cwnd_limited.exit.thread.thread:           ; preds = %tcp_is_cwnd_limited.exit, %tcp_is_cwnd_limited.exit.thread
-  %i.l = tail call i32 @tcp_slow_start(ptr noundef %0, i32 noundef %2) #9 ; 2 uses
+  %i.l = tail call i32 @tcp_slow_start(ptr noundef %0, i32 noundef %2) #10 ; 2 uses
   %.not = icmp eq i32 %i.l, 0
   br i1 %.not, label %tcp_is_cwnd_limited.exit.thread20, label %._crit_edge
 
@@ -267,7 +267,7 @@ fls64.exit.i.i:                                   ; preds = %bb.h
   %i.at = sub nuw i32 %i.ap, %.val
   %i.au = zext i32 %i.at to i64
   %i.av = mul i64 %i.as, %i.au                    ; 4 uses
-  %i.aw = tail call i32 asm "bsrq $1,${0:q}", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.av, i32 -1) #10, !srcloc !11
+  %i.aw = tail call i32 asm "bsrq $1,${0:q}", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.av, i32 -1) #11, !srcloc !11
   %i.ax = add i32 %i.aw, 1                        ; 2 uses
   %i.ay = icmp ult i32 %i.ax, 7
   br i1 %i.ay, label %bb.j, label %bb.k
@@ -323,17 +323,16 @@ usecs_to_jiffies.exit.i:                          ; preds = %cubic_root.exit.i, 
   %i.ci = sext i32 %i.ch to i64
   %i.cj = getelementptr i8, ptr %0, i64 1328
   %i.ck = load i32, ptr %i.cj, align 4
-  %i.cl = tail call i64 @__usecs_to_jiffies(i32 noundef %i.ck) #9
+  %i.cl = tail call i64 @__usecs_to_jiffies(i32 noundef %i.ck) #10
   %i.cm = add i64 %i.cl, %i.ci
   %i.cn = shl i64 %i.cm, 10
-  %i.co = udiv i64 %i.cn, 1000                    ; 3 uses
+  %i.co = udiv i64 %i.cn, 1000                    ; 2 uses
   %i.cp = getelementptr i8, ptr %0, i64 1324
   %i.cq = load i32, ptr %i.cp, align 4
-  %i.cr = zext i32 %i.cq to i64                   ; 3 uses
-  %i.cs = icmp samesign ult i64 %i.co, %i.cr      ; 2 uses
-  %3 = sub nuw nsw i64 %i.cr, %i.co
-  %i.ct = sub nuw nsw i64 %i.co, %i.cr
-  %.084.i = select i1 %i.cs, i64 %3, i64 %i.ct    ; 3 uses
+  %i.cr = zext i32 %i.cq to i64                   ; 2 uses
+  %i.cs = icmp samesign ult i64 %i.co, %i.cr
+  %i.ct = sub nsw i64 %i.co, %i.cr
+  %.084.i = tail call i64 @llvm.abs.i64(i64 %i.ct, i1 true) ; 3 uses
   %i.cu = load i32, ptr @cube_rtt_scale, align 4
   %i.cv = zext i32 %i.cu to i64
   %i.cw = mul i64 %.084.i, %i.cv
@@ -420,7 +419,7 @@ bb.r:                                             ; preds = %bb.q, %._crit_edge1
 
 bictcp_update.exit:                               ; preds = %.bictcp_update.exit_crit_edge, %bb.r
   %i.ed = phi i32 [ %.pre, %.bictcp_update.exit_crit_edge ], [ %i.ec, %bb.r ]
-  tail call void @tcp_cong_avoid_ai(ptr noundef %0, i32 noundef %i.ed, i32 noundef %.0) #9
+  tail call void @tcp_cong_avoid_ai(ptr noundef %0, i32 noundef %i.ed, i32 noundef %.0) #10
   br label %tcp_is_cwnd_limited.exit.thread20
 
 tcp_is_cwnd_limited.exit.thread20:                ; preds = %bb.b, %tcp_is_cwnd_limited.exit.thread.thread, %tcp_is_cwnd_limited.exit, %bictcp_update.exit
@@ -628,14 +627,14 @@ bb.o:                                             ; preds = %hystart_ack_delay.e
   %i.bl = getelementptr i8, ptr %.val66.i, i64 744
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = getelementptr i8, ptr %i.bm, i64 824    ; 2 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.bn, ptr elementtype(i64) %i.bn) #11, !srcloc !13
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.bn, ptr elementtype(i64) %i.bn) #12, !srcloc !13
   %.val61.i = load i32, ptr %i.p, align 4
   %i.bo = zext i32 %.val61.i to i64
   %.val65.i = load ptr, ptr %i.bk, align 16
   %i.bp = getelementptr i8, ptr %.val65.i, i64 744
   %i.bq = load ptr, ptr %i.bp, align 8
   %i.br = getelementptr i8, ptr %i.bq, i64 832    ; 2 uses
-  tail call void asm sideeffect "addq $1, %gs:$0", "=*m,re,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.br, i64 %i.bo, ptr elementtype(i64) %i.br) #11, !srcloc !14
+  tail call void asm sideeffect "addq $1, %gs:$0", "=*m,re,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.br, i64 %i.bo, ptr elementtype(i64) %i.br) #12, !srcloc !14
   %.val60.i = load i32, ptr %i.p, align 4
   store volatile i32 %.val60.i, ptr %i.q, align 4
   br label %bb.p
@@ -685,14 +684,14 @@ bb.v:                                             ; preds = %bb.u
   %i.ck = getelementptr i8, ptr %.val64.i, i64 744
   %i.cl = load ptr, ptr %i.ck, align 8
   %i.cm = getelementptr i8, ptr %i.cl, i64 840    ; 2 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.cm, ptr elementtype(i64) %i.cm) #11, !srcloc !15
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.cm, ptr elementtype(i64) %i.cm) #12, !srcloc !15
   %.val59.i = load i32, ptr %i.p, align 4
   %i.cn = zext i32 %.val59.i to i64
   %.val63.i = load ptr, ptr %i.cj, align 16
   %i.co = getelementptr i8, ptr %.val63.i, i64 744
   %i.cp = load ptr, ptr %i.co, align 8
   %i.cq = getelementptr i8, ptr %i.cp, i64 848    ; 2 uses
-  tail call void asm sideeffect "addq $1, %gs:$0", "=*m,re,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.cq, i64 %i.cn, ptr elementtype(i64) %i.cq) #11, !srcloc !16
+  tail call void asm sideeffect "addq $1, %gs:$0", "=*m,re,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.cq, i64 %i.cn, ptr elementtype(i64) %i.cq) #12, !srcloc !16
   %.val58.i = load i32, ptr %i.p, align 4
   store volatile i32 %.val58.i, ptr %i.q, align 4
   br label %hystart_update.exit
@@ -704,7 +703,7 @@ hystart_update.exit:                              ; preds = %bb.v, %bb.u, %bb.t,
 ; Function Attrs: cold fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid optsize sspstrong
 define internal void @cubictcp_unregister() #6 section ".exit.text" align 16 prefalign(16) {
 bb.a:
-  tail call void @tcp_unregister_congestion_control(ptr noundef @cubictcp) #9
+  tail call void @tcp_unregister_congestion_control(ptr noundef @cubictcp) #10
   ret void
 }
 
@@ -727,7 +726,7 @@ bb.a:
   %i.i = zext i32 %i.h to i64
   %i.j = udiv i64 1099511627776, %i.i
   store i64 %i.j, ptr @cube_factor, align 8
-  %i.k = tail call i32 @tcp_register_congestion_control(ptr noundef @cubictcp) #9
+  %i.k = tail call i32 @tcp_register_congestion_control(ptr noundef @cubictcp) #10
   ret i32 %i.k
 }
 
@@ -752,6 +751,9 @@ declare i32 @llvm.umax.i32(i32, i32) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #9
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8
 
@@ -764,9 +766,10 @@ attributes #5 = { fn_ret_thunk_extern mustprogress nofree noinline norecurse nor
 attributes #6 = { cold fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid optsize sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { noredzone nounwind "no-builtin-wcslen" }
-attributes #10 = { nounwind memory(none) }
-attributes #11 = { nounwind }
+attributes #9 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { noredzone nounwind "no-builtin-wcslen" }
+attributes #11 = { nounwind memory(none) }
+attributes #12 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6, !7, !8}
 !llvm.ident = !{!9}

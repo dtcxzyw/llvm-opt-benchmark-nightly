@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %faulthandler__stack_overflow_impl.exit
 
 faulthandler__stack_overflow_impl.exit:           ; preds = %bb.a, %bb.b
-  %i.e = ptrtoint ptr %i.a to i64                 ; 5 uses
+  %i.e = ptrtoint ptr %i.a to i64                 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   store i64 0, ptr %i.a, align 8, !tbaa !211
   %i.f = icmp ugt ptr %i.a, inttoptr (i64 104857599 to ptr)
@@ -213,11 +213,9 @@ faulthandler__stack_overflow_impl.exit:           ; preds = %bb.a, %bb.b
   %i.h = icmp ult ptr %i.a, inttoptr (i64 -104857600 to ptr)
   %i.i = add nuw i64 %i.e, 104857600
   %.0.i = select i1 %i.h, i64 %i.i, i64 -1
-  %i.j = call fastcc i64 @stack_overflow(i64 noundef %.013.i, i64 noundef %.0.i, ptr noundef %i.a) ; 3 uses
-  %3 = icmp ugt i64 %i.j, %i.e
-  %4 = sub nuw i64 %i.j, %i.e
-  %i.k = sub nuw i64 %i.e, %i.j
-  %.014.i = select i1 %3, i64 %4, i64 %i.k
+  %i.j = call fastcc i64 @stack_overflow(i64 noundef %.013.i, i64 noundef %.0.i, ptr noundef %i.a)
+  %i.k = sub nsw i64 %i.j, %i.e
+  %.014.i = call i64 @llvm.abs.i64(i64 %i.k, i1 true)
   %i.l = load ptr, ptr @PyExc_RuntimeError, align 8, !tbaa !195
   %i.m = load i64, ptr %i.a, align 8, !tbaa !211
   %i.n = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.l, ptr noundef nonnull @.str.51, i64 noundef %.014.i, i64 noundef %i.m) #16 ; 0 uses
@@ -619,6 +617,9 @@ bb.a:
 declare ptr @PyImport_ImportModuleAttrString(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 declare ptr @PyObject_CallNoArgs(ptr noundef) local_unnamed_addr #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

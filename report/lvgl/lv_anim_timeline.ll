@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define nonnull ptr @lv_anim_timeline_create() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @lv_malloc_zeroed(i64 noundef 40) #6 ; 2 uses
+  %i.a = tail call ptr @lv_malloc_zeroed(i64 noundef 40) #7 ; 2 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %.preheader, label %bb.b
 
@@ -41,10 +41,10 @@ bb.a:
   br label %.preheader
 
 lv_anim_timeline_pause.exit:                      ; preds = %bb.a
-  %i.a = tail call zeroext i1 @lv_anim_delete(ptr noundef nonnull %0, ptr noundef nonnull @anim_timeline_exec_cb) #6 ; 0 uses
+  %i.a = tail call zeroext i1 @lv_anim_delete(ptr noundef nonnull %0, ptr noundef nonnull @anim_timeline_exec_cb) #7 ; 0 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !13
-  tail call void @lv_free(ptr noundef %i.b) #6
-  tail call void @lv_free(ptr noundef nonnull %0) #6
+  tail call void @lv_free(ptr noundef %i.b) #7
+  tail call void @lv_free(ptr noundef nonnull %0) #7
   ret void
 }
 
@@ -58,7 +58,7 @@ bb.a:
   br label %.preheader
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call zeroext i1 @lv_anim_delete(ptr noundef nonnull %0, ptr noundef nonnull @anim_timeline_exec_cb) #6 ; 0 uses
+  %i.a = tail call zeroext i1 @lv_anim_delete(ptr noundef nonnull %0, ptr noundef nonnull @anim_timeline_exec_cb) #7 ; 0 uses
   ret void
 }
 
@@ -81,7 +81,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %0, align 8, !tbaa !13
   %i.e = zext i32 %i.c to i64
   %i.f = mul nuw nsw i64 %i.e, 144
-  %i.g = tail call ptr @lv_realloc(ptr noundef %i.d, i64 noundef %i.f) #6 ; 3 uses
+  %i.g = tail call ptr @lv_realloc(ptr noundef %i.d, i64 noundef %i.f) #7 ; 3 uses
   store ptr %i.g, ptr %0, align 8, !tbaa !13
   %.not12 = icmp eq ptr %i.g, null
   br i1 %.not12, label %.preheader13, label %bb.c
@@ -135,7 +135,7 @@ bb.a:
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 3 uses
   %.01935.i = phi i32 [ 0, %.lr.ph.preheader.i ], [ %spec.select.i, %bb.b ]
   %i.d = getelementptr inbounds nuw [144 x i8], ptr %i.c, i64 %indvars.iv.i
-  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #6 ; 2 uses
+  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #7 ; 2 uses
   %.not29.i = icmp eq i32 %i.e, -1
   br i1 %.not29.i, label %lv_anim_timeline_get_playtime.exit, label %bb.b
 
@@ -159,7 +159,7 @@ lv_anim_timeline_get_playtime.exit:               ; preds = %.lr.ph.i, %bb.b, %.
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.p = load i32, ptr %i.o, align 4, !tbaa !24
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !25   ; 6 uses
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !25   ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = load i8, ptr %i.s, align 8, !tbaa !26, !range !27, !noundef !28 ; 2 uses
   %i.u = trunc nuw i8 %i.t to i1                  ; 2 uses
@@ -224,23 +224,21 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %.sink.split, %.loopexit.thread50, %.loopexit.thread
   %.0 = phi i32 [ 0, %.loopexit.thread50 ], [ 0, %.loopexit.thread ], [ %i.as, %.sink.split ]
-  %i.at = select i1 %i.u, i32 0, i32 %spec.select31.i ; 4 uses
-  %2 = icmp ugt i32 %i.at, %i.r
-  %3 = sub nuw i32 %i.at, %i.r
-  %i.au = sub nuw i32 %i.r, %i.at
-  %4 = select i1 %2, i32 %3, i32 %i.au
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
-  call void @lv_anim_init(ptr noundef nonnull %1) #6
-  call void @lv_anim_set_var(ptr noundef nonnull %1, ptr noundef nonnull %0) #6
-  call void @lv_anim_set_exec_cb(ptr noundef nonnull %1, ptr noundef nonnull @anim_timeline_exec_cb) #6
-  call void @lv_anim_set_values(ptr noundef nonnull %1, i32 noundef %i.r, i32 noundef %i.at) #6
-  call void @lv_anim_set_duration(ptr noundef nonnull %1, i32 noundef %4) #6
-  call void @lv_anim_set_delay(ptr noundef nonnull %1, i32 noundef %.0) #6
-  call void @lv_anim_set_path_cb(ptr noundef nonnull %1, ptr noundef nonnull @anim_timeline_path_cb) #6
-  call void @lv_anim_set_repeat_count(ptr noundef nonnull %1, i32 noundef %i.n) #6
-  call void @lv_anim_set_repeat_delay(ptr noundef nonnull %1, i32 noundef %i.p) #6
-  %i.av = call ptr @lv_anim_start(ptr noundef nonnull %1) #6 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
+  %i.at = select i1 %i.u, i32 0, i32 %spec.select31.i ; 2 uses
+  %i.au = sub nsw i32 %i.at, %i.r
+  %2 = tail call i32 @llvm.abs.i32(i32 %i.au, i1 true)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
+  call void @lv_anim_init(ptr noundef nonnull %1) #7
+  call void @lv_anim_set_var(ptr noundef nonnull %1, ptr noundef nonnull %0) #7
+  call void @lv_anim_set_exec_cb(ptr noundef nonnull %1, ptr noundef nonnull @anim_timeline_exec_cb) #7
+  call void @lv_anim_set_values(ptr noundef nonnull %1, i32 noundef %i.r, i32 noundef %i.at) #7
+  call void @lv_anim_set_duration(ptr noundef nonnull %1, i32 noundef %2) #7
+  call void @lv_anim_set_delay(ptr noundef nonnull %1, i32 noundef %.0) #7
+  call void @lv_anim_set_path_cb(ptr noundef nonnull %1, ptr noundef nonnull @anim_timeline_path_cb) #7
+  call void @lv_anim_set_repeat_count(ptr noundef nonnull %1, i32 noundef %i.n) #7
+  call void @lv_anim_set_repeat_delay(ptr noundef nonnull %1, i32 noundef %i.p) #7
+  %i.av = call ptr @lv_anim_start(ptr noundef nonnull %1) #7 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
   ret i32 %spec.select31.i
 }
 
@@ -268,7 +266,7 @@ bb.a:
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
   %.01935 = phi i32 [ 0, %.lr.ph.preheader ], [ %spec.select, %bb.b ]
   %i.d = getelementptr inbounds nuw [144 x i8], ptr %i.c, i64 %indvars.iv
-  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #6 ; 2 uses
+  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #7 ; 2 uses
   %.not29 = icmp eq i32 %i.e, -1
   br i1 %.not29, label %.thread, label %bb.b
 
@@ -322,7 +320,7 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 8, !tbaa !32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.h = load i32, ptr %i.g, align 8, !tbaa !33
-  %i.i = tail call i32 @lv_map(i32 noundef %i.b, i32 noundef 0, i32 noundef %i.d, i32 noundef %i.f, i32 noundef %i.h) #6
+  %i.i = tail call i32 @lv_map(i32 noundef %i.b, i32 noundef 0, i32 noundef %i.d, i32 noundef %i.f, i32 noundef %i.h) #7
   ret i32 %i.i
 }
 
@@ -419,7 +417,7 @@ bb.a:
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 3 uses
   %.01935.i = phi i32 [ 0, %.lr.ph.preheader.i ], [ %spec.select.i, %bb.b ]
   %i.d = getelementptr inbounds nuw [144 x i8], ptr %i.c, i64 %indvars.iv.i
-  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #6 ; 2 uses
+  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #7 ; 2 uses
   %.not29.i = icmp eq i32 %i.e, -1
   br i1 %.not29.i, label %lv_anim_timeline_get_playtime.exit, label %bb.b
 
@@ -439,7 +437,7 @@ bb.b:                                             ; preds = %.lr.ph.i
 lv_anim_timeline_get_playtime.exit:               ; preds = %.lr.ph.i, %bb.b, %.preheader33.i
   %spec.select31.i = phi i32 [ 0, %.preheader33.i ], [ %spec.select.i, %bb.b ], [ -1, %.lr.ph.i ]
   %i.m = zext i16 %1 to i32
-  %i.n = tail call i32 @lv_map(i32 noundef %i.m, i32 noundef 0, i32 noundef 65535, i32 noundef 0, i32 noundef %spec.select31.i) #6
+  %i.n = tail call i32 @lv_map(i32 noundef %i.m, i32 noundef 0, i32 noundef 65535, i32 noundef 0, i32 noundef %spec.select31.i) #7
   tail call fastcc void @anim_timeline_set_act_time(ptr noundef nonnull %0, i32 noundef %i.n)
   ret void
 }
@@ -451,7 +449,7 @@ define internal fastcc void @anim_timeline_set_act_time(ptr noundef initializes(
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %1, ptr %i.a, align 4, !tbaa !25
-  %i.b = tail call ptr @lv_anim_get(ptr noundef %0, ptr noundef nonnull @anim_timeline_exec_cb) #6
+  %i.b = tail call ptr @lv_anim_get(ptr noundef %0, ptr noundef nonnull @anim_timeline_exec_cb) #7
   %.not = icmp eq ptr %i.b, null                  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !14
@@ -503,7 +501,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not113, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void %i.t(ptr noundef nonnull %i.g) #6
+  tail call void %i.t(ptr noundef nonnull %i.g) #7
   %.pre140 = load i8, ptr %i.p, align 4
   br label %bb.i
 
@@ -528,7 +526,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ab = load ptr, ptr %i.g, align 8, !tbaa !40
-  tail call void %i.aa(ptr noundef %i.ab, i32 noundef %i.y) #6, !inline_history !36
+  tail call void %i.aa(ptr noundef %i.ab, i32 noundef %i.y) #7, !inline_history !36
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -538,7 +536,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %.not8.i, label %exec_anim.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  tail call void %i.ad(ptr noundef nonnull %i.g, i32 noundef %i.y) #6, !inline_history !36
+  tail call void %i.ad(ptr noundef nonnull %i.g, i32 noundef %i.y) #7, !inline_history !36
   br label %exec_anim.exit
 
 exec_anim.exit:                                   ; preds = %bb.n, %bb.m
@@ -560,7 +558,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not115, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  tail call void %i.ak(ptr noundef nonnull %i.g) #6
+  tail call void %i.ak(ptr noundef nonnull %i.g) #7
   %.pre141 = load i8, ptr %i.ag, align 4
   br label %bb.r
 
@@ -599,7 +597,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not107, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  tail call void %i.av(ptr noundef nonnull %i.g) #6
+  tail call void %i.av(ptr noundef nonnull %i.g) #7
   %.pre = load i8, ptr %i.ar, align 4
   br label %bb.y
 
@@ -612,7 +610,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
   store i32 %i.ay, ptr %i.az, align 8, !tbaa !30
   %i.ba = getelementptr inbounds nuw i8, ptr %i.g, i64 64
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !43
-  %i.bc = tail call i32 %i.bb(ptr noundef nonnull %i.g) #6 ; 2 uses
+  %i.bc = tail call i32 %i.bb(ptr noundef nonnull %i.g) #7 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !39 ; 2 uses
   %.not.i120 = icmp eq ptr %i.be, null
@@ -620,7 +618,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
 
 bb.z:                                             ; preds = %bb.y
   %i.bf = load ptr, ptr %i.g, align 8, !tbaa !40
-  tail call void %i.be(ptr noundef %i.bf, i32 noundef %i.bc) #6, !inline_history !36
+  tail call void %i.be(ptr noundef %i.bf, i32 noundef %i.bc) #7, !inline_history !36
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
@@ -630,7 +628,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not8.i121, label %exec_anim.exit122, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  tail call void %i.bh(ptr noundef nonnull %i.g, i32 noundef %i.bc) #6, !inline_history !36
+  tail call void %i.bh(ptr noundef nonnull %i.g, i32 noundef %i.bc) #7, !inline_history !36
   br label %exec_anim.exit122
 
 exec_anim.exit122:                                ; preds = %bb.ab, %bb.aa
@@ -655,7 +653,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not111, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  tail call void %i.bo(ptr noundef nonnull %i.g) #6
+  tail call void %i.bo(ptr noundef nonnull %i.g) #7
   %.pre139 = load i8, ptr %i.ar, align 4
   br label %bb.ag
 
@@ -689,7 +687,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not109, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  tail call void %i.by(ptr noundef nonnull %i.g) #6
+  tail call void %i.by(ptr noundef nonnull %i.g) #7
   %.pre138 = load i8, ptr %i.ar, align 4
   br label %bb.am
 
@@ -737,7 +735,7 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.not103, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  tail call void %i.ck(ptr noundef nonnull %i.g) #6
+  tail call void %i.ck(ptr noundef nonnull %i.g) #7
   %.pre143 = load i8, ptr %i.cf, align 4
   br label %bb.at
 
@@ -758,7 +756,7 @@ bb.au:                                            ; preds = %bb.ap, %bb.at
 
 bb.av:                                            ; preds = %bb.au
   %i.cr = load ptr, ptr %i.g, align 8, !tbaa !40
-  tail call void %i.cq(ptr noundef %i.cr, i32 noundef %i.co) #6, !inline_history !36
+  tail call void %i.cq(ptr noundef %i.cr, i32 noundef %i.co) #7, !inline_history !36
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
@@ -768,7 +766,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   br i1 %.not8.i124, label %exec_anim.exit125, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  tail call void %i.ct(ptr noundef nonnull %i.g, i32 noundef %i.co) #6, !inline_history !36
+  tail call void %i.ct(ptr noundef nonnull %i.g, i32 noundef %i.co) #7, !inline_history !36
   br label %exec_anim.exit125
 
 exec_anim.exit125:                                ; preds = %bb.ax, %bb.aw
@@ -795,7 +793,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not105, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  tail call void %i.db(ptr noundef nonnull %i.g) #6
+  tail call void %i.db(ptr noundef nonnull %i.g) #7
   %.pre144 = load i8, ptr %i.cw, align 4
   br label %bb.bc
 
@@ -815,7 +813,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.
 
 bb.bd:                                            ; preds = %.critedge
   %i.di = load ptr, ptr %i.g, align 8, !tbaa !40
-  tail call void %i.dh(ptr noundef %i.di, i32 noundef %i.df) #6, !inline_history !36
+  tail call void %i.dh(ptr noundef %i.di, i32 noundef %i.df) #7, !inline_history !36
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %.critedge
@@ -825,7 +823,7 @@ bb.be:                                            ; preds = %bb.bd, %.critedge
   br i1 %.not8.i127, label %exec_anim.exit128, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
-  tail call void %i.dk(ptr noundef nonnull %i.g, i32 noundef %i.df) #6, !inline_history !36
+  tail call void %i.dk(ptr noundef nonnull %i.g, i32 noundef %i.df) #7, !inline_history !36
   br label %exec_anim.exit128
 
 .critedge117:                                     ; preds = %bb.u
@@ -834,7 +832,7 @@ bb.bf:                                            ; preds = %bb.be
   store i32 %i.dl, ptr %i.dm, align 8, !tbaa !30
   %i.dn = getelementptr inbounds nuw i8, ptr %i.g, i64 64
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !43
-  %i.dp = tail call i32 %i.do(ptr noundef nonnull %i.g) #6 ; 2 uses
+  %i.dp = tail call i32 %i.do(ptr noundef nonnull %i.g) #7 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !39 ; 2 uses
   %.not.i129 = icmp eq ptr %i.dr, null
@@ -842,7 +840,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %.critedge117
   %i.ds = load ptr, ptr %i.g, align 8, !tbaa !40
-  tail call void %i.dr(ptr noundef %i.ds, i32 noundef %i.dp) #6, !inline_history !36
+  tail call void %i.dr(ptr noundef %i.ds, i32 noundef %i.dp) #7, !inline_history !36
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %.critedge117
@@ -852,7 +850,7 @@ bb.bh:                                            ; preds = %bb.bg, %.critedge11
   br i1 %.not8.i130, label %exec_anim.exit128, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  tail call void %i.du(ptr noundef nonnull %i.g, i32 noundef %i.dp) #6, !inline_history !36
+  tail call void %i.du(ptr noundef nonnull %i.g, i32 noundef %i.dp) #7, !inline_history !36
   br label %exec_anim.exit128
 
 .critedge119:                                     ; preds = %.thread.thread
@@ -865,7 +863,7 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %.critedge119
   %i.dz = load ptr, ptr %i.g, align 8, !tbaa !40
-  tail call void %i.dy(ptr noundef %i.dz, i32 noundef %i.dw) #6, !inline_history !36
+  tail call void %i.dy(ptr noundef %i.dz, i32 noundef %i.dw) #7, !inline_history !36
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %.critedge119
@@ -875,7 +873,7 @@ bb.bk:                                            ; preds = %bb.bj, %.critedge11
   br i1 %.not8.i133, label %exec_anim.exit128, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
-  tail call void %i.eb(ptr noundef nonnull %i.g, i32 noundef %i.dw) #6, !inline_history !36
+  tail call void %i.eb(ptr noundef nonnull %i.g, i32 noundef %i.dw) #7, !inline_history !36
   br label %exec_anim.exit128
 
 exec_anim.exit128:                                ; preds = %bb.bl, %bb.bk, %bb.bi, %bb.bh, %bb.bf, %bb.be, %bb.ah, %bb.ag, %bb.an, %bb.am, %bb.bc, %bb.ay, %.thread, %bb.s, %bb.r
@@ -958,7 +956,7 @@ bb.a:
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 3 uses
   %.01935.i = phi i32 [ 0, %.lr.ph.preheader.i ], [ %spec.select.i, %bb.b ]
   %i.d = getelementptr inbounds nuw [144 x i8], ptr %i.c, i64 %indvars.iv.i
-  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #6 ; 2 uses
+  %i.e = tail call i32 @lv_anim_get_playtime(ptr noundef %i.d) #7 ; 2 uses
   %.not29.i = icmp eq i32 %i.e, -1
   br i1 %.not29.i, label %lv_anim_timeline_get_playtime.exit, label %bb.b
 
@@ -979,7 +977,7 @@ lv_anim_timeline_get_playtime.exit:               ; preds = %.lr.ph.i, %bb.b, %.
   %spec.select31.i = phi i32 [ 0, %.preheader33.i ], [ %spec.select.i, %bb.b ], [ -1, %.lr.ph.i ]
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.n = load i32, ptr %i.m, align 4, !tbaa !25
-  %i.o = tail call i32 @lv_map(i32 noundef %i.n, i32 noundef 0, i32 noundef %spec.select31.i, i32 noundef 0, i32 noundef 65535) #6
+  %i.o = tail call i32 @lv_map(i32 noundef %i.n, i32 noundef 0, i32 noundef %spec.select31.i, i32 noundef 0, i32 noundef 65535) #7
   %i.p = trunc i32 %i.o to i16
   ret i16 %i.p
 }
@@ -1059,7 +1057,7 @@ bb.a:
   store i32 %i.j, ptr %i.c, align 8, !tbaa !14
   %i.k = zext i32 %i.j to i64
   %i.l = mul nuw nsw i64 %i.k, 144
-  %i.m = tail call ptr @lv_realloc(ptr noundef %i.d, i64 noundef %i.l) #6 ; 3 uses
+  %i.m = tail call ptr @lv_realloc(ptr noundef %i.d, i64 noundef %i.l) #7 ; 3 uses
   store ptr %i.m, ptr %0, align 8, !tbaa !13
   %.not12.i = icmp eq ptr %i.m, null
   br i1 %.not12.i, label %.preheader13.i, label %lv_anim_timeline_add.exit
@@ -1099,13 +1097,17 @@ declare ptr @lv_anim_get(ptr noundef, ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #5
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.abs.i32(i32, i1 immarg) #6
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nounwind }
+attributes #6 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

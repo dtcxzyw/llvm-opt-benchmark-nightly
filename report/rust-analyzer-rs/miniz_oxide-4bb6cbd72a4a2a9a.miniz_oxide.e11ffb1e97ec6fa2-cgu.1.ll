@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %._crit_edge.i179
   br i1 %i.fc, label %bb.r, label %bb.ct, !prof !7
 
 bb.r:                                             ; preds = %._crit_edge.i.i
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.fa, i64 noundef %i.fb, i64 noundef 512, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #10, !noalias !339
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.fa, i64 noundef %i.fb, i64 noundef 512, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #11, !noalias !339
   unreachable
 
 bb.s:                                             ; preds = %_RINvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core9read_byteNCINvB2_9read_bitsNCNvB2_10decompresss8_0E0EB6_.exit.i
@@ -366,7 +366,7 @@ bb.aa:                                            ; preds = %.preheader.i
 
 .loopexit2011:                                    ; preds = %.preheader.i.1, %.preheader.i
   %.lcssa1757 = phi i64 [ %i.ho, %.preheader.i ], [ %i.is, %.preheader.i.1 ]
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.lcssa1757, i64 noundef 576, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #10, !noalias !365
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.lcssa1757, i64 noundef 576, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #11, !noalias !365
   unreachable
 
 bb.ab:                                            ; preds = %bb.aa
@@ -769,7 +769,7 @@ bb.bl:                                            ; preds = %bb.m
   br i1 %or.cond.i253, label %bb.bm, label %_RNvXs5_NtNtCshzWfHUSfYae_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsjkkKzr5dxZe_11miniz_oxide.exit, !prof !8
 
 bb.bm:                                            ; preds = %bb.bl
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.val153, i64 noundef %i.re, i64 noundef %.val152, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #10, !noalias !423
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.val153, i64 noundef %i.re, i64 noundef %.val152, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #11, !noalias !423
   unreachable
 
 _RNvXs5_NtNtCshzWfHUSfYae_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsjkkKzr5dxZe_11miniz_oxide.exit: ; preds = %bb.bl
@@ -1050,7 +1050,7 @@ bb.br:                                            ; preds = %bb.n
   br i1 %i.vj, label %_RNCNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompresss6_0B7_.exit.i, label %bb.bs
 
 bb.bs:                                            ; preds = %._crit_edge.i271
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.vi, i64 noundef 19, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #10, !noalias !457
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.vi, i64 noundef 19, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #11, !noalias !457
   unreachable
 
 _RNCNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompresss6_0B7_.exit.i: ; preds = %._crit_edge.i271
@@ -1170,7 +1170,7 @@ bb.bz:                                            ; preds = %.preheader.i301
 
 .loopexit2027:                                    ; preds = %.preheader.i301.1, %.preheader.i301
   %.lcssa1870 = phi i64 [ %i.xf, %.preheader.i301 ], [ %i.yj, %.preheader.i301.1 ]
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.lcssa1870, i64 noundef 576, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #10, !noalias !464
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.lcssa1870, i64 noundef 576, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #11, !noalias !464
   unreachable
 
 bb.ca:                                            ; preds = %bb.bz
@@ -1362,7 +1362,7 @@ bb.cn:                                            ; preds = %bb.bu
   br i1 %i.aar, label %bb.cp, label %bb.co, !prof !472
 
 bb.co:                                            ; preds = %bb.cn
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.aaq, i64 noundef 288, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.aaq, i64 noundef 288, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #11
   unreachable
 
 bb.cp:                                            ; preds = %bb.cn
@@ -1378,7 +1378,7 @@ bb.cp:                                            ; preds = %bb.cn
   br i1 %i.aaz, label %bb.cq, label %bb.cr, !prof !7
 
 bb.cq:                                            ; preds = %bb.cp
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.aaw, i64 noundef %i.aay, i64 noundef 512, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.aaw, i64 noundef %i.aay, i64 noundef 512, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #11
   unreachable
 
 bb.cr:                                            ; preds = %bb.cp
@@ -1592,7 +1592,7 @@ _RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4coreNtB2_12HuffmanTable6lookup.exit
   br i1 %i.aen, label %_RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB2_12OutputBuffer10write_byte.exit, label %bb.db
 
 bb.db:                                            ; preds = %_RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4coreNtB2_12HuffmanTable6lookup.exit318
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.abo, i64 noundef %.val150, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #10, !noalias !481
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.abo, i64 noundef %.val150, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #11, !noalias !481
   unreachable
 
 _RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB2_12OutputBuffer10write_byte.exit: ; preds = %_RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4coreNtB2_12HuffmanTable6lookup.exit318
@@ -1609,7 +1609,7 @@ bb.dc:                                            ; preds = %_RNvMNtNtCsjkkKzr5d
   br i1 %i.aet, label %bb.df, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.aeq, i64 noundef %.val150, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #10, !noalias !482
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.aeq, i64 noundef %.val150, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #11, !noalias !482
   unreachable
 
 bb.de:                                            ; preds = %_RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB2_12OutputBuffer10write_byte.exit
@@ -1716,7 +1716,7 @@ bb.dj:                                            ; preds = %.preheader.i338
 
 .loopexit2019:                                    ; preds = %.preheader.i338.1, %.preheader.i338
   %.lcssa1834 = phi i64 [ %i.agc, %.preheader.i338 ], [ %i.ahg, %.preheader.i338.1 ]
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.lcssa1834, i64 noundef 576, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #10, !noalias !489
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.lcssa1834, i64 noundef 576, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #11, !noalias !489
   unreachable
 
 bb.dk:                                            ; preds = %bb.dj
@@ -1896,7 +1896,7 @@ bb.du:                                            ; preds = %bb.dt
   br i1 %i.ajb, label %_RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB2_12OutputBuffer10write_byte.exit342, label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.val147, i64 noundef %.val146, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #10, !noalias !493
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.val147, i64 noundef %.val146, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #11, !noalias !493
   unreachable
 
 _RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB2_12OutputBuffer10write_byte.exit342: ; preds = %bb.du
@@ -1996,7 +1996,7 @@ bb.dy:                                            ; preds = %bb.ap
   br i1 %i.akg, label %_RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB2_12OutputBuffer10write_byte.exit343, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.val159, i64 noundef %.val158, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #10, !noalias !501
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.val159, i64 noundef %.val158, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #11, !noalias !501
   unreachable
 
 _RNvMNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB2_12OutputBuffer10write_byte.exit343: ; preds = %bb.dy
@@ -2022,7 +2022,7 @@ bb.ea:                                            ; preds = %bb.aq
   %i.aks = and i64 %i.akr, %storemerge
   %i.akt = zext i32 %i.lx to i64
   %..i344 = tail call noundef i64 @llvm.umin.i64(i64 %i.akt, i64 %i.akq) ; 3 uses
-  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core8transfer(ptr noalias nofree noundef nonnull %i.bl, i64 noundef %.val156, i64 noundef %i.aks, i64 noundef %i.ly, i64 noundef %..i344, i64 noundef %storemerge) #11
+  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core8transfer(ptr noalias nofree noundef nonnull %i.bl, i64 noundef %.val156, i64 noundef %i.aks, i64 noundef %i.ly, i64 noundef %..i344, i64 noundef %storemerge) #12
   %i.aku = add i64 %..i344, %i.ly                 ; 2 uses
   %i.akv = trunc nuw i64 %..i344 to i32           ; 2 uses
   %i.akw = sub i32 %i.lx, %i.akv                  ; 2 uses
@@ -2064,7 +2064,7 @@ bb.ec:                                            ; preds = %bb.eb
   br i1 %i.ai, label %.backedge.backedge, label %bb.ee
 
 bb.ed:                                            ; preds = %bb.eb
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.alh, i64 noundef %3, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.alh, i64 noundef %3, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #11
   unreachable
 
 bb.ee:                                            ; preds = %bb.ec
@@ -2119,7 +2119,7 @@ bb.ek:                                            ; preds = %bb.ej, %bb.ei
   br label %.backedge.backedge
 
 bb.el:                                            ; preds = %bb.ej
-  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core11apply_match(ptr noalias nofree noundef nonnull %i.amc, i64 noundef %i.amd, i64 noundef %i.mg, i64 noundef %i.mf, i64 noundef %i.amg, i64 noundef %storemerge) #11
+  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core11apply_match(ptr noalias nofree noundef nonnull %i.amc, i64 noundef %i.amd, i64 noundef %i.mg, i64 noundef %i.mf, i64 noundef %i.amg, i64 noundef %storemerge) #12
   store i64 %i.amh, ptr %i.q, align 8, !alias.scope !507
   br label %.backedge.backedge
 
@@ -2489,7 +2489,7 @@ bb.ff:                                            ; preds = %bb.fe
   br label %bb.fd
 
 bb.fg:                                            ; preds = %bb.fe
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %6, i64 noundef %.pre1154, i64 noundef %i.asb, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %6, i64 noundef %.pre1154, i64 noundef %i.asb, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #11
   unreachable
 
 bb.fh:                                            ; preds = %bb.fi, %bb.fd
@@ -2578,11 +2578,11 @@ bb.h:                                             ; preds = %bb.c
   br i1 %.not, label %bb.j, label %bb.k
 
 bb.i:                                             ; preds = %bb.c
-  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core8transfer(ptr noalias nofree noundef nonnull %0, i64 noundef %1, i64 noundef %i.c, i64 noundef %2, i64 noundef %4, i64 noundef %5) #11
+  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core8transfer(ptr noalias nofree noundef nonnull %0, i64 noundef %1, i64 noundef %i.c, i64 noundef %2, i64 noundef %4, i64 noundef %5) #12
   br label %bb.g
 
 bb.j:                                             ; preds = %bb.k, %bb.h
-  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core8transfer(ptr noalias nofree noundef nonnull %0, i64 noundef %1, i64 noundef %i.c, i64 noundef %2, i64 noundef %4, i64 noundef %5) #11
+  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core8transfer(ptr noalias nofree noundef nonnull %0, i64 noundef %1, i64 noundef %i.c, i64 noundef %2, i64 noundef %4, i64 noundef %5) #12
   br label %bb.g
 
 bb.k:                                             ; preds = %bb.h
@@ -2598,7 +2598,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i, label %bb.n, label %_RNvMNtCshzWfHUSfYae_4core5sliceSh12split_at_mutCsjkkKzr5dxZe_11miniz_oxide.exit, !prof !7
 
 bb.n:                                             ; preds = %bb.m
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @8, ptr noundef nonnull inttoptr (i64 19 to ptr), ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @21) #10, !noalias !528
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @8, ptr noundef nonnull inttoptr (i64 19 to ptr), ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @21) #11, !noalias !528
   unreachable
 
 _RNvMNtCshzWfHUSfYae_4core5sliceSh12split_at_mutCsjkkKzr5dxZe_11miniz_oxide.exit: ; preds = %bb.m
@@ -2615,7 +2615,7 @@ bb.o:                                             ; preds = %bb.l
   br i1 %.not.i29, label %bb.p, label %_RNvMNtCshzWfHUSfYae_4core5sliceSh12split_at_mutCsjkkKzr5dxZe_11miniz_oxide.exit33, !prof !7
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @8, ptr noundef nonnull inttoptr (i64 19 to ptr), ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @25) #10, !noalias !529
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @8, ptr noundef nonnull inttoptr (i64 19 to ptr), ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @25) #11, !noalias !529
   unreachable
 
 _RNvMNtCshzWfHUSfYae_4core5sliceSh12split_at_mutCsjkkKzr5dxZe_11miniz_oxide.exit33: ; preds = %bb.o
@@ -2629,7 +2629,7 @@ bb.q:                                             ; preds = %_RNvMNtCshzWfHUSfYa
   br i1 %.not21, label %bb.t, label %bb.s, !prof !8
 
 bb.r:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core5sliceSh12split_at_mutCsjkkKzr5dxZe_11miniz_oxide.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %i.al, i64 noundef %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %i.al, i64 noundef %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #11
   unreachable
 
 bb.s:                                             ; preds = %bb.q
@@ -2638,7 +2638,7 @@ bb.s:                                             ; preds = %bb.q
   br label %bb.g
 
 bb.t:                                             ; preds = %bb.q
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %4, i64 noundef %i.ak, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @23) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %4, i64 noundef %i.ak, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @23) #11
   unreachable
 
 bb.u:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core5sliceSh12split_at_mutCsjkkKzr5dxZe_11miniz_oxide.exit33
@@ -2648,7 +2648,7 @@ bb.u:                                             ; preds = %_RNvMNtCshzWfHUSfYa
   br i1 %or.cond28, label %bb.x, label %bb.w, !prof !8
 
 bb.v:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core5sliceSh12split_at_mutCsjkkKzr5dxZe_11miniz_oxide.exit33
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %4, i64 noundef %i.ao, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @28) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %4, i64 noundef %i.ao, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @28) #11
   unreachable
 
 bb.w:                                             ; preds = %bb.u
@@ -2657,7 +2657,7 @@ bb.w:                                             ; preds = %bb.u
   br label %bb.g
 
 bb.x:                                             ; preds = %bb.u
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.c, i64 noundef %i.ah, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.c, i64 noundef %i.ah, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #11
   unreachable
 }
 
@@ -2857,7 +2857,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.co, label %bb.m, label %bb.p
 
 bb.l:                                             ; preds = %bb.j
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.r, i64 noundef %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.r, i64 noundef %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #11
   unreachable
 
 bb.m:                                             ; preds = %bb.k
@@ -2877,7 +2877,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %or.cond91, label %.loopexit, label %bb.b
 
 bb.o:                                             ; preds = %bb.m
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cm, i64 noundef %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cm, i64 noundef %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #11
   unreachable
 
 bb.p:                                             ; preds = %bb.k, %bb.f
@@ -3059,7 +3059,7 @@ bb.ab:                                            ; preds = %bb.z, %_RNvMs_NtNtC
 
 bb.ac:                                            ; preds = %bb.aa
   %i.gi = zext i32 %.sroa.51.3 to i64             ; 2 uses
-  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core11apply_match(ptr noalias nofree noundef nonnull %i.j, i64 noundef %i.b, i64 noundef %i.cw, i64 noundef %i.fp, i64 noundef %i.gi, i64 noundef %5) #11
+  tail call fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core11apply_match(ptr noalias nofree noundef nonnull %i.j, i64 noundef %i.b, i64 noundef %i.cw, i64 noundef %i.fp, i64 noundef %i.gi, i64 noundef %5) #12
   %i.gj = add i64 %i.cw, %i.gi                    ; 3 uses
   store i64 %i.gj, ptr %i.c, align 8
   %i.gk = sub i64 %i.b, %i.gj
@@ -3090,10 +3090,8 @@ bb.ac:                                            ; preds = %bb.aa
 define internal fastcc void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core8transfer(ptr noalias nofree noundef nonnull captures(none) %0, i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %6 = icmp ugt i64 %2, %3
-  %i.b = sub nuw i64 %2, %3
-  %7 = sub nuw i64 %3, %2                         ; 2 uses
-  %.sroa.058.0 = select i1 %6, i64 %i.b, i64 %7
+  %i.b = sub nsw i64 %2, %3
+  %.sroa.058.0 = tail call i64 @llvm.abs.i64(i64 %i.b, i1 true)
   %i.c = icmp eq i64 %5, -1
   %i.d = add i64 %2, -3
   %i.e = add i64 %i.d, %4
@@ -3108,8 +3106,9 @@ bb.a:
   br i1 %or.cond96, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %6 = sub nuw i64 %3, %2
   %or.cond98 = and i1 %i.j, %.sroa.059.0
-  %i.k = icmp ugt i64 %7, 3
+  %i.k = icmp ugt i64 %6, 3
   %or.cond100 = select i1 %or.cond98, i1 %i.k, i1 false
   %i.l = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 3)
   %..i101 = tail call noundef i64 @llvm.umin.i64(i64 %i.l, i64 %i.h) ; 3 uses
@@ -3128,11 +3127,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond97, label %bb.f, label %bb.g, !prof !8
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.n, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.n, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #11
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %i.h, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @30) #10
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %i.h, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @30) #11
   unreachable
 
 bb.g:                                             ; preds = %bb.d
@@ -3176,7 +3175,7 @@ bb.h:                                             ; preds = %bb.b
   br i1 %i.aa, label %.lr.ph263, label %.lr.ph._crit_edge, !prof !552
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32) #11
   unreachable
 
 .lr.ph263:                                        ; preds = %.lr.ph.preheader, %.lr.ph
@@ -3189,7 +3188,7 @@ bb.h:                                             ; preds = %bb.b
   br i1 %i.ae, label %bb.j, label %bb.i, !prof !9
 
 bb.i:                                             ; preds = %.lr.ph263
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @33, i64 noundef 72, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @33, i64 noundef 72, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #11
   unreachable
 
 bb.j:                                             ; preds = %.lr.ph263
@@ -3208,7 +3207,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.am, label %bb.m, label %bb.n
 
 bb.l:                                             ; preds = %bb.j
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.af, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @35) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.af, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @35) #11
   unreachable
 
 bb.m:                                             ; preds = %bb.k
@@ -3217,7 +3216,7 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.ao, label %bb.o, label %bb.p
 
 bb.n:                                             ; preds = %bb.k
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.al, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.al, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #11
   unreachable
 
 bb.o:                                             ; preds = %bb.m
@@ -3231,7 +3230,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.au, label %bb.q, label %bb.r
 
 bb.p:                                             ; preds = %bb.m
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.an, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @37) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.an, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @37) #11
   unreachable
 
 bb.q:                                             ; preds = %bb.o
@@ -3240,7 +3239,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.aw, label %bb.s, label %bb.t
 
 bb.r:                                             ; preds = %bb.o
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.at, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.at, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #11
   unreachable
 
 bb.s:                                             ; preds = %bb.q
@@ -3258,7 +3257,7 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.bf, label %.lr.ph, label %.loopexit
 
 bb.t:                                             ; preds = %bb.q
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.av, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @39) #10
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.av, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @39) #11
   unreachable
 
 bb.u:                                             ; preds = %.lr.ph141, %_RINvMNtCshzWfHUSfYae_4core5sliceSh11copy_withinINtNtNtB5_3ops5range14RangeInclusivejEECsjkkKzr5dxZe_11miniz_oxide.exit
@@ -3279,7 +3278,7 @@ bb.u:                                             ; preds = %.lr.ph141, %_RINvMN
   br i1 %.not.i, label %bb.v, label %_RINvMNtCshzWfHUSfYae_4core5sliceSh11copy_withinINtNtNtB5_3ops5range14RangeInclusivejEECsjkkKzr5dxZe_11miniz_oxide.exit, !prof !7
 
 bb.v:                                             ; preds = %bb.u
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 43 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @56) #10, !noalias !554
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 43 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @56) #11, !noalias !554
   unreachable
 
 _RINvMNtCshzWfHUSfYae_4core5sliceSh11copy_withinINtNtNtB5_3ops5range14RangeInclusivejEECsjkkKzr5dxZe_11miniz_oxide.exit: ; preds = %bb.u
@@ -3338,15 +3337,15 @@ bb.aa:                                            ; preds = %bb.x
   br i1 %i.cd, label %.sink.split, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.x
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.bx, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @40) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.bx, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @40) #11
   unreachable
 
 bb.ac:                                            ; preds = %bb.aa
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.025.0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.025.0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #11
   unreachable
 
 bb.ad:                                            ; preds = %bb.y
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @42, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @43) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @42, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @43) #11
   unreachable
 
 bb.ae:                                            ; preds = %bb.y
@@ -3356,7 +3355,7 @@ bb.ae:                                            ; preds = %bb.y
   br i1 %i.cg, label %bb.ag, label %bb.af, !prof !9
 
 bb.af:                                            ; preds = %bb.ae
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @44, i64 noundef 72, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @45) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @44, i64 noundef 72, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @45) #11
   unreachable
 
 bb.ag:                                            ; preds = %bb.ae
@@ -3369,15 +3368,15 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.cj, label %.sink.split.sink.split, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ag
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.ch, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.ch, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #11
   unreachable
 
 bb.aj:                                            ; preds = %bb.ah
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.025.0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @47) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.025.0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @47) #11
   unreachable
 
 bb.ak:                                            ; preds = %bb.z
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @48, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @48, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #11
   unreachable
 
 bb.al:                                            ; preds = %bb.z
@@ -3387,7 +3386,7 @@ bb.al:                                            ; preds = %bb.z
   br i1 %i.cm, label %bb.an, label %bb.am, !prof !9
 
 bb.am:                                            ; preds = %bb.al
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @50, i64 noundef 72, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @50, i64 noundef 72, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #11
   unreachable
 
 bb.an:                                            ; preds = %bb.al
@@ -3400,7 +3399,7 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.cp, label %bb.aq, label %bb.ar
 
 bb.ap:                                            ; preds = %bb.an
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cn, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cn, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #11
   unreachable
 
 bb.aq:                                            ; preds = %bb.ao
@@ -3414,7 +3413,7 @@ bb.aq:                                            ; preds = %bb.ao
   br i1 %i.cv, label %bb.as, label %bb.at
 
 bb.ar:                                            ; preds = %bb.ao
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.025.0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.025.0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #11
   unreachable
 
 bb.as:                                            ; preds = %bb.aq
@@ -3423,11 +3422,11 @@ bb.as:                                            ; preds = %bb.aq
   br i1 %i.cx, label %.sink.split.sink.split, label %bb.au
 
 bb.at:                                            ; preds = %bb.aq
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cu, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @54) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cu, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @54) #11
   unreachable
 
 bb.au:                                            ; preds = %bb.as
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cw, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @55) #10
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.cw, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @55) #11
   unreachable
 }
 
@@ -3830,7 +3829,7 @@ _RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 
 bb.i:                                             ; preds = %bb.f
   store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
-  %i.gb = call fastcc { ptr, ptr } @_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E3nthCsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef align 8 dereferenceable(48) %i.a, i64 noundef %i.fs) #11
+  %i.gb = call fastcc { ptr, ptr } @_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E3nthCsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef align 8 dereferenceable(48) %i.a, i64 noundef %i.fs) #12
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E4nextCsjkkKzr5dxZe_11miniz_oxide.exit
@@ -4135,6 +4134,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #10
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8
 
@@ -4148,8 +4150,9 @@ attributes #6 = { cold minsize noinline noreturn nonlazybind optsize uwtable "pr
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #10 = { noinline noreturn }
-attributes #11 = { inlinehint }
+attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { noinline noreturn }
+attributes #12 = { inlinehint }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

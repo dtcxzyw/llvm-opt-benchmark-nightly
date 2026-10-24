@@ -205,19 +205,17 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load i64, ptr %i.i, align 8, !tbaa !152
   %i.k = udiv i64 %i.j, 1000000
-  %i.l = add i64 %i.k, %i.h                       ; 4 uses
+  %i.l = add i64 %i.k, %i.h                       ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !153  ; 4 uses
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !153  ; 2 uses
   %.not = icmp eq i64 %i.n, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.not.i = icmp ult i64 %i.l, %i.n
-  %i.o = sub nuw i64 %i.l, %i.n
-  %5 = sub nuw i64 %i.n, %i.l
-  %.0.i = select i1 %.not.i, i64 %5, i64 %i.o
-  %i.p = uitofp nsz i64 %.0.i to float
+  %i.o = sub nsw i64 %i.l, %i.n
+  %.0.i = call noundef i64 @llvm.abs.i64(i64 %i.o, i1 true)
+  %i.p = uitofp nsz nneg i64 %.0.i to float
   %i.q = fmul nnan nsz float %i.p, -3.000000e-02
   br label %bb.c
 
@@ -619,6 +617,9 @@ declare { double, double } @llvm.sincos.f64(double) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
