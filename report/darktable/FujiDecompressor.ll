@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.v
 _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit69.i.i.i.i.i.i: ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.w
   %i.qn = and i32 %indvars.iv.i.sroa.phi78.sroa.speculated.in.i.i.i.i, 255 ; 3 uses
   %i.qo = add nsw i32 %i.qn, -1                   ; 2 uses
-  %i.qp = shl nsw i32 %i.qm, 1                    ; 4 uses
+  %i.qp = shl nuw nsw i32 %i.qm, 1                ; 4 uses
   %i.qq = or disjoint i32 %i.qp, 1                ; 2 uses
   call void @llvm.assume(i1 %i.qh)
   %i.qr = icmp samesign ult i32 %i.qq, %i.qe
@@ -283,7 +283,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i: ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.aa, %bb.y, %bb.x, %bb.w, %bb.w
   %i.sg = and i32 %indvars.iv.i.sroa.phi78.sroa.speculated.in.i.i.i.i, 255 ; 4 uses
   %i.sh = add nsw i32 %i.sg, -1                   ; 2 uses
-  %i.si = shl nsw i32 %i.qm, 1                    ; 4 uses
+  %i.si = shl nuw nsw i32 %i.qm, 1                ; 4 uses
   %i.sj = or disjoint i32 %i.si, 1                ; 2 uses
   call void @llvm.assume(i1 %i.qh)
   %i.sk = icmp samesign ult i32 %i.sj, %i.qe
@@ -637,7 +637,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.au
   %i.yx = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i86.i.i.i.i.i.i, i64 %i.yw
   %i.yy = getelementptr inbounds nuw [2 x i8], ptr %i.yx, i64 %.pre-phi170.i.i.i.i.i
   store i16 %i.yt, ptr %i.yy, align 2, !tbaa !92
-  %i.yz = add nsw i32 %i.qm, 1
+  %i.yz = add nuw nsw i32 %i.qm, 1
   store i32 %i.yz, ptr %indvars.iv.i.sroa.phi.i.i.i.i, align 4, !tbaa !94
   br i1 %.not30.i.i.i.i.i, label %.loopexit141.i.i.i.i.i, label %bb.v, !llvm.loop !181
 
@@ -666,7 +666,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.zd = getelementptr inbounds nuw i8, ptr %indvars.iv159.i.sroa.phi.i.i.i.i, i64 4 ; 2 uses
   %i.ze = load i32, ptr %i.zd, align 4, !tbaa !94 ; 2 uses
   %i.zf = and i32 %indvars.iv159.i.sroa.phi75.sroa.speculated.i.i.i.i, 255 ; 3 uses
-  %i.zg = shl nsw i32 %i.ze, 1                    ; 3 uses
+  %i.zg = shl nuw nsw i32 %i.ze, 1                ; 3 uses
   %i.zh = or disjoint i32 %i.zg, 1                ; 2 uses
   %i.zi = icmp samesign ult i32 %i.zh, %i.ps
   call void @llvm.assume(i1 %i.zi)
@@ -683,7 +683,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.zr = load i16, ptr %i.zq, align 2, !tbaa !92
   %i.zs = zext i16 %i.zr to i32                   ; 2 uses
   %i.zt = add nsw i32 %i.zf, -1                   ; 2 uses
-  %i.zu = add nsw i32 %i.zg, 2                    ; 2 uses
+  %i.zu = add nuw nsw i32 %i.zg, 2                ; 2 uses
   %i.zv = icmp samesign ult i32 %i.zu, %i.ps
   call void @llvm.assume(i1 %i.zv)
   %i.zw = icmp samesign ult i32 %i.zt, %i.pu
@@ -701,7 +701,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.aag = getelementptr inbounds nuw [2 x i8], ptr %i.aab, i64 %i.zp
   %i.aah = load i16, ptr %i.aag, align 2, !tbaa !92 ; 3 uses
   %i.aai = zext i16 %i.aah to i32                 ; 2 uses
-  %i.aaj = add nsw i32 %i.zg, 3                   ; 2 uses
+  %i.aaj = add nuw nsw i32 %i.zg, 3               ; 2 uses
   %i.aak = icmp samesign ult i32 %i.aaj, %i.ps
   call void @llvm.assume(i1 %i.aak)
   %i.aal = zext nneg i32 %i.aaj to i64            ; 2 uses
@@ -1004,7 +1004,7 @@ _ZN8rawspeed12_GLOBAL__N_121fuji_compressed_block18fuji_decode_sampleEiiRSt5arra
   %.034.i.i.i.i.i.i = phi i16 [ %i.aga, %.thread.i.i.i.i.i ], [ 0, %bb.bs ]
   %i.agb = getelementptr inbounds nuw [2 x i8], ptr %i.zo, i64 %i.aac
   store i16 %.034.i.i.i.i.i.i, ptr %i.agb, align 2, !tbaa !92
-  %i.agc = add nsw i32 %i.ze, 1
+  %i.agc = add nuw nsw i32 %i.ze, 1
   store i32 %i.agc, ptr %i.zd, align 4, !tbaa !94
   br i1 %.not31.i.i.i.i.i, label %.loopexit.i.i.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_odd_innerENS0_8xt_linesEi.exit.i.i.i.i.i, !llvm.loop !182
 
@@ -1407,7 +1407,7 @@ bb.cd:                                            ; preds = %"_ZZN8rawspeed12_GL
   %i.avd = load i32, ptr %indvars.iv.i.sroa.phi.i106.i.i.i, align 4, !tbaa !94 ; 2 uses
   %i.ave = and i32 %indvars.iv.i.sroa.phi78.sroa.speculated.i.i.i.i, 255 ; 4 uses
   %i.avf = add nsw i32 %i.ave, -1                 ; 2 uses
-  %i.avg = shl nsw i32 %i.avd, 1                  ; 4 uses
+  %i.avg = shl nuw nsw i32 %i.avd, 1              ; 4 uses
   %i.avh = or disjoint i32 %i.avg, 1              ; 2 uses
   %i.avi = icmp samesign ult i32 %i.avh, %i.aur
   call void @llvm.assume(i1 %i.avi)
@@ -1750,7 +1750,7 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cv
   %i.bby = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i.i.i.i102.i.i.i, i64 %i.bbx
   %i.bbz = getelementptr inbounds nuw [2 x i8], ptr %i.bby, i64 %i.avp
   store i16 %.034.i.i.i.i.i.i.i, ptr %i.bbz, align 2, !tbaa !92
-  %i.bca = add nsw i32 %i.avd, 1
+  %i.bca = add nuw nsw i32 %i.avd, 1
   store i32 %i.bca, ptr %indvars.iv.i.sroa.phi.i106.i.i.i, align 4, !tbaa !94
   br i1 %.not30.i.i105.i.i.i, label %.loopexit140.i.i.i.i.i, label %bb.cd, !llvm.loop !185
 
@@ -1779,7 +1779,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.bce = getelementptr inbounds nuw i8, ptr %indvars.iv158.i.sroa.phi.i.i.i.i, i64 4 ; 2 uses
   %i.bcf = load i32, ptr %i.bce, align 4, !tbaa !94 ; 2 uses
   %i.bcg = and i32 %indvars.iv158.i.sroa.phi75.sroa.speculated.in.i.i.i.i, 255 ; 3 uses
-  %i.bch = shl nsw i32 %i.bcf, 1                  ; 3 uses
+  %i.bch = shl nuw nsw i32 %i.bcf, 1              ; 3 uses
   %i.bci = or disjoint i32 %i.bch, 1              ; 2 uses
   %i.bcj = icmp samesign ult i32 %i.bci, %i.aur
   call void @llvm.assume(i1 %i.bcj)
@@ -1796,7 +1796,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.bcs = load i16, ptr %i.bcr, align 2, !tbaa !92
   %i.bct = zext i16 %i.bcs to i32                 ; 2 uses
   %i.bcu = add nsw i32 %i.bcg, -1                 ; 2 uses
-  %i.bcv = add nsw i32 %i.bch, 2                  ; 2 uses
+  %i.bcv = add nuw nsw i32 %i.bch, 2              ; 2 uses
   %i.bcw = icmp samesign ult i32 %i.bcv, %i.aur
   call void @llvm.assume(i1 %i.bcw)
   %i.bcx = icmp samesign ult i32 %i.bcu, %i.aut
@@ -1814,7 +1814,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.bdh = getelementptr inbounds nuw [2 x i8], ptr %i.bdc, i64 %i.bcq
   %i.bdi = load i16, ptr %i.bdh, align 2, !tbaa !92 ; 3 uses
   %i.bdj = zext i16 %i.bdi to i32                 ; 2 uses
-  %i.bdk = add nsw i32 %i.bch, 3                  ; 2 uses
+  %i.bdk = add nuw nsw i32 %i.bch, 3              ; 2 uses
   %i.bdl = icmp samesign ult i32 %i.bdk, %i.aur
   call void @llvm.assume(i1 %i.bdl)
   %i.bdm = zext nneg i32 %i.bdk to i64            ; 2 uses
@@ -2117,7 +2117,7 @@ _ZN8rawspeed12_GLOBAL__N_121fuji_compressed_block18fuji_decode_sampleEiiRSt5arra
   %.034.i.i.i92.i.i.i = phi i16 [ %i.bjb, %.thread.i.i89.i.i.i ], [ 0, %bb.dt ]
   %i.bjc = getelementptr inbounds nuw [2 x i8], ptr %i.bcp, i64 %i.bdd
   store i16 %.034.i.i.i92.i.i.i, ptr %i.bjc, align 2, !tbaa !92
-  %i.bjd = add nsw i32 %i.bcf, 1
+  %i.bjd = add nuw nsw i32 %i.bcf, 1
   store i32 %i.bjd, ptr %i.bce, align 4, !tbaa !94
   br i1 %.not31.i.i73.i.i.i, label %.loopexit.i.i53.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_odd_innerENS0_8xt_linesEi.exit.i.i71.i.i.i, !llvm.loop !186
 

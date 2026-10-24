@@ -204,11 +204,11 @@ bb.n:                                             ; preds = %bb.l, %bb.k
   %..086 = tail call i32 @llvm.smin.i32(i32 %.086110, i32 %i.aj)
   %.0. = select i1 %i.bc, i1 %.0116, i1 false
   %i.bd = trunc nuw nsw i32 %i.ah to i16
-  %i.be = add nuw i16 %i.bd, 7
-  %i.bf = and i16 %i.be, -8                       ; 2 uses
+  %i.be = add nuw nsw i16 %i.bd, 7
+  %i.bf = and i16 %i.be, 32760                    ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.084111, i64 4
   store i16 %i.bf, ptr %i.bg, align 2
-  %i.bh = zext i16 %i.bf to i64
+  %i.bh = zext nneg i16 %i.bf to i64
   %i.bi = add i64 %.080113, %i.bh
   %i.bj = sext i32 %.082112 to i64
   %i.bk = getelementptr inbounds [4 x i8], ptr %4, i64 %i.bj

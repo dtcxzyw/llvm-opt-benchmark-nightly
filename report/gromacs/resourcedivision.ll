@@ -202,7 +202,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   %.0 = phi i32 [ %i.gh, %.preheader ], [ 2, %.critedge ] ; 4 uses
   %i.gg = mul nuw nsw i32 %.0, 6
   %.not109 = icmp samesign ugt i32 %i.gg, %.1.lcssa
-  %i.gh = shl nsw i32 %.0, 1
+  %i.gh = shl nuw nsw i32 %.0, 1
   br i1 %.not109, label %bb.bm, label %.preheader, !llvm.loop !300
 
 bb.bm:                                            ; preds = %.preheader

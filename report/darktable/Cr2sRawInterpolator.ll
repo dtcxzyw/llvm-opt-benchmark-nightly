@@ -204,7 +204,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !106
   %i.ae = add i32 %i.ad, -16384                   ; 3 uses
-  %i.af = shl nsw i32 %1, 1                       ; 2 uses
+  %i.af = shl nuw nsw i32 %1, 1                   ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.ah = load <3 x i32>, ptr %i.ag, align 8, !tbaa !107 ; 5 uses
   %i.ai = shufflevector <3 x i32> %i.ah, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
@@ -215,7 +215,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.an = zext nneg i32 %i.u to i64
   %i.ao = zext nneg i32 %i.w to i64               ; 4 uses
   %i.ap = zext nneg i32 %i.i to i64               ; 2 uses
-  %i.aq = zext i32 %i.af to i64                   ; 3 uses
+  %i.aq = zext nneg i32 %i.af to i64              ; 3 uses
   %i.ar = zext i32 %i.n to i64                    ; 4 uses
   %i.as = zext nneg i32 %i.k to i64
   %wide.trip.count = zext i32 %i.ab to i64        ; 4 uses
@@ -228,21 +228,21 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   tail call void @llvm.assume(i1 %i.aw), !noalias !209
   %i.ax = mul nuw nsw i64 %i.av, %i.ao            ; 2 uses
   %i.ay = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0114.0.copyload, i64 %i.ax ; 4 uses
-  %i.az = icmp ult i32 %i.af, %i.k
+  %i.az = icmp samesign ult i32 %i.af, %i.k
   tail call void @llvm.assume(i1 %i.az)
-  %i.ba = mul nuw i64 %i.aq, %i.ar                ; 2 uses
+  %i.ba = mul nuw nsw i64 %i.aq, %i.ar            ; 2 uses
   %i.bb = getelementptr [2 x i8], ptr %i.d, i64 %i.ba ; 16 uses
   %i.bc = or disjoint i64 %i.aq, 1                ; 3 uses
   %i.bd = icmp samesign ult i64 %i.bc, %i.as
   tail call void @llvm.assume(i1 %i.bd)
-  %i.be = mul nuw i64 %i.bc, %i.ar                ; 2 uses
+  %i.be = mul nuw nsw i64 %i.bc, %i.ar            ; 2 uses
   %i.bf = getelementptr [2 x i8], ptr %i.d, i64 %i.be ; 16 uses
   %min.iters.check = icmp ult i32 %i.ab, 33
   br i1 %min.iters.check, label %.preheader215.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.bg = mul nuw i64 %i.ar, %i.aq
-  %i.bh = shl i64 %i.bg, 1                        ; 6 uses
+  %i.bg = mul nuw nsw i64 %i.ar, %i.aq
+  %i.bh = shl nuw i64 %i.bg, 1                    ; 6 uses
   %i.bi = mul nuw nsw i64 %wide.trip.count, 12    ; 4 uses
   %i.bj = add i64 %i.bh, %i.bi                    ; 6 uses
   %i.bk = getelementptr i8, ptr %i.d, i64 %i.bj
@@ -266,8 +266,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.cc = getelementptr i8, ptr %i.d, i64 %i.bh
   %i.cd = getelementptr i8, ptr %i.cc, i64 10     ; 13 uses
   %i.ce = getelementptr i8, ptr %i.d, i64 %i.bj   ; 13 uses
-  %i.cf = mul nuw i64 %i.bc, %i.ar
-  %i.cg = shl i64 %i.cf, 1                        ; 6 uses
+  %i.cf = mul nuw nsw i64 %i.bc, %i.ar
+  %i.cg = shl nuw i64 %i.cf, 1                    ; 6 uses
   %i.ch = add i64 %i.cg, %i.bi                    ; 6 uses
   %i.ci = getelementptr i8, ptr %i.d, i64 %i.ch
   %i.cj = getelementptr i8, ptr %i.ci, i64 -10    ; 13 uses
@@ -670,7 +670,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !106
   %i.ae = add i32 %i.ad, -16384                   ; 9 uses
-  %i.af = shl nsw i32 %1, 1                       ; 2 uses
+  %i.af = shl nuw nsw i32 %1, 1                   ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.ah = load <3 x i32>, ptr %i.ag, align 8, !tbaa !107 ; 5 uses
   %i.ai = shufflevector <3 x i32> %i.ah, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
@@ -681,7 +681,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.an = zext nneg i32 %i.u to i64
   %i.ao = zext nneg i32 %i.w to i64               ; 4 uses
   %i.ap = zext nneg i32 %i.i to i64               ; 2 uses
-  %i.aq = zext i32 %i.af to i64                   ; 3 uses
+  %i.aq = zext nneg i32 %i.af to i64              ; 3 uses
   %i.ar = zext i32 %i.n to i64                    ; 4 uses
   %i.as = zext nneg i32 %i.k to i64
   %wide.trip.count = zext i32 %i.ab to i64        ; 4 uses
@@ -694,21 +694,21 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   tail call void @llvm.assume(i1 %i.aw), !noalias !225
   %i.ax = mul nuw nsw i64 %i.av, %i.ao            ; 2 uses
   %i.ay = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0112.0.copyload, i64 %i.ax ; 4 uses
-  %i.az = icmp ult i32 %i.af, %i.k
+  %i.az = icmp samesign ult i32 %i.af, %i.k
   tail call void @llvm.assume(i1 %i.az)
-  %i.ba = mul nuw i64 %i.aq, %i.ar                ; 2 uses
+  %i.ba = mul nuw nsw i64 %i.aq, %i.ar            ; 2 uses
   %i.bb = getelementptr [2 x i8], ptr %i.d, i64 %i.ba ; 16 uses
   %i.bc = or disjoint i64 %i.aq, 1                ; 3 uses
   %i.bd = icmp samesign ult i64 %i.bc, %i.as
   tail call void @llvm.assume(i1 %i.bd)
-  %i.be = mul nuw i64 %i.bc, %i.ar                ; 2 uses
+  %i.be = mul nuw nsw i64 %i.bc, %i.ar            ; 2 uses
   %i.bf = getelementptr [2 x i8], ptr %i.d, i64 %i.be ; 16 uses
   %min.iters.check = icmp ult i32 %i.ab, 33
   br i1 %min.iters.check, label %.preheader213.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.bg = mul nuw i64 %i.ar, %i.aq
-  %i.bh = shl i64 %i.bg, 1                        ; 6 uses
+  %i.bg = mul nuw nsw i64 %i.ar, %i.aq
+  %i.bh = shl nuw i64 %i.bg, 1                    ; 6 uses
   %i.bi = mul nuw nsw i64 %wide.trip.count, 12    ; 4 uses
   %i.bj = add i64 %i.bh, %i.bi                    ; 6 uses
   %i.bk = getelementptr i8, ptr %i.d, i64 %i.bj
@@ -732,8 +732,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.cc = getelementptr i8, ptr %i.d, i64 %i.bh
   %i.cd = getelementptr i8, ptr %i.cc, i64 10     ; 13 uses
   %i.ce = getelementptr i8, ptr %i.d, i64 %i.bj   ; 13 uses
-  %i.cf = mul nuw i64 %i.bc, %i.ar
-  %i.cg = shl i64 %i.cf, 1                        ; 6 uses
+  %i.cf = mul nuw nsw i64 %i.bc, %i.ar
+  %i.cg = shl nuw i64 %i.cf, 1                    ; 6 uses
   %i.ch = add i64 %i.cg, %i.bi                    ; 6 uses
   %i.ci = getelementptr i8, ptr %i.d, i64 %i.ch
   %i.cj = getelementptr i8, ptr %i.ci, i64 -10    ; 13 uses

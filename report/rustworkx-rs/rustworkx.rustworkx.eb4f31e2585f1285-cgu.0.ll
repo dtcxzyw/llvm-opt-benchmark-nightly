@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %_RINvNtNtNtNtCslwFu
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ip, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.iq = add nuw nsw i64 %i.ig, 1                ; 2 uses
-  %i.ir = sub nuw i64 %.sroa.15.09314, %i.iq
+  %i.ir = sub nuw nsw i64 %.sroa.15.09314, %i.iq
   %i.is = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.09413, i64 %i.iq
   br label %.backedge
 

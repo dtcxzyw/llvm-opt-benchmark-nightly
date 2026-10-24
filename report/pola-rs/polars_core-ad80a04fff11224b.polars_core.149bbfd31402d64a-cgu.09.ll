@@ -205,7 +205,7 @@ bb.at:                                            ; preds = %_RNCINvMNtCscgRAwXF
   br i1 %i.cd, label %bb.av, label %bb.au, !dbg !59648, !prof !7679
 
 bb.au:                                            ; preds = %bb.at
-  %i.ce = sub nuw i64 %.sroa.16.024.i146, %i.cb, !dbg !59649
+  %i.ce = sub nuw nsw i64 %.sroa.16.024.i146, %i.cb, !dbg !59649
   %i.cf = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.025.i145, i64 %i.cb, !dbg !59650
   %i.cg = sub nuw i64 %.sroa.023.023.i147, %i.cb, !dbg !59651
   br label %.backedge.i, !dbg !59581
@@ -566,7 +566,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.cd, label %bb.v, label %bb.u, !dbg !60023, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.ce = sub nuw i64 %.sroa.16.023.i125, %i.cb, !dbg !60024
+  %i.ce = sub nuw nsw i64 %.sroa.16.023.i125, %i.cb, !dbg !60024
   %i.cf = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i124, i64 %i.cb, !dbg !60025
   %i.cg = sub nuw i64 %.sroa.023.022.i126, %i.cb, !dbg !60026
   br label %.backedge.i, !dbg !59978
@@ -969,7 +969,7 @@ bb.at:                                            ; preds = %_RNCINvMNtCscgRAwXF
   br i1 %i.co, label %bb.av, label %bb.au, !dbg !60447, !prof !7679
 
 bb.au:                                            ; preds = %bb.at
-  %i.cp = sub nuw i64 %.sroa.16.024.i139, %i.cm, !dbg !60448
+  %i.cp = sub nuw nsw i64 %.sroa.16.024.i139, %i.cm, !dbg !60448
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.025.i138, i64 %i.cm, !dbg !60449
   %i.cr = sub nuw i64 %.sroa.023.023.i140, %i.cm, !dbg !60450
   br label %.backedge.i, !dbg !60381
@@ -1372,7 +1372,7 @@ bb.at:                                            ; preds = %_RNCINvMNtCscgRAwXF
   br i1 %i.cm, label %bb.av, label %bb.au, !dbg !60868, !prof !7679
 
 bb.au:                                            ; preds = %bb.at
-  %i.cn = sub nuw i64 %.sroa.16.024.i137, %i.ck, !dbg !60869
+  %i.cn = sub nuw nsw i64 %.sroa.16.024.i137, %i.ck, !dbg !60869
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.025.i136, i64 %i.ck, !dbg !60870
   %i.cp = sub nuw i64 %.sroa.023.023.i138, %i.ck, !dbg !60871
   br label %.backedge.i, !dbg !60801
@@ -1775,7 +1775,7 @@ bb.at:                                            ; preds = %_RNCINvMNtCscgRAwXF
   br i1 %i.co, label %bb.av, label %bb.au, !dbg !61288, !prof !7679
 
 bb.au:                                            ; preds = %bb.at
-  %i.cp = sub nuw i64 %.sroa.16.024.i139, %i.cm, !dbg !61289
+  %i.cp = sub nuw nsw i64 %.sroa.16.024.i139, %i.cm, !dbg !61289
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.025.i138, i64 %i.cm, !dbg !61290
   %i.cr = sub nuw i64 %.sroa.023.023.i140, %i.cm, !dbg !61291
   br label %.backedge.i, !dbg !61222
@@ -2178,7 +2178,7 @@ bb.at:                                            ; preds = %_RNCINvMNtCscgRAwXF
   br i1 %i.cm, label %bb.av, label %bb.au, !dbg !61709, !prof !7679
 
 bb.au:                                            ; preds = %bb.at
-  %i.cn = sub nuw i64 %.sroa.16.024.i137, %i.ck, !dbg !61710
+  %i.cn = sub nuw nsw i64 %.sroa.16.024.i137, %i.ck, !dbg !61710
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.025.i136, i64 %i.ck, !dbg !61711
   %i.cp = sub nuw i64 %.sroa.023.023.i138, %i.ck, !dbg !61712
   br label %.backedge.i, !dbg !61642
@@ -2549,7 +2549,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !62137, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !62138
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !62138
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !62139
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !62140
   br label %.backedge.i, !dbg !62092
@@ -2922,7 +2922,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !62569, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !62570
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !62570
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !62571
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !62572
   br label %.backedge.i, !dbg !62524
@@ -3295,7 +3295,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !63001, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !63002
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !63002
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !63003
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !63004
   br label %.backedge.i, !dbg !62956
@@ -3668,7 +3668,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !63433, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !63434
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !63434
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !63435
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !63436
   br label %.backedge.i, !dbg !63388
@@ -4041,7 +4041,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !63871, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !63872
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !63872
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !63873
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !63874
   br label %.backedge.i, !dbg !63826
@@ -4414,7 +4414,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !64309, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !64310
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !64310
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !64311
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !64312
   br label %.backedge.i, !dbg !64264
@@ -4787,7 +4787,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !64747, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !64748
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !64748
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !64749
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !64750
   br label %.backedge.i, !dbg !64702
@@ -5160,7 +5160,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !65185, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !65186
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !65186
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !65187
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !65188
   br label %.backedge.i, !dbg !65140
@@ -5533,7 +5533,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !65623, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !65624
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !65624
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !65625
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !65626
   br label %.backedge.i, !dbg !65578
@@ -5906,7 +5906,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %bb.v, label %bb.u, !dbg !66061, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.cl = sub nuw i64 %.sroa.16.023.i126, %i.ci, !dbg !66062
+  %i.cl = sub nuw nsw i64 %.sroa.16.023.i126, %i.ci, !dbg !66062
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.024.i125, i64 %i.ci, !dbg !66063
   %i.cn = sub nuw i64 %.sroa.023.022.i127, %i.ci, !dbg !66064
   br label %.backedge.i, !dbg !66016
@@ -6271,7 +6271,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !66406, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !66407
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !66407
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !66408
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !66409
   br label %.backedge.i, !dbg !66374
@@ -6674,7 +6674,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !66747, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !66748
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !66748
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !66749
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !66750
   br label %.backedge.i, !dbg !66715
@@ -7077,7 +7077,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !67088, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !67089
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !67089
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !67090
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !67091
   br label %.backedge.i, !dbg !67056
@@ -7480,7 +7480,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !67429, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !67430
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !67430
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !67431
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !67432
   br label %.backedge.i, !dbg !67397
@@ -7883,7 +7883,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.co, label %bb.t, label %bb.s, !dbg !67775, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cp = sub nuw i64 %.sroa.16.023.i120, %i.cm, !dbg !67776
+  %i.cp = sub nuw nsw i64 %.sroa.16.023.i120, %i.cm, !dbg !67776
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.cm, !dbg !67777
   %i.cr = sub nuw i64 %.sroa.023.022.i121, %i.cm, !dbg !67778
   br label %.backedge.i, !dbg !67740
@@ -8286,7 +8286,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.co, label %bb.t, label %bb.s, !dbg !68121, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cp = sub nuw i64 %.sroa.16.023.i120, %i.cm, !dbg !68122
+  %i.cp = sub nuw nsw i64 %.sroa.16.023.i120, %i.cm, !dbg !68122
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.cm, !dbg !68123
   %i.cr = sub nuw i64 %.sroa.023.022.i121, %i.cm, !dbg !68124
   br label %.backedge.i, !dbg !68086
@@ -8689,7 +8689,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.co, label %bb.t, label %bb.s, !dbg !68467, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cp = sub nuw i64 %.sroa.16.023.i120, %i.cm, !dbg !68468
+  %i.cp = sub nuw nsw i64 %.sroa.16.023.i120, %i.cm, !dbg !68468
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.cm, !dbg !68469
   %i.cr = sub nuw i64 %.sroa.023.022.i121, %i.cm, !dbg !68470
   br label %.backedge.i, !dbg !68432
@@ -9092,7 +9092,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.co, label %bb.t, label %bb.s, !dbg !68813, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cp = sub nuw i64 %.sroa.16.023.i120, %i.cm, !dbg !68814
+  %i.cp = sub nuw nsw i64 %.sroa.16.023.i120, %i.cm, !dbg !68814
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.cm, !dbg !68815
   %i.cr = sub nuw i64 %.sroa.023.022.i121, %i.cm, !dbg !68816
   br label %.backedge.i, !dbg !68778
@@ -9495,7 +9495,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bt, label %bb.t, label %bb.s, !dbg !69172, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bu = sub nuw i64 %.sroa.16.023.i120, %i.br, !dbg !69173
+  %i.bu = sub nuw nsw i64 %.sroa.16.023.i120, %i.br, !dbg !69173
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i119, i64 %i.br, !dbg !69174
   %i.bw = sub nuw i64 %.sroa.023.022.i121, %i.br, !dbg !69175
   br label %.backedge.i, !dbg !69134
@@ -9898,7 +9898,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bt, label %bb.v, label %bb.u, !dbg !69545, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.bu = sub nuw i64 %.sroa.16.023.i120, %i.br, !dbg !69546
+  %i.bu = sub nuw nsw i64 %.sroa.16.023.i120, %i.br, !dbg !69546
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i119, i64 %i.br, !dbg !69547
   %i.bw = sub nuw i64 %.sroa.023.022.i121, %i.br, !dbg !69548
   br label %.backedge.i, !dbg !69504
@@ -10299,7 +10299,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bt, label %bb.t, label %bb.s, !dbg !69908, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bu = sub nuw i64 %.sroa.16.023.i120, %i.br, !dbg !69909
+  %i.bu = sub nuw nsw i64 %.sroa.16.023.i120, %i.br, !dbg !69909
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i119, i64 %i.br, !dbg !69910
   %i.bw = sub nuw i64 %.sroa.023.022.i121, %i.br, !dbg !69911
   br label %.backedge.i, !dbg !69870
@@ -10702,7 +10702,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bt, label %bb.v, label %bb.u, !dbg !70281, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.bu = sub nuw i64 %.sroa.16.023.i120, %i.br, !dbg !70282
+  %i.bu = sub nuw nsw i64 %.sroa.16.023.i120, %i.br, !dbg !70282
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i119, i64 %i.br, !dbg !70283
   %i.bw = sub nuw i64 %.sroa.023.022.i121, %i.br, !dbg !70284
   br label %.backedge.i, !dbg !70240
@@ -11101,7 +11101,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !70644, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i121, %i.bp, !dbg !70645
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i121, %i.bp, !dbg !70645
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i120, i64 %i.bp, !dbg !70646
   %i.bu = sub nuw i64 %.sroa.023.022.i122, %i.bp, !dbg !70647
   br label %.backedge.i, !dbg !70606
@@ -11500,7 +11500,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.br, label %bb.v, label %bb.u, !dbg !71013, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.bs = sub nuw i64 %.sroa.16.023.i121, %i.bp, !dbg !71014
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i121, %i.bp, !dbg !71014
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i120, i64 %i.bp, !dbg !71015
   %i.bu = sub nuw i64 %.sroa.023.022.i122, %i.bp, !dbg !71016
   br label %.backedge.i, !dbg !70972
@@ -11897,7 +11897,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !71372, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i121, %i.bp, !dbg !71373
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i121, %i.bp, !dbg !71373
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i120, i64 %i.bp, !dbg !71374
   %i.bu = sub nuw i64 %.sroa.023.022.i122, %i.bp, !dbg !71375
   br label %.backedge.i, !dbg !71334
@@ -12296,7 +12296,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.br, label %bb.v, label %bb.u, !dbg !71741, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.bs = sub nuw i64 %.sroa.16.023.i121, %i.bp, !dbg !71742
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i121, %i.bp, !dbg !71742
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i120, i64 %i.bp, !dbg !71743
   %i.bu = sub nuw i64 %.sroa.023.022.i122, %i.bp, !dbg !71744
   br label %.backedge.i, !dbg !71700
@@ -12699,7 +12699,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !72082, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !72083
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !72083
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !72084
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !72085
   br label %.backedge.i, !dbg !72050
@@ -13102,7 +13102,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !72423, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !72424
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !72424
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !72425
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !72426
   br label %.backedge.i, !dbg !72391
@@ -13505,7 +13505,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !72764, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !72765
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !72765
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !72766
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !72767
   br label %.backedge.i, !dbg !72732
@@ -13908,7 +13908,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !73105, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !73106
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !73106
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !73107
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !73108
   br label %.backedge.i, !dbg !73073
@@ -14311,7 +14311,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !73446, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !73447
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !73447
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !73448
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !73449
   br label %.backedge.i, !dbg !73414
@@ -14714,7 +14714,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !73787, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !73788
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !73788
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !73789
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !73790
   br label %.backedge.i, !dbg !73755
@@ -15117,7 +15117,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !74128, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !74129
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !74129
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !74130
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !74131
   br label %.backedge.i, !dbg !74096
@@ -15520,7 +15520,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !74469, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !74470
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !74470
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !74471
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !74472
   br label %.backedge.i, !dbg !74437
@@ -15923,7 +15923,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !74810, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !74811
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !74811
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !74812
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !74813
   br label %.backedge.i, !dbg !74778
@@ -16326,7 +16326,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !75151, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !75152
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !75152
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !75153
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !75154
   br label %.backedge.i, !dbg !75119
@@ -16729,7 +16729,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !75492, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !75493
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !75493
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !75494
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !75495
   br label %.backedge.i, !dbg !75460
@@ -17132,7 +17132,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !75833, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !75834
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !75834
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !75835
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !75836
   br label %.backedge.i, !dbg !75801
@@ -17532,7 +17532,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !76152, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !76153
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !76153
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !76154
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !76155
   br label %.backedge.i, !dbg !76120
@@ -17914,7 +17914,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !76475, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !76476
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !76476
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !76477
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !76478
   br label %.backedge.i, !dbg !76443
@@ -18296,7 +18296,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !76798, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !76799
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !76799
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !76800
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !76801
   br label %.backedge.i, !dbg !76766
@@ -18678,7 +18678,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !77121, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !77122
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !77122
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !77123
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !77124
   br label %.backedge.i, !dbg !77089
@@ -19060,7 +19060,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !77444, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !77445
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !77445
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !77446
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !77447
   br label %.backedge.i, !dbg !77412
@@ -19442,7 +19442,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !77767, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !77768
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !77768
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !77769
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !77770
   br label %.backedge.i, !dbg !77735
@@ -19824,7 +19824,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !78090, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !78091
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !78091
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !78092
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !78093
   br label %.backedge.i, !dbg !78058
@@ -20206,7 +20206,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !78413, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !78414
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !78414
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !78415
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !78416
   br label %.backedge.i, !dbg !78381
@@ -20609,7 +20609,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !78758, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !78759
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !78759
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !78760
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !78761
   br label %.backedge.i, !dbg !78726
@@ -21012,7 +21012,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !79099, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !79100
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !79100
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !79101
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !79102
   br label %.backedge.i, !dbg !79067
@@ -21415,7 +21415,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !79440, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !79441
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !79441
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !79442
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !79443
   br label %.backedge.i, !dbg !79408
@@ -21818,7 +21818,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !79781, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !79782
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !79782
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !79783
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !79784
   br label %.backedge.i, !dbg !79749
@@ -22221,7 +22221,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !80122, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !80123
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !80123
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !80124
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !80125
   br label %.backedge.i, !dbg !80090
@@ -22624,7 +22624,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !80463, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !80464
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !80464
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !80465
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !80466
   br label %.backedge.i, !dbg !80431
@@ -23027,7 +23027,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !80804, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !80805
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !80805
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !80806
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !80807
   br label %.backedge.i, !dbg !80772
@@ -23430,7 +23430,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cc, label %bb.t, label %bb.s, !dbg !81145, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.cd = sub nuw i64 %.sroa.16.023.i120, %i.ca, !dbg !81146
+  %i.cd = sub nuw nsw i64 %.sroa.16.023.i120, %i.ca, !dbg !81146
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.ca, !dbg !81147
   %i.cf = sub nuw i64 %.sroa.023.022.i121, %i.ca, !dbg !81148
   br label %.backedge.i, !dbg !81113
@@ -23830,7 +23830,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !81464, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !81465
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !81465
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !81466
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !81467
   br label %.backedge.i, !dbg !81432
@@ -24212,7 +24212,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !81787, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !81788
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !81788
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !81789
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !81790
   br label %.backedge.i, !dbg !81755
@@ -24594,7 +24594,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !82110, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !82111
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !82111
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !82112
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !82113
   br label %.backedge.i, !dbg !82078
@@ -24976,7 +24976,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !82433, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !82434
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !82434
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !82435
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !82436
   br label %.backedge.i, !dbg !82401
@@ -25358,7 +25358,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !82756, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !82757
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !82757
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !82758
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !82759
   br label %.backedge.i, !dbg !82724
@@ -25740,7 +25740,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !83079, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !83080
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !83080
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !83081
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !83082
   br label %.backedge.i, !dbg !83047
@@ -26122,7 +26122,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !83402, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !83403
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !83403
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !83404
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !83405
   br label %.backedge.i, !dbg !83370
@@ -26504,7 +26504,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.t, label %bb.s, !dbg !83725, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bn = sub nuw i64 %.sroa.16.023.i119, %i.bk, !dbg !83726
+  %i.bn = sub nuw nsw i64 %.sroa.16.023.i119, %i.bk, !dbg !83726
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i118, i64 %i.bk, !dbg !83727
   %i.bp = sub nuw i64 %.sroa.023.022.i120, %i.bk, !dbg !83728
   br label %.backedge.i, !dbg !83693
@@ -26907,7 +26907,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bk, label %bb.v, label %bb.u, !dbg !84461, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.bl = sub nuw i64 %.sroa.16.023.i120, %i.bi, !dbg !84462
+  %i.bl = sub nuw nsw i64 %.sroa.16.023.i120, %i.bi, !dbg !84462
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i119, i64 %i.bi, !dbg !84463
   %i.bn = sub nuw i64 %.sroa.023.022.i121, %i.bi, !dbg !84464
   br label %.backedge.i, !dbg !84420
@@ -27294,7 +27294,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bk, label %bb.v, label %bb.u, !dbg !84844, !prof !7679
 
 bb.u:                                             ; preds = %bb.t
-  %i.bl = sub nuw i64 %.sroa.16.023.i120, %i.bi, !dbg !84845
+  %i.bl = sub nuw nsw i64 %.sroa.16.023.i120, %i.bi, !dbg !84845
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.024.i119, i64 %i.bi, !dbg !84846
   %i.bn = sub nuw i64 %.sroa.023.022.i121, %i.bi, !dbg !84847
   br label %.backedge.i, !dbg !84803
@@ -27697,7 +27697,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !85548, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i119, %i.bp, !dbg !85549
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i119, %i.bp, !dbg !85549
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.024.i118, i64 %i.bp, !dbg !85550
   %i.bu = sub nuw i64 %.sroa.023.022.i120, %i.bp, !dbg !85551
   br label %.backedge.i, !dbg !85516
@@ -28100,7 +28100,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !85903, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i119, %i.bp, !dbg !85904
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i119, %i.bp, !dbg !85904
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.024.i118, i64 %i.bp, !dbg !85905
   %i.bu = sub nuw i64 %.sroa.023.022.i120, %i.bp, !dbg !85906
   br label %.backedge.i, !dbg !85871
@@ -28488,7 +28488,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bf, label %bb.t, label %bb.s, !dbg !86236, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bg = sub nuw i64 %.sroa.16.023.i118, %i.bd, !dbg !86237
+  %i.bg = sub nuw nsw i64 %.sroa.16.023.i118, %i.bd, !dbg !86237
   %i.bh = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i117, i64 %i.bd, !dbg !86238
   %i.bi = sub nuw i64 %.sroa.023.022.i119, %i.bd, !dbg !86239
   br label %.backedge.i, !dbg !86204
@@ -28859,7 +28859,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bf, label %bb.t, label %bb.s, !dbg !86573, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bg = sub nuw i64 %.sroa.16.023.i118, %i.bd, !dbg !86574
+  %i.bg = sub nuw nsw i64 %.sroa.16.023.i118, %i.bd, !dbg !86574
   %i.bh = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.024.i117, i64 %i.bd, !dbg !86575
   %i.bi = sub nuw i64 %.sroa.023.022.i119, %i.bd, !dbg !86576
   br label %.backedge.i, !dbg !86541
@@ -29254,7 +29254,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !86932, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i119, %i.bp, !dbg !86933
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i119, %i.bp, !dbg !86933
   %i.bt = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.024.i118, i64 %i.bp, !dbg !86934
   %i.bu = sub nuw i64 %.sroa.023.022.i120, %i.bp, !dbg !86935
   br label %.backedge.i, !dbg !86900
@@ -29657,7 +29657,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !87287, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i119, %i.bp, !dbg !87288
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i119, %i.bp, !dbg !87288
   %i.bt = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.024.i118, i64 %i.bp, !dbg !87289
   %i.bu = sub nuw i64 %.sroa.023.022.i120, %i.bp, !dbg !87290
   br label %.backedge.i, !dbg !87255
@@ -30060,7 +30060,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !87642, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i119, %i.bp, !dbg !87643
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i119, %i.bp, !dbg !87643
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i118, i64 %i.bp, !dbg !87644
   %i.bu = sub nuw i64 %.sroa.023.022.i120, %i.bp, !dbg !87645
   br label %.backedge.i, !dbg !87610
@@ -30463,7 +30463,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s, !dbg !87997, !prof !7679
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = sub nuw i64 %.sroa.16.023.i119, %i.bp, !dbg !87998
+  %i.bs = sub nuw nsw i64 %.sroa.16.023.i119, %i.bp, !dbg !87998
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.024.i118, i64 %i.bp, !dbg !87999
   %i.bu = sub nuw i64 %.sroa.023.022.i120, %i.bp, !dbg !88000
   br label %.backedge.i, !dbg !87965
