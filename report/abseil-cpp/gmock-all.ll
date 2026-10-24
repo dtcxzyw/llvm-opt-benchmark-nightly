@@ -204,8 +204,7 @@ _ZN7testing7MessageD2Ev.exit61:                   ; preds = %.body, %_ZNKSt14def
 
 .thread:                                          ; preds = %bb.b, %bb.c, %_ZN7testing7MessageD2Ev.exit
   %i.am = phi i64 [ %i.a, %bb.b ], [ %.pre, %_ZN7testing7MessageD2Ev.exit ], [ %i.a, %bb.c ] ; 5 uses
-  %6 = phi i1 [ %or.cond170.not172, %bb.b ], [ false, %_ZN7testing7MessageD2Ev.exit ], [ false, %bb.c ]
-  %i.an = zext i1 %6 to i8                        ; 3 uses
+  %i.an = zext i1 %or.cond170.not172 to i8        ; 3 uses
   %i.ao = icmp slt i64 %i.am, 0
   br i1 %i.ao, label %.noexc62, label %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i
 

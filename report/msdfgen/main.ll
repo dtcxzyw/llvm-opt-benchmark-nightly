@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not16, label %bb.b, label %bb.d, !llvm.loop !266
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.not.lcssa = phi i1 [ false, %bb.c ], [ %.not, %bb.b ]
-  ret i1 %.not.lcssa
+  ret i1 %.not
 }
 
 declare noundef zeroext i1 @_ZN7msdfgen7savePngENS_18BitmapConstSectionIfLi3EEEPKc(ptr noundef byval(%"struct.msdfgen::BitmapConstSection.11") align 8, ptr noundef) local_unnamed_addr #2

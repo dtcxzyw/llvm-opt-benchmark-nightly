@@ -205,10 +205,9 @@ bb.di:                                            ; preds = %bb.cx, %bb.da
           to label %bb.cy unwind label %bb.cl
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHashMapNtNtCscdodAO9FK5_5alloc6string6StringmEECs2JiOgHzbbc7_10tokenizers.exit283: ; preds = %bb.dj, %bb.cy
-  %2 = phi i1 [ %or.cond226, %bb.cy ], [ true, %bb.dj ]
   %i.iy = load i64, ptr %i.ar, align 8, !range !20, !noundef !4
   %i.iz = icmp ne i64 %i.iy, 2
-  %or.cond9 = and i1 %2, %i.iz
+  %or.cond9 = and i1 %or.cond226, %i.iz
   br i1 %or.cond9, label %bb.dk, label %bb.b
 
 bb.dj:                                            ; preds = %bb.cy
@@ -611,10 +610,9 @@ bb.di:                                            ; preds = %bb.cx, %bb.da
           to label %bb.cy unwind label %bb.cl
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHashMapNtNtCscdodAO9FK5_5alloc6string6StringmEECs2JiOgHzbbc7_10tokenizers.exit283: ; preds = %bb.dj, %bb.cy
-  %2 = phi i1 [ %or.cond226, %bb.cy ], [ true, %bb.dj ]
   %i.iy = load i64, ptr %i.ar, align 8, !range !20, !noundef !4
   %i.iz = icmp ne i64 %i.iy, 2
-  %or.cond9 = and i1 %2, %i.iz
+  %or.cond9 = and i1 %or.cond226, %i.iz
   br i1 %or.cond9, label %bb.dk, label %bb.b
 
 bb.dj:                                            ; preds = %bb.cy

@@ -206,13 +206,12 @@ _ZN10serde_json3ser9Formatter18begin_object_value17he63e0bb025a34ac7E.exit.i.i: 
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78240)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78241)
   %i.ac = load ptr, ptr %1, align 8, !alias.scope !78242, !noundef !23 ; 2 uses
-  %.not.i.i.i.i.i = icmp ne ptr %i.ac, null       ; 2 uses
+  %.not.i.i.i.i.i = icmp ne ptr %i.ac, null
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !78243
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ag = load i64, ptr %i.af, align 8, !alias.scope !78243 ; 2 uses
   %i.ah = ptrtoint ptr %i.ac to i64
-  %.sroa.18.0.i.i.i.i = select i1 %.not.i.i.i.i.i, i64 %i.ae, i64 undef
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78244)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78245)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78246)
@@ -255,7 +254,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph.i.split.i.i.preheader.i.i.i:               ; preds = %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i"
   %i.av = phi i64 [ %i.dy, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ar, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 3 uses
   %.sroa.11.1.i.i.i.i = phi i64 [ 0, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ah, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 2 uses
-  %.sroa.7.0.i.i.i35.i.i.i.i.i.i = phi i64 [ %.sroa.7.0.i.i.i.i.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %.sroa.18.0.i.i.i.i, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 6 uses
+  %.sroa.7.0.i.i.i35.i.i.i.i.i.i = phi i64 [ %.sroa.7.0.i.i.i.i.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ae, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 6 uses
   %i.aw = phi i1 [ false, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ true, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ]
   %.sroa.012.0.lcssa.i.i20.i.i.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ null, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 2 uses
   %i.ax = phi i64 [ %i.ay, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ag, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ]

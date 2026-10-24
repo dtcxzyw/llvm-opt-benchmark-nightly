@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %._crit_edge522, %bb
   br i1 %.not393.wide, label %._crit_edge, label %bb.ac, !llvm.loop !310
 
 ._crit_edge:                                      ; preds = %bb.an, %bb.ab
-  %.not394 = icmp ne i8 %.1341, 0                 ; 4 uses
+  %.not394 = icmp ne i8 %.1341, 0                 ; 3 uses
   %.pre527 = load i32, ptr %i.bk, align 4, !tbaa !110 ; 2 uses
   br i1 %.not394, label %bb.ao, label %bb.cb
 
@@ -608,14 +608,12 @@ bb.cc:                                            ; preds = %bb.cb
 
 .sink.split:                                      ; preds = %bb.cc, %bb.cb
   %.sink586 = phi i64 [ 512, %bb.cb ], [ 4096, %bb.cc ]
-  %.ph = phi i1 [ %.not394, %bb.cb ], [ true, %bb.cc ]
   %i.lg = load i64, ptr %i.bo, align 8, !tbaa !111
   %i.lh = or i64 %i.lg, %.sink586
   store i64 %i.lh, ptr %i.bo, align 8, !tbaa !111
   br label %bb.cd
 
 bb.cd:                                            ; preds = %.sink.split, %bb.cc
-  %6 = phi i1 [ %.not394, %bb.cc ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.li = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.lj = load i32, ptr %i.li, align 8, !tbaa !340 ; 4 uses
@@ -651,7 +649,7 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %exitcond.not, label %._crit_edge510, label %bb.ce, !llvm.loop !312
 
 ._crit_edge510:                                   ; preds = %.thread463, %bb.cd
-  %or.cond470.not = and i1 %i.lf, %6
+  %or.cond470.not = and i1 %i.lf, %.not394
   br i1 %or.cond470.not, label %bb.cp, label %bb.cg
 
 bb.cg:                                            ; preds = %._crit_edge510
