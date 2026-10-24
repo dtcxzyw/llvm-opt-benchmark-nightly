@@ -206,33 +206,31 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.critedge.i, %.preheader.i
   %.02229.i = phi i64 [ 0, %.preheader.i ], [ %i.r, %.critedge.i ] ; 2 uses
   %i.i = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %.02229.i
-  %.0.i11 = load ptr, ptr %i.i, align 8, !tbaa !77 ; 2 uses
-  %.not.i12 = icmp eq ptr %.0.i11, null
-  br i1 %.not.i12, label %.critedge.i, label %.lr.ph
+  br label %bb.e
 
-bb.e:                                             ; preds = %.lr.ph
-  %2 = getelementptr inbounds nuw i8, ptr %.0.i13, i64 72
-  %.0.i = load ptr, ptr %2, align 8, !tbaa !77    ; 2 uses
+bb.e:                                             ; preds = %.lr.ph, %bb.d
+  %.0.i.in = phi ptr [ %i.i, %bb.d ], [ %2, %.lr.ph ]
+  %.0.i = load ptr, ptr %.0.i.in, align 8, !tbaa !77 ; 5 uses
   %.not.i = icmp eq ptr %.0.i, null
-  br i1 %.not.i, label %.critedge.i, label %.lr.ph, !llvm.loop !18
+  br i1 %.not.i, label %.critedge.i, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.d, %bb.e
-  %.0.i13 = phi ptr [ %.0.i, %bb.e ], [ %.0.i11, %bb.d ] ; 4 uses
-  %i.j = getelementptr i8, ptr %.0.i13, i64 48
+.lr.ph:                                           ; preds = %bb.e
+  %2 = getelementptr inbounds nuw i8, ptr %.0.i, i64 72
+  %i.j = getelementptr i8, ptr %.0.i, i64 48
   %.val11.i = load ptr, ptr %i.j, align 8, !tbaa !59 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %.0.i13, i64 10
+  %i.k = getelementptr inbounds nuw i8, ptr %.0.i, i64 10
   %i.l = load i16, ptr %i.k, align 2, !tbaa !71
   %i.m = zext i16 %i.l to i64
-  %i.n = getelementptr i8, ptr %.0.i13, i64 40
+  %i.n = getelementptr i8, ptr %.0.i, i64 40
   %.val.i = load i64, ptr %i.n, align 8, !tbaa !62
   %i.o = mul i64 %.val.i, %i.m
   %i.p = getelementptr inbounds nuw i8, ptr %.val11.i, i64 %i.o
-  %3 = icmp uge ptr %1, %.val11.i
-  %4 = icmp ult ptr %1, %i.p
-  %i.q = select i1 %3, i1 %4, i1 false
-  br i1 %i.q, label %_ZL19mi_heap_visit_pagesP9mi_heap_sPFbS0_P15mi_page_queue_sP9mi_page_sPvS5_ES5_S5_.exit, label %bb.e, !llvm.loop !18
+  %3 = icmp ult ptr %1, %.val11.i
+  %4 = icmp uge ptr %1, %i.p
+  %i.q = select i1 %3, i1 true, i1 %4
+  br i1 %i.q, label %bb.e, label %_ZL19mi_heap_visit_pagesP9mi_heap_sPFbS0_P15mi_page_queue_sP9mi_page_sPvS5_ES5_S5_.exit, !llvm.loop !18
 
-.critedge.i:                                      ; preds = %bb.e, %bb.d
+.critedge.i:                                      ; preds = %bb.e
   %i.r = add nuw nsw i64 %.02229.i, 1             ; 2 uses
   %exitcond.i = icmp eq i64 %i.r, 75
   br i1 %exitcond.i, label %_ZL19mi_heap_visit_pagesP9mi_heap_sPFbS0_P15mi_page_queue_sP9mi_page_sPvS5_ES5_S5_.exit, label %bb.d, !llvm.loop !19
@@ -271,33 +269,31 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.critedge.i.i, %.preheader.i.i
   %.02229.i.i = phi i64 [ 0, %.preheader.i.i ], [ %i.t, %.critedge.i.i ] ; 2 uses
   %i.k = getelementptr inbounds nuw [24 x i8], ptr %i.j, i64 %.02229.i.i
-  %.0.i11.i = load ptr, ptr %i.k, align 8, !tbaa !77 ; 2 uses
-  %.not.i12.i = icmp eq ptr %.0.i11.i, null
-  br i1 %.not.i12.i, label %.critedge.i.i, label %.lr.ph.i
+  br label %bb.e
 
-bb.e:                                             ; preds = %.lr.ph.i
-  %1 = getelementptr inbounds nuw i8, ptr %.0.i13.i, i64 72
-  %.0.i.i = load ptr, ptr %1, align 8, !tbaa !77  ; 2 uses
+bb.e:                                             ; preds = %.lr.ph.i, %bb.d
+  %.0.i.in.i = phi ptr [ %i.k, %bb.d ], [ %1, %.lr.ph.i ]
+  %.0.i.i = load ptr, ptr %.0.i.in.i, align 8, !tbaa !77 ; 5 uses
   %.not.i.i = icmp eq ptr %.0.i.i, null
-  br i1 %.not.i.i, label %.critedge.i.i, label %.lr.ph.i, !llvm.loop !18
+  br i1 %.not.i.i, label %.critedge.i.i, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %bb.e
-  %.0.i13.i = phi ptr [ %.0.i.i, %bb.e ], [ %.0.i11.i, %bb.d ] ; 4 uses
-  %i.l = getelementptr i8, ptr %.0.i13.i, i64 48
+.lr.ph.i:                                         ; preds = %bb.e
+  %1 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 72
+  %i.l = getelementptr i8, ptr %.0.i.i, i64 48
   %.val11.i.i = load ptr, ptr %i.l, align 8, !tbaa !59 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %.0.i13.i, i64 10
+  %i.m = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 10
   %i.n = load i16, ptr %i.m, align 2, !tbaa !71
   %i.o = zext i16 %i.n to i64
-  %i.p = getelementptr i8, ptr %.0.i13.i, i64 40
+  %i.p = getelementptr i8, ptr %.0.i.i, i64 40
   %.val.i.i = load i64, ptr %i.p, align 8, !tbaa !62
   %i.q = mul i64 %.val.i.i, %i.o
   %i.r = getelementptr inbounds nuw i8, ptr %.val11.i.i, i64 %i.q
-  %2 = icmp uge ptr %0, %.val11.i.i
-  %3 = icmp ult ptr %0, %i.r
-  %i.s = select i1 %2, i1 %3, i1 false
-  br i1 %i.s, label %mi_heap_check_owned.exit, label %bb.e, !llvm.loop !18
+  %2 = icmp ult ptr %0, %.val11.i.i
+  %3 = icmp uge ptr %0, %i.r
+  %i.s = select i1 %2, i1 true, i1 %3
+  br i1 %i.s, label %bb.e, label %mi_heap_check_owned.exit, !llvm.loop !18
 
-.critedge.i.i:                                    ; preds = %bb.e, %bb.d
+.critedge.i.i:                                    ; preds = %bb.e
   %i.t = add nuw nsw i64 %.02229.i.i, 1           ; 2 uses
   %exitcond.i.i = icmp eq i64 %i.t, 75
   br i1 %exitcond.i.i, label %mi_heap_check_owned.exit, label %bb.d, !llvm.loop !19
