@@ -202,7 +202,7 @@ _RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData14green_siblings.exit.i: ; pr
   %i.k = ptrtoint ptr %.sroa.4.0.i.i to i64
   %i.l = ptrtoint ptr %.sroa.0.0.i.i to i64       ; 2 uses
   %i.m = sub nuw i64 %i.k, %i.l
-  %i.n = lshr exact i64 %i.m, 4                   ; 3 uses
+  %i.n = lshr exact i64 %i.m, 4                   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 52
   %i.p = load i32, ptr %i.o, align 4, !noundef !5
   %i.q = zext i32 %i.p to i64                     ; 2 uses
@@ -210,15 +210,12 @@ _RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData14green_siblings.exit.i: ; pr
   br i1 %.not.i, label %bb.d, label %_RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData12prev_sibling.exit
 
 bb.d:                                             ; preds = %_RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData14green_siblings.exit.i
-  %.neg.i = xor i64 %i.q, -1
-  %i.r = add nsw i64 %i.n, %.neg.i                ; 2 uses
-  %.not.i.not.i.i = icmp samesign uge i64 %i.r, %i.n
-  %i.s = sub nsw i64 0, %i.r
+  %i.r = add nuw nsw i64 %i.q, 1
+  %i.s = sub nsw i64 %i.r, %i.n
   %i.t = getelementptr inbounds [16 x i8], ptr %.sroa.4.0.i.i, i64 %i.s
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -16 ; 3 uses
-  %i.v = icmp eq ptr %i.u, %.sroa.0.0.i.i
-  %1 = select i1 %.not.i.not.i.i, i1 true, i1 %i.v
-  %brmerge.i = or i1 %.not.i.i, %1
+  %i.v = icmp eq ptr %.sroa.0.0.i.i, %i.u
+  %brmerge.i = or i1 %.not.i.i, %i.v
   br i1 %brmerge.i, label %_RNvMs3_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_8NodeData12prev_sibling.exit, label %.lr.ph.i.i.preheader22.i
 
 .lr.ph.i.i.preheader22.i:                         ; preds = %bb.d

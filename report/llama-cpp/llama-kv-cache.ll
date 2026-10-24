@@ -205,19 +205,15 @@ _ZNSt6vectorIfSaIfEE6resizeEm.exit.i:             ; preds = %.noexc.i, %.loopexi
   %i.aeq = sub nsw i64 4, %i.aep
   %i.aer = shl nuw nsw i64 %i.aeo, 2
   %i.aes = add nuw nsw i64 %i.aep, 4
-  br label %.preheader67.i
+  br label %.preheader.preheader.i
 
-.preheader67.i:                                   ; preds = %.split.i, %.preheader67.preheader.i
-  %.04870.i = phi i32 [ %i.afq, %.split.i ], [ 1, %.preheader67.preheader.i ] ; 6 uses
-  %25 = icmp sgt i32 %.04870.i, 0
-  br i1 %25, label %.preheader.preheader.i, label %.split.i
-
-.preheader.preheader.i:                           ; preds = %.preheader67.i
+.preheader.preheader.i:                           ; preds = %.split.i, %.preheader67.preheader.i
+  %.04870.i = phi i32 [ %i.afq, %.split.i ], [ 1, %.preheader67.preheader.i ] ; 5 uses
   %i.aet = zext nneg i32 %.04870.i to i64         ; 12 uses
   %i.aeu = mul i64 %i.aeq, %i.aet
   %i.aev = mul nuw i64 %i.aer, %i.aet
   %i.aew = mul i64 %i.aes, %i.aet
-  %min.iters.check = icmp ult i32 %.04870.i, 8
+  %min.iters.check = icmp samesign ult i32 %.04870.i, 8
   %i.aex = add i64 %i.aeu, -1
   %diff.check = icmp ult i64 %i.aex, 31
   %i.aey = add i64 %i.aev, -1
@@ -275,10 +271,10 @@ vector.body:                                      ; preds = %.preheader.i, %vect
   %i.afp = icmp eq i64 %index.next, %n.vec
   br i1 %i.afp, label %._crit_edge.i, label %vector.body, !llvm.loop !461
 
-.split.i:                                         ; preds = %._crit_edge.i, %.preheader67.i
-  %i.afq = shl nsw i32 %.04870.i, 1               ; 2 uses
+.split.i:                                         ; preds = %._crit_edge.i
+  %i.afq = shl nuw nsw i32 %.04870.i, 1           ; 2 uses
   %i.afr = icmp slt i32 %i.afq, %i.adv
-  br i1 %i.afr, label %.preheader67.i, label %._crit_edge71.i, !llvm.loop !462
+  br i1 %i.afr, label %.preheader.preheader.i, label %._crit_edge71.i, !llvm.loop !462
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %scalar.ph
   br i1 %lcmp.mod.not, label %._crit_edge.i, label %scalar.ph.epil.preheader

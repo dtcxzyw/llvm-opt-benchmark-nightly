@@ -204,7 +204,7 @@ find_raw_section.exit.i.i:                        ; preds = %bb.cy
 get_blocksize.exit.i.i:                           ; preds = %find_raw_section.exit.i.i
   %i.vx = getelementptr i8, ptr %i.vw, i64 -2
   %i.vy = load i16, ptr %i.vx, align 2            ; 2 uses
-  %i.vz = zext i16 %i.vy to i32                   ; 50 uses
+  %i.vz = zext i16 %i.vy to i32                   ; 49 uses
   %i.wa = icmp eq i16 %i.vy, 0
   br i1 %i.wa, label %fixup_lfp_data_ptrs.exit.thread, label %bb.cz
 
@@ -239,7 +239,7 @@ bb.db:                                            ; preds = %bb.da
 bb.dc:                                            ; preds = %bb.db, %bb.db
   %i.wo = zext i16 %i.ms to i32                   ; 2 uses
   %i.wp = zext i16 %i.md to i32                   ; 2 uses
-  %i.wq = sub nsw i32 %i.wo, %i.wp                ; 8 uses
+  %i.wq = sub nsw i32 %i.wo, %i.wp                ; 7 uses
   %i.wr = shl nsw i32 %i.wq, 4
   %i.ws = icmp sgt i32 %i.wr, %i.vz
   br i1 %i.ws, label %fixup_lfp_data_ptrs.exit.thread, label %.preheader126.i.i
@@ -327,11 +327,14 @@ bb.dl:                                            ; preds = %bb.dk
   %or.cond119.not160.i.i = select i1 %.not110.i.i, i1 true, i1 %.not111.i.i
   %i.yf = icmp samesign ugt i32 %i.ya, %i.vz
   %or.cond155.i.i = or i1 %i.yf, %or.cond119.not160.i.i
-  %i.yg = icmp samesign ugt i32 %i.yc, %i.vz
-  %or.cond158.i.i.a = select i1 %or.cond155.i.i, i1 true, i1 %i.yg
-  br i1 %or.cond158.i.i.a, label %fixup_lfp_data_ptrs.exit.thread, label %4
+  %4 = icmp samesign ugt i32 %i.yc, %i.vz
+  %or.cond158.i.i = select i1 %or.cond155.i.i, i1 true, i1 %4
+  %5 = add nuw nsw i32 %spec.select.i.i, %i.wo
+  %i.yg = icmp samesign ugt i32 %5, %i.vz
+  %or.cond158.i.i.a = select i1 %or.cond158.i.i, i1 true, i1 %i.yg
+  br i1 %or.cond158.i.i.a, label %fixup_lfp_data_ptrs.exit.thread, label %bb.dm
 
-bb.dm:                                            ; preds = %4
+bb.dm:                                            ; preds = %bb.dl
   %i.yh = zext i16 %i.mt to i32
   %i.yi = add nuw nsw i32 %i.wh, %i.yh
   %i.yj = icmp samesign ugt i32 %i.yi, %i.vz
@@ -604,13 +607,6 @@ bb.eq:                                            ; preds = %bb.ep
   %i.ado = icmp samesign ugt i32 %i.adn, %i.vz
   br i1 %i.ado, label %fixup_lfp_data_ptrs.exit.thread, label %.preheader.i.i
 
-4:                                                ; preds = %bb.dl
-  %5 = icmp sgt i32 %i.wq, %i.vz
-  %6 = add nuw nsw i32 %spec.select.i.i, %i.wo
-  %7 = icmp samesign ugt i32 %6, %i.vz
-  %or.cond157.i.i = select i1 %5, i1 true, i1 %7
-  br i1 %or.cond157.i.i, label %fixup_lfp_data_ptrs.exit.thread, label %bb.dm
-
 .preheader.i.i:                                   ; preds = %bb.eq
   %i.adp = zext nneg i32 %spec.select.i.i to i64
   %invariant.gep.i.i = getelementptr i8, ptr %i.vw, i64 %i.adp ; 16 uses
@@ -741,7 +737,7 @@ fixup_lfp_data_ptrs.exit:                         ; preds = %bb.fe
   %.not112.15.i.i = icmp eq i16 %i.afl, -1
   br i1 %.not112.15.i.i, label %bb.fg, label %fixup_lfp_data_ptrs.exit.thread
 
-fixup_lfp_data_ptrs.exit.thread:                  ; preds = %_get_blocksize.exit.i.i34.i, %bb.ct, %bb.dh, %bb.dg, %bb.df, %bb.de, %.preheader126.i.i, %bb.di, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br, %bb.bs, %bb.bt, %bb.bu, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.ca, %bb.cb, %bb.cc, %bb.cd, %bb.ce, %bb.cf, %bb.cg, %bb.ch, %bb.ci, %bb.cj, %bb.ck, %bb.cl, %bb.cm, %bb.cn, %bb.co, %bb.cp, %raw_block_offset.exit.i, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.do, %bb.dp, %.preheader124.3.i.i, %bb.dq, %bb.dr, %.preheader124.4.i.i, %bb.ds, %bb.dt, %.preheader124.5.i.i, %bb.du, %bb.dv, %.preheader124.6.i.i, %bb.dw, %bb.dx, %.preheader124.7.i.i, %bb.dy, %bb.dz, %.preheader124.8.i.i, %bb.ea, %bb.eb, %.preheader124.9.i.i, %bb.ec, %bb.ed, %.preheader124.10.i.i, %bb.ee, %bb.ef, %.preheader124.11.i.i, %bb.eg, %bb.eh, %.preheader124.12.i.i, %bb.ei, %bb.ej, %.preheader124.13.i.i, %bb.ek, %bb.el, %.preheader124.14.i.i, %bb.em, %bb.en, %.preheader124.15.i.i, %bb.eo, %bb.ep, %bb.fc, %bb.ex, %bb.fb, %bb.ew, %bb.fd, %bb.ev, %bb.ez, %bb.eu, %bb.fe, %bb.et, %bb.fa, %bb.es, %bb.er, %.preheader.i.i, %4, %bb.eq, %bb.ba, %bb.ey, %bb.dk, %bb.dj, %bb.dm, %bb.dl, %bb.dc, %bb.db, %bb.da, %bb.cz, %get_blocksize.exit.i.i, %find_raw_section.exit.i.i, %bb.az, %bb.dn, %.preheader124.2.i.i, %bb.cr, %fixup_lfp_data_ptrs.exit
+fixup_lfp_data_ptrs.exit.thread:                  ; preds = %_get_blocksize.exit.i.i34.i, %bb.ct, %bb.dh, %bb.dg, %bb.df, %bb.de, %.preheader126.i.i, %bb.di, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br, %bb.bs, %bb.bt, %bb.bu, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.ca, %bb.cb, %bb.cc, %bb.cd, %bb.ce, %bb.cf, %bb.cg, %bb.ch, %bb.ci, %bb.cj, %bb.ck, %bb.cl, %bb.cm, %bb.cn, %bb.co, %bb.cp, %bb.bb, %raw_block_offset.exit.i, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.do, %bb.dp, %.preheader124.3.i.i, %bb.dq, %bb.dr, %.preheader124.4.i.i, %bb.ds, %bb.dt, %.preheader124.5.i.i, %bb.du, %bb.dv, %.preheader124.6.i.i, %bb.dw, %bb.dx, %.preheader124.7.i.i, %bb.dy, %bb.dz, %.preheader124.8.i.i, %bb.ea, %bb.eb, %.preheader124.9.i.i, %bb.ec, %bb.ed, %.preheader124.10.i.i, %bb.ee, %bb.ef, %.preheader124.11.i.i, %bb.eg, %bb.eh, %.preheader124.12.i.i, %bb.ei, %bb.ej, %.preheader124.13.i.i, %bb.ek, %bb.el, %.preheader124.14.i.i, %bb.em, %bb.en, %.preheader124.15.i.i, %bb.eo, %bb.ep, %bb.fc, %bb.ex, %bb.fb, %bb.ew, %bb.fd, %bb.ev, %bb.ez, %bb.eu, %bb.fe, %bb.et, %bb.fa, %bb.es, %bb.er, %.preheader.i.i, %bb.eq, %bb.ba, %bb.ey, %bb.dk, %bb.dj, %bb.dm, %bb.dl, %bb.dc, %bb.db, %bb.da, %bb.cz, %get_blocksize.exit.i.i, %find_raw_section.exit.i.i, %bb.az, %bb.dn, %.preheader124.2.i.i, %bb.cr, %fixup_lfp_data_ptrs.exit
   %i.afm = load ptr, ptr %0, align 8              ; 2 uses
   %.not.i97 = icmp eq ptr %i.afm, null
   br i1 %.not.i97, label %__drm_to_dev.exit98, label %bb.ff
