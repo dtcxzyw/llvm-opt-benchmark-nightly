@@ -202,10 +202,9 @@ bb.a:
   %.05 = phi i32 [ %i.i, %bb.b ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.c = phi i64 [ %i.h, %bb.b ], [ %.promoted, %.lr.ph.preheader ]
   %i.d = phi ptr [ %i.g, %bb.b ], [ %.promoted4, %.lr.ph.preheader ] ; 2 uses
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !25
-  %2 = sext i8 %i.e to i32
-  %isdigittmp = add nsw i32 %2, -48               ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !25    ; 2 uses
+  %2 = add i8 %i.e, -48
+  %isdigit = icmp ult i8 %2, 10
   br i1 %isdigit, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
@@ -214,7 +213,9 @@ bb.b:                                             ; preds = %.lr.ph
   %i.h = add i64 %i.c, -1                         ; 3 uses
   store ptr %i.g, ptr %1, align 8, !tbaa !37
   store i64 %i.h, ptr %i.a, align 8, !tbaa !38
-  %i.i = add i32 %isdigittmp, %i.f                ; 2 uses
+  %3 = zext nneg i8 %i.e to i32
+  %4 = add i32 %i.f, -48
+  %i.i = add i32 %4, %3                           ; 2 uses
   %i.j = icmp eq i64 %i.h, 0
   br i1 %i.j, label %.critedge, label %.lr.ph, !llvm.loop !1
 
@@ -474,10 +475,9 @@ bb.z:                                             ; preds = %bb.g
   %.05.i = phi i32 [ %i.an, %bb.aa ], [ 0, %bb.z ] ; 2 uses
   %i.ah = phi i64 [ %i.am, %bb.aa ], [ %i.n, %bb.z ]
   %i.ai = phi ptr [ %i.al, %bb.aa ], [ %i.m, %bb.z ] ; 2 uses
-  %i.aj = load i8, ptr %i.ai, align 1, !tbaa !25
-  %6 = sext i8 %i.aj to i32
-  %isdigittmp.i = add nsw i32 %6, -48             ; 2 uses
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %i.aj = load i8, ptr %i.ai, align 1, !tbaa !25  ; 2 uses
+  %6 = add i8 %i.aj, -48
+  %isdigit.i = icmp ult i8 %6, 10
   br i1 %isdigit.i, label %bb.aa, label %_ZN12lldb_private27AppleObjCTypeEncodingParser10ReadNumberERN4llvm9StringRefE.exit
 
 bb.aa:                                            ; preds = %.lr.ph.i
@@ -486,7 +486,9 @@ bb.aa:                                            ; preds = %.lr.ph.i
   %i.am = add i64 %i.ah, -1                       ; 3 uses
   store ptr %i.al, ptr %2, align 8, !tbaa !37
   store i64 %i.am, ptr %i.a, align 8, !tbaa !38
-  %i.an = add i32 %isdigittmp.i, %i.ak            ; 2 uses
+  %7 = zext nneg i8 %i.aj to i32
+  %8 = add i32 %i.ak, -48
+  %i.an = add i32 %8, %7                          ; 2 uses
   %i.ao = icmp eq i64 %i.am, 0
   br i1 %i.ao, label %_ZN12lldb_private27AppleObjCTypeEncodingParser10ReadNumberERN4llvm9StringRefE.exit, label %.lr.ph.i, !llvm.loop !1
 
@@ -889,10 +891,9 @@ bb.b:                                             ; preds = %_ZNK4llvm9StringRef
   %.05.i = phi i32 [ %i.p, %bb.c ], [ 0, %bb.b ]  ; 2 uses
   %i.j = phi i64 [ %i.o, %bb.c ], [ %i.h, %bb.b ]
   %i.k = phi ptr [ %i.n, %bb.c ], [ %i.g, %bb.b ] ; 2 uses
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !25
-  %7 = sext i8 %i.l to i32
-  %isdigittmp.i = add nsw i32 %7, -48             ; 2 uses
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !25    ; 2 uses
+  %7 = add i8 %i.l, -48
+  %isdigit.i = icmp ult i8 %7, 10
   br i1 %isdigit.i, label %bb.c, label %_ZN12lldb_private27AppleObjCTypeEncodingParser10ReadNumberERN4llvm9StringRefE.exit.loopexit
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -901,7 +902,9 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.o = add i64 %i.j, -1                         ; 3 uses
   store ptr %i.n, ptr %2, align 8, !tbaa !37
   store i64 %i.o, ptr %i.a, align 8, !tbaa !38
-  %i.p = add i32 %isdigittmp.i, %i.m              ; 2 uses
+  %8 = zext nneg i8 %i.l to i32
+  %9 = add i32 %i.m, -48
+  %i.p = add i32 %9, %8                           ; 2 uses
   %i.q = icmp eq i64 %i.o, 0
   br i1 %i.q, label %_ZN12lldb_private27AppleObjCTypeEncodingParser10ReadNumberERN4llvm9StringRefE.exit.loopexit, label %.lr.ph.i, !llvm.loop !1
 

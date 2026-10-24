@@ -202,9 +202,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.0 = phi i32 [ %.0.copyload.i, %bb.b ], [ %i.aa, %bb.d ], [ 0, %bb.c ]
   %i.ab = add nsw i32 %.0, %3                     ; 4 uses
   store i8 %i.t, ptr %i.a, align 1
-  %5 = sext i32 %i.ab to i64
-  %6 = add nsw i64 %5, -128
-  %i.ac = icmp ult i64 %6, -256
+  %5 = add i32 %i.ab, -128
+  %i.ac = icmp ult i32 %5, -256
   %or.cond3 = or i1 %i.ac, %i.q
   br i1 %or.cond3, label %bb.f, label %bb.g
 
@@ -233,7 +232,7 @@ bb.h:                                             ; preds = %bb.g
   %i.an = add nuw nsw i32 %i.j, 1
   %i.ao = zext nneg i32 %i.an to i64
   store i64 %i.ao, ptr %i.c, align 8
-  %i.ap = trunc i32 %i.ab to i8
+  %i.ap = trunc nsw i32 %i.ab to i8
   %i.aq = zext nneg i32 %i.j to i64
   %i.ar = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.aq
   store i8 %i.ap, ptr %i.ar, align 1
@@ -636,9 +635,8 @@ bb.f:                                             ; preds = %.outer, %bb.g
   %i.z = sext i32 %i.y to i64
   %i.aa = getelementptr inbounds i8, ptr %i.u, i64 %i.z
   %.0.copyload.i.i = load i32, ptr %i.aa, align 1 ; 2 uses
-  %1 = sext i32 %.0.copyload.i.i to i64
-  %2 = add nsw i64 %1, 128
-  %i.ab = icmp ult i64 %2, 256
+  %1 = add i32 %.0.copyload.i.i, 128
+  %i.ab = icmp ult i32 %1, 256
   br i1 %i.ab, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -1041,9 +1039,8 @@ bb.n:                                             ; preds = %_ZNSt5dequeIiSaIiEE
 bb.o:                                             ; preds = %.lr.ph80, %bb.q
   %i.be = phi i32 [ %i.bb, %.lr.ph80 ], [ %i.bp, %bb.q ] ; 3 uses
   %i.bf = sub i32 %2, %i.be                       ; 2 uses
-  %3 = sext i32 %i.bf to i64
-  %4 = add nsw i64 %3, 128
-  %i.bg = icmp ult i64 %4, 256
+  %3 = add i32 %i.bf, 128
+  %i.bg = icmp ult i32 %3, 256
   br i1 %i.bg, label %bb.q, label %bb.p, !prof !13
 
 bb.p:                                             ; preds = %bb.o
@@ -1057,7 +1054,7 @@ bb.q:                                             ; preds = %bb.o
   %i.bk = getelementptr i8, ptr %i.bj, i64 -1     ; 2 uses
   %i.bl = load i8, ptr %i.bk, align 1             ; 2 uses
   %i.bm = sext i8 %i.bl to i32
-  %i.bn = trunc i32 %i.bf to i8
+  %i.bn = trunc nsw i32 %i.bf to i8
   store i8 %i.bn, ptr %i.bk, align 1
   %i.bo = icmp slt i8 %i.bl, 0
   %i.bp = add nsw i32 %i.be, %i.bm                ; 2 uses
@@ -1149,9 +1146,8 @@ bb.v:                                             ; preds = %.lr.ph84, %bb.x
   %i.cw = load i32, ptr %.sroa.058.082, align 4   ; 2 uses
   %i.cx = xor i32 %i.cw, -1
   %i.cy = add i32 %2, %i.cx                       ; 2 uses
-  %5 = sext i32 %i.cy to i64
-  %6 = add nsw i64 %5, 128
-  %i.cz = icmp ult i64 %6, 256
+  %4 = add i32 %i.cy, 128
+  %i.cz = icmp ult i32 %4, 256
   br i1 %i.cz, label %bb.x, label %bb.w, !prof !13
 
 bb.w:                                             ; preds = %bb.v
@@ -1159,7 +1155,7 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 bb.x:                                             ; preds = %bb.v
-  %i.da = trunc i32 %i.cy to i8
+  %i.da = trunc nsw i32 %i.cy to i8
   %i.db = load ptr, ptr %i.ck, align 8
   %i.dc = sext i32 %i.cw to i64
   %i.dd = getelementptr inbounds i8, ptr %i.db, i64 %i.dc
@@ -1428,10 +1424,9 @@ bb.g:                                             ; preds = %_ZN2v88internal20Ju
   %i.ar = add i32 %i.u, 2
   %i.as = add i32 %i.ar, %.neg24
   %i.at = srem i32 %i.as, %.0.lcssa.i
-  %i.au = add nsw i32 %i.at, %.sroa.7.0.copyload
-  %2 = sext i32 %i.au to i64
-  %3 = add nsw i64 %2, -128
-  %i.av = icmp ult i64 %3, -256
+  %i.au = add i32 %.sroa.7.0.copyload, -128
+  %2 = add i32 %i.au, %i.at
+  %i.av = icmp ult i32 %2, -256
   br i1 %i.av, label %_ZNSt3mapIiN2v88internal20JumpOptimizationInfo8JumpInfoESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit.thread, label %.critedge
 
 _ZNSt3mapIiN2v88internal20JumpOptimizationInfo8JumpInfoESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit.thread: ; preds = %_ZNSt8_Rb_treeIiSt4pairIKiN2v88internal20JumpOptimizationInfo8JumpInfoEESt10_Select1stIS6_ESt4lessIiESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i, %bb.d, %bb.g, %_ZNSt3mapIiN2v88internal20JumpOptimizationInfo8JumpInfoESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit
@@ -1834,9 +1829,8 @@ _ZNK2v88internal5Label3posEv.exit:                ; preds = %_ZN2v88internal11En
   %.neg36 = sub i64 %i.q, %i.p
   %.neg37 = trunc i64 %.neg36 to i32
   %i.r = add i32 %.neg37, %i.l                    ; 3 uses
-  %5 = sext i32 %i.r to i64
-  %6 = add nsw i64 %5, 126
-  %i.s = icmp ult i64 %6, 256
+  %5 = add i32 %i.r, 126
+  %i.s = icmp ult i32 %5, 256
   br i1 %i.s, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %_ZNK2v88internal5Label3posEv.exit
@@ -2239,9 +2233,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit
 
 _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
-  %2 = sext i32 %1 to i64
-  %3 = add nsw i64 %2, 126
-  %i.j = icmp ult i64 %3, 256
+  %2 = add i32 %1, 126
+  %i.j = icmp ult i32 %2, 256
   br i1 %i.j, label %bb.c, label %_ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit._crit_edge
 
 _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit._crit_edge: ; preds = %_ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit
@@ -2311,9 +2304,8 @@ bb.b:                                             ; preds = %_ZNK2v88internal5La
   br label %_ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit.i
 
 _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit.i: ; preds = %bb.b, %_ZNK2v88internal5Label3posEv.exit
-  %4 = sext i32 %i.j to i64
-  %5 = add nsw i64 %4, 126
-  %i.q = icmp ult i64 %5, 256
+  %4 = add i32 %i.j, 126
+  %i.q = icmp ult i32 %4, 256
   br i1 %i.q, label %bb.c, label %_ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit._crit_edge.i
 
 _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit._crit_edge.i: ; preds = %_ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit.i

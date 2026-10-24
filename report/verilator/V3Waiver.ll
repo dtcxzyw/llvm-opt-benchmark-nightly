@@ -202,10 +202,9 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
   %.1 = phi ptr [ %.1.be, %.critedge.backedge ], [ %i.bs, %bb.r ] ; 3 uses
   %i.bu = load i8, ptr %.1, align 1, !tbaa !18    ; 3 uses
   %i.bv = icmp eq i8 %i.bu, 32
-  %13 = sext i8 %i.bu to i32
-  %isdigittmp = add nsw i32 %13, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
-  %or.cond = select i1 %i.bv, i1 true, i1 %isdigit
+  %13 = add i8 %i.bu, -48
+  %isdigit = icmp ult i8 %13, 10
+  %or.cond = or i1 %i.bv, %isdigit
   %i.bw = getelementptr inbounds nuw i8, ptr %.1, i64 1
   br i1 %or.cond, label %.critedge.backedge, label %bb.s
 

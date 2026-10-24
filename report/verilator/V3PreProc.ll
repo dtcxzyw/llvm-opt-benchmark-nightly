@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit686: ; preds = %_Z
 
 .critedge:                                        ; preds = %.critedge.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit
   %i.agy = phi i64 [ 0, %.critedge.lr.ph ], [ %i.any, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 11 uses
-  %i.agz = phi i8 [ %i.age, %.critedge.lr.ph ], [ %i.anx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 7 uses
+  %i.agz = phi i8 [ %i.age, %.critedge.lr.ph ], [ %i.anx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 8 uses
   %.01231136 = phi ptr [ %i.agd, %.critedge.lr.ph ], [ %i.anw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 12 uses
   %.01241135 = phi i1 [ false, %.critedge.lr.ph ], [ %.1125850, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 2 uses
   %.01261133 = phi i1 [ false, %.critedge.lr.ph ], [ %.1127, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 6 uses
@@ -232,7 +232,7 @@ bb.gk:                                            ; preds = %bb.gj
   br label %.thread848
 
 .thread848:                                       ; preds = %bb.gj, %bb.gk
-  %.pre-phi = phi i32 [ %i.ahd, %bb.gk ], [ 92, %bb.gj ] ; 2 uses
+  %.pre-phi = phi i32 [ %i.ahd, %bb.gk ], [ 92, %bb.gj ]
   %.1125851 = phi i1 [ %spec.select322, %bb.gk ], [ true, %bb.gj ] ; 9 uses
   %i.ahf = call i32 @isalpha(i32 noundef %.pre-phi) #46
   %.fr = freeze i32 %i.ahf
@@ -250,8 +250,8 @@ bb.gl:                                            ; preds = %switch.early.test
   br i1 %i.ahg, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit725, label %.thread859
 
 .thread859:                                       ; preds = %bb.gl
-  %isdigittmp860 = add nsw i32 %.pre-phi, -48
-  %isdigit861 = icmp ult i32 %isdigittmp860, 10
+  %57 = add i8 %i.agz, -48
+  %isdigit861 = icmp ult i8 %57, 10
   br i1 %isdigit861, label %bb.gm, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit696.thread
 
 bb.gm:                                            ; preds = %.thread859, %switch.early.test, %switch.early.test, %.thread848

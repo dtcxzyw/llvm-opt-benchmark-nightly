@@ -205,33 +205,29 @@ bb.a:
   %.051.i.i.i = phi i64 [ %i.o, %bb.e ], [ %i.d, %.lr.ph.preheader.i.i.i ] ; 2 uses
   %.sroa.031.050.i.i.i = phi ptr [ %i.n, %bb.e ], [ %0, %.lr.ph.preheader.i.i.i ] ; 9 uses
   %i.g = load i8, ptr %.sroa.031.050.i.i.i, align 1, !tbaa !54
-  %2 = sext i8 %i.g to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit.i.i.i.i.i = icmp ult i32 %3, -10
+  %2 = add i8 %i.g, -58
+  %isdigit.i.i.i.i.i = icmp ult i8 %2, -10
   br i1 %isdigit.i.i.i.i.i, label %"_ZSt11find_if_notIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZN4bzla6parser4smt26Parser23parse_open_term_indexedEvE3$_0ET_SF_SF_T0_.exit", label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i, i64 1
   %i.i = load i8, ptr %i.h, align 1, !tbaa !54
-  %4 = sext i8 %i.i to i32
-  %5 = add nsw i32 %4, -58
-  %isdigit.i.i16.i.i.i = icmp ult i32 %5, -10
+  %3 = add i8 %i.i, -58
+  %isdigit.i.i16.i.i.i = icmp ult i8 %3, -10
   br i1 %isdigit.i.i16.i.i.i, label %"_ZSt11find_if_notIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZN4bzla6parser4smt26Parser23parse_open_term_indexedEvE3$_0ET_SF_SF_T0_.exit.loopexit.split.loop.exit", label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i, i64 2
   %i.k = load i8, ptr %i.j, align 1, !tbaa !54
-  %6 = sext i8 %i.k to i32
-  %7 = add nsw i32 %6, -58
-  %isdigit.i.i17.i.i.i = icmp ult i32 %7, -10
+  %4 = add i8 %i.k, -58
+  %isdigit.i.i17.i.i.i = icmp ult i8 %4, -10
   br i1 %isdigit.i.i17.i.i.i, label %"_ZSt11find_if_notIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZN4bzla6parser4smt26Parser23parse_open_term_indexedEvE3$_0ET_SF_SF_T0_.exit.loopexit.split.loop.exit16", label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i, i64 3
   %i.m = load i8, ptr %i.l, align 1, !tbaa !54
-  %8 = sext i8 %i.m to i32
-  %9 = add nsw i32 %8, -58
-  %isdigit.i.i18.i.i.i = icmp ult i32 %9, -10
+  %5 = add i8 %i.m, -58
+  %isdigit.i.i18.i.i.i = icmp ult i8 %5, -10
   br i1 %isdigit.i.i18.i.i.i, label %"_ZSt11find_if_notIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZN4bzla6parser4smt26Parser23parse_open_term_indexedEvE3$_0ET_SF_SF_T0_.exit.loopexit.split.loop.exit18", label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -256,9 +252,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %._crit_edge.i.i.i
   %i.r = load i8, ptr %.sroa.031.0.lcssa.i.i.i, align 1, !tbaa !54
-  %10 = sext i8 %i.r to i32
-  %11 = add nsw i32 %10, -58
-  %isdigit.i.i19.i.i.i = icmp ult i32 %11, -10
+  %6 = add i8 %i.r, -58
+  %isdigit.i.i19.i.i.i = icmp ult i8 %6, -10
   br i1 %isdigit.i.i19.i.i.i, label %"_ZSt11find_if_notIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZN4bzla6parser4smt26Parser23parse_open_term_indexedEvE3$_0ET_SF_SF_T0_.exit", label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -268,9 +263,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %._crit_edge.i.i.i
   %.sroa.031.1.i.i.i = phi ptr [ %i.s, %bb.g ], [ %.sroa.031.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.t = load i8, ptr %.sroa.031.1.i.i.i, align 1, !tbaa !54
-  %12 = sext i8 %i.t to i32
-  %13 = add nsw i32 %12, -58
-  %isdigit.i.i20.i.i.i = icmp ult i32 %13, -10
+  %7 = add i8 %i.t, -58
+  %isdigit.i.i20.i.i.i = icmp ult i8 %7, -10
   br i1 %isdigit.i.i20.i.i.i, label %"_ZSt11find_if_notIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZN4bzla6parser4smt26Parser23parse_open_term_indexedEvE3$_0ET_SF_SF_T0_.exit", label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -280,9 +274,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %._crit_edge.i.i.i
   %.sroa.031.2.i.i.i = phi ptr [ %i.u, %bb.i ], [ %.sroa.031.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %i.v = load i8, ptr %.sroa.031.2.i.i.i, align 1, !tbaa !54
-  %14 = sext i8 %i.v to i32
-  %15 = add nsw i32 %14, -58
-  %isdigit.i.i21.i.i.i = icmp ult i32 %15, -10
+  %8 = add i8 %i.v, -58
+  %isdigit.i.i21.i.i.i = icmp ult i8 %8, -10
   %spec.select.i.i.i = select i1 %isdigit.i.i21.i.i.i, ptr %.sroa.031.2.i.i.i, ptr %1
   br label %"_ZSt11find_if_notIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZN4bzla6parser4smt26Parser23parse_open_term_indexedEvE3$_0ET_SF_SF_T0_.exit"
 

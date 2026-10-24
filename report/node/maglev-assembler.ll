@@ -202,7 +202,6 @@ bb.a:
   %i.b = add i32 %i.a, 22
   %i.c = and i32 %i.b, -8                         ; 2 uses
   tail call void @_ZN2v88internal6maglev15MaglevAssembler8AllocateENS1_16RegisterSnapshotENS0_8RegisterEiNS0_14AllocationTypeENS0_19AllocationAlignmentE(ptr noundef nonnull align 8 dereferenceable(456) %0, i48 %1, i8 %2, i32 noundef %i.c, i8 noundef zeroext 0, i8 noundef zeroext 0) #10
-  %9 = add i32 %i.a, 14
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   %i.d = getelementptr inbounds nuw i8, ptr %8, i64 1
   %i.e = getelementptr inbounds nuw i8, ptr %8, i64 2 ; 4 uses
@@ -229,9 +228,8 @@ bb.b:                                             ; preds = %bb.a, %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.l = phi i64 [ 1, %bb.a ], [ 2, %bb.b ]       ; 3 uses
   %i.m = phi i8 [ 0, %bb.a ], [ %i.k, %bb.b ]
-  %10 = sext i32 %9 to i64
-  %11 = add nsw i64 %10, 120
-  %i.n = icmp ult i64 %11, 256
+  %9 = add i32 %i.a, 134
+  %i.n = icmp ult i32 %9, 256
   %i.o = and i8 %2, 7                             ; 2 uses
   %i.p = icmp samesign ult i8 %2, 16              ; 2 uses
   br i1 %i.n, label %.thread.i.i, label %bb.d
@@ -472,21 +470,19 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN2v88internal6maglev15MaglevAssembler12ToMemOperandERKNS0_8compiler18InstructionOperandE.exit: ; preds = %bb.e, %bb.f
   %.0.i.i.i = phi i32 [ %i.z, %bb.f ], [ %i.t, %bb.e ]
-  %i.aa = shl nsw i32 %.0.i.i.i, 3
-  %i.ab = sub nsw i32 -32, %i.aa                  ; 3 uses
-  %4 = sext i32 %i.ab to i64
-  %5 = add nsw i64 %4, 128
-  %i.ac = icmp ult i64 %5, 256                    ; 2 uses
+  %i.aa = shl nsw i32 %.0.i.i.i, 3                ; 2 uses
+  %i.ab = sub nsw i32 -32, %i.aa                  ; 2 uses
+  %4 = add i32 %i.aa, 152
+  %i.ac = icmp ult i32 %4, 256                    ; 2 uses
   %i.ad = shl i32 %i.ab, 24
   %i.ae = or disjoint i32 %i.ad, 4521984
   %.sroa.02.3.insert.insert10.i = zext i32 %i.ae to i64
   %.sroa.02.3.insert.ext.i = zext i32 %i.ab to i64
   %.sroa.02.3.insert.shift.i = shl nuw nsw i64 %.sroa.02.3.insert.ext.i, 24
   %.sroa.02.3.insert.insert.i = or disjoint i64 %.sroa.02.3.insert.shift.i, 8716288
-  %.sroa.02.0.i = select i1 %i.ac, i64 %.sroa.02.3.insert.insert10.i, i64 %.sroa.02.3.insert.insert.i
-  %storemerge.i.i = select i1 %i.ac, i64 2, i64 5
-  %.fca.1.load.cast.i.i = inttoptr i64 %storemerge.i.i to ptr
-  tail call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 %3, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i) #10
+  %storemerge.i.i = select i1 %i.ac, i64 %.sroa.02.3.insert.insert10.i, i64 %.sroa.02.3.insert.insert.i
+  %.fca.1.load.cast.i.i = select i1 %i.ac, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 5 to ptr)
+  tail call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 %3, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i) #10
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.d, %_ZN2v88internal6maglev15MaglevAssembler12ToMemOperandERKNS0_8compiler18InstructionOperandE.exit, %bb.b
@@ -529,7 +525,7 @@ _ZNK2v88internal8compiler11OptionalRefINS1_11JSObjectRefEE5valueEv.exit: ; preds
 bb.b:                                             ; preds = %_ZNK2v88internal8compiler11OptionalRefINS1_11JSObjectRefEE5valueEv.exit, %bb.a
   %.sroa.026.0 = phi i8 [ %4, %_ZNK2v88internal8compiler11OptionalRefINS1_11JSObjectRefEE5valueEv.exit ], [ %3, %bb.a ] ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %.sroa.0.0.copyload.i17 = load i64, ptr %i.c, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i17 = load i64, ptr %i.c, align 8 ; 2 uses
   %i.d = and i64 %.sroa.0.0.copyload.i17, 16384
   %.not32 = icmp eq i64 %i.d, 0
   br i1 %.not32, label %bb.c, label %bb.e
@@ -582,7 +578,7 @@ _ZN2v88internal6maglev15MaglevAssembler15LoadTaggedFieldENS0_8RegisterES3_i.exit
 bb.e:                                             ; preds = %_ZN2v88internal6maglev15MaglevAssembler15LoadTaggedFieldENS0_8RegisterES3_i.exit, %bb.b
   %.sroa.026.2 = phi i8 [ %.sroa.026.0, %bb.b ], [ %spec.select, %_ZN2v88internal6maglev15MaglevAssembler15LoadTaggedFieldENS0_8RegisterES3_i.exit ] ; 14 uses
   %i.s = trunc i64 %.sroa.0.0.copyload.i17 to i32
-  %i.t = and i32 %i.s, 16383
+  %i.t = and i32 %i.s, 16383                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 2 ; 5 uses
@@ -630,8 +626,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN2v88internal6maglev15MaglevAssembler15LoadTaggedFieldENS0_8RegisterES3_i.exit21
 
 bb.j:                                             ; preds = %bb.g
-  %8 = and i64 %.sroa.0.0.copyload.i17, 16383
-  %i.aj = icmp samesign ult i64 %8, 129
+  %i.aj = icmp samesign ult i32 %i.t, 129
   br i1 %i.aj, label %.thread.i.i, label %bb.k
 
 .thread.i.i:                                      ; preds = %bb.j, %bb.h, %bb.h
@@ -643,7 +638,7 @@ bb.j:                                             ; preds = %bb.g
   %i.an = lshr i8 %.sroa.026.2, 3
   %i.ao = or i8 %i.ad, %i.an
   store i8 %i.ao, ptr %i.u, align 1
-  %i.ap = trunc i32 %i.w to i8
+  %i.ap = trunc nsw i32 %i.w to i8
   %i.aq = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.ac
   store i8 %i.ap, ptr %i.aq, align 1
   %i.ar = add nuw nsw i64 %i.ac, 1
@@ -1046,20 +1041,18 @@ bb.o:                                             ; preds = %_ZNK2v88internal6ma
 
 _ZN2v88internal6maglev15MaglevAssembler12ToMemOperandERKNS0_8compiler18InstructionOperandE.exit: ; preds = %_ZNK2v88internal6maglev21RegallocValueNodeInfo10allocationEv.exit, %bb.o
   %.0.i.i.i = phi i32 [ %i.bb, %bb.o ], [ %i.av, %_ZNK2v88internal6maglev21RegallocValueNodeInfo10allocationEv.exit ]
-  %i.bc = shl nsw i32 %.0.i.i.i, 3
-  %i.bd = sub nsw i32 -32, %i.bc                  ; 3 uses
-  %19 = sext i32 %i.bd to i64
-  %20 = add nsw i64 %19, 128
-  %i.be = icmp ult i64 %20, 256                   ; 2 uses
+  %i.bc = shl nsw i32 %.0.i.i.i, 3                ; 2 uses
+  %i.bd = sub nsw i32 -32, %i.bc                  ; 2 uses
+  %19 = add i32 %i.bc, 152
+  %i.be = icmp ult i32 %19, 256                   ; 2 uses
   %i.bf = shl i32 %i.bd, 24
   %i.bg = or disjoint i32 %i.bf, 4521984
   %.sroa.02.3.insert.insert10.i = zext i32 %i.bg to i64
   %.sroa.02.3.insert.ext.i = zext i32 %i.bd to i64
   %.sroa.02.3.insert.shift.i = shl nuw nsw i64 %.sroa.02.3.insert.ext.i, 24
   %.sroa.02.3.insert.insert.i = or disjoint i64 %.sroa.02.3.insert.shift.i, 8716288
-  %.sroa.02.0.i = select i1 %i.be, i64 %.sroa.02.3.insert.insert10.i, i64 %.sroa.02.3.insert.insert.i ; 8 uses
-  %storemerge.i.i = select i1 %i.be, i64 2, i64 5
-  %.fca.1.load.cast.i.i = inttoptr i64 %storemerge.i.i to ptr ; 8 uses
+  %storemerge.i.i = select i1 %i.be, i64 %.sroa.02.3.insert.insert10.i, i64 %.sroa.02.3.insert.insert.i ; 8 uses
+  %.fca.1.load.cast.i.i = select i1 %i.be, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 5 to ptr) ; 8 uses
   %sum.shift = lshr i64 %i.b, 40
   %i.bh = trunc i64 %sum.shift to i8
   %i.bi = and i8 %i.bh, 7
@@ -1122,7 +1115,7 @@ bb.q:                                             ; preds = %_ZN2v88internal6mag
 _ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScope14AcquireScratchEv.exit: ; preds = %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit.thread, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit
   %i.ca = phi ptr [ %i.bp, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit.thread ], [ %i.bt, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit ]
   store i8 0, ptr %i.ca, align 4
-  call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 10, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i) #10
+  call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 10, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i) #10
   call void @_ZN2v88internal14MacroAssembler6SmiTagENS0_8RegisterES2_(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 %1, i8 10) #10
   call void @_ZN2v88internal9Assembler3jmpEPNS0_5LabelENS2_8DistanceE(ptr noundef nonnull align 8 dereferenceable(456) %0, ptr noundef nonnull %11, i32 noundef 1) #10
   call void @_ZN2v88internal14MacroAssembler9Cvtlsi2sdENS0_11XMMRegisterENS0_8RegisterE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 0, i8 10) #10
@@ -1205,7 +1198,7 @@ bb.s:                                             ; preds = %_ZN2v88internal6mag
 _ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScope14AcquireScratchEv.exit109: ; preds = %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit108.thread, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit108
   %i.de = phi ptr [ %i.ct, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit108.thread ], [ %i.cx, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit108 ]
   store i8 0, ptr %i.de, align 4
-  call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 10, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i) #10
+  call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 10, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #10
   store i32 0, ptr %9, align 4
   %i.df = getelementptr inbounds nuw i8, ptr %9, i64 4
@@ -1286,11 +1279,11 @@ bb.v:                                             ; preds = %_ZN2v88internal6mag
   br i1 %.not.i.i.i110.a, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  tail call void @_ZN2v88internal9Assembler6vinstrEhNS0_11XMMRegisterES2_NS0_7OperandENS1_10SIMDPrefixENS1_13LeadingOpcodeENS1_4VexWENS0_10CpuFeatureE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 noundef zeroext 16, i8 0, i8 0, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i, i32 noundef 3, i32 noundef 1, i32 noundef 0, i32 noundef 5) #10
+  tail call void @_ZN2v88internal9Assembler6vinstrEhNS0_11XMMRegisterES2_NS0_7OperandENS1_10SIMDPrefixENS1_13LeadingOpcodeENS1_4VexWENS0_10CpuFeatureE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 noundef zeroext 16, i8 0, i8 0, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i, i32 noundef 3, i32 noundef 1, i32 noundef 0, i32 noundef 5) #10
   br label %_ZN2v88internal6maglev15MaglevAssembler11LoadFloat64ENS0_11XMMRegisterENS0_7OperandE.exit
 
 bb.x:                                             ; preds = %bb.v
-  tail call void @_ZN2v88internal9Assembler5movsdENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 0, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i) #10
+  tail call void @_ZN2v88internal9Assembler5movsdENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 0, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i) #10
   br label %_ZN2v88internal6maglev15MaglevAssembler11LoadFloat64ENS0_11XMMRegisterENS0_7OperandE.exit
 
 _ZN2v88internal6maglev15MaglevAssembler11LoadFloat64ENS0_11XMMRegisterENS0_7OperandE.exit: ; preds = %bb.w, %bb.x
@@ -1329,7 +1322,7 @@ bb.y:                                             ; preds = %_ZN2v88internal6mag
   %i.eq = getelementptr inbounds nuw i8, ptr %16, i64 4
   store i32 0, ptr %i.eq, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @_ZN2v88internal7OperandC1ES1_i(ptr noundef nonnull align 8 dereferenceable(16) %6, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i, i32 noundef 4) #10
+  call void @_ZN2v88internal7OperandC1ES1_i(ptr noundef nonnull align 8 dereferenceable(16) %6, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i, i32 noundef 4) #10
   %i.er = load i64, ptr %6, align 8
   %i.es = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.et = load ptr, ptr %i.es, align 8
@@ -1377,11 +1370,11 @@ _ZN2v88internal6maglev15MaglevAssembler16JumpIfNotHoleNanENS0_7OperandEPNS0_5Lab
   br i1 %.not.i.i.i111, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN2v88internal6maglev15MaglevAssembler16JumpIfNotHoleNanENS0_7OperandEPNS0_5LabelENS4_8DistanceE.exit
-  call void @_ZN2v88internal9Assembler6vinstrEhNS0_11XMMRegisterES2_NS0_7OperandENS1_10SIMDPrefixENS1_13LeadingOpcodeENS1_4VexWENS0_10CpuFeatureE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 noundef zeroext 16, i8 0, i8 0, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i, i32 noundef 3, i32 noundef 1, i32 noundef 0, i32 noundef 5) #10
+  call void @_ZN2v88internal9Assembler6vinstrEhNS0_11XMMRegisterES2_NS0_7OperandENS1_10SIMDPrefixENS1_13LeadingOpcodeENS1_4VexWENS0_10CpuFeatureE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 noundef zeroext 16, i8 0, i8 0, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i, i32 noundef 3, i32 noundef 1, i32 noundef 0, i32 noundef 5) #10
   br label %_ZN2v88internal6maglev15MaglevAssembler11LoadFloat64ENS0_11XMMRegisterENS0_7OperandE.exit112
 
 bb.ac:                                            ; preds = %_ZN2v88internal6maglev15MaglevAssembler16JumpIfNotHoleNanENS0_7OperandEPNS0_5LabelENS4_8DistanceE.exit
-  call void @_ZN2v88internal9Assembler5movsdENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 0, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i) #10
+  call void @_ZN2v88internal9Assembler5movsdENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 0, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i) #10
   br label %_ZN2v88internal6maglev15MaglevAssembler11LoadFloat64ENS0_11XMMRegisterENS0_7OperandE.exit112
 
 _ZN2v88internal6maglev15MaglevAssembler11LoadFloat64ENS0_11XMMRegisterENS0_7OperandE.exit112: ; preds = %bb.ab, %bb.ac
@@ -1461,7 +1454,7 @@ bb.ae:                                            ; preds = %_ZN2v88internal6mag
 _ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScope14AcquireScratchEv.exit120: ; preds = %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit119.thread, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit119
   %i.gi = phi ptr [ %i.fx, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit119.thread ], [ %i.gb, %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit119 ]
   store i8 0, ptr %i.gi, align 4
-  call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 10, i64 %.sroa.02.0.i, ptr nonnull %.fca.1.load.cast.i.i) #10
+  call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(456) %0, i8 10, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   store i32 0, ptr %4, align 4
   %i.gj = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -1864,9 +1857,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN2v88internal6maglev15MaglevAssembler30StoreTaggedFieldNoWriteBarrierENS0_8RegisterEiS3_.exit
 
 bb.f:                                             ; preds = %bb.c
-  %8 = sext i32 %2 to i64
-  %9 = add nsw i64 %8, 127
-  %i.p = icmp ult i64 %9, 256
+  %8 = add i32 %2, 127
+  %i.p = icmp ult i32 %8, 256
   br i1 %i.p, label %.thread.i.i, label %bb.g
 
 .thread.i.i:                                      ; preds = %bb.f, %bb.d, %bb.d
@@ -2269,9 +2261,8 @@ bb.f:                                             ; preds = %_ZN2v88internal11Re
   br i1 %i.af, label %_ZN2v88internal6maglev15MaglevAssembler28SetSlotAddressForTaggedFieldENS0_8RegisterES3_i.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %9 = sext i32 %4 to i64
-  %10 = add nsw i64 %9, 127
-  %i.ag = icmp ult i64 %10, 256
+  %9 = add i32 %4, 127
+  %i.ag = icmp ult i32 %9, 256
   br i1 %i.ag, label %.thread.i.i, label %bb.h
 
 .thread.i.i:                                      ; preds = %bb.g

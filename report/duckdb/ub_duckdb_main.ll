@@ -204,9 +204,8 @@ bb.s:                                             ; preds = %.lr.ph627, %bb.y
   %.0116625 = phi i64 [ 0, %.lr.ph627 ], [ %i.bu, %bb.y ]
   %i.bk = getelementptr inbounds nuw i8, ptr %i.az, i64 %.0115626
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !287 ; 2 uses
-  %55 = sext i8 %i.bl to i32
-  %isdigittmp = add nsw i32 %55, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %55 = add i8 %i.bl, -48
+  %isdigit = icmp ult i8 %55, 10
   br i1 %isdigit, label %bb.y, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
@@ -258,7 +257,7 @@ bb.x:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.y:                                             ; preds = %bb.s
   %i.bs = mul i64 %.0116625, 10
-  %56 = sext i8 %i.bl to i64
+  %56 = zext nneg i8 %i.bl to i64
   %i.bt = add i64 %i.bs, -48
   %i.bu = add i64 %i.bt, %56                      ; 3 uses
   %.0115 = add i64 %.0115626, 1                   ; 2 uses

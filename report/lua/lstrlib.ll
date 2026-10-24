@@ -205,9 +205,8 @@ bb.m:                                             ; preds = %bb.a
 
 bb.n:                                             ; preds = %bb.a
   %i.d = load i8, ptr %i.b, align 1, !tbaa !13
-  %3 = sext i8 %i.d to i32
-  %4 = add nsw i32 %3, -58
-  %i.e = icmp ult i32 %4, -10
+  %3 = add i8 %i.d, -58
+  %i.e = icmp ult i8 %3, -10
   br i1 %i.e, label %getnumlimit.exit, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.n, %.preheader.i.i
@@ -222,9 +221,8 @@ bb.n:                                             ; preds = %bb.a
   %i.l = and i64 %i.k, 4294967295
   %i.m = add nuw i64 %i.l, %i.g                   ; 5 uses
   %i.n = load i8, ptr %i.h, align 1, !tbaa !13
-  %5 = sext i8 %i.n to i32
-  %6 = add nsw i32 %5, -48
-  %i.o = icmp ult i32 %6, 10
+  %4 = add i8 %i.n, -48
+  %i.o = icmp ult i8 %4, 10
   %i.p = icmp ult i64 %i.m, 922337203685477580
   %i.q = select i1 %i.o, i1 %i.p, i1 false
   br i1 %i.q, label %.preheader.i.i, label %getnum.exit.i
@@ -247,9 +245,8 @@ getnumlimit.exit:                                 ; preds = %getnum.exit.i, %bb.
 
 bb.p:                                             ; preds = %bb.a
   %i.w = load i8, ptr %i.b, align 1, !tbaa !13
-  %7 = sext i8 %i.w to i32
-  %8 = add nsw i32 %7, -58
-  %i.x = icmp ult i32 %8, -10
+  %5 = add i8 %i.w, -58
+  %i.x = icmp ult i8 %5, -10
   br i1 %i.x, label %getnumlimit.exit42, label %.preheader.i.i37
 
 .preheader.i.i37:                                 ; preds = %bb.p, %.preheader.i.i37
@@ -264,9 +261,8 @@ bb.p:                                             ; preds = %bb.a
   %i.ae = and i64 %i.ad, 4294967295
   %i.af = add nuw i64 %i.ae, %i.z                 ; 5 uses
   %i.ag = load i8, ptr %i.aa, align 1, !tbaa !13
-  %9 = sext i8 %i.ag to i32
-  %10 = add nsw i32 %9, -48
-  %i.ah = icmp ult i32 %10, 10
+  %6 = add i8 %i.ag, -48
+  %i.ah = icmp ult i8 %6, 10
   %i.ai = icmp ult i64 %i.af, 922337203685477580
   %i.aj = select i1 %i.ah, i1 %i.ai, i1 false
   br i1 %i.aj, label %.preheader.i.i37, label %getnum.exit.i39
@@ -289,9 +285,8 @@ getnumlimit.exit42:                               ; preds = %getnum.exit.i39, %b
 
 bb.r:                                             ; preds = %bb.a
   %i.ap = load i8, ptr %i.b, align 1, !tbaa !13
-  %11 = sext i8 %i.ap to i32
-  %12 = add nsw i32 %11, -58
-  %i.aq = icmp ult i32 %12, -10
+  %7 = add i8 %i.ap, -58
+  %i.aq = icmp ult i8 %7, -10
   br i1 %i.aq, label %getnumlimit.exit48, label %.preheader.i.i43
 
 .preheader.i.i43:                                 ; preds = %bb.r, %.preheader.i.i43
@@ -306,9 +301,8 @@ bb.r:                                             ; preds = %bb.a
   %i.ax = and i64 %i.aw, 4294967295
   %i.ay = add nuw i64 %i.ax, %i.as                ; 5 uses
   %i.az = load i8, ptr %i.at, align 1, !tbaa !13
-  %13 = sext i8 %i.az to i32
-  %14 = add nsw i32 %13, -48
-  %i.ba = icmp ult i32 %14, 10
+  %8 = add i8 %i.az, -48
+  %i.ba = icmp ult i8 %8, 10
   %i.bb = icmp ult i64 %i.ay, 922337203685477580
   %i.bc = select i1 %i.ba, i1 %i.bb, i1 false
   br i1 %i.bc, label %.preheader.i.i43, label %getnum.exit.i45
@@ -331,9 +325,8 @@ getnumlimit.exit48:                               ; preds = %getnum.exit.i45, %b
 
 bb.t:                                             ; preds = %bb.a
   %i.bi = load i8, ptr %i.b, align 1, !tbaa !13
-  %15 = sext i8 %i.bi to i32
-  %16 = add nsw i32 %15, -58
-  %i.bj = icmp ult i32 %16, -10
+  %9 = add i8 %i.bi, -58
+  %i.bj = icmp ult i8 %9, -10
   br i1 %i.bj, label %bb.u, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.t, %.preheader.i
@@ -348,9 +341,8 @@ bb.t:                                             ; preds = %bb.a
   %i.bq = and i64 %i.bp, 4294967295
   %i.br = add nuw i64 %i.bq, %i.bl                ; 3 uses
   %i.bs = load i8, ptr %i.bm, align 1, !tbaa !13
-  %17 = sext i8 %i.bs to i32
-  %18 = add nsw i32 %17, -48
-  %i.bt = icmp ult i32 %18, 10
+  %10 = add i8 %i.bs, -48
+  %i.bt = icmp ult i8 %10, 10
   %i.bu = icmp ult i64 %i.br, 922337203685477580
   %i.bv = select i1 %i.bt, i1 %i.bu, i1 false
   br i1 %i.bv, label %.preheader.i, label %getnum.exit
@@ -389,9 +381,8 @@ bb.z:                                             ; preds = %bb.a
 
 bb.aa:                                            ; preds = %bb.a
   %i.cb = load i8, ptr %i.b, align 1, !tbaa !13
-  %19 = sext i8 %i.cb to i32
-  %20 = add nsw i32 %19, -58
-  %i.cc = icmp ult i32 %20, -10
+  %11 = add i8 %i.cb, -58
+  %i.cc = icmp ult i8 %11, -10
   br i1 %i.cc, label %getnum.exit.i52.thread, label %.preheader.i.i50
 
 .preheader.i.i50:                                 ; preds = %bb.aa, %.preheader.i.i50
@@ -406,9 +397,8 @@ bb.aa:                                            ; preds = %bb.a
   %i.cj = and i64 %i.ci, 4294967295
   %i.ck = add nuw i64 %i.cj, %i.ce                ; 5 uses
   %i.cl = load i8, ptr %i.cf, align 1, !tbaa !13
-  %21 = sext i8 %i.cl to i32
-  %22 = add nsw i32 %21, -48
-  %i.cm = icmp ult i32 %22, 10
+  %12 = add i8 %i.cl, -48
+  %i.cm = icmp ult i8 %12, 10
   %i.cn = icmp ult i64 %i.ck, 922337203685477580
   %i.co = select i1 %i.cm, i1 %i.cn, i1 false
   br i1 %i.co, label %.preheader.i.i50, label %getnum.exit.i52

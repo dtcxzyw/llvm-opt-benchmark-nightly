@@ -204,9 +204,8 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit.i: ; preds = %_ZNK6hermes2vm
 
 _ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i: ; preds = %.split.i
   %i.ez = load i8, ptr %i.er, align 1, !tbaa !51
-  %11 = sext i8 %i.ez to i16
-  %12 = add nsw i16 %11, -48
-  %i.fa = icmp ult i16 %12, 10
+  %11 = add i8 %i.ez, -48
+  %i.fa = icmp ult i8 %11, 10
   br i1 %i.fa, label %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit145.thread.i, label %_ZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheE.exit.thread
 
 _ZNK6hermes2vm10StringView14const_iteratordeEv.exit145.us.i: ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.i, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.us.i
@@ -234,16 +233,14 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit145.thread.i: ; preds = %_ZNK
   %.028.i158 = phi i32 [ %i.fo, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.i ], [ 100, %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i ] ; 2 uses
   %i.fj = phi ptr [ %i.fm, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.i ], [ %i.er, %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i ] ; 4 uses
   %i.fk = load i8, ptr %i.fj, align 1, !tbaa !51  ; 2 uses
-  %13 = sext i8 %i.fk to i16
-  %14 = add nsw i16 %13, -48
-  %i.fl = icmp ult i16 %14, 10
+  %12 = add i8 %i.fk, -48
+  %i.fl = icmp ult i8 %12, 10
   br i1 %i.fl, label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.i, label %.split226.loopexit.i
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit.i: ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit145.thread.i
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fj, i64 1 ; 2 uses
-  %15 = sext i8 %i.fk to i32
-  %16 = and i32 %15, 65535
-  %.pn247.i = add nsw i32 %16, -48
+  %13 = zext nneg i8 %i.fk to i32
+  %.pn247.i = add nsw i32 %13, -48
   %.pn.i = mul nsw i32 %.pn247.i, %.028.i158
   %i.fn = add nsw i32 %.pn.i, %.026.i159          ; 2 uses
   %i.fo = sdiv i32 %.028.i158, 10
@@ -646,9 +643,8 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit.i32: ; preds = %_ZNK6hermes2
 
 _ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i16: ; preds = %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit.thread.i14
   %i.pe = load i8, ptr %i.oz, align 1, !tbaa !51  ; 2 uses
-  %17 = sext i8 %i.pe to i16
-  %18 = add nsw i16 %17, -48
-  %i.pf = icmp ult i16 %18, 10
+  %14 = add i8 %i.pe, -48
+  %i.pf = icmp ult i8 %14, 10
   br i1 %i.pf, label %bb.ce, label %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit116.thread.i
 
 bb.ce:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i16, %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.i32
@@ -669,9 +665,8 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit116.i: ; preds = %_ZNK6hermes
 
 _ZNK6hermes2vm10StringView14const_iteratordeEv.exit116.thread.i: ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i16
   %i.pm = or i8 %i.pe, 32
-  %19 = sext i8 %i.pm to i16
-  %20 = add nsw i16 %19, -97
-  %i.pn = icmp ult i16 %20, 26
+  %15 = add i8 %i.pm, -97
+  %i.pn = icmp ult i8 %15, 26
   br i1 %i.pn, label %bb.cg, label %.thread210.i
 
 bb.cg:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit116.thread.i, %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit116.i
@@ -1074,9 +1069,8 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit: ; preds = %_ZNK6hermes2vm10
 
 _ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread: ; preds = %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit.thread
   %i.s = load i8, ptr %i.n, align 1, !tbaa !51    ; 2 uses
-  %5 = sext i8 %i.s to i16
-  %6 = add nsw i16 %5, -48
-  %i.t = icmp ult i16 %6, 10
+  %5 = add i8 %i.s, -48
+  %i.t = icmp ult i8 %5, 10
   br i1 %i.t, label %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit9, label %.critedge
 
 bb.c:                                             ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit

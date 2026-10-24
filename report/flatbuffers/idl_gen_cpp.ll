@@ -205,52 +205,44 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %.sroa.031.050.i.i.i.i = phi ptr [ %i.am, %bb.g ], [ %i.l, %.lr.ph.preheader.i.i.i.i ] ; 9 uses
   %i.t = load i8, ptr %.sroa.031.050.i.i.i.i, align 1, !tbaa !32 ; 2 uses
   %i.u = and i8 %i.t, -33
-  %6 = sext i8 %i.u to i32
-  %7 = add nsw i32 %6, -91
-  %i.v = icmp ult i32 %7, -26
-  %8 = sext i8 %i.t to i32
-  %9 = add nsw i32 %8, -58
-  %i.w = icmp ult i32 %9, -10
-  %.not2.i.i.i.i.i.i = select i1 %i.v, i1 %i.w, i1 false
+  %6 = add i8 %i.u, -91
+  %i.v = icmp ult i8 %6, -26
+  %7 = add i8 %i.t, -58
+  %i.w = icmp ult i8 %7, -10
+  %.not2.i.i.i.i.i.i = and i1 %i.w, %i.v
   br i1 %.not2.i.i.i.i.i.i, label %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN11flatbuffersL15GenIncludeGuardERKS8_RKNSC_9NamespaceESE_E7IsAlnumEEET_SK_SK_T0_.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i.i, i64 1
   %i.y = load i8, ptr %i.x, align 1, !tbaa !32    ; 2 uses
   %i.z = and i8 %i.y, -33
-  %10 = sext i8 %i.z to i32
-  %11 = add nsw i32 %10, -91
-  %i.aa = icmp ult i32 %11, -26
-  %12 = sext i8 %i.y to i32
-  %13 = add nsw i32 %12, -58
-  %i.ab = icmp ult i32 %13, -10
-  %.not2.i.i16.i.i.i.i = select i1 %i.aa, i1 %i.ab, i1 false
+  %8 = add i8 %i.z, -91
+  %i.aa = icmp ult i8 %8, -26
+  %9 = add i8 %i.y, -58
+  %i.ab = icmp ult i8 %9, -10
+  %.not2.i.i16.i.i.i.i = and i1 %i.ab, %i.aa
   br i1 %.not2.i.i16.i.i.i.i, label %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN11flatbuffersL15GenIncludeGuardERKS8_RKNSC_9NamespaceESE_E7IsAlnumEEET_SK_SK_T0_.exit.i.i.loopexit.split.loop.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i.i, i64 2
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !32  ; 2 uses
   %i.ae = and i8 %i.ad, -33
-  %14 = sext i8 %i.ae to i32
-  %15 = add nsw i32 %14, -91
-  %i.af = icmp ult i32 %15, -26
-  %16 = sext i8 %i.ad to i32
-  %17 = add nsw i32 %16, -58
-  %i.ag = icmp ult i32 %17, -10
-  %.not2.i.i17.i.i.i.i = select i1 %i.af, i1 %i.ag, i1 false
+  %10 = add i8 %i.ae, -91
+  %i.af = icmp ult i8 %10, -26
+  %11 = add i8 %i.ad, -58
+  %i.ag = icmp ult i8 %11, -10
+  %.not2.i.i17.i.i.i.i = and i1 %i.ag, %i.af
   br i1 %.not2.i.i17.i.i.i.i, label %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN11flatbuffersL15GenIncludeGuardERKS8_RKNSC_9NamespaceESE_E7IsAlnumEEET_SK_SK_T0_.exit.i.i.loopexit.split.loop.exit70, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i.i, i64 3
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !32  ; 2 uses
   %i.aj = and i8 %i.ai, -33
-  %18 = sext i8 %i.aj to i32
-  %19 = add nsw i32 %18, -91
-  %i.ak = icmp ult i32 %19, -26
-  %20 = sext i8 %i.ai to i32
-  %21 = add nsw i32 %20, -58
-  %i.al = icmp ult i32 %21, -10
-  %.not2.i.i18.i.i.i.i = select i1 %i.ak, i1 %i.al, i1 false
+  %12 = add i8 %i.aj, -91
+  %i.ak = icmp ult i8 %12, -26
+  %13 = add i8 %i.ai, -58
+  %i.al = icmp ult i8 %13, -10
+  %.not2.i.i18.i.i.i.i = and i1 %i.al, %i.ak
   br i1 %.not2.i.i18.i.i.i.i, label %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN11flatbuffersL15GenIncludeGuardERKS8_RKNSC_9NamespaceESE_E7IsAlnumEEET_SK_SK_T0_.exit.i.i.loopexit.split.loop.exit72, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -272,13 +264,11 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %._crit_edge.i.i.i.i
   %i.aq = load i8, ptr %.sroa.031.0.lcssa.i.i.i.i, align 1, !tbaa !32 ; 2 uses
   %i.ar = and i8 %i.aq, -33
-  %22 = sext i8 %i.ar to i32
-  %23 = add nsw i32 %22, -91
-  %i.as = icmp ult i32 %23, -26
-  %24 = sext i8 %i.aq to i32
-  %25 = add nsw i32 %24, -58
-  %i.at = icmp ult i32 %25, -10
-  %.not2.i.i19.i.i.i.i = select i1 %i.as, i1 %i.at, i1 false
+  %14 = add i8 %i.ar, -91
+  %i.as = icmp ult i8 %14, -26
+  %15 = add i8 %i.aq, -58
+  %i.at = icmp ult i8 %15, -10
+  %.not2.i.i19.i.i.i.i = and i1 %i.at, %i.as
   br i1 %.not2.i.i19.i.i.i.i, label %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN11flatbuffersL15GenIncludeGuardERKS8_RKNSC_9NamespaceESE_E7IsAlnumEEET_SK_SK_T0_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -289,13 +279,11 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge.
   %.sroa.031.1.i.i.i.i = phi ptr [ %i.au, %bb.i ], [ %.sroa.031.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.av = load i8, ptr %.sroa.031.1.i.i.i.i, align 1, !tbaa !32 ; 2 uses
   %i.aw = and i8 %i.av, -33
-  %26 = sext i8 %i.aw to i32
-  %27 = add nsw i32 %26, -91
-  %i.ax = icmp ult i32 %27, -26
-  %28 = sext i8 %i.av to i32
-  %29 = add nsw i32 %28, -58
-  %i.ay = icmp ult i32 %29, -10
-  %.not2.i.i20.i.i.i.i = select i1 %i.ax, i1 %i.ay, i1 false
+  %16 = add i8 %i.aw, -91
+  %i.ax = icmp ult i8 %16, -26
+  %17 = add i8 %i.av, -58
+  %i.ay = icmp ult i8 %17, -10
+  %.not2.i.i20.i.i.i.i = and i1 %i.ay, %i.ax
   br i1 %.not2.i.i20.i.i.i.i, label %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN11flatbuffersL15GenIncludeGuardERKS8_RKNSC_9NamespaceESE_E7IsAlnumEEET_SK_SK_T0_.exit.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -306,13 +294,11 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge.
   %.sroa.031.2.i.i.i.i = phi ptr [ %i.az, %bb.k ], [ %.sroa.031.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.ba = load i8, ptr %.sroa.031.2.i.i.i.i, align 1, !tbaa !32 ; 2 uses
   %i.bb = and i8 %i.ba, -33
-  %30 = sext i8 %i.bb to i32
-  %31 = add nsw i32 %30, -91
-  %i.bc = icmp ult i32 %31, -26
-  %32 = sext i8 %i.ba to i32
-  %33 = add nsw i32 %32, -58
-  %i.bd = icmp ult i32 %33, -10
-  %.not2.i.i21.i.i.i.i = select i1 %i.bc, i1 %i.bd, i1 false
+  %18 = add i8 %i.bb, -91
+  %i.bc = icmp ult i8 %18, -26
+  %19 = add i8 %i.ba, -58
+  %i.bd = icmp ult i8 %19, -10
+  %.not2.i.i21.i.i.i.i = and i1 %i.bd, %i.bc
   %spec.select.i.i.i.i = select i1 %.not2.i.i21.i.i.i.i, ptr %.sroa.031.2.i.i.i.i, ptr %i.o
   br label %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN11flatbuffersL15GenIncludeGuardERKS8_RKNSC_9NamespaceESE_E7IsAlnumEEET_SK_SK_T0_.exit.i.i
 
@@ -348,13 +334,11 @@ _ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11c
 .lr.ph.i.i.prol:                                  ; preds = %.lr.ph.i.i.preheader
   %i.bm = load i8, ptr %.sroa.06.025.i.i, align 1, !tbaa !32 ; 3 uses
   %i.bn = and i8 %i.bm, -33
-  %34 = sext i8 %i.bn to i32
-  %35 = add nsw i32 %34, -91
-  %i.bo = icmp ult i32 %35, -26
-  %36 = sext i8 %i.bm to i32
-  %37 = add nsw i32 %36, -58
-  %i.bp = icmp ult i32 %37, -10
-  %.not2.i.i.i.i.prol = select i1 %i.bo, i1 %i.bp, i1 false
+  %20 = add i8 %i.bn, -91
+  %i.bo = icmp ult i8 %20, -26
+  %21 = add i8 %i.bm, -58
+  %i.bp = icmp ult i8 %21, -10
+  %.not2.i.i.i.i.prol = and i1 %i.bp, %i.bo
   br i1 %.not2.i.i.i.i.prol, label %.lr.ph.i.i.prol.loopexit.unr-lcssa, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.i.i.prol
@@ -379,13 +363,11 @@ bb.m:                                             ; preds = %.lr.ph.i.i.prol
   %.sroa.012.027.i.i = phi ptr [ %.sroa.012.1.i.i.1, %bb.p ], [ %.sroa.012.027.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 3 uses
   %i.bs = load i8, ptr %.sroa.06.028.i.i, align 1, !tbaa !32 ; 3 uses
   %i.bt = and i8 %i.bs, -33
-  %38 = sext i8 %i.bt to i32
-  %39 = add nsw i32 %38, -91
-  %i.bu = icmp ult i32 %39, -26
-  %40 = sext i8 %i.bs to i32
-  %41 = add nsw i32 %40, -58
-  %i.bv = icmp ult i32 %41, -10
-  %.not2.i.i.i.i = select i1 %i.bu, i1 %i.bv, i1 false
+  %22 = add i8 %i.bt, -91
+  %i.bu = icmp ult i8 %22, -26
+  %23 = add i8 %i.bs, -58
+  %i.bv = icmp ult i8 %23, -10
+  %.not2.i.i.i.i = and i1 %i.bv, %i.bu
   br i1 %.not2.i.i.i.i, label %.lr.ph.i.i.1, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.i.i
@@ -398,13 +380,11 @@ bb.n:                                             ; preds = %.lr.ph.i.i
   %.sroa.06.0.i.i = getelementptr inbounds nuw i8, ptr %.sroa.06.028.i.i, i64 1
   %i.bx = load i8, ptr %.sroa.06.0.i.i, align 1, !tbaa !32 ; 3 uses
   %i.by = and i8 %i.bx, -33
-  %42 = sext i8 %i.by to i32
-  %43 = add nsw i32 %42, -91
-  %i.bz = icmp ult i32 %43, -26
-  %44 = sext i8 %i.bx to i32
-  %45 = add nsw i32 %44, -58
-  %i.ca = icmp ult i32 %45, -10
-  %.not2.i.i.i.i.1 = select i1 %i.bz, i1 %i.ca, i1 false
+  %24 = add i8 %i.by, -91
+  %i.bz = icmp ult i8 %24, -26
+  %25 = add i8 %i.bx, -58
+  %i.ca = icmp ult i8 %25, -10
+  %.not2.i.i.i.i.1 = and i1 %i.ca, %i.bz
   br i1 %.not2.i.i.i.i.1, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph.i.i.1

@@ -205,9 +205,8 @@ bb.i:                                             ; preds = %switch.early.test.i
   %.0127.idx = add nsw i64 %.0127.idx.in, -1      ; 4 uses
   %.0127.ptr = getelementptr inbounds i8, ptr %.2110, i64 %.0127.idx
   %i.av = load i8, ptr %.0127.ptr, align 1, !tbaa !295 ; 2 uses
-  %2 = sext i8 %i.av to i32
-  %isdigittmp = add nsw i32 %2, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %2 = add i8 %i.av, -48
+  %isdigit = icmp ult i8 %2, 10
   %i.aw = icmp ne i64 %.0127.idx, 2
   %i.ax = and i1 %i.aw, %isdigit
   br i1 %i.ax, label %.preheader, label %bb.j, !llvm.loop !7460

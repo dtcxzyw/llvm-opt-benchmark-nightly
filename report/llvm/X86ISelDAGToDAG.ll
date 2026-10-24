@@ -204,10 +204,9 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.ch = load i32, ptr %i.cg, align 8, !tbaa !602
-  %21 = sext i32 %i.ch to i64
-  %22 = add nsw i64 %21, 1073741824
-  %23 = icmp ult i64 %22, 2147483648
-  br i1 %23, label %bb.aa, label %.thread
+  %21 = add i32 %i.ch, 1073741824
+  %22 = icmp sgt i32 %21, -1
+  br i1 %22, label %bb.aa, label %.thread
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   store i32 1, ptr %3, align 8, !tbaa !599

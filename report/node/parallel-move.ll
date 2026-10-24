@@ -104,32 +104,28 @@ bb.h:                                             ; preds = %bb.b, %_ZNK2v88inte
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal4wasm16LiftoffAssembler14MoveStackValueEjjNS1_9ValueKindE(ptr noundef nonnull align 8 dereferenceable(824) %0, i32 noundef %1, i32 noundef %2, i8 noundef zeroext %3) local_unnamed_addr #1 comdat align 2 {
 _ZN2v88internal4wasm7liftoff12GetStackSlotEi.exit:
-  %i.a = sub nsw i32 0, %1                        ; 3 uses
-  %4 = sext i32 %i.a to i64
-  %5 = add nsw i64 %4, 128
-  %i.b = icmp ult i64 %5, 256                     ; 2 uses
+  %i.a = sub nsw i32 0, %1                        ; 2 uses
+  %4 = add i32 %1, 127
+  %i.b = icmp ult i32 %4, 256                     ; 2 uses
   %i.c = shl i32 %i.a, 24
   %i.d = or disjoint i32 %i.c, 4521984
   %.sroa.0.3.insert.insert40 = zext i32 %i.d to i64
   %.sroa.0.3.insert.ext = zext i32 %i.a to i64
   %.sroa.0.3.insert.shift = shl nuw nsw i64 %.sroa.0.3.insert.ext, 24
   %.sroa.0.3.insert.insert = or disjoint i64 %.sroa.0.3.insert.shift, 8716288
-  %.sroa.0.0 = select i1 %i.b, i64 %.sroa.0.3.insert.insert40, i64 %.sroa.0.3.insert.insert ; 4 uses
-  %storemerge.i = select i1 %i.b, i64 2, i64 5
-  %.fca.1.load.cast.i = inttoptr i64 %storemerge.i to ptr ; 4 uses
-  %i.e = sub nsw i32 0, %2                        ; 3 uses
-  %6 = sext i32 %i.e to i64
-  %7 = add nsw i64 %6, 128
-  %i.f = icmp ult i64 %7, 256                     ; 2 uses
+  %storemerge.i = select i1 %i.b, i64 %.sroa.0.3.insert.insert40, i64 %.sroa.0.3.insert.insert ; 4 uses
+  %.fca.1.load.cast.i = select i1 %i.b, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 5 to ptr) ; 4 uses
+  %i.e = sub nsw i32 0, %2                        ; 2 uses
+  %5 = add i32 %2, 127
+  %i.f = icmp ult i32 %5, 256                     ; 2 uses
   %i.g = shl i32 %i.e, 24
   %i.h = or disjoint i32 %i.g, 4521984
   %.sroa.041.3.insert.insert49 = zext i32 %i.h to i64
   %.sroa.041.3.insert.ext = zext i32 %i.e to i64
   %.sroa.041.3.insert.shift = shl nuw nsw i64 %.sroa.041.3.insert.ext, 24
   %.sroa.041.3.insert.insert = or disjoint i64 %.sroa.041.3.insert.shift, 8716288
-  %.sroa.041.0 = select i1 %i.f, i64 %.sroa.041.3.insert.insert49, i64 %.sroa.041.3.insert.insert ; 4 uses
-  %storemerge.i26 = select i1 %i.f, i64 2, i64 5
-  %.fca.1.load.cast.i29 = inttoptr i64 %storemerge.i26 to ptr ; 4 uses
+  %storemerge.i26 = select i1 %i.f, i64 %.sroa.041.3.insert.insert49, i64 %.sroa.041.3.insert.insert ; 4 uses
+  %.fca.1.load.cast.i29 = select i1 %i.f, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 5 to ptr) ; 4 uses
   %i.i = add i8 %3, -9
   %i.j = icmp ult i8 %i.i, 2
   br i1 %i.j, label %_ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit.thread, label %_ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit
@@ -145,13 +141,13 @@ _ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit: ; 
   ]
 
 bb.a:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.sroa.041.0, ptr nonnull %.fca.1.load.cast.i29, i32 noundef 4) #10
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.0.0, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 4) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %storemerge.i26, ptr nonnull %.fca.1.load.cast.i29, i32 noundef 4) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 4) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit.thread: ; preds = %_ZN2v88internal4wasm7liftoff12GetStackSlotEi.exit, %_ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.sroa.041.0, ptr nonnull %.fca.1.load.cast.i29, i32 noundef 8) #10
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.0.0, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 8) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %storemerge.i26, ptr nonnull %.fca.1.load.cast.i29, i32 noundef 8) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 8) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.b:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit
@@ -161,11 +157,11 @@ bb.b:                                             ; preds = %_ZN2v88internal4was
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_ZN2v88internal9Assembler7vmovdquENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 15, i64 %.sroa.041.0, ptr nonnull %.fca.1.load.cast.i29) #10
+  tail call void @_ZN2v88internal9Assembler7vmovdquENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 15, i64 %storemerge.i26, ptr nonnull %.fca.1.load.cast.i29) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @_ZN2v88internal9Assembler6movupsENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 15, i64 %.sroa.041.0, ptr nonnull %.fca.1.load.cast.i29) #10
+  tail call void @_ZN2v88internal9Assembler6movupsENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 15, i64 %storemerge.i26, ptr nonnull %.fca.1.load.cast.i29) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit
 
 _ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit: ; preds = %bb.c, %bb.d
@@ -175,11 +171,11 @@ _ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandE
   br i1 %.not.i.i32, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit
-  tail call void @_ZN2v88internal9Assembler7vmovdquENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %.sroa.0.0, ptr nonnull %.fca.1.load.cast.i, i8 15) #10
+  tail call void @_ZN2v88internal9Assembler7vmovdquENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 15) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.f:                                             ; preds = %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit
-  tail call void @_ZN2v88internal9Assembler6movupsENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %.sroa.0.0, ptr nonnull %.fca.1.load.cast.i, i8 15) #10
+  tail call void @_ZN2v88internal9Assembler6movupsENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 15) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.g:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler15SlotSizeForTypeENS1_9ValueKindE.exit
@@ -203,19 +199,17 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit: ; preds = %bb.a, %bb.b
-  %i.c = sub nsw i32 0, %1                        ; 3 uses
-  %4 = sext i32 %i.c to i64
-  %5 = add nsw i64 %4, 128
-  %i.d = icmp ult i64 %5, 256                     ; 2 uses
+  %i.c = sub nsw i32 0, %1                        ; 2 uses
+  %4 = add i32 %1, 127
+  %i.d = icmp ult i32 %4, 256                     ; 2 uses
   %i.e = shl i32 %i.c, 24
   %i.f = or disjoint i32 %i.e, 4521984
   %.sroa.027.3.insert.insert35 = zext i32 %i.f to i64
   %.sroa.027.3.insert.ext = zext i32 %i.c to i64
   %.sroa.027.3.insert.shift = shl nuw nsw i64 %.sroa.027.3.insert.ext, 24
   %.sroa.027.3.insert.insert = or disjoint i64 %.sroa.027.3.insert.shift, 8716288
-  %.sroa.027.0 = select i1 %i.d, i64 %.sroa.027.3.insert.insert35, i64 %.sroa.027.3.insert.insert ; 8 uses
-  %storemerge.i = select i1 %i.d, i64 2, i64 5
-  %.fca.1.load.cast.i = inttoptr i64 %storemerge.i to ptr ; 8 uses
+  %storemerge.i = select i1 %i.d, i64 %.sroa.027.3.insert.insert35, i64 %.sroa.027.3.insert.insert ; 8 uses
+  %.fca.1.load.cast.i = select i1 %i.d, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 5 to ptr) ; 8 uses
   switch i8 %3, label %bb.n [
     i8 1, label %bb.c
     i8 2, label %bb.d
@@ -229,13 +223,13 @@ _ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit: ; preds = 
 bb.c:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
   %i.g = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.g)
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i, i8 %2, i32 noundef 4) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 %2, i32 noundef 4) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.d:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit, %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit, %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
   %i.h = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.h)
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i, i8 %2, i32 noundef 8) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 %2, i32 noundef 8) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.e:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
@@ -248,11 +242,11 @@ bb.e:                                             ; preds = %_ZN2v88internal4was
   br i1 %.not.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @_ZN2v88internal9Assembler3vssEhNS0_11XMMRegisterES2_NS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 noundef zeroext 17, i8 %i.i, i8 0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i) #10
+  tail call void @_ZN2v88internal9Assembler3vssEhNS0_11XMMRegisterES2_NS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 noundef zeroext 17, i8 %i.i, i8 0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.g:                                             ; preds = %bb.e
-  tail call void @_ZN2v88internal9Assembler5movssENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i, i8 %i.i) #10
+  tail call void @_ZN2v88internal9Assembler5movssENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 %i.i) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.h:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
@@ -265,11 +259,11 @@ bb.h:                                             ; preds = %_ZN2v88internal4was
   br i1 %.not.i.i21, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZN2v88internal9Assembler6vinstrEhNS0_11XMMRegisterES2_NS0_7OperandENS1_10SIMDPrefixENS1_13LeadingOpcodeENS1_4VexWENS0_10CpuFeatureE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 noundef zeroext 17, i8 %i.m, i8 0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i, i32 noundef 3, i32 noundef 1, i32 noundef 0, i32 noundef 5) #10
+  tail call void @_ZN2v88internal9Assembler6vinstrEhNS0_11XMMRegisterES2_NS0_7OperandENS1_10SIMDPrefixENS1_13LeadingOpcodeENS1_4VexWENS0_10CpuFeatureE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 noundef zeroext 17, i8 %i.m, i8 0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i32 noundef 3, i32 noundef 1, i32 noundef 0, i32 noundef 5) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.j:                                             ; preds = %bb.h
-  tail call void @_ZN2v88internal9Assembler5movsdENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i, i8 %i.m) #10
+  tail call void @_ZN2v88internal9Assembler5movsdENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 %i.m) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.k:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
@@ -282,11 +276,11 @@ bb.k:                                             ; preds = %_ZN2v88internal4was
   br i1 %.not.i.i22, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @_ZN2v88internal9Assembler7vmovdquENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i, i8 %i.q) #10
+  tail call void @_ZN2v88internal9Assembler7vmovdquENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 %i.q) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.m:                                             ; preds = %bb.k
-  tail call void @_ZN2v88internal9Assembler6movupsENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %.sroa.027.0, ptr nonnull %.fca.1.load.cast.i, i8 %i.q) #10
+  tail call void @_ZN2v88internal9Assembler6movupsENS0_7OperandENS0_11XMMRegisterE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 %i.q) #10
   br label %_ZN2v88internal24SharedMacroAssemblerBase5MovssINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
 
 bb.n:                                             ; preds = %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
@@ -310,19 +304,17 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit: ; preds = %bb.a, %bb.b
-  %i.c = sub nsw i32 0, %1                        ; 3 uses
-  %3 = sext i32 %i.c to i64
-  %4 = add nsw i64 %3, 128
-  %i.d = icmp ult i64 %4, 256                     ; 2 uses
+  %i.c = sub nsw i32 0, %1                        ; 2 uses
+  %3 = add i32 %1, 127
+  %i.d = icmp ult i32 %3, 256                     ; 2 uses
   %i.e = shl i32 %i.c, 24
   %i.f = or disjoint i32 %i.e, 4521984
   %.sroa.036.3.insert.insert44 = zext i32 %i.f to i64
   %.sroa.036.3.insert.ext = zext i32 %i.c to i64
   %.sroa.036.3.insert.shift = shl nuw nsw i64 %.sroa.036.3.insert.ext, 24
   %.sroa.036.3.insert.insert = or disjoint i64 %.sroa.036.3.insert.shift, 8716288
-  %.sroa.036.0 = select i1 %i.d, i64 %.sroa.036.3.insert.insert44, i64 %.sroa.036.3.insert.insert ; 4 uses
-  %storemerge.i = select i1 %i.d, i64 2, i64 5
-  %.fca.1.load.cast.i = inttoptr i64 %storemerge.i to ptr ; 4 uses
+  %storemerge.i = select i1 %i.d, i64 %.sroa.036.3.insert.insert44, i64 %.sroa.036.3.insert.insert ; 4 uses
+  %.fca.1.load.cast.i = select i1 %i.d, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 5 to ptr) ; 4 uses
   %.sroa.0.0.copyload.i = load i32, ptr %2, align 8 ; 2 uses
   %i.g = and i32 %.sroa.0.0.copyload.i, 3
   %i.h = icmp eq i32 %i.g, 0
@@ -350,7 +342,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal4wa
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 4
   %.0.copyload.i.i.i = load i32, ptr %i.m, align 4
   %.sroa.028.0.insert.ext = zext i32 %.0.copyload.i.i.i to i64
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.036.0, ptr nonnull %.fca.1.load.cast.i, i64 %.sroa.028.0.insert.ext, i32 noundef 4) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i64 %.sroa.028.0.insert.ext, i32 noundef 4) #10
   br label %bb.k
 
 bb.f:                                             ; preds = %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit
@@ -362,7 +354,7 @@ bb.f:                                             ; preds = %_ZNK2v88internal4wa
 
 bb.g:                                             ; preds = %bb.f
   %.sroa.021.0.insert.ext = and i64 %.0.copyload.i.i.i16, 4294967295
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.036.0, ptr nonnull %.fca.1.load.cast.i, i64 %.sroa.021.0.insert.ext, i32 noundef 8) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i64 %.sroa.021.0.insert.ext, i32 noundef 8) #10
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f
@@ -371,12 +363,12 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.0.copyload.i.i.i16, i32 noundef 4) #10
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.036.0, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 8) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 8) #10
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_11Immediate64Ei(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.0.copyload.i.i.i16, i8 0, i32 noundef 8) #10
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.036.0, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 8) #10
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %storemerge.i, ptr nonnull %.fca.1.load.cast.i, i8 10, i32 noundef 8) #10
   br label %bb.k
 
 _ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.thread: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler21RecordUsedSpillOffsetEi.exit, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit
@@ -652,23 +644,21 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.b
   %i.t = load ptr, ptr %i.d, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %i.v = load i32, ptr %i.u, align 4
+  %i.v = load i32, ptr %i.u, align 4              ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 1
   %i.x = load i8, ptr %i.w, align 1
-  %i.y = sub nsw i32 0, %i.v                      ; 3 uses
-  %2 = sext i32 %i.y to i64
-  %3 = add nsw i64 %2, 128
-  %i.z = icmp ult i64 %3, 256                     ; 2 uses
+  %i.y = sub nsw i32 0, %i.v                      ; 2 uses
+  %2 = add i32 %i.v, 127
+  %i.z = icmp ult i32 %2, 256                     ; 2 uses
   %i.aa = shl i32 %i.y, 24
   %i.ab = or disjoint i32 %i.aa, 4521984
   %.sroa.0.3.insert.insert11.i = zext i32 %i.ab to i64
   %.sroa.0.3.insert.ext.i = zext i32 %i.y to i64
   %.sroa.0.3.insert.shift.i = shl nuw nsw i64 %.sroa.0.3.insert.ext.i, 24
   %.sroa.0.3.insert.insert.i = or disjoint i64 %.sroa.0.3.insert.shift.i, 8716288
-  %.sroa.0.0.i = select i1 %i.z, i64 %.sroa.0.3.insert.insert11.i, i64 %.sroa.0.3.insert.insert.i
-  %storemerge.i.i = select i1 %i.z, i64 2, i64 5
-  %.fca.1.load.cast.i.i = inttoptr i64 %storemerge.i.i to ptr
-  tail call void @_ZN2v88internal4wasm7liftoff13LoadFromStackEPNS1_16LiftoffAssemblerENS1_15LiftoffRegisterENS0_7OperandENS1_9ValueKindE(ptr noundef nonnull align 8 dereferenceable(824) %i.t, i8 %i.i, i64 %.sroa.0.0.i, ptr nonnull %.fca.1.load.cast.i.i, i8 noundef zeroext %i.x)
+  %storemerge.i.i = select i1 %i.z, i64 %.sroa.0.3.insert.insert11.i, i64 %.sroa.0.3.insert.insert.i
+  %.fca.1.load.cast.i.i = select i1 %i.z, ptr inttoptr (i64 2 to ptr), ptr inttoptr (i64 5 to ptr)
+  tail call void @_ZN2v88internal4wasm7liftoff13LoadFromStackEPNS1_16LiftoffAssemblerENS1_15LiftoffRegisterENS0_7OperandENS1_9ValueKindE(ptr noundef nonnull align 8 dereferenceable(824) %i.t, i8 %i.i, i64 %storemerge.i.i, ptr nonnull %.fca.1.load.cast.i.i, i8 noundef zeroext %i.x)
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.b

@@ -205,23 +205,21 @@ bb.a:
   %.03379 = phi i64 [ %.2, %bb.c ], [ 0, %bb.a ]  ; 4 uses
   %.03578 = phi i64 [ %.237, %bb.c ], [ 0, %bb.a ] ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.03578
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !88    ; 2 uses
-  %4 = sext i8 %i.d to i32
-  %isdigittmp = add nsw i32 %4, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !88    ; 3 uses
+  %4 = add i8 %i.d, -48
+  %isdigit = icmp ult i8 %4, 10
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 %.03379
   %i.f = load i8, ptr %i.e, align 1, !tbaa !88    ; 3 uses
-  %5 = sext i8 %i.f to i32
-  %isdigittmp47 = add nsw i32 %5, -48
-  %isdigit48.a = icmp ult i32 %isdigittmp47, 10
+  %5 = add i8 %i.f, -48
+  %isdigit48.a = icmp ult i8 %5, 10
   %or.cond97 = select i1 %isdigit, i1 %isdigit48.a, i1 false
   %i.g = add nuw i64 %.03578, 1                   ; 2 uses
-  %6 = sext i8 %i.d to i64                        ; 2 uses
   br i1 %or.cond97, label %.preheader.preheader, label %tolower.exit
 
 .preheader.preheader:                             ; preds = %.lr.ph
   %umax = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.g) ; 2 uses
   %i.h = add i64 %.03578, 1                       ; 2 uses
+  %6 = zext nneg i8 %i.d to i64
   %i.i = add nsw i64 %6, -48                      ; 2 uses
   %i.j = icmp ult i64 %i.h, %1
   br i1 %i.j, label %.lr.ph101, label %.critedge3
@@ -229,7 +227,7 @@ bb.a:
 .preheader:                                       ; preds = %.lr.ph101
   %i.k = mul i64 %i.p, 10
   %i.l = add i64 %i.q, 1                          ; 2 uses
-  %7 = sext i8 %i.s to i64
+  %7 = zext nneg i8 %i.s to i64
   %i.m = add i64 %i.k, -48
   %i.n = add i64 %i.m, %7                         ; 2 uses
   %i.o = icmp ult i64 %i.l, %1
@@ -240,9 +238,8 @@ bb.a:
   %i.q = phi i64 [ %i.l, %.preheader ], [ %i.h, %.preheader.preheader ] ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1, !tbaa !88    ; 2 uses
-  %8 = sext i8 %i.s to i32
-  %isdigittmp49 = add nsw i32 %8, -48
-  %isdigit50 = icmp ult i32 %isdigittmp49, 10
+  %8 = add i8 %i.s, -48
+  %isdigit50 = icmp ult i8 %8, 10
   br i1 %isdigit50, label %.preheader, label %..critedge3_crit_edge, !llvm.loop !486
 
 ..critedge3_crit_edge:                            ; preds = %.lr.ph101
@@ -254,7 +251,7 @@ bb.a:
   %i.t = add nuw i64 %.03379, 1
   %umax86 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.t) ; 2 uses
   %i.u = add i64 %.03379, 1                       ; 2 uses
-  %9 = sext i8 %i.f to i64
+  %9 = zext nneg i8 %i.f to i64
   %i.v = add nsw i64 %9, -48                      ; 2 uses
   %i.w = icmp ult i64 %i.u, %3
   br i1 %i.w, label %.lr.ph105, label %.critedge5
@@ -262,7 +259,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph105
   %i.x = mul i64 %i.ac, 10
   %i.y = add i64 %i.ad, 1                         ; 2 uses
-  %10 = sext i8 %i.af to i64
+  %10 = zext nneg i8 %i.af to i64
   %i.z = add i64 %i.x, -48
   %i.aa = add i64 %i.z, %10                       ; 2 uses
   %i.ab = icmp ult i64 %i.y, %3
@@ -273,9 +270,8 @@ bb.b:                                             ; preds = %.lr.ph105
   %i.ad = phi i64 [ %i.y, %bb.b ], [ %i.u, %.critedge3 ] ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 %i.ad
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !88  ; 2 uses
-  %11 = sext i8 %i.af to i32
-  %isdigittmp51 = add nsw i32 %11, -48
-  %isdigit52 = icmp ult i32 %isdigittmp51, 10
+  %11 = add i8 %i.af, -48
+  %isdigit52 = icmp ult i8 %11, 10
   br i1 %isdigit52, label %bb.b, label %..critedge5_crit_edge108, !llvm.loop !487
 
 ..critedge5_crit_edge108:                         ; preds = %.lr.ph105
@@ -290,7 +286,8 @@ bb.b:                                             ; preds = %.lr.ph105
 tolower.exit:                                     ; preds = %.lr.ph
   %i.ag = tail call ptr @__ctype_tolower_loc() #39
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !103 ; 2 uses
-  %i.ai = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %6
+  %12 = sext i8 %i.d to i64
+  %i.ai = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %12
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !91
   %i.ak = add nuw i64 %.03379, 1
   %i.al = sext i8 %i.f to i64

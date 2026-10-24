@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr i8, ptr %i.e, i64 32
   %i.l = getelementptr i8, ptr %i.e, i64 34
   %i.m = load i8, ptr %i.l, align 2, !tbaa !35
-  %3 = sext i8 %i.m to i32
-  %4 = add nsw i32 %3, -1
-  %i.n = icmp ult i32 %4, 12
+  %3 = add i8 %i.m, -1
+  %i.n = icmp ult i8 %3, 12
   br i1 %i.n, label %bb.e, label %date_from_pickle.exit.thread43
 
 bb.e:                                             ; preds = %bb.d
@@ -609,9 +608,8 @@ bb.q:                                             ; preds = %parse_digits.exit74
 bb.r:                                             ; preds = %.preheader, %bb.r
   %.3 = phi ptr [ %i.dt, %bb.r ], [ %.3.ph, %.preheader ] ; 2 uses
   %i.dr = load i8, ptr %.3, align 1, !tbaa !35    ; 2 uses
-  %6 = sext i8 %i.dr to i32
-  %7 = add nsw i32 %6, -58
-  %i.ds = icmp ult i32 %7, -10
+  %6 = add i8 %i.dr, -58
+  %i.ds = icmp ult i8 %6, -10
   %i.dt = getelementptr i8, ptr %.3, i64 1
   br i1 %i.ds, label %bb.s, label %bb.r, !llvm.loop !130
 
@@ -1014,9 +1012,8 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.bs = getelementptr i8, ptr %i.ba, i64 10
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !35
-  %2 = sext i8 %i.bt to i32
-  %3 = add nsw i32 %2, -58
-  %i.bu = icmp ult i32 %3, -10
+  %2 = add i8 %i.bt, -58
+  %i.bu = icmp ult i8 %2, -10
   br i1 %i.bu, label %bb.aa, label %_find_isoformat_datetime_separator.exit.i
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
@@ -1026,9 +1023,8 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %.023.i.i = phi i64 [ %i.by, %bb.ab ], [ 7, %.preheader.i.i ] ; 3 uses
   %i.bv = getelementptr i8, ptr %i.ba, i64 %.023.i.i
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !35
-  %4 = sext i8 %i.bw to i32
-  %5 = add nsw i32 %4, -58
-  %i.bx = icmp ult i32 %5, -10
+  %3 = add i8 %i.bw, -58
+  %i.bx = icmp ult i8 %3, -10
   br i1 %i.bx, label %._crit_edge.i.i, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.i.i

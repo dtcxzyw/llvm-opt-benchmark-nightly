@@ -205,9 +205,8 @@ bb.s:                                             ; preds = %rb_array_len.exit, 
   br label %bb.x
 
 bb.t:                                             ; preds = %bb.m
-  %8 = sext i8 %i.bz to i32
-  %9 = add nsw i32 %8, -58
-  %i.cj = icmp ult i32 %9, -10
+  %8 = add i8 %i.bz, -58
+  %i.cj = icmp ult i8 %8, -10
   br i1 %i.cj, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -610,38 +609,37 @@ bb.i:                                             ; preds = %RSTRING_PTR.exit110
   br i1 %i.am, label %.lr.ph1676, label %.loopexit1350
 
 .lr.ph1676:                                       ; preds = %bb.i
+  %4 = ptrtoint ptr %i.ah to i64
   %i.an = ptrtoint ptr %i.w to i64                ; 25 uses
   %i.ao = icmp eq i32 %2, 1                       ; 21 uses
   %i.ap = inttoptr i64 %i.al to ptr               ; 8 uses
   %i.aq = getelementptr i8, ptr %i.ap, i64 16     ; 7 uses
-  %4 = ptrtoint ptr %i.ah to i64
   %.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 1
   %.2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 2
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph1676, %.thread1177
   %i.ar = phi ptr [ %i.ak, %.lr.ph1676 ], [ %i.aix, %.thread1177 ] ; 2 uses
-  %.09021674 = phi i64 [ 0, %.lr.ph1676 ], [ %.7909, %.thread1177 ] ; 47 uses
-  %.09101673 = phi ptr [ %i.x, %.lr.ph1676 ], [ %.47, %.thread1177 ] ; 88 uses
+  %.09021674 = phi i64 [ 0, %.lr.ph1676 ], [ %.7909, %.thread1177 ] ; 52 uses
+  %.09101673 = phi ptr [ %i.x, %.lr.ph1676 ], [ %.47, %.thread1177 ] ; 93 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
   store i32 0, ptr %i.d, align 4, !tbaa !10
   %i.as = getelementptr i8, ptr %i.ar, i64 1      ; 4 uses
   store ptr %i.as, ptr %i.c, align 8, !tbaa !18
-  %i.at = load i8, ptr %i.ar, align 1, !tbaa !15  ; 7 uses
+  %i.at = load i8, ptr %i.ar, align 1, !tbaa !15  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
   store i32 0, ptr %i.e, align 4, !tbaa !10
-  %5 = sext i8 %i.at to i32
-  %6 = icmp ne i8 %i.at, 32
-  %7 = add nsw i32 %5, -14
-  %8 = icmp ult i32 %7, -5
-  %narrow.i.not = select i1 %6, i1 %8, i1 false
-  br i1 %narrow.i.not, label %9, label %.thread1177, !llvm.loop !52
+  switch i8 %i.at, label %bb.l [
+    i8 32, label %.thread1177
+    i8 13, label %.thread1177
+    i8 12, label %.thread1177
+    i8 11, label %.thread1177
+    i8 10, label %.thread1177
+    i8 9, label %.thread1177
+    i8 35, label %bb.k
+  ]
 
-9:                                                ; preds = %bb.j
-  %10 = icmp eq i8 %i.at, 35
-  br i1 %10, label %bb.k, label %bb.l
-
-bb.k:                                             ; preds = %9
+bb.k:                                             ; preds = %bb.j
   %i.au = ptrtoint ptr %i.as to i64
   %i.av = sub i64 %4, %i.au
   %i.aw = call ptr @memchr(ptr noundef %i.as, i32 noundef 10, i64 noundef %i.av) #14 ; 2 uses
@@ -651,7 +649,7 @@ bb.k:                                             ; preds = %9
   store ptr %i.ay, ptr %i.c, align 8, !tbaa !18
   br label %.thread1177, !llvm.loop !52
 
-bb.l:                                             ; preds = %9
+bb.l:                                             ; preds = %bb.j
   %i.az = call fastcc ptr @pack_modifiers(ptr noundef %i.as, i8 noundef signext %i.at, ptr noundef %i.e, ptr noundef %i.d) ; 4 uses
   store ptr %i.az, ptr %i.c, align 8, !tbaa !18
   %.not1026 = icmp ult ptr %i.az, %i.ah
@@ -670,9 +668,8 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.t
 
 bb.o:                                             ; preds = %bb.m
-  %11 = sext i8 %i.ba to i32
-  %12 = add nsw i32 %11, -58
-  %i.bf = icmp ult i32 %12, -10
+  %5 = add i8 %i.ba, -58
+  %i.bf = icmp ult i8 %5, -10
   br i1 %i.bf, label %bb.s, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -1075,9 +1072,9 @@ bb.jl:                                            ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   br label %.loopexit1350
 
-.thread1177:                                      ; preds = %bb.jk, %bb.je, %bb.ez, %bb.iq, %bb.is, %.preheader1347, %bb.it, %bb.ec, %bb.hr, %bb.ht, %bb.he, %bb.hg, %bb.fx, %bb.fz, %bb.bj, %bb.bl, %bb.bd, %bb.bf, %bb.ax, %bb.az, %bb.ap, %bb.ar, %bb.x, %bb.z, %bb.aj, %RSTRING_PTR.exit1150, %bb.ib, %bb.ie, %rb_array_len.exit, %._crit_edge1625, %rb_array_len.exit1117, %._crit_edge1620, %rb_array_len.exit1120, %._crit_edge1615, %rb_array_len.exit1123, %._crit_edge1610, %rb_array_len.exit1126, %._crit_edge1605, %rb_array_len.exit1129, %._crit_edge1600, %rb_array_len.exit1132, %._crit_edge1595, %bb.if, %.thread1189, %bb.j, %bb.k
-  %.47 = phi ptr [ %.14924.lcssa, %rb_array_len.exit1120 ], [ %.14924.lcssa, %._crit_edge1615 ], [ %.09101673, %bb.j ], [ %.15925.lcssa, %rb_array_len.exit1123 ], [ %.15925.lcssa, %._crit_edge1610 ], [ %.16926.lcssa, %rb_array_len.exit1126 ], [ %.16926.lcssa, %._crit_edge1605 ], [ %.17927.lcssa, %rb_array_len.exit1129 ], [ %.17927.lcssa, %._crit_edge1600 ], [ %.18928.lcssa, %rb_array_len.exit1132 ], [ %.18928.lcssa, %._crit_edge1595 ], [ %i.ru, %bb.ez ], [ %.9919.lcssa, %bb.bj ], [ %.20930.lcssa, %bb.fx ], [ %.37, %bb.he ], [ %i.aec, %RSTRING_PTR.exit1150 ], [ %i.aeq, %bb.ib ], [ %i.aev, %bb.ie ], [ %i.agx, %bb.je ], [ %.09101673, %bb.if ], [ %.41, %bb.hr ], [ %i.afb, %bb.iq ], [ %.09101673, %bb.k ], [ %.13923.lcssa, %._crit_edge1620 ], [ %i.cl, %.thread1189 ], [ %i.cr, %bb.aj ], [ %i.bu, %bb.x ], [ %.3913.lcssa, %bb.ap ], [ %.5915.lcssa, %bb.ax ], [ %.7917.lcssa, %bb.bd ], [ %.11921.lcssa, %rb_array_len.exit ], [ %.11921.lcssa, %._crit_edge1625 ], [ %.13923.lcssa, %rb_array_len.exit1117 ], [ %i.bu, %bb.z ], [ %.3913.lcssa, %bb.ar ], [ %.5915.lcssa, %bb.az ], [ %.7917.lcssa, %bb.bf ], [ %.9919.lcssa, %bb.bl ], [ %.20930.lcssa, %bb.fz ], [ %.37, %bb.hg ], [ %.41, %bb.ht ], [ %.09101673, %bb.ec ], [ %.09101673, %bb.it ], [ %.09101673, %.preheader1347 ], [ %i.afb, %bb.is ], [ %i.aim, %bb.jk ]
-  %.7909 = phi i64 [ %.09021674, %rb_array_len.exit1120 ], [ %.09021674, %._crit_edge1615 ], [ %.09021674, %bb.j ], [ %.09021674, %rb_array_len.exit1123 ], [ %.09021674, %._crit_edge1610 ], [ %.09021674, %rb_array_len.exit1126 ], [ %.09021674, %._crit_edge1605 ], [ %.09021674, %rb_array_len.exit1129 ], [ %.09021674, %._crit_edge1600 ], [ %.09021674, %rb_array_len.exit1132 ], [ %.09021674, %._crit_edge1595 ], [ %.09021674, %bb.ez ], [ %.09021674, %bb.bj ], [ %.09021674, %bb.fx ], [ %.09021674, %bb.he ], [ %.09021674, %RSTRING_PTR.exit1150 ], [ %.09021674, %bb.ib ], [ %.09021674, %bb.ie ], [ %.5907, %bb.je ], [ %.09021674, %bb.if ], [ %.09021674, %bb.hr ], [ %.2904, %bb.iq ], [ %.09021674, %bb.k ], [ %.09021674, %._crit_edge1620 ], [ %.09021674, %.thread1189 ], [ %.09021674, %bb.aj ], [ %.09021674, %bb.x ], [ %.09021674, %bb.ap ], [ %.09021674, %bb.ax ], [ %.09021674, %bb.bd ], [ %.09021674, %rb_array_len.exit ], [ %.09021674, %._crit_edge1625 ], [ %.09021674, %rb_array_len.exit1117 ], [ %.09021674, %bb.z ], [ %.09021674, %bb.ar ], [ %.09021674, %bb.az ], [ %.09021674, %bb.bf ], [ %.09021674, %bb.bl ], [ %.09021674, %bb.fz ], [ %.09021674, %bb.hg ], [ %.09021674, %bb.ht ], [ %.09021674, %bb.ec ], [ %.09021674, %bb.it ], [ %.09021674, %.preheader1347 ], [ %.2904, %bb.is ], [ %.09021674, %bb.jk ]
+.thread1177:                                      ; preds = %bb.jk, %bb.je, %bb.ez, %bb.iq, %bb.is, %.preheader1347, %bb.it, %bb.ec, %bb.j, %bb.j, %bb.j, %bb.j, %bb.j, %bb.j, %bb.hr, %bb.ht, %bb.he, %bb.hg, %bb.fx, %bb.fz, %bb.bj, %bb.bl, %bb.bd, %bb.bf, %bb.ax, %bb.az, %bb.ap, %bb.ar, %bb.x, %bb.z, %bb.aj, %RSTRING_PTR.exit1150, %bb.ib, %bb.ie, %rb_array_len.exit, %._crit_edge1625, %rb_array_len.exit1117, %._crit_edge1620, %rb_array_len.exit1120, %._crit_edge1615, %rb_array_len.exit1123, %._crit_edge1610, %rb_array_len.exit1126, %._crit_edge1605, %rb_array_len.exit1129, %._crit_edge1600, %rb_array_len.exit1132, %._crit_edge1595, %bb.if, %.thread1189, %bb.k
+  %.47 = phi ptr [ %.14924.lcssa, %rb_array_len.exit1120 ], [ %.14924.lcssa, %._crit_edge1615 ], [ %.09101673, %bb.j ], [ %.15925.lcssa, %rb_array_len.exit1123 ], [ %.15925.lcssa, %._crit_edge1610 ], [ %.16926.lcssa, %rb_array_len.exit1126 ], [ %.16926.lcssa, %._crit_edge1605 ], [ %.17927.lcssa, %rb_array_len.exit1129 ], [ %.17927.lcssa, %._crit_edge1600 ], [ %.18928.lcssa, %rb_array_len.exit1132 ], [ %.18928.lcssa, %._crit_edge1595 ], [ %.09101673, %bb.j ], [ %.9919.lcssa, %bb.bj ], [ %.20930.lcssa, %bb.fx ], [ %.37, %bb.he ], [ %i.aec, %RSTRING_PTR.exit1150 ], [ %i.aeq, %bb.ib ], [ %i.aev, %bb.ie ], [ %i.agx, %bb.je ], [ %.09101673, %bb.if ], [ %.41, %bb.hr ], [ %i.afb, %bb.iq ], [ %.09101673, %bb.k ], [ %.13923.lcssa, %._crit_edge1620 ], [ %i.cl, %.thread1189 ], [ %i.cr, %bb.aj ], [ %i.bu, %bb.x ], [ %.3913.lcssa, %bb.ap ], [ %.5915.lcssa, %bb.ax ], [ %.7917.lcssa, %bb.bd ], [ %.11921.lcssa, %rb_array_len.exit ], [ %.11921.lcssa, %._crit_edge1625 ], [ %.13923.lcssa, %rb_array_len.exit1117 ], [ %i.bu, %bb.z ], [ %.3913.lcssa, %bb.ar ], [ %.5915.lcssa, %bb.az ], [ %.7917.lcssa, %bb.bf ], [ %.9919.lcssa, %bb.bl ], [ %.20930.lcssa, %bb.fz ], [ %.37, %bb.hg ], [ %.41, %bb.ht ], [ %i.ru, %bb.ez ], [ %.09101673, %bb.j ], [ %.09101673, %bb.j ], [ %.09101673, %bb.j ], [ %.09101673, %bb.j ], [ %.09101673, %bb.ec ], [ %.09101673, %bb.it ], [ %.09101673, %.preheader1347 ], [ %i.afb, %bb.is ], [ %i.aim, %bb.jk ]
+  %.7909 = phi i64 [ %.09021674, %rb_array_len.exit1120 ], [ %.09021674, %._crit_edge1615 ], [ %.09021674, %bb.j ], [ %.09021674, %rb_array_len.exit1123 ], [ %.09021674, %._crit_edge1610 ], [ %.09021674, %rb_array_len.exit1126 ], [ %.09021674, %._crit_edge1605 ], [ %.09021674, %rb_array_len.exit1129 ], [ %.09021674, %._crit_edge1600 ], [ %.09021674, %rb_array_len.exit1132 ], [ %.09021674, %._crit_edge1595 ], [ %.09021674, %bb.j ], [ %.09021674, %bb.bj ], [ %.09021674, %bb.fx ], [ %.09021674, %bb.he ], [ %.09021674, %RSTRING_PTR.exit1150 ], [ %.09021674, %bb.ib ], [ %.09021674, %bb.ie ], [ %.5907, %bb.je ], [ %.09021674, %bb.if ], [ %.09021674, %bb.hr ], [ %.2904, %bb.iq ], [ %.09021674, %bb.k ], [ %.09021674, %._crit_edge1620 ], [ %.09021674, %.thread1189 ], [ %.09021674, %bb.aj ], [ %.09021674, %bb.x ], [ %.09021674, %bb.ap ], [ %.09021674, %bb.ax ], [ %.09021674, %bb.bd ], [ %.09021674, %rb_array_len.exit ], [ %.09021674, %._crit_edge1625 ], [ %.09021674, %rb_array_len.exit1117 ], [ %.09021674, %bb.z ], [ %.09021674, %bb.ar ], [ %.09021674, %bb.az ], [ %.09021674, %bb.bf ], [ %.09021674, %bb.bl ], [ %.09021674, %bb.fz ], [ %.09021674, %bb.hg ], [ %.09021674, %bb.ht ], [ %.09021674, %bb.ez ], [ %.09021674, %bb.j ], [ %.09021674, %bb.j ], [ %.09021674, %bb.j ], [ %.09021674, %bb.j ], [ %.09021674, %bb.ec ], [ %.09021674, %bb.it ], [ %.09021674, %.preheader1347 ], [ %.2904, %bb.is ], [ %.09021674, %bb.jk ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   %i.aix = load ptr, ptr %i.c, align 8, !tbaa !18 ; 2 uses

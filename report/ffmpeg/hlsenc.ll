@@ -204,9 +204,8 @@ bb.bg:                                            ; preds = %bb.be, %bb.bd, %bb.
   %i.gl = call i64 @strtoll(ptr noundef %i.gk, ptr noundef nonnull %i.n, i32 noundef 10) #15
   %i.gm = load ptr, ptr %i.m, align 8, !tbaa !62  ; 2 uses
   %i.gn = load i8, ptr %i.gm, align 1, !tbaa !56
-  %5 = sext i8 %i.gn to i32
-  %6 = add nsw i32 %5, -58
-  %i.go = icmp ult i32 %6, -10
+  %5 = add i8 %i.gn, -58
+  %i.go = icmp ult i8 %5, -10
   br i1 %i.go, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
@@ -609,26 +608,26 @@ bb.b:                                             ; preds = %.critedge, %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %.035, i64 1
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !56    ; 4 uses
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !56    ; 5 uses
   %i.d = icmp eq i8 %i.c, 37
   br i1 %i.d, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %5 = sext i8 %i.c to i32                        ; 3 uses
-  %6 = add nsw i32 %5, -48
-  %i.e = icmp ult i32 %6, 10
+  %5 = add i8 %i.c, -48
+  %i.e = icmp ult i8 %5, 10
   %i.f = icmp eq i8 %i.c, %2
   %or.cond = or i1 %i.f, %i.e
   br i1 %or.cond, label %.preheader, label %.critedge
 
 .preheader:                                       ; preds = %bb.d
-  %i.g = add nsw i32 %5, -58
+  %6 = sext i8 %i.c to i32                        ; 2 uses
+  %i.g = add nsw i32 %6, -58
   %i.h = icmp ult i32 %i.g, -10
   br i1 %i.h, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 1, %.preheader ]
-  %i.i = phi i32 [ %i.o, %.lr.ph ], [ %5, %.preheader ]
+  %i.i = phi i32 [ %i.o, %.lr.ph ], [ %6, %.preheader ]
   %.03446 = phi i32 [ %i.l, %.lr.ph ], [ 0, %.preheader ]
   %i.j = mul nsw i32 %.03446, 10
   %i.k = add i32 %i.j, -48

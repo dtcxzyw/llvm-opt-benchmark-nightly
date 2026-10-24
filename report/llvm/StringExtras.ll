@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.s = load ptr, ptr %0, align 8, !tbaa !29
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.j
   store i8 0, ptr %i.t, align 1, !tbaa !18
-  %i.u = load i8, ptr %i.d, align 1, !tbaa !18
+  %i.u = load i8, ptr %i.d, align 1, !tbaa !18    ; 6 uses
   %i.v = sext i8 %i.u to i32                      ; 6 uses
   %i.w = tail call noundef i32 @isupper(i32 noundef %i.v) #8, !inline_history !41
   %.not = icmp eq i32 %i.w, 0
@@ -268,16 +268,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit20: ; pred
   %i.at = load ptr, ptr %0, align 8, !tbaa !29
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.ak
   store i8 0, ptr %i.au, align 1, !tbaa !18
-  %.pre = load i8, ptr %i.d, align 1, !tbaa !18
+  %.pre = load i8, ptr %i.d, align 1, !tbaa !18   ; 2 uses
   %.pre60 = sext i8 %.pre to i32
   br label %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit21"
 
 "_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit21": ; preds = %bb.f, %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit20, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit15", %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit14", %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit"
-  %.pre-phi = phi i32 [ %i.v, %bb.f ], [ %i.v, %bb.e ], [ %.pre60, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit20 ], [ %i.v, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit15" ], [ %i.v, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit14" ], [ %i.v, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit" ] ; 2 uses
+  %.pre-phi = phi i32 [ %i.v, %bb.f ], [ %i.v, %bb.e ], [ %.pre60, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit20 ], [ %i.v, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit15" ], [ %i.v, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit14" ], [ %i.v, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit" ]
+  %3 = phi i8 [ %i.u, %bb.f ], [ %i.u, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit20 ], [ %i.u, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit15" ], [ %i.u, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit14" ], [ %i.u, %"_ZZN4llvm27convertToSnakeFromCamelCaseB5cxx11ENS_9StringRefEENK3$_0clEmNS_12function_refIFbiEEE.exit" ]
   %i.av = tail call noundef i32 @islower(i32 noundef %.pre-phi) #8, !inline_history !41
   %.not57 = icmp ne i32 %i.av, 0
-  %isdigittmp = add nsw i32 %.pre-phi, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %4 = add i8 %3, -48
+  %isdigit = icmp ult i8 %4, 10
   %or.cond = select i1 %.not57, i1 true, i1 %isdigit
   %i.aw = add nuw i64 %.059, 1                    ; 4 uses
   %i.ax = icmp ult i64 %i.aw, %2

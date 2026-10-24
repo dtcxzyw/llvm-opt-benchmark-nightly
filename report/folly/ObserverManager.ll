@@ -205,9 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i8, ptr %i.a, align 1, !tbaa !625   ; 3 uses
-  %4 = sext i8 %i.b to i32
-  %5 = add nsw i32 %4, -48
-  %or.cond = icmp ult i32 %5, 10
+  %4 = add i8 %i.b, -48
+  %or.cond = icmp ult i8 %4, 10
   br i1 %or.cond, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -218,8 +217,8 @@ bb.c:                                             ; preds = %bb.b
   %scevgep.i = getelementptr i8, ptr %i.f, i64 %i.c ; 2 uses
   %i.g = sub i64 %i.c, %i.d
   %scevgep34.i = getelementptr i8, ptr %i.a, i64 %i.g ; 2 uses
-  %6 = sext i8 %i.b to i32
-  %i.h = add nsw i32 %6, -48                      ; 2 uses
+  %5 = zext nneg i8 %i.b to i32
+  %i.h = add nsw i32 %5, -48                      ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %.not31.i43 = icmp eq ptr %i.i, %1
   br i1 %.not31.i43, label %.critedge.i, label %.lr.ph

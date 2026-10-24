@@ -205,10 +205,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %.1 = phi i8 [ 1, %.lr.ph119 ], [ 1, %bb.i ], [ 0, %bb.h ] ; 2 uses
   %i.ac = sext i32 %.231 to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %i.ac
-  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461
-  %21 = sext i8 %i.ae to i32
-  %isdigittmp36 = add nsw i32 %21, -48            ; 3 uses
-  %isdigit37 = icmp ult i32 %isdigittmp36, 10
+  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461 ; 2 uses
+  %21 = add i8 %i.ae, -48
+  %isdigit37 = icmp ult i8 %21, 10
   br i1 %isdigit37, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -304,7 +303,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 
 _ZN8facebook5velox15checkedMultiplyIiEET_S2_S2_PKc.exit: ; preds = %bb.o
   %i.bd = extractvalue { i32, i1 } %i.at, 0       ; 2 uses
-  %i.be = tail call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %i.bd, i32 %isdigittmp36) ; 2 uses
+  %22 = zext nneg i8 %i.ae to i32
+  %23 = add nsw i32 %22, -48                      ; 2 uses
+  %i.be = tail call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %i.bd, i32 %23) ; 2 uses
   %i.bf = extractvalue { i32, i1 } %i.be, 1
   br i1 %i.bf, label %bb.s, label %_ZN8facebook5velox12checkedMinusIiEET_S2_S2_PKc.exit, !prof !526
 
@@ -315,7 +316,7 @@ bb.s:                                             ; preds = %_ZN8facebook5velox1
   %i.bg = getelementptr inbounds nuw i8, ptr %9, i64 16
   store i32 %i.bd, ptr %i.bg, align 16, !tbaa !461, !alias.scope !12849, !noalias !12848
   %i.bh = getelementptr inbounds nuw i8, ptr %9, i64 32
-  store i32 %isdigittmp36, ptr %i.bh, align 16, !tbaa !461, !alias.scope !12849, !noalias !12848
+  store i32 %23, ptr %i.bh, align 16, !tbaa !461, !alias.scope !12849, !noalias !12848
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr nonnull @.str.212, i64 20, i64 284, ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #39, !noalias !12848
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox12checkedMinusIiEET_S2_S2_PKcE18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %10, ptr nonnull @.str.212) #47
@@ -376,10 +377,9 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   %.3 = phi i8 [ 1, %.lr.ph ], [ 1, %bb.x ], [ 0, %bb.w ] ; 2 uses
   %i.by = sext i32 %.4 to i64
   %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 %i.by
-  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !461
-  %22 = sext i8 %i.ca to i32
-  %isdigittmp = add nsw i32 %22, -48              ; 3 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !461 ; 2 uses
+  %24 = add i8 %i.ca, -48
+  %isdigit = icmp ult i8 %24, 10
   br i1 %isdigit, label %bb.ac, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -475,7 +475,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i76: ; preds = %b
 
 _ZN8facebook5velox15checkedMultiplyIiEET_S2_S2_PKc.exit78: ; preds = %bb.ad
   %i.cz = extractvalue { i32, i1 } %i.cp, 0       ; 2 uses
-  %i.da = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.cz, i32 %isdigittmp) ; 2 uses
+  %25 = zext nneg i8 %i.ca to i32
+  %26 = add nsw i32 %25, -48                      ; 2 uses
+  %i.da = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.cz, i32 %26) ; 2 uses
   %i.db = extractvalue { i32, i1 } %i.da, 1
   br i1 %i.db, label %bb.ah, label %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit, !prof !526
 
@@ -486,7 +488,7 @@ bb.ah:                                            ; preds = %_ZN8facebook5velox1
   %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i32 %i.cz, ptr %i.dc, align 16, !tbaa !461, !alias.scope !12856, !noalias !12855
   %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i32 %isdigittmp, ptr %i.dd, align 16, !tbaa !461, !alias.scope !12856, !noalias !12855
+  store i32 %26, ptr %i.dd, align 16, !tbaa !461, !alias.scope !12856, !noalias !12855
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr nonnull @.str.76, i64 20, i64 284, ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #39, !noalias !12855
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox11checkedPlusIiEET_S2_S2_PKcE18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %4, ptr nonnull @.str.76) #47
@@ -889,10 +891,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %.1 = phi i8 [ 1, %.lr.ph117 ], [ 1, %bb.i ], [ 0, %bb.h ] ; 2 uses
   %i.ac = sext i32 %.231 to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %i.ac
-  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461 ; 2 uses
-  %21 = sext i8 %i.ae to i32
-  %isdigittmp36 = add nsw i32 %21, -48
-  %isdigit37 = icmp ult i32 %isdigittmp36, 10
+  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461
+  %21 = add i8 %i.ae, -48                         ; 3 uses
+  %isdigit37 = icmp ult i8 %21, 10
   br i1 %isdigit37, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -989,8 +990,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 
 _ZN8facebook5velox15checkedMultiplyIaEET_S2_S2_PKc.exit: ; preds = %bb.o
   %i.be = extractvalue { i8, i1 } %i.at, 0        ; 2 uses
-  %22 = add nsw i8 %i.ae, -48                     ; 2 uses
-  %i.bf = tail call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %i.be, i8 %22) ; 2 uses
+  %i.bf = tail call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %i.be, i8 %21) ; 2 uses
   %i.bg = extractvalue { i8, i1 } %i.bf, 1
   br i1 %i.bg, label %bb.s, label %_ZN8facebook5velox12checkedMinusIaEET_S2_S2_PKc.exit, !prof !526
 
@@ -1002,8 +1002,8 @@ bb.s:                                             ; preds = %_ZN8facebook5velox1
   %i.bi = sext i8 %i.be to i32
   store i32 %i.bi, ptr %i.bh, align 16, !tbaa !461, !noalias !14564
   %i.bj = getelementptr inbounds nuw i8, ptr %9, i64 32
-  %23 = sext i8 %22 to i32
-  store i32 %23, ptr %i.bj, align 16, !tbaa !461, !noalias !14564
+  %22 = zext nneg i8 %21 to i32
+  store i32 %22, ptr %i.bj, align 16, !tbaa !461, !noalias !14564
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr nonnull @.str.212, i64 20, i64 284, ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #39, !noalias !14564
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox12checkedMinusIaEET_S2_S2_PKcE18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %10, ptr nonnull @.str.212) #47
@@ -1064,10 +1064,9 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   %.3 = phi i8 [ 1, %.lr.ph ], [ 1, %bb.x ], [ 0, %bb.w ] ; 2 uses
   %i.ca = sext i32 %.4 to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %2, i64 %i.ca
-  %i.cc = load i8, ptr %i.cb, align 1, !tbaa !461 ; 2 uses
-  %24 = sext i8 %i.cc to i32
-  %isdigittmp = add nsw i32 %24, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.cc = load i8, ptr %i.cb, align 1, !tbaa !461
+  %23 = add i8 %i.cc, -48                         ; 3 uses
+  %isdigit = icmp ult i8 %23, 10
   br i1 %isdigit, label %bb.ac, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -1164,8 +1163,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i76: ; preds = %b
 
 _ZN8facebook5velox15checkedMultiplyIaEET_S2_S2_PKc.exit78: ; preds = %bb.ad
   %i.dc = extractvalue { i8, i1 } %i.cr, 0        ; 2 uses
-  %25 = add nsw i8 %i.cc, -48                     ; 2 uses
-  %i.dd = tail call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %i.dc, i8 %25) ; 2 uses
+  %i.dd = tail call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %i.dc, i8 %23) ; 2 uses
   %i.de = extractvalue { i8, i1 } %i.dd, 1
   br i1 %i.de, label %bb.ah, label %_ZN8facebook5velox11checkedPlusIaEET_S2_S2_PKc.exit, !prof !526
 
@@ -1177,8 +1175,8 @@ bb.ah:                                            ; preds = %_ZN8facebook5velox1
   %i.dg = sext i8 %i.dc to i32
   store i32 %i.dg, ptr %i.df, align 16, !tbaa !461, !noalias !14571
   %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %26 = sext i8 %25 to i32
-  store i32 %26, ptr %i.dh, align 16, !tbaa !461, !noalias !14571
+  %24 = zext nneg i8 %23 to i32
+  store i32 %24, ptr %i.dh, align 16, !tbaa !461, !noalias !14571
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr nonnull @.str.76, i64 20, i64 284, ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #39, !noalias !14571
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox11checkedPlusIaEET_S2_S2_PKcE18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %4, ptr nonnull @.str.76) #47
@@ -1581,9 +1579,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %i.ac = sext i32 %.231 to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461 ; 2 uses
-  %21 = sext i8 %i.ae to i32
-  %isdigittmp36 = add nsw i32 %21, -48
-  %isdigit37 = icmp ult i32 %isdigittmp36, 10
+  %21 = add i8 %i.ae, -48
+  %isdigit37 = icmp ult i8 %21, 10
   br i1 %isdigit37, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -1680,7 +1677,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 
 _ZN8facebook5velox15checkedMultiplyIsEET_S2_S2_PKc.exit: ; preds = %bb.o
   %i.be = extractvalue { i16, i1 } %i.at, 0       ; 2 uses
-  %22 = sext i8 %i.ae to i16
+  %22 = zext nneg i8 %i.ae to i16
   %i.bf = add nsw i16 %22, -48                    ; 2 uses
   %i.bg = tail call { i16, i1 } @llvm.ssub.with.overflow.i16(i16 %i.be, i16 %i.bf) ; 2 uses
   %i.bh = extractvalue { i16, i1 } %i.bg, 1
@@ -1694,7 +1691,7 @@ bb.s:                                             ; preds = %_ZN8facebook5velox1
   %i.bj = sext i16 %i.be to i32
   store i32 %i.bj, ptr %i.bi, align 16, !tbaa !461, !noalias !16309
   %i.bk = getelementptr inbounds nuw i8, ptr %9, i64 32
-  %23 = sext i16 %i.bf to i32
+  %23 = zext nneg i16 %i.bf to i32
   store i32 %23, ptr %i.bk, align 16, !tbaa !461, !noalias !16309
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr nonnull @.str.212, i64 20, i64 284, ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #39, !noalias !16309
@@ -1757,9 +1754,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   %i.cb = sext i32 %.4 to i64
   %i.cc = getelementptr inbounds nuw i8, ptr %2, i64 %i.cb
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !461 ; 2 uses
-  %24 = sext i8 %i.cd to i32
-  %isdigittmp = add nsw i32 %24, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %24 = add i8 %i.cd, -48
+  %isdigit = icmp ult i8 %24, 10
   br i1 %isdigit, label %bb.ac, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -1856,7 +1852,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i76: ; preds = %b
 
 _ZN8facebook5velox15checkedMultiplyIsEET_S2_S2_PKc.exit78: ; preds = %bb.ad
   %i.dd = extractvalue { i16, i1 } %i.cs, 0       ; 2 uses
-  %25 = sext i8 %i.cd to i16
+  %25 = zext nneg i8 %i.cd to i16
   %i.de = add nsw i16 %25, -48                    ; 2 uses
   %i.df = tail call { i16, i1 } @llvm.sadd.with.overflow.i16(i16 %i.dd, i16 %i.de) ; 2 uses
   %i.dg = extractvalue { i16, i1 } %i.df, 1
@@ -1870,7 +1866,7 @@ bb.ah:                                            ; preds = %_ZN8facebook5velox1
   %i.di = sext i16 %i.dd to i32
   store i32 %i.di, ptr %i.dh, align 16, !tbaa !461, !noalias !16316
   %i.dj = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %26 = sext i16 %i.de to i32
+  %26 = zext nneg i16 %i.de to i32
   store i32 %26, ptr %i.dj, align 16, !tbaa !461, !noalias !16316
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr nonnull @.str.76, i64 20, i64 284, ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #39, !noalias !16316
@@ -2273,9 +2269,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %i.ac = sext i32 %.231 to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461 ; 2 uses
-  %21 = sext i8 %i.ae to i32
-  %isdigittmp36 = add nsw i32 %21, -48
-  %isdigit37 = icmp ult i32 %isdigittmp36, 10
+  %21 = add i8 %i.ae, -48
+  %isdigit37 = icmp ult i8 %21, 10
   br i1 %isdigit37, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -2371,7 +2366,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 
 _ZN8facebook5velox15checkedMultiplyIlEET_S2_S2_PKc.exit: ; preds = %bb.o
   %i.bd = extractvalue { i64, i1 } %i.at, 0       ; 2 uses
-  %22 = sext i8 %i.ae to i64
+  %22 = zext nneg i8 %i.ae to i64
   %i.be = add nsw i64 %22, -48                    ; 2 uses
   %i.bf = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %i.bd, i64 %i.be) ; 2 uses
   %i.bg = extractvalue { i64, i1 } %i.bf, 1
@@ -2446,9 +2441,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   %i.bz = sext i32 %.4 to i64
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 %i.bz
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !461 ; 2 uses
-  %23 = sext i8 %i.cb to i32
-  %isdigittmp = add nsw i32 %23, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %23 = add i8 %i.cb, -48
+  %isdigit = icmp ult i8 %23, 10
   br i1 %isdigit, label %bb.ac, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -2544,7 +2538,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i76: ; preds = %b
 
 _ZN8facebook5velox15checkedMultiplyIlEET_S2_S2_PKc.exit78: ; preds = %bb.ad
   %i.da = extractvalue { i64, i1 } %i.cq, 0       ; 2 uses
-  %24 = sext i8 %i.cb to i64
+  %24 = zext nneg i8 %i.cb to i64
   %i.db = add nsw i64 %24, -48                    ; 2 uses
   %i.dc = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.da, i64 %i.db) ; 2 uses
   %i.dd = extractvalue { i64, i1 } %i.dc, 1
@@ -2947,10 +2941,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %.1 = phi i8 [ 1, %.lr.ph117 ], [ 1, %bb.i ], [ 0, %bb.h ] ; 2 uses
   %i.ac = sext i32 %.231 to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %i.ac
-  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461
-  %21 = sext i8 %i.ae to i32
-  %isdigittmp36 = add nsw i32 %21, -48            ; 2 uses
-  %isdigit37 = icmp ult i32 %isdigittmp36, 10
+  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !461 ; 2 uses
+  %21 = add i8 %i.ae, -48
+  %isdigit37 = icmp ult i8 %21, 10
   br i1 %isdigit37, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -3046,7 +3039,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 
 _ZN8facebook5velox15checkedMultiplyInEET_S2_S2_PKc.exit: ; preds = %bb.o
   %i.bd = extractvalue { i128, i1 } %i.at, 0      ; 2 uses
-  %i.be = zext nneg i32 %isdigittmp36 to i128     ; 2 uses
+  %22 = zext nneg i8 %i.ae to i32
+  %23 = add nsw i32 %22, -48
+  %i.be = zext nneg i32 %23 to i128               ; 2 uses
   %i.bf = tail call { i128, i1 } @llvm.ssub.with.overflow.i128(i128 %i.bd, i128 %i.be) ; 2 uses
   %i.bg = extractvalue { i128, i1 } %i.bf, 1
   br i1 %i.bg, label %bb.s, label %_ZN8facebook5velox12checkedMinusInEET_S2_S2_PKc.exit, !prof !526
@@ -3119,10 +3114,9 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   %.3 = phi i8 [ 1, %.lr.ph ], [ 1, %bb.x ], [ 0, %bb.w ] ; 2 uses
   %i.bz = sext i32 %.4 to i64
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 %i.bz
-  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !461
-  %22 = sext i8 %i.cb to i32
-  %isdigittmp = add nsw i32 %22, -48              ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !461 ; 2 uses
+  %24 = add i8 %i.cb, -48
+  %isdigit = icmp ult i8 %24, 10
   br i1 %isdigit, label %bb.ac, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -3218,7 +3212,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i76: ; preds = %b
 
 _ZN8facebook5velox15checkedMultiplyInEET_S2_S2_PKc.exit78: ; preds = %bb.ad
   %i.da = extractvalue { i128, i1 } %i.cq, 0      ; 2 uses
-  %i.db = zext nneg i32 %isdigittmp to i128       ; 2 uses
+  %25 = zext nneg i8 %i.cb to i32
+  %26 = add nsw i32 %25, -48
+  %i.db = zext nneg i32 %26 to i128               ; 2 uses
   %i.dc = tail call { i128, i1 } @llvm.sadd.with.overflow.i128(i128 %i.da, i128 %i.db) ; 2 uses
   %i.dd = extractvalue { i128, i1 } %i.dc, 1
   br i1 %i.dd, label %bb.ah, label %_ZN8facebook5velox11checkedPlusInEET_S2_S2_PKc.exit, !prof !526
@@ -3621,9 +3617,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread: ; 
   %i.p = getelementptr i8, ptr %.pre, i64 %i.d    ; 2 uses
   %i.q = getelementptr i8, ptr %i.p, i64 -1
   %i.r = load i8, ptr %i.q, align 1, !tbaa !461
-  %1 = sext i8 %i.r to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.r, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread5
 
 bb.d:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread
@@ -4026,9 +4021,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread: ; 
   %i.p = getelementptr i8, ptr %.pre, i64 %i.d    ; 2 uses
   %i.q = getelementptr i8, ptr %i.p, i64 -1
   %i.r = load i8, ptr %i.q, align 1, !tbaa !461
-  %1 = sext i8 %i.r to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.r, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread5
 
 bb.d:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread
@@ -4431,9 +4425,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread: ; 
   %i.p = getelementptr i8, ptr %.pre, i64 %i.d    ; 2 uses
   %i.q = getelementptr i8, ptr %i.p, i64 -1
   %i.r = load i8, ptr %i.q, align 1, !tbaa !461
-  %1 = sext i8 %i.r to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.r, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread5
 
 bb.d:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread
@@ -4836,9 +4829,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread: ; 
   %i.p = getelementptr i8, ptr %.pre, i64 %i.d    ; 2 uses
   %i.q = getelementptr i8, ptr %i.p, i64 -1
   %i.r = load i8, ptr %i.q, align 1, !tbaa !461
-  %1 = sext i8 %i.r to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.r, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread5
 
 bb.d:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread

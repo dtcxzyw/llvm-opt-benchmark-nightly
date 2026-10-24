@@ -202,16 +202,13 @@ bb.a:
   %i.a = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %0, i32 %1) #16 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = trunc i32 %i.b to i1
-  br i1 %i.c, label %2, label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19
+  %2 = extractvalue { i32, i32 } %i.a, 1          ; 2 uses
+  %3 = add i32 %2, 93599
+  %or.cond.i.i.i = icmp ult i32 %3, 187199
+  %or.cond = select i1 %i.c, i1 %or.cond.i.i.i, i1 false
+  br i1 %or.cond, label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit, label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19
 
-2:                                                ; preds = %bb.a
-  %3 = extractvalue { i32, i32 } %i.a, 1          ; 2 uses
-  %4 = sext i32 %3 to i64
-  %5 = add nsw i64 %4, 93599
-  %or.cond.i.i.i = icmp ult i64 %5, 187199
-  br i1 %or.cond.i.i.i, label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit, label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19
-
-_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19: ; preds = %bb.a, %2
+_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19: ; preds = %bb.a
   tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_18OffsetTotalSecondsE3newB4_() #16
   %i.d = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 19) ; 2 uses
   %.sroa.214.0.extract.shift = lshr i32 %i.d, 16
@@ -219,10 +216,10 @@ _RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add
   %i.f = zext i32 %i.e to i64
   br label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit
 
-_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit: ; preds = %2, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19
-  %.sroa.4.0.in = phi i32 [ %.sroa.214.0.extract.shift, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19 ], [ %3, %2 ]
-  %.sroa.3.0 = phi i64 [ %i.f, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19 ], [ 0, %2 ]
-  %.sroa.0.0 = phi i64 [ 1, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19 ], [ 0, %2 ]
+_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit: ; preds = %bb.a, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19
+  %.sroa.4.0.in = phi i32 [ %.sroa.214.0.extract.shift, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19 ], [ %2, %bb.a ]
+  %.sroa.3.0 = phi i64 [ %i.f, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19 ], [ 0, %bb.a ]
+  %.sroa.0.0 = phi i64 [ 1, %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds11checked_add.exit.thread19 ], [ 0, %bb.a ]
   %.sroa.4.0 = zext i32 %.sroa.4.0.in to i64
   %.sroa.4.0.insert.shift = shl nuw i64 %.sroa.4.0, 32
   %.sroa.3.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.3.0
@@ -322,9 +319,8 @@ bb.k:                                             ; preds = %bb.i
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden range(i64 0, -65534) i64 @_RNvMNtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB2_6Offset12from_secondsB6_(i32 %0) unnamed_addr #1 {
 bb.a:
-  %1 = sext i32 %0 to i64
-  %2 = add nsw i64 %1, 93599
-  %or.cond.i.i = icmp ult i64 %2, 187199
+  %1 = add i32 %0, 93599
+  %or.cond.i.i = icmp ult i32 %1, 187199
   br i1 %or.cond.i.i, label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds6checkc.exit, label %_RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds6checkc.exit.thread
 
 _RNvMs18_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_18OffsetTotalSeconds6checkc.exit.thread: ; preds = %bb.a
@@ -727,22 +723,19 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define i32 @_RNvXs1_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3AddlE3add(i32 %0, i32 %1) unnamed_addr #5 personality ptr @rust_eh_personality {
+define range(i32 -93599, 93600) i32 @_RNvXs1_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3AddlE3add(i32 %0, i32 %1) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 2                 ; 4 uses
   %i.b = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %0, i32 %1) #16 ; 2 uses
   %i.c = extractvalue { i32, i32 } %i.b, 0
   %i.d = trunc i32 %i.c to i1
-  br i1 %i.d, label %2, label %bb.b
+  %2 = extractvalue { i32, i32 } %i.b, 1          ; 2 uses
+  %3 = add i32 %2, 93599
+  %or.cond.i.i.i.i = icmp ult i32 %3, 187199
+  %or.cond.i = select i1 %i.d, i1 %or.cond.i.i.i.i, i1 false
+  br i1 %or.cond.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit, label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = extractvalue { i32, i32 } %i.b, 1          ; 2 uses
-  %4 = sext i32 %3 to i64
-  %5 = add nsw i64 %4, 93599
-  %or.cond.i.i.i.i = icmp ult i64 %5, 187199
-  br i1 %or.cond.i.i.i.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit, label %bb.b
-
-bb.b:                                             ; preds = %bb.a, %2
+bb.b:                                             ; preds = %bb.a
   tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_18OffsetTotalSecondsE3newB4_() #16
   %i.e = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 19) ; 2 uses
   %.sroa.214.0.extract.shift.i = lshr i32 %i.e, 16
@@ -755,8 +748,8 @@ bb.b:                                             ; preds = %bb.a, %2
   call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr nonnull @1, i64 43, ptr nonnull %i.a, ptr nonnull align 8 @0, ptr nonnull align 8 @9) #19
   unreachable
 
-_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit: ; preds = %2
-  ret i32 %3
+_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit: ; preds = %bb.a
+  ret i32 %2
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -889,16 +882,13 @@ bb.a:
   %i.c = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %i.b, i32 %1) #16 ; 2 uses
   %i.d = extractvalue { i32, i32 } %i.c, 0
   %i.e = trunc i32 %i.d to i1
-  br i1 %i.e, label %2, label %bb.b
+  %2 = extractvalue { i32, i32 } %i.c, 1          ; 2 uses
+  %3 = add i32 %2, 93599
+  %or.cond.i.i.i.i.i = icmp ult i32 %3, 187199
+  %or.cond.i.i = select i1 %i.e, i1 %or.cond.i.i.i.i.i, i1 false
+  br i1 %or.cond.i.i, label %_RNvXs1_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3AddlE3add.exit, label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = extractvalue { i32, i32 } %i.c, 1          ; 2 uses
-  %4 = sext i32 %3 to i64
-  %5 = add nsw i64 %4, 93599
-  %or.cond.i.i.i.i.i = icmp ult i64 %5, 187199
-  br i1 %or.cond.i.i.i.i.i, label %_RNvXs1_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3AddlE3add.exit, label %bb.b
-
-bb.b:                                             ; preds = %2, %bb.a
+bb.b:                                             ; preds = %bb.a
   tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_18OffsetTotalSecondsE3newB4_() #16
   %i.f = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 19)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -906,8 +896,8 @@ bb.b:                                             ; preds = %2, %bb.a
   call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr nonnull @1, i64 43, ptr nonnull %i.a, ptr nonnull align 8 @0, ptr nonnull align 8 @9) #19
   unreachable
 
-_RNvXs1_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3AddlE3add.exit: ; preds = %2
-  store i32 %3, ptr %0, align 4
+_RNvXs1_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3AddlE3add.exit: ; preds = %bb.a
+  store i32 %2, ptr %0, align 4
   ret void
 }
 
@@ -969,22 +959,19 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define i32 @_RNvXs3_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3SublE3sub(i32 %0, i32 %1) unnamed_addr #5 personality ptr @rust_eh_personality {
+define range(i32 -93599, 93600) i32 @_RNvXs3_NtNtCsaR3IayqLkK5_9jiff_core2tz6offsetNtB5_6OffsetINtNtNtCs3oUPovFnLWP_4core3ops5arith3SublE3sub(i32 %0, i32 %1) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 2                 ; 4 uses
   %i.b = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %0, i32 %1) #16 ; 2 uses
   %i.c = extractvalue { i32, i32 } %i.b, 0
   %i.d = trunc i32 %i.c to i1
-  br i1 %i.d, label %2, label %bb.b
+  %2 = extractvalue { i32, i32 } %i.b, 1          ; 2 uses
+  %3 = add i32 %2, 93599
+  %or.cond.i.i.i.i = icmp ult i32 %3, 187199
+  %or.cond.i = select i1 %i.d, i1 %or.cond.i.i.i.i, i1 false
+  br i1 %or.cond.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit, label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = extractvalue { i32, i32 } %i.b, 1          ; 2 uses
-  %4 = sext i32 %3 to i64
-  %5 = add nsw i64 %4, 93599
-  %or.cond.i.i.i.i = icmp ult i64 %5, 187199
-  br i1 %or.cond.i.i.i.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit, label %bb.b
-
-bb.b:                                             ; preds = %bb.a, %2
+bb.b:                                             ; preds = %bb.a
   tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_18OffsetTotalSecondsE3newB4_() #16
   %i.e = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 19) ; 2 uses
   %.sroa.214.0.extract.shift.i = lshr i32 %i.e, 16
@@ -997,8 +984,8 @@ bb.b:                                             ; preds = %bb.a, %2
   call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr nonnull @1, i64 43, ptr nonnull %i.a, ptr nonnull align 8 @0, ptr nonnull align 8 @12) #19
   unreachable
 
-_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit: ; preds = %2
-  ret i32 %3
+_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBN_6bounds10RangeErrorE6unwrapBN_.exit: ; preds = %bb.a
+  ret i32 %2
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

@@ -202,10 +202,9 @@ bb.f:                                             ; preds = %.lr.ph
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.h
-  %i.cv = sub nsw i32 %spec.select.i, %.01635
-  %2 = sext i32 %i.cv to i64
-  %3 = add nsw i64 %2, 1048576
-  %i.cw = icmp ult i64 %3, 2097152
+  %i.cv = sub i32 %spec.select.i, %.01635
+  %2 = add i32 %i.cv, 1048576
+  %i.cw = icmp ult i32 %2, 2097152
   br i1 %i.cw, label %bb.i, label %_ZN12_GLOBAL__N_129AArch64CompressJumpTablesImpl17compressJumpTableERN4llvm12MachineInstrEi.exit
 
 bb.h:                                             ; preds = %bb.h, %.preheader.i

@@ -204,14 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %i.v = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %i.u, i32 %1) #18 ; 2 uses
   %i.w = extractvalue { i32, i32 } %i.v, 0
   %i.x = trunc i32 %i.w to i1
-  br i1 %i.x, label %2, label %bb.r
-
-2:                                                ; preds = %bb.b
-  %3 = extractvalue { i32, i32 } %i.v, 1          ; 2 uses
-  %4 = sext i32 %3 to i64
-  %5 = add nsw i64 %4, 4371587
-  %or.cond.i.i.i.i = icmp ult i64 %5, 7304484
-  br i1 %or.cond.i.i.i.i, label %_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit, label %bb.r
+  %2 = extractvalue { i32, i32 } %i.v, 1          ; 2 uses
+  %3 = add i32 %2, 4371587
+  %or.cond.i.i.i.i = icmp ult i32 %3, 7304484
+  %or.cond.i = select i1 %i.x, i1 %or.cond.i.i.i.i, i1 false
+  br i1 %or.cond.i, label %_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit, label %bb.r
 
 bb.c:                                             ; preds = %bb.a
   %.sroa.057.0.insert.ext.i = and i32 %0, 65535   ; 2 uses
@@ -253,9 +250,8 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.af = extractvalue { i16, i16 } %i.ac, 1      ; 2 uses
-  %6 = sext i16 %i.af to i64
-  %7 = add nsw i64 %6, 9999
-  %or.cond.i.i.i.i.i = icmp ult i64 %7, 19999
+  %4 = add i16 %i.af, 9999
+  %or.cond.i.i.i.i.i = icmp ult i16 %4, 19999
   br i1 %or.cond.i.i.i.i.i, label %_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9prev_yearB6_.exit.thread.i, label %_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9prev_yearB6_.exit.i
 
 _RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9prev_yearB6_.exit.thread.i: ; preds = %bb.h
@@ -318,9 +314,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.o
   %i.as = extractvalue { i16, i16 } %i.ap, 1      ; 2 uses
-  %8 = sext i16 %i.as to i64
-  %9 = add nsw i64 %8, 9999
-  %or.cond.i.i.i.i.i31 = icmp ult i64 %9, 19999
+  %5 = add i16 %i.as, 9999
+  %or.cond.i.i.i.i.i31 = icmp ult i16 %5, 19999
   br i1 %or.cond.i.i.i.i.i31, label %_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9next_yearB6_.exit.thread.i, label %_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9next_yearB6_.exit.i
 
 _RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9next_yearB6_.exit.thread.i: ; preds = %bb.p
@@ -350,14 +345,14 @@ _RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9yesterdayB6_.exit: ; pred
   %.sroa.06.0.insert.insert = or disjoint i48 %.sroa.6.0.insert.shift, %.sroa.06.0.insert.ext
   ret i48 %.sroa.06.0.insert.insert
 
-bb.r:                                             ; preds = %bb.b, %2
+bb.r:                                             ; preds = %bb.b
   tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_13UnixEpochDaysE3newB4_() #18
   %i.ax = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 24)
   br label %_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date9yesterdayB6_.exit
 
-_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit: ; preds = %2
-  %i.ay = shl i32 %3, 2
-  %i.az = add i32 %i.ay, 50797691                 ; 2 uses
+_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit: ; preds = %bb.b
+  %i.ay = shl nsw i32 %2, 2
+  %i.az = add nsw i32 %i.ay, 50797691             ; 2 uses
   %i.ba = udiv i32 %i.az, 146097
   %i.bb = urem i32 %i.az, 146097
   %i.bc = or i32 %i.bb, 3
@@ -393,9 +388,8 @@ _RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden range(i48 0, -65534) i48 @_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date16from_day_of_yearB6_(i16 %0, i16 %1) unnamed_addr #0 {
 bb.a:
-  %2 = sext i16 %0 to i64
-  %3 = add nsw i64 %2, 9999
-  %or.cond.i.i = icmp ult i64 %3, 19999
+  %2 = add i16 %0, 9999
+  %or.cond.i.i = icmp ult i16 %2, 19999
   br i1 %or.cond.i.i, label %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit, label %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread
 
 _RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread: ; preds = %bb.a
@@ -406,9 +400,8 @@ _RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread: ; preds
 _RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit: ; preds = %bb.a
   %i.b = zext i16 %0 to i32
   %i.c = shl nuw i32 %i.b, 16                     ; 2 uses
-  %4 = sext i16 %1 to i64
-  %5 = add nsw i64 %4, -1
-  %or.cond.i.i51 = icmp ult i64 %5, 366
+  %3 = add i16 %1, -1
+  %or.cond.i.i51 = icmp ult i16 %3, 366
   br i1 %or.cond.i.i51, label %_RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit, label %_RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit.thread
 
 _RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit.thread: ; preds = %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit
@@ -417,38 +410,39 @@ _RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit.thread: ; p
   br label %bb.c
 
 _RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit: ; preds = %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit
+  %4 = zext nneg i16 %1 to i32
   %i.e = sext i16 %0 to i32
   %i.f = add nsw i32 %i.e, 32799                  ; 3 uses
-  %6 = udiv i32 %i.f, 100
+  %.lhs.trunc = trunc i32 %i.f to i16
+  %5 = udiv i16 %.lhs.trunc, 100
+  %.zext = zext nneg i16 %5 to i32
   %i.g = mul nuw nsw i32 %i.f, 1461
   %i.h = lshr i32 %i.g, 2
-  %7 = udiv i32 %i.f, 400
-  %reass.sub = sub nsw i32 %7, %6
-  %8 = add nsw i32 %reass.sub, -12699116
-  %i.i = add nsw i32 %8, %i.h
-  %9 = sext i16 %1 to i32
-  %i.j = add nsw i32 %9, -1
-  %i.k = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %i.i, i32 %i.j) #18 ; 2 uses
+  %.lhs.trunc68 = trunc i32 %i.f to i16
+  %6 = udiv i16 %.lhs.trunc68, 400
+  %.zext69 = zext nneg i16 %6 to i32
+  %reass.sub = sub nsw i32 %.zext69, %.zext
+  %i.i = add nsw i32 %reass.sub, -12699116
+  %7 = add nsw i32 %i.i, %i.h
+  %i.j = add nsw i32 %4, -1
+  %i.k = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %7, i32 %i.j) #18 ; 2 uses
   %i.l = extractvalue { i32, i32 } %i.k, 0
   %i.m = trunc i32 %i.l to i1
-  br i1 %i.m, label %10, label %_RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays11checked_add.exit.thread19.i
+  %8 = extractvalue { i32, i32 } %i.k, 1          ; 2 uses
+  %9 = add i32 %8, 4371587
+  %or.cond.i.i.i.i = icmp ult i32 %9, 7304484
+  %or.cond.i = select i1 %i.m, i1 %or.cond.i.i.i.i, i1 false
+  br i1 %or.cond.i, label %_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit, label %_RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays11checked_add.exit.thread19.i
 
-10:                                               ; preds = %_RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit
-  %11 = extractvalue { i32, i32 } %i.k, 1         ; 2 uses
-  %12 = sext i32 %11 to i64
-  %13 = add nsw i64 %12, 4371587
-  %or.cond.i.i.i.i = icmp ult i64 %13, 7304484
-  br i1 %or.cond.i.i.i.i, label %_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit, label %_RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays11checked_add.exit.thread19.i
-
-_RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays11checked_add.exit.thread19.i: ; preds = %10, %_RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit
+_RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays11checked_add.exit.thread19.i: ; preds = %_RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit
   tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_13UnixEpochDaysE3newB4_() #18
   %i.n = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 24) ; 0 uses
   %.sroa.045.0.insert.insert = or disjoint i32 %i.c, 1
   %i.o = tail call i32 @_RNvMs9_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_18SpecialBoundsError16into_range_error(i32 %.sroa.045.0.insert.insert)
   br label %bb.c
 
-_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit: ; preds = %10
-  %i.p = shl nsw i32 %11, 2
+_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_addB9_.exit: ; preds = %_RNvMsC_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_9DayOfYear6checkc.exit
+  %i.p = shl nsw i32 %8, 2
   %i.q = add nsw i32 %i.p, 50797691               ; 2 uses
   %i.r = udiv i32 %i.q, 146097
   %i.s = urem i32 %i.q, 146097
@@ -691,9 +685,8 @@ bb.j:                                             ; preds = %_RNvMNtNtCsaR3IayqL
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden range(i48 0, -65534) i48 @_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date24from_day_of_year_no_leapB6_(i16 %0, i16 %1) unnamed_addr #0 {
 bb.a:
-  %2 = sext i16 %0 to i64
-  %3 = add nsw i64 %2, 9999
-  %or.cond.i.i = icmp ult i64 %3, 19999
+  %2 = add i16 %0, 9999
+  %or.cond.i.i = icmp ult i16 %2, 19999
   br i1 %or.cond.i.i, label %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit, label %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread
 
 _RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread: ; preds = %bb.a
@@ -702,9 +695,8 @@ _RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread: ; preds
   br label %bb.f
 
 _RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit: ; preds = %bb.a
-  %4 = sext i16 %1 to i64
-  %5 = add nsw i64 %4, -1
-  %or.cond.i.i25 = icmp ult i64 %5, 365
+  %3 = add i16 %1, -1
+  %or.cond.i.i25 = icmp ult i16 %3, 365
   br i1 %or.cond.i.i25, label %_RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit, label %_RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit.thread
 
 _RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit.thread: ; preds = %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit
@@ -713,8 +705,8 @@ _RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit.thre
   br label %bb.f
 
 _RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit: ; preds = %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit
-  %6 = icmp sgt i16 %1, 59
-  br i1 %6, label %bb.c, label %bb.b
+  %4 = icmp samesign ugt i16 %1, 59
+  br i1 %4, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %_RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit
   %.sroa.05.0 = phi i16 [ %1, %_RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit ], [ %spec.select, %bb.c ]
@@ -725,7 +717,7 @@ bb.b:                                             ; preds = %bb.c, %_RNvMsE_NtCs
 bb.c:                                             ; preds = %_RNvMsE_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_15DayOfYearNoLeap6checkc.exit
   %i.e = tail call zeroext i1 @_RNvNtCsaR3IayqLkK5_9jiff_core5civil12is_leap_yearB3_(i16 %0) #18
   %i.f = zext i1 %i.e to i16
-  %spec.select = add nuw i16 %1, %i.f
+  %spec.select = add nuw nsw i16 %1, %i.f
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
@@ -758,9 +750,8 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden range(i48 0, -65534) i48 @_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date3newB6_(i16 %0, i8 %1, i8 %2) unnamed_addr #0 {
 bb.a:
-  %3 = sext i16 %0 to i64
-  %4 = add nsw i64 %3, 9999
-  %or.cond.i.i = icmp ult i64 %4, 19999
+  %3 = add i16 %0, 9999
+  %or.cond.i.i = icmp ult i16 %3, 19999
   br i1 %or.cond.i.i, label %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit, label %_RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread
 
 _RNvMs1y_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_4Year6checkc.exit.thread: ; preds = %bb.a
@@ -1163,9 +1154,8 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden range(i64 0, -65534) i64 @_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay3newB9_(i32 %0) unnamed_addr #0 {
 bb.a:
-  %1 = sext i32 %0 to i64
-  %2 = add nsw i64 %1, 4371587
-  %or.cond.i.i = icmp ult i64 %2, 7304484
+  %1 = add i32 %0, 4371587
+  %or.cond.i.i = icmp ult i32 %1, 7304484
   br i1 %or.cond.i.i, label %_RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays6checkc.exit, label %_RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays6checkc.exit.thread
 
 _RNvMs1i_NtCsaR3IayqLkK5_9jiff_core6boundsNtB6_13UnixEpochDays6checkc.exit.thread: ; preds = %bb.a
@@ -1568,16 +1558,13 @@ bb.c:                                             ; preds = %_RNvMs1_NtNtCsaR3Ia
   %i.x = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 %i.h, i32 %i.w) #18 ; 2 uses
   %i.y = extractvalue { i32, i32 } %i.x, 0
   %i.z = trunc i32 %i.y to i1
-  br i1 %i.z, label %1, label %_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_subB9_.exit.thread14
+  %1 = extractvalue { i32, i32 } %i.x, 1          ; 3 uses
+  %2 = add i32 %1, 4371587
+  %or.cond.i.i.i.i.i = icmp ult i32 %2, 7304484
+  %or.cond.i.i = select i1 %i.z, i1 %or.cond.i.i.i.i.i, i1 false
+  br i1 %or.cond.i.i, label %bb.e, label %_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_subB9_.exit.thread14
 
-1:                                                ; preds = %bb.c
-  %2 = extractvalue { i32, i32 } %i.x, 1          ; 3 uses
-  %3 = sext i32 %2 to i64
-  %4 = add nsw i64 %3, 4371587
-  %or.cond.i.i.i.i.i = icmp ult i64 %4, 7304484
-  br i1 %or.cond.i.i.i.i.i, label %bb.e, label %_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_subB9_.exit.thread14
-
-_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_subB9_.exit.thread14: ; preds = %bb.c, %1
+_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB5_12UnixEpochDay11checked_subB9_.exit.thread14: ; preds = %bb.c
   tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_13UnixEpochDaysE3newB4_() #18
   br label %bb.d
 
@@ -1591,10 +1578,10 @@ bb.d:                                             ; preds = %_RNvMs1_NtNtCsaR3Ia
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr nonnull @51, ptr nonnull inttoptr (i64 41 to ptr), ptr nonnull align 8 @52) #19
   unreachable
 
-bb.e:                                             ; preds = %1
-  %.sroa.4.0.i.i = zext i32 %2 to i64
+bb.e:                                             ; preds = %bb.c
+  %.sroa.4.0.i.i = zext i32 %1 to i64
   %.sroa.4.0.insert.shift.i.i = shl nuw i64 %.sroa.4.0.i.i, 32
-  %.sroa.25.0.extract.shift.i = shl i32 %2, 16
+  %.sroa.25.0.extract.shift.i = shl i32 %1, 16
   %.sroa.36.0.extract.shift.i = and i64 %.sroa.4.0.insert.shift.i.i, -281474976710656
   %.sroa.3.0.insert.ext.i = zext i32 %.sroa.25.0.extract.shift.i to i64
   %.sroa.3.0.insert.shift.i = shl nuw nsw i64 %.sroa.3.0.insert.ext.i, 16

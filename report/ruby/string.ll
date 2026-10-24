@@ -205,9 +205,8 @@ bb.e:                                             ; preds = %.outer191.split.us
 
 bb.f:                                             ; preds = %bb.e
   %i.ag = load i8, ptr %i.ab, align 1, !tbaa !43
-  %1 = sext i8 %i.ag to i32
-  %2 = add nsw i32 %1, -58
-  %i.ah = icmp ult i32 %2, -10
+  %1 = add i8 %i.ag, -58
+  %i.ah = icmp ult i8 %1, -10
   br i1 %i.ah, label %bb.i, label %.split.us
 
 bb.g:                                             ; preds = %bb.e
@@ -218,9 +217,8 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.ak = load i8, ptr %i.ab, align 1, !tbaa !43
   %i.al = and i8 %i.ak, -33
-  %3 = sext i8 %i.al to i32
-  %4 = add nsw i32 %3, -91
-  %narrow.i153.us = icmp ult i32 %4, -26
+  %2 = add i8 %i.al, -91
+  %narrow.i153.us = icmp ult i8 %2, -26
   br i1 %narrow.i153.us, label %bb.i, label %.split.us
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
@@ -623,9 +621,8 @@ bb.s:                                             ; preds = %bb.r
 RSTRING_PTR.exit116:                              ; preds = %bb.r, %bb.s
   %i.dc = phi ptr [ %i.db, %bb.s ], [ %i.da, %bb.r ]
   %i.dd = load i8, ptr %i.dc, align 1, !tbaa !43
-  %7 = sext i8 %i.dd to i32
-  %8 = add nsw i32 %7, -58
-  %i.de = icmp ult i32 %8, -10
+  %7 = add i8 %i.dd, -58
+  %i.de = icmp ult i8 %7, -10
   br i1 %i.de, label %all_digits_p.exit, label %bb.t
 
 bb.t:                                             ; preds = %RSTRING_PTR.exit116
@@ -643,9 +640,8 @@ bb.u:                                             ; preds = %bb.t
 RSTRING_PTR.exit118:                              ; preds = %bb.t, %bb.u
   %i.dk = phi ptr [ %i.dj, %bb.u ], [ %i.di, %bb.t ]
   %i.dl = load i8, ptr %i.dk, align 1, !tbaa !43
-  %9 = sext i8 %i.dl to i32
-  %10 = add nsw i32 %9, -58
-  %i.dm = icmp ult i32 %10, -10
+  %8 = add i8 %i.dl, -58
+  %i.dm = icmp ult i8 %8, -10
   br i1 %i.dm, label %all_digits_p.exit, label %bb.v
 
 bb.v:                                             ; preds = %RSTRING_PTR.exit118
@@ -670,9 +666,8 @@ bb.x:                                             ; preds = %.lr.ph.i121
   %.in.i = phi i64 [ %i.dq, %bb.x ], [ %i.bl, %RSTRING_PTR.exit120 ] ; 2 uses
   %.035.i = phi ptr [ %i.dr, %bb.x ], [ %i.do, %RSTRING_PTR.exit120 ] ; 2 uses
   %i.dt = load i8, ptr %.035.i, align 1, !tbaa !43
-  %11 = sext i8 %i.dt to i32
-  %12 = add nsw i32 %11, -58
-  %i.du = icmp ult i32 %12, -10
+  %9 = add i8 %i.dt, -58
+  %i.du = icmp ult i8 %9, -10
   br i1 %i.du, label %all_digits_p.exit, label %bb.x
 
 .loopexit174:                                     ; preds = %bb.x, %RSTRING_PTR.exit120
@@ -699,9 +694,8 @@ bb.z:                                             ; preds = %.lr.ph.i125
   %.in.i126 = phi i64 [ %i.ea, %bb.z ], [ %i.dy, %RSTRING_PTR.exit123 ] ; 2 uses
   %.035.i127 = phi ptr [ %i.eb, %bb.z ], [ %i.dw, %RSTRING_PTR.exit123 ] ; 2 uses
   %i.ed = load i8, ptr %.035.i127, align 1, !tbaa !43
-  %13 = sext i8 %i.ed to i32
-  %14 = add nsw i32 %13, -58
-  %i.ee = icmp ult i32 %14, -10
+  %10 = add i8 %i.ed, -58
+  %i.ee = icmp ult i8 %10, -10
   br i1 %i.ee, label %all_digits_p.exit, label %bb.z
 
 .loopexit:                                        ; preds = %bb.z, %RSTRING_PTR.exit123
@@ -991,17 +985,15 @@ bb.e:                                             ; preds = %is_ascii_string.exi
 
 RSTRING_PTR.exit:                                 ; preds = %bb.e
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !43
-  %5 = sext i8 %i.ad to i32
-  %6 = add nsw i32 %5, -58
-  %i.ae = icmp ult i32 %6, -10
+  %5 = add i8 %i.ad, -58
+  %i.ae = icmp ult i8 %5, -10
   br i1 %i.ae, label %all_digits_p.exit, label %RSTRING_PTR.exit38
 
 RSTRING_PTR.exit.thread:                          ; preds = %bb.e
   %i.af = load ptr, ptr %i.ac, align 8, !tbaa !43 ; 2 uses
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !43
-  %7 = sext i8 %i.ag to i32
-  %8 = add nsw i32 %7, -58
-  %i.ah = icmp ult i32 %8, -10
+  %6 = add i8 %i.ag, -58
+  %i.ah = icmp ult i8 %6, -10
   br i1 %i.ah, label %all_digits_p.exit, label %RSTRING_PTR.exit38
 
 RSTRING_PTR.exit38:                               ; preds = %RSTRING_PTR.exit.thread, %RSTRING_PTR.exit
@@ -1021,9 +1013,8 @@ bb.f:                                             ; preds = %.lr.ph.i39
   %.in.i = phi i64 [ %i.am, %bb.f ], [ %i.ak, %RSTRING_PTR.exit38 ] ; 2 uses
   %.035.i = phi ptr [ %i.an, %bb.f ], [ %i.ai, %RSTRING_PTR.exit38 ] ; 2 uses
   %i.ap = load i8, ptr %.035.i, align 1, !tbaa !43
-  %9 = sext i8 %i.ap to i32
-  %10 = add nsw i32 %9, -58
-  %i.aq = icmp ult i32 %10, -10
+  %7 = add i8 %i.ap, -58
+  %i.aq = icmp ult i8 %7, -10
   br i1 %i.aq, label %all_digits_p.exit, label %bb.f
 
 .loopexit:                                        ; preds = %bb.f, %RSTRING_PTR.exit38
@@ -1426,29 +1417,28 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %.backedge.i, %.lr.ph.i
   %.086.i = phi ptr [ %i.dc, %.lr.ph.i ], [ %i.dh, %.backedge.i ] ; 5 uses
-  %i.df = load i8, ptr %.086.i, align 1, !tbaa !43 ; 3 uses
-  %1 = icmp eq i8 %i.df, 125
-  br i1 %1, label %bb.ax, label %2
+  %i.df = load i8, ptr %.086.i, align 1, !tbaa !43
+  switch i8 %i.df, label %bb.ay [
+    i8 125, label %bb.ax
+    i8 32, label %.backedge.i
+    i8 13, label %.backedge.i
+    i8 12, label %.backedge.i
+    i8 11, label %.backedge.i
+    i8 10, label %.backedge.i
+    i8 9, label %.backedge.i
+  ]
 
 bb.ax:                                            ; preds = %bb.aw
   %i.dg = getelementptr i8, ptr %.086.i, i64 1
   br label %undump_after_backslash.exit
 
-2:                                                ; preds = %bb.aw
-  %3 = sext i8 %i.df to i32
-  %4 = icmp ne i8 %i.df, 32
-  %5 = add nsw i32 %3, -14
-  %6 = icmp ult i32 %5, -5
-  %narrow.i.not.i = and i1 %4, %6
-  br i1 %narrow.i.not.i, label %bb.ay, label %.backedge.i
-
-.backedge.i:                                      ; preds = %rb_str_cat.exit.i, %2
-  %.sink.i = phi i64 [ %i.ea, %rb_str_cat.exit.i ], [ 1, %2 ]
+.backedge.i:                                      ; preds = %rb_str_cat.exit.i, %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw
+  %.sink.i = phi i64 [ %i.ea, %rb_str_cat.exit.i ], [ 1, %bb.aw ], [ 1, %bb.aw ], [ 1, %bb.aw ], [ 1, %bb.aw ], [ 1, %bb.aw ], [ 1, %bb.aw ]
   %i.dh = getelementptr i8, ptr %.086.i, i64 %.sink.i ; 2 uses
   %.not69.i = icmp ult ptr %i.dh, %i.n
   br i1 %.not69.i, label %bb.aw, label %._crit_edge.i
 
-bb.ay:                                            ; preds = %2
+bb.ay:                                            ; preds = %bb.aw
   %i.di = ptrtoint ptr %.086.i to i64
   %i.dj = sub i64 %i.az, %i.di
   %i.dk = call i64 @ruby_scan_hex(ptr noundef nonnull %.086.i, i64 noundef %i.dj, ptr noundef nonnull %i.a) #28

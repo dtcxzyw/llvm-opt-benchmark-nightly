@@ -204,9 +204,8 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.05.011 = phi ptr [ %i.f, %bb.b ], [ %i.a, %bb.a ] ; 3 uses
   %i.e = load i8, ptr %.sroa.05.011, align 1, !tbaa !26
-  %1 = sext i8 %i.e to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.e, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
@@ -569,9 +568,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit42: ; preds
 .lr.ph.i:                                         ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit42, %bb.x
   %.sroa.05.011.i = phi ptr [ %i.cp, %bb.x ], [ %i.cl, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit42 ] ; 3 uses
   %i.co = load i8, ptr %.sroa.05.011.i, align 1, !tbaa !26
-  %5 = sext i8 %i.co to i32
-  %isdigittmp.i = add nsw i32 %5, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %5 = add i8 %i.co, -48
+  %isdigit.i = icmp ult i8 %5, 10
   br i1 %isdigit.i, label %bb.x, label %_Z9is_numberRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
 bb.x:                                             ; preds = %.lr.ph.i
@@ -974,9 +972,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit46: ; preds
 .lr.ph.i:                                         ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit46, %bb.y
   %.sroa.05.011.i = phi ptr [ %i.ct, %bb.y ], [ %i.cp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit46 ] ; 3 uses
   %i.cs = load i8, ptr %.sroa.05.011.i, align 1, !tbaa !26
-  %8 = sext i8 %i.cs to i32
-  %isdigittmp.i = add nsw i32 %8, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %8 = add i8 %i.cs, -48
+  %isdigit.i = icmp ult i8 %8, 10
   br i1 %isdigit.i, label %bb.y, label %_Z9is_numberRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
 bb.y:                                             ; preds = %.lr.ph.i

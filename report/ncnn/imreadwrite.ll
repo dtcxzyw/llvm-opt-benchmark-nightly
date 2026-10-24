@@ -205,9 +205,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.t = load i8, ptr %i.s, align 1, !tbaa !35
   %i.u = load i8, ptr %i.p, align 1, !tbaa !35
   %i.v = load i32, ptr %i.f, align 8, !tbaa !116  ; 3 uses
-  %12 = sext i32 %i.v to i64
-  %13 = add nsw i64 %12, 3
-  %i.w = icmp ult i64 %13, 65
+  %12 = add i32 %i.v, 3
+  %i.w = icmp ult i32 %12, 65
   br i1 %i.w, label %_ZL13stbiw__write3P19stbi__write_contexthhh.exit36.i.us.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -258,9 +257,8 @@ _ZL13stbiw__write3P19stbi__write_contexthhh.exit36.i.us.i: ; preds = %bb.g, %bb.
   %.zext46.i.us.i = trunc nuw i16 %i.av to i8
   %i.aw = xor i8 %.zext46.i.us.i, -1
   %i.ax = load i32, ptr %i.f, align 8, !tbaa !116 ; 3 uses
-  %14 = sext i32 %i.ax to i64
-  %15 = add nsw i64 %14, 3
-  %i.ay = icmp ult i64 %15, 65
+  %13 = add i32 %i.ax, 3
+  %i.ay = icmp ult i32 %13, 65
   br i1 %i.ay, label %.thread.i.us.i, label %bb.h
 
 bb.h:                                             ; preds = %.preheader.i.us.i
@@ -284,13 +282,12 @@ bb.h:                                             ; preds = %.preheader.i.us.i
 
 bb.i:                                             ; preds = %bb.d, %bb.d
   %i.bh = load i8, ptr %i.p, align 1, !tbaa !35   ; 4 uses
-  %i.bi = load i32, ptr %i.f, align 8, !tbaa !116 ; 5 uses
-  %16 = sext i32 %i.bi to i64                     ; 2 uses
+  %i.bi = load i32, ptr %i.f, align 8, !tbaa !116 ; 6 uses
   br i1 %.not33.i.i, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %17 = add nsw i64 %16, 3
-  %i.bj = icmp ult i64 %17, 65
+  %14 = add i32 %i.bi, 3
+  %i.bj = icmp ult i32 %14, 65
   br i1 %i.bj, label %_ZL13stbiw__write3P19stbi__write_contexthhh.exit.i.us.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -313,8 +310,8 @@ _ZL13stbiw__write3P19stbi__write_contexthhh.exit.i.us.i: ; preds = %bb.k, %bb.j
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.i
-  %18 = add nsw i64 %16, 1
-  %i.bs = icmp ult i64 %18, 65
+  %15 = add i32 %i.bi, 1
+  %i.bs = icmp ult i32 %15, 65
   br i1 %i.bs, label %_ZL13stbiw__write1P19stbi__write_contexth.exit.i.us.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -340,9 +337,8 @@ bb.o:                                             ; preds = %bb.n
   %i.ca = getelementptr i8, ptr %i.bz, i64 -1
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !35
   %i.cc = load i32, ptr %i.f, align 8, !tbaa !116 ; 3 uses
-  %19 = sext i32 %i.cc to i64
-  %20 = add nsw i64 %19, 1
-  %i.cd = icmp ult i64 %20, 65
+  %16 = add i32 %i.cc, 1
+  %i.cd = icmp ult i32 %16, 65
   br i1 %i.cd, label %_ZL13stbiw__write1P19stbi__write_contexth.exit37.i.us.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -723,9 +719,8 @@ bb.i:                                             ; preds = %.lr.ph.us
   %i.bb = trunc i32 %.3.ph.us to i8
   %i.bc = add i8 %i.bb, -1
   %i.bd = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %5 = sext i32 %i.bd to i64
-  %6 = add nsw i64 %5, 1
-  %i.be = icmp ult i64 %6, 65
+  %5 = add i32 %i.bd, 1
+  %i.be = icmp ult i32 %5, 65
   br i1 %i.be, label %_ZL13stbiw__write1P19stbi__write_contexth.exit.us, label %bb.j
 
 bb.j:                                             ; preds = %.loopexit.us
@@ -766,9 +761,8 @@ bb.k:                                             ; preds = %.lr.ph152.us, %.lr.
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !35
   %i.bs = load i8, ptr %i.bn, align 1, !tbaa !35
   %i.bt = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %7 = sext i32 %i.bt to i64
-  %8 = add nsw i64 %7, 3
-  %i.bu = icmp ult i64 %8, 65
+  %6 = add i32 %i.bt, 3
+  %i.bu = icmp ult i32 %6, 65
   br i1 %i.bu, label %_ZL13stbiw__write3P19stbi__write_contexthhh.exit36.i.us, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -793,9 +787,8 @@ _ZL13stbiw__write3P19stbi__write_contexthhh.exit36.i.us: ; preds = %bb.l, %bb.k
 bb.m:                                             ; preds = %.lr.ph152.us, %.lr.ph152.us
   %i.cd = load i8, ptr %i.bn, align 1, !tbaa !35
   %i.ce = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %9 = sext i32 %i.ce to i64
-  %10 = add nsw i64 %9, 1
-  %i.cf = icmp ult i64 %10, 65
+  %7 = add i32 %i.ce, 1
+  %i.cf = icmp ult i32 %7, 65
   br i1 %i.cf, label %_ZL13stbiw__write1P19stbi__write_contexth.exit.i.us, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -824,9 +817,8 @@ bb.p:                                             ; preds = %bb.o, %bb.o
   %i.cn = getelementptr i8, ptr %i.cm, i64 -1
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !35
   %i.cp = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %11 = sext i32 %i.cp to i64
-  %12 = add nsw i64 %11, 1
-  %i.cq = icmp ult i64 %12, 65
+  %8 = add i32 %i.cp, 1
+  %i.cq = icmp ult i32 %8, 65
   br i1 %i.cq, label %_ZL13stbiw__write1P19stbi__write_contexth.exit37.i.us, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -878,9 +870,8 @@ bb.s:                                             ; preds = %.lr.ph155.us
   %i.de = trunc nuw i32 %.2.lcssa.us to i8
   %i.df = add nuw i8 %i.de, 127
   %i.dg = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %13 = sext i32 %i.dg to i64
-  %14 = add nsw i64 %13, 1
-  %i.dh = icmp ult i64 %14, 65
+  %9 = add i32 %i.dg, 1
+  %i.dh = icmp ult i32 %9, 65
   br i1 %i.dh, label %_ZL13stbiw__write1P19stbi__write_contexth.exit124.us, label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge.us
@@ -910,9 +901,8 @@ bb.u:                                             ; preds = %_ZL13stbiw__write1P
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !35
   %i.ds = load i8, ptr %i.ak, align 1, !tbaa !35
   %i.dt = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %15 = sext i32 %i.dt to i64
-  %16 = add nsw i64 %15, 3
-  %i.du = icmp ult i64 %16, 65
+  %10 = add i32 %i.dt, 3
+  %i.du = icmp ult i32 %10, 65
   br i1 %i.du, label %_ZL13stbiw__write3P19stbi__write_contexthhh.exit36.i125.us, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -937,9 +927,8 @@ _ZL13stbiw__write3P19stbi__write_contexthhh.exit36.i125.us: ; preds = %bb.v, %bb
 bb.w:                                             ; preds = %_ZL13stbiw__write1P19stbi__write_contexth.exit124.us, %_ZL13stbiw__write1P19stbi__write_contexth.exit124.us
   %i.ed = load i8, ptr %i.ak, align 1, !tbaa !35
   %i.ee = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %17 = sext i32 %i.ee to i64
-  %18 = add nsw i64 %17, 1
-  %i.ef = icmp ult i64 %18, 65
+  %11 = add i32 %i.ee, 1
+  %i.ef = icmp ult i32 %11, 65
   br i1 %i.ef, label %_ZL13stbiw__write1P19stbi__write_contexth.exit.i140.us, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -968,9 +957,8 @@ bb.z:                                             ; preds = %bb.y, %bb.y
   %i.en = getelementptr i8, ptr %i.em, i64 -1
   %i.eo = load i8, ptr %i.en, align 1, !tbaa !35
   %i.ep = load i32, ptr %i.y, align 8, !tbaa !116 ; 3 uses
-  %19 = sext i32 %i.ep to i64
-  %20 = add nsw i64 %19, 1
-  %i.eq = icmp ult i64 %20, 65
+  %12 = add i32 %i.ep, 1
+  %i.eq = icmp ult i32 %12, 65
   br i1 %i.eq, label %_ZL13stbiw__write1P19stbi__write_contexth.exit37.i127.us, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z

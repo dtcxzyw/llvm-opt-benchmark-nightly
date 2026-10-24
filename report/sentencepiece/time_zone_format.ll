@@ -202,13 +202,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit715: ; preds = %bb
   br label %.loopexit.split-lp
 
 bb.fb:                                            ; preds = %bb.cy
-  %22 = sext i8 %i.zg to i32
-  %isdigittmp = add nsw i32 %22, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %22 = add i8 %i.zg, -48
+  %isdigit = icmp ult i8 %22, 10
   br i1 %isdigit, label %.thread801, label %.thread
 
-.thread801:                                       ; preds = %bb.fb, %bb.eo, %bb.en
-  %23 = sext i8 %i.zg to i32
+.thread801:                                       ; preds = %bb.en, %bb.eo, %bb.fb
+  %23 = zext nneg i8 %i.zg to i32
   %memchr95.i = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %23, i64 11) ; 2 uses
   %.not7396.i = icmp eq ptr %memchr95.i, null
   br i1 %.not7396.i, label %.thread, label %.lr.ph.i
@@ -245,7 +244,7 @@ bb.fe:                                            ; preds = %bb.fd
 
 select.unfold.i:                                  ; preds = %bb.fe, %.lr.ph.i
   %.351.ph.i.idx = phi i64 [ %.14998.i.add, %bb.fe ], [ %.14998.i.idx, %.lr.ph.i ] ; 2 uses
-  %.2.ph.i = phi i32 [ %i.alf, %bb.fe ], [ %.04299.i, %.lr.ph.i ] ; 4 uses
+  %.2.ph.i = phi i32 [ %i.alf, %bb.fe ], [ %.04299.i, %.lr.ph.i ] ; 6 uses
   %.351.ph.i.ptr = getelementptr inbounds nuw i8, ptr %.2229.lcssa, i64 %.351.ph.i.idx ; 4 uses
   %i.ali = icmp eq i64 %.351.ph.i.idx, 1
   %i.alj = icmp eq i32 %.2.ph.i, -2147483648
@@ -253,8 +252,9 @@ select.unfold.i:                                  ; preds = %bb.fe, %.lr.ph.i
   br i1 %or.cond76.i.not, label %.thread, label %bb.ff
 
 bb.ff:                                            ; preds = %select.unfold.i
-  %i.alk = sub nsw i32 0, %.2.ph.i                ; 5 uses
-  %or.cond77.i = icmp ugt i32 %i.alk, 1024
+  %i.alk = sub nsw i32 0, %.2.ph.i                ; 3 uses
+  %24 = add nsw i32 %.2.ph.i, -1
+  %or.cond77.i = icmp ult i32 %24, -1025
   br i1 %or.cond77.i, label %.thread, label %_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit
 
 _ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit: ; preds = %bb.ff
@@ -376,8 +376,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit732: ; preds = %bb
   br label %.loopexit.split-lp
 
 bb.fn:                                            ; preds = %bb.fk
-  %24 = icmp samesign ugt i32 %i.alk, 15
-  br i1 %24, label %.thread805, label %bb.fo
+  %25 = icmp samesign ult i32 %.2.ph.i, -15
+  br i1 %25, label %.thread805, label %bb.fo
 
 .thread805:                                       ; preds = %bb.fk, %bb.fn
   %.0787808 = phi i32 [ %i.alk, %bb.fn ], [ 18, %bb.fk ] ; 2 uses
@@ -746,14 +746,13 @@ bb.a:
   %i.b = srem i64 %i.a, 400                       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i8, ptr %i.c, align 8, !tbaa !58    ; 5 uses
-  %2 = sext i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.f = load i8, ptr %i.e, align 1, !tbaa !59    ; 2 uses
   %i.g = sext i8 %i.f to i64                      ; 2 uses
   %i.h = add nsw i64 %i.g, -1
   %or.cond7.i = icmp ult i64 %i.h, 28
-  %3 = add nsw i64 %2, -1
-  %i.i = icmp ult i64 %3, 12
+  %2 = add i8 %i.d, -1
+  %i.i = icmp ult i8 %2, 12
   %or.cond11.i = and i1 %i.i, %or.cond7.i
   br i1 %or.cond11.i, label %_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_secEllllll.exit, label %bb.b
 
@@ -1156,9 +1155,8 @@ bb.el:                                            ; preds = %bb.ek, %bb.ej, %bb.
 
 bb.em:                                            ; preds = %bb.eg
   %i.tz = load i8, ptr %.1193984, align 1, !tbaa !18
-  %21 = sext i8 %i.tz to i32
-  %isdigittmp316 = add nsw i32 %21, -48
-  %isdigit317 = icmp ult i32 %isdigittmp316, 10
+  %21 = add i8 %i.tz, -48
+  %isdigit317 = icmp ult i8 %21, 10
   br i1 %isdigit317, label %bb.en, label %bb.eo
 
 bb.en:                                            ; preds = %bb.em
@@ -1190,9 +1188,8 @@ bb.eq:                                            ; preds = %bb.ep
   br label %_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit397
 
 bb.er:                                            ; preds = %bb.ed
-  %22 = sext i8 %i.th to i32
-  %isdigittmp = add nsw i32 %22, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %22 = add i8 %i.th, -48
+  %isdigit = icmp ult i8 %22, 10
   br i1 %isdigit, label %.thread918.a, label %.thread921
 
 .thread918.a:                                     ; preds = %bb.ep, %bb.er
@@ -1225,9 +1222,8 @@ bb.ev:                                            ; preds = %bb.eu
 
 bb.ew:                                            ; preds = %bb.es
   %i.ur = load i8, ptr %.1193984, align 1, !tbaa !18
-  %23 = sext i8 %i.ur to i32
-  %isdigittmp311 = add nsw i32 %23, -48
-  %isdigit312 = icmp ult i32 %isdigittmp311, 10
+  %23 = add i8 %i.ur, -48
+  %isdigit312 = icmp ult i8 %23, 10
   br i1 %isdigit312, label %bb.ex, label %bb.ey, !llvm.loop !63
 
 bb.ex:                                            ; preds = %bb.ew

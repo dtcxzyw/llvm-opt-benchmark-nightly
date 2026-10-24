@@ -126,21 +126,16 @@ bb.j:                                             ; preds = %bb.i, %bb.v
   %i.ac = phi ptr [ %i.ab, %bb.i ], [ %i.bc, %bb.v ] ; 5 uses
   %.04085 = phi double [ 0.000000e+00, %bb.i ], [ %i.bb, %bb.v ] ; 3 uses
   %.04384 = phi i32 [ 0, %bb.i ], [ %i.bd, %bb.v ] ; 3 uses
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !17  ; 5 uses
-  %3 = sext i8 %i.ad to i32
-  %isdigittmp = add nsw i32 %3, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !17  ; 4 uses
+  %3 = add i8 %i.ad, -48
+  %isdigit = icmp ult i8 %3, 10
   %i.ae = icmp eq i8 %i.ad, 46
   %or.cond = or i1 %i.ae, %isdigit
-  br i1 %or.cond, label %4, label %split
+  br i1 %or.cond, label %.lr.ph.i, label %split
 
-4:                                                ; preds = %bb.j
-  %.not19.i = icmp eq i8 %i.ad, 0
-  br i1 %.not19.i, label %._crit_edge.i, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %4, %bb.l
-  %i.af = phi i8 [ %i.aj, %bb.l ], [ %i.ad, %4 ]  ; 2 uses
-  %.020.i = phi ptr [ %i.ai, %bb.l ], [ %i.ac, %4 ] ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.j, %bb.l
+  %i.af = phi i8 [ %i.aj, %bb.l ], [ %i.ad, %bb.j ] ; 2 uses
+  %.020.i = phi ptr [ %i.ai, %bb.l ], [ %i.ac, %bb.j ] ; 3 uses
   %i.ag = and i8 %i.af, -33
   %or.cond.i = icmp eq i8 %i.ag, 68
   br i1 %or.cond.i, label %bb.k, label %bb.l
@@ -157,7 +152,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   %.not.i = icmp eq i8 %i.aj, 0
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !10
 
-._crit_edge.i:                                    ; preds = %bb.l, %4
+._crit_edge.i:                                    ; preds = %bb.l
   %i.ak = call noundef double @_Z9pj_strtodPKcPPc(ptr noundef nonnull %i.ac, ptr noundef nonnull %i.a)
   br label %_ZL11proj_strtodPcPS_.exit
 

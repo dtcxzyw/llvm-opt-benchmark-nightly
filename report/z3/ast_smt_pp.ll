@@ -205,11 +205,10 @@ bb.g:                                             ; preds = %_ZN12smt_renaming10
 .preheader12.i:                                   ; preds = %.preheader12.i.preheader, %.preheader12.i
   %.0.i.i = phi ptr [ %i.m, %.preheader12.i ], [ %1, %.preheader12.i.preheader ] ; 2 uses
   %i.l = load i8, ptr %.0.i.i, align 1, !tbaa !15 ; 2 uses
-  %9 = sext i8 %i.l to i32
-  %10 = add nsw i32 %9, -58
-  %isdigit.i.i = icmp ult i32 %10, -10
+  %9 = add i8 %i.l, -48
+  %isdigit.i.i = icmp ult i8 %9, 10
   %i.m = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 1
-  br i1 %isdigit.i.i, label %_ZN12smt_renaming12is_numericalEPKc.exit.i, label %.preheader12.i, !llvm.loop !1
+  br i1 %isdigit.i.i, label %.preheader12.i, label %_ZN12smt_renaming12is_numericalEPKc.exit.i, !llvm.loop !1
 
 _ZN12smt_renaming12is_numericalEPKc.exit.i:       ; preds = %.preheader12.i
   %.not.i.i = icmp eq i8 %i.l, 0
@@ -612,11 +611,10 @@ bb.a:
 .preheader12:                                     ; preds = %bb.a, %.preheader12
   %.0.i = phi ptr [ %i.b, %.preheader12 ], [ %1, %bb.a ] ; 2 uses
   %i.a = load i8, ptr %.0.i, align 1, !tbaa !15   ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit.i = icmp ult i32 %3, -10
+  %2 = add i8 %i.a, -48
+  %isdigit.i = icmp ult i8 %2, 10
   %i.b = getelementptr inbounds nuw i8, ptr %.0.i, i64 1
-  br i1 %isdigit.i, label %_ZN12smt_renaming12is_numericalEPKc.exit, label %.preheader12, !llvm.loop !1
+  br i1 %isdigit.i, label %.preheader12, label %_ZN12smt_renaming12is_numericalEPKc.exit, !llvm.loop !1
 
 _ZN12smt_renaming12is_numericalEPKc.exit:         ; preds = %.preheader12
   %.not.i = icmp eq i8 %i.a, 0
@@ -728,11 +726,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.0 = phi ptr [ %1, %bb.a ], [ %i.b, %bb.b ]    ; 2 uses
   %i.a = load i8, ptr %.0, align 1, !tbaa !15     ; 2 uses
-  %2 = sext i8 %i.a to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
+  %2 = add i8 %i.a, -48
+  %isdigit = icmp ult i8 %2, 10
   %i.b = getelementptr inbounds nuw i8, ptr %.0, i64 1
-  br i1 %isdigit, label %bb.c, label %bb.b, !llvm.loop !1
+  br i1 %isdigit, label %bb.b, label %bb.c, !llvm.loop !1
 
 bb.c:                                             ; preds = %bb.b
   %.not = icmp eq i8 %i.a, 0

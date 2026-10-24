@@ -204,9 +204,8 @@ bb.av:                                            ; preds = %bb.au
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 2
   %.0.copyload.i5428 = load i8, ptr %i.jc, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i5428) #7, !srcloc !21
-  %3 = sext i8 %.0.copyload.i5428 to i32
-  %4 = add nsw i32 %3, -48
-  %i.jd = icmp ult i32 %4, 10
+  %3 = add i8 %.0.copyload.i5428, -48
+  %i.jd = icmp ult i8 %3, 10
   br i1 %i.jd, label %bb.bb, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
@@ -609,7 +608,7 @@ bb.k:                                             ; preds = %bb.j, %bb.a
 
 .preheader2706:                                   ; preds = %bb.k, %.preheader2706
   %.22173 = phi i32 [ %i.z, %.preheader2706 ], [ %.12172, %bb.k ] ; 2 uses
-  %.02131.in = phi i1 [ %.mux, %.preheader2706 ], [ %i.u, %bb.k ]
+  %.02131.in = phi i1 [ %not., %.preheader2706 ], [ %i.u, %bb.k ]
   %.02122 = phi i32 [ %i.ab, %.preheader2706 ], [ 0, %bb.k ]
   %.02131 = zext i1 %.02131.in to i32
   %i.z = add i32 %.22173, 1                       ; 3 uses
@@ -623,13 +622,11 @@ bb.k:                                             ; preds = %bb.j, %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 1
   %.0.copyload.i2516 = load i8, ptr %i.ae, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i2516) #7, !srcloc !20
-  %i.af = icmp eq i8 %.0.copyload.i2516, 95       ; 2 uses
-  %3 = sext i8 %.0.copyload.i2516 to i32
-  %4 = add nsw i32 %3, -48
-  %i.ag = icmp ult i32 %4, 10                     ; 2 uses
+  %i.af = icmp eq i8 %.0.copyload.i2516, 95
+  %3 = add i8 %.0.copyload.i2516, -48
+  %i.ag = icmp ult i8 %3, 10                      ; 2 uses
   %brmerge = or i1 %i.af, %i.ag
   %not. = xor i1 %i.ag, true
-  %.mux = or i1 %i.af, %not.
   br i1 %brmerge, label %.preheader2706, label %.loopexit2707
 
 bb.l:                                             ; preds = %bb.b
@@ -813,11 +810,10 @@ bb.x:                                             ; preds = %bb.v, %bb.w
   %.0.copyload.i2522 = load i8, ptr %i.ck, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i2522) #7, !srcloc !20
   %i.cl = icmp eq i8 %.0.copyload.i2522, 95
-  %5 = sext i8 %.0.copyload.i2522 to i32
-  %6 = add nsw i32 %5, -48
-  %i.cm = icmp ult i32 %6, 10
-  %or.cond3032 = select i1 %i.cl, i1 true, i1 %i.cm
-  br i1 %or.cond3032, label %.preheader2701, label %.loopexit2702
+  %4 = add i8 %.0.copyload.i2522, -48
+  %i.cm = icmp ult i8 %4, 10
+  %or.cond3031 = or i1 %i.cl, %i.cm
+  br i1 %or.cond3031, label %.preheader2701, label %.loopexit2702
 
 .loopexit2702:                                    ; preds = %.preheader2701, %.loopexit2708, %bb.t, %.loopexit2704
   %.42155 = phi i32 [ %.22153, %.loopexit2704 ], [ %.12152, %.loopexit2708 ], [ %.12152, %bb.t ], [ %.32154, %.preheader2701 ] ; 21 uses

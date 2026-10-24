@@ -204,9 +204,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.d = load i8, ptr %i.c, align 1, !tbaa !18    ; 2 uses
-  %2 = sext i8 %i.d to i32
-  %isdigittmp41 = add nsw i32 %2, -48
-  %isdigit42 = icmp ult i32 %isdigittmp41, 10
+  %2 = add i8 %i.d, -48
+  %isdigit42 = icmp ult i8 %2, 10
   br i1 %isdigit42, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -223,9 +222,8 @@ bb.f:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %bb.f, %bb.g
   %.03051 = phi ptr [ %i.i, %bb.g ], [ %i.g, %bb.f ] ; 3 uses
   %i.h = load i8, ptr %.03051, align 1, !tbaa !18 ; 2 uses
-  %3 = sext i8 %i.h to i32
-  %isdigittmp44 = add nsw i32 %3, -48
-  %isdigit45 = icmp ult i32 %isdigittmp44, 10
+  %3 = add i8 %i.h, -48
+  %isdigit45 = icmp ult i8 %3, 10
   br i1 %isdigit45, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %.lr.ph
@@ -240,9 +238,8 @@ bb.g:                                             ; preds = %.lr.ph
   br label %.critedge46
 
 bb.h:                                             ; preds = %bb.b
-  %4 = sext i8 %i.a to i32
-  %isdigittmp = add nsw i32 %4, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %4 = add i8 %i.a, -48
+  %isdigit = icmp ult i8 %4, 10
   br i1 %isdigit, label %.preheader.preheader, label %.critedge46
 
 .preheader.preheader:                             ; preds = %bb.h
@@ -258,9 +255,8 @@ bb.h:                                             ; preds = %bb.b
 .lr.ph70:                                         ; preds = %.preheader.preheader, %.preheader
   %.069 = phi ptr [ %.0, %.preheader ], [ %.067.a, %.preheader.preheader ] ; 2 uses
   %i.l = load i8, ptr %.069, align 1, !tbaa !18
-  %5 = sext i8 %i.l to i32
-  %isdigittmp38 = add nsw i32 %5, -48
-  %isdigit39 = icmp ult i32 %isdigittmp38, 10
+  %5 = add i8 %i.l, -48
+  %isdigit39 = icmp ult i8 %5, 10
   br i1 %isdigit39, label %.preheader, label %..critedge46.loopexit64_crit_edge, !llvm.loop !243
 
 ..critedge46.loopexit64_crit_edge:                ; preds = %.lr.ph70
@@ -663,17 +659,15 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.ex
 
 bb.m:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit
   %i.bj = load i8, ptr %i.bh, align 1, !tbaa !18
-  %1 = sext i8 %i.bj to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.bj, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %.lr.ph.i, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 .lr.ph.i:                                         ; preds = %bb.m, %bb.n
   %.val911.i = phi ptr [ %i.bl, %bb.n ], [ %i.bh, %bb.m ] ; 4 uses
   %i.bk = load i8, ptr %.val911.i, align 1, !tbaa !18
-  %2 = sext i8 %i.bk to i32
-  %isdigittmp2.i = add nsw i32 %2, -48
-  %isdigit3.i = icmp ult i32 %isdigittmp2.i, 10
+  %2 = add i8 %i.bk, -48
+  %isdigit3.i = icmp ult i8 %2, 10
   br i1 %isdigit3.i, label %bb.n, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit.loopexit
 
 bb.n:                                             ; preds = %.lr.ph.i
@@ -1076,17 +1070,15 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.ex
 
 bb.d:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit
   %i.h = load i8, ptr %.promoted, align 1, !tbaa !18
-  %2 = sext i8 %i.h to i32
-  %isdigittmp = add nsw i32 %2, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %2 = add i8 %i.h, -48
+  %isdigit = icmp ult i8 %2, 10
   br i1 %isdigit, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.d, %bb.e
   %.val911 = phi ptr [ %i.j, %bb.e ], [ %.promoted, %bb.d ] ; 3 uses
   %i.i = load i8, ptr %.val911, align 1, !tbaa !18
-  %3 = sext i8 %i.i to i32
-  %isdigittmp2 = add nsw i32 %3, -48
-  %isdigit3 = icmp ult i32 %isdigittmp2, 10
+  %3 = add i8 %i.i, -48
+  %isdigit3 = icmp ult i8 %3, 10
   br i1 %isdigit3, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.lr.ph
@@ -1489,9 +1481,8 @@ bb.cj:                                            ; preds = %_ZN4llvh16itanium_d
 
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit234: ; preds = %bb.cj
   %i.qr = load i8, ptr %i.qq, align 1, !tbaa !18
-  %2 = sext i8 %i.qr to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.qr, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.ck, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit234.thread
 
 bb.ck:                                            ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit234
@@ -1894,25 +1885,22 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.ex
 
 bb.f:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.i
   %i.j = load i8, ptr %.promoted.i.ptr, align 1, !tbaa !18
-  %1 = sext i8 %i.j to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.j, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %.lr.ph.i.preheader, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit.thread
 
 .lr.ph.i.preheader:                               ; preds = %bb.f
   %.val911.i.ptr110 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.promoted.i.idx
   %i.k = load i8, ptr %.val911.i.ptr110, align 1, !tbaa !18
-  %2 = sext i8 %i.k to i32
-  %isdigittmp2.i111 = add nsw i32 %2, -48
-  %isdigit3.i112 = icmp ult i32 %isdigittmp2.i111, 10
+  %2 = add i8 %i.k, -48
+  %isdigit3.i112 = icmp ult i8 %2, 10
   br i1 %isdigit3.i112, label %.lr.ph114, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 .lr.ph.i:                                         ; preds = %.lr.ph114
   %.val911.i.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.val911.i.add
   %i.l = load i8, ptr %.val911.i.ptr, align 1, !tbaa !18
-  %3 = sext i8 %i.l to i32
-  %isdigittmp2.i = add nsw i32 %3, -48
-  %isdigit3.i = icmp ult i32 %isdigittmp2.i, 10
+  %3 = add i8 %i.l, -48
+  %isdigit3.i = icmp ult i8 %3, 10
   br i1 %isdigit3.i, label %.lr.ph114, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit, !llvm.loop !2
 
 .lr.ph114:                                        ; preds = %.lr.ph.i.preheader, %.lr.ph.i
@@ -1969,25 +1957,22 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.ex
 
 bb.l:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.i10
   %i.w = load i8, ptr %.promoted.i11.ptr, align 1, !tbaa !18
-  %4 = sext i8 %i.w to i32
-  %isdigittmp.i12 = add nsw i32 %4, -48
-  %isdigit.i13 = icmp ult i32 %isdigittmp.i12, 10
+  %4 = add i8 %i.w, -48
+  %isdigit.i13 = icmp ult i8 %4, 10
   br i1 %isdigit.i13, label %.lr.ph.i18.preheader, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit.thread
 
 .lr.ph.i18.preheader:                             ; preds = %bb.l
   %.val911.i19.ptr98 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.promoted.i11.idx
   %i.x = load i8, ptr %.val911.i19.ptr98, align 1, !tbaa !18
-  %5 = sext i8 %i.x to i32
-  %isdigittmp2.i2099 = add nsw i32 %5, -48
-  %isdigit3.i21100 = icmp ult i32 %isdigittmp2.i2099, 10
+  %5 = add i8 %i.x, -48
+  %isdigit3.i21100 = icmp ult i8 %5, 10
   br i1 %isdigit3.i21100, label %.lr.ph, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit23
 
 .lr.ph.i18:                                       ; preds = %.lr.ph
   %.val911.i19.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.val911.i19.add
   %i.y = load i8, ptr %.val911.i19.ptr, align 1, !tbaa !18
-  %6 = sext i8 %i.y to i32
-  %isdigittmp2.i20 = add nsw i32 %6, -48
-  %isdigit3.i21 = icmp ult i32 %isdigittmp2.i20, 10
+  %6 = add i8 %i.y, -48
+  %isdigit3.i21 = icmp ult i8 %6, 10
   br i1 %isdigit3.i21, label %.lr.ph, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit23, !llvm.loop !2
 
 .lr.ph:                                           ; preds = %.lr.ph.i18.preheader, %.lr.ph.i18
@@ -2039,25 +2024,22 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.ex
 
 bb.q:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.i28
   %i.ah = load i8, ptr %.promoted.i29.ptr, align 1, !tbaa !18
-  %7 = sext i8 %i.ah to i32
-  %isdigittmp.i30 = add nsw i32 %7, -48
-  %isdigit.i31 = icmp ult i32 %isdigittmp.i30, 10
+  %7 = add i8 %i.ah, -48
+  %isdigit.i31 = icmp ult i8 %7, 10
   br i1 %isdigit.i31, label %.lr.ph.i36.preheader, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit.thread
 
 .lr.ph.i36.preheader:                             ; preds = %bb.q
   %.val911.i37.ptr103 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.promoted.i29.idx
   %i.ai = load i8, ptr %.val911.i37.ptr103, align 1, !tbaa !18
-  %8 = sext i8 %i.ai to i32
-  %isdigittmp2.i38104 = add nsw i32 %8, -48
-  %isdigit3.i39105 = icmp ult i32 %isdigittmp2.i38104, 10
+  %8 = add i8 %i.ai, -48
+  %isdigit3.i39105 = icmp ult i8 %8, 10
   br i1 %isdigit3.i39105, label %.lr.ph107, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit41
 
 .lr.ph.i36:                                       ; preds = %.lr.ph107
   %.val911.i37.ptr = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.val911.i37.add
   %i.aj = load i8, ptr %.val911.i37.ptr, align 1, !tbaa !18
-  %9 = sext i8 %i.aj to i32
-  %isdigittmp2.i38 = add nsw i32 %9, -48
-  %isdigit3.i39 = icmp ult i32 %isdigittmp2.i38, 10
+  %9 = add i8 %i.aj, -48
+  %isdigit3.i39 = icmp ult i8 %9, 10
   br i1 %isdigit3.i39, label %.lr.ph107, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit41, !llvm.loop !2
 
 .lr.ph107:                                        ; preds = %.lr.ph.i36.preheader, %.lr.ph.i36
@@ -2460,17 +2442,15 @@ bb.c:                                             ; preds = %_ZNK10StringView10s
 
 bb.d:                                             ; preds = %bb.c
   %i.m = load i8, ptr %i.k, align 1, !tbaa !18
-  %2 = sext i8 %i.m to i32
-  %isdigittmp.i68 = add nsw i32 %2, -48
-  %isdigit.i69 = icmp ult i32 %isdigittmp.i68, 10
+  %2 = add i8 %i.m, -48
+  %isdigit.i69 = icmp ult i8 %2, 10
   br i1 %isdigit.i69, label %.lr.ph.i75, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit80
 
 .lr.ph.i75:                                       ; preds = %bb.d, %bb.e
   %.val911.i76 = phi ptr [ %i.o, %bb.e ], [ %i.k, %bb.d ] ; 4 uses
   %i.n = load i8, ptr %.val911.i76, align 1, !tbaa !18
-  %3 = sext i8 %i.n to i32
-  %isdigittmp2.i77 = add nsw i32 %3, -48
-  %isdigit3.i78 = icmp ult i32 %isdigittmp2.i77, 10
+  %3 = add i8 %i.n, -48
+  %isdigit3.i78 = icmp ult i8 %3, 10
   br i1 %isdigit3.i78, label %bb.e, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit80
 
 bb.e:                                             ; preds = %.lr.ph.i75
@@ -2692,17 +2672,15 @@ bb.w:                                             ; preds = %.critedge.i, %_ZN4l
 
 bb.x:                                             ; preds = %bb.w
   %i.cv = load i8, ptr %i.ct, align 1, !tbaa !18
-  %4 = sext i8 %i.cv to i32
-  %isdigittmp.i = add nsw i32 %4, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %4 = add i8 %i.cv, -48
+  %isdigit.i = icmp ult i8 %4, 10
   br i1 %isdigit.i, label %.lr.ph.i, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 .lr.ph.i:                                         ; preds = %bb.x, %bb.y
   %.val911.i = phi ptr [ %i.cx, %bb.y ], [ %i.ct, %bb.x ] ; 4 uses
   %i.cw = load i8, ptr %.val911.i, align 1, !tbaa !18
-  %5 = sext i8 %i.cw to i32
-  %isdigittmp2.i = add nsw i32 %5, -48
-  %isdigit3.i = icmp ult i32 %isdigittmp2.i, 10
+  %5 = add i8 %i.cw, -48
+  %isdigit3.i = icmp ult i8 %5, 10
   br i1 %isdigit3.i, label %bb.y, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 bb.y:                                             ; preds = %.lr.ph.i
@@ -3105,9 +3083,8 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit108
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit111: ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit108
   %i.t = getelementptr inbounds nuw i8, ptr %.val55376, i64 2
   %i.u = load i8, ptr %i.t, align 1, !tbaa !18
-  %1 = sext i8 %i.u to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.u, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.d, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit111.thread
 
 bb.d:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit111, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit
@@ -3510,24 +3487,21 @@ bb.ch:                                            ; preds = %_ZN4llvh16itanium_d
   br i1 %i.jx, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE20parseFloatingLiteralIfEEPNS0_4NodeEv.exit, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.jy = load i8, ptr %i.jv, align 1, !tbaa !18  ; 4 uses
-  %1 = sext i8 %i.jy to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %i.jy = load i8, ptr %i.jv, align 1, !tbaa !18  ; 3 uses
+  %1 = add i8 %i.jy, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %.lr.ph.i.preheader, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit.thread
 
 .lr.ph.i.preheader:                               ; preds = %bb.ci
-  %2 = sext i8 %i.jy to i32
-  %isdigittmp2.i192 = add nsw i32 %2, -48
-  %isdigit3.i193 = icmp ult i32 %isdigittmp2.i192, 10
+  %2 = add nsw i8 %i.jy, -48
+  %isdigit3.i193 = icmp ult i8 %2, 10
   br i1 %isdigit3.i193, label %.lr.ph, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 .lr.ph.ithread-pre-split:                         ; preds = %.lr.ph
   %.pr = load i8, ptr %i.ka, align 1, !tbaa !18   ; 2 uses
-  %3 = sext i8 %.pr to i32
-  %isdigittmp2.i = add nsw i32 %3, -48
-  %isdigit3.i = icmp ult i32 %isdigittmp2.i, 10
-  br i1 %isdigit3.i, label %.lr.ph, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
+  %3 = add i8 %.pr, -48
+  %isdigit3.i = icmp ult i8 %3, 10
+  br i1 %isdigit3.i, label %.lr.ph, label %.lr.ph.i._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit_crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.i.preheader, %.lr.ph.ithread-pre-split
   %i.jz = phi ptr [ %i.ka, %.lr.ph.ithread-pre-split ], [ %i.jv, %.lr.ph.i.preheader ]
@@ -3536,15 +3510,18 @@ bb.ci:                                            ; preds = %bb.ch
   %.not.i150 = icmp eq ptr %i.jw, %i.ka
   br i1 %.not.i150, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE20parseFloatingLiteralIfEEPNS0_4NodeEv.exit, label %.lr.ph.ithread-pre-split, !llvm.loop !2
 
-_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit: ; preds = %.lr.ph.ithread-pre-split, %.lr.ph.i.preheader
-  %.lcssa190 = phi i8 [ %i.jy, %.lr.ph.i.preheader ], [ %.pr, %.lr.ph.ithread-pre-split ]
-  %.lcssa = phi ptr [ %i.jv, %.lr.ph.i.preheader ], [ %i.ka, %.lr.ph.ithread-pre-split ] ; 3 uses
+.lr.ph.i._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit_crit_edge: ; preds = %.lr.ph.ithread-pre-split
+  %4 = icmp eq i8 %.pr, 69
+  br label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
+
+_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit: ; preds = %.lr.ph.i._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit_crit_edge, %.lr.ph.i.preheader
+  %.lcssa190 = phi i1 [ %4, %.lr.ph.i._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit_crit_edge ], [ false, %.lr.ph.i.preheader ]
+  %.lcssa = phi ptr [ %i.ka, %.lr.ph.i._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit_crit_edge ], [ %i.jv, %.lr.ph.i.preheader ] ; 3 uses
   %i.kb = icmp eq ptr %i.jv, %.lcssa
   br i1 %i.kb, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit.threadthread-pre-split, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
-  %4 = icmp eq i8 %.lcssa190, 69
-  br i1 %4, label %bb.ck, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE20parseFloatingLiteralIfEEPNS0_4NodeEv.exit
+  br i1 %.lcssa190, label %bb.ck, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE20parseFloatingLiteralIfEEPNS0_4NodeEv.exit
 
 bb.ck:                                            ; preds = %bb.cj
   %i.kc = getelementptr inbounds nuw i8, ptr %.lcssa, i64 1
@@ -3643,17 +3620,15 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE17parseCVQualif
 
 bb.i:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE17parseCVQualifiersEv.exit
   %i.y = load i8, ptr %i.w, align 1, !tbaa !18
-  %1 = sext i8 %i.y to i32
-  %isdigittmp.i = add nsw i32 %1, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %1 = add i8 %i.y, -48
+  %isdigit.i = icmp ult i8 %1, 10
   br i1 %isdigit.i, label %.lr.ph.i, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 .lr.ph.i:                                         ; preds = %bb.i, %bb.j
   %.val911.i = phi ptr [ %i.aa, %bb.j ], [ %i.w, %bb.i ] ; 4 uses
   %i.z = load i8, ptr %.val911.i, align 1, !tbaa !18
-  %2 = sext i8 %i.z to i32
-  %isdigittmp2.i = add nsw i32 %2, -48
-  %isdigit3.i = icmp ult i32 %isdigittmp2.i, 10
+  %2 = add i8 %i.z, -48
+  %isdigit3.i = icmp ult i8 %2, 10
   br i1 %isdigit3.i, label %bb.j, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 bb.j:                                             ; preds = %.lr.ph.i
@@ -3716,25 +3691,22 @@ bb.o:                                             ; preds = %_ZNK10StringView10s
 
 bb.p:                                             ; preds = %bb.o
   %i.as = load i8, ptr %.ptr, align 1, !tbaa !18
-  %3 = sext i8 %i.as to i32
-  %isdigittmp.i16 = add nsw i32 %3, -48
-  %isdigit.i17 = icmp ult i32 %isdigittmp.i16, 10
+  %3 = add i8 %i.as, -48
+  %isdigit.i17 = icmp ult i8 %3, 10
   br i1 %isdigit.i17, label %.lr.ph.i22.preheader, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread
 
 .lr.ph.i22.preheader:                             ; preds = %bb.p
   %.val911.i23.ptr131 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.at = load i8, ptr %.val911.i23.ptr131, align 1, !tbaa !18
-  %4 = sext i8 %i.at to i32
-  %isdigittmp2.i24132 = add nsw i32 %4, -48
-  %isdigit3.i25133 = icmp ult i32 %isdigittmp2.i24132, 10
+  %4 = add i8 %i.at, -48
+  %isdigit3.i25133 = icmp ult i8 %4, 10
   br i1 %isdigit3.i25133, label %.lr.ph, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread
 
 .lr.ph.i22:                                       ; preds = %.lr.ph
   %.val911.i23.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.val911.i23.add
   %i.au = load i8, ptr %.val911.i23.ptr, align 1, !tbaa !18
-  %5 = sext i8 %i.au to i32
-  %isdigittmp2.i24 = add nsw i32 %5, -48
-  %isdigit3.i25 = icmp ult i32 %isdigittmp2.i24, 10
+  %5 = add i8 %i.au, -48
+  %isdigit3.i25 = icmp ult i8 %5, 10
   br i1 %isdigit3.i25, label %.lr.ph, label %.lr.ph.i22._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit27_crit_edge, !llvm.loop !2
 
 .lr.ph:                                           ; preds = %.lr.ph.i22.preheader, %.lr.ph.i22
@@ -3817,17 +3789,15 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE17parseCVQualif
 
 bb.y:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE17parseCVQualifiersEv.exit39
   %i.bm = load i8, ptr %i.bk, align 1, !tbaa !18
-  %6 = sext i8 %i.bm to i32
-  %isdigittmp.i41 = add nsw i32 %6, -48
-  %isdigit.i42 = icmp ult i32 %isdigittmp.i41, 10
+  %6 = add i8 %i.bm, -48
+  %isdigit.i42 = icmp ult i8 %6, 10
   br i1 %isdigit.i42, label %.lr.ph.i47, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit52
 
 .lr.ph.i47:                                       ; preds = %bb.y, %bb.z
   %.val911.i48 = phi ptr [ %i.bo, %bb.z ], [ %i.bk, %bb.y ] ; 4 uses
   %i.bn = load i8, ptr %.val911.i48, align 1, !tbaa !18
-  %7 = sext i8 %i.bn to i32
-  %isdigittmp2.i49 = add nsw i32 %7, -48
-  %isdigit3.i50 = icmp ult i32 %isdigittmp2.i49, 10
+  %7 = add i8 %i.bn, -48
+  %isdigit3.i50 = icmp ult i8 %7, 10
   br i1 %isdigit3.i50, label %bb.z, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit52
 
 bb.z:                                             ; preds = %.lr.ph.i47
@@ -4230,9 +4200,8 @@ bb.aa:                                            ; preds = %_ZNK10StringView10s
 
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit70: ; preds = %bb.aa
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !18
-  %1 = sext i8 %i.eg to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.eg, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %.preheader, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit70.thread
 
 .preheader:                                       ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit70
@@ -4635,17 +4604,15 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.ex
 
 bb.d:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.i
   %i.h = load i8, ptr %.promoted.i, align 1, !tbaa !18
-  %3 = sext i8 %i.h to i32
-  %isdigittmp.i = add nsw i32 %3, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %3 = add i8 %i.h, -48
+  %isdigit.i = icmp ult i8 %3, 10
   br i1 %isdigit.i, label %.lr.ph.i, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit.thread
 
 .lr.ph.i:                                         ; preds = %bb.d, %bb.e
   %.val911.i = phi ptr [ %i.j, %bb.e ], [ %.promoted.i, %bb.d ] ; 3 uses
   %i.i = load i8, ptr %.val911.i, align 1, !tbaa !18
-  %4 = sext i8 %i.i to i32
-  %isdigittmp2.i = add nsw i32 %4, -48
-  %isdigit3.i = icmp ult i32 %isdigittmp2.i, 10
+  %4 = add i8 %i.i, -48
+  %isdigit3.i = icmp ult i8 %4, 10
   br i1 %isdigit3.i, label %bb.e, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 bb.e:                                             ; preds = %.lr.ph.i
@@ -5048,15 +5015,13 @@ bb.a:
 _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %i.k = load <8 x i8>, ptr %i.c, align 1, !tbaa !18 ; 2 uses
   %i.l = shufflevector <8 x i8> %i.k, <8 x i8> poison, <4 x i32> <i32 7, i32 5, i32 3, i32 1> ; 2 uses
-  %2 = sext <4 x i8> %i.l to <4 x i32>
-  %3 = add nsw <4 x i32> %2, splat (i32 -48)
-  %i.m = icmp ult <4 x i32> %3, splat (i32 10)
+  %2 = add <4 x i8> %i.l, splat (i8 -48)
+  %i.m = icmp ult <4 x i8> %2, splat (i8 10)
   %i.n = select <4 x i1> %i.m, <4 x i8> splat (i8 -48), <4 x i8> splat (i8 -87)
   %i.o = add <4 x i8> %i.n, %i.l
   %i.p = shufflevector <8 x i8> %i.k, <8 x i8> poison, <4 x i32> <i32 6, i32 4, i32 2, i32 0> ; 2 uses
-  %4 = sext <4 x i8> %i.p to <4 x i16>
-  %5 = add nsw <4 x i16> %4, splat (i16 -48)
-  %i.q = icmp ult <4 x i16> %5, splat (i16 10)
+  %3 = add <4 x i8> %i.p, splat (i8 -48)
+  %i.q = icmp ult <4 x i8> %3, splat (i8 10)
   %i.r = select <4 x i1> %i.q, <4 x i8> zeroinitializer, <4 x i8> splat (i8 9)
   %i.s = add <4 x i8> %i.r, %i.p
   %i.t = shl <4 x i8> %i.s, splat (i8 4)
@@ -5146,16 +5111,14 @@ bb.a:
 _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.ptr.4 = getelementptr inbounds nuw i8, ptr %i.c, i64 9
   %i.k = load i8, ptr %.ptr.4, align 1, !tbaa !18 ; 2 uses
-  %2 = sext i8 %i.k to i32
-  %isdigittmp23.4 = add nsw i32 %2, -48
-  %isdigit24.4 = icmp ult i32 %isdigittmp23.4, 10
+  %2 = add i8 %i.k, -48
+  %isdigit24.4 = icmp ult i8 %2, 10
   %.v25.4 = select i1 %isdigit24.4, i8 -48, i8 -87
   %i.l = add i8 %.v25.4, %i.k
   %.021.ptr.4 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.m = load i8, ptr %.021.ptr.4, align 1, !tbaa !18 ; 2 uses
-  %3 = sext i8 %i.m to i32
-  %isdigittmp.4 = add nsw i32 %3, -48
-  %isdigit.4 = icmp ult i32 %isdigittmp.4, 10
+  %3 = add i8 %i.m, -48
+  %isdigit.4 = icmp ult i8 %3, 10
   %.v.4 = select i1 %isdigit.4, i8 0, i8 9
   %i.n = add i8 %.v.4, %i.m
   %i.o = shl i8 %i.n, 4
@@ -5164,16 +5127,14 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.sroa.0.4.insert.shift = shl nuw nsw i64 %.sroa.0.4.insert.ext, 24
   %.ptr.5 = getelementptr inbounds nuw i8, ptr %i.c, i64 11
   %i.q = load i8, ptr %.ptr.5, align 1, !tbaa !18 ; 2 uses
-  %4 = sext i8 %i.q to i32
-  %isdigittmp23.5 = add nsw i32 %4, -48
-  %isdigit24.5 = icmp ult i32 %isdigittmp23.5, 10
+  %4 = add i8 %i.q, -48
+  %isdigit24.5 = icmp ult i8 %4, 10
   %.v25.5 = select i1 %isdigit24.5, i8 -48, i8 -87
   %i.r = add i8 %.v25.5, %i.q
   %.021.ptr.5 = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.s = load i8, ptr %.021.ptr.5, align 1, !tbaa !18 ; 2 uses
-  %5 = sext i8 %i.s to i32
-  %isdigittmp.5 = add nsw i32 %5, -48
-  %isdigit.5 = icmp ult i32 %isdigittmp.5, 10
+  %5 = add i8 %i.s, -48
+  %isdigit.5 = icmp ult i8 %5, 10
   %.v.5 = select i1 %isdigit.5, i8 0, i8 9
   %i.t = add i8 %.v.5, %i.s
   %i.u = shl i8 %i.t, 4
@@ -5181,16 +5142,14 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.sroa.0.5.insert.ext = zext i8 %i.v to i64
   %.ptr.6 = getelementptr inbounds nuw i8, ptr %i.c, i64 13
   %i.w = load i8, ptr %.ptr.6, align 1, !tbaa !18 ; 2 uses
-  %6 = sext i8 %i.w to i32
-  %isdigittmp23.6 = add nsw i32 %6, -48
-  %isdigit24.6 = icmp ult i32 %isdigittmp23.6, 10
+  %6 = add i8 %i.w, -48
+  %isdigit24.6 = icmp ult i8 %6, 10
   %.v25.6 = select i1 %isdigit24.6, i8 -48, i8 -87
   %i.x = add i8 %.v25.6, %i.w
   %.021.ptr.6 = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   %i.y = load i8, ptr %.021.ptr.6, align 1, !tbaa !18 ; 2 uses
-  %7 = sext i8 %i.y to i32
-  %isdigittmp.6 = add nsw i32 %7, -48
-  %isdigit.6 = icmp ult i32 %isdigittmp.6, 10
+  %7 = add i8 %i.y, -48
+  %isdigit.6 = icmp ult i8 %7, 10
   %.v.6 = select i1 %isdigit.6, i8 0, i8 9
   %i.z = add i8 %.v.6, %i.y
   %i.aa = shl i8 %i.z, 4
@@ -5198,16 +5157,14 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.sroa.0.6.insert.ext = zext i8 %i.ab to i64
   %.ptr.7 = getelementptr inbounds nuw i8, ptr %i.c, i64 15
   %i.ac = load i8, ptr %.ptr.7, align 1, !tbaa !18 ; 2 uses
-  %8 = sext i8 %i.ac to i32
-  %isdigittmp23.7 = add nsw i32 %8, -48
-  %isdigit24.7 = icmp ult i32 %isdigittmp23.7, 10
+  %8 = add i8 %i.ac, -48
+  %isdigit24.7 = icmp ult i8 %8, 10
   %.v25.7 = select i1 %isdigit24.7, i8 -48, i8 -87
   %i.ad = add i8 %.v25.7, %i.ac
   %.021.ptr.7 = getelementptr inbounds nuw i8, ptr %i.c, i64 14
   %i.ae = load i8, ptr %.021.ptr.7, align 1, !tbaa !18 ; 2 uses
-  %9 = sext i8 %i.ae to i32
-  %isdigittmp.7 = add nsw i32 %9, -48
-  %isdigit.7 = icmp ult i32 %isdigittmp.7, 10
+  %9 = add i8 %i.ae, -48
+  %isdigit.7 = icmp ult i8 %9, 10
   %.v.7 = select i1 %isdigit.7, i8 0, i8 9
   %i.af = add i8 %.v.7, %i.ae
   %i.ag = shl i8 %i.af, 4
@@ -5215,15 +5172,13 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.sroa.0.7.insert.ext = zext i8 %i.ah to i64
   %i.ai = load <8 x i8>, ptr %i.c, align 1, !tbaa !18 ; 2 uses
   %i.aj = shufflevector <8 x i8> %i.ai, <8 x i8> poison, <4 x i32> <i32 5, i32 3, i32 1, i32 7> ; 2 uses
-  %10 = sext <4 x i8> %i.aj to <4 x i32>
-  %11 = add nsw <4 x i32> %10, splat (i32 -48)
-  %i.ak = icmp ult <4 x i32> %11, splat (i32 10)
+  %10 = add <4 x i8> %i.aj, splat (i8 -48)
+  %i.ak = icmp ult <4 x i8> %10, splat (i8 10)
   %i.al = select <4 x i1> %i.ak, <4 x i8> splat (i8 -48), <4 x i8> splat (i8 -87)
   %i.am = add <4 x i8> %i.al, %i.aj
   %i.an = shufflevector <8 x i8> %i.ai, <8 x i8> poison, <4 x i32> <i32 4, i32 2, i32 0, i32 6> ; 2 uses
-  %12 = sext <4 x i8> %i.an to <4 x i32>
-  %13 = add nsw <4 x i32> %12, splat (i32 -48)
-  %i.ao = icmp ult <4 x i32> %13, splat (i32 10)
+  %11 = add <4 x i8> %i.an, splat (i8 -48)
+  %i.ao = icmp ult <4 x i8> %11, splat (i8 10)
   %i.ap = select <4 x i1> %i.ao, <4 x i8> zeroinitializer, <4 x i8> splat (i8 9)
   %i.aq = add <4 x i8> %i.ap, %i.an
   %i.ar = shl <4 x i8> %i.aq, splat (i8 4)
@@ -5301,7 +5256,7 @@ define linkonce_odr hidden void @_ZNK4llvh16itanium_demangle16FloatLiteralImplIe
 bb.a:
   %i.a = alloca [40 x i8], align 16               ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !197  ; 14 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !197  ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !196
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 1
@@ -5314,16 +5269,14 @@ bb.a:
 _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.ptr.6 = getelementptr inbounds nuw i8, ptr %i.c, i64 13
   %i.k = load i8, ptr %.ptr.6, align 1, !tbaa !18 ; 2 uses
-  %2 = sext i8 %i.k to i32
-  %isdigittmp23.6 = add nsw i32 %2, -48
-  %isdigit24.6 = icmp ult i32 %isdigittmp23.6, 10
+  %2 = add i8 %i.k, -48
+  %isdigit24.6 = icmp ult i8 %2, 10
   %.v25.6 = select i1 %isdigit24.6, i8 -48, i8 -87
   %i.l = add i8 %.v25.6, %i.k
   %.021.ptr.6 = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   %i.m = load i8, ptr %.021.ptr.6, align 1, !tbaa !18 ; 2 uses
-  %3 = sext i8 %i.m to i32
-  %isdigittmp.6 = add nsw i32 %3, -48
-  %isdigit.6 = icmp ult i32 %isdigittmp.6, 10
+  %3 = add i8 %i.m, -48
+  %isdigit.6 = icmp ult i8 %3, 10
   %.v.6 = select i1 %isdigit.6, i8 0, i8 9
   %i.n = add i8 %.v.6, %i.m
   %i.o = shl i8 %i.n, 4
@@ -5332,16 +5285,14 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.sroa.0.6.insert.shift = shl nuw nsw i80 %.sroa.0.6.insert.ext, 48
   %.ptr.7 = getelementptr inbounds nuw i8, ptr %i.c, i64 15
   %i.q = load i8, ptr %.ptr.7, align 1, !tbaa !18 ; 2 uses
-  %4 = sext i8 %i.q to i32
-  %isdigittmp23.7 = add nsw i32 %4, -48
-  %isdigit24.7 = icmp ult i32 %isdigittmp23.7, 10
+  %4 = add i8 %i.q, -48
+  %isdigit24.7 = icmp ult i8 %4, 10
   %.v25.7 = select i1 %isdigit24.7, i8 -48, i8 -87
   %i.r = add i8 %.v25.7, %i.q
   %.021.ptr.7 = getelementptr inbounds nuw i8, ptr %i.c, i64 14
   %i.s = load i8, ptr %.021.ptr.7, align 1, !tbaa !18 ; 2 uses
-  %5 = sext i8 %i.s to i32
-  %isdigittmp.7 = add nsw i32 %5, -48
-  %isdigit.7 = icmp ult i32 %isdigittmp.7, 10
+  %5 = add i8 %i.s, -48
+  %isdigit.7 = icmp ult i8 %5, 10
   %.v.7 = select i1 %isdigit.7, i8 0, i8 9
   %i.t = add i8 %.v.7, %i.s
   %i.u = shl i8 %i.t, 4
@@ -5351,16 +5302,14 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %i.w = or disjoint i80 %.sroa.0.6.insert.shift, %.sroa.0.7.insert.shift
   %.ptr.4 = getelementptr inbounds nuw i8, ptr %i.c, i64 9
   %i.x = load i8, ptr %.ptr.4, align 1, !tbaa !18 ; 2 uses
-  %6 = sext i8 %i.x to i32
-  %isdigittmp23.4 = add nsw i32 %6, -48
-  %isdigit24.4 = icmp ult i32 %isdigittmp23.4, 10
+  %6 = add i8 %i.x, -48
+  %isdigit24.4 = icmp ult i8 %6, 10
   %.v25.4 = select i1 %isdigit24.4, i8 -48, i8 -87
   %i.y = add i8 %.v25.4, %i.x
   %.021.ptr.4 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.z = load i8, ptr %.021.ptr.4, align 1, !tbaa !18 ; 2 uses
-  %7 = sext i8 %i.z to i32
-  %isdigittmp.4 = add nsw i32 %7, -48
-  %isdigit.4 = icmp ult i32 %isdigittmp.4, 10
+  %7 = add i8 %i.z, -48
+  %isdigit.4 = icmp ult i8 %7, 10
   %.v.4 = select i1 %isdigit.4, i8 0, i8 9
   %i.aa = add i8 %.v.4, %i.z
   %i.ab = shl i8 %i.aa, 4
@@ -5369,70 +5318,48 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %.sroa.0.4.insert.shift = shl nuw nsw i80 %.sroa.0.4.insert.ext, 32
   %.ptr.5 = getelementptr inbounds nuw i8, ptr %i.c, i64 11
   %i.ad = load i8, ptr %.ptr.5, align 1, !tbaa !18 ; 2 uses
-  %8 = sext i8 %i.ad to i32
-  %isdigittmp23.5 = add nsw i32 %8, -48
-  %isdigit24.5 = icmp ult i32 %isdigittmp23.5, 10
-  %.v25.5 = select i1 %isdigit24.5, i8 -48, i8 -87
-  %i.ae = add i8 %.v25.5, %i.ad
-  %.021.ptr.5 = getelementptr inbounds nuw i8, ptr %i.c, i64 10
-  %9 = load i8, ptr %.021.ptr.5, align 1, !tbaa !18 ; 2 uses
-  %10 = sext i8 %9 to i32
-  %isdigittmp.5 = add nsw i32 %10, -48
-  %isdigit.5.a = icmp ult i32 %isdigittmp.5, 10
-  %.v.5.a = select i1 %isdigit.5.a, i8 0, i8 9
-  %11 = add i8 %.v.5.a, %9
-  %12 = shl i8 %11, 4
-  %i.af = add i8 %i.ae, %12
-  %.sroa.0.5.insert.ext = zext i8 %i.af to i80    ; 2 uses
-  %.sroa.0.5.insert.shift = shl nuw nsw i80 %.sroa.0.5.insert.ext, 40
-  %.ptr.8 = getelementptr inbounds nuw i8, ptr %i.c, i64 17
+  %i.ae = add i8 %i.ad, -48
+  %isdigit.5.a = icmp ult i8 %i.ae, 10
+  %.v.5.a = select i1 %isdigit.5.a, i8 -48, i8 -87
+  %i.af = add i8 %.v.5.a, %i.ad
+  %.ptr.8 = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.ag = load i8, ptr %.ptr.8, align 1, !tbaa !18 ; 2 uses
-  %13 = sext i8 %i.ag to i32
-  %isdigittmp23.8 = add nsw i32 %13, -48
-  %isdigit24.8 = icmp ult i32 %isdigittmp23.8, 10
-  %.v25.8 = select i1 %isdigit24.8, i8 -48, i8 -87
-  %i.ah = add i8 %.v25.8, %i.ag
-  %.021.ptr.8 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %14 = load i8, ptr %.021.ptr.8, align 1, !tbaa !18 ; 2 uses
-  %15 = sext i8 %14 to i32
-  %isdigittmp.8 = add nsw i32 %15, -48
-  %isdigit.8 = icmp ult i32 %isdigittmp.8, 10
+  %i.ah = add i8 %i.ag, -48
+  %isdigit.8 = icmp ult i8 %i.ah, 10
   %.v.8 = select i1 %isdigit.8, i8 0, i8 9
-  %i.ai = add i8 %.v.8, %14
+  %i.ai = add i8 %.v.8, %i.ag
   %i.aj = shl i8 %i.ai, 4
-  %i.ak = add i8 %i.ah, %i.aj
-  %.sroa.0.8.insert.ext = zext i8 %i.ak to i80
-  %.sroa.0.8.insert.shift = shl nuw nsw i80 %.sroa.0.8.insert.ext, 64
-  %.ptr.9 = getelementptr inbounds nuw i8, ptr %i.c, i64 19
-  %16 = load i8, ptr %.ptr.9, align 1, !tbaa !18  ; 2 uses
-  %17 = sext i8 %16 to i32
-  %isdigittmp23.9 = add nsw i32 %17, -48
-  %isdigit24.9 = icmp ult i32 %isdigittmp23.9, 10
-  %.v25.9 = select i1 %isdigit24.9, i8 -48, i8 -87
-  %18 = add i8 %.v25.9, %16
-  %.021.ptr.9 = getelementptr inbounds nuw i8, ptr %i.c, i64 18
-  %19 = load i8, ptr %.021.ptr.9, align 1, !tbaa !18 ; 2 uses
-  %20 = sext i8 %19 to i32
-  %isdigittmp.9 = add nsw i32 %20, -48
-  %isdigit.9 = icmp ult i32 %isdigittmp.9, 10
-  %.v.9 = select i1 %isdigit.9, i8 0, i8 9
-  %21 = add i8 %.v.9, %19
-  %22 = shl i8 %21, 4
-  %23 = add i8 %18, %22
-  %.sroa.0.9.insert.ext = zext i8 %23 to i80
-  %.sroa.0.9.insert.shift = shl nuw i80 %.sroa.0.9.insert.ext, 72
-  %i.al = or disjoint i80 %.sroa.0.8.insert.shift, %.sroa.0.9.insert.shift
+  %i.ak = add i8 %i.af, %i.aj
+  %.sroa.0.8.insert.ext = zext i8 %i.ak to i80    ; 2 uses
+  %.sroa.0.8.insert.shift = shl nuw nsw i80 %.sroa.0.8.insert.ext, 40
+  %.ptr.9 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %8 = load <4 x i8>, ptr %.ptr.9, align 1, !tbaa !18 ; 2 uses
+  %9 = shufflevector <4 x i8> %8, <4 x i8> poison, <2 x i32> <i32 1, i32 3> ; 2 uses
+  %10 = add <2 x i8> %9, splat (i8 -48)
+  %11 = icmp ult <2 x i8> %10, splat (i8 10)
+  %12 = select <2 x i1> %11, <2 x i8> splat (i8 -48), <2 x i8> splat (i8 -87)
+  %13 = add <2 x i8> %12, %9
+  %14 = shufflevector <4 x i8> %8, <4 x i8> poison, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %15 = add <2 x i8> %14, splat (i8 -48)
+  %16 = icmp ult <2 x i8> %15, splat (i8 10)
+  %17 = select <2 x i1> %16, <2 x i8> zeroinitializer, <2 x i8> splat (i8 9)
+  %18 = add <2 x i8> %17, %14
+  %19 = shl <2 x i8> %18, splat (i8 4)
+  %20 = add <2 x i8> %13, %19
+  %21 = zext <2 x i8> %20 to <2 x i80>
+  %22 = shl nuw <2 x i80> %21, <i80 64, i80 72>   ; 2 uses
+  %23 = extractelement <2 x i80> %22, i64 0
+  %24 = extractelement <2 x i80> %22, i64 1
+  %i.al = or disjoint i80 %23, %24
   %i.am = load <8 x i8>, ptr %i.c, align 1, !tbaa !18 ; 2 uses
   %i.an = shufflevector <8 x i8> %i.am, <8 x i8> poison, <4 x i32> <i32 7, i32 5, i32 3, i32 1> ; 2 uses
-  %24 = sext <4 x i8> %i.an to <4 x i32>
-  %25 = add nsw <4 x i32> %24, splat (i32 -48)
-  %i.ao = icmp ult <4 x i32> %25, splat (i32 10)
+  %25 = add <4 x i8> %i.an, splat (i8 -48)
+  %i.ao = icmp ult <4 x i8> %25, splat (i8 10)
   %i.ap = select <4 x i1> %i.ao, <4 x i8> splat (i8 -48), <4 x i8> splat (i8 -87)
   %i.aq = add <4 x i8> %i.ap, %i.an
   %i.ar = shufflevector <8 x i8> %i.am, <8 x i8> poison, <4 x i32> <i32 6, i32 4, i32 2, i32 0> ; 2 uses
-  %26 = sext <4 x i8> %i.ar to <4 x i16>
-  %27 = add nsw <4 x i16> %26, splat (i16 -48)
-  %i.as = icmp ult <4 x i16> %27, splat (i16 10)
+  %26 = add <4 x i8> %i.ar, splat (i8 -48)
+  %i.as = icmp ult <4 x i8> %26, splat (i8 10)
   %i.at = select <4 x i1> %i.as, <4 x i8> zeroinitializer, <4 x i8> splat (i8 9)
   %i.au = add <4 x i8> %i.at, %i.ar
   %i.av = shl <4 x i8> %i.au, splat (i8 4)
@@ -5440,7 +5367,7 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %i.ax = bitcast <4 x i8> %i.aw to i32
   %i.ay = tail call i32 @llvm.bswap.i32(i32 %i.ax)
   %i.az = zext i32 %i.ay to i80
-  %i.ba = or disjoint i80 %.sroa.0.5.insert.shift, %i.az
+  %i.ba = or disjoint i80 %.sroa.0.8.insert.shift, %i.az
   %op.rdx85 = or disjoint i80 %i.ba, %.sroa.0.4.insert.shift
   %.sroa.0.8.insert.mask = or disjoint i80 %i.w, %op.rdx85 ; 3 uses
   %i.bb = lshr i80 %.sroa.0.8.insert.mask, 24
@@ -5453,7 +5380,7 @@ _ZSt7reverseIPcEvT_S1_.exit:                      ; preds = %bb.a
   %i.bf = lshr i80 %.sroa.0.9.insert.insert, 56
   %.sroa.0.1.insert.shift34 = and i80 %i.bf, 65280
   %.sroa.0.9.extract.shift = lshr i80 %.sroa.0.9.insert.insert, 72
-  %i.bg = shl nuw nsw i80 %.sroa.0.5.insert.ext, 32
+  %i.bg = shl nuw nsw i80 %.sroa.0.8.insert.ext, 32
   %i.bh = shl nuw nsw i80 %.sroa.0.4.insert.ext, 40
   %i.bi = tail call i80 @llvm.vector.reduce.or.v4i80(<4 x i80> %i.bd)
   %op.rdx = or i80 %i.bi, %.sroa.0.3.insert.shift44
@@ -5856,9 +5783,8 @@ bb.a:
 
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit: ; preds = %bb.a
   %i.e = load i8, ptr %.val3, align 1, !tbaa !18
-  %1 = sext i8 %i.e to i32
-  %isdigittmp = add nsw i32 %1, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %1 = add i8 %i.e, -48
+  %isdigit = icmp ult i8 %1, 10
   br i1 %isdigit, label %bb.b, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit.thread
 
 bb.b:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit
@@ -5943,9 +5869,8 @@ bb.h:                                             ; preds = %_ZNK10StringView10s
 
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit37: ; preds = %bb.h
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !18
-  %2 = sext i8 %i.ai to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.ai, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.i, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE13parseSimpleIdEv.exit34
 
 bb.i:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit37
@@ -6348,9 +6273,8 @@ bb.cc:                                            ; preds = %_ZN4llvh16itanium_d
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit100: ; preds = %bb.cc
   %i.ih = getelementptr inbounds nuw i8, ptr %.val37, i64 1
   %i.ii = load i8, ptr %i.ih, align 1, !tbaa !18
-  %2 = sext i8 %i.ii to i32
-  %isdigittmp = add nsw i32 %2, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %2 = add i8 %i.ii, -48
+  %isdigit = icmp ult i8 %2, 10
   br i1 %isdigit, label %bb.cd, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit.thread
 
 bb.cd:                                            ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit100
@@ -6753,9 +6677,8 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit19:
 .lr.ph.i:                                         ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit19, %bb.c
   %.val911.i = phi ptr [ %i.p, %bb.c ], [ %i.k, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit19 ] ; 3 uses
   %i.o = load i8, ptr %.val911.i, align 1, !tbaa !18
-  %1 = sext i8 %i.o to i32
-  %isdigittmp2.i = add nsw i32 %1, -48
-  %isdigit3.i = icmp ult i32 %isdigittmp2.i, 10
+  %1 = add i8 %i.o, -48
+  %isdigit3.i = icmp ult i8 %1, 10
   br i1 %isdigit3.i, label %bb.c, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE11parseNumberEb.exit
 
 bb.c:                                             ; preds = %.lr.ph.i

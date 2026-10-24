@@ -205,12 +205,11 @@ bb.ah:                                            ; preds = %bb.ah, %bb.ag
   %.0181 = phi ptr [ %i.lh, %bb.ag ], [ %i.lj, %bb.ah ] ; 3 uses
   %i.li = load i8, ptr %.0181, align 1, !tbaa !99 ; 2 uses
   %.not216 = icmp ne i8 %i.li, 0
-  %2 = sext i8 %i.li to i32
-  %3 = add nsw i32 %2, -58
-  %isdigit = icmp ult i32 %3, -10
-  %or.cond227 = select i1 %.not216, i1 %isdigit, i1 false
+  %2 = add i8 %i.li, -58
+  %isdigit = icmp ult i8 %2, -10
+  %or.cond226 = and i1 %.not216, %isdigit
   %i.lj = getelementptr inbounds nuw i8, ptr %.0181, i64 1
-  br i1 %or.cond227, label %bb.ah, label %.critedge, !llvm.loop !193
+  br i1 %or.cond226, label %bb.ah, label %.critedge, !llvm.loop !193
 
 .critedge:                                        ; preds = %bb.ah
   %i.lk = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses

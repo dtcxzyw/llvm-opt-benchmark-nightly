@@ -205,15 +205,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.019118, label %bb.c, label %bb.ah
 
 bb.c:                                             ; preds = %.lr.ph
-  %3 = sext i8 %i.g to i32                        ; 2 uses
-  %isdigittmp = add nsw i32 %3, -48
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %3 = add i8 %i.g, -48                           ; 2 uses
+  %isdigit = icmp ult i8 %3, 10
   br i1 %isdigit, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
   %i.h = shl i8 %.015119, 3
-  %4 = add i8 %i.h, -48
-  %i.i = add i8 %4, %i.g                          ; 2 uses
+  %i.i = add i8 %3, %i.h                          ; 2 uses
   %i.j = add nsw i32 %.0120, 1                    ; 2 uses
   %i.k = icmp eq i32 %i.j, 3
   br i1 %i.k, label %bb.e, label %bb.an
@@ -599,7 +597,8 @@ _ZL15vl_decodexdigitc.exit71:                     ; preds = %_ZL15vl_decodexdigi
           to label %bb.an unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 bb.ac:                                            ; preds = %bb.k, %bb.y, %bb.x
-  %i.dy = tail call i32 @isalnum(i32 noundef %3) #36
+  %4 = sext i8 %i.g to i32
+  %i.dy = tail call i32 @isalnum(i32 noundef %4) #36
   %.not25 = icmp eq i32 %i.dy, 0
   br i1 %.not25, label %bb.af, label %bb.ad
 

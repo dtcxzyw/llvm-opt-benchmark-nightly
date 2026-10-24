@@ -124,16 +124,16 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph51.split.i.i, %bb.k
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.k ], [ 0, %.lr.ph51.split.i.i ]
-  %i.aj = phi i8 [ %i.am, %bb.k ], [ %i.ai, %.lr.ph51.split.i.i ] ; 2 uses
-  %1 = sext i8 %i.aj to i32                       ; 2 uses
-  %2 = add nsw i32 %1, -48
-  %isdigit80.i = icmp ult i32 %2, 10
+  %i.aj = phi i8 [ %i.am, %bb.k ], [ %i.ai, %.lr.ph51.split.i.i ] ; 3 uses
+  %1 = add i8 %i.aj, -48
+  %isdigit80.i = icmp ult i8 %1, 10
   %.not41.i.i = icmp eq i8 %i.aj, 42
   %or.cond.i = or i1 %.not41.i.i, %isdigit80.i
   br i1 %or.cond.i, label %bb.k, label %.split.us.i.i
 
 .split.us.i.i:                                    ; preds = %.lr.ph.i.i
-  %i.ak = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13, ptr noundef nonnull %.03250.i.i, i32 noundef %1) #7 ; 0 uses
+  %2 = sext i8 %i.aj to i32
+  %i.ak = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13, ptr noundef nonnull %.03250.i.i, i32 noundef %2) #7 ; 0 uses
   br label %_valid_num_list.exit.i
 
 bb.k:                                             ; preds = %.lr.ph.i.i
@@ -211,16 +211,16 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.i30.i:                                     ; preds = %.lr.ph51.split.i27.i, %bb.r
   %indvars.iv.i31.i = phi i64 [ %indvars.iv.next.i33.i, %bb.r ], [ 0, %.lr.ph51.split.i27.i ]
-  %i.ba = phi i8 [ %i.bd, %bb.r ], [ %i.az, %.lr.ph51.split.i27.i ] ; 2 uses
-  %3 = sext i8 %i.ba to i32                       ; 2 uses
-  %4 = add nsw i32 %3, -48
-  %isdigit.i = icmp ult i32 %4, 10
+  %i.ba = phi i8 [ %i.bd, %bb.r ], [ %i.az, %.lr.ph51.split.i27.i ] ; 3 uses
+  %3 = add i8 %i.ba, -48
+  %isdigit.i = icmp ult i8 %3, 10
   %.not41.i43.i = icmp eq i8 %i.ba, 42
   %or.cond121.i = or i1 %.not41.i43.i, %isdigit.i
   br i1 %or.cond121.i, label %bb.r, label %.split.us.i44.i
 
 .split.us.i44.i:                                  ; preds = %.lr.ph.i30.i
-  %i.bb = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13, ptr noundef nonnull %.03250.i28.i, i32 noundef %3) #7 ; 0 uses
+  %4 = sext i8 %i.ba to i32
+  %i.bb = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13, ptr noundef nonnull %.03250.i28.i, i32 noundef %4) #7 ; 0 uses
   br label %_valid_num_list.exit45.i
 
 bb.r:                                             ; preds = %.lr.ph.i30.i

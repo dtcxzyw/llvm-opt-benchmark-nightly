@@ -205,15 +205,13 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv
   %i.g = load i8, ptr %i.f, align 1, !tbaa !81    ; 2 uses
-  %8 = sext i8 %i.g to i32
-  %9 = add nsw i32 %8, -48
-  %i.h = icmp ult i32 %9, 10
+  %8 = add i8 %i.g, -48
+  %i.h = icmp ult i8 %8, 10
   %i.i = and i8 %i.g, -33
-  %10 = sext i8 %i.i to i32
-  %11 = add nsw i32 %10, -65
-  %i.j = icmp ult i32 %11, 6
-  %12 = select i1 %i.h, i1 true, i1 %i.j
-  br i1 %12, label %bb.b, label %bb.d
+  %9 = add i8 %i.i, -65
+  %i.j = icmp ult i8 %9, 6
+  %10 = or i1 %i.h, %i.j
+  br i1 %10, label %bb.b, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #32
@@ -616,8 +614,8 @@ bb.b:                                             ; preds = %.backedge, %.outer
   %storemerge142887 = phi ptr [ %storemerge142886, %.backedge ], [ %.promoted, %.outer ] ; 16 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %storemerge142887, i64 1 ; 21 uses
   store ptr %i.ae, ptr %i.p, align 8, !tbaa !91
-  %i.af = load i8, ptr %storemerge142887, align 1, !tbaa !81 ; 10 uses
-  %i.ag = sext i8 %i.af to i32                    ; 4 uses
+  %i.af = load i8, ptr %storemerge142887, align 1, !tbaa !81 ; 11 uses
+  %i.ag = sext i8 %i.af to i32                    ; 3 uses
   store i32 %i.ag, ptr %i.y, align 4, !tbaa !228
   switch i8 %i.af, label %bb.dj [
     i8 0, label %bb.c
@@ -1020,9 +1018,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282: ; preds = %bb
   br label %bb.eu
 
 bb.bv:                                            ; preds = %bb.bp
-  %30 = sext i8 %i.ao to i32
-  %31 = add nsw i32 %30, -32
-  %i.kd = icmp ult i32 %31, 95
+  %i.kd = icmp ult i8 %i.ao, 127
   %i.ke = load i8, ptr %i.x, align 8, !tbaa !227, !range !208, !noundef !209
   %i.kf = icmp ne i8 %i.ke, 0
   %i.kg = and i1 %i.kd, %i.kf
@@ -1425,9 +1421,8 @@ bb.di:                                            ; preds = %bb.dd
 
 bb.dj:                                            ; preds = %bb.cl, %bb.b
   %i.pc = and i8 %i.af, -33
-  %32 = sext i8 %i.pc to i32
-  %33 = add nsw i32 %32, -65
-  %i.pd = icmp ult i32 %33, 26
+  %30 = add i8 %i.pc, -65
+  %i.pd = icmp ult i8 %30, 26
   %i.pe = icmp eq i8 %i.af, 95
   %i.pf = or i1 %i.pe, %i.pd
   br i1 %i.pf, label %.preheader, label %bb.dk
@@ -1435,15 +1430,13 @@ bb.dj:                                            ; preds = %bb.cl, %bb.b
 .preheader:                                       ; preds = %bb.dj
   %i.pg = load i8, ptr %i.ae, align 1, !tbaa !81  ; 3 uses
   %i.ph = and i8 %i.pg, -33
-  %34 = sext i8 %i.ph to i32
-  %35 = add nsw i32 %34, -65
-  %i.pi = icmp ult i32 %35, 26
+  %31 = add i8 %i.ph, -65
+  %i.pi = icmp ult i8 %31, 26
   %i.pj = icmp eq i8 %i.pg, 95
   %i.pk = or i1 %i.pj, %i.pi
-  %36 = sext i8 %i.pg to i32
-  %37 = add nsw i32 %36, -48
-  %i.pl = icmp ult i32 %37, 10
-  %or.cond499 = select i1 %i.pk, i1 true, i1 %i.pl
+  %32 = add i8 %i.pg, -48
+  %i.pl = icmp ult i8 %32, 10
+  %or.cond499 = or i1 %i.pl, %i.pk
   br i1 %or.cond499, label %.critedge12, label %._crit_edge500
 
 .critedge12:                                      ; preds = %.preheader, %.critedge12
@@ -1452,15 +1445,13 @@ bb.dj:                                            ; preds = %bb.cl, %bb.b
   store ptr %i.pn, ptr %i.p, align 8, !tbaa !91
   %i.po = load i8, ptr %i.pn, align 1, !tbaa !81  ; 3 uses
   %i.pp = and i8 %i.po, -33
-  %38 = sext i8 %i.pp to i32
-  %39 = add nsw i32 %38, -65
-  %i.pq = icmp ult i32 %39, 26
+  %33 = add i8 %i.pp, -65
+  %i.pq = icmp ult i8 %33, 26
   %i.pr = icmp eq i8 %i.po, 95
   %i.ps = or i1 %i.pr, %i.pq
-  %40 = sext i8 %i.po to i32
-  %41 = add nsw i32 %40, -48
-  %i.pt = icmp ult i32 %41, 10
-  %or.cond = select i1 %i.ps, i1 true, i1 %i.pt
+  %34 = add i8 %i.po, -48
+  %i.pt = icmp ult i8 %34, 10
+  %or.cond = or i1 %i.pt, %i.ps
   br i1 %or.cond, label %.critedge12, label %._crit_edge500, !llvm.loop !691
 
 ._crit_edge500:                                   ; preds = %.critedge12, %.preheader
@@ -1504,16 +1495,14 @@ bb.dl:                                            ; preds = %.tail
   %i.qg = getelementptr inbounds nuw i8, ptr %storemerge142887, i64 4
   %i.qh = load i8, ptr %i.qg, align 1, !tbaa !81  ; 3 uses
   %i.qi = and i8 %i.qh, -33
-  %42 = sext i8 %i.qi to i32
-  %43 = add nsw i32 %42, -65
-  %i.qj = icmp ult i32 %43, 26
+  %35 = add i8 %i.qi, -65
+  %i.qj = icmp ult i8 %35, 26
   %i.qk = icmp eq i8 %i.qh, 95
   %i.ql = or i1 %i.qk, %i.qj
-  %44 = sext i8 %i.qh to i32
-  %45 = add nsw i32 %44, -48
-  %i.qm = icmp ult i32 %45, 10
-  %or.cond401 = select i1 %i.ql, i1 true, i1 %i.qm
-  br i1 %or.cond401, label %.thread656, label %bb.dm
+  %36 = add i8 %i.qh, -48
+  %i.qm = icmp ult i8 %36, 10
+  %or.cond399 = or i1 %i.qm, %i.ql
+  br i1 %or.cond399, label %.thread656, label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl
   %i.qn = load i64, ptr %i.v, align 8, !tbaa !79
@@ -1529,12 +1518,11 @@ bb.dm:                                            ; preds = %bb.dl
 
 bb.dn:                                            ; preds = %sub_0
   %i.qs = and i8 %i.qa, -33
-  %46 = sext i8 %i.qs to i32
-  %47 = add nsw i32 %46, -65
-  %i.qt = icmp ult i32 %47, 26
+  %37 = add i8 %i.qs, -65
+  %i.qt = icmp ult i8 %37, 26
   %i.qu = icmp eq i8 %i.qa, 95
   %i.qv = or i1 %i.qu, %i.qt
-  br i1 %i.qv, label %.thread656, label %.thread369
+  br i1 %i.qv, label %.thread656, label %switch.early.test
 
 .thread656:                                       ; preds = %.tail, %bb.dl, %sub_1, %bb.dn
   store i8 0, ptr %0, align 1, !tbaa !212, !alias.scope !712
@@ -1544,10 +1532,9 @@ bb.dn:                                            ; preds = %sub_0
 
 bb.do:                                            ; preds = %bb.dk
   %i.qx = load i8, ptr %i.ae, align 1, !tbaa !81
-  %48 = sext i8 %i.qx to i32
-  %49 = add nsw i32 %48, -48
-  %i.qy = icmp ult i32 %49, 10
-  br i1 %i.qy, label %.thread370.thread, label %bb.dp
+  %38 = add i8 %i.qx, -48
+  %i.qy = icmp ult i8 %38, 10
+  br i1 %i.qy, label %.thread370, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
   store i8 0, ptr %0, align 1, !tbaa !212, !alias.scope !713
@@ -1555,27 +1542,26 @@ bb.dp:                                            ; preds = %bb.do
   store i8 0, ptr %i.qz, align 1, !tbaa !213, !alias.scope !713
   br label %.critedge197
 
-.thread369:                                       ; preds = %bb.dk, %bb.dn
-  %50 = add nsw i32 %i.ag, -58
-  %i.ra = icmp ult i32 %50, -10
+.thread369:                                       ; preds = %bb.dk
+  %39 = add i8 %i.af, -58
+  %i.ra = icmp ult i8 %39, -10
   br i1 %i.ra, label %switch.early.test, label %bb.dq
 
-switch.early.test:                                ; preds = %.thread369
+switch.early.test:                                ; preds = %bb.dn, %.thread369
   switch i8 %i.af, label %bb.ei [
     i8 45, label %.thread370
     i8 43, label %.thread370
   ]
 
-.thread370:                                       ; preds = %switch.early.test, %switch.early.test
-  %.pre549 = load i8, ptr %i.ae, align 1, !tbaa !81
-  %.pre552 = sext i8 %.pre549 to i32
-  %.pre553 = add nsw i32 %.pre552, -48
-  %i.rb = icmp ult i32 %.pre553, 10
+.thread370:                                       ; preds = %switch.early.test, %switch.early.test, %bb.do
+  %.ph376 = phi i32 [ 0, %bb.do ], [ 1, %switch.early.test ], [ 1, %switch.early.test ] ; 2 uses
+  %.ph377 = phi i1 [ false, %bb.do ], [ true, %switch.early.test ], [ true, %switch.early.test ]
+  %40 = load i8, ptr %i.ae, align 1, !tbaa !81
+  %41 = add i8 %40, -48
+  %i.rb = icmp ult i8 %41, 10
   br i1 %i.rb, label %.thread370.thread, label %.preheader410.preheader
 
-.thread370.thread:                                ; preds = %bb.do, %.thread370
-  %.ph377663 = phi i1 [ true, %.thread370 ], [ false, %bb.do ]
-  %.ph376662 = phi i32 [ 1, %.thread370 ], [ 0, %bb.do ]
+.thread370.thread:                                ; preds = %.thread370
   %i.rc = getelementptr inbounds nuw i8, ptr %storemerge142887, i64 2 ; 2 uses
   store ptr %i.rc, ptr %i.p, align 8, !tbaa !91
   %i.rd = load i8, ptr %i.ae, align 1, !tbaa !81
@@ -1583,8 +1569,8 @@ switch.early.test:                                ; preds = %.thread369
 
 bb.dq:                                            ; preds = %.thread369, %.thread370.thread
   %i.re = phi ptr [ %i.ae, %.thread369 ], [ %i.rc, %.thread370.thread ] ; 9 uses
-  %i.rf = phi i1 [ true, %.thread369 ], [ %.ph377663, %.thread370.thread ]
-  %i.rg = phi i32 [ 1, %.thread369 ], [ %.ph376662, %.thread370.thread ] ; 3 uses
+  %i.rf = phi i1 [ true, %.thread369 ], [ %.ph377, %.thread370.thread ]
+  %i.rg = phi i32 [ 1, %.thread369 ], [ %.ph376, %.thread370.thread ] ; 3 uses
   %.0125 = phi i8 [ %i.af, %.thread369 ], [ %i.rd, %.thread370.thread ]
   %.0 = phi ptr [ %storemerge142887, %.thread369 ], [ %i.ae, %.thread370.thread ] ; 2 uses
   %i.rh = icmp eq i8 %.0125, 48
@@ -1598,7 +1584,7 @@ bb.dr:                                            ; preds = %bb.dq
   br i1 %i.rk, label %.preheader409.us.preheader, label %.preheader410.preheader
 
 .preheader410.preheader:                          ; preds = %.thread370, %bb.dr, %bb.dq
-  %.ph = phi i32 [ %i.rg, %bb.dr ], [ %i.rg, %bb.dq ], [ 1, %.thread370 ]
+  %.ph = phi i32 [ %i.rg, %bb.dr ], [ %i.rg, %bb.dq ], [ %.ph376, %.thread370 ]
   %.promoted486.ph = phi ptr [ %i.re, %bb.dr ], [ %i.re, %bb.dq ], [ %i.ae, %.thread370 ]
   %.1.ph = phi ptr [ %.0, %bb.dr ], [ %.0, %bb.dq ], [ %i.ae, %.thread370 ] ; 3 uses
   br label %.preheader410
@@ -1613,15 +1599,13 @@ bb.dr:                                            ; preds = %bb.dq
   %.077.us = phi i32 [ 0, %bb.ds ], [ %i.rg, %.preheader409.us.preheader ] ; 4 uses
   %.promoted484487.us.ptr = getelementptr inbounds nuw i8, ptr %i.re, i64 %.promoted484487.us.idx
   %i.rl = load i8, ptr %.promoted484487.us.ptr, align 1, !tbaa !81 ; 3 uses
-  %51 = sext i8 %i.rl to i32
-  %52 = add nsw i32 %51, -48
-  %i.rm = icmp ult i32 %52, 10
+  %42 = add i8 %i.rl, -48
+  %i.rm = icmp ult i8 %42, 10
   %i.rn = and i8 %i.rl, -33
-  %53 = sext i8 %i.rn to i32
-  %54 = add nsw i32 %53, -65
-  %i.ro = icmp ult i32 %54, 6
-  %55 = select i1 %i.rm, i1 true, i1 %i.ro
-  br i1 %55, label %.lr.ph485.us, label %.loopexit.us
+  %43 = add i8 %i.rn, -65
+  %i.ro = icmp ult i8 %43, 6
+  %44 = or i1 %i.rm, %i.ro
+  br i1 %44, label %.lr.ph485.us, label %.loopexit.us
 
 .lr.ph485.us:                                     ; preds = %.preheader409.us, %.lr.ph485.us
   %.idx = phi i64 [ %.add, %.lr.ph485.us ], [ %.promoted484487.us.idx, %.preheader409.us ]
@@ -1629,15 +1613,13 @@ bb.dr:                                            ; preds = %bb.dq
   %.ptr739 = getelementptr inbounds nuw i8, ptr %i.re, i64 %.add ; 2 uses
   store ptr %.ptr739, ptr %i.p, align 8, !tbaa !91
   %i.rp = load i8, ptr %.ptr739, align 1, !tbaa !81 ; 3 uses
-  %56 = sext i8 %i.rp to i32
-  %57 = add nsw i32 %56, -48
-  %i.rq = icmp ult i32 %57, 10
+  %45 = add i8 %i.rp, -48
+  %i.rq = icmp ult i8 %45, 10
   %i.rr = and i8 %i.rp, -33
-  %58 = sext i8 %i.rr to i32
-  %59 = add nsw i32 %58, -65
-  %i.rs = icmp ult i32 %59, 6
-  %60 = select i1 %i.rq, i1 true, i1 %i.rs
-  br i1 %60, label %.lr.ph485.us, label %.loopexit.us, !llvm.loop !700
+  %46 = add i8 %i.rr, -65
+  %i.rs = icmp ult i8 %46, 6
+  %47 = or i1 %i.rq, %i.rs
+  br i1 %47, label %.lr.ph485.us, label %.loopexit.us, !llvm.loop !700
 
 bb.ds:                                            ; preds = %.loopexit.us
   %.promoted484489.us.add = add nuw nsw i64 %.promoted484489.us.idx, 1 ; 3 uses
@@ -1656,9 +1638,8 @@ bb.ds:                                            ; preds = %.loopexit.us
   %.promoted484487 = phi ptr [ %i.sd, %bb.dt ], [ %.promoted486.ph, %.preheader410.preheader ] ; 3 uses
   %.077 = phi i32 [ 0, %bb.dt ], [ %.ph, %.preheader410.preheader ] ; 3 uses
   %i.rv = load i8, ptr %.promoted484487, align 1, !tbaa !81 ; 2 uses
-  %61 = sext i8 %i.rv to i32
-  %62 = add nsw i32 %61, -48
-  %i.rw = icmp ult i32 %62, 10
+  %48 = add i8 %i.rv, -48
+  %i.rw = icmp ult i8 %48, 10
   br i1 %i.rw, label %.lr.ph483, label %.loopexit411
 
 .lr.ph483:                                        ; preds = %.preheader410, %.lr.ph483
@@ -1666,9 +1647,8 @@ bb.ds:                                            ; preds = %.loopexit.us
   %i.ry = getelementptr inbounds nuw i8, ptr %i.rx, i64 1 ; 4 uses
   store ptr %i.ry, ptr %i.p, align 8, !tbaa !91
   %i.rz = load i8, ptr %i.ry, align 1, !tbaa !81  ; 2 uses
-  %63 = sext i8 %i.rz to i32
-  %64 = add nsw i32 %63, -48
-  %i.sa = icmp ult i32 %64, 10
+  %49 = add i8 %i.rz, -48
+  %i.sa = icmp ult i8 %49, 10
   br i1 %i.sa, label %.lr.ph483, label %.loopexit411, !llvm.loop !702
 
 .loopexit411:                                     ; preds = %.lr.ph483, %.preheader410
@@ -1730,9 +1710,8 @@ bb.dx:                                            ; preds = %bb.dw, %bb.dw
 bb.dy:                                            ; preds = %bb.dw, %bb.dx
   %i.sp = phi i8 [ %i.sn, %bb.dw ], [ %.pre551, %bb.dx ] ; 2 uses
   %i.sq = phi ptr [ %i.sm, %bb.dw ], [ %i.so, %bb.dx ] ; 3 uses
-  %65 = sext i8 %i.sp to i32
-  %66 = add nsw i32 %65, -48
-  %i.sr = icmp ult i32 %66, 10
+  %50 = add i8 %i.sp, -48
+  %i.sr = icmp ult i8 %50, 10
   br i1 %i.sr, label %.lr.ph494, label %._crit_edge495
 
 .lr.ph494:                                        ; preds = %bb.dy, %.lr.ph494
@@ -1740,9 +1719,8 @@ bb.dy:                                            ; preds = %bb.dw, %bb.dx
   %i.st = getelementptr inbounds nuw i8, ptr %i.ss, i64 1 ; 4 uses
   store ptr %i.st, ptr %i.p, align 8, !tbaa !91
   %i.su = load i8, ptr %i.st, align 1, !tbaa !81  ; 2 uses
-  %67 = sext i8 %i.su to i32
-  %68 = add nsw i32 %67, -48
-  %i.sv = icmp ult i32 %68, 10
+  %51 = add i8 %i.su, -48
+  %i.sv = icmp ult i8 %51, 10
   br i1 %i.sv, label %.lr.ph494, label %._crit_edge495, !llvm.loop !703
 
 ._crit_edge495:                                   ; preds = %.lr.ph494, %bb.dy
@@ -2145,9 +2123,8 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a, %bb.b
   %i.d = phi i8 [ %i.g, %bb.b ], [ %i.c, %bb.a ]  ; 2 uses
   %.034.i = phi ptr [ %i.f, %bb.b ], [ %0, %bb.a ] ; 2 uses
-  %2 = sext i8 %i.d to i32
-  %3 = add nsw i32 %2, -48
-  %i.e = icmp ult i32 %3, 10
+  %2 = add i8 %i.d, -48
+  %i.e = icmp ult i8 %2, 10
   br i1 %i.e, label %.critedge.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
@@ -2550,15 +2527,14 @@ bb.i:                                             ; preds = %bb.d
 .lr.ph.i:                                         ; preds = %bb.i, %.critedge.i
   %.0121.i = phi i64 [ %i.aq, %.critedge.i ], [ 0, %bb.i ] ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.val, i64 %.0121.i
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !81  ; 2 uses
-  %133 = sext i8 %i.am to i32                     ; 2 uses
-  %134 = add nsw i32 %133, -97
-  %i.an = icmp ult i32 %134, 26
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !81  ; 3 uses
+  %133 = add i8 %i.am, -97
+  %i.an = icmp ult i8 %133, 26
   br i1 %i.an, label %.critedge.i, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i
-  %135 = add nsw i32 %133, -48
-  %i.ao = icmp ult i32 %135, 10
+  %134 = add i8 %i.am, -48
+  %i.ao = icmp ult i8 %134, 10
   %i.ap = icmp eq i8 %i.am, 95
   %or.cond.not.i = or i1 %i.ap, %i.ao
   br i1 %or.cond.not.i, label %.critedge.i, label %_ZN11flatbuffers12_GLOBAL__N_116IsLowerSnakeCaseERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
@@ -2961,9 +2937,8 @@ bb.dd:                                            ; preds = %bb.db, %bb.db
 .loopexit:                                        ; preds = %bb.db, %bb.dd
   %i.mj = phi i8 [ %.pre1017, %bb.dd ], [ %i.mg, %bb.db ] ; 2 uses
   %i.mk = and i8 %i.mj, -33
-  %136 = sext i8 %i.mk to i32
-  %137 = add nsw i32 %136, -65
-  %i.ml = icmp ult i32 %137, 26
+  %135 = add i8 %i.mk, -65
+  %i.ml = icmp ult i8 %135, 26
   %i.mm = icmp eq i8 %i.mj, 95
   %i.mn = or i1 %i.mm, %i.ml
   br i1 %i.mn, label %bb.dg, label %bb.de
@@ -3366,9 +3341,8 @@ bb.aw:                                            ; preds = %_ZSteqIcSt11char_tr
   %i.jq = load ptr, ptr %i.jp, align 8, !tbaa !82
   %i.jr = load i8, ptr %i.jq, align 1, !tbaa !81  ; 2 uses
   %i.js = and i8 %i.jr, -33
-  %24 = sext i8 %i.js to i32
-  %25 = add nsw i32 %24, -65
-  %i.jt = icmp ult i32 %25, 26
+  %24 = add i8 %i.js, -65
+  %i.jt = icmp ult i8 %24, 26
   %i.ju = icmp eq i8 %i.jr, 95
   %i.jv = or i1 %i.ju, %i.jt
   br i1 %i.jv, label %bb.ax, label %bb.az
@@ -3771,10 +3745,9 @@ bb.e:                                             ; preds = %bb.d
   %.014.i.i = phi ptr [ %i.am, %.preheader.i.i ], [ %i.ai, %bb.e ] ; 4 uses
   %i.ak = load i8, ptr %.014.i.i, align 1, !tbaa !81 ; 2 uses
   %.not17.i.i = icmp eq i8 %i.ak, 0
-  %12 = sext i8 %i.ak to i32
-  %13 = add nsw i32 %12, -48
-  %i.al = icmp ult i32 %13, 10
-  %or.cond.i.i = select i1 %.not17.i.i, i1 true, i1 %i.al
+  %12 = add i8 %i.ak, -48
+  %i.al = icmp ult i8 %12, 10
+  %or.cond.i.i = or i1 %.not17.i.i, %i.al
   %i.am = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 1
   br i1 %or.cond.i.i, label %.critedge.i.i, label %.preheader.i.i, !llvm.loop !8
 
@@ -4177,9 +4150,8 @@ bb.a:
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i.i = phi ptr [ %i.h, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %13 = sext i8 %i.f to i32
-  %14 = add nsw i32 %13, -48
-  %i.g = icmp ult i32 %14, 10
+  %13 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %13, 10
   br i1 %i.g, label %.critedge.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
@@ -4582,9 +4554,8 @@ bb.a:
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i.i = phi ptr [ %i.h, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %13 = sext i8 %i.f to i32
-  %14 = add nsw i32 %13, -48
-  %i.g = icmp ult i32 %14, 10
+  %13 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %13, 10
   br i1 %i.g, label %.critedge.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
@@ -4987,9 +4958,8 @@ bb.a:
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i.i = phi ptr [ %i.h, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %13 = sext i8 %i.f to i32
-  %14 = add nsw i32 %13, -48
-  %i.g = icmp ult i32 %14, 10
+  %13 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %13, 10
   br i1 %i.g, label %.critedge.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
@@ -5392,9 +5362,8 @@ bb.a:
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i.i = phi ptr [ %i.h, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %13 = sext i8 %i.f to i32
-  %14 = add nsw i32 %13, -48
-  %i.g = icmp ult i32 %14, 10
+  %13 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %13, 10
   br i1 %i.g, label %.critedge.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
@@ -5797,9 +5766,8 @@ bb.a:
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i.i = phi ptr [ %i.h, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %13 = sext i8 %i.f to i32
-  %14 = add nsw i32 %13, -48
-  %i.g = icmp ult i32 %14, 10
+  %13 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %13, 10
   br i1 %i.g, label %.critedge.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
@@ -6202,9 +6170,8 @@ bb.a:
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %bb.a ]  ; 2 uses
   %.034.i.i.i = phi ptr [ %i.h, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %13 = sext i8 %i.f to i32
-  %14 = add nsw i32 %13, -48
-  %i.g = icmp ult i32 %14, 10
+  %13 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %13, 10
   br i1 %i.g, label %.critedge.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
@@ -6607,10 +6574,9 @@ bb.b:                                             ; preds = %bb.a
   %.014.i.i = phi ptr [ %i.g, %.preheader.i.i ], [ %1, %bb.b ] ; 4 uses
   %i.e = load i8, ptr %.014.i.i, align 1, !tbaa !81 ; 2 uses
   %.not17.i.i = icmp eq i8 %i.e, 0
-  %13 = sext i8 %i.e to i32
-  %14 = add nsw i32 %13, -48
-  %i.f = icmp ult i32 %14, 10
-  %or.cond.i.i = select i1 %.not17.i.i, i1 true, i1 %i.f
+  %13 = add i8 %i.e, -48
+  %i.f = icmp ult i8 %13, 10
+  %or.cond.i.i = or i1 %.not17.i.i, %i.f
   %i.g = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 1
   br i1 %or.cond.i.i, label %.critedge.i.i, label %.preheader.i.i, !llvm.loop !8
 
@@ -7013,9 +6979,8 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
   %i.e = phi i8 [ %i.h, %bb.b ], [ %i.d, %bb.a ]  ; 2 uses
   %.034.i.i = phi ptr [ %i.g, %bb.b ], [ %i.c, %bb.a ] ; 2 uses
-  %12 = sext i8 %i.e to i32
-  %13 = add nsw i32 %12, -48
-  %i.f = icmp ult i32 %13, 10
+  %12 = add i8 %i.e, -48
+  %i.f = icmp ult i8 %12, 10
   br i1 %i.f, label %.critedge.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i
@@ -7418,10 +7383,9 @@ bb.c:                                             ; preds = %bb.b
   %.014.i = phi ptr [ %i.j, %.preheader.i ], [ %i.f, %bb.c ] ; 4 uses
   %i.h = load i8, ptr %.014.i, align 1, !tbaa !81 ; 2 uses
   %.not17.i = icmp eq i8 %i.h, 0
-  %2 = sext i8 %i.h to i32
-  %3 = add nsw i32 %2, -48
-  %i.i = icmp ult i32 %3, 10
-  %or.cond.i = select i1 %.not17.i, i1 true, i1 %i.i
+  %2 = add i8 %i.h, -48
+  %i.i = icmp ult i8 %2, 10
+  %or.cond.i = or i1 %.not17.i, %i.i
   %i.j = getelementptr inbounds nuw i8, ptr %.014.i, i64 1
   br i1 %or.cond.i, label %.critedge.i, label %.preheader.i, !llvm.loop !8
 
@@ -7824,10 +7788,9 @@ bb.c:                                             ; preds = %bb.b
   %.014.i = phi ptr [ %i.m, %.preheader.i ], [ %i.i, %bb.c ] ; 4 uses
   %i.k = load i8, ptr %.014.i, align 1, !tbaa !81 ; 2 uses
   %.not17.i = icmp eq i8 %i.k, 0
-  %5 = sext i8 %i.k to i32
-  %6 = add nsw i32 %5, -48
-  %i.l = icmp ult i32 %6, 10
-  %or.cond.i = select i1 %.not17.i, i1 true, i1 %i.l
+  %5 = add i8 %i.k, -48
+  %i.l = icmp ult i8 %5, 10
+  %or.cond.i = or i1 %.not17.i, %i.l
   %i.m = getelementptr inbounds nuw i8, ptr %.014.i, i64 1
   br i1 %or.cond.i, label %.critedge.i, label %.preheader.i, !llvm.loop !8
 
@@ -8230,9 +8193,8 @@ bb.j:                                             ; preds = %.preheader550
 .lr.ph.i.i:                                       ; preds = %bb.j, %bb.k
   %i.ew = phi i8 [ %i.ez, %bb.k ], [ %i.ev, %bb.j ] ; 2 uses
   %.034.i.i = phi ptr [ %i.ey, %bb.k ], [ %i.eu, %bb.j ] ; 2 uses
-  %26 = sext i8 %i.ew to i32
-  %27 = add nsw i32 %26, -48
-  %i.ex = icmp ult i32 %27, 10
+  %26 = add i8 %i.ew, -48
+  %i.ex = icmp ult i8 %26, 10
   br i1 %i.ex, label %.critedge.i.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.i.i
@@ -8635,9 +8597,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %.preheader ] ; 2 uses
   %.034 = phi ptr [ %i.h, %bb.b ], [ %1, %.preheader ] ; 2 uses
-  %4 = sext i8 %i.f to i32
-  %5 = add nsw i32 %4, -48
-  %i.g = icmp ult i32 %5, 10
+  %4 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %4, 10
   br i1 %i.g, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
@@ -9040,9 +9001,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader, %bb.b
   %i.f = phi i8 [ %i.i, %bb.b ], [ %i.e, %.preheader ] ; 2 uses
   %.034 = phi ptr [ %i.h, %bb.b ], [ %1, %.preheader ] ; 2 uses
-  %4 = sext i8 %i.f to i32
-  %5 = add nsw i32 %4, -48
-  %i.g = icmp ult i32 %5, 10
+  %4 = add i8 %i.f, -48
+  %i.g = icmp ult i8 %4, 10
   br i1 %i.g, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
@@ -9445,9 +9405,8 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i.i:                                       ; preds = %bb.c, %bb.d
   %i.z = phi i8 [ %i.ac, %bb.d ], [ %i.y, %bb.c ] ; 2 uses
   %.034.i.i = phi ptr [ %i.ab, %bb.d ], [ %.232.val, %bb.c ] ; 2 uses
-  %2 = sext i8 %i.z to i32
-  %3 = add nsw i32 %2, -48
-  %i.aa = icmp ult i32 %3, 10
+  %2 = add i8 %i.z, -48
+  %i.aa = icmp ult i8 %2, 10
   br i1 %i.aa, label %.critedge.i.i, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i
@@ -9536,9 +9495,8 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.i.i158:                                    ; preds = %bb.k, %bb.l
   %i.ba = phi i8 [ %i.bd, %bb.l ], [ %i.az, %bb.k ] ; 2 uses
   %.034.i.i159 = phi ptr [ %i.bc, %bb.l ], [ %.232.val, %bb.k ] ; 2 uses
-  %4 = sext i8 %i.ba to i32
-  %5 = add nsw i32 %4, -48
-  %i.bb = icmp ult i32 %5, 10
+  %3 = add i8 %i.ba, -48
+  %i.bb = icmp ult i8 %3, 10
   br i1 %i.bb, label %.critedge.i.i171, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i.i158
@@ -9627,9 +9585,8 @@ bb.s:                                             ; preds = %bb.r
 .lr.ph.i.i176:                                    ; preds = %bb.s, %bb.t
   %i.cb = phi i8 [ %i.ce, %bb.t ], [ %i.ca, %bb.s ] ; 2 uses
   %.034.i.i177 = phi ptr [ %i.cd, %bb.t ], [ %.232.val, %bb.s ] ; 2 uses
-  %6 = sext i8 %i.cb to i32
-  %7 = add nsw i32 %6, -48
-  %i.cc = icmp ult i32 %7, 10
+  %4 = add i8 %i.cb, -48
+  %i.cc = icmp ult i8 %4, 10
   br i1 %i.cc, label %.critedge.i.i189, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph.i.i176
@@ -9718,9 +9675,8 @@ bb.aa:                                            ; preds = %bb.z
 .lr.ph.i.i194:                                    ; preds = %bb.aa, %bb.ab
   %i.dc = phi i8 [ %i.df, %bb.ab ], [ %i.db, %bb.aa ] ; 2 uses
   %.034.i.i195 = phi ptr [ %i.de, %bb.ab ], [ %.232.val, %bb.aa ] ; 2 uses
-  %8 = sext i8 %i.dc to i32
-  %9 = add nsw i32 %8, -48
-  %i.dd = icmp ult i32 %9, 10
+  %5 = add i8 %i.dc, -48
+  %i.dd = icmp ult i8 %5, 10
   br i1 %i.dd, label %.critedge.i.i206, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.i.i194
@@ -9813,9 +9769,8 @@ bb.aj:                                            ; preds = %bb.ai
 .lr.ph.i.i210:                                    ; preds = %bb.aj, %bb.ak
   %i.ee = phi i8 [ %i.eh, %bb.ak ], [ %i.ed, %bb.aj ] ; 2 uses
   %.034.i.i211 = phi ptr [ %i.eg, %bb.ak ], [ %.232.val, %bb.aj ] ; 2 uses
-  %10 = sext i8 %i.ee to i32
-  %11 = add nsw i32 %10, -48
-  %i.ef = icmp ult i32 %11, 10
+  %6 = add i8 %i.ee, -48
+  %i.ef = icmp ult i8 %6, 10
   br i1 %i.ef, label %.critedge.i.i223, label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph.i.i210
@@ -9904,9 +9859,8 @@ bb.ar:                                            ; preds = %bb.aq
 .lr.ph.i.i228:                                    ; preds = %bb.ar, %bb.as
   %i.ff = phi i8 [ %i.fi, %bb.as ], [ %i.fe, %bb.ar ] ; 2 uses
   %.034.i.i229 = phi ptr [ %i.fh, %bb.as ], [ %.232.val, %bb.ar ] ; 2 uses
-  %12 = sext i8 %i.ff to i32
-  %13 = add nsw i32 %12, -48
-  %i.fg = icmp ult i32 %13, 10
+  %7 = add i8 %i.ff, -48
+  %i.fg = icmp ult i8 %7, 10
   br i1 %i.fg, label %.critedge.i.i240, label %bb.as
 
 bb.as:                                            ; preds = %.lr.ph.i.i228
@@ -9999,9 +9953,8 @@ bb.ba:                                            ; preds = %bb.az
 .lr.ph.i.i244:                                    ; preds = %bb.ba, %bb.bb
   %i.gh = phi i8 [ %i.gk, %bb.bb ], [ %i.gg, %bb.ba ] ; 2 uses
   %.034.i.i245 = phi ptr [ %i.gj, %bb.bb ], [ %.232.val, %bb.ba ] ; 2 uses
-  %14 = sext i8 %i.gh to i32
-  %15 = add nsw i32 %14, -48
-  %i.gi = icmp ult i32 %15, 10
+  %8 = add i8 %i.gh, -48
+  %i.gi = icmp ult i8 %8, 10
   br i1 %i.gi, label %.critedge.i.i257, label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph.i.i244
@@ -10090,9 +10043,8 @@ bb.bi:                                            ; preds = %bb.bh
 .lr.ph.i.i261:                                    ; preds = %bb.bi, %bb.bj
   %i.hi = phi i8 [ %i.hl, %bb.bj ], [ %i.hh, %bb.bi ] ; 2 uses
   %.034.i.i262 = phi ptr [ %i.hk, %bb.bj ], [ %.232.val, %bb.bi ] ; 2 uses
-  %16 = sext i8 %i.hi to i32
-  %17 = add nsw i32 %16, -48
-  %i.hj = icmp ult i32 %17, 10
+  %9 = add i8 %i.hi, -48
+  %i.hj = icmp ult i8 %9, 10
   br i1 %i.hj, label %.critedge.i.i273, label %bb.bj
 
 bb.bj:                                            ; preds = %.lr.ph.i.i261
@@ -10185,9 +10137,8 @@ bb.br:                                            ; preds = %bb.bq
 .lr.ph.i.i277:                                    ; preds = %bb.br, %bb.bs
   %i.ik = phi i8 [ %i.in, %bb.bs ], [ %i.ij, %bb.br ] ; 2 uses
   %.034.i.i278 = phi ptr [ %i.im, %bb.bs ], [ %.232.val, %bb.br ] ; 2 uses
-  %18 = sext i8 %i.ik to i32
-  %19 = add nsw i32 %18, -48
-  %i.il = icmp ult i32 %19, 10
+  %10 = add i8 %i.ik, -48
+  %i.il = icmp ult i8 %10, 10
   br i1 %i.il, label %.critedge.i.i290, label %bb.bs
 
 bb.bs:                                            ; preds = %.lr.ph.i.i277
@@ -10303,10 +10254,9 @@ bb.cb:                                            ; preds = %bb.ca
   %.014.i = phi ptr [ %i.ju, %.preheader.i ], [ %.232.val, %bb.cb ] ; 4 uses
   %i.js = load i8, ptr %.014.i, align 1, !tbaa !81 ; 2 uses
   %.not17.i = icmp eq i8 %i.js, 0
-  %20 = sext i8 %i.js to i32
-  %21 = add nsw i32 %20, -48
-  %i.jt = icmp ult i32 %21, 10
-  %or.cond.i294 = select i1 %.not17.i, i1 true, i1 %i.jt
+  %11 = add i8 %i.js, -48
+  %i.jt = icmp ult i8 %11, 10
+  %or.cond.i294 = or i1 %.not17.i, %i.jt
   %i.ju = getelementptr inbounds nuw i8, ptr %.014.i, i64 1
   br i1 %or.cond.i294, label %.critedge.i, label %.preheader.i, !llvm.loop !8
 

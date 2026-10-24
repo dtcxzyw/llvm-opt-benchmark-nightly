@@ -205,9 +205,8 @@ bb.a:
   %.012.idx = zext i1 %i.d to i64
   %.012 = getelementptr inbounds nuw i8, ptr %0, i64 %.012.idx ; 2 uses
   %i.e = load i8, ptr %.012, align 1              ; 2 uses
-  %2 = sext i8 %i.e to i32
-  %3 = add nsw i32 %2, -48
-  %i.f = icmp ult i32 %3, 10
+  %2 = add i8 %i.e, -48
+  %i.f = icmp ult i8 %2, 10
   br i1 %i.f, label %.preheader.i.i, label %getsecs.exit.thread
 
 .preheader.i.i:                                   ; preds = %bb.a, %bb.b
@@ -215,8 +214,8 @@ bb.a:
   %.013.i.i = phi i8 [ %i.l, %bb.b ], [ %i.e, %bb.a ]
   %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %bb.a ]
   %i.g = mul i32 %.0.i.i, 10
-  %4 = sext i8 %.013.i.i to i32
-  %i.h = add nsw i32 %4, -48
+  %3 = zext nneg i8 %.013.i.i to i32
+  %i.h = add nsw i32 %3, -48
   %i.i = add i32 %i.h, %i.g                       ; 4 uses
   %i.j = icmp sgt i32 %i.i, 167
   br i1 %i.j, label %getsecs.exit.thread, label %bb.b
@@ -224,9 +223,8 @@ bb.a:
 bb.b:                                             ; preds = %.preheader.i.i
   %i.k = getelementptr inbounds nuw i8, ptr %.015.i.i, i64 1 ; 4 uses
   %i.l = load i8, ptr %i.k, align 1               ; 2 uses
-  %5 = sext i8 %i.l to i32
-  %6 = add nsw i32 %5, -48
-  %i.m = icmp ult i32 %6, 10
+  %4 = add i8 %i.l, -48
+  %i.m = icmp ult i8 %4, 10
   br i1 %i.m, label %.preheader.i.i, label %bb.c, !llvm.loop !0
 
 bb.c:                                             ; preds = %bb.b
@@ -244,9 +242,8 @@ getnum.exit.i:                                    ; preds = %bb.c
 bb.d:                                             ; preds = %getnum.exit.i
   %i.s = getelementptr inbounds nuw i8, ptr %.015.i.i, i64 2 ; 2 uses
   %i.t = load i8, ptr %i.s, align 1               ; 2 uses
-  %7 = sext i8 %i.t to i32
-  %8 = add nsw i32 %7, -48
-  %i.u = icmp ult i32 %8, 10
+  %5 = add i8 %i.t, -48
+  %i.u = icmp ult i8 %5, 10
   br i1 %i.u, label %.preheader.i20.i, label %getsecs.exit.thread
 
 .preheader.i20.i:                                 ; preds = %bb.d, %bb.e
@@ -254,8 +251,8 @@ bb.d:                                             ; preds = %getnum.exit.i
   %.013.i22.i = phi i8 [ %i.aa, %bb.e ], [ %i.t, %bb.d ]
   %.0.i23.i = phi i32 [ %i.x, %bb.e ], [ 0, %bb.d ]
   %i.v = mul i32 %.0.i23.i, 10
-  %9 = sext i8 %.013.i22.i to i32
-  %i.w = add nsw i32 %9, -48
+  %6 = zext nneg i8 %.013.i22.i to i32
+  %i.w = add nsw i32 %6, -48
   %i.x = add i32 %i.w, %i.v                       ; 4 uses
   %i.y = icmp sgt i32 %i.x, 59
   br i1 %i.y, label %getsecs.exit.thread, label %bb.e
@@ -263,9 +260,8 @@ bb.d:                                             ; preds = %getnum.exit.i
 bb.e:                                             ; preds = %.preheader.i20.i
   %i.z = getelementptr inbounds nuw i8, ptr %.015.i21.i, i64 1 ; 4 uses
   %i.aa = load i8, ptr %i.z, align 1              ; 2 uses
-  %10 = sext i8 %i.aa to i32
-  %11 = add nsw i32 %10, -48
-  %i.ab = icmp ult i32 %11, 10
+  %7 = add i8 %i.aa, -48
+  %i.ab = icmp ult i8 %7, 10
   br i1 %i.ab, label %.preheader.i20.i, label %bb.f, !llvm.loop !0
 
 bb.f:                                             ; preds = %bb.e
@@ -284,9 +280,8 @@ getnum.exit24.i:                                  ; preds = %bb.f
 bb.g:                                             ; preds = %getnum.exit24.i
   %i.ai = getelementptr inbounds nuw i8, ptr %.015.i21.i, i64 2 ; 2 uses
   %i.aj = load i8, ptr %i.ai, align 1             ; 2 uses
-  %12 = sext i8 %i.aj to i32
-  %13 = add nsw i32 %12, -48
-  %i.ak = icmp ult i32 %13, 10
+  %8 = add i8 %i.aj, -48
+  %i.ak = icmp ult i8 %8, 10
   br i1 %i.ak, label %.preheader.i26.i, label %getsecs.exit.thread
 
 .preheader.i26.i:                                 ; preds = %bb.g, %bb.h
@@ -294,8 +289,8 @@ bb.g:                                             ; preds = %getnum.exit24.i
   %.013.i28.i = phi i8 [ %i.aq, %bb.h ], [ %i.aj, %bb.g ]
   %.0.i29.i = phi i32 [ %i.an, %bb.h ], [ 0, %bb.g ]
   %i.al = mul i32 %.0.i29.i, 10
-  %14 = sext i8 %.013.i28.i to i32
-  %i.am = add nsw i32 %14, -48
+  %9 = zext nneg i8 %.013.i28.i to i32
+  %i.am = add nsw i32 %9, -48
   %i.an = add i32 %i.am, %i.al                    ; 4 uses
   %i.ao = icmp sgt i32 %i.an, 60
   br i1 %i.ao, label %getsecs.exit.thread, label %bb.h
@@ -303,9 +298,8 @@ bb.g:                                             ; preds = %getnum.exit24.i
 bb.h:                                             ; preds = %.preheader.i26.i
   %i.ap = getelementptr inbounds nuw i8, ptr %.015.i27.i, i64 1 ; 3 uses
   %i.aq = load i8, ptr %i.ap, align 1             ; 2 uses
-  %15 = sext i8 %i.aq to i32
-  %16 = add nsw i32 %15, -48
-  %i.ar = icmp ult i32 %16, 10
+  %10 = add i8 %i.aq, -48
+  %i.ar = icmp ult i8 %10, 10
   br i1 %i.ar, label %.preheader.i26.i, label %bb.i, !llvm.loop !0
 
 bb.i:                                             ; preds = %bb.h
@@ -347,9 +341,8 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i8, ptr %i.b, align 1               ; 2 uses
-  %2 = sext i8 %i.d to i32
-  %3 = add nsw i32 %2, -48
-  %i.e = icmp ult i32 %3, 10
+  %2 = add i8 %i.d, -48
+  %i.e = icmp ult i8 %2, 10
   br i1 %i.e, label %.preheader.i, label %getnum.exit40.thread
 
 .preheader.i:                                     ; preds = %bb.b, %bb.c
@@ -357,8 +350,8 @@ bb.b:                                             ; preds = %bb.a
   %.013.i = phi i8 [ %i.k, %bb.c ], [ %i.d, %bb.b ]
   %.0.i = phi i32 [ %i.h, %bb.c ], [ 0, %bb.b ]
   %i.f = mul i32 %.0.i, 10
-  %4 = sext i8 %.013.i to i32
-  %i.g = add nsw i32 %4, -48
+  %3 = zext nneg i8 %.013.i to i32
+  %i.g = add nsw i32 %3, -48
   %i.h = add i32 %i.g, %i.f                       ; 4 uses
   %i.i = icmp sgt i32 %i.h, 365
   br i1 %i.i, label %getnum.exit40.thread, label %bb.c
@@ -366,9 +359,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.preheader.i
   %i.j = getelementptr inbounds nuw i8, ptr %.015.i, i64 1 ; 3 uses
   %i.k = load i8, ptr %i.j, align 1               ; 2 uses
-  %5 = sext i8 %i.k to i32
-  %6 = add nsw i32 %5, -48
-  %i.l = icmp ult i32 %6, 10
+  %4 = add i8 %i.k, -48
+  %i.l = icmp ult i8 %4, 10
   br i1 %i.l, label %.preheader.i, label %bb.d, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.c
@@ -384,9 +376,8 @@ bb.f:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.p = load i8, ptr %i.n, align 1               ; 2 uses
-  %7 = sext i8 %i.p to i32
-  %8 = add nsw i32 %7, -48
-  %i.q = icmp ult i32 %8, 10
+  %5 = add i8 %i.p, -48
+  %i.q = icmp ult i8 %5, 10
   br i1 %i.q, label %.preheader.i36, label %getnum.exit40.thread
 
 .preheader.i36:                                   ; preds = %bb.f, %bb.g
@@ -394,8 +385,8 @@ bb.f:                                             ; preds = %bb.a
   %.013.i38 = phi i8 [ %i.w, %bb.g ], [ %i.p, %bb.f ]
   %.0.i39 = phi i32 [ %i.t, %bb.g ], [ 0, %bb.f ]
   %i.r = mul i32 %.0.i39, 10
-  %9 = sext i8 %.013.i38 to i32
-  %i.s = add nsw i32 %9, -48
+  %6 = zext nneg i8 %.013.i38 to i32
+  %i.s = add nsw i32 %6, -48
   %i.t = add i32 %i.s, %i.r                       ; 4 uses
   %i.u = icmp sgt i32 %i.t, 12
   br i1 %i.u, label %getnum.exit40.thread, label %bb.g
@@ -403,9 +394,8 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %.preheader.i36
   %i.v = getelementptr inbounds nuw i8, ptr %.015.i37, i64 1 ; 3 uses
   %i.w = load i8, ptr %i.v, align 1               ; 2 uses
-  %10 = sext i8 %i.w to i32
-  %11 = add nsw i32 %10, -48
-  %i.x = icmp ult i32 %11, 10
+  %7 = add i8 %i.w, -48
+  %i.x = icmp ult i8 %7, 10
   br i1 %i.x, label %.preheader.i36, label %bb.h, !llvm.loop !0
 
 bb.h:                                             ; preds = %bb.g
@@ -422,9 +412,8 @@ bb.j:                                             ; preds = %bb.i
   %i.aa = getelementptr inbounds nuw i8, ptr %.015.i37, i64 2 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ac = load i8, ptr %i.aa, align 1             ; 2 uses
-  %12 = sext i8 %i.ac to i32
-  %13 = add nsw i32 %12, -48
-  %i.ad = icmp ult i32 %13, 10
+  %8 = add i8 %i.ac, -48
+  %i.ad = icmp ult i8 %8, 10
   br i1 %i.ad, label %.preheader.i42, label %getnum.exit40.thread
 
 .preheader.i42:                                   ; preds = %bb.j, %bb.k
@@ -432,8 +421,8 @@ bb.j:                                             ; preds = %bb.i
   %.013.i44 = phi i8 [ %i.aj, %bb.k ], [ %i.ac, %bb.j ]
   %.0.i45 = phi i32 [ %i.ag, %bb.k ], [ 0, %bb.j ]
   %i.ae = mul i32 %.0.i45, 10
-  %14 = sext i8 %.013.i44 to i32
-  %i.af = add nsw i32 %14, -48
+  %9 = zext nneg i8 %.013.i44 to i32
+  %i.af = add nsw i32 %9, -48
   %i.ag = add i32 %i.af, %i.ae                    ; 4 uses
   %i.ah = icmp sgt i32 %i.ag, 5
   br i1 %i.ah, label %getnum.exit40.thread, label %bb.k
@@ -441,9 +430,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.preheader.i42
   %i.ai = getelementptr inbounds nuw i8, ptr %.015.i43, i64 1 ; 3 uses
   %i.aj = load i8, ptr %i.ai, align 1             ; 2 uses
-  %15 = sext i8 %i.aj to i32
-  %16 = add nsw i32 %15, -48
-  %i.ak = icmp ult i32 %16, 10
+  %10 = add i8 %i.aj, -48
+  %i.ak = icmp ult i8 %10, 10
   br i1 %i.ak, label %.preheader.i42, label %bb.l, !llvm.loop !0
 
 bb.l:                                             ; preds = %bb.k
@@ -460,9 +448,8 @@ bb.n:                                             ; preds = %bb.m
   %i.an = getelementptr inbounds nuw i8, ptr %.015.i43, i64 2 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ap = load i8, ptr %i.an, align 1             ; 2 uses
-  %17 = sext i8 %i.ap to i32
-  %18 = add nsw i32 %17, -48
-  %i.aq = icmp ult i32 %18, 10
+  %11 = add i8 %i.ap, -48
+  %i.aq = icmp ult i8 %11, 10
   br i1 %i.aq, label %.preheader.i48, label %getnum.exit40.thread
 
 .preheader.i48:                                   ; preds = %bb.n, %bb.o
@@ -470,8 +457,8 @@ bb.n:                                             ; preds = %bb.m
   %.013.i50 = phi i8 [ %i.aw, %bb.o ], [ %i.ap, %bb.n ]
   %.0.i51 = phi i32 [ %i.at, %bb.o ], [ 0, %bb.n ]
   %i.ar = mul i32 %.0.i51, 10
-  %19 = sext i8 %.013.i50 to i32
-  %i.as = add nsw i32 %19, -48
+  %12 = zext nneg i8 %.013.i50 to i32
+  %i.as = add nsw i32 %12, -48
   %i.at = add i32 %i.as, %i.ar                    ; 4 uses
   %i.au = icmp sgt i32 %i.at, 6
   br i1 %i.au, label %getnum.exit40.thread, label %bb.o
@@ -479,9 +466,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %.preheader.i48
   %i.av = getelementptr inbounds nuw i8, ptr %.015.i49, i64 1 ; 3 uses
   %i.aw = load i8, ptr %i.av, align 1             ; 2 uses
-  %20 = sext i8 %i.aw to i32
-  %21 = add nsw i32 %20, -48
-  %i.ax = icmp ult i32 %21, 10
+  %13 = add i8 %i.aw, -48
+  %i.ax = icmp ult i8 %13, 10
   br i1 %i.ax, label %.preheader.i48, label %bb.p, !llvm.loop !0
 
 bb.p:                                             ; preds = %bb.o
@@ -493,18 +479,16 @@ bb.q:                                             ; preds = %bb.p
   br label %getnum.exit
 
 bb.r:                                             ; preds = %bb.a
-  %22 = sext i8 %i.a to i32
-  %23 = add nsw i32 %22, -48
-  %i.az = icmp ult i32 %23, 10
+  %14 = add i8 %i.a, -48
+  %i.az = icmp ult i8 %14, 10
   br i1 %i.az, label %bb.s, label %getnum.exit40.thread
 
 bb.s:                                             ; preds = %bb.r
   store i32 1, ptr %1, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bb = load i8, ptr %0, align 1                ; 2 uses
-  %24 = sext i8 %i.bb to i32
-  %25 = add nsw i32 %24, -48
-  %i.bc = icmp ult i32 %25, 10
+  %15 = add i8 %i.bb, -48
+  %i.bc = icmp ult i8 %15, 10
   br i1 %i.bc, label %.preheader.i54, label %getnum.exit40.thread
 
 .preheader.i54:                                   ; preds = %bb.s, %bb.t
@@ -512,8 +496,8 @@ bb.s:                                             ; preds = %bb.r
   %.013.i56 = phi i8 [ %i.bi, %bb.t ], [ %i.bb, %bb.s ]
   %.0.i57 = phi i32 [ %i.bf, %bb.t ], [ 0, %bb.s ]
   %i.bd = mul i32 %.0.i57, 10
-  %26 = sext i8 %.013.i56 to i32
-  %i.be = add nsw i32 %26, -48
+  %16 = zext nneg i8 %.013.i56 to i32
+  %i.be = add nsw i32 %16, -48
   %i.bf = add i32 %i.be, %i.bd                    ; 4 uses
   %i.bg = icmp sgt i32 %i.bf, 365
   br i1 %i.bg, label %getnum.exit40.thread, label %bb.t
@@ -521,9 +505,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %.preheader.i54
   %i.bh = getelementptr inbounds nuw i8, ptr %.015.i55, i64 1 ; 3 uses
   %i.bi = load i8, ptr %i.bh, align 1             ; 2 uses
-  %27 = sext i8 %i.bi to i32
-  %28 = add nsw i32 %27, -48
-  %i.bj = icmp ult i32 %28, 10
+  %17 = add i8 %i.bi, -48
+  %i.bj = icmp ult i8 %17, 10
   br i1 %i.bj, label %.preheader.i54, label %bb.u, !llvm.loop !0
 
 bb.u:                                             ; preds = %bb.t

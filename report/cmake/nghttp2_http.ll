@@ -204,21 +204,21 @@ check_path.exit.thread:                           ; preds = %bb.f, %bb.e, %check
 define dso_local range(i32 -1, 1) i32 @nghttp2_http_on_response_headers(ptr nofree noundef captures(none) %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !19   ; 5 uses
-  %i.c = and i32 %i.b, 32
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !19
+  %.fr16 = freeze i32 %i.b                        ; 5 uses
+  %i.c = and i32 %.fr16, 32
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 2 uses
-  %i.f = load i16, ptr %i.e, align 4, !tbaa !21
-  %.fr15 = freeze i16 %i.f                        ; 3 uses
-  %.off = add i16 %.fr15, -100
+  %i.f = load i16, ptr %i.e, align 4, !tbaa !21   ; 2 uses
+  %.off = add i16 %i.f, -100
   %i.g = icmp ult i16 %.off, 100
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = and i32 %i.b, 1920
+  %i.h = and i32 %.fr16, 1920
   %i.i = or disjoint i32 %i.h, 16384
   store i32 %i.i, ptr %i.a, align 8, !tbaa !19
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -227,31 +227,25 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
-  %i.k = and i32 %i.b, -16385
+  %i.k = and i32 %.fr16, -16385
   store i32 %i.k, ptr %i.a, align 8, !tbaa !19
-  %i.l = and i32 %i.b, 256
+  %i.l = and i32 %.fr16, 256
   %i.m = icmp eq i32 %i.l, 0
-  br i1 %i.m, label %1, label %expect_response_body.exit.thread
+  br i1 %i.m, label %switch.early.test, label %expect_response_body.exit.thread
 
-1:                                                ; preds = %bb.d
-  %2 = sext i16 %.fr15 to i32
-  %.off.i = add nsw i32 %2, -100
-  %.not.i = icmp ult i32 %.off.i, 100
-  br i1 %.not.i, label %expect_response_body.exit.thread, label %switch.early.test
-
-switch.early.test:                                ; preds = %1
-  switch i16 %.fr15, label %bb.e [
+switch.early.test:                                ; preds = %bb.d
+  switch i16 %i.f, label %bb.e [
     i16 304, label %expect_response_body.exit.thread
     i16 204, label %expect_response_body.exit.thread
   ]
 
-expect_response_body.exit.thread:                 ; preds = %switch.early.test, %switch.early.test, %1, %bb.d
+expect_response_body.exit.thread:                 ; preds = %switch.early.test, %switch.early.test, %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.n, align 8, !tbaa !20
   br label %bb.g
 
 bb.e:                                             ; preds = %switch.early.test
-  %i.o = and i32 %i.b, 1152
+  %i.o = and i32 %.fr16, 1152
   %.not12 = icmp eq i32 %i.o, 0
   br i1 %.not12, label %bb.g, label %bb.f
 

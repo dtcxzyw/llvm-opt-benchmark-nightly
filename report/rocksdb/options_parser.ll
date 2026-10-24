@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.k
   %.03861 = phi i32 [ 0, %.lr.ph66 ], [ %.139, %bb.k ] ; 2 uses
   %.04060 = phi i32 [ 0, %.lr.ph66 ], [ %.141, %bb.k ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %.03364
-  %i.j = load i8, ptr %i.i, align 1, !tbaa !39    ; 2 uses
+  %i.j = load i8, ptr %i.i, align 1, !tbaa !39    ; 3 uses
   %i.k = icmp eq i8 %i.j, 46
   br i1 %i.k, label %bb.c, label %bb.h
 
@@ -258,14 +258,15 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.b
-  %14 = sext i8 %i.j to i32
-  %isdigittmp = add nsw i32 %14, -48              ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %14 = add i8 %i.j, -48
+  %isdigit = icmp ult i8 %14, 10
   br i1 %isdigit, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.z = mul nsw i32 %.03861, 10
-  %i.aa = add nsw i32 %isdigittmp, %i.z
+  %15 = zext nneg i8 %i.j to i32
+  %16 = add i32 %i.z, -48
+  %i.aa = add i32 %16, %15
   %i.ab = add nsw i32 %.03662, 1
   br label %bb.k
 

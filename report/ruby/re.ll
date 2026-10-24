@@ -205,21 +205,23 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %.02437 = phi ptr [ %i.h, %bb.b ], [ %i.c, %.lr.ph.preheader ] ; 3 uses
-  %i.g = load i8, ptr %.02437, align 1, !tbaa !15 ; 2 uses
-  %5 = sext i8 %i.g to i32
-  %6 = icmp ne i8 %i.g, 32
-  %7 = add nsw i32 %5, -14
-  %8 = icmp ult i32 %7, -5
-  %narrow.i.not = select i1 %6, i1 %8, i1 false
-  br i1 %narrow.i.not, label %.critedge, label %bb.b
+  %i.g = load i8, ptr %.02437, align 1, !tbaa !15
+  switch i8 %i.g, label %.critedge [
+    i8 32, label %bb.b
+    i8 13, label %bb.b
+    i8 12, label %bb.b
+    i8 11, label %bb.b
+    i8 10, label %bb.b
+    i8 9, label %bb.b
+  ]
 
-bb.b:                                             ; preds = %.lr.ph
+bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
   %i.h = getelementptr i8, ptr %.02437, i64 1     ; 2 uses
   %exitcond.not = icmp eq ptr %i.h, %1
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !136
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.024.lcssa = phi ptr [ %i.c, %bb.a ], [ %scevgep, %bb.b ], [ %.02437, %.lr.ph ] ; 3 uses
+.critedge:                                        ; preds = %bb.b, %.lr.ph, %bb.a
+  %.024.lcssa = phi ptr [ %i.c, %bb.a ], [ %.02437, %.lr.ph ], [ %scevgep, %bb.b ] ; 3 uses
   %i.i = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.j = ptrtoint ptr %.024.lcssa to i64
   %i.k = sub i64 %i.i, %i.j
@@ -258,21 +260,23 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph41:                                         ; preds = %.lr.ph41.preheader, %bb.f
   %.240 = phi ptr [ %i.w, %bb.f ], [ %i.s, %.lr.ph41.preheader ] ; 3 uses
-  %i.v = load i8, ptr %.240, align 1, !tbaa !15   ; 2 uses
-  %9 = sext i8 %i.v to i32
-  %10 = icmp ne i8 %i.v, 32
-  %11 = add nsw i32 %9, -14
-  %12 = icmp ult i32 %11, -5
-  %narrow.i29.not = select i1 %10, i1 %12, i1 false
-  br i1 %narrow.i29.not, label %.critedge2, label %bb.f
+  %i.v = load i8, ptr %.240, align 1, !tbaa !15
+  switch i8 %i.v, label %.critedge2 [
+    i8 32, label %bb.f
+    i8 13, label %bb.f
+    i8 12, label %bb.f
+    i8 11, label %bb.f
+    i8 10, label %bb.f
+    i8 9, label %bb.f
+  ]
 
-bb.f:                                             ; preds = %.lr.ph41
+bb.f:                                             ; preds = %.lr.ph41, %.lr.ph41, %.lr.ph41, %.lr.ph41, %.lr.ph41, %.lr.ph41
   %i.w = getelementptr i8, ptr %.240, i64 1       ; 2 uses
   %exitcond53.not = icmp eq ptr %i.w, %scevgep52
   br i1 %exitcond53.not, label %.critedge2, label %.lr.ph41, !llvm.loop !137
 
-.critedge2:                                       ; preds = %.lr.ph41, %bb.f, %bb.e
-  %.2.lcssa = phi ptr [ %i.s, %bb.e ], [ %scevgep52, %bb.f ], [ %.240, %.lr.ph41 ] ; 4 uses
+.critedge2:                                       ; preds = %bb.f, %.lr.ph41, %bb.e
+  %.2.lcssa = phi ptr [ %i.s, %bb.e ], [ %.240, %.lr.ph41 ], [ %scevgep52, %bb.f ] ; 4 uses
   %i.x = ptrtoint ptr %.2.lcssa to i64
   %i.y = sub i64 %i.i, %i.x
   %i.z = call i64 @ruby_scan_hex(ptr noundef %.2.lcssa, i64 noundef %i.y, ptr noundef nonnull %i.b) #28

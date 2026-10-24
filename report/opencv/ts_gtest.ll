@@ -205,7 +205,7 @@ bb.a:
   %i.b = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.398, i64 noundef 1) ; 0 uses
   switch i8 %0, label %bb.j [
     i8 0, label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread22
-    i8 39, label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
+    i8 39, label %3
     i8 92, label %bb.b
     i8 7, label %bb.c
     i8 8, label %bb.d
@@ -221,34 +221,45 @@ _ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thr
   %i.d = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.398, i64 noundef 1) ; 0 uses
   br label %bb.s
 
+3:                                                ; preds = %bb.a
+  %4 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.511, i64 noundef 2) ; 0 uses
+  br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
+
 bb.b:                                             ; preds = %bb.a
+  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.512, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.c:                                             ; preds = %bb.a
+  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.513, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.d:                                             ; preds = %bb.a
+  %7 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.239, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.e:                                             ; preds = %bb.a
+  %8 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.242, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.f:                                             ; preds = %bb.a
+  %9 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.241, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.g:                                             ; preds = %bb.a
+  %10 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.243, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.h:                                             ; preds = %bb.a
+  %11 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.240, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.i:                                             ; preds = %bb.a
+  %12 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.514, i64 noundef 2) ; 0 uses
   br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
 
 bb.j:                                             ; preds = %bb.a
-  %3 = sext i8 %0 to i32                          ; 2 uses
-  %4 = add nsw i32 %3, -32
-  %i.e = icmp ult i32 %4, 95
+  %13 = add i8 %0, -32
+  %i.e = icmp ult i8 %13, 95
   br i1 %i.e, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
@@ -273,7 +284,11 @@ bb.m:                                             ; preds = %bb.k
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i: ; preds = %bb.m, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit
+  br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread
+
+_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread: ; preds = %3, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i
+  %14 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.398, i64 noundef 1) ; 0 uses
+  br label %bb.o
 
 bb.n:                                             ; preds = %bb.j
   %i.n = load ptr, ptr %1, align 8, !tbaa !65
@@ -306,29 +321,17 @@ bb.n:                                             ; preds = %bb.j
   %i.am = getelementptr inbounds i8, ptr %1, i64 %i.al
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   store i32 %i.s, ptr %i.an, align 8, !tbaa !287
-  br label %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit
+  %15 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.398, i64 noundef 1) ; 0 uses
+  %16 = icmp eq i8 %0, 0
+  br i1 %16, label %bb.s, label %bb.o
 
-_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
-  %.str.511.sink = phi ptr [ @.str.514, %bb.i ], [ @.str.512, %bb.b ], [ @.str.513, %bb.c ], [ @.str.239, %bb.d ], [ @.str.242, %bb.e ], [ @.str.241, %bb.f ], [ @.str.243, %bb.g ], [ @.str.240, %bb.h ], [ @.str.511, %bb.a ]
-  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %.str.511.sink, i64 noundef 2) ; 0 uses
-  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.398, i64 noundef 1) ; 0 uses
-  %.pre = zext nneg i8 %0 to i32
-  br label %bb.o
-
-_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i, %bb.n
-  %.0.i = phi i32 [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i ], [ 1, %bb.n ]
-  %7 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.398, i64 noundef 1) ; 0 uses
-  %8 = icmp eq i8 %0, 0
-  br i1 %8, label %bb.s, label %bb.o
-
-bb.o:                                             ; preds = %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread, %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit
-  %.pre-phi = phi i32 [ %.pre, %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread ], [ %3, %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit ]
-  %.0.i21 = phi i32 [ 2, %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread ], [ %.0.i, %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit ]
+bb.o:                                             ; preds = %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread, %bb.n
+  %.0.i21 = phi i1 [ false, %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread ], [ true, %bb.n ]
+  %17 = sext i8 %0 to i32
   %i.ao = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.76, i64 noundef 2) ; 0 uses
-  %i.ap = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %.pre-phi) ; 0 uses
-  %9 = icmp eq i32 %.0.i21, 1
+  %i.ap = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %17) ; 0 uses
   %or.cond = icmp ult i8 %0, 10
-  %or.cond16 = or i1 %or.cond, %9
+  %or.cond16 = or i1 %or.cond, %.0.i21
   br i1 %or.cond16, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -380,7 +383,7 @@ bb.r:                                             ; preds = %bb.o, %_ZNSt7__cxx1
   %i.bh = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.77, i64 noundef 1) ; 0 uses
   br label %bb.s
 
-bb.s:                                             ; preds = %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread22, %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit, %bb.r
+bb.s:                                             ; preds = %_ZN7testing8internalL20PrintAsCharLiteralToIhaEENS0_10CharFormatET0_PSo.exit.thread22, %bb.n, %bb.r
   ret void
 }
 

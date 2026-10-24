@@ -202,15 +202,15 @@ _ZNK2v88internal23MaybeObjectDirectHandle6objectEv.exit69: ; preds = %bb.e, %_ZN
   %.151.in.in.in = add i64 %.151.in.in.in.in, 89
   %.151.in.in = inttoptr i64 %.151.in.in.in to ptr
   %.151.in = load i16, ptr %.151.in.in, align 2   ; 2 uses
-  %.151 = sext i16 %.151.in to i32
-  %.off.i = add nsw i32 %.151, -168
-  %switch.i70 = icmp ult i32 %.off.i, 12
+  %3 = add i16 %.151.in, -168
+  %switch.i70 = icmp ult i16 %3, 12
   br i1 %switch.i70, label %switch.lookup, label %_ZN2v88internal12_GLOBAL__N_130KeyedAccessStoreModeForBuiltinENS0_7BuiltinE.exit.thread138
 
 switch.lookup:                                    ; preds = %_ZNK2v88internal23MaybeObjectDirectHandle6objectEv.exit69
-  %3 = sext i16 %.151.in to i64
-  %4 = getelementptr i8, ptr @switch.table._ZNK2v88internal13FeedbackNexus23GetKeyedAccessStoreModeEv, i64 %3
-  %switch.gep = getelementptr i8, ptr %4, i64 -168
+  %narrow = add nuw nsw i16 %.151.in, 88
+  %4 = and i16 %narrow, 255
+  %5 = zext nneg i16 %4 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK2v88internal13FeedbackNexus23GetKeyedAccessStoreModeEv, i64 %5
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %.thread144
 

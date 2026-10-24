@@ -204,9 +204,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.q, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = sext i32 %i.o to i64
-  %4 = add nsw i64 %3, 184
-  %i.r = icmp ult i64 %4, 256
+  %3 = add i32 %i.o, 184
+  %i.r = icmp ult i32 %3, 256
   br i1 %i.r, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -609,14 +608,13 @@ declare void @_ZN2v88internal9Assembler6movdquENS0_7OperandENS0_11XMMRegisterE(p
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal17RestoreWasmParamsEPNS0_14MacroAssemblerEi(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = sext i32 %1 to i64                         ; 6 uses
-  %indvars.iv.next = add i32 %1, -16              ; 4 uses
+  %indvars.iv.next = add nsw i32 %1, -16          ; 4 uses
   %i.a = icmp eq i32 %indvars.iv.next, 0
   br i1 %i.a, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = add nsw i64 %2, 112
-  %i.b = icmp ult i64 %3, 256
+  %2 = add i32 %1, 112
+  %i.b = icmp ult i32 %2, 256
   br i1 %i.b, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -635,13 +633,13 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit:   ; preds = %bb.b, %bb.a, %bb.c
   %.sroa.30.0.insert.insert = or disjoint i64 %.sroa.36.0.insert.shift, %.sroa.12.0
   %.sroa.12.0.insert.insert = or disjoint i64 %.sroa.30.0.insert.insert, 603979776
   tail call void @_ZN2v88internal9Assembler6movdquENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 6, i64 %.sroa.12.0.insert.insert, ptr nonnull %i.c) #8
-  %indvars.iv.next.1 = add i32 %1, -32            ; 4 uses
+  %indvars.iv.next.1 = add nsw i32 %1, -32        ; 4 uses
   %i.d = icmp eq i32 %indvars.iv.next.1, 0
   br i1 %i.d, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.1, label %bb.d
 
 bb.d:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit
-  %4 = add nsw i64 %2, 96
-  %i.e = icmp ult i64 %4, 256
+  %3 = add i32 %1, 96
+  %i.e = icmp ult i32 %3, 256
   br i1 %i.e, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.1, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -660,13 +658,13 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.1: ; preds = %_ZN2v88internal7Ope
   %.sroa.30.0.insert.insert105 = or disjoint i64 %.sroa.36.0.insert.shift128, %.sroa.12.1
   %.sroa.12.0.insert.insert80 = or disjoint i64 %.sroa.30.0.insert.insert105, 603979776
   tail call void @_ZN2v88internal9Assembler6movdquENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 5, i64 %.sroa.12.0.insert.insert80, ptr nonnull %i.f) #8
-  %indvars.iv.next.2 = add i32 %1, -48            ; 4 uses
+  %indvars.iv.next.2 = add nsw i32 %1, -48        ; 4 uses
   %i.g = icmp eq i32 %indvars.iv.next.2, 0
   br i1 %i.g, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.2, label %bb.f
 
 bb.f:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.1
-  %5 = add nsw i64 %2, 80
-  %i.h = icmp ult i64 %5, 256
+  %4 = add i32 %1, 80
+  %i.h = icmp ult i32 %4, 256
   br i1 %i.h, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.2, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -685,13 +683,13 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.2: ; preds = %_ZN2v88internal7Ope
   %.sroa.30.0.insert.insert110 = or disjoint i64 %.sroa.36.0.insert.shift133, %.sroa.12.2
   %.sroa.12.0.insert.insert85 = or disjoint i64 %.sroa.30.0.insert.insert110, 603979776
   tail call void @_ZN2v88internal9Assembler6movdquENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 4, i64 %.sroa.12.0.insert.insert85, ptr nonnull %i.i) #8
-  %indvars.iv.next.3 = add i32 %1, -64            ; 4 uses
+  %indvars.iv.next.3 = add nsw i32 %1, -64        ; 4 uses
   %i.j = icmp eq i32 %indvars.iv.next.3, 0
   br i1 %i.j, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.3, label %bb.h
 
 bb.h:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.2
-  %6 = add nsw i64 %2, 64
-  %i.k = icmp ult i64 %6, 256
+  %5 = add i32 %1, 64
+  %i.k = icmp ult i32 %5, 256
   br i1 %i.k, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.3, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -710,13 +708,13 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.3: ; preds = %_ZN2v88internal7Ope
   %.sroa.30.0.insert.insert115 = or disjoint i64 %.sroa.36.0.insert.shift138, %.sroa.12.3
   %.sroa.12.0.insert.insert90 = or disjoint i64 %.sroa.30.0.insert.insert115, 603979776
   tail call void @_ZN2v88internal9Assembler6movdquENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 3, i64 %.sroa.12.0.insert.insert90, ptr nonnull %i.l) #8
-  %indvars.iv.next.4 = add i32 %1, -80            ; 4 uses
+  %indvars.iv.next.4 = add nsw i32 %1, -80        ; 4 uses
   %i.m = icmp eq i32 %indvars.iv.next.4, 0
   br i1 %i.m, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.4, label %bb.j
 
 bb.j:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.3
-  %7 = add nsw i64 %2, 48
-  %i.n = icmp ult i64 %7, 256
+  %6 = add i32 %1, 48
+  %i.n = icmp ult i32 %6, 256
   br i1 %i.n, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.4, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -735,13 +733,13 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.4: ; preds = %_ZN2v88internal7Ope
   %.sroa.30.0.insert.insert120 = or disjoint i64 %.sroa.36.0.insert.shift143, %.sroa.12.4
   %.sroa.12.0.insert.insert95 = or disjoint i64 %.sroa.30.0.insert.insert120, 603979776
   tail call void @_ZN2v88internal9Assembler6movdquENS0_11XMMRegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 2, i64 %.sroa.12.0.insert.insert95, ptr nonnull %i.o) #8
-  %indvars.iv.next.5 = add i32 %1, -96            ; 4 uses
+  %indvars.iv.next.5 = add nsw i32 %1, -96        ; 4 uses
   %i.p = icmp eq i32 %indvars.iv.next.5, 0
   br i1 %i.p, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.5, label %bb.l
 
 bb.l:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.4
-  %8 = add nsw i64 %2, 32
-  %i.q = icmp ult i64 %8, 256
+  %7 = add i32 %1, 32
+  %i.q = icmp ult i32 %7, 256
   br i1 %i.q, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.5, label %bb.m
 
 bb.m:                                             ; preds = %bb.l

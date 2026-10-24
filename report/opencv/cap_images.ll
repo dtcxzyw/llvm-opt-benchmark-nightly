@@ -203,9 +203,8 @@ bb.bd:                                            ; preds = %.lr.ph337
   %.3335 = phi i64 [ %.3, %bb.bd ], [ %.3334, %.lr.ph337.preheader ] ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 %.3335
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !15
-  %28 = sext i8 %i.dg to i32
-  %29 = add nsw i32 %28, -58
-  %isdigit = icmp ult i32 %29, -10
+  %28 = add i8 %i.dg, -58
+  %isdigit = icmp ult i8 %28, -10
   br i1 %isdigit, label %bb.bd, label %..critedge_crit_edge338, !llvm.loop !133
 
 ..critedge_crit_edge338:                          ; preds = %.lr.ph337
@@ -241,16 +240,15 @@ bb.be:                                            ; preds = %bb.bu, %.lr.ph
   %.4253 = phi i64 [ %.3.lcssa, %.lr.ph ], [ %i.er, %bb.bu ] ; 4 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.4253
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !15  ; 2 uses
-  %30 = sext i8 %i.dq to i32
-  %31 = add nsw i32 %30, -58
-  %isdigit124 = icmp ult i32 %31, -10
+  %29 = add i8 %i.dq, -58
+  %isdigit124 = icmp ult i8 %29, -10
   br i1 %isdigit124, label %.critedge2, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   %i.dr = mul i64 %.081255, 10
-  %32 = sext i8 %i.dq to i64
+  %30 = zext nneg i8 %i.dq to i64
   %i.ds = add i64 %i.dr, -48
-  %i.dt = add i64 %i.ds, %32                      ; 4 uses
+  %i.dt = add i64 %i.ds, %30                      ; 4 uses
   %i.du = icmp ult i64 %i.dt, 1000000000
   br i1 %i.du, label %bb.bl, label %bb.bg
 
@@ -342,16 +340,15 @@ bb.br:                                            ; preds = %bb.bl
 bb.bs:                                            ; preds = %bb.br
   %i.ek = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.ej
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !15  ; 2 uses
-  %33 = sext i8 %i.el to i32
-  %34 = add nsw i32 %33, -58
-  %isdigit124.1 = icmp ult i32 %34, -10
+  %31 = add i8 %i.el, -58
+  %isdigit124.1 = icmp ult i8 %31, -10
   br i1 %isdigit124.1, label %.critedge2.split.loop.exit346, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   %i.em = mul nuw nsw i64 %i.dt, 10
-  %35 = sext i8 %i.el to i64
+  %32 = zext nneg i8 %i.el to i64
   %i.en = add nsw i64 %i.em, -48
-  %i.eo = add nsw i64 %i.en, %35                  ; 3 uses
+  %i.eo = add nsw i64 %i.en, %32                  ; 3 uses
   %i.ep = icmp ult i64 %i.eo, 1000000000
   br i1 %i.ep, label %bb.bu, label %bb.bg
 

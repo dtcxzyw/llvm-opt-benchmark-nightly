@@ -205,30 +205,36 @@ _ZN4core6stringIcE7replaceEcc.exit.i:             ; preds = %bb.g, %vec.epilog.m
   br i1 %.not6.i.i3.i, label %_ZNK2io10SNamedPath10PathToNameERKN4core6stringIcEE.exit, label %iter.check152
 
 iter.check152:                                    ; preds = %_ZN4core6stringIcE7replaceEcc.exit.i
-  %min.iters.check140 = icmp ult i64 %.pr10.i, 4
+  %min.iters.check140 = icmp ult i64 %.pr10.i, 8
   br i1 %min.iters.check140, label %.lr.ph.i.i4.i.preheader, label %vector.main.loop.iter.check141
 
 vector.main.loop.iter.check141:                   ; preds = %iter.check152
-  %min.iters.check142 = icmp ult i64 %.pr10.i, 16
+  %min.iters.check142 = icmp ult i64 %.pr10.i, 32
   br i1 %min.iters.check142, label %vec.epilog.ph156, label %vector.ph143
 
 vector.ph143:                                     ; preds = %vector.main.loop.iter.check141
-  %i.dh = and i64 %.pr10.i, 12
-  %n.vec144 = and i64 %.pr10.i, -16               ; 4 uses
+  %i.dh = and i64 %.pr10.i, 24
+  %n.vec144 = and i64 %.pr10.i, -32               ; 4 uses
   %i.di = getelementptr i8, ptr %i.df, i64 %n.vec144
   br label %vector.body145
 
 vector.body145:                                   ; preds = %vector.ph143, %vector.body145
   %index146 = phi i64 [ 0, %vector.ph143 ], [ %index.next149, %vector.body145 ] ; 2 uses
-  %next.gep147.a = getelementptr i8, ptr %i.df, i64 %index146 ; 2 uses
+  %next.gep147 = getelementptr i8, ptr %i.df, i64 %index146 ; 3 uses
+  %next.gep147.a = getelementptr i8, ptr %next.gep147, i64 16 ; 2 uses
+  %wide.load148 = load <16 x i8>, ptr %next.gep147, align 1, !tbaa !119 ; 3 uses
   %wide.load148.a = load <16 x i8>, ptr %next.gep147.a, align 1, !tbaa !119 ; 3 uses
-  %2 = sext <16 x i8> %wide.load148.a to <16 x i32>
-  %3 = add nsw <16 x i32> %2, splat (i32 -65)
-  %i.dj = icmp ult <16 x i32> %3, splat (i32 26)
+  %2 = add <16 x i8> %wide.load148, splat (i8 -65)
+  %3 = add <16 x i8> %wide.load148.a, splat (i8 -65)
+  %4 = icmp ult <16 x i8> %2, splat (i8 26)
+  %i.dj = icmp ult <16 x i8> %3, splat (i8 26)
+  %5 = add <16 x i8> %wide.load148, splat (i8 32)
   %i.dk = add <16 x i8> %wide.load148.a, splat (i8 32)
+  %6 = select <16 x i1> %4, <16 x i8> %5, <16 x i8> %wide.load148
   %i.dl = select <16 x i1> %i.dj, <16 x i8> %i.dk, <16 x i8> %wide.load148.a
+  store <16 x i8> %6, ptr %next.gep147, align 1, !tbaa !119
   store <16 x i8> %i.dl, ptr %next.gep147.a, align 1, !tbaa !119
-  %index.next149 = add nuw i64 %index146, 16      ; 2 uses
+  %index.next149 = add nuw i64 %index146, 32      ; 2 uses
   %i.dm = icmp eq i64 %index.next149, %n.vec144
   br i1 %i.dm, label %middle.block150, label %vector.body145, !llvm.loop !362
 
@@ -238,25 +244,24 @@ middle.block150:                                  ; preds = %vector.body145
 
 vec.epilog.iter.check153:                         ; preds = %middle.block150
   %min.epilog.iters.check155 = icmp eq i64 %i.dh, 0
-  br i1 %min.epilog.iters.check155, label %.lr.ph.i.i4.i.preheader, label %vec.epilog.ph156, !prof !369
+  br i1 %min.epilog.iters.check155, label %.lr.ph.i.i4.i.preheader, label %vec.epilog.ph156, !prof !368
 
 vec.epilog.ph156:                                 ; preds = %vector.main.loop.iter.check141, %vec.epilog.iter.check153
   %vec.epilog.resume.val157 = phi i64 [ %n.vec144, %vec.epilog.iter.check153 ], [ 0, %vector.main.loop.iter.check141 ]
-  %n.vec158 = and i64 %.pr10.i, -4                ; 3 uses
+  %n.vec158 = and i64 %.pr10.i, -8                ; 3 uses
   %i.dn = getelementptr i8, ptr %i.df, i64 %n.vec158
   br label %vec.epilog.vector.body159
 
 vec.epilog.vector.body159:                        ; preds = %vec.epilog.vector.body159, %vec.epilog.ph156
   %index160 = phi i64 [ %vec.epilog.resume.val157, %vec.epilog.ph156 ], [ %index.next163, %vec.epilog.vector.body159 ] ; 2 uses
   %next.gep161 = getelementptr i8, ptr %i.df, i64 %index160 ; 2 uses
-  %wide.load162 = load <4 x i8>, ptr %next.gep161, align 1, !tbaa !119 ; 3 uses
-  %4 = sext <4 x i8> %wide.load162 to <4 x i32>
-  %5 = add nsw <4 x i32> %4, splat (i32 -65)
-  %6 = icmp ult <4 x i32> %5, splat (i32 26)
-  %7 = add <4 x i8> %wide.load162, splat (i8 32)
-  %8 = select <4 x i1> %6, <4 x i8> %7, <4 x i8> %wide.load162
-  store <4 x i8> %8, ptr %next.gep161, align 1, !tbaa !119
-  %index.next163 = add nuw i64 %index160, 4       ; 2 uses
+  %wide.load163 = load <8 x i8>, ptr %next.gep161, align 1, !tbaa !119 ; 3 uses
+  %7 = add <8 x i8> %wide.load163, splat (i8 -65)
+  %8 = icmp ult <8 x i8> %7, splat (i8 26)
+  %9 = add <8 x i8> %wide.load163, splat (i8 32)
+  %10 = select <8 x i1> %8, <8 x i8> %9, <8 x i8> %wide.load163
+  store <8 x i8> %10, ptr %next.gep161, align 1, !tbaa !119
+  %index.next163 = add nuw i64 %index160, 8       ; 2 uses
   %i.do = icmp eq i64 %index.next163, %n.vec158
   br i1 %i.do, label %vec.epilog.middle.block164, label %vec.epilog.vector.body159, !llvm.loop !363
 
@@ -271,9 +276,8 @@ vec.epilog.middle.block164:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.i4.i:                                    ; preds = %.lr.ph.i.i4.i.preheader, %.lr.ph.i.i4.i
   %.sroa.0.08.i.i.i = phi ptr [ %i.ds, %.lr.ph.i.i4.i ], [ %.sroa.0.08.i.i.i.ph, %.lr.ph.i.i4.i.preheader ] ; 3 uses
   %i.dp = load i8, ptr %.sroa.0.08.i.i.i, align 1, !tbaa !119 ; 3 uses
-  %9 = sext i8 %i.dp to i32
-  %10 = add nsw i32 %9, -65
-  %or.cond.i.i.i.i.i = icmp ult i32 %10, 26
+  %11 = add i8 %i.dp, -65
+  %or.cond.i.i.i.i.i = icmp ult i8 %11, 26
   %i.dq = add i8 %i.dp, 32
   %i.dr = select i1 %or.cond.i.i.i.i.i, i8 %i.dq, i8 %i.dp
   store i8 %i.dr, ptr %.sroa.0.08.i.i.i, align 1, !tbaa !119
@@ -354,7 +358,7 @@ bb.a:
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -24
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c
-  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(8) %i.d, i64 noundef 24) #31, !inline_history !370
+  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(8) %i.d, i64 noundef 24) #31, !inline_history !369
   ret void
 }
 
@@ -445,7 +449,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDr
   store i64 %i.p, ptr %.sroa.04.0.i.i.i.i.i, align 8, !tbaa !183
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.af, %i.f
-  br i1 %.not.i.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !371
+  br i1 %.not.i.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !370
 
 bb.g:                                             ; preds = %bb.c
   tail call void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_(ptr %i.d, ptr %i.f)
@@ -476,7 +480,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEET_SC_SC_T0_.exit
   %i.h = icmp eq i64 %i.ax, 0
-  br i1 %i.h, label %._crit_edge, label %.lr.ph44, !llvm.loop !372
+  br i1 %i.h, label %._crit_edge, label %.lr.ph44, !llvm.loop !371
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.lcssa40 = phi i64 [ %i.d, %.lr.ph ], [ %i.ba, %bb.b ] ; 2 uses
@@ -492,7 +496,7 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge
   tail call void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_(ptr %0, i64 noundef %.09.i.i, i64 noundef %.lcssa40, ptr %.sroa.02.0.copyload.i.i)
   %.not.i.i = icmp eq i64 %.09.i.i, 0
   %i.l = add nsw i64 %.09.i.i, -1
-  br i1 %.not.i.i, label %.lr.ph.i.i, label %bb.c, !llvm.loop !373
+  br i1 %.not.i.i, label %.lr.ph.i.i, label %bb.c, !llvm.loop !372
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %.lr.ph.i.i
   %.sroa.0.05.i.i = phi ptr [ %i.m, %.lr.ph.i.i ], [ %storemerge19.lcssa, %bb.c ]
@@ -505,7 +509,7 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge
   %i.q = ashr exact i64 %i.p, 3
   tail call void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_(ptr nonnull %0, i64 noundef 0, i64 noundef %i.q, ptr %.sroa.02.0.copyload.i.i.i)
   %i.r = icmp sgt i64 %i.p, 8
-  br i1 %i.r, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_T0_.exit, !llvm.loop !374
+  br i1 %i.r, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_T0_.exit, !llvm.loop !373
 
 .lr.ph44:                                         ; preds = %.lr.ph, %bb.b
   %storemerge1943 = phi ptr [ %.sroa.019.1.i.i, %bb.b ], [ %1, %.lr.ph ] ; 3 uses
@@ -554,7 +558,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDr
   %.0.i.i.i.i.i.i.i.i = phi i32 [ %i.ah, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i.i.i.i ]
   %i.aj = icmp slt i32 %.0.i.i.i.i.i.i.i.i, 0
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.019.1.i.i, i64 8 ; 2 uses
-  br i1 %i.aj, label %bb.e, label %.preheader.i.i, !llvm.loop !375
+  br i1 %i.aj, label %bb.e, label %.preheader.i.i, !llvm.loop !374
 
 .preheader.i.i:                                   ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit16.i.i
   %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit16.i.i ], [ %.sroa.0.0.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i.i ]
@@ -584,7 +588,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i.i12.i.i: ; preds = %
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit16.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i.i12.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i9.i.i
   %.0.i.i.i.i.i.i11.i.i = phi i32 [ %i.as, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i9.i.i ], [ %.0.i6.i.i.i.i.i.i15.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i.i12.i.i ]
   %i.au = icmp slt i32 %.0.i.i.i.i.i.i11.i.i, 0
-  br i1 %i.au, label %.preheader.i.i, label %bb.f, !llvm.loop !376
+  br i1 %i.au, label %.preheader.i.i, label %bb.f, !llvm.loop !375
 
 bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit16.i.i
   %i.av = icmp ult ptr %.sroa.019.1.i.i, %.sroa.0.1.i.i
@@ -594,7 +598,7 @@ bb.g:                                             ; preds = %bb.f
   %i.aw = ptrtoint ptr %i.al to i64
   store i64 %i.aw, ptr %.sroa.019.1.i.i, align 8, !tbaa !183
   store ptr %i.aa, ptr %.sroa.0.1.i.i, align 8, !tbaa !183
-  br label %bb.d, !llvm.loop !377
+  br label %bb.d, !llvm.loop !376
 
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEET_SC_SC_T0_.exit: ; preds = %bb.f
   %i.ax = add nsw i64 %.02042, -1                 ; 3 uses
@@ -603,7 +607,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5video11CNull
   %i.az = sub i64 %i.ay, %i.a
   %i.ba = ashr exact i64 %i.az, 3                 ; 3 uses
   %i.bb = icmp sgt i64 %i.ba, 16
-  br i1 %i.bb, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_T0_.exit, !llvm.loop !372
+  br i1 %i.bb, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_T0_.exit, !llvm.loop !371
 
 _ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEET_SC_SC_T0_.exit, %.lr.ph.i.i, %bb.a
   ret void
@@ -659,7 +663,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDr
   %i.y = load i64, ptr %i.w, align 8, !tbaa !183
   store i64 %i.y, ptr %i.x, align 8, !tbaa !183
   %i.z = icmp slt i64 %spec.select, %i.b
-  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !378
+  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !377
 
 ._crit_edge:                                      ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit, %bb.a
   %.0.lcssa = phi i64 [ %1, %bb.a ], [ %spec.select, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit ] ; 5 uses
@@ -730,7 +734,7 @@ bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__op
   %i.ba = getelementptr inbounds [8 x i8], ptr %0, i64 %.019.i
   store i64 %i.at, ptr %i.ba, align 8, !tbaa !183
   %i.bb = icmp sgt i64 %.0920.i, %1
-  br i1 %i.bb, label %bb.e, label %_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops14_Iter_less_valEEvT_T0_SD_T1_RT2_.exit, !llvm.loop !379
+  br i1 %i.bb, label %bb.e, label %_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops14_Iter_less_valEEvT_T0_SD_T1_RT2_.exit, !llvm.loop !378
 
 _ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops14_Iter_less_valEEvT_T0_SD_T1_RT2_.exit: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEES6_EEbT_RT0_.exit.i, %bb.f, %bb.d
   %.0.lcssa.i = phi i64 [ %.1, %bb.d ], [ %.019.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEES6_EEbT_RT0_.exit.i ], [ %.0920.i, %bb.f ]
@@ -1052,7 +1056,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDr
 bb.j:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit
   %.sroa.0.0 = getelementptr inbounds nuw i8, ptr %.sroa.0.020, i64 8 ; 2 uses
   %.not = icmp eq ptr %.sroa.0.0, %1
-  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !380
+  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !379
 
 .loopexit:                                        ; preds = %bb.j, %.preheader, %bb.a
   ret void
@@ -1173,7 +1177,7 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN5video11CNullDri
   %.sroa.011.1.i = select i1 %i.ap, ptr %i.aq, ptr %.sroa.011.015.i ; 2 uses
   %.1.i = select i1 %i.ap, i64 %i.as, i64 %i.ae   ; 2 uses
   %i.at = icmp sgt i64 %.1.i, 0
-  br i1 %i.at, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Iter_less_valEET_SC_SC_RKT0_T1_.exit, !llvm.loop !381
+  br i1 %i.at, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Iter_less_valEET_SC_SC_RKT0_T1_.exit, !llvm.loop !380
 
 _ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Iter_less_valEET_SC_SC_RKT0_T1_.exit: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEEKS6_EEbT_RT0_.exit.i, %.critedge
   %.sroa.011.0.lcssa.i = phi ptr [ %.sroa.052.073, %.critedge ], [ %.sroa.011.1.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEEKS6_EEbT_RT0_.exit.i ] ; 2 uses
@@ -1221,13 +1225,13 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN5video11CNullDriver8SSurfaceENS_17__nor
   %.sroa.011.1.i42 = select i1 %i.bj, ptr %.sroa.011.015.i35, ptr %i.bk ; 2 uses
   %.1.i43 = select i1 %i.bj, i64 %i.ay, i64 %i.bm ; 2 uses
   %i.bn = icmp sgt i64 %.1.i43, 0
-  br i1 %i.bn, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i33, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Val_less_iterEET_SC_SC_RKT0_T1_.exit, !llvm.loop !382
+  br i1 %i.bn, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i33, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Val_less_iterEET_SC_SC_RKT0_T1_.exit, !llvm.loop !381
 
 bb.c:                                             ; preds = %bb.b, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN5video11CNullDriver8SSurfaceENS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit
   %.sroa.052.1 = phi ptr [ %i.y, %bb.b ], [ %.sroa.052.073, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN5video11CNullDriver8SSurfaceENS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit ] ; 3 uses
   %.2 = phi i64 [ %i.aa, %bb.b ], [ %i.j, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN5video11CNullDriver8SSurfaceENS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit ] ; 2 uses
   %i.bo = icmp sgt i64 %.2, 0
-  br i1 %i.bo, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Val_less_iterEET_SC_SC_RKT0_T1_.exit, !llvm.loop !383
+  br i1 %i.bo, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Val_less_iterEET_SC_SC_RKT0_T1_.exit, !llvm.loop !382
 
 _ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Val_less_iterEET_SC_SC_RKT0_T1_.exit: ; preds = %bb.c, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN5video11CNullDriver8SSurfaceENS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i, %bb.a, %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Iter_less_valEET_SC_SC_RKT0_T1_.exit
   %.sroa.3.0 = phi ptr [ %.sroa.011.1.i42, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN5video11CNullDriver8SSurfaceENS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i ], [ %i.au, %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_NS0_5__ops14_Iter_less_valEET_SC_SC_RKT0_T1_.exit ], [ %0, %bb.a ], [ %.sroa.052.1, %bb.c ]
@@ -1296,7 +1300,7 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPKN5video11CNullDr
   %.sroa.011.1.i.i = select i1 %i.v, ptr %i.w, ptr %.sroa.011.015.i.i ; 2 uses
   %.1.i.i = select i1 %i.v, i64 %i.y, i64 %i.k    ; 2 uses
   %i.z = icmp sgt i64 %.1.i.i, 0
-  br i1 %i.z, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_ET_SB_SB_RKT0_.exit, !llvm.loop !384
+  br i1 %i.z, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_ET_SB_SB_RKT0_.exit, !llvm.loop !383
 
 _ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEES4_ET_SB_SB_RKT0_.exit: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEES7_EEbT_RT0_.exit.i.i, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit
   %.sroa.011.0.lcssa.i.i = phi ptr [ %i.d, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit ], [ %.sroa.011.1.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPKN5video11CNullDriver8SSurfaceESt6vectorIS6_SaIS6_EEEES7_EEbT_RT0_.exit.i.i ] ; 2 uses
@@ -1487,7 +1491,7 @@ _ZSt10_ConstructIN5video11CNullDriver9SOccQueryEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.
   %i.bl = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i, i64 32 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 32 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.bl, %1
-  br i1 %.not.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !385
+  br i1 %.not.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !384
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit: ; preds = %_ZSt10_ConstructIN5video11CNullDriver9SOccQueryEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt16allocator_traitsISaIN5video11CNullDriver9SOccQueryEEE9constructIS2_JS2_EEEvRS3_PT_DpOT0_.exit
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN5video11CNullDriver9SOccQueryEEE9constructIS2_JS2_EEEvRS3_PT_DpOT0_.exit ], [ %i.bm, %_ZSt10_ConstructIN5video11CNullDriver9SOccQueryEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i ]
@@ -1542,7 +1546,7 @@ _ZSt10_ConstructIN5video11CNullDriver9SOccQueryEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.
   %i.ck = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i32, i64 32 ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i31, i64 32 ; 2 uses
   %.not.i.i.i.i.i36 = icmp eq ptr %i.ck, %i.b
-  br i1 %.not.i.i.i.i.i36, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit38, label %.lr.ph.i.i.i.i.i30, !llvm.loop !385
+  br i1 %.not.i.i.i.i.i36, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit38, label %.lr.ph.i.i.i.i.i30, !llvm.loop !384
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit38: ; preds = %_ZSt10_ConstructIN5video11CNullDriver9SOccQueryEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i35, %_ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit
   %.0.lcssa.i.i.i.i.i37 = phi ptr [ %i.bn, %_ZSt34__uninitialized_move_if_noexcept_aIPN5video11CNullDriver9SOccQueryES3_SaIS2_EET0_T_S6_S5_RT1_.exit ], [ %i.cl, %_ZSt10_ConstructIN5video11CNullDriver9SOccQueryEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i35 ]
@@ -1713,7 +1717,7 @@ _ZN5video11CNullDriver9SOccQueryaSERKS1_.exit.i.i.i.i.i: ; preds = %bb.e, %bb.d
   %i.ah = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i, i64 32
   %i.ai = add nsw i64 %.012.i.i.i.i.i, -1
   %i.aj = icmp sgt i64 %.012.i.i.i.i.i, 1
-  br i1 %i.aj, label %.lr.ph.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver9SOccQueryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit, !llvm.loop !386
+  br i1 %i.aj, label %.lr.ph.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver9SOccQueryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit, !llvm.loop !385
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN5video11CNullDriver9SOccQueryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit: ; preds = %_ZN5video11CNullDriver9SOccQueryaSERKS1_.exit.i.i.i.i.i
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !255
@@ -2001,7 +2005,7 @@ bb.d:                                             ; preds = %bb.b, %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %.01218, i64 40 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.019, i64 40 ; 2 uses
   %.not = icmp eq ptr %i.m, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !387
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !386
 
 .body:                                            ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
   %i.o = extractvalue { ptr, i32 } %i.d, 0
@@ -2404,8 +2408,8 @@ begin_hunk_1_@llvm.umin.i32
 !366 = !{!"llvm.loop.isvectorized", i32 1}
 !367 = !{!"llvm.loop.unroll.runtime.disable"}
 !368 = !{!"branch_weights", i32 8, i32 24}
-!369 = !{!"branch_weights", i32 4, i32 12}
-!370 = !{ptr @_ZN5video17IMaterialRendererD0Ev}
+!369 = !{ptr @_ZN5video17IMaterialRendererD0Ev}
+!370 = distinct !{!370, !159}
 !371 = distinct !{!371, !159}
 !372 = distinct !{!372, !159}
 !373 = distinct !{!373, !159}
@@ -2422,5 +2426,4 @@ begin_hunk_1_@llvm.umin.i32
 !384 = distinct !{!384, !159}
 !385 = distinct !{!385, !159}
 !386 = distinct !{!386, !159}
-!387 = distinct !{!387, !159}
 end_hunk_1

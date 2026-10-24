@@ -206,10 +206,9 @@ _ZNK5boost4json6detail11string_impl8capacityEv.exit: ; preds = %.lr.ph
   br i1 %i.n, label %bb.b, label %bb.c
 
 _ZNK5boost4json6detail11string_impl8capacityEv.exit.thread: ; preds = %.lr.ph
-  %i.o = load i8, ptr %i.b, align 1, !tbaa !93    ; 2 uses
-  %5 = sext i8 %i.o to i64
-  %6 = add nsw i64 %5, -1
-  %i.p = icmp ult i64 %6, 14
+  %i.o = load i8, ptr %i.b, align 1, !tbaa !93
+  %5 = add i8 %i.o, -1                            ; 2 uses
+  %i.p = icmp ult i8 %5, 14
   br i1 %i.p, label %.thread, label %bb.c
 
 bb.b:                                             ; preds = %_ZNK5boost4json6detail11string_impl8capacityEv.exit
@@ -218,8 +217,7 @@ bb.b:                                             ; preds = %_ZNK5boost4json6det
   br label %_ZN5boost4json6detail11string_impl4sizeEm.exit
 
 .thread:                                          ; preds = %_ZNK5boost4json6detail11string_impl8capacityEv.exit.thread
-  %7 = add i8 %i.o, -1
-  store i8 %7, ptr %i.b, align 1, !tbaa !93
+  store i8 %5, ptr %i.b, align 1, !tbaa !93
   br label %_ZN5boost4json6detail11string_impl4sizeEm.exit
 
 bb.c:                                             ; preds = %_ZNK5boost4json6detail11string_impl8capacityEv.exit.thread, %_ZNK5boost4json6detail11string_impl8capacityEv.exit

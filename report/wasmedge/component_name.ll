@@ -205,9 +205,8 @@ bb.b:                                             ; preds = %.preheader.preheade
   %.010.i = phi i64 [ %i.g, %bb.c ], [ 1, %bb.b ] ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.010.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !16
-  %2 = sext i8 %i.f to i32
-  %isdigittmp.i = add nsw i32 %2, -48
-  %isdigit.i = icmp ult i32 %isdigittmp.i, 10
+  %2 = add i8 %i.f, -48
+  %isdigit.i = icmp ult i8 %2, 10
   br i1 %isdigit.i, label %bb.c, label %_ZN8WasmEdge9Validator12_GLOBAL__N_112parseNumericESt17basic_string_viewIcSt11char_traitsIcEE.exit
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -254,9 +253,8 @@ bb.f:                                             ; preds = %bb.e
   %.010.i.1 = phi i64 [ %i.r, %bb.g ], [ 1, %bb.f ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.21.1, i64 %.010.i.1
   %i.q = load i8, ptr %i.p, align 1, !tbaa !16
-  %3 = sext i8 %i.q to i32
-  %isdigittmp.i.1 = add nsw i32 %3, -48
-  %isdigit.i.1 = icmp ult i32 %isdigittmp.i.1, 10
+  %3 = add i8 %i.q, -48
+  %isdigit.i.1 = icmp ult i8 %3, 10
   br i1 %isdigit.i.1, label %bb.g, label %_ZN8WasmEdge9Validator12_GLOBAL__N_112parseNumericESt17basic_string_viewIcSt11char_traitsIcEE.exit.1
 
 bb.g:                                             ; preds = %.lr.ph.i.1
@@ -305,9 +303,8 @@ bb.j:                                             ; preds = %bb.i
   %.010.i.2 = phi i64 [ %i.ac, %bb.k ], [ 1, %.preheader.i.2 ] ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.21.1.1, i64 %.010.i.2
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !16
-  %4 = sext i8 %i.ab to i32
-  %isdigittmp.i.2 = add nsw i32 %4, -48
-  %isdigit.i.2 = icmp ult i32 %isdigittmp.i.2, 10
+  %4 = add i8 %i.ab, -48
+  %isdigit.i.2 = icmp ult i8 %4, 10
   br i1 %isdigit.i.2, label %bb.k, label %_ZN8WasmEdge9Validator12_GLOBAL__N_112parseNumericESt17basic_string_viewIcSt11char_traitsIcEE.exit.2
 
 bb.k:                                             ; preds = %.lr.ph.i.2
@@ -710,9 +707,8 @@ bb.a:
   %.010.i.i = phi i64 [ %i.f, %bb.b ], [ 1, %.preheader.i.i ] ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.7.022.i, i64 %.010.i.i
   %i.e = load i8, ptr %i.d, align 1, !tbaa !16
-  %2 = sext i8 %i.e to i32
-  %isdigittmp.i.i = add nsw i32 %2, -48
-  %isdigit.i.i = icmp ult i32 %isdigittmp.i.i, 10
+  %2 = add i8 %i.e, -48
+  %isdigit.i.i = icmp ult i8 %2, 10
   br i1 %isdigit.i.i, label %bb.b, label %_ZN8WasmEdge9Validator12_GLOBAL__N_114isCanonVersionESt17basic_string_viewIcSt11char_traitsIcEE.exit
 
 bb.b:                                             ; preds = %.lr.ph.i.i
@@ -1115,33 +1111,29 @@ bb.b:                                             ; preds = %.lr.ph.us
   %.050.i.i.i.i.us = phi i64 [ %i.aa, %bb.f ], [ %i.t, %.lr.ph.preheader.i.i.i.i.us ] ; 2 uses
   %.02949.i.i.i.i.us = phi ptr [ %i.z, %bb.f ], [ %i.d, %.lr.ph.preheader.i.i.i.i.us ] ; 9 uses
   %.029.val32.i.i.i.i.us = load i8, ptr %.02949.i.i.i.i.us, align 1, !tbaa !16
-  %3 = sext i8 %.029.val32.i.i.i.i.us to i32
-  %4 = add nsw i32 %3, -58
-  %isdigit.i.i.i.i.i.i.us = icmp ult i32 %4, -10
+  %3 = add i8 %.029.val32.i.i.i.i.us, -58
+  %isdigit.i.i.i.i.i.i.us = icmp ult i8 %3, -10
   br i1 %isdigit.i.i.i.i.i.i.us, label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.us", label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i.i.us
   %i.w = getelementptr inbounds nuw i8, ptr %.02949.i.i.i.i.us, i64 1
   %.val31.i.i.i.i.us = load i8, ptr %i.w, align 1, !tbaa !16
-  %5 = sext i8 %.val31.i.i.i.i.us to i32
-  %6 = add nsw i32 %5, -58
-  %isdigit.i.i33.i.i.i.i.us = icmp ult i32 %6, -10
+  %4 = add i8 %.val31.i.i.i.i.us, -58
+  %isdigit.i.i33.i.i.i.i.us = icmp ult i8 %4, -10
   br i1 %isdigit.i.i33.i.i.i.i.us, label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.us.loopexit.split.loop.exit115", label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %.02949.i.i.i.i.us, i64 2
   %.val30.i.i.i.i.us = load i8, ptr %i.x, align 1, !tbaa !16
-  %7 = sext i8 %.val30.i.i.i.i.us to i32
-  %8 = add nsw i32 %7, -58
-  %isdigit.i.i34.i.i.i.i.us = icmp ult i32 %8, -10
+  %5 = add i8 %.val30.i.i.i.i.us, -58
+  %isdigit.i.i34.i.i.i.i.us = icmp ult i8 %5, -10
   br i1 %isdigit.i.i34.i.i.i.i.us, label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.us.loopexit.split.loop.exit117", label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %.02949.i.i.i.i.us, i64 3
   %.val.i.i.i.i.us = load i8, ptr %i.y, align 1, !tbaa !16
-  %9 = sext i8 %.val.i.i.i.i.us to i32
-  %10 = add nsw i32 %9, -58
-  %isdigit.i.i35.i.i.i.i.us = icmp ult i32 %10, -10
+  %6 = add i8 %.val.i.i.i.i.us, -58
+  %isdigit.i.i35.i.i.i.i.us = icmp ult i8 %6, -10
   br i1 %isdigit.i.i35.i.i.i.i.us, label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.us.loopexit.split.loop.exit119", label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1162,9 +1154,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %._crit_edge.i.i.i.i.us
   %.029.val.i.i.i.i.us = load i8, ptr %.029.lcssa.i.i.i.i.us, align 1, !tbaa !16
-  %11 = sext i8 %.029.val.i.i.i.i.us to i32
-  %12 = add nsw i32 %11, -58
-  %isdigit.i.i36.i.i.i.i.us = icmp ult i32 %12, -10
+  %7 = add i8 %.029.val.i.i.i.i.us, -58
+  %isdigit.i.i36.i.i.i.i.us = icmp ult i8 %7, -10
   br i1 %isdigit.i.i36.i.i.i.i.us, label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.us", label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -1174,9 +1165,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %._crit_edge.i.i.i.i.us
   %.1.i.i.i.i.us = phi ptr [ %i.ad, %bb.h ], [ %.029.lcssa.i.i.i.i.us, %._crit_edge.i.i.i.i.us ] ; 3 uses
   %.1.val.i.i.i.i.us = load i8, ptr %.1.i.i.i.i.us, align 1, !tbaa !16
-  %13 = sext i8 %.1.val.i.i.i.i.us to i32
-  %14 = add nsw i32 %13, -58
-  %isdigit.i.i37.i.i.i.i.us = icmp ult i32 %14, -10
+  %8 = add i8 %.1.val.i.i.i.i.us, -58
+  %isdigit.i.i37.i.i.i.i.us = icmp ult i8 %8, -10
   br i1 %isdigit.i.i37.i.i.i.i.us, label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.us", label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -1186,9 +1176,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %._crit_edge.i.i.i.i.us
   %.2.i.i.i.i.us = phi ptr [ %i.ae, %bb.j ], [ %.029.lcssa.i.i.i.i.us, %._crit_edge.i.i.i.i.us ] ; 2 uses
   %.2.val.i.i.i.i.us = load i8, ptr %.2.i.i.i.i.us, align 1, !tbaa !16
-  %15 = sext i8 %.2.val.i.i.i.i.us to i32
-  %16 = add nsw i32 %15, -58
-  %isdigit.i.i38.i.i.i.i.us = icmp ult i32 %16, -10
+  %9 = add i8 %.2.val.i.i.i.i.us, -58
+  %isdigit.i.i38.i.i.i.i.us = icmp ult i8 %9, -10
   br i1 %isdigit.i.i38.i.i.i.i.us, label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.us", label %"_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.thread.us"
 
 "_ZSt6all_ofIPKcZN8WasmEdge9Validator12_GLOBAL__N_119isPreReleaseOrBuildESt17basic_string_viewIcSt11char_traitsIcEEbE3$_0EbT_SA_T0_.exit.thread.us": ; preds = %bb.k, %._crit_edge.i.i.i.i.us

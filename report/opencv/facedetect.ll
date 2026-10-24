@@ -204,16 +204,20 @@ bb.ax:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.ay:                                            ; preds = %bb.ax
   %i.ia = load ptr, ptr %5, align 8, !tbaa !18
-  %i.ib = load i8, ptr %i.ia, align 1, !tbaa !16
-  %27 = sext i8 %i.ib to i32
-  %isdigittmp = add nsw i32 %27, -48              ; 2 uses
-  %isdigit = icmp ult i32 %isdigittmp, 10
+  %i.ib = load i8, ptr %i.ia, align 1, !tbaa !16  ; 2 uses
+  %27 = add i8 %i.ib, -48
+  %isdigit = icmp ult i8 %27, 10
   %i.ic = icmp eq i64 %i.hy, 1
   %or.cond = and i1 %i.ic, %isdigit
-  br i1 %or.cond, label %.thread, label %bb.be
+  br i1 %or.cond, label %28, label %bb.be
 
-.thread:                                          ; preds = %bb.ay, %bb.ax
-  %i.id = phi i32 [ 0, %bb.ax ], [ %isdigittmp, %bb.ay ] ; 2 uses
+28:                                               ; preds = %bb.ay
+  %29 = zext nneg i8 %i.ib to i32
+  %30 = add nsw i32 %29, -48
+  br label %.thread
+
+.thread:                                          ; preds = %bb.ax, %28
+  %i.id = phi i32 [ %30, %28 ], [ 0, %bb.ax ]     ; 2 uses
   %i.ie = invoke noundef zeroext i1 @_ZN2cv12VideoCapture4openEii(ptr noundef nonnull align 8 dereferenceable(25) %2, i32 noundef %i.id, i32 noundef 0)
           to label %bb.az unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

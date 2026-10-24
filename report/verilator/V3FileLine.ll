@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %.lr.ph184
 .critedge6.loopexit:                              ; preds = %bb.e, %.lr.ph184
   %.ph = phi i8 [ 0, %bb.e ], [ %i.r, %.lr.ph184 ]
   %.374.lcssa.ph = phi ptr [ %i.u, %bb.e ], [ %.374183, %.lr.ph184 ]
-  %10 = sext i8 %i.m to i32
-  %11 = add nsw i32 %10, -48
-  %i.w = icmp ult i32 %11, 10
+  %10 = add i8 %i.m, -48
+  %i.w = icmp ult i8 %10, 10
   br label %.critedge6
 
 .critedge6:                                       ; preds = %bb.b, %bb.c, %bb.d, %.critedge6.loopexit, %bb.a
@@ -476,19 +475,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124: ; preds = %bb
 bb.af:                                            ; preds = %.preheader, %bb.ag
   %.576.pn = phi ptr [ %.6, %bb.ag ], [ %.576, %.preheader ]
   %.6 = getelementptr inbounds nuw i8, ptr %.576.pn, i64 1 ; 3 uses
-  %i.cy = load i8, ptr %.6, align 1, !tbaa !15    ; 2 uses
+  %i.cy = load i8, ptr %.6, align 1, !tbaa !15    ; 3 uses
   %.not101 = icmp eq i8 %i.cy, 0
   br i1 %.not101, label %.critedge12.thread, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %i.cz = sext i8 %i.cy to i32                    ; 2 uses
+  %i.cz = sext i8 %i.cy to i32
   %i.da = call i32 @isspace(i32 noundef %i.cz) #27
   %.not102 = icmp eq i32 %i.da, 0
   br i1 %.not102, label %.critedge12, label %bb.af, !llvm.loop !334
 
 .critedge12:                                      ; preds = %bb.ag
-  %isdigittmp103 = add nsw i32 %i.cz, -48
-  %isdigit104 = icmp ult i32 %isdigittmp103, 10
+  %11 = add i8 %i.cy, -48
+  %isdigit104 = icmp ult i8 %11, 10
   br i1 %isdigit104, label %bb.ah, label %.critedge12.thread
 
 bb.ah:                                            ; preds = %.critedge12

@@ -205,12 +205,11 @@ bb.aw:                                            ; preds = %_ZN5scene16CXMeshFi
   %i.hf = phi i32 [ %.promoted7.i.i, %.lr.ph.i.i ], [ %i.hr, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i ] ; 3 uses
   %i.hg = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.hs, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i ] ; 5 uses
   %i.hh = load i8, ptr %i.hg, align 1, !tbaa !27  ; 3 uses
-  %15 = sext i8 %i.hh to i32
   %.off.i.i = add i8 %i.hh, -45
   %switch.i.i = icmp ult i8 %.off.i.i, 2
-  %16 = add nsw i32 %15, -48
-  %i.hi = icmp ult i32 %16, 10
-  %or.cond.i.i = select i1 %switch.i.i, i1 true, i1 %i.hi
+  %15 = add i8 %i.hh, -48
+  %i.hi = icmp ult i8 %15, 10
+  %or.cond.i.i = or i1 %switch.i.i, %i.hi
   br i1 %or.cond.i.i, label %_ZN5scene16CXMeshFileLoader28findNextNoneWhiteSpaceNumberEv.exit.i, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
@@ -613,12 +612,11 @@ bb.g:                                             ; preds = %_ZN5scene16CXMeshFi
   %i.aa = phi i32 [ %.promoted7.i, %.lr.ph.i ], [ %i.am, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i ] ; 3 uses
   %i.ab = phi ptr [ %.promoted.i, %.lr.ph.i ], [ %i.an, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i ] ; 5 uses
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !27  ; 3 uses
-  %1 = sext i8 %i.ac to i32
   %.off.i = add i8 %i.ac, -45
   %switch.i = icmp ult i8 %.off.i, 2
-  %2 = add nsw i32 %1, -48
-  %i.ad = icmp ult i32 %2, 10
-  %or.cond.i = select i1 %switch.i, i1 true, i1 %i.ad
+  %1 = add i8 %i.ac, -48
+  %i.ad = icmp ult i8 %1, 10
+  %or.cond.i = or i1 %switch.i, %i.ad
   br i1 %or.cond.i, label %_ZN5scene16CXMeshFileLoader28findNextNoneWhiteSpaceNumberEv.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -1021,12 +1019,11 @@ bb.ab:                                            ; preds = %_ZN5scene16CXMeshFi
   %i.dq = phi i32 [ %.promoted7.i.i, %.lr.ph.i.i ], [ %i.ec, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i ] ; 3 uses
   %i.dr = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.ed, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i ] ; 5 uses
   %i.ds = load i8, ptr %i.dr, align 1, !tbaa !27  ; 3 uses
-  %8 = sext i8 %i.ds to i32
   %.off.i.i = add i8 %i.ds, -45
   %switch.i.i = icmp ult i8 %.off.i.i, 2
-  %9 = add nsw i32 %8, -48
-  %i.dt = icmp ult i32 %9, 10
-  %or.cond.i.i = select i1 %switch.i.i, i1 true, i1 %i.dt
+  %8 = add i8 %i.ds, -48
+  %i.dt = icmp ult i8 %8, 10
+  %or.cond.i.i = or i1 %switch.i.i, %i.dt
   br i1 %or.cond.i.i, label %_ZN5scene16CXMeshFileLoader28findNextNoneWhiteSpaceNumberEv.exit.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
@@ -1156,12 +1153,11 @@ bb.aj:                                            ; preds = %_ZN5scene16CXMeshFi
   %i.fq = phi i32 [ %.promoted7.i.i.1, %.lr.ph.i.i.1 ], [ %i.gc, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i.1 ] ; 3 uses
   %i.fr = phi ptr [ %i.ej, %.lr.ph.i.i.1 ], [ %i.gd, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i.1 ] ; 5 uses
   %i.fs = load i8, ptr %i.fr, align 1, !tbaa !27  ; 3 uses
-  %10 = sext i8 %i.fs to i32
   %.off.i.i.1 = add i8 %i.fs, -45
   %switch.i.i.1 = icmp ult i8 %.off.i.i.1, 2
-  %11 = add nsw i32 %10, -48
-  %i.ft = icmp ult i32 %11, 10
-  %or.cond.i.i.1 = select i1 %switch.i.i.1, i1 true, i1 %i.ft
+  %9 = add i8 %i.fs, -48
+  %i.ft = icmp ult i8 %9, 10
+  %or.cond.i.i.1 = or i1 %switch.i.i.1, %i.ft
   br i1 %or.cond.i.i.1, label %_ZN5scene16CXMeshFileLoader28findNextNoneWhiteSpaceNumberEv.exit.i.1, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
@@ -1322,12 +1318,11 @@ bb.at:                                            ; preds = %_ZN5scene16CXMeshFi
   %i.hx = phi i32 [ %.promoted7.i.i.2, %.lr.ph.i.i.2 ], [ %i.ij, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i.2 ] ; 3 uses
   %i.hy = phi ptr [ %i.gv, %.lr.ph.i.i.2 ], [ %i.ik, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i.2 ] ; 5 uses
   %i.hz = load i8, ptr %i.hy, align 1, !tbaa !27  ; 3 uses
-  %12 = sext i8 %i.hz to i32
   %.off.i.i.2 = add i8 %i.hz, -45
   %switch.i.i.2 = icmp ult i8 %.off.i.i.2, 2
-  %13 = add nsw i32 %12, -48
-  %i.ia = icmp ult i32 %13, 10
-  %or.cond.i.i.2 = select i1 %switch.i.i.2, i1 true, i1 %i.ia
+  %10 = add i8 %i.hz, -48
+  %i.ia = icmp ult i8 %10, 10
+  %or.cond.i.i.2 = or i1 %switch.i.i.2, %i.ia
   br i1 %or.cond.i.i.2, label %_ZN5scene16CXMeshFileLoader28findNextNoneWhiteSpaceNumberEv.exit.i.2, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
@@ -1679,12 +1674,11 @@ bb.bq:                                            ; preds = %_ZN5scene16CXMeshFi
   %i.mu = phi i32 [ %.promoted7.i.i108, %.lr.ph.i.i107 ], [ %i.ng, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i113 ] ; 3 uses
   %i.mv = phi ptr [ %.promoted.i.i104, %.lr.ph.i.i107 ], [ %i.nh, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i.i113 ] ; 5 uses
   %i.mw = load i8, ptr %i.mv, align 1, !tbaa !27  ; 3 uses
-  %14 = sext i8 %i.mw to i32
   %.off.i.i109 = add i8 %i.mw, -45
   %switch.i.i110 = icmp ult i8 %.off.i.i109, 2
-  %15 = add nsw i32 %14, -48
-  %i.mx = icmp ult i32 %15, 10
-  %or.cond.i.i111 = select i1 %switch.i.i110, i1 true, i1 %i.mx
+  %11 = add i8 %i.mw, -48
+  %i.mx = icmp ult i8 %11, 10
+  %or.cond.i.i111 = or i1 %switch.i.i110, %i.mx
   br i1 %or.cond.i.i111, label %_ZN5scene16CXMeshFileLoader28findNextNoneWhiteSpaceNumberEv.exit.i105, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
@@ -2087,12 +2081,11 @@ bb.h:                                             ; preds = %_ZN5scene16CXMeshFi
   %i.ag = phi i32 [ %.promoted7.i, %.lr.ph.i ], [ %i.as, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i ] ; 3 uses
   %i.ah = phi ptr [ %.promoted.i, %.lr.ph.i ], [ %i.at, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit.i ] ; 5 uses
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !27  ; 3 uses
-  %1 = sext i8 %i.ai to i32
   %.off.i = add i8 %i.ai, -45
   %switch.i = icmp ult i8 %.off.i, 2
-  %2 = add nsw i32 %1, -48
-  %i.aj = icmp ult i32 %2, 10
-  %or.cond.i = select i1 %switch.i, i1 true, i1 %i.aj
+  %1 = add i8 %i.ai, -48
+  %i.aj = icmp ult i8 %1, 10
+  %or.cond.i = or i1 %switch.i, %i.aj
   br i1 %or.cond.i, label %_ZN5scene16CXMeshFileLoader28findNextNoneWhiteSpaceNumberEv.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -2495,12 +2488,11 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5scene1
   %i.i = phi i32 [ %.promoted7, %.lr.ph ], [ %i.u, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit ] ; 3 uses
   %i.j = phi ptr [ %.promoted, %.lr.ph ], [ %i.v, %_ZN5scene16CXMeshFileLoader18readUntilEndOfLineEv.exit ] ; 4 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !27    ; 3 uses
-  %1 = sext i8 %i.k to i32
   %.off = add i8 %i.k, -45
   %switch = icmp ult i8 %.off, 2
-  %2 = add nsw i32 %1, -48
-  %i.l = icmp ult i32 %2, 10
-  %or.cond = select i1 %switch, i1 true, i1 %i.l
+  %1 = add i8 %i.k, -48
+  %i.l = icmp ult i8 %1, 10
+  %or.cond = or i1 %switch, %i.l
   br i1 %or.cond, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
