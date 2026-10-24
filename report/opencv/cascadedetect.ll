@@ -205,7 +205,7 @@ _ZNSt6vectorIN2cv16FeatureEvaluator9ScaleDataESaIS2_EE6resizeEm.exit: ; preds = 
   %i.bp = and i32 %i.bo, -32                      ; 2 uses
   %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %.sroa.0.0.copyload, i32 %i.bp)
   store i32 %.sroa.speculated, ptr %i.bi, align 4, !tbaa !113
-  %i.bq = icmp slt i32 %.sroa.0.0.copyload, %i.bp
+  %i.bq = icmp slt i32 %.sroa.0.0.copyload, %i.bp ; 2 uses
   %narrow = select i1 %.not, i1 true, i1 %i.bq    ; 2 uses
   %.not72 = icmp eq ptr %i.ap, %i.aq
   br i1 %.not72, label %._crit_edge, label %.lr.ph
@@ -232,7 +232,8 @@ bb.t:                                             ; preds = %_ZNSt6vectorIN2cv16
   %i.cc = tail call float @llvm.fabs.f32(float %i.cb)
   %i.cd = fmul float %i.bk, f0x37480000
   %i.ce = fcmp ogt float %i.cc, %i.cd
-  %spec.select.peel = zext i1 %i.ce to i8
+  %narrow88 = select i1 %i.ce, i1 true, i1 %i.bq
+  %spec.select.peel = zext i1 %narrow88 to i8
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZNSt6vectorIN2cv16FeatureEvaluator9ScaleDataESaIS2_EE2atEm.exit.peel

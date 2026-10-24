@@ -205,13 +205,13 @@ tg3json__strlen_fallback.exit.i:
   %i.d = alloca i64, align 8                      ; 5 uses
   %i.e = alloca i64, align 8                      ; 8 uses
   %i.f = alloca i32, align 4                      ; 5 uses
-  %i.g = alloca [4096 x i8], align 16             ; 16 uses
+  %i.g = alloca [4096 x i8], align 16             ; 17 uses
   %i.h = ptrtoaddr ptr %i.g to i64                ; 2 uses
   %6 = alloca %struct.tg3__data_uri_result, align 8 ; 6 uses
   %i.i = alloca i64, align 8                      ; 6 uses
   %i.j = alloca [64 x i8], align 16               ; 8 uses
-  %i.k = alloca ptr, align 8                      ; 8 uses
-  %i.l = alloca i64, align 8                      ; 10 uses
+  %i.k = alloca ptr, align 8                      ; 9 uses
+  %i.l = alloca i64, align 8                      ; 12 uses
   %i.m = load i32, ptr %1, align 8, !tbaa !40
   %.not18.i.i = icmp eq i32 %i.m, 6
   br i1 %.not18.i.i, label %.preheader.i.i, label %tg3__json_is_object.exit.thread
@@ -614,7 +614,7 @@ tg3__arena_alloc.exit:                            ; preds = %bb.p
   %i.gh = phi ptr [ %i.fx, %tg3__arena_alloc.exit.thread ], [ %i.gf, %tg3__arena_alloc.exit ] ; 2 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.ep, i64 8
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 280
-  %i.gk = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %i.gk = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.gn = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
@@ -1017,7 +1017,7 @@ bb.ba:                                            ; preds = %bb.v
   %i.qf = icmp ne ptr %i.qd, null                 ; 2 uses
   %i.qg = icmp ugt i32 %i.hn, 4
   %or.cond.i103.i = and i1 %i.qg, %i.qf
-  br i1 %or.cond.i103.i, label %.preheader.i.i952, label %tg3_is_data_uri.exit.thread.i.a
+  br i1 %or.cond.i103.i, label %.preheader.i.i952, label %tg3_is_data_uri.exit.thread.i
 
 .preheader.i.i952:                                ; preds = %.thread.i
   %i.qh = load i8, ptr %i.qd, align 1, !tbaa !37
@@ -1420,7 +1420,17 @@ tg3__error_push.exit129.i:                        ; preds = %tg3__decode_data_ur
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #20
   br label %bb.ef
 
-tg3_is_data_uri.exit.thread.i.a:                  ; preds = %.preheader.i.i952, %.preheader.i.i952.1, %.preheader.i.i952.2, %.preheader.i.i952.3, %.preheader.i.i952.4, %.thread.i
+tg3_is_data_uri.exit.thread.i:                    ; preds = %.thread.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #20
+  store ptr null, ptr %i.k, align 8, !tbaa !23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #20
+  store i64 0, ptr %i.l, align 8, !tbaa !30
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #20
+  %7 = load ptr, ptr %i.gk, align 8, !tbaa !547   ; 2 uses
+  %.not.i130.i = icmp eq ptr %7, null
+  br i1 %.not.i130.i, label %bb.cc, label %bb.ck
+
+tg3_is_data_uri.exit.thread.i.a:                  ; preds = %.preheader.i.i952, %.preheader.i.i952.1, %.preheader.i.i952.2, %.preheader.i.i952.3, %.preheader.i.i952.4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #20
   store ptr null, ptr %i.k, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #20
@@ -1428,9 +1438,9 @@ tg3_is_data_uri.exit.thread.i.a:                  ; preds = %.preheader.i.i952, 
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #20
   %i.xw = load ptr, ptr %i.gk, align 8, !tbaa !547 ; 2 uses
   %.not.i130.i.a = icmp eq ptr %i.xw, null
-  br i1 %.not.i130.i.a, label %bb.cc, label %bb.ck
+  br i1 %.not.i130.i.a, label %bb.cc, label %bb.cl
 
-bb.cc:                                            ; preds = %tg3_is_data_uri.exit.thread.i.a
+bb.cc:                                            ; preds = %tg3_is_data_uri.exit.thread.i.a, %tg3_is_data_uri.exit.thread.i
   %i.xx = load ptr, ptr %i.gp, align 8, !tbaa !145 ; 6 uses
   %.not.i.i142.i = icmp eq ptr %i.xx, null
   br i1 %.not.i.i142.i, label %tg3__load_external_file.exit.thread.i, label %bb.cd
@@ -1622,10 +1632,11 @@ bb.cj:                                            ; preds = %.loopexit.i.i.i, %b
   store i32 1, ptr %i.aag, align 8, !tbaa !67
   br label %tg3__load_external_file.exit.thread.i
 
-bb.ck:                                            ; preds = %tg3_is_data_uri.exit.thread.i.a
+bb.ck:                                            ; preds = %tg3_is_data_uri.exit.thread.i
   br i1 %i.qf, label %bb.cl, label %.loopexit.i132.i
 
-bb.cl:                                            ; preds = %bb.ck
+bb.cl:                                            ; preds = %bb.ck, %tg3_is_data_uri.exit.thread.i.a
+  %8 = phi ptr [ %7, %bb.ck ], [ %i.xw, %tg3_is_data_uri.exit.thread.i.a ]
   %i.aah = zext i32 %i.hn to i64                  ; 12 uses
   br label %bb.cm
 
@@ -2028,7 +2039,7 @@ tg3__memcpy.exit91.i.i:                           ; preds = %.lr.ph.i86.i.i.prol
   %i.aib = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.aia
   store i8 0, ptr %i.aib, align 1, !tbaa !37
   %i.aic = load ptr, ptr %i.gn, align 8, !tbaa !549
-  %i.aid = call i32 %i.xw(ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.g, i32 noundef %i.age, ptr noundef %i.aic) #22, !inline_history !453
+  %i.aid = call i32 %8(ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.g, i32 noundef %i.age, ptr noundef %i.aic) #22, !inline_history !453
   %.not62.i.i = icmp eq i32 %i.aid, 0
   br i1 %.not62.i.i, label %bb.dj, label %bb.dk
 
@@ -2065,7 +2076,6 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dl
   %i.ain = load ptr, ptr %i.gp, align 8, !tbaa !145
   %i.aio = load ptr, ptr %0, align 8, !tbaa !144
   call void (ptr, ptr, i32, i32, ptr, ptr, ...) @tg3__error_pushf(ptr noundef %i.ain, ptr noundef %i.aio, i32 poison, i32 noundef 4, ptr noundef null, ptr noundef nonnull @.str.79, ptr noundef nonnull %i.g, i64 noundef %i.aim, i64 noundef %i.ail) #21
-  store ptr null, ptr %i.k, align 8, !tbaa !23
   br label %tg3__load_external_file.exit.thread.i
 
 tg3__load_external_file.exit.thread.i:            ; preds = %bb.dn, %bb.dj, %bb.di, %bb.dg, %tg3__uri_is_safe.exit.i.i, %bb.df, %bb.dd, %bb.db, %.loopexit.i132.i, %bb.cj, %bb.ch, %bb.cf, %bb.cc

@@ -204,7 +204,7 @@ bb.ga:                                            ; preds = %.loopexit820, %.cri
 
 bb.gb:                                            ; preds = %bb.ga, %.thread790
   %i.of = phi i32 [ %i.oe, %bb.ga ], [ %.promoted, %.thread790 ] ; 8 uses
-  %i.og = icmp ne ptr %.12, null                  ; 2 uses
+  %i.og = icmp ne ptr %.12, null                  ; 3 uses
   %i.oh = icmp ne i32 %i.of, 3
   %or.cond21 = select i1 %i.og, i1 %i.oh, i1 false
   br i1 %or.cond21, label %bb.gc, label %.critedge719
@@ -419,9 +419,10 @@ bb.hb:                                            ; preds = %saveTextPart.exit.t
   br label %.critedge719
 
 .critedge719:                                     ; preds = %bb.gr, %bb.gw, %bb.gz, %bb.hb, %bb.gt, %bb.gb
+  %4 = phi i1 [ %i.og, %bb.gr ], [ true, %bb.gw ], [ true, %bb.gz ], [ true, %bb.hb ], [ true, %bb.gt ], [ %i.og, %bb.gb ]
   %i.qq = phi i32 [ %i.pq, %bb.gr ], [ %i.of, %bb.gw ], [ %i.qg, %bb.gz ], [ %i.qp, %bb.hb ], [ %i.of, %bb.gt ], [ %i.of, %bb.gb ]
   %.not707 = icmp ne ptr %.12, %0
-  %or.cond722.not = and i1 %.not707, %i.og
+  %or.cond722.not = and i1 %.not707, %4
   br i1 %or.cond722.not, label %bb.hc, label %.critedge719.thread1079
 
 bb.hc:                                            ; preds = %.critedge719

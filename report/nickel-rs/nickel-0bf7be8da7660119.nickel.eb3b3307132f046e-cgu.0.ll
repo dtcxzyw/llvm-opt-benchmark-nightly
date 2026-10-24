@@ -205,6 +205,11 @@ bb.bc:                                            ; preds = %bb.ba
   %i.fj = trunc nuw i8 %.sroa.016.4168.i.i.i.i.i to i1
   br i1 %i.fj, label %bb.bd, label %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i"
 
+1:                                                ; preds = %bb.bi
+  %2 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %i.et, label %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i", label %common.resume.i.i.i.i
+
 bb.bd:                                            ; preds = %.loopexit.split-lp25.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp
   call void @llvm.experimental.noalias.scope.decl(metadata !3432)
   call void @llvm.experimental.noalias.scope.decl(metadata !3433)
@@ -242,12 +247,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bh
   invoke void @"_ZN5alloc2rc15Rc$LT$T$C$A$GT$9drop_slow17he282a80f62f516eeE"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.ap)
-          to label %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit82.i.i.i.i.i" unwind label %.split.i.i.i.i.i, !noalias !3398
-
-.split.i.i.i.i.i:                                 ; preds = %bb.bi
-  %1 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  br i1 %i.et, label %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i", label %common.resume.i.i.i.i
+          to label %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit82.i.i.i.i.i" unwind label %1, !noalias !3398
 
 bb.bj:                                            ; preds = %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit82.i.i.i.i.i"
   call void @llvm.experimental.noalias.scope.decl(metadata !3440)
@@ -389,12 +389,12 @@ bb.bu:                                            ; preds = %"_ZN70_$LT$alloc..v
   call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i83.i.i.i.i.i, i64 noundef %i.gx, i64 noundef range(i64 1, -9223372036854775807) 8) #53, !noalias !3445
   br label %"_ZN16nickel_lang_core4eval9operation2eq28_$u7b$$u7b$closure$u7d$$u7d$17hec12764e11193481E.exit.i.i.i.i"
 
-common.resume.i.i.i.i:                            ; preds = %.body.i4.i.i.i.i, %bb.cw, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit98.i.i.i.i.i", %bb.cl, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h2f95d0f5b6a89b90E.exit.i.i.i", %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit94.i.i.i.i.i", %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i", %bb.bt, %.body.i87.i.i.i.i.i, %.split.i.i.i.i.i
-  %common.resume.op.i.i.i.i = phi { ptr, i32 } [ %i.iv, %.body.i4.i.i.i.i ], [ %eh.lpad-body.i.i.i, %.body.i87.i.i.i.i.i ], [ %eh.lpad-body.i.i.i, %bb.bt ], [ %.pn38184.i.i.i.i.i, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i" ], [ %1, %.split.i.i.i.i.i ], [ %.pn.pn150193206.i.i.i.i.i, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit98.i.i.i.i.i" ], [ %.pn36182.i.i.i.i.i, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit94.i.i.i.i.i" ], [ %.pn.pn150193206.i.i.i.i.i, %bb.cw ], [ %.pn36182.i.i.i.i.i, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h2f95d0f5b6a89b90E.exit.i.i.i" ], [ %.pn36182.i.i.i.i.i, %bb.cl ]
+common.resume.i.i.i.i:                            ; preds = %.body.i4.i.i.i.i, %bb.cw, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit98.i.i.i.i.i", %bb.cl, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h2f95d0f5b6a89b90E.exit.i.i.i", %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit94.i.i.i.i.i", %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i", %bb.bt, %.body.i87.i.i.i.i.i, %1
+  %common.resume.op.i.i.i.i = phi { ptr, i32 } [ %i.iv, %.body.i4.i.i.i.i ], [ %eh.lpad-body.i.i.i, %.body.i87.i.i.i.i.i ], [ %eh.lpad-body.i.i.i, %bb.bt ], [ %.pn38184.i.i.i.i.i, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i" ], [ %2, %1 ], [ %.pn.pn150193206.i.i.i.i.i, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit98.i.i.i.i.i" ], [ %.pn36182.i.i.i.i.i, %"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit94.i.i.i.i.i" ], [ %.pn.pn150193206.i.i.i.i.i, %bb.cw ], [ %.pn36182.i.i.i.i.i, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h2f95d0f5b6a89b90E.exit.i.i.i" ], [ %.pn36182.i.i.i.i.i, %bb.cl ]
   resume { ptr, i32 } %common.resume.op.i.i.i.i
 
-"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i": ; preds = %.split.i.i.i.i.i, %bb.bf, %bb.be, %bb.bd, %.loopexit.split-lp25.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp
-  %.pn38184.i.i.i.i.i = phi { ptr, i32 } [ %1, %.split.i.i.i.i.i ], [ %lpad.loopexit.split-lp513, %.loopexit.split-lp25.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp513, %bb.bf ], [ %lpad.loopexit.split-lp513, %bb.bd ], [ %lpad.loopexit.split-lp513, %bb.be ]
+"_ZN4core3ptr67drop_in_place$LT$nickel_lang_core..term..record..SharedMetadata$GT$17h0324633f657496e5E.exit80.i.i.i.i.i": ; preds = %bb.bf, %bb.be, %bb.bd, %1, %.loopexit.split-lp25.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp
+  %.pn38184.i.i.i.i.i = phi { ptr, i32 } [ %2, %1 ], [ %lpad.loopexit.split-lp513, %.loopexit.split-lp25.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp513, %bb.bf ], [ %lpad.loopexit.split-lp513, %bb.bd ], [ %lpad.loopexit.split-lp513, %bb.be ]
   invoke fastcc void @"_ZN4core3ptr83drop_in_place$LT$alloc..vec..Vec$LT$nickel_lang_core..term..RuntimeContract$GT$$GT$17h7e944a18cbc2e1abE"(ptr noalias noundef align 8 dereferenceable(24) %i.aw) #61
           to label %common.resume.i.i.i.i unwind label %bb.aa, !noalias !3398
 
@@ -797,7 +797,7 @@ bb.uy:                                            ; preds = %"_ZN70_$LT$alloc..v
   %.not66.i.i.i.i.i.i.i = icmp eq ptr %.pre.i.pre.i.i.i.i.i.i, null ; 2 uses
   %i.bor = getelementptr inbounds nuw i8, ptr %i.nv, i64 24 ; 8 uses
   %i.bos = load ptr, ptr %i.bor, align 8, !alias.scope !52697, !noalias !52686
-  %.not68.i.i.i.i.i.i.i = icmp eq ptr %i.bos, null ; 6 uses
+  %.not68.i.i.i.i.i.i.i = icmp eq ptr %i.bos, null ; 3 uses
   %or.cond86.i.i.i.i.i.i.i = select i1 %.not66.i.i.i.i.i.i.i, i1 true, i1 %.not68.i.i.i.i.i.i.i
   br i1 %or.cond86.i.i.i.i.i.i.i, label %bb.vm, label %bb.vn
 
@@ -1120,6 +1120,7 @@ bb.wn:                                            ; preds = %bb.wm
   br label %_ZN16nickel_lang_core4repl11query_print19render_query_result17hbf488b167dac3508E.exit.i.i.i.i.i.i
 
 .thread.i.i.i.i.i.i.i:                            ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hfedeefc8cce81a05E.exit144.i.i.i.i.i.i.i", %bb.vy, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hfedeefc8cce81a05E.exit126.i.i.i.i.i.i.i", %bb.vo, %bb.vn, %bb.vm
+  %.not68258.i.i.i.i.i.i.i = phi i1 [ %.not68.i.i.i.i.i.i.i, %bb.vm ], [ false, %bb.vy ], [ false, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hfedeefc8cce81a05E.exit144.i.i.i.i.i.i.i" ], [ false, %bb.vo ], [ false, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hfedeefc8cce81a05E.exit126.i.i.i.i.i.i.i" ], [ false, %bb.vn ] ; 4 uses
   %.sroa.04.2164.i.i.i.i.i.i.i = phi i1 [ %.sroa.04.1.i.i.i.i.i.i.i, %bb.vm ], [ %.sroa.04.1.i.i.i.i.i.i.i, %bb.vy ], [ true, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hfedeefc8cce81a05E.exit144.i.i.i.i.i.i.i" ], [ %.sroa.04.1.i.i.i.i.i.i.i, %bb.vo ], [ true, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hfedeefc8cce81a05E.exit126.i.i.i.i.i.i.i" ], [ %.sroa.04.1.i.i.i.i.i.i.i, %bb.vn ] ; 2 uses
   %i.bql = getelementptr inbounds nuw i8, ptr %.pre.i.pre.i.i.i.i.i.i, i64 352
   %i.bqm = load ptr, ptr %i.bql, align 8, !noalias !52698, !noundef !34 ; 2 uses
@@ -1134,7 +1135,7 @@ bb.wo:                                            ; preds = %.thread.i.i.i.i.i.i
   br i1 %i.bqq, label %bb.wp, label %.thread167.i.i.i.i.i.i.i
 
 .thread167.i.i.i.i.i.i.i:                         ; preds = %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.i.i.i.i.i.i.i", %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.thread175.i.i.i.i.i.i.i", %bb.wo, %.thread.i.i.i.i.i.i.i, %bb.vm, %.thread260.i.i.i.i.i.i.i, %.thread117.i.i.i.i.i.i
-  %.not68257.i.i.i.i.i.i.i = phi i1 [ %.not68.i.i.i.i.i.i.i, %bb.wo ], [ %.not68.i.i.i.i.i.i.i, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.i.i.i.i.i.i.i" ], [ %.not68.i.i.i.i.i.i.i, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.thread175.i.i.i.i.i.i.i" ], [ %.not68.i.i.i.i.i.i.i, %bb.vm ], [ %.not68.i.i.i.i.i.i.i, %.thread.i.i.i.i.i.i.i ], [ %.not68253.i.i.i.i.i.i.i, %.thread260.i.i.i.i.i.i.i ], [ %.not68.i109.i.i.i.i.i.i, %.thread117.i.i.i.i.i.i ]
+  %.not68257.i.i.i.i.i.i.i = phi i1 [ %.not68258.i.i.i.i.i.i.i, %bb.wo ], [ %.not68258.i.i.i.i.i.i.i, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.i.i.i.i.i.i.i" ], [ %.not68258.i.i.i.i.i.i.i, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.thread175.i.i.i.i.i.i.i" ], [ %.not68.i.i.i.i.i.i.i, %bb.vm ], [ %.not68258.i.i.i.i.i.i.i, %.thread.i.i.i.i.i.i.i ], [ %.not68253.i.i.i.i.i.i.i, %.thread260.i.i.i.i.i.i.i ], [ %.not68.i109.i.i.i.i.i.i, %.thread117.i.i.i.i.i.i ]
   %i.bqr = phi ptr [ %i.bor, %bb.wo ], [ %i.bor, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.i.i.i.i.i.i.i" ], [ %i.bor, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.thread175.i.i.i.i.i.i.i" ], [ %i.bor, %bb.vm ], [ %i.bor, %.thread.i.i.i.i.i.i.i ], [ %i.bot, %.thread260.i.i.i.i.i.i.i ], [ %i.bmv, %.thread117.i.i.i.i.i.i ]
   %.sroa.04.3.i.i.i.i.i.i.i = phi i1 [ %.sroa.04.2164.i.i.i.i.i.i.i, %bb.wo ], [ true, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.i.i.i.i.i.i.i" ], [ true, %"_ZN123_$LT$nickel_lang_core..repl..query_print..MarkdownRenderer$u20$as$u20$nickel_lang_core..repl..query_print..QueryPrinter$GT$9write_doc17haa072379012388e5E.exit.thread175.i.i.i.i.i.i.i" ], [ %.sroa.04.1.i.i.i.i.i.i.i, %bb.vm ], [ %.sroa.04.2164.i.i.i.i.i.i.i, %.thread.i.i.i.i.i.i.i ], [ %.sroa.04.0.i100105.i.i.i.i.i.i, %.thread260.i.i.i.i.i.i.i ], [ false, %.thread117.i.i.i.i.i.i ] ; 3 uses
   %.not68.not.i.i.i.i.i.i.i = xor i1 %.not68257.i.i.i.i.i.i.i, true

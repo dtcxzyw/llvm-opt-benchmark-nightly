@@ -205,9 +205,9 @@ bb.z:                                             ; preds = %.preheader.split.i
   br i1 %or.cond88.i, label %.split.us.i, label %bb.ah
 
 .split.us.i:                                      ; preds = %.critedge.i, %.critedge.us.i
-  %.us-phi.i = phi i64 [ %i.bu, %.critedge.us.i ], [ %i.cm, %.critedge.i ]
+  %.us-phi.i = phi i64 [ %i.bu, %.critedge.us.i ], [ %i.cm, %.critedge.i ] ; 2 uses
   %.us-phi108.i = phi i64 [ %i.bx, %.critedge.us.i ], [ %i.cp, %.critedge.i ]
-  %.us-phi109.i = phi ptr [ %.0107.us.i, %.critedge.us.i ], [ %.0107.i, %.critedge.i ] ; 4 uses
+  %.us-phi109.i = phi ptr [ %.0107.us.i, %.critedge.us.i ], [ %.0107.i, %.critedge.i ] ; 5 uses
   %i.ct = icmp eq ptr %.us-phi109.i, %i.bo        ; 2 uses
   %i.cu = icmp eq i64 %.us-phi108.i, %i.ao        ; 2 uses
   %or.cond89.i = and i1 %i.cu, %i.ct
@@ -220,9 +220,10 @@ bb.aa:                                            ; preds = %.split.us.i
   %i.cy = load i64, ptr %i.cx, align 8
   %i.cz = or i64 %i.cy, %i.cv
   store i64 %i.cz, ptr %i.cx, align 8
-  br label %bb.ab
+  tail call void @_raw_spin_unlock_irqrestore(ptr noundef nonnull %.us-phi109.i, i64 noundef %.us-phi.i) #16
+  br label %bb.af
 
-bb.ab:                                            ; preds = %bb.aa, %.split.us.i
+bb.ab:                                            ; preds = %.split.us.i
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef nonnull %.us-phi109.i, i64 noundef %.us-phi.i) #16
   %.not90.i = xor i1 %i.ct, true
   %or.cond91.i = or i1 %i.cu, %.not90.i
@@ -246,7 +247,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.di = tail call i32 @timer_reduce(ptr noundef %i.df, i64 noundef %i.dh) #16 ; 0 uses
   br label %srcu_funnel_gp_start.exit
 
-bb.af:                                            ; preds = %bb.ab
+bb.af:                                            ; preds = %bb.ab, %bb.aa
   br i1 %2, label %srcu_funnel_gp_start.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af

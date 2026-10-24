@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %bb.b
   store ptr %i.n, ptr %i.e, align 8
   %i.o = cmpxchg ptr %i.h, i64 0, i64 2 seq_cst seq_cst, align 8, !noalias !399 ; 2 uses
   %i.p = extractvalue { i64, i1 } %i.o, 1         ; 2 uses
-  %2 = extractvalue { i64, i1 } %i.o, 0           ; 2 uses
   br i1 %i.p, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %2 = extractvalue { i64, i1 } %i.o, 0           ; 2 uses
   %i.q = icmp eq i64 %2, 3
   br i1 %i.q, label %bb.h, label %bb.i, !prof !6
 
@@ -469,20 +469,28 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 3 uses
   %i.c = alloca [16 x i8], align 8                ; 4 uses
   %i.d = alloca [8 x i8], align 8                 ; 3 uses
-  %.not.not = icmp eq i32 %4, -1
+  %.not = icmp ne i32 %4, -1                      ; 2 uses
   %i.e = icmp eq i64 %3, 0
-  %5 = icmp eq i32 %4, 0
-  %or.cond17 = select i1 %5, i1 %i.e, i1 false
-  br i1 %or.cond17, label %bb.c, label %bb.b
+  %or.cond17 = select i1 %.not, i1 %i.e, i1 false
+  br i1 %or.cond17, label %5, label %7
 
-bb.b:                                             ; preds = %bb.a
+5:                                                ; preds = %bb.a
+  %6 = icmp eq i32 %4, 0
+  br i1 %6, label %bb.c, label %bb.b
+
+7:                                                ; preds = %bb.a
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %9 = cmpxchg ptr %8, i64 0, i64 2 seq_cst seq_cst, align 8 ; 2 uses
+  %10 = extractvalue { i64, i1 } %9, 1
+  br i1 %10, label %bb.f, label %bb.e
+
+bb.b:                                             ; preds = %5
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.g = cmpxchg ptr %i.f, i64 0, i64 2 seq_cst seq_cst, align 8 ; 2 uses
   %i.h = extractvalue { i64, i1 } %i.g, 1
-  %6 = extractvalue { i64, i1 } %i.g, 0           ; 2 uses
-  br i1 %i.h, label %bb.f, label %bb.e
+  br i1 %i.h, label %bb.g, label %bb.e
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %5
   tail call void @_RNvMNtNtCslghKHtsL3a4_5tokio7runtime6driverNtB2_6Driver12park_timeout(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 %2, i64 noundef 0, i32 noundef 0)
   br label %bb.d
 
@@ -490,14 +498,18 @@ bb.d:                                             ; preds = %bb.i, %bb.k, %bb.c
   %.sroa.0.0 = phi i1 [ false, %bb.c ], [ true, %bb.k ], [ false, %bb.i ]
   ret i1 %.sroa.0.0
 
-bb.e:                                             ; preds = %bb.b
-  %i.i = icmp eq i64 %6, 3
+bb.e:                                             ; preds = %bb.b, %7
+  %.pn = phi { i64, i1 } [ %i.g, %bb.b ], [ %9, %7 ]
+  %11 = phi ptr [ %i.f, %bb.b ], [ %8, %7 ]
+  %12 = extractvalue { i64, i1 } %.pn, 0          ; 2 uses
+  %i.i = icmp eq i64 %12, 3
   br i1 %i.i, label %bb.k, label %bb.l, !prof !6
 
-bb.f:                                             ; preds = %bb.b
-  br i1 %.not.not, label %bb.h, label %bb.g
+bb.f:                                             ; preds = %7
+  br i1 %.not, label %bb.g, label %bb.h
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %bb.b, %bb.f
+  %13 = phi ptr [ %8, %bb.f ], [ %i.f, %bb.b ]
   tail call void @_RNvMNtNtCslghKHtsL3a4_5tokio7runtime6driverNtB2_6Driver12park_timeout(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %4)
   br label %bb.i
 
@@ -506,7 +518,8 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.j = atomicrmw xchg ptr %i.f, i64 0 seq_cst, align 8 ; 2 uses
+  %14 = phi ptr [ %8, %bb.h ], [ %13, %bb.g ]
+  %i.j = atomicrmw xchg ptr %14, i64 0 seq_cst, align 8 ; 2 uses
   %i.k = and i64 %i.j, -2
   %switch = icmp eq i64 %i.k, 2
   br i1 %switch, label %bb.d, label %bb.j, !prof !19
@@ -522,12 +535,12 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 bb.k:                                             ; preds = %bb.e
-  %i.l = atomicrmw xchg ptr %i.f, i64 0 seq_cst, align 8 ; 0 uses
+  %i.l = atomicrmw xchg ptr %11, i64 0 seq_cst, align 8 ; 0 uses
   br label %bb.d
 
 bb.l:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store i64 %6, ptr %i.d, align 8
+  store i64 %12, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.d, ptr %i.c, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8

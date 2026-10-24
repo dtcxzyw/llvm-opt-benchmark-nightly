@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.s = load ptr, ptr %i.d, align 16, !tbaa !99  ; 7 uses
+  %i.s = load ptr, ptr %i.d, align 16, !tbaa !99  ; 8 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 664 ; 4 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !28
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 768
@@ -289,19 +289,22 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !155 ; 2 uses
   %i.bb = icmp ne ptr %0, %i.ba
   %or.cond5.i.i = or i1 %i.av, %i.bb
-  br i1 %or.cond5.i.i, label %bb.o, label %_reset_form_creation.exit.i
+  br i1 %or.cond5.i.i, label %_reset_form_creation.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @gtk_toggle_button_set_active(ptr noundef %i.ba, i32 noundef 0) #16
-  br label %_reset_form_creation.exit.i
+  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !146
+  tail call void @gtk_toggle_button_set_active(ptr noundef %4, i32 noundef 0) #16
+  br label %bb.p
 
-_reset_form_creation.exit.i:                      ; preds = %bb.o, %bb.n
+_reset_form_creation.exit.i:                      ; preds = %bb.n
+  tail call void @gtk_toggle_button_set_active(ptr noundef %i.ba, i32 noundef 0) #16
   %i.bc = getelementptr inbounds nuw i8, ptr %i.s, i64 32
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !146
   tail call void @gtk_toggle_button_set_active(ptr noundef %i.bd, i32 noundef 0) #16
   br i1 %i.av, label %_add_shape.exit, label %bb.p
 
-bb.p:                                             ; preds = %_reset_form_creation.exit.i
+bb.p:                                             ; preds = %_reset_form_creation.exit.i, %bb.o
   %i.be = tail call i32 @gtk_toggle_button_get_active(ptr noundef %0) #16
   %.not24.i = icmp eq i32 %i.be, 0
   br i1 %.not24.i, label %bb.q, label %_add_shape.exit

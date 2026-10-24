@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca [4096 x i8], align 16             ; 8 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %5 = alloca %struct.IndexGroup, align 8         ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
@@ -317,13 +317,13 @@ bb.e:                                             ; preds = %bb.d
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 24
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !62
   %.not = icmp eq i32 %i.be, %i.au
-  br i1 %.not, label %bb.t, label %bb.f
+  br i1 %.not, label %bb.t, label %bb.h
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %6 = load ptr, ptr %4, align 8, !tbaa !28       ; 2 uses
+bb.f:                                             ; preds = %bb.d
   br i1 %3, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
+  %6 = load ptr, ptr %4, align 8, !tbaa !28
   %i.bf = load ptr, ptr %i.ae, align 8, !tbaa !67
   %i.bg = getelementptr inbounds [8 x i8], ptr %i.bf, i64 %i.ar
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !68
@@ -332,10 +332,11 @@ bb.g:                                             ; preds = %bb.f
   %i.bk = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @.str.128, ptr noundef %6, ptr noundef %i.bi, i32 noundef %i.bj) #26 ; 0 uses
   br label %bb.i
 
-bb.h:                                             ; preds = %bb.f
+bb.h:                                             ; preds = %bb.e, %bb.f
+  %7 = load ptr, ptr %4, align 8, !tbaa !28
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !80
-  %i.bn = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @.str.128, ptr noundef %6, ptr noundef %i.az, i32 noundef %i.bm) #26 ; 0 uses
+  %i.bn = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @.str.128, ptr noundef %7, ptr noundef %i.az, i32 noundef %i.bm) #26 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g

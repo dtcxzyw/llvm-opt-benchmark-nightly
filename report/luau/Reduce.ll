@@ -204,7 +204,9 @@ bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   br label %bb.d
 
-.preheader:                                       ; preds = %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit
+.preheader:                                       ; preds = %bb.d, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit
+  %4 = phi ptr [ %5, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit ], [ %i.f, %bb.d ] ; 2 uses
+  %.promoted80122 = phi ptr [ %.promoted80, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit ], [ %i.e, %bb.d ]
   store ptr %4, ptr %0, align 8
   %.promoted84 = load ptr, ptr %i.d, align 8, !tbaa !140
   br label %bb.j
@@ -212,13 +214,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit
   %i.e = phi ptr [ null, %bb.c ], [ %.promoted80, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit ] ; 12 uses
   %.079 = phi i64 [ 0, %bb.c ], [ %.sroa.speculated42, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit ] ; 4 uses
-  %i.f = phi ptr [ null, %bb.c ], [ %4, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit ] ; 11 uses
+  %i.f = phi ptr [ null, %bb.c ], [ %5, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit ] ; 11 uses
   %i.g = add i64 %.079, %.sroa.speculated56       ; 2 uses
   %.sroa.speculated42 = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.g) ; 3 uses
   %i.h = icmp eq i64 %.079, 0
   %i.i = icmp ule i64 %2, %i.g                    ; 2 uses
   %or.cond.i = and i1 %i.h, %i.i
-  br i1 %or.cond.i, label %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit, label %bb.e
+  br i1 %or.cond.i, label %.preheader, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.j = load ptr, ptr %i.d, align 8, !tbaa !140
@@ -302,14 +304,14 @@ _ZNSt6vectorISt4pairIS0_ImmES1_ESaIS2_EE17_M_realloc_insertIJRS1_S6_EEEvN9__gnu_
   store ptr %i.ac, ptr %i.d, align 8, !tbaa !140
   br label %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit
 
-_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit: ; preds = %_ZNSt6vectorISt4pairIS0_ImmES1_ESaIS2_EE17_M_realloc_insertIJRS1_S6_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.f, %bb.d
-  %.promoted80 = phi ptr [ %i.ab, %_ZNSt6vectorISt4pairIS0_ImmES1_ESaIS2_EE17_M_realloc_insertIJRS1_S6_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %i.l, %bb.f ], [ %i.e, %bb.d ] ; 2 uses
-  %4 = phi ptr [ %i.w, %_ZNSt6vectorISt4pairIS0_ImmES1_ESaIS2_EE17_M_realloc_insertIJRS1_S6_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %i.f, %bb.f ], [ %i.f, %bb.d ] ; 3 uses
+_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit: ; preds = %_ZNSt6vectorISt4pairIS0_ImmES1_ESaIS2_EE17_M_realloc_insertIJRS1_S6_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.f
+  %.promoted80 = phi ptr [ %i.ab, %_ZNSt6vectorISt4pairIS0_ImmES1_ESaIS2_EE17_M_realloc_insertIJRS1_S6_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %i.l, %bb.f ] ; 2 uses
+  %5 = phi ptr [ %i.w, %_ZNSt6vectorISt4pairIS0_ImmES1_ESaIS2_EE17_M_realloc_insertIJRS1_S6_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %i.f, %bb.f ] ; 2 uses
   br i1 %i.i, label %.preheader, label %bb.d, !llvm.loop !203
 
 bb.j:                                             ; preds = %.preheader, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit30
   %.192 = phi i64 [ 0, %.preheader ], [ %.sroa.speculated, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit30 ] ; 3 uses
-  %i.ad = phi ptr [ %.promoted80, %.preheader ], [ %i.ba, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit30 ] ; 13 uses
+  %i.ad = phi ptr [ %.promoted80122, %.preheader ], [ %i.ba, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit30 ] ; 13 uses
   %i.ae = phi ptr [ %.promoted84, %.preheader ], [ %i.az, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit30 ] ; 4 uses
   %i.af = phi ptr [ %4, %.preheader ], [ %i.ay, %_ZZN7Reducer13generateSpansEmmENKUlSt4pairImmES1_E_clES1_S1_.exit30 ] ; 10 uses
   %i.ag = add i64 %.192, %.sroa.speculated56      ; 2 uses

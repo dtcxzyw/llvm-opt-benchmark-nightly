@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
 ._crit_edge:                                      ; preds = %bb.f, %._crit_edge.unr-lcssa
   %.lcssa436 = phi i64 [ %i.bm, %._crit_edge.unr-lcssa ], [ %i.ah, %bb.f ] ; 2 uses
   %.lcssa435 = phi i64 [ %i.bp, %._crit_edge.unr-lcssa ], [ %i.ak, %bb.f ] ; 2 uses
-  %i.am = icmp ne i64 %.lcssa436, 0               ; 3 uses
-  %i.an = icmp ne i64 %.lcssa435, 0               ; 3 uses
+  %i.am = icmp ne i64 %.lcssa436, 0               ; 4 uses
+  %i.an = icmp ne i64 %.lcssa435, 0               ; 2 uses
   %or.cond = select i1 %i.c, i1 %i.am, i1 false
   br i1 %or.cond, label %bb.h, label %._crit_edge194.thread
 
@@ -388,6 +388,7 @@ bb.n:                                             ; preds = %._crit_edge194
   br label %._crit_edge194.thread
 
 ._crit_edge194.thread:                            ; preds = %bb.h, %._crit_edge194, %bb.n, %._crit_edge
+  %1 = phi i1 [ %i.am, %._crit_edge ], [ %i.am, %._crit_edge194 ], [ %i.am, %bb.n ], [ true, %bb.h ] ; 2 uses
   %or.cond5 = select i1 %i.c, i1 %i.an, i1 false
   br i1 %or.cond5, label %bb.o, label %.thread
 
@@ -397,8 +398,8 @@ bb.o:                                             ; preds = %._crit_edge194.thre
   br label %.thread
 
 .thread:                                          ; preds = %.preheader157, %bb.o, %._crit_edge194.thread
-  %i.dt = phi i1 [ %i.am, %._crit_edge194.thread ], [ %i.am, %bb.o ], [ false, %.preheader157 ]
-  %i.du = phi i1 [ %i.an, %._crit_edge194.thread ], [ %i.an, %bb.o ], [ false, %.preheader157 ]
+  %i.dt = phi i1 [ %1, %._crit_edge194.thread ], [ %1, %bb.o ], [ false, %.preheader157 ]
+  %i.du = phi i1 [ %i.an, %._crit_edge194.thread ], [ true, %bb.o ], [ false, %.preheader157 ]
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 408
   %i.dw = load i64, ptr %i.dv, align 8            ; 2 uses
   %i.dx = icmp ne i64 %i.dw, 0                    ; 2 uses

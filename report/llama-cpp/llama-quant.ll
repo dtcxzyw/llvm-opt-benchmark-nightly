@@ -205,7 +205,7 @@ bb.a:
   %45 = alloca %"class.std::map.165", align 8     ; 16 uses
   %46 = alloca %"class.std::__cxx11::basic_string", align 8 ; 20 uses
   %47 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %48 = alloca %"class.std::vector.67", align 8   ; 15 uses
+  %48 = alloca %"class.std::vector.67", align 8   ; 16 uses
   %i.s = alloca i16, align 2                      ; 8 uses
   %49 = alloca %"class.std::vector.179", align 8  ; 19 uses
   %50 = alloca %"class.std::__cxx11::basic_string", align 8 ; 23 uses
@@ -608,8 +608,8 @@ bb.gs:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.aay = ptrtoint ptr %.sroa.20.0.lcssa to i64
   %i.aaz = ptrtoint ptr %.sroa.0894.0.lcssa to i64 ; 3 uses
   %i.aba = sub i64 %i.aay, %i.aaz                 ; 2 uses
-  %i.abb = ashr exact i64 %i.aba, 3               ; 12 uses
-  br i1 %or.cond1040.not, label %bb.gt, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a"
+  %i.abb = ashr exact i64 %i.aba, 3               ; 13 uses
+  br i1 %or.cond1040.not, label %bb.gt, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit"
 
 bb.gt:                                            ; preds = %bb.gs
   %i.abc = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.abb, i1 true)
@@ -705,7 +705,7 @@ bb.hb:                                            ; preds = %"_ZSt25__unguarded_
 "_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_SQ_T0_.exit.i.i.i": ; preds = %bb.hb
   %i.acd = getelementptr inbounds nuw i8, ptr %.sroa.0894.0.lcssa, i64 128 ; 2 uses
   %.not6.i.i.i.i = icmp eq ptr %i.acd, %.sroa.20.0.lcssa
-  br i1 %.not6.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a", label %.lr.ph.i12.i.i.i
+  br i1 %.not6.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit", label %.lr.ph.i12.i.i.i
 
 .lr.ph.i12.i.i.i:                                 ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_SQ_T0_.exit.i.i.i", %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_T0_.exit.i16.i.i.i"
   %.sroa.0.07.i.i.i.i = phi ptr [ %i.acp, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_T0_.exit.i16.i.i.i" ], [ %i.acd, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_SQ_T0_.exit.i.i.i" ] ; 3 uses
@@ -741,7 +741,7 @@ bb.hd:                                            ; preds = %"_ZN9__gnu_cxx5__op
   store ptr %i.ace, ptr %.sroa.03.0.i.i13.i.i.i, align 8, !tbaa !136
   %i.acp = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.i, i64 8 ; 2 uses
   %.not.i17.i.i.i518 = icmp eq ptr %i.acp, %.sroa.20.0.lcssa
-  br i1 %.not.i17.i.i.i518, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a", label %.lr.ph.i12.i.i.i, !llvm.loop !588
+  br i1 %.not.i17.i.i.i518, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit", label %.lr.ph.i12.i.i.i, !llvm.loop !588
 
 .preheader.i19.i.i.i:                             ; preds = %bb.gt
   %.sroa.0.016.i20.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0894.0.lcssa, i64 8 ; 2 uses
@@ -837,24 +837,29 @@ bb.hm:                                            ; preds = %"_ZSt25__unguarded_
   %i.adt = phi ptr [ %i.acr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i35.i.i.i ], [ %.pre.i31.i.i.i, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_T0_.exit.i30.i.i.i" ]
   %.sroa.0.0.i32.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.019.i24.i.i.i, i64 8 ; 2 uses
   %.not.i33.i.i.i = icmp eq ptr %.sroa.0.0.i32.i.i.i, %.sroa.20.0.lcssa
-  br i1 %.not.i33.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a", label %bb.he, !llvm.loop !587
+  br i1 %.not.i33.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit", label %bb.he, !llvm.loop !587
 
-"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a": ; preds = %bb.hm, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_T0_.exit.i16.i.i.i", %bb.gs, %.preheader.i19.i.i.i, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_SQ_T0_.exit.i.i.i"
+"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit": ; preds = %bb.hm, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_T0_.exit.i16.i.i.i", %bb.gs, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESK_PK27llama_model_quantize_paramsE3$_0EEEvT_SQ_T0_.exit.i.i.i"
+  call void @llvm.lifetime.start.p0(ptr nonnull %48) #31
+  %64 = icmp ugt i64 %i.abb, 115292150460684697
+  br i1 %64, label %bb.hn, label %_ZNSt6vectorI15tensor_metadataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
+
+"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a": ; preds = %.preheader.i19.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #31
   %i.adu = icmp ugt i64 %i.abb, 115292150460684697
-  br i1 %i.adu, label %bb.hn, label %_ZNSt6vectorI15tensor_metadataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
+  br i1 %i.adu, label %bb.hn, label %_ZNSt12_Vector_baseI15tensor_metadataSaIS0_EEC2EmRKS1_.exit.i
 
-bb.hn:                                            ; preds = %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a"
+bb.hn:                                            ; preds = %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a", %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit"
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.32) #32
           to label %.noexc522 unwind label %bb.ho
 
 .noexc522:                                        ; preds = %bb.hn
   unreachable
 
-_ZNSt6vectorI15tensor_metadataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i: ; preds = %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a"
+_ZNSt6vectorI15tensor_metadataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i: ; preds = %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit"
   br i1 %.not.i.i514, label %_ZNSt12_Vector_baseI15tensor_metadataSaIS0_EEC2EmRKS1_.exit.i, label %.loopexit1114
 
-_ZNSt12_Vector_baseI15tensor_metadataSaIS0_EEC2EmRKS1_.exit.i: ; preds = %_ZNSt6vectorI15tensor_metadataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
+_ZNSt12_Vector_baseI15tensor_metadataSaIS0_EEC2EmRKS1_.exit.i: ; preds = %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN18llama_model_loader19llama_tensor_weightESt6vectorIS5_SaIS5_EEEEZL25llama_model_quantize_implRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESI_PK27llama_model_quantize_paramsE3$_0EvT_SN_T0_.exit.a", %_ZNSt6vectorI15tensor_metadataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
   %i.adv = mul nuw nsw i64 %i.abb, 80
   %i.adw = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.adv) #35
           to label %.noexc523 unwind label %bb.ho ; 6 uses
@@ -864,6 +869,7 @@ _ZNSt12_Vector_baseI15tensor_metadataSaIS0_EEC2EmRKS1_.exit.i: ; preds = %_ZNSt6
   %i.adx = getelementptr inbounds nuw [80 x i8], ptr %i.adw, i64 %i.abb
   %i.ady = getelementptr inbounds nuw i8, ptr %48, i64 16
   store ptr %i.adx, ptr %i.ady, align 8, !tbaa !144
+  %65 = add nsw i64 %i.abb, -1
   %xtraiter = and i64 %i.abb, 3                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i520.prol.loopexit, label %.lr.ph.i.i.i.i.i520.prol
@@ -890,7 +896,7 @@ _ZNSt12_Vector_baseI15tensor_metadataSaIS0_EEC2EmRKS1_.exit.i: ; preds = %_ZNSt6
   %.lcssa4979.unr = phi ptr [ poison, %.noexc523 ], [ %i.aee, %.lr.ph.i.i.i.i.i520.prol ]
   %.08.i.i.i.i.i.unr = phi ptr [ %i.adw, %.noexc523 ], [ %i.aee, %.lr.ph.i.i.i.i.i520.prol ]
   %.057.i.i.i.i.i.unr = phi i64 [ %i.abb, %.noexc523 ], [ %i.aed, %.lr.ph.i.i.i.i.i520.prol ]
-  %i.aef = icmp ult i64 %i.abb, 4
+  %i.aef = icmp ult i64 %65, 3
   br i1 %i.aef, label %.lr.ph2111.preheader, label %.lr.ph.i.i.i.i.i520
 
 .lr.ph.i.i.i.i.i520:                              ; preds = %.lr.ph.i.i.i.i.i520.prol.loopexit, %.lr.ph.i.i.i.i.i520
@@ -945,6 +951,7 @@ _ZNSt12_Vector_baseI15tensor_metadataSaIS0_EEC2EmRKS1_.exit.i: ; preds = %_ZNSt6
   %.lcssa4979 = phi ptr [ %.lcssa4979.unr, %.lr.ph.i.i.i.i.i520.prol.loopexit ], [ %i.afa, %.lr.ph.i.i.i.i.i520 ] ; 2 uses
   %i.afc = getelementptr inbounds nuw i8, ptr %48, i64 8 ; 2 uses
   store ptr %.lcssa4979, ptr %i.afc, align 8, !tbaa !146
+  %umax = call i64 @llvm.umax.i64(i64 %i.abb, i64 1)
   br label %.lr.ph2111
 
 ._crit_edge2112:                                  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit, %.loopexit1114
@@ -985,7 +992,7 @@ bb.hp:                                            ; preds = %.lr.ph2111
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.hp
   %i.aft = add nuw i64 %.02732109, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aft, %i.abb
+  %exitcond.not = icmp eq i64 %i.aft, %umax
   br i1 %exitcond.not, label %._crit_edge2112, label %.lr.ph2111, !llvm.loop !590
 
 bb.hq:                                            ; preds = %bb.hp, %.lr.ph2111

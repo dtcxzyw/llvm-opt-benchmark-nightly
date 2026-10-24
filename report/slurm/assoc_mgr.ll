@@ -202,9 +202,9 @@ define dso_local zeroext i1 @assoc_mgr_valid_tres_cnt(ptr noundef %0, i1 noundef
 bb.a:
   %i.a = alloca ptr, align 8                      ; 9 uses
   %i.b = alloca ptr, align 8                      ; 10 uses
-  %i.c = alloca ptr, align 8                      ; 7 uses
+  %i.c = alloca ptr, align 8                      ; 8 uses
   %i.d = alloca ptr, align 8                      ; 7 uses
-  %i.e = alloca i64, align 8                      ; 6 uses
+  %i.e = alloca i64, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   store ptr null, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
@@ -226,19 +226,22 @@ bb.a:
   %i.k = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.l = icmp ne ptr %i.k, null
   %or.cond = select i1 %1, i1 %i.l, i1 false
-  br i1 %or.cond, label %bb.b, label %bb.c
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.132, ptr noundef nonnull %i.k) #16
-  br label %bb.c
+  call void @slurm_xfree(ptr noundef nonnull %i.c) #16
+  %2 = load i64, ptr %i.e, align 8
+  %3 = icmp eq i64 %2, 0
+  br i1 %3, label %bb.d, label %bb.e
 
-bb.c:                                             ; preds = %bb.b, %.lr.ph
+bb.c:                                             ; preds = %.lr.ph
+  call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.132, ptr noundef nonnull %i.k) #16
   call void @slurm_xfree(ptr noundef nonnull %i.c) #16
   %i.m = load i64, ptr %i.e, align 8
   %i.n = icmp eq i64 %i.m, 0
-  br i1 %i.n, label %bb.d, label %bb.e
+  br i1 %i.n, label %bb.d, label %bb.h
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c, %bb.b
   call void @slurm_xfree(ptr noundef nonnull %i.a) #16
   call void @slurm_xfree(ptr noundef nonnull %i.b) #16
   br label %.backedge
@@ -251,7 +254,7 @@ bb.d:                                             ; preds = %bb.c
   %i.s = select i1 %i.p, i1 %i.r, i1 false
   br i1 %i.s, label %.lr.ph, label %select.unfold._crit_edge, !llvm.loop !123
 
-bb.e:                                             ; preds = %bb.c
+bb.e:                                             ; preds = %bb.b
   br i1 %1, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -266,7 +269,7 @@ bb.g:                                             ; preds = %bb.f
   %spec.select = select i1 %i.w, i32 1, i32 -1
   br label %select.unfold
 
-bb.h:                                             ; preds = %bb.e, %bb.f
+bb.h:                                             ; preds = %bb.c, %bb.e, %bb.f
   %i.x = load ptr, ptr %i.b, align 8
   %i.y = load ptr, ptr %i.a, align 8              ; 2 uses
   %.not20.i = icmp eq ptr %i.y, null

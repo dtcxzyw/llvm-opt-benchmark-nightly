@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %_ZSteqIcSt11char_tr
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit224
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit224: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219.thread712, %bb.w
-  %i.ha = phi i1 [ %i.gt, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219.thread712 ], [ %i.gt, %bb.w ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219 ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ] ; 3 uses
+  %i.ha = phi i1 [ %i.gt, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219.thread712 ], [ %i.gt, %bb.w ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219 ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ] ; 8 uses
   %i.hb = phi i1 [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219.thread712 ], [ %i.gz, %bb.w ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit219 ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ] ; 4 uses
   br i1 %.not143, label %bb.ba, label %bb.x
 
@@ -605,11 +605,11 @@ bb.be:                                            ; preds = %_ZStplIcSt11char_tr
 
 bb.bf:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit326, %bb.bb, %bb.ba
   %or.cond3 = or i1 %i.ha, %i.hb                  ; 2 uses
-  br i1 %or.cond3, label %bb.bg, label %_ZNSt10unique_ptrIN11flatbuffers6ParserESt14default_deleteIS1_EE5resetEPS1_.exit
+  br i1 %or.cond3, label %bb.bg, label %bb.bl
 
 bb.bg:                                            ; preds = %bb.bf
   %i.pp = invoke noalias noundef nonnull dereferenceable(1936) ptr @_Znwm(i64 noundef 1936) #27
-          to label %bb.bh unwind label %bb.al     ; 3 uses
+          to label %bb.bh unwind label %bb.al     ; 5 uses
 
 bb.bh:                                            ; preds = %bb.bg
   invoke void @_ZN11flatbuffers6ParserC2ERKNS_10IDLOptionsE(ptr noundef nonnull align 8 dereferenceable(1936) %i.pp, ptr noundef nonnull align 8 dereferenceable(794) %5)
@@ -632,15 +632,14 @@ bb.bj:                                            ; preds = %bb.bh
   call void @_ZdlPvm(ptr noundef nonnull %i.pp, i64 noundef 1936) #28
   br label %bb.gx
 
-_ZNSt10unique_ptrIN11flatbuffers6ParserESt14default_deleteIS1_EE5resetEPS1_.exit: ; preds = %_ZNKSt14default_deleteIN11flatbuffers6ParserEEclEPS1_.exit.i.i, %bb.bi, %bb.bf
+_ZNSt10unique_ptrIN11flatbuffers6ParserESt14default_deleteIS1_EE5resetEPS1_.exit: ; preds = %_ZNKSt14default_deleteIN11flatbuffers6ParserEEclEPS1_.exit.i.i, %bb.bi
   br i1 %i.hb, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %_ZNSt10unique_ptrIN11flatbuffers6ParserESt14default_deleteIS1_EE5resetEPS1_.exit
-  %50 = load ptr, ptr %0, align 8, !tbaa !309     ; 2 uses
-  invoke void @_ZN11flatbuffers12FlatCompiler16LoadBinarySchemaERNS_6ParserERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(1936) %50, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0707.01296, ptr noundef nonnull align 8 dereferenceable(32) %6)
+  invoke void @_ZN11flatbuffers12FlatCompiler16LoadBinarySchemaERNS_6ParserERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(1936) %i.pp, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0707.01296, ptr noundef nonnull align 8 dereferenceable(32) %6)
           to label %.thread715 unwind label %bb.al
 
-bb.bl:                                            ; preds = %_ZNSt10unique_ptrIN11flatbuffers6ParserESt14default_deleteIS1_EE5resetEPS1_.exit
+bb.bl:                                            ; preds = %bb.bf, %_ZNSt10unique_ptrIN11flatbuffers6ParserESt14default_deleteIS1_EE5resetEPS1_.exit
   %i.ps = load i8, ptr %i.ai, align 1, !tbaa !143, !range !95, !noundef !96
   %i.pt = trunc nuw i8 %i.ps to i1
   br i1 %i.pt, label %bb.bm, label %bb.cc
@@ -1043,7 +1042,7 @@ bb.ci:                                            ; preds = %_ZN11flexbuffers7Bu
   br i1 %or.cond3, label %.thread715, label %bb.cq
 
 .thread715:                                       ; preds = %bb.bk, %bb.cd, %bb.ci
-  %i.ur = phi ptr [ %50, %bb.bk ], [ %i.tp, %bb.cd ], [ %i.uq, %bb.ci ] ; 2 uses
+  %i.ur = phi ptr [ %i.pp, %bb.bk ], [ %i.tp, %bb.cd ], [ %i.uq, %bb.ci ] ; 2 uses
   %i.us = load i64, ptr %i.az, align 8, !tbaa !43
   %i.ut = icmp eq i64 %i.us, 0
   br i1 %i.ut, label %bb.cq, label %bb.cj
@@ -1178,6 +1177,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit397: ; preds = %.b
   br label %bb.gx
 
 bb.cq:                                            ; preds = %bb.ci, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit400, %.thread715
+  %50 = phi i1 [ false, %bb.ci ], [ %i.ha, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit400 ], [ %i.ha, %.thread715 ] ; 3 uses
   %i.wb = phi ptr [ %i.uq, %bb.ci ], [ %.pre1300, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit400 ], [ %i.ur, %.thread715 ]
   %i.wc = invoke noundef zeroext i1 @_ZN11flatbuffers6Parser27HasCircularStructDependencyEv(ptr noundef nonnull align 8 dereferenceable(1936) %i.wb)
           to label %bb.cr unwind label %bb.al
@@ -1299,6 +1299,7 @@ bb.cy:                                            ; preds = %bb.cx
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit unwind label %bb.al ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.cv, %bb.cy, %bb.cx, %bb.ae, %bb.an, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit298, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit248
+  %51 = phi i1 [ %50, %bb.cy ], [ %50, %bb.cx ], [ %i.ha, %bb.ae ], [ %i.ha, %bb.an ], [ %i.ha, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit298 ], [ %i.ha, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit248 ], [ %50, %bb.cv ]
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #26
   invoke void @_ZN11flatbuffers14StripExtensionERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %24, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0707.01296)
@@ -1370,7 +1371,7 @@ bb.df:                                            ; preds = %bb.dc, %_ZNSt7__cxx
   br i1 %.not7181293, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.df
-  %invariant.op = or i1 %i.ha, %i.hb
+  %invariant.op = or i1 %51, %i.hb
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.gl, %bb.df

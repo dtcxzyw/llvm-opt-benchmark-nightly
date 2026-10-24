@@ -205,7 +205,9 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %i.abv, label %.preheader634.preheader, label %.thread
 
 .preheader634.preheader:                          ; preds = %bb.co
+  %3 = sext i32 %.0387716 to i64
   %wide.trip.count798 = zext nneg i32 %.0349 to i64
+  %invariant.gep = getelementptr [4 x i8], ptr @magic, i64 %3
   br label %.preheader634
 
 bb.cp:                                            ; preds = %bb.cr
@@ -217,6 +219,7 @@ bb.cp:                                            ; preds = %bb.cr
   %indvars.iv794.a = phi i64 [ 0, %.preheader634.preheader ], [ %indvars.iv.next795.a, %bb.cp ] ; 2 uses
   %.0338690 = phi i32 [ %i.abu, %.preheader634.preheader ], [ %spec.select447, %bb.cp ]
   %i.abw = mul nuw nsw i64 %indvars.iv794.a, 3    ; 3 uses
+  %4 = sext i32 %.0338690 to i64
   %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.abw
   %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !12
   %i.abx = sitofp i32 %.pre to double             ; 2 uses
@@ -234,16 +237,15 @@ bb.cp:                                            ; preds = %bb.cr
   br label %bb.cq
 
 bb.cq:                                            ; preds = %.preheader634, %bb.cq
-  %.1 = phi i32 [ %spec.select447, %bb.cq ], [ %.0338690, %.preheader634 ] ; 2 uses
-  %3 = add nsw i32 %.1, %.0387716
-  %4 = sext i32 %3 to i64
-  %i.acj = getelementptr inbounds [4 x i8], ptr @magic, i64 %4
+  %indvars.iv794 = phi i64 [ %4, %.preheader634 ], [ %indvars.iv.next795, %bb.cq ] ; 3 uses
+  %i.acj = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv794
   %i.ack = load i32, ptr %i.acj, align 4, !tbaa !12
   %i.acl = uitofp i32 %i.ack to double            ; 2 uses
   %i.acm = fmul nnan double %i.acl, %i.acl
   %i.acn = fcmp ogt double %i.aci, %i.acm         ; 2 uses
-  %5 = zext i1 %i.acn to i32
-  %spec.select447 = add nsw i32 %.1, %5           ; 6 uses
+  %indvars.iv.next795 = add nsw i64 %indvars.iv794, 1 ; 2 uses
+  %spec.select447.v = select i1 %i.acn, i64 %indvars.iv.next795, i64 %indvars.iv794
+  %spec.select447 = trunc i64 %spec.select447.v to i32 ; 5 uses
   %i.aco = icmp slt i32 %spec.select447, 0
   %i.acp = and i1 %i.acn, %i.aco
   br i1 %i.acp, label %bb.cq, label %bb.cr, !llvm.loop !38

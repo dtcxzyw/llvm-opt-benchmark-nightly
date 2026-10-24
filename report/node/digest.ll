@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
 evp_md_ctx_reset_ex.exit:                         ; preds = %bb.r, %bb.s
   tail call void @evp_md_ctx_clear_digest(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 1)
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.at = load ptr, ptr %i.as, align 8, !tbaa !28
+  %i.at = load ptr, ptr %i.as, align 8, !tbaa !28 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !28 ; 4 uses
   %.not95 = icmp eq ptr %i.at, %i.av              ; 2 uses
@@ -216,18 +216,19 @@ bb.t:                                             ; preds = %evp_md_ctx_reset_ex
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 24
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !29
   %i.ay = icmp eq i32 %i.ax, 0
-  br i1 %i.ay, label %bb.u, label %EVP_MD_up_ref.exit
+  br i1 %i.ay, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 120
   %i.ba = atomicrmw add ptr %i.az, i32 1 monotonic, align 4 ; 0 uses
-  br label %EVP_MD_up_ref.exit
+  %.pre = load ptr, ptr %i.as, align 8, !tbaa !28
+  br label %bb.v
 
-EVP_MD_up_ref.exit:                               ; preds = %bb.u, %bb.t, %evp_md_ctx_reset_ex.exit
+EVP_MD_up_ref.exit:                               ; preds = %evp_md_ctx_reset_ex.exit
   br i1 %.not95, label %EVP_MD_free.exit113, label %bb.v
 
-bb.v:                                             ; preds = %EVP_MD_up_ref.exit
-  %2 = load ptr, ptr %i.as, align 8, !tbaa !28    ; 4 uses
+bb.v:                                             ; preds = %bb.t, %bb.u, %EVP_MD_up_ref.exit
+  %2 = phi ptr [ %i.at, %bb.t ], [ %.pre, %bb.u ], [ %i.at, %EVP_MD_up_ref.exit ] ; 4 uses
   %.not97 = icmp eq ptr %2, null
   br i1 %.not97, label %EVP_MD_free.exit113, label %bb.w
 

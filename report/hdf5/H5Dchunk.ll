@@ -205,7 +205,7 @@ H5D__chunk_is_partial_edge_chunk.exit:            ; preds = %bb.z, %bb.y, %bb.w,
   %i.dd = icmp ne i64 %i.ce, %i.s
   %i.de = icmp ne i64 %i.cc, -1                   ; 2 uses
   %or.cond = select i1 %i.dd, i1 %i.de, i1 false
-  br i1 %or.cond, label %bb.aa, label %.critedge.a
+  br i1 %or.cond, label %bb.aa, label %.critedge
 
 H5D__chunk_is_partial_edge_chunk.exit.thread2:    ; preds = %.lr.ph.i
   %i.df = icmp ne i64 %i.ce, %i.s
@@ -230,8 +230,11 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dl = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.H5D__chunk_lock, i32 noundef 4788, i64 noundef %i.dj, i64 noundef %i.dk, ptr noundef nonnull @.str.170) #15 ; 0 uses
   br label %.thread88
 
-.critedge.a:                                      ; preds = %H5D__chunk_is_partial_edge_chunk.exit, %bb.ab
+.critedge:                                        ; preds = %H5D__chunk_is_partial_edge_chunk.exit
   br i1 %2, label %bb.ac, label %bb.ai
+
+.critedge.a:                                      ; preds = %bb.ab
+  br i1 %2, label %bb.ac, label %bb.aj
 
 .critedge.thread:                                 ; preds = %H5D__chunk_is_partial_edge_chunk.exit.thread2
   br i1 %2, label %.thread30, label %.thread47
@@ -243,7 +246,7 @@ bb.ab:                                            ; preds = %bb.aa
   store i32 %i.do, ptr %i.dm, align 4, !tbaa !353
   br label %bb.af
 
-bb.ac:                                            ; preds = %.critedge.a
+bb.ac:                                            ; preds = %.critedge.a, %.critedge
   %i.dp = getelementptr inbounds nuw i8, ptr %i.n, i64 3652 ; 2 uses
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !353
   %i.dr = add i32 %i.dq, 1
@@ -285,7 +288,7 @@ bb.ah:                                            ; preds = %H5D__chunk_mem_allo
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %.0.i271, i8 0, i64 %i.s, i1 false)
   br label %bb.bu
 
-bb.ai:                                            ; preds = %.critedge.a
+bb.ai:                                            ; preds = %.critedge
   br i1 %i.de, label %bb.aj, label %bb.bf
 
 .thread47:                                        ; preds = %.critedge.thread
@@ -304,7 +307,7 @@ bb.ai:                                            ; preds = %.critedge.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
   br label %bb.bi
 
-bb.aj:                                            ; preds = %bb.ai
+bb.aj:                                            ; preds = %.critedge.a, %bb.ai
   %.phi.trans.insert107 = getelementptr inbounds nuw i8, ptr %1, i64 52
   %.pre108 = load i8, ptr %.phi.trans.insert107, align 4, !tbaa !169, !range !12
   %i.ec = trunc nuw i8 %.pre108 to i1

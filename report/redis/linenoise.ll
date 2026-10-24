@@ -202,14 +202,15 @@ bb.l:                                             ; preds = %bb.k
   %.not23.i.i = select i1 %i.cp, i1 true, i1 %i.cr ; 2 uses
   %.b20.i.i = load i1, ptr @cycle_to_next_search, align 4
   %or.cond.not.i.i = select i1 %.b20.i.i, i1 %.not23.i.i, i1 false
-  br i1 %or.cond.not.i.i, label %bb.n, label %bb.m
+  br i1 %or.cond.not.i.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
+  store i1 false, ptr @cycle_to_next_search, align 4
+  br label %.critedge.i.i
+
+bb.n:                                             ; preds = %bb.l
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) @search_result, i8 0, i64 4096, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) @search_result_friendly, i8 0, i64 4096, i1 false)
-  br label %bb.n
-
-bb.n:                                             ; preds = %bb.m, %bb.l
   store i1 false, ptr @cycle_to_next_search, align 4
   %i.cs = add i32 %i.cq, -4072
   %i.ct = icmp ult i32 %i.cs, -4096
@@ -248,7 +249,7 @@ bb.o:                                             ; preds = %bb.n
   store i32 %i.cw, ptr @search_result_start_offset, align 4, !tbaa !10
   br label %.critedge.i.i
 
-.critedge.i.i:                                    ; preds = %bb.o, %bb.n
+.critedge.i.i:                                    ; preds = %bb.o, %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   br label %refreshSearchResult.exit.i
 

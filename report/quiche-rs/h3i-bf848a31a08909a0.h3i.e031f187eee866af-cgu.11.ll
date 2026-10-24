@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %_RNvXs2K_NtNtCskKLD
 
 bb.j:                                             ; preds = %bb.h, %bb.g
   %.sroa.2.3.ph.i.i.i = phi ptr [ %.sroa.2.1.i.i.i, %bb.h ], [ %i.af, %bb.g ] ; 2 uses
-  %spec.select.i.ph.i.i.i = phi i32 [ %i.ay, %bb.h ], [ %i.ao, %bb.g ] ; 80 uses
+  %spec.select.i.ph.i.i.i = phi i32 [ %i.ay, %bb.h ], [ %i.ao, %bb.g ] ; 81 uses
     #dbg_value(ptr %.sroa.2.3.ph.i.i.i, !10532, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9985)
     #dbg_value(i32 %spec.select.i.ph.i.i.i, !10535, !DIExpression(), !10060)
     #dbg_value(ptr poison, !10546, !DIExpression(), !10065)
@@ -608,7 +608,7 @@ bb.bd:                                            ; preds = %bb.au
 
 .thread123.i.i.i.i.i:                             ; preds = %bb.bd, %bb.az, %bb.ay, %bb.ax, %bb.aw
   %i.dp = icmp samesign ugt i32 %spec.select.i.ph.i.i.i, 127461, !dbg !10939
-  %i.dq = zext i1 %i.dp to i8, !dbg !10939        ; 4 uses
+  %i.dq = zext i1 %i.dp to i8, !dbg !10939        ; 3 uses
   %i.dr = add nsw i32 %spec.select.i.ph.i.i.i, -127462, !dbg !10939
   %or.cond109.i.i.i.i.i = icmp ult i32 %i.dr, 26, !dbg !10939
   br i1 %or.cond109.i.i.i.i.i, label %bb.bm, label %bb.bp, !dbg !10939
@@ -620,14 +620,14 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.bl, %bb.bk, %bb.bj, %bb.be
   %i.dt = icmp samesign ugt i32 %spec.select.i.ph.i.i.i, 127461, !dbg !10939
-  %i.du = zext i1 %i.dt to i8, !dbg !10939        ; 2 uses
+  %i.du = zext i1 %i.dt to i8, !dbg !10939
   %i.dv = add nsw i32 %spec.select.i.ph.i.i.i, -127462, !dbg !10939
   %or.cond107.i.i.i.i.i = icmp ult i32 %i.dv, 26, !dbg !10939
   br i1 %or.cond107.i.i.i.i.i, label %bb.bm, label %.thread130.i.i.i.i.i, !dbg !10939
 
 bb.bg:                                            ; preds = %bb.bd, %bb.bc
   %i.dw = call fastcc noundef zeroext i1 @_RNvNtCs5Tjqocmbzhi_13unicode_width6tables22is_emoji_modifier_base(i32 noundef range(i32 0, 1114112) %spec.select.i.ph.i.i.i) #18, !dbg !10941, !noalias !10429
-  br i1 %i.dw, label %_RNCNvNtCs5Tjqocmbzhi_13unicode_width6tables9str_width0CsjfnSKV9Rz3v_3h3i.exit.i.i.i, label %bb.bo, !dbg !10941
+  br i1 %i.dw, label %_RNCNvNtCs5Tjqocmbzhi_13unicode_width6tables9str_width0CsjfnSKV9Rz3v_3h3i.exit.i.i.i, label %4, !dbg !10941
 
 bb.bh:                                            ; preds = %bb.bd
   %i.dx = icmp samesign ugt i32 %spec.select.i.ph.i.i.i, 11568, !dbg !10942
@@ -659,7 +659,6 @@ bb.bl:                                            ; preds = %bb.bi
   br i1 %cond1.i.i.i.i.i, label %bb.bn, label %.thread132.i.i.i.i.i, !dbg !10933
 
 bb.bm:                                            ; preds = %bb.bf, %.thread123.i.i.i.i.i
-  %.sroa.059.0.i.i.i.i.i = phi i8 [ %i.dq, %.thread123.i.i.i.i.i ], [ %i.du, %bb.bf ], !dbg !10939 ; 2 uses
   switch i16 %.sroa.0.1.i.i.i.i.i, label %.thread132.i.i.i.i.i [
     i16 3, label %_RNCNvNtCs5Tjqocmbzhi_13unicode_width6tables9str_width0CsjfnSKV9Rz3v_3h3i.exit.i.i.i
     i16 4, label %_RNCNvNtCs5Tjqocmbzhi_13unicode_width6tables9str_width0CsjfnSKV9Rz3v_3h3i.exit.i.i.i
@@ -682,11 +681,16 @@ bb.bn:                                            ; preds = %bb.bp, %.thread130.
     i16 4102, label %bb.br
   ], !dbg !10933
 
-bb.bo:                                            ; preds = %bb.bg
+4:                                                ; preds = %bb.bg
+  %5 = add nsw i32 %spec.select.i.ph.i.i.i, -127462, !dbg !10939
+  %or.cond108.i.i.i.i.i = icmp ult i32 %5, 26, !dbg !10939
+  br i1 %or.cond108.i.i.i.i.i, label %.thread132.i.i.i.i.i, label %bb.bo, !dbg !10939
+
+bb.bo:                                            ; preds = %4
   %i.ef = icmp samesign ugt i32 %spec.select.i.ph.i.i.i, 127461, !dbg !10939
   %i.eg = zext i1 %i.ef to i8, !dbg !10939
-  %cond.i.i.i.i.i = icmp eq i32 %spec.select.i.ph.i.i.i, 8205
-  br i1 %cond.i.i.i.i.i, label %_RNCNvNtCs5Tjqocmbzhi_13unicode_width6tables9str_width0CsjfnSKV9Rz3v_3h3i.exit.i.i.i, label %.thread132.i.i.i.i.i, !dbg !10939
+  %cond.i.i.i.i.i = icmp eq i32 %spec.select.i.ph.i.i.i, 8205, !dbg !10933
+  br i1 %cond.i.i.i.i.i, label %_RNCNvNtCs5Tjqocmbzhi_13unicode_width6tables9str_width0CsjfnSKV9Rz3v_3h3i.exit.i.i.i, label %.thread132.i.i.i.i.i, !dbg !10933
 
 bb.bp:                                            ; preds = %.thread123.i.i.i.i.i
   switch i32 %spec.select.i.ph.i.i.i, label %.thread136.i.i.i.i.i [
@@ -698,15 +702,15 @@ bb.bq:                                            ; preds = %bb.bp
   %cond144.i.i.i.i.i = icmp eq i16 %.sroa.0.1.i.i.i.i.i, 4102, !dbg !10933
   br i1 %cond144.i.i.i.i.i, label %_RNCNvNtCs5Tjqocmbzhi_13unicode_width6tables9str_width0CsjfnSKV9Rz3v_3h3i.exit.i.i.i, label %.thread132.i.i.i.i.i, !dbg !10933
 
-.thread132.i.i.i.i.i:                             ; preds = %bb.bq, %bb.bo, %bb.bn, %.thread136.i.i.i.i.i, %bb.bm, %.thread130.i.i.i.i.i
-  %.sroa.059.3.i.i.i.i.i = phi i8 [ %.sroa.059.0.i.i.i.i.i, %bb.bm ], [ %i.eg, %bb.bo ], [ %i.dq, %bb.bq ], [ %.sroa.059.1.i.i.i.i.i, %.thread136.i.i.i.i.i ], [ %.sroa.059.2.i.i.i.i.i, %bb.bn ], [ %i.ee, %.thread130.i.i.i.i.i ], !dbg !10939
+.thread132.i.i.i.i.i:                             ; preds = %bb.bq, %bb.bo, %4, %bb.bn, %.thread136.i.i.i.i.i, %bb.bm, %.thread130.i.i.i.i.i
+  %.sroa.059.3.i.i.i.i.i = phi i8 [ 1, %bb.bm ], [ %i.eg, %bb.bo ], [ %i.dq, %bb.bq ], [ %.sroa.059.1.i.i.i.i.i, %.thread136.i.i.i.i.i ], [ %.sroa.059.2.i.i.i.i.i, %bb.bn ], [ 1, %4 ], [ %i.ee, %.thread130.i.i.i.i.i ], !dbg !10939
   %i.eh = trunc nuw i8 %.sroa.059.3.i.i.i.i.i to i1, !dbg !10944
   %i.ei = icmp samesign ult i32 %spec.select.i.ph.i.i.i, 127488, !dbg !10944
   %or.cond10.i.i.i.i.i = and i1 %i.ei, %i.eh, !dbg !10944
   br i1 %or.cond10.i.i.i.i.i, label %bb.bs, label %.thread132.thread.i.i.i.i.i, !dbg !10944
 
 bb.br:                                            ; preds = %bb.bn, %.thread136.i.i.i.i.i, %bb.bm
-  %.sroa.059.6.i.i.i.i.i = phi i8 [ %.sroa.059.0.i.i.i.i.i, %bb.bm ], [ %.sroa.059.1.i.i.i.i.i, %.thread136.i.i.i.i.i ], [ %.sroa.059.2.i.i.i.i.i, %bb.bn ], !dbg !10939
+  %.sroa.059.6.i.i.i.i.i = phi i8 [ 1, %bb.bm ], [ %.sroa.059.1.i.i.i.i.i, %.thread136.i.i.i.i.i ], [ %.sroa.059.2.i.i.i.i.i, %bb.bn ], !dbg !10939
   %i.ej = trunc nuw i8 %.sroa.059.6.i.i.i.i.i to i1, !dbg !10945
   %i.ek = icmp samesign ult i32 %spec.select.i.ph.i.i.i, 127488, !dbg !10945
   %or.cond29.i.i.i.i.i = and i1 %i.ek, %i.ej, !dbg !10945

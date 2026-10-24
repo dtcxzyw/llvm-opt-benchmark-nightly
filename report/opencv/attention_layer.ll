@@ -204,17 +204,22 @@ bb.bq:                                            ; preds = %._crit_edge
   %i.nw = ptrtoint ptr %i.nu to i64
   %i.nx = sub i64 %i.nv, %i.nw
   %i.ny = sdiv exact i64 %i.nx, 208
-  %i.nz = trunc i64 %i.ny to i32
+  %i.nz = trunc i64 %i.ny to i32                  ; 2 uses
   %i.oa = load ptr, ptr %i.hz, align 8, !tbaa !99
   %i.ob = load ptr, ptr %i.ib, align 8, !tbaa !99
   %i.oc = icmp eq ptr %i.oa, %i.ob                ; 2 uses
-  %or.cond.v = select i1 %i.oc, i32 3, i32 1
-  %or.cond = icmp slt i32 %or.cond.v, %i.nz
-  br i1 %or.cond, label %.critedge, label %bb.dn
+  %31 = icmp slt i32 %i.nz, 2
+  %or.cond7.not = or i1 %i.oc, %31
+  br i1 %or.cond7.not, label %32, label %.critedge
 
-.critedge:                                        ; preds = %bb.bq
-  %.v = select i1 %i.oc, i64 624, i64 208
-  %i.od = getelementptr inbounds nuw i8, ptr %i.nu, i64 %.v ; 3 uses
+32:                                               ; preds = %bb.bq
+  %33 = icmp sgt i32 %i.nz, 3
+  %34 = and i1 %i.oc, %33
+  br i1 %34, label %.critedge, label %bb.dn
+
+.critedge:                                        ; preds = %bb.bq, %32
+  %.sink = phi i64 [ 624, %32 ], [ 208, %bb.bq ]
+  %i.od = getelementptr inbounds nuw i8, ptr %i.nu, i64 %.sink ; 3 uses
   %i.oe = load i32, ptr %i.od, align 8, !tbaa !181
   %i.of = and i32 %i.oe, 4095                     ; 2 uses
   %i.og = icmp eq i32 %i.of, 5
@@ -617,7 +622,7 @@ bb.dm:                                            ; preds = %.body275, %bb.bw
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #23
   br label %bb.dx
 
-bb.dn:                                            ; preds = %bb.bq, %_ZNSt14_Function_baseD2Ev.exit368
+bb.dn:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit368, %32
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #23
   %i.uv = getelementptr inbounds nuw i8, ptr %i.lr, i64 280
   invoke void @_ZN2cv8MatShapeC1ERKS0_(ptr noundef nonnull align 4 dereferenceable(52) %28, ptr noundef nonnull align 4 dereferenceable(52) %i.uv)

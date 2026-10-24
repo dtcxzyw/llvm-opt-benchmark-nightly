@@ -205,7 +205,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_in
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread: ; preds = %.thread._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge, %.split189, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit104, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit
   %.not.i105 = phi i1 [ %i.ej, %.thread._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge ], [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit ], [ true, %.split189 ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit104 ]
   %i.ge = and i32 %i.l, 536870912
-  %i.gf = icmp ne i32 %i.ge, 0                    ; 5 uses
+  %i.gf = icmp ne i32 %i.ge, 0                    ; 2 uses
   %or.cond202 = select i1 %i.gf, i1 %.not.i105, i1 false
   br i1 %or.cond202, label %bb.ah, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
@@ -280,7 +280,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_in
   br i1 %.not199, label %.thread193, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread191
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread: ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit116
-  %i.gy = phi i1 [ %i.fx, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ], [ %i.gf, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ %i.gf, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit116 ] ; 2 uses
+  %i.gy = phi i1 [ %i.fx, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ], [ %i.gf, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit116 ] ; 2 uses
   %.not21 = icmp sgt i32 %i.l, -1
   br i1 %.not21, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread, label %.thread193
 
@@ -329,11 +329,11 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_pref
   br label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread: ; preds = %bb.ai, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit125, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.hp = phi i1 [ %i.gf, %bb.ai ], [ %i.hq, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit125 ], [ %i.gy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.hp = phi i1 [ true, %bb.ai ], [ %i.hq, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit125 ], [ %i.gy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   br i1 %.sroa.010.0183, label %bb.am, label %bb.al
 
 .thread193:                                       ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.hq = phi i1 [ %i.gf, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.gy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.hq = phi i1 [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.gy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.hs = load ptr, ptr %i.hr, align 8, !nonnull !21, !align !25, !noundef !21 ; 3 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -736,7 +736,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_in
   %i.bl = phi i8 [ %i.y, %.thread180._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge ], [ %i.y, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit ], [ %i.y, %.split186 ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit86 ] ; 4 uses
   %.not.i87 = phi i1 [ %i.ab, %.thread180._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge ], [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit ], [ true, %.split186 ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit86 ]
   %i.bm = and i32 %i.i, 536870912
-  %i.bn = icmp ne i32 %i.bm, 0                    ; 5 uses
+  %i.bn = icmp ne i32 %i.bm, 0                    ; 2 uses
   %or.cond200 = select i1 %i.bn, i1 %.not.i87, i1 false
   br i1 %or.cond200, label %bb.u, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
@@ -810,7 +810,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_in
   br i1 %.not197, label %.thread190, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread188
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread: ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit98
-  %i.cf = phi i1 [ %i.bn, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ %i.bn, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit98 ], [ %i.be, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
+  %i.cf = phi i1 [ %i.bn, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit98 ], [ %i.be, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
   %i.cg = phi i8 [ %i.bl, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit98 ], [ %i.y, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
   %.not32 = icmp sgt i32 %i.i, -1
   br i1 %.not32, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread, label %.thread190
@@ -859,14 +859,14 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_pr
   br label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread: ; preds = %bb.v, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit107, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.cw = phi i1 [ %i.bn, %bb.v ], [ %i.da, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit107 ], [ %i.cf, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.cw = phi i1 [ true, %bb.v ], [ %i.da, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit107 ], [ %i.cf, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.cx = phi i8 [ %i.bl, %bb.v ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit107 ], [ %i.cg, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ] ; 3 uses
   %i.cy = and i16 %i.e, 32
   %i.cz = icmp eq i16 %i.cy, 0
   br i1 %i.cz, label %bb.y, label %bb.z
 
 .thread190:                                       ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.da = phi i1 [ %i.bn, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.cf, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.da = phi i1 [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.cf, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.db = phi i8 [ %i.bl, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.cg, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.dd = load ptr, ptr %i.dc, align 8, !nonnull !21, !align !25, !noundef !21 ; 3 uses
@@ -1269,7 +1269,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_in
   %i.dh = phi i8 [ %i.bn, %.thread._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge ], [ %i.bn, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit ], [ %i.bn, %.split157 ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit85 ] ; 4 uses
   %.not.i86 = phi i1 [ %i.bq, %.thread._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge ], [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit ], [ true, %.split157 ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit85 ]
   %i.di = and i32 %i.i, 536870912
-  %i.dj = icmp ne i32 %i.di, 0                    ; 5 uses
+  %i.dj = icmp ne i32 %i.di, 0                    ; 2 uses
   %or.cond169 = select i1 %i.dj, i1 %.not.i86, i1 false
   br i1 %or.cond169, label %bb.aa, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
@@ -1343,7 +1343,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_in
   br i1 %.not166, label %.thread161, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread159
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread: ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit97
-  %i.eb = phi i1 [ %i.dj, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ %i.dj, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit97 ], [ %i.da, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
+  %i.eb = phi i1 [ %i.dj, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit97 ], [ %i.da, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
   %i.ec = phi i8 [ %i.dh, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit97 ], [ %i.bn, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
   %.not14 = icmp sgt i32 %i.i, -1
   br i1 %.not14, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread, label %.thread161
@@ -1392,12 +1392,12 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_pr
   br label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread: ; preds = %bb.ab, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit106, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.es = phi i1 [ %i.dj, %bb.ab ], [ %i.eu, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit106 ], [ %i.eb, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.es = phi i1 [ true, %bb.ab ], [ %i.eu, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit106 ], [ %i.eb, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.et = phi i8 [ %i.dh, %bb.ab ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit106 ], [ %i.ec, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ] ; 2 uses
   br i1 %.sroa.09.0150, label %bb.af, label %bb.ae
 
 .thread161:                                       ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.eu = phi i1 [ %i.dj, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.eb, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.eu = phi i1 [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.eb, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.ev = phi i8 [ %i.dh, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.ec, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.ex = load ptr, ptr %i.ew, align 8, !nonnull !21, !align !25, !noundef !21 ; 3 uses
@@ -1800,7 +1800,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_in
   %i.de = phi i8 [ %i.bn, %.thread._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge ], [ %i.bn, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit ], [ %i.bn, %.split185 ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit98 ] ; 4 uses
   %.not.i99 = phi i1 [ %i.bq, %.thread._RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread_crit_edge ], [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit ], [ true, %.split185 ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit98 ]
   %i.df = and i32 %i.h, 536870912
-  %i.dg = icmp ne i32 %i.df, 0                    ; 5 uses
+  %i.dg = icmp ne i32 %i.df, 0                    ; 2 uses
   %or.cond197 = select i1 %i.dg, i1 %.not.i99, i1 false
   br i1 %or.cond197, label %bb.ab, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
@@ -1874,7 +1874,7 @@ _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_in
   br i1 %.not194, label %.thread189, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread187
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread: ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit110
-  %i.dy = phi i1 [ %i.dg, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ %i.dg, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit110 ], [ %i.cx, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
+  %i.dy = phi i1 [ %i.dg, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ true, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit110 ], [ %i.cx, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
   %i.dz = phi i8 [ %i.de, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit110 ], [ %i.bn, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xacquire_instr.exit.thread.thread ] ; 2 uses
   %.not16 = icmp sgt i32 %i.h, -1
   br i1 %.not16, label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread, label %.thread189
@@ -1923,14 +1923,14 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_
   br label %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
 
 _RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread.thread: ; preds = %bb.ac, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit119, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.ep = phi i1 [ %i.dg, %bb.ac ], [ %i.et, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit119 ], [ %i.dy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.ep = phi i1 [ true, %bb.ac ], [ %i.et, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit119 ], [ %i.dy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.eq = phi i8 [ %i.de, %bb.ac ], [ 1, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit119 ], [ %i.dz, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ] ; 3 uses
   %i.er = and i16 %i.e, 1024
   %i.es = icmp eq i16 %i.er, 0
   br i1 %i.es, label %bb.af, label %bb.ag
 
 .thread189:                                       ; preds = %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread
-  %i.et = phi i1 [ %i.dg, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.dy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
+  %i.et = phi i1 [ true, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.dy, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.eu = phi i8 [ %i.de, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit ], [ %i.dz, %_RNvMs0_NtCsf8MNnN4IDbl_8iced_x8611instructionNtB5_11Instruction17is_xrelease_instr.exit.thread ]
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.ew = load ptr, ptr %i.ev, align 8, !nonnull !21, !align !25, !noundef !21 ; 3 uses
@@ -2333,17 +2333,8 @@ bb.a:
   %or.cond.not = and i1 %i.n, %.sroa.08.0
   br i1 %or.cond.not, label %bb.b, label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a
 
-_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a: ; preds = %bb.e, %bb.d, %bb.c, %bb.a
-  %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.d ], [ 0, %bb.c ], [ %switch.select15, %bb.e ]
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 232
-  %.val = load i32, ptr %4, align 8
-  %5 = and i32 %.val, 134217728
-  %.not.i = icmp eq i32 %5, 0
-  %6 = select i1 %.sroa.08.0, i1 true, i1 %.not.i
-  %.sroa.010.0.idx = select i1 %6, i64 0, i64 48
-  %.sroa.010.0 = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.010.0.idx
-  tail call fastcc void @_RNvMNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4infoNtB2_11InstrOpInfo3new(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.010.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %3, i32 noundef %.sroa.0.0)
-  ret void
+_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a: ; preds = %bb.a
+  br i1 %.sroa.08.0, label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit, label %4
 
 bb.b:                                             ; preds = %bb.a
   %cond = icmp eq i32 %i.d, 3
@@ -2353,18 +2344,33 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.o = icmp eq i32 %i.g, %.old1
-  br i1 %i.o, label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a, label %bb.e
+  br i1 %i.o, label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit, label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   %.old2 = icmp eq i32 %.old1, 32
-  br i1 %.old2, label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a, label %bb.e
+  br i1 %.old2, label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %switch.selectcmp = icmp eq i32 %.old1, 32
   %switch.select = select i1 %switch.selectcmp, i32 4, i32 6
   %switch.selectcmp14 = icmp eq i32 %.old1, 16
   %switch.select15 = select i1 %switch.selectcmp14, i32 2, i32 %switch.select
-  br label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a
+  br label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit
+
+4:                                                ; preds = %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 232
+  %.val = load i32, ptr %5, align 8, !noundef !21
+  %6 = and i32 %.val, 134217728
+  %.not.i = icmp eq i32 %6, 0
+  %spec.select.idx = select i1 %.not.i, i64 0, i64 48
+  %spec.select = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.idx
+  br label %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit
+
+_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit: ; preds = %4, %bb.c, %bb.d, %bb.e, %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a
+  %.sroa.0.017 = phi i32 [ 0, %bb.d ], [ 0, %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a ], [ 0, %4 ], [ %switch.select15, %bb.e ], [ 0, %bb.c ]
+  %.sroa.010.0 = phi ptr [ %1, %bb.d ], [ %1, %_RNvNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4info12get_mnemonic.exit.a ], [ %spec.select, %4 ], [ %1, %bb.e ], [ %1, %bb.c ]
+  tail call fastcc void @_RNvMNtNtNtCsf8MNnN4IDbl_8iced_x869formatter3gas4infoNtB2_11InstrOpInfo3new(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.010.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %3, i32 noundef %.sroa.0.017)
+  ret void
 }
 
 ; Function Attrs: nonlazybind uwtable

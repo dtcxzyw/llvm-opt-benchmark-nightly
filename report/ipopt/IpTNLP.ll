@@ -204,7 +204,7 @@ bb.ax:                                            ; preds = %bb.fb, %bb.aw
   br label %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit350
 
 bb.ay:                                            ; preds = %bb.aw, %bb.av
-  br i1 %or.cond7, label %bb.az, label %.loopexit.a
+  br i1 %or.cond7, label %bb.az, label %.loopexit
 
 bb.az:                                            ; preds = %bb.ay
   %i.dv = getelementptr inbounds nuw i8, ptr %i.aa, i64 192
@@ -269,7 +269,7 @@ bb.bg:                                            ; preds = %bb.bf
 
 _ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit322: ; preds = %bb.bf, %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #15
-  br label %.loopexit.a
+  br label %.loopexit
 
 bb.bh:                                            ; preds = %bb.ba
   %i.eu = landingpad { ptr, i32 }
@@ -468,20 +468,22 @@ bb.cd:                                            ; preds = %_ZNK5Ipopt8IpoptNLP
   %i.hl = add nsw i32 %i.hk, -1                   ; 2 uses
   store i32 %i.hl, ptr %i.hj, align 8, !tbaa !25
   %i.hm = icmp eq i32 %i.hl, 0
-  br i1 %i.hm, label %bb.ce, label %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a
+  br i1 %i.hm, label %bb.ce, label %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit
 
 bb.ce:                                            ; preds = %bb.cd
   %i.hn = load ptr, ptr %i.hb, align 8, !tbaa !27
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 8
   %i.hp = load ptr, ptr %i.ho, align 8
   call void %i.hp(ptr noundef nonnull align 8 dereferenceable(24) %i.hb) #15, !inline_history !3
-  br label %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a
+  br label %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit
 
-_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a: ; preds = %bb.cd, %bb.ce
+_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit: ; preds = %bb.cd, %bb.ce
   %39 = fcmp une double %i.hi, 1.000000e+00
+  br i1 %39, label %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a, label %.loopexit.a
+
+_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a: ; preds = %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit
   %i.hq = icmp sgt i32 %i.dw, 0
-  %or.cond509 = select i1 %39, i1 %i.hq, i1 false
-  br i1 %or.cond509, label %.lr.ph, label %.loopexit.a
+  br i1 %i.hq, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a
   %i.hr = fcmp ogt double %i.hi, 0.000000e+00
@@ -724,7 +726,7 @@ bb.cu:                                            ; preds = %bb.ct
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph.split.us
   %lcmp.mod581.not = icmp eq i64 %xtraiter580, 0
-  br i1 %lcmp.mod581.not, label %.loopexit.a, label %.lr.ph.split.us.epil.preheader
+  br i1 %lcmp.mod581.not, label %.loopexit, label %.lr.ph.split.us.epil.preheader
 
 .lr.ph.split.us.epil.preheader:                   ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.split.us.preheader
   %indvars.iv512.epil.init = phi i64 [ 0, %.lr.ph.split.us.preheader ], [ %indvars.iv.next513.1, %.loopexit.loopexit.unr-lcssa ]
@@ -741,11 +743,11 @@ bb.cu:                                            ; preds = %bb.ct
   %i.lo = load double, ptr %i.ln, align 8, !tbaa !84
   %i.lp = fmul double %i.hi, %i.lo
   store double %i.lp, ptr %i.ln, align 8, !tbaa !84
-  br label %.loopexit.a
+  br label %.loopexit
 
 .loopexit.loopexit578.unr-lcssa:                  ; preds = %.lr.ph.split
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.a, label %.lr.ph.split.epil.preheader
+  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.split.epil.preheader
 
 .lr.ph.split.epil.preheader:                      ; preds = %.loopexit.loopexit578.unr-lcssa, %.lr.ph.split.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next.1, %.loopexit.loopexit578.unr-lcssa ]
@@ -764,16 +766,20 @@ bb.cu:                                            ; preds = %bb.ct
   %i.ma = fmul double %i.hi, %i.lz
   store double %i.ma, ptr %i.lt, align 8, !tbaa !84
   store double %i.lw, ptr %i.lx, align 8, !tbaa !84
-  br label %.loopexit.a
+  br label %.loopexit
 
-.loopexit.a:                                      ; preds = %.lr.ph.split.epil.preheader, %.loopexit.loopexit578.unr-lcssa, %.lr.ph.split.us.epil.preheader, %.loopexit.loopexit.unr-lcssa, %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit322, %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a, %bb.ay
+.loopexit:                                        ; preds = %.lr.ph.split.epil.preheader, %.loopexit.loopexit578.unr-lcssa, %.lr.ph.split.us.epil.preheader, %.loopexit.loopexit.unr-lcssa, %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit.a, %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit322, %bb.ay
+  %.not249 = icmp eq ptr %9, null
+  br i1 %.not249, label %bb.fa, label %bb.cv
+
+.loopexit.a:                                      ; preds = %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit
   %.not249.a = icmp eq ptr %9, null
-  br i1 %.not249.a, label %bb.fa, label %bb.cv
+  br i1 %.not249.a, label %bb.fa, label %bb.cw
 
-bb.cv:                                            ; preds = %.loopexit.a
+bb.cv:                                            ; preds = %.loopexit
   br i1 %3, label %bb.cw, label %.critedge280.thread
 
-bb.cw:                                            ; preds = %bb.cv
+bb.cw:                                            ; preds = %.loopexit.a, %bb.cv
   %i.mb = getelementptr inbounds nuw i8, ptr %.0172, i64 16 ; 2 uses
   %i.mc = load ptr, ptr %i.mb, align 8, !tbaa !83, !noalias !161 ; 10 uses
   %.not.i.i.i.i351 = icmp eq ptr %i.mc, null
@@ -1087,7 +1093,7 @@ _ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit371: ; preds = %bb.dy, %bb.dz
 _ZN5Ipopt6Vector4AxpyEdRKS0_.exit:                ; preds = %.noexc
   %i.qp = load ptr, ptr %36, align 8, !tbaa !104
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #15
-  invoke fastcc void @_ZN5IpoptL6curr_dEPKNS_9IpoptDataEPNS_25IpoptCalculatedQuantitiesEPNS_12OrigIpoptNLPEPNS_13RestoIpoptNLPEb(ptr dead_on_unwind noalias writable align 8 %38, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %.0172, ptr noundef %.0171, i1 noundef zeroext true)
+  invoke fastcc void @_ZN5IpoptL6curr_dEPKNS_9IpoptDataEPNS_25IpoptCalculatedQuantitiesEPNS_12OrigIpoptNLPEPNS_13RestoIpoptNLPEb(ptr dead_on_unwind noalias writable align 8 %38, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %.0172, ptr noundef %.0171, i1 noundef zeroext %3)
           to label %bb.ea unwind label %bb.er
 
 bb.ea:                                            ; preds = %_ZN5Ipopt6Vector4AxpyEdRKS0_.exit
@@ -1318,7 +1324,7 @@ _ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit390: ; preds = %bb.ez, %bb.ey, %_
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #15
   br label %_ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit350
 
-bb.fa:                                            ; preds = %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit358, %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit378, %.loopexit.a
+bb.fa:                                            ; preds = %.loopexit.a, %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit358, %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit378, %.loopexit
   br i1 %i.dd, label %bb.fb, label %bb.fc
 
 bb.fb:                                            ; preds = %bb.fa

@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.r = icmp eq i32 %.0108, 0                    ; 2 uses
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.v
-  %.0104317 = phi i32 [ 0, %bb.m ], [ %3, %bb.v ] ; 3 uses
-  %.0106.idx316 = phi i64 [ 0, %bb.m ], [ %.2.idx288, %bb.v ] ; 4 uses
+bb.n:                                             ; preds = %.backedge.backedge, %bb.m
+  %.0104317 = phi i32 [ 0, %bb.m ], [ %.0104317.be, %.backedge.backedge ] ; 3 uses
+  %.0106.idx316 = phi i64 [ 0, %bb.m ], [ %.0106.idx316.be, %.backedge.backedge ] ; 4 uses
   %.0106.ptr = getelementptr inbounds nuw i8, ptr @unicode_script_table, i64 %.0106.idx316 ; 2 uses
   %.0106.add = add nuw nsw i64 %.0106.idx316, 1   ; 2 uses
   %i.s = load i8, ptr %.0106.ptr, align 1, !tbaa !16 ; 2 uses
@@ -243,7 +243,7 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q, %bb.n
-  %.1107.idx = phi i64 [ %.0106.add, %bb.n ], [ %.add127, %bb.p ], [ %.add126, %bb.q ] ; 3 uses
+  %.1107.idx = phi i64 [ %.0106.add, %bb.n ], [ %.add127, %bb.p ], [ %.add126, %bb.q ] ; 4 uses
   %.0103 = phi i32 [ %i.u, %bb.n ], [ %i.ab, %bb.p ], [ %i.ai, %bb.q ] ; 2 uses
   %i.aj = icmp sgt i8 %i.s, -1
   br i1 %i.aj, label %.thread, label %bb.s
@@ -262,7 +262,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ap = add i32 %i.ao, %.0103                   ; 3 uses
   %i.aq = icmp eq i32 %.0108, %i.an
   %or.cond = or i1 %i.r, %i.aq
-  br i1 %or.cond, label %bb.t, label %bb.v
+  br i1 %or.cond, label %bb.t, label %.thread351
 
 bb.t:                                             ; preds = %bb.s
   %i.ar = load i32, ptr %.0, align 8, !tbaa !26   ; 2 uses
@@ -310,11 +310,20 @@ cr_add_interval.exit.thread:                      ; preds = %._crit_edge.i, %cr_
   store i32 %i.ap, ptr %i.bl, align 4, !tbaa !14
   br label %bb.v
 
-bb.v:                                             ; preds = %cr_add_interval.exit.thread, %.thread, %bb.s
-  %3 = phi i32 [ %i.al, %.thread ], [ %i.ap, %cr_add_interval.exit.thread ], [ %i.ap, %bb.s ]
-  %.2.idx288 = phi i64 [ %.1107.idx, %.thread ], [ %.1107.add, %cr_add_interval.exit.thread ], [ %.1107.add, %bb.s ] ; 2 uses
+bb.v:                                             ; preds = %cr_add_interval.exit.thread, %.thread
+  %3 = phi i32 [ %i.al, %.thread ], [ %i.ap, %cr_add_interval.exit.thread ]
+  %.2.idx288 = phi i64 [ %.1107.idx, %.thread ], [ %.1107.add, %cr_add_interval.exit.thread ] ; 2 uses
   %i.bm = icmp slt i64 %.2.idx288, 2818
-  br i1 %i.bm, label %bb.n, label %bb.w, !llvm.loop !66
+  br i1 %i.bm, label %.backedge.backedge, label %bb.w
+
+.backedge.backedge:                               ; preds = %bb.v, %.thread351
+  %.0104317.be = phi i32 [ %3, %bb.v ], [ %i.ap, %.thread351 ]
+  %.0106.idx316.be = phi i64 [ %.2.idx288, %bb.v ], [ %.1107.add, %.thread351 ]
+  br label %bb.n, !llvm.loop !66
+
+.thread351:                                       ; preds = %bb.s
+  %4 = icmp slt i64 %.1107.idx, 2817
+  br i1 %4, label %.backedge.backedge, label %bb.ac
 
 bb.w:                                             ; preds = %bb.v
   br i1 %i.r, label %bb.x, label %bb.ac
@@ -430,7 +439,7 @@ cr_invert.exit.thread:                            ; preds = %bb.ab, %bb.aa
   store i32 %.0.lcssa.i.i, ptr %.0, align 8, !tbaa !26
   br label %bb.ac
 
-bb.ac:                                            ; preds = %cr_invert.exit.thread, %bb.w
+bb.ac:                                            ; preds = %.thread351, %cr_invert.exit.thread, %bb.w
   br i1 %2, label %.preheader310, label %unicode_find_name.exit.thread
 
 .preheader310:                                    ; preds = %bb.ac, %.loopexit309

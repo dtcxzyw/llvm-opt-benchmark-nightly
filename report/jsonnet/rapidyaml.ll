@@ -205,6 +205,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bf, label %bb.ae, label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t, %.critedge48
+  %2 = phi i1 [ %i.aj, %.critedge48 ], [ true, %bb.v ], [ true, %bb.u ], [ true, %bb.t ]
   br i1 %.not, label %.critedge50, label %.thread62
 
 .thread62:                                        ; preds = %bb.w
@@ -239,7 +240,7 @@ bb.aa:                                            ; preds = %bb.z
 
 .critedge50:                                      ; preds = %.thread62, %bb.w
   %i.bs = icmp eq i8 %.pr.pre, -124
-  %or.cond57 = and i1 %i.aj, %i.bs
+  %or.cond57 = and i1 %2, %i.bs
   br i1 %or.cond57, label %bb.ab, label %.critedge50.thread
 
 bb.ab:                                            ; preds = %.critedge50
@@ -642,8 +643,8 @@ bb.ap:                                            ; preds = %.sink.split, %bb.al
   %i.jw = load ptr, ptr %0, align 8, !tbaa !120   ; 3 uses
   %i.jx = getelementptr inbounds nuw [144 x i8], ptr %i.jw, i64 %i.ju
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 112
-  %.0811.i119 = load i64, ptr %i.jy, align 8, !tbaa !102 ; 4 uses
-  %.not12.i120 = icmp eq i64 %.0811.i119, -1      ; 2 uses
+  %.0811.i119 = load i64, ptr %i.jy, align 8, !tbaa !102 ; 5 uses
+  %.not12.i120 = icmp eq i64 %.0811.i119, -1
   %i.jz = icmp eq i64 %i.jv, 0
   %or.cond13.i121 = or i1 %i.jz, %.not12.i120
   br i1 %or.cond13.i121, label %_ZNK2c43yml4Tree5childEmm.exit129, label %.lr.ph.i122
@@ -654,27 +655,28 @@ bb.ap:                                            ; preds = %.sink.split, %bb.al
   %i.ka = add nuw i64 %.0914.i124, 1              ; 2 uses
   %i.kb = getelementptr inbounds nuw [144 x i8], ptr %i.jw, i64 %.0815.i123
   %i.kc = getelementptr inbounds nuw i8, ptr %i.kb, i64 128
-  %.08.i125 = load i64, ptr %i.kc, align 8, !tbaa !102 ; 3 uses
+  %.08.i125 = load i64, ptr %i.kc, align 8, !tbaa !102 ; 4 uses
   %.not.i126 = icmp eq i64 %.08.i125, -1
   %i.kd = icmp eq i64 %i.ka, %i.jv
   %or.cond.i127 = select i1 %.not.i126, i1 true, i1 %i.kd
-  br i1 %or.cond.i127, label %_ZNK2c43yml4Tree5childEmm.exit129, label %.lr.ph.i122, !llvm.loop !11
+  br i1 %or.cond.i127, label %.thread.a, label %.lr.ph.i122, !llvm.loop !11
 
-_ZNK2c43yml4Tree5childEmm.exit129:                ; preds = %.lr.ph.i122, %bb.ap
-  %.08.lcssa.i128 = phi i64 [ %.0811.i119, %bb.ap ], [ %.08.i125, %.lr.ph.i122 ] ; 2 uses
-  %i.ke = icmp eq i64 %.08.lcssa.i128, -1
-  br i1 %i.ke, label %bb.aq, label %.thread.a
+_ZNK2c43yml4Tree5childEmm.exit129:                ; preds = %bb.ap
+  %i.ke = icmp eq i64 %.0811.i119, -1
+  br i1 %i.ke, label %.lr.ph, label %bb.aq
 
-.thread.a:                                        ; preds = %_ZNK2c43yml4Tree5childEmm.exit129
+.thread.a:                                        ; preds = %.lr.ph.i122
+  %5 = icmp eq i64 %.08.i125, -1
+  br i1 %5, label %.lr.ph.i130, label %bb.aq
+
+bb.aq:                                            ; preds = %.thread.a, %_ZNK2c43yml4Tree5childEmm.exit129
+  %.08.lcssa.i128241 = phi i64 [ %.08.i125, %.thread.a ], [ %.0811.i119, %_ZNK2c43yml4Tree5childEmm.exit129 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #59
   br label %_ZNK2c43yml4Tree10find_childEmRKNS_15basic_substringIKcEE.exit.thread168
 
-bb.aq:                                            ; preds = %_ZNK2c43yml4Tree5childEmm.exit129
-  br i1 %.not12.i120, label %.lr.ph, label %.lr.ph.i130
-
-.lr.ph.i130:                                      ; preds = %bb.aq, %.lr.ph.i130
-  %.09.i131 = phi i64 [ %.0.i, %.lr.ph.i130 ], [ %.0811.i119, %bb.aq ]
-  %.058.i = phi i64 [ %i.kf, %.lr.ph.i130 ], [ 0, %bb.aq ]
+.lr.ph.i130:                                      ; preds = %.thread.a, %.lr.ph.i130
+  %.09.i131 = phi i64 [ %.0.i, %.lr.ph.i130 ], [ %.0811.i119, %.thread.a ]
+  %.058.i = phi i64 [ %i.kf, %.lr.ph.i130 ], [ 0, %.thread.a ]
   %i.kf = add i64 %.058.i, 1                      ; 3 uses
   %i.kg = getelementptr inbounds nuw [144 x i8], ptr %i.jw, i64 %.09.i131
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 128
@@ -686,8 +688,8 @@ _ZNK2c43yml4Tree12num_childrenEm.exit:            ; preds = %.lr.ph.i130
   %.not196 = icmp ugt i64 %i.kf, %i.jv
   br i1 %.not196, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.aq, %_ZNK2c43yml4Tree12num_childrenEm.exit
-  %.05.lcssa.i242 = phi i64 [ %i.kf, %_ZNK2c43yml4Tree12num_childrenEm.exit ], [ 0, %bb.aq ]
+.lr.ph:                                           ; preds = %_ZNK2c43yml4Tree5childEmm.exit129, %_ZNK2c43yml4Tree12num_childrenEm.exit
+  %.05.lcssa.i242 = phi i64 [ %i.kf, %_ZNK2c43yml4Tree12num_childrenEm.exit ], [ 0, %_ZNK2c43yml4Tree5childEmm.exit129 ]
   %i.ki = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -895,8 +897,8 @@ bb.bd:                                            ; preds = %bb.a
   tail call void (ptr, i32, ptr, ...) @_ZN2c412handle_errorENS_6srclocEPKcz(ptr nonnull @.str.1, i32 42843, ptr noundef nonnull @.str.139) #58
   unreachable
 
-_ZNK2c43yml4Tree10find_childEmRKNS_15basic_substringIKcEE.exit.thread168: ; preds = %bb.j, %.lr.ph.split.us.i, %._crit_edge, %.thread.a, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit115, %_ZNK2c43yml4Tree10find_childEmRKNS_15basic_substringIKcEE.exit, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit
-  %.5 = phi i64 [ %i.bp, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit ], [ %.060, %_ZNK2c43yml4Tree10find_childEmRKNS_15basic_substringIKcEE.exit ], [ %.161, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit115 ], [ %.262.lcssa, %._crit_edge ], [ %.08.lcssa.i128, %.thread.a ], [ %.0918.us.i, %.lr.ph.split.us.i ], [ %.0918.i, %bb.j ]
+_ZNK2c43yml4Tree10find_childEmRKNS_15basic_substringIKcEE.exit.thread168: ; preds = %bb.j, %.lr.ph.split.us.i, %._crit_edge, %bb.aq, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit115, %_ZNK2c43yml4Tree10find_childEmRKNS_15basic_substringIKcEE.exit, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit
+  %.5 = phi i64 [ %i.bp, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit ], [ %.060, %_ZNK2c43yml4Tree10find_childEmRKNS_15basic_substringIKcEE.exit ], [ %.161, %_ZN2c43yml4Tree14_set_hierarchyEmmm.exit115 ], [ %.262.lcssa, %._crit_edge ], [ %.08.lcssa.i128241, %bb.aq ], [ %.0918.us.i, %.lr.ph.split.us.i ], [ %.0918.i, %bb.j ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 8 dereferenceable(20) %4, i64 20, i1 false), !tbaa.struct !159
   br label %bb.be
 

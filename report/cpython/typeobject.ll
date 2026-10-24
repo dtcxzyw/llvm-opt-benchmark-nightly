@@ -205,14 +205,14 @@ bb.ag:                                            ; preds = %.critedge.i
   br label %type_ready_set_dict.exit
 
 .loopexit:                                        ; preds = %bb.af, %bb.ae, %bb.ab, %bb.ad
-  %i.du = phi i64 [ %i.df, %bb.ad ], [ %i.df, %bb.ae ], [ %i.da, %bb.ab ], [ %i.df, %bb.af ] ; 4 uses
+  %i.du = phi i64 [ %i.df, %bb.ad ], [ %i.df, %bb.ae ], [ %i.da, %bb.ab ], [ %i.df, %bb.af ] ; 5 uses
   %i.dv = load ptr, ptr %i.be, align 8, !tbaa !189 ; 4 uses
   %i.dw = getelementptr i8, ptr %0, i64 312       ; 2 uses
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !157 ; 2 uses
   %i.dy = icmp eq ptr %i.dx, null                 ; 2 uses
   %i.dz = icmp eq ptr %i.dv, @PyBaseObject_Type
   %or.cond.i37 = select i1 %i.dy, i1 %i.dz, i1 false
-  br i1 %or.cond.i37, label %bb.ah, label %._crit_edge.i
+  br i1 %or.cond.i37, label %bb.ah, label %2
 
 bb.ah:                                            ; preds = %.loopexit
   %i.ea = and i64 %i.du, 512
@@ -220,17 +220,22 @@ bb.ah:                                            ; preds = %.loopexit
   %or.cond5.i = and i1 %i.ct, %i.eb
   br i1 %or.cond5.i, label %.thread.i, label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %bb.ah, %.loopexit
+2:                                                ; preds = %.loopexit
+  %3 = and i64 %i.du, 128
+  %.not.i38 = icmp eq i64 %3, 0
+  br i1 %.not.i38, label %bb.ai, label %bb.au
+
+._crit_edge.i:                                    ; preds = %bb.ah
   %i.ec = and i64 %i.du, 128
   %.not.i38.a = icmp eq i64 %i.ec, 0
-  br i1 %.not.i38.a, label %bb.ai, label %bb.au
+  br i1 %.not.i38.a, label %bb.at, label %bb.au
 
 .thread.i:                                        ; preds = %bb.ah
   %i.ed = or i64 %i.du, 128
   store i64 %i.ed, ptr %i.a, align 8, !tbaa !146
   br label %add_tp_new_wrapper.exit.thread30.sink.split.i
 
-bb.ai:                                            ; preds = %._crit_edge.i
+bb.ai:                                            ; preds = %2
   br i1 %i.dy, label %bb.at, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -309,7 +314,7 @@ add_tp_new_wrapper.exit.i:                        ; preds = %bb.as, %bb.ar, %bb.
   %i.ff = icmp slt i32 %i.fb, 0
   br i1 %i.ff, label %type_ready_set_dict.exit, label %type_ready_set_new.exit
 
-bb.at:                                            ; preds = %bb.ai
+bb.at:                                            ; preds = %bb.ai, %._crit_edge.i
   br i1 %i.ct, label %.thread36.i, label %type_ready_set_new.exit
 
 .thread36.i:                                      ; preds = %bb.at
@@ -317,7 +322,7 @@ bb.at:                                            ; preds = %bb.ai
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !157
   br label %add_tp_new_wrapper.exit.thread30.sink.split.i
 
-bb.au:                                            ; preds = %._crit_edge.i
+bb.au:                                            ; preds = %._crit_edge.i, %2
   br i1 %i.ct, label %add_tp_new_wrapper.exit.thread30.sink.split.i, label %type_ready_set_new.exit
 
 add_tp_new_wrapper.exit.thread30.sink.split.i:    ; preds = %bb.au, %.thread36.i, %.thread.i

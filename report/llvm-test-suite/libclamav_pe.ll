@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.u
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %i.aj = load i16, ptr %i.ai, align 2, !tbaa !13 ; 24 uses
+  %i.aj = load i16, ptr %i.ai, align 2, !tbaa !13 ; 23 uses
   %i.ak = zext i16 %i.aj to i32                   ; 13 uses
   %i.al = add i16 %i.aj, -97
   %or.cond27 = icmp ult i16 %i.al, -96
@@ -607,7 +607,7 @@ bb.ky:                                            ; preds = %.thread3170
 bb.kz:                                            ; preds = %.thread3170
   %i.ze = icmp ne i32 %.12349, 0                  ; 5 uses
   %or.cond99 = select i1 %i.zc, i1 true, i1 %i.ze
-  br i1 %or.cond99, label %bb.la, label %.critedge137
+  br i1 %or.cond99, label %bb.la, label %.critedge171
 
 bb.la:                                            ; preds = %bb.kz
   %i.zf = icmp eq i16 %i.aj, 3
@@ -954,7 +954,7 @@ bb.mu:                                            ; preds = %bb.mj
   call void @free(ptr noundef nonnull %i.aea) #13
   br label %.critedge137
 
-.critedge137:                                     ; preds = %bb.lg, %bb.ld, %bb.lb, %bb.lw, %bb.mu, %bb.kz, %bb.lj, %bb.le, %bb.li, %bb.lh
+.critedge137:                                     ; preds = %bb.lg, %bb.ld, %bb.lb, %bb.lw, %bb.mu, %bb.lj, %bb.le, %bb.li, %bb.lh
   br i1 %i.zc, label %bb.mv, label %.critedge171
 
 bb.mv:                                            ; preds = %.critedge137
@@ -1357,9 +1357,9 @@ bb.uo:                                            ; preds = %.split3846, %bb.um,
   call void @free(ptr noundef nonnull %i.axi) #13
   br label %.critedge171
 
-.thread3279:                                      ; preds = %.thread3268, %bb.ue, %bb.ui, %bb.qs, %bb.ta, %bb.or, %bb.un
-  %.102369.ph = phi ptr [ %i.axd, %bb.un ], [ %i.aoh, %bb.qs ], [ %i.agh, %bb.or ], [ %i.auf, %bb.ta ], [ %i.axd, %bb.ui ], [ %i.axd, %bb.ue ], [ %i.axd, %.thread3268 ]
-  %.82358.ph = phi ptr [ %i.axi, %bb.un ], [ %i.aon, %bb.qs ], [ %i.ahu, %bb.or ], [ %i.aul, %bb.ta ], [ %i.axi, %bb.ui ], [ %i.axi, %bb.ue ], [ %i.axi, %.thread3268 ] ; 5 uses
+.thread3279:                                      ; preds = %.thread3268, %bb.ue, %bb.ui, %bb.ta, %bb.or, %bb.qs, %bb.un
+  %.102369.ph = phi ptr [ %i.axd, %bb.un ], [ %i.auf, %bb.ta ], [ %i.aoh, %bb.qs ], [ %i.agh, %bb.or ], [ %i.axd, %bb.ui ], [ %i.axd, %bb.ue ], [ %i.axd, %.thread3268 ]
+  %.82358.ph = phi ptr [ %i.axi, %bb.un ], [ %i.aul, %bb.ta ], [ %i.aon, %bb.qs ], [ %i.ahu, %bb.or ], [ %i.axi, %bb.ui ], [ %i.axi, %bb.ue ], [ %i.axi, %.thread3268 ] ; 5 uses
   call void @free(ptr noundef nonnull %.102369.ph) #13
   call void @free(ptr noundef nonnull %i.em) #13
   %i.bae = call ptr @cli_gentemp(ptr noundef null) #13 ; 10 uses
@@ -1440,7 +1440,7 @@ bb.vc:                                            ; preds = %bb.vb, %bb.va
   call void @free(ptr noundef nonnull %i.bae) #13
   br label %.critedge3020
 
-.critedge171:                                     ; preds = %bb.tc, %bb.uo, %.critedge137
+.critedge171:                                     ; preds = %bb.kz, %bb.tc, %bb.uo, %.critedge137
   %i.baw = icmp ult i32 %i.lh, 200
   br i1 %i.baw, label %bb.vd, label %bb.ve
 
@@ -1675,7 +1675,7 @@ bb.wk:                                            ; preds = %bb.vz
   %i.bdj = load i32, ptr %i.bdi, align 4, !tbaa !71
   %i.bdk = and i32 %i.bdj, 512
   %i.bdl = icmp ne i32 %i.bdk, 0
-  %i.bdm = icmp ugt i16 %i.aj, 1                  ; 3 uses
+  %i.bdm = icmp ugt i16 %i.aj, 1                  ; 2 uses
   %or.cond192 = and i1 %i.bdm, %i.bdl
   br i1 %or.cond192, label %bb.wl, label %bb.xo
 
@@ -1860,11 +1860,12 @@ bb.xn:                                            ; preds = %bb.xa
   br label %bb.xo
 
 bb.xo:                                            ; preds = %bb.xl, %bb.xn, %bb.wn, %bb.wm, %bb.wl, %.critedge3049
+  %5 = phi i1 [ %i.bdm, %.critedge3049 ], [ true, %bb.xn ], [ true, %bb.wl ], [ true, %bb.wn ], [ true, %bb.wm ], [ true, %bb.xl ] ; 2 uses
   %i.bfp = load ptr, ptr %i.up, align 8, !tbaa !69
   %i.bfq = load i32, ptr %i.bfp, align 4, !tbaa !71 ; 5 uses
   %i.bfr = and i32 %i.bfq, 1024
   %i.bfs = icmp ne i32 %i.bfr, 0
-  %or.cond195 = and i1 %i.bdm, %i.bfs
+  %or.cond195 = and i1 %5, %i.bfs
   br i1 %or.cond195, label %bb.xp, label %bb.ym
 
 bb.xp:                                            ; preds = %bb.xo
@@ -1999,14 +2000,15 @@ bb.yl:                                            ; preds = %bb.ya
   br label %bb.ym
 
 bb.ym:                                            ; preds = %bb.yl, %bb.xr, %bb.xq, %bb.xp, %bb.xo
+  %6 = phi i1 [ true, %bb.yl ], [ true, %bb.xr ], [ true, %bb.xq ], [ true, %bb.xp ], [ %5, %bb.xo ]
   %i.bhc = phi i32 [ %.pre3610, %bb.yl ], [ %i.bfq, %bb.xr ], [ %i.bfq, %bb.xq ], [ %i.bfq, %bb.xp ], [ %i.bfq, %bb.xo ]
   %i.bhd = and i32 %i.bhc, 2048
   %i.bhe = icmp ne i32 %i.bhd, 0
-  %or.cond198 = and i1 %i.bdm, %i.bhe
+  %or.cond198 = and i1 %6, %i.bhe
   br i1 %or.cond198, label %bb.yn, label %.thread3850
 
 bb.yn:                                            ; preds = %bb.ym
-  %i.bhf = add nsw i32 %i.ak, -1                  ; 3 uses
+  %i.bhf = add nsw i32 %i.ak, -1                  ; 4 uses
   %i.bhg = zext i32 %i.bhf to i64                 ; 4 uses
   %i.bhh = getelementptr inbounds nuw [36 x i8], ptr %i.em, i64 %i.bhg ; 5 uses
   %i.bhi = getelementptr inbounds nuw i8, ptr %i.bhh, i64 8
@@ -2057,7 +2059,7 @@ bb.yr:                                            ; preds = %bb.yq
 
 .lr.ph3464.preheader:                             ; preds = %.preheader3341
   %xtraiter3990 = and i64 %i.bhg, 3               ; 3 uses
-  %i.bik = icmp ult i16 %i.aj, 5
+  %i.bik = icmp ult i32 %i.bhf, 4
   br i1 %i.bik, label %.lr.ph3464.epil.preheader, label %.lr.ph3464.preheader.new
 
 .lr.ph3464.preheader.new:                         ; preds = %.lr.ph3464.preheader

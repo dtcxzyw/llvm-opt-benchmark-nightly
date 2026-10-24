@@ -202,7 +202,7 @@ bb.a:
   %i.f = alloca [40 x i8], align 8                ; 9 uses
   %i.g = alloca [56 x i8], align 8                ; 5 uses
   %i.h = alloca [40 x i8], align 8                ; 7 uses
-  %i.i = alloca [64 x i8], align 8                ; 9 uses
+  %i.i = alloca [64 x i8], align 8                ; 10 uses
   %i.j = alloca [88 x i8], align 8                ; 11 uses
   %i.k = alloca [88 x i8], align 8                ; 7 uses
   %i.l = alloca [64 x i8], align 8                ; 11 uses
@@ -225,7 +225,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.f, %bb.d, %bb.b, %bb.a
-  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 3 uses
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %.sroa.531.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 176
@@ -350,7 +350,7 @@ bb.p:                                             ; preds = %bb.o
   %i.br = icmp eq i64 %i.bp, %i.bq
   %i.bs = icmp eq i8 %i.bn, %i.bo
   %or.cond15.i = and i1 %i.br, %i.bs
-  br i1 %or.cond15.i, label %bb.q, label %bb.s
+  br i1 %or.cond15.i, label %bb.q, label %.thread.i
 
 bb.q:                                             ; preds = %bb.p
   %i.bt = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !2859, !noundef !6 ; 2 uses
@@ -363,16 +363,21 @@ bb.r:                                             ; preds = %bb.q
   %i.bx = load i8, ptr %i.x, align 1, !range !9, !alias.scope !2859
   %i.by = trunc nuw i8 %i.bx to i1
   %or.cond18.i = select i1 %i.bw, i1 true, i1 %i.by
-  br i1 %or.cond18.i, label %bb.s, label %.loopexit
+  br i1 %or.cond18.i, label %.thread.i, label %.loopexit
 
-bb.s:                                             ; preds = %bb.r, %bb.p, %bb.o
+.thread.i:                                        ; preds = %bb.r, %bb.p
+  store i8 0, ptr %i.q, align 8, !alias.scope !2859
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2861
+  br label %bb.t
+
+bb.s:                                             ; preds = %bb.o
   store i8 0, ptr %i.q, align 8, !alias.scope !2859
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2861
   call void @llvm.experimental.noalias.scope.decl(metadata !2863)
   call void @llvm.experimental.noalias.scope.decl(metadata !2864)
   br i1 %i.bl, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCs7SkU8gPisFf_4redb10tree_store11btree_iters10EntryGuardNtNtNtNtCsiAynQAjgDuT_10xet_client10cas_client10simulation12local_client8RedbHashB1Y_EEEB26_.exit.i, label %bb.t
 
-bb.t:                                             ; preds = %bb.s
+bb.t:                                             ; preds = %bb.s, %.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !2865
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !2865
   %i.bz = load ptr, ptr %i.y, align 8, !alias.scope !2866, !nonnull !6, !noundef !6 ; 4 uses
@@ -625,7 +630,7 @@ bb.a:
   %i.f = alloca [40 x i8], align 8                ; 9 uses
   %i.g = alloca [56 x i8], align 8                ; 5 uses
   %i.h = alloca [40 x i8], align 8                ; 7 uses
-  %i.i = alloca [64 x i8], align 8                ; 9 uses
+  %i.i = alloca [64 x i8], align 8                ; 10 uses
   %i.j = alloca [88 x i8], align 8                ; 11 uses
   %i.k = alloca [88 x i8], align 8                ; 7 uses
   %i.l = alloca [64 x i8], align 8                ; 11 uses
@@ -648,7 +653,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.f, %bb.d, %bb.b, %bb.a
-  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 3 uses
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %.sroa.531.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 176
@@ -773,7 +778,7 @@ bb.p:                                             ; preds = %bb.o
   %i.br = icmp eq i64 %i.bp, %i.bq
   %i.bs = icmp eq i8 %i.bn, %i.bo
   %or.cond15.i = and i1 %i.br, %i.bs
-  br i1 %or.cond15.i, label %bb.q, label %bb.s
+  br i1 %or.cond15.i, label %bb.q, label %.thread.i
 
 bb.q:                                             ; preds = %bb.p
   %i.bt = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !2908, !noundef !6 ; 2 uses
@@ -786,16 +791,21 @@ bb.r:                                             ; preds = %bb.q
   %i.bx = load i8, ptr %i.x, align 1, !range !9, !alias.scope !2908
   %i.by = trunc nuw i8 %i.bx to i1
   %or.cond18.i = select i1 %i.bw, i1 true, i1 %i.by
-  br i1 %or.cond18.i, label %bb.s, label %.loopexit
+  br i1 %or.cond18.i, label %.thread.i, label %.loopexit
 
-bb.s:                                             ; preds = %bb.r, %bb.p, %bb.o
+.thread.i:                                        ; preds = %bb.r, %bb.p
+  store i8 0, ptr %i.q, align 8, !alias.scope !2908
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2910
+  br label %bb.t
+
+bb.s:                                             ; preds = %bb.o
   store i8 0, ptr %i.q, align 8, !alias.scope !2908
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2910
   call void @llvm.experimental.noalias.scope.decl(metadata !2912)
   call void @llvm.experimental.noalias.scope.decl(metadata !2913)
   br i1 %i.bl, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCs7SkU8gPisFf_4redb10tree_store11btree_iters10EntryGuardNtNtNtNtCsiAynQAjgDuT_10xet_client10cas_client10simulation12local_client8RedbHashNtB20_12FileShardRefEEEB26_.exit.i, label %bb.t
 
-bb.t:                                             ; preds = %bb.s
+bb.t:                                             ; preds = %bb.s, %.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !2914
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !2914
   %i.bz = load ptr, ptr %i.y, align 8, !alias.scope !2915, !nonnull !6, !noundef !6 ; 4 uses

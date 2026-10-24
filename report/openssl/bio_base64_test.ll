@@ -113,22 +113,25 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.ab = add i32 %i.w, %i.e
   store i32 %i.ab, ptr %i.x, align 8, !tbaa !20
-  br label %bb.f
+  br label %.thread
 
 bb.e:                                             ; preds = %bb.c
   %i.ac = icmp samesign ugt i32 %i.e, 2
-  br i1 %i.ac, label %.thread, label %bb.f
+  br i1 %i.ac, label %2, label %bb.f
 
-.thread:                                          ; preds = %bb.e
-  %2 = add nsw i32 %i.e, -2
-  store i32 %2, ptr %i.y, align 4, !tbaa !21
+2:                                                ; preds = %bb.e
+  %3 = add nsw i32 %i.e, -2
+  store i32 %3, ptr %i.y, align 4, !tbaa !21
+  br label %.thread
+
+.thread:                                          ; preds = %2, %bb.d
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr @suffixes, i64 %i.q
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !29 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 24
   store ptr %i.ae, ptr %i.af, align 8, !tbaa !22
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.e, %bb.d
+bb.f:                                             ; preds = %bb.e
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr @suffixes, i64 %i.q
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !29 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 24

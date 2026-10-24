@@ -205,7 +205,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread.i:          ; preds = %rbimpl_RB_TYPE_P_fa
   call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.134, i64 noundef %i.v, ptr noundef nonnull %i.w) #61
   unreachable
 
-rb_type.exit.i:                                   ; preds = %bb.g, %thread-pre-split.i, %bb.e, %bb.d, %bb.b, %bb.a, %rbimpl_RB_TYPE_P_fastpath.exit.i
+rb_type.exit.i:                                   ; preds = %bb.a, %rbimpl_RB_TYPE_P_fastpath.exit.i, %bb.g, %thread-pre-split.i, %bb.e, %bb.d, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #46
   %i.x = load i64, ptr %.pre27, align 8, !tbaa !126 ; 8 uses
   %i.y = trunc i64 %i.x to i32                    ; 7 uses
@@ -608,7 +608,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %bb.d, %rbimpl_RB_TY
   unreachable
 
 RB_SYMBOL_P.exit.thread:                          ; preds = %bb.c, %rbimpl_RB_TYPE_P_fastpath.exit, %RB_SYMBOL_P.exit
-  %.096 = phi i64 [ %1, %RB_SYMBOL_P.exit ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit ], [ %1, %bb.c ] ; 14 uses
+  %.096 = phi i64 [ %1, %RB_SYMBOL_P.exit ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit ], [ %1, %bb.c ] ; 15 uses
   %.095 = phi i64 [ 4, %RB_SYMBOL_P.exit ], [ %1, %rbimpl_RB_TYPE_P_fastpath.exit ], [ 4, %bb.c ] ; 10 uses
   %i.r = load i64, ptr @gc_info_decode.sym_major_by, align 8, !tbaa !75
   %i.s = icmp eq i64 %i.r, 4
@@ -759,7 +759,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q
-  br i1 %.not, label %bb.s, label %bb.ae
+  br i1 %.not, label %bb.s, label %bb.ad
 
 bb.s:                                             ; preds = %bb.r
   %i.ct = getelementptr i8, ptr %0, i64 1144
@@ -809,25 +809,25 @@ bb.aa:                                            ; preds = %bb.y
 bb.ab:                                            ; preds = %bb.v, %bb.z, %bb.aa, %bb.x, %bb.t
   %i.dg = phi i64 [ %i.cw, %bb.t ], [ %i.cy, %bb.v ], [ %i.da, %bb.x ], [ %i.dc, %bb.z ], [ %i.df, %bb.aa ] ; 2 uses
   %i.dh = load i64, ptr @gc_info_decode.sym_need_major_by, align 8, !tbaa !75 ; 2 uses
-  %.not138 = icmp eq i64 %.096, %i.dh             ; 3 uses
+  %.not138 = icmp eq i64 %.096, %i.dh             ; 2 uses
   %brmerge = or i1 %.not132, %.not138
-  %.mux = select i1 %.not138, i64 %i.dg, i64 undef
-  br i1 %brmerge, label %bb.ad, label %bb.ac
+  br i1 %brmerge, label %bb.ac, label %bb.ae
 
 bb.ac:                                            ; preds = %bb.ab
-  %3 = tail call i64 @rb_hash_aset(i64 noundef %.095, i64 noundef %i.dh, i64 noundef %i.dg) #46 ; 0 uses
-  br label %bb.ad
+  br i1 %.not138, label %bb.br, label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ab, %bb.ac
-  %.094 = phi i64 [ %.mux, %bb.ab ], [ undef, %bb.ac ]
-  br i1 %.not138, label %bb.br, label %bb.ae
+bb.ad:                                            ; preds = %bb.ac, %bb.r
+  %3 = load i64, ptr @gc_info_decode.sym_gc_by, align 8, !tbaa !75 ; 2 uses
+  %4 = icmp eq i64 %.096, %3
+  br i1 %4, label %bb.af, label %bb.ao
 
-bb.ae:                                            ; preds = %bb.ad, %bb.r
+bb.ae:                                            ; preds = %bb.ab
+  %5 = tail call i64 @rb_hash_aset(i64 noundef %.095, i64 noundef %i.dh, i64 noundef %i.dg) #46 ; 0 uses
   %i.di = load i64, ptr @gc_info_decode.sym_gc_by, align 8, !tbaa !75 ; 2 uses
   %i.dj = icmp eq i64 %.096, %i.di
-  br i1 %i.dj, label %bb.af, label %bb.ao
+  br i1 %i.dj, label %bb.af, label %bb.ap
 
-bb.af:                                            ; preds = %bb.ae
+bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.dk = and i32 %i.c, 256
   %.not148 = icmp eq i32 %i.dk, 0
   br i1 %.not148, label %bb.ah, label %bb.ag
@@ -870,10 +870,11 @@ bb.an:                                            ; preds = %bb.al
   %i.du = select i1 %.not152, i64 4, i64 %i.dt
   br label %bb.br
 
-bb.ao:                                            ; preds = %bb.ae
+bb.ao:                                            ; preds = %bb.ad
   br i1 %.not132, label %bb.ay, label %bb.ap
 
-bb.ap:                                            ; preds = %bb.ao
+bb.ap:                                            ; preds = %bb.ae, %bb.ao
+  %6 = phi i64 [ %3, %bb.ao ], [ %i.di, %bb.ae ]
   %i.dv = and i32 %i.c, 256
   %.not139 = icmp eq i32 %i.dv, 0
   br i1 %.not139, label %bb.ar, label %bb.aq
@@ -923,7 +924,7 @@ bb.ay:                                            ; preds = %bb.ao
 
 .thread:                                          ; preds = %bb.aq, %bb.au, %bb.ax, %bb.aw, %bb.as
   %i.ei = phi i64 [ %i.dw, %bb.aq ], [ %i.dy, %bb.as ], [ %i.ea, %bb.au ], [ %i.ec, %bb.aw ], [ %i.ef, %bb.ax ]
-  %i.ej = tail call i64 @rb_hash_aset(i64 noundef %.095, i64 noundef %i.di, i64 noundef %i.ei) #46 ; 0 uses
+  %i.ej = tail call i64 @rb_hash_aset(i64 noundef %.095, i64 noundef %6, i64 noundef %i.ei) #46 ; 0 uses
   %i.ek = load i64, ptr @gc_info_decode.sym_have_finalizer, align 8, !tbaa !75 ; 2 uses
   %i.el = icmp eq i64 %.096, %i.ek
   br i1 %i.el, label %bb.az, label %.thread176
@@ -1071,8 +1072,8 @@ bb.bq:                                            ; preds = %.thread181, %.threa
   %.095. = select i1 %i.gz, i64 %.095, i64 36
   br label %bb.br
 
-bb.br:                                            ; preds = %bb.bq, %bb.bg, %bb.bh, %bb.ag, %bb.ak, %bb.an, %bb.am, %bb.ai, %bb.o, %bb.ad, %bb.bp, %bb.bn, %bb.bb, %bb.az
-  %.1 = phi i64 [ %.094, %bb.ad ], [ %i.cp, %bb.o ], [ %i.en, %bb.az ], [ %i.ew, %bb.bb ], [ %i.du, %bb.an ], [ %i.gf, %bb.bn ], [ %i.gt, %bb.bp ], [ %i.fk, %bb.bh ], [ %.095., %bb.bq ], [ %i.dl, %bb.ag ], [ %i.dn, %bb.ai ], [ %i.dp, %bb.ak ], [ %i.dr, %bb.am ], [ %i.fg, %bb.bg ]
+bb.br:                                            ; preds = %bb.bq, %bb.bg, %bb.bh, %bb.ag, %bb.ak, %bb.an, %bb.am, %bb.ai, %bb.o, %bb.ac, %bb.bp, %bb.bn, %bb.bb, %bb.az
+  %.1 = phi i64 [ %i.dg, %bb.ac ], [ %i.cp, %bb.o ], [ %i.en, %bb.az ], [ %i.ew, %bb.bb ], [ %i.du, %bb.an ], [ %i.gf, %bb.bn ], [ %i.gt, %bb.bp ], [ %i.fk, %bb.bh ], [ %.095., %bb.bq ], [ %i.dl, %bb.ag ], [ %i.dn, %bb.ai ], [ %i.dp, %bb.ak ], [ %i.dr, %bb.am ], [ %i.fg, %bb.bg ]
   ret i64 %.1
 }
 

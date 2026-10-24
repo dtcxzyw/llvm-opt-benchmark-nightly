@@ -204,19 +204,19 @@ bb.ae:                                            ; preds = %mriStepInnerStepper
 bb.af:                                            ; preds = %bb.ae
   %i.fx = load ptr, ptr %i.cr, align 8, !tbaa !134 ; 2 uses
   %.not201 = icmp eq ptr %i.fx, null
+  %.pre349.pre351 = load ptr, ptr %i.cm, align 8, !tbaa !120 ; 2 uses
   br i1 %.not201, label %.thread290, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %3 = load ptr, ptr %i.cm, align 8, !tbaa !120
   %i.fy = load ptr, ptr %i.cs, align 8, !tbaa !109
-  %i.fz = tail call i32 %i.fx(double noundef %i.fh, ptr noundef %3, ptr noundef %i.fy) #14
+  %i.fz = tail call i32 %i.fx(double noundef %i.fh, ptr noundef %.pre349.pre351, ptr noundef %i.fy) #14
   %.not202 = icmp eq i32 %i.fz, 0
   br i1 %.not202, label %bb.ah, label %.thread292
 
 bb.ah:                                            ; preds = %bb.ag
   %i.ga = load ptr, ptr %i.cp, align 8, !tbaa !52 ; 4 uses
   %i.gb = load double, ptr %i.cq, align 8, !tbaa !119 ; 2 uses
-  %i.gc = load ptr, ptr %i.cm, align 8, !tbaa !120
+  %i.gc = load ptr, ptr %i.cm, align 8, !tbaa !120 ; 2 uses
   %i.gd = icmp eq ptr %i.ga, null
   br i1 %i.gd, label %mriStepInnerStepper_Reset.exit222.thread, label %bb.ai
 
@@ -241,6 +241,7 @@ mriStepInnerStepper_Reset.exit222:                ; preds = %bb.aj
 
 mriStepInnerStepper_Reset.exit222..thread290_crit_edge: ; preds = %mriStepInnerStepper_Reset.exit222
   %.pre348.pre = load double, ptr %i.cq, align 8, !tbaa !119
+  %.pre349.pre = load ptr, ptr %i.cm, align 8, !tbaa !120
   br label %.thread290
 
 mriStepInnerStepper_Reset.exit222.thread:         ; preds = %bb.ah, %bb.ai, %mriStepInnerStepper_Reset.exit222
@@ -292,16 +293,16 @@ mriStepInnerStepper_Reset.exit225.thread:         ; preds = %bb.an, %bb.ao, %mri
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef nonnull %0, i32 noundef -34, i32 noundef 3170, ptr noundef nonnull @__func__.mriStep_TakeStepMERK, ptr noundef nonnull @.str, ptr noundef nonnull @.str.16) #14
   br label %.thread292
 
-.thread290:                                       ; preds = %bb.af, %mriStepInnerStepper_Reset.exit222..thread290_crit_edge, %bb.aj
+.thread290:                                       ; preds = %mriStepInnerStepper_Reset.exit222..thread290_crit_edge, %bb.aj, %bb.af
+  %.pre349 = phi ptr [ %.pre349.pre, %mriStepInnerStepper_Reset.exit222..thread290_crit_edge ], [ %i.gc, %bb.aj ], [ %.pre349.pre351, %bb.af ] ; 2 uses
   %.pre348.a = phi double [ %.pre348.pre, %mriStepInnerStepper_Reset.exit222..thread290_crit_edge ], [ %i.gb, %bb.aj ], [ %i.fh, %bb.af ] ; 2 uses
   %i.ha = load ptr, ptr %i.ct, align 8, !tbaa !108 ; 2 uses
   %.not207 = icmp eq ptr %i.ha, null
-  %.pre350 = load ptr, ptr %i.cm, align 8, !tbaa !120 ; 2 uses
   br i1 %.not207, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %.thread290
   %i.hb = load ptr, ptr %i.cs, align 8, !tbaa !109
-  %i.hc = tail call i32 %i.ha(double noundef %.pre348.a, ptr noundef %.pre350, ptr noundef %i.hb) #14
+  %i.hc = tail call i32 %i.ha(double noundef %.pre348.a, ptr noundef %.pre349, ptr noundef %i.hb) #14
   %.not208 = icmp eq i32 %i.hc, 0
   br i1 %.not208, label %._crit_edge346, label %.thread292
 
@@ -311,7 +312,7 @@ bb.aq:                                            ; preds = %.thread290
   br label %bb.ar
 
 bb.ar:                                            ; preds = %._crit_edge346, %.thread290
-  %i.hd = phi ptr [ %.pre349.a, %._crit_edge346 ], [ %.pre350, %.thread290 ]
+  %i.hd = phi ptr [ %.pre349.a, %._crit_edge346 ], [ %.pre349, %.thread290 ]
   %i.he = phi double [ %.pre347, %._crit_edge346 ], [ %.pre348.a, %.thread290 ]
   %i.hf = load ptr, ptr %i.b, align 8, !tbaa !31
   %i.hg = load ptr, ptr %i.cu, align 8, !tbaa !96
@@ -333,7 +334,7 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as
   %i.hp = load i32, ptr %i.bk, align 4, !tbaa !48
   %.not210 = icmp eq i32 %i.hp, 0
-  br i1 %.not210, label %.thread286, label %bb.au
+  br i1 %.not210, label %bb.aw, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %i.hq = load ptr, ptr %i.cw, align 8, !tbaa !43 ; 6 uses
@@ -419,9 +420,9 @@ mriStep_ApplyForcing.exit:                        ; preds = %.lr.ph.i.epil.prehe
   %.0251 = phi i32 [ 2, %bb.au ], [ %narrow382, %mriStep_ApplyForcing.exit.loopexit.unr-lcssa ], [ %narrow382, %.lr.ph.i.epil.preheader ]
   %i.iz = load ptr, ptr %i.hs, align 8, !tbaa !107
   %i.ja = tail call i32 @N_VLinearCombination(i32 noundef %.0251, ptr noundef nonnull %i.hq, ptr noundef nonnull %i.hu, ptr noundef %i.iz) #14 ; 0 uses
-  br label %.thread286
+  br label %bb.aw
 
-.thread286:                                       ; preds = %bb.ap, %mriStepInnerStepper_Reset.exit225, %bb.al, %bb.ak, %bb.at, %mriStep_ApplyForcing.exit
+.thread286:                                       ; preds = %bb.ap, %bb.ak, %bb.al, %mriStepInnerStepper_Reset.exit225
   br i1 %i.eq, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %.thread286
@@ -429,7 +430,7 @@ bb.av:                                            ; preds = %.thread286
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.jb, ptr noundef %i.e) #14
   br label %bb.aw
 
-bb.aw:                                            ; preds = %.thread286, %bb.av
+bb.aw:                                            ; preds = %mriStep_ApplyForcing.exit, %bb.at, %.thread286, %bb.av
   %indvars.iv.next339 = add nuw nsw i64 %indvars.iv338, 1 ; 2 uses
   %i.jc = load i32, ptr %i.cn, align 8, !tbaa !77 ; 2 uses
   %i.jd = sext i32 %i.jc to i64
@@ -832,20 +833,20 @@ bb.bj:                                            ; preds = %bb.bd
 bb.bk:                                            ; preds = %bb.bj
   %i.na = load ptr, ptr %i.fj, align 8, !tbaa !140 ; 2 uses
   %.not259 = icmp eq ptr %i.na, null
+  %.pre431 = load ptr, ptr %i.ee, align 8, !tbaa !120 ; 2 uses
   br i1 %.not259, label %.thread392, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.nb = load double, ptr %i.ei, align 8, !tbaa !119
-  %3 = load ptr, ptr %i.ee, align 8, !tbaa !120
   %i.nc = load ptr, ptr %i.ep, align 8, !tbaa !109
-  %i.nd = tail call i32 %i.na(double noundef %i.nb, ptr noundef %3, ptr noundef %i.nc) #14
+  %i.nd = tail call i32 %i.na(double noundef %i.nb, ptr noundef %.pre431, ptr noundef %i.nc) #14
   %.not260 = icmp eq i32 %i.nd, 0
   br i1 %.not260, label %bb.bm, label %.loopexit
 
 bb.bm:                                            ; preds = %bb.bl
   %i.ne = load ptr, ptr %i.ej, align 8, !tbaa !52 ; 4 uses
   %i.nf = load double, ptr %i.ei, align 8, !tbaa !119
-  %i.ng = load ptr, ptr %i.ee, align 8, !tbaa !120
+  %i.ng = load ptr, ptr %i.ee, align 8, !tbaa !120 ; 2 uses
   %i.nh = icmp eq ptr %i.ne, null
   br i1 %i.nh, label %mriStepInnerStepper_Reset.exit287.thread, label %bb.bn
 
@@ -866,13 +867,17 @@ mriStepInnerStepper_Reset.exit287:                ; preds = %bb.bo
   %i.no = getelementptr inbounds nuw i8, ptr %i.ne, i64 48
   store i32 %i.nn, ptr %i.no, align 8, !tbaa !106
   %.not261 = icmp eq i32 %i.nn, 0
-  br i1 %.not261, label %.thread392, label %mriStepInnerStepper_Reset.exit287.thread
+  br i1 %.not261, label %mriStepInnerStepper_Reset.exit287.mriStepInnerStepper_Reset.exit287.thread381_crit_edge, label %mriStepInnerStepper_Reset.exit287.thread
+
+mriStepInnerStepper_Reset.exit287.mriStepInnerStepper_Reset.exit287.thread381_crit_edge: ; preds = %mriStepInnerStepper_Reset.exit287
+  %.pre430 = load ptr, ptr %i.ee, align 8, !tbaa !120
+  br label %.thread392
 
 mriStepInnerStepper_Reset.exit287.thread:         ; preds = %bb.bm, %bb.bn, %mriStepInnerStepper_Reset.exit287
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef nonnull %0, i32 noundef -34, i32 noundef 2727, ptr noundef nonnull @__func__.mriStep_TakeStepMRISR, ptr noundef nonnull @.str, ptr noundef nonnull @.str.16) #14
   br label %.loopexit
 
-.thread387.a:                                     ; preds = %bb.bi, %mriStepInnerStepper_Reset.exit284, %bb.be
+.thread387.a:                                     ; preds = %bb.bi, %bb.be, %mriStepInnerStepper_Reset.exit284
   %i.np = load ptr, ptr %i.ew, align 8, !tbaa !108 ; 2 uses
   %.not262 = icmp eq ptr %i.np, null
   br i1 %.not262, label %bb.bt, label %bb.bp
@@ -1172,9 +1177,9 @@ bb.cg:                                            ; preds = %bb.cf
   tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %i.si, double noundef 1.000000e+00, ptr noundef %i.sl, ptr noundef %i.si) #14
   br label %.thread393
 
-.thread392:                                       ; preds = %bb.bk, %mriStepInnerStepper_Reset.exit287, %bb.bo
-  %4 = load ptr, ptr %i.ee, align 8, !tbaa !120
-  tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %4, ptr noundef %i.e) #14
+.thread392:                                       ; preds = %mriStepInnerStepper_Reset.exit287.mriStepInnerStepper_Reset.exit287.thread381_crit_edge, %bb.bo, %bb.bk
+  %3 = phi ptr [ %.pre430, %mriStepInnerStepper_Reset.exit287.mriStepInnerStepper_Reset.exit287.thread381_crit_edge ], [ %i.ng, %bb.bo ], [ %.pre431, %bb.bk ]
+  tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %3, ptr noundef %i.e) #14
   br label %.thread393
 
 .thread393:                                       ; preds = %bb.bq, %bb.cg, %bb.cf, %bb.ce, %bb.bj, %.thread392

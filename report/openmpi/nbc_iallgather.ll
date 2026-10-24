@@ -77,7 +77,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.g = getelementptr i8, ptr %6, i64 264
   %.val134 = load ptr, ptr %i.g, align 8, !tbaa !72
   %i.h = getelementptr i8, ptr %.val134, i64 16
-  %.val134.val = load i32, ptr %i.h, align 8, !tbaa !47 ; 6 uses
+  %.val134.val = load i32, ptr %i.h, align 8, !tbaa !47 ; 7 uses
   %i.i = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %.val134.val)
   %.not125 = icmp samesign ugt i32 %i.i, 1
   %i.j = load i32, ptr @libnbc_iallgather_algorithm, align 4, !tbaa !48
@@ -89,8 +89,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %.val136 = load i64, ptr %i.m, align 8, !tbaa !55
   %i.n = sub nsw i64 %.val136, %.val135           ; 2 uses
   %brmerge = or i1 %9, %i.e
-  %.mux = select i1 %i.e, ptr %5, ptr %2
-  %.mux201 = select i1 %i.e, i32 %4, i32 %1
   br i1 %brmerge, label %.thread166, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -101,20 +99,24 @@ bb.e:                                             ; preds = %bb.d
   %i.s = getelementptr inbounds i8, ptr %.0110, i64 %i.r
   %i.t = tail call i32 @ompi_datatype_sndrcv(ptr noundef %.0107, i32 noundef %1, ptr noundef %2, ptr noundef %i.s, i32 noundef %4, ptr noundef nonnull %5) #10 ; 3 uses
   %.not.i = icmp eq i32 %i.t, 0
-  br i1 %.not.i, label %.thread166, label %NBC_Copy.exit
+  br i1 %.not.i, label %.thread, label %NBC_Copy.exit
 
 NBC_Copy.exit:                                    ; preds = %bb.e
   tail call void (ptr, ...) @NBC_Error(ptr nonnull poison, i32 noundef %i.t)
   br label %nbc_get_noop_request.exit
 
-.thread166:                                       ; preds = %bb.d, %bb.e
-  %.0109 = phi ptr [ %.mux, %bb.d ], [ %2, %bb.e ]
-  %.0108 = phi i32 [ %.mux201, %bb.d ], [ %1, %bb.e ]
+.thread166:                                       ; preds = %bb.d
+  %.mux179 = select i1 %i.e, i32 %4, i32 %1
+  %.mux = select i1 %i.e, ptr %5, ptr %2
   %i.u = icmp eq i32 %.val134.val, 1
   %.not = xor i1 %9, true
   %or.cond6 = or i1 %i.e, %.not                   ; 2 uses
   %or.cond133 = and i1 %or.cond6, %i.u
   br i1 %or.cond133, label %bb.f, label %bb.i
+
+.thread:                                          ; preds = %bb.e
+  %10 = icmp eq i32 %.val134.val, 1
+  br i1 %10, label %bb.h, label %bb.i
 
 bb.f:                                             ; preds = %.thread166
   br i1 %9, label %bb.g, label %bb.h
@@ -123,11 +125,14 @@ bb.g:                                             ; preds = %bb.f
   %i.v = tail call i32 @ompi_request_persistent_noop_create(ptr noundef %7) #10
   br label %nbc_get_noop_request.exit
 
-bb.h:                                             ; preds = %bb.f
+bb.h:                                             ; preds = %.thread, %bb.f
   store ptr @ompi_request_empty, ptr %7, align 8, !tbaa !17
   br label %nbc_get_noop_request.exit
 
-bb.i:                                             ; preds = %.thread166
+bb.i:                                             ; preds = %.thread, %.thread166
+  %or.cond6174 = phi i1 [ true, %.thread ], [ %or.cond6, %.thread166 ]
+  %.0108173 = phi i32 [ %1, %.thread ], [ %.mux179, %.thread166 ]
+  %.0109172 = phi ptr [ %2, %.thread ], [ %.mux, %.thread166 ]
   %i.w = load i64, ptr getelementptr inbounds nuw (i8, ptr @NBC_Schedule_class, i64 56), align 8, !tbaa !57
   %i.x = tail call noalias ptr @malloc(i64 noundef %i.w) #11 ; 23 uses
   %i.y = load i32, ptr @opal_class_init_epoch, align 4, !tbaa !48
@@ -162,7 +167,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i.i, label %.loopexit175, label %.lr.ph.i.i, !llvm.loop !1
 
 .loopexit175:                                     ; preds = %.lr.ph.i.i, %bb.l
-  br i1 %or.cond6, label %bb.r, label %bb.m
+  br i1 %or.cond6174, label %bb.r, label %bb.m
 
 bb.m:                                             ; preds = %.loopexit175
   %i.ag = sext i32 %.val to i64
@@ -170,8 +175,8 @@ bb.m:                                             ; preds = %.loopexit175
   %i.ai = mul nsw i64 %i.ag, %i.ah
   %i.aj = mul i64 %i.ai, %i.n
   %i.ak = getelementptr inbounds i8, ptr %.0110, i64 %i.aj
-  %i.al = sext i32 %.0108 to i64
-  %i.am = tail call i32 @NBC_Sched_copy(ptr noundef %.0107, i8 noundef signext 0, i64 noundef %i.al, ptr noundef %.0109, ptr noundef %i.ak, i8 noundef signext 0, i64 noundef %i.ah, ptr noundef nonnull %5, ptr noundef nonnull %i.x, i1 noundef zeroext true) #10 ; 3 uses
+  %i.al = sext i32 %.0108173 to i64
+  %i.am = tail call i32 @NBC_Sched_copy(ptr noundef %.0107, i8 noundef signext 0, i64 noundef %i.al, ptr noundef %.0109172, ptr noundef %i.ak, i8 noundef signext 0, i64 noundef %i.ah, ptr noundef nonnull %5, ptr noundef nonnull %i.x, i1 noundef zeroext true) #10 ; 3 uses
   %.not127 = icmp eq i32 %i.am, 0
   br i1 %.not127, label %bb.r, label %bb.n, !prof !12
 

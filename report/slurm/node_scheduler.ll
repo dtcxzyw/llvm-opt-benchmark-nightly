@@ -202,10 +202,12 @@ bb.an:                                            ; preds = %bb.am
 .thread514:                                       ; preds = %bb.al, %bb.ah
   %i.ee = phi i32 [ %i.dy, %bb.al ], [ %i.dq, %bb.ah ]
   %i.ef = load i32, ptr %i.h, align 4
+  %.not519 = xor i1 %1, true
   br label %bb.bf
 
 bb.ao:                                            ; preds = %bb.am, %bb.an
   %.1352 = phi ptr [ null, %bb.am ], [ %i.ed, %bb.an ] ; 2 uses
+  %.not = xor i1 %1, true
   %i.eg = load i32, ptr @max_powered_nodes, align 4
   %i.eh = icmp eq i32 %i.eg, -2
   %or.cond7.not = select i1 %1, i1 true, i1 %i.eh
@@ -324,12 +326,12 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   br label %bb.bf
 
 bb.bf:                                            ; preds = %.thread514, %bb.be, %bb.ao
+  %.not525 = phi i1 [ true, %bb.be ], [ %.not, %bb.ao ], [ %.not519, %.thread514 ]
   %.1524 = phi i1 [ %.not398.not, %bb.be ], [ %.not398.not, %bb.ao ], [ false, %.thread514 ] ; 21 uses
   %.1352523 = phi ptr [ %.1352, %bb.be ], [ %.1352, %bb.ao ], [ null, %.thread514 ] ; 21 uses
   %.0357522 = phi i32 [ %i.ea, %bb.be ], [ %i.ea, %bb.ao ], [ %i.ef, %.thread514 ] ; 5 uses
   %i.fo = phi ptr [ %.pre, %bb.be ], [ %.pre, %bb.ao ], [ null, %.thread514 ] ; 14 uses
   %i.fp = phi i32 [ %i.fm, %bb.be ], [ %i.dy, %bb.ao ], [ %i.ee, %.thread514 ] ; 4 uses
-  %.not525 = xor i1 %1, true
   %i.fq = getelementptr inbounds nuw i8, ptr %i.u, i64 1184
   %i.fr = load ptr, ptr %i.fq, align 8
   %i.fs = shl nuw nsw i64 %i.q, 3
@@ -732,7 +734,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ba = getelementptr inbounds nuw i8, ptr %3, i64 256
   %i.bb = load ptr, ptr %i.ba, align 8            ; 2 uses
   %i.bc = icmp eq ptr %i.bb, null
-  br i1 %i.bc, label %_filter_by_node_feature.exit, label %bb.ac
+  br i1 %i.bc, label %bb.ah, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 48
@@ -749,11 +751,11 @@ bb.ad:                                            ; preds = %bb.ac
   %.not12.i = icmp sgt i64 %i.bi, %i.bj
   %i.bk = icmp sgt i32 %1, 0
   %or.cond.i = and i1 %i.bk, %.not12.i
-  br i1 %or.cond.i, label %.lr.ph.preheader.i, label %_filter_by_node_feature.exit
+  br i1 %or.cond.i, label %.lr.ph.preheader.i, label %bb.ah
 
 bb.ae:                                            ; preds = %bb.ac
   %.old.i = icmp sgt i32 %1, 0
-  br i1 %.old.i, label %.lr.ph.preheader.i, label %_filter_by_node_feature.exit
+  br i1 %.old.i, label %.lr.ph.preheader.i, label %bb.ah
 
 .lr.ph.preheader.i:                               ; preds = %bb.ae, %bb.ad
   %wide.trip.count.i = zext nneg i32 %1 to i64
@@ -780,10 +782,10 @@ bb.ag:                                            ; preds = %bb.af, %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_filter_by_node_feature.exit, label %.lr.ph.i, !llvm.loop !38
 
-_filter_by_node_feature.exit:                     ; preds = %bb.ag, %bb.ae, %bb.ad, %bb.ab, %bb.aa
+_filter_by_node_feature.exit:                     ; preds = %bb.ag, %bb.aa
   br i1 %8, label %.critedge388, label %bb.ah
 
-bb.ah:                                            ; preds = %_filter_by_node_feature.exit
+bb.ah:                                            ; preds = %bb.ab, %bb.ad, %bb.ae, %_filter_by_node_feature.exit
   %i.bs = call i32 @slurm_mcs_get_select(ptr noundef nonnull %3) #13
   %i.bt = load ptr, ptr @share_node_bitmap, align 8
   call void @filter_by_node_mcs(ptr noundef nonnull %3, i32 noundef %i.bs, ptr noundef %i.bt)

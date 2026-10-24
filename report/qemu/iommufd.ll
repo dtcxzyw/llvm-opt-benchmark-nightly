@@ -202,7 +202,7 @@ bb.z:                                             ; preds = %bb.y, %.thread
 ._crit_edge:                                      ; preds = %bb.z, %bb.u, %trace_vfio_pci_hot_reset_has_dep_devices.exit
   %.067.lcssa = phi i1 [ false, %trace_vfio_pci_hot_reset_has_dep_devices.exit ], [ false, %bb.u ], [ %.199, %bb.z ]
   %or.cond = select i1 %1, i1 true, i1 %.067.lcssa
-  br i1 %or.cond, label %bb.aa, label %.loopexit
+  br i1 %or.cond, label %bb.aa, label %bb.ak
 
 bb.aa:                                            ; preds = %._crit_edge
   %i.da = call noalias dereferenceable_or_null(12) ptr @g_malloc0(i64 noundef 12) #15 ; 3 uses
@@ -286,19 +286,21 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai
   %i.eb = icmp ult i32 %i.dx, %i.ea
   br i1 %i.eb, label %bb.ah, label %.loopexit, !llvm.loop !18
 
-.loopexit:                                        ; preds = %bb.t, %bb.aj, %bb.l, %trace_vfio_pci_hot_reset_result.exit, %.preheader, %._crit_edge, %bb.j, %bb.f
-  %.3 = phi i32 [ %i.k, %bb.f ], [ -1, %.preheader ], [ %.272103, %trace_vfio_pci_hot_reset_result.exit ], [ -1, %bb.j ], [ -22, %._crit_edge ], [ -1, %bb.l ], [ %.272103, %bb.aj ], [ -22, %bb.t ]
+.loopexit:                                        ; preds = %bb.t, %bb.aj, %bb.l, %trace_vfio_pci_hot_reset_result.exit, %.preheader, %bb.j, %bb.f
+  %.3 = phi i32 [ %i.k, %bb.f ], [ -1, %.preheader ], [ %.272103, %trace_vfio_pci_hot_reset_result.exit ], [ -1, %bb.j ], [ -1, %bb.l ], [ %.272103, %bb.aj ], [ -22, %bb.t ] ; 2 uses
   br i1 %1, label %bb.al, label %bb.ak
 
-bb.ak:                                            ; preds = %.loopexit
+bb.ak:                                            ; preds = %._crit_edge, %.loopexit
+  %.3106 = phi i32 [ %.3, %.loopexit ], [ -22, %._crit_edge ]
   call void @vfio_pci_post_reset(ptr noundef nonnull %i.b) #12
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %.loopexit
+  %.3107 = phi i32 [ %.3106, %bb.ak ], [ %.3, %.loopexit ]
   %i.ec = load ptr, ptr %i.a, align 8
   call void @g_free(ptr noundef %i.ec) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
-  ret i32 %.3
+  ret i32 %.3107
 }
 
 ; Function Attrs: nounwind sspstrong uwtable

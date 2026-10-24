@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %.critedge107
 bb.k:                                             ; preds = %bb.j
   %i.ar = icmp ne i8 %i.aq, 10
   %or.cond = or i1 %i.am, %i.ar
-  br i1 %or.cond, label %bb.m, label %bb.w
+  br i1 %or.cond, label %bb.m, label %.lr.ph248
 
 bb.l:                                             ; preds = %bb.j
   br i1 %i.am, label %bb.m, label %.loopexit
@@ -316,7 +316,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit114: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   br label %bb.es
 
-bb.w:                                             ; preds = %bb.k, %.critedge107
+bb.w:                                             ; preds = %.critedge107
   br i1 %i.am, label %bb.x, label %.critedge109
 
 bb.x:                                             ; preds = %_ZN14V3OutFormatter14putsNoTrackingERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %bb.w
@@ -719,7 +719,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit199: ; preds = %.b
   %.not99242 = icmp eq i8 %.pr341, 0
   br i1 %.not99242, label %.loopexit, label %.lr.ph248
 
-.lr.ph248:                                        ; preds = %.critedge109
+.lr.ph248:                                        ; preds = %bb.k, %.critedge109
+  %12 = phi i8 [ %.pr341, %.critedge109 ], [ 10, %bb.k ]
   %i.nn = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 30 uses
   %i.no = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 10 uses
   %i.np = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 8 uses
@@ -737,7 +738,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit199: ; preds = %.b
   br label %bb.br
 
 bb.br:                                            ; preds = %.lr.ph248, %_ZN14V3OutFormatter14putsNoTrackingERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit205.thread
-  %i.ob = phi i8 [ %.pr341, %.lr.ph248 ], [ %i.wc, %_ZN14V3OutFormatter14putsNoTrackingERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit205.thread ] ; 2 uses
+  %i.ob = phi i8 [ %12, %.lr.ph248 ], [ %i.wc, %_ZN14V3OutFormatter14putsNoTrackingERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit205.thread ] ; 2 uses
   %.0247 = phi ptr [ %2, %.lr.ph248 ], [ %i.wb, %_ZN14V3OutFormatter14putsNoTrackingERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit205.thread ] ; 41 uses
   %.060245 = phi i1 [ false, %.lr.ph248 ], [ %.161, %_ZN14V3OutFormatter14putsNoTrackingERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit205.thread ] ; 2 uses
   %.062244 = phi i1 [ true, %.lr.ph248 ], [ %.163225, %_ZN14V3OutFormatter14putsNoTrackingERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit205.thread ] ; 25 uses

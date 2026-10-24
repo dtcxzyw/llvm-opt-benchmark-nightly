@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
           to label %.noexc unwind label %bb.m, !inline_history !1329 ; 2 uses
 
 .noexc:                                           ; preds = %bb.f
-  %spec.select.i = select i1 %i.aq, i32 4, i32 80 ; 3 uses
+  %spec.select.i = select i1 %i.aq, i32 4, i32 80 ; 2 uses
   store i32 %spec.select.i, ptr %i.ai, align 8, !tbaa !480
   %i.ar = load ptr, ptr %i.ag, align 8, !tbaa !75
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 248
@@ -250,7 +250,7 @@ bb.g:                                             ; preds = %.noexc61, %.thread2
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.thread21.i
-  %i.bm = phi i32 [ %i.bi, %bb.g ], [ %spec.select.i, %.thread21.i ] ; 2 uses
+  %i.bm = phi i32 [ %i.bi, %bb.g ], [ 4, %.thread21.i ] ; 2 uses
   %i.bn = phi i1 [ false, %bb.g ], [ true, %.thread21.i ]
   %i.bo = phi i64 [ 0, %bb.g ], [ %i.bh, %.thread21.i ] ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 56
@@ -653,6 +653,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit199: ; preds = %_Z
   br label %bb.ds
 
 bb.bi:                                            ; preds = %bb.at, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %43 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ha, %bb.at ]
   %i.jq = phi i8 [ %.pre342, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.pre341, %bb.at ]
   %.0 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.c, %bb.at ] ; 6 uses
   %i.jr = icmp eq i8 %i.jq, 0
@@ -661,7 +662,7 @@ bb.bi:                                            ; preds = %bb.at, %_ZNSt7__cxx
 bb.bj:                                            ; preds = %bb.bi
   %i.js = load i64, ptr %i.hb, align 8
   %i.jt = icmp eq i64 %i.js, 0
-  %or.cond7.not = select i1 %i.ha, i1 %i.jt, i1 false
+  %or.cond7.not = select i1 %43, i1 %i.jt, i1 false
   br i1 %or.cond7.not, label %.thread428, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj

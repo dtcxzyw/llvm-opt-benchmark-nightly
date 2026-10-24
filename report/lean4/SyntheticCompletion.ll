@@ -204,12 +204,12 @@ bb.eu:                                            ; preds = %bb.et
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #6
   br label %lean_dec.exit219
 
-bb.ev:                                            ; preds = %.split, %lean_nat_lt.exit
+bb.ev:                                            ; preds = %lean_nat_lt.exit
   %i.gy = and i64 %.pre-phi, 1
-  %.not.i = icmp eq i64 %i.gy, 0                  ; 2 uses
+  %.not.i = icmp eq i64 %i.gy, 0
   br i1 %.not.i, label %lean_nat_sub.exit, label %bb.ew, !prof !20
 
-bb.ew:                                            ; preds = %bb.ev
+bb.ew:                                            ; preds = %.split, %bb.ev
   %i.gz = and i64 %i.a, 1
   %.not436 = icmp eq i64 %i.gz, 0
   br i1 %.not436, label %lean_nat_sub.exit.thread426, label %bb.ex, !prof !20
@@ -236,6 +236,7 @@ lean_nat_sub.exit:                                ; preds = %bb.ev
   br i1 %.not.i348, label %lean_dec.exit217.thread, label %bb.ez
 
 bb.ez:                                            ; preds = %lean_nat_sub.exit.thread426, %lean_nat_sub.exit
+  %.not.i519 = phi i1 [ false, %lean_nat_sub.exit.thread426 ], [ true, %lean_nat_sub.exit ]
   %i.hj = phi ptr [ %i.ha, %lean_nat_sub.exit.thread426 ], [ %i.hi, %lean_nat_sub.exit ] ; 2 uses
   %i.hk = load i32, ptr %0, align 4, !tbaa !10    ; 3 uses
   %i.hl = icmp sgt i32 %i.hk, 1
@@ -255,7 +256,7 @@ bb.fc:                                            ; preds = %bb.fb
   br label %lean_dec.exit217
 
 lean_dec.exit217:                                 ; preds = %bb.fc, %bb.fb, %bb.fa
-  br i1 %.not.i, label %lean_dec.exit217.thread, label %lean_dec.exit215
+  br i1 %.not.i519, label %lean_dec.exit217.thread, label %lean_dec.exit215
 
 lean_dec.exit217.thread:                          ; preds = %lean_nat_sub.exit, %lean_dec.exit217
   %.1.i425429 = phi ptr [ %i.hj, %lean_dec.exit217 ], [ %i.hi, %lean_nat_sub.exit ] ; 3 uses
@@ -443,7 +444,7 @@ bb.fy:                                            ; preds = %lean_inc.exit, %lea
 
 .split:                                           ; preds = %bb.fy
   %i.jg = icmp ult ptr %0, %.0182
-  br i1 %i.jg, label %bb.ev, label %bb.el
+  br i1 %i.jg, label %bb.ew, label %bb.el
 
 lean_nat_lt.exit:                                 ; preds = %bb.fy
   %i.jh = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %0, ptr noundef %.0182) #6

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #34
   %.pre = load i8, ptr %i.h, align 8, !tbaa !432  ; 2 uses
   %i.v = icmp eq i8 %.pre, 0
-  %i.w = icmp ne ptr %2, null                     ; 3 uses
+  %i.w = icmp ne ptr %2, null                     ; 2 uses
   %or.cond = and i1 %i.w, %i.v
   br i1 %or.cond, label %bb.d, label %bb.e
 
@@ -250,6 +250,7 @@ _ZN7rocksdb6StatusD2Ev.exit20:                    ; preds = %bb.d, %_ZN7rocksdb6
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN7rocksdb6StatusD2Ev.exit20, %bb.c
+  %12 = phi i1 [ true, %_ZN7rocksdb6StatusD2Ev.exit20 ], [ %i.w, %bb.c ] ; 2 uses
   %i.ai = phi i8 [ %.pr24, %_ZN7rocksdb6StatusD2Ev.exit20 ], [ %.pre, %bb.c ]
   %i.aj = icmp eq i8 %i.ai, 0
   br i1 %i.aj, label %bb.f, label %.thread29
@@ -267,8 +268,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ar = shl i64 %i.ap, 8
   %i.as = zext i8 %i.aq to i64
   %i.at = or disjoint i64 %i.ar, %i.as
-  %i.au = select i1 %i.w, ptr %8, ptr null
-  %i.av = select i1 %i.w, i64 %i.at, i64 0
+  %i.au = select i1 %12, ptr %8, ptr null
+  %i.av = select i1 %12, i64 %i.at, i64 0
   %i.aw = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 %i.av, ptr %i.aw, align 8, !tbaa !1267
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 80

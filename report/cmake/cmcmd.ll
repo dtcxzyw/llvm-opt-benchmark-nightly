@@ -205,14 +205,16 @@ bb.n:                                             ; preds = %bb.l, %bb.m, %_ZNSt
   %i.be = phi i1 [ true, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ false, %bb.l ], [ %i.bd, %bb.m ] ; 2 uses
   %i.bf = and i1 %i.al, %i.be                     ; 2 uses
   %.not31 = icmp eq ptr %4, null
-  br i1 %.not31, label %bb.p, label %.sink.split
+  br i1 %.not31, label %bb.p, label %10
 
-.sink.split:                                      ; preds = %bb.n
+10:                                               ; preds = %bb.n
   %.not = xor i1 %i.al, true
   %or.cond = and i1 %i.be, %.not
-  %i.bg = load i32, ptr %i.b, align 4
-  %.sink = select i1 %or.cond, i32 -1, i32 %i.bg
-  store i32 %.sink, ptr %4, align 4, !tbaa !56
+  br i1 %or.cond, label %.thread, label %.sink.split
+
+.sink.split:                                      ; preds = %10
+  %i.bg = load i32, ptr %i.b, align 4, !tbaa !56
+  store i32 %i.bg, ptr %4, align 4, !tbaa !56
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.i
@@ -221,10 +223,14 @@ bb.o:                                             ; preds = %bb.i
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %8) #28
   br label %bb.ae
 
+.thread:                                          ; preds = %10
+  store i32 -1, ptr %4, align 4, !tbaa !56
+  br label %bb.q
+
 bb.p:                                             ; preds = %.sink.split, %bb.n
   br i1 %i.bf, label %bb.ab, label %bb.q
 
-bb.q:                                             ; preds = %bb.p
+bb.q:                                             ; preds = %.thread, %bb.p
   %.not.i44 = icmp eq ptr %0, null
   br i1 %.not.i44, label %bb.r, label %bb.s
 

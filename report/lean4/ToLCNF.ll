@@ -204,7 +204,7 @@ lean_nat_add.exit:                                ; preds = %bb.dr, %bb.dq, %.cr
 
 .split:                                           ; preds = %lean_nat_add.exit
   %i.gg = icmp ult ptr %i.fs, %.0.i
-  br i1 %i.gg, label %bb.ej, label %bb.ds
+  br i1 %i.gg, label %bb.ek, label %bb.ds
 
 lean_nat_lt.exit:                                 ; preds = %lean_nat_add.exit
   %i.gh = tail call zeroext i1 @lean_nat_big_lt(ptr noundef %i.fs, ptr noundef %.0.i) #9
@@ -306,12 +306,12 @@ lean_dec.exit199:                                 ; preds = %bb.ee, %bb.ed, %bb.
   %i.hf = tail call ptr @l___private_Lean_Compiler_LCNF_ToLCNF_0__Lean_Compiler_LCNF_ToLCNF_toLCNF_visitAppDefaultConst(ptr noundef %i.gm, ptr noundef %i.he, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7)
   br label %lean_dec.exit215
 
-bb.ej:                                            ; preds = %.split, %lean_nat_lt.exit
+bb.ej:                                            ; preds = %lean_nat_lt.exit
   %i.hg = and i64 %i.ge, 1
-  %.not.i170 = icmp eq i64 %i.hg, 0               ; 2 uses
+  %.not.i170 = icmp eq i64 %i.hg, 0
   br i1 %.not.i170, label %lean_nat_sub.exit, label %bb.ek, !prof !9
 
-bb.ek:                                            ; preds = %bb.ej
+bb.ek:                                            ; preds = %.split, %bb.ej
   %i.hh = and i64 %i.gd, 1
   %.not = icmp eq i64 %i.hh, 0
   br i1 %.not, label %lean_nat_sub.exit.thread346, label %bb.el, !prof !9
@@ -338,6 +338,7 @@ lean_nat_sub.exit:                                ; preds = %bb.ej
   br i1 %.not.i247, label %lean_dec.exit195.thread, label %bb.en
 
 bb.en:                                            ; preds = %lean_nat_sub.exit.thread346, %lean_nat_sub.exit
+  %.not.i170402 = phi i1 [ false, %lean_nat_sub.exit.thread346 ], [ true, %lean_nat_sub.exit ]
   %i.hr = phi ptr [ %i.hi, %lean_nat_sub.exit.thread346 ], [ %i.hq, %lean_nat_sub.exit ] ; 2 uses
   %i.hs = load i32, ptr %i.fs, align 4, !tbaa !11 ; 3 uses
   %i.ht = icmp sgt i32 %i.hs, 1
@@ -357,7 +358,7 @@ bb.eq:                                            ; preds = %bb.ep
   br label %lean_dec.exit195
 
 lean_dec.exit195:                                 ; preds = %bb.eo, %bb.ep, %bb.eq
-  br i1 %.not.i170, label %lean_dec.exit195.thread, label %lean_dec.exit191
+  br i1 %.not.i170402, label %lean_dec.exit195.thread, label %lean_dec.exit191
 
 lean_dec.exit195.thread:                          ; preds = %lean_nat_sub.exit, %lean_dec.exit195
   %.1.i345349 = phi ptr [ %i.hr, %lean_dec.exit195 ], [ %i.hq, %lean_nat_sub.exit ] ; 3 uses

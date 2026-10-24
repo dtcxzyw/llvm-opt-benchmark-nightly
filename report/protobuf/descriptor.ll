@@ -205,7 +205,7 @@ _ZN6google8protobuf17DescriptorBuilder14AddImportErrorERKNS0_19FileDescriptorPro
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %25)
   call void @llvm.lifetime.end.p0(ptr nonnull %27)
-  br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE6insertIS8_Li0EEESt4pairINSF_8iteratorEbERKT_.exit
+  br label %bb.df
 
 bb.cq:                                            ; preds = %bb.by
   %i.pa = getelementptr inbounds nuw i8, ptr %.pre1106, i64 64
@@ -364,8 +364,8 @@ bb.dd:                                            ; preds = %bb.cr, %bb.bu, %bb.
           cleanup
   br label %bb.dh
 
-_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE6insertIS8_Li0EEESt4pairINSF_8iteratorEbERKT_.exit: ; preds = %.lr.ph.i, %bb.cs, %bb.cq, %bb.cx, %bb.dc, %_ZN6google8protobuf17DescriptorBuilder14AddImportErrorERKNS0_19FileDescriptorProtoESt17basic_string_viewIcSt11char_traitsIcEE.exit, %bb.ct, %.thread.a, %bb.co
-  %.2 = phi ptr [ null, %.thread.a ], [ %i.ox, %bb.co ], [ null, %_ZN6google8protobuf17DescriptorBuilder14AddImportErrorERKNS0_19FileDescriptorProtoESt17basic_string_viewIcSt11char_traitsIcEE.exit ], [ %.0, %bb.cx ], [ %.0, %bb.ct ], [ %.0, %bb.dc ], [ %.0, %bb.cs ], [ %.0, %bb.cq ], [ %.0, %.lr.ph.i ] ; 3 uses
+_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE6insertIS8_Li0EEESt4pairINSF_8iteratorEbERKT_.exit: ; preds = %.lr.ph.i, %bb.cs, %bb.cq, %bb.cx, %bb.dc, %bb.ct, %.thread.a, %bb.co
+  %.2 = phi ptr [ null, %.thread.a ], [ %i.ox, %bb.co ], [ %.0, %bb.cx ], [ %.0, %bb.ct ], [ %.0, %bb.dc ], [ %.0, %bb.cs ], [ %.0, %bb.cq ], [ %.0, %.lr.ph.i ] ; 3 uses
   br i1 %i.kw, label %bb.de, label %bb.df
 
 bb.de:                                            ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE6insertIS8_Li0EEESt4pairINSF_8iteratorEbERKT_.exit
@@ -377,20 +377,22 @@ bb.de:                                            ; preds = %_ZN4absl12lts_20250
   store ptr %.2, ptr %i.se, align 8, !tbaa !171
   br label %bb.dg
 
-bb.df:                                            ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE6insertIS8_Li0EEESt4pairINSF_8iteratorEbERKT_.exit
+bb.df:                                            ; preds = %_ZN6google8protobuf17DescriptorBuilder14AddImportErrorERKNS0_19FileDescriptorProtoESt17basic_string_viewIcSt11char_traitsIcEE.exit, %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE6insertIS8_Li0EEESt4pairINSF_8iteratorEbERKT_.exit
+  %.3 = phi ptr [ %.2, %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE6insertIS8_Li0EEESt4pairINSF_8iteratorEbERKT_.exit ], [ null, %_ZN6google8protobuf17DescriptorBuilder14AddImportErrorERKNS0_19FileDescriptorProtoESt17basic_string_viewIcSt11char_traitsIcEE.exit ] ; 2 uses
   %i.sf = load ptr, ptr %i.hf, align 8, !tbaa !478
   %i.sg = getelementptr inbounds nuw [8 x i8], ptr %i.sf, i64 %indvars.iv1080
-  store ptr %.2, ptr %i.sg, align 8, !tbaa !171
+  store ptr %.3, ptr %i.sg, align 8, !tbaa !171
   %.pre1107 = load i32, ptr %i.gp, align 8, !tbaa !339
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %bb.de
-  %i.sh = phi i32 [ %.pre1107, %bb.df ], [ %i.sa, %bb.de ] ; 4 uses
+  %i.sh = phi i32 [ %i.sa, %bb.de ], [ %.pre1107, %bb.df ] ; 4 uses
+  %.4812 = phi ptr [ %.2, %bb.de ], [ %.3, %bb.df ]
   %i.si = load ptr, ptr %0, align 8, !tbaa !462
   %i.sj = getelementptr inbounds nuw i8, ptr %i.si, i64 65
   %i.sk = load i8, ptr %i.sj, align 1, !tbaa !377, !range !71, !noundef !72
   %i.sl = trunc nuw i8 %i.sk to i1
-  %i.sm = icmp eq ptr %.2, null
+  %i.sm = icmp eq ptr %.4812, null
   %or.cond5.not = and i1 %i.sm, %i.sl
   %spec.select = select i1 %or.cond5.not, i1 true, i1 %.0288948 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #40

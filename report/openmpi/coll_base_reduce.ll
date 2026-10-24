@@ -171,7 +171,7 @@ bb.a:
   %i.k = trunc i64 %i.j to i32                    ; 3 uses
   %i.l = mul nsw i64 %i.e, %i.g                   ; 5 uses
   %i.m = icmp eq ptr %0, inttoptr (i64 1 to ptr)  ; 6 uses
-  %spec.select = select i1 %i.m, ptr %1, ptr %0   ; 3 uses
+  %spec.select = select i1 %i.m, ptr %1, ptr %0   ; 2 uses
   %i.n = getelementptr i8, ptr %6, i64 220
   %.val302 = load i32, ptr %i.n, align 4, !tbaa !50 ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 8 uses
@@ -228,7 +228,7 @@ bb.f:                                             ; preds = %bb.b, %bb.e
   br i1 %or.cond365, label %ompi_datatype_copy_content_same_ddt.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.f, %bb.g
-  %.01728.i = phi ptr [ %i.ao, %bb.g ], [ %spec.select, %bb.f ] ; 2 uses
+  %.01728.i = phi ptr [ %i.ao, %bb.g ], [ %0, %bb.f ] ; 2 uses
   %.01827.i = phi ptr [ %i.an, %bb.g ], [ %.0237, %bb.f ] ; 2 uses
   %.01926.i = phi i64 [ %i.ap, %bb.g ], [ %i.f, %bb.f ] ; 2 uses
   %spec.select24.i = tail call i64 @llvm.umin.i64(i64 %.01926.i, i64 2147483647) ; 3 uses
@@ -631,8 +631,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
-  %.190 = phi i32 [ %spec.select, %bb.e ], [ %2, %bb.d ], [ %2, %bb.c ] ; 2 uses
-  %i.v = add nsw i32 %.val115.val, -1             ; 5 uses
+  %.190 = phi i32 [ %spec.select, %bb.e ], [ %2, %bb.d ], [ %2, %bb.c ] ; 3 uses
+  %i.v = add nsw i32 %.val115.val, -1             ; 6 uses
   %.not109 = icmp eq i32 %i.v, %5
   br i1 %.not109, label %ompi_datatype_copy_content_same_ddt.exit.thread, label %bb.g
 
@@ -668,7 +668,7 @@ opal_datatype_span.exit:                          ; preds = %bb.g, %bb.h
   br i1 %or.cond, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %opal_datatype_span.exit
-  %i.ao = tail call noalias ptr @malloc(i64 noundef %.0.i) #10 ; 4 uses
+  %i.ao = tail call noalias ptr @malloc(i64 noundef %.0.i) #10 ; 5 uses
   %i.ap = icmp eq ptr %i.ao, null
   br i1 %i.ap, label %.critedge, label %bb.j
 
@@ -680,7 +680,7 @@ bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr i8, ptr %3, i64 56
   %.val23.i = load i64, ptr %i.at, align 8, !tbaa !21
   %i.au = sub nsw i64 %.val23.i, %.val.i
-  br i1 %i.y, label %ompi_datatype_copy_content_same_ddt.exit, label %.lr.ph.i
+  br i1 %i.y, label %ompi_datatype_copy_content_same_ddt.exit.thread142, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.j, %bb.k
   %.01728.i = phi ptr [ %i.ay, %bb.k ], [ %1, %bb.j ] ; 2 uses
@@ -718,14 +718,19 @@ ompi_datatype_copy_content_same_ddt.exit.loopexit: ; preds = %bb.k, %.lr.ph.i
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !114
   br label %ompi_datatype_copy_content_same_ddt.exit
 
-ompi_datatype_copy_content_same_ddt.exit:         ; preds = %ompi_datatype_copy_content_same_ddt.exit.loopexit, %bb.l, %bb.n, %bb.j
-  %10 = phi ptr [ %i.i, %bb.j ], [ %i.i, %bb.n ], [ %i.i, %bb.l ], [ %.pre, %ompi_datatype_copy_content_same_ddt.exit.loopexit ]
-  %.288 = phi ptr [ %i.ar, %bb.j ], [ %0, %bb.n ], [ %0, %bb.l ], [ %i.ar, %ompi_datatype_copy_content_same_ddt.exit.loopexit ]
-  %.285 = phi ptr [ %1, %bb.j ], [ %i.be, %bb.n ], [ %1, %bb.l ], [ %1, %ompi_datatype_copy_content_same_ddt.exit.loopexit ] ; 2 uses
-  %.2 = phi ptr [ %i.ao, %bb.j ], [ %i.bb, %bb.n ], [ null, %bb.l ], [ %i.ao, %ompi_datatype_copy_content_same_ddt.exit.loopexit ] ; 5 uses
+ompi_datatype_copy_content_same_ddt.exit:         ; preds = %ompi_datatype_copy_content_same_ddt.exit.loopexit, %bb.l, %bb.n
+  %10 = phi ptr [ %.pre, %ompi_datatype_copy_content_same_ddt.exit.loopexit ], [ %i.i, %bb.n ], [ %i.i, %bb.l ]
+  %.288 = phi ptr [ %i.ar, %ompi_datatype_copy_content_same_ddt.exit.loopexit ], [ %0, %bb.n ], [ %0, %bb.l ]
+  %.285 = phi ptr [ %1, %ompi_datatype_copy_content_same_ddt.exit.loopexit ], [ %i.be, %bb.n ], [ %1, %bb.l ] ; 2 uses
+  %.2 = phi ptr [ %i.ao, %ompi_datatype_copy_content_same_ddt.exit.loopexit ], [ %i.bb, %bb.n ], [ null, %bb.l ] ; 5 uses
   %i.bf = tail call i32 @ompi_coll_base_reduce_generic(ptr noundef %.288, ptr noundef %.285, i32 noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef %i.v, ptr noundef %6, ptr noundef %7, ptr noundef %10, i32 noundef %.190, i32 noundef %9) ; 2 uses
   %.not110 = icmp eq i32 %i.bf, 0
   br i1 %.not110, label %bb.o, label %.critedge.sink.split
+
+ompi_datatype_copy_content_same_ddt.exit.thread142: ; preds = %bb.j
+  %11 = tail call i32 @ompi_coll_base_reduce_generic(ptr noundef nonnull %i.ar, ptr noundef %1, i32 noundef %2, ptr noundef nonnull %3, ptr noundef %4, i32 noundef %i.v, ptr noundef nonnull %6, ptr noundef nonnull %7, ptr noundef %i.i, i32 noundef %.190, i32 noundef %9) ; 2 uses
+  %.not110146 = icmp eq i32 %11, 0
+  br i1 %.not110146, label %bb.p, label %.critedge.sink.split
 
 ompi_datatype_copy_content_same_ddt.exit.thread:  ; preds = %bb.f
   %i.bg = tail call i32 @ompi_coll_base_reduce_generic(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef nonnull %3, ptr noundef %4, i32 noundef %5, ptr noundef nonnull %6, ptr noundef nonnull %7, ptr noundef %i.i, i32 noundef %.190, i32 noundef %9) ; 2 uses
@@ -735,7 +740,8 @@ ompi_datatype_copy_content_same_ddt.exit.thread:  ; preds = %bb.f
 bb.o:                                             ; preds = %ompi_datatype_copy_content_same_ddt.exit
   br i1 %i.am, label %bb.p, label %bb.q
 
-bb.p:                                             ; preds = %bb.o
+bb.p:                                             ; preds = %ompi_datatype_copy_content_same_ddt.exit.thread142, %bb.o
+  %.2148151 = phi ptr [ %.2, %bb.o ], [ %i.ao, %ompi_datatype_copy_content_same_ddt.exit.thread142 ] ; 2 uses
   %i.bh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_pml, i64 72), align 8, !tbaa !67
   %i.bi = tail call i32 %i.bh(ptr noundef %1, i64 noundef %i.w, ptr noundef %3, i32 noundef %i.v, i32 noundef -21, ptr noundef %6, ptr noundef null) #9 ; 2 uses
   %.not112 = icmp eq i32 %i.bi, 0
@@ -752,13 +758,14 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not111, label %bb.s, label %.critedge.sink.split
 
 bb.s:                                             ; preds = %bb.p, %bb.r, %bb.q
-  %.not113 = icmp eq ptr %.2, null
+  %.2148152 = phi ptr [ %.2148151, %bb.p ], [ %.2, %bb.r ], [ %.2, %bb.q ] ; 2 uses
+  %.not113 = icmp eq ptr %.2148152, null
   br i1 %.not113, label %.critedge, label %.critedge.sink.split
 
-.critedge.sink.split:                             ; preds = %bb.s, %bb.r, %bb.p, %ompi_datatype_copy_content_same_ddt.exit, %ompi_datatype_copy_content_same_ddt.exit.thread
-  %.2.sink = phi ptr [ %.2, %bb.r ], [ %.2, %bb.p ], [ %.2, %ompi_datatype_copy_content_same_ddt.exit ], [ null, %ompi_datatype_copy_content_same_ddt.exit.thread ], [ %.2, %bb.s ]
-  %.192.ph = phi i32 [ %i.bl, %bb.r ], [ %i.bi, %bb.p ], [ %i.bf, %ompi_datatype_copy_content_same_ddt.exit ], [ %i.bg, %ompi_datatype_copy_content_same_ddt.exit.thread ], [ 0, %bb.s ]
-  tail call void @free(ptr noundef %.2.sink) #9
+.critedge.sink.split:                             ; preds = %bb.s, %bb.r, %bb.p, %ompi_datatype_copy_content_same_ddt.exit, %ompi_datatype_copy_content_same_ddt.exit.thread, %ompi_datatype_copy_content_same_ddt.exit.thread142
+  %.2148152.sink = phi ptr [ %.2, %bb.r ], [ %.2148151, %bb.p ], [ %i.ao, %ompi_datatype_copy_content_same_ddt.exit.thread142 ], [ null, %ompi_datatype_copy_content_same_ddt.exit.thread ], [ %.2, %ompi_datatype_copy_content_same_ddt.exit ], [ %.2148152, %bb.s ]
+  %.192.ph = phi i32 [ %i.bl, %bb.r ], [ %i.bi, %bb.p ], [ %11, %ompi_datatype_copy_content_same_ddt.exit.thread142 ], [ %i.bg, %ompi_datatype_copy_content_same_ddt.exit.thread ], [ %i.bf, %ompi_datatype_copy_content_same_ddt.exit ], [ 0, %bb.s ]
+  tail call void @free(ptr noundef %.2148152.sink) #9
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.sink.split, %ompi_datatype_copy_content_same_ddt.exit.thread, %bb.i, %bb.m, %bb.s

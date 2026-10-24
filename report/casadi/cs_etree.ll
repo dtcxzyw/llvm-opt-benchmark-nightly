@@ -19,7 +19,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.e = load i32, ptr %i.d, align 4, !tbaa !16   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !17   ; 5 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !17   ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !18   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -39,24 +39,32 @@ bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr [4 x i8], ptr %i.o, i64 %i.r ; 3 uses
   %i.t = icmp sgt i32 %i.e, 0
   %or.cond81 = select i1 %.not69, i1 %i.t, i1 false
-  br i1 %or.cond81, label %.lr.ph.preheader, label %.loopexit70.a
+  br i1 %or.cond81, label %.lr.ph.preheader, label %.loopexit70
+
+.loopexit70:                                      ; preds = %bb.d
+  %2 = icmp sgt i32 %i.g, 0
+  br i1 %2, label %.lr.ph79, label %.sink.split
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.u = zext nneg i32 %i.e to i64
   %i.v = shl nuw nsw i64 %i.u, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.s, i8 -1, i64 %i.v, i1 false), !tbaa !20
-  br label %.loopexit70.a
+  %3 = icmp sgt i32 %i.g, 0
+  br i1 %3, label %.lr.ph79.a, label %.sink.split
 
-.loopexit70.a:                                    ; preds = %.lr.ph.preheader, %bb.d
-  %2 = icmp sgt i32 %i.g, 0
-  br i1 %2, label %.lr.ph79.a, label %.sink.split
+.lr.ph79:                                         ; preds = %.loopexit70
+  br i1 %.not69, label %.lr.ph79.a, label %.loopexit70.a
 
-.lr.ph79.a:                                       ; preds = %.loopexit70.a
-  %wide.trip.count94 = zext nneg i32 %i.g to i64  ; 2 uses
-  br i1 %.not69, label %.lr.ph79.split, label %.lr.ph79.split.us
+.loopexit70.a:                                    ; preds = %.lr.ph79
+  %wide.trip.count = zext nneg i32 %i.g to i64
+  br label %.lr.ph79.split.us
 
-.lr.ph79.split.us:                                ; preds = %.lr.ph79.a, %.loopexit.us
-  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %.loopexit.us ], [ 0, %.lr.ph79.a ] ; 7 uses
+.lr.ph79.a:                                       ; preds = %.lr.ph.preheader, %.lr.ph79
+  %wide.trip.count94 = zext nneg i32 %i.g to i64
+  br label %.lr.ph79.split
+
+.lr.ph79.split.us:                                ; preds = %.loopexit70.a, %.loopexit.us
+  %indvars.iv85 = phi i64 [ 0, %.loopexit70.a ], [ %indvars.iv.next86, %.loopexit.us ] ; 7 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv85
   store i32 -1, ptr %i.w, align 4, !tbaa !20
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv85
@@ -116,7 +124,7 @@ bb.e:                                             ; preds = %.lr.ph73.us.us
   br i1 %i.au, label %.lr.ph76.us, label %.loopexit.us, !llvm.loop !9
 
 .loopexit.us:                                     ; preds = %._crit_edge.us.us, %.lr.ph79.split.us
-  %exitcond.not = icmp eq i64 %indvars.iv.next86, %wide.trip.count94
+  %exitcond.not = icmp eq i64 %indvars.iv.next86, %wide.trip.count
   br i1 %exitcond.not, label %.sink.split, label %.lr.ph79.split.us, !llvm.loop !10
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph79.split
@@ -124,7 +132,7 @@ bb.e:                                             ; preds = %.lr.ph73.us.us
   br i1 %exitcond95.not, label %.sink.split, label %.lr.ph79.split, !llvm.loop !10
 
 .lr.ph79.split:                                   ; preds = %.lr.ph79.a, %.loopexit
-  %indvars.iv91 = phi i64 [ %indvars.iv.next92, %.loopexit ], [ 0, %.lr.ph79.a ] ; 8 uses
+  %indvars.iv91 = phi i64 [ 0, %.lr.ph79.a ], [ %indvars.iv.next92, %.loopexit ] ; 8 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv91
   store i32 -1, ptr %i.av, align 4, !tbaa !20
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv91
@@ -191,8 +199,8 @@ bb.f:                                             ; preds = %.lr.ph73
   %i.bw = icmp slt i64 %indvars.iv.next89, %i.bv
   br i1 %i.bw, label %.lr.ph76, label %.loopexit, !llvm.loop !9
 
-.sink.split:                                      ; preds = %.loopexit.us, %.loopexit, %.loopexit70.a, %bb.c
-  %.sink = phi i32 [ 0, %bb.c ], [ 1, %.loopexit ], [ 1, %.loopexit70.a ], [ 1, %.loopexit.us ]
+.sink.split:                                      ; preds = %.loopexit.us, %.loopexit, %.loopexit70, %.lr.ph.preheader, %bb.c
+  %.sink = phi i32 [ 0, %bb.c ], [ 1, %.loopexit ], [ 1, %.loopexit70 ], [ 1, %.lr.ph.preheader ], [ 1, %.loopexit.us ]
   %i.bx = tail call ptr @cs_idone(ptr noundef %i.l, ptr noundef null, ptr noundef %i.o, i32 noundef %.sink) #3
   br label %bb.g
 

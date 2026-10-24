@@ -205,6 +205,7 @@ _ZNSt3mapIN12cmFindCommon9PathLabelE12cmSearchPathSt4lessIS1_ESaISt4pairIKS1_S2_
           to label %bb.c unwind label %bb.g       ; 2 uses
 
 bb.c:                                             ; preds = %.noexc
+  %19 = xor i1 %i.ag, true
   %i.ah = load ptr, ptr %4, align 8, !tbaa !40    ; 2 uses
   %i.ai = icmp eq ptr %i.ah, %i.aa
   br i1 %i.ai, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -450,17 +451,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit130: ; preds = %bb
   br label %bb.be
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %bb.m, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124
-  %19 = load i64, ptr %i.m, align 8
-  %20 = icmp slt i64 %19, 1
-  %.not261 = xor i1 %i.an, true
-  %not.or.cond = or i1 %i.ag, %.not261
-  %or.cond3 = select i1 %not.or.cond, i1 true, i1 %20
-  %i.cy = load i64, ptr %i.bc, align 8
-  %21 = icmp eq i64 %i.cy, 0
-  %or.cond259 = select i1 %or.cond3, i1 true, i1 %21
-  br i1 %or.cond259, label %bb.aa, label %.noexc.i132
+  %or.cond = and i1 %19, %i.an
+  %i.cy = load i64, ptr %i.m, align 8
+  %20 = icmp sgt i64 %i.cy, 0
+  %or.cond259 = select i1 %or.cond, i1 %20, i1 false
+  br i1 %or.cond259, label %21, label %bb.aa
 
-.noexc.i132:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit
+21:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit
+  %22 = load i64, ptr %i.bc, align 8, !tbaa !42
+  %23 = icmp eq i64 %22, 0
+  br i1 %23, label %.noexc.i176, label %.noexc.i132
+
+.noexc.i132:                                      ; preds = %21
   %i.cz = load ptr, ptr %i.y, align 8, !tbaa !202
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #31
   %i.da = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 6 uses
@@ -839,7 +841,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
   br label %bb.be
 
-.noexc.i176:                                      ; preds = %bb.aa
+.noexc.i176:                                      ; preds = %21, %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31
   %i.hc = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 6 uses
   store ptr %i.hc, ptr %14, align 8, !tbaa !36

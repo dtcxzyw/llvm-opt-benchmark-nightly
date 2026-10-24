@@ -206,16 +206,18 @@ bb.h:                                             ; preds = %_ZNK5boost4json6det
   %i.ab = icmp uge ptr %3, %.0.i
   %spec.select.i = and i1 %i.ab, %i.aa            ; 2 uses
   %i.ac = getelementptr i8, ptr %.0.i, i64 %1     ; 11 uses
-  %7 = icmp eq ptr %3, %i.ac
-  %i.ad = icmp eq i64 %.sroa.speculated103, %4
-  %8 = and i1 %i.ad, %7
-  %or.cond160 = and i1 %8, %spec.select.i
-  br i1 %or.cond160, label %_ZN5boost4json6detail11string_impl4sizeEm.exit, label %bb.i
+  %i.ad = icmp eq ptr %3, %i.ac
+  %or.cond160 = and i1 %i.ad, %spec.select.i
+  br i1 %or.cond160, label %7, label %bb.i
+
+7:                                                ; preds = %bb.h
+  %8 = icmp eq i64 %.sroa.speculated103, %4
+  br i1 %8, label %_ZN5boost4json6detail11string_impl4sizeEm.exit, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   br i1 %spec.select.i, label %bb.j, label %bb.k
 
-bb.j:                                             ; preds = %bb.i
+bb.j:                                             ; preds = %7, %bb.i
   %i.ae = ptrtoint ptr %3 to i64
   %i.af = ptrtoint ptr %.0.i to i64
   %i.ag = sub i64 %i.ae, %i.af                    ; 6 uses
@@ -424,7 +426,7 @@ _ZN5boost4json6detail11string_impl7destroyERKNS0_11storage_ptrE.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #46
   br label %_ZN5boost4json6detail11string_impl4sizeEm.exit
 
-_ZN5boost4json6detail11string_impl4sizeEm.exit:   ; preds = %bb.h, %bb.p, %bb.o, %_ZN5boost4json6detail11string_impl7destroyERKNS0_11storage_ptrE.exit
+_ZN5boost4json6detail11string_impl4sizeEm.exit:   ; preds = %bb.p, %bb.o, %_ZN5boost4json6detail11string_impl7destroyERKNS0_11storage_ptrE.exit, %7
   ret void
 }
 

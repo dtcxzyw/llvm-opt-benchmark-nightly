@@ -204,18 +204,18 @@ bb.bz:                                            ; preds = %bb.by
   %i.jz = getelementptr inbounds nuw i8, ptr %0, i64 422
   %i.ka = load i8, ptr %i.jz, align 2, !tbaa !145, !range !78, !noundef !79
   %i.kb = trunc nuw i8 %i.ka to i1
-  br i1 %i.kb, label %bb.cb, label %bb.ca
+  br i1 %i.kb, label %bb.cc, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
   %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 419
   %i.kd = load i8, ptr %i.kc, align 1, !tbaa !139, !range !78, !noundef !79
   %i.ke = trunc nuw i8 %i.kd to i1
-  br i1 %i.ke, label %bb.cb, label %bb.ce
+  br i1 %i.ke, label %bb.cc, label %bb.ce
 
-bb.cb:                                            ; preds = %bb.ca, %bb.bz, %bb.by
+bb.cb:                                            ; preds = %bb.by
   br i1 %i.an, label %bb.cj, label %bb.cc
 
-bb.cc:                                            ; preds = %bb.cb
+bb.cc:                                            ; preds = %bb.bz, %bb.ca, %bb.cb
   %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.kg = load i8, ptr %i.kf, align 8, !tbaa !71, !range !78, !noundef !79
   %i.kh = trunc nuw i8 %i.kg to i1
@@ -251,7 +251,7 @@ bb.ci:                                            ; preds = %bb.ce, %bb.cg, %bb.
   %i.kq = fmul nsz float %.sink, %i.kp
   %.pn160 = fmul nsz float %i.kq, 1.000000e+01
   %.0150 = fmul nsz float %1, %.pn160
-  br label %bb.cq
+  br label %bb.cr
 
 bb.cj:                                            ; preds = %bb.cd, %bb.cc, %bb.cb
   br i1 %.3, label %bb.co, label %bb.ck
@@ -284,9 +284,7 @@ bb.co:                                            ; preds = %bb.cm, %bb.ck, %bb.
   %i.lb = load float, ptr %i.la, align 8, !tbaa !290
   %i.lc = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.ld = load float, ptr %i.lc, align 8, !tbaa !291
-  %7 = fmul nsz float %i.lb, %i.ld
-  %8 = fmul nsz float %7, 1.000000e+01
-  %i.le = fmul nsz float %1, %8                   ; 2 uses
+  %i.le = fmul nsz float %i.lb, %i.ld
   br label %bb.cq
 
 bb.cp:                                            ; preds = %bb.cn, %bb.cm
@@ -294,17 +292,18 @@ bb.cp:                                            ; preds = %bb.cn, %bb.cm
   %i.lg = load float, ptr %i.lf, align 8, !tbaa !292
   %i.lh = getelementptr inbounds nuw i8, ptr %0, i64 300
   %i.li = load float, ptr %i.lh, align 4, !tbaa !293
-  %9 = fmul nsz float %i.lg, %i.li
-  %10 = fmul nsz float %9, 1.000000e+01
-  %i.lj = fmul nsz float %1, %10                  ; 2 uses
+  %i.lj = fmul nsz float %i.lg, %i.li
   br label %bb.cq
 
-bb.cq:                                            ; preds = %bb.co, %bb.cp, %bb.ci
-  %.1151 = phi nsz float [ %i.le, %bb.co ], [ %i.lj, %bb.cp ], [ %.0150, %bb.ci ]
-  %.0149 = phi nsz float [ %i.le, %bb.co ], [ %i.lj, %bb.cp ], [ 0.000000e+00, %bb.ci ]
+bb.cq:                                            ; preds = %bb.co, %bb.cp
+  %.pn237.in = phi float [ %i.le, %bb.co ], [ %i.lj, %bb.cp ]
+  %.pn237 = fmul nsz float %.pn237.in, 1.000000e+01
+  %.1151 = fmul nsz float %1, %.pn237             ; 4 uses
   br i1 %i.an, label %bb.cu, label %bb.cr
 
-bb.cr:                                            ; preds = %bb.cq
+bb.cr:                                            ; preds = %bb.ci, %bb.cq
+  %.0149234 = phi float [ 0.000000e+00, %bb.ci ], [ %.1151, %bb.cq ] ; 3 uses
+  %.1151232 = phi float [ %.0150, %bb.ci ], [ %.1151, %bb.cq ] ; 3 uses
   %i.lk = getelementptr inbounds nuw i8, ptr %0, i64 419
   %i.ll = load i8, ptr %i.lk, align 1, !tbaa !139, !range !78, !noundef !79
   %i.lm = trunc nuw i8 %i.ll to i1
@@ -321,6 +320,8 @@ bb.ct:                                            ; preds = %bb.cs
   br label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct, %bb.cs, %bb.cr, %bb.cq
+  %.0149235 = phi float [ %.1151, %bb.cq ], [ %.0149234, %bb.cr ], [ %.0149234, %bb.cs ], [ %.0149234, %bb.ct ]
+  %.1151233 = phi float [ %.1151, %bb.cq ], [ %.1151232, %bb.cr ], [ %.1151232, %bb.cs ], [ %.1151232, %bb.ct ]
   %.0148 = phi nsz float [ 1.000000e+00, %bb.cq ], [ 1.000000e+00, %bb.cr ], [ 1.000000e+00, %bb.cs ], [ %i.lq, %bb.ct ]
   br i1 %i.ay, label %bb.cv, label %._crit_edge
 
@@ -367,9 +368,9 @@ bb.cy:                                            ; preds = %._crit_edge, %bb.cw
   store <2 x float> %.sroa.0.4.vec.insert.i206, ptr %6, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store float %i.mh, ptr %.sroa.2.0..sroa_idx, align 8
-  %i.mi = fmul nsz float %.1151, %i.me
+  %i.mi = fmul nsz float %.1151233, %i.me
   %i.mj = fmul nsz float %.0148, %i.mi
-  %i.mk = fmul nsz float %.0149, %i.me
+  %i.mk = fmul nsz float %.0149235, %i.me
   call void @_ZN11LocalPlayer10accelerateERKN4core8vector3dIfEEffb(ptr noundef nonnull align 8 dereferenceable(864) %0, ptr noundef nonnull align 4 dereferenceable(12) %6, float noundef %i.mj, float noundef %i.mk, i1 noundef zeroext %i.ay)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26

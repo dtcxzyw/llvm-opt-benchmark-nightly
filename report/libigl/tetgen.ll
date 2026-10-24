@@ -205,7 +205,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.aiu = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.aiv = load double, ptr %i.aiu, align 8, !tbaa !303
   %i.aiw = fcmp olt double %i.ait, %i.aiv
-  br i1 %i.aiw, label %.critedge602.loopexit, label %bb.cf
+  br i1 %i.aiw, label %.critedge602.loopexit, label %bb.cg
 
 .critedge602.loopexit:                            ; preds = %bb.ce, %bb.cd
   tail call void @_ZN10tetgenmesh6flip23EPNS_7trifaceEiPNS_15flipconstraintsE(ptr noundef nonnull align 8 dereferenceable(69984) %0, ptr noundef nonnull %1, i32 noundef %.0489677680, ptr noundef nonnull %5)
@@ -244,29 +244,35 @@ bb.ce:                                            ; preds = %bb.cd
   store i32 %i.aka, ptr %i.ajv, align 4, !tbaa !59
   br label %.critedge602
 
-bb.cf:                                            ; preds = %bb.ce, %.critedge611
+bb.cf:                                            ; preds = %.critedge611
   %i.akb = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.akc = load i32, ptr %i.akb, align 4, !tbaa !296
   %.not551 = icmp eq i32 %i.akc, 0
-  br i1 %.not551, label %.critedge602, label %bb.cg
+  br i1 %.not551, label %.critedge602, label %10
 
-bb.cg:                                            ; preds = %bb.cf
-  %i.akd = getelementptr inbounds nuw i8, ptr %0, i64 2800 ; 2 uses
-  %9 = load ptr, ptr %i.akd, align 8, !tbaa !266  ; 5 uses
+bb.cg:                                            ; preds = %bb.ce
+  %i.akd = getelementptr inbounds nuw i8, ptr %5, i64 12
+  %9 = load i32, ptr %i.akd, align 4, !tbaa !296
+  %.not551912 = icmp eq i32 %9, 0
+  br i1 %.not551912, label %.critedge602, label %.preheader689
+
+10:                                               ; preds = %bb.cf
   br i1 %i.aip, label %.preheader689, label %bb.ch
 
-.preheader689:                                    ; preds = %bb.cg
-  %i.ake = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 3 uses
+.preheader689:                                    ; preds = %bb.cg, %10
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2800 ; 2 uses
+  %12 = load ptr, ptr %11, align 8, !tbaa !266    ; 4 uses
+  %i.ake = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 3 uses
   %i.akf = load i64, ptr %i.ake, align 8, !tbaa !100
   %i.akg = trunc i64 %i.akf to i32
-  %i.akh = tail call noundef ptr @_ZN10tetgenmesh9arraypool8getblockEi(ptr noundef nonnull align 8 dereferenceable(48) %9, i32 noundef %i.akg)
+  %i.akh = tail call noundef ptr @_ZN10tetgenmesh9arraypool8getblockEi(ptr noundef nonnull align 8 dereferenceable(48) %12, i32 noundef %i.akg)
   %i.aki = load i64, ptr %i.ake, align 8, !tbaa !100 ; 2 uses
-  %i.akj = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.akj = getelementptr inbounds nuw i8, ptr %12, i64 4
   %i.akk = load i32, ptr %i.akj, align 4, !tbaa !101
   %i.akl = add nsw i32 %i.akk, -1
   %i.akm = sext i32 %i.akl to i64
   %i.akn = and i64 %i.aki, %i.akm
-  %i.ako = load i32, ptr %9, align 8, !tbaa !102
+  %i.ako = load i32, ptr %12, align 8, !tbaa !102
   %i.akp = sext i32 %i.ako to i64
   %i.akq = mul nsw i64 %i.akn, %i.akp
   %i.akr = getelementptr inbounds i8, ptr %i.akh, i64 %i.akq ; 2 uses
@@ -277,7 +283,7 @@ bb.cg:                                            ; preds = %bb.cf
   %i.aku = load i32, ptr %i.h, align 8, !tbaa !236
   %i.akv = getelementptr inbounds nuw i8, ptr %i.akr, i64 8
   store i32 %i.aku, ptr %i.akv, align 8, !tbaa !236
-  %i.akw = load ptr, ptr %i.akd, align 8, !tbaa !266 ; 4 uses
+  %i.akw = load ptr, ptr %11, align 8, !tbaa !266 ; 4 uses
   %i.akx = getelementptr inbounds nuw i8, ptr %i.akw, i64 32 ; 3 uses
   %i.aky = load i64, ptr %i.akx, align 8, !tbaa !100
   %i.akz = trunc i64 %i.aky to i32
@@ -303,8 +309,10 @@ bb.cg:                                            ; preds = %bb.cf
   store i32 %i.alp, ptr %i.alq, align 8, !tbaa !236
   br label %.critedge602
 
-bb.ch:                                            ; preds = %bb.cg
-  %i.alr = call noundef i32 @_ZN10tetgenmesh9arraypool8newindexEPPv(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef nonnull %i.a) ; 0 uses
+bb.ch:                                            ; preds = %10
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 2800
+  %14 = load ptr, ptr %13, align 8, !tbaa !266
+  %i.alr = call noundef i32 @_ZN10tetgenmesh9arraypool8newindexEPPv(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull %i.a) ; 0 uses
   %i.als = icmp eq i32 %4, 1
   br i1 %i.als, label %bb.ci, label %bb.cj
 
@@ -336,8 +344,8 @@ bb.cj:                                            ; preds = %bb.ch
   %i.ame = add nsw i32 %i.ig, 1
   br label %.critedge602
 
-.critedge602:                                     ; preds = %bb.v, %.loopexit, %bb.bb, %._crit_edge755, %.thread662, %.critedge599, %.critedge602.loopexit, %.critedge602.loopexit686.split.loop.exit723, %.critedge602.loopexit.split.loop.exit763, %.preheader689, %bb.ab, %.split679, %bb.ac, %bb.z, %.critedge609, %bb.bs, %._crit_edge, %bb.br, %bb.bl, %bb.bm, %bb.ca, %bb.bz, %bb.bx, %.critedge607, %bb.cf, %bb.ci, %bb.cj
-  %.3500 = phi i32 [ %i.ame, %.critedge602.loopexit686.split.loop.exit723 ], [ %2, %bb.ac ], [ %2, %.split679 ], [ 2, %bb.cf ], [ 2, %.preheader689 ], [ 2, %._crit_edge755 ], [ 2, %bb.cj ], [ 2, %bb.ci ], [ %2, %.critedge607 ], [ %2, %bb.bx ], [ %2, %bb.bz ], [ %2, %bb.ca ], [ %2, %bb.bm ], [ %2, %bb.bl ], [ %2, %bb.br ], [ %2, %._crit_edge ], [ %2, %bb.bs ], [ %2, %.critedge609 ], [ %2, %bb.z ], [ %2, %bb.ab ], [ 3, %.critedge602.loopexit ], [ %2, %.critedge599 ], [ %i.amd, %.critedge602.loopexit.split.loop.exit763 ], [ %2, %.thread662 ], [ %i.vr, %bb.bb ], [ %i.ig, %bb.v ], [ 2, %.loopexit ]
+.critedge602:                                     ; preds = %bb.v, %.loopexit, %bb.bb, %._crit_edge755, %.thread662, %.critedge599, %bb.cg, %.critedge602.loopexit, %.critedge602.loopexit686.split.loop.exit723, %.critedge602.loopexit.split.loop.exit763, %.preheader689, %bb.ab, %.split679, %bb.ac, %bb.z, %.critedge609, %bb.bs, %._crit_edge, %bb.br, %bb.bl, %bb.bm, %bb.ca, %bb.bz, %bb.bx, %.critedge607, %bb.cf, %bb.ci, %bb.cj
+  %.3500 = phi i32 [ 3, %.critedge602.loopexit ], [ %2, %bb.ac ], [ %2, %.split679 ], [ 2, %bb.cf ], [ 2, %.preheader689 ], [ %i.ame, %.critedge602.loopexit686.split.loop.exit723 ], [ 2, %bb.cj ], [ 2, %bb.ci ], [ %2, %.critedge607 ], [ %2, %bb.bx ], [ %2, %bb.bz ], [ %2, %bb.ca ], [ %2, %bb.bm ], [ %2, %bb.bl ], [ %2, %bb.br ], [ %2, %._crit_edge ], [ %2, %bb.bs ], [ %2, %.critedge609 ], [ %2, %bb.z ], [ %2, %bb.ab ], [ 2, %bb.cg ], [ %2, %.critedge599 ], [ %i.amd, %.critedge602.loopexit.split.loop.exit763 ], [ 2, %._crit_edge755 ], [ %2, %.thread662 ], [ %i.vr, %bb.bb ], [ %i.ig, %bb.v ], [ 2, %.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #45
@@ -740,8 +748,8 @@ bb.cr:                                            ; preds = %bb.cq
   store i64 %i.bfu, ptr %i.bfr, align 8, !tbaa !347
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.am, %.thread, %bb.as, %bb.at, %bb.ad, %.thread891, %.thread604, %.thread865, %.thread598, %bb.cm, %bb.cr, %bb.cq, %bb.i, %bb.f, %bb.e, %bb.bb
-  %.12331 = phi i32 [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.ad ], [ 1, %bb.cm ], [ 0, %.thread865 ], [ 0, %bb.i ], [ 1, %bb.bb ], [ 1, %bb.cq ], [ 1, %bb.cr ], [ 0, %.thread598 ], [ 0, %.thread604 ], [ 0, %.thread891 ], [ 0, %bb.at ], [ 0, %bb.as ], [ 0, %.thread ], [ 0, %bb.am ]
+.critedge:                                        ; preds = %bb.am, %.thread, %bb.ad, %bb.as, %bb.at, %.thread891, %.thread604, %.thread865, %.thread598, %bb.cm, %bb.cr, %bb.cq, %bb.i, %bb.f, %bb.e, %bb.bb
+  %.12331 = phi i32 [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.ad ], [ 0, %.thread891 ], [ 0, %.thread865 ], [ 0, %bb.i ], [ 1, %bb.bb ], [ 1, %bb.cq ], [ 1, %bb.cr ], [ 1, %bb.cm ], [ 0, %.thread598 ], [ 0, %.thread604 ], [ 0, %bb.at ], [ 0, %bb.as ], [ 0, %.thread ], [ 0, %bb.am ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #45

@@ -202,7 +202,7 @@ _RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !604
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !604
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ag = call noundef i64 @_RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8_6reload5LayerINtNtNtB8_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB6_5LayerNtNtNtB8_8registry7sharded8RegistryENtNtB2d_6marker4SendNtB48_4SyncEL_EENtNtB1y_3env9EnvFilterB3w_EB3w_EB3w_ENtNtCs2QK82Vyr5sR_12tracing_core10subscriber10Subscriber14max_level_hintCsl8OoimOLbh_6qdrant(ptr noundef nonnull align 8 %i.af) ; 15 uses
+  %i.ag = call noundef i64 @_RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8_6reload5LayerINtNtNtB8_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB6_5LayerNtNtNtB8_8registry7sharded8RegistryENtNtB2d_6marker4SendNtB48_4SyncEL_EENtNtB1y_3env9EnvFilterB3w_EB3w_EB3w_ENtNtCs2QK82Vyr5sR_12tracing_core10subscriber10Subscriber14max_level_hintCsl8OoimOLbh_6qdrant(ptr noundef nonnull align 8 %i.af) ; 17 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 552
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !605
   store i128 6396447331871555094409656509430856675, ptr %i.b, align 16
@@ -210,7 +210,7 @@ _RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8
   %i.ai = call fastcc { i64, ptr } @_RNvXNtCs4hE0XgIM7pO_18tracing_subscriber6reloadINtB2_5LayerINtNtNtB4_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtB4_5layer5LayerNtNtNtB4_8registry7sharded8RegistryENtNtB1F_6marker4SendNtB3I_4SyncEL_EENtNtB10_3env9EnvFilterB36_EB36_EIB2N_B36_E12downcast_rawCsl8OoimOLbh_6qdrant(ptr %.val.i, ptr noalias nofree noundef align 8 captures(address) dereferenceable(16) %i.b), !noalias !605
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !605
   %i.aj = extractvalue { i64, ptr } %i.ai, 0
-  %1 = icmp eq i64 %i.aj, 1
+  %1 = icmp ne i64 %i.aj, 1
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 568
   %i.al = load i8, ptr %i.ak, align 8, !range !12, !noundef !6
   %i.am = trunc nuw i8 %i.al to i1
@@ -252,7 +252,7 @@ bb.u:                                             ; preds = %bb.q
   br i1 %or.cond16.i, label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %.thread35.i
-  %.not1140.i = phi i1 [ %.not1137.i, %.thread35.i ], [ %.not11.i, %bb.u ] ; 3 uses
+  %.not1140.i = phi i1 [ %.not1137.i, %.thread35.i ], [ %.not11.i, %bb.u ] ; 4 uses
   %.not3239.i = phi i1 [ false, %.thread35.i ], [ %.not30.i, %bb.u ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) @22, i64 16, i1 false)
@@ -264,11 +264,8 @@ bb.v:                                             ; preds = %bb.u, %.thread35.i
   br i1 %i.aw, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %.not32.not.i = xor i1 %.not3239.i, true
-  %or.cond18.not.i = and i1 %1, %.not32.not.i
-  %.not.i.i = icmp eq i64 %i.ag, -1               ; 2 uses
-  %or.cond33.i = and i1 %.not.i.i, %or.cond18.not.i
-  br i1 %or.cond33.i, label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit, label %bb.y
+  %or.cond18.i = or i1 %1, %.not3239.i
+  br i1 %or.cond18.i, label %bb.y, label %2
 
 bb.x:                                             ; preds = %bb.v
   br i1 %.not3239.i, label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit, label %bb.ab
@@ -279,10 +276,11 @@ bb.y:                                             ; preds = %bb.w
 bb.z:                                             ; preds = %bb.y
   br i1 %.not1140.i, label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit, label %.split.i.i
 
-.split.i.i:                                       ; preds = %bb.z
+.split.i.i:                                       ; preds = %2, %bb.z
   %.not.i.i.i.i.i = icmp eq i64 %.sroa.0.0.i, -1
   %..i.i.i.i.i = select i1 %.not.i.i.i.i.i, i64 5, i64 %.sroa.0.0.i
-  %.sroa.01.0.i.i.i.i.i = select i1 %.not.i.i, i64 5, i64 %i.ag
+  %.not2.i.i.i.i.i = icmp eq i64 %i.ag, -1
+  %.sroa.01.0.i.i.i.i.i = select i1 %.not2.i.i.i.i.i, i64 5, i64 %i.ag
   %i.ax = icmp samesign ult i64 %..i.i.i.i.i, %.sroa.01.0.i.i.i.i.i
   br i1 %i.ax, label %bb.aa, label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit
 
@@ -291,6 +289,12 @@ _RNvYINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs2QK82Vyr5sR_12tracing_core8meta
 
 bb.aa:                                            ; preds = %_RNvYINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs2QK82Vyr5sR_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsl8OoimOLbh_6qdrant.exit.i.i, %.split.i.i
   br label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit
+
+2:                                                ; preds = %bb.w
+  %.not.i.i = icmp eq i64 %i.ag, -1               ; 2 uses
+  %brmerge.i = or i1 %.not.i.i, %.not1140.i
+  %.mux.i = select i1 %.not.i.i, i64 %.sroa.0.0.i, i64 %i.ag
+  br i1 %brmerge.i, label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit, label %.split.i.i
 
 bb.ab:                                            ; preds = %bb.x
   %i.ay = icmp ne i64 %i.ag, -2
@@ -315,8 +319,8 @@ bb.ac:                                            ; preds = %bb.t
   %..i.i = select i1 %i.ba, i64 %.sroa.0.0.i, i64 %i.ag
   br label %_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit
 
-_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit: ; preds = %_RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8_6reload5LayerINtNtNtB8_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB6_5LayerNtNtNtB8_8registry7sharded8RegistryENtNtB2d_6marker4SendNtB48_4SyncEL_EENtNtB1y_3env9EnvFilterB3w_EB3w_EB3w_ENtNtCs2QK82Vyr5sR_12tracing_core10subscriber10Subscriber12downcast_rawCsl8OoimOLbh_6qdrant.exit, %bb.r, %bb.t, %bb.u, %bb.w, %bb.x, %bb.z, %.split.i.i, %_RNvYINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs2QK82Vyr5sR_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsl8OoimOLbh_6qdrant.exit.i.i, %bb.aa, %bb.ab, %.split.i23.i, %bb.ac
-  %.sroa.07.0.i = phi i64 [ %..i.i, %bb.ac ], [ -2, %bb.x ], [ %.sroa.0.0.i, %_RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8_6reload5LayerINtNtNtB8_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB6_5LayerNtNtNtB8_8registry7sharded8RegistryENtNtB2d_6marker4SendNtB48_4SyncEL_EENtNtB1y_3env9EnvFilterB3w_EB3w_EB3w_ENtNtCs2QK82Vyr5sR_12tracing_core10subscriber10Subscriber12downcast_rawCsl8OoimOLbh_6qdrant.exit ], [ -2, %bb.r ], [ %.sroa.0.0.i, %bb.w ], [ -2, %bb.u ], [ %i.ag, %bb.z ], [ -2, %bb.t ], [ %.sroa.0.0.i, %bb.aa ], [ -2, %_RNvYINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs2QK82Vyr5sR_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsl8OoimOLbh_6qdrant.exit.i.i ], [ %i.ag, %.split.i.i ], [ %spec.select.i, %.split.i23.i ], [ %i.ag, %bb.ab ]
+_RNvMs3_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB5_7LayeredINtNtB9_6reload5LayerINtNtNtB9_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB7_5LayerIBW_IB1a_IB1v_IB2a_IB2M_DIB3m_NtNtNtB9_8registry7sharded8RegistryENtNtB2e_6marker4SendNtB4D_4SyncEL_EENtNtB1z_3env9EnvFilterB41_EB41_EB41_EEB4B_B4V_EL_EEB5b_B3x_EB3x_EB3x_E15pick_level_hintCsl8OoimOLbh_6qdrant.exit: ; preds = %_RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8_6reload5LayerINtNtNtB8_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB6_5LayerNtNtNtB8_8registry7sharded8RegistryENtNtB2d_6marker4SendNtB48_4SyncEL_EENtNtB1y_3env9EnvFilterB3w_EB3w_EB3w_ENtNtCs2QK82Vyr5sR_12tracing_core10subscriber10Subscriber12downcast_rawCsl8OoimOLbh_6qdrant.exit, %bb.r, %bb.t, %bb.u, %bb.x, %bb.z, %.split.i.i, %_RNvYINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs2QK82Vyr5sR_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsl8OoimOLbh_6qdrant.exit.i.i, %bb.aa, %2, %bb.ab, %.split.i23.i, %bb.ac
+  %.sroa.07.0.i = phi i64 [ %..i.i, %bb.ac ], [ -2, %bb.x ], [ %.sroa.0.0.i, %_RNvXs_NtNtCs4hE0XgIM7pO_18tracing_subscriber5layer7layeredINtB4_7LayeredINtNtB8_6reload5LayerINtNtNtB8_6filter13layer_filters8FilteredINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtB6_5LayerNtNtNtB8_8registry7sharded8RegistryENtNtB2d_6marker4SendNtB48_4SyncEL_EENtNtB1y_3env9EnvFilterB3w_EB3w_EB3w_ENtNtCs2QK82Vyr5sR_12tracing_core10subscriber10Subscriber12downcast_rawCsl8OoimOLbh_6qdrant.exit ], [ -2, %bb.r ], [ %.mux.i, %2 ], [ -2, %bb.u ], [ %i.ag, %bb.z ], [ -2, %bb.t ], [ %.sroa.0.0.i, %bb.aa ], [ -2, %_RNvYINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs2QK82Vyr5sR_12tracing_core8metadata11LevelFilterENtNtB7_3cmp10PartialOrd2ltCsl8OoimOLbh_6qdrant.exit.i.i ], [ %i.ag, %.split.i.i ], [ %spec.select.i, %.split.i23.i ], [ %i.ag, %bb.ab ]
   ret i64 %.sroa.07.0.i
 }
 

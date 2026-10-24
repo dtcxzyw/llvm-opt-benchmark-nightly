@@ -204,6 +204,7 @@ inet_mcv_hist_sel.exit.i:                         ; preds = %.lr.ph.i90.i, %bb.q
 
 mcv_population.exit83.thread.thread.i:            ; preds = %inet_mcv_hist_sel.exit.i, %mcv_population.exit83.thread.i, %mcv_population.exit83.i
   %.065112164.i = phi double [ %.065112.i, %inet_mcv_hist_sel.exit.i ], [ %.065112.i, %mcv_population.exit83.thread.i ], [ %.065.i, %mcv_population.exit83.i ]
+  %.061.shrunk114124.i = phi i1 [ true, %inet_mcv_hist_sel.exit.i ], [ %i.bu, %mcv_population.exit83.thread.i ], [ %i.bu, %mcv_population.exit83.i ] ; 2 uses
   %.1.i = phi double [ %i.en, %inet_mcv_hist_sel.exit.i ], [ %.067.i, %mcv_population.exit83.thread.i ], [ 0.000000e+00, %mcv_population.exit83.i ] ; 2 uses
   %or.cond5.i = select i1 %i.bs, i1 %.062.shrunk.i, i1 false
   br i1 %or.cond5.i, label %bb.r, label %bb.s
@@ -247,7 +248,7 @@ inet_mcv_hist_sel.exit102.i:                      ; preds = %.lr.ph.i97.i, %bb.r
 
 bb.s:                                             ; preds = %inet_mcv_hist_sel.exit102.i, %mcv_population.exit83.thread.thread.i
   %.2.i = phi double [ %i.fg, %inet_mcv_hist_sel.exit102.i ], [ %.1.i, %mcv_population.exit83.thread.thread.i ] ; 2 uses
-  %or.cond7.i = select i1 %.062.shrunk.i, i1 %i.bu, i1 false
+  %or.cond7.i = select i1 %.062.shrunk.i, i1 %.061.shrunk114124.i, i1 false
   br i1 %or.cond7.i, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -301,7 +302,7 @@ inet_hist_inclusion_join_sel.exit.i:              ; preds = %._crit_edge.i.i, %b
 bb.u:                                             ; preds = %inet_hist_inclusion_join_sel.exit.i, %bb.s, %.thread139.i
   %.068111127135148.i = phi double [ %i.br, %inet_hist_inclusion_join_sel.exit.i ], [ %i.br, %bb.s ], [ 0.000000e+00, %.thread139.i ]
   %.063.shrunk113125137147.i = phi i1 [ %i.bs, %inet_hist_inclusion_join_sel.exit.i ], [ %i.bs, %bb.s ], [ false, %.thread139.i ]
-  %.061.shrunk114124138146.i = phi i1 [ true, %inet_hist_inclusion_join_sel.exit.i ], [ %i.bu, %bb.s ], [ false, %.thread139.i ]
+  %.061.shrunk114124138146.i = phi i1 [ true, %inet_hist_inclusion_join_sel.exit.i ], [ %.061.shrunk114124.i, %bb.s ], [ false, %.thread139.i ]
   %.3.i = phi double [ %i.gj, %inet_hist_inclusion_join_sel.exit.i ], [ %.2.i, %bb.s ], [ 0.000000e+00, %.thread139.i ]
   %or.cond9.i = select i1 %.064.shrunk.i, i1 true, i1 %.062.shrunk.i
   %or.cond11.i = select i1 %.063.shrunk113125137147.i, i1 true, i1 %.061.shrunk114124138146.i

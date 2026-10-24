@@ -202,34 +202,35 @@ fiber_current.exit:                               ; preds = %bb.a, %bb.b
   %i.v = phi ptr [ %.pre.i, %bb.b ], [ %i.f, %bb.a ]
   %i.w = icmp ne i64 %2, 4                        ; 2 uses
   %i.x = getelementptr i8, ptr %i.v, i64 176      ; 2 uses
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !56   ; 2 uses
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !56   ; 4 uses
   %i.z = icmp eq i64 %i.y, 4
   %or.cond.i = and i1 %i.w, %i.z
-  br i1 %or.cond.i, label %bb.c, label %fiber_storage_get.exit
+  br i1 %or.cond.i, label %fiber_storage_get.exit, label %bb.c
 
 bb.c:                                             ; preds = %fiber_current.exit
-  %3 = tail call i64 @rb_hash_new() #10           ; 2 uses
-  store i64 %3, ptr %i.x, align 8, !tbaa !56
-  br label %fiber_storage_get.exit
+  %3 = icmp eq i64 %i.y, 4
+  br i1 %3, label %bb.g, label %bb.d
 
-fiber_storage_get.exit:                           ; preds = %fiber_current.exit, %bb.c
-  %.0.i = phi i64 [ %3, %bb.c ], [ %i.y, %fiber_current.exit ] ; 3 uses
-  %i.aa = icmp eq i64 %.0.i, 4
-  br i1 %i.aa, label %bb.g, label %bb.d
+fiber_storage_get.exit:                           ; preds = %fiber_current.exit
+  %4 = tail call i64 @rb_hash_new() #10           ; 3 uses
+  store i64 %4, ptr %i.x, align 8, !tbaa !56
+  %i.aa = icmp eq i64 %4, 4
+  br i1 %i.aa, label %bb.g, label %bb.f
 
-bb.d:                                             ; preds = %fiber_storage_get.exit
+bb.d:                                             ; preds = %bb.c
   br i1 %i.w, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ab = tail call i64 @rb_hash_delete(i64 noundef %.0.i, i64 noundef %i.b) #10
+  %i.ab = tail call i64 @rb_hash_delete(i64 noundef %i.y, i64 noundef %i.b) #10
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.d
-  %i.ac = tail call i64 @rb_hash_aset(i64 noundef %.0.i, i64 noundef %i.b, i64 noundef %2) #10
+bb.f:                                             ; preds = %fiber_storage_get.exit, %bb.d
+  %.0.i1315 = phi i64 [ %i.y, %bb.d ], [ %4, %fiber_storage_get.exit ]
+  %i.ac = tail call i64 @rb_hash_aset(i64 noundef %.0.i1315, i64 noundef %i.b, i64 noundef %2) #10
   br label %bb.g
 
-bb.g:                                             ; preds = %fiber_storage_get.exit, %bb.f, %bb.e
-  %.0 = phi i64 [ %i.ac, %bb.f ], [ %i.ab, %bb.e ], [ 4, %fiber_storage_get.exit ]
+bb.g:                                             ; preds = %fiber_storage_get.exit, %bb.c, %bb.f, %bb.e
+  %.0 = phi i64 [ %i.ac, %bb.f ], [ %i.ab, %bb.e ], [ 4, %bb.c ], [ 4, %fiber_storage_get.exit ]
   ret i64 %.0
 }
 

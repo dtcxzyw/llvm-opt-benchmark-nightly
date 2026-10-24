@@ -205,6 +205,7 @@ bb.kq:                                            ; preds = %bb.kp
   br label %bb.kr
 
 bb.kr:                                            ; preds = %.critedge2056, %bb.jq, %bb.jo
+  %8 = phi i1 [ %i.bw, %.critedge2056 ], [ false, %bb.jq ], [ %i.bw, %bb.jo ] ; 2 uses
   %.val.i2523 = phi ptr [ %.val.i2523.pre, %.critedge2056 ], [ %i.bu, %bb.jq ], [ %i.bu, %bb.jo ]
   %i.akl = icmp ult ptr %i.age, %.val.i2523
   br i1 %i.akl, label %peek.exit.i2525, label %.thread5094
@@ -234,14 +235,14 @@ bb.ku:                                            ; preds = %peek.exit.i2525
   %.val.i2529 = load i32, ptr %i.w, align 4, !tbaa !160
   %i.akt = and i32 %.val.i2529, 904
   %.not5.i = icmp eq i32 %i.akt, 0
-  %or.cond.i2530 = and i1 %.not5.i, %i.bw
+  %or.cond.i2530 = and i1 %.not5.i, %8
   br i1 %or.cond.i2530, label %bb.kv, label %ambiguous_operator_p.exit.thread
 
 .thread5094:                                      ; preds = %bb.kr
   %.val.i25295095 = load i32, ptr %i.w, align 4, !tbaa !160
   %i.aku = and i32 %.val.i25295095, 904
   %.not5.i5096 = icmp eq i32 %i.aku, 0
-  %or.cond.i25305097 = and i1 %.not5.i5096, %i.bw
+  %or.cond.i25305097 = and i1 %.not5.i5096, %8
   br i1 %or.cond.i25305097, label %ambiguous_operator_p.exit, label %ambiguous_operator_p.exit.thread
 
 bb.kv:                                            ; preds = %bb.ku
@@ -644,13 +645,13 @@ bb.py:                                            ; preds = %bb.px
   %.val2129 = load ptr, ptr %i.v, align 8, !tbaa !127
   %.val2130 = load ptr, ptr %i.d, align 8, !tbaa !128
   %i.ayu = call zeroext i1 @pm_diagnostic_list_append(ptr noundef %i.u, ptr noundef %.val2129, ptr noundef %.val2130, i32 noundef range(i32 297, 324) 297) #27 ; 0 uses
-  br label %bb.pz
+  br label %bb.qa
 
-bb.pz:                                            ; preds = %bb.py, %bb.px
+bb.pz:                                            ; preds = %bb.px
   %or.cond32 = select i1 %i.ayt, i1 true, i1 %i.ayo
   br i1 %or.cond32, label %bb.qa, label %bb.qd
 
-bb.qa:                                            ; preds = %bb.pz
+bb.qa:                                            ; preds = %bb.py, %bb.pz
   store i32 1, ptr %i.w, align 4, !tbaa !160
   %.val2218 = load ptr, ptr %i.f, align 8, !tbaa !89
   %.val2219 = load ptr, ptr %i.d, align 8, !tbaa !87 ; 2 uses

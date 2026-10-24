@@ -204,8 +204,8 @@ define internal i32 @ftp_done(ptr noundef %0, i32 noundef %1, i1 noundef zeroext
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca i64, align 8                      ; 7 uses
-  %i.d = alloca i32, align 4                      ; 7 uses
+  %i.c = alloca i64, align 8                      ; 8 uses
+  %i.d = alloca i32, align 4                      ; 8 uses
   %i.e = tail call ptr @Curl_meta_get(ptr noundef %0, ptr noundef nonnull @.str.1) #10 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 8 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !95
@@ -544,7 +544,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !114
   %i.dy = icmp sgt i64 %i.dx, 0
-  br i1 %i.dy, label %bb.am, label %ftp_done_control_reply.exit
+  br i1 %i.dy, label %bb.am, label %ftp_done_control_reply.exit.thread114
 
 bb.am:                                            ; preds = %bb.al
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 2187
@@ -571,13 +571,13 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.am
   tail call void @Curl_conncontrol(ptr noundef %i.db, i32 noundef 1) #10
-  br label %ftp_done_control_reply.exit
+  br label %ftp_done_control_reply.exit.thread114
 
 bb.ar:                                            ; preds = %bb.ak
   %i.eh = load i32, ptr %i.d, align 4, !tbaa !12  ; 2 uses
   switch i32 %i.eh, label %bb.at [
-    i32 226, label %ftp_done_control_reply.exit
-    i32 250, label %ftp_done_control_reply.exit
+    i32 226, label %ftp_done_control_reply.exit.thread114
+    i32 250, label %ftp_done_control_reply.exit.thread114
     i32 552, label %bb.as
   ]
 
@@ -595,12 +595,17 @@ ftp_done_control_reply.exit.thread:               ; preds = %bb.aj, %ftp_done_se
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
   br label %ftp_done_check_partial.exit
 
-ftp_done_control_reply.exit:                      ; preds = %bb.af, %bb.ag, %bb.ah, %bb.al, %bb.aq, %bb.ar, %bb.ar
+ftp_done_control_reply.exit.thread114:            ; preds = %bb.al, %bb.aq, %bb.ar, %bb.ar
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
+  br label %bb.au
+
+ftp_done_control_reply.exit:                      ; preds = %bb.af, %bb.ag, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
   br i1 %2, label %ftp_done_check_partial.exit, label %bb.au
 
-bb.au:                                            ; preds = %ftp_done_control_reply.exit
+bb.au:                                            ; preds = %ftp_done_control_reply.exit.thread114, %ftp_done_control_reply.exit
   %i.ei = load i32, ptr %i.p, align 4             ; 2 uses
   %i.ej = and i32 %i.ei, 32768
   %.not.i69 = icmp eq i32 %i.ej, 0

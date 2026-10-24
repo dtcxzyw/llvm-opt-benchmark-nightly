@@ -205,7 +205,7 @@ bb.a:
 .lr.ph384:                                        ; preds = %bb.a
   %i.v = sext i32 %2 to i64
   %i.w = getelementptr inbounds [120 x i8], ptr %i.d, i64 %i.v ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 3 uses
   %i.y = fcmp ogt float %i.p, 0.000000e+00
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 2464
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 112 ; 2 uses
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %.lr.ph384, %.loopex
   %indvars.iv391 = phi i64 [ %i.ab, %.lr.ph384 ], [ %indvars.iv.next392, %.loopexit ] ; 2 uses
   %i.ac = getelementptr inbounds [8 x i8], ptr %i.f, i64 %indvars.iv391
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !209 ; 24 uses
-  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !232 ; 4 uses
+  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !232 ; 6 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 44
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !535
   %i.ah = sext i32 %i.ag to i64
@@ -242,7 +242,7 @@ bb.b:                                             ; preds = %.lr.ph384, %.loopex
   %i.ay = freeze <4 x i1> %i.ax
   %i.az = bitcast <4 x i1> %i.ay to i4
   %i.ba = icmp eq i4 %i.az, -1
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ad, i64 196 ; 7 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ad, i64 196 ; 9 uses
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !231 ; 2 uses
   br i1 %i.ba, label %bb.d, label %bb.c
 
@@ -616,16 +616,31 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.jr = shufflevector <2 x float> %i.jp, <2 x float> %i.jq, <2 x i32> <i32 0, i32 3>
   %i.js = tail call zeroext i1 @b2UpdateContact(ptr noundef %i.b, ptr noundef nonnull %i.ad, ptr noundef nonnull %i.ai, <2 x float> %.sroa.096.0.copyload, <2 x float> %.sroa.699.0.copyload, <2 x float> %i.jh, ptr noundef nonnull %i.am, <2 x float> %.sroa.088.0.copyload, <2 x float> %.sroa.6.0.copyload, <2 x float> %i.jr) #23 ; 3 uses
   %or.cond231 = select i1 %i.js, i1 %.not225, i1 false
-  br i1 %or.cond231, label %.sink.split, label %bb.y
+  br i1 %or.cond231, label %.thread402, label %bb.y
+
+.thread402:                                       ; preds = %.thread
+  %4 = load i32, ptr %i.bb, align 4, !tbaa !231
+  %5 = or i32 %4, 262144
+  store i32 %5, ptr %i.bb, align 4, !tbaa !231
+  %.val232 = load ptr, ptr %i.x, align 8, !tbaa !215
+  %6 = lshr i32 %i.ae, 6
+  %7 = and i32 %i.ae, 63
+  %8 = zext nneg i32 %7 to i64
+  %9 = shl nuw i64 1, %8
+  %10 = zext nneg i32 %6 to i64
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %.val232, i64 %10 ; 2 uses
+  %12 = load i64, ptr %11, align 8, !tbaa !216
+  %13 = or i64 %12, %9
+  store i64 %13, ptr %11, align 8, !tbaa !216
+  br label %.preheader
 
 bb.y:                                             ; preds = %.thread
   %brmerge = select i1 %i.js, i1 true, i1 %.not225
   br i1 %brmerge, label %bb.z, label %.sink.split
 
-.sink.split:                                      ; preds = %bb.y, %.thread
-  %.sink414 = phi i32 [ 262144, %.thread ], [ 524288, %bb.y ]
+.sink.split:                                      ; preds = %bb.y
   %i.jt = load i32, ptr %i.bb, align 4, !tbaa !231
-  %i.ju = or i32 %i.jt, %.sink414
+  %i.ju = or i32 %i.jt, 524288
   store i32 %i.ju, ptr %i.bb, align 4, !tbaa !231
   %.val = load ptr, ptr %i.x, align 8, !tbaa !215
   %i.jv = lshr i32 %i.ae, 6
@@ -637,12 +652,12 @@ bb.y:                                             ; preds = %.thread
   %i.kb = load i64, ptr %i.ka, align 8, !tbaa !216
   %i.kc = or i64 %i.kb, %i.jy
   store i64 %i.kc, ptr %i.ka, align 8, !tbaa !216
-  br label %bb.z
+  br label %.loopexit
 
-bb.z:                                             ; preds = %.sink.split, %bb.y
+bb.z:                                             ; preds = %bb.y
   br i1 %i.js, label %.preheader, label %.loopexit
 
-.preheader:                                       ; preds = %bb.z
+.preheader:                                       ; preds = %.thread402, %bb.z
   %i.kd = getelementptr inbounds nuw i8, ptr %i.ad, i64 68
   %i.ke = getelementptr inbounds nuw i8, ptr %i.ad, i64 176
   %i.kf = load i32, ptr %i.ke, align 4, !tbaa !246 ; 2 uses
@@ -716,7 +731,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.aa, !llvm.loop !533
 
-.loopexit:                                        ; preds = %bb.ae, %.preheader, %.critedge, %bb.z, %bb.c
+.loopexit:                                        ; preds = %bb.ae, %.preheader, %.sink.split, %.critedge, %bb.z, %bb.c
   %indvars.iv.next392 = add nsw i64 %indvars.iv391, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next392 to i32
   %exitcond394.not = icmp eq i32 %1, %lftr.wideiv

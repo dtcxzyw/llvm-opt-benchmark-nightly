@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 48
   store ptr %i.y, ptr %i.z, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
-  %i.ab = load ptr, ptr %i.aa, align 8            ; 2 uses
+  %i.ab = load ptr, ptr %i.aa, align 8            ; 3 uses
   tail call void @SDL_LockMutex_REAL(ptr noundef %i.ab) #5
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 152 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8
   %i.am = icmp eq ptr %i.al, null
-  br i1 %i.am, label %bb.e, label %bb.i
+  br i1 %i.am, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %i.a, i64 56
@@ -264,15 +264,19 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.az = load ptr, ptr %i.ay, align 8
   %i.ba = tail call zeroext i1 %i.ax(ptr noundef %i.az, ptr noundef nonnull %i.aj) #5
-  br i1 %i.ba, label %bb.i, label %bb.h
+  br i1 %i.ba, label %.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.bb = load ptr, ptr %i.as, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 56
   %i.bd = tail call i32 @SDL_AddAtomicInt_REAL(ptr noundef nonnull %i.bc, i32 noundef -1) #5 ; 0 uses
-  br label %bb.i
+  br label %.thread
 
-bb.i:                                             ; preds = %bb.g, %bb.h, %bb.d, %._crit_edge
+.thread:                                          ; preds = %bb.g, %bb.h, %bb.d
+  tail call void @SDL_UnlockMutex_REAL(ptr noundef %i.ab) #5
+  br label %bb.k
+
+bb.i:                                             ; preds = %._crit_edge
   tail call void @SDL_UnlockMutex_REAL(ptr noundef %i.ab) #5
   br i1 %.not71, label %bb.j, label %bb.k
 
@@ -290,8 +294,8 @@ bb.j:                                             ; preds = %bb.i
   tail call void @SDL_free_REAL(ptr noundef nonnull %i.a) #5
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i
-  %.1 = phi i1 [ %.0, %bb.j ], [ true, %bb.i ]
+bb.k:                                             ; preds = %.thread, %bb.j, %bb.i
+  %.1 = phi i1 [ %.0, %bb.j ], [ true, %bb.i ], [ true, %.thread ]
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 56

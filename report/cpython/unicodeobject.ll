@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.k = icmp eq i32 %i.g, 1
-  br i1 %i.k, label %bb.aa, label %bb.e
+  br i1 %i.k, label %.thread126, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void @_PyObject_AssertFailed(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.8, i32 noundef 602, ptr noundef nonnull @__func__._PyUnicode_CheckConsistency) #35
@@ -282,7 +282,7 @@ bb.t:                                             ; preds = %bb.r
   %i.r = getelementptr i8, ptr %0, i64 16
   %i.s = load i64, ptr %i.r, align 8, !tbaa !239
   %i.t = icmp eq i64 %i.q, %i.s
-  br i1 %i.t, label %.thread126, label %bb.u
+  br i1 %i.t, label %bb.aa, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   tail call void @_PyObject_AssertFailed(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.8, i32 noundef 627, ptr noundef nonnull @__func__._PyUnicode_CheckConsistency) #35
@@ -298,35 +298,39 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.v, %bb.k
   %.val96 = phi ptr [ %.val99, %bb.k ], [ %.val97, %bb.v ]
   %i.u = icmp eq ptr %.val96, null
-  br i1 %i.u, label %bb.y, label %bb.aa
+  br i1 %i.u, label %bb.y, label %2
 
 bb.y:                                             ; preds = %bb.x
   %i.v = getelementptr i8, ptr %0, i64 40
   %i.w = load i64, ptr %i.v, align 8, !tbaa !238
   %i.x = icmp eq i64 %i.w, 0
-  br i1 %i.x, label %bb.aa, label %bb.z
+  br i1 %i.x, label %2, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   tail call void @_PyObject_AssertFailed(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.8, i32 noundef 635, ptr noundef nonnull @__func__._PyUnicode_CheckConsistency) #35
   unreachable
 
-bb.aa:                                            ; preds = %bb.x, %bb.y, %bb.d
+2:                                                ; preds = %bb.x, %bb.y
+  %.not93 = icmp eq i32 %1, 0
+  br i1 %.not93, label %bb.as, label %bb.ab
+
+bb.aa:                                            ; preds = %bb.t
   %.not93.a = icmp eq i32 %1, 0
-  br i1 %.not93.a, label %bb.as, label %bb.ab
+  br i1 %.not93.a, label %bb.as, label %.thread128
 
-.thread126:                                       ; preds = %bb.t
+.thread126:                                       ; preds = %bb.d
   %.not93127 = icmp eq i32 %1, 0
-  br i1 %.not93127, label %bb.as, label %.thread128
+  br i1 %.not93127, label %bb.as, label %bb.ac
 
-bb.ab:                                            ; preds = %bb.aa
+bb.ab:                                            ; preds = %2
   br i1 %.not87, label %.thread128, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab
+bb.ac:                                            ; preds = %.thread126, %bb.ab
   %.0.v.i.i = select i1 %.not86, i64 56, i64 40
   %.0.i.i = getelementptr i8, ptr %0, i64 %.0.v.i.i
   br label %_PyUnicode_DATA.exit
 
-.thread128:                                       ; preds = %.thread126, %bb.ab
+.thread128:                                       ; preds = %bb.aa, %bb.ab
   %i.y = getelementptr i8, ptr %0, i64 56
   %.val4.i = load ptr, ptr %i.y, align 8, !tbaa !237
   br label %_PyUnicode_DATA.exit
@@ -571,7 +575,7 @@ bb.ar:                                            ; preds = %PyUnicode_READ.exit
   tail call void @_PyObject_AssertFailed(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.8, i32 noundef 669, ptr noundef nonnull @__func__._PyUnicode_CheckConsistency) #35
   unreachable
 
-bb.as:                                            ; preds = %.thread126, %PyUnicode_READ.exit102, %bb.aa
+bb.as:                                            ; preds = %bb.aa, %.thread126, %PyUnicode_READ.exit102, %2
   ret i32 1
 }
 
@@ -974,13 +978,13 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.ah = select i1 %.not45, i32 2, i32 1         ; 2 uses
   store i32 %i.ah, ptr %6, align 4, !tbaa !316
-  br label %bb.o
+  br label %bb.p
 
-bb.o:                                             ; preds = %bb.n, %bb.m
-  %7 = phi i32 [ %i.ah, %bb.n ], [ %i.af, %bb.m ]
+bb.o:                                             ; preds = %bb.m
   br i1 %i.ae, label %bb.p, label %bb.s
 
-bb.p:                                             ; preds = %bb.o
+bb.p:                                             ; preds = %bb.n, %bb.o
+  %7 = phi i32 [ %i.ah, %bb.n ], [ %i.af, %bb.o ]
   %i.ai = icmp eq i32 %7, 2
   br i1 %i.ai, label %bb.q, label %bb.r
 

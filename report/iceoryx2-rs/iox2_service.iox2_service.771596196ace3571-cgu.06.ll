@@ -202,8 +202,8 @@ _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsI
   %i.aj = or i1 %.sroa.03.015.i, %i.ai            ; 3 uses
   %i.ak = and i1 %i.ae, %i.aj
   %i.al = add nuw i64 %.sroa.09.014.i, 1          ; 2 uses
-  %3 = icmp uge i64 %i.al, %i.y
-  %or.cond.not.i = select i1 %i.ak, i1 true, i1 %3
+  %exitcond.not.i = icmp eq i64 %i.al, %i.y
+  %or.cond.not.i = select i1 %i.ak, i1 true, i1 %exitcond.not.i
   br i1 %or.cond.not.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit, label %bb.i
 
 _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i
@@ -606,11 +606,12 @@ _RNvMs1_NtCs5kzjBmDVxDj_21iceoryx2_bb_container7slotmapINtB5_11MetaSlotMapINtNtN
   %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 3360
   br label %bb.l
 
-bb.l:                                             ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i, %.lr.ph.i
-  %.sroa.0.016.i = phi i1 [ false, %.lr.ph.i ], [ %2, %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i ]
-  %.sroa.03.015.i = phi i1 [ false, %.lr.ph.i ], [ %i.bb, %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i ]
-  %.sroa.09.014.i = phi i64 [ 0, %.lr.ph.i ], [ %3, %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i ] ; 5 uses
+bb.l:                                             ; preds = %3, %.lr.ph.i
+  %.sroa.0.016.i = phi i1 [ false, %.lr.ph.i ], [ %2, %3 ]
+  %.sroa.03.015.i = phi i1 [ false, %.lr.ph.i ], [ %i.bb, %3 ]
+  %.sroa.09.014.i = phi i64 [ 0, %.lr.ph.i ], [ %4, %3 ] ; 5 uses
   %i.au = tail call noundef zeroext i1 @_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver8has_dataCsadSKrpJ73hd_12iox2_service(ptr noundef nonnull align 8 %i.ap, i64 noundef %.sroa.09.014.i) #17
+  %2 = or i1 %.sroa.0.016.i, %i.au                ; 3 uses
   %i.av = load i64, ptr %i.as, align 8, !noundef !5 ; 2 uses
   %i.aw = icmp ult i64 %.sroa.09.014.i, %i.av
   br i1 %i.aw, label %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i, label %bb.m
@@ -620,19 +621,20 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i: ; preds = %bb.l
-  %2 = or i1 %.sroa.0.016.i, %i.au                ; 3 uses
   %i.ax = load ptr, ptr %i.at, align 16, !nonnull !5, !noundef !5
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %.sroa.09.014.i
   %i.az = load i64, ptr %i.ay, align 8, !noundef !5
   %i.ba = icmp ne i64 %i.az, 0
   %i.bb = or i1 %.sroa.03.015.i, %i.ba            ; 5 uses
   %i.bc = and i1 %2, %i.bb
-  %3 = add nuw i64 %.sroa.09.014.i, 1             ; 2 uses
-  %4 = icmp uge i64 %3, %i.ar
-  %or.cond.not.i = select i1 %i.bc, i1 true, i1 %4
-  br i1 %or.cond.not.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit, label %bb.l
+  br i1 %i.bc, label %bb.o, label %3
 
-_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i
+3:                                                ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i
+  %4 = add nuw i64 %.sroa.09.014.i, 1             ; 2 uses
+  %exitcond.not.i = icmp eq i64 %4, %i.ar
+  br i1 %exitcond.not.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit, label %bb.l
+
+_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit: ; preds = %3
   %i.bd = or i1 %i.bb, %2
   br i1 %i.bd, label %bb.o, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit.thread.a
 
@@ -653,7 +655,7 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsg6ZEkMt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RNvMs1_NtCs5kzjBmDVxDj_21iceoryx2_bb_container7slotmapINtB5_11MetaSlotMapINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiver10ConnectionNtNtNtB1i_7service3ipc7ServiceENtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits14owning_pointer20GenericOwningPointerE12get_mut_implCsadSKrpJ73hd_12iox2_service.exit.thread
 
-bb.o:                                             ; preds = %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit
+bb.o:                                             ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i, %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 1232 ; 8 uses
   %i.bi = tail call noundef i8 @_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtB9_7slotmap10SlotMapKeyNtNtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocator13HeapAllocatorEINtB7_6VectorB1o_E4pushCsadSKrpJ73hd_12iox2_service(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bh, i64 noundef %i.ab) #17
   %.not80 = icmp eq i8 %i.bi, 2
@@ -763,8 +765,8 @@ _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsI
   %i.cr = or i1 %.sroa.03.015.i.i, %i.cq          ; 3 uses
   %i.cs = and i1 %i.cm, %i.cr
   %i.ct = add nuw i64 %.sroa.09.014.i.i, 1        ; 2 uses
-  %5 = icmp uge i64 %i.ct, %i.cg
-  %or.cond.not.i.i = select i1 %i.cs, i1 true, i1 %5
+  %exitcond.not.i.i = icmp eq i64 %i.ct, %i.cg
+  %or.cond.not.i.i = select i1 %i.cs, i1 true, i1 %exitcond.not.i.i
   br i1 %or.cond.not.i.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit.i, label %bb.x
 
 _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit.i: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i.i
@@ -1167,8 +1169,8 @@ _RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsI
   %i.bp = or i1 %.sroa.03.015.i.i, %i.bo          ; 3 uses
   %i.bq = and i1 %i.bk, %i.bp
   %i.br = add nuw i64 %.sroa.09.014.i.i, 1        ; 2 uses
-  %3 = icmp uge i64 %i.br, %i.bg
-  %or.cond.not.i.i = select i1 %i.bq, i1 true, i1 %3
+  %exitcond.not.i.i = icmp eq i64 %i.br, %i.bg
+  %or.cond.not.i.i = select i1 %i.bq, i1 true, i1 %exitcond.not.i.i
   br i1 %or.cond.not.i.i, label %_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit.i, label %.lr.ph.i.i
 
 _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE38receiver_channels_have_data_or_borrowsCsadSKrpJ73hd_12iox2_service.exit.i: ; preds = %_RNvXsj_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB5_8ReceiverINtNtNtBb_15dynamic_storage19posix_shared_memory7StorageNtB5_20SharedManagementDataEENtB9_16ZeroCopyReceiver12borrow_countCsadSKrpJ73hd_12iox2_service.exit.i.i

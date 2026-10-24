@@ -204,7 +204,8 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   br label %.thread37
 
 .thread37:                                        ; preds = %..thread37_crit_edge, %bb.e, %bb.f
-  %i.x = phi ptr [ %.pre, %..thread37_crit_edge ], [ %i.p, %bb.e ], [ %i.p, %bb.f ] ; 2 uses
+  %i.x = phi ptr [ %.pre, %..thread37_crit_edge ], [ %i.p, %bb.f ], [ %i.p, %bb.e ] ; 2 uses
+  %4 = phi i1 [ %i.o, %..thread37_crit_edge ], [ true, %bb.f ], [ true, %bb.e ]
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !50
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 120
   %i.aa = load ptr, ptr %i.z, align 8
@@ -228,7 +229,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.0.i = phi ptr [ null, %bb.i ], [ %i.ah, %bb.j ] ; 2 uses
   %i.ai = icmp eq ptr %.0.i, null
-  %or.cond.i = and i1 %i.o, %i.ai
+  %or.cond.i = and i1 %4, %i.ai
   br i1 %or.cond.i, label %bb.l, label %_ZN7datalog16relation_manager11mk_union_fnERKNS_13relation_baseES3_PS2_.exit
 
 bb.l:                                             ; preds = %bb.k
@@ -631,7 +632,8 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   br label %.thread37
 
 .thread37:                                        ; preds = %..thread37_crit_edge, %bb.e, %bb.f
-  %i.x = phi ptr [ %.pre, %..thread37_crit_edge ], [ %i.p, %bb.e ], [ %i.p, %bb.f ] ; 2 uses
+  %i.x = phi ptr [ %.pre, %..thread37_crit_edge ], [ %i.p, %bb.f ], [ %i.p, %bb.e ] ; 2 uses
+  %4 = phi i1 [ %i.o, %..thread37_crit_edge ], [ true, %bb.f ], [ true, %bb.e ]
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !50
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 120
   %i.aa = load ptr, ptr %i.z, align 8
@@ -655,7 +657,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.0.i = phi ptr [ null, %bb.i ], [ %i.ah, %bb.j ] ; 2 uses
   %i.ai = icmp eq ptr %.0.i, null
-  %or.cond.i = and i1 %i.o, %i.ai
+  %or.cond.i = and i1 %4, %i.ai
   br i1 %or.cond.i, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k

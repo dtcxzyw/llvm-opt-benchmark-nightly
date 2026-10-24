@@ -204,25 +204,28 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not307, label %bb.w, label %bb.ao
 
 bb.w:                                             ; preds = %bb.v
-  %i.dp = icmp eq i32 %i.dj, 111
+  %i.dp = icmp eq i32 %i.dj, 111                  ; 2 uses
   %i.dq = icmp eq i32 %i.dl, 111
   %or.cond5 = or i1 %i.dp, %i.dq
-  br i1 %or.cond5, label %bb.x, label %bb.ao
+  br i1 %or.cond5, label %.thread, label %bb.ao
 
-bb.x:                                             ; preds = %bb.w, %bb.u
+bb.x:                                             ; preds = %bb.u
   %i.dr = icmp eq i32 %i.dj, 111
   %or.cond335 = and i1 %.not307, %i.dr
   %or.cond426 = or i1 %i.dn, %or.cond335
   br i1 %or.cond426, label %bb.y, label %bb.z
 
-bb.y:                                             ; preds = %bb.x
+.thread:                                          ; preds = %bb.w
+  br i1 %i.dp, label %bb.y, label %bb.z
+
+bb.y:                                             ; preds = %.thread, %bb.x
   %i.ds = load i32, ptr %.1262.sroa.gep340, align 4, !tbaa !12
   %i.dt = zext i32 %i.ds to i64
   %i.du = sub nsw i64 0, %i.dt
   %i.dv = getelementptr inbounds i8, ptr %5, i64 %i.du
   br label %bb.aa
 
-bb.z:                                             ; preds = %bb.x
+bb.z:                                             ; preds = %bb.x, %.thread
   %i.dw = load i32, ptr %.1262.sroa.gep, align 8, !tbaa !12
   %i.dx = zext i32 %i.dw to i64
   %i.dy = sub nsw i64 0, %i.dx

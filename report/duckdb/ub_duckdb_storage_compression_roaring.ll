@@ -204,16 +204,18 @@ bb.a:
   %.not = xor i1 %1, true
   %i.e = zext i16 %i.b to i32                     ; 2 uses
   %i.f = icmp ult i16 %i.b, 124                   ; 2 uses
-  %or.cond = select i1 %.not, i1 %i.f, i1 false
-  %3 = icmp ne i16 %i.d, 0                        ; 2 uses
-  %or.cond4.a = select i1 %or.cond, i1 %3, i1 false
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = load i8, ptr %4, align 8, !range !184
-  %.not42.a = icmp ne i8 %5, 0
+  %or.cond4.a = select i1 %.not, i1 %i.f, i1 false
+  %.not42.a = icmp ne i16 %i.d, 0                 ; 2 uses
   %or.cond49.not = select i1 %or.cond4.a, i1 %.not42.a, i1 false
-  br i1 %or.cond49.not, label %bb.b, label %bb.e
+  br i1 %or.cond49.not, label %3, label %bb.e
 
-bb.b:                                             ; preds = %bb.a
+3:                                                ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = load i8, ptr %4, align 8, !tbaa !198, !range !184, !noundef !54
+  %.not42 = icmp eq i8 %5, 0
+  br i1 %.not42, label %bb.j, label %bb.b
+
+bb.b:                                             ; preds = %3
   %i.g = icmp samesign ult i16 %i.b, 4
   br i1 %i.g, label %bb.c, label %bb.d
 
@@ -259,7 +261,7 @@ bb.f:                                             ; preds = %bb.e
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ag = load i8, ptr %i.af, align 8, !range !184
   %.not43.not = icmp ne i8 %i.ag, 0
-  %or.cond46.not = select i1 %3, i1 %.not43.not, i1 false
+  %or.cond46.not = select i1 %.not42.a, i1 %.not43.not, i1 false
   br i1 %or.cond46.not, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -292,7 +294,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   store i8 %i.ay, ptr %i.aw, align 1, !tbaa !116
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.f, %bb.e, %bb.i, %bb.d
+bb.j:                                             ; preds = %3, %bb.f, %bb.e, %bb.i, %bb.d
   ret void
 }
 

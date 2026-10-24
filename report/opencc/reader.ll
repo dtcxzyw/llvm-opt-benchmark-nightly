@@ -202,18 +202,20 @@ declare void @_ZNSt11logic_errorD1Ev(ptr noundef nonnull align 8 dead_on_return(
 define void @_ZN6marisa8grimoire2io6Reader9read_dataEPvm(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !13     ; 2 uses
-  %.not.i = icmp ne ptr %i.a, null                ; 2 uses
+  %.not.i = icmp eq ptr %i.a, null                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8
-  %.not1.i = icmp ne i32 %i.c, -1                 ; 2 uses
-  %or.cond.i.not42 = select i1 %.not.i, i1 true, i1 %.not1.i
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = load ptr, ptr %3, align 8                  ; 2 uses
-  %5 = icmp ne ptr %4, null                       ; 2 uses
-  %or.cond = select i1 %or.cond.i.not42, i1 true, i1 %5
-  br i1 %or.cond, label %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a, label %bb.b
+  %.not1.i = icmp eq i32 %i.c, -1                 ; 2 uses
+  %or.cond = select i1 %.not.i, i1 %.not1.i, i1 false
+  br i1 %or.cond, label %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit, label %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread
 
-bb.b:                                             ; preds = %bb.a
+_ZNK6marisa8grimoire2io6Reader7is_openEv.exit:    ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %4 = load ptr, ptr %3, align 8, !tbaa !15       ; 2 uses
+  %.not = icmp eq ptr %4, null
+  br i1 %.not, label %bb.b, label %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a
+
+bb.b:                                             ; preds = %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit
   %i.d = tail call ptr @__cxa_allocate_exception(i64 16) #20 ; 3 uses
   invoke void @_ZNSt11logic_errorC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull @.str.6)
           to label %bb.c unwind label %bb.d
@@ -222,17 +224,21 @@ bb.c:                                             ; preds = %bb.b
   tail call void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTISt11logic_error, ptr nonnull @_ZNSt11logic_errorD1Ev) #22
   unreachable
 
-_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a: ; preds = %bb.a
+_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread: ; preds = %bb.a
+  %5 = icmp eq i64 %2, 0
+  br i1 %5, label %.loopexit, label %bb.e
+
+_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a: ; preds = %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit
   %i.e = icmp eq i64 %2, 0
-  br i1 %i.e, label %.loopexit, label %bb.e
+  br i1 %i.e, label %.loopexit, label %bb.p
 
 bb.d:                                             ; preds = %bb.b
   %i.f = landingpad { ptr, i32 }
           cleanup
   br label %bb.t
 
-bb.e:                                             ; preds = %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a
-  br i1 %.not1.i, label %.preheader, label %bb.j
+bb.e:                                             ; preds = %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread
+  br i1 %.not1.i, label %bb.j, label %.preheader
 
 .preheader:                                       ; preds = %bb.e, %bb.h
   %.044 = phi ptr [ %i.o, %bb.h ], [ %1, %bb.e ]  ; 2 uses
@@ -267,7 +273,7 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.t
 
 bb.j:                                             ; preds = %bb.e
-  br i1 %.not.i, label %bb.k, label %bb.o
+  br i1 %.not.i, label %bb.o, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.r = tail call i64 @fread(ptr noundef %1, i64 noundef 1, i64 noundef %2, ptr noundef nonnull %i.a)
@@ -292,10 +298,14 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.t
 
 bb.o:                                             ; preds = %bb.j
-  br i1 %5, label %bb.p, label %.loopexit
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !15 ; 2 uses
+  %.not34 = icmp eq ptr %.pre, null
+  br i1 %.not34, label %.loopexit, label %bb.p
 
-bb.p:                                             ; preds = %bb.o
-  %i.x = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef %1, i64 noundef %2) ; 2 uses
+bb.p:                                             ; preds = %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a, %bb.o
+  %6 = phi ptr [ %.pre, %bb.o ], [ %4, %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a ]
+  %i.x = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef %1, i64 noundef %2) ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !25
   %i.z = getelementptr i8, ptr %i.y, i64 -24
   %i.aa = load i64, ptr %i.z, align 8
@@ -320,7 +330,7 @@ bb.s:                                             ; preds = %bb.q
           cleanup
   br label %bb.t
 
-.loopexit:                                        ; preds = %bb.h, %bb.k, %bb.p, %bb.o, %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a
+.loopexit:                                        ; preds = %bb.h, %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread.a, %bb.k, %bb.p, %bb.o, %_ZNK6marisa8grimoire2io6Reader7is_openEv.exit.thread
   ret void
 
 bb.t:                                             ; preds = %bb.s, %bb.n, %bb.d, %bb.i

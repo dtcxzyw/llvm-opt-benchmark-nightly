@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %Ivy_ObjCreateGhost.
 bb.o:                                             ; preds = %Ivy_ObjCreateGhost.exit96, %Ivy_ObjCreateGhost.exit90
   %i.bd = zext i1 %i.ai to i32
   %i.be = zext i1 %i.aj to i32
-  %i.bf = add nuw nsw i32 %i.be, %i.bd
+  %i.bf = add nuw nsw i32 %i.be, %i.bd            ; 2 uses
   %i.bg = load i32, ptr %i.f, align 8
   %i.bh = and i32 %i.bg, -1552
   %i.bi = or disjoint i32 %i.bh, 5
@@ -236,7 +236,7 @@ bb.r:                                             ; preds = %Ivy_ObjFaninId1.exi
   br label %Ivy_ObjCreateGhost.exit102
 
 Ivy_ObjCreateGhost.exit102:                       ; preds = %bb.o, %Ivy_ObjFaninId1.exit.i100, %bb.r
-  %i.bp = tail call ptr @Ivy_TableLookup(ptr noundef nonnull %0, ptr noundef nonnull %i.s) #2 ; 4 uses
+  %i.bp = tail call ptr @Ivy_TableLookup(ptr noundef nonnull %0, ptr noundef nonnull %i.s) #2 ; 5 uses
   %i.bq = ptrtoint ptr %3 to i64                  ; 6 uses
   %i.br = xor i64 %i.bq, 1                        ; 2 uses
   %i.bs = inttoptr i64 %i.br to ptr               ; 4 uses
@@ -273,7 +273,7 @@ bb.u:                                             ; preds = %Ivy_ObjFaninId1.exi
   br label %Ivy_ObjCreateGhost.exit108
 
 Ivy_ObjCreateGhost.exit108:                       ; preds = %Ivy_ObjCreateGhost.exit102, %Ivy_ObjFaninId1.exit.i106, %bb.u
-  %i.cc = tail call ptr @Ivy_TableLookup(ptr noundef nonnull %0, ptr noundef nonnull %i.s) #2 ; 4 uses
+  %i.cc = tail call ptr @Ivy_TableLookup(ptr noundef nonnull %0, ptr noundef nonnull %i.s) #2 ; 5 uses
   %i.cd = icmp ne ptr %i.bp, null                 ; 3 uses
   %i.ce = icmp ne ptr %i.cc, null                 ; 3 uses
   %or.cond3 = select i1 %i.cd, i1 %i.ce, i1 false
@@ -321,16 +321,20 @@ bb.y:                                             ; preds = %Ivy_ObjFaninId1.exi
 Ivy_ObjCreateGhost.exit114:                       ; preds = %bb.v, %Ivy_ObjFaninId1.exit.i112, %bb.y
   %i.cu = tail call ptr @Ivy_TableLookup(ptr noundef nonnull %0, ptr noundef nonnull %i.s) #2 ; 2 uses
   %.not83 = icmp eq ptr %i.cu, null
-  br i1 %.not83, label %bb.z, label %bb.cg
+  br i1 %.not83, label %.thread, label %bb.cg
 
-bb.z:                                             ; preds = %Ivy_ObjCreateGhost.exit114, %Ivy_ObjCreateGhost.exit108
+bb.z:                                             ; preds = %Ivy_ObjCreateGhost.exit108
   %i.cv = zext i1 %i.cd to i32
   %i.cw = zext i1 %i.ce to i32
   %i.cx = add nuw nsw i32 %i.cw, %i.cv
   %.not84 = icmp samesign ult i32 %i.bf, %i.cx
   br i1 %.not84, label %bb.bd, label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z
+.thread:                                          ; preds = %Ivy_ObjCreateGhost.exit114
+  %.not84124 = icmp samesign ult i32 %i.bf, 2
+  br i1 %.not84124, label %Ivy_And.exit120, label %bb.aa
+
+bb.aa:                                            ; preds = %.thread, %bb.z
   br i1 %i.ai, label %Ivy_And.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -559,7 +563,7 @@ bb.bn:                                            ; preds = %bb.bk
   br label %Ivy_And.exit118
 
 Ivy_And.exit118:                                  ; preds = %bb.bn, %bb.bm, %bb.bl, %bb.bj, %bb.bi, %bb.bg, %bb.be, %bb.bd
-  %i.gr = phi ptr [ %i.bp, %bb.bd ], [ %i.gq, %bb.bn ], [ %i.gb, %bb.bg ], [ %1, %bb.be ], [ %i.c, %bb.bi ], [ %i.gj, %bb.bj ], [ %i.gp, %bb.bm ], [ %1, %bb.bl ] ; 2 uses
+  %i.gr = phi ptr [ %1, %bb.bl ], [ %i.bp, %bb.bd ], [ %i.gq, %bb.bn ], [ %i.gb, %bb.bg ], [ %1, %bb.be ], [ %i.c, %bb.bi ], [ %i.gj, %bb.bj ], [ %i.gp, %bb.bm ] ; 8 uses
   br i1 %i.ce, label %Ivy_And.exit120, label %bb.bo
 
 bb.bo:                                            ; preds = %Ivy_And.exit118
@@ -614,19 +618,20 @@ bb.bx:                                            ; preds = %bb.bu
   %i.hn = tail call ptr @Ivy_CanonAnd(ptr noundef nonnull %0, ptr noundef %i.w, ptr noundef %i.bs) #2
   br label %Ivy_And.exit120
 
-Ivy_And.exit120:                                  ; preds = %bb.bx, %bb.bw, %bb.bv, %bb.bt, %bb.bs, %bb.bq, %bb.bo, %Ivy_And.exit118
-  %4 = phi ptr [ %i.cc, %Ivy_And.exit118 ], [ %i.hn, %bb.bx ], [ %i.gy, %bb.bq ], [ %i.w, %bb.bo ], [ %i.bs, %bb.bs ], [ %i.hg, %bb.bt ], [ %i.hm, %bb.bw ], [ %i.w, %bb.bv ] ; 3 uses
-  %i.ho = ptrtoint ptr %i.gr to i64               ; 3 uses
+Ivy_And.exit120:                                  ; preds = %.thread, %bb.bx, %bb.bw, %bb.bv, %bb.bt, %bb.bs, %bb.bq, %bb.bo, %Ivy_And.exit118
+  %4 = phi ptr [ %i.gr, %bb.bx ], [ %i.gr, %Ivy_And.exit118 ], [ %i.gr, %bb.bo ], [ %i.gr, %bb.bq ], [ %i.gr, %bb.bs ], [ %i.gr, %bb.bt ], [ %i.gr, %bb.bv ], [ %i.gr, %bb.bw ], [ %i.bp, %.thread ] ; 2 uses
+  %5 = phi ptr [ %i.hn, %bb.bx ], [ %i.cc, %Ivy_And.exit118 ], [ %i.w, %bb.bo ], [ %i.gy, %bb.bq ], [ %i.bs, %bb.bs ], [ %i.hg, %bb.bt ], [ %i.w, %bb.bv ], [ %i.hm, %bb.bw ], [ %i.cc, %.thread ] ; 3 uses
+  %i.ho = ptrtoint ptr %4 to i64                  ; 3 uses
   %i.hp = xor i64 %i.ho, 1                        ; 4 uses
   %i.hq = inttoptr i64 %i.hp to ptr               ; 2 uses
-  %i.hr = ptrtoint ptr %4 to i64                  ; 2 uses
+  %i.hr = ptrtoint ptr %5 to i64                  ; 2 uses
   %i.hs = xor i64 %i.hr, 1                        ; 2 uses
   %i.ht = inttoptr i64 %i.hs to ptr               ; 2 uses
-  %i.hu = icmp eq ptr %i.gr, %4
+  %i.hu = icmp eq ptr %4, %5
   br i1 %i.hu, label %Ivy_Or.exit123, label %bb.by
 
 bb.by:                                            ; preds = %Ivy_And.exit120
-  %i.hv = icmp eq ptr %4, %i.hq
+  %i.hv = icmp eq ptr %5, %i.hq
   br i1 %i.hv, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %bb.by

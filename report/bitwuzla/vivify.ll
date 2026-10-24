@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %bb.ac, %bb.ao, %bb.
 
 .loopexit:                                        ; preds = %bb.aw, %.thread225, %bb.an
   %i.hp = phi i8 [ %i.fy, %bb.an ], [ 0, %.thread225 ], [ 0, %bb.aw ]
-  %.0134255 = phi i32 [ %.0134283, %bb.an ], [ 0, %.thread225 ], [ %.4.ph, %bb.aw ] ; 3 uses
+  %.0134255 = phi i32 [ %.0134283, %bb.an ], [ 0, %.thread225 ], [ %.4.ph, %bb.aw ] ; 4 uses
   %.5140 = phi i32 [ %i.eg, %bb.an ], [ 0, %.thread225 ], [ %.4139.ph, %bb.aw ]
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 3864
   %i.hr = load i32, ptr %i.hq, align 8, !tbaa !303
@@ -256,10 +256,11 @@ bb.ba:                                            ; preds = %bb.az
   %i.im = add nsw i32 %i.il, -1
   tail call void @_ZN7CaDiCaL8Internal9backtrackEi(ptr noundef nonnull align 8 dereferenceable(7288) %0, i32 noundef %i.im)
   %i.in = getelementptr inbounds nuw i8, ptr %0, i64 952
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.in, i8 0, i64 16, i1 false)
-  br label %bb.bi
+  store ptr null, ptr %i.in, align 8, !tbaa !186
+  br label %.thread342
 
-.thread342:                                       ; preds = %bb.ax, %bb.ay
+.thread342:                                       ; preds = %bb.ax, %bb.ay, %.split
+  %.8.ph = phi i32 [ %i.hw, %.split ], [ %.0134255, %bb.ay ], [ %.0134255, %bb.ax ]
   store ptr null, ptr %i.ea, align 8, !tbaa !191
   br label %bb.bi
 
@@ -305,9 +306,9 @@ bb.bh:                                            ; preds = %bb.bc
   tail call void @_ZN7CaDiCaL8Internal12mark_garbageEPNS_6ClauseE(ptr noundef nonnull align 8 dereferenceable(7288) %0, ptr noundef nonnull %2)
   br label %bb.bu
 
-bb.bi:                                            ; preds = %.thread342, %.split, %bb.bb
-  %.8242 = phi i32 [ %i.hw, %.split ], [ %.0134255, %bb.bb ], [ %.0134255, %.thread342 ] ; 2 uses
-  %.not183 = icmp eq i32 %.8242, 0
+bb.bi:                                            ; preds = %.thread342, %bb.bb
+  %.8243 = phi i32 [ %.8.ph, %.thread342 ], [ %.0134255, %bb.bb ] ; 2 uses
+  %.not183 = icmp eq i32 %.8243, 0
   br i1 %.not183, label %bb.bu, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -349,7 +350,7 @@ bb.bk:                                            ; preds = %.lr.ph288, %_ZNSt6v
   %i.jv = load ptr, ptr %i.ju, align 8
   %.not186 = icmp ne ptr %i.jv, null
   %or.cond190.not250 = select i1 %.not185, i1 true, i1 %.not186
-  %i.jw = icmp eq i32 %i.jo, %.8242
+  %i.jw = icmp eq i32 %i.jo, %.8243
   %or.cond246 = or i1 %i.jw, %or.cond190.not250
   br i1 %or.cond246, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit207, label %bb.bl
 

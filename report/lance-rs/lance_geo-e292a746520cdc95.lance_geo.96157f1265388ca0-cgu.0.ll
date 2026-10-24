@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val7 = load i64, ptr %i.b, align 8, !noundef !5 ; 5 uses
+  %.val7 = load i64, ptr %i.b, align 8, !noundef !5 ; 7 uses
   %.not.i = icmp eq i64 %.val7, 0
   %.not25 = icmp eq ptr %.val, null               ; 2 uses
   %.not = select i1 %.not.i, i1 true, i1 %.not25
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp ult i64 %i.d, 192153584101141163
   tail call void @llvm.assume(i1 %i.e)
   %i.f = icmp eq i64 %i.d, 0
-  br i1 %i.f, label %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit, label %.lr.ph.i
+  br i1 %i.f, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
   %.promoted.i = load double, ptr %0, align 8, !alias.scope !188
@@ -283,33 +283,37 @@ _RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKC
   %i.ad = icmp eq i64 %i.p, %i.d
   br i1 %i.ad, label %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit, label %bb.c
 
-_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit: ; preds = %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i, %bb.b, %bb.a
+_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit: ; preds = %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i, %bb.a
   %i.ae = icmp ult i64 %.val7, 288230376151711744
   tail call void @llvm.assume(i1 %i.ae)
-  %2 = tail call noundef range(i64 0, 288230376151711743) i64 @llvm.usub.sat.i64(i64 %.val7, i64 1)
-  %3 = icmp samesign ult i64 %.val7, 2
-  br i1 %3, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.thread, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph
+  %2 = icmp samesign ult i64 %.val7, 2
+  %brmerge = select i1 %2, i1 true, i1 %.not25
+  br i1 %brmerge, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.thread, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader
 
-_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph: ; preds = %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  br i1 %.not25, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.thread, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader
+_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph: ; preds = %bb.b
+  %3 = icmp ult i64 %.val7, 288230376151711744
+  tail call void @llvm.assume(i1 %3)
+  %4 = icmp samesign ult i64 %.val7, 2
+  br i1 %4, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.thread, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader
 
-_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader: ; preds = %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph
-  %.promoted29 = load double, ptr %6, align 8
-  %.promoted28 = load double, ptr %5, align 8
-  %.promoted27 = load double, ptr %4, align 8
+_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader: ; preds = %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.promoted29 = load double, ptr %7, align 8
+  %.promoted28 = load double, ptr %6, align 8
+  %.promoted27 = load double, ptr %5, align 8
   %.promoted = load double, ptr %0, align 8
+  %8 = add i64 %.val7, -2
   br label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit
 
 _RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit: ; preds = %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18
   %i.af = phi double [ %i.bt, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18 ], [ %.promoted29, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader ] ; 3 uses
   %i.ag = phi double [ %i.bu, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18 ], [ %.promoted28, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader ] ; 3 uses
   %i.ah = phi double [ %i.bv, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18 ], [ %.promoted27, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader ] ; 3 uses
-  %.sroa.4.026 = phi i64 [ %i.aj, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18 ], [ 0, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader ]
+  %.sroa.4.026 = phi i64 [ %i.aj, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18 ], [ 0, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader ] ; 2 uses
   %i.ai = phi double [ %i.bw, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18 ], [ %.promoted, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.preheader ] ; 3 uses
-  %i.aj = add nuw nsw i64 %.sroa.4.026, 1         ; 4 uses
+  %i.aj = add nuw nsw i64 %.sroa.4.026, 1         ; 3 uses
   %i.ak = icmp samesign ult i64 %i.aj, %.val7
   tail call void @llvm.assume(i1 %i.ak)
   %i.al = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %i.aj ; 2 uses
@@ -357,7 +361,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.bj, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  store double %i.bf, ptr %4, align 8, !alias.scope !199
+  store double %i.bf, ptr %5, align 8, !alias.scope !199
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -367,7 +371,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.bm, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  store double %i.bd, ptr %5, align 8, !alias.scope !199
+  store double %i.bd, ptr %6, align 8, !alias.scope !199
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -377,7 +381,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %i.bp, label %bb.r, label %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i17
 
 bb.r:                                             ; preds = %bb.q
-  store double %i.bf, ptr %6, align 8, !alias.scope !199
+  store double %i.bf, ptr %7, align 8, !alias.scope !199
   br label %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i17
 
 _RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i17: ; preds = %bb.r, %bb.q
@@ -391,10 +395,10 @@ _RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtC
   %i.bu = phi double [ %i.ag, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit ], [ %i.bn, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i17 ]
   %i.bv = phi double [ %i.ah, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit ], [ %i.bk, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i17 ]
   %i.bw = phi double [ %i.ai, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit ], [ %i.bh, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox9add_coordRNtNtNtCsdkROKCKhesT_3wkt5types5coord5CoordEB5_.exit.i17 ]
-  %i.bx = icmp eq i64 %i.aj, %2
+  %i.bx = icmp eq i64 %.sroa.4.026, %8
   br i1 %i.bx, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.thread, label %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit
 
-_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.thread: ; preds = %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit
+_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.thread: ; preds = %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit18, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox15add_line_stringRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringEB5_.exit, %_RNvXs3_NtCs5zgMTRDcqaU_10geo_traits8iteratorINtB5_23PolygonInteriorIteratordRNtNtNtCsdkROKCKhesT_3wkt5types10linestring10LineStringNtNtB1h_7polygon7PolygonENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCscSToqyP0NyK_9lance_geo.exit.lr.ph
   ret void
 }
 

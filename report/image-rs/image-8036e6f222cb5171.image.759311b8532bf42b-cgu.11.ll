@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %_RINvNtCsj6eKBz9Db1
   %.sroa.019.sroa.4.0 = phi i64 [ undef, %bb.f ], [ %.sroa.019.sroa.4.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 54 uses
   %.sroa.019.sroa.0.0 = phi i64 [ undef, %bb.f ], [ %.sroa.019.sroa.0.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 54 uses
   %.sroa.0.0 = phi i8 [ -1, %bb.f ], [ %.sroa.0.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 52 uses
-  %.sroa.842.sroa.4.0 = phi i32 [ undef, %bb.f ], [ %.sroa.842.sroa.4.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 51 uses
-  %.sroa.842.sroa.0.0 = phi i32 [ undef, %bb.f ], [ %.sroa.842.sroa.0.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 51 uses
+  %.sroa.842.sroa.4.0 = phi i32 [ undef, %bb.f ], [ %.sroa.842.sroa.4.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 52 uses
+  %.sroa.842.sroa.0.0 = phi i32 [ undef, %bb.f ], [ %.sroa.842.sroa.0.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 52 uses
   %i.di = phi i32 [ undef, %bb.f ], [ %i.blz, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 51 uses
   %.sroa.0102.0 = phi i32 [ 0, %bb.f ], [ %.sroa.0102.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 51 uses
   %.sroa.472.0 = phi i64 [ undef, %bb.f ], [ %.sroa.472.3, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextECsa5QsYiPB8Gl_5image.exit522 ] ; 51 uses
@@ -265,12 +265,9 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.do = trunc nuw i32 %.sroa.0102.0 to i1
-  %.not453 = icmp ne i32 %.sroa.036.0, -1
-  %3 = and i32 %.sroa.036.0, -2
-  %switch = icmp eq i32 %3, 8
-  %or.cond = select i1 %i.do, i1 %switch, i1 false ; 3 uses
-  %brmerge = select i1 %or.cond, i1 true, i1 %.not453
-  br i1 %brmerge, label %bb.xl, label %bb.xm
+  %.not453 = icmp ne i32 %.sroa.036.0, -1         ; 2 uses
+  %brmerge = select i1 %i.do, i1 %.not453, i1 false
+  br i1 %brmerge, label %.sink.split, label %3
 
 bb.m:                                             ; preds = %bb.k
   %i.dp = load i64, ptr %i.ai, align 8, !range !112, !noundef !5 ; 3 uses
@@ -673,18 +670,28 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
   br label %bb.ys
 
-bb.xl:                                            ; preds = %bb.l
-  %.lcssa1971.mux = select i1 %or.cond, i32 %i.di, i32 %.sroa.842.sroa.4.0
-  %.sroa.842.sroa.4.0.insert.ext = zext i32 %.lcssa1971.mux to i64
+3:                                                ; preds = %bb.l
+  br i1 %.not453, label %bb.xl, label %bb.xm
+
+.sink.split:                                      ; preds = %bb.l
+  %4 = and i32 %.sroa.036.0, -2
+  %switch = icmp eq i32 %4, 8                     ; 2 uses
+  %.lcssa1971..sroa.842.sroa.4.0.lcssa2019 = select i1 %switch, i32 %i.di, i32 %.sroa.842.sroa.4.0
+  %..sroa.842.sroa.0.0.lcssa1995 = select i1 %switch, i32 1, i32 %.sroa.842.sroa.0.0
+  br label %bb.xl
+
+bb.xl:                                            ; preds = %.sink.split, %3
+  %.sroa.842.sroa.4.6 = phi i32 [ %.sroa.842.sroa.4.0, %3 ], [ %.lcssa1971..sroa.842.sroa.4.0.lcssa2019, %.sink.split ]
+  %.sroa.842.sroa.0.6 = phi i32 [ %.sroa.842.sroa.0.0, %3 ], [ %..sroa.842.sroa.0.0.lcssa1995, %.sink.split ]
+  %.sroa.842.sroa.4.0.insert.ext = zext i32 %.sroa.842.sroa.4.6 to i64
   %.sroa.842.sroa.4.0.insert.shift = shl nuw i64 %.sroa.842.sroa.4.0.insert.ext, 32
-  %i.bmk = zext i32 %.sroa.842.sroa.0.0 to i64
-  %.sroa.842.sroa.0.0.insert.ext = select i1 %or.cond, i64 1, i64 %i.bmk
-  %.sroa.842.sroa.0.0.insert.insert = or disjoint i64 %.sroa.842.sroa.4.0.insert.shift, %.sroa.842.sroa.0.0.insert.ext ; 2 uses
+  %i.bmk = zext i32 %.sroa.842.sroa.0.6 to i64
+  %.sroa.842.sroa.0.0.insert.insert = or disjoint i64 %.sroa.842.sroa.4.0.insert.shift, %i.bmk ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6139)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6143)
   br i1 %.sroa.052.0, label %bb.xn, label %bb.xo
 
-bb.xm:                                            ; preds = %bb.l
+bb.xm:                                            ; preds = %3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   invoke void @_RNvNtCsdsTQD3x2eOp_3exr4meta17missing_attribute(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @44, i64 noundef 11)
           to label %_RNCINvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB8_6Header4readINtNtBc_2io8TrackingINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEEE0Csa5QsYiPB8Gl_5image.exit unwind label %.thread136.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

@@ -203,37 +203,39 @@ bb.bi:                                            ; preds = %bb.bh
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.be, %bb.bi, %bb.bg, %bb.bc
-  %i.we = phi i8 [ %i.uo, %bb.be ], [ %i.wc, %bb.bi ], [ %i.th, %bb.bc ], [ %i.vk, %bb.bg ] ; 2 uses
-  %i.wf = phi i8 [ %i.uj, %bb.be ], [ %i.vw, %bb.bi ], [ %i.tf, %bb.bc ], [ %i.vd, %bb.bg ] ; 2 uses
-  %i.wg = phi i8 [ %i.ue, %bb.be ], [ %i.vs, %bb.bi ], [ %i.tc, %bb.bc ], [ %i.uy, %bb.bg ] ; 2 uses
-  %i.wh = phi i8 [ %i.ua, %bb.be ], [ %i.vp, %bb.bi ], [ %i.ta, %bb.bc ], [ %i.uu, %bb.bg ] ; 2 uses
-  %3 = icmp eq i8 %i.wh, 3                        ; 2 uses
-  %i.wi = icmp eq i8 %i.wg, 3                     ; 2 uses
-  %or.cond = select i1 %3, i1 true, i1 %i.wi      ; 2 uses
-  %i.wj = icmp eq i8 %i.wf, 3                     ; 2 uses
-  %or.cond9.a = select i1 %or.cond, i1 true, i1 %i.wj
-  %i.wk = icmp eq i8 %i.we, 3
+  %i.we = phi i8 [ %i.uo, %bb.be ], [ %i.wc, %bb.bi ], [ %i.th, %bb.bc ], [ %i.vk, %bb.bg ] ; 3 uses
+  %i.wf = phi i8 [ %i.uj, %bb.be ], [ %i.vw, %bb.bi ], [ %i.tf, %bb.bc ], [ %i.vd, %bb.bg ] ; 3 uses
+  %i.wg = phi i8 [ %i.ue, %bb.be ], [ %i.vs, %bb.bi ], [ %i.tc, %bb.bc ], [ %i.uy, %bb.bg ] ; 3 uses
+  %i.wh = phi i8 [ %i.ua, %bb.be ], [ %i.vp, %bb.bi ], [ %i.ta, %bb.bc ], [ %i.uu, %bb.bg ] ; 3 uses
+  %i.wi = icmp eq i8 %i.wh, 3                     ; 2 uses
+  %i.wj = icmp eq i8 %i.wg, 3                     ; 2 uses
+  %or.cond9.a = select i1 %i.wi, i1 true, i1 %i.wj ; 2 uses
+  %i.wk = icmp eq i8 %i.wf, 3                     ; 2 uses
   %spec.select1038 = select i1 %or.cond9.a, i1 true, i1 %i.wk
+  br i1 %spec.select1038, label %.thread1026, label %3
+
+3:                                                ; preds = %bb.bj
+  %4 = icmp eq i8 %i.we, 3
   br label %.thread1026
 
-.thread1026:                                      ; preds = %bb.bj, %bb.bh
-  %4 = phi i1 [ %i.wj, %bb.bj ], [ undef, %bb.bh ] ; 3 uses
-  %or.cond1029 = phi i1 [ %or.cond, %bb.bj ], [ true, %bb.bh ] ; 3 uses
-  %5 = phi i1 [ %i.wi, %bb.bj ], [ undef, %bb.bh ] ; 2 uses
-  %6 = phi i1 [ %3, %bb.bj ], [ undef, %bb.bh ]   ; 2 uses
-  %7 = phi i8 [ %i.wh, %bb.bj ], [ undef, %bb.bh ] ; 3 uses
-  %8 = phi i8 [ %i.wg, %bb.bj ], [ undef, %bb.bh ] ; 3 uses
-  %9 = phi i8 [ %i.wf, %bb.bj ], [ undef, %bb.bh ] ; 3 uses
-  %10 = phi i8 [ %i.we, %bb.bj ], [ undef, %bb.bh ] ; 4 uses
-  %11 = phi i1 [ %spec.select1038, %bb.bj ], [ true, %bb.bh ] ; 4 uses
+.thread1026:                                      ; preds = %bb.bh, %3, %bb.bj
+  %5 = phi i1 [ %i.wk, %bb.bj ], [ false, %3 ], [ undef, %bb.bh ] ; 3 uses
+  %or.cond1029 = phi i1 [ %or.cond9.a, %bb.bj ], [ false, %3 ], [ true, %bb.bh ] ; 3 uses
+  %6 = phi i1 [ %i.wj, %bb.bj ], [ false, %3 ], [ undef, %bb.bh ] ; 2 uses
+  %7 = phi i1 [ %i.wi, %bb.bj ], [ false, %3 ], [ undef, %bb.bh ] ; 2 uses
+  %8 = phi i8 [ %i.wh, %bb.bj ], [ %i.wh, %3 ], [ undef, %bb.bh ] ; 3 uses
+  %9 = phi i8 [ %i.wg, %bb.bj ], [ %i.wg, %3 ], [ undef, %bb.bh ] ; 3 uses
+  %10 = phi i8 [ %i.wf, %bb.bj ], [ %i.wf, %3 ], [ undef, %bb.bh ] ; 3 uses
+  %11 = phi i8 [ %i.we, %bb.bj ], [ %i.we, %3 ], [ undef, %bb.bh ] ; 4 uses
+  %12 = phi i1 [ true, %bb.bj ], [ %4, %3 ], [ true, %bb.bh ] ; 4 uses
   %i.wl = icmp ugt i8 %spec.store.select, 13      ; 9 uses
-  %i.wm = zext i8 %7 to i32
+  %i.wm = zext i8 %8 to i32
   %i.wn = shl nuw nsw i32 %i.wm, 14               ; 2 uses
-  %i.wo = zext i8 %8 to i32
+  %i.wo = zext i8 %9 to i32
   %i.wp = shl nuw nsw i32 %i.wo, 14               ; 2 uses
-  %i.wq = zext i8 %9 to i32
+  %i.wq = zext i8 %10 to i32
   %i.wr = shl nuw nsw i32 %i.wq, 14               ; 2 uses
-  %i.ws = zext i8 %10 to i32
+  %i.ws = zext i8 %11 to i32
   %i.wt = shl nuw nsw i32 %i.ws, 14               ; 2 uses
   %. = select i1 %i.wl, i32 %i.wn, i32 0          ; 2 uses
   %.1039.a = select i1 %i.wl, i32 %i.wp, i32 0    ; 2 uses
@@ -453,11 +455,11 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.adc, label %.thread882, label %.thread1030
 
 bb.bo:                                            ; preds = %bb.bm
-  %i.ade = zext i8 %9 to i64
+  %i.ade = zext i8 %10 to i64
   %i.adf = getelementptr inbounds nuw [16 x i8], ptr @stbvox_planar_face_up_normal, i64 %i.ade
-  %i.adg = zext i8 %8 to i64
+  %i.adg = zext i8 %9 to i64
   %i.adh = getelementptr inbounds nuw [4 x i8], ptr %i.adf, i64 %i.adg
-  %i.adi = zext i8 %7 to i64
+  %i.adi = zext i8 %8 to i64
   %i.adj = getelementptr inbounds nuw i8, ptr %i.adh, i64 %i.adi
   %i.adk = load i8, ptr %i.adj, align 1, !tbaa !8
   %i.adl = zext i8 %i.adk to i32
@@ -508,11 +510,11 @@ bb.bu:                                            ; preds = %bb.bs
   br label %bb.bw
 
 bb.bv:                                            ; preds = %bb.br
-  %i.adr = zext i8 %9 to i64
+  %i.adr = zext i8 %10 to i64
   %i.ads = getelementptr inbounds nuw [16 x i8], ptr @stbvox_planar_face_up_normal, i64 %i.adr
-  %i.adt = zext i8 %8 to i64
+  %i.adt = zext i8 %9 to i64
   %i.adu = getelementptr inbounds nuw [4 x i8], ptr %i.ads, i64 %i.adt
-  %i.adv = zext i8 %7 to i64
+  %i.adv = zext i8 %8 to i64
   %i.adw = getelementptr inbounds nuw i8, ptr %i.adu, i64 %i.adv
   %i.adx = load i8, ptr %i.adw, align 1, !tbaa !8
   %i.ady = zext i8 %i.adx to i64
@@ -548,11 +550,11 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx
   br i1 %.not866, label %bb.ca, label %bb.cc
 
 bb.ca:                                            ; preds = %bb.bz
-  br i1 %11, label %bb.cb, label %.thread885
+  br i1 %12, label %bb.cb, label %.thread885
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.aek = icmp eq i8 %10, 3
-  %or.cond13 = select i1 %4, i1 true, i1 %i.aek
+  %i.aek = icmp eq i8 %11, 3
+  %or.cond13 = select i1 %5, i1 true, i1 %i.aek
   br i1 %or.cond13, label %.thread903, label %.thread888
 
 bb.cc:                                            ; preds = %bb.bz
@@ -580,7 +582,7 @@ bb.cc:                                            ; preds = %bb.bz
   br i1 %.not867886, label %.thread887, label %bb.ce
 
 bb.cd:                                            ; preds = %bb.cc
-  br i1 %11, label %.thread890, label %.thread887
+  br i1 %12, label %.thread890, label %.thread887
 
 .thread890:                                       ; preds = %bb.cd
   br i1 %or.cond1029, label %bb.ce, label %.thread891
@@ -596,33 +598,33 @@ bb.ce:                                            ; preds = %.thread888, %.threa
 
 .thread891:                                       ; preds = %.thread888, %.thread903, %.thread890
   %.not868892 = trunc i32 %.5 to i1
-  %i.aeq = icmp eq i8 %10, 3
-  %i.aer = select i1 %.not868892, i1 true, i1 %5
+  %i.aeq = icmp eq i8 %11, 3
+  %i.aer = select i1 %.not868892, i1 true, i1 %6
   %or.cond1049 = select i1 %i.aer, i1 true, i1 %i.aeq
   br i1 %or.cond1049, label %bb.cg, label %.thread897
 
 bb.cf:                                            ; preds = %.thread887
-  br i1 %11, label %.thread893, label %.thread894
+  br i1 %12, label %.thread893, label %.thread894
 
 .thread893:                                       ; preds = %bb.cf
-  %.old1048 = icmp eq i8 %10, 3
-  %or.cond21.old = select i1 %5, i1 true, i1 %.old1048
+  %.old1048 = icmp eq i8 %11, 3
+  %or.cond21.old = select i1 %6, i1 true, i1 %.old1048
   br i1 %or.cond21.old, label %bb.cg, label %.thread897
 
 bb.cg:                                            ; preds = %.thread887, %.thread893, %.thread891
   call void @stbvox_make_mesh_for_face(ptr noundef nonnull %0, i8 %.sroa.0109.0, i32 noundef 0, i32 noundef %2, i24 poison, i32 noundef %i.ack, ptr noundef nonnull %i.b, i8 noundef zeroext %.0789, i32 noundef 0)
   %i.aes = and i32 %.5, 4
   %.not869 = icmp ne i32 %i.aes, 0
-  %or.cond25.old = select i1 %6, i1 true, i1 %4
-  %or.cond908 = select i1 %11, i1 %or.cond25.old, i1 false
+  %or.cond25.old = select i1 %7, i1 true, i1 %5
+  %or.cond908 = select i1 %12, i1 %or.cond25.old, i1 false
   %or.cond909 = select i1 %.not869, i1 true, i1 %or.cond908
   br i1 %or.cond909, label %bb.ch, label %.thread896
 
 .thread897:                                       ; preds = %.thread891, %.thread893
   %i.aet = and i32 %.5, 4
   %.not869898 = icmp ne i32 %i.aet, 0
-  %i.aeu = or i1 %.not869898, %6
-  %or.cond907 = select i1 %i.aeu, i1 true, i1 %4
+  %i.aeu = or i1 %.not869898, %7
+  %or.cond907 = select i1 %i.aeu, i1 true, i1 %5
   br i1 %or.cond907, label %bb.ch, label %.thread896
 
 .thread894:                                       ; preds = %bb.cf

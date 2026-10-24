@@ -202,26 +202,29 @@ bb.a:
   %. = zext i1 %not. to i8
   %i.t = tail call { i1, i8 } @_RNvMNtCskKLDkoKarTP_4core6optionINtB2_6OptionNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonAbiKindE9unwrap_orBL_(i8 %i.m, i8 %i.o, i1 zeroext %i.s, i8 %.) #15 ; 2 uses
   %i.u = extractvalue { i1, i8 } %i.t, 0          ; 3 uses
-  %i.v = extractvalue { i1, i8 } %i.t, 1          ; 3 uses
+  %i.v = extractvalue { i1, i8 } %i.t, 1          ; 4 uses
   %i.w = zext i1 %i.u to i8                       ; 2 uses
   store i8 %i.w, ptr %i.k, align 1
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 1
   store i8 %i.v, ptr %i.x, align 1
-  %.not = xor i1 %i.u, true
-  %2 = trunc nuw i8 %i.v to i1                    ; 2 uses
-  %or.cond = select i1 %.not, i1 %2, i1 false
-  %or.cond10 = select i1 %i.s, i1 true, i1 %or.cond
-  br i1 %or.cond10, label %bb.b, label %bb.c
+  %2 = lshr i40 %1, 24
+  %3 = trunc i40 %2 to i8                         ; 2 uses
+  %4 = lshr i40 %1, 32
+  %5 = trunc nuw i40 %4 to i8                     ; 2 uses
+  br i1 %i.s, label %6, label %bb.b
+
+6:                                                ; preds = %bb.a
+  %7 = trunc nuw i8 %i.v to i1
+  %or.cond9 = select i1 %i.u, i1 %7, i1 false
+  br i1 %or.cond9, label %bb.f, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %3 = lshr i40 %1, 32
-  %4 = trunc nuw i40 %3 to i8
-  %5 = lshr i40 %1, 24
-  %6 = trunc i40 %5 to i8
-  %or.cond9.a = select i1 %i.u, i1 %2, i1 false
-  br i1 %or.cond9.a, label %bb.f, label %bb.e
+  %.not = xor i1 %i.u, true
+  %8 = trunc nuw i8 %i.v to i1
+  %or.cond9.a = select i1 %.not, i1 %8, i1 false
+  br i1 %or.cond9.a, label %bb.e, label %bb.c
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %bb.b
   call void @_RINvMNtNtCskKLDkoKarTP_4core3fmt2rtNtB3_8Argument11new_displayNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonAbiKindEB12_(ptr nonnull sret([16 x i8]) align 8 %i.f, ptr nonnull %i.k) #15
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false)
   %i.y = call { ptr, ptr } @_RINvMs2_NtCskKLDkoKarTP_4core3fmtNtB6_9Arguments3newKj73_Kj1_ECsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull @266, ptr nonnull align 8 %i.g) #15 ; 2 uses
@@ -236,24 +239,24 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.h, %bb.e, %bb.c
   ret void
 
-bb.e:                                             ; preds = %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge, %bb.b
-  %7 = phi i8 [ %.pre13, %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge ], [ %4, %bb.b ]
-  %8 = phi i8 [ %.pre11, %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge ], [ %6, %bb.b ]
-  %9 = phi i8 [ %.pre, %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge ], [ %i.r, %bb.b ]
+bb.e:                                             ; preds = %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge, %bb.b, %6
+  %9 = phi i8 [ %.pre13, %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge ], [ %5, %bb.b ], [ %5, %6 ]
+  %10 = phi i8 [ %.pre11, %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge ], [ %3, %bb.b ], [ %3, %6 ]
+  %11 = phi i8 [ %.pre, %_RNvYNtNtCsiOEEQt9hBE2_17pyo3_build_config5impl_13PythonVersionNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltB6_.exit._crit_edge ], [ 3, %bb.b ], [ %i.r, %6 ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %i.w, ptr %i.ab, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %i.v, ptr %.sroa.2.0..sroa_idx, align 1
   %.sroa.36.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %9, ptr %.sroa.36.0..sroa_idx, align 2
+  store i8 %11, ptr %.sroa.36.0..sroa_idx, align 2
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %8, ptr %.sroa.4.0..sroa_idx, align 1
+  store i8 %10, ptr %.sroa.4.0..sroa_idx, align 1
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %7, ptr %.sroa.5.0..sroa_idx, align 4
+  store i8 %9, ptr %.sroa.5.0..sroa_idx, align 4
   store i64 -1, ptr %0, align 8
   br label %bb.d
 
-bb.f:                                             ; preds = %bb.b
+bb.f:                                             ; preds = %6
   %i.ac = getelementptr inbounds nuw i8, ptr %i.l, i64 3 ; 3 uses
   %i.ad = call i8 @_RNvXsX_NtNtCskKLDkoKarTP_4core3cmp5implshNtB7_3Ord3cmpCsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull %i.ac, ptr nonnull @268) #15 ; 2 uses
   %i.ae = icmp eq i8 %i.ad, 0

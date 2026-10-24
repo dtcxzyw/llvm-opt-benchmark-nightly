@@ -205,22 +205,23 @@ bb.a:
   %i.b = alloca [16 x i8], align 4                ; 4 uses
   %.not14 = icmp eq ptr %2, null, !dbg !1229      ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load i64, ptr %i.c, align 8, !range !641 ; 2 uses
-  %.not = icmp eq i64 %i.d, -9223372036854775808
+  %i.d = load i64, ptr %i.c, align 8, !range !641
+  %.not = icmp eq i64 %i.d, -9223372036854775808  ; 2 uses
   %or.cond = select i1 %.not14, i1 %.not, i1 false, !dbg !1230
   br i1 %or.cond, label %bb.c, label %bb.b, !dbg !1230
 
-bb.b:                                             ; preds = %bb.c, %bb.a
-  %3 = phi i64 [ %.pre, %bb.c ], [ %i.d, %bb.a ], !dbg !1231
-  %.not13 = icmp eq i64 %3, -9223372036854775808, !dbg !1231
+bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i64 %1, 0                        ; 2 uses
-  %or.cond18 = or i1 %i.e, %.not13, !dbg !1232
-  br i1 %or.cond18, label %bb.d, label %bb.e, !dbg !1232
+  %or.cond18 = or i1 %i.e, %.not, !dbg !1231
+  br i1 %or.cond18, label %bb.d, label %bb.e, !dbg !1231
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE13init_validityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(160) %0, i1 noundef zeroext false), !dbg !1233
-  %.pre = load i64, ptr %i.c, align 8, !dbg !1231, !range !641
-  br label %bb.b, !dbg !1233
+  tail call void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE13init_validityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(160) %0, i1 noundef zeroext false), !dbg !1232
+  %.pre = load i64, ptr %i.c, align 8, !dbg !1233, !range !641, !noundef !634
+  %.not1321 = icmp eq i64 %.pre, -9223372036854775808, !dbg !1233
+  %3 = icmp eq i64 %1, 0
+  %or.cond1822 = or i1 %3, %.not1321, !dbg !1231
+  br i1 %or.cond1822, label %bb.g, label %.thread, !dbg !1231
 
 bb.d:                                             ; preds = %bb.b
   br i1 %.not14, label %bb.g, label %bb.f, !dbg !1234
@@ -228,7 +229,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b
   br i1 %.not14, label %.thread, label %.thread20, !dbg !1235
 
-.thread:                                          ; preds = %bb.e
+.thread:                                          ; preds = %bb.c, %bb.e
   tail call void @_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap12extend_unset(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.c, i64 noundef %1), !dbg !1236
   br label %bb.g, !dbg !1234
 
@@ -243,7 +244,7 @@ bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5), !dbg !1225
   br i1 %i.e, label %bb.i, label %bb.h, !dbg !1239
 
-bb.g:                                             ; preds = %.thread, %bb.i, %bb.d
+bb.g:                                             ; preds = %bb.c, %.thread, %bb.i, %bb.d
   ret void, !dbg !1240
 
 bb.h:                                             ; preds = %.thread20, %bb.f
@@ -274,22 +275,23 @@ bb.a:
   %i.b = alloca [16 x i8], align 4                ; 4 uses
   %.not19 = icmp eq ptr %2, null, !dbg !1273      ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load i64, ptr %i.c, align 8, !range !641 ; 2 uses
-  %.not = icmp eq i64 %i.d, -9223372036854775808
+  %i.d = load i64, ptr %i.c, align 8, !range !641
+  %.not = icmp eq i64 %i.d, -9223372036854775808  ; 2 uses
   %or.cond = select i1 %.not19, i1 %.not, i1 false, !dbg !1274
   br i1 %or.cond, label %bb.c, label %bb.b, !dbg !1274
 
-bb.b:                                             ; preds = %bb.c, %bb.a
-  %4 = phi i64 [ %.pre, %bb.c ], [ %i.d, %bb.a ], !dbg !1275
-  %.not18 = icmp eq i64 %4, -9223372036854775808, !dbg !1275
+bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i64 %1, 0                        ; 2 uses
-  %or.cond23 = or i1 %i.e, %.not18, !dbg !1276
-  br i1 %or.cond23, label %bb.d, label %bb.e, !dbg !1276
+  %or.cond23 = or i1 %i.e, %.not, !dbg !1275
+  br i1 %or.cond23, label %bb.d, label %bb.e, !dbg !1275
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE13init_validityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(160) %0, i1 noundef zeroext false), !dbg !1277
-  %.pre = load i64, ptr %i.c, align 8, !dbg !1275, !range !641
-  br label %bb.b, !dbg !1277
+  tail call void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE13init_validityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(160) %0, i1 noundef zeroext false), !dbg !1276
+  %.pre = load i64, ptr %i.c, align 8, !dbg !1277, !range !641, !noundef !634
+  %.not1828 = icmp eq i64 %.pre, -9223372036854775808, !dbg !1277
+  %4 = icmp eq i64 %1, 0
+  %or.cond2329 = or i1 %4, %.not1828, !dbg !1275
+  br i1 %or.cond2329, label %bb.g, label %.thread, !dbg !1275
 
 bb.d:                                             ; preds = %bb.b
   br i1 %.not19, label %bb.g, label %bb.f, !dbg !1278
@@ -297,7 +299,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b
   br i1 %.not19, label %.thread, label %.thread27, !dbg !1279
 
-.thread:                                          ; preds = %bb.e
+.thread:                                          ; preds = %bb.c, %bb.e
   tail call void @_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap12extend_unset(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.c, i64 noundef %1), !dbg !1280
   br label %bb.g, !dbg !1278
 
@@ -312,7 +314,7 @@ bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.512), !dbg !1269
   br i1 %i.e, label %bb.i, label %bb.h, !dbg !1283
 
-bb.g:                                             ; preds = %.thread, %bb.i, %bb.d
+bb.g:                                             ; preds = %bb.c, %.thread, %bb.i, %bb.d
   ret void, !dbg !1284
 
 bb.h:                                             ; preds = %.thread27, %bb.f
@@ -715,8 +717,8 @@ bb.e:                                             ; preds = %.noexc22
   %i.t = load ptr, ptr %i.b, align 8, !dbg !20630, !noalias !20536, !noundef !634
   %.not13.i = icmp eq ptr %i.t, null, !dbg !20630 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !20631
-  %i.v = load i64, ptr %i.u, align 8, !dbg !20631, !noalias !20536
-  %.sroa.57.0.i = select i1 %.not13.i, i64 undef, i64 %i.v, !dbg !20631 ; 3 uses
+  %i.v = load i64, ptr %i.u, align 8, !dbg !20631, !noalias !20536 ; 2 uses
+  %.sroa.57.0.i = select i1 %.not13.i, i64 undef, i64 %i.v, !dbg !20631 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !20632, !noalias !20536
   %i.w = icmp eq i64 %.sroa.57.0.i, 0, !dbg !20633
   %i.x = icmp uge i64 %.sroa.57.0.i, %i.j, !dbg !20633
@@ -799,7 +801,7 @@ bb.o:                                             ; preds = %bb.k, %bb.n
   br label %.loopexit, !dbg !20648
 
 bb.p:                                             ; preds = %.noexc23, %.noexc22
-  %.sroa.6.0.i.ph = phi i64 [ %i.q, %.noexc22 ], [ %.sroa.57.0.i, %.noexc23 ] ; 2 uses
+  %.sroa.6.0.i.ph = phi i64 [ %i.q, %.noexc22 ], [ %i.v, %.noexc23 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !20658
   %i.ap = load i64, ptr %i.i, align 8, !dbg !20659, !noundef !634
   %.not21 = icmp ugt i64 %.sroa.6.0.i.ph, %i.ap
@@ -1126,8 +1128,8 @@ bb.e:                                             ; preds = %.noexc
   %i.p = load ptr, ptr %i.b, align 8, !dbg !20821, !noalias !20797, !noundef !634
   %.not13.i = icmp eq ptr %i.p, null, !dbg !20821 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !20822
-  %i.r = load i64, ptr %i.q, align 8, !dbg !20822, !noalias !20797
-  %.sroa.57.0.i = select i1 %.not13.i, i64 undef, i64 %i.r, !dbg !20822 ; 3 uses
+  %i.r = load i64, ptr %i.q, align 8, !dbg !20822, !noalias !20797 ; 2 uses
+  %.sroa.57.0.i = select i1 %.not13.i, i64 undef, i64 %i.r, !dbg !20822 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !20823, !noalias !20797
   %i.s = icmp eq i64 %.sroa.57.0.i, 0, !dbg !20824
   %i.t = icmp uge i64 %.sroa.57.0.i, %i.f, !dbg !20824
@@ -1152,7 +1154,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d
           to label %bb.k unwind label %bb.j, !dbg !20806
 
 bb.h:                                             ; preds = %.noexc8, %.noexc
-  %.sroa.6.0.i.ph = phi i64 [ %i.m, %.noexc ], [ %.sroa.57.0.i, %.noexc8 ] ; 2 uses
+  %.sroa.6.0.i.ph = phi i64 [ %i.m, %.noexc ], [ %i.r, %.noexc8 ] ; 2 uses
   %i.w = icmp ugt i64 %.sroa.6.0.i.ph, %i.f, !dbg !20829
   br i1 %i.w, label %bb.f, label %.sink.split, !dbg !20829
 
@@ -1555,9 +1557,9 @@ begin_hunk_2_@llvm.vector.reduce.add.v32i64
 !1228 = !DILocation(line: 3960, column: 9, scope: !1218, inlinedAt: !1227)
 !1229 = !DILocation(line: 636, column: 18, scope: !1219, inlinedAt: !1221)
 !1230 = !DILocation(line: 356, column: 12, scope: !1205)
-!1231 = !DILocation(line: 360, column: 33, scope: !1209)
-!1232 = !DILocation(line: 360, column: 16, scope: !1209)
-!1233 = !DILocation(line: 357, column: 18, scope: !1205)
+!1231 = !DILocation(line: 360, column: 16, scope: !1209)
+!1232 = !DILocation(line: 357, column: 18, scope: !1205)
+!1233 = !DILocation(line: 360, column: 33, scope: !1209)
 !1234 = !DILocation(line: 367, column: 16, scope: !1210)
 !1235 = !DILocation(line: 239, column: 12, scope: !1211, inlinedAt: !1222)
 !1236 = !DILocation(line: 242, column: 18, scope: !1211, inlinedAt: !1222)
@@ -1599,9 +1601,9 @@ begin_hunk_2_@llvm.vector.reduce.add.v32i64
 !1272 = !DILocation(line: 3960, column: 9, scope: !1262, inlinedAt: !1271)
 !1273 = !DILocation(line: 636, column: 18, scope: !1263, inlinedAt: !1265)
 !1274 = !DILocation(line: 356, column: 12, scope: !1249)
-!1275 = !DILocation(line: 360, column: 33, scope: !1253)
-!1276 = !DILocation(line: 360, column: 16, scope: !1253)
-!1277 = !DILocation(line: 357, column: 18, scope: !1249)
+!1275 = !DILocation(line: 360, column: 16, scope: !1253)
+!1276 = !DILocation(line: 357, column: 18, scope: !1249)
+!1277 = !DILocation(line: 360, column: 33, scope: !1253)
 !1278 = !DILocation(line: 367, column: 16, scope: !1254)
 !1279 = !DILocation(line: 239, column: 12, scope: !1255, inlinedAt: !1266)
 !1280 = !DILocation(line: 242, column: 18, scope: !1255, inlinedAt: !1266)

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZN6casadi15casadi_
   %or.cond.i = and i1 %i.bc, %i.bd
   %i.be = icmp sgt i64 %i.ay, 0                   ; 2 uses
   %or.cond15.i = and i1 %i.be, %or.cond.i
-  br i1 %or.cond15.i, label %.lr.ph.i30.preheader, label %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a
+  br i1 %or.cond15.i, label %.lr.ph.i30.preheader, label %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit
 
 .lr.ph.i30.preheader:                             ; preds = %bb.c
   %min.iters.check = icmp ult i64 %i.ay, 6
@@ -314,22 +314,29 @@ middle.block:                                     ; preds = %vector.body
   %exitcond.not.i31.3 = icmp eq i64 %i.ct, %i.ay
   br i1 %exitcond.not.i31.3, label %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a, label %.lr.ph.i30, !llvm.loop !260
 
-_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a:  ; preds = %.lr.ph.i30.prol.loopexit, %.lr.ph.i30, %middle.block, %bb.c
+_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit:    ; preds = %bb.c
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %2 = load double, ptr %1, align 8, !tbaa !264   ; 3 uses
+  %3 = fcmp ogt double %2, 0.000000e+00
+  br i1 %3, label %bb.d, label %bb.e
+
+_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a:  ; preds = %.lr.ph.i30.prol.loopexit, %.lr.ph.i30, %middle.block
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cv = load double, ptr %i.cu, align 8, !tbaa !264 ; 2 uses
   %i.cw = fcmp ogt double %i.cv, 0.000000e+00
-  br i1 %i.cw, label %bb.d, label %bb.e
+  br i1 %i.cw, label %.lr.ph.i33.preheader, label %bb.e
 
-bb.d:                                             ; preds = %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a
+bb.d:                                             ; preds = %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit
   br i1 %i.be, label %.lr.ph.i33.preheader, label %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38
 
-.lr.ph.i33.preheader:                             ; preds = %bb.d
+.lr.ph.i33.preheader:                             ; preds = %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a, %bb.d
+  %4 = phi double [ %2, %bb.d ], [ %i.cv, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a ] ; 2 uses
   %xtraiter62 = and i64 %i.ay, 1
   %i.cx = icmp eq i64 %i.ay, 1
   br i1 %i.cx, label %.lr.ph.i33.epil.preheader, label %.lr.ph.i33.preheader.new
 
 .lr.ph.i33.preheader.new:                         ; preds = %.lr.ph.i33.preheader
-  %unroll_iter66 = and i64 %i.ay, 9223372036854775806
+  %unroll_iter66 = and i64 %i.ay, -2
   br label %.lr.ph.i33
 
 .lr.ph.i33:                                       ; preds = %.lr.ph.i33, %.lr.ph.i33.preheader.new
@@ -344,7 +351,7 @@ bb.d:                                             ; preds = %_ZN6casadi11casadi_
   %i.dd = load double, ptr %i.cy, align 8, !tbaa !119
   %i.de = tail call nsz double @llvm.fabs.f64(double %i.dd)
   %i.df = tail call nsz double @llvm.maxnum.f64(double %i.db, double %i.de) ; 3 uses
-  %niter67.next.1 = add nuw nsw i64 %niter67, 2   ; 2 uses
+  %niter67.next.1 = add i64 %niter67, 2           ; 2 uses
   %niter67.ncmp.1 = icmp eq i64 %niter67.next.1, %unroll_iter66
   br i1 %niter67.ncmp.1, label %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38.loopexit.unr-lcssa, label %.lr.ph.i33, !llvm.loop !254
 
@@ -363,11 +370,12 @@ _ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38.loopexit.unr-lcssa: ; preds = %.l
   br label %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38
 
 _ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38:   ; preds = %.lr.ph.i33.epil.preheader, %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38.loopexit.unr-lcssa, %bb.d
+  %5 = phi double [ %2, %bb.d ], [ %4, %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38.loopexit.unr-lcssa ], [ %4, %.lr.ph.i33.epil.preheader ]
   %.0.lcssa.i32 = phi double [ 0.000000e+00, %bb.d ], [ %i.df, %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38.loopexit.unr-lcssa ], [ %i.di, %.lr.ph.i33.epil.preheader ]
-  %i.dj = fcmp ugt double %.0.lcssa.i32, %i.cv
+  %i.dj = fcmp ugt double %.0.lcssa.i32, %5
   br i1 %i.dj, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a
+bb.e:                                             ; preds = %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.a, %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit38, %_ZN6casadi15casadi_norm_infIdEET_xPKS1_.exit, %bb.e

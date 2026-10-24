@@ -205,7 +205,7 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit356.preheader.i: ; preds = %_ZL13gmx_snew
   %i.bia = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 13 uses
   %i.bib = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 11 uses
   %not..i = xor i1 %i.bem, true                   ; 2 uses
-  %i.bic = fpext float %i.bhy to double           ; 4 uses
+  %i.bic = fpext float %i.bhy to double           ; 5 uses
   %i.bid = fcmp ole float %i.bht, 0.000000e+00    ; 6 uses
   %i.bie = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 3 uses
   %i.bif = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 3 uses
@@ -608,7 +608,7 @@ bb.fb:                                            ; preds = %bb.fa, %._crit_edge
   %i.bsb = load double, ptr %i.m, align 16        ; 2 uses
   %i.bsc = fcmp uge double %i.bsb, 0.000000e+00
   %or.cond.i307 = select i1 %not..i, i1 %i.bsc, i1 false
-  %i.bsd = load double, ptr %i.bib, align 16      ; 2 uses
+  %i.bsd = load double, ptr %i.bib, align 16      ; 3 uses
   %i.bse = fcmp uge double %i.bsd, 0.000000e+00
   %or.cond7.i = select i1 %or.cond.i307, i1 %i.bse, i1 false
   %i.bsf = load double, ptr %i.bia, align 8       ; 4 uses
@@ -616,17 +616,20 @@ bb.fb:                                            ; preds = %bb.fa, %._crit_edge
   %i.bsh = fcmp ule double %i.bsf, 1.000000e+00
   %or.cond12.i = or i1 %i.bsh, %i.beo
   %i.bsi = and i1 %i.bsg, %or.cond12.i
-  %or.cond336.i = select i1 %or.cond7.i, i1 %i.bsi, i1 false
-  %25 = fcmp ule double %i.bsd, %i.bic            ; 2 uses
-  %or.cond470.not.i = select i1 %or.cond336.i, i1 %25, i1 false
-  br i1 %or.cond470.not.i, label %bb.ft, label %bb.fc
+  %or.cond470.not.i = select i1 %or.cond7.i, i1 %i.bsi, i1 false
+  br i1 %or.cond470.not.i, label %25, label %bb.fc
+
+25:                                               ; preds = %bb.fb
+  %26 = fcmp ogt double %i.bsd, %i.bic
+  br i1 %26, label %bb.fd, label %bb.ft
 
 bb.fc:                                            ; preds = %bb.fb
   br i1 %i.bem, label %bb.fl, label %bb.fd
 
-bb.fd:                                            ; preds = %bb.fc
+bb.fd:                                            ; preds = %bb.fc, %25
+  %27 = fcmp ogt double %i.bsd, %i.bic
   %i.bsj = load ptr, ptr @stdout, align 8, !tbaa !156 ; 2 uses
-  br i1 %25, label %bb.ff, label %bb.fe
+  br i1 %27, label %bb.fe, label %bb.ff
 
 bb.fe:                                            ; preds = %bb.fd
   %i.bsk = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bsj, ptr noundef nonnull @.str.216, double noundef %i.bic) #23 ; 0 uses
@@ -768,8 +771,8 @@ bb.fs:                                            ; preds = %bb.fr
   %.pre548.pre.i = load double, ptr %i.bia, align 8, !tbaa !34
   br label %bb.ft
 
-bb.ft:                                            ; preds = %._crit_edge552.i, %bb.fl, %bb.fb
-  %.pre548.i.a = phi double [ %.pre548.pre.i, %._crit_edge552.i ], [ %i.bsf, %bb.fb ], [ %i.btl, %bb.fl ] ; 4 uses
+bb.ft:                                            ; preds = %._crit_edge552.i, %bb.fl, %25
+  %.pre548.i.a = phi double [ %.pre548.pre.i, %._crit_edge552.i ], [ %i.btl, %bb.fl ], [ %i.bsf, %25 ] ; 4 uses
   %i.buu = load double, ptr %i.bmk, align 8, !tbaa !34 ; 2 uses
   %i.buv = fcmp oeq double %i.buu, 0.000000e+00
   br i1 %i.buv, label %_ZL22optimal_error_estimatedPKdf.exit362.i, label %bb.fu

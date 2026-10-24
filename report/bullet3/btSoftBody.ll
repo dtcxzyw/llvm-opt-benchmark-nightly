@@ -205,10 +205,10 @@ bb.a:
   %i.n = or i1 %i.k, %i.l
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 932
   %i.p = load i32, ptr %i.o, align 4, !tbaa !171  ; 5 uses
-  br i1 %i.n, label %bb.b, label %._crit_edge81
+  %2 = icmp sgt i32 %i.p, 0                       ; 2 uses
+  br i1 %i.n, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %2 = icmp sgt i32 %i.p, 0
   br i1 %2, label %bb.c, label %_ZNK10btSoftBody9getVolumeEv.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -289,7 +289,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %i.bv = fdiv float %.0.lcssa.i, 6.000000e+00
   br label %_ZNK10btSoftBody9getVolumeEv.exit
 
-_ZNK10btSoftBody9getVolumeEv.exit:                ; preds = %._crit_edge.i, %bb.b
+_ZNK10btSoftBody9getVolumeEv.exit:                ; preds = %bb.b, %._crit_edge.i
   %.1.i = phi float [ %i.bv, %._crit_edge.i ], [ 0.000000e+00, %bb.b ] ; 2 uses
   %i.bw = call noundef float @llvm.fabs.f32(float %.1.i)
   %i.bx = fdiv float 1.000000e+00, %i.bw
@@ -297,17 +297,20 @@ _ZNK10btSoftBody9getVolumeEv.exit:                ; preds = %._crit_edge.i, %bb.
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 652
   %i.ca = load float, ptr %i.bz, align 4, !tbaa !279
   %i.cb = fsub float %i.ca, %.1.i
-  %i.cc = fmul float %.fr, %i.cb
-  br label %._crit_edge81
-
-._crit_edge81:                                    ; preds = %bb.a, %_ZNK10btSoftBody9getVolumeEv.exit
-  %.043 = phi float [ %i.by, %_ZNK10btSoftBody9getVolumeEv.exit ], [ 0.000000e+00, %bb.a ]
-  %.042 = phi float [ %i.cc, %_ZNK10btSoftBody9getVolumeEv.exit ], [ 0.000000e+00, %bb.a ] ; 2 uses
+  %i.cc = fmul float %.fr, %i.cb                  ; 2 uses
   %3 = icmp sgt i32 %i.p, 0
   br i1 %3, label %.lr.ph, label %._crit_edge
 
-.lr.ph:                                           ; preds = %._crit_edge81
-  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 944 ; 6 uses
+.thread:                                          ; preds = %bb.a
+  br i1 %2, label %._crit_edge81, label %._crit_edge
+
+._crit_edge81:                                    ; preds = %.thread
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 944
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 2008
+  br label %.lr.ph.split.split
+
+.lr.ph:                                           ; preds = %_ZNK10btSoftBody9getVolumeEv.exit
+  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 944 ; 5 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 2008 ; 3 uses
   br i1 %i.k, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
@@ -339,7 +342,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cg, i64 96
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cg, i64 116
   %i.co = load float, ptr %i.cn, align 4, !tbaa !397 ; 2 uses
-  %i.cp = fmul float %.043, %i.co                 ; 2 uses
+  %i.cp = fmul float %i.by, %i.co                 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cg, i64 104
   %i.cr = load float, ptr %i.cq, align 8, !tbaa !253 ; 2 uses
   %i.cs = fmul float %i.cp, %i.cr
@@ -358,7 +361,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.l, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.dd = fmul float %.042, %i.co                 ; 2 uses
+  %i.dd = fmul float %i.cc, %i.co                 ; 2 uses
   %i.de = fmul float %i.dd, %i.cr
   %i.df = insertelement <2 x float> poison, float %i.dd, i64 0
   %i.dg = shufflevector <2 x float> %i.df, <2 x float> poison, <2 x i32> zeroinitializer
@@ -406,7 +409,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dm, i64 96
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dm, i64 116
   %i.du = load float, ptr %i.dt, align 4, !tbaa !397
-  %i.dv = fmul float %.042, %i.du                 ; 2 uses
+  %i.dv = fmul float %i.cc, %i.du                 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dm, i64 104
   %i.dx = load float, ptr %i.dw, align 8, !tbaa !253
   %i.dy = fmul float %i.dv, %i.dx
@@ -430,12 +433,14 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.split
   %exitcond74.not = icmp eq i64 %indvars.iv.next71, %wide.trip.count73
   br i1 %exitcond74.not, label %._crit_edge, label %.lr.ph.split.split.us, !llvm.loop !1037
 
-.lr.ph.split.split:                               ; preds = %.lr.ph.split
+.lr.ph.split.split:                               ; preds = %._crit_edge81, %.lr.ph.split
+  %6 = phi ptr [ %4, %._crit_edge81 ], [ %i.cd, %.lr.ph.split ] ; 2 uses
+  %7 = phi ptr [ %5, %._crit_edge81 ], [ %i.ce, %.lr.ph.split ]
   br i1 %.fr60, label %.lr.ph.split.split.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.split.split.us.preheader:            ; preds = %.lr.ph.split.split
   %wide.trip.count = zext nneg i32 %i.p to i64
-  %.pre83 = load ptr, ptr %i.cd, align 8, !tbaa !170
+  %.pre83 = load ptr, ptr %6, align 8, !tbaa !170
   br label %.lr.ph.split.split.split.us
 
 .lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split.split.us.preheader, %bb.o
@@ -449,8 +454,8 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.split
 
 bb.n:                                             ; preds = %.lr.ph.split.split.split.us
   %i.ep = trunc nuw nsw i64 %indvars.iv to i32
-  call void @_ZN10btSoftBody18addAeroForceToNodeERK9btVector3i(ptr noundef nonnull align 8 dereferenceable(2064) %0, ptr noundef nonnull align 4 dereferenceable(16) %i.ce, i32 noundef %i.ep)
-  %.pre82 = load ptr, ptr %i.cd, align 8, !tbaa !170
+  call void @_ZN10btSoftBody18addAeroForceToNodeERK9btVector3i(ptr noundef nonnull align 8 dereferenceable(2064) %0, ptr noundef nonnull align 4 dereferenceable(16) %7, i32 noundef %i.ep)
+  %.pre82 = load ptr, ptr %6, align 8, !tbaa !170
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.lr.ph.split.split.split.us
@@ -459,7 +464,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.split
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.split.split.us, !llvm.loop !1037
 
-._crit_edge:                                      ; preds = %bb.o, %bb.m, %bb.i, %.lr.ph.split.split, %._crit_edge81
+._crit_edge:                                      ; preds = %bb.o, %bb.m, %bb.i, %.lr.ph.split.split, %.thread, %_ZNK10btSoftBody9getVolumeEv.exit
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 1028
   %i.es = load i32, ptr %i.er, align 4, !tbaa !183 ; 2 uses
   %i.et = icmp sgt i32 %i.es, 0

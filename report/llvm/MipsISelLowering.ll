@@ -205,6 +205,7 @@ bb.a:
   br i1 %.not23.i.i, label %_ZNK4llvm7SDValue9hasOneUseEv.exit, label %.lr.ph.i.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i
+  %.214.i.i = select i1 %i.e, i32 %.01224.i.i, i32 0 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.018.025.i.i, i64 32
   %.sroa.018.0.i.i = load ptr, ptr %i.b, align 8, !tbaa !748 ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.018.0.i.i, null
@@ -217,12 +218,12 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.d = load i32, ptr %i.c, align 8, !tbaa !432
   %i.e = icmp ne i32 %i.d, %3                     ; 2 uses
   %i.f = icmp ne i32 %.01224.i.i, 0
-  %.214.i.i = select i1 %i.e, i32 %.01224.i.i, i32 0 ; 2 uses
   %cond.i.i = select i1 %i.e, i1 true, i1 %i.f    ; 2 uses
   br i1 %cond.i.i, label %bb.b, label %_ZNK4llvm6SDNode15hasNUsesOfValueEjj.exit.loopexit.i
 
 _ZNK4llvm6SDNode15hasNUsesOfValueEjj.exit.loopexit.i: ; preds = %.lr.ph.i.i, %bb.b
-  %i.g = icmp eq i32 %.214.i.i, 0
+  %.315.i.ph.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.214.i.i, %bb.b ]
+  %i.g = icmp eq i32 %.315.i.ph.i, 0
   %i.h = select i1 %cond.i.i, i1 %i.g, i1 false
   br label %_ZNK4llvm7SDValue9hasOneUseEv.exit
 

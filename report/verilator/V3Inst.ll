@@ -205,7 +205,11 @@ bb.i:                                             ; preds = %_ZN7AstNode4castI10
 _ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit: ; preds = %_ZN7AstNode4castI10AstVarXRefS_EEPT_PT0_.exit, %bb.i
   %i.ae = phi ptr [ null, %_ZN7AstNode4castI10AstVarXRefS_EEPT_PT0_.exit ], [ %spec.select.i178, %bb.i ] ; 5 uses
   %i.af = icmp eq ptr %i.x, null
-  br i1 %i.af, label %.critedge169, label %bb.j
+  br i1 %i.af, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit182.thread, label %bb.j
+
+_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit182.thread: ; preds = %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit
+  %.not358 = xor i1 %3, true
+  br label %.critedge169
 
 bb.j:                                             ; preds = %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %i.x, i64 152 ; 2 uses
@@ -245,9 +249,9 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.at = icmp eq i8 %.sroa.0.0.copyload.i.i, 20
   br i1 %i.at, label %.critedge2, label %.critedge169
 
-.critedge169:                                     ; preds = %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit, %bb.n
-  %21 = phi ptr [ %i.an, %bb.n ], [ null, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit ] ; 5 uses
-  %.not360 = xor i1 %3, true
+.critedge169:                                     ; preds = %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit182.thread, %bb.n
+  %.not360 = phi i1 [ %.not358, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit182.thread ], [ true, %bb.n ]
+  %21 = phi ptr [ null, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPKT_PKT0_.exit182.thread ], [ %i.an, %bb.n ] ; 5 uses
   %i.au = icmp eq ptr %i.y, null
   %or.cond9.not = or i1 %3, %i.au
   br i1 %or.cond9.not, label %bb.q, label %bb.o
@@ -266,7 +270,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o, %.critedge169
   %i.az = icmp ne ptr %21, null
-  %or.cond12 = and i1 %i.az, %.not360
+  %or.cond12 = and i1 %.not360, %i.az
   %i.ba = icmp ne ptr %i.ae, null
   %or.cond14 = and i1 %i.ba, %or.cond12
   br i1 %or.cond14, label %bb.r, label %bb.ae

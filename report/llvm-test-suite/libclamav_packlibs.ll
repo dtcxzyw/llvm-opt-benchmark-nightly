@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %.loopexit402
   %.not230 = icmp ule ptr %i.dv, %i.m             ; 2 uses
   %i.dw = icmp ugt ptr %i.dv, %1                  ; 2 uses
   %or.cond242 = and i1 %.not230, %i.dw
-  br i1 %or.cond242, label %bb.ak, label %bb.am
+  br i1 %or.cond242, label %bb.ak, label %6
 
 bb.ak:                                            ; preds = %bb.aj
   %i.dx = zext i32 %.2182 to i64
@@ -315,19 +315,20 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ev = icmp ult i32 %i.eq, 7
   br i1 %i.ev, label %.outer.outer.backedge, label %.lr.ph
 
-bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.aj
-  %narrow = and i1 %.not230, %i.dw
-  %spec.select629 = zext i1 %narrow to i32
+6:                                                ; preds = %bb.aj
+  br i1 %.not230, label %bb.am, label %.loopexit409
+
+bb.am:                                            ; preds = %bb.ak, %bb.al, %6
+  %spec.select629 = zext i1 %i.dw to i32
   br label %.loopexit409
 
-.loopexit409:                                     ; preds = %.loopexit402, %bb.am
-  %or.cond240508 = phi i1 [ false, %bb.am ], [ %or.cond240, %.loopexit402 ]
-  %6 = phi i32 [ %spec.select629, %bb.am ], [ 0, %.loopexit402 ]
+.loopexit409:                                     ; preds = %.loopexit402, %bb.am, %6
+  %7 = phi i32 [ 0, %6 ], [ %spec.select629, %bb.am ], [ 0, %.loopexit402 ]
   %i.ew = zext i32 %.2182 to i64
   %i.ex = sub nsw i64 0, %i.ew
   %i.ey = getelementptr inbounds i8, ptr %.0170, i64 %i.ex ; 3 uses
   %.not237 = icmp ult ptr %i.ey, %1
-  %or.cond249 = select i1 %or.cond240508, i1 true, i1 %.not237
+  %or.cond249 = select i1 %or.cond240, i1 true, i1 %.not237
   br i1 %or.cond249, label %bb.ap, label %bb.an
 
 bb.an:                                            ; preds = %.loopexit409
@@ -343,7 +344,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an, %.loopexit409
   %i.fd = phi i32 [ 0, %bb.an ], [ %i.fc, %bb.ao ], [ 0, %.loopexit409 ]
-  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str, ptr noundef nonnull %1, i32 noundef %3, ptr noundef %.0170, i32 noundef %.7, i32 noundef %6, ptr noundef nonnull %1, i32 noundef %3, ptr noundef %i.ey, i32 noundef %.7, i32 noundef %i.fd) #3
+  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str, ptr noundef nonnull %1, i32 noundef %3, ptr noundef %.0170, i32 noundef %.7, i32 noundef %7, ptr noundef nonnull %1, i32 noundef %3, ptr noundef %i.ey, i32 noundef %.7, i32 noundef %i.fd) #3
   br label %doubledl.exit.thread
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph

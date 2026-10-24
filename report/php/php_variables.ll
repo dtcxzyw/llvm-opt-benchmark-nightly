@@ -202,8 +202,8 @@ declare i64 @_php_stream_read(ptr noundef, ptr noundef, i64 noundef) local_unnam
 define internal fastcc range(i32 -1, 1) i32 @add_post_vars(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef nonnull captures(none) initializes((16, 32)) %1, i1 noundef zeroext %2) unnamed_addr #8 {
 bb.a:
   %3 = alloca %struct._zval_struct, align 8       ; 5 uses
-  %i.a = alloca ptr, align 8                      ; 7 uses
-  %i.b = alloca i64, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 8 uses
+  %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = load i8, ptr getelementptr inbounds nuw (i8, ptr @sapi_globals, i64 584), align 8, !tbaa !61, !range !62, !noundef !63
   %i.d = trunc nuw i8 %i.c to i1
   %i.e = load i64, ptr getelementptr inbounds nuw (i8, ptr @sapi_globals, i64 592), align 8
@@ -342,7 +342,9 @@ add_post_var.exit:                                ; preds = %bb.c
   %i.bn = ptrtoint ptr %i.s to i64
   %i.bo = sub i64 %i.v, %i.bn
   store i64 %i.bo, ptr %i.o, align 8, !tbaa !96
-  br label %add_post_var.exit.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
+  br label %bb.o
 
 bb.m:                                             ; preds = %bb.h, %php_register_variable_safe.exit.i
   %i.bp = load ptr, ptr %i.a, align 8, !tbaa !17
@@ -365,12 +367,12 @@ bb.n:                                             ; preds = %bb.m
   call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 2, ptr noundef nonnull @.str.13, i64 noundef %i.g) #14
   br label %bb.q
 
-add_post_var.exit.thread:                         ; preds = %bb.b, %add_post_var.exit
+add_post_var.exit.thread:                         ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br i1 %2, label %bb.q, label %bb.o
 
-bb.o:                                             ; preds = %add_post_var.exit.thread
+bb.o:                                             ; preds = %add_post_var.exit, %add_post_var.exit.thread
   %i.bx = load ptr, ptr %1, align 8, !tbaa !59    ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 24 ; 2 uses
   %.not = icmp eq ptr %i.by, %i.s

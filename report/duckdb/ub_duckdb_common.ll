@@ -205,25 +205,34 @@ bb.a:
   %i.h = load i32, ptr %i.g, align 4              ; 7 uses
   %i.i = and i32 %i.h, 255                        ; 2 uses
   %i.j = icmp eq i32 %i.i, 1
-  br i1 %i.j, label %bb.b, label %bb.c
+  br i1 %i.j, label %2, label %bb.c
 
-bb.b:                                             ; preds = %bb.a
-  %2 = load i32, ptr %i.f, align 8, !tbaa !1986
-  %3 = sub nsw i32 %2, %i.b                       ; 2 uses
-  %4 = icmp sgt i32 %3, 0
-  %5 = and i32 %i.h, 536870912
-  %6 = icmp ne i32 %5, 0
-  %7 = and i1 %6, %4                              ; 2 uses
-  %8 = icmp sgt i32 %i.b, 1
-  %or.cond = select i1 %8, i1 true, i1 %7
-  %.sroa.0186.0.v = select i1 %or.cond, i64 2, i64 1
-  %.sroa.0186.0 = add i64 %.sroa.0186.0.v, %1
-  %9 = sext i32 %i.b to i64
-  %gepdiff227 = add i64 %.sroa.0186.0, %9
-  %10 = add nsw i32 %3, -1
-  %11 = zext nneg i32 %10 to i64
-  %.sroa.0186.1.v = select i1 %7, i64 %11, i64 -1
-  %.sroa.0186.1 = add i64 %gepdiff227, %.sroa.0186.1.v ; 2 uses
+2:                                                ; preds = %bb.a
+  %3 = load i32, ptr %i.f, align 8, !tbaa !1986
+  %4 = sub nsw i32 %3, %i.b                       ; 2 uses
+  %5 = icmp sgt i32 %4, 0
+  %6 = and i32 %i.h, 536870912
+  %7 = icmp ne i32 %6, 0
+  %8 = and i1 %7, %5                              ; 2 uses
+  %9 = icmp sgt i32 %i.b, 1
+  %or.cond = select i1 %9, i1 true, i1 %8
+  %10 = sext i32 %i.b to i64
+  %gepdiff232 = add i64 %1, %10                   ; 3 uses
+  br i1 %or.cond, label %11, label %bb.b
+
+11:                                               ; preds = %2
+  %.sroa.05.0.lcssa.i.i = add i64 %gepdiff232, 1
+  br i1 %8, label %12, label %bb.b
+
+12:                                               ; preds = %11
+  %13 = add nsw i32 %4, -1
+  %14 = zext nneg i32 %13 to i64
+  %15 = add i64 %gepdiff232, 2
+  %16 = add i64 %15, %14
+  br label %bb.b
+
+bb.b:                                             ; preds = %2, %12, %11
+  %.sroa.0186.1 = phi i64 [ %16, %12 ], [ %.sroa.05.0.lcssa.i.i, %11 ], [ %gepdiff232, %2 ] ; 2 uses
   %i.k = add nsw i32 %i.e, -1
   %.sroa.028.0.i = add i64 %.sroa.0186.1, 2       ; 2 uses
   %.0.i = tail call i32 @llvm.abs.i32(i32 %i.k, i1 true) ; 2 uses

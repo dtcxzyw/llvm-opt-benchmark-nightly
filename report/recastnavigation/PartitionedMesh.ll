@@ -205,7 +205,7 @@ _ZNSt6vectorI13IndexedBoundsSaIS0_EED2Ev.exit100: ; preds = %_ZNSt6vectorI13Inde
 define dso_local void @_ZNK15PartitionedMesh23GetNodesOverlappingRectEPfS0_RSt6vectorIiSaIiEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(60) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !38
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !38   ; 2 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
@@ -220,7 +220,8 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.l
-  %storemerge1423 = phi i32 [ 0, %.lr.ph ], [ %storemerge.a, %bb.l ] ; 5 uses
+  %4 = phi i32 [ %i.b, %.lr.ph ], [ %storemerge.a, %bb.l ]
+  %storemerge1423 = phi i32 [ 0, %.lr.ph ], [ %storemerge, %bb.l ] ; 5 uses
   %i.h = sext i32 %storemerge1423 to i64
   %i.i = load ptr, ptr %0, align 8, !tbaa !19
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %i.i, i64 %i.h ; 6 uses
@@ -246,16 +247,16 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.s, label %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread, label %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit
 
 _ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread: ; preds = %bb.d, %bb.c, %bb.b
-  %i.t = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !45
+  %i.t = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !45   ; 2 uses
   %i.v = icmp sgt i32 %i.u, -1
   br label %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit
 
 _ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit: ; preds = %bb.d
   %i.w = load float, ptr %i.e, align 4, !tbaa !42
   %i.x = fcmp oge float %i.w, %.val15             ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !45
+  %i.y = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !45   ; 2 uses
   %i.aa = icmp sgt i32 %i.z, -1                   ; 2 uses
   %or.cond = and i1 %i.x, %i.aa
   br i1 %or.cond, label %bb.e, label %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit
@@ -321,25 +322,25 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRiEEEvN9__gnu_cxx17__normal_iteratorIPi
   br label %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.thread
 
 _ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit: ; preds = %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit
-  %4 = phi i1 [ %i.v, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread ], [ %i.aa, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit ]
-  %5 = phi ptr [ %i.t, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread ], [ %i.y, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit ]
+  %5 = phi i32 [ %i.u, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread ], [ %i.z, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit ]
+  %6 = phi i1 [ %i.v, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread ], [ %i.aa, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit ]
   %i.au = phi i1 [ false, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit.thread ], [ %i.x, %_ZN12_GLOBAL__N_116checkOverlapRectEPKfS1_S1_S1_.exit ]
-  %or.cond3 = or i1 %4, %i.au
+  %or.cond3 = or i1 %6, %i.au
   br i1 %or.cond3, label %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.thread, label %bb.k
 
 _ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.thread: ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i, %bb.f, %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit
   %i.av = add nsw i32 %storemerge1423, 1
+  %.pre = load i32, ptr %i.a, align 8, !tbaa !38
   br label %bb.l
 
 bb.k:                                             ; preds = %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit
-  %6 = load i32, ptr %5, align 4, !tbaa !45
-  %i.aw = sub nsw i32 %storemerge1423, %6
+  %i.aw = sub nsw i32 %storemerge1423, %5
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.thread
-  %storemerge.a = phi i32 [ %i.aw, %bb.k ], [ %i.av, %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.thread ] ; 2 uses
-  %7 = load i32, ptr %i.a, align 8, !tbaa !38
-  %i.ax = icmp slt i32 %storemerge.a, %7
+  %storemerge.a = phi i32 [ %4, %bb.k ], [ %.pre, %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.thread ] ; 2 uses
+  %storemerge = phi i32 [ %i.aw, %bb.k ], [ %i.av, %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.thread ] ; 2 uses
+  %i.ax = icmp slt i32 %storemerge, %storemerge.a
   br i1 %i.ax, label %bb.b, label %._crit_edge, !llvm.loop !53
 }
 

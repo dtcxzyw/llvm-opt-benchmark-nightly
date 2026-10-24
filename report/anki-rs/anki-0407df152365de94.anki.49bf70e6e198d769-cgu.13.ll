@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.8.0.copyload = load i8, ptr %.sroa.8.0..sroa_idx, align 2 ; 2 uses
   %.sroa.9.sroa.5.0.copyload = load i64, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8 ; 24 uses
   %.sroa.9.sroa.13.0.copyload = load i64, ptr %.sroa.9.sroa.13.0..sroa.9.0..sroa_idx.sroa_idx, align 8 ; 26 uses
-  %.sroa.9.sroa.14.0.copyload = load i64, ptr %.sroa.9.sroa.14.0..sroa.9.0..sroa_idx.sroa_idx, align 8 ; 89 uses
+  %.sroa.9.sroa.14.0.copyload = load i64, ptr %.sroa.9.sroa.14.0..sroa.9.0..sroa_idx.sroa_idx, align 8 ; 90 uses
   %.sroa.16.sroa.5.0.copyload = load i8, ptr %.sroa.16.sroa.5.0..sroa.16.0..sroa_idx.sroa_idx, align 8 ; 7 uses
   %.sroa.16.sroa.7.0.copyload = load ptr, ptr %.sroa.16.sroa.7.0..sroa.16.0..sroa_idx.sroa_idx, align 8 ; 13 uses
   %.sroa.16.sroa.8.0.copyload = load i64, ptr %.sroa.16.sroa.8.0..sroa.16.0..sroa_idx.sroa_idx, align 8 ; 13 uses
@@ -608,7 +608,7 @@ bb.ol:                                            ; preds = %bb.c, %bb.c
   store i64 %.sroa.9.sroa.5.0.copyload, ptr %i.dk, align 8
   store i64 %.sroa.9.sroa.13.0.copyload, ptr %.sroa.9.sroa.13.5..sroa_idx364, align 8
   store i64 %.sroa.9.sroa.14.0.copyload, ptr %.sroa.9.sroa.14.5..sroa_idx376, align 8
-  %i.aas = trunc i64 %.sroa.9.sroa.5.0.copyload to i8 ; 2 uses
+  %i.aas = trunc i64 %.sroa.9.sroa.5.0.copyload to i8 ; 3 uses
   %.val.i200 = inttoptr i64 %.sroa.9.sroa.13.0.copyload to ptr ; 3 uses
   %i.aat = invoke { ptr, i64 } @"_ZN75_$LT$pulldown_cmark..strings..CowStr$u20$as$u20$core..ops..deref..Deref$GT$5deref17h8bc51aacd5a6302aE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dk)
           to label %bb.oo unwind label %bb.om     ; 2 uses
@@ -635,7 +635,7 @@ bb.oo:                                            ; preds = %bb.ol
 .noexc196:                                        ; preds = %bb.oo
   %i.aba = icmp eq i64 %i.aay, 0
   %or.cond.i195 = or i1 %i.aba, %i.aaz
-  br i1 %or.cond.i195, label %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a", label %bb.op
+  br i1 %or.cond.i195, label %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198", label %bb.op
 
 bb.op:                                            ; preds = %.noexc196
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !875
@@ -647,23 +647,26 @@ bb.op:                                            ; preds = %.noexc196
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !875
   %i.abc = zext i1 %i.abb to i8
   store i8 %i.abc, ptr %i.dr, align 8, !alias.scope !874
-  br label %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a"
+  br label %bb.or
 
-"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a": ; preds = %.noexc197, %.noexc196
+"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198": ; preds = %.noexc196
+  br i1 %i.aaz, label %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a", label %bb.or
+
+"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a": ; preds = %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198"
   %i.abd = icmp ne i8 %i.aas, 0
   %i.abe = icmp eq i64 %.sroa.9.sroa.14.0.copyload, 0
-  %or.cond450 = select i1 %i.abd, i1 true, i1 %i.abe ; 2 uses
-  br i1 %i.aaz, label %1, label %bb.or
-
-1:                                                ; preds = %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a"
+  %or.cond450 = select i1 %i.abd, i1 true, i1 %i.abe
   br i1 %or.cond450, label %"_ZN4core3ptr52drop_in_place$LT$pulldown_cmark..strings..CowStr$GT$17hd41f98d1e7ed693aE.exit201", label %bb.oq
 
-bb.oq:                                            ; preds = %1
+bb.oq:                                            ; preds = %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a"
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i200, i64 noundef range(i64 1, 0) %.sroa.9.sroa.14.0.copyload, i64 noundef 1) #34, !noalias !876
   br label %"_ZN4core3ptr52drop_in_place$LT$pulldown_cmark..strings..CowStr$GT$17hd41f98d1e7ed693aE.exit201"
 
-bb.or:                                            ; preds = %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a"
-  br i1 %or.cond450, label %"_ZN4core3ptr52drop_in_place$LT$pulldown_cmark..strings..CowStr$GT$17hd41f98d1e7ed693aE.exit204", label %bb.os
+bb.or:                                            ; preds = %.noexc197, %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198"
+  %1 = icmp ne i8 %i.aas, 0
+  %2 = icmp eq i64 %.sroa.9.sroa.14.0.copyload, 0
+  %or.cond451 = select i1 %1, i1 true, i1 %2
+  br i1 %or.cond451, label %"_ZN4core3ptr52drop_in_place$LT$pulldown_cmark..strings..CowStr$GT$17hd41f98d1e7ed693aE.exit204", label %bb.os
 
 bb.os:                                            ; preds = %bb.or
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i200, i64 noundef range(i64 1, 0) %.sroa.9.sroa.14.0.copyload, i64 noundef 1) #34, !noalias !877
@@ -673,7 +676,7 @@ bb.os:                                            ; preds = %bb.or
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dk)
   br label %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$9start_tag17hdb4ae77c6515205fE.exit.thread406.backedge"
 
-"_ZN4core3ptr52drop_in_place$LT$pulldown_cmark..strings..CowStr$GT$17hd41f98d1e7ed693aE.exit201": ; preds = %bb.oq, %1
+"_ZN4core3ptr52drop_in_place$LT$pulldown_cmark..strings..CowStr$GT$17hd41f98d1e7ed693aE.exit201": ; preds = %bb.oq, %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$5write17h1e769eda8feefa56E.exit198.a"
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dk)
   br label %"_ZN14pulldown_cmark4html23HtmlWriter$LT$I$C$W$GT$7end_tag17h2bf8d1fd71370908E.exit"
 

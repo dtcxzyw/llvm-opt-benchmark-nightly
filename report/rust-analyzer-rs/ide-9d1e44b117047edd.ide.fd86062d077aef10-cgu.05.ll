@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9BreakExprECslLuZgPVt6hg_3ide.exit53 unwind label %bb.b
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9BreakExprECslLuZgPVt6hg_3ide.exit53: ; preds = %bb.y, %bb.x, %bb.o, %bb.n
-  %.sroa.013.0 = phi ptr [ %i.w, %bb.o ], [ %i.w, %bb.n ], [ %i.ap, %bb.x ], [ %i.ap, %bb.y ] ; 16 uses
+  %.sroa.013.0 = phi ptr [ %i.w, %bb.o ], [ %i.w, %bb.n ], [ %i.ap, %bb.x ], [ %i.ap, %bb.y ] ; 17 uses
   %.sroa.07.2 = phi i8 [ 0, %bb.o ], [ 0, %bb.n ], [ 1, %bb.x ], [ 1, %bb.y ] ; 9 uses
   %.sroa.05.2 = phi i8 [ 1, %bb.o ], [ 1, %bb.n ], [ 0, %bb.x ], [ 0, %bb.y ] ; 9 uses
   %.sroa.0.0 = phi ptr [ %i.ac, %bb.o ], [ %i.ac, %bb.n ], [ %i.av, %bb.x ], [ %i.av, %bb.y ] ; 15 uses
@@ -285,9 +285,13 @@ bb.z:                                             ; preds = %_RINvNtCshzWfHUSfYa
   %i.bi = invoke noundef zeroext i1 @_RNvNtNtCs6oosyzwIepl_6ide_db14syntax_helpers8node_ext11eq_label_lt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.bh, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.i)
           to label %bb.ab unwind label %.body
 
-bb.aa:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9BreakExprECslLuZgPVt6hg_3ide.exit53, %bb.ab
-  %.not20.not.a = icmp eq ptr %.sroa.013.0, null  ; 2 uses
-  br i1 %.not20.not.a, label %.thread198, label %bb.am
+4:                                                ; preds = %bb.ab
+  %.not20.not = icmp eq ptr %.sroa.013.0, null
+  br i1 %.not20.not, label %.thread198, label %bb.am
+
+bb.aa:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9BreakExprECslLuZgPVt6hg_3ide.exit53
+  %.not20.not.a = icmp eq ptr %.sroa.013.0, null
+  br i1 %.not20.not.a, label %.thread195, label %bb.am
 
 .body.thread156:                                  ; preds = %_RNvMs19_NtNtNtCscAsMj0W7j8b_3std11collections4hash3mapINtB6_5EntryNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdINtNtB8_3set7HashSetNtNtCslLuZgPVt6hg_3ide17highlight_related16HighlightedRangeNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEE10or_defaultB2q_.exit.i, %bb.br, %bb.bl, %.thread192, %bb.bs, %bb.bu
   %lpad.thr_comm = landingpad { ptr, i32 }
@@ -301,7 +305,7 @@ bb.aa:                                            ; preds = %_RINvNtCshzWfHUSfYa
   br label %.body.thread
 
 bb.ab:                                            ; preds = %bb.z
-  br i1 %i.bi, label %bb.aa, label %bb.ac
+  br i1 %i.bi, label %4, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   br i1 %.not19, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8LifetimeEECslLuZgPVt6hg_3ide.exit, label %bb.ad
@@ -392,7 +396,7 @@ bb.al:                                            ; preds = %.thread146, %bb.aj
   %i.cg = icmp eq i32 %i.cf, 0
   br i1 %i.cg, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECslLuZgPVt6hg_3ide.exit.sink.split, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECslLuZgPVt6hg_3ide.exit
 
-bb.am:                                            ; preds = %bb.aa
+bb.am:                                            ; preds = %bb.aa, %4
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.013.0, i64 60
   %i.ci = load i8, ptr %i.ch, align 4, !range !6, !noundef !5
   %i.cj = trunc nuw i8 %i.ci to i1
@@ -490,10 +494,11 @@ bb.ay:                                            ; preds = %bb.av
 bb.az:                                            ; preds = %bb.ax, %bb.aw
   br i1 %.not19, label %.thread192, label %bb.ba
 
-.thread198:                                       ; preds = %bb.aa
+.thread198:                                       ; preds = %4
   br i1 %.not19, label %.thread195, label %bb.ba
 
 bb.ba:                                            ; preds = %.thread198, %bb.az
+  %.not20.not209 = phi i1 [ true, %.thread198 ], [ false, %bb.az ]
   %.sroa.5.0203 = phi i32 [ undef, %.thread198 ], [ %.sroa.0.0.i.i, %bb.az ] ; 2 uses
   %.sroa.8123.0201 = phi i32 [ undef, %.thread198 ], [ %i.cx, %bb.az ] ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 60
@@ -591,7 +596,7 @@ bb.bm:                                            ; preds = %bb.bj
   unreachable
 
 bb.bn:                                            ; preds = %bb.bl, %bb.bk
-  br i1 %.not20.not.a, label %bb.bp, label %bb.bo
+  br i1 %.not20.not209, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
   br i1 %.not19, label %.thread192, label %bb.bq
@@ -636,7 +641,7 @@ bb.br:                                            ; preds = %bb.bq
   %.not.i.i82 = icmp eq i32 %i.eo, 0
   br i1 %.not.i.i82, label %bb.bt, label %bb.bs
 
-.thread195:                                       ; preds = %.thread198, %bb.bp
+.thread195:                                       ; preds = %bb.aa, %.thread198, %bb.bp
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !904
   br label %bb.bt
 

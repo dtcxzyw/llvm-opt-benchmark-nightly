@@ -204,12 +204,13 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !50   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !50   ; 2 uses
-  %.not1216 = icmp eq ptr %i.a, %i.d              ; 2 uses
+  %.not1216 = icmp eq ptr %i.a, %i.d              ; 3 uses
   %i.g = icmp eq ptr %i.b, %i.f
   %or.cond17 = select i1 %.not1216, i1 true, i1 %i.g
   br i1 %or.cond17, label %_ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.backedge
+  %.not1222 = phi i1 [ %.not12, %.backedge ], [ %.not1216, %bb.a ] ; 10 uses
   %.sroa.08.019 = phi ptr [ %i.i, %.backedge ], [ %i.b, %bb.a ] ; 5 uses
   %.sroa.010.018 = phi ptr [ %i.h, %.backedge ], [ %i.a, %bb.a ] ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.010.018, i64 48 ; 2 uses
@@ -299,13 +300,13 @@ _ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFiel
   br i1 %i.at, label %.backedge, label %_ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit.thread
 
 .backedge:                                        ; preds = %_ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i.i.i.i, %call.5.i.i, %call.4.i.i, %call.3.i.i, %call.2.i.i, %call.1.i.i
-  %.not12 = icmp eq ptr %i.h, %i.d                ; 2 uses
+  %.not12 = icmp eq ptr %i.h, %i.d                ; 3 uses
   %i.au = icmp eq ptr %i.i, %i.f
   %or.cond = select i1 %.not12, i1 true, i1 %i.au
   br i1 %or.cond, label %_ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit.thread, label %.lr.ph, !llvm.loop !191
 
 _ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit.thread: ; preds = %_ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit, %.backedge, %.lr.ph, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i.i.i.i, %call.0.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i.i.i.i, %call.5.i.i, %call.4.i.i, %call.3.i.i, %call.2.i.i, %call.1.i.i, %bb.a
-  %.not12.lcssa = phi i1 [ %.not1216, %bb.a ], [ false, %_ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit ], [ false, %call.1.i.i ], [ false, %call.2.i.i ], [ false, %call.3.i.i ], [ false, %call.4.i.i ], [ false, %call.5.i.i ], [ %.not12, %.backedge ], [ false, %.lr.ph ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i.i.i.i ], [ false, %call.0.i.i ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i.i.i.i ]
+  %.not12.lcssa = phi i1 [ %.not1216, %bb.a ], [ %.not1222, %_ZNK4Luau7VariantIJNS_8TypePath8PropertyENS1_5IndexENS1_9TypeFieldENS1_9PackFieldENS1_9PackSliceENS1_9ReductionENS1_18GenericPackMappingEEEneERKS9_.exit ], [ %.not12, %.backedge ], [ %.not1222, %.lr.ph ], [ %.not1222, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i.i.i.i ], [ %.not1222, %call.0.i.i ], [ %.not1222, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i.i.i.i ], [ %.not1222, %call.5.i.i ], [ %.not1222, %call.4.i.i ], [ %.not1222, %call.3.i.i ], [ %.not1222, %call.2.i.i ], [ %.not1222, %call.1.i.i ]
   ret i1 %.not12.lcssa
 }
 

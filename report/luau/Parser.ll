@@ -205,17 +205,20 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.c = load i32, ptr %i.b, align 8, !tbaa !1176 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 488
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
   %.01116 = load i32, ptr %i.d, align 8, !tbaa !119 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !406
   %i.g = icmp ne i32 %i.c, %i.f
   %.not17 = icmp eq i32 %.01116, %i.a             ; 2 uses
   %or.cond18 = select i1 %i.g, i1 true, i1 %.not17
-  br i1 %or.cond18, label %.critedge, label %.lr.ph.a
+  br i1 %or.cond18, label %.critedge, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.b, %bb.c
-  %.01119 = phi i32 [ %.011, %bb.c ], [ %.01116, %bb.b ]
+.lr.ph:                                           ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 488
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.c
+  %.01119 = phi i32 [ %.01116, %.lr.ph ], [ %.011, %bb.c ]
   %i.h = zext i32 %.01119 to i64
   %i.i = load ptr, ptr %5, align 8, !tbaa !211
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.h

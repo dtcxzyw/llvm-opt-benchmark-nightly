@@ -203,10 +203,10 @@ bb.a:
   %i.b = ptrtoint ptr %3 to i64                   ; 8 uses
   %i.c = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.d = sub i64 %i.b, %i.c                       ; 6 uses
-  %i.e = ashr exact i64 %i.d, 2                   ; 6 uses
+  %i.e = ashr exact i64 %i.d, 2                   ; 7 uses
   %i.f = ptrtoint ptr %2 to i64
   %i.g = sub i64 %i.c, %i.f                       ; 3 uses
-  %i.h = ashr exact i64 %i.g, 2                   ; 8 uses
+  %i.h = ashr exact i64 %i.g, 2                   ; 9 uses
   %i.i = add i64 %i.e, %4                         ; 3 uses
   %.not = icmp ult i64 %i.h, %i.i
   br i1 %.not, label %bb.j, label %bb.b
@@ -272,7 +272,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit150
 
 bb.j:                                             ; preds = %bb.a
-  %i.ab = icmp ugt i64 %4, %i.h                   ; 2 uses
+  %i.ab = icmp ugt i64 %4, %i.h                   ; 3 uses
   %.not143 = icmp ugt i64 %i.h, %i.e
   br i1 %.not143, label %bb.r, label %bb.k
 
@@ -343,30 +343,33 @@ bb.r:                                             ; preds = %bb.j
   %or.cond.i.i161 = and i1 %i.at, %i.as
   %i.au = icmp ne ptr %0, null                    ; 2 uses
   %spec.select.i.i162 = and i1 %i.au, %or.cond.i.i161
-  br i1 %spec.select.i.i162, label %bb.s, label %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164, !prof !38
+  br i1 %spec.select.i.i162, label %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164, label %bb.s, !prof !38
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %2, ptr nonnull align 4 %0, i64 %i.d, i1 false)
-  %6 = getelementptr inbounds i8, ptr %2, i64 %i.d
-  br label %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164
-
-_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164: ; preds = %bb.r, %bb.s
-  %.0.i.i163 = phi ptr [ %6, %bb.s ], [ %2, %bb.r ]
-  %i.av = sub nuw nsw i64 %i.h, %i.e              ; 3 uses
-  %i.aw = shl i64 %i.av, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %.0.i.i163, i8 0, i64 %i.aw, i1 false)
+  %6 = sub nuw nsw i64 %i.h, %i.e                 ; 2 uses
+  %7 = shl i64 %6, 2
+  tail call void @llvm.memset.p0.i64(ptr align 1 %2, i8 0, i64 %7, i1 false)
   br i1 %i.ab, label %bb.t, label %bb.u
 
-bb.t:                                             ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164
+_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164: ; preds = %bb.r
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %2, ptr nonnull align 4 %0, i64 %i.d, i1 false)
+  %8 = getelementptr inbounds i8, ptr %2, i64 %i.d
+  %i.av = sub nuw nsw i64 %i.h, %i.e              ; 2 uses
+  %i.aw = shl i64 %i.av, 2
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %8, i8 0, i64 %i.aw, i1 false)
+  br i1 %i.ab, label %.lr.ph.preheader.i168, label %bb.u
+
+bb.t:                                             ; preds = %bb.s
   br i1 %i.as, label %.lr.ph.preheader.i168, label %.critedge
 
-.lr.ph.preheader.i168:                            ; preds = %bb.t
+.lr.ph.preheader.i168:                            ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164, %bb.t
   tail call void @llvm.memset.p0.i64(ptr align 4 %0, i8 0, i64 %i.d, i1 false), !tbaa !19
   br label %.critedge
 
-bb.u:                                             ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164
-  %i.ax = sub i64 %4, %i.av                       ; 2 uses
-  %.not8.i170 = icmp eq i64 %4, %i.av
+bb.u:                                             ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164, %bb.s
+  %9 = phi i64 [ %i.av, %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit164 ], [ %6, %bb.s ] ; 2 uses
+  %i.ax = sub i64 %4, %9                          ; 2 uses
+  %.not8.i170 = icmp eq i64 %4, %9
   br i1 %.not8.i170, label %_ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_9allocatorIiLj2ELj0EEEE17copy_n_and_updateIPiEEvRS4_T_m.exit172, label %.lr.ph.preheader.i171
 
 .lr.ph.preheader.i171:                            ; preds = %bb.u
@@ -614,12 +617,12 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.a, ptr nonnull align 1 %i.ba, i64 %i.i, i1 false)
-  br label %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit119
+  br label %bb.p
 
-_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit119: ; preds = %bb.o, %bb.n
+_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit119: ; preds = %bb.n
   br i1 %.not.i.i116, label %bb.p, label %_ZN5boost9container25move_backward_overlappingIPiEET_S3_S3_S3_.exit122
 
-bb.p:                                             ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit119
+bb.p:                                             ; preds = %bb.o, %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit119
   %.not.i.i121 = icmp eq ptr %i.ba, %3
   br i1 %.not.i.i121, label %_ZN5boost9container25move_backward_overlappingIPiEET_S3_S3_S3_.exit122, label %bb.q, !prof !20
 
@@ -1022,12 +1025,12 @@ bb.m:                                             ; preds = %bb.i
 
 bb.n:                                             ; preds = %bb.m
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.b, ptr nonnull align 1 %i.au, i64 %i.k, i1 false)
-  br label %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit116
+  br label %bb.o
 
-_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit116: ; preds = %bb.n, %bb.m
+_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit116: ; preds = %bb.m
   br i1 %.not.i.i113, label %bb.o, label %_ZN5boost9container25move_backward_overlappingIPiEET_S3_S3_S3_.exit119
 
-bb.o:                                             ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit116
+bb.o:                                             ; preds = %bb.n, %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_mS8_.exit116
   %.not.i.i118 = icmp eq ptr %i.au, %3
   br i1 %.not.i.i118, label %_ZN5boost9container25move_backward_overlappingIPiEET_S3_S3_S3_.exit119, label %bb.p, !prof !20
 

@@ -204,8 +204,8 @@ bb.a:
   %i.i = alloca [4 x i8], align 4                 ; 4 uses
   %i.j = alloca ptr, align 8                      ; 10 uses
   %i.k = alloca i64, align 8                      ; 8 uses
-  %2 = alloca %struct.WebPPicture, align 8        ; 61 uses
-  %3 = alloca %struct.WebPPicture, align 8        ; 11 uses
+  %2 = alloca %struct.WebPPicture, align 8        ; 62 uses
+  %3 = alloca %struct.WebPPicture, align 8        ; 12 uses
   %4 = alloca %struct.WebPConfig, align 4         ; 53 uses
   %5 = alloca %struct.WebPAuxStats, align 4       ; 3 uses
   %6 = alloca %struct.WebPMemoryWriter, align 8   ; 10 uses
@@ -214,7 +214,7 @@ bb.a:
   %i.l = alloca i32, align 4                      ; 34 uses
   %9 = alloca %struct.WebPPicture, align 8        ; 14 uses
   %10 = alloca [4 x %struct.anon.0], align 16     ; 12 uses
-  %i.m = alloca [5 x float], align 16             ; 7 uses
+  %i.m = alloca [5 x float], align 16             ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
@@ -617,7 +617,7 @@ bb.eu:                                            ; preds = %.thread827
   %.05251121 = phi i32 [ %.05251367, %.thread883 ], [ %.1526, %bb.eu ]
   %.05211107 = phi i32 [ %.05211368, %.thread883 ], [ %.1522, %bb.eu ]
   %.05141093 = phi i32 [ %.05141369, %.thread883 ], [ %.4518, %bb.eu ] ; 5 uses
-  %.05101079 = phi i32 [ %.05101370, %.thread883 ], [ %.1511, %bb.eu ] ; 5 uses
+  %.05101079 = phi i32 [ %.05101370, %.thread883 ], [ %.1511, %bb.eu ] ; 6 uses
   %.04991065 = phi ptr [ %.04991371, %.thread883 ], [ %.1500, %bb.eu ] ; 3 uses
   %.04951051 = phi ptr [ %.04951372, %.thread883 ], [ %.1496, %bb.eu ] ; 6 uses
   %.4489 = phi ptr [ %.3488.ph, %.thread883 ], [ %.2487, %bb.eu ] ; 7 uses
@@ -1020,30 +1020,36 @@ bb.kg:                                            ; preds = %bb.ke, %bb.kf
   %i.ais = load i32, ptr %i.xk, align 8
   %i.ait = icmp sgt i32 %i.ais, 0
   %or.cond56 = select i1 %i.aio, i1 %i.ait, i1 false
-  br i1 %or.cond56, label %bb.kh, label %bb.ki
+  br i1 %or.cond56, label %bb.kh, label %11
 
 bb.kh:                                            ; preds = %bb.kg
   call fastcc void @PrintMapInfo(ptr noundef %2)
-  br label %bb.ki
+  br label %11
 
-bb.ki:                                            ; preds = %bb.kh, %bb.kg
-  br i1 %i.yo, label %.thread946, label %bb.kn
+11:                                               ; preds = %bb.kh, %bb.kg
+  br i1 %i.yo, label %bb.ki, label %bb.kn
 
-.thread946:                                       ; preds = %bb.kc, %bb.ki
+bb.ki:                                            ; preds = %11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #11
+  %12 = call i32 @WebPPictureDistortion(ptr noundef nonnull %2, ptr noundef nonnull %3, i32 noundef %.05101079, ptr noundef nonnull %i.m) #11
+  %.not737 = icmp eq i32 %12, 0
+  br i1 %.not737, label %bb.km, label %bb.kj
+
+.thread946:                                       ; preds = %bb.kc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #11
   %i.aiu = call i32 @WebPPictureDistortion(ptr noundef nonnull %2, ptr noundef nonnull %3, i32 noundef %.05101079, ptr noundef nonnull %i.m) #11
   %.not737.a = icmp eq i32 %i.aiu, 0
-  %11 = load ptr, ptr @stderr, align 8, !tbaa !11 ; 3 uses
-  br i1 %.not737.a, label %bb.km, label %bb.kj
+  br i1 %.not737.a, label %bb.km, label %bb.kl
 
-bb.kj:                                            ; preds = %.thread946
+bb.kj:                                            ; preds = %bb.ki
   br i1 %i.aio, label %bb.kk, label %bb.kl
 
 bb.kk:                                            ; preds = %bb.kj
+  %13 = load ptr, ptr @stderr, align 8, !tbaa !11
   %i.aiv = zext nneg i32 %.05101079 to i64
   %i.aiw = getelementptr inbounds nuw [8 x i8], ptr @main.distortion_names, i64 %i.aiv
   %i.aix = load ptr, ptr %i.aiw, align 8, !tbaa !44
-  %i.aiy = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %11, ptr noundef nonnull @.str.110, ptr noundef %i.aix) #14 ; 0 uses
+  %i.aiy = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %13, ptr noundef nonnull @.str.110, ptr noundef %i.aix) #14 ; 0 uses
   %i.aiz = load ptr, ptr @stderr, align 8, !tbaa !11
   %i.aja = load <4 x float>, ptr %i.m, align 16, !tbaa !29
   %i.ajb = fpext <4 x float> %i.aja to <4 x double> ; 4 uses
@@ -1057,26 +1063,28 @@ bb.kk:                                            ; preds = %bb.kj
   %i.ajj = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aiz, ptr noundef nonnull @.str.111, double noundef %i.ajf, double noundef %i.ajg, double noundef %i.ajh, double noundef %i.aji, double noundef %i.aje) #14 ; 0 uses
   br label %.thread948
 
-bb.kl:                                            ; preds = %bb.kj
+bb.kl:                                            ; preds = %.thread946, %bb.kj
+  %14 = load ptr, ptr @stderr, align 8, !tbaa !11
   %i.ajk = getelementptr inbounds nuw i8, ptr %2, i64 128
   %i.ajl = load ptr, ptr %i.ajk, align 8, !tbaa !24
   %i.ajm = load i32, ptr %i.ajl, align 4, !tbaa !31
   %i.ajn = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.ajo = load float, ptr %i.ajn, align 16, !tbaa !29
   %i.ajp = fpext float %i.ajo to double
-  %i.ajq = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %11, ptr noundef nonnull @.str.112, i32 noundef %i.ajm, double noundef %i.ajp) #14 ; 0 uses
+  %i.ajq = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %14, ptr noundef nonnull @.str.112, i32 noundef %i.ajm, double noundef %i.ajp) #14 ; 0 uses
   br label %.thread948
 
 .thread948:                                       ; preds = %bb.kl, %bb.kk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #11
   br label %bb.kn
 
-bb.km:                                            ; preds = %.thread946
-  %fwrite738 = call i64 @fwrite(ptr nonnull @.str.109, i64 38, i64 1, ptr %11) #12 ; 0 uses
+bb.km:                                            ; preds = %bb.ki, %.thread946
+  %15 = load ptr, ptr @stderr, align 8, !tbaa !11
+  %fwrite738 = call i64 @fwrite(ptr nonnull @.str.109, i64 38, i64 1, ptr %15) #12 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #11
   br label %bb.kp
 
-bb.kn:                                            ; preds = %.thread948, %bb.ki
+bb.kn:                                            ; preds = %.thread948, %11
   br i1 %i.aio, label %bb.ko, label %bb.kp
 
 bb.ko:                                            ; preds = %bb.kn

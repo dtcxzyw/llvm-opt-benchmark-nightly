@@ -31,16 +31,24 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 56
   br label %.outer873.a
 
-.outer873.a:                                      ; preds = %.outer873.backedge, %bb.a
-  %.1631.ph = phi i32 [ -1, %bb.a ], [ %.1631.ph.be, %.outer873.backedge ] ; 6 uses
-  %.1577.ph = phi i32 [ 0, %bb.a ], [ %.1577.ph.be, %.outer873.backedge ]
-  %.1558.ph = phi i32 [ 0, %bb.a ], [ %.1558.ph.be, %.outer873.backedge ]
-  %.1545.ph = phi ptr [ %i.d, %bb.a ], [ %.1545.ph.be, %.outer873.backedge ]
+.loopexit870:                                     ; preds = %gv_isspace.exit773, %bb.b
+  %.lcssa1020 = phi i32 [ %.35601021, %bb.b ], [ %.3560, %gv_isspace.exit773 ]
+  %.2559.lcssa = phi i32 [ %.1558.ph876, %bb.b ], [ %.35601024, %gv_isspace.exit773 ]
+  %.lcssa1019 = phi i1 [ %i.s, %bb.b ], [ %i.w, %gv_isspace.exit773 ]
+  %.lcssa990 = phi i32 [ %i.r, %bb.b ], [ %i.v, %gv_isspace.exit773 ]
+  %.3560.le = select i1 %.lcssa1019, i32 %.2559.lcssa, i32 %.lcssa1020
+  br label %.outer872.backedge
+
+.outer873.a:                                      ; preds = %.outer872.backedge, %bb.a
+  %.1631.ph = phi i32 [ -1, %bb.a ], [ %.1631.ph.be, %.outer872.backedge ] ; 6 uses
+  %.1577.ph = phi i32 [ 0, %bb.a ], [ %.1577.ph.be, %.outer872.backedge ]
+  %.1558.ph = phi i32 [ 0, %bb.a ], [ %.1558.ph.be, %.outer872.backedge ]
+  %.1545.ph = phi ptr [ %i.d, %bb.a ], [ %.1545.ph.be, %.outer872.backedge ]
   br label %.outer874
 
 .outer874:                                        ; preds = %.outer873.a, %bb.au
-  %.1577.ph875 = phi i32 [ %.1577.ph, %.outer873.a ], [ %spec.select761, %bb.au ] ; 14 uses
-  %.1558.ph876 = phi i32 [ %.1558.ph, %.outer873.a ], [ %i.fb, %bb.au ] ; 10 uses
+  %.1577.ph875 = phi i32 [ %.1577.ph, %.outer873.a ], [ %spec.select761, %bb.au ] ; 13 uses
+  %.1558.ph876 = phi i32 [ %.1558.ph, %.outer873.a ], [ %i.fb, %bb.au ] ; 11 uses
   %.1545.ph877 = phi ptr [ %.1545.ph, %.outer873.a ], [ %i.ai, %bb.au ]
   %i.m = trunc i32 %.1558.ph876 to i8
   %i.n = trunc i32 %.1558.ph876 to i16
@@ -49,7 +57,7 @@ bb.a:
 
 .backedge878:                                     ; preds = %.backedge878.backedge, %.outer874
   %.1545 = phi ptr [ %.1545.ph877, %.outer874 ], [ %i.et, %.backedge878.backedge ] ; 4 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %.1545, i64 1 ; 6 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.1545, i64 1 ; 5 uses
   %i.q = load i8, ptr %.1545, align 1, !tbaa !8   ; 3 uses
   switch i8 %i.q, label %gv_isspace.exit.loopexit [
     i8 0, label %.critedge29
@@ -67,22 +75,13 @@ bb.b:                                             ; preds = %.backedge878, %.bac
   %spec.store.select = select i1 %.not757, i32 10, i32 -1 ; 2 uses
   %i.r = call i32 @getc(ptr noundef %0)           ; 4 uses
   %i.s = icmp slt i32 %i.r, 0                     ; 2 uses
-  %not.1020 = xor i1 %i.s, true
-  %3 = zext i1 %not.1020 to i32
-  %.35601021 = add nsw i32 %.1558.ph876, %3       ; 2 uses
+  %.35601021 = add nsw i32 %.1558.ph876, 1        ; 2 uses
   %i.t = icmp eq i32 %i.r, %spec.store.select
   %or.cond7581022 = or i1 %i.s, %i.t
-  br i1 %or.cond7581022, label %.outer873.backedge, label %.lr.ph1025
-
-.outer873.backedge:                               ; preds = %gv_isspace.exit773, %bb.b, %bb.c, %.thread845, %bb.es, %gv_isspace.exit
-  %.1631.ph.be = phi i32 [ %.24654, %.thread845 ], [ %i.u, %bb.c ], [ %i.r, %bb.b ], [ %i.aa, %gv_isspace.exit ], [ %.24654, %bb.es ], [ %i.v, %gv_isspace.exit773 ]
-  %.1577.ph.be = phi i32 [ %.6582, %.thread845 ], [ %.1577.ph875, %bb.c ], [ %.1577.ph875, %bb.b ], [ %.1577.ph875, %gv_isspace.exit ], [ %.6582, %bb.es ], [ %.1577.ph875, %gv_isspace.exit773 ]
-  %.1558.ph.be = phi i32 [ %.42, %.thread845 ], [ %.25591023, %bb.c ], [ %.35601021, %bb.b ], [ %.4561, %gv_isspace.exit ], [ %i.op, %bb.es ], [ %.3560, %gv_isspace.exit773 ]
-  %.1545.ph.be = phi ptr [ %.15, %.thread845 ], [ %i.p, %bb.c ], [ %i.p, %bb.b ], [ %.2546, %gv_isspace.exit ], [ %.15, %bb.es ], [ %i.p, %gv_isspace.exit773 ]
-  br label %.outer873.a, !llvm.loop !12
+  br i1 %or.cond7581022, label %.loopexit870, label %.lr.ph1025
 
 .lr.ph1025:                                       ; preds = %bb.b, %gv_isspace.exit773
-  %.35601024 = phi i32 [ %.3560, %gv_isspace.exit773 ], [ %.35601021, %bb.b ] ; 2 uses
+  %.35601024 = phi i32 [ %.3560, %gv_isspace.exit773 ], [ %.35601021, %bb.b ] ; 3 uses
   %i.u = phi i32 [ %i.v, %gv_isspace.exit773 ], [ %i.r, %bb.b ] ; 3 uses
   %.25591023 = phi i32 [ %.35601024, %gv_isspace.exit773 ], [ %.1558.ph876, %bb.b ]
   switch i32 %i.u, label %bb.c [
@@ -97,16 +96,21 @@ bb.b:                                             ; preds = %.backedge878, %.bac
 gv_isspace.exit773:                               ; preds = %.lr.ph1025, %.lr.ph1025, %.lr.ph1025, %.lr.ph1025, %.lr.ph1025, %.lr.ph1025
   %i.v = call i32 @getc(ptr noundef %0)           ; 4 uses
   %i.w = icmp slt i32 %i.v, 0                     ; 2 uses
-  %not. = xor i1 %i.w, true
-  %4 = zext i1 %not. to i32
-  %.3560 = add nsw i32 %.35601024, %4             ; 2 uses
+  %.3560 = add nsw i32 %.35601024, 1              ; 2 uses
   %i.x = icmp eq i32 %i.v, %spec.store.select
   %or.cond758 = or i1 %i.w, %i.x
-  br i1 %or.cond758, label %.outer873.backedge, label %.lr.ph1025
+  br i1 %or.cond758, label %.loopexit870, label %.lr.ph1025
 
 bb.c:                                             ; preds = %.lr.ph1025
   %i.y = call i32 @ungetc(i32 noundef %i.u, ptr noundef %0) ; 0 uses
-  br label %.outer873.backedge
+  br label %.outer872.backedge
+
+.outer872.backedge:                               ; preds = %bb.c, %.loopexit870, %.thread845, %bb.es, %gv_isspace.exit
+  %.1631.ph.be = phi i32 [ %.lcssa990, %.loopexit870 ], [ %i.u, %bb.c ], [ %i.aa, %gv_isspace.exit ], [ %.24654, %bb.es ], [ %.24654, %.thread845 ]
+  %.1577.ph.be = phi i32 [ %.1577.ph875, %.loopexit870 ], [ %.1577.ph875, %bb.c ], [ %.1577.ph875, %gv_isspace.exit ], [ %.6582, %bb.es ], [ %.6582, %.thread845 ]
+  %.1558.ph.be = phi i32 [ %.3560.le, %.loopexit870 ], [ %.25591023, %bb.c ], [ %.4561, %gv_isspace.exit ], [ %i.op, %bb.es ], [ %.42, %.thread845 ]
+  %.1545.ph.be = phi ptr [ %i.p, %.loopexit870 ], [ %i.p, %bb.c ], [ %.2546, %gv_isspace.exit ], [ %.15, %bb.es ], [ %.15, %.thread845 ]
+  br label %.outer873.a, !llvm.loop !12
 
 gv_isspace.exit.loopexit:                         ; preds = %.backedge878
   %i.z = sext i8 %i.q to i32
@@ -120,7 +124,7 @@ gv_isspace.exit:                                  ; preds = %gv_isspace.exit.loo
   %i.ad = zext i1 %i.ac to i32
   %.4561 = add nsw i32 %.1558.ph876, %i.ad
   %.not756 = icmp eq i32 %i.ab, %i.aa
-  br i1 %.not756, label %.outer873.backedge, label %bb.d
+  br i1 %.not756, label %.outer872.backedge, label %bb.d
 
 bb.d:                                             ; preds = %gv_isspace.exit
   br i1 %i.ac, label %bb.e, label %.critedge29
@@ -523,12 +527,12 @@ bb.er:                                            ; preds = %bb.ek
   %i.om = icmp sgt i32 %.22621, 0
   %i.on = icmp sgt i32 %.24654, -1
   %or.cond82 = and i1 %i.on, %i.om
-  br i1 %or.cond82, label %bb.es, label %.outer873.backedge
+  br i1 %or.cond82, label %bb.es, label %.outer872.backedge
 
 bb.es:                                            ; preds = %.thread845
   %i.oo = call i32 @ungetc(i32 noundef %.24654, ptr noundef %0) ; 0 uses
   %i.op = add nsw i32 %.42, -1
-  br label %.outer873.backedge
+  br label %.outer872.backedge
 
 .critedge29:                                      ; preds = %bb.cw, %gv_isspace.exit775.thread, %.lr.ph1012, %.backedge878, %bb.f, %bb.ar, %bb.aa, %bb.v, %bb.n, %bb.er, %bb.d, %bb.e, %bb.dd, %bb.cu, %bb.cm, %bb.ca
   %.25655 = phi i32 [ %i.ab, %bb.e ], [ %i.ab, %bb.d ], [ %.1631.ph, %.backedge878 ], [ %.7637.ph, %bb.dd ], [ %.19649, %bb.er ], [ 45, %bb.ca ], [ %.1631.ph, %bb.aa ], [ %.7637.ph, %bb.cm ], [ %.7637.ph, %bb.cu ], [ %i.hr, %.lr.ph1012 ], [ %.1631.ph, %bb.n ], [ %.1631.ph, %bb.v ], [ %.1631.ph, %bb.ar ], [ %.1631.ph, %bb.f ], [ 35, %bb.cw ], [ %.2632, %gv_isspace.exit775.thread ]

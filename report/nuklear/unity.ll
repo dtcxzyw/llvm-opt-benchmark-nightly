@@ -205,7 +205,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %i.fv = phi i1 [ false, %bb.ad ], [ %i.fu, %bb.ae ] ; 4 uses
+  %i.fv = phi i1 [ false, %bb.ad ], [ %i.fu, %bb.ae ] ; 3 uses
+  %3 = zext i1 %i.fv to i32
   br i1 %or.cond464.i19, label %bb.ag, label %bb.ak
 
 bb.ag:                                            ; preds = %bb.af
@@ -235,8 +236,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.ah, %bb.
   br label %nk_input_is_mouse_hovering_rect.exit.thread.i
 
 nk_input_is_mouse_hovering_rect.exit.thread.i:    ; preds = %bb.ak, %bb.aj, %._crit_edge.i, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u
-  %.1417.shrunk.i = phi i1 [ %i.fv, %bb.ak ], [ %i.fv, %bb.aj ], [ true, %._crit_edge.i ], [ false, %bb.ac ], [ false, %bb.ab ], [ false, %bb.aa ], [ false, %bb.z ], [ false, %bb.y ], [ false, %bb.v ], [ false, %bb.u ], [ false, %bb.w ], [ false, %bb.x ] ; 2 uses
-  %.1417.i = zext i1 %.1417.shrunk.i to i32       ; 2 uses
+  %.1417.i = phi i32 [ %3, %bb.ak ], [ 1, %bb.aj ], [ 1, %._crit_edge.i ], [ 0, %bb.ac ], [ 0, %bb.ab ], [ 0, %bb.aa ], [ 0, %bb.z ], [ 0, %bb.y ], [ 0, %bb.v ], [ 0, %bb.u ], [ 0, %bb.w ], [ 0, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #50
   store i32 0, ptr %i.b, align 4, !tbaa !55
   %i.ge = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
@@ -269,7 +269,8 @@ nk_input_is_mouse_hovering_rect.exit.thread.i:    ; preds = %bb.ak, %bb.aj, %._c
   %i.hb = fptoui float %i.ha to i32
   %i.hc = load ptr, ptr %i.go, align 8, !tbaa !486
   store i32 %i.hb, ptr %i.hc, align 4, !tbaa !55
-  %or.cond4.i = and i1 %or.cond464.i19, %.1417.shrunk.i
+  %4 = icmp ne i32 %.1417.i, 0
+  %or.cond4.i = and i1 %or.cond464.i19, %4
   br i1 %or.cond4.i, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %nk_input_is_mouse_hovering_rect.exit.thread.i

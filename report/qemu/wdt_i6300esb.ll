@@ -202,11 +202,15 @@ bb.i:                                             ; preds = %bb.g
   %or.cond3.i10 = and i1 %i.j, %i.m
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 3084 ; 3 uses
   %i.o = load i32, ptr %i.n, align 4              ; 2 uses
-  %4 = icmp eq i32 %i.o, 1
-  %or.cond21.i = select i1 %or.cond3.i10, i1 %4, i1 false
-  br i1 %or.cond21.i, label %bb.j, label %._crit_edge.i.a
+  br i1 %or.cond3.i10, label %4, label %._crit_edge.i.a
 
-bb.j:                                             ; preds = %bb.i
+4:                                                ; preds = %bb.i
+  switch i32 %i.o, label %i6300esb_mem_writeb.exit [
+    i32 1, label %bb.j
+    i32 2, label %bb.p
+  ]
+
+bb.j:                                             ; preds = %4
   store i32 2, ptr %i.n, align 4
   br label %i6300esb_mem_writeb.exit
 
@@ -257,7 +261,7 @@ bb.o:                                             ; preds = %i6300esb_restart_ti
   store i32 0, ptr %i.ad, align 16
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %i6300esb_restart_timer.exit.i, %bb.k
+bb.p:                                             ; preds = %bb.o, %i6300esb_restart_timer.exit.i, %bb.k, %4
   store i32 0, ptr %i.n, align 4
   br label %i6300esb_mem_writeb.exit
 
@@ -316,7 +320,7 @@ bb.y:                                             ; preds = %bb.a
   tail call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str.8, i32 noundef 391, ptr noundef nonnull @__func__.i6300esb_mem_writefn, ptr noundef null) #7
   unreachable
 
-i6300esb_mem_writeb.exit:                         ; preds = %bb.x, %._crit_edge.i13, %bb.t, %bb.r, %bb.p, %._crit_edge.i.a, %bb.j, %bb.h, %bb.f, %bb.e, %bb.d, %bb.c
+i6300esb_mem_writeb.exit:                         ; preds = %bb.x, %._crit_edge.i13, %bb.t, %bb.r, %bb.p, %._crit_edge.i.a, %bb.j, %4, %bb.h, %bb.f, %bb.e, %bb.d, %bb.c
   ret void
 }
 

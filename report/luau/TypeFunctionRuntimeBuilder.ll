@@ -204,7 +204,7 @@ _ZN4Luau10getMutableINS_25TypeFunctionPrimitiveTypeEEEPT_PKNS_16TypeFunctionType
   br i1 %or.cond, label %.thread, label %bb.l
 
 .thread:                                          ; preds = %bb.a, %_ZN4Luau10getMutableINS_25TypeFunctionPrimitiveTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
-  %.not.i250 = phi i1 [ false, %_ZN4Luau10getMutableINS_25TypeFunctionPrimitiveTypeEEEPT_PKNS_16TypeFunctionTypeE.exit ], [ %.not.i249, %bb.a ] ; 6 uses
+  %.not.i250 = phi i1 [ false, %_ZN4Luau10getMutableINS_25TypeFunctionPrimitiveTypeEEEPT_PKNS_16TypeFunctionTypeE.exit ], [ %.not.i249, %bb.a ] ; 2 uses
   %i.f = tail call noundef ptr @_ZN4Luau9asMutableEPKNS_4TypeE(ptr noundef %2) ; 2 uses
   %.not.i.i133 = icmp eq ptr %i.f, null
   %brmerge = or i1 %.not.i250, %.not.i.i133
@@ -219,9 +219,10 @@ _ZN4Luau10getMutableINS_23TypeFunctionUnknownTypeEEEPT_PKNS_16TypeFunctionTypeE.
   br i1 %or.cond294, label %.thread214, label %bb.l
 
 .thread214:                                       ; preds = %.thread, %_ZN4Luau10getMutableINS_23TypeFunctionUnknownTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
+  %.not.i250329 = phi i1 [ false, %_ZN4Luau10getMutableINS_23TypeFunctionUnknownTypeEEEPT_PKNS_16TypeFunctionTypeE.exit ], [ %.not.i250, %.thread ] ; 2 uses
   %i.k = tail call noundef ptr @_ZN4Luau9asMutableEPKNS_4TypeE(ptr noundef %2) ; 2 uses
   %.not.i.i135 = icmp eq ptr %i.k, null
-  %brmerge306 = or i1 %.not.i250, %.not.i.i135
+  %brmerge306 = or i1 %.not.i250329, %.not.i.i135
   br i1 %brmerge306, label %.thread217, label %_ZN4Luau10getMutableINS_21TypeFunctionNeverTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
 
 _ZN4Luau10getMutableINS_21TypeFunctionNeverTypeEEEPT_PKNS_16TypeFunctionTypeE.exit: ; preds = %.thread214
@@ -233,9 +234,10 @@ _ZN4Luau10getMutableINS_21TypeFunctionNeverTypeEEEPT_PKNS_16TypeFunctionTypeE.ex
   br i1 %or.cond295, label %.thread217, label %bb.l
 
 .thread217:                                       ; preds = %.thread214, %_ZN4Luau10getMutableINS_21TypeFunctionNeverTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
+  %.not.i250329333 = phi i1 [ false, %_ZN4Luau10getMutableINS_21TypeFunctionNeverTypeEEEPT_PKNS_16TypeFunctionTypeE.exit ], [ %.not.i250329, %.thread214 ] ; 2 uses
   %i.p = tail call noundef ptr @_ZN4Luau9asMutableEPKNS_4TypeE(ptr noundef %2) ; 2 uses
   %.not.i.i137 = icmp eq ptr %i.p, null
-  %brmerge307 = or i1 %.not.i250, %.not.i.i137
+  %brmerge307 = or i1 %.not.i250329333, %.not.i.i137
   br i1 %brmerge307, label %.thread220, label %_ZN4Luau10getMutableINS_19TypeFunctionAnyTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
 
 _ZN4Luau10getMutableINS_19TypeFunctionAnyTypeEEEPT_PKNS_16TypeFunctionTypeE.exit: ; preds = %.thread217
@@ -247,9 +249,10 @@ _ZN4Luau10getMutableINS_19TypeFunctionAnyTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
   br i1 %or.cond296, label %.thread220, label %bb.l
 
 .thread220:                                       ; preds = %.thread217, %_ZN4Luau10getMutableINS_19TypeFunctionAnyTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
+  %.not.i250329333337 = phi i1 [ false, %_ZN4Luau10getMutableINS_19TypeFunctionAnyTypeEEEPT_PKNS_16TypeFunctionTypeE.exit ], [ %.not.i250329333, %.thread217 ] ; 3 uses
   %i.u = tail call noundef ptr @_ZN4Luau9asMutableEPKNS_4TypeE(ptr noundef %2) ; 2 uses
   %.not.i.i139 = icmp eq ptr %i.u, null
-  %brmerge308 = or i1 %.not.i250, %.not.i.i139
+  %brmerge308 = or i1 %.not.i250329333337, %.not.i.i139
   br i1 %brmerge308, label %.thread223, label %_ZN4Luau10getMutableINS_25TypeFunctionSingletonTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
 
 _ZN4Luau10getMutableINS_25TypeFunctionSingletonTypeEEEPT_PKNS_16TypeFunctionTypeE.exit: ; preds = %.thread220
@@ -275,7 +278,7 @@ _ZN4Luau10getMutableINS_25TypeFunctionSingletonTypeEEEPT_PKNS_16TypeFunctionType
 
 _ZN4Luau10getMutableINS_9UnionTypeEEEPT_PKNS_4TypeE.exit: ; preds = %.thread223
   %i.af = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  br i1 %.not.i250, label %.thread226, label %_ZN4Luau10getMutableINS_21TypeFunctionUnionTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
+  br i1 %.not.i250329333337, label %.thread226, label %_ZN4Luau10getMutableINS_21TypeFunctionUnionTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
 
 _ZN4Luau10getMutableINS_21TypeFunctionUnionTypeEEEPT_PKNS_16TypeFunctionTypeE.exit: ; preds = %_ZN4Luau10getMutableINS_9UnionTypeEEEPT_PKNS_4TypeE.exit
   %i.ag = load i32, ptr %i.z, align 8, !tbaa !174
@@ -291,7 +294,7 @@ bb.b:                                             ; preds = %_ZN4Luau10getMutabl
   br label %bb.l
 
 .thread226:                                       ; preds = %.thread223.thread, %_ZN4Luau10getMutableINS_9UnionTypeEEEPT_PKNS_4TypeE.exit, %.thread223, %_ZN4Luau10getMutableINS_21TypeFunctionUnionTypeEEEPT_PKNS_16TypeFunctionTypeE.exit
-  %.not.i250329333337341345 = phi i1 [ true, %.thread223.thread ], [ true, %_ZN4Luau10getMutableINS_9UnionTypeEEEPT_PKNS_4TypeE.exit ], [ %.not.i250, %.thread223 ], [ false, %_ZN4Luau10getMutableINS_21TypeFunctionUnionTypeEEEPT_PKNS_16TypeFunctionTypeE.exit ] ; 7 uses
+  %.not.i250329333337341345 = phi i1 [ true, %.thread223.thread ], [ true, %_ZN4Luau10getMutableINS_9UnionTypeEEEPT_PKNS_4TypeE.exit ], [ %.not.i250329333337, %.thread223 ], [ false, %_ZN4Luau10getMutableINS_21TypeFunctionUnionTypeEEEPT_PKNS_16TypeFunctionTypeE.exit ] ; 7 uses
   %i.al = tail call noundef ptr @_ZN4Luau9asMutableEPKNS_4TypeE(ptr noundef %2) ; 3 uses
   %.not.i.i143 = icmp eq ptr %i.al, null
   br i1 %.not.i.i143, label %.thread229, label %_ZN4Luau10getMutableINS_16IntersectionTypeEEEPT_PKNS_4TypeE.exit

@@ -201,8 +201,9 @@ bb.j:                                             ; preds = %._crit_edge
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge
+  %5 = phi i1 [ %i.at, %._crit_edge ], [ true, %bb.j ]
   %i.cb = icmp ne ptr %3, null
-  %or.cond3 = and i1 %i.cb, %i.at
+  %or.cond3 = and i1 %i.cb, %5
   br i1 %or.cond3, label %bb.l, label %.thread
 
 bb.l:                                             ; preds = %bb.k

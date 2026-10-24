@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.c, label %.preheader, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit.thread
 
 .preheader:                                       ; preds = %bb.a, %.preheader
-  %.0.i = phi ptr [ %i.d, %.preheader ], [ %1, %bb.a ] ; 10 uses
+  %.0.i = phi ptr [ %i.d, %.preheader ], [ %1, %bb.a ] ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.0.i, i64 2
   %i.e = load i16, ptr %.0.i, align 2, !tbaa !34  ; 2 uses
   %i.f = icmp ugt i16 %i.b, %i.e
@@ -216,22 +216,29 @@ bb.b:                                             ; preds = %.preheader
   %.not = icmp ne i8 %4, 0
   %i.i = icmp ne ptr %.0.i, %1                    ; 2 uses
   %or.cond.i = and i1 %.not, %i.i
-  br i1 %or.cond.i, label %bb.c, label %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit
+  br i1 %or.cond.i, label %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %7 = tail call noundef signext i8 @_ZN6icu_7816ReorderingBuffer12appendZeroCCEPKDsS2_R10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef %1, ptr noundef nonnull %.0.i, ptr noundef nonnull align 4 dereferenceable(4) %6) ; 0 uses
-  br label %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit
+  %7 = load i32, ptr %6, align 4, !tbaa !29
+  %8 = icmp slt i32 %7, 1
+  br i1 %8, label %bb.d, label %.thread573
 
-_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit: ; preds = %bb.b, %bb.c
+_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit: ; preds = %bb.b
+  %9 = tail call noundef signext i8 @_ZN6icu_7816ReorderingBuffer12appendZeroCCEPKDsS2_R10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef %1, ptr noundef nonnull %.0.i, ptr noundef nonnull align 4 dereferenceable(4) %6) ; 0 uses
   %i.j = load i32, ptr %6, align 4, !tbaa !29
   %i.k = icmp slt i32 %i.j, 1
-  br i1 %i.k, label %bb.d, label %.thread573
+  br i1 %i.k, label %.thread704, label %.thread573
 
-bb.d:                                             ; preds = %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit
-  %i.l = tail call ptr @u_strchr_78(ptr noundef nonnull %.0.i, i16 noundef zeroext 0) ; 6 uses
+.thread704:                                       ; preds = %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit
+  %10 = tail call ptr @u_strchr_78(ptr noundef nonnull %.0.i, i16 noundef zeroext 0)
+  br label %bb.e
+
+bb.d:                                             ; preds = %bb.c
+  %i.l = tail call ptr @u_strchr_78(ptr noundef nonnull %.0.i, i16 noundef zeroext 0) ; 2 uses
   br i1 %i.i, label %bb.e, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit.thread
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %.thread704, %bb.d
+  %11 = phi ptr [ %10, %.thread704 ], [ %i.l, %bb.d ] ; 5 uses
   %i.m = getelementptr inbounds i8, ptr %.0.i, i64 -2 ; 2 uses
   %i.n = load i16, ptr %i.m, align 2, !tbaa !34
   %i.o = zext i16 %i.n to i32                     ; 3 uses
@@ -334,7 +341,7 @@ _ZN6icu_7816ReorderingBuffer12removeSuffixEi.exit: ; preds = %bb.i, %bb.j
   br label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit.thread
 
 _ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit.thread: ; preds = %.split, %bb.e, %bb.g, %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit, %bb.d, %_ZN6icu_7816ReorderingBuffer12removeSuffixEi.exit, %bb.a
-  %.0306 = phi ptr [ %2, %bb.a ], [ %i.l, %_ZN6icu_7816ReorderingBuffer12removeSuffixEi.exit ], [ %i.l, %bb.d ], [ %i.l, %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit ], [ %i.l, %bb.e ], [ %i.l, %bb.g ], [ %i.l, %.split ] ; 20 uses
+  %.0306 = phi ptr [ %2, %bb.a ], [ %11, %_ZN6icu_7816ReorderingBuffer12removeSuffixEi.exit ], [ %i.l, %bb.d ], [ %11, %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit ], [ %11, %bb.e ], [ %11, %bb.g ], [ %11, %.split ] ; 20 uses
   %.0293 = phi ptr [ %1, %bb.a ], [ %i.m, %_ZN6icu_7816ReorderingBuffer12removeSuffixEi.exit ], [ %1, %bb.d ], [ %.0.i, %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEia.exit ], [ %.0.i, %bb.e ], [ %.0.i, %bb.g ], [ %.0.i, %.split ] ; 4 uses
   %i.bt = icmp eq ptr %.0293, %.0306
   br i1 %i.bt, label %._crit_edge, label %.lr.ph.lr.ph
@@ -737,8 +744,8 @@ bb.ed:                                            ; preds = %_ZNK6icu_7816Reorde
   %i.vd = icmp eq ptr %.19, %.0306
   br i1 %i.vd, label %._crit_edge, label %.lr.ph
 
-.thread573:                                       ; preds = %bb.cj, %bb.co, %bb.ci, %bb.cn, %bb.dk, %bb.cl, %bb.ak, %bb.dx, %bb.bq, %bb.bb, %bb.dy, %_ZN6icu_7816ReorderingBuffer6appendEihR10UErrorCode.exit, %bb.bc, %bb.ec, %bb.bu, %bb.cx, %_ZNK6icu_7816ReorderingBuffer6equalsEPKDsS2_.exit, %bb.w, %bb.cy, %bb.cz, %bb.ea, %._crit_edge, %bb.k, %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit
-  %.12292 = phi i8 [ 1, %bb.ea ], [ 1, %._crit_edge ], [ 0, %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit ], [ 1, %bb.k ], [ 1, %bb.cz ], [ 1, %bb.cy ], [ 1, %bb.cj ], [ 1, %bb.co ], [ 1, %bb.ci ], [ 1, %bb.cn ], [ 0, %bb.dk ], [ 1, %bb.dx ], [ 1, %bb.bq ], [ 1, %bb.bb ], [ 1, %bb.dy ], [ 1, %_ZN6icu_7816ReorderingBuffer6appendEihR10UErrorCode.exit ], [ 1, %bb.bc ], [ 0, %bb.cl ], [ 0, %bb.w ], [ 0, %_ZNK6icu_7816ReorderingBuffer6equalsEPKDsS2_.exit ], [ 0, %bb.cx ], [ 0, %bb.bu ], [ 1, %bb.ak ], [ 0, %bb.ec ]
+.thread573:                                       ; preds = %bb.cj, %bb.co, %bb.ci, %bb.cn, %bb.dk, %bb.cl, %bb.ak, %bb.dx, %bb.bq, %bb.bb, %bb.dy, %_ZN6icu_7816ReorderingBuffer6appendEihR10UErrorCode.exit, %bb.bc, %bb.ec, %bb.bu, %bb.cx, %_ZNK6icu_7816ReorderingBuffer6equalsEPKDsS2_.exit, %bb.w, %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit, %bb.cy, %bb.cz, %bb.ea, %._crit_edge, %bb.k, %bb.c
+  %.12292 = phi i8 [ 1, %bb.ea ], [ 1, %._crit_edge ], [ 0, %bb.c ], [ 1, %bb.k ], [ 1, %bb.cz ], [ 1, %bb.cy ], [ 0, %_ZNK6icu_7815Normalizer2Impl30copyLowPrefixFromNulTerminatedEPKDsiPNS_16ReorderingBufferER10UErrorCode.exit ], [ 1, %bb.cj ], [ 1, %bb.co ], [ 1, %bb.ci ], [ 1, %bb.cn ], [ 0, %bb.dk ], [ 1, %bb.dx ], [ 1, %bb.bq ], [ 1, %bb.bb ], [ 1, %bb.dy ], [ 1, %_ZN6icu_7816ReorderingBuffer6appendEihR10UErrorCode.exit ], [ 1, %bb.bc ], [ 0, %bb.cl ], [ 0, %bb.w ], [ 0, %_ZNK6icu_7816ReorderingBuffer6equalsEPKDsS2_.exit ], [ 0, %bb.cx ], [ 0, %bb.bu ], [ 1, %bb.ak ], [ 0, %bb.ec ]
   ret i8 %.12292
 }
 
@@ -1141,7 +1148,7 @@ bb.br:                                            ; preds = %.noexc490, %bb.bp
 bb.bs:                                            ; preds = %bb.br
   %.not.i.i.i489 = icmp eq i16 %i.jf, 1
   %or.cond648 = or i1 %.not417, %.not.i.i.i489
-  br i1 %or.cond648, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread534, label %bb.bt
+  br i1 %or.cond648, label %bb.bu, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   %i.jh = load i16, ptr %i.t, align 2, !tbaa !67
@@ -1158,17 +1165,17 @@ bb.bt:                                            ; preds = %bb.bs
   %i.jn = getelementptr inbounds nuw [2 x i8], ptr %i.jk, i64 %i.jm
   %i.jo = load i16, ptr %i.jn, align 2, !tbaa !50
   %i.jp = icmp ult i16 %i.jo, 512
-  br i1 %i.jp, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread534, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread531
+  br i1 %i.jp, label %bb.bu, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread531
 
 _ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit: ; preds = %bb.bt
   %i.jq = and i16 %i.jf, 6
   %i.jr = icmp samesign ult i16 %i.jq, 3
-  br i1 %i.jr, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread534, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread531
+  br i1 %i.jr, label %bb.bu, label %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread531
 
-_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread534: ; preds = %.split, %bb.bs, %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit, %bb.bo
+_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread534: ; preds = %bb.bo
   br i1 %i.is, label %bb.bw, label %bb.bu
 
-bb.bu:                                            ; preds = %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread534
+bb.bu:                                            ; preds = %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit, %bb.bs, %.split, %_ZNK6icu_7815Normalizer2Impl20hasCompBoundaryAfterEPKhS2_a.exit.thread534
   %i.js = invoke noundef signext i8 @_ZN6icu_7812ByteSinkUtil15appendUnchangedEPKhS2_RNS_8ByteSinkEjPNS_5EditsER10UErrorCode(ptr noundef %.0315693, ptr noundef nonnull %.1354688, ptr noundef nonnull align 8 dereferenceable(8) %5, i32 noundef %1, ptr noundef %6, ptr noundef nonnull align 4 dereferenceable(4) %7)
           to label %bb.bv unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

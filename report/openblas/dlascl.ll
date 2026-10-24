@@ -111,21 +111,25 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 bb.p:                                             ; preds = %bb.o
   %i.ad = add nsw i32 %i.x, -1
   store i32 %i.ad, ptr %i.a, align 4, !tbaa !36
-  %i.ae = load i32, ptr %1, align 4, !tbaa !36    ; 4 uses
+  %i.ae = load i32, ptr %1, align 4, !tbaa !36    ; 5 uses
   %i.af = tail call i32 @llvm.usub.sat.i32(i32 %i.x, i32 1)
   %or.cond318 = icmp ugt i32 %i.ae, %i.af
   br i1 %or.cond318, label %.thread309.sink.split, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ag = load i32, ptr %2, align 4, !tbaa !36    ; 4 uses
+  %i.ag = load i32, ptr %2, align 4, !tbaa !36    ; 3 uses
   %i.ah = tail call i32 @llvm.usub.sat.i32(i32 %i.z, i32 1)
   %or.cond320 = icmp ugt i32 %i.ag, %i.ah
-  %.not267 = icmp ne i32 %i.ae, %i.ag
-  %or.cond312.not = and i1 %brmerge314.demorgan, %.not267
-  %or.cond = or i1 %or.cond320, %or.cond312.not
-  br i1 %or.cond, label %.thread309.sink.split, label %bb.r
+  br i1 %or.cond320, label %.thread309.sink.split, label %10
 
-bb.r:                                             ; preds = %bb.q
+10:                                               ; preds = %bb.q
+  br i1 %brmerge314.demorgan, label %11, label %bb.v
+
+11:                                               ; preds = %10
+  %.not267 = icmp eq i32 %i.ae, %i.ag
+  br i1 %.not267, label %bb.r, label %.thread309.sink.split
+
+bb.r:                                             ; preds = %11
   br i1 %i.s, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
@@ -138,10 +142,10 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 bb.u:                                             ; preds = %bb.t
   %i.aj = load i32, ptr %8, align 4, !tbaa !36
-  %.not269 = icmp sgt i32 %i.aj, %i.ag
+  %.not269 = icmp sgt i32 %i.aj, %i.ae
   br i1 %.not269, label %bb.v, label %.thread309.sink.split
 
-bb.v:                                             ; preds = %bb.u, %bb.t
+bb.v:                                             ; preds = %10, %bb.u, %bb.t
   br i1 %i.o, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
@@ -156,8 +160,8 @@ bb.x:                                             ; preds = %bb.v, %bb.w, %bb.o
   %.not271 = icmp eq i32 %.pr, 0
   br i1 %.not271, label %bb.y, label %.thread309
 
-.thread309.sink.split:                            ; preds = %bb.s, %bb.u, %bb.w, %bb.q, %bb.p, %bb.n, %bb.k, %bb.l, %bb.j, %bb.i, %.thread, %bb.h, %bb.g
-  %.sink = phi i32 [ -1, %bb.g ], [ -4, %.thread ], [ -6, %bb.j ], [ -2, %bb.p ], [ -3, %bb.q ], [ -9, %bb.n ], [ -7, %bb.k ], [ -5, %bb.i ], [ -4, %bb.h ], [ -7, %bb.l ], [ -9, %bb.w ], [ -9, %bb.u ], [ -9, %bb.s ] ; 2 uses
+.thread309.sink.split:                            ; preds = %bb.s, %bb.u, %bb.w, %bb.q, %11, %bb.p, %bb.n, %bb.k, %bb.l, %bb.j, %bb.i, %.thread, %bb.h, %bb.g
+  %.sink = phi i32 [ -1, %bb.g ], [ -4, %.thread ], [ -6, %bb.j ], [ -2, %bb.p ], [ -3, %bb.q ], [ -9, %bb.n ], [ -7, %bb.k ], [ -5, %bb.i ], [ -4, %bb.h ], [ -7, %bb.l ], [ -3, %11 ], [ -9, %bb.w ], [ -9, %bb.u ], [ -9, %bb.s ] ; 2 uses
   store i32 %.sink, ptr %9, align 4, !tbaa !36
   br label %.thread309
 
