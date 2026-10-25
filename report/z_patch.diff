@@ -1,0 +1,109 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+index 5ba84554895f7b..dfb5ea1a5426eb 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+@@ -481,6 +481,15 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+     Known = LHSKnown.intersectWith(RHSKnown);
+     break;
+   }
++  case Instruction::PHI: {
++    bool Changed = false;
++    for (unsigned OpNo = 0; OpNo < I->getNumOperands(); OpNo++)
++      Changed |= ShrinkDemandedConstant(I, OpNo, DemandedMask);
++    if (Changed)
++      return I;
++    llvm::computeKnownBits(I, Known, Q, Depth);
++    break;
++  }
+   case Instruction::Trunc: {
+     // If we do not demand the high bits of a right-shifted and truncated value,
+     // then we may be able to truncate it before the shift.
+diff --git a/llvm/test/Analysis/ValueTracking/phi-known-bits.ll b/llvm/test/Analysis/ValueTracking/phi-known-bits.ll
+index b8a5be58349938..418c93363d8c4b 100644
+--- a/llvm/test/Analysis/ValueTracking/phi-known-bits.ll
++++ b/llvm/test/Analysis/ValueTracking/phi-known-bits.ll
+@@ -49,7 +49,7 @@ define i8 @phi_ugt_high_bits_fail(i8 %x) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i8 [[X:%.*]], -66
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ 64, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], 64
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+@@ -93,7 +93,7 @@ define i8 @phi_uge_high_bits_fail(i8 %x) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i8 [[X:%.*]], 5
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ 1, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], 1
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+@@ -137,7 +137,7 @@ define i8 @phi_sge_high_bits_fail(i8 %x) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i8 [[X:%.*]], -2
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ 1, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], 1
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+@@ -202,7 +202,7 @@ define i8 @phi_sgt_high_bits_fail(i8 %x) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i8 [[X:%.*]], 62
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ 64, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], 64
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+@@ -332,7 +332,7 @@ define i8 @phi_sle_high_bits_fail(i8 %x) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[X:%.*]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -128, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], -128
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+@@ -355,7 +355,7 @@ define i8 @phi_sle_high_bits_fail2(i8 %x) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[X:%.*]], -63
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ 64, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], 64
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+@@ -379,7 +379,7 @@ define i8 @phi_ugt_high_bits_and_known(i8 %xx) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i8 [[XX]], -65
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ 65, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], 65
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+@@ -407,7 +407,7 @@ define i8 @phi_ugt_high_bits_and_known_todo_high_depths(i8 %xx, i8 %y, i8 %z) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i8 [[X]], -65
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
+ ; CHECK:       T:
+-; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[V:%.*]] = phi i8 [ [[X]], [[ENTRY:%.*]] ], [ 65, [[F]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = and i8 [[V]], 65
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ; CHECK:       F:
+diff --git a/llvm/test/Transforms/InstCombine/trunc-minmax-intrinsics.ll b/llvm/test/Transforms/InstCombine/trunc-minmax-intrinsics.ll
+index 8a2d38fb85bc30..67eee54253a607 100644
+--- a/llvm/test/Transforms/InstCombine/trunc-minmax-intrinsics.ll
++++ b/llvm/test/Transforms/InstCombine/trunc-minmax-intrinsics.ll
+@@ -512,7 +512,7 @@ define i8 @smax_phi_self_loop(i1 %c, i8 %x) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+-; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ -128, %[[ENTRY]] ], [ [[M:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[M:%.*]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[A:%.*]] = and i32 [[ACC]], 127
+ ; CHECK-NEXT:    [[EXT:%.*]] = sext i8 [[X]] to i32
+ ; CHECK-NEXT:    [[M]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[EXT]])
