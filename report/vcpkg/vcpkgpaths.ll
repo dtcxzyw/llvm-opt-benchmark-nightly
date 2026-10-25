@@ -205,7 +205,7 @@ _ZN5vcpkg4PathD2Ev.exit.i:                        ; preds = %bb.y, %_ZNKSt7__cxx
   %i.ga = getelementptr inbounds nuw i8, ptr %2, i64 488
   call void @llvm.experimental.noalias.scope.decl(metadata !629)
   %i.gb = load i8, ptr %i.ga, align 8, !tbaa !44, !range !45, !noalias !629, !noundef !46
-  %i.gc = trunc nuw i8 %i.gb to i1
+  %i.gc = trunc nuw i8 %i.gb to i1                ; 6 uses
   br i1 %i.gc, label %bb.z, label %bb.ad
 
 bb.z:                                             ; preds = %_ZN5vcpkg4PathD2Ev.exit.i
@@ -298,7 +298,7 @@ bb.ad:                                            ; preds = %_ZN5vcpkg4PathD2Ev.
   br label %_ZNKR5vcpkg8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3mapIZN12_GLOBAL__N_120VcpkgPathsImplStage1C1ERKNS_10FilesystemERKNS_17VcpkgCmdArgumentsERKNS_14BundleSettingsERKNS_4PathESM_EUlRKS6_E_EENS0_IDTclclsr3stdE7declvalIRT_EEclL_ZSt7declvalISO_EDTcl9__declvalISQ_ELi0EEEvEEEEEESQ_.exit.i
 
 _ZNKR5vcpkg8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3mapIZN12_GLOBAL__N_120VcpkgPathsImplStage1C1ERKNS_10FilesystemERKNS_17VcpkgCmdArgumentsERKNS_14BundleSettingsERKNS_4PathESM_EUlRKS6_E_EENS0_IDTclclsr3stdE7declvalIRT_EEclL_ZSt7declvalISO_EDTcl9__declvalISQ_ELi0EEEvEEEEEESQ_.exit.i: ; preds = %bb.ad, %_ZN5vcpkg4PathD2Ev.exit.i.i
-  %i.he = phi i8 [ 0, %bb.ad ], [ 1, %_ZN5vcpkg4PathD2Ev.exit.i.i ] ; 2 uses
+  %i.he = phi i8 [ 0, %bb.ad ], [ 1, %_ZN5vcpkg4PathD2Ev.exit.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #27
   %i.hf = getelementptr inbounds nuw i8, ptr %50, i64 16 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hf, i8 0, i64 16, i1 false)
@@ -306,21 +306,20 @@ _ZNKR5vcpkg8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3mapIZ
   %i.hg = getelementptr inbounds nuw i8, ptr %50, i64 8 ; 2 uses
   store i64 0, ptr %i.hg, align 8, !tbaa !40
   call void @llvm.experimental.noalias.scope.decl(metadata !631)
-  %62 = trunc nuw i8 %i.he to i1                  ; 5 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %49, i64 8 ; 2 uses
-  %i.hi = select i1 %62, ptr %i.hh, ptr %50       ; 2 uses
+  %i.hi = select i1 %i.gc, ptr %i.hh, ptr %50     ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 5 uses
   store ptr %i.hj, ptr %i.fz, align 8, !tbaa !41, !alias.scope !631
   %i.hk = load ptr, ptr %i.hi, align 8, !tbaa !38, !noalias !631 ; 2 uses
   %.sroa.gep.i = getelementptr inbounds nuw i8, ptr %49, i64 24 ; 3 uses
-  %.sroa.sel.i = select i1 %62, ptr %.sroa.gep.i, ptr %i.hf ; 5 uses
+  %.sroa.sel.i = select i1 %i.gc, ptr %.sroa.gep.i, ptr %i.hf ; 5 uses
   %i.hl = icmp eq ptr %i.hk, %.sroa.sel.i
   br i1 %i.hl, label %bb.ae, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i49.i
 
 bb.ae:                                            ; preds = %_ZNKR5vcpkg8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3mapIZN12_GLOBAL__N_120VcpkgPathsImplStage1C1ERKNS_10FilesystemERKNS_17VcpkgCmdArgumentsERKNS_14BundleSettingsERKNS_4PathESM_EUlRKS6_E_EENS0_IDTclclsr3stdE7declvalIRT_EEclL_ZSt7declvalISO_EDTcl9__declvalISQ_ELi0EEEvEEEEEESQ_.exit.i
   %.sroa.gep105.i = getelementptr inbounds nuw i8, ptr %49, i64 16
   %.sroa.gep105.val.i = load i64, ptr %.sroa.gep105.i, align 8
-  %i.hm = select i1 %62, i64 %.sroa.gep105.val.i, i64 0 ; 3 uses
+  %i.hm = select i1 %i.gc, i64 %.sroa.gep105.val.i, i64 0 ; 3 uses
   %i.hn = icmp ult i64 %i.hm, 16
   call void @llvm.assume(i1 %i.hn)
   %i.ho = add nuw nsw i64 %i.hm, 1
@@ -333,13 +332,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store i64 %i.hp, ptr %i.hj, align 8, !tbaa !39, !alias.scope !631
   %.sroa.gep99.i = getelementptr inbounds nuw i8, ptr %49, i64 16
   %.sroa.gep99.val.i = load i64, ptr %.sroa.gep99.i, align 8
-  %.pre.i51.i = select i1 %62, i64 %.sroa.gep99.val.i, i64 0
+  %.pre.i51.i = select i1 %i.gc, i64 %.sroa.gep99.val.i, i64 0
   br label %_ZNO5vcpkg8OptionalINS_4PathEE8value_orEOS1_.exit.i
 
 _ZNO5vcpkg8OptionalINS_4PathEE8value_orEOS1_.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i49.i, %bb.ae
   %i.hq = phi i64 [ %i.hm, %bb.ae ], [ %.pre.i51.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i49.i ]
   %.sroa.gep102.i = getelementptr inbounds nuw i8, ptr %49, i64 16
-  %.sroa.sel104.i = select i1 %62, ptr %.sroa.gep102.i, ptr %i.hg
+  %.sroa.sel104.i = select i1 %i.gc, ptr %.sroa.gep102.i, ptr %i.hg
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 672
   store i64 %i.hq, ptr %i.hr, align 8, !tbaa !40, !alias.scope !631
   store ptr %.sroa.sel.i, ptr %i.hi, align 8, !tbaa !38, !noalias !631

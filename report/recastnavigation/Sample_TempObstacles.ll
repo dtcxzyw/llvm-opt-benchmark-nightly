@@ -205,7 +205,7 @@ define dso_local void @_ZN20Sample_TempObstacles11drawDebugUIEv(ptr nofree nound
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !30
-  %.not = icmp eq ptr %i.b, null
+  %.not = icmp eq ptr %i.b, null                  ; 3 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -222,7 +222,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.0.0 = phi i8 [ 0, %bb.a ], [ %i.f, %bb.b ] ; 2 uses
   %.sroa.12.0 = phi i8 [ 0, %bb.a ], [ %i.j, %bb.b ] ; 2 uses
-  %.sroa.21.0 = phi i8 [ 0, %bb.a ], [ 1, %bb.b ] ; 2 uses
+  %.sroa.21.0 = phi i32 [ 2, %bb.a ], [ 0, %bb.b ]
   %i.k = xor i8 %.sroa.0.0, 1
   %i.l = zext nneg i8 %i.k to i32                 ; 2 uses
   %spec.select.2 = mul nuw nsw i32 %i.l, 3
@@ -231,18 +231,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %spec.select.3 = add nuw nsw i32 %spec.select.2, %i.n
   %reass.add = shl nuw nsw i32 %i.l, 1
   %spec.select.5 = add nuw nsw i32 %spec.select.3, %reass.add
-  %1 = shl nuw nsw i8 %.sroa.21.0, 1
-  %2 = xor i8 %1, 2
-  %reass.add32 = zext nneg i8 %2 to i32
-  %spec.select.7 = add nuw nsw i32 %spec.select.5, %reass.add32 ; 2 uses
+  %spec.select.7 = add nuw nsw i32 %spec.select.5, %.sroa.21.0 ; 2 uses
   %i.o = icmp eq i32 %spec.select.7, 8
   br i1 %i.o, label %bb.v, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.25) #12
-  %3 = trunc nuw i8 %.sroa.21.0 to i1
-  %4 = xor i1 %3, true                            ; 2 uses
-  tail call void @_ZN5ImGui13BeginDisabledEb(i1 noundef zeroext %4) #12
+  tail call void @_ZN5ImGui13BeginDisabledEb(i1 noundef zeroext %.not) #12
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 260 ; 16 uses
   %i.q = load i32, ptr %i.p, align 4, !tbaa !211
   %i.r = icmp eq i32 %i.q, 6
@@ -331,7 +326,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   tail call void @_ZN5ImGui11EndDisabledEv() #12
-  tail call void @_ZN5ImGui13BeginDisabledEb(i1 noundef zeroext %4) #12
+  tail call void @_ZN5ImGui13BeginDisabledEb(i1 noundef zeroext %.not) #12
   %i.ap = load i32, ptr %i.p, align 4, !tbaa !211
   %i.aq = icmp eq i32 %i.ap, 7
   %i.ar = tail call noundef zeroext i1 @_ZN5ImGui11RadioButtonEPKcb(ptr noundef nonnull @.str.33, i1 noundef zeroext %i.aq) #12

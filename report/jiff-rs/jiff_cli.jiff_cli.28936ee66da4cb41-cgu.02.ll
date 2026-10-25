@@ -202,22 +202,21 @@ bb.ao:                                            ; preds = %bb.am
   unreachable
 
 .body83:                                          ; preds = %.loopexit120, %.loopexit.split-lp121, %bb.bz, %bb.bp, %bb.am, %.body85, %.body78
-  %.sroa.024.0 = phi i8 [ %.sroa.024.4, %.body85 ], [ 1, %.body78 ], [ 1, %bb.am ], [ %.sroa.024.3, %bb.bp ], [ %.sroa.024.3, %bb.bz ], [ %.sroa.024.1.ph, %.loopexit120 ], [ %.sroa.024.1.ph122, %.loopexit.split-lp121 ]
+  %.sroa.024.0 = phi i1 [ %.sroa.024.4, %.body85 ], [ true, %.body78 ], [ true, %bb.am ], [ %5, %bb.bp ], [ %5, %bb.bz ], [ %.sroa.024.1.ph, %.loopexit120 ], [ %.sroa.024.1.ph122, %.loopexit.split-lp121 ]
   %.pn62 = phi { ptr, i32 } [ %.pn, %.body85 ], [ %.pn60, %.body78 ], [ %i.eg, %bb.am ], [ %i.fq, %bb.bp ], [ %i.fx, %bb.bz ], [ %lpad.loopexit123, %.loopexit120 ], [ %lpad.loopexit.split-lp124, %.loopexit.split-lp121 ] ; 2 uses
   %i.ei = load i64, ptr %i.u, align 8, !range !7, !noundef !6
   %i.ej = icmp sgt i64 %i.ei, -1
-  %5 = trunc nuw i8 %.sroa.024.0 to i1
-  %or.cond5 = select i1 %i.ej, i1 %5, i1 false
+  %or.cond5 = and i1 %.sroa.024.0, %i.ej
   br i1 %or.cond5, label %bb.cf, label %common.resume
 
 .loopexit120:                                     ; preds = %bb.ar, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3tZ2SXJA1qv_8jiff_cli.exit.i102
-  %.sroa.024.1.ph = phi i8 [ 1, %bb.ar ], [ %.sroa.024.3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3tZ2SXJA1qv_8jiff_cli.exit.i102 ]
+  %.sroa.024.1.ph = phi i1 [ true, %bb.ar ], [ %5, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3tZ2SXJA1qv_8jiff_cli.exit.i102 ]
   %lpad.loopexit123 = landingpad { ptr, i32 }
           cleanup
   br label %.body83
 
 .loopexit.split-lp121:                            ; preds = %bb.at, %bb.an, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3tZ2SXJA1qv_8jiff_cli.exit.i
-  %.sroa.024.1.ph122 = phi i8 [ %.sroa.024.3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3tZ2SXJA1qv_8jiff_cli.exit.i ], [ 1, %bb.at ], [ 1, %bb.an ]
+  %.sroa.024.1.ph122 = phi i1 [ %5, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3tZ2SXJA1qv_8jiff_cli.exit.i ], [ true, %bb.at ], [ true, %bb.an ]
   %lpad.loopexit.split-lp124 = landingpad { ptr, i32 }
           cleanup
   br label %.body83
@@ -227,11 +226,11 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs3
   br label %bb.ap
 
 bb.ap:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs3tZ2SXJA1qv_8jiff_cli.exit, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs3tZ2SXJA1qv_8jiff_cli4args5UsageEEB1c_.exit
-  %.sroa.024.2 = phi i1 [ true, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs3tZ2SXJA1qv_8jiff_cli4args5UsageEEB1c_.exit ], [ %6, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs3tZ2SXJA1qv_8jiff_cli.exit ]
+  %.sroa.024.2 = phi i1 [ true, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs3tZ2SXJA1qv_8jiff_cli4args5UsageEEB1c_.exit ], [ %5, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs3tZ2SXJA1qv_8jiff_cli.exit ]
   %.sroa.0.0 = phi ptr [ %i.eb, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs3tZ2SXJA1qv_8jiff_cli4args5UsageEEB1c_.exit ], [ %.sroa.0.1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs3tZ2SXJA1qv_8jiff_cli.exit ]
   %i.ek = load i64, ptr %i.u, align 8, !range !7, !noundef !6
   %i.el = icmp sgt i64 %i.ek, -1
-  %or.cond = select i1 %i.el, i1 %.sroa.024.2, i1 false
+  %or.cond = and i1 %.sroa.024.2, %i.el
   br i1 %or.cond, label %bb.bu, label %bb.bt
 
 bb.aq:                                            ; preds = %bb.cf, %bb.bx, %.body85, %bb.af, %.body, %.body78
@@ -307,17 +306,17 @@ bb.bb:                                            ; preds = %bb.ay
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.az, %bb.ax
-  %.sroa.024.3 = phi i8 [ 1, %bb.ax ], [ 1, %bb.az ], [ 0, %bb.bb ] ; 11 uses
+  %5 = phi i1 [ true, %bb.ax ], [ true, %bb.az ], [ false, %bb.bb ] ; 11 uses
   br i1 %.not56226, label %._crit_edge230, label %.lr.ph229
 
 .body85:                                          ; preds = %.loopexit.split-lp127, %bb.bm, %bb.bh, %.thread112.loopexit.split-lp, %bb.bx
-  %.sroa.024.4 = phi i8 [ %.sroa.024.3, %.thread112.loopexit.split-lp ], [ %.sroa.024.3, %bb.bx ], [ %.sroa.024.3, %bb.bh ], [ %.sroa.024.3, %bb.bm ], [ %.sroa.024.5.ph, %.loopexit.split-lp127 ]
+  %.sroa.024.4 = phi i1 [ %5, %.thread112.loopexit.split-lp ], [ %5, %bb.bx ], [ %5, %bb.bh ], [ %5, %bb.bm ], [ %.sroa.024.5.ph, %.loopexit.split-lp127 ]
   %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.thread112.loopexit.split-lp ], [ %lpad.thr_comm.split-lp, %bb.bx ], [ %i.fh, %bb.bh ], [ %i.fm, %bb.bm ], [ %lpad.loopexit.split-lp129, %.loopexit.split-lp127 ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs3tZ2SXJA1qv_8jiff_cli(ptr noalias nofree noundef align 8 dereferenceable(24) %i.n) #17
           to label %.body83 unwind label %bb.aq
 
 .loopexit.split-lp127:                            ; preds = %bb.ba, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs3tZ2SXJA1qv_8jiff_cli.exit.i
-  %.sroa.024.5.ph = phi i8 [ %.sroa.024.3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs3tZ2SXJA1qv_8jiff_cli.exit.i ], [ 1, %bb.ba ]
+  %.sroa.024.5.ph = phi i1 [ %5, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs3tZ2SXJA1qv_8jiff_cli.exit.i ], [ true, %bb.ba ]
   %lpad.loopexit.split-lp129 = landingpad { ptr, i32 }
           cleanup
   br label %.body85
@@ -452,7 +451,6 @@ bb.bs:                                            ; preds = %bb.br
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs3tZ2SXJA1qv_8jiff_cli.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCsgWT32ugvpwR_6lexopt3ArgECs3tZ2SXJA1qv_8jiff_cli.exit, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3tZ2SXJA1qv_8jiff_cli.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  %6 = trunc nuw i8 %.sroa.024.3 to i1
   br label %bb.ap
 
 bb.bt:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs3tZ2SXJA1qv_8jiff_cli.exit, %bb.ap
@@ -519,8 +517,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   %i.fz = load i64, ptr %i.u, align 8, !range !7, !noundef !6
   %i.ga = icmp sgt i64 %i.fz, -1
-  %7 = trunc nuw i8 %.sroa.024.3 to i1
-  %or.cond3 = and i1 %i.ga, %7
+  %or.cond3 = and i1 %5, %i.ga
   br i1 %or.cond3, label %bb.cc, label %bb.cb
 
 bb.cb:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs3tZ2SXJA1qv_8jiff_cli.exit109, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs3tZ2SXJA1qv_8jiff_cli.exit107

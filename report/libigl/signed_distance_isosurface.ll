@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %.invoke, %bb.bm, %b
   br label %bb.br
 
 bb.ae:                                            ; preds = %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit154, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit162, %bb.ac, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit146
-  %.087 = phi i8 [ 1, %bb.ac ], [ 0, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit162 ], [ 0, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit154 ], [ 0, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit146 ] ; 4 uses
+  %8 = phi i1 [ true, %bb.ac ], [ false, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit162 ], [ false, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit154 ], [ false, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit146 ] ; 4 uses
   %i.fg = icmp eq i64 %i.dw, %i.v
   br i1 %i.fg, label %bb.af, label %bb.ah
 
@@ -213,8 +213,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.fi = load i64, ptr %i.fh, align 8, !tbaa !730
   %i.fj = icmp sgt i64 %i.v, %i.fi
-  %8 = trunc nuw i8 %.087 to i1
-  %or.cond = or i1 %i.fj, %8
+  %or.cond = or i1 %8, %i.fj
   br i1 %or.cond, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -287,8 +286,7 @@ _ZN5boost2io6detail8put_headIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS
   %i.gn = getelementptr inbounds i8, ptr %7, i64 %i.gm
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 16
   store i64 0, ptr %i.go, align 8, !tbaa !661
-  %9 = trunc nuw i8 %.087 to i1
-  br i1 %9, label %bb.am, label %bb.aq
+  br i1 %8, label %bb.am, label %bb.aq
 
 bb.am:                                            ; preds = %_ZN5boost2io6detail8put_headIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit169
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -364,7 +362,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit179: ; preds = %bb.au,
 bb.av:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit179, %bb.ar, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit174
   %i.hl = phi ptr [ %.pre238, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit179 ], [ %i.gy, %bb.ar ], [ %i.gy, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit174 ]
   %i.hm = phi ptr [ %.pre237, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit179 ], [ %i.gz, %bb.ar ], [ %i.gz, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit174 ] ; 5 uses
-  %.188 = phi i8 [ 1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit179 ], [ %.087, %bb.ar ], [ %.087, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit174 ]
+  %.188 = phi i1 [ true, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit179 ], [ %8, %bb.ar ], [ %8, %_ZN5boost2io6detail8put_lastIcSt11char_traitsIcEEEvRSt13basic_ostreamIT_T0_ERKNS1_10put_holderIS6_S7_EE.exit174 ]
   %i.hn = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.ho = load i64, ptr %i.hn, align 8, !tbaa !730
   %i.hp = ptrtoint ptr %i.hl to i64
@@ -380,7 +378,7 @@ bb.aw:                                            ; preds = %bb.av
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEPKcm.exit182 unwind label %bb.bf ; 0 uses
 
 bb.ax:                                            ; preds = %bb.av
-  %i.hu = zext nneg i8 %.188 to i64               ; 6 uses
+  %i.hu = zext i1 %.188 to i64                    ; 6 uses
   %i.hv = add i64 %i.dw, %i.hu
   %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.sroa.speculated215, i64 %i.hv) ; 3 uses
   %i.hw = icmp ugt i64 %.sroa.speculated, %i.hu

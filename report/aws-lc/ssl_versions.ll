@@ -150,7 +150,6 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %.sink
 bb.f:                                             ; preds = %bb.e
   %i.q = and i32 %.024, 67108864
   %.not29 = icmp eq i32 %i.q, 0
-  %spec.select79 = zext i1 %.not29 to i8
   br label %.thread62
 
 .thread:                                          ; preds = %bb.q, %bb.m, %bb.i
@@ -165,7 +164,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not80, label %.thread62, label %bb.k
 
 .thread62:                                        ; preds = %bb.f, %bb.g
-  %.166 = phi i8 [ 0, %bb.g ], [ %spec.select79, %bb.f ] ; 2 uses
+  %3 = phi i1 [ false, %bb.g ], [ %.not29, %bb.f ] ; 3 uses
   %.265 = phi i16 [ 770, %bb.g ], [ 769, %bb.f ]  ; 4 uses
   %i.t = icmp samesign ult i16 %.139.ph, 770
   br i1 %i.t, label %bb.r, label %bb.h
@@ -173,7 +172,6 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %.thread62
   %i.u = and i32 %.024, 268435456
   %.not29.1 = icmp eq i32 %i.u, 0
-  %3 = trunc nuw i8 %.166 to i1                   ; 2 uses
   br i1 %.not29.1, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -188,7 +186,7 @@ bb.k:                                             ; preds = %bb.g
   br i1 %i.v, label %bb.o, label %.thread68
 
 .thread68:                                        ; preds = %bb.i, %bb.j, %bb.k
-  %.1.172 = phi i8 [ 0, %bb.k ], [ 0, %bb.i ], [ 1, %bb.j ] ; 2 uses
+  %4 = phi i1 [ false, %bb.k ], [ false, %bb.i ], [ true, %bb.j ] ; 3 uses
   %.2.171 = phi i16 [ 771, %bb.k ], [ %.265, %bb.i ], [ %spec.select51.1, %bb.j ] ; 4 uses
   %i.w = icmp samesign ult i16 %.139.ph, 771
   br i1 %i.w, label %bb.r, label %bb.l
@@ -196,7 +194,6 @@ bb.k:                                             ; preds = %bb.g
 bb.l:                                             ; preds = %.thread68
   %i.x = and i32 %.024, 134217728
   %.not29.2 = icmp eq i32 %i.x, 0
-  %4 = trunc nuw i8 %.1.172 to i1                 ; 2 uses
   br i1 %.not29.2, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -208,14 +205,13 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.k, %bb.m, %bb.n
   %.2.2 = phi i16 [ 772, %bb.k ], [ %spec.select51.2, %bb.n ], [ %.2.171, %bb.m ] ; 3 uses
-  %.1.2 = phi i8 [ 0, %bb.k ], [ 1, %bb.n ], [ 0, %bb.m ] ; 2 uses
+  %5 = phi i1 [ false, %bb.k ], [ true, %bb.n ], [ false, %bb.m ] ; 3 uses
   %i.y = icmp samesign ult i16 %.139.ph, 772
   br i1 %i.y, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.z = and i32 %.024, 536870912
   %.not29.3 = icmp eq i32 %i.z, 0
-  %5 = trunc nuw i8 %.1.2 to i1                   ; 2 uses
   br i1 %.not29.3, label %.thread73, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -227,9 +223,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.o, %.thread68, %.thread62
   %.141.lcssa = phi i16 [ %.2.171, %.thread68 ], [ %.2.2, %bb.o ], [ %.265, %.thread62 ]
-  %.023.lcssa = phi i8 [ %.1.172, %.thread68 ], [ %.1.2, %bb.o ], [ %.166, %.thread62 ]
-  %6 = trunc nuw i8 %.023.lcssa to i1
-  br i1 %6, label %bb.s, label %.thread76
+  %.023.lcssa = phi i1 [ %4, %.thread68 ], [ %5, %bb.o ], [ %3, %.thread62 ]
+  br i1 %.023.lcssa, label %bb.s, label %.thread76
 
 .thread76:                                        ; preds = %bb.q, %bb.r
   tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 280, ptr noundef nonnull @.str, i32 noundef 226) #8
