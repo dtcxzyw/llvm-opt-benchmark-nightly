@@ -205,8 +205,7 @@ begin_hunk_0
 @1088 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXNtCsaMQbKjKCVRW_12tracing_core5fieldNtB2_8HexBytesNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt }>, align 8
 @1089 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsu_NtCsaMQbKjKCVRW_12tracing_core5fieldINtB5_12DisplayValueRDNtNtCshzWfHUSfYae_4core5error5ErrorEL_ENtNtB15_3fmt5Debug3fmtCs8K4cjrcxBsw_6hir_ty }>, align 8
 @1090 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -654675508425364404 to ptr), ptr inttoptr (i64 7626636266285069727 to ptr) }>, align 8
-@switch.table._RINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB6_16LayoutCalculatorRNtB8_16TargetDataLayoutE24layout_of_struct_or_enumNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNtB1Y_19RustcEnumVariantIdxRRINtB8_10LayoutDataB1W_B2H_ENCNvNvXs0_NvNtB1Y_3adt1__NtB3L_34layout_of_adt_query_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_s2_0INtNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map9FilterMapINtNtB5Q_3map3MapINtNtB5Q_9enumerate9EnumerateINtNtNtB5U_5slice4iter4IterINtNtCs6q8GQ6zN3Tv_17ra_ap_rustc_index3vec8IndexVecB1W_B38_EEENCNvMNtB83_5sliceINtB93_10IndexSliceB2H_B7Y_E15iter_enumerated0ENCB3D_s3_0EEB20_.840 = private unnamed_addr constant [5 x i8] c"xp`@\00", align 8
-@switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863 = private unnamed_addr constant [5 x i64] [i64 -8, i64 -16, i64 -32, i64 -64, i64 -128], align 8
+@switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863 = private unnamed_addr constant [5 x i8] c"xp`@\00", align 8
 @switch.table._RNvMNtNtNtCs8K4cjrcxBsw_6hir_ty3mir4eval4shimNtB4_9Evaluator14exec_intrinsic = private unnamed_addr constant [3 x ptr] [ptr @391, ptr @392, ptr @393], align 8
 @switch.table._RNvMs9_NtNtCs8K4cjrcxBsw_6hir_ty3mir4evalNtB5_9Evaluator20compute_discriminant = private unnamed_addr constant [5 x i8] c"\01\02\04\08\10", align 8
 @switch.table._RNvMs9_NtNtCs8K4cjrcxBsw_6hir_ty3mir4evalNtB5_9Evaluator24allocate_valtree_in_heap = private unnamed_addr constant [4 x i8] c"\02\04\08\10", align 8
@@ -609,7 +608,7 @@ default.unreachable:                              ; preds = %bb.gt, %bb.fx
 
 switch.lookup723:                                 ; preds = %bb.fw
   %i.ww = zext nneg i8 %i.wv to i64
-  %switch.gep724 = getelementptr inbounds nuw i8, ptr @switch.table._RINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB6_16LayoutCalculatorRNtB8_16TargetDataLayoutE24layout_of_struct_or_enumNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNtB1Y_19RustcEnumVariantIdxRRINtB8_10LayoutDataB1W_B2H_ENCNvNvXs0_NvNtB1Y_3adt1__NtB3L_34layout_of_adt_query_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_s2_0INtNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map9FilterMapINtNtB5Q_3map3MapINtNtB5Q_9enumerate9EnumerateINtNtNtB5U_5slice4iter4IterINtNtCs6q8GQ6zN3Tv_17ra_ap_rustc_index3vec8IndexVecB1W_B38_EEENCNvMNtB83_5sliceINtB93_10IndexSliceB2H_B7Y_E15iter_enumerated0ENCB3D_s3_0EEB20_.840, i64 %i.ww
+  %switch.gep724 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ww
   %switch.load725 = load i8, ptr %switch.gep724, align 1
   %i.wx = zext nneg i8 %switch.load725 to i128
   %i.wy = lshr i128 -1, %i.wx
@@ -1012,7 +1011,7 @@ bb.ie:                                            ; preds = %._crit_edge.i
 switch.lookup731:                                 ; preds = %._RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9for_alignNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit646.thread.thread_crit_edge.i, %_RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9for_alignNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit646.thread.i, %._crit_edge1232.i
   %.sroa.045.2.i = phi i8 [ %.sroa.045.1.i, %._crit_edge1232.i ], [ %.pre.i, %._RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9for_alignNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit646.thread.thread_crit_edge.i ], [ %.pre1413.i, %_RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9for_alignNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit646.thread.i ] ; 4 uses
   %i.adk = zext nneg i8 %.sroa.045.2.i to i64
-  %switch.gep732 = getelementptr inbounds nuw i8, ptr @switch.table._RINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB6_16LayoutCalculatorRNtB8_16TargetDataLayoutE24layout_of_struct_or_enumNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNtB1Y_19RustcEnumVariantIdxRRINtB8_10LayoutDataB1W_B2H_ENCNvNvXs0_NvNtB1Y_3adt1__NtB3L_34layout_of_adt_query_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_s2_0INtNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map9FilterMapINtNtB5Q_3map3MapINtNtB5Q_9enumerate9EnumerateINtNtNtB5U_5slice4iter4IterINtNtCs6q8GQ6zN3Tv_17ra_ap_rustc_index3vec8IndexVecB1W_B38_EEENCNvMNtB83_5sliceINtB93_10IndexSliceB2H_B7Y_E15iter_enumerated0ENCB3D_s3_0EEB20_.840, i64 %i.adk
+  %switch.gep732 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.adk
   %switch.load733 = load i8, ptr %switch.gep732, align 1
   %i.adl = zext nneg i8 %switch.load733 to i128
   %i.adm = lshr i128 -1, %i.adl                   ; 2 uses
@@ -1415,12 +1414,13 @@ bb.j:                                             ; preds = %bb.h
 
 switch.lookup:                                    ; preds = %bb.a
   %i.z = and i64 %.sroa.44.0.extract.shift.i, 255
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.z
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.z
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %.thread
 
 .thread:                                          ; preds = %switch.lookup, %bb.h
-  %.neg5 = phi i64 [ %.neg4, %bb.h ], [ %switch.load, %switch.lookup ]
+  %.neg5 = phi i64 [ %.neg4, %bb.h ], [ %switch.ext, %switch.lookup ]
   %i.aa = and i64 %.neg5, 120
   %i.ab = zext nneg i64 %i.aa to i128
   %i.ac = lshr i128 -1, %i.ab
@@ -1823,12 +1823,13 @@ bb.ao:                                            ; preds = %bb.am
 switch.lookup:                                    ; preds = %bb.af
   %.sroa.44.0.extract.trunc.i.i264.i.mask = and i56 %.sroa.574.41.copyload.i, 255
   %i.ha = zext nneg i56 %.sroa.44.0.extract.trunc.i.i264.i.mask to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ha
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ha
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit279.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit279.i: ; preds = %switch.lookup, %bb.am
-  %.neg5.i275.i = phi i64 [ %.neg4.i274.i, %bb.am ], [ %switch.load, %switch.lookup ]
+  %.neg5.i275.i = phi i64 [ %.neg4.i274.i, %bb.am ], [ %switch.ext, %switch.lookup ]
   %i.hb = and i64 %.neg5.i275.i, 120
   %i.hc = zext nneg i64 %i.hb to i128
   %i.hd = lshr i128 -1, %i.hc
@@ -2170,12 +2171,13 @@ bb.bw:                                            ; preds = %bb.bu
 switch.lookup10362:                               ; preds = %bb.bn
   %.sroa.44.0.extract.trunc.i.i.i.mask = and i56 %.sroa.565.41.copyload.i, 255
   %i.kt = zext nneg i56 %.sroa.44.0.extract.trunc.i.i.i.mask to i64
-  %switch.gep10363 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.kt
-  %switch.load10364 = load i64, ptr %switch.gep10363, align 8
+  %switch.gep10363 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.kt
+  %switch.load10364 = load i8, ptr %switch.gep10363, align 1
+  %switch.ext10365 = zext i8 %switch.load10364 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit.i: ; preds = %switch.lookup10362, %bb.bu
-  %.neg5.i.i = phi i64 [ %.neg4.i.i, %bb.bu ], [ %switch.load10364, %switch.lookup10362 ]
+  %.neg5.i.i = phi i64 [ %.neg4.i.i, %bb.bu ], [ %switch.ext10365, %switch.lookup10362 ]
   %i.ku = and i64 %.neg5.i.i, 120
   %i.kv = zext nneg i64 %i.ku to i128
   %i.kw = lshr i128 -1, %i.kv
@@ -2528,12 +2530,13 @@ bb.de:                                            ; preds = %bb.dc
 switch.lookup10365:                               ; preds = %bb.cv
   %.sroa.44.0.extract.trunc.i.i336.i.mask = and i56 %.sroa.592.41.copyload.i, 255
   %i.ot = zext nneg i56 %.sroa.44.0.extract.trunc.i.i336.i.mask to i64
-  %switch.gep10366 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ot
-  %switch.load10367 = load i64, ptr %switch.gep10366, align 8
+  %switch.gep10367 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ot
+  %switch.load10368 = load i8, ptr %switch.gep10367, align 1
+  %switch.ext10369 = zext i8 %switch.load10368 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit351.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit351.i: ; preds = %switch.lookup10365, %bb.dc
-  %.neg5.i347.i = phi i64 [ %.neg4.i346.i, %bb.dc ], [ %switch.load10367, %switch.lookup10365 ]
+  %.neg5.i347.i = phi i64 [ %.neg4.i346.i, %bb.dc ], [ %switch.ext10369, %switch.lookup10365 ]
   %i.ou = and i64 %.neg5.i347.i, 120
   %i.ov = zext nneg i64 %i.ou to i128
   %i.ow = lshr i128 -1, %i.ov
@@ -2875,12 +2878,13 @@ bb.em:                                            ; preds = %bb.ek
 switch.lookup10368:                               ; preds = %bb.ed
   %.sroa.44.0.extract.trunc.i.i300.i.mask = and i56 %.sroa.583.41.copyload.i, 255
   %i.sm = zext nneg i56 %.sroa.44.0.extract.trunc.i.i300.i.mask to i64
-  %switch.gep10369 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.sm
-  %switch.load10370 = load i64, ptr %switch.gep10369, align 8
+  %switch.gep10371 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.sm
+  %switch.load10372 = load i8, ptr %switch.gep10371, align 1
+  %switch.ext10373 = zext i8 %switch.load10372 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit315.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit315.i: ; preds = %switch.lookup10368, %bb.ek
-  %.neg5.i311.i = phi i64 [ %.neg4.i310.i, %bb.ek ], [ %switch.load10370, %switch.lookup10368 ]
+  %.neg5.i311.i = phi i64 [ %.neg4.i310.i, %bb.ek ], [ %switch.ext10373, %switch.lookup10368 ]
   %i.sn = and i64 %.neg5.i311.i, 120
   %i.so = zext nneg i64 %i.sn to i128
   %i.sp = lshr i128 -1, %i.so
@@ -3233,12 +3237,13 @@ bb.fu:                                            ; preds = %bb.fs
 switch.lookup10371:                               ; preds = %bb.fl
   %.sroa.44.0.extract.trunc.i.i408.i.mask = and i56 %.sroa.5110.41.copyload.i, 255
   %i.wm = zext nneg i56 %.sroa.44.0.extract.trunc.i.i408.i.mask to i64
-  %switch.gep10372 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.wm
-  %switch.load10373 = load i64, ptr %switch.gep10372, align 8
+  %switch.gep10375 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.wm
+  %switch.load10376 = load i8, ptr %switch.gep10375, align 1
+  %switch.ext10377 = zext i8 %switch.load10376 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit423.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit423.i: ; preds = %switch.lookup10371, %bb.fs
-  %.neg5.i419.i = phi i64 [ %.neg4.i418.i, %bb.fs ], [ %switch.load10373, %switch.lookup10371 ]
+  %.neg5.i419.i = phi i64 [ %.neg4.i418.i, %bb.fs ], [ %switch.ext10377, %switch.lookup10371 ]
   %i.wn = and i64 %.neg5.i419.i, 120
   %i.wo = zext nneg i64 %i.wn to i128
   %i.wp = lshr i128 -1, %i.wo
@@ -3580,12 +3585,13 @@ bb.hc:                                            ; preds = %bb.ha
 switch.lookup10374:                               ; preds = %bb.gt
   %.sroa.44.0.extract.trunc.i.i372.i.mask = and i56 %.sroa.5101.41.copyload.i, 255
   %i.aaf = zext nneg i56 %.sroa.44.0.extract.trunc.i.i372.i.mask to i64
-  %switch.gep10375 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.aaf
-  %switch.load10376 = load i64, ptr %switch.gep10375, align 8
+  %switch.gep10379 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.aaf
+  %switch.load10380 = load i8, ptr %switch.gep10379, align 1
+  %switch.ext10381 = zext i8 %switch.load10380 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit387.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit387.i: ; preds = %switch.lookup10374, %bb.ha
-  %.neg5.i383.i = phi i64 [ %.neg4.i382.i, %bb.ha ], [ %switch.load10376, %switch.lookup10374 ]
+  %.neg5.i383.i = phi i64 [ %.neg4.i382.i, %bb.ha ], [ %switch.ext10381, %switch.lookup10374 ]
   %i.aag = and i64 %.neg5.i383.i, 120
   %i.aah = zext nneg i64 %i.aag to i128
   %i.aai = lshr i128 -1, %i.aah
@@ -3938,12 +3944,13 @@ bb.ik:                                            ; preds = %bb.ii
 switch.lookup10377:                               ; preds = %bb.ib
   %.sroa.44.0.extract.trunc.i.i480.i.mask = and i56 %.sroa.5128.41.copyload.i, 255
   %i.aef = zext nneg i56 %.sroa.44.0.extract.trunc.i.i480.i.mask to i64
-  %switch.gep10378 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.aef
-  %switch.load10379 = load i64, ptr %switch.gep10378, align 8
+  %switch.gep10383 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.aef
+  %switch.load10384 = load i8, ptr %switch.gep10383, align 1
+  %switch.ext10385 = zext i8 %switch.load10384 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit495.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit495.i: ; preds = %switch.lookup10377, %bb.ii
-  %.neg5.i491.i = phi i64 [ %.neg4.i490.i, %bb.ii ], [ %switch.load10379, %switch.lookup10377 ]
+  %.neg5.i491.i = phi i64 [ %.neg4.i490.i, %bb.ii ], [ %switch.ext10385, %switch.lookup10377 ]
   %i.aeg = and i64 %.neg5.i491.i, 120
   %i.aeh = zext nneg i64 %i.aeg to i128
   %i.aei = lshr i128 -1, %i.aeh
@@ -4285,12 +4292,13 @@ bb.js:                                            ; preds = %bb.jq
 switch.lookup10380:                               ; preds = %bb.jj
   %.sroa.44.0.extract.trunc.i.i444.i.mask = and i56 %.sroa.5119.41.copyload.i, 255
   %i.ahy = zext nneg i56 %.sroa.44.0.extract.trunc.i.i444.i.mask to i64
-  %switch.gep10381 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ahy
-  %switch.load10382 = load i64, ptr %switch.gep10381, align 8
+  %switch.gep10387 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ahy
+  %switch.load10388 = load i8, ptr %switch.gep10387, align 1
+  %switch.ext10389 = zext i8 %switch.load10388 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit459.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit459.i: ; preds = %switch.lookup10380, %bb.jq
-  %.neg5.i455.i = phi i64 [ %.neg4.i454.i, %bb.jq ], [ %switch.load10382, %switch.lookup10380 ]
+  %.neg5.i455.i = phi i64 [ %.neg4.i454.i, %bb.jq ], [ %switch.ext10389, %switch.lookup10380 ]
   %i.ahz = and i64 %.neg5.i455.i, 120
   %i.aia = zext nneg i64 %i.ahz to i128
   %i.aib = lshr i128 -1, %i.aia
@@ -4671,12 +4679,13 @@ bb.lb:                                            ; preds = %bb.kz
 switch.lookup10383:                               ; preds = %bb.ks
   %.sroa.44.0.extract.trunc.i.i552.i.mask = and i56 %.sroa.5146.41.copyload.i, 255
   %i.amd = zext nneg i56 %.sroa.44.0.extract.trunc.i.i552.i.mask to i64
-  %switch.gep10384 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.amd
-  %switch.load10385 = load i64, ptr %switch.gep10384, align 8
+  %switch.gep10391 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.amd
+  %switch.load10392 = load i8, ptr %switch.gep10391, align 1
+  %switch.ext10393 = zext i8 %switch.load10392 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit567.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit567.i: ; preds = %switch.lookup10383, %bb.kz
-  %.neg5.i563.i = phi i64 [ %.neg4.i562.i, %bb.kz ], [ %switch.load10385, %switch.lookup10383 ]
+  %.neg5.i563.i = phi i64 [ %.neg4.i562.i, %bb.kz ], [ %switch.ext10393, %switch.lookup10383 ]
   %i.ame = and i64 %.neg5.i563.i, 120
   %i.amf = zext nneg i64 %i.ame to i128
   %i.amg = lshr i128 -1, %i.amf
@@ -5018,12 +5027,13 @@ bb.mj:                                            ; preds = %bb.mh
 switch.lookup10386:                               ; preds = %bb.ma
   %.sroa.44.0.extract.trunc.i.i516.i.mask = and i56 %.sroa.5137.41.copyload.i, 255
   %i.apw = zext nneg i56 %.sroa.44.0.extract.trunc.i.i516.i.mask to i64
-  %switch.gep10387 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.apw
-  %switch.load10388 = load i64, ptr %switch.gep10387, align 8
+  %switch.gep10395 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.apw
+  %switch.load10396 = load i8, ptr %switch.gep10395, align 1
+  %switch.ext10397 = zext i8 %switch.load10396 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit531.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit531.i: ; preds = %switch.lookup10386, %bb.mh
-  %.neg5.i527.i = phi i64 [ %.neg4.i526.i, %bb.mh ], [ %switch.load10388, %switch.lookup10386 ]
+  %.neg5.i527.i = phi i64 [ %.neg4.i526.i, %bb.mh ], [ %switch.ext10397, %switch.lookup10386 ]
   %i.apx = and i64 %.neg5.i527.i, 120
   %i.apy = zext nneg i64 %i.apx to i128
   %i.apz = lshr i128 -1, %i.apy
@@ -5426,12 +5436,13 @@ bb.nz:                                            ; preds = %bb.nx
 switch.lookup10389:                               ; preds = %bb.nq
   %.sroa.44.0.extract.trunc.i.i267.i.mask = and i56 %.sroa.574.41.copyload.i94, 255
   %i.ava = zext nneg i56 %.sroa.44.0.extract.trunc.i.i267.i.mask to i64
-  %switch.gep10390 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ava
-  %switch.load10391 = load i64, ptr %switch.gep10390, align 8
+  %switch.gep10399 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ava
+  %switch.load10400 = load i8, ptr %switch.gep10399, align 1
+  %switch.ext10401 = zext i8 %switch.load10400 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit282.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit282.i: ; preds = %switch.lookup10389, %bb.nx
-  %.neg5.i278.i = phi i64 [ %.neg4.i277.i, %bb.nx ], [ %switch.load10391, %switch.lookup10389 ]
+  %.neg5.i278.i = phi i64 [ %.neg4.i277.i, %bb.nx ], [ %switch.ext10401, %switch.lookup10389 ]
   %i.avb = and i64 %.neg5.i278.i, 120
   %i.avc = zext nneg i64 %i.avb to i128
   %i.avd = lshr i128 -1, %i.avc
@@ -5775,12 +5786,13 @@ bb.ph:                                            ; preds = %bb.pf
 switch.lookup10392:                               ; preds = %bb.oy
   %.sroa.44.0.extract.trunc.i.i.i116.mask = and i56 %.sroa.565.41.copyload.i115, 255
   %i.ayv = zext nneg i56 %.sroa.44.0.extract.trunc.i.i.i116.mask to i64
-  %switch.gep10393 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ayv
-  %switch.load10394 = load i64, ptr %switch.gep10393, align 8
+  %switch.gep10403 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ayv
+  %switch.load10404 = load i8, ptr %switch.gep10403, align 1
+  %switch.ext10405 = zext i8 %switch.load10404 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit.i127
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit.i127: ; preds = %switch.lookup10392, %bb.pf
-  %.neg5.i.i128 = phi i64 [ %.neg4.i.i126, %bb.pf ], [ %switch.load10394, %switch.lookup10392 ]
+  %.neg5.i.i128 = phi i64 [ %.neg4.i.i126, %bb.pf ], [ %switch.ext10405, %switch.lookup10392 ]
   %i.ayw = and i64 %.neg5.i.i128, 120
   %i.ayx = zext nneg i64 %i.ayw to i128
   %i.ayy = lshr i128 -1, %i.ayx
@@ -6136,12 +6148,13 @@ bb.qp:                                            ; preds = %bb.qn
 switch.lookup10395:                               ; preds = %bb.qg
   %.sroa.44.0.extract.trunc.i.i339.i.mask = and i56 %.sroa.592.41.copyload.i148, 255
   %i.bcx = zext nneg i56 %.sroa.44.0.extract.trunc.i.i339.i.mask to i64
-  %switch.gep10396 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bcx
-  %switch.load10397 = load i64, ptr %switch.gep10396, align 8
+  %switch.gep10407 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bcx
+  %switch.load10408 = load i8, ptr %switch.gep10407, align 1
+  %switch.ext10409 = zext i8 %switch.load10408 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit354.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit354.i: ; preds = %switch.lookup10395, %bb.qn
-  %.neg5.i350.i = phi i64 [ %.neg4.i349.i, %bb.qn ], [ %switch.load10397, %switch.lookup10395 ]
+  %.neg5.i350.i = phi i64 [ %.neg4.i349.i, %bb.qn ], [ %switch.ext10409, %switch.lookup10395 ]
   %i.bcy = and i64 %.neg5.i350.i, 120
   %i.bcz = zext nneg i64 %i.bcy to i128
   %i.bda = lshr i128 -1, %i.bcz
@@ -6485,12 +6498,13 @@ bb.rx:                                            ; preds = %bb.rv
 switch.lookup10398:                               ; preds = %bb.ro
   %.sroa.44.0.extract.trunc.i.i303.i.mask = and i56 %.sroa.583.41.copyload.i159, 255
   %i.bgs = zext nneg i56 %.sroa.44.0.extract.trunc.i.i303.i.mask to i64
-  %switch.gep10399 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bgs
-  %switch.load10400 = load i64, ptr %switch.gep10399, align 8
+  %switch.gep10411 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bgs
+  %switch.load10412 = load i8, ptr %switch.gep10411, align 1
+  %switch.ext10413 = zext i8 %switch.load10412 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit318.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit318.i: ; preds = %switch.lookup10398, %bb.rv
-  %.neg5.i314.i = phi i64 [ %.neg4.i313.i, %bb.rv ], [ %switch.load10400, %switch.lookup10398 ]
+  %.neg5.i314.i = phi i64 [ %.neg4.i313.i, %bb.rv ], [ %switch.ext10413, %switch.lookup10398 ]
   %i.bgt = and i64 %.neg5.i314.i, 120
   %i.bgu = zext nneg i64 %i.bgt to i128
   %i.bgv = lshr i128 -1, %i.bgu
@@ -6846,12 +6860,13 @@ bb.tf:                                            ; preds = %bb.td
 switch.lookup10401:                               ; preds = %bb.sw
   %.sroa.44.0.extract.trunc.i.i411.i.mask = and i56 %.sroa.5110.41.copyload.i171, 255
   %i.bku = zext nneg i56 %.sroa.44.0.extract.trunc.i.i411.i.mask to i64
-  %switch.gep10402 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bku
-  %switch.load10403 = load i64, ptr %switch.gep10402, align 8
+  %switch.gep10415 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bku
+  %switch.load10416 = load i8, ptr %switch.gep10415, align 1
+  %switch.ext10417 = zext i8 %switch.load10416 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit426.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit426.i: ; preds = %switch.lookup10401, %bb.td
-  %.neg5.i422.i = phi i64 [ %.neg4.i421.i, %bb.td ], [ %switch.load10403, %switch.lookup10401 ]
+  %.neg5.i422.i = phi i64 [ %.neg4.i421.i, %bb.td ], [ %switch.ext10417, %switch.lookup10401 ]
   %i.bkv = and i64 %.neg5.i422.i, 120
   %i.bkw = zext nneg i64 %i.bkv to i128
   %i.bkx = lshr i128 -1, %i.bkw
@@ -7195,12 +7210,13 @@ bb.un:                                            ; preds = %bb.ul
 switch.lookup10404:                               ; preds = %bb.ue
   %.sroa.44.0.extract.trunc.i.i375.i.mask = and i56 %.sroa.5101.41.copyload.i182, 255
   %i.bop = zext nneg i56 %.sroa.44.0.extract.trunc.i.i375.i.mask to i64
-  %switch.gep10405 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bop
-  %switch.load10406 = load i64, ptr %switch.gep10405, align 8
+  %switch.gep10419 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bop
+  %switch.load10420 = load i8, ptr %switch.gep10419, align 1
+  %switch.ext10421 = zext i8 %switch.load10420 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit390.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit390.i: ; preds = %switch.lookup10404, %bb.ul
-  %.neg5.i386.i = phi i64 [ %.neg4.i385.i, %bb.ul ], [ %switch.load10406, %switch.lookup10404 ]
+  %.neg5.i386.i = phi i64 [ %.neg4.i385.i, %bb.ul ], [ %switch.ext10421, %switch.lookup10404 ]
   %i.boq = and i64 %.neg5.i386.i, 120
   %i.bor = zext nneg i64 %i.boq to i128
   %i.bos = lshr i128 -1, %i.bor
@@ -7556,12 +7572,13 @@ bb.vv:                                            ; preds = %bb.vt
 switch.lookup10407:                               ; preds = %bb.vm
   %.sroa.44.0.extract.trunc.i.i483.i.mask = and i56 %.sroa.5128.41.copyload.i194, 255
   %i.bsr = zext nneg i56 %.sroa.44.0.extract.trunc.i.i483.i.mask to i64
-  %switch.gep10408 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bsr
-  %switch.load10409 = load i64, ptr %switch.gep10408, align 8
+  %switch.gep10423 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bsr
+  %switch.load10424 = load i8, ptr %switch.gep10423, align 1
+  %switch.ext10425 = zext i8 %switch.load10424 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit498.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit498.i: ; preds = %switch.lookup10407, %bb.vt
-  %.neg5.i494.i = phi i64 [ %.neg4.i493.i, %bb.vt ], [ %switch.load10409, %switch.lookup10407 ]
+  %.neg5.i494.i = phi i64 [ %.neg4.i493.i, %bb.vt ], [ %switch.ext10425, %switch.lookup10407 ]
   %i.bss = and i64 %.neg5.i494.i, 120
   %i.bst = zext nneg i64 %i.bss to i128
   %i.bsu = lshr i128 -1, %i.bst
@@ -7905,12 +7922,13 @@ bb.xd:                                            ; preds = %bb.xb
 switch.lookup10410:                               ; preds = %bb.wu
   %.sroa.44.0.extract.trunc.i.i447.i.mask = and i56 %.sroa.5119.41.copyload.i205, 255
   %i.bwm = zext nneg i56 %.sroa.44.0.extract.trunc.i.i447.i.mask to i64
-  %switch.gep10411 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bwm
-  %switch.load10412 = load i64, ptr %switch.gep10411, align 8
+  %switch.gep10427 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.bwm
+  %switch.load10428 = load i8, ptr %switch.gep10427, align 1
+  %switch.ext10429 = zext i8 %switch.load10428 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit462.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit462.i: ; preds = %switch.lookup10410, %bb.xb
-  %.neg5.i458.i = phi i64 [ %.neg4.i457.i, %bb.xb ], [ %switch.load10412, %switch.lookup10410 ]
+  %.neg5.i458.i = phi i64 [ %.neg4.i457.i, %bb.xb ], [ %switch.ext10429, %switch.lookup10410 ]
   %i.bwn = and i64 %.neg5.i458.i, 120
   %i.bwo = zext nneg i64 %i.bwn to i128
   %i.bwp = lshr i128 -1, %i.bwo
@@ -8293,12 +8311,13 @@ bb.yl:                                            ; preds = %bb.yj
 switch.lookup10413:                               ; preds = %bb.yc
   %.sroa.44.0.extract.trunc.i.i555.i.mask = and i56 %.sroa.5146.41.copyload.i68, 255
   %i.cat = zext nneg i56 %.sroa.44.0.extract.trunc.i.i555.i.mask to i64
-  %switch.gep10414 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.cat
-  %switch.load10415 = load i64, ptr %switch.gep10414, align 8
+  %switch.gep10431 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.cat
+  %switch.load10432 = load i8, ptr %switch.gep10431, align 1
+  %switch.ext10433 = zext i8 %switch.load10432 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit570.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit570.i: ; preds = %switch.lookup10413, %bb.yj
-  %.neg5.i566.i = phi i64 [ %.neg4.i565.i, %bb.yj ], [ %switch.load10415, %switch.lookup10413 ]
+  %.neg5.i566.i = phi i64 [ %.neg4.i565.i, %bb.yj ], [ %switch.ext10433, %switch.lookup10413 ]
   %i.cau = and i64 %.neg5.i566.i, 120
   %i.cav = zext nneg i64 %i.cau to i128
   %i.caw = lshr i128 -1, %i.cav
@@ -8642,12 +8661,13 @@ bb.zt:                                            ; preds = %bb.zr
 switch.lookup10416:                               ; preds = %bb.zk
   %.sroa.44.0.extract.trunc.i.i519.i.mask = and i56 %.sroa.5137.41.copyload.i79, 255
   %i.ceo = zext nneg i56 %.sroa.44.0.extract.trunc.i.i519.i.mask to i64
-  %switch.gep10417 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ceo
-  %switch.load10418 = load i64, ptr %switch.gep10417, align 8
+  %switch.gep10435 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keyTyoENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2T_16LayoutCalculatorRNtB2V_16TargetDataLayoutE17univariant_biasedB15_NtB17_19RustcEnumVariantIdxRRINtB2V_10LayoutDataB15_B4I_EEs4_0E0EB19_.863, i64 %i.ceo
+  %switch.load10436 = load i8, ptr %switch.gep10435, align 1
+  %switch.ext10437 = zext i8 %switch.load10436 to i64
   br label %_RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit534.i
 
 _RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit534.i: ; preds = %switch.lookup10416, %bb.zr
-  %.neg5.i530.i = phi i64 [ %.neg4.i529.i, %bb.zr ], [ %switch.load10418, %switch.lookup10416 ]
+  %.neg5.i530.i = phi i64 [ %.neg4.i529.i, %bb.zr ], [ %switch.ext10437, %switch.lookup10416 ]
   %i.cep = and i64 %.neg5.i530.i, 120
   %i.ceq = zext nneg i64 %i.cep to i128
   %i.cer = lshr i128 -1, %i.ceq

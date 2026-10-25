@@ -204,6 +204,7 @@ begin_hunk_0
 @.str.213 = private unnamed_addr constant [7 x i8] c"IOAPIC\00", align 1
 @_TRACE_VTD_IR_REMAP_MSI_REQ_DSTATE = external local_unnamed_addr global i16, align 2
 @.str.214 = private unnamed_addr constant [44 x i8] c"vtd_ir_remap_msi_req addr 0x%lx data 0x%lx\0A\00", align 1
+@vtd_irte_get.vtd_svt_mask = internal unnamed_addr constant [4 x i16] [i16 -1, i16 -5, i16 -7, i16 -8], align 2
 @vtd_irte_get.print_once_ = internal global i8 0, align 1
 @.str.215 = private unnamed_addr constant [30 x i8] c"%s: index too large: ind=0x%x\00", align 1
 @__func__.vtd_irte_get = private unnamed_addr constant [13 x i8] c"vtd_irte_get\00", align 1
@@ -311,7 +312,7 @@ begin_hunk_0
 @_TRACE_VTD_REPLAY_CE_INVALID_DSTATE = external local_unnamed_addr global i16, align 2
 @.str.279 = private unnamed_addr constant [68 x i8] c"vtd_replay_ce_invalid replay invalid context device %02x:%02x.%02x\0A\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @do_qemu_init_vtd_register_types, ptr null }]
-@switch.table.vtd_context_device_invalidate = private unnamed_addr constant [4 x i16] [i16 -1, i16 -5, i16 -7, i16 -8], align 4
+@switch.table.vtd_context_device_invalidate = private unnamed_addr constant [4 x i8] c"\FF\FB\F9\F8", align 4
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local range(i32 -80, 1) i32 @vtd_get_pdire_from_pdir_table(i64 noundef %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #0 {
@@ -714,8 +715,8 @@ bb.d:                                             ; preds = %bb.c
 
 switch.lookup:                                    ; preds = %bb.d, %bb.c, %bb.b, %bb.a
   %i.h = zext nneg i16 %2 to i64
-  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table.vtd_context_device_invalidate, i64 %i.h
-  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.vtd_context_device_invalidate, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %4, i8 0, i64 40, i1 false), !annotation !14
   store ptr null, ptr %i.a, align 8, !annotation !14
   %i.i = lshr i16 %1, 8
@@ -728,8 +729,8 @@ switch.lookup:                                    ; preds = %bb.d, %bb.c, %bb.b,
   br i1 %.not15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %switch.lookup
-  %5 = and i16 %1, 255
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 6344 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 6344 ; 2 uses
+  %6 = zext i8 %switch.load to i16
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.q
@@ -744,8 +745,8 @@ bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.t = load i8, ptr %i.s, align 8               ; 3 uses
   %i.u = zext i8 %i.t to i16
-  %i.v = xor i16 %5, %i.u
-  %i.w = and i16 %switch.load, %i.v
+  %i.v = xor i16 %1, %i.u
+  %i.w = and i16 %i.v, %6
   %i.x = icmp eq i16 %i.w, 0
   br i1 %i.x, label %bb.g, label %bb.q
 
@@ -775,11 +776,11 @@ bb.j:                                             ; preds = %bb.i
 
 trace_vtd_inv_desc_cc_device.exit:                ; preds = %bb.g, %bb.h, %bb.i, %bb.j
   %i.ag = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
-  call void %i.ag(ptr noundef nonnull %6, ptr noundef nonnull @.str.1, i32 noundef 187) #17, !inline_history !0
+  call void %i.ag(ptr noundef nonnull %5, ptr noundef nonnull @.str.1, i32 noundef 187) #17, !inline_history !0
   %i.ah = load ptr, ptr %i.a, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 1560
   store i32 0, ptr %i.ai, align 8
-  call void @qemu_mutex_unlock_impl(ptr noundef nonnull %6, ptr noundef nonnull @.str.1, i32 noundef 192) #17
+  call void @qemu_mutex_unlock_impl(ptr noundef nonnull %5, ptr noundef nonnull @.str.1, i32 noundef 192) #17
   %i.aj = load ptr, ptr %i.a, align 8
   %i.ak = call fastcc zeroext i1 @vtd_switch_address_space(ptr noundef %i.aj) ; 0 uses
   %i.al = load ptr, ptr %i.a, align 8
@@ -1182,7 +1183,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.bs = trunc nuw nsw i64 %.pre103.i.i to i32   ; 2 uses
   %i.bt = lshr i64 %.pre103.i.i, 16
   %i.bu = and i64 %i.bt, 3
-  %i.bv = getelementptr inbounds nuw [2 x i8], ptr @switch.table.vtd_context_device_invalidate, i64 %i.bu
+  %i.bv = getelementptr inbounds nuw [2 x i8], ptr @vtd_irte_get.vtd_svt_mask, i64 %i.bu
   %i.bw = load i16, ptr %i.bv, align 2
   %i.bx = zext i16 %i.bw to i32
   %i.by = xor i32 %i.bs, %i.bp

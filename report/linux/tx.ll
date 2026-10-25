@@ -205,7 +205,7 @@ bb.ba:                                            ; preds = %bb.az, %u32_encode_
   br label %bb.bc
 
 .critedge272:                                     ; preds = %skb_share_check.exit.thread, %bb.az, %skb_share_check.exit, %bb.ar
-  %.7 = phi i64 [ -22, %bb.az ], [ -12, %skb_share_check.exit ], [ -12, %skb_share_check.exit.thread ], [ -12, %bb.ar ] ; 2 uses
+  %.7 = phi i64 [ -22, %bb.az ], [ 4294967284, %skb_share_check.exit ], [ 4294967284, %skb_share_check.exit.thread ], [ 4294967284, %bb.ar ] ; 2 uses
   %.0208 = phi ptr [ %.0.i311, %bb.az ], [ null, %skb_share_check.exit ], [ null, %skb_share_check.exit.thread ], [ null, %bb.ar ] ; 2 uses
   %.not263 = icmp eq i16 %.0232, 0
   br i1 %.not263, label %.critedge272.thread, label %bb.bb
@@ -222,9 +222,11 @@ bb.bb:                                            ; preds = %.critedge272
 
 .critedge272.thread:                              ; preds = %bb.aa, %bb.t, %bb.k, %bb.ag, %bb.c, %bb.ah, %bb.ad, %bb.p, %bb.bb, %.critedge272
   %.0208318 = phi ptr [ %.0208, %.critedge272 ], [ %.0208, %bb.bb ], [ %1, %bb.p ], [ %1, %bb.ad ], [ %1, %bb.ah ], [ %1, %bb.c ], [ %1, %bb.ag ], [ %1, %bb.k ], [ %1, %bb.t ], [ %1, %bb.aa ]
-  %.7317 = phi i64 [ %.7, %.critedge272 ], [ %.7, %bb.bb ], [ -67, %bb.p ], [ -107, %bb.ad ], [ -1, %bb.ah ], [ -22, %bb.c ], [ -1, %bb.ag ], [ -67, %bb.k ], [ -22, %bb.t ], [ -107, %bb.aa ]
+  %.7317 = phi i64 [ %.7, %.critedge272 ], [ %.7, %bb.bb ], [ 4294967229, %bb.p ], [ 4294967189, %bb.ad ], [ 4294967295, %bb.ah ], [ 4294967274, %bb.c ], [ 4294967295, %bb.ag ], [ 4294967229, %bb.k ], [ 4294967274, %bb.t ], [ 4294967189, %bb.aa ]
   tail call void @sk_skb_reason_drop(ptr noundef null, ptr noundef %.0208318, i32 noundef 2) #16
-  %i.hi = inttoptr i64 %.7317 to ptr
+  %sext = shl i64 %.7317, 32
+  %7 = ashr exact i64 %sext, 32
+  %i.hi = inttoptr i64 %7 to ptr
   br label %bb.bc
 
 bb.bc:                                            ; preds = %.critedge272.thread, %bb.ba

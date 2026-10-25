@@ -205,13 +205,14 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i: ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 72
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = call noundef i32 %i.au(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0266.9), !inline_history !19 ; 2 uses
-  %i.aw = icmp eq i32 %i.av, -1
+  %i.aw = icmp eq i32 %i.av, -1                   ; 2 uses
   %spec.select325 = select i1 %i.aw, ptr null, ptr %.sroa.0266.9
+  %spec.select326 = select i1 %i.aw, i32 255, i32 %i.av
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit
 
 _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit: ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i, %bb.d, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i
   %.sroa.0266.10 = phi ptr [ %.sroa.0266.9, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %.sroa.0266.9, %bb.d ], [ %spec.select325, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ] ; 11 uses
-  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %i.av, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
+  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %spec.select326, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
   %i.ax = trunc i32 %.0.i.i to i8                 ; 10 uses
   %i.ay = load i8, ptr %i.ak, align 1, !tbaa !55
   %i.az = icmp eq i8 %i.ay, %i.ax                 ; 11 uses
@@ -614,13 +615,14 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i: ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 72
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = call noundef i32 %i.au(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0267.9), !inline_history !19 ; 2 uses
-  %i.aw = icmp eq i32 %i.av, -1
+  %i.aw = icmp eq i32 %i.av, -1                   ; 2 uses
   %spec.select324 = select i1 %i.aw, ptr null, ptr %.sroa.0267.9
+  %spec.select325 = select i1 %i.aw, i32 255, i32 %i.av
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit
 
 _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit: ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i, %bb.d, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i
   %.sroa.0267.10 = phi ptr [ %.sroa.0267.9, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %.sroa.0267.9, %bb.d ], [ %spec.select324, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ] ; 11 uses
-  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %i.av, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
+  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %spec.select325, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
   %i.ax = trunc i32 %.0.i.i to i8                 ; 10 uses
   %i.ay = load i8, ptr %i.ak, align 1, !tbaa !55
   %i.az = icmp eq i8 %i.ay, %i.ax                 ; 11 uses
@@ -1023,13 +1025,14 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i: ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 72
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = call noundef i32 %i.au(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0265.9), !inline_history !19 ; 2 uses
-  %i.aw = icmp eq i32 %i.av, -1
+  %i.aw = icmp eq i32 %i.av, -1                   ; 2 uses
   %spec.select322 = select i1 %i.aw, ptr null, ptr %.sroa.0265.9
+  %spec.select323 = select i1 %i.aw, i32 255, i32 %i.av
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit
 
 _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit: ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i, %bb.d, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i
   %.sroa.0265.10 = phi ptr [ %.sroa.0265.9, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %.sroa.0265.9, %bb.d ], [ %spec.select322, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ] ; 11 uses
-  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %i.av, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
+  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %spec.select323, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
   %i.ax = trunc i32 %.0.i.i to i8                 ; 10 uses
   %i.ay = load i8, ptr %i.ak, align 1, !tbaa !55
   %i.az = icmp eq i8 %i.ay, %i.ax                 ; 11 uses
@@ -1432,13 +1435,14 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i: ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 72
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = call noundef i32 %i.au(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0265.9), !inline_history !19 ; 2 uses
-  %i.aw = icmp eq i32 %i.av, -1
+  %i.aw = icmp eq i32 %i.av, -1                   ; 2 uses
   %spec.select324 = select i1 %i.aw, ptr null, ptr %.sroa.0265.9
+  %spec.select325 = select i1 %i.aw, i32 255, i32 %i.av
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit
 
 _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit: ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i, %bb.d, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i
   %.sroa.0265.10 = phi ptr [ %.sroa.0265.9, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %.sroa.0265.9, %bb.d ], [ %spec.select324, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ] ; 11 uses
-  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %i.av, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
+  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %spec.select325, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
   %i.ax = trunc i32 %.0.i.i to i8                 ; 10 uses
   %i.ay = load i8, ptr %i.ak, align 1, !tbaa !55
   %i.az = icmp eq i8 %i.ay, %i.ax                 ; 11 uses
@@ -1841,13 +1845,14 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i: ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 72
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = call noundef i32 %i.au(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0266.9), !inline_history !19 ; 2 uses
-  %i.aw = icmp eq i32 %i.av, -1
+  %i.aw = icmp eq i32 %i.av, -1                   ; 2 uses
   %spec.select325 = select i1 %i.aw, ptr null, ptr %.sroa.0266.9
+  %spec.select326 = select i1 %i.aw, i32 255, i32 %i.av
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit
 
 _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit: ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i, %bb.d, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i
   %.sroa.0266.10 = phi ptr [ %.sroa.0266.9, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %.sroa.0266.9, %bb.d ], [ %spec.select325, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ] ; 11 uses
-  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %i.av, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
+  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %spec.select326, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
   %i.ax = trunc i32 %.0.i.i to i8                 ; 10 uses
   %i.ay = load i8, ptr %i.ak, align 1, !tbaa !55
   %i.az = icmp eq i8 %i.ay, %i.ax                 ; 11 uses
@@ -2250,13 +2255,14 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i: ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 72
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = call noundef i32 %i.au(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0265.9), !inline_history !19 ; 2 uses
-  %i.aw = icmp eq i32 %i.av, -1
+  %i.aw = icmp eq i32 %i.av, -1                   ; 2 uses
   %spec.select324 = select i1 %i.aw, ptr null, ptr %.sroa.0265.9
+  %spec.select325 = select i1 %i.aw, i32 255, i32 %i.av
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit
 
 _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit: ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i, %bb.d, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i
   %.sroa.0265.10 = phi ptr [ %.sroa.0265.9, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %.sroa.0265.9, %bb.d ], [ %spec.select324, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ] ; 11 uses
-  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %i.av, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
+  %.0.i.i = phi i32 [ %i.ar, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i ], [ %2, %bb.d ], [ %spec.select325, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i ]
   %i.ax = trunc i32 %.0.i.i to i8                 ; 10 uses
   %i.ay = load i8, ptr %i.ak, align 1, !tbaa !55
   %i.az = icmp eq i8 %i.ay, %i.ax                 ; 11 uses

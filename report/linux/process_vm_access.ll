@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %process_vm_rw_single_vec.exit.i, %.lr.ph103.i
   %.1102.i = phi i64 [ 0, %.lr.ph103.i ], [ %i.cg, %process_vm_rw_single_vec.exit.i ] ; 2 uses
-  %.068101.i = phi i64 [ 0, %.lr.ph103.i ], [ %.2.i.i, %process_vm_rw_single_vec.exit.i ] ; 2 uses
+  %.068101.i = phi i64 [ 0, %.lr.ph103.i ], [ %10, %process_vm_rw_single_vec.exit.i ] ; 2 uses
   %.val83.i = load i64, ptr %i.g, align 8         ; 2 uses
   %.not78.i = icmp ne i64 %.val83.i, 0
   %.not79.i = icmp eq i64 %.068101.i, 0
@@ -402,7 +402,9 @@ process_vm_rw_pages.exit.i.process_vm_rw_single_vec.exit.loopexit_crit_edge.i: ;
   br label %process_vm_rw_single_vec.exit.i, !llvm.loop !13
 
 process_vm_rw_single_vec.exit.i:                  ; preds = %bb.p, %process_vm_rw_pages.exit.i.process_vm_rw_single_vec.exit.loopexit_crit_edge.i, %.critedge67.i.i, %bb.o, %bb.n
-  %.2.i.i = phi i64 [ 0, %bb.n ], [ -14, %.critedge67.i.i ], [ 0, %bb.o ], [ %.2.i.i.i, %process_vm_rw_pages.exit.i.process_vm_rw_single_vec.exit.loopexit_crit_edge.i ], [ %.2.i.i.i, %bb.p ] ; 2 uses
+  %.2.i.i = phi i64 [ 0, %bb.n ], [ 4294967282, %.critedge67.i.i ], [ 0, %bb.o ], [ %.2.i.i.i, %process_vm_rw_pages.exit.i.process_vm_rw_single_vec.exit.loopexit_crit_edge.i ], [ %.2.i.i.i, %bb.p ]
+  %sext.i = shl i64 %.2.i.i, 32
+  %10 = ashr exact i64 %sext.i, 32                ; 2 uses
   %i.cg = add nuw i64 %.1102.i, 1                 ; 2 uses
   %exitcond113.not.i = icmp eq i64 %i.cg, %4
   br i1 %exitcond113.not.i, label %process_vm_rw_single_vec.exit.i..critedge.i_crit_edge, label %bb.m, !llvm.loop !16
@@ -413,7 +415,7 @@ process_vm_rw_single_vec.exit.i..critedge.i_crit_edge: ; preds = %process_vm_rw_
 
 .critedge.i:                                      ; preds = %bb.m, %process_vm_rw_single_vec.exit.i..critedge.i_crit_edge
   %.val.i = phi i64 [ %.val.i.pre, %process_vm_rw_single_vec.exit.i..critedge.i_crit_edge ], [ %.val83.i, %bb.m ] ; 2 uses
-  %.068.lcssa.ph.i = phi i64 [ %.2.i.i, %process_vm_rw_single_vec.exit.i..critedge.i_crit_edge ], [ %.068101.i, %bb.m ]
+  %.068.lcssa.ph.i = phi i64 [ %10, %process_vm_rw_single_vec.exit.i..critedge.i_crit_edge ], [ %.068101.i, %bb.m ]
   %i.ch = sub i64 %.val84.i, %.val.i
   %.not80.i = icmp eq i64 %.val84.i, %.val.i
   %spec.select.i = select i1 %.not80.i, i64 %.068.lcssa.ph.i, i64 %i.ch

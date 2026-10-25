@@ -205,7 +205,7 @@ _ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit6.i
   %i.jj = mul i64 %.1752955.i, 10
   %i.jk = zext nneg i8 %i.ji to i64
   %i.jl = add i64 %i.jj, %i.jk                    ; 2 uses
-  %.067.add.i.i.i = add nuw nsw i64 %.067.idx.i.i956.i, 1 ; 3 uses
+  %.067.add.i.i.i = add nuw nsw i64 %.067.idx.i.i956.i, 1 ; 4 uses
   %.067.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.add.i.i.i
   %i.jm = load i8, ptr %.067.ptr.i.i.i, align 1, !tbaa !118 ; 2 uses
   %i.jn = add i8 %i.jm, -48                       ; 2 uses
@@ -221,10 +221,11 @@ bb.bg:                                            ; preds = %.lr.ph.i
   br i1 %or.cond.i.i114.not.i, label %_ZN8simdjson8fallback8ondemand14value_iterator15get_root_doubleEb.exit.i, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.bg, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i
-  %.067.idx.i.i.lcssa95310511064.i = phi i64 [ %.067.add.i.i.i, %bb.bg ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ] ; 2 uses
+  %.067.idx.i.i.lcssa95310511064.i = phi i64 [ %.067.add.i.i.i, %bb.bg ], [ 0, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ]
   %.1752.lcssa10521063.i = phi i64 [ %i.jl, %bb.bg ], [ %spec.select929.i, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ] ; 2 uses
   %.lcssa95210531062.i = phi i8 [ %i.jm, %bb.bg ], [ %i.jf, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ] ; 2 uses
-  %.067.ptr.i.i.le10541061.i = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.idx.i.i.lcssa95310511064.i ; 3 uses
+  %.067.add.i.i.pn.i = phi i64 [ %.067.add.i.i.i, %bb.bg ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ]
+  %.067.ptr.i.i.le10541061.i = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.add.i.i.pn.i ; 3 uses
   %i.jp = icmp eq i8 %.lcssa95210531062.i, 46
   br i1 %i.jp, label %bb.bh, label %bb.bm, !prof !142
 
@@ -627,7 +628,7 @@ bb.ar:                                            ; preds = %.lr.ph
   br i1 %or.cond.i.not, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %.thread920
 
 .thread920:                                       ; preds = %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit89, %bb.ar
-  %.067.idx.i.lcssa803916930 = phi i64 [ %.067.add.i, %bb.ar ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit89 ]
+  %.067.idx.i.lcssa803916930 = phi i64 [ %.067.add.i, %bb.ar ], [ 0, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit89 ]
   %.0595.lcssa917929 = phi i64 [ %i.hu, %bb.ar ], [ %spec.select779, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit89 ] ; 2 uses
   %.lcssa802918928 = phi i8 [ %i.hv, %bb.ar ], [ %i.ho, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit89 ] ; 2 uses
   %.067.add.i.pn = phi i64 [ %.067.add.i, %bb.ar ], [ %i.hm, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit89 ]
@@ -1030,7 +1031,7 @@ _ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit6.i
   %i.fr = mul i64 %.1529652.i, 10
   %i.fs = zext nneg i8 %i.fq to i64
   %i.ft = add i64 %i.fr, %i.fs                    ; 2 uses
-  %.067.add.i.i.i = add nuw nsw i64 %.067.idx.i.i653.i, 1 ; 3 uses
+  %.067.add.i.i.i = add nuw nsw i64 %.067.idx.i.i653.i, 1 ; 4 uses
   %.067.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.add.i.i.i
   %i.fu = load i8, ptr %.067.ptr.i.i.i, align 1, !tbaa !118 ; 2 uses
   %i.fv = add i8 %i.fu, -48                       ; 2 uses
@@ -1046,10 +1047,11 @@ bb.ac:                                            ; preds = %.lr.ph.i
   br i1 %or.cond.i.i.not.i, label %_ZN8simdjson8fallback8ondemand14value_iterator15get_root_doubleEb.exit.i, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.ac, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i
-  %.067.idx.i.i.lcssa650712725.i = phi i64 [ %.067.add.i.i.i, %bb.ac ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ] ; 2 uses
+  %.067.idx.i.i.lcssa650712725.i = phi i64 [ %.067.add.i.i.i, %bb.ac ], [ 0, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ]
   %.1529.lcssa713724.i = phi i64 [ %i.ft, %bb.ac ], [ %spec.select.i18, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ] ; 2 uses
   %.lcssa714723.i = phi i8 [ %i.fu, %bb.ac ], [ %i.fn, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ] ; 2 uses
-  %.067.ptr.i.i.le715722.i = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.idx.i.i.lcssa650712725.i ; 3 uses
+  %.067.add.i.i.pn.i = phi i64 [ %.067.add.i.i.i, %bb.ac ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i ]
+  %.067.ptr.i.i.le715722.i = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.add.i.i.pn.i ; 3 uses
   %i.fx = icmp eq i8 %.lcssa714723.i, 46
   br i1 %i.fx, label %bb.ad, label %bb.ai, !prof !142
 
@@ -1452,7 +1454,7 @@ _ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit6.i
   %i.vi = mul i64 %.1529652.i86, 10
   %i.vj = zext nneg i8 %i.vh to i64
   %i.vk = add i64 %i.vi, %i.vj                    ; 2 uses
-  %.067.add.i.i.i87 = add nuw nsw i64 %.067.idx.i.i653.i85, 1 ; 3 uses
+  %.067.add.i.i.i87 = add nuw nsw i64 %.067.idx.i.i653.i85, 1 ; 4 uses
   %.067.ptr.i.i.i88 = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i33.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.add.i.i.i87
   %i.vl = load i8, ptr %.067.ptr.i.i.i88, align 1, !tbaa !118 ; 2 uses
   %i.vm = add i8 %i.vl, -48                       ; 2 uses
@@ -1468,10 +1470,11 @@ bb.cx:                                            ; preds = %.lr.ph.i84
   br i1 %or.cond.i.i.not.i90, label %_ZN8simdjson8fallback8ondemand14value_iterator15get_root_doubleEb.exit.i27, label %.thread.i39
 
 .thread.i39:                                      ; preds = %bb.cx, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i38
-  %.067.idx.i.i.lcssa650712725.i40 = phi i64 [ %.067.add.i.i.i87, %bb.cx ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i38 ] ; 2 uses
+  %.067.idx.i.i.lcssa650712725.i40 = phi i64 [ %.067.add.i.i.i87, %bb.cx ], [ 0, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i38 ]
   %.1529.lcssa713724.i41 = phi i64 [ %i.vk, %bb.cx ], [ %spec.select.i36, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i38 ] ; 2 uses
   %.lcssa714723.i42 = phi i8 [ %i.vl, %bb.cx ], [ %i.ve, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i38 ] ; 2 uses
-  %.067.ptr.i.i.le715722.i44 = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i33.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.idx.i.i.lcssa650712725.i40 ; 3 uses
+  %.067.add.i.i.pn.i43 = phi i64 [ %.067.add.i.i.i87, %bb.cx ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit5.i.i38 ]
+  %.067.ptr.i.i.le715722.i44 = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.i33.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.067.add.i.i.pn.i43 ; 3 uses
   %i.vo = icmp eq i8 %.lcssa714723.i42, 46
   br i1 %i.vo, label %bb.cy, label %bb.dd, !prof !142
 
@@ -1874,7 +1877,7 @@ bb.o:                                             ; preds = %.lr.ph
   br i1 %or.cond.i.not, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %.thread
 
 .thread:                                          ; preds = %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55, %bb.o
-  %.067.idx.i.lcssa438502515 = phi i64 [ %.067.add.i, %bb.o ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ]
+  %.067.idx.i.lcssa438502515 = phi i64 [ %.067.add.i, %bb.o ], [ 0, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ]
   %.0324.lcssa503514 = phi i64 [ %i.dc, %bb.o ], [ %spec.select, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ] ; 2 uses
   %.lcssa504513 = phi i8 [ %i.dd, %bb.o ], [ %i.cw, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ] ; 2 uses
   %.067.add.i.pn = phi i64 [ %.067.add.i, %bb.o ], [ %i.cu, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ]
@@ -2277,7 +2280,7 @@ bb.o:                                             ; preds = %.lr.ph
   br i1 %or.cond.i.not, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %.thread
 
 .thread:                                          ; preds = %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55, %bb.o
-  %.067.idx.i.lcssa438502515 = phi i64 [ %.067.add.i, %bb.o ], [ 1, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ]
+  %.067.idx.i.lcssa438502515 = phi i64 [ %.067.add.i, %bb.o ], [ 0, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ]
   %.0324.lcssa503514 = phi i64 [ %i.dc, %bb.o ], [ %spec.select, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ] ; 2 uses
   %.lcssa504513 = phi i8 [ %i.dd, %bb.o ], [ %i.cw, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ] ; 2 uses
   %.067.add.i.pn = phi i64 [ %.067.add.i, %bb.o ], [ %i.cu, %_ZN8simdjson8fallback13numberparsing12_GLOBAL__N_111parse_digitImEEbhRT_.exit55 ]

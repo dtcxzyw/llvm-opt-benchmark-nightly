@@ -205,8 +205,9 @@ begin_hunk_0
 @.str.778 = private unnamed_addr constant [14 x i8] c"\22%s\22 [window]\00", align 1
 @.str.779 = private unnamed_addr constant [4 x i8] c"???\00", align 1
 @switch.table._ZN5ImGui17GetStyleColorNameEi = private unnamed_addr constant [58 x ptr] [ptr @.str.14, ptr @.str.15, ptr @.str.16, ptr @.str.17, ptr @.str.18, ptr @.str.19, ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23, ptr @.str.24, ptr @.str.25, ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50, ptr @.str.51, ptr @.str.52, ptr @.str.53, ptr @.str.54, ptr @.str.55, ptr @.str.56, ptr @.str.57, ptr @.str.58, ptr @.str.59, ptr @.str.60, ptr @.str.61, ptr @.str.62, ptr @.str.63, ptr @.str.64, ptr @.str.65, ptr @.str.66, ptr @.str.67, ptr @.str.68, ptr @.str.69, ptr @.str.70, ptr @.str.71], align 8
+@switch.table._ZN5ImGui15GetKeyChordNameEi = private unnamed_addr constant [3 x i32] [i32 -8193, i32 -16385, i32 -32769], align 4
 @switch.table._ZN5ImGui8ShortcutEiij = private unnamed_addr constant [3 x i16] [i16 8192, i16 16384, i16 -32768], align 4
-@switch.table._ZN5ImGui17ShowMetricsWindowEPb = private unnamed_addr constant [3 x i32] [i32 -8193, i32 -16385, i32 -32769], align 4
+@switch.table._ZN5ImGui17ShowMetricsWindowEPb = private unnamed_addr constant [3 x i16] [i16 -8193, i16 -16385, i16 32767], align 4
 @switch.table._ZN5ImGui17ShowMetricsWindowEPb.21 = private unnamed_addr constant [6 x i16] [i16 240, i16 256, i16 272, i16 352, i16 288, i16 304], align 8
 @switch.table._ZN5ImGui17ShowMetricsWindowEPb.22 = private unnamed_addr constant [6 x i16] [i16 248, i16 264, i16 280, i16 360, i16 296, i16 312], align 8
 
@@ -609,7 +610,7 @@ bb.c:                                             ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %bb.c
   %i.g = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5ImGui17ShowMetricsWindowEPb, i64 %i.g
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5ImGui15GetKeyChordNameEi, i64 %i.g
   %switch.load = load i32, ptr %switch.gep, align 4
   br label %_ZL17GetModForLRModKey8ImGuiKey.exit
 
@@ -1012,8 +1013,8 @@ bb.kb:                                            ; preds = %_ZN5ImGuiL24UpdateW
   br label %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit.thread
 
 _ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit.thread: ; preds = %bb.gx, %bb.gt, %bb.gu, %bb.gw, %bb.gs, %bb.kb, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit, %bb.gr
-  %.0949 = phi i32 [ -1, %bb.gr ], [ %.3952, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit ], [ %.3952, %bb.kb ], [ -1, %bb.gs ], [ -1, %bb.gw ], [ -1, %bb.gu ], [ -1, %bb.gt ], [ -1, %bb.gx ]
-  %.0944 = phi i32 [ -1, %bb.gr ], [ %.3947, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit ], [ %.3947, %bb.kb ], [ -1, %bb.gs ], [ -1, %bb.gw ], [ -1, %bb.gu ], [ -1, %bb.gt ], [ -1, %bb.gx ]
+  %.0949 = phi i32 [ 255, %bb.gr ], [ %.3952, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit ], [ %.3952, %bb.kb ], [ 255, %bb.gs ], [ 255, %bb.gw ], [ 255, %bb.gu ], [ 255, %bb.gt ], [ 255, %bb.gx ]
+  %.0944 = phi i32 [ 255, %bb.gr ], [ %.3947, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit ], [ %.3947, %bb.kb ], [ 255, %bb.gs ], [ 255, %bb.gw ], [ 255, %bb.gu ], [ 255, %bb.gt ], [ 255, %bb.gx ]
   %.6370 = phi i1 [ %.3367, %bb.gr ], [ %.3367, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit ], [ %spec.select477, %bb.kb ], [ %.3367, %bb.gs ], [ %.3367, %bb.gw ], [ %.3367, %bb.gu ], [ %.3367, %bb.gt ], [ %.3367, %bb.gx ]
   %.7 = phi i1 [ %.5, %bb.gr ], [ %.5, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowRK6ImVec2PiS5_iPjRK6ImRect.exit ], [ %spec.select495, %bb.kb ], [ %.5, %bb.gs ], [ %.5, %bb.gw ], [ %.5, %bb.gu ], [ %.5, %bb.gt ], [ %.5, %bb.gx ]
   %i.bec = trunc i32 %.0949 to i8
@@ -1416,12 +1417,13 @@ bb.ie:                                            ; preds = %bb.id
 
 switch.lookup:                                    ; preds = %bb.ie
   %i.cig = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5ImGui17ShowMetricsWindowEPb, i64 %i.cig
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5ImGui17ShowMetricsWindowEPb, i64 %i.cig
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i32
   br label %_ZL17GetModForLRModKey8ImGuiKey.exit.i
 
 _ZL17GetModForLRModKey8ImGuiKey.exit.i:           ; preds = %bb.ie, %switch.lookup, %bb.id, %bb.id
-  %i.cih = phi i32 [ -4097, %bb.id ], [ -4097, %bb.id ], [ %switch.load, %switch.lookup ], [ -1, %bb.ie ]
+  %i.cih = phi i32 [ 61439, %bb.id ], [ 61439, %bb.id ], [ %switch.ext, %switch.lookup ], [ 65535, %bb.ie ]
   %i.cii = and i32 %i.cih, %i.chz
   br label %bb.if
 

@@ -204,13 +204,15 @@ bb.br:                                            ; preds = %bb.bq
   %spec.select.le = trunc nsw i32 %spec.select510 to i16 ; 2 uses
   %.sroa.14.0.extract.shift = lshr i48 %1, 32
   %.sroa.14.0.extract.trunc = trunc nuw i48 %.sroa.14.0.extract.shift to i16
-  %i.mu = add nuw nsw i32 %spec.select510, 2
-  %.0184564 = add nuw nsw i16 %spec.select.le, 1
-  br label %.lr.ph571
+  %i.mu = add nsw i32 %spec.select510, 2          ; 2 uses
+  %.0184564 = add i16 %spec.select.le, 1          ; 2 uses
+  %9 = sext i16 %.0184564 to i32
+  %.not565 = icmp slt i32 %i.mu, %9
+  br i1 %.not565, label %.preheader516, label %.lr.ph571
 
 bb.bs:                                            ; preds = %._crit_edge531.2, %._crit_edge543
   %.0192546 = phi i32 [ 0, %._crit_edge531.2 ], [ %i.nu, %._crit_edge543 ]
-  %.0193545 = phi i32 [ -6, %._crit_edge531.2 ], [ %spec.select510, %._crit_edge543 ]
+  %.0193545 = phi i32 [ 65530, %._crit_edge531.2 ], [ %spec.select510, %._crit_edge543 ]
   %.sroa.0488.3544 = phi i32 [ %i.kc, %._crit_edge531.2 ], [ %i.nc, %._crit_edge543 ]
   %i.mv = mul i32 %.sroa.0488.3544, 1103515245
   %i.mw = add i32 %i.mv, 12345                    ; 2 uses
@@ -227,7 +229,9 @@ bb.bs:                                            ; preds = %._crit_edge531.2, %
   %i.nf = urem i16 %.lhs.trunc.i319, 6            ; 2 uses
   %.zext.i320 = zext nneg i16 %i.nf to i32
   %i.ng = add nsw i16 %i.nf, -3
-  %spec.select510 = call i32 @llvm.smax.i32(i32 %i.na, i32 %.0193545) ; 3 uses
+  %sext = shl i32 %.0193545, 16
+  %10 = ashr exact i32 %sext, 16
+  %spec.select510 = call i32 @llvm.smax.i32(i32 %i.na, i32 %10) ; 3 uses
   %i.nh = add nsw i32 %.zext.i320, -2             ; 2 uses
   %i.ni = sext i16 %i.ng to i32                   ; 3 uses
   %.not226539 = icmp slt i32 %i.nh, %i.ni
@@ -292,7 +296,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
   %indvars.iv.next658 = add nsw i32 %indvars.iv657, 70
   br i1 %.not226.not, label %bb.bt, label %._crit_edge543, !llvm.loop !206
 
-.preheader516:                                    ; preds = %._crit_edge561
+.preheader516:                                    ; preds = %._crit_edge561, %.lr.ph571.preheader
   %i.oh = add i16 %.sroa.0.0.extract.trunc.i, -3
   %i.oi = sext i16 %i.oh to i32
   br label %.preheader

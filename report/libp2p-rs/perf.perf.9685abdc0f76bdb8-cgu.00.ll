@@ -202,17 +202,24 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1200 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !range !41, !noundef !10 ; 2 uses
   %switch.not = icmp samesign ult i8 %i.c, 2
-  br i1 %switch.not, label %.sink.split, label %bb.b
+  br i1 %switch.not, label %2, label %bb.b
 
-.sink.split:                                      ; preds = %bb.a
+2:                                                ; preds = %bb.a
   tail call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %0)
-  %2 = load i8, ptr %i.b, align 8, !range !41, !noundef !10
-  %3 = or i8 %2, 2                                ; 2 uses
-  store i8 %3, ptr %i.b, align 8
+  %3 = load i8, ptr %i.b, align 8, !range !41, !noundef !10
+  switch i8 %3, label %.sink.split [
+    i8 1, label %4
+    i8 3, label %4
+  ]
+
+.sink.split:                                      ; preds = %2, %4
+  %.sink = phi i8 [ 3, %4 ], [ 2, %2 ]
+  %.ph = phi i8 [ 1, %4 ], [ 0, %2 ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a
-  %i.d = phi i8 [ %i.c, %bb.a ], [ %3, %.sink.split ]
+  %i.d = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = and i8 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1056
@@ -224,6 +231,9 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
   %i.g = call { i64, ptr } @_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_6StreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtNtCshPShd8ZVvJf_6rustls6client11client_conn10connection16ClientConnectionENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCscVe0kjRb1xs_4perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.g
+
+4:                                                ; preds = %2, %2
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.preheader, %bb.h
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.h ] ; 2 uses
   %.03743 = phi ptr [ %0, %.preheader ], [ %i.m, %bb.h ] ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.03743, i64 1
-  %i.d = load i8, ptr %.03743, align 1, !tbaa !36 ; 4 uses
+  %i.d = load i8, ptr %.03743, align 1, !tbaa !36 ; 3 uses
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !43   ; 2 uses
   %i.f = sext i8 %i.d to i64
   %i.g = getelementptr inbounds [2 x i8], ptr %i.e, i64 %i.f
@@ -214,17 +214,18 @@ bb.b:                                             ; preds = %.preheader, %bb.h
   br i1 %.not41, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = add i8 %i.d, -97
-  %or.cond = icmp ult i8 %i.j, 6
-  br i1 %or.cond, label %bb.e, label %bb.d
+  %i.j = add i8 %i.d, -65                         ; 2 uses
+  %or.cond = icmp ult i8 %i.j, 38
+  br i1 %or.cond, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %2 = add i8 %i.d, -65
-  %or.cond3 = icmp ult i8 %2, 6
-  br i1 %or.cond3, label %bb.e, label %.loopexit
+  %switch.maskindex = zext nneg i8 %i.j to i64
+  %switch.shifted = lshr i64 270582939711, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.e, label %.loopexit
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.sink = phi i8 [ -48, %bb.b ], [ -87, %bb.c ], [ -55, %bb.d ]
+bb.e:                                             ; preds = %bb.d, %bb.b
+  %.sink = phi i8 [ 0, %bb.b ], [ 9, %bb.d ]
   %i.k = add i8 %i.d, %.sink
   %i.l = shl i8 %i.k, 4
   %i.m = getelementptr inbounds nuw i8, ptr %.03743, i64 2
@@ -256,8 +257,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !59
 
-.loopexit:                                        ; preds = %bb.h, %bb.g, %bb.d, %bb.a
-  %.036 = phi i32 [ 0, %bb.a ], [ 1, %bb.h ], [ 0, %bb.d ], [ 0, %bb.g ]
+.loopexit:                                        ; preds = %bb.d, %bb.c, %bb.h, %bb.g, %bb.a
+  %.036 = phi i32 [ 0, %bb.a ], [ 0, %bb.d ], [ 1, %bb.h ], [ 0, %bb.c ], [ 0, %bb.g ]
   ret i32 %.036
 }
 

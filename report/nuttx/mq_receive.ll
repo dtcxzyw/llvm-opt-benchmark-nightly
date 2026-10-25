@@ -202,7 +202,7 @@ declare dso_local i32 @file_put(ptr noundef) local_unnamed_addr #4
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 
 ; Function Attrs: noredzone nounwind optsize uwtable
-define dso_local range(i64 -1, 256) i64 @mq_timedreceive(i32 noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr noundef %4) local_unnamed_addr #2 {
+define dso_local range(i64 -1, 2147483648) i64 @mq_timedreceive(i32 noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr noundef %4) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call i64 @nxmq_timedreceive(i32 noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4) #6 ; 3 uses
   %i.b = trunc nsw i64 %i.a to i32
@@ -221,8 +221,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  %.0 = phi i64 [ %i.a, %bb.a ], [ -1, %bb.c ], [ -1, %bb.b ]
-  ret i64 %.0
+  %.0 = phi i64 [ %i.a, %bb.a ], [ 4294967295, %bb.c ], [ 4294967295, %bb.b ]
+  %sext = shl nuw i64 %.0, 32
+  %5 = ashr exact i64 %sext, 32
+  ret i64 %5
 }
 
 ; Function Attrs: noredzone optsize
@@ -262,7 +264,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: noredzone nounwind optsize uwtable
-define dso_local range(i64 -1, 256) i64 @mq_receive(i32 noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3) local_unnamed_addr #2 {
+define dso_local range(i64 -1, 2147483648) i64 @mq_receive(i32 noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call i64 @nxmq_receive(i32 noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3) #6 ; 3 uses
   %i.b = trunc nsw i64 %i.a to i32
@@ -281,8 +283,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  %.0 = phi i64 [ %i.a, %bb.a ], [ -1, %bb.c ], [ -1, %bb.b ]
-  ret i64 %.0
+  %.0 = phi i64 [ %i.a, %bb.a ], [ 4294967295, %bb.c ], [ 4294967295, %bb.b ]
+  %sext = shl nuw i64 %.0, 32
+  %4 = ashr exact i64 %sext, 32
+  ret i64 %4
 }
 
 ; Function Attrs: noredzone optsize

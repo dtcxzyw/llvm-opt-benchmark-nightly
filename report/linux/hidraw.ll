@@ -204,9 +204,11 @@ bb.p:                                             ; preds = %bb.n
   br label %hidraw_fixed_size_ioctl.exit.thread
 
 hidraw_fixed_size_ioctl.exit.thread:              ; preds = %bb.h, %bb.i, %bb.l, %copy_to_user.exit.i, %bb.j, %bb.m, %bb.g, %bb.k, %bb.n, %bb.e, %bb.d, %bb.a, %bb.b, %bb.c, %bb.o, %bb.p
-  %.0 = phi i64 [ %i.bd, %bb.p ], [ -19, %bb.a ], [ -22, %bb.d ], [ -22, %bb.n ], [ -25, %bb.e ], [ %i.bc, %bb.o ], [ -19, %bb.c ], [ -19, %bb.b ], [ -14, %bb.h ], [ -22, %bb.k ], [ -22, %bb.i ], [ -14, %bb.g ], [ 0, %bb.l ], [ -14, %copy_to_user.exit.i ], [ -14, %bb.j ], [ 0, %bb.m ]
+  %.0 = phi i64 [ %i.bd, %bb.p ], [ 4294967277, %bb.a ], [ 4294967274, %bb.d ], [ 4294967274, %bb.n ], [ 4294967271, %bb.e ], [ %i.bc, %bb.o ], [ 4294967277, %bb.c ], [ 4294967277, %bb.b ], [ 4294967282, %bb.h ], [ 4294967274, %bb.k ], [ 4294967274, %bb.i ], [ 4294967282, %bb.g ], [ 0, %bb.l ], [ 4294967282, %copy_to_user.exit.i ], [ 4294967282, %bb.j ], [ 0, %bb.m ]
   call void @up_read(ptr noundef @minors_rwsem) #13
-  ret i64 %.0
+  %sext = shl i64 %.0, 32
+  %4 = ashr exact i64 %sext, 32
+  ret i64 %4
 }
 
 ; Function Attrs: noredzone null_pointer_is_valid

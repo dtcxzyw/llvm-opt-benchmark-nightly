@@ -172,7 +172,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @142 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @141, [16 x i8] c",\00\00\00\00\00\00\00\F8\01\00\00\0E\00\00\00" }>, align 8
 @143 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @24, [16 x i8] c"`\00\00\00\00\00\00\00\DA\0A\00\004\00\00\00" }>, align 8
 @switch.table._RINvMsn_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_9Primitive4sizeNtB6_16TargetDataLayoutECs8Xq8PKFYOms_3hir = private unnamed_addr constant [5 x i8] c"\01\02\04\08\10", align 8
-@switch.table._RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8Xq8PKFYOms_3hir = private unnamed_addr constant [5 x i64] [i64 -8, i64 -16, i64 -32, i64 -64, i64 -128], align 8
+@switch.table._RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8Xq8PKFYOms_3hir = private unnamed_addr constant [5 x i8] c"xp`@\00", align 8
 @switch.table._RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsileJQcQObtj_7hir_def10signatures9FieldDataEENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB2l_8adapters3map8map_foldBX_TNtNtCs33K2ylI4knu_10hir_expand4name4NameNtCs8Xq8PKFYOms_3hir5FieldEuNCNvMs1_NtB4z_11diagnosticsNtB57_13AnyDiagnostic26body_validation_diagnostic0NCINvNvB2f_8for_each4callB3S_NCINvMsk_B8_INtB8_3VecB3S_E14extend_trustedINtB3l_3MapBI_B4Z_EE0E0E0EB4z_ = private unnamed_addr constant [3 x i8] c"\02\00\01", align 4
 @switch.table._RNvNtCs8Xq8PKFYOms_3hir7display32write_builtin_derive_impl_method = private unnamed_addr constant [11 x i16] [i16 168, i16 184, i16 1440, i16 1448, i16 1456, i16 1464, i16 760, i16 1472, i16 752, i16 296, i16 304], align 8
 @switch.table._RNvNtCs8Xq8PKFYOms_3hir7display32write_builtin_derive_impl_method.513 = private unnamed_addr constant [11 x i16] [i16 172, i16 188, i16 1444, i16 1452, i16 1460, i16 1468, i16 764, i16 1476, i16 756, i16 300, i16 308], align 8
@@ -575,12 +575,13 @@ bb.j:                                             ; preds = %bb.h
 
 switch.lookup:                                    ; preds = %bb.a
   %i.z = and i64 %.sroa.44.0.extract.shift.i, 255
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8Xq8PKFYOms_3hir, i64 %i.z
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvMsv_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_5Niche9availableNtB6_16TargetDataLayoutECs8Xq8PKFYOms_3hir, i64 %i.z
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %.thread
 
 .thread:                                          ; preds = %switch.lookup, %bb.h
-  %.neg5 = phi i64 [ %.neg4, %bb.h ], [ %switch.load, %switch.lookup ]
+  %.neg5 = phi i64 [ %.neg4, %bb.h ], [ %switch.ext, %switch.lookup ]
   %i.aa = and i64 %.neg5, 120
   %i.ab = zext nneg i64 %i.aa to i128
   %i.ac = lshr i128 -1, %i.ab

@@ -205,15 +205,16 @@ _ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit47:    ; preds = %_ZN9CInBuffer8ReadB
   %i.dv = sub nuw nsw i32 15, %i.cv
   %i.dw = lshr i32 %i.cw, %i.dv
   %i.dx = lshr i32 %i.dw, 1
-  %i.dy = and i32 %i.dx, 65535
+  %i.dy = and i32 %i.dx, 65535                    ; 2 uses
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.o
-  %i.dz = tail call noundef i32 @_ZN9NCompress4NLzx10NBitStream8CDecoder11ReadBitsBigEj(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i32 noundef 24)
+  %i.dz = tail call noundef i32 @_ZN9NCompress4NLzx10NBitStream8CDecoder11ReadBitsBigEj(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i32 noundef 24) ; 2 uses
   br label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit37, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit47, %bb.aa
-  %.sink = phi i32 [ %i.dz, %bb.aa ], [ %i.dy, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit47 ], [ 32768, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit37 ] ; 2 uses
+  %.sink = phi i32 [ %i.dz, %bb.aa ], [ %i.dy, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit47 ], [ 32768, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit37 ]
+  %1 = phi i32 [ %i.dz, %bb.aa ], [ %i.dy, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit47 ], [ 0, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit37 ]
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 7400
   store i32 %.sink, ptr %i.ea, align 8, !tbaa !50
   %i.eb = icmp eq i32 %i.bt, 3                    ; 2 uses
@@ -223,7 +224,7 @@ bb.ab:                                            ; preds = %_ZN9NCompress4NLzx8
   br i1 %i.eb, label %bb.ac, label %bb.ay
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.ee = trunc i32 %.sink to i8
+  %i.ee = trunc i32 %1 to i8
   %i.ef = and i8 %i.ee, 1
   store i8 %i.ef, ptr %i.f, align 4, !tbaa !38
   %i.eg = load i32, ptr %i.p, align 4, !tbaa !43
