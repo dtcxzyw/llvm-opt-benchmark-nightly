@@ -204,24 +204,17 @@ bb.b:                                             ; preds = %bb.a
   %.0.copyload.i61 = load double, ptr %i.n, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i61) #8, !srcloc !37
   %i.o = fcmp uno double %.0.copyload.i61, 0.000000e+00 ; 2 uses
-  br i1 %i.o, label %wasm_quiet.exit.thread, label %wasm_quiet.exit, !prof !31
+  br i1 %i.o, label %wasm_quiet.exit.thread, label %wasm_quietf.exit, !prof !31
 
 wasm_quiet.exit.thread:                           ; preds = %bb.b
   %i.p = bitcast double %.0.copyload.i61 to i64
   %i.q = or i64 %i.p, 9221120237041090560
   %i.r = bitcast i64 %i.q to double
-  %5 = fptrunc double %i.r to float
-  %6 = bitcast float %5 to i32
-  %7 = or i32 %6, 2143289344
-  %8 = bitcast i32 %7 to float
   br label %wasm_quietf.exit
 
-wasm_quiet.exit:                                  ; preds = %bb.b
-  %9 = fptrunc double %.0.copyload.i61 to float
-  br label %wasm_quietf.exit
-
-wasm_quietf.exit:                                 ; preds = %wasm_quiet.exit, %wasm_quiet.exit.thread
-  %.0.i62 = phi float [ %8, %wasm_quiet.exit.thread ], [ %9, %wasm_quiet.exit ]
+wasm_quietf.exit:                                 ; preds = %bb.b, %wasm_quiet.exit.thread
+  %.0.i62.in = phi double [ %i.r, %wasm_quiet.exit.thread ], [ %.0.copyload.i61, %bb.b ]
+  %.0.i62 = fptrunc double %.0.i62.in to float
   %i.s = fpext float %.0.i62 to double
   %i.t = bitcast double %i.s to i64
   %i.u = select i1 %i.o, i64 9221120237041090560, i64 %i.t

@@ -204,14 +204,14 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !191, !nonnull !62, !align !63
   %i.v = load i64, ptr %i.u, align 8, !tbaa !16   ; 12 uses
-  %i.w = uitofp i64 %i.v to double                ; 3 uses
+  %i.w = uitofp i64 %i.v to double                ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !192, !nonnull !62, !align !64 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.val, i64 48
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !193, !nonnull !62, !align !63
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !16
   %.not.i.i.i = icmp eq i64 %i.v, 0
-  br i1 %.not.i.i.i, label %.lr.ph11.split.split.i.i.i, label %.lr.ph.us.us.preheader.i.i.i
+  br i1 %.not.i.i.i, label %.lr.ph11.split.split.preheader.i.i.i, label %.lr.ph.us.us.preheader.i.i.i
 
 .lr.ph.us.us.preheader.i.i.i:                     ; preds = %.lr.ph11.i.i.i
   %i.ac = sext i32 %.val2 to i64
@@ -230,6 +230,15 @@ bb.a:
   %xtraiter18 = and i64 %i.v, 1
   %lcmp.mod19.not = icmp eq i64 %xtraiter18, 0
   br label %.lr.ph.us.us.i.i.i
+
+.lr.ph11.split.split.preheader.i.i.i:             ; preds = %.lr.ph11.i.i.i
+  %.pre.i.i.i = load float, ptr %i.y, align 4, !tbaa !9 ; 2 uses
+  %2 = fcmp olt float %.pre.i.i.i, 0.000000e+00
+  br i1 %2, label %cdce.call, label %"_ZSt10__invoke_rIvRZN2cv3dnn15fastNormChannelERKNS0_3MatES4_S4_RS2_fE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", !prof !68
+
+cdce.call:                                        ; preds = %.lr.ph11.split.split.preheader.i.i.i
+  %3 = tail call noundef float @sqrtf(float noundef %.pre.i.i.i) #17 ; 0 uses
+  br label %"_ZSt10__invoke_rIvRZN2cv3dnn15fastNormChannelERKNS0_3MatES4_S4_RS2_fE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit"
 
 .lr.ph.us.us.i.i.i:                               ; preds = %._crit_edge8.us.us.i.i.i, %.lr.ph.us.us.preheader.i.i.i
   %indvars.iv.i.i.i = phi i64 [ %i.ac, %.lr.ph.us.us.preheader.i.i.i ], [ %indvars.iv.next.i.i.i, %._crit_edge8.us.us.i.i.i ] ; 3 uses
@@ -394,25 +403,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %exitcond28.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
   br i1 %exitcond28.not.i.i.i, label %"_ZSt10__invoke_rIvRZN2cv3dnn15fastNormChannelERKNS0_3MatES4_S4_RS2_fE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", label %.lr.ph.us.us.i.i.i, !llvm.loop !185
 
-.lr.ph11.split.split.i.i.i:                       ; preds = %.lr.ph11.i.i.i
-  %2 = fdiv double 0.000000e+00, %i.w             ; 2 uses
-  %3 = fptrunc double %2 to float
-  %4 = fpext float %3 to double                   ; 2 uses
-  %5 = fneg double %4
-  %6 = tail call double @llvm.fmuladd.f64(double %5, double %4, double %2) ; 2 uses
-  %7 = fcmp ogt double %6, 0.000000e+00
-  %.sroa.speculated.i.i.i = select i1 %7, double %6, double 0.000000e+00
-  %8 = fptrunc double %.sroa.speculated.i.i.i to float
-  %.pre.i.i.i = load float, ptr %i.y, align 4, !tbaa !9
-  %9 = fadd float %.pre.i.i.i, %8                 ; 2 uses
-  %10 = fcmp olt float %9, 0.000000e+00
-  br i1 %10, label %cdce.call, label %"_ZSt10__invoke_rIvRZN2cv3dnn15fastNormChannelERKNS0_3MatES4_S4_RS2_fE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", !prof !68
-
-cdce.call:                                        ; preds = %.lr.ph11.split.split.i.i.i
-  %11 = tail call noundef float @sqrtf(float noundef %9) #17 ; 0 uses
-  br label %"_ZSt10__invoke_rIvRZN2cv3dnn15fastNormChannelERKNS0_3MatES4_S4_RS2_fE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit"
-
-"_ZSt10__invoke_rIvRZN2cv3dnn15fastNormChannelERKNS0_3MatES4_S4_RS2_fE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit": ; preds = %._crit_edge8.us.us.i.i.i, %bb.a, %.lr.ph11.split.split.i.i.i, %cdce.call
+"_ZSt10__invoke_rIvRZN2cv3dnn15fastNormChannelERKNS0_3MatES4_S4_RS2_fE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit": ; preds = %._crit_edge8.us.us.i.i.i, %bb.a, %.lr.ph11.split.split.preheader.i.i.i, %cdce.call
   ret void
 }
 
@@ -815,7 +806,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !247, !nonnull !62, !align !63
   %i.t = load i64, ptr %i.s, align 8, !tbaa !16   ; 10 uses
-  %i.u = uitofp i64 %i.t to double                ; 3 uses
+  %i.u = uitofp i64 %i.t to double                ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !248, !nonnull !62, !align !64 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.val, i64 48
@@ -825,7 +816,16 @@ bb.a:
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !250, !nonnull !62, !align !63
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !16
   %.not.i.i.i = icmp eq i64 %i.t, 0
-  br i1 %.not.i.i.i, label %.lr.ph11.split.split.i.i.i, label %.lr.ph11.split.us.i.i.i
+  br i1 %.not.i.i.i, label %.lr.ph11.split.split.preheader.i.i.i, label %.lr.ph11.split.us.i.i.i
+
+.lr.ph11.split.split.preheader.i.i.i:             ; preds = %.lr.ph11.i.i.i
+  %.pre.i.i.i = load float, ptr %i.w, align 4, !tbaa !9 ; 2 uses
+  %2 = fcmp olt float %.pre.i.i.i, 0.000000e+00
+  br i1 %2, label %cdce.call, label %"_ZSt10__invoke_rIvRZN2cv3dnn13fastNormGroupERKNS0_3MatES4_S4_RS2_fmE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", !prof !68
+
+cdce.call:                                        ; preds = %.lr.ph11.split.split.preheader.i.i.i
+  %3 = tail call noundef float @sqrtf(float noundef %.pre.i.i.i) #17 ; 0 uses
+  br label %"_ZSt10__invoke_rIvRZN2cv3dnn13fastNormGroupERKNS0_3MatES4_S4_RS2_fmE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit"
 
 .lr.ph11.split.us.i.i.i:                          ; preds = %.lr.ph11.i.i.i
   %i.ad = getelementptr inbounds nuw i8, ptr %.val, i64 64
@@ -991,25 +991,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %exitcond28.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
   br i1 %exitcond28.not.i.i.i, label %"_ZSt10__invoke_rIvRZN2cv3dnn13fastNormGroupERKNS0_3MatES4_S4_RS2_fmE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", label %.lr.ph.us.us.i.i.i, !llvm.loop !241
 
-.lr.ph11.split.split.i.i.i:                       ; preds = %.lr.ph11.i.i.i
-  %2 = fdiv double 0.000000e+00, %i.u             ; 2 uses
-  %3 = fptrunc double %2 to float
-  %4 = fpext float %3 to double                   ; 2 uses
-  %5 = fneg double %4
-  %6 = tail call double @llvm.fmuladd.f64(double %5, double %4, double %2) ; 2 uses
-  %7 = fcmp ogt double %6, 0.000000e+00
-  %.sroa.speculated.i.i.i = select i1 %7, double %6, double 0.000000e+00
-  %8 = fptrunc double %.sroa.speculated.i.i.i to float
-  %.pre.i.i.i = load float, ptr %i.w, align 4, !tbaa !9
-  %9 = fadd float %.pre.i.i.i, %8                 ; 2 uses
-  %10 = fcmp olt float %9, 0.000000e+00
-  br i1 %10, label %cdce.call, label %"_ZSt10__invoke_rIvRZN2cv3dnn13fastNormGroupERKNS0_3MatES4_S4_RS2_fmE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", !prof !68
-
-cdce.call:                                        ; preds = %.lr.ph11.split.split.i.i.i
-  %11 = tail call noundef float @sqrtf(float noundef %9) #17 ; 0 uses
-  br label %"_ZSt10__invoke_rIvRZN2cv3dnn13fastNormGroupERKNS0_3MatES4_S4_RS2_fmE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit"
-
-"_ZSt10__invoke_rIvRZN2cv3dnn13fastNormGroupERKNS0_3MatES4_S4_RS2_fmE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit": ; preds = %._crit_edge8.us.us.i.i.i, %bb.a, %.lr.ph11.split.split.i.i.i, %cdce.call
+"_ZSt10__invoke_rIvRZN2cv3dnn13fastNormGroupERKNS0_3MatES4_S4_RS2_fmE3$_1JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit": ; preds = %._crit_edge8.us.us.i.i.i, %bb.a, %.lr.ph11.split.split.preheader.i.i.i, %cdce.call
   ret void
 }
 
