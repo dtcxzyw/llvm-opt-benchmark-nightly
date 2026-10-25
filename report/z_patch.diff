@@ -1,0 +1,90 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index d01092521d9b9..127e3564d8a5a 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16044,10 +16044,6 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+     SmallVector<SCEVUse, 16> Worklist(1, LHS);
+     SmallPtrSet<const SCEV *, 16> Visited;
+ 
+-    auto EnqueueOperands = [&Worklist](const SCEVNAryExpr *S) {
+-      append_range(Worklist, S->operands());
+-    };
+-
+     while (!Worklist.empty()) {
+       const SCEV *From = Worklist.pop_back_val();
+       if (isa<SCEVConstant>(From))
+@@ -16057,30 +16053,35 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+       const SCEV *FromRewritten = GetMaybeRewritten(From);
+       const SCEV *To = nullptr;
+ 
++      // The condition also holds for the operands of a min/max of kind Kind.
++      // Check both From and FromRewritten: an earlier condition may have
++      // wrapped From in a different kind of min/max, or added operands to it.
++      auto EnqueueOperands = [&](SCEVTypes Kind) {
++        for (const SCEV *S : {From, FromRewritten})
++          if (S->getSCEVType() == Kind)
++            append_range(Worklist, cast<SCEVMinMaxExpr>(S)->operands());
++      };
++
+       switch (Predicate) {
+       case CmpInst::ICMP_ULT:
+       case CmpInst::ICMP_ULE:
+         To = SE.getUMinExpr(FromRewritten, RHS);
+-        if (auto *UMax = dyn_cast<SCEVUMaxExpr>(FromRewritten))
+-          EnqueueOperands(UMax);
++        EnqueueOperands(scUMaxExpr);
+         break;
+       case CmpInst::ICMP_SLT:
+       case CmpInst::ICMP_SLE:
+         To = SE.getSMinExpr(FromRewritten, RHS);
+-        if (auto *SMax = dyn_cast<SCEVSMaxExpr>(FromRewritten))
+-          EnqueueOperands(SMax);
++        EnqueueOperands(scSMaxExpr);
+         break;
+       case CmpInst::ICMP_UGT:
+       case CmpInst::ICMP_UGE:
+         To = SE.getUMaxExpr(FromRewritten, RHS);
+-        if (auto *UMin = dyn_cast<SCEVUMinExpr>(FromRewritten))
+-          EnqueueOperands(UMin);
++        EnqueueOperands(scUMinExpr);
+         break;
+       case CmpInst::ICMP_SGT:
+       case CmpInst::ICMP_SGE:
+         To = SE.getSMaxExpr(FromRewritten, RHS);
+-        if (auto *SMin = dyn_cast<SCEVSMinExpr>(FromRewritten))
+-          EnqueueOperands(SMin);
++        EnqueueOperands(scSMinExpr);
+         break;
+       case CmpInst::ICMP_EQ:
+         if (isa<SCEVConstant>(RHS))
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-minmax-operands.ll b/llvm/test/Analysis/ScalarEvolution/guards-minmax-operands.ll
+index 9040e8913e29d..bfa4bfa3cb100 100644
+--- a/llvm/test/Analysis/ScalarEvolution/guards-minmax-operands.ll
++++ b/llvm/test/Analysis/ScalarEvolution/guards-minmax-operands.ll
+@@ -12,7 +12,7 @@ define void @smin_sgt_0_then_sge_4(ptr %p, i32 %a, i32 %b) {
+ ; CHECK-LABEL: 'smin_sgt_0_then_sge_4'
+ ; CHECK-NEXT:  Determining loop execution counts for: @smin_sgt_0_then_sge_4
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin %b) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin %b) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -119,7 +119,7 @@ define void @umin_ugt_0_then_uge_4(ptr %p, i32 %a, i32 %b) {
+ ; CHECK-LABEL: 'umin_ugt_0_then_uge_4'
+ ; CHECK-NEXT:  Determining loop execution counts for: @umin_ugt_0_then_uge_4
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * ((64 umin %b) /u 4))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * ((64 umin %b) /u 4))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -156,7 +156,7 @@ define void @umax_ult_1000_then_ule_64(ptr %p, i32 %a, i32 %b) {
+ ; CHECK-LABEL: 'umax_ult_1000_then_ule_64'
+ ; CHECK-NEXT:  Determining loop execution counts for: @umax_ult_1000_then_ule_64
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is %b
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 999
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 64
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %b
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
