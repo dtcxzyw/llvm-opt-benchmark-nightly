@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ah = load <2 x i64>, ptr %i.ag, align 8, !noalias !24018
   %.val21.i = load i64, ptr %3, align 8, !alias.scope !24017 ; 4 uses
   %i.ai = add i64 %.val21.i, 1                    ; 3 uses
-  %.sroa.0.0.i.i = tail call i64 @llvm.umin.i64(i64 %i.ai, i64 4096) ; 2 uses
+  %.sroa.0.0.i.i = tail call i64 @llvm.umin.i64(i64 %i.ai, i64 4096) ; 3 uses
   %i.aj = getelementptr i8, ptr %i.ae, i64 137
   %i.ak = getelementptr i8, ptr %i.aj, i64 %.val21.i
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 1008 ; 2 uses
@@ -220,7 +220,6 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.13.0..sroa_idx251.i = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %.sroa.13.0..sroa_idx245.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i, i64 1) ; 2 uses
   br label %.outer.i.outer
 
 .critedge.i:                                      ; preds = %bb.b
@@ -300,7 +299,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %exitcond.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.z, %bb.e
-  %.sroa.01.0.lcssa.i = phi i64 [ %i.bt, %bb.e ], [ %umax.i, %bb.z ]
+  %.sroa.01.0.lcssa.i = phi i64 [ %i.bt, %bb.e ], [ %.sroa.0.0.i.i, %bb.z ]
   %i.bv = call fastcc noundef zeroext i1 @"_ZN6papaya3raw24HashMap$LT$K$C$V$C$S$GT$11try_promote17h015b59a0ee69de0bE"(ptr noundef nonnull align 8 %1, i64 %.val21.i, ptr %i.ae, ptr %.sroa.13.0.ph.i.ph, i64 noundef %.sroa.01.0.lcssa.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %4), !noalias !24020
   br i1 %i.bv, label %"_ZN6papaya3raw24HashMap$LT$K$C$V$C$S$GT$18help_copy_blocking17hd6ab0228c83601edE.exit", label %bb.aa
 
@@ -703,7 +702,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %.split9.us.i.i.i, %bb.i, %bb.g
   %i.np = add nuw nsw i64 %.sroa.01.0461.i, 1     ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.np, %umax.i
+  %exitcond.not.i = icmp eq i64 %i.np, %.sroa.0.0.i.i
   br i1 %exitcond.not.i, label %bb.f, label %bb.e
 
 "_ZN6papaya3raw24HashMap$LT$K$C$V$C$S$GT$16copy_at_blocking17h0bed101db6979210E.exit.i": ; preds = %bb.p

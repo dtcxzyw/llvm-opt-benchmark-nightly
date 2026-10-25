@@ -200,7 +200,7 @@ bb.ae:                                            ; preds = %.critedge
   br i1 %or.cond, label %bb.af, label %.preheader139.preheader
 
 .preheader139.preheader:                          ; preds = %bb.ab, %bb.aa, %bb.w, %bb.u, %bb.v, %bb.r, %bb.p, %bb.q, %bb.c, %bb.k, %bb.h, %bb.e, %bb.z, %bb.ae
-  %.0101174 = phi i32 [ %2, %bb.ae ], [ 2, %bb.ab ], [ 2, %bb.aa ], [ 8, %bb.w ], [ 8, %bb.u ], [ 8, %bb.v ], [ 16, %bb.r ], [ 16, %bb.p ], [ 16, %bb.q ], [ 10, %bb.c ], [ 2, %bb.k ], [ 8, %bb.h ], [ 16, %bb.e ], [ 2, %bb.z ] ; 4 uses
+  %.0101174 = phi i32 [ %2, %bb.ae ], [ 2, %bb.ab ], [ 2, %bb.aa ], [ 8, %bb.w ], [ 8, %bb.u ], [ 8, %bb.v ], [ 16, %bb.r ], [ 16, %bb.p ], [ 16, %bb.q ], [ 10, %bb.c ], [ 2, %bb.k ], [ 8, %bb.h ], [ 16, %bb.e ], [ 2, %bb.z ] ; 3 uses
   %.3173 = phi ptr [ %.0103.lcssa, %bb.ae ], [ %i.bd, %bb.ab ], [ %i.bb, %bb.aa ], [ %i.av, %bb.w ], [ %.0103.lcssa, %bb.u ], [ %i.at, %bb.v ], [ %i.an, %bb.r ], [ %.0103.lcssa, %bb.p ], [ %i.al, %bb.q ], [ %.0103.lcssa, %bb.c ], [ %i.x, %bb.k ], [ %i.r, %bb.h ], [ %i.l, %bb.e ], [ %.0103.lcssa, %bb.z ]
   br label %.preheader139
 
@@ -232,6 +232,7 @@ bb.ah:                                            ; preds = %.preheader139
   %i.bt = getelementptr [4 x i8], ptr @digitlimit, i64 %i.bn
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !10
   %i.bv = getelementptr [8 x i8], ptr @smallmax, i64 %i.bn
+  %3 = trunc nuw nsw i32 %.0101174 to i8          ; 2 uses
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph156, %bb.an
@@ -272,8 +273,7 @@ bb.an:                                            ; preds = %bb.am, %bb.aj
   %i.cl = zext i8 %i.ck to i64
   %i.cm = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.cl
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !11  ; 2 uses
-  %3 = zext i8 %i.cn to i32
-  %4 = icmp samesign ugt i32 %.0101174, %3
+  %4 = icmp ult i8 %i.cn, %3
   br i1 %4, label %bb.ai, label %._crit_edge, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %bb.an, %bb.ah
@@ -296,10 +296,9 @@ select.unfold:                                    ; preds = %bb.am, %bb.al, %bb.
   %i.cp = zext i8 %i.co to i64
   %i.cq = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.cp
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !11
-  %5 = zext i8 %i.cr to i32
-  %6 = icmp samesign ugt i32 %.0101174, %5
+  %5 = icmp ult i8 %i.cr, %3
   %i.cs = getelementptr i8, ptr %.6, i64 1
-  br i1 %6, label %.preheader, label %bb.ap, !llvm.loop !18
+  br i1 %5, label %.preheader, label %bb.ap, !llvm.loop !18
 
 bb.ap:                                            ; preds = %.preheader
   store ptr %.6, ptr %1, align 8, !tbaa !21

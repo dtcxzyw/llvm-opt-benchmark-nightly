@@ -205,9 +205,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bh = ashr exact i32 %.1102124.us.i.i, 6
   %i.bi = sext i32 %i.bh to i64                   ; 2 uses
   %i.bj = getelementptr inbounds [14720 x i8], ptr %i.bg, i64 %i.bi
-  %i.bk = sub i32 %i.ai, %.1102124.us.i.i         ; 2 uses
+  %i.bk = sub nuw nsw i32 %i.ai, %.1102124.us.i.i
   %i.bl = tail call i32 @llvm.umin.i32(i32 %i.bk, i32 64)
-  %2 = icmp slt i32 %i.bk, 1
   %i.bm = sext i32 %.1102124.us.i.i to i64
   %wide.trip.count.i.us.i.i = zext nneg i32 %i.bl to i64
   br label %bb.k
@@ -248,14 +247,14 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.cd = icmp sgt i64 %.sroa.031.1.us.i.i, 2
-  br i1 %i.cd, label %3, label %bb.p
+  br i1 %i.cd, label %.preheader.i.us.i.i, label %bb.p
 
 bb.o:                                             ; preds = %bb.m
   %i.ce = icmp slt i64 %i.cb, 0
   %i.cf = add nsw i64 %i.cb, 1000000
   %.sroa.17.1.us.i.i = select i1 %i.ce, i64 %i.cf, i64 %i.cb
   %i.cg = icmp sgt i64 %.sroa.17.1.us.i.i, 0
-  br i1 %i.cg, label %3, label %bb.p
+  br i1 %i.cg, label %.preheader.i.us.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.ch = sext i32 %i.bv to i64
@@ -280,12 +279,9 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   store double %i.ct, ptr %i.cr, align 8
   br label %bb.t
 
-3:                                                ; preds = %bb.o, %bb.n
-  %4 = getelementptr inbounds nuw i8, ptr %i.bp, i64 168
-  store double 0.000000e+00, ptr %4, align 8
-  br i1 %2, label %vnc_refresh_lossy_rect.exit.us.i.i, label %.preheader.i.us.i.i
-
-.preheader.i.us.i.i:                              ; preds = %3
+.preheader.i.us.i.i:                              ; preds = %bb.o, %bb.n
+  %2 = getelementptr inbounds nuw i8, ptr %i.bp, i64 168
+  store double 0.000000e+00, ptr %2, align 8
   %.03541.i.us.i.i = load ptr, ptr %i.a, align 8  ; 2 uses
   %.not42.i.us.i.i = icmp eq ptr %.03541.i.us.i.i, null
   br i1 %.not42.i.us.i.i, label %vnc_refresh_lossy_rect.exit.us.i.i, label %.lr.ph45.split.us.preheader.i.us.i.i
@@ -336,8 +332,8 @@ bb.s:                                             ; preds = %._crit_edge.us.i.us
   %.not.us.i.us.i.i = icmp eq ptr %.035.us.i.us.i.i, null
   br i1 %.not.us.i.us.i.i, label %vnc_refresh_lossy_rect.exit.us.i.i, label %.lr.ph45.split.us.i.us.i.i, !llvm.loop !63
 
-vnc_refresh_lossy_rect.exit.us.i.i:               ; preds = %bb.s, %.preheader.i.us.i.i, %3
-  %.034.i.us.i.i = phi i32 [ 0, %3 ], [ 0, %.preheader.i.us.i.i ], [ %.1.us.i.us.i.i, %bb.s ]
+vnc_refresh_lossy_rect.exit.us.i.i:               ; preds = %bb.s, %.preheader.i.us.i.i
+  %.034.i.us.i.i = phi i32 [ 0, %.preheader.i.us.i.i ], [ %.1.us.i.us.i.i, %bb.s ]
   %i.df = add i32 %.034.i.us.i.i, %.1122.us.i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.bp, i8 noundef 0, i64 noundef 160, i1 noundef false) #25
   br label %bb.t
