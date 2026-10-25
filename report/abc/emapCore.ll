@@ -206,9 +206,9 @@ bb.bv:                                            ; preds = %bb.bu
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %7, i8 0, i64 48, i1 false)
   %i.ub = load i32, ptr %i.th, align 8, !tbaa !64 ; 5 uses
-  %10 = icmp slt i32 %i.ub, 1                     ; 3 uses
+  %10 = icmp sgt i32 %i.ub, 0                     ; 3 uses
   %.pre377.i = zext nneg i32 %i.ub to i64         ; 3 uses
-  br i1 %10, label %.preheader.i.i552.preheader, label %.lr.ph.i.i551
+  br i1 %10, label %.lr.ph.i.i551, label %.preheader.i.i552.preheader
 
 .lr.ph.i.i551:                                    ; preds = %bb.bv
   %i.uc = shl nuw nsw i64 %.pre377.i, 2
@@ -241,10 +241,9 @@ bb.bx:                                            ; preds = %.preheader.i.i552
   br i1 %i.um, label %Emap_PackEntryCompare.exit.i.i, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %11 = icmp ugt i64 %i.ul, %i.tz                 ; 2 uses
-  %brmerge.i.i = or i1 %10, %11
-  %.mux.i.i = zext i1 %11 to i32
-  br i1 %brmerge.i.i, label %Emap_PackEntryCompare.exit.i.i, label %.lr.ph.i.i.i562
+  %11 = icmp ule i64 %i.ul, %i.tz
+  %or.cond.i.i = and i1 %10, %11
+  br i1 %or.cond.i.i, label %.lr.ph.i.i.i562, label %Emap_PackEntryCompare.exit.i.i
 
 .lr.ph.i.i.i562:                                  ; preds = %bb.by
   %i.un = getelementptr inbounds nuw i8, ptr %i.ug, i64 16
@@ -269,7 +268,7 @@ bb.cb:                                            ; preds = %bb.ca
   br label %Emap_PackEntryCompare.exit.i.i
 
 Emap_PackEntryCompare.exit.i.i:                   ; preds = %bb.bz, %bb.cb, %bb.by, %bb.bx, %bb.bw
-  %.021.i.i.i = phi i32 [ %i.uj, %bb.bw ], [ %.mux.i.i, %bb.by ], [ -1, %bb.bx ], [ %i.us, %bb.cb ], [ 0, %bb.bz ]
+  %.021.i.i.i = phi i32 [ %i.uj, %bb.bw ], [ 0, %bb.by ], [ -2147483648, %bb.bx ], [ %i.us, %bb.cb ], [ 0, %bb.bz ]
   %i.ut = icmp slt i32 %.021.i.i.i, 0             ; 2 uses
   %i.uu = add nuw nsw i32 %i.ue, 1
   %.124.i.i = select i1 %i.ut, i32 %i.uu, i32 %.02348.i.i ; 6 uses
@@ -292,10 +291,10 @@ bb.cc:                                            ; preds = %._crit_edge.i.loope
 bb.cd:                                            ; preds = %bb.cc
   %i.vb = getelementptr inbounds nuw i8, ptr %i.uy, i64 40
   %i.vc = load i64, ptr %i.vb, align 8, !tbaa !90
-  %or.cond.not.i.i = icmp ne i64 %i.vc, %i.tz     ; 2 uses
-  %brmerge66.i.i = or i1 %10, %or.cond.not.i.i
-  %.mux67.i.i = select i1 %or.cond.not.i.i, i32 -1, i32 %.124.i.i
-  br i1 %brmerge66.i.i, label %Emap_PackEntryFindFirst.exit.i, label %.lr.ph.i29.i.i
+  %or.cond.not.i.i = icmp eq i64 %i.vc, %i.tz     ; 2 uses
+  %brmerge.not.i.i = and i1 %10, %or.cond.not.i.i
+  %.mux67.i.i = select i1 %or.cond.not.i.i, i32 %.124.i.i, i32 -1
+  br i1 %brmerge.not.i.i, label %.lr.ph.i29.i.i, label %Emap_PackEntryFindFirst.exit.i
 
 .lr.ph.i29.i.i:                                   ; preds = %bb.cd
   %i.vd = getelementptr inbounds nuw i8, ptr %i.uy, i64 16
@@ -698,9 +697,9 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %7, i8 0, i64 48, i1 false)
   %i.eh = load i32, ptr %i.dr, align 8, !tbaa !64 ; 5 uses
-  %10 = icmp slt i32 %i.eh, 1                     ; 3 uses
+  %10 = icmp sgt i32 %i.eh, 0                     ; 3 uses
   %.pre354 = zext nneg i32 %i.eh to i64           ; 3 uses
-  br i1 %10, label %.preheader.i.preheader, label %.lr.ph.i217
+  br i1 %10, label %.lr.ph.i217, label %.preheader.i.preheader
 
 .lr.ph.i217:                                      ; preds = %bb.n
   %i.ei = shl nuw nsw i64 %.pre354, 2
@@ -733,10 +732,9 @@ bb.p:                                             ; preds = %.preheader.i
   br i1 %i.es, label %Emap_PackEntryCompare.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %11 = icmp ugt i64 %i.er, %i.ef                 ; 2 uses
-  %brmerge.i = or i1 %10, %11
-  %.mux.i = zext i1 %11 to i32
-  br i1 %brmerge.i, label %Emap_PackEntryCompare.exit.i, label %.lr.ph.i.i
+  %11 = icmp ule i64 %i.er, %i.ef
+  %or.cond.i = and i1 %10, %11
+  br i1 %or.cond.i, label %.lr.ph.i.i, label %Emap_PackEntryCompare.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.q
   %i.et = getelementptr inbounds nuw i8, ptr %i.em, i64 16
@@ -761,7 +759,7 @@ bb.t:                                             ; preds = %bb.s
   br label %Emap_PackEntryCompare.exit.i
 
 Emap_PackEntryCompare.exit.i:                     ; preds = %bb.r, %bb.t, %bb.q, %bb.p, %bb.o
-  %.021.i.i = phi i32 [ %i.ep, %bb.o ], [ %.mux.i, %bb.q ], [ -1, %bb.p ], [ %i.ey, %bb.t ], [ 0, %bb.r ]
+  %.021.i.i = phi i32 [ %i.ep, %bb.o ], [ 0, %bb.q ], [ -2147483648, %bb.p ], [ %i.ey, %bb.t ], [ 0, %bb.r ]
   %i.ez = icmp slt i32 %.021.i.i, 0               ; 2 uses
   %i.fa = add nuw nsw i32 %i.ek, 1
   %.124.i = select i1 %i.ez, i32 %i.fa, i32 %.02348.i ; 6 uses
@@ -784,10 +782,10 @@ bb.u:                                             ; preds = %._crit_edge.i.loope
 bb.v:                                             ; preds = %bb.u
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fe, i64 40
   %i.fi = load i64, ptr %i.fh, align 8, !tbaa !90
-  %or.cond.not.i = icmp ne i64 %i.fi, %i.ef       ; 2 uses
-  %brmerge66.i = or i1 %10, %or.cond.not.i
-  %.mux67.i = select i1 %or.cond.not.i, i32 -1, i32 %.124.i
-  br i1 %brmerge66.i, label %Emap_PackEntryFindFirst.exit, label %.lr.ph.i29.i
+  %or.cond.not.i = icmp eq i64 %i.fi, %i.ef       ; 2 uses
+  %brmerge.not.i = and i1 %10, %or.cond.not.i
+  %.mux67.i = select i1 %or.cond.not.i, i32 %.124.i, i32 -1
+  br i1 %brmerge.not.i, label %.lr.ph.i29.i, label %Emap_PackEntryFindFirst.exit
 
 .lr.ph.i29.i:                                     ; preds = %bb.v
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fe, i64 16
@@ -1190,9 +1188,9 @@ bb.r:                                             ; preds = %Emap_MogArrival.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, i8 0, i64 48, i1 false)
   %i.fw = load i32, ptr %i.dz, align 8, !tbaa !64 ; 5 uses
-  %8 = icmp slt i32 %i.fw, 1                      ; 3 uses
+  %8 = icmp sgt i32 %i.fw, 0                      ; 3 uses
   %.pre444 = zext nneg i32 %i.fw to i64           ; 3 uses
-  br i1 %8, label %.preheader.i.preheader, label %.lr.ph.i282
+  br i1 %8, label %.lr.ph.i282, label %.preheader.i.preheader
 
 .lr.ph.i282:                                      ; preds = %bb.r
   %i.fx = shl nuw nsw i64 %.pre444, 2
@@ -1225,10 +1223,9 @@ bb.t:                                             ; preds = %.preheader.i
   br i1 %i.gh, label %Emap_PackEntryCompare.exit.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %9 = icmp ugt i64 %i.gg, %i.eq                  ; 2 uses
-  %brmerge.i = or i1 %8, %9
-  %.mux.i = zext i1 %9 to i32
-  br i1 %brmerge.i, label %Emap_PackEntryCompare.exit.i, label %.lr.ph.i.i
+  %9 = icmp ule i64 %i.gg, %i.eq
+  %or.cond.i = and i1 %8, %9
+  br i1 %or.cond.i, label %.lr.ph.i.i, label %Emap_PackEntryCompare.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.u
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gb, i64 16
@@ -1253,7 +1250,7 @@ bb.x:                                             ; preds = %bb.w
   br label %Emap_PackEntryCompare.exit.i
 
 Emap_PackEntryCompare.exit.i:                     ; preds = %bb.v, %bb.x, %bb.u, %bb.t, %bb.s
-  %.021.i.i = phi i32 [ %i.ge, %bb.s ], [ %.mux.i, %bb.u ], [ -1, %bb.t ], [ %i.gn, %bb.x ], [ 0, %bb.v ]
+  %.021.i.i = phi i32 [ %i.ge, %bb.s ], [ 0, %bb.u ], [ -2147483648, %bb.t ], [ %i.gn, %bb.x ], [ 0, %bb.v ]
   %i.go = icmp slt i32 %.021.i.i, 0               ; 2 uses
   %i.gp = add nuw nsw i32 %i.fz, 1
   %.124.i = select i1 %i.go, i32 %i.gp, i32 %.02348.i ; 6 uses
@@ -1276,10 +1273,10 @@ bb.y:                                             ; preds = %._crit_edge.i.loope
 bb.z:                                             ; preds = %bb.y
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gt, i64 40
   %i.gx = load i64, ptr %i.gw, align 8, !tbaa !90
-  %or.cond.not.i = icmp ne i64 %i.gx, %i.eq       ; 2 uses
-  %brmerge66.i = or i1 %8, %or.cond.not.i
-  %.mux67.i = select i1 %or.cond.not.i, i32 -1, i32 %.124.i
-  br i1 %brmerge66.i, label %Emap_PackEntryFindFirst.exit, label %.lr.ph.i29.i
+  %or.cond.not.i = icmp eq i64 %i.gx, %i.eq       ; 2 uses
+  %brmerge.not.i = and i1 %8, %or.cond.not.i
+  %.mux67.i = select i1 %or.cond.not.i, i32 %.124.i, i32 -1
+  br i1 %brmerge.not.i, label %.lr.ph.i29.i, label %Emap_PackEntryFindFirst.exit
 
 .lr.ph.i29.i:                                     ; preds = %bb.z
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gt, i64 16
@@ -1682,9 +1679,9 @@ bb.s:                                             ; preds = %Emap_MogArrival.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %9, i8 0, i64 48, i1 false)
   %i.gr = load i32, ptr %i.et, align 8, !tbaa !64 ; 5 uses
-  %14 = icmp slt i32 %i.gr, 1                     ; 3 uses
+  %14 = icmp sgt i32 %i.gr, 0                     ; 3 uses
   %.pre545 = zext nneg i32 %i.gr to i64           ; 3 uses
-  br i1 %14, label %.preheader.i.preheader, label %.lr.ph.i307
+  br i1 %14, label %.lr.ph.i307, label %.preheader.i.preheader
 
 .lr.ph.i307:                                      ; preds = %bb.s
   %i.gs = shl nuw nsw i64 %.pre545, 2
@@ -1717,10 +1714,9 @@ bb.u:                                             ; preds = %.preheader.i
   br i1 %i.hc, label %Emap_PackEntryCompare.exit.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %15 = icmp ugt i64 %i.hb, %i.fl                 ; 2 uses
-  %brmerge.i = or i1 %14, %15
-  %.mux.i = zext i1 %15 to i32
-  br i1 %brmerge.i, label %Emap_PackEntryCompare.exit.i, label %.lr.ph.i.i
+  %15 = icmp ule i64 %i.hb, %i.fl
+  %or.cond.i = and i1 %14, %15
+  br i1 %or.cond.i, label %.lr.ph.i.i, label %Emap_PackEntryCompare.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.v
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gw, i64 16
@@ -1745,7 +1741,7 @@ bb.y:                                             ; preds = %bb.x
   br label %Emap_PackEntryCompare.exit.i
 
 Emap_PackEntryCompare.exit.i:                     ; preds = %bb.w, %bb.y, %bb.v, %bb.u, %bb.t
-  %.021.i.i = phi i32 [ %i.gz, %bb.t ], [ %.mux.i, %bb.v ], [ -1, %bb.u ], [ %i.hi, %bb.y ], [ 0, %bb.w ]
+  %.021.i.i = phi i32 [ %i.gz, %bb.t ], [ 0, %bb.v ], [ -2147483648, %bb.u ], [ %i.hi, %bb.y ], [ 0, %bb.w ]
   %i.hj = icmp slt i32 %.021.i.i, 0               ; 2 uses
   %i.hk = add nuw nsw i32 %i.gu, 1
   %.124.i = select i1 %i.hj, i32 %i.hk, i32 %.02348.i ; 6 uses
@@ -1768,10 +1764,10 @@ bb.z:                                             ; preds = %._crit_edge.i.loope
 bb.aa:                                            ; preds = %bb.z
   %i.hr = getelementptr inbounds nuw i8, ptr %i.ho, i64 40
   %i.hs = load i64, ptr %i.hr, align 8, !tbaa !90
-  %or.cond.not.i = icmp ne i64 %i.hs, %i.fl       ; 2 uses
-  %brmerge66.i = or i1 %14, %or.cond.not.i
-  %.mux67.i = select i1 %or.cond.not.i, i32 -1, i32 %.124.i
-  br i1 %brmerge66.i, label %Emap_PackEntryFindFirst.exit, label %.lr.ph.i29.i
+  %or.cond.not.i = icmp eq i64 %i.hs, %i.fl       ; 2 uses
+  %brmerge.not.i = and i1 %14, %or.cond.not.i
+  %.mux67.i = select i1 %or.cond.not.i, i32 %.124.i, i32 -1
+  br i1 %brmerge.not.i, label %.lr.ph.i29.i, label %Emap_PackEntryFindFirst.exit
 
 .lr.ph.i29.i:                                     ; preds = %bb.aa
   %i.ht = getelementptr inbounds nuw i8, ptr %i.ho, i64 16
@@ -2174,10 +2170,10 @@ Emap_MogArrival.exit:                             ; preds = %bb.p, %bb.o
 bb.q:                                             ; preds = %Emap_MogArrival.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, i8 0, i64 48, i1 false)
-  %i.fj = load i32, ptr %i.dn, align 8, !tbaa !64 ; 8 uses
-  %6 = icmp slt i32 %i.fj, 1                      ; 3 uses
+  %i.fj = load i32, ptr %i.dn, align 8, !tbaa !64 ; 7 uses
+  %6 = icmp sgt i32 %i.fj, 0                      ; 4 uses
   %.pre337 = zext i32 %i.fj to i64                ; 6 uses
-  br i1 %6, label %.preheader.i.preheader, label %.lr.ph.i202
+  br i1 %6, label %.lr.ph.i202, label %.preheader.i.preheader
 
 .lr.ph.i202:                                      ; preds = %bb.q
   %i.fk = shl nuw nsw i64 %.pre337, 2
@@ -2210,10 +2206,9 @@ bb.s:                                             ; preds = %.preheader.i
   br i1 %i.fu, label %Emap_PackEntryCompare.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %7 = icmp ugt i64 %i.ft, %i.ek                  ; 2 uses
-  %brmerge.i = or i1 %6, %7
-  %.mux.i = zext i1 %7 to i32
-  br i1 %brmerge.i, label %Emap_PackEntryCompare.exit.i, label %.lr.ph.i.i
+  %7 = icmp ule i64 %i.ft, %i.ek
+  %or.cond.i = and i1 %6, %7
+  br i1 %or.cond.i, label %.lr.ph.i.i, label %Emap_PackEntryCompare.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.t
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fo, i64 16
@@ -2238,7 +2233,7 @@ bb.w:                                             ; preds = %bb.v
   br label %Emap_PackEntryCompare.exit.i
 
 Emap_PackEntryCompare.exit.i:                     ; preds = %bb.u, %bb.w, %bb.t, %bb.s, %bb.r
-  %.021.i.i = phi i32 [ %i.fr, %bb.r ], [ %.mux.i, %bb.t ], [ -1, %bb.s ], [ %i.ga, %bb.w ], [ 0, %bb.u ]
+  %.021.i.i = phi i32 [ %i.fr, %bb.r ], [ 0, %bb.t ], [ -2147483648, %bb.s ], [ %i.ga, %bb.w ], [ 0, %bb.u ]
   %i.gb = icmp slt i32 %.021.i.i, 0               ; 2 uses
   %i.gc = add nuw nsw i32 %i.fm, 1
   %.124.i = select i1 %i.gb, i32 %i.gc, i32 %.02348.i ; 6 uses
@@ -2261,10 +2256,10 @@ bb.x:                                             ; preds = %._crit_edge.i.loope
 bb.y:                                             ; preds = %bb.x
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gg, i64 40
   %i.gk = load i64, ptr %i.gj, align 8, !tbaa !90
-  %or.cond.not.i = icmp ne i64 %i.gk, %i.ek       ; 2 uses
-  %brmerge66.i = or i1 %6, %or.cond.not.i
-  %.mux67.i = select i1 %or.cond.not.i, i32 -1, i32 %.124.i
-  br i1 %brmerge66.i, label %Emap_PackEntryFindFirst.exit, label %.lr.ph.i29.i
+  %or.cond.not.i = icmp eq i64 %i.gk, %i.ek       ; 2 uses
+  %brmerge.not.i = and i1 %6, %or.cond.not.i
+  %.mux67.i = select i1 %or.cond.not.i, i32 %.124.i, i32 -1
+  br i1 %brmerge.not.i, label %.lr.ph.i29.i, label %Emap_PackEntryFindFirst.exit
 
 .lr.ph.i29.i:                                     ; preds = %bb.y
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gg, i64 16
@@ -2299,7 +2294,6 @@ Emap_PackEntryFindFirst.exit:                     ; preds = %bb.z, %bb.y
   br i1 %i.gr, label %.lr.ph265, label %.critedge2
 
 .lr.ph265:                                        ; preds = %.preheader
-  %8 = icmp sgt i32 %i.fj, 0
   %i.gs = getelementptr inbounds nuw i8, ptr %i.dz, i64 %.not.i207
   %i.gt = zext nneg i32 %.025.i to i64
   %wide.trip.count.i209 = zext nneg i32 %i.el to i64
@@ -2334,7 +2328,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.hj = load i32, ptr %i.hi, align 8, !tbaa !88
   %i.hk = sext i32 %i.hj to i64
   %i.hl = getelementptr [40 x i8], ptr %i.hd, i64 %i.hk
-  br i1 %8, label %.lr.ph262, label %._crit_edge.thread
+  br i1 %6, label %.lr.ph262, label %._crit_edge.thread
 
 .lr.ph262:                                        ; preds = %bb.ad
   %i.hm = getelementptr inbounds nuw i8, ptr %i.gu, i64 16 ; 2 uses

@@ -204,9 +204,9 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %.backedge.i, %bb.q
   %.05689.i = phi ptr [ %i.d, %bb.q ], [ %.056.be.i, %.backedge.i ] ; 24 uses
-  %.05788.i = phi i64 [ %i.aw, %bb.q ], [ %.057.be.i, %.backedge.i ] ; 20 uses
+  %.05788.i = phi i64 [ %i.aw, %bb.q ], [ %.057.be.i, %.backedge.i ] ; 23 uses
   %.06087.i = phi ptr [ %i.b, %bb.q ], [ %.060.be.i, %.backedge.i ] ; 43 uses
-  %i.bn = load i8, ptr %.06087.i, align 1, !tbaa !54 ; 5 uses
+  %i.bn = load i8, ptr %.06087.i, align 1, !tbaa !54 ; 6 uses
   switch i8 %i.bn, label %bb.bb [
     i8 -6, label %bb.s
     i8 -5, label %bb.al
@@ -480,13 +480,13 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.r
   %.not66.i = icmp eq i64 %.05788.i, 1
-  br i1 %.not66.i, label %.thread107.i, label %bb.aq
+  br i1 %.not66.i, label %bb.bc, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %i.eu = getelementptr inbounds nuw i8, ptr %.06087.i, i64 1
   %i.ev = load i8, ptr %i.eu, align 1, !tbaa !54
   %i.ew = icmp eq i8 %i.ev, 105
-  br i1 %i.ew, label %bb.ar, label %.thread107.i
+  br i1 %i.ew, label %bb.ar, label %bb.bc
 
 bb.ar:                                            ; preds = %bb.aq
   %i.ex = getelementptr inbounds nuw i8, ptr %.05689.i, i64 1
@@ -497,13 +497,13 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.r
   %.not65.i = icmp eq i64 %.05788.i, 1
-  br i1 %.not65.i, label %.thread107.i, label %bb.at
+  br i1 %.not65.i, label %bb.bc, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fa = getelementptr inbounds nuw i8, ptr %.06087.i, i64 1
   %i.fb = load i8, ptr %i.fa, align 1, !tbaa !54
   %i.fc = icmp eq i8 %i.fb, 1
-  br i1 %i.fc, label %bb.au, label %.thread107.i
+  br i1 %i.fc, label %bb.au, label %bb.bc
 
 bb.au:                                            ; preds = %bb.at
   %i.fd = getelementptr inbounds nuw i8, ptr %.05689.i, i64 1
@@ -550,13 +550,9 @@ bb.ba:                                            ; preds = %bb.r
   br label %.backedge.i
 
 .thread.i:                                        ; preds = %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.an, %bb.am, %bb.al
-  %i.fw = lshr i8 %i.bn, 4
+  %.ph.i = phi i8 [ -32, %bb.av ], [ -32, %bb.aw ], [ -32, %bb.ax ], [ -32, %bb.ay ], [ %i.bn, %bb.al ], [ %i.bn, %bb.am ], [ %i.bn, %bb.an ]
+  %i.fw = lshr i8 %.ph.i, 4
   %i.fx = add nuw nsw i8 %i.fw, 55
-  br label %bb.bc
-
-.thread107.i:                                     ; preds = %bb.at, %bb.as, %bb.aq, %bb.ap
-  %5 = lshr i8 %i.bn, 4
-  %6 = or disjoint i8 %5, 48
   br label %bb.bc
 
 bb.bb:                                            ; preds = %._crit_edge._crit_edge.i, %bb.r
@@ -568,10 +564,11 @@ bb.bb:                                            ; preds = %._crit_edge._crit_e
   %spec.select.i = select i1 %i.fz, i8 %i.gb, i8 %i.ga
   br label %bb.bc
 
-bb.bc:                                            ; preds = %bb.bb, %.thread107.i, %.thread.i
-  %7 = phi i8 [ %i.fx, %.thread.i ], [ %spec.select.i, %bb.bb ], [ %6, %.thread107.i ]
+bb.bc:                                            ; preds = %bb.ap, %bb.aq, %bb.as, %bb.at, %bb.bb, %.thread.i
+  %.259104.i = phi i64 [ %.05788.i, %.thread.i ], [ %.05788.i, %bb.bb ], [ %.05788.i, %bb.at ], [ 1, %bb.as ], [ %.05788.i, %bb.aq ], [ 1, %bb.ap ]
+  %5 = phi i8 [ %i.fx, %.thread.i ], [ %spec.select.i, %bb.bb ], [ 54, %bb.at ], [ 54, %bb.as ], [ 57, %bb.aq ], [ 57, %bb.ap ]
   %.2.i = getelementptr inbounds nuw i8, ptr %.05689.i, i64 1
-  store i8 %7, ptr %.05689.i, align 1, !tbaa !54
+  store i8 %5, ptr %.05689.i, align 1, !tbaa !54
   %i.gc = load i8, ptr %.06087.i, align 1, !tbaa !54
   %i.gd = and i8 %i.gc, 15                        ; 3 uses
   %i.ge = icmp samesign ult i8 %i.gd, 10
@@ -581,7 +578,7 @@ bb.bc:                                            ; preds = %bb.bb, %.thread107.
   %.2.1.i = getelementptr inbounds nuw i8, ptr %.05689.i, i64 2
   store i8 %storemerge.1.i, ptr %.2.i, align 1, !tbaa !54
   %i.gh = getelementptr inbounds nuw i8, ptr %.06087.i, i64 1
-  %i.gi = add i64 %.05788.i, -1
+  %i.gi = add i64 %.259104.i, -1
   br label %.backedge.i
 
 mcc_bytes_to_hex.exit:                            ; preds = %.backedge.i

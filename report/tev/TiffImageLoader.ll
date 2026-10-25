@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.jp, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i", label %.critedge.i
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i": ; preds = %bb.v, %bb.u
-  %.0.i.i.i.i20.i = phi i32 [ %i.jn, %bb.u ], [ -1, %bb.v ]
+  %.0.i.i.i.i20.i = phi i32 [ %i.jn, %bb.u ], [ -2147483648, %bb.v ]
   %i.jq = icmp slt i32 %.0.i.i.i.i20.i, 0
   br i1 %i.jq, label %bb.l, label %.critedge.i, !llvm.loop !2697
 
@@ -543,7 +543,7 @@ bb.ai:                                            ; preds = %_ZN3tev9ImageDataaS
   br i1 %i.pq, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i", label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.thread.i"
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i": ; preds = %bb.ai, %_ZN3tev9ImageDataaSEOS0_.exit.i99
-  %.0.i.i.i.i16.i = phi i32 [ %i.po, %_ZN3tev9ImageDataaSEOS0_.exit.i99 ], [ -1, %bb.ai ]
+  %.0.i.i.i.i16.i = phi i32 [ %i.po, %_ZN3tev9ImageDataaSEOS0_.exit.i99 ], [ -2147483648, %bb.ai ]
   %i.pr = icmp slt i32 %.0.i.i.i.i16.i, 0
   br i1 %i.pr, label %bb.z, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.thread.i", !llvm.loop !2700
 
@@ -705,13 +705,13 @@ bb.ao:                                            ; preds = %"_ZZNK3tev15TiffIma
   %i.tj = load i64, ptr %i.qg, align 8
   %i.tk = lshr i8 %i.tf, 1
   %i.tl = zext nneg i8 %i.tk to i64
-  %i.tm = select i1 %i.tg, i64 %i.tj, i64 %i.tl   ; 3 uses
+  %i.tm = select i1 %i.tg, i64 %i.tj, i64 %i.tl   ; 2 uses
   br label %bb.ap
 
-bb.ap:                                            ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i", %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i"
-  %.013.i = phi ptr [ %i.qh, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i" ], [ %.111.i, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i" ]
-  %.111.i = phi ptr [ %.010.i, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i" ], [ %.212.i, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i" ] ; 3 uses
-  %.1.i141 = phi i64 [ %.0.i140, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i" ], [ %.2.i142, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i" ] ; 2 uses
+bb.ap:                                            ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i", %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i"
+  %.013.i = phi ptr [ %i.qh, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i" ], [ %.111.i, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i" ]
+  %.111.i = phi ptr [ %.010.i, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i" ], [ %.212.i, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i" ] ; 3 uses
+  %.1.i141 = phi i64 [ %.0.i140, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit30.thread.i" ], [ %.2.i142, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i" ] ; 2 uses
   %i.tn = call noundef nonnull align 8 dereferenceable(280) ptr @_ZN3tev9ImageDataaSEOS0_(ptr noundef nonnull align 8 dereferenceable(280) %.013.i, ptr noundef nonnull align 8 dereferenceable(280) %.111.i) #44 ; 0 uses
   %i.to = icmp slt i64 %i.pv, %.1.i141
   br i1 %i.to, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.thread.i", label %bb.aq
@@ -780,26 +780,17 @@ bb.as:                                            ; preds = %bb.ar
   %i.vf = load i64, ptr %i.ve, align 8
   %i.vg = lshr i8 %i.uy, 1
   %i.vh = zext nneg i8 %i.vg to i64
-  %i.vi = select i1 %i.uz, i64 %i.vf, i64 %i.vh   ; 3 uses
+  %i.vi = select i1 %i.uz, i64 %i.vf, i64 %i.vh   ; 2 uses
   %.sroa.speculated.i.i.i.i34.i = call i64 @llvm.umin.i64(i64 %i.tm, i64 %i.vi)
   %i.vj = call noundef i32 @memcmp(ptr noundef %i.vd, ptr noundef %i.ti, i64 noundef %.sroa.speculated.i.i.i.i34.i) #44 ; 2 uses
   %i.vk = icmp eq i32 %i.vj, 0
-  br i1 %i.vk, label %15, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i"
+  %15 = icmp ult i64 %i.vi, %i.tm
+  %or.cond.i142 = select i1 %i.vk, i1 %15, i1 false
+  %16 = icmp slt i32 %i.vj, 0
+  %or.cond38.i = or i1 %16, %or.cond.i142
+  br i1 %or.cond38.i, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.thread.i", label %bb.ap, !llvm.loop !2702
 
-15:                                               ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i"
-  %16 = icmp eq i64 %i.vi, %i.tm
-  br i1 %16, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i", label %17
-
-17:                                               ; preds = %15
-  %18 = icmp ult i64 %i.vi, %i.tm
-  br i1 %18, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.thread.i", label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i"
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i": ; preds = %17, %15, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i"
-  %.0.i.i.i.i35.i = phi i32 [ %i.vj, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i" ], [ 1, %17 ], [ 0, %15 ]
-  %19 = icmp slt i32 %.0.i.i.i.i35.i, 0
-  br i1 %19, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.thread.i", label %bb.ap, !llvm.loop !2702
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.thread.i": ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.i", %17, %bb.ap
+"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit36.thread.i": ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit33.thread.i", %bb.ap
   %i.vl = call noundef nonnull align 8 dereferenceable(280) ptr @_ZN3tev9ImageDataaSEOS0_(ptr noundef nonnull align 8 dereferenceable(280) %.111.i, ptr noundef nonnull align 8 dereferenceable(280) %4) #44 ; 0 uses
   call void @_ZN3tev9ImageDataD2Ev(ptr noundef nonnull align 8 dead_on_return(280) dereferenceable(280) %4) #44
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #44
@@ -1202,7 +1193,7 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %i.ahg, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i.i.i.i.i", label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.thread.i.i.i.i.i"
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i.i.i.i.i": ; preds = %bb.bt, %bb.bs
-  %.0.i.i.i.i13.i.i.i.i.i = phi i32 [ %i.ahe, %bb.bs ], [ -1, %bb.bt ]
+  %.0.i.i.i.i13.i.i.i.i.i = phi i32 [ %i.ahe, %bb.bs ], [ -2147483648, %bb.bt ]
   %i.ahh = icmp slt i32 %.0.i.i.i.i13.i.i.i.i.i, 0
   br i1 %i.ahh, label %bb.bj, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.thread.i.i.i.i.i", !llvm.loop !2706
 
@@ -1350,7 +1341,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.akd = load i64, ptr %i.t, align 8
   %i.ake = lshr i8 %i.ajz, 1
   %i.akf = zext nneg i8 %i.ake to i64
-  %i.akg = select i1 %i.aka, i64 %i.akd, i64 %i.akf ; 10 uses
+  %i.akg = select i1 %i.aka, i64 %i.akd, i64 %i.akf ; 8 uses
   %i.akh = load i8, ptr %i.ax, align 8            ; 2 uses
   %i.aki = trunc i8 %i.akh to i1                  ; 2 uses
   %i.akj = load ptr, ptr %i.ay, align 8
@@ -1378,9 +1369,9 @@ bb.ca:                                            ; preds = %"_ZZNK3tev15TiffIma
 .preheader34.i.preheader:                         ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.i113", %bb.ca
   br label %.preheader34.i.a
 
-.preheader34.i.a:                                 ; preds = %.preheader34.i.preheader, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i"
-  %.018.i = phi ptr [ %i.akt, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i" ], [ %.021, %.preheader34.i.preheader ] ; 5 uses
-  %i.akt = getelementptr inbounds nuw i8, ptr %.018.i, i64 280 ; 3 uses
+.preheader34.i.a:                                 ; preds = %.preheader34.i.preheader, %.preheader34.i.a
+  %.018.i = phi ptr [ %i.akt, %.preheader34.i.a ], [ %.021, %.preheader34.i.preheader ] ; 5 uses
+  %i.akt = getelementptr inbounds nuw i8, ptr %.018.i, i64 280 ; 2 uses
   %i.aku = getelementptr inbounds nuw i8, ptr %.018.i, i64 536
   %i.akv = load i8, ptr %i.aku, align 8           ; 2 uses
   %i.akw = trunc i8 %i.akv to i1                  ; 2 uses
@@ -1392,28 +1383,19 @@ bb.ca:                                            ; preds = %"_ZZNK3tev15TiffIma
   %i.alc = load i64, ptr %i.alb, align 8
   %i.ald = lshr i8 %i.akv, 1
   %i.ale = zext nneg i8 %i.ald to i64
-  %i.alf = select i1 %i.akw, i64 %i.alc, i64 %i.ale ; 3 uses
+  %i.alf = select i1 %i.akw, i64 %i.alc, i64 %i.ale ; 2 uses
   %.sroa.speculated.i.i.i.i10.i = call i64 @llvm.umin.i64(i64 %i.alf, i64 %i.akg)
   %i.alg = call noundef i32 @memcmp(ptr noundef %i.akc, ptr noundef %i.ala, i64 noundef %.sroa.speculated.i.i.i.i10.i) #44 ; 2 uses
   %i.alh = icmp eq i32 %i.alg, 0
-  br i1 %i.alh, label %20, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i"
+  %17 = icmp ult i64 %i.akg, %i.alf
+  %or.cond76.i = and i1 %i.alh, %17
+  %18 = icmp slt i32 %i.alg, 0
+  %or.cond77.i = or i1 %18, %or.cond76.i
+  br i1 %or.cond77.i, label %.critedge.i114, label %.preheader34.i.a, !llvm.loop !2708
 
-20:                                               ; preds = %.preheader34.i.a
-  %21 = icmp eq i64 %i.akg, %i.alf
-  br i1 %21, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i", label %22
-
-22:                                               ; preds = %20
-  %23 = icmp ult i64 %i.akg, %i.alf
-  br i1 %23, label %.critedge.i114, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i"
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i": ; preds = %22, %20, %.preheader34.i.a
-  %.0.i.i.i.i11.i = phi i32 [ %i.alg, %.preheader34.i.a ], [ 1, %22 ], [ 0, %20 ]
-  %24 = icmp slt i32 %.0.i.i.i.i11.i, 0
-  br i1 %24, label %.critedge.i114, label %.preheader34.i.a, !llvm.loop !2708
-
-.preheader35.i:                                   ; preds = %.preheader35.i.preheader.a, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i"
-  %.119.i = phi ptr [ %i.ali, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i" ], [ %.021, %.preheader35.i.preheader.a ] ; 5 uses
-  %i.ali = getelementptr inbounds nuw i8, ptr %.119.i, i64 280 ; 5 uses
+.preheader35.i:                                   ; preds = %.preheader35.i.preheader.a, %bb.cb
+  %.119.i = phi ptr [ %i.ali, %bb.cb ], [ %.021, %.preheader35.i.preheader.a ] ; 5 uses
+  %i.ali = getelementptr inbounds nuw i8, ptr %.119.i, i64 280 ; 4 uses
   %i.alj = icmp ult ptr %i.ali, %.024.ph
   br i1 %i.alj, label %bb.cb, label %.critedge.i114
 
@@ -1429,27 +1411,18 @@ bb.cb:                                            ; preds = %.preheader35.i
   %i.als = load i64, ptr %i.alr, align 8
   %i.alt = lshr i8 %i.all, 1
   %i.alu = zext nneg i8 %i.alt to i64
-  %i.alv = select i1 %i.alm, i64 %i.als, i64 %i.alu ; 3 uses
+  %i.alv = select i1 %i.alm, i64 %i.als, i64 %i.alu ; 2 uses
   %.sroa.speculated.i.i.i.i13.i = call i64 @llvm.umin.i64(i64 %i.alv, i64 %i.akg)
   %i.alw = call noundef i32 @memcmp(ptr noundef %i.akc, ptr noundef %i.alq, i64 noundef %.sroa.speculated.i.i.i.i13.i) #44 ; 2 uses
   %i.alx = icmp eq i32 %i.alw, 0
-  br i1 %i.alx, label %25, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i"
+  %19 = icmp ult i64 %i.akg, %i.alv
+  %or.cond.i = and i1 %i.alx, %19
+  %20 = icmp slt i32 %i.alw, 0
+  %or.cond74.i = or i1 %20, %or.cond.i
+  br i1 %or.cond74.i, label %.critedge.i114, label %.preheader35.i, !llvm.loop !2709
 
-25:                                               ; preds = %bb.cb
-  %26 = icmp eq i64 %i.akg, %i.alv
-  br i1 %26, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i", label %27
-
-27:                                               ; preds = %25
-  %28 = icmp ult i64 %i.akg, %i.alv
-  br i1 %28, label %.critedge.i114, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i"
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i": ; preds = %27, %25, %bb.cb
-  %.0.i.i.i.i14.i = phi i32 [ %i.alw, %bb.cb ], [ 1, %27 ], [ 0, %25 ]
-  %29 = icmp slt i32 %.0.i.i.i.i14.i, 0
-  br i1 %29, label %.critedge.i114, label %.preheader35.i, !llvm.loop !2709
-
-.critedge.i114:                                   ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i", %27, %.preheader35.i, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i", %22
-  %.220.i = phi ptr [ %i.akt, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit12.i" ], [ %i.akt, %22 ], [ %i.ali, %.preheader35.i ], [ %i.ali, %27 ], [ %i.ali, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit15.i" ] ; 4 uses
+.critedge.i114:                                   ; preds = %bb.cb, %.preheader35.i, %.preheader34.i.a
+  %.220.i = phi ptr [ %i.akt, %.preheader34.i.a ], [ %i.ali, %.preheader35.i ], [ %i.ali, %bb.cb ] ; 4 uses
   %i.aly = icmp ult ptr %.220.i, %.024.ph
   br i1 %i.aly, label %.preheader33.i, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit18.thread.i"
 
@@ -1478,7 +1451,7 @@ bb.cc:                                            ; preds = %.preheader33.i
   br i1 %i.amo, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit18.i", label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit18.thread.i"
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit18.i": ; preds = %bb.cc, %.preheader33.i
-  %.0.i.i.i.i17.i = phi i32 [ %i.amm, %.preheader33.i ], [ -1, %bb.cc ]
+  %.0.i.i.i.i17.i = phi i32 [ %i.amm, %.preheader33.i ], [ -2147483648, %bb.cc ]
   %i.amp = icmp slt i32 %.0.i.i.i.i17.i, 0
   br i1 %i.amp, label %.preheader33.i, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit18.thread.i", !llvm.loop !2710
 
@@ -1529,11 +1502,11 @@ bb.cc:                                            ; preds = %.preheader33.i
   %i.anl = load i64, ptr %i.t, align 8
   %i.anm = lshr i8 %i.anh, 1
   %i.ann = zext nneg i8 %i.anm to i64
-  %i.ano = select i1 %i.ani, i64 %i.anl, i64 %i.ann ; 5 uses
+  %i.ano = select i1 %i.ani, i64 %i.anl, i64 %i.ann ; 4 uses
   br label %bb.cd
 
-bb.cd:                                            ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i118", %.lr.ph.i116
-  %.4.i = phi ptr [ %.32143.i, %.lr.ph.i116 ], [ %i.anp, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i118" ] ; 5 uses
+bb.cd:                                            ; preds = %bb.cd, %.lr.ph.i116
+  %.4.i = phi ptr [ %.32143.i, %.lr.ph.i116 ], [ %i.anp, %bb.cd ] ; 5 uses
   %i.anp = getelementptr inbounds nuw i8, ptr %.4.i, i64 280 ; 4 uses
   %i.anq = getelementptr inbounds nuw i8, ptr %.4.i, i64 536
   %i.anr = load i8, ptr %i.anq, align 8           ; 2 uses
@@ -1546,30 +1519,18 @@ bb.cd:                                            ; preds = %"_ZZNK3tev15TiffIma
   %i.any = load i64, ptr %i.anx, align 8
   %i.anz = lshr i8 %i.anr, 1
   %i.aoa = zext nneg i8 %i.anz to i64
-  %i.aob = select i1 %i.ans, i64 %i.any, i64 %i.aoa ; 3 uses
+  %i.aob = select i1 %i.ans, i64 %i.any, i64 %i.aoa ; 2 uses
   %.sroa.speculated.i.i.i.i19.i117 = call i64 @llvm.umin.i64(i64 %i.aob, i64 %i.ano)
   %i.aoc = call noundef i32 @memcmp(ptr noundef %i.ank, ptr noundef %i.anw, i64 noundef %.sroa.speculated.i.i.i.i19.i117) #44 ; 2 uses
   %i.aod = icmp eq i32 %i.aoc, 0
-  br i1 %i.aod, label %30, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i118"
+  %21 = icmp ult i64 %i.ano, %i.aob
+  %or.cond54 = and i1 %i.aod, %21
+  %22 = icmp slt i32 %i.aoc, 0
+  %or.cond55 = or i1 %22, %or.cond54
+  br i1 %or.cond55, label %.preheader.i120, label %bb.cd, !llvm.loop !2711
 
-30:                                               ; preds = %bb.cd
-  %31 = icmp eq i64 %i.ano, %i.aob
-  br i1 %31, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i118", label %32
-
-32:                                               ; preds = %30
-  %33 = icmp ult i64 %i.ano, %i.aob
-  br i1 %33, label %.preheader.i120.preheader, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i118"
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i118": ; preds = %32, %30, %bb.cd
-  %.0.i.i.i.i20.i119 = phi i32 [ %i.aoc, %bb.cd ], [ 1, %32 ], [ 0, %30 ]
-  %34 = icmp slt i32 %.0.i.i.i.i20.i119, 0
-  br i1 %34, label %.preheader.i120.preheader, label %bb.cd, !llvm.loop !2711
-
-.preheader.i120.preheader:                        ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit21.i118", %32
-  br label %.preheader.i120
-
-.preheader.i120:                                  ; preds = %.preheader.i120.preheader, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.i"
-  %.3.i = phi ptr [ %i.aoe, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.i" ], [ %.244.i, %.preheader.i120.preheader ] ; 5 uses
+.preheader.i120:                                  ; preds = %bb.cd, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.i"
+  %.3.i = phi ptr [ %i.aoe, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.i" ], [ %.244.i, %bb.cd ] ; 5 uses
   %i.aoe = getelementptr inbounds i8, ptr %.3.i, i64 -280 ; 3 uses
   %i.aof = getelementptr inbounds i8, ptr %.3.i, i64 -24
   %i.aog = load i8, ptr %i.aof, align 8           ; 2 uses
@@ -1593,7 +1554,7 @@ bb.ce:                                            ; preds = %.preheader.i120
   br i1 %i.aot, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.i", label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.thread.i"
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.i": ; preds = %bb.ce, %.preheader.i120
-  %.0.i.i.i.i23.i = phi i32 [ %i.aor, %.preheader.i120 ], [ -1, %bb.ce ]
+  %.0.i.i.i.i23.i = phi i32 [ %i.aor, %.preheader.i120 ], [ -2147483648, %bb.ce ]
   %i.aou = icmp slt i32 %.0.i.i.i.i23.i, 0
   br i1 %i.aou, label %.preheader.i120, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit24.thread.i", !llvm.loop !2712
 
@@ -1653,7 +1614,7 @@ bb.cf:                                            ; preds = %._crit_edge.i
   %i.apr = load i64, ptr %i.am, align 8
   %i.aps = lshr i8 %i.apn, 1
   %i.apt = zext nneg i8 %i.aps to i64
-  %i.apu = select i1 %i.apo, i64 %i.apr, i64 %i.apt ; 8 uses
+  %i.apu = select i1 %i.apo, i64 %i.apr, i64 %i.apt ; 6 uses
   br label %bb.cg
 
 bb.cg:                                            ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.i124", %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit111.thread33"
@@ -1681,7 +1642,7 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %i.aqk, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.i124", label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126"
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.i124": ; preds = %bb.ch, %bb.cg
-  %.0.i.i.i.i.i125 = phi i32 [ %i.aqi, %bb.cg ], [ -1, %bb.ch ]
+  %.0.i.i.i.i.i125 = phi i32 [ %i.aqi, %bb.cg ], [ -2147483648, %bb.ch ]
   %i.aql = icmp slt i32 %.0.i.i.i.i.i125, 0
   br i1 %i.aql, label %bb.cg, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126", !llvm.loop !2714
 
@@ -1689,13 +1650,13 @@ bb.ch:                                            ; preds = %bb.cg
   %i.aqm = icmp eq ptr %.021, %.018.i122
   br i1 %i.aqm, label %.preheader29.i, label %.preheader30.i
 
-.preheader29.i:                                   ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126", %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i"
-  %.0.i138 = phi ptr [ %i.aqo, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i" ], [ %.024.ph, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126" ] ; 7 uses
+.preheader29.i:                                   ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126", %bb.ci
+  %.0.i138 = phi ptr [ %i.aqo, %bb.ci ], [ %.024.ph, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126" ] ; 7 uses
   %i.aqn = icmp ult ptr %i.apv, %.0.i138
   br i1 %i.aqn, label %bb.ci, label %.critedge.i131
 
 bb.ci:                                            ; preds = %.preheader29.i
-  %i.aqo = getelementptr inbounds i8, ptr %.0.i138, i64 -280 ; 3 uses
+  %i.aqo = getelementptr inbounds i8, ptr %.0.i138, i64 -280 ; 2 uses
   %i.aqp = getelementptr inbounds i8, ptr %.0.i138, i64 -24
   %i.aqq = load i8, ptr %i.aqp, align 8           ; 2 uses
   %i.aqr = trunc i8 %i.aqq to i1                  ; 2 uses
@@ -1707,28 +1668,19 @@ bb.ci:                                            ; preds = %.preheader29.i
   %i.aqx = load i64, ptr %i.aqw, align 8
   %i.aqy = lshr i8 %i.aqq, 1
   %i.aqz = zext nneg i8 %i.aqy to i64
-  %i.ara = select i1 %i.aqr, i64 %i.aqx, i64 %i.aqz ; 3 uses
+  %i.ara = select i1 %i.aqr, i64 %i.aqx, i64 %i.aqz ; 2 uses
   %.sroa.speculated.i.i.i.i12.i = call i64 @llvm.umin.i64(i64 %i.apu, i64 %i.ara)
   %i.arb = call noundef i32 @memcmp(ptr noundef %i.aqv, ptr noundef %i.apq, i64 noundef %.sroa.speculated.i.i.i.i12.i) #44 ; 2 uses
   %i.arc = icmp eq i32 %i.arb, 0
-  br i1 %i.arc, label %35, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i"
+  %23 = icmp ult i64 %i.ara, %i.apu
+  %or.cond66.i = and i1 %i.arc, %23
+  %24 = icmp slt i32 %i.arb, 0
+  %or.cond67.i = or i1 %24, %or.cond66.i
+  br i1 %or.cond67.i, label %.critedge.i131, label %.preheader29.i, !llvm.loop !2715
 
-35:                                               ; preds = %bb.ci
-  %36 = icmp eq i64 %i.ara, %i.apu
-  br i1 %36, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i", label %37
-
-37:                                               ; preds = %35
-  %38 = icmp ult i64 %i.ara, %i.apu
-  br i1 %38, label %.critedge.i131, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i"
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i": ; preds = %37, %35, %bb.ci
-  %.0.i.i.i.i13.i = phi i32 [ %i.arb, %bb.ci ], [ 1, %37 ], [ 0, %35 ]
-  %39 = icmp slt i32 %.0.i.i.i.i13.i, 0
-  br i1 %39, label %.critedge.i131, label %.preheader29.i, !llvm.loop !2715
-
-.preheader30.i:                                   ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126", %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129"
-  %.1.i127 = phi ptr [ %i.ard, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129" ], [ %.024.ph, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126" ] ; 5 uses
-  %i.ard = getelementptr inbounds i8, ptr %.1.i127, i64 -280 ; 3 uses
+.preheader30.i:                                   ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126", %.preheader30.i
+  %.1.i127 = phi ptr [ %i.ard, %.preheader30.i ], [ %.024.ph, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit.thread.i126" ] ; 5 uses
+  %i.ard = getelementptr inbounds i8, ptr %.1.i127, i64 -280 ; 2 uses
   %i.are = getelementptr inbounds i8, ptr %.1.i127, i64 -24
   %i.arf = load i8, ptr %i.are, align 8           ; 2 uses
   %i.arg = trunc i8 %i.arf to i1                  ; 2 uses
@@ -1740,27 +1692,18 @@ bb.ci:                                            ; preds = %.preheader29.i
   %i.arm = load i64, ptr %i.arl, align 8
   %i.arn = lshr i8 %i.arf, 1
   %i.aro = zext nneg i8 %i.arn to i64
-  %i.arp = select i1 %i.arg, i64 %i.arm, i64 %i.aro ; 3 uses
+  %i.arp = select i1 %i.arg, i64 %i.arm, i64 %i.aro ; 2 uses
   %.sroa.speculated.i.i.i.i15.i128 = call i64 @llvm.umin.i64(i64 %i.apu, i64 %i.arp)
   %i.arq = call noundef i32 @memcmp(ptr noundef %i.ark, ptr noundef %i.apq, i64 noundef %.sroa.speculated.i.i.i.i15.i128) #44 ; 2 uses
   %i.arr = icmp eq i32 %i.arq, 0
-  br i1 %i.arr, label %40, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129"
+  %25 = icmp ult i64 %i.arp, %i.apu
+  %or.cond69.i = and i1 %i.arr, %25
+  %26 = icmp slt i32 %i.arq, 0
+  %or.cond70.i = or i1 %26, %or.cond69.i
+  br i1 %or.cond70.i, label %.critedge.i131, label %.preheader30.i, !llvm.loop !2716
 
-40:                                               ; preds = %.preheader30.i
-  %41 = icmp eq i64 %i.arp, %i.apu
-  br i1 %41, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129", label %42
-
-42:                                               ; preds = %40
-  %43 = icmp ult i64 %i.arp, %i.apu
-  br i1 %43, label %.critedge.i131, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129"
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129": ; preds = %42, %40, %.preheader30.i
-  %.0.i.i.i.i16.i130 = phi i32 [ %i.arq, %.preheader30.i ], [ 1, %42 ], [ 0, %40 ]
-  %44 = icmp slt i32 %.0.i.i.i.i16.i130, 0
-  br i1 %44, label %.critedge.i131, label %.preheader30.i, !llvm.loop !2716
-
-.critedge.i131:                                   ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129", %42, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i", %37, %.preheader29.i
-  %.2.i = phi ptr [ %i.aqo, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit14.i" ], [ %.0.i138, %.preheader29.i ], [ %i.aqo, %37 ], [ %i.ard, %42 ], [ %i.ard, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit17.i129" ] ; 2 uses
+.critedge.i131:                                   ; preds = %.preheader30.i, %bb.ci, %.preheader29.i
+  %.2.i = phi ptr [ %.0.i138, %.preheader29.i ], [ %i.aqo, %bb.ci ], [ %i.ard, %.preheader30.i ] ; 2 uses
   %.not = icmp ult ptr %i.apv, %.2.i              ; 2 uses
   br i1 %.not, label %.lr.ph.i132, label %._crit_edge.i136
 
@@ -1808,7 +1751,7 @@ bb.ci:                                            ; preds = %.preheader29.i
   %i.asq = load i64, ptr %i.am, align 8
   %i.asr = lshr i8 %i.asm, 1
   %i.ass = zext nneg i8 %i.asr to i64
-  %i.ast = select i1 %i.asn, i64 %i.asq, i64 %i.ass ; 5 uses
+  %i.ast = select i1 %i.asn, i64 %i.asq, i64 %i.ass ; 4 uses
   br label %bb.cj
 
 bb.cj:                                            ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit20.i", %.lr.ph.i132
@@ -1836,15 +1779,15 @@ bb.ck:                                            ; preds = %bb.cj
   br i1 %i.atj, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit20.i", label %.preheader.i134.preheader
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit20.i": ; preds = %bb.ck, %bb.cj
-  %.0.i.i.i.i19.i = phi i32 [ %i.ath, %bb.cj ], [ -1, %bb.ck ]
+  %.0.i.i.i.i19.i = phi i32 [ %i.ath, %bb.cj ], [ -2147483648, %bb.ck ]
   %i.atk = icmp slt i32 %.0.i.i.i.i19.i, 0
   br i1 %i.atk, label %bb.cj, label %.preheader.i134.preheader, !llvm.loop !2717
 
 .preheader.i134.preheader:                        ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit20.i", %bb.ck
   br label %.preheader.i134
 
-.preheader.i134:                                  ; preds = %.preheader.i134.preheader, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.i"
-  %.4.i135 = phi ptr [ %i.atl, %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.i" ], [ %.343.i, %.preheader.i134.preheader ] ; 5 uses
+.preheader.i134:                                  ; preds = %.preheader.i134.preheader, %.preheader.i134
+  %.4.i135 = phi ptr [ %i.atl, %.preheader.i134 ], [ %.343.i, %.preheader.i134.preheader ] ; 5 uses
   %i.atl = getelementptr inbounds i8, ptr %.4.i135, i64 -280 ; 3 uses
   %i.atm = getelementptr inbounds i8, ptr %.4.i135, i64 -24
   %i.atn = load i8, ptr %i.atm, align 8           ; 2 uses
@@ -1857,26 +1800,17 @@ bb.ck:                                            ; preds = %bb.cj
   %i.atu = load i64, ptr %i.att, align 8
   %i.atv = lshr i8 %i.atn, 1
   %i.atw = zext nneg i8 %i.atv to i64
-  %i.atx = select i1 %i.ato, i64 %i.atu, i64 %i.atw ; 3 uses
+  %i.atx = select i1 %i.ato, i64 %i.atu, i64 %i.atw ; 2 uses
   %.sroa.speculated.i.i.i.i21.i = call i64 @llvm.umin.i64(i64 %i.ast, i64 %i.atx)
   %i.aty = call noundef i32 @memcmp(ptr noundef %i.ats, ptr noundef %i.asp, i64 noundef %.sroa.speculated.i.i.i.i21.i) #44 ; 2 uses
   %i.atz = icmp eq i32 %i.aty, 0
-  br i1 %i.atz, label %45, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.i"
+  %27 = icmp ult i64 %i.atx, %i.ast
+  %or.cond.i134 = and i1 %i.atz, %27
+  %28 = icmp slt i32 %i.aty, 0
+  %or.cond64.i = or i1 %28, %or.cond.i134
+  br i1 %or.cond64.i, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.thread.i", label %.preheader.i134, !llvm.loop !2718
 
-45:                                               ; preds = %.preheader.i134
-  %46 = icmp eq i64 %i.atx, %i.ast
-  br i1 %46, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.i", label %47
-
-47:                                               ; preds = %45
-  %48 = icmp ult i64 %i.atx, %i.ast
-  br i1 %48, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.thread.i", label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.i"
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.i": ; preds = %47, %45, %.preheader.i134
-  %.0.i.i.i.i22.i = phi i32 [ %i.aty, %.preheader.i134 ], [ 1, %47 ], [ 0, %45 ]
-  %49 = icmp slt i32 %.0.i.i.i.i22.i, 0
-  br i1 %49, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.thread.i", label %.preheader.i134, !llvm.loop !2718
-
-"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.thread.i": ; preds = %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.i", %47
+"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit23.thread.i": ; preds = %.preheader.i134
   %i.aua = icmp ult ptr %i.asu, %i.atl
   br i1 %i.aua, label %.lr.ph.i132, label %._crit_edge.i136, !llvm.loop !2719
 
@@ -2279,7 +2213,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.et, label %"_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit35", label %.critedge
 
 "_ZZNK3tev15TiffImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_1clERKNS_9ImageDataESM_.exit35": ; preds = %bb.l, %bb.k
-  %.0.i.i.i.i34 = phi i32 [ %i.er, %bb.k ], [ -1, %bb.l ]
+  %.0.i.i.i.i34 = phi i32 [ %i.er, %bb.k ], [ -2147483648, %bb.l ]
   %i.eu = icmp slt i32 %.0.i.i.i.i34, 0
   br i1 %i.eu, label %bb.j, label %.critedge, !llvm.loop !2721
 

@@ -205,17 +205,17 @@ bb.c:                                             ; preds = %.lr.ph, %.preheader
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8
   store ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, ptr %18, align 8
   %i.d = call { ptr, i64 } @_ZNK4mlir10StringAttr8getValueEv(ptr noundef nonnull align 8 dereferenceable(8) %18) #32 ; 2 uses
-  %i.e = extractvalue { ptr, i64 } %i.d, 1        ; 3 uses
+  %i.e = extractvalue { ptr, i64 } %i.d, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #32
   %i.f = load ptr, ptr %.015.i.i.i.i13, align 8, !tbaa !106
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.0.0.copyload.i4.i.i.i.i.i.i = load ptr, ptr %i.g, align 8
   store ptr %.sroa.0.0.copyload.i4.i.i.i.i.i.i, ptr %19, align 8
   %i.h = call { ptr, i64 } @_ZNK4mlir10StringAttr8getValueEv(ptr noundef nonnull align 8 dereferenceable(8) %19) #32 ; 2 uses
-  %i.i = extractvalue { ptr, i64 } %i.h, 1        ; 3 uses
+  %i.i = extractvalue { ptr, i64 } %i.h, 1        ; 2 uses
   %.sroa.speculated.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.i, i64 %i.e) ; 2 uses
   %i.j = icmp eq i64 %.sroa.speculated.i.i.i.i.i.i.i.i, 0
-  br i1 %i.j, label %.thread.i.i.i.i.i.i.i.i, label %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
+  br i1 %i.j, label %bb.d, label %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
 
 _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.c
   %i.k = extractvalue { ptr, i64 } %i.h, 0
@@ -225,13 +225,9 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.c
   %.not.not.i.i.i.i.i.i.i.i = icmp eq i32 %.fr.i.i.i.i.i.i.i.i, 0
   %.inv.i.i.i.i.i.i.i.i = icmp sgt i32 %.fr.i.i.i.i.i.i.i.i, -1
   %spec.select.i.i.i.i.i.i.i.i = select i1 %.inv.i.i.i.i.i.i.i.i, i32 1, i32 -1
-  br i1 %.not.not.i.i.i.i.i.i.i.i, label %.thread.i.i.i.i.i.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i
+  br i1 %.not.not.i.i.i.i.i.i.i.i, label %bb.d, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i
 
-.thread.i.i.i.i.i.i.i.i:                          ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.c
-  %21 = icmp eq i64 %i.e, %i.i
-  br i1 %21, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i, label %bb.d
-
-bb.d:                                             ; preds = %.thread.i.i.i.i.i.i.i.i
+bb.d:                                             ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.c
   %i.n = icmp ult i64 %i.e, %i.i
   br i1 %i.n, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.thread.i.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i
 
@@ -240,8 +236,8 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #32
   br label %_ZN4llvm9is_sortedIRNS_8ArrayRefIN4mlir3gpu18KernelMetadataAttrEEEEEbOT_.exit
 
-_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i: ; preds = %bb.d, %.thread.i.i.i.i.i.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i.i.i = phi i32 [ %spec.select.i.i.i.i.i.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i ], [ 1, %bb.d ], [ 0, %.thread.i.i.i.i.i.i.i.i ]
+_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i: ; preds = %bb.d, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
+  %.1.i.i.i.i.i.i.i.i = phi i32 [ %spec.select.i.i.i.i.i.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i ], [ 0, %bb.d ]
   %i.o = icmp slt i32 %.1.i.i.i.i.i.i.i.i, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #32
@@ -425,17 +421,17 @@ bb.c:                                             ; preds = %.lr.ph, %.preheader
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.d, align 8
   store ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, ptr %6, align 8
   %i.e = call { ptr, i64 } @_ZNK4mlir10StringAttr8getValueEv(ptr noundef nonnull align 8 dereferenceable(8) %6) #32 ; 2 uses
-  %i.f = extractvalue { ptr, i64 } %i.e, 1        ; 3 uses
+  %i.f = extractvalue { ptr, i64 } %i.e, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32
   %i.g = load ptr, ptr %.015.i.i.i.i26, align 8, !tbaa !106
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.0.0.copyload.i4.i.i.i.i.i.i = load ptr, ptr %i.h, align 8
   store ptr %.sroa.0.0.copyload.i4.i.i.i.i.i.i, ptr %7, align 8
   %i.i = call { ptr, i64 } @_ZNK4mlir10StringAttr8getValueEv(ptr noundef nonnull align 8 dereferenceable(8) %7) #32 ; 2 uses
-  %i.j = extractvalue { ptr, i64 } %i.i, 1        ; 3 uses
+  %i.j = extractvalue { ptr, i64 } %i.i, 1        ; 2 uses
   %.sroa.speculated.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.j, i64 %i.f) ; 2 uses
   %i.k = icmp eq i64 %.sroa.speculated.i.i.i.i.i.i.i.i, 0
-  br i1 %i.k, label %.thread.i.i.i.i.i.i.i.i, label %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
+  br i1 %i.k, label %bb.d, label %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
 
 _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.c
   %i.l = extractvalue { ptr, i64 } %i.i, 0
@@ -445,13 +441,9 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.c
   %.not.not.i.i.i.i.i.i.i.i = icmp eq i32 %.fr.i.i.i.i.i.i.i.i, 0
   %.inv.i.i.i.i.i.i.i.i = icmp sgt i32 %.fr.i.i.i.i.i.i.i.i, -1
   %spec.select.i.i.i.i.i.i.i.i = select i1 %.inv.i.i.i.i.i.i.i.i, i32 1, i32 -1
-  br i1 %.not.not.i.i.i.i.i.i.i.i, label %.thread.i.i.i.i.i.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i
+  br i1 %.not.not.i.i.i.i.i.i.i.i, label %bb.d, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i
 
-.thread.i.i.i.i.i.i.i.i:                          ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.c
-  %10 = icmp eq i64 %i.f, %i.j
-  br i1 %10, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i, label %bb.d
-
-bb.d:                                             ; preds = %.thread.i.i.i.i.i.i.i.i
+bb.d:                                             ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.c
   %i.o = icmp ult i64 %i.f, %i.j
   br i1 %i.o, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.thread.i.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i
 
@@ -460,8 +452,8 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #32
   br label %_ZN4llvm9is_sortedIRNS_8ArrayRefIN4mlir3gpu18KernelMetadataAttrEEEEEbOT_.exit
 
-_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i: ; preds = %bb.d, %.thread.i.i.i.i.i.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i.i.i = phi i32 [ %spec.select.i.i.i.i.i.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i ], [ 1, %bb.d ], [ 0, %.thread.i.i.i.i.i.i.i.i ]
+_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPKN4mlir3gpu18KernelMetadataAttrES7_EEbT_T0_.exit.i.i.i.i: ; preds = %bb.d, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i
+  %.1.i.i.i.i.i.i.i.i = phi i32 [ %spec.select.i.i.i.i.i.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i.i ], [ 0, %bb.d ]
   %i.p = icmp slt i32 %.1.i.i.i.i.i.i.i.i, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #32

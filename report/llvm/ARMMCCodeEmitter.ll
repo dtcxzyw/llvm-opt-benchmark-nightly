@@ -28,8 +28,8 @@ $_ZN4llvm23SmallVectorTemplateBaseINS_7MCFixupELb1EE15growAndPushBackES1_ = comd
 @_ZN4llvm11APFloatBase13semIEEEdoubleE = external global %"struct.llvm::fltSemantics", align 4
 @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE = external global %"struct.llvm::fltSemantics", align 4
 @.str = private unnamed_addr constant [45 x i8] c"constant value truncated (limited to 32-bit)\00", align 1
-@switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE = private unnamed_addr constant [8 x i8] c"\10\10\08\08\10\10\08\08", align 8
-@switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140 = private unnamed_addr constant [4 x i8] c"\10\10\100", align 8
+@switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE = private unnamed_addr constant [8 x i8] c"\00\00\08\08\00\00\08\08", align 8
+@switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.135 = private unnamed_addr constant [4 x i8] c"\10\10\100", align 8
 @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter26getAddrMode6AddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE = private unnamed_addr constant [5 x i8] c"\10\10\10 0", align 4
 @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter28getRestrictedCondCodeOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE = private unnamed_addr constant [13 x i8] c"\01\00\00\00\00\00\00\01\00\04\05\06\07", align 4
 @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter18getSORegRegOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE = private unnamed_addr constant [4 x i8] c"P\100p", align 4
@@ -432,26 +432,21 @@ bb.jj:                                            ; preds = %bb.c, %bb.c, %bb.c,
 
 .split.i:                                         ; preds = %bb.jj
   %i.hrr = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.hro, i1 true)
-  %switch.tableidx15873 = add nsw i64 %i.hrr, -1  ; 2 uses
+  %switch.tableidx15873 = add nsw i64 %i.hrr, -1
   %i.hrs = icmp ult i64 %switch.tableidx15873, 4
-  br i1 %i.hrs, label %switch.lookup15874, label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit
-
-switch.lookup15874:                               ; preds = %.split.i
-  %switch.gep15875 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140, i64 %switch.tableidx15873
-  %switch.load15876 = load i8, ptr %switch.gep15875, align 1
-  %switch.ext15877 = zext i8 %switch.load15876 to i64
+  %4 = select i1 %i.hrs, i64 16, i64 0
   br label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit
 
-_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit: ; preds = %switch.lookup15874, %.split.i, %bb.jj
-  %.0.i15505 = phi i64 [ 0, %.split.i ], [ %switch.ext15877, %switch.lookup15874 ], [ 0, %bb.jj ]
+_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit: ; preds = %.split.i, %bb.jj
+  %.0.i15505 = phi i64 [ 0, %bb.jj ], [ %4, %.split.i ]
   %i.hrt = zext i16 %i.hrm to i64                 ; 2 uses
-  %4 = or i64 %.0.i15505, %i.hrt
   %i.hru = shl nuw nsw i64 %i.hrt, 16
   %i.hrv = and i64 %i.hru, 983040
-  %i.hrw = and i64 %4, 16
+  %i.hrw = and i64 %i.hrt, 16
   %i.hrx = or disjoint i64 %i.hrf, %i.hrd
-  %i.hry = or disjoint i64 %i.hrx, %i.hrv
-  %i.hrz = or disjoint i64 %i.hry, %i.hrw
+  %5 = or disjoint i64 %i.hrx, %i.hrw
+  %i.hry = or disjoint i64 %5, %i.hrv
+  %i.hrz = or i64 %i.hry, %.0.i15505
   %i.hsa = or i64 %i.hrz, %i.f                    ; 2 uses
   %.val14879 = load i64, ptr %i.hqz, align 8
   %i.hsb = getelementptr inbounds nuw i8, ptr %3, i64 264
@@ -499,31 +494,26 @@ bb.jk:                                            ; preds = %bb.c, %bb.c, %bb.c,
 
 .split.i15508:                                    ; preds = %bb.jk
   %i.htg = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.htd, i1 true)
-  %switch.tableidx15878 = add nsw i64 %i.htg, -1  ; 2 uses
+  %switch.tableidx15878 = add nsw i64 %i.htg, -1
   %i.hth = icmp ult i64 %switch.tableidx15878, 4
-  br i1 %i.hth, label %switch.lookup15879, label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15509
-
-switch.lookup15879:                               ; preds = %.split.i15508
-  %switch.gep15880 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140, i64 %switch.tableidx15878
-  %switch.load15881 = load i8, ptr %switch.gep15880, align 1
-  %switch.ext15882 = zext i8 %switch.load15881 to i64
+  %6 = select i1 %i.hth, i64 16, i64 0
   br label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15509
 
-_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15509: ; preds = %switch.lookup15879, %.split.i15508, %bb.jk
-  %.0.i15507 = phi i64 [ 0, %.split.i15508 ], [ %switch.ext15882, %switch.lookup15879 ], [ 0, %bb.jk ]
+_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15509: ; preds = %.split.i15508, %bb.jk
+  %.0.i15507 = phi i64 [ 0, %bb.jk ], [ %6, %.split.i15508 ]
   %i.hti = zext i16 %i.htb to i64                 ; 2 uses
-  %5 = or i64 %.0.i15507, %i.hti
   %i.htj = shl nuw nsw i64 %i.hti, 16
   %i.htk = and i64 %i.htj, 983040
-  %i.htl = and i64 %5, 16
+  %i.htl = and i64 %i.hti, 16
   %i.htm = getelementptr inbounds nuw i8, ptr %.val15024, i64 64
   %.val13523 = load i64, ptr %i.hso, align 8
   %i.htn = tail call fastcc noundef i32 @_ZNK12_GLOBAL__N_116ARMMCCodeEmitter17getMachineOpValueERKN4llvm6MCInstERKNS1_9MCOperandERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE(ptr nonnull %.val15023, ptr noundef nonnull align 8 dereferenceable(16) %i.htm, i64 %.val13523)
   %i.hto = and i32 %i.htn, 15
   %i.htp = zext nneg i32 %i.hto to i64
   %i.htq = or disjoint i64 %i.hsu, %i.hss
-  %i.htr = or disjoint i64 %i.htq, %i.htk
-  %i.hts = or disjoint i64 %i.htr, %i.htl
+  %7 = or disjoint i64 %i.htq, %i.htl
+  %i.htr = or disjoint i64 %7, %i.htk
+  %i.hts = or i64 %i.htr, %.0.i15507
   %i.htt = or disjoint i64 %i.hts, %i.htp
   %i.htu = or i64 %i.htt, %i.f                    ; 2 uses
   %.val14877 = load i64, ptr %i.hso, align 8
@@ -572,26 +562,21 @@ bb.jl:                                            ; preds = %bb.c, %bb.c, %bb.c,
 
 .split.i15512:                                    ; preds = %bb.jl
   %i.hva = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.hux, i1 true)
-  %switch.tableidx15883 = add nsw i64 %i.hva, -1  ; 2 uses
+  %switch.tableidx15883 = add nsw i64 %i.hva, -1
   %i.hvb = icmp ult i64 %switch.tableidx15883, 4
-  br i1 %i.hvb, label %switch.lookup15884, label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15513
-
-switch.lookup15884:                               ; preds = %.split.i15512
-  %switch.gep15885 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140, i64 %switch.tableidx15883
-  %switch.load15886 = load i8, ptr %switch.gep15885, align 1
-  %switch.ext15887 = zext i8 %switch.load15886 to i64
+  %8 = select i1 %i.hvb, i64 16, i64 0
   br label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15513
 
-_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15513: ; preds = %switch.lookup15884, %.split.i15512, %bb.jl
-  %.0.i15511 = phi i64 [ 0, %.split.i15512 ], [ %switch.ext15887, %switch.lookup15884 ], [ 0, %bb.jl ]
+_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15513: ; preds = %.split.i15512, %bb.jl
+  %.0.i15511 = phi i64 [ 0, %bb.jl ], [ %8, %.split.i15512 ]
   %i.hvc = zext i16 %i.huv to i64                 ; 2 uses
-  %6 = or i64 %.0.i15511, %i.hvc
   %i.hvd = shl nuw nsw i64 %i.hvc, 16
   %i.hve = and i64 %i.hvd, 983040
-  %i.hvf = and i64 %6, 16
+  %i.hvf = and i64 %i.hvc, 16
   %i.hvg = or disjoint i64 %i.huo, %i.hum
-  %i.hvh = or disjoint i64 %i.hvg, %i.hve
-  %i.hvi = or disjoint i64 %i.hvh, %i.hvf
+  %9 = or disjoint i64 %i.hvg, %i.hvf
+  %i.hvh = or disjoint i64 %9, %i.hve
+  %i.hvi = or i64 %i.hvh, %.0.i15511
   %i.hvj = or i64 %i.hvi, %i.f                    ; 2 uses
   %.val14875 = load i64, ptr %i.hui, align 8
   %i.hvk = getelementptr inbounds nuw i8, ptr %3, i64 264
@@ -743,26 +728,21 @@ bb.jn:                                            ; preds = %bb.c, %bb.c, %bb.c,
 
 .split.i15527:                                    ; preds = %bb.jn
   %i.hzl = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.hzi, i1 true)
-  %switch.tableidx15888 = add nsw i64 %i.hzl, -1  ; 2 uses
+  %switch.tableidx15888 = add nsw i64 %i.hzl, -1
   %i.hzm = icmp ult i64 %switch.tableidx15888, 4
-  br i1 %i.hzm, label %switch.lookup15889, label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15528
-
-switch.lookup15889:                               ; preds = %.split.i15527
-  %switch.gep15890 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140, i64 %switch.tableidx15888
-  %switch.load15891 = load i8, ptr %switch.gep15890, align 1
-  %switch.ext15892 = zext i8 %switch.load15891 to i64
+  %10 = select i1 %i.hzm, i64 16, i64 0
   br label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15528
 
-_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15528: ; preds = %switch.lookup15889, %.split.i15527, %bb.jn
-  %.0.i15526 = phi i64 [ 0, %.split.i15527 ], [ %switch.ext15892, %switch.lookup15889 ], [ 0, %bb.jn ]
+_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15528: ; preds = %.split.i15527, %bb.jn
+  %.0.i15526 = phi i64 [ 0, %bb.jn ], [ %10, %.split.i15527 ]
   %i.hzn = zext i16 %i.hzg to i64                 ; 2 uses
-  %7 = or i64 %.0.i15526, %i.hzn
   %i.hzo = shl nuw nsw i64 %i.hzn, 16
   %i.hzp = and i64 %i.hzo, 983040
-  %i.hzq = and i64 %7, 16
+  %i.hzq = and i64 %i.hzn, 16
   %i.hzr = or disjoint i64 %i.hyz, %i.hyx
-  %i.hzs = or disjoint i64 %i.hzr, %i.hzp
-  %i.hzt = or disjoint i64 %i.hzs, %i.hzq
+  %11 = or disjoint i64 %i.hzr, %i.hzq
+  %i.hzs = or disjoint i64 %11, %i.hzp
+  %i.hzt = or i64 %i.hzs, %.0.i15526
   %i.hzu = or i64 %i.hzt, %i.f                    ; 2 uses
   %.val14869 = load i64, ptr %i.hyt, align 8
   %i.hzv = getelementptr inbounds nuw i8, ptr %3, i64 264
@@ -815,7 +795,7 @@ bb.jo:                                            ; preds = %bb.c, %bb.c
   br i1 %i.ibb, label %switch.lookup15894, label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15532
 
 switch.lookup15894:                               ; preds = %.split.i15531
-  %switch.gep15895 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140, i64 %switch.tableidx15893
+  %switch.gep15895 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.135, i64 %switch.tableidx15893
   %switch.load15896 = load i8, ptr %switch.gep15895, align 1
   %switch.ext15897 = zext i8 %switch.load15896 to i64
   br label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15532
@@ -880,23 +860,17 @@ bb.jp:                                            ; preds = %bb.c, %bb.c, %bb.c,
 
 .split.i15535:                                    ; preds = %bb.jp
   %i.ict = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.icq, i1 true)
-  %switch.tableidx15898 = add nsw i64 %i.ict, -1  ; 2 uses
+  %switch.tableidx15898 = add nsw i64 %i.ict, -1
   %i.icu = icmp ult i64 %switch.tableidx15898, 4
-  br i1 %i.icu, label %switch.lookup15899, label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15536
-
-switch.lookup15899:                               ; preds = %.split.i15535
-  %switch.gep15900 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140, i64 %switch.tableidx15898
-  %switch.load15901 = load i8, ptr %switch.gep15900, align 1
-  %switch.ext15902 = zext i8 %switch.load15901 to i64
+  %12 = select i1 %i.icu, i64 16, i64 0
   br label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15536
 
-_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15536: ; preds = %switch.lookup15899, %.split.i15535, %bb.jp
-  %.0.i15534 = phi i64 [ 0, %.split.i15535 ], [ %switch.ext15902, %switch.lookup15899 ], [ 0, %bb.jp ]
+_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15536: ; preds = %.split.i15535, %bb.jp
+  %.0.i15534 = phi i64 [ 0, %bb.jp ], [ %12, %.split.i15535 ]
   %i.icv = zext i16 %i.ico to i64                 ; 2 uses
-  %8 = or i64 %.0.i15534, %i.icv
   %i.icw = shl nuw nsw i64 %i.icv, 16
   %i.icx = and i64 %i.icw, 983040
-  %i.icy = and i64 %8, 16
+  %i.icy = and i64 %i.icv, 16
   %i.icz = getelementptr inbounds nuw i8, ptr %.val15012, i64 120
   %i.ida = load i32, ptr %i.icz, align 8, !tbaa !207 ; 2 uses
   %.not.i15537 = icmp eq i32 %i.ida, 0
@@ -913,8 +887,9 @@ bb.jq:                                            ; preds = %_ZNK12_GLOBAL__N_11
 _ZNK12_GLOBAL__N_116ARMMCCodeEmitter25getAddrMode6OffsetOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15539: ; preds = %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15536, %bb.jq
   %.0.i15538 = phi i64 [ %i.idf, %bb.jq ], [ 13, %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15536 ]
   %i.idg = or disjoint i64 %i.ich, %i.icf
-  %i.idh = or disjoint i64 %i.idg, %i.icx
-  %i.idi = or disjoint i64 %i.idh, %i.icy
+  %13 = or disjoint i64 %i.idg, %i.icy
+  %i.idh = or disjoint i64 %13, %i.icx
+  %i.idi = or i64 %i.idh, %.0.i15534
   %i.idj = or i64 %i.idi, %.0.i15538
   %i.idk = or i64 %i.idj, %i.f                    ; 2 uses
   %.val14865 = load i64, ptr %i.icb, align 8
@@ -968,7 +943,7 @@ bb.jr:                                            ; preds = %bb.c, %bb.c
   br i1 %i.ier, label %switch.lookup15904, label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15543
 
 switch.lookup15904:                               ; preds = %.split.i15542
-  %switch.gep15905 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.140, i64 %switch.tableidx15903
+  %switch.gep15905 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.135, i64 %switch.tableidx15903
   %switch.load15906 = load i8, ptr %switch.gep15905, align 1
   %switch.ext15907 = zext i8 %switch.load15906 to i64
   br label %_ZNK12_GLOBAL__N_116ARMMCCodeEmitter29getAddrMode6DupAddressOpValueERKN4llvm6MCInstEjRNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE.exit15543

@@ -204,10 +204,9 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %1 = phi i32 [ 1, %bb.f ], [ %i.h, %bb.e ]
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr null, ptr %i.j, align 8, !tbaa !44
-  %i.k = icmp ugt i32 %1, 1
+  %i.k = icmp ugt i32 %i.h, 1
   tail call void @_ZN5Noise14resizeNoiseBufEb(ptr noundef nonnull align 8 dereferenceable(88) %0, i1 noundef zeroext %i.k)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !45   ; 2 uses

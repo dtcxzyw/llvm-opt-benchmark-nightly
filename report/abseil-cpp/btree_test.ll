@@ -205,10 +205,9 @@ bb.hq:                                            ; preds = %.lr.ph.i.i.i432
   br i1 %i.zd, label %.lr.ph.i.i.i432, label %.critedge.i.i.i438, !llvm.loop !502
 
 .thread.i.i441:                                   ; preds = %bb.hp, %bb.hn
-  %i.ze = phi i32 [ -1, %bb.hp ], [ %i.yy, %bb.hn ]
+  %i.ze = phi i32 [ 255, %bb.hp ], [ %i.yy, %bb.hn ]
   %i.zf = getelementptr inbounds nuw i8, ptr %.val197, i64 256
-  %87 = and i32 %i.ze, 255
-  %i.zg = zext nneg i32 %87 to i64
+  %i.zg = zext nneg i32 %i.ze to i64
   %i.zh = getelementptr inbounds nuw [8 x i8], ptr %i.zf, i64 %i.zg
   %.11727.i.i.i442 = load ptr, ptr %i.zh, align 8, !tbaa !1843 ; 3 uses
   %i.zi = getelementptr i8, ptr %.11727.i.i.i442, i64 11
@@ -611,10 +610,9 @@ bb.cv:                                            ; preds = %.lr.ph.i.i.i
   br i1 %i.ic, label %.lr.ph.i.i.i, label %.critedge.i.i.i321, !llvm.loop !547
 
 .thread.i.i:                                      ; preds = %bb.cu, %bb.cs
-  %i.id = phi i32 [ -1, %bb.cu ], [ %i.hx, %bb.cs ]
+  %i.id = phi i32 [ 255, %bb.cu ], [ %i.hx, %bb.cs ]
   %i.ie = getelementptr inbounds nuw i8, ptr %.val229, i64 256
-  %67 = and i32 %i.id, 255
-  %i.if = zext nneg i32 %67 to i64
+  %i.if = zext nneg i32 %i.id to i64
   %i.ig = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %i.if
   %.11727.i.i.i = load ptr, ptr %i.ig, align 8, !tbaa !2051 ; 3 uses
   %i.ih = getelementptr i8, ptr %.11727.i.i.i, i64 11
