@@ -204,10 +204,10 @@ declare i32 @llvm.umin.i32(i32, i32) #10
 declare i32 @llvm.fshl.i32(i32, i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #10
+declare i32 @llvm.usub.sat.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #10
+declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10

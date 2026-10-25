@@ -205,7 +205,7 @@ bb.gp:                                            ; preds = %bb.gl
   %i.aij = shl nuw nsw i64 %i.aih, 2              ; 4 uses
   %i.aik = uitofp nneg i32 %i.ahp to double
   %i.ail = getelementptr inbounds nuw i8, ptr %i.ahm, i64 72
-  %i.aim = zext nneg i32 %i.ahp to i64            ; 4 uses
+  %i.aim = zext nneg i32 %i.ahp to i64            ; 5 uses
   %i.ain = sext i32 %spec.store.select.i to i64   ; 2 uses
   %smax.i274 = call i32 @llvm.smax.i32(i32 %i.ahq, i32 2)
   %wide.trip.count155.i = zext nneg i32 %smax.i274 to i64
@@ -263,7 +263,7 @@ bb.gt:                                            ; preds = %.noexc291
 .noexc229.i:                                      ; preds = %bb.gq
   %i.aiy = load ptr, ptr %i.aig, align 8, !tbaa !106
   %i.aiz = getelementptr inbounds nuw [8 x i8], ptr %i.aiy, i64 %indvars.iv157.i
-  %i.aja = load ptr, ptr %i.aiz, align 8, !tbaa !107 ; 11 uses
+  %i.aja = load ptr, ptr %i.aiz, align 8, !tbaa !107 ; 12 uses
   %i.ajb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aii) #36
           to label %.noexc292 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.sp1281 ; 15 uses
 
@@ -357,11 +357,13 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.epil:     ; preds = %_ZNSt6vectorIiSaIiE
   br label %.preheader34.i
 
 .preheader34.i:                                   ; preds = %.critedge.i279, %.preheader34.preheader.i
-  %indvars.iv623 = phi i64 [ %indvars.iv.next624, %.critedge.i279 ], [ %i.aim, %.preheader34.preheader.i ] ; 3 uses
-  %indvars.iv134.i = phi i64 [ %indvars.iv.next135.i, %.critedge.i279 ], [ 0, %.preheader34.preheader.i ] ; 3 uses
+  %indvars.iv623 = phi i64 [ %indvar.next, %.critedge.i279 ], [ 0, %.preheader34.preheader.i ] ; 2 uses
+  %indvars.iv134.i = phi i64 [ %indvars.iv.next135.i, %.critedge.i279 ], [ 0, %.preheader34.preheader.i ] ; 5 uses
   %i.akw = getelementptr inbounds [4 x i8], ptr %i.aja, i64 %indvars.iv134.i ; 2 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %i.aja, i64 %indvars.iv134.i ; 2 uses
-  %i.akx = call i64 @llvm.umin.i64(i64 %indvars.iv623, i64 %i.aio)
+  %44 = call i64 @llvm.smax.i64(i64 %indvars.iv134.i, i64 %i.aim)
+  %45 = mul i64 %indvars.iv623, %i.ain
+  %46 = sub i64 %44, %45
+  %i.akx = call i64 @llvm.umin.i64(i64 %46, i64 %i.aio)
   %i.aky = add i64 %i.akx, 1                      ; 3 uses
   %min.iters.check1100 = icmp ult i64 %i.aky, 9
   br i1 %min.iters.check1100, label %scalar.ph1099.preheader, label %vector.ph1101
@@ -376,12 +378,13 @@ vector.ph1101:                                    ; preds = %.preheader34.i
   %broadcast.splat1108 = shufflevector <4 x float> %broadcast.splatinsert1107, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ald = fpext <4 x float> %broadcast.splat1108 to <4 x double>
   %i.ale = fsub <4 x double> %i.ald, %broadcast.splat1104 ; 2 uses
+  %invariant.gep = getelementptr [4 x i8], ptr %i.aja, i64 %indvars.iv134.i
   br label %vector.body1105
 
 vector.body1105:                                  ; preds = %vector.body1105, %vector.ph1101
   %index1106 = phi i64 [ 0, %vector.ph1101 ], [ %index.next1115, %vector.body1105 ] ; 4 uses
   %i.alf = getelementptr [4 x i8], ptr %invariant.gep, i64 %index1106 ; 2 uses
-  %i.alg = getelementptr i8, ptr %i.alf, i64 16
+  %i.alg = getelementptr inbounds nuw i8, ptr %i.alf, i64 16
   %wide.load1109.a = load <4 x float>, ptr %i.alf, align 4, !tbaa !32
   %wide.load1110.a = load <4 x float>, ptr %i.alg, align 4, !tbaa !32
   %i.alh = fpext <4 x float> %wide.load1109.a to <4 x double>
@@ -415,15 +418,16 @@ scalar.ph1099.preheader:                          ; preds = %vector.body1105, %.
   br label %scalar.ph1099
 
 scalar.ph1099:                                    ; preds = %scalar.ph1099.preheader, %bb.gv
-  %indvars.iv129.i = phi i64 [ %indvars.iv.next130.i, %bb.gv ], [ %indvars.iv129.i.ph, %scalar.ph1099.preheader ] ; 5 uses
-  %exitcond625.not = icmp eq i64 %indvars.iv129.i, %indvars.iv623
-  br i1 %exitcond625.not, label %.critedge.i279, label %bb.gv
+  %indvars.iv129.i = phi i64 [ %indvars.iv.next130.i, %bb.gv ], [ %indvars.iv129.i.ph, %scalar.ph1099.preheader ] ; 4 uses
+  %47 = add nsw i64 %indvars.iv129.i, %indvars.iv134.i ; 2 uses
+  %48 = icmp slt i64 %47, %i.aim
+  br i1 %48, label %bb.gv, label %.critedge.i279
 
 bb.gv:                                            ; preds = %scalar.ph1099
   %i.alw = load float, ptr %i.akw, align 4, !tbaa !32
   %i.alx = fpext float %i.alw to double
   %i.aly = fsub double %i.alx, %i.akv
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv129.i
+  %gep = getelementptr inbounds [4 x i8], ptr %i.aja, i64 %47
   %i.alz = load float, ptr %gep, align 4, !tbaa !32
   %i.ama = fpext float %i.alz to double
   %i.amb = fsub double %i.ama, %i.akv
@@ -436,14 +440,14 @@ bb.gv:                                            ; preds = %scalar.ph1099
   %i.amh = load i32, ptr %i.amg, align 4, !tbaa !12
   %i.ami = add nsw i32 %i.amh, 1
   store i32 %i.ami, ptr %i.amg, align 4, !tbaa !12
-  %indvars.iv.next130.i = add nuw i64 %indvars.iv129.i, 1 ; 2 uses
+  %indvars.iv.next130.i = add nuw nsw i64 %indvars.iv129.i, 1 ; 2 uses
   %exitcond133.not.i = icmp eq i64 %indvars.iv.next130.i, %i.aih
   br i1 %exitcond133.not.i, label %.critedge.i279, label %scalar.ph1099, !llvm.loop !182
 
 .critedge.i279:                                   ; preds = %bb.gv, %scalar.ph1099
   %indvars.iv.next135.i = add nsw i64 %indvars.iv134.i, %i.ain ; 2 uses
   %i.amj = icmp slt i64 %indvars.iv.next135.i, %i.aim
-  %indvars.iv.next624 = sub i64 %indvars.iv623, %i.ain
+  %indvar.next = add i64 %indvars.iv623, 1
   br i1 %i.amj, label %.preheader34.i, label %vector.main.loop.iter.check1067, !llvm.loop !183
 
 vector.main.loop.iter.check1067:                  ; preds = %.critedge.i279
@@ -844,6 +848,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9

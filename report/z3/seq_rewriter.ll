@@ -205,7 +205,11 @@ _ZNK8seq_util3str7is_unitEPK4expr.exit118:        ; preds = %bb.w
 .critedge110.preheader:                           ; preds = %.critedge108, %.critedge108.preheader
   %.not101203 = icmp ult i32 %.0.i.i, %.0.i.i113
   %i.df = sub nuw i32 %.0.i.i113, %.0.i.i         ; 2 uses
-  br i1 %.not101203, label %.lr.ph205, label %.lr.ph208.preheader
+  br i1 %.not101203, label %.lr.ph205.preheader, label %.lr.ph208.preheader
+
+.lr.ph205.preheader:                              ; preds = %.critedge110.preheader
+  %zext = zext i32 %.0.i.i to i64
+  br label %.lr.ph205
 
 .lr.ph.i119:                                      ; preds = %.lr.ph.i119.preheader, %.critedge108
   %indvars.iv = phi i64 [ 1, %.lr.ph.i119.preheader ], [ %indvars.iv.next, %.critedge108 ] ; 2 uses
@@ -249,8 +253,8 @@ bb.y:                                             ; preds = %.noexc
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge110.preheader, label %.lr.ph.i119, !llvm.loop !718
 
-.lr.ph205:                                        ; preds = %.critedge110.preheader, %"_ZZNK12seq_rewriter11non_overlapERK10ref_vectorI4expr11ast_managerES5_ENK3$_0clEjjj.exit136"
-  %.068204 = phi i32 [ %i.ep, %"_ZZNK12seq_rewriter11non_overlapERK10ref_vectorI4expr11ast_managerES5_ENK3$_0clEjjj.exit136" ], [ 0, %.critedge110.preheader ] ; 2 uses
+.lr.ph205:                                        ; preds = %.lr.ph205.preheader, %"_ZZNK12seq_rewriter11non_overlapERK10ref_vectorI4expr11ast_managerES5_ENK3$_0clEjjj.exit136"
+  %.068204 = phi i32 [ %i.ep, %"_ZZNK12seq_rewriter11non_overlapERK10ref_vectorI4expr11ast_managerES5_ENK3$_0clEjjj.exit136" ], [ 0, %.lr.ph205.preheader ] ; 2 uses
   br label %.lr.ph.i126
 
 .lr.ph.i126:                                      ; preds = %.lr.ph205, %.noexc135
@@ -284,8 +288,7 @@ bb.z:                                             ; preds = %.noexc134
 
 .noexc135:                                        ; preds = %bb.z
   %indvars.iv.next.i128 = add nuw nsw i64 %indvars.iv.i127, 1 ; 2 uses
-  %lftr.wideiv.i129 = trunc i64 %indvars.iv.next.i128 to i32
-  %exitcond.not.i130 = icmp ne i32 %.0.i.i, %lftr.wideiv.i129
+  %exitcond.not.i130 = icmp ne i64 %indvars.iv.next.i128, %zext
   %or.cond.not.i131 = select i1 %i.eo, i1 %exitcond.not.i130, i1 false
   br i1 %or.cond.not.i131, label %.lr.ph.i126, label %_ZNK12seq_rewriter11non_overlapERK7zstringS2_.exit, !llvm.loop !717
 

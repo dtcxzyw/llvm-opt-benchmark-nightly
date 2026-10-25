@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not40, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %bb.e
-  %indvars.iv48 = phi i64 [ %indvars.iv.next49, %bb.e ], [ 0, %.preheader ] ; 2 uses
   %indvars.iv = phi i32 [ %indvars.iv.next, %bb.e ], [ 0, %.preheader ] ; 2 uses
+  %4 = phi i64 [ %i.r, %bb.e ], [ 0, %.preheader ] ; 2 uses
   %i.c = zext i32 %indvars.iv to i64
   br label %bb.d
 
@@ -238,10 +238,10 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph
   br i1 %exitcond.not.1, label %bb.e, label %bb.d, !llvm.loop !88
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv48
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %4
   store i64 %.1.1, ptr %i.q, align 1
-  %indvars.iv.next49 = add i64 %indvars.iv48, 1   ; 2 uses
-  %i.r = and i64 %indvars.iv.next49, 4294967295
+  %indvars.iv.next49 = add nuw nsw i64 %4, 1
+  %i.r = and i64 %indvars.iv.next49, 4294967295   ; 2 uses
   %i.s = icmp samesign ugt i64 %i.b, %i.r
   %indvars.iv.next = add i32 %indvars.iv, 64
   br i1 %i.s, label %.lr.ph, label %.loopexit, !llvm.loop !89
@@ -273,10 +273,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not39, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.h
-  %indvars.iv47 = phi i64 [ %indvars.iv.next48, %bb.h ], [ 0, %bb.d ] ; 2 uses
   %indvars.iv = phi i32 [ %indvars.iv.next, %bb.h ], [ 0, %bb.d ] ; 2 uses
+  %4 = phi i64 [ %i.n, %bb.h ], [ 0, %bb.d ]      ; 2 uses
   %i.c = zext i32 %indvars.iv to i64
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv47
+  %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %4
   %.val = load i64, ptr %i.d, align 1
   br label %bb.e
 
@@ -306,8 +306,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %exitcond.not, label %bb.h, label %bb.e, !llvm.loop !90
 
 bb.h:                                             ; preds = %bb.g
-  %indvars.iv.next48 = add i64 %indvars.iv47, 1   ; 2 uses
-  %i.n = and i64 %indvars.iv.next48, 4294967295
+  %indvars.iv.next48 = add nuw nsw i64 %4, 1
+  %i.n = and i64 %indvars.iv.next48, 4294967295   ; 2 uses
   %i.o = icmp samesign ugt i64 %i.b, %i.n
   %indvars.iv.next = add i32 %indvars.iv, 64
   br i1 %i.o, label %.lr.ph, label %.loopexit, !llvm.loop !91

@@ -205,7 +205,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs607s
   %.sroa.5.0..sroa.0.0.sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.us, i64 16
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i.us, align 8, !noalias !5316
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.us, i64 24 ; 2 uses
-  %i.ac = add nuw i64 %storemerge28.i.us, 1
+  %i.ac = add nuw nsw i64 %storemerge28.i.us, 1
   %exitcond.not.i.us = icmp eq i64 %i.aa, %2
   br i1 %exitcond.not.i.us, label %._crit_edge.thread.i, label %.lr.ph.i.split.us
 
@@ -256,7 +256,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs607s
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i, i64 16
   store i64 %i.u, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !5316
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i, i64 24 ; 2 uses
-  %i.al = add nuw i64 %storemerge28.i, 1
+  %i.al = add nuw nsw i64 %storemerge28.i, 1
   %exitcond.not.i = icmp eq i64 %i.aj, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.i.split
 
@@ -406,7 +406,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs607s
   %.sroa.5.0..sroa.0.0.sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i.us, i64 16
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i.us, align 8, !noalias !5330
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i.us, i64 24 ; 2 uses
-  %i.aa = add nuw i64 %storemerge30.i.us, 1
+  %i.aa = add nuw nsw i64 %storemerge30.i.us, 1
   %exitcond.not.i.us = icmp eq i64 %i.y, %2
   br i1 %exitcond.not.i.us, label %._crit_edge.thread.i, label %.lr.ph.i.split.us
 
@@ -456,7 +456,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs607s
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 16
   store i64 %.val15.i, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !5330
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 24 ; 2 uses
-  %i.aj = add nuw i64 %storemerge30.i, 1
+  %i.aj = add nuw nsw i64 %storemerge30.i, 1
   %exitcond.not.i = icmp eq i64 %i.ah, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.i.split
 
@@ -607,7 +607,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs607s
   %.sroa.5.0..sroa.0.0.sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.us, i64 16
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i.us, align 8, !noalias !5343
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.us, i64 24 ; 2 uses
-  %i.ac = add nuw i64 %storemerge28.i.us, 1
+  %i.ac = add nuw nsw i64 %storemerge28.i.us, 1
   %exitcond.not.i.us = icmp eq i64 %i.aa, %2
   br i1 %exitcond.not.i.us, label %._crit_edge.thread.i, label %.lr.ph.i.split.us
 
@@ -658,7 +658,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs607s
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i, i64 16
   store i64 %i.u, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !5343
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i, i64 24 ; 2 uses
-  %i.al = add nuw i64 %storemerge28.i, 1
+  %i.al = add nuw nsw i64 %storemerge28.i, 1
   %exitcond.not.i = icmp eq i64 %i.aj, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.i.split
 

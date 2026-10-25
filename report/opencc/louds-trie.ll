@@ -205,7 +205,7 @@ define linkonce_odr void @_ZN6marisa8grimoire6vector10FlatVector6build_ERKNS1_6V
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !72   ; 6 uses
-  %.not58 = icmp ne i64 %i.b, 0                   ; 4 uses
+  %.not58 = icmp ne i64 %i.b, 0                   ; 3 uses
   br i1 %.not58, label %.lr.ph, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %bb.a
@@ -364,8 +364,7 @@ _ZN6marisa8grimoire6vector6VectorImE7reserveEm.exit.i34: ; preds = %_ZN6marisa8g
 _ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43.loopexit: ; preds = %_ZN6marisa8grimoire6vector6VectorImE7reserveEm.exit.i34
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !88
-  %.idx.i.i.i35 = select i1 %.not58, i64 8, i64 0
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.bh, i8 0, i64 %.idx.i.i.i35, i1 false), !tbaa !54
+  store i64 0, ptr %i.bh, align 8, !tbaa !54
   br label %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43
 
 _ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43: ; preds = %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43.loopexit, %_ZN6marisa8grimoire6vector6VectorImE7reserveEm.exit.i34

@@ -1,0 +1,146 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 127e3564d8a5a8..037c1412357d2a 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16238,8 +16238,25 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+                                    Multiples, SE);
+   }
+ 
+-  for (const auto &[Predicate, LHS, RHS] : GuardsToProcess)
++  for (const auto &[Predicate, LHS, RHS] : GuardsToProcess) {
++    // LHS pred RHS also bounds RHS by the range of LHS implied by the
++    // conditions processed so far, e.g. LHS >=s 4 and LHS <=s RHS imply
++    // RHS >=s 4.
++    const SCEV *RewrittenLHS = Guards.RewriteMap.lookup_or(LHS, LHS);
+     CollectCondition(Predicate, LHS, RHS, Guards.RewriteMap, DivGuards);
++    if (!ICmpInst::isRelational(Predicate) || isa<SCEVConstant>(RHS) ||
++        RHS->getType()->isPointerTy())
++      continue;
++    ConstantRange RHSRange = ConstantRange::makeAllowedICmpRegion(
++        ICmpInst::getSwappedPredicate(Predicate),
++        ICmpInst::isSigned(Predicate) ? SE.getSignedRange(RewrittenLHS)
++                                      : SE.getUnsignedRange(RewrittenLHS));
++    CmpInst::Predicate BoundPred;
++    APInt Bound;
++    if (!RHSRange.isFullSet() && RHSRange.getEquivalentICmp(BoundPred, Bound))
++      CollectCondition(BoundPred, RHS, SE.getConstant(Bound), Guards.RewriteMap,
++                       DivGuards);
++  }
+ 
+   // Apply divisibility information last. This ensures it is applied to the
+   // outermost expression after other rewrites for the given value.
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/no-dep-via-loop-guards.ll b/llvm/test/Analysis/LoopAccessAnalysis/no-dep-via-loop-guards.ll
+index e00f91d9b2e8bb..0374e3484c956e 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/no-dep-via-loop-guards.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/no-dep-via-loop-guards.ll
+@@ -354,13 +354,8 @@ exit:
+ define void @nodep_via_logical_and_1(ptr %A, i32 %index, i32 %n) {
+ ; CHECK-LABEL: 'nodep_via_logical_and_1'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
+-; CHECK-NEXT:  Unknown data dependence.
++; CHECK-NEXT:      Memory dependences are safe
+ ; CHECK-NEXT:      Dependences:
+-; CHECK-NEXT:        Unknown:
+-; CHECK-NEXT:            %0 = load double, ptr %gep.load, align 8 ->
+-; CHECK-NEXT:            store double %0, ptr %gep.store, align 8
+-; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-EMPTY:
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-lhs-range-bounds-rhs.ll b/llvm/test/Analysis/ScalarEvolution/guards-lhs-range-bounds-rhs.ll
+index 6ab6d93ad70444..18e280745d82f7 100644
+--- a/llvm/test/Analysis/ScalarEvolution/guards-lhs-range-bounds-rhs.ll
++++ b/llvm/test/Analysis/ScalarEvolution/guards-lhs-range-bounds-rhs.ll
+@@ -9,7 +9,7 @@ define void @a_sge_4_then_a_sle_x(ptr %p, i32 %a, i32 %y) {
+ ; CHECK-LABEL: 'a_sge_4_then_a_sle_x'
+ ; CHECK-NEXT:  Determining loop execution counts for: @a_sge_4_then_a_sle_x
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -79,7 +79,7 @@ define void @a_sge_4_then_a_sle_x_arg(ptr %p, i32 %a, i32 %x) {
+ ; CHECK-LABEL: 'a_sge_4_then_a_sle_x_arg'
+ ; CHECK-NEXT:  Determining loop execution counts for: @a_sge_4_then_a_sle_x_arg
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin %x) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin %x) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -113,7 +113,7 @@ define void @a_sge_3_then_a_slt_x(ptr %p, i32 %a, i32 %y) {
+ ; CHECK-LABEL: 'a_sge_3_then_a_slt_x'
+ ; CHECK-NEXT:  Determining loop execution counts for: @a_sge_3_then_a_slt_x
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -148,7 +148,7 @@ define void @a_uge_4_then_a_ule_x(ptr %p, i32 %a, i32 %y) {
+ ; CHECK-LABEL: 'a_uge_4_then_a_ule_x'
+ ; CHECK-NEXT:  Determining loop execution counts for: @a_uge_4_then_a_ule_x
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * ((64 umin (1 + %y)) /u 4))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * ((64 umin (1 + %y)) /u 4))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -184,7 +184,7 @@ define void @a_sle_64_then_a_sge_x(ptr %p, i32 %a, i32 %y) {
+ ; CHECK-LABEL: 'a_sle_64_then_a_sge_x'
+ ; CHECK-NEXT:  Determining loop execution counts for: @a_sle_64_then_a_sge_x
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((4 smax (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((4 smax (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -219,7 +219,7 @@ define void @smin_sge_4_then_smin_sle_x(ptr %p, i32 %a, i32 %c, i32 %y) {
+ ; CHECK-LABEL: 'smin_sge_4_then_smin_sle_x'
+ ; CHECK-NEXT:  Determining loop execution counts for: @smin_sge_4_then_smin_sle_x
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 15
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-4 + (4 * (zext i5 (trunc i32 ((64 smin (1 + %y)) /u 4) to i5) to i32))<nuw><nsw>)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index 209b9d9d9f6cf2..11ffacda15865b 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -229,10 +229,10 @@ define void @test_multiple_var_guards_cycle(ptr nocapture %a, i64 %i, i64 %N) {
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %a, i64 %iv
+ ; CHECK-NEXT:    --> {%a,+,4}<nuw><%loop> U: full-set S: full-set Exits: ((4 * %N)<u nuw> + %a)<u nuw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add nuw nsw i64 %iv, 1
+-; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,-1) S: [1,-1) Exits: (1 + %N)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + %N)<u nuw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_multiple_var_guards_cycle
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is %N
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -3
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -2
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %N
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+diff --git a/llvm/test/Transforms/IndVarSimplify/loop-guard-order.ll b/llvm/test/Transforms/IndVarSimplify/loop-guard-order.ll
+index 2763860e798754..49a2b11123fb31 100644
+--- a/llvm/test/Transforms/IndVarSimplify/loop-guard-order.ll
++++ b/llvm/test/Transforms/IndVarSimplify/loop-guard-order.ll
+@@ -16,14 +16,14 @@ define void @narrow_iv_precondition_order_1(ptr %start, i32 %base, i8 %n) {
+ ; CHECK-NEXT:    [[PRE_1:%.*]] = icmp sgt i32 [[BASE]], [[N_EXT]]
+ ; CHECK-NEXT:    br i1 [[PRE_1]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT]]
+ ; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = trunc i32 [[BASE]] to i8
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[GEP:%.*]], %[[LOOP]] ], [ [[START]], %[[LOOP_PREHEADER]] ]
+ ; CHECK-NEXT:    call void @foo()
+ ; CHECK-NEXT:    [[END:%.*]] = load i8, ptr [[IV]], align 1
+-; CHECK-NEXT:    [[END_EXT:%.*]] = zext i8 [[END]] to i32
+ ; CHECK-NEXT:    [[GEP]] = getelementptr inbounds i8, ptr [[IV]], i64 1
+-; CHECK-NEXT:    [[EC:%.*]] = icmp sgt i32 [[BASE]], [[END_EXT]]
++; CHECK-NEXT:    [[EC:%.*]] = icmp ugt i8 [[TMP0]], [[END]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
+ ; CHECK:       [[EXIT_LOOPEXIT]]:
+ ; CHECK-NEXT:    br label %[[EXIT]]

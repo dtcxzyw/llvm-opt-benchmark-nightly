@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !12496
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !12496
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !12497, !noalias !12412
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes10UInt16TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !12498, !noalias !12412
@@ -523,7 +523,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !12805
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !12805
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !12806, !noalias !12721
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes10UInt32TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !12807, !noalias !12721
@@ -841,7 +841,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !13114
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !13114
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !13115, !noalias !13030
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes10UInt64TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !13116, !noalias !13030
@@ -1159,7 +1159,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !13423
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !13423
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !13424, !noalias !13339
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes11Float16TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !13425, !noalias !13339
@@ -1477,7 +1477,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !13732
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !13732
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !13733, !noalias !13648
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes11Float32TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !13734, !noalias !13648
@@ -1795,7 +1795,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !14041
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !14041
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !14042, !noalias !13957
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes11Float64TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !14043, !noalias !13957
@@ -2113,7 +2113,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !14350
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !14350
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !14351, !noalias !14266
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes11UInt128TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !14352, !noalias !14266
@@ -2431,7 +2431,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.ah, %.lr.ph.i
   %.sroa.04.033.i = phi i64 [ 1, %.lr.ph.i ], [ %i.bg, %bb.ah ] ; 2 uses
-  %i.bg = add nuw i64 %.sroa.04.033.i, 1, !dbg !14659
+  %i.bg = add nuw nsw i64 %.sroa.04.033.i, 1, !dbg !14659
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !14660, !noalias !14575
   invoke void @_RNvXs3_NtCs1LHh8CLbVkQ_11polars_core5utilsINtNtB7_13chunked_array12ChunkedArrayNtNtB7_9datatypes9UInt8TypeENtB5_9Container8split_atCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.h, i64 noundef %.sroa.0.0.i)
           to label %bb.ab unwind label %.thread25.i, !dbg !14661, !noalias !14575

@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %_RNvNtNtCsdc6yCHiM2
   br i1 %or.cond.i35, label %.preheader.split.i31, label %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36
 
 .preheader.split.i31.preheader._crit_edge:        ; preds = %.preheader.split.i31.preheader, %.preheader.split.i31
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %1, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #20, !noalias !60
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #20, !noalias !60
   unreachable
 
 _RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36: ; preds = %.lr.ph87, %bb.n
@@ -272,12 +272,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.old1, label %.preheader.split.preheader, label %.loopexit
 
 .preheader.split.preheader:                       ; preds = %bb.c
-  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 %1) ; 2 uses
-  %exitcond.not26.not = icmp ult i64 %3, %1
-  br i1 %exitcond.not26.not, label %.lr.ph, label %.preheader.split._crit_edge
+  %exitcond.not26 = icmp eq i64 %3, %1
+  br i1 %exitcond.not26, label %.preheader.split._crit_edge, label %.lr.ph
 
 .preheader.split:                                 ; preds = %.lr.ph
-  %exitcond.not = icmp eq i64 %i.g, %umax
+  %exitcond.not = icmp eq i64 %i.g, %1
   br i1 %exitcond.not, label %.preheader.split._crit_edge, label %.lr.ph
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.c
@@ -302,7 +301,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond, label %.preheader.split, label %.loopexit
 
 .preheader.split._crit_edge:                      ; preds = %.preheader.split, %.preheader.split.preheader
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %umax, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #20
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #20
   unreachable
 }
 
@@ -704,9 +703,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #18
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

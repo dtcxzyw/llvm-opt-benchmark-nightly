@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.ap, %ma_device_g
   br label %ma_log_post.exit
 
 bb.ar:                                            ; preds = %switch.lookup
-  %i.ix = load i32, ptr %i.d, align 4, !tbaa !118 ; 16 uses
+  %i.ix = load i32, ptr %i.d, align 4, !tbaa !118 ; 15 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #55
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #55
   %i.iy = load ptr, ptr %0, align 8, !tbaa !219
@@ -608,7 +608,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.sw = add i32 %i.ix, -1
   %i.sx = call i32 @llvm.umin.i32(i32 %i.sw, i32 253)
   %umin = zext nneg i32 %i.sx to i64
-  %scevgep = getelementptr i8, ptr %i.b, i64 %umin
+  %scevgep = getelementptr i8, ptr %i.b, i64 %umin ; 2 uses
   br label %.preheader.i
 
 .preheader554:                                    ; preds = %bb.cp
@@ -695,17 +695,13 @@ bb.cs:                                            ; preds = %.lr.ph562, %bb.cr
 
 .preheader.i479:                                  ; preds = %bb.cs, %.preheader.i479
   %.024.i480 = phi i32 [ %i.tu, %.preheader.i479 ], [ 0, %bb.cs ] ; 2 uses
-  %.01723.i481 = phi ptr [ %i.tt, %.preheader.i479 ], [ %i.b, %bb.cs ] ; 2 uses
-  %.01822.i482 = phi i64 [ %4, %.preheader.i479 ], [ 254, %bb.cs ]
+  %.01723.i481 = phi ptr [ %i.tt, %.preheader.i479 ], [ %i.b, %bb.cs ] ; 3 uses
   %i.ts = call fastcc zeroext i8 @ma_channel_map_init_standard_channel(i32 noundef 1, i32 noundef %i.ix, i32 noundef %.024.i480)
   store i8 %i.ts, ptr %.01723.i481, align 1, !tbaa !119
   %i.tt = getelementptr inbounds nuw i8, ptr %.01723.i481, i64 1
-  %4 = add nsw i64 %.01822.i482, -1               ; 2 uses
-  %i.tu = add nuw nsw i32 %.024.i480, 1           ; 2 uses
-  %5 = icmp uge i32 %i.tu, %i.ix
-  %i.tv = icmp eq i64 %4, 0
-  %or.cond5.i483 = select i1 %5, i1 true, i1 %i.tv
-  br i1 %or.cond5.i483, label %ma_channel_map_init_standard.exit484, label %.preheader.i479, !llvm.loop !5
+  %i.tu = add nuw nsw i32 %.024.i480, 1
+  %i.tv = icmp eq ptr %.01723.i481, %scevgep
+  br i1 %i.tv, label %ma_channel_map_init_standard.exit484, label %.preheader.i479, !llvm.loop !5
 
 ma_channel_map_init_standard.exit484:             ; preds = %bb.cq, %._crit_edge, %.preheader.i479, %.preheader, %.preheader554
   call void @free(ptr noundef %i.su) #55

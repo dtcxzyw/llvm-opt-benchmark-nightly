@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   store ptr %.val21.i.i.i.i.i.i.i.i.i.i.3, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !1100
   %i.ak = add nuw nsw i64 %i.y, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN3nls12field_walker6Record16completion_items28_$u7b$$u7b$closure$u7d$$u7d$17hd7d9220b4f0259d9E.exit.loopexit.unr-lcssa", label %.preheader.i.i.i.i.i.i.i
 

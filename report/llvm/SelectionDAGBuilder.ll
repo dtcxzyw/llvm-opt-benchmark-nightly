@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNK4llvm4User10get
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.14.0 = phi i64 [ %i.an, %bb.g ], [ %i.ak, %bb.f ] ; 11 uses
+  %.sroa.14.0 = phi i64 [ %i.an, %bb.g ], [ %i.ak, %bb.f ] ; 13 uses
   %.sroa.0498.0 = phi ptr [ %i.am, %bb.g ], [ %i.ah, %bb.f ] ; 14 uses
   %.sroa.0498.0759 = ptrtoaddr ptr %.sroa.0498.0 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #34
@@ -459,7 +459,7 @@ bb.v:                                             ; preds = %_ZNK4llvm3EVT16isSc
 
 _ZNK4llvm3EVT20getVectorNumElementsEv.exit:       ; preds = %_ZNK4llvm3MVT20getVectorNumElementsEv.exit.i, %bb.v
   %i.dn = phi i32 [ %i.dl, %_ZNK4llvm3MVT20getVectorNumElementsEv.exit.i ], [ %i.dm, %bb.v ] ; 25 uses
-  %i.do = trunc i64 %.sroa.14.0 to i32            ; 14 uses
+  %i.do = trunc i64 %.sroa.14.0 to i32            ; 10 uses
   %i.dp = icmp eq i32 %i.dn, %i.do
   br i1 %i.dp, label %bb.w, label %bb.x
 
@@ -592,6 +592,7 @@ middle.block722:                                  ; preds = %vector.body718
 _ZN4llvm11SmallVectorIiLj8EEC2EmRKi.exit:         ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i, %middle.block722, %middle.block733
   store i32 %i.dx, ptr %i.eb, align 8, !tbaa !82
   %i.ez = load ptr, ptr %16, align 8
+  %33 = and i64 %.sroa.14.0, 4294967295
   br label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN4llvm11SmallVectorIiLj8EEC2EmRKi.exit, %bb.ae
@@ -625,8 +626,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %._crit_edge590.a, %bb.ab
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %lftr.wideiv, %i.do
+  %exitcond = icmp eq i64 %indvars.iv.next, %33
   br i1 %exitcond, label %bb.af, label %bb.ab, !llvm.loop !1857
 
 bb.af:                                            ; preds = %bb.ae
@@ -1029,7 +1029,7 @@ _ZN4llvm11SmallVectorIiLj8EEC2EmRKi.exit468:      ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.mk = phi ptr [ %i.lp, %middle.block755 ], [ %i.ll, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.i.i458 ], [ %i.ll, %middle.block744 ], [ %i.lp, %.lr.ph.i.i.i.i.i.i.i.i.i465 ], [ %i.ll, %.lr.ph.i.i.i.i.i.i.i.i461 ] ; 6 uses
   store i32 %i.hl, ptr %i.lm, align 8, !tbaa !82
   %.neg396 = mul i32 %i.hj, %i.dn                 ; 4 uses
-  %i.ml = and i64 %.sroa.14.0, 4294967295         ; 2 uses
+  %i.ml = and i64 %.sroa.14.0, 4294967295         ; 4 uses
   %min.iters.check761 = icmp samesign ult i64 %i.ml, 8
   %i.mm = ptrtoaddr ptr %i.mk to i64
   %i.mn = sub i64 %.sroa.0498.0759, %i.mm
@@ -1071,9 +1071,9 @@ middle.block773:                                  ; preds = %vector.body768
 
 scalar.ph760.preheader:                           ; preds = %_ZN4llvm11SmallVectorIiLj8EEC2EmRKi.exit468, %middle.block773
   %indvars.iv566.ph = phi i64 [ 0, %_ZN4llvm11SmallVectorIiLj8EEC2EmRKi.exit468 ], [ %n.vec763, %middle.block773 ] ; 5 uses
-  %33 = trunc nuw i64 %indvars.iv566.ph to i32
-  %xtraiter794 = and i32 %i.do, 1
-  %lcmp.mod795.not = icmp eq i32 %xtraiter794, 0
+  %.neg795 = or disjoint i64 %indvars.iv566.ph, 1
+  %xtraiter792 = and i64 %.sroa.14.0, 1
+  %lcmp.mod795.not = icmp eq i64 %xtraiter792, 0
   br i1 %lcmp.mod795.not, label %scalar.ph760.prol.loopexit, label %scalar.ph760.prol
 
 scalar.ph760.prol:                                ; preds = %scalar.ph760.preheader
@@ -1089,8 +1089,7 @@ scalar.ph760.prol:                                ; preds = %scalar.ph760.prehea
 
 scalar.ph760.prol.loopexit:                       ; preds = %scalar.ph760.prol, %scalar.ph760.preheader
   %indvars.iv566.unr = phi i64 [ %indvars.iv566.ph, %scalar.ph760.preheader ], [ %indvars.iv.next567.prol, %scalar.ph760.prol ]
-  %34 = add i32 %i.do, -1
-  %i.nd = icmp eq i32 %34, %33
+  %i.nd = icmp eq i64 %i.ml, %.neg795
   br i1 %i.nd, label %.loopexit, label %scalar.ph760
 
 .loopexit:                                        ; preds = %scalar.ph760.prol.loopexit, %scalar.ph760, %middle.block773
@@ -1124,8 +1123,7 @@ scalar.ph760:                                     ; preds = %scalar.ph760.prol.l
   %i.nq = getelementptr inbounds nuw [4 x i8], ptr %i.mk, i64 %indvars.iv.next567
   store i32 %.0359.1, ptr %i.nq, align 4, !tbaa !73
   %indvars.iv.next567.1 = add nuw nsw i64 %indvars.iv566, 2 ; 2 uses
-  %lftr.wideiv569.1 = trunc i64 %indvars.iv.next567.1 to i32
-  %exitcond570.1 = icmp eq i32 %lftr.wideiv569.1, %i.do
+  %exitcond570.1 = icmp eq i64 %indvars.iv.next567.1, %i.ml
   br i1 %exitcond570.1, label %.loopexit, label %scalar.ph760, !llvm.loop !1867
 
 bb.ba:                                            ; preds = %.loopexit
