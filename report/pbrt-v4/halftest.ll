@@ -204,26 +204,36 @@ _Z8nancheckv.exit:                                ; preds = %bb.g
   %.str.12..str.13.i20 = select i1 %.not.i19, ptr @.str.13, ptr @.str.12
   %i.bf = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, ptr noundef nonnull @.str.19, ptr noundef nonnull %.str.12..str.13.i20) ; 0 uses
   %i.bg = add nsw i32 %i.bc, %i.be
-  %_Z12testroundallv._Z13testroundsomev = select i1 %0, ptr @_Z12testroundallv, ptr @_Z13testroundsomev
   %i.bh = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, ptr noundef nonnull @.str.20) ; 0 uses
-  %1 = tail call noundef i32 %_Z12testroundallv._Z13testroundsomev(), !inline_history !22 ; 2 uses
-  %.not.i21 = icmp eq i32 %1, 0
+  br i1 %0, label %call.1, label %call.0
+
+call.0:                                           ; preds = %_Z8nancheckv.exit
+  %1 = tail call noundef i32 @_Z13testroundsomev(), !inline_history !22
+  br label %_Z8nancheckv.exit.tail
+
+call.1:                                           ; preds = %_Z8nancheckv.exit
+  %2 = tail call noundef i32 @_Z12testroundallv(), !inline_history !22
+  br label %_Z8nancheckv.exit.tail
+
+_Z8nancheckv.exit.tail:                           ; preds = %call.1, %call.0
+  %3 = phi i32 [ %1, %call.0 ], [ %2, %call.1 ]   ; 2 uses
+  %.not.i21 = icmp eq i32 %3, 0
   %.str.12..str.13.i22 = select i1 %.not.i21, ptr @.str.13, ptr @.str.12
-  %2 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, ptr noundef nonnull @.str.20, ptr noundef nonnull %.str.12..str.13.i22) ; 0 uses
-  %3 = add nsw i32 %i.bg, %1                      ; 3 uses
-  %.not = icmp eq i32 %3, 0
+  %4 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, ptr noundef nonnull @.str.20, ptr noundef nonnull %.str.12..str.13.i22) ; 0 uses
+  %5 = add nsw i32 %i.bg, %3                      ; 3 uses
+  %.not = icmp eq i32 %5, 0
   br i1 %.not, label %bb.h, label %bb.i
 
-bb.h:                                             ; preds = %_Z8nancheckv.exit
+bb.h:                                             ; preds = %_Z8nancheckv.exit.tail
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   br label %bb.j
 
-bb.i:                                             ; preds = %_Z8nancheckv.exit
-  %i.bi = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.22, i32 noundef %3) ; 0 uses
+bb.i:                                             ; preds = %_Z8nancheckv.exit.tail
+  %i.bi = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.22, i32 noundef %5) ; 0 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  ret i32 %3
+  ret i32 %5
 }
 
 ; Function Attrs: mustprogress uwtable

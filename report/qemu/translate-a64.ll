@@ -204,12 +204,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4
   %.not = icmp eq i32 %i.b, 0
-  %1 = select i1 %.not, ptr @gen_add32_CC, ptr @gen_add64_CC
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.d = load i32, ptr %i.c, align 4
   %i.e = sext i32 %i.d to i64
   %i.f = getelementptr inbounds [8 x i8], ptr @cpu_X, i64 %i.e
-  %i.g = load ptr, ptr %i.f, align 8
+  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = load i32, ptr %0, align 4                ; 2 uses
   %i.i = icmp eq i32 %i.h, 31
   br i1 %i.i, label %bb.b, label %bb.c
@@ -226,21 +225,31 @@ bb.c:                                             ; preds = %bb.a
   br label %cpu_reg.exit18.i
 
 cpu_reg.exit18.i:                                 ; preds = %bb.c, %bb.b
-  %i.n = phi ptr [ %i.m, %bb.c ], [ %i.j, %bb.b ] ; 3 uses
+  %i.n = phi ptr [ %i.m, %bb.c ], [ %i.j, %bb.b ] ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load i32, ptr %i.o, align 4
   %i.q = sext i32 %i.p to i64
-  %i.r = tail call ptr @tcg_constant_i64(i64 noundef %i.q) #14
-  tail call void %1(ptr noundef %i.n, ptr noundef %i.g, ptr noundef %i.r) #14, !inline_history !11
-  %2 = load i32, ptr %i.a, align 4
-  %.not.i = icmp eq i32 %2, 0
+  %i.r = tail call ptr @tcg_constant_i64(i64 noundef %i.q) #14 ; 2 uses
+  br i1 %.not, label %call.1, label %call.0
+
+call.0:                                           ; preds = %cpu_reg.exit18.i
+  tail call fastcc void @gen_add64_CC(ptr noundef %i.n, ptr noundef %i.g, ptr noundef %i.r) #14, !inline_history !11
+  br label %cpu_reg.exit18.i.tail
+
+call.1:                                           ; preds = %cpu_reg.exit18.i
+  tail call fastcc void @gen_add32_CC(ptr noundef %i.n, ptr noundef %i.g, ptr noundef %i.r) #14, !inline_history !11
+  br label %cpu_reg.exit18.i.tail
+
+cpu_reg.exit18.i.tail:                            ; preds = %call.1, %call.0
+  %1 = load i32, ptr %i.a, align 4
+  %.not.i = icmp eq i32 %1, 0
   br i1 %.not.i, label %bb.d, label %gen_rri.exit
 
-bb.d:                                             ; preds = %cpu_reg.exit18.i
+bb.d:                                             ; preds = %cpu_reg.exit18.i.tail
   tail call void @tcg_gen_ext32u_i64(ptr noundef %i.n, ptr noundef %i.n) #14
   br label %gen_rri.exit
 
-gen_rri.exit:                                     ; preds = %cpu_reg.exit18.i, %bb.d
+gen_rri.exit:                                     ; preds = %cpu_reg.exit18.i.tail, %bb.d
   ret void
 }
 
@@ -341,12 +350,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4
   %.not = icmp eq i32 %i.b, 0
-  %1 = select i1 %.not, ptr @gen_sub32_CC, ptr @gen_sub64_CC
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.d = load i32, ptr %i.c, align 4
   %i.e = sext i32 %i.d to i64
   %i.f = getelementptr inbounds [8 x i8], ptr @cpu_X, i64 %i.e
-  %i.g = load ptr, ptr %i.f, align 8
+  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = load i32, ptr %0, align 4                ; 2 uses
   %i.i = icmp eq i32 %i.h, 31
   br i1 %i.i, label %bb.b, label %bb.c
@@ -363,21 +371,31 @@ bb.c:                                             ; preds = %bb.a
   br label %cpu_reg.exit18.i
 
 cpu_reg.exit18.i:                                 ; preds = %bb.c, %bb.b
-  %i.n = phi ptr [ %i.m, %bb.c ], [ %i.j, %bb.b ] ; 3 uses
+  %i.n = phi ptr [ %i.m, %bb.c ], [ %i.j, %bb.b ] ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load i32, ptr %i.o, align 4
   %i.q = sext i32 %i.p to i64
-  %i.r = tail call ptr @tcg_constant_i64(i64 noundef %i.q) #14
-  tail call void %1(ptr noundef %i.n, ptr noundef %i.g, ptr noundef %i.r) #14, !inline_history !11
-  %2 = load i32, ptr %i.a, align 4
-  %.not.i = icmp eq i32 %2, 0
+  %i.r = tail call ptr @tcg_constant_i64(i64 noundef %i.q) #14 ; 2 uses
+  br i1 %.not, label %call.1, label %call.0
+
+call.0:                                           ; preds = %cpu_reg.exit18.i
+  tail call fastcc void @gen_sub64_CC(ptr noundef %i.n, ptr noundef %i.g, ptr noundef %i.r) #14, !inline_history !11
+  br label %cpu_reg.exit18.i.tail
+
+call.1:                                           ; preds = %cpu_reg.exit18.i
+  tail call fastcc void @gen_sub32_CC(ptr noundef %i.n, ptr noundef %i.g, ptr noundef %i.r) #14, !inline_history !11
+  br label %cpu_reg.exit18.i.tail
+
+cpu_reg.exit18.i.tail:                            ; preds = %call.1, %call.0
+  %1 = load i32, ptr %i.a, align 4
+  %.not.i = icmp eq i32 %1, 0
   br i1 %.not.i, label %bb.d, label %gen_rri.exit
 
-bb.d:                                             ; preds = %cpu_reg.exit18.i
+bb.d:                                             ; preds = %cpu_reg.exit18.i.tail
   tail call void @tcg_gen_ext32u_i64(ptr noundef %i.n, ptr noundef %i.n) #14
   br label %gen_rri.exit
 
-gen_rri.exit:                                     ; preds = %cpu_reg.exit18.i, %bb.d
+gen_rri.exit:                                     ; preds = %cpu_reg.exit18.i.tail, %bb.d
   ret void
 }
 
@@ -780,6 +798,7 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4              ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i32, ptr %i.d, align 4
+  %.not.not = icmp eq i32 %i.e, 0
   %i.f = icmp eq i32 %i.a, 31
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -795,7 +814,7 @@ bb.c:                                             ; preds = %bb.a
   br label %cpu_reg.exit.i
 
 cpu_reg.exit.i:                                   ; preds = %bb.c, %bb.b
-  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ]
+  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ] ; 2 uses
   %i.k = icmp eq i32 %i.c, 31
   br i1 %i.k, label %bb.d, label %bb.e
 
@@ -811,10 +830,18 @@ bb.e:                                             ; preds = %cpu_reg.exit.i
   br label %gen_rr.exit
 
 gen_rr.exit:                                      ; preds = %bb.d, %bb.e
-  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ]
-  %.not = icmp eq i32 %i.e, 0
-  %1 = select i1 %.not, ptr @gen_rbit32, ptr @gen_helper_rbit64
-  tail call void %1(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ] ; 2 uses
+  br i1 %.not.not, label %call.1, label %call.0
+
+call.0:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_helper_rbit64(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+call.1:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_rbit32(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+gen_rr.exit.tail:                                 ; preds = %call.1, %call.0
   ret void
 }
 
@@ -963,6 +990,7 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4              ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i32, ptr %i.d, align 4
+  %.not.not = icmp eq i32 %i.e, 0
   %i.f = icmp eq i32 %i.a, 31
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -978,7 +1006,7 @@ bb.c:                                             ; preds = %bb.a
   br label %cpu_reg.exit.i
 
 cpu_reg.exit.i:                                   ; preds = %bb.c, %bb.b
-  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ]
+  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ] ; 2 uses
   %i.k = icmp eq i32 %i.c, 31
   br i1 %i.k, label %bb.d, label %bb.e
 
@@ -994,10 +1022,18 @@ bb.e:                                             ; preds = %cpu_reg.exit.i
   br label %gen_rr.exit
 
 gen_rr.exit:                                      ; preds = %bb.d, %bb.e
-  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ]
-  %.not = icmp eq i32 %i.e, 0
-  %1 = select i1 %.not, ptr @gen_rev16_32, ptr @gen_rev16_64
-  tail call void %1(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ] ; 2 uses
+  br i1 %.not.not, label %call.1, label %call.0
+
+call.0:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_rev16_64(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+call.1:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_rev16_32(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+gen_rr.exit.tail:                                 ; preds = %call.1, %call.0
   ret void
 }
 
@@ -1092,6 +1128,7 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4              ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i32, ptr %i.d, align 4
+  %.not.not = icmp eq i32 %i.e, 0
   %i.f = icmp eq i32 %i.a, 31
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -1107,7 +1144,7 @@ bb.c:                                             ; preds = %bb.a
   br label %cpu_reg.exit.i
 
 cpu_reg.exit.i:                                   ; preds = %bb.c, %bb.b
-  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ]
+  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ] ; 2 uses
   %i.k = icmp eq i32 %i.c, 31
   br i1 %i.k, label %bb.d, label %bb.e
 
@@ -1123,10 +1160,18 @@ bb.e:                                             ; preds = %cpu_reg.exit.i
   br label %gen_rr.exit
 
 gen_rr.exit:                                      ; preds = %bb.d, %bb.e
-  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ]
-  %.not = icmp eq i32 %i.e, 0
-  %1 = select i1 %.not, ptr @gen_clz32, ptr @gen_clz64
-  tail call void %1(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ] ; 2 uses
+  br i1 %.not.not, label %call.1, label %call.0
+
+call.0:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_clz64(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+call.1:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_clz32(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+gen_rr.exit.tail:                                 ; preds = %call.1, %call.0
   ret void
 }
 
@@ -1462,6 +1507,7 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4              ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i32, ptr %i.d, align 4
+  %.not.not = icmp eq i32 %i.e, 0
   %i.f = icmp eq i32 %i.a, 31
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -1477,7 +1523,7 @@ bb.c:                                             ; preds = %bb.a
   br label %cpu_reg.exit.i
 
 cpu_reg.exit.i:                                   ; preds = %bb.c, %bb.b
-  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ]
+  %.0.i.i = phi ptr [ %i.g, %bb.b ], [ %i.j, %bb.c ] ; 2 uses
   %i.k = icmp eq i32 %i.c, 31
   br i1 %i.k, label %bb.d, label %bb.e
 
@@ -1493,10 +1539,18 @@ bb.e:                                             ; preds = %cpu_reg.exit.i
   br label %gen_rr.exit
 
 gen_rr.exit:                                      ; preds = %bb.d, %bb.e
-  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ]
-  %.not = icmp eq i32 %i.e, 0
-  %1 = select i1 %.not, ptr @gen_rev_32, ptr @gen_rev32
-  tail call void %1(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  %.0.i4.i = phi ptr [ %i.l, %bb.d ], [ %i.o, %bb.e ] ; 2 uses
+  br i1 %.not.not, label %call.1, label %call.0
+
+call.0:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_rev32(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+call.1:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_rev_32(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %gen_rr.exit.tail
+
+gen_rr.exit.tail:                                 ; preds = %call.1, %call.0
   ret void
 }
 
@@ -1719,7 +1773,6 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load i32, ptr %i.f, align 4
   %.not = icmp eq i32 %i.g, 0
-  %1 = select i1 %.not, ptr @gen_ctz32, ptr @gen_ctz64
   %i.h = icmp eq i32 %i.c, 31
   br i1 %i.h, label %bb.c, label %bb.d
 
@@ -1735,27 +1788,34 @@ bb.d:                                             ; preds = %bb.b
   br label %cpu_reg.exit.i
 
 cpu_reg.exit.i:                                   ; preds = %bb.d, %bb.c
-  %.0.i.i = phi ptr [ %i.i, %bb.c ], [ %i.l, %bb.d ]
+  %.0.i.i = phi ptr [ %i.i, %bb.c ], [ %i.l, %bb.d ] ; 2 uses
   %i.m = icmp eq i32 %i.e, 31
   br i1 %i.m, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %cpu_reg.exit.i
   %i.n = tail call ptr @tcg_temp_new_i64() #14    ; 2 uses
   tail call void @tcg_gen_movi_i64(ptr noundef %i.n, i64 noundef 0) #14
-  br label %gen_rr.exit.a
+  br label %gen_rr.exit
 
 bb.f:                                             ; preds = %cpu_reg.exit.i
   %i.o = sext i32 %i.e to i64
   %i.p = getelementptr inbounds [8 x i8], ptr @cpu_X, i64 %i.o
   %i.q = load ptr, ptr %i.p, align 8
-  br label %gen_rr.exit.a
+  br label %gen_rr.exit
 
-gen_rr.exit.a:                                    ; preds = %bb.e, %bb.f
-  %.0.i4.i = phi ptr [ %i.n, %bb.e ], [ %i.q, %bb.f ]
-  tail call void %1(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+gen_rr.exit:                                      ; preds = %bb.e, %bb.f
+  %.0.i4.i = phi ptr [ %i.n, %bb.e ], [ %i.q, %bb.f ] ; 2 uses
+  br i1 %.not, label %gen_rr.exit.a, label %call.0
+
+call.0:                                           ; preds = %gen_rr.exit
+  tail call fastcc void @gen_ctz64(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
   br label %bb.g
 
-bb.g:                                             ; preds = %gen_rr.exit.a, %bb.a
+gen_rr.exit.a:                                    ; preds = %gen_rr.exit
+  tail call fastcc void @gen_ctz32(ptr noundef %.0.i.i, ptr noundef %.0.i4.i) #14, !inline_history !13
+  br label %bb.g
+
+bb.g:                                             ; preds = %call.0, %gen_rr.exit.a, %bb.a
   ret i1 %i.b
 }
 
@@ -2158,22 +2218,22 @@ bb.h:                                             ; preds = %cpu_reg.exit47
   br i1 %.not.i48, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  call void @gen_sub64_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
+  call fastcc void @gen_sub64_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
   br label %gen_sub_CC.exit
 
 bb.j:                                             ; preds = %bb.h
-  call void @gen_sub32_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
+  call fastcc void @gen_sub32_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
   br label %gen_sub_CC.exit
 
 bb.k:                                             ; preds = %cpu_reg.exit47
   br i1 %.not.i48, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  call void @gen_add64_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
+  call fastcc void @gen_add64_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
   br label %gen_sub_CC.exit
 
 bb.m:                                             ; preds = %bb.k
-  call void @gen_add32_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
+  call fastcc void @gen_add32_CC(ptr noundef %i.d, ptr noundef %.0.i46, ptr noundef %.0)
   br label %gen_sub_CC.exit
 
 gen_sub_CC.exit:                                  ; preds = %bb.m, %bb.l, %bb.j, %bb.i
@@ -2576,22 +2636,22 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not.i44, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  tail call void @gen_sub64_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
+  tail call fastcc void @gen_sub64_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
   br label %gen_sub_CC.exit
 
 bb.y:                                             ; preds = %bb.w
-  tail call void @gen_sub32_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
+  tail call fastcc void @gen_sub32_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
   br label %gen_sub_CC.exit
 
 bb.z:                                             ; preds = %bb.v
   br i1 %.not.i44, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  tail call void @gen_add64_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
+  tail call fastcc void @gen_add64_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
   br label %gen_sub_CC.exit
 
 bb.ab:                                            ; preds = %bb.z
-  tail call void @gen_add32_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
+  tail call fastcc void @gen_add32_CC(ptr noundef %i.al, ptr noundef %i.r, ptr noundef %i.y)
   br label %gen_sub_CC.exit
 
 gen_sub_CC.exit:                                  ; preds = %bb.ab, %bb.aa, %bb.y, %bb.x, %bb.t, %bb.u
@@ -2617,7 +2677,7 @@ declare void @tcg_gen_sub_i64(ptr noundef, ptr noundef, ptr noundef) local_unnam
 declare void @tcg_gen_add_i64(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_sub64_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
+define internal fastcc void @gen_sub64_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_temp_new_i64() #14    ; 4 uses
   %i.b = tail call ptr @tcg_temp_new_i64() #14    ; 6 uses
@@ -2642,7 +2702,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_sub32_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
+define internal fastcc void @gen_sub32_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_temp_new_i32() #14    ; 5 uses
   %i.b = tail call ptr @tcg_temp_new_i32() #14    ; 4 uses
@@ -2678,7 +2738,7 @@ declare void @tcg_gen_xor_i32(ptr noundef, ptr noundef, ptr noundef) local_unnam
 declare void @tcg_gen_and_i32(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_add64_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
+define internal fastcc void @gen_add64_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_temp_new_i64() #14    ; 4 uses
   %i.b = tail call ptr @tcg_temp_new_i64() #14    ; 6 uses
@@ -2703,7 +2763,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_add32_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
+define internal fastcc void @gen_add32_CC(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_temp_new_i32() #14    ; 4 uses
   %i.b = tail call ptr @tcg_temp_new_i32() #14    ; 3 uses
@@ -2849,22 +2909,22 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.i40, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  tail call void @gen_sub64_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
+  tail call fastcc void @gen_sub64_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
   br label %gen_sub_CC.exit
 
 bb.s:                                             ; preds = %bb.q
-  tail call void @gen_sub32_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
+  tail call fastcc void @gen_sub32_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
   br label %gen_sub_CC.exit
 
 bb.t:                                             ; preds = %bb.p
   br i1 %.not.i40, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  tail call void @gen_add64_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
+  tail call fastcc void @gen_add64_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
   br label %gen_sub_CC.exit
 
 bb.v:                                             ; preds = %bb.t
-  tail call void @gen_add32_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
+  tail call fastcc void @gen_add32_CC(ptr noundef %i.aj, ptr noundef %i.q, ptr noundef %i.x)
   br label %gen_sub_CC.exit
 
 gen_sub_CC.exit:                                  ; preds = %bb.v, %bb.u, %bb.s, %bb.r, %bb.n, %bb.o
@@ -3267,7 +3327,7 @@ cpu_reg.exit:                                     ; preds = %bb.b, %bb.c
   br i1 %1, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %cpu_reg.exit
-  tail call void @gen_sub64_CC(ptr noundef %.0.i, ptr noundef %i.c, ptr noundef %i.i)
+  tail call fastcc void @gen_sub64_CC(ptr noundef %.0.i, ptr noundef %i.c, ptr noundef %i.i)
   br label %bb.f
 
 bb.e:                                             ; preds = %cpu_reg.exit
@@ -3539,7 +3599,7 @@ bb.i:                                             ; preds = %bb.h, %cpu_reg.exit
 }
 
 ; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal void @gen_helper_rbit64(ptr noundef %0, ptr noundef %1) unnamed_addr #11 {
+define internal fastcc void @gen_helper_rbit64(ptr noundef %0, ptr noundef %1) unnamed_addr #11 {
 bb.a:
   %i.a = load ptr, ptr @helper_info_rbit64, align 8
   %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
@@ -3553,7 +3613,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_rbit32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_rbit32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_temp_new_i32() #14    ; 3 uses
   tail call void @tcg_gen_extrl_i64_i32(ptr noundef %i.a, ptr noundef %1) #14
@@ -3582,7 +3642,7 @@ bb.a:
 declare void @tcg_gen_abs_i32(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_rev16_64(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_rev16_64(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_constant_i64(i64 noundef 71777214294589695) #14 ; 2 uses
   %i.b = tail call ptr @tcg_temp_new_i64() #14    ; 4 uses
@@ -3595,7 +3655,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_rev16_32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_rev16_32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_constant_i64(i64 noundef 16711935) #14 ; 2 uses
   %i.b = tail call ptr @tcg_temp_new_i64() #14    ; 4 uses
@@ -3608,14 +3668,14 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_clz64(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_clz64(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   tail call void @tcg_gen_clzi_i64(ptr noundef %0, ptr noundef %1, i64 noundef 64) #14
   ret void
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_clz32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_clz32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_temp_new_i32() #14    ; 4 uses
   tail call void @tcg_gen_extrl_i64_i32(ptr noundef %i.a, ptr noundef %1) #14
@@ -3790,7 +3850,7 @@ bb.s:                                             ; preds = %bb.r, %read_cpu_reg
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_rev32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_rev32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   tail call void @tcg_gen_bswap64_i64(ptr noundef %0, ptr noundef %1) #14
   tail call void @tcg_gen_rotri_i64(ptr noundef %0, ptr noundef %0, i64 noundef 32) #14
@@ -3798,7 +3858,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_rev_32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_rev_32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   tail call void @tcg_gen_bswap32_i64(ptr noundef %0, ptr noundef %1, i32 noundef 2) #14
   ret void
@@ -3811,14 +3871,14 @@ declare void @tcg_gen_rotri_i64(ptr noundef, ptr noundef, i64 noundef) local_unn
 declare void @tcg_gen_bswap32_i64(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_ctz64(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_ctz64(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   tail call void @tcg_gen_ctzi_i64(ptr noundef %0, ptr noundef %1, i64 noundef 64) #14
   ret void
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gen_ctz32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal fastcc void @gen_ctz32(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @tcg_temp_new_i32() #14    ; 4 uses
   tail call void @tcg_gen_extrl_i64_i32(ptr noundef %i.a, ptr noundef %1) #14

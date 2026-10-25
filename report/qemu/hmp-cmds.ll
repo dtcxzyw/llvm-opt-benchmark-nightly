@@ -202,9 +202,6 @@ bb.k:                                             ; preds = %bb.g, %bb.j, %bb.i,
   %i.u = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %.0)
   %i.v = icmp eq i32 %i.u, 1
   %i.w = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0, i1 true)
-  %6 = select i1 %i.f, ptr @ldl_be_p, ptr @ldl_le_p
-  %7 = select i1 %i.f, ptr @lduw_be_p, ptr @lduw_le_p
-  %8 = select i1 %i.f, ptr @ldq_be_p, ptr @ldq_le_p
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph106, %._crit_edge
@@ -248,25 +245,54 @@ bb.q:                                             ; preds = %bb.p
 .split.us:                                        ; preds = %.lr.ph, %bb.ab
   %.08899.us = phi i32 [ %i.ar, %bb.ab ], [ 0, %.lr.ph ] ; 2 uses
   %i.ah = sext i32 %.08899.us to i64
-  %i.ai = getelementptr inbounds i8, ptr %i.a, i64 %i.ah ; 4 uses
+  %i.ai = getelementptr inbounds i8, ptr %i.a, i64 %i.ah ; 7 uses
   switch i32 %i.w, label %bb.u [
-    i32 3, label %bb.t
-    i32 1, label %bb.s
-    i32 2, label %bb.r
+    i32 3, label %15
+    i32 1, label %10
+    i32 2, label %6
   ]
 
-bb.r:                                             ; preds = %.split.us
-  %9 = call i32 %6(ptr noundef nonnull %i.ai) #15, !callees !22
+6:                                                ; preds = %.split.us
+  br i1 %i.f, label %call.1102.us, label %call.0101.us
+
+call.0101.us:                                     ; preds = %6
+  %7 = call fastcc i32 @ldl_le_p(ptr noundef nonnull %i.ai) #15, !callees !22
+  br label %bb.r
+
+call.1102.us:                                     ; preds = %6
+  %8 = call fastcc i32 @ldl_be_p(ptr noundef nonnull %i.ai) #15, !callees !22
+  br label %bb.r
+
+bb.r:                                             ; preds = %call.1102.us, %call.0101.us
+  %9 = phi i32 [ %7, %call.0101.us ], [ %8, %call.1102.us ]
   %i.aj = zext i32 %9 to i64
   br label %bb.v
 
-bb.s:                                             ; preds = %.split.us
-  %10 = call i32 %7(ptr noundef nonnull %i.ai) #15, !callees !23
-  %11 = sext i32 %10 to i64
+10:                                               ; preds = %.split.us
+  br i1 %i.f, label %call.1.us, label %call.0.us
+
+call.0.us:                                        ; preds = %10
+  %11 = call fastcc i32 @lduw_le_p(ptr noundef nonnull %i.ai) #15, !callees !23
+  br label %bb.s
+
+call.1.us:                                        ; preds = %10
+  %12 = call fastcc i32 @lduw_be_p(ptr noundef nonnull %i.ai) #15, !callees !23
+  br label %bb.s
+
+bb.s:                                             ; preds = %call.1.us, %call.0.us
+  %13 = phi i32 [ %11, %call.0.us ], [ %12, %call.1.us ]
+  %14 = zext nneg i32 %13 to i64
   br label %bb.v
 
-bb.t:                                             ; preds = %.split.us
-  %12 = call i64 %8(ptr noundef nonnull %i.ai) #15, !callees !24
+15:                                               ; preds = %.split.us
+  br i1 %i.f, label %bb.t, label %call.0105.us
+
+call.0105.us:                                     ; preds = %15
+  %16 = call fastcc i64 @ldq_le_p(ptr noundef nonnull %i.ai) #15, !callees !24
+  br label %bb.v
+
+bb.t:                                             ; preds = %15
+  %17 = call fastcc i64 @ldq_be_p(ptr noundef nonnull %i.ai) #15, !callees !24
   br label %bb.v
 
 bb.u:                                             ; preds = %.split.us
@@ -274,8 +300,8 @@ bb.u:                                             ; preds = %.split.us
   %i.ak = zext i8 %.val93.us to i64
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r
-  %.085.us = phi i64 [ %i.ak, %bb.u ], [ %12, %bb.t ], [ %11, %bb.s ], [ %i.aj, %bb.r ] ; 5 uses
+bb.v:                                             ; preds = %bb.u, %bb.t, %call.0105.us, %bb.s, %bb.r
+  %.085.us = phi i64 [ %i.ak, %bb.u ], [ %i.aj, %bb.r ], [ %14, %bb.s ], [ %16, %call.0105.us ], [ %17, %bb.t ] ; 5 uses
   %i.al = call i32 (ptr, ptr, ...) @monitor_printf(ptr noundef %0, ptr noundef nonnull @.str.612) #15 ; 0 uses
   switch i32 %2, label %bb.ab [
     i32 111, label %bb.aa
@@ -678,7 +704,7 @@ declare void @monitor_disas(ptr noundef, ptr noundef, i64 noundef, i32 noundef, 
 declare i32 @cpu_memory_rw_debug(ptr noundef, i64 noundef, ptr noundef, i64 noundef, i1 noundef zeroext) local_unnamed_addr #5
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal range(i32 0, 65536) i32 @lduw_be_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
+define internal fastcc range(i32 0, 65536) i32 @lduw_be_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
 bb.a:
   %.val = load i16, ptr %0, align 1
   %i.a = tail call i16 @llvm.bswap.i16(i16 %.val)
@@ -687,7 +713,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal range(i32 0, 65536) i32 @lduw_le_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
+define internal fastcc range(i32 0, 65536) i32 @lduw_le_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
 bb.a:
   %.val = load i16, ptr %0, align 1
   %i.a = zext i16 %.val to i32
@@ -695,7 +721,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal i32 @ldl_be_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
+define internal fastcc i32 @ldl_be_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
 bb.a:
   %.val = load i32, ptr %0, align 1
   %i.a = tail call i32 @llvm.bswap.i32(i32 %.val)
@@ -703,14 +729,14 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal i32 @ldl_le_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
+define internal fastcc i32 @ldl_le_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
 bb.a:
   %.val = load i32, ptr %0, align 1
   ret i32 %.val
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal i64 @ldq_be_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
+define internal fastcc i64 @ldq_be_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
 bb.a:
   %.val = load i64, ptr %0, align 1
   %i.a = tail call i64 @llvm.bswap.i64(i64 %.val)
@@ -718,7 +744,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal i64 @ldq_le_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
+define internal fastcc i64 @ldq_le_p(ptr nofree noundef readonly captures(none) %0) unnamed_addr #11 {
 bb.a:
   %.val = load i64, ptr %0, align 1
   ret i64 %.val

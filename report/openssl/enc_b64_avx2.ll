@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/enc_b64_avx2?download=true
-inline.NumInlined: 33
-inline.NumDeleted: 8
+inline.NumInlined: 35
+inline.NumDeleted: 10
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -16,13 +16,13 @@ bb.a:
   br i1 %i.b, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.c = sdiv i32 %4, 3
   %i.d = shl nsw i32 %i.c, 2
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.f = load i32, ptr %i.e, align 4, !tbaa !13
   %i.g = and i32 %i.f, 2
@@ -425,21 +425,62 @@ bb.as:                                            ; preds = %bb.i, %bb.k, %ins_n
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
   %.0250.lcssa = phi i32 [ 0, %bb.c ], [ %i.rv, %._crit_edge.loopexit ] ; 4 uses
-  %.0.lcssa = phi ptr [ %1, %bb.c ], [ %.2, %._crit_edge.loopexit ] ; 4 uses
+  %.0.lcssa = phi ptr [ %1, %bb.c ], [ %.2, %._crit_edge.loopexit ] ; 5 uses
   %i.rw = icmp ne i32 %i.i, 0
   %i.rx = add nuw nsw i32 %.0250.lcssa, 28
   %.not263291 = icmp sgt i32 %i.rx, %3
   %or.cond297 = select i1 %i.rw, i1 true, i1 %.not263291
-  br i1 %or.cond297, label %.loopexit, label %.lr.ph294.a
+  br i1 %or.cond297, label %.loopexit, label %.lr.ph294
 
-.lr.ph294.a:                                      ; preds = %._crit_edge
-  %6 = select i1 %i.j, ptr @lookup_pshufb_srp, ptr @lookup_pshufb_std
-  %7 = zext i32 %.0250.lcssa to i64
-  br label %bb.at
+.lr.ph294:                                        ; preds = %._crit_edge
+  %6 = zext i32 %.0250.lcssa to i64               ; 2 uses
+  br i1 %i.j, label %.lr.ph294.a, label %bb.at
 
-bb.at:                                            ; preds = %.lr.ph294.a, %bb.at
-  %indvars.iv301 = phi i64 [ %7, %.lr.ph294.a ], [ %indvars.iv.next302, %bb.at ] ; 3 uses
-  %.3293 = phi ptr [ %.0.lcssa, %.lr.ph294.a ], [ %i.sm, %bb.at ] ; 2 uses
+.lr.ph294.a:                                      ; preds = %.lr.ph294, %.lr.ph294.a
+  %indvars.iv308 = phi i64 [ %indvars.iv.next309, %.lr.ph294.a ], [ %6, %.lr.ph294 ] ; 3 uses
+  %.3293.us = phi ptr [ %36, %.lr.ph294.a ], [ %.0.lcssa, %.lr.ph294 ] ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv308 ; 2 uses
+  %8 = load <2 x i64>, ptr %7, align 1, !tbaa !9
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 12
+  %10 = load <2 x i64>, ptr %9, align 1, !tbaa !9
+  %11 = shufflevector <2 x i64> %8, <2 x i64> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = bitcast <4 x i64> %11 to <32 x i8>
+  %13 = shufflevector <32 x i8> %12, <32 x i8> poison, <32 x i32> <i32 1, i32 0, i32 2, i32 1, i32 4, i32 3, i32 5, i32 4, i32 7, i32 6, i32 8, i32 7, i32 10, i32 9, i32 11, i32 10, i32 17, i32 16, i32 18, i32 17, i32 20, i32 19, i32 21, i32 20, i32 23, i32 22, i32 24, i32 23, i32 26, i32 25, i32 27, i32 26> ; 2 uses
+  %14 = bitcast <32 x i8> %13 to <16 x i16>
+  %15 = and <16 x i16> %14, <i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032>
+  %16 = tail call <16 x i16> @llvm.umulh.v16i16(<16 x i16> %15, <16 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
+  %17 = bitcast <32 x i8> %13 to <16 x i16>
+  %18 = and <16 x i16> %17, <i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63>
+  %19 = shl <16 x i16> %18, <i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8>
+  %20 = or <16 x i16> %16, %19                    ; 2 uses
+  %21 = bitcast <16 x i16> %20 to <32 x i8>       ; 6 uses
+  %22 = icmp sgt <32 x i8> %21, splat (i8 63)
+  %23 = icmp sgt <32 x i8> %21, splat (i8 9)
+  %.neg.i324 = zext <32 x i1> %23 to <32 x i8>
+  %24 = icmp sgt <32 x i8> %21, splat (i8 35)
+  %.neg19.i325 = zext <32 x i1> %24 to <32 x i8>
+  %25 = add nuw nsw <32 x i8> %.neg19.i325, %.neg.i324
+  %26 = icmp eq <32 x i8> %21, splat (i8 62)
+  %27 = select <32 x i1> %26, <32 x i8> splat (i8 3), <32 x i8> %25
+  %28 = icmp eq <32 x i8> %21, splat (i8 63)
+  %29 = select <32 x i1> %28, <32 x i8> splat (i8 4), <32 x i8> %27
+  %30 = bitcast <16 x i16> %20 to <32 x i8>
+  %31 = and <32 x i8> %30, splat (i8 -128)
+  %32 = select <32 x i1> %22, <32 x i8> splat (i8 -128), <32 x i8> %31
+  %33 = or disjoint <32 x i8> %29, %32
+  %34 = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> <i8 48, i8 55, i8 61, i8 -16, i8 -16, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 48, i8 55, i8 61, i8 -16, i8 -16, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <32 x i8> %33)
+  %35 = add <32 x i8> %34, %21
+  store <32 x i8> %35, ptr %.3293.us, align 1, !tbaa !9
+  %36 = getelementptr inbounds nuw i8, ptr %.3293.us, i64 32 ; 2 uses
+  %indvars.iv.next309 = add nuw nsw i64 %indvars.iv308, 24 ; 2 uses
+  %37 = trunc i64 %indvars.iv308 to i32
+  %38 = add i32 %37, 52
+  %.not263.us = icmp sgt i32 %38, %3
+  br i1 %.not263.us, label %.loopexit.thread, label %.lr.ph294.a, !llvm.loop !11
+
+bb.at:                                            ; preds = %.lr.ph294, %bb.at
+  %indvars.iv301 = phi i64 [ %indvars.iv.next302, %bb.at ], [ %6, %.lr.ph294 ] ; 3 uses
+  %.3293 = phi ptr [ %i.sm, %bb.at ], [ %.0.lcssa, %.lr.ph294 ] ; 2 uses
   %i.ry = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv301 ; 2 uses
   %i.rz = load <2 x i64>, ptr %i.ry, align 1, !tbaa !9
   %i.sa = getelementptr inbounds nuw i8, ptr %i.ry, i64 12
@@ -454,9 +495,14 @@ bb.at:                                            ; preds = %.lr.ph294.a, %bb.at
   %i.sj = and <16 x i16> %i.si, <i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63>
   %i.sk = shl <16 x i16> %i.sj, <i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8>
   %i.sl = or <16 x i16> %i.sh, %i.sk
-  %8 = bitcast <16 x i16> %i.sl to <4 x i64>
-  %9 = tail call <4 x i64> %6(<4 x i64> noundef %8) #9, !callees !15
-  store <4 x i64> %9, ptr %.3293, align 1, !tbaa !9
+  %39 = bitcast <16 x i16> %i.sl to <32 x i8>     ; 3 uses
+  %40 = tail call <32 x i8> @llvm.usub.sat.v32i8(<32 x i8> %39, <32 x i8> splat (i8 51))
+  %41 = icmp slt <32 x i8> %39, splat (i8 26)
+  %42 = select <32 x i1> %41, <32 x i8> splat (i8 13), <32 x i8> zeroinitializer
+  %43 = or <32 x i8> %42, %40
+  %44 = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> <i8 71, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -19, i8 -16, i8 65, i8 0, i8 0, i8 71, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -19, i8 -16, i8 65, i8 0, i8 0>, <32 x i8> %43)
+  %45 = add <32 x i8> %44, %39
+  store <32 x i8> %45, ptr %.3293, align 1, !tbaa !9
   %i.sm = getelementptr inbounds nuw i8, ptr %.3293, i64 32 ; 2 uses
   %indvars.iv.next302 = add nuw nsw i64 %indvars.iv301, 24 ; 2 uses
   %i.sn = trunc i64 %indvars.iv301 to i32
@@ -464,8 +510,10 @@ bb.at:                                            ; preds = %.lr.ph294.a, %bb.at
   %.not263 = icmp sgt i32 %i.so, %3
   br i1 %.not263, label %.loopexit.thread, label %bb.at, !llvm.loop !11
 
-.loopexit.thread:                                 ; preds = %bb.at
-  %i.sp = trunc nuw i64 %indvars.iv.next302 to i32
+.loopexit.thread:                                 ; preds = %bb.at, %.lr.ph294.a
+  %indvars.iv.next306.lcssa.sink = phi i64 [ %indvars.iv.next309, %.lr.ph294.a ], [ %indvars.iv.next302, %bb.at ]
+  %.4.ph = phi ptr [ %36, %.lr.ph294.a ], [ %i.sm, %bb.at ]
+  %i.sp = trunc nuw i64 %indvars.iv.next306.lcssa.sink to i32
   %i.sq = load i32, ptr %i.a, align 4, !tbaa !8
   store i32 %i.sq, ptr %5, align 4, !tbaa !8
   br label %bb.av
@@ -485,16 +533,16 @@ bb.au:                                            ; preds = %.loopexit
 
 bb.av:                                            ; preds = %.loopexit.thread, %bb.au, %.loopexit
   %.2252315 = phi i32 [ %.0250.lcssa, %bb.au ], [ %.0250.lcssa, %.loopexit ], [ %i.sp, %.loopexit.thread ] ; 2 uses
-  %.5 = phi ptr [ %i.su, %bb.au ], [ %.0.lcssa, %.loopexit ], [ %i.sm, %.loopexit.thread ] ; 2 uses
+  %.5 = phi ptr [ %i.su, %bb.au ], [ %.0.lcssa, %.loopexit ], [ %.4.ph, %.loopexit.thread ] ; 2 uses
   %i.sv = ptrtoint ptr %.5 to i64
   %i.sw = ptrtoint ptr %1 to i64
   %i.sx = sub i64 %i.sv, %i.sw
   %i.sy = sext i32 %.2252315 to i64
   %i.sz = getelementptr inbounds i8, ptr %2, i64 %i.sy
   %i.ta = sub nsw i32 %3, %.2252315
-  %i.tb = tail call i64 @evp_encodeblock_int(ptr noundef %0, ptr noundef %.5, ptr noundef %i.sz, i32 noundef %i.ta, ptr noundef nonnull %5) #9
+  %i.tb = tail call i64 @evp_encodeblock_int(ptr noundef %0, ptr noundef %.5, ptr noundef %i.sz, i32 noundef %i.ta, ptr noundef nonnull %5) #7
   %i.tc = add i64 %i.sx, %i.tb
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i64 %i.tc
 }
 
@@ -512,50 +560,14 @@ declare i64 @evp_encodeblock_int(ptr noundef, ptr noundef, ptr noundef, i32 noun
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8>, <32 x i8>) #4
 
-; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal <4 x i64> @lookup_pshufb_srp(<4 x i64> noundef %0) unnamed_addr #5 {
-  %2 = bitcast <4 x i64> %0 to <32 x i8>          ; 6 uses
-  %3 = icmp sgt <32 x i8> %2, splat (i8 63)
-  %4 = icmp sgt <32 x i8> %2, splat (i8 9)
-  %.neg = zext <32 x i1> %4 to <32 x i8>
-  %5 = icmp sgt <32 x i8> %2, splat (i8 35)
-  %.neg19 = zext <32 x i1> %5 to <32 x i8>
-  %6 = add nuw nsw <32 x i8> %.neg19, %.neg
-  %7 = icmp eq <32 x i8> %2, splat (i8 62)
-  %8 = select <32 x i1> %7, <32 x i8> splat (i8 3), <32 x i8> %6
-  %9 = icmp eq <32 x i8> %2, splat (i8 63)
-  %10 = select <32 x i1> %9, <32 x i8> splat (i8 4), <32 x i8> %8
-  %11 = bitcast <4 x i64> %0 to <32 x i8>
-  %12 = and <32 x i8> %11, splat (i8 -128)
-  %13 = select <32 x i1> %3, <32 x i8> splat (i8 -128), <32 x i8> %12
-  %14 = or disjoint <32 x i8> %10, %13
-  %15 = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> <i8 48, i8 55, i8 61, i8 -16, i8 -16, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 48, i8 55, i8 61, i8 -16, i8 -16, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <32 x i8> %14)
-  %16 = add <32 x i8> %15, %2
-  %17 = bitcast <32 x i8> %16 to <4 x i64>
-  ret <4 x i64> %17
-}
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <32 x i8> @llvm.x86.avx2.pblendvb(<32 x i8>, <32 x i8>, <32 x i8>) #4
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal <4 x i64> @lookup_pshufb_std(<4 x i64> noundef %0) unnamed_addr #6 {
-  %2 = bitcast <4 x i64> %0 to <32 x i8>          ; 3 uses
-  %3 = tail call <32 x i8> @llvm.usub.sat.v32i8(<32 x i8> %2, <32 x i8> splat (i8 51))
-  %4 = icmp slt <32 x i8> %2, splat (i8 26)
-  %5 = select <32 x i1> %4, <32 x i8> splat (i8 13), <32 x i8> zeroinitializer
-  %6 = or <32 x i8> %5, %3
-  %7 = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> <i8 71, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -19, i8 -16, i8 65, i8 0, i8 0, i8 71, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -4, i8 -19, i8 -16, i8 65, i8 0, i8 0>, <32 x i8> %6)
-  %8 = add <32 x i8> %7, %2
-  %9 = bitcast <32 x i8> %8 to <4 x i64>
-  ret <4 x i64> %9
-}
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <32 x i8> @llvm.usub.sat.v32i8(<32 x i8>, <32 x i8>) #7
+declare <32 x i8> @llvm.usub.sat.v32i8(<32 x i8>, <32 x i8>) #5
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define internal fastcc range(i64 32, 36) i64 @insert_nl_gt16(<4 x i64> noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 32)) %1, i32 noundef range(i32 12, -2147483648) %2, ptr nofree noundef nonnull captures(none) %3) unnamed_addr #8 {
+define internal fastcc range(i64 32, 36) i64 @insert_nl_gt16(<4 x i64> noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 32)) %1, i32 noundef range(i32 12, -2147483648) %2, ptr nofree noundef nonnull captures(none) %3) unnamed_addr #6 {
 bb.a:
   %i.a = load i32, ptr %3, align 4, !tbaa !8
   %i.b = sub nsw i32 %2, %i.a                     ; 6 uses
@@ -958,18 +970,16 @@ bb.aq:                                            ; preds = %bb.ap, %bb.b
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x i16> @llvm.umulh.v16i16(<16 x i16>, <16 x i16>) #7
+declare <16 x i16> @llvm.umulh.v16i16(<16 x i16>, <16 x i16>) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #5 = { inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #9 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -990,5 +1000,4 @@ attributes #9 = { nounwind }
 !12 = !{!"evp_Encode_Ctx_st", !5, i64 0, !4, i64 4, !5, i64 84, !5, i64 88}
 !13 = !{!12, !5, i64 88}
 !14 = !{!"llvm.loop.mustprogress"}
-!15 = !{ptr @lookup_pshufb_srp, ptr @lookup_pshufb_std}
 end_hunk_2
