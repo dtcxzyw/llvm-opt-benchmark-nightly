@@ -205,11 +205,10 @@ bb.x:                                             ; preds = %bb.v
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #36
   unreachable
 
-.body116.thread275:                               ; preds = %.body133, %bb.cf, %.body116.thread, %.thread291
-  %.sroa.023.0 = phi i8 [ %.sroa.023.1271, %.body116.thread ], [ %.sroa.023.2288, %.thread291 ], [ %.sroa.023.5.lpad-body, %bb.cf ], [ %.sroa.023.7, %.body133 ]
-  %.pn88.pn = phi { ptr, i32 } [ %.pn88272, %.body116.thread ], [ %.pn290, %.thread291 ], [ %eh.lpad-body185, %bb.cf ], [ %lpad.thr_comm.split-lp302, %.body133 ] ; 2 uses
-  %9 = trunc nuw i8 %.sroa.023.0 to i1
-  br i1 %9, label %.thread, label %.body
+.body116.thread275:                               ; preds = %.body116.thread, %.thread291
+  %.sroa.023.0 = phi i1 [ %.sroa.023.1271, %.body116.thread ], [ %.sroa.023.2288, %.thread291 ]
+  %.pn88.pn = phi { ptr, i32 } [ %.pn88272, %.body116.thread ], [ %.pn290, %.thread291 ] ; 2 uses
+  br i1 %.sroa.023.0, label %.thread, label %.body
 
 bb.y:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 24, i1 false)
@@ -428,6 +427,9 @@ bb.bc:                                            ; preds = %bb.ba
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #36
   unreachable
 
+.thread291.thread:                                ; preds = %bb.cf
+  br i1 %.sroa.023.5.lpad-body, label %.thread, label %.body
+
 .thread291:                                       ; preds = %.thread283
   br i1 %.sroa.022.2289, label %.body116.thread, label %.body116.thread275
 
@@ -625,7 +627,7 @@ bb.ce:                                            ; preds = %bb.cc
   unreachable
 
 bb.cf:                                            ; preds = %.body184
-  br i1 %.sroa.021.2.lpad-body, label %.thread283, label %.body116.thread275
+  br i1 %.sroa.021.2.lpad-body, label %.thread283, label %.thread291.thread
 
 .body133.thread303:                               ; preds = %.invoke, %bb.fa, %bb.cw, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i194, %bb.ee, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i132, %bb.df, %bb.bx, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i165, %bb.dh, %bb.bz, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i150
   %.sroa.022.3.ph = phi i1 [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i150 ], [ true, %bb.bz ], [ true, %bb.dh ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i165 ], [ true, %bb.bx ], [ true, %bb.df ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i132 ], [ true, %bb.ee ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsltEA4u8Pgfu_11candle_core.exit.i194 ], [ true, %bb.cw ], [ false, %bb.fa ], [ true, %.invoke ]
@@ -635,8 +637,8 @@ bb.cf:                                            ; preds = %.body184
 
 .body133:                                         ; preds = %bb.fm
   %lpad.thr_comm.split-lp302 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body116.thread275
+          cleanup                                 ; 2 uses
+  br i1 %.not85323, label %.thread, label %.body
 
 bb.cg:                                            ; preds = %bb.bz
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false)
@@ -1039,16 +1041,16 @@ _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCsltE
   br label %bb.dx
 
 bb.eq:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit238, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i232, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i, %bb.dx, %bb.fp, %bb.fn
-  %.sroa.023.5 = phi i8 [ 0, %bb.fp ], [ 0, %bb.fn ], [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit238 ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i232 ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i ], [ 1, %bb.dx ]
+  %.sroa.023.5 = phi i1 [ false, %bb.fp ], [ false, %bb.fn ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit238 ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i232 ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i ], [ true, %bb.dx ]
   %.sroa.021.2 = phi i1 [ false, %bb.fp ], [ false, %bb.fn ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit238 ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i232 ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsltEA4u8Pgfu_11candle_core.exit.i ], [ true, %bb.dx ]
   %i.hw = landingpad { ptr, i32 }
           cleanup
   br label %.body184
 
 .body184:                                         ; preds = %bb.fh, %bb.et, %bb.fk, %bb.eq, %.body.i216, %.body.i
-  %.sroa.023.5.lpad-body = phi i8 [ 1, %.body.i ], [ 0, %bb.fk ], [ 1, %.body.i216 ], [ 1, %bb.et ], [ %.sroa.023.5, %bb.eq ], [ 1, %bb.fh ] ; 2 uses
+  %.sroa.023.5.lpad-body = phi i1 [ true, %.body.i ], [ false, %bb.fk ], [ true, %.body.i216 ], [ true, %bb.et ], [ %.sroa.023.5, %bb.eq ], [ true, %bb.fh ] ; 2 uses
   %.sroa.021.2.lpad-body = phi i1 [ true, %.body.i ], [ false, %bb.fk ], [ false, %.body.i216 ], [ true, %bb.et ], [ %.sroa.021.2, %bb.eq ], [ false, %bb.fh ]
-  %eh.lpad-body185 = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %i.ix, %bb.fk ], [ %eh.lpad-body.i217, %.body.i216 ], [ %i.hz, %bb.et ], [ %i.hw, %bb.eq ], [ %i.iq, %bb.fh ] ; 2 uses
+  %eh.lpad-body185 = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %i.ix, %bb.fk ], [ %eh.lpad-body.i217, %.body.i216 ], [ %i.hz, %bb.et ], [ %i.hw, %bb.eq ], [ %i.iq, %bb.fh ] ; 3 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderECsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef align 8 dereferenceable(112) %i.t) #34
           to label %bb.cf unwind label %bb.gd
 
@@ -1256,7 +1258,7 @@ bb.fl:                                            ; preds = %_RINvNtCsf3Ta7LF998
   br label %bb.fm
 
 bb.fm:                                            ; preds = %bb.fr, %bb.fl
-  %.sroa.023.7 = phi i8 [ 0, %bb.fr ], [ 1, %bb.fl ] ; 2 uses
+  %.not85323 = phi i1 [ false, %bb.fr ], [ true, %bb.fl ] ; 2 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template25TemplateProcessingBuilderECsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef align 8 dereferenceable(112) %i.t)
           to label %bb.fs unwind label %.body133
 
@@ -1292,10 +1294,9 @@ bb.fr:                                            ; preds = %bb.fp
 bb.fs:                                            ; preds = %bb.fm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
-  %10 = trunc nuw i8 %.sroa.023.7 to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
-  br i1 %10, label %bb.u, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecTNtNtBG_6string6StringmEEECsltEA4u8Pgfu_11candle_core.exit
+  br i1 %.not85323, label %bb.u, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecTNtNtBG_6string6StringmEEECsltEA4u8Pgfu_11candle_core.exit
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecTNtNtBG_6string6StringmEEECsltEA4u8Pgfu_11candle_core.exit: ; preds = %bb.w, %bb.fs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax)
@@ -1323,8 +1324,8 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ay)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core.exit unwind label %bb.m
 
-.body:                                            ; preds = %bb.ga, %bb.fw, %bb.v, %.thread, %.body116.thread275
-  %.pn88.pn.pn = phi { ptr, i32 } [ %.pn88.pn270, %.thread ], [ %.pn88.pn, %.body116.thread275 ], [ %i.je, %bb.fw ], [ %i.bn, %bb.v ], [ %i.jj, %bb.ga ]
+.body:                                            ; preds = %bb.ga, %.body133, %.thread291.thread, %bb.fw, %bb.v, %.thread, %.body116.thread275
+  %.pn88.pn.pn = phi { ptr, i32 } [ %.pn88.pn270, %.thread ], [ %.pn88.pn, %.body116.thread275 ], [ %i.je, %bb.fw ], [ %i.bn, %bb.v ], [ %eh.lpad-body185, %.thread291.thread ], [ %lpad.thr_comm.split-lp302, %.body133 ], [ %i.jj, %bb.ga ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgCecv3eZDcN_5alloc6string6StringEECsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ay) #34
           to label %.body248 unwind label %bb.gd
 
@@ -1401,18 +1402,18 @@ bb.ge:                                            ; preds = %bb.bj
 .thread283:                                       ; preds = %bb.eo, %bb.el, %bb.du, %bb.do, %bb.dl, %bb.dd, %bb.da, %bb.cr, %bb.cl, %bb.ci, %bb.ch, %bb.cz, %bb.dk, %bb.ek, %.body133.thread303, %bb.cf
   %.pn290 = phi { ptr, i32 } [ %i.hl, %bb.ek ], [ %eh.lpad-body185, %bb.cf ], [ %lpad.thr_comm301, %.body133.thread303 ], [ %i.ef, %bb.ch ], [ %i.fj, %bb.cz ], [ %i.fv, %bb.dk ], [ %i.hm, %bb.el ], [ %i.gr, %bb.du ], [ %i.gb, %bb.do ], [ %i.fw, %bb.dl ], [ %i.fp, %bb.dd ], [ %i.fk, %bb.da ], [ %i.fd, %bb.cr ], [ %i.el, %bb.cl ], [ %i.eg, %bb.ci ], [ %i.hr, %bb.eo ] ; 2 uses
   %.sroa.022.2289 = phi i1 [ true, %bb.ek ], [ false, %bb.cf ], [ %.sroa.022.3.ph, %.body133.thread303 ], [ true, %bb.ch ], [ true, %bb.cz ], [ true, %bb.dk ], [ true, %bb.el ], [ true, %bb.du ], [ true, %bb.do ], [ true, %bb.dl ], [ true, %bb.dd ], [ true, %bb.da ], [ true, %bb.cr ], [ true, %bb.cl ], [ true, %bb.ci ], [ true, %bb.eo ]
-  %.sroa.023.2288 = phi i8 [ 1, %bb.ek ], [ %.sroa.023.5.lpad-body, %bb.cf ], [ 1, %.body133.thread303 ], [ 1, %bb.ch ], [ 1, %bb.cz ], [ 1, %bb.dk ], [ 1, %bb.el ], [ 1, %bb.du ], [ 1, %bb.do ], [ 1, %bb.dl ], [ 1, %bb.dd ], [ 1, %bb.da ], [ 1, %bb.cr ], [ 1, %bb.cl ], [ 1, %bb.ci ], [ 1, %bb.eo ] ; 2 uses
+  %.sroa.023.2288 = phi i1 [ true, %bb.ek ], [ %.sroa.023.5.lpad-body, %bb.cf ], [ true, %.body133.thread303 ], [ true, %bb.ch ], [ true, %bb.cz ], [ true, %bb.dk ], [ true, %bb.el ], [ true, %bb.du ], [ true, %bb.do ], [ true, %bb.dl ], [ true, %bb.dd ], [ true, %bb.da ], [ true, %bb.cr ], [ true, %bb.cl ], [ true, %bb.ci ], [ true, %bb.eo ] ; 2 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtBG_6string6StringEECsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef align 8 dereferenceable(24) %i.am) #34
           to label %.thread291 unwind label %bb.gd
 
 .body116.thread:                                  ; preds = %bb.cc, %bb.bu, %bb.bm, %bb.bf, %.body116.thread279, %.thread291
   %.pn88272 = phi { ptr, i32 } [ %lpad.thr_comm, %.body116.thread279 ], [ %.pn290, %.thread291 ], [ %i.dx, %bb.bu ], [ %i.dm, %bb.bm ], [ %i.cw, %bb.bf ], [ %i.ed, %bb.cc ]
-  %.sroa.023.1271 = phi i8 [ 1, %.body116.thread279 ], [ %.sroa.023.2288, %.thread291 ], [ 1, %bb.bu ], [ 1, %bb.bm ], [ 1, %bb.bf ], [ 1, %bb.cc ]
+  %.sroa.023.1271 = phi i1 [ true, %.body116.thread279 ], [ %.sroa.023.2288, %.thread291 ], [ true, %bb.bu ], [ true, %bb.bm ], [ true, %bb.bf ], [ true, %bb.cc ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtBG_6string6StringEECsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef align 8 dereferenceable(24) %i.aq) #34
           to label %.body116.thread275 unwind label %bb.gd
 
-.thread:                                          ; preds = %bb.fc, %.body116, %bb.eg, %bb.ba, %bb.au, %bb.af, %.body102, %.body106, %.body116.thread275
-  %.pn88.pn270 = phi { ptr, i32 } [ %.pn88.pn, %.body116.thread275 ], [ %eh.lpad-body103, %.body102 ], [ %eh.lpad-body107, %.body106 ], [ %i.cr, %bb.ba ], [ %i.bz, %bb.af ], [ %i.co, %bb.au ], [ %lpad.thr_comm.split-lp, %.body116 ], [ %i.hj, %bb.eg ], [ %i.im, %bb.fc ]
+.thread:                                          ; preds = %.body133, %.thread291.thread, %bb.fc, %.body116, %bb.eg, %bb.ba, %bb.au, %bb.af, %.body102, %.body106, %.body116.thread275
+  %.pn88.pn270 = phi { ptr, i32 } [ %.pn88.pn, %.body116.thread275 ], [ %eh.lpad-body103, %.body102 ], [ %eh.lpad-body107, %.body106 ], [ %i.cr, %bb.ba ], [ %i.bz, %bb.af ], [ %i.co, %bb.au ], [ %lpad.thr_comm.split-lp302, %.body133 ], [ %i.hj, %bb.eg ], [ %i.im, %bb.fc ], [ %lpad.thr_comm.split-lp, %.body116 ], [ %eh.lpad-body185, %.thread291.thread ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecTNtNtBG_6string6StringmEEECsltEA4u8Pgfu_11candle_core(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ax) #34
           to label %.body unwind label %bb.gd
 }

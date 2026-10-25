@@ -204,7 +204,7 @@ gistDeCompressAtt.exit40:                         ; preds = %gistdentryinit.exit
 
 bb.l:                                             ; preds = %.lr.ph, %.thread
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.thread ] ; 11 uses
-  %.03144 = phi i8 [ 0, %.lr.ph ], [ %.1, %.thread ] ; 3 uses
+  %.03144 = phi i8 [ 0, %.lr.ph ], [ %.1, %.thread ] ; 5 uses
   %i.cq = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %indvars.iv ; 3 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv
   %i.cs = load i8, ptr %i.cr, align 1, !range !8, !noundef !9 ; 3 uses
@@ -238,6 +238,7 @@ gistMakeUnionKey.exit:                            ; preds = %bb.l
   store i64 %i.de, ptr %i.cw, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  %8 = trunc nuw i8 %.03144 to i1
   %i.df = or i8 %i.cv, %.03144
   %brmerge.not = icmp eq i8 %i.df, 0
   br i1 %brmerge.not, label %bb.m, label %.thread
@@ -247,6 +248,7 @@ gistMakeUnionKey.exit.thread:                     ; preds = %bb.l
   store i64 0, ptr %i.cw, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  %9 = trunc nuw i8 %.03144 to i1
   br label %.thread
 
 bb.m:                                             ; preds = %gistMakeUnionKey.exit
@@ -269,7 +271,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br label %.thread
 
 .thread:                                          ; preds = %gistMakeUnionKey.exit.thread, %gistMakeUnionKey.exit, %bb.o, %bb.n
-  %.1 = phi i8 [ %.03144, %gistMakeUnionKey.exit ], [ %.03144, %gistMakeUnionKey.exit.thread ], [ 0, %bb.n ], [ 1, %bb.o ] ; 2 uses
+  %10 = phi i1 [ %8, %gistMakeUnionKey.exit ], [ %9, %gistMakeUnionKey.exit.thread ], [ false, %bb.n ], [ true, %bb.o ]
+  %.1 = phi i8 [ %.03144, %gistMakeUnionKey.exit ], [ %.03144, %gistMakeUnionKey.exit.thread ], [ 0, %bb.n ], [ 1, %bb.o ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dn = load ptr, ptr %i.h, align 8             ; 4 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 10
@@ -279,8 +282,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.dr, label %bb.l, label %._crit_edge, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %.thread
-  %8 = trunc nuw i8 %.1 to i1
-  br i1 %8, label %bb.p, label %._crit_edge.thread
+  br i1 %10, label %bb.p, label %._crit_edge.thread
 
 bb.p:                                             ; preds = %._crit_edge
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dn, i64 10

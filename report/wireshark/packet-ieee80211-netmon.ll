@@ -77,7 +77,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.41 = private unnamed_addr constant [35 x i8] c"NetMon WLAN Capture v%u, Length %u\00", align 1
 @.str.42 = private unnamed_addr constant [7 x i8] c"%d dBm\00", align 1
 @.str.43 = private unnamed_addr constant [8 x i8] c"%f Mb/s\00", align 1
-@switch.table.dissect_netmon_802_11 = private unnamed_addr constant [8 x i8] c"\01\03\02\05\04\06\07\08", align 4
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden void @proto_register_netmon_802_11() local_unnamed_addr #0 {
@@ -161,22 +160,41 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not126, label %bb.r, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.aj = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 11)
+  %i.aj = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 11) ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ak, i8 noundef 0, i64 noundef 20, i1 noundef false) #4
-  %switch.tableidx136 = add i32 %i.aj, -1         ; 2 uses
-  %5 = icmp ult i32 %switch.tableidx136, 8
-  br i1 %5, label %switch.lookup137, label %bb.f
+  switch i32 %i.aj, label %switch.lookup137 [
+    i32 8, label %9
+    i32 1, label %bb.f
+    i32 3, label %5
+    i32 2, label %6
+    i32 5, label %7
+    i32 4, label %8
+    i32 6, label %9
+    i32 7, label %bb.f
+  ]
 
-switch.lookup137:                                 ; preds = %bb.e
-  %6 = zext nneg i32 %switch.tableidx136 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.dissect_netmon_802_11, i64 %6
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32
+5:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %switch.lookup137
-  %.sink = phi i32 [ %switch.ext, %switch.lookup137 ], [ 0, %bb.e ] ; 3 uses
+6:                                                ; preds = %bb.e
+  br label %bb.f
+
+7:                                                ; preds = %bb.e
+  br label %bb.f
+
+8:                                                ; preds = %bb.e
+  br label %bb.f
+
+9:                                                ; preds = %bb.e, %bb.e
+  br label %bb.f
+
+switch.lookup137:                                 ; preds = %bb.e
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %bb.e, %switch.lookup137, %9, %8, %7, %6, %5
+  %switch.idx.cast = phi i1 [ true, %switch.lookup137 ], [ true, %9 ], [ true, %5 ], [ false, %bb.e ], [ false, %8 ], [ true, %7 ], [ false, %6 ], [ false, %bb.e ]
+  %.sink = phi i32 [ 0, %switch.lookup137 ], [ %i.aj, %9 ], [ 2, %5 ], [ %i.aj, %bb.e ], [ 5, %8 ], [ 4, %7 ], [ 3, %6 ], [ %i.aj, %bb.e ] ; 2 uses
   store i32 %.sink, ptr %i.c, align 8
   %i.al = load i32, ptr @hf_netmon_802_11_phy_type, align 4
   %i.am = call ptr @proto_tree_add_item(ptr noundef %i.q, i32 noundef %i.al, ptr noundef %0, i32 noundef 11, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
@@ -204,9 +222,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.aw, label %switch.lookup, label %.thread
 
 switch.lookup:                                    ; preds = %bb.i
-  %switch.idx.cast = trunc i32 %.sink to i1
-  %switch.offset = xor i1 %switch.idx.cast, true
-  %i.ax = call i32 @ieee80211_chan_to_mhz(i32 noundef %i.an, i1 noundef zeroext %switch.offset) ; 2 uses
+  %i.ax = call i32 @ieee80211_chan_to_mhz(i32 noundef %i.an, i1 noundef zeroext %switch.idx.cast) ; 2 uses
   %.not128 = icmp eq i32 %i.ax, 0
   br i1 %.not128, label %.thread, label %bb.j
 

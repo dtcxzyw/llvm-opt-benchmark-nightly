@@ -99,38 +99,39 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   %i.x = invoke { ptr, i64 } @_RNvXsH_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringINtNtCskKLDkoKarTP_4core7convert5AsRefeE6as_refCsdAIXAMGuHRT_18build_script_build(ptr nonnull align 8 %i.v)
-          to label %bb.d unwind label %bb.c, !noalias !14 ; 2 uses
+          to label %bb.d unwind label %bb.b, !noalias !14 ; 2 uses
 
-bb.b:                                             ; preds = %.body.i, %bb.c
-  %.pn.pn.pn.i = phi { ptr, i32 } [ %.pn.pn.i, %.body.i ], [ %i.y, %bb.c ]
-  %.sroa.03.0.i = phi i8 [ %.sroa.03.2.i, %.body.i ], [ %.sroa.03.1.i, %bb.c ]
-  %2 = trunc nuw i8 %.sroa.03.0.i to i1
-  br i1 %2, label %bb.ay, label %bb.ax
+2:                                                ; preds = %.body.i
+  br i1 %.sroa.03.2.i, label %bb.ay, label %bb.ax
 
-bb.c:                                             ; preds = %bb.u, %bb.d, %bb.a
-  %.sroa.03.1.i = phi i8 [ %.sroa.03.4.i, %bb.u ], [ 1, %bb.d ], [ 1, %bb.a ]
-  %i.y = landingpad { ptr, i32 }
+bb.b:                                             ; preds = %bb.d, %bb.a
+  %lpad.thr_comm.i = landingpad { ptr, i32 }
           cleanup
-  br label %bb.b
+  br label %bb.ay
+
+bb.c:                                             ; preds = %bb.u
+  %i.y = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %i.af, label %bb.ay, label %bb.ax
 
 bb.d:                                             ; preds = %bb.a
   %i.z = extractvalue { ptr, i64 } %i.x, 0
   %i.aa = extractvalue { ptr, i64 } %i.x, 1
   invoke void @_RNvXsz_NtCsG258MDvU3F_3std4pathNtB5_7PathBufINtNtCskKLDkoKarTP_4core7convert4FromReE4fromCsfLixTUEF4oz_6ignore(ptr nonnull sret([24 x i8]) align 8 %i.u, ptr %i.z, i64 %i.aa) #24
-          to label %_RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoNtNtCsG258MDvU3F_3std4path7PathBufE4intoCsdAIXAMGuHRT_18build_script_build.exit.i unwind label %bb.c, !noalias !14
+          to label %_RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoNtNtCsG258MDvU3F_3std4path7PathBufE4intoCsdAIXAMGuHRT_18build_script_build.exit.i unwind label %bb.b, !noalias !14
 
 _RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoNtNtCsG258MDvU3F_3std4path7PathBufE4intoCsdAIXAMGuHRT_18build_script_build.exit.i: ; preds = %bb.d
   %i.ab = invoke { ptr, i64 } @_RNvXsH_NtCsG258MDvU3F_3std4pathNtB5_7PathBufNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5derefCsdAIXAMGuHRT_18build_script_build(ptr nonnull align 8 %i.u)
           to label %bb.f unwind label %bb.e, !noalias !14 ; 2 uses
 
 .body.i:                                          ; preds = %bb.w, %.body.i.i, %bb.e
-  %.pn.pn.i = phi { ptr, i32 } [ %.pn.i, %bb.w ], [ %i.ac, %bb.e ], [ %eh.lpad-body.i.i, %.body.i.i ]
-  %.sroa.03.2.i = phi i8 [ 1, %bb.w ], [ %.sroa.03.3.i, %bb.e ], [ 0, %.body.i.i ]
+  %.pn.pn.i = phi { ptr, i32 } [ %.pn.i, %bb.w ], [ %i.ac, %bb.e ], [ %eh.lpad-body.i.i, %.body.i.i ] ; 2 uses
+  %.sroa.03.2.i = phi i1 [ true, %bb.w ], [ %.sroa.03.3.i, %bb.e ], [ false, %.body.i.i ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsG258MDvU3F_3std4path7PathBufECsyeC6ktic4j_8tempfile(ptr nonnull align 8 %i.u) #25
-          to label %bb.b unwind label %bb.aw, !noalias !14
+          to label %2 unwind label %bb.aw, !noalias !14
 
 bb.e:                                             ; preds = %bb.ak, %bb.t, %bb.r, %bb.f, %_RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoNtNtCsG258MDvU3F_3std4path7PathBufE4intoCsdAIXAMGuHRT_18build_script_build.exit.i
-  %.sroa.03.3.i = phi i8 [ 1, %bb.ak ], [ 1, %bb.t ], [ 0, %bb.r ], [ 1, %bb.f ], [ 1, %_RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoNtNtCsG258MDvU3F_3std4path7PathBufE4intoCsdAIXAMGuHRT_18build_script_build.exit.i ]
+  %.sroa.03.3.i = phi i1 [ true, %bb.ak ], [ true, %bb.t ], [ false, %bb.r ], [ true, %bb.f ], [ true, %_RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoNtNtCsG258MDvU3F_3std4path7PathBufE4intoCsdAIXAMGuHRT_18build_script_build.exit.i ]
   %i.ac = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
@@ -139,7 +140,7 @@ bb.f:                                             ; preds = %_RNvXs1_NtCskKLDkoK
   %i.ad = extractvalue { ptr, i64 } %i.ab, 0
   %i.ae = extractvalue { ptr, i64 } %i.ab, 1
   %i.af = invoke zeroext i1 @_RNvMs16_NtCsG258MDvU3F_3std4pathNtB6_4Path11is_absolute(ptr %i.ad, i64 %i.ae)
-          to label %bb.g unwind label %bb.e, !noalias !14
+          to label %bb.g unwind label %bb.e, !noalias !14 ; 3 uses
 
 bb.g:                                             ; preds = %bb.f
   br i1 %i.af, label %bb.t, label %bb.h
@@ -282,7 +283,6 @@ bb.t:                                             ; preds = %bb.g
           to label %bb.v unwind label %bb.e, !noalias !14
 
 bb.u:                                             ; preds = %bb.ak, %_RINvMs2_CseVyiZOR58h4_8globwalkNtB6_17GlobWalkerBuilder3newReNtNtCsexYYUdYSQU6_5alloc6string6StringECsdAIXAMGuHRT_18build_script_build.exit.i
-  %.sroa.03.4.i = phi i8 [ 1, %bb.ak ], [ 0, %_RINvMs2_CseVyiZOR58h4_8globwalkNtB6_17GlobWalkerBuilder3newReNtNtCsexYYUdYSQU6_5alloc6string6StringECsdAIXAMGuHRT_18build_script_build.exit.i ] ; 2 uses
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsG258MDvU3F_3std4path7PathBufECsyeC6ktic4j_8tempfile(ptr nonnull align 8 %i.u)
           to label %bb.al unwind label %bb.c, !noalias !14
 
@@ -396,8 +396,7 @@ bb.ak:                                            ; preds = %bb.aj
           to label %bb.u unwind label %bb.e, !noalias !14
 
 bb.al:                                            ; preds = %bb.u
-  %3 = trunc nuw i8 %.sroa.03.4.i to i1
-  br i1 %3, label %bb.am, label %_RINvCseVyiZOR58h4_8globwalk12glob_builderNtNtCsexYYUdYSQU6_5alloc6string6StringECsdAIXAMGuHRT_18build_script_build.exit
+  br i1 %i.af, label %bb.am, label %_RINvCseVyiZOR58h4_8globwalk12glob_builderNtNtCsexYYUdYSQU6_5alloc6string6StringECsdAIXAMGuHRT_18build_script_build.exit
 
 bb.am:                                            ; preds = %bb.al
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs5ir8AFLADJ7_12aho_corasick(ptr nonnull align 8 %i.v), !noalias !14
@@ -476,10 +475,12 @@ bb.aw:                                            ; preds = %bb.ay, %.loopexit.s
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #26, !noalias !14
   unreachable
 
-bb.ax:                                            ; preds = %bb.ay, %bb.b
-  resume { ptr, i32 } %.pn.pn.pn.i
+bb.ax:                                            ; preds = %bb.ay, %bb.c, %2
+  %.pn.pn.pn20.i = phi { ptr, i32 } [ %i.y, %bb.c ], [ %.pn.pn.pn21.i, %bb.ay ], [ %.pn.pn.i, %2 ]
+  resume { ptr, i32 } %.pn.pn.pn20.i
 
-bb.ay:                                            ; preds = %bb.b
+bb.ay:                                            ; preds = %bb.c, %bb.b, %2
+  %.pn.pn.pn21.i = phi { ptr, i32 } [ %i.y, %bb.c ], [ %.pn.pn.i, %2 ], [ %lpad.thr_comm.i, %bb.b ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs5ir8AFLADJ7_12aho_corasick(ptr nonnull align 8 %i.v) #25
           to label %bb.ax unwind label %bb.aw, !noalias !14
 

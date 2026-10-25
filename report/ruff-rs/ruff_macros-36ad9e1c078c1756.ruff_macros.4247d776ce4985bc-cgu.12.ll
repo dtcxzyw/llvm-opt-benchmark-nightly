@@ -202,19 +202,21 @@ bb.at:                                            ; preds = %bb.aj, %bb.ar
           to label %bb.au unwind label %bb.ae
 
 bb.au:                                            ; preds = %bb.at
-  %i.dw = load i64, ptr %i.az, align 8            ; 2 uses
+  %i.dw = load i64, ptr %i.az, align 8            ; 3 uses
+  %2 = icmp eq i64 %i.dw, -3                      ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.az, i64 8 ; 2 uses
-  switch i64 %i.dw, label %bb.aw [
-    i64 -3, label %bb.av
-    i64 -2, label %bb.ax
-  ]
+  br i1 %2, label %bb.av, label %3
 
 bb.av:                                            ; preds = %bb.au
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(24) %i.dx, i64 24, i1 false)
   invoke void @_RNvXsq_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultNtCsghEUimwObfx_11proc_macro211TokenStreamNtNtCsfq6Q4Do6HaX_3syn5error5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1q_EE13from_residualB1u_(ptr sret([32 x i8]) align 8 %0, ptr nonnull align 8 %i.q, ptr nonnull align 8 @47)
           to label %bb.gc unwind label %bb.ae
 
-bb.aw:                                            ; preds = %bb.au
+3:                                                ; preds = %bb.au
+  %.not = icmp eq i64 %i.dw, -2
+  br i1 %.not, label %bb.ax, label %bb.aw
+
+bb.aw:                                            ; preds = %3
   store i64 %i.dw, ptr %i.ba, align 8
   %.sroa.3.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.3.0..sroa_idx2, ptr noundef nonnull align 8 dereferenceable(24) %i.dx, i64 24, i1 false)
@@ -224,7 +226,7 @@ bb.aw:                                            ; preds = %bb.au
   invoke void @_RNvMs_NtCsfq6Q4Do6HaX_3syn8genericsNtB4_8Generics14split_for_impl(ptr nonnull sret([24 x i8]) align 8 %i.at, ptr nonnull align 8 %i.dz)
           to label %bb.ba unwind label %bb.az
 
-bb.ax:                                            ; preds = %bb.au
+bb.ax:                                            ; preds = %3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(240) %i.bb, ptr noundef nonnull align 8 dereferenceable(240) %1, i64 240, i1 false)
   invoke void @_RINvMNtCsfq6Q4Do6HaX_3syn5errorNtB3_5Error11new_spannedNtNtB5_6derive11DeriveInputReECs5GOeAjNCyUy_11ruff_macros(ptr nonnull sret([24 x i8]) align 8 %i.bc, ptr nonnull align 8 %i.bb, ptr nonnull @46, i64 36)
           to label %bb.gb unwind label %bb.ae
@@ -627,12 +629,11 @@ bb.gb:                                            ; preds = %bb.ax
   br label %bb.gc
 
 bb.gc:                                            ; preds = %bb.av, %bb.gb
-  %.sroa.03.4 = phi i8 [ 1, %bb.av ], [ 0, %bb.gb ] ; 3 uses
+  %.sroa.03.4 = phi i8 [ 1, %bb.av ], [ 0, %bb.gb ] ; 2 uses
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs4h2pZbAM0ZT_4heck(ptr nonnull align 8 %i.bf)
           to label %bb.gd unwind label %bb.b
 
 bb.gd:                                            ; preds = %bb.gc
-  %2 = trunc nuw i8 %.sroa.03.4 to i1
   br i1 %2, label %.thread, label %.critedge44
 
 .thread:                                          ; preds = %bb.ac, %bb.gd

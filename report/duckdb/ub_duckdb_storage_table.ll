@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %_ZNSt11unique_lockISt5mutexED2Ev.exit, %.noexc, %bb.m, %bb.u, %bb.bc, %bb.bb, %bb.l, %bb.k, %bb.i, %bb.h
   %.sroa.0108.0 = phi ptr [ null, %.noexc ], [ null, %bb.m ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.bc ], [ null, %bb.bb ], [ %i.bn, %_ZNSt11unique_lockISt5mutexED2Ev.exit ], [ null, %bb.u ], [ null, %bb.i ], [ null, %bb.h ]
-  %.sroa.9.0 = phi i8 [ 0, %.noexc ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.k ], [ 0, %bb.bc ], [ 0, %bb.bb ], [ 1, %_ZNSt11unique_lockISt5mutexED2Ev.exit ], [ 0, %bb.u ], [ 0, %bb.i ], [ 0, %bb.h ]
+  %.sroa.9.0 = phi i1 [ false, %.noexc ], [ false, %bb.m ], [ false, %bb.l ], [ false, %bb.k ], [ false, %bb.bc ], [ false, %bb.bb ], [ true, %_ZNSt11unique_lockISt5mutexED2Ev.exit ], [ false, %bb.u ], [ false, %bb.i ], [ false, %bb.h ]
   %i.cx = landingpad { ptr, i32 }
           cleanup
   br label %bb.cn
@@ -450,7 +450,8 @@ bb.bj:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN6duckdb13ColumnSegment19ConvertToPersistentENS_12QueryContextENS_12optional_ptrINS_12BlockManagerELb1EEEl.exit: ; preds = %bb.bj, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.bf, %bb.bd, %bb.s, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i14.i, %bb.o, %.noexc67, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit78
   %.sroa.0108.1 = phi ptr [ %i.bn, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit78 ], [ null, %bb.s ], [ null, %.noexc67 ], [ null, %bb.o ], [ null, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i14.i ], [ null, %bb.bd ], [ null, %bb.bf ], [ null, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i ], [ null, %bb.bj ] ; 3 uses
-  %.sroa.9.1 = phi i8 [ 1, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit78 ], [ 0, %bb.s ], [ 0, %.noexc67 ], [ 0, %bb.o ], [ 0, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i14.i ], [ 0, %bb.bd ], [ 0, %bb.bf ], [ 0, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i ], [ 0, %bb.bj ] ; 2 uses
+  %.not138 = phi i1 [ false, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit78 ], [ true, %bb.s ], [ true, %.noexc67 ], [ true, %bb.o ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i14.i ], [ true, %bb.bd ], [ true, %bb.bf ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i ], [ true, %bb.bj ]
+  %.sroa.9.1 = phi i1 [ true, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit78 ], [ false, %bb.s ], [ false, %.noexc67 ], [ false, %bb.o ], [ false, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i14.i ], [ false, %bb.bd ], [ false, %bb.bf ], [ false, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i ], [ false, %bb.bj ]
   %.027 = phi i64 [ %i.bs, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit78 ], [ -1, %bb.s ], [ -1, %.noexc67 ], [ -1, %bb.o ], [ -1, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i14.i ], [ -1, %bb.bd ], [ -1, %bb.bf ], [ -1, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i ], [ -1, %bb.bj ]
   %.0 = phi i32 [ %i.bu, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit78 ], [ 0, %bb.s ], [ 0, %.noexc67 ], [ 0, %bb.o ], [ 0, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i14.i ], [ 0, %bb.bd ], [ 0, %bb.bf ], [ 0, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i ], [ 0, %bb.bj ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #37
@@ -670,10 +671,9 @@ _ZN6duckdb11DataPointerD2Ev.exit:                 ; preds = %_ZNSt6vectorIN6duck
   %i.ia = getelementptr inbounds nuw i8, ptr %10, i64 40
   call void @_ZN6duckdb14BaseStatisticsD1Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %i.ia) #37
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #37
-  %14 = trunc nuw i8 %.sroa.9.1 to i1
-  %.not.i.i96 = icmp ne ptr %.sroa.0108.1, null
-  %or.cond.not = and i1 %.not.i.i96, %14
-  br i1 %or.cond.not, label %bb.cj, label %_ZNSt11unique_lockISt5mutexED2Ev.exit97
+  %.not.i.i96 = icmp eq ptr %.sroa.0108.1, null
+  %or.cond = or i1 %.not138, %.not.i.i96
+  br i1 %or.cond, label %_ZNSt11unique_lockISt5mutexED2Ev.exit97, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZN6duckdb11DataPointerD2Ev.exit
   %i.ib = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.0108.1) #37 ; 0 uses
@@ -714,11 +714,10 @@ bb.cm:                                            ; preds = %_ZN6duckdb11DataPoi
 
 bb.cn:                                            ; preds = %bb.ah, %bb.cm
   %.sroa.0108.2 = phi ptr [ %.sroa.0108.1, %bb.cm ], [ %.sroa.0108.0, %bb.ah ] ; 2 uses
-  %.sroa.9.2 = phi i8 [ %.sroa.9.1, %bb.cm ], [ %.sroa.9.0, %bb.ah ]
+  %.sroa.9.2 = phi i1 [ %.sroa.9.1, %bb.cm ], [ %.sroa.9.0, %bb.ah ]
   %.pn59.pn.pn.pn = phi { ptr, i32 } [ %.pn59.pn.pn, %bb.cm ], [ %i.cx, %bb.ah ] ; 2 uses
-  %15 = trunc nuw i8 %.sroa.9.2 to i1
   %.not.i.i102 = icmp ne ptr %.sroa.0108.2, null
-  %or.cond140.not = and i1 %.not.i.i102, %15
+  %or.cond140.not = and i1 %.not.i.i102, %.sroa.9.2
   br i1 %or.cond140.not, label %bb.co, label %_ZNSt11unique_lockISt5mutexED2Ev.exit103
 
 bb.co:                                            ; preds = %bb.cn, %.thread132
@@ -1121,21 +1120,26 @@ declare noundef nonnull align 1 dereferenceable(1) ptr @_ZN6duckdb13GeometryStat
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr noundef zeroext i1 @_ZNK6duckdb15GeometryTypeSet16TryGetSingleTypeERNS_12GeometryTypeERNS_10VertexTypeE(ptr noundef nonnull align 1 dereferenceable(4) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2) local_unnamed_addr #8 comdat align 2 {
 .preheader:
-  %i.a = load i8, ptr %0, align 1, !tbaa !273     ; 3 uses
-  %i.b = zext i8 %i.a to i32                      ; 5 uses
-  %3 = lshr i8 %i.a, 1                            ; 2 uses
-  %.lobit = and i8 %3, 1                          ; 2 uses
-  %i.c = and i32 %i.b, 4
-  %.not.1 = icmp eq i32 %i.c, 0
-  br i1 %.not.1, label %bb.b, label %bb.a
+  %i.a = load i8, ptr %0, align 1, !tbaa !273     ; 2 uses
+  %i.b = zext i8 %i.a to i32                      ; 6 uses
+  %3 = and i32 %i.b, 2
+  %.not.not = icmp eq i32 %3, 0
+  %i.c = and i32 %i.b, 4                          ; 2 uses
+  %.not.1 = icmp eq i32 %i.c, 0                   ; 2 uses
+  br i1 %.not.not, label %bb.a, label %.thread
 
 bb.a:                                             ; preds = %.preheader
-  %4 = trunc i8 %3 to i1
-  br i1 %4, label %.loopexit, label %bb.b
+  %spec.select = select i1 %.not.1, i8 0, i8 2
+  %.lobit = lshr exact i32 %i.c, 2
+  %spec.select84 = trunc nuw nsw i32 %.lobit to i8
+  br label %bb.b
 
-bb.b:                                             ; preds = %bb.a, %.preheader
-  %.229.1 = phi i8 [ %.lobit, %.preheader ], [ 2, %bb.a ]
-  %.2.1 = phi i8 [ %.lobit, %.preheader ], [ 1, %bb.a ] ; 2 uses
+.thread:                                          ; preds = %.preheader
+  br i1 %.not.1, label %bb.b, label %.loopexit
+
+bb.b:                                             ; preds = %bb.a, %.thread
+  %.229.1 = phi i8 [ %spec.select, %bb.a ], [ 1, %.thread ]
+  %.2.1 = phi i8 [ %spec.select84, %bb.a ], [ 1, %.thread ] ; 2 uses
   %i.d = and i32 %i.b, 8
   %.not.2 = icmp eq i32 %i.d, 0
   br i1 %.not.2, label %bb.d, label %bb.c
@@ -1454,8 +1458,8 @@ bb.ax:                                            ; preds = %bb.aw
   store i8 %.225.6.380, ptr %2, align 1, !tbaa !1248
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.a, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %bb.v, %bb.x, %bb.y, %bb.aa, %bb.ac, %bb.ae, %bb.ag, %bb.ai, %bb.ak, %bb.al, %bb.an, %bb.ap, %bb.ar, %bb.at, %bb.av, %bb.ax, %.critedge.3, %.thread42
-  %.334 = phi i1 [ false, %.critedge.3 ], [ true, %.thread42 ], [ false, %bb.ax ], [ false, %bb.av ], [ false, %bb.at ], [ false, %bb.ar ], [ false, %bb.ap ], [ false, %bb.an ], [ false, %bb.al ], [ false, %bb.ak ], [ false, %bb.ai ], [ false, %bb.ag ], [ false, %bb.ae ], [ false, %bb.ac ], [ false, %bb.aa ], [ false, %bb.y ], [ false, %bb.x ], [ false, %bb.v ], [ false, %bb.t ], [ false, %bb.r ], [ false, %bb.p ], [ false, %bb.n ], [ false, %bb.l ], [ false, %bb.k ], [ false, %bb.i ], [ false, %bb.g ], [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.a ]
+.loopexit:                                        ; preds = %.thread, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %bb.v, %bb.x, %bb.y, %bb.aa, %bb.ac, %bb.ae, %bb.ag, %bb.ai, %bb.ak, %bb.al, %bb.an, %bb.ap, %bb.ar, %bb.at, %bb.av, %bb.ax, %.critedge.3, %.thread42
+  %.334 = phi i1 [ false, %.critedge.3 ], [ true, %.thread42 ], [ false, %bb.c ], [ false, %bb.ax ], [ false, %bb.av ], [ false, %bb.at ], [ false, %bb.ar ], [ false, %bb.ap ], [ false, %bb.an ], [ false, %bb.al ], [ false, %bb.ak ], [ false, %bb.ai ], [ false, %bb.ag ], [ false, %bb.ae ], [ false, %bb.ac ], [ false, %bb.aa ], [ false, %bb.y ], [ false, %bb.x ], [ false, %bb.v ], [ false, %bb.t ], [ false, %bb.r ], [ false, %bb.p ], [ false, %bb.n ], [ false, %bb.l ], [ false, %bb.k ], [ false, %bb.i ], [ false, %bb.g ], [ false, %bb.e ], [ false, %.thread ]
   ret i1 %.334
 }
 

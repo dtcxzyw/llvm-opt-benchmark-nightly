@@ -205,7 +205,8 @@ bb.p:                                             ; preds = %bb.o
 
 _ZN4Luau3getINS_9UnionTypeEEEPKT_PKNS_4TypeE.exit: ; preds = %bb.o, %bb.p, %bb.k, %bb.l, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i
   %.sroa.0270.0 = phi ptr [ undef, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %i.al, %bb.l ], [ undef, %bb.k ], [ undef, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit ], [ undef, %bb.p ], [ undef, %bb.o ]
-  %.sroa.8.0 = phi i8 [ 0, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i ], [ 1, %bb.l ], [ 0, %bb.k ], [ 0, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit ], [ 0, %bb.p ], [ 0, %bb.o ] ; 3 uses
+  %15 = phi i1 [ false, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i ], [ true, %bb.l ], [ false, %bb.k ], [ false, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit ], [ false, %bb.p ], [ false, %bb.o ]
+  %.sroa.8.0 = phi i8 [ 0, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i ], [ 1, %bb.l ], [ 0, %bb.k ], [ 0, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit ], [ 0, %bb.p ], [ 0, %bb.o ] ; 2 uses
   %.sroa.0275.0 = phi ptr [ undef, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %i.aj, %bb.l ], [ undef, %bb.k ], [ undef, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit ], [ undef, %bb.p ], [ undef, %bb.o ] ; 2 uses
   %.285 = phi ptr [ null, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i ], [ null, %bb.l ], [ null, %bb.k ], [ null, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit ], [ %i.ar, %bb.p ], [ null, %bb.o ] ; 3 uses
   %.175 = phi ptr [ null, %_ZNSt12_Vector_baseISt4pairIPKN4Luau4TypeES4_ESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %i.ab, %bb.l ], [ %i.ab, %bb.k ], [ null, %_ZN4Luau3getINS_9TableTypeEEEPKT_PKNS_4TypeE.exit ], [ null, %bb.p ], [ null, %bb.o ] ; 3 uses
@@ -219,7 +220,6 @@ _ZN4Luau3getINS_9UnionTypeEEEPKT_PKNS_4TypeE.exit: ; preds = %bb.o, %bb.p, %bb.k
   %i.au = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.175, i64 16
   %i.aw = getelementptr inbounds nuw i8, ptr %.175, i64 8 ; 6 uses
-  %15 = trunc nuw i8 %.sroa.8.0 to i1
   %.not96 = icmp eq ptr %.285, null
   %i.ax = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 4 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %10, i64 24
@@ -622,13 +622,15 @@ bb.di:                                            ; preds = %.split, %.split886
   %.sroa.39.13 = phi ptr [ %.sroa.39.6, %.split886 ], [ %.sroa.39.0, %.split ] ; 2 uses
   %.sroa.22.5 = phi ptr [ %.sroa.22.2, %.split886 ], [ %.sroa.22.0, %.split ] ; 3 uses
   %.sroa.01320.13 = phi ptr [ %.sroa.01320.6, %.split886 ], [ %.sroa.01320.0, %.split ] ; 3 uses
+  %43 = phi i1 [ false, %.split886 ], [ true, %.split ]
   %.3264883 = phi i8 [ 0, %.split886 ], [ 1, %.split ] ; 2 uses
   %.not964 = icmp eq ptr %.sroa.01320.13, %.sroa.22.5
   br i1 %.not964, label %.sink.split, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204, %bb.di
   %..i7348288378821373 = phi ptr [ %..i734827, %bb.di ], [ %..i734828.ph850.ph, %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204 ]
-  %.32648831371 = phi i8 [ %.3264883, %bb.di ], [ 1, %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204 ] ; 3 uses
+  %.32648831371 = phi i8 [ %.3264883, %bb.di ], [ 1, %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204 ] ; 2 uses
+  %44 = phi i1 [ %43, %bb.di ], [ true, %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204 ]
   %.sroa.01320.131365 = phi ptr [ %.sroa.01320.13, %bb.di ], [ %i.tm, %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204 ] ; 8 uses
   %.sroa.22.51363 = phi ptr [ %.sroa.22.5, %bb.di ], [ %i.tn, %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204 ] ; 3 uses
   %.sroa.39.131358 = phi ptr [ %.sroa.39.13, %bb.di ], [ %i.tn, %_ZNKSt6vectorIPN4Luau9TableTypeESaIS2_EE12_M_check_lenEmPKc.exit.i.i1204 ] ; 7 uses
@@ -1031,8 +1033,7 @@ bb.fc:                                            ; preds = %.lr.ph.i.i544
   br label %.thread876
 
 bb.fd:                                            ; preds = %._crit_edge
-  %43 = trunc nuw i8 %.32648831371 to i1
-  br i1 %43, label %bb.fe, label %bb.fx
+  br i1 %44, label %bb.fe, label %bb.fx
 
 bb.fe:                                            ; preds = %bb.fd
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #35

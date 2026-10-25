@@ -204,13 +204,19 @@ bb.a:
   %5 = alloca %"class.std::shared_ptr", align 8   ; 5 uses
   %i.a = and i32 %4, 3
   %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %bb.b, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
+  br i1 %.not, label %bb.b, label %6
+
+6:                                                ; preds = %bb.a
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 4, ptr %7, align 4, !tbaa !22
+  br label %14
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !39   ; 4 uses
   %.not.i = icmp eq ptr %i.c, null
-  br i1 %.not.i, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, label %bb.c
+  br i1 %.not.i, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 56 ; 3 uses
@@ -240,7 +246,7 @@ _ZNSt11shared_lockISt12shared_mutexEC2ERS0_.exit.i.i: ; preds = %bb.d
 
 _ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread18: ; preds = %_ZNSt11shared_lockISt12shared_mutexEC2ERS0_.exit.i.i
   %i.j = tail call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.d) #23, !noalias !388 ; 0 uses
-  br label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
+  br label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.k = landingpad { ptr, i32 }
@@ -253,7 +259,13 @@ _ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit: ; preds = %_ZNSt11
   %i.m = load ptr, ptr %i.i, align 8, !tbaa !46, !noalias !388 ; 3 uses
   %i.n = tail call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.d) #23, !noalias !388 ; 0 uses
   %i.o = icmp eq ptr %i.m, null
-  br i1 %i.o, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, label %bb.g
+  br i1 %i.o, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread, label %bb.g
+
+_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread: ; preds = %bb.b, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread18, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 21, ptr %8, align 4, !tbaa !22
+  br label %14
 
 bb.g:                                             ; preds = %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit
   %i.p = zext i32 %4 to i64                       ; 2 uses
@@ -267,7 +279,13 @@ bb.g:                                             ; preds = %_ZNK8WasmEdge7Runti
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.p ; 2 uses
   %i.y = icmp eq ptr %i.w, null
   %i.z = select i1 %i.u, i1 true, i1 %i.y
-  br i1 %i.z, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, label %bb.h
+  br i1 %i.z, label %9, label %bb.h
+
+9:                                                ; preds = %bb.g
+  store i8 1, ptr %0, align 4, !tbaa !35
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 21, ptr %10, align 4, !tbaa !22
+  br label %14
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 160
@@ -295,7 +313,8 @@ bb.k:                                             ; preds = %bb.j
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.k, %bb.j, %bb.i
-  %.sroa.59.sroa.0.1.i = phi i32 [ 1, %bb.k ], [ 524288, %bb.i ], [ 1835008, %bb.j ] ; 2 uses
+  %11 = phi i1 [ false, %bb.k ], [ true, %bb.i ], [ true, %bb.j ]
+  %.sroa.59.sroa.0.1.i = phi i32 [ 0, %bb.k ], [ 8, %bb.i ], [ 28, %bb.j ]
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !167 ; 8 uses
   %.not.i.i.i = icmp eq ptr %i.aj, null
@@ -354,16 +373,19 @@ bb.r:                                             ; preds = %bb.h
 
 _ZNK8WasmEdge4Host4WASI7Environ12fdPrestatGetEiR16__wasi_prestat_t.exit: ; preds = %.thread.i, %bb.m, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
-  %6 = trunc i32 %.sroa.59.sroa.0.1.i to i1
-  %.sroa.513.0.extract.shift = lshr exact i32 %.sroa.59.sroa.0.1.i, 16
-  %spec.select = select i1 %6, i32 0, i32 %.sroa.513.0.extract.shift
-  br label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
-
-_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a: ; preds = %_ZNK8WasmEdge4Host4WASI7Environ12fdPrestatGetEiR16__wasi_prestat_t.exit, %bb.g, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread18, %bb.b, %bb.a
-  %.sroa.513.0.extract.shift.sink = phi i32 [ %spec.select, %_ZNK8WasmEdge4Host4WASI7Environ12fdPrestatGetEiR16__wasi_prestat_t.exit ], [ 4, %bb.a ], [ 21, %bb.g ], [ 21, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit ], [ 21, %bb.b ], [ 21, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread18 ]
   store i8 1, ptr %0, align 4, !tbaa !35
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.513.0.extract.shift.sink, ptr %7, align 4, !tbaa !22
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  br i1 %11, label %13, label %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a
+
+13:                                               ; preds = %_ZNK8WasmEdge4Host4WASI7Environ12fdPrestatGetEiR16__wasi_prestat_t.exit
+  store i32 %.sroa.59.sroa.0.1.i, ptr %12, align 4, !tbaa !22
+  br label %14
+
+_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a: ; preds = %_ZNK8WasmEdge4Host4WASI7Environ12fdPrestatGetEiR16__wasi_prestat_t.exit
+  store i32 0, ptr %12, align 4, !tbaa !22
+  br label %14
+
+14:                                               ; preds = %13, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread, %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread.a, %9, %6
   ret void
 }
 

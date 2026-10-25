@@ -202,7 +202,7 @@ sub_1.i:                                          ; preds = %bb.d
 
 .tail.i:                                          ; preds = %sub_1.i, %bb.d
   %i.r = phi i32 [ %i.m, %bb.d ], [ %i.q, %sub_1.i ]
-  %.not.i = icmp eq i32 %i.r, 0
+  %.not.i = icmp eq i32 %i.r, 0                   ; 3 uses
   br i1 %.not.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.tail.i
@@ -221,7 +221,6 @@ bb.f:                                             ; preds = %.tail.i
 
 bb.g:                                             ; preds = %._crit_edge86.i, %bb.e
   %i.u = phi ptr [ %.pre.i, %._crit_edge86.i ], [ %i.s, %bb.e ]
-  %.047.i = phi i8 [ 0, %._crit_edge86.i ], [ 1, %bb.e ] ; 3 uses
   %fwrite.i = call i64 @fwrite(ptr nonnull @.str.41, i64 131, i64 1, ptr %i.u) ; 0 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 2024
   %i.w = load i32, ptr %i.v, align 8, !tbaa !93   ; 2 uses
@@ -348,8 +347,7 @@ bb.n:                                             ; preds = %get_netscape_format
   br label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge82.i, %bb.g
-  %2 = trunc nuw i8 %.047.i to i1
-  br i1 %2, label %.sink.split.i, label %bb.p
+  br i1 %.not.i, label %.sink.split.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.br = load ptr, ptr %i.a, align 8, !tbaa !96
@@ -365,12 +363,10 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not65.i, label %.sink.split.i, label %.thread71.i
 
 .thread71.i:                                      ; preds = %bb.q, %.thread.i, %bb.h, %bb.f
-  %.148.i = phi i8 [ 0, %bb.f ], [ 0, %bb.q ], [ %.047.i, %.thread.i ], [ %.047.i, %bb.h ]
   %.4.i = phi i32 [ %i.t, %bb.f ], [ 23, %bb.q ], [ 27, %.thread.i ], [ 27, %bb.h ] ; 2 uses
   %i.bv = load ptr, ptr %i.a, align 8, !tbaa !96  ; 2 uses
   %i.bw = icmp eq ptr %i.bv, null
-  %3 = trunc nuw i8 %.148.i to i1
-  %or.cond.i = select i1 %i.bw, i1 true, i1 %3
+  %or.cond.i = or i1 %.not.i, %i.bw
   br i1 %or.cond.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %.thread71.i

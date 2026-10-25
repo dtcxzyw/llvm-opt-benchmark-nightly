@@ -202,26 +202,25 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.t = invoke i32 @_RNvXs8_NtNtCstuaXukgBIa_10proc_macro6bridge6clientNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr nonnull align 4 %i.r)
-          to label %_RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit unwind label %bb.d
+          to label %_RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit unwind label %bb.c
 
-bb.c:                                             ; preds = %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.d
-  %.pn = phi { ptr, i32 } [ %i.u, %bb.d ], [ %eh.lpad-body, %bb.al ], [ %eh.lpad-body, %bb.ap ], [ %eh.lpad-body, %bb.am ], [ %eh.lpad-body, %bb.ar ], [ %eh.lpad-body, %bb.an ], [ %eh.lpad-body, %bb.as ], [ %eh.lpad-body, %bb.ao ] ; 2 uses
-  %.sroa.03.0 = phi i8 [ %.sroa.03.1, %bb.d ], [ %.sroa.03.2.lpad-body, %bb.al ], [ %.sroa.03.2.lpad-body, %bb.ap ], [ %.sroa.03.2.lpad-body, %bb.am ], [ %.sroa.03.2.lpad-body, %bb.ar ], [ %.sroa.03.2.lpad-body, %bb.an ], [ %.sroa.03.2.lpad-body, %bb.as ], [ %.sroa.03.2.lpad-body, %bb.ao ] ; 2 uses
-  %.sroa.01.0 = phi i8 [ %.sroa.01.1, %bb.d ], [ %.sroa.01.2.lpad-body, %bb.al ], [ %.sroa.01.2.lpad-body, %bb.ap ], [ %.sroa.01.2.lpad-body, %bb.am ], [ %.sroa.01.2.lpad-body, %bb.ar ], [ %.sroa.01.2.lpad-body, %bb.an ], [ %.sroa.01.2.lpad-body, %bb.as ], [ %.sroa.01.2.lpad-body, %bb.ao ]
-  %2 = trunc nuw i8 %.sroa.01.0 to i1
-  br i1 %2, label %bb.at, label %bb.ai
+2:                                                ; preds = %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al
+  br i1 %.sroa.01.2.lpad-body, label %bb.at, label %bb.ai
 
-bb.d:                                             ; preds = %bb.b, %bb.ae, %bb.f, %_RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit
-  %.sroa.03.1 = phi i8 [ 1, %bb.f ], [ %.sroa.03.320, %bb.ae ], [ 1, %_RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit ], [ 1, %bb.b ]
-  %.sroa.01.1 = phi i8 [ 0, %bb.f ], [ %.sroa.01.3, %bb.ae ], [ 1, %_RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit ], [ 1, %bb.b ]
-  %i.u = landingpad { ptr, i32 }
+bb.c:                                             ; preds = %_RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit, %bb.b
+  %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
-  br label %bb.c
+  br label %bb.at
+
+bb.d:                                             ; preds = %bb.ae
+  %i.u = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %.not29, label %bb.at, label %bb.ai
 
 _RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit: ; preds = %bb.a, %bb.b
   %.sroa.0.0.i = phi i32 [ 0, %bb.a ], [ %i.t, %bb.b ]
   invoke void @_RINvCs3Eghgi3KVFH_3syn5parseNtNtB2_4item4ItemECshVzvyy7iigg_12salsa_macros(ptr nonnull sret([360 x i8]) align 8 %i.p, i32 %.sroa.0.0.i)
-          to label %bb.e unwind label %bb.d
+          to label %bb.e unwind label %bb.c
 
 bb.e:                                             ; preds = %_RNvXsU_CstuaXukgBIa_10proc_macroNtB5_11TokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit
   %i.v = load i64, ptr %i.p, align 8
@@ -233,7 +232,12 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.x, i64 24, i1 false)
   %i.y = load i32, ptr %i.r, align 4
   %i.z = invoke i32 @_RNvCshVzvyy7iigg_12salsa_macros23token_stream_with_error(i32 %i.y, ptr nonnull align 8 %i.h)
-          to label %.sink.split unwind label %bb.d
+          to label %.sink.split unwind label %.thread31
+
+.thread31:                                        ; preds = %bb.f
+  %lpad.thr_comm.split-lp21 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.av
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(360) %i.q, ptr noundef nonnull align 8 dereferenceable(360) %i.p, i64 360, i1 false)
@@ -377,8 +381,8 @@ bb.y:                                             ; preds = %bb.w, %bb.s, %bb.ac
   %.sroa.07.0 = phi i1 [ %.sroa.07.117, %bb.ab ], [ %.sroa.07.1.ph, %bb.ac ], [ true, %bb.aa ], [ true, %bb.h ], [ true, %bb.i ], [ false, %bb.j ], [ true, %bb.w ], [ true, %bb.s ]
   %.sroa.06.0 = phi i1 [ %.sroa.06.118, %bb.ab ], [ %.sroa.06.1.ph, %bb.ac ], [ true, %bb.aa ], [ true, %bb.h ], [ false, %bb.i ], [ true, %bb.j ], [ true, %bb.w ], [ true, %bb.s ]
   %.sroa.05.0 = phi i1 [ %.sroa.05.119, %bb.ab ], [ %.sroa.05.1.ph, %bb.ac ], [ true, %bb.aa ], [ true, %bb.h ], [ true, %bb.i ], [ true, %bb.j ], [ false, %bb.w ], [ false, %bb.s ]
-  %.sroa.03.2 = phi i8 [ %.sroa.03.321, %bb.ab ], [ 0, %bb.ac ], [ 1, %bb.aa ], [ 1, %bb.h ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.w ], [ 0, %bb.s ]
-  %.sroa.01.2 = phi i8 [ 0, %bb.ab ], [ 1, %bb.ac ], [ 1, %bb.aa ], [ 1, %bb.h ], [ 1, %bb.i ], [ 1, %bb.j ], [ 1, %bb.w ], [ 1, %bb.s ]
+  %.sroa.03.2 = phi i1 [ %3, %bb.ab ], [ false, %bb.ac ], [ true, %bb.aa ], [ true, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.w ], [ false, %bb.s ]
+  %.sroa.01.2 = phi i1 [ false, %bb.ab ], [ true, %bb.ac ], [ true, %bb.aa ], [ true, %bb.h ], [ true, %bb.i ], [ true, %bb.j ], [ true, %bb.w ], [ true, %bb.s ]
   %i.at = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -387,9 +391,9 @@ bb.y:                                             ; preds = %bb.w, %bb.s, %bb.ac
   %.sroa.07.0.lpad-body = phi i1 [ %.sroa.07.0, %bb.y ], [ true, %bb.x ], [ true, %.thread11.i ], [ true, %bb.r ]
   %.sroa.06.0.lpad-body = phi i1 [ %.sroa.06.0, %bb.y ], [ true, %bb.x ], [ true, %.thread11.i ], [ true, %bb.r ]
   %.sroa.05.0.lpad-body = phi i1 [ %.sroa.05.0, %bb.y ], [ false, %bb.x ], [ false, %.thread11.i ], [ false, %bb.r ]
-  %.sroa.03.2.lpad-body = phi i8 [ %.sroa.03.2, %bb.y ], [ 0, %bb.x ], [ 0, %.thread11.i ], [ 0, %bb.r ] ; 7 uses
-  %.sroa.01.2.lpad-body = phi i8 [ %.sroa.01.2, %bb.y ], [ 1, %bb.x ], [ 1, %.thread11.i ], [ 1, %bb.r ] ; 7 uses
-  %eh.lpad-body = phi { ptr, i32 } [ %i.at, %bb.y ], [ %.pn9.i, %bb.x ], [ %.pn9.i, %.thread11.i ], [ %i.aq, %bb.r ] ; 7 uses
+  %.sroa.03.2.lpad-body = phi i1 [ %.sroa.03.2, %bb.y ], [ false, %bb.x ], [ false, %.thread11.i ], [ false, %bb.r ] ; 2 uses
+  %.sroa.01.2.lpad-body = phi i1 [ %.sroa.01.2, %bb.y ], [ true, %bb.x ], [ true, %.thread11.i ], [ true, %bb.r ]
+  %eh.lpad-body = phi { ptr, i32 } [ %i.at, %bb.y ], [ %.pn9.i, %bb.x ], [ %.pn9.i, %.thread11.i ], [ %i.aq, %bb.r ] ; 2 uses
   %i.au = load i64, ptr %i.q, align 8             ; 2 uses
   %i.av = add i64 %i.au, -2
   %i.aw = icmp ugt i64 %i.au, 1
@@ -419,7 +423,7 @@ bb.aa:                                            ; preds = %bb.h
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.thread, %bb.z
-  %.sroa.03.321 = phi i8 [ 1, %.thread ], [ 0, %bb.z ] ; 2 uses
+  %3 = phi i1 [ true, %.thread ], [ false, %bb.z ] ; 2 uses
   %.sroa.05.119 = phi i1 [ true, %.thread ], [ %.sroa.05.1.ph, %bb.z ]
   %.sroa.06.118 = phi i1 [ true, %.thread ], [ %.sroa.06.1.ph, %bb.z ]
   %.sroa.07.117 = phi i1 [ true, %.thread ], [ %.sroa.07.1.ph, %bb.z ]
@@ -435,8 +439,8 @@ bb.ac:                                            ; preds = %bb.z
           to label %bb.ad unwind label %bb.y
 
 bb.ad:                                            ; preds = %bb.ab, %bb.ac
-  %.sroa.03.320 = phi i8 [ 0, %bb.ac ], [ %.sroa.03.321, %bb.ab ] ; 3 uses
-  %.sroa.01.3 = phi i8 [ 1, %bb.ac ], [ 0, %bb.ab ] ; 2 uses
+  %.not29 = phi i1 [ true, %bb.ac ], [ false, %bb.ab ] ; 2 uses
+  %4 = phi i1 [ false, %bb.ac ], [ %3, %bb.ab ]   ; 4 uses
   %.sroa.0.0 = phi i32 [ %i.bd, %bb.ac ], [ %i.bc, %bb.ab ] ; 2 uses
   %i.be = load i64, ptr %i.q, align 8             ; 2 uses
   %i.bf = add i64 %i.be, -2
@@ -453,27 +457,24 @@ bb.ae:                                            ; preds = %bb.ad
           to label %bb.af unwind label %bb.d
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ad, %bb.ad
-  %3 = trunc nuw i8 %.sroa.01.3 to i1
-  br i1 %3, label %bb.ah, label %bb.ag
+  br i1 %.not29, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ah, %bb.af
-  %4 = trunc nuw i8 %.sroa.03.320 to i1
   br i1 %4, label %.sink.split, label %bb.ak
 
 bb.ah:                                            ; preds = %bb.af
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCstuaXukgBIa_10proc_macro11TokenStreamECsRujiHMkeh3_11proc_macro2(ptr nonnull align 4 %i.r)
           to label %bb.ag unwind label %bb.aj
 
-bb.ai:                                            ; preds = %bb.at, %bb.aj, %bb.c
-  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.at ], [ %.pn, %bb.c ], [ %i.bi, %bb.aj ]
-  %.sroa.03.4 = phi i8 [ %.sroa.03.0, %bb.at ], [ %.sroa.03.0, %bb.c ], [ %.sroa.03.320, %bb.aj ]
-  %5 = trunc nuw i8 %.sroa.03.4 to i1
-  br i1 %5, label %bb.av, label %bb.au
+bb.ai:                                            ; preds = %bb.d, %bb.at, %2
+  %.pn.pn = phi { ptr, i32 } [ %.pn13, %bb.at ], [ %eh.lpad-body, %2 ], [ %i.u, %bb.d ] ; 2 uses
+  %.sroa.03.4 = phi i1 [ %.sroa.03.014, %bb.at ], [ %.sroa.03.2.lpad-body, %2 ], [ %4, %bb.d ]
+  br i1 %.sroa.03.4, label %bb.av, label %bb.au
 
 bb.aj:                                            ; preds = %bb.ah
   %i.bi = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ai
+          cleanup                                 ; 2 uses
+  br i1 %4, label %bb.av, label %bb.au
 
 .sink.split:                                      ; preds = %bb.f, %bb.ag
   %.sroa.0.1.ph = phi i32 [ %.sroa.0.0, %bb.ag ], [ %i.z, %bb.f ]
@@ -486,20 +487,20 @@ bb.ak:                                            ; preds = %.sink.split, %bb.ag
 
 bb.al:                                            ; preds = %.body
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs3Eghgi3KVFH_3syn4item4ItemEBF_(ptr nonnull align 8 %i.q) #10
-          to label %bb.c unwind label %bb.aq
+          to label %2 unwind label %bb.aq
 
 bb.am:                                            ; preds = %.body
-  br i1 %.sroa.06.0.lpad-body, label %bb.ap, label %bb.c
+  br i1 %.sroa.06.0.lpad-body, label %bb.ap, label %2
 
 bb.an:                                            ; preds = %.body
-  br i1 %.sroa.07.0.lpad-body, label %bb.ar, label %bb.c
+  br i1 %.sroa.07.0.lpad-body, label %bb.ar, label %2
 
 bb.ao:                                            ; preds = %.body
-  br i1 %.sroa.05.0.lpad-body, label %bb.as, label %bb.c
+  br i1 %.sroa.05.0.lpad-body, label %bb.as, label %2
 
 bb.ap:                                            ; preds = %bb.am
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs3Eghgi3KVFH_3syn4item6ItemFnEBF_(ptr nonnull align 8 %i.q) #10
-          to label %bb.c unwind label %bb.aq
+          to label %2 unwind label %bb.aq
 
 bb.aq:                                            ; preds = %bb.av, %bb.at, %bb.as, %bb.ar, %bb.ap, %bb.al
   %i.bj = landingpad { ptr, i32 }
@@ -510,21 +511,25 @@ bb.aq:                                            ; preds = %bb.av, %bb.at, %bb.
 bb.ar:                                            ; preds = %bb.an
   %i.bk = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs3Eghgi3KVFH_3syn4item8ItemImplEBF_(ptr nonnull align 8 %i.bk) #10
-          to label %bb.c unwind label %bb.aq
+          to label %2 unwind label %bb.aq
 
 bb.as:                                            ; preds = %bb.ao
   %i.bl = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs3Eghgi3KVFH_3syn4item10ItemStructEBF_(ptr nonnull align 8 %i.bl) #10
-          to label %bb.c unwind label %bb.aq
+          to label %2 unwind label %bb.aq
 
-bb.at:                                            ; preds = %bb.c
+bb.at:                                            ; preds = %bb.c, %bb.d, %2
+  %.sroa.03.014 = phi i1 [ %4, %bb.d ], [ %.sroa.03.2.lpad-body, %2 ], [ true, %bb.c ]
+  %.pn13 = phi { ptr, i32 } [ %i.u, %bb.d ], [ %eh.lpad-body, %2 ], [ %lpad.thr_comm, %bb.c ]
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCstuaXukgBIa_10proc_macro11TokenStreamECsRujiHMkeh3_11proc_macro2(ptr nonnull align 4 %i.r) #10
           to label %bb.ai unwind label %bb.aq
 
-bb.au:                                            ; preds = %bb.av, %bb.ai
-  resume { ptr, i32 } %.pn.pn
+bb.au:                                            ; preds = %bb.aj, %bb.av, %bb.ai
+  %.pn.pn34 = phi { ptr, i32 } [ %.pn.pn35, %bb.av ], [ %.pn.pn, %bb.ai ], [ %i.bi, %bb.aj ]
+  resume { ptr, i32 } %.pn.pn34
 
-bb.av:                                            ; preds = %bb.ai
+bb.av:                                            ; preds = %bb.aj, %.thread31, %bb.ai
+  %.pn.pn35 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp21, %.thread31 ], [ %.pn.pn, %bb.ai ], [ %i.bi, %bb.aj ]
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCstuaXukgBIa_10proc_macro11TokenStreamECsRujiHMkeh3_11proc_macro2(ptr nonnull align 4 %i.s) #10
           to label %bb.au unwind label %bb.aq
 }

@@ -205,7 +205,7 @@ declare void @__cxa_free_exception(ptr) local_unnamed_addr
 define internal fastcc noundef ptr @_ZL14select_by_nameiP11gmx_enxnm_tPi(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull captures(none) %2) unnamed_addr #12 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 11 uses
-  %i.b = alloca [4096 x i8], align 16             ; 9 uses
+  %i.b = alloca [4096 x i8], align 16             ; 10 uses
   %3 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
@@ -353,24 +353,21 @@ bb.l:                                             ; preds = %._crit_edge._crit_e
   br i1 %exitcond.not, label %._crit_edge137, label %.lr.ph136, !llvm.loop !334
 
 ._crit_edge137:                                   ; preds = %bb.l, %bb.a
-  br i1 %.not97, label %bb.m, label %4
+  br i1 %.not97, label %bb.m, label %.critedge191
 
 bb.m:                                             ; preds = %._crit_edge137
   %i.bc = load ptr, ptr @stderr, align 8, !tbaa !61
   %fwrite101 = tail call i64 @fwrite(ptr nonnull @.str.181, i64 2, i64 1, ptr %i.bc) #33 ; 0 uses
-  br label %4
-
-4:                                                ; preds = %bb.m, %._crit_edge137
-  %5 = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.182, ptr noundef nonnull @.str.140, i32 noundef 222, i64 noundef range(i64 -2147483648, 2147483648) %i.i, i64 noundef 1) ; 10 uses
   br label %.critedge191
 
-.critedge191:                                     ; preds = %.critedge191.backedge, %4
+.critedge191:                                     ; preds = %bb.m, %._crit_edge137
+  %4 = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.182, ptr noundef nonnull @.str.140, i32 noundef 222, i64 noundef range(i64 -2147483648, 2147483648) %i.i, i64 noundef 1) ; 10 uses
   %i.bd = load ptr, ptr @stdin, align 8, !tbaa !61
   %i.be = call noundef ptr @_Z6fgets2PciP8_IO_FILE(ptr noundef nonnull %i.b, i32 noundef 4095, ptr noundef %i.bd)
   %.not102.a = icmp eq ptr %i.be, null
   br i1 %.not102.a, label %.critedge, label %bb.n
 
-bb.n:                                             ; preds = %.critedge191
+bb.n:                                             ; preds = %.critedge191, %.critedge3
   %i.bf = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #29
   %i.bg = trunc i64 %i.bf to i32                  ; 2 uses
   %i.bh = icmp sgt i32 %i.bg, 0
@@ -398,7 +395,7 @@ _ZL5chompPc.exit:                                 ; preds = %.lr.ph.i, %bb.o, %b
   br i1 %i.bp, label %.critedge, label %.preheader128
 
 .preheader128:                                    ; preds = %_ZL5chompPc.exit, %bb.aa
-  %.074 = phi ptr [ %i.da, %bb.aa ], [ %i.b, %_ZL5chompPc.exit ] ; 6 uses
+  %.074 = phi ptr [ %6, %bb.aa ], [ %i.b, %_ZL5chompPc.exit ] ; 7 uses
   store i32 0, ptr %i.a, align 4, !tbaa !11
   br i1 %i.k, label %.lr.ph141, label %._crit_edge142.thread
 
@@ -415,7 +412,7 @@ _ZL5chompPc.exit:                                 ; preds = %.lr.ph.i, %bb.o, %b
 
 bb.p:                                             ; preds = %.lr.ph141
   %i.bv = sext i32 %.pre to i64
-  %i.bw = getelementptr inbounds i8, ptr %5, i64 %i.bv
+  %i.bw = getelementptr inbounds i8, ptr %4, i64 %i.bv
   store i8 1, ptr %i.bw, align 1, !tbaa !36
   %i.bx = add nsw i32 %.081139, 1
   br label %bb.q
@@ -429,7 +426,7 @@ bb.q:                                             ; preds = %.lr.ph141, %bb.p
 
 ._crit_edge142:                                   ; preds = %bb.q
   %i.ca = icmp eq i32 %.182, 0
-  br i1 %i.ca, label %._crit_edge142.thread, label %bb.y
+  br i1 %i.ca, label %._crit_edge142.thread, label %5
 
 ._crit_edge142.thread:                            ; preds = %.preheader128, %._crit_edge142
   %i.cb = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef nonnull %.074, ptr noundef nonnull @.str.183, ptr noundef nonnull %i.a) #27
@@ -449,15 +446,15 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.cg = zext nneg i32 %i.cd to i64
-  %i.ch = getelementptr i8, ptr %5, i64 %i.cg
+  %i.ch = getelementptr i8, ptr %4, i64 %i.cg
   %i.ci = getelementptr i8, ptr %i.ch, i64 -1
   store i8 1, ptr %i.ci, align 1, !tbaa !36
-  br label %bb.y
+  br label %5
 
 bb.u:                                             ; preds = %bb.s
   %i.cj = load ptr, ptr @stderr, align 8, !tbaa !61
   %i.ck = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.cj, ptr noundef nonnull @.str.184, i32 noundef %i.cd) #31 ; 0 uses
-  br label %bb.y
+  br label %5
 
 bb.v:                                             ; preds = %._crit_edge142.thread
   %i.cl = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.074) #29
@@ -478,7 +475,7 @@ bb.v:                                             ; preds = %._crit_edge142.thre
 
 bb.w:                                             ; preds = %.lr.ph146
   %i.cs = sext i32 %.pre170 to i64
-  %i.ct = getelementptr inbounds i8, ptr %5, i64 %i.cs
+  %i.ct = getelementptr inbounds i8, ptr %4, i64 %i.cs
   store i8 1, ptr %i.ct, align 1, !tbaa !36
   %i.cu = add nsw i32 %.283144, 1
   br label %bb.x
@@ -492,35 +489,40 @@ bb.x:                                             ; preds = %.lr.ph146, %bb.w
 
 ._crit_edge147:                                   ; preds = %bb.x
   %i.cx = icmp eq i32 %.384, 0
-  br i1 %i.cx, label %._crit_edge147.thread, label %bb.y
+  br i1 %i.cx, label %._crit_edge147.thread, label %5
 
 ._crit_edge147.thread:                            ; preds = %bb.v, %._crit_edge147
   %i.cy = load ptr, ptr @stderr, align 8, !tbaa !61
   %i.cz = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.cy, ptr noundef nonnull @.str.185, ptr noundef nonnull %.074) #31 ; 0 uses
-  br label %bb.y
+  br label %5
 
-bb.y:                                             ; preds = %bb.r, %._crit_edge142, %._crit_edge147, %._crit_edge147.thread, %bb.u, %bb.t
-  %.279 = phi i1 [ true, %bb.r ], [ false, %._crit_edge142 ], [ false, %bb.t ], [ false, %bb.u ], [ false, %._crit_edge147.thread ], [ false, %._crit_edge147 ] ; 2 uses
-  %i.da = call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %.074, i32 noundef 32) #29 ; 4 uses
+5:                                                ; preds = %._crit_edge142, %._crit_edge147, %._crit_edge147.thread, %bb.u, %bb.t
+  %6 = call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %.074, i32 noundef 32) #29 ; 4 uses
+  %7 = icmp eq ptr %6, null
+  br i1 %7, label %.critedge3, label %bb.aa
+
+bb.y:                                             ; preds = %bb.r
+  %i.da = call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %.074, i32 noundef 32) #29 ; 2 uses
   %i.db = icmp eq ptr %i.da, null
-  br i1 %i.db, label %.critedge3, label %bb.z
+  br i1 %i.db, label %.critedge, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   call void @_Z4trimPc(ptr noundef nonnull %i.da)
-  br i1 %.279, label %.critedge, label %bb.aa
+  br label %.critedge
 
-bb.aa:                                            ; preds = %bb.z
-  %char0106 = load i8, ptr %i.da, align 1
+bb.aa:                                            ; preds = %5
+  call void @_Z4trimPc(ptr noundef nonnull %6)
+  %char0106 = load i8, ptr %6, align 1
   %.not = icmp eq i8 %char0106, 0
-  br i1 %.not, label %.critedge191.backedge, label %.preheader128, !llvm.loop !338
+  br i1 %.not, label %.critedge3, label %.preheader128, !llvm.loop !338
 
-.critedge3:                                       ; preds = %bb.y
-  br i1 %.279, label %.critedge, label %.critedge191.backedge
+.critedge3:                                       ; preds = %5, %bb.aa
+  %8 = load ptr, ptr @stdin, align 8, !tbaa !61
+  %9 = call noundef ptr @_Z6fgets2PciP8_IO_FILE(ptr noundef nonnull %i.b, i32 noundef 4095, ptr noundef %8)
+  %.not102 = icmp eq ptr %9, null
+  br i1 %.not102, label %.critedge, label %bb.n, !llvm.loop !339
 
-.critedge191.backedge:                            ; preds = %bb.aa, %.critedge3
-  br label %.critedge191, !llvm.loop !339
-
-.critedge:                                        ; preds = %_ZL5chompPc.exit, %.critedge3, %.critedge191, %bb.z
+.critedge:                                        ; preds = %.critedge3, %_ZL5chompPc.exit, %.critedge191, %bb.z, %bb.y
   %i.dc = call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.143, ptr noundef nonnull @.str.140, i32 noundef 301, i64 noundef range(i64 -2147483648, 2147483648) %i.i, i64 noundef 4) ; 6 uses
   store i32 0, ptr %2, align 4, !tbaa !11
   br i1 %i.k, label %.lr.ph150.preheader, label %._crit_edge151.thread
@@ -538,7 +540,7 @@ bb.aa:                                            ; preds = %bb.z
 .lr.ph150:                                        ; preds = %bb.af, %.lr.ph150.preheader.new
   %indvars.iv159 = phi i64 [ 0, %.lr.ph150.preheader.new ], [ %indvars.iv.next160.3, %bb.af ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph150.preheader.new ], [ %niter.next.3, %bb.af ]
-  %i.de = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv159
+  %i.de = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv159
   %i.df = load i8, ptr %i.de, align 1, !tbaa !36, !range !37, !noundef !38
   %i.dg = trunc nuw i8 %i.df to i1
   br i1 %i.dg, label %bb.ab, label %.lr.ph150.1
@@ -555,7 +557,7 @@ bb.ab:                                            ; preds = %.lr.ph150
 
 .lr.ph150.1:                                      ; preds = %.lr.ph150, %bb.ab
   %indvars.iv.next160 = or disjoint i64 %indvars.iv159, 1 ; 2 uses
-  %i.dm = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv.next160
+  %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next160
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !36, !range !37, !noundef !38
   %i.do = trunc nuw i8 %i.dn to i1
   br i1 %i.do, label %bb.ac, label %.lr.ph150.2
@@ -572,7 +574,7 @@ bb.ac:                                            ; preds = %.lr.ph150.1
 
 .lr.ph150.2:                                      ; preds = %bb.ac, %.lr.ph150.1
   %indvars.iv.next160.1 = or disjoint i64 %indvars.iv159, 2 ; 2 uses
-  %i.du = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv.next160.1
+  %i.du = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next160.1
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !36, !range !37, !noundef !38
   %i.dw = trunc nuw i8 %i.dv to i1
   br i1 %i.dw, label %bb.ad, label %.lr.ph150.3
@@ -589,7 +591,7 @@ bb.ad:                                            ; preds = %.lr.ph150.2
 
 .lr.ph150.3:                                      ; preds = %bb.ad, %.lr.ph150.2
   %indvars.iv.next160.2 = or disjoint i64 %indvars.iv159, 3 ; 2 uses
-  %i.ec = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv.next160.2
+  %i.ec = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next160.2
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !36, !range !37, !noundef !38
   %i.ee = trunc nuw i8 %i.ed to i1
   br i1 %i.ee, label %bb.ae, label %bb.af
@@ -623,7 +625,7 @@ bb.af:                                            ; preds = %bb.ae, %.lr.ph150.3
 .lr.ph150.epil:                                   ; preds = %bb.ah, %.lr.ph150.epil.preheader
   %indvars.iv159.epil = phi i64 [ %indvars.iv159.epil.init, %.lr.ph150.epil.preheader ], [ %indvars.iv.next160.epil, %bb.ah ] ; 3 uses
   %epil.iter = phi i64 [ 0, %.lr.ph150.epil.preheader ], [ %epil.iter.next, %bb.ah ]
-  %i.ek = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv159.epil
+  %i.ek = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv159.epil
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !36, !range !37, !noundef !38
   %i.em = trunc nuw i8 %i.el to i1
   br i1 %i.em, label %bb.ag, label %bb.ah
@@ -645,13 +647,13 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph150.e
   br i1 %epil.iter.cmp.not, label %._crit_edge151, label %.lr.ph150.epil, !llvm.loop !341
 
 ._crit_edge151:                                   ; preds = %bb.ah, %._crit_edge151.unr-lcssa
-  call void @_Z9save_freePKcS0_iPv(ptr noundef nonnull @.str.182, ptr noundef nonnull @.str.140, i32 noundef 310, ptr noundef nonnull %5)
+  call void @_Z9save_freePKcS0_iPv(ptr noundef nonnull @.str.182, ptr noundef nonnull @.str.140, i32 noundef 310, ptr noundef nonnull %4)
   %i.es = load i32, ptr %2, align 4, !tbaa !11
   %i.et = icmp eq i32 %i.es, 0
   br i1 %i.et, label %bb.ai, label %.lr.ph153.preheader
 
 ._crit_edge151.thread:                            ; preds = %.critedge
-  call void @_Z9save_freePKcS0_iPv(ptr noundef nonnull @.str.182, ptr noundef nonnull @.str.140, i32 noundef 310, ptr noundef %5)
+  call void @_Z9save_freePKcS0_iPv(ptr noundef nonnull @.str.182, ptr noundef nonnull @.str.140, i32 noundef 310, ptr noundef %4)
   %i.eu = load i32, ptr %2, align 4, !tbaa !11
   %i.ev = icmp eq i32 %i.eu, 0
   br i1 %i.ev, label %bb.ai, label %._crit_edge154

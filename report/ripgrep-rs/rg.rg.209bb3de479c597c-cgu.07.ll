@@ -204,7 +204,7 @@ bb.jd:                                            ; preds = %bb.jc
   %i.alj = load i64, ptr %i.ajv, align 8, !dbg !8982, !noundef !401
   %i.alk = add i64 %i.alj, %i.alh, !dbg !8983
   %i.all = load i64, ptr %0, align 8, !dbg !8984, !range !429, !noundef !401
-  %i.alm = trunc nuw i64 %i.all to i1, !dbg !8985
+  %i.alm = trunc nuw i64 %i.all to i1, !dbg !8985 ; 2 uses
   br i1 %i.alm, label %bb.je, label %bb.jf, !dbg !8985
 
 bb.je:                                            ; preds = %bb.jd
@@ -214,7 +214,7 @@ bb.je:                                            ; preds = %bb.jd
 
 bb.jf:                                            ; preds = %bb.je, %bb.jd
   %.sroa.5.0.i.i = phi i64 [ %i.alo, %bb.je ], [ undef, %bb.jd ], !dbg !8988 ; 2 uses
-  %.sroa.07.0.i.i = phi i64 [ 1, %bb.je ], [ 0, %bb.jd ], !dbg !8988 ; 2 uses
+  %.sroa.07.0.i.i = phi i64 [ 1, %bb.je ], [ 0, %bb.jd ], !dbg !8988
   %i.alp = add nuw i64 %i.alh, 1, !dbg !8989      ; 2 uses
   %i.alq = load ptr, ptr %i.ail, align 8, !dbg !8990, !noundef !401
   %.not.i123.i.i = icmp eq ptr %i.alq, null, !dbg !8991
@@ -353,8 +353,7 @@ bb.jr:                                            ; preds = %bb.jq, %bb.jo, %bb.
   %i.anl = phi ptr [ %i.ani, %bb.jq ], [ %i.amy, %bb.jo ], [ %i.amy, %bb.jn ] ; 6 uses
   %.val108.i.i = phi ptr [ %i.ang, %bb.jq ], [ %i.amz, %bb.jo ], [ %i.amz, %bb.jn ]
   %.sroa.37.0.ph.i.i = phi i8 [ %..i.i.i, %bb.jq ], [ 0, %bb.jo ], [ 0, %bb.jn ] ; 2 uses
-  %1 = trunc nuw i64 %.sroa.07.0.i.i to i1, !dbg !9042
-  br i1 %1, label %bb.js, label %bb.km, !dbg !9042
+  br i1 %i.alm, label %bb.js, label %bb.km, !dbg !9042
 
 bb.js:                                            ; preds = %bb.jr
   switch i8 %.sroa.37.0.ph.i.i, label %default.unreachable [
@@ -757,7 +756,7 @@ bb.nu:                                            ; preds = %bb.nt
   %i.ayc = load i64, ptr %i.axp, align 8, !dbg !9424, !noundef !401
   %i.ayd = add i64 %i.ayc, %i.aya, !dbg !9425
   %i.aye = load i64, ptr %0, align 8, !dbg !9426, !range !429, !noundef !401
-  %i.ayf = trunc nuw i64 %i.aye to i1, !dbg !9427
+  %i.ayf = trunc nuw i64 %i.aye to i1, !dbg !9427 ; 2 uses
   br i1 %i.ayf, label %bb.nv, label %bb.nw, !dbg !9427
 
 bb.nv:                                            ; preds = %bb.nu
@@ -767,7 +766,7 @@ bb.nv:                                            ; preds = %bb.nu
 
 bb.nw:                                            ; preds = %bb.nv, %bb.nu
   %.sroa.5.0.i101.i = phi i64 [ %i.ayh, %bb.nv ], [ undef, %bb.nu ], !dbg !9430 ; 2 uses
-  %.sroa.010.0.i.i = phi i64 [ 1, %bb.nv ], [ 0, %bb.nu ], !dbg !9430 ; 2 uses
+  %.sroa.010.0.i.i = phi i64 [ 1, %bb.nv ], [ 0, %bb.nu ], !dbg !9430
   %i.ayi = call i64 @llvm.usub.sat.i64(i64 %i.axv, i64 %i.aya), !dbg !9431
   %i.ayj = add nuw i64 %i.ayi, 1, !dbg !9432      ; 2 uses
   %i.ayk = load ptr, ptr %i.ail, align 8, !dbg !9433, !noundef !401
@@ -899,8 +898,7 @@ bb.oi:                                            ; preds = %bb.oh, %bb.of, %bb.
   %i.bad = phi ptr [ %i.baa, %bb.oh ], [ %i.azq, %bb.of ], [ %i.azq, %bb.oe ] ; 6 uses
   %.val145.i.i = phi ptr [ %i.azy, %bb.oh ], [ %i.azr, %bb.of ], [ %i.azr, %bb.oe ]
   %.sroa.37.0.ph.i116.i = phi i8 [ %..i.i115.i, %bb.oh ], [ 0, %bb.of ], [ 0, %bb.oe ] ; 2 uses
-  %2 = trunc nuw i64 %.sroa.010.0.i.i to i1, !dbg !9485
-  br i1 %2, label %bb.oj, label %bb.pd, !dbg !9485
+  br i1 %i.ayf, label %bb.oj, label %bb.pd, !dbg !9485
 
 bb.oj:                                            ; preds = %bb.oi
   switch i8 %.sroa.37.0.ph.i116.i, label %default.unreachable [
@@ -1303,7 +1301,7 @@ bb.ta:                                            ; preds = %.lr.ph.split.i
   %i.bmx = load i64, ptr %i.bmp, align 8, !dbg !9934, !noundef !401
   %i.bmy = add i64 %i.bmx, %i.bmv, !dbg !9935
   %i.bmz = load i64, ptr %0, align 8, !dbg !9936, !range !429, !noundef !401
-  %i.bna = trunc nuw i64 %i.bmz to i1, !dbg !9937
+  %i.bna = trunc nuw i64 %i.bmz to i1, !dbg !9937 ; 2 uses
   br i1 %i.bna, label %bb.tb, label %bb.tc, !dbg !9937
 
 bb.tb:                                            ; preds = %bb.ta
@@ -1313,7 +1311,7 @@ bb.tb:                                            ; preds = %bb.ta
 
 bb.tc:                                            ; preds = %bb.tb, %bb.ta
   %.sroa.5.0.i = phi i64 [ %i.bnc, %bb.tb ], [ undef, %bb.ta ], !dbg !9940 ; 2 uses
-  %.sroa.015.0.i = phi i64 [ 1, %bb.tb ], [ 0, %bb.ta ], !dbg !9940 ; 2 uses
+  %.sroa.015.0.i = phi i64 [ 1, %bb.tb ], [ 0, %bb.ta ], !dbg !9940
   %i.bnd = load i64, ptr %i.bmh, align 8, !dbg !9941, !noundef !401
   %i.bne = add i64 %i.bnd, 1, !dbg !9942          ; 2 uses
   %i.bnf = load ptr, ptr %i.ail, align 8, !dbg !9943, !noundef !401
@@ -1445,8 +1443,7 @@ bb.to:                                            ; preds = %bb.tn, %bb.tl, %bb.
   %i.boy = phi ptr [ %i.bov, %bb.tn ], [ %i.bol, %bb.tl ], [ %i.bol, %bb.tk ] ; 6 uses
   %.val77.i = phi ptr [ %i.bot, %bb.tn ], [ %i.bom, %bb.tl ], [ %i.bom, %bb.tk ]
   %.sroa.37.0.ph.i30 = phi i8 [ %..i.i29, %bb.tn ], [ 0, %bb.tl ], [ 0, %bb.tk ] ; 2 uses
-  %3 = trunc nuw i64 %.sroa.015.0.i to i1, !dbg !9995
-  br i1 %3, label %bb.tp, label %bb.uj, !dbg !9995
+  br i1 %i.bna, label %bb.tp, label %bb.uj, !dbg !9995
 
 bb.tp:                                            ; preds = %bb.to
   switch i8 %.sroa.37.0.ph.i30, label %default.unreachable [
@@ -1849,7 +1846,7 @@ bb.if:                                            ; preds = %bb.ie
   %i.akr = load i64, ptr %i.ajd, align 8, !dbg !17388, !noundef !401
   %i.aks = add i64 %i.akr, %i.akp, !dbg !17389
   %i.akt = load i64, ptr %0, align 8, !dbg !17390, !range !429, !noundef !401
-  %i.aku = trunc nuw i64 %i.akt to i1, !dbg !17391
+  %i.aku = trunc nuw i64 %i.akt to i1, !dbg !17391 ; 2 uses
   br i1 %i.aku, label %bb.ig, label %bb.ih, !dbg !17391
 
 bb.ig:                                            ; preds = %bb.if
@@ -1859,7 +1856,7 @@ bb.ig:                                            ; preds = %bb.if
 
 bb.ih:                                            ; preds = %bb.ig, %bb.if
   %.sroa.5.0.i.i = phi i64 [ %i.akw, %bb.ig ], [ undef, %bb.if ], !dbg !17394 ; 2 uses
-  %.sroa.07.0.i.i = phi i64 [ 1, %bb.ig ], [ 0, %bb.if ], !dbg !17394 ; 2 uses
+  %.sroa.07.0.i.i = phi i64 [ 1, %bb.ig ], [ 0, %bb.if ], !dbg !17394
   %i.akx = add nuw i64 %i.akp, 1, !dbg !17395     ; 2 uses
   %i.aky = load ptr, ptr %i.aht, align 8, !dbg !17396, !noundef !401
   %.not.i123.i.i = icmp eq ptr %i.aky, null, !dbg !17397
@@ -1998,8 +1995,7 @@ bb.it:                                            ; preds = %bb.is, %bb.iq, %bb.
   %i.amt = phi ptr [ %i.amq, %bb.is ], [ %i.amg, %bb.iq ], [ %i.amg, %bb.ip ] ; 6 uses
   %.val108.i.i = phi ptr [ %i.amo, %bb.is ], [ %i.amh, %bb.iq ], [ %i.amh, %bb.ip ]
   %.sroa.37.0.ph.i.i = phi i8 [ %..i.i.i, %bb.is ], [ 0, %bb.iq ], [ 0, %bb.ip ] ; 2 uses
-  %1 = trunc nuw i64 %.sroa.07.0.i.i to i1, !dbg !17448
-  br i1 %1, label %bb.iu, label %bb.jk, !dbg !17448
+  br i1 %i.aku, label %bb.iu, label %bb.jk, !dbg !17448
 
 bb.iu:                                            ; preds = %bb.it
   switch i8 %.sroa.37.0.ph.i.i, label %default.unreachable [
@@ -2402,7 +2398,7 @@ bb.mh:                                            ; preds = %bb.mg
   %i.awy = load i64, ptr %i.awl, align 8, !dbg !17789, !noundef !401
   %i.awz = add i64 %i.awy, %i.aww, !dbg !17790
   %i.axa = load i64, ptr %0, align 8, !dbg !17791, !range !429, !noundef !401
-  %i.axb = trunc nuw i64 %i.axa to i1, !dbg !17792
+  %i.axb = trunc nuw i64 %i.axa to i1, !dbg !17792 ; 2 uses
   br i1 %i.axb, label %bb.mi, label %bb.mj, !dbg !17792
 
 bb.mi:                                            ; preds = %bb.mh
@@ -2412,7 +2408,7 @@ bb.mi:                                            ; preds = %bb.mh
 
 bb.mj:                                            ; preds = %bb.mi, %bb.mh
   %.sroa.5.0.i101.i = phi i64 [ %i.axd, %bb.mi ], [ undef, %bb.mh ], !dbg !17795 ; 2 uses
-  %.sroa.010.0.i.i = phi i64 [ 1, %bb.mi ], [ 0, %bb.mh ], !dbg !17795 ; 2 uses
+  %.sroa.010.0.i.i = phi i64 [ 1, %bb.mi ], [ 0, %bb.mh ], !dbg !17795
   %i.axe = call i64 @llvm.usub.sat.i64(i64 %i.awr, i64 %i.aww), !dbg !17796
   %i.axf = add nuw i64 %i.axe, 1, !dbg !17797     ; 2 uses
   %i.axg = load ptr, ptr %i.aht, align 8, !dbg !17798, !noundef !401
@@ -2544,8 +2540,7 @@ bb.mv:                                            ; preds = %bb.mu, %bb.ms, %bb.
   %i.ayz = phi ptr [ %i.ayw, %bb.mu ], [ %i.aym, %bb.ms ], [ %i.aym, %bb.mr ] ; 6 uses
   %.val145.i.i = phi ptr [ %i.ayu, %bb.mu ], [ %i.ayn, %bb.ms ], [ %i.ayn, %bb.mr ]
   %.sroa.37.0.ph.i118.i = phi i8 [ %..i.i117.i, %bb.mu ], [ 0, %bb.ms ], [ 0, %bb.mr ] ; 2 uses
-  %2 = trunc nuw i64 %.sroa.010.0.i.i to i1, !dbg !17850
-  br i1 %2, label %bb.mw, label %bb.nm, !dbg !17850
+  br i1 %i.axb, label %bb.mw, label %bb.nm, !dbg !17850
 
 bb.mw:                                            ; preds = %bb.mv
   switch i8 %.sroa.37.0.ph.i118.i, label %default.unreachable [
@@ -2948,7 +2943,7 @@ bb.qy:                                            ; preds = %.lr.ph.split.i
   %i.blh = load i64, ptr %i.bkz, align 8, !dbg !18258, !noundef !401
   %i.bli = add i64 %i.blh, %i.blf, !dbg !18259
   %i.blj = load i64, ptr %0, align 8, !dbg !18260, !range !429, !noundef !401
-  %i.blk = trunc nuw i64 %i.blj to i1, !dbg !18261
+  %i.blk = trunc nuw i64 %i.blj to i1, !dbg !18261 ; 2 uses
   br i1 %i.blk, label %bb.qz, label %bb.ra, !dbg !18261
 
 bb.qz:                                            ; preds = %bb.qy
@@ -2958,7 +2953,7 @@ bb.qz:                                            ; preds = %bb.qy
 
 bb.ra:                                            ; preds = %bb.qz, %bb.qy
   %.sroa.5.0.i = phi i64 [ %i.blm, %bb.qz ], [ undef, %bb.qy ], !dbg !18264 ; 2 uses
-  %.sroa.015.0.i = phi i64 [ 1, %bb.qz ], [ 0, %bb.qy ], !dbg !18264 ; 2 uses
+  %.sroa.015.0.i = phi i64 [ 1, %bb.qz ], [ 0, %bb.qy ], !dbg !18264
   %i.bln = load i64, ptr %i.bkr, align 8, !dbg !18265, !noundef !401
   %i.blo = add i64 %i.bln, 1, !dbg !18266         ; 2 uses
   %i.blp = load ptr, ptr %i.aht, align 8, !dbg !18267, !noundef !401
@@ -3090,8 +3085,7 @@ bb.rm:                                            ; preds = %bb.rl, %bb.rj, %bb.
   %i.bni = phi ptr [ %i.bnf, %bb.rl ], [ %i.bmv, %bb.rj ], [ %i.bmv, %bb.ri ] ; 6 uses
   %.val77.i = phi ptr [ %i.bnd, %bb.rl ], [ %i.bmw, %bb.rj ], [ %i.bmw, %bb.ri ]
   %.sroa.37.0.ph.i30 = phi i8 [ %..i.i29, %bb.rl ], [ 0, %bb.rj ], [ 0, %bb.ri ] ; 2 uses
-  %3 = trunc nuw i64 %.sroa.015.0.i to i1, !dbg !18319
-  br i1 %3, label %bb.rn, label %bb.sd, !dbg !18319
+  br i1 %i.blk, label %bb.rn, label %bb.sd, !dbg !18319
 
 bb.rn:                                            ; preds = %bb.rm
   switch i8 %.sroa.37.0.ph.i30, label %default.unreachable [

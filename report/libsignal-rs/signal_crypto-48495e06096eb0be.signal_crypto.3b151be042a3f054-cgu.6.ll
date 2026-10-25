@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
   invoke void @_RNvXNtNtCs54uEYnqmHDA_13signal_crypto4hpke8providerNtB2_14CryptoProviderNtCs3aQ7rNtaasP_14hpke_rs_crypto10HpkeCrypto2dh(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.p, i16 noundef %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ab, i64 noundef %i.ad)
           to label %bb.d unwind label %.body62
 
-.body:                                            ; preds = %.body62, %bb.bl, %bb.co, %bb.k, %.thread, %.body38.a, %bb.g
-  %.pn29 = phi { ptr, i32 } [ %.pn, %bb.g ], [ %.pn27100, %.thread ], [ %.pn27, %.body38.a ], [ %i.ar, %bb.k ], [ %i.ec, %bb.bl ], [ %i.ew, %bb.co ], [ %lpad.thr_comm.split-lp.a, %.body62 ]
+.body:                                            ; preds = %bb.bl, %.body62, %bb.co, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVechEECs54uEYnqmHDA_13signal_crypto.exit.i81, %.body38, %bb.k, %.thread, %.body38.a, %bb.g
+  %.pn29 = phi { ptr, i32 } [ %.pn, %bb.g ], [ %.pn27100, %.thread ], [ %.pn27, %.body38.a ], [ %i.eq, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVechEECs54uEYnqmHDA_13signal_crypto.exit.i81 ], [ %lpad.thr_comm.split-lp.a, %.body62 ], [ %i.ar, %bb.k ], [ %lpad.thr_comm.split-lp, %.body38 ], [ %i.ew, %bb.co ], [ %i.ec, %bb.bl ]
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsdZ6zx9bXGuc_7hpke_rs3kem10PrivateKeyECs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.u) #15
           to label %.body65 unwind label %bb.cd
 
@@ -353,17 +353,20 @@ bb.w:                                             ; preds = %bb.u
   call void @_RNvNtCsgxBkk5gSRhY_4core9panicking16panic_in_cleanup() #16
   unreachable
 
-.body38.a:                                        ; preds = %bb.cf, %bb.x, %.body62.thread, %bb.ad
-  %.pn27 = phi { ptr, i32 } [ %.pn23, %bb.ad ], [ %.pn25101, %.body62.thread ], [ %i.eq, %bb.cf ], [ %i.bg, %bb.x ] ; 2 uses
-  %.sroa.010.0 = phi i8 [ %.sroa.010.4, %bb.ad ], [ %.sroa.010.2102, %.body62.thread ], [ %.sroa.010.8, %bb.cf ], [ %.sroa.010.1, %bb.x ]
-  %10 = trunc nuw i8 %.sroa.010.0 to i1
-  br i1 %10, label %.thread, label %.body
+.body38.a:                                        ; preds = %.body62.thread, %bb.ad
+  %.pn27 = phi { ptr, i32 } [ %.pn23, %bb.ad ], [ %.pn25101, %.body62.thread ] ; 2 uses
+  %.sroa.010.0 = phi i1 [ %.sroa.010.4, %bb.ad ], [ %.sroa.010.2107, %.body62.thread ]
+  br i1 %.sroa.010.0, label %.thread, label %.body
 
-bb.x:                                             ; preds = %bb.cg, %bb.v, %bb.z, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit40
-  %.sroa.010.1 = phi i8 [ 1, %bb.z ], [ %.sroa.010.8, %bb.cg ], [ 1, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit40 ], [ 1, %bb.v ]
+bb.x:                                             ; preds = %bb.z, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit40, %bb.v
   %i.bg = landingpad { ptr, i32 }
           cleanup
-  br label %.body38.a
+  br label %.thread
+
+.body38:                                          ; preds = %bb.cg
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %i.cg, label %.thread, label %.body
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit40: ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
@@ -418,7 +421,7 @@ bb.ad:                                            ; preds = %.body58
   br i1 %.sroa.012.2, label %.body62.thread, label %.body38.a
 
 .body62.thread110:                                ; preds = %bb.af, %bb.cb, %bb.ab
-  %.sroa.010.3.ph = phi i8 [ 1, %bb.ab ], [ %.sroa.010.8, %bb.cb ], [ 1, %bb.af ]
+  %.sroa.010.3.ph = phi i1 [ true, %bb.ab ], [ %i.cg, %bb.cb ], [ true, %bb.af ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.body62.thread
@@ -470,20 +473,20 @@ bb.ai:                                            ; preds = %bb.ag
 .body58:                                          ; preds = %bb.bx, %bb.bi, %bb.aj, %.body42, %bb.an
   %.pn23 = phi { ptr, i32 } [ %i.cn, %bb.an ], [ %.pn21, %.body42 ], [ %i.ea, %bb.bi ], [ %i.ce, %bb.aj ], [ %i.el, %bb.bx ] ; 2 uses
   %.sroa.012.2 = phi i1 [ true, %bb.an ], [ %.sroa.012.4, %.body42 ], [ false, %bb.bi ], [ %.sroa.012.3, %bb.aj ], [ true, %bb.bx ]
-  %.sroa.010.4 = phi i8 [ 1, %bb.an ], [ %.sroa.010.6, %.body42 ], [ 0, %bb.bi ], [ %.sroa.010.5, %bb.aj ], [ 0, %bb.bx ] ; 2 uses
+  %.sroa.010.4 = phi i1 [ true, %bb.an ], [ %.sroa.010.6, %.body42 ], [ false, %bb.bi ], [ %.sroa.010.5, %bb.aj ], [ false, %bb.bx ] ; 2 uses
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #15
           to label %bb.ad unwind label %bb.cd
 
 bb.aj:                                            ; preds = %bb.by, %bb.bj, %bb.ah
   %.sroa.012.3 = phi i1 [ true, %bb.by ], [ false, %bb.bj ], [ true, %bb.ah ]
-  %.sroa.010.5 = phi i8 [ 0, %bb.by ], [ 0, %bb.bj ], [ 1, %bb.ah ]
+  %.sroa.010.5 = phi i1 [ false, %bb.by ], [ false, %bb.bj ], [ true, %bb.ah ]
   %i.ce = landingpad { ptr, i32 }
           cleanup
   br label %.body58
 
 bb.ak:                                            ; preds = %bb.ah
   %i.cf = load i64, ptr %i.i, align 8, !range !4, !noundef !5
-  %i.cg = trunc nuw i64 %i.cf to i1
+  %i.cg = trunc nuw i64 %i.cf to i1               ; 6 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.57, ptr noundef nonnull align 8 dereferenceable(24) %i.ch, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
@@ -567,13 +570,13 @@ bb.av:                                            ; preds = %bb.aq
 .body42:                                          ; preds = %bb.bf, %bb.bb, %bb.as, %bb.aw, %bb.ay
   %.pn21 = phi { ptr, i32 } [ %i.dq, %bb.ay ], [ %i.cy, %bb.as ], [ %i.dv, %bb.bb ], [ %i.da, %bb.aw ], [ %i.dy, %bb.bf ]
   %.sroa.012.4 = phi i1 [ true, %bb.ay ], [ true, %bb.as ], [ true, %bb.bb ], [ %.sroa.012.5, %bb.aw ], [ false, %bb.bf ]
-  %.sroa.010.6 = phi i8 [ 0, %bb.ay ], [ 1, %bb.as ], [ 0, %bb.bb ], [ %.sroa.010.7, %bb.aw ], [ 0, %bb.bf ]
+  %.sroa.010.6 = phi i1 [ false, %bb.ay ], [ true, %bb.as ], [ false, %bb.bb ], [ %.sroa.010.7, %bb.aw ], [ false, %bb.bf ]
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k) #15
           to label %.body58 unwind label %bb.cd
 
 bb.aw:                                            ; preds = %bb.bg, %bb.bc, %bb.at, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit44
   %.sroa.012.5 = phi i1 [ true, %bb.bc ], [ false, %bb.bg ], [ true, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit44 ], [ true, %bb.at ]
-  %.sroa.010.7 = phi i8 [ 0, %bb.bc ], [ 0, %bb.bg ], [ 1, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit44 ], [ 1, %bb.at ]
+  %.sroa.010.7 = phi i1 [ false, %bb.bc ], [ false, %bb.bg ], [ true, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit44 ], [ true, %bb.at ]
   %i.da = landingpad { ptr, i32 }
           cleanup
   br label %.body42
@@ -824,7 +827,6 @@ bb.bz:                                            ; preds = %bb.bx
   unreachable
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit74: ; preds = %bb.by, %bb.al
-  %.sroa.010.8 = phi i8 [ 1, %bb.al ], [ 0, %bb.by ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   invoke void @_RNvXso_NtCs6i54tJFfzR_5alloc3vecINtB5_3VechENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l)
           to label %bb.cb unwind label %bb.ca
@@ -861,13 +863,13 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54u
 
 bb.cf:                                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit80
   %i.eq = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @_RNvXs1_NtCs6i54tJFfzR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
-          to label %.body38.a unwind label %bb.ch
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVechEECs54uEYnqmHDA_13signal_crypto.exit.i81 unwind label %bb.ch
 
 bb.cg:                                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit80
   invoke void @_RNvXs1_NtCs6i54tJFfzR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit85 unwind label %bb.x
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit85 unwind label %.body38
 
 bb.ch:                                            ; preds = %bb.cf
   %i.er = landingpad { ptr, i32 }
@@ -875,10 +877,12 @@ bb.ch:                                            ; preds = %bb.cf
   call void @_RNvNtCsgxBkk5gSRhY_4core9panicking16panic_in_cleanup() #16
   unreachable
 
+_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVechEECs54uEYnqmHDA_13signal_crypto.exit.i81: ; preds = %bb.cf
+  br i1 %i.cg, label %.thread, label %.body
+
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit85: ; preds = %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  %11 = trunc nuw i8 %.sroa.010.8 to i1
-  br i1 %11, label %bb.cn, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit95
+  br i1 %i.cg, label %bb.cn, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit95
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit95: ; preds = %bb.cp, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto.exit85
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
@@ -938,13 +942,13 @@ bb.cq:                                            ; preds = %bb.co
   unreachable
 
 .body62.thread:                                   ; preds = %bb.ca, %.body62.thread110, %bb.ad
-  %.sroa.010.2102 = phi i8 [ %.sroa.010.3.ph, %.body62.thread110 ], [ %.sroa.010.4, %bb.ad ], [ %.sroa.010.8, %bb.ca ]
+  %.sroa.010.2107 = phi i1 [ %.sroa.010.3.ph, %.body62.thread110 ], [ %.sroa.010.4, %bb.ad ], [ %i.cg, %bb.ca ]
   %.pn25101 = phi { ptr, i32 } [ %lpad.thr_comm, %.body62.thread110 ], [ %.pn23, %bb.ad ], [ %i.en, %bb.ca ]
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.m) #15
           to label %.body38.a unwind label %bb.cd
 
-.thread:                                          ; preds = %bb.u, %.body34, %.body38.a
-  %.pn27100 = phi { ptr, i32 } [ %.pn27, %.body38.a ], [ %eh.lpad-body35, %.body34 ], [ %i.be, %bb.u ]
+.thread:                                          ; preds = %bb.u, %.body34, %bb.x, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVechEECs54uEYnqmHDA_13signal_crypto.exit.i81, %.body38, %.body38.a
+  %.pn27100 = phi { ptr, i32 } [ %i.bg, %bb.x ], [ %.pn27, %.body38.a ], [ %lpad.thr_comm.split-lp, %.body38 ], [ %eh.lpad-body35, %.body34 ], [ %i.eq, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVechEECs54uEYnqmHDA_13signal_crypto.exit.i81 ], [ %i.be, %bb.u ]
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs54uEYnqmHDA_13signal_crypto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.s) #15
           to label %.body unwind label %bb.cd
 

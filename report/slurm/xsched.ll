@@ -148,7 +148,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.j
   %indvars.iv82 = phi i64 [ %i.k, %.lr.ph ], [ %indvars.iv.next83, %bb.j ] ; 4 uses
   %indvars.iv = phi i64 [ %i.j, %.lr.ph ], [ %indvars.iv.next, %bb.j ] ; 5 uses
-  %.04478 = phi i8 [ 1, %.lr.ph ], [ %.1, %bb.j ]
+  %.04478 = phi i1 [ true, %.lr.ph ], [ %1, %bb.j ]
   %.04577 = phi ptr [ %i.d, %.lr.ph ], [ %.146, %bb.j ] ; 3 uses
   %i.l = lshr i64 %indvars.iv, 3
   %i.m = load i64, ptr %i.h, align 8              ; 4 uses
@@ -236,9 +236,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bg, label %.thread68, label %.thread71
 
 .thread68:                                        ; preds = %bb.h, %bb.i
-  %1 = trunc nuw i8 %.04478 to i1
   %i.bi = icmp eq i8 %i.av, 0
-  %or.cond.not = select i1 %1, i1 %i.bi, i1 false
+  %or.cond.not = select i1 %.04478, i1 %i.bi, i1 false
   br i1 %or.cond.not, label %bb.j, label %.thread71
 
 .thread71:                                        ; preds = %bb.i, %.thread68
@@ -252,15 +251,14 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %.thread68, %.thread71
   %.146 = phi ptr [ %i.bn, %.thread71 ], [ %.04577, %.thread68 ] ; 2 uses
-  %.1 = phi i8 [ 0, %.thread71 ], [ 1, %.thread68 ] ; 2 uses
+  %1 = phi i1 [ false, %.thread71 ], [ true, %.thread68 ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -4
   %i.bo = icmp sgt i64 %indvars.iv, 3
   %indvars.iv.next83 = add nsw i64 %indvars.iv82, -4
   br i1 %i.bo, label %bb.b, label %._crit_edge, !llvm.loop !10
 
 ._crit_edge:                                      ; preds = %bb.j
-  %2 = trunc nuw i8 %.1 to i1
-  br i1 %2, label %._crit_edge.thread, label %bb.k
+  br i1 %1, label %._crit_edge.thread, label %bb.k
 
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
   %.045.lcssa86 = phi ptr [ %.146, %._crit_edge ], [ %i.d, %bb.a ]

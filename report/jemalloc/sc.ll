@@ -152,7 +152,9 @@ bb.f:                                             ; preds = %bb.e
   br label %size_class.exit186.i
 
 size_class.exit186.i:                             ; preds = %bb.f, %.thread.i183.i
-  %1 = phi i8 [ 1, %bb.f ], [ 0, %.thread.i183.i ] ; 2 uses
+  %.2.i = phi i32 [ %i.ae, %bb.f ], [ %.1133200.i, %.thread.i183.i ] ; 4 uses
+  %.2136.i = phi i64 [ %i.an, %bb.f ], [ %.1135199.i, %.thread.i183.i ] ; 3 uses
+  %1 = phi i32 [ 1, %bb.f ], [ 0, %.thread.i183.i ]
   %.sink.i184.i = phi i32 [ %spec.select.i, %bb.f ], [ 0, %.thread.i183.i ] ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   store i32 %.sink.i184.i, ptr %i.bc, align 4, !tbaa !28
@@ -163,11 +165,7 @@ size_class.exit186.i:                             ; preds = %bb.f, %.thread.i183
   %.2139.i = select i1 %.not175.i, i64 %.1138198.i, i64 %i.an ; 3 uses
   %i.be = zext i1 %i.ap to i32
   %.8.i = add nsw i32 %.7195.i, %i.be             ; 3 uses
-  %2 = trunc nuw i8 %1 to i1                      ; 2 uses
-  %3 = zext nneg i8 %1 to i32
-  %.8165.i = add nsw i32 %.7164194.i, %3          ; 3 uses
-  %.2136.i = select i1 %2, i64 %i.an, i64 %.1135199.i ; 3 uses
-  %.2.i = select i1 %2, i32 %i.ae, i32 %.1133200.i ; 4 uses
+  %.8165.i = add nsw i32 %1, %.7164194.i          ; 3 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next.i to i32
   %exitcond = icmp eq i32 %i.af, %lftr.wideiv

@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !1406
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15458)
   %i.a = load i8, ptr %1, align 8, !tbaa !3623, !range !1300, !noalias !15458, !noundef !1301
-  %i.b = trunc nuw i8 %i.a to i1
+  %i.b = trunc nuw i8 %i.a to i1                  ; 2 uses
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -220,7 +220,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN5boost4asio6detail14append_handlerINS_5beast4test7handlerEJNS_6system10error_codeEEEC2IS5_EEOT_St5tupleIJS7_EE.exit
 
 _ZN5boost4asio6detail14append_handlerINS_5beast4test7handlerEJNS_6system10error_codeEEEC2IS5_EEOT_St5tupleIJS7_EE.exit: ; preds = %bb.b, %bb.c
-  %.sink.i.i.i.i = phi i8 [ 1, %bb.b ], [ 0, %bb.c ] ; 2 uses
+  %.sink.i.i.i.i = phi i8 [ 1, %bb.b ], [ 0, %bb.c ]
   store i8 %.sink.i.i.i.i, ptr %5, align 8, !tbaa !1388, !alias.scope !15458
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -233,8 +233,7 @@ _ZN5boost4asio6detail14append_handlerINS_5beast4test7handlerEJNS_6system10error_
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false), !tbaa.struct !1406
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15459)
-  %6 = trunc nuw i8 %.sink.i.i.i.i to i1
-  br i1 %6, label %bb.d, label %bb.e
+  br i1 %i.b, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZN5boost4asio6detail14append_handlerINS_5beast4test7handlerEJNS_6system10error_codeEEEC2IS5_EEOT_St5tupleIJS7_EE.exit
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 8

@@ -202,9 +202,8 @@ _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNt
 define hidden void @_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNtBb_7service3ipc7ServiceE7receiveCsadSKrpJ73hd_12iox2_service(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([80 x i8]) align 16 captures(none) dereferenceable(80) %0, ptr noundef nonnull align 16 %1, i64 noundef %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [3648 x i8], align 16             ; 5 uses
-  %.sroa.727.i = alloca [62 x i8], align 2        ; 6 uses
+  %.sroa.727.i = alloca [62 x i8], align 2        ; 2 uses
   %i.b = alloca [80 x i8], align 16               ; 8 uses
-  %.sroa.3.sroa.3.i = alloca [62 x i8], align 2   ; 2 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %.sroa.641 = alloca [62 x i8], align 2          ; 2 uses
@@ -212,7 +211,6 @@ bb.a:
   %i.f = alloca [16 x i8], align 8                ; 6 uses
   %i.g = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %1, ptr %i.g, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.727.i)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 1224
   %i.i = load i64, ptr %i.h, align 8, !range !12, !noalias !480, !noundef !5
   %i.j = trunc nuw i64 %i.i to i1
@@ -352,21 +350,19 @@ bb.o:                                             ; preds = %_RNvXsj_NtNtNtCs7gu
   br i1 %i.bc, label %bb.s, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.727.i, ptr noundef nonnull align 2 dereferenceable(62) %.sroa.638.0..sroa_idx.i, i64 62, i1 false), !noalias !480
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.727.i, ptr noundef nonnull align 2 dereferenceable(62) %.sroa.638.0..sroa_idx.i, i64 62, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !480
   %i.bf = trunc nuw i128 %i.bb to i1
   br i1 %i.bf, label %.loopexit, label %bb.q
 
 .loopexit:                                        ; preds = %bb.p
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.3.sroa.3.i, ptr noundef nonnull align 2 dereferenceable(62) %.sroa.727.i, i64 62, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.727.i)
+  %.sroa.615.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 18
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.615.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(62) %.sroa.727.i, i64 62, i1 false)
   store i128 1, ptr %0, align 16
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 %i.bd, ptr %.sroa.3.0..sroa_idx, align 16
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.be, ptr %.sroa.5.0..sroa_idx, align 1
-  %.sroa.615.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.615.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(62) %.sroa.3.sroa.3.i, i64 62, i1 false)
   br label %bb.ak
 
 bb.q:                                             ; preds = %bb.p
@@ -408,7 +404,6 @@ _RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details8receiverINtB5_8ReceiverNtNtNt
 
 bb.s:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !480
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.727.i)
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 %i.bd, ptr %i.bt, align 16
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 17
@@ -417,7 +412,6 @@ bb.s:                                             ; preds = %bb.o
   br label %bb.ak
 
 .critedge:                                        ; preds = %bb.f, %bb.e, %bb.a, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.727.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr @98, ptr %i.f, align 8, !captures !18
   %i.bv = getelementptr inbounds nuw i8, ptr %i.f, i64 8

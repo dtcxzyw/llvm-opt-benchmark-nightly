@@ -204,16 +204,13 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.trap()
   unreachable
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i: ; preds = %bb.af, %bb.ae, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit.i.i.i, %bb.e
-  %.pn14.i.i.i = phi { ptr, i32 } [ %i.t, %bb.e ], [ %.pn.i.i.i, %bb.ae ], [ %.pn.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit.i.i.i ], [ %.pn.i.i.i, %bb.af ] ; 2 uses
-  %.sroa.07.0.i.i.i = phi i8 [ %.sroa.07.5.i.i.i, %bb.e ], [ %.sroa.07.2.i.i.i, %bb.ae ], [ %.sroa.07.2.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit.i.i.i ], [ %.sroa.07.2.i.i.i, %bb.af ]
-  %2 = trunc nuw i8 %.sroa.07.0.i.i.i to i1
-  br i1 %2, label %bb.ag, label %.body.thread.i.i
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i: ; preds = %bb.af, %bb.ae, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit.i.i.i
+  br i1 %.sroa.07.2.i.i.i, label %bb.ag, label %.body.thread.i.i
 
 bb.e:                                             ; preds = %bb.aa
   %i.t = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i
+          cleanup                                 ; 2 uses
+  br i1 %2, label %bb.ag, label %.body.thread.i.i
 
 bb.f:                                             ; preds = %bb.c
   %i.u = load ptr, ptr %.sroa.0.0.i.i7.i.i, align 8, !nonnull !4, !noundef !4 ; 7 uses
@@ -266,8 +263,8 @@ bb.l:                                             ; preds = %_RNvMsc_NtNtCslghKH
           to label %.thread.i.i.i unwind label %bb.m
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit.i.i.i: ; preds = %bb.ad, %bb.ac, %.thread43.i.i.i, %bb.m
-  %.pn.i.i.i = phi { ptr, i32 } [ %i.ao, %bb.m ], [ %lpad.thr_comm.i.i.i, %.thread43.i.i.i ], [ %lpad.thr_comm.split-lp.i.i.i, %bb.ad ], [ %lpad.thr_comm.split-lp.i.i.i, %bb.ac ] ; 3 uses
-  %.sroa.07.2.i.i.i = phi i8 [ %.sroa.07.3.i.i.i, %bb.m ], [ 0, %.thread43.i.i.i ], [ 0, %bb.ad ], [ 0, %bb.ac ] ; 3 uses
+  %.pn.i.i.i = phi { ptr, i32 } [ %i.ao, %bb.m ], [ %lpad.thr_comm.i.i.i, %.thread43.i.i.i ], [ %lpad.thr_comm.split-lp.i.i.i, %bb.ad ], [ %lpad.thr_comm.split-lp.i.i.i, %bb.ac ] ; 2 uses
+  %.sroa.07.2.i.i.i = phi i1 [ %.sroa.07.3.i.i.i, %bb.m ], [ false, %.thread43.i.i.i ], [ false, %bb.ad ], [ false, %bb.ac ]
   %.sroa.06.0.i.i.i = phi i1 [ %.sroa.06.1.i.i.i, %bb.m ], [ true, %.thread43.i.i.i ], [ true, %bb.ad ], [ true, %bb.ac ]
   %i.am = load ptr, ptr %i.b, align 8, !noundef !4 ; 3 uses
   %i.an = icmp ne ptr %i.am, null
@@ -275,7 +272,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCsl
   br i1 %or.cond.i.i.i, label %bb.ae, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i
 
 bb.m:                                             ; preds = %bb.w, %bb.s, %_RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exit22.i.i.i, %bb.q, %bb.l, %bb.g
-  %.sroa.07.3.i.i.i = phi i8 [ 1, %bb.w ], [ 1, %bb.s ], [ 0, %bb.l ], [ 0, %_RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exit22.i.i.i ], [ 0, %bb.q ], [ 1, %bb.g ]
+  %.sroa.07.3.i.i.i = phi i1 [ true, %bb.w ], [ true, %bb.s ], [ false, %bb.l ], [ false, %_RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exit22.i.i.i ], [ false, %bb.q ], [ true, %bb.g ]
   %.sroa.06.1.i.i.i = phi i1 [ true, %bb.w ], [ true, %bb.s ], [ false, %bb.l ], [ true, %_RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exit22.i.i.i ], [ true, %bb.q ], [ true, %bb.g ]
   %i.ao = landingpad { ptr, i32 }
           cleanup
@@ -288,8 +285,7 @@ bb.m:                                             ; preds = %bb.w, %bb.s, %_RNvM
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit28.i.i.i: ; preds = %bb.aa, %bb.z, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardINtNtB4_6option6OptionINtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque8VecDequeINtNtNtBK_7runtime4task8NotifiedINtNtB25_4sync3ArcNtNtNtBK_4task5local6SharedEEEEEEBK_.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %3 = trunc nuw i8 %.sroa.07.5.i.i.i to i1
-  br i1 %3, label %bb.ab, label %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtNtCslghKHtsL3a4_5tokio4task5local9LocalDataE4withNCNvMs9_BW_NtBW_6Shared8schedule0uEB10_.exit
+  br i1 %2, label %bb.ab, label %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtNtCslghKHtsL3a4_5tokio4task5local9LocalDataE4withNCNvMs9_BW_NtBW_6Shared8schedule0uEB10_.exit
 
 bb.n:                                             ; preds = %bb.ag, %bb.af, %bb.ad, %bb.k
   %i.ap = landingpad { ptr, i32 }
@@ -320,7 +316,7 @@ _RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exi
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardINtNtB4_6option6OptionINtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque8VecDequeINtNtNtBK_7runtime4task8NotifiedINtNtB25_4sync3ArcNtNtNtBK_4task5local6SharedEEEEEEBK_.exit.i.i.i unwind label %bb.m
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardINtNtB4_6option6OptionINtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque8VecDequeINtNtNtBK_7runtime4task8NotifiedINtNtB25_4sync3ArcNtNtNtBK_4task5local6SharedEEEEEEBK_.exit.i.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardINtNtB4_6option6OptionINtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque8VecDequeINtNtNtBK_7runtime4task8NotifiedINtNtB25_4sync3ArcNtNtNtBK_4task5local6SharedEEEEEEBK_.exit26.i.i.i, %bb.w, %bb.v, %_RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exit22.i.i.i
-  %.sroa.07.5.i.i.i = phi i8 [ 0, %_RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exit22.i.i.i ], [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardINtNtB4_6option6OptionINtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque8VecDequeINtNtNtBK_7runtime4task8NotifiedINtNtB25_4sync3ArcNtNtNtBK_4task5local6SharedEEEEEEBK_.exit26.i.i.i ], [ 1, %bb.w ], [ 1, %bb.v ] ; 2 uses
+  %2 = phi i1 [ false, %_RNvMsc_NtNtCslghKHtsL3a4_5tokio4task5localNtB5_10LocalState14task_push_back.exit22.i.i.i ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardINtNtB4_6option6OptionINtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque8VecDequeINtNtNtBK_7runtime4task8NotifiedINtNtB25_4sync3ArcNtNtNtBK_4task5local6SharedEEEEEEBK_.exit26.i.i.i ], [ true, %bb.w ], [ true, %bb.v ] ; 2 uses
   %i.ay = load ptr, ptr %i.b, align 8, !noundef !4 ; 3 uses
   %.not13.i.i.i = icmp eq ptr %i.ay, null
   br i1 %.not13.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit28.i.i.i, label %bb.z
@@ -412,12 +408,13 @@ bb.af:                                            ; preds = %bb.ae
   invoke void @_RNvMs6_NtCs1xwejQucwHj_5alloc2rcINtB5_2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextE9drop_slowBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b) #22
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i unwind label %bb.n
 
-bb.ag:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i
+bb.ag:                                            ; preds = %bb.e, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i
+  %.pn1452.i.i.i = phi { ptr, i32 } [ %i.t, %bb.e ], [ %.pn.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i ]
   invoke void @_RNvXsd_NtNtCslghKHtsL3a4_5tokio7runtime4taskINtB5_4TaskINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtB9_4task5local6SharedEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropB9_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.n)
           to label %.body.thread.i.i unwind label %bb.n
 
-.body.thread.i.i:                                 ; preds = %bb.ah, %bb.ag, %bb.k, %bb.j, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i
-  %eh.lpad-body3.i.i = phi { ptr, i32 } [ %i.bs, %bb.ah ], [ %i.af, %bb.k ], [ %.pn14.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i ], [ %.pn14.i.i.i, %bb.ag ], [ %i.af, %bb.j ]
+.body.thread.i.i:                                 ; preds = %bb.ah, %bb.ag, %bb.k, %bb.j, %bb.e, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i
+  %eh.lpad-body3.i.i = phi { ptr, i32 } [ %i.bs, %bb.ah ], [ %i.t, %bb.e ], [ %.pn.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCslghKHtsL3a4_5tokio4task5local7ContextEEB1c_.exit33.i.i.i ], [ %.pn1452.i.i.i, %bb.ag ], [ %i.af, %bb.j ], [ %i.af, %bb.k ]
   resume { ptr, i32 } %eh.lpad-body3.i.i
 
 bb.ah:                                            ; preds = %bb.b

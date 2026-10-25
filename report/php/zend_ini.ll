@@ -202,7 +202,6 @@ bb.ag:                                            ; preds = %bb.af
   %i.cj = load ptr, ptr %i.b, align 8
   %i.ck = icmp ne ptr %i.cj, %.0109.lcssa
   %or.cond127.not = select i1 %i.ci, i1 true, i1 %i.ck ; 2 uses
-  %spec.select128 = zext i1 %or.cond127.not to i8
   %spec.select129 = select i1 %or.cond127.not, i64 %i.cf, i64 -1
   br label %bb.ak
 
@@ -221,7 +220,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.ag, %bb.aj, %bb.ai, %bb.ah, %bb.ad, %bb.af
-  %.0104 = phi i8 [ 1, %bb.ai ], [ 1, %bb.ad ], [ 0, %bb.aj ], [ 0, %bb.af ], [ %spec.select128, %bb.ag ], [ 0, %bb.ah ] ; 2 uses
+  %6 = phi i1 [ true, %bb.ai ], [ true, %bb.ad ], [ false, %bb.aj ], [ false, %bb.af ], [ %or.cond127.not, %bb.ag ], [ false, %bb.ah ] ; 2 uses
   %.0 = phi i64 [ %i.cf, %bb.ai ], [ %i.cf, %bb.ad ], [ %spec.select, %bb.aj ], [ %i.cf, %bb.af ], [ %spec.select129, %bb.ag ], [ -9223372036854775808, %bb.ah ] ; 10 uses
   %i.co = load ptr, ptr %i.b, align 8, !tbaa !84  ; 6 uses
   %i.cp = icmp eq ptr %i.co, %.2108
@@ -450,7 +449,6 @@ switch.lookup:                                    ; preds = %switch.hole_check
   %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.zend_ini_parse_quantity_internal, i64 %i.fp
   %switch.load = load i32, ptr %switch.gep, align 4
   %switch.ext = zext i32 %switch.load to i64      ; 3 uses
-  %6 = trunc nuw i8 %.0104 to i1
   br i1 %6, label %bb.bh, label %bb.bc
 
 bb.bc:                                            ; preds = %switch.lookup
@@ -481,7 +479,6 @@ bb.bg:                                            ; preds = %bb.bc
 
 bb.bh:                                            ; preds = %bb.be, %bb.bf, %bb.bg, %switch.lookup
   %.2.shrunk = phi i1 [ true, %switch.lookup ], [ %i.fz, %bb.bg ], [ %i.fu, %bb.be ], [ %i.fw, %bb.bf ]
-  %.2 = zext i1 %.2.shrunk to i8
   %i.ga = mul i64 %.0, %switch.ext                ; 5 uses
   %.not123 = icmp eq ptr %.lcssa, %i.dm
   br i1 %.not123, label %bb.bu, label %bb.bi, !prof !111
@@ -622,10 +619,9 @@ bb.bt:                                            ; preds = %bb.bs
   br label %smart_str_free_ex.exit
 
 bb.bu:                                            ; preds = %bb.bh, %.critedge5
-  %.3 = phi i8 [ %.0104, %.critedge5 ], [ %.2, %bb.bh ]
+  %.3 = phi i1 [ %6, %.critedge5 ], [ %.2.shrunk, %bb.bh ]
   %.1 = phi i64 [ %.0, %.critedge5 ], [ %i.ga, %bb.bh ] ; 5 uses
-  %7 = trunc nuw i8 %.3 to i1
-  br i1 %7, label %smart_str_0.exit, label %bb.ce, !prof !59
+  br i1 %.3, label %smart_str_0.exit, label %bb.ce, !prof !59
 
 smart_str_0.exit:                                 ; preds = %bb.bu
   %i.ib = load i64, ptr %i.d, align 8, !tbaa !69

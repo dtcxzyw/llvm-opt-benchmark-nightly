@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ak = load i64, ptr %i.aj, align 8, !noundef !6
   %i.al = tail call noundef zeroext i1 @_RNvMNtNtNtCskfBPnJUU6aB_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 7) ; 3 uses
   %i.am = tail call noundef zeroext i1 @_RNvMNtNtNtCskfBPnJUU6aB_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 15) ; 2 uses
-  %i.an = tail call noundef zeroext i1 @_RNvMNtNtNtCskfBPnJUU6aB_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 13) ; 2 uses
+  %i.an = tail call noundef zeroext i1 @_RNvMNtNtNtCskfBPnJUU6aB_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 13) ; 6 uses
   %brmerge = or i1 %i.am, %i.an
   br i1 %brmerge, label %bb.d, label %bb.e
 
@@ -311,8 +311,8 @@ bb.n:                                             ; preds = %bb.o, %bb.l
   invoke void @_RNvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB5_10Repository11loose_packs(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.ab, ptr noundef nonnull align 8 %i.ae)
           to label %bb.u unwind label %.thread213
 
-.body147:                                         ; preds = %bb.as, %.body141, %.thread213, %bb.bs, %bb.cr, %bb.x, %bb.r, %.thread202, %.body150.a
-  %.pn136 = phi { ptr, i32 } [ %.pn134, %.body150.a ], [ %.pn134205, %.thread202 ], [ %i.gb, %bb.cr ], [ %i.bh, %bb.r ], [ %i.dn, %bb.as ], [ %i.bn, %bb.x ], [ %lpad.thr_comm.split-lp, %bb.bs ], [ %lpad.thr_comm, %.thread213 ], [ %eh.lpad-body142, %.body141 ]
+.body147:                                         ; preds = %.body141, %.thread213, %bb.bs, %bb.cr, %bb.as, %bb.ac, %.body150, %bb.x, %bb.r, %.thread202, %1
+  %.pn136 = phi { ptr, i32 } [ %i.el, %1 ], [ %.pn134205, %.thread202 ], [ %i.dn, %bb.as ], [ %i.bh, %bb.r ], [ %eh.lpad-body142, %.body141 ], [ %i.bn, %bb.x ], [ %i.gb, %bb.cr ], [ %i.em, %.body150 ], [ %i.bp, %bb.ac ], [ %lpad.thr_comm.split-lp, %bb.bs ], [ %lpad.thr_comm, %.thread213 ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCskuiImRAV2ip_9elfshaker4repo10repository10RepositoryECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef align 8 dereferenceable(80) %i.ae) #24
           to label %common.resume unwind label %bb.bg
 
@@ -411,19 +411,23 @@ bb.aa:                                            ; preds = %_RINvNtCs3oUPovFnLW
 bb.ab:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)
   invoke void @_RNvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB5_10Repository26find_redundant_loose_packs(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.aa, ptr noundef nonnull align 8 %i.ae)
-          to label %bb.ad unwind label %bb.ac
+          to label %bb.ad unwind label %.body150.a
 
-.body150.a:                                       ; preds = %bb.bb, %bb.ac, %bb.az
-  %.sroa.074.0 = phi i8 [ %.sroa.074.2, %bb.az ], [ %.sroa.074.2, %bb.bb ], [ %.sroa.074.1, %bb.ac ]
-  %.pn134 = phi { ptr, i32 } [ %i.el, %bb.az ], [ %i.em, %bb.bb ], [ %i.bp, %bb.ac ] ; 2 uses
-  %1 = trunc nuw i8 %.sroa.074.0 to i1
-  br i1 %1, label %.thread202, label %.body147
+1:                                                ; preds = %bb.az
+  br i1 %i.an, label %.body147, label %.thread202
 
-bb.ac:                                            ; preds = %bb.cp, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs7BtpbLEd5q3_9elfshaker.exit.i, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7BtpbLEd5q3_9elfshaker.exit.thread, %bb.ao, %bb.an, %bb.al, %bb.ab
-  %.sroa.074.1 = phi i8 [ 1, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7BtpbLEd5q3_9elfshaker.exit.thread ], [ 1, %bb.cp ], [ 1, %bb.ab ], [ %.sroa.074.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs7BtpbLEd5q3_9elfshaker.exit.i ], [ %.sroa.074.2, %bb.al ], [ 0, %bb.ao ], [ 1, %bb.an ]
-  %i.bp = landingpad { ptr, i32 }
+.body150.a:                                       ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7BtpbLEd5q3_9elfshaker.exit.thread, %bb.cp, %bb.ab, %bb.an
+  %lpad.thr_comm229 = landingpad { ptr, i32 }
           cleanup
-  br label %.body150.a
+  br label %.thread202
+
+bb.ac:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs7BtpbLEd5q3_9elfshaker.exit.i, %bb.al
+  %i.bp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %i.an, label %.body147, label %.thread202
+
+.body150:                                         ; preds = %bb.bb
+  br i1 %i.an, label %.body147, label %.thread202
 
 bb.ad:                                            ; preds = %bb.ab
   %i.bq = load i64, ptr %i.aa, align 8, !range !16, !noundef !6 ; 2 uses
@@ -565,14 +569,13 @@ _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip
   %.sroa.020.1.lcssa = phi i64 [ 0, %bb.ai ], [ %i.fr, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdECs7BtpbLEd5q3_9elfshaker.exit186 ], [ %.sroa.020.1255, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7BtpbLEd5q3_9elfshaker.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8193)
   invoke void @_RNvXse_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.z)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEECs7BtpbLEd5q3_9elfshaker.exit168 unwind label %bb.ac
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEECs7BtpbLEd5q3_9elfshaker.exit168 unwind label %.body150.a
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEECs7BtpbLEd5q3_9elfshaker.exit168: ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7BtpbLEd5q3_9elfshaker.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z)
   br label %bb.aa
 
 bb.al:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterAhj14_EECs7BtpbLEd5q3_9elfshaker.exit171, %bb.aa
-  %.sroa.074.2 = phi i8 [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterAhj14_EECs7BtpbLEd5q3_9elfshaker.exit171 ], [ 1, %bb.aa ] ; 5 uses
   %.sroa.020.2 = phi i64 [ %.sroa.020.3.lcssa, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterAhj14_EECs7BtpbLEd5q3_9elfshaker.exit171 ], [ %.sroa.020.0, %bb.aa ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   invoke void @_RNvNtCs7BtpbLEd5q3_9elfshaker5utils11format_size(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.l, i64 noundef %.sroa.020.2)
@@ -601,7 +604,7 @@ bb.an:                                            ; preds = %bb.am
   %i.cz = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   store ptr @15, ptr %i.cz, align 8
   invoke void @_RINvNtCse7cAXHj51Pq_3log13___private_api3loguNtB2_12GlobalLoggerECs7BtpbLEd5q3_9elfshaker(ptr noundef nonnull @14, ptr noundef nonnull %i.u, i64 noundef 3, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.t)
-          to label %bb.ap unwind label %bb.ac
+          to label %bb.ap unwind label %.body150.a
 
 bb.ao:                                            ; preds = %bb.am, %bb.ap
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
@@ -624,7 +627,7 @@ bb.ao:                                            ; preds = %bb.am, %bb.ap
   %i.dj = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   store ptr %i.dg, ptr %i.dj, align 8
   invoke void @_RINvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB6_10Repository25find_unreferenced_objectsINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtB8_4pack6PackIdEECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.r, ptr noundef nonnull align 8 %i.ae, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.q)
-          to label %bb.aq unwind label %bb.ac
+          to label %bb.aq unwind label %.thread213
 
 bb.ap:                                            ; preds = %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
@@ -680,7 +683,7 @@ bb.au:                                            ; preds = %bb.aq
   invoke void @_RNvNtNtCsaL1QbXo9JQH_3std2io5stdio6__print(ptr noundef nonnull @16, ptr noundef nonnull %i.o)
           to label %bb.av unwind label %bb.bs
 
-.thread213:                                       ; preds = %bb.m, %bb.n, %bb.be, %bb.cs, %bb.bq, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterAhj14_ENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7BtpbLEd5q3_9elfshaker.exit
+.thread213:                                       ; preds = %bb.ao, %bb.cs, %bb.be, %bb.n, %bb.m, %bb.bq, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterAhj14_ENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7BtpbLEd5q3_9elfshaker.exit
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.body147
@@ -780,9 +783,9 @@ bb.ay:                                            ; preds = %bb.al
 
 bb.az:                                            ; preds = %bb.ay
   %i.el = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l) #24
-          to label %.body150.a unwind label %bb.bg
+          to label %1 unwind label %bb.bg
 
 bb.ba:                                            ; preds = %bb.ay
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
@@ -791,9 +794,9 @@ bb.ba:                                            ; preds = %bb.ay
 
 bb.bb:                                            ; preds = %bb.ba
   %i.em = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l)
-          to label %.body150.a unwind label %bb.bc
+          to label %.body150 unwind label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.en = landingpad { ptr, i32 }
@@ -807,8 +810,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs7B
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs7BtpbLEd5q3_9elfshaker.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs7BtpbLEd5q3_9elfshaker.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %2 = trunc nuw i8 %.sroa.074.2 to i1
-  br i1 %2, label %bb.be, label %bb.bd
+  br i1 %i.an, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %bb.be, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs7BtpbLEd5q3_9elfshaker.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
@@ -1100,7 +1102,7 @@ bb.cp:                                            ; preds = %bb.co
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8193)
   invoke void @_RNvXse_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.z)
-          to label %.thread217 unwind label %bb.ac
+          to label %.thread217 unwind label %.body150.a
 
 .thread217:                                       ; preds = %bb.cp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z)
@@ -1133,8 +1135,8 @@ bb.cu:                                            ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %bb.cq
 
-.thread202:                                       ; preds = %bb.ag, %.body183, %.body150.a
-  %.pn134205 = phi { ptr, i32 } [ %.pn134, %.body150.a ], [ %.pn132, %.body183 ], [ %i.bu, %bb.ag ]
+.thread202:                                       ; preds = %.body150.a, %.body183, %bb.ag, %bb.ac, %.body150, %1
+  %.pn134205 = phi { ptr, i32 } [ %i.bu, %bb.ag ], [ %i.el, %1 ], [ %i.em, %.body150 ], [ %i.bp, %bb.ac ], [ %.pn132, %.body183 ], [ %lpad.thr_comm229, %.body150.a ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ac) #24
           to label %.body147 unwind label %bb.bg
 

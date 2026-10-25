@@ -202,6 +202,7 @@ bb.p:                                             ; preds = %.split, %ompi_osc_r
 
 ompi_osc_rdma_lock_acquire_exclusive.exit:        ; preds = %ompi_osc_rdma_lock_try_acquire_exclusive.exit.i, %.split, %bb.m, %bb.l, %ompi_osc_rdma_peer_test_set_flag.exit
   %.044.a = phi i1 [ false, %ompi_osc_rdma_peer_test_set_flag.exit ], [ false, %bb.l ], [ false, %bb.m ], [ true, %.split ], [ true, %ompi_osc_rdma_lock_try_acquire_exclusive.exit.i ] ; 2 uses
+  %.044 = phi i8 [ 0, %ompi_osc_rdma_peer_test_set_flag.exit ], [ 0, %bb.l ], [ 0, %bb.m ], [ 1, %.split ], [ 1, %ompi_osc_rdma_lock_try_acquire_exclusive.exit.i ] ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.ac, i64 313
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !176, !range !65, !noundef !66
   %i.dn = trunc nuw i8 %i.dm to i1
@@ -476,11 +477,12 @@ ompi_osc_rdma_lock_acquire_exclusive.exit63.loopexit: ; preds = %.split158, %omp
 
 ompi_osc_rdma_lock_acquire_exclusive.exit63:      ; preds = %ompi_osc_rdma_lock_acquire_exclusive.exit63.loopexit, %bb.an, %.critedge
   %i.hf = phi ptr [ %.pre135, %.critedge ], [ %.pre135, %bb.an ], [ %.pre, %ompi_osc_rdma_lock_acquire_exclusive.exit63.loopexit ] ; 15 uses
-  %.1 = phi i1 [ true, %.critedge ], [ false, %bb.an ], [ true, %ompi_osc_rdma_lock_acquire_exclusive.exit63.loopexit ] ; 4 uses
+  %.1 = phi i8 [ %.044, %.critedge ], [ %.044, %bb.an ], [ 1, %ompi_osc_rdma_lock_acquire_exclusive.exit63.loopexit ] ; 2 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 140 ; 16 uses
   %i.hh = load volatile i32, ptr %i.hg, align 4, !tbaa !76
   %i.hi = and i32 %i.hh, 2
   %.not108 = icmp eq i32 %i.hi, 0
+  %7 = trunc nuw i8 %.1 to i1                     ; 5 uses
   br i1 %.not108, label %bb.bp, label %bb.ar
 
 bb.ar:                                            ; preds = %ompi_osc_rdma_lock_acquire_exclusive.exit63
@@ -614,7 +616,7 @@ osc_rdma_accelerator_mem_copy.exit.i:             ; preds = %bb.be, %bb.bb
   br label %bb.bg
 
 bb.bg:                                            ; preds = %osc_rdma_accelerator_mem_copy.exit.i, %bb.az
-  br i1 %.1, label %bb.bh, label %ompi_osc_rdma_lock_release_exclusive.exit.i.i66
+  br i1 %7, label %bb.bh, label %ompi_osc_rdma_lock_release_exclusive.exit.i.i66
 
 bb.bh:                                            ; preds = %bb.bg
   %i.iy = getelementptr inbounds nuw i8, ptr %i.hf, i64 56
@@ -769,7 +771,7 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   br i1 %.not91.i, label %bb.cj, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  br i1 %.1, label %bb.cd, label %ompi_osc_rdma_lock_release_exclusive.exit.i.i74
+  br i1 %7, label %bb.cd, label %ompi_osc_rdma_lock_release_exclusive.exit.i.i74
 
 bb.cd:                                            ; preds = %bb.cc
   %i.ks = getelementptr inbounds nuw i8, ptr %i.hf, i64 56
@@ -1007,7 +1009,7 @@ bb.db:                                            ; preds = %opal_thread_add_fet
   br label %ompi_osc_rdma_frag_complete.exit.i
 
 ompi_osc_rdma_frag_complete.exit.i:               ; preds = %bb.db, %opal_thread_add_fetch_32.exit.i.i, %._crit_edge114.i
-  br i1 %.1, label %bb.dc, label %ompi_osc_rdma_lock_release_exclusive.exit.i99.i
+  br i1 %7, label %bb.dc, label %ompi_osc_rdma_lock_release_exclusive.exit.i99.i
 
 bb.dc:                                            ; preds = %ompi_osc_rdma_frag_complete.exit.i
   %i.oh = getelementptr inbounds nuw i8, ptr %i.hf, i64 56
@@ -1070,12 +1072,17 @@ cas_rdma.exit:                                    ; preds = %bb.bp, %bb.bs, %bb.
 ompi_osc_rdma_cas_local.exit:                     ; preds = %.thread24.i, %bb.bo, %.split.i65, %cas_rdma.exit
   %.0 = phi i32 [ %.183.i, %cas_rdma.exit ], [ %.15711.i, %bb.bo ], [ %.15712.i, %.split.i65 ], [ %.1571129.i, %.thread24.i ] ; 2 uses
   %.not50 = icmp eq i32 %.0, 0
-  br i1 %.not50, label %bb.di, label %ompi_osc_rdma_cas_local.exit.thread, !prof !112
+  br i1 %.not50, label %bb.di, label %ompi_osc_rdma_cas_local.exit.ompi_osc_rdma_cas_local.exit.thread_crit_edge, !prof !112
 
-ompi_osc_rdma_cas_local.exit.thread:              ; preds = %bb.au, %bb.av, %ompi_osc_rdma_cas_local.exit
-  %.0105 = phi i32 [ %.0, %ompi_osc_rdma_cas_local.exit ], [ %i.hk, %bb.au ], [ %i.hn, %bb.av ]
+ompi_osc_rdma_cas_local.exit.ompi_osc_rdma_cas_local.exit.thread_crit_edge: ; preds = %ompi_osc_rdma_cas_local.exit
+  %.pre136 = trunc nuw i8 %.1 to i1
+  br label %ompi_osc_rdma_cas_local.exit.thread
+
+ompi_osc_rdma_cas_local.exit.thread:              ; preds = %ompi_osc_rdma_cas_local.exit.ompi_osc_rdma_cas_local.exit.thread_crit_edge, %bb.au, %bb.av
+  %.pre-phi = phi i1 [ %.pre136, %ompi_osc_rdma_cas_local.exit.ompi_osc_rdma_cas_local.exit.thread_crit_edge ], [ %7, %bb.au ], [ %7, %bb.av ]
+  %.0105 = phi i32 [ %.0, %ompi_osc_rdma_cas_local.exit.ompi_osc_rdma_cas_local.exit.thread_crit_edge ], [ %i.hk, %bb.au ], [ %i.hn, %bb.av ]
   %i.pb = load ptr, ptr %i.aa, align 8, !tbaa !39
-  call fastcc void @ompi_osc_rdma_peer_accumulate_cleanup(ptr noundef %i.ac, ptr noundef %i.pb, i1 noundef zeroext %.1)
+  call fastcc void @ompi_osc_rdma_peer_accumulate_cleanup(ptr noundef %i.ac, ptr noundef %i.pb, i1 noundef zeroext %.pre-phi)
   br label %bb.di
 
 bb.di:                                            ; preds = %ompi_osc_rdma_cas_atomic.exit.thread101, %osc_rdma_get_remote_segment.exit.thread, %ompi_osc_rdma_cas_local.exit.thread, %ompi_osc_rdma_cas_local.exit, %bb.a

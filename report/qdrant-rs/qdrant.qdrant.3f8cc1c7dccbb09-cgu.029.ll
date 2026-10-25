@@ -202,7 +202,7 @@ bb.a:
   %i.p = alloca [24 x i8], align 8                ; 7 uses
   %i.q = alloca [24 x i8], align 8                ; 6 uses
   %i.r = alloca [24 x i8], align 8                ; 8 uses
-  %i.s = alloca [24 x i8], align 8                ; 12 uses
+  %i.s = alloca [24 x i8], align 8                ; 13 uses
   %i.t = alloca [24 x i8], align 8                ; 11 uses
   %i.u = alloca [48 x i8], align 8                ; 8 uses
   %i.v = alloca [216 x i8], align 8               ; 6 uses
@@ -605,7 +605,7 @@ bb.eo:                                            ; preds = %bb.en
   store i64 %i.nf, ptr %i.nd, align 8, !noalias !7026
   %i.ng = getelementptr inbounds nuw i8, ptr %1, i64 744 ; 2 uses
   %i.nh = load i64, ptr %i.ng, align 8, !range !17, !noalias !7026, !noundef !13
-  %.not43.i.i = icmp eq i64 %i.nh, -1             ; 3 uses
+  %.not43.i.i = icmp eq i64 %i.nh, -1             ; 4 uses
   br i1 %.not43.i.i, label %bb.eq, label %bb.ep
 
 bb.ep:                                            ; preds = %._crit_edge.i.i
@@ -619,9 +619,9 @@ bb.ep:                                            ; preds = %._crit_edge.i.i
   %i.nk = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   store ptr %i.mw, ptr %i.nk, align 8, !alias.scope !7054, !noalias !7053
   invoke void @_RNvXs0_NtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB7_3VecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization19PendingOptimizationEINtB5_10SpecExtendBU_INtNtB7_9into_iter8IntoIterBU_EE11spec_extendCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ng, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.o)
-          to label %bb.es unwind label %bb.er, !noalias !7033
+          to label %.body125.thread.i.i unwind label %bb.er, !noalias !7033
 
-bb.eq:                                            ; preds = %bb.es, %._crit_edge.i.i
+bb.eq:                                            ; preds = %.body125.thread.i.i, %._crit_edge.i.i
   %i.nl = getelementptr inbounds nuw i8, ptr %1, i64 720 ; 2 uses
   %i.nm = load i64, ptr %i.nl, align 8, !range !17, !noalias !7026, !noundef !13
   %.not44.i.i = icmp eq i64 %i.nm, -1
@@ -631,15 +631,17 @@ bb.er:                                            ; preds = %bb.ep
   %i.nn = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization23OptimizationSegmentInfoEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(24) %i.s) #19
-          to label %.body125.thread.i.i unwind label %bb.el, !noalias !7033
+          to label %.body125.i.i.a unwind label %bb.el, !noalias !7033
 
-.body125.thread.i.i:                              ; preds = %bb.er
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !7026
-  br label %.body128.i.i
-
-bb.es:                                            ; preds = %bb.ep
+.body125.thread.i.i:                              ; preds = %bb.ep
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !7053
   br label %bb.eq
+
+bb.es:                                            ; preds = %bb.et
+  %3 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !7026
+  br i1 %.not43.i.i, label %bb.fg, label %.body128.i.i
 
 bb.et:                                            ; preds = %bb.eq
   %.sroa.0165.0.copyload.i.i = load i64, ptr %i.s, align 8, !noalias !7026
@@ -658,7 +660,7 @@ bb.et:                                            ; preds = %bb.eq
   %i.ns = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   store ptr %i.np, ptr %i.ns, align 8, !alias.scope !7056, !noalias !7055
   invoke void @_RNvXs0_NtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB7_3VecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization23OptimizationSegmentInfoEINtB5_10SpecExtendBU_INtNtB7_9into_iter8IntoIterBU_EE11spec_extendCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.nl, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.n)
-          to label %bb.eu unwind label %bb.ey, !noalias !7033
+          to label %bb.eu unwind label %bb.es, !noalias !7033
 
 bb.eu:                                            ; preds = %bb.et
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !7055
@@ -676,7 +678,7 @@ bb.ev:                                            ; preds = %.critedge.i.i
   %i.nt = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization23OptimizationSegmentInfoENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
-          to label %.body125.i.i.a unwind label %bb.ex, !noalias !7033
+          to label %.body125.i.i unwind label %bb.ex, !noalias !7033
 
 bb.ew:                                            ; preds = %.critedge.i.i
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization23OptimizationSegmentInfoENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
@@ -688,15 +690,19 @@ bb.ex:                                            ; preds = %bb.ev
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #17, !noalias !7033
   unreachable
 
-.body125.i.i.a:                                   ; preds = %bb.ey, %bb.ev
-  %.pn45.pn.pn.i.i = phi { ptr, i32 } [ %i.nv, %bb.ey ], [ %i.nt, %bb.ev ] ; 2 uses
+.body125.i.i.a:                                   ; preds = %bb.er
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !7026
-  br i1 %.not43.i.i, label %bb.fg, label %.body128.i.i
+  br label %.body128.i.i
 
-bb.ey:                                            ; preds = %bb.ew, %bb.et
+bb.ey:                                            ; preds = %bb.ew
   %i.nv = landingpad { ptr, i32 }
           cleanup
-  br label %.body125.i.i.a
+  br label %.body125.i.i
+
+.body125.i.i:                                     ; preds = %bb.ey, %bb.ev
+  %eh.lpad-body126.i.i = phi { ptr, i32 } [ %i.nv, %bb.ey ], [ %i.nt, %bb.ev ] ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !7026
+  br i1 %.not43.i.i, label %bb.fg, label %.body128.i.i
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization19PendingOptimizationEECsl8OoimOLbh_6qdrant.exit.i.i: ; preds = %bb.fb, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization23OptimizationSegmentInfoEECsl8OoimOLbh_6qdrant.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !7026
@@ -722,8 +728,8 @@ bb.fc:                                            ; preds = %bb.fa
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #17, !noalias !7033
   unreachable
 
-.body128.i.i:                                     ; preds = %bb.fg, %bb.fd, %bb.fa, %.body125.i.i.a, %.body125.thread.i.i
-  %.pn45.pn.pn.pn.i.i = phi { ptr, i32 } [ %.pn45.pn.pn.i.i, %bb.fg ], [ %.pn45.pn.pn.i.i, %.body125.i.i.a ], [ %i.ny, %bb.fd ], [ %i.nw, %bb.fa ], [ %i.nn, %.body125.thread.i.i ]
+.body128.i.i:                                     ; preds = %bb.fg, %bb.fd, %bb.fa, %.body125.i.i, %.body125.i.i.a, %bb.es
+  %.pn45.pn.pn.pn.i.i = phi { ptr, i32 } [ %.pn45.pn.pn185.i.i, %bb.fg ], [ %i.nn, %.body125.i.i.a ], [ %eh.lpad-body126.i.i, %.body125.i.i ], [ %3, %bb.es ], [ %i.ny, %bb.fd ], [ %i.nw, %bb.fa ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !7026
   br label %bb.fh
 
@@ -765,7 +771,8 @@ bb.ff:                                            ; preds = %bb.ff, %.lr.ph.i.i
   %i.om = icmp eq ptr %i.oi, %i.of
   br i1 %i.om, label %.loopexit.i.i, label %bb.ff
 
-bb.fg:                                            ; preds = %.body125.i.i.a
+bb.fg:                                            ; preds = %.body125.i.i, %bb.es
+  %.pn45.pn.pn185.i.i = phi { ptr, i32 } [ %3, %bb.es ], [ %eh.lpad-body126.i.i, %.body125.i.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization19PendingOptimizationEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(24) %i.t) #19
           to label %.body128.i.i unwind label %bb.el, !noalias !7033
 

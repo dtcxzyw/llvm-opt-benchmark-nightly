@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.a
   %i.mq = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.mr = load ptr, ptr %i.mq, align 8, !nonnull !20, !align !31, !noundef !20 ; 6 uses
   %i.ms = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.mt = load ptr, ptr %i.ms, align 8, !nonnull !20, !align !31, !noundef !20 ; 7 uses
+  %i.mt = load ptr, ptr %i.ms, align 8, !nonnull !20, !align !31, !noundef !20 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ds)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7184)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dr)
@@ -607,7 +607,7 @@ bb.ex:                                            ; preds = %.body688
   br i1 %.sroa.0302.2, label %.body691.thread, label %.thread1062
 
 .body691.thread1069:                              ; preds = %bb.fg, %bb.r
-  %.sroa.0303.1.ph = phi i8 [ 1, %bb.r ], [ 0, %bb.fg ]
+  %.sroa.0303.1.ph = phi i1 [ true, %bb.r ], [ false, %bb.fg ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.body691.thread
@@ -620,7 +620,7 @@ bb.ex:                                            ; preds = %.body688
 bb.ey:                                            ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dq)
   %i.abv = load i64, ptr %i.dr, align 16, !range !27, !noundef !20 ; 2 uses
-  %i.abw = icmp eq i64 %i.abv, -2
+  %i.abw = icmp eq i64 %i.abv, -2                 ; 3 uses
   %i.abx = getelementptr inbounds nuw i8, ptr %i.dr, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7184, ptr noundef nonnull align 8 dereferenceable(40) %i.abx, i64 40, i1 false)
   br i1 %i.abw, label %bb.ez, label %bb.fa
@@ -830,8 +830,7 @@ bb.fu:                                            ; preds = %bb.fn
 
 bb.fv:                                            ; preds = %bb.fx
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mt, i64 noundef 328, i64 noundef 8) #31
-  %2 = trunc nuw i8 %.sroa.0303.3 to i1
-  br i1 %2, label %bb.ga, label %bb.fz
+  br i1 %i.abw, label %bb.ga, label %bb.fz
 
 bb.fw:                                            ; preds = %bb.fg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ds)
@@ -839,15 +838,15 @@ bb.fw:                                            ; preds = %bb.fg
   br label %bb.fx
 
 bb.fx:                                            ; preds = %bb.fw, %bb.ez
-  %.sroa.0303.3 = phi i8 [ 1, %bb.ez ], [ 0, %bb.fw ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7184)
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsaNmiEuYuYZf_9sqlparser3ast4ExprECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef align 8 dereferenceable(328) %i.mt)
           to label %bb.fv unwind label %bb.fy
 
 bb.fy:                                            ; preds = %bb.fx
   %i.acz = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread1062
+          cleanup                                 ; 2 uses
+  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mt, i64 noundef 328, i64 noundef 8) #31
+  br i1 %i.abw, label %bb.gd, label %bb.gc
 
 bb.fz:                                            ; preds = %.thread1073, %bb.ga, %bb.fv
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mr, i64 noundef 328, i64 noundef 8) #31
@@ -863,26 +862,29 @@ bb.gb:                                            ; preds = %bb.ga
           cleanup
   br label %bb.gc
 
-bb.gc:                                            ; preds = %.thread1062, %bb.gd, %bb.gb
-  %.pn655 = phi { ptr, i32 } [ %i.ada, %bb.gb ], [ %.pn653, %bb.gd ], [ %.pn653, %.thread1062 ]
+bb.gc:                                            ; preds = %2, %bb.gd, %bb.fy, %.thread1062, %bb.gb
+  %.pn655 = phi { ptr, i32 } [ %i.ada, %bb.gb ], [ %i.acz, %bb.fy ], [ %.pn6531176, %bb.gd ], [ %.pn6511061, %2 ], [ %.pn6511060.ph, %.thread1062 ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mr, i64 noundef 328, i64 noundef 8) #31
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mn, i64 noundef 328, i64 noundef 8) #31
   br label %bb.bb
 
-.thread1062:                                      ; preds = %bb.ex, %.body691.thread, %.body691, %bb.fs, %bb.fy
-  %.sroa.0303.4 = phi i8 [ %.sroa.0303.3, %bb.fy ], [ %.sroa.0303.01059, %.body691.thread ], [ 0, %bb.ex ], [ 0, %.body691 ], [ 0, %bb.fs ]
-  %.pn653 = phi { ptr, i32 } [ %i.acz, %bb.fy ], [ %.pn6511061, %.body691.thread ], [ %.pn647, %bb.ex ], [ %lpad.thr_comm.split-lp, %.body691 ], [ %.pn649, %bb.fs ] ; 2 uses
+.thread1062:                                      ; preds = %bb.ex, %.body691, %bb.fs
+  %.pn6511060.ph = phi { ptr, i32 } [ %.pn649, %bb.fs ], [ %lpad.thr_comm.split-lp, %.body691 ], [ %.pn647, %bb.ex ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mt, i64 noundef 328, i64 noundef 8) #31
-  %3 = trunc nuw i8 %.sroa.0303.4 to i1
-  br i1 %3, label %bb.gd, label %bb.gc
+  br label %bb.gc
+
+2:                                                ; preds = %.body691.thread
+  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mt, i64 noundef 328, i64 noundef 8) #31
+  br i1 %.sroa.0303.01059, label %bb.gd, label %bb.gc
 
 .body691.thread:                                  ; preds = %bb.fe, %bb.fb, %.body691.thread1069, %bb.ex
-  %.pn6511061 = phi { ptr, i32 } [ %i.aca, %bb.fb ], [ %.pn647, %bb.ex ], [ %lpad.thr_comm, %.body691.thread1069 ], [ %i.acf, %bb.fe ]
-  %.sroa.0303.01059 = phi i8 [ 1, %bb.fb ], [ 0, %bb.ex ], [ %.sroa.0303.1.ph, %.body691.thread1069 ], [ 0, %bb.fe ]
+  %.pn6511061 = phi { ptr, i32 } [ %i.aca, %bb.fb ], [ %.pn647, %bb.ex ], [ %lpad.thr_comm, %.body691.thread1069 ], [ %i.acf, %bb.fe ] ; 2 uses
+  %.sroa.0303.01059 = phi i1 [ true, %bb.fb ], [ false, %bb.ex ], [ %.sroa.0303.1.ph, %.body691.thread1069 ], [ false, %bb.fe ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsaNmiEuYuYZf_9sqlparser3ast4ExprECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef align 8 dereferenceable(328) %i.mt) #36
-          to label %.thread1062 unwind label %bb.bh
+          to label %2 unwind label %bb.bh
 
-bb.gd:                                            ; preds = %.thread1062
+bb.gd:                                            ; preds = %bb.fy, %2
+  %.pn6531176 = phi { ptr, i32 } [ %i.acz, %bb.fy ], [ %.pn6511061, %2 ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsaNmiEuYuYZf_9sqlparser3ast4ExprECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef align 8 dereferenceable(328) %i.mr) #36
           to label %bb.gc unwind label %bb.bh
 
@@ -1285,7 +1287,7 @@ bb.re:                                            ; preds = %bb.rc
   br label %.critedge
 
 .critedge672.a:                                   ; preds = %bb.rv, %bb.rz, %.critedge671, %bb.ru, %bb.rs, %bb.rr, %bb.rd, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb
-  %.pn667.pn.pn = phi { ptr, i32 } [ %.pn667.pn, %bb.ru ], [ %.pn667.pn, %.critedge671 ], [ %.pn667.pn, %bb.rv ], [ %.pn667.pn, %bb.rz ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn665, %bb.rr ], [ %i.aqp, %bb.rd ], [ %i.arj, %bb.rs ]
+  %.pn667.pn.pn = phi { ptr, i32 } [ %.pn667.pn, %bb.ru ], [ %.pn667.pn, %.critedge671 ], [ %i.aqp, %bb.rd ], [ %.pn667.pn, %bb.rz ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn667.pn, %bb.bb ], [ %.pn665, %bb.rr ], [ %.pn667.pn, %bb.rv ], [ %i.arj, %bb.rs ]
   resume { ptr, i32 } %.pn667.pn.pn
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionReE11map_or_elseNtNtCscdodAO9FK5_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs43kcu4yvms7_24influxdb3_query_executor.exit: ; preds = %bb.b

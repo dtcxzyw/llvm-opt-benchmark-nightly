@@ -205,22 +205,18 @@ bb.as:                                            ; preds = %bb.c
 
 .lr.ph.i:                                         ; preds = %bb.as
   %i.eu = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %wide.trip.count.i = zext i32 %i.et to i64
+  %wide.trip.count.i = zext i32 %i.et to i64      ; 2 uses
   br label %bb.at
 
-._crit_edge.i:                                    ; preds = %bb.ax
-  %4 = trunc nuw i8 %.1.i to i1
-  br i1 %4, label %bb.ay, label %zend_compile_const_expr_new.exit
-
-bb.at:                                            ; preds = %bb.ax, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.a, %bb.ax ] ; 2 uses
-  %.0103.i = phi i8 [ 0, %.lr.ph.i ], [ %.1.i, %bb.ax ]
+bb.at:                                            ; preds = %.backedge.backedge, %.lr.ph.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.i.be, %.backedge.backedge ] ; 3 uses
+  %.0103.i = phi i1 [ false, %.lr.ph.i ], [ %.0103.i.be, %.backedge.backedge ]
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %indvars.iv.i
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !117
   %i.ex = load i16, ptr %i.ew, align 8, !tbaa !223
   switch i16 %i.ex, label %bb.av [
     i16 258, label %bb.au
-    i16 549, label %bb.ax
+    i16 549, label %4
   ]
 
 bb.au:                                            ; preds = %bb.at
@@ -228,20 +224,28 @@ bb.au:                                            ; preds = %bb.at
   unreachable
 
 bb.av:                                            ; preds = %bb.at
-  %5 = trunc nuw i8 %.0103.i to i1
-  br i1 %5, label %bb.aw, label %bb.ax
+  br i1 %.0103.i, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
   tail call void (i32, ptr, ...) @zend_error_noreturn(i32 noundef 64, ptr noundef nonnull @.str.87) #29
   unreachable
 
-bb.ax:                                            ; preds = %bb.av, %bb.at
-  %.1.i = phi i8 [ 0, %bb.av ], [ 1, %bb.at ]     ; 2 uses
+4:                                                ; preds = %bb.at
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %exitcond.not.i, label %bb.ay, label %.backedge.backedge
+
+.backedge.backedge:                               ; preds = %4, %bb.ax
+  %indvars.iv.i.be = phi i64 [ %indvars.iv.next.i, %4 ], [ %indvars.iv.next.i.a, %bb.ax ]
+  %.0103.i.be = phi i1 [ true, %4 ], [ false, %bb.ax ]
+  br label %bb.at, !llvm.loop !328
+
+bb.ax:                                            ; preds = %bb.av
   %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i.a = icmp eq i64 %indvars.iv.next.i.a, %wide.trip.count.i
-  br i1 %exitcond.not.i.a, label %._crit_edge.i, label %bb.at, !llvm.loop !328
+  br i1 %exitcond.not.i.a, label %zend_compile_const_expr_new.exit, label %.backedge.backedge
 
-bb.ay:                                            ; preds = %._crit_edge.i
+bb.ay:                                            ; preds = %4
   %i.ey = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i16 1, ptr %i.ey, align 2, !tbaa !331
   br label %zend_compile_const_expr_new.exit
@@ -393,7 +397,7 @@ bb.bs:                                            ; preds = %bb.br
   tail call void (i32, ptr, ...) @zend_error_noreturn(i32 noundef 64, ptr noundef nonnull @.str.93) #29
   unreachable
 
-zend_compile_const_expr_new.exit:                 ; preds = %bb.br, %bb.bo, %bb.ay, %._crit_edge.i, %bb.as, %bb.aq, %bb.al, %bb.am, %bb.ak, %zend_compile_const_expr_const.exit, %zend_compile_const_expr_class_name.exit, %zend_compile_const_expr_class_const.exit, %bb.c
+zend_compile_const_expr_new.exit:                 ; preds = %bb.ax, %bb.br, %bb.bo, %bb.ay, %bb.as, %bb.aq, %bb.al, %bb.am, %bb.ak, %zend_compile_const_expr_const.exit, %zend_compile_const_expr_class_name.exit, %zend_compile_const_expr_class_const.exit, %bb.c
   call void @zend_ast_apply(ptr noundef nonnull %i.c, ptr noundef nonnull @zend_compile_const_expr, ptr noundef %1) #30
   br label %bb.bt
 

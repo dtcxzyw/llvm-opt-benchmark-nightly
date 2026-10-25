@@ -202,17 +202,20 @@ bb.a:
   %.not219 = icmp eq i8 %i.dq, 0, !dbg !14411
   br i1 %.not219, label %bb.c, label %bb.d, !dbg !14412
 
-.body.a:                                          ; preds = %bb.b, %.thread, %bb.cf
-  %.sroa.022.0 = phi i8 [ %.sroa.022.5.lpad-body, %bb.cf ], [ %.sroa.022.2171, %.thread ], [ %.sroa.022.1, %bb.b ], !dbg !14413
-  %.pn52 = phi { ptr, i32 } [ %eh.lpad-body95, %bb.cf ], [ %.pn50172, %.thread ], [ %i.dr, %bb.b ] ; 2 uses
-  %3 = trunc nuw i8 %.sroa.022.0 to i1, !dbg !14414
-  br i1 %3, label %.body.thread, label %common.resume, !dbg !14414
+.body.a:                                          ; preds = %.thread, %bb.cf
+  %.sroa.022.0 = phi i1 [ %.sroa.022.5.lpad-body, %bb.cf ], [ %.sroa.022.2174, %.thread ], !dbg !14413
+  %.pn52 = phi { ptr, i32 } [ %eh.lpad-body95, %bb.cf ], [ %.pn50172, %.thread ] ; 2 uses
+  br i1 %.sroa.022.0, label %.body.thread, label %common.resume, !dbg !14414
 
-bb.b:                                             ; preds = %bb.d, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbaWXNhtWAp9_11foundations.exit, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshBQhFkKQVuE_10slog_async10AsyncGuardEECsbaWXNhtWAp9_11foundations.exit, %bb.ci, %bb.f, %bb.c
-  %.sroa.022.1 = phi i8 [ 1, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbaWXNhtWAp9_11foundations.exit ], [ 1, %bb.d ], [ 1, %bb.ci ], [ %.sroa.022.6, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshBQhFkKQVuE_10slog_async10AsyncGuardEECsbaWXNhtWAp9_11foundations.exit ], [ 1, %bb.c ], [ 1, %bb.f ], !dbg !14413
+bb.b:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbaWXNhtWAp9_11foundations.exit, %bb.d, %bb.ci, %bb.c, %bb.f
   %i.dr = landingpad { ptr, i32 }
           cleanup
-  br label %.body.a
+  br label %.body.thread, !dbg !14414
+
+.body:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshBQhFkKQVuE_10slog_async10AsyncGuardEECsbaWXNhtWAp9_11foundations.exit
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %3, label %.body.thread, label %common.resume, !dbg !14414
 
 bb.c:                                             ; preds = %bb.a
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !14415 ; 3 uses
@@ -615,7 +618,7 @@ bb.cf:                                            ; preds = %.thread182
   br i1 %.sroa.025.2.lpad-body, label %.thread, label %.body.a, !dbg !14414
 
 bb.cg:                                            ; preds = %.invoke255, %.invoke, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshBQhFkKQVuE_10slog_async10AsyncGuardECsbaWXNhtWAp9_11foundations.exit.i, %bb.az, %bb.ay, %.noexc82, %bb.ax, %.noexc80, %bb.aw, %bb.at, %bb.aq, %.noexc74, %bb.ap, %.noexc72, %.noexc71, %bb.ao, %bb.an, %bb.al, %.noexc67, %bb.ak, %bb.aj, %bb.ag, %bb.w, %.noexc60, %bb.v, %bb.t, %.noexc, %bb.s
-  %.sroa.022.3 = phi i8 [ %.sroa.022.6, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshBQhFkKQVuE_10slog_async10AsyncGuardECsbaWXNhtWAp9_11foundations.exit.i ], [ 1, %bb.az ], [ 1, %bb.s ], [ 1, %.noexc ], [ 1, %bb.t ], [ 1, %bb.v ], [ 1, %.noexc60 ], [ 1, %bb.w ], [ 1, %.noexc82 ], [ 1, %bb.ag ], [ 1, %bb.ay ], [ 1, %bb.aj ], [ 1, %bb.ak ], [ 1, %.noexc67 ], [ 1, %bb.al ], [ 1, %bb.an ], [ 1, %bb.ao ], [ 1, %.noexc71 ], [ 1, %.noexc72 ], [ 1, %bb.ap ], [ 1, %.noexc74 ], [ 1, %bb.aq ], [ 1, %.invoke255 ], [ 1, %bb.at ], [ 1, %.invoke ], [ 1, %bb.aw ], [ 1, %.noexc80 ], [ 1, %bb.ax ], !dbg !14413
+  %.sroa.022.3 = phi i1 [ %3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshBQhFkKQVuE_10slog_async10AsyncGuardECsbaWXNhtWAp9_11foundations.exit.i ], [ true, %bb.az ], [ true, %bb.s ], [ true, %.noexc ], [ true, %bb.t ], [ true, %bb.v ], [ true, %.noexc60 ], [ true, %bb.w ], [ true, %.noexc82 ], [ true, %bb.ag ], [ true, %bb.ay ], [ true, %bb.aj ], [ true, %bb.ak ], [ true, %.noexc67 ], [ true, %bb.al ], [ true, %bb.an ], [ true, %bb.ao ], [ true, %.noexc71 ], [ true, %.noexc72 ], [ true, %bb.ap ], [ true, %.noexc74 ], [ true, %bb.aq ], [ true, %.invoke255 ], [ true, %bb.at ], [ true, %.invoke ], [ true, %bb.aw ], [ true, %.noexc80 ], [ true, %bb.ax ], !dbg !14413
   %i.nf = landingpad { ptr, i32 }
           cleanup
   br label %.thread
@@ -851,7 +854,7 @@ bb.dh:                                            ; preds = %bb.cp, %bb.co
           to label %.thread182 unwind label %bb.dg, !dbg !14798, !noalias !14242
 
 bb.di:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsbaWXNhtWAp9_11foundations9telemetry8settings17TelemetrySettingsEEB1f_.exit131.i, %bb.il, %bb.ha, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry6server6router20TelemetryServerRouteEEB1g_.exit.i, %bb.dy, %bb.da, %bb.cl
-  %.sroa.022.5 = phi i8 [ 0, %bb.il ], [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsbaWXNhtWAp9_11foundations9telemetry8settings17TelemetrySettingsEEB1f_.exit131.i ], [ 1, %bb.dy ], [ 1, %bb.da ], [ 1, %bb.cl ], [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry6server6router20TelemetryServerRouteEEB1g_.exit.i ], [ 0, %bb.ha ], !dbg !14807
+  %.sroa.022.5 = phi i1 [ false, %bb.il ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsbaWXNhtWAp9_11foundations9telemetry8settings17TelemetrySettingsEEB1f_.exit131.i ], [ true, %bb.dy ], [ true, %bb.da ], [ true, %bb.cl ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry6server6router20TelemetryServerRouteEEB1g_.exit.i ], [ false, %bb.ha ], !dbg !14807
   %i.ov = landingpad { ptr, i32 }
           cleanup
   br label %.thread182
@@ -1254,7 +1257,7 @@ bb.jf:                                            ; preds = %.body.thread, %.thr
 
 _RNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing4init4init.exit.thread: ; preds = %_RNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing4init4init.exit, %bb.cm, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs26L2cHvO7VQ_13cf_rustracing6tracer6TracerINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtBG_7sampler7SamplerNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateENtNtB4_6marker4SendNtB3p_4SyncEL_EB2l_EECsbaWXNhtWAp9_11foundations.exit.i, %bb.io
   %.sroa.13.3.ph.sink256 = phi ptr [ %.sroa.13.3.ph, %bb.io ], [ %.sroa.8157.0.copyload, %_RNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing4init4init.exit ], [ %.sink.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs26L2cHvO7VQ_13cf_rustracing6tracer6TracerINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtBG_7sampler7SamplerNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateENtNtB4_6marker4SendNtB3p_4SyncEL_EB2l_EECsbaWXNhtWAp9_11foundations.exit.i ], [ %i.nt, %bb.cm ] ; 2 uses
-  %.sroa.022.6 = phi i8 [ 0, %bb.io ], [ 1, %_RNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing4init4init.exit ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs26L2cHvO7VQ_13cf_rustracing6tracer6TracerINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtBG_7sampler7SamplerNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateENtNtB4_6marker4SendNtB3p_4SyncEL_EB2l_EECsbaWXNhtWAp9_11foundations.exit.i ], [ 1, %bb.cm ], !dbg !14807 ; 4 uses
+  %3 = phi i1 [ false, %bb.io ], [ true, %_RNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing4init4init.exit ], [ true, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs26L2cHvO7VQ_13cf_rustracing6tracer6TracerINtNtCs1xwejQucwHj_5alloc5boxed3BoxDINtNtBG_7sampler7SamplerNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateENtNtB4_6marker4SendNtB3p_4SyncEL_EB2l_EECsbaWXNhtWAp9_11foundations.exit.i ], [ true, %bb.cm ] ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.13.3.ph.sink256) ]
   %i.abb = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !15226
   store ptr %.sroa.13.3.ph.sink256, ptr %i.abb, align 8, !dbg !15226
@@ -1300,11 +1303,10 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshBQhFkKQVuE_10slog_async10AsyncGuard
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshBQhFkKQVuE_10slog_async10AsyncGuardEECsbaWXNhtWAp9_11foundations.exit: ; preds = %_RNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing4init4init.exit.thread, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshBQhFkKQVuE_10slog_async10AsyncGuardECsbaWXNhtWAp9_11foundations.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dk), !dbg !14746
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsa7cuY93gk2J_12futures_util6stream17futures_unordered16FuturesUnorderedINtNtB4_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs7XllS0bOcsN_6anyhow5ErrorENtNtB4_6marker4SendEL_EEEECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef align 8 dereferenceable(24) %i.dg)
-          to label %bb.jm unwind label %bb.b, !dbg !14414
+          to label %bb.jm unwind label %.body, !dbg !14414
 
 bb.jm:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshBQhFkKQVuE_10slog_async10AsyncGuardEECsbaWXNhtWAp9_11foundations.exit
-  %4 = trunc nuw i8 %.sroa.022.6 to i1, !dbg !14414
-  br i1 %4, label %bb.jn, label %bb.je, !dbg !14414
+  br i1 %3, label %bb.jn, label %bb.je, !dbg !14414
 
 .sink.split:                                      ; preds = %bb.e, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbaWXNhtWAp9_11foundations.exit
   %.sink = phi ptr [ %i.abk, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbaWXNhtWAp9_11foundations.exit ], [ %i.dx, %bb.e ]
@@ -1329,8 +1331,8 @@ bb.jp:                                            ; preds = %bb.jo
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #30, !dbg !15231
   unreachable, !dbg !15231
 
-common.resume:                                    ; preds = %.body.a, %.body.thread, %bb.jo
-  %common.resume.op = phi { ptr, i32 } [ %i.abi, %bb.jo ], [ %.pn52167, %.body.thread ], [ %.pn52, %.body.a ]
+common.resume:                                    ; preds = %.body.a, %.body.thread, %.body, %bb.jo
+  %common.resume.op = phi { ptr, i32 } [ %i.abi, %bb.jo ], [ %lpad.thr_comm.split-lp, %.body ], [ %.pn52165, %.body.thread ], [ %.pn52, %.body.a ]
   resume { ptr, i32 } %common.resume.op, !dbg !14807
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry6server6router20TelemetryServerRouteEEB1g_.exit: ; preds = %bb.jn
@@ -1339,14 +1341,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtN
 
 .thread182:                                       ; preds = %bb.ja, %.noexc106.i, %.body.thread.i, %.thread135.i, %.body.i114, %bb.dp, %bb.dr, %bb.di, %bb.cy, %bb.cz, %bb.df, %bb.dh
   %.sroa.025.2.lpad-body = phi i1 [ true, %bb.cy ], [ true, %bb.dh ], [ true, %bb.df ], [ true, %bb.cz ], [ true, %.noexc106.i ], [ true, %bb.dp ], [ true, %.body.i114 ], [ true, %bb.di ], [ true, %bb.dr ], [ true, %.thread135.i ], [ true, %.body.thread.i ], [ false, %bb.ja ]
-  %.sroa.022.5.lpad-body = phi i8 [ 1, %bb.cy ], [ 1, %bb.dh ], [ 1, %bb.df ], [ 1, %bb.cz ], [ 0, %.noexc106.i ], [ 1, %bb.dp ], [ 1, %.body.i114 ], [ %.sroa.022.5, %bb.di ], [ 1, %bb.dr ], [ 0, %.thread135.i ], [ 0, %.body.thread.i ], [ 0, %bb.ja ] ; 2 uses
+  %.sroa.022.5.lpad-body = phi i1 [ true, %bb.cy ], [ true, %bb.dh ], [ true, %bb.df ], [ true, %bb.cz ], [ false, %.noexc106.i ], [ true, %bb.dp ], [ true, %.body.i114 ], [ %.sroa.022.5, %bb.di ], [ true, %bb.dr ], [ false, %.thread135.i ], [ false, %.body.thread.i ], [ false, %bb.ja ] ; 2 uses
   %eh.lpad-body95 = phi { ptr, i32 } [ %i.oh, %bb.cy ], [ %i.ou, %bb.dh ], [ %i.os, %bb.df ], [ %i.oh, %bb.cz ], [ %.pn89.i, %.noexc106.i ], [ %i.pi, %bb.dp ], [ %.pn.pn.i115, %.body.i114 ], [ %i.ov, %bb.di ], [ %i.pp, %bb.dr ], [ %eh.lpad-body103138.i, %.thread135.i ], [ %.pn91142.i, %.body.thread.i ], [ %i.aaw, %bb.ja ] ; 2 uses
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshBQhFkKQVuE_10slog_async10AsyncGuardEECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef align 8 dereferenceable(40) %i.dk) #31
           to label %bb.cf unwind label %bb.jf, !dbg !14746
 
 .thread:                                          ; preds = %bb.jj, %bb.cg, %.body85.i, %bb.cf
   %.pn50172 = phi { ptr, i32 } [ %eh.lpad-body95, %bb.cf ], [ %.pn76.pn.i, %.body85.i ], [ %i.nf, %bb.cg ], [ %.pn.i.i149, %bb.jj ]
-  %.sroa.022.2171 = phi i8 [ %.sroa.022.5.lpad-body, %bb.cf ], [ 1, %.body85.i ], [ %.sroa.022.3, %bb.cg ], [ %.sroa.022.6, %bb.jj ]
+  %.sroa.022.2174 = phi i1 [ %.sroa.022.5.lpad-body, %bb.cf ], [ true, %.body85.i ], [ %.sroa.022.3, %bb.cg ], [ %3, %bb.jj ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsa7cuY93gk2J_12futures_util6stream17futures_unordered16FuturesUnorderedINtNtB4_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs7XllS0bOcsN_6anyhow5ErrorENtNtB4_6marker4SendEL_EEEECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef align 8 dereferenceable(24) %i.dg) #31
           to label %.body.a unwind label %bb.jf, !dbg !14414
 
@@ -1358,8 +1360,8 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj
   %i.abk = invoke noundef nonnull ptr @_RINvMNtCs7XllS0bOcsN_6anyhow5errorNtB5_5Error3msgNtNtCs1xwejQucwHj_5alloc6string6StringECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.dp)
           to label %.sink.split unwind label %bb.b, !dbg !15234
 
-.body.thread:                                     ; preds = %bb.l, %bb.i, %.body.a
-  %.pn52167 = phi { ptr, i32 } [ %.pn52, %.body.a ], [ %i.en, %bb.i ], [ %i.ev, %bb.l ]
+.body.thread:                                     ; preds = %bb.l, %bb.i, %bb.b, %.body, %.body.a
+  %.pn52165 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.body ], [ %.pn52, %.body.a ], [ %i.dr, %bb.b ], [ %i.en, %bb.i ], [ %i.ev, %bb.l ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry6server6router20TelemetryServerRouteEEB1g_(ptr noalias nofree noundef align 8 dereferenceable(24) %1) #31
           to label %common.resume unwind label %bb.jf, !dbg !14414
 }
