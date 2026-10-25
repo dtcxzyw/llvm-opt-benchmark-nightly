@@ -204,9 +204,11 @@ scalar.ph431:                                     ; preds = %scalar.ph431.prehea
   br label %bb.z
 
 ._crit_edge202:                                   ; preds = %bb.y
-  %i.ql = zext nneg i32 %1 to i64
+  %5 = add nsw i32 %1, -1
+  %i.ql = zext nneg i32 %5 to i64
   %i.qm = shl nuw nsw i64 %i.ql, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %0, ptr nonnull align 16 %i.a, i64 %i.qm, i1 false), !tbaa !17
+  %6 = add nuw nsw i64 %i.qm, 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %6, i1 false), !tbaa !17
   br label %bb.z
 
 bb.z:                                             ; preds = %._crit_edge202, %._crit_edge199
