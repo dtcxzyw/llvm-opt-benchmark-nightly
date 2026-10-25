@@ -205,11 +205,12 @@ _ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8n
 bb.at:                                            ; preds = %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit290
   %i.ly = getelementptr inbounds nuw i8, ptr %0, i64 3920
   %i.lz = load i32, ptr %i.ly, align 8, !tbaa !343
-  %.not214 = icmp ne i32 %i.lz, 2
+  %.not214 = icmp ne i32 %i.lz, 2                 ; 2 uses
   %spec.select227 = zext i1 %.not214 to i8
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.aq, %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit287
+  %42 = phi i1 [ false, %bb.aq ], [ false, %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit287 ], [ %.not214, %bb.at ]
   %.0192 = phi i8 [ 0, %bb.aq ], [ 0, %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit287 ], [ %spec.select227, %bb.at ] ; 3 uses
   %i.ma = and i32 %4, 256
   %.not215 = icmp eq i32 %i.ma, 0
@@ -220,7 +221,6 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.mb, label %bb.aw, label %bb.az
 
 bb.aw:                                            ; preds = %bb.av
-  %42 = trunc nuw i8 %.0192 to i1
   br i1 %42, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
@@ -244,6 +244,7 @@ _ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8n
   br i1 %i.mi, label %bb.ay, label %.critedge241
 
 bb.ay:                                            ; preds = %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit293, %bb.aw
+  %.1193 = phi i8 [ %.0192, %bb.aw ], [ 0, %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit293 ]
   %i.mj = getelementptr inbounds nuw i8, ptr %0, i64 3864
   call void @_ZN3jxl16GetBlendingStageERKNS_11FrameHeaderEPKNS_18PassesDecoderStateERKNS_13ColorEncodingE(ptr dead_on_unwind nonnull writable sret(%"class.std::__1::unique_ptr.95") align 8 %24, ptr noundef nonnull align 8 dereferenceable(576) %1, ptr noundef nonnull %0, ptr noundef nonnull align 8 dereferenceable(200) %i.mj) #21
   %i.mk = call i32 @_ZN3jxl14RenderPipeline7Builder8AddStageENSt3__110unique_ptrINS_19RenderPipelineStageENS2_14default_deleteIS4_EEEE(ptr noundef nonnull align 8 dereferenceable(41) %6, ptr nofree noundef nonnull align 8 dereferenceable(8) %24) #21 ; 2 uses
@@ -264,7 +265,7 @@ _ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8n
   br i1 %i.mp, label %bb.az, label %.critedge241
 
 bb.az:                                            ; preds = %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit296, %bb.av
-  %.2194.ph = phi i8 [ %.0192, %bb.av ], [ 0, %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit296 ] ; 4 uses
+  %.2194.ph = phi i8 [ %.0192, %bb.av ], [ %.1193, %_ZNSt3__110unique_ptrIN3jxl19RenderPipelineStageENS_14default_deleteIS2_EEED2B8nn180100Ev.exit296 ] ; 4 uses
   %i.mq = load i8, ptr %i.l, align 8, !tbaa !313, !range !171, !noundef !172
   %i.mr = trunc nuw i8 %i.mq to i1
   %i.ms = load i32, ptr %i.o, align 8

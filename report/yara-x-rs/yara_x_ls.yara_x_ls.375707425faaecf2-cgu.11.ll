@@ -205,14 +205,14 @@ bb.a:
           to label %bb.c unwind label %bb.b
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit, %bb.f, %bb.b
-  %.sroa.051.0 = phi i8 [ %.sroa.051.1, %bb.b ], [ %.sroa.051.2, %bb.f ], [ %.sroa.051.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit ] ; 2 uses
+  %.sroa.051.0 = phi i1 [ %.sroa.051.1, %bb.b ], [ %.sroa.051.2, %bb.f ], [ %.sroa.051.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit ] ; 2 uses
   %.sroa.048.0 = phi i8 [ %.sroa.048.1, %bb.b ], [ %.sroa.048.2, %bb.f ], [ %.sroa.048.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit ]
   %.pn116 = phi { ptr, i32 } [ %i.bj, %bb.b ], [ %.pn114, %bb.f ], [ %.pn114, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit ] ; 2 uses
   %i.bi = trunc nuw i8 %.sroa.048.0 to i1
   br i1 %i.bi, label %bb.gh, label %.body
 
 bb.b:                                             ; preds = %bb.ga, %bb.fh, %bb.k, %bb.a
-  %.sroa.051.1 = phi i8 [ %.sroa.051.7, %bb.ga ], [ 1, %bb.fh ], [ 1, %bb.k ], [ 1, %bb.a ]
+  %.sroa.051.1 = phi i1 [ %7, %bb.ga ], [ true, %bb.fh ], [ true, %bb.k ], [ true, %bb.a ]
   %.sroa.048.1 = phi i8 [ %.sroa.048.8, %bb.ga ], [ %.sroa.048.9, %bb.fh ], [ 1, %bb.k ], [ 1, %bb.a ]
   %i.bj = landingpad { ptr, i32 }
           cleanup
@@ -238,7 +238,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit162
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit, %bb.n, %bb.g
-  %.sroa.051.2 = phi i8 [ %.sroa.051.3, %bb.g ], [ %.sroa.051.4, %bb.n ], [ %.sroa.051.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit ] ; 2 uses
+  %.sroa.051.2 = phi i1 [ %.sroa.051.3, %bb.g ], [ %.sroa.051.4, %bb.n ], [ %.sroa.051.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit ] ; 2 uses
   %.sroa.048.2 = phi i8 [ %.sroa.048.3, %bb.g ], [ %.sroa.048.4, %bb.n ], [ %.sroa.048.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit ] ; 2 uses
   %.pn114 = phi { ptr, i32 } [ %i.bp, %bb.g ], [ %.pn108.pn.pn.pn.pn, %bb.n ], [ %.pn108.pn.pn.pn.pn, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit ] ; 2 uses
   %i.bn = atomicrmw add ptr %i.bk, i64 -4 release, align 8
@@ -250,7 +250,7 @@ bb.f:                                             ; preds = %_RINvNtCskKLDkoKarT
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit unwind label %bb.ay
 
 bb.g:                                             ; preds = %bb.fg, %bb.t, %bb.d
-  %.sroa.051.3 = phi i8 [ %.sroa.051.7, %bb.t ], [ 1, %bb.fg ], [ 1, %bb.d ]
+  %.sroa.051.3 = phi i1 [ %7, %bb.t ], [ true, %bb.fg ], [ true, %bb.d ]
   %.sroa.048.3 = phi i8 [ %.sroa.048.8, %bb.t ], [ %.sroa.048.9, %bb.fg ], [ 1, %bb.d ]
   %i.bp = landingpad { ptr, i32 }
           cleanup
@@ -295,10 +295,15 @@ bb.m:                                             ; preds = %bb.l
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit162
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %3)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls.exit unwind label %bb.fk
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls.exit unwind label %.split424.thread
+
+.split424.thread:                                 ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i
+  %6 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body.thread
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit183, %bb.o
-  %.sroa.051.4 = phi i8 [ 1, %bb.o ], [ %.sroa.051.5, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit183 ] ; 2 uses
+  %.sroa.051.4 = phi i1 [ true, %bb.o ], [ %.sroa.051.5, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit183 ] ; 2 uses
   %.sroa.048.4 = phi i8 [ %.sroa.048.5, %bb.o ], [ %.sroa.048.6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit183 ] ; 2 uses
   %.pn108.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bz, %bb.o ], [ %.pn108.pn.pn.pn, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit183 ] ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bm, i64 24 ; 2 uses
@@ -330,14 +335,14 @@ bb.p:                                             ; preds = %bb.i
           to label %bb.r unwind label %bb.q
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst5TokenNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit183: ; preds = %.body254, %bb.fd, %bb.db, %bb.dc, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit189, %bb.bc, %bb.q
-  %.sroa.051.5 = phi i8 [ 1, %bb.db ], [ %.sroa.051.6, %bb.q ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit189 ], [ 1, %bb.bc ], [ 1, %bb.dc ], [ %.sroa.051.12, %bb.fd ], [ %.sroa.051.12, %.body254 ]
+  %.sroa.051.5 = phi i1 [ true, %bb.db ], [ %.sroa.051.6, %bb.q ], [ true, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit189 ], [ true, %bb.bc ], [ true, %bb.dc ], [ %.sroa.051.12, %bb.fd ], [ %.sroa.051.12, %.body254 ]
   %.sroa.048.6 = phi i8 [ 1, %bb.db ], [ %.sroa.048.7, %bb.q ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit189 ], [ 1, %bb.bc ], [ 1, %bb.dc ], [ %.sroa.048.14, %bb.fd ], [ %.sroa.048.14, %.body254 ]
   %.pn108.pn.pn.pn = phi { ptr, i32 } [ %.pn103.pn342, %bb.db ], [ %i.cd, %bb.q ], [ %.pn108.pn.pn, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit189 ], [ %.pn108.pn.pn, %bb.bc ], [ %.pn103.pn342, %bb.dc ], [ %.pn88.pn, %bb.fd ], [ %.pn88.pn, %.body254 ]
   invoke void @_RNvXsg_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.bd)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit unwind label %bb.ay
 
 bb.q:                                             ; preds = %bb.fz, %bb.ff, %bb.cq, %bb.be, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst14NodesAndTokensNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit199, %bb.y, %bb.v, %bb.u, %bb.p
-  %.sroa.051.6 = phi i8 [ 1, %bb.be ], [ 1, %bb.cq ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst14NodesAndTokensNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit199 ], [ 1, %bb.y ], [ 1, %bb.u ], [ 1, %bb.ff ], [ 0, %bb.fz ], [ 1, %bb.v ], [ 1, %bb.p ]
+  %.sroa.051.6 = phi i1 [ true, %bb.be ], [ true, %bb.cq ], [ true, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst14NodesAndTokensNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit199 ], [ true, %bb.y ], [ true, %bb.u ], [ true, %bb.ff ], [ false, %bb.fz ], [ true, %bb.v ], [ true, %bb.p ]
   %.sroa.048.7 = phi i8 [ 1, %bb.be ], [ 1, %bb.cq ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst14NodesAndTokensNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit199 ], [ 1, %bb.y ], [ 1, %bb.u ], [ %.sroa.048.13, %bb.ff ], [ %.sroa.048.13, %bb.fz ], [ 1, %bb.v ], [ 1, %bb.p ]
   %i.cd = landingpad { ptr, i32 }
           cleanup
@@ -353,7 +358,7 @@ bb.r:                                             ; preds = %bb.p
   ]
 
 bb.s:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit289, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit208, %bb.r
-  %.sroa.051.7 = phi i8 [ 1, %bb.r ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit208 ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit289 ] ; 5 uses
+  %7 = phi i1 [ true, %bb.r ], [ true, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit208 ], [ false, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit289 ] ; 5 uses
   %.sroa.048.8 = phi i8 [ 1, %bb.r ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit208 ], [ %.sroa.048.13, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfF8zpZz1lvn_13yara_x_parser3cst4NodeNtBE_9ImmutableEECs4KzxGwe94yc_9yara_x_ls.exit289 ] ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.bd, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bd)
@@ -756,7 +761,7 @@ bb.fc:                                            ; preds = %bb.fa
   unreachable
 
 .body254:                                         ; preds = %.split, %bb.fx, %bb.fe, %bb.fa, %.body230.thread, %.body230
-  %.sroa.051.12 = phi i8 [ 1, %.body230.thread ], [ 0, %.body230 ], [ 1, %bb.fa ], [ 1, %bb.fe ], [ 0, %bb.fx ], [ 0, %.split ] ; 2 uses
+  %.sroa.051.12 = phi i1 [ true, %.body230.thread ], [ false, %.body230 ], [ true, %bb.fa ], [ true, %bb.fe ], [ false, %bb.fx ], [ false, %.split ] ; 2 uses
   %.sroa.048.14 = phi i8 [ %.sroa.048.11369, %.body230.thread ], [ %.sroa.048.13, %.body230 ], [ %.sroa.048.13, %bb.fa ], [ %.sroa.048.13, %bb.fe ], [ %.sroa.048.13, %bb.fx ], [ %.sroa.048.13, %.split ] ; 2 uses
   %.pn88.pn = phi { ptr, i32 } [ %.pn88370, %.body230.thread ], [ %.pn85.pn, %.body230 ], [ %i.od, %bb.fa ], [ %i.oj, %bb.fe ], [ %i.pz, %bb.fx ], [ %lpad.thr_comm.split-lp419, %.split ] ; 2 uses
   %i.of = getelementptr inbounds nuw i8, ptr %i.cj, i64 24 ; 2 uses
@@ -835,20 +840,18 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %2)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs6SHYdBec2sV_3url3UrlECs4KzxGwe94yc_9yara_x_ls.exit unwind label %bb.fm
 
-.body:                                            ; preds = %bb.gc, %bb.fk, %bb.gh, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit
-  %.sroa.051.13 = phi i8 [ %.sroa.051.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit ], [ %.sroa.051.0, %bb.gh ], [ %.sroa.051.7, %bb.gc ], [ %.sroa.051.14, %bb.fk ]
-  %.pn118 = phi { ptr, i32 } [ %.pn116, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit ], [ %.pn116, %bb.gh ], [ %i.qi, %bb.gc ], [ %i.ox, %bb.fk ] ; 2 uses
-  %6 = trunc nuw i8 %.sroa.051.13 to i1
-  br i1 %6, label %.body.thread, label %.body264
+.body:                                            ; preds = %bb.gc, %bb.gh, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit
+  %.sroa.051.13 = phi i1 [ %.sroa.051.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit ], [ %.sroa.051.0, %bb.gh ], [ %7, %bb.gc ]
+  %.pn118 = phi { ptr, i32 } [ %.pn116, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit ], [ %.pn116, %bb.gh ], [ %i.qi, %bb.gc ] ; 2 uses
+  br i1 %.sroa.051.13, label %.body.thread, label %.body264
 
-bb.fk:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i293, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i
-  %.sroa.051.14 = phi i8 [ %.sroa.051.7, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i293 ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i ]
+bb.fk:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i293
   %i.ox = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
+          cleanup                                 ; 2 uses
+  br i1 %7, label %.body.thread, label %.body264
 
-.body264:                                         ; preds = %bb.gf, %bb.fi, %bb.fm, %.body.thread, %.body
-  %.pn120 = phi { ptr, i32 } [ %.pn118, %.body ], [ %.pn118377, %.body.thread ], [ %i.ov, %bb.fi ], [ %i.pb, %bb.fm ], [ %i.qn, %bb.gf ]
+.body264:                                         ; preds = %bb.fk, %bb.gf, %bb.fi, %bb.fm, %.body.thread, %.body
+  %.pn120 = phi { ptr, i32 } [ %.pn118, %.body ], [ %.pn118377, %.body.thread ], [ %i.ov, %bb.fi ], [ %i.pb, %bb.fm ], [ %i.qn, %bb.gf ], [ %i.ox, %bb.fk ]
   call void @llvm.experimental.noalias.scope.decl(metadata !1395)
   call void @llvm.experimental.noalias.scope.decl(metadata !1396)
   %i.oy = load ptr, ptr %i.bg, align 8, !alias.scope !1397, !nonnull !4, !noundef !4
@@ -1021,7 +1024,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one
   br i1 %i.qh, label %bb.gb, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls.exit298
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls.exit298: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i293, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit291
-  %7 = trunc nuw i8 %.sroa.051.7 to i1
   br i1 %7, label %bb.ge, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs6SHYdBec2sV_3url3UrlECs4KzxGwe94yc_9yara_x_ls.exit305
 
 bb.gb:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsjUxepGb3YzM_7dashmap6mapref3one3RefNtCs6SHYdBec2sV_3url3UrlNtNtNtCs4KzxGwe94yc_9yara_x_ls9documents8document8DocumentEEB1N_.exit291
@@ -1076,8 +1078,8 @@ bb.gh:                                            ; preds = %_RINvNtCskKLDkoKarT
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %3) #34
           to label %.body unwind label %bb.ay
 
-.body.thread:                                     ; preds = %bb.l, %.body
-  %.pn118377 = phi { ptr, i32 } [ %.pn118, %.body ], [ %i.bt, %bb.l ]
+.body.thread:                                     ; preds = %.split424.thread, %bb.fk, %bb.l, %.body
+  %.pn118377 = phi { ptr, i32 } [ %.pn118, %.body ], [ %i.bt, %bb.l ], [ %i.ox, %bb.fk ], [ %6, %.split424.thread ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs6SHYdBec2sV_3url3UrlECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef align 8 dereferenceable(88) %2) #34
           to label %.body264 unwind label %bb.ay
 

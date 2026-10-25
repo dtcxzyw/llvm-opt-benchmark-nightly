@@ -202,7 +202,7 @@ _RNvYNCNKNvNvNtCs13QwXx3ETeK_8async_io6driver8block_on5CACHE00INtNtNtCskKLDkoKar
   tail call void @llvm.experimental.noalias.scope.decl(metadata !156)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !157
   %i.u = load i64, ptr %.sroa.0.0.i.i.i8.i.i, align 8, !noalias !157, !noundef !7
-  %.not101.i.i.i = icmp eq i64 %i.u, 0            ; 3 uses
+  %.not101.i.i.i = icmp eq i64 %i.u, 0            ; 4 uses
   br i1 %.not101.i.i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_RNvYNCNKNvNvNtCs13QwXx3ETeK_8async_io6driver8block_on5CACHE00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB14_6option6OptionQIB1J_INtNtB14_4cell7RefCellTNtCs2KJ8IamB81r_7parking6ParkerNtNtNtB14_4task4wake5WakerINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtNtB14_4sync6atomic6AtomicbEEEEEEEE9call_onceCsbDLrNlwBX3H_4smol.exit.thread.i.i
@@ -253,8 +253,10 @@ bb.e:                                             ; preds = %bb.f, %bb.c
   %i.as = insertelement <2 x ptr> %i.ar, ptr %i.ai, i64 1
   br label %.backedge.i.i.i
 
-.body44.i.i.i:                                    ; preds = %1, %bb.ah, %.body.i.i.i, %.body.thread.i.i.i
-  %.pn22.pn.i.i.i = phi { ptr, i32 } [ %2, %1 ], [ %.pn22.ph.i.i.i, %bb.ah ], [ %.pn22.ph.i.i.i, %.body.i.i.i ], [ %.pn7.i.i.i.i, %.body.thread.i.i.i ] ; 2 uses
+.body44.i.i.i:                                    ; preds = %bb.al
+  %1 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  store i8 0, ptr %i.ab, align 16, !noalias !157
   br i1 %.not101.i.i.i, label %.split.i.i.i, label %bb.cs
 
 bb.f:                                             ; preds = %bb.d
@@ -304,7 +306,7 @@ _RNvMs3_Csa9iXSdNszRG_14async_executorNtB5_8Executor5state.exit.i.i.i.i: ; preds
   %.pn7.i.i.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i.i.i, %.body.i.i.i.i ], [ %lpad.loopexit.split-lp31, %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   store i8 0, ptr %i.ab, align 16, !noalias !158
   store i8 2, ptr %i.aa, align 1, !noalias !158
-  br label %.body44.i.i.i
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i
 
 bb.i:                                             ; preds = %.backedge.i.i.i
   invoke void @_RNvNtNtCskKLDkoKarTP_4core9panicking11panic_const28panic_const_async_fn_resumed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #21
@@ -514,7 +516,7 @@ bb.ae:                                            ; preds = %.body.i.i.i.i
   %.pn22.ph.i.i.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i.i.i, %bb.ba ], [ %.pn84.i.i.i, %bb.cd ], [ %i.fn, %bb.ci ], [ %lpad.loopexit.split-lp36, %.loopexit.split-lp108.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   %.pr.i.i.i = load i8, ptr %i.aa, align 1, !noalias !157
   %cond.i.i.i.i.i = icmp eq i8 %.pr.i.i.i, 3
-  br i1 %cond.i.i.i.i.i, label %bb.af, label %.body44.i.i.i
+  br i1 %cond.i.i.i.i.i, label %bb.af, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i
 
 bb.af:                                            ; preds = %.body.i.i.i
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMsb_Csa9iXSdNszRG_14async_executorNtBK_5State3runuINtNtNtB4_6future7pending7PendinguEE0ECsbDLrNlwBX3H_4smol(ptr noundef nonnull align 8 %i.i)
@@ -528,7 +530,11 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.af
   store i8 0, ptr %i.ab, align 16, !noalias !157
-  br label %.body44.i.i.i
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i: ; preds = %bb.ah, %.body.i.i.i, %.body.thread.i.i.i
+  %.pn23108.i.i.i = phi { ptr, i32 } [ %.pn7.i.i.i.i, %.body.thread.i.i.i ], [ %.pn22.ph.i.i.i, %.body.i.i.i ], [ %.pn22.ph.i.i.i, %bb.ah ] ; 2 uses
+  br i1 %.not101.i.i.i, label %.split.i.i.i, label %bb.cs
 
 bb.ai:                                            ; preds = %bb.u
   store i8 3, ptr %.phi.trans.insert.i.i.i.i, align 1, !noalias !159
@@ -555,13 +561,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.ak
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMsb_Csa9iXSdNszRG_14async_executorNtBK_5State3runuINtNtNtB4_6future7pending7PendinguEE0ECsbDLrNlwBX3H_4smol(ptr noundef nonnull align 8 %i.i)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit46.i.i.i unwind label %1, !noalias !157
-
-1:                                                ; preds = %bb.al
-  %2 = landingpad { ptr, i32 }
-          cleanup
-  store i8 0, ptr %i.ab, align 16, !noalias !157
-  br label %.body44.i.i.i
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit46.i.i.i unwind label %.body44.i.i.i, !noalias !157
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit46.i.i.i: ; preds = %bb.al, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !157
@@ -964,11 +964,13 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs13QwXx3ETeK_8async_io7reactor11Rea
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !157
   br label %bb.cg
 
-bb.cs:                                            ; preds = %.body44.i.i.i
+bb.cs:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i, %.body44.i.i.i
+  %.pn23.pn76.i.i.i = phi { ptr, i32 } [ %.pn23108.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i ], [ %1, %.body44.i.i.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtCs2KJ8IamB81r_7parking6ParkerNtNtNtB4_4task4wake5WakerINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtNtB4_4sync6atomic6AtomicbEEEECsbDLrNlwBX3H_4smol(ptr noalias nofree noundef align 8 dereferenceable(32) %i.k) #22
           to label %.body unwind label %bb.cc, !noalias !157
 
-.split.i.i.i:                                     ; preds = %.body44.i.i.i
+.split.i.i.i:                                     ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i, %.body44.i.i.i
+  %.pn23.pn.pn.i.i.i = phi { ptr, i32 } [ %.pn23108.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMs3_Csa9iXSdNszRG_14async_executorNtB1c_8Executor3runuINtNtNtB4_6future7pending7PendinguEE0EECsbDLrNlwBX3H_4smol.exit.i.i.i ], [ %1, %.body44.i.i.i ]
   %i.gc = load i64, ptr %.sroa.0.0.i.i.i8.i.i, align 8, !noalias !157, !noundef !7
   %i.gd = add i64 %i.gc, 1
   store i64 %i.gd, ptr %.sroa.0.0.i.i.i8.i.i, align 8, !noalias !157
@@ -1036,7 +1038,7 @@ bb.da:                                            ; preds = %.noexc1, %bb.cx, %b
   br label %.body
 
 .body:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_4task4wake5WakerECsbDLrNlwBX3H_4smol.exit.i.i.i.i, %bb.ap, %bb.cs, %.split.i.i.i, %bb.ct, %bb.cu, %bb.cy, %bb.cz, %bb.da
-  %eh.lpad-body = phi { ptr, i32 } [ %i.gq, %bb.da ], [ %i.gl, %bb.cy ], [ %.pn.i.i.i.i, %bb.ap ], [ %i.ge, %bb.cu ], [ %.pn22.pn.i.i.i, %.split.i.i.i ], [ %i.ge, %bb.ct ], [ %.pn22.pn.i.i.i, %bb.cs ], [ %.pn.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_4task4wake5WakerECsbDLrNlwBX3H_4smol.exit.i.i.i.i ], [ %i.gl, %bb.cz ]
+  %eh.lpad-body = phi { ptr, i32 } [ %i.gq, %bb.da ], [ %i.gl, %bb.cy ], [ %.pn.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_4task4wake5WakerECsbDLrNlwBX3H_4smol.exit.i.i.i.i ], [ %i.ge, %bb.cu ], [ %.pn.i.i.i.i, %bb.ap ], [ %.pn23.pn.pn.i.i.i, %.split.i.i.i ], [ %i.ge, %bb.ct ], [ %.pn23.pn76.i.i.i, %bb.cs ], [ %i.gl, %bb.cz ]
   %i.gr = atomicrmw add ptr @_RNvNtCs13QwXx3ETeK_8async_io6driver14BLOCK_ON_COUNT, i64 -1 seq_cst, align 8 ; 0 uses
   %i.gs = invoke noundef nonnull align 8 ptr @_RNvNtCs13QwXx3ETeK_8async_io6driver8unparker()
           to label %.noexc3 unwind label %bb.dc

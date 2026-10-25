@@ -202,25 +202,28 @@ bb.a:
   br i1 %.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread, label %bb.b
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread: ; preds = %bb.a
-  %.not56156 = trunc i32 %1 to i8                 ; 2 uses
+  %7 = and i32 %1, 1
+  %.not56.not156 = icmp eq i32 %7, 0
   %i.g = and i32 %1, 8
   %.not57.not165 = icmp eq i32 %i.g, 0
-  %i.h = and i32 %1, 16
-  %.not58.not177 = icmp eq i32 %i.h, 0
-  %i.i = and i32 %1, 24
-  %i.j = icmp eq i32 %i.i, 0
-  %.1.mux179 = select i1 %i.j, i8 %.not56156, i8 1
+  %i.h = and i32 %1, 9
+  %narrow.demorgan = icmp ne i32 %i.h, 0
+  %i.i = and i32 %1, 16
+  %i.j = icmp eq i32 %i.i, 0                      ; 2 uses
+  %not..not58.not179 = xor i1 %i.j, true
+  %narrow = or i1 %narrow.demorgan, %not..not58.not179
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !25
-  %.not55 = icmp ne i32 %i.l, %1                  ; 3 uses
-  %.not56 = trunc i32 %1 to i1
-  %.048.not = xor i1 %.not55, true                ; 3 uses
-  %brmerge.not = and i1 %.not55, %.not56
-  %7 = trunc i32 %1 to i8
-  br i1 %brmerge.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i77, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80
+  %.not55 = icmp ne i32 %i.l, %1                  ; 2 uses
+  %8 = and i32 %1, 1
+  %.not56.not = icmp eq i32 %8, 0                 ; 4 uses
+  %.048.not = xor i1 %.not55, true                ; 4 uses
+  %brmerge = or i1 %.not56.not, %.048.not
+  %not..not56.not = xor i1 %.not56.not, true
+  br i1 %brmerge, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i77
 
 bb.c:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit149.invoke, %.invoke205, %.invoke204, %.invoke203, %.invoke, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit147, %bb.ah, %bb.ag, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit139, %bb.ae, %bb.ad, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit120, %bb.n, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit116, %bb.m, %bb.l, %bb.k, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i109, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i105, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i101, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i97, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i89, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i85, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i81, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i77, %bb.aj, %bb.ai, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit123, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit118
   %i.m = landingpad { ptr, i32 }
@@ -244,11 +247,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i77: ; pre
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80 unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i77, %bb.b
-  %.0 = phi i8 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i77 ], [ %7, %bb.b ] ; 3 uses
+  %.0 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i77 ], [ %not..not56.not, %bb.b ]
   %i.s = and i32 %1, 8
   %.not57.not = icmp eq i32 %i.s, 0               ; 4 uses
   %brmerge63 = or i1 %.not57.not, %.048.not
-  %.0.mux = select i1 %.not57.not, i8 %.0, i8 1
+  %not..not57.not = xor i1 %.not57.not, true
+  %.0.mux = or i1 %.0, %not..not57.not
   br i1 %brmerge63, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88, label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80
@@ -273,11 +277,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i85: ; pre
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i85, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80
-  %.1 = phi i8 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i85 ], [ %.0.mux, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80 ]
+  %.1 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i85 ], [ %.0.mux, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit80 ]
   %i.y = and i32 %1, 16
   %.not58.not = icmp eq i32 %i.y, 0               ; 3 uses
   %brmerge65 = or i1 %.not58.not, %.048.not
-  %.1.mux = select i1 %.not58.not, i8 %.1, i8 1
+  %not..not58.not = xor i1 %.not58.not, true
+  %.1.mux = or i1 %.1, %not..not58.not
   br i1 %brmerge65, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88
@@ -302,12 +307,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93: ; pre
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96 unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88
-  %.not58.not184 = phi i1 [ %.not58.not177, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.not58.not, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ] ; 2 uses
+  %.not58.not184 = phi i1 [ %i.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.not58.not, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ] ; 2 uses
   %.048.not161168183 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.048.not, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ] ; 2 uses
-  %.048160169182 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.not55, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ]
-  %.0170181 = phi i8 [ %.not56156, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ %.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ]
+  %.048160169182 = phi i1 [ %.not56.not156, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.not56.not, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ %.not56.not, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ]
+  %.048160172183 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.not55, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ]
   %.not57.not171180 = phi i1 [ %.not57.not165, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.not57.not, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ %.not57.not, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ]
-  %.2 = phi i8 [ %.1.mux179, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.1.mux, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ] ; 2 uses
+  %.2 = phi i1 [ %narrow, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88.thread ], [ %.1.mux, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit88 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i93 ] ; 2 uses
   %i.ae = and i32 %1, 4
   %.not59 = icmp eq i32 %i.ae, 0
   br i1 %.not59, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit104, label %bb.f
@@ -318,7 +323,7 @@ bb.f:                                             ; preds = %_ZNSt7__cxx1112basi
   %.not71 = xor i1 %i.ag, true
   %brmerge73 = or i1 %.048.not161168183, %.not71
   %.mux75 = or i8 %i.af, %i.b
-  %.2.mux = select i1 %i.ag, i8 1, i8 %.2
+  %.2.mux = or i1 %.2, %i.ag
   br i1 %brmerge73, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit104, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -345,7 +350,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i101: ; pr
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit104: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i101, %bb.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96
   %.052 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96 ], [ %i.ag, %bb.f ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i101 ]
   %.047 = phi i8 [ %i.b, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96 ], [ %.mux75, %bb.f ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i101 ]
-  %.3 = phi i8 [ %.2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96 ], [ %.2.mux, %bb.f ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i101 ] ; 2 uses
+  %.3 = phi i1 [ %.2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit96 ], [ %.2.mux, %bb.f ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i101 ] ; 2 uses
   %i.am = and i32 %1, 2
   %.not60 = icmp eq i32 %i.am, 0
   br i1 %.not60, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit112, label %bb.h
@@ -355,7 +360,7 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ao = trunc nuw i8 %i.an to i1                ; 3 uses
   %.not66 = xor i1 %i.ao, true
   %brmerge68 = or i1 %.048.not161168183, %.not66
-  %.3.mux = select i1 %i.ao, i8 1, i8 %.3
+  %.3.mux = select i1 %i.ao, i1 true, i1 %.3
   br i1 %brmerge68, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit112, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -388,7 +393,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i109: ; pr
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit112: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i109, %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit104
   %.049 = phi i1 [ %i.ao, %bb.h ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit104 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i109 ]
-  %.4 = phi i8 [ %.3.mux, %bb.h ], [ %.3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit104 ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i109 ]
+  %.4 = phi i1 [ %.3.mux, %bb.h ], [ %.3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit104 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i109 ]
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.av = load i8, ptr %i.au, align 2, !tbaa !56, !range !53, !noundef !54
   %i.aw = trunc nuw i8 %i.av to i1
@@ -397,7 +402,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit112: ; preds = %
   br i1 %.not61, label %bb.o, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit112
-  br i1 %.048160169182, label %bb.k, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit123
+  br i1 %.048160172183, label %bb.k, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit123
 
 bb.k:                                             ; preds = %bb.j
   %i.ay = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ax, ptr noundef nonnull @.str.5, i64 noundef 1)
@@ -457,9 +462,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit123: ; preds = %_ZSt
 bb.o:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit123, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit112
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %1, ptr %i.br, align 4, !tbaa !25
-  %8 = trunc i8 %.4 to i1
   %not. = xor i1 %i.aw, true
-  %i.bs = select i1 %not., i1 %8, i1 false
+  %i.bs = select i1 %not., i1 %.4, i1 false
   br i1 %i.bs, label %bb.p, label %bb.ao
 
 bb.p:                                             ; preds = %bb.o
@@ -487,8 +491,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.cb, label %bb.u, label %.invoke203
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %9 = trunc i8 %.0170181 to i1
-  br i1 %9, label %bb.v, label %bb.w
+  br i1 %.048160169182, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 48

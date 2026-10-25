@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dh = getelementptr i8, ptr %i.d, i64 26
   %i.di = load i16, ptr %i.dh, align 2            ; 8 uses
   %i.dj = getelementptr i8, ptr %i.d, i64 28
-  %i.dk = load i16, ptr %i.dj, align 4            ; 9 uses
+  %i.dk = load i16, ptr %i.dj, align 4            ; 10 uses
   %i.dl = zext i16 %i.dg to i32
   %i.dm = icmp eq i16 %i.dg, 8                    ; 2 uses
   %i.dn = icmp ult i32 %i.co, 32
@@ -264,8 +264,11 @@ bb.ac:                                            ; preds = %bb.ab
 .thread155.i:                                     ; preds = %bb.ac, %bb.ac
   %i.ee = getelementptr i8, ptr %i.d, i64 30
   %.val132.i = load i16, ptr %i.ee, align 2
-  %i.ef = icmp eq i16 %.val132.i, 0
-  br label %.thread
+  %i.ef = icmp eq i16 %.val132.i, 0               ; 2 uses
+  switch i16 %i.dk, label %.sink.split.i [
+    i16 153, label %.thread
+    i16 0, label %.thread
+  ]
 
 .thread133.i:                                     ; preds = %bb.z
   %.not123.not.i = icmp eq i16 %i.dk, 0
@@ -325,7 +328,7 @@ run_again.exit.i:                                 ; preds = %bb.ah, %bb.ag
   %i.fe = icmp eq i16 %i.di, 1
   br i1 %i.fe, label %ieee80211_rx_mgmt_auth.exit, label %.critedge.i
 
-.sink.split.i:                                    ; preds = %.thread133.thread.i, %bb.ac
+.sink.split.i:                                    ; preds = %.thread133.thread.i, %.thread155.i, %bb.ac
   %i.ff = getelementptr i8, ptr %0, i64 1848
   %i.fg = load ptr, ptr %i.ff, align 8
   tail call void @cfg80211_rx_mlme_mgmt(ptr noundef %i.fg, ptr noundef %i.d, i64 noundef range(i64 0, 4294967296) %i.cp) #19
@@ -377,8 +380,8 @@ bb.am:                                            ; preds = %bb.aj
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !300
   br label %.critedge.i
 
-.thread:                                          ; preds = %.thread133.i, %bb.ak, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %.thread155.i
-  %.0140157.i = phi i1 [ %i.ef, %.thread155.i ], [ true, %bb.ak ], [ true, %.thread133.i ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ]
+.thread:                                          ; preds = %.thread133.i, %bb.ak, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %.thread155.i, %.thread155.i
+  %.0134153.i = phi i1 [ true, %.thread133.i ], [ true, %bb.ak ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ true, %bb.aj ], [ %i.ef, %.thread155.i ], [ %i.ef, %.thread155.i ]
   %i.fu = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 0, ptr %i.fu, align 4
   %i.fv = getelementptr inbounds nuw i8, ptr %9, i64 4
@@ -409,7 +412,7 @@ bb.ap:                                            ; preds = %.thread
   %i.ge = icmp eq i16 %i.dk, 153
   %or.cond23.not147.i = select i1 %cond1.i, i1 true, i1 %i.ge
   %i.gf = icmp eq i16 %i.dk, 0
-  %or.cond14.i = select i1 %i.gf, i1 %.0140157.i, i1 false
+  %or.cond14.i = select i1 %i.gf, i1 %.0134153.i, i1 false
   %or.cond128.i = select i1 %or.cond23.not147.i, i1 true, i1 %or.cond14.i
   br i1 %or.cond128.i, label %.thread158.i, label %.thread144.i
 

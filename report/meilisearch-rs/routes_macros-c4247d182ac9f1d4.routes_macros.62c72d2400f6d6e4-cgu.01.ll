@@ -202,23 +202,24 @@ bb.ad:                                            ; preds = %bb.ab
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(328) %i.di, ptr noundef nonnull align 8 dereferenceable(328) %i.dh, i64 328, i1 false)
   %i.dy = load i32, ptr %i.dj, align 4
   invoke void @_ZN3syn5parse17hb6a6b6cd9fe85335E(ptr nonnull sret([352 x i8]) align 8 %i.dc, i32 %i.dy)
-          to label %bb.ag unwind label %bb.af
+          to label %bb.ag unwind label %bb.ae
 
-bb.ae:                                            ; preds = %.body33, %bb.af
-  %.sroa.012.0 = phi i8 [ %.sroa.012.1, %bb.af ], [ %.sroa.012.2, %.body33 ]
-  %.pn26 = phi { ptr, i32 } [ %i.dz, %bb.af ], [ %.pn24, %.body33 ] ; 2 uses
-  %3 = trunc nuw i8 %.sroa.012.0 to i1
-  br i1 %3, label %bb.ig, label %.thread
+3:                                                ; preds = %.body33
+  br i1 %.sroa.012.2, label %bb.ig, label %.thread
 
-bb.af:                                            ; preds = %bb.ia, %bb.gm, %bb.ai, %bb.ag, %bb.ad
-  %.sroa.012.1 = phi i8 [ 1, %bb.ai ], [ %.sroa.012.5, %bb.gm ], [ 0, %bb.ia ], [ 1, %bb.ag ], [ 1, %bb.ad ]
-  %i.dz = landingpad { ptr, i32 }
+bb.ae:                                            ; preds = %bb.ai, %bb.ag, %bb.ad
+  %lpad.thr_comm104 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.ae
+  br label %bb.ig
+
+bb.af:                                            ; preds = %bb.gm
+  %i.dz = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %4, label %bb.ig, label %.thread
 
 bb.ag:                                            ; preds = %bb.ad
   invoke void @"_ZN79_$LT$core..result..Result$LT$T$C$E$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17h41eed31ca328bb80E"(ptr nonnull sret([352 x i8]) align 8 %i.dd, ptr nonnull align 8 %i.dc)
-          to label %bb.ah unwind label %bb.af
+          to label %bb.ah unwind label %bb.ae
 
 bb.ah:                                            ; preds = %bb.ag
   %i.ea = load i64, ptr %i.dd, align 8
@@ -229,7 +230,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.db, ptr noundef nonnull align 8 dereferenceable(24) %i.ec, i64 24, i1 false)
   invoke void @"_ZN153_$LT$core..result..Result$LT$T$C$F$GT$$u20$as$u20$core..ops..try_trait..FromResidual$LT$core..result..Result$LT$core..convert..Infallible$C$E$GT$$GT$$GT$13from_residual17hcb1bb66e0299d1e0E"(ptr sret([80 x i8]) align 8 %0, ptr nonnull align 8 %i.db, ptr nonnull align 8 @16)
-          to label %.thread56 unwind label %bb.af
+          to label %.thread56 unwind label %bb.ae
 
 bb.aj:                                            ; preds = %bb.ah
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(352) %i.de, ptr noundef nonnull align 8 dereferenceable(352) %i.dd, i64 352, i1 false)
@@ -632,13 +633,13 @@ bb.gg:                                            ; preds = %bb.fl
   unreachable
 
 .body33:                                          ; preds = %bb.am, %bb.fl, %bb.gh, %bb.gq, %bb.gu
-  %.sroa.012.2 = phi i8 [ 0, %bb.gq ], [ 0, %bb.gu ], [ 0, %bb.am ], [ %.sroa.012.3, %bb.gh ], [ 0, %bb.fl ]
-  %.pn24 = phi { ptr, i32 } [ %i.iq, %bb.gq ], [ %.pn.pn.pn, %bb.gu ], [ %.pn11.i, %bb.am ], [ %i.il, %bb.gh ], [ %i.hp, %bb.fl ]
+  %.sroa.012.2 = phi i1 [ false, %bb.gq ], [ false, %bb.gu ], [ false, %bb.am ], [ %.sroa.012.3, %bb.gh ], [ false, %bb.fl ]
+  %.pn24 = phi { ptr, i32 } [ %i.iq, %bb.gq ], [ %.pn.pn.pn, %bb.gu ], [ %.pn11.i, %bb.am ], [ %i.il, %bb.gh ], [ %i.hp, %bb.fl ] ; 2 uses
   invoke void @"_ZN4core3ptr36drop_in_place$LT$syn..item..Item$GT$17h75d320acf9d82d8bE"(ptr nonnull align 8 %i.de) #7
-          to label %bb.ae unwind label %bb.ic
+          to label %3 unwind label %bb.ic
 
 bb.gh:                                            ; preds = %.invoke, %bb.gf, %bb.er, %bb.id, %bb.gn, %bb.gi, %bb.ak
-  %.sroa.012.3 = phi i8 [ 1, %bb.id ], [ 1, %bb.ak ], [ 0, %bb.gf ], [ 0, %bb.gi ], [ 0, %bb.er ], [ 0, %.invoke ], [ 0, %bb.gn ]
+  %.sroa.012.3 = phi i1 [ true, %bb.id ], [ true, %bb.ak ], [ false, %bb.gf ], [ false, %bb.gi ], [ false, %bb.er ], [ false, %.invoke ], [ false, %bb.gn ]
   %i.il = landingpad { ptr, i32 }
           cleanup
   br label %.body33
@@ -684,7 +685,7 @@ bb.gl:                                            ; preds = %bb.gj, %bb.go
           to label %bb.gr unwind label %bb.gq
 
 bb.gm:                                            ; preds = %.invoke, %bb.ie
-  %.sroa.012.5 = phi i8 [ 1, %bb.ie ], [ 0, %.invoke ] ; 2 uses
+  %4 = phi i1 [ true, %bb.ie ], [ false, %.invoke ] ; 2 uses
   invoke void @"_ZN4core3ptr36drop_in_place$LT$syn..item..Item$GT$17h75d320acf9d82d8bE"(ptr nonnull align 8 %i.de)
           to label %bb.if unwind label %bb.af
 
@@ -899,10 +900,10 @@ bb.hz:                                            ; preds = %bb.hy
           to label %bb.ia unwind label %bb.gq
 
 bb.ia:                                            ; preds = %bb.hz
-  invoke void @"_ZN4core3ptr36drop_in_place$LT$syn..item..Item$GT$17h75d320acf9d82d8bE"(ptr nonnull align 8 %i.de)
-          to label %bb.ib unwind label %bb.af
+  call void @"_ZN4core3ptr36drop_in_place$LT$syn..item..Item$GT$17h75d320acf9d82d8bE"(ptr nonnull align 8 %i.de)
+  br label %bb.ib
 
-bb.ib:                                            ; preds = %bb.if, %.thread56, %bb.ia, %.thread58
+bb.ib:                                            ; preds = %bb.ia, %bb.if, %.thread56, %.thread58
   ret void
 
 bb.ic:                                            ; preds = %.thread48, %bb.ig, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.hk, %bb.gy, %bb.gu, %.body33
@@ -920,14 +921,14 @@ bb.ie:                                            ; preds = %bb.id
   br label %bb.gm
 
 bb.if:                                            ; preds = %bb.gm
-  %4 = trunc nuw i8 %.sroa.012.5 to i1
   br i1 %4, label %.thread56, label %bb.ib
 
 .thread56:                                        ; preds = %bb.ai, %bb.if
   call void @"_ZN4core3ptr60drop_in_place$LT$routes_macros..request..RequestItemAttr$GT$17h14f74f16552cda9dE"(ptr nonnull align 8 %i.di)
   br label %bb.ib
 
-bb.ig:                                            ; preds = %bb.ae
+bb.ig:                                            ; preds = %bb.ae, %bb.af, %3
+  %.pn26103 = phi { ptr, i32 } [ %i.dz, %bb.af ], [ %.pn24, %3 ], [ %lpad.thr_comm104, %bb.ae ]
   invoke void @"_ZN4core3ptr60drop_in_place$LT$routes_macros..request..RequestItemAttr$GT$17h14f74f16552cda9dE"(ptr nonnull align 8 %i.di) #7
           to label %.thread unwind label %bb.ic
 
@@ -935,8 +936,8 @@ bb.ig:                                            ; preds = %bb.ae
   call void @"_ZN4core3ptr44drop_in_place$LT$proc_macro..TokenStream$GT$17h664ffa5071867ce1E"(ptr nonnull align 4 %i.dj)
   br label %bb.ib
 
-.thread:                                          ; preds = %bb.ae, %bb.ig, %.thread48
-  %.pn2846 = phi { ptr, i32 } [ %.pn26, %bb.ae ], [ %eh.lpad-body51, %.thread48 ], [ %.pn26, %bb.ig ]
+.thread:                                          ; preds = %bb.af, %3, %bb.ig, %.thread48
+  %.pn2846 = phi { ptr, i32 } [ %.pn24, %3 ], [ %eh.lpad-body51, %.thread48 ], [ %.pn26103, %bb.ig ], [ %i.dz, %bb.af ]
   resume { ptr, i32 } %.pn2846
 
 .thread48:                                        ; preds = %bb.u, %bb.z, %.thread53
@@ -1339,19 +1340,20 @@ bb.g:                                             ; preds = %bb.w, %bb.e
 bb.h:                                             ; preds = %bb.e
   store i64 43, ptr %i.l, align 8, !noalias !21
   invoke void @"_ZN3syn3gen5clone62_$LT$impl$u20$core..clone..Clone$u20$for$u20$syn..ty..Type$GT$5clone17hc6d06565ea7cf750E"(ptr nonnull sret([224 x i8]) align 8 %i.j, ptr align 8 %i.ab)
-          to label %bb.k unwind label %bb.j, !noalias !21
+          to label %bb.k unwind label %bb.i, !noalias !21
 
-bb.i:                                             ; preds = %bb.l, %bb.j
-  %.pn.i = phi { ptr, i32 } [ %i.af, %bb.j ], [ %i.al, %bb.l ] ; 2 uses
-  %.sroa.0.0.i = phi i8 [ %.sroa.0.1.i, %bb.j ], [ %.sroa.0.2.i, %bb.l ]
-  %2 = trunc nuw i8 %.sroa.0.0.i to i1
-  br i1 %2, label %bb.ad, label %bb.y
-
-bb.j:                                             ; preds = %bb.u, %bb.h
-  %.sroa.0.1.i = phi i8 [ %.sroa.0.3.i, %bb.u ], [ 1, %bb.h ]
-  %i.af = landingpad { ptr, i32 }
+bb.i:                                             ; preds = %bb.h
+  %2 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.i
+  br label %bb.ad
+
+3:                                                ; preds = %bb.l
+  br i1 %.sroa.0.2.i, label %bb.ad, label %bb.y
+
+bb.j:                                             ; preds = %bb.u
+  %i.af = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %.not.i, label %bb.y, label %bb.ad
 
 bb.k:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %i.k, ptr noundef nonnull align 8 dereferenceable(224) %i.j, i64 224, i1 false), !noalias !21
@@ -1370,11 +1372,11 @@ bb.k:                                             ; preds = %bb.h
           to label %bb.m unwind label %bb.l, !noalias !21
 
 bb.l:                                             ; preds = %bb.s, %bb.q, %bb.p, %bb.o, %bb.m, %bb.k
-  %.sroa.0.2.i = phi i8 [ 1, %bb.o ], [ 0, %bb.s ], [ 0, %bb.q ], [ 0, %bb.p ], [ 1, %bb.m ], [ 1, %bb.k ]
+  %.sroa.0.2.i = phi i1 [ true, %bb.o ], [ false, %bb.s ], [ false, %bb.q ], [ false, %bb.p ], [ true, %bb.m ], [ true, %bb.k ]
   %i.al = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @"_ZN4core3ptr62drop_in_place$LT$core..option..Option$LT$syn..ty..Type$GT$$GT$17h9b30ffd1bed52713E"(ptr nonnull align 8 %i.k) #7
-          to label %bb.i unwind label %bb.ac
+          to label %3 unwind label %bb.ac
 
 bb.m:                                             ; preds = %bb.k
   invoke void @"_ZN79_$LT$core..result..Result$LT$T$C$E$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17h44611f307b547730E"(ptr nonnull sret([24 x i8]) align 8 %i.i, ptr nonnull align 8 %i.h)
@@ -1382,7 +1384,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.am = load i64, ptr %i.i, align 8, !noalias !21
-  %.not.i = icmp eq i64 %i.am, -9223372036854775808
+  %.not.i = icmp eq i64 %i.am, -9223372036854775808 ; 3 uses
   br i1 %.not.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -1424,13 +1426,11 @@ bb.t:                                             ; preds = %bb.r
   br label %_ZN13routes_macros7request16RequestFieldAttr9from_attr17h65fa446e1dcb490aE.exit
 
 bb.u:                                             ; preds = %bb.s, %bb.o
-  %.sroa.0.3.i = phi i8 [ 1, %bb.o ], [ 0, %bb.s ] ; 2 uses
   invoke void @"_ZN4core3ptr62drop_in_place$LT$core..option..Option$LT$syn..ty..Type$GT$$GT$17h9b30ffd1bed52713E"(ptr nonnull align 8 %i.k)
           to label %bb.v unwind label %bb.j
 
 bb.v:                                             ; preds = %bb.u
-  %3 = trunc nuw i8 %.sroa.0.3.i to i1
-  br i1 %3, label %bb.x, label %bb.w
+  br i1 %.not.i, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.x, %bb.v
   invoke void @"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$proc_macro2..TokenStream$GT$$GT$17ha04ccdda687da560E"(ptr nonnull align 8 %i.m)
@@ -1440,8 +1440,8 @@ bb.x:                                             ; preds = %bb.v
   invoke void @"_ZN4core3ptr90drop_in_place$LT$core..option..Option$LT$routes_macros..request..DefaultOrRequired$GT$$GT$17hf71178b0a32ff0f9E"(ptr nonnull align 8 %i.l)
           to label %bb.w unwind label %bb.z
 
-bb.y:                                             ; preds = %bb.ad, %bb.z, %bb.i
-  %.pn4.i = phi { ptr, i32 } [ %i.au, %bb.z ], [ %.pn.i, %bb.ad ], [ %.pn.i, %bb.i ]
+bb.y:                                             ; preds = %bb.ad, %bb.z, %bb.j, %3
+  %.pn4.i = phi { ptr, i32 } [ %i.au, %bb.z ], [ %.pn10.i, %bb.ad ], [ %i.al, %3 ], [ %i.af, %bb.j ]
   invoke void @"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$proc_macro2..TokenStream$GT$$GT$17ha04ccdda687da560E"(ptr nonnull align 8 %i.m) #7
           to label %bb.f unwind label %bb.ac
 
@@ -1464,7 +1464,8 @@ bb.ac:                                            ; preds = %bb.ad, %bb.y, %bb.l
   call void @_ZN4core9panicking16panic_in_cleanup17h5eff40bcc4481d72E() #8
   unreachable
 
-bb.ad:                                            ; preds = %bb.i
+bb.ad:                                            ; preds = %bb.j, %3, %bb.i
+  %.pn10.i = phi { ptr, i32 } [ %i.af, %bb.j ], [ %i.al, %3 ], [ %2, %bb.i ]
   invoke void @"_ZN4core3ptr90drop_in_place$LT$core..option..Option$LT$routes_macros..request..DefaultOrRequired$GT$$GT$17hf71178b0a32ff0f9E"(ptr nonnull align 8 %i.l) #7
           to label %bb.y unwind label %bb.ac
 

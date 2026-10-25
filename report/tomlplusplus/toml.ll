@@ -205,11 +205,11 @@ _ZNSt3mapIN4toml2v33keyESt10unique_ptrINS1_4nodeESt14default_deleteIS4_EESt4less
   %.not.i.i.i78 = icmp eq ptr %.sroa.03.0.i.i.i.i.i.i77, %i.v
   br i1 %.not.i.i.i78, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
 
-.preheader241.i:                                  ; preds = %bb.f, %.backedge.i
-  %i.ac = phi ptr [ %7, %.backedge.i ], [ %0, %bb.f ] ; 10 uses
-  %.097284.i = phi i64 [ %.097.be.i, %.backedge.i ], [ 0, %bb.f ] ; 7 uses
-  %.0106283.i = phi i1 [ %.0106.be.i, %.backedge.i ], [ false, %bb.f ]
-  %.0113282.i = phi i8 [ %.0113.be.i, %.backedge.i ], [ 1, %bb.f ]
+.preheader241.i:                                  ; preds = %bb.f, %.preheader241.i.backedge
+  %i.ac = phi ptr [ %.be, %.preheader241.i.backedge ], [ %0, %bb.f ] ; 10 uses
+  %.097284.i = phi i64 [ %.097284.i.be, %.preheader241.i.backedge ], [ 0, %bb.f ] ; 7 uses
+  %.0106283.i = phi i1 [ %.0106283.i.be, %.preheader241.i.backedge ], [ false, %bb.f ]
+  %.0113282.i = phi i1 [ %.0113282.i.be, %.preheader241.i.backedge ], [ true, %bb.f ]
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %.097284.i ; 4 uses
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !70
   switch i8 %i.ae, label %bb.y [
@@ -399,8 +399,7 @@ bb.t:                                             ; preds = %_ZSt10from_charsImE
   br i1 %.not106, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %.backedge.i
 
 bb.u:                                             ; preds = %.preheader241.i
-  %3 = trunc nuw i8 %.0113282.i to i1
-  br i1 %3, label %bb.v, label %4
+  br i1 %.0113282.i, label %bb.v, label %bb.af
 
 bb.v:                                             ; preds = %bb.u
   %i.ci = load ptr, ptr %i.ac, align 8, !tbaa !75
@@ -451,12 +450,7 @@ _ZNSt3mapIN4toml2v33keyESt10unique_ptrINS1_4nodeESt14default_deleteIS4_EESt4less
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.03.0.i.i.i.i.i.i39, i64 96
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !175 ; 2 uses
   %.not105 = icmp eq ptr %i.cv, null
-  br i1 %.not105, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %4
-
-4:                                                ; preds = %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit51", %bb.u
-  %5 = phi ptr [ %i.cv, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit51" ], [ %i.ac, %bb.u ]
-  %6 = add nuw i64 %.097284.i, 1
-  br label %.backedge.i
+  br i1 %.not105, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %bb.af
 
 bb.y:                                             ; preds = %.preheader241.i
   %i.cw = add nuw i64 %.097284.i, 1               ; 2 uses
@@ -602,20 +596,28 @@ _ZNSt3mapIN4toml2v33keyESt10unique_ptrINS1_4nodeESt14default_deleteIS4_EESt4less
   %.not107 = icmp eq ptr %i.eh, null
   br i1 %.not107, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %.backedge.i
 
-.backedge.i:                                      ; preds = %bb.ab, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit", %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.aa, %4, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit"
-  %7 = phi ptr [ %i.ac, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ %i.eh, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit" ], [ %i.ac, %bb.aa ], [ %i.ch, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit" ], [ %5, %4 ], [ %i.ac, %bb.ab ] ; 3 uses
-  %.0113.be.i = phi i8 [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ 0, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit" ], [ 0, %bb.aa ], [ 0, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit" ], [ 1, %4 ], [ 0, %bb.ab ] ; 2 uses
-  %.0106.be.i = phi i1 [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ false, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit" ], [ false, %bb.aa ], [ true, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit" ], [ false, %4 ], [ false, %bb.ab ]
-  %.097.be.i = phi i64 [ %.2.i.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ %.2.i.i.i, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit" ], [ %.2.i.i.i, %bb.aa ], [ %.3100.i, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit" ], [ %6, %4 ], [ %.2.i.i.i, %bb.ab ] ; 2 uses
+.backedge.i:                                      ; preds = %bb.ab, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit", %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.aa, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit"
+  %3 = phi ptr [ %i.ac, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ %i.eh, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit" ], [ %i.ac, %bb.aa ], [ %i.ch, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit" ], [ %i.ac, %bb.ab ] ; 2 uses
+  %.0106.be.i = phi i1 [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ false, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit" ], [ false, %bb.aa ], [ true, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit" ], [ false, %bb.ab ]
+  %.097.be.i = phi i64 [ %.2.i.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ %.2.i.i.i, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit" ], [ %.2.i.i.i, %bb.aa ], [ %.3100.i, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit" ], [ %.2.i.i.i, %bb.ab ] ; 2 uses
   %i.ei = icmp ult i64 %.097.be.i, %1
-  br i1 %i.ei, label %.preheader241.i, label %bb.af, !llvm.loop !12
+  br i1 %i.ei, label %.preheader241.i.backedge, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101
 
-bb.af:                                            ; preds = %.backedge.i
-  store ptr %7, ptr %i.a, align 8
-  %8 = trunc nuw i8 %.0113.be.i to i1
-  br i1 %8, label %bb.ag, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101
+bb.af:                                            ; preds = %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit51", %bb.u
+  %4 = phi ptr [ %i.cv, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit51" ], [ %i.ac, %bb.u ] ; 2 uses
+  %5 = add nuw i64 %.097284.i, 1                  ; 2 uses
+  %6 = icmp ult i64 %5, %1
+  br i1 %6, label %.preheader241.i.backedge, label %bb.ag
+
+.preheader241.i.backedge:                         ; preds = %bb.af, %.backedge.i
+  %.be = phi ptr [ %4, %bb.af ], [ %3, %.backedge.i ]
+  %.097284.i.be = phi i64 [ %5, %bb.af ], [ %.097.be.i, %.backedge.i ]
+  %.0106283.i.be = phi i1 [ false, %bb.af ], [ %.0106.be.i, %.backedge.i ]
+  %.0113282.i.be = phi i1 [ true, %bb.af ], [ false, %.backedge.i ]
+  br label %.preheader241.i, !llvm.loop !12
 
 bb.ag:                                            ; preds = %bb.af
+  store ptr %4, ptr %i.a, align 8
   %i.ej = call fastcc noundef zeroext i1 @"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_"(ptr noundef nonnull %i.a, i64 0, ptr nonnull @.str.7), !inline_history !436
   br i1 %i.ej, label %._ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101_crit_edge, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread
 
@@ -632,8 +634,8 @@ _ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S
 _ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread: ; preds = %bb.ac, %bb.v, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit.i, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit", %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.p, %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i.i, %bb.k, %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_18__invokeEPvm.exit", %"_ZZN4toml2v37at_pathERNS0_4nodeESt17basic_string_viewIcSt11char_traitsIcEEEN3$_08__invokeEPvS6_.exit51", %.preheader.i, %.preheader241.i, %bb.ad, %_ZNSt3mapIN4toml2v33keyESt10unique_ptrINS1_4nodeESt14default_deleteIS4_EESt4lessIvESaISt4pairIKS2_S7_EEE4findISt17basic_string_viewIcSt11char_traitsIcEEEEDTcldtdtdefpT4_M_t10_M_find_trfp_EERKT_.exit.i.i.i, %bb.w, %_ZNSt3mapIN4toml2v33keyESt10unique_ptrINS1_4nodeESt14default_deleteIS4_EESt4lessIvESaISt4pairIKS2_S7_EEE4findISt17basic_string_viewIcSt11char_traitsIcEEEEDTcldtdtdefpT4_M_t10_M_find_trfp_EERKT_.exit.i.i.i38, %bb.t, %.lr.ph, %bb.j, %.lr.ph276.i, %.split.i.i.i, %bb.s, %bb.h, %_ZNSt3mapIN4toml2v33keyESt10unique_ptrINS1_4nodeESt14default_deleteIS4_EESt4lessIvESaISt4pairIKS2_S7_EEE4findISt17basic_string_viewIcSt11char_traitsIcEEEEDTcldtdtdefpT4_M_t10_M_find_trfp_EERKT_.exit.i.i.i76, %bb.g, %bb.ag, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
   br label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101
 
-_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101: ; preds = %._ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101_crit_edge, %bb.af, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
-  %i.em = phi ptr [ %.pre, %._ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101_crit_edge ], [ %7, %bb.af ], [ null, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread ], [ %i.el, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit ]
+_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101: ; preds = %.backedge.i, %._ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101_crit_edge, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
+  %i.em = phi ptr [ %.pre, %._ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread101_crit_edge ], [ %i.el, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit ], [ null, %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread ], [ %3, %.backedge.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #50
   br label %bb.ah
 
@@ -1036,10 +1038,10 @@ bb.b:                                             ; preds = %bb.a
   %i.b = tail call noundef zeroext i1 %3(ptr noundef %2, i64 0, ptr nonnull @.str.7)
   br label %.thread203
 
-.preheader241:                                    ; preds = %bb.a, %.backedge
-  %.097284 = phi i64 [ %.097.be, %.backedge ], [ 0, %bb.a ] ; 7 uses
-  %.0106283 = phi i1 [ %.0106.be, %.backedge ], [ false, %bb.a ]
-  %.0113282 = phi i8 [ %.0113.be, %.backedge ], [ 1, %bb.a ]
+.preheader241:                                    ; preds = %bb.a, %.preheader241.backedge
+  %.097284 = phi i64 [ %.097284.be, %.preheader241.backedge ], [ 0, %bb.a ] ; 7 uses
+  %.0106283 = phi i1 [ %.0106283.be, %.preheader241.backedge ], [ false, %bb.a ]
+  %.0113282 = phi i1 [ %.0113282.be, %.preheader241.backedge ], [ true, %bb.a ]
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.097284 ; 3 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !70
   switch i8 %i.d, label %bb.o [
@@ -1207,16 +1209,11 @@ _ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_
   br i1 %i.as, label %.backedge, label %.thread203
 
 bb.m:                                             ; preds = %.preheader241
-  %5 = trunc nuw i8 %.0113282 to i1
-  br i1 %5, label %bb.n, label %6
+  br i1 %.0113282, label %bb.n, label %bb.t
 
 bb.n:                                             ; preds = %bb.m
   %i.at = tail call noundef zeroext i1 %3(ptr noundef %2, i64 0, ptr nonnull @.str.7)
-  br i1 %i.at, label %6, label %.thread203
-
-6:                                                ; preds = %bb.n, %bb.m
-  %7 = add nuw i64 %.097284, 1
-  br label %.backedge
+  br i1 %i.at, label %bb.t, label %.thread203
 
 bb.o:                                             ; preds = %.preheader241
   %i.au = add nuw i64 %.097284, 1                 ; 2 uses
@@ -1276,22 +1273,28 @@ bb.s:                                             ; preds = %_ZNKSt17basic_strin
   %i.bg = tail call noundef zeroext i1 %3(ptr noundef %2, i64 %.sroa.speculated.i143, ptr nonnull %i.c)
   br i1 %i.bg, label %.backedge, label %.thread203
 
-.backedge:                                        ; preds = %bb.r, %6, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit, %bb.s, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit, %bb.q
-  %.0113.be = phi i8 [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit ], [ 0, %bb.s ], [ 0, %bb.q ], [ 0, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit ], [ 1, %6 ], [ 0, %bb.r ] ; 2 uses
-  %.0106.be = phi i1 [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit ], [ false, %bb.s ], [ false, %bb.q ], [ true, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit ], [ false, %6 ], [ false, %bb.r ]
-  %.097.be = phi i64 [ %.2.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit ], [ %.2.i.i, %bb.s ], [ %.2.i.i, %bb.q ], [ %.3100, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit ], [ %7, %6 ], [ %.2.i.i, %bb.r ] ; 2 uses
+.backedge:                                        ; preds = %bb.r, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit, %bb.s, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit, %bb.q
+  %.0106.be = phi i1 [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit ], [ false, %bb.s ], [ false, %bb.q ], [ true, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit ], [ false, %bb.r ]
+  %.097.be = phi i64 [ %.2.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit ], [ %.2.i.i, %bb.s ], [ %.2.i.i, %bb.q ], [ %.3100, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit ], [ %.2.i.i, %bb.r ] ; 2 uses
   %i.bh = icmp ult i64 %.097.be, %0
-  br i1 %i.bh, label %.preheader241, label %bb.t, !llvm.loop !12
+  br i1 %i.bh, label %.preheader241.backedge, label %bb.v
 
-bb.t:                                             ; preds = %.backedge
-  %8 = trunc nuw i8 %.0113.be to i1
-  br i1 %8, label %bb.u, label %bb.v
+.preheader241.backedge:                           ; preds = %.backedge, %bb.t
+  %.097284.be = phi i64 [ %5, %bb.t ], [ %.097.be, %.backedge ]
+  %.0106283.be = phi i1 [ false, %bb.t ], [ %.0106.be, %.backedge ]
+  %.0113282.be = phi i1 [ true, %bb.t ], [ false, %.backedge ]
+  br label %.preheader241, !llvm.loop !12
+
+bb.t:                                             ; preds = %bb.m, %bb.n
+  %5 = add nuw i64 %.097284, 1                    ; 2 uses
+  %6 = icmp ult i64 %5, %0
+  br i1 %6, label %.preheader241.backedge, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.bi = tail call noundef zeroext i1 %3(ptr noundef %2, i64 0, ptr nonnull @.str.7)
   br i1 %i.bi, label %bb.v, label %.thread203
 
-bb.v:                                             ; preds = %bb.u, %bb.t
+bb.v:                                             ; preds = %.backedge, %bb.u
   br label %.thread203
 
 .thread203:                                       ; preds = %.preheader241, %bb.s, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit, %bb.i, %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i, %bb.d, %_ZSt10from_charsImENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit, %bb.n, %.preheader, %bb.c, %.lr.ph344, %.lr.ph276, %bb.l, %.split.i.i, %bb.v, %bb.u, %bb.b
@@ -1694,10 +1697,10 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
 
-.preheader241.i:                                  ; preds = %.preheader241.i.preheader, %.backedge.i
-  %.097284.i = phi i64 [ %.097.be.i, %.backedge.i ], [ 0, %.preheader241.i.preheader ] ; 7 uses
-  %.0106283.i = phi i1 [ %.0106.be.i, %.backedge.i ], [ false, %.preheader241.i.preheader ]
-  %.0113282.i = phi i8 [ %.0113.be.i, %.backedge.i ], [ 1, %.preheader241.i.preheader ]
+.preheader241.i:                                  ; preds = %.preheader241.i.backedge, %.preheader241.i.preheader
+  %.097284.i = phi i64 [ 0, %.preheader241.i.preheader ], [ %.097284.i.be, %.preheader241.i.backedge ] ; 7 uses
+  %.0106283.i = phi i1 [ false, %.preheader241.i.preheader ], [ %.0106283.i.be, %.preheader241.i.backedge ]
+  %.0113282.i = phi i1 [ true, %.preheader241.i.preheader ], [ %.0113282.i.be, %.preheader241.i.backedge ]
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %.097284.i ; 4 uses
   %i.s = load i8, ptr %i.r, align 1, !tbaa !70
   switch i8 %i.s, label %bb.u [
@@ -1884,8 +1887,7 @@ bb.p:                                             ; preds = %_ZSt10from_charsImE
   br label %.backedge.i
 
 bb.q:                                             ; preds = %.preheader241.i
-  %7 = trunc nuw i8 %.0113282.i to i1
-  br i1 %7, label %bb.r, label %8
+  br i1 %.0113282.i, label %bb.r, label %bb.ab
 
 bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -1909,11 +1911,7 @@ bb.t:                                             ; preds = %bb.r
 
 "_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit10": ; preds = %bb.s, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  br label %8
-
-8:                                                ; preds = %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit10", %bb.q
-  %9 = add nuw i64 %.097284.i, 1
-  br label %.backedge.i
+  br label %bb.ab
 
 bb.u:                                             ; preds = %.preheader241.i
   %i.bp = add nuw i64 %.097284.i, 1               ; 2 uses
@@ -1993,16 +1991,22 @@ bb.aa:                                            ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   br label %.backedge.i
 
-.backedge.i:                                      ; preds = %bb.x, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit8", %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_18__invokeEPvm.exit", %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.w, %8
-  %.0113.be.i = phi i8 [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ 0, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit8" ], [ 0, %bb.w ], [ 0, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_18__invokeEPvm.exit" ], [ 1, %8 ], [ 0, %bb.x ] ; 2 uses
-  %.0106.be.i = phi i1 [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ false, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit8" ], [ false, %bb.w ], [ true, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_18__invokeEPvm.exit" ], [ false, %8 ], [ false, %bb.x ]
-  %.097.be.i = phi i64 [ %.2.i.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ %.2.i.i.i, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit8" ], [ %.2.i.i.i, %bb.w ], [ %.3100.i, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_18__invokeEPvm.exit" ], [ %9, %8 ], [ %.2.i.i.i, %bb.x ] ; 2 uses
+.backedge.i:                                      ; preds = %bb.x, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit8", %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_18__invokeEPvm.exit", %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.w
+  %.0106.be.i = phi i1 [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ false, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit8" ], [ false, %bb.w ], [ true, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_18__invokeEPvm.exit" ], [ false, %bb.x ]
+  %.097.be.i = phi i64 [ %.2.i.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ %.2.i.i.i, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit8" ], [ %.2.i.i.i, %bb.w ], [ %.3100.i, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_18__invokeEPvm.exit" ], [ %.2.i.i.i, %bb.x ] ; 2 uses
   %i.cf = icmp ult i64 %.097.be.i, %0
-  br i1 %i.cf, label %.preheader241.i, label %bb.ab, !llvm.loop !12
+  br i1 %i.cf, label %.preheader241.i.backedge, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
 
-bb.ab:                                            ; preds = %.backedge.i
-  %10 = trunc nuw i8 %.0113.be.i to i1
-  br i1 %10, label %bb.ac, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
+bb.ab:                                            ; preds = %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit10", %bb.q
+  %7 = add nuw i64 %.097284.i, 1                  ; 2 uses
+  %8 = icmp ult i64 %7, %0
+  br i1 %8, label %.preheader241.i.backedge, label %bb.ac
+
+.preheader241.i.backedge:                         ; preds = %bb.ab, %.backedge.i
+  %.097284.i.be = phi i64 [ %.097.be.i, %.backedge.i ], [ %7, %bb.ab ]
+  %.0106283.i.be = phi i1 [ %.0106.be.i, %.backedge.i ], [ false, %bb.ab ]
+  %.0113282.i.be = phi i1 [ false, %.backedge.i ], [ true, %bb.ab ]
+  br label %.preheader241.i, !llvm.loop !12
 
 bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
@@ -2081,7 +2085,7 @@ _ZSt8_DestroyIPN4toml2v314path_componentES2_EvT_S4_RSaIT0_E.exit.i.i: ; preds = 
   store ptr %i.cu, ptr %i.b, align 8, !tbaa !191
   br label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit
 
-_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit: ; preds = %_ZSt8_DestroyIPN4toml2v314path_componentES2_EvT_S4_RSaIT0_E.exit.i.i, %bb.ah, %bb.ag, %bb.af, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit13", %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit", %bb.ab
+_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit: ; preds = %.backedge.i, %_ZSt8_DestroyIPN4toml2v314path_componentES2_EvT_S4_RSaIT0_E.exit.i.i, %bb.ah, %bb.ag, %bb.af, %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit13", %"_ZZN12_GLOBAL__N_115parse_path_intoESt17basic_string_viewIcSt11char_traitsIcEERSt6vectorIN4toml2v314path_componentESaIS7_EEEN3$_08__invokeEPvS3_.exit"
   ret void
 }
 

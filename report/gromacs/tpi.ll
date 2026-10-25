@@ -205,7 +205,7 @@ $_ZTVN3gmx13ExceptionInfoINS_22ExceptionInfoLocation_ENS_13ThrowLocationEEE = co
 @__PRETTY_FUNCTION__._ZZN3gmx5RangeIiEC1EiiENKUlvE_clEv = private unnamed_addr constant [90 x i8] c"auto gmx::Range<int>::Range(const int, const int)::(lambda)::operator()() const [T = int]\00", align 1
 @.str.144 = private unnamed_addr constant [75 x i8] c"/opt-bench/work/gromacs/gromacs/api/legacy/include/gromacs/utility/range.h\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_tpi.cpp, ptr null }]
-@switch.table._ZN3gmx21TestParticleInsertionC2ERK10t_inputrecRK10gmx_mtop_tRK14gmx_localtop_tRK9t_mdatomsRKNS_18MDModulesNotifiersEP10t_forcerecP14gmx_enerdata_tRKNS_5RangeIiEENS_8ArrayRefIKNS_11BasicVectorIfEEEEfffii = private unnamed_addr constant [16 x i8] c"\01\01\00\00\00\00\00\00\00\00\01\00\00\00\00\01", align 1
+@switch.table._ZN3gmx21TestParticleInsertionC2ERK10t_inputrecRK10gmx_mtop_tRK14gmx_localtop_tRK9t_mdatomsRKNS_18MDModulesNotifiersEP10t_forcerecP14gmx_enerdata_tRKNS_5RangeIiEENS_8ArrayRefIKNS_11BasicVectorIfEEEEfffii.14 = private unnamed_addr constant [16 x i8] c"\01\01\00\00\00\00\00\00\00\00\01\00\00\00\00\01", align 4
 
 @_ZN3gmx21TestParticleInsertionC1ERK10t_inputrecRK10gmx_mtop_tRK14gmx_localtop_tRK9t_mdatomsRKNS_18MDModulesNotifiersEP10t_forcerecP14gmx_enerdata_tRKNS_5RangeIiEENS_8ArrayRefIKNS_11BasicVectorIfEEEEfffii = unnamed_addr alias void (ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, float, float, float, i32, i32), ptr @_ZN3gmx21TestParticleInsertionC2ERK10t_inputrecRK10gmx_mtop_tRK14gmx_localtop_tRK9t_mdatomsRKNS_18MDModulesNotifiersEP10t_forcerecP14gmx_enerdata_tRKNS_5RangeIiEENS_8ArrayRefIKNS_11BasicVectorIfEEEEfffii
 
@@ -569,7 +569,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 364
   %.val59 = load i32, ptr %i.cy, align 4, !tbaa !252 ; 2 uses
-  %switch.tableidx = add i32 %.val59, -1          ; 2 uses
+  %switch.tableidx = add i32 %.val59, -1          ; 3 uses
   %i.cz = icmp ult i32 %switch.tableidx, 16
   br i1 %i.cz, label %switch.lookup, label %bb.s
 
@@ -602,20 +602,24 @@ bb.r:                                             ; preds = %bb.i
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit
 
 switch.lookup:                                    ; preds = %bb.m
+  %15 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN3gmx21TestParticleInsertionC2ERK10t_inputrecRK10gmx_mtop_tRK14gmx_localtop_tRK9t_mdatomsRKNS_18MDModulesNotifiersEP10t_forcerecP14gmx_enerdata_tRKNS_5RangeIiEENS_8ArrayRefIKNS_11BasicVectorIfEEEEfffii.14, i64 %15
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.dg = zext nneg i32 %switch.tableidx to i64
-  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._ZN3gmx21TestParticleInsertionC2ERK10t_inputrecRK10gmx_mtop_tRK14gmx_localtop_tRK9t_mdatomsRKNS_18MDModulesNotifiersEP10t_forcerecP14gmx_enerdata_tRKNS_5RangeIiEENS_8ArrayRefIKNS_11BasicVectorIfEEEEfffii, i64 %i.dg
+  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._ZN3gmx21TestParticleInsertionC2ERK10t_inputrecRK10gmx_mtop_tRK14gmx_localtop_tRK9t_mdatomsRKNS_18MDModulesNotifiersEP10t_forcerecP14gmx_enerdata_tRKNS_5RangeIiEENS_8ArrayRefIKNS_11BasicVectorIfEEEEfffii.14, i64 %i.dg
   %switch.load.a = load i8, ptr %switch.gep.a, align 1
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.m, %switch.lookup
-  %i.dh = phi i8 [ %switch.load.a, %switch.lookup ], [ 0, %bb.m ] ; 2 uses
+  %16 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.m ]
+  %i.dh = phi i8 [ %switch.load.a, %switch.lookup ], [ 0, %bb.m ]
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 382
   store i8 %i.dh, ptr %i.di, align 2, !tbaa !253
   %i.dj = load i32, ptr %i.az, align 8, !tbaa !174
   %spec.select76.v = select i1 %i.ct, i32 2, i32 1
   %reass.add = shl i32 %i.dj, 1
-  %15 = zext nneg i8 %i.dh to i32
-  %i.dk = add nuw nsw i32 %spec.select76.v, %15
+  %i.dk = add nuw nsw i32 %16, %spec.select76.v
   %spec.select56 = add i32 %i.dk, %reass.add      ; 3 uses
   switch i32 %.val59, label %bb.u [
     i32 3, label %_ZL23usingFullElectrostaticsRK22CoulombInteractionType.exit.thread

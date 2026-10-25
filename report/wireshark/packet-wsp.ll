@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.f, %bb.g, %g_str
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal range(i32 0, 2) i32 @wsp_stat_packet(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 %4) #1 {
+define internal noundef range(i32 0, 2) i32 @wsp_stat_packet(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 %4) #1 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr i8, ptr %i.a, i64 104
@@ -214,7 +214,7 @@ bb.a:
   %i.h = getelementptr i8, ptr %i.e, i64 20       ; 2 uses
   %i.i = load i32, ptr %i.h, align 4
   %.not50 = icmp eq i32 %i.i, 0
-  br i1 %.not50, label %._crit_edge, label %.lr.ph
+  br i1 %.not50, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = getelementptr i8, ptr %3, i64 4
@@ -231,24 +231,25 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   br i1 %i.p, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.q = add nuw i32 %.03337, 1                   ; 3 uses
+  %i.q = add nuw i32 %.03337, 1                   ; 2 uses
   %i.r = load i32, ptr %i.h, align 4
   %i.s = icmp ult i32 %i.q, %i.r
-  br i1 %i.s, label %bb.b, label %._crit_edge, !llvm.loop !12
+  br i1 %i.s, label %bb.b, label %._crit_edge.thread, !llvm.loop !12
 
-._crit_edge:                                      ; preds = %bb.c, %bb.b, %bb.a
-  %.033.lcssa = phi i32 [ 0, %bb.a ], [ %.03337, %bb.b ], [ %i.q, %bb.c ]
-  %.0 = phi i8 [ 0, %bb.a ], [ 1, %bb.b ], [ 0, %bb.c ] ; 2 uses
-  %5 = trunc nuw i8 %.0 to i1
+._crit_edge.thread:                               ; preds = %bb.c, %bb.a
   %.b = load i1, ptr @unknown_pt_idx, align 4
-  %6 = select i1 %.b, i32 49, i32 0
-  %spec.select = select i1 %5, i32 %.033.lcssa, i32 %6 ; 2 uses
-  %i.t = tail call ptr @stat_tap_get_field_data(ptr noundef %i.e, i32 noundef %spec.select, i32 noundef 1) ; 2 uses
+  %5 = select i1 %.b, i32 49, i32 0
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.b, %._crit_edge.thread
+  %.lcssa3757 = phi i32 [ 0, %._crit_edge.thread ], [ 1, %bb.b ]
+  %6 = phi i32 [ %5, %._crit_edge.thread ], [ %.03337, %bb.b ] ; 2 uses
+  %i.t = tail call ptr @stat_tap_get_field_data(ptr noundef %i.e, i32 noundef %6, i32 noundef 1) ; 2 uses
   %i.u = getelementptr i8, ptr %i.t, i64 8        ; 2 uses
   %i.v = load i32, ptr %i.u, align 8
   %i.w = add i32 %i.v, 1
   store i32 %i.w, ptr %i.u, align 8
-  tail call void @stat_tap_set_field_data(ptr noundef %i.e, i32 noundef %spec.select, i32 noundef 1, ptr noundef %i.t)
+  tail call void @stat_tap_set_field_data(ptr noundef %i.e, i32 noundef %6, i32 noundef 1, ptr noundef %i.t)
   %i.x = load i32, ptr %3, align 4
   %.not = icmp eq i32 %i.x, 0
   br i1 %.not, label %bb.e, label %.preheader
@@ -257,7 +258,7 @@ bb.c:                                             ; preds = %bb.b
   %i.y = getelementptr i8, ptr %i.g, i64 20       ; 2 uses
   %i.z = load i32, ptr %i.y, align 4
   %.not51 = icmp eq i32 %i.z, 0
-  br i1 %.not51, label %._crit_edge44, label %.lr.ph43
+  br i1 %.not51, label %._crit_edge45.thread, label %.lr.ph43
 
 .lr.ph43:                                         ; preds = %.preheader, %bb.d
   %.23542 = phi i32 [ %i.af, %bb.d ], [ 0, %.preheader ] ; 3 uses
@@ -269,29 +270,30 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ae, label %._crit_edge44, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph43
-  %i.af = add nuw i32 %.23542, 1                  ; 3 uses
+  %i.af = add nuw i32 %.23542, 1                  ; 2 uses
   %i.ag = load i32, ptr %i.y, align 4
   %i.ah = icmp ult i32 %i.af, %i.ag
-  br i1 %i.ah, label %.lr.ph43, label %._crit_edge44, !llvm.loop !13
+  br i1 %i.ah, label %.lr.ph43, label %._crit_edge45.thread, !llvm.loop !13
 
-._crit_edge44:                                    ; preds = %bb.d, %.lr.ph43, %.preheader
-  %.235.lcssa = phi i32 [ 0, %.preheader ], [ %.23542, %.lr.ph43 ], [ %i.af, %bb.d ]
-  %.1 = phi i8 [ 0, %.preheader ], [ 1, %.lr.ph43 ], [ 0, %bb.d ] ; 2 uses
-  %7 = trunc nuw i8 %.1 to i1
-  %.b56 = load i1, ptr @unknown_sc_idx, align 4
-  %8 = select i1 %.b56, i32 40, i32 0
-  %spec.select36 = select i1 %7, i32 %.235.lcssa, i32 %8 ; 2 uses
-  %i.ai = tail call ptr @stat_tap_get_field_data(ptr noundef %i.g, i32 noundef %spec.select36, i32 noundef 1) ; 2 uses
+._crit_edge45.thread:                             ; preds = %bb.d, %.preheader
+  %.b63 = load i1, ptr @unknown_sc_idx, align 4
+  %7 = select i1 %.b63, i32 40, i32 0
+  br label %._crit_edge44
+
+._crit_edge44:                                    ; preds = %.lr.ph43, %._crit_edge45.thread
+  %.lcssa60 = phi i32 [ 0, %._crit_edge45.thread ], [ 1, %.lr.ph43 ]
+  %8 = phi i32 [ %7, %._crit_edge45.thread ], [ %.23542, %.lr.ph43 ] ; 2 uses
+  %i.ai = tail call ptr @stat_tap_get_field_data(ptr noundef %i.g, i32 noundef %8, i32 noundef 1) ; 2 uses
   %i.aj = getelementptr i8, ptr %i.ai, i64 8      ; 2 uses
   %i.ak = load i32, ptr %i.aj, align 8
   %i.al = add i32 %i.ak, 1
   store i32 %i.al, ptr %i.aj, align 8
-  tail call void @stat_tap_set_field_data(ptr noundef %i.g, i32 noundef %spec.select36, i32 noundef 1, ptr noundef %i.ai)
+  tail call void @stat_tap_set_field_data(ptr noundef %i.g, i32 noundef %8, i32 noundef 1, ptr noundef %i.ai)
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge44, %._crit_edge
-  %.2 = phi i8 [ %.1, %._crit_edge44 ], [ %.0, %._crit_edge ]
-  %9 = zext nneg i8 %.2 to i32
+  %.2 = phi i32 [ %.lcssa60, %._crit_edge44 ], [ %.lcssa3757, %._crit_edge ]
+  %9 = and i32 %.2, 1
   ret i32 %9
 }
 

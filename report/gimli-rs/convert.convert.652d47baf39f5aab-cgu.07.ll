@@ -202,9 +202,9 @@ bb.ao:                                            ; preds = %bb.am
   %.sroa.5382.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.m, i64 17
   br label %bb.be
 
-.loopexit.split-lp743.i:                          ; preds = %.loopexit.split-lp747.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.cu, %bb.bz, %.loopexit.split-lp743.loopexit.split-lp.i
-  %.sroa.0266.0.i = phi i1 [ %.sroa.0266.1.ph.ph.i, %.loopexit.split-lp743.loopexit.split-lp.i ], [ true, %bb.cu ], [ true, %bb.bz ], [ true, %.loopexit.split-lp747.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %.pn471.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp754.i, %.loopexit.split-lp743.loopexit.split-lp.i ], [ %.pn469.i, %bb.cu ], [ %.pn469.i, %bb.bz ], [ %lpad.loopexit.split-lp315, %.loopexit.split-lp747.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
+.loopexit.split-lp743.i:                          ; preds = %.loopexit.split-lp747.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.cu, %bb.ca, %bb.bz, %.loopexit.split-lp743.loopexit.split-lp.i
+  %.sroa.0266.0.i = phi i1 [ true, %bb.ca ], [ true, %bb.cu ], [ true, %bb.bz ], [ %.sroa.0266.1.ph.ph.i, %.loopexit.split-lp743.loopexit.split-lp.i ], [ true, %.loopexit.split-lp747.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %.pn471.i = phi { ptr, i32 } [ %i.fn, %bb.ca ], [ %.pn469798.i, %bb.cu ], [ %.pn.i, %bb.bz ], [ %lpad.loopexit.split-lp754.i, %.loopexit.split-lp743.loopexit.split-lp.i ], [ %lpad.loopexit.split-lp315, %.loopexit.split-lp747.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtCsi68uqYEhoRA_5gimli4read4unit14AttributeValueINtNtB1d_12endian_slice11EndianSliceNtNtB1f_9endianity13RunTimeEndianEjEEECs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.n) #21
           to label %bb.bb unwind label %bb.ct, !noalias !317
 
@@ -463,8 +463,8 @@ bb.bm:                                            ; preds = %.loopexit752.i
   br i1 %.not467.i, label %bb.ce, label %bb.cd
 
 .loopexit.split-lp.i:                             ; preds = %.loopexit.split-lp.loopexit.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.i
-  %.sroa.0264.0.i = phi i8 [ %.sroa.0264.1.ph.ph.i, %.loopexit.split-lp.loopexit.split-lp.i ], [ 1, %.loopexit.split-lp.loopexit.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %.pn.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp740.i, %.loopexit.split-lp.loopexit.split-lp.i ], [ %lpad.loopexit.split-lp303, %.loopexit.split-lp.loopexit.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.0264.0.i = phi i1 [ %.sroa.0264.1.ph.ph.i, %.loopexit.split-lp.loopexit.split-lp.i ], [ true, %.loopexit.split-lp.loopexit.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %.pn.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp740.i, %.loopexit.split-lp.loopexit.split-lp.i ], [ %lpad.loopexit.split-lp303, %.loopexit.split-lp.loopexit.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtCsi68uqYEhoRA_5gimli4read4line9FileEntryINtNtB1d_12endian_slice11EndianSliceNtNtB1f_9endianity13RunTimeEndianEjEEECs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h) #21
           to label %bb.bz unwind label %bb.ct, !noalias !317
 
@@ -474,7 +474,7 @@ bb.bm:                                            ; preds = %.loopexit752.i
   br label %.loopexit.split-lp.i
 
 .loopexit.split-lp.loopexit.split-lp.i:           ; preds = %bb.br, %bb.bo, %bb.bl
-  %.sroa.0264.1.ph.ph.i = phi i8 [ 1, %bb.bo ], [ 1, %bb.br ], [ 0, %bb.bl ]
+  %.sroa.0264.1.ph.ph.i = phi i1 [ true, %bb.bo ], [ true, %bb.br ], [ false, %bb.bl ]
   %lpad.loopexit.split-lp740.i = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.i
@@ -515,7 +515,12 @@ bb.bq:                                            ; preds = %bb.bp
   %.sroa.5430.0.copyload.i = load i64, ptr %.sroa.5430.0..sroa_idx.i, align 8, !noalias !316
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !316
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtCsi68uqYEhoRA_5gimli4read4line9FileEntryINtNtB1d_12endian_slice11EndianSliceNtNtB1f_9endianity13RunTimeEndianEjEEECs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h)
-          to label %bb.cb unwind label %bb.ca, !noalias !317
+          to label %bb.cb unwind label %.split.thread799.i, !noalias !317
+
+.split.thread799.i:                               ; preds = %bb.bq
+  %6 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.cu
 
 bb.br:                                            ; preds = %bb.bp
   %i.ex = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -589,21 +594,17 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
 bb.by:                                            ; preds = %bb.bn, %bb.cp, %bb.bu
   %.sroa.34.sroa.45.6.in.in = phi i64 [ %.sroa.34.sroa.45.7.in.in, %bb.cp ], [ %i.ff, %bb.bu ], [ %.sroa.6236.i.sroa.0.0.copyload180, %bb.bn ] ; 4 uses
   %.sroa.77.6 = phi i64 [ %.sroa.77.7, %bb.cp ], [ %i.fg, %bb.bu ], [ %.sroa.6236.i.sroa.7.0.copyload183, %bb.bn ] ; 2 uses
-  %.sroa.0264.2.i = phi i8 [ 1, %bb.cp ], [ 1, %bb.bu ], [ 0, %bb.bn ] ; 2 uses
+  %7 = phi i1 [ true, %bb.cp ], [ true, %bb.bu ], [ false, %bb.bn ] ; 2 uses
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtCsi68uqYEhoRA_5gimli4read4line9FileEntryINtNtB1d_12endian_slice11EndianSliceNtNtB1f_9endianity13RunTimeEndianEjEEECs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h)
           to label %bb.cr unwind label %bb.ca, !noalias !317
 
-bb.bz:                                            ; preds = %bb.ca, %.loopexit.split-lp.i
-  %.sroa.0264.3.i = phi i8 [ %.sroa.0264.4.i, %bb.ca ], [ %.sroa.0264.0.i, %.loopexit.split-lp.i ]
-  %.pn469.i = phi { ptr, i32 } [ %i.fn, %bb.ca ], [ %.pn.i, %.loopexit.split-lp.i ] ; 2 uses
-  %6 = trunc nuw i8 %.sroa.0264.3.i to i1
-  br i1 %6, label %bb.cu, label %.loopexit.split-lp743.i
+bb.bz:                                            ; preds = %.loopexit.split-lp.i
+  br i1 %.sroa.0264.0.i, label %bb.cu, label %.loopexit.split-lp743.i
 
-bb.ca:                                            ; preds = %bb.by, %bb.bq
-  %.sroa.0264.4.i = phi i8 [ %.sroa.0264.2.i, %bb.by ], [ 1, %bb.bq ]
+bb.ca:                                            ; preds = %bb.by
   %i.fn = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bz
+          cleanup                                 ; 2 uses
+  br i1 %7, label %bb.cu, label %.loopexit.split-lp743.i
 
 bb.cb:                                            ; preds = %bb.bq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !316
@@ -731,7 +732,6 @@ bb.cr:                                            ; preds = %bb.by
   %.sroa.34.sroa.45.6.in = lshr i64 %.sroa.34.sroa.45.6.in.in, 32
   %.sroa.34.sroa.45.6 = trunc nuw i64 %.sroa.34.sroa.45.6.in to i32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !316
-  %7 = trunc nuw i8 %.sroa.0264.2.i to i1
   br i1 %7, label %bb.cc, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr, %bb.cc
@@ -754,7 +754,8 @@ bb.ct:                                            ; preds = %bb.cv, %bb.cu, %.lo
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !noalias !317
   unreachable
 
-bb.cu:                                            ; preds = %bb.bz
+bb.cu:                                            ; preds = %bb.ca, %bb.bz, %.split.thread799.i
+  %.pn469798.i = phi { ptr, i32 } [ %i.fn, %bb.ca ], [ %.pn.i, %bb.bz ], [ %6, %.split.thread799.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsi68uqYEhoRA_5gimli4read4line15FileEntryFormatEECs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.i) #21
           to label %.loopexit.split-lp743.i unwind label %bb.ct, !noalias !317
 

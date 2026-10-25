@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.cj
 
 bb.g:                                             ; preds = %bb.d
-  %7 = fcmp oeq x86_fp80 %0, 1.000000e+00
-  br i1 %7, label %bb.h, label %bb.k
+  %7 = fcmp une x86_fp80 %0, 1.000000e+00         ; 2 uses
+  br i1 %7, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.e = fcmp oeq x86_fp80 %1, 1.000000e+00
@@ -227,7 +227,7 @@ bb.k:                                             ; preds = %bb.g
 
 .thread641:                                       ; preds = %bb.h
   %i.h = fcmp oeq x86_fp80 %1, 5.000000e-01
-  br i1 %i.h, label %bb.p, label %.thread682
+  br i1 %i.h, label %.thread660, label %.thread682
 
 bb.l:                                             ; preds = %bb.k
   %i.i = fcmp oeq x86_fp80 %1, 5.000000e-01
@@ -251,15 +251,19 @@ bb.o:                                             ; preds = %bb.l
   %i.p = fcmp ogt x86_fp80 %1, 5.000000e-01
   br i1 %i.p, label %.thread660, label %bb.p
 
-.thread660:                                       ; preds = %bb.o
+.thread660:                                       ; preds = %.thread641, %bb.o
+  %.0389649657667 = phi x86_fp80 [ %1, %bb.o ], [ 1.000000e+00, %.thread641 ]
+  %.0399648658666 = phi x86_fp80 [ %2, %bb.o ], [ %3, %.thread641 ]
+  %.0409647659665 = phi x86_fp80 [ %3, %bb.o ], [ %2, %.thread641 ]
+  %8 = zext i1 %7 to i8
   br label %bb.p
 
-bb.p:                                             ; preds = %.thread641, %.thread660, %bb.o, %bb.k
-  %.1410 = phi x86_fp80 [ %3, %bb.k ], [ %3, %bb.o ], [ %3, %.thread641 ], [ %2, %.thread660 ] ; 10 uses
-  %.1400 = phi x86_fp80 [ %2, %bb.k ], [ %2, %bb.o ], [ %2, %.thread641 ], [ %3, %.thread660 ] ; 16 uses
-  %.1390 = phi x86_fp80 [ %1, %bb.k ], [ %1, %bb.o ], [ 5.000000e-01, %.thread641 ], [ 5.000000e-01, %.thread660 ] ; 17 uses
-  %.1382 = phi x86_fp80 [ %0, %bb.k ], [ 5.000000e-01, %bb.o ], [ 1.000000e+00, %.thread641 ], [ %1, %.thread660 ] ; 20 uses
-  %.1166 = phi i8 [ 0, %bb.k ], [ 0, %bb.o ], [ 0, %.thread641 ], [ 1, %.thread660 ] ; 11 uses
+bb.p:                                             ; preds = %.thread660, %bb.o, %bb.k
+  %.1410 = phi x86_fp80 [ %.0399648658666, %.thread660 ], [ %3, %bb.o ], [ %3, %bb.k ] ; 10 uses
+  %.1400 = phi x86_fp80 [ %.0409647659665, %.thread660 ], [ %2, %bb.o ], [ %2, %bb.k ] ; 16 uses
+  %.1390 = phi x86_fp80 [ 5.000000e-01, %.thread660 ], [ %1, %bb.o ], [ %1, %bb.k ] ; 17 uses
+  %.1382 = phi x86_fp80 [ %.0389649657667, %.thread660 ], [ 5.000000e-01, %bb.o ], [ %0, %bb.k ] ; 20 uses
+  %.1166 = phi i8 [ %8, %.thread660 ], [ 0, %bb.o ], [ 0, %bb.k ] ; 11 uses
   %i.q = fcmp oeq x86_fp80 %.1390, 5.000000e-01
   %i.r = fcmp oge x86_fp80 %.1382, 5.000000e-01
   %or.cond = and i1 %i.q, %i.r

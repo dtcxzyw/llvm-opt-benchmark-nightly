@@ -202,8 +202,7 @@ bb.b:                                             ; preds = %_RNvMNtCscdodAO9FK5
   %i.p = invoke noundef i32 @_RINvXs_NtCs6Wt4yPw39th_9itertools18peeking_take_whileINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters8peekable8PeekableNtNtNtBY_3str4iter5CharsENtB5_11PeekingNext12peeking_nextQNCNvMsb_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB2R_9FieldName5parse0EB2T_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.o, ptr noalias noundef nonnull %i.n)
           to label %bb.c unwind label %.body34.thread ; 9 uses
 
-.body34.a:                                        ; preds = %.loopexit.split-lp59, %bb.bx, %.body30
-  %.pn19 = phi { ptr, i32 } [ %.pn, %.body30 ], [ %i.jt, %bb.bx ], [ %lpad.loopexit.split-lp61, %.loopexit.split-lp59 ] ; 2 uses
+.body34.a:                                        ; preds = %.body30
   br i1 %.sroa.08.2, label %bb.cd, label %common.resume
 
 .body34.thread:                                   ; preds = %bb.f, %bb.e, %bb.b
@@ -213,8 +212,11 @@ bb.b:                                             ; preds = %_RNvMNtCscdodAO9FK5
 
 .loopexit.split-lp59:                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsdjunURa2XPj_19ruff_python_literal.exit.i
   %lpad.loopexit.split-lp61 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body34.a
+          cleanup                                 ; 2 uses
+  br i1 %.sroa.08.2, label %bb.cd, label %common.resume
+
+.body34:                                          ; preds = %bb.bx
+  br i1 %.sroa.08.2, label %bb.cd, label %common.resume
 
 bb.c:                                             ; preds = %bb.b
   %.not = icmp eq i32 %i.p, -1
@@ -385,7 +387,7 @@ bb.p:                                             ; preds = %.lr.ph.i
   br i1 %.not53.i, label %_RNvMsv_NtCs4NRVxsYgnAr_4core3numj16from_ascii_radix.exit, label %.lr.ph.i
 
 bb.q:                                             ; preds = %_RNvMsv_NtCs4NRVxsYgnAr_4core3numj16from_ascii_radix.exit, %.loopexit55, %bb.l
-  %.sroa.08.2 = phi i1 [ true, %bb.l ], [ false, %.loopexit55 ], [ true, %_RNvMsv_NtCs4NRVxsYgnAr_4core3numj16from_ascii_radix.exit ] ; 3 uses
+  %.sroa.08.2 = phi i1 [ true, %bb.l ], [ false, %.loopexit55 ], [ true, %_RNvMsv_NtCs4NRVxsYgnAr_4core3numj16from_ascii_radix.exit ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i64 0, ptr %i.f, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -788,8 +790,8 @@ bb.bt:                                            ; preds = %bb.bs
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #13
   unreachable
 
-common.resume:                                    ; preds = %.body34.a, %bb.cd, %bb.ca, %bb.bs
-  %common.resume.op = phi { ptr, i32 } [ %i.jv, %bb.ca ], [ %i.jp, %bb.bs ], [ %.pn19100, %bb.cd ], [ %.pn19, %.body34.a ]
+common.resume:                                    ; preds = %.body34.a, %bb.cd, %.body34, %.loopexit.split-lp59, %bb.ca, %bb.bs
+  %common.resume.op = phi { ptr, i32 } [ %i.jv, %bb.ca ], [ %i.jp, %bb.bs ], [ %i.jt, %.body34 ], [ %.pn1944, %bb.cd ], [ %.pn, %.body34.a ], [ %lpad.loopexit.split-lp61, %.loopexit.split-lp59 ]
   resume { ptr, i32 } %common.resume.op
 
 .sink.split:                                      ; preds = %bb.br, %bb.bz
@@ -802,7 +804,7 @@ bb.bu:                                            ; preds = %.sink.split, %bb.bp
   ret void
 
 .body30:                                          ; preds = %bb.bv, %bb.bh, %.body
-  %.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.jr, %bb.bv ], [ %i.je, %bb.bh ]
+  %.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.jr, %bb.bv ], [ %i.je, %bb.bh ] ; 2 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsdjunURa2XPj_19ruff_python_literal6format9FieldTypeEBF_(ptr noalias noundef align 8 dereferenceable(24) %i.g) #14
           to label %.body34.a unwind label %bb.cc
 
@@ -823,9 +825,9 @@ bb.bw:                                            ; preds = %_RINvNtCs4NRVxsYgnA
 
 bb.bx:                                            ; preds = %bb.bw
   %i.jt = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsdjunURa2XPj_19ruff_python_literal(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g)
-          to label %.body34.a unwind label %bb.by
+          to label %.body34 unwind label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
   %i.ju = landingpad { ptr, i32 }
@@ -863,8 +865,8 @@ bb.cc:                                            ; preds = %bb.cd, %.body30, %.
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #13
   unreachable
 
-bb.cd:                                            ; preds = %.body34.thread, %.body34.a
-  %.pn19100 = phi { ptr, i32 } [ %lpad.loopexit60, %.body34.thread ], [ %.pn19, %.body34.a ]
+bb.cd:                                            ; preds = %.body34.thread, %.loopexit.split-lp59, %.body34, %.body34.a
+  %.pn1944 = phi { ptr, i32 } [ %i.jt, %.body34 ], [ %.pn, %.body34.a ], [ %lpad.loopexit.split-lp61, %.loopexit.split-lp59 ], [ %lpad.loopexit60, %.body34.thread ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsdjunURa2XPj_19ruff_python_literal(ptr noalias noundef align 8 dereferenceable(24) %i.i) #14
           to label %common.resume unwind label %bb.cc
 }

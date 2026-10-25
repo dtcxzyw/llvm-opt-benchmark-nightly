@@ -205,15 +205,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33: ; preds = %bb.
   br label %bb.bf
 
 bb.m:                                             ; preds = %_ZN5boost20read_graphviz_detail5tokenD2Ev.exit30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.i
-  %.012 = phi i8 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ 1, %bb.i ], [ 0, %_ZN5boost20read_graphviz_detail5tokenD2Ev.exit30 ] ; 2 uses
+  %22 = phi i32 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ 1, %bb.i ], [ 0, %_ZN5boost20read_graphviz_detail5tokenD2Ev.exit30 ]
+  %.012 = phi i8 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ 1, %bb.i ], [ 0, %_ZN5boost20read_graphviz_detail5tokenD2Ev.exit30 ]
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !107, !nonnull !108, !align !109 ; 2 uses
   store i8 %.012, ptr %i.aw, align 8, !tbaa !123
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 1
   %i.ay = zext i1 %i.i to i8
   store i8 %i.ay, ptr %i.ax, align 1, !tbaa !124
-  %22 = zext i1 %1 to i8
-  %.not = icmp eq i8 %.012, %22
+  %23 = zext i1 %1 to i32
+  %.not = icmp eq i32 %22, %23
   br i1 %.not, label %bb.u, label %bb.n
 
 bb.n:                                             ; preds = %bb.m

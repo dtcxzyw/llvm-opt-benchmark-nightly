@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.c
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #25, !noalias !2855
   unreachable
 
-common.resume:                                    ; preds = %bb.ew, %.body21, %.body18, %bb.et, %bb.c
-  %common.resume.op = phi { ptr, i32 } [ %i.yn, %bb.et ], [ %i.bd, %bb.c ], [ %.pn12.ph, %bb.ew ], [ %eh.lpad-body, %.body21 ], [ %eh.lpad-body19, %.body18 ]
+common.resume:                                    ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECskIqAKC4t9Ft_2yr.exit.i.i, %bb.ew, %.body21, %.body18, %bb.et, %bb.c
+  %common.resume.op = phi { ptr, i32 } [ %i.yn, %bb.et ], [ %i.bd, %bb.c ], [ %.pn12125, %bb.ew ], [ %eh.lpad-body59, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECskIqAKC4t9Ft_2yr.exit.i.i ], [ %eh.lpad-body, %.body21 ], [ %eh.lpad-body19, %.body18 ]
   resume { ptr, i32 } %common.resume.op
 
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler9MatchJsonEEINtBM_11PoisonErrorBH_EE6unwrapB2g_.exit: ; preds = %bb.a
@@ -254,10 +254,17 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison5m
   invoke void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskIqAKC4t9Ft_2yr(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ak, i64 noundef 6, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %bb.k unwind label %bb.j
 
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECskIqAKC4t9Ft_2yr.exit.i.i: ; preds = %bb.ep, %bb.j
+  %.sroa.02.1.lpad-body = phi i8 [ %.sroa.02.1, %bb.j ], [ %.sroa.0.2, %bb.ep ]
+  %eh.lpad-body59 = phi { ptr, i32 } [ %i.bs, %bb.j ], [ %i.yl, %bb.ep ] ; 2 uses
+  %2 = trunc nuw i8 %.sroa.02.1.lpad-body to i1
+  br i1 %2, label %bb.ew, label %common.resume
+
 bb.j:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECskIqAKC4t9Ft_2yr.exit.i57, %bb.l, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler9MatchJsonEEEB2a_.exit
+  %.sroa.02.1 = phi i8 [ 1, %bb.l ], [ %.sroa.0.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECskIqAKC4t9Ft_2yr.exit.i57 ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler9MatchJsonEEEB2a_.exit ]
   %i.bs = landingpad { ptr, i32 }
           cleanup
-  br label %bb.ew
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECskIqAKC4t9Ft_2yr.exit.i.i
 
 bb.k:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler9MatchJsonEEEB2a_.exit
   %i.bt = load i64, ptr %i.ak, align 8, !range !14, !noundef !9
@@ -285,7 +292,7 @@ bb.m:                                             ; preds = %bb.k
   store i64 6, ptr %.sroa.6.0..sroa_idx, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.cc = load i8, ptr %i.cb, align 8, !range !13, !noundef !9
-  %i.cd = trunc nuw i8 %i.cc to i1
+  %i.cd = trunc nuw i8 %i.cc to i1                ; 2 uses
   br i1 %i.cd, label %bb.cy, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -688,7 +695,7 @@ bb.df:                                            ; preds = %_RINvNtCskKLDkoKarT
   %.sroa.11.1 = phi i64 [ %spec.select, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler15JsonCountOutputEEB1g_.exit ], [ %.sroa.11.0, %bb.de ]
   %.sroa.8.1 = phi ptr [ %.sroa.6103.0.copyload105, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler15JsonCountOutputEEB1g_.exit ], [ %.sroa.7.0131, %bb.de ] ; 2 uses
   %.sroa.061.1 = phi i64 [ %.sroa.0101.0.copyload102, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler15JsonCountOutputEEB1g_.exit ], [ %.sroa.061.0, %bb.de ] ; 2 uses
-  %.sroa.0.2 = phi i8 [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler15JsonCountOutputEEB1g_.exit ], [ 0, %bb.de ] ; 4 uses
+  %.sroa.0.2 = phi i8 [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler15JsonCountOutputEEB1g_.exit ], [ 0, %bb.de ] ; 5 uses
   %i.vb = icmp eq i64 %.sroa.061.1, -1
   br i1 %i.vb, label %bb.dg, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCsbbTh99npV2h_10serde_json5error5ErrorE6expectCskIqAKC4t9Ft_2yr.exit, !prof !7
 
@@ -1091,12 +1098,7 @@ bb.en:                                            ; preds = %bb.el
 
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsgqCuqWkNCVj_17crossbeam_channel3err9SendErrorNtNtCskIqAKC4t9Ft_2yr4walk7MessageEE6unwrapB1C_.exit: ; preds = %bb.ej
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
-  %2 = trunc nuw i8 %.sroa.0.2 to i1
-  br i1 %2, label %bb.eo, label %3
-
-3:                                                ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsgqCuqWkNCVj_17crossbeam_channel3err9SendErrorNtNtCskIqAKC4t9Ft_2yr4walk7MessageEE6unwrapB1C_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
-  br label %bb.er
+  br i1 %i.cd, label %bb.eo, label %.critedge
 
 bb.eo:                                            ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsgqCuqWkNCVj_17crossbeam_channel3err9SendErrorNtNtCskIqAKC4t9Ft_2yr4walk7MessageEE6unwrapB1C_.exit
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskIqAKC4t9Ft_2yr(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aq)
@@ -1106,7 +1108,7 @@ bb.ep:                                            ; preds = %bb.eo
   %i.yl = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskIqAKC4t9Ft_2yr(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aq)
-          to label %bb.ew unwind label %bb.eq
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECskIqAKC4t9Ft_2yr.exit.i.i unwind label %bb.eq
 
 bb.eq:                                            ; preds = %bb.ep
   %i.ym = landingpad { ptr, i32 }
@@ -1118,7 +1120,11 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECskI
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskIqAKC4t9Ft_2yr(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aq)
           to label %bb.es unwind label %bb.j
 
-bb.er:                                            ; preds = %3, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler9MatchJsonEEB1g_.exit
+.critedge:                                        ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuINtNtCsgqCuqWkNCVj_17crossbeam_channel3err9SendErrorNtNtCskIqAKC4t9Ft_2yr4walk7MessageEE6unwrapB1C_.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
+  br label %bb.er
+
+bb.er:                                            ; preds = %.critedge, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler9MatchJsonEEB1g_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   ret void
 
@@ -1151,8 +1157,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtN
 bb.ev:                                            ; preds = %bb.l
   unreachable
 
-bb.ew:                                            ; preds = %.thread132, %bb.j, %bb.ep
-  %.pn12.ph = phi { ptr, i32 } [ %.pn135, %.thread132 ], [ %i.bs, %bb.j ], [ %i.yl, %bb.ep ]
+bb.ew:                                            ; preds = %.thread132, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECskIqAKC4t9Ft_2yr.exit.i.i
+  %.pn12125 = phi { ptr, i32 } [ %eh.lpad-body59, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECskIqAKC4t9Ft_2yr.exit.i.i ], [ %.pn135, %.thread132 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler9MatchJsonEEB1g_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.as) #23
           to label %common.resume unwind label %bb.dk
 }

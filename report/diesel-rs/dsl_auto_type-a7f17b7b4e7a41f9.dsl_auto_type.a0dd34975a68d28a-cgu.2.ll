@@ -204,17 +204,18 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   br label %bb.l
 
-bb.d:                                             ; preds = %bb.k, %bb.e
-  %.pn = phi { ptr, i32 } [ %i.c, %bb.e ], [ %i.x, %bb.k ]
-  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.e ], [ %.sroa.0.0, %bb.k ]
-  %3 = trunc nuw i8 %.sroa.0.1 to i1
-  br i1 %3, label %bb.t, label %bb.s
+3:                                                ; preds = %bb.k
+  br i1 %4, label %bb.t, label %bb.s
 
-bb.e:                                             ; preds = %bb.n, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
-  %.sroa.0.2 = phi i8 [ %.sroa.0.0, %bb.n ], [ 1, %bb.f ], [ 1, %bb.i ], [ 1, %bb.g ], [ 1, %bb.j ], [ 1, %bb.h ]
-  %i.c = landingpad { ptr, i32 }
+bb.d:                                             ; preds = %bb.f, %bb.i, %bb.g, %bb.j, %bb.h
+  %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
-  br label %bb.d
+  br label %bb.t
+
+bb.e:                                             ; preds = %bb.n
+  %i.c = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %4, label %bb.t, label %bb.s
 
 bb.f:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -222,7 +223,7 @@ bb.f:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.g = load i64, ptr %i.f, align 8
   invoke void @_RNvXNtCsfDR8abjSQSr_4heck11upper_cameleNtB2_16ToUpperCamelCase19to_upper_camel_case(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %i.e, i64 %i.g)
-          to label %bb.l unwind label %bb.e
+          to label %bb.l unwind label %bb.d
 
 bb.g:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -230,7 +231,7 @@ bb.g:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.k = load i64, ptr %i.j, align 8
   invoke void @_RNvXs_NtCsfDR8abjSQSr_4heck11upper_cameleNtB4_12ToPascalCase14to_pascal_caseCsdOh5Xhm0ZW8_13dsl_auto_type(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %i.i, i64 %i.k)
-          to label %bb.l unwind label %bb.e
+          to label %bb.l unwind label %bb.d
 
 bb.h:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -238,7 +239,7 @@ bb.h:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.o = load i64, ptr %i.n, align 8
   invoke void @_RNvXNtCsfDR8abjSQSr_4heck11lower_cameleNtB2_16ToLowerCamelCase19to_lower_camel_case(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %i.m, i64 %i.o)
-          to label %bb.l unwind label %bb.e
+          to label %bb.l unwind label %bb.d
 
 bb.i:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -246,7 +247,7 @@ bb.i:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.s = load i64, ptr %i.r, align 8
   invoke void @_RNvXs_NtCsfDR8abjSQSr_4heck5snakeeNtB4_11ToSnakeCase13to_snake_case(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %i.q, i64 %i.s)
-          to label %bb.l unwind label %bb.e
+          to label %bb.l unwind label %bb.d
 
 bb.j:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -254,16 +255,16 @@ bb.j:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.w = load i64, ptr %i.v, align 8
   invoke void @_RNvXs_NtCsfDR8abjSQSr_4heck12shouty_snakeeNtB4_17ToShoutySnakeCase20to_shouty_snake_case(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %i.u, i64 %i.w)
-          to label %bb.l unwind label %bb.e
+          to label %bb.l unwind label %bb.d
 
 bb.k:                                             ; preds = %bb.m, %bb.l
   %i.x = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsdfcQ11shQaG_6strsim(ptr nonnull align 8 %i.a) #28
-          to label %bb.d unwind label %bb.r
+          to label %3 unwind label %bb.r
 
 bb.l:                                             ; preds = %bb.c, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j
-  %.sroa.0.0 = phi i8 [ 0, %bb.c ], [ 1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.h ], [ 1, %bb.i ], [ 1, %bb.j ] ; 3 uses
+  %4 = phi i1 [ false, %bb.c ], [ true, %bb.f ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.i ], [ true, %bb.j ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.z = load ptr, ptr %i.y, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -280,7 +281,6 @@ bb.n:                                             ; preds = %bb.m
           to label %bb.o unwind label %bb.e
 
 bb.o:                                             ; preds = %bb.n
-  %4 = trunc nuw i8 %.sroa.0.0 to i1
   br i1 %4, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.q, %bb.o
@@ -296,10 +296,12 @@ bb.r:                                             ; preds = %bb.t, %bb.k
   call void @_RNvNtCscI6d9CVNmLh_4core9panicking16panic_in_cleanup() #29
   unreachable
 
-bb.s:                                             ; preds = %bb.t, %bb.d
-  resume { ptr, i32 } %.pn
+bb.s:                                             ; preds = %bb.e, %bb.t, %3
+  %.pn4 = phi { ptr, i32 } [ %i.c, %bb.e ], [ %.pn5, %bb.t ], [ %i.x, %3 ]
+  resume { ptr, i32 } %.pn4
 
-bb.t:                                             ; preds = %bb.d
+bb.t:                                             ; preds = %bb.d, %bb.e, %3
+  %.pn5 = phi { ptr, i32 } [ %i.c, %bb.e ], [ %i.x, %3 ], [ %lpad.thr_comm, %bb.d ]
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsdfcQ11shQaG_6strsim(ptr nonnull align 8 %i.b) #28
           to label %bb.s unwind label %bb.r
 }

@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.dh, label %bb.d, label %bb.c
 
 .body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.kb, %bb.jz, %.body252, %.noexc10.i, %.body.i239, %.critedge45.i, %.body.i, %bb.fg, %bb.ad, %.body234.thread, %bb.if, %bb.cx, %bb.kj, %.body228, %.body223
-  %.sroa.0107.0 = phi i8 [ %.sroa.0105.2, %bb.cx ], [ %.sroa.0105.2, %bb.kj ], [ %.sroa.0107.1.ph, %.loopexit.split-lp ], [ %.sroa.0105.2, %.noexc10.i ], [ %.sroa.0105.2, %bb.if ], [ %.sroa.0105.2, %.body.i239 ], [ %.sroa.0105.2, %.body234.thread ], [ %.sroa.0105.2, %.body252 ], [ %.sroa.0105.2, %bb.ad ], [ %.sroa.0105.2, %.body228 ], [ %.sroa.0105.2, %.body223 ], [ %.sroa.0105.2, %bb.kb ], [ %.sroa.0105.2, %bb.jz ], [ %.sroa.0105.2, %.critedge45.i ], [ %.sroa.0105.2, %bb.fg ], [ %.sroa.0105.2, %.body.i ], [ %.sroa.0105.2, %.loopexit ]
+  %.sroa.0107.0 = phi i8 [ %.sroa.0105.2, %bb.cx ], [ %.sroa.0105.2, %bb.kj ], [ %.sroa.0107.1.ph, %.loopexit.split-lp ], [ %.sroa.0105.2, %.noexc10.i ], [ %.sroa.0105.2, %bb.if ], [ %.sroa.0105.2, %.body.i239 ], [ %.sroa.0105.2, %.body234.thread ], [ %.sroa.0105.2, %.body252 ], [ %.sroa.0105.2, %bb.ad ], [ %.sroa.0105.2, %.body228 ], [ %.sroa.0105.2, %.body223 ], [ %.sroa.0105.2, %bb.kb ], [ %.sroa.0105.2, %bb.jz ], [ %.sroa.0105.2, %.critedge45.i ], [ %.sroa.0105.2, %bb.fg ], [ %.sroa.0105.2, %.body.i ], [ %.sroa.0105.2, %.loopexit ] ; 2 uses
   %.sroa.0105.0 = phi i8 [ %.sroa.0105.2, %bb.cx ], [ %.sroa.0105.2, %bb.kj ], [ %.sroa.0105.1.ph, %.loopexit.split-lp ], [ %.sroa.0105.2, %.noexc10.i ], [ %.sroa.0105.2, %bb.if ], [ %.sroa.0105.2, %.body.i239 ], [ %.sroa.0105.2, %.body234.thread ], [ %.sroa.0105.2, %.body252 ], [ %.sroa.0105.2, %bb.ad ], [ %.sroa.0105.2, %.body228 ], [ %.sroa.0105.2, %.body223 ], [ %.sroa.0105.2, %bb.kb ], [ %.sroa.0105.2, %bb.jz ], [ %.sroa.0105.2, %.critedge45.i ], [ %.sroa.0105.2, %bb.fg ], [ %.sroa.0105.2, %.body.i ], [ %.sroa.0105.2, %.loopexit ]
   %.pn193 = phi { ptr, i32 } [ %i.mt, %bb.cx ], [ %i.zi, %bb.kj ], [ %lpad.loopexit.split-lp334, %.loopexit.split-lp ], [ %.pn.pn.ph.i, %.noexc10.i ], [ %i.uu, %bb.if ], [ %i.uo, %.body.i239 ], [ %eh.lpad-body235296, %.body234.thread ], [ %eh.lpad-body253, %.body252 ], [ %i.iu, %bb.ad ], [ %eh.lpad-body229, %.body228 ], [ %eh.lpad-body224, %.body223 ], [ %i.yu, %bb.kb ], [ %i.yn, %bb.jz ], [ %i.tl, %.critedge45.i ], [ %i.qm, %bb.fg ], [ %i.ti, %.body.i ], [ %lpad.loopexit333, %.loopexit ] ; 2 uses
   %i.di = trunc nuw i8 %.sroa.0105.0 to i1
@@ -235,6 +235,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %_RNvMNtCs1SQIzZDXHNl_7tracing4spanNtB2_4Span8do_enter.exit
 
 _RNvMNtCs1SQIzZDXHNl_7tracing4spanNtB2_4Span8do_enter.exit: ; preds = %.noexc197, %bb.r, %.noexc198, %bb.c
+  %3 = phi i1 [ false, %bb.c ], [ true, %.noexc198 ], [ true, %bb.r ], [ true, %.noexc197 ]
   %.sroa.0105.2 = phi i8 [ 0, %bb.c ], [ 1, %.noexc198 ], [ 1, %bb.r ], [ 1, %.noexc197 ] ; 35 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 4152 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 4088 ; 3 uses
@@ -637,7 +638,6 @@ bb.ay:                                            ; preds = %bb.av, %bb.ax
   br label %bb.am
 
 bb.az:                                            ; preds = %bb.fe, %bb.fh, %bb.ex, %bb.fa, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsczYENlYh6wI_8smallvec8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangej2_EECsdy1Aheh0r2i_16autonatv2_server.exit, %bb.hk, %bb.fq, %bb.aj
-  %3 = trunc nuw i8 %.sroa.0105.2 to i1
   br i1 %3, label %bb.ke, label %bb.ki
 
 bb.ba:                                            ; preds = %bb.aa
@@ -1040,14 +1040,16 @@ bb.kh:                                            ; preds = %bb.kg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3566
   br label %.thread313
 
-.thread:                                          ; preds = %bb.kk, %.body
-  %i.zg = trunc nuw i8 %.sroa.0107.0 to i1
+.thread:                                          ; preds = %bb.kk, %.thread.thread.a, %.body
+  %.sroa.0107.3 = phi i8 [ %.sroa.0105.2, %.thread.thread.a ], [ %.sroa.0107.0, %bb.kk ], [ %.sroa.0107.0, %.body ]
+  %.pn195 = phi { ptr, i32 } [ %i.zh, %.thread.thread.a ], [ %.pn193, %bb.kk ], [ %.pn193, %.body ] ; 2 uses
+  %i.zg = trunc nuw i8 %.sroa.0107.3 to i1
   br i1 %i.zg, label %bb.kl, label %.thread.thread318
 
 .thread.thread.a:                                 ; preds = %bb.kh, %bb.kf
   %i.zh = landingpad { ptr, i32 }
           cleanup
-  br label %bb.kl
+  br label %.thread
 
 bb.ki:                                            ; preds = %bb.az, %.thread313
   call void @llvm.lifetime.end.p0(ptr nonnull %i.df)
@@ -1068,11 +1070,10 @@ bb.kk:                                            ; preds = %.body
           to label %.thread unwind label %bb.t
 
 .thread.thread318:                                ; preds = %bb.l, %bb.kl, %.thread
-  %.pn195316 = phi { ptr, i32 } [ %.pn195317, %bb.kl ], [ %.pn193, %.thread ], [ %i.hv, %bb.l ]
+  %.pn195316 = phi { ptr, i32 } [ %.pn195, %.thread ], [ %.pn195, %bb.kl ], [ %i.hv, %bb.l ]
   resume { ptr, i32 } %.pn195316
 
-bb.kl:                                            ; preds = %.thread.thread.a, %.thread
-  %.pn195317 = phi { ptr, i32 } [ %i.zh, %.thread.thread.a ], [ %.pn193, %.thread ]
+bb.kl:                                            ; preds = %.thread
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1SQIzZDXHNl_7tracing4span4SpanECsdy1Aheh0r2i_16autonatv2_server(ptr noalias nofree noundef align 8 dereferenceable(40) %i.df) #40
           to label %.thread.thread318 unwind label %bb.t
 }
