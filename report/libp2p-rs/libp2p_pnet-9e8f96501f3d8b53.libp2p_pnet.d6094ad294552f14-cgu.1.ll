@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/libp2p_pnet-9e8f96501f3d8b53.libp2p_pnet.d6094ad294552f14-cgu.1?download=true
 inline.NumInlined: 280
 inline.NumDeleted: 85
-loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvXs_NtCs9Bqz0CSWZZv_12tracing_core8callsiteNtB4_15DefaultCallsiteNtB4_8Callsite8metadata:bb.a
 }
 
@@ -205,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 13 uses
-  %i.e = load i8, ptr %i.d, align 4, !alias.scope !121, !noundef !4 ; 5 uses
+  %i.e = load i8, ptr %i.d, align 4, !alias.scope !122, !noundef !4 ; 5 uses
   %i.f = icmp ne i8 %i.e, 0
   tail call void @llvm.assume(i1 %i.f)
   %i.g = icmp ult i8 %i.e, 65
@@ -217,7 +216,7 @@ bb.a:
 
 _RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher15check_remainingCsinjenlOLFM6_11libp2p_pnet.exit: ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.k = load i64, ptr %i.j, align 4, !alias.scope !122
+  %i.k = load i64, ptr %i.j, align 4, !alias.scope !123
   %i.l = xor i64 %i.k, -1
   %i.m = sub nuw i64 %i.c, %i.h                   ; 2 uses
   %i.n = lshr i64 %i.m, 6
@@ -229,18 +228,18 @@ _RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperI
   br i1 %i.q, label %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher31unchecked_apply_keystream_inoutCsinjenlOLFM6_11libp2p_pnet.exit, label %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher15check_remainingCsinjenlOLFM6_11libp2p_pnet.exit.thread
 
 _RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher15check_remainingCsinjenlOLFM6_11libp2p_pnet.exit.thread: ; preds = %bb.a, %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher15check_remainingCsinjenlOLFM6_11libp2p_pnet.exit
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !123)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !124)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !125)
   %..i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.c, i64 %i.h) ; 15 uses
   %i.r = trunc nuw nsw i64 %..i.i to i8
   %i.s = add nuw nsw i8 %i.e, %i.r
-  store i8 %i.s, ptr %i.d, align 4, !alias.scope !125
+  store i8 %i.s, ptr %i.d, align 4, !alias.scope !126
   %i.t = zext nneg i8 %i.e to i64
-  %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.t ; 12 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.t ; 7 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.w = load ptr, ptr %i.v, align 8, !alias.scope !124, !noundef !4 ; 14 uses
+  %i.w = load ptr, ptr %i.v, align 8, !alias.scope !125, !noundef !4 ; 9 uses
   %i.x = ptrtoaddr ptr %i.w to i64                ; 2 uses
-  %i.y = load ptr, ptr %1, align 8, !alias.scope !124, !noundef !4 ; 14 uses
+  %i.y = load ptr, ptr %1, align 8, !alias.scope !125, !noundef !4 ; 9 uses
   %i.z = ptrtoaddr ptr %i.y to i64                ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %..i.i ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.w, i64 %..i.i ; 2 uses
@@ -250,7 +249,7 @@ _RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperI
   %i.af = and i64 %i.ac, 63                       ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ae ; 7 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ae ; 7 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !127)
   %.not.i1 = icmp eq i64 %..i.i, 0
   br i1 %.not.i1, label %_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out.exit.i, label %iter.check
 
@@ -267,63 +266,36 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.aj = and i64 %..i.i, 12
-  %n.vec = and i64 %..i.i, 112                    ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %wide.load = load <8 x i8>, ptr %i.y, align 1, !noalias !127
-  %wide.load8 = load <8 x i8>, ptr %2, align 1, !noalias !127
-  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  %wide.load9 = load <8 x i8>, ptr %i.u, align 1, !alias.scope !128
-  %wide.load10 = load <8 x i8>, ptr %3, align 1, !alias.scope !128
-  %4 = xor <8 x i8> %wide.load9, %wide.load
-  %5 = xor <8 x i8> %wide.load10, %wide.load8
-  %6 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  store <8 x i8> %4, ptr %i.w, align 1, !noalias !127
-  store <8 x i8> %5, ptr %6, align 1, !noalias !127
-  %7 = icmp eq i64 %n.vec, 16
-  br i1 %7, label %middle.block, label %vector.body.1
+  %n.vec = and i64 %..i.i, 112                    ; 4 uses
+  br label %vector.body.1
 
-vector.body.1:                                    ; preds = %vector.ph
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %i.al = getelementptr inbounds nuw i8, ptr %i.y, i64 24
-  %wide.load.1 = load <8 x i8>, ptr %i.ak, align 1, !noalias !127
-  %wide.load8.1 = load <8 x i8>, ptr %i.al, align 1, !noalias !127
-  %i.am = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  %i.an = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.u, i64 24
-  %wide.load9.1 = load <8 x i8>, ptr %i.an, align 1, !alias.scope !128
-  %wide.load10.1 = load <8 x i8>, ptr %i.ao, align 1, !alias.scope !128
+vector.body.1:                                    ; preds = %vector.ph, %vector.body.1
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body.1 ] ; 4 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.y, i64 %index ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
+  %wide.load.1 = load <8 x i8>, ptr %i.ak, align 1, !noalias !128
+  %wide.load8.1 = load <8 x i8>, ptr %i.al, align 1, !noalias !128
+  %i.am = getelementptr inbounds nuw i8, ptr %i.w, i64 %index ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.u, i64 %index ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
+  %wide.load9.1 = load <8 x i8>, ptr %i.an, align 1, !alias.scope !129
+  %wide.load10.1 = load <8 x i8>, ptr %i.ao, align 1, !alias.scope !129
   %i.ap = xor <8 x i8> %wide.load9.1, %wide.load.1
   %i.aq = xor <8 x i8> %wide.load10.1, %wide.load8.1
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.w, i64 24
-  store <8 x i8> %i.ap, ptr %i.am, align 1, !noalias !127
-  store <8 x i8> %i.aq, ptr %i.ar, align 1, !noalias !127
-  %i.as = icmp eq i64 %n.vec, 32
-  br i1 %i.as, label %middle.block, label %vector.body.2
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 8
+  store <8 x i8> %i.ap, ptr %i.am, align 1, !noalias !128
+  store <8 x i8> %i.aq, ptr %i.ar, align 1, !noalias !128
+  %index.next = add nuw i64 %index, 16            ; 2 uses
+  %i.as = icmp eq i64 %index.next, %n.vec
+  br i1 %i.as, label %middle.block, label %vector.body.1, !llvm.loop !103
 
-vector.body.2:                                    ; preds = %vector.body.1
-  %8 = getelementptr inbounds nuw i8, ptr %i.y, i64 32
-  %9 = getelementptr inbounds nuw i8, ptr %i.y, i64 40
-  %wide.load.2 = load <8 x i8>, ptr %8, align 1, !noalias !127
-  %wide.load8.2 = load <8 x i8>, ptr %9, align 1, !noalias !127
-  %10 = getelementptr inbounds nuw i8, ptr %i.w, i64 32
-  %11 = getelementptr inbounds nuw i8, ptr %i.u, i64 32
-  %12 = getelementptr inbounds nuw i8, ptr %i.u, i64 40
-  %wide.load9.2 = load <8 x i8>, ptr %11, align 1, !alias.scope !128
-  %wide.load10.2 = load <8 x i8>, ptr %12, align 1, !alias.scope !128
-  %13 = xor <8 x i8> %wide.load9.2, %wide.load.2
-  %14 = xor <8 x i8> %wide.load10.2, %wide.load8.2
-  %15 = getelementptr inbounds nuw i8, ptr %i.w, i64 40
-  store <8 x i8> %13, ptr %10, align 1, !noalias !127
-  store <8 x i8> %14, ptr %15, align 1, !noalias !127
-  br label %middle.block
-
-middle.block:                                     ; preds = %vector.body.2, %vector.body.1, %vector.ph
+middle.block:                                     ; preds = %vector.body.1
   %cmp.n = icmp eq i64 %..i.i, %n.vec
   br i1 %cmp.n, label %_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out.exit.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.aj, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !129
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !132
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -333,15 +305,15 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index12 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next15, %vec.epilog.vector.body ] ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.y, i64 %index12
-  %wide.load13 = load <4 x i8>, ptr %i.at, align 1, !noalias !127
+  %wide.load13 = load <4 x i8>, ptr %i.at, align 1, !noalias !128
   %i.au = getelementptr inbounds nuw i8, ptr %i.w, i64 %index12
   %i.av = getelementptr inbounds nuw i8, ptr %i.u, i64 %index12
-  %wide.load14 = load <4 x i8>, ptr %i.av, align 1, !alias.scope !128
+  %wide.load14 = load <4 x i8>, ptr %i.av, align 1, !alias.scope !129
   %i.aw = xor <4 x i8> %wide.load14, %wide.load13
-  store <4 x i8> %i.aw, ptr %i.au, align 1, !noalias !127
+  store <4 x i8> %i.aw, ptr %i.au, align 1, !noalias !128
   %index.next15 = add nuw i64 %index12, 4         ; 2 uses
   %i.ax = icmp eq i64 %index.next15, %n.vec11
-  br i1 %i.ax, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !103
+  br i1 %i.ax, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !104
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n16 = icmp eq i64 %..i.i, %n.vec11
@@ -357,16 +329,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.sroa.01.0.i11.i.prol = phi i64 [ %i.bb, %.lr.ph.i.prol ], [ %.sroa.01.0.i11.i.ph, %.lr.ph.i.preheader ] ; 4 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
   %i.ay = getelementptr inbounds nuw i8, ptr %i.y, i64 %.sroa.01.0.i11.i.prol
-  %i.az = load i8, ptr %i.ay, align 1, !noalias !127, !noundef !4
+  %i.az = load i8, ptr %i.ay, align 1, !noalias !128, !noundef !4
   %i.ba = getelementptr inbounds nuw i8, ptr %i.w, i64 %.sroa.01.0.i11.i.prol
   %i.bb = add nuw nsw i64 %.sroa.01.0.i11.i.prol, 1 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.u, i64 %.sroa.01.0.i11.i.prol
-  %i.bd = load i8, ptr %i.bc, align 1, !alias.scope !128, !noundef !4
+  %i.bd = load i8, ptr %i.bc, align 1, !alias.scope !129, !noundef !4
   %i.be = xor i8 %i.bd, %i.az
-  store i8 %i.be, ptr %i.ba, align 1, !noalias !127
+  store i8 %i.be, ptr %i.ba, align 1, !noalias !128
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !104
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !105
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.sroa.01.0.i11.i.unr = phi i64 [ %.sroa.01.0.i11.i.ph, %.lr.ph.i.preheader ], [ %i.bb, %.lr.ph.i.prol ]
@@ -377,59 +349,59 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
   %.sroa.01.0.i11.i = phi i64 [ %i.cf, %.lr.ph.i ], [ %.sroa.01.0.i11.i.unr, %.lr.ph.i.prol.loopexit ] ; 7 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.y, i64 %.sroa.01.0.i11.i
-  %i.bi = load i8, ptr %i.bh, align 1, !noalias !127, !noundef !4
+  %i.bi = load i8, ptr %i.bh, align 1, !noalias !128, !noundef !4
   %i.bj = getelementptr inbounds nuw i8, ptr %i.w, i64 %.sroa.01.0.i11.i
   %i.bk = add nuw nsw i64 %.sroa.01.0.i11.i, 1    ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.u, i64 %.sroa.01.0.i11.i
-  %i.bm = load i8, ptr %i.bl, align 1, !alias.scope !128, !noundef !4
+  %i.bm = load i8, ptr %i.bl, align 1, !alias.scope !129, !noundef !4
   %i.bn = xor i8 %i.bm, %i.bi
-  store i8 %i.bn, ptr %i.bj, align 1, !noalias !127
+  store i8 %i.bn, ptr %i.bj, align 1, !noalias !128
   %i.bo = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.bk
-  %i.bp = load i8, ptr %i.bo, align 1, !noalias !127, !noundef !4
+  %i.bp = load i8, ptr %i.bo, align 1, !noalias !128, !noundef !4
   %i.bq = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.bk
   %i.br = add nuw nsw i64 %.sroa.01.0.i11.i, 2    ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.bk
-  %i.bt = load i8, ptr %i.bs, align 1, !alias.scope !128, !noundef !4
+  %i.bt = load i8, ptr %i.bs, align 1, !alias.scope !129, !noundef !4
   %i.bu = xor i8 %i.bt, %i.bp
-  store i8 %i.bu, ptr %i.bq, align 1, !noalias !127
+  store i8 %i.bu, ptr %i.bq, align 1, !noalias !128
   %i.bv = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.br
-  %i.bw = load i8, ptr %i.bv, align 1, !noalias !127, !noundef !4
+  %i.bw = load i8, ptr %i.bv, align 1, !noalias !128, !noundef !4
   %i.bx = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.br
   %i.by = add nuw nsw i64 %.sroa.01.0.i11.i, 3    ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.br
-  %i.ca = load i8, ptr %i.bz, align 1, !alias.scope !128, !noundef !4
+  %i.ca = load i8, ptr %i.bz, align 1, !alias.scope !129, !noundef !4
   %i.cb = xor i8 %i.ca, %i.bw
-  store i8 %i.cb, ptr %i.bx, align 1, !noalias !127
+  store i8 %i.cb, ptr %i.bx, align 1, !noalias !128
   %i.cc = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.by
-  %i.cd = load i8, ptr %i.cc, align 1, !noalias !127, !noundef !4
+  %i.cd = load i8, ptr %i.cc, align 1, !noalias !128, !noundef !4
   %i.ce = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.by
   %i.cf = add nuw nsw i64 %.sroa.01.0.i11.i, 4    ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.by
-  %i.ch = load i8, ptr %i.cg, align 1, !alias.scope !128, !noundef !4
+  %i.ch = load i8, ptr %i.cg, align 1, !alias.scope !129, !noundef !4
   %i.ci = xor i8 %i.ch, %i.cd
-  store i8 %i.ci, ptr %i.ce, align 1, !noalias !127
+  store i8 %i.ci, ptr %i.ce, align 1, !noalias !128
   %exitcond.not.i.3 = icmp eq i64 %i.cf, %..i.i
-  br i1 %exitcond.not.i.3, label %_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out.exit.i, label %.lr.ph.i, !llvm.loop !105
+  br i1 %exitcond.not.i.3, label %_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out.exit.i, label %.lr.ph.i, !llvm.loop !106
 
 _RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out.exit.i: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher15check_remainingCsinjenlOLFM6_11libp2p_pnet.exit.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !133
-  store ptr %i.aa, ptr %i.a, align 8, !noalias !134
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !134
+  store ptr %i.aa, ptr %i.a, align 8, !noalias !135
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %i.ab, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !134
+  store ptr %i.ab, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !135
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i64 %i.ad, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !134
-  call void @_RINvXs3_Cs5sEvUJpJda_7salsa20INtB6_9SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBI_IBI_IBI_NtBK_5UTermNtNtBM_3bit2B1ENtB1H_2B0EB1F_EB1U_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore20process_with_backendINtB2h_14ApplyBlocksCtxIBI_IBI_IBI_IBI_IBI_B1m_B1U_EB1U_EB1U_EB1U_EB1U_EEECsinjenlOLFM6_11libp2p_pnet(ptr noalias nofree noundef nonnull align 4 dereferenceable(128) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a), !noalias !135
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !133
+  store i64 %i.ad, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !135
+  call void @_RINvXs3_Cs5sEvUJpJda_7salsa20INtB6_9SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBI_IBI_IBI_NtBK_5UTermNtNtBM_3bit2B1ENtB1H_2B0EB1F_EB1U_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore20process_with_backendINtB2h_14ApplyBlocksCtxIBI_IBI_IBI_IBI_IBI_B1m_B1U_EB1U_EB1U_EB1U_EB1U_EEECsinjenlOLFM6_11libp2p_pnet(ptr noalias nofree noundef nonnull align 4 dereferenceable(128) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a), !noalias !136
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !134
   %i.cj = icmp eq i64 %i.af, 0
   br i1 %i.cj, label %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher31unchecked_apply_keystream_inoutCsinjenlOLFM6_11libp2p_pnet.exit, label %bb.b
 
 bb.b:                                             ; preds = %_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out.exit.i
   invoke void @_RINvXs3_Cs5sEvUJpJda_7salsa20INtB6_9SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBI_IBI_IBI_NtBK_5UTermNtNtBM_3bit2B1ENtB1H_2B0EB1F_EB1U_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore20process_with_backendINtB2h_13WriteBlockCtxIBI_IBI_IBI_IBI_IBI_B1m_B1U_EB1U_EB1U_EB1U_EB1U_EEECsinjenlOLFM6_11libp2p_pnet(ptr noalias nofree noundef nonnull align 4 dereferenceable(128) %0, ptr noalias nofree noundef nonnull dereferenceable(64) %i.d)
-          to label %iter.check35 unwind label %bb.c, !noalias !124
+          to label %iter.check35 unwind label %bb.c, !noalias !125
 
 iter.check35:                                     ; preds = %bb.b
-  call void @llvm.experimental.noalias.scope.decl(metadata !136)
   call void @llvm.experimental.noalias.scope.decl(metadata !137)
+  call void @llvm.experimental.noalias.scope.decl(metadata !138)
   %min.iters.check19 = icmp samesign ult i64 %i.af, 4
   %i.ck = sub i64 %i.z, %i.x
   %diff.check21 = icmp ugt i64 %i.ck, -16
@@ -449,21 +421,21 @@ vector.body26:                                    ; preds = %vector.ph24, %vecto
   %index27 = phi i64 [ 0, %vector.ph24 ], [ %index.next32, %vector.body26 ] ; 4 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ag, i64 %index27 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
-  %wide.load28 = load <8 x i8>, ptr %i.cm, align 1, !noalias !138
-  %wide.load29 = load <8 x i8>, ptr %i.cn, align 1, !noalias !138
+  %wide.load28 = load <8 x i8>, ptr %i.cm, align 1, !noalias !139
+  %wide.load29 = load <8 x i8>, ptr %i.cn, align 1, !noalias !139
   %i.co = getelementptr inbounds nuw i8, ptr %i.ah, i64 %index27 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.d, i64 %index27 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
-  %wide.load30 = load <8 x i8>, ptr %i.cp, align 4, !alias.scope !139
-  %wide.load31 = load <8 x i8>, ptr %i.cq, align 4, !alias.scope !139
+  %wide.load30 = load <8 x i8>, ptr %i.cp, align 4, !alias.scope !140
+  %wide.load31 = load <8 x i8>, ptr %i.cq, align 4, !alias.scope !140
   %i.cr = xor <8 x i8> %wide.load30, %wide.load28
   %i.cs = xor <8 x i8> %wide.load31, %wide.load29
   %i.ct = getelementptr inbounds nuw i8, ptr %i.co, i64 8
-  store <8 x i8> %i.cr, ptr %i.co, align 1, !noalias !138
-  store <8 x i8> %i.cs, ptr %i.ct, align 1, !noalias !138
+  store <8 x i8> %i.cr, ptr %i.co, align 1, !noalias !139
+  store <8 x i8> %i.cs, ptr %i.ct, align 1, !noalias !139
   %index.next32 = add nuw i64 %index27, 16        ; 2 uses
   %i.cu = icmp eq i64 %index.next32, %n.vec25
-  br i1 %i.cu, label %middle.block33, label %vector.body26, !llvm.loop !115
+  br i1 %i.cu, label %middle.block33, label %vector.body26, !llvm.loop !116
 
 middle.block33:                                   ; preds = %vector.body26
   %cmp.n34 = icmp eq i64 %i.af, %n.vec25
@@ -471,7 +443,7 @@ middle.block33:                                   ; preds = %vector.body26
 
 vec.epilog.iter.check36:                          ; preds = %middle.block33
   %min.epilog.iters.check38 = icmp eq i64 %i.cl, 0
-  br i1 %min.epilog.iters.check38, label %vec.epilog.scalar.ph37.preheader, label %vec.epilog.ph39, !prof !129
+  br i1 %min.epilog.iters.check38, label %vec.epilog.scalar.ph37.preheader, label %vec.epilog.ph39, !prof !132
 
 vec.epilog.ph39:                                  ; preds = %vector.main.loop.iter.check22, %vec.epilog.iter.check36
   %vec.epilog.resume.val40 = phi i64 [ %n.vec25, %vec.epilog.iter.check36 ], [ 0, %vector.main.loop.iter.check22 ]
@@ -481,15 +453,15 @@ vec.epilog.ph39:                                  ; preds = %vector.main.loop.it
 vec.epilog.vector.body42:                         ; preds = %vec.epilog.vector.body42, %vec.epilog.ph39
   %index43 = phi i64 [ %vec.epilog.resume.val40, %vec.epilog.ph39 ], [ %index.next46, %vec.epilog.vector.body42 ] ; 4 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ag, i64 %index43
-  %wide.load44 = load <4 x i8>, ptr %i.cv, align 1, !noalias !138
+  %wide.load44 = load <4 x i8>, ptr %i.cv, align 1, !noalias !139
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ah, i64 %index43
   %i.cx = getelementptr inbounds nuw i8, ptr %i.d, i64 %index43
-  %wide.load45 = load <4 x i8>, ptr %i.cx, align 4, !alias.scope !139
+  %wide.load45 = load <4 x i8>, ptr %i.cx, align 4, !alias.scope !140
   %i.cy = xor <4 x i8> %wide.load45, %wide.load44
-  store <4 x i8> %i.cy, ptr %i.cw, align 1, !noalias !138
+  store <4 x i8> %i.cy, ptr %i.cw, align 1, !noalias !139
   %index.next46 = add nuw i64 %index43, 4         ; 2 uses
   %i.cz = icmp eq i64 %index.next46, %n.vec41
-  br i1 %i.cz, label %vec.epilog.middle.block47, label %vec.epilog.vector.body42, !llvm.loop !116
+  br i1 %i.cz, label %vec.epilog.middle.block47, label %vec.epilog.vector.body42, !llvm.loop !117
 
 vec.epilog.middle.block47:                        ; preds = %vec.epilog.vector.body42
   %cmp.n48 = icmp eq i64 %i.af, %n.vec41
@@ -505,16 +477,16 @@ vec.epilog.scalar.ph37.prol:                      ; preds = %vec.epilog.scalar.p
   %.sroa.01.0.i1.i.i.prol = phi i64 [ %i.dd, %vec.epilog.scalar.ph37.prol ], [ %.sroa.01.0.i1.i.i.ph, %vec.epilog.scalar.ph37.preheader ] ; 4 uses
   %prol.iter53 = phi i64 [ %prol.iter53.next, %vec.epilog.scalar.ph37.prol ], [ 0, %vec.epilog.scalar.ph37.preheader ]
   %i.da = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.sroa.01.0.i1.i.i.prol
-  %i.db = load i8, ptr %i.da, align 1, !noalias !138, !noundef !4
+  %i.db = load i8, ptr %i.da, align 1, !noalias !139, !noundef !4
   %i.dc = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.sroa.01.0.i1.i.i.prol
   %i.dd = add nuw nsw i64 %.sroa.01.0.i1.i.i.prol, 1 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.01.0.i1.i.i.prol
-  %i.df = load i8, ptr %i.de, align 1, !alias.scope !139, !noundef !4
+  %i.df = load i8, ptr %i.de, align 1, !alias.scope !140, !noundef !4
   %i.dg = xor i8 %i.df, %i.db
-  store i8 %i.dg, ptr %i.dc, align 1, !noalias !138
+  store i8 %i.dg, ptr %i.dc, align 1, !noalias !139
   %prol.iter53.next = add i64 %prol.iter53, 1     ; 2 uses
   %prol.iter53.cmp.not = icmp eq i64 %prol.iter53.next, %xtraiter51
-  br i1 %prol.iter53.cmp.not, label %vec.epilog.scalar.ph37.prol.loopexit, label %vec.epilog.scalar.ph37.prol, !llvm.loop !117
+  br i1 %prol.iter53.cmp.not, label %vec.epilog.scalar.ph37.prol.loopexit, label %vec.epilog.scalar.ph37.prol, !llvm.loop !118
 
 vec.epilog.scalar.ph37.prol.loopexit:             ; preds = %vec.epilog.scalar.ph37.prol, %vec.epilog.scalar.ph37.preheader
   %.sroa.01.0.i1.i.i.unr = phi i64 [ %.sroa.01.0.i1.i.i.ph, %vec.epilog.scalar.ph37.preheader ], [ %i.dd, %vec.epilog.scalar.ph37.prol ]
@@ -525,49 +497,49 @@ vec.epilog.scalar.ph37.prol.loopexit:             ; preds = %vec.epilog.scalar.p
 vec.epilog.scalar.ph37:                           ; preds = %vec.epilog.scalar.ph37.prol.loopexit, %vec.epilog.scalar.ph37
   %.sroa.01.0.i1.i.i = phi i64 [ %i.eh, %vec.epilog.scalar.ph37 ], [ %.sroa.01.0.i1.i.i.unr, %vec.epilog.scalar.ph37.prol.loopexit ] ; 7 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.sroa.01.0.i1.i.i
-  %i.dk = load i8, ptr %i.dj, align 1, !noalias !138, !noundef !4
+  %i.dk = load i8, ptr %i.dj, align 1, !noalias !139, !noundef !4
   %i.dl = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.sroa.01.0.i1.i.i
   %i.dm = add nuw nsw i64 %.sroa.01.0.i1.i.i, 1   ; 3 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.01.0.i1.i.i
-  %i.do = load i8, ptr %i.dn, align 1, !alias.scope !139, !noundef !4
+  %i.do = load i8, ptr %i.dn, align 1, !alias.scope !140, !noundef !4
   %i.dp = xor i8 %i.do, %i.dk
-  store i8 %i.dp, ptr %i.dl, align 1, !noalias !138
+  store i8 %i.dp, ptr %i.dl, align 1, !noalias !139
   %i.dq = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.dm
-  %i.dr = load i8, ptr %i.dq, align 1, !noalias !138, !noundef !4
+  %i.dr = load i8, ptr %i.dq, align 1, !noalias !139, !noundef !4
   %i.ds = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.dm
   %i.dt = add nuw nsw i64 %.sroa.01.0.i1.i.i, 2   ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.dm
-  %i.dv = load i8, ptr %i.du, align 1, !alias.scope !139, !noundef !4
+  %i.dv = load i8, ptr %i.du, align 1, !alias.scope !140, !noundef !4
   %i.dw = xor i8 %i.dv, %i.dr
-  store i8 %i.dw, ptr %i.ds, align 1, !noalias !138
+  store i8 %i.dw, ptr %i.ds, align 1, !noalias !139
   %i.dx = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.dt
-  %i.dy = load i8, ptr %i.dx, align 1, !noalias !138, !noundef !4
+  %i.dy = load i8, ptr %i.dx, align 1, !noalias !139, !noundef !4
   %i.dz = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.dt
   %i.ea = add nuw nsw i64 %.sroa.01.0.i1.i.i, 3   ; 3 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.dt
-  %i.ec = load i8, ptr %i.eb, align 1, !alias.scope !139, !noundef !4
+  %i.ec = load i8, ptr %i.eb, align 1, !alias.scope !140, !noundef !4
   %i.ed = xor i8 %i.ec, %i.dy
-  store i8 %i.ed, ptr %i.dz, align 1, !noalias !138
+  store i8 %i.ed, ptr %i.dz, align 1, !noalias !139
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ea
-  %i.ef = load i8, ptr %i.ee, align 1, !noalias !138, !noundef !4
+  %i.ef = load i8, ptr %i.ee, align 1, !noalias !139, !noundef !4
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ea
   %i.eh = add nuw nsw i64 %.sroa.01.0.i1.i.i, 4   ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ea
-  %i.ej = load i8, ptr %i.ei, align 1, !alias.scope !139, !noundef !4
+  %i.ej = load i8, ptr %i.ei, align 1, !alias.scope !140, !noundef !4
   %i.ek = xor i8 %i.ej, %i.ef
-  store i8 %i.ek, ptr %i.eg, align 1, !noalias !138
+  store i8 %i.ek, ptr %i.eg, align 1, !noalias !139
   %exitcond.not.i.i.3 = icmp eq i64 %i.eh, %i.af
-  br i1 %exitcond.not.i.i.3, label %.loopexit, label %vec.epilog.scalar.ph37, !llvm.loop !118
+  br i1 %exitcond.not.i.i.3, label %.loopexit, label %vec.epilog.scalar.ph37, !llvm.loop !119
 
 .loopexit:                                        ; preds = %vec.epilog.scalar.ph37.prol.loopexit, %vec.epilog.scalar.ph37, %vec.epilog.middle.block47, %middle.block33
   %i.el = trunc nuw nsw i64 %i.af to i8
-  store i8 %i.el, ptr %i.d, align 4, !alias.scope !140
+  store i8 %i.el, ptr %i.d, align 4, !alias.scope !141
   br label %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher31unchecked_apply_keystream_inoutCsinjenlOLFM6_11libp2p_pnet.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.em = landingpad { ptr, i32 }
           cleanup
-  store i8 64, ptr %i.d, align 4, !alias.scope !123
+  store i8 64, ptr %i.d, align 4, !alias.scope !124
   resume { ptr, i32 } %i.em
 
 _RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher31unchecked_apply_keystream_inoutCsinjenlOLFM6_11libp2p_pnet.exit: ; preds = %.loopexit, %_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out.exit.i, %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1N_IB1N_IB1N_NtB1P_5UTermNtNtB1R_3bit2B1ENtB2Q_2B0EB2O_EB34_EEENtB7_12StreamCipher15check_remainingCsinjenlOLFM6_11libp2p_pnet.exit
@@ -793,41 +765,42 @@ attributes #24 = { cold noreturn nounwind }
 !101 = distinct !{!101, !100, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out: argument 1"}
 !102 = distinct !{!102, !100, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out: argument 0"}
 !103 = distinct !{!103, !130, !131}
-!104 = distinct !{!104, !132}
-!105 = distinct !{!105, !130}
-!106 = distinct !{!106, i1 true, !"_RNvYINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBB_IBB_IBB_NtBD_5UTermNtNtBF_3bit2B1ENtB1A_2B0EB1y_EB1N_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore28apply_keystream_blocks_inoutCsinjenlOLFM6_11libp2p_pnet"}
-!107 = distinct !{!107, !106, !"_RNvYINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBB_IBB_IBB_NtBD_5UTermNtNtBF_3bit2B1ENtB1A_2B0EB1y_EB1N_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore28apply_keystream_blocks_inoutCsinjenlOLFM6_11libp2p_pnet: argument 1"}
-!108 = distinct !{!108, !106, !"_RNvYINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBB_IBB_IBB_NtBD_5UTermNtNtBF_3bit2B1ENtB1A_2B0EB1y_EB1N_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore28apply_keystream_blocks_inoutCsinjenlOLFM6_11libp2p_pnet: argument 0"}
-!109 = distinct !{!109, i1 true, !"_RNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB7_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1P_IB1P_IB1P_NtB1R_5UTermNtNtB1T_3bit2B1ENtB2S_2B0EB2Q_EB36_EEENtB9_12StreamCipher31unchecked_apply_keystream_inouts_0CsinjenlOLFM6_11libp2p_pnet"}
-!110 = distinct !{!110, !109, !"_RNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB7_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1P_IB1P_IB1P_NtB1R_5UTermNtNtB1T_3bit2B1ENtB2S_2B0EB2Q_EB36_EEENtB9_12StreamCipher31unchecked_apply_keystream_inouts_0CsinjenlOLFM6_11libp2p_pnet: argument 1"}
-!111 = distinct !{!111, i1 true, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out"}
-!112 = distinct !{!112, !111, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out: argument 1"}
-!113 = distinct !{!113, !109, !"_RNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB7_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1P_IB1P_IB1P_NtB1R_5UTermNtNtB1T_3bit2B1ENtB2S_2B0EB2Q_EB36_EEENtB9_12StreamCipher31unchecked_apply_keystream_inouts_0CsinjenlOLFM6_11libp2p_pnet: argument 0"}
-!114 = distinct !{!114, !111, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out: argument 0"}
-!115 = distinct !{!115, !130, !131}
+!104 = distinct !{!104, !130, !131}
+!105 = distinct !{!105, !133}
+!106 = distinct !{!106, !130}
+!107 = distinct !{!107, i1 true, !"_RNvYINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBB_IBB_IBB_NtBD_5UTermNtNtBF_3bit2B1ENtB1A_2B0EB1y_EB1N_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore28apply_keystream_blocks_inoutCsinjenlOLFM6_11libp2p_pnet"}
+!108 = distinct !{!108, !107, !"_RNvYINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBB_IBB_IBB_NtBD_5UTermNtNtBF_3bit2B1ENtB1A_2B0EB1y_EB1N_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore28apply_keystream_blocks_inoutCsinjenlOLFM6_11libp2p_pnet: argument 1"}
+!109 = distinct !{!109, !107, !"_RNvYINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBB_IBB_IBB_NtBD_5UTermNtNtBF_3bit2B1ENtB1A_2B0EB1y_EB1N_EENtNtNtCs4WSCZBoZJWV_6cipher6stream8core_api16StreamCipherCore28apply_keystream_blocks_inoutCsinjenlOLFM6_11libp2p_pnet: argument 0"}
+!110 = distinct !{!110, i1 true, !"_RNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB7_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1P_IB1P_IB1P_NtB1R_5UTermNtNtB1T_3bit2B1ENtB2S_2B0EB2Q_EB36_EEENtB9_12StreamCipher31unchecked_apply_keystream_inouts_0CsinjenlOLFM6_11libp2p_pnet"}
+!111 = distinct !{!111, !110, !"_RNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB7_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1P_IB1P_IB1P_NtB1R_5UTermNtNtB1T_3bit2B1ENtB2S_2B0EB2Q_EB36_EEENtB9_12StreamCipher31unchecked_apply_keystream_inouts_0CsinjenlOLFM6_11libp2p_pnet: argument 1"}
+!112 = distinct !{!112, i1 true, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out"}
+!113 = distinct !{!113, !112, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out: argument 1"}
+!114 = distinct !{!114, !110, !"_RNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB7_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1P_IB1P_IB1P_NtB1R_5UTermNtNtB1T_3bit2B1ENtB2S_2B0EB2Q_EB36_EEENtB9_12StreamCipher31unchecked_apply_keystream_inouts_0CsinjenlOLFM6_11libp2p_pnet: argument 0"}
+!115 = distinct !{!115, !112, !"_RNvMs2_NtCs9HgoOO8pbyf_5inout9inout_bufINtB5_8InOutBufhE10xor_in2out: argument 0"}
 !116 = distinct !{!116, !130, !131}
-!117 = distinct !{!117, !132}
-!118 = distinct !{!118, !130}
-!119 = distinct !{!119, i1 true, !"_RINvMs1_NtCs6rzsz56FN1o_12block_buffer4readINtB6_10ReadBufferINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBY_IBY_IBY_IBY_IBY_IBY_NtB10_5UTermNtNtB12_3bit2B1ENtB2a_2B0EB2o_EB2o_EB2o_EB2o_EB2o_EE11write_blockNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB3j_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreIBY_IBY_B1O_B28_EB2o_EEENtB3l_12StreamCipher31unchecked_apply_keystream_inout0NCB3d_s_0ECsinjenlOLFM6_11libp2p_pnet"}
-!120 = distinct !{!120, !119, !"_RINvMs1_NtCs6rzsz56FN1o_12block_buffer4readINtB6_10ReadBufferINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBY_IBY_IBY_IBY_IBY_IBY_NtB10_5UTermNtNtB12_3bit2B1ENtB2a_2B0EB2o_EB2o_EB2o_EB2o_EB2o_EE11write_blockNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB3j_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreIBY_IBY_B1O_B28_EB2o_EEENtB3l_12StreamCipher31unchecked_apply_keystream_inout0NCB3d_s_0ECsinjenlOLFM6_11libp2p_pnet: argument 0"}
-!121 = !{!92}
-!122 = !{!94, !92}
-!123 = !{!96}
-!124 = !{!97}
-!125 = !{!99, !96}
-!126 = !{!101}
-!127 = !{!102, !101, !96, !97}
-!128 = !{!101, !96}
-!129 = !{!"branch_weights", i32 4, i32 12}
+!117 = distinct !{!117, !130, !131}
+!118 = distinct !{!118, !133}
+!119 = distinct !{!119, !130}
+!120 = distinct !{!120, i1 true, !"_RINvMs1_NtCs6rzsz56FN1o_12block_buffer4readINtB6_10ReadBufferINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBY_IBY_IBY_IBY_IBY_IBY_NtB10_5UTermNtNtB12_3bit2B1ENtB2a_2B0EB2o_EB2o_EB2o_EB2o_EB2o_EE11write_blockNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB3j_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreIBY_IBY_B1O_B28_EB2o_EEENtB3l_12StreamCipher31unchecked_apply_keystream_inout0NCB3d_s_0ECsinjenlOLFM6_11libp2p_pnet"}
+!121 = distinct !{!121, !120, !"_RINvMs1_NtCs6rzsz56FN1o_12block_buffer4readINtB6_10ReadBufferINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIBY_IBY_IBY_IBY_IBY_IBY_NtB10_5UTermNtNtB12_3bit2B1ENtB2a_2B0EB2o_EB2o_EB2o_EB2o_EB2o_EE11write_blockNCNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB3j_23StreamCipherCoreWrapperINtCs5sEvUJpJda_7salsa209SalsaCoreIBY_IBY_B1O_B28_EB2o_EEENtB3l_12StreamCipher31unchecked_apply_keystream_inout0NCB3d_s_0ECsinjenlOLFM6_11libp2p_pnet: argument 0"}
+!122 = !{!92}
+!123 = !{!94, !92}
+!124 = !{!96}
+!125 = !{!97}
+!126 = !{!99, !96}
+!127 = !{!101}
+!128 = !{!102, !101, !96, !97}
+!129 = !{!101, !96}
 !130 = !{!"llvm.loop.isvectorized", i32 1}
 !131 = !{!"llvm.loop.unroll.runtime.disable"}
-!132 = !{!"llvm.loop.unroll.disable"}
-!133 = !{!108, !107, !96, !97}
-!134 = !{!108, !96, !97}
-!135 = !{!107, !97}
-!136 = !{!110}
-!137 = !{!112}
-!138 = !{!114, !112, !113, !110, !97}
-!139 = !{!112, !110, !96}
-!140 = !{!120, !96}
+!132 = !{!"branch_weights", i32 4, i32 12}
+!133 = !{!"llvm.loop.unroll.disable"}
+!134 = !{!109, !108, !96, !97}
+!135 = !{!109, !96, !97}
+!136 = !{!108, !97}
+!137 = !{!111}
+!138 = !{!113}
+!139 = !{!115, !113, !114, !111, !97}
+!140 = !{!113, !111, !96}
+!141 = !{!121, !96}
 end_hunk_0
