@@ -53,7 +53,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.028 = phi i32 [ %i.g, %bb.b ], [ %i.i, %bb.c ] ; 4 uses
-  %i.j = phi i32 [ -1026, %bb.b ], [ -130, %bb.c ]
+  %i.j = phi i32 [ -1028, %bb.b ], [ -132, %bb.c ]
   %i.k = getelementptr i8, ptr %1, i64 24         ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
   store ptr %i.l, ptr %i.a, align 8
@@ -141,7 +141,7 @@ bb.n:                                             ; preds = %v9fs_fid_clone.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.af = and i32 %i.j, %.028
-  %i.ag = or i32 %i.af, 2
+  %i.ag = or disjoint i32 %i.af, 2
   %i.ah = tail call i32 @p9_client_open(ptr noundef %i.aa, i32 noundef %i.ag) #5
   %i.ai = icmp slt i32 %i.ah, 0
   br i1 %i.ai, label %bb.p, label %.thread

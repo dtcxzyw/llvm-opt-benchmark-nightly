@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %.noexc, %.lr.ph.i
   %.sroa.046.0159 = phi ptr [ %.sroa.3.0.copyload.i35, %.loopexit118.loopexit ], [ %.sroa.3.0.copyload.i35, %bb.l ], [ @2, %.thread ] ; 3 uses
   %.sroa.8.0157 = phi i64 [ %.sroa.5.sroa.0.0.copyload, %.loopexit118.loopexit ], [ %.sroa.5.sroa.0.0.copyload, %bb.l ], [ 0, %.thread ] ; 5 uses
   %.sroa.1252.0156 = phi i64 [ %.sroa.5.sroa.5.0.copyload, %.loopexit118.loopexit ], [ 0, %bb.l ], [ 0, %.thread ] ; 2 uses
-  %.val3.i.i40 = phi <16 x i8> [ %.val3.i.i40.pre, %.loopexit118.loopexit ], [ %.val3.i.i, %bb.l ], [ splat (i8 -1), %.thread ]
+  %.val3.i.i40 = phi <16 x i8> [ %.val3.i.i40.pre, %.loopexit118.loopexit ], [ %.val3.i.i, %bb.l ], [ splat (i8 -128), %.thread ]
   %i.eu = icmp eq i64 %.sroa.1252.0156, 0
   br i1 %i.eu, label %._crit_edge, label %.lr.ph
 
@@ -608,7 +608,7 @@ bb.t:                                             ; preds = %bb.r
   br label %_ZN4core3cmp10PartialOrd2lt17h56dc2cd34f92b0bbE.exit
 
 _ZN4core3cmp10PartialOrd2lt17h56dc2cd34f92b0bbE.exit: ; preds = %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i", %bb.i, %bb.j, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.r, %bb.s, %bb.t
-  %.sroa.0.2.i.i = phi i8 [ %.sroa.0.0.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i" ], [ 1, %bb.i ], [ %i.am, %bb.l ], [ -1, %bb.j ], [ %i.bq, %bb.t ], [ -1, %bb.n ], [ %..i.i, %bb.s ], [ %i.aw, %bb.o ], [ 1, %bb.m ], [ %i.bg, %bb.p ], [ 1, %bb.r ]
+  %.sroa.0.2.i.i = phi i8 [ %.sroa.0.0.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i" ], [ 0, %bb.i ], [ %i.am, %bb.l ], [ -128, %bb.j ], [ %i.bq, %bb.t ], [ -128, %bb.n ], [ %..i.i, %bb.s ], [ %i.aw, %bb.o ], [ 0, %bb.m ], [ %i.bg, %bb.p ], [ 0, %bb.r ]
   %i.br = icmp slt i8 %.sroa.0.2.i.i, 0
   ret i1 %i.br
 }
@@ -1011,7 +1011,7 @@ bb.ac:                                            ; preds = %"_ZN4core3cmp5impls
   br i1 %i.cm, label %bb.v, label %_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit
 
 _ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit: ; preds = %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i", %._crit_edge5, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i", %bb.k, %bb.m, %bb.o, %bb.p, %bb.q, %bb.t
-  %.sroa.0.2.i.i.i = phi i8 [ %.sroa.0.0.i.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i" ], [ %i.at, %bb.q ], [ %i.ad, %bb.m ], [ -1, %bb.k ], [ %i.az, %._crit_edge5 ], [ -1, %bb.o ], [ %..i.i.i, %bb.t ], [ %i.al, %bb.p ], [ %.sroa.0.0.i.i.i.i.i.i.i, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i" ]
+  %.sroa.0.2.i.i.i = phi i8 [ %.sroa.0.0.i.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i" ], [ %i.at, %bb.q ], [ %i.ad, %bb.m ], [ -128, %bb.k ], [ %i.az, %._crit_edge5 ], [ -128, %bb.o ], [ %..i.i.i, %bb.t ], [ %i.al, %bb.p ], [ %.sroa.0.0.i.i.i.i.i.i.i, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i" ]
   %i.cn = icmp slt i8 %.sroa.0.2.i.i.i, 0
   br i1 %i.cn, label %bb.b, label %_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit.thread
 
@@ -1414,7 +1414,7 @@ bb.ay:                                            ; preds = %"_ZN4core3cmp5impls
   br i1 %i.hk, label %bb.ar, label %_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit67
 
 _ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit67: ; preds = %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i77", %._crit_edge16, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i42", %bb.af, %bb.ag, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.ao, %bb.ap
-  %.sroa.0.2.i.i.i44 = phi i8 [ %.sroa.0.0.i.i.i.i.i43, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i42" ], [ 1, %bb.af ], [ %i.et, %bb.ai ], [ -1, %bb.ag ], [ 1, %bb.ao ], [ -1, %bb.ak ], [ %..i.i.i66, %bb.ap ], [ %i.fd, %bb.al ], [ 1, %bb.aj ], [ %i.fn, %bb.am ], [ %i.fx, %._crit_edge16 ], [ %.sroa.0.0.i.i.i.i.i.i.i78, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i77" ] ; 2 uses
+  %.sroa.0.2.i.i.i44 = phi i8 [ %.sroa.0.0.i.i.i.i.i43, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i42" ], [ 0, %bb.af ], [ %i.et, %bb.ai ], [ -128, %bb.ag ], [ 0, %bb.ao ], [ -128, %bb.ak ], [ %..i.i.i66, %bb.ap ], [ %i.fd, %bb.al ], [ 0, %bb.aj ], [ %i.fn, %bb.am ], [ %i.fx, %._crit_edge16 ], [ %.sroa.0.0.i.i.i.i.i.i.i78, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i77" ] ; 2 uses
   %i.hl = icmp sgt i8 %.sroa.0.2.i.i.i44, -1      ; 2 uses
   %..i.i = select i1 %i.hl, ptr %i.df, ptr %i.de
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.dg, ptr noundef nonnull align 8 dereferenceable(96) %..i.i, i64 96, i1 false), !alias.scope !92238, !noalias !92242
@@ -1713,7 +1713,7 @@ bb.bz:                                            ; preds = %"_ZN4core3cmp5impls
   br i1 %i.lx, label %bb.bs, label %_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit
 
 _ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit: ; preds = %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i", %._crit_edge11, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i", %bb.bg, %bb.bh, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bp, %bb.bq
-  %.sroa.0.2.i.i.i = phi i8 [ %.sroa.0.0.i.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i" ], [ 1, %bb.bg ], [ %i.jg, %bb.bj ], [ -1, %bb.bh ], [ 1, %bb.bp ], [ -1, %bb.bl ], [ %..i.i.i, %bb.bq ], [ %i.jq, %bb.bm ], [ 1, %bb.bk ], [ %i.ka, %bb.bn ], [ %i.kk, %._crit_edge11 ], [ %.sroa.0.0.i.i.i.i.i.i.i, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i" ] ; 2 uses
+  %.sroa.0.2.i.i.i = phi i8 [ %.sroa.0.0.i.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i" ], [ 0, %bb.bg ], [ %i.jg, %bb.bj ], [ -128, %bb.bh ], [ 0, %bb.bp ], [ -128, %bb.bl ], [ %..i.i.i, %bb.bq ], [ %i.jq, %bb.bm ], [ 0, %bb.bk ], [ %i.ka, %bb.bn ], [ %i.kk, %._crit_edge11 ], [ %.sroa.0.0.i.i.i.i.i.i.i, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i" ] ; 2 uses
   %i.ly = icmp sgt i8 %.sroa.0.2.i.i.i, -1        ; 2 uses
   %spec.select.i.i = select i1 %i.ly, ptr %i.ht, ptr %.sroa.0.02.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.hs, ptr noundef nonnull align 8 dereferenceable(96) %spec.select.i.i, i64 96, i1 false), !alias.scope !92238, !noalias !92276
@@ -2116,7 +2116,7 @@ bb.bq:                                            ; preds = %"_ZN4core3cmp5impls
   br i1 %i.ky, label %bb.bj, label %_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit.i
 
 _ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit.i: ; preds = %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i.i", %._crit_edge69, %bb.bh, %bb.be, %bb.bd, %bb.bc, %bb.ba, %bb.ay, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i.i"
-  %.sroa.0.2.i.i.i.i = phi i8 [ %.sroa.0.0.i.i.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i.i" ], [ %i.jf, %bb.be ], [ %i.ip, %bb.ba ], [ -1, %bb.ay ], [ %i.jl, %._crit_edge69 ], [ -1, %bb.bc ], [ %..i.i.i.i, %bb.bh ], [ %i.ix, %bb.bd ], [ %.sroa.0.0.i.i.i.i.i.i.i.i, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i.i" ]
+  %.sroa.0.2.i.i.i.i = phi i8 [ %.sroa.0.0.i.i.i.i.i.i, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i.i" ], [ %i.jf, %bb.be ], [ %i.ip, %bb.ba ], [ -128, %bb.ay ], [ %i.jl, %._crit_edge69 ], [ -128, %bb.bc ], [ %..i.i.i.i, %bb.bh ], [ %i.ix, %bb.bd ], [ %.sroa.0.0.i.i.i.i.i.i.i.i, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i.i" ]
   %i.kz = icmp slt i8 %.sroa.0.2.i.i.i.i, 0
   br i1 %i.kz, label %bb.ap, label %_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit.thread.i
 
@@ -2519,7 +2519,7 @@ bb.ei:                                            ; preds = %"_ZN4core3cmp5impls
   br i1 %i.vn, label %bb.eb, label %_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit.i110
 
 _ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit.i110: ; preds = %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i.i141", %._crit_edge59, %bb.dz, %bb.dy, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dq, %bb.dp, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i.i108"
-  %.sroa.0.2.i.i.i.i111 = phi i8 [ %.sroa.0.0.i.i.i.i.i.i109, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i.i108" ], [ 1, %bb.dp ], [ %i.td, %bb.ds ], [ -1, %bb.dq ], [ 1, %bb.dy ], [ -1, %bb.du ], [ %..i.i.i.i162, %bb.dz ], [ %i.tl, %bb.dv ], [ 1, %bb.dt ], [ %i.tt, %bb.dw ], [ %i.ua, %._crit_edge59 ], [ %.sroa.0.0.i.i.i.i.i.i.i.i142, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i.i141" ]
+  %.sroa.0.2.i.i.i.i111 = phi i8 [ %.sroa.0.0.i.i.i.i.i.i109, %"_ZN67_$LT$nls..diagnostic..OrdRange$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17hbfbcecf0e9d68948E.exit.i.i.i.i108" ], [ 0, %bb.dp ], [ %i.td, %bb.ds ], [ -128, %bb.dq ], [ 0, %bb.dy ], [ -128, %bb.du ], [ %..i.i.i.i162, %bb.dz ], [ %i.tl, %bb.dv ], [ 0, %bb.dt ], [ %i.tt, %bb.dw ], [ %i.ua, %._crit_edge59 ], [ %.sroa.0.0.i.i.i.i.i.i.i.i142, %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare28_$u7b$$u7b$closure$u7d$$u7d$17hf3cbdcd417b3d58fE.exit.i.i.i.i141" ]
   %i.vo = icmp sgt i8 %.sroa.0.2.i.i.i.i111, -1   ; 2 uses
   %i.vp = getelementptr inbounds i8, ptr %.sroa.19.19.i106, i64 -96 ; 3 uses
   %.sroa.01.0.i.i = select i1 %i.vo, ptr %2, ptr %i.vp

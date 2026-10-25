@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.ai, label %_ZN4Luau7CodeGen3A6418AssemblyBuilderA649placeFMOVEPKcNS1_11RegisterA64Edj.exit.sink.split, label %_ZN4Luau7CodeGen3A6418AssemblyBuilderA649placeFMOVEPKcNS1_11RegisterA64Edj.exit
 
 .thread:                                          ; preds = %_ZN4Luau7CodeGen3A64L14getFmovImmFp64Ed.exit, %_ZN4Luau7CodeGen3A64L14getFmovImmFp64Ed.exit.thread
-  %.0.i2325 = phi i32 [ -1, %_ZN4Luau7CodeGen3A64L14getFmovImmFp64Ed.exit.thread ], [ %i.q, %_ZN4Luau7CodeGen3A64L14getFmovImmFp64Ed.exit ]
-  %i.aj = shl nsw i32 %.0.i2325, 13
+  %.0.i2325 = phi i32 [ 462079, %_ZN4Luau7CodeGen3A64L14getFmovImmFp64Ed.exit.thread ], [ %i.q, %_ZN4Luau7CodeGen3A64L14getFmovImmFp64Ed.exit ]
+  %i.aj = shl i32 %.0.i2325, 13
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !38, !range !20, !noundef !21
   %i.am = trunc nuw i8 %i.al to i1
@@ -390,8 +390,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.ai, label %_ZN4Luau7CodeGen3A6418AssemblyBuilderA649placeFMOVEPKcNS1_11RegisterA64Edj.exit.sink.split, label %_ZN4Luau7CodeGen3A6418AssemblyBuilderA649placeFMOVEPKcNS1_11RegisterA64Edj.exit
 
 .thread:                                          ; preds = %_ZN4Luau7CodeGen3A64L14getFmovImmFp32Ef.exit, %_ZN4Luau7CodeGen3A64L14getFmovImmFp32Ef.exit.thread
-  %.0.i2325 = phi i32 [ -1, %_ZN4Luau7CodeGen3A64L14getFmovImmFp32Ef.exit.thread ], [ %i.p, %_ZN4Luau7CodeGen3A64L14getFmovImmFp32Ef.exit ]
-  %i.aj = shl nsw i32 %.0.i2325, 13
+  %.0.i2325 = phi i32 [ 462591, %_ZN4Luau7CodeGen3A64L14getFmovImmFp32Ef.exit.thread ], [ %i.p, %_ZN4Luau7CodeGen3A64L14getFmovImmFp32Ef.exit ]
+  %i.aj = shl i32 %.0.i2325, 13
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !38, !range !20, !noundef !21
   %i.am = trunc nuw i8 %i.al to i1

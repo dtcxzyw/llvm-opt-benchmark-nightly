@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.i
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit: ; preds = %bb.c, %bb.e, %bb.f, %bb.g, %bb.i, %bb.j, %bb.k
-  %.sroa.0.0.i.i.i.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i, %bb.k ], [ %i.u, %bb.c ], [ %..i.i.i.i, %bb.j ], [ 1, %bb.e ], [ %.sroa.0.0.i.i.i.i.i, %bb.g ], [ -1, %bb.f ], [ 1, %bb.i ] ; 3 uses
+  %.sroa.0.0.i.i.i.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i, %bb.k ], [ %i.u, %bb.c ], [ %..i.i.i.i, %bb.j ], [ 0, %bb.e ], [ %.sroa.0.0.i.i.i.i.i, %bb.g ], [ -128, %bb.f ], [ 0, %bb.i ] ; 3 uses
   %i.av = icmp slt i8 %.sroa.0.0.i.i.i.i, 0       ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !198)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !199)
@@ -376,7 +376,7 @@ bb.ab:                                            ; preds = %bb.z
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit37
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit37: ; preds = %bb.t, %bb.v, %bb.w, %bb.x, %bb.z, %bb.aa, %bb.ab
-  %.sroa.0.0.i.i.i.i25 = phi i8 [ %.sroa.0.0.i19.i.i.i.i31, %bb.ab ], [ %i.ck, %bb.t ], [ %..i.i.i.i26, %bb.aa ], [ 1, %bb.v ], [ %.sroa.0.0.i.i.i.i.i36, %bb.x ], [ -1, %bb.w ], [ 1, %bb.z ]
+  %.sroa.0.0.i.i.i.i25 = phi i8 [ %.sroa.0.0.i19.i.i.i.i31, %bb.ab ], [ %i.ck, %bb.t ], [ %..i.i.i.i26, %bb.aa ], [ 0, %bb.v ], [ %.sroa.0.0.i.i.i.i.i36, %bb.x ], [ -128, %bb.w ], [ 0, %bb.z ]
   %i.dl = xor i8 %.sroa.0.0.i.i.i.i25, %.sroa.0.0.i.i.i.i
   %i.dm = icmp slt i8 %i.dl, 0
   %..i = select i1 %i.dm, ptr %.sroa.08.0, ptr %.sroa.04.0
@@ -779,7 +779,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bq, label %.thread, label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.n, %bb.l, %bb.j
-  %.sroa.0.0.i.i.i.i8.us = phi i8 [ -1, %bb.p ], [ %i.bb, %bb.j ], [ %..i.i.i.i9.us, %bb.n ], [ %.sroa.0.0.i.i.i.i.i19.us, %bb.l ]
+  %.sroa.0.0.i.i.i.i8.us = phi i8 [ -128, %bb.p ], [ %i.bb, %bb.j ], [ %..i.i.i.i9.us, %bb.n ], [ %.sroa.0.0.i.i.i.i.i19.us, %bb.l ]
   %i.br = icmp slt i8 %.sroa.0.0.i.i.i.i8.us, 0
   br i1 %i.br, label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit.thread7.split.us, label %.thread
 
@@ -1182,7 +1182,7 @@ bb.i:                                             ; preds = %bb.g
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit: ; preds = %bb.a, %bb.c, %bb.d, %bb.e, %bb.g, %bb.h, %bb.i
-  %.sroa.0.0.i.i.i.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i, %bb.i ], [ %i.h, %bb.a ], [ %..i.i.i.i, %bb.h ], [ 1, %bb.c ], [ %.sroa.0.0.i.i.i.i.i, %bb.e ], [ -1, %bb.d ], [ 1, %bb.g ] ; 2 uses
+  %.sroa.0.0.i.i.i.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i, %bb.i ], [ %i.h, %bb.a ], [ %..i.i.i.i, %bb.h ], [ 0, %bb.c ], [ %.sroa.0.0.i.i.i.i.i, %bb.e ], [ -128, %bb.d ], [ 0, %bb.g ] ; 2 uses
   %i.aj = icmp sgt i8 %.sroa.0.0.i.i.i.i, -1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !958)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !959)
@@ -1266,7 +1266,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit13
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit13: ; preds = %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit, %bb.k, %bb.l, %bb.m, %bb.o, %bb.p, %bb.q
-  %.sroa.0.0.i.i.i.i1 = phi i8 [ %.sroa.0.0.i19.i.i.i.i7, %bb.q ], [ %i.ar, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit ], [ %..i.i.i.i2, %bb.p ], [ 1, %bb.k ], [ %.sroa.0.0.i.i.i.i.i12, %bb.m ], [ -1, %bb.l ], [ 1, %bb.o ]
+  %.sroa.0.0.i.i.i.i1 = phi i8 [ %.sroa.0.0.i19.i.i.i.i7, %bb.q ], [ %i.ar, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit ], [ %..i.i.i.i2, %bb.p ], [ 0, %bb.k ], [ %.sroa.0.0.i.i.i.i.i12, %bb.m ], [ -128, %bb.l ], [ 0, %bb.o ]
   %i.bu = icmp slt i8 %.sroa.0.0.i.i.i.i1, 0      ; 2 uses
   %.sroa.0.0.i.i.i.i.lobit = lshr i8 %.sroa.0.0.i.i.i.i, 7
   %i.bv = zext nneg i8 %.sroa.0.0.i.i.i.i.lobit to i64
@@ -1357,7 +1357,7 @@ bb.y:                                             ; preds = %bb.w
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit26
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit26: ; preds = %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit13, %bb.s, %bb.t, %bb.u, %bb.w, %bb.x, %bb.y
-  %.sroa.0.0.i.i.i.i14 = phi i8 [ %.sroa.0.0.i19.i.i.i.i20, %bb.y ], [ %i.ck, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit13 ], [ %..i.i.i.i15, %bb.x ], [ 1, %bb.s ], [ %.sroa.0.0.i.i.i.i.i25, %bb.u ], [ -1, %bb.t ], [ 1, %bb.w ]
+  %.sroa.0.0.i.i.i.i14 = phi i8 [ %.sroa.0.0.i19.i.i.i.i20, %bb.y ], [ %i.ck, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit13 ], [ %..i.i.i.i15, %bb.x ], [ 0, %bb.s ], [ %.sroa.0.0.i.i.i.i.i25, %bb.u ], [ -128, %bb.t ], [ 0, %bb.w ]
   %i.dl = icmp slt i8 %.sroa.0.0.i.i.i.i14, 0     ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !980)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !981)
@@ -1439,7 +1439,7 @@ bb.ag:                                            ; preds = %bb.ae
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit39
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit39: ; preds = %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit26, %bb.aa, %bb.ab, %bb.ac, %bb.ae, %bb.af, %bb.ag
-  %.sroa.0.0.i.i.i.i27 = phi i8 [ %.sroa.0.0.i19.i.i.i.i33, %bb.ag ], [ %i.dt, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit26 ], [ %..i.i.i.i28, %bb.af ], [ 1, %bb.aa ], [ %.sroa.0.0.i.i.i.i.i38, %bb.ac ], [ -1, %bb.ab ], [ 1, %bb.ae ]
+  %.sroa.0.0.i.i.i.i27 = phi i8 [ %.sroa.0.0.i19.i.i.i.i33, %bb.ag ], [ %i.dt, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit26 ], [ %..i.i.i.i28, %bb.af ], [ 0, %bb.aa ], [ %.sroa.0.0.i.i.i.i.i38, %bb.ac ], [ -128, %bb.ab ], [ 0, %bb.ae ]
   %i.eu = icmp slt i8 %.sroa.0.0.i.i.i.i27, 0     ; 3 uses
   %i.ev = select i1 %i.eu, ptr %i.ca, ptr %i.by, !unpredictable !4
   %i.ew = select i1 %i.dl, ptr %i.bw, ptr %i.ev, !unpredictable !4 ; 7 uses
@@ -1525,7 +1525,7 @@ bb.ao:                                            ; preds = %bb.am
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit52
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit52: ; preds = %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit39, %bb.ai, %bb.aj, %bb.ak, %bb.am, %bb.an, %bb.ao
-  %.sroa.0.0.i.i.i.i40 = phi i8 [ %.sroa.0.0.i19.i.i.i.i46, %bb.ao ], [ %i.fg, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit39 ], [ %..i.i.i.i41, %bb.an ], [ 1, %bb.ai ], [ %.sroa.0.0.i.i.i.i.i51, %bb.ak ], [ -1, %bb.aj ], [ 1, %bb.am ]
+  %.sroa.0.0.i.i.i.i40 = phi i8 [ %.sroa.0.0.i19.i.i.i.i46, %bb.ao ], [ %i.fg, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit39 ], [ %..i.i.i.i41, %bb.an ], [ 0, %bb.ai ], [ %.sroa.0.0.i.i.i.i.i51, %bb.ak ], [ -128, %bb.aj ], [ 0, %bb.am ]
   %i.gh = select i1 %i.eu, ptr %i.by, ptr %i.cc, !unpredictable !4
   %i.gi = select i1 %i.dl, ptr %i.ca, ptr %i.bw, !unpredictable !4
   %i.gj = icmp slt i8 %.sroa.0.0.i.i.i.i40, 0     ; 2 uses
@@ -1928,7 +1928,7 @@ bb.o:                                             ; preds = %bb.m
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit.i
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit.i: ; preds = %bb.o, %bb.n, %bb.m, %bb.k, %bb.j, %bb.i, %.lr.ph.i
-  %.sroa.0.0.i.i.i.i.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i.i, %bb.o ], [ %i.af, %.lr.ph.i ], [ %..i.i.i.i.i, %bb.n ], [ 1, %bb.i ], [ %.sroa.0.0.i.i.i.i.i.i, %bb.k ], [ -1, %bb.j ], [ 1, %bb.m ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i.i, %bb.o ], [ %i.af, %.lr.ph.i ], [ %..i.i.i.i.i, %bb.n ], [ 0, %bb.i ], [ %.sroa.0.0.i.i.i.i.i.i, %bb.k ], [ -128, %bb.j ], [ 0, %bb.m ] ; 2 uses
   %i.bg = icmp sgt i8 %.sroa.0.0.i.i.i.i.i, -1    ; 2 uses
   %..i21.i = select i1 %i.bg, ptr %.sroa.06.08.i, ptr %.sroa.011.07.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.0.010.i, ptr noundef nonnull align 8 dereferenceable(40) %..i21.i, i64 40, i1 false), !noalias !1834
@@ -2018,7 +2018,7 @@ bb.w:                                             ; preds = %bb.u
   br label %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit34.i
 
 _RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit34.i: ; preds = %bb.w, %bb.v, %bb.u, %bb.s, %bb.r, %bb.q, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit.i
-  %.sroa.0.0.i.i.i.i22.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i28.i, %bb.w ], [ %i.bt, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit.i ], [ %..i.i.i.i23.i, %bb.v ], [ 1, %bb.q ], [ %.sroa.0.0.i.i.i.i.i33.i, %bb.s ], [ -1, %bb.r ], [ 1, %bb.u ] ; 2 uses
+  %.sroa.0.0.i.i.i.i22.i = phi i8 [ %.sroa.0.0.i19.i.i.i.i28.i, %bb.w ], [ %i.bt, %_RNvYNvYNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata9ConditionNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit.i ], [ %..i.i.i.i23.i, %bb.v ], [ 0, %bb.q ], [ %.sroa.0.0.i.i.i.i.i33.i, %bb.s ], [ -128, %bb.r ], [ 0, %bb.u ] ; 2 uses
   %i.cu = icmp sgt i8 %.sroa.0.0.i.i.i.i22.i, -1  ; 2 uses
   %..i.i = select i1 %i.cu, ptr %.sroa.017.05.i, ptr %.sroa.015.06.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.019.04.i, ptr noundef nonnull align 8 dereferenceable(40) %..i.i, i64 40, i1 false), !noalias !1846

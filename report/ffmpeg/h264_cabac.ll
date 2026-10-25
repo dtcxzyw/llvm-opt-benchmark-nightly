@@ -204,8 +204,8 @@ bb.dy:                                            ; preds = %bb.ek, %bb.eg, %bb.
   br label %.thread1382
 
 .thread1362:                                      ; preds = %bb.dv, %bb.dw, %bb.dx
-  %i.bia = phi i32 [ 0, %bb.dw ], [ %i.bhx, %bb.dx ], [ -1, %bb.dv ]
-  %i.bib = trunc nsw i32 %i.bia to i8             ; 3 uses
+  %i.bia = phi i32 [ 0, %bb.dw ], [ %i.bhx, %bb.dx ], [ 255, %bb.dv ]
+  %i.bib = trunc nuw i32 %i.bia to i8             ; 3 uses
   %i.bic = getelementptr inbounds nuw i8, ptr %i.bhn, i64 21
   store i8 %i.bib, ptr %i.bic, align 1, !tbaa !82
   %i.bid = getelementptr inbounds nuw i8, ptr %i.bhn, i64 20
@@ -240,8 +240,8 @@ bb.ec:                                            ; preds = %bb.eb
   br i1 %.not986.1, label %.thread1362.1, label %bb.dy
 
 .thread1362.1:                                    ; preds = %bb.ea, %bb.eb, %bb.ec
-  %i.bip = phi i32 [ 0, %bb.eb ], [ %i.bio, %bb.ec ], [ -1, %bb.ea ]
-  %i.biq = trunc nsw i32 %i.bip to i8             ; 3 uses
+  %i.bip = phi i32 [ 0, %bb.eb ], [ %i.bio, %bb.ec ], [ 255, %bb.ea ]
+  %i.biq = trunc nuw i32 %i.bip to i8             ; 3 uses
   %i.bir = getelementptr inbounds nuw i8, ptr %i.bhn, i64 23
   store i8 %i.biq, ptr %i.bir, align 1, !tbaa !82
   %i.bis = getelementptr inbounds nuw i8, ptr %i.bhn, i64 22
@@ -276,8 +276,8 @@ bb.eg:                                            ; preds = %bb.ef
   br i1 %.not986.2, label %.thread1362.2, label %bb.dy
 
 .thread1362.2:                                    ; preds = %bb.ee, %bb.ef, %bb.eg
-  %i.bje = phi i32 [ 0, %bb.ef ], [ %i.bjd, %bb.eg ], [ -1, %bb.ee ]
-  %i.bjf = trunc nsw i32 %i.bje to i8             ; 3 uses
+  %i.bje = phi i32 [ 0, %bb.ef ], [ %i.bjd, %bb.eg ], [ 255, %bb.ee ]
+  %i.bjf = trunc nuw i32 %i.bje to i8             ; 3 uses
   %i.bjg = getelementptr inbounds nuw i8, ptr %i.bhn, i64 37
   store i8 %i.bjf, ptr %i.bjg, align 1, !tbaa !82
   %i.bjh = getelementptr inbounds nuw i8, ptr %i.bhn, i64 36
@@ -312,8 +312,8 @@ bb.ek:                                            ; preds = %bb.ej
   br i1 %.not986.3, label %.thread1362.3, label %bb.dy
 
 .thread1362.3:                                    ; preds = %bb.ei, %bb.ej, %bb.ek
-  %i.bjt = phi i32 [ 0, %bb.ej ], [ %i.bjs, %bb.ek ], [ -1, %bb.ei ]
-  %i.bju = trunc nsw i32 %i.bjt to i8             ; 3 uses
+  %i.bjt = phi i32 [ 0, %bb.ej ], [ %i.bjs, %bb.ek ], [ 255, %bb.ei ]
+  %i.bju = trunc nuw i32 %i.bjt to i8             ; 3 uses
   %i.bjv = getelementptr inbounds nuw i8, ptr %i.bhn, i64 39
   store i8 %i.bju, ptr %i.bjv, align 1, !tbaa !82
   %i.bjw = getelementptr inbounds nuw i8, ptr %i.bhn, i64 38
@@ -716,7 +716,7 @@ get_cabac_bypass_sign.exit233.i.sink.split:       ; preds = %.critedge7.i.thread
 get_cabac_bypass_sign.exit233.i:                  ; preds = %get_cabac_bypass_sign.exit233.i.sink.split, %.critedge7.i.thread, %bb.p
   %.sink = phi i32 [ %i.mx, %bb.p ], [ %i.pf, %.critedge7.i.thread ], [ %.sink.ph, %get_cabac_bypass_sign.exit233.i.sink.split ] ; 3 uses
   %.sroa.0.33.sink = phi i32 [ %i.ny, %bb.p ], [ %i.rp, %.critedge7.i.thread ], [ %i.sa, %get_cabac_bypass_sign.exit233.i.sink.split ]
-  %.sink201 = phi i32 [ -1, %bb.p ], [ %i.ro, %.critedge7.i.thread ], [ %.sink201.ph, %get_cabac_bypass_sign.exit233.i.sink.split ]
+  %.sink201 = phi i32 [ 65535, %bb.p ], [ %i.ro, %.critedge7.i.thread ], [ %.sink201.ph, %get_cabac_bypass_sign.exit233.i.sink.split ]
   %.sroa.10849.30 = phi ptr [ %.sroa.10849.19, %bb.p ], [ %.sroa.10849.28, %.critedge7.i.thread ], [ %i.sb, %get_cabac_bypass_sign.exit233.i.sink.split ] ; 2 uses
   %.3186.in.i = phi i8 [ %i.nx, %bb.p ], [ %i.of, %.critedge7.i.thread ], [ %.3186.in.i.ph, %get_cabac_bypass_sign.exit233.i.sink.split ]
   %i.sc = shl i32 %.sink, 17                      ; 2 uses
@@ -725,7 +725,7 @@ get_cabac_bypass_sign.exit233.i:                  ; preds = %get_cabac_bypass_si
   %i.sf = and i32 %i.se, %i.sc
   %i.sg = add nsw i32 %i.sf, %i.sd                ; 2 uses
   %i.sh = xor i32 %i.se, %.sink201
-  %i.si = sub nsw i32 %i.sh, %i.se
+  %i.si = sub i32 %i.sh, %i.se
   %i.sj = trunc i32 %i.si to i16
   %i.sk = zext i8 %i.ly to i64
   %i.sl = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.sk
@@ -1128,7 +1128,7 @@ get_cabac_bypass_sign.exit233.i.sink.split:       ; preds = %.critedge7.i.thread
 get_cabac_bypass_sign.exit233.i:                  ; preds = %get_cabac_bypass_sign.exit233.i.sink.split, %.critedge7.i.thread, %bb.n
   %.sink259 = phi i32 [ %i.na, %bb.n ], [ %i.pi, %.critedge7.i.thread ], [ %.sink259.ph, %get_cabac_bypass_sign.exit233.i.sink.split ] ; 3 uses
   %.sroa.0.15.sink = phi i32 [ %i.ob, %bb.n ], [ %i.rs, %.critedge7.i.thread ], [ %i.sd, %get_cabac_bypass_sign.exit233.i.sink.split ]
-  %.sink252 = phi i32 [ -1, %bb.n ], [ %i.rr, %.critedge7.i.thread ], [ %.sink252.ph, %get_cabac_bypass_sign.exit233.i.sink.split ]
+  %.sink252 = phi i32 [ 65535, %bb.n ], [ %i.rr, %.critedge7.i.thread ], [ %.sink252.ph, %get_cabac_bypass_sign.exit233.i.sink.split ]
   %.sroa.10875.16 = phi ptr [ %.sroa.10875.28, %bb.n ], [ %.sroa.10875.14, %.critedge7.i.thread ], [ %i.se, %get_cabac_bypass_sign.exit233.i.sink.split ] ; 2 uses
   %.3186.in.i = phi i8 [ %i.oa, %bb.n ], [ %i.oi, %.critedge7.i.thread ], [ %.3186.in.i.ph, %get_cabac_bypass_sign.exit233.i.sink.split ]
   %i.sf = shl i32 %.sink259, 17                   ; 2 uses
@@ -1137,7 +1137,7 @@ get_cabac_bypass_sign.exit233.i:                  ; preds = %get_cabac_bypass_si
   %i.si = and i32 %i.sh, %i.sf
   %i.sj = add nsw i32 %i.si, %i.sg                ; 2 uses
   %i.sk = xor i32 %i.sh, %.sink252
-  %i.sl = sub nsw i32 %i.sk, %i.sh
+  %i.sl = sub i32 %i.sk, %i.sh
   %i.sm = trunc i32 %i.sl to i16
   %i.sn = zext i8 %i.mb to i64
   %i.so = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.sn

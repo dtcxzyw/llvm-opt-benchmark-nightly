@@ -204,7 +204,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i: ; preds = %_ZSt9__
 
 .thread.i.i.i.i.i.i.i:                            ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i, %_ZSt9__advanceIPKSt4pairIN4llvm9StringRefEmElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i
   %.not.i.i.i.i.i = icmp ugt i64 %1, %.sroa.2.0.copyload.i.i.i.i
-  %spec.select.i.i.i.i.i = sext i1 %.not.i.i.i.i.i to i32
+  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i32 -2147483648, i32 0
   br label %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN5clang7tooling12_GLOBAL__N_14LessILb1EEEEclIPKSt4pairIN4llvm9StringRefEmEKSB_EEbT_RT0_.exit.i.i.i
 
 _ZN9__gnu_cxx5__ops14_Iter_comp_valIN5clang7tooling12_GLOBAL__N_14LessILb1EEEEclIPKSt4pairIN4llvm9StringRefEmEKSB_EEbT_RT0_.exit.i.i.i: ; preds = %.thread.i.i.i.i.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i

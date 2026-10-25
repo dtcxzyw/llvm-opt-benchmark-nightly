@@ -204,9 +204,9 @@ bb.ah:                                            ; preds = %Abc_Clock.exit57
   br label %Abc_Clock.exit59
 
 Abc_Clock.exit59:                                 ; preds = %Abc_Clock.exit57, %bb.ah
-  %.0.i58 = phi i64 [ %i.hj, %bb.ah ], [ -1, %Abc_Clock.exit57 ]
+  %.0.i58 = phi i64 [ %i.hj, %bb.ah ], [ 4294967295, %Abc_Clock.exit57 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
-  %i.hk = sub nsw i64 %.0.i58, %.0.i54
+  %i.hk = sub i64 %.0.i58, %.0.i54
   %i.hl = trunc i64 %i.hk to i32
   %i.hm = add i32 %.0106, %i.hl                   ; 2 uses
   %i.hn = load ptr, ptr @p, align 8, !tbaa !100

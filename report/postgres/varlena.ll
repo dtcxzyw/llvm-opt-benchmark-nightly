@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.not.i = icmp eq i32 %i.aq, 0
   %i.av = icmp slt i32 %.0.i.i, %.0.i18.i
-  %spec.select = sext i1 %i.av to i32
+  %spec.select = select i1 %i.av, i32 -2147483648, i32 0
   %.0.i = select i1 %.not.i, i32 %spec.select, i32 %i.aq
   %.0.i.lobit = lshr i32 %.0.i, 31
   %i.aw = zext nneg i32 %.0.i.lobit to i64
@@ -440,7 +440,7 @@ bb.k:                                             ; preds = %bb.j
   br label %internal_text_pattern_compare.exit
 
 internal_text_pattern_compare.exit:               ; preds = %VARSIZE_ANY_EXHDR.exit21.i, %bb.j, %bb.k
-  %.0.i = phi i32 [ -1, %bb.j ], [ %i.aq, %VARSIZE_ANY_EXHDR.exit21.i ], [ %..i, %bb.k ]
+  %.0.i = phi i32 [ -2147483648, %bb.j ], [ %i.aq, %VARSIZE_ANY_EXHDR.exit21.i ], [ %..i, %bb.k ]
   %i.at = load i64, ptr %i.a, align 8
   %i.au = inttoptr i64 %i.at to ptr
   %.not = icmp eq ptr %i.d, %i.au

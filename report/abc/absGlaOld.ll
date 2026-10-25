@@ -205,15 +205,15 @@ bb.ed:                                            ; preds = %bb.dz
   br label %bb.ee
 
 bb.ee:                                            ; preds = %bb.eb, %bb.ed, %bb.ec, %bb.dy
-  %.sink625 = phi i32 [ -524282, %bb.eb ], [ -524282, %bb.ed ], [ -524282, %bb.ec ], [ -524281, %bb.dy ]
+  %.sink625 = phi i32 [ -2147483642, %bb.eb ], [ -2147483642, %bb.ed ], [ -2147483642, %bb.ec ], [ -2147483641, %bb.dy ]
   %.sink = phi i32 [ %i.vz, %bb.eb ], [ %i.wb, %bb.ed ], [ %i.wa, %bb.ec ], [ %i.vi, %bb.dy ]
   %i.wc = and i32 %i.uz, %.sink625
-  %1 = or disjoint i32 %.sink, %i.wc
   %i.wd = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !33 ; 3 uses
   %i.we = shl i32 %i.wd, 19
   %i.wf = and i32 %i.we, 2146959360
-  %i.wg = and i32 %1, -2146959361
-  %i.wh = or disjoint i32 %i.wg, %i.wf
+  %i.wg = and i32 %.sink, 524280
+  %1 = or disjoint i32 %i.wg, %i.wc
+  %i.wh = or disjoint i32 %1, %i.wf
   br label %bb.ef
 
 bb.ef:                                            ; preds = %bb.bo, %Gla_ObjRef.exit319, %bb.ee

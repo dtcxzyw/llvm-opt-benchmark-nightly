@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i.i, label %range_reverse_each_fixnum_section.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %.012.i = phi i64 [ %.0, %bb.k ], [ 9223372036854775807, %bb.l ]
+  %.012.i = phi i64 [ %.0, %bb.k ], [ 9223372036854775806, %bb.l ]
   %i.z = ashr i64 %i.g, 1                         ; 2 uses
   %i.aa = ashr i64 %.012.i, 1                     ; 2 uses
   %.not15.i = icmp slt i64 %i.aa, %i.z
@@ -307,7 +307,7 @@ bb.w:                                             ; preds = %.lr.ph.i.i
 
 range_reverse_each_positive_bignum_section.exit:  ; preds = %.lr.ph.i.i, %bb.w, %bb.q, %bb.r, %bb.v
   %brmerge = or i1 %i.ao, %i.t
-  %.mux = select i1 %i.t, i64 %i.g, i64 -9223372036854775807
+  %.mux = select i1 %i.t, i64 %i.g, i64 -9223372036854775808
   br i1 %brmerge, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %range_reverse_each_positive_bignum_section.exit
@@ -316,7 +316,7 @@ bb.x:                                             ; preds = %range_reverse_each_
   br i1 %.not14.i36, label %bb.y, label %range_reverse_each_fixnum_section.exit44
 
 bb.y:                                             ; preds = %range_reverse_each_positive_bignum_section.exit, %bb.x
-  %.013.i37 = phi i64 [ %.mux, %range_reverse_each_positive_bignum_section.exit ], [ -9223372036854775807, %bb.x ]
+  %.013.i37 = phi i64 [ %.mux, %range_reverse_each_positive_bignum_section.exit ], [ -9223372036854775808, %bb.x ]
   br i1 %i.az, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -325,7 +325,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not.i.i38, label %range_reverse_each_fixnum_section.exit44.thread, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %.012.i39 = phi i64 [ %.1, %bb.y ], [ 9223372036854775807, %bb.z ]
+  %.012.i39 = phi i64 [ %.1, %bb.y ], [ 9223372036854775806, %bb.z ]
   %i.bl = ashr i64 %.013.i37, 1                   ; 2 uses
   %i.bm = ashr i64 %.012.i39, 1                   ; 2 uses
   %.not15.i40 = icmp slt i64 %i.bm, %i.bl

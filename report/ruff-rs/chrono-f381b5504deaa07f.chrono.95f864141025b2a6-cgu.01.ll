@@ -204,7 +204,7 @@ _RNvMs0_NtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info6parserNtB5_6Cursor10r
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.019.0.copyload = load ptr, ptr %i.t, align 8 ; 6 uses
   %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.420.0.copyload = load i64, ptr %.sroa.420.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.420.0.copyload = load i64, ptr %.sroa.420.0..sroa_idx, align 8 ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br i1 %i.s, label %bb.c, label %bb.d
 
@@ -454,7 +454,7 @@ _RNvXso_NtCs4NRVxsYgnAr_4core3numlNtNtNtB7_3str6traits7FromStr8from_str.exit: ; 
   br i1 %i.di, label %_RNvXso_NtCs4NRVxsYgnAr_4core3numlNtNtNtB7_3str6traits7FromStr8from_str.exit.thread, label %bb.x
 
 _RNvXso_NtCs4NRVxsYgnAr_4core3numlNtNtNtB7_3str6traits7FromStr8from_str.exit.thread: ; preds = %bb.j, %bb.i, %.lr.ph143.i.i, %bb.n, %bb.o, %.lr.ph152.i.i, %.lr.ph152.i.i.1, %.lr.ph152.i.i.2, %.lr.ph152.i.i.3, %.lr.ph152.i.i.4, %.lr.ph152.i.i.5, %.lr.ph152.i.i.6, %bb.d, %bb.e, %bb.e, %_RNvXso_NtCs4NRVxsYgnAr_4core3numlNtNtNtB7_3str6traits7FromStr8from_str.exit
-  %.sroa.12.0.insert.insert.i.i36 = phi i64 [ %.sroa.12.0.insert.insert.i.i, %_RNvXso_NtCs4NRVxsYgnAr_4core3numlNtNtNtB7_3str6traits7FromStr8from_str.exit ], [ 257, %bb.e ], [ 257, %.lr.ph152.i.i ], [ 1, %bb.d ], [ 257, %.lr.ph143.i.i ], [ 257, %bb.e ], [ 257, %bb.n ], [ 257, %.lr.ph152.i.i.6 ], [ 257, %.lr.ph152.i.i.5 ], [ 257, %.lr.ph152.i.i.4 ], [ 257, %.lr.ph152.i.i.3 ], [ 257, %.lr.ph152.i.i.2 ], [ 257, %.lr.ph152.i.i.1 ], [ 513, %bb.o ], [ 769, %bb.j ], [ 257, %bb.i ]
+  %.sroa.12.0.insert.insert.i.i36 = phi i64 [ %.sroa.12.0.insert.insert.i.i, %_RNvXso_NtCs4NRVxsYgnAr_4core3numlNtNtNtB7_3str6traits7FromStr8from_str.exit ], [ 256, %bb.e ], [ 256, %.lr.ph152.i.i ], [ %.sroa.420.0.copyload, %bb.d ], [ 256, %.lr.ph143.i.i ], [ 256, %bb.e ], [ 256, %bb.n ], [ 256, %.lr.ph152.i.i.6 ], [ 256, %.lr.ph152.i.i.5 ], [ 256, %.lr.ph152.i.i.4 ], [ 256, %.lr.ph152.i.i.3 ], [ 256, %.lr.ph152.i.i.2 ], [ 256, %.lr.ph152.i.i.1 ], [ 512, %bb.o ], [ 768, %bb.j ], [ 256, %bb.i ]
   %.sroa.431.0.extract.shift = lshr i64 %.sroa.12.0.insert.insert.i.i36, 8
   %.sroa.431.0.extract.trunc = trunc i64 %.sroa.431.0.extract.shift to i8
   store i8 8, ptr %0, align 8
@@ -669,7 +669,7 @@ _RNvXsy_NtCs4NRVxsYgnAr_4core3numtNtNtNtB7_3str6traits7FromStr8from_str.exit: ; 
   br i1 %i.br, label %_RNvXsy_NtCs4NRVxsYgnAr_4core3numtNtNtNtB7_3str6traits7FromStr8from_str.exit.thread, label %bb.n
 
 _RNvXsy_NtCs4NRVxsYgnAr_4core3numtNtNtNtB7_3str6traits7FromStr8from_str.exit.thread: ; preds = %bb.i, %bb.g, %.lr.ph.i.i31, %.lr.ph.i.i31.1, %.lr.ph.i.i31.2, %.lr.ph.i.i31.3, %bb.d, %bb.e, %bb.e, %_RNvXsy_NtCs4NRVxsYgnAr_4core3numtNtNtNtB7_3str6traits7FromStr8from_str.exit
-  %.sroa.8.0.insert.insert.i.i33 = phi i32 [ %.sroa.8.0.insert.insert.i.i, %_RNvXsy_NtCs4NRVxsYgnAr_4core3numtNtNtNtB7_3str6traits7FromStr8from_str.exit ], [ 257, %bb.e ], [ 257, %.lr.ph.i.i31 ], [ 257, %bb.e ], [ 1, %bb.d ], [ 257, %.lr.ph.i.i31.3 ], [ 257, %.lr.ph.i.i31.2 ], [ 257, %.lr.ph.i.i31.1 ], [ 257, %bb.g ], [ 513, %bb.i ]
+  %.sroa.8.0.insert.insert.i.i33 = phi i32 [ %.sroa.8.0.insert.insert.i.i, %_RNvXsy_NtCs4NRVxsYgnAr_4core3numtNtNtNtB7_3str6traits7FromStr8from_str.exit ], [ 256, %bb.e ], [ 256, %.lr.ph.i.i31 ], [ 256, %bb.e ], [ 0, %bb.d ], [ 256, %.lr.ph.i.i31.3 ], [ 256, %.lr.ph.i.i31.2 ], [ 256, %.lr.ph.i.i31.1 ], [ 256, %bb.g ], [ 512, %bb.i ]
   %.sroa.429.0.extract.shift = lshr i32 %.sroa.8.0.insert.insert.i.i33, 8
   %.sroa.429.0.extract.trunc = trunc i32 %.sroa.429.0.extract.shift to i8
   store i8 8, ptr %0, align 8

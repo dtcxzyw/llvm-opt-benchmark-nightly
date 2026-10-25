@@ -202,10 +202,10 @@ pgd_none_or_clear_bad.exit:                       ; preds = %bb.h, %p4d_offset.e
 
 .thread139:                                       ; preds = %bb.o, %bb.w, %bb.z
   %.094.ph = phi ptr [ %i.cb, %bb.z ], [ %i.bu, %bb.w ], [ %i.ba, %bb.o ] ; 2 uses
-  %.092.ph = phi i64 [ 4095, %bb.z ], [ 2097151, %bb.w ], [ 1073741823, %bb.o ]
+  %.092.ph = phi i64 [ 0, %bb.z ], [ 2093056, %bb.w ], [ 1073737728, %bb.o ]
   %i.cj = and i64 %.092.ph, %2
-  %i.ck = lshr i64 %i.cj, 12
-  %4 = getelementptr [64 x i8], ptr %.094.ph, i64 %i.ck
+  %i.ck = lshr exact i64 %i.cj, 6
+  %4 = getelementptr i8, ptr %.094.ph, i64 %i.ck
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab

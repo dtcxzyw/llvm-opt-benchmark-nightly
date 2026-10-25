@@ -205,7 +205,7 @@ bb.gw:                                            ; preds = %.preheader1381
   unreachable
 
 _ZN4llvm8CallBase17data_operands_endEv.exit.i:    ; preds = %bb.gv, %bb.gu, %.preheader1381
-  %.0.i.i.i968.neg = phi i64 [ %i.bin, %bb.gv ], [ -96, %bb.gu ], [ -32, %.preheader1381 ]
+  %.0.i.i.i968.neg = phi i64 [ %i.bin, %bb.gv ], [ 137438953376, %bb.gu ], [ 137438953440, %.preheader1381 ]
   %i.bio = load i32, ptr %i.bhz, align 4          ; 2 uses
   %i.bip = icmp slt i32 %i.bio, 0
   br i1 %i.bip, label %_ZNK4llvm8CallBase20bundle_op_info_beginEv.exit.i.i.i.i, label %_ZNK4llvm8CallBase17hasOperandBundlesEv.exit.i.i
@@ -263,7 +263,7 @@ _ZN4llvm8CallBase7arg_endEv.exit:                 ; preds = %_ZNK4llvm8CallBase1
   %i.bjr = zext nneg i32 %i.bjq to i64
   %.neg1352 = mul nsw i64 %i.bjr, -32             ; 2 uses
   %gepdiff = sub nsw i64 %i.bjp, %.neg1352
-  %i.bjs = lshr exact i64 %gepdiff, 5
+  %i.bjs = lshr i64 %gepdiff, 5
   %i.bjt = trunc i64 %i.bjs to i32
   %.not433 = icmp eq i32 %.0361, %i.bjt
   br i1 %.not433, label %bb.gz, label %bb.hh

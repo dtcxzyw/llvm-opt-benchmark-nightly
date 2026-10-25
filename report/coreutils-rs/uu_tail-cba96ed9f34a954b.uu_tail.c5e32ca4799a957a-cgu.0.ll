@@ -205,7 +205,7 @@ bb.em:                                            ; preds = %_RINvMNtNtCsgNwXemy
   %i.to = getelementptr inbounds nuw i8, ptr %i.te, i64 8 ; 3 uses
   %i.tp = load ptr, ptr %i.to, align 8, !nonnull !9, !noundef !9 ; 5 uses
   %i.tq = getelementptr inbounds nuw i8, ptr %i.te, i64 16 ; 3 uses
-  %i.tr = load i64, ptr %i.tq, align 8, !noundef !9 ; 5 uses
+  %i.tr = load i64, ptr %i.tq, align 8, !noundef !9 ; 6 uses
   switch i64 %i.tr, label %thread-pre-split.i159 [
     i64 0, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread
     i64 1, label %bb.en
@@ -443,7 +443,7 @@ _RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.xg, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread, label %bb.fu
 
 _RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.es, %bb.er, %.lr.ph143.i, %bb.ew, %bb.ex, %.lr.ph152.i, %.lr.ph152.i.1, %.lr.ph152.i.2, %.lr.ph152.i.3, %.lr.ph152.i.4, %.lr.ph152.i.5, %.lr.ph152.i.6, %bb.em, %bb.en, %bb.en, %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit
-  %.sroa.12.0.insert.insert.i454 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit ], [ 1, %bb.em ], [ 257, %.lr.ph143.i ], [ 257, %.lr.ph152.i ], [ 257, %bb.en ], [ 257, %bb.en ], [ 257, %bb.ew ], [ 257, %.lr.ph152.i.6 ], [ 257, %.lr.ph152.i.5 ], [ 257, %.lr.ph152.i.4 ], [ 257, %.lr.ph152.i.3 ], [ 257, %.lr.ph152.i.2 ], [ 257, %.lr.ph152.i.1 ], [ 513, %bb.ex ], [ 257, %bb.er ], [ 769, %bb.es ]
+  %.sroa.12.0.insert.insert.i454 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit ], [ %i.tr, %bb.em ], [ 256, %.lr.ph143.i ], [ 256, %.lr.ph152.i ], [ 256, %bb.en ], [ 256, %bb.en ], [ 256, %bb.ew ], [ 256, %.lr.ph152.i.6 ], [ 256, %.lr.ph152.i.5 ], [ 256, %.lr.ph152.i.4 ], [ 256, %.lr.ph152.i.3 ], [ 256, %.lr.ph152.i.2 ], [ 256, %.lr.ph152.i.1 ], [ 512, %bb.ex ], [ 256, %bb.er ], [ 768, %bb.es ]
   %.sroa.473.0.extract.shift = lshr i64 %.sroa.12.0.insert.insert.i454, 8
   %.sroa.473.0.extract.trunc = trunc i64 %.sroa.473.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.by)

@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_ZNK8facebook4yoga5Style9dimensionENS0_9DimensionE.exit.i
 
 _ZNK8facebook4yoga5Style9dimensionENS0_9DimensionE.exit.i: ; preds = %.fold.split.i.i.i, %bb.q, %bb.p, %bb.h, %bb.g, %bb.f, %bb.e
-  %.sroa.0.1.in.i.i.i = phi i64 [ %.sroa.03.0.insert.ext.i4.i.i.i, %bb.q ], [ 2143289344, %bb.e ], [ 27913093120, %bb.h ], [ 19323158528, %bb.f ], [ 23618125824, %bb.g ], [ %.sroa.03.0.insert.ext.i.i.i.i, %bb.p ], [ 15028191232, %.fold.split.i.i.i ]
+  %.sroa.0.1.in.i.i.i = phi i64 [ %.sroa.03.0.insert.ext.i4.i.i.i, %bb.q ], [ 0, %bb.e ], [ 25769803776, %bb.h ], [ 17179869184, %bb.f ], [ 21474836480, %bb.g ], [ %.sroa.03.0.insert.ext.i.i.i.i, %bb.p ], [ 12884901888, %.fold.split.i.i.i ]
   %i.ar = call i64 @_ZNK8facebook4yoga5Style9flexBasisEv(ptr noundef nonnull align 8 dereferenceable(280) %i.i)
   %i.as = getelementptr inbounds nuw i8, ptr %i.g, i64 89
   %.sroa.0.0.copyload.i31.i = load i16, ptr %i.as, align 1, !tbaa !12 ; 5 uses
@@ -493,7 +493,7 @@ bb.ar:                                            ; preds = %bb.ap
   br label %_ZNK8facebook4yoga5Style8positionENS0_4EdgeE.exit83.i
 
 _ZNK8facebook4yoga5Style8positionENS0_4EdgeE.exit83.i: ; preds = %.fold.split.i.i70.i, %bb.ar, %bb.aq, %_ZNK8facebook4yoga5Style8positionENS0_4EdgeE.exit68.thread.i
-  %.sroa.0.1.in.i.i71.i = phi i64 [ %.sroa.03.0.insert.ext.i4.i.i79.i, %bb.ar ], [ 2143289344, %_ZNK8facebook4yoga5Style8positionENS0_4EdgeE.exit68.thread.i ], [ %.sroa.03.0.insert.ext.i.i.i81.i, %bb.aq ], [ 15028191232, %.fold.split.i.i70.i ]
+  %.sroa.0.1.in.i.i71.i = phi i64 [ %.sroa.03.0.insert.ext.i4.i.i79.i, %bb.ar ], [ 0, %_ZNK8facebook4yoga5Style8positionENS0_4EdgeE.exit68.thread.i ], [ %.sroa.03.0.insert.ext.i.i.i81.i, %bb.aq ], [ 12884901888, %.fold.split.i.i70.i ]
   %i.ez = and i64 %.sroa.0.1.in.i.i71.i, 12884901888
   %i.fa = icmp eq i64 %i.ez, 8589934592
   br label %bb.as
@@ -896,7 +896,7 @@ bb.ci:                                            ; preds = %bb.cg
   br label %_ZNK8facebook4yoga5Style3gapENS0_6GutterE.exit175
 
 _ZNK8facebook4yoga5Style3gapENS0_6GutterE.exit175: ; preds = %_ZNK8facebook4yoga5Style3gapENS0_6GutterE.exit160.thread, %bb.ch, %bb.ci, %.fold.split.i.i162
-  %.sroa.0.1.in.i.i163 = phi i64 [ %.sroa.03.0.insert.ext.i4.i.i171, %bb.ci ], [ 2143289344, %_ZNK8facebook4yoga5Style3gapENS0_6GutterE.exit160.thread ], [ %.sroa.03.0.insert.ext.i.i.i173, %bb.ch ], [ 15028191232, %.fold.split.i.i162 ]
+  %.sroa.0.1.in.i.i163 = phi i64 [ %.sroa.03.0.insert.ext.i4.i.i171, %bb.ci ], [ 0, %_ZNK8facebook4yoga5Style3gapENS0_6GutterE.exit160.thread ], [ %.sroa.03.0.insert.ext.i.i.i173, %bb.ch ], [ 12884901888, %.fold.split.i.i162 ]
   %i.ms = and i64 %.sroa.0.1.in.i.i163, 12884901888
   %i.mt = icmp eq i64 %i.ms, 8589934592
   br label %.critedge

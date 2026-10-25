@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %_ZNKSt14default_del
   br i1 %.not40, label %._crit_edge.loopexit, label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.ab, %.thread
-  %.234.ph = phi i32 [ 2, %.thread ], [ %.032, %bb.ab ]
+  %.234.ph = phi i32 [ 0, %.thread ], [ %.032, %bb.ab ]
   %.3.ph = phi i1 [ %.2153, %.thread ], [ %.1, %bb.ab ]
   %i.gg = and i32 %.234.ph, -3
   %i.gh = icmp eq i32 %i.gg, 0
@@ -608,7 +608,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108: ; preds = %.lr.ph.i.i.i
   br i1 %i.ai, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit117, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit117: ; preds = %.thread.i.i.i116, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108
-  %.1.i.i.i115 = phi i32 [ %spec.select.i.i.i114, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108 ], [ -1, %.thread.i.i.i116 ]
+  %.1.i.i.i115 = phi i32 [ %spec.select.i.i.i114, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108 ], [ -2147483648, %.thread.i.i.i116 ]
   %i.aj = icmp slt i32 %.1.i.i.i115, 0
   br i1 %i.aj, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -686,7 +686,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78: ; preds = %.lr.ph.i.i14.
   br i1 %i.as, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit87, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit87: ; preds = %.thread.i.i.i86, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78
-  %.1.i.i.i85 = phi i32 [ %spec.select.i.i.i84, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78 ], [ -1, %.thread.i.i.i86 ]
+  %.1.i.i.i85 = phi i32 [ %spec.select.i.i.i84, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78 ], [ -2147483648, %.thread.i.i.i86 ]
   %i.at = icmp slt i32 %.1.i.i.i85, 0
   br i1 %i.at, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -821,7 +821,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.bm, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bn = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bn, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -1224,7 +1224,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107: ; preds = %.lr.ph.i.i.i
   br i1 %i.ai, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116: ; preds = %.thread.i.i.i115, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107
-  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -1, %.thread.i.i.i115 ]
+  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -2147483648, %.thread.i.i.i115 ]
   %i.aj = icmp slt i32 %.1.i.i.i114, 0
   br i1 %i.aj, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -1302,7 +1302,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77: ; preds = %.lr.ph.i.i14.
   br i1 %i.as, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86: ; preds = %.thread.i.i.i85, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77
-  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -1, %.thread.i.i.i85 ]
+  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -2147483648, %.thread.i.i.i85 ]
   %i.at = icmp slt i32 %.1.i.i.i84, 0
   br i1 %i.at, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -1437,7 +1437,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.bm, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bn = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bn, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -1840,7 +1840,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73: ; preds = %.lr.ph.i.i.i
   br i1 %i.w, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82: ; preds = %.thread.i.i.i81, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73
-  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -1, %.thread.i.i.i81 ]
+  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -2147483648, %.thread.i.i.i81 ]
   %i.x = icmp slt i32 %.1.i.i.i80, 0
   br i1 %i.x, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -1918,7 +1918,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43: ; preds = %.lr.ph.i.i14.
   br i1 %i.ag, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52: ; preds = %.thread.i.i.i51, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43
-  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -1, %.thread.i.i.i51 ]
+  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -2147483648, %.thread.i.i.i51 ]
   %i.ah = icmp slt i32 %.1.i.i.i50, 0
   br i1 %i.ah, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -2053,7 +2053,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.ba, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bb = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bb, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -2456,7 +2456,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108: ; preds = %.lr.ph.i.i.i
   br i1 %i.aj, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit117, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit117: ; preds = %.thread.i.i.i116, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108
-  %.1.i.i.i115 = phi i32 [ %spec.select.i.i.i114, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108 ], [ -1, %.thread.i.i.i116 ]
+  %.1.i.i.i115 = phi i32 [ %spec.select.i.i.i114, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108 ], [ -2147483648, %.thread.i.i.i116 ]
   %i.ak = icmp slt i32 %.1.i.i.i115, 0
   br i1 %i.ak, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -2534,7 +2534,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78: ; preds = %.lr.ph.i.i14.
   br i1 %i.at, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit87, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit87: ; preds = %.thread.i.i.i86, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78
-  %.1.i.i.i85 = phi i32 [ %spec.select.i.i.i84, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78 ], [ -1, %.thread.i.i.i86 ]
+  %.1.i.i.i85 = phi i32 [ %spec.select.i.i.i84, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78 ], [ -2147483648, %.thread.i.i.i86 ]
   %i.au = icmp slt i32 %.1.i.i.i85, 0
   br i1 %i.au, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -2669,7 +2669,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.bn, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bo = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bo, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -2979,7 +2979,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108: ; preds = %.lr.ph.i.i.i
   br i1 %i.ai, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit117, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit117: ; preds = %.thread.i.i.i116, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108
-  %.1.i.i.i115 = phi i32 [ %spec.select.i.i.i114, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108 ], [ -1, %.thread.i.i.i116 ]
+  %.1.i.i.i115 = phi i32 [ %spec.select.i.i.i114, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i108 ], [ -2147483648, %.thread.i.i.i116 ]
   %i.aj = icmp slt i32 %.1.i.i.i115, 0
   br i1 %i.aj, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -3057,7 +3057,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78: ; preds = %.lr.ph.i.i14.
   br i1 %i.as, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit87, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit87: ; preds = %.thread.i.i.i86, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78
-  %.1.i.i.i85 = phi i32 [ %spec.select.i.i.i84, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78 ], [ -1, %.thread.i.i.i86 ]
+  %.1.i.i.i85 = phi i32 [ %spec.select.i.i.i84, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i78 ], [ -2147483648, %.thread.i.i.i86 ]
   %i.at = icmp slt i32 %.1.i.i.i85, 0
   br i1 %i.at, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -3192,7 +3192,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.bm, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bn = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bn, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -3595,7 +3595,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i71: ; preds = %.lr.ph.i.i.i
   br i1 %i.w, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit80, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit80: ; preds = %.thread.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i71
-  %.1.i.i.i78 = phi i32 [ %spec.select.i.i.i77, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i71 ], [ -1, %.thread.i.i.i79 ]
+  %.1.i.i.i78 = phi i32 [ %spec.select.i.i.i77, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i71 ], [ -2147483648, %.thread.i.i.i79 ]
   %i.x = icmp slt i32 %.1.i.i.i78, 0
   br i1 %i.x, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -3673,7 +3673,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i41: ; preds = %.lr.ph.i.i14.
   br i1 %i.ag, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit50, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit50: ; preds = %.thread.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i41
-  %.1.i.i.i48 = phi i32 [ %spec.select.i.i.i47, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i41 ], [ -1, %.thread.i.i.i49 ]
+  %.1.i.i.i48 = phi i32 [ %spec.select.i.i.i47, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i41 ], [ -2147483648, %.thread.i.i.i49 ]
   %i.ah = icmp slt i32 %.1.i.i.i48, 0
   br i1 %i.ah, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -3808,7 +3808,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.ba, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bb = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bb, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -4024,7 +4024,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107: ; preds = %.lr.ph.i.i.i
   br i1 %i.ai, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116: ; preds = %.thread.i.i.i115, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107
-  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -1, %.thread.i.i.i115 ]
+  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -2147483648, %.thread.i.i.i115 ]
   %i.aj = icmp slt i32 %.1.i.i.i114, 0
   br i1 %i.aj, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -4102,7 +4102,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77: ; preds = %.lr.ph.i.i14.
   br i1 %i.as, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86: ; preds = %.thread.i.i.i85, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77
-  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -1, %.thread.i.i.i85 ]
+  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -2147483648, %.thread.i.i.i85 ]
   %i.at = icmp slt i32 %.1.i.i.i84, 0
   br i1 %i.at, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -4237,7 +4237,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.bm, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bn = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bn, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -4640,7 +4640,7 @@ bb.ab:                                            ; preds = %_ZNKSt14default_del
   br i1 %.not40, label %._crit_edge.loopexit, label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.ab, %.thread
-  %.234.ph = phi i32 [ 2, %.thread ], [ %.032, %bb.ab ]
+  %.234.ph = phi i32 [ 0, %.thread ], [ %.032, %bb.ab ]
   %.3.ph = phi i1 [ %.2153, %.thread ], [ %.1, %bb.ab ]
   %i.gg = and i32 %.234.ph, -3
   %i.gh = icmp eq i32 %i.gg, 0
@@ -5043,7 +5043,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107: ; preds = %.lr.ph.i.i.i
   br i1 %i.aj, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116: ; preds = %.thread.i.i.i115, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107
-  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -1, %.thread.i.i.i115 ]
+  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -2147483648, %.thread.i.i.i115 ]
   %i.ak = icmp slt i32 %.1.i.i.i114, 0
   br i1 %i.ak, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -5121,7 +5121,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77: ; preds = %.lr.ph.i.i14.
   br i1 %i.at, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86: ; preds = %.thread.i.i.i85, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77
-  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -1, %.thread.i.i.i85 ]
+  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -2147483648, %.thread.i.i.i85 ]
   %i.au = icmp slt i32 %.1.i.i.i84, 0
   br i1 %i.au, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -5256,7 +5256,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.bn, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bo = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bo, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -5648,7 +5648,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73: ; preds = %.lr.ph.i.i.i
   br i1 %i.w, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82: ; preds = %.thread.i.i.i81, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73
-  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -1, %.thread.i.i.i81 ]
+  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -2147483648, %.thread.i.i.i81 ]
   %i.x = icmp slt i32 %.1.i.i.i80, 0
   br i1 %i.x, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -5726,7 +5726,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43: ; preds = %.lr.ph.i.i14.
   br i1 %i.ag, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52: ; preds = %.thread.i.i.i51, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43
-  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -1, %.thread.i.i.i51 ]
+  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -2147483648, %.thread.i.i.i51 ]
   %i.ah = icmp slt i32 %.1.i.i.i50, 0
   br i1 %i.ah, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -5861,7 +5861,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.ba, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bb = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bb, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -6264,7 +6264,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107: ; preds = %.lr.ph.i.i.i
   br i1 %i.aj, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit116: ; preds = %.thread.i.i.i115, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107
-  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -1, %.thread.i.i.i115 ]
+  %.1.i.i.i114 = phi i32 [ %spec.select.i.i.i113, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i107 ], [ -2147483648, %.thread.i.i.i115 ]
   %i.ak = icmp slt i32 %.1.i.i.i114, 0
   br i1 %i.ak, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -6342,7 +6342,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77: ; preds = %.lr.ph.i.i14.
   br i1 %i.at, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit86: ; preds = %.thread.i.i.i85, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77
-  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -1, %.thread.i.i.i85 ]
+  %.1.i.i.i84 = phi i32 [ %spec.select.i.i.i83, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i77 ], [ -2147483648, %.thread.i.i.i85 ]
   %i.au = icmp slt i32 %.1.i.i.i84, 0
   br i1 %i.au, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -6477,7 +6477,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.bn, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bo = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bo, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -6880,7 +6880,7 @@ bb.z:                                             ; preds = %_ZNKSt14default_del
   br i1 %.not40, label %._crit_edge.loopexit, label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.z, %.thread
-  %.234.ph = phi i32 [ 2, %.thread ], [ %.032, %bb.z ]
+  %.234.ph = phi i32 [ 0, %.thread ], [ %.032, %bb.z ]
   %.3.ph = phi i1 [ %.2153, %.thread ], [ %.1, %bb.z ]
   %i.gh = and i32 %.234.ph, -3
   %i.gi = icmp eq i32 %i.gh, 0
@@ -7283,7 +7283,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73: ; preds = %.lr.ph.i.i.i
   br i1 %i.w, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82: ; preds = %.thread.i.i.i81, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73
-  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -1, %.thread.i.i.i81 ]
+  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -2147483648, %.thread.i.i.i81 ]
   %i.x = icmp slt i32 %.1.i.i.i80, 0
   br i1 %i.x, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -7361,7 +7361,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43: ; preds = %.lr.ph.i.i14.
   br i1 %i.ag, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52: ; preds = %.thread.i.i.i51, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43
-  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -1, %.thread.i.i.i51 ]
+  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -2147483648, %.thread.i.i.i51 ]
   %i.ah = icmp slt i32 %.1.i.i.i50, 0
   br i1 %i.ah, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -7496,7 +7496,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.ba, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bb = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bb, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 
@@ -7899,7 +7899,7 @@ bb.z:                                             ; preds = %_ZNKSt14default_del
   br i1 %.not40, label %._crit_edge.loopexit, label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.z, %.thread
-  %.234.ph = phi i32 [ 2, %.thread ], [ %.032, %bb.z ]
+  %.234.ph = phi i32 [ 0, %.thread ], [ %.032, %bb.z ]
   %.3.ph = phi i1 [ %.2153, %.thread ], [ %.1, %bb.z ]
   %i.gh = and i32 %.234.ph, -3
   %i.gi = icmp eq i32 %i.gh, 0
@@ -8302,7 +8302,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73: ; preds = %.lr.ph.i.i.i
   br i1 %i.w, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit82: ; preds = %.thread.i.i.i81, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73
-  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -1, %.thread.i.i.i81 ]
+  %.1.i.i.i80 = phi i32 [ %spec.select.i.i.i79, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i73 ], [ -2147483648, %.thread.i.i.i81 ]
   %i.x = icmp slt i32 %.1.i.i.i80, 0
   br i1 %i.x, label %.lr.ph.i.i.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i.i, !llvm.loop !93
 
@@ -8380,7 +8380,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43: ; preds = %.lr.ph.i.i14.
   br i1 %i.ag, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit52: ; preds = %.thread.i.i.i51, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43
-  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -1, %.thread.i.i.i51 ]
+  %.1.i.i.i50 = phi i32 [ %spec.select.i.i.i49, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i43 ], [ -2147483648, %.thread.i.i.i51 ]
   %i.ah = icmp slt i32 %.1.i.i.i50, 0
   br i1 %i.ah, label %.lr.ph.i.i14.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i11.i, !llvm.loop !93
 
@@ -8515,7 +8515,7 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i.i26.i
   br i1 %i.ba, label %_ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i
 
 _ZN4llvm13ScopedPrinter8flagNameERKNS_9FlagEntryES3_.exit: ; preds = %.thread.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i
-  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -1, %.thread.i.i.i ]
+  %.1.i.i.i = phi i32 [ %spec.select.i.i.i, %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i ], [ -2147483648, %.thread.i.i.i ]
   %i.bb = icmp slt i32 %.1.i.i.i, 0
   br i1 %i.bb, label %.lr.ph.i.i26.i, label %_ZSt25__unguarded_linear_insertIPN4llvm9FlagEntryEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S7_EEEEvT_T0_.exit.i22.i, !llvm.loop !93
 

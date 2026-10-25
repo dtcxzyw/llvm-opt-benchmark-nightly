@@ -205,7 +205,7 @@ bb.cw:                                            ; preds = %zend_jit_trace_get_
   br i1 %.not573, label %bb.df, label %.thread778
 
 .thread778:                                       ; preds = %.thread758.thread, %bb.cw
-  %.1494783 = phi i32 [ %i.py, %bb.cw ], [ -1073739778, %.thread758.thread ]
+  %.1494783 = phi i32 [ %i.py, %bb.cw ], [ -1073740802, %.thread758.thread ]
   %i.qa = tail call fastcc i32 @jit_Z_TYPE(ptr noundef nonnull %0, i64 noundef %.0533764)
   %i.qb = tail call i32 @ir_const_u8(ptr noundef nonnull %0, i8 noundef zeroext 10) #34
   %i.qc = tail call i32 @ir_fold2(ptr noundef nonnull %0, i32 noundef 270, i32 noundef %i.qa, i32 noundef %i.qb) #34
@@ -608,7 +608,7 @@ bb.dl:                                            ; preds = %zend_jit_trace_get_
   br i1 %.not581, label %bb.dw, label %.thread785
 
 .thread785:                                       ; preds = %.thread765.thread, %bb.dl
-  %.1485790 = phi i32 [ %i.sy, %bb.dl ], [ -1073739778, %.thread765.thread ]
+  %.1485790 = phi i32 [ %i.sy, %bb.dl ], [ -1073740802, %.thread765.thread ]
   %i.ta = tail call fastcc i32 @jit_Z_TYPE(ptr noundef nonnull %0, i64 noundef %.1544772)
   %i.tb = tail call i32 @ir_const_u8(ptr noundef nonnull %0, i8 noundef zeroext 10) #34
   %i.tc = tail call i32 @ir_fold2(ptr noundef nonnull %0, i32 noundef 270, i32 noundef %i.ta, i32 noundef %i.tb) #34
@@ -1011,7 +1011,7 @@ bb.q:                                             ; preds = %bb.p
   br label %_ssa_op1_info.exit191
 
 _ssa_op1_info.exit191:                            ; preds = %bb.m, %bb.k, %bb.o, %bb.q, %bb.p, %bb.n, %bb.l
-  %.0.i189 = phi i32 [ %spec.select.i206, %bb.n ], [ -521143298, %bb.k ], [ %i.ax, %bb.l ], [ -486539265, %bb.o ], [ %i.bj, %bb.q ], [ -486539265, %bb.p ], [ %i.az, %bb.m ]
+  %.0.i189 = phi i32 [ %spec.select.i206, %bb.n ], [ 1006, %bb.k ], [ %i.ax, %bb.l ], [ 2031, %bb.o ], [ %i.bj, %bb.q ], [ 2031, %bb.p ], [ %i.az, %bb.m ]
   %i.bk = and i32 %.0.i189, 2031
   %i.bl = icmp eq i32 %i.bk, 0
   br label %_ssa_op1_info.exit187.thread
@@ -1189,7 +1189,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %_ssa_op2_info.exit198
 
 _ssa_op2_info.exit198:                            ; preds = %bb.ak, %bb.ai, %bb.am, %bb.ao, %bb.an, %bb.al, %bb.aj
-  %.0.i196 = phi i32 [ %spec.select.i, %bb.al ], [ -521143298, %bb.ai ], [ %i.eb, %bb.aj ], [ -486539265, %bb.am ], [ %i.eo, %bb.ao ], [ -486539265, %bb.an ], [ %i.ed, %bb.ak ]
+  %.0.i196 = phi i32 [ %spec.select.i, %bb.al ], [ 1006, %bb.ai ], [ %i.eb, %bb.aj ], [ 2031, %bb.am ], [ %i.eo, %bb.ao ], [ 2031, %bb.an ], [ %i.ed, %bb.ak ]
   %i.ep = and i32 %.0.i196, 2031
   %i.eq = icmp eq i32 %i.ep, 0
   br label %_ssa_op1_info.exit187.thread
@@ -1315,7 +1315,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ssa_op1_info.exit183
 
 _ssa_op1_info.exit183:                            ; preds = %bb.bb, %bb.az, %bb.bd, %bb.bf, %bb.be, %bb.bc, %bb.ba
-  %.0.i181 = phi i32 [ %spec.select.i214, %bb.bc ], [ -521143298, %bb.az ], [ %i.gn, %bb.ba ], [ -486539265, %bb.bd ], [ %i.gz, %bb.bf ], [ -486539265, %bb.be ], [ %i.gp, %bb.bb ]
+  %.0.i181 = phi i32 [ %spec.select.i214, %bb.bc ], [ 1006, %bb.az ], [ %i.gn, %bb.ba ], [ 2031, %bb.bd ], [ %i.gz, %bb.bf ], [ 2031, %bb.be ], [ %i.gp, %bb.bb ]
   %i.ha = and i32 %.0.i181, 2031
   %i.hb = icmp eq i32 %i.ha, 0
   br label %_ssa_op1_info.exit187.thread
@@ -1493,7 +1493,7 @@ bb.cd:                                            ; preds = %bb.cc
   br label %_ssa_op2_info.exit
 
 _ssa_op2_info.exit:                               ; preds = %bb.bz, %bb.bx, %bb.cb, %bb.cd, %bb.cc, %bb.ca, %bb.by
-  %.0.i193 = phi i32 [ %spec.select.i202, %bb.ca ], [ -521143298, %bb.bx ], [ %i.jr, %bb.by ], [ -486539265, %bb.cb ], [ %i.ke, %bb.cd ], [ -486539265, %bb.cc ], [ %i.jt, %bb.bz ]
+  %.0.i193 = phi i32 [ %spec.select.i202, %bb.ca ], [ 1006, %bb.bx ], [ %i.jr, %bb.by ], [ 2031, %bb.cb ], [ %i.ke, %bb.cd ], [ 2031, %bb.cc ], [ %i.jt, %bb.bz ]
   %i.kf = and i32 %.0.i193, 2031
   %i.kg = icmp eq i32 %i.kf, 0
   br label %_ssa_op1_info.exit187.thread
@@ -1896,7 +1896,7 @@ bb.co:                                            ; preds = %bb.cn
 
 _ssa_op1_info.exit239:                            ; preds = %bb.ck, %bb.ci, %bb.cm, %bb.co, %bb.cn, %bb.cl, %bb.cj
   %i.kf = phi i8 [ 1, %bb.cl ], [ 1, %bb.ci ], [ %.pre428, %bb.cj ], [ %i.ja, %bb.cm ], [ %i.ja, %bb.co ], [ %i.ja, %bb.cn ], [ 1, %bb.ck ]
-  %.0.i237 = phi i32 [ %spec.select.i310, %bb.cl ], [ -521143298, %bb.ci ], [ %i.js, %bb.cj ], [ -486539265, %bb.cm ], [ %i.ke, %bb.co ], [ -486539265, %bb.cn ], [ %i.ju, %bb.ck ]
+  %.0.i237 = phi i32 [ %spec.select.i310, %bb.cl ], [ 1022, %bb.ci ], [ %i.js, %bb.cj ], [ 2047, %bb.cm ], [ %i.ke, %bb.co ], [ 2047, %bb.cn ], [ %i.ju, %bb.ck ]
   %i.kg = and i8 %i.kf, 9
   %i.kh = icmp ne i8 %i.kg, 0
   %i.ki = and i32 %.0.i237, 2047
@@ -1979,7 +1979,7 @@ bb.cz:                                            ; preds = %bb.cy
 
 _ssa_op1_info.exit235:                            ; preds = %bb.cv, %bb.ct, %bb.cx, %bb.cz, %bb.cy, %bb.cw, %bb.cu
   %i.lr = phi i8 [ 1, %bb.cw ], [ 1, %bb.ct ], [ %.pre427, %bb.cu ], [ %i.km, %bb.cx ], [ %i.km, %bb.cz ], [ %i.km, %bb.cy ], [ 1, %bb.cv ]
-  %.0.i233 = phi i32 [ %spec.select.i314, %bb.cw ], [ -521143298, %bb.ct ], [ %i.le, %bb.cu ], [ -486539265, %bb.cx ], [ %i.lq, %bb.cz ], [ -486539265, %bb.cy ], [ %i.lg, %bb.cv ]
+  %.0.i233 = phi i32 [ %spec.select.i314, %bb.cw ], [ 1022, %bb.ct ], [ %i.le, %bb.cu ], [ 2047, %bb.cx ], [ %i.lq, %bb.cz ], [ 2047, %bb.cy ], [ %i.lg, %bb.cv ]
   %i.ls = and i8 %i.lr, 9
   %i.lt = icmp ne i8 %i.ls, 0
   %i.lu = and i32 %.0.i233, 2047
@@ -2179,7 +2179,7 @@ bb.dz:                                            ; preds = %bb.dy
   br label %_ssa_op2_info.exit262
 
 _ssa_op2_info.exit262:                            ; preds = %bb.dv, %bb.dt, %bb.dx, %bb.dz, %bb.dy, %bb.dw, %bb.du
-  %.0.i260 = phi i32 [ %spec.select.i286, %bb.dw ], [ -521143298, %bb.dt ], [ %i.ow, %bb.du ], [ -486539265, %bb.dx ], [ %i.pj, %bb.dz ], [ -486539265, %bb.dy ], [ %i.oy, %bb.dv ]
+  %.0.i260 = phi i32 [ %spec.select.i286, %bb.dw ], [ 1022, %bb.dt ], [ %i.ow, %bb.du ], [ 1023, %bb.dx ], [ %i.pj, %bb.dz ], [ 1023, %bb.dy ], [ %i.oy, %bb.dv ]
   %.not183 = icmp eq ptr %4, null
   br i1 %.not183, label %bb.eb, label %bb.ea
 
@@ -2444,7 +2444,7 @@ bb.fk:                                            ; preds = %bb.fj
   br label %_ssa_op2_info.exit
 
 _ssa_op2_info.exit:                               ; preds = %bb.fg, %bb.fe, %bb.fi, %bb.fk, %bb.fj, %bb.fh, %bb.ff
-  %.0.i257 = phi i32 [ %spec.select.i290, %bb.fh ], [ -521143298, %bb.fe ], [ %i.tj, %bb.ff ], [ -486539265, %bb.fi ], [ %i.tw, %bb.fk ], [ -486539265, %bb.fj ], [ %i.tl, %bb.fg ]
+  %.0.i257 = phi i32 [ %spec.select.i290, %bb.fh ], [ 1022, %bb.fe ], [ %i.tj, %bb.ff ], [ 1023, %bb.fi ], [ %i.tw, %bb.fk ], [ 1023, %bb.fj ], [ %i.tl, %bb.fg ]
   %.not177 = icmp eq ptr %4, null
   %i.tx = load i8, ptr %i.rk, align 1, !tbaa !296 ; 2 uses
   br i1 %.not177, label %bb.fs, label %bb.fl
@@ -2707,7 +2707,7 @@ bb.gv:                                            ; preds = %bb.gu
 
 _ssa_op1_info.exit:                               ; preds = %bb.gr, %bb.gp, %bb.gt, %bb.gv, %bb.gu, %bb.gs, %bb.gq
   %i.yf = phi i8 [ 1, %bb.gs ], [ 1, %bb.gp ], [ %.pre, %bb.gq ], [ %i.xa, %bb.gt ], [ %i.xa, %bb.gv ], [ %i.xa, %bb.gu ], [ 1, %bb.gr ]
-  %.0.i = phi i32 [ %spec.select.i334, %bb.gs ], [ -521143298, %bb.gp ], [ %i.xs, %bb.gq ], [ -486539265, %bb.gt ], [ %i.ye, %bb.gv ], [ -486539265, %bb.gu ], [ %i.xu, %bb.gr ]
+  %.0.i = phi i32 [ %spec.select.i334, %bb.gs ], [ 256, %bb.gp ], [ %i.xs, %bb.gq ], [ 256, %bb.gt ], [ %i.ye, %bb.gv ], [ 256, %bb.gu ], [ %i.xu, %bb.gr ]
   %i.yg = icmp eq i8 %i.yf, 0
   %i.yh = and i32 %.0.i, 256
   %i.yi = icmp ne i32 %i.yh, 0
@@ -3110,7 +3110,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ssa_op1_info.exit
 
 _ssa_op1_info.exit:                               ; preds = %bb.k, %bb.i, %bb.m, %bb.o, %bb.n, %bb.l, %bb.j
-  %.0.i = phi i32 [ %spec.select.i, %bb.l ], [ -521143298, %bb.i ], [ %i.av, %bb.j ], [ -486539265, %bb.m ], [ %i.bg, %bb.o ], [ -486539265, %bb.n ], [ %i.ax, %bb.k ]
+  %.0.i = phi i32 [ %spec.select.i, %bb.l ], [ 1022, %bb.i ], [ %i.av, %bb.j ], [ 1023, %bb.m ], [ %i.bg, %bb.o ], [ 1023, %bb.n ], [ %i.ax, %bb.k ]
   %i.bh = and i32 %i.p, 1023
   %i.bi = xor i32 %i.bh, 1023
   %i.bj = and i32 %i.bi, %.0.i

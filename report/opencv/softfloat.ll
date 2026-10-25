@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.b
   br label %_ZN2cvL19f32_to_i32_r_minMagENS_9softfloatEb.exit
 
 _ZN2cvL19f32_to_i32_r_minMagENS_9softfloatEb.exit: ; preds = %bb.a, %bb.c, %bb.d, %bb.e
-  %.0.i = phi i64 [ %i.r, %bb.e ], [ 0, %bb.a ], [ %i.m, %bb.d ], [ -2147483648, %bb.c ]
-  %i.s = trunc nsw i64 %.0.i to i32
+  %.0.i = phi i64 [ %i.r, %bb.e ], [ 0, %bb.a ], [ %i.m, %bb.d ], [ 2147483648, %bb.c ]
+  %i.s = trunc i64 %.0.i to i32
   ret i32 %i.s
 }
 
@@ -458,8 +458,8 @@ bb.e:                                             ; preds = %bb.b
   br label %_ZN2cvL19f64_to_i32_r_minMagENS_10softdoubleEb.exit
 
 _ZN2cvL19f64_to_i32_r_minMagENS_10softdoubleEb.exit: ; preds = %bb.a, %bb.c, %bb.d, %bb.e
-  %.0.i = phi i64 [ %i.q, %bb.e ], [ 0, %bb.a ], [ %i.m, %bb.d ], [ -2147483648, %bb.c ]
-  %i.r = trunc nsw i64 %.0.i to i32
+  %.0.i = phi i64 [ %i.q, %bb.e ], [ 0, %bb.a ], [ %i.m, %bb.d ], [ 2147483648, %bb.c ]
+  %i.r = trunc i64 %.0.i to i32
   ret i32 %i.r
 }
 

@@ -205,7 +205,7 @@ bb.dj:                                            ; preds = %"_ZN4core3ptr106dro
           to label %bb.dg unwind label %bb.dq
 
 bb.dk:                                            ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i", %.noexc203
-  %.sroa.0.0.i202 = phi i8 [ %i.jf, %.noexc203 ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ]
+  %.sroa.0.0.i202 = phi i8 [ %i.jf, %.noexc203 ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   invoke void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.e, ptr noundef nonnull align 8 %i.ay, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @162, i64 noundef 20)
@@ -223,7 +223,7 @@ bb.dk:                                            ; preds = %"_ZN4core3ptr106dro
           to label %bb.dl unwind label %bb.dj
 
 bb.dl:                                            ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i207", %.noexc209
-  %.sroa.0.0.i208 = phi i8 [ %i.jj, %.noexc209 ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i207" ]
+  %.sroa.0.0.i208 = phi i8 [ %i.jj, %.noexc209 ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i207" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   invoke void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.d, ptr noundef nonnull align 8 %i.ay, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @191, i64 noundef 4)
@@ -241,7 +241,7 @@ bb.dl:                                            ; preds = %"_ZN4core3ptr106dro
           to label %bb.dm unwind label %bb.dj
 
 bb.dm:                                            ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i214", %.noexc216
-  %.sroa.0.0.i215 = phi i8 [ %i.jm, %.noexc216 ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i214" ]
+  %.sroa.0.0.i215 = phi i8 [ %i.jm, %.noexc216 ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i214" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.c, ptr noundef nonnull align 8 %i.ay, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @192, i64 noundef 15)
@@ -278,7 +278,7 @@ bb.dn:                                            ; preds = %"_ZN4core3ptr106dro
           to label %bb.do unwind label %bb.dj
 
 bb.do:                                            ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i228", %.noexc230
-  %.sroa.0.0.i229 = phi i8 [ %i.js, %.noexc230 ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i228" ]
+  %.sroa.0.0.i229 = phi i8 [ %i.js, %.noexc230 ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i228" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.011, ptr noundef nonnull align 8 dereferenceable(24) %i.ao, i64 24, i1 false)
   %.sroa.011.48..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.011, i64 48
@@ -681,7 +681,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i10"
-  %.sroa.0.0.i11 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i10" ], [ %i.o, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
+  %.sroa.0.0.i11 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i10" ], [ %i.o, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.c, ptr noundef nonnull align 8 %i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @178, i64 noundef 21)
@@ -696,7 +696,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit16"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit16": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i14"
-  %.sroa.0.0.i15 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i14" ], [ %i.r, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12" ]
+  %.sroa.0.0.i15 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i14" ], [ %i.r, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.experimental.noalias.scope.decl(metadata !1957)
@@ -773,7 +773,7 @@ bb.f:                                             ; preds = %"_ZN4core3ptr106dro
           to label %bb.j unwind label %bb.i
 
 bb.g:                                             ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i18", %.noexc
-  %.sroa.0.0.i19 = phi i8 [ %i.ae, %.noexc ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i18" ]
+  %.sroa.0.0.i19 = phi i8 [ %i.ae, %.noexc ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i18" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.a, ptr noundef nonnull align 8 %i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @179, i64 noundef 11)
@@ -791,7 +791,7 @@ bb.g:                                             ; preds = %"_ZN4core3ptr106dro
           to label %bb.h unwind label %bb.f
 
 bb.h:                                             ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i23", %.noexc25
-  %.sroa.0.0.i24 = phi i8 [ %i.ai, %.noexc25 ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i23" ]
+  %.sroa.0.0.i24 = phi i8 [ %i.ai, %.noexc25 ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i23" ]
   %.sroa.0.0.i = icmp ne i8 %.sroa.0.0.i8, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.aj = zext i1 %.sroa.0.0.i to i8
@@ -849,7 +849,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %bb.a, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i5 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.k, %bb.a ]
+  %.sroa.0.0.i5 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.k, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.e, ptr noundef nonnull align 8 %i.h, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @175, i64 noundef 27)
@@ -946,7 +946,7 @@ bb.b:                                             ; preds = %"_ZN4anki6config46_
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit25"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit25": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit21", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i23"
-  %.sroa.0.0.i24 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i23" ], [ %i.ag, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit21" ]
+  %.sroa.0.0.i24 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i23" ], [ %i.ag, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit21" ]
   %i.ah = insertelement <4 x i8> poison, i8 %.sroa.0.0.i8, i64 0
   %i.ai = insertelement <4 x i8> %i.ah, i8 %.sroa.0.0.i12, i64 1
   %i.aj = insertelement <4 x i8> %i.ai, i8 %.sroa.0.0.i16, i64 2
@@ -1109,7 +1109,7 @@ bb.f:                                             ; preds = %"_ZN4anki6config46_
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$23get_creation_utc_offset17hc98478cd86e1baf4E.exit", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.ak, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$23get_creation_utc_offset17hc98478cd86e1baf4E.exit" ]
+  %.sroa.0.0.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.ak, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$23get_creation_utc_offset17hc98478cd86e1baf4E.exit" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.al = and i8 %.sroa.0.0.i, 1
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1153,7 +1153,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %bb.a, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.a ]
+  %.sroa.0.0.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %spec.select.i.i = trunc i8 %.sroa.0.0.i to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -1556,7 +1556,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %bb.a, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.a ]
+  %.sroa.0.0.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.b, ptr noundef nonnull align 8 %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @189, i64 noundef 14)
@@ -1571,7 +1571,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i10"
-  %.sroa.0.0.i11 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i10" ], [ %i.l, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
+  %.sroa.0.0.i11 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i10" ], [ %i.l, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.a, ptr noundef nonnull align 8 %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @190, i64 noundef 15)
@@ -1586,7 +1586,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit16"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit16": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i14"
-  %.sroa.0.0.i15 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i14" ], [ %i.o, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12" ]
+  %.sroa.0.0.i15 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i14" ], [ %i.o, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit12" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17h2ed662c879338143E"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.e, ptr noundef nonnull align 8 %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @214, i64 noundef 11)
@@ -1989,7 +1989,7 @@ bb.bu:                                            ; preds = %bb.bt
           to label %"_ZN4core3ptr99drop_in_place$LT$core..option..Option$LT$anki_proto..stats..graphs_response..Retrievability$GT$$GT$17hbbc92000b0d87789E.exit.i.i" unwind label %bb.bw, !noalias !7254
 
 bb.bv:                                            ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i.i", %.noexc213.i.i
-  %.sroa.0.0.i.i.i = phi i8 [ %i.ey, %.noexc213.i.i ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i.i" ]
+  %.sroa.0.0.i.i.i = phi i8 [ %i.ey, %.noexc213.i.i ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i.i" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !7255
   %.sroa.048.sroa.0.96..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.048.sroa.0.i.i, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %.sroa.048.sroa.0.96..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(288) %i.h, i64 288, i1 false), !noalias !7255
@@ -2392,7 +2392,7 @@ bb.b:                                             ; preds = %"_ZN4anki6config46_
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %bb.b, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.b ]
+  %.sroa.0.0.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %spec.select.i.i = trunc i8 %.sroa.0.0.i to i1
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$17scheduler_version17hb427acb225cacf9aE.exit.thread"
@@ -2795,7 +2795,7 @@ bb.ad:                                            ; preds = %bb.a
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i.i"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i.i": ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i.i", %bb.ad
-  %.sroa.0.0.i.i.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i.i" ], [ %i.mz, %bb.ad ]
+  %.sroa.0.0.i.i.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i.i" ], [ %i.mz, %bb.ad ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !10170
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !10170
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.c, ptr noundef nonnull align 8 %i.mw, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @187, i64 noundef 28), !noalias !10171
@@ -3198,7 +3198,7 @@ bb.kb:                                            ; preds = %bb.ka, %bb.jr
   br label %bb.av
 
 bb.kc:                                            ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3.i.i", %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i.i"
-  %.sroa.0.0.i4.i.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3.i.i" ], [ %i.nc, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i.i" ]
+  %.sroa.0.0.i4.i.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3.i.i" ], [ %i.nc, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i.i" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !10170
   %i.aaj = and i8 %.sroa.0.0.i.i.i, 1
   %i.aak = and i8 %.sroa.0.0.i4.i.i, 1
@@ -3601,7 +3601,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %bb.a, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.f, %bb.a ]
+  %.sroa.0.0.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.f, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.a, ptr noundef nonnull align 8 %i.c, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @187, i64 noundef 28)
@@ -3616,7 +3616,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit5"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit5": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3"
-  %.sroa.0.0.i4 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3" ], [ %i.i, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
+  %.sroa.0.0.i4 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3" ], [ %i.i, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
   %spec.select.i.i = trunc i8 %.sroa.0.0.i to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %spec.select.i.i1 = trunc i8 %.sroa.0.0.i4 to i1
@@ -4019,7 +4019,7 @@ bb.b:                                             ; preds = %bb.a
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit7"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit7": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i5"
-  %.sroa.0.0.i6 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i5" ], [ %i.l, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
+  %.sroa.0.0.i6 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i5" ], [ %i.l, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.d
 
@@ -4052,7 +4052,7 @@ bb.c:                                             ; preds = %bb.a
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit15"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit15": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit11", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i13"
-  %.sroa.0.0.i14 = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i13" ], [ %i.r, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit11" ]
+  %.sroa.0.0.i14 = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i13" ], [ %i.r, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit11" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.d
 
@@ -4455,7 +4455,7 @@ bb.q:                                             ; preds = %"_ZN4core3ptr106dro
           to label %"_ZN4core3ptr90drop_in_place$LT$std..collections..hash..map..HashMap$LT$anki..decks..DeckId$C$f32$GT$$GT$17h3ef7e3a0ace16449E.exit" unwind label %bb.dx
 
 bb.r:                                             ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i", %.noexc165
-  %.sroa.0.0.i164 = phi i8 [ %i.bu, %.noexc165 ], [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ]
+  %.sroa.0.0.i164 = phi i8 [ %i.bu, %.noexc165 ], [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %spec.select.i.i = trunc i8 %.sroa.0.0.i164 to i1
   call void @llvm.experimental.noalias.scope.decl(metadata !11948)
@@ -4858,7 +4858,7 @@ bb.a:
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i": ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i", %bb.a
-  %.sroa.0.0.i.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i" ], [ %i.f, %bb.a ]
+  %.sroa.0.0.i.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i" ], [ %i.f, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @"_ZN4anki7storage6config54_$LT$impl$u20$anki..storage..sqlite..SqliteStorage$GT$16get_config_value17he6d4c5be612c4b9eE"(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(address) dereferenceable(112) %i.a, ptr noundef nonnull align 8 %i.c, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @187, i64 noundef 28)
@@ -4873,7 +4873,7 @@ bb.a:
   br label %"_ZN4anki9scheduler3new46_$LT$impl$u20$anki..collection..Collection$GT$19reposition_defaults17hab1a639d3149eac4E.exit"
 
 "_ZN4anki9scheduler3new46_$LT$impl$u20$anki..collection..Collection$GT$19reposition_defaults17hab1a639d3149eac4E.exit": ; preds = %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i", %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3.i"
-  %.sroa.0.0.i4.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3.i" ], [ %i.i, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i" ]
+  %.sroa.0.0.i4.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i3.i" ], [ %i.i, %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = and i8 %.sroa.0.0.i.i, 1
@@ -5276,7 +5276,7 @@ bb.h:                                             ; preds = %bb.f
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit.i": ; preds = %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i", %bb.h
-  %.sroa.0.0.i.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i" ], [ %i.as, %bb.h ]
+  %.sroa.0.0.i.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i.i" ], [ %i.as, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13056
   %spec.select.i.i.i = trunc i8 %.sroa.0.0.i.i to i1
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 88
@@ -5679,7 +5679,7 @@ bb.c:                                             ; preds = %bb.a
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %bb.c, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.c ]
+  %.sroa.0.0.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.d
 
@@ -6082,7 +6082,7 @@ bb.c:                                             ; preds = %bb.a
   br label %"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit"
 
 "_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$19get_config_optional17h59ed1b814d2f79ceE.exit": ; preds = %bb.c, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i"
-  %.sroa.0.0.i = phi i8 [ 2, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.c ]
+  %.sroa.0.0.i = phi i8 [ 0, %"_ZN4core3ptr106drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$bool$GT$$C$anki..error..AnkiError$GT$$GT$17he1bda0707b167ad3E.exit.i" ], [ %i.i, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.d
 

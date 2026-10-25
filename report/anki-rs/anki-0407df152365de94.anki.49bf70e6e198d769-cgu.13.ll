@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.lr.ph.i.i25
   store i64 5, ptr %0, align 8
   br label %bb.j
 
-.loopexit:                                        ; preds = %bb.q, %.lr.ph, %.lr.ph.i.i25, %select.unfold4, %bb.l, %bb.l, %bb.k
+.loopexit:                                        ; preds = %.lr.ph, %bb.q, %.lr.ph.i.i25, %select.unfold4, %bb.l, %bb.l, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %spec.select = select i1 %3, ptr @729, ptr @728
   store ptr %spec.select, ptr %i.e, align 8

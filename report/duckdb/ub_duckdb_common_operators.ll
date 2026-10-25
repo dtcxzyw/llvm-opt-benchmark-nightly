@@ -205,7 +205,7 @@ _ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.i.i: ; preds = %._
   br i1 %or.cond.i.i.i31.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIaEELb1EEEbRT_.exit.i.i.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIaEELb1EEEbRT_.exit.thread115.i.i.i
 
 _ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIaEELb1EEEbRT_.exit.thread115.i.i.i: ; preds = %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.i.i, %.thread119.i.i.thread.i, %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i
-  %.8.i96271276.i.i = phi i64 [ 1, %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i30.i, %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i30.ph.i, %.thread119.i.i.thread.i ]
+  %.8.i96271276.i.i = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i30.i, %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i30.ph.i, %.thread119.i.i.thread.i ]
   %i.ij = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %i.ey, %_ZN6duckdb7TryCast9OperationIlaEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %i.hk, %.thread119.i.i.thread.i ]
   store i64 %i.ij, ptr %6, align 8, !tbaa !132
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -608,7 +608,7 @@ _ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.i.i: ; preds = %._
   br i1 %or.cond.i.i.i22.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIsEELb1EEEbRT_.exit.i.i.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIsEELb1EEEbRT_.exit.thread115.i.i.i
 
 _ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIsEELb1EEEbRT_.exit.thread115.i.i.i: ; preds = %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.i.i, %.thread119.i.i.thread.i, %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i
-  %.8.i96271276.i.i = phi i64 [ 1, %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i.i, %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i.ph.i, %.thread119.i.i.thread.i ]
+  %.8.i96271276.i.i = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i.i, %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i.ph.i, %.thread119.i.i.thread.i ]
   %i.fs = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %i.ch, %_ZN6duckdb7TryCast9OperationIlsEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %i.et, %.thread119.i.i.thread.i ]
   store i64 %i.fs, ptr %7, align 8, !tbaa !136
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -1011,7 +1011,7 @@ _ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.i.i: ; preds = %._
   br i1 %or.cond.i.i.i31.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIiEELb1EEEbRT_.exit.i.i.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIiEELb1EEEbRT_.exit.thread115.i.i.i
 
 _ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIiEELb1EEEbRT_.exit.thread115.i.i.i: ; preds = %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.i.i, %.thread119.i.i.thread.i, %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i
-  %.8.i96271276.i.i = phi i64 [ 1, %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i30.i, %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i30.ph.i, %.thread119.i.i.thread.i ]
+  %.8.i96271276.i.i = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i30.i, %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i30.ph.i, %.thread119.i.i.thread.i ]
   %i.ir = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %i.fg, %_ZN6duckdb7TryCast9OperationIliEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %i.hs, %.thread119.i.i.thread.i ]
   store i64 %i.ir, ptr %6, align 8, !tbaa !140
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -1414,7 +1414,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bk
 
 ._crit_edge15.i.i.thread.i.i:                     ; preds = %bb.bn, %bb.bj, %bb.ar
   %.ph.i.i = phi i64 [ 0, %bb.ar ], [ %i.hs, %bb.bj ], [ %i.hs, %bb.bn ]
-  %.8.i.ph.i.i = phi i64 [ 1, %bb.ar ], [ %.7.i.i35.i, %bb.bn ], [ %.036142.i.i, %bb.bj ]
+  %.8.i.ph.i.i = phi i64 [ 0, %bb.ar ], [ %.7.i.i35.i, %bb.bn ], [ %.036142.i.i, %bb.bj ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   br label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIlEELb1EEEbRT_.exit.thread.i.i.i
 
@@ -1817,7 +1817,7 @@ _ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.i.i: ; preds = %._
   br i1 %or.cond.i.i.i34.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIhEELb1EEEbRT_.exit.i.i.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIhEELb1EEEbRT_.exit.thread115.i.i.i
 
 _ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIhEELb1EEEbRT_.exit.thread115.i.i.i: ; preds = %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.i.i, %.thread119.i.i.thread.i, %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i
-  %.8.i104287292.i.i = phi i64 [ 1, %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i33.i, %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i33.ph.i, %.thread119.i.i.thread.i ]
+  %.8.i104287292.i.i = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i33.i, %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i33.ph.i, %.thread119.i.i.thread.i ]
   %i.il = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %i.fc, %_ZN6duckdb7TryCast9OperationIlhEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %i.ho, %.thread119.i.i.thread.i ]
   store i64 %i.il, ptr %6, align 8, !tbaa !148
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -2220,7 +2220,7 @@ _ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.i.i: ; preds = %._
   br i1 %or.cond.i.i.i34.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataItEELb1EEEbRT_.exit.i.i.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataItEELb1EEEbRT_.exit.thread115.i.i.i
 
 _ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataItEELb1EEEbRT_.exit.thread115.i.i.i: ; preds = %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.i.i, %.thread119.i.i.thread.i, %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i
-  %.8.i104287292.i.i = phi i64 [ 1, %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i33.i, %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i33.ph.i, %.thread119.i.i.thread.i ]
+  %.8.i104287292.i.i = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i33.i, %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i33.ph.i, %.thread119.i.i.thread.i ]
   %i.ir = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %i.fi, %_ZN6duckdb7TryCast9OperationIltEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %i.hu, %.thread119.i.i.thread.i ]
   store i64 %i.ir, ptr %6, align 8, !tbaa !152
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -2623,7 +2623,7 @@ _ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.i.i: ; preds = %._
   br i1 %or.cond.i.i.i34.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIjEELb1EEEbRT_.exit.i.i.i, label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIjEELb1EEEbRT_.exit.thread115.i.i.i
 
 _ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataIjEELb1EEEbRT_.exit.thread115.i.i.i: ; preds = %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.i.i, %.thread119.i.i.thread.i, %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i
-  %.8.i104287292.i.i = phi i64 [ 1, %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i33.i, %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i33.ph.i, %.thread119.i.i.thread.i ]
+  %.8.i104287292.i.i = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %.8.i.i33.i, %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %.8.i.i33.ph.i, %.thread119.i.i.thread.i ]
   %i.it = phi i64 [ 0, %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.thread.i.i ], [ %i.fk, %_ZN6duckdb7TryCast9OperationIljEEbT_RT0_b.exit._crit_edge.i.i.i.i ], [ %i.hw, %.thread119.i.i.thread.i ]
   store i64 %i.it, ptr %6, align 8, !tbaa !156
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -3026,7 +3026,7 @@ bb.bf:                                            ; preds = %bb.be, %bb.bc
 
 ._crit_edge15.i.i.thread.i.i:                     ; preds = %bb.bf, %.lr.ph224.i, %.preheader.i24.i.preheader, %.lr.ph233.i.preheader, %.lr.ph233.i.._crit_edge15.i.i.thread.i.i.loopexit_crit_edge
   %.ph.i.i = phi i64 [ %i.fz, %.lr.ph233.i.._crit_edge15.i.i.thread.i.i.loopexit_crit_edge ], [ 0, %.preheader.i24.i.preheader ], [ %i.fp, %.lr.ph233.i.preheader ], [ %i.im, %.lr.ph224.i ], [ %i.im, %bb.bf ]
-  %.8.i.ph.i.i = phi i64 [ %.043160.i.i, %.lr.ph233.i.._crit_edge15.i.i.thread.i.i.loopexit_crit_edge ], [ 1, %.preheader.i24.i.preheader ], [ %.043160.i.i, %.lr.ph233.i.preheader ], [ %.7.i.i39.i, %bb.bf ], [ %.043160.i.i, %.lr.ph224.i ]
+  %.8.i.ph.i.i = phi i64 [ %.043160.i.i, %.lr.ph233.i.._crit_edge15.i.i.thread.i.i.loopexit_crit_edge ], [ 0, %.preheader.i24.i.preheader ], [ %.043160.i.i, %.lr.ph233.i.preheader ], [ %.7.i.i39.i, %bb.bf ], [ %.043160.i.i, %.lr.ph224.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   br label %_ZN6duckdb27IntegerDecimalCastOperation8FinalizeINS_22IntegerDecimalCastDataImEELb1EEEbRT_.exit.thread.i.i.i
 
@@ -3429,7 +3429,7 @@ bb.l:                                             ; preds = %bb.k, %bb.i
   br i1 %i.au, label %.lr.ph.split, label %.thread84, !llvm.loop !1497
 
 .thread84:                                        ; preds = %bb.h, %bb.l, %bb.c, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit78, %bb.a, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit, %.thread82
-  %.8 = phi i64 [ %i.t, %.thread82 ], [ %1, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit78 ], [ %i.aa, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit ], [ 1, %bb.a ], [ %1, %bb.c ], [ %.7, %bb.l ], [ %1, %bb.h ]
+  %.8 = phi i64 [ %i.t, %.thread82 ], [ %1, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit78 ], [ %i.aa, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit ], [ 0, %bb.a ], [ %1, %bb.c ], [ %.7, %bb.l ], [ %1, %bb.h ]
   %i.av = icmp ugt i64 %.8, 1
   br label %.critedge
 
@@ -3832,7 +3832,7 @@ bb.ae:                                            ; preds = %thread-pre-split.th
 
 thread-pre-split.thread.thread:                   ; preds = %bb.z, %bb.ad, %bb.c, %bb.ae, %thread-pre-split.thread
   %i.dz = phi i8 [ %i.du, %bb.ae ], [ %i.du, %thread-pre-split.thread ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.z ] ; 5 uses
-  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 1, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
+  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
   %.pre.i.i.i = phi i16 [ %i.dy, %bb.ae ], [ %i.dv, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.promoted.i.i.i.i177, %bb.ad ], [ %.promoted.i.i.i.i177, %bb.z ] ; 4 uses
   %i.ea = icmp ult i8 %i.dz, %5
   br i1 %i.ea, label %iter.check, label %_ZN6duckdb20DecimalCastOperation8FinalizeINS_15DecimalCastDataIsEELb1EEEbRT_.exit.i.i
@@ -4235,7 +4235,7 @@ bb.ae:                                            ; preds = %thread-pre-split.th
 
 thread-pre-split.thread.thread:                   ; preds = %bb.z, %bb.ad, %bb.c, %bb.ae, %thread-pre-split.thread
   %i.dz = phi i8 [ %i.du, %bb.ae ], [ %i.du, %thread-pre-split.thread ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.z ] ; 4 uses
-  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 1, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
+  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
   %.pre.i.i.i = phi i32 [ %i.dy, %bb.ae ], [ %i.dv, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.promoted.i.i.i.i177, %bb.ad ], [ %.promoted.i.i.i.i177, %bb.z ] ; 3 uses
   %i.ea = icmp ult i8 %i.dz, %5
   br i1 %i.ea, label %.lr.ph.i.i.i.preheader, label %_ZN6duckdb20DecimalCastOperation8FinalizeINS_15DecimalCastDataIiEELb1EEEbRT_.exit.i.i
@@ -4638,7 +4638,7 @@ bb.ae:                                            ; preds = %thread-pre-split.th
 
 thread-pre-split.thread.thread:                   ; preds = %bb.z, %bb.ad, %bb.c, %bb.ae, %thread-pre-split.thread
   %i.dy = phi i8 [ %i.dt, %bb.ae ], [ %i.dt, %thread-pre-split.thread ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.z ] ; 5 uses
-  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 1, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
+  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
   %.pre.i.i.i = phi i64 [ %i.dx, %bb.ae ], [ %i.du, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.promoted.i.i.i.i177, %bb.ad ], [ %.promoted.i.i.i.i177, %bb.z ] ; 3 uses
   %i.dz = icmp ult i8 %i.dy, %5
   br i1 %i.dz, label %.lr.ph.i.i.i.preheader, label %_ZN6duckdb20DecimalCastOperation8FinalizeINS_15DecimalCastDataIlEELb1EEEbRT_.exit.i.i
@@ -5041,7 +5041,7 @@ bb.ae:                                            ; preds = %thread-pre-split.th
 
 thread-pre-split.thread.thread:                   ; preds = %bb.z, %bb.ad, %bb.c, %bb.ae, %thread-pre-split.thread
   %i.dz = phi i8 [ %i.du, %bb.ae ], [ %i.du, %thread-pre-split.thread ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.z ] ; 5 uses
-  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 1, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
+  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
   %.pre.i.i.i = phi i16 [ %i.dy, %bb.ae ], [ %i.dv, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.promoted.i.i.i.i177, %bb.ad ], [ %.promoted.i.i.i.i177, %bb.z ] ; 4 uses
   %i.ea = icmp ult i8 %i.dz, %5
   br i1 %i.ea, label %iter.check, label %_ZN6duckdb20DecimalCastOperation8FinalizeINS_15DecimalCastDataIsEELb1EEEbRT_.exit.i.i
@@ -5444,7 +5444,7 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   br i1 %i.aj, label %.lr.ph, label %.thread84, !llvm.loop !2577
 
 .thread84:                                        ; preds = %bb.f, %bb.j, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit78, %bb.a, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit, %.thread82
-  %.8 = phi i64 [ %i.i, %.thread82 ], [ %1, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit78 ], [ %i.p, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit ], [ 1, %bb.a ], [ %.7, %bb.j ], [ %1, %bb.f ]
+  %.8 = phi i64 [ %i.i, %.thread82 ], [ %1, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit78 ], [ %i.p, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit ], [ 0, %bb.a ], [ %.7, %bb.j ], [ %1, %bb.f ]
   %i.ak = icmp ugt i64 %.8, 1
   br label %.critedge
 
@@ -5847,7 +5847,7 @@ bb.ae:                                            ; preds = %thread-pre-split.th
 
 thread-pre-split.thread.thread:                   ; preds = %bb.z, %bb.ad, %bb.c, %bb.ae, %thread-pre-split.thread
   %i.dz = phi i8 [ %i.du, %bb.ae ], [ %i.du, %thread-pre-split.thread ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.z ] ; 4 uses
-  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 1, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
+  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
   %.pre.i.i.i = phi i32 [ %i.dy, %bb.ae ], [ %i.dv, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.promoted.i.i.i.i177, %bb.ad ], [ %.promoted.i.i.i.i177, %bb.z ] ; 3 uses
   %i.ea = icmp ult i8 %i.dz, %5
   br i1 %i.ea, label %.lr.ph.i.i.i.preheader, label %_ZN6duckdb20DecimalCastOperation8FinalizeINS_15DecimalCastDataIiEELb1EEEbRT_.exit.i.i
@@ -6250,7 +6250,7 @@ bb.ae:                                            ; preds = %thread-pre-split.th
 
 thread-pre-split.thread.thread:                   ; preds = %bb.z, %bb.ad, %bb.c, %bb.ae, %thread-pre-split.thread
   %i.dy = phi i8 [ %i.dt, %bb.ae ], [ %i.dt, %thread-pre-split.thread ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.z ] ; 5 uses
-  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 1, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
+  %.8.i.i243250266 = phi i64 [ %.8.i.i, %bb.ae ], [ %.8.i.i, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.035153.i, %bb.z ], [ %.7.i.i, %bb.ad ]
   %.pre.i.i.i = phi i64 [ %i.dx, %bb.ae ], [ %i.du, %thread-pre-split.thread ], [ 0, %bb.c ], [ %.promoted.i.i.i.i177, %bb.ad ], [ %.promoted.i.i.i.i177, %bb.z ] ; 3 uses
   %i.dz = icmp ult i8 %i.dy, %5
   br i1 %i.dz, label %.lr.ph.i.i.i.preheader, label %_ZN6duckdb20DecimalCastOperation8FinalizeINS_15DecimalCastDataIlEELb1EEEbRT_.exit.i.i

@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call { ptr, i64 } @_RINvMNtCsj6eKBz9Db1c_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3) ; 2 uses
   %i.g = extractvalue { ptr, i64 } %i.f, 0        ; 3 uses
-  %i.h = extractvalue { ptr, i64 } %i.f, 1        ; 2 uses
+  %i.h = extractvalue { ptr, i64 } %i.f, 1        ; 3 uses
   switch i64 %i.h, label %thread-pre-split.i [
     i64 0, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread
     i64 1, label %bb.c
@@ -398,7 +398,7 @@ bb.p:                                             ; preds = %bb.a
   br label %bb.u
 
 _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.g, %bb.e, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %.lr.ph.i.6, %.lr.ph.i.7, %bb.b, %bb.c, %bb.c, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i42 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.c ], [ 257, %.lr.ph.i ], [ 257, %bb.c ], [ 1, %bb.b ], [ 257, %.lr.ph.i.7 ], [ 257, %.lr.ph.i.6 ], [ 257, %.lr.ph.i.5 ], [ 257, %.lr.ph.i.4 ], [ 257, %.lr.ph.i.3 ], [ 257, %.lr.ph.i.2 ], [ 257, %.lr.ph.i.1 ], [ 257, %bb.e ], [ 513, %bb.g ]
+  %.sroa.8.0.insert.insert.i42 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 256, %bb.c ], [ 256, %.lr.ph.i ], [ 256, %bb.c ], [ %i.h, %bb.b ], [ 256, %.lr.ph.i.7 ], [ 256, %.lr.ph.i.6 ], [ 256, %.lr.ph.i.5 ], [ 256, %.lr.ph.i.4 ], [ 256, %.lr.ph.i.3 ], [ 256, %.lr.ph.i.2 ], [ 256, %.lr.ph.i.1 ], [ 256, %bb.e ], [ 512, %bb.g ]
   %.sroa.431.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i42, 8
   %.sroa.431.0.extract.trunc = trunc i64 %.sroa.431.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1394

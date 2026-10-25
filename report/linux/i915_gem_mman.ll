@@ -69,7 +69,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @llvm.compiler.used = appending global [6 x ptr] [ptr @__assert_rpm_raw_wakeref_held.__UNIQUE_ID_addressable___SCK__WARN_trap_717, ptr @__assert_rpm_wakelock_held.__UNIQUE_ID_addressable___SCK__WARN_trap_718, ptr @__do_trace_i915_gem_object_fault.__UNIQUE_ID_addressable___SCK__tp_func_i915_gem_object_fault_837, ptr @__do_trace_i915_gem_object_fault.__trace_check_i915_gem_object_fault, ptr @assert_rpm_device_not_suspended.__UNIQUE_ID_addressable___SCK__WARN_trap_716, ptr @i915_error_to_vmf_fault.__UNIQUE_ID_addressable___SCK__WARN_trap_939], section "llvm.metadata"
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define dso_local range(i32 -4095, 1) i32 @i915_gem_mmap_ioctl(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr noundef %2) local_unnamed_addr #0 align 16 prefalign(16) {
+define dso_local i32 @i915_gem_mmap_ioctl(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr noundef %2) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 1648
   %i.b = load ptr, ptr %i.a, align 8
@@ -243,7 +243,7 @@ bb.r:                                             ; preds = %bb.q, %bb.l
   br label %bb.v
 
 .critedge:                                        ; preds = %__vma_matches.exit.thread, %bb.m, %bb.i, %bb.j, %i915_gem_object_lookup.exit, %bb.k
-  %.3 = phi i64 [ -6, %i915_gem_object_lookup.exit ], [ %i.ap, %bb.k ], [ -22, %bb.i ], [ -22, %bb.j ], [ -12, %__vma_matches.exit.thread ], [ -4, %bb.m ]
+  %.3 = phi i64 [ 4294967290, %i915_gem_object_lookup.exit ], [ %i.ap, %bb.k ], [ 4294967274, %bb.i ], [ 4294967274, %bb.j ], [ 4294967284, %__vma_matches.exit.thread ], [ 4294967292, %bb.m ]
   %i.br = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %i.u, i32 -1, ptr nonnull elementtype(i32) %i.u) #11, !srcloc !17 ; 2 uses
   %i.bs = icmp eq i32 %i.br, 1
   br i1 %i.bs, label %bb.u, label %bb.s
@@ -262,7 +262,7 @@ bb.u:                                             ; preds = %.critedge
   br label %i915_gem_object_put.exit
 
 i915_gem_object_put.exit:                         ; preds = %bb.s, %bb.t, %bb.u
-  %i.bu = trunc nsw i64 %.3 to i32
+  %i.bu = trunc i64 %.3 to i32
   br label %bb.v
 
 bb.v:                                             ; preds = %i915_gem_object_lookup.exit.thread, %bb.e, %bb.c, %bb.a, %bb.b, %i915_gem_object_put.exit, %bb.r

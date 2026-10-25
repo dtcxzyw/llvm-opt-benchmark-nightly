@@ -204,9 +204,9 @@ padstr8.exit128:                                  ; preds = %bb.a
 padstr8.exit146:                                  ; preds = %padstr8.exit128, %padstr8.exit97, %bb.i, %bb.c, %padstr8.exit
   %.086 = phi i32 [ 6, %bb.c ], [ 28, %padstr8.exit ], [ 112, %bb.i ], [ 100, %padstr8.exit97 ], [ 36, %padstr8.exit128 ] ; 2 uses
   %.085 = phi i64 [ 3, %bb.c ], [ 3, %padstr8.exit ], [ 3, %bb.i ], [ 3, %padstr8.exit97 ], [ 4, %padstr8.exit128 ]
-  %.0.neg = phi i32 [ -4, %bb.c ], [ -4, %padstr8.exit ], [ -4, %bb.i ], [ -4, %padstr8.exit97 ], [ -5, %padstr8.exit128 ]
-  %i.hu = add nsw i32 %.0.neg, %.086
-  %i.hv = trunc nuw nsw i32 %i.hu to i8
+  %.0.neg = phi i32 [ 252, %bb.c ], [ 252, %padstr8.exit ], [ 252, %bb.i ], [ 252, %padstr8.exit97 ], [ 251, %padstr8.exit128 ]
+  %i.hu = add nuw nsw i32 %.0.neg, %.086
+  %i.hv = trunc i32 %i.hu to i8
   %i.hw = getelementptr inbounds nuw i8, ptr %1, i64 %.085
   store i8 %i.hv, ptr %i.hw, align 1
   %spec.select.i147 = tail call i32 @llvm.umin.i32(i32 range(i32 0, -2147483648) %.086, i32 range(i32 0, 65536) %i.c) ; 3 uses

@@ -206,7 +206,7 @@ bb.n:                                             ; preds = %_ZN3std3env3var17ha
   %.sroa.556.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %.sroa.556.0.copyload.i = load ptr, ptr %.sroa.556.0..sroa_idx.i, align 8, !noalias !42588, !nonnull !57, !noundef !57 ; 8 uses
   %.sroa.857.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
-  %.sroa.857.0.copyload.i = load i64, ptr %.sroa.857.0..sroa_idx.i, align 8, !noalias !42588 ; 6 uses
+  %.sroa.857.0.copyload.i = load i64, ptr %.sroa.857.0..sroa_idx.i, align 8, !noalias !42588 ; 7 uses
   switch i64 %.sroa.857.0.copyload.i, label %bb.p [
     i64 0, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread.i"
     i64 1, label %bb.o
@@ -318,7 +318,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.de, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread.i", label %bb.z, !prof !129
 
 "_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread.i": ; preds = %bb.v, %bb.t, %.lr.ph.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.i", %bb.o, %bb.o, %bb.n
-  %.sroa.8.0.insert.insert.i70.i = phi i64 [ %.sroa.8.0.insert.insert.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.i" ], [ 257, %bb.o ], [ 257, %.lr.ph.i.i ], [ 1, %bb.n ], [ 257, %bb.o ], [ 257, %bb.t ], [ 513, %bb.v ]
+  %.sroa.8.0.insert.insert.i70.i = phi i64 [ %.sroa.8.0.insert.insert.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.i" ], [ 256, %bb.o ], [ 256, %.lr.ph.i.i ], [ %.sroa.857.0.copyload.i, %bb.n ], [ 256, %bb.o ], [ 256, %bb.t ], [ 512, %bb.v ]
   %.sroa.4.0.extract.shift.i.i = lshr i64 %.sroa.8.0.insert.insert.i70.i, 8
   %.sroa.4.0.extract.trunc.i.i = trunc i64 %.sroa.4.0.extract.shift.i.i to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !42591
@@ -721,7 +721,7 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   br label %.thread741
 
 ._crit_edge.thread:                               ; preds = %bb.l, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i, %._crit_edge
-  %.val13.i.i.i1190 = phi <16 x i8> [ %.val13.i.i.i, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.val13.i.i.i, %._crit_edge ], [ splat (i8 -1), %bb.l ]
+  %.val13.i.i.i1190 = phi <16 x i8> [ %.val13.i.i.i, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.val13.i.i.i, %._crit_edge ], [ splat (i8 -128), %bb.l ]
   %.sroa.0689.0.copyload1189 = phi ptr [ %.sroa.0689.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.sroa.0689.0.copyload.pre, %._crit_edge ], [ @29, %bb.l ] ; 4 uses
   %.sroa.2690.0.copyload1188 = phi i64 [ %.sroa.2690.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ 0, %._crit_edge ], [ 0, %bb.l ]
   %.sroa.3692.0.copyload1187 = phi i64 [ %.sroa.3692.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.sroa.3692.0.copyload.pre, %._crit_edge ], [ 0, %bb.l ] ; 3 uses
@@ -1124,7 +1124,7 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   br label %.thread741
 
 ._crit_edge.thread:                               ; preds = %bb.l, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i, %._crit_edge
-  %.val13.i.i.i1190 = phi <16 x i8> [ %.val13.i.i.i, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.val13.i.i.i, %._crit_edge ], [ splat (i8 -1), %bb.l ]
+  %.val13.i.i.i1190 = phi <16 x i8> [ %.val13.i.i.i, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.val13.i.i.i, %._crit_edge ], [ splat (i8 -128), %bb.l ]
   %.sroa.0689.0.copyload1189 = phi ptr [ %.sroa.0689.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.sroa.0689.0.copyload.pre, %._crit_edge ], [ @29, %bb.l ] ; 4 uses
   %.sroa.2690.0.copyload1188 = phi i64 [ %.sroa.2690.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ 0, %._crit_edge ], [ 0, %bb.l ]
   %.sroa.3692.0.copyload1187 = phi i64 [ %.sroa.3692.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.sroa.3692.0.copyload.pre, %._crit_edge ], [ 0, %bb.l ] ; 3 uses
@@ -1527,7 +1527,7 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   br label %.thread741
 
 ._crit_edge.thread:                               ; preds = %bb.l, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i, %._crit_edge
-  %.val13.i.i.i1190 = phi <16 x i8> [ %.val13.i.i.i, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.val13.i.i.i, %._crit_edge ], [ splat (i8 -1), %bb.l ]
+  %.val13.i.i.i1190 = phi <16 x i8> [ %.val13.i.i.i, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.val13.i.i.i, %._crit_edge ], [ splat (i8 -128), %bb.l ]
   %.sroa.0689.0.copyload1189 = phi ptr [ %.sroa.0689.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.sroa.0689.0.copyload.pre, %._crit_edge ], [ @29, %bb.l ] ; 4 uses
   %.sroa.2690.0.copyload1188 = phi i64 [ %.sroa.2690.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ 0, %._crit_edge ], [ 0, %bb.l ]
   %.sroa.3692.0.copyload1187 = phi i64 [ %.sroa.3692.0.copyload.pre, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i ], [ %.sroa.3692.0.copyload.pre, %._crit_edge ], [ 0, %bb.l ] ; 3 uses

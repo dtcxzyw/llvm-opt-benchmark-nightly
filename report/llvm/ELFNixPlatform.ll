@@ -204,9 +204,6 @@ bb.ay:                                            ; preds = %_ZN4llvmltENS_9Stri
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br i1 %i.hj, label %_ZN4llvmltENS_9StringRefES0_.exit.i.thread.i.i, label %.preheader.i.i.preheader
 
-.preheader.i.i.preheader:                         ; preds = %"_ZZN4llvm3orc14ELFNixPlatform20ELFNixPlatformPlugin20registerFiniSectionsERNS_7jitlink9LinkGraphERNS0_8JITDylibEbENK3$_1clEPKNS3_7SectionESB_.exit.i.i", %_ZN4llvmltENS_9StringRefES0_.exit.i.i.i, %.thread.i.i.i.i.i, %.split42.i.i, %.split43.i.i, %.split.i.i
-  br label %.preheader.i.i
-
 bb.az:                                            ; preds = %bb.ay
   switch i32 %i.hh, label %bb.be [
     i32 0, label %bb.ba
@@ -274,6 +271,9 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i: ; preds = %bb.be
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br i1 %i.ia, label %_ZN4llvmltENS_9StringRefES0_.exit.i.thread.i.i, label %.preheader.i.i.preheader
 
+.preheader.i.i.preheader:                         ; preds = %"_ZZN4llvm3orc14ELFNixPlatform20ELFNixPlatformPlugin20registerFiniSectionsERNS_7jitlink9LinkGraphERNS0_8JITDylibEbENK3$_1clEPKNS3_7SectionESB_.exit.i.i", %_ZN4llvmltENS_9StringRefES0_.exit.i.i.i, %.split42.i.i, %.split43.i.i, %.split.i.i, %.thread.i.i.i.i.i
+  br label %.preheader.i.i
+
 _ZN4llvmltENS_9StringRefES0_.exit.i.i.i:          ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i
   %i.ib = icmp slt i32 %.fr.i.i.i.i.i, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
@@ -286,7 +286,7 @@ _ZN4llvmltENS_9StringRefES0_.exit.i.i.i:          ; preds = %_ZN4llvm9StringRef1
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br i1 %.0.i.in.i.i, label %.preheader.i.i.preheader, label %_ZN4llvmltENS_9StringRefES0_.exit.i.thread.i.i
 
-_ZN4llvmltENS_9StringRefES0_.exit.i.thread.i.i:   ; preds = %"_ZZN4llvm3orc14ELFNixPlatform20ELFNixPlatformPlugin20registerFiniSectionsERNS_7jitlink9LinkGraphERNS0_8JITDylibEbENK3$_1clEPKNS3_7SectionESB_.exit.i.i", %_ZN4llvmltENS_9StringRefES0_.exit.i.i.i, %.thread.i.i.i.i.i, %.split42.i.i, %.split43.i.i, %.split.i.i
+_ZN4llvmltENS_9StringRefES0_.exit.i.thread.i.i:   ; preds = %.thread.i.i.i.i.i, %"_ZZN4llvm3orc14ELFNixPlatform20ELFNixPlatformPlugin20registerFiniSectionsERNS_7jitlink9LinkGraphERNS0_8JITDylibEbENK3$_1clEPKNS3_7SectionESB_.exit.i.i", %_ZN4llvmltENS_9StringRefES0_.exit.i.i.i, %.split42.i.i, %.split43.i.i, %.split.i.i
   %i.ic = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 8
   br label %bb.ay, !llvm.loop !2207
 

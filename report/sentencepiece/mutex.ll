@@ -202,7 +202,7 @@ _ZNSt13__atomic_baseIlE21compare_exchange_weakERllSt12memory_orderS2_.exit: ; pr
   %.0131 = phi ptr [ %i.au, %bb.r ], [ null, %bb.p ] ; 2 uses
   %i.aw = and i64 %i.ap, -504
   %i.ax = icmp eq i64 %i.aw, 0
-  %i.ay = select i1 %i.ax, i64 -34, i64 -41
+  %i.ay = select i1 %i.ax, i64 -98, i64 -105
   %i.az = and i64 %i.ap, 159
   %i.ba = and i64 %i.az, %i.ay
   %.not206 = icmp eq ptr %.0131, null

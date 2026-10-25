@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d
   br label %xa_mk_value.exit
 
 xa_mk_value.exit:                                 ; preds = %.thread, %bb.d, %bb.e
-  %.019 = phi i64 [ 1, %.thread ], [ %i.s, %bb.d ], [ -9223372036854775808, %bb.e ]
-  %i.u = shl i64 %.019, 1
+  %.019 = phi i64 [ 1, %.thread ], [ %i.s, %bb.d ], [ 0, %bb.e ]
+  %i.u = shl nuw i64 %.019, 1
   %i.v = or disjoint i64 %i.u, 1
   %i.w = inttoptr i64 %i.v to ptr
   %i.x = tail call ptr @xa_store(ptr noundef %i.b, i64 noundef %i.a, ptr noundef nonnull %i.w, i32 noundef 4197568) #16 ; 0 uses

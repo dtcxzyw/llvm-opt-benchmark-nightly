@@ -205,12 +205,12 @@ bb.a:                                             ; preds = %fls.exit
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.d, %bb.c, %bb.a
-  %.lcssa.neg = phi i32 [ 0, %bb.a ], [ -7, %bb.c ], [ -12, %bb.d ]
+  %.lcssa.neg = phi i32 [ 0, %bb.a ], [ 249, %bb.c ], [ 244, %bb.d ]
   %.016.lcssa = phi ptr [ @ata_xfer_tbl, %bb.a ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 12), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 24), %bb.d ]
   %i.c = getelementptr i8, ptr %.016.lcssa, i64 8
   %i.d = load i8, ptr %i.c, align 4
-  %i.e = add nsw i32 %.lcssa.neg, %i.a
-  %i.f = trunc nsw i32 %i.e to i8
+  %i.e = add nuw nsw i32 %.lcssa.neg, %i.a
+  %i.f = trunc i32 %i.e to i8
   %i.g = add i8 %i.d, %i.f
   br label %.loopexit
 
@@ -613,12 +613,12 @@ bb.be:                                            ; preds = %fls.exit.i
   br i1 %i.kq, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %bb.bh, %bb.bg, %bb.be
-  %.lcssa.neg.i = phi i32 [ 0, %bb.be ], [ -7, %bb.bg ], [ -12, %bb.bh ]
+  %.lcssa.neg.i = phi i32 [ 0, %bb.be ], [ 249, %bb.bg ], [ 244, %bb.bh ]
   %.016.lcssa.i = phi ptr [ @ata_xfer_tbl, %bb.be ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 12), %bb.bg ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 24), %bb.bh ]
   %i.kr = getelementptr i8, ptr %.016.lcssa.i, i64 8
   %i.ks = load i8, ptr %i.kr, align 4
-  %i.kt = add nsw i32 %.lcssa.neg.i, %i.kp
-  %i.ku = trunc nsw i32 %i.kt to i8
+  %i.kt = add nuw nsw i32 %.lcssa.neg.i, %i.kp
+  %i.ku = trunc i32 %i.kt to i8
   %i.kv = add i8 %i.ks, %i.ku
   br label %ata_xfer_mask2mode.exit
 
@@ -656,12 +656,12 @@ ata_xfer_mask2mode.exit99.thread:                 ; preds = %bb.bk, %ata_xfer_ma
   br label %bb.bl
 
 ata_xfer_mask2mode.exit99:                        ; preds = %bb.bi, %bb.bj, %bb.bk
-  %.lcssa.neg.i97 = phi i32 [ 0, %bb.bi ], [ -7, %bb.bj ], [ -12, %bb.bk ]
+  %.lcssa.neg.i97 = phi i32 [ 0, %bb.bi ], [ 249, %bb.bj ], [ 244, %bb.bk ]
   %.016.lcssa.i98 = phi ptr [ @ata_xfer_tbl, %bb.bi ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 12), %bb.bj ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 24), %bb.bk ]
   %i.le = getelementptr i8, ptr %.016.lcssa.i98, i64 8
   %i.lf = load i8, ptr %i.le, align 4
-  %i.lg = add nsw i32 %.lcssa.neg.i97, %i.kz
-  %i.lh = trunc nsw i32 %i.lg to i8
+  %i.lg = add nuw nsw i32 %.lcssa.neg.i97, %i.kz
+  %i.lh = trunc i32 %i.lg to i8
   %i.li = add i8 %i.lf, %i.lh
   %.fr = freeze i8 %i.li                          ; 2 uses
   %i.lj = getelementptr i8, ptr %.065270, i64 857
@@ -1064,12 +1064,12 @@ bb.dp:                                            ; preds = %ata_id_xfermask.exi
   br i1 %i.xd, label %bb.dq, label %bb.dr
 
 bb.dq:                                            ; preds = %bb.ds, %bb.dr, %bb.dp
-  %.lcssa.neg.i.i = phi i32 [ 0, %bb.dp ], [ -7, %bb.dr ], [ -12, %bb.ds ]
+  %.lcssa.neg.i.i = phi i32 [ 0, %bb.dp ], [ 249, %bb.dr ], [ 244, %bb.ds ]
   %.016.lcssa.i.i = phi ptr [ @ata_xfer_tbl, %bb.dp ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 12), %bb.dr ], [ getelementptr inbounds nuw (i8, ptr @ata_xfer_tbl, i64 24), %bb.ds ]
   %i.xe = getelementptr i8, ptr %.016.lcssa.i.i, i64 8
   %i.xf = load i8, ptr %i.xe, align 4
-  %i.xg = add nsw i32 %.lcssa.neg.i.i, %i.xc
-  %i.xh = trunc nsw i32 %i.xg to i8
+  %i.xg = add nuw nsw i32 %.lcssa.neg.i.i, %i.xc
+  %i.xh = trunc i32 %i.xg to i8
   %i.xi = add i8 %i.xf, %i.xh
   br label %ata_xfer_mask2mode.exit.i
 

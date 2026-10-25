@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.k
   unreachable
 
 _ZN4llvm8CallBase17data_operands_endEv.exit.i:    ; preds = %bb.m, %bb.l, %bb.k
-  %.0.i.i.i367.neg = phi i64 [ %i.fb, %bb.m ], [ -96, %bb.l ], [ -32, %bb.k ]
+  %.0.i.i.i367.neg = phi i64 [ %i.fb, %bb.m ], [ 137438953376, %bb.l ], [ 137438953440, %bb.k ]
   %i.fc = load i32, ptr %i.co, align 4            ; 2 uses
   %i.fd = icmp slt i32 %i.fc, 0
   br i1 %i.fd, label %_ZNK4llvm8CallBase20bundle_op_info_beginEv.exit.i.i.i.i, label %_ZNK4llvm8CallBase17hasOperandBundlesEv.exit.i.i
@@ -260,7 +260,7 @@ _ZN4llvm8CallBase7arg_endEv.exit:                 ; preds = %_ZNK4llvm8CallBase1
   %i.gf = zext nneg i32 %i.ge to i64
   %.neg455 = mul nsw i64 %i.gf, -32               ; 2 uses
   %gepdiff = sub nsw i64 %i.gd, %.neg455
-  %i.gg = lshr exact i64 %gepdiff, 5
+  %i.gg = lshr i64 %gepdiff, 5
   %i.gh = and i64 %i.gg, 4294967295
   %i.gi = icmp samesign uge i64 %indvars.iv, %i.gh
   %i.gj = load i64, ptr %i.ae, align 8
@@ -663,7 +663,7 @@ bb.ce:                                            ; preds = %bb.cb
   unreachable
 
 _ZN4llvm8CallBase17data_operands_endEv.exit.i370: ; preds = %bb.cd, %bb.cc, %bb.cb
-  %.0.i.i.i371.neg = phi i64 [ %i.sf, %bb.cd ], [ -96, %bb.cc ], [ -32, %bb.cb ]
+  %.0.i.i.i371.neg = phi i64 [ %i.sf, %bb.cd ], [ 137438953376, %bb.cc ], [ 137438953440, %bb.cb ]
   %i.sg = load i32, ptr %i.co, align 4            ; 2 uses
   %i.sh = icmp slt i32 %i.sg, 0
   br i1 %i.sh, label %_ZNK4llvm8CallBase20bundle_op_info_beginEv.exit.i.i.i.i377, label %_ZNK4llvm8CallBase17hasOperandBundlesEv.exit.i.i372
@@ -721,7 +721,7 @@ _ZN4llvm8CallBase7arg_endEv.exit379:              ; preds = %_ZNK4llvm8CallBase1
   %i.tj = zext nneg i32 %i.ti to i64
   %.neg465 = mul nsw i64 %i.tj, -32               ; 2 uses
   %gepdiff462 = sub nsw i64 %i.th, %.neg465
-  %i.tk = lshr exact i64 %gepdiff462, 5
+  %i.tk = lshr i64 %gepdiff462, 5
   %i.tl = and i64 %i.tk, 4294967295
   %i.tm = icmp samesign uge i64 %indvars.iv520, %i.tl
   %i.tn = load i64, ptr %i.ae, align 8
@@ -1124,7 +1124,7 @@ bb.dp:                                            ; preds = %bb.dm
   unreachable
 
 _ZN4llvm8CallBase17data_operands_endEv.exit.i380: ; preds = %bb.do, %bb.dn, %bb.dm
-  %.0.i.i.i381.neg = phi i64 [ %i.yg, %bb.do ], [ -96, %bb.dn ], [ -32, %bb.dm ]
+  %.0.i.i.i381.neg = phi i64 [ %i.yg, %bb.do ], [ 137438953376, %bb.dn ], [ 137438953440, %bb.dm ]
   %i.yh = load i32, ptr %i.co, align 4            ; 2 uses
   %i.yi = icmp slt i32 %i.yh, 0
   br i1 %i.yi, label %_ZNK4llvm8CallBase20bundle_op_info_beginEv.exit.i.i.i.i387, label %_ZNK4llvm8CallBase17hasOperandBundlesEv.exit.i.i382

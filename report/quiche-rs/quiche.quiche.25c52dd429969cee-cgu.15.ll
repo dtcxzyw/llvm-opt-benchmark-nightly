@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i, !dbg !8879
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %.sroa.05.0 = phi i128 [ -1, %bb.h ], [ %i.o, %bb.g ], !dbg !8849
-    #dbg_value(i128 %.sroa.05.0, !5013, !DIExpression(), !8862)
-    #dbg_value(i128 %.sroa.05.0, !4956, !DIExpression(), !8861)
+  %.sroa.05.0 = phi i128 [ -4096, %bb.h ], [ %i.o, %bb.g ], !dbg !8849
+    #dbg_value(i128 poison, !5013, !DIExpression(), !8862)
+    #dbg_value(i128 poison, !4956, !DIExpression(), !8861)
   %i.q = udiv i128 %.sroa.05.0, 8000000000, !dbg !8880
     #dbg_value(i128 %i.q, !4957, !DIExpression(), !8865)
     #dbg_value(i128 %i.q, !2893, !DIExpression(), !8831)
@@ -609,9 +609,9 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h, !dbg !13762
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.05.0.i = phi i128 [ -1, %bb.g ], [ %i.o, %bb.f ], !dbg !13763
-    #dbg_value(i128 %.sroa.05.0.i, !5013, !DIExpression(), !13738)
-    #dbg_value(i128 %.sroa.05.0.i, !4956, !DIExpression(), !13737)
+  %.sroa.05.0.i = phi i128 [ -4096, %bb.g ], [ %i.o, %bb.f ], !dbg !13763
+    #dbg_value(i128 poison, !5013, !DIExpression(), !13738)
+    #dbg_value(i128 poison, !4956, !DIExpression(), !13737)
   %i.q = udiv i128 %.sroa.05.0.i, 8000000000, !dbg !13764
     #dbg_value(i128 %i.q, !4957, !DIExpression(), !13741)
     #dbg_value(i128 %i.q, !2893, !DIExpression(), !13743)

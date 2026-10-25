@@ -202,12 +202,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ak, label %.lr.ph.i4, label %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit9
 
 _ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit9: ; preds = %bb.f, %bb.g, %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit
-  %.2.i3 = phi i32 [ -1, %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit ], [ -1, %bb.g ], [ %i.ac, %bb.f ]
+  %.2.i3 = phi i32 [ 65535, %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit ], [ 65535, %bb.g ], [ %i.ac, %bb.f ]
   %i.al = load i8, ptr %i.o, align 2, !tbaa !22
   %i.am = sext i8 %i.al to i64
   %i.an = getelementptr inbounds [4 x i8], ptr @_ZN6icu_78L8gOffsetsE, i64 %i.am
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !36
-  %i.ap = sub nsw i32 %.2.i3, %i.ao
+  %i.ap = sub i32 %.2.i3, %i.ao
   %i.aq = trunc i32 %i.ap to i16
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i16 %i.aq, ptr %i.ar, align 8, !tbaa !21
@@ -457,12 +457,12 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.cg, label %.lr.ph.i29, label %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit34
 
 _ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit34: ; preds = %bb.r, %bb.q, %bb.o, %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit27
-  %.1 = phi i32 [ %i.z, %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit27 ], [ -1, %bb.o ], [ -1, %bb.r ], [ %i.by, %bb.q ]
+  %.1 = phi i32 [ %i.z, %_ZN6icu_78L12binarySearchEPKPKciiNS_11StringPieceE.exit27 ], [ 65535, %bb.o ], [ 65535, %bb.r ], [ %i.by, %bb.q ]
   %i.ch = load i8, ptr %i.o, align 2, !tbaa !22
   %i.ci = sext i8 %i.ch to i64
   %i.cj = getelementptr inbounds [4 x i8], ptr @_ZN6icu_78L8gOffsetsE, i64 %i.ci
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !36
-  %i.cl = sub nsw i32 %.1, %i.ck
+  %i.cl = sub i32 %.1, %i.ck
   %i.cm = trunc i32 %i.cl to i16
   br label %bb.s
 

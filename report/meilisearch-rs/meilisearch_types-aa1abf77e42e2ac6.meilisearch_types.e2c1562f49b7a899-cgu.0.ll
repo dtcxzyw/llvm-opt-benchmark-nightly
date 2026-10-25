@@ -205,7 +205,7 @@ _ZN4core4iter6traits8iterator8Iterator7collect17h23191e8e6367d7c7E.exit: ; preds
 bb.k:                                             ; preds = %_ZN4core4iter6traits8iterator8Iterator7collect17h23191e8e6367d7c7E.exit
   %i.ct = load ptr, ptr %.sroa.8199.0.copyload, align 8, !nonnull !21, !align !37, !noundef !21 ; 6 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.8199.0.copyload, i64 8
-  %i.cv = load i64, ptr %i.cu, align 8, !noundef !21 ; 6 uses
+  %i.cv = load i64, ptr %i.cu, align 8, !noundef !21 ; 7 uses
   switch i64 %i.cv, label %bb.m [
     i64 0, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread"
     i64 1, label %bb.l
@@ -354,7 +354,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.eb, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread", label %.thread
 
 "_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread": ; preds = %bb.s, %bb.q, %.lr.ph.i, %bb.l, %bb.l, %bb.k, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit"
-  %.sroa.8.0.insert.insert.i247 = phi i64 [ %.sroa.8.0.insert.insert.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit" ], [ 257, %bb.l ], [ 257, %.lr.ph.i ], [ 1, %bb.k ], [ 257, %bb.l ], [ 257, %bb.q ], [ 513, %bb.s ]
+  %.sroa.8.0.insert.insert.i247 = phi i64 [ %.sroa.8.0.insert.insert.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit" ], [ 256, %bb.l ], [ 256, %.lr.ph.i ], [ %i.cv, %bb.k ], [ 256, %bb.l ], [ 256, %bb.q ], [ 512, %bb.s ]
   %.sroa.4128.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i247, 8
   %.sroa.4128.0.extract.trunc = trunc i64 %.sroa.4128.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
@@ -383,7 +383,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ec = getelementptr inbounds nuw i8, ptr %.sroa.8199.0.copyload, i64 16
   %i.ed = load ptr, ptr %i.ec, align 8, !nonnull !21, !align !37, !noundef !21 ; 6 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %.sroa.8199.0.copyload, i64 24
-  %i.ef = load i64, ptr %i.ee, align 8, !noundef !21 ; 6 uses
+  %i.ef = load i64, ptr %i.ee, align 8, !noundef !21 ; 7 uses
   switch i64 %i.ef, label %bb.z [
     i64 0, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit169.thread"
     i64 1, label %bb.y
@@ -494,7 +494,7 @@ bb.ag:                                            ; preds = %.lr.ph.i149
   br i1 %i.fh, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit169.thread", label %.thread253
 
 "_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit169.thread": ; preds = %bb.af, %bb.ad, %.lr.ph.i149, %bb.y, %bb.y, %.thread, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit169"
-  %.sroa.8.0.insert.insert.i145252 = phi i64 [ %.sroa.8.0.insert.insert.i145, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit169" ], [ 257, %bb.y ], [ 257, %.lr.ph.i149 ], [ 1, %.thread ], [ 257, %bb.y ], [ 257, %bb.ad ], [ 513, %bb.af ]
+  %.sroa.8.0.insert.insert.i145252 = phi i64 [ %.sroa.8.0.insert.insert.i145, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit169" ], [ 256, %bb.y ], [ 256, %.lr.ph.i149 ], [ %i.ef, %.thread ], [ 256, %bb.y ], [ 256, %bb.ad ], [ 512, %bb.af ]
   %.sroa.4132.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i145252, 8
   %.sroa.4132.0.extract.trunc = trunc i64 %.sroa.4132.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
@@ -523,7 +523,7 @@ bb.ag:                                            ; preds = %.lr.ph.i149
   %i.fi = getelementptr inbounds nuw i8, ptr %.sroa.8199.0.copyload, i64 32
   %i.fj = load ptr, ptr %i.fi, align 8, !nonnull !21, !align !37, !noundef !21 ; 6 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.8199.0.copyload, i64 40
-  %i.fl = load i64, ptr %i.fk, align 8, !noundef !21 ; 6 uses
+  %i.fl = load i64, ptr %i.fk, align 8, !noundef !21 ; 7 uses
   switch i64 %i.fl, label %bb.aj [
     i64 0, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit195.thread"
     i64 1, label %bb.ai
@@ -634,7 +634,7 @@ bb.aq:                                            ; preds = %.lr.ph.i175
   br i1 %i.gn, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit195.thread", label %.thread259
 
 "_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit195.thread": ; preds = %bb.ap, %bb.an, %.lr.ph.i175, %bb.ai, %bb.ai, %.thread253, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit195"
-  %.sroa.8.0.insert.insert.i171258 = phi i64 [ %.sroa.8.0.insert.insert.i171, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit195" ], [ 257, %bb.ai ], [ 257, %.lr.ph.i175 ], [ 1, %.thread253 ], [ 257, %bb.ai ], [ 257, %bb.an ], [ 513, %bb.ap ]
+  %.sroa.8.0.insert.insert.i171258 = phi i64 [ %.sroa.8.0.insert.insert.i171, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit195" ], [ 256, %bb.ai ], [ 256, %.lr.ph.i175 ], [ %i.fl, %.thread253 ], [ 256, %bb.ai ], [ 256, %bb.an ], [ 512, %bb.ap ]
   %.sroa.4136.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i171258, 8
   %.sroa.4136.0.extract.trunc = trunc i64 %.sroa.4136.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)

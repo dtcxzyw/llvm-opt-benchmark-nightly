@@ -203,7 +203,6 @@ bb.q:                                             ; preds = %bb.p
   br label %._crit_edge133
 
 .loopexit:                                        ; preds = %.lr.ph127
-  %2 = ashr exact i32 %i.cb, 1
   tail call fastcc void @arith_encode(ptr noundef nonnull %0, ptr noundef nonnull %i.cc, i32 noundef 0)
   %i.ce = getelementptr inbounds nuw i8, ptr %.189124, i64 15
   %.not111130 = icmp eq i32 %i.cb, 0
@@ -211,11 +210,12 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph132.preheader:                              ; preds = %.loopexit.thread164, %.loopexit
   %i.cf = phi ptr [ %i.bz, %.loopexit.thread164 ], [ %i.ce, %.loopexit ]
-  %.1168 = phi i32 [ 1, %.loopexit.thread164 ], [ %2, %.loopexit ]
+  %.1168 = phi i32 [ 2, %.loopexit.thread164 ], [ %i.cb, %.loopexit ]
+  %2 = ashr exact i32 %.1168, 1
   br label %.lr.ph132
 
 .lr.ph132:                                        ; preds = %.lr.ph132.preheader, %.lr.ph132
-  %i.cg = phi i32 [ %i.cj, %.lr.ph132 ], [ %.1168, %.lr.ph132.preheader ] ; 2 uses
+  %i.cg = phi i32 [ %i.cj, %.lr.ph132 ], [ %2, %.lr.ph132.preheader ] ; 2 uses
   %i.ch = and i32 %i.cg, %i.bs
   %.not112 = icmp ne i32 %i.ch, 0
   %i.ci = zext i1 %.not112 to i32
@@ -618,7 +618,6 @@ bb.v:                                             ; preds = %bb.u
   br label %._crit_edge199
 
 .loopexit:                                        ; preds = %.lr.ph193
-  %2 = ashr exact i32 %i.ep, 1
   tail call fastcc void @arith_encode(ptr noundef nonnull %0, ptr noundef nonnull %i.eq, i32 noundef 0)
   %i.es = getelementptr inbounds nuw i8, ptr %.4148190, i64 15
   %.not169196 = icmp eq i32 %i.ep, 0
@@ -626,11 +625,12 @@ bb.v:                                             ; preds = %bb.u
 
 .lr.ph198.preheader:                              ; preds = %.loopexit.thread235, %.loopexit
   %i.et = phi ptr [ %i.en, %.loopexit.thread235 ], [ %i.es, %.loopexit ]
-  %.4239 = phi i32 [ 1, %.loopexit.thread235 ], [ %2, %.loopexit ]
+  %.4239 = phi i32 [ 2, %.loopexit.thread235 ], [ %i.ep, %.loopexit ]
+  %2 = ashr exact i32 %.4239, 1
   br label %.lr.ph198
 
 .lr.ph198:                                        ; preds = %.lr.ph198.preheader, %.lr.ph198
-  %i.eu = phi i32 [ %i.ex, %.lr.ph198 ], [ %.4239, %.lr.ph198.preheader ] ; 2 uses
+  %i.eu = phi i32 [ %i.ex, %.lr.ph198 ], [ %2, %.lr.ph198.preheader ] ; 2 uses
   %i.ev = and i32 %i.eu, %i.eg
   %.not170 = icmp ne i32 %i.ev, 0
   %i.ew = zext i1 %.not170 to i32

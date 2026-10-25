@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_RNvMsB_NtCskKLDkoK
 
 bb.i:                                             ; preds = %bb.f
   %i.ah = extractvalue { ptr, i64 } %i.af, 0, !dbg !5673 ; 3 uses
-  %i.ai = extractvalue { ptr, i64 } %i.af, 1, !dbg !5673 ; 2 uses
+  %i.ai = extractvalue { ptr, i64 } %i.af, 1, !dbg !5673 ; 3 uses
     #dbg_value(ptr %i.ah, !4241, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4974)
     #dbg_value(ptr %i.ah, !4612, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4615)
     #dbg_value(i64 %i.ai, !4241, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4974)
@@ -607,7 +607,7 @@ _RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.em, label %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %bb.w, !dbg !5702, !prof !5075
 
 _RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.m, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %.lr.ph.i.6, %.lr.ph.i.7, %bb.i, %bb.j, %bb.j, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i271 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %.lr.ph.i ], [ 257, %bb.j ], [ 257, %bb.j ], [ 1, %bb.i ], [ 257, %.lr.ph.i.7 ], [ 257, %.lr.ph.i.6 ], [ 257, %.lr.ph.i.5 ], [ 257, %.lr.ph.i.4 ], [ 257, %.lr.ph.i.3 ], [ 257, %.lr.ph.i.2 ], [ 257, %.lr.ph.i.1 ], [ 257, %bb.m ]
+  %.sroa.8.0.insert.insert.i271 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 256, %.lr.ph.i ], [ 256, %bb.j ], [ 256, %bb.j ], [ %i.ai, %bb.i ], [ 256, %.lr.ph.i.7 ], [ 256, %.lr.ph.i.6 ], [ 256, %.lr.ph.i.5 ], [ 256, %.lr.ph.i.4 ], [ 256, %.lr.ph.i.3 ], [ 256, %.lr.ph.i.2 ], [ 256, %.lr.ph.i.1 ], [ 256, %bb.m ]
   %.sroa.4.0.extract.shift.i = lshr i64 %.sroa.8.0.insert.insert.i271, 8
     #dbg_value(i64 %.sroa.4.0.extract.shift.i, !5065, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 8, 8), !3912)
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8
@@ -1010,7 +1010,7 @@ _RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.mi, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread, label %bb.dt, !dbg !5950, !prof !5075
 
 _RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.do, %bb.dm, %.lr.ph.i259, %.lr.ph.i259.1, %.lr.ph.i259.2, %.lr.ph.i259.3, %bb.dj, %bb.dk, %bb.dk, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i248281 = phi i32 [ %.sroa.8.0.insert.insert.i248, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.dk ], [ 257, %.lr.ph.i259 ], [ 257, %bb.dk ], [ 1, %bb.dj ], [ 257, %.lr.ph.i259.3 ], [ 257, %.lr.ph.i259.2 ], [ 257, %.lr.ph.i259.1 ], [ 257, %bb.dm ], [ 513, %bb.do ]
+  %.sroa.8.0.insert.insert.i248281 = phi i32 [ %.sroa.8.0.insert.insert.i248, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 256, %bb.dk ], [ 256, %.lr.ph.i259 ], [ 256, %bb.dk ], [ 0, %bb.dj ], [ 256, %.lr.ph.i259.3 ], [ 256, %.lr.ph.i259.2 ], [ 256, %.lr.ph.i259.1 ], [ 256, %bb.dm ], [ 512, %bb.do ]
   %.sroa.4.0.extract.shift.i211 = lshr i32 %.sroa.8.0.insert.insert.i248281, 8
     #dbg_value(i32 %.sroa.4.0.extract.shift.i211, !5645, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 8, 8), !4212)
   %.sroa.4.0.extract.trunc.i212 = trunc i32 %.sroa.4.0.extract.shift.i211 to i8
