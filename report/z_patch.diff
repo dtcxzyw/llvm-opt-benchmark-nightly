@@ -1,0 +1,94 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 749ee43357ea1..d01092521d9b9 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -13836,6 +13836,13 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+             isKnownPredicate(CondGE, GuardedRHS, GuardedStart))
+           return true;
+ 
++        // Guards can rewrite RHS to a min/max with a bound that is unrelated to
++        // Start (e.g. n -> smin(n, m) for a guard n <= m), hiding facts about
++        // the original RHS, like n >= Start via induction. Try without guards.
++        if ((GuardedRHS != GELHS || GuardedStart != GERHS) &&
++            isKnownPredicate(CondGE, GELHS, GERHS))
++          return true;
++
+         // (RHS > Start - 1) implies RHS >= Start.
+         // * "RHS >= Start" is trivially equivalent to "RHS > Start - 1" if
+         //   "Start - 1" doesn't overflow.
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-guarded-rhs-minmax.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-guarded-rhs-minmax.ll
+index b97605417221e..6b3b6ebc11c8e 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-guarded-rhs-minmax.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-guarded-rhs-minmax.ll
+@@ -50,9 +50,9 @@ define void @slt_guard_n_pos_and_n_sle_m(ptr %p, i32 %n, i32 %m) {
+ ;
+ ; CHECK-LABEL: 'slt_guard_n_pos_and_n_sle_m'
+ ; CHECK-NEXT:  Determining loop execution counts for: @slt_guard_n_pos_and_n_sle_m
+-; CHECK-NEXT:  Loop %inner: backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> smax %n))
++; CHECK-NEXT:  Loop %inner: backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> smax %n))
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %n)
+ ; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 2147483646
+@@ -94,9 +94,9 @@ define void @ult_guard_n_ne0_and_n_ule_m(ptr %p, i32 %n, i32 %m) {
+ ;
+ ; CHECK-LABEL: 'ult_guard_n_ne0_and_n_ule_m'
+ ; CHECK-NEXT:  Determining loop execution counts for: @ult_guard_n_ne0_and_n_ule_m
+-; CHECK-NEXT:  Loop %inner: backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> umax %n))
++; CHECK-NEXT:  Loop %inner: backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 -2
+-; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> umax %n))
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %n)
+ ; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 -2
+@@ -222,9 +222,9 @@ define void @slt_guard_n_sle_m_after_n_pos(ptr %p, i32 %n, i32 %m) {
+ ;
+ ; CHECK-LABEL: 'slt_guard_n_sle_m_after_n_pos'
+ ; CHECK-NEXT:  Determining loop execution counts for: @slt_guard_n_sle_m_after_n_pos
+-; CHECK-NEXT:  Loop %inner: backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> smax %n))
++; CHECK-NEXT:  Loop %inner: backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> smax %n))
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %n)
+ ; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 2147483646
+@@ -266,9 +266,9 @@ define void @slt_guard_n_pos_and_n_sle_100(ptr %p, i32 %n) {
+ ;
+ ; CHECK-LABEL: 'slt_guard_n_pos_and_n_sle_100'
+ ; CHECK-NEXT:  Determining loop execution counts for: @slt_guard_n_pos_and_n_sle_100
+-; CHECK-NEXT:  Loop %inner: backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> smax %n))
++; CHECK-NEXT:  Loop %inner: backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is ({-1,+,-1}<nsw><%outer> + ({1,+,1}<nuw><nsw><%outer> smax %n))
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %n)
+ ; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 2147483646
+@@ -351,9 +351,9 @@ define void @sgt_guard_lo_neg_and_lo_sge_m(ptr %p, i32 %lo, i32 %m) {
+ ;
+ ; CHECK-LABEL: 'sgt_guard_lo_neg_and_lo_sge_m'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_guard_lo_neg_and_lo_sge_m
+-; CHECK-NEXT:  Loop %inner: backedge-taken count is ((-1 * ({-1,+,-1}<nsw><%outer> smin %lo)) + {-1,+,-1}<nsw><%outer>)
++; CHECK-NEXT:  Loop %inner: backedge-taken count is {(-1 + (-1 * %lo)),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2147483647
+-; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is ((-1 * ({-1,+,-1}<nsw><%outer> smin %lo)) + {-1,+,-1}<nsw><%outer>)
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is {(-1 + (-1 * %lo)),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + (-1 * %lo))
+ ; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 2147483647
+@@ -395,9 +395,9 @@ define void @sgt_guard_lo_neg_and_lo_sge_minus100(ptr %p, i32 %lo) {
+ ;
+ ; CHECK-LABEL: 'sgt_guard_lo_neg_and_lo_sge_minus100'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_guard_lo_neg_and_lo_sge_minus100
+-; CHECK-NEXT:  Loop %inner: backedge-taken count is ((-1 * ({-1,+,-1}<nsw><%outer> smin %lo)) + {-1,+,-1}<nsw><%outer>)
++; CHECK-NEXT:  Loop %inner: backedge-taken count is {(-1 + (-1 * %lo)),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2147483647
+-; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is ((-1 * ({-1,+,-1}<nsw><%outer> smin %lo)) + {-1,+,-1}<nsw><%outer>)
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is {(-1 + (-1 * %lo)),+,-1}<nw><%outer>
+ ; CHECK-NEXT:  Loop %inner: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + (-1 * %lo))
+ ; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 2147483647
