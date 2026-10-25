@@ -205,7 +205,7 @@ define dso_local noundef zeroext i1 @_ZNK5clang12FunctionDecl23isTemplateInstant
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.a, align 8 ; 2 uses
-  %i.b = and i64 %.sroa.0.0.copyload.i.i.i.i, 6   ; 3 uses
+  %i.b = and i64 %.sroa.0.0.copyload.i.i.i.i, 6   ; 2 uses
   %i.c = icmp ne i64 %i.b, 4
   %i.d = and i64 %.sroa.0.0.copyload.i.i.i.i, -7  ; 2 uses
   %i.e = inttoptr i64 %i.d to ptr                 ; 2 uses
@@ -225,7 +225,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.k = icmp ne i64 %i.b, 2
   %.not11.not.i = or i1 %i.k, %.not.not19.i
-  br i1 %.not11.not.i, label %1, label %bb.d
+  br i1 %.not11.not.i, label %_ZNK5clang12FunctionDecl29getTemplateSpecializationKindEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %.0.copyload.i.i.i.i14.i = load i64, ptr %i.e, align 8
@@ -235,22 +235,8 @@ bb.d:                                             ; preds = %bb.c
   %i.o = add nuw nsw i32 %i.n, 1
   br label %_ZNK5clang12FunctionDecl29getTemplateSpecializationKindEv.exit
 
-1:                                                ; preds = %bb.c
-  %2 = icmp eq i64 %i.b, 6
-  br i1 %2, label %3, label %7
-
-3:                                                ; preds = %1
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %5 = load i32, ptr %4, align 4
-  %6 = and i32 %5, 25165824
-  %.not.i.i = icmp eq i32 %6, 0
-  br i1 %.not.i.i, label %_ZNK5clang12FunctionDecl29getTemplateSpecializationKindEv.exit, label %7
-
-7:                                                ; preds = %3, %1
-  br label %_ZNK5clang12FunctionDecl29getTemplateSpecializationKindEv.exit
-
-_ZNK5clang12FunctionDecl29getTemplateSpecializationKindEv.exit: ; preds = %bb.b, %bb.d, %3, %7
-  %.2.i = phi i32 [ %i.j, %bb.b ], [ 0, %7 ], [ %i.o, %bb.d ], [ 2, %3 ]
+_ZNK5clang12FunctionDecl29getTemplateSpecializationKindEv.exit: ; preds = %bb.c, %bb.b, %bb.d
+  %.2.i = phi i32 [ %i.j, %bb.b ], [ %i.o, %bb.d ], [ 0, %bb.c ]
   %i.p = and i32 %.2.i, -3
   %i.q = icmp ne i32 %i.p, 0
   ret i1 %i.q

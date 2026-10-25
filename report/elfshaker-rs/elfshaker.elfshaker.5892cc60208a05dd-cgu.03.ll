@@ -204,7 +204,7 @@ bb.oa:                                            ; preds = %bb.nz
   %i.aca = getelementptr inbounds nuw i8, ptr %i.abz, i64 8
   %i.acb = load ptr, ptr %i.aca, align 8, !noalias !783, !nonnull !6, !noundef !6 ; 5 uses
   %i.acc = getelementptr inbounds nuw i8, ptr %i.abz, i64 16
-  %i.acd = load i64, ptr %i.acc, align 8, !noalias !783, !noundef !6 ; 5 uses
+  %i.acd = load i64, ptr %i.acc, align 8, !noalias !783, !noundef !6 ; 6 uses
   switch i64 %i.acd, label %thread-pre-split.i.i.i [
     i64 0, label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i
     i64 1, label %bb.ob
@@ -447,7 +447,7 @@ _RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_impl.exit.i.i: ; pred
   br i1 %i.afs, label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i, label %bb.ov
 
 _RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i: ; preds = %bb.og, %bb.of, %.lr.ph143.i.i.i, %bb.ol, %bb.ok, %.lr.ph152.i.i.i, %.lr.ph152.i.i.i.1, %.lr.ph152.i.i.i.2, %.lr.ph152.i.i.i.3, %.lr.ph152.i.i.i.4, %.lr.ph152.i.i.i.5, %.lr.ph152.i.i.i.6, %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_impl.exit.i.i, %bb.ob, %bb.ob, %bb.oa
-  %.sroa.12.0.insert.insert.i314.i.i = phi i64 [ %.sroa.12.0.insert.insert.i.i.i, %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_impl.exit.i.i ], [ 1, %bb.oa ], [ 257, %.lr.ph143.i.i.i ], [ 257, %.lr.ph152.i.i.i ], [ 257, %bb.ob ], [ 257, %bb.ob ], [ 257, %bb.ok ], [ 257, %.lr.ph152.i.i.i.6 ], [ 257, %.lr.ph152.i.i.i.5 ], [ 257, %.lr.ph152.i.i.i.4 ], [ 257, %.lr.ph152.i.i.i.3 ], [ 257, %.lr.ph152.i.i.i.2 ], [ 257, %.lr.ph152.i.i.i.1 ], [ 513, %bb.ol ], [ 257, %bb.of ], [ 769, %bb.og ]
+  %.sroa.12.0.insert.insert.i314.i.i = phi i64 [ %.sroa.12.0.insert.insert.i.i.i, %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_impl.exit.i.i ], [ %i.acd, %bb.oa ], [ 256, %.lr.ph143.i.i.i ], [ 256, %.lr.ph152.i.i.i ], [ 256, %bb.ob ], [ 256, %bb.ob ], [ 256, %bb.ok ], [ 256, %.lr.ph152.i.i.i.6 ], [ 256, %.lr.ph152.i.i.i.5 ], [ 256, %.lr.ph152.i.i.i.4 ], [ 256, %.lr.ph152.i.i.i.3 ], [ 256, %.lr.ph152.i.i.i.2 ], [ 256, %.lr.ph152.i.i.i.1 ], [ 512, %bb.ol ], [ 256, %bb.of ], [ 768, %bb.og ]
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26, !noalias !783
   %i.aft = call noundef dereferenceable_or_null(1) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 1, 57) 1, i64 noundef range(i64 1, 9) 1) #26, !noalias !783 ; 3 uses
   %i.afu = icmp eq ptr %i.aft, null
@@ -552,7 +552,7 @@ bb.pd:                                            ; preds = %bb.pc
   %i.agj = getelementptr inbounds nuw i8, ptr %i.agi, i64 8
   %i.agk = load ptr, ptr %i.agj, align 8, !noalias !783, !nonnull !6, !noundef !6 ; 3 uses
   %i.agl = getelementptr inbounds nuw i8, ptr %i.agi, i64 16
-  %i.agm = load i64, ptr %i.agl, align 8, !noalias !783, !noundef !6 ; 2 uses
+  %i.agm = load i64, ptr %i.agl, align 8, !noalias !783, !noundef !6 ; 3 uses
   switch i64 %i.agm, label %thread-pre-split.i288.i.i [
     i64 0, label %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i
     i64 1, label %bb.pe
@@ -744,7 +744,7 @@ _RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i: ; pred
   br i1 %i.aji, label %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i, label %bb.pr
 
 _RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i: ; preds = %bb.pi, %bb.pg, %.lr.ph.i287.i.i, %.lr.ph.i287.i.i.1, %.lr.ph.i287.i.i.2, %.lr.ph.i287.i.i.3, %.lr.ph.i287.i.i.4, %.lr.ph.i287.i.i.5, %.lr.ph.i287.i.i.6, %.lr.ph.i287.i.i.7, %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i, %bb.pe, %bb.pe, %bb.pd
-  %.sroa.8.0.insert.insert.i317.i.i = phi i64 [ %.sroa.8.0.insert.insert.i.i.i, %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i ], [ 257, %bb.pe ], [ 257, %.lr.ph.i287.i.i ], [ 257, %bb.pe ], [ 1, %bb.pd ], [ 257, %.lr.ph.i287.i.i.7 ], [ 257, %.lr.ph.i287.i.i.6 ], [ 257, %.lr.ph.i287.i.i.5 ], [ 257, %.lr.ph.i287.i.i.4 ], [ 257, %.lr.ph.i287.i.i.3 ], [ 257, %.lr.ph.i287.i.i.2 ], [ 257, %.lr.ph.i287.i.i.1 ], [ 257, %bb.pg ], [ 513, %bb.pi ]
+  %.sroa.8.0.insert.insert.i317.i.i = phi i64 [ %.sroa.8.0.insert.insert.i.i.i, %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i ], [ 256, %bb.pe ], [ 256, %.lr.ph.i287.i.i ], [ 256, %bb.pe ], [ %i.agm, %bb.pd ], [ 256, %.lr.ph.i287.i.i.7 ], [ 256, %.lr.ph.i287.i.i.6 ], [ 256, %.lr.ph.i287.i.i.5 ], [ 256, %.lr.ph.i287.i.i.4 ], [ 256, %.lr.ph.i287.i.i.3 ], [ 256, %.lr.ph.i287.i.i.2 ], [ 256, %.lr.ph.i287.i.i.1 ], [ 256, %bb.pg ], [ 512, %bb.pi ]
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26, !noalias !783
   %i.ajj = call noundef dereferenceable_or_null(1) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 1, 57) 1, i64 noundef range(i64 1, 9) 1) #26, !noalias !783 ; 3 uses
   %i.ajk = icmp eq ptr %i.ajj, null

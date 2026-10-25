@@ -205,8 +205,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 .loopexit:                                        ; preds = %bb.ab, %.preheader245, %.thread
   %.2318 = phi i32 [ -1, %.preheader245 ], [ %i.fe, %.thread ], [ %i.fe, %bb.ab ]
-  %.3317 = phi i64 [ -1, %.preheader245 ], [ %.3, %.thread ], [ %.3, %bb.ab ]
-  %i.gn = trunc nsw i64 %.3317 to i32
+  %.3317 = phi i64 [ 4294967295, %.preheader245 ], [ %.3, %.thread ], [ %.3, %bb.ab ]
+  %i.gn = trunc i64 %.3317 to i32
   %i.go = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %.080270
   store i32 %i.gn, ptr %i.go, align 4, !tbaa !61
   %i.gp = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %.080270

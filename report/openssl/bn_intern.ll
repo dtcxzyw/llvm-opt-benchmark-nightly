@@ -30,12 +30,12 @@ bb.d:                                             ; preds = %bb.a
   br i1 %or.cond, label %.thread.sink.split, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.e = shl nuw nsw i32 1, %1                    ; 7 uses
-  %i.f = shl nuw nsw i32 2, %1                    ; 7 uses
+  %i.e = shl nuw nsw i32 1, %1                    ; 4 uses
+  %i.f = shl nuw nsw i32 2, %1                    ; 4 uses
   %i.g = add nsw i32 %i.f, -1                     ; 2 uses
   %i.h = tail call i32 @BN_is_negative(ptr noundef %0) #7
-  %.fr = freeze i32 %i.h
-  %.not83 = icmp eq i32 %.fr, 0
+  %.not83 = icmp eq i32 %i.h, 0
+  %spec.select = select i1 %.not83, i32 1, i32 255
   %i.i = load ptr, ptr %0, align 8, !tbaa !13
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %.thread.sink.split, label %bb.f
@@ -48,9 +48,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.n = tail call i32 @BN_num_bits(ptr noundef nonnull %0) #7
-  %i.o = sext i32 %i.n to i64                     ; 5 uses
+  %i.o = sext i32 %i.n to i64                     ; 3 uses
   %i.p = add nsw i64 %i.o, 1                      ; 2 uses
-  %i.q = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.p, ptr noundef nonnull @.str, i32 noundef 58) #7 ; 11 uses
+  %i.q = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.p, ptr noundef nonnull @.str, i32 noundef 58) #7 ; 7 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %.thread, label %bb.h
 
@@ -58,83 +58,16 @@ bb.h:                                             ; preds = %bb.g
   %i.s = load ptr, ptr %0, align 8, !tbaa !13
   %i.t = load i64, ptr %i.s, align 8, !tbaa !9
   %i.u = trunc i64 %i.t to i32
-  %i.v = and i32 %i.g, %i.u                       ; 2 uses
+  %i.v = and i32 %i.g, %i.u
   %narrow = add nuw nsw i32 %1, 1
-  %i.w = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.x = lshr i32 %i.g, 1                         ; 2 uses
-  %i.y = sub nsw i32 0, %i.e                      ; 2 uses
-  br i1 %.not83, label %.split.us, label %.split
+  %i.w = zext nneg i32 %narrow to i64             ; 2 uses
+  %i.x = lshr i32 %i.g, 1
+  %i.y = sub nsw i32 0, %i.e
+  br label %.split
 
-.split.us:                                        ; preds = %bb.h, %.critedge.thread.us
-  %.070.us = phi i32 [ %26, %.critedge.thread.us ], [ %i.v, %bb.h ] ; 8 uses
-  %.066.us = phi i64 [ %19, %.critedge.thread.us ], [ 0, %bb.h ] ; 5 uses
-  %.not84.us = icmp eq i32 %.070.us, 0
-  br i1 %.not84.us, label %15, label %.critedge.us
-
-.critedge.us:                                     ; preds = %.split.us
-  %3 = and i32 %.070.us, 1
-  %.not85.us = icmp eq i32 %3, 0
-  br i1 %.not85.us, label %.critedge.thread.us, label %4
-
-4:                                                ; preds = %.critedge.us
-  %5 = and i32 %.070.us, %i.e
-  %.not86.us = icmp eq i32 %5, 0
-  br i1 %.not86.us, label %11, label %6
-
-6:                                                ; preds = %4
-  %7 = sub nsw i32 %.070.us, %i.f
-  %8 = add i64 %.066.us, %i.w
-  %.not87.us = icmp ult i64 %8, %i.o
-  %9 = and i32 %.070.us, %i.x
-  %spec.select = select i1 %.not87.us, i32 %7, i32 %9 ; 2 uses
-  %.pre = and i32 %spec.select, 1
-  %10 = icmp eq i32 %.pre, 0
-  br label %11
-
-11:                                               ; preds = %6, %4
-  %.pre-phi = phi i1 [ %10, %6 ], [ false, %4 ]
-  %.0.us = phi i32 [ %spec.select, %6 ], [ %.070.us, %4 ] ; 5 uses
-  %.not88.us = icmp sle i32 %.0.us, %i.y
-  %.not89.us = icmp sge i32 %.0.us, %i.e
-  %or.cond94.not101.us = or i1 %.not88.us, %.not89.us
-  %or.cond95.us = or i1 %or.cond94.not101.us, %.pre-phi
-  br i1 %or.cond95.us, label %.thread.sink.split, label %12
-
-12:                                               ; preds = %11
-  %13 = sub nsw i32 %.070.us, %.0.us              ; 4 uses
-  %.not91.us = icmp eq i32 %13, 0
-  br i1 %.not91.us, label %.critedge.thread.us, label %14
-
-14:                                               ; preds = %12
-  %.not92.us = icmp eq i32 %13, %i.f
-  %.not93.us = icmp eq i32 %13, %i.e
-  %or.cond96.us = select i1 %.not92.us, i1 true, i1 %.not93.us
-  br i1 %or.cond96.us, label %.critedge.thread.us, label %.thread.sink.split
-
-15:                                               ; preds = %.split.us
-  %16 = add i64 %.066.us, %i.w
-  %17 = icmp ult i64 %16, %i.o
-  br i1 %17, label %.critedge.thread.us, label %.split110.us
-
-.critedge.thread.us:                              ; preds = %15, %14, %12, %.critedge.us
-  %.171.us = phi i32 [ %.070.us, %.critedge.us ], [ %13, %14 ], [ 0, %12 ], [ 0, %15 ]
-  %.1.us = phi i32 [ 0, %.critedge.us ], [ %.0.us, %14 ], [ %.0.us, %12 ], [ 0, %15 ]
-  %18 = trunc nsw i32 %.1.us to i8
-  %19 = add i64 %.066.us, 1                       ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.q, i64 %.066.us
-  store i8 %18, ptr %20, align 1, !tbaa !16
-  %21 = ashr i32 %.171.us, 1
-  %22 = trunc i64 %19 to i32
-  %23 = add i32 %1, %22
-  %24 = tail call i32 @BN_is_bit_set(ptr noundef nonnull %0, i32 noundef %23) #7
-  %25 = shl nsw i32 %24, %1
-  %26 = add nsw i32 %25, %21                      ; 2 uses
-  %27 = icmp sgt i32 %26, %i.f
-  br i1 %27, label %.thread.sink.split, label %.split.us
-
-.split:                                           ; preds = %bb.h, %.critedge.thread
-  %.070 = phi i32 [ %i.ap, %.critedge.thread ], [ %i.v, %bb.h ] ; 8 uses
-  %.066 = phi i64 [ %i.ai, %.critedge.thread ], [ 0, %bb.h ] ; 5 uses
+.split:                                           ; preds = %.critedge.thread, %bb.h
+  %.070 = phi i32 [ %i.v, %bb.h ], [ %i.ap, %.critedge.thread ] ; 8 uses
+  %.066 = phi i64 [ 0, %bb.h ], [ %i.ai, %.critedge.thread ] ; 6 uses
   %.not84 = icmp eq i32 %.070, 0
   br i1 %.not84, label %bb.i, label %.critedge
 
@@ -186,11 +119,11 @@ bb.n:                                             ; preds = %bb.m
 .critedge.thread:                                 ; preds = %bb.i, %bb.m, %bb.n, %.critedge
   %.171 = phi i32 [ %.070, %.critedge ], [ %i.ah, %bb.n ], [ 0, %bb.m ], [ 0, %bb.i ]
   %.1 = phi i32 [ 0, %.critedge ], [ %.0, %bb.n ], [ %.0, %bb.m ], [ 0, %bb.i ]
-  %28 = trunc i32 %.1 to i8
-  %29 = sub i8 0, %28
+  %3 = mul i32 %.1, %spec.select
+  %4 = trunc i32 %3 to i8
   %i.ai = add i64 %.066, 1                        ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.q, i64 %.066
-  store i8 %29, ptr %i.aj, align 1, !tbaa !16
+  store i8 %4, ptr %i.aj, align 1, !tbaa !16
   %i.ak = ashr i32 %.171, 1
   %i.al = trunc i64 %i.ai to i32
   %i.am = add i32 %1, %i.al
@@ -200,18 +133,17 @@ bb.n:                                             ; preds = %bb.m
   %i.aq = icmp sgt i32 %i.ap, %i.f
   br i1 %i.aq, label %.thread.sink.split, label %.split
 
-.split110.us:                                     ; preds = %bb.i, %15
-  %.us-phi = phi i64 [ %.066.us, %15 ], [ %.066, %bb.i ] ; 2 uses
-  %i.ar = icmp ugt i64 %.us-phi, %i.p
+.split110.us:                                     ; preds = %bb.i
+  %i.ar = icmp ugt i64 %.066, %i.p
   br i1 %i.ar, label %.thread.sink.split, label %bb.o
 
 bb.o:                                             ; preds = %.split110.us
-  store i64 %.us-phi, ptr %2, align 8, !tbaa !9
+  store i64 %.066, ptr %2, align 8, !tbaa !9
   br label %bb.p
 
-.thread.sink.split:                               ; preds = %.critedge.thread, %bb.n, %bb.l, %.critedge.thread.us, %14, %11, %.split110.us, %bb.e, %bb.f, %bb.d
-  %.sink = phi i32 [ 53, %bb.f ], [ 109, %14 ], [ 53, %bb.e ], [ 126, %.split110.us ], [ 41, %bb.d ], [ 97, %11 ], [ 120, %.critedge.thread.us ], [ 109, %bb.n ], [ 120, %.critedge.thread ], [ 97, %bb.l ]
-  %.069.ph = phi ptr [ null, %bb.f ], [ %i.q, %.critedge.thread.us ], [ null, %bb.e ], [ %i.q, %.split110.us ], [ null, %bb.d ], [ %i.q, %11 ], [ %i.q, %14 ], [ %i.q, %bb.l ], [ %i.q, %bb.n ], [ %i.q, %.critedge.thread ]
+.thread.sink.split:                               ; preds = %.critedge.thread, %bb.n, %bb.l, %.split110.us, %bb.e, %bb.f, %bb.d
+  %.sink = phi i32 [ 41, %bb.d ], [ 53, %bb.f ], [ 53, %bb.e ], [ 126, %.split110.us ], [ 109, %bb.n ], [ 97, %bb.l ], [ 120, %.critedge.thread ]
+  %.069.ph = phi ptr [ null, %bb.d ], [ null, %bb.f ], [ null, %bb.e ], [ %i.q, %.split110.us ], [ %i.q, %bb.l ], [ %i.q, %bb.n ], [ %i.q, %.critedge.thread ]
   tail call void @ERR_new() #7
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef %.sink, ptr noundef nonnull @__func__.bn_compute_wNAF) #7
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 3, i32 noundef 786691, ptr noundef null) #7

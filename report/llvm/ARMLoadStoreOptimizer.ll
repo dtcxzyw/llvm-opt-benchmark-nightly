@@ -205,14 +205,14 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ah
   br label %_ZN4llvm18getAddSubImmediateERNS_12MachineInstrE.exit.i.i
 
 _ZN4llvm18getAddSubImmediateERNS_12MachineInstrE.exit.i.i: ; preds = %bb.aj, %bb.ai, %bb.ah
-  %.04.i.i.i = phi i64 [ -1, %bb.aj ], [ -1, %bb.ai ], [ 1, %bb.ah ]
+  %.04.i.i.i = phi i64 [ 4294967295, %bb.aj ], [ 4294967295, %bb.ai ], [ 1, %bb.ah ]
   %.0.i.i.i = phi i64 [ 3, %bb.aj ], [ 2, %bb.ai ], [ 2, %bb.ah ]
   %i.ls = getelementptr inbounds nuw i8, ptr %i.li, i64 32
   %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !381
   %i.lu = getelementptr inbounds nuw [32 x i8], ptr %i.lt, i64 %.0.i.i.i
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 16
   %i.lw = load i64, ptr %i.lv, align 8, !tbaa !382
-  %i.lx = mul nsw i64 %i.lw, %.04.i.i.i
+  %i.lx = mul i64 %i.lw, %.04.i.i.i
   %i.ly = and i64 %i.lx, 4294967295
   %.not126.i.i = icmp eq i64 %i.ly, 0
   br i1 %.not126.i.i, label %_ZN4llvm18getAddSubImmediateERNS_12MachineInstrE.exit.thread.i.i, label %_ZL10isPreIndexRN4llvm12MachineInstrE.exit.thread.i.i
@@ -550,13 +550,13 @@ bb.bd:                                            ; preds = %.critedge136.i.i, %
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc, %.critedge136.i.i
-  %.04.i.i = phi i64 [ -1, %bb.bd ], [ -1, %bb.bc ], [ 1, %.critedge136.i.i ]
+  %.04.i.i = phi i64 [ 4294967295, %bb.bd ], [ 4294967295, %bb.bc ], [ 1, %.critedge136.i.i ]
   %.0.i54.i = phi i64 [ 3, %bb.bd ], [ 2, %bb.bc ], [ 2, %.critedge136.i.i ]
   %i.pt = load ptr, ptr %i.nt, align 8, !tbaa !381
   %i.pu = getelementptr inbounds nuw [32 x i8], ptr %i.pt, i64 %.0.i54.i
   %i.pv = getelementptr inbounds nuw i8, ptr %i.pu, i64 16
   %i.pw = load i64, ptr %i.pv, align 8, !tbaa !382
-  %i.px = mul nsw i64 %i.pw, %.04.i.i
+  %i.px = mul i64 %i.pw, %.04.i.i
   %i.py = trunc i64 %i.px to i32
   br label %_ZN4llvm18getAddSubImmediateERNS_12MachineInstrE.exit.i
 
@@ -959,7 +959,7 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   %.09 = phi i1 [ false, %bb.f ], [ true, %bb.b ], [ true, %bb.c ], [ true, %bb.d ], [ false, %bb.e ], [ true, %bb.a ]
-  %.0 = phi i64 [ -4, %bb.f ], [ -4, %bb.b ], [ -1, %bb.c ], [ 1, %bb.d ], [ 4, %bb.e ], [ 4, %bb.a ]
+  %.0 = phi i64 [ 4294967292, %bb.f ], [ 4294967292, %bb.b ], [ 4294967295, %bb.c ], [ 1, %bb.d ], [ 4, %bb.e ], [ 4, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   store i32 0, ptr %4, align 4, !tbaa !454
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -1020,7 +1020,7 @@ bb.l:                                             ; preds = %.lr.ph.i
 _ZL11definesCPSRRKN4llvm12MachineInstrE.exit.thread: ; preds = %.critedge.i, %bb.k, %bb.j
   %i.w = getelementptr inbounds nuw i8, ptr %.pre, i64 80
   %i.x = load i64, ptr %i.w, align 8, !tbaa !382
-  %i.y = mul nsw i64 %i.x, %.0
+  %i.y = mul i64 %i.x, %.0
   %i.z = trunc i64 %i.y to i32
   br label %.critedge
 

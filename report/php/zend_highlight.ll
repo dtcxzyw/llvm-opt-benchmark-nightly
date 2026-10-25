@@ -201,7 +201,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.outer, %bb.c
-  %i.m = call i32 @lex_scan(ptr noundef nonnull %1, ptr noundef null) #4 ; 2 uses
+  %i.m = call i32 @lex_scan(ptr noundef nonnull %1, ptr noundef null) #4 ; 6 uses
   switch i32 %i.m, label %bb.d [
     i32 0, label %bb.s
     i32 267, label %.loopexit.loopexit
@@ -250,6 +250,7 @@ bb.d:                                             ; preds = %bb.b
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %bb.b, %.loopexit.loopexit, %.loopexit52, %.loopexit45, %bb.d
+  %2 = phi i32 [ %i.m, %bb.d ], [ 266, %.loopexit.loopexit ], [ %i.m, %.loopexit45 ], [ %i.m, %.loopexit52 ], [ %i.m, %bb.b ], [ %i.m, %bb.b ]
   %.0.in = phi ptr [ %., %bb.d ], [ %0, %.loopexit.loopexit ], [ %i.j, %.loopexit45 ], [ %i.i, %.loopexit52 ], [ %i.k, %bb.b ], [ %i.k, %bb.b ]
   %.0 = load ptr, ptr %.0.in, align 8, !tbaa !18  ; 5 uses
   %.not22 = icmp eq ptr %.019.ph, %.0
@@ -389,7 +390,7 @@ zend_html_puts.exit:                              ; preds = %._crit_edge.i, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   %i.bf = load i8, ptr %i.h, align 8, !tbaa !14
   %i.bg = icmp ne i8 %i.bf, 6
-  %.off = add i32 %i.m, -392
+  %.off = add i32 %2, -392
   %switch = icmp ult i32 %.off, 6
   %or.cond = or i1 %switch, %i.bg
   %i.bh = load i8, ptr %i.l, align 1

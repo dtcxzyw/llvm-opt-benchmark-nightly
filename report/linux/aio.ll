@@ -204,11 +204,11 @@ signal_pending.exit.i.i:                          ; preds = %test_tsk_thread_fla
   %.in.i.i.in.in.i.i.fr.i.i = freeze i64 %i.t
   %i.u = and i64 %.in.i.i.in.in.i.i.fr.i.i, 2
   %.not14.i.i = icmp eq i64 %i.u, 0
-  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 -4
+  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 4294967292
   br label %signal_pending.exit.thread.i.i
 
 signal_pending.exit.thread.i.i:                   ; preds = %signal_pending.exit.i.i, %test_tsk_thread_flag.exit.i.i.i, %bb.c
-  %.0.i.i = phi i64 [ %i.n, %bb.c ], [ -4, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
+  %.0.i.i = phi i64 [ %i.n, %bb.c ], [ 4294967292, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
   %sext.i.i = shl i64 %.0.i.i, 32
   %i.v = ashr exact i64 %sext.i.i, 32
   br label %__se_sys_io_getevents.exit
@@ -272,11 +272,11 @@ signal_pending.exit.i.i:                          ; preds = %test_tsk_thread_fla
   %.in.i.i.in.in.i.i.fr.i.i = freeze i64 %i.aa
   %i.ab = and i64 %.in.i.i.in.in.i.i.fr.i.i, 2
   %.not14.i.i = icmp eq i64 %i.ab, 0
-  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 -4
+  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 4294967292
   br label %signal_pending.exit.thread.i.i
 
 signal_pending.exit.thread.i.i:                   ; preds = %signal_pending.exit.i.i, %test_tsk_thread_flag.exit.i.i.i, %bb.c
-  %.0.i.i = phi i64 [ %i.u, %bb.c ], [ -4, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
+  %.0.i.i = phi i64 [ %i.u, %bb.c ], [ 4294967292, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
   %sext.i.i = shl i64 %.0.i.i, 32
   %i.ac = ashr exact i64 %sext.i.i, 32
   br label %__se_sys_io_getevents.exit
@@ -495,11 +495,11 @@ signal_pending.exit.i.i:                          ; preds = %test_tsk_thread_fla
   %.in.i.i.in.in.i.i.fr.i.i = freeze i64 %i.y
   %i.z = and i64 %.in.i.i.in.in.i.i.fr.i.i, 2
   %.not14.i.i = icmp eq i64 %i.z, 0
-  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 -4
+  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 4294967292
   br label %signal_pending.exit.thread.i.i
 
 signal_pending.exit.thread.i.i:                   ; preds = %signal_pending.exit.i.i, %test_tsk_thread_flag.exit.i.i.i, %bb.c
-  %.0.i.i = phi i64 [ %i.s, %bb.c ], [ -4, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
+  %.0.i.i = phi i64 [ %i.s, %bb.c ], [ 4294967292, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
   %sext.i.i = shl i64 %.0.i.i, 32
   %i.aa = ashr exact i64 %sext.i.i, 32
   br label %__se_sys_io_getevents_time32.exit
@@ -563,11 +563,11 @@ signal_pending.exit.i.i:                          ; preds = %test_tsk_thread_fla
   %.in.i.i.in.in.i.i.fr.i.i = freeze i64 %i.aa
   %i.ab = and i64 %.in.i.i.in.in.i.i.fr.i.i, 2
   %.not14.i.i = icmp eq i64 %i.ab, 0
-  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 -4
+  %spec.select.i.i = select i1 %.not14.i.i, i64 0, i64 4294967292
   br label %signal_pending.exit.thread.i.i
 
 signal_pending.exit.thread.i.i:                   ; preds = %signal_pending.exit.i.i, %test_tsk_thread_flag.exit.i.i.i, %bb.c
-  %.0.i.i = phi i64 [ %i.u, %bb.c ], [ -4, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
+  %.0.i.i = phi i64 [ %i.u, %bb.c ], [ 4294967292, %test_tsk_thread_flag.exit.i.i.i ], [ %spec.select.i.i, %signal_pending.exit.i.i ]
   %sext.i.i = shl i64 %.0.i.i, 32
   %i.ac = ashr exact i64 %sext.i.i, 32
   br label %__se_sys_io_getevents_time32.exit

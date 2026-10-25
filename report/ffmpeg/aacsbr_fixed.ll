@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   br label %av_add_sf.exit.i
 
 av_add_sf.exit.i:                                 ; preds = %.preheader.i30.i.i, %bb.o, %av_normalize_sf.exit.i.i
-  %.sroa.016.0.i.i = phi i64 [ 4831838208, %bb.o ], [ %i.cx, %av_normalize_sf.exit.i.i ], [ %i.di, %.preheader.i30.i.i ]
+  %.sroa.016.0.i.i = phi i64 [ 536870912, %bb.o ], [ %i.cx, %av_normalize_sf.exit.i.i ], [ %i.di, %.preheader.i30.i.i ]
   %.sroa.5.0.i.i = phi i32 [ 1, %bb.o ], [ %i.cr, %av_normalize_sf.exit.i.i ], [ %i.dj, %.preheader.i30.i.i ]
   %i.dk = shl i64 %.sroa.016.0.i.i, 32
   %i.dl = ashr exact i64 %i.dk, 32
@@ -355,7 +355,7 @@ bb.r:                                             ; preds = %bb.q
   br label %av_add_sf.exit193.i
 
 av_add_sf.exit193.i:                              ; preds = %.preheader.i30.i163.i, %bb.r, %.preheader.i.i179.i, %bb.p
-  %.sroa.016.0.i156.i = phi i64 [ %.sroa.09.0.insert.insert.i, %bb.p ], [ %i.fo, %.preheader.i.i179.i ], [ %i.fz, %.preheader.i30.i163.i ], [ 4831838208, %bb.r ]
+  %.sroa.016.0.i156.i = phi i64 [ %.sroa.09.0.insert.insert.i, %bb.p ], [ %i.fo, %.preheader.i.i179.i ], [ %i.fz, %.preheader.i30.i163.i ], [ 536870912, %bb.r ]
   %.sroa.5.0.i157.i = phi i64 [ %.sroa.4.0.extract.shift.i.i, %bb.p ], [ %.sroa.4.0.extract.shift.i.i, %.preheader.i.i179.i ], [ %.sroa.8.0.lcssa.i33.i167.i, %.preheader.i30.i163.i ], [ 1, %bb.r ]
   %i.ga = shl nuw nsw i64 %i.fd, 32
   %.sroa.4.0.insert.ext.i = sub nsw i64 34359738368, %i.ga
@@ -758,7 +758,7 @@ av_normalize_sf.exit41.i.i282:                    ; preds = %._crit_edge.i32.i.i
   br label %av_add_sf.exit.i243
 
 av_add_sf.exit.i243:                              ; preds = %av_normalize_sf.exit41.i.i282, %bb.bs, %av_normalize_sf.exit.i.i295, %.lr.ph.i238
-  %.sroa.016.0.i.i244 = phi i64 [ %i.afv, %.lr.ph.i238 ], [ %.sroa.05.0.insert.insert.i.i.i296, %av_normalize_sf.exit.i.i295 ], [ %.sroa.05.0.insert.insert.i37.i.i283, %av_normalize_sf.exit41.i.i282 ], [ 4831838208, %bb.bs ]
+  %.sroa.016.0.i.i244 = phi i64 [ %i.afv, %.lr.ph.i238 ], [ %.sroa.05.0.insert.insert.i.i.i296, %av_normalize_sf.exit.i.i295 ], [ %.sroa.05.0.insert.insert.i37.i.i283, %av_normalize_sf.exit41.i.i282 ], [ 536870912, %bb.bs ]
   %.sroa.5.0.i.i245 = phi i64 [ %.sroa.4.0.extract.shift.i.i241, %.lr.ph.i238 ], [ %.sroa.5.0.extract.shift.i.i297, %av_normalize_sf.exit.i.i295 ], [ %.sroa.5.0.extract.shift18.i.i284, %av_normalize_sf.exit41.i.i282 ], [ 1, %bb.bs ]
   %i.ahh = load i64, ptr %i.aft, align 8          ; 3 uses
   %.sroa.9.0.extract.shift.i.i246 = lshr i64 %i.ahh, 32
@@ -1111,7 +1111,7 @@ av_normalize_sf.exit41.i359.i:                    ; preds = %._crit_edge.i32.i35
   br label %av_add_sf.exit381.i
 
 av_add_sf.exit381.i:                              ; preds = %av_normalize_sf.exit41.i359.i, %bb.ce, %av_normalize_sf.exit.i375.i, %bb.cb
-  %.sroa.016.0.i344.i = phi i64 [ %i.amk, %bb.cb ], [ %.sroa.05.0.insert.insert.i.i376.i, %av_normalize_sf.exit.i375.i ], [ %.sroa.05.0.insert.insert.i37.i360.i, %av_normalize_sf.exit41.i359.i ], [ 4831838208, %bb.ce ]
+  %.sroa.016.0.i344.i = phi i64 [ %i.amk, %bb.cb ], [ %.sroa.05.0.insert.insert.i.i376.i, %av_normalize_sf.exit.i375.i ], [ %.sroa.05.0.insert.insert.i37.i360.i, %av_normalize_sf.exit41.i359.i ], [ 536870912, %bb.ce ]
   %.sroa.5.0.i345.i = phi i64 [ %.sroa.4.0.extract.shift.i342.i, %bb.cb ], [ %.sroa.5.0.extract.shift.i377.i, %av_normalize_sf.exit.i375.i ], [ %.sroa.5.0.extract.shift18.i361.i, %av_normalize_sf.exit41.i359.i ], [ 1, %bb.ce ]
   br i1 %i.afx, label %av_add_sf.exit422.i, label %bb.cg
 
@@ -1210,7 +1210,7 @@ av_normalize_sf.exit41.i400.i:                    ; preds = %._crit_edge.i32.i39
   br label %av_add_sf.exit422.i
 
 av_add_sf.exit422.i:                              ; preds = %av_normalize_sf.exit41.i400.i, %bb.ci, %av_normalize_sf.exit.i416.i, %av_add_sf.exit381.i
-  %.sroa.016.0.i385.i = phi i64 [ %i.afv, %av_add_sf.exit381.i ], [ %.sroa.05.0.insert.insert.i.i417.i, %av_normalize_sf.exit.i416.i ], [ %.sroa.05.0.insert.insert.i37.i401.i, %av_normalize_sf.exit41.i400.i ], [ 4831838208, %bb.ci ]
+  %.sroa.016.0.i385.i = phi i64 [ %i.afv, %av_add_sf.exit381.i ], [ %.sroa.05.0.insert.insert.i.i417.i, %av_normalize_sf.exit.i416.i ], [ %.sroa.05.0.insert.insert.i37.i401.i, %av_normalize_sf.exit41.i400.i ], [ 536870912, %bb.ci ]
   %.sroa.5.0.i386.i = phi i64 [ %.sroa.4.0.extract.shift.i.i241, %av_add_sf.exit381.i ], [ %.sroa.5.0.extract.shift.i418.i, %av_normalize_sf.exit.i416.i ], [ %.sroa.5.0.extract.shift18.i402.i, %av_normalize_sf.exit41.i400.i ], [ 1, %bb.ci ]
   %i.apf = shl i64 %.sroa.016.0.i344.i, 32
   %i.apg = ashr exact i64 %i.apf, 32
@@ -1383,7 +1383,7 @@ av_normalize_sf.exit41.i474.i:                    ; preds = %._crit_edge.i32.i46
   br label %av_add_sf.exit496.i
 
 av_add_sf.exit496.i:                              ; preds = %av_normalize_sf.exit41.i474.i, %bb.cp, %av_normalize_sf.exit.i490.i, %bb.cm
-  %.sroa.016.0.i459.i = phi i64 [ %i.amk, %bb.cm ], [ %.sroa.05.0.insert.insert.i.i491.i, %av_normalize_sf.exit.i490.i ], [ %.sroa.05.0.insert.insert.i37.i475.i, %av_normalize_sf.exit41.i474.i ], [ 4831838208, %bb.cp ]
+  %.sroa.016.0.i459.i = phi i64 [ %i.amk, %bb.cm ], [ %.sroa.05.0.insert.insert.i.i491.i, %av_normalize_sf.exit.i490.i ], [ %.sroa.05.0.insert.insert.i37.i475.i, %av_normalize_sf.exit41.i474.i ], [ 536870912, %bb.cp ]
   %.sroa.5.0.i460.i = phi i64 [ %.sroa.4.0.extract.shift.i342.i, %bb.cm ], [ %.sroa.5.0.extract.shift.i492.i, %av_normalize_sf.exit.i490.i ], [ %.sroa.5.0.extract.shift18.i476.i, %av_normalize_sf.exit41.i474.i ], [ 1, %bb.cp ]
   %.sroa.2.0.extract.trunc.i500.i = trunc nuw i64 %.sroa.5.0.i460.i to i32
   %i.ars = shl i64 %.sroa.016.0.i459.i, 32
@@ -1562,7 +1562,7 @@ av_normalize_sf.exit41.i549.i:                    ; preds = %._crit_edge.i32.i54
   br label %av_add_sf.exit571.i
 
 av_add_sf.exit571.i:                              ; preds = %av_normalize_sf.exit41.i549.i, %bb.cw, %av_normalize_sf.exit.i565.i, %bb.ct
-  %.sroa.016.0.i534.i = phi i64 [ %i.asu, %bb.ct ], [ %.sroa.05.0.insert.insert.i.i566.i, %av_normalize_sf.exit.i565.i ], [ %.sroa.05.0.insert.insert.i37.i550.i, %av_normalize_sf.exit41.i549.i ], [ 4831838208, %bb.cw ]
+  %.sroa.016.0.i534.i = phi i64 [ %i.asu, %bb.ct ], [ %.sroa.05.0.insert.insert.i.i566.i, %av_normalize_sf.exit.i565.i ], [ %.sroa.05.0.insert.insert.i37.i550.i, %av_normalize_sf.exit41.i549.i ], [ 536870912, %bb.cw ]
   %.sroa.5.0.i535.i = phi i64 [ %.sroa.4.0.extract.shift.i532.i, %bb.ct ], [ %.sroa.5.0.extract.shift.i567.i, %av_normalize_sf.exit.i565.i ], [ %.sroa.5.0.extract.shift18.i551.i, %av_normalize_sf.exit41.i549.i ], [ 1, %bb.cw ]
   br i1 %i.afx, label %av_add_sf.exit612.i, label %bb.cy
 
@@ -1661,7 +1661,7 @@ av_normalize_sf.exit41.i590.i:                    ; preds = %._crit_edge.i32.i58
   br label %av_add_sf.exit612.i
 
 av_add_sf.exit612.i:                              ; preds = %av_normalize_sf.exit41.i590.i, %bb.da, %av_normalize_sf.exit.i606.i, %av_add_sf.exit571.i
-  %.sroa.016.0.i575.i = phi i64 [ %i.afv, %av_add_sf.exit571.i ], [ %.sroa.05.0.insert.insert.i.i607.i, %av_normalize_sf.exit.i606.i ], [ %.sroa.05.0.insert.insert.i37.i591.i, %av_normalize_sf.exit41.i590.i ], [ 4831838208, %bb.da ]
+  %.sroa.016.0.i575.i = phi i64 [ %i.afv, %av_add_sf.exit571.i ], [ %.sroa.05.0.insert.insert.i.i607.i, %av_normalize_sf.exit.i606.i ], [ %.sroa.05.0.insert.insert.i37.i591.i, %av_normalize_sf.exit41.i590.i ], [ 536870912, %bb.da ]
   %.sroa.5.0.i576.i = phi i64 [ %.sroa.4.0.extract.shift.i.i241, %av_add_sf.exit571.i ], [ %.sroa.5.0.extract.shift.i608.i, %av_normalize_sf.exit.i606.i ], [ %.sroa.5.0.extract.shift18.i592.i, %av_normalize_sf.exit41.i590.i ], [ 1, %bb.da ]
   %i.avp = shl i64 %.sroa.016.0.i534.i, 32
   %i.avq = ashr exact i64 %i.avp, 32
@@ -1889,7 +1889,7 @@ av_normalize_sf.exit41.i662.i:                    ; preds = %._crit_edge.i32.i65
 
 av_add_sf.exit684.i:                              ; preds = %av_normalize_sf.exit41.i662.i, %bb.dg, %av_normalize_sf.exit.i678.i, %av_sqrt_sf.exit292.i
   %i.azs = phi ptr [ %i.aye, %av_sqrt_sf.exit292.i ], [ %i.aye, %av_normalize_sf.exit.i678.i ], [ %i.azb, %av_normalize_sf.exit41.i662.i ], [ %i.aye, %bb.dg ]
-  %.sroa.016.0.i647.i = phi i64 [ -639413256192, %av_sqrt_sf.exit292.i ], [ %.sroa.05.0.insert.insert.i.i679.i, %av_normalize_sf.exit.i678.i ], [ %.sroa.05.0.insert.insert.i37.i663.i, %av_normalize_sf.exit41.i662.i ], [ %i.ayd, %bb.dg ]
+  %.sroa.016.0.i647.i = phi i64 [ 536870912, %av_sqrt_sf.exit292.i ], [ %.sroa.05.0.insert.insert.i.i679.i, %av_normalize_sf.exit.i678.i ], [ %.sroa.05.0.insert.insert.i37.i663.i, %av_normalize_sf.exit41.i662.i ], [ %i.ayd, %bb.dg ]
   %.sroa.5.0.i648.i = phi i64 [ 4294967147, %av_sqrt_sf.exit292.i ], [ %.sroa.5.0.extract.shift.i680.i, %av_normalize_sf.exit.i678.i ], [ %.sroa.5.0.extract.shift18.i664.i, %av_normalize_sf.exit41.i662.i ], [ %i.aya, %bb.dg ]
   %.sroa.5.0.insert.shift.i649.i = shl nuw i64 %.sroa.5.0.i648.i, 32
   %.sroa.016.0.insert.ext.i650.i = and i64 %.sroa.016.0.i647.i, 4294967295
@@ -2263,7 +2263,7 @@ av_normalize_sf.exit41.i791.i:                    ; preds = %._crit_edge.i32.i78
   br label %av_add_sf.exit813.i
 
 av_add_sf.exit813.i:                              ; preds = %av_normalize_sf.exit41.i791.i, %bb.ds, %av_normalize_sf.exit.i807.i, %._crit_edge1451.i
-  %.sroa.016.0.i776.i = phi i64 [ %.sroa.016.0.insert.insert.i695.i, %._crit_edge1451.i ], [ %.sroa.05.0.insert.insert.i.i808.i, %av_normalize_sf.exit.i807.i ], [ %.sroa.05.0.insert.insert.i37.i792.i, %av_normalize_sf.exit41.i791.i ], [ -68015789294, %bb.ds ] ; 4 uses
+  %.sroa.016.0.i776.i = phi i64 [ %.sroa.016.0.insert.insert.i695.i, %._crit_edge1451.i ], [ %.sroa.05.0.insert.insert.i.i808.i, %av_normalize_sf.exit.i807.i ], [ %.sroa.05.0.insert.insert.i37.i792.i, %av_normalize_sf.exit41.i791.i ], [ 703687442, %bb.ds ] ; 4 uses
   %.sroa.5.0.i777.i = phi i64 [ %.sroa.5.0.i692.i, %._crit_edge1451.i ], [ %.sroa.5.0.extract.shift.i809.i, %av_normalize_sf.exit.i807.i ], [ %.sroa.5.0.extract.shift18.i793.i, %av_normalize_sf.exit41.i791.i ], [ 4294967280, %bb.ds ] ; 4 uses
   %.sroa.09.0.extract.trunc.i814.i = trunc i64 %.sroa.016.0.i735.i to i32 ; 2 uses
   %.sroa.4.0.extract.trunc.i816.i = trunc nuw i64 %.sroa.5.0.i736.i to i32 ; 4 uses
@@ -2368,9 +2368,9 @@ av_normalize_sf.exit41.i832.i:                    ; preds = %._crit_edge.i32.i82
 
 av_add_sf.exit854.i:                              ; preds = %av_normalize_sf.exit41.i832.i, %bb.dw, %av_normalize_sf.exit.i848.i, %av_add_sf.exit813.i, %.thread1658.i
   %.sroa.5.0.i7771643.i = phi i64 [ %.sroa.5.0.i777.i, %av_add_sf.exit813.i ], [ %.sroa.5.0.i777.i, %av_normalize_sf.exit.i848.i ], [ %.sroa.5.0.i777.i, %av_normalize_sf.exit41.i832.i ], [ %.sroa.5.0.i777.i, %bb.dw ], [ 4294967280, %.thread1658.i ]
-  %.sroa.016.0.i7761641.i = phi i64 [ %.sroa.016.0.i776.i, %av_add_sf.exit813.i ], [ %.sroa.016.0.i776.i, %av_normalize_sf.exit.i848.i ], [ %.sroa.016.0.i776.i, %av_normalize_sf.exit41.i832.i ], [ %.sroa.016.0.i776.i, %bb.dw ], [ -68015789294, %.thread1658.i ]
+  %.sroa.016.0.i7761641.i = phi i64 [ %.sroa.016.0.i776.i, %av_add_sf.exit813.i ], [ %.sroa.016.0.i776.i, %av_normalize_sf.exit.i848.i ], [ %.sroa.016.0.i776.i, %av_normalize_sf.exit41.i832.i ], [ %.sroa.016.0.i776.i, %bb.dw ], [ 703687442, %.thread1658.i ]
   %.pn1837.in.i = phi i32 [ %i.bdh, %av_add_sf.exit813.i ], [ %i.bdh, %av_normalize_sf.exit.i848.i ], [ %i.bdh, %av_normalize_sf.exit41.i832.i ], [ %i.bdh, %bb.dw ], [ %i.azy, %.thread1658.i ]
-  %.sroa.016.0.i817.i = phi i64 [ %.sroa.016.0.insert.insert.i739.i, %av_add_sf.exit813.i ], [ %.sroa.05.0.insert.insert.i.i849.i, %av_normalize_sf.exit.i848.i ], [ %.sroa.05.0.insert.insert.i37.i833.i, %av_normalize_sf.exit41.i832.i ], [ -68015789294, %bb.dw ], [ -68015789294, %.thread1658.i ]
+  %.sroa.016.0.i817.i = phi i64 [ %.sroa.016.0.insert.insert.i739.i, %av_add_sf.exit813.i ], [ %.sroa.05.0.insert.insert.i.i849.i, %av_normalize_sf.exit.i848.i ], [ %.sroa.05.0.insert.insert.i37.i833.i, %av_normalize_sf.exit41.i832.i ], [ 703687442, %bb.dw ], [ 703687442, %.thread1658.i ]
   %.sroa.5.0.i818.i = phi i64 [ %.sroa.5.0.i736.i, %av_add_sf.exit813.i ], [ %.sroa.5.0.extract.shift.i850.i, %av_normalize_sf.exit.i848.i ], [ %.sroa.5.0.extract.shift18.i834.i, %av_normalize_sf.exit41.i832.i ], [ 4294967280, %bb.dw ], [ 4294967280, %.thread1658.i ]
   %.pn1837.i = zext i32 %.pn1837.in.i to i64
   %i.bge = getelementptr inbounds nuw [8 x i8], ptr @sbr_gain_calc.limgain, i64 %.pn1837.i
@@ -2773,7 +2773,7 @@ av_normalize_sf.exit41.i1182.i:                   ; preds = %._crit_edge.i32.i11
   br label %av_add_sf.exit1204.i
 
 av_add_sf.exit1204.i:                             ; preds = %av_normalize_sf.exit41.i1182.i, %bb.fh, %av_normalize_sf.exit.i1198.i, %._crit_edge1465.i
-  %.sroa.016.0.i1167.i = phi i64 [ %.sroa.016.0.insert.insert.i950.i, %._crit_edge1465.i ], [ %.sroa.05.0.insert.insert.i.i1199.i, %av_normalize_sf.exit.i1198.i ], [ %.sroa.05.0.insert.insert.i37.i1183.i, %av_normalize_sf.exit41.i1182.i ], [ -68015789294, %bb.fh ] ; 4 uses
+  %.sroa.016.0.i1167.i = phi i64 [ %.sroa.016.0.insert.insert.i950.i, %._crit_edge1465.i ], [ %.sroa.05.0.insert.insert.i.i1199.i, %av_normalize_sf.exit.i1198.i ], [ %.sroa.05.0.insert.insert.i37.i1183.i, %av_normalize_sf.exit41.i1182.i ], [ 703687442, %bb.fh ] ; 4 uses
   %.sroa.5.0.i1168.i = phi i64 [ %.sroa.5.0.i947.i, %._crit_edge1465.i ], [ %.sroa.5.0.extract.shift.i1200.i, %av_normalize_sf.exit.i1198.i ], [ %.sroa.5.0.extract.shift18.i1184.i, %av_normalize_sf.exit41.i1182.i ], [ 4294967280, %bb.fh ] ; 4 uses
   %.sroa.09.0.extract.trunc.i1205.i = trunc i64 %.sroa.10.2.i to i32 ; 2 uses
   %.sroa.4.0.extract.shift.i1206.i = lshr i64 %.sroa.10.2.i, 32 ; 3 uses
@@ -2879,8 +2879,8 @@ av_normalize_sf.exit41.i1223.i:                   ; preds = %._crit_edge.i32.i12
 
 av_add_sf.exit1245.i:                             ; preds = %av_normalize_sf.exit41.i1223.i, %bb.fl, %av_normalize_sf.exit.i1239.i, %av_add_sf.exit1204.i, %._crit_edge1457.i
   %.sroa.5.0.i11681704.i = phi i64 [ %.sroa.5.0.i1168.i, %av_add_sf.exit1204.i ], [ %.sroa.5.0.i1168.i, %av_normalize_sf.exit.i1239.i ], [ %.sroa.5.0.i1168.i, %av_normalize_sf.exit41.i1223.i ], [ %.sroa.5.0.i1168.i, %bb.fl ], [ 4294967280, %._crit_edge1457.i ]
-  %.sroa.016.0.i11671702.i = phi i64 [ %.sroa.016.0.i1167.i, %av_add_sf.exit1204.i ], [ %.sroa.016.0.i1167.i, %av_normalize_sf.exit.i1239.i ], [ %.sroa.016.0.i1167.i, %av_normalize_sf.exit41.i1223.i ], [ %.sroa.016.0.i1167.i, %bb.fl ], [ -68015789294, %._crit_edge1457.i ]
-  %.sroa.016.0.i1208.i = phi i64 [ %.sroa.10.2.i, %av_add_sf.exit1204.i ], [ %.sroa.05.0.insert.insert.i.i1240.i, %av_normalize_sf.exit.i1239.i ], [ %.sroa.05.0.insert.insert.i37.i1224.i, %av_normalize_sf.exit41.i1223.i ], [ -68015789294, %bb.fl ], [ -68015789294, %._crit_edge1457.i ]
+  %.sroa.016.0.i11671702.i = phi i64 [ %.sroa.016.0.i1167.i, %av_add_sf.exit1204.i ], [ %.sroa.016.0.i1167.i, %av_normalize_sf.exit.i1239.i ], [ %.sroa.016.0.i1167.i, %av_normalize_sf.exit41.i1223.i ], [ %.sroa.016.0.i1167.i, %bb.fl ], [ 703687442, %._crit_edge1457.i ]
+  %.sroa.016.0.i1208.i = phi i64 [ %.sroa.10.2.i, %av_add_sf.exit1204.i ], [ %.sroa.05.0.insert.insert.i.i1240.i, %av_normalize_sf.exit.i1239.i ], [ %.sroa.05.0.insert.insert.i37.i1224.i, %av_normalize_sf.exit41.i1223.i ], [ 703687442, %bb.fl ], [ 703687442, %._crit_edge1457.i ]
   %.sroa.5.0.i1209.i = phi i64 [ %.sroa.4.0.extract.shift.i1206.i, %av_add_sf.exit1204.i ], [ %.sroa.5.0.extract.shift.i1241.i, %av_normalize_sf.exit.i1239.i ], [ %.sroa.5.0.extract.shift18.i1225.i, %av_normalize_sf.exit41.i1223.i ], [ 4294967280, %bb.fl ], [ 4294967280, %._crit_edge1457.i ]
   %.sroa.9.0.extract.trunc.i1247.i = trunc nuw i64 %.sroa.5.0.i11681704.i to i32
   %.sroa.2.0.extract.trunc.i1249.i = trunc nuw i64 %.sroa.5.0.i1209.i to i32
@@ -3283,7 +3283,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   %.neg189 = add nsw i32 %.sroa.866.0, -1
-  %i.xz = shl nsw i32 %.sroa.059.0, %.neg189
+  %i.xz = shl nsw i32 %.sroa.059.0, %.neg189      ; 2 uses
   br label %bb.bg
 
 bb.bf:                                            ; preds = %bb.bd
@@ -3291,11 +3291,12 @@ bb.bf:                                            ; preds = %bb.bd
   %i.yb = sub nsw i32 0, %.sroa.866.0
   %i.yc = shl nuw nsw i32 1, %i.yb
   %i.yd = add nsw i32 %i.yc, %.sroa.059.0
-  %i.ye = ashr i32 %i.yd, %i.ya
+  %i.ye = ashr i32 %i.yd, %i.ya                   ; 2 uses
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bc, %bb.bb, %bb.bf, %bb.be
-  %.sink956 = phi i32 [ 2147483647, %bb.bb ], [ %i.ye, %bb.bf ], [ %i.xz, %bb.be ], [ 0, %bb.bc ] ; 2 uses
+  %.sink956 = phi i32 [ 2147483647, %bb.bb ], [ %i.ye, %bb.bf ], [ %i.xz, %bb.be ], [ 0, %bb.bc ]
+  %6 = phi i32 [ 2147483646, %bb.bb ], [ %i.ye, %bb.bf ], [ %i.xz, %bb.be ], [ 0, %bb.bc ]
   %i.yf = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   store i32 %.sink956, ptr %i.yf, align 4, !tbaa !14
   %i.yg = icmp sgt i32 %.sroa.8.0, 2
@@ -3311,7 +3312,7 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %bb.bi
   %.neg190 = add nsw i32 %.sroa.8.0, -1
-  %i.yj = shl nsw i32 %.sroa.047.0, %.neg190
+  %i.yj = shl nsw i32 %.sroa.047.0, %.neg190      ; 2 uses
   br label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bi
@@ -3319,20 +3320,21 @@ bb.bk:                                            ; preds = %bb.bi
   %i.yl = sub nsw i32 0, %.sroa.8.0
   %i.ym = shl nuw nsw i32 1, %i.yl
   %i.yn = add nsw i32 %i.ym, %.sroa.047.0
-  %i.yo = ashr i32 %i.yn, %i.yk
+  %i.yo = ashr i32 %i.yn, %i.yk                   ; 2 uses
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bh, %bb.bg, %bb.bk, %bb.bj
-  %.sink958 = phi i32 [ 2147483647, %bb.bg ], [ %i.yo, %bb.bk ], [ %i.yj, %bb.bj ], [ 0, %bb.bh ] ; 2 uses
+  %.sink958 = phi i32 [ 2147483647, %bb.bg ], [ %i.yo, %bb.bk ], [ %i.yj, %bb.bj ], [ 0, %bb.bh ]
+  %7 = phi i32 [ 2147483646, %bb.bg ], [ %i.yo, %bb.bk ], [ %i.yj, %bb.bj ], [ 0, %bb.bh ]
   %i.yp = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %i.yq = getelementptr inbounds nuw i8, ptr %i.yp, i64 4
   store i32 %.sink958, ptr %i.yq, align 4, !tbaa !14
   %i.yr = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 3 uses
-  %i.ys = ashr i32 %.sink956, 1
+  %i.ys = ashr i32 %6, 1
   %i.yt = sext i32 %i.ys to i64                   ; 2 uses
   %i.yu = mul nsw i64 %i.yt, %i.yt
   %i.yv = getelementptr inbounds nuw i8, ptr %i.yr, i64 4 ; 2 uses
-  %i.yw = ashr i32 %.sink958, 1
+  %i.yw = ashr i32 %7, 1
   %i.yx = sext i32 %i.yw to i64                   ; 2 uses
   %i.yy = mul nsw i64 %i.yx, %i.yx
   %i.yz = add nuw nsw i64 %i.yy, %i.yu

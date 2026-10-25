@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.052 = phi i32 [ %i.w, %bb.g ], [ -1, %bb.f ]
+  %.052 = phi i32 [ %i.w, %bb.g ], [ 2147483647, %bb.f ]
   %.not72 = icmp eq i32 %i.c, 0
   br i1 %.not72, label %._crit_edge, label %.lr.ph
 
@@ -608,17 +608,18 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.as = getelementptr i8, ptr %0, i64 312
   %i.at = load i32, ptr %i.as, align 8
-  %i.au = shl i32 %i.at, 3                        ; 2 uses
+  %i.au = shl i32 %i.at, 3                        ; 3 uses
   %i.av = icmp ugt i32 %i.aq, %i.au
   br i1 %i.av, label %.sink.split, label %bb.g
 
 .sink.split:                                      ; preds = %bb.f, %bb.e
-  %.sink179 = phi i32 [ 1, %bb.e ], [ %i.au, %bb.f ] ; 2 uses
+  %.sink179 = phi i32 [ 1, %bb.e ], [ %i.au, %bb.f ]
+  %.ph = phi i32 [ 0, %bb.e ], [ %i.au, %bb.f ]
   store i32 %.sink179, ptr %i.ap, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %.sink.split, %bb.f
-  %i.aw = phi i32 [ %i.aq, %bb.f ], [ %.sink179, %.sink.split ]
+  %i.aw = phi i32 [ %i.aq, %bb.f ], [ %.ph, %.sink.split ]
   %i.ax = lshr i32 %i.aw, 3
   %i.ay = trunc i32 %i.ax to i16
   %i.az = getelementptr i8, ptr %i.a, i64 116

@@ -122,7 +122,6 @@ bb.g:                                             ; preds = %.critedge
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.critedge
-  %5 = phi i32 [ 1, %bb.g ], [ %i.y, %.critedge ]
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 1540
   store i32 1, ptr %i.z, align 4, !tbaa !94
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 56
@@ -148,7 +147,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.am = icmp ne i32 %i.ak, -1
-  %i.an = and i32 %5, 16
+  %i.an = and i32 %i.y, 16
   %.not29 = icmp eq i32 %i.an, 0
   %or.cond45 = or i1 %i.am, %.not29
   br i1 %or.cond45, label %bb.l, label %bb.k

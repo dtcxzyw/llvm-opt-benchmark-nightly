@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hcd733f23ed2f8554E.exit", label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.thread.i
-  %i.q = phi i8 [ 86, %.thread.i ], [ %.pr.i, %bb.b ]
+  %i.q = phi i8 [ 22, %.thread.i ], [ %.pr.i, %bb.b ]
   invoke fastcc void @_ZN18nickel_lang_parser7grammar13__parse__Term22__symbol_type_mismatch17ha9846476a177a7c1E() #52
           to label %bb.e unwind label %bb.d, !noalias !130777
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17heae7342e5287a0afE.exit", label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.thread.i
-  %i.q = phi i8 [ 86, %.thread.i ], [ %.pr.i, %bb.b ]
+  %i.q = phi i8 [ 22, %.thread.i ], [ %.pr.i, %bb.b ]
   invoke fastcc void @_ZN18nickel_lang_parser7grammar18__parse__FixedType22__symbol_type_mismatch17hc653e715723875b5E() #52
           to label %bb.e unwind label %bb.d, !noalias !220661
 
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h341a9ca56f42259fE.exit", label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.thread.i
-  %i.q = phi i8 [ 86, %.thread.i ], [ %.pr.i, %bb.b ]
+  %i.q = phi i8 [ 22, %.thread.i ], [ %.pr.i, %bb.b ]
   invoke fastcc void @_ZN18nickel_lang_parser7grammar21__parse__ExtendedTerm22__symbol_type_mismatch17h3a7cd77dfb7eadcfE() #52
           to label %bb.e unwind label %bb.d, !noalias !310558
 
@@ -1414,7 +1414,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h035db530c0402b0eE.exit", label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.thread.i
-  %i.q = phi i8 [ 86, %.thread.i ], [ %.pr.i, %bb.b ]
+  %i.q = phi i8 [ 22, %.thread.i ], [ %.pr.i, %bb.b ]
   invoke fastcc void @_ZN18nickel_lang_parser7grammar24__parse__StaticFieldPath22__symbol_type_mismatch17h12a1491df8b5a78cE() #52
           to label %bb.e unwind label %bb.d, !noalias !400455
 
@@ -1817,7 +1817,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h0f4d0473142ee59eE.exit", label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.thread.i
-  %i.q = phi i8 [ 86, %.thread.i ], [ %.pr.i, %bb.b ]
+  %i.q = phi i8 [ 22, %.thread.i ], [ %.pr.i, %bb.b ]
   invoke fastcc void @_ZN18nickel_lang_parser7grammar27__parse__CliFieldAssignment22__symbol_type_mismatch17hcbcc27ec5f5cac52E() #52
           to label %bb.e unwind label %bb.d, !noalias !490352
 

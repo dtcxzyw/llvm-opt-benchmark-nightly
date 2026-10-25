@@ -205,7 +205,7 @@ bb.se:                                            ; preds = %bb.sd
   %i.bvg = icmp eq i8 %i.bvf, 10                  ; 2 uses
   %i.bvh = getelementptr inbounds nuw i8, ptr %i.bva, i64 2
   %spec.select2724 = select i1 %i.bvg, ptr %i.bvh, ptr %i.bvb
-  %spec.select2725 = select i1 %i.bvg, i32 10, i32 13
+  %spec.select2725 = select i1 %i.bvg, i32 10, i32 12
   br label %.thread1275
 
 nextc0.exit1112:                                  ; preds = %bb.sc
@@ -352,7 +352,7 @@ pushback.exit1125:                                ; preds = %.critedge.i1114, %.
 
 .thread1275:                                      ; preds = %bb.se, %bb.sd, %nextc0.exit1112
   %i.bxh = phi ptr [ %i.bvb, %nextc0.exit1112 ], [ %i.bvb, %bb.sd ], [ %spec.select2724, %bb.se ] ; 2 uses
-  %.011.i110712671277 = phi i32 [ %i.bvi, %nextc0.exit1112 ], [ 13, %bb.sd ], [ %spec.select2725, %bb.se ]
+  %.011.i110712671277 = phi i32 [ %i.bvi, %nextc0.exit1112 ], [ 12, %bb.sd ], [ %spec.select2725, %bb.se ]
   %i.bxi = load i16, ptr %i.f, align 8
   %i.bxj = and i16 %i.bxi, -9
   store i16 %i.bxj, ptr %i.f, align 8

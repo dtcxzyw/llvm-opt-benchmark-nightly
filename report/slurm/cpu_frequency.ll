@@ -202,7 +202,7 @@ bb.z:                                             ; preds = %bb.x, %bb.v
 bb.aa:                                            ; preds = %bb.r
   %.pre = load i32, ptr %3, align 4               ; 2 uses
   %i.be = icmp eq i32 %.pre, -2
-  %i.bf = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 312), align 8 ; 2 uses
+  %i.bf = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 312), align 8 ; 3 uses
   %i.bg = icmp ne i32 %i.bf, -2
   %or.cond9 = select i1 %i.be, i1 %i.bg, i1 false
   br i1 %or.cond9, label %.sink.split, label %.thread124
@@ -217,19 +217,21 @@ bb.aa:                                            ; preds = %bb.r
   br label %.thread124
 
 .thread124:                                       ; preds = %.thread124thread-pre-split, %bb.z, %bb.aa, %.thread116.thread
-  %.pr = phi i32 [ %.pr.pr, %.thread124thread-pre-split ], [ %i.ay, %bb.z ], [ %.pre, %bb.aa ], [ %.pre123, %.thread116.thread ] ; 2 uses
+  %.pr = phi i32 [ %.pr.pr, %.thread124thread-pre-split ], [ %i.ay, %bb.z ], [ %.pre, %bb.aa ], [ %.pre123, %.thread116.thread ] ; 3 uses
   %.0.ph = phi i32 [ -1, %.thread124thread-pre-split ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 0, %.thread116.thread ] ; 2 uses
   %.not93 = icmp eq i32 %.pr, -2
   br i1 %.not93, label %bb.ad, label %bb.ab
 
 .sink.split:                                      ; preds = %.thread116.thread, %bb.aa
   %.sink = phi i32 [ %i.bf, %bb.aa ], [ -2139095040, %.thread116.thread ] ; 2 uses
+  %.ph141 = phi i32 [ %i.bf, %bb.aa ], [ 8388608, %.thread116.thread ]
   store i32 %.sink, ptr %3, align 4
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.sink.split, %.thread124
+  %4 = phi i32 [ %.pr, %.thread124 ], [ %.sink, %.sink.split ]
   %.0100 = phi i32 [ %.0.ph, %.thread124 ], [ 0, %.sink.split ]
-  %i.bh = phi i32 [ %.pr, %.thread124 ], [ %.sink, %.sink.split ] ; 2 uses
+  %i.bh = phi i32 [ %.pr, %.thread124 ], [ %.ph141, %.sink.split ]
   %i.bi = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 316), align 4
   %i.bj = and i32 %i.bh, 2147483647
   %i.bk = and i32 %i.bj, %i.bi
@@ -242,7 +244,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ab, %bb.ac, %.thread124
-  %i.bn = phi i32 [ -2, %bb.ac ], [ %i.bh, %bb.ab ], [ -2, %.thread124 ]
+  %i.bn = phi i32 [ -2, %bb.ac ], [ %4, %bb.ab ], [ -2, %.thread124 ]
   %.1 = phi i32 [ -1, %bb.ac ], [ %.0100, %bb.ab ], [ %.0.ph, %.thread124 ]
   %i.bo = load i64, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 336), align 8
   %i.bp = and i64 %i.bo, 2199023255552

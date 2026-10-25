@@ -204,29 +204,30 @@ bb.aw:                                            ; preds = %bb.aq
   br label %bb.bk
 
 bb.ax:                                            ; preds = %bb.aq
-  %i.fu = load i8, ptr %i.fr, align 1             ; 4 uses
+  %i.fu = load i8, ptr %i.fr, align 1             ; 3 uses
   %i.fv = add i8 %i.fu, -48
   %or.cond.i = icmp ult i8 %i.fv, 10
   br i1 %or.cond.i, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.fw = add i8 %i.fu, -65
-  %or.cond5.i = icmp ult i8 %i.fw, 6
-  br i1 %or.cond5.i, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit, label %bb.az
+  %i.fw = add i8 %i.fu, -65                       ; 2 uses
+  %or.cond5.i = icmp ult i8 %i.fw, 38
+  br i1 %or.cond5.i, label %bb.ba, label %bb.az
 
-bb.az:                                            ; preds = %bb.ay
-  %3 = add i8 %i.fu, -97
-  %or.cond8.i = icmp ult i8 %3, 6
-  br i1 %or.cond8.i, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit, label %bb.ba
-
-bb.ba:                                            ; preds = %bb.az
+bb.az:                                            ; preds = %bb.ba, %bb.ay
   tail call void @__assert_fail(ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.2, i32 noundef 742, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh) #17
   unreachable
 
-_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit: ; preds = %bb.ax, %bb.ay, %bb.az
-  %.sink.i = phi i16 [ -55, %bb.ay ], [ -48, %bb.ax ], [ -87, %bb.az ]
+bb.ba:                                            ; preds = %bb.ay
+  %switch.maskindex = zext nneg i8 %i.fw to i64
+  %switch.shifted = lshr i64 270582939711, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit, label %bb.az
+
+_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit: ; preds = %bb.ba, %bb.ax
+  %.sink.i = phi i16 [ 0, %bb.ax ], [ 9, %bb.ba ]
   %i.fx = zext nneg i8 %i.fu to i16
-  %i.fy = add nsw i16 %.sink.i, %i.fx
+  %i.fy = add nuw nsw i16 %.sink.i, %i.fx
   %i.fz = shl i16 %i.fy, 12
   %i.ga = getelementptr inbounds nuw i8, ptr %.044112, i64 3
   %i.gb = load i8, ptr %i.ga, align 1             ; 4 uses
@@ -249,10 +250,10 @@ bb.bd:                                            ; preds = %bb.bc
   unreachable
 
 _ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit76: ; preds = %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit, %bb.bb, %bb.bc
-  %.sink.i75 = phi i16 [ -55, %bb.bb ], [ -48, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit ], [ -87, %bb.bc ]
+  %.sink.i75 = phi i16 [ 201, %bb.bb ], [ 208, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit ], [ 169, %bb.bc ]
   %i.gf = zext nneg i8 %i.gb to i16
-  %i.gg = add nsw i16 %.sink.i75, %i.gf
-  %i.gh = shl nsw i16 %i.gg, 8
+  %i.gg = add nuw nsw i16 %.sink.i75, %i.gf
+  %i.gh = shl i16 %i.gg, 8
   %i.gi = or i16 %i.gh, %i.fz
   %i.gj = getelementptr inbounds nuw i8, ptr %.044112, i64 4
   %i.gk = load i8, ptr %i.gj, align 1             ; 4 uses
@@ -275,10 +276,10 @@ bb.bg:                                            ; preds = %bb.bf
   unreachable
 
 _ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit81: ; preds = %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit76, %bb.be, %bb.bf
-  %.sink.i80 = phi i16 [ -55, %bb.be ], [ -48, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit76 ], [ -87, %bb.bf ]
+  %.sink.i80 = phi i16 [ 4041, %bb.be ], [ 4048, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserIhE8HexToIntEh.exit76 ], [ 4009, %bb.bf ]
   %i.go = zext nneg i8 %i.gk to i16
-  %i.gp = add nsw i16 %.sink.i80, %i.go
-  %i.gq = shl nsw i16 %i.gp, 4
+  %i.gp = add nuw nsw i16 %.sink.i80, %i.go
+  %i.gq = shl i16 %i.gp, 4
   %i.gr = or i16 %i.gi, %i.gq
   %i.gs = getelementptr inbounds nuw i8, ptr %.044112, i64 5
   %i.gt = load i8, ptr %i.gs, align 1             ; 4 uses
@@ -681,28 +682,29 @@ bb.v:                                             ; preds = %bb.p
   br label %bb.aj
 
 bb.w:                                             ; preds = %bb.p
-  %i.bh = load i16, ptr %i.bf, align 2            ; 4 uses
+  %i.bh = load i16, ptr %i.bf, align 2            ; 3 uses
   %i.bi = add i16 %i.bh, -48
   %or.cond.i = icmp ult i16 %i.bi, 10
   br i1 %or.cond.i, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bj = add i16 %i.bh, -65
-  %or.cond5.i = icmp ult i16 %i.bj, 6
-  br i1 %or.cond5.i, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit, label %bb.y
+  %i.bj = add i16 %i.bh, -65                      ; 2 uses
+  %or.cond5.i = icmp ult i16 %i.bj, 38
+  br i1 %or.cond5.i, label %bb.z, label %bb.y
 
-bb.y:                                             ; preds = %bb.x
-  %3 = add i16 %i.bh, -97
-  %or.cond8.i = icmp ult i16 %3, 6
-  br i1 %or.cond8.i, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit, label %bb.z
-
-bb.z:                                             ; preds = %bb.y
+bb.y:                                             ; preds = %bb.z, %bb.x
   tail call void @__assert_fail(ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.2, i32 noundef 742, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt) #17
   unreachable
 
-_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit: ; preds = %bb.w, %bb.x, %bb.y
-  %.sink.i = phi i16 [ -55, %bb.x ], [ -48, %bb.w ], [ -87, %bb.y ]
-  %i.bk = add nsw i16 %.sink.i, %i.bh
+bb.z:                                             ; preds = %bb.x
+  %switch.maskindex = zext nneg i16 %i.bj to i64
+  %switch.shifted = lshr i64 270582939711, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit, label %bb.y
+
+_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit: ; preds = %bb.z, %bb.w
+  %.sink.i = phi i16 [ 0, %bb.w ], [ 9, %bb.z ]
+  %i.bk = add nuw nsw i16 %.sink.i, %i.bh
   %i.bl = shl i16 %i.bk, 12
   %i.bm = getelementptr inbounds nuw i8, ptr %.02259, i64 6
   %i.bn = load i16, ptr %i.bm, align 2            ; 4 uses
@@ -725,9 +727,9 @@ bb.ac:                                            ; preds = %bb.ab
   unreachable
 
 _ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit34: ; preds = %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit, %bb.aa, %bb.ab
-  %.sink.i33 = phi i16 [ -55, %bb.aa ], [ -48, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit ], [ -87, %bb.ab ]
-  %i.br = add nsw i16 %.sink.i33, %i.bn
-  %i.bs = shl nsw i16 %i.br, 8
+  %.sink.i33 = phi i16 [ 201, %bb.aa ], [ 208, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit ], [ 169, %bb.ab ]
+  %i.br = add nuw nsw i16 %.sink.i33, %i.bn
+  %i.bs = shl i16 %i.br, 8
   %i.bt = or i16 %i.bs, %i.bl
   %i.bu = getelementptr inbounds nuw i8, ptr %.02259, i64 8
   %i.bv = load i16, ptr %i.bu, align 2            ; 4 uses
@@ -750,9 +752,9 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 _ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit39: ; preds = %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit34, %bb.ad, %bb.ae
-  %.sink.i38 = phi i16 [ -55, %bb.ad ], [ -48, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit34 ], [ -87, %bb.ae ]
-  %i.bz = add nsw i16 %.sink.i38, %i.bv
-  %i.ca = shl nsw i16 %i.bz, 4
+  %.sink.i38 = phi i16 [ 4041, %bb.ad ], [ 4048, %_ZN5crdtp4json12_GLOBAL__N_110JsonParserItE8HexToIntEt.exit34 ], [ 4009, %bb.ae ]
+  %i.bz = add nuw nsw i16 %.sink.i38, %i.bv
+  %i.ca = shl i16 %i.bz, 4
   %i.cb = or i16 %i.bt, %i.ca
   %i.cc = getelementptr inbounds nuw i8, ptr %.02259, i64 10
   %i.cd = load i16, ptr %i.cc, align 2            ; 4 uses

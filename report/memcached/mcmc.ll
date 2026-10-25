@@ -202,14 +202,14 @@ bb.at:                                            ; preds = %bb.ai, %bb.af, %bb.
   br i1 %i.gg, label %.thread141.i, label %.thread146.i
 
 .thread141.sink.split.i:                          ; preds = %bb.as, %bb.ar, %bb.aj
-  %.2143.ph.i = phi i32 [ -21, %bb.aj ], [ -23, %bb.ar ], [ -22, %bb.as ]
+  %.2143.ph.i = phi i32 [ 65515, %bb.aj ], [ 65513, %bb.ar ], [ 65514, %bb.as ]
   store i16 108, ptr %2, align 8, !tbaa !34
   br label %.thread141.i
 
 .thread141.i:                                     ; preds = %.thread141.sink.split.i, %bb.at, %bb.as, %bb.aq, %bb.ap, %bb.ao, %bb.al, %bb.aj, %bb.ah, %bb.ae, %bb.ad
-  %.2143.i = phi i32 [ %.2.i, %bb.at ], [ -19, %bb.ah ], [ -1, %bb.ap ], [ -1, %bb.ao ], [ -1, %bb.al ], [ -1, %bb.aj ], [ -1, %bb.as ], [ -1, %bb.aq ], [ -1, %bb.ae ], [ -1, %bb.ad ], [ %.2143.ph.i, %.thread141.sink.split.i ]
-  %i.gh = trunc nsw i32 %.2143.i to i16
-  %i.gi = sub nsw i16 0, %i.gh
+  %.2143.i = phi i32 [ %.2.i, %bb.at ], [ 65517, %bb.ah ], [ 65535, %bb.ap ], [ 65535, %bb.ao ], [ 65535, %bb.al ], [ 65535, %bb.aj ], [ 65535, %bb.as ], [ 65535, %bb.aq ], [ 65535, %bb.ae ], [ 65535, %bb.ad ], [ %.2143.ph.i, %.thread141.sink.split.i ]
+  %i.gh = trunc i32 %.2143.i to i16
+  %i.gi = sub i16 0, %i.gh
   br label %_mcmc_parse_response.exit
 
 .thread146.sink.split.i:                          ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.ad

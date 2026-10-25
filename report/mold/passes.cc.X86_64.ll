@@ -205,13 +205,14 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 thread-pre-split:                                 ; preds = %bb.l
-  %.promoted.i.pre = load i8, ptr %i.m, align 2, !tbaa !3387
+  %.promoted.i.pre = load i8, ptr %i.m, align 2, !tbaa !3387 ; 2 uses
   %.pre = load i8, ptr %i.d, align 4, !tbaa !743
   br label %bb.e
 
 bb.e:                                             ; preds = %thread-pre-split, %bb.d
+  %6 = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.d ] ; 3 uses
   %i.s = phi i8 [ %.pre, %thread-pre-split ], [ %i.e, %bb.d ] ; 2 uses
-  %i.t = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.d ] ; 4 uses
+  %i.t = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 0, %bb.d ]
   %i.u = icmp ult i8 %i.t, 8
   br i1 %i.u, label %.lr.ph.i, label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit
 
@@ -229,7 +230,7 @@ bb.f:                                             ; preds = %bb.g
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i: ; preds = %.lr.ph.i, %bb.f
   %i.x = phi i8 [ %i.aw, %bb.f ], [ %.pre.i, %.lr.ph.i ] ; 2 uses
-  %i.y = phi i8 [ %i.ba, %bb.f ], [ %i.t, %.lr.ph.i ]
+  %i.y = phi i8 [ %i.ba, %bb.f ], [ %6, %.lr.ph.i ]
   %i.z = zext i8 %i.x to i64                      ; 3 uses
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %i.z
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
@@ -276,7 +277,7 @@ bb.g:                                             ; preds = %_ZN3tbb6detail2d112
   br label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit, !llvm.loop !3381
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit: ; preds = %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i, %bb.f, %.lr.ph.i, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge, %bb.e
-  %.pr15 = phi i8 [ %i.t, %bb.e ], [ %i.ba, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %i.t, %.lr.ph.i ], [ %i.ba, %bb.f ], [ %i.y, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i ] ; 3 uses
+  %.pr15 = phi i8 [ %6, %bb.e ], [ %i.ba, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %6, %.lr.ph.i ], [ %i.ba, %bb.f ], [ %i.y, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZNS6_22create_output_sectionsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i ] ; 3 uses
   %i.bc = load ptr, ptr %i.p, align 32, !tbaa !1343
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 24
   %i.be = load atomic i8, ptr %i.bd monotonic, align 1, !range !613, !noundef !599
@@ -679,13 +680,14 @@ bb.g:                                             ; preds = %bb.b
   br label %bb.h
 
 thread-pre-split:                                 ; preds = %bb.q
-  %.promoted.i.pre = load i8, ptr %i.r, align 2, !tbaa !4468
+  %.promoted.i.pre = load i8, ptr %i.r, align 2, !tbaa !4468 ; 2 uses
   %.pre = load i8, ptr %i.d, align 4, !tbaa !743
   br label %bb.h
 
 bb.h:                                             ; preds = %thread-pre-split, %bb.g
+  %6 = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.g ] ; 3 uses
   %i.x = phi i8 [ %.pre, %thread-pre-split ], [ %i.e, %bb.g ] ; 2 uses
-  %i.y = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.g ] ; 4 uses
+  %i.y = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 0, %bb.g ]
   %i.z = icmp ult i8 %i.y, 8
   br i1 %i.z, label %.lr.ph.i, label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit
 
@@ -703,7 +705,7 @@ bb.i:                                             ; preds = %bb.j
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i: ; preds = %.lr.ph.i, %bb.i
   %i.ac = phi i8 [ %i.bb, %bb.i ], [ %.pre.i, %.lr.ph.i ] ; 2 uses
-  %i.ad = phi i8 [ %i.bf, %bb.i ], [ %i.y, %.lr.ph.i ]
+  %i.ad = phi i8 [ %i.bf, %bb.i ], [ %6, %.lr.ph.i ]
   %i.ae = zext i8 %i.ac to i64                    ; 3 uses
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24
@@ -750,7 +752,7 @@ bb.j:                                             ; preds = %_ZN3tbb6detail2d112
   br label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit, !llvm.loop !4462
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit: ; preds = %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i, %bb.i, %.lr.ph.i, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge, %bb.h
-  %.pr21 = phi i8 [ %i.y, %bb.h ], [ %i.bf, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %i.y, %.lr.ph.i ], [ %i.bf, %bb.i ], [ %i.ad, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i ] ; 2 uses
+  %.pr21 = phi i8 [ %6, %bb.h ], [ %i.bf, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %6, %.lr.ph.i ], [ %i.bf, %bb.i ], [ %i.ad, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt4spanISA_Lm18446744073709551615EEEEZNS6_12sort_dynsymsIS8_EEvRNS6_7ContextIT_EEEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i ] ; 2 uses
   %i.bh = load ptr, ptr %i.u, align 32, !tbaa !1849
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 24
   %i.bj = load atomic i8, ptr %i.bi monotonic, align 1, !range !613, !noundef !599
@@ -1153,13 +1155,14 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 thread-pre-split:                                 ; preds = %bb.k
-  %.promoted.i.pre = load i8, ptr %i.h, align 2, !tbaa !4775
+  %.promoted.i.pre = load i8, ptr %i.h, align 2, !tbaa !4775 ; 2 uses
   %.pre = load i8, ptr %i.d, align 4, !tbaa !743
   br label %bb.e
 
 bb.e:                                             ; preds = %thread-pre-split, %bb.d
+  %6 = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.d ] ; 3 uses
   %i.o = phi i8 [ %.pre, %thread-pre-split ], [ %i.e, %bb.d ] ; 2 uses
-  %i.p = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.d ] ; 4 uses
+  %i.p = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 0, %bb.d ]
   %i.q = icmp ult i8 %i.p, 8
   br i1 %i.q, label %.lr.ph.i, label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE13split_to_fillEh.exit
 
@@ -1177,7 +1180,7 @@ bb.f:                                             ; preds = %bb.g
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE12is_divisibleEh.exit.i: ; preds = %.lr.ph.i, %bb.f
   %i.t = phi i8 [ %i.as, %bb.f ], [ %.pre.i, %.lr.ph.i ] ; 2 uses
-  %i.u = phi i8 [ %i.aw, %bb.f ], [ %i.p, %.lr.ph.i ]
+  %i.u = phi i8 [ %i.aw, %bb.f ], [ %6, %.lr.ph.i ]
   %i.v = zext i8 %i.t to i64                      ; 3 uses
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 24
@@ -1224,7 +1227,7 @@ bb.g:                                             ; preds = %_ZN3tbb6detail2d112
   br label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE13split_to_fillEh.exit, !llvm.loop !4769
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE13split_to_fillEh.exit: ; preds = %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE12is_divisibleEh.exit.i, %bb.f, %.lr.ph.i, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge, %bb.e
-  %.pr12 = phi i8 [ %i.p, %bb.e ], [ %i.aw, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %i.p, %.lr.ph.i ], [ %i.aw, %bb.f ], [ %i.u, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE12is_divisibleEh.exit.i ] ; 2 uses
+  %.pr12 = phi i8 [ %6, %bb.e ], [ %i.aw, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %6, %.lr.ph.i ], [ %i.aw, %bb.f ], [ %i.u, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIPN4mold6ElfRelINS4_6X86_64EEEZNS4_11sort_reldynIS6_EEvRNS4_7ContextIT_EEEUlRKS7_SF_E_EELh8EE12is_divisibleEh.exit.i ] ; 2 uses
   %i.ay = load ptr, ptr %i.k, align 32, !tbaa !1996
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
   %i.ba = load atomic i8, ptr %i.az monotonic, align 1, !range !613, !noundef !599

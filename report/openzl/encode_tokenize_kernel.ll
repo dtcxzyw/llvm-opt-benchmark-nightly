@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %bb.ad
   br label %MapVSF_genericHash.exit.i
 
 MapVSF_genericHash.exit.i:                        ; preds = %bb.af, %bb.ae, %XXH3_len_17to128_64b.exit.i.i.i, %bb.v, %bb.u, %bb.t, %bb.r
-  %.0.i.i.i.i = phi i64 [ %i.jl, %bb.af ], [ %i.ji, %XXH3_len_17to128_64b.exit.i.i.i ], [ %i.jk, %bb.ae ], [ %i.dv, %bb.r ], [ %i.eo, %bb.t ], [ %i.fl, %bb.v ], [ 3244421341483603138, %bb.u ]
+  %.0.i.i.i.i = phi i64 [ %i.jl, %bb.af ], [ %i.ji, %XXH3_len_17to128_64b.exit.i.i.i ], [ %i.jk, %bb.ae ], [ %i.dv, %bb.r ], [ %i.eo, %bb.t ], [ %i.fl, %bb.v ], [ 953390274, %bb.u ]
   %i.jm = and i64 %.0.i.i.i.i, %i.bc
   %i.jn = shl nuw nsw i64 %i.jm, 5
   %i.jo = getelementptr inbounds nuw i8, ptr %.0.i25.i, i64 %i.jn ; 2 uses
@@ -535,7 +535,7 @@ bb.bc:                                            ; preds = %bb.ba
   br label %MapVSF_genericHash.exit.i33
 
 MapVSF_genericHash.exit.i33:                      ; preds = %bb.bc, %bb.bb, %XXH3_len_17to128_64b.exit.i.i.i38, %bb.as, %bb.ar, %bb.aq, %bb.ao
-  %.0.i.i.i.i34 = phi i64 [ %i.qy, %bb.bc ], [ %i.qv, %XXH3_len_17to128_64b.exit.i.i.i38 ], [ %i.qx, %bb.bb ], [ %i.li, %bb.ao ], [ %i.mb, %bb.aq ], [ %i.my, %bb.as ], [ 3244421341483603138, %bb.ar ]
+  %.0.i.i.i.i34 = phi i64 [ %i.qy, %bb.bc ], [ %i.qv, %XXH3_len_17to128_64b.exit.i.i.i38 ], [ %i.qx, %bb.bb ], [ %i.li, %bb.ao ], [ %i.mb, %bb.aq ], [ %i.my, %bb.as ], [ 953390274, %bb.ar ]
   %i.qz = load i32, ptr %i.kd, align 8, !tbaa !29
   %i.ra = zext i32 %i.qz to i64
   %i.rb = and i64 %.0.i.i.i.i34, %i.ra
@@ -850,7 +850,7 @@ bb.bv:                                            ; preds = %bb.bt
   br label %MapVSF_genericHash.exit.i63
 
 MapVSF_genericHash.exit.i63:                      ; preds = %bb.bv, %bb.bu, %XXH3_len_17to128_64b.exit.i.i.i74, %bb.bl, %bb.bk, %bb.bj, %bb.bh
-  %.0.i.i.i.i64 = phi i64 [ %i.ym, %bb.bv ], [ %i.yj, %XXH3_len_17to128_64b.exit.i.i.i74 ], [ %i.yl, %bb.bu ], [ %i.sw, %bb.bh ], [ %i.tp, %bb.bj ], [ %i.um, %bb.bl ], [ 3244421341483603138, %bb.bk ]
+  %.0.i.i.i.i64 = phi i64 [ %i.ym, %bb.bv ], [ %i.yj, %XXH3_len_17to128_64b.exit.i.i.i74 ], [ %i.yl, %bb.bu ], [ %i.sw, %bb.bh ], [ %i.tp, %bb.bj ], [ %i.um, %bb.bl ], [ 953390274, %bb.bk ]
   %i.yn = load i32, ptr %i.kd, align 8, !tbaa !29
   %i.yo = zext i32 %i.yn to i64
   %i.yp = and i64 %.0.i.i.i.i64, %i.yo
@@ -1253,7 +1253,7 @@ bb.ac:                                            ; preds = %bb.aa
   br label %MapVSF_genericHash.exit.i.i
 
 MapVSF_genericHash.exit.i.i:                      ; preds = %bb.ac, %bb.ab, %XXH3_len_17to128_64b.exit.i.i.i.i, %bb.s, %bb.r, %bb.q, %bb.o
-  %.0.i.i.i.i.i = phi i64 [ %i.hx, %bb.ac ], [ %i.hu, %XXH3_len_17to128_64b.exit.i.i.i.i ], [ %i.hw, %bb.ab ], [ %i.ch, %bb.o ], [ %i.da, %bb.q ], [ %i.dx, %bb.s ], [ 3244421341483603138, %bb.r ]
+  %.0.i.i.i.i.i = phi i64 [ %i.hx, %bb.ac ], [ %i.hu, %XXH3_len_17to128_64b.exit.i.i.i.i ], [ %i.hw, %bb.ab ], [ %i.ch, %bb.o ], [ %i.da, %bb.q ], [ %i.dx, %bb.s ], [ 953390274, %bb.r ]
   %i.hy = and i64 %.0.i.i.i.i.i, %i.bg
   %i.hz = shl nuw nsw i64 %i.hy, 5
   %i.ia = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.hz ; 4 uses
@@ -1641,7 +1641,7 @@ bb.au:                                            ; preds = %bb.as
   br label %MapVSF_genericHash.exit.i.i46
 
 MapVSF_genericHash.exit.i.i46:                    ; preds = %bb.au, %bb.at, %XXH3_len_17to128_64b.exit.i.i.i.i59, %bb.ak, %bb.aj, %bb.ai, %bb.ag
-  %.0.i.i.i.i.i47 = phi i64 [ %i.qr, %bb.au ], [ %i.qo, %XXH3_len_17to128_64b.exit.i.i.i.i59 ], [ %i.qq, %bb.at ], [ %i.lb, %bb.ag ], [ %i.lu, %bb.ai ], [ %i.mr, %bb.ak ], [ 3244421341483603138, %bb.aj ]
+  %.0.i.i.i.i.i47 = phi i64 [ %i.qr, %bb.au ], [ %i.qo, %XXH3_len_17to128_64b.exit.i.i.i.i59 ], [ %i.qq, %bb.at ], [ %i.lb, %bb.ag ], [ %i.lu, %bb.ai ], [ %i.mr, %bb.ak ], [ 953390274, %bb.aj ]
   %i.qs = load i32, ptr %i.jy, align 8, !tbaa !29
   %i.qt = zext i32 %i.qs to i64
   %i.qu = and i64 %.0.i.i.i.i.i47, %i.qt
@@ -2044,7 +2044,7 @@ bb.af:                                            ; preds = %bb.ad
   br label %MapVSF_genericHash.exit
 
 MapVSF_genericHash.exit:                          ; preds = %bb.r, %bb.t, %bb.u, %bb.v, %XXH3_len_17to128_64b.exit.i.i, %bb.ae, %bb.af
-  %.0.i.i.i = phi i64 [ %i.jh, %bb.af ], [ %i.je, %XXH3_len_17to128_64b.exit.i.i ], [ %i.jg, %bb.ae ], [ %i.dr, %bb.r ], [ %i.ek, %bb.t ], [ %i.fh, %bb.v ], [ 3244421341483603138, %bb.u ]
+  %.0.i.i.i = phi i64 [ %i.jh, %bb.af ], [ %i.je, %XXH3_len_17to128_64b.exit.i.i ], [ %i.jg, %bb.ae ], [ %i.dr, %bb.r ], [ %i.ek, %bb.t ], [ %i.fh, %bb.v ], [ 953390274, %bb.u ]
   %i.ji = and i64 %.0.i.i.i, %i.ay
   %i.jj = shl nuw nsw i64 %i.ji, 5
   %i.jk = getelementptr inbounds nuw i8, ptr %.0.i24, i64 %i.jj ; 2 uses

@@ -206,29 +206,21 @@ bb.h:                                             ; preds = %bb.g
   %i.ag = shl i32 %spec.select, 2                 ; 2 uses
   %i.ah = sub i32 60, %i.ag                       ; 2 uses
   %i.ai = shl i64 %.sroa.0.0.extract.trunc.i, 1   ; 2 uses
-  %i.aj = add i64 %i.ai, -2
+  %i.aj = add i64 %i.ai, 2305843009213693950
   %i.ak = or i64 %i.aj, %.sroa.0.0.extract.trunc.i
   %i.al = icmp sgt i32 %i.ah, 63
-  br i1 %i.al, label %_ZN5boost8charconv6detaillsENS1_7uint128Ei.exit, label %4
-
-4:                                                ; preds = %bb.h
-  %5 = icmp eq i32 %i.ag, 60
-  br i1 %5, label %_ZN5boost8charconv6detaillsENS1_7uint128Ei.exit, label %6
-
-6:                                                ; preds = %4
-  %7 = zext nneg i32 %i.ah to i64
-  %8 = shl nuw i64 1, %7
-  br label %_ZN5boost8charconv6detaillsENS1_7uint128Ei.exit
-
-_ZN5boost8charconv6detaillsENS1_7uint128Ei.exit:  ; preds = %bb.h, %4, %6
-  %.sroa.4.0.i = phi i64 [ 1, %4 ], [ %8, %6 ], [ 0, %bb.h ]
-  %9 = and i64 %i.ak, %.sroa.4.0.i
-  %10 = and i64 %9, %i.ai
-  %11 = add i64 %10, %.sroa.0.0.extract.trunc.i
+  %4 = icmp eq i32 %i.ag, 60
+  %or.cond228 = or i1 %4, %i.al
+  %5 = zext nneg i32 %i.ah to i64
+  %6 = shl nuw i64 1, %5
+  %7 = and i64 %6, %i.ak
+  %8 = and i64 %7, %i.ai
+  %.sroa.4.0.i = select i1 %or.cond228, i64 0, i64 %8
+  %9 = add i64 %.sroa.4.0.i, %.sroa.0.0.extract.trunc.i
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZN5boost8charconv6detaillsENS1_7uint128Ei.exit, %bb.g
-  %.sroa.14.1 = phi i64 [ %11, %_ZN5boost8charconv6detaillsENS1_7uint128Ei.exit ], [ %.sroa.0.0.extract.trunc.i, %bb.g ] ; 15 uses
+bb.i:                                             ; preds = %bb.h, %bb.g
+  %.sroa.14.1 = phi i64 [ %9, %bb.h ], [ %.sroa.0.0.extract.trunc.i, %bb.g ] ; 15 uses
   br i1 %i.u, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i

@@ -204,25 +204,26 @@ bb.i:                                             ; preds = %OPENSSL_malloc.exit
   %.056 = phi i64 [ %i.bb, %.critedge ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.ae = shl nuw nsw i64 %.056, 1
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 %i.ae ; 2 uses
-  %i.ag = load i8, ptr %i.af, align 1, !tbaa !19  ; 2 uses
-  %i.ah = sext i8 %i.ag to i32                    ; 3 uses
+  %i.ag = load i8, ptr %i.af, align 1, !tbaa !19  ; 3 uses
+  %i.ah = sext i8 %i.ag to i32
   %i.ai = add nsw i32 %i.ah, -58
   %i.aj = icmp ult i32 %i.ai, -10
   br i1 %i.aj, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %i.ah, -97
-  %or.cond.i = icmp ult i32 %2, 6
-  br i1 %or.cond.i, label %bb.l, label %bb.k
+  %switch.tableidx = add i8 %i.ag, -65            ; 2 uses
+  %or.cond.i = icmp ult i8 %switch.tableidx, 38
+  br i1 %or.cond.i, label %bb.k, label %OPENSSL_fromxdigit.exit.thread
 
 bb.k:                                             ; preds = %bb.j
-  %3 = add nsw i32 %i.ah, -65
-  %or.cond3.i = icmp ult i32 %3, 6
-  br i1 %or.cond3.i, label %bb.l, label %OPENSSL_fromxdigit.exit.thread
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 270582939711, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.l, label %OPENSSL_fromxdigit.exit.thread
 
-bb.l:                                             ; preds = %bb.k, %bb.j, %.lr.ph
-  %.sink16.i = phi i8 [ -87, %bb.j ], [ -48, %.lr.ph ], [ -55, %bb.k ]
-  %i.ak = add nsw i8 %.sink16.i, %i.ag
+bb.l:                                             ; preds = %bb.k, %.lr.ph
+  %.sink16.i = phi i8 [ 0, %.lr.ph ], [ 9, %bb.k ]
+  %i.ak = add i8 %.sink16.i, %i.ag
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 1
   %i.am = load i8, ptr %i.al, align 1, !tbaa !19  ; 2 uses
   %i.an = sext i8 %i.am to i32                    ; 3 uses
@@ -240,7 +241,7 @@ bb.n:                                             ; preds = %bb.m
   %or.cond3.i39 = icmp ult i32 %i.ar, 6
   br i1 %or.cond3.i39, label %.critedge, label %OPENSSL_fromxdigit.exit.thread
 
-OPENSSL_fromxdigit.exit.thread:                   ; preds = %bb.n, %bb.k
+OPENSSL_fromxdigit.exit.thread:                   ; preds = %bb.k, %bb.j, %bb.n
   %i.as = load ptr, ptr @free_impl, align 8, !tbaa !12 ; 2 uses
   %.not.i41 = icmp eq ptr %i.as, null
   br i1 %.not.i41, label %bb.p, label %bb.o

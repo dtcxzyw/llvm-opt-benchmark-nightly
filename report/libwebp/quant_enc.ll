@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.e, !llvm.loop !226
 
 ._crit_edge.loopexit:                             ; preds = %bb.w
-  %i.gp = trunc nsw i32 %.sroa.8.4.1 to i8
+  %i.gp = trunc i32 %.sroa.8.4.1 to i8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader

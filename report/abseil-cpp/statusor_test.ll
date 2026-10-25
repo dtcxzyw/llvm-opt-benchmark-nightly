@@ -205,15 +205,16 @@ _ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_s
   br label %.thread176
 
 _ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit.thread: ; preds = %_ZN7testing15AssertionResultD2Ev.exit80, %_ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit
-  %i.dj = phi i64 [ %.pr, %_ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit ], [ %i.a, %_ZN7testing15AssertionResultD2Ev.exit80 ] ; 7 uses
+  %i.dj = phi i64 [ %.pr, %_ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit ], [ %i.a, %_ZN7testing15AssertionResultD2Ev.exit80 ] ; 8 uses
   store i64 55, ptr %15, align 8, !tbaa !114, !noalias !883
   store i64 %i.dj, ptr %14, align 8, !tbaa !114, !alias.scope !883
   %i.dk = trunc i64 %i.dj to i1
   br i1 %i.dk, label %.thread176, label %bb.an
 
 .thread176:                                       ; preds = %_ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit.thread, %.thread142
-  %i.dl = phi i64 [ 1, %.thread142 ], [ %i.dj, %_ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit.thread ] ; 2 uses
-  %i.dm = and i64 %i.dl, 2
+  %i.dl = phi i64 [ 1, %.thread142 ], [ %i.dj, %_ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit.thread ]
+  %21 = phi i64 [ 0, %.thread142 ], [ %i.dj, %_ZN4absl12lts_202605268StatusOrIiEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0EiT_EE5valueEiE4typeELi0EEEOS6_.exit.thread ]
+  %i.dm = and i64 %21, 2
   %.not.i88 = icmp eq i64 %i.dm, 0                ; 2 uses
   %spec.select.i89 = select i1 %.not.i88, i64 0, i64 27
   %spec.select1.i90 = select i1 %.not.i88, ptr null, ptr @_ZN4absl12lts_202605266Status16kMovedFromStringE

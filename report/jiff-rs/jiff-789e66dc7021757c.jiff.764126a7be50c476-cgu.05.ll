@@ -204,7 +204,7 @@ bb.bv:                                            ; preds = %bb.bt
 _RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i: ; preds = %bb.bv, %bb.bu, %bb.bt, %bb.bs
   %.sroa.12.0.i = phi i64 [ %i.nu, %bb.bv ], [ 0, %bb.bs ], [ %i.ns, %bb.bu ], [ %i.jd, %bb.bt ] ; 3 uses
   %.sroa.7.0.i = phi ptr [ %i.nv, %bb.bv ], [ %i.nq, %bb.bs ], [ %i.nt, %bb.bu ], [ %i.nq, %bb.bt ] ; 3 uses
-  %.sroa.047.0.i = phi i64 [ 1, %bb.bv ], [ 1, %bb.bs ], [ -1, %bb.bu ], [ 1, %bb.bt ]
+  %.sroa.047.0.i = phi i64 [ 1, %bb.bv ], [ 1, %bb.bs ], [ 65535, %bb.bu ], [ 1, %bb.bt ]
   switch i8 %.sroa.3.0.extract.trunc.i, label %bb.bw [
     i8 0, label %bb.bx
     i8 2, label %bb.bx
@@ -607,9 +607,9 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultuNtB
   br label %.loopexit2464
 
 bb.pq:                                            ; preds = %_RNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB6_9Extension12parse_number.exit.i
-  %i.arr = mul nsw i64 %.sroa.060.0.i.lcssa103.i, %.sroa.047.0.i
-  %i.ars = trunc nsw i64 %i.arr to i16
-  %.sroa.539.0.extract.trunc.i = mul nsw i16 %i.ars, 100
+  %i.arr = mul nuw nsw i64 %.sroa.060.0.i.lcssa103.i, %.sroa.047.0.i
+  %i.ars = trunc i64 %i.arr to i16
+  %.sroa.539.0.extract.trunc.i = mul i16 %i.ars, 100
   %i.art = load ptr, ptr %i.hd, align 8, !alias.scope !1343, !nonnull !4, !align !6, !noundef !4 ; 2 uses
   %i.aru = getelementptr inbounds nuw i8, ptr %i.art, i64 80
   store i16 1, ptr %i.aru, align 8, !noalias !1343

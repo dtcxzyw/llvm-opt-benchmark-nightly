@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.c
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
-  %.sroa.43.0 = phi i64 [ %i.o, %bb.f ], [ %i.v, %bb.g ], [ %i.z, %bb.h ] ; 2 uses
+  %.sroa.43.0 = phi i64 [ %i.o, %bb.f ], [ %i.v, %bb.g ], [ %i.z, %bb.h ] ; 3 uses
   %.sroa.02.0 = phi ptr [ %i.r, %bb.f ], [ %i.t, %bb.g ], [ %i.aa, %bb.h ] ; 3 uses
   switch i64 %.sroa.43.0, label %thread-pre-split.i [
     i64 0, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread
@@ -389,7 +389,7 @@ _RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.cv, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %bb.z
 
 _RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.l, %bb.m, %.lr.ph.split.us.i, %.lr.ph.split.us.i.1, %.lr.ph.split.us.i.2, %.lr.ph.split.us.i.3, %.lr.ph.split.us.i.4, %.lr.ph.split.us.i.5, %.lr.ph.split.us.i.6, %.lr.ph.split.us.i.7, %bb.i, %bb.j, %bb.j, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i78 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.j ], [ 257, %.lr.ph.split.us.i ], [ 257, %bb.j ], [ 1, %bb.i ], [ 257, %.lr.ph.split.us.i.7 ], [ 257, %.lr.ph.split.us.i.6 ], [ 257, %.lr.ph.split.us.i.5 ], [ 257, %.lr.ph.split.us.i.4 ], [ 257, %.lr.ph.split.us.i.3 ], [ 257, %.lr.ph.split.us.i.2 ], [ 257, %.lr.ph.split.us.i.1 ], [ 513, %bb.m ], [ 257, %bb.l ]
+  %.sroa.8.0.insert.insert.i78 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 256, %bb.j ], [ 256, %.lr.ph.split.us.i ], [ 256, %bb.j ], [ %.sroa.43.0, %bb.i ], [ 256, %.lr.ph.split.us.i.7 ], [ 256, %.lr.ph.split.us.i.6 ], [ 256, %.lr.ph.split.us.i.5 ], [ 256, %.lr.ph.split.us.i.4 ], [ 256, %.lr.ph.split.us.i.3 ], [ 256, %.lr.ph.split.us.i.2 ], [ 256, %.lr.ph.split.us.i.1 ], [ 512, %bb.m ], [ 256, %bb.l ]
   %.sroa.417.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i78, 8
   %.sroa.417.0.extract.trunc = trunc i64 %.sroa.417.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
@@ -473,7 +473,7 @@ bb.ad:                                            ; preds = %bb.d
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.ab
-  %.sroa.49.0 = phi i64 [ %i.o, %bb.ab ], [ %i.dg, %bb.ac ], [ %i.dk, %bb.ad ] ; 2 uses
+  %.sroa.49.0 = phi i64 [ %i.o, %bb.ab ], [ %i.dg, %bb.ac ], [ %i.dk, %bb.ad ] ; 3 uses
   %.sroa.08.0 = phi ptr [ %i.dc, %bb.ab ], [ %i.de, %bb.ac ], [ %i.dl, %bb.ad ] ; 3 uses
   switch i64 %.sroa.49.0, label %thread-pre-split.i50 [
     i64 0, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit52.thread
@@ -653,7 +653,7 @@ _RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit52: ; preds 
   br i1 %i.ge, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit52.thread, label %bb.au
 
 _RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit52.thread: ; preds = %bb.ah, %.lr.ph.split.us.i45, %.lr.ph.split.us.i45.1, %.lr.ph.split.us.i45.2, %.lr.ph.split.us.i45.3, %.lr.ph.split.us.i45.4, %.lr.ph.split.us.i45.5, %.lr.ph.split.us.i45.6, %.lr.ph.split.us.i45.7, %bb.ae, %bb.af, %bb.af, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit52
-  %.sroa.8.0.insert.insert.i2780 = phi i64 [ %.sroa.8.0.insert.insert.i27, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit52 ], [ 257, %.lr.ph.split.us.i45 ], [ 257, %bb.af ], [ 257, %bb.af ], [ 1, %bb.ae ], [ 257, %.lr.ph.split.us.i45.7 ], [ 257, %.lr.ph.split.us.i45.6 ], [ 257, %.lr.ph.split.us.i45.5 ], [ 257, %.lr.ph.split.us.i45.4 ], [ 257, %.lr.ph.split.us.i45.3 ], [ 257, %.lr.ph.split.us.i45.2 ], [ 257, %.lr.ph.split.us.i45.1 ], [ 257, %bb.ah ]
+  %.sroa.8.0.insert.insert.i2780 = phi i64 [ %.sroa.8.0.insert.insert.i27, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit52 ], [ 256, %.lr.ph.split.us.i45 ], [ 256, %bb.af ], [ 256, %bb.af ], [ %.sroa.49.0, %bb.ae ], [ 256, %.lr.ph.split.us.i45.7 ], [ 256, %.lr.ph.split.us.i45.6 ], [ 256, %.lr.ph.split.us.i45.5 ], [ 256, %.lr.ph.split.us.i45.4 ], [ 256, %.lr.ph.split.us.i45.3 ], [ 256, %.lr.ph.split.us.i45.2 ], [ 256, %.lr.ph.split.us.i45.1 ], [ 256, %bb.ah ]
   %.sroa.420.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i2780, 8
   %.sroa.420.0.extract.trunc = trunc i64 %.sroa.420.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -734,7 +734,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw, %bb.
   %.sroa.014.0 = phi ptr [ %i.gl, %bb.av ], [ %i.gn, %bb.aw ], [ %i.gu, %bb.ax ]
   %i.gv = tail call { ptr, i64 } @_RINvMNtCsf3Ta7LF998c_4core3stre18trim_start_matchesReECscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.014.0, i64 noundef %.sroa.415.0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @34, i64 noundef 2) ; 2 uses
   %i.gw = extractvalue { ptr, i64 } %i.gv, 0      ; 3 uses
-  %i.gx = extractvalue { ptr, i64 } %i.gv, 1      ; 2 uses
+  %i.gx = extractvalue { ptr, i64 } %i.gv, 1      ; 3 uses
   switch i64 %i.gx, label %thread-pre-split.i70 [
     i64 0, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit72.thread
     i64 1, label %bb.az
@@ -960,7 +960,7 @@ _RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit72: ; preds 
   br i1 %i.lb, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit72.thread, label %bb.bo
 
 _RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit72.thread: ; preds = %bb.bb, %.lr.ph.split.i, %.lr.ph.split.i.1, %.lr.ph.split.i.2, %.lr.ph.split.i.3, %.lr.ph.split.i.4, %.lr.ph.split.i.5, %.lr.ph.split.i.6, %.lr.ph.split.i.7, %bb.ay, %bb.az, %bb.az, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit72
-  %.sroa.8.0.insert.insert.i5782 = phi i64 [ %.sroa.8.0.insert.insert.i57, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit72 ], [ 257, %bb.az ], [ 257, %.lr.ph.split.i ], [ 257, %bb.az ], [ 1, %bb.ay ], [ 257, %.lr.ph.split.i.7 ], [ 257, %.lr.ph.split.i.6 ], [ 257, %.lr.ph.split.i.5 ], [ 257, %.lr.ph.split.i.4 ], [ 257, %.lr.ph.split.i.3 ], [ 257, %.lr.ph.split.i.2 ], [ 257, %.lr.ph.split.i.1 ], [ 257, %bb.bb ]
+  %.sroa.8.0.insert.insert.i5782 = phi i64 [ %.sroa.8.0.insert.insert.i57, %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit72 ], [ 256, %bb.az ], [ 256, %.lr.ph.split.i ], [ 256, %bb.az ], [ %i.gx, %bb.ay ], [ 256, %.lr.ph.split.i.7 ], [ 256, %.lr.ph.split.i.6 ], [ 256, %.lr.ph.split.i.5 ], [ 256, %.lr.ph.split.i.4 ], [ 256, %.lr.ph.split.i.3 ], [ 256, %.lr.ph.split.i.2 ], [ 256, %.lr.ph.split.i.1 ], [ 256, %bb.bb ]
   %.sroa.424.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i5782, 8
   %.sroa.424.0.extract.trunc = trunc i64 %.sroa.424.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
@@ -1363,7 +1363,7 @@ _RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.bn, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit.thread, label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResulttNtNtNtB4_3num5error13ParseIntErrorE6expectCscScJTt9VrQp_6fea_rs.exit, !prof !25
 
 _RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.k, %bb.i, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %bb.f, %bb.g, %bb.g, %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i6 = phi i32 [ %.sroa.8.0.insert.insert.i, %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.g ], [ 257, %.lr.ph.i ], [ 257, %bb.g ], [ 1, %bb.f ], [ 257, %.lr.ph.i.3 ], [ 257, %.lr.ph.i.2 ], [ 257, %.lr.ph.i.1 ], [ 257, %bb.i ], [ 513, %bb.k ]
+  %.sroa.8.0.insert.insert.i6 = phi i32 [ %.sroa.8.0.insert.insert.i, %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 256, %bb.g ], [ 256, %.lr.ph.i ], [ 256, %bb.g ], [ 0, %bb.f ], [ 256, %.lr.ph.i.3 ], [ 256, %.lr.ph.i.2 ], [ 256, %.lr.ph.i.1 ], [ 256, %bb.i ], [ 512, %bb.k ]
   %.sroa.4.0.extract.shift.i = lshr i32 %.sroa.8.0.insert.insert.i6, 8
   %.sroa.4.0.extract.trunc.i = trunc i32 %.sroa.4.0.extract.shift.i to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1766,7 +1766,7 @@ _RNvMsn_NtCsf3Ta7LF998c_4core3nums27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.ci, label %_RNvMsn_NtCsf3Ta7LF998c_4core3nums27from_ascii_bytes_radix_impl.exit.thread, label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultsNtNtNtB4_3num5error13ParseIntErrorE6expectCscScJTt9VrQp_6fea_rs.exit, !prof !25
 
 _RNvMsn_NtCsf3Ta7LF998c_4core3nums27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.l, %bb.k, %.lr.ph142.i, %bb.p, %bb.q, %.lr.ph151.i, %.lr.ph151.i.1, %.lr.ph151.i.2, %bb.f, %bb.g, %bb.g, %_RNvMsn_NtCsf3Ta7LF998c_4core3nums27from_ascii_bytes_radix_impl.exit
-  %.sroa.12.0.insert.insert.i6 = phi i32 [ %.sroa.12.0.insert.insert.i, %_RNvMsn_NtCsf3Ta7LF998c_4core3nums27from_ascii_bytes_radix_impl.exit ], [ 1, %bb.f ], [ 257, %.lr.ph142.i ], [ 257, %.lr.ph151.i ], [ 257, %bb.g ], [ 257, %bb.g ], [ 257, %bb.p ], [ 257, %.lr.ph151.i.2 ], [ 257, %.lr.ph151.i.1 ], [ 513, %bb.q ], [ 257, %bb.k ], [ 769, %bb.l ]
+  %.sroa.12.0.insert.insert.i6 = phi i32 [ %.sroa.12.0.insert.insert.i, %_RNvMsn_NtCsf3Ta7LF998c_4core3nums27from_ascii_bytes_radix_impl.exit ], [ 0, %bb.f ], [ 256, %.lr.ph142.i ], [ 256, %.lr.ph151.i ], [ 256, %bb.g ], [ 256, %bb.g ], [ 256, %bb.p ], [ 256, %.lr.ph151.i.2 ], [ 256, %.lr.ph151.i.1 ], [ 512, %bb.q ], [ 256, %bb.k ], [ 768, %bb.l ]
   %.sroa.4.0.extract.shift.i = lshr i32 %.sroa.12.0.insert.insert.i6, 8
   %.sroa.4.0.extract.trunc.i = trunc i32 %.sroa.4.0.extract.shift.i to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

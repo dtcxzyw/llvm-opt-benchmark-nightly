@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.ao
   br label %_ZN4jiff3fmt7strtime5parse19parse_optional_sign17hcc3eb4e7091cec06E.exit.i
 
 _ZN4jiff3fmt7strtime5parse19parse_optional_sign17hcc3eb4e7091cec06E.exit.i: ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an
-  %.sink5.i.i = phi i64 [ 1, %bb.ao ], [ 1, %bb.aq ], [ -1, %bb.ap ], [ 1, %bb.an ]
+  %.sink5.i.i = phi i64 [ 1, %bb.ao ], [ 1, %bb.aq ], [ 65535, %bb.ap ], [ 1, %bb.an ]
   %.sink3.i.i = phi ptr [ %i.aif, %bb.ao ], [ %i.aim, %bb.aq ], [ %i.aik, %bb.ap ], [ %i.aif, %bb.an ] ; 3 uses
   %.sink.i.i = phi i64 [ %i.aig, %bb.ao ], [ %i.ail, %bb.aq ], [ %i.aij, %bb.ap ], [ 0, %bb.an ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3755)
@@ -363,9 +363,9 @@ bb.ax:                                            ; preds = %"_ZN4jiff3fmt7strti
 
 "_ZN92_$LT$core..result..Result$LT$T$C$E$GT$$u20$as$u20$jiff..error..ErrorContext$LT$T$C$E$GT$$GT$7context17h3413f8e230dbeb3eE.exit645": ; preds = %"_ZN4jiff3fmt7strtime5parse47_$LT$impl$u20$jiff..fmt..strtime..Extension$GT$12parse_number17hbd3ca6b9c61eeb01E.exit.i.thread", %"_ZN4jiff3fmt7strtime5parse47_$LT$impl$u20$jiff..fmt..strtime..Extension$GT$12parse_number17hbd3ca6b9c61eeb01E.exit.i"
   %.sroa.043.0.lcssa.i.i21932198 = phi i64 [ 0, %"_ZN4jiff3fmt7strtime5parse47_$LT$impl$u20$jiff..fmt..strtime..Extension$GT$12parse_number17hbd3ca6b9c61eeb01E.exit.i.thread" ], [ %.sroa.043.0.lcssa.i.i2193, %"_ZN4jiff3fmt7strtime5parse47_$LT$impl$u20$jiff..fmt..strtime..Extension$GT$12parse_number17hbd3ca6b9c61eeb01E.exit.i" ]
-  %i.ajp = mul nsw i64 %.sroa.043.0.lcssa.i.i21932198, %.sink5.i.i
-  %i.ajq = trunc nsw i64 %i.ajp to i16
-  %.sroa.5.0.extract.trunc.i.i = mul nsw i16 %i.ajq, 100
+  %i.ajp = mul nuw nsw i64 %.sroa.043.0.lcssa.i.i21932198, %.sink5.i.i
+  %i.ajq = trunc i64 %i.ajp to i16
+  %.sroa.5.0.extract.trunc.i.i = mul i16 %i.ajq, 100
   %i.ajr = load ptr, ptr %i.cw, align 8, !alias.scope !3753, !nonnull !11, !align !12, !noundef !11 ; 2 uses
   %i.ajs = getelementptr inbounds nuw i8, ptr %i.ajr, i64 80
   store i16 1, ptr %i.ajs, align 8, !noalias !3753
@@ -768,7 +768,7 @@ _ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E
   br i1 %i.am, label %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.thread.i, label %bb.d
 
 _ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.thread.i: ; preds = %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.i, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i
-  %.sroa.5.0.insert.insert.i91.i = phi i32 [ %spec.select.i.i, %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.i ], [ 1, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i ]
+  %.sroa.5.0.insert.insert.i91.i = phi i32 [ %spec.select.i.i, %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.i ], [ 0, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i ]
   %.sroa.447.0.insert.shift.i = and i32 %.sroa.5.0.insert.insert.i91.i, 65280
   %.sroa.046.0.insert.insert.i = or disjoint i32 %.sroa.447.0.insert.shift.i, 10
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i)

@@ -205,13 +205,14 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 thread-pre-split:                                 ; preds = %bb.k
-  %.promoted.i.pre = load i8, ptr %i.h, align 2, !tbaa !1318
+  %.promoted.i.pre = load i8, ptr %i.h, align 2, !tbaa !1318 ; 2 uses
   %.pre = load i8, ptr %i.d, align 4, !tbaa !719
   br label %bb.e
 
 bb.e:                                             ; preds = %thread-pre-split, %bb.d
+  %6 = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.d ] ; 3 uses
   %i.o = phi i8 [ %.pre, %thread-pre-split ], [ %i.e, %bb.d ] ; 2 uses
-  %i.p = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 1, %bb.d ] ; 4 uses
+  %i.p = phi i8 [ %.promoted.i.pre, %thread-pre-split ], [ 0, %bb.d ]
   %i.q = icmp ult i8 %i.p, 8
   br i1 %i.q, label %.lr.ph.i, label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE13split_to_fillEh.exit
 
@@ -229,7 +230,7 @@ bb.f:                                             ; preds = %bb.g
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i: ; preds = %.lr.ph.i, %bb.f
   %i.t = phi i8 [ %i.as, %bb.f ], [ %.pre.i, %.lr.ph.i ] ; 2 uses
-  %i.u = phi i8 [ %i.aw, %bb.f ], [ %i.p, %.lr.ph.i ]
+  %i.u = phi i8 [ %i.aw, %bb.f ], [ %6, %.lr.ph.i ]
   %i.v = zext i8 %i.t to i64                      ; 3 uses
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 24
@@ -276,7 +277,7 @@ bb.g:                                             ; preds = %_ZN3tbb6detail2d112
   br label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE13split_to_fillEh.exit, !llvm.loop !1312
 
 _ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE13split_to_fillEh.exit: ; preds = %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i, %bb.f, %.lr.ph.i, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge, %bb.e
-  %.pr12 = phi i8 [ %i.p, %bb.e ], [ %i.aw, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %i.p, %.lr.ph.i ], [ %i.aw, %bb.f ], [ %i.u, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i ] ; 2 uses
+  %.pr12 = phi i8 [ %6, %bb.e ], [ %i.aw, %._ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE13split_to_fillEh.exit.loopexit_crit_edge ], [ %6, %.lr.ph.i ], [ %i.aw, %bb.f ], [ %i.u, %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EE12is_divisibleEh.exit.i ] ; 2 uses
   %i.ay = load ptr, ptr %i.k, align 32, !tbaa !731
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
   %i.ba = load atomic i8, ptr %i.az monotonic, align 1, !range !107, !noundef !108

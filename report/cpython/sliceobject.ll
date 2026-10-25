@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = load i64, ptr %3, align 8, !tbaa !37     ; 2 uses
+  %i.e = load i64, ptr %3, align 8, !tbaa !37     ; 3 uses
   switch i64 %i.e, label %bb.e [
     i64 0, label %bb.d
     i64 -9223372036854775808, label %.sink.split
@@ -214,12 +214,13 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.l
 
 .sink.split:                                      ; preds = %bb.c, %bb.a
-  %.sink = phi i64 [ 1, %bb.a ], [ -9223372036854775807, %bb.c ] ; 2 uses
+  %.sink = phi i64 [ 1, %bb.a ], [ -9223372036854775807, %bb.c ]
+  %.ph = phi i64 [ 0, %bb.a ], [ %i.e, %bb.c ]
   store i64 %.sink, ptr %3, align 8, !tbaa !37
   br label %bb.e
 
 bb.e:                                             ; preds = %.sink.split, %bb.c
-  %i.g = phi i64 [ %i.e, %bb.c ], [ %.sink, %.sink.split ]
+  %i.g = phi i64 [ %i.e, %bb.c ], [ %.ph, %.sink.split ]
   %i.h = getelementptr i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !26   ; 2 uses
   %i.j = icmp eq ptr %i.i, @_Py_NoneStruct

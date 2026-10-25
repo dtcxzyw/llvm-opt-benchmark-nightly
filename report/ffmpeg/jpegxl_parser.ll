@@ -58,7 +58,7 @@ bb.a:
   %i.x = alloca [4 x i32], align 16               ; 4 uses
   %i.y = alloca [4 x i32], align 16               ; 4 uses
   %i.z = alloca [4 x i32], align 16               ; 4 uses
-  %6 = alloca %struct.JXLEntropyDecoder, align 8  ; 25 uses
+  %6 = alloca %struct.JXLEntropyDecoder, align 8  ; 28 uses
   %7 = alloca %struct.GetBitContext, align 8      ; 22 uses
   %i.aa = alloca ptr, align 8                     ; 3 uses
   %i.ab = alloca i32, align 4                     ; 5 uses
@@ -461,7 +461,7 @@ bb.fm:                                            ; preds = %bb.fl
 
 ._crit_edge670.i.i:                               ; preds = %bb.fm
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 24, ptr noundef nonnull @.str, i32 noundef %i.ana, i32 noundef %i.ane, i32 noundef %i.aoi, i32 noundef %.pre671.i.i) #10
-  br label %.thread593.i.i
+  br label %parse_frame_header.exit.thread100.i
 
 bb.fn:                                            ; preds = %bb.fm
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.et, i8 0, i64 88, i1 false)
@@ -508,7 +508,7 @@ entropy_decoder_init.exit.thread.i.i:             ; preds = %.lr.ph.i.i.i.i.i, %
   call void @av_freep(ptr noundef nonnull %i.apb) #10
   %i.apc = getelementptr inbounds nuw i8, ptr %6, i64 56
   call void @av_freep(ptr noundef nonnull %i.apc) #10
-  br label %.thread593.i.i
+  br label %parse_frame_header.exit.thread100.i
 
 entropy_decoder_init.exit.i.i:                    ; preds = %bb.fn
   %.val354.i.i = load i32, ptr %i.dv, align 8, !tbaa !21
@@ -553,7 +553,7 @@ entropy_decoder_close.exit.i.i:                   ; preds = %.lr.ph.i.i.i.i, %.p
   call void @av_freep(ptr noundef nonnull %i.aps) #10
   %i.apt = getelementptr inbounds nuw i8, ptr %6, i64 56
   call void @av_freep(ptr noundef nonnull %i.apt) #10
-  br label %.thread593.i.i
+  br label %parse_frame_header.exit.thread100.i
 
 bb.fs:                                            ; preds = %entropy_decoder_init.exit.i.i
   %.not.i.i451.i.i = icmp ult i32 %.0239.i.i, 65536 ; 2 uses
@@ -602,7 +602,7 @@ bb.fs:                                            ; preds = %entropy_decoder_ini
 
 bb.ft:                                            ; preds = %bb.fs
   call fastcc void @entropy_decoder_close(ptr noundef %6)
-  br label %.thread593.i.i
+  br label %parse_frame_header.exit.thread100.i
 
 bb.fu:                                            ; preds = %bb.fv
   %i.aqo = add nuw i32 %.0226618.i.i, 1           ; 2 uses
@@ -640,19 +640,16 @@ bb.fu:                                            ; preds = %bb.fv
   %.0.i461.i.i = select i1 %i.arc, i64 %i.ard, i64 %i.arf ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   %i.arg = icmp slt i64 %.0.i461.i.i, 0
-  br i1 %i.arg, label %.thread590.i.i, label %bb.fv
+  br i1 %i.arg, label %parse_frame_header.exit.i, label %bb.fv
 
 bb.fv:                                            ; preds = %.lr.ph619.i.i
   %.val352.i.i = load i32, ptr %i.dv, align 8, !tbaa !21 ; 2 uses
   %.val353.i.i = load i32, ptr %i.ds, align 4, !tbaa !19
   %i.arh = icmp slt i32 %.val353.i.i, %.val352.i.i
-  br i1 %i.arh, label %.thread590.i.i, label %bb.fu
+  br i1 %i.arh, label %.thread593.i.i, label %bb.fu
 
-.thread590.i.i:                                   ; preds = %bb.fv, %.lr.ph619.i.i
+.thread593.i.i:                                   ; preds = %bb.fv
   call fastcc void @entropy_decoder_close(ptr noundef %6)
-  br label %.thread593.i.i
-
-.thread593.i.i:                                   ; preds = %.thread590.i.i, %bb.ft, %entropy_decoder_close.exit.i.i, %entropy_decoder_init.exit.thread.i.i, %._crit_edge670.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   br label %try_parse.exit.thread
 
@@ -799,6 +796,15 @@ bb.ge:                                            ; preds = %bb.gd, %._crit_edge
   %.not79.i = icmp eq i32 %i.atz, 0
   br i1 %.not79.i, label %bb.gg, label %bb.gf
 
+parse_frame_header.exit.thread100.i:              ; preds = %bb.ft, %entropy_decoder_close.exit.i.i, %entropy_decoder_init.exit.thread.i.i, %._crit_edge670.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  br label %try_parse.exit.thread
+
+parse_frame_header.exit.i:                        ; preds = %.lr.ph619.i.i
+  call fastcc void @entropy_decoder_close(ptr noundef %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  br label %try_parse.exit.thread
+
 bb.gf:                                            ; preds = %bb.ge
   %i.aua = sdiv i64 %i.aty, 8
   br label %try_parse.exit
@@ -820,7 +826,7 @@ bb.gh:                                            ; preds = %bb.gg
   store i32 %i.aug, ptr %i.dv, align 8, !tbaa !21
   br label %bb.bi
 
-try_parse.exit.thread:                            ; preds = %bb.gg, %bb.de, %jxl_u32.exit348.i.i, %bb.cs, %jxl_u32.exit315.i.i, %bb.ek, %.thread564.i.i, %bb.es, %bb.eo, %bb.eq, %bb.ev, %bb.fa, %bb.fb, %.thread569.i.i, %bb.fh, %bb.fi, %bb.ds, %bb.ez, %bb.fg, %jxl_u32.exit.i.i, %bb.k, %bb.f, %bb.bb, %bb.bh, %.thread593.i.i, %bb.i, %bb.n, %bb.be
+try_parse.exit.thread:                            ; preds = %bb.gg, %bb.fi, %bb.fh, %.thread569.i.i, %bb.fb, %bb.fa, %bb.ev, %bb.eq, %bb.eo, %bb.es, %.thread564.i.i, %bb.ek, %jxl_u32.exit315.i.i, %bb.cs, %jxl_u32.exit348.i.i, %bb.de, %bb.ds, %bb.ez, %bb.fg, %jxl_u32.exit.i.i, %bb.k, %bb.f, %bb.bb, %bb.bh, %.thread593.i.i, %parse_frame_header.exit.i, %parse_frame_header.exit.thread100.i, %bb.i, %bb.n, %bb.be
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   br label %.thread72
 
@@ -1042,7 +1048,7 @@ declare i32 @ff_jpegxl_collect_codestream_header(ptr noundef, i32 noundef, ptr n
 declare i32 @ff_jpegxl_parse_codestream_header(ptr noundef, i32 noundef, ptr noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -2147483648, 1) i32 @skip_icc_profile(ptr noundef %0, ptr nofree noundef nonnull captures(none) %1) unnamed_addr #0 {
+define internal fastcc i32 @skip_icc_profile(ptr noundef %0, ptr nofree noundef nonnull captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %2 = alloca %struct.JXLEntropyDecoder, align 8  ; 20 uses
@@ -1234,8 +1240,8 @@ bb.w:                                             ; preds = %bb.t, %bb.u, %bb.v
   br i1 %exitcond.not, label %.thread.loopexit, label %.lr.ph, !llvm.loop !116
 
 .thread.loopexit:                                 ; preds = %bb.v, %bb.u, %bb.r, %bb.q, %icc_context.exit, %bb.w
-  %.2.ph = phi i64 [ -1094995529, %bb.v ], [ -1094995529, %bb.u ], [ -1397118274, %bb.r ], [ -1094995529, %bb.q ], [ %.0.i48, %icc_context.exit ], [ 0, %bb.w ]
-  %i.bl = trunc nsw i64 %.2.ph to i32
+  %.2.ph = phi i64 [ 3199971767, %bb.v ], [ 3199971767, %bb.u ], [ 2897849022, %bb.r ], [ 3199971767, %bb.q ], [ %.0.i48, %icc_context.exit ], [ 0, %bb.w ]
+  %i.bl = trunc i64 %.2.ph to i32
   br label %.thread
 
 .thread:                                          ; preds = %.thread.loopexit, %entropy_decoder_init.exit.thread, %bb.e

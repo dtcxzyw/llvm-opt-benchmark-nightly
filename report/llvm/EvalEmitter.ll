@@ -205,7 +205,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bi = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bj, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -458,7 +458,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bi = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bj, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -710,7 +710,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.o, %bb.n
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.m, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -962,7 +962,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.o, %bb.n
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.m, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -1214,7 +1214,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.o, %bb.n
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.m, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -1466,7 +1466,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.o, %bb.n
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.m, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -1718,7 +1718,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.o, %bb.n
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.m, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -1970,7 +1970,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.o, %bb.n
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.m, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -2304,7 +2304,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.q, %bb.p
   %i.cd = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.ce, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.o, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -2658,7 +2658,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.q, %bb.p
   %i.cp = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.cq, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.o, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -2907,7 +2907,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bi = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bj, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -3310,7 +3310,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.m, %bb.l
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.k, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -3570,7 +3570,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.m, %bb.l
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.k, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -3829,7 +3829,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bn, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -4088,7 +4088,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bn, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -4347,7 +4347,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bn, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -4606,7 +4606,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bn, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -4865,7 +4865,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bn, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -5124,7 +5124,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bn, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.l, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -5465,7 +5465,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.p, %bb.o
   %i.cf = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.cg, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.n, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -5826,7 +5826,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.p, %bb.o
   %i.cr = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.cs, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.n, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -6082,7 +6082,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %bb.m, %bb.l
   %i.bk = getelementptr inbounds nuw i8, ptr %.0.i.i8.i.i, i64 40
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.bl, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer8getIndexEv.exit
 
 _ZNK5clang6interp7Pointer8getIndexEv.exit:        ; preds = %bb.k, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -6485,7 +6485,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.ap = getelementptr inbounds nuw i8, ptr %.0.i.i3.i.i, i64 40
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !690, !noalias !12407
   %.not1.i.i.i = icmp eq ptr %i.aq, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7PtrView12isOnePastEndEv.exit.i
 
 _ZNK5clang6interp7PtrView12isOnePastEndEv.exit.i: ; preds = %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i, %_ZNK5clang6interp7PtrView7getSizeEv.exit.thread.i.i, %bb.e
@@ -6888,7 +6888,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i71, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -7160,7 +7160,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i: ; preds = %_ZNK5clang6interp
   %i.ai = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 40
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !690
   %.not1.i.i = icmp eq ptr %i.aj, null
-  %..i.i = select i1 %.not1.i.i, i64 -8, i64 -16
+  %..i.i = select i1 %.not1.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer9getOffsetEv.exit
 
 _ZNK5clang6interp7Pointer9getOffsetEv.exit:       ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread, %_ZNK5clang6interp7Pointer7getSizeEv.exit, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i
@@ -7264,7 +7264,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i: ; preds = %bb.j, %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %.0.i.i8.i, i64 40
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !690
   %.not1.i.i = icmp eq ptr %i.ah, null
-  %..i.i = select i1 %.not1.i.i, i64 -8, i64 -16
+  %..i.i = select i1 %.not1.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7PtrView9getOffsetEv.exit.i
 
 _ZNK5clang6interp7PtrView9getOffsetEv.exit.i:     ; preds = %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i, %bb.h
@@ -7667,7 +7667,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i68, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -8070,7 +8070,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i68, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -8473,7 +8473,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -8876,7 +8876,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -9279,7 +9279,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -9682,7 +9682,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -10085,7 +10085,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fh = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fi, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -10488,7 +10488,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fh = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fi, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -10891,7 +10891,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i: ; preds = %_ZNK5clang6in
   %i.dv = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 40
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !690
   %.not1.i.i.i.i = icmp eq ptr %i.dw, null
-  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 -8, i64 -16
+  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i: ; preds = %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.i.i
@@ -11078,7 +11078,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.hl = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.hm, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -11481,7 +11481,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i: ; preds = %_ZNK5clang6in
   %i.ed = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 40
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !690
   %.not1.i.i.i.i = icmp eq ptr %i.ee, null
-  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 -8, i64 -16
+  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i: ; preds = %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.i.i
@@ -11668,7 +11668,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.ht = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.hu, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -12071,7 +12071,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i66, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -12474,7 +12474,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i: ; preds = %bb.au, %bb.at
   %i.kl = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 40
   %i.km = load ptr, ptr %i.kl, align 8, !tbaa !690
   %.not1.i.i = icmp eq ptr %i.km, null
-  %..i.i = select i1 %.not1.i.i, i64 -8, i64 -16
+  %..i.i = select i1 %.not1.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer9getOffsetEv.exit
 
 _ZNK5clang6interp7Pointer9getOffsetEv.exit:       ; preds = %bb.as, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i
@@ -12559,7 +12559,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i221: ; preds = %bb.bb, %bb.ba
   %i.lw = getelementptr inbounds nuw i8, ptr %.0.i.i.i222, i64 40
   %i.lx = load ptr, ptr %i.lw, align 8, !tbaa !690
   %.not1.i.i223 = icmp eq ptr %i.lx, null
-  %..i.i224 = select i1 %.not1.i.i223, i64 -8, i64 -16
+  %..i.i224 = select i1 %.not1.i.i223, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer9getOffsetEv.exit226
 
 _ZNK5clang6interp7Pointer9getOffsetEv.exit226:    ; preds = %bb.az, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i221
@@ -12962,7 +12962,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i71, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -13365,7 +13365,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -13768,7 +13768,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -14171,7 +14171,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -14574,7 +14574,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -14977,7 +14977,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fh = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fi, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -15380,7 +15380,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fh = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fi, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -15783,7 +15783,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i: ; preds = %_ZNK5clang6in
   %i.dv = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 40
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !690
   %.not1.i.i.i.i = icmp eq ptr %i.dw, null
-  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 -8, i64 -16
+  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i: ; preds = %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.i.i
@@ -15970,7 +15970,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.hl = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.hm, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -16373,7 +16373,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i: ; preds = %_ZNK5clang6in
   %i.ed = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 40
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !690
   %.not1.i.i.i.i = icmp eq ptr %i.ee, null
-  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 -8, i64 -16
+  %..i.i.i.i = select i1 %.not1.i.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit.i: ; preds = %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.i.i
@@ -16560,7 +16560,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.ht = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i72, i64 40
   %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.hu, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i
@@ -16963,7 +16963,7 @@ _ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i: ; preds = %_ZNK5clang6inte
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i69, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !690
   %.not1.i.i.i = icmp eq ptr %i.fk, null
-  %..i.i.i = select i1 %.not1.i.i.i, i64 -8, i64 -16
+  %..i.i.i = select i1 %.not1.i.i.i, i64 4294967288, i64 4294967280
   br label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7Pointer7getSizeEv.exit.i, %_ZNK5clang6interp7Pointer7getSizeEv.exit.thread.i, %_ZNK5clang6interp7PtrView12getFieldDescEv.exit.i.i.i

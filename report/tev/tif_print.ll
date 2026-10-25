@@ -204,15 +204,16 @@ bb.el:                                            ; preds = %bb.eg
 
 bb.em:                                            ; preds = %bb.el
   %i.op = load i16, ptr %i.oc, align 2, !tbaa !54
-  %i.oq = zext i16 %i.op to i32
+  %i.oq = zext i16 %i.op to i32                   ; 2 uses
   br label %bb.eo
 
 bb.en:                                            ; preds = %bb.el
-  %i.or = sext i16 %i.ok to i32
+  %i.or = sext i16 %i.ok to i32                   ; 2 uses
   br label %bb.eo
 
 bb.eo:                                            ; preds = %bb.el, %bb.el, %bb.em, %bb.en
-  %.sink = phi i32 [ %i.oq, %bb.em ], [ %i.or, %bb.en ], [ 1, %bb.el ], [ 1, %bb.el ] ; 2 uses
+  %.sink = phi i32 [ %i.oq, %bb.em ], [ %i.or, %bb.en ], [ 1, %bb.el ], [ 1, %bb.el ]
+  %3 = phi i32 [ %i.oq, %bb.em ], [ %i.or, %bb.en ], [ 0, %bb.el ], [ 0, %bb.el ]
   store i32 %.sink, ptr %i.a, align 4, !tbaa !34
   %i.os = load i32, ptr %i.of, align 8, !tbaa !79
   %i.ot = icmp eq i32 %i.os, 336
@@ -244,7 +245,7 @@ bb.es:                                            ; preds = %bb.er
 
 bb.et:                                            ; preds = %bb.es
   %i.pc = icmp eq i16 %i.ok, -2
-  %i.pd = icmp ugt i32 %.sink, 1
+  %i.pd = icmp ugt i32 %3, 1
   %or.cond = select i1 %i.pc, i1 true, i1 %i.pd
   br i1 %or.cond, label %bb.eu, label %bb.ev
 

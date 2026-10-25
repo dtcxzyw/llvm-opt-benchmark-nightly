@@ -137,7 +137,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not16, label %.critedge, label %bb.b
 
 .critedge:                                        ; preds = %bb.b, %bb.c
-  %i.h = trunc i32 %i.a to i8
+  %.lcssa = phi i32 [ 255, %bb.b ], [ %i.a, %bb.c ]
+  %i.h = trunc i32 %.lcssa to i8
   store i8 %i.h, ptr %1, align 1, !tbaa !14
   %i.i = tail call i32 @getc(ptr noundef %0)      ; 2 uses
   %.not1719 = icmp eq i32 %i.i, -1
@@ -540,7 +541,8 @@ bb.e:                                             ; preds = %.preheader317
   br i1 %.not16.i, label %.critedge.i, label %.preheader317
 
 .critedge.i:                                      ; preds = %bb.e, %.preheader317
-  %i.ah = trunc i32 %i.aa to i8
+  %.lcssa.i = phi i32 [ 255, %.preheader317 ], [ %i.aa, %bb.e ]
+  %i.ah = trunc i32 %.lcssa.i to i8
   store i8 %i.ah, ptr %i.c, align 16, !tbaa !14
   %i.ai = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i = icmp eq i32 %i.ai, -1
@@ -872,7 +874,8 @@ bb.an:                                            ; preds = %.preheader309
   br i1 %.not16.i180, label %.critedge.i181, label %.preheader309
 
 .critedge.i181:                                   ; preds = %bb.an, %.preheader309
-  %i.eq = trunc i32 %i.ej to i8
+  %.lcssa.i182 = phi i32 [ 255, %.preheader309 ], [ %i.ej, %bb.an ]
+  %i.eq = trunc i32 %.lcssa.i182 to i8
   store i8 %i.eq, ptr %i.c, align 16, !tbaa !14
   %i.er = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i182 = icmp eq i32 %i.er, -1
@@ -999,7 +1002,8 @@ bb.ax:                                            ; preds = %.preheader
   br label %.preheader
 
 .critedge.i196:                                   ; preds = %bb.ax, %.preheader
-  %i.gi = trunc i32 %i.gb to i8
+  %.lcssa.i198 = phi i32 [ 255, %.preheader ], [ %i.gb, %bb.ax ]
+  %i.gi = trunc i32 %.lcssa.i198 to i8
   store i8 %i.gi, ptr %i.c, align 16, !tbaa !14
   %i.gj = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i197 = icmp eq i32 %i.gj, -1
@@ -1140,7 +1144,8 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %.not16.i210, label %.critedge.i211, label %bb.bf
 
 .critedge.i211:                                   ; preds = %bb.bg, %bb.bf
-  %i.iz = trunc i32 %i.is to i8
+  %.lcssa.i214 = phi i32 [ 255, %bb.bf ], [ %i.is, %bb.bg ]
+  %i.iz = trunc i32 %.lcssa.i214 to i8
   store i8 %i.iz, ptr %i.c, align 16, !tbaa !14
   %i.ja = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i212 = icmp eq i32 %i.ja, -1
@@ -1280,7 +1285,8 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %.not16.i225, label %.critedge.i226, label %bb.bq
 
 .critedge.i226:                                   ; preds = %bb.br, %bb.bq
-  %i.li = trunc i32 %i.lb to i8
+  %.lcssa.i230 = phi i32 [ 255, %bb.bq ], [ %i.lb, %bb.br ]
+  %i.li = trunc i32 %.lcssa.i230 to i8
   store i8 %i.li, ptr %i.c, align 16, !tbaa !14
   %i.lj = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i227 = icmp eq i32 %i.lj, -1
@@ -1608,7 +1614,8 @@ bb.cy:                                            ; preds = %bb.cx
   br i1 %.not16.i240, label %.critedge.i241, label %bb.cx
 
 .critedge.i241:                                   ; preds = %bb.cy, %bb.cx
-  %i.qj = trunc i32 %i.qc to i8
+  %.lcssa.i246 = phi i32 [ 255, %bb.cx ], [ %i.qc, %bb.cy ]
+  %i.qj = trunc i32 %.lcssa.i246 to i8
   store i8 %i.qj, ptr %i.c, align 16, !tbaa !14
   %i.qk = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i242 = icmp eq i32 %i.qk, -1
@@ -1754,7 +1761,8 @@ bb.dj:                                            ; preds = %bb.di
   br i1 %.not16.i256, label %.critedge.i257, label %bb.di
 
 .critedge.i257:                                   ; preds = %bb.dj, %bb.di
-  %i.sf = trunc i32 %i.ry to i8
+  %.lcssa.i263 = phi i32 [ 255, %bb.di ], [ %i.ry, %bb.dj ]
+  %i.sf = trunc i32 %.lcssa.i263 to i8
   store i8 %i.sf, ptr %i.c, align 16, !tbaa !14
   %i.sg = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i258 = icmp eq i32 %i.sg, -1
@@ -2157,7 +2165,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not16.i, label %.critedge.i, label %bb.c
 
 .critedge.i:                                      ; preds = %bb.d, %bb.c
-  %i.q = trunc i32 %i.j to i8
+  %.lcssa.i = phi i32 [ 255, %bb.c ], [ %i.j, %bb.d ]
+  %i.q = trunc i32 %.lcssa.i to i8
   store i8 %i.q, ptr %2, align 1, !tbaa !14
   %i.r = call i32 @getc(ptr noundef %0)           ; 2 uses
   %.not1719.i = icmp eq i32 %i.r, -1
@@ -2321,7 +2330,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not16.i41, label %.critedge.i42, label %bb.p
 
 .critedge.i42:                                    ; preds = %bb.q, %bb.p
-  %i.bs = trunc i32 %i.bl to i8
+  %.lcssa.i43 = phi i32 [ 255, %bb.p ], [ %i.bl, %bb.q ]
+  %i.bs = trunc i32 %.lcssa.i43 to i8
   store i8 %i.bs, ptr %2, align 1, !tbaa !14
   %i.bt = call i32 @getc(ptr noundef %0)          ; 2 uses
   %.not1719.i43 = icmp eq i32 %i.bt, -1

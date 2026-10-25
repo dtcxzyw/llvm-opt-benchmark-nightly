@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.d, %bb.c, %_ZN5clang18QualifierCollector5stripENS_8QualTypeE.exit
-  %.sink7.i = phi i64 [ -6, %bb.c ], [ -2, %_ZN5clang18QualifierCollector5stripENS_8QualTypeE.exit ], [ -8, %bb.d ]
+  %.sink7.i = phi i64 [ -4294967294, %bb.c ], [ -4294967290, %_ZN5clang18QualifierCollector5stripENS_8QualTypeE.exit ], [ -4294967296, %bb.d ]
   %.0.ph.i = phi i32 [ 53, %bb.c ], [ 38, %_ZN5clang18QualifierCollector5stripENS_8QualTypeE.exit ], [ 55, %bb.d ]
   %i.af = and i64 %.sink7.i, %i.i
   store i64 %i.af, ptr %3, align 8, !tbaa !1515
@@ -253,7 +253,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not6.i, label %_ZL16getNextQualifierRN5clang10QualifiersE.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.sink7.i = phi i64 [ -6, %bb.b ], [ -2, %bb.a ], [ -8, %bb.c ]
+  %.sink7.i = phi i64 [ -4294967294, %bb.b ], [ -4294967290, %bb.a ], [ -4294967296, %bb.c ]
   %.0.ph.i = phi i32 [ 53, %bb.b ], [ 38, %bb.a ], [ 55, %bb.c ]
   %i.g = and i64 %.sink7.i, %i.c
   store i64 %i.g, ptr %i.a, align 8, !tbaa !1515
@@ -656,7 +656,6 @@ bb.b:                                             ; preds = %bb.a
   call void @_ZNK5clang17FunctionProtoType15getExtProtoInfoEv(ptr dead_on_unwind nonnull writable sret(%"struct.clang::FunctionProtoType::ExtProtoInfo") align 8 %3, ptr noundef nonnull align 16 dereferenceable(48) %1), !inline_history !2779
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !1515 ; 4 uses
-  %7 = and i64 %i.e, -4294967290
   %i.f = trunc i64 %i.e to i1
   br i1 %i.f, label %_ZN5clang7CodeGen11CGDebugInfo19CreateQualifiedTypeEPKNS_17FunctionProtoTypeEPN4llvm6DIFileE.exit, label %bb.c
 
@@ -675,9 +674,9 @@ _ZN5clang7CodeGen11CGDebugInfo19CreateQualifiedTypeEPKNS_17FunctionProtoTypeEPN4
   br label %bb.e
 
 _ZN5clang7CodeGen11CGDebugInfo19CreateQualifiedTypeEPKNS_17FunctionProtoTypeEPN4llvm6DIFileE.exit: ; preds = %bb.b, %bb.c, %bb.d
-  %.sink7.i.i = phi i64 [ -6, %bb.c ], [ -2, %bb.b ], [ -8, %bb.d ]
+  %.sink7.i.i = phi i64 [ -4294967294, %bb.c ], [ -4294967290, %bb.b ], [ -4294967296, %bb.d ]
   %.0.ph.i.i = phi i32 [ 53, %bb.c ], [ 38, %bb.b ], [ 55, %bb.d ]
-  %i.i = and i64 %7, %.sink7.i.i
+  %i.i = and i64 %i.e, %.sink7.i.i
   store i64 %i.i, ptr %i.d, align 8, !tbaa !1515
   %i.j = load ptr, ptr %0, align 8, !tbaa !604, !nonnull !494, !align !495
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 144

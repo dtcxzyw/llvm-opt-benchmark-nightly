@@ -202,8 +202,9 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i.peel: ; preds = %bb
           to label %.noexc4.peel unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !445 ; 2 uses
 
 .noexc4.peel:                                     ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i.peel
-  %i.am = icmp eq i32 %i.al, -1
+  %i.am = icmp eq i32 %i.al, -1                   ; 2 uses
   %spec.select16.peel = select i1 %i.am, ptr null, ptr %.sroa.010.1.peel
+  %spec.select17.peel = select i1 %i.am, i32 255, i32 %i.al
   br label %bb.f
 
 _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i.peel: ; preds = %bb.e
@@ -213,7 +214,7 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i.peel: ; pred
 
 bb.f:                                             ; preds = %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i.peel, %.noexc4.peel, %bb.d
   %.sroa.010.2.peel = phi ptr [ %.sroa.010.1.peel, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i.peel ], [ %.sroa.010.1.peel, %bb.d ], [ %spec.select16.peel, %.noexc4.peel ] ; 5 uses
-  %.0.i.i.peel = phi i32 [ %i.ao, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i.peel ], [ %2, %bb.d ], [ %i.al, %.noexc4.peel ]
+  %.0.i.i.peel = phi i32 [ %i.ao, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i.peel ], [ %2, %bb.d ], [ %spec.select17.peel, %.noexc4.peel ]
   %i.ap = trunc i32 %.0.i.i.peel to i8            ; 2 uses
   %i.aq = load ptr, ptr %i.b, align 8, !tbaa !157 ; 3 uses
   %i.ar = load ptr, ptr %i.c, align 8, !tbaa !158

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN12_GLOBAL__N_113BitcodeReader22decodeSignRotatedValueEm.exit
 
 _ZN12_GLOBAL__N_113BitcodeReader22decodeSignRotatedValueEm.exit: ; preds = %bb.c, %bb.d, %bb.e
-  %.0.i = phi i64 [ %i.g, %bb.c ], [ %i.i, %bb.e ], [ -9223372036854775808, %bb.d ]
+  %.0.i = phi i64 [ %i.g, %bb.c ], [ %i.i, %bb.e ], [ 0, %bb.d ]
   %i.j = trunc i64 %.0.i to i32                   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1824
   %i.l = load i8, ptr %i.k, align 8, !tbaa !689, !range !75, !noundef !76
@@ -608,125 +608,41 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %.0.i.i.i = phi i32 [ %i.ws, %bb.ck ], [ 0, %bb.av ] ; 6 uses
   switch i32 %.0.i.i.i, label %bb.cd [
     i32 106, label %_ZL30decodeLLVMAttributesForBitcodeRN4llvm11AttrBuilderEmm.exit.i
-    i32 31, label %bb.cc
-    i32 81, label %bb.cb
-    i32 15, label %bb.ca
-    i32 73, label %bb.bz
+    i32 5, label %bb.cc
+    i32 56, label %bb.cb
+    i32 24, label %bb.ca
+    i32 64, label %bb.bz
     i32 84, label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-    i32 58, label %177
-    i32 40, label %178
-    i32 16, label %179
-    i32 90, label %180
-    i32 45, label %181
-    i32 23, label %182
-    i32 86, label %183
-    i32 22, label %184
-    i32 54, label %185
-    i32 55, label %186
-    i32 34, label %187
-    i32 3, label %188
-    i32 51, label %189
-    i32 74, label %190
-    i32 75, label %191
-    i32 91, label %192
-    i32 39, label %193
-    i32 33, label %194
-    i32 21, label %195
-    i32 17, label %196
-    i32 101, label %197
-    i32 57, label %bb.aw
-    i32 102, label %bb.ax
-    i32 46, label %bb.ay
-    i32 60, label %bb.az
-    i32 19, label %bb.ba
-    i32 29, label %bb.bb
-    i32 76, label %bb.bc
-    i32 68, label %bb.bd
-    i32 64, label %bb.be
-    i32 24, label %bb.bf
-    i32 56, label %bb.bg
-    i32 5, label %bb.bh
-    i32 4, label %bb.bi
-    i32 52, label %bb.bj
-    i32 88, label %bb.bk
-    i32 47, label %bb.bl
-    i32 18, label %bb.bm
-    i32 6, label %bb.bn
-    i32 59, label %bb.bo
-    i32 38, label %bb.bp
-    i32 80, label %bb.bq
-    i32 79, label %bb.br
-    i32 83, label %bb.bs
-    i32 72, label %bb.bt
-    i32 77, label %bb.bu
-    i32 62, label %bb.bv
-    i32 26, label %bb.bw
-    i32 49, label %bb.bx
-    i32 70, label %bb.by
+    i32 58, label %bb.aw
+    i32 40, label %bb.ax
+    i32 16, label %bb.ay
+    i32 90, label %bb.az
+    i32 45, label %bb.ba
+    i32 23, label %bb.bb
+    i32 86, label %bb.bc
+    i32 22, label %bb.bd
+    i32 54, label %bb.be
+    i32 55, label %bb.bf
+    i32 34, label %bb.bg
+    i32 3, label %bb.bh
+    i32 51, label %bb.bi
+    i32 74, label %bb.bj
+    i32 75, label %bb.bk
+    i32 91, label %bb.bl
+    i32 39, label %bb.bm
+    i32 33, label %bb.bn
+    i32 21, label %bb.bo
+    i32 17, label %bb.bp
+    i32 101, label %bb.bq
+    i32 57, label %bb.br
+    i32 102, label %bb.bs
+    i32 46, label %bb.bt
+    i32 60, label %bb.bu
+    i32 19, label %bb.bv
+    i32 29, label %bb.bw
+    i32 76, label %bb.bx
+    i32 68, label %bb.by
   ]
-
-177:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-178:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-179:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-180:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-181:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-182:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-183:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-184:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-185:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-186:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-187:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-188:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-189:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-190:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-191:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-192:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-193:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-194:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-195:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-196:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
-
-197:                                              ; preds = %.preheader.i.i.i
-  br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
 
 bb.aw:                                            ; preds = %.preheader.i.i.i
   br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
@@ -830,8 +746,8 @@ bb.cc:                                            ; preds = %.preheader.i.i.i
 bb.cd:                                            ; preds = %.preheader.i.i.i
   br label %_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i
 
-_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i: ; preds = %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %197, %196, %195, %194, %193, %192, %191, %190, %189, %188, %187, %186, %185, %184, %183, %182, %181, %180, %179, %178, %177, %.preheader.i.i.i
-  %.0.i.i.i.i = phi i64 [ 0, %bb.cd ], [ -9223372036854775808, %bb.cc ], [ 4611686018427387904, %bb.cb ], [ 2305843009213693952, %bb.ca ], [ 1152921504606846976, %bb.bz ], [ 576460752303423488, %bb.by ], [ 2, %177 ], [ 4, %178 ], [ 8, %179 ], [ 16, %180 ], [ 32, %181 ], [ 64, %182 ], [ 128, %183 ], [ 256, %184 ], [ 512, %185 ], [ 1024, %186 ], [ 2048, %187 ], [ 4096, %188 ], [ 8192, %189 ], [ 16384, %190 ], [ 32768, %191 ], [ 2031616, %192 ], [ 4194304, %193 ], [ 8388608, %194 ], [ 16777216, %195 ], [ 33554432, %196 ], [ 469762048, %197 ], [ 536870912, %bb.aw ], [ 1073741824, %bb.ax ], [ 2147483648, %bb.ay ], [ 4294967296, %bb.az ], [ 8589934592, %bb.ba ], [ 17179869184, %bb.bb ], [ 34359738368, %bb.bc ], [ 68719476736, %bb.bd ], [ 137438953472, %bb.be ], [ 274877906944, %bb.bf ], [ 549755813888, %bb.bg ], [ 1099511627776, %bb.bh ], [ 2199023255552, %bb.bi ], [ 4398046511104, %bb.bj ], [ 8796093022208, %bb.bk ], [ 17592186044416, %bb.bl ], [ 35184372088832, %bb.bm ], [ 70368744177664, %bb.bn ], [ 140737488355328, %bb.bo ], [ 281474976710656, %bb.bp ], [ 2251799813685248, %bb.bq ], [ 4503599627370496, %bb.br ], [ 9007199254740992, %bb.bs ], [ 18014398509481984, %bb.bt ], [ 36028797018963968, %bb.bu ], [ 72057594037927936, %bb.bv ], [ 144115188075855872, %bb.bw ], [ 288230376151711744, %bb.bx ], [ 1, %.preheader.i.i.i ]
+_ZL19getRawAttributeMaskN4llvm9Attribute8AttrKindE.exit.i.i.i: ; preds = %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %.preheader.i.i.i
+  %.0.i.i.i.i = phi i64 [ 0, %bb.cd ], [ 137438953472, %bb.bz ], [ 274877906944, %bb.ca ], [ 549755813888, %bb.cb ], [ 1099511627776, %bb.cc ], [ 1, %.preheader.i.i.i ], [ 2, %bb.aw ], [ 4, %bb.ax ], [ 8, %bb.ay ], [ 16, %bb.az ], [ 32, %bb.ba ], [ 64, %bb.bb ], [ 128, %bb.bc ], [ 256, %bb.bd ], [ 512, %bb.be ], [ 1024, %bb.bf ], [ 2048, %bb.bg ], [ 4096, %bb.bh ], [ 8192, %bb.bi ], [ 16384, %bb.bj ], [ 32768, %bb.bk ], [ 2031616, %bb.bl ], [ 4194304, %bb.bm ], [ 8388608, %bb.bn ], [ 16777216, %bb.bo ], [ 33554432, %bb.bp ], [ 469762048, %bb.bq ], [ 536870912, %bb.br ], [ 1073741824, %bb.bs ], [ 2147483648, %bb.bt ], [ 4294967296, %bb.bu ], [ 8589934592, %bb.bv ], [ 17179869184, %bb.bw ], [ 34359738368, %bb.bx ], [ 68719476736, %bb.by ]
   %i.wb = and i64 %.0.i.i.i.i, %.6.i.i            ; 3 uses
   %.not19.i.i.i = icmp eq i64 %i.wb, 0
   br i1 %.not19.i.i.i, label %bb.ck, label %bb.ce

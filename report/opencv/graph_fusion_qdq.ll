@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.ao, %bb.aq, %bb.as
   %i.re = phi ptr [ %.pre, %bb.as ], [ %.pre7904, %bb.aq ], [ %i.ql, %bb.ao ]
-  %i.rf = phi i32 [ %i.rd, %bb.as ], [ -1, %bb.aq ], [ -1, %bb.ao ]
+  %i.rf = phi i32 [ %i.rd, %bb.as ], [ -2, %bb.aq ], [ -2, %bb.ao ]
   %i.rg = icmp slt i32 %i.qk, 0
   %i.rh = select i1 %i.rg, i32 %i.rf, i32 %i.qk
   %i.ri = icmp ult i32 %i.rh, 2
@@ -294,7 +294,7 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az, %bb.ax, %bb.av
   %i.tf = phi ptr [ %.pre7905, %bb.az ], [ %.pre7906, %bb.ax ], [ %i.sm, %bb.av ]
-  %i.tg = phi i32 [ %i.te, %bb.az ], [ -1, %bb.ax ], [ -1, %bb.av ]
+  %i.tg = phi i32 [ %i.te, %bb.az ], [ -2, %bb.ax ], [ -2, %bb.av ]
   %i.th = icmp slt i32 %i.sl, 0
   %i.ti = select i1 %i.th, i32 %i.tg, i32 %i.sl
   %i.tj = icmp ult i32 %i.ti, 2
@@ -697,7 +697,7 @@ bb.ke:                                            ; preds = %bb.kd
   br label %.loopexit.split-lp3810
 
 bb.kf:                                            ; preds = %bb.ke, %bb.kd, %bb.ka, %bb.jz
-  %.01804 = phi i32 [ %i.bmv, %bb.jz ], [ %i.bmx, %bb.ka ], [ %i.bni, %bb.ke ], [ 1, %bb.kd ]
+  %.01804 = phi i32 [ %i.bmv, %bb.jz ], [ %i.bmx, %bb.ka ], [ %i.bni, %bb.ke ], [ 0, %bb.kd ]
   %i.bnj = icmp ult i32 %.01804, 2
   %i.bnk = load ptr, ptr %i.dd, align 8, !tbaa !48
   %i.bnl = load ptr, ptr %32, align 8, !tbaa !49  ; 2 uses
@@ -791,7 +791,7 @@ bb.kq:                                            ; preds = %bb.kp
   br label %bb.kr
 
 bb.kr:                                            ; preds = %bb.kq, %bb.kp, %bb.km
-  %.01810 = phi i32 [ %i.boj, %bb.km ], [ %i.bot, %bb.kq ], [ 1, %bb.kp ]
+  %.01810 = phi i32 [ %i.boj, %bb.km ], [ %i.bot, %bb.kq ], [ 0, %bb.kp ]
   %i.bou = icmp samesign ult i32 %.01810, 2
   %i.bov = zext i1 %i.bou to i8
   %i.bow = load ptr, ptr %0, align 8, !tbaa !20
@@ -1001,7 +1001,7 @@ bb.lj:                                            ; preds = %bb.li
   br label %bb.lk
 
 bb.lk:                                            ; preds = %bb.lj, %bb.li, %bb.lf
-  %.01810.1 = phi i32 [ %i.brt, %bb.lf ], [ %i.bsd, %bb.lj ], [ 1, %bb.li ]
+  %.01810.1 = phi i32 [ %i.brt, %bb.lf ], [ %i.bsd, %bb.lj ], [ 0, %bb.li ]
   %i.bse = trunc nuw i8 %.31808 to i1
   %i.bsf = icmp samesign ult i32 %.01810.1, 2
   %narrow.1 = select i1 %i.bse, i1 %i.bsf, i1 false
@@ -1404,7 +1404,7 @@ bb.wa:                                            ; preds = %bb.vz
   br label %bb.wb
 
 bb.wb:                                            ; preds = %bb.wa, %bb.vz, %bb.vw, %.thread8570, %bb.vu
-  %.01776 = phi i32 [ %i.cyb, %bb.vu ], [ %i.cyd, %bb.vw ], [ %i.cyd, %.thread8570 ], [ %i.cyt, %bb.wa ], [ 1, %bb.vz ]
+  %.01776 = phi i32 [ %i.cyb, %bb.vu ], [ %i.cyd, %bb.vw ], [ %i.cyd, %.thread8570 ], [ %i.cyt, %bb.wa ], [ 0, %bb.vz ]
   %.not3711 = icmp eq ptr %i.cww, null
   br i1 %.not3711, label %.thread3553, label %bb.wc
 
@@ -1807,7 +1807,7 @@ bb.abc:                                           ; preds = %bb.abb
   br label %bb.abd
 
 bb.abd:                                           ; preds = %bb.abc, %bb.abb, %bb.aay, %.thread8571, %bb.aaw
-  %.01758 = phi i32 [ %i.dmx, %bb.aaw ], [ %i.dmz, %bb.aay ], [ %i.dmz, %.thread8571 ], [ %i.dnp, %bb.abc ], [ 1, %bb.abb ]
+  %.01758 = phi i32 [ %i.dmx, %bb.aaw ], [ %i.dmz, %bb.aay ], [ %i.dmz, %.thread8571 ], [ %i.dnp, %bb.abc ], [ 0, %bb.abb ]
   %.not3713 = icmp eq ptr %i.dlt, null
   br i1 %.not3713, label %.thread3578, label %bb.abe
 
@@ -2210,7 +2210,7 @@ bb.agg:                                           ; preds = %bb.agf
   br label %bb.agh
 
 bb.agh:                                           ; preds = %bb.agg, %bb.agf, %bb.agc, %.thread8572, %bb.aga
-  %.01744 = phi i32 [ %i.dyu, %bb.aga ], [ %i.dyw, %bb.agc ], [ %i.dyw, %.thread8572 ], [ %i.dzm, %bb.agg ], [ 1, %bb.agf ]
+  %.01744 = phi i32 [ %i.dyu, %bb.aga ], [ %i.dyw, %bb.agc ], [ %i.dyw, %.thread8572 ], [ %i.dzm, %bb.agg ], [ 0, %bb.agf ]
   %.not3715 = icmp eq ptr %i.dxp, null
   br i1 %.not3715, label %.thread3602, label %bb.agi
 

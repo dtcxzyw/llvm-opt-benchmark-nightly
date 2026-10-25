@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.f, %bb.d
   %.061.i.i = phi ptr [ null, %bb.d ], [ null, %bb.f ], [ %i.s, %bb.i ], [ %i.s, %bb.m ], [ %i.s, %bb.n ], [ null, %bb.o ], [ %i.s, %bb.l ], [ %i.s, %bb.k ], [ %i.s, %bb.j ] ; 3 uses
-  %.0.i.i = phi i64 [ %i.i, %bb.d ], [ %i.m, %bb.f ], [ %i.u, %bb.i ], [ -5, %bb.m ], [ -12, %bb.n ], [ 0, %bb.o ], [ -22, %bb.l ], [ -22, %bb.k ], [ -13, %bb.j ]
+  %.0.i.i = phi i64 [ %i.i, %bb.d ], [ %i.m, %bb.f ], [ %i.u, %bb.i ], [ 4294967291, %bb.m ], [ 4294967284, %bb.n ], [ 0, %bb.o ], [ 4294967274, %bb.l ], [ 4294967274, %bb.k ], [ 4294967283, %bb.j ]
   call void @putname(ptr noundef %i.f) #11
   %.not.i.i.i = icmp eq ptr %.061.i.i, null
   %i.be = icmp ugt ptr %.061.i.i, inttoptr (i64 -4096 to ptr)
@@ -605,7 +605,7 @@ bb.g:                                             ; preds = %.lr.ph.i75
 bb.h:                                             ; preds = %bb.g
   %i.az = add nuw nsw i64 %i.au, 1
   %i.ba = icmp eq i64 %i.au, 1048575              ; 2 uses
-  %spec.select.i76 = select i1 %i.ba, i64 524288, i64 %i.az
+  %spec.select.i76 = select i1 %i.ba, i64 0, i64 %i.az
   %i.bb = zext i1 %i.ba to i32
   %spec.select19.i = add nuw i32 %i.av, %i.bb
   br label %encode_comp2_t.exit

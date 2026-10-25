@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %find_dqentry.exit
   br i1 %i.r, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.thread, %bb.e
-  %.0.i636568 = phi i64 [ -5, %.thread ], [ %i.p, %bb.e ]
+  %.0.i636568 = phi i64 [ 4294967291, %.thread ], [ %i.p, %bb.e ]
   %i.s = load i64, ptr %i.b, align 8
   %i.t = tail call i32 @from_kqid(ptr noundef @init_user_ns, i64 %i.s) #9
   tail call void (ptr, ptr, ptr, ...) @__quota_error(ptr noundef %i.f, ptr noundef @__func__.qtree_read_dquot, ptr noundef @.str.4, i32 noundef %i.t) #9
@@ -607,11 +607,11 @@ select.unfold:                                    ; preds = %bb.h, %bb.d
   %.1.lcssa = phi i32 [ %i.bu, %.split.loop.exit ], [ %i.ay, %__get_index.exit ], [ %i.bw, %.split.loop.exit87.loopexit ]
   %.2 = phi i64 [ %i.bv, %.split.loop.exit ], [ %i.ad, %__get_index.exit ], [ %.150.ph, %.split.loop.exit87.loopexit ]
   %i.bx = icmp eq i32 %.1.lcssa, %i.f
-  %spec.select = select i1 %i.bx, i64 -2, i64 %.2
+  %spec.select = select i1 %i.bx, i64 4294967294, i64 %.2
   br label %.thread75
 
 .thread75:                                        ; preds = %bb.g, %bb.f, %.split.loop.exit87, %bb.a
-  %.3 = phi i64 [ %i.ad, %bb.a ], [ %spec.select, %.split.loop.exit87 ], [ -117, %bb.f ], [ 0, %bb.g ]
+  %.3 = phi i64 [ %i.ad, %bb.a ], [ %spec.select, %.split.loop.exit87 ], [ 4294967179, %bb.f ], [ 0, %bb.g ]
   tail call void @kfree(ptr noundef nonnull %i.d) #9
   %i.by = trunc i64 %.3 to i32
   br label %bb.i

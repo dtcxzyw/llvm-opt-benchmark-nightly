@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i5, label %_ZNK2OT6Layout6Common8Coverage14get_populationEv.exit, label %.lr.ph.i.i, !llvm.loop !4228
 
 _ZNK2OT6Layout6Common8Coverage14get_populationEv.exit: ; preds = %.lr.ph.i.i, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, %bb.l, %bb.m
-  %.0.i = phi i32 [ -1, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread ], [ %i.ce, %bb.l ], [ 0, %bb.m ], [ %i.ft, %.lr.ph.i.i ]
+  %.0.i = phi i32 [ -2, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread ], [ %i.ce, %bb.l ], [ 0, %bb.m ], [ %i.ft, %.lr.ph.i.i ]
   %i.fv = lshr i32 %.0.i, 1                       ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !508 ; 3 uses
@@ -608,7 +608,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i6, label %_ZNK2OT6Layout6Common8Coverage14get_populationEv.exit, label %.lr.ph.i.i, !llvm.loop !4262
 
 _ZNK2OT6Layout6Common8Coverage14get_populationEv.exit: ; preds = %.lr.ph.i.i, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, %bb.l, %bb.m
-  %.0.i = phi i32 [ -1, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread ], [ %i.ce, %bb.l ], [ 0, %bb.m ], [ %i.ft, %.lr.ph.i.i ]
+  %.0.i = phi i32 [ -2, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread ], [ %i.ce, %bb.l ], [ 0, %bb.m ], [ %i.ft, %.lr.ph.i.i ]
   %i.fv = lshr i32 %.0.i, 1                       ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 3 uses
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !508 ; 3 uses

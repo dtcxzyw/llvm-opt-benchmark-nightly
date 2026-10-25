@@ -204,8 +204,8 @@ _ZN5nlsat8adjacentERN17algebraic_numbers7managerERKNS_8intervalES5_.exit: ; pred
   %i.cm = icmp eq i32 %.051.lcssa, %i.h
   br label %.thread120
 
-.thread120:                                       ; preds = %_ZN5nlsat19compare_lower_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit, %bb.j, %_ZN5nlsat8adjacentERN17algebraic_numbers7managerERKNS_8intervalES5_.exit, %bb.t, %_ZN5nlsat19compare_upper_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit.thread, %._crit_edge, %bb.d, %bb.c, %bb.b, %bb.a
-  %.8 = phi i1 [ false, %bb.d ], [ true, %bb.a ], [ %i.cm, %._crit_edge ], [ false, %bb.b ], [ true, %bb.c ], [ false, %_ZN5nlsat8adjacentERN17algebraic_numbers7managerERKNS_8intervalES5_.exit ], [ false, %_ZN5nlsat19compare_upper_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit.thread ], [ false, %bb.t ], [ false, %bb.j ], [ false, %_ZN5nlsat19compare_lower_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit ]
+.thread120:                                       ; preds = %bb.j, %_ZN5nlsat19compare_lower_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit, %_ZN5nlsat8adjacentERN17algebraic_numbers7managerERKNS_8intervalES5_.exit, %bb.t, %_ZN5nlsat19compare_upper_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit.thread, %._crit_edge, %bb.d, %bb.c, %bb.b, %bb.a
+  %.8 = phi i1 [ false, %bb.d ], [ true, %bb.a ], [ %i.cm, %._crit_edge ], [ false, %bb.b ], [ true, %bb.c ], [ false, %_ZN5nlsat8adjacentERN17algebraic_numbers7managerERKNS_8intervalES5_.exit ], [ false, %_ZN5nlsat19compare_upper_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit.thread ], [ false, %bb.t ], [ false, %_ZN5nlsat19compare_lower_lowerERN17algebraic_numbers7managerERKNS_8intervalES5_.exit ], [ false, %bb.j ]
   ret i1 %.8
 }
 

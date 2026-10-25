@@ -206,7 +206,7 @@ bb.an:                                            ; preds = %bb.ak
   br label %_ZN4core3cmp10PartialOrd2lt17hc22bc632dd203acbE.exit
 
 _ZN4core3cmp10PartialOrd2lt17hc22bc632dd203acbE.exit: ; preds = %bb.j, %bb.k, %bb.n, %bb.o, %bb.r, %bb.s, %bb.w, %bb.x, %"_ZN54_$LT$gix_url..Url$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17h8643935685102a95E.exit.i.i.i", %bb.aa, %bb.ab, %bb.ac, %bb.ad, %"_ZN72_$LT$nickel_lang_package..index..Id$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17h99158ebb2dbb45a1E.exit.i.i", %bb.aj, %bb.al, %bb.am, %bb.an
-  %.sroa.0.0.i.i = phi i8 [ %.sroa.0.0.i8.i.i, %"_ZN72_$LT$nickel_lang_package..index..Id$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17h99158ebb2dbb45a1E.exit.i.i" ], [ %i.ds, %bb.ac ], [ %i.dx, %bb.ad ], [ 1, %bb.j ], [ %i.dq, %bb.aa ], [ %i.dr, %bb.ab ], [ %.sroa.0.4.i.i.i.i, %"_ZN54_$LT$gix_url..Url$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17h8643935685102a95E.exit.i.i.i" ], [ -1, %bb.x ], [ 1, %bb.w ], [ 1, %bb.r ], [ -1, %bb.s ], [ -1, %bb.o ], [ 1, %bb.n ], [ -1, %bb.k ], [ %i.gb, %bb.am ], [ %i.gc, %bb.an ], [ %i.fs, %bb.al ], [ %i.fm, %bb.aj ]
+  %.sroa.0.0.i.i = phi i8 [ %.sroa.0.0.i8.i.i, %"_ZN72_$LT$nickel_lang_package..index..Id$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17h99158ebb2dbb45a1E.exit.i.i" ], [ %i.ds, %bb.ac ], [ %i.dx, %bb.ad ], [ 0, %bb.j ], [ %i.dq, %bb.aa ], [ %i.dr, %bb.ab ], [ %.sroa.0.4.i.i.i.i, %"_ZN54_$LT$gix_url..Url$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17h8643935685102a95E.exit.i.i.i" ], [ -128, %bb.x ], [ 0, %bb.w ], [ 0, %bb.r ], [ -128, %bb.s ], [ -128, %bb.o ], [ 0, %bb.n ], [ -128, %bb.k ], [ %i.gb, %bb.am ], [ %i.gc, %bb.an ], [ %i.fs, %bb.al ], [ %i.fm, %bb.aj ]
   %i.gd = icmp slt i8 %.sroa.0.0.i.i, 0
   ret i1 %i.gd
 }
@@ -609,7 +609,7 @@ bb.e:                                             ; preds = %_ZN4core5slice6memc
   br i1 %i.q, label %bb.f, label %bb.d
 
 bb.f:                                             ; preds = %bb.e
-  %i.r = sub nuw i64 %2, %i.n                     ; 6 uses
+  %i.r = sub nuw i64 %2, %i.n                     ; 7 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.n ; 6 uses
   %i.t = icmp slt i64 %i.o, 0
   br i1 %i.t, label %bb.h, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i, !prof !53
@@ -764,7 +764,7 @@ bb.s:                                             ; preds = %bb.r, %.loopexit
   br i1 %i.bc, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread", label %bb.u
 
 "_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread": ; preds = %bb.p, %bb.n, %.lr.ph.i, %bb.i, %bb.i, %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h9fa53752598ee3fdE.exit", %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit"
-  %.sroa.8.0.insert.insert.i45 = phi i64 [ %.sroa.8.0.insert.insert.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit" ], [ 257, %bb.i ], [ 257, %.lr.ph.i ], [ 1, %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h9fa53752598ee3fdE.exit" ], [ 257, %bb.i ], [ 257, %bb.n ], [ 513, %bb.p ]
+  %.sroa.8.0.insert.insert.i45 = phi i64 [ %.sroa.8.0.insert.insert.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit" ], [ 256, %bb.i ], [ 256, %.lr.ph.i ], [ %i.r, %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h9fa53752598ee3fdE.exit" ], [ 256, %bb.i ], [ 256, %bb.n ], [ 512, %bb.p ]
   %.sroa.414.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i45, 8
   %.sroa.414.0.extract.trunc = trunc i64 %.sroa.414.0.extract.shift to i8
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8

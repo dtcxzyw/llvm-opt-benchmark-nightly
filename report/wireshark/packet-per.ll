@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0217261 = phi i32 [ %i.ak, %.lr.ph ], [ 2147483647, %.lr.ph.preheader ]
+  %.0217261 = phi i32 [ %i.ak, %.lr.ph ], [ 2147483646, %.lr.ph.preheader ]
   %.0218260 = phi i32 [ %i.aj, %.lr.ph ], [ -2147483648, %.lr.ph.preheader ]
   %.0219259 = phi i32 [ %i.ai, %.lr.ph ], [ 32, %.lr.ph.preheader ]
   %i.ai = add i32 %.0219259, -1                   ; 2 uses
@@ -608,12 +608,11 @@ bb.e:                                             ; preds = %bb.c
   %i.w = shl nuw nsw i32 %i.d, 3                  ; 2 uses
   %i.x = call ptr @tvb_new_octet_aligned(ptr noundef %0, i32 noundef %.066, i32 noundef %i.w) ; 3 uses
   %i.y = call zeroext i8 @tvb_get_uint8(ptr noundef %i.x, i32 noundef 0)
-  %.lobit.peel = ashr i8 %i.y, 7
-  %..peel = sext i8 %.lobit.peel to i32
-  %6 = shl nsw i32 %..peel, 8
+  %.not73.peel = icmp sgt i8 %i.y, -1
+  %..peel = select i1 %.not73.peel, i32 0, i32 -256
   %i.z = call zeroext i8 @tvb_get_uint8(ptr noundef %i.x, i32 noundef 0)
   %i.aa = zext i8 %i.z to i32
-  %i.ab = or disjoint i32 %6, %i.aa               ; 2 uses
+  %i.ab = or disjoint i32 %..peel, %i.aa          ; 2 uses
   %exitcond.peel.not = icmp eq i32 %i.d, 1
   br i1 %exitcond.peel.not, label %.loopexit, label %.peel.next
 
@@ -728,12 +727,11 @@ bb.a:
 bb.b:                                             ; preds = %.preheader
   %i.e = lshr i32 %i.b, 3                         ; 2 uses
   %i.f = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.e)
-  %.lobit.peel = ashr i8 %i.f, 7
-  %..peel = sext i8 %.lobit.peel to i64
-  %6 = shl nsw i64 %..peel, 8
+  %.not63.peel = icmp sgt i8 %i.f, -1
+  %..peel = select i1 %.not63.peel, i64 0, i64 -256
   %i.g = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.e)
   %i.h = zext i8 %i.g to i64
-  %i.i = or disjoint i64 %6, %i.h                 ; 2 uses
+  %i.i = or disjoint i64 %..peel, %i.h            ; 2 uses
   %i.j = add i32 %i.b, 8                          ; 2 uses
   %exitcond.peel.not = icmp eq i32 %i.c, 1
   br i1 %exitcond.peel.not, label %._crit_edge, label %.lr.ph.peel.next
@@ -980,7 +978,7 @@ bb.p:                                             ; preds = %bb.o
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0235324 = phi i64 [ %i.an, %.lr.ph ], [ 9223372036854775807, %.lr.ph.preheader ]
+  %.0235324 = phi i64 [ %i.an, %.lr.ph ], [ 9223372036854775806, %.lr.ph.preheader ]
   %.0236323 = phi i64 [ %i.am, %.lr.ph ], [ -9223372036854775808, %.lr.ph.preheader ]
   %.0243322 = phi i32 [ %i.al, %.lr.ph ], [ 64, %.lr.ph.preheader ]
   %i.al = add i32 %.0243322, -1                   ; 2 uses

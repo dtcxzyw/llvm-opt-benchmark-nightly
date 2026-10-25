@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not.i.i.i, label %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h182e90a280bb351fE.exit.thread", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = extractvalue { ptr, i64 } %i.c, 1        ; 8 uses
+  %i.e = extractvalue { ptr, i64 } %i.c, 1        ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !104)
   switch i64 %i.e, label %thread-pre-split.i.i.i.i.i.i.i [
     i64 0, label %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.thread.i.i.i.i
@@ -381,7 +381,7 @@ _ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i: ; preds =
   br i1 %i.bf, label %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.thread.i.i.i.i, label %bb.m
 
 _ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.thread.i.i.i.i: ; preds = %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i, %bb.c, %bb.c, %bb.b
-  %.sroa.12.0.insert.insert.i.i.i2.i.i.i.i = phi i64 [ %.sroa.12.0.insert.insert.i.i.i.i.i.i.i, %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i ], [ 257, %bb.c ], [ 257, %bb.c ], [ 1, %bb.b ]
+  %.sroa.12.0.insert.insert.i.i.i2.i.i.i.i = phi i64 [ %.sroa.12.0.insert.insert.i.i.i.i.i.i.i, %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i ], [ 256, %bb.c ], [ 256, %bb.c ], [ %i.e, %bb.b ]
   %.sroa.03.0.insert.insert.i.i.i.i.i.i = lshr i64 %.sroa.12.0.insert.insert.i.i.i2.i.i.i.i, 8
   %.sroa.415.0.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.03.0.insert.insert.i.i.i.i.i.i to i8 ; 2 uses
   %i.bg = icmp ult i8 %.sroa.415.0.extract.trunc.i.i.i.i.i, 5
@@ -784,7 +784,7 @@ bb.i:                                             ; preds = %.lr.ph.split.i
   br i1 %i.at, label %"_ZN4core3num21_$LT$impl$u20$u16$GT$16from_ascii_radix17hc54ff9b205fe9008E.exit.thread", label %bb.j, !prof !28
 
 "_ZN4core3num21_$LT$impl$u20$u16$GT$16from_ascii_radix17hc54ff9b205fe9008E.exit.thread": ; preds = %.lr.ph.split.i, %bb.e, %bb.e, %"_ZN4core3str21_$LT$impl$u20$str$GT$18trim_start_matches17haf037132f813db10E.exit", %"_ZN4core3num21_$LT$impl$u20$u16$GT$16from_ascii_radix17hc54ff9b205fe9008E.exit"
-  %.sroa.8.0.insert.insert.i10 = phi i32 [ %.sroa.8.0.insert.insert.i, %"_ZN4core3num21_$LT$impl$u20$u16$GT$16from_ascii_radix17hc54ff9b205fe9008E.exit" ], [ 257, %bb.e ], [ 1, %"_ZN4core3str21_$LT$impl$u20$str$GT$18trim_start_matches17haf037132f813db10E.exit" ], [ 257, %bb.e ], [ 257, %.lr.ph.split.i ]
+  %.sroa.8.0.insert.insert.i10 = phi i32 [ %.sroa.8.0.insert.insert.i, %"_ZN4core3num21_$LT$impl$u20$u16$GT$16from_ascii_radix17hc54ff9b205fe9008E.exit" ], [ 256, %bb.e ], [ 0, %"_ZN4core3str21_$LT$impl$u20$str$GT$18trim_start_matches17haf037132f813db10E.exit" ], [ 256, %bb.e ], [ 256, %.lr.ph.split.i ]
   %.sroa.4.0.extract.shift = lshr i32 %.sroa.8.0.insert.insert.i10, 8
   %.sroa.4.0.extract.trunc = trunc i32 %.sroa.4.0.extract.shift to i8
   %i.au = call fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17h035e5d8170740611E"(i8 noundef range(i8 0, 5) %.sroa.4.0.extract.trunc)
@@ -1187,7 +1187,7 @@ bb.ac:                                            ; preds = %_ZN4core4iter6trait
   %i.ht = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i84, i64 16
   %i.hu = load ptr, ptr %i.ht, align 8, !noalias !5806, !nonnull !6, !align !11, !noundef !6 ; 6 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i84, i64 24
-  %i.hw = load i64, ptr %i.hv, align 8, !noalias !5806, !noundef !6 ; 6 uses
+  %i.hw = load i64, ptr %i.hv, align 8, !noalias !5806, !noundef !6 ; 7 uses
   switch i64 %i.hw, label %bb.ae [
     i64 0, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.thread.invoke.i.i"
     i64 1, label %bb.ad
@@ -1347,7 +1347,7 @@ bb.an:                                            ; preds = %bb.am
   %i.je = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i84, i64 32
   %i.jf = load ptr, ptr %i.je, align 8, !noalias !5806, !nonnull !6, !align !11, !noundef !6 ; 6 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i84, i64 40
-  %i.jh = load i64, ptr %i.jg, align 8, !noalias !5806, !noundef !6 ; 6 uses
+  %i.jh = load i64, ptr %i.jg, align 8, !noalias !5806, !noundef !6 ; 7 uses
   switch i64 %i.jh, label %bb.ap [
     i64 0, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.thread.invoke.i.i"
     i64 1, label %bb.ao
@@ -1456,7 +1456,7 @@ bb.aw:                                            ; preds = %.lr.ph.i86.i.i
   %i.kn = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i84, i64 48
   %i.ko = load ptr, ptr %i.kn, align 8, !noalias !5806, !nonnull !6, !align !11, !noundef !6 ; 6 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i84, i64 56
-  %i.kq = load i64, ptr %i.kp, align 8, !noalias !5806, !noundef !6 ; 6 uses
+  %i.kq = load i64, ptr %i.kp, align 8, !noalias !5806, !noundef !6 ; 7 uses
   switch i64 %i.kq, label %bb.ay [
     i64 0, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.thread.invoke.i.i"
     i64 1, label %bb.ax
@@ -1558,7 +1558,7 @@ bb.bf:                                            ; preds = %.lr.ph.i112.i.i
   br i1 %i.ls, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.thread.invoke.i.i", label %.thread177.i.i, !prof !28
 
 "_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.thread.invoke.i.i": ; preds = %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.i.i", %bb.ax, %bb.ax, %.thread167.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit106.i.i", %bb.ao, %bb.ao, %.thread.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.i.i", %bb.ad, %bb.ad, %bb.ac, %bb.ak, %bb.ai, %.lr.ph.i.i99.i, %bb.av, %bb.at, %.lr.ph.i86.i.i, %bb.be, %bb.bc, %.lr.ph.i112.i.i
-  %.sroa.8.0.insert.insert.i161.sink.i.i = phi i64 [ 513, %bb.ak ], [ 513, %bb.be ], [ 513, %bb.av ], [ 257, %.lr.ph.i86.i.i ], [ 257, %.lr.ph.i112.i.i ], [ 257, %.lr.ph.i.i99.i ], [ 257, %bb.bc ], [ 257, %bb.at ], [ 257, %bb.ai ], [ 1, %bb.ac ], [ 257, %bb.ad ], [ %.sroa.8.0.insert.insert.i82.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit106.i.i" ], [ 257, %bb.ao ], [ 1, %.thread.i.i ], [ 257, %bb.ao ], [ %.sroa.8.0.insert.insert.i108.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.i.i" ], [ 257, %bb.ax ], [ 1, %.thread167.i.i ], [ 257, %bb.ax ], [ %.sroa.8.0.insert.insert.i.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.i.i" ], [ 257, %bb.ad ]
+  %.sroa.8.0.insert.insert.i161.sink.i.i = phi i64 [ 512, %bb.ak ], [ 512, %bb.be ], [ 512, %bb.av ], [ 256, %.lr.ph.i86.i.i ], [ 256, %.lr.ph.i112.i.i ], [ 256, %.lr.ph.i.i99.i ], [ 256, %bb.bc ], [ 256, %bb.at ], [ 256, %bb.ai ], [ %i.hw, %bb.ac ], [ 256, %bb.ad ], [ %.sroa.8.0.insert.insert.i82.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit106.i.i" ], [ 256, %bb.ao ], [ %i.jh, %.thread.i.i ], [ 256, %bb.ao ], [ %.sroa.8.0.insert.insert.i108.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit132.i.i" ], [ 256, %bb.ax ], [ %i.kq, %.thread167.i.i ], [ 256, %bb.ax ], [ %.sroa.8.0.insert.insert.i.i.i, %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.i.i" ], [ 256, %bb.ad ]
   %.sroa.457.0.extract.shift.i.i = lshr i64 %.sroa.8.0.insert.insert.i161.sink.i.i, 8
   %.sroa.457.0.extract.trunc.i.i = trunc i64 %.sroa.457.0.extract.shift.i.i to i8
   %i.lt = invoke fastcc noalias noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17h035e5d8170740611E"(i8 noundef range(i8 0, 5) %.sroa.457.0.extract.trunc.i.i)
@@ -1961,7 +1961,7 @@ _ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i.i: ; preds
   br i1 %i.pq, label %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.thread.i.i.i.i.i, label %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hf35793715db690d9E.exit"
 
 _ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.thread.i.i.i.i.i: ; preds = %bb.bz, %bb.bz, %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i.i
-  %.sroa.12.0.insert.insert.i.i.i2.i.i.i.i.i = phi i64 [ %.sroa.12.0.insert.insert.i.i.i.i.i.i.i.i, %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i.i ], [ 257, %bb.bz ], [ 257, %bb.bz ]
+  %.sroa.12.0.insert.insert.i.i.i2.i.i.i.i.i = phi i64 [ %.sroa.12.0.insert.insert.i.i.i.i.i.i.i.i, %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i.i ], [ 256, %bb.bz ], [ 256, %bb.bz ]
   %.sroa.03.0.insert.insert.i.i.i.i.i.i.i = lshr i64 %.sroa.12.0.insert.insert.i.i.i2.i.i.i.i.i, 8
   %.sroa.415.0.extract.trunc.i.i.i.i.i.i = trunc i64 %.sroa.03.0.insert.insert.i.i.i.i.i.i.i to i8 ; 2 uses
   %i.pr = icmp ult i8 %.sroa.415.0.extract.trunc.i.i.i.i.i.i, 5

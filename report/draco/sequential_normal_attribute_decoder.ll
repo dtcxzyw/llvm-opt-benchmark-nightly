@@ -204,7 +204,7 @@ _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47:        ; preds = %bb.o
   br i1 %i.ga, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread
 
 _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split: ; preds = %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47, %bb.n, %bb.o, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit
-  %spec.select.i46104.sink = phi i64 [ %i.fu, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.fz, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47 ], [ 9223372036854775807, %bb.n ], [ 9223372036854775807, %bb.o ]
+  %spec.select.i46104.sink = phi i64 [ %i.fu, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.fz, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47 ], [ 9223372036317904896, %bb.n ], [ 9223372036317904896, %bb.o ]
   %i.gb = lshr i64 %spec.select.i46104.sink, 29   ; 3 uses
   %i.gc = sdiv i64 %.sroa.072.0.lcssa, %i.gb
   %i.gd = sdiv i64 %.sroa.12.0.lcssa, %i.gb
@@ -607,7 +607,7 @@ _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52:        ; preds = %bb.r
   br i1 %i.gb, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread
 
 _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split: ; preds = %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52, %bb.q, %bb.r, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit
-  %spec.select.i51112.sink = phi i64 [ %i.fv, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.ga, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52 ], [ 9223372036854775807, %bb.q ], [ 9223372036854775807, %bb.r ]
+  %spec.select.i51112.sink = phi i64 [ %i.fv, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.ga, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52 ], [ 9223372036317904896, %bb.q ], [ 9223372036317904896, %bb.r ]
   %i.gc = lshr i64 %spec.select.i51112.sink, 29   ; 3 uses
   %i.gd = sdiv i64 %.sroa.077.0.lcssa, %i.gc
   %i.ge = sdiv i64 %.sroa.12.0.lcssa, %i.gc
@@ -1010,7 +1010,7 @@ _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47:        ; preds = %bb.o
   br i1 %i.ga, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread
 
 _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split: ; preds = %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47, %bb.n, %bb.o, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit
-  %spec.select.i46104.sink = phi i64 [ %i.fu, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.fz, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47 ], [ 9223372036854775807, %bb.n ], [ 9223372036854775807, %bb.o ]
+  %spec.select.i46104.sink = phi i64 [ %i.fu, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.fz, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit47 ], [ 9223372036317904896, %bb.n ], [ 9223372036317904896, %bb.o ]
   %i.gb = lshr i64 %spec.select.i46104.sink, 29   ; 3 uses
   %i.gc = sdiv i64 %.sroa.072.0.lcssa, %i.gb
   %i.gd = sdiv i64 %.sroa.12.0.lcssa, %i.gb
@@ -1413,7 +1413,7 @@ _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52:        ; preds = %bb.r
   br i1 %i.gb, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split, label %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread
 
 _ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit.thread.sink.split: ; preds = %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52, %bb.q, %bb.r, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit
-  %spec.select.i51112.sink = phi i64 [ %i.fv, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.ga, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52 ], [ 9223372036854775807, %bb.q ], [ 9223372036854775807, %bb.r ]
+  %spec.select.i51112.sink = phi i64 [ %i.fv, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit ], [ %i.ga, %_ZNK5draco7VectorDIlLi3EE6AbsSumEv.exit52 ], [ 9223372036317904896, %bb.q ], [ 9223372036317904896, %bb.r ]
   %i.gc = lshr i64 %spec.select.i51112.sink, 29   ; 3 uses
   %i.gd = sdiv i64 %.sroa.077.0.lcssa, %i.gc
   %i.ge = sdiv i64 %.sroa.12.0.lcssa, %i.gc

@@ -205,7 +205,7 @@ bb.hg:                                            ; preds = %bb.gn
   br label %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i
 
 _RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i: ; preds = %.peel.next.i.i.i, %bb.hg
-  %.sroa.6.1.lcssa.i.neg.i.i = phi i32 [ -1, %bb.hg ], [ -4, %.peel.next.i.i.i ]
+  %.sroa.6.1.lcssa.i.neg.i.i = phi i32 [ 2147483647, %bb.hg ], [ 2147483644, %.peel.next.i.i.i ]
   %.sroa.0.1.lcssa.i.i.i = phi i32 [ %i.vm, %bb.hg ], [ %i.vr, %.peel.next.i.i.i ]
   %i.vs = ptrtoint ptr %i.so to i64
   %i.vt = icmp samesign ugt i64 %.sroa.5.0.i.i, %i.sn
@@ -257,7 +257,7 @@ bb.hj:                                            ; preds = %bb.hh
   %i.wl = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %.sroa.5.0.i.i
   %i.wm = load i8, ptr %i.wl, align 1, !alias.scope !681, !noalias !592, !noundef !15
   %i.wn = zext i8 %i.wk to i32
-  %.neg.i.i = mul nsw i32 %.sroa.6.1.lcssa.i.neg.i.i, %i.wn
+  %.neg.i.i = mul i32 %.sroa.6.1.lcssa.i.neg.i.i, %i.wn
   %i.wo = add i32 %.neg.i.i, %.sroa.013.1.i.i.i.i
   %i.wp = shl i32 %i.wo, 1
   %i.wq = zext i8 %i.wm to i32
@@ -660,7 +660,7 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6e
   %i.gy = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.gz = load ptr, ptr %i.gy, align 8, !alias.scope !13297, !noalias !13296, !nonnull !15, !noundef !15 ; 3 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.hb = load i64, ptr %i.ha, align 8, !alias.scope !13297, !noalias !13296, !noundef !15 ; 2 uses
+  %i.hb = load i64, ptr %i.ha, align 8, !alias.scope !13297, !noalias !13296, !noundef !15 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !13296
   switch i64 %i.hb, label %thread-pre-split.i.i [
     i64 0, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread.i
@@ -840,7 +840,7 @@ _RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.i: ; preds = %bb.bw, %
   br i1 %i.ju, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread.i, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultmNtNtNtB4_3num5error13ParseIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i, !prof !61
 
 _RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread.i: ; preds = %bb.bv, %.lr.ph.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %.lr.ph.i.i.3, %.lr.ph.i.i.4, %.lr.ph.i.i.5, %.lr.ph.i.i.6, %.lr.ph.i.i.7, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.i, %bb.bs, %bb.bs, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6expectCsb6FLkjZuKG_18ruff_python_parser.exit.i
-  %.sroa.8.0.insert.insert.i24.i = phi i64 [ %.sroa.8.0.insert.insert.i.i, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.i ], [ 257, %.lr.ph.i.i ], [ 257, %bb.bs ], [ 257, %bb.bs ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6expectCsb6FLkjZuKG_18ruff_python_parser.exit.i ], [ 257, %.lr.ph.i.i.7 ], [ 257, %.lr.ph.i.i.6 ], [ 257, %.lr.ph.i.i.5 ], [ 257, %.lr.ph.i.i.4 ], [ 257, %.lr.ph.i.i.3 ], [ 257, %.lr.ph.i.i.2 ], [ 257, %.lr.ph.i.i.1 ], [ 257, %bb.bv ]
+  %.sroa.8.0.insert.insert.i24.i = phi i64 [ %.sroa.8.0.insert.insert.i.i, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.i ], [ 256, %.lr.ph.i.i ], [ 256, %bb.bs ], [ 256, %bb.bs ], [ %i.hb, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6expectCsb6FLkjZuKG_18ruff_python_parser.exit.i ], [ 256, %.lr.ph.i.i.7 ], [ 256, %.lr.ph.i.i.6 ], [ 256, %.lr.ph.i.i.5 ], [ 256, %.lr.ph.i.i.4 ], [ 256, %.lr.ph.i.i.3 ], [ 256, %.lr.ph.i.i.2 ], [ 256, %.lr.ph.i.i.1 ], [ 256, %bb.bv ]
   %.sroa.4.0.extract.shift.i.i = lshr i64 %.sroa.8.0.insert.insert.i24.i, 8
   %.sroa.4.0.extract.trunc.i.i = trunc i64 %.sroa.4.0.extract.shift.i.i to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13296

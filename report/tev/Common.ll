@@ -205,9 +205,9 @@ _ZNKSt3__112regex_traitsIcE5valueB8ne180100Eci.exit: ; preds = %bb.at
 
 bb.au:                                            ; preds = %bb.at, %bb.as
   %.sink139 = phi i8 [ %i.bh, %bb.at ], [ %i.bf, %bb.as ]
-  %.sink138 = phi i16 [ -87, %bb.at ], [ -48, %bb.as ]
+  %.sink138 = phi i16 [ 169, %bb.at ], [ 208, %bb.as ]
   %i.bj = zext i8 %.sink139 to i16
-  %i.bk = add nsw i16 %.sink138, %i.bj
+  %i.bk = add nuw nsw i16 %.sink138, %i.bj
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
   %i.bm = icmp eq ptr %i.bl, %2
   br i1 %i.bm, label %bb.av, label %bb.aw
@@ -234,11 +234,11 @@ _ZNKSt3__112regex_traitsIcE5valueB8ne180100Eci.exit60: ; preds = %bb.ax
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %.sink141 = phi i8 [ %i.bp, %bb.ax ], [ %i.bn, %bb.aw ]
-  %.sink140 = phi i16 [ -87, %bb.ax ], [ -48, %bb.aw ]
+  %.sink140 = phi i16 [ 4009, %bb.ax ], [ 4048, %bb.aw ]
   %i.br = zext i8 %.sink141 to i16
-  %i.bs = add nsw i16 %.sink140, %i.br
+  %i.bs = add nuw nsw i16 %.sink140, %i.br
   %i.bt = shl i16 %i.bk, 8
-  %i.bu = shl nsw i16 %i.bs, 4
+  %i.bu = shl i16 %i.bs, 4
   %i.bv = add i16 %i.bu, %i.bt
   br label %bb.az
 
@@ -271,9 +271,9 @@ _ZNKSt3__112regex_traitsIcE5valueB8ne180100Eci.exit63: ; preds = %bb.bc
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %.sink143 = phi i8 [ %i.ca, %bb.bc ], [ %i.by, %bb.bb ]
-  %.sink142 = phi i16 [ -87, %bb.bc ], [ -48, %bb.bb ]
+  %.sink142 = phi i16 [ 9, %bb.bc ], [ 0, %bb.bb ]
   %i.cc = zext i8 %.sink143 to i16
-  %i.cd = add nsw i16 %.sink142, %i.cc
+  %i.cd = add nuw nsw i16 %.sink142, %i.cc
   %i.ce = add i16 %i.cd, %.0
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.087.0, i64 2 ; 2 uses
   %i.cg = icmp eq ptr %i.cf, %2
@@ -301,9 +301,9 @@ _ZNKSt3__112regex_traitsIcE5valueB8ne180100Eci.exit66: ; preds = %bb.bg
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
   %.sink145 = phi i8 [ %i.cj, %bb.bg ], [ %i.ch, %bb.bf ]
-  %.sink144 = phi i16 [ -87, %bb.bg ], [ -48, %bb.bf ]
+  %.sink144 = phi i16 [ 169, %bb.bg ], [ 208, %bb.bf ]
   %i.cl = zext i8 %.sink145 to i16
-  %i.cm = add nsw i16 %.sink144, %i.cl
+  %i.cm = add nuw nsw i16 %.sink144, %i.cl
   %i.cn = shl i16 %i.ce, 4
   %i.co = add i16 %i.cm, %i.cn
   %.not39 = icmp eq ptr %3, null

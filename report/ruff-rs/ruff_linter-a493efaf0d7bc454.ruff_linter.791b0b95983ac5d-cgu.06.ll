@@ -204,9 +204,8 @@ _RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6pylint5rules28type_name_incorrect_v
   br i1 %.not1619.i.i, label %.thread51.i.i, label %.thread22.i.i
 
 .thread51.i.i:                                    ; preds = %.thread22.i.i, %.thread.i.i, %.thread27.i.i, %.thread27.i.i, %bb.qd, %.thread22.thread56.i.i, %.thread42.i.i, %.thread34.i.i
-  %.sroa.09.021.i.i = phi i8 [ 0, %.thread.i.i ], [ 2, %.thread27.i.i ], [ %.sroa.09.02025.i.i, %.thread22.i.i ], [ %i.bdz, %bb.qd ], [ 2, %.thread27.i.i ], [ 2, %.thread34.i.i ], [ 0, %.thread42.i.i ], [ %i.bdx, %.thread22.thread56.i.i ]
-  %2 = and i8 %.sroa.09.021.i.i, 1
-  %..i54.i = xor i8 %2, 3
+  %.sroa.09.021.i.i = phi i8 [ 0, %.thread.i.i ], [ %i.bdx, %.thread22.thread56.i.i ], [ %.sroa.09.02025.i.i, %.thread22.i.i ], [ %i.bdz, %bb.qd ], [ 0, %.thread27.i.i ], [ 0, %.thread34.i.i ], [ 0, %.thread42.i.i ], [ 0, %.thread27.i.i ]
+  %..i54.i = xor i8 %.sroa.09.021.i.i, 3
   br label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6pylint5rules28type_name_incorrect_variance8variance.exit.i
 
 .thread22.i.i:                                    ; preds = %.thread.i.i, %bb.qd

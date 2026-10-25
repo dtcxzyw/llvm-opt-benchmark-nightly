@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.fs, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i", label %.critedge.i
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i": ; preds = %bb.r, %bb.q
-  %.0.i.i.i.i20.i = phi i32 [ %i.fq, %bb.q ], [ -1, %bb.r ]
+  %.0.i.i.i.i20.i = phi i32 [ %i.fq, %bb.q ], [ -2147483648, %bb.r ]
   %i.ft = icmp slt i32 %.0.i.i.i.i20.i, 0
   br i1 %i.ft, label %bb.l, label %.critedge.i, !llvm.loop !3033
 
@@ -483,7 +483,7 @@ bb.ae:                                            ; preds = %_ZN3tev13AttributeN
   br i1 %i.kv, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i", label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.thread.i"
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i": ; preds = %bb.ae, %_ZN3tev13AttributeNodeaSEOS0_.exit.i68
-  %.0.i.i.i.i16.i = phi i32 [ %i.kt, %_ZN3tev13AttributeNodeaSEOS0_.exit.i68 ], [ -1, %bb.ae ]
+  %.0.i.i.i.i16.i = phi i32 [ %i.kt, %_ZN3tev13AttributeNodeaSEOS0_.exit.i68 ], [ -2147483648, %bb.ae ]
   %i.kw = icmp slt i32 %.0.i.i.i.i16.i, 0
   br i1 %i.kw, label %bb.z, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.thread.i", !llvm.loop !3035
 
@@ -693,13 +693,13 @@ bb.ao:                                            ; preds = %"_ZZN3tev9ImageData
   %i.oz = load i64, ptr %i.mh, align 8
   %i.pa = lshr i8 %i.ov, 1
   %i.pb = zext nneg i8 %i.pa to i64
-  %i.pc = select i1 %i.ow, i64 %i.oz, i64 %i.pb   ; 3 uses
+  %i.pc = select i1 %i.ow, i64 %i.oz, i64 %i.pb   ; 2 uses
   br label %bb.ap
 
-bb.ap:                                            ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i"
-  %.013.i = phi ptr [ %i.mi, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i" ], [ %.111.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i" ]
-  %.111.i = phi ptr [ %.010.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i" ], [ %.212.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i" ] ; 13 uses
-  %.1.i113 = phi i64 [ %.0.i112, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i" ], [ %.2.i114, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i" ] ; 2 uses
+bb.ap:                                            ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i"
+  %.013.i = phi ptr [ %i.mi, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i" ], [ %.111.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i" ]
+  %.111.i = phi ptr [ %.010.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i" ], [ %.212.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i" ] ; 13 uses
+  %.1.i113 = phi i64 [ %.0.i112, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit30.thread.i" ], [ %.2.i114, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i" ] ; 2 uses
   %i.pd = tail call noundef nonnull align 8 dereferenceable(96) ptr @_ZN3tev13AttributeNodeaSEOS0_(ptr noundef nonnull align 8 dereferenceable(96) %.013.i, ptr noundef nonnull align 8 dereferenceable(96) %.111.i) #44 ; 0 uses
   %i.pe = icmp slt i64 %i.ma, %.1.i113
   br i1 %i.pe, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.thread.i", label %bb.aq
@@ -765,26 +765,17 @@ bb.as:                                            ; preds = %bb.ar
   %i.qs = load i64, ptr %i.qr, align 8
   %i.qt = lshr i8 %i.ql, 1
   %i.qu = zext nneg i8 %i.qt to i64
-  %i.qv = select i1 %i.qm, i64 %i.qs, i64 %i.qu   ; 3 uses
+  %i.qv = select i1 %i.qm, i64 %i.qs, i64 %i.qu   ; 2 uses
   %.sroa.speculated.i.i.i.i34.i = tail call i64 @llvm.umin.i64(i64 %i.pc, i64 %i.qv)
   %i.qw = call noundef i32 @memcmp(ptr noundef %i.qq, ptr noundef %i.oy, i64 noundef %.sroa.speculated.i.i.i.i34.i) #44 ; 2 uses
   %i.qx = icmp eq i32 %i.qw, 0
-  br i1 %i.qx, label %10, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i"
+  %10 = icmp ult i64 %i.qv, %i.pc
+  %or.cond.i114 = select i1 %i.qx, i1 %10, i1 false
+  %11 = icmp slt i32 %i.qw, 0
+  %or.cond39.i = or i1 %11, %or.cond.i114
+  br i1 %or.cond39.i, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.thread.i", label %bb.ap, !llvm.loop !3037
 
-10:                                               ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i"
-  %11 = icmp eq i64 %i.qv, %i.pc
-  br i1 %11, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i", label %12
-
-12:                                               ; preds = %10
-  %13 = icmp ult i64 %i.qv, %i.pc
-  br i1 %13, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.thread.i", label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i"
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i": ; preds = %12, %10, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i"
-  %.0.i.i.i.i35.i = phi i32 [ %i.qw, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i" ], [ 1, %12 ], [ 0, %10 ]
-  %14 = icmp slt i32 %.0.i.i.i.i35.i, 0
-  br i1 %14, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.thread.i", label %bb.ap, !llvm.loop !3037
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.thread.i": ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.i", %12, %bb.ap
+"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit36.thread.i": ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit33.thread.i", %bb.ap
   %i.qy = load i8, ptr %.111.i, align 8
   %i.qz = trunc i8 %i.qy to i1
   br i1 %i.qz, label %bb.at, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSB8ne180100EOS5_.exit.i.i115
@@ -1187,7 +1178,7 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %i.abw, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i.i.i.i.i", label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.thread.i.i.i.i.i"
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i.i.i.i.i": ; preds = %bb.bx, %bb.bw
-  %.0.i.i.i.i13.i.i.i.i.i = phi i32 [ %i.abu, %bb.bw ], [ -1, %bb.bx ]
+  %.0.i.i.i.i13.i.i.i.i.i = phi i32 [ %i.abu, %bb.bw ], [ -2147483648, %bb.bx ]
   %i.abx = icmp slt i32 %.0.i.i.i.i13.i.i.i.i.i, 0
   br i1 %i.abx, label %bb.br, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.thread.i.i.i.i.i", !llvm.loop !3040
 
@@ -1352,7 +1343,7 @@ bb.ch:                                            ; preds = %bb.cg
   %i.aet = load i64, ptr %i.h, align 8
   %i.aeu = lshr i8 %i.aep, 1
   %i.aev = zext nneg i8 %i.aeu to i64
-  %i.aew = select i1 %i.aeq, i64 %i.aet, i64 %i.aev ; 15 uses
+  %i.aew = select i1 %i.aeq, i64 %i.aet, i64 %i.aev ; 12 uses
   %i.aex = load i8, ptr %i.y, align 8             ; 2 uses
   %i.aey = trunc i8 %i.aex to i1                  ; 2 uses
   %i.aez = load ptr, ptr %i.z, align 8
@@ -1380,9 +1371,9 @@ bb.ci:                                            ; preds = %"_ZZN3tev9ImageData
 .preheader34.i.preheader:                         ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.i75", %bb.ci
   br label %.preheader34.i.a
 
-.preheader34.i.a:                                 ; preds = %.preheader34.i.preheader, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i"
-  %.018.i = phi ptr [ %i.afj, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i" ], [ %.021, %.preheader34.i.preheader ] ; 4 uses
-  %i.afj = getelementptr inbounds nuw i8, ptr %.018.i, i64 96 ; 4 uses
+.preheader34.i.a:                                 ; preds = %.preheader34.i.preheader, %.preheader34.i.a
+  %.018.i = phi ptr [ %i.afj, %.preheader34.i.a ], [ %.021, %.preheader34.i.preheader ] ; 4 uses
+  %i.afj = getelementptr inbounds nuw i8, ptr %.018.i, i64 96 ; 3 uses
   %i.afk = load i8, ptr %i.afj, align 8           ; 2 uses
   %i.afl = trunc i8 %i.afk to i1                  ; 2 uses
   %i.afm = getelementptr inbounds nuw i8, ptr %.018.i, i64 112
@@ -1393,28 +1384,19 @@ bb.ci:                                            ; preds = %"_ZZN3tev9ImageData
   %i.afr = load i64, ptr %i.afq, align 8
   %i.afs = lshr i8 %i.afk, 1
   %i.aft = zext nneg i8 %i.afs to i64
-  %i.afu = select i1 %i.afl, i64 %i.afr, i64 %i.aft ; 3 uses
+  %i.afu = select i1 %i.afl, i64 %i.afr, i64 %i.aft ; 2 uses
   %.sroa.speculated.i.i.i.i10.i = tail call i64 @llvm.umin.i64(i64 %i.afu, i64 %i.aew)
   %i.afv = call noundef i32 @memcmp(ptr noundef %i.aes, ptr noundef %i.afp, i64 noundef %.sroa.speculated.i.i.i.i10.i) #44 ; 2 uses
   %i.afw = icmp eq i32 %i.afv, 0
-  br i1 %i.afw, label %15, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i"
+  %12 = icmp ult i64 %i.aew, %i.afu
+  %or.cond77.i = and i1 %i.afw, %12
+  %13 = icmp slt i32 %i.afv, 0
+  %or.cond78.i = or i1 %13, %or.cond77.i
+  br i1 %or.cond78.i, label %.critedge.i76, label %.preheader34.i.a, !llvm.loop !3042
 
-15:                                               ; preds = %.preheader34.i.a
-  %16 = icmp eq i64 %i.aew, %i.afu
-  br i1 %16, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i", label %17
-
-17:                                               ; preds = %15
-  %18 = icmp ult i64 %i.aew, %i.afu
-  br i1 %18, label %.critedge.i76, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i"
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i": ; preds = %17, %15, %.preheader34.i.a
-  %.0.i.i.i.i11.i = phi i32 [ %i.afv, %.preheader34.i.a ], [ 1, %17 ], [ 0, %15 ]
-  %19 = icmp slt i32 %.0.i.i.i.i11.i, 0
-  br i1 %19, label %.critedge.i76, label %.preheader34.i.a, !llvm.loop !3042
-
-.preheader35.i:                                   ; preds = %.preheader35.i.preheader.a, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i"
-  %.119.i = phi ptr [ %i.afx, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i" ], [ %.021, %.preheader35.i.preheader.a ] ; 4 uses
-  %i.afx = getelementptr inbounds nuw i8, ptr %.119.i, i64 96 ; 6 uses
+.preheader35.i:                                   ; preds = %.preheader35.i.preheader.a, %bb.cj
+  %.119.i = phi ptr [ %i.afx, %bb.cj ], [ %.021, %.preheader35.i.preheader.a ] ; 4 uses
+  %i.afx = getelementptr inbounds nuw i8, ptr %.119.i, i64 96 ; 5 uses
   %i.afy = icmp ult ptr %i.afx, %.024.ph
   br i1 %i.afy, label %bb.cj, label %.critedge.i76
 
@@ -1429,27 +1411,18 @@ bb.cj:                                            ; preds = %.preheader35.i
   %i.agg = load i64, ptr %i.agf, align 8
   %i.agh = lshr i8 %i.afz, 1
   %i.agi = zext nneg i8 %i.agh to i64
-  %i.agj = select i1 %i.aga, i64 %i.agg, i64 %i.agi ; 3 uses
+  %i.agj = select i1 %i.aga, i64 %i.agg, i64 %i.agi ; 2 uses
   %.sroa.speculated.i.i.i.i13.i = tail call i64 @llvm.umin.i64(i64 %i.agj, i64 %i.aew)
   %i.agk = call noundef i32 @memcmp(ptr noundef %i.aes, ptr noundef %i.age, i64 noundef %.sroa.speculated.i.i.i.i13.i) #44 ; 2 uses
   %i.agl = icmp eq i32 %i.agk, 0
-  br i1 %i.agl, label %20, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i"
+  %14 = icmp ult i64 %i.aew, %i.agj
+  %or.cond.i = and i1 %i.agl, %14
+  %15 = icmp slt i32 %i.agk, 0
+  %or.cond75.i = or i1 %15, %or.cond.i
+  br i1 %or.cond75.i, label %.critedge.i76, label %.preheader35.i, !llvm.loop !3043
 
-20:                                               ; preds = %bb.cj
-  %21 = icmp eq i64 %i.aew, %i.agj
-  br i1 %21, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i", label %22
-
-22:                                               ; preds = %20
-  %23 = icmp ult i64 %i.aew, %i.agj
-  br i1 %23, label %.critedge.i76, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i"
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i": ; preds = %22, %20, %bb.cj
-  %.0.i.i.i.i14.i = phi i32 [ %i.agk, %bb.cj ], [ 1, %22 ], [ 0, %20 ]
-  %24 = icmp slt i32 %.0.i.i.i.i14.i, 0
-  br i1 %24, label %.critedge.i76, label %.preheader35.i, !llvm.loop !3043
-
-.critedge.i76:                                    ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i", %22, %.preheader35.i, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i", %17
-  %.220.i = phi ptr [ %i.afj, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit12.i" ], [ %i.afj, %17 ], [ %i.afx, %.preheader35.i ], [ %i.afx, %22 ], [ %i.afx, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit15.i" ] ; 4 uses
+.critedge.i76:                                    ; preds = %bb.cj, %.preheader35.i, %.preheader34.i.a
+  %.220.i = phi ptr [ %i.afj, %.preheader34.i.a ], [ %i.afx, %.preheader35.i ], [ %i.afx, %bb.cj ] ; 4 uses
   %i.agm = icmp ult ptr %.220.i, %.024.ph
   br i1 %i.agm, label %.preheader33.i, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit18.thread.i"
 
@@ -1477,7 +1450,7 @@ bb.ck:                                            ; preds = %.preheader33.i
   br i1 %i.ahb, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit18.i", label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit18.thread.i"
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit18.i": ; preds = %bb.ck, %.preheader33.i
-  %.0.i.i.i.i17.i = phi i32 [ %i.agz, %.preheader33.i ], [ -1, %bb.ck ]
+  %.0.i.i.i.i17.i = phi i32 [ %i.agz, %.preheader33.i ], [ -2147483648, %bb.ck ]
   %i.ahc = icmp slt i32 %.0.i.i.i.i17.i, 0
   br i1 %i.ahc, label %.preheader33.i, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit18.thread.i", !llvm.loop !3044
 
@@ -1492,8 +1465,8 @@ bb.ck:                                            ; preds = %.preheader33.i
   tail call void @_ZNSt3__14swapB8ne180100IN3tev13AttributeNodeEEENS_9enable_ifIXaasr21is_move_constructibleIT_EE5valuesr18is_move_assignableIS4_EE5valueEvE4typeERS4_S7_(ptr noundef nonnull align 8 dereferenceable(96) %.32143.i, ptr noundef nonnull align 8 dereferenceable(96) %.244.i) #44
   br label %bb.cl
 
-bb.cl:                                            ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i85", %.lr.ph.i83
-  %.4.i = phi ptr [ %.32143.i, %.lr.ph.i83 ], [ %i.ahe, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i85" ] ; 4 uses
+bb.cl:                                            ; preds = %bb.cl, %.lr.ph.i83
+  %.4.i = phi ptr [ %.32143.i, %.lr.ph.i83 ], [ %i.ahe, %bb.cl ] ; 4 uses
   %i.ahe = getelementptr inbounds nuw i8, ptr %.4.i, i64 96 ; 5 uses
   %i.ahf = load i8, ptr %i.ahe, align 8           ; 2 uses
   %i.ahg = trunc i8 %i.ahf to i1                  ; 2 uses
@@ -1505,30 +1478,18 @@ bb.cl:                                            ; preds = %"_ZZN3tev9ImageData
   %i.ahm = load i64, ptr %i.ahl, align 8
   %i.ahn = lshr i8 %i.ahf, 1
   %i.aho = zext nneg i8 %i.ahn to i64
-  %i.ahp = select i1 %i.ahg, i64 %i.ahm, i64 %i.aho ; 3 uses
+  %i.ahp = select i1 %i.ahg, i64 %i.ahm, i64 %i.aho ; 2 uses
   %.sroa.speculated.i.i.i.i19.i84 = tail call i64 @llvm.umin.i64(i64 %i.ahp, i64 %i.aew)
   %i.ahq = call noundef i32 @memcmp(ptr noundef %i.aes, ptr noundef %i.ahk, i64 noundef %.sroa.speculated.i.i.i.i19.i84) #44 ; 2 uses
   %i.ahr = icmp eq i32 %i.ahq, 0
-  br i1 %i.ahr, label %25, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i85"
+  %16 = icmp ult i64 %i.aew, %i.ahp
+  %or.cond54 = and i1 %i.ahr, %16
+  %17 = icmp slt i32 %i.ahq, 0
+  %or.cond55 = or i1 %17, %or.cond54
+  br i1 %or.cond55, label %.preheader.i87, label %bb.cl, !llvm.loop !3045
 
-25:                                               ; preds = %bb.cl
-  %26 = icmp eq i64 %i.aew, %i.ahp
-  br i1 %26, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i85", label %27
-
-27:                                               ; preds = %25
-  %28 = icmp ult i64 %i.aew, %i.ahp
-  br i1 %28, label %.preheader.i87.preheader, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i85"
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i85": ; preds = %27, %25, %bb.cl
-  %.0.i.i.i.i20.i86 = phi i32 [ %i.ahq, %bb.cl ], [ 1, %27 ], [ 0, %25 ]
-  %29 = icmp slt i32 %.0.i.i.i.i20.i86, 0
-  br i1 %29, label %.preheader.i87.preheader, label %bb.cl, !llvm.loop !3045
-
-.preheader.i87.preheader:                         ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit21.i85", %27
-  br label %.preheader.i87
-
-.preheader.i87:                                   ; preds = %.preheader.i87.preheader, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.i"
-  %.3.i = phi ptr [ %i.ahs, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.i" ], [ %.244.i, %.preheader.i87.preheader ] ; 4 uses
+.preheader.i87:                                   ; preds = %bb.cl, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.i"
+  %.3.i = phi ptr [ %i.ahs, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.i" ], [ %.244.i, %bb.cl ] ; 4 uses
   %i.ahs = getelementptr inbounds i8, ptr %.3.i, i64 -96 ; 4 uses
   %i.aht = load i8, ptr %i.ahs, align 8           ; 2 uses
   %i.ahu = trunc i8 %i.aht to i1                  ; 2 uses
@@ -1551,7 +1512,7 @@ bb.cm:                                            ; preds = %.preheader.i87
   br i1 %i.aig, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.i", label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.thread.i"
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.i": ; preds = %bb.cm, %.preheader.i87
-  %.0.i.i.i.i23.i = phi i32 [ %i.aie, %.preheader.i87 ], [ -1, %bb.cm ]
+  %.0.i.i.i.i23.i = phi i32 [ %i.aie, %.preheader.i87 ], [ -2147483648, %bb.cm ]
   %i.aih = icmp slt i32 %.0.i.i.i.i23.i, 0
   br i1 %i.aih, label %.preheader.i87, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit24.thread.i", !llvm.loop !3046
 
@@ -1709,7 +1670,7 @@ bb.cv:                                            ; preds = %_ZNSt3__112basic_st
   %i.akr = load i64, ptr %i.t, align 8
   %i.aks = lshr i8 %i.akn, 1
   %i.akt = zext nneg i8 %i.aks to i64
-  %i.aku = select i1 %i.ako, i64 %i.akr, i64 %i.akt ; 13 uses
+  %i.aku = select i1 %i.ako, i64 %i.akr, i64 %i.akt ; 10 uses
   br label %bb.cw
 
 bb.cw:                                            ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.i91", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit73.thread33"
@@ -1736,7 +1697,7 @@ bb.cx:                                            ; preds = %bb.cw
   br i1 %i.alj, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.i91", label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93"
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.i91": ; preds = %bb.cx, %bb.cw
-  %.0.i.i.i.i.i92 = phi i32 [ %i.alh, %bb.cw ], [ -1, %bb.cx ]
+  %.0.i.i.i.i.i92 = phi i32 [ %i.alh, %bb.cw ], [ -2147483648, %bb.cx ]
   %i.alk = icmp slt i32 %.0.i.i.i.i.i92, 0
   br i1 %i.alk, label %bb.cw, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93", !llvm.loop !3048
 
@@ -1744,13 +1705,13 @@ bb.cx:                                            ; preds = %bb.cw
   %i.all = icmp eq ptr %.021, %.018.i89
   br i1 %i.all, label %.preheader29.i, label %.preheader30.i
 
-.preheader29.i:                                   ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i"
-  %.0.i110 = phi ptr [ %i.aln, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i" ], [ %.024.ph, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93" ] ; 6 uses
+.preheader29.i:                                   ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93", %bb.cy
+  %.0.i110 = phi ptr [ %i.aln, %bb.cy ], [ %.024.ph, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93" ] ; 6 uses
   %i.alm = icmp ult ptr %i.akv, %.0.i110
   br i1 %i.alm, label %bb.cy, label %.critedge.i98
 
 bb.cy:                                            ; preds = %.preheader29.i
-  %i.aln = getelementptr inbounds i8, ptr %.0.i110, i64 -96 ; 4 uses
+  %i.aln = getelementptr inbounds i8, ptr %.0.i110, i64 -96 ; 3 uses
   %i.alo = load i8, ptr %i.aln, align 8           ; 2 uses
   %i.alp = trunc i8 %i.alo to i1                  ; 2 uses
   %i.alq = getelementptr inbounds i8, ptr %.0.i110, i64 -80
@@ -1761,28 +1722,19 @@ bb.cy:                                            ; preds = %.preheader29.i
   %i.alv = load i64, ptr %i.alu, align 8
   %i.alw = lshr i8 %i.alo, 1
   %i.alx = zext nneg i8 %i.alw to i64
-  %i.aly = select i1 %i.alp, i64 %i.alv, i64 %i.alx ; 3 uses
+  %i.aly = select i1 %i.alp, i64 %i.alv, i64 %i.alx ; 2 uses
   %.sroa.speculated.i.i.i.i12.i = tail call i64 @llvm.umin.i64(i64 %i.aku, i64 %i.aly)
   %i.alz = call noundef i32 @memcmp(ptr noundef %i.alt, ptr noundef %i.akq, i64 noundef %.sroa.speculated.i.i.i.i12.i) #44 ; 2 uses
   %i.ama = icmp eq i32 %i.alz, 0
-  br i1 %i.ama, label %30, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i"
+  %18 = icmp ult i64 %i.aly, %i.aku
+  %or.cond69.i = and i1 %i.ama, %18
+  %19 = icmp slt i32 %i.alz, 0
+  %or.cond70.i = or i1 %19, %or.cond69.i
+  br i1 %or.cond70.i, label %.critedge.i98, label %.preheader29.i, !llvm.loop !3049
 
-30:                                               ; preds = %bb.cy
-  %31 = icmp eq i64 %i.aly, %i.aku
-  br i1 %31, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i", label %32
-
-32:                                               ; preds = %30
-  %33 = icmp ult i64 %i.aly, %i.aku
-  br i1 %33, label %.critedge.i98, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i"
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i": ; preds = %32, %30, %bb.cy
-  %.0.i.i.i.i13.i = phi i32 [ %i.alz, %bb.cy ], [ 1, %32 ], [ 0, %30 ]
-  %34 = icmp slt i32 %.0.i.i.i.i13.i, 0
-  br i1 %34, label %.critedge.i98, label %.preheader29.i, !llvm.loop !3049
-
-.preheader30.i:                                   ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93", %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96"
-  %.1.i94 = phi ptr [ %i.amb, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96" ], [ %.024.ph, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93" ] ; 4 uses
-  %i.amb = getelementptr inbounds i8, ptr %.1.i94, i64 -96 ; 4 uses
+.preheader30.i:                                   ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93", %.preheader30.i
+  %.1.i94 = phi ptr [ %i.amb, %.preheader30.i ], [ %.024.ph, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit.thread.i93" ] ; 4 uses
+  %i.amb = getelementptr inbounds i8, ptr %.1.i94, i64 -96 ; 3 uses
   %i.amc = load i8, ptr %i.amb, align 8           ; 2 uses
   %i.amd = trunc i8 %i.amc to i1                  ; 2 uses
   %i.ame = getelementptr inbounds i8, ptr %.1.i94, i64 -80
@@ -1793,27 +1745,18 @@ bb.cy:                                            ; preds = %.preheader29.i
   %i.amj = load i64, ptr %i.ami, align 8
   %i.amk = lshr i8 %i.amc, 1
   %i.aml = zext nneg i8 %i.amk to i64
-  %i.amm = select i1 %i.amd, i64 %i.amj, i64 %i.aml ; 3 uses
+  %i.amm = select i1 %i.amd, i64 %i.amj, i64 %i.aml ; 2 uses
   %.sroa.speculated.i.i.i.i15.i95 = tail call i64 @llvm.umin.i64(i64 %i.aku, i64 %i.amm)
   %i.amn = call noundef i32 @memcmp(ptr noundef %i.amh, ptr noundef %i.akq, i64 noundef %.sroa.speculated.i.i.i.i15.i95) #44 ; 2 uses
   %i.amo = icmp eq i32 %i.amn, 0
-  br i1 %i.amo, label %35, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96"
+  %20 = icmp ult i64 %i.amm, %i.aku
+  %or.cond72.i = and i1 %i.amo, %20
+  %21 = icmp slt i32 %i.amn, 0
+  %or.cond73.i = or i1 %21, %or.cond72.i
+  br i1 %or.cond73.i, label %.critedge.i98, label %.preheader30.i, !llvm.loop !3050
 
-35:                                               ; preds = %.preheader30.i
-  %36 = icmp eq i64 %i.amm, %i.aku
-  br i1 %36, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96", label %37
-
-37:                                               ; preds = %35
-  %38 = icmp ult i64 %i.amm, %i.aku
-  br i1 %38, label %.critedge.i98, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96"
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96": ; preds = %37, %35, %.preheader30.i
-  %.0.i.i.i.i16.i97 = phi i32 [ %i.amn, %.preheader30.i ], [ 1, %37 ], [ 0, %35 ]
-  %39 = icmp slt i32 %.0.i.i.i.i16.i97, 0
-  br i1 %39, label %.critedge.i98, label %.preheader30.i, !llvm.loop !3050
-
-.critedge.i98:                                    ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96", %37, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i", %32, %.preheader29.i
-  %.2.i = phi ptr [ %i.aln, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit14.i" ], [ %.0.i110, %.preheader29.i ], [ %i.aln, %32 ], [ %i.amb, %37 ], [ %i.amb, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit17.i96" ] ; 2 uses
+.critedge.i98:                                    ; preds = %.preheader30.i, %bb.cy, %.preheader29.i
+  %.2.i = phi ptr [ %.0.i110, %.preheader29.i ], [ %i.aln, %bb.cy ], [ %i.amb, %.preheader30.i ] ; 2 uses
   %.not = icmp ult ptr %i.akv, %.2.i              ; 2 uses
   br i1 %.not, label %.lr.ph.i99, label %._crit_edge.i103
 
@@ -1847,15 +1790,15 @@ bb.da:                                            ; preds = %bb.cz
   br i1 %i.and, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit20.i", label %.preheader.i101.preheader
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit20.i": ; preds = %bb.da, %bb.cz
-  %.0.i.i.i.i19.i = phi i32 [ %i.anb, %bb.cz ], [ -1, %bb.da ]
+  %.0.i.i.i.i19.i = phi i32 [ %i.anb, %bb.cz ], [ -2147483648, %bb.da ]
   %i.ane = icmp slt i32 %.0.i.i.i.i19.i, 0
   br i1 %i.ane, label %bb.cz, label %.preheader.i101.preheader, !llvm.loop !3051
 
 .preheader.i101.preheader:                        ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit20.i", %bb.da
   br label %.preheader.i101
 
-.preheader.i101:                                  ; preds = %.preheader.i101.preheader, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.i"
-  %.4.i102 = phi ptr [ %i.anf, %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.i" ], [ %.343.i, %.preheader.i101.preheader ] ; 4 uses
+.preheader.i101:                                  ; preds = %.preheader.i101.preheader, %.preheader.i101
+  %.4.i102 = phi ptr [ %i.anf, %.preheader.i101 ], [ %.343.i, %.preheader.i101.preheader ] ; 4 uses
   %i.anf = getelementptr inbounds i8, ptr %.4.i102, i64 -96 ; 4 uses
   %i.ang = load i8, ptr %i.anf, align 8           ; 2 uses
   %i.anh = trunc i8 %i.ang to i1                  ; 2 uses
@@ -1867,26 +1810,17 @@ bb.da:                                            ; preds = %bb.cz
   %i.ann = load i64, ptr %i.anm, align 8
   %i.ano = lshr i8 %i.ang, 1
   %i.anp = zext nneg i8 %i.ano to i64
-  %i.anq = select i1 %i.anh, i64 %i.ann, i64 %i.anp ; 3 uses
+  %i.anq = select i1 %i.anh, i64 %i.ann, i64 %i.anp ; 2 uses
   %.sroa.speculated.i.i.i.i21.i = tail call i64 @llvm.umin.i64(i64 %i.aku, i64 %i.anq)
   %i.anr = call noundef i32 @memcmp(ptr noundef %i.anl, ptr noundef %i.akq, i64 noundef %.sroa.speculated.i.i.i.i21.i) #44 ; 2 uses
   %i.ans = icmp eq i32 %i.anr, 0
-  br i1 %i.ans, label %40, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.i"
+  %22 = icmp ult i64 %i.anq, %i.aku
+  %or.cond.i101 = and i1 %i.ans, %22
+  %23 = icmp slt i32 %i.anr, 0
+  %or.cond67.i = or i1 %23, %or.cond.i101
+  br i1 %or.cond67.i, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.thread.i", label %.preheader.i101, !llvm.loop !3052
 
-40:                                               ; preds = %.preheader.i101
-  %41 = icmp eq i64 %i.anq, %i.aku
-  br i1 %41, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.i", label %42
-
-42:                                               ; preds = %40
-  %43 = icmp ult i64 %i.anq, %i.aku
-  br i1 %43, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.thread.i", label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.i"
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.i": ; preds = %42, %40, %.preheader.i101
-  %.0.i.i.i.i22.i = phi i32 [ %i.anr, %.preheader.i101 ], [ 1, %42 ], [ 0, %40 ]
-  %44 = icmp slt i32 %.0.i.i.i.i22.i, 0
-  br i1 %44, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.thread.i", label %.preheader.i101, !llvm.loop !3052
-
-"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.thread.i": ; preds = %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.i", %42
+"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit23.thread.i": ; preds = %.preheader.i101
   %i.ant = icmp ult ptr %i.amp, %i.anf
   br i1 %i.ant, label %.lr.ph.i99, label %._crit_edge.i103, !llvm.loop !3053
 
@@ -2289,7 +2223,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.de, label %"_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit35", label %.critedge
 
 "_ZZN3tev9ImageData11ensureValidENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEiENK3$_0clERKNS_13AttributeNodeES9_.exit35": ; preds = %bb.l, %bb.k
-  %.0.i.i.i.i34 = phi i32 [ %i.dc, %bb.k ], [ -1, %bb.l ]
+  %.0.i.i.i.i34 = phi i32 [ %i.dc, %bb.k ], [ -2147483648, %bb.l ]
   %i.df = icmp slt i32 %.0.i.i.i.i34, 0
   br i1 %i.df, label %bb.j, label %.critedge, !llvm.loop !3056
 

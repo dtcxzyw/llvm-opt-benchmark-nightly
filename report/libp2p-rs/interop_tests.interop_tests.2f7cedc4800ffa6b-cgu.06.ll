@@ -205,17 +205,27 @@ bb.k:                                             ; preds = %bb.j
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1352 ; 3 uses
   %i.an = load i8, ptr %i.am, align 8, !range !46, !alias.scope !10720, !noundef !10 ; 2 uses
   %switch.not.i.i = icmp samesign ult i8 %i.an, 2
-  br i1 %switch.not.i.i, label %.sink.split.i.i, label %_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
+  br i1 %switch.not.i.i, label %2, label %_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
-.sink.split.i.i:                                  ; preds = %bb.k
+2:                                                ; preds = %bb.k
   call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(1352) %i.ak), !noalias !10721
-  %2 = load i8, ptr %i.am, align 8, !range !46, !alias.scope !10720, !noundef !10
-  %3 = or i8 %2, 2                                ; 2 uses
-  store i8 %3, ptr %i.am, align 8, !alias.scope !10720
+  %3 = load i8, ptr %i.am, align 8, !range !46, !alias.scope !10720, !noundef !10
+  switch i8 %3, label %.sink.split.i.i [
+    i8 1, label %4
+    i8 3, label %4
+  ]
+
+.sink.split.i.i:                                  ; preds = %4, %2
+  %.sink.i.i = phi i8 [ 3, %4 ], [ 2, %2 ]
+  %.ph.i.i = phi i8 [ 1, %4 ], [ 0, %2 ]
+  store i8 %.sink.i.i, ptr %i.am, align 8, !alias.scope !10720
   br label %_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
+4:                                                ; preds = %2, %2
+  br label %.sink.split.i.i
+
 _RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i: ; preds = %.sink.split.i.i, %bb.k
-  %i.ao = phi i8 [ %i.an, %bb.k ], [ %3, %.sink.split.i.i ]
+  %i.ao = phi i8 [ %i.an, %bb.k ], [ %.ph.i.i, %.sink.split.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10722
   %i.ap = and i8 %i.ao, 1
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 1176
@@ -234,17 +244,27 @@ bb.l:                                             ; preds = %bb.j
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 1248 ; 3 uses
   %i.au = load i8, ptr %i.at, align 8, !range !46, !alias.scope !10724, !noundef !10 ; 2 uses
   %switch.not.i2.i = icmp samesign ult i8 %i.au, 2
-  br i1 %switch.not.i2.i, label %.sink.split.i5.i, label %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
+  br i1 %switch.not.i2.i, label %5, label %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
-.sink.split.i5.i:                                 ; preds = %bb.l
+5:                                                ; preds = %bb.l
   call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(1240) %i.as), !noalias !10725
-  %4 = load i8, ptr %i.at, align 8, !range !46, !alias.scope !10724, !noundef !10
-  %5 = or i8 %4, 2                                ; 2 uses
-  store i8 %5, ptr %i.at, align 8, !alias.scope !10724
+  %6 = load i8, ptr %i.at, align 8, !range !46, !alias.scope !10724, !noundef !10
+  switch i8 %6, label %.sink.split.i5.i [
+    i8 1, label %7
+    i8 3, label %7
+  ]
+
+.sink.split.i5.i:                                 ; preds = %7, %5
+  %.sink.i6.i = phi i8 [ 3, %7 ], [ 2, %5 ]
+  %.ph.i7.i = phi i8 [ 1, %7 ], [ 0, %5 ]
+  store i8 %.sink.i6.i, ptr %i.at, align 8, !alias.scope !10724
   br label %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
+7:                                                ; preds = %5, %5
+  br label %.sink.split.i5.i
+
 _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i: ; preds = %.sink.split.i5.i, %bb.l
-  %i.av = phi i8 [ %i.au, %bb.l ], [ %5, %.sink.split.i5.i ]
+  %i.av = phi i8 [ %i.au, %bb.l ], [ %.ph.i7.i, %.sink.split.i5.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10726
   %i.aw = and i8 %i.av, 1
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1072
@@ -647,17 +667,27 @@ bb.k:                                             ; preds = %bb.j
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1320 ; 3 uses
   %i.an = load i8, ptr %i.am, align 8, !range !46, !alias.scope !10795, !noundef !10 ; 2 uses
   %switch.not.i.i = icmp samesign ult i8 %i.an, 2
-  br i1 %switch.not.i.i, label %.sink.split.i.i, label %_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
+  br i1 %switch.not.i.i, label %2, label %_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
-.sink.split.i.i:                                  ; preds = %bb.k
+2:                                                ; preds = %bb.k
   call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(1320) %i.ak), !noalias !10796
-  %2 = load i8, ptr %i.am, align 8, !range !46, !alias.scope !10795, !noundef !10
-  %3 = or i8 %2, 2                                ; 2 uses
-  store i8 %3, ptr %i.am, align 8, !alias.scope !10795
+  %3 = load i8, ptr %i.am, align 8, !range !46, !alias.scope !10795, !noundef !10
+  switch i8 %3, label %.sink.split.i.i [
+    i8 1, label %4
+    i8 3, label %4
+  ]
+
+.sink.split.i.i:                                  ; preds = %4, %2
+  %.sink.i.i = phi i8 [ 3, %4 ], [ 2, %2 ]
+  %.ph.i.i = phi i8 [ 1, %4 ], [ 0, %2 ]
+  store i8 %.sink.i.i, ptr %i.am, align 8, !alias.scope !10795
   br label %_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
+4:                                                ; preds = %2, %2
+  br label %.sink.split.i.i
+
 _RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6serverINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i: ; preds = %.sink.split.i.i, %bb.k
-  %i.ao = phi i8 [ %i.an, %bb.k ], [ %3, %.sink.split.i.i ]
+  %i.ao = phi i8 [ %i.an, %bb.k ], [ %.ph.i.i, %.sink.split.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10797
   %i.ap = and i8 %i.ao, 1
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 1176
@@ -676,17 +706,27 @@ bb.l:                                             ; preds = %bb.j
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 1216 ; 3 uses
   %i.au = load i8, ptr %i.at, align 8, !range !46, !alias.scope !10799, !noundef !10 ; 2 uses
   %switch.not.i2.i = icmp samesign ult i8 %i.au, 2
-  br i1 %switch.not.i2.i, label %.sink.split.i5.i, label %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
+  br i1 %switch.not.i2.i, label %5, label %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
-.sink.split.i5.i:                                 ; preds = %bb.l
+5:                                                ; preds = %bb.l
   call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(1208) %i.as), !noalias !10800
-  %4 = load i8, ptr %i.at, align 8, !range !46, !alias.scope !10799, !noundef !10
-  %5 = or i8 %4, 2                                ; 2 uses
-  store i8 %5, ptr %i.at, align 8, !alias.scope !10799
+  %6 = load i8, ptr %i.at, align 8, !range !46, !alias.scope !10799, !noundef !10
+  switch i8 %6, label %.sink.split.i5.i [
+    i8 1, label %7
+    i8 3, label %7
+  ]
+
+.sink.split.i5.i:                                 ; preds = %7, %5
+  %.sink.i6.i = phi i8 [ 3, %7 ], [ 2, %5 ]
+  %.ph.i7.i = phi i8 [ 1, %7 ], [ 0, %5 ]
+  store i8 %.sink.i6.i, ptr %i.at, align 8, !alias.scope !10799
   br label %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i
 
+7:                                                ; preds = %5, %5
+  br label %.sink.split.i5.i
+
 _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6clientINtB5_9TlsStreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests.exit.i: ; preds = %.sink.split.i5.i, %bb.l
-  %i.av = phi i8 [ %i.au, %bb.l ], [ %5, %.sink.split.i5.i ]
+  %i.av = phi i8 [ %i.au, %bb.l ], [ %.ph.i7.i, %.sink.split.i5.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10801
   %i.aw = and i8 %i.av, 1
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1072
@@ -1089,17 +1129,24 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1344 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !range !46, !noundef !10 ; 2 uses
   %switch.not = icmp samesign ult i8 %i.c, 2
-  br i1 %switch.not, label %.sink.split, label %bb.b
+  br i1 %switch.not, label %2, label %bb.b
 
-.sink.split:                                      ; preds = %bb.a
+2:                                                ; preds = %bb.a
   tail call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %0)
-  %2 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
-  %3 = or i8 %2, 2                                ; 2 uses
-  store i8 %3, ptr %i.b, align 8
+  %3 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
+  switch i8 %3, label %.sink.split [
+    i8 1, label %4
+    i8 3, label %4
+  ]
+
+.sink.split:                                      ; preds = %2, %4
+  %.sink = phi i8 [ 3, %4 ], [ 2, %2 ]
+  %.ph = phi i8 [ 1, %4 ], [ 0, %2 ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a
-  %i.d = phi i8 [ %i.c, %bb.a ], [ %3, %.sink.split ]
+  %i.d = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = and i8 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1168
@@ -1111,6 +1158,9 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
   %i.g = call { i64, ptr } @_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_6StreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEENtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection16ServerConnectionENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.g
+
+4:                                                ; preds = %2, %2
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1158,17 +1208,24 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1312 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !range !46, !noundef !10 ; 2 uses
   %switch.not = icmp samesign ult i8 %i.c, 2
-  br i1 %switch.not, label %.sink.split, label %bb.b
+  br i1 %switch.not, label %2, label %bb.b
 
-.sink.split:                                      ; preds = %bb.a
+2:                                                ; preds = %bb.a
   tail call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %0)
-  %2 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
-  %3 = or i8 %2, 2                                ; 2 uses
-  store i8 %3, ptr %i.b, align 8
+  %3 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
+  switch i8 %3, label %.sink.split [
+    i8 1, label %4
+    i8 3, label %4
+  ]
+
+.sink.split:                                      ; preds = %2, %4
+  %.sink = phi i8 [ 3, %4 ], [ 2, %2 ]
+  %.ph = phi i8 [ 1, %4 ], [ 0, %2 ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a
-  %i.d = phi i8 [ %i.c, %bb.a ], [ %3, %.sink.split ]
+  %i.d = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = and i8 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1168
@@ -1180,6 +1237,9 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
   %i.g = call { i64, ptr } @_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_6StreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection16ServerConnectionENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.g
+
+4:                                                ; preds = %2, %2
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1233,12 +1293,19 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %i.d)
   %i.e = load i8, ptr %i.b, align 8, !range !46, !noundef !10
-  %2 = or i8 %i.e, 2                              ; 2 uses
-  store i8 %2, ptr %i.b, align 8
+  switch i8 %i.e, label %.sink.split [
+    i8 1, label %2
+    i8 3, label %2
+  ]
+
+.sink.split:                                      ; preds = %.sink.split.a, %2
+  %.sink = phi i8 [ 3, %2 ], [ 2, %.sink.split.a ]
+  %.ph = phi i8 [ 1, %2 ], [ 0, %.sink.split.a ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %.sink.split.a, %bb.a
-  %i.f = phi i8 [ %i.c, %bb.a ], [ %2, %.sink.split.a ]
+bb.b:                                             ; preds = %.sink.split, %bb.a
+  %i.f = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.g = and i8 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -1250,6 +1317,9 @@ bb.b:                                             ; preds = %.sink.split.a, %bb.
   %i.i = call { i64, ptr } @_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_6StreamNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamNtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection16ServerConnectionENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.i
+
+2:                                                ; preds = %.sink.split.a, %.sink.split.a
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1652,17 +1722,24 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1232 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !range !46, !noundef !10 ; 2 uses
   %switch.not = icmp samesign ult i8 %i.c, 2
-  br i1 %switch.not, label %.sink.split, label %bb.b
+  br i1 %switch.not, label %2, label %bb.b
 
-.sink.split:                                      ; preds = %bb.a
+2:                                                ; preds = %bb.a
   tail call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %0)
-  %2 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
-  %3 = or i8 %2, 2                                ; 2 uses
-  store i8 %3, ptr %i.b, align 8
+  %3 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
+  switch i8 %3, label %.sink.split [
+    i8 1, label %4
+    i8 3, label %4
+  ]
+
+.sink.split:                                      ; preds = %2, %4
+  %.sink = phi i8 [ 3, %4 ], [ 2, %2 ]
+  %.ph = phi i8 [ 1, %4 ], [ 0, %2 ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a
-  %i.d = phi i8 [ %i.c, %bb.a ], [ %3, %.sink.split ]
+  %i.d = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = and i8 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1056
@@ -1674,6 +1751,9 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
   %i.g = call { i64, ptr } @_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_6StreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEENtNtNtNtCshPShd8ZVvJf_6rustls6client11client_conn10connection16ClientConnectionENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.g
+
+4:                                                ; preds = %2, %2
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1721,17 +1801,24 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1200 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !range !46, !noundef !10 ; 2 uses
   %switch.not = icmp samesign ult i8 %i.c, 2
-  br i1 %switch.not, label %.sink.split, label %bb.b
+  br i1 %switch.not, label %2, label %bb.b
 
-.sink.split:                                      ; preds = %bb.a
+2:                                                ; preds = %bb.a
   tail call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %0)
-  %2 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
-  %3 = or i8 %2, 2                                ; 2 uses
-  store i8 %3, ptr %i.b, align 8
+  %3 = load i8, ptr %i.b, align 8, !range !46, !noundef !10
+  switch i8 %3, label %.sink.split [
+    i8 1, label %4
+    i8 3, label %4
+  ]
+
+.sink.split:                                      ; preds = %2, %4
+  %.sink = phi i8 [ 3, %4 ], [ 2, %2 ]
+  %.ph = phi i8 [ 1, %4 ], [ 0, %2 ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a
-  %i.d = phi i8 [ %i.c, %bb.a ], [ %3, %.sink.split ]
+  %i.d = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = and i8 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1056
@@ -1743,6 +1830,9 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
   %i.g = call { i64, ptr } @_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_6StreamINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtNtCshPShd8ZVvJf_6rustls6client11client_conn10connection16ClientConnectionENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.g
+
+4:                                                ; preds = %2, %2
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1796,12 +1886,19 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @_RNvMNtCshPShd8ZVvJf_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %i.d)
   %i.e = load i8, ptr %i.b, align 8, !range !46, !noundef !10
-  %2 = or i8 %i.e, 2                              ; 2 uses
-  store i8 %2, ptr %i.b, align 8
+  switch i8 %i.e, label %.sink.split [
+    i8 1, label %2
+    i8 3, label %2
+  ]
+
+.sink.split:                                      ; preds = %.sink.split.a, %2
+  %.sink = phi i8 [ 3, %2 ], [ 2, %.sink.split.a ]
+  %.ph = phi i8 [ 1, %2 ], [ 0, %.sink.split.a ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %.sink.split.a, %bb.a
-  %i.f = phi i8 [ %i.c, %bb.a ], [ %2, %.sink.split.a ]
+bb.b:                                             ; preds = %.sink.split, %bb.a
+  %i.f = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.g = and i8 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -1813,6 +1910,9 @@ bb.b:                                             ; preds = %.sink.split.a, %bb.
   %i.i = call { i64, ptr } @_RNvXs1_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_6StreamNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamNtNtNtNtCshPShd8ZVvJf_6rustls6client11client_conn10connection16ClientConnectionENtNtCs5vIp9T9TAX9_10futures_io6if_std10AsyncWrite10poll_closeCs44McOc0n4RX_13interop_tests(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.i
+
+2:                                                ; preds = %.sink.split.a, %.sink.split.a
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

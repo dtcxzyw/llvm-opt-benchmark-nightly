@@ -205,8 +205,8 @@ bb.z:                                             ; preds = %bb.y
   br i1 %or.cond8.i37, label %bb.aa, label %_ZL12is_hex_digitcRj.exit41
 
 bb.aa:                                            ; preds = %bb.x, %bb.y, %bb.z
-  %.sink21.i40 = phi i32 [ -55, %bb.y ], [ -48, %bb.x ], [ -87, %bb.z ]
-  %i.by = add nsw i32 %.sink21.i40, %i.bu
+  %.sink21.i40 = phi i32 [ 1048521, %bb.y ], [ 1048528, %bb.x ], [ 1048489, %bb.z ]
+  %i.by = add nuw nsw i32 %.sink21.i40, %i.bu
   %i.bz = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !13  ; 4 uses
   %i.cb = zext nneg i8 %i.ca to i32
@@ -225,8 +225,8 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %or.cond8.i44, label %bb.ad, label %_ZL12is_hex_digitcRj.exit41
 
 bb.ad:                                            ; preds = %bb.aa, %bb.ab, %bb.ac
-  %.sink21.i47 = phi i32 [ -55, %bb.ab ], [ -48, %bb.aa ], [ -87, %bb.ac ]
-  %i.cf = add nsw i32 %.sink21.i47, %i.cb
+  %.sink21.i47 = phi i32 [ 16777161, %bb.ab ], [ 16777168, %bb.aa ], [ 16777129, %bb.ac ]
+  %i.cf = add nuw nsw i32 %.sink21.i47, %i.cb
   %i.cg = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !13  ; 4 uses
   %i.ci = zext nneg i8 %i.ch to i32
@@ -245,7 +245,7 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %or.cond8.i51, label %bb.ag, label %_ZL12is_hex_digitcRj.exit41
 
 bb.ag:                                            ; preds = %bb.ad, %bb.ae, %bb.af
-  %.sink21.i54 = phi i32 [ -55, %bb.ae ], [ -48, %bb.ad ], [ -87, %bb.af ]
+  %.sink21.i54 = phi i32 [ 268435401, %bb.ae ], [ 268435408, %bb.ad ], [ 268435369, %bb.af ]
   %i.cm = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !13  ; 4 uses
   %i.co = zext nneg i8 %i.cn to i32
@@ -265,14 +265,14 @@ bb.ai:                                            ; preds = %bb.ah
 
 switch.lookup100:                                 ; preds = %bb.ag, %bb.ah, %bb.ai
   %.sink21.i61 = phi i32 [ -55, %bb.ah ], [ -48, %bb.ag ], [ -87, %bb.ai ]
-  %i.cs = shl nsw i32 %i.by, 8
-  %i.ct = shl nsw i32 %i.cf, 4
-  %i.cu = add nsw i32 %i.ct, %i.cs
-  %i.cv = add nsw i32 %i.cu, %i.ci
-  %i.cw = add nsw i32 %i.cv, %.sink21.i54
-  %i.cx = shl nsw i32 %i.cw, 4
-  %i.cy = add nsw i32 %i.cx, %i.co
-  %i.cz = add nsw i32 %i.cy, %.sink21.i61         ; 2 uses
+  %i.cs = shl nuw nsw i32 %i.by, 8
+  %i.ct = shl nuw nsw i32 %i.cf, 4
+  %i.cu = add nuw nsw i32 %i.ct, %i.cs
+  %i.cv = add nuw nsw i32 %i.cu, %i.ci
+  %i.cw = add nuw nsw i32 %i.cv, %.sink21.i54
+  %i.cx = shl i32 %i.cw, 4
+  %i.cy = add i32 %i.cx, %i.co
+  %i.cz = add i32 %i.cy, %.sink21.i61             ; 2 uses
   store i32 %i.cz, ptr %2, align 4, !tbaa !14
   %i.da = tail call noundef i32 @_ZN7zstring12get_encodingEv()
   %i.db = zext nneg i32 %i.da to i64

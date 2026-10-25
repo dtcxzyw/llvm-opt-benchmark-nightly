@@ -204,12 +204,19 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @_RNvMNtCs62AB4KIMLyv_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias noundef nonnull align 8 dereferenceable(824) %i.d)
   %i.e = load i8, ptr %i.b, align 8, !range !64, !noundef !6
-  %2 = or i8 %i.e, 2                              ; 2 uses
-  store i8 %2, ptr %i.b, align 8
+  switch i8 %i.e, label %.sink.split [
+    i8 1, label %2
+    i8 3, label %2
+  ]
+
+.sink.split:                                      ; preds = %.sink.split.a, %2
+  %.sink = phi i8 [ 3, %2 ], [ 2, %.sink.split.a ]
+  %.ph = phi i8 [ 1, %2 ], [ 0, %.sink.split.a ]
+  store i8 %.sink, ptr %i.b, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %.sink.split.a, %bb.a
-  %i.f = phi i8 [ %i.c, %bb.a ], [ %2, %.sink.split.a ]
+bb.b:                                             ; preds = %.sink.split, %bb.a
+  %i.f = phi i8 [ %i.c, %bb.a ], [ %.ph, %.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.g = and i8 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -221,6 +228,9 @@ bb.b:                                             ; preds = %.sink.split.a, %bb.
   %i.i = call { i64, ptr } @_RNvXs1_NtCs8rTCm43AEA0_12tokio_rustls6commonINtB5_6StreamNtNtNtNtCseCDlJsl44RV_5tokio3net3tcp6stream9TcpStreamNtNtNtCs62AB4KIMLyv_6rustls6server11server_conn16ServerConnectionENtNtNtB11_2io11async_write10AsyncWrite13poll_shutdownCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i64, ptr } %i.i
+
+2:                                                ; preds = %.sink.split.a, %.sink.split.a
+  br label %.sink.split
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

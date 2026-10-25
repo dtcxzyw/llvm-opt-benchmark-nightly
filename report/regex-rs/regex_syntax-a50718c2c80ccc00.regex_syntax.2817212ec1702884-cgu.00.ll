@@ -204,7 +204,7 @@ _RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread44: ; preds = %bb
 _RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread: ; preds = %bb.k, %bb.i, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit
     #dbg_value(ptr %i.l, !13833, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13847)
     #dbg_value(i64 %i.n, !13833, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13847)
-  %i.ag = sub nuw i64 %.sroa.04.0.copyload, %.sroa.0.0.copyload, !dbg !13917 ; 2 uses
+  %i.ag = sub nuw i64 %.sroa.04.0.copyload, %.sroa.0.0.copyload, !dbg !13917 ; 3 uses
     #dbg_value(i64 %i.ag, !13834, !DIExpression(), !13848)
     #dbg_value(ptr %i.l, !13840, !DIExpression(), !13843)
   %i.ah = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sroa.0.0.copyload, !dbg !13918 ; 3 uses
@@ -607,7 +607,7 @@ _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.da, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultmNtNtNtB4_3num5error13ParseIntErrorE6expectCs3roNzt6HBWW_12regex_syntax.exit, !dbg !13945, !prof !13864
 
 _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.r, %.lr.ph.split.us.i, %.lr.ph.split.us.i.1, %.lr.ph.split.us.i.2, %.lr.ph.split.us.i.3, %.lr.ph.split.us.i.4, %.lr.ph.split.us.i.5, %.lr.ph.split.us.i.6, %.lr.ph.split.us.i.7, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread, %bb.p, %bb.p, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i47 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %.lr.ph.split.us.i ], [ 257, %bb.p ], [ 257, %bb.p ], [ 1, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread ], [ 257, %.lr.ph.split.us.i.7 ], [ 257, %.lr.ph.split.us.i.6 ], [ 257, %.lr.ph.split.us.i.5 ], [ 257, %.lr.ph.split.us.i.4 ], [ 257, %.lr.ph.split.us.i.3 ], [ 257, %.lr.ph.split.us.i.2 ], [ 257, %.lr.ph.split.us.i.1 ], [ 257, %bb.r ]
+  %.sroa.8.0.insert.insert.i47 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 256, %.lr.ph.split.us.i ], [ 256, %bb.p ], [ 256, %bb.p ], [ %i.ag, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread ], [ 256, %.lr.ph.split.us.i.7 ], [ 256, %.lr.ph.split.us.i.6 ], [ 256, %.lr.ph.split.us.i.5 ], [ 256, %.lr.ph.split.us.i.4 ], [ 256, %.lr.ph.split.us.i.3 ], [ 256, %.lr.ph.split.us.i.2 ], [ 256, %.lr.ph.split.us.i.1 ], [ 256, %bb.r ]
   %.sroa.4.0.extract.shift.i = lshr i64 %.sroa.8.0.insert.insert.i47, 8
     #dbg_value(i64 %.sroa.4.0.extract.shift.i, !13854, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 8, 8), !13735)
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8

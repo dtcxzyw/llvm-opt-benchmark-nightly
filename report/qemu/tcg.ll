@@ -205,8 +205,7 @@ bb.p:                                             ; preds = %bb.h, %bb.c, %bb.m,
 bb.q:                                             ; preds = %.thread, %bb.p
   %.068 = phi i32 [ %i.g, %.thread ], [ %i.b, %bb.p ]
   %.167 = phi i32 [ %i.a, %.thread ], [ %.1, %bb.p ]
-  %.05566 = phi i64 [ -128, %.thread ], [ %3, %bb.p ]
-  %i.cw = trunc nsw i64 %.05566 to i8
+  %i.cw = trunc i64 %3 to i8
   %i.cx = add nuw nsw i32 %.167, 131
   tail call fastcc void @tcg_out_modrm(ptr noundef %0, i32 noundef %i.cx, i32 noundef %.068, i32 noundef %2)
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses

@@ -202,9 +202,9 @@ bb.p:                                             ; preds = %bb.o
   br label %Abc_Clock.exit64
 
 Abc_Clock.exit64:                                 ; preds = %bb.o, %bb.p
-  %.0.i63 = phi i64 [ %i.cj, %bb.p ], [ -1, %bb.o ]
+  %.0.i63 = phi i64 [ %i.cj, %bb.p ], [ 4294967295, %bb.o ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
-  %i.ck = sub nsw i64 %.0.i63, %.0.i
+  %i.ck = sub i64 %.0.i63, %.0.i
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.cm = load i32, ptr %i.cl, align 8, !tbaa !72
   %i.cn = trunc i64 %i.ck to i32
@@ -244,9 +244,9 @@ bb.r:                                             ; preds = %bb.q
   br label %Abc_Clock.exit66
 
 Abc_Clock.exit66:                                 ; preds = %bb.q, %bb.r
-  %.0.i65 = phi i64 [ %i.dj, %bb.r ], [ -1, %bb.q ]
+  %.0.i65 = phi i64 [ %i.dj, %bb.r ], [ 4294967295, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  %i.dk = sub nsw i64 %.0.i65, %.0.i
+  %i.dk = sub i64 %.0.i65, %.0.i
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !75
   %i.dn = trunc i64 %i.dk to i32
@@ -281,9 +281,9 @@ bb.t:                                             ; preds = %bb.s
   br label %Abc_Clock.exit68
 
 Abc_Clock.exit68:                                 ; preds = %bb.s, %bb.t
-  %.0.i67 = phi i64 [ %i.ef, %bb.t ], [ -1, %bb.s ]
+  %.0.i67 = phi i64 [ %i.ef, %bb.t ], [ 4294967295, %bb.s ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
-  %i.eg = sub nsw i64 %.0.i67, %.0.i
+  %i.eg = sub i64 %.0.i67, %.0.i
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.ei = load i32, ptr %i.eh, align 8, !tbaa !78
   %i.ej = trunc i64 %i.eg to i32
@@ -551,7 +551,7 @@ bb.r:                                             ; preds = %.critedge
   br label %Abc_Clock.exit74
 
 Abc_Clock.exit74:                                 ; preds = %.critedge, %bb.r
-  %.0.i73 = phi i64 [ %i.cz, %bb.r ], [ -1, %.critedge ]
+  %.0.i73 = phi i64 [ %i.cz, %bb.r ], [ 4294967295, %.critedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   %i.da = add i64 %.0.i73, %.0.i.neg
   %i.db = trunc i64 %i.da to i32

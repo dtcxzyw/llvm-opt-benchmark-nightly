@@ -205,27 +205,31 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %i.le = phi i64 [ 9, %.lr.ph.preheader.new ], [ %i.lo, %.lr.ph ] ; 3 uses
+  %1 = phi i64 [ 9, %.lr.ph.preheader.new ], [ %i.lo, %.lr.ph ] ; 3 uses
+  %i.le = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.lj, %.lr.ph ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ] ; 2 uses
-  %i.lf = lshr i64 %i.le, 1
+  %2 = and i64 %i.le, 1
+  %.not233.not = icmp eq i64 %2, 0
+  %i.lf = lshr i64 %1, 1
   %i.lg = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.lf ; 2 uses
   %i.lh = load i64, ptr %i.lg, align 8, !tbaa !16
-  %i.li = and i64 %i.lh, 4294967295
+  %. = select i1 %.not233.not, i64 4294967295, i64 -4294967296
+  %i.li = and i64 %i.lh, %.
   store i64 %i.li, ptr %i.lg, align 8, !tbaa !16
-  %i.lj = add nuw nsw i64 %i.le, 1                ; 2 uses
+  %i.lj = add nuw nsw i64 %1, 1                   ; 3 uses
   %i.lk = lshr i64 %i.lj, 1
   %i.ll = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.lk ; 2 uses
   %i.lm = load i64, ptr %i.ll, align 8, !tbaa !16
   %i.ln = and i64 %i.lm, -4294967296
   store i64 %i.ln, ptr %i.ll, align 8, !tbaa !16
-  %i.lo = add nuw nsw i64 %i.le, 2                ; 2 uses
+  %i.lo = add nuw nsw i64 %1, 2                   ; 2 uses
   %niter.next.1 = add i64 %niter, 2
   %niter.ncmp.1 = icmp eq i64 %niter, %i.ld
   br i1 %niter.ncmp.1, label %.lr.ph.epil, label %.lr.ph, !llvm.loop !29
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.preheader, %.lr.ph
-  %.epil.init = phi i64 [ 9, %.lr.ph.preheader ], [ %i.lo, %.lr.ph ]
-  %.0460.epil.init = phi i64 [ 8, %.lr.ph.preheader ], [ %i.lj, %.lr.ph ]
+  %.epil.init = phi i64 [ 8, %.lr.ph.preheader ], [ %i.lo, %.lr.ph ]
+  %.0460.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.lj, %.lr.ph ]
   %i.lp = and i64 %.0460.epil.init, 1
   %.not233.not.epil = icmp eq i64 %i.lp, 0
   %i.lq = lshr i64 %.epil.init, 1
@@ -628,27 +632,31 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %i.pf = phi i64 [ 13, %.lr.ph.preheader.new ], [ %i.pp, %.lr.ph ] ; 3 uses
+  %1 = phi i64 [ 13, %.lr.ph.preheader.new ], [ %i.pp, %.lr.ph ] ; 3 uses
+  %i.pf = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.pk, %.lr.ph ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ] ; 2 uses
-  %i.pg = lshr i64 %i.pf, 1
+  %2 = and i64 %i.pf, 1
+  %.not324.not = icmp eq i64 %2, 0
+  %i.pg = lshr i64 %1, 1
   %i.ph = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.pg ; 2 uses
   %i.pi = load i64, ptr %i.ph, align 8, !tbaa !16
-  %i.pj = and i64 %i.pi, 4294967295
+  %. = select i1 %.not324.not, i64 4294967295, i64 -4294967296
+  %i.pj = and i64 %i.pi, %.
   store i64 %i.pj, ptr %i.ph, align 8, !tbaa !16
-  %i.pk = add nuw nsw i64 %i.pf, 1                ; 2 uses
+  %i.pk = add nuw nsw i64 %1, 1                   ; 3 uses
   %i.pl = lshr i64 %i.pk, 1
   %i.pm = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.pl ; 2 uses
   %i.pn = load i64, ptr %i.pm, align 8, !tbaa !16
   %i.po = and i64 %i.pn, -4294967296
   store i64 %i.po, ptr %i.pm, align 8, !tbaa !16
-  %i.pp = add nuw nsw i64 %i.pf, 2                ; 2 uses
+  %i.pp = add nuw nsw i64 %1, 2                   ; 2 uses
   %niter.next.1 = add i64 %niter, 2
   %niter.ncmp.1 = icmp eq i64 %niter, %i.pe
   br i1 %niter.ncmp.1, label %.lr.ph.epil, label %.lr.ph, !llvm.loop !30
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.preheader, %.lr.ph
-  %.epil.init = phi i64 [ 13, %.lr.ph.preheader ], [ %i.pp, %.lr.ph ]
-  %.0597.epil.init = phi i64 [ 12, %.lr.ph.preheader ], [ %i.pk, %.lr.ph ]
+  %.epil.init = phi i64 [ 12, %.lr.ph.preheader ], [ %i.pp, %.lr.ph ]
+  %.0597.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.pk, %.lr.ph ]
   %i.pq = and i64 %.0597.epil.init, 1
   %.not324.not.epil = icmp eq i64 %i.pq, 0
   %i.pr = lshr i64 %.epil.init, 1

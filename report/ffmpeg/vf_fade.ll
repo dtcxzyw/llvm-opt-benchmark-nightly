@@ -206,8 +206,8 @@ bb.b:                                             ; preds = %.split.us, %._crit_
 
 bb.c:                                             ; preds = %._crit_edge38.us
   %i.bc = load i8, ptr %i.r, align 4, !tbaa !48
-  %.not33.us.1 = icmp eq i8 %i.bc, 0
-  br i1 %.not33.us.1, label %.split40.us, label %.preheader.us.1
+  %.not33.us.1 = icmp ne i8 %i.bc, 0
+  br i1 %.not33.us.1, label %.preheader.us.1, label %.split40.us
 
 .preheader.us.1:                                  ; preds = %bb.c
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 8

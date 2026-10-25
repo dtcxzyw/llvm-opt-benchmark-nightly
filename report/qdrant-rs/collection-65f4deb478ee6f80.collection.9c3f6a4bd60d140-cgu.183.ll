@@ -202,12 +202,22 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @_RNvMNtCsbM8FbnNn9aS_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %i.d), !noalias !160
   %i.e = load i8, ptr %i.b, align 1, !range !14, !alias.scope !159, !noundef !6
-  %2 = or i8 %i.e, 2                              ; 2 uses
-  store i8 %2, ptr %i.b, align 1, !alias.scope !159
+  switch i8 %i.e, label %.sink.split.i [
+    i8 1, label %2
+    i8 3, label %2
+  ]
+
+.sink.split.i:                                    ; preds = %2, %.sink.split.i.a
+  %.sink.i = phi i8 [ 3, %2 ], [ 2, %.sink.split.i.a ]
+  %.ph.i = phi i8 [ 1, %2 ], [ 0, %.sink.split.i.a ]
+  store i8 %.sink.i, ptr %i.b, align 1, !alias.scope !159
   br label %_RNvXs9_NtCs38lzWNSsbR5_12tokio_rustls6clientINtB5_9TlsStreamINtNtNtCslfxrBSw8aGw_10hyper_util2rt5tokio7TokioIoIBX_NtNtNtNtCsjZG7hsAZr3B_5tokio3net3tcp6stream9TcpStreamEEENtNtNtB1W_2io11async_write10AsyncWrite13poll_shutdownCsPYQCUnoTxQ_10collection.exit
 
-_RNvXs9_NtCs38lzWNSsbR5_12tokio_rustls6clientINtB5_9TlsStreamINtNtNtCslfxrBSw8aGw_10hyper_util2rt5tokio7TokioIoIBX_NtNtNtNtCsjZG7hsAZr3B_5tokio3net3tcp6stream9TcpStreamEEENtNtNtB1W_2io11async_write10AsyncWrite13poll_shutdownCsPYQCUnoTxQ_10collection.exit: ; preds = %bb.a, %.sink.split.i.a
-  %i.f = phi i8 [ %i.c, %bb.a ], [ %2, %.sink.split.i.a ]
+2:                                                ; preds = %.sink.split.i.a, %.sink.split.i.a
+  br label %.sink.split.i
+
+_RNvXs9_NtCs38lzWNSsbR5_12tokio_rustls6clientINtB5_9TlsStreamINtNtNtCslfxrBSw8aGw_10hyper_util2rt5tokio7TokioIoIBX_NtNtNtNtCsjZG7hsAZr3B_5tokio3net3tcp6stream9TcpStreamEEENtNtNtB1W_2io11async_write10AsyncWrite13poll_shutdownCsPYQCUnoTxQ_10collection.exit: ; preds = %bb.a, %.sink.split.i
+  %i.f = phi i8 [ %i.c, %bb.a ], [ %.ph.i, %.sink.split.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !161
   %i.g = and i8 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -315,12 +325,22 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @_RNvMNtCsbM8FbnNn9aS_6rustls12common_stateNtB2_11CommonState17send_close_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %i.d), !noalias !183
   %i.e = load i8, ptr %i.b, align 1, !range !14, !alias.scope !182, !noundef !6
-  %2 = or i8 %i.e, 2                              ; 2 uses
-  store i8 %2, ptr %i.b, align 1, !alias.scope !182
+  switch i8 %i.e, label %.sink.split.i [
+    i8 1, label %2
+    i8 3, label %2
+  ]
+
+.sink.split.i:                                    ; preds = %2, %.sink.split.i.a
+  %.sink.i = phi i8 [ 3, %2 ], [ 2, %.sink.split.i.a ]
+  %.ph.i = phi i8 [ 1, %2 ], [ 0, %.sink.split.i.a ]
+  store i8 %.sink.i, ptr %i.b, align 1, !alias.scope !182
   br label %_RNvXs9_NtCs38lzWNSsbR5_12tokio_rustls6clientINtB5_9TlsStreamINtNtNtCslfxrBSw8aGw_10hyper_util2rt5tokio7TokioIoIBX_NtNtNtNtCsjZG7hsAZr3B_5tokio3net4unix6stream10UnixStreamEEENtNtNtB1W_2io11async_write10AsyncWrite13poll_shutdownCsPYQCUnoTxQ_10collection.exit
 
-_RNvXs9_NtCs38lzWNSsbR5_12tokio_rustls6clientINtB5_9TlsStreamINtNtNtCslfxrBSw8aGw_10hyper_util2rt5tokio7TokioIoIBX_NtNtNtNtCsjZG7hsAZr3B_5tokio3net4unix6stream10UnixStreamEEENtNtNtB1W_2io11async_write10AsyncWrite13poll_shutdownCsPYQCUnoTxQ_10collection.exit: ; preds = %bb.a, %.sink.split.i.a
-  %i.f = phi i8 [ %i.c, %bb.a ], [ %2, %.sink.split.i.a ]
+2:                                                ; preds = %.sink.split.i.a, %.sink.split.i.a
+  br label %.sink.split.i
+
+_RNvXs9_NtCs38lzWNSsbR5_12tokio_rustls6clientINtB5_9TlsStreamINtNtNtCslfxrBSw8aGw_10hyper_util2rt5tokio7TokioIoIBX_NtNtNtNtCsjZG7hsAZr3B_5tokio3net4unix6stream10UnixStreamEEENtNtNtB1W_2io11async_write10AsyncWrite13poll_shutdownCsPYQCUnoTxQ_10collection.exit: ; preds = %bb.a, %.sink.split.i
+  %i.f = phi i8 [ %i.c, %bb.a ], [ %.ph.i, %.sink.split.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !184
   %i.g = and i8 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32

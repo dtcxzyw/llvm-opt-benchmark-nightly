@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %_ZN4llvm10samplepro
   br label %_ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i.i
 
 _ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i.i: ; preds = %bb.ae, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i.i, %bb.ad, %bb.ac
-  %.0.i.i.i.i.i.i = phi i32 [ %i.fe, %bb.ae ], [ %i.fb, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i.i ], [ 1, %bb.ad ], [ -1, %bb.ac ]
+  %.0.i.i.i.i.i.i = phi i32 [ %i.fe, %bb.ae ], [ %i.fb, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i.i ], [ 0, %bb.ad ], [ -2147483648, %bb.ac ]
   %i.ff = icmp slt i32 %.0.i.i.i.i.i.i, 0
   br label %.thread.i
 
@@ -607,7 +607,7 @@ bb.f:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit.i.i
 
 _ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit.i.i: ; preds = %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i, %bb.e, %bb.d
-  %.0.i.i.i.i = phi i32 [ %i.y, %bb.f ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i ], [ 1, %bb.e ], [ -1, %bb.d ]
+  %.0.i.i.i.i = phi i32 [ %i.y, %bb.f ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i ], [ 0, %bb.e ], [ -2147483648, %bb.d ]
   %i.z = icmp slt i32 %.0.i.i.i.i, 0
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit
 
@@ -1010,7 +1010,7 @@ bb.c:                                             ; preds = %_ZN9__gnu_cxx5__ops
   %i.f = icmp ugt i64 %i.e, %i.c
   br i1 %i.f, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit.thread, label %.preheader
 
-.preheader:                                       ; preds = %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit, %.split
+.preheader:                                       ; preds = %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i, %bb.f, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit, %.split
   %i.g = getelementptr inbounds nuw i8, ptr %.1, i64 16 ; 2 uses
   br label %.backedge
 
@@ -1413,7 +1413,7 @@ bb.f:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i
 
 _ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i: ; preds = %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i, %bb.e, %bb.d
-  %.0.i.i.i.i.i = phi i32 [ %i.w, %bb.f ], [ %i.t, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i ], [ 1, %bb.e ], [ -1, %bb.d ]
+  %.0.i.i.i.i.i = phi i32 [ %i.w, %bb.f ], [ %i.t, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i ], [ 0, %bb.e ], [ -2147483648, %bb.d ]
   %i.x = icmp slt i32 %.0.i.i.i.i.i, 0
   br label %.thread
 
@@ -1816,7 +1816,7 @@ bb.g:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit
 
 _ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit: ; preds = %bb.e, %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i, %bb.g
-  %.0.i.i = phi i32 [ %i.y, %bb.g ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i ], [ 1, %bb.f ], [ -1, %bb.e ]
+  %.0.i.i = phi i32 [ %i.y, %bb.g ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i ], [ 0, %bb.f ], [ -2147483648, %bb.e ]
   %i.z = icmp slt i32 %.0.i.i, 0
   br label %_ZNK4llvm10sampleprof12LineLocationltERKS1_.exit.thread
 
@@ -1861,7 +1861,7 @@ bb.l:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZNK4llvm10sampleprof12LineLocationltERKS1_.exit.thread
 
 .loopexit.loopexit:                               ; preds = %bb.j, %bb.k, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i
-  %.0.i.ph.ph = phi i32 [ -1, %bb.j ], [ 1, %bb.k ], [ %i.al, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i ]
+  %.0.i.ph.ph = phi i32 [ -2147483648, %bb.j ], [ 0, %bb.k ], [ %i.al, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i ]
   %i.ao = icmp slt i32 %.0.i.ph.ph, 0
   br label %_ZNK4llvm10sampleprof12LineLocationltERKS1_.exit.thread
 
@@ -2264,7 +2264,7 @@ bb.f:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i
 
 _ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i: ; preds = %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i, %bb.e, %bb.d
-  %.0.i.i.i.i.i = phi i32 [ %i.u, %bb.f ], [ %i.r, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i ], [ 1, %bb.e ], [ -1, %bb.d ]
+  %.0.i.i.i.i.i = phi i32 [ %i.u, %bb.f ], [ %i.r, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i ], [ 0, %bb.e ], [ -2147483648, %bb.d ]
   %i.v = icmp slt i32 %.0.i.i.i.i.i, 0
   br label %.thread
 
@@ -2667,7 +2667,7 @@ bb.f:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i
 
 _ZNKSt4lessIN4llvm10sampleprof10FunctionIdEEclERKS2_S5_.exit.i.i: ; preds = %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i, %bb.e, %bb.d
-  %.0.i.i.i.i.i = phi i32 [ %i.ah, %bb.f ], [ %i.ae, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i ], [ 1, %bb.e ], [ -1, %bb.d ]
+  %.0.i.i.i.i.i = phi i32 [ %i.ah, %bb.f ], [ %i.ae, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i.i ], [ 0, %bb.e ], [ -2147483648, %bb.d ]
   %i.ai = icmp slt i32 %.0.i.i.i.i.i, 0
   br label %.thread
 

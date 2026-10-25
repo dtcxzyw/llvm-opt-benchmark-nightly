@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit.i.i
 
 _ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit.i.i: ; preds = %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i, %bb.e, %bb.d
-  %.0.i.i.i.i = phi i32 [ %i.y, %bb.f ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i ], [ 1, %bb.e ], [ -1, %bb.d ]
+  %.0.i.i.i.i = phi i32 [ %i.y, %bb.f ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i ], [ 0, %bb.e ], [ -2147483648, %bb.d ]
   %i.z = icmp slt i32 %.0.i.i.i.i, 0
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %_ZN9__gnu_cxx5__ops
   %i.f = icmp ugt i64 %i.e, %i.c
   br i1 %i.f, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit.thread, label %.preheader
 
-.preheader:                                       ; preds = %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit, %.split
+.preheader:                                       ; preds = %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i, %bb.f, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10sampleprof12SampleRecord20CallTargetComparatorEEclIPSt4pairINS3_10FunctionIdEmESB_EEbT_T0_.exit, %.split
   %i.g = getelementptr inbounds nuw i8, ptr %.1, i64 16 ; 2 uses
   br label %.backedge
 
@@ -1011,7 +1011,7 @@ bb.g:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit
 
 _ZN4llvm10sampleprofltERKNS0_10FunctionIdES3_.exit: ; preds = %bb.e, %bb.f, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i, %bb.g
-  %.0.i.i = phi i32 [ %i.y, %bb.g ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i ], [ 1, %bb.f ], [ -1, %bb.e ]
+  %.0.i.i = phi i32 [ %i.y, %bb.g ], [ %i.v, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i ], [ 0, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i ], [ 0, %bb.f ], [ -2147483648, %bb.e ]
   %i.z = icmp slt i32 %.0.i.i, 0
   br label %_ZNK4llvm10sampleprof12LineLocationltERKS1_.exit.thread
 
@@ -1056,7 +1056,7 @@ bb.l:                                             ; preds = %_ZN4llvm10samplepro
   br label %_ZNK4llvm10sampleprof12LineLocationltERKS1_.exit.thread
 
 .loopexit.loopexit:                               ; preds = %bb.j, %bb.k, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i
-  %.0.i.ph.ph = phi i32 [ -1, %bb.j ], [ 1, %bb.k ], [ %i.al, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i ]
+  %.0.i.ph.ph = phi i32 [ -2147483648, %bb.j ], [ 0, %bb.k ], [ %i.al, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i ]
   %i.ao = icmp slt i32 %.0.i.ph.ph, 0
   br label %_ZNK4llvm10sampleprof12LineLocationltERKS1_.exit.thread
 
@@ -1432,7 +1432,7 @@ _ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i25.
   br i1 %i.bx, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZL14stabilizeTableIN4llvm10sampleprof10FunctionIdEjENS3_11SmallVectorIPSt4pairIT_T0_ELj0EEERNS3_9MapVectorIS8_S9_NS3_8DenseMapIS8_jNS3_12DenseMapInfoIS8_vEENS3_6detail12DenseMapPairIS8_jEEEENS6_ISA_Lj0EEELj0EEEEUlPKS8_PKS9_E_EclIPPS7_IS5_jESX_EEbS8_S9_.exit26.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZL14stabilizeTableIN4llvm10sampleprof10FunctionIdEjENS3_11SmallVectorIPSt4pairIT_T0_ELj0EEERNS3_9MapVectorIS8_S9_NS3_8DenseMapIS8_jNS3_12DenseMapInfoIS8_vEENS3_6detail12DenseMapPairIS8_jEEEENS6_ISA_Lj0EEELj0EEEEUlPKS8_PKS9_E_EclIPPS7_IS5_jESX_EEbS8_S9_.exit26.thread.i.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZL14stabilizeTableIN4llvm10sampleprof10FunctionIdEjENS3_11SmallVectorIPSt4pairIT_T0_ELj0EEERNS3_9MapVectorIS8_S9_NS3_8DenseMapIS8_jNS3_12DenseMapInfoIS8_vEENS3_6detail12DenseMapPairIS8_jEEEENS6_ISA_Lj0EEELj0EEEEUlPKS8_PKS9_E_EclIPPS7_IS5_jESX_EEbS8_S9_.exit26.i.i: ; preds = %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i25.i.i, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i22.i.i
-  %.0.i.i.i.i24.i.i = phi i32 [ -1, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i25.i.i ], [ %i.bw, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i22.i.i ]
+  %.0.i.i.i.i24.i.i = phi i32 [ -2147483648, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.thread12.i.i.i.i25.i.i ], [ %i.bw, %_ZN4llvm10sampleprof10FunctionId13compareMemoryEPKcS3_m.exit.i.i.i.i22.i.i ]
   %i.by = icmp slt i32 %.0.i.i.i.i24.i.i, 0
   br i1 %i.by, label %.preheader.split33.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZL14stabilizeTableIN4llvm10sampleprof10FunctionIdEjENS3_11SmallVectorIPSt4pairIT_T0_ELj0EEERNS3_9MapVectorIS8_S9_NS3_8DenseMapIS8_jNS3_12DenseMapInfoIS8_vEENS3_6detail12DenseMapPairIS8_jEEEENS6_ISA_Lj0EEELj0EEEEUlPKS8_PKS9_E_EclIPPS7_IS5_jESX_EEbS8_S9_.exit26.thread.i.i, !llvm.loop !741
 

@@ -204,9 +204,9 @@ bb.o:                                             ; preds = %bb.n
   br label %Abc_Clock.exit65
 
 Abc_Clock.exit65:                                 ; preds = %bb.n, %bb.o
-  %.0.i64 = phi i64 [ %i.cc, %bb.o ], [ -1, %bb.n ]
+  %.0.i64 = phi i64 [ %i.cc, %bb.o ], [ 4294967295, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
-  %i.cd = sub nsw i64 %.0.i64, %.0.i60
+  %i.cd = sub i64 %.0.i64, %.0.i60
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.cf = load i32, ptr %i.ce, align 8, !tbaa !83
   %i.cg = trunc i64 %i.cd to i32
@@ -248,9 +248,9 @@ bb.q:                                             ; preds = %bb.p
   br label %Abc_Clock.exit67
 
 Abc_Clock.exit67:                                 ; preds = %bb.p, %bb.q
-  %.0.i66 = phi i64 [ %i.de, %bb.q ], [ -1, %bb.p ]
+  %.0.i66 = phi i64 [ %i.de, %bb.q ], [ 4294967295, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  %i.df = sub nsw i64 %.0.i66, %.0.i60
+  %i.df = sub i64 %.0.i66, %.0.i60
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !86
   %i.di = trunc i64 %i.df to i32
@@ -287,9 +287,9 @@ bb.s:                                             ; preds = %bb.r
   br label %Abc_Clock.exit69
 
 Abc_Clock.exit69:                                 ; preds = %bb.r, %bb.s
-  %.0.i68 = phi i64 [ %i.ec, %bb.s ], [ -1, %bb.r ]
+  %.0.i68 = phi i64 [ %i.ec, %bb.s ], [ 4294967295, %bb.r ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
-  %i.ed = sub nsw i64 %.0.i68, %.0.i60
+  %i.ed = sub i64 %.0.i68, %.0.i60
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.ef = load i32, ptr %i.ee, align 8, !tbaa !89
   %i.eg = trunc i64 %i.ed to i32
@@ -529,9 +529,9 @@ bb.r:                                             ; preds = %bb.q
   br label %Abc_Clock.exit85
 
 Abc_Clock.exit85:                                 ; preds = %bb.q, %bb.r
-  %.0.i84 = phi i64 [ %i.cy, %bb.r ], [ -1, %bb.q ]
+  %.0.i84 = phi i64 [ %i.cy, %bb.r ], [ 4294967295, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
-  %i.cz = sub nsw i64 %.0.i84, %.0.i80
+  %i.cz = sub i64 %.0.i84, %.0.i80
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.db = load i32, ptr %i.da, align 8, !tbaa !83
   %i.dc = trunc i64 %i.cz to i32
@@ -573,9 +573,9 @@ bb.t:                                             ; preds = %bb.s
   br label %Abc_Clock.exit87
 
 Abc_Clock.exit87:                                 ; preds = %bb.s, %bb.t
-  %.0.i86 = phi i64 [ %i.ea, %bb.t ], [ -1, %bb.s ]
+  %.0.i86 = phi i64 [ %i.ea, %bb.t ], [ 4294967295, %bb.s ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
-  %i.eb = sub nsw i64 %.0.i86, %.0.i80
+  %i.eb = sub i64 %.0.i86, %.0.i80
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !86
   %i.ee = trunc i64 %i.eb to i32
@@ -612,9 +612,9 @@ bb.v:                                             ; preds = %bb.u
   br label %Abc_Clock.exit89
 
 Abc_Clock.exit89:                                 ; preds = %bb.u, %bb.v
-  %.0.i88 = phi i64 [ %i.ey, %bb.v ], [ -1, %bb.u ]
+  %.0.i88 = phi i64 [ %i.ey, %bb.v ], [ 4294967295, %bb.u ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  %i.ez = sub nsw i64 %.0.i88, %.0.i80
+  %i.ez = sub i64 %.0.i88, %.0.i80
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.fb = load i32, ptr %i.fa, align 8, !tbaa !89
   %i.fc = trunc i64 %i.ez to i32
@@ -1017,7 +1017,7 @@ bb.at:                                            ; preds = %.critedge
   br label %Abc_Clock.exit121
 
 Abc_Clock.exit121:                                ; preds = %.critedge, %bb.at
-  %.0.i120 = phi i64 [ %i.ic, %bb.at ], [ -1, %.critedge ]
+  %.0.i120 = phi i64 [ %i.ic, %bb.at ], [ 4294967295, %.critedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   %i.id = add i64 %.0.i120, %.0.i.neg
   %i.ie = trunc i64 %i.id to i32
@@ -1420,7 +1420,7 @@ bb.ap:                                            ; preds = %.critedge
   br label %Abc_Clock.exit100
 
 Abc_Clock.exit100:                                ; preds = %.critedge, %bb.ap
-  %.0.i99 = phi i64 [ %i.gl, %bb.ap ], [ -1, %.critedge ]
+  %.0.i99 = phi i64 [ %i.gl, %bb.ap ], [ 4294967295, %.critedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   %i.gm = add i64 %.0.i99, %.0.i.neg
   %i.gn = trunc i64 %i.gm to i32
@@ -1823,7 +1823,7 @@ bb.ax:                                            ; preds = %.critedge
   br label %Abc_Clock.exit88
 
 Abc_Clock.exit88:                                 ; preds = %.critedge, %bb.ax
-  %.0.i87 = phi i64 [ %i.hg, %bb.ax ], [ -1, %.critedge ]
+  %.0.i87 = phi i64 [ %i.hg, %bb.ax ], [ 4294967295, %.critedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   %i.hh = add i64 %.0.i87, %.0.i.neg
   %i.hi = trunc i64 %i.hh to i32

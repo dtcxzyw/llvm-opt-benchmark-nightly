@@ -205,7 +205,7 @@ define hidden void @_RINvMs3_NtCshMFl0SviwmK_3syn3litNtB6_6LitInt12base10_parsel
 bb.a:
   %i.a = tail call { ptr, i64 } @_RNvMs3_NtCshMFl0SviwmK_3syn3litNtB5_6LitInt13base10_digits(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %1) ; 2 uses
   %i.b = extractvalue { ptr, i64 } %i.a, 0        ; 5 uses
-  %i.c = extractvalue { ptr, i64 } %i.a, 1        ; 5 uses
+  %i.c = extractvalue { ptr, i64 } %i.a, 1        ; 6 uses
   switch i64 %i.c, label %thread-pre-split.i.i.i [
     i64 0, label %_RINvMNtCscI6d9CVNmLh_4core3stre5parselECsluMP4ekZjHw_14diesel_derives.exit.thread
     i64 1, label %bb.b
@@ -444,7 +444,7 @@ _RINvMNtCscI6d9CVNmLh_4core3stre5parselECsluMP4ekZjHw_14diesel_derives.exit: ; p
   br i1 %i.cr, label %_RINvMNtCscI6d9CVNmLh_4core3stre5parselECsluMP4ekZjHw_14diesel_derives.exit.thread, label %bb.u
 
 _RINvMNtCscI6d9CVNmLh_4core3stre5parselECsluMP4ekZjHw_14diesel_derives.exit.thread: ; preds = %bb.g, %bb.f, %.lr.ph143.i.i.i, %bb.k, %bb.l, %.lr.ph152.i.i.i, %.lr.ph152.i.i.i.1, %.lr.ph152.i.i.i.2, %.lr.ph152.i.i.i.3, %.lr.ph152.i.i.i.4, %.lr.ph152.i.i.i.5, %.lr.ph152.i.i.i.6, %bb.a, %bb.b, %bb.b, %_RINvMNtCscI6d9CVNmLh_4core3stre5parselECsluMP4ekZjHw_14diesel_derives.exit
-  %.sroa.12.0.insert.insert.i.i.i5 = phi i64 [ %.sroa.12.0.insert.insert.i.i.i, %_RINvMNtCscI6d9CVNmLh_4core3stre5parselECsluMP4ekZjHw_14diesel_derives.exit ], [ 257, %bb.b ], [ 257, %.lr.ph152.i.i.i ], [ 1, %bb.a ], [ 257, %.lr.ph143.i.i.i ], [ 257, %bb.k ], [ 257, %bb.b ], [ 257, %.lr.ph152.i.i.i.6 ], [ 257, %.lr.ph152.i.i.i.5 ], [ 257, %.lr.ph152.i.i.i.4 ], [ 257, %.lr.ph152.i.i.i.3 ], [ 257, %.lr.ph152.i.i.i.2 ], [ 257, %.lr.ph152.i.i.i.1 ], [ 513, %bb.l ], [ 769, %bb.g ], [ 257, %bb.f ]
+  %.sroa.12.0.insert.insert.i.i.i5 = phi i64 [ %.sroa.12.0.insert.insert.i.i.i, %_RINvMNtCscI6d9CVNmLh_4core3stre5parselECsluMP4ekZjHw_14diesel_derives.exit ], [ 256, %bb.b ], [ 256, %.lr.ph152.i.i.i ], [ %i.c, %bb.a ], [ 256, %.lr.ph143.i.i.i ], [ 256, %bb.k ], [ 256, %bb.b ], [ 256, %.lr.ph152.i.i.i.6 ], [ 256, %.lr.ph152.i.i.i.5 ], [ 256, %.lr.ph152.i.i.i.4 ], [ 256, %.lr.ph152.i.i.i.3 ], [ 256, %.lr.ph152.i.i.i.2 ], [ 256, %.lr.ph152.i.i.i.1 ], [ 512, %bb.l ], [ 768, %bb.g ], [ 256, %bb.f ]
   %.sroa.4.0.extract.shift.i = lshr i64 %.sroa.12.0.insert.insert.i.i.i5, 8
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8
   %i.cs = tail call noundef i32 @_RNvMs3_NtCshMFl0SviwmK_3syn3litNtB5_6LitInt4span(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %1), !noalias !340
@@ -468,7 +468,7 @@ define hidden void @_RINvMs3_NtCshMFl0SviwmK_3syn3litNtB6_6LitInt12base10_parsem
 bb.a:
   %i.a = tail call { ptr, i64 } @_RNvMs3_NtCshMFl0SviwmK_3syn3litNtB5_6LitInt13base10_digits(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %1) ; 2 uses
   %i.b = extractvalue { ptr, i64 } %i.a, 0        ; 3 uses
-  %i.c = extractvalue { ptr, i64 } %i.a, 1        ; 2 uses
+  %i.c = extractvalue { ptr, i64 } %i.a, 1        ; 3 uses
   switch i64 %i.c, label %thread-pre-split.i.i.i [
     i64 0, label %_RINvMNtCscI6d9CVNmLh_4core3stre5parsemECsluMP4ekZjHw_14diesel_derives.exit.thread
     i64 1, label %bb.b
@@ -653,7 +653,7 @@ _RINvMNtCscI6d9CVNmLh_4core3stre5parsemECsluMP4ekZjHw_14diesel_derives.exit: ; p
   br i1 %i.bx, label %_RINvMNtCscI6d9CVNmLh_4core3stre5parsemECsluMP4ekZjHw_14diesel_derives.exit.thread, label %bb.o
 
 _RINvMNtCscI6d9CVNmLh_4core3stre5parsemECsluMP4ekZjHw_14diesel_derives.exit.thread: ; preds = %bb.f, %bb.d, %.lr.ph.i.i.i, %.lr.ph.i.i.i.1, %.lr.ph.i.i.i.2, %.lr.ph.i.i.i.3, %.lr.ph.i.i.i.4, %.lr.ph.i.i.i.5, %.lr.ph.i.i.i.6, %.lr.ph.i.i.i.7, %bb.a, %bb.b, %bb.b, %_RINvMNtCscI6d9CVNmLh_4core3stre5parsemECsluMP4ekZjHw_14diesel_derives.exit
-  %.sroa.8.0.insert.insert.i.i.i5 = phi i64 [ %.sroa.8.0.insert.insert.i.i.i, %_RINvMNtCscI6d9CVNmLh_4core3stre5parsemECsluMP4ekZjHw_14diesel_derives.exit ], [ 257, %bb.b ], [ 257, %.lr.ph.i.i.i ], [ 257, %bb.b ], [ 1, %bb.a ], [ 257, %.lr.ph.i.i.i.7 ], [ 257, %.lr.ph.i.i.i.6 ], [ 257, %.lr.ph.i.i.i.5 ], [ 257, %.lr.ph.i.i.i.4 ], [ 257, %.lr.ph.i.i.i.3 ], [ 257, %.lr.ph.i.i.i.2 ], [ 257, %.lr.ph.i.i.i.1 ], [ 257, %bb.d ], [ 513, %bb.f ]
+  %.sroa.8.0.insert.insert.i.i.i5 = phi i64 [ %.sroa.8.0.insert.insert.i.i.i, %_RINvMNtCscI6d9CVNmLh_4core3stre5parsemECsluMP4ekZjHw_14diesel_derives.exit ], [ 256, %bb.b ], [ 256, %.lr.ph.i.i.i ], [ 256, %bb.b ], [ %i.c, %bb.a ], [ 256, %.lr.ph.i.i.i.7 ], [ 256, %.lr.ph.i.i.i.6 ], [ 256, %.lr.ph.i.i.i.5 ], [ 256, %.lr.ph.i.i.i.4 ], [ 256, %.lr.ph.i.i.i.3 ], [ 256, %.lr.ph.i.i.i.2 ], [ 256, %.lr.ph.i.i.i.1 ], [ 256, %bb.d ], [ 512, %bb.f ]
   %.sroa.4.0.extract.shift.i = lshr i64 %.sroa.8.0.insert.insert.i.i.i5, 8
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8
   %i.by = tail call noundef i32 @_RNvMs3_NtCshMFl0SviwmK_3syn3litNtB5_6LitInt4span(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %1), !noalias !353

@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.m
   unreachable
 
 bb.t:                                             ; preds = %bb.e
-  %i.db = extractvalue { ptr, i64 } %i.bf, 1      ; 5 uses
+  %i.db = extractvalue { ptr, i64 } %i.bf, 1      ; 6 uses
   switch i64 %i.db, label %thread-pre-split.i [
     i64 0, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread
     i64 1, label %bb.u
@@ -443,7 +443,7 @@ _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit: ; preds = %.loopexit1
   br i1 %i.gq, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultlNtNtNtB4_3num5error13ParseIntErrorE6expectCs63DIHKhvmTb_10lance_core.exit, !prof !47
 
 _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread: ; preds = %bb.z, %bb.y, %.lr.ph143.i, %bb.ad, %bb.ae, %.lr.ph152.i, %.lr.ph152.i.1, %.lr.ph152.i.2, %.lr.ph152.i.3, %.lr.ph152.i.4, %.lr.ph152.i.5, %.lr.ph152.i.6, %bb.t, %bb.u, %bb.u, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit
-  %.sroa.12.0.insert.insert.i56 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit ], [ 1, %bb.t ], [ 257, %.lr.ph143.i ], [ 257, %.lr.ph152.i ], [ 257, %bb.u ], [ 257, %bb.u ], [ 257, %bb.ad ], [ 257, %.lr.ph152.i.6 ], [ 257, %.lr.ph152.i.5 ], [ 257, %.lr.ph152.i.4 ], [ 257, %.lr.ph152.i.3 ], [ 257, %.lr.ph152.i.2 ], [ 257, %.lr.ph152.i.1 ], [ 513, %bb.ae ], [ 257, %bb.y ], [ 769, %bb.z ]
+  %.sroa.12.0.insert.insert.i56 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit ], [ %i.db, %bb.t ], [ 256, %.lr.ph143.i ], [ 256, %.lr.ph152.i ], [ 256, %bb.u ], [ 256, %bb.u ], [ 256, %bb.ad ], [ 256, %.lr.ph152.i.6 ], [ 256, %.lr.ph152.i.5 ], [ 256, %.lr.ph152.i.4 ], [ 256, %.lr.ph152.i.3 ], [ 256, %.lr.ph152.i.2 ], [ 256, %.lr.ph152.i.1 ], [ 512, %bb.ae ], [ 256, %bb.y ], [ 768, %bb.z ]
   %.sroa.4.0.extract.shift.i = lshr i64 %.sroa.12.0.insert.insert.i56, 8
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -846,7 +846,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.0.0 = phi i64 [ -1, %bb.b ], [ %i.f, %bb.a ]
+  %.sroa.0.0 = phi i64 [ -4294967296, %bb.b ], [ %i.f, %bb.a ]
   %i.h = lshr i64 %.sroa.0.0, 32                  ; 3 uses
   %i.i = icmp samesign ult i64 %i.h, %i.c
   br i1 %i.i, label %bb.d, label %bb.m
@@ -963,7 +963,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.0.0 = phi i64 [ -1, %bb.b ], [ %i.f, %bb.a ]
+  %.sroa.0.0 = phi i64 [ -4294967296, %bb.b ], [ %i.f, %bb.a ]
   %i.h = lshr i64 %.sroa.0.0, 32                  ; 3 uses
   %i.i = icmp samesign ult i64 %i.h, %i.c
   br i1 %i.i, label %bb.d, label %bb.e
@@ -1366,7 +1366,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.7.0..sroa_idx335 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx335, align 8, !nonnull !23, !noundef !23 ; 8 uses
   %.sroa.11336.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %.sroa.11336.0.copyload = load i64, ptr %.sroa.11336.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.11336.0.copyload = load i64, ptr %.sroa.11336.0..sroa_idx, align 8 ; 6 uses
   switch i64 %.sroa.11336.0.copyload, label %thread-pre-split.i [
     i64 0, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread
     i64 1, label %bb.d
@@ -1627,7 +1627,7 @@ _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit: ; preds = %.loopexit.
   br i1 %i.dq, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread, label %bb.ab
 
 _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread: ; preds = %bb.i, %bb.h, %.lr.ph143.i, %bb.m, %bb.n, %.lr.ph152.i, %.lr.ph152.i.1, %.lr.ph152.i.2, %.lr.ph152.i.3, %.lr.ph152.i.4, %.lr.ph152.i.5, %.lr.ph152.i.6, %bb.c, %bb.d, %bb.d, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit
-  %.sroa.12.0.insert.insert.i417 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit ], [ 1, %bb.c ], [ 257, %.lr.ph143.i ], [ 257, %.lr.ph152.i ], [ 257, %bb.d ], [ 257, %bb.d ], [ 257, %bb.m ], [ 257, %.lr.ph152.i.6 ], [ 257, %.lr.ph152.i.5 ], [ 257, %.lr.ph152.i.4 ], [ 257, %.lr.ph152.i.3 ], [ 257, %.lr.ph152.i.2 ], [ 257, %.lr.ph152.i.1 ], [ 513, %bb.n ], [ 257, %bb.h ], [ 769, %bb.i ]
+  %.sroa.12.0.insert.insert.i417 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit ], [ %.sroa.11336.0.copyload, %bb.c ], [ 256, %.lr.ph143.i ], [ 256, %.lr.ph152.i ], [ 256, %bb.d ], [ 256, %bb.d ], [ 256, %bb.m ], [ 256, %.lr.ph152.i.6 ], [ 256, %.lr.ph152.i.5 ], [ 256, %.lr.ph152.i.4 ], [ 256, %.lr.ph152.i.3 ], [ 256, %.lr.ph152.i.2 ], [ 256, %.lr.ph152.i.1 ], [ 512, %bb.n ], [ 256, %bb.h ], [ 768, %bb.i ]
   %.sroa.4188.0.extract.shift = lshr i64 %.sroa.12.0.insert.insert.i417, 8
   %.sroa.4188.0.extract.trunc = trunc i64 %.sroa.4188.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -2030,7 +2030,7 @@ bb.dm:                                            ; preds = %bb.ay
   %i.td = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload947, i64 16
   %i.te = load ptr, ptr %i.td, align 8, !nonnull !23, !noundef !23 ; 5 uses
   %i.tf = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload947, i64 24
-  %i.tg = load i64, ptr %i.tf, align 8, !noundef !23 ; 5 uses
+  %i.tg = load i64, ptr %i.tf, align 8, !noundef !23 ; 6 uses
   switch i64 %i.tg, label %thread-pre-split.i [
     i64 0, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread
     i64 1, label %bb.dn
@@ -2268,7 +2268,7 @@ _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit: ; preds = %.loopexit.
   br i1 %i.wv, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread, label %bb.eg
 
 _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit.thread: ; preds = %bb.ds, %bb.dr, %.lr.ph143.i, %bb.dw, %bb.dx, %.lr.ph152.i, %.lr.ph152.i.1, %.lr.ph152.i.2, %.lr.ph152.i.3, %.lr.ph152.i.4, %.lr.ph152.i.5, %.lr.ph152.i.6, %bb.dm, %bb.dn, %bb.dn, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit
-  %.sroa.12.0.insert.insert.i987 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit ], [ 1, %bb.dm ], [ 257, %.lr.ph143.i ], [ 257, %.lr.ph152.i ], [ 257, %bb.dn ], [ 257, %bb.dn ], [ 257, %bb.dw ], [ 257, %.lr.ph152.i.6 ], [ 257, %.lr.ph152.i.5 ], [ 257, %.lr.ph152.i.4 ], [ 257, %.lr.ph152.i.3 ], [ 257, %.lr.ph152.i.2 ], [ 257, %.lr.ph152.i.1 ], [ 513, %bb.dx ], [ 257, %bb.dr ], [ 769, %bb.ds ]
+  %.sroa.12.0.insert.insert.i987 = phi i64 [ %.sroa.12.0.insert.insert.i, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit ], [ %i.tg, %bb.dm ], [ 256, %.lr.ph143.i ], [ 256, %.lr.ph152.i ], [ 256, %bb.dn ], [ 256, %bb.dn ], [ 256, %bb.dw ], [ 256, %.lr.ph152.i.6 ], [ 256, %.lr.ph152.i.5 ], [ 256, %.lr.ph152.i.4 ], [ 256, %.lr.ph152.i.3 ], [ 256, %.lr.ph152.i.2 ], [ 256, %.lr.ph152.i.1 ], [ 512, %bb.dx ], [ 256, %bb.dr ], [ 768, %bb.ds ]
   %.sroa.4665.0.extract.shift = lshr i64 %.sroa.12.0.insert.insert.i987, 8
   %.sroa.4665.0.extract.trunc = trunc i64 %.sroa.4665.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
@@ -2319,7 +2319,7 @@ bb.ej:                                            ; preds = %bb.aw
   %i.wy = getelementptr i8, ptr %i.wx, i64 -16
   %i.wz = load ptr, ptr %i.wy, align 8, !nonnull !23, !noundef !23 ; 5 uses
   %i.xa = getelementptr i8, ptr %i.wx, i64 -8
-  %i.xb = load i64, ptr %i.xa, align 8, !noundef !23 ; 5 uses
+  %i.xb = load i64, ptr %i.xa, align 8, !noundef !23 ; 6 uses
   switch i64 %i.xb, label %thread-pre-split.i834 [
     i64 0, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit836.thread
     i64 1, label %bb.ek
@@ -2559,7 +2559,7 @@ _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit836: ; preds = %.loopex
   br i1 %i.aaq, label %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit836.thread, label %bb.fd
 
 _RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit836.thread: ; preds = %bb.ep, %bb.eo, %.lr.ph143.i815, %bb.et, %bb.eu, %.lr.ph152.i829, %.lr.ph152.i829.1, %.lr.ph152.i829.2, %.lr.ph152.i829.3, %.lr.ph152.i829.4, %.lr.ph152.i829.5, %.lr.ph152.i829.6, %bb.ej, %bb.ek, %bb.ek, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit836
-  %.sroa.12.0.insert.insert.i800991 = phi i64 [ %.sroa.12.0.insert.insert.i800, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit836 ], [ 1, %bb.ej ], [ 257, %.lr.ph143.i815 ], [ 257, %.lr.ph152.i829 ], [ 257, %bb.ek ], [ 257, %bb.ek ], [ 257, %bb.et ], [ 257, %.lr.ph152.i829.6 ], [ 257, %.lr.ph152.i829.5 ], [ 257, %.lr.ph152.i829.4 ], [ 257, %.lr.ph152.i829.3 ], [ 257, %.lr.ph152.i829.2 ], [ 257, %.lr.ph152.i829.1 ], [ 513, %bb.eu ], [ 257, %bb.eo ], [ 769, %bb.ep ]
+  %.sroa.12.0.insert.insert.i800991 = phi i64 [ %.sroa.12.0.insert.insert.i800, %_RNvMsp_NtCscI6d9CVNmLh_4core3numl16from_ascii_radix.exit836 ], [ %i.xb, %bb.ej ], [ 256, %.lr.ph143.i815 ], [ 256, %.lr.ph152.i829 ], [ 256, %bb.ek ], [ 256, %bb.ek ], [ 256, %bb.et ], [ 256, %.lr.ph152.i829.6 ], [ 256, %.lr.ph152.i829.5 ], [ 256, %.lr.ph152.i829.4 ], [ 256, %.lr.ph152.i829.3 ], [ 256, %.lr.ph152.i829.2 ], [ 256, %.lr.ph152.i829.1 ], [ 512, %bb.eu ], [ 256, %bb.eo ], [ 768, %bb.ep ]
   %.sroa.4671.0.extract.shift = lshr i64 %.sroa.12.0.insert.insert.i800991, 8
   %.sroa.4671.0.extract.trunc = trunc i64 %.sroa.4671.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)

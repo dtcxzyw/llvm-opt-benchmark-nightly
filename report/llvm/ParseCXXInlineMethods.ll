@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bm = load i16, ptr %i.c, align 8, !tbaa !17
-  %.not249 = icmp eq i16 %i.bm, 64
-  %spec.select = select i1 %.not249, i32 2, i32 1
+  %.not249 = icmp ne i16 %i.bm, 64
+  %spec.select = zext i1 %.not249 to i32
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.i
@@ -222,7 +222,7 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.j, %bb.l, %bb.i
-  %.083 = phi i32 [ 3, %bb.i ], [ %spec.store.select, %bb.l ], [ %spec.select, %bb.k ], [ %i.bk, %bb.j ]
+  %.083 = phi i32 [ 1, %bb.i ], [ %spec.store.select, %bb.l ], [ %spec.select, %bb.k ], [ %i.bk, %bb.j ]
   %i.br = load ptr, ptr %i.l, align 8, !tbaa !112, !nonnull !23, !align !113
   call void @_ZN5clang12Preprocessor9BacktrackEv(ptr noundef nonnull align 8 dereferenceable(3344) %i.br) #16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.o, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8, i64 40, i1 false), !tbaa.struct !1053

@@ -202,7 +202,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %bb.ac, %bb.ab
-  %i.ij = phi i64 [ %i.ii, %bb.ac ], [ 4294967296, %bb.ab ]
+  %i.ij = phi i64 [ %i.ii, %bb.ac ], [ 0, %bb.ab ]
   %i.ik = load i32, ptr %i.at, align 4, !tbaa !623
   %i.il = zext i32 %i.ik to i64
   %i.im = getelementptr inbounds nuw [2 x i8], ptr %.pre.i130.i, i64 %i.il
@@ -246,7 +246,7 @@ _ZL6getTagPKN4llvm18TargetRegisterInfoERKNS_12MachineInstrERKN12_GLOBAL__N_18Loa
   %i.jf = and i64 %i.je, 16128
   %i.jg = or i64 %i.jd, %i.ij
   %i.jh = or i64 %i.jg, %i.jf
-  %.sroa.0262.0.extract.trunc.i = trunc i64 %i.jh to i32 ; 5 uses
+  %.sroa.0262.0.extract.trunc.i = trunc nuw nsw i64 %i.jh to i32 ; 5 uses
   %i.ji = load ptr, ptr %i.ao, align 8, !tbaa !233, !noalias !628 ; 3 uses
   %i.jj = load ptr, ptr %i.ar, align 8, !tbaa !234, !noalias !628 ; 3 uses
   %i.jk = load i32, ptr %i.aq, align 4, !tbaa !232, !noalias !628 ; 4 uses
@@ -649,7 +649,7 @@ bb.av:                                            ; preds = %bb.au
   br label %._crit_edge.i142.i
 
 ._crit_edge.i142.i:                               ; preds = %bb.av, %bb.au
-  %i.qi = phi i64 [ %i.qh, %bb.av ], [ 4294967296, %bb.au ]
+  %i.qi = phi i64 [ %i.qh, %bb.av ], [ 0, %bb.au ]
   %i.qj = zext i32 %.sroa.5.0.copyload.i to i64
   %i.qk = getelementptr inbounds nuw [2 x i8], ptr %.pre.i141.i, i64 %i.qj
   %i.ql = load i16, ptr %i.qk, align 2, !tbaa !625
@@ -691,7 +691,7 @@ _ZL6getTagPKN4llvm18TargetRegisterInfoERKNS_12MachineInstrERKN12_GLOBAL__N_18Loa
   %i.rc = and i64 %i.rb, 16128
   %i.rd = or i64 %i.ra, %i.qi
   %i.re = or i64 %i.rd, %i.rc
-  %.sroa.0239.0.extract.trunc.i = trunc i64 %i.re to i32 ; 5 uses
+  %.sroa.0239.0.extract.trunc.i = trunc nuw nsw i64 %i.re to i32 ; 5 uses
   %i.rf = load ptr, ptr %i.ao, align 8, !tbaa !233, !noalias !637 ; 3 uses
   %i.rg = load ptr, ptr %i.ar, align 8, !tbaa !234, !noalias !637 ; 3 uses
   %i.rh = load i32, ptr %i.aq, align 4, !tbaa !232, !noalias !637 ; 4 uses
@@ -992,7 +992,7 @@ bb.bj:                                            ; preds = %bb.bi
   br label %._crit_edge.i158.i
 
 ._crit_edge.i158.i:                               ; preds = %bb.bj, %bb.bi
-  %i.xs = phi i64 [ %i.xr, %bb.bj ], [ 4294967296, %bb.bi ]
+  %i.xs = phi i64 [ %i.xr, %bb.bj ], [ 0, %bb.bi ]
   %i.xt = zext i16 %i.wh to i64
   %i.xu = getelementptr inbounds nuw [2 x i8], ptr %.pre.i157.i, i64 %i.xt
   %i.xv = load i16, ptr %i.xu, align 2, !tbaa !625
@@ -1031,7 +1031,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl, %._c
   %i.yj = and i64 %i.yi, 16128
   %i.yk = or i64 %i.yh, %i.xs
   %i.yl = or i64 %i.yk, %i.yj
-  %i.ym = trunc i64 %i.yl to i32
+  %i.ym = trunc nuw nsw i64 %i.yl to i32
   br label %_ZL6getTagPKN4llvm18TargetRegisterInfoERKNS_12MachineInstrERKN12_GLOBAL__N_18LoadInfoE.exit162.i
 
 _ZL6getTagPKN4llvm18TargetRegisterInfoERKNS_12MachineInstrERKN12_GLOBAL__N_18LoadInfoE.exit162.i: ; preds = %bb.bn, %bb.bk, %bb.bk, %bb.bk

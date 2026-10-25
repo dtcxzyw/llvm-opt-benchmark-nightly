@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.aa
   br label %.thread
 
 bb.c:                                             ; preds = %._crit_edge.thread, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, %._crit_edge
-  %.val3.i.i.i210 = phi <16 x i8> [ %.val3.i.i.i, %._crit_edge ], [ %.val3.i.i.i, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ splat (i8 -1), %._crit_edge.thread ]
+  %.val3.i.i.i210 = phi <16 x i8> [ %.val3.i.i.i, %._crit_edge ], [ %.val3.i.i.i, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ splat (i8 -128), %._crit_edge.thread ]
   %.sroa.0114.0.copyload209 = phi ptr [ %.sroa.0114.0.copyload.pre, %._crit_edge ], [ %.sroa.0114.0.copyload.pre, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ @124, %._crit_edge.thread ] ; 3 uses
   %.sroa.4115.0.copyload208 = phi i64 [ 0, %._crit_edge ], [ %.sroa.4115.0.copyload.pre, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ 0, %._crit_edge.thread ]
   %.sroa.5117.0.copyload207 = phi i64 [ %.sroa.5117.0.copyload.pre, %._crit_edge ], [ %.sroa.5117.0.copyload.pre, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ 0, %._crit_edge.thread ]
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.c
   br label %.thread
 
 bb.g:                                             ; preds = %._crit_edge.thread, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, %._crit_edge
-  %.val3.i.i.i220 = phi <16 x i8> [ %.val3.i.i.i, %._crit_edge ], [ %.val3.i.i.i, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ splat (i8 -1), %._crit_edge.thread ]
+  %.val3.i.i.i220 = phi <16 x i8> [ %.val3.i.i.i, %._crit_edge ], [ %.val3.i.i.i, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ splat (i8 -128), %._crit_edge.thread ]
   %.sroa.0121.0.copyload219 = phi ptr [ %.sroa.0121.0.copyload.pre, %._crit_edge ], [ %.sroa.0121.0.copyload.pre, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ @124, %._crit_edge.thread ] ; 3 uses
   %.sroa.4122.0.copyload218 = phi i64 [ 0, %._crit_edge ], [ %.sroa.4122.0.copyload.pre, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ 0, %._crit_edge.thread ]
   %.sroa.5124.0.copyload217 = phi i64 [ %.sroa.5124.0.copyload.pre, %._crit_edge ], [ %.sroa.5124.0.copyload.pre, %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ 0, %._crit_edge.thread ]
@@ -1011,7 +1011,7 @@ _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.i: ; preds 
   br i1 %i.ph, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.loopexit235.i, label %bb.ei, !prof !47
 
 _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.loopexit235.i: ; preds = %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.i, %bb.ds, %bb.ds
-  %.sroa.8.0.insert.insert.i199.ph.i = phi i64 [ 257, %bb.ds ], [ 257, %bb.ds ], [ %.sroa.8.0.insert.insert.i.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.i ]
+  %.sroa.8.0.insert.insert.i199.ph.i = phi i64 [ 256, %bb.ds ], [ 256, %bb.ds ], [ %.sroa.8.0.insert.insert.i.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.i ]
   %i.pi = lshr i64 %.sroa.8.0.insert.insert.i199.ph.i, 8
   %i.pj = trunc i64 %i.pi to i8
   br label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i
@@ -1414,7 +1414,7 @@ _RINvMs0_NtNtCsaKJjC64KgbL_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9l
 
 bb.v:                                             ; preds = %bb.s
   %i.dy = extractvalue { ptr, i64 } %i.dp, 0      ; 3 uses
-  %i.dz = extractvalue { ptr, i64 } %i.dp, 1      ; 2 uses
+  %i.dz = extractvalue { ptr, i64 } %i.dp, 1      ; 3 uses
   switch i64 %i.dz, label %thread-pre-split.i650 [
     i64 0, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.loopexit982
     i64 1, label %bb.w
@@ -1640,7 +1640,7 @@ _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.id, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.loopexit982, label %bb.aj, !prof !47
 
 _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.loopexit982: ; preds = %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit, %bb.w, %bb.w, %bb.v
-  %.sroa.8.0.insert.insert.i743.ph = phi i64 [ 257, %bb.w ], [ 257, %bb.w ], [ 1, %bb.v ], [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ]
+  %.sroa.8.0.insert.insert.i743.ph = phi i64 [ 256, %bb.w ], [ 256, %bb.w ], [ %i.dz, %bb.v ], [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ]
   %i.ie = lshr i64 %.sroa.8.0.insert.insert.i743.ph, 8
   %i.if = trunc i64 %i.ie to i8
   br label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread
@@ -1859,7 +1859,7 @@ _RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit: ; preds = 
   br i1 %i.lh, label %_RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit.thread.loopexit986, label %bb.aw, !prof !47
 
 _RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit.thread.loopexit986: ; preds = %_RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit, %bb.an, %bb.an, %bb.am
-  %.sroa.8.0.insert.insert.i652750.ph = phi i32 [ 257, %bb.an ], [ 257, %bb.an ], [ 1, %bb.am ], [ %.sroa.8.0.insert.insert.i652, %_RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit ]
+  %.sroa.8.0.insert.insert.i652750.ph = phi i32 [ 256, %bb.an ], [ 256, %bb.an ], [ 0, %bb.am ], [ %.sroa.8.0.insert.insert.i652, %_RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit ]
   %i.li = lshr i32 %.sroa.8.0.insert.insert.i652750.ph, 8
   %i.lj = trunc i32 %i.li to i8
   br label %_RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit.thread

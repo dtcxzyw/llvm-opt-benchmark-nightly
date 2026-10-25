@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k
   br label %_RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1B_3ops8function5FnMutTRB5_B2I_EE8call_mutBa_.exit.i
 
 _RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1B_3ops8function5FnMutTRB5_B2I_EE8call_mutBa_.exit.i: ; preds = %bb.m, %bb.l, %bb.k, %bb.i, %bb.h, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i.i.i
-  %.sroa.0.0.i.i.i.i = phi i8 [ %i.bc, %bb.m ], [ %i.ak, %bb.h ], [ %..i.i.i.i, %bb.l ], [ %.sroa.0.0.i.i.i.i.i.i.i, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i.i.i ], [ %i.aq, %bb.i ], [ 1, %bb.k ] ; 3 uses
+  %.sroa.0.0.i.i.i.i = phi i8 [ %i.bc, %bb.m ], [ %i.ak, %bb.h ], [ %..i.i.i.i, %bb.l ], [ %.sroa.0.0.i.i.i.i.i.i.i, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i.i.i ], [ %i.aq, %bb.i ], [ 0, %bb.k ] ; 3 uses
   %i.bd = icmp slt i8 %.sroa.0.0.i.i.i.i, 0
   tail call void @llvm.experimental.noalias.scope.decl(metadata !244)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !245)
@@ -386,7 +386,7 @@ bb.af:                                            ; preds = %bb.ad
   br label %_RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1B_3ops8function5FnMutTRB5_B2I_EE8call_mutBa_.exit20.i
 
 _RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1B_3ops8function5FnMutTRB5_B2I_EE8call_mutBa_.exit20.i: ; preds = %bb.af, %bb.ae, %bb.ad, %bb.ab, %bb.aa, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i.i16.i
-  %.sroa.0.0.i.i.i18.i = phi i8 [ %i.ef, %bb.af ], [ %i.dn, %bb.aa ], [ %..i.i.i19.i, %bb.ae ], [ %.sroa.0.0.i.i.i.i.i.i17.i, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i.i16.i ], [ %i.dt, %bb.ab ], [ 1, %bb.ad ]
+  %.sroa.0.0.i.i.i18.i = phi i8 [ %i.ef, %bb.af ], [ %i.dn, %bb.aa ], [ %..i.i.i19.i, %bb.ae ], [ %.sroa.0.0.i.i.i.i.i.i17.i, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos7pairpos11PairPosRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i.i16.i ], [ %i.dt, %bb.ab ], [ 0, %bb.ad ]
   %i.eg = xor i8 %.sroa.0.0.i.i.i18.i, %.sroa.0.0.i.i.i.i
   %i.eh = icmp slt i8 %i.eg, 0
   %..i.i = select i1 %i.eh, ptr %i.h, ptr %i.g
@@ -427,8 +427,8 @@ bb.ag:                                            ; preds = %_RINvNtNtNtNtCsf3Ta
   %i.ex = load i16, ptr %i.ew, align 2, !alias.scope !280 ; 4 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %.sroa.0.0119243, i64 360
   %i.ez = load i16, ptr %i.ey, align 8, !range !7, !alias.scope !280
-  %i.fa = trunc nuw i16 %i.ez to i1               ; 3 uses
-  %..i.i.i.i.i = sext i1 %i.fa to i8              ; 2 uses
+  %i.fa = trunc nuw i16 %i.ez to i1               ; 4 uses
+  %..i.i.i.i.i = sext i1 %i.fa to i8
   %i.fb = getelementptr inbounds nuw i8, ptr %.sroa.0.0119243, i64 362
   %i.fc = load i16, ptr %i.fb, align 2, !alias.scope !280 ; 2 uses
   br label %.outer.i.i
@@ -601,9 +601,11 @@ bb.az:                                            ; preds = %bb.ay
   %i.hk = getelementptr inbounds i8, ptr %.sroa.011.1.i.i, i64 -8
   %i.hl = load i16, ptr %i.hk, align 8, !range !7, !alias.scope !309, !noundef !4
   %i.hm = trunc nuw i16 %i.hl to i1               ; 2 uses
-  %i.hn = select i1 %i.hm, i1 %i.fa, i1 false
-  %..i.i.i43.mux.i.i = select i1 %i.hm, i8 1, i8 %..i.i.i.i.i
-  br i1 %i.hn, label %bb.ba, label %bb.bb
+  %.not36.i.i = xor i1 %i.hm, true
+  %5 = select i1 %i.hm, i1 %i.fa, i1 false
+  %i.hn = select i1 %.not36.i.i, i1 %i.fa, i1 false
+  %..i.i.i43.mux.i.i = sext i1 %i.hn to i8
+  br i1 %5, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
   %i.ho = getelementptr inbounds i8, ptr %.sroa.011.1.i.i, i64 -6
@@ -1006,7 +1008,7 @@ bb.s:                                             ; preds = %bb.q
   br label %_RNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtB7_4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltB7_.exit
 
 _RNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtB7_4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltB7_.exit: ; preds = %bb.f, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i, %bb.n, %bb.o, %bb.q, %bb.r, %bb.s
-  %.sroa.0.0.i.i = phi i8 [ %i.cd, %bb.s ], [ %i.bl, %bb.n ], [ %..i.i, %bb.r ], [ %.sroa.0.0.i.i.i.i.i, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i ], [ %i.br, %bb.o ], [ 1, %bb.q ], [ 1, %bb.f ]
+  %.sroa.0.0.i.i = phi i8 [ %i.cd, %bb.s ], [ %i.bl, %bb.n ], [ %..i.i, %bb.r ], [ %.sroa.0.0.i.i.i.i.i, %_RNvXs9_NtCsgCecv3eZDcN_5alloc6borrowINtB5_3CowNtNtNtCs5JazJsyow1H_14otl_normalizer4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd11partial_cmpBO_.exit.i.i ], [ %i.br, %bb.o ], [ 0, %bb.q ], [ 0, %bb.f ]
   %i.ce = icmp slt i8 %.sroa.0.0.i.i, 0
   ret i1 %i.ce
 }
