@@ -205,7 +205,7 @@ bb.a:
 
 .split383.us.us.us.us.preheader:                  ; preds = %.lr.ph
   %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
-  %i.i = add nuw i32 %1, 2                        ; 2 uses
+  %i.i = add nuw nsw i32 %1, 1
   %i.j = add nsw i64 %wide.trip.count.i, -1       ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.k = icmp eq i64 %i.j, 0
@@ -220,12 +220,12 @@ bb.a:
   br label %.split383.us.us.us.us
 
 .split383.us.us.us.us:                            ; preds = %.split383.us.us.us.us.preheader, %.split410.us.split.us.split.us.us.us.us
-  %storemerge452.us.us.us = phi i32 [ %i.bo, %.split410.us.split.us.split.us.us.us.us ], [ 1, %.split383.us.us.us.us.preheader ] ; 3 uses
+  %storemerge452.us.us.us = phi i32 [ %i.bo, %.split410.us.split.us.split.us.us.us.us ], [ 1, %.split383.us.us.us.us.preheader ] ; 4 uses
   store i32 %storemerge452.us.us.us, ptr %i.c, align 4, !tbaa !31
   br label %.split320.us.us.us.us.us.us.us
 
 .split320.us.us.us.us.us.us.us:                   ; preds = %.split345.us.split.us.split.us.us.us.us.us.us.us, %.split383.us.us.us.us
-  %storemerge71381.us.us.us.us.us.us = phi i32 [ %storemerge452.us.us.us, %.split383.us.us.us.us ], [ %i.bn, %.split345.us.split.us.split.us.us.us.us.us.us.us ] ; 3 uses
+  %storemerge71381.us.us.us.us.us.us = phi i32 [ %storemerge452.us.us.us, %.split383.us.us.us.us ], [ %i.bn, %.split345.us.split.us.split.us.us.us.us.us.us.us ] ; 4 uses
   store i32 %storemerge71381.us.us.us.us.us.us, ptr %i.d, align 4, !tbaa !31
   br label %.split264.us.us.us.us.us.us.us.us.us.us
 
@@ -451,15 +451,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not74.us.us.us.us.us.us.us.us.us, label %.split345.us.split.us.split.us.us.us.us.us.us.us, label %.split264.us.us.us.us.us.us.us.us.us.us, !llvm.loop !93
 
 .split345.us.split.us.split.us.us.us.us.us.us.us: ; preds = %.split287.us.split.us.split.us.us.us.us.us.us.us.us.us.us
-  %i.bn = add nuw i32 %storemerge71381.us.us.us.us.us.us, 1 ; 3 uses
+  %i.bn = add nuw nsw i32 %storemerge71381.us.us.us.us.us.us, 1 ; 2 uses
   store i32 %i.bn, ptr %i.c, align 4, !tbaa !31
-  %exitcond506 = icmp eq i32 %i.bn, %i.i
-  br i1 %exitcond506, label %.split410.us.split.us.split.us.us.us.us, label %.split320.us.us.us.us.us.us.us, !llvm.loop !94
+  %.not72.us.us.us.us.us.us = icmp sgt i32 %storemerge71381.us.us.us.us.us.us, %1
+  br i1 %.not72.us.us.us.us.us.us, label %.split410.us.split.us.split.us.us.us.us, label %.split320.us.us.us.us.us.us.us, !llvm.loop !94
 
 .split410.us.split.us.split.us.us.us.us:          ; preds = %.split345.us.split.us.split.us.us.us.us.us.us.us
-  %i.bo = add nuw i32 %storemerge452.us.us.us, 1  ; 3 uses
+  %i.bo = add nuw i32 %storemerge452.us.us.us, 1  ; 2 uses
   store i32 %i.bo, ptr %i.b, align 4, !tbaa !31
-  %exitcond507 = icmp eq i32 %i.bo, %i.i
+  %exitcond507 = icmp eq i32 %storemerge452.us.us.us, %i.i
   br i1 %exitcond507, label %.thread, label %.split383.us.us.us.us, !llvm.loop !95
 
 .preheader.us143.us.us.us.us.us.us:               ; preds = %.lr.ph, %bb.m

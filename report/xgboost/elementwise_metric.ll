@@ -204,8 +204,8 @@ _ZNK7xgboost6common15OptionalWeightsixEm.exit.i.i: ; preds = %_ZNK7xgboost6commo
   %i.dc = getelementptr [4 x i8], ptr %i.av, i64 %i.da
   %i.dd = getelementptr [4 x i8], ptr %i.dc, i64 %i.db
   %i.de = load float, ptr %i.dd, align 4, !tbaa !74, !noalias !436 ; 3 uses
-  %2 = icmp ult i64 %.0187.i, %i.az
-  br i1 %2, label %_ZNK7xgboost6common4SpanIKfLm18446744073709551615EEixEm.exit.i.i, label %.loopexit13.i, !prof !120
+  %exitcond.not = icmp eq i64 %.0187.i, %i.az
+  br i1 %exitcond.not, label %.loopexit13.i, label %_ZNK7xgboost6common4SpanIKfLm18446744073709551615EEixEm.exit.i.i, !prof !128
 
 .loopexit13.i:                                    ; preds = %_ZNK7xgboost6common15OptionalWeightsixEm.exit.i.i, %_ZNK7xgboost6common15OptionalWeightsixEm.exit.i.peel.i
   call void @_ZSt9terminatev() #36, !noalias !436
@@ -248,7 +248,7 @@ _ZZN7xgboost6metric13EvalEWiseBaseINS0_14EvalRowLogLossEE4EvalERKNS_16HostDevice
   %i.dy = insertelement <2 x float> %i.dx, float %i.dw, i64 1
   %i.dz = fpext <2 x float> %i.dy to <2 x double>
   %i.ea = fadd <2 x double> %i.ck, %i.dz          ; 2 uses
-  %i.eb = add nuw i64 %.0187.i, 1                 ; 2 uses
+  %i.eb = add i64 %.0187.i, 1                     ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.eb, %.val5
   br i1 %exitcond.not.i, label %_ZZN7xgboost6metric12_GLOBAL__N_16ReduceIZNS0_13EvalEWiseBaseINS0_14EvalRowLogLossEE4EvalERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEEUlmmmE_EENS0_18PackedReduceResultEPKNS_7ContextESC_OT_mENKUlSJ_E_clINS_6common7Range1dEEEDaSJ_.exit, label %bb.g, !llvm.loop !432
 

@@ -205,7 +205,7 @@ _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecIBv_jEE7reserveCskcxRuJ53GpR_9rustwor
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.3, align 8, !noalias !14186
   %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.ew, i64 88
   store i64 0, ptr %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i.i.3, align 8, !noalias !14186
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i509
 
@@ -608,7 +608,7 @@ _RNvXsb_NtCs87CvPiUlf0m_5alloc3vecINtB5_3VecjENtNtCslwFuT2d6ECx_4core5clone5Clon
   %.sroa.726.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.031.i, i64 16
   store i64 %.sroa.9.0.copyload, ptr %.sroa.726.0..sroa.0.0.sroa_idx.i, align 8, !noalias !41862
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.031.i, i64 24 ; 2 uses
-  %i.ab = add nuw i64 %storemerge29.i, 1
+  %i.ab = add nuw nsw i64 %storemerge29.i, 1
   %exitcond.not.i = icmp eq i64 %i.z, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.split.i
 
@@ -1011,7 +1011,7 @@ _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecTjjEE7reserveCskcxRuJ53GpR_9rustworkx
   %i.bt = zext <2 x i32> %i.bs to <2 x i64>
   store <2 x i64> %i.bt, ptr %i.br, align 8, !noalias !106058
   %i.bu = add nuw i64 %i.ba, 4                    ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RNvXs_NtNtCs87CvPiUlf0m_5alloc3vec21spec_from_iter_nestedINtB6_3VecTjjEEINtB4_18SpecFromIterNestedB13_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1L_5slice4iter4IterTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB2S_EENCNvNtCskcxRuJ53GpR_9rustworkx12connectivity18digraph_find_cycle0EE9from_iterB3R_.exit.i.loopexit.unr-lcssa, label %.preheader.i.i.i.i
 
@@ -1414,7 +1414,7 @@ bb.ar:                                            ; preds = %bb.aq, %.preheader.
   %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.fj, i64 %i.fu
   store ptr %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.1, ptr %i.ga, align 8, !noalias !140396
   %i.gb = add nuw i64 %i.fn, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs87CvPiUlf0m_5alloc3vec21spec_from_iter_nestedINtB6_3VecINtNtCslwFuT2d6ECx_4core6option6OptionRINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1L_5types3any5PyAnyEEEINtB4_18SpecFromIterNestedB13_INtNtNtNtB18_4iter8adapters3map3MapINtNtNtB18_5slice4iter4IterNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexENCNvNtCskcxRuJ53GpR_9rustworkx8dag_algo6layerss0_0EE9from_iterB57_.exit.i.loopexit.unr-lcssa, label %.preheader.i
 

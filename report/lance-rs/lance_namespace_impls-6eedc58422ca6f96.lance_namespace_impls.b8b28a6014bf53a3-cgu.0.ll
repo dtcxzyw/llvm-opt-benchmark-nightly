@@ -205,7 +205,7 @@ _RNvXs4_NtCscI6d9CVNmLh_4core6optionINtB5_6OptionINtNtCs40k4W9msRzi_5alloc3vec3V
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.023.i, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !88808
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !88808
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.023.i, i64 24 ; 2 uses
-  %i.aj = add nuw i64 %storemerge21.i, 1
+  %i.aj = add nuw nsw i64 %storemerge21.i, 1
   %exitcond.not.i = icmp eq i64 %i.ah, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.split.i
 
@@ -608,7 +608,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecRDNtNtCs4ytUTZt2Gw9_11arrow_array5arr
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
   store ptr %i.cv, ptr %i.dd, align 8, !noalias !141477
   %i.de = add nuw i64 %i.ce, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.preheader.i.i.i.i.i.i
 

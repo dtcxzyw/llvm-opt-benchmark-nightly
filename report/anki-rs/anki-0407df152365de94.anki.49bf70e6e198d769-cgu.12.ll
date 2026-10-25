@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.noexc16.i
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 16
   store i64 %.val15.i, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !9931
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 24 ; 2 uses
-  %i.ac = add nuw i64 %storemerge30.i, 1
+  %i.ac = add nuw nsw i64 %storemerge30.i, 1
   %exitcond.not.i = icmp eq i64 %i.aa, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %bb.c
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 360
   store i64 -9223372036854775807, ptr %i.r, align 8, !noalias !13202
   %i.s = add nuw i64 %i.k, 4                      ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN111_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$9from_iter17h2d5c493df6b99d82E.exit.loopexit.unr-lcssa", label %.preheader
 
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 360
   store i64 -9223372036854775807, ptr %i.r, align 8, !noalias !13833
   %i.s = add nuw i64 %i.k, 4                      ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN111_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$9from_iter17h6cfff2137225d90cE.exit.loopexit.unr-lcssa", label %.preheader
 
