@@ -205,7 +205,7 @@ bb.a:
   %30 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %31 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %32 = alloca %"class.std::unique_ptr", align 8  ; 5 uses
-  %33 = alloca %"class.std::unique_ptr.269", align 8 ; 6 uses
+  %33 = alloca %"class.std::unique_ptr.269", align 8 ; 5 uses
   %34 = alloca %"class.std::unique_ptr", align 8  ; 5 uses
   %35 = alloca %"class.std::unique_ptr.269", align 8 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 16 uses
@@ -213,7 +213,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #29
   %i.k = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZNK4llvm11MCAsmParser6getTokEv(ptr noundef nonnull align 8 dereferenceable(243) %i.j) #29
-  %i.l = tail call ptr @_ZNK4llvm8AsmToken6getLocEv(ptr noundef nonnull align 8 dereferenceable(40) %i.k) #29 ; 9 uses
+  %i.l = tail call ptr @_ZNK4llvm8AsmToken6getLocEv(ptr noundef nonnull align 8 dereferenceable(40) %i.k) #29 ; 10 uses
   %i.m = tail call noundef nonnull align 8 dereferenceable(320) ptr @_ZNK4llvm17MCTargetAsmParser6getSTIEv(ptr noundef nonnull align 8 dereferenceable(1000) %0) #29
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 256
   %i.o = load i64, ptr %i.n, align 8, !tbaa !59
@@ -301,7 +301,7 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
   %.sroa.082.0.copyload = load ptr, ptr %2, align 8, !tbaa !81
-  call void @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.269") align 8 %6, i32 %i.v, i32 noundef 1, i1 noundef zeroext false, ptr %i.l, ptr %.sroa.082.0.copyload, ptr noundef nonnull align 8 dereferenceable(1000) %0)
+  call fastcc void @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.269") align 8 %6, i32 %i.v, i32 noundef 1, i1 noundef zeroext false, ptr %i.l, ptr %.sroa.082.0.copyload, ptr noundef nonnull align 8 dereferenceable(1000) %0)
   %i.au = load ptr, ptr %6, align 8, !tbaa !334
   store ptr %i.au, ptr %5, align 8, !tbaa !331
   call void @_ZN4llvm23SmallVectorTemplateBaseISt10unique_ptrINS_18MCParsedAsmOperandESt14default_deleteIS2_EELb0EE9push_backEOS5_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %5)
@@ -417,7 +417,7 @@ bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #29
   %.sroa.068.0.copyload = load ptr, ptr %2, align 8, !tbaa !81
-  call void @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.269") align 8 %12, i32 %i.ch, i32 noundef 2, i1 noundef zeroext false, ptr %i.l, ptr %.sroa.068.0.copyload, ptr noundef nonnull align 8 dereferenceable(1000) %0)
+  call fastcc void @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.269") align 8 %12, i32 %i.ch, i32 noundef 2, i1 noundef zeroext false, ptr %i.l, ptr %.sroa.068.0.copyload, ptr noundef nonnull align 8 dereferenceable(1000) %0)
   %i.ci = load ptr, ptr %12, align 8, !tbaa !334
   store ptr %i.ci, ptr %11, align 8, !tbaa !331
   call void @_ZN4llvm23SmallVectorTemplateBaseISt10unique_ptrINS_18MCParsedAsmOperandESt14default_deleteIS2_EELb0EE9push_backEOS5_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %11)
@@ -706,7 +706,7 @@ _ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit210.thread: ; preds = %
 .outer:                                           ; preds = %.outer.outer, %.split
   %.sroa.0257.1.ph = phi i32 [ %.sroa.0246.0, %.split ], [ %.sroa.0257.1.ph.ph, %.outer.outer ] ; 6 uses
   %.1129.ph = phi i32 [ %.2130, %.split ], [ %.1129.ph.ph, %.outer.outer ]
-  %.1124.ph = phi i32 [ %i.lc, %.split ], [ %.1124.ph.ph, %.outer.outer ] ; 6 uses
+  %.1124.ph = phi i32 [ %i.lc, %.split ], [ %.1124.ph.ph, %.outer.outer ] ; 7 uses
   br label %bb.z
 
 bb.z:                                             ; preds = %.outer, %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit213.thread
@@ -1109,7 +1109,7 @@ bb.bm:                                            ; preds = %bb.bl
   br label %.thread
 
 bb.bn:                                            ; preds = %bb.bl
-  %i.ot = call ptr @_ZNK4llvm8AsmToken9getEndLocEv(ptr noundef nonnull align 8 dereferenceable(40) %i.on) #29 ; 2 uses
+  %i.ot = call ptr @_ZNK4llvm8AsmToken9getEndLocEv(ptr noundef nonnull align 8 dereferenceable(40) %i.on) #29 ; 3 uses
   %i.ou = load ptr, ptr %i.j, align 8, !tbaa !34
   %i.ov = getelementptr inbounds nuw i8, ptr %i.ou, i64 152
   %i.ow = load ptr, ptr %i.ov, align 8
@@ -1141,30 +1141,26 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.bo
-  %.sroa.041.1 = phi i32 [ %.sroa.041.0, %bb.bp ], [ %i.pg, %bb.bq ], [ %.sroa.041.0, %bb.bo ]
+  %.sroa.041.1 = phi i32 [ %.sroa.041.0, %bb.bp ], [ %i.pg, %bb.bq ], [ %.sroa.041.0, %bb.bo ] ; 2 uses
   %i.ph = icmp eq i32 %.pre, 0
-  %_ZN12_GLOBAL__N_110ARMOperand16CreateVectorListEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE._ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE = select i1 %i.ph, ptr @_ZN12_GLOBAL__N_110ARMOperand16CreateVectorListEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE, ptr @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #29
-  %i.pi = icmp eq i32 %.1129, 2
-  call void %_ZN12_GLOBAL__N_110ARMOperand16CreateVectorListEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE._ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.269") align 8 %33, i32 %.sroa.041.1, i32 noundef %.1124.ph, i1 noundef zeroext %i.pi, ptr %i.l, ptr %i.ot, ptr noundef nonnull align 8 dereferenceable(1000) %0) #29, !callees !1033
-  %36 = load ptr, ptr %33, align 8, !tbaa !334
-  store ptr null, ptr %33, align 8, !tbaa !334
-  store ptr %36, ptr %32, align 8, !tbaa !331
-  call void @_ZN4llvm23SmallVectorTemplateBaseISt10unique_ptrINS_18MCParsedAsmOperandESt14default_deleteIS2_EELb0EE9push_backEOS5_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %32)
-  %37 = load ptr, ptr %32, align 8, !tbaa !49     ; 3 uses
-  %.not.i226 = icmp eq ptr %37, null
-  br i1 %.not.i226, label %_ZNSt10unique_ptrIN4llvm18MCParsedAsmOperandESt14default_deleteIS1_EED2Ev.exit228, label %_ZNKSt14default_deleteIN4llvm18MCParsedAsmOperandEEclEPS1_.exit.i227.a
+  %i.pi = icmp eq i32 %.1129, 2                   ; 2 uses
+  br i1 %i.ph, label %_ZNKSt14default_deleteIN4llvm18MCParsedAsmOperandEEclEPS1_.exit.i227.a, label %call.0
 
-_ZNKSt14default_deleteIN4llvm18MCParsedAsmOperandEEclEPS1_.exit.i227.a: ; preds = %bb.br
-  %38 = load ptr, ptr %37, align 8, !tbaa !34
-  %39 = getelementptr inbounds nuw i8, ptr %38, i64 8
-  %40 = load ptr, ptr %39, align 8
-  call void %40(ptr noundef nonnull align 8 dereferenceable(48) %37) #29, !inline_history !7
+call.0:                                           ; preds = %bb.br
+  call fastcc void @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.269") align 8 %33, i32 %.sroa.041.1, i32 noundef %.1124.ph, i1 noundef zeroext %i.pi, ptr %i.l, ptr %i.ot, ptr noundef nonnull align 8 dereferenceable(1000) %0) #29, !callees !1033
   br label %_ZNSt10unique_ptrIN4llvm18MCParsedAsmOperandESt14default_deleteIS1_EED2Ev.exit228
 
-_ZNSt10unique_ptrIN4llvm18MCParsedAsmOperandESt14default_deleteIS1_EED2Ev.exit228: ; preds = %bb.br, %_ZNKSt14default_deleteIN4llvm18MCParsedAsmOperandEEclEPS1_.exit.i227.a
-  %i.pj = load ptr, ptr %33, align 8, !tbaa !334  ; 3 uses
+_ZNKSt14default_deleteIN4llvm18MCParsedAsmOperandEEclEPS1_.exit.i227.a: ; preds = %bb.br
+  call fastcc void @_ZN12_GLOBAL__N_110ARMOperand16CreateVectorListEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.269") align 8 %33, i32 %.sroa.041.1, i32 noundef %.1124.ph, i1 noundef zeroext %i.pi, ptr %i.l, ptr %i.ot, ptr noundef nonnull align 8 dereferenceable(1000) %0) #29, !callees !1033
+  br label %_ZNSt10unique_ptrIN4llvm18MCParsedAsmOperandESt14default_deleteIS1_EED2Ev.exit228
+
+_ZNSt10unique_ptrIN4llvm18MCParsedAsmOperandESt14default_deleteIS1_EED2Ev.exit228: ; preds = %_ZNKSt14default_deleteIN4llvm18MCParsedAsmOperandEEclEPS1_.exit.i227.a, %call.0
+  %36 = load ptr, ptr %33, align 8, !tbaa !334
+  store ptr %36, ptr %32, align 8, !tbaa !331
+  call void @_ZN4llvm23SmallVectorTemplateBaseISt10unique_ptrINS_18MCParsedAsmOperandESt14default_deleteIS2_EELb0EE9push_backEOS5_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %32)
+  %i.pj = load ptr, ptr %32, align 8, !tbaa !49   ; 3 uses
   %.not.i229 = icmp eq ptr %i.pj, null
   br i1 %.not.i229, label %_ZNSt10unique_ptrIN12_GLOBAL__N_110ARMOperandESt14default_deleteIS1_EED2Ev.exit231, label %_ZNKSt14default_deleteIN12_GLOBAL__N_110ARMOperandEEclEPS1_.exit.i230
 
@@ -1172,10 +1168,10 @@ _ZNKSt14default_deleteIN12_GLOBAL__N_110ARMOperandEEclEPS1_.exit.i230: ; preds =
   %i.pk = load ptr, ptr %i.pj, align 8, !tbaa !34
   %i.pl = getelementptr inbounds nuw i8, ptr %i.pk, i64 8
   %i.pm = load ptr, ptr %i.pl, align 8
-  call void %i.pm(ptr noundef nonnull align 8 dereferenceable(176) %i.pj) #29, !inline_history !12
+  call void %i.pm(ptr noundef nonnull align 8 dereferenceable(48) %i.pj) #29, !inline_history !7
   br label %_ZNSt10unique_ptrIN12_GLOBAL__N_110ARMOperandESt14default_deleteIS1_EED2Ev.exit231
 
-_ZNSt10unique_ptrIN12_GLOBAL__N_110ARMOperandESt14default_deleteIS1_EED2Ev.exit231: ; preds = %_ZNSt10unique_ptrIN4llvm18MCParsedAsmOperandESt14default_deleteIS1_EED2Ev.exit228, %_ZNKSt14default_deleteIN12_GLOBAL__N_110ARMOperandEEclEPS1_.exit.i230
+_ZNSt10unique_ptrIN12_GLOBAL__N_110ARMOperandESt14default_deleteIS1_EED2Ev.exit231: ; preds = %_ZNKSt14default_deleteIN12_GLOBAL__N_110ARMOperandEEclEPS1_.exit.i230, %_ZNSt10unique_ptrIN4llvm18MCParsedAsmOperandESt14default_deleteIS1_EED2Ev.exit228
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #29
   br label %.thread
@@ -1578,7 +1574,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.c
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal void @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr.269") align 8 captures(none) initializes((0, 8)) %0, i32 %1, i32 noundef %2, i1 noundef zeroext %3, ptr %4, ptr %5, ptr noundef nonnull align 8 dereferenceable(1000) %6) unnamed_addr #3 align 2 {
+define internal fastcc void @_ZN12_GLOBAL__N_110ARMOperand24CreateVectorListAllLanesEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr.269") align 8 captures(none) initializes((0, 8)) %0, i32 %1, i32 noundef %2, i1 noundef zeroext %3, ptr %4, ptr %5, ptr noundef nonnull align 8 dereferenceable(1000) %6) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = zext i1 %3 to i8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1063)
@@ -1665,7 +1661,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal void @_ZN12_GLOBAL__N_110ARMOperand16CreateVectorListEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr.269") align 8 captures(none) initializes((0, 8)) %0, i32 %1, i32 noundef %2, i1 noundef zeroext %3, ptr %4, ptr %5, ptr noundef nonnull align 8 dereferenceable(1000) %6) unnamed_addr #3 align 2 {
+define internal fastcc void @_ZN12_GLOBAL__N_110ARMOperand16CreateVectorListEN4llvm10MCRegisterEjbNS1_5SMLocES3_RNS_12ARMAsmParserE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr.269") align 8 captures(none) initializes((0, 8)) %0, i32 %1, i32 noundef %2, i1 noundef zeroext %3, ptr %4, ptr %5, ptr noundef nonnull align 8 dereferenceable(1000) %6) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = zext i1 %3 to i8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1069)
