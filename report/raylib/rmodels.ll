@@ -205,7 +205,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.ph = load i32, ptr %i.pg, align 4, !noalias !141 ; 2 uses
   %i.pi = mul i32 %i.ph, 3                        ; 2 uses
   %i.pj = getelementptr inbounds nuw i8, ptr %i.pf, i64 12
-  %i.pk = load i32, ptr %i.pj, align 4, !noalias !141 ; 2 uses
+  %i.pk = load i32, ptr %i.pj, align 4, !noalias !141 ; 3 uses
   %i.pl = add i32 %i.pk, %i.ph
   %i.pm = mul i32 %i.pl, 3
   %i.pn = icmp ult i32 %i.pi, %i.pm
@@ -216,10 +216,10 @@ bb.bk:                                            ; preds = %bb.bj
   %i.pp = getelementptr inbounds nuw i8, ptr %i.po, i64 8 ; 3 uses
   %i.pq = getelementptr inbounds nuw i8, ptr %i.po, i64 88 ; 3 uses
   %i.pr = zext i32 %i.pi to i64                   ; 2 uses
-  %i.ps = mul i32 %i.pk, 3                        ; 3 uses
+  %i.ps = mul i32 %i.pk, 3                        ; 2 uses
   %wide.trip.count536.i = zext i32 %i.ps to i64   ; 2 uses
   %xtraiter263 = and i64 %wide.trip.count536.i, 1
-  %i.pt = icmp eq i32 %i.ps, 1
+  %i.pt = icmp eq i32 %i.pk, -1431655765
   br i1 %i.pt, label %.epil.preheader262, label %.lr.ph413.i.new
 
 .lr.ph413.i.new:                                  ; preds = %.lr.ph413.i
@@ -329,7 +329,7 @@ bb.br:                                            ; preds = %bb.bj
   %i.rh = load i32, ptr %i.rg, align 4, !noalias !141 ; 2 uses
   %i.ri = mul i32 %i.rh, 3                        ; 2 uses
   %i.rj = getelementptr inbounds nuw i8, ptr %i.rf, i64 12
-  %i.rk = load i32, ptr %i.rj, align 4, !noalias !141 ; 2 uses
+  %i.rk = load i32, ptr %i.rj, align 4, !noalias !141 ; 3 uses
   %i.rl = add i32 %i.rk, %i.rh
   %i.rm = mul i32 %i.rl, 3
   %i.rn = icmp ult i32 %i.ri, %i.rm
@@ -340,10 +340,10 @@ bb.br:                                            ; preds = %bb.bj
   %i.rp = getelementptr inbounds nuw i8, ptr %i.ro, i64 32 ; 3 uses
   %i.rq = getelementptr inbounds nuw i8, ptr %i.ro, i64 96 ; 3 uses
   %i.rr = zext i32 %i.ri to i64                   ; 2 uses
-  %i.rs = mul i32 %i.rk, 3                        ; 3 uses
+  %i.rs = mul i32 %i.rk, 3                        ; 2 uses
   %wide.trip.count524.i = zext i32 %i.rs to i64   ; 2 uses
   %xtraiter256 = and i64 %wide.trip.count524.i, 1
-  %i.rt = icmp eq i32 %i.rs, 1
+  %i.rt = icmp eq i32 %i.rk, -1431655765
   br i1 %i.rt, label %.epil.preheader255, label %.lr.ph405.i.new
 
 .lr.ph405.i.new:                                  ; preds = %.lr.ph405.i

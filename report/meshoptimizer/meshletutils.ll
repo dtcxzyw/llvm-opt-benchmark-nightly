@@ -205,13 +205,13 @@ define dso_local void @meshopt_computeMeshletBounds(ptr dead_on_unwind noalias n
 bb.a:
   %i.a = alloca [1536 x i32], align 16            ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %i.b = mul i64 %3, 3                            ; 5 uses
+  %i.b = mul i64 %3, 3                            ; 4 uses
   %.not = icmp eq i64 %3, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %xtraiter = and i64 %i.b, 1
-  %i.c = icmp eq i64 %i.b, 1
+  %i.c = icmp eq i64 %3, -6148914691236517205
   br i1 %i.c, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader

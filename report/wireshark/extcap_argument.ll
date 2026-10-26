@@ -205,8 +205,8 @@ _ZN7QStringD2Ev.exit43:                           ; preds = %bb.g, %_ZN17QArrayD
 
 bb.h:                                             ; preds = %_ZN7QStringD2Ev.exit43
   %i.x = getelementptr i8, ptr %0, i64 24         ; 2 uses
-  %.idx = mul i64 %i.v, 88
-  %.not119120 = icmp eq i64 %.idx, 0
+  %11 = and i64 %i.v, 2305843009213693951
+  %.not119120 = icmp eq i64 %11, 0
   br i1 %.not119120, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h
@@ -609,8 +609,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.ae = getelementptr i8, ptr %0, i64 24        ; 2 uses
   %i.af = load i64, ptr %i.aa, align 8
-  %.idx = mul i64 %i.af, 88
-  %.not7074 = icmp eq i64 %.idx, 0
+  %10 = and i64 %i.af, 2305843009213693951
+  %.not7074 = icmp eq i64 %10, 0
   br i1 %.not7074, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l
@@ -1013,8 +1013,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr i8, ptr %0, i64 24         ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8              ; 3 uses
-  %.idx = mul i64 %i.n, 88
-  %.not3637 = icmp eq i64 %.idx, 0
+  %4 = and i64 %i.n, 2305843009213693951
+  %.not3637 = icmp eq i64 %4, 0
   br i1 %.not3637, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
@@ -1417,8 +1417,8 @@ bb.k:                                             ; preds = %_ZN5QListI7QStringE
 
 bb.l:                                             ; preds = %bb.k
   %i.ad = getelementptr i8, ptr %0, i64 24        ; 2 uses
-  %.idx = mul i64 %i.ab, 88
-  %.not5759 = icmp eq i64 %.idx, 0
+  %5 = and i64 %i.ab, 2305843009213693951
+  %.not5759 = icmp eq i64 %5, 0
   br i1 %.not5759, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l
@@ -1821,8 +1821,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr i8, ptr %0, i64 24         ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8              ; 3 uses
-  %.idx = mul i64 %i.o, 88
-  %.not3435 = icmp eq i64 %.idx, 0
+  %4 = and i64 %i.o, 2305843009213693951
+  %.not3435 = icmp eq i64 %4, 0
   br i1 %.not3435, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
