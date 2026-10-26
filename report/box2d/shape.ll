@@ -204,8 +204,7 @@ bb.h:                                             ; preds = %._crit_edge
   %wide.trip.count83 = zext nneg i32 %i.e to i64
   %i.ak = add nsw i64 %wide.trip.count83, -1      ; 2 uses
   %xtraiter = and i64 %i.ak, 7                    ; 3 uses
-  %6 = add nsw i32 %i.e, -2
-  %i.al = icmp ult i32 %6, 7
+  %i.al = icmp ult i32 %i.e, 9
   br i1 %i.al, label %.lr.ph76.epil.preheader, label %.lr.ph76.preheader.new
 
 .lr.ph76.preheader.new:                           ; preds = %.lr.ph76.preheader

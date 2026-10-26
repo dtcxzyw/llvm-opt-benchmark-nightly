@@ -202,8 +202,7 @@ bb.p:                                             ; preds = %bb.f
   br i1 %.not, label %bb.q, label %bb.r, !prof !18, !nosanitize !15
 
 bb.q:                                             ; preds = %bb.p
-  %2 = ptrtoint ptr %0 to i64, !nosanitize !15
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @24, i64 %2) #16, !nosanitize !15
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @24, i64 0) #16, !nosanitize !15
   unreachable, !nosanitize !15
 
 bb.r:                                             ; preds = %bb.p
