@@ -204,8 +204,9 @@ _RNvXs0_NtNtCskKLDkoKarTP_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSear
   br i1 %.not.i, label %bb.a, label %_RNvYNtNtNtCskKLDkoKarTP_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCsl8OoimOLbh_6qdrant.exit
 
 _RNvYNtNtNtCskKLDkoKarTP_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCsl8OoimOLbh_6qdrant.exit: ; preds = %bb.a, %_RNvXs0_NtNtCskKLDkoKarTP_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i
+  %.reass5.i.lcssa = phi i64 [ 0, %bb.a ], [ %.reass5.i, %_RNvXs0_NtNtCskKLDkoKarTP_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i ]
   %i.am = insertvalue { ptr, i64 } poison, ptr %0, 0
-  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass5.i, 1
+  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass5.i.lcssa, 1
   ret { ptr, i64 } %i.an
 }
 
@@ -608,7 +609,7 @@ bb.e:                                             ; preds = %bb.d
 
 .invoke:                                          ; preds = %bb.x, %bb.w, %bb.j, %bb.m, %bb.p, %bb.s, %bb.u, %bb.e
   %i.t = phi ptr [ @15, %bb.w ], [ @6, %bb.e ], [ @15, %bb.u ], [ @15, %bb.s ], [ @15, %bb.p ], [ @15, %bb.m ], [ @15, %bb.j ], [ @17, %bb.x ]
-  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.t) #20
+  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.t) #20
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke

@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %lean_dec.exit, %bb.a
   %.0120 = phi ptr [ %8, %bb.a ], [ %i.gm, %lean_dec.exit ] ; 5 uses
   %.0117 = phi ptr [ %7, %bb.a ], [ %.0.i257, %lean_dec.exit ] ; 16 uses
-  %.0114 = phi ptr [ %6, %bb.a ], [ %.1.i255, %lean_dec.exit ] ; 11 uses
+  %.0114 = phi ptr [ %6, %bb.a ], [ %.1.i255, %lean_dec.exit ] ; 9 uses
   %i.h = ptrtoint ptr %.0114 to i64               ; 2 uses
   %i.i = and i64 %i.h, 1
   %.not.i192 = icmp eq i64 %i.i, 0                ; 2 uses
@@ -219,6 +219,7 @@ lean_nat_eq.exit.thread:                          ; preds = %bb.b
   br i1 %.not267, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %lean_nat_eq.exit.thread, %lean_nat_eq.exit
+  %.0114.lcssa = phi ptr [ inttoptr (i64 1 to ptr), %lean_nat_eq.exit.thread ], [ %.0114, %lean_nat_eq.exit ] ; 3 uses
   %i.k = ptrtoint ptr %.0117 to i64
   %i.l = and i64 %i.k, 1
   %.not.i159 = icmp eq i64 %i.l, 0
@@ -246,13 +247,13 @@ lean_dec.exit160:                                 ; preds = %bb.g, %bb.f, %bb.e,
   br i1 %.not.i192, label %bb.h, label %lean_dec.exit158
 
 bb.h:                                             ; preds = %lean_dec.exit160
-  %i.p = load i32, ptr %.0114, align 4, !tbaa !12 ; 3 uses
+  %i.p = load i32, ptr %.0114.lcssa, align 4, !tbaa !12 ; 3 uses
   %i.q = icmp sgt i32 %i.p, 1
   br i1 %i.q, label %bb.i, label %bb.j, !prof !13
 
 bb.i:                                             ; preds = %bb.h
   %i.r = add nsw i32 %i.p, -1
-  store i32 %i.r, ptr %.0114, align 4, !tbaa !12
+  store i32 %i.r, ptr %.0114.lcssa, align 4, !tbaa !12
   br label %lean_dec.exit158
 
 bb.j:                                             ; preds = %bb.h
@@ -260,7 +261,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not.i162, label %lean_dec.exit158, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %.0114) #5
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %.0114.lcssa) #5
   br label %lean_dec.exit158
 
 lean_dec.exit158:                                 ; preds = %bb.k, %bb.j, %bb.i, %lean_dec.exit160

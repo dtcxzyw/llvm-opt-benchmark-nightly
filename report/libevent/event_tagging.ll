@@ -200,7 +200,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -1, -2147483648) i32 @decode_tag_internal(ptr nofree noundef writeonly captures(address_is_null) %0, ptr noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #1 {
+define internal fastcc range(i32 -1, 6) i32 @decode_tag_internal(ptr nofree noundef writeonly captures(address_is_null) %0, ptr noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #1 {
 bb.a:
   %i.a = tail call i64 @evbuffer_get_length(ptr noundef %1) #8 ; 6 uses
   %i.b = tail call i64 @llvm.umin.i64(i64 %i.a, i64 5)
@@ -268,15 +268,16 @@ bb.e:                                             ; preds = %.preheader.peel.nex
   %i.z = load i8, ptr %i.y, align 1               ; 3 uses
   %i.aa = and i8 %i.z, 112
   %.not41 = icmp eq i8 %i.aa, 0
-  br i1 %.not41, label %bb.f, label %.thread
+  %.not42 = icmp sgt i8 %i.z, -1
+  %or.cond = and i1 %.not41, %.not42
+  br i1 %or.cond, label %bb.f, label %.thread, !llvm.loop !9
 
 bb.f:                                             ; preds = %.lr.ph
   %i.ab = and i8 %i.z, 15
   %i.ac = zext nneg i8 %i.ab to i32
   %i.ad = shl nuw i32 %i.ac, 28
   %i.ae = or disjoint i32 %i.ad, %i.x
-  %.not42 = icmp sgt i8 %i.z, -1
-  br i1 %.not42, label %.thread50, label %.thread, !llvm.loop !9
+  br label %.thread50
 
 .thread50:                                        ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   %.lcssa59 = phi i32 [ %i.x, %bb.e ], [ %i.g, %bb.b ], [ %i.m, %bb.c ], [ %i.s, %bb.d ], [ %i.ae, %bb.f ]
@@ -300,8 +301,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ag = trunc nuw nsw i64 %.lcssa58 to i32
   br label %.thread
 
-.thread:                                          ; preds = %bb.f, %.lr.ph, %.preheader.preheader, %.preheader.peel.next, %.preheader.peel.next60, %.preheader.peel.next67, %bb.a, %bb.j
-  %.237 = phi i32 [ -1, %bb.a ], [ %i.ag, %bb.j ], [ -1, %.preheader.peel.next ], [ -1, %.preheader.peel.next60 ], [ -1, %.preheader.peel.next67 ], [ -1, %.preheader.preheader ], [ -1, %.lr.ph ], [ -1, %bb.f ]
+.thread:                                          ; preds = %.lr.ph, %.preheader.preheader, %.preheader.peel.next, %.preheader.peel.next60, %.preheader.peel.next67, %bb.a, %bb.j
+  %.237 = phi i32 [ -1, %bb.a ], [ %i.ag, %bb.j ], [ -1, %.preheader.peel.next ], [ -1, %.preheader.peel.next60 ], [ -1, %.preheader.peel.next67 ], [ -1, %.preheader.preheader ], [ -1, %.lr.ph ]
   ret i32 %.237
 }
 
@@ -590,9 +591,9 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.a, i8 0, i64 5, i1 false)
-  %.021.tr.i.i = trunc i32 %.020.lcssa31.i to i8
   %i.ad = load i8, ptr %i.a, align 1
   %i.ae = and i8 %i.ad, -16
+  %.021.tr.i.i = trunc i32 %.020.lcssa31.i to i8
   %i.af = and i8 %.021.tr.i.i, 15
   %i.ag = or disjoint i8 %i.ae, %i.af
   store i8 %i.ag, ptr %i.a, align 1
@@ -602,9 +603,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i.1:                                     ; preds = %.lr.ph.i.i.preheader
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %.021.tr.i.i.1 = trunc i32 %i.ah to i8
   %3 = load i8, ptr %i.ai, align 1
   %4 = and i8 %3, 15
+  %.021.tr.i.i.1 = trunc i32 %i.ah to i8
   %i.aj = shl i8 %.021.tr.i.i.1, 4
   %i.ak = or disjoint i8 %4, %i.aj
   store i8 %i.ak, ptr %i.ai, align 1
@@ -614,9 +615,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %.021.tr.i.i.2 = trunc i32 %i.al to i8
   %5 = load i8, ptr %i.am, align 1
   %6 = and i8 %5, -16
+  %.021.tr.i.i.2 = trunc i32 %i.al to i8
   %i.an = and i8 %.021.tr.i.i.2, 15
   %i.ao = or disjoint i8 %6, %i.an
   store i8 %i.ao, ptr %i.am, align 1
@@ -727,9 +728,9 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.a, i8 0, i64 5, i1 false)
-  %.021.tr.i.i = trunc i32 %.020.lcssa31.i to i8
   %i.ad = load i8, ptr %i.a, align 1
   %i.ae = and i8 %i.ad, -16
+  %.021.tr.i.i = trunc i32 %.020.lcssa31.i to i8
   %i.af = and i8 %.021.tr.i.i, 15
   %i.ag = or disjoint i8 %i.ae, %i.af
   store i8 %i.ag, ptr %i.a, align 1
@@ -739,9 +740,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i.1:                                     ; preds = %.lr.ph.i.i.preheader
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %.021.tr.i.i.1 = trunc i32 %i.ah to i8
   %3 = load i8, ptr %i.ai, align 1
   %4 = and i8 %3, 15
+  %.021.tr.i.i.1 = trunc i32 %i.ah to i8
   %i.aj = shl i8 %.021.tr.i.i.1, 4
   %i.ak = or disjoint i8 %4, %i.aj
   store i8 %i.ak, ptr %i.ai, align 1
@@ -751,9 +752,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %.021.tr.i.i.2 = trunc i32 %i.al to i8
   %5 = load i8, ptr %i.am, align 1
   %6 = and i8 %5, -16
+  %.021.tr.i.i.2 = trunc i32 %i.al to i8
   %i.an = and i8 %.021.tr.i.i.2, 15
   %i.ao = or disjoint i8 %6, %i.an
   store i8 %i.ao, ptr %i.am, align 1
@@ -1123,7 +1124,7 @@ decode_int64_internal.exit.thread:                ; preds = %bb.d, %bb.c, %bb.b,
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 -1, -2147483648) i32 @evtag_peek(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1) local_unnamed_addr #1 {
+define range(i32 -1, 6) i32 @evtag_peek(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call fastcc i32 @decode_tag_internal(ptr noundef %1, ptr noundef %0, i32 noundef 0)
   ret i32 %i.a

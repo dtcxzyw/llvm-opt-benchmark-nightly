@@ -29,7 +29,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.d, %bb.b
   %.0.in = phi ptr [ %i.c, %bb.b ], [ %.0, %bb.d ]
-  %.0 = load ptr, ptr %.0.in, align 8             ; 5 uses
+  %.0 = load ptr, ptr %.0.in, align 8             ; 4 uses
   %.not8 = icmp eq ptr %.0, null
   br i1 %.not8, label %.critedge, label %bb.d
 
@@ -41,6 +41,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not9, label %.critedge, label %bb.c, !llvm.loop !7
 
 .critedge:                                        ; preds = %bb.c, %bb.d
+  %.0.lcssa = phi ptr [ null, %bb.c ], [ %.0, %bb.d ] ; 2 uses
   %i.g = and i64 %i.b, 512
   %.not10 = icmp eq i64 %i.g, 0
   br i1 %.not10, label %up_irq_restore.exit, label %bb.e
@@ -50,7 +51,7 @@ bb.e:                                             ; preds = %.critedge
   br label %up_irq_restore.exit
 
 up_irq_restore.exit:                              ; preds = %bb.e, %.critedge, %bb.a
-  %.1 = phi ptr [ null, %bb.a ], [ %.0, %.critedge ], [ %.0, %bb.e ]
+  %.1 = phi ptr [ null, %bb.a ], [ %.0.lcssa, %.critedge ], [ %.0.lcssa, %bb.e ]
   ret ptr %.1
 }
 

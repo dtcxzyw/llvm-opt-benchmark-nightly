@@ -205,9 +205,6 @@ $_ZTSZN8LightGBM2RF12TrainOneIterEPKfS2_EUlS2_iE_ = comdat any
 @.str.30 = private unnamed_addr constant [3 x i8] c",\22\00", align 1
 @.str.31 = private unnamed_addr constant [4 x i8] c"\22: \00", align 1
 @.str.32 = private unnamed_addr constant [7 x i8] c"string\00", align 1
-@.str.33 = private unnamed_addr constant [4 x i8] c"int\00", align 1
-@.str.34 = private unnamed_addr constant [7 x i8] c"double\00", align 1
-@.str.35 = private unnamed_addr constant [5 x i8] c"bool\00", align 1
 @.str.37 = private unnamed_addr constant [7 x i8] c"vector\00", align 1
 @.str.38 = private unnamed_addr constant [2 x i8] c"[\00", align 1
 @.str.39 = private unnamed_addr constant [2 x i8] c",\00", align 1
@@ -481,7 +478,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %.preheader, %bb.u
   %.0 = phi i64 [ %i.bn, %bb.u ], [ %i.au, %.preheader ]
   %i.aw = icmp eq i64 %.0, 1
-  %i.ax = load i8, ptr %i.c, align 1, !tbaa !27   ; 6 uses
+  %i.ax = load i8, ptr %i.c, align 1, !tbaa !27   ; 5 uses
   br i1 %i.aw, label %bb.p, label %.loopexit
 
 bb.p:                                             ; preds = %bb.o
@@ -552,7 +549,7 @@ bb.v:                                             ; preds = %.loopexit79
   br label %.loopexit80
 
 .loopexit80:                                      ; preds = %bb.p, %bb.v, %.loopexit
-  %i.bw = phi i8 [ %.pre, %bb.v ], [ %i.ax, %.loopexit ], [ %i.ax, %bb.p ]
+  %i.bw = phi i8 [ %.pre, %bb.v ], [ %i.ax, %.loopexit ], [ 10, %bb.p ]
   %i.bx = icmp eq i8 %i.bw, 10
   br i1 %i.bx, label %bb.w, label %bb.y
 
@@ -955,7 +952,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc30
 
 .lr.ph.preheader:                                 ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc30
   %wide.trip.count = zext nneg i32 %i.l to i64    ; 3 uses
-  %min.iters.check = icmp ult i32 %i.l, 8
+  %min.iters.check = icmp samesign ult i32 %i.l, 8
   br i1 %min.iters.check, label %.lr.ph.preheader186, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -1358,8 +1355,8 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit64 unwind label %bb.ax ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit64: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit
-  %i.er = load i64, ptr %i.ah, align 8, !tbaa !25 ; 6 uses
-  %.pre450 = load ptr, ptr %17, align 8, !tbaa !24 ; 7 uses
+  %i.er = load i64, ptr %i.ah, align 8, !tbaa !25 ; 3 uses
+  %.pre450 = load ptr, ptr %17, align 8, !tbaa !24 ; 9 uses
   switch i64 %i.er, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89.thread207 [
     i64 6, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit66
     i64 3, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit74
@@ -1390,8 +1387,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit68: ; preds = %_ZSte
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit136.invoke unwind label %bb.ax
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit74: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit64
-  %bcmp.i73 = call i32 @bcmp(ptr %.pre450, ptr nonnull @.str.33, i64 %i.er)
-  %i.fg = icmp eq i32 %bcmp.i73, 0
+  %22 = load i16, ptr %.pre450, align 1
+  %23 = xor i16 %22, 28265
+  %24 = getelementptr i8, ptr %.pre450, i64 2
+  %25 = load i8, ptr %24, align 1
+  %26 = zext i8 %25 to i16
+  %27 = xor i16 %26, 116
+  %28 = or i16 %23, %27
+  %29 = icmp ne i16 %28, 0
+  %30 = zext i1 %29 to i32
+  %i.fg = icmp eq i32 %30, 0
   br i1 %i.fg, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit74.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89.thread207
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit74.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit74
@@ -1451,8 +1456,16 @@ bb.ab:                                            ; preds = %bb.y
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit72 unwind label %bb.ax ; 0 uses
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit76: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit66
-  %bcmp.i75 = call i32 @bcmp(ptr nonnull %.pre450, ptr nonnull @.str.34, i64 %i.er)
-  %i.fx = icmp eq i32 %bcmp.i75, 0
+  %31 = load i32, ptr %.pre450, align 1
+  %32 = xor i32 %31, 1651863396
+  %33 = getelementptr i8, ptr %.pre450, i64 4
+  %34 = load i16, ptr %33, align 1
+  %35 = zext i16 %34 to i32
+  %36 = xor i32 %35, 25964
+  %37 = or i32 %32, %36
+  %38 = icmp ne i32 %37, 0
+  %39 = zext i1 %38 to i32
+  %i.fx = icmp eq i32 %39, 0
   br i1 %i.fx, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit76.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89.thread207
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit76.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit76
@@ -1855,8 +1868,10 @@ _ZN8LightGBM6CommonL4AtofEPKcPd.exit:             ; preds = %_ZNSt7__cxx1112basi
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit72 unwind label %bb.ax ; 0 uses
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit64
-  %bcmp.i88 = call i32 @bcmp(ptr %.pre450, ptr nonnull @.str.35, i64 %i.er)
-  %i.mn = icmp eq i32 %bcmp.i88, 0
+  %40 = load i32, ptr %.pre450, align 1
+  %41 = icmp ne i32 %40, 1819242338
+  %42 = zext i1 %41 to i32
+  %i.mn = icmp eq i32 %42, 0
   br i1 %i.mn, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89.thread207
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit89

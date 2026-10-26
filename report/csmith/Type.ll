@@ -127,9 +127,6 @@ $_ZSt19piecewise_construct = comdat any
 @_ZTV22ChooseRandomTypeFilter = dso_local constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTI22ChooseRandomTypeFilter, ptr @_ZN22ChooseRandomTypeFilterD2Ev, ptr @_ZN22ChooseRandomTypeFilterD0Ev, ptr @_ZNK22ChooseRandomTypeFilter6filterEi] }, align 8
 @_ZZN4TypeC1ERSt6vectorIPKS_SaIS2_EEbbRS0_I12CVQualifiersSaIS6_EERS0_IiSaIiEEbbE8sequence = internal unnamed_addr global i32 0, align 4
 @_ZZN4Type15get_simple_typeE11eSimpleTypeE6inited = internal unnamed_addr global i1 false, align 1
-@.str.10 = private unnamed_addr constant [6 x i8] c"UChar\00", align 1
-@.str.12 = private unnamed_addr constant [7 x i8] c"UShort\00", align 1
-@.str.13 = private unnamed_addr constant [4 x i8] c"Int\00", align 1
 @.str.14 = private unnamed_addr constant [5 x i8] c"UInt\00", align 1
 @.str.15 = private unnamed_addr constant [5 x i8] c"Long\00", align 1
 @.str.16 = private unnamed_addr constant [6 x i8] c"ULong\00", align 1
@@ -532,7 +529,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f, %bb.c,
 declare noundef zeroext i1 @_ZN9CGOptions14return_structsEv() local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef range(i32 -2147483646, -2147483648) i32 @_ZNK4Type16get_struct_depthEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(136) %0) local_unnamed_addr #10 align 2 {
+define dso_local noundef range(i32 -2147483645, -2147483648) i32 @_ZNK4Type16get_struct_depthEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(136) %0) local_unnamed_addr #10 align 2 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !73
   %i.b = icmp eq i32 %i.a, 3
@@ -935,7 +932,7 @@ _ZNSt6vectorIP4TypeSaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorIP4Type
 define dso_local noundef ptr @_ZN4Type20get_type_from_stringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !39   ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !39
   switch i64 %i.b, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24.thread30 [
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 5, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit18
@@ -967,9 +964,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.q
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit18: ; preds = %bb.a
-  %.pre = load ptr, ptr %0, align 8, !tbaa !41    ; 3 uses
-  %bcmp.i17 = tail call i32 @bcmp(ptr %.pre, ptr nonnull @.str.10, i64 %i.b)
-  %i.n = icmp eq i32 %bcmp.i17, 0
+  %.pre = load ptr, ptr %0, align 8, !tbaa !41    ; 4 uses
+  %1 = load i32, ptr %.pre, align 1
+  %2 = xor i32 %1, 1634222933
+  %3 = getelementptr i8, ptr %.pre, i64 4
+  %4 = load i8, ptr %3, align 1
+  %5 = zext i8 %4 to i32
+  %6 = xor i32 %5, 114
+  %7 = or i32 %2, %6
+  %8 = icmp ne i32 %7, 0
+  %9 = zext i1 %8 to i32
+  %i.n = icmp eq i32 %9, 0
   br i1 %i.n, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit18.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit18.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit18
@@ -994,9 +999,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.q
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit22: ; preds = %bb.a
-  %.pre31 = load ptr, ptr %0, align 8, !tbaa !41
-  %bcmp.i21 = tail call i32 @bcmp(ptr %.pre31, ptr nonnull @.str.12, i64 %i.b)
-  %i.aa = icmp eq i32 %bcmp.i21, 0
+  %.pre31 = load ptr, ptr %0, align 8, !tbaa !41  ; 2 uses
+  %10 = load i32, ptr %.pre31, align 1
+  %11 = xor i32 %10, 1869108053
+  %12 = getelementptr i8, ptr %.pre31, i64 4
+  %13 = load i16, ptr %12, align 1
+  %14 = zext i16 %13 to i32
+  %15 = xor i32 %14, 29810
+  %16 = or i32 %11, %15
+  %17 = icmp ne i32 %16, 0
+  %18 = zext i1 %17 to i32
+  %i.aa = icmp eq i32 %18, 0
   br i1 %i.aa, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit22.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24.thread30
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit22.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit22
@@ -1004,9 +1017,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.q
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24: ; preds = %bb.a
-  %.pre32 = load ptr, ptr %0, align 8, !tbaa !41
-  %bcmp.i23 = tail call i32 @bcmp(ptr %.pre32, ptr nonnull @.str.13, i64 %i.b)
-  %i.ac = icmp eq i32 %bcmp.i23, 0
+  %.pre32 = load ptr, ptr %0, align 8, !tbaa !41  ; 2 uses
+  %19 = load i16, ptr %.pre32, align 1
+  %20 = xor i16 %19, 28233
+  %21 = getelementptr i8, ptr %.pre32, i64 2
+  %22 = load i8, ptr %21, align 1
+  %23 = zext i8 %22 to i16
+  %24 = xor i16 %23, 116
+  %25 = or i16 %20, %24
+  %26 = icmp ne i16 %25, 0
+  %27 = zext i1 %26 to i32
+  %i.ac = icmp eq i32 %27, 0
   br i1 %i.ac, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24.thread30
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24
@@ -1380,7 +1401,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %switch.lookup, label %bb.c
 
 switch.lookup:                                    ; preds = %bb.b
-  %switch.cast = trunc nuw i32 %i.c to i14
+  %switch.cast = trunc nuw nsw i32 %i.c to i14
   %switch.downshift = lshr i14 5183, %switch.cast
   %switch.masked = trunc i14 %switch.downshift to i1
   br label %bb.c
@@ -1783,19 +1804,19 @@ bb.i:                                             ; preds = %bb.c
   br label %switch.edge
 
 switch.lookup:                                    ; preds = %bb.e
-  %switch.cast = trunc nuw i32 %i.k to i7
+  %switch.cast = trunc nuw nsw i32 %i.k to i7
   %switch.downshift = lshr i7 60, %switch.cast
   %switch.masked = trunc i7 %switch.downshift to i1
   br label %switch.edge
 
 switch.lookup30:                                  ; preds = %bb.f
-  %switch.cast31 = trunc nuw i32 %i.n to i9
+  %switch.cast31 = trunc nuw nsw i32 %i.n to i9
   %switch.downshift33 = lshr i9 180, %switch.cast31
   %switch.masked34 = trunc i9 %switch.downshift33 to i1
   br label %switch.edge
 
 switch.lookup35:                                  ; preds = %bb.g
-  %switch.cast36 = trunc nuw i32 %i.q to i12
+  %switch.cast36 = trunc nuw nsw i32 %i.q to i12
   %switch.downshift38 = lshr i12 -1488, %switch.cast36
   %switch.masked39 = trunc i12 %switch.downshift38 to i1
   br label %switch.edge
@@ -2198,7 +2219,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 16
   %i.cs = add nsw i64 %.052.i.i.i, -1
-  %8 = icmp sgt i64 %.052.i.i.i, 1
+  %8 = icmp samesign ugt i64 %.052.i.i.i, 1
   br i1 %8, label %bb.p, label %._crit_edge.loopexit.i.i.i, !llvm.loop !277
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.t
@@ -2601,7 +2622,7 @@ _ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE10EnumObjec
 bb.b:                                             ; preds = %tailrecurse._crit_edge
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 10
   store i8 1, ptr %i.m, align 2, !tbaa !118
-  %i.n = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.lcssa) #32 ; 2 uses
+  %i.n = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.lcssa) #32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %_ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE24reset_after_backward_posEv.exit, label %.lr.ph.i
@@ -2642,7 +2663,7 @@ _ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE24reset_aft
 bb.c:                                             ; preds = %.lr.ph
   %i.ag = getelementptr inbounds nuw i8, ptr %i.aa, i64 10
   store i8 1, ptr %i.ag, align 2, !tbaa !118
-  %i.ah = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %i.y) #32 ; 2 uses
+  %i.ah = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %i.y) #32 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.aj = icmp eq ptr %i.ah, %i.ai
   br i1 %i.aj, label %_ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE24reset_after_backward_posEv.exit7, label %.lr.ph.i5

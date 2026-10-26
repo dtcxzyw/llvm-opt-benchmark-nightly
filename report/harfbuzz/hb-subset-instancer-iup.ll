@@ -205,8 +205,8 @@ bb.bb:                                            ; preds = %bb.ba
 .loopexit.i.i:                                    ; preds = %bb.bb, %bb.ba, %.split.1.i.i, %bb.az, %bb.ay, %.split116.1.i.i, %bb.ax, %bb.aw, %bb.au, %bb.at, %.critedge97.i.i
   %i.kc = phi i32 [ %i.gd, %bb.bb ], [ %i.gd, %bb.ba ], [ %i.gd, %.split.1.i.i ], [ %i.gd, %bb.az ], [ %i.gd, %bb.ay ], [ %i.gd, %.split116.1.i.i ], [ %i.gd, %bb.ax ], [ %i.gd, %bb.aw ], [ %i.gd, %bb.au ], [ %i.gd, %bb.at ], [ -1, %.critedge97.i.i ] ; 3 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
-  %16 = icmp sgt i64 %indvars.iv.i.i, 0
-  br i1 %16, label %bb.af, label %_ZL29_iup_contour_bound_forced_set10hb_array_tIK15contour_point_tES_IKiES4_R13hb_bit_page_td.exit.i, !llvm.loop !61
+  %.not300 = icmp eq i64 %indvars.iv.i.i, 0
+  br i1 %.not300, label %_ZL29_iup_contour_bound_forced_set10hb_array_tIK15contour_point_tES_IKiES4_R13hb_bit_page_td.exit.i, label %bb.af, !llvm.loop !61
 
 _ZL29_iup_contour_bound_forced_set10hb_array_tIK15contour_point_tES_IKiES4_R13hb_bit_page_td.exit.i: ; preds = %.loopexit.i.i
   store i32 %i.kc, ptr %6, align 8
@@ -609,11 +609,14 @@ _ZL5beginIRK13hb_bit_page_tTnPN12hb_enable_ifIXsr14hb_is_iterableIT_EE5valueEvE4
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i32 -1, ptr %3, align 8, !tbaa !42
   %i.x = add nuw nsw i32 %i.v, %i.b
-  %4 = urem i32 %i.x, %2                          ; 2 uses
-  %i.y = and i32 %4, 63
+  %.lhs.trunc = trunc nuw nsw i32 %i.x to i16
+  %.rhs.trunc = trunc nuw nsw i32 %2 to i16
+  %4 = urem i16 %.lhs.trunc, %.rhs.trunc
+  %.zext = zext nneg i16 %4 to i32                ; 2 uses
+  %i.y = and i32 %.zext, 63
   %i.z = zext nneg i32 %i.y to i64
   %i.aa = shl nuw i64 1, %i.z
-  %i.ab = lshr i32 %4, 6
+  %i.ab = lshr i32 %.zext, 6
   %i.ac = zext nneg i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.ac ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !37
@@ -1016,7 +1019,7 @@ bb.af:                                            ; preds = %bb.x
   br i1 %i.eg, label %.lr.ph109.us.i.i.preheader, label %.lr.ph107.us.preheader.i.i
 
 .lr.ph109.us.i.i.preheader:                       ; preds = %bb.af
-  %min.iters.check209 = icmp ult i32 %.sroa.speculated.i.i.fr, 4
+  %min.iters.check209 = icmp samesign ult i32 %.sroa.speculated.i.i.fr, 4
   br i1 %min.iters.check209, label %.lr.ph109.us.i.i.preheader223, label %vector.ph210
 
 vector.ph210:                                     ; preds = %.lr.ph109.us.i.i.preheader

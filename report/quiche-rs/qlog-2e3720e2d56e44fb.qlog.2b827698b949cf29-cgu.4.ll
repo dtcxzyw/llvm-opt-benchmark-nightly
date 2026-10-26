@@ -204,7 +204,7 @@ bb.dx:                                            ; preds = %bb.du
           to label %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueNtCs3JBf551F2Kj_4qlog8TraceSeqEB23_.exit.i unwind label %.loopexit.i49, !dbg !4898, !noalias !4368
 
 .invoke:                                          ; preds = %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz
-  %i.lq = phi ptr [ @4, %bb.cc ], [ @3, %bb.cb ], [ @2, %bb.ca ], [ @1, %bb.bz ], [ @5, %bb.cd ]
+  %i.lq = phi ptr [ @5, %bb.cd ], [ @4, %bb.cc ], [ @3, %bb.cb ], [ @2, %bb.ca ], [ @1, %bb.bz ]
   %i.lr = invoke noundef nonnull align 8 ptr @_RNvYNtNtCsenfyI6F4F2A_10serde_json5error5ErrorNtNtCs9xKKqPmwf7Y_10serde_core2de5Error15duplicate_fieldCs3JBf551F2Kj_4qlog(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.lq, i64 noundef %.sroa.4.0.copyload.i.i.i.i.i.i.i)
           to label %.loopexit unwind label %.loopexit.split-lp.i, !dbg !4734, !noalias !4368
 
@@ -607,7 +607,7 @@ bb.gk:                                            ; preds = %_RINvXs0_NvXNvCs3JB
   %i.oi = getelementptr inbounds nuw i8, ptr %i.av, i64 352, !dbg !4958
   store ptr %i.og, ptr %i.oi, align 8, !dbg !4958
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au), !dbg !4961
-  %i.oj = load i64, ptr %i.av, align 8, !dbg !4958, !range !936, !noundef !594 ; 4 uses
+  %i.oj = load i64, ptr %i.av, align 8, !dbg !4958, !range !936, !noundef !594 ; 2 uses
   %i.ok = icmp eq i64 %i.oj, -1, !dbg !4958
   br i1 %i.ok, label %bb.gm, label %bb.gl, !dbg !4962
 
@@ -654,7 +654,7 @@ bb.gn:                                            ; preds = %bb.gl
   br label %.thread91, !dbg !4964
 
 .thread91:                                        ; preds = %.thread372, %bb.gn, %bb.go, %bb.gm
-  %.sroa.09.297 = phi i64 [ %i.oj, %bb.gm ], [ %i.oj, %bb.go ], [ -1, %bb.gn ], [ %i.oj, %.thread372 ]
+  %.sroa.09.297 = phi i64 [ -1, %bb.gm ], [ -1, %bb.go ], [ -1, %bb.gn ], [ %i.oj, %.thread372 ]
   %.sroa.10.296 = phi ptr [ %i.om, %bb.gm ], [ %i.om, %bb.go ], [ %i.og, %bb.gn ], [ %.sroa.421.0.copyload, %.thread372 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !dbg !4964
   br label %bb.bk, !dbg !4964
@@ -1057,7 +1057,7 @@ bb.dw:                                            ; preds = %bb.dt
           to label %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtB26_6string6StringEECs3JBf551F2Kj_4qlog.exit.i unwind label %.loopexit.i49, !dbg !6864, !noalias !6311
 
 .invoke:                                          ; preds = %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca
-  %i.ll = phi ptr [ @7, %bb.cd ], [ @6, %bb.cc ], [ @4, %bb.cb ], [ @3, %bb.ca ], [ @8, %bb.ce ]
+  %i.ll = phi ptr [ @8, %bb.ce ], [ @7, %bb.cd ], [ @6, %bb.cc ], [ @4, %bb.cb ], [ @3, %bb.ca ]
   %i.lm = invoke noundef nonnull align 8 ptr @_RNvYNtNtCsenfyI6F4F2A_10serde_json5error5ErrorNtNtCs9xKKqPmwf7Y_10serde_core2de5Error15duplicate_fieldCs3JBf551F2Kj_4qlog(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ll, i64 noundef %.sroa.4.0.copyload.i.i.i.i.i.i.i)
           to label %.loopexit unwind label %.loopexit.split-lp.i, !dbg !6702, !noalias !6311
 
@@ -1460,7 +1460,7 @@ bb.gf:                                            ; preds = %_RINvXs0_NvXNvCs3JB
   %i.oa = getelementptr inbounds nuw i8, ptr %i.at, i64 256, !dbg !6920
   store ptr %i.ny, ptr %i.oa, align 8, !dbg !6920
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !dbg !6923
-  %i.ob = load i64, ptr %i.at, align 8, !dbg !6920, !range !936, !noundef !594 ; 4 uses
+  %i.ob = load i64, ptr %i.at, align 8, !dbg !6920, !range !936, !noundef !594 ; 2 uses
   %i.oc = icmp eq i64 %i.ob, -1, !dbg !6920
   br i1 %i.oc, label %bb.gh, label %bb.gg, !dbg !6924
 
@@ -1510,7 +1510,7 @@ bb.gi:                                            ; preds = %bb.gg
   br label %.thread91, !dbg !6926
 
 .thread91:                                        ; preds = %.thread366, %bb.gi, %bb.gj, %bb.gh
-  %.sroa.09.297 = phi i64 [ %i.ob, %bb.gh ], [ %i.ob, %bb.gj ], [ -1, %bb.gi ], [ %i.ob, %.thread366 ]
+  %.sroa.09.297 = phi i64 [ -1, %bb.gh ], [ -1, %bb.gj ], [ -1, %bb.gi ], [ %i.ob, %.thread366 ]
   %.sroa.10.296 = phi ptr [ %i.oe, %bb.gh ], [ %i.oe, %bb.gj ], [ %i.ny, %bb.gi ], [ %.sroa.421.0.copyload, %.thread366 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !dbg !6926
   br label %bb.bl, !dbg !6926
@@ -1913,7 +1913,7 @@ bb.dy:                                            ; preds = %_RINvXs0_NvXNvCs3JB
   %i.kf = getelementptr inbounds nuw i8, ptr %i.ad, i64 72, !dbg !9471
   store ptr %i.kd, ptr %i.kf, align 8, !dbg !9471
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !dbg !9474
-  %i.kg = load i64, ptr %i.ad, align 8, !dbg !9471, !range !936, !noundef !594 ; 4 uses
+  %i.kg = load i64, ptr %i.ad, align 8, !dbg !9471, !range !936, !noundef !594 ; 2 uses
   %i.kh = icmp eq i64 %i.kg, -1, !dbg !9471
   br i1 %i.kh, label %bb.ea, label %bb.dz, !dbg !9475
 
@@ -1951,7 +1951,7 @@ bb.eb:                                            ; preds = %bb.dz
   br label %.thread84, !dbg !9477
 
 .thread84:                                        ; preds = %.thread276, %bb.eb, %bb.ec, %bb.ea
-  %.sroa.09.290 = phi i64 [ %i.kg, %bb.ea ], [ %i.kg, %bb.ec ], [ -1, %bb.eb ], [ %i.kg, %.thread276 ]
+  %.sroa.09.290 = phi i64 [ -1, %bb.ea ], [ -1, %bb.ec ], [ -1, %bb.eb ], [ %i.kg, %.thread276 ]
   %.sroa.10.289 = phi ptr [ %i.kj, %bb.ea ], [ %i.kj, %bb.ec ], [ %i.kd, %bb.eb ], [ %.sroa.421.0.copyload, %.thread276 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !dbg !9477
   br label %bb.aq, !dbg !9477
@@ -2354,7 +2354,7 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.gh, label %bb.by, label %bb.bs, !dbg !11155
 
 bb.bs:                                            ; preds = %.noexc276.i
-  %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !dbg !11156, !noalias !10809 ; 2 uses
+  %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !dbg !11156, !noalias !10809 ; 5 uses
     #dbg_declare(ptr poison, !10811, !DIExpression(), !9926)
     #dbg_value(ptr %i.gi, !10815, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9927)
     #dbg_value(ptr %i.gi, !10817, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9930)
@@ -2757,8 +2757,9 @@ bb.dv:                                            ; preds = %bb.ds
           to label %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionNtCs3JBf551F2Kj_4qlog10TimeFormatEEB2F_.exit.i unwind label %.loopexit.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp, !dbg !11296, !noalias !10759
 
 .invoke:                                          ; preds = %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca
+  %.sroa.4.0.copyload.i.i.i.i.i.i.i909 = phi i64 [ %.sroa.4.0.copyload.i.i.i.i.i.i.i, %bb.cd ], [ %.sroa.4.0.copyload.i.i.i.i.i.i.i, %bb.ca ], [ %.sroa.4.0.copyload.i.i.i.i.i.i.i, %bb.cb ], [ %.sroa.4.0.copyload.i.i.i.i.i.i.i, %bb.cc ], [ 11, %bb.ce ]
   %i.le = phi ptr [ @18, %bb.cd ], [ @15, %bb.ca ], [ @16, %bb.cb ], [ @17, %bb.cc ], [ @19, %bb.ce ]
-  %i.lf = invoke noundef nonnull align 8 ptr @_RNvYNtNtCsenfyI6F4F2A_10serde_json5error5ErrorNtNtCs9xKKqPmwf7Y_10serde_core2de5Error15duplicate_fieldCs3JBf551F2Kj_4qlog(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.le, i64 noundef %.sroa.4.0.copyload.i.i.i.i.i.i.i)
+  %i.lf = invoke noundef nonnull align 8 ptr @_RNvYNtNtCsenfyI6F4F2A_10serde_json5error5ErrorNtNtCs9xKKqPmwf7Y_10serde_core2de5Error15duplicate_fieldCs3JBf551F2Kj_4qlog(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.le, i64 noundef %.sroa.4.0.copyload.i.i.i.i.i.i.i909)
           to label %.loopexit unwind label %.loopexit.split-lp.i, !dbg !11136, !noalias !10759
 
 _RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionNtCs3JBf551F2Kj_4qlog10TimeFormatEEB2F_.exit.i: ; preds = %bb.dv
@@ -3161,7 +3162,7 @@ bb.fq:                                            ; preds = %_RINvXs0_NvXNvCs3JB
   %i.na = getelementptr inbounds nuw i8, ptr %i.ar, i64 152, !dbg !11338
   store ptr %i.my, ptr %i.na, align 8, !dbg !11338
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !dbg !11341
-  %i.nb = load i64, ptr %i.ar, align 8, !dbg !11338, !range !936, !noundef !594 ; 4 uses
+  %i.nb = load i64, ptr %i.ar, align 8, !dbg !11338, !range !936, !noundef !594 ; 2 uses
   %i.nc = icmp eq i64 %i.nb, -1, !dbg !11338
   br i1 %i.nc, label %bb.fs, label %bb.fr, !dbg !11342
 
@@ -3208,7 +3209,7 @@ bb.ft:                                            ; preds = %bb.fr
   br label %.thread85, !dbg !11344
 
 .thread85:                                        ; preds = %.thread412, %bb.ft, %bb.fu, %bb.fs
-  %.sroa.09.291 = phi i64 [ %i.nb, %bb.fs ], [ %i.nb, %bb.fu ], [ -1, %bb.ft ], [ %i.nb, %.thread412 ]
+  %.sroa.09.291 = phi i64 [ -1, %bb.fs ], [ -1, %bb.fu ], [ -1, %bb.ft ], [ %i.nb, %.thread412 ]
   %.sroa.10.290 = phi ptr [ %i.ne, %bb.fs ], [ %i.ne, %bb.fu ], [ %i.my, %bb.ft ], [ %.sroa.421.0.copyload, %.thread412 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !dbg !11344
   br label %bb.bl, !dbg !11344

@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.preheader, %bb.h
   %.1.i.i = phi ptr [ %i.ac, %bb.h ], [ %.050.i, %.preheader ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16
-  %i.ac = load ptr, ptr %i.ab, align 8            ; 4 uses
+  %i.ac = load ptr, ptr %i.ab, align 8            ; 5 uses
   %.not19.i.i = icmp eq ptr %i.ac, null
   br i1 %.not19.i.i, label %watcher_root_RB_NEXT.exit.i, label %bb.h
 
@@ -215,7 +215,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.af, label %bb.g, label %watcher_root_RB_NEXT.exit.i, !llvm.loop !12
 
 watcher_root_RB_NEXT.exit.i:                      ; preds = %.preheader.i.i, %bb.h, %bb.g, %bb.f
-  %.2.i.i = phi ptr [ null, %bb.g ], [ %i.y, %bb.f ], [ %i.ac, %bb.h ], [ %.0.i40.i, %.preheader.i.i ] ; 2 uses
+  %.2.i.i = phi ptr [ %i.ac, %bb.h ], [ %i.y, %bb.f ], [ %i.ac, %bb.g ], [ %.0.i40.i, %.preheader.i.i ] ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.050.i, i64 48 ; 2 uses
   store i32 1, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %.050.i, i64 32 ; 4 uses
@@ -618,7 +618,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %.outer159, %bb.al
-  %.1125 = phi i32 [ %.3127, %bb.al ], [ %.1125.ph160, %.outer159 ] ; 4 uses
+  %.1125 = phi i32 [ -1, %bb.al ], [ %.1125.ph160, %.outer159 ] ; 4 uses
   %.1 = phi i1 [ true, %bb.al ], [ %.1.ph162, %.outer159 ] ; 3 uses
   %i.ce = load i32, ptr %i.bq, align 4
   %i.cf = icmp eq i32 %i.ce, 0
@@ -1021,7 +1021,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %or.cond151, label %.loopexit158, label %.outer159
 
 bb.al:                                            ; preds = %bb.m, %bb.aj
-  %.3127 = phi i32 [ %.2126, %bb.aj ], [ %.149.mux, %bb.m ] ; 2 uses
+  %.3127 = phi i32 [ %.2126, %bb.aj ], [ %.149.mux, %bb.m ]
   switch i32 %.3127, label %bb.am [
     i32 0, label %.loopexit158
     i32 -1, label %bb.j
@@ -1089,7 +1089,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.h = load i32, ptr %i.g, align 8
   %i.i = tail call i64 (i64, ...) @syscall(i64 noundef 426, i32 noundef %i.h, i32 noundef %i.f, i32 noundef %i.f, i32 noundef 1, ptr noundef null, i64 noundef 0) #15
-  %i.j = trunc i64 %i.i to i32                    ; 3 uses
+  %i.j = trunc i64 %i.i to i32                    ; 4 uses
   %i.k = icmp eq i32 %i.j, -1
   br i1 %i.k, label %bb.c, label %.critedge
 
@@ -1104,11 +1104,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.o, label %.critedge.thread, label %bb.d
 
 .critedge.thread:                                 ; preds = %bb.c, %.critedge
+  %4 = phi i32 [ %i.j, %.critedge ], [ -1, %bb.c ]
   tail call void @perror(ptr noundef nonnull @.str.26) #19
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge.thread, %.critedge
-  %.not = icmp eq i32 %i.f, %i.j
+  %5 = phi i32 [ %4, %.critedge.thread ], [ %i.j, %.critedge ]
+  %.not = icmp eq i32 %i.f, %5
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1511,7 +1513,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bb, label %.loopexit86.preheader, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bf = load i8, ptr %.068.ptr.le, align 1
+  %i.bf = load i8, ptr %.068.ptr.le, align 16
   %i.bg = icmp eq i8 %i.bf, 0
   br i1 %i.bg, label %bb.q, label %bb.r
 

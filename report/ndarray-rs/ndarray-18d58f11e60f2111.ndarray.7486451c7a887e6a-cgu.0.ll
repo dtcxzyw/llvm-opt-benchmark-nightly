@@ -205,8 +205,7 @@ _RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCsa0fWqW2HhWg_7ndarray.exit
   br i1 %.not.i, label %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCsa0fWqW2HhWg_7ndarray.exit.i4.thread, label %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCsa0fWqW2HhWg_7ndarray.exit.i4
 
 _RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCsa0fWqW2HhWg_7ndarray.exit.i4.thread: ; preds = %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCsa0fWqW2HhWg_7ndarray.exit.i
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %2
-  store i64 1, ptr %3, align 8, !noalias !132
+  store i64 1, ptr %i.a, align 8, !noalias !132
   br label %bb.e
 
 _RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCsa0fWqW2HhWg_7ndarray.exit.i4: ; preds = %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCsa0fWqW2HhWg_7ndarray.exit.i

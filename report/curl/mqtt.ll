@@ -204,6 +204,7 @@ bb.y:                                             ; preds = %bb.x
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedgesplit, %..critedge_crit_edge
+  %3 = phi i32 [ 0, %..critedge_crit_edge ], [ %i.bn, %.critedgesplit ]
   %i.bw = phi i8 [ %i.br, %..critedge_crit_edge ], [ %.pre173, %.critedgesplit ]
   %i.bx = phi i64 [ %.pre, %..critedge_crit_edge ], [ %i.bp, %.critedgesplit ]
   %.lcssa = phi i1 [ true, %..critedge_crit_edge ], [ %i.bo, %.critedgesplit ]
@@ -211,7 +212,7 @@ bb.y:                                             ; preds = %bb.x
   %or.cond5 = select i1 %.lcssa, i1 %i.by, i1 false
   %.not132 = icmp sgt i8 %i.bw, -1
   %spec.select = select i1 %.not132, i32 0, i32 8
-  %.0102 = select i1 %or.cond5, i32 %spec.select, i32 %i.bn ; 2 uses
+  %.0102 = select i1 %or.cond5, i32 %spec.select, i32 %3 ; 2 uses
   %.not133 = icmp eq i32 %.0102, 0
   br i1 %.not133, label %bb.z, label %mqstate.exit145
 
@@ -614,7 +615,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i40.1.not, label %mqtt_encode_len.exit, label %.lr.ph.i.2
 
 .lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
-  %i.x = trunc nuw i64 %i.w to i8
+  %i.x = trunc nuw nsw i64 %i.w to i8
   %.sroa.0.2..sroa_idx50 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
   store i8 %i.x, ptr %.sroa.0.2..sroa_idx50, align 2, !tbaa !77
   br label %mqtt_encode_len.exit

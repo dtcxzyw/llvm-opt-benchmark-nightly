@@ -204,7 +204,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.dv, label %middle.block, label %vector.body, !llvm.loop !329
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = call <2 x i64> @llvm.smax.v2i64(<2 x i64> %i.dt, <2 x i64> %i.du)
+  %rdx.minmax = call <2 x i64> @llvm.umax.v2i64(<2 x i64> %i.dt, <2 x i64> %i.du)
   %i.dw = call i64 @llvm.vector.reduce.smax.v2i64(<2 x i64> %rdx.minmax) ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
@@ -605,6 +605,9 @@ declare <2 x i64> @llvm.smax.v2i64(<2 x i64>, <2 x i64>) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.smax.v2i64(<2 x i64>) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i64> @llvm.umax.v2i64(<2 x i64>, <2 x i64>) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.xor.v2i64(<2 x i64>) #17

@@ -204,6 +204,7 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.bh, label %.critedge.i.i, label %bb.j, !llvm.loop !73
 
 .critedge.i.i:                                    ; preds = %bb.m, %bb.j
+  %.lcssa = phi ptr [ null, %bb.m ], [ %i.bb, %bb.j ]
   %.pr.pre.pr.i.i = load ptr, ptr %i.aj, align 8, !tbaa !34
   %i.bi = icmp eq ptr %.pr.pre.pr.i.i, null
   br i1 %i.bi, label %.critedge.thread.i.i, label %.critedge.thread49.i.i
@@ -233,7 +234,7 @@ bb.o:                                             ; preds = %.critedge.thread49.
   br i1 %.not.i.i, label %bb.s, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bs = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.bb, i64 noundef 128, ptr noundef nonnull @.str.6, i64 noundef %i.bn) #18 ; 2 uses
+  %i.bs = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %.lcssa, i64 noundef 128, ptr noundef nonnull @.str.6, i64 noundef %i.bn) #18 ; 2 uses
   %i.bt = add i32 %i.bs, -128
   %or.cond.i27.i = icmp ult i32 %i.bt, -127
   br i1 %or.cond.i27.i, label %bb.q, label %bb.r
@@ -636,7 +637,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = add nuw nsw i32 %i.a, 8                  ; 2 uses
   store i32 %i.k, ptr %3, align 8
   %i.l = load i32, ptr %i.j, align 4, !tbaa !15   ; 6 uses
-  %i.m = icmp ult i32 %i.a, 33
+  %i.m = icmp samesign ult i32 %i.a, 33
   br i1 %i.m, label %bb.c, label %.thread33
 
 .thread33:                                        ; preds = %bb.b, %.thread
@@ -656,7 +657,7 @@ bb.c:                                             ; preds = %bb.b
   %i.w = add nuw nsw i32 %i.a, 16                 ; 2 uses
   store i32 %i.w, ptr %3, align 8
   %i.x = load ptr, ptr %i.v, align 8, !tbaa !52   ; 5 uses
-  %i.y = icmp ult i32 %i.a, 25
+  %i.y = icmp samesign ult i32 %i.a, 25
   br i1 %i.y, label %bb.d, label %.thread36
 
 .thread36:                                        ; preds = %bb.c, %.thread33
@@ -677,7 +678,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aj = add nuw nsw i32 %i.a, 24                ; 2 uses
   store i32 %i.aj, ptr %3, align 8
   %i.ak = load i32, ptr %i.ai, align 4, !tbaa !15 ; 4 uses
-  %i.al = icmp ult i32 %i.a, 17
+  %i.al = icmp samesign ult i32 %i.a, 17
   br i1 %i.al, label %bb.e, label %.thread39
 
 .thread39:                                        ; preds = %bb.d, %.thread36
@@ -834,7 +835,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = add nuw nsw i32 %i.a, 8                  ; 2 uses
   store i32 %i.k, ptr %3, align 8
   %i.l = load i32, ptr %i.j, align 4, !tbaa !15   ; 6 uses
-  %i.m = icmp ult i32 %i.a, 33
+  %i.m = icmp samesign ult i32 %i.a, 33
   br i1 %i.m, label %bb.c, label %.thread47
 
 .thread47:                                        ; preds = %bb.b, %.thread
@@ -854,7 +855,7 @@ bb.c:                                             ; preds = %bb.b
   %i.w = add nuw nsw i32 %i.a, 16                 ; 2 uses
   store i32 %i.w, ptr %3, align 8
   %i.x = load i32, ptr %i.v, align 4, !tbaa !15   ; 5 uses
-  %i.y = icmp ult i32 %i.a, 25
+  %i.y = icmp samesign ult i32 %i.a, 25
   br i1 %i.y, label %bb.d, label %.thread50
 
 .thread50:                                        ; preds = %bb.c, %.thread47
@@ -875,7 +876,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aj = add nuw nsw i32 %i.a, 24                ; 2 uses
   store i32 %i.aj, ptr %3, align 8
   %i.ak = load ptr, ptr %i.ai, align 8, !tbaa !52 ; 4 uses
-  %i.al = icmp ult i32 %i.a, 17
+  %i.al = icmp samesign ult i32 %i.a, 17
   br i1 %i.al, label %bb.e, label %.thread53
 
 .thread53:                                        ; preds = %bb.d, %.thread50
@@ -1069,7 +1070,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = add nuw nsw i32 %i.a, 8                  ; 2 uses
   store i32 %i.k, ptr %3, align 8
   %i.l = load ptr, ptr %i.j, align 8, !tbaa !109  ; 5 uses
-  %i.m = icmp ult i32 %i.a, 33
+  %i.m = icmp samesign ult i32 %i.a, 33
   br i1 %i.m, label %bb.c, label %.thread25
 
 .thread25:                                        ; preds = %bb.b, %.thread
@@ -1089,7 +1090,7 @@ bb.c:                                             ; preds = %bb.b
   %i.w = add nuw nsw i32 %i.a, 16                 ; 2 uses
   store i32 %i.w, ptr %3, align 8
   %i.x = load i32, ptr %i.v, align 4, !tbaa !15   ; 4 uses
-  %i.y = icmp ult i32 %i.a, 25
+  %i.y = icmp samesign ult i32 %i.a, 25
   br i1 %i.y, label %bb.d, label %.thread28
 
 .thread28:                                        ; preds = %bb.c, %.thread25
@@ -1110,7 +1111,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aj = add nuw nsw i32 %i.a, 24                ; 2 uses
   store i32 %i.aj, ptr %3, align 8
   %i.ak = load i32, ptr %i.ai, align 4, !tbaa !15 ; 3 uses
-  %i.al = icmp ult i32 %i.a, 17
+  %i.al = icmp samesign ult i32 %i.a, 17
   br i1 %i.al, label %bb.e, label %.thread31
 
 .thread31:                                        ; preds = %bb.d, %.thread28

@@ -204,8 +204,9 @@ bb.am:                                            ; preds = %_RNvMs2_NtNtCsa9sSW
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.am, %.loopexit.loopexit
+  %4 = phi i8 [ 47, %.loopexit.loopexit ], [ %i.cm, %bb.am ]
   %.sroa.01.0.i.i = phi i8 [ 12, %.loopexit.loopexit ], [ 10, %bb.am ]
-  %i.cn = tail call noundef ptr @_RNvXs_NtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7rfc9557NtB8_5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB4_5ErrorE4from(i8 noundef %.sroa.01.0.i.i, i8 %i.cm) #18, !noalias !280
+  %i.cn = tail call noundef ptr @_RNvXs_NtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7rfc9557NtB8_5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB4_5ErrorE4from(i8 noundef %.sroa.01.0.i.i, i8 %4) #18, !noalias !280
   br label %bb.bb
 
 bb.an:                                            ; preds = %bb.am
@@ -233,7 +234,7 @@ bb.ap:                                            ; preds = %bb.an
 
 _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i.i.i: ; preds = %bb.ap
   %scevgep.i.i.i = getelementptr i8, ptr %.sroa.03.0.lcssa.i.i50, i64 %.sroa.56.0.lcssa.i.i51 ; 2 uses
-  %.sroa.56.0.i.i.i580 = add nsw i64 %.sroa.56.0.lcssa.i.i51, -2 ; 3 uses
+  %.sroa.56.0.i.i.i580 = add nsw i64 %.sroa.56.0.lcssa.i.i51, -2 ; 2 uses
   %.not.i10.i.i.i581 = icmp eq i64 %.sroa.56.0.i.i.i580, 0
   br i1 %.not.i10.i.i.i581, label %._crit_edge585, label %.lr.ph584
 
@@ -242,7 +243,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.bb
 
 _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i.i.i: ; preds = %.lr.ph584
-  %.sroa.56.0.i.i.i = add nsw i64 %.sroa.56.0.i.i.i583, -1 ; 3 uses
+  %.sroa.56.0.i.i.i = add nsw i64 %.sroa.56.0.i.i.i583, -1 ; 2 uses
   %.not.i10.i.i.i = icmp eq i64 %.sroa.56.0.i.i.i, 0
   br i1 %.not.i10.i.i.i, label %._crit_edge585, label %.lr.ph584
 
@@ -260,7 +261,7 @@ _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_
   br i1 %or.cond7.i12.i.i.i, label %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i.i.i, label %._crit_edge585
 
 ._crit_edge585:                                   ; preds = %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i.i.i, %.lr.ph584, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i.i.i
-  %.sroa.56.0.i.i.i.lcssa = phi i64 [ %.sroa.56.0.i.i.i580, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i.i.i ], [ %.sroa.56.0.i.i.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i.i.i ], [ %.sroa.56.0.i.i.i583, %.lr.ph584 ] ; 2 uses
+  %.sroa.56.0.i.i.i.lcssa = phi i64 [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i.i.i ], [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i.i.i ], [ %.sroa.56.0.i.i.i583, %.lr.ph584 ] ; 2 uses
   %.sroa.03.0.lcssa.i.i.i = phi ptr [ %scevgep.i.i.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i.i.i ], [ %scevgep.i.i.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i.i.i ], [ %.sroa.03.0.i.i.i, %.lr.ph584 ] ; 4 uses
   %i.dc = ptrtoint ptr %.sroa.03.0.lcssa.i.i.i to i64
   %i.dd = ptrtoint ptr %i.cp to i64
@@ -304,7 +305,7 @@ bb.at:                                            ; preds = %.lr.ph.i46.i
 
 _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i26.i.i: ; preds = %bb.at
   %scevgep.i27.i.i = getelementptr i8, ptr %i.dh, i64 %i.dj ; 2 uses
-  %.sroa.56.0.i31.i.i589 = add nsw i64 %i.dj, -1  ; 3 uses
+  %.sroa.56.0.i31.i.i589 = add nsw i64 %i.dj, -1  ; 2 uses
   %.not.i10.i32.i.i590 = icmp eq i64 %.sroa.56.0.i31.i.i589, 0
   br i1 %.not.i10.i32.i.i590, label %._crit_edge594, label %.lr.ph593
 
@@ -313,7 +314,7 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.bb
 
 _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i28.i.i: ; preds = %.lr.ph593
-  %.sroa.56.0.i31.i.i = add nsw i64 %.sroa.56.0.i31.i.i592, -1 ; 3 uses
+  %.sroa.56.0.i31.i.i = add nsw i64 %.sroa.56.0.i31.i.i592, -1 ; 2 uses
   %.not.i10.i32.i.i = icmp eq i64 %.sroa.56.0.i31.i.i, 0
   br i1 %.not.i10.i32.i.i, label %._crit_edge594, label %.lr.ph593
 
@@ -331,7 +332,7 @@ _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_
   br i1 %or.cond7.i12.i35.i.i, label %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i28.i.i, label %._crit_edge594
 
 ._crit_edge594:                                   ; preds = %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i28.i.i, %.lr.ph593, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i26.i.i
-  %.sroa.56.0.i31.i.i.lcssa = phi i64 [ %.sroa.56.0.i31.i.i589, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i26.i.i ], [ %.sroa.56.0.i31.i.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i28.i.i ], [ %.sroa.56.0.i31.i.i592, %.lr.ph593 ] ; 2 uses
+  %.sroa.56.0.i31.i.i.lcssa = phi i64 [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i26.i.i ], [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i28.i.i ], [ %.sroa.56.0.i31.i.i592, %.lr.ph593 ] ; 2 uses
   %.sroa.03.0.lcssa.i36.i.i = phi ptr [ %scevgep.i27.i.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.preheader.i26.i.i ], [ %scevgep.i27.i.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser27parse_annotation_value_char.exit.i28.i.i ], [ %.sroa.03.0.i33.i.i, %.lr.ph593 ] ; 4 uses
   %i.dw = ptrtoint ptr %.sroa.03.0.lcssa.i36.i.i to i64
   %i.dx = ptrtoint ptr %i.dh to i64

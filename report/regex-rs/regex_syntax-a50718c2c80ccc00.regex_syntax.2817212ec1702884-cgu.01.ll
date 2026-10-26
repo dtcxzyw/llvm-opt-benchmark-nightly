@@ -202,7 +202,10 @@ bb.a:
     i64 7, label %bb.g
   ], !dbg !13583
 
-.loopexit:                                        ; preds = %bb.o, %bb.a
+default.unreachable:                              ; preds = %bb.o
+  unreachable
+
+.loopexit:                                        ; preds = %bb.a
   unreachable, !dbg !13584
 
 _RNvMs4_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKind4subs.exit.thread76: ; preds = %bb.d, %bb.d, %bb.d, %bb.d, %bb.b, %bb.b, %bb.b, %bb.b, %bb.g, %bb.f, %_RNvMs4_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKind4subs.exit47, %_RNvMs4_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKind4subs.exit, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir3HirEEB1c_.exit, %bb.a, %bb.a, %bb.a, %bb.a
@@ -498,7 +501,7 @@ bb.o:                                             ; preds = %bb.k, %bb.an
   %i.bc = add nsw i64 %i.ba, -2, !dbg !13584
   %.inv41 = icmp samesign ult i64 %i.ba, 2, !dbg !13584
   %i.bd = select i1 %.inv41, i64 2, i64 %i.bc, !dbg !13584
-  switch i64 %i.bd, label %.loopexit [
+  switch i64 %i.bd, label %default.unreachable [
     i64 0, label %bb.p
     i64 1, label %bb.p
     i64 2, label %bb.p

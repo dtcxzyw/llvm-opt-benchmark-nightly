@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.b, label %_io__RawIOBase_readall_impl.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.a, %.preheader.i.backedge
-  %i.c = tail call ptr (ptr, ptr, ptr, ...) @_PyObject_CallMethod(ptr noundef %0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96800), ptr noundef nonnull @.str.47, i32 noundef 131072) #6 ; 18 uses
+  %i.c = tail call ptr (ptr, ptr, ptr, ...) @_PyObject_CallMethod(ptr noundef %0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96800), ptr noundef nonnull @.str.47, i32 noundef 131072) #6 ; 16 uses
   %.not.i = icmp eq ptr %i.c, null
   br i1 %.not.i, label %bb.b, label %bb.d
 
@@ -229,13 +229,13 @@ bb.f:                                             ; preds = %bb.e
   br label %_io__RawIOBase_readall_impl.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.h = load i32, ptr %i.c, align 8, !tbaa !14   ; 2 uses
+  %i.h = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !14 ; 2 uses
   %.not.i32.i = icmp sgt i32 %i.h, -1
   br i1 %.not.i32.i, label %bb.h, label %bb.w
 
 bb.h:                                             ; preds = %bb.g
   %i.i = add nsw i32 %i.h, -1                     ; 2 uses
-  store i32 %i.i, ptr %i.c, align 8, !tbaa !14
+  store i32 %i.i, ptr @_Py_NoneStruct, align 8, !tbaa !14
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %.sink.split.i, label %bb.w
 
@@ -328,7 +328,8 @@ bb.v:                                             ; preds = %bb.u
   br label %.preheader.i
 
 .sink.split.i:                                    ; preds = %bb.o, %bb.h
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.c) #6
+  %2 = phi ptr [ %i.c, %bb.o ], [ @_Py_NoneStruct, %bb.h ]
+  tail call void @_Py_Dealloc(ptr noundef nonnull %2) #6
   br label %bb.w
 
 bb.w:                                             ; preds = %.sink.split.i, %bb.o, %bb.n, %bb.h, %bb.g

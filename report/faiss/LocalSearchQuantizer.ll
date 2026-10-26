@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 .preheader.lr.ph.split:                           ; preds = %.preheader.lr.ph
   %i.br = fdiv float 0.000000e+00, %i.n
   %i.bs = call float @sqrtf(float noundef %i.br) #16 ; 2 uses
-  %i.bt = add i64 %i.k, 1
+  %i.bt = add nsw i64 %i.k, 1
   %i.bu = sub i64 %i.bt, %i.l                     ; 3 uses
   %min.iters.check = icmp ult i64 %i.bu, 8
   br i1 %min.iters.check, label %.preheader.preheader, label %vector.ph
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.19) #26
-          to label %.noexc34 unwind label %.loopexit.split-lp.loopexit.split-lp.a
+          to label %.noexc34 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc34:                                         ; preds = %bb.e
   unreachable
@@ -624,7 +624,7 @@ _ZNKSt6vectorISt19normal_distributionIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; 
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.am = shl nuw nsw i64 %i.al, 4
   %i.an = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.am) #27
-          to label %.noexc35 unwind label %.loopexit.split-lp.loopexit.split-lp.a ; 5 uses
+          to label %.noexc35 unwind label %.loopexit.split-lp.loopexit ; 5 uses
 
 .noexc35:                                         ; preds = %_ZNKSt6vectorISt19normal_distributionIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.af ; 3 uses
@@ -759,21 +759,31 @@ _ZNSt19normal_distributionIfEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm
   %.pre93 = sub i64 %.sroa.12.0.lcssa, %.pre91
   br label %bb.h
 
-.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %_ZNKSt6vectorISt19normal_distributionIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i, %bb.e
+.loopexit.split-lp.loopexit:                      ; preds = %_ZNKSt6vectorISt19normal_distributionIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.e
   %lpad.loopexit.split-lp141 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit
+  %6 = phi i64 [ %i.af, %.loopexit.split-lp.loopexit ], [ 9223372036854775792, %.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp141, %.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   %.not.i.i.i38 = icmp eq ptr %.sroa.0.065, null
   br i1 %.not.i.i.i38, label %_ZNSt6vectorISt19normal_distributionIfESaIS1_EED2Ev.exit39, label %bb.h
 
 bb.h:                                             ; preds = %.thread, %.loopexit.split-lp.loopexit.split-lp.a
-  %.pre-phi94 = phi i64 [ %.pre93, %.thread ], [ %i.af, %.loopexit.split-lp.loopexit.split-lp.a ]
+  %.pre-phi94 = phi i64 [ %.pre93, %.thread ], [ %6, %.loopexit.split-lp.loopexit.split-lp.a ]
   %.sroa.0.064 = phi ptr [ %.sroa.0.0.lcssa, %.thread ], [ %.sroa.0.065, %.loopexit.split-lp.loopexit.split-lp.a ]
-  %.pn2650 = phi { ptr, i32 } [ %i.cn, %.thread ], [ %lpad.loopexit.split-lp141, %.loopexit.split-lp.loopexit.split-lp.a ]
+  %.pn2650 = phi { ptr, i32 } [ %i.cn, %.thread ], [ %lpad.phi, %.loopexit.split-lp.loopexit.split-lp.a ]
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.064, i64 noundef %.pre-phi94) #25
   br label %_ZNSt6vectorISt19normal_distributionIfESaIS1_EED2Ev.exit39
 
 _ZNSt6vectorISt19normal_distributionIfESaIS1_EED2Ev.exit39: ; preds = %.loopexit.split-lp.loopexit.split-lp.a, %bb.h
-  %.pn2651 = phi { ptr, i32 } [ %lpad.loopexit.split-lp141, %.loopexit.split-lp.loopexit.split-lp.a ], [ %.pn2650, %bb.h ]
+  %.pn2651 = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp.loopexit.split-lp.a ], [ %.pn2650, %bb.h ]
   call void @_ZN5faiss3lsq13LSQTimerScopeD1Ev(ptr noundef nonnull align 8 dead_on_return(49) dereferenceable(49) %4) #16
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33
 

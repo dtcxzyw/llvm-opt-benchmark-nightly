@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %.backedge, %.outer
   %.sroa.0.0 = phi i32 [ %.sroa.0.0.ph, %.outer ], [ %i.u, %.backedge ] ; 6 uses
   %i.n = call { i64, i32 } @_RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4nextCse52LceO7DeS_12typst_macros(ptr nonnull align 8 %i.c) #23 ; 2 uses
-  %i.o = extractvalue { i64, i32 } %i.n, 1        ; 4 uses
+  %i.o = extractvalue { i64, i32 } %i.n, 1        ; 2 uses
   switch i32 %i.o, label %.loopexit [
     i32 -1, label %.loopexit16
     i32 40, label %bb.c
@@ -224,6 +224,7 @@ bb.b:                                             ; preds = %.backedge, %.outer
           to label %bb.i unwind label %bb.h       ; 2 uses
 
 .loopexit:                                        ; preds = %bb.b, %bb.d
+  %3 = phi i32 [ 46, %bb.d ], [ %i.o, %bb.b ]     ; 3 uses
   %i.t = extractvalue { i64, i32 } %i.n, 0        ; 2 uses
   br i1 %.sroa.03.0.ph, label %bb.e, label %.outer.backedge
 
@@ -245,7 +246,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.v, label %.outer.backedge, label %.loopexit
 
 bb.e:                                             ; preds = %.loopexit
-  switch i32 %i.o, label %bb.f [
+  switch i32 %3, label %bb.f [
     i32 32, label %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread
     i32 13, label %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread
     i32 12, label %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread
@@ -255,11 +256,11 @@ bb.e:                                             ; preds = %.loopexit
   ]
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = icmp ult i32 %i.o, 133
+  %i.w = icmp ult i32 %3, 133
   br i1 %i.w, label %.outer.backedge, label %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit
 
 _RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit: ; preds = %bb.f
-  %i.x = call zeroext i1 @_RNvNtNtNtCs3oUPovFnLWP_4core7unicode12unicode_data11white_space6lookupCse52LceO7DeS_12typst_macros(i32 %i.o) #23
+  %i.x = call zeroext i1 @_RNvNtNtNtCs3oUPovFnLWP_4core7unicode12unicode_data11white_space6lookupCse52LceO7DeS_12typst_macros(i32 %3) #23
   br i1 %i.x, label %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread, label %.outer.backedge
 
 _RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread: ; preds = %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit

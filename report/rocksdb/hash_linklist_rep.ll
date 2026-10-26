@@ -205,11 +205,11 @@ iter.check:                                       ; preds = %bb.c
   %wide.trip.count = zext nneg i32 %i.aj to i64   ; 2 uses
   %.pre = load ptr, ptr %i.al, align 8, !tbaa !114 ; 3 uses
   %i.am = add nsw i64 %wide.trip.count, -1        ; 5 uses
-  %min.iters.check = icmp ult i32 %i.aj, 5
+  %min.iters.check = icmp samesign ult i32 %i.aj, 5
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check69 = icmp ult i32 %i.aj, 17
+  %min.iters.check69 = icmp samesign ult i32 %i.aj, 17
   br i1 %min.iters.check69, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -612,7 +612,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.as, label %bb.e, label %_ZN7rocksdb12_GLOBAL__N_115HashLinkListRep16LinkListIterator4SeekERKNS_5SliceEPKc.exit
 
 _ZN7rocksdb12_GLOBAL__N_115HashLinkListRep16LinkListIterator4SeekERKNS_5SliceEPKc.exit: ; preds = %bb.e, %bb.f
-  store ptr %.010.i.i, ptr %i.ah, align 8, !tbaa !135
+  %.010.i.i.lcssa = phi ptr [ null, %bb.e ], [ %.010.i.i, %bb.f ]
+  store ptr %.010.i.i.lcssa, ptr %i.ah, align 8, !tbaa !135
   br label %bb.ab
 
 _ZNK7rocksdb12_GLOBAL__N_115HashLinkListRep20GetLinkListFirstNodeERSt6atomicIPvE.exit.thread: ; preds = %bb.d, %_ZNK7rocksdb12_GLOBAL__N_115HashLinkListRep20GetLinkListFirstNodeERSt6atomicIPvE.exit

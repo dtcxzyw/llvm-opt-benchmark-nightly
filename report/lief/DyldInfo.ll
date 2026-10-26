@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.lr.ph78.i
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph78.i
-  %.1.i = phi i64 [ %i.u, %bb.f ], [ %.076.i, %.lr.ph78.i ]
+  %.1.i = phi i64 [ %i.u, %bb.f ], [ %.076.i, %.lr.ph78.i ] ; 2 uses
   %i.z = phi i32 [ %i.y, %bb.f ], [ %i.r, %.lr.ph78.i ]
   %i.aa = sub nsw i32 %.04374.i, %i.z             ; 2 uses
   %i.ab = icmp sgt i32 %i.aa, -1
@@ -213,8 +213,8 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph78.i
 
 bb.h:                                             ; preds = %bb.g
   %i.ac = xor i1 %.04175.i, true                  ; 2 uses
-  %i.ad = add i64 %.1.i, 1                        ; 2 uses
-  %i.ae = icmp ult i64 %i.ad, 309
+  %i.ad = add nuw nsw i64 %.1.i, 1
+  %i.ae = icmp ult i64 %.1.i, 308
   br i1 %i.ae, label %.lr.ph78.i, label %_ZN3fmt3v126detail12is_printableEtPKNS1_9singletonEmPKhS6_m.exit, !llvm.loop !1263
 
 bb.i:                                             ; preds = %bb.a
@@ -290,7 +290,7 @@ bb.n:                                             ; preds = %.lr.ph78.i55
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.lr.ph78.i55
-  %.1.i60 = phi i64 [ %i.ba, %bb.n ], [ %.076.i56, %.lr.ph78.i55 ]
+  %.1.i60 = phi i64 [ %i.ba, %bb.n ], [ %.076.i56, %.lr.ph78.i55 ] ; 2 uses
   %i.bf = phi i32 [ %i.be, %bb.n ], [ %i.ax, %.lr.ph78.i55 ]
   %i.bg = sub nsw i32 %.04374.i58, %i.bf          ; 2 uses
   %i.bh = icmp sgt i32 %i.bg, -1
@@ -298,8 +298,8 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph78.i55
 
 bb.p:                                             ; preds = %bb.o
   %i.bi = xor i1 %.04175.i57, true                ; 2 uses
-  %i.bj = add i64 %.1.i60, 1                      ; 2 uses
-  %i.bk = icmp ult i64 %i.bj, 419
+  %i.bj = add nuw nsw i64 %.1.i60, 1
+  %i.bk = icmp ult i64 %.1.i60, 418
   br i1 %i.bk, label %.lr.ph78.i55, label %_ZN3fmt3v126detail12is_printableEtPKNS1_9singletonEmPKhS6_m.exit, !llvm.loop !1263
 
 bb.q:                                             ; preds = %bb.i
@@ -702,9 +702,9 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 
 .lr.ph.i:                                         ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i
   %i.ak = add nsw i32 %i.c, -1                    ; 2 uses
-  %i.al = add i32 %i.y, %i.ak
+  %i.al = add nuw i32 %i.y, %i.ak
   %i.am = sext i32 %i.al to i64                   ; 5 uses
-  %i.an = zext i32 %i.ak to i64                   ; 5 uses
+  %i.an = zext nneg i32 %i.ak to i64              ; 5 uses
   %i.ao = and i64 %i.b, 2147483647                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.ao, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -1107,7 +1107,7 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit:
 
 .preheader38:                                     ; preds = %.preheader38.lr.ph, %bb.k
   %indvars.iv63 = phi i64 [ 1, %.preheader38.lr.ph ], [ %indvars.iv.next64, %bb.k ] ; 4 uses
-  %indvars.iv = phi i64 [ 0, %.preheader38.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.preheader38.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 4 uses
   %.03542 = phi i128 [ 0, %.preheader38.lr.ph ], [ %i.bc, %bb.k ] ; 2 uses
   %xtraiter = and i64 %indvars.iv63, 1
   %i.ak = icmp eq i64 %indvars.iv, 0
@@ -1146,7 +1146,7 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit:
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.preheader38
   %indvars.iv56.epil.init = phi i64 [ 0, %.preheader38 ], [ %indvars.iv.next57.1, %.unr-lcssa ]
-  %indvars.iv54.epil.init = phi i64 [ %indvars.iv, %.preheader38 ], [ %indvars.iv.next55.1, %.unr-lcssa ]
+  %indvars.iv54.epil.init = phi i64 [ 0, %.preheader38 ], [ %indvars.iv.next55.1, %.unr-lcssa ]
   %.139.epil.init = phi i128 [ %.03542, %.preheader38 ], [ %i.bw, %.unr-lcssa ]
   %lcmp.mod140 = trunc i64 %indvars.iv63 to i1
   call void @llvm.assume(i1 %lcmp.mod140)
@@ -1290,7 +1290,7 @@ bb.p:                                             ; preds = %.lr.ph50, %._crit_e
   %i.db = zext i32 %i.da to i64
   %i.dc = mul nuw i64 %i.db, %i.cz
   %i.dd = zext i64 %i.dc to i128
-  %i.de = add nsw i128 %.248, %i.dd               ; 2 uses
+  %i.de = add nuw nsw i128 %.248, %i.dd           ; 2 uses
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
@@ -1693,7 +1693,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %or.cond225, label %.critedge134.thread, label %.critedge136
 
 bb.am:                                            ; preds = %.thread269
-  %.1205268274 = trunc nsw i64 %.1205268274.in to i32
+  %.1205268274 = trunc nuw nsw i64 %.1205268274.in to i32
   %i.ii = lshr i32 %i.gb, 31
   %i.ij = or i64 %i.eb, %i.cv
   %i.ik = icmp ne i64 %i.ij, 0
@@ -2096,7 +2096,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = or disjoint i32 %i.ag, %i.ak
   %i.am = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v126detail11utf8_decodeEPKcPjPi.shiftc, i64 %i.m
   %i.an = load i32, ptr %i.am, align 4, !tbaa !97
-  %i.ao = lshr i32 %i.al, %i.an                   ; 4 uses
+  %i.ao = lshr i32 %i.al, %i.an                   ; 8 uses
   %i.ap = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v126detail11utf8_decodeEPKcPjPi.mins, i64 %i.m
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !97
   %i.ar = icmp ult i32 %i.ao, %i.aq
@@ -2138,6 +2138,7 @@ _ZN3fmt3v126detail12needs_escapeEj.exit.i.i:      ; preds = %switch.early.test.i
   br i1 %i.bo, label %_ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit, label %_ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit.thread
 
 _ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit.thread: ; preds = %.lr.ph, %switch.early.test.i.i.i, %switch.early.test.i.i.i, %switch.early.test.i.i.i, %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i
+  %.lcssa125 = phi i32 [ %i.ao, %.lr.ph ], [ %i.ao, %switch.early.test.i.i.i ], [ %i.ao, %switch.early.test.i.i.i ], [ %i.ao, %switch.early.test.i.i.i ], [ %i.bm, %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i ]
   %i.bp = add nsw i64 %i.p, %i.m
   %i.bq = select i1 %.not.i, i64 %i.bp, i64 1
   %i.br = getelementptr inbounds nuw i8, ptr %.02455, i64 %i.bq
@@ -2145,7 +2146,7 @@ _ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %i.br, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !98
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i32 %i.bm, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !97
+  store i32 %.lcssa125, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !97
   br label %.thread
 
 _ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit: ; preds = %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i
@@ -2336,7 +2337,7 @@ _ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT
   %i.et = or disjoint i32 %i.eo, %i.es
   %i.eu = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v126detail11utf8_decodeEPKcPjPi.shiftc, i64 %i.du
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !97
-  %i.ew = lshr i32 %i.et, %i.ev                   ; 4 uses
+  %i.ew = lshr i32 %i.et, %i.ev                   ; 8 uses
   %i.ex = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v126detail11utf8_decodeEPKcPjPi.mins, i64 %i.du
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !97
   %i.ez = icmp ult i32 %i.ew, %i.ey
@@ -2378,12 +2379,13 @@ _ZN3fmt3v126detail12needs_escapeEj.exit.i.i41:    ; preds = %switch.early.test.i
   br i1 %i.fw, label %_ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit42, label %_ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit42.thread
 
 _ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit42.thread: ; preds = %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit, %switch.early.test.i.i.i37, %switch.early.test.i.i.i37, %switch.early.test.i.i.i37, %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i41
+  %.lcssa = phi i32 [ %i.ew, %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit ], [ %i.ew, %switch.early.test.i.i.i37 ], [ %i.ew, %switch.early.test.i.i.i37 ], [ %i.ew, %switch.early.test.i.i.i37 ], [ %i.fu, %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i41 ]
   %i.fx = add nsw i64 %i.dx, %i.du
   %i.fy = select i1 %.not.i36, i64 %i.fx, i64 1
   %i.fz = getelementptr inbounds nuw i8, ptr %.3, i64 %i.fy
   store ptr %.3, ptr %2, align 8, !tbaa !98
   store ptr %i.fz, ptr %.sroa.4.0..sroa_idx.i.i39, align 8, !tbaa !98
-  store i32 %i.fu, ptr %.sroa.5.0..sroa_idx.i.i40, align 8, !tbaa !97
+  store i32 %.lcssa, ptr %.sroa.5.0..sroa_idx.i.i40, align 8, !tbaa !97
   br label %.loopexit75
 
 _ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit42: ; preds = %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i41

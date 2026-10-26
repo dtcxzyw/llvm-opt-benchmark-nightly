@@ -201,13 +201,14 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.us.i
   br i1 %.not64.us.i, label %._crit_edge.us.i.preheader, label %bb.g
 
 ._crit_edge.us.i.preheader:                       ; preds = %bb.h, %bb.g
+  %.lcssa222 = phi ptr [ null, %bb.h ], [ %i.bd, %bb.g ]
   %.2.us.i.ph = phi i32 [ %i.bc, %bb.h ], [ %.047.i, %bb.g ]
   br label %._crit_edge.us.i.outer
 
 ._crit_edge.us.i.outer:                           ; preds = %bb.ac, %._crit_edge.us.i.preheader
   %.260.us.i.ph = phi ptr [ %.15974.us.i, %._crit_edge.us.i.preheader ], [ %.050.us.i, %bb.ac ] ; 3 uses
   %.156.us.i.ph = phi ptr [ %.05575.us.i, %._crit_edge.us.i.preheader ], [ %.257.us.i, %bb.ac ]
-  %.253.us.i.ph = phi ptr [ %i.bd, %._crit_edge.us.i.preheader ], [ %.354.us.i, %bb.ac ]
+  %.253.us.i.ph = phi ptr [ %.lcssa222, %._crit_edge.us.i.preheader ], [ %.354.us.i, %bb.ac ]
   %.149.us.i.ph = phi ptr [ %.04876.us.i, %._crit_edge.us.i.preheader ], [ %.050.us.i, %bb.ac ]
   %.2.us.i.ph221 = phi i32 [ %.2.us.i.ph, %._crit_edge.us.i.preheader ], [ %.3.us.i, %bb.ac ]
   %.043.us.i.ph = phi i32 [ %.047.i, %._crit_edge.us.i.preheader ], [ %.1.us.i, %bb.ac ]
@@ -512,13 +513,14 @@ bb.ai:                                            ; preds = %bb.ah, %.lr.ph.us.i
   br i1 %.not64.us.i90, label %._crit_edge.us.i92.preheader, label %bb.ah
 
 ._crit_edge.us.i92.preheader:                     ; preds = %bb.ai, %bb.ah
+  %.lcssa212 = phi ptr [ null, %bb.ai ], [ %i.fa, %bb.ah ]
   %.2.us.i98.ph = phi i32 [ %i.ez, %bb.ai ], [ %.047.i82, %bb.ah ]
   br label %._crit_edge.us.i92.outer
 
 ._crit_edge.us.i92.outer:                         ; preds = %bb.ap, %._crit_edge.us.i92.preheader
   %.260.us.i94.ph = phi ptr [ %.15974.us.i87, %._crit_edge.us.i92.preheader ], [ %.050.us.i107, %bb.ap ] ; 4 uses
   %.156.us.i95.ph = phi ptr [ %.05575.us.i86, %._crit_edge.us.i92.preheader ], [ %.257.us.i105, %bb.ap ]
-  %.253.us.i96.ph = phi ptr [ %i.fa, %._crit_edge.us.i92.preheader ], [ %.354.us.i106, %bb.ap ]
+  %.253.us.i96.ph = phi ptr [ %.lcssa212, %._crit_edge.us.i92.preheader ], [ %.354.us.i106, %bb.ap ]
   %.149.us.i97.ph = phi ptr [ %.04876.us.i85, %._crit_edge.us.i92.preheader ], [ %.050.us.i107, %bb.ap ]
   %.2.us.i98.ph211 = phi i32 [ %.2.us.i98.ph, %._crit_edge.us.i92.preheader ], [ %.3.us.i108, %bb.ap ]
   %.043.us.i99.ph = phi i32 [ %.047.i82, %._crit_edge.us.i92.preheader ], [ %.1.us.i109, %bb.ap ]
@@ -740,13 +742,14 @@ bb.c:                                             ; preds = %.lr.ph.us, %bb.b
   br i1 %.not64.us, label %._crit_edge.us.preheader, label %bb.b
 
 ._crit_edge.us.preheader:                         ; preds = %bb.b, %bb.c
+  %.lcssa = phi ptr [ %i.c, %bb.b ], [ null, %bb.c ]
   %.2.us.ph = phi i32 [ %.047, %bb.b ], [ %i.b, %bb.c ]
   br label %._crit_edge.us.outer
 
 ._crit_edge.us.outer:                             ; preds = %bb.j, %._crit_edge.us.preheader
   %.260.us.ph = phi ptr [ %.15974.us, %._crit_edge.us.preheader ], [ %.050.us, %bb.j ] ; 3 uses
   %.156.us.ph = phi ptr [ %.05575.us, %._crit_edge.us.preheader ], [ %.257.us, %bb.j ]
-  %.253.us.ph = phi ptr [ %i.c, %._crit_edge.us.preheader ], [ %.354.us, %bb.j ]
+  %.253.us.ph = phi ptr [ %.lcssa, %._crit_edge.us.preheader ], [ %.354.us, %bb.j ]
   %.149.us.ph = phi ptr [ %.04876.us, %._crit_edge.us.preheader ], [ %.050.us, %bb.j ]
   %.2.us.ph92 = phi i32 [ %.2.us.ph, %._crit_edge.us.preheader ], [ %.3.us, %bb.j ]
   %.043.us.ph = phi i32 [ %.047, %._crit_edge.us.preheader ], [ %.1.us, %bb.j ]
@@ -1008,13 +1011,14 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.us.i
   br i1 %.not64.us.i, label %._crit_edge.us.i.preheader, label %bb.h
 
 ._crit_edge.us.i.preheader:                       ; preds = %bb.i, %bb.h
+  %.lcssa = phi ptr [ null, %bb.i ], [ %i.as, %bb.h ]
   %.2.us.i.ph = phi i32 [ %i.ar, %bb.i ], [ %.047.i, %bb.h ]
   br label %._crit_edge.us.i.outer
 
 ._crit_edge.us.i.outer:                           ; preds = %bb.p, %._crit_edge.us.i.preheader
   %.260.us.i.ph = phi ptr [ %.15974.us.i, %._crit_edge.us.i.preheader ], [ %.050.us.i, %bb.p ] ; 3 uses
   %.156.us.i.ph = phi ptr [ %.05575.us.i, %._crit_edge.us.i.preheader ], [ %.257.us.i, %bb.p ]
-  %.253.us.i.ph = phi ptr [ %i.as, %._crit_edge.us.i.preheader ], [ %.354.us.i, %bb.p ]
+  %.253.us.i.ph = phi ptr [ %.lcssa, %._crit_edge.us.i.preheader ], [ %.354.us.i, %bb.p ]
   %.149.us.i.ph = phi ptr [ %.04876.us.i, %._crit_edge.us.i.preheader ], [ %.050.us.i, %bb.p ]
   %.2.us.i.ph89 = phi i32 [ %.2.us.i.ph, %._crit_edge.us.i.preheader ], [ %.3.us.i, %bb.p ]
   %.043.us.i.ph = phi i32 [ %.047.i, %._crit_edge.us.i.preheader ], [ %.1.us.i, %bb.p ]

@@ -205,14 +205,14 @@ begin_hunk_0_@_ZN4ncnn28pack_A_tile_int8_avxvnniint8ERKNS_3MatERS0_iiii:bb.a
   %.not = icmp eq i32 %i.hl, %5
   %i.ho = add nsw i64 %i.hm, %i.hn
   %i.hp = or disjoint i32 %i.hl, 1
-  %smax = tail call i32 @llvm.smax.i32(i32 %5, i32 %i.hp)
+  %smax = tail call i32 @llvm.umax.i32(i32 %5, i32 %i.hp)
   %i.hq = xor i32 %i.hl, -1
   %i.hr = add nsw i32 %smax, %i.hq                ; 3 uses
   %i.hs = zext i32 %i.hr to i64
   %i.ht = add nuw nsw i64 %i.hs, 1                ; 5 uses
   %i.hu = add nsw i32 %5, -4                      ; 4 uses
   %i.hv = and i32 %i.hu, -4
-  %i.hw = zext i32 %i.hv to i64                   ; 2 uses
+  %i.hw = zext nneg i32 %i.hv to i64              ; 2 uses
   %i.hx = lshr i32 %i.hu, 2
   %narrow274 = add nuw nsw i32 %i.hx, 1
   %i.hy = zext nneg i32 %narrow274 to i64         ; 5 uses
@@ -221,13 +221,13 @@ begin_hunk_0_@_ZN4ncnn28pack_A_tile_int8_avxvnniint8ERKNS_3MatERS0_iiii:bb.a
   %i.hz = and i64 %i.hy, 12
   %n.vec237 = and i64 %i.hy, 2147483632           ; 5 uses
   %i.ia = trunc nuw nsw i64 %n.vec237 to i32
-  %i.ib = shl i32 %i.ia, 2
+  %i.ib = shl nuw nsw i32 %i.ia, 2
   %i.ic = shl nuw nsw i64 %n.vec237, 2            ; 2 uses
   %cmp.n250 = icmp eq i64 %n.vec237, %i.hy
   %min.epilog.iters.check254 = icmp eq i64 %i.hz, 0
   %n.vec257 = and i64 %i.hy, 2147483644           ; 4 uses
   %i.id = trunc nuw nsw i64 %n.vec257 to i32
-  %i.ie = shl i32 %i.id, 2
+  %i.ie = shl nuw nsw i32 %i.id, 2
   %i.if = shl nuw nsw i64 %n.vec257, 2            ; 2 uses
   %cmp.n270 = icmp eq i64 %n.vec257, %i.hy
   %min.iters.check192 = icmp ult i32 %i.hr, 7
@@ -630,14 +630,14 @@ begin_hunk_1_@_ZN4ncnn28pack_B_tile_int8_avxvnniint8ERKNS_3MatERS0_iiii:bb.a
   %.not = icmp eq i32 %i.hl, %5
   %i.ho = add nsw i64 %i.hm, %i.hn
   %i.hp = or disjoint i32 %i.hl, 1
-  %smax = tail call i32 @llvm.smax.i32(i32 %5, i32 %i.hp)
+  %smax = tail call i32 @llvm.umax.i32(i32 %5, i32 %i.hp)
   %i.hq = xor i32 %i.hl, -1
   %i.hr = add nsw i32 %smax, %i.hq                ; 3 uses
   %i.hs = zext i32 %i.hr to i64
   %i.ht = add nuw nsw i64 %i.hs, 1                ; 5 uses
   %i.hu = add nsw i32 %5, -4                      ; 4 uses
   %i.hv = and i32 %i.hu, -4
-  %i.hw = zext i32 %i.hv to i64                   ; 2 uses
+  %i.hw = zext nneg i32 %i.hv to i64              ; 2 uses
   %i.hx = lshr i32 %i.hu, 2
   %narrow274 = add nuw nsw i32 %i.hx, 1
   %i.hy = zext nneg i32 %narrow274 to i64         ; 5 uses
@@ -646,13 +646,13 @@ begin_hunk_1_@_ZN4ncnn28pack_B_tile_int8_avxvnniint8ERKNS_3MatERS0_iiii:bb.a
   %i.hz = and i64 %i.hy, 12
   %n.vec237 = and i64 %i.hy, 2147483632           ; 5 uses
   %i.ia = trunc nuw nsw i64 %n.vec237 to i32
-  %i.ib = shl i32 %i.ia, 2
+  %i.ib = shl nuw nsw i32 %i.ia, 2
   %i.ic = shl nuw nsw i64 %n.vec237, 2            ; 2 uses
   %cmp.n250 = icmp eq i64 %n.vec237, %i.hy
   %min.epilog.iters.check254 = icmp eq i64 %i.hz, 0
   %n.vec257 = and i64 %i.hy, 2147483644           ; 4 uses
   %i.id = trunc nuw nsw i64 %n.vec257 to i32
-  %i.ie = shl i32 %i.id, 2
+  %i.ie = shl nuw nsw i32 %i.id, 2
   %i.if = shl nuw nsw i64 %n.vec257, 2            ; 2 uses
   %cmp.n270 = icmp eq i64 %n.vec257, %i.hy
   %min.iters.check192 = icmp ult i32 %i.hr, 7
@@ -1055,15 +1055,15 @@ begin_hunk_2_@_ZN4ncnn40gemm_transB_packed_tile_int8_avxvnniint8ERKNS_3MatES2_RS
   %i.tp = and i32 %i.tj, 4
   %lcmp.mod1844.not.not = icmp eq i32 %i.tp, 0
   %lcmp.mod1847 = trunc i32 %i.tl to i1
-  %min.iters.check1145 = icmp ult i32 %i.sw, 28
+  %min.iters.check1145 = icmp samesign ult i32 %i.sw, 28
   %n.vec1147 = and i64 %i.ti, 2147483640          ; 4 uses
   %i.tq = trunc nuw nsw i64 %n.vec1147 to i32
   %i.tr = shl i32 %i.tq, 2
   %i.ts = shl nuw nsw i64 %n.vec1147, 3           ; 2 uses
   %cmp.n1172 = icmp eq i64 %i.ti, %n.vec1147
   %i.tt = add i32 %8, -2
-  %min.iters.check1010 = icmp ult i32 %i.sw, 12
-  %min.iters.check1012 = icmp ult i32 %i.sw, 60
+  %min.iters.check1010 = icmp samesign ult i32 %i.sw, 12
+  %min.iters.check1012 = icmp samesign ult i32 %i.sw, 60
   %i.tu = and i64 %i.ti, 12
   %n.vec1014 = and i64 %i.ti, 2147483632          ; 6 uses
   %i.tv = trunc nuw nsw i64 %n.vec1014 to i32
@@ -1466,7 +1466,7 @@ begin_hunk_3_@_ZN4ncnn40gemm_transB_packed_tile_int8_avxvnniint8ERKNS_3MatES2_RS
   %unroll_iter1870 = and i32 %i.ake, 2147483644
   %lcmp.mod1867.not = icmp eq i32 %xtraiter1863, 0
   %lcmp.mod1869 = icmp ne i32 %xtraiter1863, 0
-  %min.iters.check1380 = icmp ult i32 %i.ajp, 12
+  %min.iters.check1380 = icmp samesign ult i32 %i.ajp, 12
   %min.iters.check1382 = icmp ult i32 %i.ajp, 60
   %i.akh = and i64 %i.akb, 12
   %n.vec1384 = and i64 %i.akb, 2147483632         ; 6 uses
@@ -1484,10 +1484,10 @@ begin_hunk_3_@_ZN4ncnn40gemm_transB_packed_tile_int8_avxvnniint8ERKNS_3MatES2_RS
   %cmp.n1449 = icmp eq i64 %i.akb, %n.vec1432
   %i.akq = lshr i64 %i.ajt, 2
   %i.akr = add nuw nsw i64 %i.akq, 1              ; 2 uses
-  %min.iters.check1231 = icmp ult i32 %i.ajp, 28
+  %min.iters.check1231 = icmp samesign ult i32 %i.ajp, 28
   %n.vec1233 = and i64 %i.akr, 2147483640         ; 4 uses
   %i.aks = trunc nuw nsw i64 %n.vec1233 to i32
-  %i.akt = shl i32 %i.aks, 2
+  %i.akt = shl nuw nsw i32 %i.aks, 2
   %i.aku = shl nuw nsw i64 %n.vec1233, 2          ; 2 uses
   %cmp.n1251 = icmp eq i64 %i.akr, %n.vec1233
   br label %.preheader383.i
@@ -1888,6 +1888,9 @@ declare i64 @llvm.umax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.round.v8f32(<8 x float>) #3

@@ -205,9 +205,9 @@ middle.block:                                     ; preds = %vector.body.1, %vec
   %predphi430.lcssa = phi <4 x i32> [ %predphi430, %vector.ph ], [ %predphi430.1, %vector.body.1 ]
   %predphi431.lcssa = phi <4 x i32> [ %i.ap, %vector.ph ], [ %predphi431.1, %vector.body.1 ]
   %predphi432.lcssa = phi <4 x i32> [ %i.aq, %vector.ph ], [ %predphi432.1, %vector.body.1 ]
-  %bin.rdx = add nsw <4 x i32> %predphi432.lcssa, %predphi431.lcssa
+  %bin.rdx = add nuw nsw <4 x i32> %predphi432.lcssa, %predphi431.lcssa
   %i.bg = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %rdx.minmax = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %predphi.lcssa, <4 x i32> %predphi430.lcssa)
+  %rdx.minmax = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %predphi.lcssa, <4 x i32> %predphi430.lcssa)
   %i.bh = tail call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %rdx.minmax) ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader451
@@ -608,6 +608,9 @@ declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.bswap.v2i16(<2 x i16>) #6

@@ -205,7 +205,7 @@ switch.lookup:
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden range(i32 -1, 2) i32 @pm_string_query_method_name(ptr noundef %0, i64 noundef %1, ptr noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = tail call i32 @pm_slice_type(ptr noundef %0, i64 noundef %1, ptr noundef %2) ; 2 uses
+  %i.a = tail call i32 @pm_slice_type(ptr noundef %0, i64 noundef %1, ptr noundef %2)
   switch i32 %i.a, label %bb.g [
     i32 -1, label %bb.w
     i32 3, label %bb.f
@@ -378,7 +378,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.g, %bb.t, %bb.u, %bb.v, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.i, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.b, %bb.c, %bb.d, %bb.e, %bb.a, %bb.f
-  %.0 = phi i32 [ %i.ce, %bb.v ], [ %i.h, %bb.e ], [ %i.k, %bb.i ], [ %i.az, %bb.s ], [ 1, %bb.f ], [ %i.a, %bb.a ], [ 1, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.r ], [ 1, %bb.q ], [ 1, %bb.p ], [ 1, %bb.o ], [ 1, %bb.n ], [ 1, %bb.m ], [ 1, %bb.l ], [ 1, %bb.k ], [ 1, %bb.j ], [ 1, %bb.u ], [ 1, %bb.t ], [ 0, %bb.g ]
+  %.0 = phi i32 [ %i.ce, %bb.v ], [ %i.h, %bb.e ], [ %i.k, %bb.i ], [ %i.az, %bb.s ], [ 1, %bb.f ], [ -1, %bb.a ], [ 1, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.h ], [ 1, %bb.r ], [ 1, %bb.q ], [ 1, %bb.p ], [ 1, %bb.o ], [ 1, %bb.n ], [ 1, %bb.m ], [ 1, %bb.l ], [ 1, %bb.k ], [ 1, %bb.j ], [ 1, %bb.u ], [ 1, %bb.t ], [ 0, %bb.g ]
   ret i32 %.0
 }
 
@@ -781,7 +781,7 @@ bb.afj:                                           ; preds = %bb.afi
   %i.cva = ptrtoint ptr %i.cuz to i64
   %i.cvb = ptrtoint ptr %i.cuy to i64
   %i.cvc = sub i64 %i.cva, %i.cvb
-  %i.cvd = call ptr @pm_strpbrk(ptr noundef %0, ptr noundef %i.cuy, ptr noundef %i.cug, i64 noundef %i.cvc, i1 noundef zeroext true) #27
+  %i.cvd = call ptr @pm_strpbrk(ptr noundef nonnull %0, ptr noundef %i.cuy, ptr noundef %i.cug, i64 noundef %i.cvc, i1 noundef zeroext true) #27
   %i.cve = load i64, ptr %i.cuf, align 8, !tbaa !83
   %i.cvf = add i64 %i.cve, -1
   store i64 %i.cvf, ptr %i.cuf, align 8, !tbaa !83
@@ -1184,7 +1184,7 @@ bb.ais:                                           ; preds = %bb.air
   %i.dgp = ptrtoint ptr %i.dgo to i64
   %i.dgq = ptrtoint ptr %i.dgn to i64
   %i.dgr = sub i64 %i.dgp, %i.dgq
-  %i.dgs = call ptr @pm_strpbrk(ptr noundef %0, ptr noundef %i.dgn, ptr noundef %i.dfy, i64 noundef %i.dgr, i1 noundef zeroext true) #27
+  %i.dgs = call ptr @pm_strpbrk(ptr noundef nonnull %0, ptr noundef %i.dgn, ptr noundef %i.dfy, i64 noundef %i.dgr, i1 noundef zeroext true) #27
   br label %.backedge3620
 
 .backedge3620:                                    ; preds = %bb.aix, %parser_lex_callback.exit3076, %parser_lex_callback.exit3073, %bb.ajx, %peek_at.exit3054.thread, %bb.ajr, %bb.ais
@@ -1587,7 +1587,7 @@ parser_lex_callback.exit3134:                     ; preds = %bb.any
   %i.eac = ptrtoint ptr %i.eab to i64
   %i.ead = ptrtoint ptr %i.eaa to i64
   %i.eae = sub i64 %i.eac, %i.ead
-  %i.eaf = call ptr @pm_strpbrk(ptr noundef %0, ptr noundef %i.eaa, ptr noundef nonnull %i.b, i64 noundef %i.eae, i1 noundef zeroext true) #27
+  %i.eaf = call ptr @pm_strpbrk(ptr noundef nonnull %0, ptr noundef %i.eaa, ptr noundef nonnull %i.b, i64 noundef %i.eae, i1 noundef zeroext true) #27
   br label %.outer.backedge
 
 .loopexit4509:                                    ; preds = %.lr.ph6003
@@ -1990,7 +1990,7 @@ peek.exit:                                        ; preds = %peek.exit.lr.ph, %t
   %.val5061313 = phi ptr [ %.val5061049, %peek.exit.lr.ph ], [ %.val506, %tailrecurse.backedge ] ; 12 uses
   %.val5071053 = phi ptr [ %.val5071050, %peek.exit.lr.ph ], [ %.val507, %tailrecurse.backedge ] ; 25 uses
   %.tr7271051 = phi i8 [ %3, %peek.exit.lr.ph ], [ %i.qq, %tailrecurse.backedge ] ; 74 uses
-  %i.f = load i8, ptr %.val5071053, align 1, !tbaa !83 ; 4 uses
+  %i.f = load i8, ptr %.val5071053, align 1, !tbaa !83 ; 3 uses
   switch i8 %i.f, label %peek_offset.exit665.thread [
     i8 92, label %bb.b
     i8 39, label %bb.i
@@ -2393,6 +2393,7 @@ bb.fq:                                            ; preds = %peek_offset.exit665
   br label %.critedge480
 
 peek_offset.exit665.thread:                       ; preds = %peek.exit, %bb.fp, %peek_offset.exit665
+  %4 = phi i8 [ 13, %peek_offset.exit665 ], [ 13, %bb.fp ], [ %i.f, %peek.exit ] ; 2 uses
   %i.wb = and i8 %.tr7271051, 3
   %.not478 = icmp eq i8 %i.wb, 0
   br i1 %.not478, label %.thread717, label %bb.fr
@@ -2406,11 +2407,11 @@ peek_offset.exit665.thread:                       ; preds = %peek.exit, %bb.fp, 
   br i1 %.not478712, label %.thread718, label %char_is_ascii_printable.exit669.thread
 
 bb.fr:                                            ; preds = %peek_offset.exit665.thread
-  %i.wd = icmp sgt i8 %i.f, -1
+  %i.wd = icmp sgt i8 %4, -1
   br i1 %i.wd, label %char_is_ascii_printable.exit669, label %char_is_ascii_printable.exit669.thread
 
 char_is_ascii_printable.exit669:                  ; preds = %bb.fr
-  %i.we = zext nneg i8 %i.f to i64
+  %i.we = zext nneg i8 %4 to i64
   %i.wf = getelementptr i8, ptr @ascii_printable_chars, i64 %i.we
   %i.wg = load i8, ptr %i.wf, align 1, !tbaa !39, !range !64, !noundef !65
   %i.wh = trunc nuw i8 %i.wg to i1
@@ -2813,7 +2814,7 @@ bb.tw:                                            ; preds = %bb.tq
 bb.tx:                                            ; preds = %bb.tq, %pm_interpolated_symbol_node_append.exit2814, %pm_interpolated_symbol_node_create.exit2783
   %.41936 = phi ptr [ %i.bjh, %pm_interpolated_symbol_node_create.exit2783 ], [ %i.bjo, %pm_interpolated_symbol_node_append.exit2814 ], [ %.01932.ph, %bb.tq ] ; 8 uses
   %.01925 = phi i1 [ false, %pm_interpolated_symbol_node_create.exit2783 ], [ true, %pm_interpolated_symbol_node_append.exit2814 ], [ false, %bb.tq ]
-  %i.bkr = tail call fastcc ptr @parse_string_part(ptr noundef %0, i16 noundef zeroext %i.bdx) ; 4 uses
+  %i.bkr = tail call fastcc ptr @parse_string_part(ptr noundef nonnull %0, i16 noundef zeroext %i.bdx) ; 4 uses
   %i.bks = getelementptr i8, ptr %.41936, i64 40  ; 2 uses
   %i.bkt = load i64, ptr %i.bks, align 8, !tbaa !232
   %i.bku = icmp eq i64 %i.bkt, 0
@@ -3216,7 +3217,7 @@ bb.wg:                                            ; preds = %bb.wd
 
 bb.wh:                                            ; preds = %bb.wd, %pm_interpolated_string_node_create.exit2944, %pm_interpolated_string_node_create.exit2926
   %.41914 = phi ptr [ %i.bqk, %pm_interpolated_string_node_create.exit2926 ], [ %i.bqs, %pm_interpolated_string_node_create.exit2944 ], [ %.01910.ph, %bb.wd ] ; 2 uses
-  %i.bqz = tail call fastcc ptr @parse_string_part(ptr noundef %0, i16 noundef zeroext %i.bnt)
+  %i.bqz = tail call fastcc ptr @parse_string_part(ptr noundef nonnull %0, i16 noundef zeroext %i.bnt)
   tail call fastcc void @pm_interpolated_string_node_append(ptr noundef %.41914, ptr noundef %i.bqz)
   br label %.outer3765.backedge
 
@@ -3619,11 +3620,11 @@ bb.e:                                             ; preds = %pm_node_alloc.exit
   br label %.loopexit.i
 
 iter.check:                                       ; preds = %bb.e
-  %min.iters.check = icmp ult i64 %i.p, 8
+  %min.iters.check = icmp samesign ult i64 %i.p, 8
   br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check13 = icmp ult i64 %i.p, 32
+  %min.iters.check13 = icmp samesign ult i64 %i.p, 32
   br i1 %min.iters.check13, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -4026,9 +4027,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 switch.lookup:                                    ; preds = %bb.a
-  %switch.tableidx = add i32 %0, -1
-  %1 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.context_human, i64 %1
+  %1 = zext nneg i32 %0 to i64
+  %2 = getelementptr [8 x i8], ptr @switch.table.context_human, i64 %1
+  %switch.gep = getelementptr i8, ptr %2, i64 -8
   %switch.load = load ptr, ptr %switch.gep, align 8
   ret ptr %switch.load
 }
@@ -4431,7 +4432,7 @@ bb.l:                                             ; preds = %accept1.exit57
 accept1.exit65:                                   ; preds = %accept1.exit57, %bb.l
   %i.aq = load i32, ptr %2, align 8, !tbaa !126
   %i.ar = icmp eq i32 %i.aq, 28
-  %.val49 = load i32, ptr %i.b, align 8, !tbaa !154 ; 3 uses
+  %.val49 = load i32, ptr %i.b, align 8, !tbaa !154 ; 2 uses
   br i1 %i.ar, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %accept1.exit65
@@ -4574,7 +4575,7 @@ thread-pre-split:                                 ; preds = %pm_begin_node_creat
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.o, %bb.p, %thread-pre-split
-  %.val.i.i72 = phi i32 [ %.val.i.i72.pr, %thread-pre-split ], [ %.val49, %bb.o ], [ %.val51, %bb.p ]
+  %.val.i.i72 = phi i32 [ %.val.i.i72.pr, %thread-pre-split ], [ 6, %bb.o ], [ %.val51, %bb.p ]
   %.2 = phi ptr [ %.2.ph, %thread-pre-split ], [ null, %bb.o ], [ %i.bg, %bb.p ] ; 2 uses
   %i.cc = icmp eq i32 %.val.i.i72, 8
   br i1 %i.cc, label %accept1.exit.thread.i74, label %accept1.exit.i73

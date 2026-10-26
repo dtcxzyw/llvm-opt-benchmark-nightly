@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aa, label %bb.c, label %.critedge, !llvm.loop !22
 
 .critedge:                                        ; preds = %bb.c, %bb.d
-  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %i.w, i32 0) ; 2 uses
+  %.lcssa = phi i32 [ %i.w, %bb.c ], [ -1, %bb.d ]
+  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %.lcssa, i32 0) ; 2 uses
   %i.ab = load i32, ptr %i.t, align 4
   %i.ac = add i32 %i.ab, %spec.store.select
   %i.ad = srem i32 %i.ac, 64

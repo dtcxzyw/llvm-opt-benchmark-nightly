@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bi
   %i.gl = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.gm = load i64, ptr %i.gl, align 8, !noalias !1859, !noundef !6 ; 3 uses
+  %i.gm = load i64, ptr %i.gl, align 8, !noalias !1859, !noundef !6 ; 2 uses
   %i.gn = icmp ult i64 %i.gm, 768614336404564651
   call void @llvm.assume(i1 %i.gn)
   %i.go = icmp eq i64 %i.gm, 0
@@ -246,7 +246,7 @@ bb.bn:                                            ; preds = %bb.bm
 
 bb.bo:                                            ; preds = %bb.br
   %i.hf = icmp eq ptr %i.hg, %i.he
-  br i1 %i.hf, label %.loopexit.i, label %bb.bp
+  br i1 %i.hf, label %.loopexit.i.loopexit, label %bb.bp
 
 bb.bp:                                            ; preds = %.lr.ph225, %bb.bo
   %.sroa.0119.0.i223 = phi ptr [ %i.hd, %.lr.ph225 ], [ %i.hg, %bb.bo ] ; 4 uses
@@ -276,9 +276,12 @@ bb.br:                                            ; preds = %bb.bq
   %or.cond1322.i = select i1 %.not280.i, i1 true, i1 %.not281.i
   br i1 %or.cond1322.i, label %bb.bo, label %.loopexit
 
-.loopexit.i:                                      ; preds = %bb.bx, %bb.bo
-  %.sroa.22.0.copyload.in = phi i64 [ %i.gu, %bb.bo ], [ %i.gm, %bb.bx ]
-  %.sroa.22.0.copyload = inttoptr i64 %.sroa.22.0.copyload.in to ptr ; 2 uses
+.loopexit.i.loopexit:                             ; preds = %bb.bo
+  %2 = inttoptr i64 %i.gu to ptr
+  br label %.loopexit.i
+
+.loopexit.i:                                      ; preds = %bb.bx, %.loopexit.i.loopexit
+  %.sroa.22.0.copyload.in = phi ptr [ %2, %.loopexit.i.loopexit ], [ null, %bb.bx ] ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %i.l, i64 104
   %i.hs = load ptr, ptr %i.hr, align 8, !noalias !1859, !nonnull !6, !noundef !6 ; 2 uses
   %.idx231 = mul nuw nsw i64 %i.gf, 12
@@ -540,7 +543,7 @@ bb.cp:                                            ; preds = %_RNvMNtCsc2ZV4bV5Sr
   %.sroa.25.4111 = phi ptr [ %.sroa.25.4.ph, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit.thread ], [ %.sroa.25.0.copyload, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit ]
   %.sroa.26.4110 = phi ptr [ %.sroa.26.4.ph, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit.thread ], [ %.sroa.26.0.copyload, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit ]
   %.sroa.27.4109 = phi i64 [ %.sroa.27.4.ph, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit.thread ], [ %.sroa.27.0.copyload, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit ]
-  %.sroa.22.4108 = phi ptr [ %.sroa.22.4.ph, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit.thread ], [ %.sroa.22.0.copyload, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit ]
+  %.sroa.22.4108 = phi ptr [ %.sroa.22.4.ph, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit.thread ], [ %.sroa.22.0.copyload.in, %_RNvMNtCsc2ZV4bV5Srq_9daachorse8bytewiseINtB2_22DoubleArrayAhoCorasickmE11deserializeCskIqAKC4t9Ft_2yr.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   store i64 %.sroa.12.0..sroa.12.0..sroa.12.8.copyload, ptr %i.r, align 8
@@ -592,7 +595,7 @@ bb.cq:                                            ; preds = %_RNvMNtCsc2ZV4bV5Sr
   %.sroa.027.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.12.0.copyload, ptr %.sroa.027.sroa.4.0..sroa_idx, align 8
   %.sroa.027.sroa.4.sroa.4.0..sroa.027.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.22.0.copyload, ptr %.sroa.027.sroa.4.sroa.4.0..sroa.027.sroa.4.0..sroa_idx.sroa_idx, align 8
+  store ptr %.sroa.22.0.copyload.in, ptr %.sroa.027.sroa.4.sroa.4.0..sroa.027.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.027.sroa.4.sroa.5.0..sroa.027.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %.sroa.25.0.copyload, ptr %.sroa.027.sroa.4.sroa.5.0..sroa.027.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.027.sroa.4.sroa.6.0..sroa.027.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32

@@ -204,8 +204,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IteryINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtNtCshMzyYDJGtjv_3api4grpc12dynamic_pool13ItemWithStatsNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7ChannelEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB3p_8adapters3map12map_try_foldTRyRBV_ETB53_jEuINtNtNtB3r_3ops12control_flow11ControlFlowB5a_ENCNvMs1_B1w_INtB1w_11DynamicPoolB2q_E6chooses_0NCINvNvB3j_4find5checkB5a_QNCB65_s0_0E0E0B5i_ECsgGgPqgSfnMH_7storage.exit, label %bb.b
 
 _RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IteryINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtNtNtCshMzyYDJGtjv_3api4grpc12dynamic_pool13ItemWithStatsNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7ChannelEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB3p_8adapters3map12map_try_foldTRyRBV_ETB53_jEuINtNtNtB3r_3ops12control_flow11ControlFlowB5a_ENCNvMs1_B1w_INtB1w_11DynamicPoolB2q_E6chooses_0NCINvNvB3j_4find5checkB5a_QNCB65_s0_0E0E0B5i_ECsgGgPqgSfnMH_7storage.exit: ; preds = %bb.b, %bb.c
+  %.lcssa = phi ptr [ null, %bb.b ], [ %i.g, %bb.c ]
   %.sroa.3.0.i = phi i64 [ undef, %bb.b ], [ %i.l, %bb.c ]
-  %i.q = insertvalue { ptr, i64 } poison, ptr %i.g, 0
+  %i.q = insertvalue { ptr, i64 } poison, ptr %.lcssa, 0
   %i.r = insertvalue { ptr, i64 } %i.q, i64 %.sroa.3.0.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret { ptr, i64 } %i.r

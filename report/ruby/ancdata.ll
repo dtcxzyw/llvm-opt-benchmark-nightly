@@ -204,7 +204,7 @@ RSTRING_PTR.exit151:                              ; preds = %bb.r, %bb.s
   store ptr %9, ptr %i.ag, align 8, !tbaa !58
   store i32 %spec.select144, ptr %i.ah, align 4, !tbaa !59
   %i.bh = call ptr @rb_thread_call_without_gvl(ptr noundef nonnull @nogvl_recvmsg_func, ptr noundef nonnull %8, ptr noundef nonnull inttoptr (i64 -1 to ptr), ptr noundef null) #9
-  %i.bi = ptrtoint ptr %i.bh to i64               ; 4 uses
+  %i.bi = ptrtoint ptr %i.bh to i64               ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #9
   switch i64 %i.bi, label %.loopexit195 [
     i64 0, label %bb.t
@@ -271,11 +271,12 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   unreachable
 
 .loopexit195:                                     ; preds = %RSTRING_PTR.exit151, %bb.t
+  %12 = phi i64 [ 0, %bb.t ], [ %i.bi, %RSTRING_PTR.exit151 ] ; 3 uses
   br i1 %.not130, label %rsock_discard_cmsg_resource.exit.thread187, label %bb.ae
 
 bb.ae:                                            ; preds = %.loopexit195
   %i.bt = load i64, ptr %i.ac, align 8
-  %i.bu = icmp eq i64 %i.bt, %i.bi
+  %i.bu = icmp eq i64 %i.bt, %12
   %or.cond146 = select i1 %i.d, i1 %i.bu, i1 false ; 2 uses
   br i1 %or.cond146, label %bb.af, label %bb.ai
 
@@ -614,11 +615,11 @@ rsock_discard_cmsg_resource.exit.thread187:       ; preds = %bb.az, %.loopexit19
   br i1 %i.hi, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %rsock_discard_cmsg_resource.exit.thread187
-  %i.hj = call i64 @rb_str_new(ptr noundef %i.at, i64 noundef %i.bi) #9
+  %i.hj = call i64 @rb_str_new(ptr noundef %i.at, i64 noundef %12) #9
   br label %bb.bh
 
 bb.bg:                                            ; preds = %rsock_discard_cmsg_resource.exit.thread187
-  %i.hk = call i64 @rb_str_resize(i64 noundef %.1116, i64 noundef %i.bi) #9 ; 0 uses
+  %i.hk = call i64 @rb_str_resize(i64 noundef %.1116, i64 noundef %12) #9 ; 0 uses
   %i.hl = load i64, ptr @rb_cString, align 8, !tbaa !13
   %i.hm = call i64 @rb_obj_reveal(i64 noundef %.1116, i64 noundef %i.hl) #9 ; 0 uses
   br label %bb.bh

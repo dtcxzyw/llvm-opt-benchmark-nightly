@@ -141,7 +141,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #8
-          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.a
+          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.n
   unreachable
@@ -157,7 +157,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.m
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i)
   %i.bh = shl nuw nsw i64 %i.bg, 2
   %i.bi = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bh) #9
-          to label %.noexc34 unwind label %.loopexit.split-lp.loopexit.split-lp.a ; 4 uses
+          to label %.noexc34 unwind label %.loopexit.split-lp.loopexit ; 4 uses
 
 .noexc34:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.bj = getelementptr inbounds i8, ptr %i.bi, i64 %i.ba ; 2 uses
@@ -216,18 +216,28 @@ bb.r:                                             ; preds = %_ZSt16set_intersect
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.2, i64 noundef %i.bv) #10
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
-.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i, %bb.n
+.loopexit.split-lp.loopexit:                      ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.n
   %lpad.loopexit.split-lp88 = landingpad { ptr, i32 }
           cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit
+  %2 = phi i64 [ %i.ba, %.loopexit.split-lp.loopexit ], [ 9223372036854775804, %.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp88, %.loopexit.split-lp.loopexit.split-lp ]
   %.not.i.i.i31 = icmp eq ptr %.sroa.0.0, null
   br i1 %.not.i.i.i31, label %_ZNSt6vectorIiSaIiEED2Ev.exit32, label %bb.s
 
 bb.s:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0, i64 noundef %i.ba) #10
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0, i64 noundef %2) #10
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit32
 
 _ZNSt6vectorIiSaIiEED2Ev.exit32:                  ; preds = %.loopexit.split-lp.loopexit.split-lp.a, %bb.s
-  resume { ptr, i32 } %lpad.loopexit.split-lp88
+  resume { ptr, i32 } %lpad.phi
 
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.d, %bb.g, %bb.r, %_ZSt16set_intersectionIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_St20back_insert_iteratorIS5_EET1_T_SA_T0_SB_S9_.exit, %bb.a, %bb.b
   %.2 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.d ], [ %.not, %bb.r ], [ %.not, %_ZSt16set_intersectionIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_St20back_insert_iteratorIS5_EET1_T_SA_T0_SB_S9_.exit ], [ false, %bb.g ]

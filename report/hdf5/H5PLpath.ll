@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.an = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ad) #14
   %i.ao = add i64 %i.am, 6
   %i.ap = add i64 %i.ao, %i.an                    ; 2 uses
-  %i.aq = call noalias ptr @calloc(i64 noundef 1, i64 noundef %i.ap) #13 ; 11 uses
+  %i.aq = call noalias ptr @calloc(i64 noundef 1, i64 noundef %i.ap) #13 ; 12 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %bb.g, label %bb.h
 
@@ -284,6 +284,7 @@ bb.q:                                             ; preds = %bb.p
   br label %.backedge.sink.split.i
 
 .thread.i:                                        ; preds = %bb.l, %bb.i, %bb.g
+  %4 = phi ptr [ %i.aq, %bb.l ], [ %i.aq, %bb.i ], [ null, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %.loopexit.thread.i
 
@@ -310,7 +311,7 @@ bb.r:                                             ; preds = %.loopexit.i
   br label %.loopexit.thread.i
 
 .loopexit.thread.i:                               ; preds = %.backedge.i, %bb.r, %.loopexit.i, %.thread.i, %.preheader.i
-  %.444.ph.i = phi ptr [ %i.aq, %.thread.i ], [ %i.aq, %.loopexit.i ], [ %i.aq, %bb.r ], [ null, %.preheader.i ], [ %.040.be.i, %.backedge.i ] ; 2 uses
+  %.444.ph.i = phi ptr [ %4, %.thread.i ], [ %i.aq, %.loopexit.i ], [ %i.aq, %bb.r ], [ null, %.preheader.i ], [ %.040.be.i, %.backedge.i ] ; 2 uses
   %.5.ph.i = phi i32 [ -1, %.thread.i ], [ %i.bw, %.loopexit.i ], [ %i.bw, %bb.r ], [ 0, %.preheader.i ], [ 0, %.backedge.i ] ; 2 uses
   %i.cd = call i32 @closedir(ptr noundef nonnull %i.z)
   %i.ce = icmp slt i32 %i.cd, 0
@@ -458,7 +459,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ai = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.y) #14
   %i.aj = add i64 %i.ah, 6
   %i.ak = add i64 %i.aj, %i.ai                    ; 2 uses
-  %i.al = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef %i.ak) #13 ; 7 uses
+  %i.al = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef %i.ak) #13 ; 9 uses
   %i.am = icmp eq ptr %i.al, null
   br i1 %i.am, label %bb.i, label %bb.j
 
@@ -509,6 +510,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.bk, label %.thread.i, label %.backedge.sink.split.i
 
 .thread.i:                                        ; preds = %bb.o, %bb.n, %bb.k, %bb.i
+  %4 = phi ptr [ null, %bb.i ], [ %i.al, %bb.n ], [ %i.al, %bb.k ], [ %i.al, %bb.o ]
   %i.bl = phi i1 [ true, %bb.i ], [ true, %bb.n ], [ true, %bb.k ], [ false, %bb.o ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %.loopexit.i
@@ -531,7 +533,7 @@ bb.p:                                             ; preds = %bb.e
   br label %H5PL__find_plugin_in_path.exit.thread14
 
 .loopexit.i:                                      ; preds = %.backedge.i, %.thread.i, %.preheader.i
-  %.338.ph.i = phi ptr [ %i.al, %.thread.i ], [ null, %.preheader.i ], [ %.035.be.i, %.backedge.i ] ; 2 uses
+  %.338.ph.i = phi ptr [ %4, %.thread.i ], [ null, %.preheader.i ], [ %.035.be.i, %.backedge.i ] ; 2 uses
   %.3.ph.i = phi i1 [ %i.bl, %.thread.i ], [ false, %.preheader.i ], [ false, %.backedge.i ]
   %i.br = tail call i32 @closedir(ptr noundef nonnull %i.v)
   %i.bs = icmp slt i32 %i.br, 0

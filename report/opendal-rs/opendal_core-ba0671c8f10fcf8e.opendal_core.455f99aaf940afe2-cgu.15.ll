@@ -205,12 +205,11 @@ bb.aa:                                            ; preds = %_RNvMs9_NtNtCs5XgW7
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit.sink.split
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit.sink.split: ; preds = %bb.y, %bb.aa, %bb.ah
-  %.sroa.048.0.ph = phi i64 [ %i.af, %bb.ah ], [ -1, %bb.aa ], [ -1, %bb.y ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.3, i64 40, i1 false)
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit: ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit.sink.split, %bb.ae, %bb.ac, %bb.ad
-  %.sroa.048.0 = phi i64 [ %i.bn, %bb.ac ], [ %i.bn, %bb.ad ], [ %i.bn, %bb.ae ], [ %.sroa.048.0.ph, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit.sink.split ]
+  %.sroa.048.0 = phi i64 [ %i.bn, %bb.ac ], [ %i.bn, %bb.ad ], [ %i.bn, %bb.ae ], [ %i.af, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   store i64 %.sroa.048.0, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -204,7 +204,6 @@ $_ZTSN6duckdb19VectorAuxiliaryDataE = comdat any
 @.str.39 = private unnamed_addr constant [3 x i8] c"vz\00", align 1
 @.str.40 = private unnamed_addr constant [39 x i8] c" Timestamptz precision of not accepted\00", align 1
 @_ZN6duckdb11LogicalType12TIMESTAMP_TZE = external constant i8, align 1
-@.str.43 = private unnamed_addr constant [4 x i8] c"+vl\00", align 1
 @.str.46 = private unnamed_addr constant [78 x i8] c"Attempted to convert a STRUCT with no fields to DuckDB which is not supported\00", align 1
 @.str.47 = private unnamed_addr constant [44 x i8] c"Unsupported Internal Arrow Type: \22%c\22 Union\00", align 1
 @.str.48 = private unnamed_addr constant [5 x i8] c"+us:\00", align 1
@@ -607,8 +606,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !80   ; 3 uses
-  %.pre318 = load ptr, ptr %3, align 8, !tbaa !43 ; 10 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !80   ; 2 uses
+  %.pre318 = load ptr, ptr %3, align 8, !tbaa !43 ; 11 uses
   switch i64 %i.e, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit210.thread292 [
     i64 2, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 3, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit208
@@ -634,8 +633,16 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.n, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit210.thread.invoke, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit210.thread292
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit208: ; preds = %bb.c
-  %bcmp.i207 = call i32 @bcmp(ptr %.pre318, ptr nonnull @.str.43, i64 %i.e)
-  %i.o = icmp eq i32 %bcmp.i207, 0
+  %63 = load i16, ptr %.pre318, align 1
+  %64 = xor i16 %63, 30251
+  %65 = getelementptr i8, ptr %.pre318, i64 2
+  %66 = load i8, ptr %65, align 1
+  %67 = zext i8 %66 to i16
+  %68 = xor i16 %67, 108
+  %69 = or i16 %64, %68
+  %70 = icmp ne i16 %69, 0
+  %71 = zext i1 %70 to i32
+  %i.o = icmp eq i32 %71, 0
   br i1 %i.o, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit210.thread.invoke, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit210
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit210: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit208
@@ -1038,7 +1045,7 @@ _ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_c
 .lr.ph.i.i.i30.prol.loopexit:                     ; preds = %.lr.ph.i.i.i30.prol, %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit
   %.08.i.i.i31.unr = phi ptr [ %i.am, %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit ], [ %i.aq, %.lr.ph.i.i.i30.prol ]
   %.057.i.i.i32.unr = phi i64 [ %1, %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit ], [ %i.ap, %.lr.ph.i.i.i30.prol ]
-  %2 = icmp ult i64 %1, 4
+  %2 = icmp slt i64 %1, 4
   br i1 %2, label %_ZSt27__uninitialized_default_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_ET_S7_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30
 
 .lr.ph.i.i.i30:                                   ; preds = %.lr.ph.i.i.i30.prol.loopexit, %.lr.ph.i.i.i30

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %_ZNK5draco11CornerT
 
 bb.l:                                             ; preds = %bb.k
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #16
-          to label %.noexc73 unwind label %.loopexit.split-lp.loopexit.split-lp.a
+          to label %.noexc73 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc73:                                         ; preds = %bb.l
   unreachable
@@ -221,7 +221,7 @@ _ZNKSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1
   tail call void @llvm.assume(i1 %.not.i.i72)
   %i.dg = shl nuw nsw i64 %i.df, 3
   %i.dh = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dg) #14
-          to label %.noexc74 unwind label %.loopexit.split-lp.loopexit.split-lp.a ; 13 uses
+          to label %.noexc74 unwind label %.loopexit.split-lp.loopexit ; 13 uses
 
 .noexc74:                                         ; preds = %_ZNKSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EE12_M_check_lenEmPKc.exit.i
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 %i.cz ; 2 uses
@@ -371,14 +371,24 @@ bb.o:                                             ; preds = %_ZNK5draco11CornerT
   %i.ev = icmp ult i32 %i.eo, %i.eu
   br i1 %i.ev, label %.lr.ph226, label %._crit_edge, !llvm.loop !131
 
-.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %_ZNKSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EE12_M_check_lenEmPKc.exit.i, %bb.l
+.loopexit.split-lp.loopexit:                      ; preds = %_ZNKSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EE12_M_check_lenEmPKc.exit.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.l
   %lpad.loopexit.split-lp393 = landingpad { ptr, i32 }
           cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit
+  %1 = phi i64 [ %i.cz, %.loopexit.split-lp.loopexit ], [ 9223372036854775800, %.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp393, %.loopexit.split-lp.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %.sroa.0136.2, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EED2Ev.exit, label %bb.p
 
 bb.p:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0136.2, i64 noundef %i.cz) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0136.2, i64 noundef %1) #15
   br label %_ZNSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EED2Ev.exit
 
 _ZNSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EED2Ev.exit: ; preds = %.loopexit.split-lp.loopexit.split-lp.a, %bb.p
@@ -426,7 +436,7 @@ _ZNSt13_Bvector_baseISaIbEED2Ev.exit71:           ; preds = %_ZNSt6vectorISt4pai
   ret i1 true
 
 _ZNSt13_Bvector_baseISaIbEED2Ev.exit:             ; preds = %bb.q, %_ZNSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EED2Ev.exit
-  resume { ptr, i32 } %lpad.loopexit.split-lp393
+  resume { ptr, i32 } %lpad.phi
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -829,7 +839,7 @@ _ZSt22__uninitialized_move_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEES
   br i1 %i.af, label %.lr.ph.i.i.i.i.i69.preheader, label %_ZSt13move_backwardIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEES4_ET0_T_S6_S5_.exit
 
 .lr.ph.i.i.i.i.i69.preheader:                     ; preds = %_ZSt22__uninitialized_move_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit
-  %min.iters.check186 = icmp ult i64 %i.ae, 8
+  %min.iters.check186 = icmp samesign ult i64 %i.ae, 8
   %i.ag = add i64 %.neg, -1
   %diff.check188 = icmp ult i64 %i.ag, 31
   %or.cond = or i1 %min.iters.check186, %diff.check188
@@ -838,7 +848,7 @@ _ZSt22__uninitialized_move_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEES
 vector.ph189:                                     ; preds = %.lr.ph.i.i.i.i.i69.preheader
   %n.vec190 = and i64 %i.ae, 9223372036854775800  ; 3 uses
   %i.ah = and i64 %i.ae, 7
-  %i.ai = mul i64 %n.vec190, -4                   ; 2 uses
+  %i.ai = mul nsw i64 %n.vec190, -4               ; 2 uses
   %i.aj = getelementptr i8, ptr %i.d, i64 %i.ai
   %i.ak = getelementptr i8, ptr %i.n, i64 %i.ai
   br label %vector.body191
@@ -893,7 +903,7 @@ _ZSt13move_backwardIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEES4_ET0_T_S
 
 vector.ph205:                                     ; preds = %_ZSt13move_backwardIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEES4_ET0_T_S6_S5_.exit
   %n.vec206 = and i64 %i.az, 9223372036854775800  ; 3 uses
-  %i.ba = shl i64 %n.vec206, 2
+  %i.ba = shl nuw i64 %n.vec206, 2
   %i.bb = getelementptr i8, ptr %1, i64 %i.ba
   %broadcast.splatinsert207 = insertelement <4 x i32> poison, i32 %i.i, i64 0
   %broadcast.splat208 = shufflevector <4 x i32> %broadcast.splatinsert207, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -1112,12 +1122,12 @@ bb.h:                                             ; preds = %_ZNKSt6vectorIN5dra
   %i.de = phi ptr [ %i.dd, %bb.h ], [ null, %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 7 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.db ; 3 uses
   %.pre.i.i.i.i86 = load i32, ptr %3, align 4, !tbaa !54 ; 2 uses
-  %min.iters.check217 = icmp ult i64 %2, 8
+  %min.iters.check217 = icmp samesign ult i64 %2, 8
   br i1 %min.iters.check217, label %.lr.ph.i.i.i.i87.preheader, label %vector.ph218
 
 vector.ph218:                                     ; preds = %.lr.ph.preheader.i.i.i.i85
   %n.vec219 = and i64 %2, -8                      ; 3 uses
-  %i.dg = shl i64 %n.vec219, 2
+  %i.dg = shl nuw i64 %n.vec219, 2
   %i.dh = getelementptr i8, ptr %i.df, i64 %i.dg
   %i.di = and i64 %2, 7
   %broadcast.splatinsert220 = insertelement <4 x i32> poison, i32 %.pre.i.i.i.i86, i64 0
@@ -1222,7 +1232,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN5draco9IndexTypeIjNS0_21CornerIndex_t
   br i1 %min.iters.check250, label %.lr.ph.i.i.i.i.i97.preheader267, label %vector.memcheck251
 
 vector.memcheck251:                               ; preds = %.lr.ph.i.i.i.i.i97.preheader
-  %i.eh = shl i64 %2, 2
+  %i.eh = shl nuw i64 %2, 2
   %i.ei = add i64 %i.eh, %.0.lcssa.i.i.i.i.i95248
   %i.ej = sub i64 %i.da, %i.ei
   %diff.check252 = icmp ugt i64 %i.ej, -32
@@ -1548,7 +1558,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = shl nuw nsw i64 %1, 2
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #14 ; 5 uses
   %.pre.i.i.i.i.i.i = load i32, ptr %2, align 4, !tbaa !24 ; 2 uses
-  %min.iters.check59 = icmp ult i64 %1, 8
+  %min.iters.check59 = icmp samesign ult i64 %1, 8
   br i1 %min.iters.check59, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.ph60
 
 vector.ph60:                                      ; preds = %.lr.ph.preheader.i.i.i.i.i.i
@@ -1724,7 +1734,7 @@ bb.g:                                             ; preds = %bb.e
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i.i16
   %n.vec = and i64 %i.ay, 9223372036854775800     ; 3 uses
-  %i.az = shl i64 %n.vec, 2
+  %i.az = shl nuw i64 %n.vec, 2
   %i.ba = getelementptr i8, ptr %i.c, i64 %i.az
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.pre.i.i.i.i17, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -1794,7 +1804,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = shl nuw nsw i64 %1, 2
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #14 ; 5 uses
   %.pre.i.i.i.i.i.i = load i32, ptr %2, align 4, !tbaa !54 ; 2 uses
-  %min.iters.check59 = icmp ult i64 %1, 8
+  %min.iters.check59 = icmp samesign ult i64 %1, 8
   br i1 %min.iters.check59, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.ph60
 
 vector.ph60:                                      ; preds = %.lr.ph.preheader.i.i.i.i.i.i
@@ -1970,7 +1980,7 @@ bb.g:                                             ; preds = %bb.e
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i.i16
   %n.vec = and i64 %i.ay, 9223372036854775800     ; 3 uses
-  %i.az = shl i64 %n.vec, 2
+  %i.az = shl nuw i64 %n.vec, 2
   %i.ba = getelementptr i8, ptr %i.c, i64 %i.az
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.pre.i.i.i.i17, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -2102,7 +2112,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
 
 vector.ph127:                                     ; preds = %bb.k
   %n.vec128 = and i64 %i.ag, 9223372036854775800  ; 3 uses
-  %i.ah = shl i64 %n.vec128, 2
+  %i.ah = shl nuw i64 %n.vec128, 2
   %i.ai = getelementptr i8, ptr %1, i64 %i.ah
   %broadcast.splatinsert129 = insertelement <4 x i32> poison, i32 %i.i, i64 0
   %broadcast.splat130 = shufflevector <4 x i32> %broadcast.splatinsert129, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -2288,15 +2298,15 @@ bb.t:                                             ; preds = %bb.s, %_ZNKSt6vecto
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 2       ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.idx.i.i.i.i.i75
   %i.ch = load i32, ptr %3, align 4, !tbaa !26    ; 2 uses
-  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4       ; 2 uses
+  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4
   %i.cj = lshr exact i64 %i.ci, 2
   %i.ck = add nuw nsw i64 %i.cj, 1                ; 2 uses
-  %min.iters.check139 = icmp ult i64 %i.ci, 28
+  %min.iters.check139 = icmp ult i64 %2, 8
   br i1 %min.iters.check139, label %.lr.ph.i.i.i.i.i.i.i76.preheader, label %vector.ph140
 
 vector.ph140:                                     ; preds = %bb.t
   %n.vec141 = and i64 %i.ck, 9223372036854775800  ; 3 uses
-  %i.cl = shl i64 %n.vec141, 2
+  %i.cl = shl nuw nsw i64 %n.vec141, 2
   %i.cm = getelementptr i8, ptr %i.cf, i64 %i.cl
   %broadcast.splatinsert142 = insertelement <4 x i32> poison, i32 %i.ch, i64 0
   %broadcast.splat143 = shufflevector <4 x i32> %broadcast.splatinsert142, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -2457,7 +2467,7 @@ _ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i:      ; preds = %bb.d, %bb.c
   %storemerge.i.i.i.i.i = phi i64 [ %i.af, %bb.c ], [ %i.ai, %bb.d ]
   store i64 %storemerge.i.i.i.i.i, ptr %.sroa.07.1.i.i.i.i.i, align 8, !tbaa !56
   %i.aj = add nsw i64 %.024.i.i.i.i.i, -1
-  %4 = icmp sgt i64 %.024.i.i.i.i.i, 1
+  %4 = icmp samesign ugt i64 %.024.i.i.i.i.i, 1
   br i1 %4, label %_ZNSt13_Bit_iteratormmEv.exit.i.i.i.i.i, label %_ZSt13copy_backwardISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit, !llvm.loop !267
 
 _ZSt13copy_backwardISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit: ; preds = %_ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i, %bb.b
@@ -2580,7 +2590,7 @@ _ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i:       ; preds = %bb.n, %bb.m
   %.sroa.03.1.idx.i.i.i.i.i.i = select i1 %i.cd, i64 8, i64 0
   %.sroa.03.1.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.03.019.i.i.i.i.i.i, i64 %.sroa.03.1.idx.i.i.i.i.i.i ; 5 uses
   %i.ce = add nsw i64 %.020.i.i.i.i.i.i, -1
-  %5 = icmp sgt i64 %.020.i.i.i.i.i.i, 1
+  %5 = icmp samesign ugt i64 %.020.i.i.i.i.i.i, 1
   br i1 %5, label %.lr.ph.i.i.i.i.i.i, label %_ZNSt6vectorIbSaIbEE15_M_copy_alignedESt19_Bit_const_iteratorS2_St13_Bit_iterator.exit, !llvm.loop !268
 
 _ZNSt6vectorIbSaIbEE15_M_copy_alignedESt19_Bit_const_iteratorS2_St13_Bit_iterator.exit: ; preds = %_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i
@@ -2665,7 +2675,7 @@ _ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i66:    ; preds = %bb.s, %bb.r
   %.sroa.07.1.idx.i.i.i.i.i71 = select i1 %i.dk, i64 8, i64 0
   %.sroa.07.1.i.i.i.i.i72 = getelementptr inbounds nuw i8, ptr %.sroa.07.023.i.i.i.i.i63, i64 %.sroa.07.1.idx.i.i.i.i.i71 ; 2 uses
   %i.dl = add nsw i64 %.024.i.i.i.i.i62, -1
-  %6 = icmp sgt i64 %.024.i.i.i.i.i62, 1
+  %6 = icmp samesign ugt i64 %.024.i.i.i.i.i62, 1
   br i1 %6, label %.lr.ph.i.i.i.i.i, label %_ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit, !llvm.loop !269
 
 _ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit:  ; preds = %_ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i66, %_ZNSt14_Bit_referenceaSEb.exit53

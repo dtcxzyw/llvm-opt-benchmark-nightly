@@ -204,7 +204,8 @@ _ZNK6hermes6parser6detail12JSParserImpl6checkNINS0_9TokenKindEJS4_S4_EEEbT_DpT0_
   br i1 %i.en, label %_ZNK6hermes6parser6detail12JSParserImpl6checkNINS0_9TokenKindEJS4_S4_EEEbT_DpT0_.exit.thread, label %bb.ad
 
 _ZNK6hermes6parser6detail12JSParserImpl6checkNINS0_9TokenKindEJS4_S4_EEEbT_DpT0_.exit.thread: ; preds = %_ZNK6hermes6parser6detail12JSParserImpl6checkNINS0_9TokenKindEJS4_S4_EEEbT_DpT0_.exit, %bb.t
-  %i.eo = icmp eq i32 %i.by, 58
+  %.lcssa = phi i32 [ %i.by, %_ZNK6hermes6parser6detail12JSParserImpl6checkNINS0_9TokenKindEJS4_S4_EEEbT_DpT0_.exit ], [ 55, %bb.t ]
+  %i.eo = icmp eq i32 %.lcssa, 58
   %spec.select = select i1 %i.eo, i8 1, i8 %.027.ph ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   %.sroa.0.0.copyload.i38 = load ptr, ptr %i.ep, align 8, !tbaa !183
@@ -607,7 +608,7 @@ _ZN4llvh11SmallStringILj24EEaSERKS1_.exit.i.i.i.i.i: ; preds = %.sink.split.i.i.
   %i.ag = getelementptr inbounds nuw i8, ptr %.0910.i.i.i.i.i, i64 40
   %i.ah = getelementptr inbounds nuw i8, ptr %.0812.i.i.i.i.i, i64 40 ; 2 uses
   %i.ai = add nsw i64 %.014.i.i.i.i.i, -1
-  %2 = icmp sgt i64 %.014.i.i.i.i.i, 1
+  %2 = icmp samesign ugt i64 %.014.i.i.i.i.i, 1
   br i1 %2, label %.lr.ph.i.i.i.i.i, label %_ZSt4copyIPKN4llvh11SmallStringILj24EEEPS2_ET0_T_S7_S6_.exit.loopexit, !llvm.loop !826
 
 _ZSt4copyIPKN4llvh11SmallStringILj24EEEPS2_ET0_T_S7_S6_.exit.loopexit: ; preds = %_ZN4llvh11SmallStringILj24EEaSERKS1_.exit.i.i.i.i.i
@@ -777,7 +778,7 @@ _ZN4llvh11SmallStringILj24EEaSERKS1_.exit.i.i.i.i.i46: ; preds = %.sink.split.i.
   %i.bx = getelementptr inbounds nuw i8, ptr %.0910.i.i.i.i.i41, i64 40
   %i.by = getelementptr inbounds nuw i8, ptr %.0812.i.i.i.i.i40, i64 40
   %i.bz = add nsw i64 %.014.i.i.i.i.i39, -1
-  %3 = icmp sgt i64 %.014.i.i.i.i.i39, 1
+  %3 = icmp samesign ugt i64 %.014.i.i.i.i.i39, 1
   br i1 %3, label %.lr.ph.i.i.i.i.i38, label %_ZSt4copyIPKN4llvh11SmallStringILj24EEEPS2_ET0_T_S7_S6_.exit53, !llvm.loop !826
 
 _ZSt4copyIPKN4llvh11SmallStringILj24EEEPS2_ET0_T_S7_S6_.exit53: ; preds = %_ZN4llvh11SmallStringILj24EEaSERKS1_.exit.i.i.i.i.i46, %bb.t, %_ZN4llvh23SmallVectorTemplateBaseINS_11SmallStringILj24EEELb0EE13destroy_rangeEPS2_S4_.exit35

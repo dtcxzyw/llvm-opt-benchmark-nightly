@@ -202,7 +202,7 @@ _ZNKSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt
 
 bb.i:                                             ; preds = %bb.j, %_ZNKSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE4findERS1_.exit.i.i
   %.sroa.03.0.in.i.i = phi ptr [ %.sroa.06.1.i.i.i, %_ZNKSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE4findERS1_.exit.i.i ], [ %.sroa.03.0.i.i, %bb.j ]
-  %.sroa.03.0.i.i = load ptr, ptr %.sroa.03.0.in.i.i, align 8 ; 5 uses
+  %.sroa.03.0.i.i = load ptr, ptr %.sroa.03.0.in.i.i, align 8 ; 4 uses
   %.not2.i.i = icmp eq ptr %.sroa.03.0.i.i, null
   br i1 %.not2.i.i, label %_ZNKSt18unordered_multimapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE11equal_rangeERS5_.exit, label %bb.j
 
@@ -213,7 +213,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ak, label %bb.i, label %_ZNKSt18unordered_multimapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE11equal_rangeERS5_.exit, !llvm.loop !6
 
 _ZNKSt18unordered_multimapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE11equal_rangeERS5_.exit: ; preds = %bb.i, %bb.j
-  %.not275305 = icmp eq ptr %.sroa.06.1.i.i.i, %.sroa.03.0.i.i
+  %.sroa.03.0.i.i.lcssa = phi ptr [ null, %bb.i ], [ %.sroa.03.0.i.i, %bb.j ] ; 2 uses
+  %.not275305 = icmp eq ptr %.sroa.06.1.i.i.i, %.sroa.03.0.i.i.lcssa
   br i1 %.not275305, label %._crit_edge, label %.lr.ph307
 
 .lr.ph307:                                        ; preds = %_ZNKSt18unordered_multimapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE11equal_rangeERS5_.exit, %.loopexit281
@@ -616,7 +617,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 
 .loopexit281:                                     ; preds = %.thread251, %bb.l, %_ZNK6Assimp4STEP10LazyObject5ToPtrINS_3IFC10Schema_2x313IfcStyledItemEEEPKT_v.exit
   %i.oo = load ptr, ptr %.sroa.0233.0306, align 8 ; 2 uses
-  %.not275 = icmp eq ptr %i.oo, %.sroa.03.0.i.i
+  %.not275 = icmp eq ptr %i.oo, %.sroa.03.0.i.i.lcssa
   br i1 %.not275, label %._crit_edge, label %.lr.ph307, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %.lr.ph.i.i.i.i.i, %bb.c, %.loopexit281, %bb.e, %..loopexit_crit_edge21.i.i.i.i.i, %_ZNKSt18unordered_multimapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE11equal_rangeERS5_.exit

@@ -54,13 +54,13 @@ iter.check:                                       ; preds = %bb.d
   %i.o = add nuw i32 %i.m, 1
   %wide.trip.count1584 = zext i32 %i.o to i64     ; 2 uses
   %i.p = zext nneg i32 %i.m to i64                ; 5 uses
-  %min.iters.check = icmp ugt i32 %i.m, 3
+  %min.iters.check = icmp samesign ugt i32 %i.m, 3
   %ident.check.not = icmp eq i32 %i.a, 1
   %or.cond = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   br i1 %or.cond, label %vector.main.loop.iter.check, label %.lr.ph1490.preheader
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check1801 = icmp ult i32 %i.m, 16
+  %min.iters.check1801 = icmp samesign ult i32 %i.m, 16
   br i1 %min.iters.check1801, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -384,19 +384,20 @@ bb.f:                                             ; preds = %bb.c
   %i.gc = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.gd = load double, ptr %i.gc, align 8, !tbaa !109 ; 7 uses
   %i.ge = fmul double %i.fx, %i.gd                ; 6 uses
-  %i.gf = load i32, ptr %2, align 4, !tbaa !107   ; 7 uses
+  %i.gf = load i32, ptr %2, align 4, !tbaa !107   ; 6 uses
   %.not14401482 = icmp slt i32 %i.gf, 1
   br i1 %.not14401482, label %.loopexit, label %.lr.ph1484.lver.check
 
 .lr.ph1484.lver.check:                            ; preds = %bb.f
   %i.gg = sext i32 %i.a to i64                    ; 6 uses
+  %8 = add nuw i32 %i.gf, 1                       ; 2 uses
   %ident.check3663.not = icmp eq i32 %i.a, 1
   br i1 %ident.check3663.not, label %.lr.ph1484.ph, label %.lr.ph1484.lver.orig.preheader
 
 .lr.ph1484.lver.orig.preheader:                   ; preds = %.lr.ph1484.lver.check
   %i.gh = zext nneg i32 %i.gf to i64              ; 2 uses
   %xtraiter3758 = and i64 %i.gh, 1
-  %i.gi = icmp eq i32 %i.gf, 1
+  %i.gi = icmp eq i32 %8, 2
   br i1 %i.gi, label %.lr.ph1484.lver.orig.epil.preheader, label %.lr.ph1484.lver.orig.preheader.new
 
 .lr.ph1484.lver.orig.preheader.new:               ; preds = %.lr.ph1484.lver.orig.preheader
@@ -453,7 +454,7 @@ bb.f:                                             ; preds = %bb.c
   %load_initial3665 = load double, ptr %scevgep, align 8 ; 2 uses
   %i.hn = zext nneg i32 %i.gf to i64              ; 2 uses
   %xtraiter3763 = and i64 %i.hn, 1
-  %i.ho = icmp eq i32 %i.gf, 1
+  %i.ho = icmp eq i32 %8, 2
   br i1 %i.ho, label %.lr.ph1484.epil.preheader, label %.lr.ph1484.ph.new
 
 .lr.ph1484.ph.new:                                ; preds = %.lr.ph1484.ph
@@ -510,19 +511,20 @@ bb.g:                                             ; preds = %bb.c
   %i.it = insertelement <4 x double> poison, double %i.ir, i64 0
   %i.iu = shufflevector <4 x double> %i.it, <4 x double> poison, <4 x i32> zeroinitializer
   %i.iv = fmul <4 x double> %i.iu, %i.is          ; 7 uses
-  %i.iw = load i32, ptr %2, align 4, !tbaa !107   ; 7 uses
+  %i.iw = load i32, ptr %2, align 4, !tbaa !107   ; 6 uses
   %.not14391479 = icmp slt i32 %i.iw, 1
   br i1 %.not14391479, label %.loopexit, label %.lr.ph1481.lver.check
 
 .lr.ph1481.lver.check:                            ; preds = %bb.g
   %i.ix = sext i32 %i.a to i64                    ; 6 uses
+  %9 = add nuw i32 %i.iw, 1                       ; 2 uses
   %ident.check3667.not = icmp eq i32 %i.a, 1
   br i1 %ident.check3667.not, label %.lr.ph1481.ph, label %.lr.ph1481.lver.orig.preheader
 
 .lr.ph1481.lver.orig.preheader:                   ; preds = %.lr.ph1481.lver.check
   %i.iy = zext nneg i32 %i.iw to i64              ; 2 uses
   %xtraiter3748 = and i64 %i.iy, 1
-  %i.iz = icmp eq i32 %i.iw, 1
+  %i.iz = icmp eq i32 %9, 2
   br i1 %i.iz, label %.lr.ph1481.lver.orig.epil.preheader, label %.lr.ph1481.lver.orig.preheader.new
 
 .lr.ph1481.lver.orig.preheader.new:               ; preds = %.lr.ph1481.lver.orig.preheader
@@ -591,7 +593,7 @@ bb.g:                                             ; preds = %bb.c
   %i.kr = extractelement <4 x double> %i.is, i64 3 ; 3 uses
   %i.ks = zext nneg i32 %i.iw to i64              ; 2 uses
   %xtraiter3753 = and i64 %i.ks, 1
-  %i.kt = icmp eq i32 %i.iw, 1
+  %i.kt = icmp eq i32 %9, 2
   br i1 %i.kt, label %.lr.ph1481.epil.preheader, label %.lr.ph1481.ph.new
 
 .lr.ph1481.ph.new:                                ; preds = %.lr.ph1481.ph
@@ -661,19 +663,20 @@ bb.h:                                             ; preds = %bb.c
   %i.mj = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.mk = load double, ptr %i.mj, align 8, !tbaa !109 ; 7 uses
   %i.ml = fmul double %i.me, %i.mk                ; 6 uses
-  %i.mm = load i32, ptr %2, align 4, !tbaa !107   ; 7 uses
+  %i.mm = load i32, ptr %2, align 4, !tbaa !107   ; 6 uses
   %.not14381476 = icmp slt i32 %i.mm, 1
   br i1 %.not14381476, label %.loopexit, label %.lr.ph1478.lver.check
 
 .lr.ph1478.lver.check:                            ; preds = %bb.h
   %i.mn = sext i32 %i.a to i64                    ; 6 uses
+  %10 = add nuw i32 %i.mm, 1                      ; 2 uses
   %ident.check3672.not = icmp eq i32 %i.a, 1
   br i1 %ident.check3672.not, label %.lr.ph1478.ph, label %.lr.ph1478.lver.orig.preheader
 
 .lr.ph1478.lver.orig.preheader:                   ; preds = %.lr.ph1478.lver.check
   %i.mo = zext nneg i32 %i.mm to i64              ; 2 uses
   %xtraiter3738 = and i64 %i.mo, 1
-  %i.mp = icmp eq i32 %i.mm, 1
+  %i.mp = icmp eq i32 %10, 2
   br i1 %i.mp, label %.lr.ph1478.lver.orig.epil.preheader, label %.lr.ph1478.lver.orig.preheader.new
 
 .lr.ph1478.lver.orig.preheader.new:               ; preds = %.lr.ph1478.lver.orig.preheader
@@ -752,7 +755,7 @@ bb.h:                                             ; preds = %bb.c
   %i.op = extractelement <4 x double> %i.mf, i64 3 ; 3 uses
   %i.oq = zext nneg i32 %i.mm to i64              ; 2 uses
   %xtraiter3743 = and i64 %i.oq, 1
-  %i.or = icmp eq i32 %i.mm, 1
+  %i.or = icmp eq i32 %10, 2
   br i1 %i.or, label %.lr.ph1478.epil.preheader, label %.lr.ph1478.ph.new
 
 .lr.ph1478.ph.new:                                ; preds = %.lr.ph1478.ph
@@ -1155,11 +1158,11 @@ iter.check3645:                                   ; preds = %bb.o
   %wide.trip.count1634 = zext i32 %i.aep to i64
   %invariant.gep1780 = getelementptr [8 x i8], ptr %i.c, i64 %i.aeo ; 3 uses
   %i.aeq = zext nneg i32 %i.aen to i64            ; 5 uses
-  %min.iters.check3629 = icmp ult i32 %i.aen, 4
+  %min.iters.check3629 = icmp samesign ult i32 %i.aen, 4
   br i1 %min.iters.check3629, label %.lr.ph1520.preheader, label %vector.main.loop.iter.check3630
 
 vector.main.loop.iter.check3630:                  ; preds = %iter.check3645
-  %min.iters.check3631 = icmp ult i32 %i.aen, 16
+  %min.iters.check3631 = icmp samesign ult i32 %i.aen, 16
   br i1 %min.iters.check3631, label %vec.epilog.ph3649, label %vector.ph3632
 
 vector.ph3632:                                    ; preds = %vector.main.loop.iter.check3630
@@ -1258,7 +1261,7 @@ bb.p:                                             ; preds = %bb.n
   %invariant.gep1776 = getelementptr [8 x i8], ptr %i.c, i64 %i.afs ; 4 uses
   %invariant.gep1778 = getelementptr [8 x i8], ptr %i.c, i64 %i.aft ; 4 uses
   %i.afv = zext nneg i32 %i.afq to i64            ; 2 uses
-  %min.iters.check3601 = icmp ult i32 %i.afq, 12
+  %min.iters.check3601 = icmp samesign ult i32 %i.afq, 12
   br i1 %min.iters.check3601, label %scalar.ph3600.preheader, label %vector.memcheck3602
 
 vector.memcheck3602:                              ; preds = %.lr.ph1517
@@ -1413,7 +1416,7 @@ bb.q:                                             ; preds = %bb.n
   %invariant.gep1772 = getelementptr [8 x i8], ptr %i.c, i64 %i.aio ; 4 uses
   %invariant.gep1774 = getelementptr [8 x i8], ptr %i.c, i64 %i.aip ; 4 uses
   %i.air = zext nneg i32 %i.aik to i64            ; 2 uses
-  %min.iters.check3555 = icmp ult i32 %i.aik, 16
+  %min.iters.check3555 = icmp samesign ult i32 %i.aik, 16
   br i1 %min.iters.check3555, label %scalar.ph3554.preheader, label %vector.memcheck3556
 
 vector.memcheck3556:                              ; preds = %.lr.ph1514
@@ -1604,7 +1607,7 @@ bb.r:                                             ; preds = %bb.n
   %invariant.gep1766 = getelementptr [8 x i8], ptr %i.c, i64 %i.amd ; 2 uses
   %invariant.gep1768 = getelementptr [8 x i8], ptr %i.c, i64 %i.ame ; 2 uses
   %i.amg = zext nneg i32 %i.alx to i64            ; 2 uses
-  %min.iters.check3481 = icmp ult i32 %i.alx, 20
+  %min.iters.check3481 = icmp samesign ult i32 %i.alx, 20
   br i1 %min.iters.check3481, label %scalar.ph3480.preheader, label %vector.memcheck3482
 
 vector.memcheck3482:                              ; preds = %.lr.ph1511
@@ -1786,7 +1789,7 @@ bb.s:                                             ; preds = %bb.n
   %invariant.gep1758 = getelementptr [8 x i8], ptr %i.c, i64 %i.apj ; 2 uses
   %invariant.gep1760 = getelementptr [8 x i8], ptr %i.c, i64 %i.apk ; 2 uses
   %i.apm = zext nneg i32 %i.apb to i64            ; 2 uses
-  %min.iters.check3371 = icmp ult i32 %i.apb, 24
+  %min.iters.check3371 = icmp samesign ult i32 %i.apb, 24
   br i1 %min.iters.check3371, label %scalar.ph3370.preheader, label %vector.memcheck3372
 
 vector.memcheck3372:                              ; preds = %.lr.ph1508
@@ -2012,7 +2015,7 @@ bb.t:                                             ; preds = %bb.n
   %invariant.gep1748 = getelementptr [8 x i8], ptr %i.c, i64 %i.ath ; 2 uses
   %invariant.gep1750 = getelementptr [8 x i8], ptr %i.c, i64 %i.ati ; 2 uses
   %i.atk = zext nneg i32 %i.asx to i64            ; 2 uses
-  %min.iters.check3217 = icmp ult i32 %i.asx, 28
+  %min.iters.check3217 = icmp samesign ult i32 %i.asx, 28
   br i1 %min.iters.check3217, label %scalar.ph3216.preheader, label %vector.memcheck3218
 
 vector.memcheck3218:                              ; preds = %.lr.ph1505
@@ -2286,7 +2289,7 @@ bb.u:                                             ; preds = %bb.n
   %invariant.gep1736 = getelementptr [8 x i8], ptr %i.c, i64 %i.axx ; 2 uses
   %invariant.gep1738 = getelementptr [8 x i8], ptr %i.c, i64 %i.axy ; 2 uses
   %i.aya = zext nneg i32 %i.axl to i64            ; 2 uses
-  %min.iters.check3011 = icmp ult i32 %i.axl, 32
+  %min.iters.check3011 = icmp samesign ult i32 %i.axl, 32
   br i1 %min.iters.check3011, label %scalar.ph3010.preheader, label %vector.memcheck3012
 
 vector.memcheck3012:                              ; preds = %.lr.ph1502
@@ -2612,7 +2615,7 @@ bb.v:                                             ; preds = %bb.n
   %invariant.gep1722 = getelementptr [8 x i8], ptr %i.c, i64 %i.bdf ; 2 uses
   %invariant.gep1724 = getelementptr [8 x i8], ptr %i.c, i64 %i.bdg ; 2 uses
   %i.bdi = zext nneg i32 %i.bcr to i64            ; 2 uses
-  %min.iters.check2745 = icmp ult i32 %i.bcr, 36
+  %min.iters.check2745 = icmp samesign ult i32 %i.bcr, 36
   br i1 %min.iters.check2745, label %scalar.ph2744.preheader, label %vector.memcheck2746
 
 vector.memcheck2746:                              ; preds = %.lr.ph1499
@@ -2994,7 +2997,7 @@ bb.w:                                             ; preds = %bb.n
   %invariant.gep1706 = getelementptr [8 x i8], ptr %i.c, i64 %i.bjf ; 2 uses
   %invariant.gep1708 = getelementptr [8 x i8], ptr %i.c, i64 %i.bjg ; 2 uses
   %i.bji = zext nneg i32 %i.bip to i64            ; 2 uses
-  %min.iters.check2411 = icmp ult i32 %i.bip, 40
+  %min.iters.check2411 = icmp samesign ult i32 %i.bip, 40
   br i1 %min.iters.check2411, label %scalar.ph2410.preheader, label %vector.memcheck2412
 
 vector.memcheck2412:                              ; preds = %.lr.ph1496
@@ -3397,7 +3400,7 @@ bb.x:                                             ; preds = %bb.n
   %invariant.gep1688 = getelementptr [8 x i8], ptr %i.c, i64 %i.bpx ; 2 uses
   %invariant.gep1690 = getelementptr [8 x i8], ptr %i.c, i64 %i.bpy ; 2 uses
   %i.bqa = zext nneg i32 %i.bpf to i64            ; 2 uses
-  %min.iters.check2006 = icmp ult i32 %i.bpf, 44
+  %min.iters.check2006 = icmp samesign ult i32 %i.bpf, 44
   br i1 %min.iters.check2006, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph1493

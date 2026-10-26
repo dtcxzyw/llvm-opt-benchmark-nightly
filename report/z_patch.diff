@@ -1,0 +1,4559 @@
+diff --git a/llvm/include/llvm/Transforms/Scalar/CorrelatedValuePropagation.h b/llvm/include/llvm/Transforms/Scalar/CorrelatedValuePropagation.h
+index 075718a60e5ea1..6f74d8db30286e 100644
+--- a/llvm/include/llvm/Transforms/Scalar/CorrelatedValuePropagation.h
++++ b/llvm/include/llvm/Transforms/Scalar/CorrelatedValuePropagation.h
+@@ -17,7 +17,18 @@ class Function;
+ 
+ struct CorrelatedValuePropagationPass
+     : OptionalPassInfoMixin<CorrelatedValuePropagationPass> {
++  /// Enable bounded evaluation over small, proven input sets. The default
++  /// early pipeline keeps this off so that it does not perturb inlining.
++  explicit CorrelatedValuePropagationPass(bool FoldFiniteValues = false)
++      : FoldFiniteValues(FoldFiniteValues) {}
++
+   LLVM_ABI PreservedAnalyses run(Function &F, FunctionAnalysisManager &AM);
++  LLVM_ABI void
++  printPipeline(raw_ostream &OS,
++                function_ref<StringRef(StringRef)> MapClassName2PassName);
++
++private:
++  bool FoldFiniteValues;
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/include/llvm/Transforms/Utils/Evaluator.h b/llvm/include/llvm/Transforms/Utils/Evaluator.h
+index 758d9aa84b5567..44429d775c1270 100644
+--- a/llvm/include/llvm/Transforms/Utils/Evaluator.h
++++ b/llvm/include/llvm/Transforms/Utils/Evaluator.h
+@@ -14,6 +14,7 @@
+ #define LLVM_TRANSFORMS_UTILS_EVALUATOR_H
+ 
+ #include "llvm/ADT/DenseMap.h"
++#include "llvm/ADT/STLFunctionalExtras.h"
+ #include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/IR/BasicBlock.h"
+@@ -79,8 +80,16 @@ class Evaluator {
+   };
+ 
+ public:
+-  Evaluator(const DataLayout &DL, const TargetLibraryInfo *TLI)
+-      : DL(DL), TLI(TLI) {
++  /// Runtime evaluation must not assume that a mutable global still has its
++  /// initializer's value. It accepts only integer computations and paths with
++  /// no externally visible effects, and bounds the total work across calls.
++  enum class Mode { GlobalInitializer, Runtime };
++
++  Evaluator(const DataLayout &DL, const TargetLibraryInfo *TLI,
++            Mode EvalMode = Mode::GlobalInitializer, unsigned MaxSteps = 256,
++            unsigned MaxCallDepth = 4)
++      : DL(DL), TLI(TLI), EvalMode(EvalMode), StepsLeft(MaxSteps),
++        MaxCallDepth(MaxCallDepth) {
+     ValueStack.emplace_back();
+   }
+ 
+@@ -99,6 +108,12 @@ class Evaluator {
+   LLVM_ABI bool EvaluateFunction(Function *F, Constant *&RetVal,
+                                  const SmallVectorImpl<Constant *> &ActualArgs);
+ 
++  /// Evaluate an expression in Runtime mode. GetConstant supplies substitutions
++  /// proven at the expression's program point. All uses of a substituted value
++  /// share the same assignment. A failed evaluator must not be reused.
++  LLVM_ABI Constant *
++  EvaluateExpression(Value *V, function_ref<Constant *(Value *)> GetConstant);
++
+   DenseMap<GlobalVariable *, Constant *> getMutatedInitializers() const {
+     DenseMap<GlobalVariable *, Constant *> Result;
+     for (const auto &Pair : MutatedMemory)
+@@ -111,6 +126,27 @@ class Evaluator {
+   }
+ 
+ private:
++  using Lookup = function_ref<Constant *(Value *)>;
++
++  Constant *EvaluateExpressionImpl(Value *V, Lookup GetConstant,
++                                   unsigned Depth);
++  Constant *EvaluateRuntimeCall(CallBase &CB, ArrayRef<Constant *> Args);
++  Constant *FoldRuntimeInstruction(Instruction &I, ArrayRef<Constant *> Ops);
++  bool CanEvaluateRuntimeFunction(Function &F, ArrayRef<Constant *> Args) const;
++
++  Constant *getRuntimeVal(Value *V) {
++    if (auto *C = dyn_cast<Constant>(V))
++      return C;
++    return ValueStack.back().lookup(V);
++  }
++
++  bool takeRuntimeStep() {
++    if (!StepsLeft)
++      return false;
++    --StepsLeft;
++    return true;
++  }
++
+   bool EvaluateBlock(BasicBlock::iterator CurInst, BasicBlock *&NextBB,
+                      bool &StrippedPointerCastsForAliasAnalysis);
+ 
+@@ -167,6 +203,11 @@ class Evaluator {
+ 
+   const DataLayout &DL;
+   const TargetLibraryInfo *TLI;
++
++  Mode EvalMode;
++  unsigned StepsLeft;
++  unsigned MaxCallDepth;
++  DenseMap<Value *, Constant *> ExpressionCache;
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/lib/Passes/PassBuilder.cpp b/llvm/lib/Passes/PassBuilder.cpp
+index dd77f96f94379c..53ecb7c640ad58 100644
+--- a/llvm/lib/Passes/PassBuilder.cpp
++++ b/llvm/lib/Passes/PassBuilder.cpp
+@@ -955,6 +955,11 @@ Expected<bool> parsePostOrderFunctionAttrsPassOptions(StringRef Params) {
+       Params, "skip-non-recursive-function-attrs", "PostOrderFunctionAttrs");
+ }
+ 
++Expected<bool> parseCorrelatedValuePropagationPassOptions(StringRef Params) {
++  return PassBuilder::parseSinglePassOption(Params, "finite-values",
++                                            "CorrelatedValuePropagation");
++}
++
+ Expected<bool> parseEarlyCSEPassOptions(StringRef Params) {
+   return PassBuilder::parseSinglePassOption(Params, "memssa", "EarlyCSE");
+ }
+diff --git a/llvm/lib/Passes/PassBuilderPipelines.cpp b/llvm/lib/Passes/PassBuilderPipelines.cpp
+index 125c8e442f27b6..e4ee2a2d5b589b 100644
+--- a/llvm/lib/Passes/PassBuilderPipelines.cpp
++++ b/llvm/lib/Passes/PassBuilderPipelines.cpp
+@@ -1378,6 +1378,14 @@ void PassBuilder::addVectorPasses(OptimizationLevel Level,
+                                      /*AggregateToVector=*/true)));
+   }
+ 
++  if (Level == OptimizationLevel::O3) {
++    // Vectorization and unrolling can expose small, correlated input sets.
++    // Leave interprocedural evaluation until after inlining, and let SCCP and
++    // the existing InstCombine consume the resulting call-site facts.
++    FPM.addPass(CorrelatedValuePropagationPass(/*FoldFiniteValues=*/true));
++    FPM.addPass(SCCPPass());
++  }
++
+   FPM.addPass(InferAlignmentPass());
+   FPM.addPass(InstCombinePass());
+ 
+diff --git a/llvm/lib/Passes/PassRegistry.def b/llvm/lib/Passes/PassRegistry.def
+index af4ce5029551db..73ab793d63d2b1 100644
+--- a/llvm/lib/Passes/PassRegistry.def
++++ b/llvm/lib/Passes/PassRegistry.def
+@@ -427,7 +427,6 @@ FUNCTION_PASS("constraint-elimination", ConstraintEliminationPass())
+ FUNCTION_PASS("copyprof", CopyProfPass())
+ FUNCTION_PASS("copyprof-stores", CopyProfStoresPass())
+ FUNCTION_PASS("coro-elide", CoroElidePass())
+-FUNCTION_PASS("correlated-propagation", CorrelatedValuePropagationPass())
+ FUNCTION_PASS("count-visits", CountVisitsPass())
+ FUNCTION_PASS("dce", DCEPass())
+ FUNCTION_PASS("declare-to-assign", llvm::AssignmentTrackingPass())
+@@ -581,6 +580,12 @@ FUNCTION_PASS("wasm-eh-prepare", WasmEHPreparePass())
+ #ifndef FUNCTION_PASS_WITH_PARAMS
+ #define FUNCTION_PASS_WITH_PARAMS(NAME, CLASS, CREATE_PASS, PARSER, PARAMS)
+ #endif
++FUNCTION_PASS_WITH_PARAMS(
++    "correlated-propagation", "CorrelatedValuePropagationPass",
++    [](bool FoldFiniteValues) {
++      return CorrelatedValuePropagationPass(FoldFiniteValues);
++    },
++    parseCorrelatedValuePropagationPassOptions, "finite-values")
+ FUNCTION_PASS_WITH_PARAMS(
+     "early-cse", "EarlyCSEPass",
+     [](bool UseMemorySSA) { return EarlyCSEPass(UseMemorySSA); },
+diff --git a/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp b/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp
+index 2c983b1dcb7f61..755c314dceaf19 100644
+--- a/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp
++++ b/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp
+@@ -12,12 +12,17 @@
+ 
+ #include "llvm/Transforms/Scalar/CorrelatedValuePropagation.h"
+ #include "llvm/ADT/DepthFirstIterator.h"
++#include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/ADT/Statistic.h"
++#include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/DomTreeUpdater.h"
+ #include "llvm/Analysis/GlobalsModRef.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/Analysis/LazyValueInfo.h"
++#include "llvm/Analysis/OptimizationRemarkEmitter.h"
++#include "llvm/Analysis/TargetLibraryInfo.h"
++#include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/IR/Attributes.h"
+ #include "llvm/IR/BasicBlock.h"
+@@ -28,6 +33,7 @@
+ #include "llvm/IR/DerivedTypes.h"
+ #include "llvm/IR/Function.h"
+ #include "llvm/IR/IRBuilder.h"
++#include "llvm/IR/InstIterator.h"
+ #include "llvm/IR/InstrTypes.h"
+ #include "llvm/IR/Instruction.h"
+ #include "llvm/IR/Instructions.h"
+@@ -38,7 +44,10 @@
+ #include "llvm/IR/PatternMatch.h"
+ #include "llvm/IR/Type.h"
+ #include "llvm/IR/Value.h"
++#include "llvm/IR/ValueHandle.h"
+ #include "llvm/Support/Casting.h"
++#include "llvm/Support/CommandLine.h"
++#include "llvm/Transforms/Utils/Evaluator.h"
+ #include "llvm/Transforms/Utils/Local.h"
+ #include <cassert>
+ #include <optional>
+@@ -1324,6 +1333,638 @@ static bool processTrunc(TruncInst *TI, LazyValueInfo *LVI) {
+   return Changed;
+ }
+ 
++STATISTIC(NumFiniteFolded, "Computations folded over finite input sets");
++STATISTIC(NumFiniteCallsFolded, "Calls folded over finite input sets");
++
++namespace {
++constexpr unsigned MaxValues = 4;
++constexpr unsigned MaxExpressionSize = 32;
++struct InputSet {
++  Value *Input;
++  SmallVector<ConstantInt *, MaxValues> Values;
++  // For a select input, retain its original condition and arm order.
++  Value *Condition = nullptr;
++};
++
++static void findInputSets(Instruction &Root, LazyValueInfo &LVI,
++                          DominatorTree &DT, AssumptionCache &AC,
++                          SmallVectorImpl<InputSet> &Sets) {
++  SmallVector<Value *, MaxExpressionSize> Work;
++  SmallPtrSet<Value *, MaxExpressionSize> Seen;
++  for (Value *Op : Root.operands())
++    if (!isa<Constant>(Op) && Op->getType()->isIntOrIntVectorTy() &&
++        !is_contained(Work, Op))
++      Work.push_back(Op);
++  for (unsigned N = 0; N < Work.size() && N < MaxExpressionSize; ++N) {
++    Value *V = Work[N];
++    if (!Seen.insert(V).second)
++      continue;
++    if (auto *SI = dyn_cast<SelectInst>(V)) {
++      auto *T = dyn_cast<ConstantInt>(SI->getTrueValue());
++      auto *F = dyn_cast<ConstantInt>(SI->getFalseValue());
++      if (T && F && T != F)
++        Sets.push_back({V, {T, F}, SI->getCondition()});
++    }
++    if (V->getType()->isIntegerTy() &&
++        isGuaranteedNotToBeUndefOrPoison(V, &AC, &Root, &DT)) {
++      // A shared successor with no other predecessor admits exactly the
++      // switch labels targeting it, even when several labels share that edge.
++      auto *Node = DT.getNode(Root.getParent());
++      if (Node)
++        Node = Node->getIDom();
++      for (unsigned D = 0; Node && D != 16; ++D, Node = Node->getIDom()) {
++        auto *SI = dyn_cast<SwitchInst>(Node->getBlock()->getTerminator());
++        if (!SI || SI->getCondition() != V || SI->getNumCases() > 32)
++          continue;
++        for (BasicBlock *Succ : successors(SI->getParent())) {
++          if (Succ == SI->getDefaultDest() ||
++              Succ->getUniquePredecessor() != SI->getParent() ||
++              !DT.dominates(Succ, Root.getParent()))
++            continue;
++          InputSet S{V, {}};
++          for (auto C : SI->cases())
++            if (C.getCaseSuccessor() == Succ)
++              S.Values.push_back(C.getCaseValue());
++          if (!S.Values.empty() && S.Values.size() <= MaxValues)
++            Sets.push_back(std::move(S));
++          break;
++        }
++      }
++      ConstantRange R = LVI.getConstantRange(V, &Root, /*UndefAllowed=*/false);
++      if (R.isEmptySet())
++        continue;
++      APInt Min = R.getUnsignedMin(), Max = R.getUnsignedMax();
++      if ((Max - Min).ult(MaxValues)) {
++        InputSet S{V, {}};
++        for (APInt C = Min;; ++C) {
++          S.Values.push_back(ConstantInt::get(V->getContext(), C));
++          if (C == Max)
++            break;
++        }
++        Sets.push_back(std::move(S));
++      }
++    }
++    if (auto *I = dyn_cast<Instruction>(V))
++      if (!I->mayReadOrWriteMemory() && !isa<PHINode, FreezeInst>(I))
++        for (Value *Op : I->operands())
++          if (!isa<Constant>(Op) && Op->getType()->isIntOrIntVectorTy() &&
++              !is_contained(Work, Op) && Work.size() < MaxExpressionSize)
++            Work.push_back(Op);
++  }
++}
++
++static InstructionCost instructionSize(Instruction &I,
++                                       TargetTransformInfo &TTI) {
++  InstructionCost Cost =
++      isa<CastInst>(I)
++          ? 0
++          : TTI.getInstructionCost(&I, TargetTransformInfo::TCK_CodeSize);
++  for (auto [Idx, Op] : enumerate(I.operands()))
++    if (auto *C = dyn_cast<ConstantInt>(Op))
++      Cost +=
++          TTI.getIntImmCostInst(I.getOpcode(), Idx, C->getValue(), C->getType(),
++                                TargetTransformInfo::TCK_CodeSize, &I);
++  return Cost;
++}
++
++static InstructionCost
++removableCost(Instruction &Root, TargetTransformInfo &TTI, Value *RetainedInput,
++              TargetTransformInfo::TargetCostKind Kind,
++              SmallPtrSetImpl<Instruction *> *Removed = nullptr) {
++  InstructionCost Cost = 0;
++  SmallVector<Instruction *, 16> Work{&Root};
++  SmallPtrSet<Instruction *, 16> Seen;
++  while (!Work.empty()) {
++    Instruction *I = Work.pop_back_val();
++    if (I == RetainedInput || !Seen.insert(I).second)
++      continue;
++    // Do not credit casts: lowering can fold an extension into its consumer,
++    // which is not reflected by its standalone instruction cost.
++    if (Kind == TargetTransformInfo::TCK_CodeSize)
++      Cost += instructionSize(*I, TTI);
++    else if (!isa<CastInst>(I))
++      Cost += TTI.getInstructionCost(I, Kind);
++    for (Value *V : I->operands())
++      if (auto *Op = dyn_cast<Instruction>(V))
++        if (Op->hasOneUse() && !Op->mayHaveSideEffects() &&
++            !Op->mayReadOrWriteMemory() && !isa<PHINode, FreezeInst>(Op))
++          Work.push_back(Op);
++  }
++  if (Removed)
++    Removed->insert(Seen.begin(), Seen.end());
++  return Cost;
++}
++
++/// Keep single-bit masks available to the target's bit-test/set/reset/toggle
++/// combines. A standalone shift cost does not describe its cost in these users.
++static bool hasOnlyBitwiseMaskUsers(Instruction &Root,
++                                    ArrayRef<ConstantInt *> Results) {
++  if ((!Root.isShift() && !isa<IntrinsicInst>(Root)) ||
++      !all_of(Results,
++              [](ConstantInt *C) { return C->getValue().isPowerOf2(); }))
++    return false;
++  SmallVector<Instruction *, 8> Work{&Root};
++  SmallPtrSet<Instruction *, 8> Seen;
++  unsigned Uses = 0;
++  bool HasBitwiseUser = false;
++  while (!Work.empty()) {
++    Instruction *I = Work.pop_back_val();
++    if (!Seen.insert(I).second)
++      continue;
++    for (User *U : I->users()) {
++      // A large use graph is outside this local profitability check.
++      if (++Uses > MaxExpressionSize)
++        return true;
++      auto *Use = dyn_cast<Instruction>(U);
++      if (!Use)
++        return false;
++      if (Use->isBitwiseLogicOp()) {
++        HasBitwiseUser = true;
++      } else if (isa<CastInst>(Use) && Use->getType()->isIntegerTy()) {
++        Work.push_back(Use);
++      } else {
++        // Another value consumer already requires materializing the mask, so
++        // do not assume the bitwise uses can make this computation free.
++        return false;
++      }
++    }
++  }
++  return HasBitwiseUser;
++}
++
++/// Share the offset of constant selects used as arithmetic offsets. For
++/// example, select C, 14, 18 and select C, 15, 19 can share D = select C, 0, 4.
++/// Then 1 << ((select C, 14, 18) - 1) becomes 8192 << D. Unlike materializing
++/// both one-hot results, this also exposes the common offset to lowering.
++static Value *shareShiftOffset(Instruction &Root, InputSet &S,
++                               ArrayRef<ConstantInt *> Results,
++                               TargetTransformInfo &TTI,
++                               SmallVectorImpl<WeakTrackingVH> &Dead) {
++  if (Root.getOpcode() != Instruction::Shl || !S.Condition ||
++      Results.size() != 2)
++    return nullptr;
++  // ConstantData conditions (including true, undef and poison) have no
++  // use-list.
++  if (!S.Condition->hasUseList())
++    return nullptr;
++  // Minsize lowering can use different constant materializations (for example,
++  // push/pop on x86) that are not represented by the instruction size costs.
++  // Keep the ordinary finite-input folding policy, but do not use this
++  // fallback.
++  if (Root.getFunction()->hasMinSize())
++    return nullptr;
++  auto *Input = dyn_cast<SelectInst>(S.Input);
++  auto *Count = dyn_cast<BinaryOperator>(Root.getOperand(1));
++  auto *Seed = dyn_cast<ConstantInt>(Root.getOperand(0));
++  if (!Input || !Count || !Seed || !Seed->getValue().isPowerOf2() ||
++      Input->getType() != Root.getType() ||
++      Count->getOpcode() != Instruction::Add || !Count->hasOneUse() ||
++      Count->getOperand(0) != Input ||
++      !isa<ConstantInt>(Count->getOperand(1)) ||
++      Input->getParent() != Root.getParent() ||
++      !Results[0]->getValue().isPowerOf2() ||
++      !Results[1]->getValue().isPowerOf2())
++    return nullptr;
++
++  // Instruction costs do not account for legalization or combines with the
++  // users of the shift. Restrict this size-only rewrite to a legal computation
++  // used as an extended arithmetic offset, with a free extension. In
++  // particular, retaining the original shift can be smaller for narrow types
++  // and for bitwise consumers.
++  constexpr auto Kind = TargetTransformInfo::TCK_CodeSize;
++  if (!TTI.isTypeLegal(Root.getType()) || !Root.hasOneUse())
++    return nullptr;
++  auto *Wide = dyn_cast<ZExtInst>(*Root.user_begin());
++  if (!Wide || !TTI.isTypeLegal(Wide->getType()) || Wide->use_empty() ||
++      TTI.getCastInstrCost(Instruction::ZExt, Wide->getType(), Root.getType(),
++                           TargetTransformInfo::CastContextHint::None,
++                           Kind) != 0 ||
++      any_of(Wide->users(), [](User *U) {
++        auto *BO = dyn_cast<BinaryOperator>(U);
++        return !BO || (BO->getOpcode() != Instruction::Add &&
++                       BO->getOpcode() != Instruction::Sub);
++      }))
++    return nullptr;
++
++  unsigned TrueShift = Results[0]->getValue().logBase2();
++  unsigned FalseShift = Results[1]->getValue().logBase2();
++  if (TrueShift == FalseShift)
++    return nullptr;
++  bool TrueIsLow = TrueShift < FalseShift;
++  unsigned Delta = TrueIsLow ? FalseShift - TrueShift : TrueShift - FalseShift;
++  // Consecutive arms already lower to an extended condition plus an offset;
++  // there is no nontrivial common computation to amortize in that case.
++  if (Delta == 1)
++    return nullptr;
++  auto *Ty = cast<IntegerType>(Root.getType());
++  auto *Zero = ConstantInt::get(Ty, 0);
++  auto *Offset = ConstantInt::get(Ty, Delta);
++  ConstantInt *Base = Results[TrueIsLow ? 0 : 1];
++  SmallVector<std::pair<SelectInst *, ConstantInt *>, 4> Selects;
++  unsigned Scanned = 0;
++  for (User *U : S.Condition->users()) {
++    if (Scanned++ == MaxExpressionSize)
++      break;
++    auto *SI = dyn_cast<SelectInst>(U);
++    if (!SI || SI->getParent() != Input->getParent() || SI->getType() != Ty ||
++        SI->hasNUsesOrMore(MaxExpressionSize))
++      continue;
++    auto *T = dyn_cast<ConstantInt>(SI->getTrueValue());
++    auto *F = dyn_cast<ConstantInt>(SI->getFalseValue());
++    if (!T || !F ||
++        (TrueIsLow ? F->getValue() - T->getValue()
++                   : T->getValue() - F->getValue()) != Delta ||
++        SI->use_empty() || any_of(SI->users(), [](User *U) {
++          auto *BO = dyn_cast<BinaryOperator>(U);
++          return !BO || (BO->getOpcode() != Instruction::Add &&
++                         BO->getOpcode() != Instruction::Sub);
++        }))
++      continue;
++    Selects.emplace_back(SI, TrueIsLow ? T : F);
++    if (Selects.size() == 8)
++      break;
++  }
++  // Amortize the common offset over two independently required selections.
++  // Identical selections can already be CSE'd by lowering and must not be
++  // credited as two instructions.
++  if (Selects.size() != 2 || Selects[0].second == Selects[1].second ||
++      none_of(Selects, [&](auto Entry) { return Entry.first == Input; }))
++    return nullptr;
++
++  // Only combine offsets that contribute with the same sign to one addition:
++  //   Input + Other, or Input + (Other +/- X).
++  // Otherwise arithmetic can cancel a shared offset, or separate consumers can
++  // require extra copies that the per-instruction costs do not represent.
++  auto *Other = Selects[0].first == Input ? Selects[1].first : Selects[0].first;
++  BinaryOperator *Sum = nullptr;
++  for (User *U : Input->users()) {
++    if (U == Count)
++      continue;
++    if (Sum)
++      return nullptr;
++    Sum = cast<BinaryOperator>(U);
++  }
++  if (!Sum || Sum->getOpcode() != Instruction::Add || !Other->hasOneUse())
++    return nullptr;
++  auto *OtherUser = cast<BinaryOperator>(*Other->user_begin());
++  if (OtherUser != Sum &&
++      ((Sum->getOperand(0) != OtherUser && Sum->getOperand(1) != OtherUser) ||
++       (OtherUser->getOpcode() != Instruction::Add &&
++        (OtherUser->getOpcode() != Instruction::Sub ||
++         OtherUser->getOperand(0) != Other))))
++    return nullptr;
++
++  auto *First = min_element(Selects, [](auto A, auto B) {
++                  return A.first->comesBefore(B.first);
++                })->first;
++  // Sharing changes the value that stays live from the selections to the
++  // shift. Do not rely on instruction costs to predict register preservation
++  // across calls, or extend the lifetime past the shift's block.
++  if (any_of(Selects, [&](auto Entry) {
++        return !Entry.first->comesBefore(&Root) ||
++               any_of(Entry.first->users(), [&](User *U) {
++                 auto *I = cast<Instruction>(U);
++                 return I->getParent() != Root.getParent() ||
++                        !I->comesBefore(&Root);
++               });
++      }))
++    return nullptr;
++  unsigned Distance = 0;
++  for (Instruction &I : make_range(First->getIterator(), Root.getIterator()))
++    if (++Distance > MaxExpressionSize || isa<CallBase>(I))
++      return nullptr;
++
++  SmallPtrSet<Instruction *, 16> Removed;
++  InstructionCost OldCost =
++      removableCost(Root, TTI, S.Condition, Kind, &Removed);
++  InstructionCost NewCost = TTI.getCmpSelInstrCost(
++      Instruction::Select, Ty, S.Condition->getType(), CmpInst::ICMP_EQ, Kind);
++  NewCost += TTI.getIntImmCostInst(Instruction::Select, TrueIsLow ? 2 : 1,
++                                   Offset->getValue(), Ty, Kind);
++  NewCost += TTI.getIntImmCostInst(Instruction::Select, TrueIsLow ? 1 : 2,
++                                   Zero->getValue(), Ty, Kind);
++  NewCost += TTI.getArithmeticInstrCost(Instruction::Shl, Ty, Kind);
++  NewCost +=
++      TTI.getIntImmCostInst(Instruction::Shl, 0, Base->getValue(), Ty, Kind);
++  for (auto [SI, Low] : Selects) {
++    if (Removed.insert(SI).second)
++      OldCost += instructionSize(*SI, TTI);
++    if (SI == Input && SI->hasOneUse())
++      continue;
++    NewCost += TTI.getArithmeticInstrCost(Instruction::Add, Ty, Kind);
++    NewCost +=
++        TTI.getIntImmCostInst(Instruction::Add, 1, Low->getValue(), Ty, Kind);
++  }
++  if (!OldCost.isValid() || !NewCost.isValid() || NewCost >= OldCost)
++    return nullptr;
++
++  IRBuilder<> B(First);
++  Value *D = B.CreateSelect(S.Condition, TrueIsLow ? Zero : Offset,
++                            TrueIsLow ? Offset : Zero, "finite.offset");
++  for (auto [SI, Low] : Selects) {
++    if (SI == Input && SI->hasOneUse())
++      continue;
++    B.SetInsertPoint(SI);
++    Value *V = B.CreateAdd(D, Low, SI->getName() + ".offset");
++    SI->replaceAllUsesWith(V);
++    Dead.push_back(SI);
++  }
++  B.SetInsertPoint(&Root);
++  return B.CreateShl(Base, D, Root.getName() + ".finite");
++}
++
++static bool foldFiniteInput(Instruction &Root, LazyValueInfo &LVI,
++                            DominatorTree &DT, AssumptionCache &AC,
++                            const TargetLibraryInfo &TLI,
++                            TargetTransformInfo &TTI) {
++  if (!DT.isReachableFromEntry(Root.getParent()))
++    return false;
++  bool IsHelperCall = isa<CallInst>(Root) && !isa<IntrinsicInst>(Root);
++  SmallVector<InputSet, 4> Sets;
++  findInputSets(Root, LVI, DT, AC, Sets);
++  for (InputSet &S : Sets) {
++    if (IsHelperCall &&
++        !isGuaranteedNotToBeUndefOrPoison(S.Input, &AC, &Root, &DT))
++      continue;
++    SmallVector<ConstantInt *, MaxValues> Results;
++    for (ConstantInt *Input : S.Values) {
++      auto GetContextConstant = [&](Value *V) -> Constant * {
++        if (V == &Root || !V->getType()->isIntegerTy() ||
++            (isa<Instruction>(V) &&
++             !DT.dominates(cast<Instruction>(V), &Root)) ||
++            !isGuaranteedNotToBeUndefOrPoison(V, &AC, &Root, &DT))
++          return nullptr;
++        ConstantRange R = LVI.getConstantRange(V, &Root, false);
++        if (auto *C = R.getSingleElement())
++          return ConstantInt::get(V->getContext(), *C);
++        return nullptr;
++      };
++      Evaluator Eval(Root.getDataLayout(), &TLI, Evaluator::Mode::Runtime);
++      auto *C = dyn_cast_or_null<ConstantInt>(
++          Eval.EvaluateExpression(&Root, [&](Value *V) -> Constant * {
++            return V == S.Input ? Input : GetContextConstant(V);
++          }));
++      if (!C)
++        break;
++      Results.push_back(C);
++    }
++    if (Results.size() != S.Values.size())
++      continue;
++    bool Same =
++        all_of(Results, [&](ConstantInt *C) { return C == Results[0]; });
++    if (Same && S.Condition &&
++        !isGuaranteedNotToBePoison(S.Condition, &AC, &Root, &DT))
++      continue;
++    // Keep identity results as call-site facts for InstCombine rather than
++    // materializing an unnecessary comparison/select table.
++    std::optional<unsigned> IdentityArg;
++    if (auto *CI = dyn_cast<CallInst>(&Root); IsHelperCall)
++      if (Root.getType() == S.Input->getType() &&
++          (!CI->getReturnedArgOperand() ||
++           CI->getReturnedArgOperand() == S.Input) &&
++          all_of(zip(S.Values, Results), [](auto Pair) {
++            return std::get<0>(Pair) == std::get<1>(Pair);
++          }))
++        for (auto [N, Arg] : enumerate(CI->args()))
++          if (Arg == S.Input) {
++            IdentityArg = N;
++            break;
++          }
++    auto SelectionCost = [&](TargetTransformInfo::TargetCostKind Kind) {
++      if (IdentityArg)
++        return InstructionCost(0);
++      InstructionCost Constants = 0;
++      for (ConstantInt *C : Results) {
++        InstructionCost Imm =
++            TTI.getIntImmCost(C->getValue(), C->getType(), Kind);
++        // Cheap constants may fold into the selection's lowering. Expensive
++        // materializations must also be paid for when optimizing for speed.
++        if (Kind == TargetTransformInfo::TCK_CodeSize || !Imm.isValid() ||
++            Imm > TargetTransformInfo::TCC_Basic)
++          Constants += Imm;
++      }
++      if (Same)
++        return Kind == TargetTransformInfo::TCK_CodeSize
++                   ? TTI.getIntImmCost(Results[0]->getValue(), Root.getType(),
++                                       Kind)
++                   : InstructionCost(0);
++      Type *CondTy = Type::getInt1Ty(Root.getContext());
++      InstructionCost Cost = TTI.getCmpSelInstrCost(
++          Instruction::Select, Root.getType(), CondTy, CmpInst::ICMP_EQ, Kind);
++      if (!S.Condition) {
++        Cost += TTI.getCmpSelInstrCost(Instruction::ICmp, S.Input->getType(),
++                                       CondTy, CmpInst::ICMP_EQ, Kind);
++        Cost *= Results.size() - 1;
++        if (Kind == TargetTransformInfo::TCK_CodeSize)
++          for (ConstantInt *C : drop_end(S.Values))
++            Constants += TTI.getIntImmCostInst(
++                Instruction::ICmp, 1, C->getValue(), C->getType(), Kind);
++      }
++      return Cost + Constants;
++    };
++    bool OptimizeForSize = Root.getFunction()->hasOptSize();
++    auto CostKind = OptimizeForSize ? TargetTransformInfo::TCK_CodeSize
++                                    : TargetTransformInfo::TCK_SizeAndLatency;
++    InstructionCost NewCost = SelectionCost(CostKind);
++    if (!NewCost.isValid())
++      continue;
++    Value *RetainedInput = IdentityArg   ? S.Input
++                           : Same        ? nullptr
++                           : S.Condition ? S.Condition
++                                         : S.Input;
++    SmallPtrSet<Instruction *, 16> Removed;
++    InstructionCost OldCost =
++        removableCost(Root, TTI, RetainedInput, CostKind, &Removed);
++    if (!Same && !IsHelperCall && hasOnlyBitwiseMaskUsers(Root, Results))
++      continue;
++    Value *Replacement = nullptr;
++    SmallVector<WeakTrackingVH, 8> Dead;
++    if (OptimizeForSize) {
++      // Compact arithmetic can be much smaller than loading several large
++      // constants, even when a target counts each load as one instruction.
++      if (any_of(Results, [&](ConstantInt *C) {
++            return TTI.getIntImmCost(C->getValue(), C->getType(), CostKind) >
++                   TargetTransformInfo::TCC_Basic;
++          }))
++        continue;
++      // Require a strict code-size saving, including for calls. Other callers
++      // can keep the callee alive, so do not credit its evaluated path here.
++      if (!OldCost.isValid() || NewCost >= OldCost) {
++        Replacement = shareShiftOffset(Root, S, Results, TTI, Dead);
++        if (!Replacement)
++          continue;
++      }
++    } else if (!IsHelperCall) {
++      // A folded call also removes the completely evaluated callee path. The
++      // expression-only case must pay for all newly introduced instructions.
++      if (!OldCost.isValid() || NewCost > OldCost)
++        continue;
++      if (!Same) {
++        // Do not sum costs from different execution frequencies, or introduce
++        // another selection of a retained value in a different type. Such
++        // sharing and live-range changes are not represented by these costs.
++        if (any_of(Removed, [&](Instruction *I) {
++              return I->getParent() != Root.getParent();
++            }))
++          continue;
++        if (S.Condition) {
++          auto *Input = cast<SelectInst>(S.Input);
++          if (Input->getParent() != Root.getParent() ||
++              (!Removed.contains(Input) &&
++               (Input->getType() != Root.getType() ||
++                Input->hasNUsesOrMore(MaxExpressionSize) ||
++                any_of(Input->users(),
++                       [](User *U) { return isa<SelectInst, PHINode>(U); }))))
++            continue;
++          // Keep a retained selection coupled to the selects/PHIs forwarding
++          // it through control flow. Splitting another value of its condition
++          // can increase register pressure in successor blocks and loops even
++          // when the local arithmetic becomes cheaper.
++          unsigned Distance = 0;
++          bool Local = true;
++          for (Instruction &I :
++               make_range(Input->getIterator(), Root.getIterator()))
++            if (++Distance > MaxExpressionSize || isa<CallBase>(I)) {
++              Local = false;
++              break;
++            }
++          if (!Local)
++            continue;
++        }
++        // Reusing a condition is not a free operation: require a strict
++        // throughput benefit. In particular, replacing a shift of an already
++        // shared count with an equally costly select can repeat its test and
++        // obstruct combines.
++        InstructionCost NewThroughput =
++            SelectionCost(TargetTransformInfo::TCK_RecipThroughput);
++        InstructionCost OldThroughput = removableCost(
++            Root, TTI, RetainedInput, TargetTransformInfo::TCK_RecipThroughput);
++        if (!NewThroughput.isValid() || !OldThroughput.isValid() ||
++            NewThroughput >= OldThroughput)
++          continue;
++        InstructionCost RootThroughput = TTI.getInstructionCost(
++            &Root, TargetTransformInfo::TCK_RecipThroughput);
++        // Expensive operations such as division can pay for more code with
++        // their strict throughput saving. A cheap root must also avoid size
++        // growth: standalone costs do not describe all its lowering combines.
++        if (!RootThroughput.isValid() ||
++            RootThroughput <= TargetTransformInfo::TCC_Basic) {
++          InstructionCost NewSize =
++              SelectionCost(TargetTransformInfo::TCK_CodeSize);
++          InstructionCost OldSize = removableCost(
++              Root, TTI, RetainedInput, TargetTransformInfo::TCK_CodeSize);
++          if (!NewSize.isValid() || !OldSize.isValid() || NewSize > OldSize)
++            continue;
++        }
++      }
++    }
++    if (IsHelperCall)
++      ++NumFiniteCallsFolded;
++    ++NumFiniteFolded;
++    OptimizationRemarkEmitter ORE(Root.getFunction());
++    ORE.emit([&]() {
++      std::string RootName;
++      raw_string_ostream OS(RootName);
++      Root.printAsOperand(OS, false);
++      return OptimizationRemark(DEBUG_TYPE, "FiniteInput", &Root)
++             << "folded " << ore::NV("Root", RootName) << " over "
++             << ore::NV("NumValues", S.Values.size()) << " values of "
++             << ore::NV("Input", S.Input) << " ("
++             << ore::NV("Operation", Root.getOpcodeName()) << ")";
++    });
++    if (auto *CI = dyn_cast<CallInst>(&Root);
++        IsHelperCall && (Same || IdentityArg)) {
++      // Runtime evaluation proved all possible executed paths effect-free and
++      // terminating. These facts apply to this call, not to the whole callee.
++      CI->setMemoryEffects(MemoryEffects::none());
++      CI->setDoesNotThrow();
++      CI->addFnAttr(Attribute::WillReturn);
++      CI->addRetAttr(Attribute::NoUndef);
++      if (IdentityArg) {
++        CI->addParamAttr(*IdentityArg, Attribute::Returned);
++      } else {
++        CI->addRangeRetAttr(ConstantRange(Results[0]->getValue()));
++        // SCCP consumes the singleton return range and removes this call
++        // using the proven effect and termination facts.
++      }
++      LVI.clear();
++      return true;
++    }
++    IRBuilder<> B(&Root);
++    if (!Replacement && Same)
++      Replacement = Results.back();
++    if (!Replacement) {
++      if (S.Condition)
++        Replacement = B.CreateSelect(S.Condition, Results[0], Results[1],
++                                     Root.getName() + ".finite");
++      else {
++        Replacement = Results.back();
++        for (unsigned N = Results.size() - 1; N-- != 0;) {
++          Value *Cond = B.CreateICmpEQ(S.Input, S.Values[N]);
++          Replacement = B.CreateSelect(Cond, Results[N], Replacement,
++                                       Root.getName() + ".finite");
++        }
++      }
++    }
++    Root.replaceAllUsesWith(Replacement);
++    SmallVector<WeakTrackingVH, 8> Operands(Root.operands());
++    append_range(Operands, Dead);
++    Root.eraseFromParent();
++    for (WeakTrackingVH &Op : Operands)
++      if (auto *I = dyn_cast_or_null<Instruction>(Op))
++        RecursivelyDeleteTriviallyDeadInstructions(I, &TLI);
++    LVI.clear();
++    return true;
++  }
++  return false;
++}
++
++static bool foldFiniteInputs(Function &F, FunctionAnalysisManager &AM) {
++  if (F.hasFnAttribute(Attribute::OptimizeNone) ||
++      F.hasFnAttribute(Attribute::StrictFP))
++    return false;
++  bool Changed = false;
++  SmallVector<WeakTrackingVH, 32> Work;
++  for (Instruction &I : instructions(F)) {
++    if (I.use_empty() || !I.getType()->isIntegerTy())
++      continue;
++    // Cheap arithmetic and casts are best left to the ordinary
++    // canonicalizers: replacing them with selections can obstruct target
++    // combines.
++    switch (I.getOpcode()) {
++    case Instruction::Call:
++      if (isa<IntrinsicInst>(I) && I.mayHaveSideEffects())
++        break;
++      [[fallthrough]];
++    case Instruction::Mul:
++    case Instruction::UDiv:
++    case Instruction::SDiv:
++    case Instruction::URem:
++    case Instruction::SRem:
++    case Instruction::Shl:
++    case Instruction::LShr:
++    case Instruction::AShr:
++      Work.push_back(&I);
++      break;
++    default:
++      break;
++    }
++  }
++  if (Work.empty())
++    return false;
++  auto &LVI = AM.getResult<LazyValueAnalysis>(F);
++  auto &DT = AM.getResult<DominatorTreeAnalysis>(F);
++  auto &AC = AM.getResult<AssumptionAnalysis>(F);
++  auto &TLI = AM.getResult<TargetLibraryAnalysis>(F);
++  auto &TTI = AM.getResult<TargetIRAnalysis>(F);
++  for (WeakTrackingVH &V : reverse(Work))
++    if (auto *I = dyn_cast_or_null<Instruction>(V))
++      Changed |= foldFiniteInput(*I, LVI, DT, AC, TLI, TTI);
++  return Changed;
++}
++
++} // namespace
++
+ static bool runImpl(Function &F, LazyValueInfo *LVI, DominatorTree *DT,
+                     const SimplifyQuery &SQ) {
+   bool FnChanged = false;
+@@ -1443,6 +2084,8 @@ CorrelatedValuePropagationPass::run(Function &F, FunctionAnalysisManager &AM) {
+   DominatorTree *DT = &AM.getResult<DominatorTreeAnalysis>(F);
+ 
+   bool Changed = runImpl(F, LVI, DT, getBestSimplifyQuery(AM, F));
++  if (FoldFiniteValues)
++    Changed |= foldFiniteInputs(F, AM);
+ 
+   PreservedAnalyses PA;
+   if (!Changed) {
+@@ -1465,3 +2108,11 @@ CorrelatedValuePropagationPass::run(Function &F, FunctionAnalysisManager &AM) {
+   PA.abandon<LazyValueAnalysis>();
+   return PA;
+ }
++
++void CorrelatedValuePropagationPass::printPipeline(
++    raw_ostream &OS, function_ref<StringRef(StringRef)> MapClassName2PassName) {
++  static_cast<PassInfoMixin<CorrelatedValuePropagationPass> *>(this)
++      ->printPipeline(OS, MapClassName2PassName);
++  if (FoldFiniteValues)
++    OS << "<finite-values>";
++}
+diff --git a/llvm/lib/Transforms/Utils/Evaluator.cpp b/llvm/lib/Transforms/Utils/Evaluator.cpp
+index e700a9aa893f16..b2c6dbb92f8394 100644
+--- a/llvm/lib/Transforms/Utils/Evaluator.cpp
++++ b/llvm/lib/Transforms/Utils/Evaluator.cpp
+@@ -16,8 +16,10 @@
+ #include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/Analysis/ConstantFolding.h"
++#include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/IR/BasicBlock.h"
+ #include "llvm/IR/Constant.h"
++#include "llvm/IR/ConstantRange.h"
+ #include "llvm/IR/Constants.h"
+ #include "llvm/IR/DataLayout.h"
+ #include "llvm/IR/DerivedTypes.h"
+@@ -45,6 +47,265 @@ isSimpleEnoughValueToCommit(Constant *C,
+                             SmallPtrSetImpl<Constant *> &SimpleConstants,
+                             const DataLayout &DL);
+ 
++/// ConstantFoldInstOperands deliberately does not preserve poison-generating
++/// flags. Check them before using its result, including each fixed vector lane.
++static bool flagsHold(Instruction &I, ArrayRef<Constant *> Ops) {
++  if (!I.hasPoisonGeneratingFlags())
++    return true;
++  unsigned Lanes = 1;
++  if (auto *VT = dyn_cast<FixedVectorType>(Ops[0]->getType()))
++    Lanes = VT->getNumElements();
++  for (unsigned Lane = 0; Lane != Lanes; ++Lane) {
++    auto GetInt = [&](unsigned Op) -> ConstantInt * {
++      Constant *C = Ops[Op];
++      if (C->getType()->isVectorTy())
++        C = C->getAggregateElement(Lane);
++      return dyn_cast_or_null<ConstantInt>(C);
++    };
++    auto *C0 = GetInt(0);
++    if (!C0)
++      return false;
++    const APInt &A = C0->getValue();
++    if (auto *Trunc = dyn_cast<TruncInst>(&I)) {
++      APInt R = A.trunc(I.getType()->getScalarSizeInBits());
++      if ((Trunc->hasNoUnsignedWrap() && R.zext(A.getBitWidth()) != A) ||
++          (Trunc->hasNoSignedWrap() && R.sext(A.getBitWidth()) != A))
++        return false;
++      continue;
++    }
++    if (isa<ZExtInst>(I)) {
++      if (I.hasNonNeg() && A.isNegative())
++        return false;
++      continue;
++    }
++    auto *C1 = Ops.size() > 1 ? GetInt(1) : nullptr;
++    if (!C1)
++      return false;
++    const APInt &B = C1->getValue();
++    if (auto *Cmp = dyn_cast<ICmpInst>(&I)) {
++      if (Cmp->hasSameSign() && A.isNegative() != B.isNegative())
++        return false;
++      continue;
++    }
++    auto *BO = dyn_cast<BinaryOperator>(&I);
++    if (!BO)
++      return false;
++    bool SignedOverflow = false, UnsignedOverflow = false;
++    switch (BO->getOpcode()) {
++    case Instruction::Add:
++      (void)A.sadd_ov(B, SignedOverflow);
++      (void)A.uadd_ov(B, UnsignedOverflow);
++      break;
++    case Instruction::Sub:
++      (void)A.ssub_ov(B, SignedOverflow);
++      (void)A.usub_ov(B, UnsignedOverflow);
++      break;
++    case Instruction::Mul:
++      (void)A.smul_ov(B, SignedOverflow);
++      (void)A.umul_ov(B, UnsignedOverflow);
++      break;
++    case Instruction::Shl:
++      if (B.uge(A.getBitWidth()))
++        return false;
++      (void)A.sshl_ov(B, SignedOverflow);
++      (void)A.ushl_ov(B, UnsignedOverflow);
++      break;
++    case Instruction::LShr:
++    case Instruction::AShr:
++      if (B.uge(A.getBitWidth()) ||
++          (BO->isExact() && A.countTrailingZeros() < B.getZExtValue()))
++        return false;
++      continue;
++    case Instruction::UDiv:
++    case Instruction::SDiv:
++      if (B.isZero() || (BO->getOpcode() == Instruction::SDiv &&
++                         A.isMinSignedValue() && B.isAllOnes()))
++        return false;
++      if (BO->isExact() &&
++          !(BO->getOpcode() == Instruction::UDiv ? A.urem(B) : A.srem(B))
++               .isZero())
++        return false;
++      continue;
++    case Instruction::Or:
++      if (!(A & B).isZero())
++        return false;
++      continue;
++    default:
++      return false;
++    }
++    if ((BO->hasNoSignedWrap() && SignedOverflow) ||
++        (BO->hasNoUnsignedWrap() && UnsignedOverflow))
++      return false;
++  }
++  return true;
++}
++
++Constant *Evaluator::FoldRuntimeInstruction(Instruction &I,
++                                            ArrayRef<Constant *> Ops) {
++  if (I.mayReadOrWriteMemory() || I.mayHaveSideEffects() || I.isTerminator() ||
++      isa<PHINode, FreezeInst>(I) || !I.getType()->isIntOrIntVectorTy())
++    return nullptr;
++  if (Ops.empty() || !flagsHold(I, Ops))
++    return nullptr;
++  // Division by zero (and signed division overflow) is immediate UB, even
++  // when the result would subsequently be masked by a select.
++  if (I.getOpcode() == Instruction::UDiv ||
++      I.getOpcode() == Instruction::SDiv ||
++      I.getOpcode() == Instruction::URem ||
++      I.getOpcode() == Instruction::SRem) {
++    unsigned Lanes = 1;
++    if (auto *VT = dyn_cast<FixedVectorType>(I.getType()))
++      Lanes = VT->getNumElements();
++    for (unsigned Lane = 0; Lane != Lanes; ++Lane) {
++      auto Get = [&](unsigned Op) {
++        return dyn_cast_or_null<ConstantInt>(
++            I.getType()->isVectorTy() ? Ops[Op]->getAggregateElement(Lane)
++                                      : Ops[Op]);
++      };
++      ConstantInt *A = Get(0), *B = Get(1);
++      if (!A || !B || B->isZero() ||
++          ((I.getOpcode() == Instruction::SDiv ||
++            I.getOpcode() == Instruction::SRem) &&
++           A->getValue().isMinSignedValue() && B->isMinusOne()))
++        return nullptr;
++    }
++  }
++  return ConstantFoldInstOperands(&I, Ops, DL, TLI,
++                                  /*AllowNonDeterministic=*/false);
++}
++
++/// An out-of-range call result is poison. In particular, do not turn that
++/// into immediate UB by inferring noundef on a call whose result may be masked.
++static bool constantIsInRange(Constant *C, const ConstantRange &Range) {
++  if (auto *CI = dyn_cast<ConstantInt>(C))
++    return Range.contains(CI->getValue());
++  auto *VT = dyn_cast<FixedVectorType>(C->getType());
++  if (!VT)
++    return false;
++  for (unsigned Lane = 0; Lane != VT->getNumElements(); ++Lane) {
++    auto *CI = dyn_cast_or_null<ConstantInt>(C->getAggregateElement(Lane));
++    if (!CI || !Range.contains(CI->getValue()))
++      return false;
++  }
++  return true;
++}
++
++bool Evaluator::CanEvaluateRuntimeFunction(Function &F,
++                                           ArrayRef<Constant *> Args) const {
++  if (!F.hasExactDefinition() || F.isVarArg() || F.doesNotReturn() ||
++      F.hasFnAttribute(Attribute::OptimizeNone) ||
++      F.hasFnAttribute(Attribute::Naked) ||
++      F.hasFnAttribute(Attribute::StrictFP) ||
++      F.hasFnAttribute(Attribute::Convergent) ||
++      F.hasFnAttribute(Attribute::ReturnsTwice) ||
++      F.hasFnAttribute("loader-replaceable") ||
++      !F.getReturnType()->isIntOrIntVectorTy() ||
++      CallStack.size() >= MaxCallDepth)
++    return false;
++  for (auto [Arg, C] : zip(F.args(), Args)) {
++    if (C->getType() != Arg.getType() || !C->getType()->isIntOrIntVectorTy() ||
++        !isGuaranteedNotToBeUndefOrPoison(C))
++      return false;
++    if (auto R = Arg.getRange())
++      if (!constantIsInRange(C, *R))
++        return false;
++  }
++  return true;
++}
++
++Constant *Evaluator::EvaluateRuntimeCall(CallBase &CB,
++                                         ArrayRef<Constant *> Args) {
++  Function *F = CB.getCalledFunction();
++  if (!isa<CallInst>(CB) || !F || CB.isMustTailCall() ||
++      CB.hasOperandBundles() || CB.isConvergent() ||
++      CB.hasFnAttr(Attribute::ReturnsTwice) ||
++      CB.hasFnAttr("loader-replaceable") ||
++      F->getFunctionType() != CB.getFunctionType() ||
++      F->getCallingConv() != CB.getCallingConv())
++    return nullptr;
++  for (auto [N, C] : enumerate(Args)) {
++    Attribute Range = CB.getParamAttr(N, Attribute::Range);
++    if (Range.isValid() && !constantIsInRange(C, Range.getRange()))
++      return nullptr;
++  }
++  Constant *Result = nullptr;
++  if (F->isIntrinsic()) {
++    // This observes manifest constants in the IR, not just runtime values.
++    // As in simplifyWithOpReplaced(), assumptions must not make it true.
++    if (F->getIntrinsicID() == Intrinsic::is_constant)
++      return nullptr;
++    if (CB.mayHaveSideEffects() || !canConstantFoldCallTo(&CB, F, TLI))
++      return nullptr;
++    Result = ConstantFoldCall(&CB, F, Args, TLI,
++                              /*AllowNonDeterministic=*/false);
++  } else {
++    SmallVector<Constant *, 8> ActualArgs(Args);
++    ValueStack.emplace_back();
++    bool Success = EvaluateFunction(F, Result, ActualArgs);
++    ValueStack.pop_back();
++    if (!Success)
++      return nullptr;
++  }
++  if (Result)
++    if (auto Range = CB.getRange())
++      if (!constantIsInRange(Result, *Range))
++        return nullptr;
++  return Result;
++}
++
++Constant *Evaluator::EvaluateExpression(Value *V, Lookup GetConstant) {
++  assert(EvalMode == Mode::Runtime &&
++         "Expression evaluation needs runtime mode");
++  ExpressionCache.clear();
++  return EvaluateExpressionImpl(V, GetConstant, 0);
++}
++
++Constant *Evaluator::EvaluateExpressionImpl(Value *V, Lookup GetConstant,
++                                            unsigned Depth) {
++  if (auto *C = dyn_cast<Constant>(V))
++    return C;
++  if (Constant *C = ExpressionCache.lookup(V))
++    return C;
++  if (Depth == 32 || !takeRuntimeStep())
++    return nullptr;
++  if (Constant *C = GetConstant(V)) {
++    if (C->getType() != V->getType())
++      return nullptr;
++    return ExpressionCache[V] = C;
++  }
++  auto *I = dyn_cast<Instruction>(V);
++  if (!I)
++    return nullptr;
++  // In particular, do not visit PHI incoming values at the root's context:
++  // those definitions need not dominate the expression being evaluated.
++  if (!isa<CallInst>(I) &&
++      (I->mayReadOrWriteMemory() || I->mayHaveSideEffects() ||
++       I->isTerminator() || isa<PHINode, FreezeInst>(I) ||
++       !I->getType()->isIntOrIntVectorTy()))
++    return nullptr;
++  SmallVector<Constant *, 8> Ops;
++  if (auto *CI = dyn_cast<CallInst>(I)) {
++    for (Value *Arg : CI->args()) {
++      Constant *C = EvaluateExpressionImpl(Arg, GetConstant, Depth + 1);
++      if (!C)
++        return nullptr;
++      Ops.push_back(C);
++    }
++    if (Constant *C = EvaluateRuntimeCall(*CI, Ops))
++      return ExpressionCache[V] = C;
++    return nullptr;
++  }
++  for (Value *Op : I->operands()) {
++    Constant *C = EvaluateExpressionImpl(Op, GetConstant, Depth + 1);
++    if (!C)
++      return nullptr;
++    Ops.push_back(C);
++  }
++  if (Constant *C = FoldRuntimeInstruction(*I, Ops))
++    return ExpressionCache[V] = C;
++  return nullptr;
++}
++
+ /// Return true if the specified constant can be handled by the code generator.
+ /// We don't want to generate something like:
+ ///   void *X = &X/42;
+@@ -276,6 +537,66 @@ bool Evaluator::EvaluateBlock(BasicBlock::iterator CurInst, BasicBlock *&NextBB,
+   while (true) {
+     Constant *InstResult = nullptr;
+ 
++    if (EvalMode == Mode::Runtime) {
++      if (!takeRuntimeStep())
++        return false;
++      Instruction &I = *CurInst;
++      if (auto *AI = dyn_cast<AllocaInst>(&I)) {
++        if (!AI->isStaticAlloca() || AI->isUsedWithInAlloca() ||
++            AI->isSwiftError())
++          return false;
++        // Runtime mode never evaluates a load or an escaping stack address.
++        ++CurInst;
++        continue;
++      }
++      if (auto *SI = dyn_cast<StoreInst>(&I)) {
++        auto *AI = dyn_cast<AllocaInst>(SI->getPointerOperand());
++        auto Size = AI ? AI->getAllocationSize(DL) : std::nullopt;
++        TypeSize StoreSize =
++            DL.getTypeStoreSize(SI->getValueOperand()->getType());
++        if (SI->isVolatile() || SI->isAtomic() || !AI ||
++            AI->getFunction() != I.getFunction() || !Size ||
++            Size->isScalable() || StoreSize.isScalable() ||
++            StoreSize.getFixedValue() > Size->getFixedValue() ||
++            SI->getAlign() > AI->getAlign())
++          return false;
++        ++CurInst;
++        continue;
++      }
++      if (isa<DbgInfoIntrinsic>(I)) {
++        ++CurInst;
++        continue;
++      }
++      if (!I.isTerminator()) {
++        SmallVector<Constant *, 8> Ops;
++        if (auto *CI = dyn_cast<CallInst>(&I)) {
++          for (Value *Arg : CI->args()) {
++            Constant *C = getRuntimeVal(Arg);
++            if (!C)
++              return false;
++            Ops.push_back(C);
++          }
++          InstResult = EvaluateRuntimeCall(*CI, Ops);
++        } else {
++          for (Value *Op : I.operands()) {
++            Constant *C = getRuntimeVal(Op);
++            if (!C)
++              return false;
++            Ops.push_back(C);
++          }
++          InstResult = FoldRuntimeInstruction(I, Ops);
++        }
++        if (!InstResult)
++          return false;
++        if (!I.use_empty())
++          setVal(&I, InstResult);
++        ++CurInst;
++        continue;
++      }
++      if (!isa<UncondBrInst, CondBrInst, SwitchInst, ReturnInst>(I))
++        return false;
++    }
++
+     LLVM_DEBUG(dbgs() << "Evaluating Instruction: " << *CurInst << "\n");
+ 
+     if (StoreInst *SI = dyn_cast<StoreInst>(CurInst)) {
+@@ -598,6 +919,9 @@ bool Evaluator::EvaluateFunction(Function *F, Constant *&RetVal,
+                                  const SmallVectorImpl<Constant*> &ActualArgs) {
+   assert(ActualArgs.size() == F->arg_size() && "wrong number of arguments");
+ 
++  if (EvalMode == Mode::Runtime && !CanEvaluateRuntimeFunction(*F, ActualArgs))
++    return false;
++
+   // Check to see if this function is already executing (recursion).  If so,
+   // bail out.  TODO: we might want to accept limited recursion.
+   if (is_contained(CallStack, F))
+@@ -643,6 +967,11 @@ bool Evaluator::EvaluateFunction(Function *F, Constant *&RetVal,
+           return false;
+         }
+         RetVal = getVal(RI->getOperand(0));
++        if (EvalMode == Mode::Runtime) {
++          Attribute Range = F->getRetAttribute(Attribute::Range);
++          if (Range.isValid() && !constantIsInRange(RetVal, Range.getRange()))
++            return false;
++        }
+       }
+       CallStack.pop_back();
+       return true;
+@@ -658,9 +987,15 @@ bool Evaluator::EvaluateFunction(Function *F, Constant *&RetVal,
+     // are any PHI nodes.  If so, evaluate them with information about where
+     // we came from.
+     PHINode *PN = nullptr;
+-    for (CurInst = NextBB->begin();
+-         (PN = dyn_cast<PHINode>(CurInst)); ++CurInst)
+-      setVal(PN, getVal(PN->getIncomingValueForBlock(CurBB)));
++    for (CurInst = NextBB->begin(); (PN = dyn_cast<PHINode>(CurInst));
++         ++CurInst) {
++      if (EvalMode == Mode::Runtime && !takeRuntimeStep())
++        return false;
++      Constant *C = getRuntimeVal(PN->getIncomingValueForBlock(CurBB));
++      if (!C)
++        return false;
++      setVal(PN, C);
++    }
+ 
+     // Advance to the next block.
+     CurBB = NextBB;
+diff --git a/llvm/test/Other/new-pm-defaults.ll b/llvm/test/Other/new-pm-defaults.ll
+index 0eb201432132c5..ae6fbf713f1ce8 100644
+--- a/llvm/test/Other/new-pm-defaults.ll
++++ b/llvm/test/Other/new-pm-defaults.ll
+@@ -256,6 +256,10 @@
+ ; CHECK-O-NEXT: Running pass: LoopUnrollPass
+ ; CHECK-O-NEXT: Running pass: WarnMissedTransformationsPass
+ ; CHECK-O-NEXT: Running pass: SROAPass
++; CHECK-O3-NEXT: Running pass: CorrelatedValuePropagationPass
++; CHECK-O3-NEXT: Running analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Invalidating analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Running pass: SCCPPass
+ ; CHECK-O-NEXT: Running pass: InferAlignmentPass
+ ; CHECK-O-NEXT: Running pass: InstCombinePass
+ ; CHECK-O-NEXT: Running pass: LoopSimplifyPass
+diff --git a/llvm/test/Other/new-pm-lto-defaults.ll b/llvm/test/Other/new-pm-lto-defaults.ll
+index cc8b8f0269e6a2..3177fa2b41e93f 100644
+--- a/llvm/test/Other/new-pm-lto-defaults.ll
++++ b/llvm/test/Other/new-pm-lto-defaults.ll
+@@ -16,19 +16,19 @@
+ ; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-EP
+ ; RUN: opt -disable-verify -verify-analysis-invalidation=0 -eagerly-invalidate-analyses=0 -debug-pass-manager \
+ ; RUN:     -passes='lto<O3>' -S  %s 2>&1 \
+-; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23
++; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-O3
+ ; RUN: opt -disable-verify -verify-analysis-invalidation=0 -eagerly-invalidate-analyses=0 -debug-pass-manager \
+ ; RUN:     -passes='lto<O3>' -S  %s -passes-ep-vectorizer-start='no-op-function' 2>&1 \
+-; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-EP-VECTORIZER-START
++; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-O3,CHECK-EP-VECTORIZER-START
+ ; RUN: opt -disable-verify -verify-analysis-invalidation=0 -eagerly-invalidate-analyses=0 -debug-pass-manager \
+ ; RUN:     -passes='lto<O3>' -S  %s -passes-ep-vectorizer-end='no-op-function' 2>&1 \
+-; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-EP-VECTORIZER-END
++; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-O3,CHECK-EP-VECTORIZER-END
+ ; RUN: opt -disable-verify -verify-analysis-invalidation=0 -eagerly-invalidate-analyses=0 -debug-pass-manager \
+ ; RUN:     -passes='lto<O3>' -S  %s -passes-ep-peephole='no-op-function' 2>&1 \
+-; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-EP-PEEPHOLE
++; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-O3,CHECK-EP-PEEPHOLE
+ ; RUN: opt -disable-verify -verify-analysis-invalidation=0 -eagerly-invalidate-analyses=0 -debug-pass-manager \
+ ; RUN:     -passes='lto<O3>' -S  %s -passes-ep-cgscc-optimizer-late='no-op-cgscc' 2>&1 \
+-; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-EP-CGSCC-LATE
++; RUN:     | FileCheck %s --check-prefixes=CHECK-O,CHECK-O23,CHECK-O3,CHECK-EP-CGSCC-LATE
+ 
+ ; CHECK-EP: Running pass: NoOpModulePass
+ ; CHECK-O: Running pass: CrossDSOCFIPass
+@@ -142,6 +142,9 @@
+ ; CHECK-O23-NEXT: Running pass: BDCEPass on foo
+ ; CHECK-O23-NEXT: Running pass: SLPVectorizerPass on foo
+ ; CHECK-O23-NEXT: Running pass: VectorCombinePass on foo
++; CHECK-O3-NEXT: Running pass: CorrelatedValuePropagationPass
++; CHECK-O3-NEXT: Invalidating analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Running pass: SCCPPass
+ ; CHECK-O23-NEXT: Running pass: InferAlignmentPass on foo
+ ; CHECK-O23-NEXT: Running pass: InstCombinePass on foo
+ ; CHECK-O23-NEXT: Running pass: LoopSimplifyPass
+@@ -151,6 +154,8 @@
+ ; CHECK-EP-VECTORIZER-END-NEXT: Running pass: NoOpFunctionPass on foo
+ ; CHECK-EP-PEEPHOLE-NEXT: Running pass: NoOpFunctionPass on foo
+ ; CHECK-O23-NEXT: Running pass: JumpThreadingPass on foo
++; CHECK-O3-NEXT: Running analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Invalidating analysis: LazyValueAnalysis
+ ; CHECK-O23-NEXT: Running pass: LowerTypeTestsPass
+ ; CHECK-O-NEXT: Running pass: DropTypeTestsPass
+ ; CHECK-O23-NEXT: Running pass: LoopSink
+diff --git a/llvm/test/Other/new-pm-thinlto-postlink-defaults.ll b/llvm/test/Other/new-pm-thinlto-postlink-defaults.ll
+index 204f3eb8beb546..dcbe76f740b65a 100644
+--- a/llvm/test/Other/new-pm-thinlto-postlink-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-postlink-defaults.ll
+@@ -192,6 +192,10 @@
+ ; CHECK-POSTLINK-O-NEXT: Running pass: LoopUnrollPass
+ ; CHECK-POSTLINK-O-NEXT: Running pass: WarnMissedTransformationsPass
+ ; CHECK-POSTLINK-O-NEXT: Running pass: SROAPass
++; CHECK-O3-NEXT: Running pass: CorrelatedValuePropagationPass
++; CHECK-O3-NEXT: Running analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Invalidating analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Running pass: SCCPPass
+ ; CHECK-POSTLINK-O-NEXT: Running pass: InferAlignmentPass
+ ; CHECK-POSTLINK-O-NEXT: Running pass: InstCombinePass
+ ; CHECK-POSTLINK-O-NEXT: Running pass: LoopSimplifyPass
+diff --git a/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll
+index 441344250e2fff..8ffcb23f1d6e85 100644
+--- a/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll
+@@ -173,6 +173,10 @@
+ ; CHECK-O-NEXT: Running pass: LoopUnrollPass
+ ; CHECK-O-NEXT: Running pass: WarnMissedTransformationsPass
+ ; CHECK-O-NEXT: Running pass: SROAPass
++; CHECK-O3-NEXT: Running pass: CorrelatedValuePropagationPass
++; CHECK-O3-NEXT: Running analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Invalidating analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Running pass: SCCPPass
+ ; CHECK-O-NEXT: Running pass: InferAlignmentPass
+ ; CHECK-O-NEXT: Running pass: InstCombinePass
+ ; CHECK-O-NEXT: Running pass: LoopSimplifyPass
+diff --git a/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll
+index 477e36e8d9aba1..ec4c010a76bfef 100644
+--- a/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll
+@@ -180,6 +180,10 @@
+ ; CHECK-O-NEXT: Running pass: LoopUnrollPass
+ ; CHECK-O-NEXT: Running pass: WarnMissedTransformationsPass
+ ; CHECK-O-NEXT: Running pass: SROAPass
++; CHECK-O3-NEXT: Running pass: CorrelatedValuePropagationPass
++; CHECK-O3-NEXT: Running analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Invalidating analysis: LazyValueAnalysis
++; CHECK-O3-NEXT: Running pass: SCCPPass
+ ; CHECK-O-NEXT: Running pass: InferAlignmentPass
+ ; CHECK-O-NEXT: Running pass: InstCombinePass
+ ; CHECK-O-NEXT: Running pass: LoopSimplifyPass
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-call-facts.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-call-facts.ll
+new file mode 100644
+index 00000000000000..2ce22a72d2b375
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-call-facts.ll
+@@ -0,0 +1,157 @@
++; RUN: opt -passes='correlated-propagation<finite-values>' -print-pipeline-passes -disable-output %s | FileCheck %s --check-prefix=PIPELINE
++; PIPELINE: function(correlated-propagation<finite-values>)
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s --check-prefix=FACTS
++; RUN: opt -passes='correlated-propagation<finite-values>,instcombine,sccp,instcombine,verify' -S %s | FileCheck %s --check-prefix=CLEAN
++; RUN: opt -passes='correlated-propagation,instcombine,verify' -S %s | FileCheck %s --check-prefix=DISABLED
++
++@state = global i32 7
++declare void @opaque()
++
++define internal i32 @identity(i32 %x) {
++  %ok = icmp sge i32 %x, 0
++  br i1 %ok, label %pure, label %effect
++pure:
++  ret i32 %x
++effect:
++  call void @opaque()
++  ret i32 14
++}
++
++; Facts belong to this call. Other callers may still execute the effect path.
++define i32 @finite_identity(i32 noundef range(i32 2, 4) %x) {
++; DISABLED-LABEL: define {{.*}} @finite_identity(
++; DISABLED: call i32 @identity(i32 %x)
++; FACTS-LABEL: define {{.*}} @finite_identity(
++; FACTS: %r = call {{.*}} @identity(i32 {{.*}}returned %x)
++; FACTS: ret i32 %r
++; CLEAN-LABEL: define {{.*}} @finite_identity(
++; CLEAN-NOT: call
++; CLEAN: ret i32 %x
++  %r = call i32 @identity(i32 %x)
++  ret i32 %r
++}
++
++define i32 @unrestricted(i32 noundef %x) {
++; FACTS-LABEL: define {{.*}} @unrestricted(
++; FACTS: call i32 @identity(i32 %x)
++; CLEAN-LABEL: define {{.*}} @unrestricted(
++; CLEAN: call i32 @identity(i32 %x)
++  %r = call i32 @identity(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @uniform(i32 %x) {
++  %ok = icmp sge i32 %x, 0
++  br i1 %ok, label %pure, label %effect
++pure:
++  ret i32 9
++effect:
++  call void @opaque()
++  ret i32 14
++}
++
++define i32 @finite_uniform(i32 noundef range(i32 2, 4) %x) {
++; DISABLED-LABEL: define {{.*}} @finite_uniform(
++; DISABLED: call i32 @uniform(i32 %x)
++; FACTS-LABEL: define {{.*}} @finite_uniform(
++; FACTS: %r = call noundef range(i32 9, 10) i32 @uniform(i32 %x) #[[PURE:[0-9]+]]
++; FACTS: ret i32 %r
++; CLEAN-LABEL: define {{.*}} @finite_uniform(
++; CLEAN-NOT: call
++; CLEAN: ret i32 9
++  %r = call i32 @uniform(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @read_mutable(i32 %x) {
++  %r = load i32, ptr @state
++  ret i32 %r
++}
++
++; A static initializer is not the memory state at this runtime call.
++define i32 @after_write(i32 noundef range(i32 2, 4) %x) {
++; FACTS-LABEL: define {{.*}} @after_write(
++; FACTS: store i32 99, ptr @state
++; FACTS: %r = call i32 @read_mutable(i32 %x)
++; FACTS: ret i32 %r
++; CLEAN-LABEL: define {{.*}} @after_write(
++; CLEAN: store i32 99, ptr @state
++; CLEAN: %r = call i32 @read_mutable(i32 %x)
++; CLEAN: ret i32 %r
++  store i32 99, ptr @state
++  %r = call i32 @read_mutable(i32 %x)
++  ret i32 %r
++}
++
++define internal range(i32 9, 10) i32 @poison_return(i32 %x) {
++  ret i32 %x
++}
++
++; Out-of-range results are poison, which a select may mask. Inferring noundef
++; here would turn that defined execution into immediate UB.
++define i32 @masked_poison_return(i32 noundef range(i32 2, 4) %x, i1 %c) {
++; FACTS-LABEL: define {{.*}} @masked_poison_return(
++; FACTS: %r = call i32 @poison_return(i32 %x)
++; FACTS: %s = select i1 %c, i32 %r, i32 0
++; CLEAN-LABEL: define {{.*}} @masked_poison_return(
++; CLEAN: %r = call i32 @poison_return(i32 %x)
++; CLEAN: %s = select i1 %c, i32 9, i32 0
++; CLEAN: ret i32 %s
++  %r = call i32 @poison_return(i32 %x)
++  %s = select i1 %c, i32 %r, i32 0
++  ret i32 %s
++}
++
++define i32 @masked_callsite_range(i32 noundef range(i32 2, 4) %x, i1 %c) {
++; FACTS-LABEL: define {{.*}} @masked_callsite_range(
++; FACTS: %r = call range(i32 9, 10) i32 @identity(i32 %x)
++; CLEAN-LABEL: define {{.*}} @masked_callsite_range(
++  %r = call range(i32 9, 10) i32 @identity(i32 %x)
++  %s = select i1 %c, i32 %r, i32 0
++  ret i32 %s
++}
++
++define internal i32 @argument_identity(i32 %x) {
++  ret i32 %x
++}
++
++define i32 @masked_parameter_range(i32 noundef range(i32 2, 4) %x, i1 %c) {
++; FACTS-LABEL: define {{.*}} @masked_parameter_range(
++; FACTS: %r = call i32 @argument_identity(i32 range(i32 9, 10) %x)
++; CLEAN-LABEL: define {{.*}} @masked_parameter_range(
++  %r = call i32 @argument_identity(i32 range(i32 9, 10) %x)
++  %s = select i1 %c, i32 %r, i32 0
++  ret i32 %s
++}
++
++declare i1 @llvm.is.constant.i32(i32)
++
++define internal i1 @constant_query(i32 %x) {
++  %r = call i1 @llvm.is.constant.i32(i32 %x)
++  ret i1 %r
++}
++
++; Knowing a small runtime input set must not make these manifest constants.
++define i1 @finite_is_constant(i1 noundef %c) {
++; FACTS-LABEL: define {{.*}} @finite_is_constant(
++; FACTS: %v = select i1 %c, i32 2, i32 3
++; FACTS: %r = call i1 @llvm.is.constant.i32(i32 %v)
++; FACTS: ret i1 %r
++; CLEAN-LABEL: define {{.*}} @finite_is_constant(
++  %v = select i1 %c, i32 2, i32 3
++  %r = call i1 @llvm.is.constant.i32(i32 %v)
++  ret i1 %r
++}
++
++define i1 @finite_helper_is_constant(i1 noundef %c) {
++; FACTS-LABEL: define {{.*}} @finite_helper_is_constant(
++; FACTS: %v = select i1 %c, i32 2, i32 3
++; FACTS: %r = call i1 @constant_query(i32 %v)
++; FACTS: ret i1 %r
++; CLEAN-LABEL: define {{.*}} @finite_helper_is_constant(
++  %v = select i1 %c, i32 2, i32 3
++  %r = call i1 @constant_query(i32 %v)
++  ret i1 %r
++}
++
++; FACTS: attributes #[[PURE]] = { nounwind willreturn memory(none) }
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-constant-condition.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-constant-condition.ll
+new file mode 100644
+index 00000000000000..03250830747d1f
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-constant-condition.ll
+@@ -0,0 +1,116 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; REQUIRES: x86-registered-target
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++
++; Use a legal width and an extended arithmetic consumer, so the other size
++; restrictions do not hide the missing use-list on these conditions.
++
++target triple = "x86_64-unknown-linux-gnu"
++
++; true has no use-list. The offset-sharing fallback must not enumerate it.
++define i64 @constant_condition_true(i32 %depth, i64 %value, ptr %out) optsize {
++; CHECK-LABEL: define i64 @constant_condition_true(
++; CHECK-SAME: i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 true, i32 14, i32 18
++; CHECK-NEXT:    [[SRCBITS:%.*]] = select i1 true, i32 15, i32 19
++; CHECK-NEXT:    [[PART:%.*]] = sub i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[PART]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[RESULT:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %bits = select i1 true, i32 14, i32 18
++  %srcbits = select i1 true, i32 15, i32 19
++  %part = sub i32 %srcbits, %depth
++  %sum = add i32 %part, %bits
++  store i32 %sum, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  %result = add i64 %value, %wide
++  ret i64 %result
++}
++
++; false has no use-list. The offset-sharing fallback must not enumerate it.
++define i64 @constant_condition_false(i32 %depth, i64 %value, ptr %out) optsize {
++; CHECK-LABEL: define i64 @constant_condition_false(
++; CHECK-SAME: i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 false, i32 14, i32 18
++; CHECK-NEXT:    [[SRCBITS:%.*]] = select i1 false, i32 15, i32 19
++; CHECK-NEXT:    [[PART:%.*]] = sub i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[PART]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[RESULT:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %bits = select i1 false, i32 14, i32 18
++  %srcbits = select i1 false, i32 15, i32 19
++  %part = sub i32 %srcbits, %depth
++  %sum = add i32 %part, %bits
++  store i32 %sum, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  %result = add i64 %value, %wide
++  ret i64 %result
++}
++
++; undef has no use-list. The offset-sharing fallback must not enumerate it.
++define i64 @constant_condition_undef(i32 %depth, i64 %value, ptr %out) optsize {
++; CHECK-LABEL: define i64 @constant_condition_undef(
++; CHECK-SAME: i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 undef, i32 14, i32 18
++; CHECK-NEXT:    [[SRCBITS:%.*]] = select i1 undef, i32 15, i32 19
++; CHECK-NEXT:    [[PART:%.*]] = sub i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[PART]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[RESULT:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %bits = select i1 undef, i32 14, i32 18
++  %srcbits = select i1 undef, i32 15, i32 19
++  %part = sub i32 %srcbits, %depth
++  %sum = add i32 %part, %bits
++  store i32 %sum, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  %result = add i64 %value, %wide
++  ret i64 %result
++}
++
++; poison has no use-list. The offset-sharing fallback must not enumerate it.
++define i64 @constant_condition_poison(i32 %depth, i64 %value, ptr %out) optsize {
++; CHECK-LABEL: define i64 @constant_condition_poison(
++; CHECK-SAME: i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 poison, i32 14, i32 18
++; CHECK-NEXT:    [[SRCBITS:%.*]] = select i1 poison, i32 15, i32 19
++; CHECK-NEXT:    [[PART:%.*]] = sub i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[PART]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[RESULT:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %bits = select i1 poison, i32 14, i32 18
++  %srcbits = select i1 poison, i32 15, i32 19
++  %part = sub i32 %srcbits, %depth
++  %sum = add i32 %part, %bits
++  store i32 %sum, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  %result = add i64 %value, %wide
++  ret i64 %result
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-guards.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-guards.ll
+new file mode 100644
+index 00000000000000..443ed489b70515
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-guards.ll
+@@ -0,0 +1,520 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++
++target datalayout = "e-p:64:64-i64:64-n8:16:32:64"
++target triple = "unknown-unknown-unknown"
++
++define i32 @guard_nneg(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 1, 129) i32 @guard_nneg(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i8 1, i8 -1
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i8 [[X]] to i32
++; CHECK-NEXT:    [[COUNT:%.*]] = and i32 [[WIDE]], 7
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i8 1, i8 -1
++  %wide = zext nneg i8 %x to i32
++  %count = and i32 %wide, 7
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define i32 @guard_trunc_nuw(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_trunc_nuw(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i16 255, i16 256
++; CHECK-NEXT:    [[NARROW:%.*]] = trunc nuw i16 [[X]] to i8
++; CHECK-NEXT:    [[LOW:%.*]] = and i8 [[NARROW]], 7
++; CHECK-NEXT:    [[COUNT:%.*]] = zext nneg i8 [[LOW]] to i32
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 128
++;
++  %x = select i1 %c, i16 255, i16 256
++  %narrow = trunc nuw i16 %x to i8
++  %low = and i8 %narrow, 7
++  %count = zext i8 %low to i32
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define i32 @guard_trunc_nsw(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 1, 129) i32 @guard_trunc_nsw(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i16 127, i16 128
++; CHECK-NEXT:    [[NARROW:%.*]] = trunc nuw nsw i16 [[X]] to i8
++; CHECK-NEXT:    [[LOW:%.*]] = and i8 [[NARROW]], 7
++; CHECK-NEXT:    [[COUNT:%.*]] = zext nneg i8 [[LOW]] to i32
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i16 127, i16 128
++  %narrow = trunc nsw i16 %x to i8
++  %low = and i8 %narrow, 7
++  %count = zext i8 %low to i32
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define i32 @guard_disjoint(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_disjoint(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i8 2, i8 3
++; CHECK-NEXT:    [[LOW:%.*]] = or disjoint i8 [[X]], 1
++; CHECK-NEXT:    [[COUNT:%.*]] = zext nneg i8 [[LOW]] to i32
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 8
++;
++  %x = select i1 %c, i8 2, i8 3
++  %low = or disjoint i8 %x, 1
++  %count = zext i8 %low to i32
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define i32 @guard_samesign(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 1, 3) i32 @guard_samesign(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i8 1, i8 -1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp samesign slt i8 [[X]], 0
++; CHECK-NEXT:    [[COUNT:%.*]] = zext i1 [[CMP]] to i32
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i8 1, i8 -1
++  %cmp = icmp samesign slt i8 %x, 0
++  %count = zext i1 %cmp to i32
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define internal i32 @vector_overflow(i8 %x) {
++; CHECK-LABEL: define internal range(i32 0, 256) i32 @vector_overflow(
++; CHECK-SAME: i8 [[X:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = insertelement <2 x i8> zeroinitializer, i8 [[X]], i64 1
++; CHECK-NEXT:    [[SUM:%.*]] = add nuw <2 x i8> [[V]], splat (i8 1)
++; CHECK-NEXT:    [[ELEM:%.*]] = extractelement <2 x i8> [[SUM]], i64 1
++; CHECK-NEXT:    [[R:%.*]] = zext i8 [[ELEM]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %v = insertelement <2 x i8> <i8 0, i8 0>, i8 %x, i64 1
++  %sum = add nuw <2 x i8> %v, <i8 1, i8 1>
++  %elem = extractelement <2 x i8> %sum, i64 1
++  %r = zext i8 %elem to i32
++  ret i32 %r
++}
++define i32 @guard_vector(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 0, 256) i32 @guard_vector(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i8 1, i8 -1
++; CHECK-NEXT:    [[R:%.*]] = call i32 @vector_overflow(i8 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i8 1, i8 -1
++  %r = call i32 @vector_overflow(i8 %x)
++  ret i32 %r
++}
++define internal i32 @volatile_slot(i32 %x) {
++; CHECK-LABEL: define internal i32 @volatile_slot(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[SLOT:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store volatile i32 [[X]], ptr [[SLOT]], align 4
++; CHECK-NEXT:    ret i32 [[X]]
++;
++  %slot = alloca i32, align 4
++  store volatile i32 %x, ptr %slot, align 4
++  ret i32 %x
++}
++define i32 @guard_volatile(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_volatile(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @volatile_slot(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @volatile_slot(i32 %x)
++  ret i32 %r
++}
++declare noundef range(i32 2, 3) i32 @observable_range()
++define i32 @keep_observable(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 16, 33) i32 @keep_observable(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 2, i32 3
++; CHECK-NEXT:    [[EFFECT:%.*]] = call i32 @observable_range()
++; CHECK-NEXT:    [[COUNT:%.*]] = add nuw nsw i32 [[BITS]], [[EFFECT]]
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %bits = select i1 %c, i32 2, i32 3
++  %effect = call i32 @observable_range()
++  %count = add i32 %bits, %effect
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++; A local fold must still preserve an observable constant-range producer.
++define i32 @keep_observable_before_select(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 16, 33) i32 @keep_observable_before_select(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[EFFECT:%.*]] = call i32 @observable_range()
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i32 16, i32 32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %effect = call i32 @observable_range()
++  %bits = select i1 %c, i32 2, i32 3
++  %count = add i32 %bits, %effect
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define internal i32 @callee_noipa(i32 %x) noipa {
++; CHECK-LABEL: define internal i32 @callee_noipa(
++; CHECK-SAME: i32 [[X:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = add i32 %x, 1
++  ret i32 %r
++}
++define i32 @guard_noipa(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_noipa(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @callee_noipa(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @callee_noipa(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @callee_convergent(i32 %x) convergent {
++; CHECK-LABEL: define internal i32 @callee_convergent(
++; CHECK-SAME: i32 [[X:%.*]]) #[[ATTR1:[0-9]+]] {
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = add i32 %x, 1
++  ret i32 %r
++}
++define i32 @guard_convergent(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_convergent(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @callee_convergent(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @callee_convergent(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @callee_returns_twice(i32 %x) returns_twice {
++; CHECK-LABEL: define internal i32 @callee_returns_twice(
++; CHECK-SAME: i32 [[X:%.*]]) #[[ATTR2:[0-9]+]] {
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = add i32 %x, 1
++  ret i32 %r
++}
++define i32 @guard_returns_twice(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_returns_twice(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @callee_returns_twice(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @callee_returns_twice(i32 %x)
++  ret i32 %r
++}
++
++; This acyclic four-level call tree stays within the recursion-depth limit
++; but exceeds the evaluation-step budget. A smaller subtree must still fold.
++define internal i32 @too_many_steps(i32 %x) {
++; CHECK-LABEL: define internal i32 @too_many_steps(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = call i32 @budget_l1(i32 [[X]])
++; CHECK-NEXT:    [[B:%.*]] = call i32 @budget_l1(i32 [[A]])
++; CHECK-NEXT:    [[C:%.*]] = call i32 @budget_l1(i32 [[B]])
++; CHECK-NEXT:    [[D:%.*]] = call i32 @budget_l1(i32 [[C]])
++; CHECK-NEXT:    ret i32 [[D]]
++;
++  %a = call i32 @budget_l1(i32 %x)
++  %b = call i32 @budget_l1(i32 %a)
++  %c = call i32 @budget_l1(i32 %b)
++  %d = call i32 @budget_l1(i32 %c)
++  ret i32 %d
++}
++
++define internal i32 @budget_l1(i32 %x) {
++; CHECK-LABEL: define internal i32 @budget_l1(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = call i32 @budget_l2(i32 [[X]])
++; CHECK-NEXT:    [[B:%.*]] = call i32 @budget_l2(i32 [[A]])
++; CHECK-NEXT:    [[C:%.*]] = call i32 @budget_l2(i32 [[B]])
++; CHECK-NEXT:    [[D:%.*]] = call i32 @budget_l2(i32 [[C]])
++; CHECK-NEXT:    ret i32 [[D]]
++;
++  %a = call i32 @budget_l2(i32 %x)
++  %b = call i32 @budget_l2(i32 %a)
++  %c = call i32 @budget_l2(i32 %b)
++  %d = call i32 @budget_l2(i32 %c)
++  ret i32 %d
++}
++
++define internal i32 @budget_l2(i32 %x) {
++; CHECK-LABEL: define internal i32 @budget_l2(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = call i32 @budget_leaf(i32 [[X]])
++; CHECK-NEXT:    [[B:%.*]] = call i32 @budget_leaf(i32 [[A]])
++; CHECK-NEXT:    [[C:%.*]] = call i32 @budget_leaf(i32 [[B]])
++; CHECK-NEXT:    [[D:%.*]] = call i32 @budget_leaf(i32 [[C]])
++; CHECK-NEXT:    ret i32 [[D]]
++;
++  %a = call i32 @budget_leaf(i32 %x)
++  %b = call i32 @budget_leaf(i32 %a)
++  %c = call i32 @budget_leaf(i32 %b)
++  %d = call i32 @budget_leaf(i32 %c)
++  ret i32 %d
++}
++
++define internal i32 @budget_leaf(i32 %x) {
++; CHECK-LABEL: define internal i32 @budget_leaf(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    [[B:%.*]] = add i32 [[A]], 1
++; CHECK-NEXT:    [[C:%.*]] = add i32 [[B]], 1
++; CHECK-NEXT:    [[D:%.*]] = add i32 [[C]], 1
++; CHECK-NEXT:    ret i32 [[D]]
++;
++  %a = add i32 %x, 1
++  %b = add i32 %a, 1
++  %c = add i32 %b, 1
++  %d = add i32 %c, 1
++  ret i32 %d
++}
++define i32 @guard_budget(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_budget(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @too_many_steps(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @too_many_steps(i32 %x)
++  ret i32 %r
++}
++
++; Atomic stores remain observable even in an otherwise unused stack slot.
++define internal i32 @atomic_slot(i32 %x) {
++; CHECK-LABEL: define internal i32 @atomic_slot(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[SLOT:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store atomic i32 [[X]], ptr [[SLOT]] monotonic, align 4
++; CHECK-NEXT:    ret i32 [[X]]
++;
++  %slot = alloca i32, align 4
++  store atomic i32 %x, ptr %slot monotonic, align 4
++  ret i32 %x
++}
++
++define i32 @guard_atomic(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_atomic(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @atomic_slot(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @atomic_slot(i32 %x)
++  ret i32 %r
++}
++
++declare void @escape(ptr)
++define internal i32 @escaped_slot(i32 %x) {
++; CHECK-LABEL: define internal i32 @escaped_slot(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[SLOT:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 [[X]], ptr [[SLOT]], align 4
++; CHECK-NEXT:    call void @escape(ptr nonnull [[SLOT]])
++; CHECK-NEXT:    ret i32 [[X]]
++;
++  %slot = alloca i32, align 4
++  store i32 %x, ptr %slot, align 4
++  call void @escape(ptr %slot)
++  ret i32 %x
++}
++
++define i32 @guard_escape(i1 noundef %c) {
++; CHECK-LABEL: define i32 @guard_escape(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @escaped_slot(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @escaped_slot(i32 %x)
++  ret i32 %r
++}
++
++; The shared successor must exclude the default edge and other predecessors.
++define i32 @default_is_not_finite(i32 noundef %bits) {
++; CHECK-LABEL: define range(i32 1, -2147483647) i32 @default_is_not_finite(
++; CHECK-SAME: i32 noundef [[BITS:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[BITS]], label %[[COMPUTE:.*]] [
++; CHECK-NEXT:      i32 2, label %[[COMPUTE]]
++; CHECK-NEXT:      i32 4, label %[[COMPUTE]]
++; CHECK-NEXT:    ]
++; CHECK:       [[COMPUTE]]:
++; CHECK-NEXT:    [[COUNT:%.*]] = add i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  switch i32 %bits, label %compute [
++  i32 2, label %compute
++  i32 4, label %compute
++  ]
++compute:
++  %count = add i32 %bits, -1
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define i32 @other_predecessor(i1 %skip, i32 noundef %bits) {
++; CHECK-LABEL: define range(i32 0, -2147483647) i32 @other_predecessor(
++; CHECK-SAME: i1 [[SKIP:%.*]], i32 noundef [[BITS:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[SKIP]], label %[[COMPUTE:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    switch i32 [[BITS]], label %[[EXIT:.*]] [
++; CHECK-NEXT:      i32 2, label %[[COMPUTE]]
++; CHECK-NEXT:      i32 4, label %[[COMPUTE]]
++; CHECK-NEXT:    ]
++; CHECK:       [[COMPUTE]]:
++; CHECK-NEXT:    [[COUNT:%.*]] = add i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  br i1 %skip, label %compute, label %dispatch
++dispatch:
++  switch i32 %bits, label %exit [
++  i32 2, label %compute
++  i32 4, label %compute
++  ]
++compute:
++  %count = add i32 %bits, -1
++  %r = shl i32 1, %count
++  ret i32 %r
++exit:
++  ret i32 0
++}
++
++define i32 @guard_strictfp(i1 %c) strictfp {
++; CHECK-LABEL: define range(i32 2, 9) i32 @guard_strictfp(
++; CHECK-SAME: i1 [[C:%.*]]) #[[ATTR3:[0-9]+]] {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[X]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %count = add i32 %x, -1
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define i32 @guard_optnone(i1 %c) noinline optnone {
++; CHECK-LABEL: define i32 @guard_optnone(
++; CHECK-SAME: i1 [[C:%.*]]) #[[ATTR4:[0-9]+]] {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add i32 [[X]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %count = add i32 %x, -1
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++; The basic select and switch folds also work with the generic target model.
++define i32 @generic_select(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 2, 5) i32 @generic_select(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %bits = select i1 %c, i32 2, i32 3
++  %count = add i32 %bits, -1
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++define i32 @generic_switch(i32 noundef %x) {
++; CHECK-LABEL: define i32 @generic_switch(
++; CHECK-SAME: i32 noundef [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[X]], label %[[EXIT:.*]] [
++; CHECK-NEXT:      i32 2, label %[[VALID:.*]]
++; CHECK-NEXT:      i32 4, label %[[VALID]]
++; CHECK-NEXT:    ]
++; CHECK:       [[VALID]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i32 [[X]], 2
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[TMP0]], i32 3, i32 5
++; CHECK-NEXT:    ret i32 [[R]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  switch i32 %x, label %exit [
++  i32 2, label %valid
++  i32 4, label %valid
++  ]
++valid:
++  %r = call i32 @increment(i32 %x)
++  ret i32 %r
++exit:
++  ret i32 0
++}
++
++define internal i32 @increment(i32 %x) {
++; CHECK-LABEL: define internal i32 @increment(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = add i32 %x, 1
++  ret i32 %r
++}
++
++define i32 @within_budget(i1 noundef %c) {
++; CHECK-LABEL: define i32 @within_budget(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i32 66, i32 68
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call i32 @budget_l1(i32 %x)
++  ret i32 %r
++}
++
++declare noundef range(i32 9, 10) i32 @observable_arg(i32)
++define i32 @observable_root(i1 noundef %c) {
++; CHECK-LABEL: define i32 @observable_root(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call noundef range(i32 9, 10) i32 @observable_arg(i32 [[X]])
++; CHECK-NEXT:    ret i32 9
++;
++  %x = select i1 %c, i32 2, i32 4
++  %r = call noundef range(i32 9, 10) i32 @observable_arg(i32 %x)
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-loader-replaceable.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-loader-replaceable.ll
+new file mode 100644
+index 00000000000000..7e374ab4a4b4fc
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-loader-replaceable.ll
+@@ -0,0 +1,107 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++; RUN: opt -passes='default<O3>,verify' -S %s | FileCheck %s --check-prefix=O3
++
++target datalayout = "e-p:64:64-i64:64-n8:16:32:64"
++target triple = "unknown-unknown-unknown"
++
++; Exact definitions can still be replaced by the Windows loader. The same guard
++; is necessary when evaluating a nested call, and on call-site attributes.
++define i32 @loader_replaced(i32 %x) "loader-replaceable" {
++; CHECK-LABEL: define i32 @loader_replaced(
++; CHECK-SAME: i32 [[X:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @loader_replaced(
++; O3-SAME: i32 [[X:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; O3-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; O3-NEXT:    ret i32 [[R]]
++;
++  %r = add i32 %x, 1
++  ret i32 %r
++}
++
++define i32 @direct(i1 noundef %cond) {
++; CHECK-LABEL: define i32 @direct(
++; CHECK-SAME: i1 noundef [[COND:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @loader_replaced(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @direct(
++; O3-SAME: i1 noundef [[COND:%.*]]) local_unnamed_addr #[[ATTR1:[0-9]+]] {
++; O3-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 2, i32 4
++; O3-NEXT:    [[R:%.*]] = tail call i32 @loader_replaced(i32 [[X]])
++; O3-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %cond, i32 2, i32 4
++  %r = call i32 @loader_replaced(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @wrapper(i32 %x) noinline {
++; CHECK-LABEL: define internal i32 @wrapper(
++; CHECK-SAME: i32 [[X:%.*]]) #[[ATTR1:[0-9]+]] {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @loader_replaced(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define internal fastcc i32 @wrapper(
++; O3-SAME: i32 range(i32 2, 5) [[X:%.*]]) unnamed_addr #[[ATTR2:[0-9]+]] {
++; O3-NEXT:    [[R:%.*]] = tail call i32 @loader_replaced(i32 [[X]])
++; O3-NEXT:    ret i32 [[R]]
++;
++  %r = call i32 @loader_replaced(i32 %x)
++  ret i32 %r
++}
++
++define i32 @nested(i1 noundef %cond) {
++; CHECK-LABEL: define i32 @nested(
++; CHECK-SAME: i1 noundef [[COND:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @wrapper(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @nested(
++; O3-SAME: i1 noundef [[COND:%.*]]) local_unnamed_addr #[[ATTR1]] {
++; O3-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 2, i32 4
++; O3-NEXT:    [[R:%.*]] = tail call fastcc i32 @wrapper(i32 [[X]])
++; O3-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %cond, i32 2, i32 4
++  %r = call i32 @wrapper(i32 %x)
++  ret i32 %r
++}
++
++define i32 @ordinary(i32 %x) noinline {
++; CHECK-LABEL: define i32 @ordinary(
++; CHECK-SAME: i32 [[X:%.*]]) #[[ATTR1]] {
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @ordinary(
++; O3-SAME: i32 [[X:%.*]]) local_unnamed_addr #[[ATTR2]] {
++; O3-NEXT:    [[R:%.*]] = add i32 [[X]], 1
++; O3-NEXT:    ret i32 [[R]]
++;
++  %r = add i32 %x, 1
++  ret i32 %r
++}
++
++define i32 @call_site(i1 noundef %cond) {
++; CHECK-LABEL: define i32 @call_site(
++; CHECK-SAME: i1 noundef [[COND:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 2, i32 4
++; CHECK-NEXT:    [[R:%.*]] = call i32 @ordinary(i32 [[X]]) #[[ATTR0]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @call_site(
++; O3-SAME: i1 noundef [[COND:%.*]]) local_unnamed_addr #[[ATTR1]] {
++; O3-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 2, i32 4
++; O3-NEXT:    [[R:%.*]] = tail call i32 @ordinary(i32 [[X]]) #[[ATTR3:[0-9]+]]
++; O3-NEXT:    ret i32 [[R]]
++;
++  %x = select i1 %cond, i32 2, i32 4
++  %r = call i32 @ordinary(i32 %x) "loader-replaceable"
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-offset-size.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-offset-size.ll
+new file mode 100644
+index 00000000000000..5fc8253cf2501a
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-offset-size.ll
+@@ -0,0 +1,355 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; REQUIRES: x86-registered-target
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' %s -o %t.bc
++; RUN: llc -mtriple=x86_64-unknown-linux-gnu -filetype=obj %t.bc -o %t.o
++; RUN: llvm-nm --print-size --format=posix %t.o | FileCheck %s --check-prefix=SIZE
++; RUN: opt -passes='default<O3>,verify' %s -o %t.o3.bc
++; RUN: llc -mtriple=x86_64-unknown-linux-gnu -filetype=obj %t.o3.bc -o %t.o3.o
++; RUN: llvm-nm --print-size --format=posix %t.o3.o | FileCheck %s --check-prefix=SIZE-O3
++;
++; These cases grew after sharing a common select offset, despite a lower
++; estimated instruction cost. Check both the standalone pass and the O3 pipeline.
++
++; SIZE-DAG: across_call_minsize T {{[0-9a-f]+}} 2e{{$}}
++; SIZE-DAG: across_call_optsize T {{[0-9a-f]+}} 30{{$}}
++; SIZE-DAG: bitwise_consumer_i16 T {{[0-9a-f]+}} 24{{$}}
++; SIZE-DAG: bitwise_consumer_i32 T {{[0-9a-f]+}} 20{{$}}
++; SIZE-DAG: minsize_extended_offset T {{[0-9a-f]+}} 20{{$}}
++; SIZE-DAG: narrow_odd_type T {{[0-9a-f]+}} 22{{$}}
++; SIZE-DAG: nonfree_extension T {{[0-9a-f]+}} 35{{$}}
++; SIZE-DAG: offset_across_call T {{[0-9a-f]+}} 47{{$}}
++; SIZE-DAG: offset_used_after_shift T {{[0-9a-f]+}} 37{{$}}
++; SIZE-DAG: separate_offsets T {{[0-9a-f]+}} 1e{{$}}
++; SIZE-O3-DAG: across_call_minsize T {{[0-9a-f]+}} 2e{{$}}
++; SIZE-O3-DAG: across_call_optsize T {{[0-9a-f]+}} 30{{$}}
++; SIZE-O3-DAG: bitwise_consumer_i16 T {{[0-9a-f]+}} 20{{$}}
++; SIZE-O3-DAG: bitwise_consumer_i32 T {{[0-9a-f]+}} 22{{$}}
++; SIZE-O3-DAG: minsize_extended_offset T {{[0-9a-f]+}} 27{{$}}
++; SIZE-O3-DAG: narrow_odd_type T {{[0-9a-f]+}} 22{{$}}
++; SIZE-O3-DAG: nonfree_extension T {{[0-9a-f]+}} 35{{$}}
++; SIZE-O3-DAG: offset_across_call T {{[0-9a-f]+}} 47{{$}}
++; SIZE-O3-DAG: offset_used_after_shift T {{[0-9a-f]+}} 37{{$}}
++; SIZE-O3-DAG: separate_offsets T {{[0-9a-f]+}} 1e{{$}}
++
++target triple = "x86_64-unknown-linux-gnu"
++
++declare void @sink(i64)
++
++; Legalizing a non-native width can add masks and extensions.
++define i7 @narrow_odd_type(i1 noundef %c, i32 noundef %v, i7 %d, i7 %e, ptr %out, ptr %out2) optsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define range(i7 2, 17) i7 @narrow_odd_type(
++; CHECK-SAME: i1 noundef [[C:%.*]], i32 noundef [[V:%.*]], i7 [[D:%.*]], i7 [[E:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[COND:%.*]] = trunc i32 [[V]] to i1
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i7 2, i7 5
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i7 0, i7 3
++; CHECK-NEXT:    [[S:%.*]] = sub i7 [[OTHER]], [[D]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i7 [[S]], [[BITS]]
++; CHECK-NEXT:    store i7 [[SUM]], ptr [[OUT]], align 1
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i7 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i7 1, [[COUNT]]
++; CHECK-NEXT:    ret i7 [[R]]
++;
++  %cond = trunc i32 %v to i1
++  %bits = select i1 %cond, i7 2, i7 5
++  %other = select i1 %cond, i7 0, i7 3
++  %s = sub i7 %other, %d
++  %sum = add i7 %s, %bits
++  store i7 %sum, ptr %out, align 1
++  %count = add nsw i7 %bits, -1
++  %r = shl nuw nsw i7 1, %count
++  ret i7 %r
++}
++
++; Separate arithmetic users do not guarantee a size saving.
++define i8 @separate_offsets(i1 noundef %c, i32 noundef %v, i8 %d, i8 %e, ptr %out, ptr %out2) optsize "target-cpu"="x86-64-v4" {
++; CHECK-LABEL: define range(i8 1, 5) i8 @separate_offsets(
++; CHECK-SAME: i1 noundef [[C:%.*]], i32 noundef [[V:%.*]], i8 [[D:%.*]], i8 [[E:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]]) #[[ATTR1:[0-9]+]] {
++; CHECK-NEXT:    [[COND:%.*]] = xor i1 [[C]], false
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i8 3, i8 1
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i8 18, i8 16
++; CHECK-NEXT:    [[LEFT:%.*]] = add i8 [[BITS]], [[D]]
++; CHECK-NEXT:    [[RIGHT:%.*]] = sub i8 [[OTHER]], [[E]]
++; CHECK-NEXT:    store i8 [[LEFT]], ptr [[OUT]], align 1
++; CHECK-NEXT:    store i8 [[RIGHT]], ptr [[OUT2]], align 1
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i8 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i8 1, [[COUNT]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %cond = xor i1 %c, false
++  %bits = select i1 %cond, i8 3, i8 1
++  %other = select i1 %cond, i8 18, i8 16
++  %left = add i8 %bits, %d
++  %right = sub i8 %other, %e
++  store i8 %left, ptr %out, align 1
++  store i8 %right, ptr %out2, align 1
++  %count = add nsw i8 %bits, -1
++  %r = shl nuw nsw i8 1, %count
++  ret i8 %r
++}
++
++; A bitwise consumer can combine better with the original shift.
++define i16 @bitwise_consumer_i16(i1 noundef %c, i32 noundef %v, i16 %d, i16 %e, ptr %out, ptr %out2) optsize "target-cpu"="x86-64-v4" {
++; CHECK-LABEL: define range(i16 0, 4096) i16 @bitwise_consumer_i16(
++; CHECK-SAME: i1 noundef [[C:%.*]], i32 noundef [[V:%.*]], i16 [[D:%.*]], i16 [[E:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]]) #[[ATTR1]] {
++; CHECK-NEXT:    [[COND:%.*]] = icmp slt i32 [[V]], 15
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i16 4, i16 12
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i16 16, i16 24
++; CHECK-NEXT:    [[SUM:%.*]] = add nuw nsw i16 [[OTHER]], [[BITS]]
++; CHECK-NEXT:    store i16 [[SUM]], ptr [[OUT]], align 2
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i16 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i16 1, [[COUNT]]
++; CHECK-NEXT:    [[MIX:%.*]] = xor i16 [[R]], [[SUM]]
++; CHECK-NEXT:    ret i16 [[MIX]]
++;
++  %cond = icmp slt i32 %v, 15
++  %bits = select i1 %cond, i16 4, i16 12
++  %other = select i1 %cond, i16 16, i16 24
++  %sum = add i16 %other, %bits
++  store i16 %sum, ptr %out, align 2
++  %count = add nsw i16 %bits, -1
++  %r = shl nuw nsw i16 1, %count
++  %mix = xor i16 %r, %sum
++  ret i16 %mix
++}
++
++; Keep the original calculation for a bitwise consumer.
++define i32 @bitwise_consumer_i32(i1 noundef %c, i32 noundef %v, i32 %d, i32 %e, ptr %out, ptr %out2) optsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define range(i32 0, 512) i32 @bitwise_consumer_i32(
++; CHECK-SAME: i1 noundef [[C:%.*]], i32 noundef [[V:%.*]], i32 [[D:%.*]], i32 [[E:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[COND:%.*]] = xor i1 [[C]], false
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 6, i32 9
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i32 1, i32 4
++; CHECK-NEXT:    [[SUM:%.*]] = add nuw nsw i32 [[OTHER]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[MIX:%.*]] = xor i32 [[R]], [[SUM]]
++; CHECK-NEXT:    ret i32 [[MIX]]
++;
++  %cond = xor i1 %c, false
++  %bits = select i1 %cond, i32 6, i32 9
++  %other = select i1 %cond, i32 1, i32 4
++  %sum = add i32 %other, %bits
++  store i32 %sum, ptr %out, align 4
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %mix = xor i32 %r, %sum
++  ret i32 %mix
++}
++
++; Changing the value preserved across a call can require another move.
++define i64 @across_call_optsize(i1 noundef %cond, i64 %x, i64 %y, ptr %out) optsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define range(i64 16384, 4194305) i64 @across_call_optsize(
++; CHECK-SAME: i1 noundef [[COND:%.*]], i64 [[X:%.*]], i64 [[Y:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i64 23, i64 15
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i64 4, i64 -4
++; CHECK-NEXT:    [[LEFT:%.*]] = add i64 [[BITS]], [[X]]
++; CHECK-NEXT:    [[RIGHT:%.*]] = sub i64 [[OTHER]], [[Y]]
++; CHECK-NEXT:    store i64 [[LEFT]], ptr [[OUT]], align 8
++; CHECK-NEXT:    call void @sink(i64 [[RIGHT]])
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  %bits = select i1 %cond, i64 23, i64 15
++  %other = select i1 %cond, i64 4, i64 -4
++  %left = add i64 %bits, %x
++  %right = sub i64 %other, %y
++  store i64 %left, ptr %out, align 8
++  call void @sink(i64 %right)
++  %count = add nsw i64 %bits, -1
++  %r = shl nuw nsw i64 1, %count
++  ret i64 %r
++}
++
++; Minsize can also use a smaller materialization of the original seed.
++define i64 @across_call_minsize(i1 noundef %cond, i64 %x, i64 %y, ptr %out) minsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define range(i64 16384, 4194305) i64 @across_call_minsize(
++; CHECK-SAME: i1 noundef [[COND:%.*]], i64 [[X:%.*]], i64 [[Y:%.*]], ptr [[OUT:%.*]]) #[[ATTR2:[0-9]+]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i64 23, i64 15
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i64 4, i64 -4
++; CHECK-NEXT:    [[LEFT:%.*]] = add i64 [[BITS]], [[X]]
++; CHECK-NEXT:    [[RIGHT:%.*]] = sub i64 [[OTHER]], [[Y]]
++; CHECK-NEXT:    store i64 [[LEFT]], ptr [[OUT]], align 8
++; CHECK-NEXT:    call void @sink(i64 [[RIGHT]])
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  %bits = select i1 %cond, i64 23, i64 15
++  %other = select i1 %cond, i64 4, i64 -4
++  %left = add i64 %bits, %x
++  %right = sub i64 %other, %y
++  store i64 %left, ptr %out, align 8
++  call void @sink(i64 %right)
++  %count = add nsw i64 %bits, -1
++  %r = shl nuw nsw i64 1, %count
++  ret i64 %r
++}
++
++; A free extension does not cover minsize constant materialization costs.
++define i64 @minsize_extended_offset(i1 noundef %c, i32 noundef %v, i32 %d, i32 %e, ptr %out, ptr %out2, i64 %bias) minsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define i64 @minsize_extended_offset(
++; CHECK-SAME: i1 noundef [[C:%.*]], i32 noundef [[V:%.*]], i32 [[D:%.*]], i32 [[E:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]], i64 [[BIAS:%.*]]) #[[ATTR2]] {
++; CHECK-NEXT:    [[COND:%.*]] = xor i1 [[C]], false
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 21, i32 13
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i32 136, i32 128
++; CHECK-NEXT:    [[SUM:%.*]] = add nuw nsw i32 [[OTHER]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[ROUND:%.*]] = add i64 [[WIDE]], [[BIAS]]
++; CHECK-NEXT:    ret i64 [[ROUND]]
++;
++  %cond = xor i1 %c, false
++  %bits = select i1 %cond, i32 21, i32 13
++  %other = select i1 %cond, i32 136, i32 128
++  %sum = add i32 %other, %bits
++  store i32 %sum, ptr %out, align 4
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext i32 %r to i64
++  %round = add i64 %wide, %bias
++  ret i64 %round
++}
++
++; Keep the original offsets in nonfree_extension.
++define i64 @nonfree_extension(i1 %cond, i16 %depth, i64 %value, ptr %out) optsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define i64 @nonfree_extension(
++; CHECK-SAME: i1 [[COND:%.*]], i16 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i16 6, i16 10
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i16 7, i16 11
++; CHECK-NEXT:    [[PART:%.*]] = sub i16 [[OTHER]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add i16 [[PART]], [[BITS]]
++; CHECK-NEXT:    store i16 [[SHIFT]], ptr [[OUT]], align 2
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i16 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i16 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i16 [[R]] to i64
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[SUM]]
++;
++  %bits = select i1 %cond, i16 6, i16 10
++  %other = select i1 %cond, i16 7, i16 11
++  %part = sub i16 %other, %depth
++  %shift = add i16 %part, %bits
++  store i16 %shift, ptr %out
++  %count = add nsw i16 %bits, -1
++  %r = shl nuw nsw i16 1, %count
++  %wide = zext i16 %r to i64
++  %sum = add i64 %value, %wide
++  ret i64 %sum
++}
++
++; Keep the original offsets in offset_across_call.
++define i64 @offset_across_call(i1 %cond, i32 %depth, i64 %value, ptr %out) optsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define i64 @offset_across_call(
++; CHECK-SAME: i1 [[COND:%.*]], i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 6, i32 10
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i32 7, i32 11
++; CHECK-NEXT:    [[PART:%.*]] = sub i32 [[OTHER]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add i32 [[PART]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SHIFT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    call void @sink(i64 [[VALUE]])
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[SUM]]
++;
++  %bits = select i1 %cond, i32 6, i32 10
++  %other = select i1 %cond, i32 7, i32 11
++  %part = sub i32 %other, %depth
++  %shift = add i32 %part, %bits
++  store i32 %shift, ptr %out
++  call void @sink(i64 %value)
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext i32 %r to i64
++  %sum = add i64 %value, %wide
++  ret i64 %sum
++}
++
++; Keep the original offsets in offset_used_after_shift.
++define i64 @offset_used_after_shift(i1 %cond, i32 %depth, i64 %value, ptr %out) optsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define i64 @offset_used_after_shift(
++; CHECK-SAME: i1 [[COND:%.*]], i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 6, i32 10
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i32 7, i32 11
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[PART:%.*]] = sub i32 [[OTHER]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add i32 [[PART]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SHIFT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[SUM]]
++;
++  %bits = select i1 %cond, i32 6, i32 10
++  %other = select i1 %cond, i32 7, i32 11
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %part = sub i32 %other, %depth
++  %shift = add i32 %part, %bits
++  store i32 %shift, ptr %out
++  %wide = zext i32 %r to i64
++  %sum = add i64 %value, %wide
++  ret i64 %sum
++}
++
++; Identical selections already share their materialization in lowering.
++define i64 @identical_offsets(i1 noundef %c, i32 noundef %v, i32 %d, i32 %e, ptr %out, ptr %out2, i64 %bias) optsize "target-cpu"="x86-64-v4" {
++; CHECK-LABEL: define i64 @identical_offsets(
++; CHECK-SAME: i1 noundef [[C:%.*]], i32 noundef [[V:%.*]], i32 [[D:%.*]], i32 [[E:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]], i64 [[BIAS:%.*]]) #[[ATTR1]] {
++; CHECK-NEXT:    [[COND:%.*]] = icmp slt i32 [[V]], 15
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 2, i32 6
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i32 2, i32 6
++; CHECK-NEXT:    [[S:%.*]] = sub i32 [[OTHER]], [[D]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[S]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[ROUND:%.*]] = add i64 [[WIDE]], [[BIAS]]
++; CHECK-NEXT:    ret i64 [[ROUND]]
++;
++  %cond = icmp slt i32 %v, 15
++  %bits = select i1 %cond, i32 2, i32 6
++  %other = select i1 %cond, i32 2, i32 6
++  %s = sub i32 %other, %d
++  %sum = add i32 %s, %bits
++  store i32 %sum, ptr %out, align 4
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext i32 %r to i64
++  %round = add i64 %wide, %bias
++  ret i64 %round
++}
++
++; The two selected offsets cancel in their subtraction.
++define i64 @cancelling_offsets(i1 noundef %c, i32 noundef %v, i32 %d, i32 %e, ptr %out, ptr %out2, i64 %bias) optsize "target-cpu"="x86-64" {
++; CHECK-LABEL: define i64 @cancelling_offsets(
++; CHECK-SAME: i1 noundef [[C:%.*]], i32 noundef [[V:%.*]], i32 [[D:%.*]], i32 [[E:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]], i64 [[BIAS:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[COND:%.*]] = trunc i32 [[V]] to i1
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 11, i32 3
++; CHECK-NEXT:    [[OTHER:%.*]] = select i1 [[COND]], i32 8, i32 0
++; CHECK-NEXT:    [[SUM:%.*]] = sub nsw i32 [[OTHER]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[ROUND:%.*]] = add i64 [[WIDE]], [[BIAS]]
++; CHECK-NEXT:    ret i64 [[ROUND]]
++;
++  %cond = trunc i32 %v to i1
++  %bits = select i1 %cond, i32 11, i32 3
++  %other = select i1 %cond, i32 8, i32 0
++  %sum = sub i32 %other, %bits
++  store i32 %sum, ptr %out, align 4
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext i32 %r to i64
++  %round = add i64 %wide, %bias
++  ret i64 %round
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-phi-context.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-phi-context.ll
+new file mode 100644
+index 00000000000000..6e8c72ac236d09
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-phi-context.ll
+@@ -0,0 +1,36 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++
++; An unbound PHI is not an ordinary expression node. Its incoming definitions
++; need not dominate the multiplication, and cannot be queried there in LVI.
++define i32 @phi_context(i1 noundef %c, i1 noundef %d, i32 noundef %x) {
++; CHECK-LABEL: define i32 @phi_context(
++; CHECK-SAME: i1 noundef [[C:%.*]], i1 noundef [[D:%.*]], i32 noundef [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[C]], label %[[LEFT:.*]], label %[[RIGHT:.*]]
++; CHECK:       [[LEFT]]:
++; CHECK-NEXT:    [[A:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    br label %[[MERGE:.*]]
++; CHECK:       [[RIGHT]]:
++; CHECK-NEXT:    [[B:%.*]] = sub i32 [[X]], 1
++; CHECK-NEXT:    br label %[[MERGE]]
++; CHECK:       [[MERGE]]:
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ [[A]], %[[LEFT]] ], [ [[B]], %[[RIGHT]] ]
++; CHECK-NEXT:    [[N:%.*]] = select i1 [[D]], i32 2, i32 3
++; CHECK-NEXT:    [[R:%.*]] = mul i32 [[P]], [[N]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  br i1 %c, label %left, label %right
++left:
++  %a = add i32 %x, 1
++  br label %merge
++right:
++  %b = sub i32 %x, 1
++  br label %merge
++merge:
++  %p = phi i32 [ %a, %left ], [ %b, %right ]
++  %n = select i1 %d, i32 2, i32 3
++  %r = mul i32 %p, %n
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-profitability.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-profitability.ll
+new file mode 100644
+index 00000000000000..a96a1ce093b066
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-profitability.ll
+@@ -0,0 +1,402 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; REQUIRES: x86-registered-target
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' %s -o %t.bc
++; RUN: llc -mtriple=x86_64-unknown-linux-gnu -mcpu=x86-64 %t.bc -o - | FileCheck %s --check-prefix=ASM
++
++target triple = "x86_64-unknown-linux-gnu"
++
++; Even a dead add and shift do not pay for a selection when the shift folds
++; into its consumer. Keep the bit-index representation available to lowering.
++define i1 @bit_test(i1 %c, i64 %x, ptr %out) {
++; CHECK-LABEL: define i1 @bit_test(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    store i64 [[BITS]], ptr [[OUT]], align 8
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    [[TEST:%.*]] = and i64 [[X]], [[MASK]]
++; CHECK-NEXT:    [[RESULT:%.*]] = icmp ne i64 [[TEST]], 0
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++; ASM-LABEL: bit_test:
++; ASM: bt{{[lq]}}
++  %bits = select i1 %c, i64 3, i64 5
++  store i64 %bits, ptr %out
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  %test = and i64 %x, %mask
++  %result = icmp ne i64 %test, 0
++  ret i1 %result
++}
++
++define i64 @bit_toggle(i1 %c, i64 %x, ptr %out) {
++; CHECK-LABEL: define i64 @bit_toggle(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    store i64 [[BITS]], ptr [[OUT]], align 8
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    [[RESULT:%.*]] = xor i64 [[X]], [[MASK]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++; ASM-LABEL: bit_toggle:
++; ASM: btcq
++  %bits = select i1 %c, i64 3, i64 5
++  store i64 %bits, ptr %out
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  %result = xor i64 %x, %mask
++  ret i64 %result
++}
++
++define i64 @bit_set(i1 %c, i64 %x, ptr %out) {
++; CHECK-LABEL: define range(i64 4, 0) i64 @bit_set(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    store i64 [[BITS]], ptr [[OUT]], align 8
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    [[RESULT:%.*]] = or i64 [[X]], [[MASK]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++; ASM-LABEL: bit_set:
++; ASM: btsq
++  %bits = select i1 %c, i64 3, i64 5
++  store i64 %bits, ptr %out
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  %result = or i64 %x, %mask
++  ret i64 %result
++}
++
++define i64 @bit_reset(i1 %c, i64 %x, ptr %out) {
++; CHECK-LABEL: define range(i64 0, -4) i64 @bit_reset(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    store i64 [[BITS]], ptr [[OUT]], align 8
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    [[NOTMASK:%.*]] = xor i64 [[MASK]], -1
++; CHECK-NEXT:    [[RESULT:%.*]] = and i64 [[X]], [[NOTMASK]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++; ASM-LABEL: bit_reset:
++; ASM: btrq
++  %bits = select i1 %c, i64 3, i64 5
++  store i64 %bits, ptr %out
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  %notmask = xor i64 %mask, -1
++  %result = and i64 %x, %notmask
++  ret i64 %result
++}
++
++; The consumer check must also see through free integer casts.
++define i1 @bit_test_through_trunc(i1 %c, i32 %x, ptr %out) {
++; CHECK-LABEL: define i1 @bit_test_through_trunc(
++; CHECK-SAME: i1 [[C:%.*]], i32 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    store i64 [[BITS]], ptr [[OUT]], align 8
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    [[NARROW:%.*]] = trunc nuw nsw i64 [[MASK]] to i32
++; CHECK-NEXT:    [[TEST:%.*]] = and i32 [[X]], [[NARROW]]
++; CHECK-NEXT:    [[RESULT:%.*]] = icmp ne i32 [[TEST]], 0
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++; ASM-LABEL: bit_test_through_trunc:
++; ASM: btl
++  %bits = select i1 %c, i64 3, i64 5
++  store i64 %bits, ptr %out
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  %narrow = trunc i64 %mask to i32
++  %test = and i32 %x, %narrow
++  %result = icmp ne i32 %test, 0
++  ret i1 %result
++}
++
++define i64 @bit_toggle_through_zext(i1 %c, i64 %x, ptr %out) {
++; CHECK-LABEL: define i64 @bit_toggle_through_zext(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 3, i32 5
++; CHECK-NEXT:    store i32 [[BITS]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[MASK]] to i64
++; CHECK-NEXT:    [[RESULT:%.*]] = xor i64 [[X]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %bits = select i1 %c, i32 3, i32 5
++  store i32 %bits, ptr %out
++  %count = add nsw i32 %bits, -1
++  %mask = shl nuw nsw i32 1, %count
++  %wide = zext i32 %mask to i64
++  %result = xor i64 %x, %wide
++  ret i64 %result
++}
++
++; A constant base is also a possible bit-set consumer.
++define i32 @bit_set_constant(i1 %c, ptr %out) {
++; CHECK-LABEL: define range(i32 4, 18) i32 @bit_set_constant(
++; CHECK-SAME: i1 [[C:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 3, i32 5
++; CHECK-NEXT:    store i32 [[BITS]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[RESULT:%.*]] = or i32 [[MASK]], 1
++; CHECK-NEXT:    ret i32 [[RESULT]]
++;
++  %bits = select i1 %c, i32 3, i32 5
++  store i32 %bits, ptr %out
++  %count = add nsw i32 %bits, -1
++  %mask = shl nuw nsw i32 1, %count
++  %result = or i32 %mask, 1
++  ret i32 %result
++}
++
++; The same restriction applies when optimizing for code size. The existing
++; shift/and can be one bit-test even though the standalone costs count both.
++define i1 @bit_test_optsize(i1 %c, i64 %x) optsize {
++; CHECK-LABEL: define i1 @bit_test_optsize(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[X:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    [[TEST:%.*]] = and i64 [[X]], [[MASK]]
++; CHECK-NEXT:    [[RESULT:%.*]] = icmp ne i64 [[TEST]], 0
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++; ASM-LABEL: bit_test_optsize:
++; ASM: bt{{[lq]}}
++  %bits = select i1 %c, i64 3, i64 5
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  %test = and i64 %x, %mask
++  %result = icmp ne i64 %test, 0
++  ret i1 %result
++}
++
++define i1 @bit_test_minsize(i1 %c, i64 %x) minsize {
++; CHECK-LABEL: define i1 @bit_test_minsize(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[X:%.*]]) #[[ATTR1:[0-9]+]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    [[TEST:%.*]] = and i64 [[X]], [[MASK]]
++; CHECK-NEXT:    [[RESULT:%.*]] = icmp ne i64 [[TEST]], 0
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++; ASM-LABEL: bit_test_minsize:
++; ASM: bt{{[lq]}}
++  %bits = select i1 %c, i64 3, i64 5
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  %test = and i64 %x, %mask
++  %result = icmp ne i64 %test, 0
++  ret i1 %result
++}
++
++; An arithmetic use already requires materializing the mask. Do not charge
++; the shift as free just because another use can test the selected bit.
++define i1 @mask_used_as_value(i1 %c, i32 %x, ptr %out, ptr %sum_out) {
++; CHECK-LABEL: define i1 @mask_used_as_value(
++; CHECK-SAME: i1 [[C:%.*]], i32 [[X:%.*]], ptr [[OUT:%.*]], ptr [[SUM_OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 3, i32 5
++; CHECK-NEXT:    store i32 [[BITS]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[MASK:%.*]] = select i1 [[C]], i32 4, i32 16
++; CHECK-NEXT:    [[TEST:%.*]] = and i32 [[X]], [[MASK]]
++; CHECK-NEXT:    [[SUM:%.*]] = add nuw nsw i32 [[MASK]], 1
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[SUM_OUT]], align 4
++; CHECK-NEXT:    [[RESULT:%.*]] = icmp ne i32 [[TEST]], 0
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++  %bits = select i1 %c, i32 3, i32 5
++  store i32 %bits, ptr %out
++  %count = add nsw i32 %bits, -1
++  %mask = shl nuw nsw i32 1, %count
++  %test = and i32 %x, %mask
++  %sum = add i32 %mask, 1
++  store i32 %sum, ptr %sum_out
++  %result = icmp ne i32 %test, 0
++  ret i1 %result
++}
++
++; Replacing a shift of a retained count with a second, equally costly select
++; can repeat tests or increase register pressure. Tied throughput is not enough.
++define i32 @retained_count(i1 %c, ptr %out) {
++; CHECK-LABEL: define range(i32 8192, 131073) i32 @retained_count(
++; CHECK-SAME: i1 [[C:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[COUNT:%.*]] = select i1 [[C]], i32 13, i32 17
++; CHECK-NEXT:    store i32 [[COUNT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[MASK]]
++;
++  %count = select i1 %c, i32 13, i32 17
++  store i32 %count, ptr %out
++  %mask = shl nuw nsw i32 1, %count
++  ret i32 %mask
++}
++
++; These outcomes require expensive materializations even without optsize.
++define i64 @large_materializations(i1 %c) {
++; CHECK-LABEL: define range(i64 274877906944, 1099511627777) i64 @large_materializations(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 39, i64 41
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    ret i64 [[MASK]]
++;
++  %bits = select i1 %c, i64 39, i64 41
++  %count = add nsw i64 %bits, -1
++  %mask = shl nuw nsw i64 1, %count
++  ret i64 %mask
++}
++
++; Costs from a less frequently executed block cannot pay for new work in a
++; different block. Nor should a retained input get a second typed selection.
++define i32 @nonlocal_input(i1 %c, i1 %enter, ptr %out) {
++; CHECK-LABEL: define range(i32 0, 17) i32 @nonlocal_input(
++; CHECK-SAME: i1 [[C:%.*]], i1 [[ENTER:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 3, i32 5
++; CHECK-NEXT:    store i32 [[BITS]], ptr [[OUT]], align 4
++; CHECK-NEXT:    br i1 [[ENTER]], label %[[COMPUTE:.*]], label %[[EXIT:.*]]
++; CHECK:       [[COMPUTE]]:
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[MASK]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  %bits = select i1 %c, i32 3, i32 5
++  store i32 %bits, ptr %out
++  br i1 %enter, label %compute, label %exit
++compute:
++  %count = add nsw i32 %bits, -1
++  %mask = shl nuw nsw i32 1, %count
++  ret i32 %mask
++exit:
++  ret i32 0
++}
++
++define i32 @retained_narrowed_input(i1 %c, ptr %out) {
++; CHECK-LABEL: define range(i32 4, 17) i32 @retained_narrowed_input(
++; CHECK-SAME: i1 [[C:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i64 3, i64 5
++; CHECK-NEXT:    store i64 [[BITS]], ptr [[OUT]], align 8
++; CHECK-NEXT:    [[NARROW:%.*]] = trunc nuw nsw i64 [[BITS]] to i32
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[NARROW]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[MASK]]
++;
++  %bits = select i1 %c, i64 3, i64 5
++  store i64 %bits, ptr %out
++  %narrow = trunc i64 %bits to i32
++  %count = add nsw i32 %narrow, -1
++  %mask = shl nuw nsw i32 1, %count
++  ret i32 %mask
++}
++
++; A dead input and its free cast are still eligible.
++define i32 @dead_narrowed_input(i1 %c) {
++; CHECK-LABEL: define range(i32 4, 17) i32 @dead_narrowed_input(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:    [[MASK:%.*]] = select i1 [[C]], i32 4, i32 16
++; CHECK-NEXT:    ret i32 [[MASK]]
++;
++  %bits = select i1 %c, i64 3, i64 5
++  %narrow = trunc i64 %bits to i32
++  %count = add nsw i32 %narrow, -1
++  %mask = shl nuw nsw i32 1, %count
++  ret i32 %mask
++}
++
++; The retained count can be live through a different conditional selection.
++; A second selection of the mask can change spills in its successor loops.
++define i32 @retained_conditional_input(i1 %c, i1 %other, i32 %x, ptr %out) {
++; CHECK-LABEL: define range(i32 8, 65) i32 @retained_conditional_input(
++; CHECK-SAME: i1 [[C:%.*]], i1 [[OTHER:%.*]], i32 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 4, i32 7
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[FORWARD:%.*]] = select i1 [[OTHER]], i32 [[X]], i32 [[BITS]]
++; CHECK-NEXT:    store i32 [[FORWARD]], ptr [[OUT]], align 4
++; CHECK-NEXT:    ret i32 [[MASK]]
++;
++  %bits = select i1 %c, i32 4, i32 7
++  %count = add nsw i32 %bits, -1
++  %mask = shl nuw nsw i32 1, %count
++  %forward = select i1 %other, i32 %x, i32 %bits
++  store i32 %forward, ptr %out
++  ret i32 %mask
++}
++
++define i32 @retained_phi_input(i1 %c, i1 %other, i32 %x, ptr %out) {
++; CHECK-LABEL: define range(i32 8, 65) i32 @retained_phi_input(
++; CHECK-SAME: i1 [[C:%.*]], i1 [[OTHER:%.*]], i32 [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 4, i32 7
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    br i1 [[OTHER]], label %[[DIFFERENT:.*]], label %[[MERGE:.*]]
++; CHECK:       [[DIFFERENT]]:
++; CHECK-NEXT:    br label %[[MERGE]]
++; CHECK:       [[MERGE]]:
++; CHECK-NEXT:    [[FORWARD:%.*]] = phi i32 [ [[BITS]], %[[ENTRY]] ], [ [[X]], %[[DIFFERENT]] ]
++; CHECK-NEXT:    store i32 [[FORWARD]], ptr [[OUT]], align 4
++; CHECK-NEXT:    ret i32 [[MASK]]
++;
++entry:
++  %bits = select i1 %c, i32 4, i32 7
++  %count = add nsw i32 %bits, -1
++  %mask = shl nuw nsw i32 1, %count
++  br i1 %other, label %different, label %merge
++different:
++  br label %merge
++merge:
++  %forward = phi i32 [ %bits, %entry ], [ %x, %different ]
++  store i32 %forward, ptr %out
++  ret i32 %mask
++}
++
++declare void @observe()
++
++define i32 @across_call(i1 %c, ptr %out) {
++; CHECK-LABEL: define range(i32 4, 17) i32 @across_call(
++; CHECK-SAME: i1 [[C:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 3, i32 5
++; CHECK-NEXT:    store i32 [[BITS]], ptr [[OUT]], align 4
++; CHECK-NEXT:    call void @observe()
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[MASK:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[MASK]]
++;
++  %bits = select i1 %c, i32 3, i32 5
++  store i32 %bits, ptr %out
++  call void @observe()
++  %count = add nsw i32 %bits, -1
++  %mask = shl nuw nsw i32 1, %count
++  ret i32 %mask
++}
++
++; Do not break a shared shift count into several independently tied selections.
++define void @multiple_masks_shared_count(i1 %c, ptr %out, ptr %out2) {
++; CHECK-LABEL: define void @multiple_masks_shared_count(
++; CHECK-SAME: i1 [[C:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]]) {
++; CHECK-NEXT:    [[COUNT:%.*]] = select i1 [[C]], i32 2, i32 4
++; CHECK-NEXT:    [[FIRST:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[SECOND:%.*]] = shl nuw nsw i32 2, [[COUNT]]
++; CHECK-NEXT:    store i32 [[FIRST]], ptr [[OUT]], align 4
++; CHECK-NEXT:    store i32 [[SECOND]], ptr [[OUT2]], align 4
++; CHECK-NEXT:    ret void
++;
++  %count = select i1 %c, i32 2, i32 4
++  %first = shl nuw nsw i32 1, %count
++  %second = shl nuw nsw i32 2, %count
++  store i32 %first, ptr %out
++  store i32 %second, ptr %out2
++  ret void
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-size.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-size.ll
+new file mode 100644
+index 00000000000000..868fdc0fb47e81
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-size.ll
+@@ -0,0 +1,316 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; REQUIRES: x86-registered-target
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' %s -o %t.bc
++; RUN: llc -mtriple=x86_64-unknown-linux-gnu -mcpu=x86-64 -filetype=obj %t.bc -o %t.o
++; RUN: llvm-nm --print-size --format=posix %t.o | FileCheck %s --check-prefix=SIZE
++;
++; SIZE-DAG: size_optimized_rounding T {{[0-9a-f]+}} 1d
++; SIZE-DAG: large_constants T {{[0-9a-f]+}} 11
++; SIZE-DAG: shared_offsets T {{[0-9a-f]+}} 28{{$}}
++; SIZE-DAG: shared_offsets_reversed T {{[0-9a-f]+}} 24{{$}}
++; SIZE-DAG: unit_offsets T {{[0-9a-f]+}} 1e
++
++target triple = "x86_64-unknown-linux-gnu"
++
++; Adding a comparison and select ties the size of the existing add and shift.
++define i32 @size_optimized(i32 noundef range(i32 5, 7) %bits) optsize {
++; CHECK-LABEL: define range(i32 16, 33) i32 @size_optimized(
++; CHECK-SAME: i32 noundef range(i32 5, 7) [[BITS:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %count = add i32 %bits, -1
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++; A retained input is cheap to reuse; a second select needs two more constants.
++define i64 @size_optimized_rounding(i1 %cond, ptr %out) optsize {
++; CHECK-LABEL: define range(i64 8192, 131073) i64 @size_optimized_rounding(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 14, i32 18
++; CHECK-NEXT:    store i32 [[BITS]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    ret i64 [[WIDE]]
++;
++  %bits = select i1 %cond, i32 14, i32 18
++  store i32 %bits, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  ret i64 %wide
++}
++
++; Reusing a condition still needs a strict size saving. The input stays live.
++define i32 @size_optimized_shared_count(i1 %cond, ptr %out) optsize {
++; CHECK-LABEL: define range(i32 8192, 131073) i32 @size_optimized_shared_count(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[COUNT:%.*]] = select i1 [[COND]], i32 13, i32 17
++; CHECK-NEXT:    store i32 [[COUNT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %count = select i1 %cond, i32 13, i32 17
++  store i32 %count, ptr %out
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++; Three outcomes would introduce more code than the add and shift remove.
++define i32 @size_optimized_three_values(i32 noundef range(i32 5, 8) %bits) optsize {
++; CHECK-LABEL: define range(i32 16, 65) i32 @size_optimized_three_values(
++; CHECK-SAME: i32 noundef range(i32 5, 8) [[BITS:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++; A division's throughput benefit does not pay for extra code under optsize.
++define i32 @size_optimized_division(i32 noundef range(i32 5, 7) %x) optsize {
++; CHECK-LABEL: define range(i32 166, 201) i32 @size_optimized_division(
++; CHECK-SAME: i32 noundef range(i32 5, 7) [[X:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[R_RHS_TRUNC:%.*]] = trunc i32 [[X]] to i16
++; CHECK-NEXT:    [[R1:%.*]] = udiv i16 1000, [[R_RHS_TRUNC]]
++; CHECK-NEXT:    [[R:%.*]] = zext i16 [[R1]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = udiv i32 1000, %x
++  ret i32 %r
++}
++
++; Calls do not bypass the code-size gate: the callee may have other callers.
++define i32 @size_optimized_call(i32 noundef range(i32 1, 4) %x) optsize {
++; CHECK-LABEL: define i32 @size_optimized_call(
++; CHECK-SAME: i32 noundef range(i32 1, 4) [[X:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @polynomial(i32 [[X]], i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = call i32 @polynomial(i32 %x, i32 %x)
++  ret i32 %r
++}
++
++define i32 @size_optimized_uniform(i32 noundef range(i32 2, 4) %x) optsize {
++; CHECK-LABEL: define i32 @size_optimized_uniform(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[R:%.*]] = call noundef range(i32 9, 10) i32 @nine(i32 [[X]]) #[[ATTR2:[0-9]+]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = call i32 @nine(i32 %x)
++  ret i32 %r
++}
++
++; Minsize uses the same code-size policy.
++define i16 @minimum_size_select(i1 %cond) minsize {
++; CHECK-LABEL: define range(i16 2, 5) i16 @minimum_size_select(
++; CHECK-SAME: i1 [[COND:%.*]]) #[[ATTR1:[0-9]+]] {
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[COND]], i16 2, i16 4
++; CHECK-NEXT:    ret i16 [[R]]
++;
++  %bits = select i1 %cond, i16 2, i16 3
++  %count = add nsw i16 %bits, -1
++  %r = shl nuw nsw i16 1, %count
++  ret i16 %r
++}
++
++; Large i64 immediates lose even when the input selection dies.
++define i64 @large_constants(i1 noundef %cond) optsize {
++; CHECK-LABEL: define range(i64 4294967296, 8589934593) i64 @large_constants(
++; CHECK-SAME: i1 noundef [[COND:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i64 33, i64 34
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i64 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i64 1, [[COUNT]]
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  %bits = select i1 %cond, i64 33, i64 34
++  %count = add nsw i64 %bits, -1
++  %r = shl nuw nsw i64 1, %count
++  ret i64 %r
++}
++
++; Arithmetic offsets can share one small discriminator instead of materializing
++; the two large one-hot constants. This is the swscale rounding calculation.
++define i64 @shared_offsets(i1 %cond, i32 %depth, i64 %value, ptr %out) optsize {
++; CHECK-LABEL: define i64 @shared_offsets(
++; CHECK-SAME: i1 [[COND:%.*]], i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[FINITE_OFFSET:%.*]] = select i1 [[COND]], i32 0, i32 4
++; CHECK-NEXT:    [[BITS:%.*]] = add i32 [[FINITE_OFFSET]], 14
++; CHECK-NEXT:    [[SRCBITS:%.*]] = add i32 [[FINITE_OFFSET]], 15
++; CHECK-NEXT:    [[SRCSHIFT:%.*]] = sub nsw i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add nsw i32 [[SRCSHIFT]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SHIFT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[R:%.*]] = shl i32 8192, [[FINITE_OFFSET]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[SUM]]
++;
++  %bits = select i1 %cond, i32 14, i32 18
++  %srcbits = select i1 %cond, i32 15, i32 19
++  %srcshift = sub nsw i32 %srcbits, %depth
++  %shift = add nsw i32 %srcshift, %bits
++  store i32 %shift, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  %sum = add i64 %value, %wide
++  ret i64 %sum
++}
++
++; Reverse arm order and an earlier sibling must preserve dominance and polarity.
++define i64 @shared_offsets_reversed(i1 %cond, i32 %depth, i64 %value, ptr %out) optsize {
++; CHECK-LABEL: define i64 @shared_offsets_reversed(
++; CHECK-SAME: i1 [[COND:%.*]], i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[FINITE_OFFSET:%.*]] = select i1 [[COND]], i32 4, i32 0
++; CHECK-NEXT:    [[SRCBITS:%.*]] = add i32 [[FINITE_OFFSET]], 15
++; CHECK-NEXT:    [[BITS:%.*]] = add i32 [[FINITE_OFFSET]], 14
++; CHECK-NEXT:    [[SRCSHIFT:%.*]] = sub nsw i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add nsw i32 [[SRCSHIFT]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SHIFT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[R:%.*]] = shl i32 8192, [[FINITE_OFFSET]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    ret i64 [[SUM]]
++;
++  %srcbits = select i1 %cond, i32 19, i32 15
++  %bits = select i1 %cond, i32 18, i32 14
++  %srcshift = sub nsw i32 %srcbits, %depth
++  %shift = add nsw i32 %srcshift, %bits
++  store i32 %shift, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  %sum = add i64 %value, %wide
++  ret i64 %sum
++}
++
++; Sharing must not change a differently spaced sibling.
++define i32 @different_offsets(i1 %cond, i32 %depth, ptr %out) optsize {
++; CHECK-LABEL: define range(i32 8192, 131073) i32 @different_offsets(
++; CHECK-SAME: i1 [[COND:%.*]], i32 [[DEPTH:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 14, i32 18
++; CHECK-NEXT:    [[SRCBITS:%.*]] = select i1 [[COND]], i32 15, i32 20
++; CHECK-NEXT:    [[SRCSHIFT:%.*]] = sub nsw i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add nsw i32 [[SRCSHIFT]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SHIFT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %bits = select i1 %cond, i32 14, i32 18
++  %srcbits = select i1 %cond, i32 15, i32 20
++  %srcshift = sub nsw i32 %srcbits, %depth
++  %shift = add nsw i32 %srcshift, %bits
++  store i32 %shift, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++; Directly observable selections are not candidates for sharing.
++define i32 @stored_offsets(i1 %cond, i32 %depth, ptr %out, ptr %out2) optsize {
++; CHECK-LABEL: define range(i32 8192, 131073) i32 @stored_offsets(
++; CHECK-SAME: i1 [[COND:%.*]], i32 [[DEPTH:%.*]], ptr [[OUT:%.*]], ptr [[OUT2:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 14, i32 18
++; CHECK-NEXT:    [[SRCBITS:%.*]] = select i1 [[COND]], i32 15, i32 19
++; CHECK-NEXT:    store i32 [[SRCBITS]], ptr [[OUT2]], align 4
++; CHECK-NEXT:    [[SRCSHIFT:%.*]] = sub nsw i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add nsw i32 [[SRCSHIFT]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SHIFT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %bits = select i1 %cond, i32 14, i32 18
++  %srcbits = select i1 %cond, i32 15, i32 19
++  store i32 %srcbits, ptr %out2
++  %srcshift = sub nsw i32 %srcbits, %depth
++  %shift = add nsw i32 %srcshift, %bits
++  store i32 %shift, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++; A unit offset is already a cheap extension of the condition. Rebuilding the
++; selections would duplicate that calculation and grow 30 bytes to 35 on x86.
++define i32 @unit_offsets(i32 noundef %v, i32 %depth, ptr %out) optsize {
++; CHECK-LABEL: define range(i32 2, 5) i32 @unit_offsets(
++; CHECK-SAME: i32 noundef [[V:%.*]], i32 [[DEPTH:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[COND:%.*]] = trunc i32 [[V]] to i1
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[COND]], i32 2, i32 3
++; CHECK-NEXT:    [[SRCBITS:%.*]] = select i1 [[COND]], i32 3, i32 4
++; CHECK-NEXT:    [[SRCSHIFT:%.*]] = sub i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[SRCSHIFT]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SUM]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %cond = trunc i32 %v to i1
++  %bits = select i1 %cond, i32 2, i32 3
++  %srcbits = select i1 %cond, i32 3, i32 4
++  %srcshift = sub i32 %srcbits, %depth
++  %sum = add i32 %srcshift, %bits
++  store i32 %sum, ptr %out
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++define internal i32 @polynomial(i32 %x, i32 %y) {
++; CHECK-LABEL: define internal range(i32 -2147483647, -2147483648) i32 @polynomial(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = mul nsw i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[R:%.*]] = add nsw i32 [[P]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = mul nsw i32 %x, %y
++  %r = add nsw i32 %p, 1
++  ret i32 %r
++}
++
++define internal i32 @nine(i32 %x) {
++; CHECK-LABEL: define internal i32 @nine(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    ret i32 9
++;
++  ret i32 9
++}
++
++; The intermediate source shift can also be used independently, as in swscale.
++define i64 @shared_offsets_other_use(i1 %cond, i32 %depth, i64 %value, ptr %out) optsize {
++; CHECK-LABEL: define i64 @shared_offsets_other_use(
++; CHECK-SAME: i1 [[COND:%.*]], i32 [[DEPTH:%.*]], i64 [[VALUE:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[FINITE_OFFSET:%.*]] = select i1 [[COND]], i32 0, i32 4
++; CHECK-NEXT:    [[BITS:%.*]] = add i32 [[FINITE_OFFSET]], 14
++; CHECK-NEXT:    [[SRCBITS:%.*]] = add i32 [[FINITE_OFFSET]], 15
++; CHECK-NEXT:    [[SRCSHIFT:%.*]] = sub nsw i32 [[SRCBITS]], [[DEPTH]]
++; CHECK-NEXT:    [[SHIFT:%.*]] = add nsw i32 [[SRCSHIFT]], [[BITS]]
++; CHECK-NEXT:    store i32 [[SHIFT]], ptr [[OUT]], align 4
++; CHECK-NEXT:    [[SRCWIDE:%.*]] = zext nneg i32 [[SRCSHIFT]] to i64
++; CHECK-NEXT:    [[R:%.*]] = shl i32 8192, [[FINITE_OFFSET]]
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i32 [[R]] to i64
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[VALUE]], [[WIDE]]
++; CHECK-NEXT:    [[RESULT:%.*]] = add i64 [[SUM]], [[SRCWIDE]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %bits = select i1 %cond, i32 14, i32 18
++  %srcbits = select i1 %cond, i32 15, i32 19
++  %srcshift = sub nsw i32 %srcbits, %depth
++  %shift = add nsw i32 %srcshift, %bits
++  store i32 %shift, ptr %out
++  %srcwide = zext nneg i32 %srcshift to i64
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  %wide = zext nneg i32 %r to i64
++  %sum = add i64 %value, %wide
++  %result = add i64 %sum, %srcwide
++  ret i64 %result
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-vector-path.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-vector-path.ll
+new file mode 100644
+index 00000000000000..2a8397eb64612d
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values-vector-path.ll
+@@ -0,0 +1,52 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -passes='correlated-propagation<finite-values>,instcombine,verify' -S %s | FileCheck %s
++
++target triple = "x86_64-unknown-linux-gnu"
++declare i8 @llvm.vector.reduce.or.v8i8(<8 x i8>)
++
++; Earlier call folding can leave a helper with one caller, enabling inlining.
++; Find the same scalar input through its integer vector packing computation.
++define i8 @inlined_pack(i64 noundef %bits, i8 noundef %fallback) {
++; CHECK-LABEL: @inlined_pack(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    switch i64 [[BITS:%.*]], label [[INVALID:%.*]] [
++; CHECK-NEXT:      i64 2, label [[VALID:%.*]]
++; CHECK-NEXT:      i64 4, label [[VALID]]
++; CHECK-NEXT:    ]
++; CHECK:       valid:
++; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i64 [[BITS]], 2
++; CHECK-NEXT:    [[R_FINITE:%.*]] = select i1 [[TMP0]], i8 -86, i8 -120
++; CHECK-NEXT:    ret i8 [[R_FINITE]]
++; CHECK:       invalid:
++; CHECK-NEXT:    ret i8 [[FALLBACK:%.*]]
++;
++entry:
++  switch i64 %bits, label %invalid [
++  i64 2, label %valid
++  i64 4, label %valid
++  ]
++valid:
++  %k = trunc nuw nsw i64 %bits to i32
++  %count = add nsw i32 %k, -1
++  %one = shl nuw nsw i32 1, %count
++  %mask = shl nsw i32 -1, %k
++  %notmask = xor i32 %mask, -1
++  %field = and i32 %one, %notmask
++  %v0 = insertelement <8 x i32> poison, i32 %field, i64 0
++  %v = shufflevector <8 x i32> %v0, <8 x i32> poison, <8 x i32> zeroinitializer
++  %k0 = insertelement <8 x i32> poison, i32 %k, i64 0
++  %kv = shufflevector <8 x i32> %k0, <8 x i32> poison, <8 x i32> zeroinitializer
++  %shifts = mul nuw nsw <8 x i32> %kv, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  %shifted = shl <8 x i32> %v, %shifts
++  %bytes = trunc <8 x i32> %shifted to <8 x i8>
++  %lanes = udiv i64 8, %bits
++  %last = add nsw i64 %lanes, -1
++  %l0 = insertelement <8 x i64> poison, i64 %last, i64 0
++  %lv = shufflevector <8 x i64> %l0, <8 x i64> poison, <8 x i32> zeroinitializer
++  %inactive = icmp ult <8 x i64> %lv, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
++  %active = select <8 x i1> %inactive, <8 x i8> zeroinitializer, <8 x i8> %bytes
++  %r = call i8 @llvm.vector.reduce.or.v8i8(<8 x i8> %active)
++  ret i8 %r
++invalid:
++  ret i8 %fallback
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/finite-values.ll b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values.ll
+new file mode 100644
+index 00000000000000..131499db8c0b63
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/finite-values.ll
+@@ -0,0 +1,740 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; REQUIRES: x86-registered-target
++; RUN: opt -passes='correlated-propagation<finite-values>,verify' -S %s | FileCheck %s
++; Keep the helper out of the inliner to exercise the call-folding path in O3.
++; RUN: opt -passes='default<O3>,verify' -inline-threshold=0 -S %s | FileCheck %s --check-prefix=O3
++
++target triple = "x86_64-unknown-linux-gnu"
++
++@observable = global i32 0
++
++define i32 @select_one_hot(i1 %cond) {
++; CHECK-LABEL: define range(i32 128, 32769) i32 @select_one_hot(
++; CHECK-SAME: i1 [[COND:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[COND]], i32 128, i32 32768
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 128, 32769) i32 @select_one_hot(
++; O3-SAME: i1 [[COND:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; O3-NEXT:    [[R:%.*]] = select i1 [[COND]], i32 128, i32 32768
++; O3-NEXT:    ret i32 [[R]]
++;
++  %bits = select i1 %cond, i32 8, i32 16
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++define i32 @range_one_hot(i32 noundef range(i32 5, 7) %bits, ptr %out) {
++; CHECK-LABEL: define range(i32 16, 33) i32 @range_one_hot(
++; CHECK-SAME: i32 noundef range(i32 5, 7) [[BITS:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    store i32 [[R]], ptr [[OUT]], align 4
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 16, 33) i32 @range_one_hot(
++; O3-SAME: i32 noundef range(i32 5, 7) [[BITS:%.*]], ptr nofree writeonly captures(none) initializes((0, 4)) [[OUT:%.*]]) local_unnamed_addr #[[ATTR1:[0-9]+]] {
++; O3-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; O3-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; O3-NEXT:    store i32 [[R]], ptr [[OUT]], align 4
++; O3-NEXT:    ret i32 [[R]]
++;
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  store i32 %r, ptr %out
++  ret i32 %r
++}
++
++define i32 @range_division(i32 noundef range(i32 5, 7) %x, ptr %out) {
++; CHECK-LABEL: define range(i32 166, 201) i32 @range_division(
++; CHECK-SAME: i32 noundef range(i32 5, 7) [[X:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[R_RHS_TRUNC:%.*]] = trunc i32 [[X]] to i16
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i16 [[R_RHS_TRUNC]], 5
++; CHECK-NEXT:    [[R1_FINITE:%.*]] = select i1 [[TMP1]], i16 200, i16 166
++; CHECK-NEXT:    [[R:%.*]] = zext i16 [[R1_FINITE]] to i32
++; CHECK-NEXT:    store i32 [[R]], ptr [[OUT]], align 4
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 166, 201) i32 @range_division(
++; O3-SAME: i32 noundef range(i32 5, 7) [[X:%.*]], ptr nofree writeonly captures(none) initializes((0, 4)) [[OUT:%.*]]) local_unnamed_addr #[[ATTR1]] {
++; O3-NEXT:    [[TMP1:%.*]] = icmp eq i32 [[X]], 5
++; O3-NEXT:    [[R_ZEXT:%.*]] = select i1 [[TMP1]], i32 200, i32 166
++; O3-NEXT:    store i32 [[R_ZEXT]], ptr [[OUT]], align 4
++; O3-NEXT:    ret i32 [[R_ZEXT]]
++;
++  %r = udiv i32 1000, %x
++  store i32 %r, ptr %out
++  ret i32 %r
++}
++
++define i32 @single_use_range(i32 noundef range(i32 5, 7) %bits) {
++; CHECK-LABEL: define range(i32 16, 33) i32 @single_use_range(
++; CHECK-SAME: i32 noundef range(i32 5, 7) [[BITS:%.*]]) {
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 16, 33) i32 @single_use_range(
++; O3-SAME: i32 noundef range(i32 5, 7) [[BITS:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; O3-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; O3-NEXT:    ret i32 [[R]]
++;
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++; The extension can disappear in lowering, so do not count it as a saving.
++define i32 @folded_extension_cost(i8 noundef range(i8 48, 50) %opcode) {
++; CHECK-LABEL: define range(i32 1, 3) i32 @folded_extension_cost(
++; CHECK-SAME: i8 noundef range(i8 48, 50) [[OPCODE:%.*]]) {
++; CHECK-NEXT:    [[LOWBIT:%.*]] = and i8 [[OPCODE]], 1
++; CHECK-NEXT:    [[COUNT:%.*]] = zext nneg i8 [[LOWBIT]] to i32
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 1, 3) i32 @folded_extension_cost(
++; O3-SAME: i8 noundef range(i8 48, 50) [[OPCODE:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    [[LOWBIT:%.*]] = and i8 [[OPCODE]], 1
++; O3-NEXT:    [[COUNT:%.*]] = zext nneg i8 [[LOWBIT]] to i32
++; O3-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; O3-NEXT:    ret i32 [[R]]
++;
++  %lowbit = and i8 %opcode, 1
++  %count = zext i8 %lowbit to i32
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++; Correlated arguments must be evaluated using the same input assignment.
++define i32 @correlated_arguments(i1 noundef %cond) {
++; CHECK-LABEL: define i32 @correlated_arguments(
++; CHECK-SAME: i1 noundef [[COND:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[COND]], i32 16, i32 36
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 16, 37) i32 @correlated_arguments(
++; O3-SAME: i1 noundef [[COND:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 3, i32 5
++; O3-NEXT:    [[Y:%.*]] = add nuw nsw i32 [[X]], 2
++; O3-NEXT:    [[P_I:%.*]] = mul nuw nsw i32 [[Y]], [[X]]
++; O3-NEXT:    [[R_I:%.*]] = add nuw nsw i32 [[P_I]], 1
++; O3-NEXT:    ret i32 [[R_I]]
++;
++  %x = select i1 %cond, i32 3, i32 5
++  %y = add nsw i32 %x, 2
++  %r = call i32 @polynomial(i32 %x, i32 %y)
++  ret i32 %r
++}
++
++define internal i32 @polynomial(i32 %x, i32 %y) {
++; CHECK-LABEL: define internal range(i32 -2147483647, -2147483648) i32 @polynomial(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = mul nsw i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[R:%.*]] = add nsw i32 [[P]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = mul nsw i32 %x, %y
++  %r = add nsw i32 %p, 1
++  ret i32 %r
++}
++
++define i32 @three_values(i32 noundef range(i32 1, 4) %x) {
++; CHECK-LABEL: define range(i32 -2147483647, -2147483648) i32 @three_values(
++; CHECK-SAME: i32 noundef range(i32 1, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i32 [[X]], 2
++; CHECK-NEXT:    [[R_FINITE:%.*]] = select i1 [[TMP1]], i32 5, i32 10
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp eq i32 [[X]], 1
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[TMP2]], i32 2, i32 [[R_FINITE]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 2, 11) i32 @three_values(
++; O3-SAME: i32 noundef range(i32 1, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    [[P_I:%.*]] = mul nuw nsw i32 [[X]], [[X]]
++; O3-NEXT:    [[R_I:%.*]] = add nuw nsw i32 [[P_I]], 1
++; O3-NEXT:    ret i32 [[R_I]]
++;
++  %r = call i32 @polynomial(i32 %x, i32 %x)
++  ret i32 %r
++}
++
++define i32 @four_values(i32 noundef range(i32 1, 5) %x) {
++; CHECK-LABEL: define range(i32 -2147483647, -2147483648) i32 @four_values(
++; CHECK-SAME: i32 noundef range(i32 1, 5) [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i32 [[X]], 3
++; CHECK-NEXT:    [[R_FINITE:%.*]] = select i1 [[TMP1]], i32 10, i32 17
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp eq i32 [[X]], 2
++; CHECK-NEXT:    [[R_FINITE1:%.*]] = select i1 [[TMP2]], i32 5, i32 [[R_FINITE]]
++; CHECK-NEXT:    [[TMP3:%.*]] = icmp eq i32 [[X]], 1
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[TMP3]], i32 2, i32 [[R_FINITE1]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 2, 18) i32 @four_values(
++; O3-SAME: i32 noundef range(i32 1, 5) [[X:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    [[P_I:%.*]] = mul nuw nsw i32 [[X]], [[X]]
++; O3-NEXT:    [[R_I:%.*]] = add nuw nsw i32 [[P_I]], 1
++; O3-NEXT:    ret i32 [[R_I]]
++;
++  %r = call i32 @polynomial(i32 %x, i32 %x)
++  ret i32 %r
++}
++
++define i32 @too_many_values(i32 noundef range(i32 1, 6) %x) {
++; CHECK-LABEL: define range(i32 -2147483647, -2147483648) i32 @too_many_values(
++; CHECK-SAME: i32 noundef range(i32 1, 6) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @polynomial(i32 [[X]], i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 2, 27) i32 @too_many_values(
++; O3-SAME: i32 noundef range(i32 1, 6) [[X:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    [[P_I:%.*]] = mul nuw nsw i32 [[X]], [[X]]
++; O3-NEXT:    [[R_I:%.*]] = add nuw nsw i32 [[P_I]], 1
++; O3-NEXT:    ret i32 [[R_I]]
++;
++  %r = call i32 @polynomial(i32 %x, i32 %x)
++  ret i32 %r
++}
++
++; A disjoint set is supplied by the switch, not an added assume or attribute.
++; The helper has error effects, but neither evaluated input executes them.
++define i8 @switch_helper(i64 noundef %bits) {
++; CHECK-LABEL: define i8 @switch_helper(
++; CHECK-SAME: i64 noundef [[BITS:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i64 [[BITS]], label %[[INVALID:.*]] [
++; CHECK-NEXT:      i64 2, label %[[VALID:.*]]
++; CHECK-NEXT:      i64 4, label %[[VALID]]
++; CHECK-NEXT:    ]
++; CHECK:       [[VALID]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i64 [[BITS]], 2
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[TMP0]], i8 -86, i8 -120
++; CHECK-NEXT:    ret i8 [[R]]
++; CHECK:       [[INVALID]]:
++; CHECK-NEXT:    ret i8 17
++;
++; O3-LABEL: define range(i8 -120, 18) i8 @switch_helper(
++; O3-SAME: i64 noundef [[BITS:%.*]]) local_unnamed_addr {
++; O3-NEXT:  [[VALID:.*:]]
++; O3-NEXT:    [[SWITCH_SELECTCMP:%.*]] = icmp eq i64 [[BITS]], 4
++; O3-NEXT:    [[SWITCH_SELECT:%.*]] = select i1 [[SWITCH_SELECTCMP]], i8 -120, i8 17
++; O3-NEXT:    [[TMP0:%.*]] = icmp eq i64 [[BITS]], 2
++; O3-NEXT:    [[SWITCH_SELECT2:%.*]] = select i1 [[TMP0]], i8 -86, i8 [[SWITCH_SELECT]]
++; O3-NEXT:    ret i8 [[SWITCH_SELECT2]]
++;
++entry:
++  switch i64 %bits, label %invalid [
++  i64 2, label %valid
++  i64 4, label %valid
++  ]
++valid:
++  %b32 = trunc nuw nsw i64 %bits to i32
++  %count = add nsw i32 %b32, -1
++  %one = shl nuw nsw i32 1, %count
++  %zp = trunc nuw nsw i32 %one to i8
++  %r = call i8 @packed_helper(i64 %bits, i8 %zp)
++  ret i8 %r
++invalid:
++  ret i8 17
++}
++
++define internal i8 @packed_helper(i64 %bits, i8 %zp) {
++; CHECK-LABEL: define internal i8 @packed_helper(
++; CHECK-SAME: i64 [[BITS:%.*]], i8 [[ZP:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SLOT:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 [[BITS]], ptr [[SLOT]], align 8
++; CHECK-NEXT:    [[LESS:%.*]] = add i64 [[BITS]], -1
++; CHECK-NEXT:    [[RANGE:%.*]] = icmp ult i64 [[LESS]], 8
++; CHECK-NEXT:    br i1 [[RANGE]], label %[[DIVISOR:.*]], label %[[INVALID:.*]]
++; CHECK:       [[DIVISOR]]:
++; CHECK-NEXT:    [[B8:%.*]] = trunc nuw nsw i64 [[BITS]] to i8
++; CHECK-NEXT:    [[REM:%.*]] = urem i8 8, [[B8]]
++; CHECK-NEXT:    [[LANES:%.*]] = udiv i8 8, [[B8]]
++; CHECK-NEXT:    [[DIVIDES:%.*]] = icmp eq i8 [[REM]], 0
++; CHECK-NEXT:    br i1 [[DIVIDES]], label %[[PACK:.*]], label %[[INVALID]]
++; CHECK:       [[INVALID]]:
++; CHECK-NEXT:    call void @throw_invalid()
++; CHECK-NEXT:    unreachable
++; CHECK:       [[PACK]]:
++; CHECK-NEXT:    [[K:%.*]] = trunc nuw nsw i64 [[BITS]] to i32
++; CHECK-NEXT:    [[MASK:%.*]] = shl nsw i32 -1, [[K]]
++; CHECK-NEXT:    [[NOTMASK:%.*]] = xor i32 [[MASK]], -1
++; CHECK-NEXT:    [[ZP32:%.*]] = zext i8 [[ZP]] to i32
++; CHECK-NEXT:    [[FIELD:%.*]] = and i32 [[ZP32]], [[NOTMASK]]
++; CHECK-NEXT:    [[V0:%.*]] = insertelement <8 x i32> poison, i32 [[FIELD]], i64 0
++; CHECK-NEXT:    [[V:%.*]] = shufflevector <8 x i32> [[V0]], <8 x i32> poison, <8 x i32> zeroinitializer
++; CHECK-NEXT:    [[K0:%.*]] = insertelement <8 x i32> poison, i32 [[K]], i64 0
++; CHECK-NEXT:    [[KV:%.*]] = shufflevector <8 x i32> [[K0]], <8 x i32> poison, <8 x i32> zeroinitializer
++; CHECK-NEXT:    [[SHIFTS:%.*]] = mul nuw nsw <8 x i32> [[KV]], <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[SHIFTED:%.*]] = shl <8 x i32> [[V]], [[SHIFTS]]
++; CHECK-NEXT:    [[BYTES:%.*]] = trunc <8 x i32> [[SHIFTED]] to <8 x i8>
++; CHECK-NEXT:    [[LAST:%.*]] = add nsw i8 [[LANES]], -1
++; CHECK-NEXT:    [[L0:%.*]] = insertelement <8 x i8> poison, i8 [[LAST]], i64 0
++; CHECK-NEXT:    [[LV:%.*]] = shufflevector <8 x i8> [[L0]], <8 x i8> poison, <8 x i32> zeroinitializer
++; CHECK-NEXT:    [[INACTIVE:%.*]] = icmp ult <8 x i8> [[LV]], <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
++; CHECK-NEXT:    [[ACTIVE:%.*]] = select <8 x i1> [[INACTIVE]], <8 x i8> zeroinitializer, <8 x i8> [[BYTES]]
++; CHECK-NEXT:    [[R:%.*]] = call i8 @llvm.vector.reduce.or.v8i8(<8 x i8> [[ACTIVE]])
++; CHECK-NEXT:    ret i8 [[R]]
++;
++; O3-LABEL: define internal fastcc i8 @packed_helper(
++; O3-SAME: i64 [[BITS:%.*]], i8 range(i8 1, 0) [[ZP:%.*]]) unnamed_addr {
++; O3-NEXT:  [[ENTRY:.*:]]
++; O3-NEXT:    [[LESS:%.*]] = add i64 [[BITS]], -1
++; O3-NEXT:    [[RANGE:%.*]] = icmp ult i64 [[LESS]], 8
++; O3-NEXT:    br i1 [[RANGE]], label %[[DIVISOR:.*]], label %[[INVALID:.*]]
++; O3:       [[DIVISOR]]:
++; O3-NEXT:    [[B8:%.*]] = trunc nuw nsw i64 [[BITS]] to i8
++; O3-NEXT:    [[REM:%.*]] = urem i8 8, [[B8]]
++; O3-NEXT:    [[LANES:%.*]] = udiv i8 8, [[B8]]
++; O3-NEXT:    [[DIVIDES:%.*]] = icmp eq i8 [[REM]], 0
++; O3-NEXT:    br i1 [[DIVIDES]], label %[[PACK:.*]], label %[[INVALID]]
++; O3:       [[INVALID]]:
++; O3-NEXT:    tail call void @throw_invalid()
++; O3-NEXT:    unreachable
++; O3:       [[PACK]]:
++; O3-NEXT:    [[K:%.*]] = trunc nuw nsw i64 [[BITS]] to i32
++; O3-NEXT:    [[MASK:%.*]] = shl nsw i32 -1, [[K]]
++; O3-NEXT:    [[NOTMASK:%.*]] = xor i32 [[MASK]], -1
++; O3-NEXT:    [[ZP32:%.*]] = zext i8 [[ZP]] to i32
++; O3-NEXT:    [[FIELD:%.*]] = and i32 [[ZP32]], [[NOTMASK]]
++; O3-NEXT:    [[V0:%.*]] = insertelement <8 x i32> poison, i32 [[FIELD]], i64 0
++; O3-NEXT:    [[V:%.*]] = shufflevector <8 x i32> [[V0]], <8 x i32> poison, <8 x i32> zeroinitializer
++; O3-NEXT:    [[K0:%.*]] = insertelement <8 x i32> poison, i32 [[K]], i64 0
++; O3-NEXT:    [[KV:%.*]] = shufflevector <8 x i32> [[K0]], <8 x i32> poison, <8 x i32> zeroinitializer
++; O3-NEXT:    [[SHIFTS:%.*]] = mul nuw nsw <8 x i32> [[KV]], <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; O3-NEXT:    [[SHIFTED:%.*]] = shl <8 x i32> [[V]], [[SHIFTS]]
++; O3-NEXT:    [[BYTES:%.*]] = trunc <8 x i32> [[SHIFTED]] to <8 x i8>
++; O3-NEXT:    [[LAST:%.*]] = add nsw i8 [[LANES]], -1
++; O3-NEXT:    [[L0:%.*]] = insertelement <8 x i8> poison, i8 [[LAST]], i64 0
++; O3-NEXT:    [[LV:%.*]] = shufflevector <8 x i8> [[L0]], <8 x i8> poison, <8 x i32> zeroinitializer
++; O3-NEXT:    [[INACTIVE:%.*]] = icmp ult <8 x i8> [[LV]], <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
++; O3-NEXT:    [[ACTIVE:%.*]] = select <8 x i1> [[INACTIVE]], <8 x i8> zeroinitializer, <8 x i8> [[BYTES]]
++; O3-NEXT:    [[R:%.*]] = tail call i8 @llvm.vector.reduce.or.v8i8(<8 x i8> [[ACTIVE]])
++; O3-NEXT:    ret i8 [[R]]
++;
++entry:
++  %slot = alloca i64
++  store i64 %bits, ptr %slot
++  %less = add i64 %bits, -1
++  %range = icmp ult i64 %less, 8
++  br i1 %range, label %divisor, label %invalid
++divisor:
++  %b8 = trunc nuw nsw i64 %bits to i8
++  %rem = urem i8 8, %b8
++  %lanes = udiv i8 8, %b8
++  %divides = icmp eq i8 %rem, 0
++  br i1 %divides, label %pack, label %invalid
++invalid:
++  call void @throw_invalid()
++  unreachable
++pack:
++  %k = trunc nuw nsw i64 %bits to i32
++  %mask = shl nsw i32 -1, %k
++  %notmask = xor i32 %mask, -1
++  %zp32 = zext i8 %zp to i32
++  %field = and i32 %zp32, %notmask
++  %v0 = insertelement <8 x i32> poison, i32 %field, i64 0
++  %v = shufflevector <8 x i32> %v0, <8 x i32> poison, <8 x i32> zeroinitializer
++  %k0 = insertelement <8 x i32> poison, i32 %k, i64 0
++  %kv = shufflevector <8 x i32> %k0, <8 x i32> poison, <8 x i32> zeroinitializer
++  %shifts = mul nuw nsw <8 x i32> %kv, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  %shifted = shl <8 x i32> %v, %shifts
++  %bytes = trunc <8 x i32> %shifted to <8 x i8>
++  %last = add nsw i8 %lanes, -1
++  %l0 = insertelement <8 x i8> poison, i8 %last, i64 0
++  %lv = shufflevector <8 x i8> %l0, <8 x i8> poison, <8 x i32> zeroinitializer
++  %inactive = icmp ult <8 x i8> %lv, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
++  %active = select <8 x i1> %inactive, <8 x i8> zeroinitializer, <8 x i8> %bytes
++  %r = call i8 @llvm.vector.reduce.or.v8i8(<8 x i8> %active)
++  ret i8 %r
++}
++
++define i8 @invalid_helper_case(i64 noundef %bits) {
++; CHECK-LABEL: define i8 @invalid_helper_case(
++; CHECK-SAME: i64 noundef [[BITS:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i64 [[BITS]], label %[[OTHER:.*]] [
++; CHECK-NEXT:      i64 2, label %[[VALID:.*]]
++; CHECK-NEXT:      i64 3, label %[[VALID]]
++; CHECK-NEXT:    ]
++; CHECK:       [[VALID]]:
++; CHECK-NEXT:    [[B32:%.*]] = trunc nuw nsw i64 [[BITS]] to i32
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[B32]], -1
++; CHECK-NEXT:    [[ONE:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    [[ZP:%.*]] = trunc nuw nsw i32 [[ONE]] to i8
++; CHECK-NEXT:    [[R:%.*]] = call i8 @packed_helper(i64 [[BITS]], i8 [[ZP]])
++; CHECK-NEXT:    ret i8 [[R]]
++; CHECK:       [[OTHER]]:
++; CHECK-NEXT:    ret i8 17
++;
++; O3-LABEL: define i8 @invalid_helper_case(
++; O3-SAME: i64 noundef [[BITS:%.*]]) local_unnamed_addr {
++; O3-NEXT:  [[ENTRY:.*]]:
++; O3-NEXT:    [[TMP0:%.*]] = and i64 [[BITS]], -2
++; O3-NEXT:    [[SWITCH:%.*]] = icmp eq i64 [[TMP0]], 2
++; O3-NEXT:    br i1 [[SWITCH]], label %[[VALID:.*]], label %[[COMMON_RET:.*]]
++; O3:       [[COMMON_RET]]:
++; O3-NEXT:    [[COMMON_RET_OP:%.*]] = phi i8 [ [[R:%.*]], %[[VALID]] ], [ 17, %[[ENTRY]] ]
++; O3-NEXT:    ret i8 [[COMMON_RET_OP]]
++; O3:       [[VALID]]:
++; O3-NEXT:    [[B32:%.*]] = trunc nuw nsw i64 [[BITS]] to i32
++; O3-NEXT:    [[COUNT:%.*]] = add nsw i32 [[B32]], -1
++; O3-NEXT:    [[ONE:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; O3-NEXT:    [[ZP:%.*]] = trunc nuw nsw i32 [[ONE]] to i8
++; O3-NEXT:    [[R]] = tail call fastcc i8 @packed_helper(i64 [[BITS]], i8 [[ZP]])
++; O3-NEXT:    br label %[[COMMON_RET]]
++;
++entry:
++  switch i64 %bits, label %other [
++  i64 2, label %valid
++  i64 3, label %valid
++  ]
++valid:
++  %b32 = trunc nuw nsw i64 %bits to i32
++  %count = add nsw i32 %b32, -1
++  %one = shl nuw nsw i32 1, %count
++  %zp = trunc nuw nsw i32 %one to i8
++  %r = call i8 @packed_helper(i64 %bits, i8 %zp)
++  ret i8 %r
++other:
++  ret i8 17
++}
++
++define i32 @uniform_results(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @uniform_results(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call noundef range(i32 9, 10) i32 @nine(i32 [[X]]) #[[ATTR2:[0-9]+]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef i32 @uniform_results(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    ret i32 9
++;
++  %r = call i32 @nine(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @nine(i32 %x) {
++; CHECK-LABEL: define internal i32 @nine(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    ret i32 9
++;
++  ret i32 9
++}
++
++define i32 @side_effect(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @side_effect(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @write_global(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef range(i32 2, 4) i32 @side_effect(
++; O3-SAME: i32 noundef returned range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR2:[0-9]+]] {
++; O3-NEXT:    store i32 [[X]], ptr @observable, align 4
++; O3-NEXT:    ret i32 [[X]]
++;
++  %r = call i32 @write_global(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @write_global(i32 %x) {
++; CHECK-LABEL: define internal i32 @write_global(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    store i32 [[X]], ptr @observable, align 4
++; CHECK-NEXT:    ret i32 [[X]]
++;
++  store i32 %x, ptr @observable
++  ret i32 %x
++}
++
++define i32 @effect_in_one_case(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @effect_in_one_case(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @sometimes_write(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 20, 31) i32 @effect_in_one_case(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR2]] {
++; O3-NEXT:    [[C_I:%.*]] = icmp eq i32 [[X]], 2
++; O3-NEXT:    br i1 [[C_I]], label %[[SOMETIMES_WRITE_EXIT:.*]], label %[[EFFECT_I:.*]]
++; O3:       [[EFFECT_I]]:
++; O3-NEXT:    store i32 3, ptr @observable, align 4
++; O3-NEXT:    br label %[[SOMETIMES_WRITE_EXIT]]
++; O3:       [[SOMETIMES_WRITE_EXIT]]:
++; O3-NEXT:    [[COMMON_RET_OP_I:%.*]] = phi i32 [ 30, %[[EFFECT_I]] ], [ 20, [[TMP0:%.*]] ]
++; O3-NEXT:    ret i32 [[COMMON_RET_OP_I]]
++;
++  %r = call i32 @sometimes_write(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @sometimes_write(i32 %x) {
++; CHECK-LABEL: define internal range(i32 20, 31) i32 @sometimes_write(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i32 [[X]], 2
++; CHECK-NEXT:    br i1 [[C]], label %[[PURE:.*]], label %[[EFFECT:.*]]
++; CHECK:       [[PURE]]:
++; CHECK-NEXT:    ret i32 20
++; CHECK:       [[EFFECT]]:
++; CHECK-NEXT:    store i32 [[X]], ptr @observable, align 4
++; CHECK-NEXT:    ret i32 30
++;
++  %c = icmp eq i32 %x, 2
++  br i1 %c, label %pure, label %effect
++pure:
++  ret i32 20
++effect:
++  store i32 %x, ptr @observable
++  ret i32 30
++}
++
++define i32 @unknown_call(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @unknown_call(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @unknown(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @unknown_call(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr {
++; O3-NEXT:    [[R:%.*]] = tail call i32 @unknown(i32 [[X]])
++; O3-NEXT:    ret i32 [[R]]
++;
++  %r = call i32 @unknown(i32 %x)
++  ret i32 %r
++}
++
++define i32 @global_read(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @global_read(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @read_global(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @global_read(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR3:[0-9]+]] {
++; O3-NEXT:    [[G_I:%.*]] = load i32, ptr @observable, align 4
++; O3-NEXT:    [[R_I:%.*]] = add i32 [[G_I]], [[X]]
++; O3-NEXT:    ret i32 [[R_I]]
++;
++  %r = call i32 @read_global(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @read_global(i32 %x) {
++; CHECK-LABEL: define internal i32 @read_global(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[G:%.*]] = load i32, ptr @observable, align 4
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[G]], [[X]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %g = load i32, ptr @observable
++  %r = add i32 %g, %x
++  ret i32 %r
++}
++
++define i32 @loop_call(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @loop_call(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @loop(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef range(i32 2, 4) i32 @loop_call(
++; O3-SAME: i32 noundef returned range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    ret i32 [[X]]
++;
++  %r = call i32 @loop(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @loop(i32 %x) {
++; CHECK-LABEL: define internal i32 @loop(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[BODY:.*]]
++; CHECK:       [[BODY]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[NEXT:%.*]], %[[BODY]] ]
++; CHECK-NEXT:    [[NEXT]] = add i32 [[I]], 1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i32 [[NEXT]], [[X]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[BODY]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 [[NEXT]]
++;
++entry:
++  br label %body
++body:
++  %i = phi i32 [ 0, %entry ], [ %next, %body ]
++  %next = add i32 %i, 1
++  %done = icmp eq i32 %next, %x
++  br i1 %done, label %exit, label %body
++exit:
++  ret i32 %next
++}
++
++define i32 @interposable_call(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @interposable_call(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @interposable(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define i32 @interposable_call(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr {
++; O3-NEXT:    [[R:%.*]] = tail call i32 @interposable(i32 [[X]])
++; O3-NEXT:    ret i32 [[R]]
++;
++  %r = call i32 @interposable(i32 %x)
++  ret i32 %r
++}
++
++define weak i32 @interposable(i32 %x) {
++; CHECK-LABEL: define weak i32 @interposable(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    ret i32 9
++;
++; O3-LABEL: define weak i32 @interposable(
++; O3-SAME: i32 [[X:%.*]]) local_unnamed_addr {
++; O3-NEXT:    ret i32 9
++;
++  ret i32 9
++}
++
++define i32 @recursive_call(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @recursive_call(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @recursive(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef i32 @recursive_call(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR4:[0-9]+]] {
++; O3-NEXT:    br label %[[TAILRECURSE_I:.*]]
++; O3:       [[TAILRECURSE_I]]:
++; O3-NEXT:    br label %[[TAILRECURSE_I]]
++;
++  %r = call i32 @recursive(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @recursive(i32 %x) {
++; CHECK-LABEL: define internal i32 @recursive(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @recursive(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %r = call i32 @recursive(i32 %x)
++  ret i32 %r
++}
++
++define i32 @bundled_call(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @bundled_call(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = call i32 @nine(i32 [[X]]) [ "deopt"(i32 [[X]]) ]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef i32 @bundled_call(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    ret i32 9
++;
++  %r = call i32 @nine(i32 %x) [ "deopt"(i32 %x) ]
++  ret i32 %r
++}
++
++define i32 @musttail_call(i32 noundef range(i32 2, 4) %x) {
++; CHECK-LABEL: define i32 @musttail_call(
++; CHECK-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = musttail call i32 @nine(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef i32 @musttail_call(
++; O3-SAME: i32 noundef range(i32 2, 4) [[X:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    ret i32 9
++;
++  %r = musttail call i32 @nine(i32 %x)
++  ret i32 %r
++}
++
++; The sign-bit case is poison, not another integer selection arm.
++define i32 @poison_nsw(i1 noundef %c) {
++; CHECK-LABEL: define i32 @poison_nsw(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[BITS:%.*]] = select i1 [[C]], i32 31, i32 32
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 1073741824
++;
++; O3-LABEL: define noundef i32 @poison_nsw(
++; O3-SAME: i1 noundef [[C:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    ret i32 1073741824
++;
++  %bits = select i1 %c, i32 31, i32 32
++  %count = add nsw i32 %bits, -1
++  %r = shl nuw nsw i32 1, %count
++  ret i32 %r
++}
++
++define i32 @poison_exact(i1 noundef %c) {
++; CHECK-LABEL: define range(i32 0, 2) i32 @poison_exact(
++; CHECK-SAME: i1 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[COUNT:%.*]] = select i1 [[C]], i32 1, i32 2
++; CHECK-NEXT:    [[R:%.*]] = lshr exact i32 2, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef range(i32 0, 2) i32 @poison_exact(
++; O3-SAME: i1 noundef [[C:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    ret i32 1
++;
++  %count = select i1 %c, i32 1, i32 2
++  %r = lshr exact i32 2, %count
++  ret i32 %r
++}
++
++; A range attribute alone does not make an otherwise undef argument noundef.
++define i32 @possibly_undef(i32 range(i32 5, 7) %bits) {
++; CHECK-LABEL: define range(i32 16, 33) i32 @possibly_undef(
++; CHECK-SAME: i32 range(i32 5, 7) [[BITS:%.*]]) {
++; CHECK-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define range(i32 16, 33) i32 @possibly_undef(
++; O3-SAME: i32 range(i32 5, 7) [[BITS:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    [[COUNT:%.*]] = add nsw i32 [[BITS]], -1
++; O3-NEXT:    [[R:%.*]] = shl nuw nsw i32 1, [[COUNT]]
++; O3-NEXT:    ret i32 [[R]]
++;
++  %count = add i32 %bits, -1
++  %r = shl i32 1, %count
++  ret i32 %r
++}
++
++; Immediate UB cannot be masked the way a poison result can be.
++define i32 @masked_remainder_ub(i1 noundef %cond) {
++; CHECK-LABEL: define i32 @masked_remainder_ub(
++; CHECK-SAME: i1 noundef [[COND:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = select i1 [[COND]], i32 -1, i32 1
++; CHECK-NEXT:    [[R:%.*]] = call i32 @masked_remainder(i32 [[X]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++; O3-LABEL: define noundef i32 @masked_remainder_ub(
++; O3-SAME: i1 noundef [[COND:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; O3-NEXT:    ret i32 7
++;
++  %x = select i1 %cond, i32 -1, i32 1
++  %r = call i32 @masked_remainder(i32 %x)
++  ret i32 %r
++}
++
++define internal i32 @masked_remainder(i32 %x) {
++; CHECK-LABEL: define internal range(i32 -2147483647, 8) i32 @masked_remainder(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = srem i32 -2147483648, [[X]]
++; CHECK-NEXT:    [[MASKED:%.*]] = select i1 true, i32 7, i32 [[R]]
++; CHECK-NEXT:    ret i32 [[MASKED]]
++;
++  %r = srem i32 -2147483648, %x
++  %masked = select i1 true, i32 7, i32 %r
++  ret i32 %masked
++}
++
++declare i32 @unknown(i32)
++declare void @throw_invalid() noreturn
++declare i8 @llvm.vector.reduce.or.v8i8(<8 x i8>)
+diff --git a/llvm/unittests/Transforms/Utils/CMakeLists.txt b/llvm/unittests/Transforms/Utils/CMakeLists.txt
+index f4e4c817114c1b..40b14f27a3bbaf 100644
+--- a/llvm/unittests/Transforms/Utils/CMakeLists.txt
++++ b/llvm/unittests/Transforms/Utils/CMakeLists.txt
+@@ -21,6 +21,7 @@ add_llvm_unittest(UtilsTests
+   DebugifyTest.cpp
+   DebugSSAUpdaterTest.cpp
+   DynamicDebuggingTest.cpp
++  EvaluatorTest.cpp
+   FunctionComparatorTest.cpp
+   IntegerDivisionTest.cpp
+   LocalTest.cpp
+diff --git a/llvm/unittests/Transforms/Utils/EvaluatorTest.cpp b/llvm/unittests/Transforms/Utils/EvaluatorTest.cpp
+new file mode 100644
+index 00000000000000..f48f7edd883e2d
+--- /dev/null
++++ b/llvm/unittests/Transforms/Utils/EvaluatorTest.cpp
+@@ -0,0 +1,315 @@
++//===- EvaluatorTest.cpp - Runtime and initializer evaluation
++//--------------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++
++#include "llvm/Transforms/Utils/Evaluator.h"
++#include "llvm/AsmParser/Parser.h"
++#include "llvm/IR/Constants.h"
++#include "llvm/IR/InstIterator.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/LLVMContext.h"
++#include "llvm/IR/Module.h"
++#include "llvm/Support/SourceMgr.h"
++#include "gtest/gtest.h"
++
++using namespace llvm;
++
++namespace {
++class EvaluatorTest : public testing::Test {
++protected:
++  LLVMContext Context;
++  std::unique_ptr<Module> M;
++
++  void SetUp() override {
++    SMDiagnostic Error;
++    M = parseAssemblyString(R"IR(
++      target datalayout = "e-p:64:64"
++      @state = global i32 7
++      declare void @opaque()
++      declare i8 @llvm.vector.reduce.or.v2i8(<2 x i8>)
++      declare i1 @llvm.is.constant.i32(i32)
++
++      define internal i1 @constant_query(i32 %x) {
++        %r = call i1 @llvm.is.constant.i32(i32 %x)
++        ret i1 %r
++      }
++      define internal i32 @pure(i32 %x) {
++        %r = mul i32 %x, 3
++        ret i32 %r
++      }
++      define internal range(i32 9, 10) i32 @return_range(i32 %x) {
++        %r = mul i32 %x, 3
++        ret i32 %r
++      }
++      define internal i32 @call_return_range(i32 %x) {
++        %r = call range(i32 9, 10) i32 @pure(i32 %x)
++        ret i32 %r
++      }
++      define internal i32 @call_parameter_range(i32 %x) {
++        %r = call i32 @pure(i32 range(i32 2, 4) %x)
++        ret i32 %r
++      }
++      define internal <2 x i8> @vector_parameter_range(<2 x i8> range(i8 2, 4) %x) {
++        ret <2 x i8> %x
++      }
++      define internal i32 @read(i32 %x) {
++        %r = load i32, ptr @state
++        ret i32 %r
++      }
++      define internal i32 @write(i32 %x) {
++        store i32 %x, ptr @state
++        ret i32 %x
++      }
++      define internal i32 @local(i32 %x) {
++        %slot = alloca i32, align 4
++        store i32 %x, ptr %slot, align 4
++        ret i32 9
++      }
++      define internal i32 @oversized_store(i32 %x) {
++        %slot = alloca i8, align 4
++        store i32 %x, ptr %slot, align 4
++        ret i32 9
++      }
++      define internal i32 @atomic_store(i32 %x) {
++        %slot = alloca i32, align 4
++        store atomic i32 %x, ptr %slot release, align 4
++        ret i32 9
++      }
++      define internal i32 @volatile_store(i32 %x) {
++        %slot = alloca i32, align 4
++        store volatile i32 %x, ptr %slot, align 4
++        ret i32 9
++      }
++      define internal i32 @path(i32 %x) {
++        %ok = icmp sge i32 %x, 0
++        br i1 %ok, label %pure, label %effect
++      pure:
++        ret i32 %x
++      effect:
++        call void @opaque()
++        ret i32 14
++      }
++      define internal i32 @nested(i32 %x) {
++        %r = call i32 @pure(i32 %x)
++        ret i32 %r
++      }
++      define internal i32 @recursive(i32 %x) {
++        %r = call i32 @recursive(i32 %x)
++        ret i32 %r
++      }
++      define internal i32 @loop(i32 %x) {
++        br label %body
++      body:
++        br label %body
++      }
++      define weak i32 @interposable(i32 %x) {
++        ret i32 %x
++      }
++      define internal i8 @overflow(i8 %x) {
++        %r = add nsw i8 %x, 1
++        ret i8 %r
++      }
++      define internal i16 @negative(i8 %x) {
++        %r = zext nneg i8 %x to i16
++        ret i16 %r
++      }
++      define internal i8 @exact(i8 %x) {
++        %r = udiv exact i8 %x, 2
++        ret i8 %r
++      }
++      define internal i8 @zero_divisor(i8 %x) {
++        %r = urem i8 %x, 0
++        ret i8 %r
++      }
++      define internal <2 x i8> @vector_overflow() {
++        %r = add nsw <2 x i8> <i8 1, i8 127>, <i8 1, i8 1>
++        ret <2 x i8> %r
++      }
++      define internal i8 @reduce() {
++        %r = call i8 @llvm.vector.reduce.or.v2i8(<2 x i8> <i8 1, i8 2>)
++        ret i8 %r
++      }
++      define internal i32 @polynomial(i32 %x, i32 %y) {
++        %p = mul nsw i32 %x, %y
++        %r = add nsw i32 %p, 1
++        ret i32 %r
++      }
++      define i32 @expression(i32 %x) {
++        %y = add nsw i32 %x, 2
++        %r = call i32 @polynomial(i32 %x, i32 %y)
++        ret i32 %r
++      }
++      define i32 @phi_expression(i1 %c, i1 %d, i32 %x) {
++        br i1 %c, label %left, label %right
++      left:
++        %left.value = add i32 %x, 1
++        br label %merge
++      right:
++        %right.value = sub i32 %x, 1
++        br label %merge
++      merge:
++        %p = phi i32 [ %left.value, %left ], [ %right.value, %right ]
++        %n = select i1 %d, i32 2, i32 3
++        %r = mul i32 %p, %n
++        ret i32 %r
++      }
++    )IR",
++                            Error, Context);
++    ASSERT_TRUE(M);
++  }
++
++  bool evaluate(StringRef Name, ArrayRef<int64_t> Inputs, Constant *&Result,
++                unsigned Steps = 256, unsigned Depth = 4) {
++    Function *F = M->getFunction(Name);
++    SmallVector<Constant *, 4> Args;
++    for (auto [Arg, Input] : zip(F->args(), Inputs))
++      Args.push_back(ConstantInt::getSigned(Arg.getType(), Input));
++    Evaluator Eval(M->getDataLayout(), nullptr, Evaluator::Mode::Runtime, Steps,
++                   Depth);
++    return Eval.EvaluateFunction(F, Result, Args);
++  }
++};
++
++TEST_F(EvaluatorTest, RuntimeArithmetic) {
++  Constant *Result = nullptr;
++  ASSERT_TRUE(evaluate("pure", {3}, Result));
++  EXPECT_EQ(cast<ConstantInt>(Result)->getSExtValue(), 9);
++}
++
++TEST_F(EvaluatorTest, RuntimeRejectsMutableMemory) {
++  Constant *Result = nullptr;
++  EXPECT_FALSE(evaluate("read", {2}, Result));
++  EXPECT_FALSE(evaluate("write", {2}, Result));
++  EXPECT_EQ(cast<ConstantInt>(M->getNamedGlobal("state")->getInitializer())
++                ->getSExtValue(),
++            7);
++}
++
++TEST_F(EvaluatorTest, InitializerModeRemainsTheDefault) {
++  Evaluator Eval(M->getDataLayout(), nullptr);
++  Constant *Result = nullptr;
++  SmallVector<Constant *, 1> Args{
++      ConstantInt::get(Type::getInt32Ty(Context), 2)};
++  ASSERT_TRUE(Eval.EvaluateFunction(M->getFunction("read"), Result, Args));
++  EXPECT_EQ(cast<ConstantInt>(Result)->getSExtValue(), 7);
++}
++
++TEST_F(EvaluatorTest, InitializerWritesAreSimulated) {
++  Evaluator Eval(M->getDataLayout(), nullptr);
++  Constant *Result = nullptr;
++  SmallVector<Constant *, 1> Args{
++      ConstantInt::get(Type::getInt32Ty(Context), 2)};
++  ASSERT_TRUE(Eval.EvaluateFunction(M->getFunction("write"), Result, Args));
++  auto Writes = Eval.getMutatedInitializers();
++  ASSERT_EQ(Writes.size(), 1u);
++  EXPECT_EQ(cast<ConstantInt>(Writes.lookup(M->getNamedGlobal("state")))
++                ->getSExtValue(),
++            2);
++  EXPECT_EQ(cast<ConstantInt>(M->getNamedGlobal("state")->getInitializer())
++                ->getSExtValue(),
++            7);
++}
++
++TEST_F(EvaluatorTest, RuntimeAllowsOnlyUnobservableStackStores) {
++  Constant *Result = nullptr;
++  ASSERT_TRUE(evaluate("local", {2}, Result));
++  EXPECT_EQ(cast<ConstantInt>(Result)->getSExtValue(), 9);
++  EXPECT_FALSE(evaluate("oversized_store", {2}, Result));
++  EXPECT_FALSE(evaluate("atomic_store", {2}, Result));
++  EXPECT_FALSE(evaluate("volatile_store", {2}, Result));
++}
++
++TEST_F(EvaluatorTest, OnlyExecutedEffectsMatter) {
++  Constant *Result = nullptr;
++  ASSERT_TRUE(evaluate("path", {2}, Result));
++  EXPECT_EQ(cast<ConstantInt>(Result)->getSExtValue(), 2);
++  EXPECT_FALSE(evaluate("path", {-1}, Result));
++}
++
++TEST_F(EvaluatorTest, PoisonFlagsAndImmediateUBAreRejected) {
++  Constant *Result = nullptr;
++  EXPECT_FALSE(evaluate("overflow", {127}, Result));
++  EXPECT_FALSE(evaluate("negative", {-1}, Result));
++  EXPECT_FALSE(evaluate("exact", {3}, Result));
++  EXPECT_FALSE(evaluate("zero_divisor", {2}, Result));
++  EXPECT_FALSE(evaluate("vector_overflow", {}, Result));
++}
++
++TEST_F(EvaluatorTest, PureIntrinsicUsesTheExistingConstantFolder) {
++  Constant *Result = nullptr;
++  ASSERT_TRUE(evaluate("reduce", {}, Result));
++  EXPECT_EQ(cast<ConstantInt>(Result)->getSExtValue(), 3);
++}
++
++TEST_F(EvaluatorTest, WorkAndCallDepthAreBounded) {
++  Constant *Result = nullptr;
++  EXPECT_FALSE(evaluate("pure", {2}, Result, 1));
++  EXPECT_FALSE(evaluate("nested", {2}, Result, 256, 1));
++  ASSERT_TRUE(evaluate("nested", {2}, Result, 256, 2));
++  EXPECT_EQ(cast<ConstantInt>(Result)->getSExtValue(), 6);
++  EXPECT_FALSE(evaluate("recursive", {2}, Result));
++  EXPECT_FALSE(evaluate("loop", {2}, Result));
++  EXPECT_FALSE(evaluate("interposable", {2}, Result));
++}
++
++TEST_F(EvaluatorTest, CorrelatedExpressionArgumentsUseOneAssignment) {
++  Function *F = M->getFunction("expression");
++  Value *Root = cast<ReturnInst>(F->back().getTerminator())->getReturnValue();
++  for (auto [Input, Expected] : {std::pair{3, 16}, std::pair{5, 36}}) {
++    Evaluator Eval(M->getDataLayout(), nullptr, Evaluator::Mode::Runtime);
++    Constant *Result =
++        Eval.EvaluateExpression(Root, [&](Value *V) -> Constant * {
++          return V == F->getArg(0)
++                     ? ConstantInt::get(Type::getInt32Ty(Context), Input)
++                     : nullptr;
++        });
++    ASSERT_TRUE(Result);
++    EXPECT_EQ(cast<ConstantInt>(Result)->getSExtValue(), Expected);
++  }
++}
++
++TEST_F(EvaluatorTest, UnboundPhiDoesNotVisitNonDominatingIncomingValues) {
++  Function *F = M->getFunction("phi_expression");
++  Value *Root = cast<ReturnInst>(F->back().getTerminator())->getReturnValue();
++  bool VisitedIncoming = false;
++  Evaluator Eval(M->getDataLayout(), nullptr, Evaluator::Mode::Runtime);
++  Constant *Result = Eval.EvaluateExpression(Root, [&](Value *V) -> Constant * {
++    VisitedIncoming |=
++        V->getName() == "left.value" || V->getName() == "right.value";
++    return V->getName() == "n" ? ConstantInt::get(Type::getInt32Ty(Context), 2)
++                               : nullptr;
++  });
++  EXPECT_FALSE(Result);
++  EXPECT_FALSE(VisitedIncoming);
++}
++TEST_F(EvaluatorTest, RuntimeRespectsCallAndFunctionRanges) {
++  Constant *Result = nullptr;
++  EXPECT_FALSE(evaluate("return_range", {2}, Result));
++  EXPECT_TRUE(evaluate("return_range", {3}, Result));
++  EXPECT_FALSE(evaluate("call_return_range", {2}, Result));
++  EXPECT_TRUE(evaluate("call_return_range", {3}, Result));
++  EXPECT_FALSE(evaluate("call_parameter_range", {4}, Result));
++  EXPECT_TRUE(evaluate("call_parameter_range", {2}, Result));
++
++  Function *F = M->getFunction("vector_parameter_range");
++  auto *Ty = Type::getInt8Ty(Context);
++  auto Check = [&](unsigned High) {
++    SmallVector<Constant *, 2> Lanes{ConstantInt::get(Ty, 2),
++                                     ConstantInt::get(Ty, High)};
++    SmallVector<Constant *, 1> Args{ConstantVector::get(Lanes)};
++    Evaluator Eval(M->getDataLayout(), nullptr, Evaluator::Mode::Runtime);
++    return Eval.EvaluateFunction(F, Result, Args);
++  };
++  EXPECT_TRUE(Check(3));
++  EXPECT_FALSE(Check(4));
++}
++TEST_F(EvaluatorTest, RuntimeValuesDoNotBecomeManifestConstants) {
++  Constant *Result = nullptr;
++  EXPECT_FALSE(evaluate("constant_query", {2}, Result));
++}
++} // namespace

@@ -202,7 +202,10 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file5State
     i64 2, label %bb.l
   ]
 
-default.unreachable88:                            ; preds = %bb.o, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file5StateEBH_.exit
+default.unreachable:                              ; preds = %bb.o
+  unreachable
+
+default.unreachable88:                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file5StateEBH_.exit
   unreachable
 
 bb.k:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file5StateEBH_.exit
@@ -229,7 +232,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.ac = ptrtoint ptr %i.w to i64                ; 4 uses
   %i.ad = and i64 %i.ac, 3
-  switch i64 %i.ad, label %default.unreachable88 [
+  switch i64 %i.ad, label %default.unreachable [
     i64 2, label %bb.p
     i64 3, label %bb.s
     i64 0, label %bb.q

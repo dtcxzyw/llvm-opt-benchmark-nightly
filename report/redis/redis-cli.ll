@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %.lr.ph552, %._crit_
 
 .lr.ph546:                                        ; preds = %bb.ad
   %i.eu = getelementptr inbounds nuw i8, ptr %i.ej, i64 84 ; 5 uses
-  %i.ev = add i64 %.1263, 1
+  %i.ev = add nuw i64 %.1263, 1
   %i.ew = sub i64 %i.ev, %.0265548
   %i.ex = sub i64 %.1263, %i.et
   %xtraiter = and i64 %i.ew, 3                    ; 2 uses
@@ -608,12 +608,12 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.j
   %not. = xor i1 %i.m, true
   %.033.add = zext i1 %not. to i64
-  %spec.select = add nuw nsw i64 %.033.idx, %.033.add ; 3 uses
+  %spec.select = add nuw nsw i64 %.033.idx, %.033.add ; 2 uses
   %.not42 = icmp samesign ult i64 %spec.select, 4095
   br i1 %.not42, label %bb.h, label %.split.loop.exit
 
 .split.loop.exit:                                 ; preds = %bb.k
-  %.1.ptr.le = getelementptr inbounds nuw i8, ptr %i.a, i64 %spec.select
+  %.1.ptr.le = getelementptr inbounds nuw i8, ptr %i.a, i64 4095
   br label %.split.loop.exit56
 
 .split.loop.exit56:                               ; preds = %bb.j, %.split.loop.exit
@@ -695,12 +695,12 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %bb.r
   %not.55 = xor i1 %i.bb, true
   %.3.add = zext i1 %not.55 to i64
-  %spec.select54 = add nuw nsw i64 %.3.idx, %.3.add ; 3 uses
+  %spec.select54 = add nuw nsw i64 %.3.idx, %.3.add ; 2 uses
   %.not49 = icmp samesign ult i64 %spec.select54, 4095
   br i1 %.not49, label %bb.p, label %.split.loop.exit58
 
 .split.loop.exit58:                               ; preds = %bb.s
-  %.4.ptr.le = getelementptr inbounds nuw i8, ptr %i.a, i64 %spec.select54
+  %.4.ptr.le = getelementptr inbounds nuw i8, ptr %i.a, i64 4095
   br label %.split.loop.exit59
 
 .split.loop.exit59:                               ; preds = %bb.r, %.split.loop.exit58
@@ -1103,6 +1103,7 @@ bb.rc:                                            ; preds = %bb.rb
   br i1 %.not28.i.i, label %.critedge.i.i, label %bb.rb, !llvm.loop !318
 
 .critedge.i.i:                                    ; preds = %bb.rc, %bb.rb
+  %.lcssa932 = phi ptr [ %i.bgl, %bb.rc ], [ null, %bb.rb ]
   %i.bgp = call noalias dereferenceable_or_null(32) ptr @zmalloc(i64 noundef 32) #36 ; 5 uses
   store i64 %i.bfu, ptr %i.bgp, align 8, !tbaa !192
   %i.bgq = getelementptr inbounds nuw i8, ptr %i.bgp, i64 8
@@ -1124,7 +1125,7 @@ createKeySizeInfo.exit.i.i:                       ; preds = %.critedge.i.i
   br i1 %.not27.i.i, label %bb.rf, label %bb.re
 
 bb.re:                                            ; preds = %createKeySizeInfo.exit.i.i
-  %i.bgw = call ptr @listInsertNode(ptr noundef nonnull %i.bcg, ptr noundef nonnull %i.bgl, ptr noundef nonnull %i.bgp, i32 noundef 0) #32 ; 0 uses
+  %i.bgw = call ptr @listInsertNode(ptr noundef nonnull %i.bcg, ptr noundef nonnull %.lcssa932, ptr noundef nonnull %i.bgp, i32 noundef 0) #32 ; 0 uses
   br label %bb.rg
 
 bb.rf:                                            ; preds = %createKeySizeInfo.exit.i.i

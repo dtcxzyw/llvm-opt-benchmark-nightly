@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f
   %i.bd = trunc nuw i8 %.0135. to i1
-  %i.be = trunc nuw i8 %..0137 to i1              ; 2 uses
+  %i.be = trunc nuw i8 %..0137 to i1              ; 4 uses
   %i.bf = call i32 @lv_obj_get_scroll_dir(ptr noundef nonnull %.0139183) #6 ; 4 uses
   %i.bg = trunc i32 %i.bf to i1
   %i.bh = and i32 %i.bf, 2
@@ -333,7 +333,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond173.not, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u, %bb.s, %bb.t, %._crit_edge
-  %i.cv = select i1 %i.be, i16 3, i16 12
+  %.lcssa214 = phi i1 [ %i.be, %bb.u ], [ %i.be, %bb.s ], [ %i.be, %bb.t ], [ true, %._crit_edge ]
+  %i.cv = select i1 %.lcssa214, i16 3, i16 12
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 2 uses
   %i.cx = load i16, ptr %i.cw, align 4
   %i.cy = and i16 %i.cx, -16

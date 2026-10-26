@@ -202,8 +202,9 @@ bb.e:                                             ; preds = %.preheader
   br i1 %i.t, label %.critedge, label %.preheader, !llvm.loop !177
 
 .critedge:                                        ; preds = %.preheader, %bb.e
+  %.0.lcssa = phi ptr [ null, %.preheader ], [ %.0, %bb.e ]
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !64
-  %i.v = tail call noundef zeroext i1 @_ZNK8Function14is_var_visibleEPK8VariablePK9Statement(ptr noundef nonnull align 8 dereferenceable(424) %i.u, ptr noundef %i.e, ptr noundef %.0)
+  %i.v = tail call noundef zeroext i1 @_ZNK8Function14is_var_visibleEPK8VariablePK9Statement(ptr noundef nonnull align 8 dereferenceable(424) %i.u, ptr noundef %i.e, ptr noundef %.0.lcssa)
   br i1 %i.v, label %.critedge._crit_edge, label %_ZNSt6vectorIPK4FactSaIS2_EE9push_backERKS2_.exit
 
 .critedge._crit_edge:                             ; preds = %.critedge
@@ -606,7 +607,7 @@ _ZSt13move_backwardIPPK8VariableS3_ET0_T_S5_S4_.exit: ; preds = %bb.h, %bb.i, %b
   br i1 %i.ag, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKP8VariableSt6vectorIS3_SaIS3_EEEENS1_IPPKS2_S6_ISB_SaISB_EEEEET0_T_SH_SG_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZSt13move_backwardIPPK8VariableS3_ET0_T_S5_S4_.exit
-  %min.iters.check128 = icmp ult i64 %i.e, 8
+  %min.iters.check128 = icmp samesign ult i64 %i.e, 8
   %i.ah = sub i64 %i.c, %i.m
   %diff.check130 = icmp ugt i64 %i.ah, -32
   %or.cond = or i1 %min.iters.check128, %diff.check130
@@ -615,7 +616,7 @@ _ZSt13move_backwardIPPK8VariableS3_ET0_T_S5_S4_.exit: ; preds = %bb.h, %bb.i, %b
 vector.ph131:                                     ; preds = %.lr.ph.i.i.i.i.i.preheader
   %n.vec132 = and i64 %i.e, 9223372036854775804   ; 3 uses
   %i.ai = and i64 %i.e, 3
-  %i.aj = shl i64 %n.vec132, 3                    ; 2 uses
+  %i.aj = shl nuw nsw i64 %n.vec132, 3            ; 2 uses
   %i.ak = getelementptr i8, ptr %1, i64 %i.aj
   %i.al = getelementptr i8, ptr %2, i64 %i.aj
   br label %vector.body133
@@ -667,7 +668,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKP8VariableSt6vectorIS3_SaIS3_EEE
   br i1 %i.ba, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKP8VariableSt6vectorIS3_SaIS3_EEEEPPKS2_SB_ET0_T_SE_SD_RSaIT1_E.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKP8VariableSt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit
-  %min.iters.check = icmp ult i64 %i.az, 8
+  %min.iters.check = icmp samesign ult i64 %i.az, 8
   %i.bb = sub i64 %i.c, %i.m
   %diff.check = icmp ugt i64 %i.bb, -32
   %or.cond145 = or i1 %min.iters.check, %diff.check
@@ -676,7 +677,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKP8VariableSt6vectorIS3_SaIS3_EEE
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.az, 9223372036854775804     ; 3 uses
   %i.bc = and i64 %i.az, 3
-  %i.bd = shl i64 %n.vec, 3                       ; 2 uses
+  %i.bd = shl nuw nsw i64 %n.vec, 3               ; 2 uses
   %i.be = getelementptr i8, ptr %i.i, i64 %i.bd
   %i.bf = getelementptr i8, ptr %i.aw, i64 %i.bd
   br label %vector.body
@@ -747,7 +748,7 @@ _ZSt22__uninitialized_move_aIPPK8VariableS3_SaIS2_EET0_T_S6_S5_RT1_.exit51: ; pr
   br i1 %i.bw, label %.lr.ph.i.i.i.i.i53.preheader, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKP8VariableSt6vectorIS3_SaIS3_EEEENS1_IPPKS2_S6_ISB_SaISB_EEEEET0_T_SH_SG_.exit
 
 .lr.ph.i.i.i.i.i53.preheader:                     ; preds = %_ZSt22__uninitialized_move_aIPPK8VariableS3_SaIS2_EET0_T_S6_S5_RT1_.exit51
-  %min.iters.check108 = icmp ult i64 %i.bv, 8
+  %min.iters.check108 = icmp samesign ult i64 %i.bv, 8
   %i.bx = sub i64 %i.c, %i.m
   %diff.check110 = icmp ugt i64 %i.bx, -32
   %or.cond146 = or i1 %min.iters.check108, %diff.check110
@@ -756,7 +757,7 @@ _ZSt22__uninitialized_move_aIPPK8VariableS3_SaIS2_EET0_T_S6_S5_RT1_.exit51: ; pr
 vector.ph111:                                     ; preds = %.lr.ph.i.i.i.i.i53.preheader
   %n.vec112 = and i64 %i.bv, 9223372036854775804  ; 3 uses
   %i.by = and i64 %i.bv, 3
-  %i.bz = shl i64 %n.vec112, 3                    ; 2 uses
+  %i.bz = shl nuw nsw i64 %n.vec112, 3            ; 2 uses
   %i.ca = getelementptr i8, ptr %1, i64 %i.bz
   %i.cb = getelementptr i8, ptr %2, i64 %i.bz
   br label %vector.body113

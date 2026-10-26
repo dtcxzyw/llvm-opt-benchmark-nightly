@@ -202,8 +202,9 @@ bb.ck:                                            ; preds = %bb.cf
   br label %.thread68.i
 
 .thread68.i:                                      ; preds = %bb.cf, %.thread68.i.loopexit986, %.thread68.i.loopexit770, %.thread68.i.loopexit554, %.thread68.i.loopexit368, %.thread68.i.loopexit, %bb.ck, %bb.cj, %bb.ci, %bb.ch, %bb.cg
+  %4 = phi i32 [ %i.dd, %bb.ck ], [ 619028576, %bb.cj ], [ 620077666, %bb.ci ], [ 1095190341, %.thread68.i.loopexit ], [ 45419539, %.thread68.i.loopexit368 ], [ 147932943, %.thread68.i.loopexit554 ], [ 747017483, %.thread68.i.loopexit770 ], [ 518595301, %.thread68.i.loopexit986 ], [ 176525740, %bb.cg ], [ 80098930, %bb.ch ], [ 122041095, %bb.cf ]
   %.0.i.i180 = phi ptr [ @.str.17, %bb.ck ], [ @.str.16, %bb.cj ], [ @.str.15, %bb.ci ], [ @.str.6, %.thread68.i.loopexit ], [ @.str.8, %.thread68.i.loopexit368 ], [ @.str.9, %.thread68.i.loopexit554 ], [ @.str.10, %.thread68.i.loopexit770 ], [ @.str.11, %.thread68.i.loopexit986 ], [ @.str.13, %bb.cg ], [ @.str.14, %bb.ch ], [ @.str.12, %bb.cf ]
-  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.145, i32 noundef %i.dd, ptr noundef nonnull %.0.i.i180) #13
+  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.145, i32 noundef %4, ptr noundef nonnull %.0.i.i180) #13
   br label %bb.fv
 
 bb.cl:                                            ; preds = %bb.cf
@@ -606,7 +607,7 @@ bb.ht:                                            ; preds = %.lr.ph
   %.be555 = phi ptr [ %i.it, %.thread237 ], [ %i.il, %.split ], [ %i.it, %.split548 ], [ %i.it, %.split550 ], [ %i.lc, %.split552 ] ; 2 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %.be555, i64 104
   %i.mn = load ptr, ptr %i.mm, align 8, !tbaa !68
-  %i.mo = call ptr %i.mn(ptr noundef %.be555, i64 noundef %.be, i64 noundef 4, i32 noundef 0) #13, !inline_history !63 ; 2 uses
+  %i.mo = call ptr %i.mn(ptr noundef nonnull %.be555, i64 noundef %.be, i64 noundef 4, i32 noundef 0) #13, !inline_history !63 ; 2 uses
   %.not159 = icmp eq ptr %i.mo, null
   br i1 %.not159, label %._crit_edge, label %.lr.ph
 

@@ -202,7 +202,7 @@ _Z24toku_external_mutex_lockPSt10shared_ptrIN7rocksdb18TransactionDBMutexEE.exit
 
 bb.b:                                             ; preds = %bb.f, %_Z24toku_external_mutex_lockPSt10shared_ptrIN7rocksdb18TransactionDBMutexEE.exit
   %.015 = phi i32 [ 0, %_Z24toku_external_mutex_lockPSt10shared_ptrIN7rocksdb18TransactionDBMutexEE.exit ], [ %spec.select, %bb.f ] ; 5 uses
-  %i.k = load i8, ptr %0, align 8, !tbaa !52, !range !53, !noundef !54 ; 2 uses
+  %i.k = load i8, ptr %0, align 8, !tbaa !52, !range !53, !noundef !54
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %_ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE4sizeEv.exit.thread, label %bb.c
 
@@ -226,6 +226,7 @@ _ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE4sizeEv.exit.thread: ; preds = %bb.b
   br i1 %i.v, label %_ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE4sizeEv.exit.i, label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %_ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE4sizeEv.exit.thread, %_ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE4sizeEv.exit
+  %.lcssa42 = phi i8 [ 0, %bb.c ], [ 1, %_ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE4sizeEv.exit.thread ], [ 0, %_ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE4sizeEv.exit ]
   %.not.i = icmp eq ptr %1, null
   br i1 %.not.i, label %_ZN4toku12lock_request12report_waitsEPSt6vectorINS_14lock_wait_infoESaIS2_EEPFvPvS5_ES6_.exit, label %bb.d
 
@@ -299,7 +300,7 @@ bb.f:                                             ; preds = %_ZNK4toku3omtIPNS_1
   resume { ptr, i32 } %lpad.loopexit.split-lp41
 
 _ZN4toku12lock_request12report_waitsEPSt6vectorINS_14lock_wait_infoESaIS2_EEPFvPvS5_ES6_.exit: ; preds = %._ZN4toku12lock_request12report_waitsEPSt6vectorINS_14lock_wait_infoESaIS2_EEPFvPvS5_ES6_.exit_crit_edge, %.critedge
-  %i.as = phi i8 [ %.pre, %._ZN4toku12lock_request12report_waitsEPSt6vectorINS_14lock_wait_infoESaIS2_EEPFvPvS5_ES6_.exit_crit_edge ], [ %i.k, %.critedge ]
+  %i.as = phi i8 [ %.pre, %._ZN4toku12lock_request12report_waitsEPSt6vectorINS_14lock_wait_infoESaIS2_EEPFvPvS5_ES6_.exit_crit_edge ], [ %.lcssa42, %.critedge ]
   %i.at = trunc nuw i8 %i.as to i1
   br i1 %i.at, label %bb.g, label %bb.h
 
@@ -702,7 +703,7 @@ _ZNK4toku3omtIPNS_12lock_requestES2_Lb0EE7nweightERKNS_12omt_internal17subtree_t
   %.0.i38 = phi i32 [ %i.cl, %bb.o ], [ -1, %bb.n ]
   %i.cm = add i32 %.0.i38, %.tr42.ph52
   %i.cn = getelementptr inbounds nuw i8, ptr %i.s, i64 16 ; 3 uses
-  %i.co = load i32, ptr %i.cn, align 4, !tbaa !73 ; 2 uses
+  %i.co = load i32, ptr %i.cn, align 8, !tbaa !73 ; 2 uses
   %i.cp = icmp eq i32 %i.co, -1
   br i1 %i.cp, label %tailrecurse.outer._crit_edge, label %.lr.ph
 }

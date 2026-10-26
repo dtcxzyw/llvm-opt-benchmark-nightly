@@ -202,7 +202,8 @@ bb.b:                                             ; preds = %tailrecurse
   br i1 %i.h, label %bb.c, label %tailrecurse
 
 bb.c:                                             ; preds = %bb.b, %tailrecurse
-  ret ptr %i.f
+  %.lcssa = phi ptr [ %i.f, %bb.b ], [ null, %tailrecurse ]
+  ret ptr %.lcssa
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -289,7 +290,8 @@ bb.b:                                             ; preds = %tailrecurse
   br i1 %i.h, label %bb.c, label %tailrecurse
 
 bb.c:                                             ; preds = %bb.b, %tailrecurse
-  ret ptr %i.f
+  %.lcssa = phi ptr [ %i.f, %bb.b ], [ null, %tailrecurse ]
+  ret ptr %.lcssa
 }
 
 ; Function Attrs: nonlazybind uwtable

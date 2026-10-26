@@ -202,7 +202,11 @@ bb.h:                                             ; preds = %bb.g
   %.not165 = icmp eq i32 %i.am, 0
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  br i1 %.not165, label %.lr.ph141.split, label %.lr.ph141.split.us
+  br i1 %.not165, label %.lr.ph141.split.preheader, label %.lr.ph141.split.us
+
+.lr.ph141.split.preheader:                        ; preds = %.lr.ph141
+  %exitcond172.not.old = icmp eq i32 %i.ah, 0
+  br label %.lr.ph141.split
 
 .lr.ph141.split.us:                               ; preds = %.lr.ph141, %bb.at
   %.040139.us = phi i32 [ %i.fd, %bb.at ], [ %not., %.lr.ph141 ] ; 3 uses
@@ -588,8 +592,8 @@ bb.at:                                            ; preds = %bb.as, %bb.aq, %.lr
   call void @__clang_call_terminate(ptr %i.fn) #17
   unreachable
 
-.lr.ph141.split:                                  ; preds = %.lr.ph141, %.lr.ph141.split.backedge
-  %.040139 = phi i32 [ %.040139.be, %.lr.ph141.split.backedge ], [ %not., %.lr.ph141 ] ; 4 uses
+.lr.ph141.split:                                  ; preds = %.lr.ph141.split.backedge, %.lr.ph141.split.preheader
+  %.040139 = phi i32 [ %not., %.lr.ph141.split.preheader ], [ %.040139.be, %.lr.ph141.split.backedge ] ; 3 uses
   %i.fo = load ptr, ptr %i.as, align 8, !tbaa !21 ; 2 uses
   %i.fp = icmp ne ptr %i.fo, null
   %i.fq = icmp ne i32 %.040139, 0                 ; 2 uses
@@ -633,7 +637,6 @@ bb.az:                                            ; preds = %bb.aw
   br i1 %or.cond191, label %._crit_edge142, label %.lr.ph141.split.backedge
 
 bb.ba:                                            ; preds = %.lr.ph141.split
-  %exitcond172.not.old = icmp eq i32 %.040139, %i.ah
   br i1 %exitcond172.not.old, label %._crit_edge142, label %.lr.ph141.split.backedge
 
 .lr.ph141.split.backedge:                         ; preds = %bb.ba, %bb.az

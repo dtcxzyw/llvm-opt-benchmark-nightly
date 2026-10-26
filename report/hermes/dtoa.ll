@@ -205,7 +205,7 @@ bb.ce:                                            ; preds = %bb.cd
 
 .lr.ph939.preheader.i:                            ; preds = %.preheader.i
   %i.kv = sext i32 %.sroa.6.2.i to i64            ; 2 uses
-  %i.kw = sub i32 %.1494.i, %.2495.lcssa.i
+  %i.kw = sub nsw i32 %.1494.i, %.2495.lcssa.i
   %xtraiter658 = and i32 %i.kw, 3                 ; 2 uses
   %lcmp.mod659.not = icmp eq i32 %xtraiter658, 0
   br i1 %lcmp.mod659.not, label %.lr.ph939.i.prol.loopexit, label %.lr.ph939.i.prol
@@ -608,10 +608,11 @@ bb.bx:                                            ; preds = %bb.bw
   br label %bb.by
 
 bb.by:                                            ; preds = %.loopexit, %bb.bx
+  %.6.idx1263 = phi i64 [ 5, %bb.bx ], [ %.6.idx, %.loopexit ]
   %i.lr = phi i8 [ 49, %bb.bx ], [ %i.lq, %.loopexit ]
   %.ptr756774 = phi ptr [ %.ptr754.ptr, %bb.bx ], [ %.ptr756.le, %.loopexit ]
   %.6469 = phi i32 [ %i.lp, %bb.bx ], [ %.5468, %.loopexit ]
-  %.6.ptr776 = getelementptr inbounds i8, ptr %.1.i.i, i64 %.6.idx
+  %.6.ptr776 = getelementptr inbounds i8, ptr %.1.i.i, i64 %.6.idx1263
   store i8 %i.lr, ptr %.ptr756774, align 1, !tbaa !19
   br label %Bfree.exit695
 
@@ -1014,7 +1015,7 @@ bb.k:                                             ; preds = %.lr.ph73, %bb.j
 
 bb.l:                                             ; preds = %.lr.ph76
   %i.co = add nsw i32 %.05974, -1
-  %3 = icmp sgt i32 %.05974, 1
+  %3 = icmp samesign ugt i32 %.05974, 1
   br i1 %3, label %.lr.ph76, label %.critedge, !llvm.loop !57
 
 .critedge:                                        ; preds = %.lr.ph76, %bb.l, %.preheader
@@ -1417,10 +1418,11 @@ bb.bw:                                            ; preds = %bb.bv
   br label %bb.bx
 
 bb.bx:                                            ; preds = %.loopexit, %bb.bw
+  %.6.idx1159 = phi i64 [ 5, %bb.bw ], [ %.6.idx, %.loopexit ]
   %i.lp = phi i8 [ 49, %bb.bw ], [ %i.lo, %.loopexit ]
   %.ptr717736 = phi ptr [ %.ptr715.ptr, %bb.bw ], [ %.ptr717.le, %.loopexit ]
   %.6454 = phi i32 [ %i.ln, %bb.bw ], [ %.5453, %.loopexit ]
-  %.6.ptr738 = getelementptr inbounds i8, ptr %.1.i.i, i64 %.6.idx
+  %.6.ptr738 = getelementptr inbounds i8, ptr %.1.i.i, i64 %.6.idx1159
   store i8 %i.lp, ptr %.ptr717736, align 1, !tbaa !19
   br label %Bfree.exit664
 

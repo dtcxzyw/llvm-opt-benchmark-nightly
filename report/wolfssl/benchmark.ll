@@ -204,8 +204,9 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not48.i, label %.loopexit57.i, label %bb.n, !llvm.loop !144
 
 .loopexit57.i:                                    ; preds = %bb.q, %bb.o
+  %5 = phi i32 [ %i.bq, %bb.o ], [ 0, %bb.q ]
   %storemerge.i = phi i32 [ %i.bp, %bb.o ], [ %i.bs, %bb.q ]
-  call fastcc void @bench_stats_asym_finish(ptr noundef nonnull %switch.load, i32 noundef range(i32 128, 257) %switch.offset, ptr noundef nonnull @.str.168, i32 noundef %storemerge.i, double noundef %i.bo, i32 noundef %i.bq)
+  call fastcc void @bench_stats_asym_finish(ptr noundef nonnull %switch.load, i32 noundef range(i32 128, 257) %switch.offset, ptr noundef nonnull @.str.168, i32 noundef %storemerge.i, double noundef %i.bo, i32 noundef %5)
   call fastcc void @bench_stats_start(ptr noundef %i.a, ptr noundef %i.b)
   %.promoted67.i = load i32, ptr %i.a, align 4
   %i.bu = load double, ptr %i.b, align 8          ; 3 uses
@@ -608,7 +609,7 @@ bb.az:                                            ; preds = %bb.ay
   %.1113 = phi ptr [ %i.g, %bb.g ], [ %i.g, %bb.f ], [ %.0112247, %.thread340 ], [ %.0112247, %bb.i ], [ %.0112247, %bb.k ], [ %.0112247, %bb.m ], [ %.0112247, %bb.o ], [ %i.g, %bb.r ], [ %.0112247, %bb.ay ], [ %.0112247, %bb.t ], [ %.0112247, %bb.v ], [ %.0112247, %bb.x ], [ %.0112247, %bb.z ], [ %.0112247, %bb.ab ], [ %.0112247, %bb.ad ], [ %.0112247, %bb.af ], [ %.0112247, %bb.ah ], [ %i.g, %bb.ak ], [ %.0112247, %.thread375 ], [ %i.g, %bb.an ], [ %.0112247, %.thread374 ], [ %i.g, %bb.aq ], [ %.0112247, %.thread373 ], [ %.0112247, %bb.az ], [ %.0112247, %.thread320 ], [ %.0112247, %.thread324 ], [ %.0112247, %.thread318 ], [ %.0112247, %.thread328 ], [ %.0112247, %.thread316 ], [ %.0112247, %.thread326 ], [ %.0112247, %.thread314 ], [ %.0112247, %.thread322 ], [ %.0112247, %.thread293 ], [ %.0112247, %.thread301 ], [ %.0112247, %.thread291 ], [ %.0112247, %.thread305 ], [ %.0112247, %.thread289 ], [ %.0112247, %.thread297 ], [ %.0112247, %.thread287 ], [ %.0112247, %.thread307 ], [ %.0112247, %.thread285 ], [ %.0112247, %.thread299 ], [ %.0112247, %.thread283 ], [ %.0112247, %.thread309 ], [ %.0112247, %.thread281 ], [ %.0112247, %.thread303 ], [ %.0112247, %.thread279 ], [ %.0112247, %.thread295 ], [ %.0112247, %.thread ], [ %.0112247, %.thread271 ], [ %.0112247, %.thread273 ], [ %.0112247, %.thread267 ], [ %.0112247, %.thread275 ], [ %.0112247, %.thread269 ], [ %.0112247, %bb.ax ], [ %.0112247, %.thread342 ], [ %.0112247, %.thread336 ], [ %.0112247, %.thread344 ], [ %.0112247, %.thread338 ], [ %.0112247, %.thread346 ], [ %.0112247, %.thread363 ], [ %.0112247, %.thread351 ], [ %.0112247, %.thread359 ], [ %.0112247, %.thread353 ], [ %.0112247, %.thread367 ], [ %.0112247, %.thread355 ], [ %.0112247, %.thread361 ], [ %.0112247, %.thread357 ], [ %.0112247, %.thread365 ]
   %i.ff = add nsw i32 %.1115, -1
   %i.fg = getelementptr inbounds nuw i8, ptr %.1113, i64 8
-  %2 = icmp sgt i32 %.1115, 2
+  %2 = icmp samesign ugt i32 %.1115, 2
   br i1 %2, label %sub_0, label %._crit_edge, !llvm.loop !168
 
 ._crit_edge:                                      ; preds = %bb.ap, %bb.am, %bb.aj, %bb.q, %bb.e, %.critedge178, %bb.a

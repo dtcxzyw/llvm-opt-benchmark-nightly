@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i46
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit48: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i46
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
-  %i.y = load i64, ptr %i.n, align 8, !tbaa !18   ; 2 uses
+  %i.y = load i64, ptr %i.n, align 8, !tbaa !18
   switch i64 %i.y, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit62.thread96 [
     i64 11, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 14, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit62
@@ -313,9 +313,16 @@ bb.i:                                             ; preds = %.noexc58
   br label %.body
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit62: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit48
-  %.pre = load ptr, ptr %2, align 8, !tbaa !20
-  %bcmp.i61 = call i32 @bcmp(ptr %.pre, ptr nonnull @.str.52, i64 %i.y)
-  %i.bj = icmp eq i32 %bcmp.i61, 0
+  %.pre = load ptr, ptr %2, align 8, !tbaa !20    ; 2 uses
+  %13 = load i64, ptr %.pre, align 1
+  %14 = xor i64 %13, 7301018227779332442
+  %15 = getelementptr i8, ptr %.pre, i64 6
+  %16 = load i64, ptr %15, align 1
+  %17 = xor i64 %16, 7305808869231650130
+  %18 = or i64 %14, %17
+  %19 = icmp ne i64 %18, 0
+  %20 = zext i1 %19 to i32
+  %i.bj = icmp eq i32 %20, 0
   br i1 %i.bj, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit62.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit62.thread96
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit62.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit62

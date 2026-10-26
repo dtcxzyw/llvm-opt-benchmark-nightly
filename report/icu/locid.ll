@@ -204,11 +204,12 @@ _ZN6icu_7812_GLOBAL__N_113AliasReplacer4sameEPKcS3_.exit.i: ; preds = %bb.iu
   br i1 %i.vl, label %bb.iw, label %_ZN6icu_7812_GLOBAL__N_113AliasReplacer4sameEPKcS3_.exit.thread.i
 
 _ZN6icu_7812_GLOBAL__N_113AliasReplacer4sameEPKcS3_.exit.thread.i: ; preds = %_ZN6icu_7812_GLOBAL__N_113AliasReplacer4sameEPKcS3_.exit.i, %bb.iu
+  %.lcssa = phi ptr [ %i.vd, %_ZN6icu_7812_GLOBAL__N_113AliasReplacer4sameEPKcS3_.exit.i ], [ null, %bb.iu ]
   invoke void @_ZN6icu_787UVector12setElementAtEPvi(ptr noundef nonnull align 8 dereferenceable(40) %i.sn, ptr noundef nonnull %i.vh, i32 noundef %.01913.i)
           to label %.noexc171 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc171:                                        ; preds = %_ZN6icu_7812_GLOBAL__N_113AliasReplacer4sameEPKcS3_.exit.thread.i
-  %i.vm = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.vd, ptr noundef nonnull dereferenceable(7) @.str.191) #27
+  %i.vm = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.lcssa, ptr noundef nonnull dereferenceable(7) @.str.191) #27
   %i.vn = icmp eq i32 %i.vm, 0
   br i1 %i.vn, label %.preheader.i, label %_ZN6icu_7812_GLOBAL__N_113AliasReplacer14replaceVariantER10UErrorCode.exit.thread
 

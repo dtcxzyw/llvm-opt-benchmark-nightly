@@ -202,7 +202,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %i.b = call i32 (i32, i64, ...) @ioctl(i32 noundef %0, i64 noundef 21537, ptr noundef nonnull %i.a) #23 ; 2 uses
+  %i.b = call i32 (i32, i64, ...) @ioctl(i32 noundef %0, i64 noundef 21537, ptr noundef nonnull %i.a) #23
   switch i32 %i.b, label %..critedge_crit_edge [
     i32 -1, label %bb.c
     i32 0, label %.loopexit
@@ -225,7 +225,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %.critedge
-  %.0 = phi i32 [ %i.g, %.critedge ], [ %i.b, %bb.b ]
+  %.0 = phi i32 [ %i.g, %.critedge ], [ 0, %bb.b ]
   ret i32 %.0
 }
 
@@ -237,7 +237,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %i.a = tail call i32 (i32, i32, ...) @fcntl64(i32 noundef %0, i32 noundef 2, i32 noundef %spec.store.select) #23 ; 2 uses
+  %i.a = tail call i32 (i32, i32, ...) @fcntl64(i32 noundef %0, i32 noundef 2, i32 noundef %spec.store.select) #23
   switch i32 %i.a, label %..critedge_crit_edge [
     i32 -1, label %bb.c
     i32 0, label %.loopexit
@@ -260,7 +260,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %.critedge
-  %.0 = phi i32 [ %i.f, %.critedge ], [ %i.a, %bb.b ]
+  %.0 = phi i32 [ %i.f, %.critedge ], [ 0, %bb.b ]
   ret i32 %.0
 }
 
@@ -451,7 +451,7 @@ bb.d:                                             ; preds = %.critedge17
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %bb.d
-  %i.l = tail call i32 (i32, i32, ...) @fcntl64(i32 noundef %0, i32 noundef 4, i32 noundef %.0) #23 ; 2 uses
+  %i.l = tail call i32 (i32, i32, ...) @fcntl64(i32 noundef %0, i32 noundef 4, i32 noundef %.0) #23
   switch i32 %i.l, label %..critedge2_crit_edge [
     i32 -1, label %bb.f
     i32 0, label %.loopexit
@@ -474,7 +474,7 @@ bb.f:                                             ; preds = %bb.e
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.e, %.critedge17, %.critedge2, %.critedge
-  %.015 = phi i32 [ %i.f, %.critedge ], [ 0, %.critedge17 ], [ %i.q, %.critedge2 ], [ %i.l, %bb.e ]
+  %.015 = phi i32 [ %i.f, %.critedge ], [ 0, %.critedge17 ], [ %i.q, %.critedge2 ], [ 0, %bb.e ]
   ret i32 %.015
 }
 
@@ -877,7 +877,7 @@ uv__open_cloexec.exit:                            ; preds = %bb.a, %bb.b
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader, %bb.d
-  %i.h = tail call i64 @read(i32 noundef %.0.i, ptr noundef %1, i64 noundef %i.g) #23 ; 3 uses
+  %i.h = tail call i64 @read(i32 noundef %.0.i, ptr noundef %1, i64 noundef %i.g) #23 ; 2 uses
   %i.i = icmp eq i64 %i.h, -1
   %i.j = tail call ptr @__errno_location() #24    ; 5 uses
   br i1 %i.i, label %bb.d, label %.critedge
@@ -888,6 +888,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.c, label %.critedge, !llvm.loop !15
 
 .critedge:                                        ; preds = %bb.d, %bb.c
+  %.lcssa23 = phi i64 [ -1, %bb.d ], [ %i.h, %bb.c ] ; 2 uses
   %i.m = load i32, ptr %i.j, align 4
   %i.n = tail call i64 (i64, ...) @syscall(i64 noundef 3, i32 noundef %.0.i) #23
   %i.o = trunc i64 %i.n to i32                    ; 2 uses
@@ -913,7 +914,7 @@ bb.f:                                             ; preds = %uv__close_nocheckst
   unreachable
 
 uv__close_nocheckstdio.exit.thread:               ; preds = %bb.e, %bb.e, %uv__close_nocheckstdio.exit
-  %i.s = icmp slt i64 %i.h, 0
+  %i.s = icmp slt i64 %.lcssa23, 0
   br i1 %i.s, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %uv__close_nocheckstdio.exit.thread
@@ -922,7 +923,7 @@ bb.g:                                             ; preds = %uv__close_nocheckst
   br label %bb.i
 
 bb.h:                                             ; preds = %uv__close_nocheckstdio.exit.thread
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %i.h
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %.lcssa23
   store i8 0, ptr %i.v, align 1
   br label %bb.i
 

@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 
 .invoke:                                          ; preds = %bb.h, %bb.g, %bb.f
   %i.bx = phi ptr [ @18, %bb.g ], [ @17, %bb.f ], [ @19, %bb.h ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bx) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bx) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -428,7 +428,7 @@ bb.i:                                             ; preds = %bb.h
 
 .invoke:                                          ; preds = %bb.i, %bb.h, %bb.g, %bb.f
   %i.cc = phi ptr [ @19, %bb.h ], [ @18, %bb.g ], [ @17, %bb.f ], [ @20, %bb.i ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cc) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cc) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -637,7 +637,7 @@ bb.h:                                             ; preds = %bb.g
 
 .invoke:                                          ; preds = %bb.h, %bb.g, %bb.f
   %i.bw = phi ptr [ @18, %bb.g ], [ @17, %bb.f ], [ @19, %bb.h ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bw) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bw) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -850,7 +850,7 @@ bb.i:                                             ; preds = %bb.h
 
 .invoke:                                          ; preds = %bb.i, %bb.h, %bb.g, %bb.f
   %i.ca = phi ptr [ @19, %bb.h ], [ @18, %bb.g ], [ @17, %bb.f ], [ @20, %bb.i ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ca) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ca) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -1221,7 +1221,7 @@ bb.h:                                             ; preds = %bb.g
 
 .invoke:                                          ; preds = %bb.h, %bb.g, %bb.f
   %i.bx = phi ptr [ @18, %bb.g ], [ @17, %bb.f ], [ @19, %bb.h ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bx) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bx) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -1445,7 +1445,7 @@ bb.i:                                             ; preds = %bb.h
 
 .invoke:                                          ; preds = %bb.i, %bb.h, %bb.g, %bb.f
   %i.cc = phi ptr [ @19, %bb.h ], [ @18, %bb.g ], [ @17, %bb.f ], [ @20, %bb.i ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cc) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cc) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -1653,7 +1653,7 @@ bb.h:                                             ; preds = %bb.g
 
 .invoke:                                          ; preds = %bb.h, %bb.g, %bb.f
   %i.bx = phi ptr [ @18, %bb.g ], [ @17, %bb.f ], [ @19, %bb.h ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bx) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bx) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -1871,7 +1871,7 @@ bb.i:                                             ; preds = %bb.h
 
 .invoke:                                          ; preds = %bb.i, %bb.h, %bb.g, %bb.f
   %i.cb = phi ptr [ @19, %bb.h ], [ @18, %bb.g ], [ @17, %bb.f ], [ @20, %bb.i ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cb) #29
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13unwrap_failed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cb) #29
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -2274,10 +2274,11 @@ bb.h:                                             ; preds = %bb.e
   ]
 
 .loopexit79:                                      ; preds = %bb.h, %bb.i
+  %.sroa.419.sroa.0.0.copyload134 = phi i8 [ 4, %bb.i ], [ %.sroa.419.sroa.0.0.copyload, %bb.h ]
   %.sroa.546.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.546.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.933, i64 6, i1 false)
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.sroa.419.sroa.0.0.copyload, ptr %i.am, align 8
+  store i8 %.sroa.419.sroa.0.0.copyload134, ptr %i.am, align 8
   %.sroa.445.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %.sroa.419.sroa.4.0.copyload, ptr %.sroa.445.0..sroa_idx, align 1
   %.sroa.647.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16

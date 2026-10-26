@@ -202,6 +202,7 @@ bb.bh:                                            ; preds = %bb.bf
   br i1 %i.ec, label %.thread101.i.i, label %bb.bj
 
 .thread101.i.i:                                   ; preds = %bb.bh, %bb.be
+  %.lcssa60 = phi ptr [ %i.dv, %bb.bh ], [ @_Py_NoneStruct, %bb.be ]
   %i.ed = icmp eq i64 %.036.i.i, 0
   br i1 %i.ed, label %bb.bl, label %bb.bi
 
@@ -225,7 +226,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bi, %.thread101.i.i, %bb.aw, %.thread99.i.i, %bb.av
   %.2.i.i = phi ptr [ %.0.i.i.i.i, %.thread99.i.i ], [ %i.ee, %bb.bi ], [ %.0.i.i.i.i, %bb.aw ], [ null, %.thread101.i.i ], [ @_Py_NoneStruct, %bb.av ] ; 2 uses
-  %.035.i.i = phi ptr [ %.0.i.i.i.i, %.thread99.i.i ], [ %i.ee, %bb.bi ], [ %.pre.i.i, %bb.aw ], [ %i.dv, %.thread101.i.i ], [ %i.bl, %bb.av ] ; 2 uses
+  %.035.i.i = phi ptr [ %.0.i.i.i.i, %.thread99.i.i ], [ %i.ee, %bb.bi ], [ %.pre.i.i, %bb.aw ], [ %.lcssa60, %.thread101.i.i ], [ %i.bl, %bb.av ] ; 2 uses
   %.0.i54.i = phi ptr [ null, %.thread99.i.i ], [ %i.dk, %bb.bi ], [ null, %bb.aw ], [ %i.dk, %.thread101.i.i ], [ null, %bb.av ] ; 2 uses
   %.not.i84.i.i = icmp eq ptr %.035.i.i, null
   br i1 %.not.i84.i.i, label %Py_XINCREF.exit.i.i, label %.thread153.i.i
@@ -628,7 +629,7 @@ bb.ac:                                            ; preds = %bb.aa
   br label %_bufferedreader_read_fast.exit
 
 bb.ad:                                            ; preds = %bb.z
-  %i.bs = sub i64 %.1115206, %i.bo                ; 3 uses
+  %i.bs = sub nsw i64 %.1115206, %i.bo            ; 3 uses
   %i.bt = add i64 %i.bo, %.1108207                ; 2 uses
   %i.bu = icmp sgt i64 %i.bs, 0
   br i1 %i.bu, label %bb.v, label %.thread151

@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 6 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 5 uses
   switch i64 %i.c, label %._ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i_crit_edge [
     i64 1, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 2, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit8
@@ -221,8 +221,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit8: ; preds = %bb.b
   %.pre = load ptr, ptr %0, align 8, !tbaa !16    ; 2 uses
-  %bcmp.i7 = tail call i32 @bcmp(ptr %.pre, ptr nonnull @.str, i64 %i.c)
-  %i.f = icmp eq i32 %bcmp.i7, 0
+  %1 = load i16, ptr %.pre, align 1
+  %2 = icmp ne i16 %1, 11822
+  %3 = zext i1 %2 to i32
+  %i.f = icmp eq i32 %3, 0
   br i1 %i.f, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit8, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %._ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i_crit_edge

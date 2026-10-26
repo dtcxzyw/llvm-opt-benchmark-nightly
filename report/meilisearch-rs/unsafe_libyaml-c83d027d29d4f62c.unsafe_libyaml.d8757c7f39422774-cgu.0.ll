@@ -205,14 +205,13 @@ bb.u:                                             ; preds = %bb.w, %bb.v
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.preheader": ; preds = %.thread75, %bb.u
   %i.az = phi i32 [ %i.bc, %.thread75 ], [ %i.aw, %bb.u ] ; 2 uses
   %.sroa.034.06179 = phi i64 [ 2, %.thread75 ], [ %.sroa.034.0.ph.ph, %bb.u ] ; 3 uses
-  %1 = add nsw i64 %.sroa.034.06179, -1           ; 2 uses
-  %i.ba = add nsw i64 %.sroa.034.06179, -2
-  %xtraiter = and i64 %1, 3                       ; 3 uses
-  %2 = icmp ult i64 %i.ba, 3
-  br i1 %2, label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.epil.preheader", label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.preheader.new"
+  %i.ba = add nsw i64 %.sroa.034.06179, -1        ; 2 uses
+  %xtraiter = and i64 %i.ba, 3                    ; 3 uses
+  %1 = icmp ugt i64 %.sroa.034.06179, 1
+  br i1 %1, label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.epil.preheader", label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.preheader.new"
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.preheader.new": ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.preheader"
-  %unroll_iter = and i64 %1, -4
+  %unroll_iter = and i64 %i.ba, -4
   br label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit"
 
 .thread75:                                        ; preds = %bb.s
@@ -615,13 +614,14 @@ bb.cx:                                            ; preds = %_ZN14unsafe_libyaml
   br i1 %.not.i25.i, label %._crit_edge.i26.i, label %.lr.ph.i24.i
 
 _ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.thread.i.i: ; preds = %_ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.i.i, %bb.cv, %bb.cw
+  %strlen47.i.i245 = phi i64 [ %strlen47.i.i, %bb.cw ], [ 0, %bb.cv ], [ %strlen47.i.i, %_ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.i.i ] ; 2 uses
   %i.md = load ptr, ptr %.sroa.01.037.i.i, align 8, !noundef !6 ; 2 uses
   store ptr %i.md, ptr %i.n, align 8
   %strlen49.i.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.md)
   store i64 %strlen49.i.i, ptr %i.o, align 8
-  %i.me = getelementptr i8, ptr %i.cm, i64 %strlen47.i.i
+  %i.me = getelementptr i8, ptr %i.cm, i64 %strlen47.i.i245
   store ptr %i.me, ptr %i.p, align 8
-  %i.mf = sub nuw i64 %strlen.i23.i, %strlen47.i.i
+  %i.mf = sub nuw i64 %strlen.i23.i, %strlen47.i.i245
   store i64 %i.mf, ptr %i.q, align 8
   br label %_ZN14unsafe_libyaml7emitter24yaml_emitter_analyze_tag17h09799cc7d6d37d1fE.exit.i
 
@@ -764,13 +764,14 @@ bb.dn:                                            ; preds = %_ZN14unsafe_libyaml
   br i1 %.not.i42.i, label %._crit_edge.i43.i, label %.lr.ph.i39.i
 
 _ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.thread.i52.i: ; preds = %_ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.i51.i, %bb.dl, %bb.dm
+  %strlen47.i41.i237 = phi i64 [ %strlen47.i41.i, %bb.dm ], [ 0, %bb.dl ], [ %strlen47.i41.i, %_ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.i51.i ] ; 2 uses
   %i.np = load ptr, ptr %.sroa.01.037.i40.i, align 8, !noundef !6 ; 2 uses
   store ptr %i.np, ptr %i.n, align 8
   %strlen49.i53.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.np)
   store i64 %strlen49.i53.i, ptr %i.o, align 8
-  %i.nq = getelementptr i8, ptr %i.mw, i64 %strlen47.i41.i
+  %i.nq = getelementptr i8, ptr %i.mw, i64 %strlen47.i41.i237
   store ptr %i.nq, ptr %i.p, align 8
-  %i.nr = sub nuw i64 %strlen.i36.i, %strlen47.i41.i
+  %i.nr = sub nuw i64 %strlen.i36.i, %strlen47.i41.i237
   store i64 %i.nr, ptr %i.q, align 8
   br label %_ZN14unsafe_libyaml7emitter26yaml_emitter_analyze_event17hb1437bf771b87f11E.exit
 
@@ -901,13 +902,14 @@ bb.ec:                                            ; preds = %_ZN14unsafe_libyaml
   br i1 %.not.i71.i, label %._crit_edge.i72.i, label %.lr.ph.i68.i
 
 _ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.thread.i81.i: ; preds = %_ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.i80.i, %bb.ea, %bb.eb
+  %strlen47.i70.i229 = phi i64 [ %strlen47.i70.i, %bb.eb ], [ 0, %bb.ea ], [ %strlen47.i70.i, %_ZN14unsafe_libyaml7externs7strncmp17h574b8fbadd8eca77E.exit.i80.i ] ; 2 uses
   %i.ow = load ptr, ptr %.sroa.01.037.i69.i, align 8, !noundef !6 ; 2 uses
   store ptr %i.ow, ptr %i.n, align 8
   %strlen49.i82.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ow)
   store i64 %strlen49.i82.i, ptr %i.o, align 8
-  %i.ox = getelementptr i8, ptr %i.od, i64 %strlen47.i70.i
+  %i.ox = getelementptr i8, ptr %i.od, i64 %strlen47.i70.i229
   store ptr %i.ox, ptr %i.p, align 8
-  %i.oy = sub nuw i64 %strlen.i65.i, %strlen47.i70.i
+  %i.oy = sub nuw i64 %strlen.i65.i, %strlen47.i70.i229
   store i64 %i.oy, ptr %i.q, align 8
   br label %_ZN14unsafe_libyaml7emitter24yaml_emitter_analyze_tag17h09799cc7d6d37d1fE.exit84.i
 
@@ -1310,7 +1312,7 @@ bb.et:                                            ; preds = %_ZN14unsafe_libyaml
   ]
 
 bb.eu:                                            ; preds = %bb.et
-  %i.vu = icmp ult i32 %.sroa.021.0.lcssa.i.i.i, 256
+  %i.vu = icmp samesign ult i32 %.sroa.021.0.lcssa.i.i.i, 256
   br i1 %i.vu, label %bb.gp, label %bb.go
 
 bb.ev:                                            ; preds = %bb.et
@@ -1713,7 +1715,7 @@ _ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit176.i.i.i: ; preds = %bb
   br i1 %i.adw, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i, label %.loopexit.i.i.i
 
 bb.go:                                            ; preds = %bb.eu
-  %i.adx = icmp ult i32 %.sroa.021.0.lcssa.i.i.i, 65536
+  %i.adx = icmp samesign ult i32 %.sroa.021.0.lcssa.i.i.i, 65536
   %i.ady = load ptr, ptr %i.sk, align 8, !noundef !6
   %i.adz = getelementptr i8, ptr %i.ady, i64 5
   %i.aea = load ptr, ptr %i.sl, align 8, !noundef !6
@@ -1826,8 +1828,8 @@ _ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit188.i.i.i: ; preds = %bb
 
 bb.gy:                                            ; preds = %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit192.i.i.i
   %i.afk = add nsw i32 %.sroa.026.1263.i.i.i, -4
-  %6 = icmp sgt i32 %.sroa.026.1263.i.i.i, 3
-  br i1 %6, label %bb.gz, label %.loopexit.i.i.i
+  %.not = icmp eq i32 %.sroa.026.1263.i.i.i, 0
+  br i1 %.not, label %.loopexit.i.i.i, label %bb.gz
 
 bb.gz:                                            ; preds = %.preheader, %bb.gy
   %.sroa.026.1263.i.i.i = phi i32 [ %i.afk, %bb.gy ], [ %.sroa.026.1263.i.i.i.ph, %.preheader ] ; 3 uses
@@ -2230,7 +2232,7 @@ bb.gf:                                            ; preds = %bb.gc
   %i.uu = shl nuw nsw i32 %i.ul, 4
   %i.uv = add nuw i32 %i.ut, %i.uu
   %i.uw = zext nneg i8 %.sroa.056.0.i.5 to i32
-  %i.ux = add nuw i32 %i.uv, %i.uw
+  %i.ux = add nuw nsw i32 %i.uv, %i.uw
   %i.uy = getelementptr i8, ptr %i.me, i64 6
   %i.uz = load i8, ptr %i.uy, align 1, !noundef !6 ; 5 uses
   %i.va = add i8 %i.uz, -48                       ; 2 uses
@@ -2633,7 +2635,7 @@ bb.ad:                                            ; preds = %bb.ac, %._crit_edge
   %i.cm = ptrtoint ptr %i.ck to i64
   %i.cn = ptrtoint ptr %i.cl to i64
   %i.co = sub i64 %i.cm, %i.cn                    ; 5 uses
-  %i.cp = load i32, ptr %i.m, align 8, !range !9, !noundef !6 ; 3 uses
+  %i.cp = load i32, ptr %i.m, align 8, !range !9, !noundef !6 ; 2 uses
   switch i32 %i.cp, label %default.unreachable [
     i32 1, label %bb.ae
     i32 2, label %bb.af
@@ -2724,13 +2726,13 @@ bb.ak:                                            ; preds = %.thread158.i, %.thr
   %i.dt = phi i1 [ false, %.thread174.i ], [ %.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ], [ %.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ]
   %.sroa.095.0157160164264.i = phi i64 [ 1, %.thread174.i ], [ %.ph261.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ], [ %.ph261.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %.ph261.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ]
   %.sroa.027.1.lcssa.i = phi i32 [ %i.dl, %.thread174.i ], [ %i.ek, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ], [ %i.er, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %i.ey, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ] ; 7 uses
-  %i.du = icmp ugt i32 %.sroa.027.1.lcssa.i, 127
+  %i.du = icmp samesign ugt i32 %.sroa.027.1.lcssa.i, 127
   %or.cond.i = select i1 %i.dr, i1 %i.du, i1 false
   %or.cond132.i = select i1 %i.ct, i1 true, i1 %or.cond.i
-  %i.dv = icmp ugt i32 %.sroa.027.1.lcssa.i, 2047
+  %i.dv = icmp samesign ugt i32 %.sroa.027.1.lcssa.i, 2047
   %or.cond3.i = select i1 %i.ds, i1 %i.dv, i1 false
   %or.cond133.i = select i1 %or.cond132.i, i1 true, i1 %or.cond3.i
-  %i.dw = icmp ugt i32 %.sroa.027.1.lcssa.i, 65535
+  %i.dw = icmp samesign ugt i32 %.sroa.027.1.lcssa.i, 65535
   %or.cond5.i = select i1 %i.dt, i1 %i.dw, i1 false
   %or.cond134.i = select i1 %or.cond133.i, i1 true, i1 %or.cond5.i
   br i1 %or.cond134.i, label %bb.al, label %bb.am
@@ -2738,7 +2740,7 @@ bb.ak:                                            ; preds = %.thread158.i, %.thr
 bb.al:                                            ; preds = %"_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit._crit_edge.i"
   %i.dx = and i32 %.sroa.027.1.lcssa.i, -2048
   %or.cond7.i = icmp eq i32 %i.dx, 55296
-  %i.dy = icmp ugt i32 %.sroa.027.1.lcssa.i, 1114111
+  %i.dy = icmp samesign ugt i32 %.sroa.027.1.lcssa.i, 1114111
   %or.cond9.i = or i1 %i.dy, %or.cond7.i
   br i1 %or.cond9.i, label %bb.an, label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i"
 
@@ -2968,7 +2970,7 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.hk, label %bb.bf, label %bb.be
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i": ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i", %.lr.ph200.i
-  %.sroa.027.0169.i = phi i32 [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %i.cp, %.lr.ph200.i ] ; 7 uses
+  %.sroa.027.0169.i = phi i32 [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ 0, %.lr.ph200.i ] ; 7 uses
   %.sroa.082.0168.i = phi i64 [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ 0, %.lr.ph200.i ]
   %i.hl = add nsw i32 %.sroa.027.0169.i, -32
   %or.cond15.i = icmp ult i32 %i.hl, 95

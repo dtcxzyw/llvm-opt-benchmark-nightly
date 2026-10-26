@@ -202,7 +202,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.bx, label %.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %. = tail call i32 @llvm.smin.i32(i32 %i.bu, i32 %i.bw) ; 19 uses
+  %. = tail call i32 @llvm.smin.i32(i32 %i.bu, i32 %i.bw) ; 21 uses
   %i.by = load i32, ptr %4, align 4, !tbaa !31    ; 2 uses
   %i.bz = load i32, ptr %5, align 4, !tbaa !31    ; 6 uses
   %i.ca = add nsw i32 %i.bz, %i.by
@@ -605,7 +605,7 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bo, %bb.bp
   %indvars.iv.next732 = add nsw i64 %indvars.iv731, -1
-  %18 = icmp sgt i64 %indvars.iv731, 1
+  %18 = icmp samesign ugt i64 %indvars.iv731, 1
   br i1 %18, label %bb.bm, label %.loopexit, !llvm.loop !18
 
 bb.br:                                            ; preds = %bb.bk
@@ -618,7 +618,7 @@ iter.check:                                       ; preds = %bb.br
   %wide.trip.count = zext nneg i32 %. to i64      ; 4 uses
   %invariant.gep785 = getelementptr [8 x i8], ptr %i.s, i64 %i.rx ; 11 uses
   %i.ry = add nsw i64 %wide.trip.count, -1        ; 5 uses
-  %min.iters.check = icmp ugt i32 %., 4
+  %min.iters.check = icmp samesign ugt i32 %., 4
   %ident.check.not = icmp eq i32 %i.q, 1
   %or.cond872 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   br i1 %or.cond872, label %vector.memcheck, label %.lr.ph687.preheader
@@ -631,7 +631,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %.lr.ph687.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check795 = icmp ult i32 %., 17
+  %min.iters.check795 = icmp samesign ult i32 %., 17
   br i1 %min.iters.check795, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -777,12 +777,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 iter.check824:                                    ; preds = %.lr.ph687.prol.loopexit, %.lr.ph687, %middle.block, %vec.epilog.middle.block, %._crit_edge688
   %i.tx = sext i32 %i.q to i64                    ; 9 uses
-  %i.ty = add i32 %., 1
-  %wide.trip.count729 = zext i32 %i.ty to i64     ; 3 uses
+  %i.ty = add nuw i32 %., 1
+  %wide.trip.count729 = zext i32 %i.ty to i64     ; 2 uses
   %i.tz = zext nneg i32 %i.ok to i64              ; 2 uses
   %invariant.gep787 = getelementptr [8 x i8], ptr %i.s, i64 %i.tz ; 11 uses
-  %i.ua = zext i32 %. to i64                      ; 5 uses
-  %min.iters.check808 = icmp ugt i32 %., 3
+  %i.ua = zext nneg i32 %. to i64                 ; 5 uses
+  %min.iters.check808 = icmp samesign ugt i32 %., 3
   %ident.check805.not = icmp eq i32 %i.q, 1
   %or.cond873 = select i1 %min.iters.check808, i1 %ident.check805.not, i1 false
   br i1 %or.cond873, label %vector.memcheck809, label %vec.epilog.scalar.ph826.preheader
@@ -795,12 +795,12 @@ vector.memcheck809:                               ; preds = %iter.check824
   br i1 %diff.check810, label %vec.epilog.scalar.ph826.preheader, label %vector.main.loop.iter.check811
 
 vector.main.loop.iter.check811:                   ; preds = %vector.memcheck809
-  %min.iters.check812 = icmp ult i32 %., 16
+  %min.iters.check812 = icmp samesign ult i32 %., 16
   br i1 %min.iters.check812, label %vec.epilog.ph828, label %vector.ph813
 
 vector.ph813:                                     ; preds = %vector.main.loop.iter.check811
   %i.ue = and i64 %i.ua, 12
-  %n.vec814 = and i64 %i.ua, 4294967280           ; 4 uses
+  %n.vec814 = and i64 %i.ua, 2147483632           ; 4 uses
   %i.uf = or disjoint i64 %n.vec814, 1
   br label %vector.body815
 
@@ -837,7 +837,7 @@ vec.epilog.iter.check825:                         ; preds = %middle.block822
 
 vec.epilog.ph828:                                 ; preds = %vector.main.loop.iter.check811, %vec.epilog.iter.check825
   %vec.epilog.resume.val829 = phi i64 [ %n.vec814, %vec.epilog.iter.check825 ], [ 0, %vector.main.loop.iter.check811 ]
-  %n.vec830 = and i64 %i.ua, 4294967292           ; 3 uses
+  %n.vec830 = and i64 %i.ua, 2147483644           ; 3 uses
   %i.uq = or disjoint i64 %n.vec830, 1
   br label %vec.epilog.vector.body831
 
@@ -858,8 +858,10 @@ vec.epilog.middle.block835:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph826.preheader:                ; preds = %iter.check824, %vector.memcheck809, %vec.epilog.iter.check825, %vec.epilog.middle.block835
   %indvars.iv726.ph = phi i64 [ 1, %iter.check824 ], [ 1, %vector.memcheck809 ], [ %i.uf, %vec.epilog.iter.check825 ], [ %i.uq, %vec.epilog.middle.block835 ] ; 4 uses
-  %i.uv = sub nsw i64 %wide.trip.count729, %indvars.iv726.ph
-  %xtraiter879 = and i64 %i.uv, 7                 ; 2 uses
+  %19 = sub nsw i64 %wide.trip.count729, %indvars.iv726.ph
+  %20 = zext i32 %. to i64
+  %i.uv = sub nsw i64 %20, %indvars.iv726.ph
+  %xtraiter879 = and i64 %19, 7                   ; 2 uses
   %lcmp.mod880.not = icmp eq i64 %xtraiter879, 0
   br i1 %lcmp.mod880.not, label %vec.epilog.scalar.ph826.prol.loopexit, label %vec.epilog.scalar.ph826.prol
 
@@ -879,9 +881,8 @@ vec.epilog.scalar.ph826.prol:                     ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph826.prol.loopexit:            ; preds = %vec.epilog.scalar.ph826.prol, %vec.epilog.scalar.ph826.preheader
   %indvars.iv726.unr = phi i64 [ %indvars.iv726.ph, %vec.epilog.scalar.ph826.preheader ], [ %indvars.iv.next727.prol, %vec.epilog.scalar.ph826.prol ]
-  %19 = sub nsw i64 %indvars.iv726.ph, %wide.trip.count729
-  %20 = icmp ugt i64 %19, -8
-  br i1 %20, label %.loopexit, label %vec.epilog.scalar.ph826
+  %21 = icmp ult i64 %i.uv, 7
+  br i1 %21, label %.loopexit, label %vec.epilog.scalar.ph826
 
 vec.epilog.scalar.ph826:                          ; preds = %vec.epilog.scalar.ph826.prol.loopexit, %vec.epilog.scalar.ph826
   %indvars.iv726 = phi i64 [ %indvars.iv.next727.7, %vec.epilog.scalar.ph826 ], [ %indvars.iv726.unr, %vec.epilog.scalar.ph826.prol.loopexit ] ; 11 uses
@@ -961,10 +962,10 @@ vec.epilog.scalar.ph826:                          ; preds = %vec.epilog.scalar.p
 
 iter.check858:                                    ; preds = %._crit_edge699.thread, %._crit_edge699
   %i.wj = sext i32 %i.q to i64                    ; 9 uses
-  %i.wk = add i32 %., 1
-  %wide.trip.count740 = zext i32 %i.wk to i64     ; 3 uses
-  %i.wl = zext i32 %. to i64                      ; 5 uses
-  %min.iters.check842 = icmp ult i32 %., 4
+  %i.wk = add nuw i32 %., 1
+  %wide.trip.count740 = zext i32 %i.wk to i64     ; 2 uses
+  %i.wl = zext nneg i32 %. to i64                 ; 5 uses
+  %min.iters.check842 = icmp samesign ult i32 %., 4
   %ident.check839.not = icmp ne i32 %i.q, 1
   %or.cond874.not876 = select i1 %min.iters.check842, i1 true, i1 %ident.check839.not
   %i.wm = sub i64 %i.c, %i.a
@@ -973,12 +974,12 @@ iter.check858:                                    ; preds = %._crit_edge699.thre
   br i1 %or.cond875, label %.lr.ph703.preheader, label %vector.main.loop.iter.check845
 
 vector.main.loop.iter.check845:                   ; preds = %iter.check858
-  %min.iters.check846 = icmp ult i32 %., 16
+  %min.iters.check846 = icmp samesign ult i32 %., 16
   br i1 %min.iters.check846, label %vec.epilog.ph862, label %vector.ph847
 
 vector.ph847:                                     ; preds = %vector.main.loop.iter.check845
   %i.wn = and i64 %i.wl, 12
-  %n.vec848 = and i64 %i.wl, 4294967280           ; 4 uses
+  %n.vec848 = and i64 %i.wl, 2147483632           ; 4 uses
   %i.wo = or disjoint i64 %n.vec848, 1
   br label %vector.body849
 
@@ -1015,7 +1016,7 @@ vec.epilog.iter.check859:                         ; preds = %middle.block856
 
 vec.epilog.ph862:                                 ; preds = %vector.main.loop.iter.check845, %vec.epilog.iter.check859
   %vec.epilog.resume.val863 = phi i64 [ %n.vec848, %vec.epilog.iter.check859 ], [ 0, %vector.main.loop.iter.check845 ]
-  %n.vec864 = and i64 %i.wl, 4294967292           ; 3 uses
+  %n.vec864 = and i64 %i.wl, 2147483644           ; 3 uses
   %i.wz = or disjoint i64 %n.vec864, 1
   br label %vec.epilog.vector.body865
 
@@ -1036,8 +1037,10 @@ vec.epilog.middle.block869:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph703.preheader:                              ; preds = %iter.check858, %vec.epilog.iter.check859, %vec.epilog.middle.block869
   %indvars.iv737.ph = phi i64 [ 1, %iter.check858 ], [ %i.wo, %vec.epilog.iter.check859 ], [ %i.wz, %vec.epilog.middle.block869 ] ; 4 uses
-  %i.xe = sub nsw i64 %wide.trip.count740, %indvars.iv737.ph
-  %xtraiter882 = and i64 %i.xe, 7                 ; 2 uses
+  %22 = sub nsw i64 %wide.trip.count740, %indvars.iv737.ph
+  %23 = zext i32 %. to i64
+  %i.xe = sub nsw i64 %23, %indvars.iv737.ph
+  %xtraiter882 = and i64 %22, 7                   ; 2 uses
   %lcmp.mod883.not = icmp eq i64 %xtraiter882, 0
   br i1 %lcmp.mod883.not, label %.lr.ph703.prol.loopexit, label %.lr.ph703.prol
 
@@ -1057,9 +1060,8 @@ vec.epilog.middle.block869:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph703.prol.loopexit:                          ; preds = %.lr.ph703.prol, %.lr.ph703.preheader
   %indvars.iv737.unr = phi i64 [ %indvars.iv737.ph, %.lr.ph703.preheader ], [ %indvars.iv.next738.prol, %.lr.ph703.prol ]
-  %21 = sub nsw i64 %indvars.iv737.ph, %wide.trip.count740
-  %22 = icmp ugt i64 %21, -8
-  br i1 %22, label %.loopexit, label %.lr.ph703
+  %24 = icmp ult i64 %i.xe, 7
+  br i1 %24, label %.loopexit, label %.lr.ph703
 
 .lr.ph703:                                        ; preds = %.lr.ph703.prol.loopexit, %.lr.ph703
   %indvars.iv737 = phi i64 [ %indvars.iv.next738.7, %.lr.ph703 ], [ %indvars.iv737.unr, %.lr.ph703.prol.loopexit ] ; 11 uses

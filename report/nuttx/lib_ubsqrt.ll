@@ -23,7 +23,8 @@ bb.a:                                             ; preds = %select.unfold
   br i1 %.not14, label %select.unfold, label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %select.unfold
-  %i.e = trunc i64 %.012 to i32
+  %.012.lcssa = phi i64 [ %.012, %bb.a ], [ 0, %select.unfold ]
+  %i.e = trunc i64 %.012.lcssa to i32
   ret i32 %i.e
 }
 
@@ -47,7 +48,8 @@ bb.a:                                             ; preds = %select.unfold
   br i1 %.not14, label %select.unfold, label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %select.unfold
-  %i.e = trunc i32 %.012 to i16
+  %.012.lcssa = phi i32 [ %.012, %bb.a ], [ 0, %select.unfold ]
+  %i.e = trunc i32 %.012.lcssa to i16
   ret i16 %i.e
 }
 

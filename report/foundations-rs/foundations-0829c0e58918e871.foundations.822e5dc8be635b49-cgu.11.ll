@@ -204,8 +204,9 @@ _RNvXs0_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSear
   br i1 %.not.i, label %bb.a, label %_RNvYNtNtNtCs3oUPovFnLWP_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCsbaWXNhtWAp9_11foundations.exit, !dbg !1696
 
 _RNvYNtNtNtCs3oUPovFnLWP_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCsbaWXNhtWAp9_11foundations.exit: ; preds = %bb.a, %_RNvXs0_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i
+  %.reass5.i.lcssa = phi i64 [ 0, %bb.a ], [ %.reass5.i, %_RNvXs0_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i ]
   %i.am = insertvalue { ptr, i64 } poison, ptr %0, 0, !dbg !1697
-  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass5.i, 1, !dbg !1697
+  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass5.i.lcssa, 1, !dbg !1697
   ret { ptr, i64 } %i.an, !dbg !1697
 }
 
@@ -608,7 +609,7 @@ bb.b:                                             ; preds = %_RINvYNtNtCsduyiHOa
   br label %.outer.i, !dbg !4515
 
 .outer.i:                                         ; preds = %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i, %bb.b
-  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i ], [ %1, %bb.b ] ; 8 uses
+  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i ], [ %1, %bb.b ] ; 4 uses
   %.sroa.05.0.ph.i = phi ptr [ %i.ah, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i ], [ %0, %bb.b ] ; 6 uses
   %exitcond.not.i31 = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !4516
   br i1 %exitcond.not.i31, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !4516
@@ -619,7 +620,8 @@ bb.c:                                             ; preds = %_RNvMNtCs3oUPovFnLW
   br i1 %exitcond.not.i, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !4516
 
 .outer.i._crit_edge:                              ; preds = %.outer.i, %bb.c
-  %i.s = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !4518
+  %.sroa.5.0.ph.i46 = phi i64 [ %.sroa.5.0.ph.i, %bb.c ], [ 0, %.outer.i ] ; 5 uses
+  %i.s = icmp eq i64 %.sroa.5.0.ph.i46, 0, !dbg !4518
   %.pre18 = load i64, ptr %i.d, align 8, !dbg !4519, !noalias !631 ; 5 uses
   br i1 %i.s, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_15PrettyFormatterECsbaWXNhtWAp9_11foundations.exit.thread, label %bb.d, !dbg !4520
 
@@ -629,15 +631,15 @@ bb.d:                                             ; preds = %.outer.i._crit_edge
   %i.u = icmp sgt i64 %.pre18, -1, !dbg !4523
   call void @llvm.assume(i1 %i.u), !dbg !4524
   %i.v = sub nsw i64 %i.t, %.pre18, !dbg !4525
-  %i.w = icmp ult i64 %.sroa.5.0.ph.i, %i.v, !dbg !4526
+  %i.w = icmp ult i64 %.sroa.5.0.ph.i46, %i.v, !dbg !4526
   br i1 %i.w, label %bb.e, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_15PrettyFormatterECsbaWXNhtWAp9_11foundations.exit, !dbg !4526, !prof !732
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !4477), !dbg !4527
   %i.x = load ptr, ptr %i.n, align 8, !dbg !4528, !alias.scope !4478, !noalias !4476, !nonnull !631, !noundef !631
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %.pre18, !dbg !4529
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i, i1 false), !dbg !4530, !noalias !4478
-  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i, !dbg !4531 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46, i1 false), !dbg !4530, !noalias !4478
+  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i46, !dbg !4531 ; 2 uses
   store i64 %i.z, ptr %i.d, align 8, !dbg !4532, !alias.scope !4478, !noalias !4476
   br label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_15PrettyFormatterECsbaWXNhtWAp9_11foundations.exit.thread, !dbg !4533
 
@@ -765,7 +767,7 @@ _RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_
   br i1 %.not21.i, label %.outer.i, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit, !dbg !4601
 
 _RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_15PrettyFormatterECsbaWXNhtWAp9_11foundations.exit: ; preds = %bb.d
-  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileE14write_all_coldCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i) #27, !dbg !4602 ; 2 uses
+  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileE14write_all_coldCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46) #27, !dbg !4602 ; 2 uses
   %.not5 = icmp eq ptr %i.bw, null, !dbg !4514
   br i1 %.not5, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_15PrettyFormatterECsbaWXNhtWAp9_11foundations.exit._RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_15PrettyFormatterECsbaWXNhtWAp9_11foundations.exit.thread_crit_edge, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit, !dbg !4511
 
@@ -841,7 +843,7 @@ bb.b:                                             ; preds = %_RINvYNtNtCsduyiHOa
   br label %.outer.i, !dbg !4827
 
 .outer.i:                                         ; preds = %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i, %bb.b
-  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i ], [ %1, %bb.b ] ; 8 uses
+  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i ], [ %1, %bb.b ] ; 4 uses
   %.sroa.05.0.ph.i = phi ptr [ %i.ah, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit.i ], [ %0, %bb.b ] ; 6 uses
   %exitcond.not.i31 = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !4828
   br i1 %exitcond.not.i31, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !4828
@@ -852,7 +854,8 @@ bb.c:                                             ; preds = %_RNvMNtCs3oUPovFnLW
   br i1 %exitcond.not.i, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !4828
 
 .outer.i._crit_edge:                              ; preds = %.outer.i, %bb.c
-  %i.s = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !4830
+  %.sroa.5.0.ph.i46 = phi i64 [ %.sroa.5.0.ph.i, %bb.c ], [ 0, %.outer.i ] ; 5 uses
+  %i.s = icmp eq i64 %.sroa.5.0.ph.i46, 0, !dbg !4830
   %.pre18 = load i64, ptr %i.d, align 8, !dbg !4831, !noalias !631 ; 5 uses
   br i1 %i.s, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_16CompactFormatterECsbaWXNhtWAp9_11foundations.exit.thread, label %bb.d, !dbg !4832
 
@@ -862,15 +865,15 @@ bb.d:                                             ; preds = %.outer.i._crit_edge
   %i.u = icmp sgt i64 %.pre18, -1, !dbg !4835
   call void @llvm.assume(i1 %i.u), !dbg !4836
   %i.v = sub nsw i64 %i.t, %.pre18, !dbg !4837
-  %i.w = icmp ult i64 %.sroa.5.0.ph.i, %i.v, !dbg !4838
+  %i.w = icmp ult i64 %.sroa.5.0.ph.i46, %i.v, !dbg !4838
   br i1 %i.w, label %bb.e, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_16CompactFormatterECsbaWXNhtWAp9_11foundations.exit, !dbg !4838, !prof !732
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !4789), !dbg !4839
   %i.x = load ptr, ptr %i.n, align 8, !dbg !4840, !alias.scope !4790, !noalias !4788, !nonnull !631, !noundef !631
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %.pre18, !dbg !4841
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i, i1 false), !dbg !4842, !noalias !4790
-  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i, !dbg !4843 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46, i1 false), !dbg !4842, !noalias !4790
+  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i46, !dbg !4843 ; 2 uses
   store i64 %i.z, ptr %i.d, align 8, !dbg !4844, !alias.scope !4790, !noalias !4788
   br label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_16CompactFormatterECsbaWXNhtWAp9_11foundations.exit.thread, !dbg !4845
 
@@ -998,7 +1001,7 @@ _RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write
   br i1 %.not21.i, label %.outer.i, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit, !dbg !4913
 
 _RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_16CompactFormatterECsbaWXNhtWAp9_11foundations.exit: ; preds = %bb.d
-  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileE14write_all_coldCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i) #27, !dbg !4914 ; 2 uses
+  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileE14write_all_coldCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46) #27, !dbg !4914 ; 2 uses
   %.not5 = icmp eq ptr %i.bw, null, !dbg !4826
   br i1 %.not5, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_16CompactFormatterECsbaWXNhtWAp9_11foundations.exit._RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileENtB2_16CompactFormatterECsbaWXNhtWAp9_11foundations.exit.thread_crit_edge, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtCsaL1QbXo9JQH_3std2fs4FileEECsbaWXNhtWAp9_11foundations.exit, !dbg !4823
 
@@ -1074,7 +1077,7 @@ bb.b:                                             ; preds = %_RINvYNtNtCsduyiHOa
   br label %.outer.i, !dbg !5139
 
 .outer.i:                                         ; preds = %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2y_.exit.i, %bb.b
-  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2y_.exit.i ], [ %1, %bb.b ] ; 8 uses
+  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2y_.exit.i ], [ %1, %bb.b ] ; 4 uses
   %.sroa.05.0.ph.i = phi ptr [ %i.ah, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2y_.exit.i ], [ %0, %bb.b ] ; 6 uses
   %exitcond.not.i31 = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !5140
   br i1 %exitcond.not.i31, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !5140
@@ -1085,7 +1088,8 @@ bb.c:                                             ; preds = %_RNvMNtCs3oUPovFnLW
   br i1 %exitcond.not.i, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !5140
 
 .outer.i._crit_edge:                              ; preds = %.outer.i, %bb.c
-  %i.s = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !5142
+  %.sroa.5.0.ph.i46 = phi i64 [ %.sroa.5.0.ph.i, %bb.c ], [ 0, %.outer.i ] ; 5 uses
+  %i.s = icmp eq i64 %.sroa.5.0.ph.i46, 0, !dbg !5142
   %.pre18 = load i64, ptr %i.d, align 8, !dbg !5143, !noalias !631 ; 5 uses
   br i1 %i.s, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_15PrettyFormatterEB29_.exit.thread, label %bb.d, !dbg !5144
 
@@ -1095,15 +1099,15 @@ bb.d:                                             ; preds = %.outer.i._crit_edge
   %i.u = icmp sgt i64 %.pre18, -1, !dbg !5147
   call void @llvm.assume(i1 %i.u), !dbg !5148
   %i.v = sub nsw i64 %i.t, %.pre18, !dbg !5149
-  %i.w = icmp ult i64 %.sroa.5.0.ph.i, %i.v, !dbg !5150
+  %i.w = icmp ult i64 %.sroa.5.0.ph.i46, %i.v, !dbg !5150
   br i1 %i.w, label %bb.e, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_15PrettyFormatterEB29_.exit, !dbg !5150, !prof !732
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !5101), !dbg !5151
   %i.x = load ptr, ptr %i.n, align 8, !dbg !5152, !alias.scope !5102, !noalias !5100, !nonnull !631, !noundef !631
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %.pre18, !dbg !5153
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i, i1 false), !dbg !5154, !noalias !5102
-  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i, !dbg !5155 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46, i1 false), !dbg !5154, !noalias !5102
+  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i46, !dbg !5155 ; 2 uses
   store i64 %i.z, ptr %i.d, align 8, !dbg !5156, !alias.scope !5102, !noalias !5100
   br label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_15PrettyFormatterEB29_.exit.thread, !dbg !5157
 
@@ -1231,7 +1235,7 @@ _RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter17write_
   br i1 %.not21.i, label %.outer.i, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2r_.exit, !dbg !5225
 
 _RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_15PrettyFormatterEB29_.exit: ; preds = %bb.d
-  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterE14write_all_coldB1e_(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i) #27, !dbg !5226 ; 2 uses
+  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterE14write_all_coldB1e_(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46) #27, !dbg !5226 ; 2 uses
   %.not5 = icmp eq ptr %i.bw, null, !dbg !5138
   br i1 %.not5, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_15PrettyFormatterEB29_.exit._RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_15PrettyFormatterEB29_.exit.thread_crit_edge, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser15PrettyFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2r_.exit, !dbg !5135
 
@@ -1307,7 +1311,7 @@ bb.b:                                             ; preds = %_RINvYNtNtCsduyiHOa
   br label %.outer.i, !dbg !5451
 
 .outer.i:                                         ; preds = %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2z_.exit.i, %bb.b
-  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2z_.exit.i ], [ %1, %bb.b ] ; 8 uses
+  %.sroa.5.0.ph.i = phi i64 [ %i.aj, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2z_.exit.i ], [ %1, %bb.b ] ; 4 uses
   %.sroa.05.0.ph.i = phi ptr [ %i.ah, %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write_char_escapeQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2z_.exit.i ], [ %0, %bb.b ] ; 6 uses
   %exitcond.not.i31 = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !5452
   br i1 %exitcond.not.i31, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !5452
@@ -1318,7 +1322,8 @@ bb.c:                                             ; preds = %_RNvMNtCs3oUPovFnLW
   br i1 %exitcond.not.i, label %.outer.i._crit_edge, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsbaWXNhtWAp9_11foundations.exit.i, !dbg !5452
 
 .outer.i._crit_edge:                              ; preds = %.outer.i, %bb.c
-  %i.s = icmp eq i64 %.sroa.5.0.ph.i, 0, !dbg !5454
+  %.sroa.5.0.ph.i46 = phi i64 [ %.sroa.5.0.ph.i, %bb.c ], [ 0, %.outer.i ] ; 5 uses
+  %i.s = icmp eq i64 %.sroa.5.0.ph.i46, 0, !dbg !5454
   %.pre18 = load i64, ptr %i.d, align 8, !dbg !5455, !noalias !631 ; 5 uses
   br i1 %i.s, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_16CompactFormatterEB29_.exit.thread, label %bb.d, !dbg !5456
 
@@ -1328,15 +1333,15 @@ bb.d:                                             ; preds = %.outer.i._crit_edge
   %i.u = icmp sgt i64 %.pre18, -1, !dbg !5459
   call void @llvm.assume(i1 %i.u), !dbg !5460
   %i.v = sub nsw i64 %i.t, %.pre18, !dbg !5461
-  %i.w = icmp ult i64 %.sroa.5.0.ph.i, %i.v, !dbg !5462
+  %i.w = icmp ult i64 %.sroa.5.0.ph.i46, %i.v, !dbg !5462
   br i1 %i.w, label %bb.e, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_16CompactFormatterEB29_.exit, !dbg !5462, !prof !732
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !5413), !dbg !5463
   %i.x = load ptr, ptr %i.n, align 8, !dbg !5464, !alias.scope !5414, !noalias !5412, !nonnull !631, !noundef !631
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %.pre18, !dbg !5465
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i, i1 false), !dbg !5466, !noalias !5414
-  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i, !dbg !5467 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.y, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.05.0.ph.i, i64 range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46, i1 false), !dbg !5466, !noalias !5414
+  %i.z = add nuw i64 %.pre18, %.sroa.5.0.ph.i46, !dbg !5467 ; 2 uses
   store i64 %i.z, ptr %i.d, align 8, !dbg !5468, !alias.scope !5414, !noalias !5412
   br label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_16CompactFormatterEB29_.exit.thread, !dbg !5469
 
@@ -1464,7 +1469,7 @@ _RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter17write
   br i1 %.not21.i, label %.outer.i, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2s_.exit, !dbg !5537
 
 _RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_16CompactFormatterEB29_.exit: ; preds = %bb.d
-  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterE14write_all_coldB1e_(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i) #27, !dbg !5538 ; 2 uses
+  %i.bw = call noundef ptr @_RNvMs_NtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriterINtB4_9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterE14write_all_coldB1e_(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.ph.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.5.0.ph.i46) #27, !dbg !5538 ; 2 uses
   %.not5 = icmp eq ptr %i.bw, null, !dbg !5450
   br i1 %.not5, label %_RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_16CompactFormatterEB29_.exit._RINvNtCsduyiHOaxwSq_10serde_json3ser27format_escaped_str_contentsQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterENtB2_16CompactFormatterEB29_.exit.thread_crit_edge, label %_RINvYNtNtCsduyiHOaxwSq_10serde_json3ser16CompactFormatterNtB5_9Formatter10end_stringQINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufwriter9BufWriterNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12retry_writer15RetryPipeWriterEEB2s_.exit, !dbg !5447
 

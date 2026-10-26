@@ -204,7 +204,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.j = load float, ptr %i.i, align 8, !tbaa !10
   %i.k = tail call noundef float @llvm.fabs.f32(float %i.j) ; 2 uses
-  %i.l = fcmp oge float %i.k, %.2.1               ; 6 uses
+  %i.l = fcmp oge float %i.k, %.2.1               ; 5 uses
   %not. = xor i1 %i.l, true
   %narrow = and i1 %i.h, %not.                    ; 4 uses
   %.2.1157 = select i1 %i.l, float %i.k, float %.2.1
@@ -250,7 +250,7 @@ bb.b:                                             ; preds = %bb.l, %bb.g, %bb.d
 .loopexit122:                                     ; preds = %.critedge.1.thread, %.preheader121, %.critedge.1
   %.not108203 = phi i1 [ true, %.critedge.1.thread ], [ false, %.preheader121 ], [ true, %.critedge.1 ]
   %.292.1.1202.shrunk = phi i1 [ true, %.critedge.1.thread ], [ %narrow, %.preheader121 ], [ %narrow, %.critedge.1 ] ; 4 uses
-  %.296.1.1201.shrunk = phi i1 [ true, %.critedge.1.thread ], [ %i.l, %.preheader121 ], [ %i.l, %.critedge.1 ] ; 2 uses
+  %.296.1.1201.shrunk = phi i1 [ true, %.critedge.1.thread ], [ %i.l, %.preheader121 ], [ false, %.critedge.1 ] ; 2 uses
   %i.w = zext i1 %.292.1.1202.shrunk to i64       ; 2 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.w ; 6 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.w ; 2 uses
@@ -653,11 +653,21 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.lcssa87 = phi ptr [ %.sroa.0.1, %.preheader ], [ %i.b, %bb.b ] ; 2 uses
   br label %.lr.ph.i22.preheader
 
-.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i, %bb.f
+.loopexit.split-lp.loopexit:                      ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.f
   %lpad.loopexit.split-lp100 = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.061, i64 noundef %i.o) #25
-  resume { ptr, i32 } %lpad.loopexit.split-lp100
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit
+  %1 = phi i64 [ %i.o, %.loopexit.split-lp.loopexit ], [ 9223372036854775804, %.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp100, %.loopexit.split-lp.loopexit.split-lp ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.061, i64 noundef %1) #25
+  resume { ptr, i32 } %lpad.phi
 
 .lr.ph:                                           ; preds = %bb.b, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit"
   %storemerge64 = phi i32 [ %i.ab, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit" ], [ 3, %bb.b ] ; 5 uses
@@ -701,7 +711,7 @@ bb.e:                                             ; preds = %.loopexit47
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.32) #24
-          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.a
+          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.f
   unreachable
@@ -717,7 +727,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.e
   tail call void @llvm.assume(i1 %.not.i.i.i19)
   %i.v = shl nuw nsw i64 %i.u, 2
   %i.w = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #26
-          to label %.noexc20 unwind label %.loopexit.split-lp.loopexit.split-lp.a ; 4 uses
+          to label %.noexc20 unwind label %.loopexit.split-lp.loopexit ; 4 uses
 
 .noexc20:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
   %i.x = getelementptr inbounds i8, ptr %i.w, i64 %i.o ; 2 uses

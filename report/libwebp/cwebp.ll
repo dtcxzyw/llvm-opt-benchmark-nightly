@@ -204,14 +204,14 @@ bb.ej:                                            ; preds = %bb.ei
   %spec.select = select i1 %i.np, ptr %i.nn, ptr %i.no ; 2 uses
   %i.nq = ptrtoint ptr %spec.select to i64
   %i.nr = ptrtoint ptr %.0492.ph1350 to i64
-  %i.ns = sub i64 %i.nq, %i.nr                    ; 7 uses
+  %i.ns = sub i64 %i.nq, %i.nr                    ; 2 uses
   switch i64 %i.ns, label %.thread1877 [
     i64 3, label %bb.ek
     i64 4, label %bb.em
   ]
 
 bb.ek:                                            ; preds = %.lr.ph
-  %i.nt = call i32 @strncmp(ptr noundef nonnull %.0492.ph1350, ptr noundef nonnull @.str.73, i64 noundef %i.ns) #13
+  %i.nt = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.0492.ph1350, ptr noundef nonnull dereferenceable(4) @.str.73, i64 noundef 3) #13
   %.not691 = icmp eq i32 %i.nt, 0
   br i1 %.not691, label %bb.el, label %bb.eo
 
@@ -223,28 +223,29 @@ bb.el:                                            ; preds = %bb.ek, %bb.en, %bb.
   br label %.thread815
 
 bb.em:                                            ; preds = %.lr.ph
-  %i.nx = call i32 @strncmp(ptr noundef nonnull %.0492.ph1350, ptr noundef nonnull @.str.22, i64 noundef %i.ns) #13
+  %i.nx = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.0492.ph1350, ptr noundef nonnull dereferenceable(5) @.str.22, i64 noundef 4) #13
   %.not691.1 = icmp eq i32 %i.nx, 0
   br i1 %.not691.1, label %.thread815, label %bb.en
 
 bb.en:                                            ; preds = %bb.em
-  %i.ny = call i32 @strncmp(ptr noundef nonnull %.0492.ph1350, ptr noundef nonnull @.str.74, i64 noundef %i.ns) #13
+  %i.ny = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.0492.ph1350, ptr noundef nonnull dereferenceable(5) @.str.74, i64 noundef 4) #13
   %.not691.2 = icmp eq i32 %i.ny, 0
   br i1 %.not691.2, label %bb.el, label %.thread1877
 
 bb.eo:                                            ; preds = %bb.ek
-  %i.nz = call i32 @strncmp(ptr noundef nonnull %.0492.ph1350, ptr noundef nonnull @.str.75, i64 noundef %i.ns) #13
+  %i.nz = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.0492.ph1350, ptr noundef nonnull dereferenceable(4) @.str.75, i64 noundef 3) #13
   %.not691.3 = icmp eq i32 %i.nz, 0
   br i1 %.not691.3, label %bb.el, label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo
-  %i.oa = call i32 @strncmp(ptr noundef nonnull %.0492.ph1350, ptr noundef nonnull @.str.76, i64 noundef %i.ns) #13
+  %i.oa = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.0492.ph1350, ptr noundef nonnull dereferenceable(4) @.str.76, i64 noundef 3) #13
   %.not691.4 = icmp eq i32 %i.oa, 0
   br i1 %.not691.4, label %bb.el, label %.thread1877
 
 .thread1877:                                      ; preds = %.lr.ph, %bb.en, %bb.ep
+  %.lcssa2537 = phi i64 [ %i.ns, %.lr.ph ], [ 4, %bb.en ], [ 3, %bb.ep ]
   %i.ob = load ptr, ptr @stderr, align 8, !tbaa !11
-  %i.oc = trunc i64 %i.ns to i32
+  %i.oc = trunc i64 %.lcssa2537 to i32
   %i.od = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ob, ptr noundef nonnull @.str.77, i32 noundef %i.oc, ptr noundef nonnull %.0492.ph1350) #14 ; 0 uses
   br label %.thread831
 

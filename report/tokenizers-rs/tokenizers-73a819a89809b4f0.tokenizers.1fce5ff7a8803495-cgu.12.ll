@@ -204,11 +204,12 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bn, label %bb.n, label %bb.u, !prof !22
 
 bb.u:                                             ; preds = %bb.s, %bb.t
+  %.lcssa300 = phi i64 [ %i.bd, %bb.s ], [ 7, %bb.t ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.bo = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.ba, ptr %i.bo, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store i64 %i.bd, ptr %i.bp, align 8
+  store i64 %.lcssa300, ptr %i.bp, align 8
   store i8 5, ptr %i.c, align 8
   %i.bq = invoke noundef nonnull align 8 ptr @_RNvXs6_NtCs5PtHgSLqj5O_10serde_json5errorNtB5_5ErrorNtNtCsboAIIHEtPkY_10serde_core2de5Error13invalid_value(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c, ptr noundef nonnull @14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5)
           to label %bb.v unwind label %.loopexit.split-lp97.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -611,11 +612,12 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bv, label %bb.n, label %bb.u, !prof !22
 
 bb.u:                                             ; preds = %bb.t, %bb.s
+  %.lcssa281 = phi i64 [ 7, %bb.t ], [ %i.bl, %bb.s ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !289
   %i.bw = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.bi, ptr %i.bw, align 8, !noalias !289
   %i.bx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store i64 %i.bl, ptr %i.bx, align 8, !noalias !289
+  store i64 %.lcssa281, ptr %i.bx, align 8, !noalias !289
   store i8 5, ptr %i.c, align 8, !noalias !289
   %i.by = invoke noundef nonnull align 8 ptr @_RNvXs6_NtCs5PtHgSLqj5O_10serde_json5errorNtB5_5ErrorNtNtCsboAIIHEtPkY_10serde_core2de5Error13invalid_value(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c, ptr noundef nonnull @14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5)
           to label %bb.v unwind label %.loopexit.split-lp97.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !288
@@ -1018,7 +1020,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2JiOgHzbbc7_10tok
 
 .split.us.i.i.invoke:                             ; preds = %.noexc32, %.noexc29, %bb.h
   %i.ah = phi ptr [ @100, %bb.h ], [ @75, %.noexc29 ], [ @75, %.noexc32 ]
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @78, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ah) #25
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @78, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ah) #25
           to label %.split.us.i.i.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .split.us.i.i.cont:                               ; preds = %.split.us.i.i.invoke

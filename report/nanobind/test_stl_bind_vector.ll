@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.032.051, i64 16
   %i.t = add nsw i64 %.052, -1
-  %3 = icmp sgt i64 %.052, 1
+  %3 = icmp samesign ugt i64 %.052, 1
   br i1 %3, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !290
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
@@ -497,7 +497,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.032.051, i64 16
   %i.t = add nsw i64 %.052, -1
-  %3 = icmp sgt i64 %.052, 1
+  %3 = icmp samesign ugt i64 %.052, 1
   br i1 %3, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !292
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
@@ -797,7 +797,7 @@ _ZNSt14_Bit_referenceaSEb.exit:                   ; preds = %bb.b, %bb.c
   %.sroa.03.1.idx = select i1 %i.x, i64 8, i64 0
   %.sroa.03.1 = getelementptr inbounds nuw i8, ptr %.sroa.03.019, i64 %.sroa.03.1.idx ; 2 uses
   %i.y = add nsw i64 %.020, -1
-  %6 = icmp sgt i64 %.020, 1
+  %6 = icmp samesign ugt i64 %.020, 1
   br i1 %6, label %.lr.ph, label %._crit_edge, !llvm.loop !293
 }
 
@@ -1200,7 +1200,7 @@ _ZNSt14_Bit_referenceaSERKS_.exit:                ; preds = %bb.b, %bb.c
   %storemerge = phi i64 [ %i.u, %bb.b ], [ %i.x, %bb.c ]
   store i64 %storemerge, ptr %.sroa.07.1, align 8, !tbaa !81
   %i.y = add nsw i64 %.024, -1
-  %6 = icmp sgt i64 %.024, 1
+  %6 = icmp samesign ugt i64 %.024, 1
   br i1 %6, label %_ZNSt13_Bit_iteratormmEv.exit, label %._crit_edge, !llvm.loop !317
 
 ._crit_edge:                                      ; preds = %_ZNSt14_Bit_referenceaSERKS_.exit, %bb.a
@@ -1272,7 +1272,7 @@ _ZNSt14_Bit_referenceaSERKS_.exit:                ; preds = %bb.b, %bb.c
   %.sroa.07.1.idx = select i1 %i.x, i64 8, i64 0
   %.sroa.07.1 = getelementptr inbounds nuw i8, ptr %.sroa.07.023, i64 %.sroa.07.1.idx ; 2 uses
   %i.y = add nsw i64 %.024, -1
-  %6 = icmp sgt i64 %.024, 1
+  %6 = icmp samesign ugt i64 %.024, 1
   br i1 %6, label %.lr.ph, label %._crit_edge, !llvm.loop !318
 }
 
@@ -1675,7 +1675,7 @@ _ZNSt19_Bit_const_iteratorppEv.exit58:            ; preds = %bb.e, %_ZNSt19_Bit_
   %.sroa.079.6 = phi ptr [ %i.ax, %_ZNSt19_Bit_const_iteratorppEv.exit57.thread ], [ %spec.select129, %bb.e ] ; 3 uses
   %.sroa.31.6 = phi i32 [ 1, %_ZNSt19_Bit_const_iteratorppEv.exit57.thread ], [ %spec.select130, %bb.e ] ; 3 uses
   %i.be = add nsw i64 %.0142, -1
-  %5 = icmp sgt i64 %.0142, 1
+  %5 = icmp samesign ugt i64 %.0142, 1
   br i1 %5, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !330
 
 ._crit_edge.loopexit:                             ; preds = %_ZNSt19_Bit_const_iteratorppEv.exit58
@@ -2047,7 +2047,7 @@ _ZNSt13_Bit_iteratorppEv.exit58:                  ; preds = %bb.e, %_ZNSt13_Bit_
   %.sroa.079.6 = phi ptr [ %i.ax, %_ZNSt13_Bit_iteratorppEv.exit57.thread ], [ %spec.select129, %bb.e ] ; 3 uses
   %.sroa.31.6 = phi i32 [ 1, %_ZNSt13_Bit_iteratorppEv.exit57.thread ], [ %spec.select130, %bb.e ] ; 3 uses
   %i.be = add nsw i64 %.0142, -1
-  %5 = icmp sgt i64 %.0142, 1
+  %5 = icmp samesign ugt i64 %.0142, 1
   br i1 %5, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !332
 
 ._crit_edge.loopexit:                             ; preds = %_ZNSt13_Bit_iteratorppEv.exit58
@@ -2450,7 +2450,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.041.058.i.i.i.i, i64 64
   %i.y = add nsw i64 %.059.i.i.i.i, -1
-  %5 = icmp sgt i64 %.059.i.i.i.i, 1
+  %5 = icmp samesign ugt i64 %.059.i.i.i.i, 1
   br i1 %5, label %bb.d, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !557
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.h
@@ -2662,7 +2662,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.041.058.i.i.i.i, i64 64
   %i.y = add nsw i64 %.059.i.i.i.i, -1
-  %5 = icmp sgt i64 %.059.i.i.i.i, 1
+  %5 = icmp samesign ugt i64 %.059.i.i.i.i, 1
   br i1 %5, label %bb.d, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !559
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.h
@@ -3065,7 +3065,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.54) #33
-          to label %.noexc.i unwind label %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a, !noalias !627
+          to label %.noexc.i unwind label %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp, !noalias !627
 
 .noexc.i:                                         ; preds = %bb.f
   unreachable
@@ -3082,7 +3082,7 @@ _ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_E
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.t = shl nuw nsw i64 %i.s, 2
   %i.u = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #34
-          to label %.noexc5.i unwind label %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a, !noalias !627 ; 6 uses
+          to label %.noexc5.i unwind label %.loopexit.split-lp.i.loopexit.split-lp.loopexit, !noalias !627 ; 6 uses
 
 .noexc5.i:                                        ; preds = %_ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE4E_ncSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.l
@@ -3124,18 +3124,28 @@ _ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE
   %exitcond.not.i = icmp eq i32 %storemerge9.i, %i.d
   br i1 %exitcond.not.i, label %_ZN8nanobind6detail12infer_policyISt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implNS_7module_EE4E_ncSaIS4_EEEENS_9rv_policyES7_.exit, label %bb.c, !llvm.loop !626
 
-.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a: ; preds = %_ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE4E_ncSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.f
+.loopexit.split-lp.i.loopexit.split-lp.loopexit:  ; preds = %_ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE4E_ncSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.f
   %lpad.loopexit.split-lp36 = landingpad { ptr, i32 }
           cleanup
+  br label %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a: ; preds = %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.i.loopexit.split-lp.loopexit
+  %6 = phi i64 [ %i.l, %.loopexit.split-lp.i.loopexit.split-lp.loopexit ], [ 9223372036854775804, %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.i.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp36, %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp ]
   %.not.i.i.i6.i = icmp eq ptr %.val26.i.i.i, null
   br i1 %.not.i.i.i6.i, label %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE4E_ncSaIS2_EED2Ev.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a
-  call void @_ZdlPvm(ptr noundef nonnull %.val26.i.i.i, i64 noundef %i.l) #32, !noalias !627
+  call void @_ZdlPvm(ptr noundef nonnull %.val26.i.i.i, i64 noundef %6) #32, !noalias !627
   br label %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE4E_ncSaIS2_EED2Ev.exit.i
 
 _ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE4E_ncSaIS2_EED2Ev.exit.i: ; preds = %bb.h, %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.a
-  resume { ptr, i32 } %lpad.loopexit.split-lp36
+  resume { ptr, i32 } %lpad.phi
 
 _ZN8nanobind6detail12infer_policyISt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implNS_7module_EE4E_ncSaIS4_EEEENS_9rv_policyES7_.exit: ; preds = %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE4E_ncSaIS2_EE12emplace_backIJRiEEERS2_DpOT_.exit.i, %bb.b
   %i.ad = load ptr, ptr @_ZN8nanobind6detail9internalsE, align 8, !tbaa !25

@@ -202,12 +202,13 @@ _ZNSt6vectorIPKN5arrow7compute12ScalarKernelESaIS4_EE9push_backEOS4_.exit: ; pre
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %2 = phi i64 [ %i.n, %.loopexit ], [ 9223372036854775800, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN5arrow7compute12ScalarKernelESaIS4_EED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #22
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %2) #22
   br label %_ZNSt6vectorIPKN5arrow7compute12ScalarKernelESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN5arrow7compute12ScalarKernelESaIS4_EED2Ev.exit: ; preds = %bb.h, %bb.i
@@ -322,12 +323,13 @@ _ZNSt6vectorIPKN5arrow7compute12VectorKernelESaIS4_EE9push_backEOS4_.exit: ; pre
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %2 = phi i64 [ %i.n, %.loopexit ], [ 9223372036854775800, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN5arrow7compute12VectorKernelESaIS4_EED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #22
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %2) #22
   br label %_ZNSt6vectorIPKN5arrow7compute12VectorKernelESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN5arrow7compute12VectorKernelESaIS4_EED2Ev.exit: ; preds = %bb.h, %bb.i
@@ -442,12 +444,13 @@ _ZNSt6vectorIPKN5arrow7compute21ScalarAggregateKernelESaIS4_EE9push_backEOS4_.ex
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %2 = phi i64 [ %i.n, %.loopexit ], [ 9223372036854775800, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN5arrow7compute21ScalarAggregateKernelESaIS4_EED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #22
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %2) #22
   br label %_ZNSt6vectorIPKN5arrow7compute21ScalarAggregateKernelESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN5arrow7compute21ScalarAggregateKernelESaIS4_EED2Ev.exit: ; preds = %bb.h, %bb.i
@@ -562,12 +565,13 @@ _ZNSt6vectorIPKN5arrow7compute19HashAggregateKernelESaIS4_EE9push_backEOS4_.exit
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %2 = phi i64 [ %i.n, %.loopexit ], [ 9223372036854775800, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN5arrow7compute19HashAggregateKernelESaIS4_EED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #22
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %2) #22
   br label %_ZNSt6vectorIPKN5arrow7compute19HashAggregateKernelESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN5arrow7compute19HashAggregateKernelESaIS4_EED2Ev.exit: ; preds = %bb.h, %bb.i

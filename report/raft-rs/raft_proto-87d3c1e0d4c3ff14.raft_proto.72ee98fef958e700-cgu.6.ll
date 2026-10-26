@@ -202,12 +202,10 @@ bb.g:                                             ; preds = %.peel.next
   %i.j = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !82, !nonnull !4, !noundef !4
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.p
   store i8 32, ptr %i.k, align 1
-  %i.l = add nuw i64 %i.p, 1                      ; 3 uses
+  %i.l = add nuw nsw i64 %i.p, 1                  ; 2 uses
   store i64 %i.l, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !82
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.038, i64 24
   %i.n = load i8, ptr %i.m, align 8, !range !81, !noundef !4
-  %3 = icmp sgt i64 %i.l, -1
-  call void @llvm.assume(i1 %3)
   switch i8 %i.n, label %.unreachabledefault [
     i8 0, label %bb.h
     i8 1, label %bb.i

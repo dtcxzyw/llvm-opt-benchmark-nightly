@@ -204,8 +204,9 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w, %bb.t, %bb.r, %bb.p, %bb.o
+  %.lcssa76 = phi i64 [ 27, %bb.w ], [ 7, %bb.t ], [ 11, %bb.r ], [ 12, %bb.p ], [ %i.bs, %bb.o ]
   %i.dr = load ptr, ptr @stderr, align 8, !tbaa !36
-  %i.ds = trunc i64 %i.bs to i32
+  %i.ds = trunc i64 %.lcssa76 to i32
   %i.dt = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dr, ptr noundef nonnull @.str.25, i32 noundef %i.ds, ptr noundef nonnull %i.bq) #40 ; 0 uses
   br label %poison_enable.exit.i
 

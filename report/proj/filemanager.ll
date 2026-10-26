@@ -115,7 +115,6 @@ $_ZSt19piecewise_construct = comdat any
 @.str.33 = private unnamed_addr constant [23 x i8] c"PROJ_ONLY_BEST_DEFAULT\00", align 1
 @.str.34 = private unnamed_addr constant [15 x i8] c"PROJ_NATIVE_CA\00", align 1
 @.str.35 = private unnamed_addr constant [9 x i8] c"proj.ini\00", align 1
-@.str.41 = private unnamed_addr constant [19 x i8] c"tmerc_default_algo\00", align 1
 @.str.44 = private unnamed_addr constant [15 x i8] c"poder_engsager\00", align 1
 @.str.45 = private unnamed_addr constant [52 x i8] c"pj_load_ini(): Invalid value for tmerc_default_algo\00", align 1
 @.str.47 = private unnamed_addr constant [18 x i8] c"only_best_default\00", align 1
@@ -518,7 +517,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit127: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   %i.en = load i64, ptr %i.cl, align 8, !tbaa !21
   %i.eo = icmp eq i64 %i.en, 0
-  %.pre269.pre = load i64, ptr %i.cm, align 8, !tbaa !21 ; 5 uses
+  %.pre269.pre = load i64, ptr %i.cm, align 8, !tbaa !21 ; 4 uses
   %i.ep = icmp eq i64 %.pre269.pre, 12
   %or.cond339 = select i1 %i.eo, i1 %i.ep, i1 false
   br i1 %or.cond339, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread185
@@ -784,9 +783,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.ca
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit146: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit138.thread186
-  %.pre270 = load ptr, ptr %2, align 8, !tbaa !20
-  %bcmp.i145 = call i32 @bcmp(ptr %.pre270, ptr nonnull @.str.41, i64 %.pre269.pre)
-  %i.ik = icmp eq i32 %bcmp.i145, 0
+  %.pre270 = load ptr, ptr %2, align 8, !tbaa !20 ; 2 uses
+  %6 = load i128, ptr %.pre270, align 1
+  %7 = xor i128 %6, 144062212392994276456955038780086381940
+  %8 = getelementptr i8, ptr %.pre270, i64 16
+  %9 = load i16, ptr %8, align 1
+  %10 = zext i16 %9 to i128
+  %11 = xor i128 %10, 28519
+  %12 = or i128 %7, %11
+  %13 = icmp ne i128 %12, 0
+  %14 = zext i1 %13 to i32
+  %i.ik = icmp eq i32 %14, 0
   br i1 %i.ik, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit146.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit152.thread193
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit146.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit146

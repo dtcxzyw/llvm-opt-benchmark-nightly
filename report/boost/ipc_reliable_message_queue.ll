@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_ZN5boost3log11v2_m
   br i1 %.not, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %bb.f
-  %i.x = load i32, ptr %i.r, align 8, !tbaa !73   ; 2 uses
+  %i.x = load i32, ptr %i.r, align 8, !tbaa !73
   switch i32 %i.x, label %bb.j [
     i32 1, label %.critedge
     i32 2, label %bb.h
@@ -295,7 +295,7 @@ bb.o:                                             ; preds = %bb.n
   resume { ptr, i32 } %lpad.loopexit.split-lp39
 
 .critedge:                                        ; preds = %bb.g, %_ZN5boost3log11v2_mt_posix3ipc22reliable_message_queue14implementation10lock_queueEv.exit, %bb.o, %bb.n
-  %.2 = phi i32 [ 0, %bb.n ], [ 0, %bb.o ], [ 2, %_ZN5boost3log11v2_mt_posix3ipc22reliable_message_queue14implementation10lock_queueEv.exit ], [ %i.x, %bb.g ]
+  %.2 = phi i32 [ 0, %bb.n ], [ 0, %bb.o ], [ 2, %_ZN5boost3log11v2_mt_posix3ipc22reliable_message_queue14implementation10lock_queueEv.exit ], [ 1, %bb.g ]
   %i.bf = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.o) #31 ; 0 uses
   br label %bb.p
 
@@ -698,7 +698,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.l, %bb.j
   %i.q = invoke i32 @shm_open(ptr noundef %i.p, i32 noundef %3, i32 noundef %i.n)
-          to label %.noexc42 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
+          to label %.noexc42 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc42:                                         ; preds = %bb.k
   %i.r = icmp eq i32 %i.q, -1
@@ -711,7 +711,8 @@ bb.l:                                             ; preds = %.noexc42
   br i1 %i.u, label %bb.k, label %_ZN5boost12interprocess20shared_memory_object20eintr_aware_shm_openEPKcij.exit, !llvm.loop !195
 
 _ZN5boost12interprocess20shared_memory_object20eintr_aware_shm_openEPKcij.exit: ; preds = %bb.l, %.noexc42
-  store i32 %i.q, ptr %0, align 8, !tbaa !65
+  %.lcssa = phi i32 [ -1, %bb.l ], [ %i.q, %.noexc42 ] ; 2 uses
+  store i32 %.lcssa, ptr %0, align 8, !tbaa !65
   br label %bb.ac
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.u, %bb.k, %bb.n, %bb.q, %.thread55, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i, %bb.c, %bb.b
@@ -854,7 +855,7 @@ thread-pre-split:                                 ; preds = %bb.w, %bb.s, %threa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %thread-pre-split, %_ZN5boost12interprocess20shared_memory_object20eintr_aware_shm_openEPKcij.exit
-  %i.az = phi i32 [ %.pr, %thread-pre-split ], [ %i.q, %_ZN5boost12interprocess20shared_memory_object20eintr_aware_shm_openEPKcij.exit ]
+  %i.az = phi i32 [ %.pr, %thread-pre-split ], [ %.lcssa, %_ZN5boost12interprocess20shared_memory_object20eintr_aware_shm_openEPKcij.exit ]
   %i.ba = icmp slt i32 %i.az, 0
   br i1 %i.ba, label %.thread, label %.thread55
 

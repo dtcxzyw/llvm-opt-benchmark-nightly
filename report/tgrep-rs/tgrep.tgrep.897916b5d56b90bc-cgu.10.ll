@@ -204,8 +204,9 @@ _RNvXs0_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSear
   br i1 %.not.i, label %bb.a, label %_RNvYNtNtNtCsf3Ta7LF998c_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCsbNLsQi0JuJ4_5tgrep.exit
 
 _RNvYNtNtNtCsf3Ta7LF998c_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCsbNLsQi0JuJ4_5tgrep.exit: ; preds = %bb.a, %_RNvXs0_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i
+  %.reass5.i.lcssa = phi i64 [ 0, %bb.a ], [ %.reass5.i, %_RNvXs0_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i ]
   %i.am = insertvalue { ptr, i64 } poison, ptr %0, 0
-  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass5.i, 1
+  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass5.i.lcssa, 1
   ret { ptr, i64 } %i.an
 }
 
@@ -608,7 +609,7 @@ bb.p:                                             ; preds = %_RNvMNtCsf3Ta7LF998
   %i.bx = add nsw i64 %i.bq, -2
   %i.by = call { ptr, i64 } @_RINvMNtCsf3Ta7LF998c_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bp, i64 noundef %i.bx) ; 2 uses
   %i.bz = extractvalue { ptr, i64 } %i.by, 0      ; 3 uses
-  %i.ca = extractvalue { ptr, i64 } %i.by, 1      ; 3 uses
+  %i.ca = extractvalue { ptr, i64 } %i.by, 1      ; 2 uses
   switch i64 %i.ca, label %thread-pre-split.i [
     i64 0, label %_RNvMNtCsf3Ta7LF998c_4core5sliceSh9ends_withCsbNLsQi0JuJ4_5tgrep.exit.thread
     i64 1, label %bb.s
@@ -616,7 +617,7 @@ bb.p:                                             ; preds = %_RNvMNtCsf3Ta7LF998
 
 _RNvMNtCsf3Ta7LF998c_4core5sliceSh9ends_withCsbNLsQi0JuJ4_5tgrep.exit.thread: ; preds = %.preheader56.i, %bb.u, %.preheader56.i.preheader, %bb.v, %.lr.ph.i, %.preheader.i, %bb.s, %bb.s, %bb.p, %.split112.us, %_RNvMNtCsf3Ta7LF998c_4core5sliceSh9ends_withCsbNLsQi0JuJ4_5tgrep.exit
   %.sroa.6.2 = phi i64 [ undef, %.split112.us ], [ undef, %_RNvMNtCsf3Ta7LF998c_4core5sliceSh9ends_withCsbNLsQi0JuJ4_5tgrep.exit ], [ 0, %.preheader.i ], [ undef, %bb.s ], [ undef, %bb.p ], [ undef, %bb.s ], [ %i.db, %bb.v ], [ undef, %.lr.ph.i ], [ undef, %bb.u ], [ undef, %.preheader56.i.preheader ], [ %i.cr, %.preheader56.i ]
-  %.sroa.0.2 = phi i64 [ 0, %.split112.us ], [ 0, %_RNvMNtCsf3Ta7LF998c_4core5sliceSh9ends_withCsbNLsQi0JuJ4_5tgrep.exit ], [ 1, %.preheader.i ], [ 0, %bb.s ], [ %i.ca, %bb.p ], [ 0, %bb.s ], [ 1, %bb.v ], [ 0, %.lr.ph.i ], [ 0, %bb.u ], [ 0, %.preheader56.i.preheader ], [ 1, %.preheader56.i ]
+  %.sroa.0.2 = phi i64 [ 0, %.split112.us ], [ 0, %_RNvMNtCsf3Ta7LF998c_4core5sliceSh9ends_withCsbNLsQi0JuJ4_5tgrep.exit ], [ 1, %.preheader.i ], [ 0, %bb.s ], [ 0, %bb.p ], [ 0, %bb.s ], [ 1, %bb.v ], [ 0, %.lr.ph.i ], [ 0, %bb.u ], [ 0, %.preheader56.i.preheader ], [ 1, %.preheader56.i ]
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit55 unwind label %bb.q
 

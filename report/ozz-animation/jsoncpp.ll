@@ -204,7 +204,8 @@ _ZN4Json6Reader11getNextCharEv.exit5:             ; preds = %bb.c, %bb.b, %_ZN4J
   br i1 %.not, label %_ZN4Json6Reader11getNextCharEv.exit._crit_edge.loopexit, label %_ZN4Json6Reader11getNextCharEv.exit, !llvm.loop !3
 
 _ZN4Json6Reader11getNextCharEv.exit._crit_edge.loopexit: ; preds = %_ZN4Json6Reader11getNextCharEv.exit, %_ZN4Json6Reader11getNextCharEv.exit5
-  %i.j = icmp eq i8 %i.f, 34
+  %.lcssa = phi i8 [ 34, %_ZN4Json6Reader11getNextCharEv.exit ], [ %i.f, %_ZN4Json6Reader11getNextCharEv.exit5 ]
+  %i.j = icmp eq i8 %.lcssa, 34
   br label %_ZN4Json6Reader11getNextCharEv.exit._crit_edge
 
 _ZN4Json6Reader11getNextCharEv.exit._crit_edge:   ; preds = %_ZN4Json6Reader11getNextCharEv.exit._crit_edge.loopexit, %bb.a
@@ -607,7 +608,7 @@ bb.e:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 2 uses
   store ptr %i.y, ptr %2, align 8, !tbaa !117
   %i.z = load i8, ptr %i.c, align 1, !tbaa !50    ; 4 uses
-  %7 = sext i8 %i.z to i32
+  %7 = zext nneg i8 %i.z to i32
   %i.aa = add i8 %i.z, -48
   %or.cond = icmp ult i8 %i.aa, 10
   br i1 %or.cond, label %bb.j, label %bb.f
@@ -1010,7 +1011,8 @@ _ZN4Json9OurReader11getNextCharEv.exit5:          ; preds = %bb.c, %bb.b, %_ZN4J
   br i1 %.not, label %_ZN4Json9OurReader11getNextCharEv.exit._crit_edge.loopexit, label %_ZN4Json9OurReader11getNextCharEv.exit, !llvm.loop !12
 
 _ZN4Json9OurReader11getNextCharEv.exit._crit_edge.loopexit: ; preds = %_ZN4Json9OurReader11getNextCharEv.exit, %_ZN4Json9OurReader11getNextCharEv.exit5
-  %i.j = icmp eq i8 %i.f, 34
+  %.lcssa = phi i8 [ 34, %_ZN4Json9OurReader11getNextCharEv.exit ], [ %i.f, %_ZN4Json9OurReader11getNextCharEv.exit5 ]
+  %i.j = icmp eq i8 %.lcssa, 34
   br label %_ZN4Json9OurReader11getNextCharEv.exit._crit_edge
 
 _ZN4Json9OurReader11getNextCharEv.exit._crit_edge: ; preds = %_ZN4Json9OurReader11getNextCharEv.exit._crit_edge.loopexit, %bb.a
@@ -1053,7 +1055,8 @@ _ZN4Json9OurReader11getNextCharEv.exit5:          ; preds = %bb.c, %bb.b, %_ZN4J
   br i1 %.not, label %_ZN4Json9OurReader11getNextCharEv.exit._crit_edge.loopexit, label %_ZN4Json9OurReader11getNextCharEv.exit, !llvm.loop !469
 
 _ZN4Json9OurReader11getNextCharEv.exit._crit_edge.loopexit: ; preds = %_ZN4Json9OurReader11getNextCharEv.exit, %_ZN4Json9OurReader11getNextCharEv.exit5
-  %i.j = icmp eq i8 %i.f, 39
+  %.lcssa = phi i8 [ 39, %_ZN4Json9OurReader11getNextCharEv.exit ], [ %i.f, %_ZN4Json9OurReader11getNextCharEv.exit5 ]
+  %i.j = icmp eq i8 %.lcssa, 39
   br label %_ZN4Json9OurReader11getNextCharEv.exit._crit_edge
 
 _ZN4Json9OurReader11getNextCharEv.exit._crit_edge: ; preds = %_ZN4Json9OurReader11getNextCharEv.exit._crit_edge.loopexit, %bb.a
@@ -1456,7 +1459,7 @@ bb.e:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 2 uses
   store ptr %i.y, ptr %2, align 8, !tbaa !117
   %i.z = load i8, ptr %i.c, align 1, !tbaa !50    ; 4 uses
-  %7 = sext i8 %i.z to i32
+  %7 = zext nneg i8 %i.z to i32
   %i.aa = add i8 %i.z, -48
   %or.cond = icmp ult i8 %i.aa, 10
   br i1 %or.cond, label %bb.j, label %bb.f
@@ -1859,11 +1862,11 @@ bb.h:                                             ; preds = %bb.d, %bb.g, %bb.f,
   br i1 %i.r, label %iter.check, label %_ZN4JsonL16fixNumericLocaleEPcS0_.exit
 
 iter.check:                                       ; preds = %bb.h
-  %min.iters.check = icmp ult i32 %.0, 8
+  %min.iters.check = icmp samesign ult i32 %.0, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check13 = icmp ult i32 %.0, 32
+  %min.iters.check13 = icmp samesign ult i32 %.0, 32
   br i1 %min.iters.check13, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

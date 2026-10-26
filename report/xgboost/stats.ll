@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.noexc46.i
 .lr.ph.i.i.i.i:                                   ; preds = %bb.w, %select.unfold.i.i.i.i
   %.010.i.i.i.i = phi i64 [ %i.de, %select.unfold.i.i.i.i ], [ %i.cy, %bb.w ] ; 4 uses
   %i.da = shl nuw nsw i64 %.010.i.i.i.i, 3
-  %i.db = call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.da, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #33 ; 2 uses
+  %i.db = call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.da, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #33 ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.db, null
   br i1 %.not.i.i.i.i, label %select.unfold.i.i.i.i, label %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i
 
@@ -217,7 +217,7 @@ select.unfold.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i
 
 _ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i: ; preds = %select.unfold.i.i.i.i, %.lr.ph.i.i.i.i, %bb.w
   %.sroa.5.0.i.i = phi i64 [ 0, %bb.w ], [ %.010.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %select.unfold.i.i.i.i ] ; 4 uses
-  %.sroa.12.0.i.i = phi ptr [ null, %bb.w ], [ %i.db, %.lr.ph.i.i.i.i ], [ null, %select.unfold.i.i.i.i ] ; 7 uses
+  %.sroa.12.0.i.i = phi ptr [ null, %bb.w ], [ %i.db, %.lr.ph.i.i.i.i ], [ %i.db, %select.unfold.i.i.i.i ] ; 7 uses
   %i.df = icmp eq i64 %i.cy, %.sroa.5.0.i.i
   br i1 %i.df, label %bb.x, label %bb.z, !prof !35
 
@@ -232,10 +232,11 @@ bb.x:                                             ; preds = %_ZNSt17_Temporary_b
   br label %bb.ac
 
 bb.y:                                             ; preds = %bb.ab, %bb.aa
+  %.sroa.12.0.i.i.lcssa = phi ptr [ %.sroa.12.0.i.i, %bb.ab ], [ null, %bb.aa ]
   %i.dk = landingpad { ptr, i32 }
           cleanup
   %i.dl = shl i64 %.sroa.5.0.i.i, 3
-  call void @_ZdlPvm(ptr noundef %.sroa.12.0.i.i, i64 noundef %i.dl) #8
+  call void @_ZdlPvm(ptr noundef %.sroa.12.0.i.i.lcssa, i64 noundef %i.dl) #8
   br label %.body
 
 bb.z:                                             ; preds = %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i
@@ -638,7 +639,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i:                                       ; preds = %bb.b, %select.unfold.i.i
   %.010.i.i = phi i64 [ %i.m, %select.unfold.i.i ], [ %i.g, %bb.b ] ; 4 uses
   %i.i = shl nuw nsw i64 %.010.i.i, 3
-  %i.j = tail call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.i, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #33 ; 2 uses
+  %i.j = tail call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.i, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #33 ; 3 uses
   %.not.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i, label %select.unfold.i.i, label %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit
 
@@ -650,7 +651,7 @@ select.unfold.i.i:                                ; preds = %.lr.ph.i.i
 
 _ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit: ; preds = %.lr.ph.i.i, %select.unfold.i.i, %bb.b
   %.sroa.5.0 = phi i64 [ 0, %bb.b ], [ %.010.i.i, %.lr.ph.i.i ], [ 0, %select.unfold.i.i ] ; 4 uses
-  %.sroa.12.0 = phi ptr [ null, %bb.b ], [ %i.j, %.lr.ph.i.i ], [ null, %select.unfold.i.i ] ; 5 uses
+  %.sroa.12.0 = phi ptr [ null, %bb.b ], [ %i.j, %select.unfold.i.i ], [ %i.j, %.lr.ph.i.i ] ; 5 uses
   %i.n = icmp eq i64 %i.g, %.sroa.5.0
   br i1 %i.n, label %bb.c, label %bb.e, !prof !35
 
@@ -1053,7 +1054,7 @@ bb.a:
   br i1 %.not56, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 10 uses
   %.idx50 = shl i64 %3, 4                         ; 2 uses
   %.not51 = icmp eq i64 %.idx, %.idx50
   %.sroa.6.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1076,7 +1077,7 @@ bb.b:                                             ; preds = %.critedge.i.us
 bb.c:                                             ; preds = %bb.b
   %i.i = load i64, ptr %.sroa.042.057.us, align 8, !tbaa !31
   store i64 %i.i, ptr %.058.us, align 8, !tbaa !31
-  %i.j = getelementptr inbounds nuw i8, ptr %.058.us, i64 %.idx
+  %i.j = getelementptr inbounds nuw i8, ptr %.058.us, i64 8
   %i.k = load i64, ptr %i.h, align 8, !tbaa !31
   store i64 %i.k, ptr %i.j, align 8, !tbaa !31
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common8QuantileINSA_18IndexTransformIterIZNS9_6linalg6cbeginIKfLi1EEEDaRKNSD_10TensorViewIT_XT0_EEEEUlmE_EEfEET0_PKNS9_7ContextEdRKSH_SS_EUlmmE_EEESN_SH_SH_SH_SH_SN_T1_.exit.us
@@ -1479,7 +1480,7 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph100.preheader:                              ; preds = %bb.g
   %i.ao = getelementptr [8 x i8], ptr %.sroa.042.0, i64 %.085 ; 5 uses
-  %min.iters.check = icmp ult i64 %i.ag, 6
+  %min.iters.check = icmp samesign ult i64 %i.ag, 6
   br i1 %min.iters.check, label %.lr.ph100.preheader186, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph100.preheader
@@ -1640,7 +1641,7 @@ bb.n:                                             ; preds = %bb.i
   br i1 %i.co, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.n
-  %min.iters.check141 = icmp ult i64 %.085, 6
+  %min.iters.check141 = icmp samesign ult i64 %.085, 6
   br i1 %min.iters.check141, label %.lr.ph.preheader187, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph.preheader

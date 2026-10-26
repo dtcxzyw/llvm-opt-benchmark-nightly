@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   br label %lean_inc_ref.exit39
 
 lean_inc_ref.exit39:                              ; preds = %bb.f, %bb.g, %bb.h
-  %i.j = tail call zeroext i8 @l_Lean_TagAttribute_hasTag(ptr noundef %i.a, ptr noundef nonnull %0, ptr noundef %.020) #3 ; 2 uses
+  %i.j = tail call zeroext i8 @l_Lean_TagAttribute_hasTag(ptr noundef %i.a, ptr noundef nonnull %0, ptr noundef %.020) #3 ; 4 uses
   %i.k = icmp eq i8 %i.j, 0
   br i1 %i.k, label %bb.i, label %bb.w
 
@@ -315,7 +315,8 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.q, %bb.o, %bb.p, %bb.ab, %bb.ac, %bb.ad
-  ret i8 %i.j
+  %2 = phi i8 [ 0, %bb.q ], [ 0, %bb.o ], [ 0, %bb.p ], [ %i.j, %bb.ab ], [ %i.j, %bb.ac ], [ %i.j, %bb.ad ]
+  ret i8 %2
 }
 
 declare zeroext i8 @l_Lean_TagAttribute_hasTag(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1

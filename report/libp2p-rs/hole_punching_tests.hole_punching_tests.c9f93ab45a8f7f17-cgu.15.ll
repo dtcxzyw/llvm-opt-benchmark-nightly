@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.l, %bb.i, %.loopexit, %bb.l, %bb.m, %bb.j, %bb.j, %bb.p, %bb.f
-  %.sroa.01.1 = phi i8 [ %i.d, %bb.f ], [ -1, %bb.j ], [ -1, %bb.j ], [ %i.l, %.loopexit ], [ %i.o, %bb.l ], [ %i.h, %bb.i ], [ %i.o, %bb.m ], [ %i.k, %bb.p ], [ %i.o, %bb.l ]
+  %.sroa.01.1 = phi i8 [ %i.d, %bb.f ], [ -1, %bb.j ], [ -1, %bb.j ], [ %2, %.loopexit ], [ %i.o, %bb.l ], [ %i.h, %bb.i ], [ %i.o, %bb.m ], [ %i.k, %bb.p ], [ %i.o, %bb.l ]
   ret i8 %.sroa.01.1
 
 bb.h:                                             ; preds = %bb.o, %bb.c
@@ -268,6 +268,7 @@ bb.o:                                             ; preds = %bb.k
   br label %bb.h
 
 .loopexit:                                        ; preds = %bb.k, %bb.n
+  %2 = phi i8 [ %i.l, %bb.n ], [ -1, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.g
 
@@ -322,7 +323,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.l, %bb.i, %.loopexit, %bb.l, %bb.m, %bb.j, %bb.j, %bb.p, %bb.f
-  %.sroa.01.1 = phi i8 [ %i.d, %bb.f ], [ -1, %bb.j ], [ -1, %bb.j ], [ %i.l, %.loopexit ], [ %i.o, %bb.l ], [ %i.h, %bb.i ], [ %i.o, %bb.m ], [ %i.k, %bb.p ], [ %i.o, %bb.l ]
+  %.sroa.01.1 = phi i8 [ %i.d, %bb.f ], [ -1, %bb.j ], [ -1, %bb.j ], [ %2, %.loopexit ], [ %i.o, %bb.l ], [ %i.h, %bb.i ], [ %i.o, %bb.m ], [ %i.k, %bb.p ], [ %i.o, %bb.l ]
   ret i8 %.sroa.01.1
 
 bb.h:                                             ; preds = %bb.o, %bb.c
@@ -388,6 +389,7 @@ bb.o:                                             ; preds = %bb.k
   br label %bb.h
 
 .loopexit:                                        ; preds = %bb.k, %bb.n
+  %2 = phi i8 [ %i.l, %bb.n ], [ -1, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.g
 

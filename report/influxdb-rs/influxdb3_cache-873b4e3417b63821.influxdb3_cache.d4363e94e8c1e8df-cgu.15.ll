@@ -202,10 +202,11 @@ bb.ce:                                            ; preds = %bb.w
   br i1 %i.he, label %bb.cf, label %bb.cu
 
 bb.cf:                                            ; preds = %bb.ce, %bb.w
+  %.lcssa282 = phi i8 [ 0, %bb.ce ], [ %i.dd, %bb.w ]
   %i.hf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 6, ptr %i.hf, align 8
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %i.dd, ptr %.sroa.410.0..sroa_idx, align 1
+  store i8 %.lcssa282, ptr %.sroa.410.0..sroa_idx, align 1
   store i64 -1, ptr %0, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !1136)
   call void @llvm.experimental.noalias.scope.decl(metadata !1137)
@@ -608,7 +609,7 @@ default.unreachable:                              ; preds = %_RINvXs2J_NtNtCs4NR
   %i.dh = phi ptr [ @105, %bb.u ], [ @46, %bb.r ], [ @102, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtCs1ElB0qm0ygX_13influxdb3_wal5FieldENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvMs0_NtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cacheNtB2k_9LastCache4push0EB2o_.exit ]
   %i.di = phi ptr [ inttoptr (i64 59 to ptr), %bb.u ], [ inttoptr (i64 157 to ptr), %bb.r ], [ inttoptr (i64 69 to ptr), %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtCs1ElB0qm0ygX_13influxdb3_wal5FieldENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvMs0_NtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cacheNtB2k_9LastCache4push0EB2o_.exit ]
   %i.dj = phi ptr [ @106, %bb.u ], [ @104, %bb.r ], [ @103, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtCs1ElB0qm0ygX_13influxdb3_wal5FieldENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvMs0_NtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cacheNtB2k_9LastCache4push0EB2o_.exit ]
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull %i.dh, ptr noundef nonnull %i.di, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dj) #26
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull %i.dh, ptr noundef nonnull %i.di, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dj) #26
           to label %.cont unwind label %.body102.thread385.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -1011,7 +1012,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.me = phi ptr [ @18, %bb.cf ], [ @0, %_RNvMNtNtCsjfzoCD6FJrB_12arrow_buffer7builder4nullNtB2_17NullBufferBuilder6append.exit.i.i.i ]
   %i.mf = phi i64 [ 35, %bb.cf ], [ 26, %_RNvMNtNtCsjfzoCD6FJrB_12arrow_buffer7builder4nullNtB2_17NullBufferBuilder6append.exit.i.i.i ]
   %i.mg = phi ptr [ @20, %bb.cf ], [ @2, %_RNvMNtNtCsjfzoCD6FJrB_12arrow_buffer7builder4nullNtB2_17NullBufferBuilder6append.exit.i.i.i ]
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.me, i64 noundef %i.mf, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.mg) #26
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.me, i64 noundef %i.mf, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.mg) #26
           to label %.cont364 unwind label %.loopexit.split-lp257.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont364:                                         ; preds = %.invoke363

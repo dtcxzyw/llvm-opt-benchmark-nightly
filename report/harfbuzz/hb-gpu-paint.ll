@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %_ZN15hb_draw_funcs_
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  %i.dc = call ptr @hb_gpu_draw_encode(ptr noundef nonnull %i.cw, ptr noundef nonnull %3) #13 ; 3 uses
+  %i.dc = call ptr @hb_gpu_draw_encode(ptr noundef nonnull %i.cw, ptr noundef nonnull %3) #13 ; 4 uses
   %.not58.i = icmp eq ptr %i.dc, null
   br i1 %.not58.i, label %_ZL18emit_clip_sub_blobP14hb_gpu_paint_tRNS_14pending_clip_tE.exit.thread23, label %bb.q, !prof !12
 
@@ -241,7 +241,8 @@ _ZN11hb_vector_tIP9hb_blob_tLb0EE12push_or_failIJRS1_EEEbDpOT_.exit.i: ; preds =
   br i1 %.not96.i, label %_ZL18emit_clip_sub_blobP14hb_gpu_paint_tRNS_14pending_clip_tE.exit.thread23, label %_ZL18emit_clip_sub_blobP14hb_gpu_paint_tRNS_14pending_clip_tE.exit, !prof !116
 
 _ZL18emit_clip_sub_blobP14hb_gpu_paint_tRNS_14pending_clip_tE.exit.thread23: ; preds = %bb.p, %_ZN11hb_vector_tIP9hb_blob_tLb0EE12push_or_failIJRS1_EEEbDpOT_.exit.i, %_ZN11hb_vector_tIP9hb_blob_tLb0EE12push_or_failIJRS1_EEEbDpOT_.exit.thread.i
-  call void @hb_blob_destroy(ptr noundef %i.dc) #13
+  %4 = phi ptr [ %i.dc, %_ZN11hb_vector_tIP9hb_blob_tLb0EE12push_or_failIJRS1_EEEbDpOT_.exit.thread.i ], [ %i.dc, %_ZN11hb_vector_tIP9hb_blob_tLb0EE12push_or_failIJRS1_EEEbDpOT_.exit.i ], [ null, %bb.p ]
+  call void @hb_blob_destroy(ptr noundef %4) #13
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 357
   store i8 1, ptr %i.dn, align 1, !tbaa !69
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13

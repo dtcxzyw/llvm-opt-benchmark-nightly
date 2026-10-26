@@ -204,8 +204,8 @@ bb.ab:                                            ; preds = %bb.z
   %i.df = zext i32 %i.de to i64                   ; 2 uses
   %i.dg = icmp sgt i32 %2, 0
   %i.dh = mul nsw i64 %i.br, -2
-  %min.iters.check = icmp ult i32 %2, 4
-  %min.iters.check1416 = icmp ult i32 %2, 16
+  %min.iters.check = icmp samesign ult i32 %2, 4
+  %min.iters.check1416 = icmp samesign ult i32 %2, 16
   %i.di = and i64 %wide.trip.count.i.i, 12
   %n.vec = and i64 %wide.trip.count.i.i, 2147483632 ; 4 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i
@@ -608,7 +608,7 @@ _ZL14countPolyVertsPKti.exit.us.i:                ; preds = %bb.bh, %._crit_edge
 
 .lr.ph.us.preheader.i:                            ; preds = %_ZL14countPolyVertsPKti.exit.us.i
   %wide.trip.count.i440 = zext nneg i32 %i.rt to i64 ; 3 uses
-  %min.iters.check1591 = icmp ult i32 %i.rt, 8
+  %min.iters.check1591 = icmp samesign ult i32 %i.rt, 8
   br i1 %min.iters.check1591, label %.lr.ph.us.i.preheader, label %vector.ph1592
 
 vector.ph1592:                                    ; preds = %.lr.ph.us.preheader.i
@@ -719,14 +719,14 @@ _ZL15canRemoveVertexP9rcContextR10rcPolyMesht.exit.thread580: ; preds = %bb.bi
 
 .lr.ph169.preheader.i:                            ; preds = %.preheader.i432
   %wide.trip.count198.i = zext nneg i32 %.178.lcssa.i to i64 ; 3 uses
-  %min.iters.check1578 = icmp ult i32 %.178.lcssa.i, 9
+  %min.iters.check1578 = icmp samesign ult i32 %.178.lcssa.i, 9
   br i1 %min.iters.check1578, label %.lr.ph169.i.preheader, label %vector.ph1579
 
 vector.ph1579:                                    ; preds = %.lr.ph169.preheader.i
   %i.tb = and i64 %wide.trip.count198.i, 7        ; 2 uses
   %i.tc = icmp eq i64 %i.tb, 0
   %i.td = select i1 %i.tc, i64 8, i64 %i.tb
-  %n.vec1580 = sub nsw i64 %wide.trip.count198.i, %i.td ; 2 uses
+  %n.vec1580 = sub nuw nsw i64 %wide.trip.count198.i, %i.td ; 2 uses
   br label %vector.body1581
 
 vector.body1581:                                  ; preds = %vector.body1581, %vector.ph1579
@@ -1002,7 +1002,7 @@ _ZL14countPolyVertsPKti.exit.i:                   ; preds = %bb.bp, %._crit_edge
 
 .lr.ph.preheader.i459:                            ; preds = %_ZL14countPolyVertsPKti.exit.i
   %wide.trip.count.i460 = zext nneg i32 %i.xm to i64 ; 3 uses
-  %min.iters.check1560 = icmp ult i32 %i.xm, 8
+  %min.iters.check1560 = icmp samesign ult i32 %i.xm, 8
   br i1 %min.iters.check1560, label %.lr.ph.i461.preheader, label %vector.ph1561
 
 vector.ph1561:                                    ; preds = %.lr.ph.preheader.i459
@@ -1186,11 +1186,11 @@ _ZL14countPolyVertsPKti.exit427.i:                ; preds = %bb.bu, %._crit_edge
 
 iter.check1540:                                   ; preds = %_ZL14countPolyVertsPKti.exit427.i
   %wide.trip.count710.i = zext nneg i32 %i.zo to i64 ; 7 uses
-  %min.iters.check1525 = icmp ult i32 %i.zo, 4
+  %min.iters.check1525 = icmp samesign ult i32 %i.zo, 4
   br i1 %min.iters.check1525, label %.lr.ph606.i.preheader, label %vector.main.loop.iter.check1526
 
 vector.main.loop.iter.check1526:                  ; preds = %iter.check1540
-  %min.iters.check1527 = icmp ult i32 %i.zo, 16
+  %min.iters.check1527 = icmp samesign ult i32 %i.zo, 16
   br i1 %min.iters.check1527, label %vec.epilog.ph1544, label %vector.ph1528
 
 vector.ph1528:                                    ; preds = %vector.main.loop.iter.check1526
@@ -1453,11 +1453,11 @@ _ZL14countPolyVertsPKti.exit435.i:                ; preds = %bb.cb, %._crit_edge
 
 iter.check1493:                                   ; preds = %_ZL14countPolyVertsPKti.exit435.i
   %wide.trip.count725.i = zext nneg i32 %i.add to i64 ; 6 uses
-  %min.iters.check1451 = icmp ult i32 %i.add, 8
+  %min.iters.check1451 = icmp samesign ult i32 %i.add, 8
   br i1 %min.iters.check1451, label %.lr.ph628.i.preheader, label %vector.main.loop.iter.check1452
 
 vector.main.loop.iter.check1452:                  ; preds = %iter.check1493
-  %min.iters.check1453 = icmp ult i32 %i.add, 16
+  %min.iters.check1453 = icmp samesign ult i32 %i.add, 16
   br i1 %min.iters.check1453, label %vec.epilog.ph1497, label %vector.ph1454
 
 vector.ph1454:                                    ; preds = %vector.main.loop.iter.check1452
@@ -1860,8 +1860,8 @@ bb.du:                                            ; preds = %bb.dt, %bb.ds
   %.pre774.i = load i32, ptr %i.cd, align 4, !tbaa !73
   %wide.trip.count767.i = zext i32 %i.ws to i64   ; 8 uses
   %i.axh = mul nsw i64 %i.xa, -2
-  %min.iters.check1425 = icmp ult i32 %i.ws, 4
-  %min.iters.check1427 = icmp ult i32 %i.ws, 16
+  %min.iters.check1425 = icmp samesign ult i32 %i.ws, 4
+  %min.iters.check1427 = icmp samesign ult i32 %i.ws, 16
   %i.axi = and i64 %wide.trip.count767.i, 12
   %n.vec1429 = and i64 %wide.trip.count767.i, 2147483632 ; 4 uses
   %cmp.n1436 = icmp eq i64 %n.vec1429, %wide.trip.count767.i
@@ -2027,7 +2027,8 @@ bb.dy:                                            ; preds = %.critedge418.i
   br label %.preheader
 
 .critedge592:                                     ; preds = %bb.dy, %bb.cv
-  tail call void @_Z6rcFreePv(ptr noundef %i.amt) #8
+  %4 = phi ptr [ %i.amt, %bb.dy ], [ null, %bb.cv ]
+  tail call void @_Z6rcFreePv(ptr noundef %4) #8
   tail call void @_Z6rcFreePv(ptr noundef nonnull %i.ams) #8
   tail call void @_Z6rcFreePv(ptr noundef nonnull %i.amn) #8
   tail call void @_Z6rcFreePv(ptr noundef nonnull %i.alo) #8

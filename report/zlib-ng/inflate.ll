@@ -205,7 +205,7 @@ bb.ed:                                            ; preds = %.lr.ph2086.preheade
   %i.ri = zext i8 %i.rh to i64
   %i.rj = shl nuw nsw i64 %i.ri, %i.rd
   %i.rk = add i64 %i.rj, %i.qz                    ; 3 uses
-  %indvars.iv.next2789 = add nuw nsw i64 %i.rd, 8 ; 3 uses
+  %indvars.iv.next2789 = add nuw nsw i64 %i.rd, 8 ; 2 uses
   %.not = icmp eq i32 %i.rc, 24
   br i1 %.not, label %._crit_edge2087.loopexit, label %.lr.ph2086.1
 
@@ -256,7 +256,7 @@ bb.eg:                                            ; preds = %.lr.ph2086.3
   %.lcssa4059 = phi i32 [ %i.rf, %bb.ed ], [ %i.rm, %bb.ee ], [ %i.ru, %bb.ef ], [ %i.sc, %bb.eg ]
   %.lcssa4058 = phi ptr [ %i.rg, %bb.ed ], [ %i.rn, %bb.ee ], [ %i.rv, %bb.ef ], [ %i.sd, %bb.eg ]
   %.lcssa4057 = phi i64 [ %i.rk, %bb.ed ], [ %i.rr, %bb.ee ], [ %i.rz, %bb.ef ], [ %i.sh, %bb.eg ]
-  %indvars.iv.next2789.lcssa = phi i64 [ %indvars.iv.next2789, %bb.ed ], [ %indvars.iv.next2789.1, %bb.ee ], [ %indvars.iv.next2789.2, %bb.ef ], [ 32, %bb.eg ]
+  %indvars.iv.next2789.lcssa = phi i64 [ 32, %bb.ed ], [ %indvars.iv.next2789.1, %bb.ee ], [ %indvars.iv.next2789.2, %bb.ef ], [ 32, %bb.eg ]
   %i.si = trunc nuw nsw i64 %indvars.iv.next2789.lcssa to i32
   br label %._crit_edge2087
 
@@ -520,7 +520,7 @@ bb.ev:                                            ; preds = %._crit_edge2819, %b
 .preheader1265:                                   ; preds = %.preheader1265.lr.ph, %bb.fg
   %.291978 = phi i32 [ %.28, %.preheader1265.lr.ph ], [ %.35, %bb.fg ] ; 4 uses
   %.299491977 = phi i64 [ %.28948, %.preheader1265.lr.ph ], [ %.35955, %bb.fg ] ; 4 uses
-  %.3310161976 = phi i32 [ %.321015, %.preheader1265.lr.ph ], [ %.391022, %bb.fg ] ; 5 uses
+  %.3310161976 = phi i32 [ %.321015, %.preheader1265.lr.ph ], [ %.391022, %bb.fg ] ; 4 uses
   %.3310811975 = phi ptr [ %.321080, %.preheader1265.lr.ph ], [ %.391087, %bb.fg ] ; 3 uses
   %.lcssa196919721974 = phi i32 [ %.promoted1971, %.preheader1265.lr.ph ], [ %.lcssa19691973, %bb.fg ] ; 11 uses
   %i.vn = and i64 %.299491977, %i.vm              ; 2 uses
@@ -768,14 +768,14 @@ bb.fe:                                            ; preds = %._crit_edge1943, %.
   br i1 %i.zc, label %bb.ff, label %iter.check
 
 iter.check:                                       ; preds = %bb.fe
-  %min.iters.check = icmp ult i32 %.3899, 4
+  %min.iters.check = icmp samesign ult i32 %.3899, 4
   %i.zd = sub nsw i32 0, %.3899
   %i.ze = icmp ugt i32 %.lcssa196919721974, %i.zd
   %or.cond3900 = select i1 %min.iters.check, i1 true, i1 %i.ze
   br i1 %or.cond3900, label %.preheader.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check3891 = icmp ult i32 %.3899, 16
+  %min.iters.check3891 = icmp samesign ult i32 %.3899, 16
   br i1 %min.iters.check3891, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -959,7 +959,7 @@ bb.fn:                                            ; preds = %bb.fm, %bb.l
 
 bb.fo:                                            ; preds = %bb.fn, %bb.l
   %.421090 = phi ptr [ %.411089, %bb.fn ], [ %.01048, %bb.l ] ; 4 uses
-  %.421025 = phi i32 [ %.411024, %bb.fn ], [ %.0983, %bb.l ] ; 7 uses
+  %.421025 = phi i32 [ %.411024, %bb.fn ], [ %.0983, %bb.l ] ; 6 uses
   %.38958 = phi i64 [ %.37957, %bb.fn ], [ %.0920, %bb.l ] ; 5 uses
   %.38 = phi i32 [ %.37, %bb.fn ], [ %.0909, %bb.l ] ; 5 uses
   %.3 = phi i32 [ %.2, %bb.fn ], [ %.0894, %bb.l ] ; 8 uses
@@ -1046,7 +1046,7 @@ bb.fs:                                            ; preds = %.lr.ph3769, %.lr.ph
 ._crit_edge1995:                                  ; preds = %._crit_edge1995.loopexit, %bb.fr
   %.lcssa1985 = phi ptr [ %i.abo, %bb.fr ], [ %i.aca, %._crit_edge1995.loopexit ] ; 2 uses
   %.431091.lcssa = phi ptr [ %.421090, %bb.fr ], [ %i.abu, %._crit_edge1995.loopexit ] ; 4 uses
-  %.431026.lcssa = phi i32 [ %.421025, %bb.fr ], [ %i.abt, %._crit_edge1995.loopexit ] ; 6 uses
+  %.431026.lcssa = phi i32 [ %.421025, %bb.fr ], [ %i.abt, %._crit_edge1995.loopexit ] ; 5 uses
   %.39959.lcssa = phi i64 [ %.38958, %bb.fr ], [ %i.aby, %._crit_edge1995.loopexit ] ; 5 uses
   %.39.lcssa = phi i32 [ %.38, %bb.fr ], [ %i.acd, %._crit_edge1995.loopexit ] ; 5 uses
   %.sroa.1868.0.copyload70.lcssa = phi i8 [ %.sroa.1868.0.copyload701987, %bb.fr ], [ %.sroa.1868.0.copyload70, %._crit_edge1995.loopexit ] ; 2 uses
@@ -1184,7 +1184,7 @@ bb.ga:                                            ; preds = %bb.fy
 bb.gb:                                            ; preds = %._crit_edge2822, %bb.ga
   %i.ads = phi i32 [ %i.adr, %bb.ga ], [ %.pre2823, %._crit_edge2822 ] ; 7 uses
   %.461094 = phi ptr [ %.451093, %bb.ga ], [ %.01048, %._crit_edge2822 ] ; 4 uses
-  %.461029 = phi i32 [ %.451028, %bb.ga ], [ %.0983, %._crit_edge2822 ] ; 6 uses
+  %.461029 = phi i32 [ %.451028, %bb.ga ], [ %.0983, %._crit_edge2822 ] ; 5 uses
   %.42962 = phi i64 [ %i.adj, %bb.ga ], [ %.0920, %._crit_edge2822 ] ; 4 uses
   %.42 = phi i32 [ %i.adk, %bb.ga ], [ %.0909, %._crit_edge2822 ] ; 5 uses
   %.4 = phi i32 [ %.3, %bb.ga ], [ %.0894, %._crit_edge2822 ] ; 2 uses
@@ -1255,7 +1255,7 @@ bb.gc:                                            ; preds = %._crit_edge2824, %.
 
 bb.gd:                                            ; preds = %bb.gc, %bb.l
   %.491097 = phi ptr [ %.481096, %bb.gc ], [ %.01048, %bb.l ] ; 3 uses
-  %.491032 = phi i32 [ %.481031, %bb.gc ], [ %.0983, %bb.l ] ; 5 uses
+  %.491032 = phi i32 [ %.481031, %bb.gc ], [ %.0983, %bb.l ] ; 4 uses
   %.45965 = phi i64 [ %.44964, %bb.gc ], [ %.0920, %bb.l ] ; 4 uses
   %.45 = phi i32 [ %.44, %bb.gc ], [ %.0909, %bb.l ] ; 4 uses
   %.5 = phi i32 [ %.4, %bb.gc ], [ %.0894, %bb.l ] ; 4 uses
@@ -1312,7 +1312,7 @@ bb.ge:                                            ; preds = %.lr.ph3832, %.lr.ph
 ._crit_edge2042:                                  ; preds = %._crit_edge2042.loopexit, %bb.gd
   %.lcssa2032 = phi ptr [ %i.aev, %bb.gd ], [ %i.afh, %._crit_edge2042.loopexit ] ; 2 uses
   %.501098.lcssa = phi ptr [ %.491097, %bb.gd ], [ %i.afb, %._crit_edge2042.loopexit ] ; 4 uses
-  %.501033.lcssa = phi i32 [ %.491032, %bb.gd ], [ %i.afa, %._crit_edge2042.loopexit ] ; 6 uses
+  %.501033.lcssa = phi i32 [ %.491032, %bb.gd ], [ %i.afa, %._crit_edge2042.loopexit ] ; 5 uses
   %.46966.lcssa = phi i64 [ %.45965, %bb.gd ], [ %i.aff, %._crit_edge2042.loopexit ] ; 5 uses
   %.46.lcssa = phi i32 [ %.45, %bb.gd ], [ %i.afk, %._crit_edge2042.loopexit ] ; 5 uses
   %.sroa.1868.0.copyload74.lcssa = phi i8 [ %.sroa.1868.0.copyload742034, %bb.gd ], [ %.sroa.1868.0.copyload74, %._crit_edge2042.loopexit ] ; 2 uses
@@ -1437,7 +1437,7 @@ bb.gi:                                            ; preds = %bb.gg
 bb.gj:                                            ; preds = %._crit_edge2827, %bb.gi
   %i.agz = phi i32 [ %i.agy, %bb.gi ], [ %.pre2828, %._crit_edge2827 ] ; 7 uses
   %.531101 = phi ptr [ %.521100, %bb.gi ], [ %.01048, %._crit_edge2827 ] ; 4 uses
-  %.531036 = phi i32 [ %.521035, %bb.gi ], [ %.0983, %._crit_edge2827 ] ; 6 uses
+  %.531036 = phi i32 [ %.521035, %bb.gi ], [ %.0983, %._crit_edge2827 ] ; 5 uses
   %.49969 = phi i64 [ %i.ags, %bb.gi ], [ %.0920, %._crit_edge2827 ] ; 4 uses
   %.49 = phi i32 [ %i.agt, %bb.gi ], [ %.0909, %._crit_edge2827 ] ; 5 uses
   %.6 = phi i32 [ %.5, %bb.gi ], [ %.0894, %._crit_edge2827 ] ; 2 uses
@@ -1840,57 +1840,64 @@ bb.ht:                                            ; preds = %bb.hr, %._crit_edge
   br label %.loopexit1260
 
 .loopexit1260.loopexit2945:                       ; preds = %.lr.ph1928.preheader, %.lr.ph1928
+  %.33101619763980 = phi i32 [ %.3310161976, %.lr.ph1928 ], [ 0, %.lr.ph1928.preheader ] ; 2 uses
   %.309501926.lcssa = phi i64 [ %i.vy, %.lr.ph1928 ], [ %.299491977, %.lr.ph1928.preheader ]
-  %i.anm = zext i32 %.3310161976 to i64
-  %i.ann = shl i32 %.3310161976, 3
+  %i.anm = zext i32 %.33101619763980 to i64
+  %i.ann = shl i32 %.33101619763980, 3
   %i.ano = add i32 %i.ann, %.291978
   %scevgep.le = getelementptr i8, ptr %.3310811975, i64 %i.anm
   br label %.loopexit1260
 
 .loopexit1260.loopexit2946:                       ; preds = %.lr.ph2075.preheader, %.lr.ph2075
+  %.5310364179 = phi i32 [ %.531036, %.lr.ph2075 ], [ 0, %.lr.ph2075.preheader ] ; 2 uses
   %.509702073.lcssa = phi i64 [ %i.ahj, %.lr.ph2075 ], [ %.49969, %.lr.ph2075.preheader ]
-  %i.anp = shl i32 %.531036, 3
+  %i.anp = shl i32 %.5310364179, 3
   %i.anq = add i32 %.49, %i.anp
-  %i.anr = zext i32 %.531036 to i64
+  %i.anr = zext i32 %.5310364179 to i64
   %scevgep2787.le = getelementptr i8, ptr %.531101, i64 %i.anr
   br label %.loopexit1260
 
 .loopexit1260.loopexit2947:                       ; preds = %.lr.ph2062.preheader, %.lr.ph2062
+  %.501033.lcssa4170 = phi i32 [ %.501033.lcssa, %.lr.ph2062 ], [ 0, %.lr.ph2062.preheader ] ; 2 uses
   %.479672060.lcssa = phi i64 [ %i.age, %.lr.ph2062 ], [ %.46966.lcssa, %.lr.ph2062.preheader ]
-  %i.ans = zext i32 %.501033.lcssa to i64
-  %i.ant = shl i32 %.501033.lcssa, 3
+  %i.ans = zext i32 %.501033.lcssa4170 to i64
+  %i.ant = shl i32 %.501033.lcssa4170, 3
   %i.anu = add i32 %i.ant, %.46.lcssa
   %scevgep2785.le = getelementptr i8, ptr %.501098.lcssa, i64 %i.ans
   br label %.loopexit1260
 
 .loopexit1260.loopexit2948:                       ; preds = %.lr.ph2041.preheader, %.lr.ph2041
+  %.4910324161 = phi i32 [ %.491032, %.lr.ph2041 ], [ 0, %.lr.ph2041.preheader ] ; 2 uses
   %.469662038.lcssa = phi i64 [ %i.aff, %.lr.ph2041 ], [ %.45965, %.lr.ph2041.preheader ]
-  %i.anv = zext i32 %.491032 to i64
-  %i.anw = shl i32 %.491032, 3
+  %i.anv = zext i32 %.4910324161 to i64
+  %i.anw = shl i32 %.4910324161, 3
   %i.anx = add i32 %i.anw, %.45
   %scevgep2781.le = getelementptr i8, ptr %.491097, i64 %i.anv
   br label %.loopexit1260
 
 .loopexit1260.loopexit2949:                       ; preds = %.lr.ph2026.preheader, %.lr.ph2026
+  %.4610294143 = phi i32 [ %.461029, %.lr.ph2026 ], [ 0, %.lr.ph2026.preheader ] ; 2 uses
   %.439632024.lcssa = phi i64 [ %i.aec, %.lr.ph2026 ], [ %.42962, %.lr.ph2026.preheader ]
-  %i.any = shl i32 %.461029, 3
+  %i.any = shl i32 %.4610294143, 3
   %i.anz = add i32 %.42, %i.any
-  %i.aoa = zext i32 %.461029 to i64
+  %i.aoa = zext i32 %.4610294143 to i64
   %scevgep2778.le = getelementptr i8, ptr %.461094, i64 %i.aoa
   br label %.loopexit1260
 
 .loopexit1260.loopexit2950:                       ; preds = %.lr.ph2013.preheader, %.lr.ph2013
+  %.431026.lcssa4134 = phi i32 [ %.431026.lcssa, %.lr.ph2013 ], [ 0, %.lr.ph2013.preheader ] ; 2 uses
   %.409602011.lcssa = phi i64 [ %i.acx, %.lr.ph2013 ], [ %.39959.lcssa, %.lr.ph2013.preheader ]
-  %i.aob = zext i32 %.431026.lcssa to i64
-  %i.aoc = shl i32 %.431026.lcssa, 3
+  %i.aob = zext i32 %.431026.lcssa4134 to i64
+  %i.aoc = shl i32 %.431026.lcssa4134, 3
   %i.aod = add i32 %i.aoc, %.39.lcssa
   %scevgep2776.le = getelementptr i8, ptr %.431091.lcssa, i64 %i.aob
   br label %.loopexit1260
 
 .loopexit1260.loopexit2951:                       ; preds = %.lr.ph1994.preheader, %.lr.ph1994
+  %.4210254125 = phi i32 [ %.421025, %.lr.ph1994 ], [ 0, %.lr.ph1994.preheader ] ; 2 uses
   %.399591991.lcssa = phi i64 [ %i.aby, %.lr.ph1994 ], [ %.38958, %.lr.ph1994.preheader ]
-  %i.aoe = zext i32 %.421025 to i64
-  %i.aof = shl i32 %.421025, 3
+  %i.aoe = zext i32 %.4210254125 to i64
+  %i.aof = shl i32 %.4210254125, 3
   %i.aog = add i32 %i.aof, %.38
   %scevgep2772.le = getelementptr i8, ptr %.421090, i64 %i.aoe
   br label %.loopexit1260

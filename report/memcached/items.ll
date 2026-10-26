@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.d = tail call ptr @slabs_alloc(i32 noundef %1, i32 noundef 0) #19 ; 3 uses
+  %i.d = tail call ptr @slabs_alloc(i32 noundef %1, i32 noundef 0) #19 ; 2 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.e, label %bb.i
 
@@ -228,12 +228,13 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   br i1 %exitcond.not, label %.thread, label %bb.b, !llvm.loop !89
 
 bb.i:                                             ; preds = %bb.d, %bb.f
+  %.lcssa = phi ptr [ %i.d, %bb.d ], [ null, %bb.f ] ; 2 uses
   %.not = icmp eq i32 %.021, 0
   br i1 %.not, label %bb.j, label %.thread
 
 .thread:                                          ; preds = %bb.h, %bb.i
   %.020 = phi i32 [ %.021, %bb.i ], [ 10, %bb.h ]
-  %.117 = phi ptr [ %i.d, %bb.i ], [ null, %bb.h ]
+  %.117 = phi ptr [ %.lcssa, %bb.i ], [ null, %bb.h ]
   %i.l = zext i32 %1 to i64                       ; 2 uses
   %i.m = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %i.l ; 2 uses
   %i.n = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.m) #19 ; 0 uses
@@ -247,7 +248,7 @@ bb.i:                                             ; preds = %bb.d, %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %.thread, %bb.i
-  %.118 = phi ptr [ %.117, %.thread ], [ %i.d, %bb.i ]
+  %.118 = phi ptr [ %.117, %.thread ], [ %.lcssa, %bb.i ]
   ret ptr %.118
 }
 
@@ -650,7 +651,7 @@ bb.ba:                                            ; preds = %bb.az
   %.1128 = phi i32 [ %i.ac, %bb.g ], [ %.0127261, %._crit_edge319 ], [ %.0127261, %do_item_remove.exit ], [ %.0127261, %bb.k ], [ %.0127261, %bb.w ], [ %.0127261, %do_item_remove.exit161 ] ; 2 uses
   %.5 = phi i64 [ %.0113263, %bb.g ], [ %.0113263, %._crit_edge319 ], [ %.0113263, %do_item_remove.exit ], [ %.0113263, %bb.k ], [ %.0113263, %bb.w ], [ %.2115, %do_item_remove.exit161 ]
   %i.fd = add nsw i32 %.1128, -1
-  %6 = icmp sgt i32 %.1128, 1
+  %6 = icmp samesign ugt i32 %.1128, 1
   %i.fe = icmp ne ptr %i.r, null
   %i.ff = select i1 %6, i1 %i.fe, i1 false
   br i1 %i.ff, label %bb.c, label %.thread336, !llvm.loop !90
@@ -1053,7 +1054,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.a
   %i.am = or i16 %i.d, 8
   store i16 %i.am, ptr %i.c, align 2, !tbaa !35
-  tail call void @do_item_update(ptr noundef %1)
+  tail call void @do_item_update(ptr noundef nonnull %1)
   br label %bb.k
 
 bb.k:                                             ; preds = %lru_bump_async.exit.thread, %bb.b, %bb.f, %bb.i, %bb.d, %bb.j
@@ -1456,7 +1457,7 @@ bb.be:                                            ; preds = %bb.bd
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %i.fw = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %indvars.iv.next.i.3
   %i.fx = load i64, ptr %i.fw, align 8, !tbaa !18
-  %i.fy = add i64 %i.fx, %i.fu                    ; 6 uses
+  %i.fy = add i64 %i.fx, %i.fu                    ; 5 uses
   %i.fz = icmp ugt i64 %i.fy, %i.et
   br i1 %i.fz, label %bb.ax, label %bb.bf
 
@@ -1477,7 +1478,7 @@ bb.bh:                                            ; preds = %bb.bg
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.bh, %bb.bg, %bb.ba, %bb.ay
-  %i.ge = phi i64 [ %.lcssa, %bb.ba ], [ %i.fy, %bb.bh ], [ %.lcssa, %bb.ay ], [ %i.fy, %bb.bg ] ; 2 uses
+  %i.ge = phi i64 [ %.lcssa, %bb.ba ], [ 0, %bb.bh ], [ %.lcssa, %bb.ay ], [ %i.fy, %bb.bg ] ; 2 uses
   %i.gf = phi i32 [ %i.fj, %bb.ba ], [ %i.gd, %bb.bh ], [ %i.fh, %bb.ay ], [ %i.gc, %bb.bg ] ; 2 uses
   %i.gg = icmp ugt i32 %i.gf, 3600
   br i1 %i.gg, label %bb.bi, label %.thread.thread.i

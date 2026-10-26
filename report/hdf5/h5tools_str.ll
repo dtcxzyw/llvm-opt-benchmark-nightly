@@ -204,8 +204,9 @@ sub_1:                                            ; preds = %sub_0
   br i1 %i.aq, label %.thread38, label %bb.d
 
 bb.f:                                             ; preds = %bb.e, %.tail
+  %.lcssa = phi i64 [ %i.x, %bb.e ], [ 0, %.tail ]
   %i.ar = load i64, ptr %i.l, align 8, !tbaa !15
-  %i.as = add i64 %i.ar, %i.x
+  %i.as = add i64 %i.ar, %.lcssa
   store i64 %i.as, ptr %i.l, align 8, !tbaa !15
   %i.at = load ptr, ptr %0, align 8, !tbaa !14
   br label %.thread38

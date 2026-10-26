@@ -204,10 +204,11 @@ _RNvXs0_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSear
   br i1 %.not.i, label %bb.a, label %_RNvYNtNtNtCsf3Ta7LF998c_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCs5yXxDE1DkoT_4tera.exit, !dbg !6013
 
 _RNvYNtNtNtCsf3Ta7LF998c_4core3str7pattern12CharSearcherNtB4_15ReverseSearcher16next_reject_backCs5yXxDE1DkoT_4tera.exit: ; preds = %bb.a, %_RNvXs0_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i
-    #dbg_value(i64 %.reass7.i, !5917, !DIExpression(), !5950)
-    #dbg_value(i64 %.reass7.i, !5915, !DIExpression(), !5949)
+  %.reass7.i.lcssa = phi i64 [ 0, %bb.a ], [ %.reass7.i, %_RNvXs0_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_12CharSearcherNtB5_15ReverseSearcher9next_back.exit.i ]
+    #dbg_value(i64 %.reass7.i.lcssa, !5917, !DIExpression(), !5950)
+    #dbg_value(i64 %.reass7.i.lcssa, !5915, !DIExpression(), !5949)
   %i.am = insertvalue { ptr, i64 } poison, ptr %0, 0, !dbg !6014
-  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass7.i, 1, !dbg !6014
+  %i.an = insertvalue { ptr, i64 } %i.am, i64 %.reass7.i.lcssa, 1, !dbg !6014
   ret { ptr, i64 } %i.an, !dbg !6014
 }
 

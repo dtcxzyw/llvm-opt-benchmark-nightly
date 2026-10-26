@@ -205,7 +205,7 @@ _ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i:       ; preds = %bb.d, %bb.c
   %.sroa.03.1.idx.i.i.i.i.i.i = select i1 %i.aq, i64 8, i64 0
   %.sroa.03.1.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.03.019.i.i.i.i.i.i, i64 %.sroa.03.1.idx.i.i.i.i.i.i
   %i.ar = add nsw i64 %.020.i.i.i.i.i.i, -1
-  %6 = icmp sgt i64 %.020.i.i.i.i.i.i, 1
+  %6 = icmp samesign ugt i64 %.020.i.i.i.i.i.i, 1
   br i1 %6, label %.lr.ph.i.i.i.i.i.i, label %_ZNSt6vectorIbSaIbEE19_M_initialize_rangeISt19_Bit_const_iteratorEEvT_S4_St20forward_iterator_tag.exit, !llvm.loop !2140
 
 _ZNSt6vectorIbSaIbEE19_M_initialize_rangeISt19_Bit_const_iteratorEEvT_S4_St20forward_iterator_tag.exit: ; preds = %_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i, %_ZNSt6vectorIbSaIbEE13_M_initializeEm.exit.i
@@ -608,12 +608,13 @@ _ZNSt6vectorISt7variantIJPKN4absl12lts_202605264CordEEESaIS6_EE9push_backEOS6_.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %2 = phi i64 [ %i.m, %.loopexit ], [ 9223372036854775792, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt7variantIJPKN4absl12lts_202605264CordEEESaIS6_EED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.m) #40
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %2) #40
   br label %_ZNSt6vectorISt7variantIJPKN4absl12lts_202605264CordEEESaIS6_EED2Ev.exit
 
 _ZNSt6vectorISt7variantIJPKN4absl12lts_202605264CordEEESaIS6_EED2Ev.exit: ; preds = %bb.g, %bb.h
