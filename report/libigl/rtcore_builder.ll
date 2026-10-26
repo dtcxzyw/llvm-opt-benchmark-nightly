@@ -205,8 +205,7 @@ _ZN6embree5lzcntEi.exit.thread:                   ; preds = %_ZN6embree5lzcntEi.
   %i.eh = phi i32 [ %i.cx, %_ZN6embree5lzcntEi.exit61 ], [ %i.dw, %_ZN6embree5lzcntEi.exit ] ; 4 uses
   %i.ei = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit61 ], [ %i.ds, %_ZN6embree5lzcntEi.exit ] ; 3 uses
   %.pn = phi i32 [ %i.dp, %_ZN6embree5lzcntEi.exit61 ], [ %i.ed, %_ZN6embree5lzcntEi.exit ]
-  %.036.i51 = sub nsw i32 31, %.pn
-  %14 = lshr exact i32 -2147483648, %.036.i51
+  %14 = shl nuw i32 1, %.pn
   %i.ej = add i32 %i.ei, 1
   %.not38.i54123 = icmp eq i32 %i.ej, %i.eh
   br i1 %.not38.i54123, label %._crit_edge, label %.lr.ph
@@ -373,8 +372,7 @@ _ZN6embree5lzcntEi.exit63.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.gy = phi ptr [ %i.ev, %_ZN6embree5lzcntEi.exit65 ], [ %i.go, %_ZN6embree5lzcntEi.exit63 ] ; 4 uses
   %i.gz = phi ptr [ %i.ew, %_ZN6embree5lzcntEi.exit65 ], [ %i.go, %_ZN6embree5lzcntEi.exit63 ]
   %.pn118 = phi i32 [ %i.gm, %_ZN6embree5lzcntEi.exit65 ], [ %i.gv, %_ZN6embree5lzcntEi.exit63 ]
-  %.036.i = sub nsw i32 31, %.pn118
-  %15 = lshr exact i32 -2147483648, %.036.i
+  %15 = shl nuw i32 1, %.pn118
   %i.ha = add i32 %i.ga, 1
   %.not38.i129 = icmp eq i32 %i.ha, %i.gf
   br i1 %.not38.i129, label %._crit_edge133, label %.lr.ph132

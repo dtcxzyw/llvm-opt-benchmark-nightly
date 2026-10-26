@@ -205,14 +205,14 @@ bb.bz:                                            ; preds = %.loopexit.i299.i, %
   %i.apa = load i8, ptr %i.aoz, align 1, !tbaa !37
   %i.apb = zext i8 %i.apa to i32                  ; 2 uses
   %i.apc = getelementptr inbounds nuw [4 x i8], ptr %i.aot, i64 %indvars.iv22.i.i
-  %i.apd = load i32, ptr %i.apc, align 4, !tbaa !39 ; 3 uses
+  %i.apd = load i32, ptr %i.apc, align 4, !tbaa !39 ; 4 uses
   %i.ape = add nsw i32 %i.apd, 1                  ; 4 uses
   %.not.not.i.i = icmp slt i32 %i.apd, %i.aos
   br i1 %.not.not.i.i, label %bb.ca, label %.lr.ph.i294.i
 
 .lr.ph.i294.i:                                    ; preds = %bb.bz
-  %i.apf = sub nsw i32 31, %i.apd                 ; 4 uses
-  %4 = shl nsw i32 -1, %i.apf                     ; 3 uses
+  %i.apf = sub nsw i32 31, %i.apd                 ; 3 uses
+  %4 = ashr exact i32 -2147483648, %i.apd         ; 3 uses
   %umax.i.i = call i32 @llvm.umax.i32(i32 %i.apb, i32 1) ; 2 uses
   %wide.trip.count.i295.i = zext nneg i32 %umax.i.i to i64 ; 2 uses
   %xtraiter712 = and i64 %wide.trip.count.i295.i, 1
@@ -441,7 +441,7 @@ bb.ce:                                            ; preds = %.loopexit.i307.i, %
   %i.atz = getelementptr inbounds nuw [4 x i8], ptr @at9_q_unit_to_coeff_idx, i64 %indvars.iv.next6.i306.i
   %i.aua = load i32, ptr %i.atz, align 4, !tbaa !39 ; 2 uses
   %i.aub = getelementptr inbounds nuw [4 x i8], ptr %i.atx, i64 %indvars.iv5.i305.i
-  %i.auc = load i32, ptr %i.aub, align 4, !tbaa !39 ; 3 uses
+  %i.auc = load i32, ptr %i.aub, align 4, !tbaa !39 ; 4 uses
   %i.aud = add nuw nsw i32 %i.auc, 1              ; 3 uses
   %i.aue = icmp slt i32 %i.auc, 1
   br i1 %i.aue, label %.loopexit.i307.i, label %bb.cf
@@ -453,8 +453,8 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %i.auh, label %.lr.ph.i308.i, label %.loopexit.i307.i
 
 .lr.ph.i308.i:                                    ; preds = %bb.cf
-  %i.aui = sub nsw i32 31, %i.auc                 ; 4 uses
-  %5 = shl nsw i32 -1, %i.aui                     ; 3 uses
+  %i.aui = sub nsw i32 31, %i.auc                 ; 3 uses
+  %5 = ashr exact i32 -2147483648, %i.auc         ; 3 uses
   %i.auj = sext i32 %i.aug to i64                 ; 5 uses
   %wide.trip.count.i309.i = sext i32 %i.aua to i64 ; 3 uses
   %i.auk = sub nsw i64 %wide.trip.count.i309.i, %i.auj

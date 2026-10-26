@@ -205,8 +205,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !302  ; 10 uses
   %i.d = trunc i64 %i.c to i32                    ; 4 uses
-  %i.e = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.d, i1 false) ; 12 uses
-  %i.f = sub nsw i32 31, %i.e                     ; 17 uses
+  %i.e = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.d, i1 false) ; 14 uses
+  %i.f = sub nsw i32 31, %i.e                     ; 16 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 8 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !243
   %i.i = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.h, i1 false) ; 3 uses
@@ -566,8 +566,8 @@ _ZN4llvm15SmallVectorImplIjE7reserveEm.exit.i.i..lr.ph.preheader.i.i_crit_edge.i
   %i.ds = icmp ugt i64 %.sroa.2273.0.copyload, 40
   %i.dt = and i64 %.sroa.2273.0.copyload, 4294967295 ; 2 uses
   %.not328.i = icmp eq i64 %i.dt, 0
-  %.neg.i.i = shl nsw i32 -1, %i.f                ; 2 uses
-  %25 = xor i32 %.neg.i.i, -1                     ; 4 uses
+  %.neg.i.i = ashr exact i32 -2147483648, %i.e    ; 3 uses
+  %25 = lshr i32 2147483647, %i.e                 ; 2 uses
   br i1 %i.dr, label %.lr.ph12.i.split.us, label %.lr.ph12.i.split.preheader
 
 .lr.ph12.i.split.preheader:                       ; preds = %.lr.ph12.i
@@ -747,7 +747,7 @@ _ZN4llvm11SmallVectorIhLj40EEC2Em.exit.i:         ; preds = %.lr.ph.preheader.i.
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i149.epil.preheader
   %.pre.i150 = load i64, ptr %i.dp, align 8, !tbaa !296, !noalias !1004
   %.pre403 = and i64 %.pre.i150, 4294967295       ; 2 uses
-  %i.fb = load ptr, ptr %7, align 8, !tbaa !295, !noalias !1004 ; 3 uses
+  %i.fb = load ptr, ptr %7, align 8, !tbaa !295, !noalias !1004 ; 4 uses
   %.not7.i.i = icmp eq i64 %.pre403, 0
   br i1 %.not7.i.i, label %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i", label %.lr.ph10.split.i.i
 
@@ -762,7 +762,7 @@ _ZN4llvm11SmallVectorIhLj40EEC2Em.exit.i:         ; preds = %.lr.ph.preheader.i.
 
 bb.i:                                             ; preds = %.lr.ph10.split.i.i
   %i.fg = icmp eq i32 %.0228.i.i, -1
-  br i1 %i.fg, label %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i.loopexit", label %.preheader.preheader.i.i
+  br i1 %i.fg, label %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i", label %.preheader.preheader.i.i
 
 .preheader.preheader.i.i:                         ; preds = %bb.i
   %i.fh = trunc nuw i64 %indvars.iv.i.i to i32    ; 3 uses
@@ -832,19 +832,15 @@ bb.m:                                             ; preds = %.preheader.i.i.epil
   %.4.ph.i.i = phi i32 [ %.0228.i.i, %.lr.ph10.split.i.i ], [ %.3.i.i.1, %..loopexit_crit_edge.i.i.loopexit.unr-lcssa ], [ %.15.i.i.epil.init, %.preheader.i.i.epil.preheader ], [ %spec.select.i.i.epil, %bb.m ] ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %.pre403
-  br i1 %.not.i.i, label %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i.loopexit", label %.lr.ph10.split.i.i, !llvm.loop !960
+  br i1 %.not.i.i, label %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i", label %.lr.ph10.split.i.i, !llvm.loop !960
 
-"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i.loopexit": ; preds = %bb.i, %..loopexit_crit_edge.i.i
-  %.5.i.i.ph = phi i32 [ -1, %bb.i ], [ %.4.ph.i.i, %..loopexit_crit_edge.i.i ]
-  %.pre405 = xor i32 %.5.i.i.ph, -1
-  br label %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i"
-
-"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i": ; preds = %._crit_edge.i.thread, %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i.loopexit", %._crit_edge.i
-  %26 = phi ptr [ %i.fb, %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i.loopexit" ], [ %i.fb, %._crit_edge.i ], [ %i.er, %._crit_edge.i.thread ] ; 2 uses
-  %.pre-phi406 = phi i32 [ %.pre405, %"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i.loopexit" ], [ %25, %._crit_edge.i ], [ %25, %._crit_edge.i.thread ]
+"_ZZN4llvm11HvxSelector21getPerfectCompletionsEN12_GLOBAL__N_111ShuffleMaskEjENK3$_0clENS_8ArrayRefIhEEj.exit.i": ; preds = %..loopexit_crit_edge.i.i, %bb.i, %._crit_edge.i.thread, %._crit_edge.i
+  %26 = phi ptr [ %i.fb, %._crit_edge.i ], [ %i.er, %._crit_edge.i.thread ], [ %i.fb, %bb.i ], [ %i.fb, %..loopexit_crit_edge.i.i ] ; 2 uses
+  %.5.i.i = phi i32 [ %.neg.i.i, %._crit_edge.i ], [ %.neg.i.i, %._crit_edge.i.thread ], [ %.4.ph.i.i, %..loopexit_crit_edge.i.i ], [ -1, %bb.i ]
+  %27 = xor i32 %.5.i.i, -1
   %i.fz = load ptr, ptr %11, align 8, !tbaa !31, !alias.scope !1004
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %i.fz, i64 %indvars.iv27.i
-  store i32 %.pre-phi406, ptr %i.ga, align 4, !tbaa !34
+  store i32 %27, ptr %i.ga, align 4, !tbaa !34
   %i.gb = icmp eq ptr %26, %i.do
   br i1 %i.gb, label %_ZN4llvm11SmallVectorIhLj40EED2Ev.exit.i, label %bb.n
 
