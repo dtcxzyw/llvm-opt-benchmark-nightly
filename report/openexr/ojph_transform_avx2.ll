@@ -204,12 +204,10 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load <8 x float>, ptr %i.g, align 32, !tbaa !11 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.n = load <8 x float>, ptr %i.m, align 32, !tbaa !11 ; 2 uses
-  %6 = shufflevector <8 x float> %i.l, <8 x float> %i.n, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %7 = shufflevector <8 x float> %i.l, <8 x float> %i.n, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %8 = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %9 = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %8, ptr %i.i, align 32, !tbaa !11
-  store <8 x float> %9, ptr %i.h, align 32, !tbaa !11
+  %6 = shufflevector <8 x float> %i.l, <8 x float> %i.n, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %7 = shufflevector <8 x float> %i.l, <8 x float> %i.n, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %6, ptr %i.i, align 32, !tbaa !11
+  store <8 x float> %7, ptr %i.h, align 32, !tbaa !11
   %i.o = add nsw i32 %4, -16
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 64
   %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -232,24 +230,20 @@ bb.c:                                             ; preds = %bb.b
   %i.t = load <8 x float>, ptr %.01922.i.i, align 32, !tbaa !11 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 32
   %i.v = load <8 x float>, ptr %i.u, align 32, !tbaa !11 ; 2 uses
-  %10 = shufflevector <8 x float> %i.t, <8 x float> %i.v, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %11 = shufflevector <8 x float> %i.t, <8 x float> %i.v, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %12 = shufflevector <8 x float> %10, <8 x float> %11, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %13 = shufflevector <8 x float> %10, <8 x float> %11, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %12, ptr %.024.i.i, align 32, !tbaa !11
-  store <8 x float> %13, ptr %.01823.i.i, align 32, !tbaa !11
+  %8 = shufflevector <8 x float> %i.t, <8 x float> %i.v, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %9 = shufflevector <8 x float> %i.t, <8 x float> %i.v, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %8, ptr %.024.i.i, align 32, !tbaa !11
+  store <8 x float> %9, ptr %.01823.i.i, align 32, !tbaa !11
   %i.w = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 64
   %i.x = getelementptr inbounds nuw i8, ptr %.024.i.i, i64 32
   %i.y = getelementptr inbounds nuw i8, ptr %.01823.i.i, i64 32
   %i.z = load <8 x float>, ptr %i.w, align 32, !tbaa !11 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 96
   %i.ab = load <8 x float>, ptr %i.aa, align 32, !tbaa !11 ; 2 uses
-  %14 = shufflevector <8 x float> %i.z, <8 x float> %i.ab, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %15 = shufflevector <8 x float> %i.z, <8 x float> %i.ab, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %16 = shufflevector <8 x float> %14, <8 x float> %15, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %17 = shufflevector <8 x float> %14, <8 x float> %15, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %16, ptr %i.x, align 32, !tbaa !11
-  store <8 x float> %17, ptr %i.y, align 32, !tbaa !11
+  %10 = shufflevector <8 x float> %i.z, <8 x float> %i.ab, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %11 = shufflevector <8 x float> %i.z, <8 x float> %i.ab, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %10, ptr %i.x, align 32, !tbaa !11
+  store <8 x float> %11, ptr %i.y, align 32, !tbaa !11
   %i.ac = add nsw i32 %.02021.i.i, -32
   %i.ad = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 128
   %i.ae = getelementptr inbounds nuw i8, ptr %.024.i.i, i64 64
