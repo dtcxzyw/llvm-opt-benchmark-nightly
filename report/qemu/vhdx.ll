@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %vhdx_block_translat
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %vhdx_block_translate.exit, %vhdx_block_translate.exit, %vhdx_block_translate.exit, %vhdx_block_translate.exit
-  %.0103 = phi i8 [ 1, %bb.e ], [ 0, %vhdx_block_translate.exit ], [ 0, %vhdx_block_translate.exit ], [ 0, %vhdx_block_translate.exit ], [ 0, %vhdx_block_translate.exit ] ; 3 uses
+  %8 = phi i1 [ true, %bb.e ], [ false, %vhdx_block_translate.exit ], [ false, %vhdx_block_translate.exit ], [ false, %vhdx_block_translate.exit ], [ false, %vhdx_block_translate.exit ] ; 3 uses
   %i.bf = load ptr, ptr %i.r, align 8
   %i.bg = load ptr, ptr %i.bf, align 8
   %i.bh = call i64 @bdrv_co_getlength(ptr noundef %i.bg) #16 ; 3 uses
@@ -220,7 +220,6 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.bm, label %.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %8 = trunc nuw i8 %.0103 to i1
   br i1 %8, label %bb.j, label %.critedge.i
 
 bb.j:                                             ; preds = %bb.i
@@ -242,7 +241,7 @@ bb.j:                                             ; preds = %bb.i
 
 vhdx_allocate_block.exit:                         ; preds = %bb.j, %bb.g, %.critedge.i
   %.sroa.18.2 = phi i64 [ %.sroa.18.1, %bb.g ], [ %i.bl, %bb.j ], [ %i.bl, %.critedge.i ] ; 4 uses
-  %.2105 = phi i8 [ %.0103, %bb.g ], [ 0, %bb.j ], [ %.0103, %.critedge.i ]
+  %.2105 = phi i1 [ %8, %bb.g ], [ false, %bb.j ], [ %8, %.critedge.i ]
   %.1.i = phi i32 [ %i.bj, %bb.g ], [ %i.br, %bb.j ], [ %i.bw, %.critedge.i ] ; 2 uses
   %i.bx = icmp slt i32 %.1.i, 0
   br i1 %i.bx, label %.thread, label %bb.k
@@ -263,8 +262,7 @@ bb.k:                                             ; preds = %vhdx_allocate_block
   %i.ch = load i64, ptr %i.t, align 8
   %i.ci = shl nuw nsw i64 %i.as, 3
   %i.cj = add i64 %i.ch, %i.ci                    ; 3 uses
-  %9 = trunc nuw i8 %.2105 to i1
-  br i1 %9, label %bb.m, label %bb.l
+  br i1 %.2105, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ck = add i64 %.sroa.18.2, %i.ax

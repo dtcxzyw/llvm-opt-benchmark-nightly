@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !23   ; 2 uses
-  %i.h = icmp eq ptr %i.g, @_Py_TrueStruct
+  %i.h = icmp eq ptr %i.g, @_Py_TrueStruct        ; 2 uses
   br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -212,11 +212,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.d, label %_ZZN8nanobind6detail11func_createILb0ELb1EZNS_11bind_vectorISt6vectorIbSaIbEELNS_9rv_policy5valueE1EJEEENS_6class_IT_JEEENS_6handleEPKcDpOT1_EUlRS5_RKbE_vJSH_SJ_EJLm0ELm1EEJNS_5scopeENS_4nameENS_9is_methodENS_9lock_selfEA39_cEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSR_jPNS0_12cleanup_listEE_clES15_S16_jS18_.exit
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.sink.i = phi i8 [ 1, %bb.b ], [ 0, %bb.c ]    ; 2 uses
+  %.sink.i = phi i8 [ 1, %bb.b ], [ 0, %bb.c ]
   store i8 %.sink.i, ptr %4, align 8, !tbaa !111
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !106
-  %5 = trunc nuw i8 %.sink.i to i1
-  call void @_ZNSt6vectorIbSaIbEE9push_backEb(ptr noundef nonnull align 8 dereferenceable(40) %i.j, i1 noundef zeroext %5) #29
+  call void @_ZNSt6vectorIbSaIbEE9push_backEb(ptr noundef nonnull align 8 dereferenceable(40) %i.j, i1 noundef zeroext %i.h) #29
   br label %_ZZN8nanobind6detail11func_createILb0ELb1EZNS_11bind_vectorISt6vectorIbSaIbEELNS_9rv_policy5valueE1EJEEENS_6class_IT_JEEENS_6handleEPKcDpOT1_EUlRS5_RKbE_vJSH_SJ_EJLm0ELm1EEJNS_5scopeENS_4nameENS_9is_methodENS_9lock_selfEA39_cEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSR_jPNS0_12cleanup_listEE_clES15_S16_jS18_.exit
 
 _ZZN8nanobind6detail11func_createILb0ELb1EZNS_11bind_vectorISt6vectorIbSaIbEELNS_9rv_policy5valueE1EJEEENS_6class_IT_JEEENS_6handleEPKcDpOT1_EUlRS5_RKbE_vJSH_SJ_EJLm0ELm1EEJNS_5scopeENS_4nameENS_9is_methodENS_9lock_selfEA39_cEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSR_jPNS0_12cleanup_listEE_clES15_S16_jS18_.exit: ; preds = %bb.c, %bb.a, %bb.d
@@ -619,7 +618,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !23   ; 2 uses
-  %i.n = icmp eq ptr %i.m, @_Py_TrueStruct
+  %i.n = icmp eq ptr %i.m, @_Py_TrueStruct        ; 2 uses
   br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -627,7 +626,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.o, label %bb.e, label %_ZZN8nanobind6detail11func_createILb0ELb1EZNS_11bind_vectorISt6vectorIbSaIbEELNS_9rv_policy5valueE1EJEEENS_6class_IT_JEEENS_6handleEPKcDpOT1_EUlRS5_lRKbE0_vJSH_lSJ_EJLm0ELm1ELm2EEJNS_5scopeENS_4nameENS_9is_methodENS_9lock_selfEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSQ_jPNS0_12cleanup_listEE_clES14_S15_jS17_.exit
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %i.p = phi i8 [ 1, %bb.c ], [ 0, %bb.d ]        ; 2 uses
+  %i.p = phi i8 [ 1, %bb.c ], [ 0, %bb.d ]
   store i8 %i.p, ptr %4, align 8, !tbaa !111
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !106  ; 3 uses
   %i.r = load i64, ptr %i.f, align 8, !tbaa !81   ; 2 uses
@@ -666,12 +665,11 @@ bb.h:                                             ; preds = %bb.f
   resume { ptr, i32 } %i.ah
 
 _ZN8nanobind6detail4wrapElm.exit.i:               ; preds = %bb.e
-  %5 = trunc nuw i8 %i.p to i1
   %i.ai = lshr i64 %spec.select.i.i, 6
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.ai ; 3 uses
   %i.ak = and i64 %spec.select.i.i, 63
   %i.al = shl nuw i64 1, %i.ak                    ; 2 uses
-  br i1 %5, label %bb.i, label %bb.j
+  br i1 %i.n, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_ZN8nanobind6detail4wrapElm.exit.i
   %i.am = load i64, ptr %i.aj, align 8, !tbaa !81

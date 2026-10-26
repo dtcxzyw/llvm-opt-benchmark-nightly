@@ -202,7 +202,7 @@ kissat_next_clause.exit.i:                        ; preds = %.preheader.i.i.i, %
 
 .lr.ph.i20:                                       ; preds = %kissat_next_clause.exit.i, %bb.r
   %.0137246.i = phi ptr [ %i.cz, %bb.r ], [ %i.aw, %kissat_next_clause.exit.i ] ; 2 uses
-  %.0138245.i = phi i8 [ %.2.i, %bb.r ], [ 0, %kissat_next_clause.exit.i ]
+  %.0138245.i = phi i1 [ %3, %bb.r ], [ false, %kissat_next_clause.exit.i ]
   %.0139244.i = phi i32 [ %.3.i, %bb.r ], [ 0, %kissat_next_clause.exit.i ] ; 5 uses
   %.0142243.i = phi i32 [ %.3145.i, %bb.r ], [ -1, %kissat_next_clause.exit.i ] ; 4 uses
   %.0146242.i = phi i32 [ %.3149.i, %bb.r ], [ -1, %kissat_next_clause.exit.i ] ; 4 uses
@@ -210,14 +210,12 @@ kissat_next_clause.exit.i:                        ; preds = %.preheader.i.i.i, %
   %.0154240.i = phi i32 [ %.3157.i, %bb.r ], [ -1, %kissat_next_clause.exit.i ] ; 5 uses
   %.0158239.i = phi ptr [ %.2160.i, %bb.r ], [ %i.bl, %kissat_next_clause.exit.i ] ; 5 uses
   %i.bp = load i32, ptr %.0137246.i, align 4, !tbaa !64 ; 7 uses
-  %3 = trunc nuw i8 %.0138245.i to i1
-  br i1 %3, label %bb.r, label %bb.l
+  br i1 %.0138245.i, label %bb.r, label %bb.l
 
 .critedge.i:                                      ; preds = %bb.r
-  %4 = trunc nuw i8 %.2.i to i1
   %i.bq = lshr i32 %.3149.i, 1
   %i.br = zext nneg i32 %i.bq to i64
-  br i1 %4, label %bb.s, label %.critedge.thread.i
+  br i1 %3, label %bb.s, label %.critedge.thread.i
 
 bb.l:                                             ; preds = %.lr.ph.i20
   %i.bs = zext i32 %i.bp to i64
@@ -301,7 +299,7 @@ bb.r:                                             ; preds = %kissat_map_literal.
   %.3149.i = phi i32 [ %.0146242.i, %.lr.ph.i20 ], [ %.1147.i, %kissat_map_literal.exit.i ], [ %.0146242.i, %bb.n ], [ %.0146242.i, %bb.m ] ; 2 uses
   %.3145.i = phi i32 [ %.0142243.i, %.lr.ph.i20 ], [ %.1143.i, %kissat_map_literal.exit.i ], [ %.0142243.i, %bb.n ], [ %.0142243.i, %bb.m ] ; 2 uses
   %.3.i = phi i32 [ %.0139244.i, %.lr.ph.i20 ], [ %.1140.i, %kissat_map_literal.exit.i ], [ %.0139244.i, %bb.n ], [ %.0139244.i, %bb.m ]
-  %.2.i = phi i8 [ 1, %.lr.ph.i20 ], [ 0, %kissat_map_literal.exit.i ], [ 1, %bb.n ], [ 0, %bb.m ] ; 2 uses
+  %3 = phi i1 [ true, %.lr.ph.i20 ], [ false, %kissat_map_literal.exit.i ], [ true, %bb.n ], [ false, %bb.m ] ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.0137246.i, i64 4 ; 2 uses
   %.not193.i = icmp eq ptr %i.cz, %i.bo
   br i1 %.not193.i, label %.critedge.i, label %.lr.ph.i20, !llvm.loop !84

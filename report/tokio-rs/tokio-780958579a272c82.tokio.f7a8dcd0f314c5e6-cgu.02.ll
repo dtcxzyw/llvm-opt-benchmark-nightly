@@ -204,15 +204,14 @@ bb.d:                                             ; preds = %_RNvMNtCs3oUPovFnLW
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit55.i: ; preds = %bb.ae, %bb.ad, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit53.i, %.split.i, %.loopexit.split-lp.i
   %.sroa.0.09.i = phi ptr [ %.sroa.0.340.i, %bb.ae ], [ %.sroa.0.340.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit53.i ], [ %.sroa.0.340.i, %bb.ad ], [ %.sroa.0.340.i, %.split.i ], [ %.sroa.0.110.ph.i, %.loopexit.split-lp.i ] ; 3 uses
   %.pn32.i = phi { ptr, i32 } [ %.pn63.i, %bb.ae ], [ %lpad.thr_comm.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit53.i ], [ %.pn63.i, %bb.ad ], [ %i.az, %.split.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ] ; 3 uses
-  %.sroa.020.0.i = phi i8 [ %.sroa.020.5.i, %bb.ae ], [ %.sroa.020.5.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit53.i ], [ %.sroa.020.5.i, %bb.ad ], [ %.sroa.020.5.i, %.split.i ], [ %.sroa.020.1.ph.i, %.loopexit.split-lp.i ]
-  %2 = trunc nuw i8 %.sroa.020.0.i to i1
+  %.sroa.020.0.i = phi i1 [ %2, %bb.ae ], [ %2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit53.i ], [ %2, %bb.ad ], [ %2, %.split.i ], [ %.sroa.020.1.ph.i, %.loopexit.split-lp.i ]
   %i.aa = icmp ne ptr %.sroa.0.09.i, null
-  %or.cond85.not.i = select i1 %2, i1 %i.aa, i1 false
+  %or.cond85.not.i = select i1 %.sroa.020.0.i, i1 %i.aa, i1 false
   br i1 %or.cond85.not.i, label %bb.ag, label %.body
 
 .loopexit.split-lp.i:                             ; preds = %bb.q, %bb.m
   %.sroa.0.110.ph.i = phi ptr [ %.sroa.0.340.i, %bb.q ], [ null, %bb.m ]
-  %.sroa.020.1.ph.i = phi i8 [ %.sroa.020.5.i, %bb.q ], [ 1, %bb.m ]
+  %.sroa.020.1.ph.i = phi i1 [ %2, %bb.q ], [ true, %bb.m ]
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit55.i
@@ -279,8 +278,7 @@ bb.k:                                             ; preds = %bb.j
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit.i: ; preds = %bb.s, %bb.q, %bb.p
   %.sroa.0.0.i18 = phi i8 [ 0, %bb.s ], [ 1, %bb.q ], [ 1, %bb.p ] ; 2 uses
-  %3 = trunc nuw i8 %.sroa.020.5.i to i1
-  br i1 %3, label %.thread52.i, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread
+  br i1 %2, label %.thread52.i, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread
 
 bb.l:                                             ; preds = %bb.k
   %i.am = cmpxchg weak ptr %i.c, i8 0, i8 1 acquire monotonic, align 1
@@ -299,7 +297,8 @@ bb.m:                                             ; preds = %bb.l
   %.sroa.09.0243749.i = phi i64 [ %i.al, %bb.l ], [ %i.al, %bb.m ], [ %i.al, %bb.k ], [ %i.ap, %.thread.loopexit.i ] ; 3 uses
   %.sroa.0.340.i = phi ptr [ null, %bb.l ], [ null, %bb.m ], [ %.sroa.0.295.i, %bb.k ], [ %.sroa.0.3.i, %.thread.loopexit.i ] ; 9 uses
   %storemerge.i = phi ptr [ %i.c, %bb.l ], [ %i.c, %bb.m ], [ %.sroa.0.295.i, %bb.k ], [ %.sroa.0.3.i, %.thread.loopexit.i ] ; 12 uses
-  %.sroa.020.5.i = phi i8 [ 1, %bb.l ], [ 1, %bb.m ], [ 0, %bb.k ], [ 0, %.thread.loopexit.i ] ; 7 uses
+  %.not83.i = phi i1 [ false, %bb.l ], [ false, %bb.m ], [ true, %bb.k ], [ true, %.thread.loopexit.i ]
+  %2 = phi i1 [ true, %bb.l ], [ true, %bb.m ], [ false, %bb.k ], [ false, %.thread.loopexit.i ] ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 24
   %i.ar = load i8, ptr %i.aq, align 8, !range !10, !noundef !4
   %i.as = trunc nuw i8 %i.ar to i1
@@ -421,10 +420,9 @@ bb.y:                                             ; preds = %_RINvNtCs3oUPovFnLW
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit.i unwind label %.split.i, !inline_history !279
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit.i: ; preds = %bb.y, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit49.i
-  %4 = trunc nuw i8 %.sroa.020.5.i to i1
-  %5 = icmp ne ptr %.sroa.0.340.i, null
-  %or.cond.not.i = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond.not.i, label %bb.z, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread26
+  %3 = icmp eq ptr %.sroa.0.340.i, null
+  %or.cond.not.i = select i1 %.not83.i, i1 true, i1 %3
+  br i1 %or.cond.not.i, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread26, label %bb.z
 
 bb.z:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit.i
   %i.bv = cmpxchg ptr %.sroa.0.340.i, i8 1, i8 0 release monotonic, align 1

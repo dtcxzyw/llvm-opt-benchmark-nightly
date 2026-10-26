@@ -205,7 +205,8 @@ bb.fa:                                            ; preds = %_RNvMsi_NtNtCsf3Ta7
 
 _RNvMs0_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_6IpAddr12to_canonical.exit.i.i.i.i.i: ; preds = %bb.fa, %bb.ez, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i.i.i.i.i.i, %bb.ey
   %.sroa.7482.0.i.i.i.i.i = phi i128 [ %.sroa.7489.13.extract.shift.i.i.i.i.i, %bb.fa ], [ %.sroa.7489.1.insert.ext.i.i.i.i.i, %bb.ez ], [ %.sroa.7489.1.copyload.i.i.i.i.i, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i.i.i.i.i.i ], [ %.sroa.7489.1.copyload.i.i.i.i.i, %bb.ey ] ; 2 uses
-  %.sroa.0480.0.i.i.i.i.i = phi i8 [ 0, %bb.fa ], [ 0, %bb.ez ], [ 1, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i.i.i.i.i.i ], [ 1, %bb.ey ] ; 2 uses
+  %3 = phi i1 [ false, %bb.fa ], [ false, %bb.ez ], [ true, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i.i.i.i.i.i ], [ true, %bb.ey ]
+  %.sroa.0480.0.i.i.i.i.i = phi i8 [ 0, %bb.fa ], [ 0, %bb.ez ], [ 1, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i.i.i.i.i.i ], [ 1, %bb.ey ]
   %i.wp = trunc nuw i16 %.sroa.0459.0.copyload.i.i.i.i.i to i1 ; 3 uses
   br i1 %i.wp, label %bb.fb, label %bb.fc
 
@@ -266,17 +267,14 @@ bb.fd:                                            ; preds = %_RNvMsi_NtNtCsf3Ta7
 
 _RNvMs0_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_6IpAddr12to_canonical.exit195.i.i.i.i.i: ; preds = %bb.fd, %bb.fc, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i163.i.i.i.i.i, %bb.fb
   %.sroa.7494.0.i.i.i.i.i = phi i128 [ %.sroa.7501.13.extract.shift.i.i.i.i.i, %bb.fd ], [ %.sroa.7501.1.insert.ext.i.i.i.i.i, %bb.fc ], [ %.sroa.7501.5.insert.insert.i.i.i.i.i, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i163.i.i.i.i.i ], [ %.sroa.7501.5.insert.insert.i.i.i.i.i, %bb.fb ] ; 2 uses
-  %.sroa.0492.0.i.i.i.i.i = phi i8 [ 0, %bb.fd ], [ 0, %bb.fc ], [ 1, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i163.i.i.i.i.i ], [ 1, %bb.fb ] ; 2 uses
-  %3 = trunc nuw i8 %.sroa.0492.0.i.i.i.i.i to i1
+  %.sroa.0492.0.i.i.i.i.i = phi i8 [ 0, %bb.fd ], [ 0, %bb.fc ], [ 1, %_RNvMsi_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i163.i.i.i.i.i ], [ 1, %bb.fb ]
   %i.xa = icmp eq i8 %.sroa.0480.0.i.i.i.i.i, %.sroa.0492.0.i.i.i.i.i
   br i1 %i.xa, label %bb.fe, label %_RNvYNtNtNtCsf3Ta7LF998c_4core3net7ip_addr6IpAddrNtNtB8_3cmp9PartialEq2neCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i
 
 bb.fe:                                            ; preds = %_RNvMs0_NtNtCsf3Ta7LF998c_4core3net7ip_addrNtB5_6IpAddr12to_canonical.exit195.i.i.i.i.i
-  %4 = trunc nuw i8 %.sroa.0480.0.i.i.i.i.i to i1
-  br i1 %4, label %.split.i.i.i.i.i, label %_RNvYNtNtNtCsf3Ta7LF998c_4core3net7ip_addr6IpAddrNtNtB8_3cmp9PartialEq2neCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i
+  br i1 %3, label %.split.i.i.i.i.i, label %_RNvYNtNtNtCsf3Ta7LF998c_4core3net7ip_addr6IpAddrNtNtB8_3cmp9PartialEq2neCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i
 
 .split.i.i.i.i.i:                                 ; preds = %bb.fe
-  call void @llvm.assume(i1 %3)
   %i.xb = icmp eq i128 %.sroa.7482.0.i.i.i.i.i, %.sroa.7494.0.i.i.i.i.i
   br i1 %i.xb, label %bb.ff, label %_RNvYNtNtNtCsf3Ta7LF998c_4core3net7ip_addr6IpAddrNtNtB8_3cmp9PartialEq2neCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i
 

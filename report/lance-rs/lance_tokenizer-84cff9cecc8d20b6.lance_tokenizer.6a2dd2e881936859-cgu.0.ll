@@ -205,12 +205,11 @@ bb.d:                                             ; preds = %_RNvXs2J_NtNtCscI6d
   %i.ar = ptrtoint ptr %.sroa.0.1 to i64
   %i.as = sub i64 %.sroa.10.024, %i.f
   %i.at = add i64 %i.as, %i.ar
-  %cond = icmp eq i32 %.sroa.4.0.i.ph.i, 95
+  %cond = icmp eq i32 %.sroa.4.0.i.ph.i, 95       ; 2 uses
   br i1 %cond, label %bb.f, label %bb.g
 
 .thread:                                          ; preds = %bb.i
-  %4 = trunc nuw i64 %.sroa.06.1 to i1
-  br i1 %4, label %bb.e, label %.thread.thread
+  br i1 %cond, label %.thread.thread, label %bb.e
 
 bb.e:                                             ; preds = %.thread
   invoke fastcc void @_RNvNtCs97bFUy425Ar_15lance_tokenizer21word_delimiter_filter13split_segment(ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.69.1, i64 noundef %2, i1 noundef zeroext %3, ptr noalias noundef align 8 dereferenceable(24) %i.a)
@@ -235,7 +234,7 @@ bb.h:                                             ; preds = %bb.f
           to label %bb.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
-  %.sroa.06.1 = phi i64 [ 0, %bb.f ], [ 1, %bb.g ], [ 0, %bb.h ] ; 2 uses
+  %.sroa.06.1 = phi i64 [ 0, %bb.f ], [ 1, %bb.g ], [ 0, %bb.h ]
   %.sroa.69.1 = phi i64 [ undef, %bb.f ], [ %spec.select16, %bb.g ], [ undef, %bb.h ] ; 2 uses
   %i.av = icmp eq ptr %.sroa.0.1, %i.d
   br i1 %i.av, label %.thread, label %.lr.ph

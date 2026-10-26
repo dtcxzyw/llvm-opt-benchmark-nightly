@@ -200,7 +200,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.i = icmp ne ptr %i.h, null
   %i.j = icmp ne ptr %4, null
   %or.cond = and i1 %i.j, %i.i
-  %or.cond3 = select i1 %or.cond, i1 %i.g, i1 false
+  %or.cond3 = select i1 %or.cond, i1 %i.g, i1 false ; 5 uses
   br i1 %or.cond3, label %bb.f, label %bb.l
 
 bb.f:                                             ; preds = %bb.e
@@ -238,7 +238,6 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.e
   %.159 = phi i32 [ %spec.store.select, %bb.k ], [ %spec.select, %bb.e ]
-  %.0 = phi i8 [ 1, %bb.k ], [ 0, %bb.e ]         ; 4 uses
   %i.s = call i32 @onas_curl_init(ptr noundef nonnull %i.a, ptr noundef %0, i64 noundef %1, i64 noundef %6) ; 2 uses
   %.not77 = icmp eq i32 %i.s, 0
   br i1 %.not77, label %bb.n, label %bb.m
@@ -277,8 +276,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %12 = trunc nuw i8 %.0 to i1
-  %. = select i1 %12, ptr %11, ptr null
+  %. = select i1 %or.cond3, ptr %11, ptr null
   %i.aa = call i32 @onas_dsresult(ptr noundef %i.v, i32 noundef %.159, i64 noundef %3, ptr noundef %4, ptr noundef %., i32 noundef %5, i64 noundef %6, ptr noundef nonnull %i.b, ptr noundef %9, ptr noundef %10) #9 ; 4 uses
   %i.ab = icmp sgt i32 %i.aa, -1
   br i1 %i.ab, label %bb.u, label %bb.v
@@ -309,7 +307,7 @@ bb.y:                                             ; preds = %bb.x, %bb.u
 select.unfold:                                    ; preds = %bb.y, %.thread
   %i.ah = phi ptr [ null, %.thread ], [ %i.v, %bb.y ] ; 2 uses
   %.156 = phi i32 [ %.05585, %.thread ], [ %i.ag, %bb.y ] ; 3 uses
-  %.1 = phi i8 [ 0, %.thread ], [ %.0, %bb.y ]    ; 2 uses
+  %.1 = phi i1 [ false, %.thread ], [ %or.cond3, %bb.y ] ; 2 uses
   %or.cond5 = icmp ugt i32 %.156, 1
   br i1 %or.cond5, label %.thread86, label %.thread94
 
@@ -319,7 +317,7 @@ select.unfold:                                    ; preds = %bb.y, %.thread
 
 .thread86:                                        ; preds = %.thread86.sink.split, %select.unfold
   %i.ai = phi ptr [ %i.ah, %select.unfold ], [ null, %.thread86.sink.split ] ; 3 uses
-  %.193 = phi i8 [ %.1, %select.unfold ], [ %.0, %.thread86.sink.split ] ; 3 uses
+  %.193 = phi i1 [ %.1, %select.unfold ], [ %or.cond3, %.thread86.sink.split ] ; 3 uses
   %.15691 = phi i32 [ %.156, %select.unfold ], [ 9, %.thread86.sink.split ] ; 4 uses
   br i1 %.not, label %bb.ab, label %bb.z
 
@@ -346,7 +344,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 .thread94:                                        ; preds = %bb.y, %bb.ab, %bb.ac, %bb.ad, %select.unfold
   %i.an = phi ptr [ %i.ai, %bb.ab ], [ %i.ai, %bb.ac ], [ %i.ai, %bb.ad ], [ %i.ah, %select.unfold ], [ %i.v, %bb.y ] ; 2 uses
-  %.192 = phi i8 [ %.193, %bb.ab ], [ %.193, %bb.ac ], [ %.193, %bb.ad ], [ %.1, %select.unfold ], [ %.0, %bb.y ]
+  %.192 = phi i1 [ %.193, %bb.ab ], [ %.193, %bb.ac ], [ %.193, %bb.ad ], [ %.1, %select.unfold ], [ %or.cond3, %bb.y ]
   %.15690 = phi i32 [ %.15691, %bb.ab ], [ %.15691, %bb.ac ], [ %.15691, %bb.ad ], [ %.156, %select.unfold ], [ 1, %bb.y ]
   %.not81 = icmp eq ptr %i.an, null
   br i1 %.not81, label %bb.af, label %bb.ae
@@ -356,8 +354,7 @@ bb.ae:                                            ; preds = %.thread94
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %.thread94
-  %13 = trunc nuw i8 %.192 to i1
-  br i1 %13, label %bb.ag, label %bb.ah
+  br i1 %.192, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
   call void @action_source_close(ptr noundef nonnull %11) #9

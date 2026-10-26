@@ -204,12 +204,7 @@ bb.x:                                             ; preds = %bb.t, %_ZNK14NodeDe
   %i.ij = load i8, ptr %i.b, align 1, !range !78
   %i.ik = trunc nuw i8 %i.ij to i1
   %or.cond3 = select i1 %i.ii, i1 %i.ik, i1 false
-  br i1 %or.cond3, label %bb.y, label %13
-
-13:                                               ; preds = %bb.x
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 422
-  store i8 0, ptr %14, align 2, !tbaa !145
-  br label %bb.af
+  br i1 %or.cond3, label %bb.y, label %bb.af
 
 bb.y:                                             ; preds = %bb.x
   %i.il = and i32 %i.if, 65535
@@ -241,7 +236,7 @@ _ZNK14NodeDefManager3getEt.exit454:               ; preds = %bb.z, %bb.aa
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 1415
   %i.jd = load i8, ptr %i.jc, align 1, !tbaa !144, !range !78, !noundef !79
   %i.je = trunc nuw i8 %i.jd to i1
-  br i1 %i.je, label %15, label %bb.ab
+  br i1 %i.je, label %bb.ae, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZNK14NodeDefManager3getEt.exit454
   %i.jf = and i32 %i.ig, 65535
@@ -265,20 +260,16 @@ _ZNK14NodeDefManager3getEt.exit455:               ; preds = %bb.ac, %bb.ad
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 1415
   %i.jp = load i8, ptr %i.jo, align 1, !tbaa !144, !range !78, !noundef !79
   %i.jq = trunc nuw i8 %i.jp to i1
-  br i1 %i.jq, label %15, label %bb.ae
+  br i1 %i.jq, label %bb.ae, label %bb.af
 
-15:                                               ; preds = %_ZNK14NodeDefManager3getEt.exit455, %_ZNK14NodeDefManager3getEt.exit454
-  br label %bb.ae
-
-bb.ae:                                            ; preds = %15, %_ZNK14NodeDefManager3getEt.exit455
-  %16 = phi i8 [ 0, %_ZNK14NodeDefManager3getEt.exit455 ], [ 1, %15 ] ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 422
-  store i8 %16, ptr %17, align 2, !tbaa !145
-  %18 = trunc nuw i8 %16 to i1
+bb.ae:                                            ; preds = %_ZNK14NodeDefManager3getEt.exit455, %_ZNK14NodeDefManager3getEt.exit454
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %13
-  %19 = phi i1 [ %18, %bb.ae ], [ false, %13 ]
+bb.af:                                            ; preds = %_ZNK14NodeDefManager3getEt.exit455, %bb.ae, %bb.x
+  %.sink896 = phi i8 [ 0, %bb.x ], [ 0, %_ZNK14NodeDefManager3getEt.exit455 ], [ 1, %bb.ae ]
+  %13 = phi i1 [ false, %bb.x ], [ false, %_ZNK14NodeDefManager3getEt.exit455 ], [ true, %bb.ae ]
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 422
+  store i8 %.sink896, ptr %14, align 2, !tbaa !145
   %i.jr = getelementptr inbounds nuw i8, ptr %0, i64 243 ; 3 uses
   %i.js = load i8, ptr %i.jr, align 1, !tbaa !166, !range !78, !noundef !79
   %i.jt = trunc nuw i8 %i.js to i1
@@ -335,7 +326,7 @@ _Z8rangelimIfffET_RKS0_RKT0_RKT1_.exit:           ; preds = %bb.ak
   %..i456 = select nsz i1 %i.ks, float %i.kp, float %i.kq
   %.0.i457 = select nsz i1 %i.kr, float %i.ko, float %..i456
   store float %.0.i457, ptr %.sroa.2252.0..sroa_idx, align 8, !tbaa !82
-  br i1 %19, label %bb.ap, label %bb.al
+  br i1 %13, label %bb.ap, label %bb.al
 
 bb.al:                                            ; preds = %_Z8rangelimIfffET_RKS0_RKT0_RKT1_.exit
   %.sroa.2.0.extract.shift.i = lshr i48 %.sroa.0154.0.copyload, 16
