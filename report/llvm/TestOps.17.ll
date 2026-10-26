@@ -205,7 +205,7 @@ _ZN4mlir9Operation10getRegionsEv.exit:            ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local i64 @_ZN4test6detail46TestReturnWithIgnoredValueOpGenericAdaptorBase27getODSOperandIndexAndLengthEjj(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #3 align 2 {
 bb.a:
-  %.not = icmp eq i32 %1, 0                       ; 2 uses
+  %.not = icmp eq i32 %1, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
@@ -218,24 +218,27 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind.a = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %3 = icmp eq <4 x i32> %vec.ind.a, zeroinitializer
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %4, %vector.body ]
+  %vec.ind.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %3 = icmp ne <4 x i32> %vec.ind, splat (i32 1)
   %i.a = zext <4 x i1> %3 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %4 = add <4 x i32> %vec.phi, %i.a               ; 2 uses
+  %i.b = add <4 x i32> %vec.ind.a, splat (i32 1)  ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i32> %vec.ind.a, splat (i32 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.ind, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !404
 
 middle.block:                                     ; preds = %vector.body
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %bin.rdx = add <4 x i32> %i.b, %4
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader17
 
 .lr.ph.preheader17:                               ; preds = %.lr.ph.preheader, %middle.block
-  %.015.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
-  %.01114.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.015.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.01114.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -244,7 +247,8 @@ middle.block:                                     ; preds = %vector.body
   %i.f = add i32 %2, -2
   %i.g = mul nsw i32 %.0.lcssa, %i.f
   %i.h = add i32 %i.g, %1
-  %i.i = select i1 %.not, i32 %i.e, i32 1
+  %.sroa.idx1.not = icmp eq i32 %1, 1
+  %i.i = select i1 %.sroa.idx1.not, i32 1, i32 %i.e
   %.sroa.2.0.insert.ext = zext i32 %i.i to i64
   %.sroa.2.0.insert.shift = shl nuw i64 %.sroa.2.0.insert.ext, 32
   %.sroa.0.0.insert.ext = zext i32 %i.h to i64
@@ -252,12 +256,12 @@ middle.block:                                     ; preds = %vector.body
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader17, %.lr.ph
-  %.015 = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph, %.lr.ph.preheader17 ]
-  %.01114 = phi i32 [ %i.k, %.lr.ph ], [ %.01114.ph, %.lr.ph.preheader17 ] ; 2 uses
-  %4 = icmp eq i32 %.01114, 0
-  %i.j = zext i1 %4 to i32
-  %spec.select = add nuw nsw i32 %.015, %i.j      ; 2 uses
-  %i.k = add nuw i32 %.01114, 1                   ; 2 uses
+  %.015 = phi i32 [ %i.k, %.lr.ph ], [ %.015.ph, %.lr.ph.preheader17 ] ; 2 uses
+  %.01114 = phi i32 [ %spec.select, %.lr.ph ], [ %.01114.ph, %.lr.ph.preheader17 ]
+  %.sroa.idx.not = icmp ne i32 %.015, 1
+  %i.j = zext i1 %.sroa.idx.not to i32
+  %spec.select = add nuw nsw i32 %.01114, %i.j    ; 2 uses
+  %i.k = add nuw i32 %.015, 1                     ; 2 uses
   %exitcond.not = icmp eq i32 %i.k, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !405
 }
@@ -336,7 +340,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @_ZN4test28TestReturnWithIgnoredValueOp27getODSOperandIndexAndLengthEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #6 align 2 {
 bb.a:
-  %.not = icmp eq i32 %1, 0                       ; 2 uses
+  %.not = icmp eq i32 %1, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
@@ -349,24 +353,27 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind.a = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %2 = icmp eq <4 x i32> %vec.ind.a, zeroinitializer
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %3, %vector.body ]
+  %vec.ind.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %2 = icmp ne <4 x i32> %vec.ind, splat (i32 1)
   %i.a = zext <4 x i1> %2 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %3 = add <4 x i32> %vec.phi, %i.a               ; 2 uses
+  %i.b = add <4 x i32> %vec.ind.a, splat (i32 1)  ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i32> %vec.ind.a, splat (i32 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.ind, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !406
 
 middle.block:                                     ; preds = %vector.body
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %bin.rdx = add <4 x i32> %i.b, %3
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader16
 
 .lr.ph.preheader16:                               ; preds = %.lr.ph.preheader, %middle.block
-  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
-  %.01013.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.01013.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -389,7 +396,8 @@ _ZN4mlir9Operation14getNumOperandsEv.exit:        ; preds = %._crit_edge, %bb.b
   %i.m = add i32 %i.k, -2
   %i.n = mul nsw i32 %i.m, %.0.lcssa
   %i.o = add i32 %i.n, %1
-  %i.p = select i1 %.not, i32 %i.l, i32 1
+  %.sroa.idx1.not = icmp eq i32 %1, 1
+  %i.p = select i1 %.sroa.idx1.not, i32 1, i32 %i.l
   %.sroa.2.0.insert.ext = zext i32 %i.p to i64
   %.sroa.2.0.insert.shift = shl nuw i64 %.sroa.2.0.insert.ext, 32
   %.sroa.0.0.insert.ext = zext i32 %i.o to i64
@@ -397,12 +405,12 @@ _ZN4mlir9Operation14getNumOperandsEv.exit:        ; preds = %._crit_edge, %bb.b
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader16, %.lr.ph
-  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader16 ]
-  %.01013 = phi i32 [ %i.r, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader16 ] ; 2 uses
-  %3 = icmp eq i32 %.01013, 0
-  %i.q = zext i1 %3 to i32
-  %spec.select = add nuw nsw i32 %.014, %i.q      ; 2 uses
-  %i.r = add nuw i32 %.01013, 1                   ; 2 uses
+  %.014 = phi i32 [ %i.r, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader16 ] ; 2 uses
+  %.01013 = phi i32 [ %spec.select, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader16 ]
+  %.sroa.idx.not = icmp ne i32 %.014, 1
+  %i.q = zext i1 %.sroa.idx.not to i32
+  %spec.select = add nuw nsw i32 %.01013, %i.q    ; 2 uses
+  %i.r = add nuw i32 %.014, 1                     ; 2 uses
   %exitcond.not = icmp eq i32 %i.r, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !407
 }

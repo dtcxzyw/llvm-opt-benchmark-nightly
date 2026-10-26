@@ -204,7 +204,11 @@ bb.l:                                             ; preds = %rb_scan_args_set.ex
   %i.ah = load i64, ptr @cEC_GROUP, align 8, !tbaa !12
   %i.ai = tail call i64 @rb_obj_is_kind_of(i64 noundef %.sink.a, i64 noundef %i.ah) #7
   %.not26 = icmp eq i64 %i.ai, 0
-  br i1 %.not26, label %bb.m, label %bb.q
+  br i1 %.not26, label %bb.m, label %3
+
+3:                                                ; preds = %bb.l
+  %4 = tail call fastcc ptr @ec_key_new_from_group(i64 noundef %.sink.a)
+  br label %bb.q
 
 bb.m:                                             ; preds = %bb.l
   %i.aj = tail call i64 @ossl_pem_passwd_value(i64 noundef %i.ad) #7
@@ -219,6 +223,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   call void @ossl_clear_error() #7
   %i.ao = load i64, ptr %i.a, align 8, !tbaa !12
+  %5 = call fastcc ptr @ec_key_new_from_group(i64 noundef %i.ao)
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.m
@@ -233,21 +238,20 @@ bb.p:                                             ; preds = %bb.o
   call void (i64, ptr, ...) @rb_raise(i64 noundef %i.aq, ptr noundef nonnull @.str.64, ptr noundef %i.ar) #9
   unreachable
 
-bb.q:                                             ; preds = %bb.l, %bb.n
-  %.sink50 = phi i64 [ %i.ao, %bb.n ], [ %.sink.a, %bb.l ]
-  %3 = call fastcc ptr @ec_key_new_from_group(i64 noundef %.sink50) ; 2 uses
+bb.q:                                             ; preds = %bb.n, %3
+  %.0 = phi ptr [ %4, %3 ], [ %5, %bb.n ]         ; 2 uses
   %i.as = call ptr @EVP_PKEY_new() #7             ; 4 uses
   %.not29 = icmp eq ptr %i.as, null
   br i1 %.not29, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.at = call i32 @EVP_PKEY_assign(ptr noundef nonnull %i.as, i32 noundef 408, ptr noundef nonnull %3) #7
+  %i.at = call i32 @EVP_PKEY_assign(ptr noundef nonnull %i.as, i32 noundef 408, ptr noundef nonnull %.0) #7
   %.not30 = icmp eq i32 %i.at, 1
   br i1 %.not30, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   call void @EVP_PKEY_free(ptr noundef %i.as) #7
-  call void @EC_KEY_free(ptr noundef nonnull %3) #7
+  call void @EC_KEY_free(ptr noundef nonnull %.0) #7
   %i.au = load i64, ptr @ePKeyError, align 8, !tbaa !12
   call void (i64, ptr, ...) @ossl_raise(i64 noundef %i.au, ptr noundef nonnull @.str.56) #9
   unreachable
@@ -650,7 +654,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal noundef i64 @ossl_ec_point_initialize(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef returned %2) #0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.a = alloca i64, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = icmp eq i64 %2, 0
   %i.c = and i64 %2, 7
@@ -713,45 +717,45 @@ bb.f:                                             ; preds = %rbimpl_check_typedd
   br i1 %i.w, label %bb.h, label %.preheader
 
 .preheader:                                       ; preds = %bb.f
-  %i.x = load i64, ptr %1, align 8, !tbaa !12     ; 7 uses
-  %.not50 = icmp eq i32 %0, 1                     ; 3 uses
-  br i1 %.not50, label %3, label %bb.g
+  %i.x = load i64, ptr %1, align 8, !tbaa !12     ; 8 uses
+  %.not50 = icmp eq i32 %0, 1                     ; 2 uses
+  br i1 %.not50, label %rb_scan_args_set.exit, label %bb.g
 
 bb.g:                                             ; preds = %.preheader
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.z = load i64, ptr %i.y, align 8, !tbaa !12
+  %i.z = load i64, ptr %i.y, align 8, !tbaa !12   ; 2 uses
   %i.aa = icmp eq i32 %0, 2
-  br label %3
+  store i64 %i.z, ptr %i.a, align 8, !tbaa !12
+  br i1 %i.aa, label %bb.i, label %bb.h
 
-3:                                                ; preds = %.preheader, %bb.g
-  %.sink = phi i64 [ %i.z, %bb.g ], [ 4, %.preheader ] ; 2 uses
-  %.185.i.lcssa = phi i1 [ %i.aa, %bb.g ], [ true, %.preheader ]
-  store i64 %.sink, ptr %i.a, align 8, !tbaa !12
-  br i1 %.185.i.lcssa, label %rb_scan_args_set.exit, label %bb.h
-
-bb.h:                                             ; preds = %3, %bb.f
+bb.h:                                             ; preds = %bb.g, %bb.f
   tail call void @rb_error_arity(i32 noundef %0, i32 noundef 1, i32 noundef 2) #9
   unreachable
 
-rb_scan_args_set.exit:                            ; preds = %3
+rb_scan_args_set.exit:                            ; preds = %.preheader
+  store i64 4, ptr %i.a, align 8, !tbaa !12
   %i.ab = load i64, ptr @cEC_POINT, align 8, !tbaa !12
   %i.ac = tail call i64 @rb_obj_is_kind_of(i64 noundef %i.x, i64 noundef %i.ab) #7
   %.not26 = icmp eq i64 %i.ac, 0
-  br i1 %.not26, label %bb.l, label %bb.i
+  br i1 %.not26, label %bb.l, label %bb.k
 
-bb.i:                                             ; preds = %rb_scan_args_set.exit
-  br i1 %.not50, label %bb.k, label %bb.j
+bb.i:                                             ; preds = %bb.g
+  %3 = load i64, ptr @cEC_POINT, align 8, !tbaa !12
+  %4 = tail call i64 @rb_obj_is_kind_of(i64 noundef %i.x, i64 noundef %3) #7
+  %.not2696 = icmp eq i64 %4, 0
+  br i1 %.not2696, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.ad = load i64, ptr @rb_eArgError, align 8, !tbaa !12
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.ad, ptr noundef nonnull @.str.97) #9
   unreachable
 
-bb.k:                                             ; preds = %bb.i
+bb.k:                                             ; preds = %rb_scan_args_set.exit
   %i.ae = tail call i64 @ossl_ec_point_initialize_copy(i64 noundef %2, i64 noundef %i.x) ; 0 uses
   br label %bb.ac
 
-bb.l:                                             ; preds = %rb_scan_args_set.exit
+bb.l:                                             ; preds = %bb.i, %rb_scan_args_set.exit
+  %5 = phi i64 [ %i.z, %bb.i ], [ 4, %rb_scan_args_set.exit ]
   %i.af = icmp eq i64 %i.x, 0
   %i.ag = and i64 %i.x, 7
   %i.ah = icmp ne i64 %i.ag, 0
@@ -823,7 +827,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.q
   %i.bd = load i64, ptr @cBN, align 8, !tbaa !12
-  %i.be = tail call i64 @rb_obj_is_kind_of(i64 noundef %.sink, i64 noundef %i.bd) #7
+  %i.be = tail call i64 @rb_obj_is_kind_of(i64 noundef %5, i64 noundef %i.bd) #7
   %.not27 = icmp eq i64 %i.be, 0
   br i1 %.not27, label %bb.w, label %bb.u
 

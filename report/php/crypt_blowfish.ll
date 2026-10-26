@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/crypt_blowfish?download=true
 inline.NumInlined: 6
 inline.NumDeleted: 2
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -120,8 +120,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.j, %bb.i
-  %indvars.iv.i = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.i, %bb.j ] ; 4 uses
-  %.03442.i = phi ptr [ @.str.4, %bb.i ], [ %.236.3.i, %bb.j ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ 0, %bb.i ] ; 4 uses
+  %.03442.i = phi ptr [ %.236.3.i, %bb.j ], [ @.str.4, %bb.i ] ; 2 uses
   %i.as = load i8, ptr %.03442.i, align 1, !tbaa !13 ; 2 uses
   %i.at = zext i8 %i.as to i32
   %.not37.i = icmp eq i8 %i.as, 0
@@ -164,8 +164,8 @@ BF_set_key.exit:                                  ; preds = %bb.j
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %BF_set_key.exit
-  %indvars.iv.i40 = phi i64 [ 0, %BF_set_key.exit ], [ %indvars.iv.next.i53, %bb.k ] ; 4 uses
-  %.03442.i43 = phi ptr [ @.str.4, %BF_set_key.exit ], [ %.236.3.i52, %bb.k ] ; 2 uses
+  %indvars.iv.i40 = phi i64 [ %indvars.iv.next.i53, %bb.k ], [ 0, %BF_set_key.exit ] ; 4 uses
+  %.03442.i43 = phi ptr [ %.236.3.i52, %bb.k ], [ @.str.4, %BF_set_key.exit ] ; 2 uses
   %i.bq = load i8, ptr %.03442.i43, align 1, !tbaa !13 ; 2 uses
   %i.br = zext i8 %i.bq to i32
   %.not37.i44 = icmp eq i8 %i.bq, 0
@@ -568,21 +568,74 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @BF_set_key(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull writeonly captures(none) %1, ptr nofree noundef nonnull captures(none) %2, i8 noundef zeroext %3) unnamed_addr #5 {
-bb.a:
-  %4 = alloca [2 x i32], align 4                  ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
-  %i.a = zext i8 %3 to i32                        ; 2 uses
-  %i.b = and i32 %i.a, 1
-  %i.c = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %5 = zext nneg i32 %i.b to i64
-  %i.d = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5
-  br label %bb.b
+  %5 = zext i8 %3 to i32                          ; 2 uses
+  %6 = and i32 %5, 1
+  %.sroa.idx.not = icmp eq i32 %6, 0
+  br i1 %.sroa.idx.not, label %bb.a, label %bb.b
 
-bb.b:                                             ; preds = %bb.a, %bb.b
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 4 uses
-  %.045 = phi i32 [ 0, %bb.a ], [ %i.ak, %bb.b ]
-  %.03144 = phi i32 [ 0, %bb.a ], [ %.2.3, %bb.b ]
-  %.03442 = phi ptr [ %0, %bb.a ], [ %.236.3, %bb.b ] ; 2 uses
+bb.a:                                             ; preds = %4, %bb.a
+  %indvars.iv79 = phi i64 [ %indvars.iv.next80, %bb.a ], [ 0, %4 ] ; 4 uses
+  %.067.us = phi i32 [ %36, %bb.a ], [ 0, %4 ]
+  %.05266.us = phi i32 [ %.2.us.3, %bb.a ], [ 0, %4 ]
+  %.05564.us = phi ptr [ %.257.us.3, %bb.a ], [ %0, %4 ] ; 2 uses
+  %7 = load i8, ptr %.05564.us, align 1, !tbaa !13 ; 3 uses
+  %8 = zext i8 %7 to i32
+  %9 = sext i8 %7 to i32
+  %.not58.us = icmp eq i8 %7, 0
+  %10 = getelementptr inbounds nuw i8, ptr %.05564.us, i64 1
+  %.257.us = select i1 %.not58.us, ptr %0, ptr %10 ; 2 uses
+  %11 = load i8, ptr %.257.us, align 1, !tbaa !13 ; 3 uses
+  %12 = zext i8 %11 to i32
+  %13 = sext i8 %11 to i32                        ; 2 uses
+  %.not58.us.1 = icmp eq i8 %11, 0
+  %14 = getelementptr inbounds nuw i8, ptr %.257.us, i64 1
+  %.257.us.1 = select i1 %.not58.us.1, ptr %0, ptr %14 ; 2 uses
+  %15 = shl nuw nsw i32 %8, 16
+  %16 = shl nuw nsw i32 %12, 8
+  %17 = or disjoint i32 %15, %16
+  %18 = load i8, ptr %.257.us.1, align 1, !tbaa !13 ; 3 uses
+  %19 = zext i8 %18 to i32
+  %20 = or disjoint i32 %17, %19
+  %21 = shl nsw i32 %9, 16
+  %22 = shl nsw i32 %13, 8
+  %23 = or i32 %21, %22
+  %24 = sext i8 %18 to i32                        ; 2 uses
+  %25 = or i32 %23, %24
+  %26 = or i32 %13, %24
+  %.not58.us.2 = icmp eq i8 %18, 0
+  %27 = getelementptr inbounds nuw i8, ptr %.257.us.1, i64 1
+  %.257.us.2 = select i1 %.not58.us.2, ptr %0, ptr %27 ; 2 uses
+  %28 = shl nuw i32 %20, 8
+  %29 = load i8, ptr %.257.us.2, align 1, !tbaa !13 ; 3 uses
+  %i.a = zext i8 %29 to i32
+  %30 = or disjoint i32 %28, %i.a                 ; 3 uses
+  %31 = shl nsw i32 %25, 8
+  %32 = sext i8 %29 to i32                        ; 2 uses
+  %33 = or i32 %31, %32
+  %34 = or i32 %26, %32
+  %i.b = and i32 %34, 128
+  %.2.us.3 = or i32 %i.b, %.05266.us              ; 2 uses
+  %.not58.us.3 = icmp eq i8 %29, 0
+  %i.c = getelementptr inbounds nuw i8, ptr %.257.us.2, i64 1
+  %.257.us.3 = select i1 %.not58.us.3, ptr %0, ptr %i.c
+  %35 = xor i32 %33, %30
+  %36 = or i32 %35, %.067.us                      ; 2 uses
+  %37 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv79
+  store i32 %30, ptr %37, align 4, !tbaa !14
+  %38 = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @BF_init_state, i64 4096), i64 %indvars.iv79
+  %39 = load i32, ptr %38, align 4, !tbaa !14
+  %40 = xor i32 %39, %30
+  %i.d = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv79
+  store i32 %40, ptr %i.d, align 4, !tbaa !14
+  %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
+  %exitcond82.not = icmp eq i64 %indvars.iv.next80, 18
+  br i1 %exitcond82.not, label %bb.c, label %bb.a, !llvm.loop !0
+
+bb.b:                                             ; preds = %4, %bb.b
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %4 ] ; 4 uses
+  %.045 = phi i32 [ %i.ak, %bb.b ], [ 0, %4 ]
+  %.03144 = phi i32 [ %.2.3, %bb.b ], [ 0, %4 ]
+  %.03442 = phi ptr [ %.236.3, %bb.b ], [ %0, %4 ] ; 2 uses
   %i.e = load i8, ptr %.03442, align 1, !tbaa !13 ; 3 uses
   %i.f = zext i8 %i.e to i32
   %i.g = sext i8 %i.e to i32
@@ -613,45 +666,44 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.z = shl nuw i32 %i.r, 8
   %i.aa = load i8, ptr %.236.2, align 1, !tbaa !13 ; 3 uses
   %i.ab = zext i8 %i.aa to i32
-  %i.ac = or disjoint i32 %i.z, %i.ab             ; 2 uses
-  store i32 %i.ac, ptr %4, align 4, !tbaa !14
+  %i.ac = or disjoint i32 %i.z, %i.ab
   %i.ad = shl nsw i32 %i.w, 8
   %i.ae = sext i8 %i.aa to i32                    ; 2 uses
-  %i.af = or i32 %i.ad, %i.ae                     ; 2 uses
-  store i32 %i.af, ptr %i.c, align 4, !tbaa !14
+  %i.af = or i32 %i.ad, %i.ae                     ; 3 uses
   %i.ag = or i32 %i.x, %i.ae
   %i.ah = and i32 %i.ag, 128
   %.2.3 = or i32 %i.ah, %.03144                   ; 2 uses
   %.not37.3 = icmp eq i8 %i.aa, 0
   %i.ai = getelementptr inbounds nuw i8, ptr %.236.2, i64 1
   %.236.3 = select i1 %.not37.3, ptr %0, ptr %i.ai
-  %i.aj = xor i32 %i.ac, %i.af
-  %i.ak = or i32 %i.aj, %.045                     ; 3 uses
-  %6 = load i32, ptr %i.d, align 4, !tbaa !14     ; 2 uses
+  %i.aj = xor i32 %i.af, %i.ac
+  %i.ak = or i32 %i.aj, %.045                     ; 2 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
-  store i32 %6, ptr %i.al, align 4, !tbaa !14
+  store i32 %i.af, ptr %i.al, align 4, !tbaa !14
   %i.am = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @BF_init_state, i64 4096), i64 %indvars.iv
   %i.an = load i32, ptr %i.am, align 4, !tbaa !14
-  %i.ao = xor i32 %i.an, %6
+  %i.ao = xor i32 %i.an, %i.af
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   store i32 %i.ao, ptr %i.ap, align 4, !tbaa !14
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 18
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !0
 
-bb.c:                                             ; preds = %bb.b
-  %i.aq = shl nuw nsw i32 %i.a, 15
-  %i.ar = lshr i32 %i.ak, 16
-  %.0.masked = and i32 %i.ak, 65535
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.us-phi = phi i32 [ %.2.us.3, %bb.a ], [ %.2.3, %bb.b ]
+  %.us-phi70 = phi i32 [ %36, %bb.a ], [ %i.ak, %bb.b ] ; 2 uses
+  %i.aq = shl nuw nsw i32 %5, 15
+  %41 = and i32 %i.aq, 65536
+  %i.ar = lshr i32 %.us-phi70, 16
+  %.0.masked = and i32 %.us-phi70, 65535
   %i.as = or i32 %.0.masked, %i.ar
-  %i.at = shl nuw nsw i32 %.2.3, 9
+  %i.at = shl nuw nsw i32 %.us-phi, 9
   %i.au = sub nuw nsw i32 65536, %i.as
-  %i.av = and i32 %i.aq, %i.at
+  %i.av = and i32 %41, %i.at
   %i.aw = and i32 %i.av, %i.au
   %i.ax = load i32, ptr %2, align 4, !tbaa !14
   %i.ay = xor i32 %i.ax, %i.aw
   store i32 %i.ay, ptr %2, align 4, !tbaa !14
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret void
 }
 

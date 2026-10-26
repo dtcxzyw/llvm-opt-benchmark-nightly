@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/CGLTFMeshFileLoader?download=true
 inline.NumInlined: 12819
 inline.NumDeleted: 6981
-loop-unroll.NumCompletelyUnrolled: 69
+loop-unroll.NumCompletelyUnrolled: 73
 loop-unroll.NumRuntimeUnrolled: 31
-loop-unroll.NumUnrolled: 100
+loop-unroll.NumUnrolled: 104
 begin_hunk_0
 @.str.67 = private unnamed_addr constant [8 x i8] c"version\00", align 1
 @.str.68 = private unnamed_addr constant [10 x i8] c"copyright\00", align 1
@@ -205,8 +205,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i16 @_ZN5scene19CGLTFMeshFileLoader6rawgetISt5arrayIhLm2EEEET_PKc(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.0.0.copyload = load i16, ptr %0, align 1
-  ret i16 %.sroa.0.0.copyload
+  %.0.copyload.i = load i8, ptr %0, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %.0.copyload.i.1 = load i8, ptr %1, align 1
+  %.sroa.2.0.insert.ext = zext i8 %.0.copyload.i.1 to i16
+  %.sroa.2.0.insert.shift = shl nuw i16 %.sroa.2.0.insert.ext, 8
+  %.sroa.0.0.insert.ext = zext i8 %.0.copyload.i to i16
+  %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  ret i16 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -226,8 +232,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i32 @_ZN5scene19CGLTFMeshFileLoader6rawgetISt5arrayItLm2EEEET_PKc(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.0.0.copyload = load i32, ptr %0, align 1
-  ret i32 %.sroa.0.0.copyload
+  %.0.copyload.i = load i16, ptr %0, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %.0.copyload.i.1 = load i16, ptr %1, align 1
+  %.sroa.2.0.insert.ext = zext i16 %.0.copyload.i.1 to i32
+  %.sroa.2.0.insert.shift = shl nuw i32 %.sroa.2.0.insert.ext, 16
+  %.sroa.0.0.insert.ext = zext i16 %.0.copyload.i to i32
+  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  ret i32 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -247,8 +259,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i64 @_ZN5scene19CGLTFMeshFileLoader6rawgetISt5arrayIjLm2EEEET_PKc(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.0.0.copyload = load i64, ptr %0, align 1
-  ret i64 %.sroa.0.0.copyload
+  %.0.copyload.i = load i32, ptr %0, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.0.copyload.i.1 = load i32, ptr %1, align 1
+  %.sroa.2.0.insert.ext = zext i32 %.0.copyload.i.1 to i64
+  %.sroa.2.0.insert.shift = shl nuw i64 %.sroa.2.0.insert.ext, 32
+  %.sroa.0.0.insert.ext = zext i32 %.0.copyload.i to i64
+  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  ret i64 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -651,28 +669,28 @@ _ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8Accessor
   %.02048.us51 = phi i64 [ 0, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader.new ], [ %i.ax, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us ] ; 6 uses
   %niter = phi i64 [ 0, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader.new ], [ %niter.next.3, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us ]
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.02048.us51
+  %.sroa.02.0.copyload.i.us73 = load <2 x i32>, ptr %i.aq, align 4, !tbaa !60
   %5 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %.02048.us51
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 28
-  %7 = load <2 x i32>, ptr %i.aq, align 4, !tbaa !60
-  store <2 x i32> %7, ptr %6, align 4, !tbaa !412
+  store <2 x i32> %.sroa.02.0.copyload.i.us73, ptr %6, align 4, !tbaa !412
   %i.ar = or disjoint i64 %.02048.us51, 1         ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.ar
-  %8 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.ar
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 28
-  %10 = load <2 x i32>, ptr %i.as, align 4, !tbaa !60
-  store <2 x i32> %10, ptr %9, align 4, !tbaa !412
+  %.sroa.02.0.copyload.i.us73.1 = load <2 x i32>, ptr %i.as, align 4, !tbaa !60
+  %7 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.ar
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 28
+  store <2 x i32> %.sroa.02.0.copyload.i.us73.1, ptr %8, align 4, !tbaa !412
   %i.at = or disjoint i64 %.02048.us51, 2         ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.at
-  %11 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.at
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 28
-  %13 = load <2 x i32>, ptr %i.au, align 4, !tbaa !60
-  store <2 x i32> %13, ptr %12, align 4, !tbaa !412
+  %.sroa.02.0.copyload.i.us73.2 = load <2 x i32>, ptr %i.au, align 4, !tbaa !60
+  %9 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.at
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 28
+  store <2 x i32> %.sroa.02.0.copyload.i.us73.2, ptr %10, align 4, !tbaa !412
   %i.av = or disjoint i64 %.02048.us51, 3         ; 2 uses
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.av
-  %14 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.av
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 28
-  %16 = load <2 x i32>, ptr %i.aw, align 4, !tbaa !60
-  store <2 x i32> %16, ptr %15, align 4, !tbaa !412
+  %.sroa.02.0.copyload.i.us73.3 = load <2 x i32>, ptr %i.aw, align 4, !tbaa !60
+  %11 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.av
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 28
+  store <2 x i32> %.sroa.02.0.copyload.i.us73.3, ptr %12, align 4, !tbaa !412
   %i.ax = add nuw i64 %.02048.us51, 4             ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -696,10 +714,10 @@ _ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8Accessor
   %.02048.us51.epil = phi i64 [ %i.ba, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil ], [ %.02048.us51.epil.init, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil.preheader ] ; 3 uses
   %epil.iter = phi i64 [ %epil.iter.next, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil ], [ 0, %_ZSt3getISt6vectorISt5arrayIfLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil.preheader ]
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.02048.us51.epil
-  %17 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %.02048.us51.epil
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 28
-  %19 = load <2 x i32>, ptr %i.az, align 4, !tbaa !60
-  store <2 x i32> %19, ptr %18, align 4, !tbaa !412
+  %.sroa.02.0.copyload.i.us73.epil = load <2 x i32>, ptr %i.az, align 4, !tbaa !60
+  %13 = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %.02048.us51.epil
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 28
+  store <2 x i32> %.sroa.02.0.copyload.i.us73.epil, ptr %14, align 4, !tbaa !412
   %i.ba = add nuw i64 %.02048.us51.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -1102,7 +1120,7 @@ bb.i:                                             ; preds = %bb.g
   resume { ptr, i32 } %i.ap
 
 .loopexit:                                        ; preds = %bb.f, %_ZNK5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm2EEE3getEm.exit, %_ZNK5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm2EEE3getEm.exit
-  %.sroa.042.0 = phi <2 x float> [ %i.m, %_ZNK5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm2EEE3getEm.exit ], [ %i.x, %_ZNK5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm2EEE3getEm.exit ], [ %.sroa.02.0.i31, %bb.f ]
+  %.sroa.042.0 = phi <2 x float> [ %i.x, %_ZNK5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm2EEE3getEm.exit ], [ %i.m, %_ZNK5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm2EEE3getEm.exit ], [ %.sroa.02.0.i31, %bb.f ]
   ret <2 x float> %.sroa.042.0
 }
 

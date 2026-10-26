@@ -204,8 +204,8 @@ _ZNKR2v85MaybeIbE8FromJustEv.exit.i:              ; preds = %_ZNKR2v85MaybeINS_8
   %i.m = load i64, ptr %.sroa.0.0.copyload.i.i, align 8
   %i.n = add i64 %i.m, -1
   %i.o = inttoptr i64 %i.n to ptr
-  %i.p = call noundef zeroext i1 @_ZNK2v88internal6String9IsEqualToILNS1_12EqualityTypeE0EcEEbNS_4base6VectorIKT0_EEPNS0_7IsolateE(ptr noundef nonnull align 4 dereferenceable(16) %i.o, ptr nonnull @.str.1, i64 8, ptr noundef nonnull %0)
-  br i1 %i.p, label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit, label %.lr.ph.i.1
+  %i.p = call noundef zeroext i1 @_ZNK2v88internal6String9IsEqualToILNS1_12EqualityTypeE0EcEEbNS_4base6VectorIKT0_EEPNS0_7IsolateE(ptr noundef nonnull align 4 dereferenceable(16) %i.o, ptr nonnull @.str.1, i64 8, ptr noundef nonnull %0) ; 2 uses
+  br i1 %i.p, label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit, label %.lr.ph.i.1
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i.preheader
   %.sroa.0.0.copyload.i.i.1 = load ptr, ptr %8, align 8
@@ -213,7 +213,7 @@ _ZNKR2v85MaybeIbE8FromJustEv.exit.i:              ; preds = %_ZNKR2v85MaybeINS_8
   %i.r = add i64 %i.q, -1
   %i.s = inttoptr i64 %i.r to ptr
   %i.t = call noundef zeroext i1 @_ZNK2v88internal6String9IsEqualToILNS1_12EqualityTypeE0EcEEbNS_4base6VectorIKT0_EEPNS0_7IsolateE(ptr noundef nonnull align 4 dereferenceable(16) %i.s, ptr nonnull @.str.2, i64 7, ptr noundef nonnull %0)
-  br i1 %i.t, label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit, label %.loopexit.i
+  br i1 %i.t, label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.lr.ph.i.1
   %i.u = load ptr, ptr %8, align 8
@@ -254,8 +254,13 @@ _ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
   br label %_ZNK2v88internal11MaybeHandleINS0_10JSReceiverEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
-_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit: ; preds = %.lr.ph.i.preheader, %.lr.ph.i.1, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i
-  %.sroa.597.0.extract.trunc147 = phi i32 [ 0, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i ], [ 0, %.lr.ph.i.preheader ], [ 1, %.lr.ph.i.1 ] ; 3 uses
+_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit: ; preds = %.lr.ph.i.1, %.lr.ph.i.preheader
+  %.sroa.idx = xor i1 %i.p, true
+  %.sroa.speculated = zext i1 %.sroa.idx to i32
+  br label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit
+
+_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit: ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit.i, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit
+  %.sroa.597.0.extract.trunc147 = phi i32 [ %.sroa.speculated, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit ], [ 0, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #16
   %i.ag = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 4 uses
