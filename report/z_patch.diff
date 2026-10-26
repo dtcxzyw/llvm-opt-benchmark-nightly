@@ -1,0 +1,168 @@
+diff --git a/llvm/include/llvm/Analysis/ValueTracking.h b/llvm/include/llvm/Analysis/ValueTracking.h
+index e567f6d16f9a95..f52c34bb1c73df 100644
+--- a/llvm/include/llvm/Analysis/ValueTracking.h
++++ b/llvm/include/llvm/Analysis/ValueTracking.h
+@@ -537,13 +537,6 @@ inline const AllocaInst *findAllocaForValue(const Value *V,
+   return findAllocaForValue(const_cast<Value *>(V), OffsetZero);
+ }
+ 
+-/// Return true if the only users of this pointer are lifetime markers.
+-LLVM_ABI bool onlyUsedByLifetimeMarkers(const Value *V);
+-
+-/// Return true if the only users of this pointer are lifetime markers or
+-/// droppable instructions.
+-LLVM_ABI bool onlyUsedByLifetimeMarkersOrDroppableInsts(const Value *V);
+-
+ /// Return true if the instruction doesn't potentially cross vector lanes. This
+ /// condition is weaker than checking that the instruction is lanewise: lanewise
+ /// means that the same operation is splatted across all lanes, but we also
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index d3ab17e5333c95..9130694ee92c1f 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -7702,33 +7702,6 @@ AllocaInst *llvm::findAllocaForValue(Value *V, bool OffsetZero) {
+   return Result;
+ }
+ 
+-static bool onlyUsedByLifetimeMarkersOrDroppableInstsHelper(
+-    const Value *V, bool AllowLifetime, bool AllowDroppable) {
+-  for (const User *U : V->users()) {
+-    const IntrinsicInst *II = dyn_cast<IntrinsicInst>(U);
+-    if (!II)
+-      return false;
+-
+-    if (AllowLifetime && II->isLifetimeStartOrEnd())
+-      continue;
+-
+-    if (AllowDroppable && II->isDroppable())
+-      continue;
+-
+-    return false;
+-  }
+-  return true;
+-}
+-
+-bool llvm::onlyUsedByLifetimeMarkers(const Value *V) {
+-  return onlyUsedByLifetimeMarkersOrDroppableInstsHelper(
+-      V, /* AllowLifetime */ true, /* AllowDroppable */ false);
+-}
+-bool llvm::onlyUsedByLifetimeMarkersOrDroppableInsts(const Value *V) {
+-  return onlyUsedByLifetimeMarkersOrDroppableInstsHelper(
+-      V, /* AllowLifetime */ true, /* AllowDroppable */ true);
+-}
+-
+ bool llvm::isNotCrossLaneOperation(const Instruction *I) {
+   if (auto *II = dyn_cast<IntrinsicInst>(I))
+     return isTriviallyVectorizable(II->getIntrinsicID());
+diff --git a/llvm/lib/Transforms/Utils/PromoteMemoryToRegister.cpp b/llvm/lib/Transforms/Utils/PromoteMemoryToRegister.cpp
+index 157c3de56be026..ea7b55f485b4b7 100644
+--- a/llvm/lib/Transforms/Utils/PromoteMemoryToRegister.cpp
++++ b/llvm/lib/Transforms/Utils/PromoteMemoryToRegister.cpp
+@@ -94,17 +94,6 @@ bool llvm::isAllocaPromotable(const AllocaInst *AI) {
+       if (!II->isLifetimeStartOrEnd() && !II->isDroppable() &&
+           II->getIntrinsicID() != Intrinsic::fake_use)
+         return false;
+-    } else if (const BitCastInst *BCI = dyn_cast<BitCastInst>(U)) {
+-      if (!onlyUsedByLifetimeMarkersOrDroppableInsts(BCI))
+-        return false;
+-    } else if (const GetElementPtrInst *GEPI = dyn_cast<GetElementPtrInst>(U)) {
+-      if (!GEPI->hasAllZeroIndices())
+-        return false;
+-      if (!onlyUsedByLifetimeMarkersOrDroppableInsts(GEPI))
+-        return false;
+-    } else if (const AddrSpaceCastInst *ASCI = dyn_cast<AddrSpaceCastInst>(U)) {
+-      if (!onlyUsedByLifetimeMarkers(ASCI))
+-        return false;
+     } else {
+       return false;
+     }
+@@ -550,22 +539,6 @@ static void removeIntrinsicUsers(AllocaInst *AI) {
+       continue;
+     }
+ 
+-    if (!I->getType()->isVoidTy()) {
+-      // Follow the use/def chain to erase users of this instruction now
+-      // instead of leaving it for dead code elimination later.
+-      for (Use &UU : llvm::make_early_inc_range(I->uses())) {
+-        Instruction *Inst = cast<Instruction>(UU.getUser());
+-
+-        // Drop the use of I in droppable instructions.
+-        if (Inst->isDroppable()) {
+-          Inst->dropDroppableUse(UU);
+-          continue;
+-        }
+-
+-        Inst->eraseFromParent();
+-      }
+-    }
+-
+     // Same as above for lifetime intrinsics directly on the alloca. If the
+     // alloca has no load/store users, PromotedType is null and the alloca will
+     // be deleted as dead, so no store is needed.
+diff --git a/llvm/test/DebugInfo/Generic/mem2reg-promote-alloca-3.ll b/llvm/test/DebugInfo/Generic/mem2reg-promote-alloca-3.ll
+index 71da53cf0b5654..0af4534e38b871 100644
+--- a/llvm/test/DebugInfo/Generic/mem2reg-promote-alloca-3.ll
++++ b/llvm/test/DebugInfo/Generic/mem2reg-promote-alloca-3.ll
+@@ -27,8 +27,7 @@
+ define dso_local void @fun() !dbg !7 {
+ entry:
+   %local = alloca ptr, align 8
+-  %0 = bitcast ptr %local to ptr, !dbg !14
+-  call void @llvm.lifetime.start.p0(i64 8, ptr nonnull %0) #3, !dbg !14
++  call void @llvm.lifetime.start.p0(i64 8, ptr nonnull %local) #3, !dbg !14
+   call void @llvm.dbg.value(metadata ptr null, metadata !11, metadata !DIExpression()), !dbg !15
+   store ptr null, ptr %local, align 8, !dbg !16
+   call void @llvm.dbg.value(metadata ptr %local, metadata !11, metadata !DIExpression(DW_OP_deref)), !dbg !15
+@@ -37,8 +36,7 @@ entry:
+   %1 = load ptr, ptr %local, align 8, !dbg !29
+   %add.ptr.i = getelementptr inbounds i8, ptr %1, i64 4, !dbg !29
+   store ptr %add.ptr.i, ptr %local, align 8, !dbg !29
+-  %2 = bitcast ptr %local to ptr, !dbg !30
+-  call void @llvm.lifetime.end.p0(i64 8, ptr nonnull %2) #3, !dbg !30
++  call void @llvm.lifetime.end.p0(i64 8, ptr nonnull %local) #3, !dbg !30
+   ret void, !dbg !30
+ }
+ 
+diff --git a/llvm/test/Transforms/Mem2Reg/ignore-droppable.ll b/llvm/test/Transforms/Mem2Reg/ignore-droppable.ll
+index e5236c7b3d96dd..c10dfa6a7f3f58 100644
+--- a/llvm/test/Transforms/Mem2Reg/ignore-droppable.ll
++++ b/llvm/test/Transforms/Mem2Reg/ignore-droppable.ll
+@@ -46,10 +46,17 @@ define void @positive_multiple_assume_uses() {
+   ret void
+ }
+ 
++; We don't bother handling this, zero-index GEP is a no-op that should be
++; optimized away.
+ define void @positive_gep_assume_uses() {
+ ; CHECK-LABEL: @positive_gep_assume_uses(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "ignore"(ptr poison, i64 8), "ignore"(ptr poison, i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "ignore"(ptr poison), "ignore"(ptr poison, i64 2) ]
++; CHECK-NEXT:    [[A:%.*]] = alloca { i8, i16 }, align 8
++; CHECK-NEXT:    [[B:%.*]] = getelementptr { i8, i16 }, ptr [[A]], i32 0, i32 0
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[A]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[B]], i64 8), "align"(ptr [[B]], i64 16) ]
++; CHECK-NEXT:    store { i8, i16 } zeroinitializer, ptr [[A]], align 2
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[A]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[B]]), "align"(ptr [[B]], i64 2) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca {i8, i16}
+@@ -82,7 +89,7 @@ define void @positive_mixed_assume_uses() {
+ declare void @use(i32)
+ 
+ ; Verify that lifetime.start and lifetime.end on an addrspace(5) alloca
+-; alongside zero-index GEP droppable users insert store undef in the pre-pass,
++; alongside droppable users insert store undef in the pre-pass,
+ ; breaking loop-carried back-edge dependencies.
+ define void @lifetime_addrspace5_and_gep_in_loop(i32 %val, i1 %c1, i1 %c2) {
+ ; CHECK-LABEL: @lifetime_addrspace5_and_gep_in_loop(
+@@ -110,8 +117,7 @@ entry:
+ 
+ loop:
+   call void @llvm.lifetime.start.p5(ptr addrspace(5) %a)
+-  %gep = getelementptr inbounds i32, ptr addrspace(5) %a, i64 0
+-  call void @llvm.assume(i1 true) ["align"(ptr addrspace(5) %gep, i64 4)]
++  call void @llvm.assume(i1 true) ["align"(ptr addrspace(5) %a, i64 4)]
+   br i1 %c1, label %init, label %skip
+ 
+ init:
