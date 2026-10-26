@@ -202,14 +202,14 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow15SliceBufferSafeERKSt10shared_ptrINS_6BufferEEl(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 4 uses
   %3 = alloca %"class.arrow::Status", align 8     ; 7 uses
-  %4 = alloca %"class.arrow::Status", align 8     ; 8 uses
+  %4 = alloca %"class.arrow::Status", align 8     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.b = load ptr, ptr %1, align 8, !tbaa !79
   %i.c = getelementptr i8, ptr %i.b, i64 24
-  %.val = load i64, ptr %i.c, align 8             ; 2 uses
+  %.val = load i64, ptr %i.c, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !135)
   %i.d = icmp slt i64 %2, 0
   br i1 %i.d, label %bb.b, label %bb.c, !prof !33
@@ -219,41 +219,22 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN5arrow6StatusD2Ev.exit
 
 bb.c:                                             ; preds = %bb.a
-  %5 = sub nsw i64 %.val, %2                      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !137)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !138
   store ptr @.str.9, ptr %i.a, align 8, !tbaa !80, !noalias !139
-  %i.e = icmp slt i64 %5, 0
-  br i1 %i.e, label %6, label %7, !prof !33
+  %i.e = icmp slt i64 %.val, %2
+  br i1 %i.e, label %bb.d, label %bb.e, !prof !33
 
-6:                                                ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c
   call void @_ZN5arrow6Status8FromArgsIJRA10_KcRPS2_RA14_S2_EEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, i8 noundef signext 7, ptr noundef nonnull align 1 dereferenceable(10) @.str.10, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(14) @.str.12)
   br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
 
-7:                                                ; preds = %bb.c
-  %8 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 range(i64 0, -9223372036854775808) %2, i64 range(i64 0, -9223372036854775808) %5) ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 1
-  br i1 %9, label %10, label %11, !prof !33
-
-10:                                               ; preds = %7
-  call void @_ZN5arrow6Status10IndexErrorIJRPKcRA22_S2_EEES0_DpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(22) @.str.13)
-  br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
-
-11:                                               ; preds = %7
-  %12 = extractvalue { i64, i1 } %8, 0
-  %13 = icmp sgt i64 %12, %.val
-  br i1 %13, label %bb.d, label %bb.e, !prof !33
-
-bb.d:                                             ; preds = %11
-  call void @_ZN5arrow6Status10IndexErrorIJRPKcRA21_S2_S4_RA8_S2_EEES0_DpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(21) @.str.14, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(8) @.str.15)
-  br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
-
-bb.e:                                             ; preds = %11
+bb.e:                                             ; preds = %bb.c
   store ptr null, ptr %4, align 8, !tbaa !36, !alias.scope !140
   br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
 
-_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i: ; preds = %bb.e, %bb.d, %10, %6
+_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i: ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !138
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -420,14 +401,14 @@ bb.l:                                             ; preds = %_ZN5arrow6StatusD2E
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow22SliceMutableBufferSafeERKSt10shared_ptrINS_6BufferEEl(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 4 uses
   %3 = alloca %"class.arrow::Status", align 8     ; 7 uses
-  %4 = alloca %"class.arrow::Status", align 8     ; 8 uses
+  %4 = alloca %"class.arrow::Status", align 8     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.b = load ptr, ptr %1, align 8, !tbaa !79
   %i.c = getelementptr i8, ptr %i.b, i64 24
-  %.val = load i64, ptr %i.c, align 8             ; 2 uses
+  %.val = load i64, ptr %i.c, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !174)
   %i.d = icmp slt i64 %2, 0
   br i1 %i.d, label %bb.b, label %bb.c, !prof !33
@@ -437,41 +418,22 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN5arrow6StatusD2Ev.exit
 
 bb.c:                                             ; preds = %bb.a
-  %5 = sub nsw i64 %.val, %2                      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !175)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !176)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !177
   store ptr @.str.9, ptr %i.a, align 8, !tbaa !80, !noalias !178
-  %i.e = icmp slt i64 %5, 0
-  br i1 %i.e, label %6, label %7, !prof !33
+  %i.e = icmp slt i64 %.val, %2
+  br i1 %i.e, label %bb.d, label %bb.e, !prof !33
 
-6:                                                ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c
   call void @_ZN5arrow6Status8FromArgsIJRA10_KcRPS2_RA14_S2_EEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, i8 noundef signext 7, ptr noundef nonnull align 1 dereferenceable(10) @.str.10, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(14) @.str.12)
   br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
 
-7:                                                ; preds = %bb.c
-  %8 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 range(i64 0, -9223372036854775808) %2, i64 range(i64 0, -9223372036854775808) %5) ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 1
-  br i1 %9, label %10, label %11, !prof !33
-
-10:                                               ; preds = %7
-  call void @_ZN5arrow6Status10IndexErrorIJRPKcRA22_S2_EEES0_DpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(22) @.str.13)
-  br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
-
-11:                                               ; preds = %7
-  %12 = extractvalue { i64, i1 } %8, 0
-  %13 = icmp sgt i64 %12, %.val
-  br i1 %13, label %bb.d, label %bb.e, !prof !33
-
-bb.d:                                             ; preds = %11
-  call void @_ZN5arrow6Status10IndexErrorIJRPKcRA21_S2_S4_RA8_S2_EEES0_DpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(21) @.str.14, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 1 dereferenceable(8) @.str.15)
-  br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
-
-bb.e:                                             ; preds = %11
+bb.e:                                             ; preds = %bb.c
   store ptr null, ptr %4, align 8, !tbaa !36, !alias.scope !179
   br label %_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i
 
-_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i: ; preds = %bb.e, %bb.d, %10, %6
+_ZN5arrow12_GLOBAL__N_116CheckBufferSliceERKNS_6BufferEll.exit.i: ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !177
   br label %_ZN5arrow6StatusD2Ev.exit
 
