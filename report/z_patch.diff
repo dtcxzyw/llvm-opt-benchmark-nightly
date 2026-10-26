@@ -1,0 +1,139 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+index 6375f2ee267ce..d76d735b45fdc 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+@@ -466,7 +466,7 @@ Instruction *InstCombinerImpl::commonShiftTransforms(BinaryOperator &I) {
+   unsigned BitWidth = Ty->getScalarSizeInBits();
+ 
+   const APInt *AC;
+-  if (match(Op0, m_APInt(AC))) {
++  if (match(Op0, m_APIntAllowPoison(AC))) {
+     assert(!AC->isZero() && "Expected simplify of shifted zero");
+ 
+     // Try to pre-shift a constant shifted by a variable amount added with a
+@@ -509,11 +509,14 @@ Instruction *InstCombinerImpl::commonShiftTransforms(BinaryOperator &I) {
+ 
+     // C1 << (C2 - X) -> (C1 << C2) >> X
+     // C1 >> (C2 - X) -> (C1 >> C2) << X
+-    // X must be u<= C2 (checked by NUWSub).
++    // X must be u<= C2 (checked by NUWSub). If C2 is BW-1, a wrapping C2 - X
++    // is u>= BW, so the shift would be poison.
+     // Also match (X ^ C2) if equivalent to (C2 - X).
+     uint64_t C2;
+     Value *X;
+-    if (match(Op1, m_NUWSub(m_ConstantInt(C2), m_Value(X))) ||
++    if ((match(Op1, m_Sub(m_ConstantInt(C2), m_Value(X))) &&
++         (C2 == BitWidth - 1 ||
++          cast<OverflowingBinaryOperator>(Op1)->hasNoUnsignedWrap())) ||
+         (match(Op1, m_Xor(m_Value(X), m_ConstantInt(C2))) &&
+          (C2 | computeKnownBits(X, &I).Zero).isAllOnes())) {
+       if (I.getOpcode() == Instruction::Shl) {
+@@ -1397,11 +1400,6 @@ Instruction *InstCombinerImpl::visitShl(BinaryOperator &I) {
+   }
+ 
+   if (match(Op0, m_One())) {
+-    // (1 << (C - x)) -> ((1 << C) >> x) if C is bitwidth - 1
+-    if (match(Op1, m_Sub(m_SpecificInt(BitWidth - 1), m_Value(X))))
+-      return BinaryOperator::CreateLShr(
+-          ConstantInt::get(Ty, APInt::getSignMask(BitWidth)), X);
+-
+     // Canonicalize "extract lowest set bit" using cttz to and-with-negate:
+     // 1 << (cttz X) --> -X & X
+     if (match(Op1, m_OneUse(m_Cttz(m_Value(X), m_Value())))) {
+diff --git a/llvm/test/Transforms/InstCombine/shift-sub.ll b/llvm/test/Transforms/InstCombine/shift-sub.ll
+index 12d5469e36504..1d08f8a8da744 100644
+--- a/llvm/test/Transforms/InstCombine/shift-sub.ll
++++ b/llvm/test/Transforms/InstCombine/shift-sub.ll
+@@ -375,8 +375,7 @@ define <2 x i8> @lshr_xor_vec_splat(<2 x i8> %x) {
+ define <2 x i8> @lshr_xor_vec_splat_poison(<2 x i8> %x) {
+ ; CHECK-LABEL: @lshr_xor_vec_splat_poison(
+ ; CHECK-NEXT:    [[M:%.*]] = and <2 x i8> [[X:%.*]], <i8 2, i8 3>
+-; CHECK-NEXT:    [[S:%.*]] = xor <2 x i8> [[M]], splat (i8 3)
+-; CHECK-NEXT:    [[R:%.*]] = lshr exact <2 x i8> <i8 poison, i8 16>, [[S]]
++; CHECK-NEXT:    [[R:%.*]] = shl nuw nsw <2 x i8> splat (i8 2), [[M]]
+ ; CHECK-NEXT:    ret <2 x i8> [[R]]
+ ;
+   %m = and <2 x i8> <i8 2, i8 3>, %x
+diff --git a/llvm/test/Transforms/InstCombine/shl-sub.ll b/llvm/test/Transforms/InstCombine/shl-sub.ll
+index 6cf60a76da9fb..d954a9aeb7e91 100644
+--- a/llvm/test/Transforms/InstCombine/shl-sub.ll
++++ b/llvm/test/Transforms/InstCombine/shl-sub.ll
+@@ -66,6 +66,78 @@ define <3 x i64> @shl_sub_i64_vec_poison(<3 x i64> %x) {
+   ret <3 x i64> %r
+ }
+ 
++define i32 @shl_allones_sub_bwm1(i32 %x) {
++; CHECK-LABEL: @shl_allones_sub_bwm1(
++; CHECK-NEXT:    [[R:%.*]] = ashr exact i32 -2147483648, [[X:%.*]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = sub i32 31, %x
++  %r = shl i32 -1, %s
++  ret i32 %r
++}
++
++define i32 @lshr_signmask_sub_bwm1(i32 %x) {
++; CHECK-LABEL: @lshr_signmask_sub_bwm1(
++; CHECK-NEXT:    [[R:%.*]] = shl nuw i32 1, [[X:%.*]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = sub i32 31, %x
++  %r = lshr i32 -2147483648, %s
++  ret i32 %r
++}
++
++define i32 @ashr_signmask_sub_bwm1(i32 %x) {
++; CHECK-LABEL: @ashr_signmask_sub_bwm1(
++; CHECK-NEXT:    [[R:%.*]] = shl nsw i32 -1, [[X:%.*]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = sub i32 31, %x
++  %r = ashr i32 -2147483648, %s
++  ret i32 %r
++}
++
++define <2 x i8> @lshr_signmask_sub_bwm1_vec(<2 x i8> %x) {
++; CHECK-LABEL: @lshr_signmask_sub_bwm1_vec(
++; CHECK-NEXT:    [[R:%.*]] = shl nuw <2 x i8> splat (i8 1), [[X:%.*]]
++; CHECK-NEXT:    ret <2 x i8> [[R]]
++;
++  %s = sub <2 x i8> splat (i8 7), %x
++  %r = lshr <2 x i8> splat (i8 -128), %s
++  ret <2 x i8> %r
++}
++
++define <2 x i8> @lshr_signmask_sub_bwm1_vec_poison(<2 x i8> %x) {
++; CHECK-LABEL: @lshr_signmask_sub_bwm1_vec_poison(
++; CHECK-NEXT:    [[R:%.*]] = shl nuw <2 x i8> splat (i8 1), [[X:%.*]]
++; CHECK-NEXT:    ret <2 x i8> [[R]]
++;
++  %s = sub <2 x i8> splat (i8 7), %x
++  %r = lshr <2 x i8> <i8 -128, i8 poison>, %s
++  ret <2 x i8> %r
++}
++
++define <2 x i8> @lshr_signmask_sub_bwm1_vec_poison_sub(<2 x i8> %x) {
++; CHECK-LABEL: @lshr_signmask_sub_bwm1_vec_poison_sub(
++; CHECK-NEXT:    [[S:%.*]] = sub <2 x i8> <i8 7, i8 poison>, [[X:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = lshr exact <2 x i8> splat (i8 -128), [[S]]
++; CHECK-NEXT:    ret <2 x i8> [[R]]
++;
++  %s = sub <2 x i8> <i8 7, i8 poison>, %x
++  %r = lshr <2 x i8> splat (i8 -128), %s
++  ret <2 x i8> %r
++}
++
++define i32 @lshr_signmask_sub_bwm2(i32 %x) {
++; CHECK-LABEL: @lshr_signmask_sub_bwm2(
++; CHECK-NEXT:    [[S:%.*]] = sub i32 30, [[X:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = lshr exact i32 -2147483648, [[S]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = sub i32 30, %x
++  %r = lshr i32 -2147483648, %s
++  ret i32 %r
++}
++
+ ; Negative tests
+ 
+ define i32 @shl_bad_sub_i32(i32 %x) {
