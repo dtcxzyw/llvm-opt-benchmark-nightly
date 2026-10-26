@@ -205,12 +205,10 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bs = load ptr, ptr %i.k, align 8, !tbaa !883
-  %5 = icmp ne ptr %i.bs, null
+  %5 = icmp eq ptr %i.bs, null
   %i.bt = load i8, ptr %i.n, align 8, !range !815
-  %i.bu = trunc nuw i8 %i.bt to i1                ; 2 uses
-  %6 = select i1 %5, i1 true, i1 %i.bu
-  %.not49 = xor i1 %6, true
-  %brmerge = select i1 %.not49, i1 true, i1 %i.bu
+  %i.bu = trunc nuw i8 %i.bt to i1
+  %brmerge = select i1 %5, i1 true, i1 %i.bu
   br i1 %brmerge, label %bb.w, label %bb.s
 
 bb.s:                                             ; preds = %bb.r

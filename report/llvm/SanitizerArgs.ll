@@ -204,18 +204,16 @@ bb.a:
   %.sroa.0.0.copyload.i = load i64, ptr %i.b, align 8
   %i.c = xor i64 %.sroa.0.0.copyload.i, -1
   %i.d = and i64 %i.a, %i.c
-  %.not.i.i = icmp ne i64 %i.d, 0
+  %.not.i.i = icmp eq i64 %i.d, 0
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 262
   %i.f = load i8, ptr %i.e, align 2, !range !23
-  %i.g = trunc nuw i8 %i.f to i1                  ; 2 uses
-  %or.cond.i = select i1 %.not.i.i, i1 %i.g, i1 false
+  %i.g = trunc nuw i8 %i.f to i1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 332
   %i.i = load i8, ptr %i.h, align 4, !range !23
   %i.j = trunc nuw i8 %i.i to i1
-  %1 = xor i1 %i.j, true
-  %not.or.cond.i = xor i1 %or.cond.i, true
-  %i.k = select i1 %not.or.cond.i, i1 %i.g, i1 false
-  %i.l = select i1 %i.k, i1 %1, i1 false
+  %not.or.cond.i = xor i1 %i.j, true
+  %i.k = select i1 %.not.i.i, i1 %i.g, i1 false
+  %i.l = select i1 %i.k, i1 %not.or.cond.i, i1 false
   ret i1 %i.l
 }
 
