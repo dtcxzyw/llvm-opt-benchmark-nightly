@@ -1,0 +1,50 @@
+diff --git a/llvm/lib/Transforms/Utils/Evaluator.cpp b/llvm/lib/Transforms/Utils/Evaluator.cpp
+index e700a9aa893f16..cc0458b3fb91af 100644
+--- a/llvm/lib/Transforms/Utils/Evaluator.cpp
++++ b/llvm/lib/Transforms/Utils/Evaluator.cpp
+@@ -464,6 +464,11 @@ bool Evaluator::EvaluateBlock(BasicBlock::iterator CurInst, BasicBlock *&NextBB,
+           LLVM_DEBUG(dbgs() << "Skipping pseudoprobe intrinsic.\n");
+           ++CurInst;
+           continue;
++        } else if (II->getIntrinsicID() == Intrinsic::vector_reduce_or) {
++          InstResult = ConstantFoldCall(II, II->getCalledFunction(),
++                                        {getVal(II->getArgOperand(0))}, TLI);
++          if (!InstResult)
++            return false;
+         } else {
+           Value *Stripped = CurInst->stripPointerCastsForAliasAnalysis();
+           // Only attempt to getVal() if we've actually managed to strip
+diff --git a/llvm/test/Transforms/GlobalOpt/evaluate-vector-reduce-or.ll b/llvm/test/Transforms/GlobalOpt/evaluate-vector-reduce-or.ll
+index 8ca35fd883ff68..5547f19e6da31a 100644
+--- a/llvm/test/Transforms/GlobalOpt/evaluate-vector-reduce-or.ll
++++ b/llvm/test/Transforms/GlobalOpt/evaluate-vector-reduce-or.ll
+@@ -3,11 +3,11 @@
+ ; The reduction operands are computed in the evaluated call frame, rather
+ ; than being literal constants at the intrinsic call.
+ 
+-; CHECK: @byte = local_unnamed_addr global i8 0
+-; CHECK: @bit = local_unnamed_addr global i1 false
+-; CHECK: @wide = local_unnamed_addr global i64 0
++; CHECK: @byte = local_unnamed_addr global i8 -86
++; CHECK: @bit = local_unnamed_addr global i1 true
++; CHECK: @wide = local_unnamed_addr global i64 281474976710659
+ ; CHECK: @unsupported = local_unnamed_addr global i8 0
+-; CHECK: @llvm.global_ctors = appending global [2 x { i32, ptr, ptr }]
++; CHECK: @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 1, ptr @init_xor, ptr null }]
+ 
+ @byte = global i8 0
+ @bit = global i1 false
+diff --git a/llvm/test/Transforms/WholeProgramDevirt/uniform-retval-vector-reduce-or.ll b/llvm/test/Transforms/WholeProgramDevirt/uniform-retval-vector-reduce-or.ll
+index 80ff7815a36a02..0c4ac4b00f4849 100644
+--- a/llvm/test/Transforms/WholeProgramDevirt/uniform-retval-vector-reduce-or.ll
++++ b/llvm/test/Transforms/WholeProgramDevirt/uniform-retval-vector-reduce-or.ll
+@@ -21,7 +21,8 @@ define i8 @vf2(ptr %this, i8 %arg) memory(none) {
+ 
+ ; Both targets return 15 for this argument, but not for arbitrary arguments.
+ ; CHECK-LABEL: define i8 @constant_arg(
+-; CHECK: call i8 %fptr(ptr %obj, i8 5)
++; CHECK-NOT: call i8
++; CHECK: ret i8 15
+ define i8 @constant_arg(ptr %obj) {
+   %vtable = load ptr, ptr %obj
+   %p = call i1 @llvm.type.test(ptr %vtable, metadata !"typeid")
