@@ -205,8 +205,8 @@ bb.v:                                             ; preds = %bb.s
   br i1 %i.bs, label %bb.x, label %bb.y
 
 bb.w:                                             ; preds = %.lr.ph, %bb.cm
-  %.sroa.0.1 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.lt, %bb.cm ]
-  %.sroa.7.1 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.nz, %bb.cm ]
+  %.sroa.0.1 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.nz, %bb.cm ]
+  %.sroa.7.1 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.lt, %bb.cm ]
   %.sroa.08.0247 = phi i64 [ 0, %.lr.ph ], [ %i.oa, %bb.cm ] ; 14 uses
   %i.bt = add nuw nsw i64 %i.bc, %.sroa.08.0247   ; 2 uses
   %exitcond339.not = icmp eq i64 %.sroa.08.0247, %i.bg
@@ -609,7 +609,7 @@ bb.cj:                                            ; preds = %middle.block484
   %i.lq = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %.sroa.08.0247
   %i.lr = load float, ptr %i.lq, align 4, !noundef !10
   %i.ls = fsub float %i.lp, %i.lr
-  %i.lt = fadd float %.sroa.0.1, %i.ls            ; 2 uses
+  %i.lt = fadd float %.sroa.7.1, %i.ls            ; 2 uses
   %i.lu = add i64 %i.g, %.sroa.08.0247            ; 5 uses
   %i.lv = load i64, ptr %i.bj, align 8, !noundef !10
   %i.lw = add i64 %i.lv, %.sroa.08.0247           ; 3 uses
@@ -721,7 +721,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.nw = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %i.lu
   %i.nx = load float, ptr %i.nw, align 4, !noundef !10
   %i.ny = fsub float %i.nv, %i.nx
-  %i.nz = fadd float %.sroa.7.1, %i.ny            ; 2 uses
+  %i.nz = fadd float %.sroa.0.1, %i.ny            ; 2 uses
   %i.oa = add nuw nsw i64 %.sroa.08.0247, 1       ; 2 uses
   %exitcond346.not = icmp eq i64 %i.oa, %i.g
   br i1 %exitcond346.not, label %._crit_edge, label %bb.w
