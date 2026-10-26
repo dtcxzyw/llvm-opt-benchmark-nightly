@@ -205,8 +205,7 @@ _ZN6embree5lzcntEi.exit.thread:                   ; preds = %_ZN6embree5lzcntEi.
   %i.dq = phi i32 [ %i.cg, %_ZN6embree5lzcntEi.exit63 ], [ %i.df, %_ZN6embree5lzcntEi.exit ] ; 4 uses
   %i.dr = phi i32 [ %i.ch, %_ZN6embree5lzcntEi.exit63 ], [ %i.db, %_ZN6embree5lzcntEi.exit ] ; 3 uses
   %.pn = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit63 ], [ %i.dm, %_ZN6embree5lzcntEi.exit ]
-  %.036.i51 = sub nsw i32 31, %.pn
-  %16 = lshr exact i32 -2147483648, %.036.i51
+  %16 = shl nuw i32 1, %.pn
   %i.ds = add i32 %i.dr, 1
   %.not38.i54158 = icmp eq i32 %i.ds, %i.dq
   br i1 %.not38.i54158, label %._crit_edge, label %.lr.ph
@@ -383,8 +382,7 @@ _ZN6embree5lzcntEi.exit65.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.go = phi i32 [ %i.fj, %_ZN6embree5lzcntEi.exit67 ], [ %i.fy, %_ZN6embree5lzcntEi.exit65 ] ; 3 uses
   %i.gp = phi ptr [ %i.ef, %_ZN6embree5lzcntEi.exit67 ], [ %i.fx, %_ZN6embree5lzcntEi.exit65 ]
   %.pn151 = phi i32 [ %i.fv, %_ZN6embree5lzcntEi.exit67 ], [ %i.gj, %_ZN6embree5lzcntEi.exit65 ]
-  %.036.i = sub nsw i32 31, %.pn151
-  %17 = lshr exact i32 -2147483648, %.036.i
+  %17 = shl nuw i32 1, %.pn151
   %i.gq = add i32 %i.go, 1
   %.not38.i164 = icmp eq i32 %i.gq, %i.gn
   br i1 %.not38.i164, label %._crit_edge168, label %.lr.ph167
@@ -787,8 +785,7 @@ _ZN6embree5lzcntEi.exit.i63.thread:               ; preds = %_ZN6embree5lzcntEi.
   %i.dq = phi i32 [ %i.cg, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.df, %_ZN6embree5lzcntEi.exit.i63 ] ; 4 uses
   %i.dr = phi i32 [ %i.ch, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.db, %_ZN6embree5lzcntEi.exit.i63 ] ; 3 uses
   %.pn = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.dm, %_ZN6embree5lzcntEi.exit.i63 ]
-  %.036.i57 = sub nsw i32 31, %.pn
-  %16 = lshr exact i32 -2147483648, %.036.i57
+  %16 = shl nuw i32 1, %.pn
   %i.ds = add i32 %i.dr, 1
   %.not38.i60156 = icmp eq i32 %i.ds, %i.dq
   br i1 %.not38.i60156, label %._crit_edge, label %.lr.ph
@@ -965,8 +962,7 @@ _ZN6embree5lzcntEi.exit.i.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.go = phi i32 [ %i.fj, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fy, %_ZN6embree5lzcntEi.exit.i ] ; 3 uses
   %i.gp = phi ptr [ %i.ef, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fx, %_ZN6embree5lzcntEi.exit.i ]
   %.pn149 = phi i32 [ %i.fv, %_ZN6embree5lzcntEi.exit40.i ], [ %i.gj, %_ZN6embree5lzcntEi.exit.i ]
-  %.036.i = sub nsw i32 31, %.pn149
-  %17 = lshr exact i32 -2147483648, %.036.i
+  %17 = shl nuw i32 1, %.pn149
   %i.gq = add i32 %i.go, 1
   %.not38.i162 = icmp eq i32 %i.gq, %i.gn
   br i1 %.not38.i162, label %._crit_edge166, label %.lr.ph165
@@ -1369,8 +1365,7 @@ _ZN6embree5lzcntEi.exit.i63.thread:               ; preds = %_ZN6embree5lzcntEi.
   %i.dq = phi i32 [ %i.cg, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.df, %_ZN6embree5lzcntEi.exit.i63 ] ; 4 uses
   %i.dr = phi i32 [ %i.ch, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.db, %_ZN6embree5lzcntEi.exit.i63 ] ; 3 uses
   %.pn = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.dm, %_ZN6embree5lzcntEi.exit.i63 ]
-  %.036.i57 = sub nsw i32 31, %.pn
-  %16 = lshr exact i32 -2147483648, %.036.i57
+  %16 = shl nuw i32 1, %.pn
   %i.ds = add i32 %i.dr, 1
   %.not38.i60156 = icmp eq i32 %i.ds, %i.dq
   br i1 %.not38.i60156, label %._crit_edge, label %.lr.ph
@@ -1547,8 +1542,7 @@ _ZN6embree5lzcntEi.exit.i.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.go = phi i32 [ %i.fj, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fy, %_ZN6embree5lzcntEi.exit.i ] ; 3 uses
   %i.gp = phi ptr [ %i.ef, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fx, %_ZN6embree5lzcntEi.exit.i ]
   %.pn149 = phi i32 [ %i.fv, %_ZN6embree5lzcntEi.exit40.i ], [ %i.gj, %_ZN6embree5lzcntEi.exit.i ]
-  %.036.i = sub nsw i32 31, %.pn149
-  %17 = lshr exact i32 -2147483648, %.036.i
+  %17 = shl nuw i32 1, %.pn149
   %i.gq = add i32 %i.go, 1
   %.not38.i162 = icmp eq i32 %i.gq, %i.gn
   br i1 %.not38.i162, label %._crit_edge166, label %.lr.ph165
@@ -1951,8 +1945,7 @@ _ZN6embree5lzcntEi.exit.i63.thread:               ; preds = %_ZN6embree5lzcntEi.
   %i.dq = phi i32 [ %i.cg, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.df, %_ZN6embree5lzcntEi.exit.i63 ] ; 4 uses
   %i.dr = phi i32 [ %i.ch, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.db, %_ZN6embree5lzcntEi.exit.i63 ] ; 3 uses
   %.pn = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.dm, %_ZN6embree5lzcntEi.exit.i63 ]
-  %.036.i57 = sub nsw i32 31, %.pn
-  %16 = lshr exact i32 -2147483648, %.036.i57
+  %16 = shl nuw i32 1, %.pn
   %i.ds = add i32 %i.dr, 1
   %.not38.i60156 = icmp eq i32 %i.ds, %i.dq
   br i1 %.not38.i60156, label %._crit_edge, label %.lr.ph
@@ -2129,8 +2122,7 @@ _ZN6embree5lzcntEi.exit.i.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.go = phi i32 [ %i.fj, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fy, %_ZN6embree5lzcntEi.exit.i ] ; 3 uses
   %i.gp = phi ptr [ %i.ef, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fx, %_ZN6embree5lzcntEi.exit.i ]
   %.pn149 = phi i32 [ %i.fv, %_ZN6embree5lzcntEi.exit40.i ], [ %i.gj, %_ZN6embree5lzcntEi.exit.i ]
-  %.036.i = sub nsw i32 31, %.pn149
-  %17 = lshr exact i32 -2147483648, %.036.i
+  %17 = shl nuw i32 1, %.pn149
   %i.gq = add i32 %i.go, 1
   %.not38.i162 = icmp eq i32 %i.gq, %i.gn
   br i1 %.not38.i162, label %._crit_edge166, label %.lr.ph165
@@ -2533,8 +2525,7 @@ _ZN6embree5lzcntEi.exit.i63.thread:               ; preds = %_ZN6embree5lzcntEi.
   %i.dq = phi i32 [ %i.cg, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.df, %_ZN6embree5lzcntEi.exit.i63 ] ; 4 uses
   %i.dr = phi i32 [ %i.ch, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.db, %_ZN6embree5lzcntEi.exit.i63 ] ; 3 uses
   %.pn = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.dm, %_ZN6embree5lzcntEi.exit.i63 ]
-  %.036.i57 = sub nsw i32 31, %.pn
-  %16 = lshr exact i32 -2147483648, %.036.i57
+  %16 = shl nuw i32 1, %.pn
   %i.ds = add i32 %i.dr, 1
   %.not38.i60156 = icmp eq i32 %i.ds, %i.dq
   br i1 %.not38.i60156, label %._crit_edge, label %.lr.ph
@@ -2711,8 +2702,7 @@ _ZN6embree5lzcntEi.exit.i.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.go = phi i32 [ %i.fj, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fy, %_ZN6embree5lzcntEi.exit.i ] ; 3 uses
   %i.gp = phi ptr [ %i.ef, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fx, %_ZN6embree5lzcntEi.exit.i ]
   %.pn149 = phi i32 [ %i.fv, %_ZN6embree5lzcntEi.exit40.i ], [ %i.gj, %_ZN6embree5lzcntEi.exit.i ]
-  %.036.i = sub nsw i32 31, %.pn149
-  %17 = lshr exact i32 -2147483648, %.036.i
+  %17 = shl nuw i32 1, %.pn149
   %i.gq = add i32 %i.go, 1
   %.not38.i162 = icmp eq i32 %i.gq, %i.gn
   br i1 %.not38.i162, label %._crit_edge166, label %.lr.ph165
@@ -3115,8 +3105,7 @@ _ZN6embree5lzcntEi.exit.i63.thread:               ; preds = %_ZN6embree5lzcntEi.
   %i.dq = phi i32 [ %i.cg, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.df, %_ZN6embree5lzcntEi.exit.i63 ] ; 4 uses
   %i.dr = phi i32 [ %i.ch, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.db, %_ZN6embree5lzcntEi.exit.i63 ] ; 3 uses
   %.pn = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.dm, %_ZN6embree5lzcntEi.exit.i63 ]
-  %.036.i57 = sub nsw i32 31, %.pn
-  %16 = lshr exact i32 -2147483648, %.036.i57
+  %16 = shl nuw i32 1, %.pn
   %i.ds = add i32 %i.dr, 1
   %.not38.i60156 = icmp eq i32 %i.ds, %i.dq
   br i1 %.not38.i60156, label %._crit_edge, label %.lr.ph
@@ -3293,8 +3282,7 @@ _ZN6embree5lzcntEi.exit.i.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.go = phi i32 [ %i.fj, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fy, %_ZN6embree5lzcntEi.exit.i ] ; 3 uses
   %i.gp = phi ptr [ %i.ef, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fx, %_ZN6embree5lzcntEi.exit.i ]
   %.pn149 = phi i32 [ %i.fv, %_ZN6embree5lzcntEi.exit40.i ], [ %i.gj, %_ZN6embree5lzcntEi.exit.i ]
-  %.036.i = sub nsw i32 31, %.pn149
-  %17 = lshr exact i32 -2147483648, %.036.i
+  %17 = shl nuw i32 1, %.pn149
   %i.gq = add i32 %i.go, 1
   %.not38.i162 = icmp eq i32 %i.gq, %i.gn
   br i1 %.not38.i162, label %._crit_edge166, label %.lr.ph165
@@ -3697,8 +3685,7 @@ _ZN6embree5lzcntEi.exit.i63.thread:               ; preds = %_ZN6embree5lzcntEi.
   %i.dq = phi i32 [ %i.cg, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.df, %_ZN6embree5lzcntEi.exit.i63 ] ; 4 uses
   %i.dr = phi i32 [ %i.ch, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.db, %_ZN6embree5lzcntEi.exit.i63 ] ; 3 uses
   %.pn = phi i32 [ %i.cy, %_ZN6embree5lzcntEi.exit40.i54 ], [ %i.dm, %_ZN6embree5lzcntEi.exit.i63 ]
-  %.036.i57 = sub nsw i32 31, %.pn
-  %16 = lshr exact i32 -2147483648, %.036.i57
+  %16 = shl nuw i32 1, %.pn
   %i.ds = add i32 %i.dr, 1
   %.not38.i60156 = icmp eq i32 %i.ds, %i.dq
   br i1 %.not38.i60156, label %._crit_edge, label %.lr.ph
@@ -3875,8 +3862,7 @@ _ZN6embree5lzcntEi.exit.i.thread:                 ; preds = %_ZN6embree5lzcntEi.
   %i.go = phi i32 [ %i.fj, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fy, %_ZN6embree5lzcntEi.exit.i ] ; 3 uses
   %i.gp = phi ptr [ %i.ef, %_ZN6embree5lzcntEi.exit40.i ], [ %i.fx, %_ZN6embree5lzcntEi.exit.i ]
   %.pn149 = phi i32 [ %i.fv, %_ZN6embree5lzcntEi.exit40.i ], [ %i.gj, %_ZN6embree5lzcntEi.exit.i ]
-  %.036.i = sub nsw i32 31, %.pn149
-  %17 = lshr exact i32 -2147483648, %.036.i
+  %17 = shl nuw i32 1, %.pn149
   %i.gq = add i32 %i.go, 1
   %.not38.i162 = icmp eq i32 %i.gq, %i.gn
   br i1 %.not38.i162, label %._crit_edge166, label %.lr.ph165
