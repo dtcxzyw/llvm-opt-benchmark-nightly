@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.c
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #28, !noalias !1307
   unreachable
 
-common.resume:                                    ; preds = %.body, %bb.ai, %bb.ae, %bb.h, %bb.c
-  %common.resume.op = phi { ptr, i32 } [ %i.bi, %bb.ae ], [ %i.ad, %bb.c ], [ %i.an, %bb.h ], [ %.pn, %bb.ai ], [ %.pn, %.body ]
+common.resume:                                    ; preds = %.split, %.body, %bb.ai, %bb.ae, %bb.h, %bb.c
+  %common.resume.op = phi { ptr, i32 } [ %i.bi, %bb.ae ], [ %i.ad, %bb.c ], [ %i.an, %bb.h ], [ %.pn43, %bb.ai ], [ %.pn, %.body ], [ %lpad.thr_comm.split-lp, %.split ]
   resume { ptr, i32 } %common.resume.op
 
 _RNvXsC_NtCsgCecv3eZDcN_5alloc6stringNtNtCs5Xr050g3D4S_3std4path7DisplayNtB5_12SpecToString14spec_to_stringCsbzNSmZPCnTx_10tgrep_core.exit: ; preds = %bb.d
@@ -265,17 +265,19 @@ _RNvXsC_NtCsgCecv3eZDcN_5alloc6stringNtCs30WoLBgco1_6ignore5ErrorNtB5_12SpecToSt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1309
   br label %bb.ag
 
-.body:                                            ; preds = %bb.aa, %bb.l, %bb.z
-  %.pn = phi { ptr, i32 } [ %i.bf, %bb.z ], [ %i.ap, %bb.l ], [ %i.bg, %bb.aa ] ; 2 uses
-  %.sroa.08.0 = phi i8 [ %.sroa.08.2, %bb.z ], [ %.sroa.08.1, %bb.l ], [ %.sroa.08.2, %bb.aa ]
-  %4 = trunc nuw i8 %.sroa.08.0 to i1
+.body:                                            ; preds = %bb.aa, %bb.z
+  %.pn = phi { ptr, i32 } [ %i.bf, %bb.z ], [ %i.bg, %bb.aa ] ; 2 uses
   br i1 %4, label %bb.ai, label %common.resume
 
-bb.l:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbzNSmZPCnTx_10tgrep_core.exit.i, %bb.o, %bb.u, %bb.r, %bb.n, %_RNvXsC_NtCsgCecv3eZDcN_5alloc6stringNtNtCs5Xr050g3D4S_3std4path7DisplayNtB5_12SpecToString14spec_to_stringCsbzNSmZPCnTx_10tgrep_core.exit
-  %.sroa.08.1 = phi i8 [ %.sroa.08.2, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbzNSmZPCnTx_10tgrep_core.exit.i ], [ 1, %bb.o ], [ 1, %bb.u ], [ 1, %bb.r ], [ 1, %bb.n ], [ 1, %_RNvXsC_NtCsgCecv3eZDcN_5alloc6stringNtNtCs5Xr050g3D4S_3std4path7DisplayNtB5_12SpecToString14spec_to_stringCsbzNSmZPCnTx_10tgrep_core.exit ]
+bb.l:                                             ; preds = %bb.o, %bb.u, %bb.r, %bb.n, %_RNvXsC_NtCsgCecv3eZDcN_5alloc6stringNtNtCs5Xr050g3D4S_3std4path7DisplayNtB5_12SpecToString14spec_to_stringCsbzNSmZPCnTx_10tgrep_core.exit
   %i.ap = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.ai
+
+.split:                                           ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbzNSmZPCnTx_10tgrep_core.exit.i
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %4, label %bb.ai, label %common.resume
 
 bb.m:                                             ; preds = %_RNvXsC_NtCsgCecv3eZDcN_5alloc6stringNtNtCs5Xr050g3D4S_3std4path7DisplayNtB5_12SpecToString14spec_to_stringCsbzNSmZPCnTx_10tgrep_core.exit
   br i1 %i.aj, label %bb.o, label %bb.n
@@ -314,7 +316,7 @@ bb.r:                                             ; preds = %bb.p
           to label %bb.t unwind label %bb.l
 
 bb.s:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbzNSmZPCnTx_10tgrep_core.exit, %bb.w, %bb.q
-  %.sroa.08.2 = phi i8 [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbzNSmZPCnTx_10tgrep_core.exit ], [ 1, %bb.w ], [ 0, %bb.q ] ; 4 uses
+  %4 = phi i1 [ true, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbzNSmZPCnTx_10tgrep_core.exit ], [ true, %bb.w ], [ false, %bb.q ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store ptr %i.k, ptr %i.g, align 8
   %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -394,12 +396,11 @@ bb.ab:                                            ; preds = %bb.aa
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbzNSmZPCnTx_10tgrep_core.exit.i: ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbzNSmZPCnTx_10tgrep_core.exit37
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.k)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbzNSmZPCnTx_10tgrep_core.exit unwind label %bb.l
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbzNSmZPCnTx_10tgrep_core.exit unwind label %.split
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbzNSmZPCnTx_10tgrep_core.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbzNSmZPCnTx_10tgrep_core.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  %5 = trunc nuw i8 %.sroa.08.2 to i1
-  br i1 %5, label %bb.ad, label %bb.ac
+  br i1 %4, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbzNSmZPCnTx_10tgrep_core.exit40, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbzNSmZPCnTx_10tgrep_core.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
@@ -435,7 +436,8 @@ bb.ah:                                            ; preds = %bb.ai, %bb.z
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #28
   unreachable
 
-bb.ai:                                            ; preds = %.body
+bb.ai:                                            ; preds = %bb.l, %.split, %.body
+  %.pn43 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.split ], [ %.pn, %.body ], [ %i.ap, %bb.l ]
   invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m) #29
           to label %common.resume unwind label %bb.ah
 }

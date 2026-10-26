@@ -202,19 +202,20 @@ bb.a:
 .noexc.i.i:                                       ; preds = %bb.a
   %i.bb = getelementptr inbounds nuw i8, ptr %i.an, i64 24 ; 3 uses
   %i.bc = invoke zeroext i1 @"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17ha1000b95e371eda3E"(ptr nonnull align 8 %i.bb, ptr nonnull align 8 @40)
-          to label %bb.d unwind label %bb.c, !noalias !6
+          to label %bb.d unwind label %bb.b, !noalias !6
 
-bb.b:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.c
-  %.pn.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp2, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.bd, %bb.c ] ; 2 uses
-  %.sroa.03.0.i.i.i = phi i8 [ %.sroa.03.2.i.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.sroa.03.1.i.i.i, %bb.c ]
-  %2 = trunc nuw i8 %.sroa.03.0.i.i.i to i1
-  br i1 %2, label %bb.az, label %.body.i.i
+2:                                                ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  br i1 %3, label %bb.az, label %.body.i.i
 
-bb.c:                                             ; preds = %bb.au, %bb.k, %bb.j, %bb.h, %bb.f, %.noexc.i.i
-  %.sroa.03.1.i.i.i = phi i8 [ %.sroa.03.2.i.i.i, %bb.au ], [ 1, %bb.k ], [ 1, %bb.j ], [ 1, %bb.h ], [ 1, %bb.f ], [ 1, %.noexc.i.i ]
-  %i.bd = landingpad { ptr, i32 }
+bb.b:                                             ; preds = %bb.k, %bb.j, %bb.h, %bb.f, %.noexc.i.i
+  %lpad.thr_comm.i.i.i = landingpad { ptr, i32 }
           cleanup
-  br label %bb.b
+  br label %bb.az
+
+bb.c:                                             ; preds = %bb.au
+  %i.bd = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %3, label %bb.az, label %.body.i.i
 
 bb.d:                                             ; preds = %.noexc.i.i
   br i1 %i.bc, label %bb.f, label %bb.e
@@ -225,36 +226,36 @@ bb.e:                                             ; preds = %bb.i, %bb.g, %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.be = invoke zeroext i1 @"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17ha1000b95e371eda3E"(ptr align 8 %i.an, ptr nonnull align 8 @42)
-          to label %bb.g unwind label %bb.c, !noalias !6
+          to label %bb.g unwind label %bb.b, !noalias !6
 
 bb.g:                                             ; preds = %bb.f
   br i1 %i.be, label %bb.h, label %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.bf = invoke zeroext i1 @_ZN2cc4tool4Tool13is_like_clang17h62b6fd19627fc5d5E(ptr nonnull align 8 %i.e)
-          to label %bb.i unwind label %bb.c, !noalias !6
+          to label %bb.i unwind label %bb.b, !noalias !6
 
 bb.i:                                             ; preds = %bb.h
   br i1 %i.bf, label %bb.e, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.bg = invoke align 8 ptr @_ZN2cc5Build8compiler17hd0046d4e79759ef6E(ptr nonnull align 8 %i.f, ptr nonnull align 1 @43, i64 5)
-          to label %bb.k unwind label %bb.c, !noalias !6 ; 0 uses
+          to label %bb.k unwind label %bb.b, !noalias !6 ; 0 uses
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_ZN2cc5Build12get_compiler17hce9f5e609ff00ea8E(ptr nonnull sret([152 x i8]) align 8 %i.d, ptr nonnull align 8 %i.f)
-          to label %bb.l unwind label %bb.c, !noalias !6
+          to label %bb.l unwind label %bb.b, !noalias !6
 
 bb.l:                                             ; preds = %bb.k, %bb.e
-  %.sroa.03.2.i.i.i = phi i8 [ 0, %bb.e ], [ 1, %bb.k ] ; 3 uses
+  %3 = phi i1 [ false, %bb.e ], [ true, %bb.k ]   ; 3 uses
   invoke void @_ZN3std4path4Path4join17h8019228f0bbba227E(ptr nonnull sret([24 x i8]) align 8 %i.c, ptr align 1 %i.ap, i64 %i.ar, ptr nonnull align 1 @44, i64 7)
           to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !6
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.t, %bb.r, %bb.av, %bb.at, %bb.as, %bb.ap, %bb.an, %bb.ak, %bb.aj, %.critedge.i.i.i, %bb.ag, %bb.ae, %bb.ad, %bb.ab, %bb.aa, %.invoke.i.i.i, %bb.x, %bb.v, %bb.u, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l
   %lpad.loopexit.split-lp2 = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @"_ZN4core3ptr35drop_in_place$LT$cc..tool..Tool$GT$17ha0166c56e0224b04E"(ptr nonnull align 8 %i.d) #18
-          to label %bb.b unwind label %bb.ay, !noalias !6
+          to label %2 unwind label %bb.ay, !noalias !6
 
 bb.m:                                             ; preds = %bb.l
   %i.bh = invoke align 8 ptr @_ZN2cc5Build7include17h6e5a8f30b9a08bd4E(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.c)
@@ -417,7 +418,6 @@ bb.av:                                            ; preds = %bb.am
           to label %bb.au unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !6 ; 0 uses
 
 bb.aw:                                            ; preds = %bb.au
-  %3 = trunc nuw i8 %.sroa.03.2.i.i.i to i1
   br i1 %3, label %bb.ax, label %_ZN18build_script_build9new_build17h9d6c29cc7ea11b76E.exit.i
 
 bb.ax:                                            ; preds = %bb.aw
@@ -430,7 +430,8 @@ bb.ay:                                            ; preds = %bb.az, %.loopexit.s
   call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #20, !noalias !6
   unreachable
 
-bb.az:                                            ; preds = %bb.b
+bb.az:                                            ; preds = %bb.c, %bb.b, %2
+  %.pn8.i.i.i = phi { ptr, i32 } [ %i.bd, %bb.c ], [ %lpad.loopexit.split-lp2, %2 ], [ %lpad.thr_comm.i.i.i, %bb.b ]
   invoke void @"_ZN4core3ptr35drop_in_place$LT$cc..tool..Tool$GT$17ha0166c56e0224b04E"(ptr nonnull align 8 %i.e) #18
           to label %.body.i.i unwind label %bb.ay, !noalias !6
 
@@ -439,8 +440,8 @@ bb.ba:                                            ; preds = %bb.ax, %bb.a
           cleanup
   br label %.body.i.i
 
-.body.i.i:                                        ; preds = %bb.ba, %bb.az, %bb.b
-  %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.cu, %bb.ba ], [ %.pn.i.i.i, %bb.az ], [ %.pn.i.i.i, %bb.b ]
+.body.i.i:                                        ; preds = %bb.ba, %bb.az, %bb.c, %2
+  %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.cu, %bb.ba ], [ %i.bd, %bb.c ], [ %.pn8.i.i.i, %bb.az ], [ %lpad.loopexit.split-lp2, %2 ]
   invoke void @"_ZN4core3ptr30drop_in_place$LT$cc..Build$GT$17hddbac109700f29a1E"(ptr nonnull align 8 %i.f) #18
           to label %common.resume.i unwind label %bb.bb, !noalias !6
 

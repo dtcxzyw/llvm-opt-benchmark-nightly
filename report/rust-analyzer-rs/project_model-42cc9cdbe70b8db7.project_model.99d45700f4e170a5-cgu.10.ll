@@ -202,17 +202,16 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsbSS6DM8SDEO_
   %i.tc = icmp eq ptr %i.tb, %i.ta
   br i1 %i.tc, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCsixqsALXRULh_14cargo_metadata7PackageENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCsdcPuHeDsw6v_13project_model.exit.thread, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCsixqsALXRULh_14cargo_metadata7PackageENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCsdcPuHeDsw6v_13project_model.exit
 
-.body367:                                         ; preds = %bb.gn, %bb.gc, %bb.gf
-  %.sroa.055.0 = phi i1 [ true, %bb.gf ], [ false, %bb.gc ], [ false, %bb.gn ]
-  %.sroa.051.0 = phi i8 [ %.sroa.051.2, %bb.gf ], [ %.sroa.051.3, %bb.gc ], [ %.sroa.051.3, %bb.gn ]
-  %.pn184 = phi { ptr, i32 } [ %i.tf, %bb.gf ], [ %i.td, %bb.gc ], [ %i.tu, %bb.gn ] ; 2 uses
-  %5 = trunc nuw i8 %.sroa.051.0 to i1
-  br i1 %5, label %bb.hf, label %bb.gz
+.body367:                                         ; preds = %bb.gn, %bb.gf
+  %.sroa.055.0 = phi i1 [ true, %bb.gf ], [ false, %bb.gn ] ; 2 uses
+  %.sroa.051.0 = phi i1 [ %.sroa.051.2, %bb.gf ], [ %5, %bb.gn ]
+  %.pn184 = phi { ptr, i32 } [ %i.tf, %bb.gf ], [ %i.tu, %bb.gn ] ; 2 uses
+  br i1 %.sroa.051.0, label %bb.hf, label %bb.gz
 
 bb.gc:                                            ; preds = %bb.gr
   %i.td = landingpad { ptr, i32 }
-          cleanup
-  br label %.body367
+          cleanup                                 ; 2 uses
+  br i1 %5, label %bb.hf, label %.thread621
 
 _RNvMs3_NtCsdcPuHeDsw6v_13project_model15cargo_workspaceNtB5_10TargetKind3new.exit.thread.loopexit: ; preds = %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i
   br label %_RNvMs3_NtCsdcPuHeDsw6v_13project_model15cargo_workspaceNtB5_10TargetKind3new.exit.thread
@@ -251,7 +250,7 @@ bb.ge:                                            ; preds = %.lr.ph.i
           to label %bb.gg unwind label %bb.gf     ; 2 uses
 
 bb.gf:                                            ; preds = %bb.gj, %bb.gg, %bb.ge, %bb.gd
-  %.sroa.051.2 = phi i8 [ 1, %bb.gj ], [ 0, %bb.gd ], [ 1, %bb.gg ], [ 1, %bb.ge ]
+  %.sroa.051.2 = phi i1 [ true, %bb.gj ], [ false, %bb.gd ], [ true, %bb.gg ], [ true, %bb.ge ]
   %i.tf = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsdcPuHeDsw6v_13project_model(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z) #30
@@ -290,7 +289,7 @@ bb.gk:                                            ; preds = %bb.gj
 
 bb.gl:                                            ; preds = %bb.gp, %bb.gk
   %.sroa.0.1.i312619 = phi i8 [ 2, %bb.gk ], [ %.sroa.0.1.i312620, %bb.gp ]
-  %.sroa.051.3 = phi i8 [ 1, %bb.gk ], [ 0, %bb.gp ] ; 3 uses
+  %5 = phi i1 [ true, %bb.gk ], [ false, %bb.gp ] ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eo, ptr noundef nonnull align 8 dereferenceable(24) %i.ac, i64 24, i1 false)
   store i32 %i.pw, ptr %i.el, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aa, ptr noundef nonnull align 8 dereferenceable(24) %i.z, i64 24, i1 false)
@@ -347,8 +346,7 @@ bb.gs:                                            ; preds = %bb.gq, %bb.gr
   store i32 %i.tz, ptr %i.ue, align 4
   %i.uf = add i64 %i.ua, 1
   store i64 %i.uf, ptr %i.qw, align 8, !alias.scope !435
-  %6 = trunc nuw i8 %.sroa.051.3 to i1
-  br i1 %6, label %bb.gw, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs9p4rgIae0RV_6camino11Utf8PathBufECsdcPuHeDsw6v_13project_model.exit
+  br i1 %5, label %bb.gw, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs9p4rgIae0RV_6camino11Utf8PathBufECsdcPuHeDsw6v_13project_model.exit
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs9p4rgIae0RV_6camino11Utf8PathBufECsdcPuHeDsw6v_13project_model.exit: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std4path7PathBufECsdcPuHeDsw6v_13project_model.exit.i, %bb.gs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab)
@@ -393,7 +391,9 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std4path7PathBufECsdc
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs9p4rgIae0RV_6camino11Utf8PathBufECsdcPuHeDsw6v_13project_model.exit unwind label %bb.ha
 
 bb.gz:                                            ; preds = %bb.hf, %.body367
-  br i1 %.sroa.055.0, label %bb.hg, label %.thread621
+  %.pn1841291 = phi { ptr, i32 } [ %.pn184, %.body367 ], [ %.pn1841292, %bb.hf ] ; 2 uses
+  %.sroa.055.01289 = phi i1 [ %.sroa.055.0, %.body367 ], [ %.sroa.055.01290, %bb.hf ]
+  br i1 %.sroa.055.01289, label %bb.hg, label %.thread621
 
 bb.ha:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std4path7PathBufECsdcPuHeDsw6v_13project_model.exit.i
   %i.uk = landingpad { ptr, i32 }
@@ -435,12 +435,14 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtCsixq
   %i.uq = icmp eq ptr %i.up, %i.uo
   br i1 %i.uq, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCsixqsALXRULh_14cargo_metadata6TargetENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCsdcPuHeDsw6v_13project_model.exit.thread, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCsixqsALXRULh_14cargo_metadata6TargetENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCsdcPuHeDsw6v_13project_model.exit
 
-bb.hf:                                            ; preds = %.body367
+bb.hf:                                            ; preds = %bb.gc, %.body367
+  %.pn1841292 = phi { ptr, i32 } [ %i.td, %bb.gc ], [ %.pn184, %.body367 ]
+  %.sroa.055.01290 = phi i1 [ false, %bb.gc ], [ %.sroa.055.0, %.body367 ]
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs9p4rgIae0RV_6camino11Utf8PathBufECsdcPuHeDsw6v_13project_model(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ab) #30
           to label %bb.gz unwind label %bb.ar
 
-.thread621:                                       ; preds = %bb.gx, %bb.ha, %bb.hg, %bb.gz
-  %.pn186626 = phi { ptr, i32 } [ %.pn184, %bb.gz ], [ %.pn184, %bb.hg ], [ %i.uk, %bb.ha ], [ %i.ui, %bb.gx ]
+.thread621:                                       ; preds = %bb.gc, %bb.gx, %bb.ha, %bb.hg, %bb.gz
+  %.pn186626 = phi { ptr, i32 } [ %.pn1841291, %bb.gz ], [ %.pn1841291, %bb.hg ], [ %i.uk, %bb.ha ], [ %i.ui, %bb.gx ], [ %i.td, %bb.gc ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtCsixqsALXRULh_14cargo_metadata10TargetKindEECsdcPuHeDsw6v_13project_model(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ad) #30
           to label %.body371 unwind label %bb.ar
 

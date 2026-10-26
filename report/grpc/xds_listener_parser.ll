@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZN9grpc_core19XdsL
   store i8 0, ptr %i.ar, align 1, !tbaa !62, !alias.scope !521
   %i.as = load i32, ptr %0, align 8, !tbaa !185, !noalias !521
   %.not.i = icmp eq i32 %i.as, 0
-  br i1 %.not.i, label %bb.aa, label %bb.n
+  br i1 %.not.i, label %bb.ab, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %12, i64 17, ptr nonnull @.str.91)
@@ -331,16 +331,12 @@ _ZNSt7__cxx119to_stringEj.exit.i:                 ; preds = %bb.w, %bb.v
 bb.y:                                             ; preds = %_ZNSt7__cxx119to_stringEj.exit.i
   %i.cq = load ptr, ptr %4, align 8, !tbaa !61, !noalias !521 ; 2 uses
   %i.cr = icmp eq ptr %i.cq, %i.bf
-  br i1 %i.cr, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+  br i1 %i.cr, label %bb.aa, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.y
   %i.cs = load i64, ptr %i.bf, align 8, !tbaa !62, !noalias !521
   %i.ct = add i64 %i.cs, 1
   call void @_ZdlPvm(ptr noundef %i.cq, i64 noundef %i.ct) #35
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.y, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !521
   br label %bb.aa
 
 bb.z:                                             ; preds = %_ZNSt7__cxx119to_stringEj.exit.i
@@ -360,30 +356,36 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88.i: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !521
   br label %.loopexit.split-lp.i
 
-bb.aa:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %bb.m
-  %.056.i = phi i8 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ 1, %bb.m ] ; 2 uses
+bb.aa:                                            ; preds = %bb.y, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !521
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !174, !noalias !521
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !174, !noalias !521
   %i.dd = icmp eq ptr %i.da, %i.dc
-  br i1 %i.dd, label %bb.al, label %bb.ab
+  br i1 %i.dd, label %bb.al, label %bb.ac
 
-bb.ab:                                            ; preds = %bb.aa
-  %13 = trunc nuw i8 %.056.i to i1
-  br i1 %13, label %bb.ad, label %bb.ac
+bb.ab:                                            ; preds = %bb.m
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %14 = load ptr, ptr %13, align 8, !tbaa !174, !noalias !521
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %16 = load ptr, ptr %15, align 8, !tbaa !174, !noalias !521
+  %17 = icmp eq ptr %14, %16
+  br i1 %17, label %bb.al, label %bb.ad
 
-bb.ac:                                            ; preds = %bb.ab
+bb.ac:                                            ; preds = %bb.aa
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %12, i64 2, ptr nonnull @.str.92)
           to label %bb.ad unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
+  %18 = phi ptr [ %13, %bb.ab ], [ %i.cz, %bb.ac ]
+  %19 = phi ptr [ %15, %bb.ab ], [ %i.db, %bb.ac ]
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %12, i64 15, ptr nonnull @.str.93)
           to label %bb.ae unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.de = load ptr, ptr %i.cz, align 8, !tbaa !174, !noalias !521 ; 3 uses
-  %i.df = load ptr, ptr %i.db, align 8, !tbaa !174, !noalias !521 ; 3 uses
+  %i.de = load ptr, ptr %18, align 8, !tbaa !174, !noalias !521 ; 3 uses
+  %i.df = load ptr, ptr %19, align 8, !tbaa !174, !noalias !521 ; 3 uses
   %.not211240.i = icmp eq ptr %i.de, %i.df
   br i1 %.not211240.i, label %._crit_edge.i, label %bb.af
 
@@ -477,8 +479,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit96.i: ; preds = %.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30, !noalias !521
   br label %.loopexit.split-lp.i
 
-bb.al:                                            ; preds = %._crit_edge.i, %bb.aa
-  %.157.i = phi i8 [ %.056.i, %bb.aa ], [ 0, %._crit_edge.i ] ; 3 uses
+bb.al:                                            ; preds = %._crit_edge.i, %bb.ab, %bb.aa
+  %20 = phi i1 [ false, %bb.aa ], [ false, %._crit_edge.i ], [ true, %bb.ab ] ; 2 uses
+  %.157.i = phi i8 [ 0, %bb.aa ], [ 0, %._crit_edge.i ], [ 1, %bb.ab ]
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.eb = load i32, ptr %i.ea, align 8, !tbaa !187, !noalias !521
   switch i32 %i.eb, label %bb.aq [
@@ -487,8 +490,7 @@ bb.al:                                            ; preds = %._crit_edge.i, %bb.
   ]
 
 bb.am:                                            ; preds = %bb.al
-  %14 = trunc nuw i8 %.157.i to i1
-  br i1 %14, label %.invoke.i, label %bb.an
+  br i1 %20, label %.invoke.i, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %12, i64 2, ptr nonnull @.str.92)
@@ -501,8 +503,7 @@ bb.an:                                            ; preds = %bb.am
           to label %bb.aq unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ao:                                            ; preds = %bb.al
-  %15 = trunc nuw i8 %.157.i to i1
-  br i1 %15, label %.invoke.i, label %bb.ap
+  br i1 %20, label %.invoke.i, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %12, i64 2, ptr nonnull @.str.92)

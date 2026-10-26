@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %_ZNK6vectorIPN7data
   %i.cv = load i32, ptr %i.cu, align 8, !tbaa !524 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ct, i64 68
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !525 ; 3 uses
-  %i.cy = icmp ult i32 %i.cv, %i.cx               ; 2 uses
+  %i.cy = icmp ult i32 %i.cv, %i.cx               ; 3 uses
   br i1 %i.cy, label %bb.p, label %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit
 
 bb.p:                                             ; preds = %bb.o
@@ -452,12 +452,13 @@ _ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE
   br label %bb.af
 
 ._crit_edge417:                                   ; preds = %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit131, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit
-  %.pre-phi.a = phi i1 [ %i.cy, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit ], [ false, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit131 ]
+  %.pre-phi.a = phi i1 [ %i.cy, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit ], [ %.2414, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit131 ]
   %indvars.iv.next501 = add nuw nsw i64 %indvars.iv500, 1
   br i1 %.pre-phi.a, label %.critedge, label %.preheader, !llvm.loop !513
 
 bb.af:                                            ; preds = %.lr.ph416, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit131
   %indvars.iv498 = phi i64 [ 0, %.lr.ph416 ], [ %indvars.iv.next499, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit131 ] ; 2 uses
+  %.2414 = phi i1 [ %i.cy, %.lr.ph416 ], [ false, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit131 ] ; 2 uses
   %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.fb, i64 %indvars.iv498
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !380
   %i.fi = ptrtoint ptr %i.fh to i64
@@ -747,8 +748,9 @@ bb.ba:                                            ; preds = %bb.ay, %bb.aw
 
 _ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE6insertERKPS1_.exit131: ; preds = %bb.ah, %bb.ak, %bb.al, %.preheader.i.i118
   %indvars.iv.next499 = add nuw nsw i64 %indvars.iv498, 1 ; 2 uses
-  %.not653 = icmp samesign ult i64 %indvars.iv.next499, %i.fc
-  br i1 %.not653, label %bb.af, label %._crit_edge417, !llvm.loop !514
+  %1 = icmp samesign uge i64 %indvars.iv.next499, %i.fc
+  %.not76 = or i1 %1, %.2414
+  br i1 %.not76, label %._crit_edge417, label %bb.af, !llvm.loop !514
 
 .critedge:                                        ; preds = %bb.i, %bb.l, %.preheader, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit, %._crit_edge417, %.noexc172, %bb.as, %bb.az, %bb.ax, %bb.au
   %.sroa.44.7 = phi i32 [ %.sroa.44.2431, %bb.l ], [ %spec.select268, %bb.az ], [ %.sroa.44.12, %bb.as ], [ %.sroa.44.12, %.noexc172 ], [ %.sroa.44.3424, %.preheader ], [ %spec.select266, %bb.au ], [ %.sroa.44.12, %bb.ax ], [ %.sroa.44.4, %._crit_edge417 ], [ %.sroa.44.3424, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit ], [ %.sroa.44.2431, %bb.i ] ; 3 uses

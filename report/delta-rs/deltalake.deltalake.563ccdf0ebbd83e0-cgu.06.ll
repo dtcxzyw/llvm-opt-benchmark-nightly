@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.a
   %i.mg = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.mh = load ptr, ptr %i.mg, align 8, !nonnull !12, !align !16, !noundef !12 ; 6 uses
   %i.mi = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.mj = load ptr, ptr %i.mi, align 8, !nonnull !12, !align !16, !noundef !12 ; 7 uses
+  %i.mj = load ptr, ptr %i.mi, align 8, !nonnull !12, !align !16, !noundef !12 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.di)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7184)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dh)
@@ -608,7 +608,7 @@ bb.ev:                                            ; preds = %.body690
   br i1 %.sroa.0302.2, label %.body693.thread, label %.thread1103
 
 .body693.thread1110:                              ; preds = %bb.fe, %bb.r
-  %.sroa.0303.1.ph = phi i8 [ 1, %bb.r ], [ 0, %bb.fe ]
+  %.sroa.0303.1.ph = phi i1 [ true, %bb.r ], [ false, %bb.fe ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.body693.thread
@@ -621,7 +621,7 @@ bb.ev:                                            ; preds = %.body690
 bb.ew:                                            ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dg)
   %i.abp = load i64, ptr %i.dh, align 16, !range !26, !noundef !12 ; 2 uses
-  %i.abq = icmp eq i64 %i.abp, 37
+  %i.abq = icmp eq i64 %i.abp, 37                 ; 3 uses
   %i.abr = getelementptr inbounds nuw i8, ptr %i.dh, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7184, ptr noundef nonnull align 8 dereferenceable(40) %i.abr, i64 40, i1 false)
   br i1 %i.abq, label %bb.ex, label %bb.ey
@@ -831,8 +831,7 @@ bb.fs:                                            ; preds = %bb.fl
 
 bb.ft:                                            ; preds = %bb.fv
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mj, i64 noundef 328, i64 noundef 8) #50
-  %2 = trunc nuw i8 %.sroa.0303.3 to i1
-  br i1 %2, label %bb.fy, label %bb.fx
+  br i1 %i.abq, label %bb.fy, label %bb.fx
 
 bb.fu:                                            ; preds = %bb.fe
   call void @llvm.lifetime.end.p0(ptr nonnull %i.di)
@@ -840,15 +839,15 @@ bb.fu:                                            ; preds = %bb.fe
   br label %bb.fv
 
 bb.fv:                                            ; preds = %bb.fu, %bb.ex
-  %.sroa.0303.3 = phi i8 [ 1, %bb.ex ], [ 0, %bb.fu ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7184)
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser3ast4ExprECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 dereferenceable(328) %i.mj)
           to label %bb.ft unwind label %bb.fw
 
 bb.fw:                                            ; preds = %bb.fv
   %i.act = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread1103
+          cleanup                                 ; 2 uses
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mj, i64 noundef 328, i64 noundef 8) #50
+  br i1 %i.abq, label %bb.gb, label %bb.ga
 
 bb.fx:                                            ; preds = %.thread1114, %bb.fy, %bb.ft
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mh, i64 noundef 328, i64 noundef 8) #50
@@ -864,26 +863,29 @@ bb.fz:                                            ; preds = %bb.fy
           cleanup
   br label %bb.ga
 
-bb.ga:                                            ; preds = %.thread1103, %bb.gb, %bb.fz
-  %.pn657 = phi { ptr, i32 } [ %i.acu, %bb.fz ], [ %.pn655, %bb.gb ], [ %.pn655, %.thread1103 ]
+bb.ga:                                            ; preds = %2, %bb.gb, %bb.fw, %.thread1103, %bb.fz
+  %.pn657 = phi { ptr, i32 } [ %i.acu, %bb.fz ], [ %i.act, %bb.fw ], [ %.pn6551217, %bb.gb ], [ %.pn6531102, %2 ], [ %.pn6531101.ph, %.thread1103 ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mh, i64 noundef 328, i64 noundef 8) #50
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.md, i64 noundef 328, i64 noundef 8) #50
   br label %bb.bb
 
-.thread1103:                                      ; preds = %bb.ev, %.body693.thread, %.body693, %bb.fq, %bb.fw
-  %.sroa.0303.4 = phi i8 [ %.sroa.0303.3, %bb.fw ], [ %.sroa.0303.01100, %.body693.thread ], [ 0, %bb.ev ], [ 0, %.body693 ], [ 0, %bb.fq ]
-  %.pn655 = phi { ptr, i32 } [ %i.act, %bb.fw ], [ %.pn6531102, %.body693.thread ], [ %.pn649, %bb.ev ], [ %lpad.thr_comm.split-lp, %.body693 ], [ %.pn651, %bb.fq ] ; 2 uses
+.thread1103:                                      ; preds = %bb.ev, %.body693, %bb.fq
+  %.pn6531101.ph = phi { ptr, i32 } [ %.pn651, %bb.fq ], [ %lpad.thr_comm.split-lp, %.body693 ], [ %.pn649, %bb.ev ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mj, i64 noundef 328, i64 noundef 8) #50
-  %3 = trunc nuw i8 %.sroa.0303.4 to i1
-  br i1 %3, label %bb.gb, label %bb.ga
+  br label %bb.ga
+
+2:                                                ; preds = %.body693.thread
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.mj, i64 noundef 328, i64 noundef 8) #50
+  br i1 %.sroa.0303.01100, label %bb.gb, label %bb.ga
 
 .body693.thread:                                  ; preds = %bb.fc, %bb.ez, %.body693.thread1110, %bb.ev
-  %.pn6531102 = phi { ptr, i32 } [ %i.abu, %bb.ez ], [ %.pn649, %bb.ev ], [ %lpad.thr_comm, %.body693.thread1110 ], [ %i.abz, %bb.fc ]
-  %.sroa.0303.01100 = phi i8 [ 1, %bb.ez ], [ 0, %bb.ev ], [ %.sroa.0303.1.ph, %.body693.thread1110 ], [ 0, %bb.fc ]
+  %.pn6531102 = phi { ptr, i32 } [ %i.abu, %bb.ez ], [ %.pn649, %bb.ev ], [ %lpad.thr_comm, %.body693.thread1110 ], [ %i.abz, %bb.fc ] ; 2 uses
+  %.sroa.0303.01100 = phi i1 [ true, %bb.ez ], [ false, %bb.ev ], [ %.sroa.0303.1.ph, %.body693.thread1110 ], [ false, %bb.fc ]
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser3ast4ExprECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 dereferenceable(328) %i.mj) #48
-          to label %.thread1103 unwind label %bb.bf
+          to label %2 unwind label %bb.bf
 
-bb.gb:                                            ; preds = %.thread1103
+bb.gb:                                            ; preds = %bb.fw, %2
+  %.pn6551217 = phi { ptr, i32 } [ %i.act, %bb.fw ], [ %.pn6531102, %2 ]
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser3ast4ExprECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 dereferenceable(328) %i.mh) #48
           to label %bb.ga unwind label %bb.bf
 
@@ -1286,7 +1288,7 @@ bb.qa:                                            ; preds = %bb.py
   br label %.critedge
 
 .critedge674.a:                                   ; preds = %bb.qp, %bb.qt, %.critedge673, %bb.qo, %bb.qm, %bb.ql, %bb.pz, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb
-  %.pn669.pn.pn = phi { ptr, i32 } [ %.pn669.pn, %bb.qo ], [ %.pn669.pn, %.critedge673 ], [ %.pn669.pn, %bb.qp ], [ %.pn669.pn, %bb.qt ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn667, %bb.ql ], [ %i.aoa, %bb.pz ], [ %i.aon, %bb.qm ]
+  %.pn669.pn.pn = phi { ptr, i32 } [ %.pn669.pn, %bb.qo ], [ %.pn669.pn, %.critedge673 ], [ %i.aoa, %bb.pz ], [ %.pn669.pn, %bb.qt ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn669.pn, %bb.bb ], [ %.pn667, %bb.ql ], [ %.pn669.pn, %bb.qp ], [ %i.aon, %bb.qm ]
   resume { ptr, i32 } %.pn669.pn.pn
 
 bb.qb:                                            ; preds = %bb.qe, %bb.qc
@@ -1689,7 +1691,7 @@ bb.ah:                                            ; preds = %bb.am, %bb.ak, %bb.
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #49
   unreachable
 
-bb.ai:                                            ; preds = %bb.d, %bb.g, %bb.k, %bb.j, %bb.ag, %.body19.thread
+bb.ai:                                            ; preds = %.body19.thread, %bb.ag, %bb.j, %bb.k, %bb.g, %bb.d
   %.pn.ph = phi { ptr, i32 } [ %i.ak, %bb.j ], [ %i.af, %bb.g ], [ %i.v, %bb.d ], [ %i.ak, %bb.k ], [ %eh.lpad-body2043, %bb.ag ], [ %eh.lpad-body2043, %.body19.thread ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !24915)
   %i.bu = load ptr, ptr %i.m, align 8, !alias.scope !24915, !noundef !12 ; 2 uses
@@ -1706,8 +1708,8 @@ bb.ak:                                            ; preds = %bb.aj
   invoke void @_RNvMsn_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcNtNtCs7xHNgVo2C7m_12arrow_buffer5bytes5BytesE9drop_slowBK_(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.m) #52
           to label %bb.al unwind label %bb.ah
 
-.body19.thread44:                                 ; preds = %bb.al, %bb.am, %bb.ac
-  %.pn.pn34 = phi { ptr, i32 } [ %i.bo, %bb.ac ], [ %.pn.pn.ph, %bb.al ], [ %.pn.pn.ph, %bb.am ]
+.body19.thread44:                                 ; preds = %bb.ac, %bb.al, %bb.am
+  %.pn.pn34 = phi { ptr, i32 } [ %.pn.pn.ph, %bb.al ], [ %.pn.pn.ph, %bb.am ], [ %i.bo, %bb.ac ]
   resume { ptr, i32 } %.pn.pn34
 
 bb.al:                                            ; preds = %bb.b, %bb.ak, %bb.ai, %bb.aj

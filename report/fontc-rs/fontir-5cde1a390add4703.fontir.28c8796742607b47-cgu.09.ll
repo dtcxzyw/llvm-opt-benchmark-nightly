@@ -204,10 +204,8 @@ bb.a:
   invoke void @_RINvXs1c_NtNtNtCs5Xr050g3D4S_3std11collections4hash3mapINtB7_7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorTB15_lEE9from_iterINtNtNtB1L_8adapters10filter_map9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map4IterB15_RNtNtCs3v5ql5U6hxj_6fontir2ir5GlyphENCINvNtCsgdm2QMcbaeA_10fontdrasil4util29depth_sorted_composite_glyphsB4B_E0EEB4G_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.n, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %i.m)
           to label %bb.b unwind label %.thread
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a: ; preds = %bb.ah, %bb.ao, %.thread84
-  %.sroa.012.0 = phi i8 [ %.sroa.012.277, %.thread84 ], [ %.sroa.012.1, %bb.ah ], [ %.sroa.012.1, %bb.ao ]
-  %.pn.pn = phi { ptr, i32 } [ %.pn78, %.thread84 ], [ %lpad.thr_comm.split-lp96, %bb.ah ], [ %lpad.thr_comm95, %bb.ao ] ; 2 uses
-  %2 = trunc nuw i8 %.sroa.012.0 to i1
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a: ; preds = %bb.ao, %bb.ah
+  %lpad.phi100 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp96, %bb.ah ], [ %lpad.thr_comm95, %bb.ao ] ; 2 uses
   br i1 %2, label %bb.aq, label %common.resume
 
 .thread:                                          ; preds = %bb.a
@@ -241,14 +239,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.n, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtCs9NoVXegZYB5_8smol_str7SmolStrEECs3v5ql5U6hxj_6fontir.exit, %._crit_edge109, %._crit_edge
-  %.sroa.012.1 = phi i8 [ 1, %._crit_edge ], [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtCs9NoVXegZYB5_8smol_str7SmolStrEECs3v5ql5U6hxj_6fontir.exit ], [ 1, %bb.n ], [ 1, %._crit_edge109 ] ; 3 uses
+  %2 = phi i1 [ true, %._crit_edge ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtCs9NoVXegZYB5_8smol_str7SmolStrEECs3v5ql5U6hxj_6fontir.exit ], [ true, %bb.n ], [ true, %._crit_edge109 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.n, i64 48, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @_RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.c, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.b)
-          to label %bb.ac unwind label %bb.ah
+          to label %bb.ac unwind label %.split
 
 bb.d:                                             ; preds = %.lr.ph108, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCs9NoVXegZYB5_8smol_str7SmolStrECs3v5ql5U6hxj_6fontir.exit60
   %.sroa.04.0106 = phi ptr [ %i.ad, %.lr.ph108 ], [ %i.ag, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCs9NoVXegZYB5_8smol_str7SmolStrECs3v5ql5U6hxj_6fontir.exit60 ] ; 2 uses
@@ -264,10 +262,15 @@ bb.d:                                             ; preds = %.lr.ph108, %_RINvNt
   br label %.thread84
 
 .thread89.loopexit.split-lp.loopexit.split-lp:    ; preds = %bb.o, %bb.m
-  %.sroa.012.3.ph.ph.ph = phi i8 [ 0, %bb.o ], [ 1, %bb.m ]
+  %.sroa.012.3.ph.ph.ph = phi i1 [ false, %bb.o ], [ true, %bb.m ]
   %lpad.loopexit.split-lp103 = landingpad { ptr, i32 }
           cleanup
   br label %.thread84
+
+.split:                                           ; preds = %bb.c, %bb.ac
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %2, label %bb.aq, label %common.resume
 
 bb.e:                                             ; preds = %bb.d
   %i.ai = invoke { i32, i32 } @_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE6removeBO_ECs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.n, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.l)
@@ -463,7 +466,7 @@ bb.ac:                                            ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   invoke void @_RNvXNtNtCsgCecv3eZDcN_5alloc3vec14spec_from_iterINtB4_3VecTlNtCs9NoVXegZYB5_8smol_str7SmolStrEEINtB2_12SpecFromIterBU_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map8IntoIterBW_lENCINvNtCsgdm2QMcbaeA_10fontdrasil4util29depth_sorted_composite_glyphsRNtNtCs3v5ql5U6hxj_6fontir2ir5GlyphEs1_0EE9from_iterB4T_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(64) %i.e)
-          to label %bb.ad unwind label %bb.ah
+          to label %bb.ad unwind label %.split
 
 bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -486,7 +489,7 @@ bb.ag:                                            ; preds = %bb.ae
   invoke void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort25insertion_sort_shift_leftTlNtCs9NoVXegZYB5_8smol_str7SmolStrENvYB1m_NtNtBa_3cmp10PartialOrd2ltECs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef nonnull align 8 %i.ca, i64 noundef range(i64 0, 288230376151711744) %i.cc, i64 noundef 1, ptr noalias nofree noundef nonnull %i.a)
           to label %_RINvNtCsgCecv3eZDcN_5alloc5slice11stable_sortTlNtCs9NoVXegZYB5_8smol_str7SmolStrENvYBH_NtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltECs3v5ql5U6hxj_6fontir.exit unwind label %bb.ao
 
-bb.ah:                                            ; preds = %bb.ac, %bb.c, %_RINvNtCsgCecv3eZDcN_5alloc5slice11stable_sortTlNtCs9NoVXegZYB5_8smol_str7SmolStrENvYBH_NtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltECs3v5ql5U6hxj_6fontir.exit
+bb.ah:                                            ; preds = %_RINvNtCsgCecv3eZDcN_5alloc5slice11stable_sortTlNtCs9NoVXegZYB5_8smol_str7SmolStrENvYBH_NtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltECs3v5ql5U6hxj_6fontir.exit
   %lpad.thr_comm.split-lp96 = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a
@@ -511,8 +514,7 @@ bb.ai:                                            ; preds = %_RINvNtCsgCecv3eZDc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  %3 = trunc nuw i8 %.sroa.012.1 to i1
-  br i1 %3, label %bb.aj, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecRRNtNtCs3v5ql5U6hxj_6fontir2ir5GlyphEEB1e_.exit
+  br i1 %2, label %bb.aj, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecRRNtNtCs3v5ql5U6hxj_6fontir2ir5GlyphEEB1e_.exit
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecRRNtNtCs3v5ql5U6hxj_6fontir2ir5GlyphEEB1e_.exit: ; preds = %bb.an, %bb.am, %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
@@ -546,8 +548,8 @@ bb.an:                                            ; preds = %bb.am
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i67, i64 noundef %i.cm, i64 noundef range(i64 1, -9223372036854775807) 8) #31, !noalias !895
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecRRNtNtCs3v5ql5U6hxj_6fontir2ir5GlyphEEB1e_.exit
 
-common.resume:                                    ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a, %bb.aq, %bb.ak, %bb.al
-  %common.resume.op = phi { ptr, i32 } [ %i.ci, %bb.ak ], [ %i.ci, %bb.al ], [ %.pn.pn72, %bb.aq ], [ %.pn.pn, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a ]
+common.resume:                                    ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a, %bb.aq, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit, %.split, %bb.ak, %bb.al
+  %common.resume.op = phi { ptr, i32 } [ %i.ci, %bb.ak ], [ %i.ci, %bb.al ], [ %.pn.pn72, %bb.aq ], [ %lpad.phi100, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a ], [ %.pn78, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit ], [ %lpad.thr_comm.split-lp, %.split ]
   resume { ptr, i32 } %common.resume.op
 
 bb.ao:                                            ; preds = %bb.ag, %bb.af
@@ -564,13 +566,16 @@ bb.ap:                                            ; preds = %.lr.ph
   br i1 %.not56, label %._crit_edge, label %.lr.ph
 
 .thread84:                                        ; preds = %.thread89.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.thread89.loopexit.split-lp.loopexit.split-lp, %bb.h, %bb.g, %bb.f, %bb.t, %bb.y, %bb.x
-  %.pn78 = phi { ptr, i32 } [ %i.bu, %bb.y ], [ %i.aj, %bb.h ], [ %i.bu, %bb.x ], [ %i.bj, %bb.t ], [ %i.aj, %bb.f ], [ %i.aj, %bb.g ], [ %lpad.loopexit.split-lp103, %.thread89.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp, %.thread89.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %.sroa.012.277 = phi i8 [ 0, %bb.y ], [ 1, %bb.h ], [ 0, %bb.x ], [ 0, %bb.t ], [ 1, %bb.f ], [ 1, %bb.g ], [ %.sroa.012.3.ph.ph.ph, %.thread89.loopexit.split-lp.loopexit.split-lp ], [ 1, %.thread89.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %.pn78 = phi { ptr, i32 } [ %i.bu, %bb.y ], [ %i.aj, %bb.h ], [ %i.bu, %bb.x ], [ %i.bj, %bb.t ], [ %i.aj, %bb.f ], [ %i.aj, %bb.g ], [ %lpad.loopexit.split-lp103, %.thread89.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp, %.thread89.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
+  %.sroa.012.277 = phi i1 [ false, %bb.y ], [ true, %bb.h ], [ false, %bb.x ], [ false, %bb.t ], [ true, %bb.f ], [ true, %bb.g ], [ %.sroa.012.3.ph.ph.ph, %.thread89.loopexit.split-lp.loopexit.split-lp ], [ true, %.thread89.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RNvXsg_NtCsbDKHzkXHCUM_9hashbrown3rawINtB5_8RawTableTNtCs9NoVXegZYB5_8smol_str7SmolStrlEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.n)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a unwind label %bb.l
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit unwind label %bb.l
 
-bb.aq:                                            ; preds = %.thread, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a
-  %.pn.pn72 = phi { ptr, i32 } [ %i.x, %.thread ], [ %.pn.pn, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a ]
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit: ; preds = %.thread84
+  br i1 %.sroa.012.277, label %bb.aq, label %common.resume
+
+bb.aq:                                            ; preds = %.split, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit, %.thread, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a
+  %.pn.pn72 = phi { ptr, i32 } [ %i.x, %.thread ], [ %lpad.phi100, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit.a ], [ %.pn78, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtCs9NoVXegZYB5_8smol_str7SmolStrlEECs3v5ql5U6hxj_6fontir.exit ], [ %lpad.thr_comm.split-lp, %.split ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecRRNtNtCs3v5ql5U6hxj_6fontir2ir5GlyphEEB1e_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.o) #27
           to label %common.resume unwind label %bb.l
 }

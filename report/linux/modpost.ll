@@ -204,13 +204,19 @@ bb.n:                                             ; preds = %bb.l
   unreachable
 
 bb.o:                                             ; preds = %bb.m, %bb.l
+  %3 = phi i32 [ 1, %bb.m ], [ 0, %bb.l ]
   %storemerge.i = phi i8 [ 1, %bb.m ], [ 0, %bb.l ] ; 2 uses
   store i8 %storemerge.i, ptr @target_is_big_endian, align 1, !tbaa !48
-  %i.ad = load i8, ptr @host_is_big_endian, align 1, !tbaa !48, !range !51, !noundef !52
-  %i.ae = icmp eq i8 %storemerge.i, %i.ad         ; 6 uses
+  %i.ad = load i8, ptr @host_is_big_endian, align 1, !tbaa !48, !range !51, !noundef !52 ; 2 uses
+  %4 = zext nneg i8 %i.ad to i32
+  %i.ae = icmp eq i32 %3, %4
   %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %i.ag = load i16, ptr %i.af, align 8, !tbaa !108 ; 2 uses
-  br i1 %i.ae, label %bb.p, label %bb.q
+  %rev.i.i = tail call i16 @llvm.bswap.i16(i16 %i.ag)
+  %.in.i = select i1 %i.ae, i16 %i.ag, i16 %rev.i.i ; 2 uses
+  store i16 %.in.i, ptr %i.af, align 8, !tbaa !108
+  %5 = icmp eq i8 %storemerge.i, %i.ad            ; 6 uses
+  br i1 %5, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.ah = getelementptr inbounds nuw i8, ptr %i.k, i64 40
@@ -222,8 +228,6 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  %rev.i.i = tail call noundef i16 @llvm.bswap.i16(i16 %i.ag) ; 2 uses
-  store i16 %rev.i.i, ptr %i.af, align 8, !tbaa !108
   %i.an = getelementptr inbounds nuw i8, ptr %i.k, i64 18 ; 2 uses
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !56
   %rev.i306.i = tail call noundef i16 @llvm.bswap.i16(i16 %i.ao)
@@ -264,14 +268,13 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.in297369.i = phi i16 [ %i.ak, %bb.p ], [ %rev.i311.i, %bb.q ] ; 2 uses
   %i.bl = phi i64 [ %i.ai, %bb.p ], [ %i.ba, %bb.q ] ; 3 uses
-  %.in317322326330334338342347352357362367.i = phi i16 [ %i.ag, %bb.p ], [ %rev.i.i, %bb.q ]
   %.in298.i = phi i16 [ %i.am, %bb.p ], [ %rev.i312.i, %bb.q ] ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.k, i64 62
   store i16 %.in298.i, ptr %i.bm, align 2, !tbaa !111
   %i.bn = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.bl ; 8 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   store ptr %i.bn, ptr %i.bo, align 8, !tbaa !36
-  %.not299.i = icmp eq i16 %.in317322326330334338342347352357362367.i, 1
+  %.not299.i = icmp eq i16 %.in.i, 1
   br i1 %.not299.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -296,7 +299,7 @@ bb.w:                                             ; preds = %bb.v
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 32
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !117 ; 2 uses
   %i.bt = tail call i64 @llvm.bswap.i64(i64 %i.bs)
-  %i.bu = select i1 %i.ae, i64 %i.bs, i64 %i.bt
+  %i.bu = select i1 %5, i64 %i.bs, i64 %i.bt
   %i.bv = trunc i64 %i.bu to i32
   br label %bb.y
 
@@ -315,7 +318,7 @@ bb.z:                                             ; preds = %bb.y
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bn, i64 40
   %i.ca = load i32, ptr %i.bz, align 8, !tbaa !118 ; 2 uses
   %i.cb = tail call i32 @llvm.bswap.i32(i32 %i.ca)
-  %i.cc = select i1 %i.ae, i32 %i.ca, i32 %i.cb
+  %i.cc = select i1 %5, i32 %i.ca, i32 %i.cb
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.y
@@ -331,7 +334,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 .lr.ph.i:                                         ; preds = %bb.ab
   %wide.trip.count419.i = zext i32 %.sink.i to i64 ; 2 uses
-  br i1 %i.ae, label %._crit_edge.i, label %.lr.ph.split.i
+  br i1 %5, label %._crit_edge.i, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.lr.ph.split.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.split.i ], [ 0, %.lr.ph.i ] ; 2 uses
@@ -536,7 +539,7 @@ bb.ao:                                            ; preds = %bb.an, %.thread382.
   %i.ga = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !128 ; 2 uses
   %i.gc = icmp uge ptr %i.fz, %i.gb
-  %brmerge.i = or i1 %i.ae, %i.gc
+  %brmerge.i = or i1 %5, %i.gc
   br i1 %brmerge.i, label %._crit_edge407.i, label %.lr.ph406.split.i
 
 bb.ap:                                            ; preds = %._crit_edge402.i
@@ -588,7 +591,7 @@ bb.as:                                            ; preds = %bb.aq
   %i.gv = getelementptr inbounds nuw i8, ptr %2, i64 104
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !129 ; 3 uses
   %i.gx = icmp uge ptr %i.gu, %i.gw
-  %brmerge444.i = or i1 %i.ae, %i.gx
+  %brmerge444.i = or i1 %5, %i.gx
   br i1 %brmerge444.i, label %.loopexit195, label %.lr.ph410.split.i.preheader
 
 .lr.ph410.split.i.preheader:                      ; preds = %bb.as

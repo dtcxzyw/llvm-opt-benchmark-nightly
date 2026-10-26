@@ -202,10 +202,15 @@ bb.a:
   invoke void @_RNvMsa_NtNtCsi68uqYEhoRA_5gimli4read4lineINtB5_17LineProgramHeaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianEjE9directoryCsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef nonnull sret([32 x i8]) align 16 captures(none) dereferenceable(32) %i.ae, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(320) %2, i64 noundef 0)
           to label %bb.b unwind label %8
 
-.body250:                                         ; preds = %8, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.au, %bb.ck
-  %.pn214 = phi { ptr, i32 } [ %i.cq, %bb.au ], [ %.pn212.ph, %bb.ck ], [ %lpad.loopexit.split-lp377, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %9, %8 ]
+.body250:                                         ; preds = %bb.au, %.body255, %8, %bb.ck
+  %.pn214 = phi { ptr, i32 } [ %.pn, %.body255 ], [ %.pn212.ph, %bb.ck ], [ %9, %8 ], [ %i.cq, %bb.au ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCsi68uqYEhoRA_5gimli5write4line2id6FileIdEECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ag) #19
           to label %.body unwind label %bb.w
+
+8:                                                ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsjhlb6SMKfKY_14simple_convert.exit.i, %bb.d, %bb.c, %bb.a
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body250
 
 bb.b:                                             ; preds = %bb.a
   %i.ao = load i64, ptr %i.ae, align 16, !range !14, !noundef !5
@@ -389,7 +394,7 @@ bb.v:                                             ; preds = %bb.ar, %bb.ap, %bb.
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %i.t, i64 24, i1 false)
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 311
   %i.bk = load i8, ptr %i.bj, align 1, !noundef !5
-  %i.bl = icmp sgt i8 %i.bk, 0
+  %i.bl = icmp sgt i8 %i.bk, 0                    ; 2 uses
   br i1 %i.bl, label %bb.ax, label %bb.aw
 
 bb.w:                                             ; preds = %.body281, %bb.ck, %bb.cj, %.body, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ai, %bb.s, %.body250
@@ -675,7 +680,7 @@ bb.aw:                                            ; preds = %bb.v
   %.sroa.0198.1.insert.shift = shl nuw i40 %.sroa.0198.1.insert.ext, 8
   %.sroa.0198.1.insert.insert = or disjoint i40 %.sroa.0198.1.insert.shift, %.sroa.0198.0.insert.ext
   invoke void @_RNvMNtNtCsi68uqYEhoRA_5gimli5write4lineNtB2_11LineProgram3new(ptr noalias nofree noundef nonnull sret([280 x i8]) align 8 captures(none) dereferenceable(280) %i.s, i32 noundef %.sroa.0195.0.insert.insert, i40 %.sroa.0198.1.insert.insert, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.q, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.o)
-          to label %bb.bb unwind label %8
+          to label %bb.bb unwind label %bb.by
 
 bb.ax:                                            ; preds = %bb.v
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -708,11 +713,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsjh
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsjhlb6SMKfKY_14simple_convert.exit.i254._RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringECsjhlb6SMKfKY_14simple_convert.exit258_crit_edge: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsjhlb6SMKfKY_14simple_convert.exit.i254
   %.pre351 = load i64, ptr %i.ac, align 8, !range !9, !alias.scope !108
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringECsjhlb6SMKfKY_14simple_convert.exit258
-
-8:                                                ; preds = %bb.a, %bb.c, %bb.d, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsjhlb6SMKfKY_14simple_convert.exit.i, %bb.bn, %bb.aw
-  %9 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body250
 
 bb.bb:                                            ; preds = %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
@@ -756,7 +756,7 @@ bb.be:                                            ; preds = %_RNvMsG_NtCsexYYUdY
   %lpad.loopexit.split-lp377 = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsi68uqYEhoRA_5gimli5write4line11LineProgramECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 8 dereferenceable(280) %i.s) #19
-          to label %.body250 unwind label %bb.w
+          to label %.body255 unwind label %bb.w
 
 bb.bf:                                            ; preds = %bb.bc, %bb.bd
   %i.dk = load ptr, ptr %i.ak, align 8, !alias.scope !109, !nonnull !5, !noundef !5
@@ -863,7 +863,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCsi68uqYEhoRA_5gimli5write4lin
 
 bb.bn:                                            ; preds = %bb.bu, %.loopexit334
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsi68uqYEhoRA_5gimli5write4line11LineProgramECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 8 dereferenceable(280) %i.s)
-          to label %bb.bz unwind label %8
+          to label %bb.bz unwind label %bb.by
 
 ._crit_edge:                                      ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCsi68uqYEhoRA_5gimli5write4line11DirectoryIdE8push_mutCsjhlb6SMKfKY_14simple_convert.exit271, %bb.be
   %i.eg = invoke noundef zeroext i1 @_RNvMsa_NtNtCsi68uqYEhoRA_5gimli4read4lineINtB5_17LineProgramHeaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianEjE18file_has_timestampCsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(320) %2)
@@ -963,10 +963,14 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtNtCsi68uqYEhoRA_5gimli5write4l
   %i.fl = icmp eq ptr %i.ey, %i.ew
   br i1 %i.fl, label %._crit_edge341, label %bb.bs
 
-bb.by:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsjhlb6SMKfKY_14simple_convert.exit.i254
+.body255:                                         ; preds = %bb.by, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp377, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.fm, %bb.by ] ; 2 uses
+  br i1 %i.bl, label %bb.cj, label %.body250
+
+bb.by:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsjhlb6SMKfKY_14simple_convert.exit.i254, %bb.aw, %bb.bn
   %i.fm = landingpad { ptr, i32 }
           cleanup
-  br label %bb.cj
+  br label %.body255
 
 bb.bz:                                            ; preds = %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
@@ -1099,8 +1103,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtC
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsi68uqYEhoRA_5gimli4read4line21IncompleteLineProgramINtNtBG_12endian_slice11EndianSliceNtNtBI_9endianity13RunTimeEndianEjEECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 16 dereferenceable(320) %2)
   br label %bb.ca
 
-bb.cj:                                            ; preds = %bb.az, %bb.by
-  %eh.lpad-body256 = phi { ptr, i32 } [ %i.fm, %bb.by ], [ %i.cw, %bb.az ]
+bb.cj:                                            ; preds = %bb.az, %.body255
+  %eh.lpad-body256 = phi { ptr, i32 } [ %.pn, %.body255 ], [ %i.cw, %bb.az ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringEECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ac) #19
           to label %bb.ck unwind label %bb.w
 

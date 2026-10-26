@@ -205,45 +205,49 @@ strip_array_coercion.exit:                        ; preds = %.lr.ph.i, %bb.c, %b
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 52 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4            ; 2 uses
   %.not226 = icmp eq i32 %i.aj, 0
-  br i1 %.not226, label %bb.h, label %bb.f
+  br i1 %.not226, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %strip_array_coercion.exit
-  %i.ak = icmp eq i32 %i.j, %i.aj
-  br i1 %i.ak, label %bb.h, label %bb.g
+  %i.ak = icmp eq i32 %i.j, %i.aj                 ; 2 uses
+  br i1 %i.ak, label %8, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.al = tail call i32 @get_negator(i32 noundef %i.j) #12
   %i.am = load i32, ptr %i.ai, align 4
-  %7 = icmp eq i32 %i.al, %i.am
-  %spec.select.a = zext i1 %7 to i8
-  br label %bb.h
+  %7 = icmp ne i32 %i.al, %i.am                   ; 2 uses
+  %spec.select = or i1 %2, %7
+  %not. = xor i1 %7, true
+  %spec.select.a = zext i1 %not. to i8            ; 2 uses
+  br i1 %spec.select, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f, %strip_array_coercion.exit
-  %.0199 = phi i8 [ 0, %strip_array_coercion.exit ], [ 0, %bb.f ], [ %spec.select.a, %bb.g ] ; 4 uses
-  %.0195 = phi i8 [ 0, %strip_array_coercion.exit ], [ 1, %bb.f ], [ 0, %bb.g ] ; 4 uses
-  %8 = or i8 %.0195, %.0199
-  %or.cond.not227 = icmp eq i8 %8, 0
-  %or.cond6 = or i1 %2, %or.cond.not227
-  br i1 %or.cond6, label %12, label %bb.i
+8:                                                ; preds = %bb.f
+  br i1 %2, label %bb.j, label %bb.h
 
-bb.i:                                             ; preds = %bb.h
-  %9 = trunc nuw i8 %.0195 to i1
-  %10 = tail call double @scalararraysel_containment(ptr noundef %0, ptr noundef %i.t, ptr noundef %.010.lcssa.i, i32 noundef %i.w, i1 noundef zeroext %9, i1 noundef zeroext %i.m, i32 noundef %3) #12 ; 2 uses
-  %11 = fcmp ult double %10, 0.000000e+00
-  br i1 %11, label %12, label %bb.bd
+bb.h:                                             ; preds = %bb.g, %8
+  %.0195239 = phi i8 [ 0, %bb.g ], [ 1, %8 ]
+  %.0199238 = phi i8 [ %spec.select.a, %bb.g ], [ 0, %8 ]
+  %9 = tail call double @scalararraysel_containment(ptr noundef %0, ptr noundef %i.t, ptr noundef %.010.lcssa.i, i32 noundef %i.w, i1 noundef zeroext %i.ak, i1 noundef zeroext %i.m, i32 noundef %3) #12 ; 2 uses
+  %10 = fcmp ult double %9, 0.000000e+00
+  br i1 %10, label %bb.i, label %bb.bd
 
-12:                                               ; preds = %bb.i, %bb.h
+bb.i:                                             ; preds = %strip_array_coercion.exit, %bb.g, %bb.h
+  %.0195237 = phi i8 [ 0, %strip_array_coercion.exit ], [ %.0195239, %bb.h ], [ 0, %bb.g ] ; 2 uses
+  %.0199236 = phi i8 [ 0, %strip_array_coercion.exit ], [ %.0199238, %bb.h ], [ %spec.select.a, %bb.g ] ; 2 uses
   br i1 %2, label %bb.j, label %bb.k
 
-bb.j:                                             ; preds = %12
+bb.j:                                             ; preds = %8, %bb.i
+  %.0199236305 = phi i8 [ %.0199236, %bb.i ], [ 0, %8 ]
+  %.0195237303 = phi i8 [ %.0195237, %bb.i ], [ 1, %8 ]
   %i.an = tail call i32 @get_oprjoin(i32 noundef %i.j) #12
   br label %bb.l
 
-bb.k:                                             ; preds = %12
+bb.k:                                             ; preds = %bb.i
   %i.ao = tail call i32 @get_oprrest(i32 noundef %i.j) #12
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
+  %.0199236304 = phi i8 [ %.0199236305, %bb.j ], [ %.0199236, %bb.k ] ; 3 uses
+  %.0195237302 = phi i8 [ %.0195237303, %bb.j ], [ %.0195237, %bb.k ] ; 2 uses
   %.0218 = phi i32 [ %i.an, %bb.j ], [ %i.ao, %bb.k ] ; 3 uses
   %.not228.a = icmp eq i32 %.0218, 0
   br i1 %.not228.a, label %bb.bd, label %bb.m
@@ -264,8 +268,8 @@ bb.n:                                             ; preds = %bb.m, %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.m, %.fold.split, %bb.n
-  %.1200 = phi i8 [ %.0199, %bb.m ], [ 1, %bb.n ], [ %.0199, %bb.m ], [ %.0199, %.fold.split ] ; 4 uses
-  %.1196 = phi i8 [ 1, %bb.m ], [ %.0195, %bb.n ], [ 1, %bb.m ], [ %.0195, %.fold.split ] ; 4 uses
+  %.1200 = phi i8 [ %.0199236304, %bb.m ], [ 1, %bb.n ], [ %.0199236304, %bb.m ], [ %.0199236304, %.fold.split ] ; 4 uses
+  %.1196 = phi i8 [ 1, %bb.m ], [ %.0195237302, %bb.n ], [ 1, %bb.m ], [ %.0195237302, %.fold.split ] ; 4 uses
   %.not229.a = icmp eq ptr %.010.lcssa.i, null
   br i1 %.not229.a, label %.critedge, label %bb.p
 
@@ -654,8 +658,8 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %.14 = select i1 %i.gw, double 0.000000e+00, double %spec.store.select
   br label %bb.bd
 
-bb.bd:                                            ; preds = %bb.az, %bb.ah, %bb.l, %bb.i, %bb.a, %.loopexit
-  %.4 = phi double [ %.14, %.loopexit ], [ 0.000000e+00, %bb.ah ], [ 0.000000e+00, %bb.az ], [ %10, %bb.i ], [ 5.000000e-01, %bb.a ], [ 5.000000e-01, %bb.l ]
+bb.bd:                                            ; preds = %bb.az, %bb.ah, %bb.l, %bb.h, %bb.a, %.loopexit
+  %.4 = phi double [ %.14, %.loopexit ], [ 0.000000e+00, %bb.ah ], [ 0.000000e+00, %bb.az ], [ %9, %bb.h ], [ 5.000000e-01, %bb.a ], [ 5.000000e-01, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   ret double %.4
 }
