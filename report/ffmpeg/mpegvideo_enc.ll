@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/mpegvideo_enc?download=true
 inline.NumInlined: 128
 inline.NumDeleted: 48
-loop-unroll.NumCompletelyUnrolled: 62
+loop-unroll.NumCompletelyUnrolled: 63
 loop-unroll.NumRuntimeUnrolled: 33
-loop-unroll.NumUnrolled: 125
+loop-unroll.NumUnrolled: 126
 begin_hunk_0_@get_visual_weight:bb.a
   %i.au = add nsw i32 %.03350.us, 4
   br i1 %i.r, label %bb.f, label %._crit_edge.us
@@ -205,74 +205,532 @@ bb.b:                                             ; preds = %bb.a
   %i.p = tail call nsz <4 x double> @llvm.cos.v4f64(<4 x double> %i.o)
   %i.q = fmul nnan nsz <4 x double> %i.n, <double 4.500000e+00, double 5.500000e+00, double 6.500000e+00, double 7.500000e+00>
   %i.r = tail call nsz <4 x double> @llvm.cos.v4f64(<4 x double> %i.q)
-  br label %.preheader27.i
-
-.preheader27.i:                                   ; preds = %23, %.preheader28.i
-  %indvars.iv35.i = phi i64 [ 0, %.preheader28.i ], [ %indvars.iv.next36.i, %23 ] ; 4 uses
-  %gep.i = getelementptr inbounds nuw i8, ptr %invariant.gep.i, i64 %indvars.iv35.i ; 8 uses
-  %6 = icmp eq i64 %indvars.iv35.i, 0
-  %.1.i = select nsz i1 %6, double %i.i, double %.0.i
-  %7 = trunc nuw nsw i64 %indvars.iv35.i to i32
-  %8 = uitofp nsz nneg i32 %7 to double
-  %9 = fmul nnan nsz double %8, f0x3FD921FB54442D18
-  %10 = insertelement <4 x double> poison, double %.1.i, i64 0
-  %11 = shufflevector <4 x double> %10, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %12 = fmul nsz <4 x double> %i.p, %11
-  %13 = fmul nsz <4 x double> %i.r, %11
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.i, %.preheader27.i
-  %indvars.iv.i = phi i64 [ 0, %.preheader27.i ], [ %indvars.iv.next.i, %.preheader.i ] ; 10 uses
+.preheader.i:                                     ; preds = %.preheader.i, %.preheader28.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader28.i ], [ %indvars.iv.next.i, %.preheader.i ] ; 4 uses
+  %gep.i = getelementptr inbounds nuw i8, ptr %invariant.gep.i, i64 %indvars.iv.i ; 64 uses
+  %6 = icmp eq i64 %indvars.iv.i, 0
+  %.1.i = select nsz i1 %6, double %i.i, double %.0.i
   %i.s = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.t = uitofp nsz nneg i32 %i.s to double
-  %14 = fadd nnan nsz double %i.t, 5.000000e-01
-  %i.u = fmul nsz double %9, %14
+  %7 = fmul nnan nsz double %i.t, f0x3FD921FB54442D18 ; 8 uses
+  %8 = fmul nnan nsz double %7, 5.000000e-01
+  %9 = tail call nsz double @llvm.cos.f64(double %8)
+  %10 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %11 = zext i8 %10 to i64
+  %12 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %11
+  %13 = insertelement <4 x double> poison, double %.1.i, i64 0
+  %14 = shufflevector <4 x double> %13, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %15 = fmul nsz <4 x double> %i.p, %14           ; 8 uses
+  %16 = insertelement <4 x double> poison, double %9, i64 0
+  %17 = shufflevector <4 x double> %16, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %18 = fmul nsz <4 x double> %15, %17
+  %19 = fptrunc <4 x double> %18 to <4 x float>   ; 4 uses
+  %20 = extractelement <4 x float> %19, i64 0
+  %21 = tail call i64 @llvm.lrint.i64.f32(float %20)
+  %22 = trunc i64 %21 to i16
+  store i16 %22, ptr %12, align 16, !tbaa !53
+  %23 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %24 = extractelement <4 x float> %19, i64 1
+  %25 = tail call i64 @llvm.lrint.i64.f32(float %24)
+  %26 = trunc i64 %25 to i16
+  %27 = zext i8 %23 to i64
+  %28 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %27
+  %29 = getelementptr inbounds nuw i8, ptr %28, i64 16
+  store i16 %26, ptr %29, align 16, !tbaa !53
+  %30 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %31 = extractelement <4 x float> %19, i64 2
+  %32 = tail call i64 @llvm.lrint.i64.f32(float %31)
+  %33 = trunc i64 %32 to i16
+  %34 = zext i8 %30 to i64
+  %35 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %34
+  %36 = getelementptr inbounds nuw i8, ptr %35, i64 32
+  store i16 %33, ptr %36, align 16, !tbaa !53
+  %37 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %38 = extractelement <4 x float> %19, i64 3
+  %39 = tail call i64 @llvm.lrint.i64.f32(float %38)
+  %40 = trunc i64 %39 to i16
+  %41 = zext i8 %37 to i64
+  %42 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %41
+  %43 = getelementptr inbounds nuw i8, ptr %42, i64 48
+  store i16 %40, ptr %43, align 16, !tbaa !53
+  %44 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %45 = zext i8 %44 to i64
+  %46 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %45
+  %47 = getelementptr inbounds nuw i8, ptr %46, i64 64
+  %48 = fmul nsz <4 x double> %i.r, %14           ; 8 uses
+  %49 = fmul nsz <4 x double> %48, %17
+  %50 = fptrunc <4 x double> %49 to <4 x float>   ; 4 uses
+  %51 = extractelement <4 x float> %50, i64 0
+  %52 = tail call i64 @llvm.lrint.i64.f32(float %51)
+  %53 = trunc i64 %52 to i16
+  store i16 %53, ptr %47, align 16, !tbaa !53
+  %54 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %55 = extractelement <4 x float> %50, i64 1
+  %56 = tail call i64 @llvm.lrint.i64.f32(float %55)
+  %57 = trunc i64 %56 to i16
+  %58 = zext i8 %54 to i64
+  %59 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %58
+  %60 = getelementptr inbounds nuw i8, ptr %59, i64 80
+  store i16 %57, ptr %60, align 16, !tbaa !53
+  %61 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %62 = extractelement <4 x float> %50, i64 2
+  %63 = tail call i64 @llvm.lrint.i64.f32(float %62)
+  %64 = trunc i64 %63 to i16
+  %65 = zext i8 %61 to i64
+  %66 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %65
+  %67 = getelementptr inbounds nuw i8, ptr %66, i64 96
+  store i16 %64, ptr %67, align 16, !tbaa !53
+  %68 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %69 = extractelement <4 x float> %50, i64 3
+  %70 = tail call i64 @llvm.lrint.i64.f32(float %69)
+  %71 = trunc i64 %70 to i16
+  %72 = zext i8 %68 to i64
+  %73 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %72
+  %74 = getelementptr inbounds nuw i8, ptr %73, i64 112
+  store i16 %71, ptr %74, align 16, !tbaa !53
+  %75 = fmul nnan nsz double %7, 1.500000e+00
+  %76 = tail call nsz double @llvm.cos.f64(double %75)
+  %77 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %78 = zext i8 %77 to i64
+  %79 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %78
+  %80 = getelementptr inbounds nuw i8, ptr %79, i64 2
+  %81 = insertelement <4 x double> poison, double %76, i64 0
+  %82 = shufflevector <4 x double> %81, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %83 = fmul nsz <4 x double> %15, %82
+  %84 = fptrunc <4 x double> %83 to <4 x float>   ; 4 uses
+  %85 = extractelement <4 x float> %84, i64 0
+  %86 = tail call i64 @llvm.lrint.i64.f32(float %85)
+  %87 = trunc i64 %86 to i16
+  store i16 %87, ptr %80, align 2, !tbaa !53
+  %88 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %89 = extractelement <4 x float> %84, i64 1
+  %90 = tail call i64 @llvm.lrint.i64.f32(float %89)
+  %91 = trunc i64 %90 to i16
+  %92 = zext i8 %88 to i64
+  %93 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %92
+  %94 = getelementptr inbounds nuw i8, ptr %93, i64 18
+  store i16 %91, ptr %94, align 2, !tbaa !53
+  %95 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %96 = extractelement <4 x float> %84, i64 2
+  %97 = tail call i64 @llvm.lrint.i64.f32(float %96)
+  %98 = trunc i64 %97 to i16
+  %99 = zext i8 %95 to i64
+  %100 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %99
+  %101 = getelementptr inbounds nuw i8, ptr %100, i64 34
+  store i16 %98, ptr %101, align 2, !tbaa !53
+  %102 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %103 = extractelement <4 x float> %84, i64 3
+  %104 = tail call i64 @llvm.lrint.i64.f32(float %103)
+  %105 = trunc i64 %104 to i16
+  %106 = zext i8 %102 to i64
+  %107 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %106
+  %108 = getelementptr inbounds nuw i8, ptr %107, i64 50
+  store i16 %105, ptr %108, align 2, !tbaa !53
+  %109 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %110 = zext i8 %109 to i64
+  %111 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %110
+  %112 = getelementptr inbounds nuw i8, ptr %111, i64 66
+  %113 = fmul nsz <4 x double> %48, %82
+  %114 = fptrunc <4 x double> %113 to <4 x float> ; 4 uses
+  %115 = extractelement <4 x float> %114, i64 0
+  %116 = tail call i64 @llvm.lrint.i64.f32(float %115)
+  %117 = trunc i64 %116 to i16
+  store i16 %117, ptr %112, align 2, !tbaa !53
+  %118 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %119 = extractelement <4 x float> %114, i64 1
+  %120 = tail call i64 @llvm.lrint.i64.f32(float %119)
+  %121 = trunc i64 %120 to i16
+  %122 = zext i8 %118 to i64
+  %123 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %122
+  %124 = getelementptr inbounds nuw i8, ptr %123, i64 82
+  store i16 %121, ptr %124, align 2, !tbaa !53
+  %125 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %126 = extractelement <4 x float> %114, i64 2
+  %127 = tail call i64 @llvm.lrint.i64.f32(float %126)
+  %128 = trunc i64 %127 to i16
+  %129 = zext i8 %125 to i64
+  %130 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %129
+  %131 = getelementptr inbounds nuw i8, ptr %130, i64 98
+  store i16 %128, ptr %131, align 2, !tbaa !53
+  %132 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %133 = extractelement <4 x float> %114, i64 3
+  %134 = tail call i64 @llvm.lrint.i64.f32(float %133)
+  %135 = trunc i64 %134 to i16
+  %136 = zext i8 %132 to i64
+  %137 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %136
+  %138 = getelementptr inbounds nuw i8, ptr %137, i64 114
+  store i16 %135, ptr %138, align 2, !tbaa !53
+  %139 = fmul nnan nsz double %7, 2.500000e+00
+  %140 = tail call nsz double @llvm.cos.f64(double %139)
+  %141 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %142 = zext i8 %141 to i64
+  %143 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %142
+  %144 = getelementptr inbounds nuw i8, ptr %143, i64 4
+  %145 = insertelement <4 x double> poison, double %140, i64 0
+  %146 = shufflevector <4 x double> %145, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %147 = fmul nsz <4 x double> %15, %146
+  %148 = fptrunc <4 x double> %147 to <4 x float> ; 4 uses
+  %149 = extractelement <4 x float> %148, i64 0
+  %150 = tail call i64 @llvm.lrint.i64.f32(float %149)
+  %151 = trunc i64 %150 to i16
+  store i16 %151, ptr %144, align 4, !tbaa !53
+  %152 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %153 = extractelement <4 x float> %148, i64 1
+  %154 = tail call i64 @llvm.lrint.i64.f32(float %153)
+  %155 = trunc i64 %154 to i16
+  %156 = zext i8 %152 to i64
+  %157 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %156
+  %158 = getelementptr inbounds nuw i8, ptr %157, i64 20
+  store i16 %155, ptr %158, align 4, !tbaa !53
+  %159 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %160 = extractelement <4 x float> %148, i64 2
+  %161 = tail call i64 @llvm.lrint.i64.f32(float %160)
+  %162 = trunc i64 %161 to i16
+  %163 = zext i8 %159 to i64
+  %164 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %163
+  %165 = getelementptr inbounds nuw i8, ptr %164, i64 36
+  store i16 %162, ptr %165, align 4, !tbaa !53
+  %166 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %167 = extractelement <4 x float> %148, i64 3
+  %168 = tail call i64 @llvm.lrint.i64.f32(float %167)
+  %169 = trunc i64 %168 to i16
+  %170 = zext i8 %166 to i64
+  %171 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %170
+  %172 = getelementptr inbounds nuw i8, ptr %171, i64 52
+  store i16 %169, ptr %172, align 4, !tbaa !53
+  %173 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %174 = zext i8 %173 to i64
+  %175 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %174
+  %176 = getelementptr inbounds nuw i8, ptr %175, i64 68
+  %177 = fmul nsz <4 x double> %48, %146
+  %178 = fptrunc <4 x double> %177 to <4 x float> ; 4 uses
+  %179 = extractelement <4 x float> %178, i64 0
+  %180 = tail call i64 @llvm.lrint.i64.f32(float %179)
+  %181 = trunc i64 %180 to i16
+  store i16 %181, ptr %176, align 4, !tbaa !53
+  %182 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %183 = extractelement <4 x float> %178, i64 1
+  %184 = tail call i64 @llvm.lrint.i64.f32(float %183)
+  %185 = trunc i64 %184 to i16
+  %186 = zext i8 %182 to i64
+  %187 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %186
+  %188 = getelementptr inbounds nuw i8, ptr %187, i64 84
+  store i16 %185, ptr %188, align 4, !tbaa !53
+  %189 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %190 = extractelement <4 x float> %178, i64 2
+  %191 = tail call i64 @llvm.lrint.i64.f32(float %190)
+  %192 = trunc i64 %191 to i16
+  %193 = zext i8 %189 to i64
+  %194 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %193
+  %195 = getelementptr inbounds nuw i8, ptr %194, i64 100
+  store i16 %192, ptr %195, align 4, !tbaa !53
+  %196 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %197 = extractelement <4 x float> %178, i64 3
+  %198 = tail call i64 @llvm.lrint.i64.f32(float %197)
+  %199 = trunc i64 %198 to i16
+  %200 = zext i8 %196 to i64
+  %201 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %200
+  %202 = getelementptr inbounds nuw i8, ptr %201, i64 116
+  store i16 %199, ptr %202, align 4, !tbaa !53
+  %203 = fmul nnan nsz double %7, 3.500000e+00
+  %204 = tail call nsz double @llvm.cos.f64(double %203)
+  %205 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %206 = zext i8 %205 to i64
+  %207 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %206
+  %208 = getelementptr inbounds nuw i8, ptr %207, i64 6
+  %209 = insertelement <4 x double> poison, double %204, i64 0
+  %210 = shufflevector <4 x double> %209, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %211 = fmul nsz <4 x double> %15, %210
+  %212 = fptrunc <4 x double> %211 to <4 x float> ; 4 uses
+  %213 = extractelement <4 x float> %212, i64 0
+  %214 = tail call i64 @llvm.lrint.i64.f32(float %213)
+  %215 = trunc i64 %214 to i16
+  store i16 %215, ptr %208, align 2, !tbaa !53
+  %216 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %217 = extractelement <4 x float> %212, i64 1
+  %218 = tail call i64 @llvm.lrint.i64.f32(float %217)
+  %219 = trunc i64 %218 to i16
+  %220 = zext i8 %216 to i64
+  %221 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %220
+  %222 = getelementptr inbounds nuw i8, ptr %221, i64 22
+  store i16 %219, ptr %222, align 2, !tbaa !53
+  %223 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %224 = extractelement <4 x float> %212, i64 2
+  %225 = tail call i64 @llvm.lrint.i64.f32(float %224)
+  %226 = trunc i64 %225 to i16
+  %227 = zext i8 %223 to i64
+  %228 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %227
+  %229 = getelementptr inbounds nuw i8, ptr %228, i64 38
+  store i16 %226, ptr %229, align 2, !tbaa !53
+  %230 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %231 = extractelement <4 x float> %212, i64 3
+  %232 = tail call i64 @llvm.lrint.i64.f32(float %231)
+  %233 = trunc i64 %232 to i16
+  %234 = zext i8 %230 to i64
+  %235 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %234
+  %236 = getelementptr inbounds nuw i8, ptr %235, i64 54
+  store i16 %233, ptr %236, align 2, !tbaa !53
+  %237 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %238 = zext i8 %237 to i64
+  %239 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %238
+  %240 = getelementptr inbounds nuw i8, ptr %239, i64 70
+  %241 = fmul nsz <4 x double> %48, %210
+  %242 = fptrunc <4 x double> %241 to <4 x float> ; 4 uses
+  %243 = extractelement <4 x float> %242, i64 0
+  %244 = tail call i64 @llvm.lrint.i64.f32(float %243)
+  %245 = trunc i64 %244 to i16
+  store i16 %245, ptr %240, align 2, !tbaa !53
+  %246 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %247 = extractelement <4 x float> %242, i64 1
+  %248 = tail call i64 @llvm.lrint.i64.f32(float %247)
+  %249 = trunc i64 %248 to i16
+  %250 = zext i8 %246 to i64
+  %251 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %250
+  %252 = getelementptr inbounds nuw i8, ptr %251, i64 86
+  store i16 %249, ptr %252, align 2, !tbaa !53
+  %253 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %254 = extractelement <4 x float> %242, i64 2
+  %255 = tail call i64 @llvm.lrint.i64.f32(float %254)
+  %256 = trunc i64 %255 to i16
+  %257 = zext i8 %253 to i64
+  %258 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %257
+  %259 = getelementptr inbounds nuw i8, ptr %258, i64 102
+  store i16 %256, ptr %259, align 2, !tbaa !53
+  %260 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %261 = extractelement <4 x float> %242, i64 3
+  %262 = tail call i64 @llvm.lrint.i64.f32(float %261)
+  %263 = trunc i64 %262 to i16
+  %264 = zext i8 %260 to i64
+  %265 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %264
+  %266 = getelementptr inbounds nuw i8, ptr %265, i64 118
+  store i16 %263, ptr %266, align 2, !tbaa !53
+  %267 = fmul nnan nsz double %7, 4.500000e+00
+  %268 = tail call nsz double @llvm.cos.f64(double %267)
+  %269 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %270 = zext i8 %269 to i64
+  %271 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %270
+  %272 = getelementptr inbounds nuw i8, ptr %271, i64 8
+  %273 = insertelement <4 x double> poison, double %268, i64 0
+  %274 = shufflevector <4 x double> %273, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %275 = fmul nsz <4 x double> %15, %274
+  %276 = fptrunc <4 x double> %275 to <4 x float> ; 4 uses
+  %277 = extractelement <4 x float> %276, i64 0
+  %278 = tail call i64 @llvm.lrint.i64.f32(float %277)
+  %279 = trunc i64 %278 to i16
+  store i16 %279, ptr %272, align 8, !tbaa !53
+  %280 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %281 = extractelement <4 x float> %276, i64 1
+  %282 = tail call i64 @llvm.lrint.i64.f32(float %281)
+  %283 = trunc i64 %282 to i16
+  %284 = zext i8 %280 to i64
+  %285 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %284
+  %286 = getelementptr inbounds nuw i8, ptr %285, i64 24
+  store i16 %283, ptr %286, align 8, !tbaa !53
+  %287 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %288 = extractelement <4 x float> %276, i64 2
+  %289 = tail call i64 @llvm.lrint.i64.f32(float %288)
+  %290 = trunc i64 %289 to i16
+  %291 = zext i8 %287 to i64
+  %292 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %291
+  %293 = getelementptr inbounds nuw i8, ptr %292, i64 40
+  store i16 %290, ptr %293, align 8, !tbaa !53
+  %294 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %295 = extractelement <4 x float> %276, i64 3
+  %296 = tail call i64 @llvm.lrint.i64.f32(float %295)
+  %297 = trunc i64 %296 to i16
+  %298 = zext i8 %294 to i64
+  %299 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %298
+  %300 = getelementptr inbounds nuw i8, ptr %299, i64 56
+  store i16 %297, ptr %300, align 8, !tbaa !53
+  %301 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %302 = zext i8 %301 to i64
+  %303 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %302
+  %304 = getelementptr inbounds nuw i8, ptr %303, i64 72
+  %305 = fmul nsz <4 x double> %48, %274
+  %306 = fptrunc <4 x double> %305 to <4 x float> ; 4 uses
+  %307 = extractelement <4 x float> %306, i64 0
+  %308 = tail call i64 @llvm.lrint.i64.f32(float %307)
+  %309 = trunc i64 %308 to i16
+  store i16 %309, ptr %304, align 8, !tbaa !53
+  %310 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %311 = extractelement <4 x float> %306, i64 1
+  %312 = tail call i64 @llvm.lrint.i64.f32(float %311)
+  %313 = trunc i64 %312 to i16
+  %314 = zext i8 %310 to i64
+  %315 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %314
+  %316 = getelementptr inbounds nuw i8, ptr %315, i64 88
+  store i16 %313, ptr %316, align 8, !tbaa !53
+  %317 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %318 = extractelement <4 x float> %306, i64 2
+  %319 = tail call i64 @llvm.lrint.i64.f32(float %318)
+  %320 = trunc i64 %319 to i16
+  %321 = zext i8 %317 to i64
+  %322 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %321
+  %323 = getelementptr inbounds nuw i8, ptr %322, i64 104
+  store i16 %320, ptr %323, align 8, !tbaa !53
+  %324 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %325 = extractelement <4 x float> %306, i64 3
+  %326 = tail call i64 @llvm.lrint.i64.f32(float %325)
+  %327 = trunc i64 %326 to i16
+  %328 = zext i8 %324 to i64
+  %329 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %328
+  %330 = getelementptr inbounds nuw i8, ptr %329, i64 120
+  store i16 %327, ptr %330, align 8, !tbaa !53
+  %331 = fmul nnan nsz double %7, 5.500000e+00
+  %332 = tail call nsz double @llvm.cos.f64(double %331)
+  %333 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %334 = zext i8 %333 to i64
+  %335 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %334
+  %336 = getelementptr inbounds nuw i8, ptr %335, i64 10
+  %337 = insertelement <4 x double> poison, double %332, i64 0
+  %338 = shufflevector <4 x double> %337, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %339 = fmul nsz <4 x double> %15, %338
+  %340 = fptrunc <4 x double> %339 to <4 x float> ; 4 uses
+  %341 = extractelement <4 x float> %340, i64 0
+  %342 = tail call i64 @llvm.lrint.i64.f32(float %341)
+  %343 = trunc i64 %342 to i16
+  store i16 %343, ptr %336, align 2, !tbaa !53
+  %344 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %345 = extractelement <4 x float> %340, i64 1
+  %346 = tail call i64 @llvm.lrint.i64.f32(float %345)
+  %347 = trunc i64 %346 to i16
+  %348 = zext i8 %344 to i64
+  %349 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %348
+  %350 = getelementptr inbounds nuw i8, ptr %349, i64 26
+  store i16 %347, ptr %350, align 2, !tbaa !53
+  %351 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %352 = extractelement <4 x float> %340, i64 2
+  %353 = tail call i64 @llvm.lrint.i64.f32(float %352)
+  %354 = trunc i64 %353 to i16
+  %355 = zext i8 %351 to i64
+  %356 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %355
+  %357 = getelementptr inbounds nuw i8, ptr %356, i64 42
+  store i16 %354, ptr %357, align 2, !tbaa !53
+  %358 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %359 = extractelement <4 x float> %340, i64 3
+  %360 = tail call i64 @llvm.lrint.i64.f32(float %359)
+  %361 = trunc i64 %360 to i16
+  %362 = zext i8 %358 to i64
+  %363 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %362
+  %364 = getelementptr inbounds nuw i8, ptr %363, i64 58
+  store i16 %361, ptr %364, align 2, !tbaa !53
+  %365 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %366 = zext i8 %365 to i64
+  %367 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %366
+  %368 = getelementptr inbounds nuw i8, ptr %367, i64 74
+  %369 = fmul nsz <4 x double> %48, %338
+  %370 = fptrunc <4 x double> %369 to <4 x float> ; 4 uses
+  %371 = extractelement <4 x float> %370, i64 0
+  %372 = tail call i64 @llvm.lrint.i64.f32(float %371)
+  %373 = trunc i64 %372 to i16
+  store i16 %373, ptr %368, align 2, !tbaa !53
+  %374 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %375 = extractelement <4 x float> %370, i64 1
+  %376 = tail call i64 @llvm.lrint.i64.f32(float %375)
+  %377 = trunc i64 %376 to i16
+  %378 = zext i8 %374 to i64
+  %379 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %378
+  %380 = getelementptr inbounds nuw i8, ptr %379, i64 90
+  store i16 %377, ptr %380, align 2, !tbaa !53
+  %381 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %382 = extractelement <4 x float> %370, i64 2
+  %383 = tail call i64 @llvm.lrint.i64.f32(float %382)
+  %384 = trunc i64 %383 to i16
+  %385 = zext i8 %381 to i64
+  %386 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %385
+  %387 = getelementptr inbounds nuw i8, ptr %386, i64 106
+  store i16 %384, ptr %387, align 2, !tbaa !53
+  %388 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %389 = extractelement <4 x float> %370, i64 3
+  %390 = tail call i64 @llvm.lrint.i64.f32(float %389)
+  %391 = trunc i64 %390 to i16
+  %392 = zext i8 %388 to i64
+  %393 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %392
+  %394 = getelementptr inbounds nuw i8, ptr %393, i64 122
+  store i16 %391, ptr %394, align 2, !tbaa !53
+  %i.u = fmul nnan nsz double %7, 6.500000e+00
   %i.v = tail call nsz double @llvm.cos.f64(double %i.u)
   %i.w = load i8, ptr %gep.i, align 1, !tbaa !52
   %i.x = zext i8 %i.w to i64
   %i.y = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.x
-  %15 = getelementptr inbounds nuw [2 x i8], ptr %i.y, i64 %indvars.iv.i
+  %395 = getelementptr inbounds nuw i8, ptr %i.y, i64 12
   %i.z = insertelement <4 x double> poison, double %i.v, i64 0
   %i.aa = shufflevector <4 x double> %i.z, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.ab = fmul nsz <4 x double> %12, %i.aa
+  %i.ab = fmul nsz <4 x double> %15, %i.aa
   %i.ac = fptrunc <4 x double> %i.ab to <4 x float> ; 4 uses
   %i.ad = extractelement <4 x float> %i.ac, i64 0
   %i.ae = tail call i64 @llvm.lrint.i64.f32(float %i.ad)
   %i.af = trunc i64 %i.ae to i16
-  store i16 %i.af, ptr %15, align 2, !tbaa !53
+  store i16 %i.af, ptr %395, align 4, !tbaa !53
   %i.ag = load i8, ptr %gep.i, align 1, !tbaa !52
   %i.ah = extractelement <4 x float> %i.ac, i64 1
   %i.ai = tail call i64 @llvm.lrint.i64.f32(float %i.ah)
   %i.aj = trunc i64 %i.ai to i16
   %i.ak = zext i8 %i.ag to i64
   %i.al = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.ak
-  %16 = getelementptr inbounds nuw [2 x i8], ptr %i.al, i64 %indvars.iv.i
-  %i.am = getelementptr inbounds nuw i8, ptr %16, i64 16
-  store i16 %i.aj, ptr %i.am, align 2, !tbaa !53
+  %396 = getelementptr inbounds nuw i8, ptr %i.al, i64 28
+  store i16 %i.aj, ptr %396, align 4, !tbaa !53
+  %397 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %398 = extractelement <4 x float> %i.ac, i64 2
+  %399 = tail call i64 @llvm.lrint.i64.f32(float %398)
+  %400 = trunc i64 %399 to i16
+  %401 = zext i8 %397 to i64
+  %402 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %401
+  %i.am = getelementptr inbounds nuw i8, ptr %402, i64 44
+  store i16 %400, ptr %i.am, align 4, !tbaa !53
   %i.an = load i8, ptr %gep.i, align 1, !tbaa !52
-  %i.ao = extractelement <4 x float> %i.ac, i64 2
+  %i.ao = extractelement <4 x float> %i.ac, i64 3
   %i.ap = tail call i64 @llvm.lrint.i64.f32(float %i.ao)
   %i.aq = trunc i64 %i.ap to i16
   %i.ar = zext i8 %i.an to i64
   %i.as = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.ar
-  %17 = getelementptr inbounds nuw [2 x i8], ptr %i.as, i64 %indvars.iv.i
-  %i.at = getelementptr inbounds nuw i8, ptr %17, i64 32
-  store i16 %i.aq, ptr %i.at, align 2, !tbaa !53
+  %403 = getelementptr inbounds nuw i8, ptr %i.as, i64 60
+  store i16 %i.aq, ptr %403, align 4, !tbaa !53
+  %404 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %405 = zext i8 %404 to i64
+  %406 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %405
+  %i.at = getelementptr inbounds nuw i8, ptr %406, i64 76
+  %407 = fmul nsz <4 x double> %48, %i.aa
+  %408 = fptrunc <4 x double> %407 to <4 x float> ; 4 uses
+  %409 = extractelement <4 x float> %408, i64 0
+  %410 = tail call i64 @llvm.lrint.i64.f32(float %409)
+  %411 = trunc i64 %410 to i16
+  store i16 %411, ptr %i.at, align 4, !tbaa !53
   %i.au = load i8, ptr %gep.i, align 1, !tbaa !52
-  %i.av = extractelement <4 x float> %i.ac, i64 3
+  %i.av = extractelement <4 x float> %408, i64 1
   %i.aw = tail call i64 @llvm.lrint.i64.f32(float %i.av)
   %i.ax = trunc i64 %i.aw to i16
   %i.ay = zext i8 %i.au to i64
   %i.az = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.ay
-  %18 = getelementptr inbounds nuw [2 x i8], ptr %i.az, i64 %indvars.iv.i
-  %i.ba = getelementptr inbounds nuw i8, ptr %18, i64 48
-  store i16 %i.ax, ptr %i.ba, align 2, !tbaa !53
+  %412 = getelementptr inbounds nuw i8, ptr %i.az, i64 92
+  store i16 %i.ax, ptr %412, align 4, !tbaa !53
+  %413 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %414 = extractelement <4 x float> %408, i64 2
+  %415 = tail call i64 @llvm.lrint.i64.f32(float %414)
+  %416 = trunc i64 %415 to i16
+  %417 = zext i8 %413 to i64
+  %418 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %417
+  %i.ba = getelementptr inbounds nuw i8, ptr %418, i64 108
+  store i16 %416, ptr %i.ba, align 4, !tbaa !53
   %i.bb = load i8, ptr %gep.i, align 1, !tbaa !52
+  %419 = extractelement <4 x float> %408, i64 3
+  %420 = tail call i64 @llvm.lrint.i64.f32(float %419)
+  %421 = trunc i64 %420 to i16
   %i.bc = zext i8 %i.bb to i64
   %i.bd = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.bc
-  %19 = getelementptr inbounds nuw [2 x i8], ptr %i.bd, i64 %indvars.iv.i
-  %i.be = getelementptr inbounds nuw i8, ptr %19, i64 64
-  %i.bf = fmul nsz <4 x double> %13, %i.aa
+  %422 = getelementptr inbounds nuw i8, ptr %i.bd, i64 124
+  store i16 %421, ptr %422, align 4, !tbaa !53
+  %423 = fmul nnan nsz double %7, 7.500000e+00
+  %424 = tail call nsz double @llvm.cos.f64(double %423)
+  %425 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %426 = zext i8 %425 to i64
+  %427 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %426
+  %i.be = getelementptr inbounds nuw i8, ptr %427, i64 14
+  %428 = insertelement <4 x double> poison, double %424, i64 0
+  %429 = shufflevector <4 x double> %428, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %i.bf = fmul nsz <4 x double> %15, %429
   %i.bg = fptrunc <4 x double> %i.bf to <4 x float> ; 4 uses
   %i.bh = extractelement <4 x float> %i.bg, i64 0
   %i.bi = tail call i64 @llvm.lrint.i64.f32(float %i.bh)
@@ -284,40 +742,66 @@ bb.b:                                             ; preds = %bb.a
   %i.bn = trunc i64 %i.bm to i16
   %i.bo = zext i8 %i.bk to i64
   %i.bp = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.bo
-  %20 = getelementptr inbounds nuw [2 x i8], ptr %i.bp, i64 %indvars.iv.i
-  %i.bq = getelementptr inbounds nuw i8, ptr %20, i64 80
-  store i16 %i.bn, ptr %i.bq, align 2, !tbaa !53
+  %430 = getelementptr inbounds nuw i8, ptr %i.bp, i64 30
+  store i16 %i.bn, ptr %430, align 2, !tbaa !53
+  %431 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %432 = extractelement <4 x float> %i.bg, i64 2
+  %433 = tail call i64 @llvm.lrint.i64.f32(float %432)
+  %434 = trunc i64 %433 to i16
+  %435 = zext i8 %431 to i64
+  %436 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %435
+  %i.bq = getelementptr inbounds nuw i8, ptr %436, i64 46
+  store i16 %434, ptr %i.bq, align 2, !tbaa !53
   %i.br = load i8, ptr %gep.i, align 1, !tbaa !52
-  %i.bs = extractelement <4 x float> %i.bg, i64 2
+  %i.bs = extractelement <4 x float> %i.bg, i64 3
   %i.bt = tail call i64 @llvm.lrint.i64.f32(float %i.bs)
   %i.bu = trunc i64 %i.bt to i16
-  %i.bv = zext i8 %i.br to i64
+  %437 = zext i8 %i.br to i64
+  %438 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %437
+  %439 = getelementptr inbounds nuw i8, ptr %438, i64 62
+  store i16 %i.bu, ptr %439, align 2, !tbaa !53
+  %440 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %i.bv = zext i8 %440 to i64
   %i.bw = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.bv
-  %21 = getelementptr inbounds nuw [2 x i8], ptr %i.bw, i64 %indvars.iv.i
-  %i.bx = getelementptr inbounds nuw i8, ptr %21, i64 96
-  store i16 %i.bu, ptr %i.bx, align 2, !tbaa !53
+  %441 = getelementptr inbounds nuw i8, ptr %i.bw, i64 78
+  %442 = fmul nsz <4 x double> %48, %429
+  %443 = fptrunc <4 x double> %442 to <4 x float> ; 4 uses
+  %444 = extractelement <4 x float> %443, i64 0
+  %445 = tail call i64 @llvm.lrint.i64.f32(float %444)
+  %446 = trunc i64 %445 to i16
+  store i16 %446, ptr %441, align 2, !tbaa !53
+  %447 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %448 = extractelement <4 x float> %443, i64 1
+  %449 = tail call i64 @llvm.lrint.i64.f32(float %448)
+  %450 = trunc i64 %449 to i16
+  %451 = zext i8 %447 to i64
+  %452 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %451
+  %i.bx = getelementptr inbounds nuw i8, ptr %452, i64 94
+  store i16 %450, ptr %i.bx, align 2, !tbaa !53
   %i.by = load i8, ptr %gep.i, align 1, !tbaa !52
-  %i.bz = extractelement <4 x float> %i.bg, i64 3
+  %i.bz = extractelement <4 x float> %443, i64 2
   %i.ca = tail call i64 @llvm.lrint.i64.f32(float %i.bz)
   %i.cb = trunc i64 %i.ca to i16
   %i.cc = zext i8 %i.by to i64
   %i.cd = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.cc
-  %22 = getelementptr inbounds nuw [2 x i8], ptr %i.cd, i64 %indvars.iv.i
-  %i.ce = getelementptr inbounds nuw i8, ptr %22, i64 112
-  store i16 %i.cb, ptr %i.ce, align 2, !tbaa !53
+  %453 = getelementptr inbounds nuw i8, ptr %i.cd, i64 110
+  store i16 %i.cb, ptr %453, align 2, !tbaa !53
+  %454 = load i8, ptr %gep.i, align 1, !tbaa !52
+  %455 = extractelement <4 x float> %443, i64 3
+  %456 = tail call i64 @llvm.lrint.i64.f32(float %455)
+  %457 = trunc i64 %456 to i16
+  %458 = zext i8 %454 to i64
+  %459 = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %458
+  %i.ce = getelementptr inbounds nuw i8, ptr %459, i64 126
+  store i16 %457, ptr %i.ce, align 2, !tbaa !53
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 8
-  br i1 %exitcond.not.i, label %23, label %.preheader.i, !llvm.loop !530
+  br i1 %exitcond.not.i, label %bb.c, label %.preheader.i, !llvm.loop !530
 
-23:                                               ; preds = %.preheader.i
-  %indvars.iv.next36.i = add nuw nsw i64 %indvars.iv35.i, 1 ; 2 uses
-  %exitcond38.not.i = icmp eq i64 %indvars.iv.next36.i, 8
-  br i1 %exitcond38.not.i, label %bb.c, label %.preheader27.i, !llvm.loop !531
-
-bb.c:                                             ; preds = %23
+bb.c:                                             ; preds = %.preheader.i
   %indvars.iv.next40.i = add nuw nsw i64 %indvars.iv39.i, 1 ; 2 uses
   %exitcond42.not.i = icmp eq i64 %indvars.iv.next40.i, 8
-  br i1 %exitcond42.not.i, label %build_basis.exit, label %.preheader28.i, !llvm.loop !532
+  br i1 %exitcond42.not.i, label %build_basis.exit, label %.preheader28.i, !llvm.loop !531
 
 build_basis.exit:                                 ; preds = %bb.c, %bb.a
   %i.cf = shl nsw i32 %5, 1                       ; 4 uses
@@ -345,7 +829,7 @@ bb.e:                                             ; preds = %bb.d
 
 .thread446:                                       ; preds = %bb.e
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ct = load i32, ptr %i.cs, align 8, !tbaa !538
+  %i.ct = load i32, ptr %i.cs, align 8, !tbaa !537
   %i.cu = shl i32 %i.ct, 3                        ; 2 uses
   %i.cv = mul i32 %i.cu, %i.cr
   br label %.sink.split
@@ -504,7 +988,7 @@ vector.body570:                                   ; preds = %vector.ph, %vector.
   %i.gg = add <4 x i32> %i.ge, %vec.phi572        ; 2 uses
   %index.next575 = add nuw i64 %index571, 8       ; 2 uses
   %i.gh = icmp eq i64 %index.next575, 64
-  br i1 %i.gh, label %middle.block576, label %vector.body570, !llvm.loop !533
+  br i1 %i.gh, label %middle.block576, label %vector.body570, !llvm.loop !532
 
 middle.block576:                                  ; preds = %vector.body570
   %bin.rdx = add <4 x i32> %i.gg, %i.gf
@@ -584,7 +1068,7 @@ bb.j:                                             ; preds = %bb.i
   %i.id = sext i32 %.0378493 to i64
   %i.ie = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.id
   store i32 %.0371494, ptr %i.ie, align 4, !tbaa !54
-  %i.if = load ptr, ptr %i.gq, align 16, !tbaa !539
+  %i.if = load ptr, ptr %i.gq, align 16, !tbaa !538
   %i.ig = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.hw
   call void %i.if(ptr noundef nonnull %i.a, ptr noundef nonnull %i.ig, i32 noundef %.0367) #14
   br label %bb.l
@@ -598,11 +1082,11 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.1372 = phi i32 [ 0, %bb.j ], [ %i.ih, %bb.k ]
   %indvars.iv.next536 = add nuw nsw i64 %indvars.iv535, 1 ; 2 uses
   %exitcond538.not = icmp eq i64 %indvars.iv.next536, %wide.trip.count
-  br i1 %exitcond538.not, label %.preheader486, label %bb.i, !llvm.loop !534
+  br i1 %exitcond538.not, label %.preheader486, label %bb.i, !llvm.loop !533
 
 bb.m:                                             ; preds = %.preheader486, %._crit_edge
   %.0394 = phi i32 [ %.2396, %._crit_edge ], [ %i.dr, %.preheader486 ] ; 9 uses
-  %i.ii = load ptr, ptr %i.gt, align 8, !tbaa !540
+  %i.ii = load ptr, ptr %i.gt, align 8, !tbaa !539
   %i.ij = call i32 %i.ii(ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull @basis, i32 noundef 0) #14 ; 4 uses
   %i.ik = icmp sgt i32 %.0394, 2
   br i1 %i.ik, label %vector.body578, label %.split
@@ -710,7 +1194,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %or.cond, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.kx = load ptr, ptr %i.gt, align 8, !tbaa !540
+  %i.kx = load ptr, ptr %i.gt, align 8, !tbaa !539
   %i.ky = call i32 %i.kx(ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull @basis, i32 noundef %i.gy) #14 ; 2 uses
   %i.kz = icmp slt i32 %i.ky, %i.ij               ; 2 uses
   %.1359 = call i32 @llvm.smin.i32(i32 %i.ky, i32 %i.ij)
@@ -728,7 +1212,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   br i1 %or.cond.1, label %.loopexit484, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.lc = load ptr, ptr %i.gt, align 8, !tbaa !540
+  %i.lc = load ptr, ptr %i.gt, align 8, !tbaa !539
   %i.ld = call i32 %i.lc(ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull @basis, i32 noundef %.1370) #14 ; 2 uses
   %i.le = icmp slt i32 %i.ld, %.2360              ; 2 uses
   %.1359.1 = call i32 @llvm.smin.i32(i32 %i.ld, i32 %.2360)
@@ -1007,7 +1491,7 @@ bb.ar:                                            ; preds = %bb.an, %bb.ao, %bb.
   %.1 = phi i32 [ %.0, %bb.ac ], [ %.0, %bb.ad ], [ %.0, %bb.aa ], [ 0, %bb.ap ], [ %.0, %bb.ak ], [ %.0, %bb.aj ], [ %.0, %bb.ai ], [ 0, %bb.aq ], [ %.0, %bb.ah ], [ 0, %bb.an ], [ 0, %bb.ao ]
   %i.rd = mul nsw i32 %.2, %i.gp
   %i.re = sub nsw i32 %.1, %.1326                 ; 2 uses
-  %i.rf = load ptr, ptr %i.gt, align 8, !tbaa !540
+  %i.rf = load ptr, ptr %i.gt, align 8, !tbaa !539
   %i.rg = call i32 %i.rf(ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull %i.nb, i32 noundef %i.re) #14
   %i.rh = add nsw i32 %i.rg, %i.rd                ; 2 uses
   %i.ri = icmp slt i32 %i.rh, %.4362512
@@ -1203,7 +1687,7 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.
   %.1.1 = phi i32 [ %.0.1, %bb.ba ], [ %.0.1, %bb.az ], [ %.0.1, %bb.ax ], [ 0, %bb.bj ], [ %.0.1, %bb.be ], [ %.0.1, %bb.bd ], [ %.0.1, %bb.bg ], [ 0, %bb.bk ], [ %.0.1, %bb.bh ], [ 0, %bb.bn ], [ 0, %bb.bm ]
   %i.vk = mul nsw i32 %.2.1, %i.gp
   %i.vl = sub nsw i32 %.1.1, %.1326               ; 2 uses
-  %i.vm = load ptr, ptr %i.gt, align 8, !tbaa !540
+  %i.vm = load ptr, ptr %i.gt, align 8, !tbaa !539
   %i.vn = call i32 %i.vm(ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull %i.nb, i32 noundef %i.vl) #14
   %i.vo = add nsw i32 %i.vn, %i.vk                ; 2 uses
   %i.vp = icmp slt i32 %i.vo, %.7365
@@ -1225,7 +1709,7 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo, %bb.
   %.1402 = select i1 %.not426, i32 %.0401508, i32 %spec.store.select7
   %.3374 = select i1 %.not426, i32 %i.vs, i32 0
   %exitcond549.not = icmp eq i64 %indvars.iv.next547, 64
-  br i1 %exitcond549.not, label %bb.br, label %bb.s, !llvm.loop !535
+  br i1 %exitcond549.not, label %bb.br, label %bb.s, !llvm.loop !534
 
 bb.br:                                            ; preds = %bb.s, %bb.bq
   %.4352.lcssa = phi i32 [ %.4352513, %bb.s ], [ %.7355.1, %bb.bq ] ; 3 uses
@@ -1265,7 +1749,7 @@ bb.bs:                                            ; preds = %bb.br
 bb.bt:                                            ; preds = %.lr.ph519
   %i.wi = add nsw i32 %.1395518, -1
   %.not432.not = icmp sgt i32 %.1395518, %.0398
-  br i1 %.not432.not, label %.lr.ph519, label %.loopexit, !llvm.loop !536
+  br i1 %.not432.not, label %.lr.ph519, label %.loopexit, !llvm.loop !535
 
 .loopexit:                                        ; preds = %.lr.ph519, %bb.bt, %.preheader, %bb.bs
   %.2396 = phi i32 [ %.4352.lcssa, %bb.bs ], [ %.0394, %.preheader ], [ %.1395518, %.lr.ph519 ], [ %i.gx, %bb.bt ] ; 3 uses
@@ -1338,7 +1822,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   %indvars.iv.next551.1 = add nuw nsw i64 %indvars.iv550, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph526, !llvm.loop !537
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph526, !llvm.loop !536
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.by
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1365,7 +1849,7 @@ bb.bz:                                            ; preds = %.lr.ph526.epil.preh
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph526.epil.preheader, %bb.bz, %.loopexit
-  %i.xn = load ptr, ptr %i.gw, align 16, !tbaa !539
+  %i.xn = load ptr, ptr %i.gw, align 16, !tbaa !538
   %i.xo = getelementptr inbounds nuw [128 x i8], ptr @basis, i64 %i.vw
   call void %i.xn(ptr noundef nonnull %i.a, ptr noundef nonnull %i.xo, i32 noundef %.4.lcssa) #14
   br label %bb.m
@@ -1768,13 +2252,12 @@ begin_hunk_1_@llvm.cos.v4f64
 !529 = distinct !{!529, !55}
 !530 = distinct !{!530, !55}
 !531 = distinct !{!531, !55}
-!532 = distinct !{!532, !55}
-!533 = distinct !{!533, !55, !195, !196}
+!532 = distinct !{!532, !55, !195, !196}
+!533 = distinct !{!533, !55}
 !534 = distinct !{!534, !55}
 !535 = distinct !{!535, !55}
 !536 = distinct !{!536, !55}
-!537 = distinct !{!537, !55}
-!538 = !{!50, !12, i64 8}
-!539 = !{!50, !15, i64 4512}
-!540 = !{!50, !15, i64 4504}
+!537 = !{!50, !12, i64 8}
+!538 = !{!50, !15, i64 4512}
+!539 = !{!50, !15, i64 4504}
 end_hunk_1
