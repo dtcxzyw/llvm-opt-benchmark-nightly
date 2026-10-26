@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %_RINvNtNtNtNtCscgRA
 bb.x:                                             ; preds = %_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtNtBa_3ops5range5RangejENCINvB2_9quicksortB1x_NCINvMB8_SB1x_20sort_unstable_by_keyjNCNCNvMs4_NtNtCslpwjCj2YNBy_9polars_io5cloud19polars_object_storeNtNtB36_5inner17PolarsObjectStore15get_ranges_sort00E0E0ECs2g09Ig8GZd6_13polars_stream.exit.i
   tail call void @_RNvMNtCscgRAwXFJnXP_4core5sliceSINtNtNtB4_3ops5range5RangejE14swap_uncheckedCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 %.sroa.0.090153, i64 noundef range(i64 33, 576460752303423488) %.sroa.15.089154, i64 noundef 0, i64 noundef %i.fo, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @39), !dbg !45373
   %i.fz = add nuw nsw i64 %i.fo, 1, !dbg !45374   ; 2 uses
-  %i.ga = sub nuw i64 %.sroa.15.089154, %i.fz, !dbg !45375
+  %i.ga = sub nuw nsw i64 %.sroa.15.089154, %i.fz, !dbg !45375
   %i.gb = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.090153, i64 %i.fz, !dbg !45376
   br label %.backedge, !dbg !45266
 
@@ -608,7 +608,7 @@ bb.w:                                             ; preds = %_RINvNtNtNtNtCscgRA
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gw, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false), !dbg !46037
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !46038
   %i.gx = add nuw nsw i64 %i.fz, 1, !dbg !46039   ; 2 uses
-  %i.gy = sub nuw i64 %.sroa.15.082131, %i.gx, !dbg !46040
+  %i.gy = sub nuw nsw i64 %.sroa.15.082131, %i.gx, !dbg !46040
   %i.gz = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.083130, i64 %i.gx, !dbg !46041
   br label %.backedge, !dbg !45874
 
@@ -1011,7 +1011,7 @@ bb.ak:                                            ; preds = %bb.ar, %.lr.ph.i
   %.sroa.012.025.i = phi ptr [ %i.bi, %.lr.ph.i ], [ %i.ca, %bb.ar ] ; 5 uses
   %.sroa.7.024.i = phi i64 [ 0, %.lr.ph.i ], [ %i.cb, %bb.ar ] ; 3 uses
   %.sroa.10.023.i = phi i64 [ %i.bo, %.lr.ph.i ], [ %i.by, %bb.ar ]
-  %i.by = add i64 %.sroa.10.023.i, -1, !dbg !64765 ; 2 uses
+  %i.by = add nsw i64 %.sroa.10.023.i, -1, !dbg !64765 ; 2 uses
   %i.bz = icmp eq ptr %.sroa.012.025.i, %i.bv, !dbg !64766
   br i1 %i.bz, label %.loopexit, label %bb.al, !dbg !64767
 
