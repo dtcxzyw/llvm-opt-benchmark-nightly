@@ -205,8 +205,6 @@ bb.a:
   %7 = alloca %"class.duckdb::unique_ptr", align 8 ; 6 uses
   %8 = alloca %"class.duckdb::vector.63", align 8 ; 12 uses
   %9 = alloca [2 x %"class.duckdb::optional_ptr.508"], align 16 ; 15 uses
-  %.sroa.0 = alloca i64, align 16                 ; 8 uses
-  %.sroa.8 = alloca i64, align 8                  ; 7 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %11 = alloca %"class.std::allocator", align 1   ; 5 uses
   %12 = alloca %"class.duckdb::vector.63", align 8 ; 7 uses
@@ -609,8 +607,6 @@ _ZNSt6vectorISt17reference_wrapperIN6duckdb12NeighborInfoEESaIS3_EED2Ev.exit104:
 .split:                                           ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %9, i8 0, i64 16, i1 false), !tbaa !443
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   %i.ee = load ptr, ptr %.sroa.0259.1507, align 8, !tbaa !342 ; 3 uses
   %i.ef = ptrtoint ptr %i.ee to i64               ; 4 uses
   %i.eg = load i64, ptr %i.p, align 8, !tbaa !287 ; 4 uses
@@ -694,7 +690,6 @@ bb.aj:                                            ; preds = %.noexc185.1, %.noex
   %i.fk = load ptr, ptr %.1.i, align 8, !tbaa !290
   %i.fl = ptrtoint ptr %i.fk to i64
   store i64 %i.fl, ptr %9, align 16, !tbaa !290
-  store i64 0, ptr %.sroa.0, align 16, !tbaa !88
   %i.fm = getelementptr inbounds nuw i8, ptr %.sroa.0259.1507, i64 8 ; 2 uses
   %i.fn = load ptr, ptr %i.fm, align 8, !tbaa !342 ; 3 uses
   %i.fo = ptrtoint ptr %i.fn to i64               ; 4 uses
@@ -766,7 +761,6 @@ _ZNSt10_HashtableISt17reference_wrapperIN6duckdb15JoinRelationSetEESt4pairIKS3_N
   %i.go = load ptr, ptr %.1.i.1, align 8, !tbaa !290 ; 2 uses
   %i.gp = ptrtoint ptr %i.go to i64
   store i64 %i.gp, ptr %i.s, align 8, !tbaa !290
-  store i64 1, ptr %.sroa.8, align 8, !tbaa !88
   %i.gq = icmp ugt i64 %i.be, 2
   br i1 %i.gq, label %.lr.ph504, label %._crit_edge
 
@@ -775,7 +769,9 @@ _ZNSt10_HashtableISt17reference_wrapperIN6duckdb15JoinRelationSetEESt4pairIKS3_N
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.loopexit323.1
-  %i.gr = phi ptr [ %.pre581, %._crit_edge.loopexit ], [ %i.go, %.loopexit323.1 ]
+  %i.gr = phi ptr [ %i.go, %.loopexit323.1 ], [ %.pre581, %._crit_edge.loopexit ]
+  %.sroa.028.1.lcssa = phi i64 [ 0, %.loopexit323.1 ], [ %.sroa.028.2, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.6.1.lcssa = phi i64 [ 1, %.loopexit323.1 ], [ %.sroa.6.2, %._crit_edge.loopexit ] ; 2 uses
   %i.gs = load ptr, ptr %9, align 16, !tbaa !443
   %.not316 = icmp eq ptr %i.gs, null
   %.not317 = icmp eq ptr %i.gr, null
@@ -783,8 +779,10 @@ _ZNSt10_HashtableISt17reference_wrapperIN6duckdb15JoinRelationSetEESt4pairIKS3_N
   br i1 %or.cond, label %bb.aw, label %bb.bb
 
 .lr.ph504:                                        ; preds = %.loopexit323.1, %.loopexit
-  %.044503 = phi i64 [ %i.iq, %.loopexit ], [ 2, %.loopexit323.1 ] ; 3 uses
-  %i.gt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0259.1507, i64 %.044503 ; 2 uses
+  %.052518 = phi i64 [ %i.iq, %.loopexit ], [ 2, %.loopexit323.1 ] ; 4 uses
+  %.sroa.6.1516 = phi i64 [ %.sroa.6.2, %.loopexit ], [ 1, %.loopexit323.1 ] ; 2 uses
+  %.044503 = phi i64 [ %.sroa.028.2, %.loopexit ], [ 0, %.loopexit323.1 ] ; 2 uses
+  %i.gt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0259.1507, i64 %.052518 ; 2 uses
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !342 ; 3 uses
   %i.gv = ptrtoint ptr %i.gu to i64               ; 4 uses
   %i.gw = load i64, ptr %i.p, align 8, !tbaa !287 ; 2 uses
@@ -933,11 +931,12 @@ bb.av:                                            ; preds = %bb.as
   unreachable
 
 .split478.us:                                     ; preds = %.split476.preheader, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129, %.split476.1, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1, %.split476.us
-  %.us-phi.sroa.phi = phi ptr [ %.sroa.0, %.split476.us ], [ %.sroa.0, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129 ], [ %.sroa.0, %.split476.preheader ], [ %.sroa.8, %.split476.1 ], [ %.sroa.8, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1 ]
+  %.sroa.idx1 = phi i1 [ false, %.split476.us ], [ false, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129 ], [ false, %.split476.preheader ], [ true, %.split476.1 ], [ true, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1 ] ; 2 uses
   %.us-phi.sroa.phi834 = phi ptr [ %9, %.split476.us ], [ %9, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129 ], [ %9, %.split476.preheader ], [ %.us-phi.sroa.gep837, %.split476.1 ], [ %.us-phi.sroa.gep838, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1 ]
   %i.il = ptrtoint ptr %.fr to i64
   store i64 %i.il, ptr %.us-phi.sroa.phi834, align 8, !tbaa !290
-  store i64 %.044503, ptr %.us-phi.sroa.phi, align 8, !tbaa !88
+  %.sroa.028.1..052 = select i1 %.sroa.idx1, i64 %.044503, i64 %.052518
+  %.052..sroa.6.1 = select i1 %.sroa.idx1, i64 %.052518, i64 %.sroa.6.1516
   br label %.loopexit
 
 .split476.1:                                      ; preds = %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129
@@ -952,7 +951,9 @@ _ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1: ; preds = %.split4
   br i1 %i.ip, label %.split478.us, label %.loopexit
 
 .loopexit:                                        ; preds = %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1, %.split478.us
-  %i.iq = add nuw i64 %.044503, 1                 ; 2 uses
+  %.sroa.028.2 = phi i64 [ %.sroa.028.1..052, %.split478.us ], [ %.044503, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1 ] ; 2 uses
+  %.sroa.6.2 = phi i64 [ %.052..sroa.6.1, %.split478.us ], [ %.sroa.6.1516, %_ZN6duckdb12optional_ptrINS_10DPJoinNodeELb1EEptEv.exit129.1 ] ; 2 uses
+  %i.iq = add nuw i64 %.052518, 1                 ; 2 uses
   %exitcond579.not = icmp eq i64 %i.iq, %i.be
   br i1 %exitcond579.not, label %._crit_edge.loopexit, label %.lr.ph504, !llvm.loop !999
 
@@ -1036,10 +1037,8 @@ bb.be:                                            ; preds = %_ZN6duckdb17QueryGr
           to label %bb.bf unwind label %bb.bh     ; 0 uses
 
 bb.bf:                                            ; preds = %bb.be
-  %.sroa.0.0..sroa.0.0. = load i64, ptr %.sroa.0, align 16, !tbaa !88 ; 2 uses
-  %.sroa.8.0..sroa.8.8. = load i64, ptr %.sroa.8, align 8, !tbaa !88 ; 2 uses
-  %spec.select = call i64 @llvm.umin.i64(i64 %.sroa.0.0..sroa.0.0., i64 %.sroa.8.0..sroa.8.8.)
-  %spec.select315 = call i64 @llvm.umax.i64(i64 %.sroa.0.0..sroa.0.0., i64 %.sroa.8.0..sroa.8.8.)
+  %spec.select = call i64 @llvm.umin.i64(i64 %.sroa.028.1.lcssa, i64 %.sroa.6.1.lcssa)
+  %spec.select315 = call i64 @llvm.umax.i64(i64 %.sroa.028.1.lcssa, i64 %.sroa.6.1.lcssa)
   %i.jf = load ptr, ptr %12, align 8, !tbaa !161  ; 2 uses
   %.not.i.i.i140 = icmp eq ptr %i.jf, null
   br i1 %.not.i.i.i140, label %_ZNSt6vectorISt17reference_wrapperIN6duckdb12NeighborInfoEESaIS3_EED2Ev.exit141, label %bb.bj
@@ -1071,8 +1070,6 @@ bb.bj:                                            ; preds = %bb.bf
 
 _ZNSt6vectorISt17reference_wrapperIN6duckdb12NeighborInfoEESaIS3_EED2Ev.exit141: ; preds = %bb.bf, %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
   br label %bb.bk
 
@@ -1083,8 +1080,6 @@ _ZNSt6vectorISt17reference_wrapperIN6duckdb12NeighborInfoEESaIS3_EED2Ev.exit139:
 
 .body112:                                         ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i221, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i222, %bb.au, %bb.aq, %bb.aj, %_ZNSt6vectorISt17reference_wrapperIN6duckdb12NeighborInfoEESaIS3_EED2Ev.exit139, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.ba
   %.pn69 = phi { ptr, i32 } [ %.pn63, %_ZNSt6vectorISt17reference_wrapperIN6duckdb12NeighborInfoEESaIS3_EED2Ev.exit139 ], [ %i.fh, %bb.aj ], [ %i.it, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.pn308, %bb.ba ], [ %i.hx, %bb.aq ], [ %.pn9.i218, %bb.au ], [ %i.ih, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i222 ], [ %i.ih, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i221 ], [ %i.it, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %lpad.loopexit.split-lp771, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
   br label %.body
 

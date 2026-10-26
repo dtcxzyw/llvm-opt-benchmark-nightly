@@ -205,7 +205,6 @@ bb.a:
   %i.l = alloca [48 x i8], align 8                ; 22 uses
   %i.m = alloca [48 x i8], align 8                ; 7 uses
   %i.n = alloca [64 x i8], align 8                ; 6 uses
-  %3 = alloca [8 x i8], align 8                   ; 6 uses
   %i.o = alloca [40 x i8], align 8                ; 4 uses
   %i.p = alloca [40 x i8], align 8                ; 4 uses
   %i.q = alloca [48 x i8], align 8                ; 9 uses
@@ -608,13 +607,13 @@ _RNvNtCshxhuDJfZv4T_6fontbe3os219codepage_range_bits.exit.i: ; preds = %bb.dn, %
   br label %bb.fs
 
 bb.fs:                                            ; preds = %.noexc129, %bb.cs
-  call void @llvm.lifetime.start.p0(ptr nonnull %3), !noalias !5132
-  store i64 0, ptr %3, align 8, !noalias !5132
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !5132
   invoke void @_RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapmuNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.n, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.m)
           to label %.noexc130 unwind label %bb.bo
 
 .noexc130:                                        ; preds = %bb.fs, %bb.fx
+  %.sroa.0.0.i = phi i32 [ %.sroa.0.0..i, %bb.fx ], [ 0, %bb.fs ] ; 6 uses
+  %.sroa.6.0.i = phi i32 [ %..sroa.6.0.i, %bb.fx ], [ 0, %bb.fs ] ; 6 uses
   %i.ql = invoke { i32, i32 } @_RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3rawINtB5_11RawIntoIterTmuEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.n)
           to label %bb.ft unwind label %.loopexit.split-lp.loopexit.split-lp.i122.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !5133 ; 2 uses
 
@@ -635,8 +634,7 @@ bb.fu:                                            ; preds = %bb.ft
 
 bb.fv:                                            ; preds = %bb.ft
   %i.qo = extractvalue { i32, i32 } %i.ql, 1      ; 3 uses
-  %i.qp = lshr i32 %i.qo, 5
-  %4 = zext nneg i32 %i.qp to i64                 ; 2 uses
+  %i.qp = lshr i32 %i.qo, 5                       ; 2 uses
   %i.qq = icmp ult i32 %i.qo, 64
   br i1 %i.qq, label %bb.fx, label %bb.fy
 
@@ -646,14 +644,16 @@ bb.fw:                                            ; preds = %bb.fy
 bb.fx:                                            ; preds = %bb.fv
   %i.qr = and i32 %i.qo, 31
   %i.qs = shl nuw i32 1, %i.qr
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %4 ; 2 uses
-  %6 = load i32, ptr %5, align 4, !noalias !5132, !noundef !5
-  %i.qt = or i32 %6, %i.qs
-  store i32 %i.qt, ptr %5, align 4, !noalias !5132
+  %.sroa.idx.i = icmp eq i32 %i.qp, 1             ; 3 uses
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, i32 %.sroa.6.0.i, i32 %.sroa.0.0.i
+  %i.qt = or i32 %.sroa.speculated.i, %i.qs       ; 2 uses
+  %.sroa.0.0..i = select i1 %.sroa.idx.i, i32 %.sroa.0.0.i, i32 %i.qt
+  %..sroa.6.0.i = select i1 %.sroa.idx.i, i32 %i.qt, i32 %.sroa.6.0.i
   br label %.noexc130
 
 bb.fy:                                            ; preds = %bb.fv
-  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %4, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @60) #44
+  %3 = zext nneg i32 %i.qp to i64
+  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @60) #44
           to label %bb.fw unwind label %.loopexit.split-lp.loopexit.split-lp.i122.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !5133
 
 bb.fz:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.i122.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -664,10 +664,6 @@ bb.fz:                                            ; preds = %.loopexit.split-lp.
 
 bb.ga:                                            ; preds = %bb.fu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !5132
-  %7 = load i32, ptr %3, align 8, !noalias !5132, !noundef !5 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %9 = load i32, ptr %8, align 4, !noalias !5132, !noundef !5 ; 4 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3), !noalias !5132
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6209)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -1027,9 +1023,9 @@ bb.ic:                                            ; preds = %bb.ia
   br label %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit
 
 _RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit: ; preds = %bb.ic, %bb.ia
-  %.sroa.13.1 = phi i32 [ %9, %bb.ia ], [ %i.vc, %bb.ic ] ; 2 uses
+  %.sroa.13.1 = phi i32 [ %.sroa.6.0.i, %bb.ia ], [ %i.vc, %bb.ic ] ; 2 uses
   %.sroa.10.1 = phi i32 [ 1, %bb.ia ], [ %i.va, %bb.ic ] ; 2 uses
-  %.sroa.7.1 = phi i32 [ %7, %bb.ia ], [ %i.uy, %bb.ic ] ; 2 uses
+  %.sroa.7.1 = phi i32 [ %.sroa.0.0.i, %bb.ia ], [ %i.uy, %bb.ic ] ; 2 uses
   %.sroa.0180.1 = phi i32 [ 1, %bb.ia ], [ %i.rz, %bb.ic ] ; 2 uses
   %i.vd = atomicrmw add ptr %i.rv, i64 -1 release, align 8, !noalias !5147
   %i.ve = icmp eq i64 %i.vd, 1
@@ -1053,9 +1049,9 @@ bb.id:                                            ; preds = %_RNvNtCshxhuDJfZv4T
   %.sroa.61.0.ph = phi i16 [ %.sroa.02.0.i92, %bb.gu ], [ %.sroa.02.0.i92, %bb.gt ], [ %.sroa.61.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.61.1, %bb.id ]
   %.sroa.59.0.ph = phi i16 [ %.sroa.02.0.i, %bb.gu ], [ %.sroa.02.0.i, %bb.gt ], [ %.sroa.59.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.59.1, %bb.id ]
   %.sroa.56.0.ph = phi i32 [ %.sroa.024.0.copyload, %bb.gu ], [ %.sroa.024.0.copyload, %bb.gt ], [ %.sroa.56.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.56.1, %bb.id ]
-  %.sroa.13.0.ph = phi i32 [ %9, %bb.gu ], [ %9, %bb.gt ], [ %.sroa.13.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.13.1, %bb.id ]
+  %.sroa.13.0.ph = phi i32 [ %.sroa.6.0.i, %bb.gu ], [ %.sroa.6.0.i, %bb.gt ], [ %.sroa.13.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.13.1, %bb.id ]
   %.sroa.10.0.ph = phi i32 [ 1, %bb.gu ], [ 1, %bb.gt ], [ %.sroa.10.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.10.1, %bb.id ]
-  %.sroa.7.0.ph = phi i32 [ %7, %bb.gu ], [ %7, %bb.gt ], [ %.sroa.7.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.7.1, %bb.id ]
+  %.sroa.7.0.ph = phi i32 [ %.sroa.0.0.i, %bb.gu ], [ %.sroa.0.0.i, %bb.gt ], [ %.sroa.7.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.7.1, %bb.id ]
   %.sroa.0180.0.ph = phi i32 [ 1, %bb.gu ], [ 1, %bb.gt ], [ %.sroa.0180.1, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %.sroa.0180.1, %bb.id ]
   %i.vf = phi <8 x i8> [ %i.iq, %bb.gu ], [ %i.iq, %bb.gt ], [ %i.up, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %i.up, %bb.id ]
   %i.vg = phi <2 x i16> [ %i.rw, %bb.gu ], [ %i.rw, %bb.gt ], [ %i.tu, %_RNvNtCshxhuDJfZv4T_6fontbe3os213merge_fea_os2.exit ], [ %i.tu, %bb.id ]
@@ -1079,9 +1075,9 @@ bb.ie:                                            ; preds = %.sink.split, %bb.gq
   %.sroa.61.0 = phi i16 [ %.sroa.02.0.i92, %bb.gq ], [ %.sroa.61.0.ph, %.sink.split ]
   %.sroa.59.0 = phi i16 [ %.sroa.02.0.i, %bb.gq ], [ %.sroa.59.0.ph, %.sink.split ]
   %.sroa.56.0 = phi i32 [ %.sroa.024.0.copyload, %bb.gq ], [ %.sroa.56.0.ph, %.sink.split ]
-  %.sroa.13.0 = phi i32 [ %9, %bb.gq ], [ %.sroa.13.0.ph, %.sink.split ]
+  %.sroa.13.0 = phi i32 [ %.sroa.6.0.i, %bb.gq ], [ %.sroa.13.0.ph, %.sink.split ]
   %.sroa.10.0 = phi i32 [ 1, %bb.gq ], [ %.sroa.10.0.ph, %.sink.split ]
-  %.sroa.7.0 = phi i32 [ %7, %bb.gq ], [ %.sroa.7.0.ph, %.sink.split ]
+  %.sroa.7.0 = phi i32 [ %.sroa.0.0.i, %bb.gq ], [ %.sroa.7.0.ph, %.sink.split ]
   %.sroa.0180.0 = phi i32 [ 1, %bb.gq ], [ %.sroa.0180.0.ph, %.sink.split ]
   %i.vl = phi <8 x i8> [ %i.iq, %bb.gq ], [ %i.vf, %.sink.split ]
   %i.vm = phi <2 x i16> [ %i.rw, %bb.gq ], [ %i.vg, %.sink.split ]

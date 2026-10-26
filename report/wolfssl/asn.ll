@@ -205,18 +205,15 @@ define range(i32 -192, 1) i32 @GetASN_Items(ptr nofree noundef readonly captures
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca [8 x i32], align 16               ; 6 uses
-  %7 = alloca [2 x i8], align 2                   ; 7 uses
   %i.c = load i32, ptr %5, align 4, !tbaa !26     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
-  store i16 -1, ptr %7, align 2
   %i.d = insertelement <4 x i32> poison, i32 %6, i64 0
   %i.e = shufflevector <4 x i32> %i.d, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   store <4 x i32> %i.e, ptr %i.b, align 16, !tbaa !26
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store <4 x i32> %i.e, ptr %i.f, align 16, !tbaa !26
   %i.g = icmp sgt i32 %2, 0
-  br i1 %i.g, label %.lr.ph325.preheader, label %.loopexit
+  br i1 %i.g, label %.lr.ph325.preheader, label %bb.cc
 
 .lr.ph325.preheader:                              ; preds = %bb.a
   %i.h = load i8, ptr %0, align 1, !tbaa !24
@@ -228,6 +225,8 @@ bb.a:
 .lr.ph325:                                        ; preds = %.lr.ph325.preheader, %.loopexit264
   %.0145324 = phi i32 [ %spec.select, %.loopexit264 ], [ %i.i, %.lr.ph325.preheader ] ; 2 uses
   %.0147323 = phi i32 [ %.2, %.loopexit264 ], [ 0, %.lr.ph325.preheader ] ; 3 uses
+  %.sroa.7.0358 = phi i8 [ %.sroa.7.3, %.loopexit264 ], [ -1, %.lr.ph325.preheader ] ; 5 uses
+  %.sroa.0.0357 = phi i8 [ %.sroa.0.3, %.loopexit264 ], [ -1, %.lr.ph325.preheader ] ; 5 uses
   %.1153322 = phi i32 [ %i.oc, %.loopexit264 ], [ 0, %.lr.ph325.preheader ] ; 9 uses
   %.0321 = phi i32 [ %.2234, %.loopexit264 ], [ %i.c, %.lr.ph325.preheader ] ; 12 uses
   %i.l = sext i32 %.1153322 to i64                ; 2 uses
@@ -256,19 +255,20 @@ bb.b:                                             ; preds = %.lr.ph325
   br i1 %i.w, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %._crit_edge394
-  %8 = zext i8 %i.u to i64
-  %9 = getelementptr i8, ptr %7, i64 %8
-  %10 = getelementptr i8, ptr %9, i64 -2          ; 2 uses
-  %11 = load i8, ptr %10, align 1, !tbaa !15
+  %.sroa.idx = icmp eq i8 %i.u, 3                 ; 3 uses
+  %.sroa.speculated40 = select i1 %.sroa.idx, i8 %.sroa.7.0358, i8 %.sroa.0.0357
   fence seq_cst
-  %i.x = icmp eq i8 %11, -1
+  %i.x = icmp eq i8 %.sroa.speculated40, -1
   br i1 %i.x, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr %10, align 1, !tbaa !15
+  %.sroa.0.0. = select i1 %.sroa.idx, i8 %.sroa.0.0357, i8 0
+  %..sroa.7.0 = select i1 %.sroa.idx, i8 0, i8 %.sroa.7.0358
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d, %._crit_edge394
+  %.sroa.0.1 = phi i8 [ %.sroa.0.0., %bb.d ], [ %.sroa.0.0357, %bb.c ], [ %.sroa.0.0357, %._crit_edge394 ], [ %.sroa.0.0357, %bb.b ] ; 5 uses
+  %.sroa.7.1 = phi i8 [ %..sroa.7.0, %bb.d ], [ %.sroa.7.0358, %bb.c ], [ %.sroa.7.0358, %._crit_edge394 ], [ %.sroa.7.0358, %bb.b ] ; 5 uses
   %.2 = phi i32 [ %i.v, %bb.d ], [ %i.v, %bb.c ], [ 0, %._crit_edge394 ], [ %.0147323, %bb.b ] ; 3 uses
   %i.y = zext nneg i8 %i.p to i64
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.y ; 2 uses
@@ -500,31 +500,25 @@ bb.t:                                             ; preds = %._crit_edge.i, %bb.
 GetLength_ex.exit:                                ; preds = %bb.t
   store i32 %.240.i, ptr %i.n, align 4, !tbaa !30
   %i.dk = icmp eq i8 %i.p, 7
-  br i1 %i.dk, label %GetLength_ex.exit.thread, label %12
+  br i1 %i.dk, label %GetLength_ex.exit.thread, label %bb.u
 
-12:                                               ; preds = %GetLength_ex.exit
-  %13 = getelementptr inbounds nuw i8, ptr %i.z, i64 4
-  store i32 %i.di, ptr %13, align 4, !tbaa !26
-  %14 = icmp samesign ugt i32 %.2, 1
-  br i1 %14, label %bb.u, label %17
-
-bb.u:                                             ; preds = %12
-  %15 = zext nneg i32 %.2 to i64
-  %16 = getelementptr i8, ptr %7, i64 %15
-  %i.dl = getelementptr i8, ptr %16, i64 -2
-  store i8 1, ptr %i.dl, align 1, !tbaa !15
-  br label %17
-
-17:                                               ; preds = %bb.u, %12
-  %18 = getelementptr inbounds nuw i8, ptr %i.o, i64 1
-  %19 = load i8, ptr %18, align 1, !tbaa !23      ; 4 uses
-  switch i8 %19, label %bb.af [
+bb.u:                                             ; preds = %GetLength_ex.exit
+  %7 = getelementptr inbounds nuw i8, ptr %i.z, i64 4
+  store i32 %i.di, ptr %7, align 4, !tbaa !26
+  %8 = icmp samesign ugt i32 %.2, 1
+  %.sroa.idx5 = icmp ne i32 %.2, 3                ; 2 uses
+  %9 = and i1 %8, %.sroa.idx5
+  %.sroa.0.2 = select i1 %9, i8 1, i8 %.sroa.0.1  ; 5 uses
+  %.sroa.7.2 = select i1 %.sroa.idx5, i8 %.sroa.7.1, i8 1 ; 5 uses
+  %i.dl = getelementptr inbounds nuw i8, ptr %i.o, i64 1
+  %10 = load i8, ptr %i.dl, align 1, !tbaa !23    ; 4 uses
+  switch i8 %10, label %bb.af [
     i8 2, label %bb.v
     i8 3, label %bb.ac
     i8 12, label %bb.ag
   ]
 
-bb.v:                                             ; preds = %17
+bb.v:                                             ; preds = %bb.u
   %i.dm = and i8 %i.aw, -2
   %narrow = icmp eq i8 %i.dm, 8                   ; 2 uses
   %i.dn = icmp eq i32 %.240.i, 0
@@ -579,7 +573,7 @@ GetASN_Integer.exit.thread247:                    ; preds = %bb.y
   %i.ee = add nsw i32 %.240.i, -1
   br label %GetASN_UTF8String.exit
 
-bb.ac:                                            ; preds = %17
+bb.ac:                                            ; preds = %bb.u
   %i.ef = icmp eq i32 %.240.i, 0
   br i1 %i.ef, label %GetLength_ex.exit.thread, label %bb.ad
 
@@ -608,12 +602,12 @@ GetASN_BitString.exit:                            ; preds = %bb.ae
   %i.et = add i32 %.2.i, 1
   br label %GetASN_UTF8String.exit
 
-bb.af:                                            ; preds = %17
+bb.af:                                            ; preds = %bb.u
   %i.eu = load i8, ptr %i.av, align 1, !tbaa !32
   %i.ev = icmp eq i8 %i.eu, 12
   br i1 %i.ev, label %bb.ag, label %bb.aq
 
-bb.ag:                                            ; preds = %17, %bb.af
+bb.ag:                                            ; preds = %bb.u, %bb.af
   %.not260 = icmp eq i32 %.240.i, 0
   br i1 %.not260, label %GetASN_UTF8String.exit, label %.lr.ph47.i
 
@@ -700,7 +694,7 @@ bb.ap:                                            ; preds = %.lr.ph.preheader.i1
   br i1 %i.fy, label %.lr.ph47.i, label %GetASN_UTF8String.exit
 
 bb.aq:                                            ; preds = %bb.af
-  %i.fz = icmp eq i8 %19, 6
+  %i.fz = icmp eq i8 %10, 6
   br i1 %i.fz, label %bb.ar, label %GetASN_UTF8String.exit
 
 bb.ar:                                            ; preds = %bb.aq
@@ -764,7 +758,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not124.i, label %bb.aw, label %GetLength_ex.exit.thread
 
 bb.aw:                                            ; preds = %bb.av
-  %i.gq = icmp ne i8 %19, 1
+  %i.gq = icmp ne i8 %10, 1
   %or.cond.not154.i = and i1 %i.gq, %.not122.i
   %.phi.trans.insert.i = zext i32 %.1 to i64
   %.phi.trans.insert143.i = getelementptr inbounds nuw i8, ptr %4, i64 %.phi.trans.insert.i
@@ -989,7 +983,7 @@ bb.bm:                                            ; preds = %bb.bl
   br label %GetASN_StoreData.exit
 
 bb.bn:                                            ; preds = %bb.au
-  switch i8 %19, label %bb.bx [
+  switch i8 %10, label %bb.bx [
     i8 1, label %bb.bo
     i8 5, label %bb.br
     i8 6, label %bb.bt
@@ -1232,13 +1226,17 @@ bb.ca:                                            ; preds = %bb.by, %bb.bz
   br label %.loopexit264
 
 .loopexit264:                                     ; preds = %bb.bz, %bb.ca, %.lr.ph316, %..loopexit264.loopexit_crit_edge, %..loopexit264.loopexit_crit_edge541, %.preheader265, %.preheader263, %GetASN_StoreData.exit, %bb.at
-  %.2234 = phi i32 [ %i.np, %GetASN_StoreData.exit ], [ %.1, %bb.at ], [ %.0321, %.preheader263 ], [ %.0321, %.lr.ph316 ], [ %i.np, %.preheader265 ], [ %.0321, %..loopexit264.loopexit_crit_edge541 ], [ %.0321, %..loopexit264.loopexit_crit_edge ], [ %i.np, %bb.ca ], [ %i.np, %bb.bz ] ; 4 uses
+  %.2234 = phi i32 [ %i.np, %GetASN_StoreData.exit ], [ %.1, %bb.at ], [ %.0321, %.preheader263 ], [ %.0321, %.lr.ph316 ], [ %i.np, %.preheader265 ], [ %.0321, %..loopexit264.loopexit_crit_edge541 ], [ %.0321, %..loopexit264.loopexit_crit_edge ], [ %i.np, %bb.ca ], [ %i.np, %bb.bz ] ; 3 uses
   %.2154 = phi i32 [ %.1153322, %GetASN_StoreData.exit ], [ %.1153322, %bb.at ], [ %.1153322, %.preheader263 ], [ %.1153322, %.lr.ph316 ], [ %.1153322, %.preheader265 ], [ %i.ob, %..loopexit264.loopexit_crit_edge541 ], [ %i.k, %..loopexit264.loopexit_crit_edge ], [ %.1150.in309, %bb.bz ], [ %i.k, %bb.ca ]
+  %.sroa.0.3 = phi i8 [ %.sroa.0.2, %GetASN_StoreData.exit ], [ %.sroa.0.2, %bb.at ], [ %.sroa.0.1, %.preheader263 ], [ %.sroa.0.1, %.lr.ph316 ], [ %.sroa.0.2, %.preheader265 ], [ %.sroa.0.1, %..loopexit264.loopexit_crit_edge541 ], [ %.sroa.0.1, %..loopexit264.loopexit_crit_edge ], [ %.sroa.0.2, %bb.ca ], [ %.sroa.0.2, %bb.bz ] ; 2 uses
+  %.sroa.7.3 = phi i8 [ %.sroa.7.2, %GetASN_StoreData.exit ], [ %.sroa.7.2, %bb.at ], [ %.sroa.7.1, %.preheader263 ], [ %.sroa.7.1, %.lr.ph316 ], [ %.sroa.7.2, %.preheader265 ], [ %.sroa.7.1, %..loopexit264.loopexit_crit_edge541 ], [ %.sroa.7.1, %..loopexit264.loopexit_crit_edge ], [ %.sroa.7.2, %bb.ca ], [ %.sroa.7.2, %bb.bz ] ; 2 uses
   %i.oc = add nsw i32 %.2154, 1                   ; 2 uses
   %i.od = icmp slt i32 %i.oc, %2
   br i1 %i.od, label %.lr.ph325, label %._crit_edge, !llvm.loop !153
 
 ._crit_edge:                                      ; preds = %.loopexit264
+  %11 = icmp eq i8 %.sroa.0.3, 0
+  %12 = icmp eq i8 %.sroa.7.3, 0
   %.not = icmp ne i32 %3, 0
   %i.oe = icmp samesign ult i32 %.0145324, %i.q
   %or.cond = select i1 %.not, i1 %i.oe, i1 false
@@ -1257,23 +1255,17 @@ bb.cb:                                            ; preds = %.lr.ph330
   %i.ok = icmp ult i32 %.2234, %i.oj
   br i1 %i.ok, label %GetLength_ex.exit.thread, label %bb.cb
 
-.loopexit:                                        ; preds = %bb.cb, %bb.a, %._crit_edge
-  %.0.lcssa428 = phi i32 [ %i.c, %bb.a ], [ %.2234, %._crit_edge ], [ %.2234, %bb.cb ]
-  %20 = load i8, ptr %7, align 2, !tbaa !15
-  %21 = icmp eq i8 %20, 0
-  %22 = getelementptr inbounds nuw i8, ptr %7, i64 1
-  %23 = load i8, ptr %22, align 1
-  %24 = icmp eq i8 %23, 0
-  %or.cond478 = select i1 %21, i1 true, i1 %24
+.loopexit:                                        ; preds = %bb.cb, %._crit_edge
+  %or.cond478 = select i1 %11, i1 true, i1 %12
   br i1 %or.cond478, label %GetLength_ex.exit.thread, label %bb.cc
 
-bb.cc:                                            ; preds = %.loopexit
-  store i32 %.0.lcssa428, ptr %5, align 4, !tbaa !26
+bb.cc:                                            ; preds = %.loopexit, %bb.a
+  %.0.lcssa465472475 = phi i32 [ %.2234, %.loopexit ], [ %i.c, %bb.a ]
+  store i32 %.0.lcssa465472475, ptr %5, align 4, !tbaa !26
   br label %GetLength_ex.exit.thread
 
 GetLength_ex.exit.thread:                         ; preds = %.preheader.i200, %bb.bp, %bb.bo, %bb.br, %bb.bh, %bb.bg, %bb.bf, %bb.bd, %bb.bc, %bb.ba, %bb.az, %bb.ax, %bb.aw, %bb.av, %bb.ar, %bb.as, %bb.ae, %bb.ac, %bb.ad, %bb.ab, %bb.y, %bb.v, %bb.aa, %.thread69.i, %bb.s, %._crit_edge.i, %bb.t, %bb.m, %bb.q, %GetLength_ex.exit, %.lr.ph325, %bb.l, %bb.aj, %bb.bk, %bb.ap, %.lr.ph.preheader.i195, %.lr.ph.i196.1, %bb.am, %.lr.ph.i196.2, %bb.ao, %.lr.ph330, %.loopexit, %bb.j, %bb.bj, %GetOID.exit.i, %bb.k, %bb.cc
   %.4 = phi i32 [ 0, %bb.cc ], [ -142, %bb.bj ], [ %.mux, %bb.j ], [ -148, %GetOID.exit.i ], [ %switch.select189, %bb.k ], [ -140, %bb.aj ], [ -140, %bb.ap ], [ -140, %bb.bk ], [ -140, %.loopexit ], [ -140, %.lr.ph330 ], [ -140, %bb.ao ], [ -140, %.lr.ph.i196.2 ], [ -140, %bb.am ], [ -140, %.lr.ph.i196.1 ], [ -140, %.lr.ph.preheader.i195 ], [ -140, %bb.ax ], [ -146, %bb.az ], [ -140, %bb.ba ], [ -146, %bb.bc ], [ -132, %bb.bd ], [ -140, %bb.bf ], [ -140, %bb.bg ], [ -110, %bb.bh ], [ -146, %bb.br ], [ -140, %bb.bo ], [ -192, %bb.bp ], [ -140, %.preheader.i200 ], [ -140, %bb.as ], [ -146, %bb.aw ], [ -140, %bb.ac ], [ -140, %bb.ad ], [ -140, %bb.v ], [ -140, %bb.y ], [ -146, %bb.ab ], [ -140, %bb.s ], [ -140, %._crit_edge.i ], [ -140, %bb.t ], [ -140, %bb.m ], [ -140, %bb.q ], [ -140, %bb.l ], [ -140, %bb.ae ], [ -146, %bb.aa ], [ -140, %.thread69.i ], [ -140, %GetLength_ex.exit ], [ -140, %bb.ar ], [ -140, %.lr.ph325 ], [ -140, %bb.av ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   ret i32 %.4
 }

@@ -204,14 +204,9 @@ bb.a:
   %.not43 = icmp eq ptr %i.q, %i.u
   br i1 %.not43, label %._crit_edge, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.c
-  %2 = trunc nuw i8 %.sroa.0.2 to i1
-  %3 = trunc nuw i8 %.sroa.5.2 to i1
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.sroa.5.0 = phi i1 [ false, %bb.a ], [ %3, %._crit_edge.loopexit ]
-  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ %2, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %bb.c, %bb.a
+  %.sroa.5.0 = phi i1 [ false, %bb.a ], [ %.sroa.5.2.1, %bb.c ]
+  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ %.sroa.0.2, %bb.c ]
   %i.v = load ptr, ptr %0, align 8, !tbaa !9
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 40
   %i.x = load ptr, ptr %i.w, align 8
@@ -224,8 +219,8 @@ bb.a:
   br i1 %.not4047, label %._crit_edge51, label %.lr.ph50
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
-  %.sroa.5.1 = phi i8 [ %.sroa.5.2, %bb.c ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.c ], [ 0, %bb.a ] ; 2 uses
+  %.sroa.0.052 = phi i1 [ %.sroa.0.2, %bb.c ], [ false, %bb.a ] ; 2 uses
+  %.sroa.5.051 = phi i1 [ %.sroa.5.2.1, %bb.c ], [ false, %bb.a ] ; 2 uses
   %.sroa.036.044 = phi ptr [ %i.ar, %bb.c ], [ %i.q, %bb.a ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.036.044, i64 32
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !24 ; 4 uses
@@ -238,11 +233,11 @@ _ZNK4geos9geomgraph5Label11getLocationEj.exit:    ; preds = %.lr.ph
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !19
   %i.ak = icmp eq i8 %i.aj, 1
-  %spec.select = select i1 %i.ak, i8 1, i8 %.sroa.0.1
+  %spec.select = select i1 %i.ak, i1 true, i1 %.sroa.0.052
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNK4geos9geomgraph5Label11getLocationEj.exit, %.lr.ph
-  %.sroa.0.2 = phi i8 [ %.sroa.0.1, %.lr.ph ], [ %spec.select, %_ZNK4geos9geomgraph5Label11getLocationEj.exit ] ; 2 uses
+  %.sroa.0.2 = phi i1 [ %.sroa.0.052, %.lr.ph ], [ %spec.select, %_ZNK4geos9geomgraph5Label11getLocationEj.exit ] ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ae, i64 23
   %i.am = load i8, ptr %i.al, align 1, !tbaa !63
   %i.an = icmp eq i8 %i.am, 1
@@ -252,14 +247,14 @@ _ZNK4geos9geomgraph5Label11getLocationEj.exit.1:  ; preds = %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ae, i64 20
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !19
   %i.aq = icmp eq i8 %i.ap, 1
-  %spec.select84 = select i1 %i.aq, i8 1, i8 %.sroa.5.1
+  %spec.select92 = select i1 %i.aq, i1 true, i1 %.sroa.5.051
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNK4geos9geomgraph5Label11getLocationEj.exit.1, %bb.b
-  %.sroa.5.2 = phi i8 [ %.sroa.5.1, %bb.b ], [ %spec.select84, %_ZNK4geos9geomgraph5Label11getLocationEj.exit.1 ] ; 2 uses
+  %.sroa.5.2.1 = phi i1 [ %.sroa.5.051, %bb.b ], [ %spec.select92, %_ZNK4geos9geomgraph5Label11getLocationEj.exit.1 ] ; 2 uses
   %i.ar = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.036.044) #21 ; 2 uses
   %.not = icmp eq ptr %i.ar, %i.u
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge51:                                    ; preds = %_ZN4geos9geomgraph5Label21setAllLocationsIfNullEjNS_4geom8LocationE.exit.1, %._crit_edge
   ret void

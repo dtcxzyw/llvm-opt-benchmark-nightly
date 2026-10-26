@@ -5,7 +5,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@__const.cblas_dgemv.gemv = private unnamed_addr constant [2 x ptr] [ptr @dgemv_n, ptr @dgemv_t], align 16
 @.str = private unnamed_addr constant [7 x i8] c"DGEMV \00", align 1
 @gemv_thread = internal unnamed_addr constant [2 x ptr] [ptr @dgemv_thread_n, ptr @dgemv_thread_t], align 16
 @blas_cpu_number = external local_unnamed_addr global i32, align 4
@@ -190,19 +189,18 @@ get_gemv_optimal_nthreads.exit:                   ; preds = %bb.p
   br i1 %i.bo, label %get_gemv_optimal_nthreads.exit.thread, label %bb.q
 
 get_gemv_optimal_nthreads.exit.thread:            ; preds = %bb.p, %num_cpu_avail.exit.i, %get_gemv_optimal_nthreads.exit
-  %12 = sext i32 %.9 to i64
-  %13 = getelementptr inbounds [8 x i8], ptr @__const.cblas_dgemv.gemv, i64 %12
-  %14 = load ptr, ptr %13, align 8, !tbaa !11
+  %.sroa.idx = icmp eq i32 %.9, 1
+  %.sroa.speculated = select i1 %.sroa.idx, ptr @dgemv_t, ptr @dgemv_n
   %i.bp = sext i32 %6 to i64
   %i.bq = sext i32 %8 to i64
   %i.br = sext i32 %11 to i64
-  %i.bs = call i32 %14(i64 noundef %i.be, i64 noundef %i.bf, i64 noundef 0, double noundef %4, ptr noundef %5, i64 noundef %i.bp, ptr noundef %.097, i64 noundef %i.bq, ptr noundef %.098, i64 noundef %i.br, ptr noundef %i.bd) #6 ; 0 uses
+  %i.bs = call i32 %.sroa.speculated(i64 noundef %i.be, i64 noundef %i.bf, i64 noundef 0, double noundef %4, ptr noundef %5, i64 noundef %i.bp, ptr noundef %.097, i64 noundef %i.bq, ptr noundef %.098, i64 noundef %i.br, ptr noundef %i.bd) #6, !callees !10 ; 0 uses
   br label %bb.r
 
 bb.q:                                             ; preds = %get_gemv_optimal_nthreads.exit
   %i.bt = sext i32 %.9 to i64
   %i.bu = getelementptr inbounds [8 x i8], ptr @gemv_thread, i64 %i.bt
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !11
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !12
   %i.bw = sext i32 %6 to i64
   %i.bx = sext i32 %8 to i64
   %i.by = sext i32 %11 to i64
@@ -232,9 +230,9 @@ bb.u:                                             ; preds = %bb.g, %bb.d, %bb.t,
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
-declare i32 @dgemv_n(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dgemv_n(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
-declare i32 @dgemv_t(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dgemv_t(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
 declare i32 @xerbla_(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
@@ -285,6 +283,7 @@ attributes #6 = { nounwind }
 !7 = !{!6, !5, i64 0}
 !8 = !{!5, !5, i64 0}
 !9 = !{!4, !4, i64 0}
-!10 = !{!"any pointer", !4, i64 0}
-!11 = !{!10, !10, i64 0}
+!10 = !{ptr @dgemv_n, ptr @dgemv_t}
+!11 = !{!"any pointer", !4, i64 0}
+!12 = !{!11, !11, i64 0}
 end_hunk_0

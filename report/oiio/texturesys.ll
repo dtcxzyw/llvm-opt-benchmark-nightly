@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %.critedge.i, %.lr.p
   %.inv.i208 = fcmp oge float %i.hj, 0.000000e+00
   %.0.i77.i = select i1 %.inv.i208, float %i.hj, float 0.000000e+00 ; 2 uses
   %i.hk = fcmp ogt float %.0.i77.i, 1.000000e+00
-  %.1.i78.i = select i1 %i.hk, float 1.000000e+00, float %.0.i77.i ; 6 uses
-  %i.hl = fsub float 1.000000e+00, %.1.i78.i
+  %.1.i78.i = select i1 %i.hk, float 1.000000e+00, float %.0.i77.i ; 5 uses
+  %i.hl = fsub float 1.000000e+00, %.1.i78.i      ; 2 uses
   %i.hm = icmp slt i64 %indvars.iv.i, 0
   br i1 %i.hm, label %.loopexit.i.thread, label %bb.p
 
@@ -256,8 +256,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ie = fcmp ult float %i.t, %.1.i78.i          ; 2 uses
   %i.if = fdiv float %i.t, %.1.i78.i
   %i.ig = fsub float %i.t, %.1.i78.i
-  %18 = fsub float 1.000000e+00, %.1.i78.i
-  %i.ih = fdiv float %i.ig, %18
+  %i.ih = fdiv float %i.ig, %i.hl
   %.sroa.10.1 = select i1 %i.ie, i32 %i.hh, i32 %i.hi ; 2 uses
   %.sink109.i = select i1 %i.ie, float %i.if, float %i.ih ; 2 uses
   %.inv91.i = fcmp oge float %.sink109.i, 0.000000e+00
@@ -270,9 +269,9 @@ bb.u:                                             ; preds = %bb.t
 _ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit: ; preds = %bb.q, %.loopexit.i.thread, %bb.r, %bb.s, %bb.t, %bb.u
   %i.ij = phi float [ %i.t, %.loopexit.i.thread ], [ %i.t, %bb.s ], [ %i.t, %bb.r ], [ %.1.i.i207, %bb.u ], [ %i.t, %bb.t ], [ %i.t, %bb.q ]
   %.sroa.10.2 = phi i32 [ %i.hn, %.loopexit.i.thread ], [ %i.gw, %bb.s ], [ %i.gw, %bb.r ], [ %.sroa.10.1, %bb.u ], [ %i.hh, %bb.t ], [ %i.hh, %bb.q ] ; 7 uses
-  %.sroa.0328.2 = phi i32 [ %i.hn, %.loopexit.i.thread ], [ %i.gw, %bb.s ], [ %i.gw, %bb.r ], [ %.sroa.10.1, %bb.u ], [ %i.hi, %bb.t ], [ %i.hh, %bb.q ] ; 7 uses
+  %.sroa.0237.1 = phi float [ 1.000000e+00, %.loopexit.i.thread ], [ 1.000000e+00, %bb.s ], [ 1.000000e+00, %bb.r ], [ 1.000000e+00, %bb.u ], [ %i.hl, %bb.t ], [ 1.000000e+00, %bb.q ] ; 2 uses
   %.sroa.9.1 = phi float [ 0.000000e+00, %.loopexit.i.thread ], [ 0.000000e+00, %bb.s ], [ 0.000000e+00, %bb.r ], [ 0.000000e+00, %bb.u ], [ %.1.i78.i, %bb.t ], [ 0.000000e+00, %bb.q ] ; 2 uses
-  %.sroa.0.1 = phi float [ 1.000000e+00, %.loopexit.i.thread ], [ 1.000000e+00, %bb.s ], [ 1.000000e+00, %bb.r ], [ 1.000000e+00, %bb.u ], [ %i.hl, %bb.t ], [ 1.000000e+00, %bb.q ] ; 2 uses
+  %.sroa.0241.2 = phi i32 [ %i.hn, %.loopexit.i.thread ], [ %i.gw, %bb.s ], [ %i.gw, %bb.r ], [ %.sroa.10.1, %bb.u ], [ %i.hi, %bb.t ], [ %i.hh, %bb.q ] ; 7 uses
   %.0309 = phi float [ %.0.i, %.loopexit.i.thread ], [ %.1.i76.i, %bb.s ], [ %.0.i, %bb.r ], [ %.0.i, %bb.u ], [ %.0.i, %bb.t ], [ %.0.i, %bb.q ]
   %i.ik = zext i16 %i.fz to i32
   %i.il = shl nuw nsw i32 %i.ik, 1
@@ -358,7 +357,7 @@ bb.w:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.kg = lshr i32 %i.r, 1                        ; 2 uses
   %.3 = select i1 %.not168, ptr null, ptr %16     ; 8 uses
   %i.kh = select i1 %.not168, ptr null, ptr %17   ; 8 uses
-  %i.ki = fcmp une float %.sroa.0.1, 0.000000e+00
+  %i.ki = fcmp une float %.sroa.0237.1, 0.000000e+00
   br i1 %i.ki, label %bb.y, label %bb.ak
 
 bb.x:                                             ; preds = %bb.x, %.lr.ph.new
@@ -403,19 +402,19 @@ bb.y:                                             ; preds = %._crit_edge
   ]
 
 bb.z:                                             ; preds = %bb.y
-  %i.la = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl14sample_closestEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0328.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef null, ptr noundef null)
+  %i.la = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl14sample_closestEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0241.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef null, ptr noundef null)
   br label %bb.ah
 
 bb.aa:                                            ; preds = %bb.y
-  %i.lb = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl15sample_bilinearEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0328.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
+  %i.lb = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl15sample_bilinearEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0241.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
   br label %bb.ah
 
 bb.ab:                                            ; preds = %bb.y
-  %i.lc = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl14sample_bicubicEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0328.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
+  %i.lc = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl14sample_bicubicEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0241.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
   br label %bb.ah
 
 bb.ac:                                            ; preds = %bb.y
-  %i.ld = icmp eq i32 %.sroa.0328.2, 0
+  %i.ld = icmp eq i32 %.sroa.0241.2, 0
   br i1 %i.ld, label %bb.af, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
@@ -423,7 +422,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.lf = sext i32 %i.le to i64
   %i.lg = load ptr, ptr %i.gp, align 8, !tbaa !203
   %i.lh = getelementptr inbounds nuw [128 x i8], ptr %i.lg, i64 %i.lf ; 2 uses
-  %i.li = sext i32 %.sroa.0328.2 to i64
+  %i.li = sext i32 %.sroa.0241.2 to i64
   %i.lj = load ptr, ptr %i.lh, align 8, !tbaa !263
   %i.lk = getelementptr inbounds nuw [40 x i8], ptr %i.lj, i64 %i.li
   %i.ll = load ptr, ptr %i.lk, align 8, !tbaa !273 ; 2 uses
@@ -443,11 +442,11 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.lu, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac
-  %i.lv = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl14sample_bicubicEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0328.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
+  %i.lv = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl14sample_bicubicEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0241.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.lw = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl15sample_bilinearEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0328.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
+  %i.lw = call noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl15sample_bilinearEiPKfS3_iRNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiS3_PNS0_4simd7vfloat4ESC_SC_(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef %i.jc, ptr noundef %i.iw, ptr noundef %i.iz, i32 noundef %.sroa.0241.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.ir, ptr noundef nonnull %15, ptr noundef %.3, ptr noundef %i.kh)
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.af, %bb.ag, %bb.ab, %bb.aa, %bb.z, %bb.y
@@ -455,7 +454,7 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag, %bb.
   %.1156 = phi i32 [ 0, %bb.y ], [ 1, %bb.z ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ 0, %bb.af ], [ 0, %bb.ag ]
   %.1153 = phi i32 [ 0, %bb.y ], [ 0, %bb.z ], [ 1, %bb.aa ], [ 0, %bb.ab ], [ 0, %bb.af ], [ 1, %bb.ag ]
   %.1150 = phi i32 [ 0, %bb.y ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 1, %bb.ab ], [ 1, %bb.af ], [ 0, %bb.ag ]
-  %i.lx = insertelement <4 x float> poison, float %.sroa.0.1, i64 0
+  %i.lx = insertelement <4 x float> poison, float %.sroa.0237.1, i64 0
   %i.ly = shufflevector <4 x float> %i.lx, <4 x float> poison, <4 x i32> zeroinitializer ; 3 uses
   %i.lz = load <4 x float>, ptr %15, align 16, !tbaa !83
   %i.ma = fmul <4 x float> %i.ly, %i.lz
@@ -832,7 +831,7 @@ _ZN11OpenImageIO4v3_112adjust_widthERfS1_S1_S1_ff.exit: ; preds = %bb.d, %bb.e, 
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 96
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !342 ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 100
-  %i.bu = load i32, ptr %i.bt, align 4, !tbaa !343 ; 7 uses
+  %i.bu = load i32, ptr %i.bt, align 4, !tbaa !343 ; 5 uses
   %i.bv = icmp slt i32 %i.bu, %i.bs
   br i1 %i.bv, label %.lr.ph.i, label %.loopexit.i.thread
 
@@ -864,8 +863,8 @@ bb.h:                                             ; preds = %.critedge.i, %.lr.p
   %.inv.i = fcmp oge float %i.cg, 0.000000e+00
   %.0.i77.i = select i1 %.inv.i, float %i.cg, float 0.000000e+00 ; 2 uses
   %i.ch = fcmp ogt float %.0.i77.i, 1.000000e+00
-  %.1.i78.i = select i1 %i.ch, float 1.000000e+00, float %.0.i77.i ; 6 uses
-  %i.ci = fsub float 1.000000e+00, %.1.i78.i
+  %.1.i78.i = select i1 %i.ch, float 1.000000e+00, float %.0.i77.i ; 5 uses
+  %i.ci = fsub float 1.000000e+00, %.1.i78.i      ; 2 uses
   %i.cj = icmp slt i64 %indvars.iv.i, 0
   br i1 %i.cj, label %.loopexit.i.thread, label %bb.i
 
@@ -875,17 +874,17 @@ bb.h:                                             ; preds = %.critedge.i, %.lr.p
 
 bb.i:                                             ; preds = %.loopexit.i
   %.not174 = icmp slt i32 %i.bu, %i.ce
-  br i1 %.not174, label %bb.j, label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
+  br i1 %.not174, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.cl = getelementptr inbounds nuw i8, ptr %3, i64 19
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !198
   switch i8 %i.cm, label %bb.l [
-    i8 1, label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
-    i8 2, label %bb.k
+    i8 1, label %bb.k
+    i8 2, label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
   ]
 
-bb.k:                                             ; preds = %bb.j
+bb.k:                                             ; preds = %bb.j, %bb.i
   br label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
 
 bb.l:                                             ; preds = %bb.j
@@ -895,8 +894,7 @@ bb.m:                                             ; preds = %bb.l
   %i.cn = fcmp ult float %i.e, %.1.i78.i          ; 2 uses
   %i.co = fdiv float %i.e, %.1.i78.i
   %i.cp = fsub float %i.e, %.1.i78.i
-  %18 = fsub float 1.000000e+00, %.1.i78.i
-  %i.cq = fdiv float %i.cp, %18
+  %i.cq = fdiv float %i.cp, %i.ci
   %.sroa.11.1 = select i1 %i.cn, i32 %i.ce, i32 %i.cf ; 2 uses
   %.sink109.i = select i1 %i.cn, float %i.co, float %i.cq ; 2 uses
   %.inv91.i = fcmp oge float %.sink109.i, 0.000000e+00
@@ -906,11 +904,11 @@ bb.m:                                             ; preds = %bb.l
   store float %.1.i.i, ptr %i.d, align 8, !tbaa !261
   br label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
 
-_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit: ; preds = %bb.i, %bb.j, %.loopexit.i.thread, %bb.k, %bb.l, %bb.m
-  %.sroa.11.2 = phi i32 [ %i.ck, %.loopexit.i.thread ], [ %i.ce, %bb.k ], [ %.sroa.11.1, %bb.m ], [ %i.ce, %bb.l ], [ %i.bu, %bb.j ], [ %i.bu, %bb.i ] ; 2 uses
-  %.sroa.0146.2 = phi i32 [ %i.ck, %.loopexit.i.thread ], [ %i.ce, %bb.k ], [ %.sroa.11.1, %bb.m ], [ %i.cf, %bb.l ], [ %i.bu, %bb.j ], [ %i.bu, %bb.i ] ; 2 uses
-  %.sroa.10.1 = phi float [ 0.000000e+00, %.loopexit.i.thread ], [ 0.000000e+00, %bb.k ], [ 0.000000e+00, %bb.m ], [ %.1.i78.i, %bb.l ], [ 0.000000e+00, %bb.j ], [ 0.000000e+00, %bb.i ] ; 4 uses
-  %.sroa.0.1 = phi float [ 1.000000e+00, %.loopexit.i.thread ], [ 1.000000e+00, %bb.k ], [ 1.000000e+00, %bb.m ], [ %i.ci, %bb.l ], [ 1.000000e+00, %bb.j ], [ 1.000000e+00, %bb.i ] ; 3 uses
+_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit: ; preds = %bb.k, %bb.j, %.loopexit.i.thread, %bb.l, %bb.m
+  %.sroa.9.1 = phi float [ 0.000000e+00, %.loopexit.i.thread ], [ 0.000000e+00, %bb.j ], [ 0.000000e+00, %bb.k ], [ 0.000000e+00, %bb.m ], [ %.1.i78.i, %bb.l ] ; 4 uses
+  %.sroa.0102.1 = phi float [ 1.000000e+00, %.loopexit.i.thread ], [ 1.000000e+00, %bb.j ], [ 1.000000e+00, %bb.k ], [ 1.000000e+00, %bb.m ], [ %i.ci, %bb.l ] ; 3 uses
+  %.sroa.10.2 = phi i32 [ %i.ck, %.loopexit.i.thread ], [ %i.ce, %bb.j ], [ %i.bu, %bb.k ], [ %.sroa.11.1, %bb.m ], [ %i.ce, %bb.l ] ; 2 uses
+  %.sroa.0107.2 = phi i32 [ %i.ck, %.loopexit.i.thread ], [ %i.ce, %bb.j ], [ %i.bu, %bb.k ], [ %.sroa.11.1, %bb.m ], [ %i.cf, %bb.l ] ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.ct = load i8, ptr %i.cs, align 4, !tbaa !257
   %i.cu = zext i8 %i.ct to i64
@@ -931,7 +929,7 @@ _ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.c, ptr noundef nonnull align 16 dereferenceable(16) @__const._ZN11OpenImageIO4v3_117TextureSystemImpl31texture_lookup_trilinear_mipmapERNS0_14ImageCacheFileEPNS0_23ImageCachePerThreadInfoERNS0_13TextureOpt_v2EiiffffffPfS8_S8_.weight, i64 16, i1 false)
   %i.da = inttoptr i64 %.unpack to ptr            ; 4 uses
-  %i.db = fcmp une float %.sroa.0.1, 0.000000e+00 ; 2 uses
+  %i.db = fcmp une float %.sroa.0102.1, 0.000000e+00 ; 2 uses
   br i1 %.not, label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.us.preheader, label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.preheader
 
 _ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.preheader: ; preds = %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
@@ -944,9 +942,9 @@ bb.n:                                             ; preds = %_ZN11OpenImageIO4v3
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #3
-  %i.dc = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.0146.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef null, ptr noundef null)
+  %i.dc = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.0107.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef null, ptr noundef null)
   %i.dd = zext i1 %i.dc to i8
-  %i.de = insertelement <4 x float> poison, float %.sroa.0.1, i64 0
+  %i.de = insertelement <4 x float> poison, float %.sroa.0102.1, i64 0
   %i.df = shufflevector <4 x float> %i.de, <4 x float> poison, <4 x i32> zeroinitializer
   %i.dg = load <4 x float>, ptr %15, align 16, !tbaa !83
   %i.dh = fmul <4 x float> %i.df, %i.dg
@@ -960,19 +958,19 @@ _ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt
   %.sroa.088.1.us = phi <4 x float> [ %i.di, %bb.n ], [ zeroinitializer, %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.us.preheader ] ; 2 uses
   %.158.us = phi i8 [ %i.dd, %bb.n ], [ 1, %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.us.preheader ] ; 2 uses
   %.1.us = phi i64 [ 1, %bb.n ], [ 0, %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.us.preheader ] ; 2 uses
-  %i.dj = fcmp une float %.sroa.10.1, 0.000000e+00
+  %i.dj = fcmp une float %.sroa.9.1, 0.000000e+00
   br i1 %i.dj, label %bb.o, label %.split.us.thread
 
 bb.o:                                             ; preds = %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.us.1
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #3
-  %i.dk = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.11.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef null, ptr noundef null)
+  %i.dk = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.10.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef null, ptr noundef null)
   %i.dl = icmp ne i8 %.158.us, 0
   %i.dm = and i1 %i.dk, %i.dl
   %i.dn = zext i1 %i.dm to i8
   %i.do = add nuw nsw i64 %.1.us, 1
-  %i.dp = insertelement <4 x float> poison, float %.sroa.10.1, i64 0
+  %i.dp = insertelement <4 x float> poison, float %.sroa.9.1, i64 0
   %i.dq = shufflevector <4 x float> %i.dp, <4 x float> poison, <4 x i32> zeroinitializer
   %i.dr = load <4 x float>, ptr %15, align 16, !tbaa !83
   %i.ds = fmul <4 x float> %i.dq, %i.dr
@@ -993,9 +991,9 @@ bb.p:                                             ; preds = %_ZN11OpenImageIO4v3
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #3
-  %i.du = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.0146.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef nonnull %16, ptr noundef nonnull %17)
+  %i.du = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.0107.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef nonnull %16, ptr noundef nonnull %17)
   %i.dv = zext i1 %i.du to i8
-  %i.dw = insertelement <4 x float> poison, float %.sroa.0.1, i64 0
+  %i.dw = insertelement <4 x float> poison, float %.sroa.0102.1, i64 0
   %i.dx = shufflevector <4 x float> %i.dw, <4 x float> poison, <4 x i32> zeroinitializer ; 3 uses
   %i.dy = load <4 x float>, ptr %15, align 16, !tbaa !83
   %i.dz = fmul <4 x float> %i.dx, %i.dy
@@ -1017,19 +1015,19 @@ _ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt
   %.sroa.086.3 = phi <4 x float> [ %i.eg, %bb.p ], [ zeroinitializer, %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.preheader ] ; 2 uses
   %.158 = phi i8 [ %i.dv, %bb.p ], [ 1, %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.preheader ] ; 2 uses
   %.1 = phi i64 [ 1, %bb.p ], [ 0, %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.preheader ] ; 2 uses
-  %i.eh = fcmp une float %.sroa.10.1, 0.000000e+00
+  %i.eh = fcmp une float %.sroa.9.1, 0.000000e+00
   br i1 %i.eh, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit.split.1
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #3
-  %i.ei = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.11.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef nonnull %16, ptr noundef nonnull %17)
+  %i.ei = call noundef zeroext i1 %i.da(ptr noundef nonnull align 8 dereferenceable(188) %0, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef %.sroa.10.2, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, i32 noundef %4, i32 noundef %5, ptr noundef nonnull %i.c, ptr noundef nonnull %15, ptr noundef nonnull %16, ptr noundef nonnull %17)
   %i.ej = icmp ne i8 %.158, 0
   %i.ek = and i1 %i.ei, %i.ej
   %i.el = zext i1 %i.ek to i8
   %i.em = add nuw nsw i64 %.1, 1
-  %i.en = insertelement <4 x float> poison, float %.sroa.10.1, i64 0
+  %i.en = insertelement <4 x float> poison, float %.sroa.9.1, i64 0
   %i.eo = shufflevector <4 x float> %i.en, <4 x float> poison, <4 x i32> zeroinitializer ; 3 uses
   %i.ep = load <4 x float>, ptr %15, align 16, !tbaa !83
   %i.eq = fmul <4 x float> %i.eo, %i.ep

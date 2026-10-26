@@ -204,7 +204,7 @@ declare extern_weak void @rb_define_method(i64 noundef, ptr noundef, ptr noundef
 ; Function Attrs: nounwind uwtable
 define internal range(i64 1, 0) i64 @ossl_bn_initialize(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef returned %2) #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 9 uses
+  %i.a = alloca ptr, align 8                      ; 7 uses
   %i.b = alloca i64, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -342,8 +342,7 @@ bb.l:                                             ; preds = %.preheader.i
   br label %rbimpl_check_typeddata.exit
 
 rbimpl_check_typeddata.exit:                      ; preds = %bb.l, %RTYPEDDATA_GET_DATA.exit.i, %.critedge.i
-  %.1.i30 = phi ptr [ %i.at, %.critedge.i ], [ %i.ao, %RTYPEDDATA_GET_DATA.exit.i ], [ %i.ao, %bb.l ] ; 3 uses
-  store ptr %.1.i30, ptr %i.a, align 8, !tbaa !35
+  %.1.i30 = phi ptr [ %i.at, %.critedge.i ], [ %i.ao, %RTYPEDDATA_GET_DATA.exit.i ], [ %i.ao, %bb.l ] ; 2 uses
   %.not25 = icmp eq ptr %.1.i30, null
   br i1 %.not25, label %bb.m, label %bb.n
 
@@ -403,8 +402,7 @@ bb.q:                                             ; preds = %.preheader.i37
   br label %rbimpl_check_typeddata.exit40
 
 rbimpl_check_typeddata.exit40:                    ; preds = %bb.q, %RTYPEDDATA_GET_DATA.exit.i36, %.critedge.i34
-  %i.bo = phi ptr [ %i.bn, %.critedge.i34 ], [ %i.bi, %RTYPEDDATA_GET_DATA.exit.i36 ], [ %i.bi, %bb.q ] ; 3 uses
-  store ptr %i.bo, ptr %i.a, align 8, !tbaa !35
+  %i.bo = phi ptr [ %i.bn, %.critedge.i34 ], [ %i.bi, %RTYPEDDATA_GET_DATA.exit.i36 ], [ %i.bi, %bb.q ] ; 2 uses
   %.not22 = icmp eq ptr %i.bo, null
   br i1 %.not22, label %bb.r, label %bb.s
 

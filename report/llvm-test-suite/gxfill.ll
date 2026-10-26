@@ -201,7 +201,6 @@ bb.bo:                                            ; preds = %bb.ac, %bb.bf, %add
 ; Function Attrs: nounwind uwtable
 define dso_local void @fill_loop(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, i64 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = alloca [2 x i32], align 4                  ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !56   ; 3 uses
   %i.c = icmp eq ptr %i.b, null
@@ -222,7 +221,6 @@ bb.b:                                             ; preds = %bb.a
 .preheader238.lr.ph:                              ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 272 ; 2 uses
   %.neg273 = mul i64 %5, -2                       ; 2 uses
   br label %.preheader238
@@ -605,14 +603,12 @@ bb.af:                                            ; preds = %bb.ae, %bb.aa
 
 ._crit_edge:                                      ; preds = %bb.af, %.preheader
   %i.gl = sub nsw i64 %.4, %.0194271
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
-  store i32 0, ptr %6, align 4, !tbaa !12
   %i.gm = load i32, ptr %i.i, align 8, !tbaa !43
-  store i32 %i.gm, ptr %7, align 4, !tbaa !12
   br label %bb.ag
 
 bb.ag:                                            ; preds = %._crit_edge, %swap_group.exit
-  %i.gn = phi i32 [ 0, %._crit_edge ], [ %22, %swap_group.exit ]
+  %.sroa.8.0296 = phi i32 [ %i.gm, %._crit_edge ], [ %.sroa.8.1, %swap_group.exit ] ; 5 uses
+  %i.gn = phi i32 [ 0, %._crit_edge ], [ %.sroa.0.1, %swap_group.exit ] ; 5 uses
   %.0269 = phi i64 [ undef, %._crit_edge ], [ %.1, %swap_group.exit ] ; 6 uses
   %.0175268 = phi i64 [ undef, %._crit_edge ], [ %.1176, %swap_group.exit ] ; 6 uses
   %.0177267 = phi ptr [ %.0184250, %._crit_edge ], [ %i.gt, %swap_group.exit ] ; 17 uses
@@ -627,9 +623,8 @@ bb.ag:                                            ; preds = %._crit_edge, %swap_
   br i1 %.not211, label %bb.ak, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %8 = load i32, ptr %7, align 4, !tbaa !12
   %i.gv = load i32, ptr %i.j, align 8, !tbaa !97  ; 2 uses
-  %i.gw = and i32 %i.gv, %8
+  %i.gw = and i32 %i.gv, %.sroa.8.0296
   %.not212 = icmp eq i32 %i.gw, 0
   br i1 %.not212, label %bb.ak, label %bb.ai
 
@@ -638,23 +633,19 @@ bb.ai:                                            ; preds = %bb.ah
   %i.gy = load i32, ptr %i.gx, align 8, !tbaa !51
   %i.gz = getelementptr inbounds nuw i8, ptr %.0177267, i64 68
   %i.ha = load i16, ptr %i.gz, align 4, !tbaa !50
-  %9 = sext i16 %i.ha to i64
-  %10 = getelementptr inbounds [4 x i8], ptr %6, i64 %9 ; 2 uses
-  %11 = load i32, ptr %10, align 4, !tbaa !12
-  %12 = add nsw i32 %11, %i.gy
-  store i32 %12, ptr %10, align 4, !tbaa !12
-  %13 = load i32, ptr %6, align 4, !tbaa !12      ; 3 uses
-  %i.hb = and i32 %13, %1
+  %.sroa.idx = icmp eq i16 %i.ha, 1               ; 3 uses
+  %.sroa.speculated15 = select i1 %.sroa.idx, i32 %.sroa.8.0296, i32 %i.gn
+  %6 = add nsw i32 %.sroa.speculated15, %i.gy     ; 2 uses
+  %.sroa.0.0. = select i1 %.sroa.idx, i32 %i.gn, i32 %6 ; 3 uses
+  %..sroa.8.0 = select i1 %.sroa.idx, i32 %6, i32 %.sroa.8.0296 ; 3 uses
+  %7 = and i32 %.sroa.0.0., %1
+  %.not238 = icmp eq i32 %7, 0
+  %i.hb = and i32 %..sroa.8.0, %i.gv
   %.not215 = icmp eq i32 %i.hb, 0
-  br i1 %.not215, label %bb.aj, label %14
+  %or.cond = select i1 %.not238, i1 true, i1 %.not215
+  br i1 %or.cond, label %bb.aj, label %bb.am
 
-14:                                               ; preds = %bb.ai
-  %15 = load i32, ptr %7, align 4, !tbaa !12
-  %16 = and i32 %15, %i.gv
-  %.not216 = icmp eq i32 %16, 0
-  br i1 %.not216, label %bb.aj, label %bb.am
-
-bb.aj:                                            ; preds = %14, %bb.ai
+bb.aj:                                            ; preds = %bb.ai
   %i.hc = add nsw i64 %.0175268, %5
   %.neg235 = sub i64 %.neg273, %.0175268
   %i.hd = add i64 %.neg235, %i.gp
@@ -669,29 +660,28 @@ bb.ak:                                            ; preds = %bb.ah, %bb.ag
   %i.hi = load i32, ptr %i.hh, align 8, !tbaa !51
   %i.hj = getelementptr inbounds nuw i8, ptr %.0177267, i64 68
   %i.hk = load i16, ptr %i.hj, align 4, !tbaa !50
-  %17 = sext i16 %i.hk to i64
-  %18 = getelementptr inbounds [4 x i8], ptr %6, i64 %17 ; 2 uses
-  %19 = load i32, ptr %18, align 4, !tbaa !12
-  %i.hl = add nsw i32 %19, %i.hi
-  store i32 %i.hl, ptr %18, align 4, !tbaa !12
-  %20 = load i32, ptr %6, align 4, !tbaa !12      ; 3 uses
-  %i.hm = and i32 %20, %1
+  %.sroa.idx1 = icmp eq i16 %i.hk, 1              ; 3 uses
+  %.sroa.speculated = select i1 %.sroa.idx1, i32 %.sroa.8.0296, i32 %i.gn
+  %i.hl = add nsw i32 %.sroa.speculated, %i.hi    ; 2 uses
+  %.sroa.0.0.246 = select i1 %.sroa.idx1, i32 %i.gn, i32 %i.hl ; 3 uses
+  %..sroa.8.0247 = select i1 %.sroa.idx1, i32 %i.hl, i32 %.sroa.8.0296 ; 3 uses
+  %i.hm = and i32 %.sroa.0.0.246, %1
   %.not213 = icmp eq i32 %i.hm, 0
   br i1 %.not213, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %21 = load i32, ptr %7, align 4, !tbaa !12
   %i.hn = load i32, ptr %i.j, align 8, !tbaa !97
-  %i.ho = and i32 %i.hn, %21
+  %i.ho = and i32 %i.hn, %..sroa.8.0247
   %.not214 = icmp eq i32 %i.ho, 0                 ; 2 uses
   %spec.select223 = select i1 %.not214, i64 %.0175268, i64 %i.gp
   %spec.select224 = select i1 %.not214, i64 %.0269, i64 %i.gr
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.al, %bb.ak, %14, %bb.aj
-  %22 = phi i32 [ %13, %14 ], [ %13, %bb.aj ], [ %20, %bb.ak ], [ %20, %bb.al ]
-  %.1176 = phi i64 [ %.0175268, %14 ], [ %.0175268, %bb.aj ], [ %.0175268, %bb.ak ], [ %spec.select223, %bb.al ]
-  %.1 = phi i64 [ %.0269, %14 ], [ %.0269, %bb.aj ], [ %.0269, %bb.ak ], [ %spec.select224, %bb.al ]
+bb.am:                                            ; preds = %bb.ai, %bb.al, %bb.ak, %bb.aj
+  %.1176 = phi i64 [ %.0175268, %bb.ai ], [ %.0175268, %bb.aj ], [ %.0175268, %bb.ak ], [ %spec.select223, %bb.al ]
+  %.1 = phi i64 [ %.0269, %bb.ai ], [ %.0269, %bb.aj ], [ %.0269, %bb.ak ], [ %spec.select224, %bb.al ]
+  %.sroa.0.1 = phi i32 [ %.sroa.0.0., %bb.ai ], [ %.sroa.0.0., %bb.aj ], [ %.sroa.0.0.246, %bb.ak ], [ %.sroa.0.0.246, %bb.al ]
+  %.sroa.8.1 = phi i32 [ %..sroa.8.0, %bb.ai ], [ %..sroa.8.0, %bb.aj ], [ %..sroa.8.0247, %bb.ak ], [ %..sroa.8.0247, %bb.al ]
   store i64 %i.gr, ptr %i.go, align 8, !tbaa !63
   %i.hp = getelementptr inbounds nuw i8, ptr %.0177267, i64 70
   %i.hq = load i16, ptr %i.hp, align 2, !tbaa !67
@@ -826,15 +816,11 @@ bb.bd:                                            ; preds = %bb.ba
 
 swap_group.exit:                                  ; preds = %bb.at, %bb.bd, %bb.bc, %bb.bb, %bb.an, %bb.am
   %.not210 = icmp eq ptr %i.gt, null
-  br i1 %.not210, label %23, label %bb.ag, !llvm.loop !93
+  br i1 %.not210, label %bb.be, label %bb.ag, !llvm.loop !93
 
-23:                                               ; preds = %swap_group.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
-  br label %bb.be
-
-bb.be:                                            ; preds = %.critedge.thread, %23
-  %.1180242 = phi ptr [ %.1180243, %23 ], [ %.1180249, %.critedge.thread ]
-  %.1195 = phi i64 [ %.4, %23 ], [ %i.l, %.critedge.thread ] ; 2 uses
+bb.be:                                            ; preds = %swap_group.exit, %.critedge.thread
+  %.1180242 = phi ptr [ %.1180249, %.critedge.thread ], [ %.1180243, %swap_group.exit ]
+  %.1195 = phi i64 [ %i.l, %.critedge.thread ], [ %.4, %swap_group.exit ] ; 2 uses
   %.not = icmp slt i64 %.1195, %.sroa.3.0.copyload
   br i1 %.not, label %.preheader238, label %.thread231
 
