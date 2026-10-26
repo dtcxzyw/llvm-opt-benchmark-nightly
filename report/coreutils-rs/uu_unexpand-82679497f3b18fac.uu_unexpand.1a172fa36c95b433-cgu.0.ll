@@ -205,6 +205,7 @@ _RINvNtCs7tKScEop1B6_5alloc3str17join_generic_copyehReECs2eSwMnb0Awh_11uu_unexpa
   %or.cond208.i.ph995 = phi i1 [ %or.cond208.i.ph, %.outer.split.preheader.i.outer ], [ true, %bb.be ]
   %.sroa.060.0.ph.i.ph996 = phi i64 [ %.sroa.060.0.ph.i.ph, %.outer.split.preheader.i.outer ], [ 0, %bb.be ]
   %.sroa.828.0.ph.i.ph997 = phi i64 [ %.sroa.828.0.ph.i.ph, %.outer.split.preheader.i.outer ], [ %i.iq, %bb.be ] ; 4 uses
+  %.ph998 = phi i1 [ false, %.outer.split.preheader.i.outer ], [ true, %bb.be ]
   %.sroa.022.0.ph.i.ph = phi i64 [ 0, %.outer.split.preheader.i.outer ], [ 1, %bb.be ]
   br label %.outer.split.preheader.i
 
@@ -214,7 +215,8 @@ _RINvNtCs7tKScEop1B6_5alloc3str17join_generic_copyehReECs2eSwMnb0Awh_11uu_unexpa
   %.us-phi341440.i = phi i64 [ %.lcssa268327.i, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecjE8push_mutCs2eSwMnb0Awh_11uu_unexpand.exit225.i ], [ %.us-phi341440.i.ph994, %.outer.split.preheader.i.outer991 ]
   %or.cond208.i = phi i1 [ false, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecjE8push_mutCs2eSwMnb0Awh_11uu_unexpand.exit225.i ], [ %or.cond208.i.ph995, %.outer.split.preheader.i.outer991 ] ; 4 uses
   %.sroa.060.0.ph.i = phi i64 [ 0, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecjE8push_mutCs2eSwMnb0Awh_11uu_unexpand.exit225.i ], [ %.sroa.060.0.ph.i.ph996, %.outer.split.preheader.i.outer991 ]
-  %.sroa.022.0.ph.i = phi i64 [ 0, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecjE8push_mutCs2eSwMnb0Awh_11uu_unexpand.exit225.i ], [ %.sroa.022.0.ph.i.ph, %.outer.split.preheader.i.outer991 ] ; 2 uses
+  %2 = phi i1 [ false, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecjE8push_mutCs2eSwMnb0Awh_11uu_unexpand.exit225.i ], [ %.ph998, %.outer.split.preheader.i.outer991 ]
+  %.sroa.022.0.ph.i = phi i64 [ 0, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecjE8push_mutCs2eSwMnb0Awh_11uu_unexpand.exit225.i ], [ %.sroa.022.0.ph.i.ph, %.outer.split.preheader.i.outer991 ]
   br label %.outer.split.i
 
 .outer.split.i:                                   ; preds = %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i, %.outer.split.preheader.i
@@ -304,7 +306,6 @@ bb.w:                                             ; preds = %.outer.split.i
   br i1 %or.cond207.i, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %2 = trunc nuw i64 %.sroa.022.0.ph.i to i1
   %.not.i.i57 = icmp ne i64 %.sroa.828.0.ph.i.ph997, 0
   %narrow.i.i = select i1 %2, i1 %.not.i.i57, i1 false
   br i1 %narrow.i.i, label %bb.aa, label %bb.af

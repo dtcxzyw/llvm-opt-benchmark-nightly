@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.b
           to label %bb.i unwind label %bb.h, !dbg !27151, !noalias !27096
 
 bb.f:                                             ; preds = %bb.l, %bb.h
-  %.sroa.017.0.i.i.i = phi i8 [ %.sroa.017.1.i.i.i, %bb.h ], [ 1, %bb.l ], !dbg !27150 ; 2 uses
+  %.sroa.017.0.i.i.i = phi i1 [ %.sroa.017.1.i.i.i, %bb.h ], [ true, %bb.l ], !dbg !27150
   %.pn.i.i.i = phi { ptr, i32 } [ %i.t, %bb.h ], [ %i.w, %bb.l ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !27097), !dbg !27152
     #dbg_value(ptr %i.d, !3877, !DIExpression(), !26923)
@@ -231,7 +231,7 @@ bb.g:                                             ; preds = %bb.f
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i unwind label %bb.ac, !dbg !27159, !noalias !27102
 
 bb.h:                                             ; preds = %bb.t, %bb.n, %bb.e
-  %.sroa.017.1.i.i.i = phi i8 [ 1, %bb.n ], [ 0, %bb.t ], [ 1, %bb.e ], !dbg !27160
+  %.sroa.017.1.i.i.i = phi i1 [ true, %bb.n ], [ false, %bb.t ], [ true, %bb.e ], !dbg !27160
   %i.t = landingpad { ptr, i32 }
           cleanup
   br label %bb.f
@@ -344,7 +344,7 @@ bb.w:                                             ; preds = %bb.u
   br label %bb.x, !dbg !27152
 
 bb.x:                                             ; preds = %.sink.split.i.i, %bb.t
-  %.sroa.017.3.i.i.i = phi i8 [ 0, %bb.t ], [ 1, %.sink.split.i.i ], !dbg !27160 ; 2 uses
+  %5 = phi i1 [ false, %bb.t ], [ true, %.sink.split.i.i ], !dbg !27160 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !27152, !noalias !27087
   call void @llvm.experimental.noalias.scope.decl(metadata !27117), !dbg !27152
     #dbg_value(ptr %i.d, !3877, !DIExpression(), !26969)
@@ -370,21 +370,16 @@ bb.y:                                             ; preds = %bb.x
   invoke void @_RNvMsn_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtNtNtCs5yXxDE1DkoT_4tera5value3key3KeyNtB1F_5ValueEE9drop_slowB1H_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.d) #24
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit47.i.i.i unwind label %bb.z, !dbg !27195, !noalias !27102
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i: ; preds = %bb.z, %bb.g, %bb.f
-  %.sroa.017.4.i.i.i = phi i8 [ %.sroa.017.5.i.i.i, %bb.z ], [ %.sroa.017.0.i.i.i, %bb.g ], [ %.sroa.017.0.i.i.i, %bb.f ], !dbg !27150
-  %.pn44.i.i.i = phi { ptr, i32 } [ %i.ak, %bb.z ], [ %.pn.i.i.i, %bb.g ], [ %.pn.i.i.i, %bb.f ] ; 2 uses
-  %5 = trunc nuw i8 %.sroa.017.4.i.i.i to i1, !dbg !27152
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i: ; preds = %bb.g, %bb.f
+  br i1 %.sroa.017.0.i.i.i, label %bb.ad, label %.body.thread, !dbg !27152
+
+bb.z:                                             ; preds = %bb.y
+  %i.ak = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
   br i1 %5, label %bb.ad, label %.body.thread, !dbg !27152
 
-bb.z:                                             ; preds = %bb.ab, %bb.y
-  %.sroa.017.5.i.i.i = phi i8 [ 1, %bb.ab ], [ %.sroa.017.3.i.i.i, %bb.y ], !dbg !27160
-  %i.ak = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i
-
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit47.i.i.i: ; preds = %bb.y, %bb.x
-  %6 = trunc nuw i8 %.sroa.017.3.i.i.i to i1, !dbg !27152
-  br i1 %6, label %.sink.split.i.i.i, label %bb.ae, !dbg !27152
+  br i1 %5, label %.sink.split.i.i.i, label %bb.ae, !dbg !27152
 
 .sink.split.i.i.i:                                ; preds = %bb.ab, %bb.aa, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit47.i.i.i
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera5value5ValueEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e), !dbg !27152
@@ -414,7 +409,12 @@ bb.ab:                                            ; preds = %bb.aa
     #dbg_value(i8 2, !3710, !DIExpression(), !26998)
   fence acquire, !dbg !27200
   invoke void @_RNvMsn_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapNtNtNtCs5yXxDE1DkoT_4tera5value3key3KeyNtB1F_5ValueEE9drop_slowB1H_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.d) #24
-          to label %.sink.split.i.i.i unwind label %bb.z, !dbg !27201, !noalias !27096
+          to label %.sink.split.i.i.i unwind label %.split.thread.i.i.i, !dbg !27201, !noalias !27096
+
+.split.thread.i.i.i:                              ; preds = %bb.ab
+  %6 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.ad, !dbg !27152
 
 bb.ac:                                            ; preds = %bb.ad, %bb.l, %bb.g
   %i.ao = landingpad { ptr, i32 }
@@ -422,7 +422,8 @@ bb.ac:                                            ; preds = %bb.ad, %bb.l, %bb.g
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #23, !dbg !27202, !noalias !27102
   unreachable, !dbg !27202
 
-bb.ad:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i
+bb.ad:                                            ; preds = %.split.thread.i.i.i, %bb.z, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i
+  %.pn442.i.i.i = phi { ptr, i32 } [ %i.ak, %bb.z ], [ %.pn.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i ], [ %6, %.split.thread.i.i.i ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera5value5ValueEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e) #22
           to label %.body.thread unwind label %bb.ac, !dbg !27152, !noalias !27102
 
@@ -437,8 +438,8 @@ bb.ae:                                            ; preds = %.sink.split.i.i.i, 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit: ; preds = %bb.d, %bb.c, %bb.ae
   ret void, !dbg !27205
 
-.body.thread:                                     ; preds = %bb.af, %bb.ag, %bb.ad, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i
-  %eh.lpad-body26 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.af ], [ %.pn44.i.i.i, %bb.ad ], [ %.pn44.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i ], [ %lpad.thr_comm.split-lp, %bb.ag ]
+.body.thread:                                     ; preds = %bb.af, %bb.ag, %bb.ad, %bb.z, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i
+  %eh.lpad-body26 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.af ], [ %.pn.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera4args6KwargsEBF_.exit.i.i.i ], [ %i.ak, %bb.z ], [ %.pn442.i.i.i, %bb.ad ], [ %lpad.thr_comm.split-lp, %bb.ag ]
   resume { ptr, i32 } %eh.lpad-body26, !dbg !27206
 
 bb.af:                                            ; preds = %bb.a

@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.q
   br i1 %.sroa.04.1, label %.thread, label %.thread41
 
 bb.c:                                             ; preds = %bb.at, %bb.aj, %bb.d, %bb.a
-  %.sroa.0.1 = phi i8 [ 1, %bb.at ], [ 0, %bb.aj ], [ 1, %bb.d ], [ 1, %bb.a ]
+  %.sroa.0.1 = phi i1 [ true, %bb.at ], [ false, %bb.aj ], [ true, %bb.d ], [ true, %bb.a ]
   %i.ae = landingpad { ptr, i32 }
           cleanup
   br label %.thread
@@ -255,7 +255,7 @@ bb.l:                                             ; preds = %bb.k
   store ptr %i.am, ptr %i.y, align 8
   store ptr %i.aa, ptr %i.x, align 8
   %i.an = invoke zeroext i1 @_RNvXsf_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionRNtNtCs1xwejQucwHj_5alloc6string6StringENtNtB7_3cmp9PartialEq2eqCse52LceO7DeS_12typst_macros(ptr nonnull align 8 %i.y, ptr nonnull align 8 %i.x)
-          to label %bb.m unwind label %.thread26
+          to label %bb.m unwind label %.thread26  ; 3 uses
 
 bb.m:                                             ; preds = %bb.l
   br i1 %i.an, label %bb.o, label %bb.n
@@ -383,7 +383,6 @@ bb.aj:                                            ; preds = %bb.ai
           to label %bb.ak unwind label %bb.c
 
 bb.ak:                                            ; preds = %bb.at, %bb.aj
-  %.sroa.0.4 = phi i8 [ 0, %bb.aj ], [ 1, %bb.at ] ; 2 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECsjMPGGl8VONr_3syn(ptr align 8 %2)
           to label %bb.aw unwind label %bb.av
 
@@ -442,20 +441,16 @@ bb.at:                                            ; preds = %bb.as
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECscIE41xXMWxr_4heck(ptr nonnull align 8 %i.aa)
           to label %bb.ak unwind label %bb.c
 
-bb.au:                                            ; preds = %.thread, %bb.av
-  %.pn13 = phi { ptr, i32 } [ %i.bm, %bb.av ], [ %.pn1118, %.thread ] ; 2 uses
-  %.sroa.0.5 = phi i8 [ %.sroa.0.4, %bb.av ], [ %.sroa.0.019, %.thread ]
-  %5 = trunc nuw i8 %.sroa.0.5 to i1
-  br i1 %5, label %bb.ay, label %.thread41
+bb.au:                                            ; preds = %.thread
+  br i1 %.sroa.0.019, label %bb.ay, label %.thread41
 
 bb.av:                                            ; preds = %bb.ak
   %i.bm = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.au
+          cleanup                                 ; 2 uses
+  br i1 %i.an, label %bb.ay, label %.thread41
 
 bb.aw:                                            ; preds = %bb.ak
-  %6 = trunc nuw i8 %.sroa.0.4 to i1
-  br i1 %6, label %bb.ax, label %bb.aa
+  br i1 %i.an, label %bb.ax, label %bb.aa
 
 bb.ax:                                            ; preds = %bb.aw
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECsjMPGGl8VONr_3syn(ptr align 8 %1)
@@ -467,16 +462,17 @@ bb.ax:                                            ; preds = %bb.aw
           to label %.thread unwind label %bb.al
 
 .thread:                                          ; preds = %bb.j, %bb.f, %.thread20, %bb.c, %bb.b
-  %.sroa.0.019 = phi i8 [ 0, %bb.b ], [ 1, %bb.f ], [ 0, %bb.j ], [ 1, %.thread20 ], [ %.sroa.0.1, %bb.c ]
-  %.pn1118 = phi { ptr, i32 } [ %.pn7, %bb.b ], [ %i.ag, %bb.f ], [ %lpad.thr_comm.split-lp, %bb.j ], [ %.pn923, %.thread20 ], [ %i.ae, %bb.c ]
+  %.sroa.0.019 = phi i1 [ false, %bb.b ], [ true, %bb.f ], [ false, %bb.j ], [ true, %.thread20 ], [ %.sroa.0.1, %bb.c ]
+  %.pn1118 = phi { ptr, i32 } [ %.pn7, %bb.b ], [ %i.ag, %bb.f ], [ %lpad.thr_comm.split-lp, %bb.j ], [ %.pn923, %.thread20 ], [ %i.ae, %bb.c ] ; 2 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECsjMPGGl8VONr_3syn(ptr align 8 %2) #25
           to label %bb.au unwind label %bb.al
 
-.thread41:                                        ; preds = %bb.b, %bb.ay, %bb.au
-  %.pn1344 = phi { ptr, i32 } [ %.pn13, %bb.au ], [ %.pn13, %bb.ay ], [ %.pn7, %bb.b ]
+.thread41:                                        ; preds = %bb.av, %bb.b, %bb.ay, %bb.au
+  %.pn1344 = phi { ptr, i32 } [ %.pn1118, %bb.au ], [ %.pn1345, %bb.ay ], [ %.pn7, %bb.b ], [ %i.bm, %bb.av ]
   resume { ptr, i32 } %.pn1344
 
-bb.ay:                                            ; preds = %bb.au
+bb.ay:                                            ; preds = %bb.av, %bb.au
+  %.pn1345 = phi { ptr, i32 } [ %i.bm, %bb.av ], [ %.pn1118, %bb.au ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECsjMPGGl8VONr_3syn(ptr align 8 %1) #25
           to label %.thread41 unwind label %bb.al
 }

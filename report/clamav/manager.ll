@@ -202,8 +202,8 @@ thread-pre-split:                                 ; preds = %bb.k, %bb.l
 
 bb.o:                                             ; preds = %thread-pre-split, %bb.j
   %i.aw = phi ptr [ %.pr, %thread-pre-split ], [ %i.am, %bb.j ]
-  %.not140 = icmp eq ptr %i.aw, null
-  br i1 %.not140, label %bb.s, label %bb.p
+  %.not140 = icmp ne ptr %i.aw, null              ; 10 uses
+  br i1 %.not140, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %bb.o
   %i.ax = call i32 @action_source_open_path(ptr noundef nonnull %0, ptr noundef %spec.select, ptr noundef nonnull %7) #22 ; 2 uses
@@ -238,7 +238,6 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.r, %bb.o
   %.0112 = phi i32 [ -1, %bb.o ], [ %i.bd, %bb.r ] ; 2 uses
-  %.0101 = phi i8 [ 0, %bb.o ], [ 1, %bb.r ]      ; 2 uses
   br i1 %.0100, label %._crit_edge193, label %bb.aa
 
 ._crit_edge193:                                   ; preds = %bb.s
@@ -247,7 +246,6 @@ bb.s:                                             ; preds = %bb.r, %bb.o
 
 bb.t:                                             ; preds = %._crit_edge193, %.thread
   %i.bm = phi i64 [ %i.bi, %.thread ], [ %.pre194, %._crit_edge193 ]
-  %.0101180 = phi i8 [ 1, %.thread ], [ %.0101, %._crit_edge193 ] ; 5 uses
   %.0112178.a = phi i32 [ %i.bd, %.thread ], [ %.0112, %._crit_edge193 ] ; 5 uses
   %i.bn = load i64, ptr @procdev, align 8, !tbaa !27 ; 2 uses
   %.not142 = icmp ne i64 %i.bn, 0
@@ -286,12 +284,10 @@ bb.z:                                             ; preds = %bb.w
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.s
-  %.0101181 = phi i8 [ %.0101180, %bb.z ], [ %.0101, %bb.s ] ; 5 uses
   %.0112179 = phi i32 [ %.0112178.a, %bb.z ], [ %.0112, %bb.s ] ; 3 uses
   %i.bx = call i32 @geteuid() #22
   %i.by = icmp eq i32 %i.bx, 0
-  %8 = trunc nuw i8 %.0101181 to i1
-  %or.cond11 = or i1 %i.by, %8
+  %or.cond11 = or i1 %.not140, %i.by
   br i1 %or.cond11, label %bb.ao, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -634,25 +630,24 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bw, %bb.bx, %bb.x, %bb.y, %bb.u, %bb.v, %bb.m, %bb.n, %.critedge, %bb.h, %bb.d, %bb.e, %bb.bb, %bb.ar, %bb.an, %bb.q, %bb.b
   %.2 = phi i32 [ -1, %bb.b ], [ -1, %bb.d ], [ -1, %bb.e ], [ -1, %bb.m ], [ -1, %bb.n ], [ -1, %bb.q ], [ %.0112178.a, %bb.u ], [ %.0112178.a, %bb.v ], [ %.1113, %bb.bx ], [ %.1113, %bb.bw ], [ -1, %bb.bb ], [ %.0112179, %bb.ar ], [ %.0112179, %bb.an ], [ %.0112178.a, %bb.x ], [ %.0112178.a, %bb.y ], [ -1, %.critedge ], [ -1, %bb.h ] ; 2 uses
-  %.1102 = phi i8 [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.m ], [ 0, %bb.n ], [ 0, %bb.q ], [ %.0101180, %bb.u ], [ %.0101180, %bb.v ], [ %.0101181, %bb.bx ], [ %.0101181, %bb.bw ], [ %.0101181, %bb.bb ], [ %.0101181, %bb.ar ], [ 0, %bb.an ], [ %.0101180, %bb.x ], [ %.0101180, %bb.y ], [ 0, %.critedge ], [ 0, %bb.h ]
+  %.1102 = phi i1 [ false, %bb.b ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.q ], [ %.not140, %bb.u ], [ %.not140, %bb.v ], [ %.not140, %bb.bx ], [ %.not140, %bb.bw ], [ %.not140, %bb.bb ], [ %.not140, %bb.ar ], [ false, %bb.an ], [ %.not140, %bb.x ], [ %.not140, %bb.y ], [ false, %.critedge ], [ false, %bb.h ] ; 2 uses
   %i.gm = load i32, ptr %i.b, align 4, !tbaa !43
   %i.gn = and i32 %i.gm, -2
   %or.cond19 = icmp eq i32 %i.gn, 2
   %i.go = load ptr, ptr @action, align 8          ; 2 uses
   %i.gp = icmp ne ptr %i.go, null
   %or.cond21 = select i1 %or.cond19, i1 %i.gp, i1 false
-  %9 = trunc nuw i8 %.1102 to i1                  ; 2 uses
-  %or.cond23 = select i1 %or.cond21, i1 %9, i1 false
+  %or.cond23 = and i1 %.1102, %or.cond21
   br i1 %or.cond23, label %.thread184, label %bb.bz
 
 .thread184:                                       ; preds = %bb.by
   call void %i.go(ptr noundef nonnull %7) #22
-  br label %bb.ca
+  br label %bb.bz
 
-bb.bz:                                            ; preds = %bb.by
-  br i1 %9, label %bb.ca, label %bb.cb
+bb.bz:                                            ; preds = %bb.by, %.thread184
+  br i1 %.1102, label %bb.ca, label %bb.cb
 
-bb.ca:                                            ; preds = %.thread184, %bb.bz
+bb.ca:                                            ; preds = %bb.bz
   call void @action_source_close(ptr noundef nonnull %7) #22
   br label %bb.cd
 

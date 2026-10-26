@@ -205,7 +205,8 @@ token_is_pseudo_keyword.exit.thread:              ; preds = %is_using.exit401, %
 
 .thread433:                                       ; preds = %is_using.exit401, %bb.q, %token_is_pseudo_keyword.exit.thread, %token_is_pseudo_keyword.exit.thread, %token_is_pseudo_keyword.exit.thread, %token_is_pseudo_keyword.exit.thread
   %i.gy = phi i1 [ %i.gx, %token_is_pseudo_keyword.exit.thread ], [ %i.gx, %token_is_pseudo_keyword.exit.thread ], [ %i.gx, %token_is_pseudo_keyword.exit.thread ], [ %i.gx, %token_is_pseudo_keyword.exit.thread ], [ true, %bb.q ], [ true, %is_using.exit401 ] ; 4 uses
-  %.1438 = phi i8 [ 0, %token_is_pseudo_keyword.exit.thread ], [ 0, %token_is_pseudo_keyword.exit.thread ], [ 0, %token_is_pseudo_keyword.exit.thread ], [ 0, %token_is_pseudo_keyword.exit.thread ], [ 1, %bb.q ], [ 0, %is_using.exit401 ] ; 3 uses
+  %7 = phi i1 [ false, %token_is_pseudo_keyword.exit.thread ], [ false, %token_is_pseudo_keyword.exit.thread ], [ false, %token_is_pseudo_keyword.exit.thread ], [ false, %token_is_pseudo_keyword.exit.thread ], [ true, %bb.q ], [ false, %is_using.exit401 ]
+  %.1438 = phi i8 [ 0, %token_is_pseudo_keyword.exit.thread ], [ 0, %token_is_pseudo_keyword.exit.thread ], [ 0, %token_is_pseudo_keyword.exit.thread ], [ 0, %token_is_pseudo_keyword.exit.thread ], [ 1, %bb.q ], [ 0, %is_using.exit401 ] ; 2 uses
   %.4279436 = phi i32 [ %.0275412, %token_is_pseudo_keyword.exit.thread ], [ %.0275412, %token_is_pseudo_keyword.exit.thread ], [ %.0275412, %token_is_pseudo_keyword.exit.thread ], [ %.0275412, %token_is_pseudo_keyword.exit.thread ], [ -49, %bb.q ], [ -49, %is_using.exit401 ] ; 8 uses
   %i.gz = call fastcc i32 @next_token(ptr noundef %0)
   %.not303 = icmp eq i32 %i.gz, 0
@@ -409,7 +410,6 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.jy = phi i32 [ %i.ju, %bb.as ], [ %i.jf, %bb.ar ]
   %i.jz = phi ptr [ %i.jt, %bb.as ], [ %i.je, %bb.ar ]
-  %7 = trunc nuw i8 %.1438 to i1
   br i1 %7, label %bb.au, label %bb.bf
 
 bb.au:                                            ; preds = %bb.at
@@ -812,6 +812,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.l, %bb.a
   %.054 = phi ptr [ %3, %bb.a ], [ %i.ad, %bb.l ] ; 11 uses
   %.051.a = phi i1 [ false, %bb.a ], [ true, %bb.l ]
+  %.051 = phi i8 [ 0, %bb.a ], [ 1, %bb.l ]       ; 2 uses
   %.049 = phi i32 [ %5, %bb.a ], [ %i.bf, %bb.l ]
   %i.b = getelementptr inbounds nuw i8, ptr %.054, i64 176
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !720
@@ -942,7 +943,7 @@ bb.l:                                             ; preds = %.loopexit80
 .thread:                                          ; preds = %bb.i, %bb.j, %capture_var.exit, %find_private_class_field_all.exit
   %.361 = phi i32 [ %i.aa, %capture_var.exit ], [ %.02.i, %find_private_class_field_all.exit ], [ %i.aq, %bb.i ], [ %i.az, %bb.j ]
   %.257 = phi i32 [ %i.s, %capture_var.exit ], [ %i.s, %find_private_class_field_all.exit ], [ %i.au, %bb.i ], [ %i.au, %bb.j ]
-  %.3 = phi i8 [ 1, %capture_var.exit ], [ 0, %find_private_class_field_all.exit ], [ 1, %bb.i ], [ 1, %bb.j ]
+  %.3 = phi i8 [ %.051, %capture_var.exit ], [ %.051, %find_private_class_field_all.exit ], [ 1, %bb.i ], [ 1, %bb.j ]
   store i8 %.3, ptr %1, align 1, !tbaa !605
   store i32 %.257, ptr %2, align 4, !tbaa !191
   br label %.thread75

@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i968: ; preds = 
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i971: ; preds = %bb.jd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i970
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #27
-  %.not541 = icmp eq ptr %i.ad, %i.alv
+  %.not541 = icmp eq ptr %i.ad, %i.alv            ; 2 uses
   br i1 %.not541, label %bb.jf, label %_ZNSt8optionalIN2v88internal6torque5StackIPKNS2_4TypeEEEEC2EOS8_.exit.i
 
 _ZNSt8optionalIN2v88internal6torque5StackIPKNS2_4TypeEEEEC2EOS8_.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i971
@@ -246,7 +246,7 @@ _ZNSt14_Optional_baseIN2v88internal6torque5StackIPKNS2_4TypeEEELb0ELb0EED2Ev.exi
 
 bb.jf:                                            ; preds = %_ZNSt14_Optional_baseIN2v88internal6torque5StackIPKNS2_4TypeEEELb0ELb0EED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i971
   %.sroa.01351.0 = phi ptr [ undef, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i971 ], [ %i.amv, %_ZNSt14_Optional_baseIN2v88internal6torque5StackIPKNS2_4TypeEEELb0ELb0EED2Ev.exit ] ; 2 uses
-  %.sroa.61352.0 = phi i8 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i971 ], [ 1, %_ZNSt14_Optional_baseIN2v88internal6torque5StackIPKNS2_4TypeEEELb0ELb0EED2Ev.exit ] ; 2 uses
+  %.sroa.61352.0 = phi i8 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i971 ], [ 1, %_ZNSt14_Optional_baseIN2v88internal6torque5StackIPKNS2_4TypeEEELb0ELb0EED2Ev.exit ]
   %.not1759 = icmp eq ptr %i.rn, %i.ro            ; 2 uses
   br i1 %.not1759, label %._crit_edge1727, label %_ZNSt8optionalIN2v88internal6torque5StackIPKNS2_4TypeEEEEC2EOS8_.exit.i980.lr.ph
 
@@ -649,8 +649,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   br label %bb.kj
 
 ._crit_edge1738:                                  ; preds = %._crit_edge1734, %.preheader
-  %108 = trunc nuw i8 %.sroa.61352.0 to i1
-  br i1 %108, label %bb.lo, label %bb.lr
+  br i1 %.not541, label %bb.lr, label %bb.lo
 
 bb.kd:                                            ; preds = %_ZNSt15__new_allocatorIPN2v88internal6torque5BlockEE8allocateEmPKv.exit.i.i.i.i, %.noexc.i.i1007
   %i.ase = landingpad { ptr, i32 }

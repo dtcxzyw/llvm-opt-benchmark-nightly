@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.075.i, i64 1 ; 2 uses
   %i.f = load i8, ptr %.sroa.0.075.i, align 1, !alias.scope !90, !noundef !4
   %i.g = add i8 %i.f, -48                         ; 2 uses
-  %4 = icmp ugt i8 %i.g, 9
-  br i1 %4, label %bb.i, label %bb.d
+  %4 = icmp ult i8 %i.g, 10                       ; 2 uses
+  br i1 %4, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.h = zext i64 %.sroa.017.074.i to i128
@@ -272,13 +272,14 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.aj, label %bb.k, label %bb.l
 
 bb.i:                                             ; preds = %.lr.ph.i, %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U25615overflowing_add.exit.i, %bb.d
-  %.sroa.5.0.ph = phi i8 [ 1, %bb.d ], [ 1, %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U25615overflowing_add.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
+  %.sroa.5.0.ph = phi i8 [ 0, %.lr.ph.i ], [ 1, %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U25615overflowing_add.exit.i ], [ 1, %bb.d ]
+  %. = zext i1 %4 to i8
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 -1, ptr %i.al, align 8
   %.sroa.08.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i8 %.sroa.5.0.ph, ptr %.sroa.08.sroa.4.0..sroa_idx, align 4
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 %.sroa.5.0.ph, ptr %.sroa.49.0..sroa_idx, align 8
+  store i8 %., ptr %.sroa.49.0..sroa_idx, align 8
   br label %bb.m
 
 .loopexit:                                        ; preds = %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U25615overflowing_add.exit.thread.i, %bb.c

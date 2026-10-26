@@ -202,8 +202,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.n = phi i64 [ %i.m, %bb.f ], [ 0, %bb.e ]
   %i.o = add i64 %i.i, %i.d                       ; 4 uses
   %invariant.op = sub i64 %i.n, %i.o              ; 3 uses
-  %2 = icmp sgt i64 %i.o, 0
-  br i1 %2, label %.lr.ph, label %._crit_edge
+  %2 = icmp slt i64 %i.o, 1                       ; 4 uses
+  br i1 %2, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g
   %i.p = icmp sgt i64 %i.d, 0
@@ -391,7 +391,6 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !85
 
 ._crit_edge:                                      ; preds = %bb.ah, %bb.t, %bb.g
-  %.073.lcssa = phi i8 [ 1, %bb.g ], [ 0, %bb.t ], [ 0, %bb.ah ] ; 3 uses
   %i.cv = getelementptr i8, ptr %1, i64 16        ; 2 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !92
   %.not = icmp eq ptr %i.cw, null
@@ -409,8 +408,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.db, label %.critedge, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %._crit_edge
-  %3 = trunc nuw i8 %.073.lcssa to i1
-  br i1 %3, label %bb.am, label %bb.al
+  br i1 %2, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.dc = tail call i32 @PyUnicodeWriter_WriteUTF8(ptr noundef nonnull %0, ptr noundef nonnull @.str.28, i64 noundef -1) #3
@@ -451,7 +449,7 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %i.dq, label %append_ast_arg.exit.thread, label %.critedge
 
 .critedge:                                        ; preds = %bb.ar, %bb.ap, %bb.ai, %bb.an, %bb.aj
-  %.174 = phi i8 [ %.073.lcssa, %bb.ai ], [ 0, %bb.an ], [ %.073.lcssa, %bb.aj ], [ 0, %bb.ap ], [ 0, %bb.ar ]
+  %.174 = phi i1 [ %2, %bb.ai ], [ false, %bb.an ], [ %2, %bb.aj ], [ false, %bb.ap ], [ false, %bb.ar ] ; 2 uses
   %i.dr = getelementptr i8, ptr %1, i64 24        ; 3 uses
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !93 ; 3 uses
   %i.dt = icmp eq ptr %i.ds, null
@@ -474,13 +472,12 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.at, %bb.au
   %i.ea = phi i64 [ %i.dz, %bb.au ], [ 0, %bb.at ]
-  %4 = trunc nuw i8 %.174 to i1                   ; 2 uses
   %invariant.op117 = sub i64 %i.ea, %i.dv         ; 3 uses
   %i.eb = icmp sgt i64 %i.dv, 0
   br i1 %i.eb, label %.lr.ph122.preheader, label %._crit_edge123
 
 .lr.ph122.preheader:                              ; preds = %bb.av
-  br i1 %4, label %bb.ax, label %bb.aw
+  br i1 %.174, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %.lr.ph122.preheader
   %i.ec = tail call i32 @PyUnicodeWriter_WriteUTF8(ptr noundef nonnull %0, ptr noundef nonnull @.str.28, i64 noundef -1) #3
@@ -605,7 +602,7 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %exitcond127.not, label %._crit_edge123, label %.lr.ph122.peel.next, !llvm.loop !86
 
 ._crit_edge123:                                   ; preds = %.critedge98, %.critedge98.peel, %bb.av
-  %.2.lcssa = phi i1 [ %4, %bb.av ], [ false, %.critedge98.peel ], [ false, %.critedge98 ]
+  %.2.lcssa = phi i1 [ %.174, %bb.av ], [ false, %.critedge98.peel ], [ false, %.critedge98 ]
   %i.ga = getelementptr i8, ptr %1, i64 40        ; 2 uses
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !95
   %.not93 = icmp eq ptr %i.gb, null

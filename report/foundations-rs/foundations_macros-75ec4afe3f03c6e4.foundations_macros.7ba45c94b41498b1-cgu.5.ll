@@ -202,19 +202,19 @@ bb.bo:                                            ; preds = %bb.a
   br i1 %i.fm, label %bb.oj, label %bb.br
 
 bb.bp:                                            ; preds = %bb.pw, %bb.pu, %bb.oh, %bb.bn, %bb.bi, %bb.b
-  %.sroa.03.0 = phi i8 [ 1, %bb.b ], [ 0, %bb.bn ], [ 0, %bb.pw ], [ 0, %bb.oh ], [ 0, %bb.bi ], [ 0, %bb.pu ]
+  %.sroa.03.0 = phi i1 [ true, %bb.b ], [ false, %bb.bn ], [ false, %bb.pw ], [ false, %bb.oh ], [ false, %bb.bi ], [ false, %bb.pu ]
   %i.fn = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
 .body:                                            ; preds = %bb.ps, %.thread.i17, %.body.i, %bb.bp, %bb.bg, %.thread.i
-  %.sroa.03.0.lpad-body = phi i8 [ 0, %bb.bg ], [ 0, %.thread.i ], [ 0, %.body.i ], [ %.sroa.03.0, %bb.bp ], [ 0, %.thread.i17 ], [ 0, %bb.ps ]
-  %eh.lpad-body = phi { ptr, i32 } [ %.pn14.i, %bb.bg ], [ %.pn1621.i, %.thread.i ], [ %.pn8.i8, %.body.i ], [ %i.fn, %bb.bp ], [ %.pn914.i, %.thread.i17 ], [ %.pn7.i, %bb.ps ]
+  %.sroa.03.0.lpad-body = phi i1 [ false, %bb.bg ], [ false, %.thread.i ], [ false, %.body.i ], [ %.sroa.03.0, %bb.bp ], [ false, %.thread.i17 ], [ false, %bb.ps ]
+  %eh.lpad-body = phi { ptr, i32 } [ %.pn14.i, %bb.bg ], [ %.pn1621.i, %.thread.i ], [ %.pn8.i8, %.body.i ], [ %i.fn, %bb.bp ], [ %.pn914.i, %.thread.i17 ], [ %.pn7.i, %bb.ps ] ; 2 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs6bAnw1I7Lci_3syn4item4ItemEBF_(ptr nonnull align 8 %2) #9
           to label %bb.px unwind label %bb.qc
 
 bb.bq:                                            ; preds = %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings27expand_unnamed_field_struct.exit, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings13expand_struct.exit, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings11expand_enum.exit, %bb.b
-  %.sroa.03.1 = phi i8 [ 1, %bb.b ], [ 0, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings11expand_enum.exit ], [ 0, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings27expand_unnamed_field_struct.exit ], [ 0, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings13expand_struct.exit ] ; 2 uses
+  %3 = phi i1 [ true, %bb.b ], [ false, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings11expand_enum.exit ], [ false, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings27expand_unnamed_field_struct.exit ], [ false, %_RNvNtCsaC8UfsfJL0H_18foundations_macros8settings13expand_struct.exit ] ; 2 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs6bAnw1I7Lci_3syn4item4ItemEBF_(ptr nonnull align 8 %2)
           to label %bb.pz unwind label %bb.py
 
@@ -617,20 +617,16 @@ _RNvNtCsaC8UfsfJL0H_18foundations_macros8settings27expand_unnamed_field_struct.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %bb.bq
 
-bb.px:                                            ; preds = %bb.py, %.body
-  %.pn = phi { ptr, i32 } [ %i.mn, %bb.py ], [ %eh.lpad-body, %.body ]
-  %.sroa.03.2 = phi i8 [ %.sroa.03.1, %bb.py ], [ %.sroa.03.0.lpad-body, %.body ]
-  %3 = trunc nuw i8 %.sroa.03.2 to i1
-  br i1 %3, label %bb.qe, label %bb.qd
+bb.px:                                            ; preds = %.body
+  br i1 %.sroa.03.0.lpad-body, label %bb.qe, label %bb.qd
 
 bb.py:                                            ; preds = %bb.bq
   %i.mn = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.px
+          cleanup                                 ; 2 uses
+  br i1 %3, label %bb.qe, label %bb.qd
 
 bb.pz:                                            ; preds = %bb.bq
-  %4 = trunc nuw i8 %.sroa.03.1 to i1
-  br i1 %4, label %bb.qb, label %bb.qa
+  br i1 %3, label %bb.qb, label %bb.qa
 
 bb.qa:                                            ; preds = %bb.qb, %bb.pz
   ret void
@@ -645,10 +641,12 @@ bb.qc:                                            ; preds = %bb.qe, %.body
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #10
   unreachable
 
-bb.qd:                                            ; preds = %bb.qe, %bb.px
-  resume { ptr, i32 } %.pn
+bb.qd:                                            ; preds = %bb.py, %bb.qe, %bb.px
+  %.pn65 = phi { ptr, i32 } [ %i.mn, %bb.py ], [ %.pn66, %bb.qe ], [ %eh.lpad-body, %bb.px ]
+  resume { ptr, i32 } %.pn65
 
-bb.qe:                                            ; preds = %bb.px
+bb.qe:                                            ; preds = %bb.py, %bb.px
+  %.pn66 = phi { ptr, i32 } [ %i.mn, %bb.py ], [ %eh.lpad-body, %bb.px ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaC8UfsfJL0H_18foundations_macros8settings7OptionsEBF_(ptr nonnull align 8 %1) #9
           to label %bb.qd unwind label %bb.qc
 }

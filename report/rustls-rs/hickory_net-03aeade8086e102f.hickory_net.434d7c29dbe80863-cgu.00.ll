@@ -202,11 +202,11 @@ thread-pre-split.i.i.i.i:                         ; preds = %bb.ct, %bb.cu
 
 .preheader.i.i.i.i:                               ; preds = %thread-pre-split.i.i.i.i
   %.not5366.i.i.i.i = icmp eq i64 %.sroa.15.0.i.i.i.i, 0
-  br i1 %.not5366.i.i.i.i, label %.loopexit960.a, label %.lr.ph.i.i.i.i
+  br i1 %.not5366.i.i.i.i, label %.loopexit960, label %.lr.ph.i.i.i.i
 
 .preheader56.i.i.i.i:                             ; preds = %bb.cx
   %.not52.i.i.i.i = icmp eq i64 %i.jm, 0
-  br i1 %.not52.i.i.i.i, label %.loopexit960.a, label %.preheader56.i.i.i.i.preheader
+  br i1 %.not52.i.i.i.i, label %.loopexit960, label %.preheader56.i.i.i.i.preheader
 
 .preheader56.i.i.i.i.preheader:                   ; preds = %thread-pre-split.i.i.i.i, %.preheader56.i.i.i.i
   %.sroa.0.1.i.i.i.i1006 = phi ptr [ %i.jl, %.preheader56.i.i.i.i ], [ %.sroa.0.0.i.i.i.i, %thread-pre-split.i.i.i.i ] ; 2 uses
@@ -255,7 +255,13 @@ bb.cy:                                            ; preds = %.lr.ph.i.i.i.i
   %i.kg = zext nneg i32 %i.kb to i64
   %i.kh = add i64 %i.kd, %i.kg                    ; 2 uses
   %.not53.i.i.i.i = icmp eq i64 %i.ke, 0
-  br i1 %.not53.i.i.i.i, label %.loopexit960.a, label %.lr.ph.i.i.i.i
+  br i1 %.not53.i.i.i.i, label %.loopexit960, label %.lr.ph.i.i.i.i
+
+.loopexit960:                                     ; preds = %.preheader56.i.i.i.i, %bb.cy, %.preheader.i.i.i.i
+  %.sroa.10457.0.ph = phi i64 [ 0, %.preheader.i.i.i.i ], [ %i.kh, %bb.cy ], [ %i.jx, %.preheader56.i.i.i.i ] ; 2 uses
+  %3 = call i64 @llvm.umax.i64(i64 %.sroa.10457.0.ph, i64 512)
+  %4 = call range(i64 512, 4097) i64 @llvm.umin.i64(i64 %3, i64 4096)
+  br label %.loopexit960.a
 
 .loopexit:                                        ; preds = %bb.cv, %bb.cx, %.lr.ph.i.i.i.i, %bb.cq, %bb.cu, %bb.cu, %bb.cw
   %.sroa.8455.0.ph = phi i8 [ 1, %.lr.ph.i.i.i.i ], [ 1, %bb.cu ], [ %spec.select.i, %bb.cw ], [ 0, %bb.cq ], [ 1, %bb.cu ], [ 1, %bb.cv ], [ 2, %bb.cx ]
@@ -275,19 +281,16 @@ bb.cz:                                            ; preds = %.loopexit960.a, %bb
           cleanup
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit305
 
-.loopexit960.a:                                   ; preds = %.preheader56.i.i.i.i, %bb.cy, %bb.cp, %.preheader.i.i.i.i
-  %.sroa.9452.0.ph = phi i64 [ %i.kh, %bb.cy ], [ 0, %.preheader.i.i.i.i ], [ undef, %bb.cp ], [ %i.jx, %.preheader56.i.i.i.i ] ; 2 uses
-  %.sroa.0451.0.ph = phi i64 [ 1, %bb.cy ], [ 1, %.preheader.i.i.i.i ], [ 0, %bb.cp ], [ 1, %.preheader56.i.i.i.i ] ; 2 uses
+.loopexit960.a:                                   ; preds = %bb.cp, %.loopexit960
+  %..i = phi i64 [ %4, %.loopexit960 ], [ 512, %bb.cp ]
+  %.sroa.9452.0.ph = phi i64 [ %.sroa.10457.0.ph, %.loopexit960 ], [ undef, %bb.cp ]
+  %.sroa.0451.0.ph = phi i64 [ 1, %.loopexit960 ], [ 0, %bb.cp ]
   %i.kk = getelementptr inbounds nuw i8, ptr %1, i64 424
   store i64 %.sroa.0451.0.ph, ptr %i.kk, align 8
   %i.kl = getelementptr inbounds nuw i8, ptr %1, i64 432
   store i64 %.sroa.9452.0.ph, ptr %i.kl, align 8
-  %3 = trunc nuw i64 %.sroa.0451.0.ph to i1
-  %4 = call i64 @llvm.umax.i64(i64 %.sroa.9452.0.ph, i64 512)
-  %5 = call range(i64 512, 4097) i64 @llvm.umin.i64(i64 %4, i64 4096)
-  %.sroa.0.0.i263 = select i1 %3, i64 %5, i64 512
   %i.km = getelementptr inbounds nuw i8, ptr %1, i64 440
-  invoke fastcc void @_RNvMs_NtCsl0TPHHzpGH6_5bytes9bytes_mutNtB4_8BytesMut13with_capacity(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.km, i64 noundef %.sroa.0.0.i263)
+  invoke fastcc void @_RNvMs_NtCsl0TPHHzpGH6_5bytes9bytes_mutNtB4_8BytesMut13with_capacity(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.km, i64 noundef %..i)
           to label %.thread unwind label %bb.cz
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit305: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit, %bb.cn, %bb.cz

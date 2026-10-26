@@ -201,14 +201,18 @@ bb.cl:                                            ; preds = %bb.cg, %bb.cg, %bb.
   br i1 %i.gi, label %.loopexit, label %.lr.ph752
 
 .lr.ph752:                                        ; preds = %bb.cl, %.thread634
-  %.0352749 = phi i32 [ %.1353630, %.thread634 ], [ 0, %bb.cl ] ; 3 uses
-  %.4399748 = phi i32 [ %i.gm, %.thread634 ], [ 0, %bb.cl ] ; 6 uses
-  %.9618747 = phi i32 [ %i.gq, %.thread634 ], [ %.6615.lcssa, %bb.cl ] ; 8 uses
+  %.0352749 = phi i32 [ %.1353630, %.thread634 ], [ 0, %bb.cl ] ; 4 uses
+  %.4399748 = phi i32 [ %i.gm, %.thread634 ], [ 0, %bb.cl ] ; 5 uses
+  %.9618747 = phi i32 [ %i.gq, %.thread634 ], [ %.6615.lcssa, %bb.cl ] ; 7 uses
   switch i32 %.9618747, label %bb.cn [
-    i32 45, label %bb.cp
-    i32 43, label %bb.cp
+    i32 45, label %5
+    i32 43, label %5
     i32 48, label %bb.cm
   ]
+
+5:                                                ; preds = %.lr.ph752, %.lr.ph752
+  %.not513 = icmp ne i32 %.4399748, 0
+  br label %bb.cp
 
 bb.cm:                                            ; preds = %.lr.ph752
   %spec.store.select19 = call i32 @llvm.umax.i32(i32 %.0352749, i32 1)
@@ -220,8 +224,9 @@ bb.cn:                                            ; preds = %.lr.ph752
   br i1 %or.cond22, label %.split878, label %bb.co
 
 .split878:                                        ; preds = %bb.cn
-  %.not970 = icmp eq i32 %.0352749, 1
-  br i1 %.not970, label %.thread634, label %.loopexit
+  %6 = icmp ne i32 %.0352749, 1                   ; 2 uses
+  %..0352 = select i1 %6, i32 %.0352749, i32 2
+  br label %bb.cp
 
 bb.co:                                            ; preds = %bb.cn
   %i.gk = add i32 %.9618747, -48
@@ -244,12 +249,13 @@ switch.early.test:                                ; preds = %bb.co
     i32 65, label %.thread634
   ]
 
-bb.cp:                                            ; preds = %.lr.ph752, %.lr.ph752
-  %.not513.not = icmp eq i32 %.4399748, 0
-  br i1 %.not513.not, label %.thread634, label %.loopexit
+bb.cp:                                            ; preds = %5, %.split878
+  %.1353 = phi i32 [ %..0352, %.split878 ], [ %.0352749, %5 ]
+  %.pn = phi i1 [ %6, %.split878 ], [ %.not513, %5 ]
+  br i1 %.pn, label %.loopexit, label %.thread634
 
-.thread634:                                       ; preds = %bb.cp, %bb.cm, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.co, %.split878
-  %.1353630 = phi i32 [ %.0352749, %bb.cp ], [ %spec.store.select19, %bb.cm ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %bb.co ], [ 2, %.split878 ]
+.thread634:                                       ; preds = %bb.cp, %bb.cm, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.co
+  %.1353630 = phi i32 [ %.1353, %bb.cp ], [ %spec.store.select19, %bb.cm ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %switch.early.test ], [ 2, %bb.co ]
   %i.gl = trunc nuw nsw i32 %.9618747 to i8
   %i.gm = add nuw nsw i32 %.4399748, 1            ; 3 uses
   %i.gn = zext nneg i32 %.4399748 to i64
@@ -317,15 +323,19 @@ bb.ct:                                            ; preds = %bb.cs, %.split897
   br i1 %.not968.a, label %.lr.ph738, label %.loopexit, !llvm.loop !18
 
 .lr.ph760:                                        ; preds = %.preheader677, %.thread648
-  %.2354758 = phi i32 [ %.3355644, %.thread648 ], [ 0, %.preheader677 ] ; 4 uses
-  %.0392757 = phi i32 [ %.1393642, %.thread648 ], [ 10, %.preheader677 ] ; 9 uses
-  %.10756 = phi i32 [ %i.ho, %.thread648 ], [ 0, %.preheader677 ] ; 6 uses
-  %.15755 = phi i32 [ %i.hs, %.thread648 ], [ %.6615.lcssa, %.preheader677 ] ; 10 uses
+  %.2354758 = phi i32 [ %.3355644, %.thread648 ], [ 0, %.preheader677 ] ; 5 uses
+  %.0392757 = phi i32 [ %.1393642, %.thread648 ], [ 10, %.preheader677 ] ; 8 uses
+  %.10756 = phi i32 [ %i.ho, %.thread648 ], [ 0, %.preheader677 ] ; 5 uses
+  %.15755 = phi i32 [ %i.hs, %.thread648 ], [ %.6615.lcssa, %.preheader677 ] ; 9 uses
   switch i32 %.15755, label %bb.cv [
-    i32 45, label %bb.da
-    i32 43, label %bb.da
+    i32 45, label %7
+    i32 43, label %7
     i32 48, label %bb.cu
   ]
+
+7:                                                ; preds = %.lr.ph760, %.lr.ph760
+  %.not516 = icmp ne i32 %.10756, 0
+  br label %bb.da
 
 bb.cu:                                            ; preds = %.lr.ph760
   %i.hf = icmp eq i32 %.2354758, 0
@@ -339,8 +349,10 @@ bb.cv:                                            ; preds = %.lr.ph760
   br i1 %or.cond49, label %.split908, label %bb.cw
 
 .split908:                                        ; preds = %bb.cv
-  %.not972 = icmp eq i32 %.2354758, 1
-  br i1 %.not972, label %.thread648, label %.loopexit
+  %8 = icmp ne i32 %.2354758, 1                   ; 3 uses
+  %..0392 = select i1 %8, i32 %.0392757, i32 16
+  %..2354 = select i1 %8, i32 %.2354758, i32 2
+  br label %bb.da
 
 bb.cw:                                            ; preds = %bb.cv
   %i.hh = and i32 %.15755, -8
@@ -367,13 +379,15 @@ bb.cz:                                            ; preds = %bb.cy
   %or.cond73 = select i1 %or.cond70, i1 %i.hl, i1 false
   br i1 %or.cond73, label %.thread648, label %.loopexit
 
-bb.da:                                            ; preds = %.lr.ph760, %.lr.ph760
-  %.not516.not = icmp eq i32 %.10756, 0
-  br i1 %.not516.not, label %.thread648, label %.loopexit
+bb.da:                                            ; preds = %7, %.split908
+  %.1393 = phi i32 [ %..0392, %.split908 ], [ %.0392757, %7 ] ; 2 uses
+  %.3355 = phi i32 [ %..2354, %.split908 ], [ %.2354758, %7 ]
+  %.pn866 = phi i1 [ %8, %.split908 ], [ %.not516, %7 ]
+  br i1 %.pn866, label %.loopexit, label %.thread648
 
-.thread648:                                       ; preds = %bb.da, %bb.cu, %bb.cz, %bb.cy, %bb.cx, %bb.cw, %.split908
-  %.3355644 = phi i32 [ %.2354758, %bb.da ], [ %spec.select541, %bb.cu ], [ 2, %bb.cz ], [ 2, %bb.cy ], [ 2, %bb.cx ], [ 2, %bb.cw ], [ 2, %.split908 ]
-  %.1393642 = phi i32 [ %.0392757, %bb.da ], [ %spec.select540, %bb.cu ], [ 16, %bb.cz ], [ 16, %bb.cy ], [ %.0392757, %bb.cx ], [ %.0392757, %bb.cw ], [ 16, %.split908 ] ; 2 uses
+.thread648:                                       ; preds = %bb.da, %bb.cu, %bb.cz, %bb.cy, %bb.cx, %bb.cw
+  %.3355644 = phi i32 [ %.3355, %bb.da ], [ %spec.select541, %bb.cu ], [ 2, %bb.cz ], [ 2, %bb.cy ], [ 2, %bb.cx ], [ 2, %bb.cw ]
+  %.1393642 = phi i32 [ %.1393, %bb.da ], [ %spec.select540, %bb.cu ], [ 16, %bb.cz ], [ 16, %bb.cy ], [ %.0392757, %bb.cx ], [ %.0392757, %bb.cw ] ; 2 uses
   %i.hn = trunc nuw nsw i32 %.15755 to i8
   %i.ho = add nuw nsw i32 %.10756, 1              ; 3 uses
   %i.hp = zext nneg i32 %.10756 to i64
@@ -384,11 +398,11 @@ bb.da:                                            ; preds = %.lr.ph760, %.lr.ph7
   %.not973 = icmp slt i32 %i.ho, %spec.store.select90
   br i1 %.not973, label %.lr.ph760, label %.loopexit, !llvm.loop !19
 
-.loopexit:                                        ; preds = %.split897, %bb.cs, %bb.ct, %.split886, %bb.cq, %bb.cr, %.split878, %switch.early.test, %bb.cp, %.thread634, %.split908, %bb.cz, %bb.da, %.thread648, %.split, %bb.cj, %bb.ck, %.preheader682, %.preheader680, %bb.cl, %.preheader677, %bb.ci
-  %.17 = phi i32 [ %.15755, %bb.da ], [ %.11620741, %.split886 ], [ %i.gh, %bb.ck ], [ %.9618747, %switch.early.test ], [ %.6615.lcssa, %bb.ci ], [ %.6615.lcssa, %.preheader677 ], [ %.6615.lcssa, %bb.cl ], [ %.6615.lcssa, %.preheader680 ], [ %.6615.lcssa, %.preheader682 ], [ %.7616764, %bb.cj ], [ %.7616764, %.split ], [ %.15755, %.split908 ], [ %.15755, %bb.cz ], [ %i.hs, %.thread648 ], [ %.9618747, %bb.cp ], [ %.9618747, %.split878 ], [ %i.gq, %.thread634 ], [ %i.gx, %bb.cr ], [ %.11620741, %bb.cq ], [ %.13622735, %.split897 ], [ %i.he, %bb.ct ], [ %.13622735, %bb.cs ] ; 2 uses
-  %.12 = phi i32 [ %.10756, %bb.da ], [ %.6401742, %.split886 ], [ %i.gd, %bb.ck ], [ %.4399748, %switch.early.test ], [ 0, %bb.ci ], [ 0, %.preheader677 ], [ 0, %bb.cl ], [ 0, %.preheader680 ], [ 0, %.preheader682 ], [ %.2397765, %bb.cj ], [ %.2397765, %.split ], [ %.10756, %.split908 ], [ %.10756, %bb.cz ], [ %i.ho, %.thread648 ], [ %.4399748, %bb.cp ], [ %.4399748, %.split878 ], [ %i.gm, %.thread634 ], [ %i.gt, %bb.cr ], [ %.6401742, %bb.cq ], [ %.8403736, %.split897 ], [ %i.ha, %bb.ct ], [ %.8403736, %bb.cs ]
-  %.2394 = phi i32 [ %.0392757, %bb.da ], [ 8, %.split886 ], [ 10, %.split ], [ 16, %.split878 ], [ 10, %bb.ci ], [ 10, %.preheader677 ], [ 16, %bb.cl ], [ 8, %.preheader680 ], [ 2, %.preheader682 ], [ 10, %bb.ck ], [ 10, %bb.cj ], [ %.0392757, %.split908 ], [ %.0392757, %bb.cz ], [ %.1393642, %.thread648 ], [ 16, %.thread634 ], [ 16, %bb.cp ], [ 16, %switch.early.test ], [ 8, %bb.cr ], [ 8, %bb.cq ], [ 2, %bb.ct ], [ 2, %bb.cs ], [ 2, %.split897 ] ; 4 uses
-  %.1357 = phi i1 [ true, %.split908 ], [ false, %.split886 ], [ %.0356, %.split ], [ false, %.split878 ], [ %.0356, %bb.ci ], [ true, %.preheader677 ], [ false, %bb.cl ], [ false, %.preheader680 ], [ false, %.preheader682 ], [ %.0356, %bb.ck ], [ %.0356, %bb.cj ], [ true, %.thread648 ], [ true, %bb.da ], [ true, %bb.cz ], [ false, %.thread634 ], [ false, %bb.cp ], [ false, %switch.early.test ], [ false, %bb.cr ], [ false, %bb.cq ], [ false, %bb.ct ], [ false, %bb.cs ], [ false, %.split897 ] ; 2 uses
+.loopexit:                                        ; preds = %.split897, %bb.cs, %bb.ct, %.split886, %bb.cq, %bb.cr, %switch.early.test, %bb.cp, %.thread634, %bb.cz, %bb.da, %.thread648, %.split, %bb.cj, %bb.ck, %.preheader682, %.preheader680, %bb.cl, %.preheader677, %bb.ci
+  %.17 = phi i32 [ %.9618747, %bb.cp ], [ %i.hs, %.thread648 ], [ %i.gx, %bb.cr ], [ %i.gh, %bb.ck ], [ %.6615.lcssa, %bb.ci ], [ %.6615.lcssa, %.preheader677 ], [ %.6615.lcssa, %bb.cl ], [ %.6615.lcssa, %.preheader680 ], [ %.6615.lcssa, %.preheader682 ], [ %.7616764, %bb.cj ], [ %.7616764, %.split ], [ %.15755, %bb.cz ], [ %.15755, %bb.da ], [ %.9618747, %switch.early.test ], [ %i.gq, %.thread634 ], [ %.11620741, %.split886 ], [ %.11620741, %bb.cq ], [ %.13622735, %.split897 ], [ %i.he, %bb.ct ], [ %.13622735, %bb.cs ] ; 2 uses
+  %.12 = phi i32 [ %.4399748, %bb.cp ], [ %i.ho, %.thread648 ], [ %i.gt, %bb.cr ], [ %i.gd, %bb.ck ], [ 0, %bb.ci ], [ 0, %.preheader677 ], [ 0, %bb.cl ], [ 0, %.preheader680 ], [ 0, %.preheader682 ], [ %.2397765, %bb.cj ], [ %.2397765, %.split ], [ %.10756, %bb.cz ], [ %.10756, %bb.da ], [ %.4399748, %switch.early.test ], [ %i.gm, %.thread634 ], [ %.6401742, %.split886 ], [ %.6401742, %bb.cq ], [ %.8403736, %.split897 ], [ %i.ha, %bb.ct ], [ %.8403736, %bb.cs ]
+  %.2394 = phi i32 [ 16, %switch.early.test ], [ %.1393642, %.thread648 ], [ 8, %.split886 ], [ 10, %.split ], [ 10, %bb.ci ], [ 10, %.preheader677 ], [ 16, %bb.cl ], [ 8, %.preheader680 ], [ 2, %.preheader682 ], [ 10, %bb.ck ], [ 10, %bb.cj ], [ %.0392757, %bb.cz ], [ %.1393, %bb.da ], [ 16, %.thread634 ], [ 16, %bb.cp ], [ 8, %bb.cr ], [ 8, %bb.cq ], [ 2, %bb.ct ], [ 2, %bb.cs ], [ 2, %.split897 ] ; 4 uses
+  %.1357 = phi i1 [ false, %switch.early.test ], [ true, %bb.cz ], [ false, %.split886 ], [ %.0356, %.split ], [ %.0356, %bb.ci ], [ true, %.preheader677 ], [ false, %bb.cl ], [ false, %.preheader680 ], [ false, %.preheader682 ], [ %.0356, %bb.ck ], [ %.0356, %bb.cj ], [ true, %.thread648 ], [ true, %bb.da ], [ false, %.thread634 ], [ false, %bb.cp ], [ false, %bb.cr ], [ false, %bb.cq ], [ false, %bb.ct ], [ false, %bb.cs ], [ false, %.split897 ] ; 2 uses
   %i.ht = sext i32 %.12 to i64
   %i.hu = getelementptr inbounds i8, ptr %i.a, i64 %i.ht
   store i8 0, ptr %i.hu, align 1

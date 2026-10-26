@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.r
 
 conf_next.exit:                                   ; preds = %bb.v, %bb.u
   %.12083 = phi ptr [ %.250.i, %bb.v ], [ %i.cg, %bb.u ] ; 2 uses
-  %.42071 = phi i64 [ %i.cr, %bb.v ], [ %i.cp, %bb.u ] ; 228 uses
+  %.42071 = phi i64 [ %i.cr, %bb.v ], [ %i.cp, %bb.u ] ; 227 uses
   %i.ct = icmp eq i64 %i.cb, 12                   ; 2 uses
   br i1 %i.ct, label %bb.x, label %bb.ad
 
@@ -227,11 +227,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.y
   %i.cy = call i32 @strncmp(ptr noundef nonnull dereferenceable(6) @.str.40, ptr noundef nonnull readonly dereferenceable(1) %i.bx, i64 noundef 5) #12
   %i.cz = icmp eq i32 %i.cy, 0
-  br i1 %i.cz, label %conf_error.exit.thread2567, label %conf_handle_bool.exit
-
-conf_error.exit.thread2567:                       ; preds = %bb.aa
-  store i8 0, ptr @je_opt_confirm_conf, align 1, !tbaa !15
-  br label %conf_error.exit.thread
+  br i1 %i.cz, label %conf_error.exit.thread.critedge, label %conf_handle_bool.exit
 
 conf_handle_bool.exit:                            ; preds = %bb.y, %bb.z, %bb.aa
   br i1 %2, label %conf_error.exit.thread, label %bb.ab
@@ -257,8 +253,7 @@ conf_error.exit:                                  ; preds = %bb.z
   br i1 %2, label %conf_error.exit.thread, label %bb.ac, !llvm.loop !22
 
 bb.ac:                                            ; preds = %conf_error.exit
-  %5 = trunc nuw nsw i64 %.42071 to i32
-  call void (ptr, ...) @je_malloc_printf(ptr noundef nonnull @.str.10, i32 noundef 12, ptr noundef nonnull %.020822515, i32 noundef %5, ptr noundef nonnull %i.bx) #10
+  call void (ptr, ...) @je_malloc_printf(ptr noundef nonnull @.str.10, i32 noundef 12, ptr noundef nonnull %.020822515, i32 noundef 4, ptr noundef nonnull %i.bx) #10
   br label %conf_error.exit.thread, !llvm.loop !22
 
 bb.ad:                                            ; preds = %conf_next.exit
@@ -661,7 +656,11 @@ bb.rg:                                            ; preds = %bb.rb, %bb.rc
   call fastcc void @conf_error(ptr noundef nonnull @.str.89, ptr noundef nonnull %.020822515, i64 noundef %i.cb, ptr noundef nonnull %i.bx, i64 noundef %.42071)
   br label %conf_error.exit.thread
 
-conf_error.exit.thread:                           ; preds = %conf_error.exit.thread2567, %.critedge.i1150, %.preheader.preheader.i1149, %bb.gy, %.critedge.i1144, %.preheader.preheader.i1143, %bb.gs, %.critedge.i1138, %.preheader.preheader.i1137, %bb.gm, %.critedge.i1132, %.preheader.preheader.i1131, %bb.gg, %.critedge.i1126, %.preheader.preheader.i1125, %.thread2252, %.critedge.i1106, %.preheader.preheader.i1105, %bb.ew, %bb.do, %.preheader.preheader.i1078, %.critedge.i1079, %.critedge.i1067, %.preheader.preheader.i1066, %conf_error.exit1065.2, %.critedge.i1061, %.preheader.preheader.i1060, %bb.cb, %.critedge1000, %.preheader.preheader.i1054, %.critedge.i1055, %.critedge.i1052, %.preheader.preheader.i1051, %bb.bt, %.critedge.i1046, %.preheader.preheader.i1045, %bb.bn, %.critedge.i1040, %.preheader.preheader.i1039, %bb.bh, %.critedge.i1034, %.preheader.preheader.i1033, %bb.bb, %.critedge.i1028, %.preheader.preheader.i1027, %bb.av, %.critedge.i1022, %.preheader.preheader.i1021, %bb.ap, %.critedge.i1016, %.preheader.preheader.i1015, %bb.aj, %.critedge.i, %.preheader.preheader.i, %bb.ab, %conf_handle_bool.exit, %.thread2465, %.thread2452, %.thread2445, %.thread2413, %.thread2388, %.thread2367, %.thread2359, %.thread2356, %.thread2106, %bb.re, %bb.rf, %bb.qn, %bb.qo, %bb.qf, %bb.qg, %bb.pw, %bb.px, %bb.ok, %bb.ol, %bb.of, %bb.og, %bb.mr, %bb.ms, %bb.ll, %bb.lm, %bb.ky, %bb.kz, %bb.kt, %bb.ku, %conf_error.exit1151, %bb.gz, %conf_error.exit1145, %bb.gt, %conf_error.exit1139, %bb.gn, %conf_error.exit1133, %bb.gh, %conf_error.exit1127, %bb.gb, %init_opt_stats_opts.exit1124, %bb.fq, %init_opt_stats_opts.exit, %bb.fd, %conf_error.exit1107, %bb.ex, %conf_error.exit1080, %bb.dp, %bb.cp, %bb.cq, %conf_error.exit1068, %bb.ck, %conf_error.exit1062, %bb.cc, %conf_error.exit1056, %bb.bv, %conf_error.exit1053, %bb.bu, %conf_error.exit1047, %bb.bo, %conf_error.exit1041, %bb.bi, %conf_error.exit1035, %bb.bc, %conf_error.exit1029, %bb.aw, %conf_error.exit1023, %bb.aq, %conf_error.exit1017, %bb.ak, %bb.ad, %conf_error.exit, %bb.ac, %bb.rg, %bb.ra, %bb.qu, %bb.qd, %bb.pr, %bb.pk, %bb.pe, %bb.ox, %bb.oq, %bb.od, %bb.nw, %bb.np, %.thread2397, %bb.mz, %bb.mn, %bb.mh, %bb.ma, %bb.lt, %bb.li, %.thread2352, %.thread2347, %.thread2342, %bb.jr, %bb.jk, %bb.je, %bb.iy, %bb.ir, %bb.ik, %bb.ie, %conf_error.exit1163.thread, %conf_error.exit1160.thread, %conf_error.exit1157.thread, %conf_error.exit1154.thread, %conf_error.exit1112.thread, %conf_error.exit1101.thread, %conf_error.exit1095.thread, %conf_error.exit1089.thread, %conf_error.exit1083.thread, %bb.dk, %conf_error.exit1074.thread, %conf_error.exit1071.thread
+conf_error.exit.thread.critedge:                  ; preds = %bb.aa
+  store i8 0, ptr @je_opt_confirm_conf, align 1, !tbaa !15
+  br label %conf_error.exit.thread
+
+conf_error.exit.thread:                           ; preds = %conf_error.exit.thread.critedge, %.critedge.i1150, %.preheader.preheader.i1149, %bb.gy, %.critedge.i1144, %.preheader.preheader.i1143, %bb.gs, %.critedge.i1138, %.preheader.preheader.i1137, %bb.gm, %.critedge.i1132, %.preheader.preheader.i1131, %bb.gg, %.critedge.i1126, %.preheader.preheader.i1125, %.thread2252, %.critedge.i1106, %.preheader.preheader.i1105, %bb.ew, %bb.do, %.preheader.preheader.i1078, %.critedge.i1079, %.critedge.i1067, %.preheader.preheader.i1066, %conf_error.exit1065.2, %.critedge.i1061, %.preheader.preheader.i1060, %bb.cb, %.critedge1000, %.preheader.preheader.i1054, %.critedge.i1055, %.critedge.i1052, %.preheader.preheader.i1051, %bb.bt, %.critedge.i1046, %.preheader.preheader.i1045, %bb.bn, %.critedge.i1040, %.preheader.preheader.i1039, %bb.bh, %.critedge.i1034, %.preheader.preheader.i1033, %bb.bb, %.critedge.i1028, %.preheader.preheader.i1027, %bb.av, %.critedge.i1022, %.preheader.preheader.i1021, %bb.ap, %.critedge.i1016, %.preheader.preheader.i1015, %bb.aj, %.critedge.i, %.preheader.preheader.i, %bb.ab, %conf_handle_bool.exit, %.thread2465, %.thread2452, %.thread2445, %.thread2413, %.thread2388, %.thread2367, %.thread2359, %.thread2356, %.thread2106, %bb.re, %bb.rf, %bb.qn, %bb.qo, %bb.qf, %bb.qg, %bb.pw, %bb.px, %bb.ok, %bb.ol, %bb.of, %bb.og, %bb.mr, %bb.ms, %bb.ll, %bb.lm, %bb.ky, %bb.kz, %bb.kt, %bb.ku, %conf_error.exit1151, %bb.gz, %conf_error.exit1145, %bb.gt, %conf_error.exit1139, %bb.gn, %conf_error.exit1133, %bb.gh, %conf_error.exit1127, %bb.gb, %init_opt_stats_opts.exit1124, %bb.fq, %init_opt_stats_opts.exit, %bb.fd, %conf_error.exit1107, %bb.ex, %conf_error.exit1080, %bb.dp, %bb.cp, %bb.cq, %conf_error.exit1068, %bb.ck, %conf_error.exit1062, %bb.cc, %conf_error.exit1056, %bb.bv, %conf_error.exit1053, %bb.bu, %conf_error.exit1047, %bb.bo, %conf_error.exit1041, %bb.bi, %conf_error.exit1035, %bb.bc, %conf_error.exit1029, %bb.aw, %conf_error.exit1023, %bb.aq, %conf_error.exit1017, %bb.ak, %bb.ad, %conf_error.exit, %bb.ac, %bb.rg, %bb.ra, %bb.qu, %bb.qd, %bb.pr, %bb.pk, %bb.pe, %bb.ox, %bb.oq, %bb.od, %bb.nw, %bb.np, %.thread2397, %bb.mz, %bb.mn, %bb.mh, %bb.ma, %bb.lt, %bb.li, %.thread2352, %.thread2347, %.thread2342, %bb.jr, %bb.jk, %bb.je, %bb.iy, %bb.ir, %bb.ik, %bb.ie, %conf_error.exit1163.thread, %conf_error.exit1160.thread, %conf_error.exit1157.thread, %conf_error.exit1154.thread, %conf_error.exit1112.thread, %conf_error.exit1101.thread, %conf_error.exit1095.thread, %conf_error.exit1089.thread, %conf_error.exit1083.thread, %bb.dk, %conf_error.exit1074.thread, %conf_error.exit1071.thread
   %i.aqn = load i8, ptr %.12083, align 1, !tbaa !29 ; 2 uses
   %.not925 = icmp eq i8 %i.aqn, 0
   br i1 %.not925, label %.critedge, label %.preheader2496

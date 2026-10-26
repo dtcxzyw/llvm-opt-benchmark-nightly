@@ -202,6 +202,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.f, label %bb.j, label %.thread, !dbg !14120
 
 .thread:                                          ; preds = %bb.e, %bb.g
+  %.sroa.0.0112 = phi i8 [ 1, %bb.g ], [ 0, %bb.e ]
   %.sroa.8.sroa.0.0111 = phi i40 [ %.sroa.8.sroa.0.0.insert.ext28, %bb.g ], [ 0, %bb.e ]
   %i.i = tail call noundef i8 @_RNvXs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir8intervalhNtB5_5Bound9increment(i8 noundef %.val101), !dbg !14121 ; 2 uses
     #dbg_value(i8 %i.i, !14084, !DIExpression(), !14101)
@@ -242,7 +243,7 @@ bb.i:                                             ; preds = %.thread
 
 bb.j:                                             ; preds = %bb.a, %bb.h, %bb.i, %bb.g, %bb.d
   %.sroa.8.sroa.0.1 = phi i40 [ %.sroa.8.sroa.0.0.insert.ext28, %bb.g ], [ %.sroa.8.sroa.0.0.insert.ext18, %bb.d ], [ %.sroa.8.sroa.0.0.insert.ext38, %bb.i ], [ %.sroa.8.sroa.0.2.insert.insert64, %bb.h ], [ 0, %bb.a ], !dbg !14087
-  %.sroa.0.1 = phi i8 [ 1, %bb.g ], [ 1, %bb.d ], [ 1, %bb.i ], [ 1, %bb.h ], [ 0, %bb.a ], !dbg !14087
+  %.sroa.0.1 = phi i8 [ 1, %bb.g ], [ 1, %bb.d ], [ 1, %bb.i ], [ %.sroa.0.0112, %bb.h ], [ 0, %bb.a ], !dbg !14087
     #dbg_value(i8 %.sroa.0.1, !14082, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !14097)
     #dbg_value(i40 %.sroa.8.sroa.0.1, !14082, !DIExpression(DW_OP_LLVM_fragment, 8, 40), !14097)
   %.sroa.8.0.insert.ext = zext i40 %.sroa.8.sroa.0.1 to i48, !dbg !14128

@@ -202,7 +202,7 @@ bb.hi:                                            ; preds = %bb.hh
 bb.hj:                                            ; preds = %bb.hi, %bb.hh
   %i.vp = load i64, ptr %i.iu, align 8            ; 2 uses
   %i.vq = and i64 %i.vp, 1099511627776
-  %.not596.i.i = icmp eq i64 %i.vq, 0
+  %.not596.i.i = icmp eq i64 %i.vq, 0             ; 2 uses
   br i1 %.not596.i.i, label %bb.hl, label %bb.hk
 
 bb.hk:                                            ; preds = %bb.hj
@@ -212,14 +212,13 @@ bb.hk:                                            ; preds = %bb.hj
 
 bb.hl:                                            ; preds = %bb.hk, %bb.hj
   %i.vr = phi i64 [ %i.vp, %bb.hj ], [ %.pre735.i.i, %bb.hk ] ; 2 uses
-  %.2651.i.i = phi i8 [ 1, %bb.hj ], [ 0, %bb.hk ] ; 2 uses
+  %.2651.i.i = phi i8 [ 1, %bb.hj ], [ 0, %bb.hk ]
   %i.vs = and i64 %i.vr, 524288
   %.not597.i.i = icmp eq i64 %i.vs, 0
   br i1 %.not597.i.i, label %bb.hn, label %bb.hm
 
 bb.hm:                                            ; preds = %bb.hl
-  %6 = trunc nuw i8 %.2651.i.i to i1
-  %i.vt = select i1 %6, ptr @.str.41, ptr @.str.74
+  %i.vt = select i1 %.not596.i.i, ptr @.str.41, ptr @.str.74
   call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.i, ptr noundef nonnull @.str.205, ptr noundef nonnull %i.vt, ptr noundef nonnull @.str.182) #14
   %.pre736.i.i = load i64, ptr %i.iu, align 8
   br label %bb.hn

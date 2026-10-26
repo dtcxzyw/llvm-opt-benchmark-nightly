@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_RNCINvXs0_NtCskItK
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   %i.au = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
   %i.av = load ptr, ptr %i.au, align 8, !noundef !5 ; 2 uses
-  %.not = icmp eq ptr %i.av, null
+  %.not = icmp eq ptr %i.av, null                 ; 4 uses
   br i1 %.not, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -229,7 +229,6 @@ bb.q:                                             ; preds = %bb.n
           to label %bb.r unwind label %bb.h
 
 bb.r:                                             ; preds = %bb.q, %bb.o
-  %.sroa.038.2 = phi i8 [ 0, %bb.q ], [ 1, %bb.o ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTNtNtCskItKYAOUBlG_10serde_yaml2de5EventNtNtNtBK_7libyaml5error4MarkEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.o)
           to label %bb.t unwind label %bb.s
@@ -257,26 +256,24 @@ bb.v:                                             ; preds = %bb.bw, %_RINvNtCskK
   unreachable
 
 bb.w:                                             ; preds = %bb.t, %bb.k
-  %.sroa.038.3 = phi i8 [ 1, %bb.k ], [ %.sroa.038.2, %bb.t ]
+  %.sroa.038.3 = phi i1 [ true, %bb.k ], [ %.not, %bb.t ]
   %i.bc = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
 .body:                                            ; preds = %bb.w, %bb.s, %bb.j
-  %.sroa.038.3.lpad-body = phi i8 [ 1, %bb.j ], [ %.sroa.038.3, %bb.w ], [ %.sroa.038.2, %bb.s ]
+  %.sroa.038.3.lpad-body = phi i1 [ true, %bb.j ], [ %.sroa.038.3, %bb.w ], [ %.not, %bb.s ]
   %eh.lpad-body = phi { ptr, i32 } [ %i.as, %bb.j ], [ %i.bc, %bb.w ], [ %i.az, %bb.s ] ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
   %i.be = load ptr, ptr %i.bd, align 8, !noundef !5 ; 2 uses
   %i.bf = icmp ne ptr %i.be, null
-  %4 = trunc nuw i8 %.sroa.038.3.lpad-body to i1
-  %or.cond3 = select i1 %i.bf, i1 %4, i1 false
+  %or.cond3 = and i1 %.sroa.038.3.lpad-body, %i.bf
   br i1 %or.cond3, label %bb.ac, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtCskItKYAOUBlG_10serde_yaml5error9ErrorImplEECskeugdADtBsi_12pingora_core.exit77
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtCskItKYAOUBlG_10serde_yaml2de5EventNtNtNtB1d_7libyaml5error4MarkEEECskeugdADtBsi_12pingora_core.exit73: ; preds = %bb.t
   %i.bg = load ptr, ptr %i.au, align 8, !noundef !5 ; 2 uses
   %i.bh = icmp ne ptr %i.bg, null
-  %5 = trunc nuw i8 %.sroa.038.2 to i1
-  %or.cond = and i1 %i.bh, %5
+  %or.cond = and i1 %.not, %i.bh
   br i1 %or.cond, label %bb.x, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtCskItKYAOUBlG_10serde_yaml5error9ErrorImplEECskeugdADtBsi_12pingora_core.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtCskItKYAOUBlG_10serde_yaml5error9ErrorImplEECskeugdADtBsi_12pingora_core.exit: ; preds = %bb.x, %bb.y, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtCskItKYAOUBlG_10serde_yaml2de5EventNtNtNtB1d_7libyaml5error4MarkEEECskeugdADtBsi_12pingora_core.exit, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtCskItKYAOUBlG_10serde_yaml2de5EventNtNtNtB1d_7libyaml5error4MarkEEECskeugdADtBsi_12pingora_core.exit73

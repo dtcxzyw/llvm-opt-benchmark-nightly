@@ -55,7 +55,6 @@ target triple = "x86_64-unknown-linux-gnu"
 @47 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @46, [16 x i8] c"#\00\00\00\00\00\00\00\B1\00\00\00!\00\00\00" }>, align 8
 @48 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @46, [16 x i8] c"#\00\00\00\00\00\00\00\B1\00\00\00 \00\00\00" }>, align 8
 @49 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @46, [16 x i8] c"#\00\00\00\00\00\00\00\B1\00\00\00\09\00\00\00" }>, align 8
-@switch.table._RINvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp12format_floatNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish = private unnamed_addr constant [17 x i8] c"\01\01\01\01\00\01\01\00\01\00\01\00\01\00\01\01\01", align 1
 
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp10format_e_fNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(64) %2, i1 noundef zeroext %3) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -458,27 +457,53 @@ bb.a:
   %i.h = bitcast double %2 to i64                 ; 2 uses
   %.not = icmp sgt i64 %i.h, -1
   %i.i = trunc i48 %.sroa.010.3.extract.shift to i1 ; 5 uses
-  br i1 %.not, label %bb.b, label %switch.lookup
+  br i1 %.not, label %bb.b, label %10
 
 bb.b:                                             ; preds = %bb.a
   %i.j = trunc i48 %.sroa.010.4.extract.shift to i1
-  br i1 %i.j, label %switch.lookup, label %bb.c
+  br i1 %i.j, label %10, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.mask = and i48 %.sroa.010.3.extract.shift, 1
   %. = zext nneg i48 %.mask to i64
   %.37 = select i1 %i.i, ptr @8, ptr inttoptr (i64 1 to ptr)
-  br label %switch.lookup
+  br label %10
 
-switch.lookup:                                    ; preds = %bb.b, %bb.c, %bb.a
+10:                                               ; preds = %bb.b, %bb.c, %bb.a
   %.sroa.5.0 = phi i64 [ 1, %bb.b ], [ %., %bb.c ], [ 1, %bb.a ] ; 6 uses
   %.sroa.011.0 = phi ptr [ @9, %bb.b ], [ %.37, %bb.c ], [ @10, %bb.a ] ; 5 uses
-  %10 = trunc nuw i64 %4 to i1                    ; 4 uses
-  %.38 = select i1 %10, i64 %5, i64 6             ; 8 uses
+  %11 = trunc nuw i64 %4 to i1                    ; 4 uses
+  %.38 = select i1 %11, i64 %5, i64 6             ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %11 = zext nneg i8 %8 to i64                    ; 3 uses
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp12format_floatNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish, i64 %11
-  %switch.load = load i8, ptr %switch.gep, align 1
+  switch i8 %8, label %default.unreachable124 [
+    i8 0, label %switch.lookup
+    i8 1, label %switch.lookup
+    i8 2, label %switch.lookup
+    i8 3, label %switch.lookup
+    i8 4, label %12
+    i8 5, label %switch.lookup
+    i8 6, label %switch.lookup
+    i8 7, label %12
+    i8 8, label %switch.lookup
+    i8 9, label %12
+    i8 10, label %switch.lookup
+    i8 11, label %12
+    i8 12, label %switch.lookup
+    i8 13, label %12
+    i8 14, label %switch.lookup
+    i8 15, label %switch.lookup
+    i8 16, label %switch.lookup
+  ]
+
+default.unreachable124:                           ; preds = %10
+  unreachable
+
+12:                                               ; preds = %10, %10, %10, %10, %10
+  br label %switch.lookup
+
+switch.lookup:                                    ; preds = %10, %10, %10, %10, %10, %10, %10, %10, %10, %10, %10, %10, %12
+  %13 = phi i1 [ false, %12 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ], [ true, %10 ] ; 5 uses
+  %.sroa.017.0 = phi i8 [ 0, %12 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ], [ 1, %10 ]
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   store ptr %1, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 16
@@ -502,7 +527,7 @@ switch.lookup:                                    ; preds = %bb.b, %bb.c, %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i64 %.sroa.5.0, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.g, i64 63
-  store i8 %switch.load, ptr %i.s, align 1
+  store i8 %.sroa.017.0, ptr %i.s, align 1
   %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 48
   store ptr %9, ptr %i.t, align 8
   %i.u = tail call double @llvm.fabs.f64(double %2) ; 2 uses
@@ -515,12 +540,9 @@ switch.lookup:                                    ; preds = %bb.b, %bb.c, %bb.a
 
 bb.d:                                             ; preds = %switch.lookup
   tail call void @llvm.experimental.noalias.scope.decl(metadata !366)
-  %12 = shl nuw nsw i64 1, %11
-  %13 = and i64 %12, 120175
-  %.not146 = icmp eq i64 %13, 0                   ; 2 uses
   %i.aa = fcmp uno double %2, 0.000000e+00
-  %..i = select i1 %.not146, ptr @13, ptr @14
-  %.3.i = select i1 %.not146, ptr @15, ptr @16
+  %..i = select i1 %13, ptr @14, ptr @13
+  %.3.i = select i1 %13, ptr @16, ptr @15
   %.sroa.0.0.i = select i1 %i.aa, ptr %.3.i, ptr %..i ; 8 uses
   %i.ab = add nuw nsw i64 %.sroa.5.0, 3           ; 3 uses
   %i.ac = trunc i48 %i.y to i1
@@ -923,9 +945,6 @@ bb.z:                                             ; preds = %bb.y, %bb.y
   %i.gr = trunc i48 %i.w to i1
   %i.gs = trunc i48 %i.y to i1                    ; 3 uses
   %i.gt = trunc i48 %.sroa.010.4.extract.shift to i1
-  %14 = shl nuw nsw i64 1, %11
-  %15 = and i64 %14, 120175
-  %.not145 = icmp eq i64 %15, 0                   ; 3 uses
   %i.gu = tail call { double, i32 } @_RNvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp5frexp(double noundef %i.u), !noalias !413 ; 2 uses
   %i.gv = extractvalue { double, i32 } %i.gu, 0   ; 3 uses
   %i.gw = extractvalue { double, i32 } %i.gu, 1   ; 2 uses
@@ -941,7 +960,7 @@ bb.ab:                                            ; preds = %bb.ac, %bb.z
   %.sroa.018.0.i = phi i32 [ %i.ha, %bb.ac ], [ %i.gw, %bb.z ] ; 2 uses
   %.sroa.06.0.i = phi double [ %i.hb, %bb.ac ], [ %i.gv, %bb.z ] ; 3 uses
   %brmerge84.i = or i1 %.not76.i, %i.gt           ; 2 uses
-  br i1 %.not145, label %bb.ae, label %bb.af
+  br i1 %13, label %bb.af, label %bb.ae
 
 bb.ac:                                            ; preds = %bb.aa
   %i.ha = extractvalue { i32, i1 } %i.gy, 0
@@ -969,7 +988,7 @@ bb.ah:                                            ; preds = %bb.ai, %bb.ag, %bb.
   %.sroa.10.0.i = phi i64 [ 3, %bb.ae ], [ %.79.i, %bb.ai ], [ 3, %bb.af ], [ %..i39, %bb.ag ] ; 3 uses
   %.sroa.023.0.i = phi ptr [ %.mux.i, %bb.ae ], [ %.80.i, %bb.ai ], [ %.mux85.i, %bb.af ], [ %.78.i, %bb.ag ] ; 2 uses
   %i.hc = icmp ult i64 %.38, 13
-  %or.cond.i = and i1 %i.hc, %10
+  %or.cond.i = and i1 %i.hc, %11
   br i1 %or.cond.i, label %bb.aj, label %.split.i
 
 bb.ai:                                            ; preds = %bb.af
@@ -981,7 +1000,7 @@ bb.ai:                                            ; preds = %bb.af
   %.sroa.06.1.i = phi double [ %i.il, %bb.al ], [ %i.ih, %bb.ak ], [ %.sroa.06.0.i, %bb.ah ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !413
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !413
-  %.81.i = select i1 %.not145, i32 80, i32 112
+  %.81.i = select i1 %13, i32 112, i32 80
   store i32 %.81.i, ptr %i.d, align 4, !noalias !413
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !413
   %i.hd = icmp slt i32 %.sroa.018.0.i, 0
@@ -1007,7 +1026,7 @@ bb.ai:                                            ; preds = %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !413
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !413
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !413
-  %.sroa.026.0.i = select i1 %.not145, ptr @38, ptr @39
+  %.sroa.026.0.i = select i1 %13, ptr @39, ptr @38
   %i.hg = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 5 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
   %i.hi = icmp ne i64 %.38, 0                     ; 2 uses
@@ -1126,7 +1145,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.ji, label %bb.ax, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  br i1 %10, label %bb.aw, label %bb.av
+  br i1 %11, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
   br i1 %i.gq, label %bb.ax, label %bb.be
@@ -1197,7 +1216,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.jv = icmp sgt i64 %i.ju, -1
   call void @llvm.assume(i1 %i.jv)
   %i.jw = add nuw i64 %i.ju, %i.jr                ; 2 uses
-  %or.cond1.i = and i1 %i.hi, %10
+  %or.cond1.i = and i1 %i.hi, %11
   br i1 %or.cond1.i, label %bb.bh, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bi, %bb.bf

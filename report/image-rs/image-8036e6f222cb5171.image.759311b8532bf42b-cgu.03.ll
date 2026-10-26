@@ -205,8 +205,8 @@ _RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta6hea
   br i1 %i.p, label %bb.b, label %bb.f
 
 bb.a:                                             ; preds = %bb.t, %bb.p, %bb.n, %_RNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB5_6Header22get_block_data_indices.exit
-  %.sroa.090.1 = phi i8 [ 1, %bb.n ], [ %.sroa.090.2, %bb.t ], [ %.sroa.090.2, %bb.p ], [ 1, %_RNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB5_6Header22get_block_data_indices.exit ]
-  %.sroa.092.1 = phi i8 [ 1, %bb.n ], [ %.sroa.092.2, %bb.t ], [ %.sroa.092.2, %bb.p ], [ 1, %_RNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB5_6Header22get_block_data_indices.exit ]
+  %.sroa.090.1 = phi i1 [ true, %bb.n ], [ %4, %bb.t ], [ %4, %bb.p ], [ true, %_RNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB5_6Header22get_block_data_indices.exit ]
+  %.sroa.092.1 = phi i1 [ true, %bb.n ], [ %5, %bb.t ], [ %5, %bb.p ], [ true, %_RNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB5_6Header22get_block_data_indices.exit ]
   %i.q = landingpad { ptr, i32 }
           cleanup                                 ; 4 uses
   %i.r = load i64, ptr %1, align 8, !range !24, !noundef !7 ; 2 uses
@@ -406,8 +406,8 @@ bb.o:                                             ; preds = %_RNvMsa_NtNtCsdsTQD
   br label %bb.p
 
 bb.p:                                             ; preds = %_RNvMsa_NtNtCsdsTQD3x2eOp_3exr4meta9attributeNtB5_13IntegerBounds8validate.exit, %bb.o
-  %.sroa.090.2 = phi i8 [ 0, %bb.o ], [ 1, %_RNvMsa_NtNtCsdsTQD3x2eOp_3exr4meta9attributeNtB5_13IntegerBounds8validate.exit ] ; 3 uses
-  %.sroa.092.2 = phi i8 [ 1, %bb.o ], [ 0, %_RNvMsa_NtNtCsdsTQD3x2eOp_3exr4meta9attributeNtB5_13IntegerBounds8validate.exit ] ; 3 uses
+  %4 = phi i1 [ false, %bb.o ], [ true, %_RNvMsa_NtNtCsdsTQD3x2eOp_3exr4meta9attributeNtB5_13IntegerBounds8validate.exit ] ; 3 uses
+  %5 = phi i1 [ true, %bb.o ], [ false, %_RNvMsa_NtNtCsdsTQD3x2eOp_3exr4meta9attributeNtB5_13IntegerBounds8validate.exit ] ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.br, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -515,12 +515,10 @@ bb.y:                                             ; preds = %bb.w, %bb.g
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit
 
 bb.z:                                             ; preds = %bb.w
-  %4 = trunc nuw i8 %.sroa.092.2 to i1
-  br i1 %4, label %bb.ab, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit
+  br i1 %5, label %bb.ab, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit
 
 bb.aa:                                            ; preds = %bb.w
-  %5 = trunc nuw i8 %.sroa.090.2 to i1
-  br i1 %5, label %bb.af, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit
+  br i1 %4, label %bb.af, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit: ; preds = %bb.ai, %bb.ah, %bb.ae, %bb.ad, %bb.v, %bb.ak, %bb.aa, %bb.z, %bb.y
   ret void
@@ -599,12 +597,10 @@ bb.al:                                            ; preds = %bb.a
           to label %common.resume unwind label %bb.x
 
 bb.am:                                            ; preds = %bb.a
-  %6 = trunc nuw i8 %.sroa.092.1 to i1
-  br i1 %6, label %.invoke, label %common.resume
+  br i1 %.sroa.092.1, label %.invoke, label %common.resume
 
 bb.an:                                            ; preds = %bb.a
-  %7 = trunc nuw i8 %.sroa.090.1 to i1
-  br i1 %7, label %.invoke, label %common.resume
+  br i1 %.sroa.090.1, label %.invoke, label %common.resume
 
 .invoke:                                          ; preds = %bb.an, %bb.am
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 8

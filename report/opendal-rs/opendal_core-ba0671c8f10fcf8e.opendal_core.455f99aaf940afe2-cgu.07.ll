@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.c, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.x = load i64, ptr %i.w, align 8, !range !8, !noundef !6
-  %i.y = trunc nuw i64 %i.x to i1
+  %i.y = trunc nuw i64 %i.x to i1                 ; 2 uses
   br i1 %i.y, label %bb.i, label %bb.j
 
 bb.h:                                             ; preds = %.noexc61
@@ -222,7 +222,7 @@ bb.i:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.g, %bb.i
-  %storemerge = phi i8 [ 1, %bb.i ], [ 0, %bb.g ] ; 2 uses
+  %storemerge = phi i8 [ 1, %bb.i ], [ 0, %bb.g ]
   store i8 %storemerge, ptr %i.m, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -301,9 +301,8 @@ bb.j:                                             ; preds = %bb.g, %bb.i
   %i.ca = load i64, ptr %i.bz, align 8
   %.sroa.543.0 = select i1 %.not59, i64 undef, i64 %i.ca
   %.sroa.042.0 = select i1 %.not59, ptr null, ptr %i.by
-  %1 = trunc nuw i8 %storemerge to i1
   %i.cb = getelementptr inbounds nuw i8, ptr %i.m, i64 1
-  %.sroa.046.0 = select i1 %1, ptr %i.cb, ptr null
+  %.sroa.046.0 = select i1 %i.y, ptr %i.cb, ptr null
   store ptr %.sroa.08.0, ptr %i.l, align 8
   %i.cc = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store i64 %.sroa.59.0, ptr %i.cc, align 8

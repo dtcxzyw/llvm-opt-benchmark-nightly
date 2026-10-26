@@ -204,12 +204,15 @@ bb.d:                                             ; preds = %.noexc
   %i.z = load i64, ptr %i.y, align 8, !noalias !642
   br label %.invoke
 
-bb.e:                                             ; preds = %bb.ad, %bb.ae, %bb.am
-  %.sroa.0176.1.ph = phi i8 [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.sroa.0176.6, %bb.am ]
-  %.sroa.0179.1.ph = phi i8 [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.sroa.0179.4, %bb.am ]
+bb.e:                                             ; preds = %bb.ad, %bb.ae
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %.thread
+  br label %.thread.thread
+
+.split:                                           ; preds = %bb.am
+  %lpad.thr_comm.split-lp467 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %i.ck, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit366, label %.thread.thread
 
 bb.f:                                             ; preds = %.noexc
   %i.aa = load ptr, ptr %i.y, align 8, !noalias !642, !nonnull !4, !noundef !4 ; 2 uses
@@ -458,7 +461,7 @@ bb.ac:                                            ; preds = %bb.u
   %i.ch = load i32, ptr %i.cg, align 8, !range !7, !noundef !4
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 76
   %i.cj = load i32, ptr %i.ci, align 4
-  %i.ck = trunc nuw i32 %i.ch to i1
+  %i.ck = trunc nuw i32 %i.ch to i1               ; 5 uses
   br i1 %i.ck, label %bb.ag, label %bb.ah
 
 bb.ad:                                            ; preds = %bb.u
@@ -530,15 +533,15 @@ bb.ai:                                            ; preds = %.noexc356
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit: ; preds = %bb.au, %bb.at, %bb.aj
   %.sroa.0176.4 = phi i8 [ 1, %bb.aj ], [ 0, %bb.at ], [ 0, %bb.au ]
-  %.sroa.0179.2 = phi i8 [ %.sroa.0179.3, %bb.aj ], [ 0, %bb.at ], [ 0, %bb.au ]
+  %.sroa.0179.2 = phi i1 [ %.sroa.0179.3, %bb.aj ], [ false, %bb.at ], [ false, %bb.au ]
   %.pn318 = phi { ptr, i32 } [ %2, %bb.aj ], [ %.pn, %bb.at ], [ %.pn, %bb.au ]
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k) #21
           to label %.thread unwind label %bb.ab
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.ap
-  %.sroa.0179.3 = phi i8 [ 1, %bb.ah ], [ 0, %bb.ap ], [ 1, %bb.ai ]
   %2 = landingpad { ptr, i32 }
           cleanup
+  %.sroa.0179.3 = xor i1 %i.ck, true
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit
 
 bb.ak:                                            ; preds = %.noexc356
@@ -559,20 +562,20 @@ bb.ak:                                            ; preds = %.noexc356
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit361
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit361: ; preds = %bb.aq, %bb.ax, %bb.ay, %bb.ak
-  %.sroa.0176.6 = phi i8 [ 1, %bb.ak ], [ 1, %bb.aq ], [ 0, %bb.ax ], [ 0, %bb.ay ] ; 4 uses
-  %.sroa.0179.4 = phi i8 [ 1, %bb.ak ], [ 0, %bb.aq ], [ 0, %bb.ax ], [ 0, %bb.ay ] ; 3 uses
+  %.sroa.0176.6 = phi i8 [ 1, %bb.ak ], [ 1, %bb.aq ], [ 0, %bb.ax ], [ 0, %bb.ay ] ; 5 uses
   invoke void @_RNvXso_NtCs6i54tJFfzR_5alloc3vecINtB5_3VechENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.k)
           to label %bb.am unwind label %bb.al
 
 bb.al:                                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit361
   %i.df = landingpad { ptr, i32 }
           cleanup
+  %.sroa.0179.4 = xor i1 %i.ck, true
   invoke void @_RNvXs1_NtCs6i54tJFfzR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.k)
           to label %.thread unwind label %bb.an
 
 bb.am:                                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit361
   invoke void @_RNvXs1_NtCs6i54tJFfzR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.k)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit unwind label %bb.e
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit unwind label %.split
 
 bb.an:                                            ; preds = %bb.al
   %i.dg = landingpad { ptr, i32 }
@@ -715,8 +718,7 @@ bb.bc:                                            ; preds = %bb.ba
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit: ; preds = %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  %3 = trunc nuw i8 %.sroa.0179.4 to i1
-  br i1 %3, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc3vec3VechEEECs4tP8yUXWbFU_18libsignal_protocol.exit, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit349
+  br i1 %i.ck, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit349, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc3vec3VechEEECs4tP8yUXWbFU_18libsignal_protocol.exit
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit349: ; preds = %bb.aa, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc3vec3VechEEECs4tP8yUXWbFU_18libsignal_protocol.exit, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit
   %.sroa.0176.8 = phi i8 [ %.sroa.0176.6, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit ], [ %.sroa.0176.2, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc3vec3VechEEECs4tP8yUXWbFU_18libsignal_protocol.exit ], [ %.sroa.0176.2, %bb.aa ]
@@ -810,12 +812,11 @@ bb.bi:                                            ; preds = %bb.az, %bb.bh
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc3vec3VechEEECs4tP8yUXWbFU_18libsignal_protocol.exit364
 
-.thread:                                          ; preds = %bb.al, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit, %bb.e
-  %.pn320440 = phi { ptr, i32 } [ %.pn318, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit ], [ %i.df, %bb.al ], [ %lpad.thr_comm.split-lp, %bb.e ] ; 2 uses
-  %.sroa.0179.0439 = phi i8 [ %.sroa.0179.2, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit ], [ %.sroa.0179.4, %bb.al ], [ %.sroa.0179.1.ph, %bb.e ]
-  %.sroa.0176.0438 = phi i8 [ %.sroa.0176.4, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit ], [ %.sroa.0176.6, %bb.al ], [ %.sroa.0176.1.ph, %bb.e ] ; 2 uses
-  %4 = trunc nuw i8 %.sroa.0179.0439 to i1
-  br i1 %4, label %.thread.thread, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit366
+.thread:                                          ; preds = %bb.al, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit
+  %.pn320440 = phi { ptr, i32 } [ %.pn318, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit ], [ %i.df, %bb.al ] ; 2 uses
+  %.sroa.0179.0439 = phi i1 [ %.sroa.0179.2, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit ], [ %.sroa.0179.4, %bb.al ]
+  %.sroa.0176.0438 = phi i8 [ %.sroa.0176.4, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtBE_6PublicEEBG_.exit ], [ %.sroa.0176.6, %bb.al ] ; 2 uses
+  br i1 %.sroa.0179.0439, label %.thread.thread, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit366
 
 bb.bj:                                            ; preds = %.invoke, %bb.k, %bb.c, %bb.l, %bb.q, %bb.v
   %lpad.thr_comm = landingpad { ptr, i32 }
@@ -823,15 +824,15 @@ bb.bj:                                            ; preds = %.invoke, %bb.k, %bb
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc3vec3VechEEECs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef align 8 dereferenceable(24) %1) #21
           to label %.thread.thread unwind label %bb.ab
 
-_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit366: ; preds = %bb.bk, %.thread.thread, %.thread
-  %.sroa.0176.0438462 = phi i8 [ %.sroa.0176.0438, %.thread ], [ %.sroa.0176.0438463, %.thread.thread ], [ %.sroa.0176.0438463, %bb.bk ]
-  %.pn320440460 = phi { ptr, i32 } [ %.pn320440, %.thread ], [ %.pn320440461, %.thread.thread ], [ %.pn320440461, %bb.bk ] ; 2 uses
+_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4tP8yUXWbFU_18libsignal_protocol3kem3KeyNtB10_6PublicEEEB12_.exit366: ; preds = %.split, %bb.bk, %.thread.thread, %.thread
+  %.sroa.0176.0438462 = phi i8 [ %.sroa.0176.0438, %.thread ], [ %.sroa.0176.0438463, %.thread.thread ], [ %.sroa.0176.0438463, %bb.bk ], [ %.sroa.0176.6, %.split ]
+  %.pn320440460 = phi { ptr, i32 } [ %.pn320440, %.thread ], [ %.pn320440461, %.thread.thread ], [ %.pn320440461, %bb.bk ], [ %lpad.thr_comm.split-lp467, %.split ] ; 2 uses
   %i.eg = trunc nuw i8 %.sroa.0176.0438462 to i1
   br i1 %i.eg, label %bb.bl, label %common.resume
 
-.thread.thread:                                   ; preds = %bb.bj, %.thread
-  %.sroa.0176.0438463 = phi i8 [ %.sroa.0176.0438, %.thread ], [ 1, %bb.bj ] ; 2 uses
-  %.pn320440461 = phi { ptr, i32 } [ %.pn320440, %.thread ], [ %lpad.thr_comm, %bb.bj ] ; 2 uses
+.thread.thread:                                   ; preds = %bb.e, %.split, %bb.bj, %.thread
+  %.sroa.0176.0438463 = phi i8 [ %.sroa.0176.0438, %.thread ], [ 1, %bb.bj ], [ %.sroa.0176.6, %.split ], [ 1, %bb.e ] ; 2 uses
+  %.pn320440461 = phi { ptr, i32 } [ %.pn320440, %.thread ], [ %lpad.thr_comm, %bb.bj ], [ %lpad.thr_comm.split-lp467, %.split ], [ %lpad.thr_comm.split-lp, %bb.e ] ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 80
   %.val328 = load ptr, ptr %i.eh, align 8, !noundef !4 ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 88
